@@ -75,7 +75,8 @@ void o_net_reset(GschemToplevel *w_current)
 void o_net_guess_direction(GschemToplevel *w_current,
 			   int wx, int wy)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   int up=0, down=0, left=0, right=0;
   int x1, y1, x2, y2;
   int xmin, ymin, xmax, ymax;
@@ -89,8 +90,9 @@ void o_net_guess_direction(GschemToplevel *w_current,
   const int bus_rules[] = {90, 0, 40};
   const int net_rules[] = {80, 30, 0};
 
-  objectlists = s_tile_get_objectlists(toplevel, toplevel->page_current,
-                                       wx, wy, wx, wy);
+  g_return_if_fail (page != NULL);
+
+  objectlists = s_tile_get_objectlists(page->toplevel, page, wx, wy, wx, wy);
 
   for (iter1 = objectlists; iter1 != NULL; iter1 = g_list_next(iter1)) {
     for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {
@@ -198,7 +200,8 @@ void o_net_guess_direction(GschemToplevel *w_current,
 void o_net_find_magnetic(GschemToplevel *w_current,
 			 int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   int x1, x2, y1, y2, min_x, min_y, w_magnetic_reach;
   double mindist, minbest, dist1, dist2;
   double weight, min_weight;
@@ -206,6 +209,8 @@ void o_net_find_magnetic(GschemToplevel *w_current,
   OBJECT *o_current;
   OBJECT *o_magnetic = NULL;
   GList *objectlists, *iter1, *iter2;
+
+  g_return_if_fail (page != NULL);
 
   minbest = min_x = min_y = 0;
   min_weight = 0;
@@ -220,15 +225,15 @@ void o_net_find_magnetic(GschemToplevel *w_current,
   y1 = w_y - w_magnetic_reach;
   x2 = w_x + w_magnetic_reach;
   y2 = w_y + w_magnetic_reach;
-  objectlists = s_tile_get_objectlists(toplevel, toplevel->page_current,
-                                       x1, y1, x2, y2);
+
+  objectlists = s_tile_get_objectlists(page->toplevel, page, x1, y1, x2, y2);
 
   for (iter1 = objectlists; iter1 != NULL; iter1 = g_list_next(iter1)) {
     for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {
       int left, top, right, bottom;
       o_current = (OBJECT*) iter2->data;
 
-      if (!world_get_single_object_bounds(w_current->toplevel, o_current,
+      if (!world_get_single_object_bounds(page->toplevel, o_current,
                                           &left, &top, &right, &bottom) ||
           !visible (w_current, left, top, right, bottom))
 	continue; /* skip invisible objects */
@@ -455,7 +460,8 @@ void o_net_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   int primary_zero_length, secondary_zero_length;
   int found_primary_connection = FALSE;
   int save_wx, save_wy;
@@ -499,10 +505,10 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
 
   if (!primary_zero_length ) {
   /* create primary net */
-      new_net = o_net_new(toplevel, OBJ_NET, NET_COLOR,
+      new_net = o_net_new(page->toplevel, OBJ_NET, NET_COLOR,
                           w_current->first_wx, w_current->first_wy,
                           w_current->second_wx, w_current->second_wy);
-      s_page_append (toplevel, toplevel->page_current, new_net);
+      s_page_append (page->toplevel, page, new_net);
 
       added_objects = g_list_prepend (added_objects, new_net);
 
@@ -534,10 +540,10 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
   if (!secondary_zero_length && !found_primary_connection) {
 
       /* Add secondary net */
-      new_net = o_net_new(toplevel, OBJ_NET, NET_COLOR,
+      new_net = o_net_new(page->toplevel, OBJ_NET, NET_COLOR,
                           w_current->second_wx, w_current->second_wy,
                           w_current->third_wx, w_current->third_wy);
-      s_page_append (toplevel, toplevel->page_current, new_net);
+      s_page_append (page->toplevel, page, new_net);
 
       added_objects = g_list_prepend (added_objects, new_net);
 
@@ -560,7 +566,7 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
   w_current->first_wx = save_wx;
   w_current->first_wy = save_wy;
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, page);
   o_undo_savestate_old(w_current, UNDO_ALL);
 
   /* Continue net drawing */
@@ -736,7 +742,8 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
                          GList *prev_conn_objects)
 
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   OBJECT *new_obj;
   GList *cl_current = NULL;
   OBJECT *bus_object = NULL;
@@ -754,6 +761,8 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
   const int ripper_size = w_current->bus_ripper_size;
   int complex_angle = 0;
   const CLibSymbol *rippersym = NULL;
+
+  g_return_if_fail (page != NULL);
 
   length = o_line_length(net_obj);
 
@@ -1015,11 +1024,11 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
   }
 
   if (made_changes) {
-    s_conn_remove_object (toplevel, net_obj);
+    s_conn_remove_object (page->toplevel, net_obj);
 
     if (w_current->bus_ripper_type == COMP_BUS_RIPPER) {
       GList *symlist =
-	s_clib_search (toplevel->bus_ripper_symname, CLIB_EXACT);
+	s_clib_search (page->toplevel->bus_ripper_symname, CLIB_EXACT);
       if (symlist != NULL) {
         rippersym = (CLibSymbol *) symlist->data;
       }
@@ -1028,29 +1037,29 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
 
     for (i = 0; i < ripper_count; i++) {
       if (w_current->bus_ripper_type == NET_BUS_RIPPER) {
-        new_obj = o_net_new(toplevel, OBJ_NET, NET_COLOR,
+        new_obj = o_net_new(page->toplevel, OBJ_NET, NET_COLOR,
                   rippers[i].x[0], rippers[i].y[0],
                   rippers[i].x[1], rippers[i].y[1]);
-        s_page_append (toplevel, toplevel->page_current, new_obj);
+        s_page_append (page->toplevel, page, new_obj);
       } else {
 
         if (rippersym != NULL) {
-          new_obj = o_complex_new (toplevel, OBJ_COMPLEX, DEFAULT_COLOR,
+          new_obj = o_complex_new (page->toplevel, OBJ_COMPLEX, DEFAULT_COLOR,
                                    rippers[i].x[0], rippers[i].y[0],
                                    complex_angle, 0,
                                    rippersym,
-                                   toplevel->bus_ripper_symname, 1);
-          s_page_append_list (toplevel, toplevel->page_current,
-                              o_complex_promote_attribs (toplevel, new_obj));
-          s_page_append (toplevel, toplevel->page_current, new_obj);
+                                   page->toplevel->bus_ripper_symname, 1);
+          s_page_append_list (page->toplevel, page,
+                              o_complex_promote_attribs (page->toplevel, new_obj));
+          s_page_append (page->toplevel, page, new_obj);
         } else {
           s_log_message(_("Bus ripper symbol [%s] was not found in any component library\n"),
-                        toplevel->bus_ripper_symname);
+                        page->toplevel->bus_ripper_symname);
         }
       }
     }
 
-    s_conn_update_object (toplevel, net_obj);
+    s_conn_update_object (page->toplevel, net_obj);
     return(TRUE);
   }
 
