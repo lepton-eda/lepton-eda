@@ -405,14 +405,13 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
 void o_invalidate_rect (GschemToplevel *w_current,
                         int x1, int y1, int x2, int y2)
 {
-  g_return_if_fail (w_current != NULL);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
-  gschem_page_view_invalidate_screen_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_screen_rect (page_view,
                                            x1,
                                            y1,
                                            x2,
                                            y2);
-
 }
 
 
@@ -426,9 +425,9 @@ void o_invalidate_rect (GschemToplevel *w_current,
  */
 void o_invalidate_all (GschemToplevel *w_current)
 {
-  g_return_if_fail (w_current != NULL);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
-  gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (w_current->drawing_area));
+  gschem_page_view_invalidate_all (page_view);
 }
 
 
@@ -443,19 +442,18 @@ void o_invalidate_all (GschemToplevel *w_current)
  */
 void o_invalidate (GschemToplevel *w_current, OBJECT *object)
 {
-  if (w_current == NULL || w_current->drawing_area == NULL || w_current->dont_invalidate) return;
+  if (w_current == NULL || w_current->dont_invalidate) return;
 
   int left, top, bottom, right;
 
-  GschemPageView *view = GSCHEM_PAGE_VIEW (w_current->drawing_area);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
 
-  if (view->page == NULL) return;
+  g_return_if_fail (page != NULL);
 
-  TOPLEVEL *toplevel = view->page->toplevel;
-
-  if (world_get_single_object_bounds(toplevel, object, &left,  &top,
+  if (world_get_single_object_bounds(page->toplevel, object, &left,  &top,
                                                        &right, &bottom)) {
-    gschem_page_view_invalidate_world_rect (view,
+    gschem_page_view_invalidate_world_rect (page_view,
                                             left,
                                             top,
                                             right,
@@ -475,12 +473,15 @@ void o_invalidate (GschemToplevel *w_current, OBJECT *object)
  */
 void o_invalidate_glist (GschemToplevel *w_current, GList *list)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   int left, top, bottom, right;
 
-  if (world_get_object_glist_bounds (toplevel, list, &left,  &top,
+  g_return_if_fail (page != NULL);
+
+  if (world_get_object_glist_bounds (page->toplevel, list, &left,  &top,
                                                      &right, &bottom)) {
-    gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+    gschem_page_view_invalidate_world_rect (page_view,
                                             left,
                                             top,
                                             right,

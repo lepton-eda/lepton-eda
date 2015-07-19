@@ -37,7 +37,7 @@ a_zoom_box(GschemToplevel *w_current);
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- * 
+ *
  */
 /* dir is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are defined in globals.h */
 void
@@ -57,8 +57,8 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
   switch(dir) {
   case(ZOOM_IN):
     relativ_zoom_factor = (100.0 + w_current->zoom_gain) / 100.0;
-    break;	
-	
+    break;
+
   case(ZOOM_OUT):
     relativ_zoom_factor = 100.0 / (100.0 + w_current->zoom_gain);
     break;
@@ -69,10 +69,10 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
     break;
   }
 
-  /* calc center: either "mouse_to_world" or center=center or a 
+  /* calc center: either "mouse_to_world" or center=center or a
      virtual center if warp_cursor is disabled */
   if (w_current->zoom_with_pan == TRUE && selected_from == HOTKEY) {
-    if (!x_event_get_pointer_position(w_current, FALSE, 
+    if (!x_event_get_pointer_position(w_current, FALSE,
 				      &start_x, &start_y))
       return;
     if ( w_current->warp_cursor ) {
@@ -104,11 +104,11 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
                                 world_pan_center_y,
                                 relativ_zoom_factor);
 
-  /* Before warping the cursor, filter out any consecutive scroll events 
-   * from the event queue.  If the program receives more than one scroll 
-   * event before it can process the first one, then the globals mouse_x 
+  /* Before warping the cursor, filter out any consecutive scroll events
+   * from the event queue.  If the program receives more than one scroll
+   * event before it can process the first one, then the globals mouse_x
    * and mouse_y won't contain the proper mouse position,
-   * because the handler for the mouse moved event needs to 
+   * because the handler for the mouse moved event needs to
    * run first to set these values.
    */
   GdkEvent *topEvent = gdk_event_get();
@@ -121,8 +121,8 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
     gdk_event_free( topEvent );
     topEvent = gdk_event_get();
   }
-	
-  /* warp the cursor to the right position */ 
+
+  /* warp the cursor to the right position */
   if (w_current->warp_cursor) {
      gschem_page_view_WORLDtoSCREEN (page_view,
                                      world_pan_center_x, world_pan_center_y,
@@ -134,7 +134,7 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- * 
+ *
  */
 static void
 a_zoom_box(GschemToplevel *w_current)
@@ -156,13 +156,13 @@ a_zoom_box(GschemToplevel *w_current)
     s_log_message(_("Zoom too small!  Cannot zoom further.\n"));
     return;
   }
-	
+
   /*calc new zoomfactors and choose the smaller one*/
   zx = (double) abs(geometry->viewport_left - geometry->viewport_right) / abs(w_current->first_wx - w_current->second_wx);
   zy = (double) abs(geometry->viewport_top - geometry->viewport_bottom) / abs(w_current->first_wy - w_current->second_wy);
 
   relativ_zoom_factor = (zx < zy ? zx : zy);
-	
+
   /* calculate the center of the zoom box */
   world_pan_center_x = (w_current->first_wx + w_current->second_wx) / 2.0;
   world_pan_center_y = (w_current->first_wy + w_current->second_wy) / 2.0;
@@ -177,7 +177,7 @@ a_zoom_box(GschemToplevel *w_current)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- * 
+ *
  */
 void a_zoom_box_start(GschemToplevel *w_current, int w_x, int w_y)
 {
@@ -190,7 +190,7 @@ void a_zoom_box_start(GschemToplevel *w_current, int w_x, int w_y)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- * 
+ *
  */
 void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
 {
@@ -202,7 +202,7 @@ void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
   a_zoom_box(w_current);
 
   if (w_current->undo_panzoom) {
-    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY); 
+    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
 
   i_action_stop (w_current);
@@ -212,7 +212,7 @@ void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- * 
+ *
  */
 void a_zoom_box_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
@@ -234,9 +234,11 @@ void a_zoom_box_motion (GschemToplevel *w_current, int w_x, int w_y)
  */
 void a_zoom_box_invalidate_rubber (GschemToplevel *w_current)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+
   g_return_if_fail (w_current != NULL);
 
-  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->first_wx,
                                           w_current->first_wy,
                                           w_current->second_wx,
@@ -246,7 +248,7 @@ void a_zoom_box_invalidate_rubber (GschemToplevel *w_current)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- * 
+ *
  */
 void a_zoom_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
