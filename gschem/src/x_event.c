@@ -712,6 +712,9 @@ x_event_key (GschemPageView *page_view, GdkEventKey *event, GschemToplevel *w_cu
  *  \brief
  *  \par Function Description
  *
+ *  \param [in] widget The GschemPageView with the scroll event.
+ *  \param [in] event
+ *  \param [in] w_current
  */
 gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
                      GschemToplevel *w_current)
@@ -775,7 +778,7 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   }
 
   if (pan_xaxis) {
-    adj = gschem_page_view_get_hadjustment (GSCHEM_PAGE_VIEW (w_current->drawing_area));
+    adj = gschem_page_view_get_hadjustment (GSCHEM_PAGE_VIEW (widget));
     g_return_val_if_fail (adj != NULL, TRUE);
     gtk_adjustment_set_value(adj, min(adj->value + pan_direction *
                                         (adj->page_increment /
@@ -784,7 +787,7 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   }
 
   if (pan_yaxis) {
-    adj = gschem_page_view_get_vadjustment (GSCHEM_PAGE_VIEW (w_current->drawing_area));
+    adj = gschem_page_view_get_vadjustment (GSCHEM_PAGE_VIEW (widget));
     g_return_val_if_fail (adj != NULL, TRUE);
     gtk_adjustment_set_value(adj, min(adj->value + pan_direction *
                                         (adj->page_increment /
