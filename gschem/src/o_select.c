@@ -151,7 +151,7 @@ void o_select_run_hooks(GschemToplevel *w_current, OBJECT *o_current, int flag)
  *  \par Function Description
  *
  *  \note
- *  type can be either SINGLE meaning selection is a single mouse click 
+ *  type can be either SINGLE meaning selection is a single mouse click
  *      or it can be MULTIPLE meaning selection is a selection box
  */
 void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
@@ -165,7 +165,7 @@ void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
   SHIFTKEY = w_current->SHIFTKEY;
   CONTROLKEY = w_current->CONTROLKEY;
 
-#if DEBUG 
+#if DEBUG
   printf("OBJECT id: %d\n", o_current->sid);
 #endif
 
@@ -230,7 +230,7 @@ void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
             o_select_run_hooks( w_current, o_current, 1 );
             o_selection_add (toplevel,
                              toplevel->page_current->selection_list, o_current);
-          }	
+          }
 
           /* condition: doing single object add */
           /* condition: control key not pressed */
@@ -252,7 +252,7 @@ void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
           }
 
           break;
-      } 
+      }
       break; /* end object selected switch */
   }
 
@@ -289,6 +289,7 @@ void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
  */
 void o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   int diff_x, diff_y, dist;
 
   diff_x = abs(w_current->first_wx - w_x);
@@ -296,7 +297,7 @@ void o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
 
   /* if we are still close to the button press location,
      then don't enter the selection box mode */
-  dist = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), max(diff_x, diff_y));
+  dist = gschem_page_view_SCREENabs (page_view, max(diff_x, diff_y));
 
   if (dist >= 10) {
     w_current->second_wx = w_x;
@@ -336,8 +337,8 @@ void o_select_box_motion (GschemToplevel *w_current, int w_x, int w_y)
 
   if (w_current->rubber_visible)
     o_select_box_invalidate_rubber (w_current);
-    
-  w_current->second_wx = w_x; 
+
+  w_current->second_wx = w_x;
   w_current->second_wy = w_y;
 
   o_select_box_invalidate_rubber (w_current);
@@ -350,9 +351,11 @@ void o_select_box_motion (GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_select_box_invalidate_rubber (GschemToplevel *w_current)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+
   g_return_if_fail (w_current != NULL);
 
-  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->first_wx,
                                           w_current->first_wy,
                                           w_current->second_wx,
@@ -383,7 +386,7 @@ void o_select_box_search(GschemToplevel *w_current)
   int CONTROLKEY = w_current->CONTROLKEY;
   int left, right, top, bottom;
   const GList *iter;
-	
+
   left = min(w_current->first_wx, w_current->second_wx);
   right = max(w_current->first_wx, w_current->second_wx);
   top = min(w_current->first_wy, w_current->second_wy);
@@ -458,14 +461,14 @@ void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_net)
   /* the current net is the startpoint for the stack */
   netstack = g_list_prepend(netstack, o_net);
 
-  count = 0; 
+  count = 0;
   while (1) {
     netnameiter = g_list_last(netnamestack);
     for (iter1 = g_list_last(netstack);
-	 iter1 != NULL; 
+	 iter1 != NULL;
 	 iter1 = g_list_previous(iter1), count++) {
       o_current = iter1->data;
-      if (o_current->type == OBJ_NET && 
+      if (o_current->type == OBJ_NET &&
 	  (!o_current->selected || count == 0)) {
 	o_select_object (w_current, o_current, SINGLE, count);
 	if (w_current->net_selection_state > 1) {
@@ -522,7 +525,7 @@ void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_net)
 }
 
 /* This is a wrapper for o_selection_return_first_object */
-/* This function always looks at the current page selection list */ 
+/* This function always looks at the current page selection list */
 OBJECT *o_select_return_first_object(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
