@@ -694,17 +694,18 @@ o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer)
  */
 void o_net_invalidate_rubber (GschemToplevel *w_current)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   int size = 0, magnetic_halfsize;
   int magnetic_x, magnetic_y;
   gboolean magnetic_net_mode;
 
   g_return_if_fail (w_current != NULL);
 
-  gschem_page_view_WORLDtoSCREEN (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_WORLDtoSCREEN (page_view,
                                   w_current->magnetic_wx, w_current->magnetic_wy,
                                   &magnetic_x, &magnetic_y);
 
-  size = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), NET_WIDTH);
+  size = gschem_page_view_SCREENabs (page_view, NET_WIDTH);
 
   magnetic_net_mode = gschem_options_get_magnetic_net_mode (w_current->options);
 
@@ -719,13 +720,13 @@ void o_net_invalidate_rubber (GschemToplevel *w_current)
     }
   }
 
-  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->first_wx,
                                           w_current->first_wy,
                                           w_current->second_wx,
                                           w_current->second_wy);
 
-  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->second_wx,
                                           w_current->second_wy,
                                           w_current->third_wx,
