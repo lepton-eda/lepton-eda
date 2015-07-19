@@ -30,11 +30,13 @@
  */
 void o_arc_invalidate_rubber (GschemToplevel *w_current)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+
   g_return_if_fail (w_current != NULL);
 
   /* FIXME: This isn't a tight bounding box */
 
-  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->first_wx - w_current->distance,
                                           w_current->first_wy - w_current->distance,
                                           w_current->first_wx + w_current->distance,
