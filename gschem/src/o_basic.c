@@ -449,7 +449,10 @@ void o_invalidate (GschemToplevel *w_current, OBJECT *object)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   PAGE *page = gschem_page_view_get_page (page_view);
 
-  g_return_if_fail (page != NULL);
+  /* this function may be called before a page is created */
+  if (page == NULL) {
+    return;
+  }
 
   if (world_get_single_object_bounds(page->toplevel, object, &left,  &top,
                                                        &right, &bottom)) {
