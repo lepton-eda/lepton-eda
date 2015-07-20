@@ -406,7 +406,6 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
-  if (!w_current->window) return;
 
   if (GTK_TOGGLE_BUTTON (widget)->active) {
     if (!o_invalidate_rubber (w_current)) {
@@ -2714,8 +2713,10 @@ DEFINE_I_CALLBACK(cancel)
   /* Free the place list and its contents. If we were in a move
    * action, the list (refering to objects on the page) would
    * already have been cleared in o_move_cancel(), so this is OK. */
-  s_delete_object_glist(toplevel, toplevel->page_current->place_list);
-  toplevel->page_current->place_list = NULL;
+  if (toplevel->page_current != NULL) {
+    s_delete_object_glist(toplevel, toplevel->page_current->place_list);
+    toplevel->page_current->place_list = NULL;
+  }
 
   /* leave this on for now... but it might have to change */
   /* this is problematic since we don't know what the right mode */

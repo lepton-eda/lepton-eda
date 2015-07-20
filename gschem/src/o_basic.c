@@ -427,6 +427,11 @@ void o_invalidate_all (GschemToplevel *w_current)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
+  /* this function can be called early during initialization */
+  if (page_view == NULL) {
+    return;
+  }
+
   gschem_page_view_invalidate_all (page_view);
 }
 
