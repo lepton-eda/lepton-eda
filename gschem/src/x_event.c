@@ -66,6 +66,8 @@ x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_cu
 
     o_redraw_rects (w_current,
                     cr,
+                    gtk_widget_get_window (GTK_WIDGET(view)),
+                    gschem_page_view_get_gc (view),
                     page,
                     geometry,
                     &(event->area),
@@ -593,8 +595,6 @@ x_event_configure (GschemPageView    *page_view,
     /* nothing to do here */
     return FALSE;
   }
-
-  w_current->drawable = w_current->window;
 
   /* update the GschemToplevel with new size of drawing area */
   w_current->win_width   = new_win_width;

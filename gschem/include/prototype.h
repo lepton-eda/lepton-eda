@@ -394,7 +394,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object);
 void o_attrib_toggle_show_name_value(GschemToplevel *w_current, OBJECT *object, int new_show_name_value);
 OBJECT *o_attrib_add_attrib(GschemToplevel *w_current, const char *text_string, int visibility, int show_name_value, OBJECT *object);
 /* o_basic.c */
-void o_redraw_rects(GschemToplevel *w_current, cairo_t *cr, PAGE *page, GschemPageGeometry *geometry, GdkRectangle *rectangles, int n_rectangles);
+void o_redraw_rects(GschemToplevel *w_current, cairo_t *cr, GdkDrawable *drawable, GdkGC *gc, PAGE *page, GschemPageGeometry *geometry, GdkRectangle *rectangles, int n_rectangles);
 int o_invalidate_rubber(GschemToplevel *w_current);
 int o_redraw_cleanstates(GschemToplevel *w_current);
 void o_draw_place(GschemToplevel *w_current, int dx, int dy, OBJECT *object);
@@ -589,7 +589,7 @@ void attrib_edit_dialog(GschemToplevel *w_current, OBJECT *attr_obj, int flag);
 /* x_autonumber.c */
 void autonumber_text_dialog(GschemToplevel *w_current);
 /* x_basic.c */
-void x_repaint_background_region(GschemToplevel *w_current, cairo_t *cr, int x, int y, int width, int height);
+void x_repaint_background_region(GschemToplevel *w_current, cairo_t *cr, GdkDrawable *drawable, GdkGC *gc, int x, int y, int width, int height);
 void x_basic_warp_cursor(GtkWidget *widget, gint x, gint y);
 /* x_clipboard.c */
 void x_clipboard_init (GschemToplevel *w_current);
@@ -675,7 +675,7 @@ gboolean x_fstylecb_get_use1 (GtkWidget *widget);
 gboolean x_fstylecb_get_use2 (GtkWidget *widget);
 void x_fstylecb_set_index (GtkWidget *widget, int style);
 /* x_grid.c */
-void x_grid_draw_region(GschemToplevel *w_current, cairo_t *cr, int x, int y, int width, int height);
+void x_grid_draw_region(GschemToplevel *w_current, cairo_t *cr, GdkDrawable *drawable, GdkGC *gc, int x, int y, int width, int height);
 int x_grid_query_drawn_spacing(GschemToplevel *w_current);
 void x_draw_tiles(GschemToplevel *w_current, cairo_t *cr);
 /* x_image.c */
@@ -742,8 +742,6 @@ void x_stroke_record (GschemToplevel *w_current, gint x, gint y);
 gint x_stroke_translate_and_execute (GschemToplevel *w_current);
 /* x_window.c */
 void x_window_setup (GschemToplevel *w_current);
-void x_window_setup_gc(GschemToplevel *w_current);
-void x_window_free_gc(GschemToplevel *w_current);
 void x_window_create_drawing(GtkWidget *drawbox, GschemToplevel *w_current);
 void x_window_setup_draw_events(GschemToplevel *w_current);
 void x_window_create_main(GschemToplevel *w_current);

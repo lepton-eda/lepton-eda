@@ -94,18 +94,9 @@ struct st_gschem_toplevel {
   double pixbuf_wh_ratio;               /* width/height ratio of the pixbuf */
   char *pixbuf_filename;
 
-
-  /* ---------------- */
-  /* graphics context */
-  /* ---------------- */
-  GdkGC *gc;
-
   /* ---------------- */
   /* Drawing surfaces */
   /* ---------------- */
-  GdkWindow *window;                    /* drawing_area's X drawable */
-  GdkPixmap *drawable;                  /* drawable to paint onto */
-
   int win_width, win_height;            /* Actual size of window (?) */
 
   int background_color;

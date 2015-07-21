@@ -31,6 +31,8 @@
  */
 void x_repaint_background_region (GschemToplevel *w_current,
                                   cairo_t *cr,
+                                  GdkDrawable *drawable,
+                                  GdkGC *gc,
                                   int x, int y, int width, int height)
 {
   GdkColor *color = x_get_color (w_current->background_color);
@@ -42,7 +44,7 @@ void x_repaint_background_region (GschemToplevel *w_current,
 
   cairo_paint (cr);
 
-  x_grid_draw_region (w_current, cr, x, y, width, height);
+  x_grid_draw_region (w_current, cr, drawable, gc, x, y, width, height);
 }
 
 /*! \todo Finish function documentation!!!

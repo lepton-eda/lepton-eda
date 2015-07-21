@@ -169,10 +169,48 @@ dispose (GObject *object)
     gschem_page_view_set_page (view, NULL);
   }
 
+  if (view->gc != NULL) {
+    gdk_gc_unref (view->gc);
+    view->gc = NULL;
+  }
+
   /* lastly, chain up to the parent dispose */
 
   g_return_if_fail (gschem_page_view_parent_class != NULL);
   gschem_page_view_parent_class->dispose (object);
+}
+
+
+
+/*! \brief Event handler for window realized
+ */
+static void
+event_realize(GtkWidget *widget, gpointer unused)
+{
+  GschemPageView *view = GSCHEM_PAGE_VIEW(widget);
+  GdkWindow *window = gtk_widget_get_window (widget);
+
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (window != NULL);
+
+  view->gc = gdk_gc_new (window);
+}
+
+
+
+/*! \brief Event handler for window unrealized
+ */
+static void
+event_unrealize(GtkWidget *widget, gpointer unused)
+{
+  GschemPageView *view = GSCHEM_PAGE_VIEW(widget);
+
+  g_return_if_fail (view != NULL);
+
+  if (view->gc != NULL) {
+    gdk_gc_unref (view->gc);
+    view->gc = NULL;
+  }
 }
 
 
@@ -302,6 +340,21 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
     g_cclosure_marshal_VOID__VOID,
     G_TYPE_NONE,
     0);
+}
+
+
+
+/*! \brief Get a graphics context for this view
+ *
+ *  \param [in] view The view
+ *  \return The graphics context, or NULL if the window is not realized
+ */
+GdkGC*
+gschem_page_view_get_gc (GschemPageView *view)
+{
+  g_return_val_if_fail (view != NULL, NULL);
+
+  return view->gc;
 }
 
 
@@ -601,6 +654,16 @@ gschem_page_view_init (GschemPageView *view)
                     "set-scroll-adjustments",
                     G_CALLBACK (set_scroll_adjustments),
                     NULL);
+
+  g_signal_connect(view,
+                   "realize",
+                   G_CALLBACK (event_realize),
+                   NULL);
+
+  g_signal_connect(view,
+                   "unrealize",
+                   G_CALLBACK (event_unrealize),
+                   NULL);
 }
 
 

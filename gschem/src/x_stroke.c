@@ -89,6 +89,9 @@ x_stroke_free (void)
 void
 x_stroke_record (GschemToplevel *w_current, gint x, gint y)
 {
+  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  GdkGC *view_gc = gschem_page_view_get_gc (view);
+
   g_assert (stroke_points != NULL);
 
   stroke_record (x, y);
@@ -98,8 +101,8 @@ x_stroke_record (GschemToplevel *w_current, gint x, gint y)
 
     g_array_append_val (stroke_points, point);
 
-    gdk_gc_set_foreground (w_current->gc, x_get_color (STROKE_COLOR));
-    gdk_draw_point (w_current->window, w_current->gc, x, y);
+    gdk_gc_set_foreground (view_gc, x_get_color (STROKE_COLOR));
+    gdk_draw_point (w_current->window, view_gc, x, y);
   }
 
 }

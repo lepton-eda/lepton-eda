@@ -63,31 +63,6 @@ void x_window_setup (GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-void x_window_setup_gc(GschemToplevel *w_current)
-{
-  w_current->gc = gdk_gc_new(w_current->window);
-
-  if (w_current->gc == NULL) {
-    fprintf(stderr, _("Couldn't allocate gc\n"));
-    exit(-1);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_window_free_gc(GschemToplevel *w_current)
-{
-  gdk_gc_unref(w_current->gc);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
 {
   /* drawing next */
@@ -239,9 +214,6 @@ void x_window_create_main(GschemToplevel *w_current)
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
   char *right_button_text;
-
-  /* used to signify that the window isn't mapped yet */
-  w_current->window = NULL;
 
   w_current->main_window = GTK_WIDGET (gschem_main_window_new ());
 
@@ -463,12 +435,6 @@ void x_window_create_main(GschemToplevel *w_current)
   gtk_box_pack_start (GTK_BOX (main_box), w_current->bottom_widget, FALSE, FALSE, 0);
 
   gtk_widget_show_all (w_current->main_window);
-
-  w_current->window = w_current->drawing_area->window;
-
-  w_current->drawable = w_current->window;
-
-  x_window_setup_gc(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -562,8 +528,6 @@ void x_window_close(GschemToplevel *w_current)
     /* free the buffers */
     o_buffer_free (w_current);
   }
-
-  x_window_free_gc(w_current);
 
   /* Clear Guile smob weak ref */
   if (w_current->smob != SCM_UNDEFINED) {

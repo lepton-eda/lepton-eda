@@ -38,6 +38,8 @@ extern COLOR display_outline_colors[MAX_COLORS];
  */
 void o_redraw_rects (GschemToplevel *w_current,
                      cairo_t *cr,
+                     GdkDrawable *drawable,
+                     GdkGC *gc,
                      PAGE *page,
                      GschemPageGeometry *geometry,
                      GdkRectangle *rectangles,
@@ -68,7 +70,7 @@ void o_redraw_rects (GschemToplevel *w_current,
   cairo_set_matrix (cr, gschem_page_geometry_get_world_to_screen_matrix (geometry));
 
   for (i = 0; i < n_rectangles; i++) {
-    x_repaint_background_region (w_current, cr, rectangles[i].x, rectangles[i].y,
+    x_repaint_background_region (w_current, cr, drawable, gc, rectangles[i].x, rectangles[i].y,
                                  rectangles[i].width, rectangles[i].height);
   }
 

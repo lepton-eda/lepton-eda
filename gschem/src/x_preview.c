@@ -95,15 +95,10 @@ preview_callback_realize (GtkWidget *widget,
   TOPLEVEL *preview_toplevel = preview_page->toplevel;
   g_return_if_fail (preview_toplevel != NULL);
 
-  preview_w_current->window = preview_w_current->drawing_area->window;
   gtk_widget_grab_focus (preview_w_current->drawing_area);
 
   preview_w_current->win_width  = preview_w_current->drawing_area->allocation.width;
   preview_w_current->win_height = preview_w_current->drawing_area->allocation.height;
-
-  preview_w_current->drawable = preview_w_current->window;
-
-  x_window_setup_gc (preview_w_current);
 
   gschem_page_view_zoom_extents (preview_view, NULL);
 }
@@ -463,8 +458,6 @@ preview_dispose (GObject *self)
 
   if (preview_w_current != NULL) {
     preview_w_current->drawing_area = NULL;
-
-    x_window_free_gc (preview_w_current);
 
     gschem_toplevel_free (preview_w_current);
 

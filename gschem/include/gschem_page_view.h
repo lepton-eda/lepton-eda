@@ -41,6 +41,8 @@ struct _GschemPageView
 {
   GtkWindow parent;
 
+  GdkGC *gc;
+
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
 
@@ -57,6 +59,9 @@ struct _GschemPageView
 };
 
 
+
+GdkGC*
+gschem_page_view_get_gc (GschemPageView *view);
 
 GtkAdjustment*
 gschem_page_view_get_hadjustment (GschemPageView *view);

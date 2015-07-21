@@ -513,6 +513,7 @@ static void x_image_convert_to_greyscale(GdkPixbuf *pixbuf)
 GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
 {
   GdkPixbuf *pixbuf;
+  GschemPageView *page_view;
   int origin_x, origin_y, bottom, right;
   int size_x, size_y;
   GschemToplevel new_w_current;
@@ -521,8 +522,10 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   GdkRectangle rect;
   GschemPageGeometry *old_geometry, *new_geometry;
   cairo_t *cr;
+  GdkPixmap *window = NULL;
 
-  old_geometry = gschem_page_view_get_page_geometry (gschem_toplevel_get_current_page_view (w_current));
+  page_view = gschem_toplevel_get_current_page_view (w_current);
+  old_geometry = gschem_page_view_get_page_geometry (page_view);
 
   /* Do a copy of the w_current struct and work with it */
   memcpy(&new_w_current, w_current, sizeof(GschemToplevel));
@@ -537,9 +540,8 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   size_x = new_w_current.image_width;
   size_y = new_w_current.image_height;
 
-  new_w_current.window = gdk_pixmap_new (w_current->window, size_x, size_y, -1);
-  new_w_current.drawable = new_w_current.window;
-  cr = gdk_cairo_create (new_w_current.window);
+  window = gdk_pixmap_new (gtk_widget_get_window (GTK_WIDGET(page_view)), size_x, size_y, -1);
+  cr = gdk_cairo_create (window);
 
   gschem_options_set_grid_mode (new_w_current.options, GRID_MODE_NONE);
 
@@ -572,12 +574,19 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
                                                    toplevel.init_right,
                                                    toplevel.init_bottom);
 
-  o_redraw_rects (&new_w_current, cr, toplevel.page_current, new_geometry, &rect, 1);
+  o_redraw_rects (&new_w_current,
+                  cr,
+                  window,
+                  NULL,
+                  toplevel.page_current,
+                  new_geometry,
+                  &rect,
+                  1);
 
   gschem_page_geometry_free (new_geometry);
 
   /* Get the pixbuf */
-  pixbuf = gdk_pixbuf_get_from_drawable (NULL,new_w_current.drawable, NULL,
+  pixbuf = gdk_pixbuf_get_from_drawable (NULL, window, NULL,
                                         origin_x, origin_y, 0, 0,
                                         right-origin_x,
                                         bottom-origin_y);
@@ -589,8 +598,8 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
 
   cairo_destroy (cr);
 
-  if (new_w_current.window != NULL) {
-    g_object_unref(new_w_current.window);
+  if (window != NULL) {
+    g_object_unref(window);
   }
 
   return(pixbuf);

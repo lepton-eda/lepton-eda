@@ -41,6 +41,7 @@ int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
                                 int *max_x, int *max_y)
 {
   GschemToplevel *w_current = (GschemToplevel *) user_data;
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   TOPLEVEL *toplevel;
   EdaRenderer *renderer;
   cairo_t *cr;
@@ -51,7 +52,7 @@ int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
   g_return_val_if_fail ((w_current != NULL), FALSE);
   toplevel = gschem_toplevel_get_toplevel (w_current);
 
-  cr = gdk_cairo_create (w_current->drawable);
+  cr = gdk_cairo_create (gtk_widget_get_window (GTK_WIDGET(page_view)));
 
   /* Set up renderer based on configuration in w_current. Note that we
    * *don't* enable hinting, because if its enabled the calculated

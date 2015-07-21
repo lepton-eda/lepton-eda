@@ -88,6 +88,8 @@ static int query_dots_grid_spacing (GschemToplevel *w_current)
 zz *  \param [in] height     The height of the region to draw.
  */
 static void draw_dots_grid_region (GschemToplevel *w_current,
+                                   GdkDrawable *drawable,
+                                   GdkGC *gc,
                                    int x, int y, int width, int height)
 {
   int i, j;
@@ -101,10 +103,10 @@ static void draw_dots_grid_region (GschemToplevel *w_current,
   if (incr == -1)
     return;
 
-  gdk_gc_set_foreground (w_current->gc, x_get_color (DOTS_GRID_COLOR));
-
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+
+  gdk_gc_set_foreground (gc, x_get_color (DOTS_GRID_COLOR));
 
   gschem_page_view_SCREENtoWORLD (view, x - 1, y + height + 1, &x_start, &y_start);
   gschem_page_view_SCREENtoWORLD (view, x + width + 1, y - 1, &x_end, &y_end);
@@ -130,12 +132,11 @@ static void draw_dots_grid_region (GschemToplevel *w_current,
 
           /* get out of loop if we're hit the end of the array */
           if (count == DOTS_POINTS_ARRAY_SIZE) {
-            gdk_draw_points (w_current->drawable,
-                             w_current->gc, points, count);
+            gdk_draw_points (drawable, gc, points, count);
             count = 0;
           }
         } else {
-          gdk_draw_arc (w_current->drawable, w_current->gc,
+          gdk_draw_arc (drawable, gc,
                         TRUE, dot_x, dot_y,
                         w_current->dots_grid_dot_size,
                         w_current->dots_grid_dot_size, 0, FULL_CIRCLE);
@@ -146,7 +147,7 @@ static void draw_dots_grid_region (GschemToplevel *w_current,
 
   /* now draw all the points in one step */
   if(count != 0) {
-    gdk_draw_points (w_current->drawable, w_current->gc, points, count);
+    gdk_draw_points (drawable, gc, points, count);
   }
 }
 
@@ -352,6 +353,8 @@ draw_mesh_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int
  */
 void x_grid_draw_region (GschemToplevel *w_current,
                          cairo_t *cr,
+                         GdkDrawable *drawable,
+                         GdkGC *gc,
                          int x,
                          int y,
                          int width,
@@ -368,7 +371,7 @@ void x_grid_draw_region (GschemToplevel *w_current,
       return;
 
     case GRID_MODE_DOTS:
-      draw_dots_grid_region (w_current, x, y, width, height);
+      draw_dots_grid_region (w_current, drawable, gc, x, y, width, height);
       break;
 
     case GRID_MODE_MESH:
