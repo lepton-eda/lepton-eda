@@ -28,7 +28,7 @@
 #define GET_BOX_HEIGHT(w) abs((w)->second_wy - (w)->first_wy)
 
 #define GET_PICTURE_WIDTH(w)			\
-  abs((w)->second_wx - (w)->first_wx) 
+  abs((w)->second_wx - (w)->first_wx)
 #define GET_PICTURE_HEIGHT(w)						\
   (w)->pixbuf_wh_ratio == 0 ? 0 : abs((w)->second_wx - (w)->first_wx)/(w)->pixbuf_wh_ratio
 #define GET_PICTURE_LEFT(w)			\
@@ -62,6 +62,7 @@
  */
 OBJECT *o_grips_search_world(GschemToplevel *w_current, int x, int y, int *whichone)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *object=NULL;
   OBJECT *found=NULL;
@@ -75,7 +76,7 @@ OBJECT *o_grips_search_world(GschemToplevel *w_current, int x, int y, int *which
 
   /* get the size of the grip according to zoom level */
   size = GRIP_SIZE / 2;
-  w_size = WORLDabs (w_current, size );
+  w_size = gschem_page_view_WORLDabs (page_view, size);
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   while (s_current != NULL) {
@@ -735,25 +736,25 @@ static void o_grips_start_picture(GschemToplevel *w_current, OBJECT *o_current,
     case PICTURE_UPPER_LEFT:
       w_current->second_wx = o_current->picture->upper_x;
       w_current->second_wy = o_current->picture->upper_y;
-      w_current->first_wx = o_current->picture->lower_x; 
+      w_current->first_wx = o_current->picture->lower_x;
       w_current->first_wy = o_current->picture->lower_y;
       break;
     case PICTURE_LOWER_RIGHT:
       w_current->second_wx = o_current->picture->lower_x;
       w_current->second_wy = o_current->picture->lower_y;
-      w_current->first_wx = o_current->picture->upper_x; 
+      w_current->first_wx = o_current->picture->upper_x;
       w_current->first_wy = o_current->picture->upper_y;
       break;
     case PICTURE_UPPER_RIGHT:
       w_current->second_wx = o_current->picture->lower_x;
       w_current->second_wy = o_current->picture->upper_y;
-      w_current->first_wx = o_current->picture->upper_x; 
+      w_current->first_wx = o_current->picture->upper_x;
       w_current->first_wy = o_current->picture->lower_y;
       break;
     case PICTURE_LOWER_LEFT:
       w_current->second_wx = o_current->picture->upper_x;
       w_current->second_wy = o_current->picture->lower_y;
-      w_current->first_wx = o_current->picture->lower_x; 
+      w_current->first_wx = o_current->picture->lower_x;
       w_current->first_wy = o_current->picture->upper_y;
       break;
     default:
@@ -1108,7 +1109,7 @@ static void o_grips_end_picture(GschemToplevel *w_current, OBJECT *o_current,
     return;
   }
 
-  o_picture_modify(toplevel, o_current, 
+  o_picture_modify(toplevel, o_current,
 		   w_current->second_wx, w_current->second_wy, whichone);
 
   g_object_unref (w_current->current_pixbuf);
@@ -1183,7 +1184,7 @@ static void o_grips_end_line(GschemToplevel *w_current, OBJECT *o_current,
   }
 
   /* modify the right line end according to whichone */
-  o_line_modify(toplevel, o_current, 
+  o_line_modify(toplevel, o_current,
 		w_current->second_wx, w_current->second_wy, whichone);
 }
 

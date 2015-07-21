@@ -754,8 +754,8 @@ gschem_page_view_pan_mouse (GschemPageView *view, GschemToplevel *w_current, int
   page_cx = (gschem_page_geometry_get_viewport_left (geometry) + gschem_page_geometry_get_viewport_right (geometry)) / 2.0;
   page_cy = (gschem_page_geometry_get_viewport_top (geometry) + gschem_page_geometry_get_viewport_bottom (geometry)) / 2.0;
 
-  world_cx = page_cx - WORLDabs (w_current, diff_x);
-  world_cy = page_cy + WORLDabs (w_current, diff_y);
+  world_cx = page_cx - gschem_page_view_WORLDabs (view, diff_x);
+  world_cy = page_cy + gschem_page_view_WORLDabs (view, diff_y);
 
 #if DEBUG
   printf("  world_cx=%f, world_cy=%f\n", world_cx, world_cy);
@@ -1138,6 +1138,42 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
     gtk_adjustment_changed(view->vadjustment);
     gtk_adjustment_value_changed (view->vadjustment);
   }
+}
+
+
+/*! \brief Get absolute WORLD coordinate.
+ *  \par Function Description
+ *  Get absolute WORLD coordinate.
+ *
+ *  \param [in,out] view The view
+ *  \param [in]     val        The coordinate to convert.
+ *  \return The converted WORLD coordinate.
+ */
+int
+gschem_page_view_WORLDabs(GschemPageView *page_view, int val)
+{
+  GtkAllocation allocation;
+  double fw0,fw1,fw,fval;
+  double i;
+  int j;
+
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (page_view);
+
+  gtk_widget_get_allocation (GTK_WIDGET(page_view), &allocation);
+
+  fw1 = geometry->viewport_right;
+  fw0 = geometry->viewport_left;
+  fw  = allocation.width;
+  fval = val;
+  i = fval * (fw1 - fw0) / fw;
+
+#ifdef HAS_RINT
+  j = rint(i);
+#else
+  j = i;
+#endif
+
+  return(j);
 }
 
 

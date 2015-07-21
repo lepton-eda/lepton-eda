@@ -127,11 +127,12 @@ find_single_object (GschemToplevel *w_current, OBJECT *object,
 gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
                         gboolean change_selection)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int w_slack;
   const GList *iter = NULL;
 
-  w_slack = WORLDabs (w_current, w_current->select_slack_pixels);
+  w_slack = gschem_page_view_WORLDabs (page_view, w_current->select_slack_pixels);
 
   /* Decide whether to iterate over all object or start at the last
      found object. If there is more than one object below the
@@ -171,8 +172,8 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
   /* didn't find anything.... reset lastplace */
   toplevel->page_current->object_lastplace = NULL;
 
-  /* deselect everything only if shift key isn't pressed and 
-     the caller allows it */	
+  /* deselect everything only if shift key isn't pressed and
+     the caller allows it */
   if (change_selection && (!w_current->SHIFTKEY)) {
     o_select_unselect_all (w_current);
   }
@@ -189,8 +190,9 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
 gboolean
 o_find_selected_object (GschemToplevel *w_current, int w_x, int w_y)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  int w_slack = WORLDabs (w_current, w_current->select_slack_pixels);
+  int w_slack = gschem_page_view_WORLDabs (page_view, w_current->select_slack_pixels);
   GList *s_current;
 
   for (s_current = geda_list_get_glist (toplevel->page_current->selection_list);

@@ -374,7 +374,6 @@ void i_vars_init_gschem_defaults (void);
 void i_vars_atexit_save_user_config (gpointer user_data);
  /* m_basic.c */
 int snap_grid(GschemToplevel *w_current, int input);
-int WORLDabs(GschemToplevel *w_current, int val);
 int WORLDclip_change(GschemToplevel *w_current, int *x1, int *y1, int *x2, int *y2);
 int clip_nochange(GschemPageGeometry *geometry, int x1, int y1, int x2, int y2);
 int visible(GschemToplevel *w_current, int wleft, int wtop, int wright, int wbottom);

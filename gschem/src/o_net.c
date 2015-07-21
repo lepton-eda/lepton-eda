@@ -218,7 +218,7 @@ void o_net_find_magnetic(GschemToplevel *w_current,
   /* max distance of all the different reaches */
   magnetic_reach = max(MAGNETIC_PIN_REACH, MAGNETIC_NET_REACH);
   magnetic_reach = max(magnetic_reach, MAGNETIC_BUS_REACH);
-  w_magnetic_reach = WORLDabs (w_current, magnetic_reach);
+  w_magnetic_reach = gschem_page_view_WORLDabs (page_view, magnetic_reach);
 
   /* get the objects of the tiles around the reach region */
   x1 = w_x - w_magnetic_reach;
@@ -318,7 +318,7 @@ void o_net_find_magnetic(GschemToplevel *w_current,
     case (OBJ_NET): magnetic_reach = MAGNETIC_NET_REACH; break;
     case (OBJ_BUS): magnetic_reach = MAGNETIC_BUS_REACH; break;
     }
-    if (minbest > WORLDabs (w_current, magnetic_reach)) {
+    if (minbest > gschem_page_view_WORLDabs (page_view, magnetic_reach)) {
       w_current->magnetic_wx = -1;
       w_current->magnetic_wy = -1;
     }
@@ -651,6 +651,7 @@ void o_net_motion (GschemToplevel *w_current, int w_x, int w_y)
 void
 o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   int size = NET_WIDTH, w_magnetic_halfsize;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);
   GArray *color_map = eda_renderer_get_color_map (renderer);
@@ -666,7 +667,7 @@ o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer)
   if (magnetic_net_mode) {
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
       w_magnetic_halfsize = max (4 * size,
-                                 WORLDabs (w_current, MAGNETIC_HALFSIZE));
+                                 gschem_page_view_WORLDabs (page_view, MAGNETIC_HALFSIZE));
       eda_cairo_arc (cr, flags, size,
                      w_current->magnetic_wx, w_current->magnetic_wy,
                      w_magnetic_halfsize, 0, 360);

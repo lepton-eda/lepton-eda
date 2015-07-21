@@ -67,37 +67,6 @@ int snap_grid(GschemToplevel *w_current, int input)
   return(sign*n);
 }
 
-/*! \brief Get absolute WORLD coordinate.
- *  \par Function Description
- *  Get absolute WORLD coordinate.
- *
- *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] val        The coordinate to convert.
- *  \return The converted WORLD coordinate.
- */
-int WORLDabs(GschemToplevel *w_current, int val)
-{
-  double fw0,fw1,fw,fval;
-
-  double i;
-  int j;
-
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (gschem_toplevel_get_current_page_view (w_current));
-
-  fw1 = geometry->viewport_right;
-  fw0 = geometry->viewport_left;
-  fw  = w_current->win_width;
-  fval = val;
-  i = fval * (fw1 - fw0) / fw;
-
-#ifdef HAS_RINT
-  j = rint(i);
-#else
-  j = i;
-#endif
-
-  return(j);
-}
 
 
 /*! \brief */
