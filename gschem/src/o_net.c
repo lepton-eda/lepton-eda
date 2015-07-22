@@ -764,7 +764,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
   int complex_angle = 0;
   const CLibSymbol *rippersym = NULL;
 
-  g_return_if_fail (page != NULL);
+  g_return_val_if_fail (page != NULL, FALSE);
 
   length = o_line_length(net_obj);
 
