@@ -566,10 +566,11 @@ x_event_configure (GschemPageView    *page_view,
                    GdkEventConfigure *event,
                    gpointer           user_data)
 {
+  PAGE *p_current = gschem_page_view_get_page (page_view);
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data);
 
-  PAGE *p_current = page_view->page;
   if (p_current == NULL) {
+    /* don't want to call this if the current page isn't setup yet */
     return FALSE;
   }
 
@@ -578,11 +579,6 @@ x_event_configure (GschemPageView    *page_view,
 
   GList *iter;
   gint old_win_width, old_win_height, new_win_width, new_win_height;
-
-  if (gschem_page_view_get_page (page_view) == NULL) {
-    /* don't want to call this if the current page isn't setup yet */
-    return FALSE;
-  }
 
   old_win_width  = w_current->win_width;
   old_win_height = w_current->win_height;
