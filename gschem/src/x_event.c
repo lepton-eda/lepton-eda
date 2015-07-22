@@ -566,6 +566,7 @@ x_event_configure (GschemPageView    *page_view,
                    GdkEventConfigure *event,
                    gpointer           user_data)
 {
+  GtkAllocation current_allocation;
   PAGE *p_current = gschem_page_view_get_page (page_view);
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data);
 
@@ -578,23 +579,18 @@ x_event_configure (GschemPageView    *page_view,
   g_assert (toplevel != NULL);
 
   GList *iter;
-  gint old_win_width, old_win_height, new_win_width, new_win_height;
 
-  old_win_width  = w_current->win_width;
-  old_win_height = w_current->win_height;
-  new_win_width  = event->width;
-  new_win_height = event->height;
+  gtk_widget_get_allocation (GTK_WIDGET(page_view), &current_allocation);
 
-  if (old_win_width  == new_win_width &&
-      old_win_height == new_win_height) {
-    /* the size of the drawing area has not changed */
-    /* nothing to do here */
+  if ((current_allocation.width == page_view->previous_allocation.width) &&
+      (current_allocation.height == page_view->previous_allocation.height)) {
+    /* the size of the drawing area has not changed -- nothing to do here */
     return FALSE;
   }
 
   /* update the GschemToplevel with new size of drawing area */
-  w_current->win_width   = new_win_width;
-  w_current->win_height  = new_win_height;
+  w_current->win_width   = current_allocation.width;
+  w_current->win_height  = current_allocation.height;
 
   /* save current page */
   PAGE *old_page_current = gschem_page_view_get_page (page_view);

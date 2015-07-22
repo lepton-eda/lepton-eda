@@ -194,6 +194,8 @@ event_realize(GtkWidget *widget, gpointer unused)
   g_return_if_fail (window != NULL);
 
   view->gc = gdk_gc_new (window);
+
+  gtk_widget_get_allocation (widget, &(view->previous_allocation));
 }
 
 

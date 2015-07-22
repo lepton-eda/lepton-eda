@@ -43,6 +43,8 @@ struct _GschemPageView
 
   GdkGC *gc;
 
+  GtkAllocation previous_allocation;
+
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
 
