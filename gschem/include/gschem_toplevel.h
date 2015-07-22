@@ -97,8 +97,6 @@ struct st_gschem_toplevel {
   /* ---------------- */
   /* Drawing surfaces */
   /* ---------------- */
-  int win_width, win_height;            /* Actual size of window (?) */
-
   int background_color;
 
   /* ------------- */

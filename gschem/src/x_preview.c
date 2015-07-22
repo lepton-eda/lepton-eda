@@ -97,9 +97,6 @@ preview_callback_realize (GtkWidget *widget,
 
   gtk_widget_grab_focus (preview_w_current->drawing_area);
 
-  preview_w_current->win_width  = preview_w_current->drawing_area->allocation.width;
-  preview_w_current->win_height = preview_w_current->drawing_area->allocation.height;
-
   gschem_page_view_zoom_extents (preview_view, NULL);
 }
 
@@ -356,15 +353,12 @@ preview_init (Preview *preview)
   preview_w_current->handleboxes = FALSE;
   preview_w_current->toolbars    = FALSE;
 
-  preview_w_current->win_width  = 160;
-  preview_w_current->win_height = 120;
-
   preview_w_current->drawing_area = GTK_WIDGET (preview);
   preview->preview_w_current = preview_w_current;
 
   g_object_set (GTK_WIDGET (preview),
-                "width-request",  preview_w_current->win_width,
-                "height-request", preview_w_current->win_height,
+                "width-request",  160,
+                "height-request", 120,
                 NULL);
 
   preview->active   = FALSE;

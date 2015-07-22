@@ -229,7 +229,6 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int width, height;
-  int save_height, save_width;
   int save_page_left, save_page_right, save_page_top, save_page_bottom;
   int page_width, page_height, page_center_left, page_center_top;
   GdkPixbuf *pixbuf;
@@ -242,12 +241,6 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
 
   w_current->image_width = width = desired_width;
   w_current->image_height = height = desired_height;
-
-  save_width  = w_current->win_width;
-  save_height = w_current->win_height;
-
-  w_current->win_width = width;
-  w_current->win_height = height;
 
   save_page_left = geometry->viewport_left;
   save_page_right = geometry->viewport_right;
@@ -324,9 +317,6 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
       s_log_message(_("x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"));
     }
   }
-
-  w_current->win_width = save_width;
-  w_current->win_height = save_height;
 
   gschem_page_geometry_set_viewport_left   (geometry, save_page_left  );
   gschem_page_geometry_set_viewport_right  (geometry, save_page_right );
@@ -544,9 +534,6 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   cr = gdk_cairo_create (window);
 
   gschem_options_set_grid_mode (new_w_current.options, GRID_MODE_NONE);
-
-  new_w_current.win_width = new_w_current.image_width;
-  new_w_current.win_height = new_w_current.image_height;
 
   if (toplevel.image_color == FALSE)
   {

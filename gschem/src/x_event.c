@@ -568,7 +568,6 @@ x_event_configure (GschemPageView    *page_view,
 {
   GtkAllocation current_allocation;
   PAGE *p_current = gschem_page_view_get_page (page_view);
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data);
 
   if (p_current == NULL) {
     /* don't want to call this if the current page isn't setup yet */
@@ -588,9 +587,7 @@ x_event_configure (GschemPageView    *page_view,
     return FALSE;
   }
 
-  /* update the GschemToplevel with new size of drawing area */
-  w_current->win_width   = current_allocation.width;
-  w_current->win_height  = current_allocation.height;
+  page_view->previous_allocation = current_allocation;
 
   /* save current page */
   PAGE *old_page_current = gschem_page_view_get_page (page_view);

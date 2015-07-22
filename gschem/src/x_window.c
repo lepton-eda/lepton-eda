@@ -44,11 +44,6 @@ void x_window_setup (GschemToplevel *w_current)
   /* Initialize the clipboard callback */
   x_clipboard_init (w_current);
 
-  /* x_window_setup_world() - BEGIN */
-  w_current->win_width  = default_width;
-  w_current->win_height = default_height;
-  /* x_window_setup_world() - END */
-
   /* Add to the list of windows */
   global_window_list = g_list_append (global_window_list, w_current);
 
@@ -75,8 +70,8 @@ void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
    */
 
   gtk_widget_set_size_request (w_current->drawing_area,
-                               w_current->win_width,
-                               w_current->win_height);
+                               default_width,
+                               default_height);
 
   gtk_container_add(GTK_CONTAINER(scrolled), w_current->drawing_area);
 
