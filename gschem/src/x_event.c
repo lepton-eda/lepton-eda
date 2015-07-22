@@ -543,30 +543,30 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   return(0);
 }
 
-/*! \brief Updates the GschemToplevel and display when drawing area is configured.
+/*! \brief Updates the display when drawing area is configured.
  *  \par Function Description
  *  This is the callback function connected to the configure event of
- *  the drawing area of the main window.
+ *  the GschemPageView of the main window.
  *
- *  It updates the size of the backingstore for the associated
- *  toplevel structure (creates a new pixmap) and re-pans each of its
- *  pages to keep their contents centered in the drawing area.
+ *  It re-pans each of its pages to keep their contents centered in the
+ *  GschemPageView.
  *
  *  When the window is maximised, the zoom of every page is changed to
  *  best fit the previously displayed area of the page in the new
  *  area. Otherwise the current zoom level is left unchanged.
  *
- *  \param [in] widget    The drawing area which received the signal.
+ *  \param [in] widget    The GschemPageView which received the signal.
  *  \param [in] event     The event structure of signal configure-event.
- *  \param [in] user_data The toplevel environment as user data.
+ *  \param [in] unused
  *  \returns FALSE to propagate the event further.
  */
 gboolean
 x_event_configure (GschemPageView    *page_view,
                    GdkEventConfigure *event,
-                   gpointer           user_data)
+                   gpointer           unused)
 {
   GtkAllocation current_allocation;
+  GList *iter;
   PAGE *p_current = gschem_page_view_get_page (page_view);
 
   if (p_current == NULL) {
@@ -574,10 +574,7 @@ x_event_configure (GschemPageView    *page_view,
     return FALSE;
   }
 
-  TOPLEVEL *toplevel = p_current->toplevel;
-  g_assert (toplevel != NULL);
-
-  GList *iter;
+  g_return_val_if_fail (p_current->toplevel != NULL, FALSE);
 
   gtk_widget_get_allocation (GTK_WIDGET(page_view), &current_allocation);
 
@@ -589,13 +586,10 @@ x_event_configure (GschemPageView    *page_view,
 
   page_view->previous_allocation = current_allocation;
 
-  /* save current page */
-  PAGE *old_page_current = gschem_page_view_get_page (page_view);
-
   /* re-pan each page of the TOPLEVEL */
-  for ( iter = geda_list_get_glist( toplevel->pages );
+  for ( iter = geda_list_get_glist (p_current->toplevel->pages);
         iter != NULL;
-        iter = g_list_next( iter ) ) {
+        iter = g_list_next (iter) ) {
 
     gschem_page_view_set_page (page_view, (PAGE *)iter->data);
 
@@ -604,12 +598,11 @@ x_event_configure (GschemPageView    *page_view,
     } else {
       gschem_page_view_zoom_extents (page_view, NULL);
     }
-
   }
 
   page_view->configured = TRUE;
 
-  gschem_page_view_set_page (page_view, old_page_current);
+  gschem_page_view_set_page (page_view, p_current);
 
   /* redraw the current page and update UI */
   gschem_page_view_invalidate_all (page_view);
