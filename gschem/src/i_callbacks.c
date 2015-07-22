@@ -1211,7 +1211,7 @@ DEFINE_I_CALLBACK(view_pan_left)
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page_view != NULL);
 
-  gschem_page_view_pan_mouse (page_view, w_current, w_current->keyboardpan_gain, 0);
+  gschem_page_view_pan_mouse (page_view, w_current->keyboardpan_gain, 0);
 }
 
 /*! \brief Scheme callback function that moves the viewport to the right.
@@ -1227,7 +1227,7 @@ DEFINE_I_CALLBACK(view_pan_right)
   g_return_if_fail (page_view != NULL);
 
   /* yes, that's a negative sign there */
-  gschem_page_view_pan_mouse (page_view, w_current, -w_current->keyboardpan_gain, 0);
+  gschem_page_view_pan_mouse (page_view, -w_current->keyboardpan_gain, 0);
 }
 
 /*! \brief Scheme callback function that moves the viewport up.
@@ -1242,7 +1242,7 @@ DEFINE_I_CALLBACK(view_pan_up)
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page_view != NULL);
 
-  gschem_page_view_pan_mouse (page_view, w_current, 0, w_current->keyboardpan_gain);
+  gschem_page_view_pan_mouse (page_view, 0, w_current->keyboardpan_gain);
 }
 
 /*! \brief Scheme callback function that moves the viewport down.
@@ -1258,7 +1258,7 @@ DEFINE_I_CALLBACK(view_pan_down)
   g_return_if_fail (page_view != NULL);
 
   /* yes, that's a negative sign there */
-  gschem_page_view_pan_mouse (page_view, w_current, 0, -w_current->keyboardpan_gain);
+  gschem_page_view_pan_mouse (page_view, 0, -w_current->keyboardpan_gain);
 }
 
 /*! \todo Finish function documentation!!!

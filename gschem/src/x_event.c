@@ -603,7 +603,7 @@ x_event_configure (GschemPageView    *page_view,
     gschem_page_view_set_page (page_view, (PAGE *)iter->data);
 
     if (page_view->configured) {
-      gschem_page_view_pan_mouse (page_view, w_current, 0, 0);
+      gschem_page_view_pan_mouse (page_view, 0, 0);
     } else {
       gschem_page_view_zoom_extents (page_view, NULL);
     }

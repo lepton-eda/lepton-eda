@@ -729,16 +729,12 @@ gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
 
 /*! \brief Pan the view by the given screen coordinate displacement
  *
- *  The w_current parameter will be replaced with signals. This way, any object
- *  can listen for changes in the view.
- *
  *  \param [in,out] view      This GschemPageView
- *  \param [in]     w_current The GschemToplevel
  *  \param [in]     diff_x    The screen x coordinate displacement
  *  \param [in]     diff_y    The screen y coordinate displacement
  */
 void
-gschem_page_view_pan_mouse (GschemPageView *view, GschemToplevel *w_current, int diff_x, int diff_y)
+gschem_page_view_pan_mouse (GschemPageView *view, int diff_x, int diff_y)
 {
   GschemPageGeometry *geometry = NULL;
   double world_cx, world_cy;
@@ -817,7 +813,6 @@ gschem_page_view_pan_motion (GschemPageView *view, GschemToplevel *w_current, in
 
     if (!(view->throttle % 5)) {
       gschem_page_view_pan_mouse(view,
-                                 w_current,
                                  pdiff_x*w_current->mousepan_gain,
                                  pdiff_y*w_current->mousepan_gain);
 
