@@ -93,10 +93,10 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
  */
 void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
 {
-  GtkWidget *label = NULL;
+  GtkWidget *label[3];
   GtkWidget *vbox;
   GtkWidget *alignment, *table;
-  GtkWidget *radius, *spin_start, *spin_sweep;
+  GtkWidget *widget[3];
 
   if (!w_current->aawindow) {
     w_current->aawindow = gschem_dialog_new_with_buttons(_("Arc Params"),
@@ -135,63 +135,50 @@ void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
                               0 /*DIALOG_INDENTATION */, 0);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
 
-    table = gtk_table_new (2, 3, FALSE);
-    gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
-    gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
-    gtk_container_add(GTK_CONTAINER(alignment), table);
+    label[0] = gschem_dialog_misc_create_property_label (_("Arc Radius:"));
+    label[1] = gschem_dialog_misc_create_property_label (_("Start Angle:"));
+    label[2] = gschem_dialog_misc_create_property_label (_("Degrees of Sweep:"));
 
-    label = gtk_label_new (_("Arc Radius:"));
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-    gtk_table_attach(GTK_TABLE(table), label, 0,1,0,1, GTK_FILL,0,0,0);
+    widget[0] = gtk_spin_button_new_with_range (1, 100000, 100);
+    gtk_entry_set_activates_default (GTK_ENTRY(widget[0]), TRUE);
 
-    radius = gtk_spin_button_new_with_range(1, 100000, 100);
-    gtk_entry_set_activates_default(GTK_ENTRY(radius), TRUE);
-    gtk_table_attach_defaults(GTK_TABLE(table), radius, 1,2,0,1);
+    widget[1] = gtk_spin_button_new_with_range (-360,360,1);
+    gtk_entry_set_activates_default (GTK_ENTRY(widget[1]), TRUE);
 
-    label = gtk_label_new (_("Start Angle:"));
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-    gtk_table_attach(GTK_TABLE(table), label, 0,1,1,2, GTK_FILL,0,0,0);
+    widget[2] = gtk_spin_button_new_with_range (-360,360,1);
+    gtk_entry_set_activates_default(GTK_ENTRY(widget[2]), TRUE);
 
-    spin_start = gtk_spin_button_new_with_range(-360,360,1);
-    gtk_entry_set_activates_default(GTK_ENTRY(spin_start), TRUE);
-    gtk_table_attach_defaults(GTK_TABLE(table), spin_start, 1,2,1,2);
+	table = gschem_dialog_misc_create_property_table (label, widget, 3);
+    gtk_container_add (GTK_CONTAINER(alignment), table);
 
-    label = gtk_label_new(_("Degrees of Sweep:"));
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-    gtk_table_attach(GTK_TABLE(table), label, 0,1,2,3, GTK_FILL,0,0,0);
-
-    spin_sweep = gtk_spin_button_new_with_range(-360,360,1);
-    gtk_entry_set_activates_default(GTK_ENTRY(spin_sweep), TRUE);
-    gtk_table_attach_defaults(GTK_TABLE(table), spin_sweep, 1,2,2,3);
-
-    GLADE_HOOKUP_OBJECT(w_current->aawindow, radius, "radius");
-    GLADE_HOOKUP_OBJECT(w_current->aawindow, spin_start,"spin_start");
-    GLADE_HOOKUP_OBJECT(w_current->aawindow, spin_sweep,"spin_sweep");
+    GLADE_HOOKUP_OBJECT(w_current->aawindow, widget[0], "radius");
+    GLADE_HOOKUP_OBJECT(w_current->aawindow, widget[1],"spin_start");
+    GLADE_HOOKUP_OBJECT(w_current->aawindow, widget[2],"spin_sweep");
     g_object_set_data(G_OBJECT(w_current->aawindow), "arc_object", arc_object);
     gtk_widget_show_all (w_current->aawindow);
   }
 
   else {  /* dialog already created */
     gtk_window_present (GTK_WINDOW(w_current->aawindow));
-    radius = g_object_get_data(G_OBJECT(w_current->aawindow),"radius");
-    spin_start = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_start");
-    spin_sweep = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_sweep");
+    widget[0] = g_object_get_data(G_OBJECT(w_current->aawindow),"radius");
+    widget[1] = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_start");
+    widget[2] = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_sweep");
   }
 
   if (arc_object == NULL) {
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(radius), w_current->distance);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_start),0);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_sweep), 90);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget[0]), w_current->distance);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget[1]),0);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget[2]), 90);
   } else {
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(radius),
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget[0]),
 			      arc_object->arc->width / 2);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_start),
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget[1]),
 			      arc_object->arc->start_angle);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_sweep),
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget[2]),
 			      arc_object->arc->end_angle);
   }
 
-  gtk_widget_grab_focus(radius);
+  gtk_widget_grab_focus(widget[0]);
 }
 
 /***************** End of Arc dialog box *****************************/
