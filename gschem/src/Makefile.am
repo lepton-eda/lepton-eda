@@ -24,14 +24,19 @@ gschem_SOURCES = \
 	globals.c \
 	gschem.c \
 	gschemhotkeystore.c \
+	gschem_about_dialog.c \
 	gschem_accel_label.c \
 	gschem_action.c \
+	gschem_arc_dialog.c \
 	gschem_binding.c \
 	gschem_binding_integer.c \
 	gschem_bottom_widget.c \
+	gschem_close_confirmation_dialog.c \
+	gschem_coord_dialog.c \
 	gschem_dialog.c \
 	gschem_dialog_misc.c \
 	gschem_fill_swatch_cell_renderer.c \
+	gschem_hotkey_dialog.c \
 	gschem_integer_combo_box.c \
 	gschem_macro_widget.c \
 	gschem_main_window.c \
@@ -41,8 +46,10 @@ gschem_SOURCES = \
 	gschem_page_geometry.c \
 	gschem_page_view.c \
 	gschem_selection_adapter.c \
+	gschem_slot_edit_dialog.c \
 	gschem_swatch_column_renderer.c \
 	gschem_text_properties_dialog.c \
+	gschem_translate_dialog.c \
 	gschem_toplevel.c \
 	i_basic.c \
 	i_callbacks.c \
