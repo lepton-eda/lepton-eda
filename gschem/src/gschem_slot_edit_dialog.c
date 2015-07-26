@@ -83,10 +83,10 @@ void slot_edit_dialog_response(GtkWidget *widget, gint response, GschemToplevel 
  */
 void slot_edit_dialog (GschemToplevel *w_current, const char *count, const char *string)
 {
-  GtkWidget *label[1];
+  GtkWidget *label[2];
   GtkWidget *table;
   GtkWidget *vbox;
-  GtkWidget *widget[1];
+  GtkWidget *widget[2];
 
   if (!w_current->sewindow) {
     w_current->sewindow = gschem_dialog_new_with_buttons(_("Edit slot number"),
