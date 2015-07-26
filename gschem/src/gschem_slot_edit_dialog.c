@@ -81,11 +81,12 @@ void slot_edit_dialog_response(GtkWidget *widget, gint response, GschemToplevel 
  *  \par Function Description
  *  This function creates the slot edit dialog.
  */
-void slot_edit_dialog (GschemToplevel *w_current, const char *string)
+void slot_edit_dialog (GschemToplevel *w_current, const char *count, const char *string)
 {
-  GtkWidget *label = NULL;
-  GtkWidget *textentry;
+  GtkWidget *label[1];
+  GtkWidget *table;
   GtkWidget *vbox;
+  GtkWidget *widget[1];
 
   if (!w_current->sewindow) {
     w_current->sewindow = gschem_dialog_new_with_buttons(_("Edit slot number"),
@@ -119,17 +120,28 @@ void slot_edit_dialog (GschemToplevel *w_current, const char *string)
     vbox = GTK_DIALOG(w_current->sewindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
-    label = gtk_label_new (_("Edit slot number:"));
-    gtk_misc_set_alignment(GTK_MISC(label),0,0);
-    gtk_box_pack_start(GTK_BOX (vbox), label, FALSE, FALSE, 0);
+    label[0] = gschem_dialog_misc_create_property_label (_("Number of Slots:"));
+    label[1] = gschem_dialog_misc_create_property_label (_("Slot Number:"));
 
-    textentry = gtk_entry_new();
-    gtk_box_pack_start( GTK_BOX(vbox),
-                       textentry, FALSE, FALSE, 0);
-    gtk_entry_set_max_length(GTK_ENTRY(textentry), 80);
-    gtk_entry_set_activates_default (GTK_ENTRY(textentry),TRUE);
+    widget[0] = gtk_entry_new();
+    gtk_entry_set_max_length(GTK_ENTRY(widget[0]), 80);
+    gtk_editable_set_editable (GTK_EDITABLE(widget[0]), FALSE);
+	gtk_widget_set_sensitive (GTK_WIDGET(widget[0]), FALSE);
 
-    GLADE_HOOKUP_OBJECT(w_current->sewindow, textentry, "textentry");
+	widget[1] = gtk_entry_new();
+    gtk_entry_set_max_length(GTK_ENTRY(widget[1]), 80);
+    gtk_entry_set_activates_default (GTK_ENTRY(widget[1]),TRUE);
+
+    table = gschem_dialog_misc_create_property_table(label, widget, 2);
+
+	gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
+                        table,                                   /* child   */
+                        FALSE,                                   /* expand  */
+                        FALSE,                                   /* fill    */
+                        0);                                      /* padding */
+
+	GLADE_HOOKUP_OBJECT(w_current->sewindow, widget[0], "countentry");
+    GLADE_HOOKUP_OBJECT(w_current->sewindow, widget[1], "textentry");
     gtk_widget_show_all (w_current->sewindow);
   }
 
@@ -137,11 +149,16 @@ void slot_edit_dialog (GschemToplevel *w_current, const char *string)
     gtk_window_present (GTK_WINDOW(w_current->sewindow));
   }
 
+  if (count != NULL) {
+    widget[0] = g_object_get_data(G_OBJECT(w_current->sewindow),"countentry");
+    gtk_entry_set_text(GTK_ENTRY(widget[0]), count);
+  }
+
   /* always set the current text and select the number of the slot */
   if (string != NULL) {
-    textentry = g_object_get_data(G_OBJECT(w_current->sewindow),"textentry");
-    gtk_entry_set_text(GTK_ENTRY(textentry), string);
-    gtk_editable_select_region (GTK_EDITABLE(textentry), 0, -1);
+    widget[1] = g_object_get_data(G_OBJECT(w_current->sewindow),"textentry");
+    gtk_entry_set_text(GTK_ENTRY(widget[1]), string);
+    gtk_editable_select_region (GTK_EDITABLE(widget[1]), 0, -1);
   }
 }
 
