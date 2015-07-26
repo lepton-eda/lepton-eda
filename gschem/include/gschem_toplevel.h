@@ -36,6 +36,7 @@ struct st_gschem_toplevel {
   GtkWidget *menubar;
   GtkWidget *popup_menu;
 
+  GtkWidget *find_text_widget;
   GtkWidget *macro_widget;
   GtkWidget *bottom_widget;
 
@@ -64,7 +65,6 @@ struct st_gschem_toplevel {
   GtkWidget *trwindow;                  /* translate */
   GtkWidget *tshowwindow;               /* text show window */
   GtkWidget *thidewindow;               /* text hide window */
-  GtkWidget *tfindwindow;               /* text find window */
   GtkWidget *hkwindow;                  /* Help/Hotkeys... dialog*/
   GtkWidget *cowindow;                  /* Coordinate window */
   GtkWidget *coord_world;                 /* World coordinate label */

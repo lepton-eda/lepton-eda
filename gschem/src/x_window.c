@@ -393,6 +393,20 @@ void x_window_create_main(GschemToplevel *w_current)
   vscrollbar = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (scrolled));
   gtk_range_set_update_policy (GTK_RANGE (vscrollbar), GTK_UPDATE_CONTINUOUS);
 
+  /* find text box */
+  w_current->find_text_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_FIND_TEXT_WIDGET, NULL));
+
+  gtk_box_pack_start (GTK_BOX (main_box),
+                      w_current->find_text_widget,
+                      FALSE,
+                      FALSE,
+                      0);
+
+  g_signal_connect (w_current->find_text_widget,
+                    "response",
+                    G_CALLBACK (&find_text_dialog_response),
+                    w_current);
+
   /* macro box */
   w_current->macro_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_MACRO_WIDGET, NULL));
 

@@ -159,6 +159,7 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->drawing_area = NULL;
   w_current->menubar      = NULL;
   w_current->popup_menu   = NULL;
+  w_current->find_text_widget = NULL;
   w_current->macro_widget  = NULL;
   w_current->bottom_widget = NULL;
 
@@ -186,7 +187,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->trwindow     = NULL;
   w_current->tshowwindow  = NULL;
   w_current->thidewindow  = NULL;
-  w_current->tfindwindow  = NULL;
   w_current->hkwindow     = NULL;
   w_current->cowindow     = NULL;
   w_current->coord_world  = NULL;

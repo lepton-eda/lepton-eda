@@ -357,7 +357,7 @@ int skiplast;
  *
  */
 int o_edit_find_text (GschemToplevel *w_current, const GList *o_list,
-                      char *stext, int descend, int skip)
+                      const char *stext, int descend, int skip)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);

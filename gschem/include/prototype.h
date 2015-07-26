@@ -471,7 +471,7 @@ void o_rotate_world_update(GschemToplevel *w_current, int centerx, int centery, 
 void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, GList *list);
 void o_edit_show_hidden_lowlevel(GschemToplevel *w_current, const GList *o_list);
 void o_edit_show_hidden(GschemToplevel *w_current, const GList *o_list);
-int o_edit_find_text(GschemToplevel *w_current, const GList *o_list, char *stext, int descend, int skip);
+int o_edit_find_text(GschemToplevel *w_current, const GList *o_list, const char *stext, int descend, int skip);
 void o_edit_hide_specific_text(GschemToplevel *w_current, const GList *o_list, char *stext);
 void o_edit_show_specific_text(GschemToplevel *w_current, const GList *o_list, char *stext);
 OBJECT *o_update_component(GschemToplevel *w_current, OBJECT *o_current);
@@ -639,6 +639,7 @@ int generic_confirm_dialog(const char *);
 char * generic_filesel_dialog(const char *, const char *, gint);
 
 void find_text_dialog(GschemToplevel *w_current);
+void find_text_dialog_response(GtkWidget *widget, gint response, GschemToplevel *w_current);
 void hide_text_dialog(GschemToplevel *w_current);
 void show_text_dialog(GschemToplevel *w_current);
 void major_changed_dialog(GschemToplevel* w_current);

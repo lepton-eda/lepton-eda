@@ -236,49 +236,49 @@ PAGE *remember_page;
  *  This function takes the string the user likes to find and searches it
  *  in the schematic.
  */
-void find_text_dialog_response(GtkWidget *w, gint response,
-                               GschemToplevel *w_current)
+void
+find_text_dialog_response(GtkWidget *widget, gint response, GschemToplevel *w_current)
 {
+  gint close = FALSE;
+  gint done = FALSE;
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  GtkWidget *textentry;
-  GtkWidget *checkdescend;
-  gchar *string;
-  gint done=0, close=0;
+
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (w_current != NULL);
 
   switch (response) {
-  case GTK_RESPONSE_ACCEPT:
-    textentry = g_object_get_data(G_OBJECT(w_current->tfindwindow),"textentry");
-    string = (gchar*) gtk_entry_get_text(GTK_ENTRY(textentry));
-    checkdescend = g_object_get_data(G_OBJECT(w_current->tfindwindow),"checkdescend");
-
-    strncpy(generic_textstring, string, sizeof(generic_textstring)-1);
-    generic_textstring[sizeof(generic_textstring)-1] = '\0';
-
+  case GTK_RESPONSE_OK:
     if (remember_page != toplevel->page_current) {
       s_page_goto(toplevel, remember_page);
       gschem_toplevel_page_changed (w_current);
     }
-    done =
-      o_edit_find_text (w_current, s_page_objects (remember_page), string,
-                        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-                                                     (checkdescend)),
-                        !start_find);
+
+    done = o_edit_find_text (
+            w_current,
+            s_page_objects (remember_page),
+            gschem_find_text_widget_get_find_text_string (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
+            gschem_find_text_widget_get_descend (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
+            !start_find);
+
     if (done) {
       o_invalidate_all (w_current);
-      close = 1;
+      close = TRUE;
     }
-    start_find = 0;
+    start_find = FALSE;
     break;
-  case GTK_RESPONSE_REJECT:
+
+  case GTK_RESPONSE_CANCEL:
   case GTK_RESPONSE_DELETE_EVENT:
-    close = 1;
+    close = TRUE;
     break;
+
   default:
     printf("find_text_dialog_response(): strange signal %d\n", response);
   }
+
   if (close) {
-    gtk_widget_destroy(w_current->tfindwindow);
-    w_current->tfindwindow = NULL;
+    gtk_widget_grab_focus (w_current->drawing_area);
+    gtk_widget_hide (GTK_WIDGET (widget));
   }
 }
 
@@ -288,82 +288,55 @@ void find_text_dialog_response(GtkWidget *w, gint response,
  */
 void find_text_dialog(GschemToplevel *w_current)
 {
-  GtkWidget *label = NULL;
-  GtkWidget *vbox;
-  GtkWidget *checkdescend;
-  GtkWidget *textentry;
-  OBJECT *object = NULL;
+  OBJECT *object;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
-  start_find = 1;
-  remember_page = w_current->toplevel->page_current;
-  if ((object = o_select_return_first_object(w_current)) != NULL) {
-    if (object->type == OBJ_TEXT) {
-      strncpy (generic_textstring,
-               o_text_get_string (w_current->toplevel, object),
-               sizeof(generic_textstring)-1);
-      generic_textstring[sizeof(generic_textstring)-1] = '\0';
-    }
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (w_current != NULL);
+
+  start_find = TRUE;
+  remember_page = toplevel->page_current;
+
+  object = o_select_return_first_object(w_current);
+
+  if ((object != NULL) && (object->type == OBJ_TEXT)) {
+    gschem_find_text_widget_set_find_text_string(
+            GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget),
+            o_text_get_string (w_current->toplevel, object)
+            );
   }
 
-  if (!w_current->tfindwindow) {
-    w_current->tfindwindow = gschem_dialog_new_with_buttons(_("Find Text"),
-                                                            GTK_WINDOW(w_current->main_window),
-                                                            0, /* not modal GTK_DIALOG_MODAL */
-                                                            "find-text", w_current,
-                                                            GTK_STOCK_CLOSE,
-                                                            GTK_RESPONSE_REJECT,
-                                                            GTK_STOCK_FIND,
-                                                            GTK_RESPONSE_ACCEPT,
-                                                            NULL);
+  //if (!w_current->tfindwindow) {
+  //  w_current->tfindwindow = gschem_dialog_new_with_buttons(_("Find Text"),
+  //                                                          GTK_WINDOW(w_current->main_window),
+  //                                                          0, /* not modal GTK_DIALOG_MODAL */
+  //                                                          "find-text", w_current,
+  //                                                          GTK_STOCK_CLOSE,
+  //                                                          GTK_RESPONSE_REJECT,
+  //                                                          GTK_STOCK_FIND,
+  //                                                          GTK_RESPONSE_ACCEPT,
+  //                                                          NULL);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
-    gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->tfindwindow),
-                                            GTK_RESPONSE_ACCEPT,
-                                            GTK_RESPONSE_REJECT,
-                                            -1);
+  //  gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->tfindwindow),
+  //                                          GTK_RESPONSE_ACCEPT,
+  //                                          GTK_RESPONSE_REJECT,
+  //                                          -1);
 
-    gtk_window_position(GTK_WINDOW(w_current->tfindwindow),
-                        GTK_WIN_POS_MOUSE);
 
-    g_signal_connect (G_OBJECT (w_current->tfindwindow), "response",
-                      G_CALLBACK (find_text_dialog_response),
-                      w_current);
+  //  g_signal_connect (G_OBJECT (w_current->tfindwindow), "response",
+  //                    G_CALLBACK (find_text_dialog_response),
+  //                    w_current);
 
-    gtk_dialog_set_default_response(GTK_DIALOG(w_current->tfindwindow),
-                                     GTK_RESPONSE_ACCEPT);
+  //  gtk_dialog_set_default_response(GTK_DIALOG(w_current->tfindwindow),
+  //                                   GTK_RESPONSE_ACCEPT);
 
-    gtk_container_border_width(GTK_CONTAINER(w_current->tfindwindow),
-                               DIALOG_BORDER_SPACING);
-    vbox = GTK_DIALOG(w_current->tfindwindow)->vbox;
-    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
+    //checkdescend = gtk_check_button_new_with_label(_("descend into hierarchy"));
+    //gtk_box_pack_start(GTK_BOX(vbox), checkdescend, TRUE, TRUE, 0);
 
-    label = gtk_label_new(_("Text to find:"));
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
-
-    textentry = gtk_entry_new_with_max_length(20);
-    gtk_editable_select_region(GTK_EDITABLE(textentry), 0, -1);
-    gtk_box_pack_start(GTK_BOX(vbox), textentry, FALSE, FALSE, 0);
-    gtk_entry_set_activates_default(GTK_ENTRY(textentry), TRUE);
-    gtk_widget_grab_focus(textentry);
-
-    checkdescend = gtk_check_button_new_with_label(_("descend into hierarchy"));
-    gtk_box_pack_start(GTK_BOX(vbox), checkdescend, TRUE, TRUE, 0);
-
-    GLADE_HOOKUP_OBJECT(w_current->tfindwindow, textentry, "textentry");
-    GLADE_HOOKUP_OBJECT(w_current->tfindwindow, checkdescend, "checkdescend");
-
-    gtk_widget_show_all(w_current->tfindwindow);
-  }
-
-  else { /* dialog already created */
-    gtk_window_present(GTK_WINDOW(w_current->tfindwindow));
-  }
-
-  /* always select the text string in the entry */
-  textentry = g_object_get_data (G_OBJECT (w_current->tfindwindow), "textentry");
-  gtk_entry_set_text(GTK_ENTRY(textentry), generic_textstring);
-  gtk_entry_select_region(GTK_ENTRY(textentry), 0, -1);
+  gtk_widget_show (GTK_WIDGET (w_current->find_text_widget));
+  gtk_widget_grab_focus (gschem_find_text_widget_get_entry (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)));
+  gtk_entry_select_region(GTK_ENTRY(gschem_find_text_widget_get_entry (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget))), 0, -1);
 }
 
 /*********** End of find text dialog box *******/
