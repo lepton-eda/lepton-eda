@@ -55,7 +55,7 @@ dist_noinst_DATA = geda/core/gettext.scm.in unit-test.scm $(TESTS)
 geda/core/gettext.scm: $(srcdir)/geda/core/gettext.scm.in Makefile
 	@domain=$(LIBGEDA_GETTEXT_DOMAIN); \
 	$(MKDIR_P) geda/core; \
-	sed -e"s:[@]LIBGEDA_GETTEXT_DOMAIN@:$$domain:" < $< > $@.new; \
+	sed -e"s:[@]LIBGEDA_GETTEXT_DOMAIN@:$$domain:" < $@.in > $@.new; \
 	if cmp $@ $@.new > /dev/null 2>&1; then \
 	  rm $@.new; echo "$@ is unchanged"; \
 	else \

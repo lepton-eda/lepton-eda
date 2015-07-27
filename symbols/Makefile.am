@@ -66,7 +66,7 @@ endif HAVE_GIT_REPO
 dist-hook:
 	@for lib in $(symbol_dirs); do \
 	  $(MKDIR_P) $(distdir)/$$lib && \
-	  list=`(ls $(srcdir)/$$lib) | grep '.[Ss][Yy][Mm]$$'`; \
+	  list=`(cd $(srcdir)/$$lib && find . -name '*.[sS][yY][mM]' | sed -e 's:^\./::')`; \
 	  for file in $$list; do \
 	    cp -p $(srcdir)/$$lib/$$file $(distdir)/$$lib || exit $$?; \
 	  done; \
@@ -78,7 +78,7 @@ install-data-local:
 	@for lib in $(symbol_dirs); do \
 	  d="$(DESTDIR)$(datasymdir)/$$lib"; \
 	  $(MKDIR_P) "$$d"; \
-	  list=`(ls $(srcdir)/$$lib) | grep '.[Ss][Yy][Mm]$$'`; \
+	  list=`(cd $(srcdir)/$$lib && find . -name '*.[sS][yY][mM]' | sed -e 's:^\./::')`; \
 	  if test -n "$$list"; then \
 	    echo " ( cd $(srcdir)/$$lib && $(INSTALL_DATA)" $$list "'$$d' )"; \
 	    (cd $(srcdir)/$$lib && $(INSTALL_DATA) $$list "$$d") || exit $$?; \
@@ -90,7 +90,7 @@ uninstall-local:
 	@$(NORMAL_UNINSTALL)
 	@for lib in $(symbol_dirs); do \
 	  d="$(DESTDIR)$(datasymdir)/$$lib"; \
-	  list=`(ls $(srcdir)/$$lib) | grep '\.[Ss][Yy][Mm]$$'`; \
+	  list=`(cd $(srcdir)/$$lib && find . -name '*.[sS][yY][mM]' | sed -e 's:^\./::')`; \
 	  if test -n "$$list"; then \
 	    echo " ( cd '$$d' && rm -f" $$list ")"; \
 	    (cd "$$d" && rm -f $$list) || exit $$?; \
