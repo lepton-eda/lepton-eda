@@ -14,25 +14,24 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-pkgpython_PYTHON = \
+nobase_pkgpython_PYTHON = \
 	__init__.py \
 	base64.py \
 	command.py \
 	fileutils.py \
-	proxy.py
-noinst_PYTHON = storage.py
-nodist_pkgpython_PYTHON = config.py
-EXTRA_DIST = config.py.in
-CLEANFILES = config.py config.pyc
-
-gedadir = $(pkgpythondir)/geda
-geda_PYTHON = \
+	proxy.py \
 	geda/__init__.py \
 	geda/attrib.py \
 	geda/clib.py \
 	geda/fileformat.py \
 	geda/read.py \
 	geda/write.py
+
+noinst_PYTHON = storage.py
+
+nodist_pkgpython_PYTHON = config.py
+EXTRA_DIST = config.py.in
+CLEANFILES = config.py config.pyc
 
 # Make sure config.py is available when running from builddir
 all-local: $(nodist_pkgpython_PYTHON)
