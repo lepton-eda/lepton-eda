@@ -64,6 +64,9 @@ spice_sdb-sort-nomunge)
     backend=spice_sdb
     backend_options="-O sort_mode -O nomunge_mode"
     ;;
+drc2)
+    backend_options="--ignore-errors"
+    ;;
 esac
 
 test -r "${top_srcdir}/src/backend/gnet_${backend}.py" || exit 77  # skip test
