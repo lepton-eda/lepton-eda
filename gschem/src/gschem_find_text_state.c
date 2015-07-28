@@ -37,6 +37,9 @@
 
 #include "gschem.h"
 
+static void
+set_remember_page (GschemToplevel *w_current, PAGE *remember_page);
+
 /*********** Start of find text dialog box *******/
 
 /*! \brief response function for the find text dialog
@@ -56,7 +59,11 @@ find_text_dialog_response(GtkWidget *widget, gint response, GschemToplevel *w_cu
 
   switch (response) {
   case GTK_RESPONSE_OK:
-    if (w_current->remember_page != toplevel->page_current) {
+    if (w_current->remember_page == NULL) {
+      /* if page was closed, just start over again */
+      w_current->start_find = TRUE;
+      set_remember_page (w_current, toplevel->page_current);
+    } else if (w_current->remember_page != toplevel->page_current) {
       s_page_goto(toplevel, w_current->remember_page);
       gschem_toplevel_page_changed (w_current);
     }
@@ -103,7 +110,7 @@ void find_text_dialog(GschemToplevel *w_current)
   g_return_if_fail (w_current != NULL);
 
   w_current->start_find = TRUE;
-  w_current->remember_page = toplevel->page_current;
+  set_remember_page (w_current, toplevel->page_current);
 
   object = o_select_return_first_object(w_current);
 
@@ -147,8 +154,30 @@ void find_text_dialog(GschemToplevel *w_current)
   gtk_entry_select_region(GTK_ENTRY(gschem_find_text_widget_get_entry (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget))), 0, -1);
 }
 
+
+/**
+ *  \brief Set the current find page
+ *
+ *  Sets the current find page as a weak pointer, so if the page is closed,
+ *  this module can handle it.
+ *
+ *  \param [in] w_current
+ *  \param [in] remember_page
+ */
+static void
+set_remember_page (GschemToplevel *w_current, PAGE *remember_page)
+{
+  g_return_if_fail (w_current != NULL);
+
+  if (w_current->remember_page != NULL) {
+    s_page_remove_weak_ptr (w_current->remember_page, &(w_current->remember_page));
+  }
+
+  w_current->remember_page = remember_page;
+
+  if (w_current->remember_page != NULL) {
+    s_page_add_weak_ptr (w_current->remember_page, &(w_current->remember_page));
+  }
+}
+
 /*********** End of find text dialog box *******/
-
-
-
-
