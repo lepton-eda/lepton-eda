@@ -242,6 +242,12 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->temp_path = NULL;
   w_current->pathcontrol = TRUE;
 
+  /* ---------- */
+  /* Find State */
+  /* ---------- */
+  w_current->start_find = TRUE;
+  w_current->remember_page = NULL;
+
   /* ------------------ */
   /* Rubberbanding nets */
   /* ------------------ */

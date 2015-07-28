@@ -122,6 +122,12 @@ struct st_gschem_toplevel {
   PATH *temp_path;                      /* Path being created */
   gboolean pathcontrol;                 /* Set path control point while path creating */ /* FIXME: can we do without it? */
 
+  /* ---------- */
+  /* Find State */
+  /* ---------- */
+  int start_find;
+  PAGE *remember_page;
+
   /* ------------------ */
   /* Rubberbanding nets */
   /* ------------------ */

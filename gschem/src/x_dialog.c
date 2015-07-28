@@ -228,9 +228,6 @@ char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
 
 /*********** Start of find text dialog box *******/
 
-int start_find;
-PAGE *remember_page;
-
 /*! \brief response function for the find text dialog
  *  \par Function Description
  *  This function takes the string the user likes to find and searches it
@@ -248,23 +245,23 @@ find_text_dialog_response(GtkWidget *widget, gint response, GschemToplevel *w_cu
 
   switch (response) {
   case GTK_RESPONSE_OK:
-    if (remember_page != toplevel->page_current) {
-      s_page_goto(toplevel, remember_page);
+    if (w_current->remember_page != toplevel->page_current) {
+      s_page_goto(toplevel, w_current->remember_page);
       gschem_toplevel_page_changed (w_current);
     }
 
     done = o_edit_find_text (
             w_current,
-            s_page_objects (remember_page),
+            s_page_objects (w_current->remember_page),
             gschem_find_text_widget_get_find_text_string (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
             gschem_find_text_widget_get_descend (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
-            !start_find);
+            !(w_current->start_find));
 
     if (done) {
       o_invalidate_all (w_current);
       close = TRUE;
     }
-    start_find = FALSE;
+    w_current->start_find = FALSE;
     break;
 
   case GTK_RESPONSE_CANCEL:
@@ -294,8 +291,8 @@ void find_text_dialog(GschemToplevel *w_current)
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (w_current != NULL);
 
-  start_find = TRUE;
-  remember_page = toplevel->page_current;
+  w_current->start_find = TRUE;
+  w_current->remember_page = toplevel->page_current;
 
   object = o_select_return_first_object(w_current);
 
