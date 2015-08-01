@@ -198,6 +198,63 @@ s_hierarchy_find_up_page (GedaPageList *page_list, PAGE *current_page)
   return s_page_search_by_page_id (page_list, current_page->up);
 }
 
+
+/*! \brief Load a subpage
+ *
+ *  \par Function Description
+ *  Implements s_hierarchy_down_schematic(), but without changing variables
+ *  related to the UI.
+ *
+ *  - Ensures a duplicate page is not loaded
+ *  - Does not change the current page
+ *  - Does not modify the most recent "up" page
+ *
+ *  \param [in]  page
+ *  \param [in]  filename
+ *  \param [out] error
+ *  \return A pointer to the subpage or NULL if an error occured.
+ */
+PAGE*
+s_hierarchy_load_subpage (PAGE *page, const char *filename, GError **error)
+{
+  char *string;
+  PAGE *subpage = NULL;
+
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (page != NULL, NULL);
+
+  string = s_slib_search_single (filename);
+
+  if (string == NULL) {
+    g_set_error (error,
+                 EDA_ERROR,
+                 EDA_ERROR_NOLIB,
+                 _("Schematic not found in source library."));
+  } else {
+    gchar *normalized = f_normalize_filename (string, error);
+
+    subpage = s_page_search (page->toplevel, normalized);
+
+    if (subpage == NULL) {
+      int success;
+
+      subpage = s_page_new (page->toplevel, string);
+      success = f_open (page->toplevel, subpage, subpage->page_filename, error);
+
+      if (success) {
+        subpage->page_control = ++page_control_counter;
+      } else {
+        s_page_delete (page->toplevel, subpage);
+        subpage = NULL;
+      }
+    }
+
+    g_free (normalized);
+  }
+
+  return subpage;
+}
+
 /*! \brief Find page hierarchy below a page.
  *  \par Function Description
  *  This function traverses the hierarchy tree of pages and returns a

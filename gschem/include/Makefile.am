@@ -18,6 +18,7 @@ noinst_HEADERS = \
 	gschem_dialog.h \
 	gschem_dialog_misc.h \
 	gschem_fill_swatch_cell_renderer.h \
+	gschem_find_text_state.h \
 	gschem_find_text_widget.h \
 	gschem_integer_combo_box.h \
 	gschem_macro_widget.h \

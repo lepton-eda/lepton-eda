@@ -20,7 +20,7 @@
 /*!
  * \file gschem_find_text_state.c
  *
- * \brief A widget for finding text
+ * \brief Stores state of a find text operation
  */
 
 #include <config.h>
@@ -37,147 +37,675 @@
 
 #include "gschem.h"
 
-static void
-set_remember_page (GschemToplevel *w_current, PAGE *remember_page);
 
-/*********** Start of find text dialog box *******/
-
-/*! \brief response function for the find text dialog
- *  \par Function Description
- *  This function takes the string the user likes to find and searches it
- *  in the schematic.
- */
-void
-find_text_dialog_response(GtkWidget *widget, gint response, GschemToplevel *w_current)
+enum
 {
-  gint close = FALSE;
-  gint done = FALSE;
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  COLUMN_FILENAME,
+  COLUMN_STRING,
+  COLUMN_OBJECT,
+  COLUMN_COUNT
+};
 
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (w_current != NULL);
 
-  switch (response) {
-  case GTK_RESPONSE_OK:
-    if (w_current->remember_page == NULL) {
-      /* if page was closed, just start over again */
-      w_current->start_find = TRUE;
-      set_remember_page (w_current, toplevel->page_current);
-    } else if (w_current->remember_page != toplevel->page_current) {
-      s_page_goto(toplevel, w_current->remember_page);
-      gschem_toplevel_page_changed (w_current);
+typedef void (*NotifyFunc)(void*, void*);
+
+
+static void
+assign_store (GschemFindTextState *state, GSList *objects);
+
+static void
+class_init (GschemFindTextStateClass *klass);
+
+static void
+clear_store (GschemFindTextState *state);
+
+static void
+dispose (GObject *object);
+
+static void
+finalize (GObject *object);
+
+static GSList*
+find_objects (GSList *pages, const char *text);
+
+static GSList*
+get_pages (GList *pages, gboolean descend);
+
+static void
+get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
+
+static GList*
+get_subpages (PAGE *page);
+
+static void
+instance_init (GschemFindTextState *state);
+
+static void
+object_weakref_cb (OBJECT *object, GschemFindTextState *state);
+
+static void
+remove_object (GschemFindTextState *state, OBJECT *object);
+
+static void
+select_cb (GtkTreeSelection *selection, GschemFindTextState *state);
+
+static void
+set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
+
+
+static GObjectClass *gschem_find_text_state_parent_class = NULL;
+
+
+/*! \brief find instances of a given string
+ *
+ *  Finds instances of a given string and displays the result inside this
+ *  widget.
+ *
+ *  \param [in] state
+ *  \param [in] pages a list of pages to search
+ *  \param [in] text the text to find
+ *  \param [in] descend decend the page heirarchy
+ *  \return the number of objects found
+ */
+int
+gschem_find_text_state_find (GschemFindTextState *state, GList *pages, const char *text, gboolean descend)
+{
+  int count;
+  GSList *objects;
+  GSList *all_pages;
+
+  all_pages = get_pages (pages, descend);
+
+  objects = find_objects (all_pages, text);
+  g_slist_free (all_pages);
+
+  assign_store (state, objects);
+  count = g_slist_length (objects);
+  g_slist_free (objects);
+
+  return count;
+}
+
+
+/*! \brief Get/register GschemFindTextState type.
+ */
+GType
+gschem_find_text_state_get_type ()
+{
+  static GType type = 0;
+
+  if (type == 0) {
+    static const GTypeInfo info = {
+      sizeof(GschemFindTextStateClass),
+      NULL,                                /* base_init */
+      NULL,                                /* base_finalize */
+      (GClassInitFunc) class_init,
+      NULL,                                /* class_finalize */
+      NULL,                                /* class_data */
+      sizeof(GschemFindTextState),
+      0,                                   /* n_preallocs */
+      (GInstanceInitFunc) instance_init,
+    };
+
+    type = g_type_register_static (GTK_TYPE_ALIGNMENT,
+                                   "GschemFindTextState",
+                                   &info,
+                                   0);
+  }
+
+  return type;
+}
+
+
+/*! \brief create a new widget for showing the find text state
+ *
+ *  \return the new find text state widget
+ */
+GschemFindTextState*
+gschem_find_text_state_new ()
+{
+  return GSCHEM_FIND_TEXT_STATE (g_object_new (GSCHEM_TYPE_FIND_TEXT_STATE,
+                                               NULL));
+}
+
+
+
+
+
+
+
+
+/*! \brief places object in the store so the user can see them
+ *
+ *  \param [in] state
+ *  \param [in] objects the list of objects to put in the store
+ */
+static void
+assign_store (GschemFindTextState *state, GSList *objects)
+{
+  GSList *object_iter;
+
+  g_return_if_fail (state != NULL);
+  g_return_if_fail (state->store != NULL);
+
+  clear_store (state);
+
+  object_iter = objects;
+
+  while (object_iter != NULL) {
+    char *basename;
+    OBJECT *object = (OBJECT*) object_iter->data;
+    const char *str;
+    GtkTreeIter tree_iter;
+
+    object_iter = g_slist_next (object_iter);
+
+    if (object == NULL) {
+      g_warning ("NULL object encountered");
+      continue;
     }
 
-    done = o_edit_find_text (
-            w_current,
-            s_page_objects (w_current->remember_page),
-            gschem_find_text_widget_get_find_text_string (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
-            gschem_find_text_widget_get_descend (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
-            !(w_current->start_find));
-
-    if (done) {
-      o_invalidate_all (w_current);
-      close = TRUE;
+    if (object->page == NULL) {
+      g_warning ("NULL page encountered");
+      continue;
     }
-    w_current->start_find = FALSE;
-    break;
 
-  case GTK_RESPONSE_CANCEL:
-  case GTK_RESPONSE_DELETE_EVENT:
-    close = TRUE;
-    break;
+    if (object->type != OBJ_TEXT) {
+      g_warning ("expecting a text object");
+      continue;
+    }
 
-  default:
-    printf("find_text_dialog_response(): strange signal %d\n", response);
-  }
+    str = o_text_get_string (object->page->toplevel, object);
 
-  if (close) {
-    gtk_widget_grab_focus (w_current->drawing_area);
-    gtk_widget_hide (GTK_WIDGET (widget));
+    if (str == NULL) {
+      g_warning ("NULL string encountered");
+      continue;
+    }
+
+    s_object_weak_ref (object, (NotifyFunc) object_weakref_cb, state);
+
+    gtk_list_store_append (state->store, &tree_iter);
+
+    basename = g_path_get_basename (object->page->page_filename);
+
+    gtk_list_store_set (state->store,
+                        &tree_iter,
+                        COLUMN_FILENAME, basename,
+                        COLUMN_STRING, str,
+                        COLUMN_OBJECT, object,
+                        -1);
+
+    g_free (basename);
   }
 }
 
-/*! \brief Create the text find dialog
- *  \par Function Description
- *  This function creates the text find dialog.
- */
-void find_text_dialog(GschemToplevel *w_current)
-{
-  OBJECT *object;
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (w_current != NULL);
-
-  w_current->start_find = TRUE;
-  set_remember_page (w_current, toplevel->page_current);
-
-  object = o_select_return_first_object(w_current);
-
-  if ((object != NULL) && (object->type == OBJ_TEXT)) {
-    gschem_find_text_widget_set_find_text_string(
-            GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget),
-            o_text_get_string (w_current->toplevel, object)
-            );
-  }
-
-  //if (!w_current->tfindwindow) {
-  //  w_current->tfindwindow = gschem_dialog_new_with_buttons(_("Find Text"),
-  //                                                          GTK_WINDOW(w_current->main_window),
-  //                                                          0, /* not modal GTK_DIALOG_MODAL */
-  //                                                          "find-text", w_current,
-  //                                                          GTK_STOCK_CLOSE,
-  //                                                          GTK_RESPONSE_REJECT,
-  //                                                          GTK_STOCK_FIND,
-  //                                                          GTK_RESPONSE_ACCEPT,
-  //                                                          NULL);
-
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  //  gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->tfindwindow),
-  //                                          GTK_RESPONSE_ACCEPT,
-  //                                          GTK_RESPONSE_REJECT,
-  //                                          -1);
-
-
-  //  g_signal_connect (G_OBJECT (w_current->tfindwindow), "response",
-  //                    G_CALLBACK (find_text_dialog_response),
-  //                    w_current);
-
-  //  gtk_dialog_set_default_response(GTK_DIALOG(w_current->tfindwindow),
-  //                                   GTK_RESPONSE_ACCEPT);
-
-    //checkdescend = gtk_check_button_new_with_label(_("descend into hierarchy"));
-    //gtk_box_pack_start(GTK_BOX(vbox), checkdescend, TRUE, TRUE, 0);
-
-  gtk_widget_show (GTK_WIDGET (w_current->find_text_widget));
-  gtk_widget_grab_focus (gschem_find_text_widget_get_entry (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)));
-  gtk_entry_select_region(GTK_ENTRY(gschem_find_text_widget_get_entry (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget))), 0, -1);
-}
-
-
-/**
- *  \brief Set the current find page
+/*! \brief initialize class
  *
- *  Sets the current find page as a weak pointer, so if the page is closed,
- *  this module can handle it.
- *
- *  \param [in] w_current
- *  \param [in] remember_page
+ *  \param [in] klass The class for initialization
  */
 static void
-set_remember_page (GschemToplevel *w_current, PAGE *remember_page)
+class_init (GschemFindTextStateClass *klass)
 {
-  g_return_if_fail (w_current != NULL);
+  gschem_find_text_state_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
-  if (w_current->remember_page != NULL) {
-    s_page_remove_weak_ptr (w_current->remember_page, &(w_current->remember_page));
+  G_OBJECT_CLASS (klass)->dispose  = dispose;
+  G_OBJECT_CLASS (klass)->finalize = finalize;
+
+  G_OBJECT_CLASS (klass)->get_property = get_property;
+  G_OBJECT_CLASS (klass)->set_property = set_property;
+
+  g_signal_new ("select-object",                     /* signal_name  */
+                G_OBJECT_CLASS_TYPE (klass),         /* itype        */
+                0,                                   /* signal_flags */
+                0,                                   /* class_offset */
+                NULL,                                /* accumulator  */
+                NULL,                                /* accu_data    */
+                g_cclosure_marshal_VOID__POINTER,    /* c_marshaller */
+                G_TYPE_NONE,                         /* return_type  */
+                1,                                   /* n_params     */
+                G_TYPE_POINTER
+                );
+}
+
+
+/*! \brief delete all items from the list store
+ *
+ *  This function deletes all items in the list store and removes all the weak
+ *  references to the objects.
+ *
+ *  \param [in] state
+ */
+static void
+clear_store (GschemFindTextState *state)
+{
+  GtkTreeIter iter;
+  gboolean valid;
+
+  g_return_if_fail (state != NULL);
+  g_return_if_fail (state->store != NULL);
+
+  valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (state->store), &iter);
+
+  while (valid) {
+    GValue value = G_VALUE_INIT;
+
+    gtk_tree_model_get_value (GTK_TREE_MODEL (state->store),
+                              &iter,
+                              COLUMN_OBJECT,
+                              &value);
+
+    if (G_VALUE_HOLDS_POINTER (&value)) {
+      OBJECT *object = g_value_get_pointer (&value);
+
+      s_object_weak_unref (object, (NotifyFunc) object_weakref_cb, state);
+    }
+
+    g_value_unset (&value);
+
+    valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (state->store), &iter);
   }
 
-  w_current->remember_page = remember_page;
+  gtk_list_store_clear (state->store);
+}
 
-  if (w_current->remember_page != NULL) {
-    s_page_add_weak_ptr (w_current->remember_page, &(w_current->remember_page));
+
+/*! \brief Dispose of the object
+ */
+static void
+dispose (GObject *object)
+{
+  GschemFindTextState *state = GSCHEM_FIND_TEXT_STATE (object);
+
+  if (state->store) {
+    clear_store (state);
+    g_object_unref (state->store);
+    state->store = NULL;
+  }
+
+  /* lastly, chain up to the parent dispose */
+
+  g_return_if_fail (gschem_find_text_state_parent_class != NULL);
+  gschem_find_text_state_parent_class->dispose (object);
+}
+
+
+/*! \brief Finalize object
+ */
+static void
+finalize (GObject *object)
+{
+  /* lastly, chain up to the parent finalize */
+
+  g_return_if_fail (gschem_find_text_state_parent_class != NULL);
+  gschem_find_text_state_parent_class->finalize (object);
+}
+
+
+/*! \brief Find all text objects that contain a string
+ *
+ *  \param pages the list of pages to search
+ *  \param text the text to find
+ *  \return a list of objects that contain the given text
+ */
+static GSList*
+find_objects (GSList *pages, const char *text)
+{
+  GSList *object_list = NULL;
+  GSList *page_iter = pages;
+
+  g_return_val_if_fail (text != NULL, NULL);
+
+  while (page_iter != NULL) {
+    const GList *object_iter;
+    PAGE *page = (PAGE*) page_iter->data;
+
+    page_iter = g_slist_next (page_iter);
+
+    if (page == NULL) {
+      g_warning ("NULL page encountered");
+      continue;
+    }
+
+    object_iter = s_page_objects (page);
+
+    while (object_iter != NULL) {
+      OBJECT *object = (OBJECT*) object_iter->data;
+      const char *str;
+
+      object_iter = g_list_next (object_iter);
+
+      if (object == NULL) {
+        g_warning ("NULL object encountered");
+        continue;
+      }
+
+      if (object->type != OBJ_TEXT) {
+        continue;
+      }
+
+      if (!(o_is_visible (page->toplevel, object) || page->toplevel->show_hidden_text)) {
+        continue;
+      }
+
+      str = o_text_get_string (page->toplevel, object);
+
+      if (str == NULL) {
+        g_warning ("NULL string encountered");
+        continue;
+      }
+
+      if (strstr (str, text) != NULL) {
+        object_list = g_slist_prepend (object_list, object);
+      }
+    }
+  }
+
+  return g_slist_reverse (object_list);
+}
+
+
+/*! \brief obtain a list of pages for an operation
+ *
+ *  Descends the heirarchy of pages, if selected, and removes duplicate pages.
+ *
+ *  \param [in] pages the list of pages to begin search
+ *  \param [in] descend alose locates subpages
+ *  \return a list of all the pages
+ */
+static GSList*
+get_pages (GList *pages, gboolean descend)
+{
+  GList *input_list = g_list_copy (pages);
+  GSList *output_list = NULL;
+  GHashTable *visit_list = g_hash_table_new (NULL, NULL);
+
+  while (input_list != NULL) {
+    PAGE *page = (PAGE*) input_list->data;
+
+    input_list = g_list_delete_link (input_list, input_list);
+
+    if (page == NULL) {
+      g_warning ("NULL page encountered");
+      continue;
+    }
+
+    /** \todo the following function becomes available in glib 2.32 */
+    /* if (g_hash_table_contains (visit_list, page)) { */
+
+    if (g_hash_table_lookup_extended (visit_list, page, NULL, NULL)) {
+      continue;
+    }
+
+    output_list = g_slist_prepend (output_list, page);
+    g_hash_table_insert (visit_list, page, NULL);
+
+    if (descend) {
+      input_list = g_list_concat (input_list, get_subpages (page));
+    }
+  }
+
+  g_hash_table_destroy (visit_list);
+
+  return g_slist_reverse (output_list);
+}
+
+
+/*! \brief Get a property
+ *
+ *  \param [in]     object
+ *  \param [in]     param_id
+ *  \param [in,out] value
+ *  \param [in]     pspec
+ */
+static void
+get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
+{
+  /* GschemFindTextState *state = GSCHEM_FIND_TEXT_STATE (object); */
+
+  switch (param_id) {
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
   }
 }
 
-/*********** End of find text dialog box *******/
+
+/*! \brief get the subpages of a schematic page
+ *
+ *  if any subpages are not loaded, this function will load them.
+ *
+ *  \param [in] page the parent page
+ *  \return a list of all the subpages
+ */
+static GList*
+get_subpages (PAGE *page)
+{
+  const GList *object_iter;
+  GList *page_list = NULL;
+
+  g_return_val_if_fail (page != NULL, NULL);
+
+  object_iter = s_page_objects (page);
+
+  while (object_iter != NULL) {
+    char *attrib;
+    char *filename;
+    OBJECT *object = (OBJECT*) object_iter->data;
+    PAGE *subpage;
+
+    object_iter = g_list_next (object_iter);
+
+    if (object == NULL) {
+      g_warning ("NULL object encountered");
+      continue;
+    }
+
+    if (object->type != OBJ_COMPLEX) {
+      continue;
+    }
+
+    attrib = o_attrib_search_attached_attribs_by_name (object,
+                                                       "source",
+                                                       0);
+
+    if (attrib == NULL) {
+      attrib = o_attrib_search_inherited_attribs_by_name (object,
+                                                          "source",
+                                                          0);
+    }
+
+    if (attrib == NULL) {
+      continue;
+    }
+
+    filename = u_basic_breakup_string (attrib, ',', 0);
+
+    if (filename == NULL) {
+      continue;
+    }
+
+    subpage = s_hierarchy_load_subpage (page, filename, NULL);
+
+    if (subpage != NULL) {
+      page_list = g_list_prepend (page_list, subpage);
+    }
+  }
+
+  return g_list_reverse (page_list);
+}
+
+
+/*! \brief initialize a new instance
+ *
+ *  \param [in] state the new instance
+ */
+static void
+instance_init (GschemFindTextState *state)
+{
+  GtkTreeViewColumn *column;
+  GtkCellRenderer *renderer;
+  GtkWidget *scrolled;
+  GtkTreeSelection *selection;
+  GtkWidget *tree_widget;
+
+  g_return_if_fail (state != NULL);
+
+  state->store = gtk_list_store_new(COLUMN_COUNT,
+                                    G_TYPE_STRING,
+                                    G_TYPE_STRING,
+                                    G_TYPE_POINTER);
+
+  scrolled = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (state), scrolled);
+
+  tree_widget = gtk_tree_view_new_with_model (GTK_TREE_MODEL (state->store));
+  gtk_container_add (GTK_CONTAINER (scrolled), tree_widget);
+
+  /* filename column */
+
+  column = gtk_tree_view_column_new();
+  gtk_tree_view_column_set_resizable (column, TRUE);
+  gtk_tree_view_column_set_title (column, _("Filename"));
+
+  gtk_tree_view_append_column (GTK_TREE_VIEW (tree_widget), column);
+
+  renderer = gtk_cell_renderer_text_new();
+  gtk_tree_view_column_pack_start(column, renderer, TRUE);
+  gtk_tree_view_column_add_attribute(column, renderer, "text", 0);
+
+  /* text column */
+
+  column = gtk_tree_view_column_new();
+  gtk_tree_view_column_set_resizable (column, TRUE);
+  gtk_tree_view_column_set_title (column, _("Text"));
+
+  gtk_tree_view_append_column (GTK_TREE_VIEW (tree_widget), column);
+
+  renderer = gtk_cell_renderer_text_new();
+  gtk_tree_view_column_pack_start(column, renderer, TRUE);
+  gtk_tree_view_column_add_attribute(column, renderer, "text", 1);
+
+  /* attach signal to detect user selection */
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_widget));
+  g_signal_connect (selection, "changed", G_CALLBACK (select_cb), state);
+}
+
+
+/*! \brief callback for an object that has been destroyed
+ *
+ *  \param [in] object the object that has been destroyed
+ *  \param [in] state
+ */
+static void
+object_weakref_cb (OBJECT *object, GschemFindTextState *state)
+{
+  g_return_if_fail (state != NULL);
+
+  remove_object (state, object);
+}
+
+
+/*! \brief remove an object from the store
+ *
+ *  This function gets called in response to the object deletion. And, doesn't
+ *  dereference the object.
+ *
+ *  This function doesn't remove the weak reference, under the assumption that
+ *  the object is being destroyed.
+ *
+ *  \param [in] state
+ *  \param [in] object the object to remove from the store
+ */
+static void
+remove_object (GschemFindTextState *state, OBJECT *object)
+{
+  GtkTreeIter iter;
+  gboolean valid;
+
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (state != NULL);
+  g_return_if_fail (state->store != NULL);
+
+  valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (state->store), &iter);
+
+  while (valid) {
+    GValue value = G_VALUE_INIT;
+
+    gtk_tree_model_get_value (GTK_TREE_MODEL (state->store),
+                              &iter,
+                              COLUMN_OBJECT,
+                              &value);
+
+    if (G_VALUE_HOLDS_POINTER (&value)) {
+      OBJECT *other = g_value_get_pointer (&value);
+
+      if (object == other) {
+        g_value_unset (&value);
+        valid = gtk_list_store_remove (state->store, &iter);
+        continue;
+      }
+    }
+
+    g_value_unset (&value);
+    valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (state->store), &iter);
+  }
+}
+
+
+/*! \brief callback for user selecting an item
+ *
+ *  \param [in] selection
+ *  \param [in] state
+ */
+static void
+select_cb (GtkTreeSelection *selection, GschemFindTextState *state)
+{
+  GtkTreeIter iter;
+  gboolean success;
+
+  g_return_if_fail (selection != NULL);
+  g_return_if_fail (state != NULL);
+
+  success = gtk_tree_selection_get_selected (selection, NULL, &iter);
+
+  if (success) {
+    GValue value = G_VALUE_INIT;
+
+    gtk_tree_model_get_value (GTK_TREE_MODEL (state->store),
+                              &iter,
+                              COLUMN_OBJECT,
+                              &value);
+
+    if (G_VALUE_HOLDS_POINTER (&value)) {
+      OBJECT *object = g_value_get_pointer (&value);
+
+      if (object != NULL) {
+        g_signal_emit_by_name (state, "select-object", object);
+      } else {
+        g_warning ("NULL object encountered");
+      }
+    }
+
+    g_value_unset (&value);
+  }
+}
+
+
+/*! \brief Set a gobject property
+ *
+ *  \param [in]     object
+ *  \param [in]     param_id
+ *  \param [in,out] value
+ *  \param [in]     pspec
+ */
+static void
+set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
+{
+  /* GschemFindTextState *state = GSCHEM_FIND_TEXT_STATE (object); */
+
+  switch (param_id) {
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
+  }
+}

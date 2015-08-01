@@ -170,6 +170,41 @@ static GtkWidget *x_window_stock_pixmap(const char *stock, GschemToplevel *w_cur
   return wpixmap;
 }
 
+
+static void
+x_window_find_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
+{
+  gint close = FALSE;
+  int count;
+
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->toplevel != NULL);
+
+  switch (response) {
+  case GTK_RESPONSE_OK:
+    count = gschem_find_text_state_find (
+        w_current->find_text_state,
+        geda_list_get_glist (w_current->toplevel->pages),
+        gschem_find_text_widget_get_find_text_string (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
+        gschem_find_text_widget_get_descend (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)));
+    close = (count > 0);
+    break;
+
+  case GTK_RESPONSE_CANCEL:
+  case GTK_RESPONSE_DELETE_EVENT:
+    close = TRUE;
+    break;
+
+  default:
+    printf("x_window_find_text(): strange signal %d\n", response);
+  }
+
+  if (close) {
+    gtk_widget_grab_focus (w_current->drawing_area);
+    gtk_widget_hide (GTK_WIDGET (widget));
+  }
+}
+
 static void
 x_window_invoke_macro (GschemMacroWidget *widget, int response, GschemToplevel *w_current)
 {
@@ -187,6 +222,22 @@ x_window_invoke_macro (GschemMacroWidget *widget, int response, GschemToplevel *
 
   gtk_widget_grab_focus (w_current->drawing_area);
   gtk_widget_hide (GTK_WIDGET (widget));
+}
+
+static void
+x_window_select_text (GschemFindTextState *state, OBJECT *object, GschemToplevel *w_current)
+{
+  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (view);
+
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->page != NULL);
+
+  if (page != object->page) {
+    gschem_page_view_set_page (view, object->page);
+  }
+
+  gschem_page_view_zoom_text (view, object, w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -209,6 +260,9 @@ void x_window_create_main(GschemToplevel *w_current)
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
   char *right_button_text;
+  GtkWidget *vpaned;
+  GtkWidget *notebook;
+  GtkWidget *work_box;
 
   w_current->main_window = GTK_WIDGET (gschem_main_window_new ());
 
@@ -359,6 +413,11 @@ void x_window_create_main(GschemToplevel *w_current)
                                  TRUE);
   }
 
+  vpaned = gtk_vpaned_new ();
+  gtk_container_add(GTK_CONTAINER(main_box), vpaned);
+
+  work_box = gtk_vbox_new (FALSE, 0);
+  gtk_paned_add1 (GTK_PANED (vpaned), work_box);
 
   /*  Try to create popup menu (appears in right mouse button  */
   w_current->popup_menu = (GtkWidget *) get_main_popup(w_current);
@@ -380,7 +439,7 @@ void x_window_create_main(GschemToplevel *w_current)
                                                     10.0));
 
   scrolled = gtk_scrolled_window_new (hadjustment, vadjustment);
-  gtk_container_add(GTK_CONTAINER(main_box), scrolled);
+  gtk_container_add (GTK_CONTAINER (work_box), scrolled);
   x_window_create_drawing(scrolled, w_current);
   x_window_setup_draw_events(w_current);
 
@@ -396,7 +455,7 @@ void x_window_create_main(GschemToplevel *w_current)
   /* find text box */
   w_current->find_text_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_FIND_TEXT_WIDGET, NULL));
 
-  gtk_box_pack_start (GTK_BOX (main_box),
+  gtk_box_pack_start (GTK_BOX (work_box),
                       w_current->find_text_widget,
                       FALSE,
                       FALSE,
@@ -404,13 +463,13 @@ void x_window_create_main(GschemToplevel *w_current)
 
   g_signal_connect (w_current->find_text_widget,
                     "response",
-                    G_CALLBACK (&find_text_dialog_response),
+                    G_CALLBACK (&x_window_find_text),
                     w_current);
 
   /* macro box */
   w_current->macro_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_MACRO_WIDGET, NULL));
 
-  gtk_box_pack_start (GTK_BOX (main_box),
+  gtk_box_pack_start (GTK_BOX (work_box),
                       w_current->macro_widget,
                       FALSE,
                       FALSE,
@@ -419,6 +478,25 @@ void x_window_create_main(GschemToplevel *w_current)
   g_signal_connect (w_current->macro_widget,
                     "response",
                     G_CALLBACK (&x_window_invoke_macro),
+                    w_current);
+
+  /* status notebook */
+  notebook = gtk_notebook_new ();
+  gtk_paned_add2 (GTK_PANED (vpaned), notebook);
+
+  w_current->find_text_state = gschem_find_text_state_new ();
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                            GTK_WIDGET (w_current->find_text_state),
+                            gtk_label_new (_("Find Text")));
+
+  gtk_widget_set_size_request (GTK_WIDGET (w_current->find_text_state),
+                               default_width,
+                               default_height / 4);
+
+  g_signal_connect (w_current->find_text_state,
+                    "select-object",
+                    G_CALLBACK (&x_window_select_text),
                     w_current);
 
   /* bottom box */

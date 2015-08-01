@@ -153,6 +153,31 @@ finalize (GObject *object)
 }
 
 
+/*! \brief Create the text find dialog
+ *  \par Function Description
+ *  This function creates the text find dialog.
+ */
+void find_text_dialog (GschemToplevel *w_current)
+{
+  OBJECT *object;
+
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->toplevel != NULL);
+
+  object = o_select_return_first_object(w_current);
+
+  if ((object != NULL) && (object->type == OBJ_TEXT)) {
+    gschem_find_text_widget_set_find_text_string(
+            GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget),
+            o_text_get_string (w_current->toplevel, object)
+            );
+  }
+
+  gtk_widget_show (GTK_WIDGET (w_current->find_text_widget));
+  gtk_widget_grab_focus (gschem_find_text_widget_get_entry (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)));
+  gtk_entry_select_region(GTK_ENTRY(gschem_find_text_widget_get_entry (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget))), 0, -1);
+}
+
 
 /*! \brief Get a property
  *

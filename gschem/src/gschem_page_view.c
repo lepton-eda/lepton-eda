@@ -1299,3 +1299,44 @@ gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
   gschem_page_view_update_scroll_adjustments (view);
   gschem_page_view_invalidate_all (view);
 }
+
+
+/*! \brief Zoom in on a single text object
+ *
+ *  \param [in] view      This GschemPageView
+ *  \param [in] object    The text object
+ *  \param [in] w_current The GschemToplevel
+ */
+void
+gschem_page_view_zoom_text (GschemPageView *view, OBJECT *object, GschemToplevel *w_current)
+{
+  int text_screen_height;
+  int x[2];
+  int y[2];
+
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->page != NULL);
+  g_return_if_fail (object->page->toplevel != NULL);
+  g_return_if_fail (object->text != NULL);
+
+  a_zoom (w_current, view, ZOOM_FULL, DONTCARE);
+
+  g_assert (world_get_single_object_bounds (object->page->toplevel,
+                                            object,
+                                            &x[0],
+                                            &y[0],
+                                            &x[1],
+                                            &y[1]));
+
+  text_screen_height = gschem_page_view_SCREENabs (view, y[1] - y[0]);
+
+  /* this code will zoom/pan till the text screen height is about */
+  /* 50 pixels high, perhaps a future enhancement will be to make */
+  /* this number configurable */
+  while (text_screen_height < 50) {
+    a_zoom (w_current, view, ZOOM_IN, DONTCARE);
+    text_screen_height = gschem_page_view_SCREENabs (view, y[1] - y[0]);
+  }
+
+  gschem_page_view_pan (view, object->text->x, object->text->y);
+}

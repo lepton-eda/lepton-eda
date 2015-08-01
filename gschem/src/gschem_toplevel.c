@@ -167,6 +167,8 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->toolbar_net    = NULL;
   w_current->toolbar_bus    = NULL;
 
+  w_current->find_text_state = NULL;
+
   w_current->keyaccel_string = NULL;
   w_current->keyaccel_string_source_id = FALSE;
 
@@ -241,12 +243,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->which_object = NULL;
   w_current->temp_path = NULL;
   w_current->pathcontrol = TRUE;
-
-  /* ---------- */
-  /* Find State */
-  /* ---------- */
-  w_current->start_find = TRUE;
-  w_current->remember_page = NULL;
 
   /* ------------------ */
   /* Rubberbanding nets */

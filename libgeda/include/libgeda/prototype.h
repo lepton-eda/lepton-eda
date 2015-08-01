@@ -26,7 +26,7 @@ SCM g_scm_c_eval_string_protected (const gchar *str);
 gboolean g_read_file(TOPLEVEL *toplevel, const gchar *filename, GError **err);
 
 /* g_rc.c */
-SCM g_rc_mode_general(SCM scmmode, const char *rc_name, int *mode_var, 
+SCM g_rc_mode_general(SCM scmmode, const char *rc_name, int *mode_var,
                       const vstbl_entry *table, int table_size);
 gboolean g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
 gboolean g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
@@ -133,10 +133,10 @@ void o_circle_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_cent
 
 /* o_complex_basic.c */
 int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
-			      int *rleft, int *rtop, 
+			      int *rleft, int *rtop,
 			      int *rright, int *rbottom);
 int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *o_list,
-			     int *left, int *top, 
+			     int *left, int *top,
 			     int *right, int *bottom);
 int o_complex_is_embedded(OBJECT *o_current);
 GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object);
@@ -277,12 +277,12 @@ void s_clib_free (void);
 GList *s_clib_get_sources (const gboolean sorted);
 const CLibSource *s_clib_get_source_by_name (const gchar *name);
 void s_clib_refresh ();
-const CLibSource *s_clib_add_directory (const gchar *directory, 
+const CLibSource *s_clib_add_directory (const gchar *directory,
 					const gchar *name);
 const CLibSource *s_clib_add_command (const gchar *list_cmd,
                                       const gchar *get_cmd,
 				      const gchar *name);
-const CLibSource *s_clib_add_scm (SCM listfunc, SCM getfunc, 
+const CLibSource *s_clib_add_scm (SCM listfunc, SCM getfunc,
 				  const gchar *name);
 const gchar *s_clib_source_get_name (const CLibSource *source);
 GList *s_clib_source_get_symbols (const CLibSource *source);
@@ -316,6 +316,7 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object);
 PAGE *s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename, PAGE *parent, int page_control, int flag, GError **err);
 void s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol, PAGE *parent);
 PAGE *s_hierarchy_find_up_page(GedaPageList *page_list, PAGE *current_page);
+PAGE* s_hierarchy_load_subpage (PAGE *page, const char *filename, GError **error);
 GList* s_hierarchy_traversepages(TOPLEVEL *toplevel, PAGE *p_current, gint flags);
 gint s_hierarchy_print_page(PAGE *p_current, void * data);
 PAGE *s_hierarchy_find_prev_page(GedaPageList *page_list, PAGE *current_page);

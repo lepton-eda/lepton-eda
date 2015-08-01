@@ -44,6 +44,10 @@ struct st_gschem_toplevel {
   GtkWidget *toolbar_net;
   GtkWidget *toolbar_bus;
 
+  /* Widgets inside notebook at bottom of window */
+  GschemFindTextState *find_text_state;
+
+
   gchar *keyaccel_string;               /* visual feedback when pressing
                                            keyboard accelerators */
   gboolean keyaccel_string_source_id;   /* event source ID used by above */
@@ -121,12 +125,6 @@ struct st_gschem_toplevel {
   OBJECT *which_object;                 /* Object being manipulated */
   PATH *temp_path;                      /* Path being created */
   gboolean pathcontrol;                 /* Set path control point while path creating */ /* FIXME: can we do without it? */
-
-  /* ---------- */
-  /* Find State */
-  /* ---------- */
-  int start_find;
-  PAGE *remember_page;
 
   /* ------------------ */
   /* Rubberbanding nets */
