@@ -116,6 +116,10 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
   g_return_val_if_fail ((w_current != NULL), 0);
 
+  if (!gtk_widget_has_focus (GTK_WIDGET (page_view))) {
+    gtk_widget_grab_focus (GTK_WIDGET (page_view));
+  }
+
   scm_dynwind_begin (0);
   g_dynwind_window (w_current);
 
