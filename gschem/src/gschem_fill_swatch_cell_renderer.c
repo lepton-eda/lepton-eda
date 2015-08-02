@@ -192,6 +192,7 @@ get_property (GObject    *object,
   switch (param_id) {
     case PROP_ENABLED:
       g_value_set_boolean (value, swatch->enabled);
+      break;
 
     case PROP_FILL_TYPE:
       g_value_set_int (value, swatch->fill_type);
