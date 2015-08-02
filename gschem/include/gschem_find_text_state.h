@@ -35,12 +35,12 @@ typedef struct _GschemFindTextState GschemFindTextState;
 
 struct _GschemFindTextStateClass
 {
-  GtkAlignmentClass parent_class;
+  GschemBinClass parent_class;
 };
 
 struct _GschemFindTextState
 {
-  GtkAlignment parent;
+  GschemBin parent;
 
   GtkListStore *store;
 };

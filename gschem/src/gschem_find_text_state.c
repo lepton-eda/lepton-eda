@@ -147,7 +147,7 @@ gschem_find_text_state_get_type ()
       (GInstanceInitFunc) instance_init,
     };
 
-    type = g_type_register_static (GTK_TYPE_ALIGNMENT,
+    type = g_type_register_static (GSCHEM_TYPE_BIN,
                                    "GschemFindTextState",
                                    &info,
                                    0);

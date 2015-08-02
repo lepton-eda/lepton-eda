@@ -28,6 +28,7 @@ gschem_SOURCES = \
 	gschem_accel_label.c \
 	gschem_action.c \
 	gschem_arc_dialog.c \
+	gschem_bin.c \
 	gschem_binding.c \
 	gschem_binding_integer.c \
 	gschem_bottom_widget.c \

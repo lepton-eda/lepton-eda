@@ -34,13 +34,13 @@ typedef struct _GschemLogWidgetClass GschemLogWidgetClass;
 typedef struct _GschemLogWidget      GschemLogWidget;
 
 struct _GschemLogWidgetClass {
-  GtkAlignmentClass parent_class;
+  GschemBinClass parent_class;
 
   GtkTextBuffer *buffer;
 };
 
 struct _GschemLogWidget {
-  GtkAlignment parent_instance;
+  GschemBin parent_instance;
 
   GtkTextView *viewer;
 };

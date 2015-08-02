@@ -87,7 +87,7 @@ gschem_log_widget_get_type ()
       (GInstanceInitFunc) instance_init,
     };
 
-    type = g_type_register_static (GTK_TYPE_ALIGNMENT,
+    type = g_type_register_static (GSCHEM_TYPE_BIN,
                                    "GschemLogWidget",
                                    &info,
                                    0);

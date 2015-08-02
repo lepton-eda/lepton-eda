@@ -11,6 +11,7 @@ noinst_HEADERS = \
 	gschemhotkeystore.h \
 	gschem_accel_label.h \
 	gschem_action.h \
+	gschem_bin.h \
 	gschem_binding.h \
 	gschem_binding_integer.h \
 	gschem_bottom_widget.h \
