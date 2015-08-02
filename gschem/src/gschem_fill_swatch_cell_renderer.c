@@ -45,7 +45,8 @@
 
 enum
 {
-  PROP_ENABLED = 1,
+  PROP_0,
+  PROP_ENABLED,
   PROP_FILL_TYPE
 };
 
@@ -83,19 +84,19 @@ set_property (GObject      *object,
 /*! \brief Get/register GschemFillSwatchCellRenderer type.
  */
 GType
-gschem_fill_swatch_cell_renderer_get_type()
+gschem_fill_swatch_cell_renderer_get_type ()
 {
   static GType type = 0;
 
   if (type == 0) {
     static const GTypeInfo info = {
-      sizeof(GschemFillSwatchCellRendererClass),
+      sizeof (GschemFillSwatchCellRendererClass),
       NULL,                                         /* base_init */
       NULL,                                         /* base_finalize */
       (GClassInitFunc) class_init,
       NULL,                                         /* class_finalize */
       NULL,                                         /* class_data */
-      sizeof(GschemFillSwatchCellRenderer),
+      sizeof (GschemFillSwatchCellRenderer),
       0,                                            /* n_preallocs */
       (GInstanceInitFunc) instance_init,
     };
@@ -116,7 +117,7 @@ gschem_fill_swatch_cell_renderer_get_type()
  *  \return The new cell renderer
  */
 GtkCellRenderer*
-gschem_fill_swatch_cell_renderer_new()
+gschem_fill_swatch_cell_renderer_new ()
 {
   return g_object_new (GSCHEM_TYPE_FILL_SWATCH_CELL_RENDERER, NULL);
 }
@@ -176,10 +177,10 @@ instance_init (GschemFillSwatchCellRenderer *swatch)
 /*! \private
  *  \brief Get a property.
  *
- *  \brief [in]  object   The object with the property
- *  \brief [in]  param_id The id of the property
- *  \brief [out] value    The value of the property
- *  \brief [in]  pspec    The property param spec
+ *  \param [in]  object   The object with the property
+ *  \param [in]  param_id The id of the property
+ *  \param [out] value    The value of the property
+ *  \param [in]  pspec    The property param spec
  */
 static void
 get_property (GObject    *object,
@@ -206,14 +207,15 @@ get_property (GObject    *object,
 
 
 
-/*! \brief Render the swatch into the cell
+/*! \private
+ *  \brief Render the swatch into the cell
  *
- *  \param [in] cell
- *  \param [in] window
- *  \param [in] widget
- *  \param [in] background_area
- *  \param [in] cell_area
- *  \param [in] expose_area
+ *  \param [in] cell this cell renderer
+ *  \param [in] window the window to renter to
+ *  \param [in] widget the widget owning the window
+ *  \param [in] background_area entire cell area
+ *  \param [in] cell_area area rendered normally
+ *  \param [in] expose_area the area requiring update
  *  \param [in] flags
  */
 static void
@@ -284,10 +286,10 @@ render (GtkCellRenderer      *cell,
       box.upper_x = cell_area->x + cell_area->width;
       box.upper_y = cell_area->y + cell_area->height;
 
-      m_hatch_box(&box, 135, SWATCH_LINE_PITCH, lines);
+      m_hatch_box (&box, 135, SWATCH_LINE_PITCH, lines);
 
       if (swatch->fill_type == FILLING_MESH) {
-        m_hatch_box(&box, 45, SWATCH_LINE_PITCH, lines);
+        m_hatch_box (&box, 45, SWATCH_LINE_PITCH, lines);
       }
 
       for (index=0; index<lines->len; index++) {
@@ -322,10 +324,10 @@ render (GtkCellRenderer      *cell,
 /*! \private
  *  \brief Set a property.
  *
- *  \brief [in,out] object   The object with the property
- *  \brief [in]     param_id The id of the property
- *  \brief [in]     value    The value of the property
- *  \brief [in]     pspec    The property param spec
+ *  \param [in,out] object   The object with the property
+ *  \param [in]     param_id The id of the property
+ *  \param [in]     value    The value of the property
+ *  \param [in]     pspec    The property param spec
  */
 static void
 set_property (GObject      *object,
