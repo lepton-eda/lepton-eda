@@ -187,7 +187,20 @@ x_window_find_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
         geda_list_get_glist (w_current->toplevel->pages),
         gschem_find_text_widget_get_find_text_string (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
         gschem_find_text_widget_get_descend (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)));
-    close = (count > 0);
+    if (count > 0) {
+      /* switch the notebook page to the find results */
+      int page = gtk_notebook_page_num (GTK_NOTEBOOK (w_current->bottom_notebook),
+                                        GTK_WIDGET (w_current->find_text_state));
+
+      if (page >= 0) {
+        int current = gtk_notebook_get_current_page (GTK_NOTEBOOK (w_current->bottom_notebook));
+
+        if (page != current) {
+          gtk_notebook_set_current_page (GTK_NOTEBOOK (w_current->bottom_notebook), page);
+        }
+      }
+      close = TRUE;
+    };
     break;
 
   case GTK_RESPONSE_CANCEL:
@@ -261,7 +274,6 @@ void x_window_create_main(GschemToplevel *w_current)
   GtkAdjustment *vadjustment;
   char *right_button_text;
   GtkWidget *vpaned;
-  GtkWidget *notebook;
   GtkWidget *work_box;
 
   w_current->main_window = GTK_WIDGET (gschem_main_window_new ());
@@ -481,12 +493,12 @@ void x_window_create_main(GschemToplevel *w_current)
                     w_current);
 
   /* status notebook */
-  notebook = gtk_notebook_new ();
-  gtk_paned_add2 (GTK_PANED (vpaned), notebook);
+  w_current->bottom_notebook = gtk_notebook_new ();
+  gtk_paned_add2 (GTK_PANED (vpaned), w_current->bottom_notebook);
 
   w_current->find_text_state = gschem_find_text_state_new ();
 
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+  gtk_notebook_append_page (GTK_NOTEBOOK (w_current->bottom_notebook),
                             GTK_WIDGET (w_current->find_text_state),
                             gtk_label_new (_("Find Text")));
 
@@ -498,6 +510,13 @@ void x_window_create_main(GschemToplevel *w_current)
                     "select-object",
                     G_CALLBACK (&x_window_select_text),
                     w_current);
+
+
+  w_current->log_widget = gschem_log_widget_new ();
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (w_current->bottom_notebook),
+                            GTK_WIDGET (w_current->log_widget),
+                            gtk_label_new (_("Status")));
 
   /* bottom box */
   if (default_third_button == POPUP_ENABLED) {

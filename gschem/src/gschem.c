@@ -110,7 +110,7 @@ void gschem_quit(void)
   /* enable this to get more memory usage from glib */
   /* You also have to enable something in glib I think */
   /* g_mem_profile();*/
-	 
+
 
   gtk_main_quit();
 }
@@ -147,12 +147,12 @@ void main_prog(void *closure, int argc, char *argv[])
   /* This must be the same for all locales */
   setlocale(LC_NUMERIC, "C");
 
-  /* Disable gtk's ability to set the locale. */ 
+  /* Disable gtk's ability to set the locale. */
   /* If gtk is allowed to set the locale, then it will override the     */
   /* setlocale for LC_NUMERIC (which is important for proper PS output. */
   /* This may look funny here, given we make a call to gtk_set_locale() */
   /* above.  I don't know yet, if this is really the right thing to do. */
-  gtk_disable_setlocale(); 
+  gtk_disable_setlocale();
 
 #endif
 
@@ -160,7 +160,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
   argv_index = parse_commandline(argc, argv);
   cwd = g_get_current_dir();
-  
+
   libgeda_init();
 
   /* create log file right away even if logging is enabled */
@@ -174,11 +174,11 @@ void main_prog(void *closure, int argc, char *argv[])
   s_log_message(
                 _("This is free software, and you are welcome to redistribute it under certain\n"));
   s_log_message(
-                _("conditions; please see the COPYING file for more details.\n\n")); 
+                _("conditions; please see the COPYING file for more details.\n\n"));
 
 #if defined(__MINGW32__) && defined(DEBUG)
   fprintf(stderr, _("This is the MINGW32 port.\n"));
-#endif  
+#endif
 
 #if DEBUG
   fprintf(stderr, _("Current locale settings: %s\n"), setlocale(LC_ALL, NULL));
@@ -200,10 +200,10 @@ void main_prog(void *closure, int argc, char *argv[])
   /* initialise color map (need to do this before reading rc files */
   x_color_init ();
 
-  o_undo_init(); 
+  o_undo_init();
 
   if (s_path_sys_data () == NULL) {
-    const gchar *message = 
+    const gchar *message =
       _("You must set the GEDADATA environment variable!\n\n"
         "gschem cannot locate its data files. You must set the GEDADATA\n"
         "environment variable to point to the correct location.\n");
@@ -304,7 +304,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* open up log window on startup */
   if (w_current->log_window == MAP_ON_STARTUP) {
-    x_log_open ();
+    x_log_open (w_current);
   }
 
   /* if there were any symbols which had major changes, put up an error */
@@ -335,6 +335,6 @@ int main (int argc, char *argv[])
 #endif
 
   scm_boot_guile (argc, argv, main_prog, 0);
-  
+
   return 0;
 }

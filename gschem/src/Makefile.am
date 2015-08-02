@@ -40,6 +40,7 @@ gschem_SOURCES = \
 	gschem_find_text_widget.c \
 	gschem_hotkey_dialog.c \
 	gschem_integer_combo_box.c \
+	gschem_log_widget.c \
 	gschem_macro_widget.c \
 	gschem_main_window.c \
 	gschem_object_properties_dialog.c \
@@ -100,7 +101,6 @@ gschem_SOURCES = \
 	x_integerls.c \
 	x_linecapcb.c \
 	x_linetypecb.c \
-	x_log.c \
 	x_menus.c \
 	x_misc.c \
 	x_multiattrib.c \

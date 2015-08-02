@@ -167,7 +167,10 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->toolbar_net    = NULL;
   w_current->toolbar_bus    = NULL;
 
+  w_current->bottom_notebook = NULL;
+
   w_current->find_text_state = NULL;
+  w_current->log_widget      = NULL;
 
   w_current->keyaccel_string = NULL;
   w_current->keyaccel_string_source_id = FALSE;

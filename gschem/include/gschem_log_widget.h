@@ -18,6 +18,11 @@
  * MA 02111-1301 USA.
  */
 
+#define GSCHEM_TYPE_LOG_WIDGET           (gschem_log_widget_get_type())
+#define GSCHEM_LOG_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_LOG_WIDGET, GschemLogWidget))
+#define GSCHEM_LOG_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_LOG_WIDGET, GschemLogWidgetClass))
+#define GSCHEM_IS_LOG_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_LOG_WIDGET))
+#define GSCHEM_LOG_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_LOG_WIDGET, GschemLogWidgetClass))
 
 
 typedef enum {
@@ -25,29 +30,24 @@ typedef enum {
 } LogResponseType;
 
 
-#define TYPE_LOG         (log_get_type())
-#define LOG(obj)         (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_LOG, Log))
-#define LOG_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), TYPE_LOG, LogClass))
-#define IS_LOG(obj)      (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_LOG))
+typedef struct _GschemLogWidgetClass GschemLogWidgetClass;
+typedef struct _GschemLogWidget      GschemLogWidget;
 
+struct _GschemLogWidgetClass {
+  GtkAlignmentClass parent_class;
 
-typedef struct _LogClass LogClass;
-typedef struct _Log      Log;
-
-
-struct _LogClass {
-  GschemDialogClass parent_class;
+  GtkTextBuffer *buffer;
 };
 
-struct _Log {
-  GschemDialog parent_instance;
+struct _GschemLogWidget {
+  GtkAlignment parent_instance;
 
-  GtkTextView *textview;
-
-  guint handler;
-  
+  GtkTextView *viewer;
 };
 
 
-GType log_get_type (void);
+GType
+gschem_log_widget_get_type (void);
 
+GschemLogWidget*
+gschem_log_widget_new ();

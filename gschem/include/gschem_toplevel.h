@@ -44,8 +44,11 @@ struct st_gschem_toplevel {
   GtkWidget *toolbar_net;
   GtkWidget *toolbar_bus;
 
+  GtkWidget *bottom_notebook;
+
   /* Widgets inside notebook at bottom of window */
   GschemFindTextState *find_text_state;
+  GschemLogWidget     *log_widget;
 
 
   gchar *keyaccel_string;               /* visual feedback when pressing
