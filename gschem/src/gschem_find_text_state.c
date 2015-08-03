@@ -530,8 +530,6 @@ get_subpages (PAGE *page)
       if (subpage != NULL) {
         page_list = g_list_prepend (page_list, subpage);
       }
-
-      printf ("%s\n", *iter);
     }
 
     g_strfreev (filenames);
