@@ -489,9 +489,9 @@ get_subpages (PAGE *page)
 
   while (object_iter != NULL) {
     char *attrib;
-    char *filename;
+    char **filenames;
+    char **iter;
     OBJECT *object = (OBJECT*) object_iter->data;
-    PAGE *subpage;
 
     object_iter = g_list_next (object_iter);
 
@@ -518,17 +518,23 @@ get_subpages (PAGE *page)
       continue;
     }
 
-    filename = u_basic_breakup_string (attrib, ',', 0);
+    filenames = g_strsplit (attrib, ",", 0);
 
-    if (filename == NULL) {
+    if (filenames == NULL) {
       continue;
     }
 
-    subpage = s_hierarchy_load_subpage (page, filename, NULL);
+    for (iter = filenames; *iter != NULL; iter++) {
+      PAGE *subpage = s_hierarchy_load_subpage (page, *iter, NULL);
 
-    if (subpage != NULL) {
-      page_list = g_list_prepend (page_list, subpage);
+      if (subpage != NULL) {
+        page_list = g_list_prepend (page_list, subpage);
+      }
+
+      printf ("%s\n", *iter);
     }
+
+    g_strfreev (filenames);
   }
 
   return g_list_reverse (page_list);
