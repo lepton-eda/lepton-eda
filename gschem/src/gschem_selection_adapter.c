@@ -65,6 +65,9 @@ enum
 static void
 class_init (GschemSelectionAdapterClass *klass);
 
+static GList*
+get_selection_iter (GschemSelectionAdapter *adapter);
+
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
@@ -91,11 +94,7 @@ int
 gschem_selection_adapter_get_cap_style (GschemSelectionAdapter *adapter)
 {
   gint cap_style = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -143,11 +142,7 @@ int
 gschem_selection_adapter_get_dash_length (GschemSelectionAdapter *adapter)
 {
   gint dash_length = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -195,11 +190,7 @@ int
 gschem_selection_adapter_get_dash_space (GschemSelectionAdapter *adapter)
 {
   gint dash_space = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -247,11 +238,7 @@ int
 gschem_selection_adapter_get_fill_angle1 (GschemSelectionAdapter *adapter)
 {
   gint fill_angle = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -302,11 +289,7 @@ int
 gschem_selection_adapter_get_fill_angle2 (GschemSelectionAdapter *adapter)
 {
   gint fill_angle = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -357,11 +340,7 @@ int
 gschem_selection_adapter_get_fill_pitch1 (GschemSelectionAdapter *adapter)
 {
   gint fill_pitch = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -412,11 +391,7 @@ int
 gschem_selection_adapter_get_fill_pitch2 (GschemSelectionAdapter *adapter)
 {
   gint fill_pitch = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -467,11 +442,7 @@ int
 gschem_selection_adapter_get_fill_type (GschemSelectionAdapter *adapter)
 {
   gint fill_type = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -522,11 +493,7 @@ int
 gschem_selection_adapter_get_fill_width (GschemSelectionAdapter *adapter)
 {
   gint fill_width = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -577,11 +544,7 @@ int
 gschem_selection_adapter_get_line_type (GschemSelectionAdapter *adapter)
 {
   gint line_type = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -629,11 +592,7 @@ int
 gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter)
 {
   gint line_width = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -681,11 +640,7 @@ int
 gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
 {
   int color = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT* object = (OBJECT *) iter->data;
@@ -753,11 +708,7 @@ int
 gschem_selection_adapter_get_text_alignment (GschemSelectionAdapter *adapter)
 {
   gint alignment = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -794,11 +745,7 @@ int
 gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter)
 {
   int color = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT* object = (OBJECT *) iter->data;
@@ -839,11 +786,7 @@ int
 gschem_selection_adapter_get_text_rotation (GschemSelectionAdapter *adapter)
 {
   gint angle = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -880,11 +823,7 @@ int
 gschem_selection_adapter_get_text_size (GschemSelectionAdapter *adapter)
 {
   gint size = NO_SELECTION;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -919,11 +858,7 @@ const char*
 gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter)
 {
   const char *string = NULL;
-  GList *iter;
-
-  g_return_val_if_fail (adapter != NULL, NULL);
-
-  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+  GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
     OBJECT *object = (OBJECT*) iter->data;
@@ -2130,6 +2065,25 @@ class_init (GschemSelectionAdapterClass *klass)
                 );
 }
 
+
+/*! \private
+ *  \brief Get an iterator for objects in the selection
+ *
+ *  \param [in] adapter this adapter
+ *  \return an iterator for the selection or NULL in none
+ */
+static GList*
+get_selection_iter (GschemSelectionAdapter *adapter)
+{
+  GList *iter = NULL;
+  SELECTION *selection = gschem_selection_adapter_get_selection (adapter);
+
+  if (selection != NULL) {
+    iter = geda_list_get_glist (selection);
+  }
+
+  return iter;
+}
 
 
 /*! \private
