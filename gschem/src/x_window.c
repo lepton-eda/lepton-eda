@@ -273,6 +273,7 @@ void x_window_create_main(GschemToplevel *w_current)
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
   char *right_button_text;
+  GtkWidget *hpaned;
   GtkWidget *vpaned;
   GtkWidget *work_box;
 
@@ -428,8 +429,17 @@ void x_window_create_main(GschemToplevel *w_current)
   vpaned = gtk_vpaned_new ();
   gtk_container_add(GTK_CONTAINER(main_box), vpaned);
 
+  hpaned = gtk_hpaned_new ();
+  gtk_paned_add1 (GTK_PANED (vpaned), hpaned);
+
   work_box = gtk_vbox_new (FALSE, 0);
-  gtk_paned_add1 (GTK_PANED (vpaned), work_box);
+  gtk_paned_add1 (GTK_PANED (hpaned), work_box);
+
+  w_current->right_notebook = gtk_notebook_new ();
+  gtk_paned_add2 (GTK_PANED (hpaned), w_current->right_notebook);
+
+  gtk_container_set_border_width (GTK_CONTAINER (w_current->right_notebook),
+                                  DIALOG_BORDER_SPACING);
 
   /*  Try to create popup menu (appears in right mouse button  */
   w_current->popup_menu = (GtkWidget *) get_main_popup(w_current);
@@ -492,9 +502,19 @@ void x_window_create_main(GschemToplevel *w_current)
                     G_CALLBACK (&x_window_invoke_macro),
                     w_current);
 
+  /* object properties editor */
+  w_current->object_properties = gschem_object_properties_widget_new (w_current);
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (w_current->right_notebook),
+                            GTK_WIDGET (w_current->object_properties),
+                            gtk_label_new (_("Object")));
+
   /* status notebook */
   w_current->bottom_notebook = gtk_notebook_new ();
   gtk_paned_add2 (GTK_PANED (vpaned), w_current->bottom_notebook);
+
+  gtk_container_set_border_width (GTK_CONTAINER (w_current->bottom_notebook),
+                                  DIALOG_BORDER_SPACING);
 
   w_current->find_text_state = gschem_find_text_state_new ();
 

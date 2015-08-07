@@ -44,7 +44,7 @@ gschem_SOURCES = \
 	gschem_log_widget.c \
 	gschem_macro_widget.c \
 	gschem_main_window.c \
-	gschem_object_properties_dialog.c \
+	gschem_object_properties_widget.c \
 	gschem_options.c \
 	gschem_options_dialog.c \
 	gschem_page_geometry.c \

@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_object_properties_dialog.c
+ * \file gschem_object_properties_widget.c
  *
  * \brief A dialog box for editing object properties.
  */
@@ -37,83 +37,89 @@
 #include <gdk/gdkkeysyms.h>
 
 
+enum
+{
+  PROP_0,
+  PROP_GSCHEM_TOPLEVEL
+};
+
 static void
-class_init (GschemObjectPropertiesDialogClass *klass);
+class_init (GschemObjectPropertiesWidgetClass *klass);
 
 static GtkWidget*
-create_fill_property_widget (GschemObjectPropertiesDialog *dialog);
+create_fill_property_widget (GschemObjectPropertiesWidget *dialog);
 
 static GtkWidget*
-create_general_property_widget (GschemObjectPropertiesDialog *dialog);
+create_general_property_widget (GschemObjectPropertiesWidget *dialog);
 
 static GtkWidget*
-create_line_property_widget (GschemObjectPropertiesDialog *dialog);
+create_line_property_widget (GschemObjectPropertiesWidget *dialog);
 
 static void
 dispose (GObject *object);
 
 static void
-geometry_restore (GschemObjectPropertiesDialog *dialog, EdaConfig *cfg, gchar* group_name);
+get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-geometry_save (GschemObjectPropertiesDialog *dialog, EdaConfig *cfg, gchar* group_name);
+instance_init (GschemObjectPropertiesWidget *dialog);
 
 static void
-instance_init (GschemObjectPropertiesDialog *dialog);
+notify_gschem_toplevel (GschemObjectPropertiesWidget *dialog);
 
 static void
-notify_gschem_toplevel (GschemObjectPropertiesDialog *dialog);
+set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
 static void
-set_selection_adapter (GschemObjectPropertiesDialog *dialog, GschemSelectionAdapter *adapter);
+set_selection_adapter (GschemObjectPropertiesWidget *dialog, GschemSelectionAdapter *adapter);
 
 static void
-update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog);
+update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog);
 
 static void
-update_cap_style_widget (GschemObjectPropertiesDialog *dialog);
+update_cap_style_widget (GschemObjectPropertiesWidget *dialog);
 
 static void
-update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog);
+update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog);
 
 static void
-update_fill_type_widget (GschemObjectPropertiesDialog *dialog);
+update_fill_type_widget (GschemObjectPropertiesWidget *dialog);
 
 static void
-update_line_type_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog);
+update_line_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog);
 
 static void
-update_line_type_widget (GschemObjectPropertiesDialog *dialog);
+update_line_type_widget (GschemObjectPropertiesWidget *dialog);
 
 static void
-update_object_color_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog);
+update_object_color_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog);
 
 static void
-update_object_color_widget (GschemObjectPropertiesDialog *dialog);
+update_object_color_widget (GschemObjectPropertiesWidget *dialog);
 
 
 
-/*! \brief Get/register GschemObjectPropertiesDialog type.
+/*! \brief Get/register GschemObjectPropertiesWidget type.
  */
 GType
-gschem_object_properties_dialog_get_type()
+gschem_object_properties_widget_get_type()
 {
   static GType type = 0;
 
   if (type == 0) {
     static const GTypeInfo info = {
-      sizeof(GschemObjectPropertiesDialogClass),
+      sizeof(GschemObjectPropertiesWidgetClass),
       NULL,                                   /* base_init */
       NULL,                                   /* base_finalize */
       (GClassInitFunc) class_init,
       NULL,                                   /* class_finalize */
       NULL,                                   /* class_data */
-      sizeof(GschemObjectPropertiesDialog),
+      sizeof(GschemObjectPropertiesWidget),
       0,                                      /* n_preallocs */
       (GInstanceInitFunc) instance_init,
     };
 
-    type = g_type_register_static (GSCHEM_TYPE_DIALOG, "GschemObjectPropertiesDialog", &info, 0);
+    type = g_type_register_static (GSCHEM_TYPE_BIN, "GschemObjectPropertiesWidget", &info, 0);
   }
 
   return type;
@@ -126,23 +132,10 @@ gschem_object_properties_dialog_get_type()
  *  \param [in] w_current The GschemToplevel structure
  */
 GtkDialog*
-gschem_object_properties_dialog_new (GschemToplevel *w_current)
+gschem_object_properties_widget_new (GschemToplevel *w_current)
 {
-  return g_object_new (GSCHEM_TYPE_OBJECT_PROPERTIES_DIALOG,
-                       /* GtkContainer */
-                       "border-width",    DIALOG_BORDER_SPACING,
-                       /* GtkWindow */
-                       "title",           _("Object Properties"),
-                       "default-width",   320,
-                       "default-height",  350,
-                       "window-position", GTK_WIN_POS_NONE,
-                       "allow-grow",      TRUE,
-                       "allow-shrink",    FALSE,
-                       "modal",           FALSE,
-                       /* GtkDialog */
-                       "has-separator",   TRUE,
-                       /* GschemDialog */
-                       "settings-name",    "line-type",
+  return g_object_new (GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET,
+                       /* GschemObjectProperties */
                        "gschem-toplevel",  w_current,
                        NULL);
 
@@ -160,17 +153,28 @@ gschem_object_properties_dialog_new (GschemToplevel *w_current)
 void
 line_type_dialog (GschemToplevel *w_current)
 {
-  g_return_if_fail (w_current != NULL);
+  int page;
 
-  gschem_dialog_misc_show_non_modal (w_current,
-                                     &(w_current->lpwindow),
-                                     gschem_object_properties_dialog_new);
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->right_notebook != NULL);
+  g_return_if_fail (w_current->object_properties != NULL);
+
+  page = gtk_notebook_page_num (GTK_NOTEBOOK (w_current->right_notebook),
+                                GTK_WIDGET (w_current->object_properties));
+
+  if (page >= 0) {
+    int current = gtk_notebook_get_current_page (GTK_NOTEBOOK (w_current->right_notebook));
+
+    if (page != current) {
+      gtk_notebook_set_current_page (GTK_NOTEBOOK (w_current->right_notebook), page);
+    }
+  }
 }
 
 
 
 /*! \private
- *  \brief Initialize GschemObjectPropertiesDialog class
+ *  \brief Initialize GschemObjectPropertiesWidget class
  *
  *  \par Function Description
  *
@@ -180,7 +184,7 @@ line_type_dialog (GschemToplevel *w_current)
  *  \param [in] klass
  */
 static void
-class_init (GschemObjectPropertiesDialogClass *klass)
+class_init (GschemObjectPropertiesWidgetClass *klass)
 {
   GObjectClass *object_class;
 
@@ -191,6 +195,17 @@ class_init (GschemObjectPropertiesDialogClass *klass)
   g_return_if_fail (object_class != NULL);
 
   object_class->dispose = dispose;
+
+  object_class->get_property = get_property;
+  object_class->set_property = set_property;
+
+  g_object_class_install_property (
+    object_class,
+    PROP_GSCHEM_TOPLEVEL,
+    g_param_spec_pointer ("gschem-toplevel",
+                          "",
+                          "",
+                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
 }
 
 
@@ -202,7 +217,7 @@ class_init (GschemObjectPropertiesDialogClass *klass)
  *  \return A new fill property section widget
  */
 static GtkWidget*
-create_fill_property_widget (GschemObjectPropertiesDialog *dialog)
+create_fill_property_widget (GschemObjectPropertiesWidget *dialog)
 {
   GtkWidget *label[6];
   GtkWidget *table;
@@ -285,7 +300,7 @@ create_fill_property_widget (GschemObjectPropertiesDialog *dialog)
  *  \return A new general property section widget
  */
 static GtkWidget*
-create_general_property_widget (GschemObjectPropertiesDialog *dialog)
+create_general_property_widget (GschemObjectPropertiesWidget *dialog)
 {
   GtkWidget *label[1];
   GtkWidget *table;
@@ -314,7 +329,7 @@ create_general_property_widget (GschemObjectPropertiesDialog *dialog)
  *  \return A new line property section widget
  */
 static GtkWidget*
-create_line_property_widget (GschemObjectPropertiesDialog *dialog)
+create_line_property_widget (GschemObjectPropertiesWidget *dialog)
 {
   GtkWidget *label[5];
   GtkWidget *table;
@@ -381,13 +396,13 @@ create_line_property_widget (GschemObjectPropertiesDialog *dialog)
 static void
 dispose (GObject *object)
 {
-  GschemObjectPropertiesDialog *dialog;
-  GschemObjectPropertiesDialogClass *klass;
+  GschemObjectPropertiesWidget *dialog;
+  GschemObjectPropertiesWidgetClass *klass;
   GObjectClass *parent_class;
 
   g_return_if_fail (object != NULL);
 
-  dialog = GSCHEM_OBJECT_PROPERTIES_DIALOG (object);
+  dialog = GSCHEM_OBJECT_PROPERTIES_WIDGET (object);
 
   set_selection_adapter (dialog, NULL);
 
@@ -397,7 +412,7 @@ dispose (GObject *object)
 
   /* lastly, chain up to the parent dispose */
 
-  klass = GSCHEM_OBJECT_PROPERTIES_DIALOG_GET_CLASS (object);
+  klass = GSCHEM_OBJECT_PROPERTIES_WIDGET_GET_CLASS (object);
   g_return_if_fail (klass != NULL);
   parent_class = g_type_class_peek_parent (klass);
   g_return_if_fail (parent_class != NULL);
@@ -406,120 +421,64 @@ dispose (GObject *object)
 
 
 
-/*! \private
- *  \brief Restore widget state
+/*! \brief Get a property
  *
- *  \param [in] dialog     The GschemDialog to restore the position and size of.
- *  \param [in] key_file   The GKeyFile to load the geometry data from.
- *  \param [in] group_name The group name in the key file to find the data under.
+ *  \param [in]     object
+ *  \param [in]     param_id
+ *  \param [in,out] value
+ *  \param [in]     pspec
  */
 static void
-geometry_restore (GschemObjectPropertiesDialog *dialog, EdaConfig *cfg, gchar* group_name)
+get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  GError *error = NULL;
-  gboolean value;
+  GschemObjectPropertiesWidget *widget = GSCHEM_OBJECT_PROPERTIES_WIDGET (object);
 
-  g_return_if_fail (dialog != NULL);
+  switch (param_id) {
+    case PROP_GSCHEM_TOPLEVEL:
+      g_value_set_pointer (value, widget->w_current);
+      break;
 
-  /* If any errors occur, use the value already set */
-
-  value = eda_config_get_boolean (cfg,
-                                  group_name,
-                                  "fill-section-expanded",
-                                  &error);
-
-  if (error == NULL) {
-    gtk_expander_set_expanded (GTK_EXPANDER (dialog->fill_section_widget), value);
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
   }
-
-  g_clear_error (&error);
-
-  value = eda_config_get_boolean (cfg,
-                                  group_name,
-                                  "general-section-expanded",
-                                  &error);
-
-  if (error == NULL) {
-    gtk_expander_set_expanded (GTK_EXPANDER (dialog->general_section_widget), value);
-  }
-
-  g_clear_error (&error);
-
-  value = eda_config_get_boolean (cfg,
-                                  group_name,
-                                  "line-section-expanded",
-                                  &error);
-
-  if (error == NULL) {
-    gtk_expander_set_expanded (GTK_EXPANDER (dialog->line_section_widget), value);
-  }
-
-  g_clear_error (&error);
 }
 
 
-
 /*! \private
- *  \brief Save widget state
- *
- *  \param [in] dialog     The GschemDialog to save the position and size of.
- *  \param [in] key_file   The GKeyFile to save the geometry data to.
- *  \param [in] group_name The group name in the key file to store the data under.
- */
-static void
-geometry_save (GschemObjectPropertiesDialog *dialog, EdaConfig *cfg, gchar* group_name)
-{
-  g_return_if_fail (dialog != NULL);
-
-  eda_config_set_boolean (cfg,
-                          group_name,
-                          "fill-section-expanded",
-                          gtk_expander_get_expanded (GTK_EXPANDER (dialog->fill_section_widget)));
-
-  eda_config_set_boolean (cfg,
-                          group_name,
-                          "general-section-expanded",
-                          gtk_expander_get_expanded (GTK_EXPANDER (dialog->general_section_widget)));
-
-  eda_config_set_boolean (cfg,
-                          group_name,
-                          "line-section-expanded",
-                          gtk_expander_get_expanded (GTK_EXPANDER (dialog->line_section_widget)));
-}
-
-
-
-/*! \private
- *  \brief Initialize GschemObjectPropertiesDialog instance
+ *  \brief Initialize GschemObjectPropertiesWidget instance
  *
  *  \param [in,out] dialog The edit text dialog
  */
 static void
-instance_init (GschemObjectPropertiesDialog *dialog)
+instance_init (GschemObjectPropertiesWidget *dialog)
 {
+  GtkWidget *scrolled;
   GtkWidget *vbox;
-
-  gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         GTK_STOCK_CLOSE,
-                         GTK_RESPONSE_CLOSE);
+  GtkWidget *viewport;
 
   g_signal_connect (G_OBJECT (dialog),
                     "notify::gschem-toplevel",
                     G_CALLBACK (notify_gschem_toplevel),
                     NULL);
 
-  g_signal_connect (G_OBJECT (dialog),
-                    "geometry-restore",
-                    G_CALLBACK (geometry_restore),
-                    NULL);
+  scrolled = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (dialog), scrolled);
 
-  g_signal_connect (G_OBJECT (dialog),
-                    "geometry-save",
-                    G_CALLBACK (geometry_save),
-                    NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+                                  GTK_POLICY_NEVER,
+                                  GTK_POLICY_ALWAYS);
 
-  vbox = GTK_DIALOG (dialog)->vbox;
-  gtk_box_set_spacing (GTK_BOX (vbox), DIALOG_V_SPACING);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
+                                       GTK_SHADOW_NONE);
+
+  viewport = gtk_viewport_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (scrolled), viewport);
+
+  gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport),
+                                GTK_SHADOW_NONE);
+
+  vbox = gtk_vbox_new (FALSE, DIALOG_V_SPACING);
+  gtk_container_add (GTK_CONTAINER (viewport), vbox);
 
   dialog->general_section_widget = create_general_property_widget (dialog);
   dialog->line_section_widget    = create_line_property_widget (dialog);
@@ -556,7 +515,7 @@ instance_init (GschemObjectPropertiesDialog *dialog)
  *  \param [in]     selection The selection to manipulate
  */
 static void
-notify_gschem_toplevel (GschemObjectPropertiesDialog *dialog)
+notify_gschem_toplevel (GschemObjectPropertiesWidget *dialog)
 {
     GschemToplevel *w_current;
 
@@ -601,7 +560,7 @@ notify_gschem_toplevel (GschemObjectPropertiesDialog *dialog)
  *  \param [in]     selection The selection to manipulate
  */
 static void
-set_selection_adapter (GschemObjectPropertiesDialog *dialog, GschemSelectionAdapter *adapter)
+set_selection_adapter (GschemObjectPropertiesWidget *dialog, GschemSelectionAdapter *adapter)
 {
   g_return_if_fail (dialog != NULL);
 
@@ -669,7 +628,7 @@ set_selection_adapter (GschemObjectPropertiesDialog *dialog, GschemSelectionAdap
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
+update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
   TOPLEVEL *toplevel;
   GschemToplevel *w_current;
@@ -677,7 +636,7 @@ update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
 
-  w_current = dialog->parent.w_current;
+  w_current = dialog->w_current;
   g_return_if_fail (w_current != NULL);
 
   toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -704,7 +663,7 @@ update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
  *  \param [in,out] dialog This dialog
  */
 static void
-update_cap_style_widget (GschemObjectPropertiesDialog *dialog)
+update_cap_style_widget (GschemObjectPropertiesWidget *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->line_end != NULL);
@@ -735,7 +694,7 @@ update_cap_style_widget (GschemObjectPropertiesDialog *dialog)
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
+update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
   TOPLEVEL *toplevel;
   GschemToplevel *w_current;
@@ -743,7 +702,7 @@ update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
 
-  w_current = dialog->parent.w_current;
+  w_current = dialog->w_current;
   g_return_if_fail (w_current != NULL);
 
   toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -770,7 +729,7 @@ update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
  *  \param [in,out] dialog This dialog
  */
 static void
-update_fill_type_widget (GschemObjectPropertiesDialog *dialog)
+update_fill_type_widget (GschemObjectPropertiesWidget *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->fstylecb != NULL);
@@ -800,7 +759,7 @@ update_fill_type_widget (GschemObjectPropertiesDialog *dialog)
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_line_type_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
+update_line_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
   TOPLEVEL *toplevel;
   GschemToplevel *w_current;
@@ -808,7 +767,7 @@ update_line_type_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
 
-  w_current = dialog->parent.w_current;
+  w_current = dialog->w_current;
   g_return_if_fail (w_current != NULL);
 
   toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -835,7 +794,7 @@ update_line_type_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
  *  \param [in,out] dialog This dialog
  */
 static void
-update_line_type_widget (GschemObjectPropertiesDialog *dialog)
+update_line_type_widget (GschemObjectPropertiesWidget *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->line_type != NULL);
@@ -865,7 +824,7 @@ update_line_type_widget (GschemObjectPropertiesDialog *dialog)
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_object_color_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
+update_object_color_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
   TOPLEVEL *toplevel;
   GschemToplevel *w_current;
@@ -873,7 +832,7 @@ update_object_color_model (GtkWidget *widget, GschemObjectPropertiesDialog *dial
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
 
-  w_current = dialog->parent.w_current;
+  w_current = dialog->w_current;
   g_return_if_fail (w_current != NULL);
 
   toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -900,7 +859,7 @@ update_object_color_model (GtkWidget *widget, GschemObjectPropertiesDialog *dial
  *  \param [in,out] dialog This dialog
  */
 static void
-update_object_color_widget (GschemObjectPropertiesDialog *dialog)
+update_object_color_widget (GschemObjectPropertiesWidget *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->colorcb != NULL);
@@ -919,5 +878,23 @@ update_object_color_widget (GschemObjectPropertiesDialog *dialog)
                                        dialog);
 
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->colorcb), (color != NO_SELECTION));
+  }
+}
+
+
+/*! \brief Set a gobject property
+ */
+static void
+set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
+{
+  GschemObjectPropertiesWidget *widget = GSCHEM_OBJECT_PROPERTIES_WIDGET (object);
+
+  switch (param_id) {
+    case PROP_GSCHEM_TOPLEVEL:
+      widget->w_current = g_value_get_pointer (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
   }
 }

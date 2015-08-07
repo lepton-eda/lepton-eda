@@ -18,30 +18,32 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file gschem_object_properties_dialog.h
+ * \file gschem_object_properties_widget.h
  *
  * \brief A dialog box for editing an object's line properties.
  */
 
-#define GSCHEM_TYPE_OBJECT_PROPERTIES_DIALOG           (gschem_object_properties_dialog_get_type())
-#define GSCHEM_OBJECT_PROPERTIES_DIALOG(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_OBJECT_PROPERTIES_DIALOG, GschemObjectPropertiesDialog))
-#define GSCHEM_OBJECT_PROPERTIES_DIALOG_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_OBJECT_PROPERTIES_DIALOG, GschemObjectPropertiesDialogClass))
-#define IS_GSCHEM_OBJECT_PROPERTIES_DIALOG(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_OBJECT_PROPERTIES_DIALOG))
-#define GSCHEM_OBJECT_PROPERTIES_DIALOG_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GSCHEM_TYPE_OBJECT_PROPERTIES_DIALOG, GschemObjectPropertiesDialogClass))
+#define GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET           (gschem_object_properties_widget_get_type())
+#define GSCHEM_OBJECT_PROPERTIES_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET, GschemObjectPropertiesWidget))
+#define GSCHEM_OBJECT_PROPERTIES_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET, GschemObjectPropertiesWidgetClass))
+#define IS_GSCHEM_OBJECT_PROPERTIES_WIDGET(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET))
+#define GSCHEM_OBJECT_PROPERTIES_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET, GschemObjectPropertiesWidgetClass))
 
-typedef struct _GschemObjectPropertiesDialogClass GschemObjectPropertiesDialogClass;
-typedef struct _GschemObjectPropertiesDialog GschemObjectPropertiesDialog;
+typedef struct _GschemObjectPropertiesWidgetClass GschemObjectPropertiesWidgetClass;
+typedef struct _GschemObjectPropertiesWidget GschemObjectPropertiesWidget;
 
-struct _GschemObjectPropertiesDialogClass
+struct _GschemObjectPropertiesWidgetClass
 {
   GschemDialogClass parent_class;
 };
 
-struct _GschemObjectPropertiesDialog
+struct _GschemObjectPropertiesWidget
 {
   GschemDialog parent;
 
   GschemSelectionAdapter *adapter;
+
+  GschemToplevel *w_current;
 
   GSList *bindings;
 
@@ -66,7 +68,7 @@ struct _GschemObjectPropertiesDialog
 };
 
 GType
-gschem_object_properties_dialog_get_type();
+gschem_object_properties_widget_get_type();
 
 GtkDialog*
-gschem_object_properties_dialog_new (GschemToplevel *w_current);
+gschem_object_properties_widget_new (GschemToplevel *w_current);

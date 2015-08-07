@@ -417,6 +417,7 @@ GschemSelectionAdapter*
 gschem_toplevel_get_selection_adapter (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
+  g_return_val_if_fail (w_current->toplevel != NULL, NULL);
 
   if (w_current->selection_adapter == NULL) {
     w_current->selection_adapter = gschem_selection_adapter_new ();
@@ -428,7 +429,14 @@ gschem_toplevel_get_selection_adapter (GschemToplevel *w_current)
 
 
     gschem_selection_adapter_set_toplevel (w_current->selection_adapter, w_current->toplevel);
-    gschem_selection_adapter_set_selection (w_current->selection_adapter, w_current->toplevel->page_current->selection_list);
+
+    if (w_current->toplevel->page_current != NULL) {
+      gschem_selection_adapter_set_selection (w_current->selection_adapter,
+                                              w_current->toplevel->page_current->selection_list);
+    } else {
+      gschem_selection_adapter_set_selection (w_current->selection_adapter,
+                                              NULL);
+    }
   }
 
   return w_current->selection_adapter;

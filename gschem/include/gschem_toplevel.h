@@ -50,6 +50,11 @@ struct st_gschem_toplevel {
   GschemFindTextState *find_text_state;
   GschemLogWidget     *log_widget;
 
+  GtkWidget *right_notebook;
+
+  /* Widgets inside the notebook at the right of the window */
+  GtkWidget *object_properties;
+
 
   gchar *keyaccel_string;               /* visual feedback when pressing
                                            keyboard accelerators */

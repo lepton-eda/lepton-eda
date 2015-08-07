@@ -43,7 +43,7 @@ typedef struct st_gschem_toplevel GschemToplevel;
 #include "gschem_binding.h"
 #include "gschem_binding_integer.h"
 
-#include "gschem_object_properties_dialog.h"
+#include "gschem_object_properties_widget.h"
 #include "gschem_options_dialog.h"
 #include "gschem_text_properties_dialog.h"
 
