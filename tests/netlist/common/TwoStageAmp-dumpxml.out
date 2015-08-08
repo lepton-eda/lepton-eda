@@ -223,7 +223,6 @@
 			<pin-conns>
 			</pin-conns>
 			<attributes>
-				<attrib name="file" value="unknown" />
 				<attrib name="device" value="directive" />
 				<attrib name="value" value=".options TEMP=25" />
 				<attrib name="refdes" value="A3" />

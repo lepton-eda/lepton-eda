@@ -124,7 +124,6 @@ element-attrib	C1	value	2.2uF
 element-attrib	C1	refdes	C1
 element	A3
 element-pins	A3
-element-attrib	A3	file	unknown
 element-attrib	A3	device	directive
 element-attrib	A3	value	.options TEMP=25
 element-attrib	A3	refdes	A3

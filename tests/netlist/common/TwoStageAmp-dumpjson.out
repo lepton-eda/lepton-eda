@@ -222,7 +222,6 @@
 			"pin-conns": {
 			},
 			"attribs":{
-				"file": "unknown",
 				"device": "directive",
 				"value": ".options TEMP=25",
 				"refdes": "A3",

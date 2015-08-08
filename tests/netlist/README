@@ -23,6 +23,11 @@ accomodate these differences.
   package and raises an error if there are inconsistent values.
   Therefore, the "slot" attribute is now excluded, too.
 
+- gnetlist:vams-get-package-attributes returned the names of all
+  attributes attached to a package's first component, including those
+  which have been set to "unknown".  This has been fixed; now only
+  attributes whose value is not "unknown" are listed in the output.
+
 The tests do NOT cover most of the more advanced features of the
 backends; they are basically just a bunch of standard schematics run
 through each backend, whether meaningful or not.

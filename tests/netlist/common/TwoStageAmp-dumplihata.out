@@ -222,7 +222,6 @@ ha:gschem {
 			ha:pin-conns {
 			}
 			ha:attribs {
-				file={unknown}
 				device={directive}
 				value={.options TEMP=25}
 				refdes={A3}

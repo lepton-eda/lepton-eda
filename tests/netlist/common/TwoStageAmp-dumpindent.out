@@ -164,7 +164,6 @@ ELEMENTS:
 		PINS:
 		PIN-CONNS:
 		ATTRIBS:
-			file=unknown
 			device=directive
 			value=.options TEMP=25
 			refdes=A3
