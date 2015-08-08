@@ -16,6 +16,13 @@ accomodate these differences.
   checking algorithm.  Since it's *almost* the order of the pins in
   the file, they are now sorted in that order.
 
+- The VAMS backend included all attributes on the first component of a
+  package in the output except "refdes", "source", and "architecture".
+  For slotted packages, this means a semi-arbitrary value for "slot"
+  was used.  The new attribute code considers all components of a
+  package and raises an error if there are inconsistent values.
+  Therefore, the "slot" attribute is now excluded, too.
+
 The tests do NOT cover most of the more advanced features of the
 backends; they are basically just a bunch of standard schematics run
 through each backend, whether meaningful or not.

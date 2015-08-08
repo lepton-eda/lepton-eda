@@ -16,7 +16,6 @@ BEGIN
  
   U1 : ENTITY LM324
 	GENERIC MAP (
-			slot => 1, 
 			device => LM324)
 	PORT MAP (	3 => plusin_slot1_pin3_a,
 			2 => minusin_slot1_pin_b,

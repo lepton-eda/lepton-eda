@@ -10,8 +10,6 @@ BEGIN
 -- Architecture statement part
  
   U100 : ENTITY 7400
-	GENERIC MAP (
-			slot => 2)
 	PORT MAP (	6 => SING_N,
 			5 => SING_N,
 			4 => SING_N,
