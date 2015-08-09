@@ -31,13 +31,9 @@ wire SING_N ;
     .\7  ( GND ),
     .\3  ( SING_N_2 ),
     .\1  ( SING_N_2 ),
-    .\14  ( Vcc ),
-    .\7  ( GND ),
     .\8  ( SING_N ),
     .\10  ( SING_N ),
-    .\9  ( SING_N ),
-    .\14  ( Vcc ),
-    .\7  ( GND )
+    .\9  ( SING_N )
     );
 
 endmodule
