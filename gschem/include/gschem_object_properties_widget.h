@@ -34,12 +34,12 @@ typedef struct _GschemObjectPropertiesWidget GschemObjectPropertiesWidget;
 
 struct _GschemObjectPropertiesWidgetClass
 {
-  GschemDialogClass parent_class;
+  GschemBinClass parent_class;
 };
 
 struct _GschemObjectPropertiesWidget
 {
-  GschemDialog parent;
+  GschemBin parent;
 
   GschemSelectionAdapter *adapter;
 
@@ -70,5 +70,5 @@ struct _GschemObjectPropertiesWidget
 GType
 gschem_object_properties_widget_get_type();
 
-GtkDialog*
+GtkWidget*
 gschem_object_properties_widget_new (GschemToplevel *w_current);

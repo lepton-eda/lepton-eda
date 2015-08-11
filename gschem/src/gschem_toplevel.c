@@ -183,10 +183,8 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->cswindow     = NULL;
   w_current->pswindow     = NULL;
   w_current->tiwindow     = NULL;
-  w_current->tewindow     = NULL;
   w_current->sewindow     = NULL;
   w_current->aawindow     = NULL;
-  w_current->lpwindow     = NULL;
   w_current->mawindow     = NULL;
   w_current->aewindow     = NULL;
   w_current->trwindow     = NULL;

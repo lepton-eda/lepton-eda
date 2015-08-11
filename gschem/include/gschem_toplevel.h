@@ -54,6 +54,7 @@ struct st_gschem_toplevel {
 
   /* Widgets inside the notebook at the right of the window */
   GtkWidget *object_properties;
+  GtkWidget *text_properties;
 
 
   gchar *keyaccel_string;               /* visual feedback when pressing
@@ -68,10 +69,8 @@ struct st_gschem_toplevel {
   GtkWidget *cswindow;                  /* component select */
   GtkWidget *pswindow;                  /* page select */
   GtkWidget *tiwindow;                  /* text input */
-  GtkWidget *tewindow;                  /* text edit */
   GtkWidget *sewindow;                  /* slot edit */
   GtkWidget *aawindow;                  /* arc attribs */
-  GtkWidget *lpwindow;                  /* line properties */
   GtkWidget *mawindow;                  /* multi attribute */
   GtkWidget *aewindow;                  /* attribute edit */
   GtkWidget *trwindow;                  /* translate */

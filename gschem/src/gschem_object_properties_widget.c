@@ -131,7 +131,7 @@ gschem_object_properties_widget_get_type()
  *
  *  \param [in] w_current The GschemToplevel structure
  */
-GtkDialog*
+GtkWidget*
 gschem_object_properties_widget_new (GschemToplevel *w_current)
 {
   return g_object_new (GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET,

@@ -509,6 +509,13 @@ void x_window_create_main(GschemToplevel *w_current)
                             GTK_WIDGET (w_current->object_properties),
                             gtk_label_new (_("Object")));
 
+  /* text properties editor */
+  w_current->text_properties = gschem_text_properties_widget_new (w_current);
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (w_current->right_notebook),
+                            GTK_WIDGET (w_current->text_properties),
+                            gtk_label_new (_("Text")));
+
   /* status notebook */
   w_current->bottom_notebook = gtk_notebook_new ();
   gtk_paned_add2 (GTK_PANED (vpaned), w_current->bottom_notebook);
@@ -602,9 +609,6 @@ void x_window_close(GschemToplevel *w_current)
 
   if (w_current->tiwindow)
   gtk_widget_destroy(w_current->tiwindow);
-
-  if (w_current->tewindow)
-  gtk_widget_destroy(w_current->tewindow);
 
   if (w_current->aawindow)
   gtk_widget_destroy(w_current->aawindow);
