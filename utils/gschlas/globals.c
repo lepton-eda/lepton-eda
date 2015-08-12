@@ -18,6 +18,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+/*! \file
+ *  \brief Global declarations
+ *
+ * Global declarations
+ */
+
 #include <config.h>
 
 #include <stdio.h>

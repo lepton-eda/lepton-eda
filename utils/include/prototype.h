@@ -1,3 +1,8 @@
+/*! \file
+ * This file holds all function prototypes for the entire gschlas
+ * utility.
+ */
+
 /* g_rc.c */
 SCM g_rc_gschlas_version(SCM version);
 SCM g_rc_force_boundingbox(SCM mode);

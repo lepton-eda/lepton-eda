@@ -37,6 +37,14 @@
 
 #include "../include/prototype.h"
 
+
+
+/*! \brief Register Scheme functions
+ *
+ * This function registers the Scheme functions required to use
+ * gschlas.  They are mostly unnecessary, except for reading in the gschlasrc
+ * file at the beginning of the prog which gives the library search paths.
+ */
 void
 g_register_funcs(void)
 {
@@ -44,11 +52,15 @@ g_register_funcs(void)
   scm_c_define_gsubr ("quit", 0, 0, 0, g_quit);
   scm_c_define_gsubr ("exit", 0, 0, 0, g_quit);
 
-  /* gsymcheckrc functions */
+  /* gschlas functions */
   scm_c_define_gsubr ("gschlas-version", 1, 0, 0, g_rc_gschlas_version);
   scm_c_define_gsubr ("force-boundingbox", 1, 0, 0, g_rc_force_boundingbox);
 }
 
+/*! \brief Scheme function to quit the application
+ *
+ * Quit the application from within Scheme.
+ */
 SCM
 g_quit(void)
 {

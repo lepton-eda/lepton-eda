@@ -44,6 +44,22 @@ gschlas_quit(void)
 
 }
 
+/*! \brief The "real" main for gschlas.
+ *
+ * This is the main program body for gschlas. A pointer to this
+ * function is passed to scm_boot_guile() at startup.
+ *
+ * This function:
+ * - initialises libgeda;
+ * - parses the command line;
+ * - starts logging;
+ * - registers the Scheme functions with Guile;
+ * - parses the RC files;
+ *
+ * \param closure
+ * \param argc Number of command line arguments
+ * \param argv Command line arguments
+ */
 void
 main_prog(void *closure, int argc, char *argv[])
 {
@@ -140,6 +156,14 @@ main_prog(void *closure, int argc, char *argv[])
   exit(0);
 }
 
+/*! \brief Entry point to gschlas
+ *
+ * This is just a wrapper which invokes the guile stuff, and
+ * points to the real main program main_prog().
+ *
+ * \param argc Number of command line arguments
+ * \param argv Command line arguments
+ */
 int
 main (int argc, char *argv[])
 {

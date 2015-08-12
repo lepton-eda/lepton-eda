@@ -34,6 +34,11 @@
 
 int default_force_boundingbox = FALSE;
 
+/*! \brief Initialize variables in the TOPLEVEL
+ *
+ * Initialize the variables in toplevel.
+ * \param toplevel pointer to the TOPLEVEL structure.
+ */
 void i_vars_set(TOPLEVEL * pr_current)
 {
     i_vars_libgeda_set(pr_current);

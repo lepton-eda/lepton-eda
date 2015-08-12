@@ -41,6 +41,11 @@
 #include "../include/i_vars.h"
 #include "../include/prototype.h"
 
+/*! \brief Test the version of gschlas and gEDA/gaf
+ *
+ * \param version Version being tested
+ * \returns false if incorrect version, true if OK
+ */
 SCM g_rc_gschlas_version(SCM scm_version)
 {
     char *version;
