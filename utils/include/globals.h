@@ -17,20 +17,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-extern char *rc_filename;
 
-extern int logfile_fd;
-extern int do_logging;
-extern int logging_dest;
-
-/* gnetlist specific stuff */
-extern NETLIST *netlist_head;
-extern char *guile_proc;
 /* command line switch settings */
 extern int verbose_mode;
-extern int interactive_mode;
 extern int quiet_mode;
-extern int netlist_mode;
 extern int embed_mode;
 extern int unembed_mode;
-extern char *output_filename;

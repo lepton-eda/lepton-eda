@@ -78,19 +78,15 @@ main_prog(void *closure, int argc, char *argv[])
   /* even if logging is enabled */
   s_log_init ("gschlas");
 
-  logging_dest=STDOUT_TTY;
-
 #if defined(__MINGW32__) && defined(DEBUG)
   fprintf(stderr, "This is the MINGW32 port.\n");
 #endif
-
-  logging_dest=-1; /* don't output to the screen for now */
 
   /* register guile (scheme) functions */
   g_register_funcs();
 
   pr_current = s_toplevel_new ();
-  g_rc_parse (pr_current, argv[0], "gschlasrc", rc_filename);
+  g_rc_parse (pr_current, argv[0], "gschlasrc", NULL);
   i_vars_set(pr_current);
 
   i = argv_index;
@@ -112,7 +108,6 @@ main_prog(void *closure, int argc, char *argv[])
     if (!f_open (pr_current, pr_current->page_current,
                  pr_current->page_current->page_filename, &err)) {
       /* Not being able to load a file is apparently a fatal error */
-      logging_dest = STDOUT_TTY;
       g_warning ("%s\n", err->message);
       g_error_free (err);
       exit(2);
@@ -130,9 +125,6 @@ main_prog(void *closure, int argc, char *argv[])
   }
 
   g_free(cwd);
-
-  logging_dest=STDOUT_TTY;
-
 #if DEBUG
   s_page_print_all(pr_current);
 #endif

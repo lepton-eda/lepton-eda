@@ -16,38 +16,3 @@
 ; being run. The end user should *not* change this value.
 ;
 (gschlas-version "@DATE_VERSION@")
-
-; force-boundingbox string
-;
-; Controls if the entire bounding box of a symbol is used when figuring out
-; whichend of the pin is considered the active port.  Enable this when
-; gschlas is guessing incorrectly.
-;
-(force-boundingbox "disabled")
-;(force-boundingbox "enabled")
-
-;
-; End of mode related keywords
-;
-
-
-;
-; Start of path related keywords
-;
-
-;
-; End of path related keywords
-;
-
-; world-size width height border
-;
-; Specifies the size of the world and a border
-; Be sure all inputs are reals (floats/doubles) and don't try to reverse
-; the values: to get a portrait mode.  Code to support that needs to be added
-; The code that implements this automatically transforms the dimensions into
-; the proper aspect ratio.  All units are in inches.
-; This is not the paper size.  That is specified elsewhere.  End users should
-; not change this at all
-;
-(world-size 120.0 90.0 1.0)
-;(world-size 60.0 45.0 1.0)

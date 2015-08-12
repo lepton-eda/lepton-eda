@@ -30,9 +30,7 @@
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
-#include "../include/papersizes.h"
 
-int default_force_boundingbox = FALSE;
 
 /*! \brief Initialize variables in the TOPLEVEL
  *
@@ -42,6 +40,4 @@ int default_force_boundingbox = FALSE;
 void i_vars_set(TOPLEVEL * pr_current)
 {
     i_vars_libgeda_set(pr_current);
-
-    pr_current->force_boundingbox = default_force_boundingbox;
 }

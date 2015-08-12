@@ -38,7 +38,6 @@
 #include <libgeda/libgeda.h>
 
 #include "../include/globals.h"
-#include "../include/i_vars.h"
 #include "../include/prototype.h"
 
 /*! \brief Test the version of gschlas and gEDA/gaf
@@ -50,39 +49,36 @@ SCM g_rc_gschlas_version(SCM scm_version)
 {
     char *version;
     SCM ret = SCM_BOOL_T;
+    SCM rc_filename;
+    char *sourcefile;
 
     SCM_ASSERT (scm_is_string (scm_version), scm_version,
                 SCM_ARG1, "gschlas-version");
 
+    scm_dynwind_begin (0);
     version = scm_to_utf8_string (scm_version);
+    scm_dynwind_free (version);
+
     if (g_strcasecmp (version, PACKAGE_DATE_VERSION) != 0) {
+      sourcefile = NULL;
+      rc_filename = g_rc_rc_filename ();
+      if (rc_filename == SCM_BOOL_F) {
+        rc_filename = scm_from_utf8_string ("unknown");
+      }
+      sourcefile = scm_to_utf8_string (rc_filename);
+      scm_dynwind_free (sourcefile);
       fprintf(stderr,
               "You are running gEDA/gaf version [%s%s.%s],\n",
               PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
               PACKAGE_DATE_VERSION);
       fprintf(stderr,
               "but you have a version [%s] gschlasrc file:\n[%s]\n",
-              version, rc_filename);
+              version, sourcefile);
       fprintf(stderr,
               "Please be sure that you have the latest rc file.\n");
       ret = SCM_BOOL_F;
     }
+    scm_dynwind_end();
 
-    free (version);
     return ret;
 }
-
-
-SCM
-g_rc_force_boundingbox(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE, "enabled"},
-    {FALSE, "disabled"}
-  };
-
-  RETURN_G_RC_MODE("force-boundingbox", default_force_boundingbox, 2);
-}
-
-
-/*************************** GUILE end done *********************************/

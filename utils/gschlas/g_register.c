@@ -54,7 +54,7 @@ g_register_funcs(void)
 
   /* gschlas functions */
   scm_c_define_gsubr ("gschlas-version", 1, 0, 0, g_rc_gschlas_version);
-  scm_c_define_gsubr ("force-boundingbox", 1, 0, 0, g_rc_force_boundingbox);
+
 }
 
 /*! \brief Scheme function to quit the application

@@ -5,7 +5,6 @@
 
 /* g_rc.c */
 SCM g_rc_gschlas_version(SCM version);
-SCM g_rc_force_boundingbox(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 SCM g_quit(void);
