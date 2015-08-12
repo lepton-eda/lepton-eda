@@ -20,6 +20,8 @@
  */
 
 #include <config.h>
+#include <version.h>
+
 
 #include <stdio.h>
 #include <sys/stat.h>
@@ -81,6 +83,11 @@ main_prog(void *closure, int argc, char *argv[])
 #if defined(__MINGW32__) && defined(DEBUG)
   fprintf(stderr, "This is the MINGW32 port.\n");
 #endif
+
+  s_log_message
+    ("gEDA/gschlas version %s%s.%s\ngEDA/gschlas comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\nThis is free software, and you are welcome to redistribute it under certain\nconditions; please see the COPYING file for more details.\n\n",
+     PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
+     PACKAGE_DATE_VERSION);
 
   /* register guile (scheme) functions */
   g_register_funcs();
