@@ -33,4 +33,3 @@ extern int netlist_mode;
 extern int embed_mode;
 extern int unembed_mode;
 extern char *output_filename;
-

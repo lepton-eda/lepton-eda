@@ -47,7 +47,7 @@ SCM g_rc_gschlas_version(SCM scm_version)
     SCM ret = SCM_BOOL_T;
 
     SCM_ASSERT (scm_is_string (scm_version), scm_version,
-		SCM_ARG1, "gschlas-version");
+                SCM_ARG1, "gschlas-version");
 
     version = scm_to_utf8_string (scm_version);
     if (g_strcasecmp (version, PACKAGE_DATE_VERSION) != 0) {
@@ -68,13 +68,13 @@ SCM g_rc_gschlas_version(SCM scm_version)
 }
 
 
-SCM 
+SCM
 g_rc_force_boundingbox(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
     {TRUE, "enabled"},
     {FALSE, "disabled"}
-			    };
+  };
 
   RETURN_G_RC_MODE("force-boundingbox", default_force_boundingbox, 2);
 }

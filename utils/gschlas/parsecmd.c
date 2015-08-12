@@ -45,7 +45,7 @@ extern int optind;
 #endif
 
 #ifdef HAVE_GETOPT_LONG
-struct option long_options[] = 
+struct option long_options[] =
   {
     {"embed",   0, 0, 'e'},
     {"unembed", 0, 0, 'u'},
@@ -78,42 +78,42 @@ int parse_commandline(int argc, char *argv[])
 #endif
         switch (ch) {
 
-	case 'v':
-	    verbose_mode = TRUE;
-	    break;
+        case 'v':
+            verbose_mode = TRUE;
+            break;
 
-	case 'q':
-	    quiet_mode = TRUE;
-	    break;
+        case 'q':
+            quiet_mode = TRUE;
+            break;
 
-	case 'e':
-	    embed_mode = TRUE;
-	    break;
+        case 'e':
+            embed_mode = TRUE;
+            break;
 
-	case 'u':
-	    unembed_mode = TRUE;
-	    break;
+        case 'u':
+            unembed_mode = TRUE;
+            break;
 
-	case 'h':
-	    usage(argv[0]);
-	    break;
+        case 'h':
+            usage(argv[0]);
+            break;
 
-	case '?':
-	default:
-	    usage(argv[0]);
-	    break;
-	}
+        case '?':
+        default:
+            usage(argv[0]);
+            break;
+        }
     }
 
     if (quiet_mode) {
-	verbose_mode = FALSE;
+        verbose_mode = FALSE;
     }
 
     if (embed_mode && unembed_mode) {
-	fprintf(stderr, 
-	        "Cannot specify both -e and -u at the same time (ignoring both flags)\n");	
-	embed_mode = FALSE;
-	unembed_mode = FALSE;
+        fprintf(stderr,
+                "Cannot specify both -e and -u at the same time (ignoring both flags)\n");
+        embed_mode = FALSE;
+        unembed_mode = FALSE;
     }
 
     return (optind);

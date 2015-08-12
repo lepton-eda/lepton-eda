@@ -18,5 +18,3 @@
  */
 
 extern int default_force_boundingbox;
-
-

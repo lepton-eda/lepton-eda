@@ -38,19 +38,19 @@
 void
 gschlas_quit(void)
 {
-  
+
   s_clib_free();
   s_slib_free();
 
 }
 
-void 
+void
 main_prog(void *closure, int argc, char *argv[])
 {
   int i;
   int argv_index;
   char *cwd;
-  
+
   TOPLEVEL *pr_current;
 
   argv_index = parse_commandline(argc, argv);
@@ -61,22 +61,22 @@ main_prog(void *closure, int argc, char *argv[])
   /* create log file right away */
   /* even if logging is enabled */
   s_log_init ("gschlas");
-	
+
   logging_dest=STDOUT_TTY;
 
 #if defined(__MINGW32__) && defined(DEBUG)
   fprintf(stderr, "This is the MINGW32 port.\n");
-#endif  
+#endif
 
   logging_dest=-1; /* don't output to the screen for now */
-  
+
   /* register guile (scheme) functions */
   g_register_funcs();
 
   pr_current = s_toplevel_new ();
   g_rc_parse (pr_current, argv[0], "gschlasrc", rc_filename);
   i_vars_set(pr_current);
-  
+
   i = argv_index;
   while (argv[i] != NULL) {
 
@@ -117,10 +117,10 @@ main_prog(void *closure, int argc, char *argv[])
 
   logging_dest=STDOUT_TTY;
 
-#if DEBUG 
+#if DEBUG
   s_page_print_all(pr_current);
 #endif
-  
+
   if (!quiet_mode) s_log_message("\n");
 
   if (embed_mode) {
@@ -129,7 +129,7 @@ main_prog(void *closure, int argc, char *argv[])
 
   if (unembed_mode) {
     s_util_embed(pr_current, FALSE);
-  }	
+  }
 
   /* save all the opened files */
   s_page_save_all(pr_current);
@@ -140,7 +140,7 @@ main_prog(void *closure, int argc, char *argv[])
   exit(0);
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   scm_boot_guile (argc, argv, main_prog, NULL);

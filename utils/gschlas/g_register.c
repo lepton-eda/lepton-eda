@@ -30,7 +30,7 @@
 #include <assert.h>
 #endif
 #ifdef HAVE_UNISTD_H
-#include <unistd.h> 
+#include <unistd.h>
 #endif
 
 #include <libgeda/libgeda.h>
@@ -55,4 +55,3 @@ g_quit(void)
   gschlas_quit();
   exit(0);
 }
-

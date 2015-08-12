@@ -35,9 +35,8 @@
 int default_force_boundingbox = FALSE;
 
 void i_vars_set(TOPLEVEL * pr_current)
-{ 
+{
     i_vars_libgeda_set(pr_current);
 
     pr_current->force_boundingbox = default_force_boundingbox;
 }
-

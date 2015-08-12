@@ -27,7 +27,7 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-char *rc_filename = NULL; 
+char *rc_filename = NULL;
 
 int logfile_fd=-1;
 int logging_dest=LOG_WINDOW;
@@ -36,8 +36,5 @@ int logging_dest=LOG_WINDOW;
 int verbose_mode=FALSE;
 int interactive_mode=FALSE;
 int quiet_mode=FALSE;
-int embed_mode=FALSE; 
+int embed_mode=FALSE;
 int unembed_mode=FALSE;
-
-
-
