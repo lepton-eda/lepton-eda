@@ -39,7 +39,6 @@ gschem/src/gschem_selection_adapter.c
 gschem/src/gschem_slot_edit_dialog.c
 gschem/src/gschem_swatch_column_renderer.c
 gschem/src/gschem_text_properties_widget.c
-gschem/src/gschem_translate_dialog.c
 gschem/src/gschem_translate_widget.c
 gschem/src/gschem_toplevel.c
 gschem/src/i_basic.c
