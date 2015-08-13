@@ -162,6 +162,7 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->find_text_widget = NULL;
   w_current->macro_widget  = NULL;
   w_current->bottom_widget = NULL;
+  w_current->translate_widget = NULL;
 
   w_current->toolbar_select = NULL;
   w_current->toolbar_net    = NULL;
@@ -187,7 +188,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->aawindow     = NULL;
   w_current->mawindow     = NULL;
   w_current->aewindow     = NULL;
-  w_current->trwindow     = NULL;
   w_current->tshowwindow  = NULL;
   w_current->thidewindow  = NULL;
   w_current->hkwindow     = NULL;

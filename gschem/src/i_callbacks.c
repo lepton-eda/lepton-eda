@@ -775,7 +775,8 @@ DEFINE_I_CALLBACK(edit_translate)
                   "set to 100\n"));
   }
 
-  translate_dialog(w_current);
+  gtk_widget_show (w_current->translate_widget);
+  gtk_widget_grab_focus (gschem_translate_widget_get_entry (GSCHEM_TRANSLATE_WIDGET (w_current->translate_widget)));
 }
 
 DEFINE_I_CALLBACK(edit_invoke_macro)

@@ -253,6 +253,20 @@ x_window_select_text (GschemFindTextState *state, OBJECT *object, GschemToplevel
   gschem_page_view_zoom_text (view, object, w_current);
 }
 
+static void
+x_window_translate_response (GschemTranslateWidget *widget, gint response, GschemToplevel *w_current)
+{
+  if (response == GTK_RESPONSE_OK) {
+    o_complex_translate_all (w_current,
+                             gschem_translate_widget_get_value (widget));
+  }
+
+  i_set_state (w_current, SELECT);
+  gtk_widget_grab_focus (w_current->drawing_area);
+  gtk_widget_hide (GTK_WIDGET (widget));
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -502,6 +516,20 @@ void x_window_create_main(GschemToplevel *w_current)
                     G_CALLBACK (&x_window_invoke_macro),
                     w_current);
 
+  /* translate widget */
+  w_current->translate_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_TRANSLATE_WIDGET, NULL));
+
+  gtk_box_pack_start (GTK_BOX (work_box),
+                      w_current->translate_widget,
+                      FALSE,
+                      FALSE,
+                      0);
+
+  g_signal_connect (w_current->translate_widget,
+                    "response",
+                    G_CALLBACK (&x_window_translate_response),
+                    w_current);
+
   /* object properties editor */
   w_current->object_properties = gschem_object_properties_widget_new (w_current);
 
@@ -617,9 +645,6 @@ void x_window_close(GschemToplevel *w_current)
 
   if (w_current->aewindow)
   gtk_widget_destroy(w_current->aewindow);
-
-  if (w_current->trwindow)
-  gtk_widget_destroy(w_current->trwindow);
 
   x_pagesel_close (w_current);
 

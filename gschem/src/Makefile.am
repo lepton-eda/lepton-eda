@@ -53,7 +53,7 @@ gschem_SOURCES = \
 	gschem_slot_edit_dialog.c \
 	gschem_swatch_column_renderer.c \
 	gschem_text_properties_widget.c \
-	gschem_translate_dialog.c \
+	gschem_translate_widget.c \
 	gschem_toplevel.c \
 	i_basic.c \
 	i_callbacks.c \

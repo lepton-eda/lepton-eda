@@ -85,9 +85,6 @@ void x_dialog_raise_all(GschemToplevel *w_current)
   if(w_current->aewindow) {
     gdk_window_raise(w_current->aewindow->window);
   }
-  if(w_current->trwindow) {
-    gdk_window_raise(w_current->trwindow->window);
-  }
   if(w_current->hkwindow) {
     gdk_window_raise(w_current->hkwindow->window);
   }
