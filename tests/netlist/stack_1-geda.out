@@ -14,11 +14,6 @@ U109 device=AM9128
 
 END components
 
-START renamed-nets
-
-
-END renamed-nets
-
 START nets
 
 SP_BUS_L : U210 1 

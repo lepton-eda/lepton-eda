@@ -12,15 +12,6 @@ U100/Uunder device=7400
 
 END components
 
-START renamed-nets
-
-U102/unnamed_net3 -> two
-U102/unnamed_net4 -> two
-U100/unnamed_net1 -> one
-U100/unnamed_net2 -> one
-
-END renamed-nets
-
 START nets
 
 U102/GND : U102/Uunder 7 

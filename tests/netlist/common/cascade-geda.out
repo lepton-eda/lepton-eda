@@ -18,11 +18,6 @@ DEFAULTS device=cascade-defaults-top
 
 END components
 
-START renamed-nets
-
-
-END renamed-nets
-
 START nets
 
 unnamed_net6 : AMP2 1, T1 2 

@@ -11,11 +11,6 @@ U1 device=LM324
 
 END components
 
-START renamed-nets
-
-
-END renamed-nets
-
 START nets
 
 minusin_slot4_pin13_b : U1 13 

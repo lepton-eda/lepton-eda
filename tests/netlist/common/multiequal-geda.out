@@ -13,11 +13,6 @@ A1 device=options
 
 END components
 
-START renamed-nets
-
-
-END renamed-nets
-
 START nets
 
 GND : V1 2, R1 1 

@@ -21,11 +21,6 @@ X1 device=LVD
 
 END components
 
-START renamed-nets
-
-
-END renamed-nets
-
 START nets
 
 Vdd1 : Rlp 2, Vdd 1, M1 B, M1 S, X1 6 

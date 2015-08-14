@@ -33,6 +33,9 @@ accomodate these differences.
   component, resulting in duplicate pins in the output.  This has been
   fixed; each pin in now listed only once.
 
+- The renamed-nets section in the test backend has been removed as it
+  isn't meaningful any longer.
+
 The tests do NOT cover most of the more advanced features of the
 backends; they are basically just a bunch of standard schematics run
 through each backend, whether meaningful or not.

@@ -22,12 +22,6 @@ U1 device=DIODE-BRIDGE
 
 END components
 
-START renamed-nets
-
-four -> GND
-
-END renamed-nets
-
 START nets
 
 ten : U2 1, C3 1, R1 2, R2 1 

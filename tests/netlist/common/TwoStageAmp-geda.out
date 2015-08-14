@@ -33,11 +33,6 @@ Q1 device=NPN_TRANSISTOR
 
 END components
 
-START renamed-nets
-
-
-END renamed-nets
-
 START nets
 
 unnamed_net2 : C2 1, R8 2 
