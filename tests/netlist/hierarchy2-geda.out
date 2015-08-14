@@ -16,10 +16,10 @@ START nets
 
 U102/GND : U102/Uunder 7 
 U102/Vcc : U102/Uunder 14 
-two : U102/Uunder 1, U102/Uunder 3 
+two : U102/Uunder 3, U102/Uunder 1 
 U100/GND : U100/Uunder 7 
 U100/Vcc : U100/Uunder 14 
-one : U100/Uunder 1, U100/Uunder 3 
+one : U100/Uunder 3, U100/Uunder 1 
 
 END nets
 
