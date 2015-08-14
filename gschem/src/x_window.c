@@ -444,13 +444,22 @@ void x_window_create_main(GschemToplevel *w_current)
   gtk_container_add(GTK_CONTAINER(main_box), vpaned);
 
   hpaned = gtk_hpaned_new ();
-  gtk_paned_add1 (GTK_PANED (vpaned), hpaned);
+  gtk_paned_pack1 (GTK_PANED (vpaned),
+                   hpaned,
+                   TRUE,
+                   TRUE);
 
   work_box = gtk_vbox_new (FALSE, 0);
-  gtk_paned_add1 (GTK_PANED (hpaned), work_box);
+  gtk_paned_pack1 (GTK_PANED (hpaned),
+                   work_box,
+                   TRUE,
+                   TRUE);
 
   w_current->right_notebook = gtk_notebook_new ();
-  gtk_paned_add2 (GTK_PANED (hpaned), w_current->right_notebook);
+  gtk_paned_pack2 (GTK_PANED (hpaned),
+                   w_current->right_notebook,
+                   FALSE,
+                   TRUE);
 
   gtk_container_set_border_width (GTK_CONTAINER (w_current->right_notebook),
                                   DIALOG_BORDER_SPACING);
@@ -546,7 +555,10 @@ void x_window_create_main(GschemToplevel *w_current)
 
   /* status notebook */
   w_current->bottom_notebook = gtk_notebook_new ();
-  gtk_paned_add2 (GTK_PANED (vpaned), w_current->bottom_notebook);
+  gtk_paned_pack2 (GTK_PANED (vpaned),
+                   w_current->bottom_notebook,
+                   FALSE,
+                   TRUE);
 
   gtk_container_set_border_width (GTK_CONTAINER (w_current->bottom_notebook),
                                   DIALOG_BORDER_SPACING);
