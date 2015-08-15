@@ -1,5 +1,5 @@
 ;                                                         -*-Scheme-*-
-; 
+;
 ; Init file for gschem
 ;
 
@@ -8,19 +8,19 @@
 ;  ;'s are comments
 ;  keywords are case sensitive (guile feature)
 ;  mode strings are case sensitive
-;  colors are not case sensitive 
-;  
+;  colors are not case sensitive
+;
 
 ; gschem-version string
 ;
-; Specifies the version of this file.  This number is used to make sure 
-; that the rc file is compatible with the version of gschem that is 
+; Specifies the version of this file.  This number is used to make sure
+; that the rc file is compatible with the version of gschem that is
 ; being run. The end user should *not* change this value.
 ;
 (gschem-version "@DATE_VERSION@")
 
 ;
-; Start of color section 
+; Start of color section
 ;
 
 ;; Make the gschem color maps more user-friendly
@@ -53,7 +53,7 @@
 
 ; handleboxes string
 ;
-; Controls if the handleboxes (which contain the menu and toolbar) are 
+; Controls if the handleboxes (which contain the menu and toolbar) are
 ; visible or not.
 ;
 (handleboxes "enabled")
@@ -68,14 +68,14 @@
 
 ; undo-levels number
 ;
-; Determines the number of levels of undo.  Basically this number decides 
+; Determines the number of levels of undo.  Basically this number decides
 ; how many backup schematics are saved on disk.
 ;
 (undo-levels 10)
 
 ; undo-type string
 ;
-; Controls which kind of undo is used.  The default is to use the disk as 
+; Controls which kind of undo is used.  The default is to use the disk as
 ; the storing medium (ie after every action the undo information is stored
 ; to disk).  The other mechanism uses only memory.  The disk mechanism is
 ; nice because you get undo-level number of backups of the schematic written
@@ -86,10 +86,10 @@
 
 ; undo-panzoom string
 ;
-; Controls if pan or zoom commands are saved in the undo list.  If this 
+; Controls if pan or zoom commands are saved in the undo list.  If this
 ; is enabled then a pan or zoom command will be considered a command and
 ; can be undone.  If this is false, then panning and zooming is not saved
-; in the undo list and cannot be undone.  Note, the current viewport 
+; in the undo list and cannot be undone.  Note, the current viewport
 ; information is saved for every command, so the display will change to the
 ; viewport before a command is executed.
 ;
@@ -123,7 +123,7 @@
 ;  net-selection-mode string
 ;
 ; Controls how many net segments are selected when you click at a net
-; If one of the enabled items is used, the selection state will toggle 
+; If one of the enabled items is used, the selection state will toggle
 ; through all selection states. The mode defines the maximum search depth
 ; for the net selection mode
 ;
@@ -135,17 +135,17 @@
 ;
 ;  Controls if the net consolidation code is used when schematics are read
 ;  in, written to disk, and when nets are being drawn (does not consolidate
-;  when things are being copied or moved yet).  Net consolidation is the 
+;  when things are being copied or moved yet).  Net consolidation is the
 ;  connection of nets which can be combined into one.
-;  Comment out if you want the default mode 
+;  Comment out if you want the default mode
 ;
 (net-consolidate "enabled")
 ;(net-consolidate "disabled")
 
 ; netconn-rubberband string
 ;
-; Controls if net connections are maintained when you move a connecting 
-; component or net.   
+; Controls if net connections are maintained when you move a connecting
+; component or net.
 ;
 (netconn-rubberband "enabled")
 ;(netconn-rubberband "disabled")
@@ -198,9 +198,9 @@
 
 ; keyboardpan-gain integer
 ;
-; Controls how much the display pans when using the keyboard cursor keys.  
-; A larger value provides greater pan distance when pressing the cursor 
-; keys, while a smaller value provides a smoother, but smaller pan 
+; Controls how much the display pans when using the keyboard cursor keys.
+; A larger value provides greater pan distance when pressing the cursor
+; keys, while a smaller value provides a smoother, but smaller pan
 ; distance when moving the cursor keys.
 (keyboardpan-gain 20)
 ;(keyboardpan-gain 10)
@@ -221,8 +221,8 @@
 ; action-feedback-mode string
 ;
 ; Set the default action feedback mode (for copy/move/component place).
-; Set to outline to get an outline of the selection. 
-; Set to boundingbox to get a bounding box of the selection. 
+; Set to outline to get an outline of the selection.
+; Set to boundingbox to get a bounding box of the selection.
 ; For a fast machines with fast video use outline (it looks good).
 ; For a slow machine use boundingbox; it is much faster.
 ; Comment out if you want the default mode.
@@ -244,7 +244,7 @@
 ; scrollbars string
 ;
 ; Controls if the scrollbars are displayed (enabled) or not (disabled)
-; If you disable the scrollbars, you will not be able to use the scroll 
+; If you disable the scrollbars, you will not be able to use the scroll
 ; wheel on your mouse.  This is an unfortunate side effect of how the
 ; code is implemented.
 ;
@@ -262,9 +262,9 @@
 
 ; embed-components string
 ;
-; Determines if the newly placed components are embedded in the schematic 
-; or if only the filename is specified and the component is searched for 
-; instead.  If it is enabled, then all new components will be embedded 
+; Determines if the newly placed components are embedded in the schematic
+; or if only the filename is specified and the component is searched for
+; instead.  If it is enabled, then all new components will be embedded
 ; otherwise they are not embedded.  This can be controlled on the fly during
 ; runtime with the "Embed Component" checkbox on the select component dialog
 ; box
@@ -298,7 +298,7 @@
 
 ; log-window-type string
 ;
-; Controls if the log message window is a transient or if it is decorated 
+; Controls if the log message window is a transient or if it is decorated
 ; as a normal window (this is dependant on the window manager doing decoration
 ; right)
 ;
@@ -336,7 +336,7 @@
 ; snap-size number
 ;
 ; Sets the default grid spacing at start-up of gschem.
-; 
+;
 (snap-size 100)
 
 ; text-caps-style string
@@ -352,7 +352,7 @@
 
 ;  file-preview string
 ;
-;  Controls if the preview area in the File Open/Save As and Component 
+;  Controls if the preview area in the File Open/Save As and Component
 ;  dialog boxes is enabled by default or not
 ;
 (file-preview "enabled")
@@ -369,12 +369,12 @@
 (enforce-hierarchy "enabled")
 ;(enforce-hierarchy "disabled")
 
-; window-size width height 
+; window-size width height
 ;
 ; Specifies the size of the drawing area window.  The width and height
-; are specified in pixels and do not include the three menu bars and 
-; scrollbars (so the window will be larger than the specified 
-; measurements). Try to keep an aspect ratio of 1.333333 if at all possible. 
+; are specified in pixels and do not include the three menu bars and
+; scrollbars (so the window will be larger than the specified
+; measurements). Try to keep an aspect ratio of 1.333333 if at all possible.
 ; These numbers are NOT the true size of the window, but of the drawing area.
 ;
 ;(window-size 650 487)  ; Good size for 800x600
@@ -404,8 +404,8 @@
 
 ; middle-button string
 ;
-; Controls if the middle mouse button draws strokes, repeats the last 
-; command, does an action (move and copy (holding down the ALT key) 
+; Controls if the middle mouse button draws strokes, repeats the last
+; command, does an action (move and copy (holding down the ALT key)
 ; are supported) on a single objects, or if it does the mouse panning.
 ;
 (middle-button "mousepan")
@@ -415,7 +415,7 @@
 
 ; third-button string
 ;
-; Controls if the third mouse button performs the popup ("popup") or 
+; Controls if the third mouse button performs the popup ("popup") or
 ; if it does the mouse panning ("mousepan")
 ;
 (third-button "popup")
@@ -460,15 +460,15 @@
 ; Bus ripper controls
 ; The following keywords control the auto bus ripper addition code
 ;
-; bus-ripper-size  : Sets the size of the auto bus rippers.  
-; bus-ripper-type  : Sets the bus ripper type either a "component" or 
+; bus-ripper-size  : Sets the size of the auto bus rippers.
+; bus-ripper-type  : Sets the bus ripper type either a "component" or
 ;                    plain "net"
 ; bus-ripper-symname  : If above is set to component, specify the symbol name.
 ;                       The symbol must exist in a component library
-; bus-ripper-rotation  : Either "symmetric" or "non-symmetric".  This deals 
-;                        with how the bus ripper symbol is rotated when it 
+; bus-ripper-rotation  : Either "symmetric" or "non-symmetric".  This deals
+;                        with how the bus ripper symbol is rotated when it
 ;                        is auto added to a schematic.
-;   
+;
 
 ; The default bus ripper
 (bus-ripper-size 200)
@@ -476,13 +476,13 @@
 (bus-ripper-symname "busripper-1.sym")
 (bus-ripper-rotation "non-symmetric")
 
-; A symmetric alternative 
+; A symmetric alternative
 ;(bus-ripper-size 200)
 ;(bus-ripper-type "component")
 ;(bus-ripper-symname "busripper-2.sym")
 ;(bus-ripper-rotation "symmetric")
 
-; A simple net 
+; A simple net
 ;(bus-ripper-size 200)
 ;(bus-ripper-type "net")
 
@@ -536,7 +536,7 @@
 ; force-boundingbox string
 ;
 ; Controls if the entire bounding box of a symbol is used when figuring out
-; whichend of the pin is considered the active port.  Enable this when 
+; whichend of the pin is considered the active port.  Enable this when
 ; gschem is guessing incorrectly.
 ;
 (force-boundingbox "disabled")
@@ -545,9 +545,9 @@
 
 ; add-attribute-offset integer
 ;
-; This has not been implemented/debugged yet.  
-; This has not been implemented/debugged yet.  
-; This has not been implemented/debugged yet.  
+; This has not been implemented/debugged yet.
+; This has not been implemented/debugged yet.
+; This has not been implemented/debugged yet.
 ;
 ; Controls a offset which is added to the location of text items that are
 ; added to an object as an attribute.  This offset is added when the following
@@ -559,7 +559,7 @@
 ;  4) The initial mouse position is at or near the actual net (with one
 ;     grid unit).
 ;
-; If these four conditions are not met, then this offset is not added. 
+; If these four conditions are not met, then this offset is not added.
 ;(add-attribute-offset 50)
 
 
@@ -610,27 +610,27 @@
 
 
 ; Define default pin attributes
-; Attributes: 
+; Attributes:
 ;   - Attribute name.
 ;   - Value of the attribute.
 ;   - Visibility: #t (visible) or #f (hidden).
-;   - Show_list:  a list containing what to show, using 
+;   - Show_list:  a list containing what to show, using
 ;                 elements like "name" or "value", or an empty list.
-(define default-pin-attributes 
+(define default-pin-attributes
        '(("pintype"   "unknown" #f ())
 	 ("pinlabel"  "unknown" #t ("value"))
 	 ("pinnumber" "0"       #t ("value"))
 	 ("pinseq"    "0"       #f ())))
 
 ; Convert a character into a string
-(define char2str 
+(define char2str
   (lambda (char)
     (list->string (list char))))
 
-; Attribute autoplacement grid 
+; Attribute autoplacement grid
 (define autoplace-attributes-grid 50)
 
-; Load the default position of attributes, for attribute autoplacing 
+; Load the default position of attributes, for attribute autoplacing
 ; functions.
 (load-from-path "default-attrib-positions.scm")
 
@@ -648,10 +648,10 @@
 ; Comment in this to load the functions to place the attributes automatically.
 (load-from-path "auto-place-attribs.scm")
 
-; Autoplace pin text attributes hook. 
+; Autoplace pin text attributes hook.
 ; Comment in these if you want the pin attributes to be automatically placed.
 ; There are different hooks for situations like adding a new pin and rotating
-; or mirroring an existing one. 
+; or mirroring an existing one.
 ; The #t at the end means that function is appended to the end of the hook.
 (add-hook! add-pin-hook (lambda (pin)
 	(autoplace-pin-attributes pin )) #t)
@@ -660,8 +660,8 @@
 ;(add-hook! mirror-pin-hook (lambda (pin)
 ;	(autoplace-pin-attributes pin )) #t)
 
-; Autoplace component/net/buses text attributes hook. 
-; Comment in these if you want the component attributes to be 
+; Autoplace component/net/buses text attributes hook.
+; Comment in these if you want the component attributes to be
 ; automatically placed.
 ; There are different hooks for situations like adding a new pin, rotating
 ; or mirroring an existing one, adding a new attribute or a new component.
@@ -691,7 +691,7 @@
 ;; (define default-titleblock "title-A4.sym")
 ;; Change "title-A4.sym" by the name of your preferred titleblock!
 ;
-; If you don't want a titleblock to be added automatically, then add one of 
+; If you don't want a titleblock to be added automatically, then add one of
 ; the following lines to your gschemrc file (without the semicolon).
 ; There are several ways, so just choose one:
 ;   (define default-titleblock "")
@@ -712,7 +712,7 @@
 	    ; If the guile installation doesn't provide the regex module,
 	    ; don't care about the page filename.
 	    (if (provided? 'regex)
-		(not (string-match ".*\\.[sS][yY][mM]" 
+		(not (string-match ".*\\.[sS][yY][mM]"
 				   (get-page-filename page)))
 		#t))
 ;      Syntax             Symbol name        X   Y    angle selectable mirrored
@@ -782,11 +782,11 @@
 ;
 
 ;
-; This section defines associations between a stroke sequence and a 
+; This section defines associations between a stroke sequence and a
 ; guile function which is executed when the stroke is drawn in the
 ; gschem window
 ;
-; Strokes are defined as follows: 
+; Strokes are defined as follows:
 ;
 ; 1  2  3
 ;
@@ -795,20 +795,20 @@
 ; 7  8  9
 ;
 ; The sequence of number such as "852" specify how the stroke is drawn.
-; Sequence "852" happens to be a vertical line drawn from the bottom going 
+; Sequence "852" happens to be a vertical line drawn from the bottom going
 ; up.
 ;
-; Please see the libstroke documentation for further information on the 
-; stroke description.  
+; Please see the libstroke documentation for further information on the
+; stroke description.
 ;
-; For the most part I went a little overboard on the stroke defs, you 
-; probably can get away with many less stroke defs, but I'm a very 
-; sloppy stroke drawing person. :-)  Guess my teachers were always 
+; For the most part I went a little overboard on the stroke defs, you
+; probably can get away with many less stroke defs, but I'm a very
+; sloppy stroke drawing person. :-)  Guess my teachers were always
 ; right-- my handwritting was/is awful.
 ;
 ; Be careful here, strokes is a rather large list, and make sure you maintain
 ; proper ( and )'s.
-; 
+;
 
 (define strokes
 ; Letter L for line
