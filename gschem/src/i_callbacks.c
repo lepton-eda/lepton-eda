@@ -1038,6 +1038,19 @@ DEFINE_I_CALLBACK(edit_filltype)
 }
 
 /*! \section view-menu View Menu Callback Functions */
+/*! \brief Toggle the visibility of the sidebar
+ */
+DEFINE_I_CALLBACK(view_sidebar)
+{
+  gboolean visible;
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+
+  g_return_if_fail (w_current != NULL);
+
+  visible = gtk_widget_get_visible (GTK_WIDGET (w_current->right_notebook));
+  gtk_widget_set_visible (GTK_WIDGET (w_current->right_notebook), !visible);
+}
+
 /*! \brief Toggle the visibility of the status window
  */
 DEFINE_I_CALLBACK(view_status)

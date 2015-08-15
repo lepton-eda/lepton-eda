@@ -184,6 +184,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "buffer-paste4",             0, 0, 0, g_keys_buffer_paste4 },
   { "buffer-paste5",             0, 0, 0, g_keys_buffer_paste5 },
 
+  { "view-sidebar",              0, 0, 0, g_keys_view_sidebar },
   { "view-status",               0, 0, 0, g_keys_view_status },
   { "view-redraw",               0, 0, 0, g_keys_view_redraw },
   { "view-zoom-full",            0, 0, 0, g_keys_view_zoom_full },

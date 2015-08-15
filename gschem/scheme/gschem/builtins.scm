@@ -175,6 +175,9 @@
 ;; -------------------------------------------------------------------
 ;;;; View control actions
 
+(define-action-public (&view-sidebar #:label (_ "Sidebar"))
+  (%view-sidebar))
+
 (define-action-public (&view-status #:label (_ "Status"))
   (%view-status))
 
