@@ -20,6 +20,7 @@
 ## Writing files in a safe way.
 
 import errno, os, stat, tempfile
+from gettext import gettext as _
 
 ## How many symlinks to follow before returning \c ELOOP.
 #

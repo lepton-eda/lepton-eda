@@ -20,6 +20,7 @@
 ## \namespace xorn.geda.write
 ## Writing gEDA schematic/symbol files.
 
+from gettext import gettext as _
 import xorn.fileutils
 import xorn.proxy
 import xorn.storage
