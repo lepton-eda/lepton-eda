@@ -168,6 +168,8 @@ line_type_dialog (GschemToplevel *w_current)
     if (page != current) {
       gtk_notebook_set_current_page (GTK_NOTEBOOK (w_current->right_notebook), page);
     }
+
+    gtk_widget_set_visible (GTK_WIDGET (w_current->right_notebook), TRUE);
   }
 }
 

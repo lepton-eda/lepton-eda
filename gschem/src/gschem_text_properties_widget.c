@@ -193,6 +193,8 @@ text_edit_dialog (GschemToplevel *w_current)
     if (page != current) {
       gtk_notebook_set_current_page (GTK_NOTEBOOK (w_current->right_notebook), page);
     }
+
+    gtk_widget_set_visible (GTK_WIDGET (w_current->right_notebook), TRUE);
   }
 
   gschem_text_properties_widget_adjust_focus(GSCHEM_TEXT_PROPERTIES_WIDGET(w_current->text_properties));
