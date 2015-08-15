@@ -175,6 +175,9 @@
 ;; -------------------------------------------------------------------
 ;;;; View control actions
 
+(define-action-public (&view-status #:label (_ "Status"))
+  (%view-status))
+
 (define-action-public (&view-redraw #:label (_ "Redraw") #:icon "gtk-refresh")
   (%view-redraw))
 

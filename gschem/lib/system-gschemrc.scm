@@ -1051,6 +1051,7 @@
 (global-set-key "U" '&edit-undo)
 (global-set-key "<Shift>U" '&edit-undo)
 
+(global-set-key "V S" '&view-status)
 (global-set-key "V R" '&view-redraw)
 (global-set-key "V B" '&view-zoom-box)
 (global-set-key "V F" '&view-zoom-full)
@@ -1198,7 +1199,9 @@
 ;;
 ;;          menu item name        menu action             menu stock icon
 ;;
-        `( (,(N_ "_Redraw")             &view-redraw            "gtk-refresh")
+        `( (,(N_ "Status")              &view-status            #f)
+           ("SEPARATOR"                 #f                      #f)
+           (,(N_ "_Redraw")             &view-redraw            "gtk-refresh")
            (,(N_ "_Pan")                &view-pan               #f)
            (,(N_ "Zoom _Box")           &view-zoom-box          #f)
            (,(N_ "Zoom _Extents")       &view-zoom-extents      "gtk-zoom-fit")

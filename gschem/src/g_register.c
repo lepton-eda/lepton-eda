@@ -184,6 +184,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "buffer-paste4",             0, 0, 0, g_keys_buffer_paste4 },
   { "buffer-paste5",             0, 0, 0, g_keys_buffer_paste5 },
 
+  { "view-status",               0, 0, 0, g_keys_view_status },
   { "view-redraw",               0, 0, 0, g_keys_view_redraw },
   { "view-zoom-full",            0, 0, 0, g_keys_view_zoom_full },
   { "view-zoom-extents",         0, 0, 0, g_keys_view_zoom_extents },
@@ -267,7 +268,7 @@ create_hook (const char *name, int n_args)
 void g_register_funcs (void)
 {
   struct gsubr_t *tmp = gschem_funcs;
- 
+
   while (tmp->name != NULL) {
     scm_c_define_gsubr (tmp->name, tmp->req, tmp->opt, tmp->rst, tmp->fnc);
     tmp++;

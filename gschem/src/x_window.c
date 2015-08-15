@@ -199,6 +199,7 @@ x_window_find_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
           gtk_notebook_set_current_page (GTK_NOTEBOOK (w_current->bottom_notebook), page);
         }
       }
+      gtk_widget_set_visible (GTK_WIDGET (w_current->bottom_notebook), TRUE);
       close = TRUE;
     };
     break;
