@@ -20,6 +20,7 @@ SUBDIRS = \
 	src/cpython \
 	src/python \
 	src/command \
+	src/backend \
 	tests
 
 include_HEADERS = include/xornstorage.h

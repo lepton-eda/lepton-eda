@@ -56,6 +56,10 @@ def main():
 "        Find symbols in a directory matching a given pinout.\n"))
             sys.stdout.write("\n")
             sys.stdout.write(_(
+"    netlist\n"
+"        Generate a netlist from one or more gEDA schematic files.\n"))
+            sys.stdout.write("\n")
+            sys.stdout.write(_(
 "    For more information about an individual command, type:\n"
 "      `%s COMMAND --help'\n") % xorn.command.program_name)
             sys.stdout.write("\n")

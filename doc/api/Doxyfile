@@ -772,7 +772,20 @@ INPUT                  = .. \
                          ./xorn/geda/clib.py \
                          ./xorn/geda/fileformat.py \
                          ./xorn/geda/read.py \
-                         ./xorn/geda/write.py
+                         ./xorn/geda/write.py \
+                         ./xorn/geda/netlist/__init__.py \
+                         ./xorn/geda/netlist/backend.py \
+                         ./xorn/geda/netlist/blueprint.py \
+                         ./xorn/geda/netlist/conn.py \
+                         ./xorn/geda/netlist/instance.py \
+                         ./xorn/geda/netlist/net.py \
+                         ./xorn/geda/netlist/netlist.py \
+                         ./xorn/geda/netlist/package.py \
+                         ./xorn/geda/netlist/pp_graphical.py \
+                         ./xorn/geda/netlist/pp_hierarchy.py \
+                         ./xorn/geda/netlist/pp_netattrib.py \
+                         ./xorn/geda/netlist/pp_slotting.py \
+                         ./xorn/geda/netlist/slib.py
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses

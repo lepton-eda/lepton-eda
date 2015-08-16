@@ -1,4 +1,6 @@
-# Process this file with autoconf to produce a configure script.
+# xorn.geda.netlist - gEDA Netlist Extraction and Generation
+# Copyright (C) 1998-2010 Ales Hvezda
+# Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
 # Copyright (C) 2013-2015 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
@@ -15,36 +17,14 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-AC_PREREQ([2.61])
-LT_PREREQ([2.4.2])
+# Copyright (C) 2001-2010 MIYAMOTO Takanori
 
-AC_INIT([Xorn], [0.0], [bug-xorn@hedmen.org])
-AC_CONFIG_SRCDIR([src/cpython/module.c])
-AC_CONFIG_MACRO_DIR([m4])
+from partslist_common import *
 
-AM_INIT_AUTOMAKE([-Wall -Werror silent-rules subdir-objects])
-m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
-LT_INIT([])
-
-AC_PROG_CXX
-
-AM_PATH_PYTHON([2.7])
-AC_CHECK_HEADERS(
-	[python${PYTHON_VERSION}/Python.h], [],
-	[AC_MSG_ERROR([python headers not found])])
-
-AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.18.2])
-
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_FILES([
-	Makefile
-	po/Makefile.in
-	src/storage/Makefile
-	src/cpython/Makefile
-	src/python/Makefile
-	src/command/Makefile
-	src/backend/Makefile
-	tests/Makefile
-])
-AC_OUTPUT
+def run(f, netlist):
+    f.write('.START\n')
+    f.write('..refdes\tdevice\tvalue\tfootprint\tquantity\n')
+    for row in marge_sort_with_multikey(
+            get_parts_table(netlist), [1, 2, 3, 0]):
+        write_one_row(f, row + ('1', ), '\t', '\n')
+    f.write('.END\n')

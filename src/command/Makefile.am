@@ -50,4 +50,5 @@ uninstall-local:
 commanddir = $(pkglibdir)
 command_PYTHON = \
 	extract.py \
-	find-symbol-by-pinout.py
+	find-symbol-by-pinout.py \
+	netlist.py

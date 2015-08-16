@@ -25,7 +25,20 @@ nobase_pkgpython_PYTHON = \
 	geda/clib.py \
 	geda/fileformat.py \
 	geda/read.py \
-	geda/write.py
+	geda/write.py \
+	geda/netlist/__init__.py \
+	geda/netlist/backend.py \
+	geda/netlist/blueprint.py \
+	geda/netlist/conn.py \
+	geda/netlist/instance.py \
+	geda/netlist/net.py \
+	geda/netlist/netlist.py \
+	geda/netlist/package.py \
+	geda/netlist/pp_graphical.py \
+	geda/netlist/pp_hierarchy.py \
+	geda/netlist/pp_netattrib.py \
+	geda/netlist/pp_slotting.py \
+	geda/netlist/slib.py
 
 noinst_PYTHON = storage.py
 
