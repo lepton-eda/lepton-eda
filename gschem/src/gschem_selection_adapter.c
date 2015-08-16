@@ -53,6 +53,7 @@ enum
   PROP_LINE_TYPE,
   PROP_LINE_WIDTH,
   PROP_OBJECT_COLOR,
+  PROP_PIN_TYPE,
   PROP_TEXT_ALIGNMENT,
   PROP_TEXT_COLOR,
   PROP_TEXT_ROTATION,
@@ -677,6 +678,47 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
   }
 
   return color;
+}
+
+
+
+/*! \brief Get the pin type of selected objects
+ *
+ *  \param [in] adapter This adapter
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different pin types are selected
+ *  \retval others          The pin type of the selected objects
+ */
+int
+gschem_selection_adapter_get_pin_type (GschemSelectionAdapter *adapter)
+{
+  int type = NO_SELECTION;
+  GList *iter = get_selection_iter (adapter);
+
+  while (iter != NULL) {
+    OBJECT* object = (OBJECT *) iter->data;
+    iter = g_list_next (iter);
+    if ((object != NULL) && (object->type == OBJ_PIN)) {
+      type = object->pin_type;
+      break;
+    }
+  }
+
+  /* Check if all other objects have the same properties */
+
+  while (iter != NULL) {
+    OBJECT* object = (OBJECT *) iter->data;
+    if ((object != NULL) && (object->type == OBJ_PIN)) {
+      if (type != object->pin_type) {
+        type = MULTIPLE_VALUES;
+        break;
+      }
+    }
+    iter = g_list_next (iter);
+  }
+
+  return type;
 }
 
 
@@ -1631,6 +1673,40 @@ gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int 
 
 
 
+/*! \brief Set the pin type in the selection
+ *
+ *  \param [in] adapter
+ *  \param [in] color
+ */
+void
+gschem_selection_adapter_set_pin_type (GschemSelectionAdapter *adapter, int type)
+{
+  GList *iter;
+
+  g_return_if_fail (adapter != NULL);
+  g_return_if_fail ((type == PIN_TYPE_NET) || (type == PIN_TYPE_BUS));
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+
+    if (object->type == OBJ_PIN && object->pin_type != type) {
+      s_conn_remove_object (adapter->toplevel, object);
+      o_pin_set_type (adapter->toplevel, object, type);
+      s_conn_update_object (adapter->toplevel, object);
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "pin-type");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
+}
+
+
+
 /*! \brief Set the selection associated with this adapter
  *
  *  \param [in] adapter
@@ -1672,6 +1748,7 @@ gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter, SELECTI
   g_object_notify (G_OBJECT (adapter), "line-type");
   g_object_notify (G_OBJECT (adapter), "line-width");
   g_object_notify (G_OBJECT (adapter), "object-color");
+  g_object_notify (G_OBJECT (adapter), "pin-type");
 }
 
 
@@ -2002,6 +2079,16 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_PIN_TYPE,
+                                   g_param_spec_int ("pin-type",
+                                                     "Pin Type",
+                                                     "Pin Type",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_TEXT_ALIGNMENT,
                                    g_param_spec_int ("text-alignment",
                                                      "Text Alignment",
@@ -2148,6 +2235,10 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       g_value_set_int (value, gschem_selection_adapter_get_object_color (adapter));
       break;
 
+    case PROP_PIN_TYPE:
+      g_value_set_int (value, gschem_selection_adapter_get_pin_type (adapter));
+      break;
+
     case PROP_TEXT_ALIGNMENT:
       g_value_set_int (value, gschem_selection_adapter_get_text_alignment (adapter));
       break;
@@ -2215,6 +2306,7 @@ selection_changed (GedaList *selection, GschemSelectionAdapter *adapter)
   g_object_notify (G_OBJECT (adapter), "line-type");
   g_object_notify (G_OBJECT (adapter), "line-width");
   g_object_notify (G_OBJECT (adapter), "object-color");
+  g_object_notify (G_OBJECT (adapter), "pin-type");
   g_object_notify (G_OBJECT (adapter), "text-alignment");
   g_object_notify (G_OBJECT (adapter), "text-color");
   g_object_notify (G_OBJECT (adapter), "text-rotation");
@@ -2283,6 +2375,10 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
     case PROP_OBJECT_COLOR:
       gschem_selection_adapter_set_object_color (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_PIN_TYPE:
+      gschem_selection_adapter_set_pin_type (adapter, g_value_get_int (value));
       break;
 
     case PROP_TEXT_ALIGNMENT:

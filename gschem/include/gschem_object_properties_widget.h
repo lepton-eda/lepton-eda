@@ -62,9 +62,12 @@ struct _GschemObjectPropertiesWidget
   GtkWidget *pitch1e;
   GtkWidget *pitch2e;
 
+  GtkWidget *pin_type;
+
   GtkWidget *fill_section_widget;
   GtkWidget *general_section_widget;
   GtkWidget *line_section_widget;
+  GtkWidget *pin_section_widget;
 };
 
 GType

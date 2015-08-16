@@ -30,6 +30,7 @@ noinst_HEADERS = \
 	gschem_options_dialog.h \
 	gschem_page_geometry.h \
 	gschem_page_view.h \
+	gschem_pin_type_combo.h \
 	gschem_selection_adapter.h \
 	gschem_show_hide_text_widget.h \
 	gschem_struct.h \

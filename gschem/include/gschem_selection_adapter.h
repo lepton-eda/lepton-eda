@@ -94,6 +94,9 @@ gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter);
 int
 gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter);
 
+int
+gschem_selection_adapter_get_pin_type (GschemSelectionAdapter *adapter);
+
 SELECTION *
 gschem_selection_adapter_get_selection (GschemSelectionAdapter *adapter);
 
@@ -153,6 +156,9 @@ gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int li
 
 void
 gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int color);
+
+void
+gschem_selection_adapter_set_pin_type (GschemSelectionAdapter *adapter, int type);
 
 void
 gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter, SELECTION *selection);

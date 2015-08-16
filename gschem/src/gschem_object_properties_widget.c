@@ -55,6 +55,9 @@ create_general_property_widget (GschemObjectPropertiesWidget *dialog);
 static GtkWidget*
 create_line_property_widget (GschemObjectPropertiesWidget *dialog);
 
+static GtkWidget*
+create_pin_property_widget (GschemObjectPropertiesWidget *dialog);
+
 static void
 dispose (GObject *object);
 
@@ -97,6 +100,11 @@ update_object_color_model (GtkWidget *widget, GschemObjectPropertiesWidget *dial
 static void
 update_object_color_widget (GschemObjectPropertiesWidget *dialog);
 
+static void
+update_pin_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog);
+
+static void
+update_pin_type_widget (GschemObjectPropertiesWidget *dialog);
 
 
 /*! \brief Get/register GschemObjectPropertiesWidget type.
@@ -152,6 +160,36 @@ gschem_object_properties_widget_new (GschemToplevel *w_current)
  */
 void
 line_type_dialog (GschemToplevel *w_current)
+{
+  int page;
+
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->right_notebook != NULL);
+  g_return_if_fail (w_current->object_properties != NULL);
+
+  page = gtk_notebook_page_num (GTK_NOTEBOOK (w_current->right_notebook),
+                                GTK_WIDGET (w_current->object_properties));
+
+  if (page >= 0) {
+    int current = gtk_notebook_get_current_page (GTK_NOTEBOOK (w_current->right_notebook));
+
+    if (page != current) {
+      gtk_notebook_set_current_page (GTK_NOTEBOOK (w_current->right_notebook), page);
+    }
+
+    gtk_widget_set_visible (GTK_WIDGET (w_current->right_notebook), TRUE);
+  }
+}
+
+
+
+/*! \brief Open the dialog box to edit pin type
+ *
+ *  \param [in] w_current The gschem toplevel
+ *  \param [in] obj_list unused
+ */
+void
+x_dialog_edit_pin_type (GschemToplevel *w_current, const GList *obj_list)
 {
   int page;
 
@@ -391,6 +429,35 @@ create_line_property_widget (GschemObjectPropertiesWidget *dialog)
 
 
 
+/*! \private
+ *  \brief Create a pin property section widget
+ *
+ *  \param [in] dialog
+ *  \return A new pin property section widget
+ */
+static GtkWidget*
+create_pin_property_widget (GschemObjectPropertiesWidget *dialog)
+{
+  GtkWidget *label[1];
+  GtkWidget *table;
+  GtkWidget *widget[1];
+
+  label[0] = gschem_dialog_misc_create_property_label (_("Pin Type:"));
+
+  widget[0] = dialog->pin_type = gschem_pin_type_combo_new ();
+
+  table = gschem_dialog_misc_create_property_table (label, widget, 1);
+
+  g_signal_connect (G_OBJECT (dialog->pin_type),
+                    "changed",
+                    G_CALLBACK (update_pin_type_model),
+                    dialog);
+
+  return gschem_dialog_misc_create_section_widget (_("<b>Pin Properties</b>"), table);
+}
+
+
+
 /*! \brief Dispose
  *
  *  \param [in,out] object This object
@@ -485,6 +552,7 @@ instance_init (GschemObjectPropertiesWidget *dialog)
   dialog->general_section_widget = create_general_property_widget (dialog);
   dialog->line_section_widget    = create_line_property_widget (dialog);
   dialog->fill_section_widget    = create_fill_property_widget (dialog);
+  dialog->pin_section_widget     = create_pin_property_widget (dialog);
 
   gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
                       dialog->general_section_widget,          /* child   */
@@ -500,6 +568,12 @@ instance_init (GschemObjectPropertiesWidget *dialog)
 
   gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
                       dialog->fill_section_widget,             /* child   */
+                      FALSE,                                   /* expand  */
+                      FALSE,                                   /* fill    */
+                      0);                                      /* padding */
+
+  gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
+                      dialog->pin_section_widget,              /* child   */
                       FALSE,                                   /* expand  */
                       FALSE,                                   /* fill    */
                       0);                                      /* padding */
@@ -568,6 +642,10 @@ set_selection_adapter (GschemObjectPropertiesWidget *dialog, GschemSelectionAdap
 
   if (dialog->adapter != NULL) {
     g_signal_handlers_disconnect_by_func (dialog->adapter,
+                                          G_CALLBACK (update_pin_type_widget),
+                                          dialog);
+
+    g_signal_handlers_disconnect_by_func (dialog->adapter,
                                           G_CALLBACK (update_object_color_widget),
                                           dialog);
 
@@ -614,12 +692,18 @@ set_selection_adapter (GschemObjectPropertiesWidget *dialog, GschemSelectionAdap
                               "notify::object-color",
                               G_CALLBACK (update_object_color_widget),
                               dialog);
+
+    g_signal_connect_swapped (dialog->adapter,
+                              "notify::pin-type",
+                              G_CALLBACK (update_pin_type_widget),
+                              dialog);
   }
 
   update_cap_style_widget (dialog);
   update_fill_type_widget (dialog);
   update_line_type_widget (dialog);
   update_object_color_widget (dialog);
+  update_pin_type_widget (dialog);
 }
 
 
@@ -880,6 +964,70 @@ update_object_color_widget (GschemObjectPropertiesWidget *dialog)
                                        dialog);
 
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->colorcb), (color != NO_SELECTION));
+  }
+}
+
+
+/*! \brief Update the pin type value in the model
+ *
+ *  \param [in] widget The widget emitting the event
+ *  \param [in] dialog The line properties dialog box
+ */
+static void
+update_pin_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
+{
+  TOPLEVEL *toplevel;
+  GschemToplevel *w_current;
+
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (widget != NULL);
+
+  w_current = dialog->w_current;
+  g_return_if_fail (w_current != NULL);
+
+  toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_if_fail (toplevel != NULL);
+
+  if ((dialog->adapter != NULL) && (dialog->pin_type != NULL)) {
+    int pin_type;
+
+    g_return_if_fail (widget == dialog->pin_type);
+
+    pin_type = gschem_pin_type_combo_get_index (dialog->pin_type);
+
+    if (pin_type >= 0) {
+      gschem_selection_adapter_set_pin_type (dialog->adapter, pin_type);
+    }
+  }
+}
+
+
+
+/*! \private
+ *  \brief Update the value in the pin type widget
+ *
+ *  \param [in,out] dialog This dialog
+ */
+static void
+update_pin_type_widget (GschemObjectPropertiesWidget *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (dialog->pin_type != NULL);
+
+  if (dialog->adapter != NULL) {
+    int type = gschem_selection_adapter_get_pin_type (dialog->adapter);
+
+    g_signal_handlers_block_by_func (G_OBJECT (dialog->pin_type),
+                                     G_CALLBACK (update_pin_type_model),
+                                     dialog);
+
+    gschem_pin_type_combo_set_index (dialog->pin_type, type);
+
+    g_signal_handlers_unblock_by_func (G_OBJECT (dialog->pin_type),
+                                       G_CALLBACK (update_pin_type_model),
+                                       dialog);
+
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->pin_type), (type != NO_SELECTION));
   }
 }
 
