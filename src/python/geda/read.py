@@ -28,9 +28,9 @@
 
 import codecs
 from gettext import gettext as _
-import xorn.storage
-import xorn.proxy
 import xorn.base64
+import xorn.proxy
+import xorn.storage
 import xorn.geda.clib
 from xorn.geda.fileformat import *
 
