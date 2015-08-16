@@ -475,8 +475,8 @@ void o_rotate_world_update(GschemToplevel *w_current, int centerx, int centery, 
 void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, GList *list);
 void o_edit_show_hidden_lowlevel(GschemToplevel *w_current, const GList *o_list);
 void o_edit_show_hidden(GschemToplevel *w_current, const GList *o_list);
-void o_edit_hide_specific_text(GschemToplevel *w_current, const GList *o_list, char *stext);
-void o_edit_show_specific_text(GschemToplevel *w_current, const GList *o_list, char *stext);
+void o_edit_hide_specific_text(GschemToplevel *w_current, const GList *o_list, const char *stext);
+void o_edit_show_specific_text(GschemToplevel *w_current, const GList *o_list, const char *stext);
 OBJECT *o_update_component(GschemToplevel *w_current, OBJECT *o_current);
 void o_autosave_backups(GschemToplevel *w_current);
 /* o_move.c */

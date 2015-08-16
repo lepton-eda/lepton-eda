@@ -219,6 +219,41 @@ x_window_find_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
   }
 }
 
+
+static void
+x_window_hide_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
+{
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->toplevel != NULL);
+
+  if (response == GTK_RESPONSE_OK) {
+    o_edit_hide_specific_text (w_current,
+                               s_page_objects (w_current->toplevel->page_current),
+                               gschem_show_hide_text_widget_get_text_string (GSCHEM_SHOW_HIDE_TEXT_WIDGET (widget)));
+  }
+
+  gtk_widget_grab_focus (w_current->drawing_area);
+  gtk_widget_hide (GTK_WIDGET (widget));
+}
+
+
+static void
+x_window_show_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
+{
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->toplevel != NULL);
+
+  if (response == GTK_RESPONSE_OK) {
+    o_edit_show_specific_text (w_current,
+                               s_page_objects (w_current->toplevel->page_current),
+                               gschem_show_hide_text_widget_get_text_string (GSCHEM_SHOW_HIDE_TEXT_WIDGET (widget)));
+  }
+
+  gtk_widget_grab_focus (w_current->drawing_area);
+  gtk_widget_hide (GTK_WIDGET (widget));
+}
+
+
 static void
 x_window_invoke_macro (GschemMacroWidget *widget, int response, GschemToplevel *w_current)
 {
@@ -510,6 +545,40 @@ void x_window_create_main(GschemToplevel *w_current)
   g_signal_connect (w_current->find_text_widget,
                     "response",
                     G_CALLBACK (&x_window_find_text),
+                    w_current);
+
+  /* hide text box */
+  w_current->hide_text_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET,
+                                                          "button-text", _("Hide"),
+                                                          "label-text",  _("Hide text starting with:"),
+                                                          NULL));
+
+  gtk_box_pack_start (GTK_BOX (work_box),
+                      w_current->hide_text_widget,
+                      FALSE,
+                      FALSE,
+                      0);
+
+  g_signal_connect (w_current->hide_text_widget,
+                    "response",
+                    G_CALLBACK (&x_window_hide_text),
+                    w_current);
+
+  /* show text box */
+  w_current->show_text_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET,
+                                                          "button-text", _("Show"),
+                                                          "label-text",  _("Show text starting with:"),
+                                                          NULL));
+
+  gtk_box_pack_start (GTK_BOX (work_box),
+                      w_current->show_text_widget,
+                      FALSE,
+                      FALSE,
+                      0);
+
+  g_signal_connect (w_current->show_text_widget,
+                    "response",
+                    G_CALLBACK (&x_window_show_text),
                     w_current);
 
   /* macro box */

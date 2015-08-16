@@ -38,9 +38,12 @@ struct st_gschem_toplevel {
 
   /* Widgets at inside the bottom of the main view */
   GtkWidget *find_text_widget;
+  GtkWidget *hide_text_widget;
+  GtkWidget *show_text_widget;
   GtkWidget *macro_widget;
-  GtkWidget *bottom_widget;
   GtkWidget *translate_widget;
+
+  GtkWidget *bottom_widget;
 
   GtkWidget *toolbar_select;
   GtkWidget *toolbar_net;
@@ -75,8 +78,6 @@ struct st_gschem_toplevel {
   GtkWidget *aawindow;                  /* arc attribs */
   GtkWidget *mawindow;                  /* multi attribute */
   GtkWidget *aewindow;                  /* attribute edit */
-  GtkWidget *tshowwindow;               /* text show window */
-  GtkWidget *thidewindow;               /* text hide window */
   GtkWidget *hkwindow;                  /* Help/Hotkeys... dialog*/
   GtkWidget *cowindow;                  /* Coordinate window */
   GtkWidget *coord_world;                 /* World coordinate label */

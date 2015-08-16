@@ -31,6 +31,7 @@ noinst_HEADERS = \
 	gschem_page_geometry.h \
 	gschem_page_view.h \
 	gschem_selection_adapter.h \
+	gschem_show_hide_text_widget.h \
 	gschem_struct.h \
 	gschem_swatch_column_renderer.h \
 	gschem_text_properties_widget.h \

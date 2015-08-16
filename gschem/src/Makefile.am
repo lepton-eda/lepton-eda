@@ -50,6 +50,7 @@ gschem_SOURCES = \
 	gschem_page_geometry.c \
 	gschem_page_view.c \
 	gschem_selection_adapter.c \
+	gschem_show_hide_text_widget.c \
 	gschem_slot_edit_dialog.c \
 	gschem_swatch_column_renderer.c \
 	gschem_text_properties_widget.c \

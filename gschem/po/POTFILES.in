@@ -36,6 +36,7 @@ gschem/src/gschem_options_dialog.c
 gschem/src/gschem_page_geometry.c
 gschem/src/gschem_page_view.c
 gschem/src/gschem_selection_adapter.c
+gschem/src/gschem_show_hide_text_widget.c
 gschem/src/gschem_slot_edit_dialog.c
 gschem/src/gschem_swatch_column_renderer.c
 gschem/src/gschem_text_properties_widget.c

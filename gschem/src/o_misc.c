@@ -351,7 +351,7 @@ void o_edit_show_hidden (GschemToplevel *w_current, const GList *o_list)
  */
 void o_edit_hide_specific_text (GschemToplevel *w_current,
                                 const GList *o_list,
-                                char *stext)
+                                const char *stext)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *o_current;
@@ -385,7 +385,7 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
  */
 void o_edit_show_specific_text (GschemToplevel *w_current,
                                 const GList *o_list,
-                                char *stext)
+                                const char *stext)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *o_current;

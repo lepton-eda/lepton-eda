@@ -21,6 +21,7 @@ typedef struct st_gschem_toplevel GschemToplevel;
 #include "gschem_page_view.h"
 #include "gschem_main_window.h"
 #include "gschem_selection_adapter.h"
+#include "gschem_show_hide_text_widget.h"
 #include "gschem_struct.h"
 #include "gschem_options.h"
 #include "gschem_toplevel.h"
