@@ -30,6 +30,14 @@
 #define GSCHEM_FIND_TEXT_STATE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_FIND_TEXT_STATE, GschemFindTextStateClass))
 
 
+enum
+{
+  FIND_TYPE_PATTERN,
+  FIND_TYPE_REGEX,
+  FIND_TYPE_SUBSTRING
+};
+
+
 typedef struct _GschemFindTextStateClass GschemFindTextStateClass;
 typedef struct _GschemFindTextState GschemFindTextState;
 
@@ -47,7 +55,7 @@ struct _GschemFindTextState
 
 
 int
-gschem_find_text_state_find (GschemFindTextState *state, GList *pages, const char *text, gboolean descend);
+gschem_find_text_state_find (GschemFindTextState *state, GList *pages, int type, const char *text, gboolean descend);
 
 GType
 gschem_find_text_state_get_type ();

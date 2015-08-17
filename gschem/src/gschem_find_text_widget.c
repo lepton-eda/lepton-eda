@@ -40,12 +40,22 @@
 
 
 
+/*! \brief The columns in the GtkListStore
+ */
+enum
+{
+    COLUMN_NAME,
+    COLUMN_INDEX,
+    COLUMN_COUNT
+};
+
+
 enum
 {
   PROP_0,
   PROP_DESCEND,
-  PROP_LABEL_TEXT,
-  PROP_FIND_TEXT_STRING
+  PROP_FIND_TEXT_STRING,
+  PROP_FIND_TYPE
 };
 
 
@@ -59,6 +69,9 @@ click_cancel (GtkWidget *button, GschemFindTextWidget *widget);
 
 static void
 click_find (GtkWidget *entry, GschemFindTextWidget *widget);
+
+static GtkListStore*
+create_find_type_store ();
 
 static void
 dispose (GObject *object);
@@ -196,12 +209,12 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       g_value_set_boolean (value, gschem_find_text_widget_get_descend (widget));
       break;
 
-    case PROP_LABEL_TEXT:
-      g_value_set_string (value, gschem_find_text_widget_get_label_text (widget));
-      break;
-
     case PROP_FIND_TEXT_STRING:
       g_value_set_string (value, gschem_find_text_widget_get_find_text_string (widget));
+      break;
+
+    case PROP_FIND_TYPE:
+      g_value_set_int (value, gschem_find_text_widget_get_find_type (widget));
       break;
 
     default:
@@ -235,12 +248,14 @@ gschem_find_text_widget_class_init (GschemFindTextWidgetClass *klass)
                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_LABEL_TEXT,
-                                   g_param_spec_string ("label-text",
-                                                        "Label Text",
-                                                        "Label Text",
-                                                        _("Find Text:"),
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                   PROP_FIND_TYPE,
+                                   g_param_spec_int ("find-type",
+                                                     "Find Type",
+                                                     "Find Type",
+                                                     0,
+                                                     2,
+                                                     FIND_TYPE_SUBSTRING,
+                                                     G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_FIND_TEXT_STRING,
@@ -283,17 +298,27 @@ gschem_find_text_widget_get_entry (GschemFindTextWidget *widget)
 
 
 
-/*! \brief Get the label text
+/*! \brief Get the type of find to perform
  *
  *  \param [in] widget This GschemFindTextWidget
- *  \return The label text
+ *  \return The find type
  */
-const char*
-gschem_find_text_widget_get_label_text (GschemFindTextWidget *widget)
+int
+gschem_find_text_widget_get_find_type (GschemFindTextWidget *widget)
 {
-  g_return_val_if_fail (widget != NULL, NULL);
+  int index = -1;
+  GtkTreeIter iter;
+  GValue value = {0};
 
-  return gtk_label_get_text (GTK_LABEL (widget->label));
+  g_return_val_if_fail (widget != NULL, 0);
+
+  if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (widget->combo), &iter)) {
+    gtk_tree_model_get_value (GTK_TREE_MODEL (widget->find_type_model), &iter, COLUMN_INDEX, &value);
+    index = g_value_get_int (&value);
+    g_value_unset (&value);
+  }
+
+  return index;
 }
 
 
@@ -352,14 +377,21 @@ gschem_find_text_widget_init (GschemFindTextWidget *widget)
   GtkWidget *button_box;
   GtkWidget *cancel_button;
   GtkWidget *content = gtk_info_bar_get_content_area (GTK_INFO_BAR (widget));
+  GtkCellRenderer *text_cell;
 
   g_return_if_fail (widget != NULL);
 
   gtk_widget_set_no_show_all (GTK_WIDGET (widget), TRUE);
 
-  widget->label = gtk_label_new (NULL);
-  gtk_widget_set_visible (widget->label, TRUE);
-  gtk_box_pack_start (GTK_BOX (content), widget->label, FALSE, FALSE, 0);
+  widget->find_type_model = GTK_TREE_MODEL (create_find_type_store ());
+  widget->combo = gtk_combo_box_new_with_model (widget->find_type_model);
+  gtk_widget_set_visible (widget->combo, TRUE);
+  gtk_box_pack_start (GTK_BOX (content), widget->combo, FALSE, FALSE, 0);
+
+  text_cell = GTK_CELL_RENDERER (gtk_cell_renderer_text_new());
+  g_object_set (text_cell, "xpad", 5, NULL);
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget->combo), text_cell, TRUE);
+  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (widget->combo), text_cell, "text", COLUMN_NAME);
 
   widget->entry = gtk_entry_new ();
   gtk_widget_set_visible (widget->entry, TRUE);
@@ -425,19 +457,39 @@ gschem_find_text_widget_set_descend (GschemFindTextWidget *widget, int descend)
 
 
 
-/*! \brief Set the label text
+/*! \brief Set the type of find to perform
  *
  *  \param [in,out] view This GschemFindTextWidget
  *  \param [in]     text The label text
  */
 void
-gschem_find_text_widget_set_label_text (GschemFindTextWidget *widget, const char *text)
+gschem_find_text_widget_set_find_type (GschemFindTextWidget *widget, int type)
 {
+  GtkTreeIter *active = NULL;
+
   g_return_if_fail (widget != NULL);
 
-  gtk_label_set_text (GTK_LABEL (widget->label), text);
+  if (type >= 0) {
+    GtkTreeIter iter;
+    gboolean success;
+    GValue value = {0};
 
-  g_object_notify (G_OBJECT (widget), "label-text");
+    success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (widget->find_type_model), &iter);
+    while (success) {
+      gtk_tree_model_get_value (GTK_TREE_MODEL (widget->find_type_model), &iter, COLUMN_INDEX, &value);
+      if (g_value_get_int (&value) == type) {
+        g_value_unset (&value);
+        active = &iter;
+        break;
+      }
+      g_value_unset (&value);
+      success = gtk_tree_model_iter_next (GTK_TREE_MODEL(widget->find_type_model), &iter);
+    }
+  }
+
+  gtk_combo_box_set_active_iter (GTK_COMBO_BOX(widget->combo), active);
+
+  g_object_notify (G_OBJECT (widget), "find-type");
 }
 
 
@@ -457,6 +509,40 @@ gschem_find_text_widget_set_find_text_string (GschemFindTextWidget *widget, cons
   g_object_notify (G_OBJECT (widget), "find-text-string");
 }
 
+
+static GtkListStore*
+create_find_type_store ()
+{
+  GtkTreeIter iter;
+  GtkListStore *store;
+
+  store = gtk_list_store_new (COLUMN_COUNT,
+                              G_TYPE_STRING,
+                              G_TYPE_INT);
+
+  gtk_list_store_append (store, &iter);
+  gtk_list_store_set (store, &iter,
+    COLUMN_NAME,      _("Find Text:"),
+    COLUMN_INDEX,     FIND_TYPE_SUBSTRING,
+    -1
+    );
+
+  gtk_list_store_append (store, &iter);
+  gtk_list_store_set (store, &iter,
+    COLUMN_NAME,      _("Find Pattern:"),
+    COLUMN_INDEX,     FIND_TYPE_PATTERN,
+    -1
+    );
+
+  gtk_list_store_append (store, &iter);
+  gtk_list_store_set (store, &iter,
+    COLUMN_NAME,      _("Find Regex:"),
+    COLUMN_INDEX,     FIND_TYPE_REGEX,
+    -1
+    );
+
+  return store;
+}
 
 
 /*! \brief Update the sensitivity of the find button
@@ -484,12 +570,12 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       gschem_find_text_widget_set_descend (widget, g_value_get_boolean (value));
       break;
 
-    case PROP_LABEL_TEXT:
-      gschem_find_text_widget_set_label_text (widget, g_value_get_string (value));
-      break;
-
     case PROP_FIND_TEXT_STRING:
       gschem_find_text_widget_set_find_text_string (widget, g_value_get_string (value));
+      break;
+
+    case PROP_FIND_TYPE:
+      gschem_find_text_widget_set_find_type (widget, g_value_get_int (value));
       break;
 
     default:

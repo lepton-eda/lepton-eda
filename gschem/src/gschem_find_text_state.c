@@ -66,7 +66,13 @@ static void
 finalize (GObject *object);
 
 static GSList*
-find_objects (GSList *pages, const char *text);
+find_objects_using_pattern (GSList *pages, const char *text);
+
+static GSList*
+find_objects_using_regex (GSList *pages, const char *text, GError **error);
+
+static GSList*
+find_objects_using_substring (GSList *pages, const char *text);
 
 static GSList*
 get_pages (GList *pages, gboolean descend);
@@ -103,20 +109,37 @@ static GObjectClass *gschem_find_text_state_parent_class = NULL;
  *
  *  \param [in] state
  *  \param [in] pages a list of pages to search
+ *  \param [in] type the type of find to perform
  *  \param [in] text the text to find
  *  \param [in] descend decend the page heirarchy
  *  \return the number of objects found
  */
 int
-gschem_find_text_state_find (GschemFindTextState *state, GList *pages, const char *text, gboolean descend)
+gschem_find_text_state_find (GschemFindTextState *state, GList *pages, int type, const char *text, gboolean descend)
 {
   int count;
-  GSList *objects;
+  GSList *objects = NULL;
   GSList *all_pages;
 
   all_pages = get_pages (pages, descend);
 
-  objects = find_objects (all_pages, text);
+  switch (type) {
+    case FIND_TYPE_SUBSTRING:
+      objects = find_objects_using_substring (all_pages, text);
+      break;
+
+    case FIND_TYPE_PATTERN:
+      objects = find_objects_using_pattern (all_pages, text);
+      break;
+
+    case FIND_TYPE_REGEX:
+      objects = find_objects_using_regex (all_pages, text, NULL);
+      break;
+
+    default:
+      break;
+  }
+
   g_slist_free (all_pages);
 
   assign_store (state, objects);
@@ -342,14 +365,159 @@ finalize (GObject *object)
 }
 
 
-/*! \brief Find all text objects that contain a string
+/*! \brief Find all text objects that match a pattern
  *
  *  \param pages the list of pages to search
- *  \param text the text to find
- *  \return a list of objects that contain the given text
+ *  \param text the pattern to match
+ *  \return a list of objects that match the given pattern
  */
 static GSList*
-find_objects (GSList *pages, const char *text)
+find_objects_using_pattern (GSList *pages, const char *text)
+{
+  GSList *object_list = NULL;
+  GSList *page_iter = pages;
+  GPatternSpec *pattern;
+
+  g_return_val_if_fail (text != NULL, NULL);
+
+  pattern = g_pattern_spec_new (text);
+
+  while (page_iter != NULL) {
+    const GList *object_iter;
+    PAGE *page = (PAGE*) page_iter->data;
+
+    page_iter = g_slist_next (page_iter);
+
+    if (page == NULL) {
+      g_warning ("NULL page encountered");
+      continue;
+    }
+
+    object_iter = s_page_objects (page);
+
+    while (object_iter != NULL) {
+      OBJECT *object = (OBJECT*) object_iter->data;
+      const char *str;
+
+      object_iter = g_list_next (object_iter);
+
+      if (object == NULL) {
+        g_warning ("NULL object encountered");
+        continue;
+      }
+
+      if (object->type != OBJ_TEXT) {
+        continue;
+      }
+
+      if (!(o_is_visible (page->toplevel, object) || page->toplevel->show_hidden_text)) {
+        continue;
+      }
+
+      str = o_text_get_string (object->page->toplevel, object);
+
+      if (str == NULL) {
+        g_warning ("NULL string encountered");
+        continue;
+      }
+
+      if (g_pattern_match_string (pattern, str)) {
+        object_list = g_slist_prepend (object_list, object);
+      }
+    }
+  }
+
+  g_pattern_spec_free (pattern);
+
+  return g_slist_reverse (object_list);
+}
+
+
+/*! \brief Find all text objects that match a regex
+ *
+ *  \param pages the list of pages to search
+ *  \param text the regex to match
+ *  \return a list of objects that match the given regex
+ */
+static GSList*
+find_objects_using_regex (GSList *pages, const char *text, GError **error)
+{
+  GError *ierror = NULL;
+  GSList *object_list = NULL;
+  GSList *page_iter = pages;
+  GRegex *regex;
+
+  g_return_val_if_fail (text != NULL, NULL);
+
+  regex = g_regex_new (text,
+                       0,
+                       0,
+                       &ierror);
+
+  if (ierror != NULL) {
+    g_propagate_error (error, ierror);
+    return NULL;
+  }
+
+  while (page_iter != NULL) {
+    const GList *object_iter;
+    PAGE *page = (PAGE*) page_iter->data;
+
+    page_iter = g_slist_next (page_iter);
+
+    if (page == NULL) {
+      g_warning ("NULL page encountered");
+      continue;
+    }
+
+    object_iter = s_page_objects (page);
+
+    while (object_iter != NULL) {
+      OBJECT *object = (OBJECT*) object_iter->data;
+      const char *str;
+
+      object_iter = g_list_next (object_iter);
+
+      if (object == NULL) {
+        g_warning ("NULL object encountered");
+        continue;
+      }
+
+      if (object->type != OBJ_TEXT) {
+        continue;
+      }
+
+      if (!(o_is_visible (page->toplevel, object) || page->toplevel->show_hidden_text)) {
+        continue;
+      }
+
+      str = o_text_get_string (object->page->toplevel, object);
+
+      if (str == NULL) {
+        g_warning ("NULL string encountered");
+        continue;
+      }
+
+      if (g_regex_match (regex, str, 0, NULL)) {
+        object_list = g_slist_prepend (object_list, object);
+      }
+    }
+  }
+
+  g_regex_unref (regex);
+
+  return g_slist_reverse (object_list);
+}
+
+
+/*! \brief Find all text objects that contain a substring
+ *
+ *  \param pages the list of pages to search
+ *  \param text the substring to find
+ *  \return a list of objects that contain the given substring
+ */
+static GSList*
+find_objects_using_substring (GSList *pages, const char *text)
 {
   GSList *object_list = NULL;
   GSList *page_iter = pages;
@@ -388,7 +556,7 @@ find_objects (GSList *pages, const char *text)
         continue;
       }
 
-      str = o_text_get_string (page->toplevel, object);
+      str = o_text_get_string (object->page->toplevel, object);
 
       if (str == NULL) {
         g_warning ("NULL string encountered");

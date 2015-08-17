@@ -41,10 +41,12 @@ struct _GschemFindTextWidget
 {
   GtkInfoBar parent;
 
+  GtkTreeModel *find_type_model;
+
+  GtkWidget *combo;
   GtkWidget *descend_button;
   GtkWidget *entry;
   GtkWidget *find_button;
-  GtkWidget *label;
 };
 
 
@@ -56,10 +58,10 @@ GtkWidget*
 gschem_find_text_widget_get_entry (GschemFindTextWidget *widget);
 
 const char*
-gschem_find_text_widget_get_label_text (GschemFindTextWidget *widget);
-
-const char*
 gschem_find_text_widget_get_find_text_string (GschemFindTextWidget *widget);
+
+int
+gschem_find_text_widget_get_find_type (GschemFindTextWidget *widget);
 
 GType
 gschem_find_text_widget_get_type ();
@@ -68,7 +70,7 @@ void
 gschem_find_text_widget_set_descend (GschemFindTextWidget *widget, int descend);
 
 void
-gschem_find_text_widget_set_label_text (GschemFindTextWidget *widget, const char *text);
+gschem_find_text_widget_set_find_text_string (GschemFindTextWidget *widget, const char *str);
 
 void
-gschem_find_text_widget_set_find_text_string (GschemFindTextWidget *widget, const char *str);
+gschem_find_text_widget_set_find_type (GschemFindTextWidget *widget, int type);
