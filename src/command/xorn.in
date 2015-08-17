@@ -44,7 +44,23 @@ def main():
                                 xorn.command.program_name,
                                 xorn.command.program_name))
 	    sys.stdout.write("\n")
+            sys.stdout.write(_(
+"  Valid commands are:\n"))
+            sys.stdout.write("\n")
+            sys.stdout.write(_(
+"    extract\n"
+"        Extract objects embedded in a schematic into a separate file.\n"))
+            sys.stdout.write("\n")
+            sys.stdout.write(_(
+"    find-symbol-by-pinout\n"
+"        Find symbols in a directory matching a given pinout.\n"))
+            sys.stdout.write("\n")
+            sys.stdout.write(_(
+"    For more information about an individual command, type:\n"
+"      `%s COMMAND --help'\n") % xorn.command.program_name)
+            sys.stdout.write("\n")
 	    sys.stdout.write(_(
+"  Command-line options:\n"
 "      --help            give this help\n"
 "      --version         display version number\n"))
 	    sys.stdout.write("\n")
