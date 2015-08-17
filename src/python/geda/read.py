@@ -185,6 +185,15 @@ def sscanf(s, fmt, message):
 
     return [parse_token(st, ft, message) for (st, ft) in zip(stok, fmttok)]
 
+## Replace "\r\n" line endings with "\n" line endings.
+
+def strip_carriage_return(f):
+    for line in f:
+        if line.endswith('\r\n'):
+            yield line[:-2] + '\n'
+        else:
+            yield line
+
 ## Read a file in libgeda format.
 #
 # See \ref read_file for a description of the keyword arguments.
@@ -196,7 +205,7 @@ def sscanf(s, fmt, message):
 def read(filename, **kwds):
     f = codecs.open(filename, encoding = 'utf-8')
     try:
-        return read_file(f, filename, **kwds)
+        return read_file(strip_carriage_return(f), filename, **kwds)
     finally:
         f.close()
 
