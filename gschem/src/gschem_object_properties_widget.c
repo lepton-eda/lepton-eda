@@ -491,11 +491,6 @@ dispose (GObject *object)
 
 
 /*! \brief Get a property
- *
- *  \param [in]     object
- *  \param [in]     param_id
- *  \param [in,out] value
- *  \param [in]     pspec
  */
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)

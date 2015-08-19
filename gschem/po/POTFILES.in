@@ -32,7 +32,7 @@ gschem/src/gschem_macro_widget.c
 gschem/src/gschem_main_window.c
 gschem/src/gschem_object_properties_widget.c
 gschem/src/gschem_options.c
-gschem/src/gschem_options_dialog.c
+gschem/src/gschem_options_widget.c
 gschem/src/gschem_page_geometry.c
 gschem/src/gschem_page_view.c
 gschem/src/gschem_pin_type_combo.c

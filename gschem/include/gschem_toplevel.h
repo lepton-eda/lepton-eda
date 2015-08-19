@@ -59,6 +59,7 @@ struct st_gschem_toplevel {
 
   /* Widgets inside the notebook at the right of the window */
   GtkWidget *object_properties;
+  GtkWidget *options_widget;
   GtkWidget *text_properties;
 
 
@@ -82,7 +83,6 @@ struct st_gschem_toplevel {
   GtkWidget *cowindow;                  /* Coordinate window */
   GtkWidget *coord_world;                 /* World coordinate label */
   GtkWidget *coord_screen;                /* Screen coordinate window */
-  GtkWidget *sswindow;                  /* snap size dialog */
 
   /* -------------------------------------- */
   /* Models for widgets inside dialog boxes */

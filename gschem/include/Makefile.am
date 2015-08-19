@@ -27,7 +27,7 @@ noinst_HEADERS = \
 	gschem_main_window.h \
 	gschem_object_properties_widget.h \
 	gschem_options.h \
-	gschem_options_dialog.h \
+	gschem_options_widget.h \
 	gschem_page_geometry.h \
 	gschem_page_view.h \
 	gschem_pin_type_combo.h \

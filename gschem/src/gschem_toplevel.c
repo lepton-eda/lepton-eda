@@ -192,7 +192,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->cowindow     = NULL;
   w_current->coord_world  = NULL;
   w_current->coord_screen = NULL;
-  w_current->sswindow     = NULL;
 
   /* -------------------------------------- */
   /* Models for widgets inside dialog boxes */
