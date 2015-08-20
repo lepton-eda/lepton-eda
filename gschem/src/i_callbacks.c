@@ -82,7 +82,7 @@ DEFINE_I_CALLBACK(file_new)
  */
 void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name (GSCHEM_TOPLEVEL (data), "file-new");
+  i_callback_file_new (data, 0, widget);
 }
 
 /*! \todo Finish function documentation!!!
@@ -131,7 +131,7 @@ DEFINE_I_CALLBACK(file_open)
  */
 void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name (GSCHEM_TOPLEVEL (data), "file-open");
+  i_callback_file_open (data, 0, widget);
 }
 
 /*! \todo Finish function documentation!!!
@@ -191,7 +191,7 @@ DEFINE_I_CALLBACK(file_save)
  */
 void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name (GSCHEM_TOPLEVEL (data), "file-save");
+  i_callback_file_save (data, 0, widget);
 }
 
 /*! \todo Finish function documentation!!!
@@ -347,7 +347,7 @@ DEFINE_I_CALLBACK(edit_undo)
  */
 void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name (GSCHEM_TOPLEVEL (data), "edit-undo");
+  i_callback_edit_undo (data, 0, widget);
 }
 
 /*! \todo Finish function documentation!!!
@@ -374,7 +374,7 @@ DEFINE_I_CALLBACK(edit_redo)
  */
 void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name (GSCHEM_TOPLEVEL (data), "edit-redo");
+  i_callback_edit_redo (data, 0, widget);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1723,7 +1723,7 @@ DEFINE_I_CALLBACK(add_component)
  */
 void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name (GSCHEM_TOPLEVEL (data), "add-component");
+  i_callback_add_component (data, 0, widget);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1778,9 +1778,13 @@ DEFINE_I_CALLBACK(add_net)
  */
 void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
 {
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
   if (GTK_TOGGLE_BUTTON (widget)->active) {
-    g_action_eval_by_name (GSCHEM_TOPLEVEL (data), "add-net");
+    i_callback_add_net (w_current, 0, widget);
   }
+  scm_dynwind_end ();
 }
 
 /*! \todo Finish function documentation!!!
@@ -1816,9 +1820,13 @@ DEFINE_I_CALLBACK(add_bus)
  */
 void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
 {
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
   if (GTK_TOGGLE_BUTTON (widget)->active) {
-    g_action_eval_by_name (GSCHEM_TOPLEVEL (data), "add-bus");
+    i_callback_add_bus (w_current, 0, widget);
   }
+  scm_dynwind_end ();
 }
 
 /*! \todo Finish function documentation!!!
@@ -1852,7 +1860,7 @@ DEFINE_I_CALLBACK(add_text)
  */
 void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name (GSCHEM_TOPLEVEL (data), "add-text");
+  i_callback_add_text (data, 0, widget);
 }
 
 /*! \todo Finish function documentation!!!
