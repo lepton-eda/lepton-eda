@@ -168,23 +168,6 @@ GdkColor *x_get_color(int color)
  *  \brief
  *  \par Function Documentation
  *
- *  \todo this has to change... to the right code
- */
-GdkColor *x_get_darkcolor(int color)
-{
-  if ((color < 0) || (color >= MAX_COLORS)
-      || (gdk_outline_colors[color] == NULL)) {
-    g_warning (_("Tried to get an invalid color: %d\n"), color);
-    return(&white);
-  } else {
-    return(gdk_outline_colors[color]);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Documentation
- *
  */
 COLOR *x_color_lookup (int color)
 {
@@ -195,46 +178,6 @@ COLOR *x_color_lookup (int color)
   } else {
     return &display_colors[color];
   }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Documentation
- *
- *  \todo this has to change... to the right code
- */
-COLOR *x_color_lookup_dark (int color)
-{
-  if (color < 0 || color >= MAX_COLORS ||
-      !display_outline_colors[color].enabled) {
-    g_warning (_("Tried to get an invalid outline color: %d\n"), color);
-    return &display_outline_colors[DEFAULT_COLOR];
-  } else {
-    return &display_outline_colors[color];
-  }
-
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Documentation
- *
- */
-gchar *x_color_get_name(int index)
-{
-  COLOR c;
-
-  if ((index >= MAX_COLORS) || (index < 0)) {
-    return(NULL);
-  }
-
-  if (display_colors[index].enabled) {
-    c = display_colors[index];
-    return s_color_rgba_encode (c.r, c.g, c.b, c.a);
-  }
-
-  /* didn't find a color, but there still might be more */
-  return(NULL);
 }
 
 gboolean
