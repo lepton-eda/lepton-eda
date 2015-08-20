@@ -50,7 +50,7 @@ def postproc_instances(netlist):
 
     remove_components = set()
 
-    for component in netlist.components[:]:
+    for component in netlist.components:
         if not component.blueprint.is_graphical:
             continue
 
