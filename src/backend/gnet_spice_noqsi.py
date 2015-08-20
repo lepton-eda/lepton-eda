@@ -85,9 +85,7 @@ def get_munged(prefix, refdes):
         munges[prefix, refdes] = candidate
         return candidate
 
-# Expand value. Empty string if it doesn't exist, and no default given.
-# Deal with the fact that missing attributes may either be "unknown"
-# or "not found" :(
+# Get package or toplevel attribute.
 
 def expand_value(package, name, default):
     # Select either package attribute or toplevel attribute
