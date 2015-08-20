@@ -15,7 +15,6 @@ void g_init_builtins (void);
 /* g_attrib.c */
 void g_init_attrib ();
 /* g_funcs.c */
-SCM g_funcs_print(SCM filename);
 SCM g_funcs_pdf(SCM filename);
 SCM g_funcs_image(SCM filename);
 SCM g_funcs_exit(void);
@@ -24,7 +23,6 @@ SCM g_funcs_msg(SCM msg);
 SCM g_funcs_confirm(SCM msg);
 SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags);
 SCM g_funcs_use_rc_values(void);
-SCM get_selected_component_attributes(GschemToplevel *w_current);
 /* g_hook.c */
 void g_init_hook ();
 void g_run_hook_object (GschemToplevel *w_current, const char *name, OBJECT *obj);
@@ -378,7 +376,6 @@ void i_vars_init_gschem_defaults (void);
 void i_vars_atexit_save_user_config (gpointer user_data);
  /* m_basic.c */
 int snap_grid(GschemToplevel *w_current, int input);
-int WORLDclip_change(GschemToplevel *w_current, int *x1, int *y1, int *x2, int *y2);
 int clip_nochange(GschemPageGeometry *geometry, int x1, int y1, int x2, int y2);
 int visible(GschemToplevel *w_current, int wleft, int wtop, int wright, int wbottom);
 double round_5_2_1(double unrounded);
@@ -400,7 +397,6 @@ OBJECT *o_attrib_add_attrib(GschemToplevel *w_current, const char *text_string, 
 void o_redraw_rects(GschemToplevel *w_current, cairo_t *cr, GdkDrawable *drawable, GdkGC *gc, PAGE *page, GschemPageGeometry *geometry, GdkRectangle *rectangles, int n_rectangles);
 int o_invalidate_rubber(GschemToplevel *w_current);
 int o_redraw_cleanstates(GschemToplevel *w_current);
-void o_draw_place(GschemToplevel *w_current, int dx, int dy, OBJECT *object);
 void o_invalidate_rect(GschemToplevel *w_current, int x1, int y1, int x2, int y2);
 void o_invalidate_all(GschemToplevel *w_current);
 void o_invalidate(GschemToplevel *w_current, OBJECT *object);
@@ -438,8 +434,6 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset);
 /* o_copy.c */
 void o_copy_start(GschemToplevel *w_current, int x, int y);
 void o_copy_end(GschemToplevel *w_current);
-void o_copy_multiple_end(GschemToplevel *w_current);
-/* o_cue.c */
 /* o_delete.c */
 void o_delete(GschemToplevel *w_current, OBJECT *object);
 void o_delete_selected(GschemToplevel *w_current);
@@ -613,24 +607,16 @@ void x_colorcb_set_index (GtkWidget *widget, int color_index);
 /* x_dialog.c */
 int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);
 void select_all_text_in_textview(GtkTextView *textview);
-void destroy_window(GtkWidget *widget, GtkWidget **window);
-void text_input_dialog_apply(GtkWidget *w, GschemToplevel *w_current);
 void text_input_dialog(GschemToplevel *w_current);
-gint change_alignment(GtkComboBox *w, GschemToplevel *w_current);
-void text_edit_dialog_ok(GtkWidget *w, GschemToplevel *w_current);
 void text_edit_dialog(GschemToplevel *w_current);
 void line_type_dialog(GschemToplevel *w_current);
-void fill_type_dialog(GschemToplevel *w_current);
 void arc_angle_dialog(GschemToplevel *w_current, OBJECT *arc_object);
-void translate_dialog(GschemToplevel *w_current);
 void snap_size_dialog(GschemToplevel *w_current);
 void slot_edit_dialog(GschemToplevel *w_current, const char *count, const char *string);
 void about_dialog(GschemToplevel *w_current);
 void coord_display_update(GschemToplevel *w_current, int x, int y);
 void coord_dialog(GschemToplevel *w_current, int x, int y);
-gint color_set(GtkWidget *w, gpointer data);
 char *index2functionstring(int index);
-void color_edit_dialog_apply(GtkWidget *w, GschemToplevel *w_current);
 void x_dialog_hotkeys(GschemToplevel *w_current);
 void x_dialog_raise_all(GschemToplevel *w_current);
 
@@ -692,7 +678,7 @@ void x_log_open (GschemToplevel *w_current);
 void x_log_message (const gchar *log_domain,
                     GLogLevelFlags log_level,
                     const gchar *message);
-/* x_linetypecb.c */
+/* x_linecapcb.c */
 GtkWidget* x_linecapcb_new ();
 int x_linecapcb_get_index (GtkWidget *widget);
 void x_linecapcb_set_index (GtkWidget *widget, int index);
