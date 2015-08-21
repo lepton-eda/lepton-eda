@@ -244,7 +244,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* Now read in RC files. */
   g_rc_parse_gtkrc();
-  x_rc_parse_gschem (toplevel, rc_filename);
+  x_rc_parse_gschem (toplevel, NULL);
 
   /* Set default icon theme and make sure we can find our own icons */
   x_window_set_default_icon();
