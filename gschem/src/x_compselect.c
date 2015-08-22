@@ -240,23 +240,6 @@ x_compselect_open (GschemToplevel *w_current)
   }
 }
 
-/*! \brief Closes the component selection dialog.
- *  \par Function Description
- *  This function closes the component chooser dialog associated with
- *  <B>toplevel</B>.
- *
- *  \param [in] w_current  The GschemToplevel environment.
- */
-void
-x_compselect_close (GschemToplevel *w_current)
-{
-  if (w_current->cswindow) {
-    g_assert (IS_COMPSELECT (w_current->cswindow));
-    gtk_widget_destroy (w_current->cswindow);
-    w_current->cswindow = NULL;
-  }
-}
-
 
 void
 x_compselect_deselect (GschemToplevel *w_current)

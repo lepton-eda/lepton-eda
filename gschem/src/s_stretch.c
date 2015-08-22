@@ -83,31 +83,6 @@ GList *s_stretch_remove (GList *list, OBJECT *object)
   return g_list_delete_link (list, item);
 }
 
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void s_stretch_print_all (GList *list)
-{
-  GList *iter;
-
-  printf("START printing stretch ********************\n");
-  for (iter = list; iter != NULL; iter = g_list_next (iter)) {
-    STRETCH *s_current = iter->data;
-
-    if (s_current->object) {
-      printf("Object: %s\n", s_current->object->name);
-    } else {
-      printf("Object is NULL\n");
-    }
-
-    printf("which one: %d\n", s_current->whichone);
-  }
-  printf("DONE printing stretch ********************\n\n");
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

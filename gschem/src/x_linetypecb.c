@@ -176,52 +176,6 @@ x_linetypecb_get_index (GtkWidget *widget)
 
 
 
-/*! \brief The currently selected line type uses dash length
- *
- *  \param [in,out] widget The line type combo box
- *  \return The currently selected line type uses dash length
- */
-gboolean
-x_linetypecb_get_use_length (GtkWidget *widget)
-{
-  gboolean use_length = FALSE;
-  GtkTreeIter iter;
-  GValue value = {0};
-
-  if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (widget), &iter)) {
-    gtk_tree_model_get_value (GTK_TREE_MODEL (line_type_list_store), &iter, COLUMN_USE_LENGTH, &value);
-    use_length = g_value_get_boolean (&value);
-    g_value_unset (&value);
-  }
-
-  return use_length;
-}
-
-
-
-/*! \brief The currently selected line type uses dash space
- *
- *  \param [in,out] widget The line type combo box
- *  \return The currently selected line type uses dash space
- */
-gboolean
-x_linetypecb_get_use_space (GtkWidget *widget)
-{
-  gboolean use_space = FALSE;
-  GtkTreeIter iter;
-  GValue value = {0};
-
-  if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (widget), &iter)) {
-    gtk_tree_model_get_value (GTK_TREE_MODEL (line_type_list_store), &iter, COLUMN_USE_SPACE, &value);
-    use_space = g_value_get_boolean (&value);
-    g_value_unset (&value);
-  }
-
-  return use_space;
-}
-
-
-
 /*! \brief Select the given line type index
  *
  *  \param [in,out] widget The line type combo box
