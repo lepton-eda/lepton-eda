@@ -84,6 +84,9 @@ SCM g_rc_gschem_version(SCM scm_version)
 		      g_utf8_casefold (PACKAGE_DATE_VERSION,-1)) != 0) {
     sourcefile = NULL;
     rc_filename = g_rc_rc_filename ();
+    if (rc_filename == SCM_BOOL_F) {
+      rc_filename = scm_from_utf8_string ("unknown");
+    }
     sourcefile = scm_to_utf8_string (rc_filename);
     scm_dynwind_free (sourcefile);
     fprintf(stderr,
