@@ -59,7 +59,7 @@ import xorn.storage
 #
 # Must be lowercase.
 
-SYM_FILENAME_FILTER = ".sym"
+SYM_FILENAME_FILTER = '.sym'
 
 ## Named tuple class for storing data about a particular component source.
 
@@ -170,7 +170,7 @@ class CommandSource:
     def get(self, symbol):
         return _run_source_command(
             shlex.split(self.get_cmd) + [symbol],
-            lambda f: xorn.geda.read.read_file(f, "<pipe>"))
+            lambda f: xorn.geda.read.read_file(f, '<pipe>'))
 
 
 ## Execute a library command.
@@ -294,7 +294,7 @@ def uniquify_source_name(name):
         except ValueError:
             break
         i += 1
-        newname = "%s<%i>" % (name, i)
+        newname = '%s<%i>' % (name, i)
 
     if i != 0:
         sys.stderr.write(_("Library name [%s] already in use.  Using [%s].\n")
