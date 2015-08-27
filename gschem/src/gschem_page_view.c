@@ -170,7 +170,7 @@ dispose (GObject *object)
   }
 
   if (view->gc != NULL) {
-    gdk_gc_unref (view->gc);
+    g_object_unref (view->gc);
     view->gc = NULL;
   }
 
@@ -210,7 +210,7 @@ event_unrealize(GtkWidget *widget, gpointer unused)
   g_return_if_fail (view != NULL);
 
   if (view->gc != NULL) {
-    gdk_gc_unref (view->gc);
+    g_object_unref (view->gc);
     view->gc = NULL;
   }
 }

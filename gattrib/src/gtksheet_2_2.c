@@ -2670,10 +2670,12 @@ gtk_sheet_realize (GtkWidget * widget)
   gtk_sheet_make_backing_pixmap(sheet, 0, 0);  
 
   /* GCs */
-  if(sheet->fg_gc) 
-      gdk_gc_unref(sheet->fg_gc);
-  if(sheet->bg_gc) 
-      gdk_gc_unref(sheet->bg_gc);
+  if (sheet->fg_gc) {
+    g_object_unref (sheet->fg_gc);
+  }
+  if (sheet->bg_gc) {
+    g_object_unref (sheet->bg_gc);
+  }
   sheet->fg_gc = gdk_gc_new (widget->window);
   sheet->bg_gc = gdk_gc_new (widget->window);
 
@@ -2687,8 +2689,9 @@ gtk_sheet_realize (GtkWidget * widget)
   values.foreground = widget->style->white;
   values.function = GDK_INVERT;
   values.subwindow_mode = GDK_INCLUDE_INFERIORS;
-  if(sheet->xor_gc)
-    gdk_gc_unref(sheet->xor_gc);
+  if(sheet->xor_gc) {
+    g_object_unref (sheet->xor_gc);
+  }
   sheet->xor_gc = gdk_gc_new_with_values (widget->window,
 					  &values,
 					  GDK_GC_FOREGROUND |
