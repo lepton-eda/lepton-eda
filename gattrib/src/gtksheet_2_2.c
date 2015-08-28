@@ -745,125 +745,206 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   parent_class = g_type_class_peek_parent (klass);
 
   sheet_signals[SELECT_ROW] =
-    gtk_signal_new ("select_row",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, select_row),
-		    gtkextra_VOID__INT,
-                    GTK_TYPE_NONE, 1, GTK_TYPE_INT);
+    g_signal_new ("select_row",                       /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   select_row),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_VOID__INT,                 /* c_marshaller */
+                  G_TYPE_NONE,                        /* return_type  */
+                  1,                                  /* n_params     */
+                  G_TYPE_INT);                        /* param types  */
 
   sheet_signals[SELECT_COLUMN] =
-    gtk_signal_new ("select_column",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, select_column),
-		    gtkextra_VOID__INT,
-                    GTK_TYPE_NONE, 1, GTK_TYPE_INT);
+    g_signal_new ("select_column",                    /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   select_column),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_VOID__INT,                 /* c_marshaller */
+                  G_TYPE_NONE,                        /* return_type  */
+                  1,                                  /* n_params     */
+                  G_TYPE_INT);                        /* param types  */
 
   sheet_signals[SELECT_RANGE] =
-    gtk_signal_new ("select_range",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, select_range),
-                    gtkextra_VOID__BOXED,
-	            GTK_TYPE_NONE, 1, GTK_TYPE_SHEET_RANGE);
+    g_signal_new ("select_range",                     /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   select_range),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_VOID__BOXED,               /* c_marshaller */
+                  G_TYPE_NONE,                        /* return_type  */
+                  1,                                  /* n_params     */
+                  GTK_TYPE_SHEET_RANGE);              /* param types  */
 
   sheet_signals[CLIP_RANGE] =
-    gtk_signal_new ("clip_range",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, clip_range),
-                    gtkextra_VOID__BOXED,
-	            GTK_TYPE_NONE, 1, GTK_TYPE_SHEET_RANGE);
+    g_signal_new ("clip_range",                       /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   clip_range),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_VOID__BOXED,               /* c_marshaller */
+                  G_TYPE_NONE,                        /* return_type  */
+                  1,                                  /* n_params     */
+                  GTK_TYPE_SHEET_RANGE);              /* param types  */
 
   sheet_signals[RESIZE_RANGE] =
-    gtk_signal_new ("resize_range",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, resize_range),
-		    gtkextra_VOID__BOXED_BOXED,
-	            GTK_TYPE_NONE, 2, GTK_TYPE_SHEET_RANGE, GTK_TYPE_SHEET_RANGE);
+    g_signal_new ("resize_range",                     /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   resize_range),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_VOID__BOXED_BOXED,         /* c_marshaller */
+                  G_TYPE_NONE,                        /* return_type  */
+                  2,                                  /* n_params     */
+                  GTK_TYPE_SHEET_RANGE,               /* param types  */
+                  GTK_TYPE_SHEET_RANGE);
+
   sheet_signals[MOVE_RANGE] =
-    gtk_signal_new ("move_range",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, move_range),
-		    gtkextra_VOID__BOXED_BOXED,
-                    GTK_TYPE_NONE, 2, GTK_TYPE_SHEET_RANGE, GTK_TYPE_SHEET_RANGE);
+    g_signal_new ("move_range",                       /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   move_range),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_VOID__BOXED_BOXED,         /* c_marshaller */
+                  G_TYPE_NONE,                        /* return_type  */
+                  2,                                  /* n_params     */
+                  GTK_TYPE_SHEET_RANGE,               /* param types  */
+                  GTK_TYPE_SHEET_RANGE);
+
   sheet_signals[TRAVERSE] =
-    gtk_signal_new ("traverse",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, traverse),
-                    gtkextra_BOOLEAN__INT_INT_POINTER_POINTER,
-	            GTK_TYPE_BOOL, 4, GTK_TYPE_INT, GTK_TYPE_INT,
-                                      GTK_TYPE_POINTER, GTK_TYPE_POINTER);
+    g_signal_new ("traverse",                         /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   traverse),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_BOOLEAN__INT_INT_POINTER_POINTER,
+                                                      /* c_marshaller */
+                  G_TYPE_BOOLEAN,                     /* return_type  */
+                  4,                                  /* n_params     */
+                  G_TYPE_INT, G_TYPE_INT,             /* param types  */
+                  G_TYPE_POINTER, G_TYPE_POINTER);
 
   sheet_signals[DEACTIVATE] =
-    gtk_signal_new ("deactivate",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, deactivate),
-                    gtkextra_BOOLEAN__INT_INT,
-	            GTK_TYPE_BOOL, 2, GTK_TYPE_INT, GTK_TYPE_INT);
+    g_signal_new ("deactivate",                       /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   deactivate),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_BOOLEAN__INT_INT,          /* c_marshaller */
+                  G_TYPE_BOOLEAN,                     /* return_type  */
+                  2,                                  /* n_params     */
+                  G_TYPE_INT, G_TYPE_INT);            /* param types  */
 
   sheet_signals[ACTIVATE] =
-    gtk_signal_new ("activate",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, activate),
-                    gtkextra_BOOLEAN__INT_INT,
-	            GTK_TYPE_BOOL, 2, GTK_TYPE_INT, GTK_TYPE_INT);
+    g_signal_new ("activate",                         /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   activate),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_BOOLEAN__INT_INT,          /* c_marshaller */
+                  G_TYPE_BOOLEAN,                     /* return_type  */
+                  2,                                  /* n_params     */
+                  G_TYPE_INT, G_TYPE_INT);            /* param types  */
 
   sheet_signals[SET_CELL] =
-    gtk_signal_new ("set_cell",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, set_cell),
-                    gtkextra_VOID__INT_INT,
-	            GTK_TYPE_NONE, 2, GTK_TYPE_INT, GTK_TYPE_INT);
+    g_signal_new ("set_cell",                         /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   set_cell),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_VOID__INT_INT,             /* c_marshaller */
+                  G_TYPE_NONE,                        /* return_type  */
+                  2,                                  /* n_params     */
+                  G_TYPE_INT, G_TYPE_INT);            /* param types  */
 
   sheet_signals[CLEAR_CELL] =
-    gtk_signal_new ("clear_cell",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, clear_cell),
-                    gtkextra_VOID__INT_INT,
-	            GTK_TYPE_NONE, 2, GTK_TYPE_INT, GTK_TYPE_INT);
+    g_signal_new ("clear_cell",                       /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   clear_cell),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_VOID__INT_INT,             /* c_marshaller */
+                  G_TYPE_NONE,                        /* return_type  */
+                  2,                                  /* n_params     */
+                  G_TYPE_INT, G_TYPE_INT);            /* param types  */
 
   sheet_signals[CHANGED] =
-    gtk_signal_new ("changed",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, changed),
-                    gtkextra_VOID__INT_INT,
-	            GTK_TYPE_NONE, 2, GTK_TYPE_INT, GTK_TYPE_INT);
+    g_signal_new ("changed",                          /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   changed),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_VOID__INT_INT,             /* c_marshaller */
+                  G_TYPE_NONE,                        /* return_type  */
+                  2,                                  /* n_params     */
+                  G_TYPE_INT, G_TYPE_INT);            /* param types  */
 
   sheet_signals[NEW_COL_WIDTH] =
-    gtk_signal_new ("new_column_width",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, changed),
-                    gtkextra_VOID__INT_INT,
-	            GTK_TYPE_NONE, 2, GTK_TYPE_INT, GTK_TYPE_INT);
+    g_signal_new ("new_column_width",                 /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   changed),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_VOID__INT_INT,             /* c_marshaller */
+                  G_TYPE_NONE,                        /* return_type  */
+                  2,                                  /* n_params     */
+                  G_TYPE_INT, G_TYPE_INT);            /* param types  */
 
   sheet_signals[NEW_ROW_HEIGHT] =
-    gtk_signal_new ("new_row_height",
-		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
-		    GTK_SIGNAL_OFFSET (GtkSheetClass, changed),
-                    gtkextra_VOID__INT_INT,
-	            GTK_TYPE_NONE, 2, GTK_TYPE_INT, GTK_TYPE_INT);
+    g_signal_new ("new_row_height",                   /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   changed),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_VOID__INT_INT,             /* c_marshaller */
+                  G_TYPE_NONE,                        /* return_type  */
+                  2,                                  /* n_params     */
+                  G_TYPE_INT, G_TYPE_INT);            /* param types  */
 
 
 
   widget_class->set_scroll_adjustments_signal =
-    gtk_signal_new ("set_scroll_adjustments",
-                    GTK_RUN_LAST,
-                    GTK_CLASS_TYPE(object_class),
-                    GTK_SIGNAL_OFFSET (GtkSheetClass, set_scroll_adjustments),
-                    gtkextra_VOID__OBJECT_OBJECT,
-                    GTK_TYPE_NONE, 2, GTK_TYPE_ADJUSTMENT, GTK_TYPE_ADJUSTMENT);
+    g_signal_new ("set_scroll_adjustments",           /* signal_name  */
+                  G_OBJECT_CLASS_TYPE (klass),        /* itype        */
+                  G_SIGNAL_RUN_LAST,                  /* signal_flags */
+                  G_STRUCT_OFFSET (GtkSheetClass,     /* class_offset */
+                                   set_scroll_adjustments),
+                  NULL,                               /* accumulator  */
+                  NULL,                               /* accu_data    */
+                  gtkextra_VOID__OBJECT_OBJECT,       /* c_marshaller */
+                  G_TYPE_NONE,                        /* return_type  */
+                  2,                                  /* n_params     */
+                  GTK_TYPE_ADJUSTMENT,                /* param types  */
+                  GTK_TYPE_ADJUSTMENT);
 
 
   container_class->add = NULL;
