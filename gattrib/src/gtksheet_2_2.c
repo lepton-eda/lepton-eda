@@ -1637,7 +1637,7 @@ gtk_sheet_row_button_add_label(GtkSheet *sheet, gint row, const gchar *label)
 
   if(!GTK_SHEET_IS_FROZEN(sheet)){
     gtk_sheet_button_draw(sheet, row, -1);
-    gtk_signal_emit(GTK_OBJECT(sheet),sheet_signals[CHANGED], row, -1);
+    g_signal_emit (sheet, sheet_signals[CHANGED], 0, row, -1);
   }
 }  
 
@@ -1664,7 +1664,7 @@ gtk_sheet_row_label_set_visibility(GtkSheet *sheet, gint row, gboolean visible)
 
   if(!GTK_SHEET_IS_FROZEN(sheet)){  
     gtk_sheet_button_draw(sheet, row, -1);
-    gtk_signal_emit(GTK_OBJECT(sheet),sheet_signals[CHANGED], row, -1);
+    g_signal_emit (sheet, sheet_signals[CHANGED], 0, row, -1);
   }
 }
 
@@ -1710,7 +1710,7 @@ gtk_sheet_column_button_add_label(GtkSheet *sheet, gint column, const gchar *lab
 
   if(!GTK_SHEET_IS_FROZEN(sheet)){
     gtk_sheet_button_draw(sheet, -1, column);
-    gtk_signal_emit(GTK_OBJECT(sheet),sheet_signals[CHANGED], -1, column);
+    g_signal_emit (sheet, sheet_signals[CHANGED], 0, -1, column);
   }
 }  
 
@@ -1737,7 +1737,7 @@ gtk_sheet_column_label_set_visibility(GtkSheet *sheet, gint col, gboolean visibl
 
   if(!GTK_SHEET_IS_FROZEN(sheet)){  
     gtk_sheet_button_draw(sheet, -1, col);
-    gtk_signal_emit(GTK_OBJECT(sheet),sheet_signals[CHANGED], -1, col);
+    g_signal_emit (sheet, sheet_signals[CHANGED], 0, -1, col);
   }
 }
 
@@ -1769,7 +1769,7 @@ gtk_sheet_row_button_justify(GtkSheet *sheet, gint row,
 
   if(!GTK_SHEET_IS_FROZEN(sheet)){  
     gtk_sheet_button_draw(sheet, row, -1);
-    gtk_signal_emit(GTK_OBJECT(sheet),sheet_signals[CHANGED], row, -1);
+    g_signal_emit (sheet, sheet_signals[CHANGED], 0, row, -1);
   }
 }  
 
@@ -1789,7 +1789,7 @@ gtk_sheet_column_button_justify(GtkSheet *sheet, gint column,
 
   if(!GTK_SHEET_IS_FROZEN(sheet)){  
     gtk_sheet_button_draw(sheet, -1, column);
-    gtk_signal_emit(GTK_OBJECT(sheet),sheet_signals[CHANGED], -1, column);
+    g_signal_emit (sheet, sheet_signals[CHANGED], 0, -1, column);
   }
 }  
 
@@ -2055,7 +2055,7 @@ gtk_sheet_select_row (GtkSheet * sheet,
   sheet->active_cell.row=row;
   sheet->active_cell.col=0;
 
-  gtk_signal_emit (GTK_OBJECT (sheet), sheet_signals[SELECT_ROW], row);
+  g_signal_emit (sheet, sheet_signals[SELECT_ROW], 0, row);
   gtk_sheet_real_select_range(sheet, NULL);
 
 }
@@ -2089,7 +2089,7 @@ gtk_sheet_select_column (GtkSheet * sheet,
   sheet->active_cell.row=0;
   sheet->active_cell.col=column;
 
-  gtk_signal_emit (GTK_OBJECT (sheet), sheet_signals[SELECT_COLUMN], column);
+  g_signal_emit (sheet, sheet_signals[SELECT_COLUMN], 0, column);
   gtk_sheet_real_select_range(sheet, NULL);
 
 }
@@ -2113,8 +2113,7 @@ gtk_sheet_clip_range (GtkSheet *sheet, const GtkSheetRange *range)
   sheet->interval=0;
   sheet->clip_timer=gtk_timeout_add(TIMEOUT_FLASH, gtk_sheet_flash, sheet); 
 
-  gtk_signal_emit(GTK_OBJECT(sheet), sheet_signals[CLIP_RANGE],
-                                     &sheet->clip_range);
+  g_signal_emit (sheet, sheet_signals[CLIP_RANGE], 0, &sheet->clip_range);
 
 }
 
@@ -3522,7 +3521,7 @@ gtk_sheet_set_cell(GtkSheet *sheet, gint row, gint col,
      if(!GTK_SHEET_IS_FROZEN(sheet))
        gtk_sheet_range_draw(sheet, &range);
  }
- gtk_signal_emit(GTK_OBJECT(sheet),sheet_signals[CHANGED], row, col);
+ g_signal_emit (sheet, sheet_signals[CHANGED], 0, row, col);
 
 
 }
@@ -3589,7 +3588,7 @@ gtk_sheet_real_cell_clear (GtkSheet *sheet, gint row, gint column, gboolean dele
     sheet->data[row][column]->text = NULL;
 
     if(GTK_IS_OBJECT(sheet) && G_OBJECT(sheet)->ref_count > 0)
-      gtk_signal_emit(GTK_OBJECT(sheet),sheet_signals[CLEAR_CELL], row, column);
+      g_signal_emit (sheet, sheet_signals[CLEAR_CELL], 0, row, column);
 
     sheet_head->CHANGED = 1;
   }  
@@ -3963,7 +3962,7 @@ gtk_sheet_hide_active_cell(GtkSheet *sheet)
 
  if(text && strlen(text)!=0){
       gtk_sheet_set_cell(sheet, row, col, justification, text);
-      gtk_signal_emit(GTK_OBJECT(sheet),sheet_signals[SET_CELL], row, col);
+      g_signal_emit (sheet, sheet_signals[SET_CELL], 0, row, col);
  }
  else
  {
@@ -4622,7 +4621,7 @@ gtk_sheet_real_select_range (GtkSheet * sheet,
            gtk_sheet_range_draw_selection(sheet, sheet->range);
          }
 
-  gtk_signal_emit(GTK_OBJECT(sheet), sheet_signals[SELECT_RANGE], range);
+  g_signal_emit (sheet, sheet_signals[SELECT_RANGE], 0, range);
 }
 
 void
@@ -5105,7 +5104,7 @@ gtk_sheet_button_release (GtkWidget * widget,
       old_range=sheet->range;
       sheet->range=sheet->drag_range;
       sheet->drag_range=old_range;
-      gtk_signal_emit(GTK_OBJECT(sheet),sheet_signals[MOVE_RANGE],
+      g_signal_emit (sheet, sheet_signals[MOVE_RANGE], 0,
                       &sheet->drag_range, &sheet->range);
       gtk_sheet_select_range(sheet, &sheet->range);
   }
@@ -5135,7 +5134,7 @@ gtk_sheet_button_release (GtkWidget * widget,
       sheet->drag_range = old_range;
 
       if(sheet->state==GTK_STATE_NORMAL) sheet->state=GTK_SHEET_RANGE_SELECTED;
-      gtk_signal_emit(GTK_OBJECT(sheet),sheet_signals[RESIZE_RANGE],
+      g_signal_emit (sheet, sheet_signals[RESIZE_RANGE], 0,
                       &sheet->drag_range, &sheet->range);
       gtk_sheet_select_range(sheet, &sheet->range);
   }
@@ -6952,8 +6951,8 @@ gtk_sheet_set_column_width (GtkSheet * sheet,
     gtk_sheet_range_draw (sheet, NULL);
   } else
 
-  gtk_signal_emit(GTK_OBJECT(sheet), sheet_signals[CHANGED], -1, column);
-  gtk_signal_emit(GTK_OBJECT(sheet), sheet_signals[NEW_COL_WIDTH], column, width);
+  g_signal_emit (sheet, sheet_signals[CHANGED], 0, -1, column);
+  g_signal_emit (sheet, sheet_signals[NEW_COL_WIDTH], 0, column, width);
 
 }
 
@@ -6984,8 +6983,8 @@ gtk_sheet_set_row_height (GtkSheet * sheet,
     gtk_sheet_range_draw (sheet, NULL);
   }
 
-  gtk_signal_emit(GTK_OBJECT(sheet), sheet_signals[CHANGED], row, -1);
-  gtk_signal_emit(GTK_OBJECT(sheet), sheet_signals[NEW_ROW_HEIGHT], row, height);
+  g_signal_emit (sheet, sheet_signals[CHANGED], 0, row, -1);
+  g_signal_emit (sheet, sheet_signals[NEW_ROW_HEIGHT], 0, row, height);
 
 }
 
