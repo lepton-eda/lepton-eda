@@ -4002,9 +4002,9 @@ gtk_sheet_deactivate_cell(GtkSheet *sheet)
 
  if(!veto) return FALSE;
 
- gtk_signal_disconnect_by_func(GTK_OBJECT(gtk_sheet_get_entry(sheet)),
-        	               (GtkSignalFunc) gtk_sheet_entry_changed,
-                	       GTK_OBJECT(GTK_WIDGET(sheet)));
+ g_signal_handlers_disconnect_by_func (gtk_sheet_get_entry (sheet),
+                                       (GtkSignalFunc) gtk_sheet_entry_changed,
+                                       sheet);
 
  gtk_sheet_hide_active_cell(sheet);
  sheet->active_cell.row=-1;
