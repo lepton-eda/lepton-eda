@@ -2430,7 +2430,13 @@ gtk_sheet_set_vadjustment (GtkSheet      *sheet,
 
   if (sheet->vadjustment)
     {
-      gtk_signal_disconnect_by_data (GTK_OBJECT (sheet->vadjustment), sheet);
+      g_signal_handlers_disconnect_matched (sheet->vadjustment,  /* instance  */
+                                            G_SIGNAL_MATCH_DATA, /* mask      */
+                                            0,                   /* signal_id */
+                                            0,                   /* detail    */
+                                            NULL,                /* closure   */
+                                            NULL,                /* func      */
+                                            sheet);              /* data      */
       g_object_unref (sheet->vadjustment);
     }
 
@@ -2474,7 +2480,13 @@ gtk_sheet_set_hadjustment (GtkSheet      *sheet,
 
   if (sheet->hadjustment)
     {
-      gtk_signal_disconnect_by_data (GTK_OBJECT (sheet->hadjustment), sheet);
+      g_signal_handlers_disconnect_matched (sheet->hadjustment,  /* instance  */
+                                            G_SIGNAL_MATCH_DATA, /* mask      */
+                                            0,                   /* signal_id */
+                                            0,                   /* detail    */
+                                            NULL,                /* closure   */
+                                            NULL,                /* func      */
+                                            sheet);              /* data      */
       g_object_unref (sheet->hadjustment);
     }
 
@@ -2583,13 +2595,25 @@ gtk_sheet_destroy (GtkObject * object)
   /* unref adjustments */
   if (sheet->hadjustment)
     {
-      gtk_signal_disconnect_by_data (GTK_OBJECT (sheet->hadjustment), sheet);
+      g_signal_handlers_disconnect_matched (sheet->hadjustment,  /* instance  */
+                                            G_SIGNAL_MATCH_DATA, /* mask      */
+                                            0,                   /* signal_id */
+                                            0,                   /* detail    */
+                                            NULL,                /* closure   */
+                                            NULL,                /* func      */
+                                            sheet);              /* data      */
       g_object_unref (sheet->hadjustment);
       sheet->hadjustment = NULL;
     }
   if (sheet->vadjustment)
     {
-      gtk_signal_disconnect_by_data (GTK_OBJECT (sheet->vadjustment), sheet);
+      g_signal_handlers_disconnect_matched (sheet->vadjustment,  /* instance  */
+                                            G_SIGNAL_MATCH_DATA, /* mask      */
+                                            0,                   /* signal_id */
+                                            0,                   /* detail    */
+                                            NULL,                /* closure   */
+                                            NULL,                /* func      */
+                                            sheet);              /* data      */
       g_object_unref (sheet->vadjustment);
       sheet->vadjustment = NULL;
     }
