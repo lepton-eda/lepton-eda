@@ -390,21 +390,21 @@ void x_window_create_main(GschemToplevel *w_current)
                              _("New file"),
                              "toolbar/new",
                              x_window_stock_pixmap("new", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_file_new,
+                             (GCallback) i_callback_toolbar_file_new,
                              w_current);
     gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
                              _("Open"),
                              _("Open file..."),
                              "toolbar/open",
                              x_window_stock_pixmap("open", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_file_open,
+                             (GCallback) i_callback_toolbar_file_open,
                              w_current);
     gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
                              _("Save"),
                              _("Save file"),
                              "toolbar/save",
                              x_window_stock_pixmap("save", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_file_save,
+                             (GCallback) i_callback_toolbar_file_save,
                              w_current);
     gtk_toolbar_append_space (GTK_TOOLBAR(toolbar));
     gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
@@ -412,14 +412,14 @@ void x_window_create_main(GschemToplevel *w_current)
                              _("Undo last operation"),
                              "toolbar/undo",
                              x_window_stock_pixmap("undo", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_edit_undo,
+                             (GCallback) i_callback_toolbar_edit_undo,
                              w_current);
     gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
                              _("Redo"),
                              _("Redo last undo"),
                              "toolbar/redo",
                              x_window_stock_pixmap("redo", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_edit_redo,
+                             (GCallback) i_callback_toolbar_edit_redo,
                              w_current);
     gtk_toolbar_append_space (GTK_TOOLBAR(toolbar));
     /* not part of any radio button group */
@@ -428,7 +428,7 @@ void x_window_create_main(GschemToplevel *w_current)
                              _("Add component...\nSelect library and component from list, move the mouse into main window, click to place\nRight mouse button to cancel"),
                              "toolbar/component",
                              x_window_stock_pixmap("insert-symbol", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_add_component,
+                             (GCallback) i_callback_toolbar_add_component,
                              w_current);
     w_current->toolbar_net =
       gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
@@ -438,7 +438,7 @@ void x_window_create_main(GschemToplevel *w_current)
                                  _("Add nets mode\nRight mouse button to cancel"),
                                  "toolbar/nets",
                                  x_window_stock_pixmap("insert-net", w_current),
-                                 (GtkSignalFunc) i_callback_toolbar_add_net,
+                                 (GCallback) i_callback_toolbar_add_net,
                                  w_current);
     w_current->toolbar_bus =
       gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
@@ -448,7 +448,7 @@ void x_window_create_main(GschemToplevel *w_current)
                                  _("Add buses mode\nRight mouse button to cancel"),
                                  "toolbar/bus",
                                  x_window_stock_pixmap("insert-bus", w_current),
-                                 (GtkSignalFunc) i_callback_toolbar_add_bus,
+                                 (GCallback) i_callback_toolbar_add_bus,
                                  w_current);
     /* not part of any radio button group */
     gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
@@ -456,7 +456,7 @@ void x_window_create_main(GschemToplevel *w_current)
                              _("Add Text..."),
                              "toolbar/text",
                              x_window_stock_pixmap("insert-text", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_add_text,
+                             (GCallback) i_callback_toolbar_add_text,
                              w_current);
     gtk_toolbar_append_space (GTK_TOOLBAR(toolbar));
     w_current->toolbar_select =
@@ -467,7 +467,7 @@ void x_window_create_main(GschemToplevel *w_current)
                                  _("Select mode"),
                                  "toolbar/select",
                                  x_window_stock_pixmap("select", w_current),
-                                 (GtkSignalFunc) i_callback_toolbar_edit_select,
+                                 (GCallback) i_callback_toolbar_edit_select,
                                  w_current);
 
 

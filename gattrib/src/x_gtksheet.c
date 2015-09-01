@@ -143,7 +143,7 @@ x_gtksheet_init()
        *  sheet's working area (like in MS E*cel).   I have removed this from
        *  gattrib, but leave the code in just in case I want to put it back.  */
       g_signal_connect (gtk_sheet_get_entry (GTK_SHEET (sheets[i])),
-                        "changed", (GtkSignalFunc) show_entry, NULL);
+                        "changed", (GCallback) show_entry, NULL);
     }
   }
 }
