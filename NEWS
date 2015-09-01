@@ -6,6 +6,9 @@ September 2015
 - Fixed a bug which caused nets to be shorted when using customizable
   power symbols
 
+- Fixed a bug which caused some components to remain unnamed in
+  hierarchical schematics
+
 
 August 2015
 ===========

@@ -273,7 +273,7 @@ class Netlist:
 
 
         # assign component refdes
-        for component in sheet.components:
+        for component in self.components:
             if component.blueprint.refdes is not None:
                 if component.sheet.instantiating_component is not None:
                     namespace = component.sheet
