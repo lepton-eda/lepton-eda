@@ -112,11 +112,6 @@ class ComponentPin:
 
         #self.is_bus = blueprint is not None and blueprint.ob.data().is_bus
 
-        ## The \c "pinlabel=" attribute of the pin.
-        #
-        # Only relevant for subschematic symbols.
-        self.label = blueprint.get_attribute('pinlabel', None)
-
         ## The LocalNet object to which this pin is connected.
         #
         # For real pins, this is just the net instance for the

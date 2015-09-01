@@ -37,7 +37,8 @@ def postproc_instances(netlist):
             continue
 
         for cpin in component.cpins:
-            if cpin.label is None:
+            label = cpin.blueprint.get_attribute('pinlabel', None)
+            if label is None:
                 cpin.error(_("pin on composite component is missing a label"))
                 continue
 
@@ -46,14 +47,14 @@ def postproc_instances(netlist):
             # search for the matching port
             ports = [potential_port for subsheet in component.subsheets
                                     for potential_port in subsheet.components
-                     if potential_port.blueprint.refdes == cpin.label]
+                     if potential_port.blueprint.refdes == label]
 
             if not ports:
                 cpin.warn(_("missing I/O symbol with refdes `%s' "
-                            "inside schematic") % cpin.label)
+                            "inside schematic") % label)
             elif len(ports) > 1:
                 cpin.warn(_("multiple I/O symbols with refdes `%s' "
-                            "inside schematic") % cpin.label)
+                            "inside schematic") % label)
 
             for port in ports:
                 if not port.cpins:
