@@ -48,30 +48,55 @@ def postproc_blueprints(netlist):
     for schematic in netlist.schematics:
         for component in schematic.components:
             # first look inside the component, then outside the component
-            for value in \
-                    xorn.geda.attrib.search_inherited(component.ob, 'net') + \
-                    xorn.geda.attrib.search_attached(component.ob, 'net'):
-                # A "net=" attribute has been found in the component.
+            pinnumbers = []
+            assignments = {}
 
-                try:
-                    pos = value.index(':')
-                except ValueError:
-                    component.error(
-                        _("invalid net= attribute: \"%s\"") % value)
-                    continue
+            for is_inherited, func in [
+                    (True, xorn.geda.attrib.search_inherited),
+                    (False, xorn.geda.attrib.search_attached)]:
+                for value in func(component.ob, 'net'):
+                    # A "net=" attribute has been found in the component.
 
-                # skip over first colon
-                for current_pin in strtok(
-                        value[pos + 1:], NET_ATTRIB_DELIMITERS):
                     try:
-                        pin = component.pins_by_number[current_pin]
-                    except KeyError:
-                        net = xorn.geda.netlist.blueprint.Net(schematic, [])
-                        pin = xorn.geda.netlist.blueprint.Pin(component, None)
-                        pin.number = current_pin
-                        component.pins_by_number[current_pin] = pin
-                        pin.net = net
-                        net.pins.append(pin)
+                        pos = value.index(':')
+                    except ValueError:
+                        component.error(
+                            _("invalid net= attribute: \"%s\"") % value)
+                        continue
 
-                    pin.has_netattrib = True
-                    pin.net.names_from_net_attribute.append(value[:pos])
+                    # skip over first colon
+                    for pinnumber in strtok(
+                            value[pos + 1:], NET_ATTRIB_DELIMITERS):
+                        try:
+                            l = assignments[pinnumber]
+                        except KeyError:
+                            pinnumbers.append(pinnumber)
+                            l = assignments[pinnumber] = []
+                        l.append((value[:pos], is_inherited))
+
+            for pinnumber in pinnumbers:
+                try:
+                    pin = component.pins_by_number[pinnumber]
+                except KeyError:
+                    net = xorn.geda.netlist.blueprint.Net(schematic, [])
+                    pin = xorn.geda.netlist.blueprint.Pin(component, None)
+                    pin.number = pinnumber
+                    component.pins_by_number[pinnumber] = pin
+                    pin.net = net
+                    net.pins.append(pin)
+
+                netnames = [netname for netname, is_inherited in
+                                      assignments[pinnumber]
+                            if not is_inherited]
+                if not netnames:
+                    netnames = [netname for netname, is_inherited in
+                                          assignments[pinnumber]
+                                if is_inherited]
+
+                if len(netnames) > 1:
+                    pin.error(_("more than one netname assigned "
+                                "via \"net=\" attribute: %s") %
+                              _(" vs. ").join(netnames))
+
+                pin.has_netattrib = True
+                pin.net.names_from_net_attribute += netnames

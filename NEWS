@@ -3,6 +3,9 @@ September 2015
 
 - The ripperdir field on buses is now written correctly
 
+- Fixed a bug which caused nets to be shorted when using customizable
+  power symbols
+
 
 August 2015
 ===========
