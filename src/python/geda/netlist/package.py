@@ -294,11 +294,11 @@ def postproc_instances(netlist, flat_namespace):
 
         for cpin in component.cpins:
             try:
-                ppin = package.pins_by_number[cpin.number]
+                ppin = package.pins_by_number[cpin.blueprint.number]
             except KeyError:
-                ppin = PackagePin(package, cpin.number)
+                ppin = PackagePin(package, cpin.blueprint.number)
                 package.pins.append(ppin)
-                package.pins_by_number[cpin.number] = ppin
+                package.pins_by_number[cpin.blueprint.number] = ppin
             ppin.cpins.append(cpin)
 
     for package in netlist.packages:
@@ -330,6 +330,6 @@ def postproc_instances(netlist, flat_namespace):
             else:
                 namespace = cpin.component.sheet
             ppin = pkg_dict[namespace, cpin.component.blueprint.refdes] \
-                     .pins_by_number[cpin.number]
+                     .pins_by_number[cpin.blueprint.number]
             if ppin not in net.connections:
                 net.connections.append(ppin)

@@ -112,9 +112,6 @@ class ComponentPin:
 
         #self.is_bus = blueprint is not None and blueprint.ob.data().is_bus
 
-        ## The "identifier" of the pin.
-        self.number = blueprint.number
-
         ## The \c "pinlabel=" attribute of the pin.
         #
         # Only relevant for subschematic symbols.

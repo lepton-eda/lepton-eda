@@ -36,7 +36,7 @@ class Callback:
 
     def write_pin_attrib(self, f, component, cpin, pinattrib):
         f.write('pin-attrib\t%s-%s\t%s\t%s\n' % (
-            get_refdes(component), cpin.number, pinattrib,
+            get_refdes(component), cpin.blueprint.number, pinattrib,
             cpin.blueprint.get_attribute(pinattrib, 'unknown')))
 
     def write_pin_attrib_post(self, f, component, cpin):
@@ -52,8 +52,9 @@ class Callback:
         pass
 
     def write_pin_net(self, f, component, cpin):
-        f.write('pin-conn\t%s-%s\t%s\n' % (
-            get_refdes(component), cpin.number, cpin.local_net.net.name))
+        f.write('pin-conn\t%s-%s\t%s\n' % (get_refdes(component),
+                                           cpin.blueprint.number,
+                                           cpin.local_net.net.name))
 
     def write_pin_net_post(self, f, component, cpin):
         pass
@@ -62,7 +63,7 @@ class Callback:
         pass
 
     def write_pinlist(self, f, component, cpin):
-        f.write('\t%s-%s' % (get_refdes(component), cpin.number))
+        f.write('\t%s-%s' % (get_refdes(component), cpin.blueprint.number))
 
     def write_pinlist_pre(self, f, component):
         f.write('element-pins\t%s' % get_refdes(component))
@@ -95,7 +96,8 @@ class Callback:
     # Formatting: print netlists
 
     def write_netlist_pin(self, f, cpin):
-        f.write('\t%s-%s' % (get_refdes(cpin.component), cpin.number))
+        f.write('\t%s-%s' % (get_refdes(cpin.component),
+                             cpin.blueprint.number))
 
     def write_netlist_pre(self, f, net):
         f.write('net\t%s\n' % net.name)

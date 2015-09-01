@@ -264,6 +264,8 @@ class Pin:
         self.net = None
         self.ob = ob
 
+        ## The "identifier" of the pin.
+        #
         # populated by xorn.geda.netlist.pp_slotting and
         # xorn.geda.netlist.pp_netattrib
         self.number = None
