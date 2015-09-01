@@ -572,7 +572,6 @@ int parse_commandline(int argc, char *argv[]);
 /* s_stretch.c */
 GList *s_stretch_add(GList *list, OBJECT *object, int whichone);
 GList *s_stretch_remove(GList *list, OBJECT *object);
-void s_stretch_print_all(GList *list);
 void s_stretch_destroy_all(GList *list);
 /* x_aligncb.c */
 GtkWidget* x_aligncb_new ();
@@ -646,7 +645,6 @@ gint x_event_scroll(GtkWidget *widget, GdkEventScroll *event, GschemToplevel *w_
 gboolean x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint *wx, gint *wy);
 /* x_compselect.c */
 void x_compselect_open (GschemToplevel *w_current);
-void x_compselect_close (GschemToplevel *w_current);
 void x_compselect_deselect (GschemToplevel *w_current);
 /* x_fileselect.c */
 void x_fileselect_open(GschemToplevel *w_current);
@@ -655,9 +653,6 @@ int x_fileselect_load_backup(void *user_data, GString *message);
 /* x_fstylecb.c */
 GtkWidget* x_fstylecb_new ();
 int x_fstylecb_get_index (GtkWidget *widget);
-gboolean x_fstylecb_get_use_width (GtkWidget *widget);
-gboolean x_fstylecb_get_use1 (GtkWidget *widget);
-gboolean x_fstylecb_get_use2 (GtkWidget *widget);
 void x_fstylecb_set_index (GtkWidget *widget, int style);
 /* x_grid.c */
 void x_grid_draw_region(GschemToplevel *w_current, cairo_t *cr, GdkDrawable *drawable, GdkGC *gc, int x, int y, int width, int height);
@@ -685,8 +680,6 @@ void x_linecapcb_set_index (GtkWidget *widget, int index);
 /* x_linetypecb.c */
 GtkWidget* x_linetypecb_new ();
 int x_linetypecb_get_index (GtkWidget *widget);
-gboolean x_linetypecb_get_use_length (GtkWidget *widget);
-gboolean x_linetypecb_get_use_space (GtkWidget *widget);
 void x_linetypecb_set_index (GtkWidget *widget, int index);
 /* x_misc.c */
 gboolean x_show_uri (GschemToplevel *w_current, const gchar *buf, GError **err);
