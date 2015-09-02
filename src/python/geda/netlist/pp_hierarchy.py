@@ -33,7 +33,7 @@ def postproc_instances(netlist):
     remove_components = set()
 
     for component in netlist.components:
-        if not component.is_composite:
+        if not component.blueprint.composite_sources:
             continue
 
         for cpin in component.cpins:

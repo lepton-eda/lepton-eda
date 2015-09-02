@@ -105,7 +105,8 @@ def get_all_attr_values(attribute, packages):
     return l
 
 def run(f, netlist):
-    input_files = [sheet.filename for sheet in netlist.toplevel_sheets]
+    input_files = [sheet.blueprint.filename
+                   for sheet in netlist.toplevel_sheets]
 
     # lazy version, use first filename only for naming scheme
     match = MAKEDEPEND_SCHEME.match(input_files[0])

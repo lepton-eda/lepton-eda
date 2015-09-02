@@ -339,7 +339,8 @@ class Netlist:
 
         values = []
         for sheet in self.toplevel_sheets:
-            values += xorn.geda.attrib.search_floating(sheet.rev, name)
+            values += xorn.geda.attrib.search_floating(
+                sheet.blueprint.rev, name)
 
         if values:
             for value in values[1:]:

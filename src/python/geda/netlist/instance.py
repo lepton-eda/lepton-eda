@@ -32,10 +32,8 @@ import sys
 class Sheet:
     def __init__(self, netlist, blueprint, instantiating_component):
         self.netlist = netlist
-        self.filename = blueprint.filename
         # schematic which is traversed
         self.blueprint = blueprint
-        self.rev = blueprint.rev
 
         self.instantiating_component = instantiating_component
 
@@ -68,15 +66,12 @@ class Component:
     def __init__(self, sheet, blueprint):
         self.sheet = sheet
         self.blueprint = blueprint
-        self.ob = blueprint.ob
 
         self.refdes = None # populated by netlist ctor
 
         self.cpins = [] # list of ComponentPin
         self.cpins_by_blueprint = {}
         self.cpins_by_number = {}
-
-        self.is_composite = bool(blueprint.composite_sources)
 
         self.subsheets = []
 
