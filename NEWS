@@ -1,3 +1,31 @@
+September 2015
+==============
+
+- The ripperdir field on buses is now written correctly
+
+
+August 2015
+===========
+
+- Files which contain `\r\n' line endings are now read correctly
+
+- Added python package `xorn.geda.netlist' which allows creating a
+  netlist from one or more gEDA schematic files
+
+- Added a set of backends (mostly from gnetlist) which output netlists
+  in various formats
+
+- Added subcommand `xorn netlist', a command-line interface to the
+  netlister
+
+
+May 2015
+========
+
+- Added python module `xorn.geda.clib' which implements the gEDA
+  symbol library mechanism
+
+
 May 2014
 ========
 
@@ -11,6 +39,11 @@ May 2014
 - Added command-line utility `xorn' with two sub-commands:
     extract - extract embedded symbols or pixmaps from a schematic
     find-symbol-by-pinout - find symbols matching a given pinout
+
+- Python modules can now be imported from the build directory by
+  adding the subdirectory `built-packages' to PYTHONPATH
+
+- Added internationalization
 
 
 April 2014
