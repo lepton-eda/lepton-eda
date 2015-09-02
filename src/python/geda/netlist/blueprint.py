@@ -331,7 +331,7 @@ class Pin:
             self.component.schematic.filename,
             self.component.refdes, self.number,
             format_coord(data.x), format_coord(data.y), msg))
-        self.netlister_run.failed = True
+        self.component.schematic.netlister_run.failed = True
 
     def warn(self, msg):
         # TODO: calculate pin coordinates
