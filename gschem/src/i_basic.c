@@ -316,18 +316,18 @@ void i_update_toolbar(GschemToplevel *w_current)
 
   switch(w_current->event_state) {
     case(SELECT):
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
-				   w_current->toolbar_select), TRUE);
+      gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select),
+                                         TRUE);
       break;
 
     case(NETMODE):
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
-				   w_current->toolbar_net), TRUE);
+      gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_net),
+                                         TRUE);
       break;
 
     case(BUSMODE):
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
-				   w_current->toolbar_bus), TRUE);
+      gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_bus),
+                                         TRUE);
       break;
 
     case(ARCMODE): /*! \todo */
@@ -348,8 +348,8 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(PASTEMODE): /*! \todo */
     case(GRIPS): /*! \todo */
     default:
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
-				   w_current->toolbar_select), TRUE);
+      gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select),
+                                         TRUE);
       break;
   }
 }
