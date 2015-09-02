@@ -128,7 +128,7 @@ class Component:
         # populated by schematic loader
         self.composite_sources = None
 
-        # populated by xorn.geda.netlist.pp_graphical
+        # set by xorn.geda.netlist.pp_graphical
         self.is_graphical = False
 
         # populated by xorn.geda.netlist.pp_slotting
@@ -266,11 +266,11 @@ class Pin:
 
         ## The "identifier" of the pin.
         #
-        # populated by xorn.geda.netlist.pp_slotting and
+        # set by xorn.geda.netlist.pp_slotting and
         # xorn.geda.netlist.pp_netattrib
         self.number = None
 
-        # populated by xorn.geda.netlist.pp_netattrib
+        # set by xorn.geda.netlist.pp_netattrib
         self.has_netattrib = False
 
         component.pins.append(self)

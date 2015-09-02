@@ -30,7 +30,7 @@ class Net:
         self.names = { False: [], True: [] }
         self.namespace = None
         self.unmangled_name = None
-        self.name = None # populated by netlist ctor
+        self.name = None  # set by netlist ctor
         self.unnamed_counter = None  # only for unnamed nets/buses
         self.is_unconnected_pin = False
 

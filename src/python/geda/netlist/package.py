@@ -28,7 +28,7 @@ class Package:
         self.netlist = netlist
         self.namespace = namespace
         self.unmangled_refdes = unmangled_refdes
-        self.refdes = None  # populated by netlist ctor
+        self.refdes = None  # set by netlist ctor
         self.components = []
         self.pins = []
         self.pins_by_number = {}

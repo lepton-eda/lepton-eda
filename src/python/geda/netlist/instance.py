@@ -67,7 +67,8 @@ class Component:
         self.sheet = sheet
         self.blueprint = blueprint
 
-        self.refdes = None # populated by netlist ctor
+        # set by netlist ctor
+        self.refdes = None
 
         self.cpins = [] # list of ComponentPin
         self.cpins_by_blueprint = {}
