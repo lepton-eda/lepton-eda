@@ -91,7 +91,6 @@ x_window_init()
   window = gtk_window_new(GTK_WINDOW_TOPLEVEL);  
 
   gtk_window_set_title( GTK_WINDOW(window), _("gattrib -- gEDA attribute editor")); 
-  gtk_window_set_default_size(GTK_WINDOW(window), 750, 600);  
   
   g_signal_connect(window, "delete_event",
                    G_CALLBACK (gattrib_really_quit), 0);
