@@ -215,8 +215,11 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
     /* Ensure we set this to flag there is "something" supposed to be
      * drawn when the invalidate call below causes an expose event. */
     w_current->last_drawb_mode = w_current->actionfeedback_mode;
-    w_current->drawbounding_action_mode = (w_current->CONTROLKEY)
-                                            ? CONSTRAINED : FREE;
+    w_current->drawbounding_action_mode = (w_current->CONTROLKEY &&
+                                           ! ((w_current->event_state == PASTEMODE) ||
+                                              (w_current->event_state == COMPMODE) ||
+                                              (w_current->event_state == TEXTMODE)))
+                                          ? CONSTRAINED : FREE;
   }
 
   /* Calculate delta of X-Y positions from buffer's origin */
@@ -281,8 +284,11 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
   /* Don't worry about the previous drawing method and movement
    * constraints, use with the current settings */
   w_current->last_drawb_mode = w_current->actionfeedback_mode;
-  w_current->drawbounding_action_mode =
-    (w_current->CONTROLKEY) ? CONSTRAINED : FREE;
+  w_current->drawbounding_action_mode = (w_current->CONTROLKEY &&
+                                         ! ((w_current->event_state == PASTEMODE) ||
+                                            (w_current->event_state == COMPMODE) ||
+                                            (w_current->event_state == TEXTMODE)))
+                                        ? CONSTRAINED : FREE;
 
   /* Calculate delta of X-Y positions from buffer's origin */
   diff_x = w_current->second_wx - w_current->first_wx;
