@@ -85,7 +85,7 @@ static int query_dots_grid_spacing (GschemToplevel *w_current)
  *  \param [in] x          The left screen coordinate for the drawing.
  *  \param [in] y          The top screen coordinate for the drawing.
  *  \param [in] width      The width of the region to draw.
-zz *  \param [in] height     The height of the region to draw.
+ *  \param [in] height     The height of the region to draw.
  */
 static void draw_dots_grid_region (GschemToplevel *w_current,
                                    GdkDrawable *drawable,
