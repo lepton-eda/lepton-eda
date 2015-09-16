@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gschem>
+	<elements>
+		<element name="V1">
+			<pins>
+				<pin name="V1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="-" />
+				</pin>
+				<pin name="V1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="+" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="V1-2" value="GND" />
+				<pin-conn name="V1-1" value="unnamed_net1" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="DC 1V" />
+				<attrib name="refdes" value="V1" />
+			</attributes>
+		</element>
+		<element name="R1">
+			<pins>
+				<pin name="R1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+				<pin name="R1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="R1-1" value="GND" />
+				<pin-conn name="R1-2" value="unnamed_net1" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="20" />
+				<attrib name="refdes" value="R1" />
+			</attributes>
+		</element>
+		<element name="A1">
+			<pins>
+			</pins>
+			<pin-conns>
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="abotol=1e-11" />
+				<attrib name="refdes" value="A1" />
+			</attributes>
+		</element>
+	</elements>
+	<nets>
+		<net name="GND">
+			<pin name="V1-2" />
+			<pin name="R1-1" />
+		</net>
+		<net name="unnamed_net1">
+			<pin name="V1-1" />
+			<pin name="R1-2" />
+		</net>
+	</nets>
+</gschem>

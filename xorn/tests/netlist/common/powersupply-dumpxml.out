@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gschem>
+	<elements>
+		<element name="U2">
+			<pins>
+				<pin name="U2-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="Adjust" />
+				</pin>
+				<pin name="U2-3">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="Vin" />
+				</pin>
+				<pin name="U2-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="Vout" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="U2-1" value="ten" />
+				<pin-conn name="U2-3" value="eight" />
+				<pin-conn name="U2-2" value="eleven" />
+			</pin-conns>
+			<attributes>
+				<attrib name="refdes" value="U2" />
+			</attributes>
+		</element>
+		<element name="C4">
+			<pins>
+				<pin name="C4-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="-" />
+				</pin>
+				<pin name="C4-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="+" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="C4-2" value="nine" />
+				<pin-conn name="C4-1" value="eleven" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="1uf" />
+				<attrib name="refdes" value="C4" />
+			</attributes>
+		</element>
+		<element name="C3">
+			<pins>
+				<pin name="C3-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="-" />
+				</pin>
+				<pin name="C3-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="+" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="C3-2" value="nine" />
+				<pin-conn name="C3-1" value="ten" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="22uF" />
+				<attrib name="refdes" value="C3" />
+			</attributes>
+		</element>
+		<element name="R1">
+			<pins>
+				<pin name="R1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+				<pin name="R1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+				<pin name="R1-3">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="3" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="R1-1" value="nine" />
+				<pin-conn name="R1-2" value="ten" />
+				<pin-conn name="R1-3" value="nine" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="5k" />
+				<attrib name="refdes" value="R1" />
+			</attributes>
+		</element>
+		<element name="C2">
+			<pins>
+				<pin name="C2-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="-" />
+				</pin>
+				<pin name="C2-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="+" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="C2-2" value="nine" />
+				<pin-conn name="C2-1" value="eight" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="0.1uF" />
+				<attrib name="refdes" value="C2" />
+			</attributes>
+		</element>
+		<element name="R2">
+			<pins>
+				<pin name="R2-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+				<pin name="R2-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="R2-1" value="ten" />
+				<pin-conn name="R2-2" value="eleven" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="220" />
+				<attrib name="refdes" value="R2" />
+			</attributes>
+		</element>
+		<element name="C1">
+			<pins>
+				<pin name="C1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="-" />
+				</pin>
+				<pin name="C1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="+" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="C1-2" value="nine" />
+				<pin-conn name="C1-1" value="eight" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="2200uF" />
+				<attrib name="refdes" value="C1" />
+			</attributes>
+		</element>
+		<element name="S1">
+			<pins>
+				<pin name="S1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+				<pin name="S1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="S1-1" value="one" />
+				<pin-conn name="S1-2" value="two" />
+			</pin-conns>
+			<attributes>
+				<attrib name="refdes" value="S1" />
+			</attributes>
+		</element>
+		<element name="CONN1">
+			<pins>
+				<pin name="CONN1-3">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="3" />
+				</pin>
+				<pin name="CONN1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+				<pin name="CONN1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="CONN1-3" value="GND" />
+				<pin-conn name="CONN1-2" value="five" />
+				<pin-conn name="CONN1-1" value="one" />
+			</pin-conns>
+			<attributes>
+				<attrib name="refdes" value="CONN1" />
+			</attributes>
+		</element>
+		<element name="T1">
+			<pins>
+				<pin name="T1-3">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="3" />
+				</pin>
+				<pin name="T1-4">
+					<attrib name="pinseq" value="4" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="4" />
+				</pin>
+				<pin name="T1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+				<pin name="T1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="T1-3" value="six" />
+				<pin-conn name="T1-4" value="seven" />
+				<pin-conn name="T1-1" value="three" />
+				<pin-conn name="T1-2" value="five" />
+			</pin-conns>
+			<attributes>
+				<attrib name="refdes" value="T1" />
+			</attributes>
+		</element>
+		<element name="F1">
+			<pins>
+				<pin name="F1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+				<pin name="F1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="F1-2" value="three" />
+				<pin-conn name="F1-1" value="two" />
+			</pin-conns>
+			<attributes>
+				<attrib name="refdes" value="F1" />
+			</attributes>
+		</element>
+		<element name="U1">
+			<pins>
+				<pin name="U1-4">
+					<attrib name="pinseq" value="4" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="4" />
+				</pin>
+				<pin name="U1-3">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="3" />
+				</pin>
+				<pin name="U1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+				<pin name="U1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="U1-4" value="six" />
+				<pin-conn name="U1-3" value="seven" />
+				<pin-conn name="U1-2" value="nine" />
+				<pin-conn name="U1-1" value="eight" />
+			</pin-conns>
+			<attributes>
+				<attrib name="refdes" value="U1" />
+			</attributes>
+		</element>
+	</elements>
+	<nets>
+		<net name="ten">
+			<pin name="U2-1" />
+			<pin name="C3-1" />
+			<pin name="R1-2" />
+			<pin name="R2-1" />
+		</net>
+		<net name="eleven">
+			<pin name="U2-2" />
+			<pin name="C4-1" />
+			<pin name="R2-2" />
+		</net>
+		<net name="GND">
+			<pin name="CONN1-3" />
+		</net>
+		<net name="one">
+			<pin name="S1-1" />
+			<pin name="CONN1-1" />
+		</net>
+		<net name="five">
+			<pin name="CONN1-2" />
+			<pin name="T1-2" />
+		</net>
+		<net name="three">
+			<pin name="T1-1" />
+			<pin name="F1-2" />
+		</net>
+		<net name="two">
+			<pin name="S1-2" />
+			<pin name="F1-1" />
+		</net>
+		<net name="six">
+			<pin name="T1-3" />
+			<pin name="U1-4" />
+		</net>
+		<net name="seven">
+			<pin name="T1-4" />
+			<pin name="U1-3" />
+		</net>
+		<net name="nine">
+			<pin name="C4-2" />
+			<pin name="C3-2" />
+			<pin name="R1-1" />
+			<pin name="R1-3" />
+			<pin name="C2-2" />
+			<pin name="C1-2" />
+			<pin name="U1-2" />
+		</net>
+		<net name="eight">
+			<pin name="U2-3" />
+			<pin name="C2-1" />
+			<pin name="C1-1" />
+			<pin name="U1-1" />
+		</net>
+	</nets>
+</gschem>

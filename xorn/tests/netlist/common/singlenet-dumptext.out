@@ -1,0 +1,80 @@
+element	U100.3
+element-pins	U100.3	U100.3-7	U100.3-14	U100.3-9	U100.3-10	U100.3-8
+pin-attrib	U100.3-7	pinseq	unknown
+pin-attrib	U100.3-7	pintype	pwr
+pin-attrib	U100.3-7	pinlabel	unknown
+pin-attrib	U100.3-14	pinseq	unknown
+pin-attrib	U100.3-14	pintype	pwr
+pin-attrib	U100.3-14	pinlabel	unknown
+pin-attrib	U100.3-9	pinseq	1
+pin-attrib	U100.3-9	pintype	in
+pin-attrib	U100.3-9	pinlabel	A
+pin-attrib	U100.3-10	pinseq	2
+pin-attrib	U100.3-10	pintype	in
+pin-attrib	U100.3-10	pinlabel	B
+pin-attrib	U100.3-8	pinseq	3
+pin-attrib	U100.3-8	pintype	out
+pin-attrib	U100.3-8	pinlabel	Y
+pin-conn	U100.3-7	GND
+pin-conn	U100.3-14	Vcc
+pin-conn	U100.3-9	SING_N
+pin-conn	U100.3-10	SING_N
+pin-conn	U100.3-8	SING_N
+element-attrib	U100.3	slot	3
+element-attrib	U100.3	refdes	U100
+element	U100.1
+element-pins	U100.1	U100.1-7	U100.1-14	U100.1-1	U100.1-2	U100.1-3
+pin-attrib	U100.1-7	pinseq	unknown
+pin-attrib	U100.1-7	pintype	pwr
+pin-attrib	U100.1-7	pinlabel	unknown
+pin-attrib	U100.1-14	pinseq	unknown
+pin-attrib	U100.1-14	pintype	pwr
+pin-attrib	U100.1-14	pinlabel	unknown
+pin-attrib	U100.1-1	pinseq	1
+pin-attrib	U100.1-1	pintype	in
+pin-attrib	U100.1-1	pinlabel	A
+pin-attrib	U100.1-2	pinseq	2
+pin-attrib	U100.1-2	pintype	in
+pin-attrib	U100.1-2	pinlabel	B
+pin-attrib	U100.1-3	pinseq	3
+pin-attrib	U100.1-3	pintype	out
+pin-attrib	U100.1-3	pinlabel	Y
+pin-conn	U100.1-7	GND
+pin-conn	U100.1-14	Vcc
+pin-conn	U100.1-1	SING_N_2
+pin-conn	U100.1-2	unconnected_pin-1
+pin-conn	U100.1-3	SING_N_2
+element-attrib	U100.1	slot	1
+element-attrib	U100.1	refdes	U100
+element	U100.2
+element-pins	U100.2	U100.2-7	U100.2-14	U100.2-4	U100.2-5	U100.2-6
+pin-attrib	U100.2-7	pinseq	unknown
+pin-attrib	U100.2-7	pintype	pwr
+pin-attrib	U100.2-7	pinlabel	unknown
+pin-attrib	U100.2-14	pinseq	unknown
+pin-attrib	U100.2-14	pintype	pwr
+pin-attrib	U100.2-14	pinlabel	unknown
+pin-attrib	U100.2-4	pinseq	1
+pin-attrib	U100.2-4	pintype	in
+pin-attrib	U100.2-4	pinlabel	A
+pin-attrib	U100.2-5	pinseq	2
+pin-attrib	U100.2-5	pintype	in
+pin-attrib	U100.2-5	pinlabel	B
+pin-attrib	U100.2-6	pinseq	3
+pin-attrib	U100.2-6	pintype	out
+pin-attrib	U100.2-6	pinlabel	Y
+pin-conn	U100.2-7	GND
+pin-conn	U100.2-14	Vcc
+pin-conn	U100.2-4	SING_N
+pin-conn	U100.2-5	SING_N
+pin-conn	U100.2-6	SING_N
+element-attrib	U100.2	slot	2
+element-attrib	U100.2	refdes	U100
+net	SING_N_2
+net-conns	SING_N_2	U100.1-1	U100.1-3
+net	GND
+net-conns	GND	U100.3-7	U100.1-7	U100.2-7
+net	Vcc
+net-conns	Vcc	U100.3-14	U100.1-14	U100.2-14
+net	SING_N
+net-conns	SING_N	U100.3-9	U100.3-10	U100.3-8	U100.2-4	U100.2-5	U100.2-6

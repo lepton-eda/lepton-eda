@@ -1,0 +1,162 @@
+ha:gschem {
+	ha:elements {
+		ha:F1 {
+			ha:pins {
+				ha:F1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+				ha:F1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+			}
+			ha:pin-conns {
+				F1-2 = {unconnected_pin-3}
+				F1-1 = {one}
+			}
+			ha:attribs {
+				refdes={F1}
+			}
+		}
+		ha:U300 {
+			ha:pins {
+				ha:U300-14 {
+					pinseq={unknown}
+					pintype={pwr}
+					pinlabel={unknown}
+				}
+				ha:U300-7 {
+					pinseq={unknown}
+					pintype={pwr}
+					pinlabel={unknown}
+				}
+				ha:U300-2 {
+					pinseq={2}
+					pintype={out}
+					pinlabel={Y}
+				}
+				ha:U300-1 {
+					pinseq={1}
+					pintype={in}
+					pinlabel={A}
+				}
+			}
+			ha:pin-conns {
+				U300-14 = {Vcc}
+				U300-7 = {GND}
+				U300-2 = {unnamed_net1}
+				U300-1 = {one}
+			}
+			ha:attribs {
+				refdes={U300}
+			}
+		}
+		ha:U200 {
+			ha:pins {
+				ha:U200-14 {
+					pinseq={unknown}
+					pintype={pwr}
+					pinlabel={unknown}
+				}
+				ha:U200-7 {
+					pinseq={unknown}
+					pintype={pwr}
+					pinlabel={unknown}
+				}
+				ha:U200-2 {
+					pinseq={2}
+					pintype={out}
+					pinlabel={Y}
+				}
+				ha:U200-1 {
+					pinseq={1}
+					pintype={in}
+					pinlabel={A}
+				}
+			}
+			ha:pin-conns {
+				U200-14 = {Vcc}
+				U200-7 = {GND}
+				U200-2 = {netattrib}
+				U200-1 = {one}
+			}
+			ha:attribs {
+				refdes={U200}
+			}
+		}
+		ha:U100 {
+			ha:pins {
+				ha:U100-5 {
+					pinseq={unknown}
+					pintype={pwr}
+					pinlabel={unknown}
+				}
+				ha:U100-7 {
+					pinseq={unknown}
+					pintype={pwr}
+					pinlabel={unknown}
+				}
+				ha:U100-14 {
+					pinseq={unknown}
+					pintype={pwr}
+					pinlabel={unknown}
+				}
+				ha:U100-1 {
+					pinseq={1}
+					pintype={in}
+					pinlabel={A}
+				}
+				ha:U100-2 {
+					pinseq={2}
+					pintype={in}
+					pinlabel={B}
+				}
+				ha:U100-3 {
+					pinseq={3}
+					pintype={out}
+					pinlabel={Y}
+				}
+			}
+			ha:pin-conns {
+				U100-5 = {netattrib}
+				U100-7 = {GND}
+				U100-14 = {Vcc}
+				U100-1 = {unconnected_pin-2}
+				U100-2 = {unconnected_pin-1}
+				U100-3 = {one}
+			}
+			ha:attribs {
+				net={netattrib:5}
+				refdes={U100}
+			}
+		}
+	}
+	ha:nets {
+		li:unnamed_net1 {
+			U300-2
+		}
+		li:netattrib {
+			U200-2
+			U100-5
+		}
+		li:GND {
+			U300-7
+			U200-7
+			U100-7
+		}
+		li:Vcc {
+			U300-14
+			U200-14
+			U100-14
+		}
+		li:one {
+			F1-1
+			U300-1
+			U200-1
+			U100-3
+		}
+	}
+}

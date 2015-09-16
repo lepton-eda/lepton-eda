@@ -1,0 +1,359 @@
+{
+	"elements": {
+		"U2": {
+			"pins": {
+				"U2-1": {
+					"pinseq": "1",
+					"pintype": "unknown",
+					"pinlabel": "Adjust",
+				},
+				"U2-3": {
+					"pinseq": "3",
+					"pintype": "unknown",
+					"pinlabel": "Vin",
+				},
+				"U2-2": {
+					"pinseq": "2",
+					"pintype": "unknown",
+					"pinlabel": "Vout",
+				},
+			},
+			"pin-conns": {
+				"U2-1": "ten",
+				"U2-3": "eight",
+				"U2-2": "eleven",
+			},
+			"attribs":{
+				"refdes": "U2",
+			},
+		},
+		"C4": {
+			"pins": {
+				"C4-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "-",
+				},
+				"C4-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "+",
+				},
+			},
+			"pin-conns": {
+				"C4-2": "nine",
+				"C4-1": "eleven",
+			},
+			"attribs":{
+				"value": "1uf",
+				"refdes": "C4",
+			},
+		},
+		"C3": {
+			"pins": {
+				"C3-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "-",
+				},
+				"C3-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "+",
+				},
+			},
+			"pin-conns": {
+				"C3-2": "nine",
+				"C3-1": "ten",
+			},
+			"attribs":{
+				"value": "22uF",
+				"refdes": "C3",
+			},
+		},
+		"R1": {
+			"pins": {
+				"R1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"R1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+				"R1-3": {
+					"pinseq": "3",
+					"pintype": "pas",
+					"pinlabel": "3",
+				},
+			},
+			"pin-conns": {
+				"R1-1": "nine",
+				"R1-2": "ten",
+				"R1-3": "nine",
+			},
+			"attribs":{
+				"value": "5k",
+				"refdes": "R1",
+			},
+		},
+		"C2": {
+			"pins": {
+				"C2-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "-",
+				},
+				"C2-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "+",
+				},
+			},
+			"pin-conns": {
+				"C2-2": "nine",
+				"C2-1": "eight",
+			},
+			"attribs":{
+				"value": "0.1uF",
+				"refdes": "C2",
+			},
+		},
+		"R2": {
+			"pins": {
+				"R2-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"R2-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"R2-1": "ten",
+				"R2-2": "eleven",
+			},
+			"attribs":{
+				"value": "220",
+				"refdes": "R2",
+			},
+		},
+		"C1": {
+			"pins": {
+				"C1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "-",
+				},
+				"C1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "+",
+				},
+			},
+			"pin-conns": {
+				"C1-2": "nine",
+				"C1-1": "eight",
+			},
+			"attribs":{
+				"value": "2200uF",
+				"refdes": "C1",
+			},
+		},
+		"S1": {
+			"pins": {
+				"S1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"S1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"S1-1": "one",
+				"S1-2": "two",
+			},
+			"attribs":{
+				"refdes": "S1",
+			},
+		},
+		"CONN1": {
+			"pins": {
+				"CONN1-3": {
+					"pinseq": "3",
+					"pintype": "pas",
+					"pinlabel": "3",
+				},
+				"CONN1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+				"CONN1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+			},
+			"pin-conns": {
+				"CONN1-3": "GND",
+				"CONN1-2": "five",
+				"CONN1-1": "one",
+			},
+			"attribs":{
+				"refdes": "CONN1",
+			},
+		},
+		"T1": {
+			"pins": {
+				"T1-3": {
+					"pinseq": "3",
+					"pintype": "pas",
+					"pinlabel": "3",
+				},
+				"T1-4": {
+					"pinseq": "4",
+					"pintype": "pas",
+					"pinlabel": "4",
+				},
+				"T1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"T1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"T1-3": "six",
+				"T1-4": "seven",
+				"T1-1": "three",
+				"T1-2": "five",
+			},
+			"attribs":{
+				"refdes": "T1",
+			},
+		},
+		"F1": {
+			"pins": {
+				"F1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+				"F1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+			},
+			"pin-conns": {
+				"F1-2": "three",
+				"F1-1": "two",
+			},
+			"attribs":{
+				"refdes": "F1",
+			},
+		},
+		"U1": {
+			"pins": {
+				"U1-4": {
+					"pinseq": "4",
+					"pintype": "pas",
+					"pinlabel": "4",
+				},
+				"U1-3": {
+					"pinseq": "3",
+					"pintype": "pas",
+					"pinlabel": "3",
+				},
+				"U1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+				"U1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+			},
+			"pin-conns": {
+				"U1-4": "six",
+				"U1-3": "seven",
+				"U1-2": "nine",
+				"U1-1": "eight",
+			},
+			"attribs":{
+				"refdes": "U1",
+			},
+		},
+	},
+	"nets": {
+		"ten": [
+			"U2-1",
+			"C3-1",
+			"R1-2",
+			"R2-1",
+		],
+		"eleven": [
+			"U2-2",
+			"C4-1",
+			"R2-2",
+		],
+		"GND": [
+			"CONN1-3",
+		],
+		"one": [
+			"S1-1",
+			"CONN1-1",
+		],
+		"five": [
+			"CONN1-2",
+			"T1-2",
+		],
+		"three": [
+			"T1-1",
+			"F1-2",
+		],
+		"two": [
+			"S1-2",
+			"F1-1",
+		],
+		"six": [
+			"T1-3",
+			"U1-4",
+		],
+		"seven": [
+			"T1-4",
+			"U1-3",
+		],
+		"nine": [
+			"C4-2",
+			"C3-2",
+			"R1-1",
+			"R1-3",
+			"C2-2",
+			"C1-2",
+			"U1-2",
+		],
+		"eight": [
+			"U2-3",
+			"C2-1",
+			"C1-1",
+			"U1-1",
+		],
+	},
+}

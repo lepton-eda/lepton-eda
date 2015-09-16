@@ -1,0 +1,585 @@
+ha:gschem {
+	ha:elements {
+		ha:C2 {
+			ha:pins {
+				ha:C2-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+				ha:C2-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+			}
+			ha:pin-conns {
+				C2-2 = {Vbase2}
+				C2-1 = {unnamed_net2}
+			}
+			ha:attribs {
+				symversion={0.1}
+				device={CAPACITOR}
+				value={2.2uF}
+				refdes={C2}
+			}
+		}
+		ha:R4 {
+			ha:pins {
+				ha:R4-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:R4-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				R4-1 = {GND}
+				R4-2 = {Vbase2}
+			}
+			ha:attribs {
+				device={RESISTOR}
+				value={2.8K}
+				refdes={R4}
+			}
+		}
+		ha:R3 {
+			ha:pins {
+				ha:R3-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:R3-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				R3-1 = {Vbase2}
+				R3-2 = {Vcc}
+			}
+			ha:attribs {
+				device={RESISTOR}
+				value={28K}
+				refdes={R3}
+			}
+		}
+		ha:R8 {
+			ha:pins {
+				ha:R8-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:R8-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				R8-1 = {Vcoll1}
+				R8-2 = {unnamed_net2}
+			}
+			ha:attribs {
+				device={RESISTOR}
+				value={1}
+				refdes={R8}
+			}
+		}
+		ha:CE2 {
+			ha:pins {
+				ha:CE2-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+				ha:CE2-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+			}
+			ha:pin-conns {
+				CE2-2 = {Vem2}
+				CE2-1 = {GND}
+			}
+			ha:attribs {
+				symversion={0.1}
+				device={CAPACITOR}
+				value={1pF}
+				refdes={CE2}
+			}
+		}
+		ha:RE2 {
+			ha:pins {
+				ha:RE2-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:RE2-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				RE2-1 = {GND}
+				RE2-2 = {Vem2}
+			}
+			ha:attribs {
+				device={RESISTOR}
+				value={100}
+				refdes={RE2}
+			}
+		}
+		ha:RC1 {
+			ha:pins {
+				ha:RC1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:RC1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				RC1-1 = {Vcoll1}
+				RC1-2 = {Vcc}
+			}
+			ha:attribs {
+				device={RESISTOR}
+				value={3.3K}
+				refdes={RC1}
+			}
+		}
+		ha:Q2 {
+			ha:pins {
+				ha:Q2-2 {
+					pinseq={2}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+				ha:Q2-1 {
+					pinseq={3}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+				ha:Q2-3 {
+					pinseq={1}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+			}
+			ha:pin-conns {
+				Q2-2 = {Vbase2}
+				Q2-1 = {Vem2}
+				Q2-3 = {VColl2}
+			}
+			ha:attribs {
+				device={NPN_TRANSISTOR}
+				model-name={2N3904}
+				refdes={Q2}
+			}
+		}
+		ha:C1 {
+			ha:pins {
+				ha:C1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+				ha:C1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+			}
+			ha:pin-conns {
+				C1-2 = {Vbase1}
+				C1-1 = {unnamed_net1}
+			}
+			ha:attribs {
+				symversion={0.1}
+				device={CAPACITOR}
+				value={2.2uF}
+				refdes={C1}
+			}
+		}
+		ha:A3 {
+			ha:pins {
+			}
+			ha:pin-conns {
+			}
+			ha:attribs {
+				device={directive}
+				value={.options TEMP=25}
+				refdes={A3}
+			}
+		}
+		ha:A2 {
+			ha:pins {
+			}
+			ha:pin-conns {
+			}
+			ha:attribs {
+				device={include}
+				file={TwoStageAmp-extras/Simulation.cmd}
+				refdes={A2}
+			}
+		}
+		ha:A1 {
+			ha:pins {
+			}
+			ha:pin-conns {
+			}
+			ha:attribs {
+				device={model}
+				file={./TwoStageAmp-extras/models/2N3904.mod}
+				model-name={2N3904}
+				refdes={A1}
+			}
+		}
+		ha:VCC {
+			ha:pins {
+				ha:VCC-2 {
+					pinseq={2}
+					pintype={pwr}
+					pinlabel={-}
+				}
+				ha:VCC-1 {
+					pinseq={1}
+					pintype={pwr}
+					pinlabel={+}
+				}
+			}
+			ha:pin-conns {
+				VCC-2 = {GND}
+				VCC-1 = {Vcc}
+			}
+			ha:attribs {
+				footprint={none}
+				device={VOLTAGE_SOURCE}
+				value={DC 15V}
+				refdes={VCC}
+			}
+		}
+		ha:Vinput {
+			ha:pins {
+				ha:Vinput-2 {
+					pinseq={2}
+					pintype={pwr}
+					pinlabel={-}
+				}
+				ha:Vinput-1 {
+					pinseq={1}
+					pintype={pwr}
+					pinlabel={+}
+				}
+			}
+			ha:pin-conns {
+				Vinput-2 = {GND}
+				Vinput-1 = {Vin}
+			}
+			ha:attribs {
+				footprint={none}
+				device={vsin}
+				value={DC 1.6V AC 10MV SIN(0 1MV 1KHZ)}
+				refdes={Vinput}
+			}
+		}
+		ha:CE1 {
+			ha:pins {
+				ha:CE1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+				ha:CE1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+			}
+			ha:pin-conns {
+				CE1-2 = {Vem1}
+				CE1-1 = {GND}
+			}
+			ha:attribs {
+				symversion={0.1}
+				device={CAPACITOR}
+				value={1pF}
+				refdes={CE1}
+			}
+		}
+		ha:Cout {
+			ha:pins {
+				ha:Cout-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+				ha:Cout-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+			}
+			ha:pin-conns {
+				Cout-2 = {Vout}
+				Cout-1 = {VColl2}
+			}
+			ha:attribs {
+				symversion={0.1}
+				device={CAPACITOR}
+				value={2.2uF}
+				refdes={Cout}
+			}
+		}
+		ha:RL {
+			ha:pins {
+				ha:RL-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:RL-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				RL-1 = {GND}
+				RL-2 = {Vout}
+			}
+			ha:attribs {
+				device={RESISTOR}
+				value={100K}
+				refdes={RL}
+			}
+		}
+		ha:RC2 {
+			ha:pins {
+				ha:RC2-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:RC2-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				RC2-1 = {VColl2}
+				RC2-2 = {Vcc}
+			}
+			ha:attribs {
+				device={RESISTOR}
+				value={1K}
+				refdes={RC2}
+			}
+		}
+		ha:RE1 {
+			ha:pins {
+				ha:RE1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:RE1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				RE1-1 = {GND}
+				RE1-2 = {Vem1}
+			}
+			ha:attribs {
+				device={RESISTOR}
+				value={100}
+				refdes={RE1}
+			}
+		}
+		ha:R2 {
+			ha:pins {
+				ha:R2-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:R2-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				R2-1 = {GND}
+				R2-2 = {Vbase1}
+			}
+			ha:attribs {
+				device={RESISTOR}
+				value={2K}
+				refdes={R2}
+			}
+		}
+		ha:R1 {
+			ha:pins {
+				ha:R1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:R1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				R1-1 = {Vbase1}
+				R1-2 = {Vcc}
+			}
+			ha:attribs {
+				device={RESISTOR}
+				value={28K}
+				refdes={R1}
+			}
+		}
+		ha:R5 {
+			ha:pins {
+				ha:R5-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:R5-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				R5-1 = {Vin}
+				R5-2 = {unnamed_net1}
+			}
+			ha:attribs {
+				device={RESISTOR}
+				value={10}
+				refdes={R5}
+			}
+		}
+		ha:Q1 {
+			ha:pins {
+				ha:Q1-2 {
+					pinseq={2}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+				ha:Q1-1 {
+					pinseq={3}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+				ha:Q1-3 {
+					pinseq={1}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+			}
+			ha:pin-conns {
+				Q1-2 = {Vbase1}
+				Q1-1 = {Vem1}
+				Q1-3 = {Vcoll1}
+			}
+			ha:attribs {
+				device={NPN_TRANSISTOR}
+				model-name={2N3904}
+				refdes={Q1}
+			}
+		}
+	}
+	ha:nets {
+		li:unnamed_net2 {
+			C2-1
+			R8-2
+		}
+		li:Vbase2 {
+			C2-2
+			R4-2
+			R3-1
+			Q2-2
+		}
+		li:Vem2 {
+			CE2-2
+			RE2-2
+			Q2-1
+		}
+		li:Vout {
+			Cout-2
+			RL-2
+		}
+		li:VColl2 {
+			Q2-3
+			Cout-1
+			RC2-1
+		}
+		li:GND {
+			R4-1
+			CE2-1
+			RE2-1
+			VCC-2
+			Vinput-2
+			CE1-1
+			RL-1
+			RE1-1
+			R2-1
+		}
+		li:Vcc {
+			R3-2
+			RC1-2
+			VCC-1
+			RC2-2
+			R1-2
+		}
+		li:Vin {
+			Vinput-1
+			R5-1
+		}
+		li:unnamed_net1 {
+			C1-1
+			R5-2
+		}
+		li:Vbase1 {
+			C1-2
+			R2-2
+			R1-1
+			Q1-2
+		}
+		li:Vem1 {
+			CE1-2
+			RE1-2
+			Q1-1
+		}
+		li:Vcoll1 {
+			R8-1
+			RC1-1
+			Q1-3
+		}
+	}
+}

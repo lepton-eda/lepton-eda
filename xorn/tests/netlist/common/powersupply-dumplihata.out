@@ -1,0 +1,359 @@
+ha:gschem {
+	ha:elements {
+		ha:U2 {
+			ha:pins {
+				ha:U2-1 {
+					pinseq={1}
+					pintype={unknown}
+					pinlabel={Adjust}
+				}
+				ha:U2-3 {
+					pinseq={3}
+					pintype={unknown}
+					pinlabel={Vin}
+				}
+				ha:U2-2 {
+					pinseq={2}
+					pintype={unknown}
+					pinlabel={Vout}
+				}
+			}
+			ha:pin-conns {
+				U2-1 = {ten}
+				U2-3 = {eight}
+				U2-2 = {eleven}
+			}
+			ha:attribs {
+				refdes={U2}
+			}
+		}
+		ha:C4 {
+			ha:pins {
+				ha:C4-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={-}
+				}
+				ha:C4-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={+}
+				}
+			}
+			ha:pin-conns {
+				C4-2 = {nine}
+				C4-1 = {eleven}
+			}
+			ha:attribs {
+				value={1uf}
+				refdes={C4}
+			}
+		}
+		ha:C3 {
+			ha:pins {
+				ha:C3-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={-}
+				}
+				ha:C3-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={+}
+				}
+			}
+			ha:pin-conns {
+				C3-2 = {nine}
+				C3-1 = {ten}
+			}
+			ha:attribs {
+				value={22uF}
+				refdes={C3}
+			}
+		}
+		ha:R1 {
+			ha:pins {
+				ha:R1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:R1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+				ha:R1-3 {
+					pinseq={3}
+					pintype={pas}
+					pinlabel={3}
+				}
+			}
+			ha:pin-conns {
+				R1-1 = {nine}
+				R1-2 = {ten}
+				R1-3 = {nine}
+			}
+			ha:attribs {
+				value={5k}
+				refdes={R1}
+			}
+		}
+		ha:C2 {
+			ha:pins {
+				ha:C2-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={-}
+				}
+				ha:C2-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={+}
+				}
+			}
+			ha:pin-conns {
+				C2-2 = {nine}
+				C2-1 = {eight}
+			}
+			ha:attribs {
+				value={0.1uF}
+				refdes={C2}
+			}
+		}
+		ha:R2 {
+			ha:pins {
+				ha:R2-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:R2-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				R2-1 = {ten}
+				R2-2 = {eleven}
+			}
+			ha:attribs {
+				value={220}
+				refdes={R2}
+			}
+		}
+		ha:C1 {
+			ha:pins {
+				ha:C1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={-}
+				}
+				ha:C1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={+}
+				}
+			}
+			ha:pin-conns {
+				C1-2 = {nine}
+				C1-1 = {eight}
+			}
+			ha:attribs {
+				value={2200uF}
+				refdes={C1}
+			}
+		}
+		ha:S1 {
+			ha:pins {
+				ha:S1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:S1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				S1-1 = {one}
+				S1-2 = {two}
+			}
+			ha:attribs {
+				refdes={S1}
+			}
+		}
+		ha:CONN1 {
+			ha:pins {
+				ha:CONN1-3 {
+					pinseq={3}
+					pintype={pas}
+					pinlabel={3}
+				}
+				ha:CONN1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+				ha:CONN1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+			}
+			ha:pin-conns {
+				CONN1-3 = {GND}
+				CONN1-2 = {five}
+				CONN1-1 = {one}
+			}
+			ha:attribs {
+				refdes={CONN1}
+			}
+		}
+		ha:T1 {
+			ha:pins {
+				ha:T1-3 {
+					pinseq={3}
+					pintype={pas}
+					pinlabel={3}
+				}
+				ha:T1-4 {
+					pinseq={4}
+					pintype={pas}
+					pinlabel={4}
+				}
+				ha:T1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:T1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				T1-3 = {six}
+				T1-4 = {seven}
+				T1-1 = {three}
+				T1-2 = {five}
+			}
+			ha:attribs {
+				refdes={T1}
+			}
+		}
+		ha:F1 {
+			ha:pins {
+				ha:F1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+				ha:F1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+			}
+			ha:pin-conns {
+				F1-2 = {three}
+				F1-1 = {two}
+			}
+			ha:attribs {
+				refdes={F1}
+			}
+		}
+		ha:U1 {
+			ha:pins {
+				ha:U1-4 {
+					pinseq={4}
+					pintype={pas}
+					pinlabel={4}
+				}
+				ha:U1-3 {
+					pinseq={3}
+					pintype={pas}
+					pinlabel={3}
+				}
+				ha:U1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+				ha:U1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+			}
+			ha:pin-conns {
+				U1-4 = {six}
+				U1-3 = {seven}
+				U1-2 = {nine}
+				U1-1 = {eight}
+			}
+			ha:attribs {
+				refdes={U1}
+			}
+		}
+	}
+	ha:nets {
+		li:ten {
+			U2-1
+			C3-1
+			R1-2
+			R2-1
+		}
+		li:eleven {
+			U2-2
+			C4-1
+			R2-2
+		}
+		li:GND {
+			CONN1-3
+		}
+		li:one {
+			S1-1
+			CONN1-1
+		}
+		li:five {
+			CONN1-2
+			T1-2
+		}
+		li:three {
+			T1-1
+			F1-2
+		}
+		li:two {
+			S1-2
+			F1-1
+		}
+		li:six {
+			T1-3
+			U1-4
+		}
+		li:seven {
+			T1-4
+			U1-3
+		}
+		li:nine {
+			C4-2
+			C3-2
+			R1-1
+			R1-3
+			C2-2
+			C1-2
+			U1-2
+		}
+		li:eight {
+			U2-3
+			C2-1
+			C1-1
+			U1-1
+		}
+	}
+}

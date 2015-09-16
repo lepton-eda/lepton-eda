@@ -1,0 +1,68 @@
+{
+	"elements": {
+		"V1": {
+			"pins": {
+				"V1-2": {
+					"pinseq": "2",
+					"pintype": "pwr",
+					"pinlabel": "-",
+				},
+				"V1-1": {
+					"pinseq": "1",
+					"pintype": "pwr",
+					"pinlabel": "+",
+				},
+			},
+			"pin-conns": {
+				"V1-2": "GND",
+				"V1-1": "unnamed_net1",
+			},
+			"attribs":{
+				"value": "DC 1V",
+				"refdes": "V1",
+			},
+		},
+		"R1": {
+			"pins": {
+				"R1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"R1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"R1-1": "GND",
+				"R1-2": "unnamed_net1",
+			},
+			"attribs":{
+				"value": "20",
+				"refdes": "R1",
+			},
+		},
+		"A1": {
+			"pins": {
+			},
+			"pin-conns": {
+			},
+			"attribs":{
+				"value": "abotol=1e-11",
+				"refdes": "A1",
+			},
+		},
+	},
+	"nets": {
+		"GND": [
+			"V1-2",
+			"R1-1",
+		],
+		"unnamed_net1": [
+			"V1-1",
+			"R1-2",
+		],
+	},
+}

@@ -1,0 +1,31 @@
+;; Gossip Netlist Created by gNetlist
+
+;; Created By Matt Ettus <matt@ettus.com>
+;; Libraries:
+
+(use-library unknown *)
+(define-block (not found (
+(signals (unnamed_net2 Vbase2 Vem2 Vout VColl2 GND Vcc Vin unnamed_net1 Vbase1 Vem1 Vcoll1))
+   (C2)
+   (R4)
+   (R3)
+   (R8)
+   (CE2)
+   (RE2)
+   (RC1)
+   (Q2)
+   (C1)
+   (A3)
+   (A2)
+   (A1)
+   (VCC)
+   (Vinput)
+   (CE1)
+   (Cout)
+   (RL)
+   (RC2)
+   (RE1)
+   (R2)
+   (R1)
+   (R5)
+   (Q1)

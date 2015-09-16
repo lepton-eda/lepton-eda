@@ -1,0 +1,98 @@
+PROTEL NETLIST 2.0
+[
+DESIGNATOR
+U1
+FOOTPRINT
+unknown
+PARTTYPE
+LM324
+DESCRIPTION
+LM324
+Part Field 1
+*
+Part Field 2
+*
+Part Field 3
+*
+Part Field 4
+*
+Part Field 5
+*
+Part Field 6
+*
+Part Field 7
+*
+Part Field 8
+*
+Part Field 9
+*
+Part Field 10
+*
+Part Field 11
+*
+Part Field 12
+*
+Part Field 13
+*
+Part Field 14
+*
+Part Field 15
+*
+Part Field 16
+*
+LIBRARYFIELD1
+
+LIBRARYFIELD2
+
+LIBRARYFIELD3
+
+LIBRARYFIELD4
+
+LIBRARYFIELD5
+
+LIBRARYFIELD6
+
+LIBRARYFIELD7
+
+LIBRARYFIELD8
+
+]
+(
+minusin_slot4_pin13_b
+U1-13 LM324-13 PASSIVE 
+)
+(
+plusin_slot4_pin12_a
+U1-12 LM324-12 PASSIVE 
+)
+(
+minusin_slot3_pin_b
+U1-9 LM324-9 PASSIVE 
+)
+(
+plusin_slot3_pin10_a
+U1-10 LM324-10 PASSIVE 
+)
+(
+minusin_slot2_pin6_b
+U1-6 LM324-6 PASSIVE 
+)
+(
+plusin_slot2_pin5_a
+U1-5 LM324-5 PASSIVE 
+)
+(
+samenet_output_c
+U1-14 LM324-14 PASSIVE
+U1-8 LM324-8 PASSIVE
+U1-7 LM324-7 PASSIVE
+U1-1 LM324-1 PASSIVE 
+)
+(
+minusin_slot1_pin_b
+U1-2 LM324-2 PASSIVE 
+)
+(
+plusin_slot1_pin3_a
+U1-3 LM324-3 PASSIVE 
+)

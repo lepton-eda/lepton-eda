@@ -1,0 +1,315 @@
+element	C2
+element-pins	C2	C2-2	C2-1
+pin-attrib	C2-2	pinseq	2
+pin-attrib	C2-2	pintype	pas
+pin-attrib	C2-2	pinlabel	2
+pin-attrib	C2-1	pinseq	1
+pin-attrib	C2-1	pintype	pas
+pin-attrib	C2-1	pinlabel	1
+pin-conn	C2-2	Vbase2
+pin-conn	C2-1	unnamed_net2
+element-attrib	C2	symversion	0.1
+element-attrib	C2	device	CAPACITOR
+element-attrib	C2	value	2.2uF
+element-attrib	C2	refdes	C2
+element	R4
+element-pins	R4	R4-1	R4-2
+pin-attrib	R4-1	pinseq	1
+pin-attrib	R4-1	pintype	pas
+pin-attrib	R4-1	pinlabel	1
+pin-attrib	R4-2	pinseq	2
+pin-attrib	R4-2	pintype	pas
+pin-attrib	R4-2	pinlabel	2
+pin-conn	R4-1	GND
+pin-conn	R4-2	Vbase2
+element-attrib	R4	device	RESISTOR
+element-attrib	R4	value	2.8K
+element-attrib	R4	refdes	R4
+element	R3
+element-pins	R3	R3-1	R3-2
+pin-attrib	R3-1	pinseq	1
+pin-attrib	R3-1	pintype	pas
+pin-attrib	R3-1	pinlabel	1
+pin-attrib	R3-2	pinseq	2
+pin-attrib	R3-2	pintype	pas
+pin-attrib	R3-2	pinlabel	2
+pin-conn	R3-1	Vbase2
+pin-conn	R3-2	Vcc
+element-attrib	R3	device	RESISTOR
+element-attrib	R3	value	28K
+element-attrib	R3	refdes	R3
+element	R8
+element-pins	R8	R8-1	R8-2
+pin-attrib	R8-1	pinseq	1
+pin-attrib	R8-1	pintype	pas
+pin-attrib	R8-1	pinlabel	1
+pin-attrib	R8-2	pinseq	2
+pin-attrib	R8-2	pintype	pas
+pin-attrib	R8-2	pinlabel	2
+pin-conn	R8-1	Vcoll1
+pin-conn	R8-2	unnamed_net2
+element-attrib	R8	device	RESISTOR
+element-attrib	R8	value	1
+element-attrib	R8	refdes	R8
+element	CE2
+element-pins	CE2	CE2-2	CE2-1
+pin-attrib	CE2-2	pinseq	2
+pin-attrib	CE2-2	pintype	pas
+pin-attrib	CE2-2	pinlabel	2
+pin-attrib	CE2-1	pinseq	1
+pin-attrib	CE2-1	pintype	pas
+pin-attrib	CE2-1	pinlabel	1
+pin-conn	CE2-2	Vem2
+pin-conn	CE2-1	GND
+element-attrib	CE2	symversion	0.1
+element-attrib	CE2	device	CAPACITOR
+element-attrib	CE2	value	1pF
+element-attrib	CE2	refdes	CE2
+element	RE2
+element-pins	RE2	RE2-1	RE2-2
+pin-attrib	RE2-1	pinseq	1
+pin-attrib	RE2-1	pintype	pas
+pin-attrib	RE2-1	pinlabel	1
+pin-attrib	RE2-2	pinseq	2
+pin-attrib	RE2-2	pintype	pas
+pin-attrib	RE2-2	pinlabel	2
+pin-conn	RE2-1	GND
+pin-conn	RE2-2	Vem2
+element-attrib	RE2	device	RESISTOR
+element-attrib	RE2	value	100
+element-attrib	RE2	refdes	RE2
+element	RC1
+element-pins	RC1	RC1-1	RC1-2
+pin-attrib	RC1-1	pinseq	1
+pin-attrib	RC1-1	pintype	pas
+pin-attrib	RC1-1	pinlabel	1
+pin-attrib	RC1-2	pinseq	2
+pin-attrib	RC1-2	pintype	pas
+pin-attrib	RC1-2	pinlabel	2
+pin-conn	RC1-1	Vcoll1
+pin-conn	RC1-2	Vcc
+element-attrib	RC1	device	RESISTOR
+element-attrib	RC1	value	3.3K
+element-attrib	RC1	refdes	RC1
+element	Q2
+element-pins	Q2	Q2-2	Q2-1	Q2-3
+pin-attrib	Q2-2	pinseq	2
+pin-attrib	Q2-2	pintype	unknown
+pin-attrib	Q2-2	pinlabel	unknown
+pin-attrib	Q2-1	pinseq	3
+pin-attrib	Q2-1	pintype	unknown
+pin-attrib	Q2-1	pinlabel	unknown
+pin-attrib	Q2-3	pinseq	1
+pin-attrib	Q2-3	pintype	unknown
+pin-attrib	Q2-3	pinlabel	unknown
+pin-conn	Q2-2	Vbase2
+pin-conn	Q2-1	Vem2
+pin-conn	Q2-3	VColl2
+element-attrib	Q2	device	NPN_TRANSISTOR
+element-attrib	Q2	model-name	2N3904
+element-attrib	Q2	refdes	Q2
+element	C1
+element-pins	C1	C1-2	C1-1
+pin-attrib	C1-2	pinseq	2
+pin-attrib	C1-2	pintype	pas
+pin-attrib	C1-2	pinlabel	2
+pin-attrib	C1-1	pinseq	1
+pin-attrib	C1-1	pintype	pas
+pin-attrib	C1-1	pinlabel	1
+pin-conn	C1-2	Vbase1
+pin-conn	C1-1	unnamed_net1
+element-attrib	C1	symversion	0.1
+element-attrib	C1	device	CAPACITOR
+element-attrib	C1	value	2.2uF
+element-attrib	C1	refdes	C1
+element	A3
+element-pins	A3
+element-attrib	A3	device	directive
+element-attrib	A3	value	.options TEMP=25
+element-attrib	A3	refdes	A3
+element	A2
+element-pins	A2
+element-attrib	A2	device	include
+element-attrib	A2	file	TwoStageAmp-extras/Simulation.cmd
+element-attrib	A2	refdes	A2
+element	A1
+element-pins	A1
+element-attrib	A1	device	model
+element-attrib	A1	file	./TwoStageAmp-extras/models/2N3904.mod
+element-attrib	A1	model-name	2N3904
+element-attrib	A1	refdes	A1
+element	VCC
+element-pins	VCC	VCC-2	VCC-1
+pin-attrib	VCC-2	pinseq	2
+pin-attrib	VCC-2	pintype	pwr
+pin-attrib	VCC-2	pinlabel	-
+pin-attrib	VCC-1	pinseq	1
+pin-attrib	VCC-1	pintype	pwr
+pin-attrib	VCC-1	pinlabel	+
+pin-conn	VCC-2	GND
+pin-conn	VCC-1	Vcc
+element-attrib	VCC	footprint	none
+element-attrib	VCC	device	VOLTAGE_SOURCE
+element-attrib	VCC	value	DC 15V
+element-attrib	VCC	refdes	VCC
+element	Vinput
+element-pins	Vinput	Vinput-2	Vinput-1
+pin-attrib	Vinput-2	pinseq	2
+pin-attrib	Vinput-2	pintype	pwr
+pin-attrib	Vinput-2	pinlabel	-
+pin-attrib	Vinput-1	pinseq	1
+pin-attrib	Vinput-1	pintype	pwr
+pin-attrib	Vinput-1	pinlabel	+
+pin-conn	Vinput-2	GND
+pin-conn	Vinput-1	Vin
+element-attrib	Vinput	footprint	none
+element-attrib	Vinput	device	vsin
+element-attrib	Vinput	value	DC 1.6V AC 10MV SIN(0 1MV 1KHZ)
+element-attrib	Vinput	refdes	Vinput
+element	CE1
+element-pins	CE1	CE1-2	CE1-1
+pin-attrib	CE1-2	pinseq	2
+pin-attrib	CE1-2	pintype	pas
+pin-attrib	CE1-2	pinlabel	2
+pin-attrib	CE1-1	pinseq	1
+pin-attrib	CE1-1	pintype	pas
+pin-attrib	CE1-1	pinlabel	1
+pin-conn	CE1-2	Vem1
+pin-conn	CE1-1	GND
+element-attrib	CE1	symversion	0.1
+element-attrib	CE1	device	CAPACITOR
+element-attrib	CE1	value	1pF
+element-attrib	CE1	refdes	CE1
+element	Cout
+element-pins	Cout	Cout-2	Cout-1
+pin-attrib	Cout-2	pinseq	2
+pin-attrib	Cout-2	pintype	pas
+pin-attrib	Cout-2	pinlabel	2
+pin-attrib	Cout-1	pinseq	1
+pin-attrib	Cout-1	pintype	pas
+pin-attrib	Cout-1	pinlabel	1
+pin-conn	Cout-2	Vout
+pin-conn	Cout-1	VColl2
+element-attrib	Cout	symversion	0.1
+element-attrib	Cout	device	CAPACITOR
+element-attrib	Cout	value	2.2uF
+element-attrib	Cout	refdes	Cout
+element	RL
+element-pins	RL	RL-1	RL-2
+pin-attrib	RL-1	pinseq	1
+pin-attrib	RL-1	pintype	pas
+pin-attrib	RL-1	pinlabel	1
+pin-attrib	RL-2	pinseq	2
+pin-attrib	RL-2	pintype	pas
+pin-attrib	RL-2	pinlabel	2
+pin-conn	RL-1	GND
+pin-conn	RL-2	Vout
+element-attrib	RL	device	RESISTOR
+element-attrib	RL	value	100K
+element-attrib	RL	refdes	RL
+element	RC2
+element-pins	RC2	RC2-1	RC2-2
+pin-attrib	RC2-1	pinseq	1
+pin-attrib	RC2-1	pintype	pas
+pin-attrib	RC2-1	pinlabel	1
+pin-attrib	RC2-2	pinseq	2
+pin-attrib	RC2-2	pintype	pas
+pin-attrib	RC2-2	pinlabel	2
+pin-conn	RC2-1	VColl2
+pin-conn	RC2-2	Vcc
+element-attrib	RC2	device	RESISTOR
+element-attrib	RC2	value	1K
+element-attrib	RC2	refdes	RC2
+element	RE1
+element-pins	RE1	RE1-1	RE1-2
+pin-attrib	RE1-1	pinseq	1
+pin-attrib	RE1-1	pintype	pas
+pin-attrib	RE1-1	pinlabel	1
+pin-attrib	RE1-2	pinseq	2
+pin-attrib	RE1-2	pintype	pas
+pin-attrib	RE1-2	pinlabel	2
+pin-conn	RE1-1	GND
+pin-conn	RE1-2	Vem1
+element-attrib	RE1	device	RESISTOR
+element-attrib	RE1	value	100
+element-attrib	RE1	refdes	RE1
+element	R2
+element-pins	R2	R2-1	R2-2
+pin-attrib	R2-1	pinseq	1
+pin-attrib	R2-1	pintype	pas
+pin-attrib	R2-1	pinlabel	1
+pin-attrib	R2-2	pinseq	2
+pin-attrib	R2-2	pintype	pas
+pin-attrib	R2-2	pinlabel	2
+pin-conn	R2-1	GND
+pin-conn	R2-2	Vbase1
+element-attrib	R2	device	RESISTOR
+element-attrib	R2	value	2K
+element-attrib	R2	refdes	R2
+element	R1
+element-pins	R1	R1-1	R1-2
+pin-attrib	R1-1	pinseq	1
+pin-attrib	R1-1	pintype	pas
+pin-attrib	R1-1	pinlabel	1
+pin-attrib	R1-2	pinseq	2
+pin-attrib	R1-2	pintype	pas
+pin-attrib	R1-2	pinlabel	2
+pin-conn	R1-1	Vbase1
+pin-conn	R1-2	Vcc
+element-attrib	R1	device	RESISTOR
+element-attrib	R1	value	28K
+element-attrib	R1	refdes	R1
+element	R5
+element-pins	R5	R5-1	R5-2
+pin-attrib	R5-1	pinseq	1
+pin-attrib	R5-1	pintype	pas
+pin-attrib	R5-1	pinlabel	1
+pin-attrib	R5-2	pinseq	2
+pin-attrib	R5-2	pintype	pas
+pin-attrib	R5-2	pinlabel	2
+pin-conn	R5-1	Vin
+pin-conn	R5-2	unnamed_net1
+element-attrib	R5	device	RESISTOR
+element-attrib	R5	value	10
+element-attrib	R5	refdes	R5
+element	Q1
+element-pins	Q1	Q1-2	Q1-1	Q1-3
+pin-attrib	Q1-2	pinseq	2
+pin-attrib	Q1-2	pintype	unknown
+pin-attrib	Q1-2	pinlabel	unknown
+pin-attrib	Q1-1	pinseq	3
+pin-attrib	Q1-1	pintype	unknown
+pin-attrib	Q1-1	pinlabel	unknown
+pin-attrib	Q1-3	pinseq	1
+pin-attrib	Q1-3	pintype	unknown
+pin-attrib	Q1-3	pinlabel	unknown
+pin-conn	Q1-2	Vbase1
+pin-conn	Q1-1	Vem1
+pin-conn	Q1-3	Vcoll1
+element-attrib	Q1	device	NPN_TRANSISTOR
+element-attrib	Q1	model-name	2N3904
+element-attrib	Q1	refdes	Q1
+net	unnamed_net2
+net-conns	unnamed_net2	C2-1	R8-2
+net	Vbase2
+net-conns	Vbase2	C2-2	R4-2	R3-1	Q2-2
+net	Vem2
+net-conns	Vem2	CE2-2	RE2-2	Q2-1
+net	Vout
+net-conns	Vout	Cout-2	RL-2
+net	VColl2
+net-conns	VColl2	Q2-3	Cout-1	RC2-1
+net	GND
+net-conns	GND	R4-1	CE2-1	RE2-1	VCC-2	Vinput-2	CE1-1	RL-1	RE1-1	R2-1
+net	Vcc
+net-conns	Vcc	R3-2	RC1-2	VCC-1	RC2-2	R1-2
+net	Vin
+net-conns	Vin	Vinput-1	R5-1
+net	unnamed_net1
+net-conns	unnamed_net1	C1-1	R5-2
+net	Vbase1
+net-conns	Vbase1	C1-2	R2-2	R1-1	Q1-2
+net	Vem1
+net-conns	Vem1	CE1-2	RE1-2	Q1-1
+net	Vcoll1
+net-conns	Vcoll1	R8-1	RC1-1	Q1-3

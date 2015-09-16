@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gschem>
+	<elements>
+		<element name="AMP2">
+			<pins>
+				<pin name="AMP2-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="OUT" />
+				</pin>
+				<pin name="AMP2-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="IN" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="AMP2-2" value="unconnected_pin-1" />
+				<pin-conn name="AMP2-1" value="unnamed_net6" />
+			</pin-conns>
+			<attributes>
+				<attrib name="IIP3" value="12" />
+				<attrib name="NF" value="12" />
+				<attrib name="G" value="10" />
+				<attrib name="footprint" value="none" />
+				<attrib name="refdes" value="AMP2" />
+				<attrib name="device" value="cascade-amp" />
+			</attributes>
+		</element>
+		<element name="T1">
+			<pins>
+				<pin name="T1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+				<pin name="T1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="T1-2" value="unnamed_net6" />
+				<pin-conn name="T1-1" value="unnamed_net5" />
+			</pin-conns>
+			<attributes>
+				<attrib name="ROUT" value="50" />
+				<attrib name="RIN" value="50" />
+				<attrib name="NF" value="0" />
+				<attrib name="G" value="0" />
+				<attrib name="footprint" value="none" />
+				<attrib name="device" value="cascade-transformer" />
+				<attrib name="refdes" value="T1" />
+			</attributes>
+		</element>
+		<element name="MX1">
+			<pins>
+				<pin name="MX1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="OUT" />
+				</pin>
+				<pin name="MX1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="IN" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="MX1-2" value="unnamed_net5" />
+				<pin-conn name="MX1-1" value="unnamed_net4" />
+			</pin-conns>
+			<attributes>
+				<attrib name="IIP3" value="5" />
+				<attrib name="NF" value="15" />
+				<attrib name="G" value="12" />
+				<attrib name="refdes" value="MX1" />
+				<attrib name="device" value="cascade-mixer" />
+				<attrib name="footprint" value="none" />
+			</attributes>
+		</element>
+		<element name="FL1">
+			<pins>
+				<pin name="FL1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="O" />
+				</pin>
+				<pin name="FL1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="I" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="FL1-2" value="unnamed_net4" />
+				<pin-conn name="FL1-1" value="unnamed_net3" />
+			</pin-conns>
+			<attributes>
+				<attrib name="NF" value="5.5" />
+				<attrib name="G" value="-5.5" />
+				<attrib name="refdes" value="FL1" />
+				<attrib name="device" value="cascade-filter" />
+				<attrib name="footprint" value="none" />
+			</attributes>
+		</element>
+		<element name="DEF1">
+			<pins>
+				<pin name="DEF1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="OUT" />
+				</pin>
+				<pin name="DEF1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="IN" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="DEF1-2" value="unnamed_net3" />
+				<pin-conn name="DEF1-1" value="unnamed_net2" />
+			</pin-conns>
+			<attributes>
+				<attrib name="footprint" value="none" />
+				<attrib name="RHO" value="0.2" />
+				<attrib name="ROUT" value="50" />
+				<attrib name="RIN" value="50" />
+				<attrib name="refdes" value="DEF1" />
+				<attrib name="device" value="cascade-defaults" />
+			</attributes>
+		</element>
+		<element name="AMP1">
+			<pins>
+				<pin name="AMP1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="OUT" />
+				</pin>
+				<pin name="AMP1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="IN" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="AMP1-2" value="unnamed_net2" />
+				<pin-conn name="AMP1-1" value="unnamed_net1" />
+			</pin-conns>
+			<attributes>
+				<attrib name="IIP3" value="-2" />
+				<attrib name="NF" value="5" />
+				<attrib name="G" value="12" />
+				<attrib name="footprint" value="none" />
+				<attrib name="refdes" value="AMP1" />
+				<attrib name="device" value="cascade-amp" />
+			</attributes>
+		</element>
+		<element name="SOURCE">
+			<pins>
+				<pin name="SOURCE-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="OUT" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="SOURCE-1" value="unnamed_net1" />
+			</pin-conns>
+			<attributes>
+				<attrib name="BW" value="1" />
+				<attrib name="CN" value="70" />
+				<attrib name="C" value="0" />
+				<attrib name="footprint" value="none" />
+				<attrib name="refdes" value="SOURCE" />
+				<attrib name="device" value="cascade-source" />
+			</attributes>
+		</element>
+		<element name="DEFAULTS">
+			<pins>
+				<pin name="DEFAULTS-1">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="DEFAULTS-1" value="GND" />
+			</pin-conns>
+			<attributes>
+				<attrib name="RHO" value="0" />
+				<attrib name="ROUT" value="50" />
+				<attrib name="RIN" value="50" />
+				<attrib name="refdes" value="DEFAULTS" />
+				<attrib name="device" value="cascade-defaults-top" />
+			</attributes>
+		</element>
+	</elements>
+	<nets>
+		<net name="unnamed_net6">
+			<pin name="AMP2-1" />
+			<pin name="T1-2" />
+		</net>
+		<net name="unnamed_net5">
+			<pin name="T1-1" />
+			<pin name="MX1-2" />
+		</net>
+		<net name="unnamed_net4">
+			<pin name="MX1-1" />
+			<pin name="FL1-2" />
+		</net>
+		<net name="unnamed_net3">
+			<pin name="FL1-1" />
+			<pin name="DEF1-2" />
+		</net>
+		<net name="unnamed_net2">
+			<pin name="DEF1-1" />
+			<pin name="AMP1-2" />
+		</net>
+		<net name="unnamed_net1">
+			<pin name="AMP1-1" />
+			<pin name="SOURCE-1" />
+		</net>
+		<net name="GND">
+			<pin name="DEFAULTS-1" />
+		</net>
+	</nets>
+</gschem>

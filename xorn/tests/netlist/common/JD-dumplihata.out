@@ -1,0 +1,326 @@
+ha:gschem {
+	ha:elements {
+		ha:A1 {
+			ha:pins {
+			}
+			ha:pin-conns {
+			}
+			ha:attribs {
+				file={./JD-extras/models/openIP_5.cir}
+				model-name={unknown_LVD}
+				refdes={A1}
+				device={model}
+			}
+		}
+		ha:Cm {
+			ha:pins {
+				ha:Cm-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+				ha:Cm-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+			}
+			ha:pin-conns {
+				Cm-2 = {GND}
+				Cm-1 = {m}
+			}
+			ha:attribs {
+				device={CAPACITOR}
+				value={20p}
+				symversion={0.1}
+				refdes={Cm}
+			}
+		}
+		ha:Cp {
+			ha:pins {
+				ha:Cp-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+				ha:Cp-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+			}
+			ha:pin-conns {
+				Cp-2 = {GND}
+				Cp-1 = {p}
+			}
+			ha:attribs {
+				value={20p}
+				symversion={0.1}
+				refdes={Cp}
+			}
+		}
+		ha:Rlp {
+			ha:pins {
+				ha:Rlp-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:Rlp-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				Rlp-1 = {p}
+				Rlp-2 = {Vdd1}
+			}
+			ha:attribs {
+				value={1meg}
+				refdes={Rlp}
+			}
+		}
+		ha:Rlm {
+			ha:pins {
+				ha:Rlm-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:Rlm-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				Rlm-1 = {m}
+				Rlm-2 = {GND}
+			}
+			ha:attribs {
+				value={500k}
+				refdes={Rlm}
+			}
+		}
+		ha:Vdd {
+			ha:pins {
+				ha:Vdd-2 {
+					pinseq={2}
+					pintype={pwr}
+					pinlabel={-}
+				}
+				ha:Vdd-1 {
+					pinseq={1}
+					pintype={pwr}
+					pinlabel={+}
+				}
+			}
+			ha:pin-conns {
+				Vdd-2 = {GND}
+				Vdd-1 = {Vdd1}
+			}
+			ha:attribs {
+				value={DC 3.3V}
+				refdes={Vdd}
+			}
+		}
+		ha:V1 {
+			ha:pins {
+				ha:V1-2 {
+					pinseq={2}
+					pintype={pwr}
+					pinlabel={-}
+				}
+				ha:V1-1 {
+					pinseq={1}
+					pintype={pwr}
+					pinlabel={+}
+				}
+			}
+			ha:pin-conns {
+				V1-2 = {GND}
+				V1-1 = {i}
+			}
+			ha:attribs {
+				value={pulse 3.3 0 1u 10p 10p 1.25u 2.5u}
+				refdes={V1}
+			}
+		}
+		ha:Rt {
+			ha:pins {
+				ha:Rt-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:Rt-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				Rt-1 = {p}
+				Rt-2 = {m}
+			}
+			ha:attribs {
+				value={1k}
+				refdes={Rt}
+			}
+		}
+		ha:Rb {
+			ha:pins {
+				ha:Rb-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:Rb-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				Rb-1 = {GND}
+				Rb-2 = {LVH}
+			}
+			ha:attribs {
+				device={RESISTOR}
+				value={5.6k}
+				refdes={Rb}
+			}
+		}
+		ha:M1 {
+			ha:pins {
+				ha:M1-G {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={G}
+				}
+				ha:M1-D {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={D}
+				}
+				ha:M1-B {
+					pinseq={4}
+					pintype={pas}
+					pinlabel={B}
+				}
+				ha:M1-S {
+					pinseq={3}
+					pintype={pas}
+					pinlabel={S}
+				}
+			}
+			ha:pin-conns {
+				M1-G = {LVH}
+				M1-D = {LVH}
+				M1-B = {Vdd1}
+				M1-S = {Vdd1}
+			}
+			ha:attribs {
+				m={36}
+				l={3u}
+				w={3u}
+				model-name={pch}
+				refdes={M1}
+			}
+		}
+		ha:X1 {
+			ha:pins {
+				ha:X1-7 {
+					pinseq={7}
+					pintype={pwr}
+					pinlabel={Vss}
+				}
+				ha:X1-6 {
+					pinseq={6}
+					pintype={pwr}
+					pinlabel={Vdd1}
+				}
+				ha:X1-2 {
+					pinseq={2}
+					pintype={pwr}
+					pinlabel={DGND}
+				}
+				ha:X1-3 {
+					pinseq={3}
+					pintype={in}
+					pinlabel={VH}
+				}
+				ha:X1-1 {
+					pinseq={1}
+					pintype={in}
+					pinlabel={D}
+				}
+				ha:X1-5 {
+					pinseq={5}
+					pintype={out}
+					pinlabel={Y1}
+				}
+				ha:X1-4 {
+					pinseq={4}
+					pintype={out}
+					pinlabel={Y0}
+				}
+			}
+			ha:pin-conns {
+				X1-7 = {GND}
+				X1-6 = {Vdd1}
+				X1-2 = {GND}
+				X1-3 = {LVH}
+				X1-1 = {i}
+				X1-5 = {p}
+				X1-4 = {m}
+			}
+			ha:attribs {
+				model-name={unknown_LVD}
+				refdes={X1}
+			}
+		}
+	}
+	ha:nets {
+		li:Vdd1 {
+			Rlp-2
+			Vdd-1
+			M1-B
+			M1-S
+			X1-6
+		}
+		li:GND {
+			Cm-2
+			Cp-2
+			Rlm-2
+			Vdd-2
+			V1-2
+			Rb-1
+			X1-7
+			X1-2
+		}
+		li:LVH {
+			Rb-2
+			M1-G
+			M1-D
+			X1-3
+		}
+		li:i {
+			V1-1
+			X1-1
+		}
+		li:p {
+			Cp-1
+			Rlp-1
+			Rt-1
+			X1-5
+		}
+		li:m {
+			Cm-1
+			Rlm-1
+			Rt-2
+			X1-4
+		}
+	}
+}

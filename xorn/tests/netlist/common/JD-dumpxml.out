@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gschem>
+	<elements>
+		<element name="A1">
+			<pins>
+			</pins>
+			<pin-conns>
+			</pin-conns>
+			<attributes>
+				<attrib name="file" value="./JD-extras/models/openIP_5.cir" />
+				<attrib name="model-name" value="unknown_LVD" />
+				<attrib name="refdes" value="A1" />
+				<attrib name="device" value="model" />
+			</attributes>
+		</element>
+		<element name="Cm">
+			<pins>
+				<pin name="Cm-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+				<pin name="Cm-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="Cm-2" value="GND" />
+				<pin-conn name="Cm-1" value="m" />
+			</pin-conns>
+			<attributes>
+				<attrib name="device" value="CAPACITOR" />
+				<attrib name="value" value="20p" />
+				<attrib name="symversion" value="0.1" />
+				<attrib name="refdes" value="Cm" />
+			</attributes>
+		</element>
+		<element name="Cp">
+			<pins>
+				<pin name="Cp-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+				<pin name="Cp-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="Cp-2" value="GND" />
+				<pin-conn name="Cp-1" value="p" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="20p" />
+				<attrib name="symversion" value="0.1" />
+				<attrib name="refdes" value="Cp" />
+			</attributes>
+		</element>
+		<element name="Rlp">
+			<pins>
+				<pin name="Rlp-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+				<pin name="Rlp-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="Rlp-1" value="p" />
+				<pin-conn name="Rlp-2" value="Vdd1" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="1meg" />
+				<attrib name="refdes" value="Rlp" />
+			</attributes>
+		</element>
+		<element name="Rlm">
+			<pins>
+				<pin name="Rlm-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+				<pin name="Rlm-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="Rlm-1" value="m" />
+				<pin-conn name="Rlm-2" value="GND" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="500k" />
+				<attrib name="refdes" value="Rlm" />
+			</attributes>
+		</element>
+		<element name="Vdd">
+			<pins>
+				<pin name="Vdd-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="-" />
+				</pin>
+				<pin name="Vdd-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="+" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="Vdd-2" value="GND" />
+				<pin-conn name="Vdd-1" value="Vdd1" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="DC 3.3V" />
+				<attrib name="refdes" value="Vdd" />
+			</attributes>
+		</element>
+		<element name="V1">
+			<pins>
+				<pin name="V1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="-" />
+				</pin>
+				<pin name="V1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="+" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="V1-2" value="GND" />
+				<pin-conn name="V1-1" value="i" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="pulse 3.3 0 1u 10p 10p 1.25u 2.5u" />
+				<attrib name="refdes" value="V1" />
+			</attributes>
+		</element>
+		<element name="Rt">
+			<pins>
+				<pin name="Rt-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+				<pin name="Rt-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="Rt-1" value="p" />
+				<pin-conn name="Rt-2" value="m" />
+			</pin-conns>
+			<attributes>
+				<attrib name="value" value="1k" />
+				<attrib name="refdes" value="Rt" />
+			</attributes>
+		</element>
+		<element name="Rb">
+			<pins>
+				<pin name="Rb-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+				<pin name="Rb-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="Rb-1" value="GND" />
+				<pin-conn name="Rb-2" value="LVH" />
+			</pin-conns>
+			<attributes>
+				<attrib name="device" value="RESISTOR" />
+				<attrib name="value" value="5.6k" />
+				<attrib name="refdes" value="Rb" />
+			</attributes>
+		</element>
+		<element name="M1">
+			<pins>
+				<pin name="M1-G">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="G" />
+				</pin>
+				<pin name="M1-D">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="D" />
+				</pin>
+				<pin name="M1-B">
+					<attrib name="pinseq" value="4" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="B" />
+				</pin>
+				<pin name="M1-S">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="S" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="M1-G" value="LVH" />
+				<pin-conn name="M1-D" value="LVH" />
+				<pin-conn name="M1-B" value="Vdd1" />
+				<pin-conn name="M1-S" value="Vdd1" />
+			</pin-conns>
+			<attributes>
+				<attrib name="m" value="36" />
+				<attrib name="l" value="3u" />
+				<attrib name="w" value="3u" />
+				<attrib name="model-name" value="pch" />
+				<attrib name="refdes" value="M1" />
+			</attributes>
+		</element>
+		<element name="X1">
+			<pins>
+				<pin name="X1-7">
+					<attrib name="pinseq" value="7" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="Vss" />
+				</pin>
+				<pin name="X1-6">
+					<attrib name="pinseq" value="6" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="Vdd1" />
+				</pin>
+				<pin name="X1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="DGND" />
+				</pin>
+				<pin name="X1-3">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="VH" />
+				</pin>
+				<pin name="X1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="D" />
+				</pin>
+				<pin name="X1-5">
+					<attrib name="pinseq" value="5" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="Y1" />
+				</pin>
+				<pin name="X1-4">
+					<attrib name="pinseq" value="4" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="Y0" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="X1-7" value="GND" />
+				<pin-conn name="X1-6" value="Vdd1" />
+				<pin-conn name="X1-2" value="GND" />
+				<pin-conn name="X1-3" value="LVH" />
+				<pin-conn name="X1-1" value="i" />
+				<pin-conn name="X1-5" value="p" />
+				<pin-conn name="X1-4" value="m" />
+			</pin-conns>
+			<attributes>
+				<attrib name="model-name" value="unknown_LVD" />
+				<attrib name="refdes" value="X1" />
+			</attributes>
+		</element>
+	</elements>
+	<nets>
+		<net name="Vdd1">
+			<pin name="Rlp-2" />
+			<pin name="Vdd-1" />
+			<pin name="M1-B" />
+			<pin name="M1-S" />
+			<pin name="X1-6" />
+		</net>
+		<net name="GND">
+			<pin name="Cm-2" />
+			<pin name="Cp-2" />
+			<pin name="Rlm-2" />
+			<pin name="Vdd-2" />
+			<pin name="V1-2" />
+			<pin name="Rb-1" />
+			<pin name="X1-7" />
+			<pin name="X1-2" />
+		</net>
+		<net name="LVH">
+			<pin name="Rb-2" />
+			<pin name="M1-G" />
+			<pin name="M1-D" />
+			<pin name="X1-3" />
+		</net>
+		<net name="i">
+			<pin name="V1-1" />
+			<pin name="X1-1" />
+		</net>
+		<net name="p">
+			<pin name="Cp-1" />
+			<pin name="Rlp-1" />
+			<pin name="Rt-1" />
+			<pin name="X1-5" />
+		</net>
+		<net name="m">
+			<pin name="Cm-1" />
+			<pin name="Rlm-1" />
+			<pin name="Rt-2" />
+			<pin name="X1-4" />
+		</net>
+	</nets>
+</gschem>

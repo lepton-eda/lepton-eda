@@ -1,0 +1,4 @@
+.START
+..refdes	device	value	footprint	quantity
+U100	7400	unknown	DIP14	1
+.END

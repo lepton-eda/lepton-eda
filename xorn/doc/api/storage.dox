@@ -1,0 +1,140 @@
+/* Copyright (C) 2013-2015 Roland Lutz
+ *
+ * Permission is granted to copy, distribute and/or modify this document
+ * under the terms of the GNU Free Documentation License, Version 1.2 or
+ * any later version published by the Free Software Foundation; with no
+ * Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+ * Texts.  A copy of the license is included in the ``GNU Free
+ * Documentation License'' file as part of this distribution.  */
+
+/** \file xornstorage.h
+ *  \brief Storing file contents in memory.
+ *
+ * See \ref storage "here" for an overview of the storage library.  */
+
+/** \enum xorn_obtype_t
+ *  \brief Object types, each corresponding to a data structure.
+ *
+ * The type of an object indicates which data structure is used to encode
+ * its parameters.  It can be read using \ref xorn_get_object_type.
+ * Depending on the object type, the object's data can be read using the
+ * appropriate type-safe function, e.g. \c xornsch_get_line_data for a
+ * line object.
+ *
+ * \var xorn_obtype_t xorn_obtype_none
+ * The object does not exist.
+ * \var xorn_obtype_t xornsch_obtype_arc
+ * See \ref xornsch_arc.
+ * \var xorn_obtype_t xornsch_obtype_box
+ * See \ref xornsch_box.
+ * \var xorn_obtype_t xornsch_obtype_circle
+ * See \ref xornsch_circle.
+ * \var xorn_obtype_t xornsch_obtype_component
+ * See \ref xornsch_component.
+ * \var xorn_obtype_t xornsch_obtype_line
+ * See \ref xornsch_line.
+ * \var xorn_obtype_t xornsch_obtype_net
+ * See \ref xornsch_net.
+ * \var xorn_obtype_t xornsch_obtype_path
+ * See \ref xornsch_path.
+ * \var xorn_obtype_t xornsch_obtype_picture
+ * See \ref xornsch_picture.
+ * \var xorn_obtype_t xornsch_obtype_text
+ * See \ref xornsch_text.  */
+
+/** \enum xorn_attst_t
+ *  \brief Attribute status across multiple objects.
+ *
+ * Returned by the \c xornsch_get_<em>attribute</em> class of functions.
+ *
+ * \var xorn_attst_t xorn_attst_na
+ * None of the selected objects has this attribute.  Don't show this
+ * attribute in the property editor.
+ *
+ * \var xorn_attst_t xorn_attst_consistent
+ * All selected objects have the same value of this attribute.  Show
+ * this value for this attribute in the property editor.
+ *
+ * \var xorn_attst_t xorn_attst_inconsistent
+ * There are different values of this attribute between the selected
+ * objects.  Show this attribute in the property editor, but don't
+ * show a value.  */
+
+/** \typedef typedef struct xorn_revision *xorn_revision_t
+ *  \brief Opaque type representing the contents of a file.
+ *
+ * A revision points to a particular state of the contents of a file,
+ * sharing memory parts between revisions where possible.  It is
+ * created by \ref xorn_new_revision and needs to be freed explicitly
+ * by calling \ref xorn_free_revision.
+ *
+ * A revision can be “finalized” by calling \ref
+ * xorn_finalize_revision which prevents further changes to it by
+ * means of the library's functions.  It is of course still possible
+ * to create a copy of the revision and modify that.  */
+
+/** \typedef typedef struct xorn_object *xorn_object_t
+ *  \brief Opaque type representing the identity of an object.
+ *
+ * A value of this type is used as a key to look up and change the
+ * state of an object in a revision.  It is created by \ref
+ * xorn_add_object, \ref xorn_copy_object, or (indirectly) \ref
+ * xorn_copy_objects and doesn't need to be freed explicitly; it loses
+ * its meaning once the last revision in which it is valid has been
+ * freed.  */
+
+/** \typedef typedef struct xorn_selection *xorn_selection_t
+ *  \brief Opaque type representing the identity of a set of objects.
+ *
+ * A value of this type is used as an set of keys for mass object
+ * inspection or manipulation not designating any specific order.  It
+ * can be created using one of the \c xorn_select_<em>something</em>
+ * class of functions and needs to be freed explicitly by calling \ref
+ * xorn_free_selection.  */
+
+/** \struct xorn_string
+ *  \brief Sequence of bytes.
+ *
+ * The data is copied by \ref xorn_add_object, \ref
+ * xorn_set_object_data and their type-safe equivalents, so it is safe
+ * to re-use the memory passed to these functions.
+ *
+ * This struct may contain any data, including zero bytes.  However,
+ * the context in which it is used generally imposes some restrictions
+ * on the data.
+ *
+ * \var xorn_string::s
+ * \brief Pointer to the character data.
+ *
+ * \var xorn_string::len
+ * \brief Length of the string in bytes.  */
+
+/** \struct xorn_double2d
+ *  \brief Pair of double values indicating a coordinate or offset.
+ *
+ * The units are defined by the context in which this struct is used.
+ *
+ * \var xorn_double2d::x
+ * \brief X coordinate or offset.
+ *
+ * \var xorn_double2d::y
+ * \brief Y coordinate or offset.  */
+
+/** \struct xorn_pointer
+ *  \brief Arbitrary reference-counted pointer.
+ *
+ * \ref xorn_add_object and \ref xorn_set_object_data do not “steal” a
+ * reference to the pointer.
+ *
+ * \var xorn_pointer::ptr
+ * \brief The actual pointer.
+ *
+ * \var xorn_pointer::incref
+ * \brief A function which is called when the pointer is copied.
+ *
+ * May be \c NULL.
+ *
+ * \var xorn_pointer::decref
+ * \brief A function which is called when a copy of the pointer is deleted.
+ *
+ * May be \c NULL.  */

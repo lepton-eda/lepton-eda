@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gschem>
+	<elements>
+		<element name="U100.3">
+			<pins>
+				<pin name="U100.3-7">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U100.3-14">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U100.3-9">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="A" />
+				</pin>
+				<pin name="U100.3-10">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="B" />
+				</pin>
+				<pin name="U100.3-8">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="Y" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="U100.3-7" value="GND" />
+				<pin-conn name="U100.3-14" value="Vcc" />
+				<pin-conn name="U100.3-9" value="SING_N" />
+				<pin-conn name="U100.3-10" value="SING_N" />
+				<pin-conn name="U100.3-8" value="SING_N" />
+			</pin-conns>
+			<attributes>
+				<attrib name="slot" value="3" />
+				<attrib name="refdes" value="U100" />
+			</attributes>
+		</element>
+		<element name="U100.1">
+			<pins>
+				<pin name="U100.1-7">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U100.1-14">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U100.1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="A" />
+				</pin>
+				<pin name="U100.1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="B" />
+				</pin>
+				<pin name="U100.1-3">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="Y" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="U100.1-7" value="GND" />
+				<pin-conn name="U100.1-14" value="Vcc" />
+				<pin-conn name="U100.1-1" value="SING_N_2" />
+				<pin-conn name="U100.1-2" value="unconnected_pin-1" />
+				<pin-conn name="U100.1-3" value="SING_N_2" />
+			</pin-conns>
+			<attributes>
+				<attrib name="slot" value="1" />
+				<attrib name="refdes" value="U100" />
+			</attributes>
+		</element>
+		<element name="U100.2">
+			<pins>
+				<pin name="U100.2-7">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U100.2-14">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U100.2-4">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="A" />
+				</pin>
+				<pin name="U100.2-5">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="B" />
+				</pin>
+				<pin name="U100.2-6">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="Y" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="U100.2-7" value="GND" />
+				<pin-conn name="U100.2-14" value="Vcc" />
+				<pin-conn name="U100.2-4" value="SING_N" />
+				<pin-conn name="U100.2-5" value="SING_N" />
+				<pin-conn name="U100.2-6" value="SING_N" />
+			</pin-conns>
+			<attributes>
+				<attrib name="slot" value="2" />
+				<attrib name="refdes" value="U100" />
+			</attributes>
+		</element>
+	</elements>
+	<nets>
+		<net name="SING_N_2">
+			<pin name="U100.1-1" />
+			<pin name="U100.1-3" />
+		</net>
+		<net name="GND">
+			<pin name="U100.3-7" />
+			<pin name="U100.1-7" />
+			<pin name="U100.2-7" />
+		</net>
+		<net name="Vcc">
+			<pin name="U100.3-14" />
+			<pin name="U100.1-14" />
+			<pin name="U100.2-14" />
+		</net>
+		<net name="SING_N">
+			<pin name="U100.3-9" />
+			<pin name="U100.3-10" />
+			<pin name="U100.3-8" />
+			<pin name="U100.2-4" />
+			<pin name="U100.2-5" />
+			<pin name="U100.2-6" />
+		</net>
+	</nets>
+</gschem>

@@ -1,0 +1,585 @@
+{
+	"elements": {
+		"C2": {
+			"pins": {
+				"C2-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+				"C2-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+			},
+			"pin-conns": {
+				"C2-2": "Vbase2",
+				"C2-1": "unnamed_net2",
+			},
+			"attribs":{
+				"symversion": "0.1",
+				"device": "CAPACITOR",
+				"value": "2.2uF",
+				"refdes": "C2",
+			},
+		},
+		"R4": {
+			"pins": {
+				"R4-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"R4-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"R4-1": "GND",
+				"R4-2": "Vbase2",
+			},
+			"attribs":{
+				"device": "RESISTOR",
+				"value": "2.8K",
+				"refdes": "R4",
+			},
+		},
+		"R3": {
+			"pins": {
+				"R3-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"R3-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"R3-1": "Vbase2",
+				"R3-2": "Vcc",
+			},
+			"attribs":{
+				"device": "RESISTOR",
+				"value": "28K",
+				"refdes": "R3",
+			},
+		},
+		"R8": {
+			"pins": {
+				"R8-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"R8-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"R8-1": "Vcoll1",
+				"R8-2": "unnamed_net2",
+			},
+			"attribs":{
+				"device": "RESISTOR",
+				"value": "1",
+				"refdes": "R8",
+			},
+		},
+		"CE2": {
+			"pins": {
+				"CE2-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+				"CE2-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+			},
+			"pin-conns": {
+				"CE2-2": "Vem2",
+				"CE2-1": "GND",
+			},
+			"attribs":{
+				"symversion": "0.1",
+				"device": "CAPACITOR",
+				"value": "1pF",
+				"refdes": "CE2",
+			},
+		},
+		"RE2": {
+			"pins": {
+				"RE2-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"RE2-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"RE2-1": "GND",
+				"RE2-2": "Vem2",
+			},
+			"attribs":{
+				"device": "RESISTOR",
+				"value": "100",
+				"refdes": "RE2",
+			},
+		},
+		"RC1": {
+			"pins": {
+				"RC1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"RC1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"RC1-1": "Vcoll1",
+				"RC1-2": "Vcc",
+			},
+			"attribs":{
+				"device": "RESISTOR",
+				"value": "3.3K",
+				"refdes": "RC1",
+			},
+		},
+		"Q2": {
+			"pins": {
+				"Q2-2": {
+					"pinseq": "2",
+					"pintype": "unknown",
+					"pinlabel": "unknown",
+				},
+				"Q2-1": {
+					"pinseq": "3",
+					"pintype": "unknown",
+					"pinlabel": "unknown",
+				},
+				"Q2-3": {
+					"pinseq": "1",
+					"pintype": "unknown",
+					"pinlabel": "unknown",
+				},
+			},
+			"pin-conns": {
+				"Q2-2": "Vbase2",
+				"Q2-1": "Vem2",
+				"Q2-3": "VColl2",
+			},
+			"attribs":{
+				"device": "NPN_TRANSISTOR",
+				"model-name": "2N3904",
+				"refdes": "Q2",
+			},
+		},
+		"C1": {
+			"pins": {
+				"C1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+				"C1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+			},
+			"pin-conns": {
+				"C1-2": "Vbase1",
+				"C1-1": "unnamed_net1",
+			},
+			"attribs":{
+				"symversion": "0.1",
+				"device": "CAPACITOR",
+				"value": "2.2uF",
+				"refdes": "C1",
+			},
+		},
+		"A3": {
+			"pins": {
+			},
+			"pin-conns": {
+			},
+			"attribs":{
+				"device": "directive",
+				"value": ".options TEMP=25",
+				"refdes": "A3",
+			},
+		},
+		"A2": {
+			"pins": {
+			},
+			"pin-conns": {
+			},
+			"attribs":{
+				"device": "include",
+				"file": "TwoStageAmp-extras/Simulation.cmd",
+				"refdes": "A2",
+			},
+		},
+		"A1": {
+			"pins": {
+			},
+			"pin-conns": {
+			},
+			"attribs":{
+				"device": "model",
+				"file": "./TwoStageAmp-extras/models/2N3904.mod",
+				"model-name": "2N3904",
+				"refdes": "A1",
+			},
+		},
+		"VCC": {
+			"pins": {
+				"VCC-2": {
+					"pinseq": "2",
+					"pintype": "pwr",
+					"pinlabel": "-",
+				},
+				"VCC-1": {
+					"pinseq": "1",
+					"pintype": "pwr",
+					"pinlabel": "+",
+				},
+			},
+			"pin-conns": {
+				"VCC-2": "GND",
+				"VCC-1": "Vcc",
+			},
+			"attribs":{
+				"footprint": "none",
+				"device": "VOLTAGE_SOURCE",
+				"value": "DC 15V",
+				"refdes": "VCC",
+			},
+		},
+		"Vinput": {
+			"pins": {
+				"Vinput-2": {
+					"pinseq": "2",
+					"pintype": "pwr",
+					"pinlabel": "-",
+				},
+				"Vinput-1": {
+					"pinseq": "1",
+					"pintype": "pwr",
+					"pinlabel": "+",
+				},
+			},
+			"pin-conns": {
+				"Vinput-2": "GND",
+				"Vinput-1": "Vin",
+			},
+			"attribs":{
+				"footprint": "none",
+				"device": "vsin",
+				"value": "DC 1.6V AC 10MV SIN(0 1MV 1KHZ)",
+				"refdes": "Vinput",
+			},
+		},
+		"CE1": {
+			"pins": {
+				"CE1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+				"CE1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+			},
+			"pin-conns": {
+				"CE1-2": "Vem1",
+				"CE1-1": "GND",
+			},
+			"attribs":{
+				"symversion": "0.1",
+				"device": "CAPACITOR",
+				"value": "1pF",
+				"refdes": "CE1",
+			},
+		},
+		"Cout": {
+			"pins": {
+				"Cout-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+				"Cout-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+			},
+			"pin-conns": {
+				"Cout-2": "Vout",
+				"Cout-1": "VColl2",
+			},
+			"attribs":{
+				"symversion": "0.1",
+				"device": "CAPACITOR",
+				"value": "2.2uF",
+				"refdes": "Cout",
+			},
+		},
+		"RL": {
+			"pins": {
+				"RL-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"RL-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"RL-1": "GND",
+				"RL-2": "Vout",
+			},
+			"attribs":{
+				"device": "RESISTOR",
+				"value": "100K",
+				"refdes": "RL",
+			},
+		},
+		"RC2": {
+			"pins": {
+				"RC2-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"RC2-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"RC2-1": "VColl2",
+				"RC2-2": "Vcc",
+			},
+			"attribs":{
+				"device": "RESISTOR",
+				"value": "1K",
+				"refdes": "RC2",
+			},
+		},
+		"RE1": {
+			"pins": {
+				"RE1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"RE1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"RE1-1": "GND",
+				"RE1-2": "Vem1",
+			},
+			"attribs":{
+				"device": "RESISTOR",
+				"value": "100",
+				"refdes": "RE1",
+			},
+		},
+		"R2": {
+			"pins": {
+				"R2-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"R2-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"R2-1": "GND",
+				"R2-2": "Vbase1",
+			},
+			"attribs":{
+				"device": "RESISTOR",
+				"value": "2K",
+				"refdes": "R2",
+			},
+		},
+		"R1": {
+			"pins": {
+				"R1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"R1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"R1-1": "Vbase1",
+				"R1-2": "Vcc",
+			},
+			"attribs":{
+				"device": "RESISTOR",
+				"value": "28K",
+				"refdes": "R1",
+			},
+		},
+		"R5": {
+			"pins": {
+				"R5-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+				"R5-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+			},
+			"pin-conns": {
+				"R5-1": "Vin",
+				"R5-2": "unnamed_net1",
+			},
+			"attribs":{
+				"device": "RESISTOR",
+				"value": "10",
+				"refdes": "R5",
+			},
+		},
+		"Q1": {
+			"pins": {
+				"Q1-2": {
+					"pinseq": "2",
+					"pintype": "unknown",
+					"pinlabel": "unknown",
+				},
+				"Q1-1": {
+					"pinseq": "3",
+					"pintype": "unknown",
+					"pinlabel": "unknown",
+				},
+				"Q1-3": {
+					"pinseq": "1",
+					"pintype": "unknown",
+					"pinlabel": "unknown",
+				},
+			},
+			"pin-conns": {
+				"Q1-2": "Vbase1",
+				"Q1-1": "Vem1",
+				"Q1-3": "Vcoll1",
+			},
+			"attribs":{
+				"device": "NPN_TRANSISTOR",
+				"model-name": "2N3904",
+				"refdes": "Q1",
+			},
+		},
+	},
+	"nets": {
+		"unnamed_net2": [
+			"C2-1",
+			"R8-2",
+		],
+		"Vbase2": [
+			"C2-2",
+			"R4-2",
+			"R3-1",
+			"Q2-2",
+		],
+		"Vem2": [
+			"CE2-2",
+			"RE2-2",
+			"Q2-1",
+		],
+		"Vout": [
+			"Cout-2",
+			"RL-2",
+		],
+		"VColl2": [
+			"Q2-3",
+			"Cout-1",
+			"RC2-1",
+		],
+		"GND": [
+			"R4-1",
+			"CE2-1",
+			"RE2-1",
+			"VCC-2",
+			"Vinput-2",
+			"CE1-1",
+			"RL-1",
+			"RE1-1",
+			"R2-1",
+		],
+		"Vcc": [
+			"R3-2",
+			"RC1-2",
+			"VCC-1",
+			"RC2-2",
+			"R1-2",
+		],
+		"Vin": [
+			"Vinput-1",
+			"R5-1",
+		],
+		"unnamed_net1": [
+			"C1-1",
+			"R5-2",
+		],
+		"Vbase1": [
+			"C1-2",
+			"R2-2",
+			"R1-1",
+			"Q1-2",
+		],
+		"Vem1": [
+			"CE1-2",
+			"RE1-2",
+			"Q1-1",
+		],
+		"Vcoll1": [
+			"R8-1",
+			"RC1-1",
+			"Q1-3",
+		],
+	},
+}

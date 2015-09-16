@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gschem>
+	<elements>
+		<element name="U1.4">
+			<pins>
+				<pin name="U1.4-14">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U1.4-13">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U1.4-12">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="U1.4-14" value="samenet_output_c" />
+				<pin-conn name="U1.4-13" value="minusin_slot4_pin13_b" />
+				<pin-conn name="U1.4-12" value="plusin_slot4_pin12_a" />
+			</pin-conns>
+			<attributes>
+				<attrib name="slot" value="4" />
+				<attrib name="refdes" value="U1" />
+				<attrib name="device" value="LM324" />
+			</attributes>
+		</element>
+		<element name="U1.3">
+			<pins>
+				<pin name="U1.3-8">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U1.3-9">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U1.3-10">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="U1.3-8" value="samenet_output_c" />
+				<pin-conn name="U1.3-9" value="minusin_slot3_pin_b" />
+				<pin-conn name="U1.3-10" value="plusin_slot3_pin10_a" />
+			</pin-conns>
+			<attributes>
+				<attrib name="slot" value="3" />
+				<attrib name="refdes" value="U1" />
+				<attrib name="device" value="LM324" />
+			</attributes>
+		</element>
+		<element name="U1.2">
+			<pins>
+				<pin name="U1.2-7">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U1.2-6">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U1.2-5">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="U1.2-7" value="samenet_output_c" />
+				<pin-conn name="U1.2-6" value="minusin_slot2_pin6_b" />
+				<pin-conn name="U1.2-5" value="plusin_slot2_pin5_a" />
+			</pin-conns>
+			<attributes>
+				<attrib name="slot" value="2" />
+				<attrib name="refdes" value="U1" />
+				<attrib name="device" value="LM324" />
+			</attributes>
+		</element>
+		<element name="U1.1">
+			<pins>
+				<pin name="U1.1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U1.1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U1.1-3">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="unknown" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="U1.1-1" value="samenet_output_c" />
+				<pin-conn name="U1.1-2" value="minusin_slot1_pin_b" />
+				<pin-conn name="U1.1-3" value="plusin_slot1_pin3_a" />
+			</pin-conns>
+			<attributes>
+				<attrib name="slot" value="1" />
+				<attrib name="refdes" value="U1" />
+				<attrib name="device" value="LM324" />
+			</attributes>
+		</element>
+	</elements>
+	<nets>
+		<net name="minusin_slot4_pin13_b">
+			<pin name="U1.4-13" />
+		</net>
+		<net name="plusin_slot4_pin12_a">
+			<pin name="U1.4-12" />
+		</net>
+		<net name="minusin_slot3_pin_b">
+			<pin name="U1.3-9" />
+		</net>
+		<net name="plusin_slot3_pin10_a">
+			<pin name="U1.3-10" />
+		</net>
+		<net name="minusin_slot2_pin6_b">
+			<pin name="U1.2-6" />
+		</net>
+		<net name="plusin_slot2_pin5_a">
+			<pin name="U1.2-5" />
+		</net>
+		<net name="samenet_output_c">
+			<pin name="U1.4-14" />
+			<pin name="U1.3-8" />
+			<pin name="U1.2-7" />
+			<pin name="U1.1-1" />
+		</net>
+		<net name="minusin_slot1_pin_b">
+			<pin name="U1.1-2" />
+		</net>
+		<net name="plusin_slot1_pin3_a">
+			<pin name="U1.1-3" />
+		</net>
+	</nets>
+</gschem>

@@ -1,0 +1,114 @@
+#!/bin/sh
+# xorn.geda.netlist - gEDA Netlist Extraction and Generation
+# Copyright (C) 1998-2010 Ales Hvezda
+# Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+# Copyright (C) 2013-2015 Roland Lutz
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+reference="$1"
+srcsubdir=`dirname "${reference}"`
+basename=`basename "${reference}"`
+stem="${basename%%-*.out}"
+rel_subdir="${srcsubdir#${srcdir%/}}"
+if [ "${rel_subdir}" = "${srcsubdir}" ]
+then
+    echo "ERROR: Test is not in source directory"
+    exit 99  # hard error
+fi
+buildsubdir="${builddir}${rel_subdir}"
+
+# input paths
+input="${srcsubdir}/${stem}.sch"
+source_library="${srcsubdir}/${stem}-sources"
+symbol_library="${srcsubdir}/${stem}-symbols"
+extradir="${srcsubdir}/${stem}-extras"
+
+# output paths
+output="${buildsubdir}/${basename%.out}.new"
+
+backend_tmp="${basename#*-}"
+backend="${backend_tmp%.out}"
+backend_options=
+
+case "${backend}" in
+spice_noqsi)
+    backend=spice-noqsi
+    ;;
+spice_sdb)
+    backend=spice-sdb
+    ;;
+spice_sdb-nomunge)
+    backend=spice-sdb
+    backend_options="-O nomunge_mode"
+    ;;
+spice_sdb-include)
+    backend=spice-sdb
+    backend_options="-O include_mode"
+    ;;
+spice_sdb-include-nomunge)
+    backend=spice-sdb
+    backend_options="-O include_mode -O nomunge_mode"
+    ;;
+spice_sdb-sort)
+    backend=spice-sdb
+    backend_options="-O sort_mode"
+    ;;
+spice_sdb-sort-nomunge)
+    backend=spice-sdb
+    backend_options="-O sort_mode -O nomunge_mode"
+    ;;
+vams)
+    # The vams backend will always write to this file regardless of
+    # the `-o' setting.  This is not thread-safe.
+    output=default_entity_arc.net
+    ;;
+esac
+
+# Create symlink to directory with auxiliary files
+[ -d "${extradir}" ] && ln -s "${extradir}" . 2>/dev/null
+
+# Write configuration file
+pre_backend_scm="${buildsubdir}/${basename%.out}.scm"
+{
+    [ -d "${source_library}" ] &&
+	echo "(source-library \"${source_library}\")"
+    [ -d "${symbol_library}" ] &&
+	echo "(component-library \"${symbol_library}\")"
+} > "${pre_backend_scm}"
+
+gnetlist -l "${pre_backend_scm}" \
+    -o "${output}" -g "${backend}" ${backend_options} "${input}"
+status=$?
+rm "${pre_backend_scm}"
+[ "$status" = 0 ] || exit 1
+
+# Compare netlist with reference file
+case "${backend}" in
+spice-noqsi|spice-sdb)
+    # Strip invocation line
+    reference_filtered="${buildsubdir}/${basename}.filtered"
+    sed '/netlist.*-g/d' "${reference}" > "${reference_filtered}"
+    sed '/netlist.*-g/d' "${output}" > "${output}.filtered"
+    diff "${reference_filtered}" "${output}.filtered"
+    status=$?
+    rm "${reference_filtered}" "${output}.filtered"
+    ;;
+*)
+    diff "${reference}" "${output}"
+    status=$?
+    ;;
+esac
+[ "$status" = 0 ] || exit 2

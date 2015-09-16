@@ -1,0 +1,19 @@
+# Cascade (http://rfcascade.sourceforge.net)
+# Created with gEDA/gnetlist
+
+# Initial global defaults
+defaults RIN=50 ROUT=50 RHO=0 
+
+# Source definition
+source C=0 CN=70 BW=1 
+
+# Cascaded system
+AMP1 G=12 NF=5 IIP3=-2 
+defaults RIN=50 ROUT=50 RHO=0.2 
+FL1 G=-5.5 NF=5.5 
+MX1 G=12 NF=15 IIP3=5 
+T1 G=0 NF=0 RIN=50 ROUT=50 
+AMP2 G=10 NF=12 IIP3=12 
+
+# End of netlist created by gEDA/gnetlist
+

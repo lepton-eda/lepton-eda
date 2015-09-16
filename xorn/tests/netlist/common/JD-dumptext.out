@@ -1,0 +1,173 @@
+element	A1
+element-pins	A1
+element-attrib	A1	file	./JD-extras/models/openIP_5.cir
+element-attrib	A1	model-name	unknown_LVD
+element-attrib	A1	refdes	A1
+element-attrib	A1	device	model
+element	Cm
+element-pins	Cm	Cm-2	Cm-1
+pin-attrib	Cm-2	pinseq	2
+pin-attrib	Cm-2	pintype	pas
+pin-attrib	Cm-2	pinlabel	2
+pin-attrib	Cm-1	pinseq	1
+pin-attrib	Cm-1	pintype	pas
+pin-attrib	Cm-1	pinlabel	1
+pin-conn	Cm-2	GND
+pin-conn	Cm-1	m
+element-attrib	Cm	device	CAPACITOR
+element-attrib	Cm	value	20p
+element-attrib	Cm	symversion	0.1
+element-attrib	Cm	refdes	Cm
+element	Cp
+element-pins	Cp	Cp-2	Cp-1
+pin-attrib	Cp-2	pinseq	2
+pin-attrib	Cp-2	pintype	pas
+pin-attrib	Cp-2	pinlabel	2
+pin-attrib	Cp-1	pinseq	1
+pin-attrib	Cp-1	pintype	pas
+pin-attrib	Cp-1	pinlabel	1
+pin-conn	Cp-2	GND
+pin-conn	Cp-1	p
+element-attrib	Cp	value	20p
+element-attrib	Cp	symversion	0.1
+element-attrib	Cp	refdes	Cp
+element	Rlp
+element-pins	Rlp	Rlp-1	Rlp-2
+pin-attrib	Rlp-1	pinseq	1
+pin-attrib	Rlp-1	pintype	pas
+pin-attrib	Rlp-1	pinlabel	1
+pin-attrib	Rlp-2	pinseq	2
+pin-attrib	Rlp-2	pintype	pas
+pin-attrib	Rlp-2	pinlabel	2
+pin-conn	Rlp-1	p
+pin-conn	Rlp-2	Vdd1
+element-attrib	Rlp	value	1meg
+element-attrib	Rlp	refdes	Rlp
+element	Rlm
+element-pins	Rlm	Rlm-1	Rlm-2
+pin-attrib	Rlm-1	pinseq	1
+pin-attrib	Rlm-1	pintype	pas
+pin-attrib	Rlm-1	pinlabel	1
+pin-attrib	Rlm-2	pinseq	2
+pin-attrib	Rlm-2	pintype	pas
+pin-attrib	Rlm-2	pinlabel	2
+pin-conn	Rlm-1	m
+pin-conn	Rlm-2	GND
+element-attrib	Rlm	value	500k
+element-attrib	Rlm	refdes	Rlm
+element	Vdd
+element-pins	Vdd	Vdd-2	Vdd-1
+pin-attrib	Vdd-2	pinseq	2
+pin-attrib	Vdd-2	pintype	pwr
+pin-attrib	Vdd-2	pinlabel	-
+pin-attrib	Vdd-1	pinseq	1
+pin-attrib	Vdd-1	pintype	pwr
+pin-attrib	Vdd-1	pinlabel	+
+pin-conn	Vdd-2	GND
+pin-conn	Vdd-1	Vdd1
+element-attrib	Vdd	value	DC 3.3V
+element-attrib	Vdd	refdes	Vdd
+element	V1
+element-pins	V1	V1-2	V1-1
+pin-attrib	V1-2	pinseq	2
+pin-attrib	V1-2	pintype	pwr
+pin-attrib	V1-2	pinlabel	-
+pin-attrib	V1-1	pinseq	1
+pin-attrib	V1-1	pintype	pwr
+pin-attrib	V1-1	pinlabel	+
+pin-conn	V1-2	GND
+pin-conn	V1-1	i
+element-attrib	V1	value	pulse 3.3 0 1u 10p 10p 1.25u 2.5u
+element-attrib	V1	refdes	V1
+element	Rt
+element-pins	Rt	Rt-1	Rt-2
+pin-attrib	Rt-1	pinseq	1
+pin-attrib	Rt-1	pintype	pas
+pin-attrib	Rt-1	pinlabel	1
+pin-attrib	Rt-2	pinseq	2
+pin-attrib	Rt-2	pintype	pas
+pin-attrib	Rt-2	pinlabel	2
+pin-conn	Rt-1	p
+pin-conn	Rt-2	m
+element-attrib	Rt	value	1k
+element-attrib	Rt	refdes	Rt
+element	Rb
+element-pins	Rb	Rb-1	Rb-2
+pin-attrib	Rb-1	pinseq	1
+pin-attrib	Rb-1	pintype	pas
+pin-attrib	Rb-1	pinlabel	1
+pin-attrib	Rb-2	pinseq	2
+pin-attrib	Rb-2	pintype	pas
+pin-attrib	Rb-2	pinlabel	2
+pin-conn	Rb-1	GND
+pin-conn	Rb-2	LVH
+element-attrib	Rb	device	RESISTOR
+element-attrib	Rb	value	5.6k
+element-attrib	Rb	refdes	Rb
+element	M1
+element-pins	M1	M1-G	M1-D	M1-B	M1-S
+pin-attrib	M1-G	pinseq	2
+pin-attrib	M1-G	pintype	pas
+pin-attrib	M1-G	pinlabel	G
+pin-attrib	M1-D	pinseq	1
+pin-attrib	M1-D	pintype	pas
+pin-attrib	M1-D	pinlabel	D
+pin-attrib	M1-B	pinseq	4
+pin-attrib	M1-B	pintype	pas
+pin-attrib	M1-B	pinlabel	B
+pin-attrib	M1-S	pinseq	3
+pin-attrib	M1-S	pintype	pas
+pin-attrib	M1-S	pinlabel	S
+pin-conn	M1-G	LVH
+pin-conn	M1-D	LVH
+pin-conn	M1-B	Vdd1
+pin-conn	M1-S	Vdd1
+element-attrib	M1	m	36
+element-attrib	M1	l	3u
+element-attrib	M1	w	3u
+element-attrib	M1	model-name	pch
+element-attrib	M1	refdes	M1
+element	X1
+element-pins	X1	X1-7	X1-6	X1-2	X1-3	X1-1	X1-5	X1-4
+pin-attrib	X1-7	pinseq	7
+pin-attrib	X1-7	pintype	pwr
+pin-attrib	X1-7	pinlabel	Vss
+pin-attrib	X1-6	pinseq	6
+pin-attrib	X1-6	pintype	pwr
+pin-attrib	X1-6	pinlabel	Vdd1
+pin-attrib	X1-2	pinseq	2
+pin-attrib	X1-2	pintype	pwr
+pin-attrib	X1-2	pinlabel	DGND
+pin-attrib	X1-3	pinseq	3
+pin-attrib	X1-3	pintype	in
+pin-attrib	X1-3	pinlabel	VH
+pin-attrib	X1-1	pinseq	1
+pin-attrib	X1-1	pintype	in
+pin-attrib	X1-1	pinlabel	D
+pin-attrib	X1-5	pinseq	5
+pin-attrib	X1-5	pintype	out
+pin-attrib	X1-5	pinlabel	Y1
+pin-attrib	X1-4	pinseq	4
+pin-attrib	X1-4	pintype	out
+pin-attrib	X1-4	pinlabel	Y0
+pin-conn	X1-7	GND
+pin-conn	X1-6	Vdd1
+pin-conn	X1-2	GND
+pin-conn	X1-3	LVH
+pin-conn	X1-1	i
+pin-conn	X1-5	p
+pin-conn	X1-4	m
+element-attrib	X1	model-name	unknown_LVD
+element-attrib	X1	refdes	X1
+net	Vdd1
+net-conns	Vdd1	Rlp-2	Vdd-1	M1-B	M1-S	X1-6
+net	GND
+net-conns	GND	Cm-2	Cp-2	Rlm-2	Vdd-2	V1-2	Rb-1	X1-7	X1-2
+net	LVH
+net-conns	LVH	Rb-2	M1-G	M1-D	X1-3
+net	i
+net-conns	i	V1-1	X1-1
+net	p
+net-conns	p	Cp-1	Rlp-1	Rt-1	X1-5
+net	m
+net-conns	m	Cm-1	Rlm-1	Rt-2	X1-4

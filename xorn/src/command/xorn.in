@@ -1,0 +1,136 @@
+#!/usr/bin/python
+# Copyright (C) 2013-2015 Roland Lutz
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+pythondir = '@pythondir@'
+commanddir = '@commanddir@'
+
+import getopt, gettext, imp, os, sys
+from gettext import gettext as _
+sys.path.insert(0, pythondir)
+import xorn.command
+import xorn.config
+
+def main():
+    gettext.bindtextdomain(xorn.config.PACKAGE, xorn.config.localedir)
+    gettext.textdomain(xorn.config.PACKAGE)
+
+    try:
+        options, args = getopt.getopt(
+            xorn.command.args, '', ['help', 'version'])
+    except getopt.GetoptError as e:
+        xorn.command.invalid_arguments(e.msg)
+
+    for option, value in options:
+        if option == '--help':
+	    sys.stdout.write(_(
+"Usage: %s COMMAND [ARGS]...\n"
+"       %s --help\n"
+"       %s --version\n")
+                             % (xorn.command.program_name,
+                                xorn.command.program_name,
+                                xorn.command.program_name))
+	    sys.stdout.write("\n")
+            sys.stdout.write(_(
+"  Valid commands are:\n"))
+            sys.stdout.write("\n")
+            sys.stdout.write(_(
+"    extract\n"
+"        Extract objects embedded in a schematic into a separate file.\n"))
+            sys.stdout.write("\n")
+            sys.stdout.write(_(
+"    find-symbol-by-pinout\n"
+"        Find symbols in a directory matching a given pinout.\n"))
+            sys.stdout.write("\n")
+            sys.stdout.write(_(
+"    netlist\n"
+"        Generate a netlist from one or more gEDA schematic files.\n"))
+            sys.stdout.write("\n")
+            sys.stdout.write(_(
+"    For more information about an individual command, type:\n"
+"      `%s COMMAND --help'\n") % xorn.command.program_name)
+            sys.stdout.write("\n")
+	    sys.stdout.write(_(
+"  Command-line options:\n"
+"      --help            give this help\n"
+"      --version         display version number\n"))
+	    sys.stdout.write("\n")
+	    sys.stdout.write(_("Report %s bugs to %s\n")
+                             % (xorn.config.PACKAGE_NAME,
+                                xorn.config.PACKAGE_BUGREPORT))
+            sys.exit(0)
+
+        if option == '--version':
+            xorn.command.core_version()
+
+    if not args:
+        xorn.command.invalid_arguments(_("No command name given."))
+
+    short_name = 'xorn-' + args[0]
+
+    try:
+        res = imp.find_module(args[0], [commanddir])
+    except ImportError:
+        for path in os.environ['PATH'].split(':'):
+            fn = os.path.join(path, short_name)
+            if not os.path.exists(fn):
+                continue
+
+            try:
+                os.execl(fn, fn, *args[1:])
+            except OSError as e:
+                sys.stderr.write(_("%s: %s: %s\n") % (
+                        xorn.command.program_short_name, fn, e.strerror))
+                sys.exit(1)
+
+        xorn.command.invalid_arguments(
+            _("`%s' is not a xorn command.") % args[0])
+
+    xorn.command.program_name += ' ' + args[0]
+    xorn.command.program_short_name = short_name
+    xorn.command.args = args[1:]
+
+    try:
+        try:
+            module = imp.load_module(short_name, *res)
+        finally:
+            res[0].close()
+    except SystemExit:
+        raise
+    except:
+        sys.stderr.write(_("`%s' failed to load.\n") % short_name)
+        sys.stderr.write(_("This is an error.  Please report it to %s\n")
+                         % xorn.command.bugreport)
+        sys.stderr.write('\n')
+        raise
+
+    try:
+        if 'main' in module.__dict__:
+            module.main()
+    except SystemExit:
+        raise
+    except:
+        sys.stderr.write(_("`%s' raised an uncaught exception.\n")
+                         % short_name)
+        sys.stderr.write(_("This is an error.  Please report it to %s\n")
+                         % xorn.command.bugreport)
+        sys.stderr.write('\n')
+        raise
+
+    return
+
+if __name__ == '__main__':
+    main()

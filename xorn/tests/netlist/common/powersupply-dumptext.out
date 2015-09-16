@@ -1,0 +1,188 @@
+element	U2
+element-pins	U2	U2-1	U2-3	U2-2
+pin-attrib	U2-1	pinseq	1
+pin-attrib	U2-1	pintype	unknown
+pin-attrib	U2-1	pinlabel	Adjust
+pin-attrib	U2-3	pinseq	3
+pin-attrib	U2-3	pintype	unknown
+pin-attrib	U2-3	pinlabel	Vin
+pin-attrib	U2-2	pinseq	2
+pin-attrib	U2-2	pintype	unknown
+pin-attrib	U2-2	pinlabel	Vout
+pin-conn	U2-1	ten
+pin-conn	U2-3	eight
+pin-conn	U2-2	eleven
+element-attrib	U2	refdes	U2
+element	C4
+element-pins	C4	C4-2	C4-1
+pin-attrib	C4-2	pinseq	2
+pin-attrib	C4-2	pintype	pas
+pin-attrib	C4-2	pinlabel	-
+pin-attrib	C4-1	pinseq	1
+pin-attrib	C4-1	pintype	pas
+pin-attrib	C4-1	pinlabel	+
+pin-conn	C4-2	nine
+pin-conn	C4-1	eleven
+element-attrib	C4	value	1uf
+element-attrib	C4	refdes	C4
+element	C3
+element-pins	C3	C3-2	C3-1
+pin-attrib	C3-2	pinseq	2
+pin-attrib	C3-2	pintype	pas
+pin-attrib	C3-2	pinlabel	-
+pin-attrib	C3-1	pinseq	1
+pin-attrib	C3-1	pintype	pas
+pin-attrib	C3-1	pinlabel	+
+pin-conn	C3-2	nine
+pin-conn	C3-1	ten
+element-attrib	C3	value	22uF
+element-attrib	C3	refdes	C3
+element	R1
+element-pins	R1	R1-1	R1-2	R1-3
+pin-attrib	R1-1	pinseq	1
+pin-attrib	R1-1	pintype	pas
+pin-attrib	R1-1	pinlabel	1
+pin-attrib	R1-2	pinseq	2
+pin-attrib	R1-2	pintype	pas
+pin-attrib	R1-2	pinlabel	2
+pin-attrib	R1-3	pinseq	3
+pin-attrib	R1-3	pintype	pas
+pin-attrib	R1-3	pinlabel	3
+pin-conn	R1-1	nine
+pin-conn	R1-2	ten
+pin-conn	R1-3	nine
+element-attrib	R1	value	5k
+element-attrib	R1	refdes	R1
+element	C2
+element-pins	C2	C2-2	C2-1
+pin-attrib	C2-2	pinseq	2
+pin-attrib	C2-2	pintype	pas
+pin-attrib	C2-2	pinlabel	-
+pin-attrib	C2-1	pinseq	1
+pin-attrib	C2-1	pintype	pas
+pin-attrib	C2-1	pinlabel	+
+pin-conn	C2-2	nine
+pin-conn	C2-1	eight
+element-attrib	C2	value	0.1uF
+element-attrib	C2	refdes	C2
+element	R2
+element-pins	R2	R2-1	R2-2
+pin-attrib	R2-1	pinseq	1
+pin-attrib	R2-1	pintype	pas
+pin-attrib	R2-1	pinlabel	1
+pin-attrib	R2-2	pinseq	2
+pin-attrib	R2-2	pintype	pas
+pin-attrib	R2-2	pinlabel	2
+pin-conn	R2-1	ten
+pin-conn	R2-2	eleven
+element-attrib	R2	value	220
+element-attrib	R2	refdes	R2
+element	C1
+element-pins	C1	C1-2	C1-1
+pin-attrib	C1-2	pinseq	2
+pin-attrib	C1-2	pintype	pas
+pin-attrib	C1-2	pinlabel	-
+pin-attrib	C1-1	pinseq	1
+pin-attrib	C1-1	pintype	pas
+pin-attrib	C1-1	pinlabel	+
+pin-conn	C1-2	nine
+pin-conn	C1-1	eight
+element-attrib	C1	value	2200uF
+element-attrib	C1	refdes	C1
+element	S1
+element-pins	S1	S1-1	S1-2
+pin-attrib	S1-1	pinseq	1
+pin-attrib	S1-1	pintype	pas
+pin-attrib	S1-1	pinlabel	1
+pin-attrib	S1-2	pinseq	2
+pin-attrib	S1-2	pintype	pas
+pin-attrib	S1-2	pinlabel	2
+pin-conn	S1-1	one
+pin-conn	S1-2	two
+element-attrib	S1	refdes	S1
+element	CONN1
+element-pins	CONN1	CONN1-3	CONN1-2	CONN1-1
+pin-attrib	CONN1-3	pinseq	3
+pin-attrib	CONN1-3	pintype	pas
+pin-attrib	CONN1-3	pinlabel	3
+pin-attrib	CONN1-2	pinseq	2
+pin-attrib	CONN1-2	pintype	pas
+pin-attrib	CONN1-2	pinlabel	2
+pin-attrib	CONN1-1	pinseq	1
+pin-attrib	CONN1-1	pintype	pas
+pin-attrib	CONN1-1	pinlabel	1
+pin-conn	CONN1-3	GND
+pin-conn	CONN1-2	five
+pin-conn	CONN1-1	one
+element-attrib	CONN1	refdes	CONN1
+element	T1
+element-pins	T1	T1-3	T1-4	T1-1	T1-2
+pin-attrib	T1-3	pinseq	3
+pin-attrib	T1-3	pintype	pas
+pin-attrib	T1-3	pinlabel	3
+pin-attrib	T1-4	pinseq	4
+pin-attrib	T1-4	pintype	pas
+pin-attrib	T1-4	pinlabel	4
+pin-attrib	T1-1	pinseq	1
+pin-attrib	T1-1	pintype	pas
+pin-attrib	T1-1	pinlabel	1
+pin-attrib	T1-2	pinseq	2
+pin-attrib	T1-2	pintype	pas
+pin-attrib	T1-2	pinlabel	2
+pin-conn	T1-3	six
+pin-conn	T1-4	seven
+pin-conn	T1-1	three
+pin-conn	T1-2	five
+element-attrib	T1	refdes	T1
+element	F1
+element-pins	F1	F1-2	F1-1
+pin-attrib	F1-2	pinseq	2
+pin-attrib	F1-2	pintype	pas
+pin-attrib	F1-2	pinlabel	2
+pin-attrib	F1-1	pinseq	1
+pin-attrib	F1-1	pintype	pas
+pin-attrib	F1-1	pinlabel	1
+pin-conn	F1-2	three
+pin-conn	F1-1	two
+element-attrib	F1	refdes	F1
+element	U1
+element-pins	U1	U1-4	U1-3	U1-2	U1-1
+pin-attrib	U1-4	pinseq	4
+pin-attrib	U1-4	pintype	pas
+pin-attrib	U1-4	pinlabel	4
+pin-attrib	U1-3	pinseq	3
+pin-attrib	U1-3	pintype	pas
+pin-attrib	U1-3	pinlabel	3
+pin-attrib	U1-2	pinseq	2
+pin-attrib	U1-2	pintype	pas
+pin-attrib	U1-2	pinlabel	2
+pin-attrib	U1-1	pinseq	1
+pin-attrib	U1-1	pintype	pas
+pin-attrib	U1-1	pinlabel	1
+pin-conn	U1-4	six
+pin-conn	U1-3	seven
+pin-conn	U1-2	nine
+pin-conn	U1-1	eight
+element-attrib	U1	refdes	U1
+net	ten
+net-conns	ten	U2-1	C3-1	R1-2	R2-1
+net	eleven
+net-conns	eleven	U2-2	C4-1	R2-2
+net	GND
+net-conns	GND	CONN1-3
+net	one
+net-conns	one	S1-1	CONN1-1
+net	five
+net-conns	five	CONN1-2	T1-2
+net	three
+net-conns	three	T1-1	F1-2
+net	two
+net-conns	two	S1-2	F1-1
+net	six
+net-conns	six	T1-3	U1-4
+net	seven
+net-conns	seven	T1-4	U1-3
+net	nine
+net-conns	nine	C4-2	C3-2	R1-1	R1-3	C2-2	C1-2	U1-2
+net	eight
+net-conns	eight	U2-3	C2-1	C1-1	U1-1

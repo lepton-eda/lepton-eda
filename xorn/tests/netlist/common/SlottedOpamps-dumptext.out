@@ -1,0 +1,86 @@
+element	U1.4
+element-pins	U1.4	U1.4-14	U1.4-13	U1.4-12
+pin-attrib	U1.4-14	pinseq	1
+pin-attrib	U1.4-14	pintype	unknown
+pin-attrib	U1.4-14	pinlabel	unknown
+pin-attrib	U1.4-13	pinseq	2
+pin-attrib	U1.4-13	pintype	unknown
+pin-attrib	U1.4-13	pinlabel	unknown
+pin-attrib	U1.4-12	pinseq	3
+pin-attrib	U1.4-12	pintype	unknown
+pin-attrib	U1.4-12	pinlabel	unknown
+pin-conn	U1.4-14	samenet_output_c
+pin-conn	U1.4-13	minusin_slot4_pin13_b
+pin-conn	U1.4-12	plusin_slot4_pin12_a
+element-attrib	U1.4	slot	4
+element-attrib	U1.4	refdes	U1
+element-attrib	U1.4	device	LM324
+element	U1.3
+element-pins	U1.3	U1.3-8	U1.3-9	U1.3-10
+pin-attrib	U1.3-8	pinseq	1
+pin-attrib	U1.3-8	pintype	unknown
+pin-attrib	U1.3-8	pinlabel	unknown
+pin-attrib	U1.3-9	pinseq	2
+pin-attrib	U1.3-9	pintype	unknown
+pin-attrib	U1.3-9	pinlabel	unknown
+pin-attrib	U1.3-10	pinseq	3
+pin-attrib	U1.3-10	pintype	unknown
+pin-attrib	U1.3-10	pinlabel	unknown
+pin-conn	U1.3-8	samenet_output_c
+pin-conn	U1.3-9	minusin_slot3_pin_b
+pin-conn	U1.3-10	plusin_slot3_pin10_a
+element-attrib	U1.3	slot	3
+element-attrib	U1.3	refdes	U1
+element-attrib	U1.3	device	LM324
+element	U1.2
+element-pins	U1.2	U1.2-7	U1.2-6	U1.2-5
+pin-attrib	U1.2-7	pinseq	1
+pin-attrib	U1.2-7	pintype	unknown
+pin-attrib	U1.2-7	pinlabel	unknown
+pin-attrib	U1.2-6	pinseq	2
+pin-attrib	U1.2-6	pintype	unknown
+pin-attrib	U1.2-6	pinlabel	unknown
+pin-attrib	U1.2-5	pinseq	3
+pin-attrib	U1.2-5	pintype	unknown
+pin-attrib	U1.2-5	pinlabel	unknown
+pin-conn	U1.2-7	samenet_output_c
+pin-conn	U1.2-6	minusin_slot2_pin6_b
+pin-conn	U1.2-5	plusin_slot2_pin5_a
+element-attrib	U1.2	slot	2
+element-attrib	U1.2	refdes	U1
+element-attrib	U1.2	device	LM324
+element	U1.1
+element-pins	U1.1	U1.1-1	U1.1-2	U1.1-3
+pin-attrib	U1.1-1	pinseq	1
+pin-attrib	U1.1-1	pintype	unknown
+pin-attrib	U1.1-1	pinlabel	unknown
+pin-attrib	U1.1-2	pinseq	2
+pin-attrib	U1.1-2	pintype	unknown
+pin-attrib	U1.1-2	pinlabel	unknown
+pin-attrib	U1.1-3	pinseq	3
+pin-attrib	U1.1-3	pintype	unknown
+pin-attrib	U1.1-3	pinlabel	unknown
+pin-conn	U1.1-1	samenet_output_c
+pin-conn	U1.1-2	minusin_slot1_pin_b
+pin-conn	U1.1-3	plusin_slot1_pin3_a
+element-attrib	U1.1	slot	1
+element-attrib	U1.1	refdes	U1
+element-attrib	U1.1	device	LM324
+net	minusin_slot4_pin13_b
+net-conns	minusin_slot4_pin13_b	U1.4-13
+net	plusin_slot4_pin12_a
+net-conns	plusin_slot4_pin12_a	U1.4-12
+net	minusin_slot3_pin_b
+net-conns	minusin_slot3_pin_b	U1.3-9
+net	plusin_slot3_pin10_a
+net-conns	plusin_slot3_pin10_a	U1.3-10
+net	minusin_slot2_pin6_b
+net-conns	minusin_slot2_pin6_b	U1.2-6
+net	plusin_slot2_pin5_a
+net-conns	plusin_slot2_pin5_a	U1.2-5
+net	samenet_output_c
+net-conns	samenet_output_c	U1.4-14	U1.3-8	U1.2-7	U1.1-1
+net	minusin_slot1_pin_b
+net-conns	minusin_slot1_pin_b	U1.1-2
+net	plusin_slot1_pin3_a
+net-conns	plusin_slot1_pin3_a	U1.1-3
