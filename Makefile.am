@@ -1,8 +1,11 @@
 if ENABLE_GATTRIB
 GATTRIB_DIR=gattrib
 endif
+if XORN
+  XORN_DIR = xorn
+endif
 SUBDIRS = intl libgeda libgedacairo gaf gschem ${GATTRIB_DIR} \
-	gsymcheck gnetlist utils symbols docs examples contrib xorn
+	gsymcheck gnetlist utils symbols docs examples contrib $(XORN_DIR)
 
 ACLOCAL_AMFLAGS = -I m4
 
