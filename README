@@ -2,7 +2,7 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2014 gEDA Developers
+Copyright (C) 1998-2015 gEDA Developers
 
 Introduction
 ============
@@ -53,6 +53,11 @@ The major components of the gEDA suite are:
 `gsymcheck'
   A utility for checking for common errors in schematic symbol files.
 
+`gaf'
+  A utility for interactive and batch mode working with gEDA Scheme
+  API, exporting schematics into various formats, and
+  configuring all the programs of the suite.
+
 Installation
 ============
 
@@ -71,7 +76,7 @@ In order to compile gEDA from the distributed source archives, you
    <http://pkgconfig.freedesktop.org/>
 
  - Guile ("GNU's Ubiquitous Intelligent Language for Extensions"),
-   version 1.8.0 or later.  <http://www.gnu.org/software/guile/>
+   version 2.0.0 or later.  <http://www.gnu.org/software/guile/>
 
  - GTK+ (the Gimp Toolkit), version 2.18.0 or later.
    <http://www.gtk.org/>
