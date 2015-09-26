@@ -2,7 +2,7 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2014 gEDA Developers
+Copyright (C) 1998-2015 gEDA Developers
 
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
@@ -13,21 +13,16 @@ Notable changes in gEDA/gaf 1.9.2
 
   - Guile 2.0 or newer is now required.
 
+  - top-level control file allowing continuous integration using
+    Travis CI has been added.
+
 * Nullor expansion has been fixed in the `spice' and `spice-sdb'
   backends.
 
   - Element name prefix "E_" has been substituted for "E-" to prevent
     errors output by some simulators (e.g. ngspice).
 
-  - A default gain value has been added in the nullor expansion code. 
-
-* Two attributes ("value=" and "symversion=") have been added to the
-  default nullor symbol.
-
-* Visibility and attributes of several VHDL symbols have been fixed.
-
-* Four verilog symbols have been fixed so that the verilog gnetlist
-  backend outputs their pins in right order.
+  - A default gain value has been added in the nullor expansion code.
 
 * Two obsolete scripts verilog2vhdl.sh and script.sed have been
   removed.
@@ -47,13 +42,131 @@ Notable changes in gEDA/gaf 1.9.2
          pads_backannotate       sw2asc
          gnet_hier_verilog.sh
 
-* `gpstoimage' has been removed from the distribution; equivalent 
+* `gpstoimage' has been removed from the distribution; equivalent
   functionality is provided by the `gaf' command.
 
 * `convert_sym.awk' has been removed from the distribution; equivalent
   functionality is provided by the `convert_sym' command.
 
 * gnetlist now supports output of netlists to the standard output.
+
+* New Scheme procedures and hooks have been added.  Please see the
+  "geda-scheme" info manual for more details.
+
+  - `set-component-with-transform!' is a modified version of
+    `set-component!', which applies all the specified transformations
+    to a component and immediately updates it.
+
+  - `auto-refdes-reset!' resets components' refdeses
+
+  - `copy-objects-hook' is called whenever an object is copied, it can
+    be used, for example, to reset component's refdes on copy.
+
+* The following gschem configuration items have been added:
+
+  - `third-button-cancel' cancels draw actions by the third mouse
+    button in mousepan mode.
+
+  - `grid-mode' sets default grid mode.
+
+* Fixes/updates to the *BSD, Mac OS X, and MinGW builds.
+
+* Changes in the gschem UI event state machine:
+
+  - New drawing modes apply immediately.
+
+  - Indication of an action being in progress has been added.
+
+  - Mirror action can now be used during an object placement.
+
+  - Show/hide text function is now enabled during other actions.
+
+  - RMB panning is now enabled during placing or drawing.
+
+* Some gschem dialog have been merged, made non-modal, and placed in
+  sidebar:
+
+  - Color, line, fill and pin type dialogs have been merged into one
+    non-modal object properties dialog with widgets applying values
+    immediately.
+
+  - Text properties dialog.
+
+  - Options to control the magnetic net mode and the net rubber band
+    mode as well as grid mode and grid snap mode have been merged into
+    one options dialog.
+
+* The following dialogs/windows have been converted into an info bar
+  and are now placed in bottom notebook:
+
+  - Log (status) window.
+
+  - Find text dialog.
+
+* The following dialogs are now popup & docked the same way as the
+  execute script dialog:
+
+  - Show and hide text dialogs.
+
+  - Translate dialog.
+
+* Other gschem GUI changes:
+
+  - Hotkeys and menu items to show/hide the sidebar and status window
+    have been added.
+
+  - Swatch for fill types has been added.
+
+  - Slot edit dialog now displays number of slots.
+
+  - Library folder structure in gschem is now displayed as tree.
+
+  - Indication of page change has been added in gschem main window's
+    title.
+
+* Improved find text functionality:
+
+  - When searching for text, gschem now descends all files specified
+    in the comma separated list of the source attribute.
+
+  - There is now a widget that lists all occurences of the text
+    objects that contain the search string.
+
+  - The find text operation does not switch the current schematic in
+    the view or interfere with the most recent page up.
+
+  - The find text operation also searches all open pages instead of
+    the current one.
+
+  - The behavior of the find text operation works with multiple
+    toplevel windows open while running concurrent find text
+    operations.
+
+  - The find text operation can now use either a substring, pattern,
+    or regex. The pattern style uses * and ?. The regex uses glib,
+    which adheres to perl compatible regular expressions.
+
+* Several symbols have been fixed/improved.
+
+* gschemdoc has been enhanced to search in the user documentation
+  directory.
+
+* Several translations have been added/updated.
+
+* Man pages for gsymcheck and gschlas have been updated.
+
+* Switches --help and -h have been added for most of gEDA utilities.
+
+* Fixed the following bugs:
+
+  -  900122: Gschem crashes on ctrl-x.
+  - 1258834: spice-sdb crashes on non-existing files.
+  - 1463178: Gsch2pcb crashes when using `m4-pcbdir' option.
+  - 1478760: Gschem segmentation fault during find text.
+  - Gschem crashes on pressing the third mouse button.
+  - SVG output bug in `gaf export'.
+  - Several other bugs.
+
 
 Notable changes in gEDA/gaf 1.9.1
 =================================
