@@ -42,7 +42,7 @@ Werner Hoch <werner.ho@gmx.de>
 .BR pcb (1)
 .SH COPYRIGHT
 .nf
-Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+Copyright \(co 1999-@YEAR@ gEDA Contributors.  License GPLv2+: GNU GPL
 version 2 or later.  Please see the `COPYING' file included with this
 program for full details.
 .PP
