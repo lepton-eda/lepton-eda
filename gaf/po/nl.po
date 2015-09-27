@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gaf\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2014-08-30 14:03+0200\n"
+"POT-Creation-Date: 2015-08-22 12:59+0300\n"
 "PO-Revision-Date: 2014-08-31 20:24+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
-#: gaf/gaf.c:65
+#: gaf/gaf.c:66
 #, c-format
 msgid ""
 "Usage: gaf [OPTION...] COMMAND [ARGS ...]\n"
@@ -50,7 +50,7 @@ msgstr ""
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
 
-#: gaf/gaf.c:88
+#: gaf/gaf.c:89
 #, c-format
 msgid ""
 "gEDA/gaf %s (g%.7s)\n"
@@ -67,7 +67,7 @@ msgstr ""
 "de gEDA distributie is bijgevoegd.\n"
 "Er is GEEN GARANTIE, voor zover toegelaten door de wet.\n"
 
-#: gaf/gaf.c:136
+#: gaf/gaf.c:137
 #, c-format
 msgid ""
 "\n"
@@ -76,7 +76,7 @@ msgstr ""
 "\n"
 "Voer `gaf --help' uit voor meer informatie.\n"
 
-#: gaf/gaf.c:148
+#: gaf/gaf.c:149
 #, c-format
 msgid ""
 "ERROR: You must specify a command to run.\n"
@@ -87,7 +87,7 @@ msgstr ""
 "\n"
 "Voer `gaf --help' uit voor meer informatie.\n"
 
-#: gaf/gaf.c:166
+#: gaf/gaf.c:167
 #, c-format
 msgid ""
 "ERROR: Unrecognised command `%s'.\n"
@@ -129,10 +129,13 @@ msgstr ""
 "  -h, --help     toon gebruiksinformatie en stop\n"
 "\n"
 "Wanneer GROEP and SLEUTEL zijn gespecificeerd, haal de waarde van die\n"
-"configuratie parameter op.  Als een WAARDE was gespecificeerd, stel de waarde van\n"
+"configuratie parameter op.  Als een WAARDE was gespecificeerd, stel de "
+"waarde van\n"
 "de parameter in.  De -p, -u en -s opties kunnen worden gebruikt om de\n"
-"beïnvloedde configuratie opslag te selecteren (gebruikelijk, de project configuratie\n"
-"opslag voor de huidige bestandenmap). Als geen GROEP en SLEUTEL werden gegeven,\n"
+"beïnvloedde configuratie opslag te selecteren (gebruikelijk, de project "
+"configuratie\n"
+"opslag voor de huidige bestandenmap). Als geen GROEP en SLEUTEL werden "
+"gegeven,\n"
 "geeft dan de bestandsnaam van de geselecteerde configuratie opslag.\n"
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
@@ -159,9 +162,7 @@ msgstr "WAARSCHUWING: Kan '%s': %s niet laden.\n"
 msgid "ERROR: You must specify both configuration group and key.\n"
 msgstr "FOUT: U moet beide configuratie groep en sleutel specificeren.\n"
 
-#: gaf/config.c:182
-#: gaf/config.c:196
-#: gaf/export.c:318
+#: gaf/config.c:182 gaf/config.c:196 gaf/export.c:317
 #, c-format
 msgid "ERROR: %s.\n"
 msgstr "FOUT: %s.\n"
@@ -179,37 +180,38 @@ msgstr ""
 "\n"
 "Voer `gaf export --help' uit voor meer informatie.\n"
 
-#: gaf/export.c:188
+#: gaf/export.c:187
 #, c-format
 msgid "ERROR: Cannot infer output format from filename '%s'.\n"
 msgstr "FOUT: Kan geen uitvoerformaat afleiden van bestandsnaam '%s'.\n"
 
-#: gaf/export.c:205
+#: gaf/export.c:204
 #, c-format
 msgid "ERROR: Cannot find supported format for filename '%s'.\n"
 msgstr "FOUT: Kan geen ondersteund formaat vinden voor bestandsnaam '%s'.\n"
 
-#: gaf/export.c:210
+#: gaf/export.c:209
 #, c-format
 msgid "ERROR: Unsupported output format '%s'.\n"
 msgstr "FOUT: Niet ondersteund uitvoer formaat '%s'.\n"
 
-#: gaf/export.c:222
+#: gaf/export.c:221
 #, c-format
 msgid "ERROR: Selected output format does not support multipage output\n"
-msgstr "FOUT: Geselecteerde uitvoer formaat ondersteund geen meerbladige uitvoer\n"
+msgstr ""
+"FOUT: Geselecteerde uitvoer formaat ondersteund geen meerbladige uitvoer\n"
 
-#: gaf/export.c:234
+#: gaf/export.c:233
 #, c-format
 msgid "ERROR: Failed to load '%s': %s\n"
 msgstr "FOUT: Faalde om '%s': %s te laden\n"
 
-#: gaf/export.c:240
+#: gaf/export.c:239
 #, c-format
 msgid "ERROR: Failed to change directory to '%s': %s\n"
 msgstr "Faalde om bestandenmap te wijzigen naar '%s': %s\n"
 
-#: gaf/export.c:904
+#: gaf/export.c:903
 #, c-format
 msgid ""
 "Usage: gaf export [OPTION ...] -o OUTPUT [--] FILE ...\n"
@@ -256,12 +258,12 @@ msgstr ""
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
 
-#: gaf/export.c:1083
+#: gaf/export.c:1082
 #, c-format
 msgid "ERROR: You must specify at least one input filename.\n"
 msgstr "FOUT: U moet tenminste een invoer bestandsnaam specificeren.\n"
 
-#: gaf/export.c:1092
+#: gaf/export.c:1091
 #, c-format
 msgid "ERROR: You must specify an output filename.\n"
 msgstr "FOUT: U moet een uitvoer bestandnaam specificeren.\n"
@@ -288,7 +290,8 @@ msgid ""
 msgstr ""
 "Gebruik: gaf shell [OPTIE ...]\n"
 "\n"
-"Shell voor interactieve verwerking van gEDA gegevens gebruikmakend van Scheme.\n"
+"Shell voor interactieve verwerking van gEDA gegevens gebruikmakend van "
+"Scheme.\n"
 "\n"
 "  -s FILE        laad Scheme broncode uit FILE, en eindig\n"
 "  -c EXPR        evalueer Scheme expressie EXPR, en eindig\n"
@@ -311,4 +314,3 @@ msgid ""
 msgstr ""
 "\n"
 "Voer `gaf shell --help' uit voor meer informatie.\n"
-

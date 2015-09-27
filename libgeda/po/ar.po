@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2014-03-08 22:17+0000\n"
+"POT-Creation-Date: 2015-09-26 23:29+0300\n"
 "PO-Revision-Date: 2012-01-31 12:11+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -47,7 +47,7 @@ msgstr "رمز مخطّط gEDA"
 msgid "o_save_objects: object %p has unknown type '%c'\n"
 msgstr "﻿‏o_save_objects: يملك الكائن %p نوعا مجهولا '%c'\n"
 
-#: libgeda/src/a_basic.c:234 libgeda/src/f_basic.c:377
+#: libgeda/src/a_basic.c:234 libgeda/src/f_basic.c:372
 #, c-format
 msgid "File %s is read-only"
 msgstr ""
@@ -113,12 +113,12 @@ msgstr ""
 msgid "Failed to stat [%s]: %s"
 msgstr "فشل إلى الحالة  [%s]: %s"
 
-#: libgeda/src/f_basic.c:216
+#: libgeda/src/f_basic.c:211
 #, c-format
 msgid "Cannot find file %s: %s"
 msgstr "يتعذّر العثور على الملف ‪%s‬: %s"
 
-#: libgeda/src/f_basic.c:263
+#: libgeda/src/f_basic.c:258
 #, c-format
 msgid ""
 "\n"
@@ -132,11 +132,11 @@ msgstr ""
 "  %s.\n"
 "\n"
 
-#: libgeda/src/f_basic.c:265
+#: libgeda/src/f_basic.c:260
 msgid "I could not guess if it is newer, so you have to do it manually.\n"
 msgstr "لم أستطع تخمين ما إذا كان أحدث، لذلك عليك أن تفعل ذلك يدويا.\n"
 
-#: libgeda/src/f_basic.c:267
+#: libgeda/src/f_basic.c:262
 msgid ""
 "The backup copy is newer than the schematic, so it seems you should load it "
 "instead of the original file.\n"
@@ -144,7 +144,7 @@ msgstr ""
 "النسخة الاحتياطية أحدث من المخطّط، لذلك على ما يبدو يجب عليك تحميله بدلا من "
 "الملف الأصلي.\n"
 
-#: libgeda/src/f_basic.c:269
+#: libgeda/src/f_basic.c:264
 msgid ""
 "Gschem usually makes backup copies automatically, and this situation happens "
 "when it crashed or it was forced to exit abruptly.\n"
@@ -152,7 +152,7 @@ msgstr ""
 "عادة ما يعمل gschem نسخا احتياطية تلقائيا، وهذا الوضع يحدث عندما يتحطم أو "
 "يجبر على الخروج بشكل مفاجئ.\n"
 
-#: libgeda/src/f_basic.c:272
+#: libgeda/src/f_basic.c:267
 msgid ""
 "\n"
 "Run gschem and correct the situation.\n"
@@ -162,111 +162,111 @@ msgstr ""
 "شغل gschem و صحح الوضع.\n"
 "\n"
 
-#: libgeda/src/f_basic.c:367
+#: libgeda/src/f_basic.c:362
 #, c-format
 msgid "Can't get the real filename of %s: %s"
 msgstr ""
 
-#: libgeda/src/f_basic.c:398
+#: libgeda/src/f_basic.c:393
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "تعذّر وضع الملف الاحتياطي السابق [‎%s‬] للقراءة والكتابة\n"
 
-#: libgeda/src/f_basic.c:404
+#: libgeda/src/f_basic.c:399
 #, c-format
 msgid "Can't save backup file: %s."
 msgstr "يتعذّر حفظ الملف الاحتياطي: %s."
 
-#: libgeda/src/f_basic.c:414
+#: libgeda/src/f_basic.c:409
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "تعذّر وضع الملف الاحتياطي [‎%s‬] للقراءة فقط\n"
 
-#: libgeda/src/f_basic.c:463
+#: libgeda/src/f_basic.c:458
 #, fuzzy, c-format
 msgid "Failed to restore permissions on '%s': %s\n"
 msgstr "فشل في فتح الدليل [%s]: %s\n"
 
-#: libgeda/src/f_basic.c:468
+#: libgeda/src/f_basic.c:463
 #, fuzzy, c-format
 msgid "Failed to restore ownership on '%s': %s\n"
 msgstr "فشل في فتح الدليل [%s]: %s\n"
 
-#: libgeda/src/f_basic.c:478
+#: libgeda/src/f_basic.c:473
 #, c-format
 msgid "Could NOT save file: %s"
 msgstr ""
 
-#: libgeda/src/f_basic.c:725
+#: libgeda/src/f_basic.c:720
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: libgeda/src/g_basic.c:260
+#: libgeda/src/g_basic.c:259
 msgid ""
 "\n"
 "Backtrace:\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:99
+#: libgeda/src/g_rc.c:98
 #, c-format
 msgid "Invalid mode [%s] passed to %s\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:139
+#: libgeda/src/g_rc.c:138
 msgid "RC file already loaded"
 msgstr ""
 
-#: libgeda/src/g_rc.c:183
+#: libgeda/src/g_rc.c:182
 #, fuzzy, c-format
 msgid "Failed to load config from '%s': %s\n"
 msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
 
-#: libgeda/src/g_rc.c:207
+#: libgeda/src/g_rc.c:206
 #, fuzzy, c-format
 msgid "Loaded RC file [%s]\n"
 msgstr "فشل أمر المكتبة [%s]\n"
 
-#: libgeda/src/g_rc.c:211
+#: libgeda/src/g_rc.c:210
 #, fuzzy, c-format
 msgid "Failed to load RC file [%s]: "
 msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
 
-#: libgeda/src/g_rc.c:328
+#: libgeda/src/g_rc.c:327
 msgid "ERROR: An unknown error occurred while parsing configuration files."
 msgstr ""
 
-#: libgeda/src/g_rc.c:340 libgeda/src/g_rc.c:341
+#: libgeda/src/g_rc.c:339 libgeda/src/g_rc.c:340
 #, c-format
 msgid "ERROR: %s\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:347
+#: libgeda/src/g_rc.c:346
 #, c-format
 msgid "ERROR: The %s log may contain more information.\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:468
+#: libgeda/src/g_rc.c:467
 #, fuzzy, c-format
 msgid "Invalid path [%s] passed to component-library\n"
 msgstr "لم يعثر على المكون [%s] في المكتبة المكونات\n"
 
-#: libgeda/src/g_rc.c:607
+#: libgeda/src/g_rc.c:606
 #, c-format
 msgid "Invalid path [%s] passed to source-library\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:654 libgeda/src/g_rc.c:663
+#: libgeda/src/g_rc.c:653 libgeda/src/g_rc.c:662
 #, c-format
 msgid "Invalid path [%s] passed to source-library-search\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:863
+#: libgeda/src/g_rc.c:862
 #, c-format
 msgid "Invalid path [%s] passed to bitmap-directory\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:996
+#: libgeda/src/g_rc.c:995
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
@@ -274,7 +274,7 @@ msgstr ""
 "تحذير: تم تغيير استعمال سلسلة نصية من أجل 'always-promote-attributes'.بدلا "
 "من ذلك استعمل قائمة سلاسل نصية\n"
 
-#: libgeda/src/g_rc.c:1018
+#: libgeda/src/g_rc.c:1017
 msgid "always-promote-attribute: list element is not a string"
 msgstr ""
 
@@ -288,36 +288,41 @@ msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
 msgstr "عثر على قوس صفر الشعاع [ %c %d, %d, %d, %d, %d, %d ]\n"
 
 #: libgeda/src/o_arc_basic.c:278 libgeda/src/o_box_basic.c:320
-#: libgeda/src/o_bus_basic.c:150 libgeda/src/o_circle_basic.c:282
-#: libgeda/src/o_line_basic.c:257 libgeda/src/o_net_basic.c:137
+#: libgeda/src/o_bus_basic.c:146 libgeda/src/o_circle_basic.c:282
+#: libgeda/src/o_line_basic.c:257 libgeda/src/o_net_basic.c:132
 #: libgeda/src/o_path_basic.c:206 libgeda/src/o_pin_basic.c:154
-#: libgeda/src/o_text_basic.c:387
+#: libgeda/src/o_text_basic.c:386
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
 msgstr "عثر على لون غير صالح [ %s ]\n"
 
 #: libgeda/src/o_arc_basic.c:279 libgeda/src/o_box_basic.c:321
-#: libgeda/src/o_bus_basic.c:151 libgeda/src/o_circle_basic.c:283
-#: libgeda/src/o_line_basic.c:258 libgeda/src/o_net_basic.c:138
+#: libgeda/src/o_bus_basic.c:147 libgeda/src/o_circle_basic.c:283
+#: libgeda/src/o_line_basic.c:258 libgeda/src/o_net_basic.c:133
 #: libgeda/src/o_path_basic.c:207 libgeda/src/o_pin_basic.c:155
-#: libgeda/src/o_text_basic.c:388
+#: libgeda/src/o_text_basic.c:387
 msgid "Setting color to default color\n"
 msgstr "تغيير لون إلى اللون الإفتراضي\n"
 
-#: libgeda/src/o_attrib.c:117
+#: libgeda/src/o_attrib.c:111
+#, c-format
+msgid "Attribute [%s] already attached\n"
+msgstr ""
+
+#: libgeda/src/o_attrib.c:116
 msgid "Attempt to attach non text item as an attribute!\n"
 msgstr "محاولة إرفاق عنصر غير نصي كسمة!\n"
 
-#: libgeda/src/o_attrib.c:122
+#: libgeda/src/o_attrib.c:121
 #, c-format
 msgid "Attempt to attach attribute [%s] to more than one object\n"
 msgstr "محاولة إرفاق السمة [%s] لأكثر من كائن واحد\n"
 
-#: libgeda/src/o_attrib.c:325
+#: libgeda/src/o_attrib.c:324
 msgid "Tried to attach a non-text item as an attribute"
 msgstr ""
 
-#: libgeda/src/o_attrib.c:332
+#: libgeda/src/o_attrib.c:331
 msgid "Unexpected end-of-file in attribute list"
 msgstr ""
 
@@ -339,12 +344,12 @@ msgstr ""
 msgid "Found a zero length bus [ %c %d %d %d %d %d ]\n"
 msgstr "عثر على ناقل صفر الطول [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_bus_basic.c:156
+#: libgeda/src/o_bus_basic.c:152
 #, c-format
 msgid "Found an invalid bus ripper direction [ %s ]\n"
 msgstr "عثر على اتجاه غير صالح لمموج الناقل [ %s ]\n"
 
-#: libgeda/src/o_bus_basic.c:157
+#: libgeda/src/o_bus_basic.c:153
 msgid "Resetting direction to neutral (no direction)\n"
 msgstr "إعادة تعيين الاتجاه إلى محايد (دون اتجاه)\n"
 
@@ -384,7 +389,7 @@ msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr "عثر على مكون باستدارة غير صالحة [ %c %d %d %d %d %d %s ]\n"
 
 #: libgeda/src/o_complex_basic.c:719 libgeda/src/o_picture.c:104
-#: libgeda/src/o_text_basic.c:359
+#: libgeda/src/o_text_basic.c:358
 msgid "Setting angle to 0\n"
 msgstr "تعيين 'زاوية' إلى 0\n"
 
@@ -398,7 +403,7 @@ msgstr "عثر على مكون بعلامة مرآة غير صالحة [ %c %d %
 msgid "Setting mirror to 0\n"
 msgstr ""
 
-#: libgeda/src/o_complex_basic.c:1045
+#: libgeda/src/o_complex_basic.c:1052
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -407,7 +412,7 @@ msgstr ""
 "تحذير: خطأ عند تحليل(إعراب) إصدار الرمز في refdes %s:\n"
 "‏\tتعذر تحليل ملف الرمز symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1049
+#: libgeda/src/o_complex_basic.c:1056
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -416,7 +421,7 @@ msgstr ""
 "تحذير: خطأ عند تحليل(إعراب) إصدار الرمز في refdes %s:\n"
 "‏\tتعذر تحليل ملف الرمز symversion=\n"
 
-#: libgeda/src/o_complex_basic.c:1065
+#: libgeda/src/o_complex_basic.c:1072
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -425,7 +430,7 @@ msgstr ""
 "تحذير: خطأ عند تحليل(إعراب) إصدار الرمز في refdes %s:\n"
 "‏\tتعذر تحليل المرفق symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1090
+#: libgeda/src/o_complex_basic.c:1097
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -435,7 +440,7 @@ msgstr ""
 "‏تحذير:  غرابة إصدار الرمز في refdes %s:\n"
 "‏\t‏symversion=%s مرفق إلى رمز مماثل، و لكن لا symversion= ضمن ملف الرمز\n"
 
-#: libgeda/src/o_complex_basic.c:1104
+#: libgeda/src/o_complex_basic.c:1111
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -444,17 +449,17 @@ msgstr ""
 "تحذير: عدم تطابق رمز الإصدار في refdes %s (%s):\n"
 "‏\tالرمز في المكتبة أحدث من مثيله\n"
 
-#: libgeda/src/o_complex_basic.c:1132
+#: libgeda/src/o_complex_basic.c:1139
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr "\t‏\tتغيير أساسي في الإصدار (الملف %.3f، المثيل %.3f، %s)!\n"
 
-#: libgeda/src/o_complex_basic.c:1150
+#: libgeda/src/o_complex_basic.c:1157
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\t‏\tتغيير ثانوي في الإصدار (الملف %.3f، المثيل %.3f)\n"
 
-#: libgeda/src/o_complex_basic.c:1161
+#: libgeda/src/o_complex_basic.c:1168
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -627,51 +632,51 @@ msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
 msgstr ""
 "عثر على whichend (أيّ-نهاية) غير صالح على دبوس (إعادة تعيين إلى الصفر): %d\n"
 
-#: libgeda/src/o_text_basic.c:318 libgeda/src/o_text_basic.c:328
-#: libgeda/src/o_text_basic.c:338
+#: libgeda/src/o_text_basic.c:317 libgeda/src/o_text_basic.c:327
+#: libgeda/src/o_text_basic.c:337
 msgid "Failed to parse text object"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:345
+#: libgeda/src/o_text_basic.c:344
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr "عثر على نص صفر الحجم [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:357
+#: libgeda/src/o_text_basic.c:356
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr "عثر على زاوية نص غير مدعومة [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:379
+#: libgeda/src/o_text_basic.c:378
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr "عثر على محاذاة نص غير مدعومة [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:381
+#: libgeda/src/o_text_basic.c:380
 msgid "Setting alignment to LOWER_LEFT\n"
 msgstr "تعيين المحاذاة إلى LOWER_LEFT (اليسار-السفلي)\n"
 
-#: libgeda/src/o_text_basic.c:402
+#: libgeda/src/o_text_basic.c:401
 #, c-format
 msgid "Unexpected end-of-file after %d lines"
 msgstr ""
 
-#: libgeda/src/s_clib.c:461
+#: libgeda/src/s_clib.c:460
 #, c-format
 msgid "Library command failed [%s]: %s\n"
 msgstr "فشل أمر المكتبة [%s]: %s\n"
 
-#: libgeda/src/s_clib.c:466
+#: libgeda/src/s_clib.c:465
 #, c-format
 msgid "Library command failed [%s]: Uncaught signal %i.\n"
 msgstr "فشل أمر المكتبة [%s]: إشارة لم تمسك %i.\n"
 
-#: libgeda/src/s_clib.c:470
+#: libgeda/src/s_clib.c:469
 #, c-format
 msgid "Library command failed [%s]\n"
 msgstr "فشل أمر المكتبة [%s]\n"
 
-#: libgeda/src/s_clib.c:471
+#: libgeda/src/s_clib.c:470
 #, c-format
 msgid ""
 "Error output was:\n"
@@ -680,31 +685,31 @@ msgstr ""
 "كان خطأ الإخراج:\n"
 "%s\n"
 
-#: libgeda/src/s_clib.c:557
+#: libgeda/src/s_clib.c:556
 #, c-format
 msgid "Library name [%s] already in use.  Using [%s].\n"
 msgstr "اسم المكتبة [%s] قيد الاستخدام بالفعل.استعمال [%s].\n"
 
-#: libgeda/src/s_clib.c:594
+#: libgeda/src/s_clib.c:593
 #, c-format
 msgid "Failed to open directory [%s]: %s\n"
 msgstr "فشل في فتح الدليل [%s]: %s\n"
 
-#: libgeda/src/s_clib.c:730
+#: libgeda/src/s_clib.c:729
 #, c-format
 msgid "Failed to scan library [%s]: Scheme function returned non-list\n"
 msgstr "فشل في فحص المكتبة [%s]: أرجعت الدالة Scheme كائن آخر ليس قائمة\n"
 
-#: libgeda/src/s_clib.c:738
+#: libgeda/src/s_clib.c:737
 #, c-format
 msgid "Non-string symbol name while scanning library [%s]\n"
 msgstr "عثر على اسم رمز غير نصي أثناء تفحص المكتبة [%s]\n"
 
-#: libgeda/src/s_clib.c:897 libgeda/src/s_clib.c:944
+#: libgeda/src/s_clib.c:896 libgeda/src/s_clib.c:943
 msgid "Cannot add library: name not specified\n"
 msgstr "يتعذر إضافة المكتبة: لم يحدد الاسم\n"
 
-#: libgeda/src/s_clib.c:904
+#: libgeda/src/s_clib.c:903
 #, c-format
 msgid ""
 "Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
@@ -712,44 +717,44 @@ msgstr ""
 "يتعذر إضافة المكتبة [%s]: يجب تحديد الأوامر 'list' (قائمة) و 'get' (أحصل "
 "على).\n"
 
-#: libgeda/src/s_clib.c:952
+#: libgeda/src/s_clib.c:951
 #, c-format
 msgid "Cannot add Scheme-library [%s]: callbacks must be closures\n"
 msgstr "يتعذّر إضافة مكتبة Scheme [%s]: الرد يجب أن يكون الإغلاق.\n"
 
-#: libgeda/src/s_clib.c:1079
+#: libgeda/src/s_clib.c:1078
 #, c-format
 msgid "Failed to load symbol from file [%s]: %s\n"
 msgstr "‏تعذر تحميل الرمز من الملف [%s]: %s\n"
 
-#: libgeda/src/s_clib.c:1139
+#: libgeda/src/s_clib.c:1138
 #, c-format
 msgid "Failed to load symbol data [%s] from source [%s]\n"
 msgstr "تعذر تحميل بيانات الرمز [%s] من المصدر [%s]\n"
 
-#: libgeda/src/s_clib.c:1381
+#: libgeda/src/s_clib.c:1380
 #, c-format
 msgid "Component [%s] was not found in the component library\n"
 msgstr "لم يعثر على المكون [%s] في المكتبة المكونات\n"
 
-#: libgeda/src/s_clib.c:1387
+#: libgeda/src/s_clib.c:1386
 #, c-format
 msgid "More than one component found with name [%s]\n"
 msgstr "أكثر من مكون واحد عثر عليه باسم [%s]\n"
 
-#: libgeda/src/s_color.c:232
+#: libgeda/src/s_color.c:231
 msgid "Color map entry must be a two-element list"
 msgstr "يجب أن يكون إدخال خارطة اللون قائمة عنصرين"
 
-#: libgeda/src/s_color.c:240
+#: libgeda/src/s_color.c:239
 msgid "Index in color map entry must be an integer"
 msgstr "يجب أن يكون الفهرس في إدخال خارطة اللون عددا صحيحا (integer)"
 
-#: libgeda/src/s_color.c:266
+#: libgeda/src/s_color.c:265
 msgid "Value in color map entry must be #f or a string"
 msgstr "يجب أن تكون القيمة في إدخال خارطة اللون f# أو نص"
 
-#: libgeda/src/s_hierarchy.c:75
+#: libgeda/src/s_hierarchy.c:75 libgeda/src/s_hierarchy.c:232
 msgid "Schematic not found in source library."
 msgstr ""
 
@@ -761,27 +766,27 @@ msgstr ""
 msgid "There are no schematics above the current one!\n"
 msgstr "لا توجد مخططات فوق المخطط الحالي!\n"
 
-#: libgeda/src/s_hierarchy.c:275
+#: libgeda/src/s_hierarchy.c:332
 #, fuzzy, c-format
 msgid "Failed to descend hierarchy into '%s': %s\n"
 msgstr "فشل في فتح الدليل [%s]: %s\n"
 
-#: libgeda/src/s_page.c:207
+#: libgeda/src/s_page.c:205
 #, c-format
 msgid "s_page_delete: Can't get the real filename of %s."
 msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏"
 
-#: libgeda/src/s_page.c:218
+#: libgeda/src/s_page.c:216
 #, c-format
 msgid "s_page_delete: Unable to delete backup file %s."
 msgstr "‏s_page_delete: غير قادرة على حذف الملف الاحتياطي %s."
 
-#: libgeda/src/s_page.c:493
+#: libgeda/src/s_page.c:491
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "‏حفظ [%s]\n"
 
-#: libgeda/src/s_page.c:499
+#: libgeda/src/s_page.c:497
 #, c-format
 msgid "Could NOT save [%s]\n"
 msgstr "تعذّر حفظ [‎%s‬]\n"
@@ -968,11 +973,11 @@ msgstr ""
 msgid "Parse error: ~s"
 msgstr ""
 
-#: libgeda/src/edascmhookproxy.c:75
+#: libgeda/src/edascmhookproxy.c:81
 msgid "Scheme hook"
 msgstr ""
 
-#: libgeda/src/edascmhookproxy.c:76
+#: libgeda/src/edascmhookproxy.c:82
 msgid "The Scheme-level hook to proxy"
 msgstr ""
 

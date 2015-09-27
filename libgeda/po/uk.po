@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2014-03-08 22:17+0000\n"
+"POT-Creation-Date: 2015-09-26 23:29+0300\n"
 "PO-Revision-Date: 2012-01-27 14:12+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -47,7 +47,7 @@ msgstr ""
 msgid "o_save_objects: object %p has unknown type '%c'\n"
 msgstr "o_save_objects: об’єкт %p має не визначений тип '%c'\n"
 
-#: libgeda/src/a_basic.c:234 libgeda/src/f_basic.c:377
+#: libgeda/src/a_basic.c:234 libgeda/src/f_basic.c:372
 #, c-format
 msgid "File %s is read-only"
 msgstr ""
@@ -101,12 +101,12 @@ msgstr ""
 msgid "Failed to stat [%s]: %s"
 msgstr ""
 
-#: libgeda/src/f_basic.c:216
+#: libgeda/src/f_basic.c:211
 #, c-format
 msgid "Cannot find file %s: %s"
 msgstr "Не можу знайти файл %s: %s"
 
-#: libgeda/src/f_basic.c:263
+#: libgeda/src/f_basic.c:258
 #, c-format
 msgid ""
 "\n"
@@ -119,12 +119,12 @@ msgstr ""
 "  %s.\n"
 "\n"
 
-#: libgeda/src/f_basic.c:265
+#: libgeda/src/f_basic.c:260
 msgid "I could not guess if it is newer, so you have to do it manually.\n"
 msgstr ""
 "Не можу визначити чи він більш новий, тому Вам слід зробити це самостійно.\n"
 
-#: libgeda/src/f_basic.c:267
+#: libgeda/src/f_basic.c:262
 msgid ""
 "The backup copy is newer than the schematic, so it seems you should load it "
 "instead of the original file.\n"
@@ -132,7 +132,7 @@ msgstr ""
 "Файл резерної копії новіший за файл схеми, здається Вам слід завантажити "
 "його замість оригіналу.\n"
 
-#: libgeda/src/f_basic.c:269
+#: libgeda/src/f_basic.c:264
 msgid ""
 "Gschem usually makes backup copies automatically, and this situation happens "
 "when it crashed or it was forced to exit abruptly.\n"
@@ -140,7 +140,7 @@ msgstr ""
 "Gschem зазвичай автоматично створює резервні копії, а така ситуація "
 "трапляється при збої чи вимушеному несподіваному виході.\n"
 
-#: libgeda/src/f_basic.c:272
+#: libgeda/src/f_basic.c:267
 msgid ""
 "\n"
 "Run gschem and correct the situation.\n"
@@ -150,118 +150,118 @@ msgstr ""
 "Запустіть gschem та виправте ситуацію.\n"
 "\n"
 
-#: libgeda/src/f_basic.c:367
+#: libgeda/src/f_basic.c:362
 #, c-format
 msgid "Can't get the real filename of %s: %s"
 msgstr ""
 
-#: libgeda/src/f_basic.c:398
+#: libgeda/src/f_basic.c:393
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 
-#: libgeda/src/f_basic.c:404
+#: libgeda/src/f_basic.c:399
 #, c-format
 msgid "Can't save backup file: %s."
 msgstr "Не можу зберегти файл резервної копії: %s."
 
-#: libgeda/src/f_basic.c:414
+#: libgeda/src/f_basic.c:409
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
 "Не мжу встановити для файлу резерної копії [%s] режим тільки для читання\n"
 
-#: libgeda/src/f_basic.c:463
+#: libgeda/src/f_basic.c:458
 #, c-format
 msgid "Failed to restore permissions on '%s': %s\n"
 msgstr ""
 
-#: libgeda/src/f_basic.c:468
+#: libgeda/src/f_basic.c:463
 #, c-format
 msgid "Failed to restore ownership on '%s': %s\n"
 msgstr ""
 
-#: libgeda/src/f_basic.c:478
+#: libgeda/src/f_basic.c:473
 #, c-format
 msgid "Could NOT save file: %s"
 msgstr ""
 
-#: libgeda/src/f_basic.c:725
+#: libgeda/src/f_basic.c:720
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: libgeda/src/g_basic.c:260
+#: libgeda/src/g_basic.c:259
 msgid ""
 "\n"
 "Backtrace:\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:99
+#: libgeda/src/g_rc.c:98
 #, c-format
 msgid "Invalid mode [%s] passed to %s\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:139
+#: libgeda/src/g_rc.c:138
 msgid "RC file already loaded"
 msgstr ""
 
-#: libgeda/src/g_rc.c:183
+#: libgeda/src/g_rc.c:182
 #, c-format
 msgid "Failed to load config from '%s': %s\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:207
+#: libgeda/src/g_rc.c:206
 #, c-format
 msgid "Loaded RC file [%s]\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:211
+#: libgeda/src/g_rc.c:210
 #, c-format
 msgid "Failed to load RC file [%s]: "
 msgstr ""
 
-#: libgeda/src/g_rc.c:328
+#: libgeda/src/g_rc.c:327
 msgid "ERROR: An unknown error occurred while parsing configuration files."
 msgstr ""
 
-#: libgeda/src/g_rc.c:340 libgeda/src/g_rc.c:341
+#: libgeda/src/g_rc.c:339 libgeda/src/g_rc.c:340
 #, c-format
 msgid "ERROR: %s\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:347
+#: libgeda/src/g_rc.c:346
 #, c-format
 msgid "ERROR: The %s log may contain more information.\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:468
+#: libgeda/src/g_rc.c:467
 #, c-format
 msgid "Invalid path [%s] passed to component-library\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:607
+#: libgeda/src/g_rc.c:606
 #, c-format
 msgid "Invalid path [%s] passed to source-library\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:654 libgeda/src/g_rc.c:663
+#: libgeda/src/g_rc.c:653 libgeda/src/g_rc.c:662
 #, c-format
 msgid "Invalid path [%s] passed to source-library-search\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:863
+#: libgeda/src/g_rc.c:862
 #, c-format
 msgid "Invalid path [%s] passed to bitmap-directory\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:996
+#: libgeda/src/g_rc.c:995
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:1018
+#: libgeda/src/g_rc.c:1017
 msgid "always-promote-attribute: list element is not a string"
 msgstr ""
 
@@ -275,36 +275,41 @@ msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
 msgstr "Дуга з нульовим радіусом [ %c %d, %d, %d, %d, %d, %d ]\n"
 
 #: libgeda/src/o_arc_basic.c:278 libgeda/src/o_box_basic.c:320
-#: libgeda/src/o_bus_basic.c:150 libgeda/src/o_circle_basic.c:282
-#: libgeda/src/o_line_basic.c:257 libgeda/src/o_net_basic.c:137
+#: libgeda/src/o_bus_basic.c:146 libgeda/src/o_circle_basic.c:282
+#: libgeda/src/o_line_basic.c:257 libgeda/src/o_net_basic.c:132
 #: libgeda/src/o_path_basic.c:206 libgeda/src/o_pin_basic.c:154
-#: libgeda/src/o_text_basic.c:387
+#: libgeda/src/o_text_basic.c:386
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
 msgstr "Недопустимий колір [ %s ]\n"
 
 #: libgeda/src/o_arc_basic.c:279 libgeda/src/o_box_basic.c:321
-#: libgeda/src/o_bus_basic.c:151 libgeda/src/o_circle_basic.c:283
-#: libgeda/src/o_line_basic.c:258 libgeda/src/o_net_basic.c:138
+#: libgeda/src/o_bus_basic.c:147 libgeda/src/o_circle_basic.c:283
+#: libgeda/src/o_line_basic.c:258 libgeda/src/o_net_basic.c:133
 #: libgeda/src/o_path_basic.c:207 libgeda/src/o_pin_basic.c:155
-#: libgeda/src/o_text_basic.c:388
+#: libgeda/src/o_text_basic.c:387
 msgid "Setting color to default color\n"
 msgstr "Колір виставлено за замовчуванням\n"
 
-#: libgeda/src/o_attrib.c:117
+#: libgeda/src/o_attrib.c:111
+#, c-format
+msgid "Attribute [%s] already attached\n"
+msgstr ""
+
+#: libgeda/src/o_attrib.c:116
 msgid "Attempt to attach non text item as an attribute!\n"
 msgstr "Спроба встановити не текстовий елемент як атрибут\n"
 
-#: libgeda/src/o_attrib.c:122
+#: libgeda/src/o_attrib.c:121
 #, c-format
 msgid "Attempt to attach attribute [%s] to more than one object\n"
 msgstr "Спроба додати трибут [%s] більш ніж до одного об'єкту\n"
 
-#: libgeda/src/o_attrib.c:325
+#: libgeda/src/o_attrib.c:324
 msgid "Tried to attach a non-text item as an attribute"
 msgstr ""
 
-#: libgeda/src/o_attrib.c:332
+#: libgeda/src/o_attrib.c:331
 msgid "Unexpected end-of-file in attribute list"
 msgstr ""
 
@@ -327,12 +332,12 @@ msgstr ""
 msgid "Found a zero length bus [ %c %d %d %d %d %d ]\n"
 msgstr "Знайдено шину нульової довжини [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_bus_basic.c:156
+#: libgeda/src/o_bus_basic.c:152
 #, c-format
 msgid "Found an invalid bus ripper direction [ %s ]\n"
 msgstr ""
 
-#: libgeda/src/o_bus_basic.c:157
+#: libgeda/src/o_bus_basic.c:153
 msgid "Resetting direction to neutral (no direction)\n"
 msgstr ""
 
@@ -373,7 +378,7 @@ msgstr ""
 "Знайдено не правильно зорієнтований компонент [ %c %d %d %d %d %d %s ]\n"
 
 #: libgeda/src/o_complex_basic.c:719 libgeda/src/o_picture.c:104
-#: libgeda/src/o_text_basic.c:359
+#: libgeda/src/o_text_basic.c:358
 msgid "Setting angle to 0\n"
 msgstr ""
 
@@ -388,28 +393,28 @@ msgstr ""
 msgid "Setting mirror to 0\n"
 msgstr ""
 
-#: libgeda/src/o_complex_basic.c:1045
+#: libgeda/src/o_complex_basic.c:1052
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=%s\n"
 msgstr ""
 
-#: libgeda/src/o_complex_basic.c:1049
+#: libgeda/src/o_complex_basic.c:1056
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=\n"
 msgstr ""
 
-#: libgeda/src/o_complex_basic.c:1065
+#: libgeda/src/o_complex_basic.c:1072
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse attached symversion=%s\n"
 msgstr ""
 
-#: libgeda/src/o_complex_basic.c:1090
+#: libgeda/src/o_complex_basic.c:1097
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -417,24 +422,24 @@ msgid ""
 "symbol file\n"
 msgstr ""
 
-#: libgeda/src/o_complex_basic.c:1104
+#: libgeda/src/o_complex_basic.c:1111
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
 "\tSymbol in library is newer than instantiated symbol\n"
 msgstr ""
 
-#: libgeda/src/o_complex_basic.c:1132
+#: libgeda/src/o_complex_basic.c:1139
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr ""
 
-#: libgeda/src/o_complex_basic.c:1150
+#: libgeda/src/o_complex_basic.c:1157
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr ""
 
-#: libgeda/src/o_complex_basic.c:1161
+#: libgeda/src/o_complex_basic.c:1168
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -600,125 +605,125 @@ msgstr ""
 msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:318 libgeda/src/o_text_basic.c:328
-#: libgeda/src/o_text_basic.c:338
+#: libgeda/src/o_text_basic.c:317 libgeda/src/o_text_basic.c:327
+#: libgeda/src/o_text_basic.c:337
 msgid "Failed to parse text object"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:345
+#: libgeda/src/o_text_basic.c:344
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:357
+#: libgeda/src/o_text_basic.c:356
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:379
+#: libgeda/src/o_text_basic.c:378
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:381
+#: libgeda/src/o_text_basic.c:380
 msgid "Setting alignment to LOWER_LEFT\n"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:402
+#: libgeda/src/o_text_basic.c:401
 #, c-format
 msgid "Unexpected end-of-file after %d lines"
 msgstr ""
 
-#: libgeda/src/s_clib.c:461
+#: libgeda/src/s_clib.c:460
 #, c-format
 msgid "Library command failed [%s]: %s\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:466
+#: libgeda/src/s_clib.c:465
 #, c-format
 msgid "Library command failed [%s]: Uncaught signal %i.\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:470
+#: libgeda/src/s_clib.c:469
 #, c-format
 msgid "Library command failed [%s]\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:471
+#: libgeda/src/s_clib.c:470
 #, c-format
 msgid ""
 "Error output was:\n"
 "%s\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:557
+#: libgeda/src/s_clib.c:556
 #, c-format
 msgid "Library name [%s] already in use.  Using [%s].\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:594
+#: libgeda/src/s_clib.c:593
 #, c-format
 msgid "Failed to open directory [%s]: %s\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:730
+#: libgeda/src/s_clib.c:729
 #, c-format
 msgid "Failed to scan library [%s]: Scheme function returned non-list\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:738
+#: libgeda/src/s_clib.c:737
 #, c-format
 msgid "Non-string symbol name while scanning library [%s]\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:897 libgeda/src/s_clib.c:944
+#: libgeda/src/s_clib.c:896 libgeda/src/s_clib.c:943
 msgid "Cannot add library: name not specified\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:904
+#: libgeda/src/s_clib.c:903
 #, c-format
 msgid ""
 "Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:952
+#: libgeda/src/s_clib.c:951
 #, c-format
 msgid "Cannot add Scheme-library [%s]: callbacks must be closures\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:1079
+#: libgeda/src/s_clib.c:1078
 #, c-format
 msgid "Failed to load symbol from file [%s]: %s\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:1139
+#: libgeda/src/s_clib.c:1138
 #, c-format
 msgid "Failed to load symbol data [%s] from source [%s]\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:1381
+#: libgeda/src/s_clib.c:1380
 #, c-format
 msgid "Component [%s] was not found in the component library\n"
 msgstr ""
 
-#: libgeda/src/s_clib.c:1387
+#: libgeda/src/s_clib.c:1386
 #, c-format
 msgid "More than one component found with name [%s]\n"
 msgstr ""
 
-#: libgeda/src/s_color.c:232
+#: libgeda/src/s_color.c:231
 msgid "Color map entry must be a two-element list"
 msgstr ""
 
-#: libgeda/src/s_color.c:240
+#: libgeda/src/s_color.c:239
 msgid "Index in color map entry must be an integer"
 msgstr ""
 
-#: libgeda/src/s_color.c:266
+#: libgeda/src/s_color.c:265
 msgid "Value in color map entry must be #f or a string"
 msgstr ""
 
-#: libgeda/src/s_hierarchy.c:75
+#: libgeda/src/s_hierarchy.c:75 libgeda/src/s_hierarchy.c:232
 msgid "Schematic not found in source library."
 msgstr ""
 
@@ -730,27 +735,27 @@ msgstr ""
 msgid "There are no schematics above the current one!\n"
 msgstr ""
 
-#: libgeda/src/s_hierarchy.c:275
+#: libgeda/src/s_hierarchy.c:332
 #, c-format
 msgid "Failed to descend hierarchy into '%s': %s\n"
 msgstr ""
 
-#: libgeda/src/s_page.c:207
+#: libgeda/src/s_page.c:205
 #, c-format
 msgid "s_page_delete: Can't get the real filename of %s."
 msgstr ""
 
-#: libgeda/src/s_page.c:218
+#: libgeda/src/s_page.c:216
 #, c-format
 msgid "s_page_delete: Unable to delete backup file %s."
 msgstr ""
 
-#: libgeda/src/s_page.c:493
+#: libgeda/src/s_page.c:491
 #, c-format
 msgid "Saved [%s]\n"
 msgstr ""
 
-#: libgeda/src/s_page.c:499
+#: libgeda/src/s_page.c:497
 #, c-format
 msgid "Could NOT save [%s]\n"
 msgstr ""
@@ -937,11 +942,11 @@ msgstr ""
 msgid "Parse error: ~s"
 msgstr ""
 
-#: libgeda/src/edascmhookproxy.c:75
+#: libgeda/src/edascmhookproxy.c:81
 msgid "Scheme hook"
 msgstr ""
 
-#: libgeda/src/edascmhookproxy.c:76
+#: libgeda/src/edascmhookproxy.c:82
 msgid "The Scheme-level hook to proxy"
 msgstr ""
 

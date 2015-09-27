@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2014-03-08 21:51+0000\n"
+"POT-Creation-Date: 2015-09-13 16:27+0300\n"
 "PO-Revision-Date: 2012-01-27 14:17+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
@@ -31,7 +31,7 @@ msgstr "Manipular los atributs dels components amb gattrib"
 msgid "o_save: Could not open [%s]\n"
 msgstr ""
 
-#: gattrib/src/gattrib.c:153
+#: gattrib/src/gattrib.c:154
 #, c-format
 msgid ""
 "gEDA/gattrib version %s%s.%s\n"
@@ -42,12 +42,12 @@ msgid ""
 "\n"
 msgstr ""
 
-#: gattrib/src/gattrib.c:189
+#: gattrib/src/gattrib.c:190
 #, c-format
 msgid "Couldn't find file [%s]\n"
 msgstr ""
 
-#: gattrib/src/g_rc.c:71
+#: gattrib/src/g_rc.c:70
 #, c-format
 msgid ""
 "You are running gEDA/gaf version [%s%s.%s],\n"
@@ -55,11 +55,11 @@ msgid ""
 "Please be sure that you have the latest rc file.\n"
 msgstr ""
 
-#: gattrib/src/gtksheet_2_2.c:6199
+#: gattrib/src/gtksheet_2_2.c:6251
 msgid "Entry type must be GtkEntry subclass, using default"
 msgstr ""
 
-#: gattrib/src/gtksheet_2_2.c:8379
+#: gattrib/src/gtksheet_2_2.c:8408
 msgid "Widget must be a GtkSheet child"
 msgstr ""
 
@@ -283,15 +283,15 @@ msgstr ""
 msgid "Enter new attribute name"
 msgstr ""
 
-#: gattrib/src/x_dialog.c:146
+#: gattrib/src/x_dialog.c:147
 msgid "Are you sure you want to delete this attribute?"
 msgstr ""
 
-#: gattrib/src/x_dialog.c:148
+#: gattrib/src/x_dialog.c:149
 msgid "Delete attribute"
 msgstr ""
 
-#: gattrib/src/x_dialog.c:173
+#: gattrib/src/x_dialog.c:174
 msgid ""
 "One or more components have been found with missing symbol files!\n"
 "\n"
@@ -302,33 +302,33 @@ msgid ""
 "\"Forward\" to continue working with gattrib.\n"
 msgstr ""
 
-#: gattrib/src/x_dialog.c:186
+#: gattrib/src/x_dialog.c:187
 msgid "Missing symbol file found for component!"
 msgstr ""
 
-#: gattrib/src/x_dialog.c:214
+#: gattrib/src/x_dialog.c:215
 msgid "Save the changes before closing?"
 msgstr ""
 
-#: gattrib/src/x_dialog.c:215
+#: gattrib/src/x_dialog.c:216
 msgid "<big><b>"
 msgstr ""
 
-#: gattrib/src/x_dialog.c:215
+#: gattrib/src/x_dialog.c:216
 msgid "</b></big>"
 msgstr ""
 
-#: gattrib/src/x_dialog.c:217
+#: gattrib/src/x_dialog.c:218
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 
-#: gattrib/src/x_dialog.c:227
+#: gattrib/src/x_dialog.c:228
 msgid "Close without saving"
 msgstr ""
 
-#: gattrib/src/x_dialog.c:274
+#: gattrib/src/x_dialog.c:275
 msgid ""
-"Sorry -- you have chosen a feature which has nоt been\n"
+"Sorry -- you have chosen a feature which has not been\n"
 "implemented yet.\n"
 "\n"
 "Gattrib is an open-source program which\n"
@@ -340,15 +340,15 @@ msgid ""
 "Otherwise, just hang tight -- I'll implement this feature soon!\n"
 msgstr ""
 
-#: gattrib/src/x_dialog.c:282
+#: gattrib/src/x_dialog.c:283
 msgid "Unimplemented feature!"
 msgstr ""
 
-#: gattrib/src/x_dialog.c:309
+#: gattrib/src/x_dialog.c:310
 msgid "Fatal error"
 msgstr ""
 
-#: gattrib/src/x_dialog.c:324
+#: gattrib/src/x_dialog.c:325
 #, c-format
 msgid ""
 "gEDA : GPL Electronic Design Automation\n"
@@ -362,11 +362,11 @@ msgid ""
 "and gtkextra, as well as support from the gEDA community."
 msgstr ""
 
-#: gattrib/src/x_dialog.c:335
+#: gattrib/src/x_dialog.c:336
 msgid "About..."
 msgstr ""
 
-#: gattrib/src/x_dialog.c:351
+#: gattrib/src/x_dialog.c:352
 msgid "Export CSV"
 msgstr ""
 
@@ -446,26 +446,26 @@ msgstr ""
 msgid "gattrib -- gEDA attribute editor"
 msgstr "Editor d'atributs gEDA"
 
-#: gattrib/src/x_window.c:285
+#: gattrib/src/x_window.c:284
 #, c-format
 msgid ""
 "Error loading %s:\n"
 "%s\n"
 msgstr ""
 
-#: gattrib/src/x_window.c:322
+#: gattrib/src/x_window.c:321
 msgid ""
 "No components found in entire design!\n"
 "Do you have refdeses on your components?"
 msgstr ""
 
-#: gattrib/src/x_window.c:327
+#: gattrib/src/x_window.c:326
 msgid ""
 "No configurable component attributes found in entire design!\n"
 "Please attach at least some attributes before running gattrib."
 msgstr ""
 
-#: gattrib/src/x_window.c:332
+#: gattrib/src/x_window.c:331
 msgid ""
 "No pins found on any components!\n"
 "Please check your design."

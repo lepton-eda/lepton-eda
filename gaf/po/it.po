@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gaf\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2014-08-12 17:38+0200\n"
+"POT-Creation-Date: 2015-08-22 12:59+0300\n"
 "PO-Revision-Date: 2014-12-28 22:09+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../gaf/gaf.c:65
+#: gaf/gaf.c:66
 #, c-format
 msgid ""
 "Usage: gaf [OPTION...] COMMAND [ARGS ...]\n"
@@ -50,7 +50,7 @@ msgstr ""
 "\n"
 "Segnalare eventuali difetti a %s.\n"
 
-#: ../../gaf/gaf.c:88
+#: gaf/gaf.c:89
 #, c-format
 msgid ""
 "gEDA/gaf %s (g%.7s)\n"
@@ -67,15 +67,16 @@ msgstr ""
 "nella distribuzione di gEDA.\n"
 "NON C'È ALCUNA GARANZIA, nei limiti della legislazione vigente.\n"
 
-#. getopt_long already printed an error message
-#: ../../gaf/gaf.c:136
+#: gaf/gaf.c:137
 #, c-format
 msgid ""
 "\n"
 "Run `gaf --help' for more information.\n"
-msgstr "\nEseguire \"gaf --help\" per ulteriori informazioni.\n"
+msgstr ""
+"\n"
+"Eseguire \"gaf --help\" per ulteriori informazioni.\n"
 
-#: ../../gaf/gaf.c:148
+#: gaf/gaf.c:149
 #, c-format
 msgid ""
 "ERROR: You must specify a command to run.\n"
@@ -86,7 +87,7 @@ msgstr ""
 "\n"
 "Eseguire \"gaf --help\" per ulteriori informazioni.\n"
 
-#: ../../gaf/gaf.c:166
+#: gaf/gaf.c:167
 #, c-format
 msgid ""
 "ERROR: Unrecognised command `%s'.\n"
@@ -97,7 +98,7 @@ msgstr ""
 "\n"
 "Eseguire \"gaf --help\" per ulteriori informazioni.\n"
 
-#: ../../gaf/config.c:47
+#: gaf/config.c:47
 #, c-format
 msgid ""
 "Usage: gaf config [OPTION] [GROUP KEY [VALUE]]\n"
@@ -139,73 +140,83 @@ msgstr ""
 "\n"
 "Segnalare eventuali difetti a %s.\n"
 
-#: ../../gaf/config.c:68
+#: gaf/config.c:68
 msgid ""
 "\n"
 "Run `gaf config --help' for more information.\n"
-msgstr "\nEseguire \"gaf config --help\" per ulteriori informazioni.\n"
+msgstr ""
+"\n"
+"Eseguire \"gaf config --help\" per ulteriori informazioni.\n"
 
-#: ../../gaf/config.c:69
+#: gaf/config.c:69
 msgid "ERROR: You may only specify a single configuration store.\n"
-msgstr "ERRORE: si può specificare solo un singolo archivio di configurazione.\n"
+msgstr ""
+"ERRORE: si può specificare solo un singolo archivio di configurazione.\n"
 
-#: ../../gaf/config.c:158
+#: gaf/config.c:158
 #, c-format
 msgid "WARNING: Could not load '%s': %s.\n"
 msgstr "ATTENZIONE: impossibile caricare \"%s\": %s.\n"
 
-#: ../../gaf/config.c:170
+#: gaf/config.c:170
 #, c-format
 msgid "ERROR: You must specify both configuration group and key.\n"
-msgstr "ERRORE: si deve specificare sia il gruppo di configurazione che la chiave.\n"
+msgstr ""
+"ERRORE: si deve specificare sia il gruppo di configurazione che la chiave.\n"
 
-#: ../../gaf/config.c:182 ../../gaf/config.c:196 ../../gaf/export.c:318
+#: gaf/config.c:182 gaf/config.c:196 gaf/export.c:317
 #, c-format
 msgid "ERROR: %s.\n"
 msgstr "ERRORE: %s.\n"
 
-#: ../../gaf/export.c:146
+#: gaf/export.c:146
 #, c-format
 msgid "ERROR: Bad argument '%s' to %s option.\n"
 msgstr "ERRORE: argomento errato \"%s\" all'opzione %s.\n"
 
-#: ../../gaf/export.c:147
+#: gaf/export.c:147
 msgid ""
 "\n"
 "Run `gaf export --help' for more information.\n"
-msgstr "\nEseguire `gaf export --help' per ulteriori informazioni.\n"
+msgstr ""
+"\n"
+"Eseguire `gaf export --help' per ulteriori informazioni.\n"
 
-#: ../../gaf/export.c:188
+#: gaf/export.c:187
 #, c-format
 msgid "ERROR: Cannot infer output format from filename '%s'.\n"
-msgstr "ERRORE: impossibile ricavare il formato di uscita dal nome del file \"%s\".\n"
+msgstr ""
+"ERRORE: impossibile ricavare il formato di uscita dal nome del file \"%s\".\n"
 
-#: ../../gaf/export.c:205
+#: gaf/export.c:204
 #, c-format
 msgid "ERROR: Cannot find supported format for filename '%s'.\n"
-msgstr "ERRORE: impossibile trovare il formato supportato per il file di nome \"%s\".\n"
+msgstr ""
+"ERRORE: impossibile trovare il formato supportato per il file di nome \"%s"
+"\".\n"
 
-#: ../../gaf/export.c:210
+#: gaf/export.c:209
 #, c-format
 msgid "ERROR: Unsupported output format '%s'.\n"
 msgstr "ERRORE: formato di uscita \"%s\" non supportato.\n"
 
-#: ../../gaf/export.c:222
+#: gaf/export.c:221
 #, c-format
 msgid "ERROR: Selected output format does not support multipage output\n"
-msgstr "ERRORE: il formato di uscita selezionato non supporta le pagine multiple\n"
+msgstr ""
+"ERRORE: il formato di uscita selezionato non supporta le pagine multiple\n"
 
-#: ../../gaf/export.c:234
+#: gaf/export.c:233
 #, c-format
 msgid "ERROR: Failed to load '%s': %s\n"
 msgstr "ERRORE: fallito il caricamento di \"%s\": %s\n"
 
-#: ../../gaf/export.c:240
+#: gaf/export.c:239
 #, c-format
 msgid "ERROR: Failed to change directory to '%s': %s\n"
 msgstr "ERRORE: fallito il cambiamento di cartella a \"%s\": %s\n"
 
-#: ../../gaf/export.c:904
+#: gaf/export.c:903
 #, c-format
 msgid ""
 "Usage: gaf export [OPTION ...] -o OUTPUT [--] FILE ...\n"
@@ -252,17 +263,17 @@ msgstr ""
 "\n"
 "Segnalare eventuali difetti a %s.\n"
 
-#: ../../gaf/export.c:1083
+#: gaf/export.c:1082
 #, c-format
 msgid "ERROR: You must specify at least one input filename.\n"
 msgstr "ERRORE: bisogna specificare almeno un nome file in ingresso.\n"
 
-#: ../../gaf/export.c:1092
+#: gaf/export.c:1091
 #, c-format
 msgid "ERROR: You must specify an output filename.\n"
 msgstr "ERRORE: bisogna specificare un nome file in uscita.\n"
 
-#: ../../gaf/shell.c:46
+#: gaf/shell.c:46
 #, c-format
 msgid ""
 "Usage: gaf shell [OPTION ...]\n"
@@ -288,21 +299,24 @@ msgstr ""
 "\n"
 "  -s FILE        carica il codice sorgente Scheme da FILE ed esce\n"
 "  -c EXPR        elabora l'espressione Scheme EXPR ed esce\n"
-"  --             blocca la scansione degli argomenti ed esegue interattivamente\n"
+"  --             blocca la scansione degli argomenti ed esegue "
+"interattivamente\n"
 "\n"
 "L'opzione soprastante blocca l'elaborazione degli argomenti e passa tutti i\n"
 "rimanenti argomenti come valore di (command-line).\n"
 "\n"
-"  -L CARTELLA    aggiunge CARTELLA in cima al percorso di caricamento di Scheme\n"
+"  -L CARTELLA    aggiunge CARTELLA in cima al percorso di caricamento di "
+"Scheme\n"
 "  -l FILE        carica il codice sorgente Scheme da FILE\n"
 "  -h, --help     mostra le informazioni sull'uso ed esce\n"
 "\n"
 "Segnalare eventuali difetti a %s.\n"
 
-#. getopt_long already printed an error message
-#: ../../gaf/shell.c:102
+#: gaf/shell.c:102
 #, c-format
 msgid ""
 "\n"
 "Run `gaf shell --help' for more information.\n"
-msgstr "\nEseguire `gaf shell --help' per ulteriori informazioni.\n"
+msgstr ""
+"\n"
+"Eseguire `gaf shell --help' per ulteriori informazioni.\n"
