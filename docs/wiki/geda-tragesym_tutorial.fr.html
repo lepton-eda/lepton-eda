@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Autres langues: <a href="geda-tragesym_tutorial.html" class="wikilink1" title="geda-tragesym_tutorial.html">English</a> <a href="geda-tragesym_tutorial.ru.html" class="wikilink1" title="geda-tragesym_tutorial.ru.html">Русский</a></em>
+</p>
 
-<h1 class="sectionedit1993"><a name="creer_des_symboles_gschem_rapidement_et_facilement_en_utilisant_tragesym_et_un_tableur" id="creer_des_symboles_gschem_rapidement_et_facilement_en_utilisant_tragesym_et_un_tableur">Créer des symboles gschem rapidement et facilement en utilisant tragesym et un tableur</a></h1>
+<h1 class="sectionedit1"><a name="creer_des_symboles_gschem_rapidement_et_facilement_en_utilisant_tragesym_et_un_tableur" id="creer_des_symboles_gschem_rapidement_et_facilement_en_utilisant_tragesym_et_un_tableur">Créer des symboles gschem rapidement et facilement en utilisant tragesym et un tableur</a></h1>
 <div class="level1">
 
 <p>
@@ -20,8 +23,8 @@ La création de symboles pour le dessin de schémas peut prendre beaucoup de tem
 </p>
 
 </div>
-<!-- EDIT1993 SECTION "Créer des symboles gschem rapidement et facilement en utilisant tragesym et un tableur" [1-532] -->
-<h2 class="sectionedit1994"><a name="etapes_necessaires" id="etapes_necessaires">Étapes nécessaires</a></h2>
+<!-- EDIT1 SECTION "Créer des symboles gschem rapidement et facilement en utilisant tragesym et un tableur" [91-622] -->
+<h2 class="sectionedit2"><a name="etapes_necessaires" id="etapes_necessaires">Étapes nécessaires</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Étape 1: Ouvrir un fichier de formulaire tragesym</div>
@@ -41,28 +44,28 @@ La création de symboles pour le dessin de schémas peut prendre beaucoup de tem
 </ul>
 
 </div>
-<!-- EDIT1994 SECTION "Étapes nécessaires" [533-1094] -->
-<h2 class="sectionedit1995"><a name="etape_1ouvrir_un_fichier_de_formulaire_tragesym" id="etape_1ouvrir_un_fichier_de_formulaire_tragesym">Étape 1: Ouvrir un fichier de formulaire tragesym</a></h2>
+<!-- EDIT2 SECTION "Étapes nécessaires" [623-1184] -->
+<h2 class="sectionedit3"><a name="etape_1ouvrir_un_fichier_de_formulaire_tragesym" id="etape_1ouvrir_un_fichier_de_formulaire_tragesym">Étape 1: Ouvrir un fichier de formulaire tragesym</a></h2>
 <div class="level2">
 
 <p>
-tragesym est fourni avec deux fichiers de formulaires. L&#039;un est en <a href="media/tragesym/template.txt" class="media" target="_blank" title="tragesym:template.txt">texte ASCII</a>, le second est une <a href="media/tragesym/template.ods" class="media" target="_blank" title="tragesym:template.ods">feuille de calcul OpenOffice</a>. Vous pouvez aussi les obtenir depuis le paquet d&#039;utilitaires gEDA (utils/examples/tragesym/template.src et utils/examples/tragesym/template.ods).
+tragesym est fourni avec deux fichiers de formulaires. L&#039;un est en <a href="media/tragesym/template.txt" class="media mediafile mf_txt" title="tragesym:template.txt">texte ASCII</a>, le second est une <a href="media/tragesym/template.ods" class="media mediafile mf_ods" title="tragesym:template.ods">feuille de calcul OpenOffice</a>. Vous pouvez aussi les obtenir depuis le paquet d&#039;utilitaires gEDA (utils/examples/tragesym/template.src et utils/examples/tragesym/template.ods).
  Si vous préférez un tableur différent, comme gnumeric ou kspread, créez simplement votre propre fichier formulaire texte à partir de celui qui est fourni. La seule différence entre les formulaires texte et calcul est la syntaxe des valeurs dans les sections [options] et [geda_attr]. Le fichier texte les sépare avec un signe (clé=valeur), la feuille de calcul obtient la valeur dans la seconde colonne (qui devient une tabulation après avoir été exportée).
 </p>
 
 </div>
-<!-- EDIT1995 SECTION "Étape 1: Ouvrir un fichier de formulaire tragesym" [1095-1958] -->
-<h2 class="sectionedit1996"><a name="etape_2telecharger_le_fichier_technique_du_composant_et_trouver_la_liste_des_broches" id="etape_2telecharger_le_fichier_technique_du_composant_et_trouver_la_liste_des_broches">Étape 2: Télécharger le fichier technique du composant et trouver la liste des broches</a></h2>
+<!-- EDIT3 SECTION "Étape 1: Ouvrir un fichier de formulaire tragesym" [1185-2048] -->
+<h2 class="sectionedit4"><a name="etape_2telecharger_le_fichier_technique_du_composant_et_trouver_la_liste_des_broches" id="etape_2telecharger_le_fichier_technique_du_composant_et_trouver_la_liste_des_broches">Étape 2: Télécharger le fichier technique du composant et trouver la liste des broches</a></h2>
 <div class="level2">
 
 <p>
-Pour cet exemple, nous allons créer un symbole avec les ports IO du PCA9555 16-bit IIC IO de Philips 
+Pour cet exemple, nous allons créer un symbole avec les ports IO du PCA9555 16-bit IIC IO de Philips
 Semiconductor. La description du produit et la fiche technique sont disponibles sur Philips :
 [<a href="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html]" class="urlextern" title="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html]"  rel="nofollow">http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html]</a>. Téléchargez la fiche technique et ouvrez-la avec un  visualiseur pdf qui permet la copie du texte à l&#039;extérieur du <acronym title="Portable Document Format">PDF</acronym>, tel que xpdf (téléchargeable sur [<a href="http://www.foolabs.com/xpdf/home.html]" class="urlextern" title="http://www.foolabs.com/xpdf/home.html]"  rel="nofollow">http://www.foolabs.com/xpdf/home.html]</a>). Passez les pages jusqu&#039;à ce que vous ayez trouvé le brochage ou le composant·:
 </p>
 
 <p>
-<a href="media/tragesym/kpdf_pinconfiguration.png" class="media" target="_blank" title="tragesym:kpdf_pinconfiguration.png"><img src="media/tragesym/kpdf_pinconfiguration.png" class="media" alt="" /></a> <a href="media/tragesym/acroread_selectiontable.png" class="media" target="_blank" title="tragesym:acroread_selectiontable.png"><img src="media/tragesym/acroread_selectiontable.png" class="media" alt="" /></a>
+<a href="media/tragesym/kpdf_pinconfiguration.png?id=geda%3Atragesym_tutorial.fr" class="media" title="tragesym:kpdf_pinconfiguration.png"><img src="media/tragesym/kpdf_pinconfiguration.png" class="media" alt="" /></a> <a href="media/tragesym/acroread_selectiontable.png?id=geda%3Atragesym_tutorial.fr" class="media" title="tragesym:acroread_selectiontable.png"><img src="media/tragesym/acroread_selectiontable.png" class="media" alt="" /></a>
 </p>
 
 <p>
@@ -70,8 +73,8 @@ Dans la feuille de calcul, la liste des broches peut être seulement présente d
 </p>
 
 </div>
-<!-- EDIT1996 SECTION "Étape 2: Télécharger le fichier technique du composant et trouver la liste des broches" [1959-2906] -->
-<h2 class="sectionedit1997"><a name="etape_3copier_la_liste_des_broches_dans_un_editeur_et_la_preparer" id="etape_3copier_la_liste_des_broches_dans_un_editeur_et_la_preparer">Étape 3: Copier la liste des broches dans un éditeur et la préparer</a></h2>
+<!-- EDIT4 SECTION "Étape 2: Télécharger le fichier technique du composant et trouver la liste des broches" [2049-2995] -->
+<h2 class="sectionedit5"><a name="etape_3copier_la_liste_des_broches_dans_un_editeur_et_la_preparer" id="etape_3copier_la_liste_des_broches_dans_un_editeur_et_la_preparer">Étape 3: Copier la liste des broches dans un éditeur et la préparer</a></h2>
 <div class="level2">
 
 <p>
@@ -83,7 +86,7 @@ Sélectionnez la liste des broches et copiez-la dans un éditeur de texte. C&#03
 </p>
 
 <p>
-<a href="media/tragesym/xemacs_rawselection.png" class="media" target="_blank" title="tragesym:xemacs_rawselection.png"><img src="media/tragesym/xemacs_rawselection.png" class="media" alt="" /></a> <a href="media/tragesym/xemacs_modifiedselection.png" class="media" target="_blank" title="tragesym:xemacs_modifiedselection.png"><img src="media/tragesym/xemacs_modifiedselection.png" class="media" alt="" /></a> <a href="media/tragesym/ooo_selection.png" class="media" target="_blank" title="tragesym:ooo_selection.png"><img src="media/tragesym/ooo_selection.png" class="media" alt="" /></a>
+<a href="media/tragesym/xemacs_rawselection.png?id=geda%3Atragesym_tutorial.fr" class="media" title="tragesym:xemacs_rawselection.png"><img src="media/tragesym/xemacs_rawselection.png" class="media" alt="" /></a> <a href="media/tragesym/xemacs_modifiedselection.png?id=geda%3Atragesym_tutorial.fr" class="media" title="tragesym:xemacs_modifiedselection.png"><img src="media/tragesym/xemacs_modifiedselection.png" class="media" alt="" /></a> <a href="media/tragesym/ooo_selection.png?id=geda%3Atragesym_tutorial.fr" class="media" title="tragesym:ooo_selection.png"><img src="media/tragesym/ooo_selection.png" class="media" alt="" /></a>
 </p>
 
 <p>
@@ -92,13 +95,13 @@ L&#039;image ci-dessus illustre les étapes·:
 <ul>
 <li class="level1"><div class="li"> insérez la sélection depuis votre visualiseur pdf vers un éditeur de texte</div>
 </li>
-<li class="level1"><div class="li"> modifiez la liste des broches pour rendre votre tableur heureux </div>
+<li class="level1"><div class="li"> modifiez la liste des broches pour rendre votre tableur heureux</div>
 <ul>
 <li class="level2"><div class="li"> coupez la liste de 24 à 13 avec la sélection rectangulaire</div>
 </li>
 <li class="level2"><div class="li"> insérez la sélection rectangulaire sous les broches 1 à 12</div>
 </li>
-<li class="level2"><div class="li"> triez les lignes (xemacs peut le faire <img src="images/smileys/icon_wink.gif" align="middle" alt=";-)" />)</div>
+<li class="level2"><div class="li"> triez les lignes (xemacs peut le faire <img src="images/smileys/icon_wink.gif" class="middle" alt=";-)" />)</div>
 </li>
 <li class="level2"><div class="li"> enlevez ou réparez les lignes avec les numéros 2,3,… Ils ne sont pas sur la même ligne. Vous pouvez facilement recréer les numéros de broche plus tard</div>
 </li>
@@ -111,8 +114,8 @@ L&#039;image ci-dessus illustre les étapes·:
 </ul>
 
 </div>
-<!-- EDIT1997 SECTION "Étape 3: Copier la liste des broches dans un éditeur et la préparer" [2907-4587] -->
-<h2 class="sectionedit1998"><a name="etape_4inserer_toutes_les_donnees_manquantes_dans_la_feuille_de_calcul" id="etape_4inserer_toutes_les_donnees_manquantes_dans_la_feuille_de_calcul">Étape 4: Insérer toutes les données manquantes dans la feuille de calcul</a></h2>
+<!-- EDIT5 SECTION "Étape 3: Copier la liste des broches dans un éditeur et la préparer" [2996-4674] -->
+<h2 class="sectionedit6"><a name="etape_4inserer_toutes_les_donnees_manquantes_dans_la_feuille_de_calcul" id="etape_4inserer_toutes_les_donnees_manquantes_dans_la_feuille_de_calcul">Étape 4: Insérer toutes les données manquantes dans la feuille de calcul</a></h2>
 <div class="level2">
 
 <p>
@@ -120,16 +123,16 @@ Déplacez maintenant les étiquettes et les numéros de broches dans leurs colon
 </p>
 
 <p>
-<a href="media/tragesym/ooo_rearanged.png" class="media" target="_blank" title="tragesym:ooo_rearanged.png"><img src="media/tragesym/ooo_rearanged.png" class="media" alt="" /></a>
+<a href="media/tragesym/ooo_rearanged.png?id=geda%3Atragesym_tutorial.fr" class="media" title="tragesym:ooo_rearanged.png"><img src="media/tragesym/ooo_rearanged.png" class="media" alt="" /></a>
 </p>
 
 <p>
-Remplissez les colonens de type, de style et de position aux valeurs les plus habituelles. Vous pouvez à nouveau utiliser la fonctionnalité d&#039;autoremplissage 
+Remplissez les colonens de type, de style et de position aux valeurs les plus habituelles. Vous pouvez à nouveau utiliser la fonctionnalité d&#039;autoremplissage
 Maintenant vous allez changer quelques unes de ces valeurs. Jetez un coup d&#039;oeil sur le tableau descriptif de la fiche technique:
 </p>
 
 <p>
-<a href="media/tragesym/kpdf_pindescription.png" class="media" target="_blank" title="tragesym:kpdf_pindescription.png"><img src="media/tragesym/kpdf_pindescription.png" class="media" alt="" /></a>
+<a href="media/tragesym/kpdf_pindescription.png?id=geda%3Atragesym_tutorial.fr" class="media" title="tragesym:kpdf_pindescription.png"><img src="media/tragesym/kpdf_pindescription.png" class="media" alt="" /></a>
 </p>
 
 <p>
@@ -140,7 +143,7 @@ Selon ce tableau, nous changeons les éléments suivants (voir le résultat ci-d
 </li>
 <li class="level1"><div class="li"> A1 à A3 sont des entrées, nous changeons le type et les déplaçons sur le côté gauche</div>
 </li>
-<li class="level1"><div class="li"> mettez le type de SCL en entrée et déplacez aussi SCL et SDA sur le côté gauche </div>
+<li class="level1"><div class="li"> mettez le type de SCL en entrée et déplacez aussi SCL et SDA sur le côté gauche</div>
 </li>
 <li class="level1"><div class="li"> changez le type des broches d&#039;alimentations VSS et VDD et ajoutez des noms de net. Nous utilisons les habituels GND et Vcc.</div>
 </li>
@@ -151,7 +154,7 @@ Selon ce tableau, nous changeons les éléments suivants (voir le résultat ci-d
 </p>
 
 <p>
-<a href="media/tragesym/ooo_changedpins.png" class="media" target="_blank" title="tragesym:ooo_changedpins.png"><img src="media/tragesym/ooo_changedpins.png" class="media" alt="" /></a>
+<a href="media/tragesym/ooo_changedpins.png?id=geda%3Atragesym_tutorial.fr" class="media" title="tragesym:ooo_changedpins.png"><img src="media/tragesym/ooo_changedpins.png" class="media" alt="" /></a>
 </p>
 
 <p>
@@ -159,12 +162,12 @@ Avant de configurer les attributs et les options aux valeurs appropriées.
 </p>
 
 <p>
-<a href="media/tragesym/ooo_attributes.png" class="media" target="_blank" title="tragesym:ooo_attributes.png"><img src="media/tragesym/ooo_attributes.png" class="media" alt="" /></a>
+<a href="media/tragesym/ooo_attributes.png?id=geda%3Atragesym_tutorial.fr" class="media" title="tragesym:ooo_attributes.png"><img src="media/tragesym/ooo_attributes.png" class="media" alt="" /></a>
 </p>
 
 </div>
-<!-- EDIT1998 SECTION "Étape 4: Insérer toutes les données manquantes dans la feuille de calcul" [4588-6061] -->
-<h2 class="sectionedit1999"><a name="etape_5exporter_la_feuille_de_calcul_dans_un_fichier_texte_avec_separation_par_tabulation" id="etape_5exporter_la_feuille_de_calcul_dans_un_fichier_texte_avec_separation_par_tabulation">Étape 5: Exporter la feuille de calcul dans un fichier texte avec séparation par tabulation</a></h2>
+<!-- EDIT6 SECTION "Étape 4: Insérer toutes les données manquantes dans la feuille de calcul" [4675-6145] -->
+<h2 class="sectionedit7"><a name="etape_5exporter_la_feuille_de_calcul_dans_un_fichier_texte_avec_separation_par_tabulation" id="etape_5exporter_la_feuille_de_calcul_dans_un_fichier_texte_avec_separation_par_tabulation">Étape 5: Exporter la feuille de calcul dans un fichier texte avec séparation par tabulation</a></h2>
 <div class="level2">
 
 <p>
@@ -172,12 +175,12 @@ Vous pouvez soit utiliser le fonction export de votre tableur pour créer un fic
 </p>
 
 </div>
-<!-- EDIT1999 SECTION "Étape 5: Exporter la feuille de calcul dans un fichier texte avec séparation par tabulation" [6062-6409] -->
-<h2 class="sectionedit2000"><a name="etape_6lancer_tragesym_et_creer_le_symbole" id="etape_6lancer_tragesym_et_creer_le_symbole">Étape 6: Lancer tragesym et créer le symbole</a></h2>
+<!-- EDIT7 SECTION "Étape 5: Exporter la feuille de calcul dans un fichier texte avec séparation par tabulation" [6146-6493] -->
+<h2 class="sectionedit8"><a name="etape_6lancer_tragesym_et_creer_le_symbole" id="etape_6lancer_tragesym_et_creer_le_symbole">Étape 6: Lancer tragesym et créer le symbole</a></h2>
 <div class="level2">
 
 <p>
-Utilisez un shell et exécutez tragesym: 
+Utilisez un shell et exécutez tragesym:
 </p>
 
 <p>
@@ -189,12 +192,12 @@ Si tragesym indique qu&#039;il y a une erreur, faites quelques changements dans 
 </p>
 
 </div>
-<!-- EDIT2000 SECTION "Étape 6: Lancer tragesym et créer le symbole" [6410-6771] -->
-<h2 class="sectionedit2001"><a name="etape_7controler_le_resultat_avec_gschem_et_peaufiner_le_symbole" id="etape_7controler_le_resultat_avec_gschem_et_peaufiner_le_symbole">Étape 7: Contrôler le résultat avec gschem et peaufiner le symbole</a></h2>
+<!-- EDIT8 SECTION "Étape 6: Lancer tragesym et créer le symbole" [6494-6854] -->
+<h2 class="sectionedit9"><a name="etape_7controler_le_resultat_avec_gschem_et_peaufiner_le_symbole" id="etape_7controler_le_resultat_avec_gschem_et_peaufiner_le_symbole">Étape 7: Contrôler le résultat avec gschem et peaufiner le symbole</a></h2>
 <div class="level2">
 
 <p>
-Ouvrez maintenant le symbole généré avec et contrôlez le résultat 
+Ouvrez maintenant le symbole généré avec et contrôlez le résultat
 </p>
 
 <p>
@@ -206,7 +209,7 @@ En validant le texte caché («·en·», Edit→Show/Hide Inv Text), vous pouvez
 </p>
 
 <p>
-<a href="media/tragesym/gschem_showhidden.png" class="media" target="_blank" title="tragesym:gschem_showhidden.png"><img src="media/tragesym/gschem_showhidden.png" class="media" alt="" /></a> <a href="media/tragesym/gschem_finished.png" class="media" target="_blank" title="tragesym:gschem_finished.png"><img src="media/tragesym/gschem_finished.png" class="media" alt="" /></a>
+<a href="media/tragesym/gschem_showhidden.png?id=geda%3Atragesym_tutorial.fr" class="media" title="tragesym:gschem_showhidden.png"><img src="media/tragesym/gschem_showhidden.png" class="media" alt="" /></a> <a href="media/tragesym/gschem_finished.png?id=geda%3Atragesym_tutorial.fr" class="media" title="tragesym:gschem_finished.png"><img src="media/tragesym/gschem_finished.png" class="media" alt="" /></a>
 </p>
 
 <p>
@@ -214,8 +217,8 @@ Nous avons maintenant un symbole complet. Vous pouvez le copier dans votre bibli
 </p>
 
 </div>
-<!-- EDIT2001 SECTION "Étape 7: Contrôler le résultat avec gschem et peaufiner le symbole" [6772-7503] -->
-<h2 class="sectionedit2002"><a name="conclusion" id="conclusion">Conclusion</a></h2>
+<!-- EDIT9 SECTION "Étape 7: Contrôler le résultat avec gschem et peaufiner le symbole" [6855-7584] -->
+<h2 class="sectionedit10"><a name="conclusion" id="conclusion">Conclusion</a></h2>
 <div class="level2">
 
 <p>
@@ -223,8 +226,8 @@ C&#039;était un exemple simple avec peu de broches mais cela est d&#039;autant 
 </p>
 
 </div>
-<!-- EDIT2002 SECTION "Conclusion" [7504-7673] -->
-<h2 class="sectionedit2003"><a name="credits" id="credits">Crédits</a></h2>
+<!-- EDIT10 SECTION "Conclusion" [7585-7754] -->
+<h2 class="sectionedit11"><a name="credits" id="credits">Crédits</a></h2>
 <div class="level2">
 
 <p>
@@ -237,5 +240,6 @@ NdT·: si vous voulez la version française: <a href="http://www.iznogood-factor
 </p>
 
 </div>
-<!-- EDIT2003 SECTION "Crédits" [7674-] --></body>
+<!-- EDIT11 SECTION "Crédits" [7755-] --></div>
+</body>
 </html>

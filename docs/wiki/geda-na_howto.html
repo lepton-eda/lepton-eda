@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Translations of this page are also available in the following languages:</em> <a href="geda-na_howto.ru.html" class="wikilink1" title="geda-na_howto.ru.html">Русский</a>.
+</p>
 
-<h1 class="sectionedit27"><a name="net_attribute_mini-howto" id="net_attribute_mini-howto">net= attribute mini-HOWTO</a></h1>
+<h1 class="sectionedit1"><a name="net_attribute_mini-howto" id="net_attribute_mini-howto">net= attribute mini-HOWTO</a></h1>
 <div class="level1">
 
 <p>
@@ -32,8 +35,8 @@ The information in this document is current as of 19991011.
 </p>
 
 </div>
-<!-- EDIT27 SECTION "net= attribute mini-HOWTO" [1-216] -->
-<h2 class="sectionedit28"><a name="what_is_the_net_attribute_used_for" id="what_is_the_net_attribute_used_for">What is the net= attribute used for?</a></h2>
+<!-- EDIT1 SECTION "net= attribute mini-HOWTO" [111-326] -->
+<h2 class="sectionedit2"><a name="what_is_the_net_attribute_used_for" id="what_is_the_net_attribute_used_for">What is the net= attribute used for?</a></h2>
 <div class="level2">
 
 <p>
@@ -44,8 +47,8 @@ Now having said all this, you can have power/ground pins on a symbol, but gnetli
 </p>
 
 </div>
-<!-- EDIT28 SECTION "What is the net= attribute used for?" [217-1022] -->
-<h2 class="sectionedit29"><a name="what_is_the_format_of_the_net_attribute" id="what_is_the_format_of_the_net_attribute">What is the format of the net= attribute?</a></h2>
+<!-- EDIT2 SECTION "What is the net= attribute used for?" [327-1132] -->
+<h2 class="sectionedit3"><a name="what_is_the_format_of_the_net_attribute" id="what_is_the_format_of_the_net_attribute">What is the format of the net= attribute?</a></h2>
 <div class="level2">
 
 <p>
@@ -61,7 +64,7 @@ The <strong><code>net=</code></strong> attribute is a text item which takes on t
 <p>
 where:
 </p>
-<div class="table sectionedit30"><table class="inline">
+<div class="table sectionedit4"><table class="inline">
 	<tr class="row0">
 		<td class="col0"> <strong><code>net=</code></strong> </td><td class="col1"> The attribute name (always the same, lowercase) </td>
 	</tr>
@@ -72,7 +75,7 @@ where:
 		<td class="col0"> pinname </td><td class="col1"> The pin name (or number) which is assigned to this signal/net (or pin names/numbers) </td>
 	</tr>
 </table></div>
-<!-- EDIT30 TABLE [1725-1963] -->
+<!-- EDIT4 TABLE [1835-2073] -->
 <p>
 The signalname cannot contain the ”:” character (since it is a delimiter). The pinname is the pin name (A1, P2, D1, etc…) or pin number (1, 2, 5, 13, etc…). The pinname cannot contain the ”,” character (since it is also a delimiter). pinnames are typically the same sort of numbers/names like the <code>pin#=#</code> attribute (if you are familiar with that attribute).<br/>
 
@@ -80,8 +83,8 @@ You can only have ONE signalname per <strong><code>net=</code></strong> attribut
 </p>
 
 </div>
-<!-- EDIT29 SECTION "What is the format of the net= attribute?" [1023-2448] -->
-<h2 class="sectionedit31"><a name="how_do_you_actually_use_the_net_attribute" id="how_do_you_actually_use_the_net_attribute">How do you actually use the net= attribute?</a></h2>
+<!-- EDIT3 SECTION "What is the format of the net= attribute?" [1133-2558] -->
+<h2 class="sectionedit5"><a name="how_do_you_actually_use_the_net_attribute" id="how_do_you_actually_use_the_net_attribute">How do you actually use the net= attribute?</a></h2>
 <div class="level2">
 
 <p>
@@ -106,8 +109,8 @@ You can have as many <strong><code>net=</code></strong> attributes as you want. 
 </p>
 
 </div>
-<!-- EDIT31 SECTION "How do you actually use the net= attribute?" [2449-4343] -->
-<h2 class="sectionedit32"><a name="caveats_bugs" id="caveats_bugs">Caveats / Bugs</a></h2>
+<!-- EDIT5 SECTION "How do you actually use the net= attribute?" [2559-4453] -->
+<h2 class="sectionedit6"><a name="caveats_bugs" id="caveats_bugs">Caveats / Bugs</a></h2>
 <div class="level2">
 
 <p>
@@ -125,20 +128,20 @@ The <strong><code>net=</code></strong> attribute/mechanism is fairly new, so the
 </ul>
 
 </div>
-<!-- EDIT32 SECTION "Caveats / Bugs" [4344-5555] -->
-<h2 class="sectionedit33"><a name="example" id="example">Example</a></h2>
+<!-- EDIT6 SECTION "Caveats / Bugs" [4454-5665] -->
+<h2 class="sectionedit7"><a name="example" id="example">Example</a></h2>
 <div class="level2">
 
 <p>
 Here&#039;s a schematic which uses standard symbols (note: the 7400 does not have the <strong><code>net=</code></strong> attribute inside yet). This schematic consists of a 7400 with the <strong><code>net=</code></strong> attributes attached for power and ground, One of the input pins grounded using a gnd symbol and the other at a logic one using the vcc symbol (with an attached <strong><code>net=</code></strong> attribute). One of the input net is named, but as you will see, the netname is replaced by the <strong><code>net=</code></strong> signal name (see above for more info on this). The output is pulled up with a pull up resistor which has power specified using the +5V symbol.<br/>
 
 </p>
-<div class="table sectionedit34"><table class="inline">
+<div class="table sectionedit8"><table class="inline">
 	<tr class="row0">
-		<td class="col0"> <a href="media/geda/net.jpg" class="media" target="_blank" title="geda:net.jpg"><img src="media/geda/net.jpg" class="media" alt="" /></a> </td>
+		<td class="col0"> <a href="media/geda/net.jpg?id=geda%3Ana_howto" class="media" title="geda:net.jpg"><img src="media/geda/net.jpg" class="media" title="net.jpg" alt="net.jpg" /></a> </td>
 	</tr>
 </table></div>
-<!-- EDIT34 TABLE [6176-6197] --><pre class="code">v 19991011
+<!-- EDIT8 TABLE [6286-6307] --><pre class="code">v 19991011
 C 38700 58100 1 0 0 7400-1.sym
 {
 T 39000 59000 5 10 1 1 0
@@ -212,8 +215,8 @@ Notice how NETLABEL was renamed (aliased to the +5V net).
 </p>
 
 </div>
-<!-- EDIT33 SECTION "Example" [5556-7333] -->
-<h2 class="sectionedit35"><a name="final_notes" id="final_notes">Final notes</a></h2>
+<!-- EDIT7 SECTION "Example" [5666-7443] -->
+<h2 class="sectionedit9"><a name="final_notes" id="final_notes">Final notes</a></h2>
 <div class="level2">
 
 <p>
@@ -221,5 +224,6 @@ If you found a bug, please <a href="geda-howto_report_bugs.html" class="wikilink
 </p>
 
 </div>
-<!-- EDIT35 SECTION "Final notes" [7334-] --></body>
+<!-- EDIT9 SECTION "Final notes" [7444-] --></div>
+</body>
 </html>

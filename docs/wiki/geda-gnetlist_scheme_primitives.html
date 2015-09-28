@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+<h1 class="sectionedit1"><a name="gnetlist_scheme_primitives" id="gnetlist_scheme_primitives">gnetlist Scheme primitives</a></h1>
+<div class="level1">
+
+<p>
+Originally written by <em>John Doty</em>
+</p>
+<div class="table sectionedit2"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-packages</strong> <em>level</em> </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0" colspan="2"> Yields a list of refdes values for the set of schematics. Duplicated values are only listed once. The string <em>level</em> must be present, but is unused.<br/>
+<strong>Usage:</strong> <code>(gnelist:get-packages &quot;&quot;)</code> </td>
+	</tr>
+	<tr class="row2">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-non-unique-packages</strong> <em>level</em> </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0" colspan="2"> The same as <strong>gnetlist:get-packages</strong>, but duplicated values are listed as many times as they appear. <br/>
+<strong>Usage:</strong> <code>(gnetlist:get-non-unique-packages &quot;&quot;)</code> </td>
+	</tr>
+	<tr class="row4">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-pins</strong> <em>refdes</em> </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0" colspan="2"> Yields a list of pin numbers for the specified <em>refdes</em> value, which must be a string. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-pins &quot;R1&quot;)</code> </td>
+	</tr>
+	<tr class="row6">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-all-nets</strong> <em>level</em> </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0" colspan="2"> Yields a list of net names of nets connected to pins of all components for the set of schematics. Duplicated values are listed as many times as they appear once per pin. The string <em>level</em> must be present, but is unused. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-all-nets &quot;&quot;)</code> </td>
+	</tr>
+	<tr class="row8">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-all-unique-nets</strong> <em>level</em> </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0" colspan="2"> The same as <strong>gnetlist:get-all-nets</strong>, but duplicated values are only listed once. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-all-unique-nets &quot;&quot;)</code> </td>
+	</tr>
+	<tr class="row10">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-all-connections</strong> <em>net</em> </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0" colspan="2"> Yields a list of all connections to the named <em>net</em>, which must be a string. Each element of the list is itself a two element list of the form <code>(refdes pinnumber)</code>. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-all-connections &quot;3&quot;)</code> </td>
+	</tr>
+	<tr class="row12">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-nets</strong> <em>refdes pin</em> </td>
+	</tr>
+	<tr class="row13">
+		<td class="col0" colspan="2"> Yields a list of the form <code>(netname connection1 connection2 …)</code> where the <em>netname</em> is a name of the net connected to the <em>pin</em> of the component with the given <em>refdes</em>, and each connection is itself a two element list of the form <code>(refdes pinnumber)</code> representing the pin with the <em>pinnumber</em> of the component with the <em>refdes</em>.  All arguments must be strings.  <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-nets &quot;R1&quot; &quot;1&quot;)</code> <br/>
+<em>BUG:</em> This function does not reliably list all of the connections, if a <a href="geda-na_howto.html" class="wikilink1" title="geda-na_howto.html">net=</a> connection is specified. All existing back ends that use this (excluding the <strong>cascade</strong> back end) use only the netname. </td>
+	</tr>
+	<tr class="row14">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-pins-nets</strong> <em>refdes</em> </td>
+	</tr>
+	<tr class="row15">
+		<td class="col0" colspan="2"> Yields a list of <code>(pinnumber . netname)</code> pairs detailing all pin connections for the given refdes. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-pins-nets &quot;R1&quot;)</code> </td>
+	</tr>
+	<tr class="row16">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-all-package-attributes</strong> <em>refdes attribute</em> </td>
+	</tr>
+	<tr class="row17">
+		<td class="col0" colspan="2"> Yields the list of values of the first found named <em>attribute</em> attached to all symbol instances with the given <em>refdes</em>. If an instance has no such attribute, <code>#f</code> is added to the list. All arguments must be strings. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-all-package-attributes &quot;D1&quot; &quot;slot&quot;)</code> </td>
+	</tr>
+	<tr class="row18">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-package-attribute</strong> <em>refdes attribute</em> </td>
+	</tr>
+	<tr class="row19">
+		<td class="col0" colspan="2"> Yields the value of the named <em>attribute</em> attached to a symbol instance with the given refdes. Yields <code>&quot;unknown&quot;</code> if the attribute is absent. It only yields one value, regardless of how many matching attributes exist in the set of schematics. All arguments must be strings.  <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-package-attribute &quot;R1&quot; &quot;device&quot;)</code> <br/>
+<em>BUG:</em> If there is more than one instance only the first instance encountered is inspected, so it may yield <code>&quot;unknown&quot;</code>, even if a matching attribute is present. </td>
+	</tr>
+	<tr class="row20">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-toplevel-attribute</strong> <em>attribute</em> </td>
+	</tr>
+	<tr class="row21">
+		<td class="col0" colspan="2"> Yields the value of the named <em>attribute</em>, which must be a string, at top level, that is, an attribute present in one of the schematics unattached to any object. Yields <code>&quot;not found&quot;</code> if no matching attribute is present. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-toplevel-attribute &quot;schematic-name&quot;)</code> </td>
+	</tr>
+	<tr class="row22">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-renamed-nets</strong> <em>level</em> </td>
+	</tr>
+	<tr class="row23">
+		<td class="col0" colspan="2"> When <strong><code>gnetlist</code></strong> expands a hierarchical subcircuit, it first assigns every net within the subcircuit a unique name based on the refdes of the subcircuit instance and, if present, the netname within the subcircuit. If a net is attached to the higher level circuit, gnetlist then changes the name of the subcircuit net to the name of the higher level net to which it is attached. <strong>gnetlist:get-renamed-nets</strong> returns a list of lists of pairs of names. The first name in a pair is the initial unique netname within the subcircuit, the second is the higher level netname it has acquired. The string <em>level</em> argument must be present, but is unused. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-renamed-nets &quot;&quot;)</code> </td>
+	</tr>
+	<tr class="row24">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-attribute-by-pinseq</strong> <em>refdes pinseq attribute</em> </td>
+	</tr>
+	<tr class="row25">
+		<td class="col0" colspan="2"> Yields the value of the named <em>attribute</em> attached to the pin with the named <em>pinseq</em> attribute to the package with the named <em>refdes</em> attribute. All arguments must be strings. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-attribute-by-pinseq &quot;R1&quot; &quot;1&quot; &quot;pinlabel&quot;)</code> </td>
+	</tr>
+	<tr class="row26">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-attribute-by-pinnumber</strong> <em>refdes pinnumber attribute</em> </td>
+	</tr>
+	<tr class="row27">
+		<td class="col0" colspan="2"> Yields the value of the named <em>attribute</em> attached to the pin with the named <em>pinnumber</em> attribute to the package with the named <em>refdes</em> attribute.  All arguments must be strings. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-attribute-by-pinnumber &quot;R1&quot; &quot;1&quot; &quot;pinlabel&quot;)</code> </td>
+	</tr>
+	<tr class="row28">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:vams-get-package-attributes</strong> <em>refdes</em> </td>
+	</tr>
+	<tr class="row29">
+		<td class="col0" colspan="2"> Yields a list of the names of attributes attached to the package with the named <em>refdes</em>, which must be a string. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:vams-get-package-attributes &quot;R1&quot;)</code> <br/>
+<em>BUG:</em> If there is more than one instance only the first instance encountered is inspected. </td>
+	</tr>
+	<tr class="row30">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-slots</strong> <em>refdes</em> </td>
+	</tr>
+	<tr class="row31">
+		<td class="col0" colspan="2"> Yields a list of integers representing all slot attributes associated with a given <em>refdes</em>, which must be a string. Duplicated values are listed as many times as they appear. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-slots &quot;D3&quot;)</code> </td>
+	</tr>
+	<tr class="row32">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-unique-slots</strong> <em>refdes</em> </td>
+	</tr>
+	<tr class="row33">
+		<td class="col0" colspan="2"> The same as <strong>gnetlist:get-slots</strong>, but duplicated values are listed only once. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-unique-slots &quot;D3&quot;)</code> </td>
+	</tr>
+	<tr class="row34">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:graphical-objs-in-net-with-attrib-get-attrib</strong> <em>netname attribute-string attribute-name</em> </td>
+	</tr>
+	<tr class="row35">
+		<td class="col0" colspan="2"> This searches for a <a href="geda-master_attributes_list.html#graphical" class="wikilink1" title="geda-master_attributes_list.html">graphical symbol</a> attached to a net with the given <em>netname</em>. The symbol must have <em>attribute-string</em> (of the form <code>name=value</code>) attached. It yields the value of the specified attribute named <em>attribute-name</em>. All arguments must be strings. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:graphical-objs-in-net-with-attrib-get-attrib &quot;undriven_net&quot; &quot;device=DRC_Directive&quot; &quot;value&quot;)</code> </td>
+	</tr>
+	<tr class="row36">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-backend-arguments</strong> </td>
+	</tr>
+	<tr class="row37">
+		<td class="col0" colspan="2"> Yields a list of arguments passed to the gnetlist backend via the <code>-O</code> command-line option. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-backend-arguments)</code> </td>
+	</tr>
+	<tr class="row38">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-calling-flags</strong> </td>
+	</tr>
+	<tr class="row39">
+		<td class="col0" colspan="2"> Yields a list of lists of command line flags and values. Each flag must be known to the gnetlist front end. For example, the <code>-O nomunge_mode</code> option will yield <code>(&quot;nomunge_mode&quot; #t)</code>. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-calling-flags)</code> <br/>
+<em>NOTE:</em> This function is deprecated and should not be used in new code.  New code should use <strong>gnetlist:get-backend-arguments</strong> directly. </td>
+	</tr>
+	<tr class="row40">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-input-files</strong> </td>
+	</tr>
+	<tr class="row41">
+		<td class="col0" colspan="2"> Yields a list of the files named on the command line.  <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-input-files)</code> </td>
+	</tr>
+	<tr class="row42">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-command-line</strong> </td>
+	</tr>
+	<tr class="row43">
+		<td class="col0" colspan="2"> Yields the command line used to invoke the program. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-command-line)</code> <br/>
+<em>BUG:</em> As of <strong><code>gnetlist</code></strong> version 1.9.1 it is broken and outputs command line arguments passed to <strong><code>guile</code></strong> instead of those of <strong><code>gnetlist</code></strong>. </td>
+	</tr>
+	<tr class="row44">
+		<td class="col0" colspan="2"> Yields a number corresponding to the verbosity mode specified on the command-line: <code>1</code> for verbose mode, <code>-1</code> for quiet mode, and <code>0</code> otherwise. <br/>
+<strong>Usage:</strong>  <code>(gnetlist:get-verbosity)</code> </td>
+	</tr>
+	<tr class="row45">
+		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist-version</strong> </td>
+	</tr>
+	<tr class="row46">
+		<td class="col0" colspan="2"> Yields <code>#t</code> if the version numbers of the <strong><code>gnetlist</code></strong> rc files and that of gEDA/gaf do not differ, otherwise yields <code>#f</code> and outputs warning. <br/>
+<strong>Usage:</strong>  <code>(gnetlist-version)</code> </td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [80-8530] -->
+<p>
+See the <a href="geda-hierarchy.html" class="wikilink1" title="geda-hierarchy.html">hierarchy</a> page for information about <strong><code>gnetlist</code></strong> rc settings.
+</p>
+
+</div>
+</div>
+</body>
+</html>

@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Autres langues: <a href="geda-debian.html" class="wikilink1" title="geda-debian.html">English</a> <a href="geda-debian.ru.html" class="wikilink1" title="geda-debian.ru.html">Русский</a></em>
+</p>
 
-<h1 class="sectionedit532"><a name="notes_d_installation_debian_de_la_version_20060825" id="notes_d_installation_debian_de_la_version_20060825">Notes d&#039;installation Debian de la version 20060825</a></h1>
+<h1 class="sectionedit1"><a name="notes_d_installation_debian_de_la_version_20060825" id="notes_d_installation_debian_de_la_version_20060825">Notes d&#039;installation Debian de la version 20060825</a></h1>
 <div class="level1">
 
 <p>
@@ -31,7 +34,7 @@ Lib packages I had to add to my system:
         * I needed to install guile-1.6-dev rather than libguile-dev.
           Else the installer fails to find scm_make_smob_type.
 
-On my system /usr/lib/libqthreads.so pointed to a non existing 
+On my system /usr/lib/libqthreads.so pointed to a non existing
 /usr/lib/libqthreads.so.12.3.1 This may be a bug in Debians packaging
 rules. Thus the installer failed with:
         gcc: /usr/lib/libqthreads.so: No such file or directory make[2]:*** [libgeda.la] Error 1
@@ -39,5 +42,6 @@ I resolved the issue by faking a link:
         sudo ln -s libqthreads.so.12.3.0 libqthreads.so.12.3.1</pre>
 
 </div>
+<!-- EDIT1 SECTION "Notes d'installation Debian de la version 20060825" [69-] --></div>
 </body>
 </html>

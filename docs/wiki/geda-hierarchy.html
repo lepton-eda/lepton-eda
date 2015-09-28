@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+<p>
+<em>(This page is still incomplete.)</em>
+</p>
+
+<h1 class="sectionedit1"><a name="hierarchical_schematics" id="hierarchical_schematics">Hierarchical schematics</a></h1>
+<div class="level1">
+
+<p>
+Depending on what you want to achieve, there are several options how to use hierarchy.  If you are unsure, ask yourself if you want to include a subcircuit multiple times in your design, or want to represent a subsheet as a symbol in another sheet.  If you answer either with yes, go with full mangling.  If not, you probably don&#039;t need hierarchy at all and can just use multiple schematic files.
+</p>
+
+<p>
+<p><div class="noteclassic">
+The schematic hierarchy isn&#039;t limited to one level—subcircuits can in turn contain other subcircuits.
+
+</div></p>
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Hierarchical schematics" [39-595] -->
+<h2 class="sectionedit2"><a name="multiple_schematic_files" id="multiple_schematic_files">Multiple schematic files</a></h2>
+<div class="level2">
+
+<p>
+If you just want to split your schematic to multiple pages, you don&#039;t need to use hierarchy at all.  Just list the individual schematic files when invoking gnetlist:
+</p>
+<pre class="code">$ gnetlist -g geda page-one.sch page-two.sch</pre>
+
+<p>
+If you are using the same <code>netname=</code> attribute on different pages, the nets will automatically be connected.
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Multiple schematic files" [596-960] -->
+<h2 class="sectionedit3"><a name="hierarchy_as_a_convenience_method" id="hierarchy_as_a_convenience_method">Hierarchy as a convenience method</a></h2>
+<div class="level2">
+
+<p>
+Alternatively, you can create a top schematic which contains symbols for each subsheet and tell <code>gnetlist</code> to go look for the corresponding schematic files.  You do so by adding a <code>source=</code> attribute to the symbol and adding the directory which contains the subsheets to the source library.  Usually this will be the same directory as the schematic containing the subsheet symbol, so add the following line to <code>gnetlistrc</code> (either your global one in <code>~/.gEDA/</code>, or a project-specific one in the same directory):
+</p>
+<pre class="code">(source-library &quot;.&quot;)</pre>
+
+<p>
+You also need to tell gnetlist to disable component and net name mangling or you will end up with component names like <code>U?/R1</code>, and your nets will not connect.  To do so, add the following lines to <code>gnetlistrc</code>:
+</p>
+<pre class="code">(hierarchy-netattrib-mangle &quot;disabled&quot;)
+(hierarchy-netname-mangle &quot;disabled&quot;)
+(hierarchy-uref-mangle &quot;disabled&quot;)</pre>
+
+<p>
+Now when invoking gnetlist, just specify the main schematic file:
+</p>
+<pre class="code">$ gnetlist -g geda main.sch</pre>
+
+<p>
+<p><div class="noteclassic">
+This will only work if the <a href="geda-gaf_utility.html#gaf_config" class="wikilink1" title="geda-gaf_utility.html">configuration</a> setting <code><a href="geda-gaf_utility.html#gnetlist_group" class="wikilink1" title="geda-gaf_utility.html">gnetlist.traverse-hierarchy</a></code> is set to <code>true</code>.  This is the default but may have been overridden by your distribution or local administrator.
+
+</div></p>
+</p>
+
+<p>
+<p><div class="noteimportant">
+<code>gnetlist</code> will complain if the subsheet symbols don&#039;t contain a <code>refdes=</code> attribute, but with mangling disabled, it won&#039;t use it in any way.
+
+</div></p>
+</p>
+
+<p>
+In <code>gschem</code>, you can navigate the schematic hierarchy using the commands from the “Hierarchy” menu.  To view the underlying schematic for a subcircuit component, select it and use <strong>Hierarchy→Down Schematic</strong>.  Once finished editing, use <strong>Hierarchy→Up</strong> to return to the original schematic.  (This works only if you accessed the subcircuit&#039;s schematic in that way.)  Analogously, you can edit the subcircuit symbol itself using <strong>Hierarchy→Down Symbol</strong>.
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Hierarchy as a convenience method" [961-2908] -->
+<h3 class="sectionedit4"><a name="input_output_pins" id="input_output_pins">Input/output pins</a></h3>
+<div class="level3">
+
+<p>
+As an alternative to using the same net name, you can add pins to a subsheet symbol to route nets to and from that schematic.  For each pin on the symbol, you need to add a corresponding footprint-less I/O symbol to the subsheet whose <code>refdes=</code> matches the <code>pinlabel=</code> of the pin.  (You can normally use the <code>in-1.sym</code> and <code>out-1.sym</code> symbols from the generic “Input/Output” symbol library for this.)
+</p>
+
+<p>
+<p><div class="noteimportant">
+If you get an error about a “Missing I/O symbol”, make sure you set a <code>refdes=</code> for the subsheet symbols.
+
+</div></p>
+</p>
+
+<p>
+<p><div class="notewarning">
+Make sure not to add more than one I/O symbol for each pin as this will silently produce an incorrect netlist.
+
+</div></p>
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Input/output pins" [2909-3624] -->
+<h2 class="sectionedit5"><a name="hierarchy_as_a_grouping_instantiation_mechanism" id="hierarchy_as_a_grouping_instantiation_mechanism">Hierarchy as a grouping/instantiation mechanism</a></h2>
+<div class="level2">
+
+<p>
+If you want to include a subcircuit multiple times in your schematic, you need a way to tell the components of one instantiation from those of another one (given that your subcircuit contains any components).  This is where uref mangling comes in.  You enable it by specifying
+</p>
+<pre class="code">(hierarchy-uref-mangle &quot;enabled&quot;)</pre>
+
+<p>
+in <code>gnetlistrc</code>.  Now, <code>gnetlist</code> constructs the name of an instantiated component by appending it to the subsheet symbol&#039;s <code>refdes=</code> attribute, separated by a slash.  You can configure this in <code>gnetlistrc</code>.  For example, to list the component <code>refdes=</code> first and use a colon as a separator, use
+</p>
+<pre class="code">(hierarchy-uref-order &quot;prepend&quot;)
+(hierarchy-uref-separator &quot;:&quot;)</pre>
+
+<p>
+<p><div class="noteimportant">
+Named nets from one instantiation will connect to the same net of another one.  If you are using net names in the subcircuit, you will probably want to use separate net namespaces to avoid that.
+
+</div></p>
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Hierarchy as a grouping/instantiation mechanism" [3625-4597] -->
+<h2 class="sectionedit6"><a name="separating_net_netname_namespaces" id="separating_net_netname_namespaces">Separating net=/netname= namespaces</a></h2>
+<div class="level2">
+
+<p>
+…
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Separating net=/netname= namespaces" [4598-] --></div>
+</body>
+</html>

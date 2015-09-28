@@ -1,0 +1,1165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+<h1 class="sectionedit1"><a name="pcb_development_introduction" id="pcb_development_introduction">PCB Development Introduction</a></h1>
+<div class="level1">
+
+<p>
+I started this document to get an insight in the structure/architecture of the PCB program. The main objective is to get up to speed so we are able to start contributing to the PCB program.
+</p>
+
+<p>
+This document is work in progress.
+</p>
+
+</div>
+<!-- EDIT1 SECTION "PCB Development Introduction" [1-271] -->
+<h2 class="sectionedit2"><a name="get_information" id="get_information">Get Information</a></h2>
+<div class="level2">
+
+<p>
+These links help to get an understanding of PCB:
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign">Link  </th><th class="col1 leftalign">Remark  </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0"><a href="http://pcb.geda-project.org/manual.html" class="urlextern" title="http://pcb.geda-project.org/manual.html"  rel="nofollow">http://pcb.geda-project.org/manual.html</a></td><td class="col1 leftalign">As always read the manual first.  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"><a href="http://pcb.geda-project.org/faq.html" class="urlextern" title="http://pcb.geda-project.org/faq.html"  rel="nofollow">http://pcb.geda-project.org/faq.html</a>  </td><td class="col1"> </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"><a href="http://www.delorie.com/pcb/docs/gs/gs.html#Terminology" class="urlextern" title="http://www.delorie.com/pcb/docs/gs/gs.html#Terminology"  rel="nofollow">http://www.delorie.com/pcb/docs/gs/gs.html#Terminology</a>  </td><td class="col1 leftalign">Knowing the terminology helps in understanding the code  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"><a href="http://wiki.geda-project.org/geda:pcb-quick_reference" class="urlextern" title="http://wiki.geda-project.org/geda:pcb-quick_reference"  rel="nofollow">http://wiki.geda-project.org/geda:pcb-quick_reference</a>  </td><td class="col1"> </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"><a href="http://wiki.geda-project.org/geda:pcb_footprints" class="urlextern" title="http://wiki.geda-project.org/geda:pcb_footprints"  rel="nofollow">http://wiki.geda-project.org/geda:pcb_footprints</a>  </td><td class="col1"> </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"><a href="http://wiki.geda-project.org/geda:pcb_tips" class="urlextern" title="http://wiki.geda-project.org/geda:pcb_tips"  rel="nofollow">http://wiki.geda-project.org/geda:pcb_tips</a>  </td><td class="col1"> </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0"><a href="http://wiki.geda-project.org/geda:documentation" class="urlextern" title="http://wiki.geda-project.org/geda:documentation"  rel="nofollow">http://wiki.geda-project.org/geda:documentation</a> </td><td class="col1"> </td>
+	</tr>
+</table></div>
+<!-- EDIT3 TABLE [349-848] -->
+</div>
+<!-- EDIT2 SECTION "Get Information" [272-849] -->
+<h2 class="sectionedit4"><a name="root_directory_structure" id="root_directory_structure">root Directory structure</a></h2>
+<div class="level2">
+
+<p>
+This is the ~/pcb directory
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> </td><td class="col1 rightalign">  data</td><td class="col2">PCB layout and gerber icons and mime registration data</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> </td><td class="col1 rightalign">  doc</td><td class="col2">All files used to generate the documentation</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> </td><td class="col1 rightalign">  example</td><td class="col2">Speaks for it self, examples how to use PCB</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> </td><td class="col1 rightalign">  gts</td><td class="col2">This directory/library is only used by the toporouter (toporouter.h includes gts.h)</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">*</td><td class="col1 rightalign">  intl</td><td class="col2">Internationalization - it handles conversions to non-English languages. It is for i18n, l10n and related stuff. See the <em><strong>ABOUT-NLS</strong></em> text file in the root directory for more information.</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"> </td><td class="col1 rightalign">  lib</td><td class="col2">The M4 library stores the footprints as M4 macros</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0"> </td><td class="col1 rightalign">  m4</td><td class="col2">Some additional m4 scripts used by configure</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0"> </td><td class="col1 rightalign">  newlib</td><td class="col2">File to make newlib library components</td>
+	</tr>
+	<tr class="row8">
+		<td class="col0"> </td><td class="col1 rightalign">  po</td><td class="col2">Translation files</td>
+	</tr>
+	<tr class="row9">
+		<td class="col0"> </td><td class="col1 rightalign">  README_FILES</td><td class="col2 leftalign">Information in this directory is obsolete and/or very old. Just ignore it.  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0"> </td><td class="col1 rightalign">  src</td><td class="col2">The source code</td>
+	</tr>
+	<tr class="row11">
+		<td class="col0"> </td><td class="col1 rightalign">  tests</td><td class="col2">File to test the build during make</td>
+	</tr>
+	<tr class="row12">
+		<td class="col0"> </td><td class="col1 rightalign">  tools</td><td class="col2">Build tools</td>
+	</tr>
+	<tr class="row13">
+		<td class="col0"> </td><td class="col1 rightalign">  tutorial</td><td class="col2"> </td>
+	</tr>
+	<tr class="row14">
+		<td class="col0"> </td><td class="col1 rightalign">  utils</td><td class="col2">Build tools</td>
+	</tr>
+	<tr class="row15">
+		<td class="col0"> </td><td class="col1 rightalign">  w32</td><td class="col2">File needed to build for Windows</td>
+	</tr>
+	<tr class="row16">
+		<td class="col0" colspan="3"> </td>
+	</tr>
+	<tr class="row17">
+		<td class="col0">*</td><td class="col1" colspan="2">This directory is no part of the git repository it is added by the <code>./autogen.sh</code> script</td>
+	</tr>
+</table></div>
+<!-- EDIT5 TABLE [917-1964] -->
+</div>
+<!-- EDIT4 SECTION "root Directory structure" [850-1966] -->
+<h2 class="sectionedit6"><a name="src_directory_structure" id="src_directory_structure">src Directory structure</a></h2>
+<div class="level2">
+
+<p>
+This is the ~/pcb/src directory
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<tr class="row0">
+		<td class="col0">src/hid</td><td class="col1"> </td><td class="col2">Human Interface Device layer. The basic idea is that every action outside the core is treated as a separate human interface device.</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> </td><td class="col1 leftalign">src/hid/batch  </td><td class="col2">Batch mode</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> </td><td class="col1 leftalign">src/hid/bom  </td><td class="col2">Export a bill of materials</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> </td><td class="col1 leftalign">src/hid/common  </td><td class="col2"> </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> </td><td class="col1 leftalign">src/hid/gcode  </td><td class="col2">Export to G-Code</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"> </td><td class="col1 leftalign">src/hid/gerber  </td><td class="col2">Export RS-274X (Gerber)</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0"> </td><td class="col1 leftalign">src/hid/gtk  </td><td class="col2">Graphical User Interface based on GTK2</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0"> </td><td class="col1 leftalign">src/hid/lesstif  </td><td class="col2">Graphical User Interface based on lessif</td>
+	</tr>
+	<tr class="row8">
+		<td class="col0"> </td><td class="col1 leftalign">src/hid/lpr  </td><td class="col2">Printer driver</td>
+	</tr>
+	<tr class="row9">
+		<td class="col0"> </td><td class="col1 leftalign">src/hid/nelma  </td><td class="col2">Numerical analysis package export</td>
+	</tr>
+	<tr class="row10">
+		<td class="col0"> </td><td class="col1 leftalign">src/hid/png  </td><td class="col2">export <acronym title="Graphics Interchange Format">GIF</acronym>/<acronym title="Joint Photographics Experts Group">JPEG</acronym>/<acronym title="Portable Network Graphics">PNG</acronym></td>
+	</tr>
+	<tr class="row11">
+		<td class="col0"> </td><td class="col1 leftalign">src/hid/ps  </td><td class="col2">export postscript /encapsulated postscript</td>
+	</tr>
+	<tr class="row12">
+		<td class="col0"> </td><td class="col1 leftalign">src/hid/hidint.h  </td><td class="col2">HID internal interfaces. These may ONLY be called from the HID modules, not from the common PCB code.</td>
+	</tr>
+	<tr class="row13">
+		<td class="col0" colspan="3">src/icons</td>
+	</tr>
+</table></div>
+<!-- EDIT7 TABLE [2037-2819] -->
+</div>
+<!-- EDIT6 SECTION "src Directory structure" [1967-2820] -->
+<h2 class="sectionedit8"><a name="src_directory_file_list" id="src_directory_file_list">src Directory file list</a></h2>
+<div class="level2">
+
+<p>
+These are the files in the ~/pcb/src directory
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<tr class="row0">
+		<th class="col0"> _*_ </th><th class="col1 leftalign">File  </th><th class="col2 leftalign">Short description  </th><th class="col3">Comment / Explanation </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0">H</td><td class="col1">action.*</td><td class="col2 leftalign">action routines for output window  </td><td class="col3">This is one of the top files. A lot of the functionality will start here. This is a good place to start your digging work when learning the PCB code.<br/>
+This file also contains a lot of documentation generating code.<br/>
+This means two things:<br/>
+- Look at the PCB manual for a description of all actions (manual is in doc directory after make)<br/>
+- Take this as an example how to add documentation to the code.</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">H</td><td class="col1">autoplace.*</td><td class="col2 leftalign">functions used to autoplace elements.  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">H</td><td class="col1">autoroute.*</td><td class="col2 leftalign">functions used to autoroute nets.  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">C</td><td class="col1">box.h</td><td class="col2 leftalign">random box-related utilities.  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">C</td><td class="col1">buffer.*</td><td class="col2 leftalign">functions used by paste- and move/copy buffer  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">D</td><td class="col1">change.*</td><td class="col2 leftalign">functions used to change object properties  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0"> </td><td class="col1">check_icon.data</td><td class="col2"> </td><td class="col3"> </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0"> </td><td class="col1">clip.*</td><td class="col2 leftalign">Clip the line to the clipBox  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0">C</td><td class="col1">command.*</td><td class="col2 leftalign">executes commands from user  </td><td class="col3">That is, some commands, only the short-hand vi compatible commands like l, le, m, q, w, s and rn.<br/>
+See pcb manual for the explanation.<br/>
+See action.c for the other commands.</td>
+	</tr>
+	<tr class="row10">
+		<td class="col0">C</td><td class="col1">compat.*</td><td class="col2"> </td><td class="col3">This file is for compatibility across operating systems; we can define functions there that might be missing elsewhere (like linux-specific things) or broken elsewhere.  Mostly it&#039;s for unix-vs-windows.</td>
+	</tr>
+	<tr class="row11">
+		<td class="col0"> </td><td class="col1">const.h</td><td class="col2 leftalign">global source constants  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0">D</td><td class="col1">copy.*</td><td class="col2 leftalign">functions used to copy pins, elements …  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row13">
+		<td class="col0">D</td><td class="col1">create.*</td><td class="col2 leftalign">functions used to create vias, pins …  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row14">
+		<td class="col0">H</td><td class="col1">crosshair.*</td><td class="col2 leftalign">crosshair stuff  </td><td class="col3">is for the board&#039;s crosshair; this handles (for example) grid snapping. This is *not* the same as the <acronym title="Graphical User Interface">GUI</acronym>&#039;s mouse cursor. For the GKT <acronym title="Graphical User Interface">GUI</acronym> the crosshair will follow the mouse if its over the board-space/canvas.</td>
+	</tr>
+	<tr class="row15">
+		<td class="col0">C</td><td class="col1">data.*</td><td class="col2 leftalign">just defines common identifiers  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row16">
+		<td class="col0">C</td><td class="col1">dbus.*</td><td class="col2 leftalign">Interprocess communication (IPC)  </td><td class="col3">D-Bus is a system for interprocess communication (IPC). D-Bus code originally derived from example-service.c in the dbus-glib bindings.<br/>
+The dbus was added to provide some communications between gschem and pcb, and to provide some remote-control options for pcb.  Not sure if anything uses it at the moment.<br/>
+If you&#039;re not interested in connecting to other programs just ignore the files.</td>
+	</tr>
+	<tr class="row17">
+		<td class="col0">C</td><td class="col1">dbus-pcbmain.*</td><td class="col2 leftalign">PCB HID main loop integration.  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row18">
+		<td class="col0">C</td><td class="col1">default_font</td><td class="col2"> </td><td class="col3">From the PCB documentation: A number of user defined Symbols are called a font. There is only one per layout. All symbols are made of lines. See the file &#039;default_font&#039; as an example.<br/>
+Fontmode.c is linked with this file.</td>
+	</tr>
+	<tr class="row19">
+		<td class="col0">D</td><td class="col1">djopt.*</td><td class="col2">optimize functions</td><td class="col3">is for the “Connects→Optimize Routed Tracks” functions.</td>
+	</tr>
+	<tr class="row20">
+		<td class="col0">C</td><td class="col1">dolists.h</td><td class="col2"> </td><td class="col3">REGISTER_*(a) macro in dolists.h will be expanded by the preprocessor to the actual calling of these functions.</td>
+	</tr>
+	<tr class="row21">
+		<td class="col0">H</td><td class="col1">draw.*</td><td class="col2 leftalign">drawing routines  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row22">
+		<td class="col0">H</td><td class="col1">drill.*</td><td class="col2 leftalign">functions to generate drill information  </td><td class="col3">is for generating drill report information.</td>
+	</tr>
+	<tr class="row23">
+		<td class="col0" rowspan="3">H</td><td class="col1">edif.*</td><td class="col2 leftalign">EDIF stands for Electronic Design Interchange Format.  </td><td class="col3" rowspan="3">These files are associated with only one action “LoadFrom(Netlist)”. This will call the function ImportNetlist() in file.c. If the first line of the netlist file contains “edif” it will use these files to parse the EDIF 2.0.0 formatted file. A little googling learns that the EDIF 2.0.0 file format was approved in March 1988. File format EDIF 4.0.0 was released in August 1996. The PCB documentation doesn&#039;t say anything about EDIF. <br/>
+The files are here to be backwards compatible, so we are able to read files generated many year ago. It doesn&#039;t hurt so just ignore it.</td>
+	</tr>
+	<tr class="row24">
+		<td class="col0">edif_parse.h</td><td class="col1 leftalign">This file defines the interface to the outside world.  </td>
+	</tr>
+	<tr class="row25">
+		<td class="col0">edif.y</td><td class="col1 leftalign">file says: A Bison parser, used in with edif.c. EDIF stands for Electronic Design Interchange Format.  </td>
+	</tr>
+	<tr class="row26">
+		<td class="col0">C</td><td class="col1">error.*</td><td class="col2 leftalign">error and debug functions  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row27">
+		<td class="col0">C</td><td class="col1">file.*</td><td class="col2 leftalign">file save, load, merge … routines  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row28">
+		<td class="col0">D</td><td class="col1">find.*</td><td class="col2 leftalign">routines to find connections between pins, vias, lines…  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row29">
+		<td class="col0">C</td><td class="col1">flags.*</td><td class="col2 leftalign">routines to initialize and use flags  </td><td class="col3">flags.c functions are used by some of the HIDs to mark menu entries as “checked” vs “unchecked” when they refer to flags.  That&#039;s why they&#039;re registered, too, there&#039;s a list with <acronym title="American Standard Code for Information Interchange">ASCII</acronym> names that hids can refer to.</td>
+	</tr>
+	<tr class="row30">
+		<td class="col0">H</td><td class="col1">fontmode.c</td><td class="col2 leftalign">routines to edit the font in PCB  </td><td class="col3">There are two actions: <br/>
+FontEdit() and FontSave() <br/>
+Font editing draws one of each character on the screen as a PCB.  You edit the PCB.  Then it reads the traces from the PCB and turns it back into a font.  You can then cut/paste the font section out of that pcb to default_font.<br/>
+default_font is linked with this file.</td>
+	</tr>
+	<tr class="row31">
+		<td class="col0">C</td><td class="col1">free_atexit.*</td><td class="col2 leftalign">some routines to free memory  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row32">
+		<td class="col0"> </td><td class="col1">gather-actions</td><td class="col2 leftalign">shell script used during build.  </td><td class="col3">Probably a leftover from an old build script, I can&#039;t find where it is called. Think the script isn&#039;t used. <br/>
+Just ignore it.</td>
+	</tr>
+	<tr class="row33">
+		<td class="col0"> </td><td class="col1">gettext.h</td><td class="col2"> </td><td class="col3">Used if –enable-nls option is configured. Takes care of internationalization.</td>
+	</tr>
+	<tr class="row34">
+		<td class="col0">C</td><td class="col1">global.h</td><td class="col2"> </td><td class="col3">The big include just about everything include file</td>
+	</tr>
+	<tr class="row35">
+		<td class="col0">H</td><td class="col1">gpcb-menu.res</td><td class="col2"> </td><td class="col3"> </td>
+	</tr>
+	<tr class="row36">
+		<td class="col0">C</td><td class="col1">heap.*</td><td class="col2"> </td><td class="col3">The heap functions seem to be associated mainly with the two autorouters. Additionally the file polygon1.c makes use of a heap in one of its functions</td>
+	</tr>
+	<tr class="row37">
+		<td class="col0">H</td><td class="col1">hid_draw.h</td><td class="col2 leftalign">Low level drawing <acronym title="Application Programming Interface">API</acronym>.  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row38">
+		<td class="col0">H</td><td class="col1">hid.h</td><td class="col2 leftalign">Human Interface Device layer.  </td><td class="col3">This is one of the top files.<br/>
+This is a good place to start looking if you want to know what&#039;s-what.</td>
+	</tr>
+	<tr class="row39">
+		<td class="col0"> </td><td class="col1">icon.data</td><td class="col2"> </td><td class="col3"> </td>
+	</tr>
+	<tr class="row40">
+		<td class="col0">D</td><td class="col1">insert.*</td><td class="col2 leftalign">functions used to insert points into objects  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row41">
+		<td class="col0">D</td><td class="col1">intersect.*</td><td class="col2 leftalign">rectangle intersection/union routines.  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row42">
+		<td class="col0">D</td><td class="col1">line.*</td><td class="col2">line routines</td><td class="col3"> </td>
+	</tr>
+	<tr class="row43">
+		<td class="col0"> </td><td class="col1">lrealpath.*</td><td class="col2 leftalign">Libiberty realpath. Like realpath, but more consistent behaviour  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row44">
+		<td class="col0">C</td><td class="col1">macro.h</td><td class="col2 leftalign">some commonly used macros not related to a special C-file the file is included by global.h after const.h  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row45">
+		<td class="col0">C</td><td class="col1">main.c</td><td class="col2"> </td><td class="col3">It all starts here</td>
+	</tr>
+	<tr class="row46">
+		<td class="col0"> </td><td class="col1">main-test.c</td><td class="col2"> </td><td class="col3"> </td>
+	</tr>
+	<tr class="row47">
+		<td class="col0">D</td><td class="col1">mirror.*</td><td class="col2 leftalign">functions used to change the mirror flag of an object  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row48">
+		<td class="col0">C</td><td class="col1">misc.*</td><td class="col2"> </td><td class="col3"> </td>
+	</tr>
+	<tr class="row49">
+		<td class="col0"> </td><td class="col1">mode_icon.data</td><td class="col2"> </td><td class="col3">Icons used in the <acronym title="Graphical User Interface">GUI</acronym></td>
+	</tr>
+	<tr class="row50">
+		<td class="col0">D</td><td class="col1">move.*</td><td class="col2 leftalign">functions used to move pins, elements …  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row51">
+		<td class="col0">C</td><td class="col1">mtspace.*</td><td class="col2 leftalign">implementation for “empty space” routines (needed for via-space tracking in the auto-router.  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row52">
+		<td class="col0">C</td><td class="col1">mymem.*</td><td class="col2 leftalign">memory management functions  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row53">
+		<td class="col0">H</td><td class="col1">netlist.c</td><td class="col2"> </td><td class="col3"> </td>
+	</tr>
+	<tr class="row54">
+		<td class="col0" rowspan="2">C</td><td class="col1">parse_l.*</td><td class="col2 leftalign">lexical definitions to parse <acronym title="American Standard Code for Information Interchange">ASCII</acronym> input of PCB and Element description  </td><td class="col3" rowspan="2">Parse an element file or layout file. This is either a footprint file or our PCB layout file</td>
+	</tr>
+	<tr class="row55">
+		<td class="col0">parse_y.*</td><td class="col1 leftalign">grammar to parse <acronym title="American Standard Code for Information Interchange">ASCII</acronym> input of PCB description  </td>
+	</tr>
+	<tr class="row56">
+		<td class="col0">H</td><td class="col1">pcb-menu.res</td><td class="col2"> </td><td class="col3"> </td>
+	</tr>
+	<tr class="row57">
+		<td class="col0">C</td><td class="col1">pcb-printf.*</td><td class="col2 leftalign">Implementation of printf wrapper to output pcb coords and angles.  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row58">
+		<td class="col0"> </td><td class="col1">pcbtest.sh.in</td><td class="col2 leftalign">Used during the build to test the program  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row59">
+		<td class="col0" rowspan="3">D</td><td class="col1">polyarea.h</td><td class="col2 leftalign">file says: poly_Boolean: a polygon clip library.  </td><td class="col3">Used in polygon.c, polygon1.c and thermal.c</td>
+	</tr>
+	<tr class="row60">
+		<td class="col0">polygon1.c</td><td class="col1 leftalign">polygon clipping functions  </td><td class="col2"> </td>
+	</tr>
+	<tr class="row61">
+		<td class="col0">polygon.*</td><td class="col1 leftalign">special polygon editing routines  </td><td class="col2"> </td>
+	</tr>
+	<tr class="row62">
+		<td class="col0">H</td><td class="col1">print.*</td><td class="col2 leftalign">printing routines  </td><td class="col3">Looks like it is used to “print” the fabrication layer. print.c generates a layer to be used as a fabrication drawing. Whether the HID uses that or not (and what it does with it) is a Separate question.  At least, both ps and gerber need that layer. Since the layer is created in “pcb unit space” it&#039;s in the core.  HID things tend to happen in “hid unit space” instead.</td>
+	</tr>
+	<tr class="row63">
+		<td class="col0">H</td><td class="col1">puller.c</td><td class="col2 leftalign">PCB HID Project - Puller  </td><td class="col3">See <a href="http://www.delorie.com/pcb/puller" class="urlextern" title="http://www.delorie.com/pcb/puller"  rel="nofollow">http://www.delorie.com/pcb/puller</a> for more information.</td>
+	</tr>
+	<tr class="row64">
+		<td class="col0">H</td><td class="col1">rats.*</td><td class="col2 leftalign">rats nest routines  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row65">
+		<td class="col0">D</td><td class="col1">remove.*</td><td class="col2 leftalign">functions used to remove vias, pins …  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row66">
+		<td class="col0">H</td><td class="col1">report.*</td><td class="col2 leftalign">Tell the user what he/she must know  </td><td class="col3">See PCB manual for the options.</td>
+	</tr>
+	<tr class="row67">
+		<td class="col0" rowspan="2">H</td><td class="col1">res_lex.*</td><td class="col2"> </td><td class="col3" rowspan="2">These files are used to parse the pcb-menu.res and gpcb-menu.res files. This defines the menu structure of PCB. res_* is a generic resource parser.  Both gtk and lesstif hids use them.</td>
+	</tr>
+	<tr class="row68">
+		<td class="col0">res_parse.*</td><td class="col1 leftalign">A parser, to read the resource (menu items etc) form PCB  </td>
+	</tr>
+	<tr class="row69">
+		<td class="col0">H</td><td class="col1">resource.h</td><td class="col2"> </td><td class="col3"> </td>
+	</tr>
+	<tr class="row70">
+		<td class="col0">D</td><td class="col1">rotate.*</td><td class="col2 leftalign">functions used to rotate pins, elements …  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row71">
+		<td class="col0">C</td><td class="col1">rtree.*</td><td class="col2 leftalign">r-tree functions  </td><td class="col3">a way to quickly find 2-D objects in a 2-D space</td>
+	</tr>
+	<tr class="row72">
+		<td class="col0"> </td><td class="col1">rubberband.*</td><td class="col2 leftalign">functions used by &#039;rubberband moves&#039;  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row73">
+		<td class="col0">C</td><td class="col1">search.*</td><td class="col2 leftalign">search routines some of the functions use dummy parameters  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row74">
+		<td class="col0">C</td><td class="col1">select.*</td><td class="col2 leftalign">select routines  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row75">
+		<td class="col0">C</td><td class="col1">set.*</td><td class="col2 leftalign">routines to update widgets and global settings (except output window and dialogs)  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row76">
+		<td class="col0">C</td><td class="col1">strflags.*</td><td class="col2 leftalign">Some flags routines  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row77">
+		<td class="col0">C</td><td class="col1">thermal.*</td><td class="col2 leftalign">negative thermal finger polygons  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row78">
+		<td class="col0"> </td><td class="col1">toporouter.*</td><td class="col2 leftalign">This file implements a topological autorouter.  </td><td class="col3">Please take a look inside the file for some literature references on the toporouter.</td>
+	</tr>
+	<tr class="row79">
+		<td class="col0">C</td><td class="col1">undo.*</td><td class="col2 leftalign">functions used to undo operations  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row80">
+		<td class="col0">C</td><td class="col1">vector.*</td><td class="col2 leftalign">operations on vectors.  </td><td class="col3"> </td>
+	</tr>
+	<tr class="row81">
+		<td class="col0">H</td><td class="col1">vendor.*</td><td class="col2 leftalign">routines to generate vendor specific output  </td><td class="col3">vendor.c is used to load vendor-specific DRC rules and apply them.</td>
+	</tr>
+</table></div>
+<!-- EDIT9 TABLE [2906-11399] -->
+<p>
+D = These files have there focus on the Data Functionality. They manipulate the <span class="curid"><a href="geda-pcb_developer_introduction.html#pcbtype" class="wikilink1" title="geda-pcb_developer_introduction.html">PCBType</a></span> or <span class="curid"><a href="geda-pcb_developer_introduction.html#datatype" class="wikilink1" title="geda-pcb_developer_introduction.html">DataType</a></span> structure.
+</p>
+
+<p>
+C = These files have there focus on the Core Functionality. They support the overall working of the program.
+</p>
+
+<p>
+H = These files have there focus on the HID Functionality. They support the HID actions and requests.
+</p>
+
+</div>
+<!-- EDIT8 SECTION "src Directory file list" [2821-11804] -->
+<h2 class="sectionedit10"><a name="build_system" id="build_system">Build system</a></h2>
+<div class="level2">
+
+<p>
+You must have a working build system before you even can think about hacking the source code. Make sure you can build a git clone.<br/>
+
+Try building the sources from git before you try anything else.<br/>
+
+The wiki page <a href="http://wiki.geda-project.org/geda:developer" class="urlextern" title="http://wiki.geda-project.org/geda:developer"  rel="nofollow">http://wiki.geda-project.org/geda:developer</a> shows the git command to get the geda-gaf repository. We are talking about pcb here.<br/>
+For pcb we need to do:
+</p>
+<pre class="code">git clone git://git.geda-project.org/pcb.git</pre>
+
+<p>
+For the other repositories take a look at <a href="http://git.geda-project.org/" class="urlextern" title="http://git.geda-project.org/"  rel="nofollow">http://git.geda-project.org/</a>
+</p>
+
+<p>
+Next get your build system working. <a href="http://wiki.geda-project.org/geda:gaf_building_git_version" class="urlextern" title="http://wiki.geda-project.org/geda:gaf_building_git_version"  rel="nofollow">http://wiki.geda-project.org/geda:gaf_building_git_version</a>
+</p>
+
+<p>
+While working on the pcb sources remember that PCB uses The AutoTools as there build system.<br/>
+This isn&#039;t as daunting as it sounds, for the newbie developer.<br/>
+The PCB development team has made it easy for us.
+</p>
+
+<p>
+Generally just run:
+</p>
+<pre class="code">./autogen.sh</pre>
+
+<p>
+and the scary part is over <img src="images/smileys/icon_wink.gif" class="middle" alt=";-)" />
+</p>
+
+<p>
+Then do the usual:
+</p>
+<pre class="code">./configure
+make</pre>
+
+<p>
+The autogen.sh script is usually only needed once, after a git clone or if a file is added to be build into PCB. See <span class="curid"><a href="geda-pcb_developer_introduction.html#example" class="wikilink1" title="geda-pcb_developer_introduction.html">Example</a></span> on when to use the autogen.sh script.
+</p>
+
+<p>
+For more information on the AutoTools take a look at: <a href="https://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html" class="urlextern" title="https://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html"  rel="nofollow">https://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html</a>
+</p>
+
+<p>
+If you want to know more about git take a look at: <a href="https://git-scm.com/docs/gittutorial" class="urlextern" title="https://git-scm.com/docs/gittutorial"  rel="nofollow">https://git-scm.com/docs/gittutorial</a>
+</p>
+
+</div>
+<!-- EDIT10 SECTION "Build system" [11805-13196] -->
+<h2 class="sectionedit11"><a name="dependencies" id="dependencies">Dependencies</a></h2>
+<div class="level2">
+
+<p>
+PCB is a open source program and it uses open source libraries and tools to do what it does.
+Doing a <code>repoquery –requires pcb</code> on my Fedora 20 system show the following dependencies:
+</p>
+<div class="table sectionedit12"><table class="inline">
+	<tr class="row0">
+		<td class="col0 rightalign">  perl</td><td class="col1 rightalign">  libdl.so.2()</td><td class="col2 rightalign">  libm.so.6(GLIBC_2.2.5)</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 rightalign">  wish</td><td class="col1 rightalign">  libdl.so.2(GLIBC_2.2.5)</td><td class="col2 rightalign">  libpango-1.0.so.0()</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 rightalign">  libGL.so.1()</td><td class="col1 rightalign">  libfontconfig.so.1()</td><td class="col2 rightalign">  libpangocairo-1.0.so.0()</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 rightalign">  libGLU.so.1()</td><td class="col1 rightalign">  libfreetype.so.6()</td><td class="col2 rightalign">  libpangoft2-1.0.so.0()</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 rightalign">  libICE.so.6()</td><td class="col1 rightalign">  libgd.so.3()</td><td class="col2 rightalign">  libpangox-1.0.so.0()</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 rightalign">  libSM.so.6()</td><td class="col1 rightalign">  libgdk-x11-2.0.so.0()</td><td class="col2 rightalign">  libpng16.so.16()</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 rightalign">  libX11.so.6()</td><td class="col1 rightalign">  libgdk_pixbuf-2.0.so.0()</td><td class="col2 rightalign">  libpthread.so.0()</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 rightalign">  libXinerama.so.1()</td><td class="col1 rightalign">  libgdkglext-x11-1.0.so.0()</td><td class="col2 rightalign">  libpthread.so.0(GLIBC_2.2.5)</td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 rightalign">  libXmu.so.6()</td><td class="col1 rightalign">  libgio-2.0.so.0()</td><td class="col2 rightalign">  libtiff.so.5()</td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 rightalign">  libXpm.so.4()</td><td class="col1 rightalign">  libglib-2.0.so.0()</td><td class="col2 rightalign">  libvpx.so.1()</td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 rightalign">  libXrender.so.1()</td><td class="col1 rightalign">  libgmodule-2.0.so.0()</td><td class="col2 rightalign">  libz.so.1()</td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 rightalign">  libXt.so.6()</td><td class="col1 rightalign">  libgobject-2.0.so.0()</td><td class="col2 rightalign">  m4</td>
+	</tr>
+	<tr class="row12">
+		<td class="col0 rightalign">  libatk-1.0.so.0()</td><td class="col1 rightalign">  libgtk-x11-2.0.so.0()</td><td class="col2 rightalign">  perl(File::Basename)</td>
+	</tr>
+	<tr class="row13">
+		<td class="col0 rightalign">  libc.so.6(GLIBC_2.14)</td><td class="col1 rightalign">  libgtkglext-x11-1.0.so.0()</td><td class="col2 rightalign">  perl(File::Copy)</td>
+	</tr>
+	<tr class="row14">
+		<td class="col0 rightalign">  libcairo.so.2()</td><td class="col1 rightalign">  libjpeg.so.62()</td><td class="col2 rightalign">  rtld(GNU_HASH)</td>
+	</tr>
+	<tr class="row15">
+		<td class="col0 rightalign">  libdbus-1.so.3()</td><td class="col1 rightalign">  libm.so.6()</td><td class="col2"> </td>
+	</tr>
+</table></div>
+<!-- EDIT12 TABLE [13410-14361] -->
+</div>
+<!-- EDIT11 SECTION "Dependencies" [13197-14362] -->
+<h2 class="sectionedit13"><a name="trace_an_action" id="trace_an_action">Trace an action</a></h2>
+<div class="level2">
+
+<p>
+Here is a short introduction where to start if you want to trace an action down into the source code:
+Lets draw a line in the (GTK) <acronym title="Graphical User Interface">GUI</acronym>.
+</p>
+
+<p>
+If we start pcb the default mode is the select mode, in order to draw a trace we need to switch to the LINE mode. We do that by pressing <kbd>F2</kbd>. Next we use the mouse to select a starting point and do a left click of the mouse button. Now we can start drawing a trace.
+</p>
+
+<p>
+So what happens in the source code? PCB uses a flexible way of implementing menu structures and it uses a flexible way to implement actions the program should do. All this flexibility made it a bit difficult for me to see where to start.
+</p>
+
+</div>
+<!-- EDIT13 SECTION "Trace an action" [14363-15045] -->
+<h3 class="sectionedit14"><a name="f2_key" id="f2_key">F2 key</a></h3>
+<div class="level3">
+
+<p>
+First let&#039;s trace the LINE mode selecting by pressing <kbd>F2</kbd>.
+</p>
+
+<p>
+In the file <em><strong>gpcb-menu.res</strong></em> we look for our <kbd>F2</kbd> key and we find
+</p>
+<pre class="code">{&quot;Line&quot; checked=linemode,1 Mode(Line) a={&quot;F2&quot; &quot;&lt;Key&gt;F2&quot;}}</pre>
+
+<p>
+In the file <em><strong>action.c</strong></em> we find
+</p>
+<pre class="code">HID_Action action_action_list[] {&quot;Mode&quot;, 0, ActionMode, mode_help, mode_syntax}</pre>
+
+<p>
+The action_action_list defines that the <strong>Mode</strong> event is translated into the <em class="u">ActionMode</em> function. So the function called when we press <kbd>F2</kbd> is <code>ActionMode(Line)</code>.
+</p>
+
+<p>
+ActionMode is a generic function and therefore it will need to find what to do.
+</p>
+<pre class="code c">ActionMode <span class="br0">&#40;</span><span class="kw4">int</span> argc<span class="sy0">,</span> <span class="kw4">char</span> <span class="sy0">**</span>argv<span class="sy0">,</span> Coord x<span class="sy0">,</span> Coord y<span class="br0">&#41;</span></pre>
+
+<p>
+It will do that by calling <code>GetFunctionID (AGV[0])</code> in this example AGV[0] = Line. The function ID will tell it to do the function <code>SetMode (LINE_MODE);</code>
+</p>
+
+<p>
+That function will set the variable <strong>Settings.Mode</strong> to LINE_MODE
+</p>
+
+<p>
+<a href="media/devel_intro/set_mode.png?id=geda%3Apcb_developer_introduction" class="media" title="devel_intro:set_mode.png"><img src="media/devel_intro/set_mode.png" class="media" alt="" /></a>
+</p>
+
+</div>
+<!-- EDIT14 SECTION "F2 key" [15046-16000] -->
+<h3 class="sectionedit15"><a name="mouse_click" id="mouse_click">Mouse click</a></h3>
+<div class="level3">
+
+<p>
+Next we trace down what will happen if we left click the mouse button to start drawing a track.<br/>
+Please note this is a very simplified call graph.
+</p>
+
+<p>
+<a href="media/devel_intro/draw_line.png?id=geda%3Apcb_developer_introduction" class="media" title="devel_intro:draw_line.png"><img src="media/devel_intro/draw_line.png" class="media" alt="" /></a>
+</p>
+
+<p>
+In the file <em><strong>gpcb-menu.res</strong></em> Left mouse click Mouse = Left ⇒ points to Mode(Notify)
+</p>
+
+<p>
+[*1] Mode(Notify)
+</p>
+
+<p>
+<strong>Mode</strong> translates in the action_action_list into _ActionMode_
+</p>
+
+<p>
+[*2] Left mouse click translates into calling function ActionMode(Notify)
+</p>
+
+<p>
+[*3] The program will go back and forth between NotifyMode and NotifyLine until [*4].<br/>
+
+In the function NotifyLine all the dynamic processing is done, meaning that here the limitations and restrictions are check realtime. e.g. if the Auto force DRC check flag is checked, this function checks if we try to draw over existing copper.
+</p>
+
+<p>
+[*4]if two points are selected we can create a line
+</p>
+
+<p>
+[*5] We need to free memory-space and add our new Line into the linked list. This is done through the GLIB Library.
+Next our newly created LINE object is filled with the relevant data. 
+Basically we are done, the line is added to the data structure. However there is one more thing to do.
+</p>
+
+<p>
+[*6] Our new line is stored into the main PCBType data structure (actually in the DataType sub structure). Now there is one more administrative task to do, the newly created line must be add to the rtree data structure. Every item that is added to the data structure is also added to the rtree data structure. The R-TREE data structure makes it easy to search for free or occupied areas on a layer.
+</p>
+
+<p>
+This is in a very simplified description on what happens and the path the software takes to draw a line.
+</p>
+
+</div>
+<!-- EDIT15 SECTION "Mouse click" [16001-17637] -->
+<h2 class="sectionedit16"><a name="crosshair" id="crosshair">Crosshair</a></h2>
+<div class="level2">
+
+<p>
+From: <a href="http://www.delorie.com/pcb/docs/gs/gs.html#Terminology" class="urlextern" title="http://www.delorie.com/pcb/docs/gs/gs.html#Terminology"  rel="nofollow">http://www.delorie.com/pcb/docs/gs/gs.html#Terminology</a>
+</p>
+
+<p>
+<em>crosshair</em>
+</p>
+
+<p>
+This is the actual location on the <a href="http://www.delorie.com/pcb/docs/gs/gs.html#board" class="urlextern" title="http://www.delorie.com/pcb/docs/gs/gs.html#board"  rel="nofollow">board</a> which is used when you perform an <a href="http://www.delorie.com/pcb/docs/gs/gs.html#action" class="urlextern" title="http://www.delorie.com/pcb/docs/gs/gs.html#action"  rel="nofollow">action</a>. If <a href="http://www.delorie.com/pcb/docs/gs/gs.html#grid" class="urlextern" title="http://www.delorie.com/pcb/docs/gs/gs.html#grid"  rel="nofollow">grid</a> snap is active, the crosshair reflects the grid point closest to the <a href="http://www.delorie.com/pcb/docs/gs/gs.html#cursor" class="urlextern" title="http://www.delorie.com/pcb/docs/gs/gs.html#cursor"  rel="nofollow">cursor</a>, else the crosshair reflects the <a href="http://www.delorie.com/pcb/docs/gs/gs.html#cursor" class="urlextern" title="http://www.delorie.com/pcb/docs/gs/gs.html#cursor"  rel="nofollow">cursor</a> itself. 
+</p>
+
+<p>
+So the crosshair is the X Y position on the PCB canvas. When grid is enabled the crosshair is automatically snapped to the grid.<br/>
+Let&#039;s see how that works:
+</p>
+
+<p>
+Open the file <em><strong>crosshair.c</strong></em> with your favourite text editor and look for the function <code>FitCrosshairIntoGrid.</code> In my version its around line 920.
+</p>
+
+<p>
+Add the debug code into the function:
+</p>
+<pre class="code c"><span class="coMULTI">/* ---------------------------------------------------------------------------
+ * recalculates the passed coordinates to fit the current grid setting
+ */</span>
+<span class="kw4">void</span>
+FitCrosshairIntoGrid <span class="br0">&#40;</span>Coord X<span class="sy0">,</span> Coord Y<span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+  Coord nearest_grid_x<span class="sy0">,</span> nearest_grid_y<span class="sy0">;</span>
+  <span class="kw4">void</span> <span class="sy0">*</span>ptr1<span class="sy0">,</span> <span class="sy0">*</span>ptr2<span class="sy0">,</span> <span class="sy0">*</span>ptr3<span class="sy0">;</span>
+  <span class="kw4">struct</span> snap_data snap_data<span class="sy0">;</span>
+  <span class="kw4">int</span> ans<span class="sy0">;</span>
+&nbsp;
+  <span class="coMULTI">/* Add the next two lines */</span>
+  <span class="coMULTI">/* RZE: Debug code please remove if I forget */</span>
+  pcb_printf<span class="br0">&#40;</span><span class="st0">&quot;X=%d, Y=%d<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> Crosshair.<span class="me1">X</span><span class="sy0">,</span> Crosshair.<span class="me1">Y</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+  Crosshair.<span class="me1">X</span> <span class="sy0">=</span> CLAMP <span class="br0">&#40;</span>X<span class="sy0">,</span> Crosshair.<span class="me1">MinX</span><span class="sy0">,</span> Crosshair.<span class="me1">MaxX</span><span class="br0">&#41;</span><span class="sy0">;</span><span class="st0">''</span>
+  Crosshair.<span class="me1">Y</span> <span class="sy0">=</span> CLAMP <span class="br0">&#40;</span>Y<span class="sy0">,</span> Crosshair.<span class="me1">MinY</span><span class="sy0">,</span> Crosshair.<span class="me1">MaxY</span><span class="br0">&#41;</span><span class="sy0">;</span><span class="st0">''</span></pre>
+
+<p>
+Try!
+From the command-line terminal do:
+</p>
+<pre class="code">cd &lt;to_pcb_source_directory&gt;
+./configure
+make
+src/pcb</pre>
+
+<p>
+In your terminal you will see the X and Y coordinates of the crosshair.<br/>
+Please note that they are rounded numbers.<br/>
+Turn off grid snapping and watch the numbers.
+</p>
+
+<p>
+Congratulations, you just hacked into the PCB source code <img src="images/smileys/icon_wink.gif" class="middle" alt=";-)" />
+</p>
+
+</div>
+<!-- EDIT16 SECTION "Crosshair" [17638-19499] -->
+<h2 class="sectionedit17"><a name="example" id="example">Example</a></h2>
+<div class="level2">
+
+<p>
+As an exercise let&#039;s do something easy, like adding an action to PCB.
+</p>
+
+<p>
+Before you start coding take a look at: <span class="curid"><a href="geda-pcb_developer_introduction.html#build_system" class="wikilink1" title="geda-pcb_developer_introduction.html">Build system</a></span>
+It is essential that you have a working build system.
+</p>
+
+<p>
+When working on the source code of PCB then please make use of lots and lots of comments (preferably doxygen style). In trying to understand the code I was very grateful for every piece of comment the developer had written.
+</p>
+
+<p>
+First make a file called <em><strong>example.c</strong></em> and add:
+</p>
+<pre class="code c"><span class="coMULTI">/*!
+ * =====================================================================================
+ *
+ *                                      COPYRIGHT
+ *  Example action implementation for PCB.
+ *  Copyright (C) 2015 Robert Zeegers
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 2
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ *  \File:   example.c
+ *  \Brief:  Example on how to implement a action in the PCB program.
+ *  \par Description
+ *   Example action implementation for PCB, interactive printed circuit board design
+ *  \copyright (C) 2015 Robert Zeegers
+ *
+ *  \Version:  1.0
+ *  Created:  24/07/15
+ *
+ *  \Todo:     nothing
+ *  \Bug:      not that I know of
+ *
+ * =====================================================================================
+ */</span>
+&nbsp;
+<span class="coMULTI">/* First thing todo is include global.h  */</span>
+<span class="coMULTI">/* This will automatically also include const.h and macro.h */</span>
+<span class="co2">#include &quot;global.h&quot;</span>
+&nbsp;
+<span class="coMULTI">/* Second we include hid.h because we want to register our action to the HID */</span>
+<span class="co2">#include &quot;hid.h&quot;</span>
+&nbsp;
+<span class="coMULTI">/* We are going to add an action and therefore we want it to show-up in the PCB manual, */</span>
+<span class="coMULTI">/* so we add some documentation comments */</span>
+<span class="coMULTI">/* For the documentation style see the &quot;extract-docs&quot; perl script in the doc directory */</span>
+&nbsp;
+<span class="coMULTI">/* %start-doc actions DoSilly
+   This function doesn't do anything useful.
+&nbsp;
+   @example
+   DoSilly()
+   @end example
+&nbsp;
+   %end-doc */</span>
+&nbsp;
+<span class="coMULTI">/* All action entry functions must have the same syntax as defined in */</span>
+<span class="coMULTI">/* typedef struct HID_Action (hid.h)  */</span>
+<span class="kw4">static</span> <span class="kw4">int</span>
+ExampleDo <span class="br0">&#40;</span><span class="kw4">int</span> argc<span class="sy0">,</span> <span class="kw4">char</span> <span class="sy0">**</span>argv<span class="sy0">,</span> <span class="kw4">int</span> x<span class="sy0">,</span> <span class="kw4">int</span> y<span class="br0">&#41;</span>
+<span class="br0">&#123;</span>
+    <span class="coMULTI">/* It should do something, so let's do something silly */</span>
+    <span class="coMULTI">/* Let's write a Dutch songtext to the Message Log window */</span>
+    <span class="coMULTI">/* The struct HID is defined in hid.h */</span>
+    <span class="coMULTI">/* and the variable gui is made available there by &quot;extern HID *gui;&quot; */</span>
+    <span class="coMULTI">/* First we check if we have a gui. */</span>
+    <span class="kw1">if</span><span class="br0">&#40;</span> <span class="nu0">1</span> <span class="sy0">==</span> gui<span class="sy0">-&gt;</span>gui <span class="br0">&#41;</span>
+    <span class="br0">&#123;</span>
+        <span class="coMULTI">/*  if we have one let's write the songtext */</span>
+        gui<span class="sy0">-&gt;</span>log <span class="br0">&#40;</span>_<span class="br0">&#40;</span><span class="st0">&quot;Iedereen is van de wereld en de wereld is van iedereen!<span class="es1">\n</span>&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="coMULTI">/* Now we have to make an action list. */</span>
+<span class="coMULTI">/* Here we make the connection between our command &quot;DoSilly()&quot; and */</span>
+<span class="coMULTI">/* the actual function which should be executed ExampleDo().*/</span>
+<span class="kw4">static</span> HID_Action exampledo_action_list<span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+  <span class="br0">&#123;</span><span class="st0">&quot;DoSilly&quot;</span><span class="sy0">,</span> <span class="st0">&quot;Example action&quot;</span><span class="sy0">,</span> ExampleDo<span class="sy0">,</span> <span class="st0">&quot;Always provide some help&quot;</span><span class="sy0">,</span> <span class="st0">&quot;DoSilly()&quot;</span><span class="br0">&#125;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span>
+&nbsp;
+<span class="coMULTI">/* Next a macro to register the action in the HID */</span>
+<span class="coMULTI">/* Note the missing ; at the end, that's correct ;-) */</span>
+REGISTER_ACTIONS <span class="br0">&#40;</span>exampledo_action_list<span class="br0">&#41;</span></pre>
+
+<p>
+For an explanation on the <code>REGISTER_ACTION</code> macro see paragraph <span class="curid"><a href="geda-pcb_developer_introduction.html#register" class="wikilink1" title="geda-pcb_developer_introduction.html">REGISTER</a></span>.
+</p>
+
+<p>
+Next we need to add our file to the build system.<br/>
+
+We do that in the file <em><strong>MakeFile.am</strong></em>.<br/>
+Open <em><strong>MakeFile.am</strong></em> and look for the variable <em class="u">PCB_SRCS</em> and add the file <em><strong>example.c</strong></em> there like the others.
+</p>
+
+<p>
+Clean your build directory by doing:
+</p>
+<pre class="code">make distclean</pre>
+
+<p>
+Then do:
+</p>
+<pre class="code">./autogen.sh</pre>
+
+<p>
+Now our file is in <em><strong>MakeFile.in</strong></em>
+</p>
+
+<p>
+Next do:
+</p>
+<pre class="code">./configure
+make</pre>
+
+<p>
+Run:
+</p>
+<pre class="code">src/pcb</pre>
+
+<p>
+In the PCB program type ”:DoSilly()” and watch the message log window.
+</p>
+
+<p>
+And do check out the pcb manual in doc/pcb.pdf search for “DoSilly”
+</p>
+
+</div>
+<!-- EDIT17 SECTION "Example" [19500-23774] -->
+<h2 class="sectionedit18"><a name="register" id="register">REGISTER</a></h2>
+<div class="level2">
+
+<p>
+<strong>REGISTER_ACTIONS - REGISTER_FLAGS - REGISTER_ATTRIBUTES</strong>
+</p>
+
+<p>
+Every action file must register its actions in the HID.
+The action file will have an 
+</p>
+<pre class="code c"><span class="co2">#include &quot;hid.h&quot;</span></pre>
+
+<p>
+ which define the REGISTER_* macros.
+Then somewhere in the file you add:
+</p>
+<pre class="code">REGISTER_ACTIONS(exampledo_action_list)</pre>
+
+<p>
+This will be expanded by the preprocessor into:
+</p>
+<pre class="code c"><span class="kw4">void</span> register_exampledo_action_list<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="br0">&#123;</span> hid_register_actions<span class="br0">&#40;</span>exampledo_action_list<span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">;</span> <span class="br0">&#125;</span></pre>
+
+<p>
+During the build process the files <em><strong>core_lists.h</strong></em> and <em><strong>gtk_lists.h</strong></em> are created. These files contain nothing more than a collection of REGISTER_* instructions it found in its source files.<br/>
+So <em><strong>core_lists.h</strong></em> and <em><strong>gtk_lists.h</strong></em> will contain:
+</p>
+<pre class="code">REGISTER_ACTION(exampledo_action_list)</pre>
+
+<p>
+In the file <em><strong>main.c</strong></em> around the <em class="u">main</em> functions we find the instruction:
+</p>
+<pre class="code c"><span class="co2">#include &quot;dolists.h&quot;</span></pre>
+
+<p>
+And soon after that we find
+</p>
+<pre class="code c"><span class="co2">#include &quot;core_lists.h&quot;</span></pre>
+
+<p>
+Because <em><strong>dolists.h</strong></em> redefines the REGISTER_* macros, the macros in <em><strong>core_lists.h</strong></em>
+</p>
+<pre class="code">REGISTER_ACTIONS(exampledo_action_list)</pre>
+
+<p>
+will be expanded by the preprocessor into:
+</p>
+<pre class="code c">external <span class="kw4">void</span> register_exampledo_action_list<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+register_exampledo_action_list<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+<p>
+And therefore it will call all functions to register the actions at the beginning of the main function.
+</p>
+
+</div>
+<!-- EDIT18 SECTION "REGISTER" [23775-25153] -->
+<h3 class="sectionedit19"><a name="options" id="options">Options</a></h3>
+<div class="level3">
+<div class="table sectionedit20"><table class="inline">
+	<tr class="row0">
+		<td class="col0">REGISTER_ACTIONS</td><td class="col1">These actions can be called though the user command window (start with ”:” in the PCB program.</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">REGISTER_FLAGS</td><td class="col1">These flags initiate a functions when set or unset.<br/>
+E.g. in file <em><strong>flags.c</strong></em> we find <pre class="code c">HID_Flag flags_flag_list<span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+  <span class="br0">&#123;</span><span class="st0">&quot;style&quot;</span><span class="sy0">,</span>                FlagCurrentStyle<span class="sy0">,</span> NULL<span class="br0">&#125;</span><span class="sy0">,</span>
+  <span class="br0">&#123;</span><span class="st0">&quot;grid&quot;</span><span class="sy0">,</span>                 FlagGrid<span class="sy0">,</span>         NULL<span class="br0">&#125;</span><span class="sy0">,</span></pre>
+
+<p>
+The “grid” flags is associated with the menu flag: <strong>View→enable visible grid</strong> and makes the connection to the <code>FlagGrid()</code> function.<br/>
+If you select <strong>View→enable visible grid</strong> the function <code>FlagGrid</code> will be called.
+</p>
+</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">REGISTER_ATTRIBUTES</td><td class="col1">In <em><strong>main.c</strong></em> there is a call to this macro: <code>REGISTER_ATTRIBUTES (main_attribute_list)</code><br/>
+The main_attribute_list defines the command-line options.<br/>
+Most of the HID also use this macro, to add their command line options as well.</td>
+	</tr>
+</table></div>
+<!-- EDIT20 TABLE [25173-26028] -->
+</div>
+<!-- EDIT19 SECTION "Options" [25154-26029] -->
+<h2 class="sectionedit21"><a name="pcbtype" id="pcbtype">PCBType</a></h2>
+<div class="level2">
+
+<p>
+PCBType is the main data structure
+</p>
+
+<p>
+PCBType contain all the general information used in the program and it contains a pointer to the DataType
+</p>
+
+<p>
+<a href="media/devel_intro/structpcbtype_graph.png?id=geda%3Apcb_developer_introduction" class="media" title="devel_intro:structpcbtype_graph.png"><img src="media/devel_intro/structpcbtype_graph.png" class="media" alt="" /></a>
+</p>
+
+</div>
+<!-- EDIT21 SECTION "PCBType" [26030-26235] -->
+<h2 class="sectionedit22"><a name="datatype" id="datatype">DataType</a></h2>
+<div class="level2">
+
+<p>
+The DataType contains the actual data that defines our printed circuit board.
+</p>
+
+<p>
+DataType is what&#039;s stored in the Buffers when you do cut/paste.
+</p>
+<div class="table sectionedit23"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Data Fields </th><th class="col1" colspan="2"> </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0">Cardinal</td><td class="col1">ViaN</td><td class="col2"> </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">Cardinal</td><td class="col1">ElementN</td><td class="col2"> </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">Cardinal</td><td class="col1">RatN</td><td class="col2"> </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">int</td><td class="col1">LayerN</td><td class="col2"> </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">GList *</td><td class="col1">Via</td><td class="col2">Layer independent via&#039;s</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">GList *</td><td class="col1">Element</td><td class="col2">Layer independent elements</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">GList *</td><td class="col1">Rat</td><td class="col2">Layer independent rat-lines</td>
+	</tr>
+	<tr class="row8">
+		<td class="col0">rtree_t *</td><td class="col1">via_tree</td><td class="col2"> </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0">rtree_t *</td><td class="col1">element_tree</td><td class="col2"> </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0">rtree_t *</td><td class="col1">pin_tree</td><td class="col2"> </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0">rtree_t *</td><td class="col1">pad_tree</td><td class="col2"> </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0">rtree_t *</td><td class="col1">name_tree [3]</td><td class="col2"> </td>
+	</tr>
+	<tr class="row13">
+		<td class="col0">rtree_t *</td><td class="col1">rat_tree</td><td class="col2"> </td>
+	</tr>
+	<tr class="row14">
+		<td class="col0">struct PCBType *</td><td class="col1">pcb</td><td class="col2">A pointer back to the main data structure</td>
+	</tr>
+	<tr class="row15">
+		<td class="col0">LayerType</td><td class="col1">Layer [MAX_LAYER+2]</td><td class="col2">All layer dependent items</td>
+	</tr>
+	<tr class="row16">
+		<td class="col0">int</td><td class="col1">polyClip</td><td class="col2"> </td>
+	</tr>
+</table></div>
+<!-- EDIT23 TABLE [26402-26904] -->
+<p>
+The actual data is stored in the <span class="curid"><a href="geda-pcb_developer_introduction.html#glist" class="wikilink1" title="geda-pcb_developer_introduction.html">GList</a></span> data elements. The rest is there for administrative purposes, to keep track of it all.
+Here I like to specially mention the rtree_t* data members. Although they have an administrative character the <span class="curid"><a href="geda-pcb_developer_introduction.html#r-tree" class="wikilink1" title="geda-pcb_developer_introduction.html">R-TREE</a></span> data structure is heavily used in the PCB program.
+</p>
+
+</div>
+<!-- EDIT22 SECTION "DataType" [26236-27276] -->
+<h2 class="sectionedit24"><a name="glist" id="glist">GList</a></h2>
+<div class="level2">
+<pre class="code c"><span class="kw4">struct</span> GList <span class="br0">&#123;</span>
+  gpointer data<span class="sy0">;</span>
+  GList <span class="sy0">*</span>next<span class="sy0">;</span>
+  GList <span class="sy0">*</span>prev<span class="sy0">;</span>
+<span class="br0">&#125;</span><span class="sy0">;</span> </pre>
+
+<p>
+The GList struct is used for each element in a doubly-linked list. 
+</p>
+
+<p>
+Members:
+</p>
+<div class="table sectionedit25"><table class="inline">
+	<tr class="row0">
+		<td class="col0">gpointer data</td><td class="col1">holds the element&#039;s data , which can be a pointer to any kind of data.</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0">GList *next</td><td class="col1">contains the link to the next element in the list</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">GList *prev;</td><td class="col1">contains the link to the previous element in the list</td>
+	</tr>
+</table></div>
+<!-- EDIT25 TABLE [27458-27677] -->
+<p>
+gpointer ⇒
+</p>
+<pre class="code c"><span class="kw4">typedef</span> <span class="kw4">void</span><span class="sy0">*</span> gpointer<span class="sy0">;</span></pre>
+
+<p>
+An untyped pointer. <code>gpointer</code> looks better and is easier to use than <code>void*</code>.
+</p>
+
+</div>
+<!-- EDIT24 SECTION "GList" [27277-27816] -->
+<h2 class="sectionedit26"><a name="r-tree" id="r-tree">R-TREE</a></h2>
+<div class="level2">
+
+<p>
+From Wikipedia:
+The key idea of the r-tree data structure is to group nearby objects and represent them with their minimum bounding rectangle in the next higher level of the tree; the “R” in R-tree is for rectangle. Since all objects lie within this bounding rectangle, a query that does not intersect the bounding rectangle also cannot intersect any of the contained objects. At the leaf level, each rectangle describes a single object; at higher levels the aggregation of an increasing number of objects. This can also be seen as an increasingly coarse approximation of the data set.
+</p>
+
+<p>
+A general r-tree will look like this:
+</p>
+
+<p>
+<a href="media/devel_intro/rtree.png?id=geda%3Apcb_developer_introduction" class="media" title="devel_intro:rtree.png"><img src="media/devel_intro/rtree.png" class="media" alt="" /></a>
+</p>
+
+<p>
+The bottom row of records are called leafs. 
+</p>
+
+<p>
+The rtree data structure PCB uses is:
+</p>
+
+<p>
+<a href="media/devel_intro/structrtree.png?id=geda%3Apcb_developer_introduction" class="media" title="devel_intro:structrtree.png"><img src="media/devel_intro/structrtree.png" class="media" alt="" /></a>
+</p>
+
+<p>
+The r-tree data structure hold a copy of the where&#039;s what data. Meaning that it holds a list of every item on our canvas arranged in successively smaller boxes.
+<a href="media/devel_intro/rtreepicture.png?id=geda%3Apcb_developer_introduction" class="media" title="devel_intro:rtreepicture.png"><img src="media/devel_intro/rtreepicture.png" class="media" alt="" /></a>
+</p>
+
+</div>
+<!-- EDIT26 SECTION "R-TREE" [27817-28805] -->
+<h2 class="sectionedit27"><a name="more_in-depth_explanations" id="more_in-depth_explanations">More in-depth explanations:</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> DRC</div>
+</li>
+<li class="level1"><div class="li"> ?</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT27 SECTION "More in-depth explanations:" [28806-] --></div>
+</body>
+</html>

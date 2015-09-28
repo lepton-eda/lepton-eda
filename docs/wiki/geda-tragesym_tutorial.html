@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Translations of this page are also available in the following languages:</em> <a href="geda-tragesym_tutorial.fr.html" class="wikilink1" title="geda-tragesym_tutorial.fr.html">Français</a>, <a href="geda-tragesym_tutorial.ru.html" class="wikilink1" title="geda-tragesym_tutorial.ru.html">Русский</a>.
+</p>
 
-<h1 class="sectionedit2004"><a name="creating_gschem_symbols_quickly_and_easily_using_tragesym_and_a_spreadsheet_program" id="creating_gschem_symbols_quickly_and_easily_using_tragesym_and_a_spreadsheet_program">Creating gschem symbols quickly and easily using tragesym and a spreadsheet program</a></h1>
+<h1 class="sectionedit1"><a name="creating_gschem_symbols_quickly_and_easily_using_tragesym_and_a_spreadsheet_program" id="creating_gschem_symbols_quickly_and_easily_using_tragesym_and_a_spreadsheet_program">Creating gschem symbols quickly and easily using tragesym and a spreadsheet program</a></h1>
 <div class="level1">
 
 <p>
@@ -20,8 +23,8 @@ Creating symbols for schematic capture can be very time consuming, error prone, 
 </p>
 
 </div>
-<!-- EDIT2004 SECTION "Creating gschem symbols quickly and easily using tragesym and a spreadsheet program" [1-449] -->
-<h2 class="sectionedit2005"><a name="required_steps" id="required_steps">Required Steps</a></h2>
+<!-- EDIT1 SECTION "Creating gschem symbols quickly and easily using tragesym and a spreadsheet program" [156-604] -->
+<h2 class="sectionedit2"><a name="required_steps" id="required_steps">Required Steps</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Step1: Open a tragesym template file</div>
@@ -41,26 +44,26 @@ Creating symbols for schematic capture can be very time consuming, error prone, 
 </ul>
 
 </div>
-<!-- EDIT2005 SECTION "Required Steps" [450-872] -->
-<h2 class="sectionedit2006"><a name="step1open_a_tragesym_template_file" id="step1open_a_tragesym_template_file">Step1: Open a tragesym template file</a></h2>
+<!-- EDIT2 SECTION "Required Steps" [605-1027] -->
+<h2 class="sectionedit3"><a name="step1open_a_tragesym_template_file" id="step1open_a_tragesym_template_file">Step1: Open a tragesym template file</a></h2>
 <div class="level2">
 
 <p>
-tragesym comes with two template files. One is <a href="media/tragesym/template2.txt.src" class="media" target="_blank" title="tragesym:template2.txt.src">ASCII text</a>, the second is a <a href="media/tragesym/template2.ods" class="media" target="_blank" title="tragesym:template2.ods">OpenOffice spreadsheet file</a>. You can obtain them from the gEDA utility package, too (utils/examples/tragesym/template.src and utils/examples/tragesym/template.ods).
+tragesym comes with two template files. One is <a href="media/tragesym/template2.txt.src" class="media mediafile mf_src" title="tragesym:template2.txt.src">ASCII text</a>, the second is a <a href="media/tragesym/template2.ods" class="media mediafile mf_ods" title="tragesym:template2.ods">OpenOffice spreadsheet file</a>. You can obtain them from the gEDA utility package, too (utils/examples/tragesym/template.src and utils/examples/tragesym/template.ods).
  If you prefer a different spreadsheet program, like gnumeric or kspread, just create your own template out of the textual template file. The only difference between the textual template and the spreadsheet template is the syntax of the key value pairs in the [options] and [geda_attr] sections. The textfile splits them with an equal sign (key=value), the spreadsheet has the value in the second column (which becomes a tab after being exported).
 </p>
 
 </div>
-<!-- EDIT2006 SECTION "Step1: Open a tragesym template file" [873-1671] -->
-<h2 class="sectionedit2007"><a name="step2download_the_part_data_sheet_and_find_the_pin_list" id="step2download_the_part_data_sheet_and_find_the_pin_list">Step2: Download the part data sheet and find the pin list</a></h2>
+<!-- EDIT3 SECTION "Step1: Open a tragesym template file" [1028-1826] -->
+<h2 class="sectionedit4"><a name="step2download_the_part_data_sheet_and_find_the_pin_list" id="step2download_the_part_data_sheet_and_find_the_pin_list">Step2: Download the part data sheet and find the pin list</a></h2>
 <div class="level2">
 
 <p>
-For this example, we will create a symbol from the Philips Semiconductor PCA9555 16-bit IIC IO port. The description of product and datasheet is available at Philips:  <a href="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html" class="urlextern" title="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html"  rel="nofollow">http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html</a>. Download the datasheet and open it with a pdf viewer that allows copying text out of the pdf file, such as kpdf or acroread. Flip through the pages until you find the pinout for the device: 
+For this example, we will create a symbol from the Philips Semiconductor PCA9555 16-bit IIC IO port. The description of product and datasheet is available at Philips:  <a href="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html" class="urlextern" title="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html"  rel="nofollow">http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html</a>. Download the datasheet and open it with a pdf viewer that allows copying text out of the pdf file, such as kpdf or acroread. Flip through the pages until you find the pinout for the device:
 </p>
 
 <p>
-<a href="media/tragesym/kpdf_pinconfiguration.png" class="media" target="_blank" title="tragesym:kpdf_pinconfiguration.png"><img src="media/tragesym/kpdf_pinconfiguration.png" class="media" alt="" /></a> <a href="media/tragesym/acroread_selectiontable.png" class="media" target="_blank" title="tragesym:acroread_selectiontable.png"><img src="media/tragesym/acroread_selectiontable.png" class="media" alt="" /></a>
+<a href="media/tragesym/kpdf_pinconfiguration.png?id=geda%3Atragesym_tutorial" class="media" title="tragesym:kpdf_pinconfiguration.png"><img src="media/tragesym/kpdf_pinconfiguration.png" class="media" alt="" /></a> <a href="media/tragesym/acroread_selectiontable.png?id=geda%3Atragesym_tutorial" class="media" title="tragesym:acroread_selectiontable.png"><img src="media/tragesym/acroread_selectiontable.png" class="media" alt="" /></a>
 </p>
 
 <p>
@@ -68,12 +71,12 @@ Inside the datasheet the pin list may only be in the drawing of the pin configur
 </p>
 
 </div>
-<!-- EDIT2007 SECTION "Step2: Download the part data sheet and find the pin list" [1672-2445] -->
-<h2 class="sectionedit2008"><a name="step3copy_the_pin_list_into_an_editor_and_prepare_it" id="step3copy_the_pin_list_into_an_editor_and_prepare_it">Step3: Copy the pin list into an editor and prepare it</a></h2>
+<!-- EDIT4 SECTION "Step2: Download the part data sheet and find the pin list" [1827-2599] -->
+<h2 class="sectionedit5"><a name="step3copy_the_pin_list_into_an_editor_and_prepare_it" id="step3copy_the_pin_list_into_an_editor_and_prepare_it">Step3: Copy the pin list into an editor and prepare it</a></h2>
 <div class="level2">
 
 <p>
-Select the pin list and copy it into a text editor. This intermediate step is required as your spreadsheet program may need a special field separator, like comma or tab. You may have to remove duplicate separators or replace it with tabs. 
+Select the pin list and copy it into a text editor. This intermediate step is required as your spreadsheet program may need a special field separator, like comma or tab. You may have to remove duplicate separators or replace it with tabs.
 </p>
 
 <p>
@@ -81,7 +84,7 @@ Select the pin list and copy it into a text editor. This intermediate step is re
 </p>
 
 <p>
-<a href="media/tragesym/xemacs_rawselection.png" class="media" target="_blank" title="tragesym:xemacs_rawselection.png"><img src="media/tragesym/xemacs_rawselection.png" class="media" alt="" /></a> <a href="media/tragesym/xemacs_modifiedselection.png" class="media" target="_blank" title="tragesym:xemacs_modifiedselection.png"><img src="media/tragesym/xemacs_modifiedselection.png" class="media" alt="" /></a> <a href="media/tragesym/ooo_selection.png" class="media" target="_blank" title="tragesym:ooo_selection.png"><img src="media/tragesym/ooo_selection.png" class="media" alt="" /></a>
+<a href="media/tragesym/xemacs_rawselection.png?id=geda%3Atragesym_tutorial" class="media" title="tragesym:xemacs_rawselection.png"><img src="media/tragesym/xemacs_rawselection.png" class="media" alt="" /></a> <a href="media/tragesym/xemacs_modifiedselection.png?id=geda%3Atragesym_tutorial" class="media" title="tragesym:xemacs_modifiedselection.png"><img src="media/tragesym/xemacs_modifiedselection.png" class="media" alt="" /></a> <a href="media/tragesym/ooo_selection.png?id=geda%3Atragesym_tutorial" class="media" title="tragesym:ooo_selection.png"><img src="media/tragesym/ooo_selection.png" class="media" alt="" /></a>
 </p>
 
 <p>
@@ -90,13 +93,13 @@ The pictures above illustrate the steps:
 <ul>
 <li class="level1"><div class="li"> insert the selection from your pdf viewer into a text editor</div>
 </li>
-<li class="level1"><div class="li"> modify the pinlist to make your spreadsheet program happy </div>
+<li class="level1"><div class="li"> modify the pinlist to make your spreadsheet program happy</div>
 <ul>
 <li class="level2"><div class="li"> cut out pinlist 24 to 13 with a rectangular selection</div>
 </li>
 <li class="level2"><div class="li"> insert the rectangular selection below the pins 1 to 12</div>
 </li>
-<li class="level2"><div class="li"> sort the lines (xemacs can do that <img src="images/smileys/icon_wink.gif" align="middle" alt=";-)" />)</div>
+<li class="level2"><div class="li"> sort the lines (xemacs can do that <img src="images/smileys/icon_wink.gif" class="middle" alt=";-)" />)</div>
 </li>
 <li class="level2"><div class="li"> remove or repair the lines with the numbers 2,3,… They are not in the same line. You can easily recreate the pin numbers later</div>
 </li>
@@ -109,8 +112,8 @@ The pictures above illustrate the steps:
 </ul>
 
 </div>
-<!-- EDIT2008 SECTION "Step3: Copy the pin list into an editor and prepare it" [2446-3819] -->
-<h2 class="sectionedit2009"><a name="step4insert_all_missing_data_into_the_spreadsheet" id="step4insert_all_missing_data_into_the_spreadsheet">Step4: Insert all missing data into the spreadsheet</a></h2>
+<!-- EDIT5 SECTION "Step3: Copy the pin list into an editor and prepare it" [2600-3970] -->
+<h2 class="sectionedit6"><a name="step4insert_all_missing_data_into_the_spreadsheet" id="step4insert_all_missing_data_into_the_spreadsheet">Step4: Insert all missing data into the spreadsheet</a></h2>
 <div class="level2">
 
 <p>
@@ -118,7 +121,7 @@ Now, move the labels into the label column and the pin numbers into the pin numb
 </p>
 
 <p>
-<a href="media/tragesym/ooo_rearanged.png" class="media" target="_blank" title="tragesym:ooo_rearanged.png"><img src="media/tragesym/ooo_rearanged.png" class="media" alt="" /></a>
+<a href="media/tragesym/ooo_rearanged.png?id=geda%3Atragesym_tutorial" class="media" title="tragesym:ooo_rearanged.png"><img src="media/tragesym/ooo_rearanged.png" class="media" alt="" /></a>
 </p>
 
 <p>
@@ -130,7 +133,7 @@ Now you want to change some of the values. Take a look at the pin description ta
 </p>
 
 <p>
-<a href="media/tragesym/kpdf_pindescription.png" class="media" target="_blank" title="tragesym:kpdf_pindescription.png"><img src="media/tragesym/kpdf_pindescription.png" class="media" alt="" /></a>
+<a href="media/tragesym/kpdf_pindescription.png?id=geda%3Atragesym_tutorial" class="media" title="tragesym:kpdf_pindescription.png"><img src="media/tragesym/kpdf_pindescription.png" class="media" alt="" /></a>
 </p>
 
 <p>
@@ -141,7 +144,7 @@ Regarding to that table we change the following things (see result below):
 </li>
 <li class="level1"><div class="li"> A1 to A3 are inputs, we change the type and move them to the left side</div>
 </li>
-<li class="level1"><div class="li"> set the SCL type to input and move SCL and SDA to the left side, too </div>
+<li class="level1"><div class="li"> set the SCL type to input and move SCL and SDA to the left side, too</div>
 </li>
 <li class="level1"><div class="li"> change the type of the power pins VSS and VDD and add net names. We use the more usual GND and Vcc.</div>
 </li>
@@ -152,7 +155,7 @@ Regarding to that table we change the following things (see result below):
 </p>
 
 <p>
-<a href="media/tragesym/ooo_changedpins.png" class="media" target="_blank" title="tragesym:ooo_changedpins.png"><img src="media/tragesym/ooo_changedpins.png" class="media" alt="" /></a>
+<a href="media/tragesym/ooo_changedpins.png?id=geda%3Atragesym_tutorial" class="media" title="tragesym:ooo_changedpins.png"><img src="media/tragesym/ooo_changedpins.png" class="media" alt="" /></a>
 </p>
 
 <p>
@@ -160,12 +163,12 @@ Before going on set the attributes and the options to appropriate values.
 </p>
 
 <p>
-<a href="media/tragesym/ooo_attributes.png" class="media" target="_blank" title="tragesym:ooo_attributes.png"><img src="media/tragesym/ooo_attributes.png" class="media" alt="" /></a>
+<a href="media/tragesym/ooo_attributes.png?id=geda%3Atragesym_tutorial" class="media" title="tragesym:ooo_attributes.png"><img src="media/tragesym/ooo_attributes.png" class="media" alt="" /></a>
 </p>
 
 </div>
-<!-- EDIT2009 SECTION "Step4: Insert all missing data into the spreadsheet" [3820-5027] -->
-<h2 class="sectionedit2010"><a name="step5export_the_spreadsheet_into_a_tab_separated_text_file" id="step5export_the_spreadsheet_into_a_tab_separated_text_file">Step5: Export the spreadsheet into a tab separated text file</a></h2>
+<!-- EDIT6 SECTION "Step4: Insert all missing data into the spreadsheet" [3971-5176] -->
+<h2 class="sectionedit7"><a name="step5export_the_spreadsheet_into_a_tab_separated_text_file" id="step5export_the_spreadsheet_into_a_tab_separated_text_file">Step5: Export the spreadsheet into a tab separated text file</a></h2>
 <div class="level2">
 
 <p>
@@ -173,12 +176,12 @@ You can either use the export function of your spreadsheet program to create a t
 </p>
 
 </div>
-<!-- EDIT2010 SECTION "Step5: Export the spreadsheet into a tab separated text file" [5028-5291] -->
-<h2 class="sectionedit2011"><a name="step6execute_tragesym_and_create_the_symbol" id="step6execute_tragesym_and_create_the_symbol">Step6: execute tragesym and create the symbol</a></h2>
+<!-- EDIT7 SECTION "Step5: Export the spreadsheet into a tab separated text file" [5177-5440] -->
+<h2 class="sectionedit8"><a name="step6execute_tragesym_and_create_the_symbol" id="step6execute_tragesym_and_create_the_symbol">Step6: execute tragesym and create the symbol</a></h2>
 <div class="level2">
 
 <p>
-Use a shell and execute tragesym: 
+Use a shell and execute tragesym:
 </p>
 
 <p>
@@ -190,12 +193,12 @@ If tragesym says that there&#039;s an error, just make some changes in the sprea
 </p>
 
 </div>
-<!-- EDIT2011 SECTION "Step6: execute tragesym and create the symbol" [5292-5612] -->
-<h2 class="sectionedit2012"><a name="step7check_the_result_with_gschem_and_do_some_artwork" id="step7check_the_result_with_gschem_and_do_some_artwork">Step7: check the result with gschem and do some artwork</a></h2>
+<!-- EDIT8 SECTION "Step6: execute tragesym and create the symbol" [5441-5760] -->
+<h2 class="sectionedit9"><a name="step7check_the_result_with_gschem_and_do_some_artwork" id="step7check_the_result_with_gschem_and_do_some_artwork">Step7: check the result with gschem and do some artwork</a></h2>
 <div class="level2">
 
 <p>
-Now open the generated symbol with gschem and check the result 
+Now open the generated symbol with gschem and check the result
 </p>
 
 <p>
@@ -207,7 +210,7 @@ Enabling the hidden text (“en”, Edit→Show/Hide Inv Text), you can see the 
 </p>
 
 <p>
-<a href="media/tragesym/gschem_showhidden.png" class="media" target="_blank" title="tragesym:gschem_showhidden.png"><img src="media/tragesym/gschem_showhidden.png" class="media" alt="" /></a> <a href="media/tragesym/gschem_finished.png" class="media" target="_blank" title="tragesym:gschem_finished.png"><img src="media/tragesym/gschem_finished.png" class="media" alt="" /></a>
+<a href="media/tragesym/gschem_showhidden.png?id=geda%3Atragesym_tutorial" class="media" title="tragesym:gschem_showhidden.png"><img src="media/tragesym/gschem_showhidden.png" class="media" alt="" /></a> <a href="media/tragesym/gschem_finished.png?id=geda%3Atragesym_tutorial" class="media" title="tragesym:gschem_finished.png"><img src="media/tragesym/gschem_finished.png" class="media" alt="" /></a>
 </p>
 
 <p>
@@ -215,8 +218,8 @@ Now we have a complete symbol. You can copy the symbol to your local symbol libr
 </p>
 
 </div>
-<!-- EDIT2012 SECTION "Step7: check the result with gschem and do some artwork" [5613-6255] -->
-<h2 class="sectionedit2013"><a name="conclusion" id="conclusion">Conclusion</a></h2>
+<!-- EDIT9 SECTION "Step7: check the result with gschem and do some artwork" [5761-6401] -->
+<h2 class="sectionedit10"><a name="conclusion" id="conclusion">Conclusion</a></h2>
 <div class="level2">
 
 <p>
@@ -224,8 +227,8 @@ This was a simple example with a small pincount, but this method really pays off
 </p>
 
 </div>
-<!-- EDIT2013 SECTION "Conclusion" [6256-6420] -->
-<h2 class="sectionedit2014"><a name="credits" id="credits">Credits</a></h2>
+<!-- EDIT10 SECTION "Conclusion" [6402-6566] -->
+<h2 class="sectionedit11"><a name="credits" id="credits">Credits</a></h2>
 <div class="level2">
 
 <p>
@@ -235,5 +238,6 @@ You can find that tutorial at
 </p>
 
 </div>
-<!-- EDIT2014 SECTION "Credits" [6421-] --></body>
+<!-- EDIT11 SECTION "Credits" [6567-] --></div>
+</body>
 </html>

@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,50 +9,54 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Это руководство доступно также на следующих языках:</em>
+<a href="geda-gschem_symbol_creation.html" class="wikilink1" title="geda-gschem_symbol_creation.html">English</a>
+</p>
 
-<h1 class="sectionedit1203"><a name="руководство_по_созданию_символов_geda_gaf" id="руководство_по_созданию_символов_geda_gaf">Руководство по созданию символов gEDA/gaf</a></h1>
+<h1 class="sectionedit1"><a name="руководство_по_созданию_символов_geda_gaf" id="руководство_по_созданию_символов_geda_gaf">Руководство по созданию символов gEDA/gaf</a></h1>
 <div class="level1">
 
 <p>
 Последняя версия оригинала настоящего документа находится по адресу
 <a href="http://www.geda-project.org/wiki/geda:gschem_symbol_creation" class="urlextern" title="http://www.geda-project.org/wiki/geda:gschem_symbol_creation"  rel="nofollow">http://www.geda-project.org/wiki/geda:gschem_symbol_creation</a>.<br/>
-
-Настоящий документ выпущен под лицензией
-<a href="geda-gfdl.html" class="wikilink1" title="geda-gfdl.html">GNU Free Documentation License (GFDL)</a>.
+Настоящий
+документ выпущен под лицензией <a href="geda-gfdl.html" class="wikilink1" title="geda-gfdl.html">GNU Free Documentation License
+(GFDL)</a>.
 </p>
 
 </div>
-<!-- EDIT1203 SECTION "Руководство по созданию символов gEDA/gaf" [1-409] -->
-<h2 class="sectionedit1204"><a name="обзор" id="обзор">Обзор</a></h2>
+<!-- EDIT1 SECTION "Руководство по созданию символов gEDA/gaf" [137-545] -->
+<h2 class="sectionedit2"><a name="обзор" id="обзор">Обзор</a></h2>
 <div class="level2">
 
 <p>
-В настоящем документе описывается создание <a href="geda-glossary.ru.html#символ" class="wikilink1" title="geda-glossary.ru.html">символов
-компонентов</a>, в том числе
-соглашения по стилю, советы/подсказки и то, чего стоит остерегаться при вычерчивании
+В настоящем документе описывается создание
+<a href="geda-glossary.ru.html#символ" class="wikilink1" title="geda-glossary.ru.html">символов компонентов</a>, в том числе соглашения по
+стилю, советы/подсказки и то, чего стоит остерегаться при вычерчивании
 символов для системы gEDA/gaf.
 </p>
 
 </div>
-<!-- EDIT1204 SECTION "Обзор" [410-816] -->
-<h2 class="sectionedit1205"><a name="создание_символа_компонента" id="создание_символа_компонента">Создание символа компонента</a></h2>
+<!-- EDIT2 SECTION "Обзор" [546-952] -->
+<h2 class="sectionedit3"><a name="создание_символа_компонента" id="создание_символа_компонента">Создание символа компонента</a></h2>
 <div class="level2">
 
 <p>
-Символы компонентов (называемые далее просто “символами”) вычерчиваются в
-<strong>gschem</strong>. Можно начать с пустой страницы или с заведомо хорошего
-символа, похожего на создаваемый вами.
+Символы компонентов (называемые далее просто «символами») вычерчиваются в
+<strong>gschem</strong>. Можно начать с пустой страницы или с заведомо хорошего символа,
+похожего на создаваемый вами.
 </p>
 
 </div>
-<!-- EDIT1205 SECTION "Создание символа компонента" [817-1202] -->
-<h3 class="sectionedit1206"><a name="подготовка" id="подготовка">Подготовка</a></h3>
+<!-- EDIT3 SECTION "Создание символа компонента" [953-1340] -->
+<h3 class="sectionedit4"><a name="подготовка" id="подготовка">Подготовка</a></h3>
 <div class="level3">
 
 <p>
-Прежде, чем открыть <strong>gschem</strong> и начать чертить символ, задайте себе
-несколько вопросов, ответы на которые повлияют на то, как это делать:
+Прежде, чем открыть <strong>gschem</strong> и начать чертить символ, задайте себе несколько вопросов, ответы на которые повлияют на то, как это делать:
 </p>
 <ol>
 <li class="level1"><div class="li"> Создаётся ли символ чисто из эстетических соображений (просто как рисунок)? Если так, несколько шагов упрощаются.</div>
@@ -67,8 +70,8 @@
 </ol>
 
 <p>
-Когда вы сами для себя ответите на эти вопросы, дальнейшая
-часть руководства станет для вас гораздо полезней.
+Когда вы сами для себя ответите на эти вопросы, дальнейшая часть руководства
+станет для вас гораздо полезней.
 </p>
 
 <p>
@@ -88,33 +91,32 @@
 </ol>
 
 </div>
-<!-- EDIT1206 SECTION "Подготовка" [1203-3947] -->
-<h3 class="sectionedit1207"><a name="черчение_символа" id="черчение_символа">Черчение символа</a></h3>
+<!-- EDIT4 SECTION "Подготовка" [1341-4085] -->
+<h3 class="sectionedit5"><a name="черчение_символа" id="черчение_символа">Черчение символа</a></h3>
 <div class="level3">
 
 <p>
 С помощью инструментов <code>Линия</code>, <code>Прямоугольник</code>, <code>Окружность</code>,
 <code>Дуга</code> (которые можно выбрать в меню <strong><em>Добавить</em></strong> [<strong><em>Add</em></strong>])
-создайте условное графическое обозначение своего устройства. Убедитесь,
-что единственный цвет, который вы использовали, это &#039;Graphic&#039; (зелёный).
-Не помещайте никаких выводов устройства до следующего шага.
+создайте условное графическое обозначение своего устройства. Убедитесь, что
+единственный цвет, который вы использовали, это &#039;Graphic&#039; (зелёный).  Не
+помещайте никаких выводов устройства до следующего шага.
 </p>
 
 <p>
 Для проверки того, какой цвет используется для черчения, откройте меню
-<strong><em>Правка</em></strong> → <strong><em>Цвет…</em></strong> [<strong><em>Edit</em></strong> → <strong><em>Color…</em></strong>]
-(или нажмите <kbd>E</kbd> <kbd>O</kbd>).
+<strong><em>Правка</em></strong> → <strong><em>Цвет…</em></strong> [<strong><em>Edit</em></strong> → <strong><em>Color…</em></strong>] (или
+нажмите <kbd>E</kbd> <kbd>O</kbd>).
 </p>
 
 </div>
-<!-- EDIT1207 SECTION "Черчение символа" [3948-4845] -->
-<h3 class="sectionedit1208"><a name="размещение_выводов" id="размещение_выводов">Размещение выводов</a></h3>
+<!-- EDIT5 SECTION "Черчение символа" [4086-4984] -->
+<h3 class="sectionedit6"><a name="размещение_выводов" id="размещение_выводов">Размещение выводов</a></h3>
 <div class="level3">
 
 <p>
-Если вы решили, что ваш символ будет графическим (т. е. не будет ни к
-чему подключаться, а будет просто картинкой), то этот шаг можно
-пропустить.
+Если вы решили, что ваш символ будет графическим (т. е. не будет ни к чему
+подключаться, а будет просто картинкой), то этот шаг можно пропустить.
 </p>
 
 <p>
@@ -134,9 +136,9 @@
 четыре атрибута (четыре пары <code>имя=значение</code>), уже прикреплённых к нему.
 Эти атрибуты можно отредактировать, щёлкая сначала по атрибуту в списке
 вверху окна редактирования, затем по полю, которое вы хотите изменить.
-Учтите, что когда что-то выделено, это не отражается в разделе
-диалогового окна <strong>Добавить атрибут</strong>, так как этот раздел предназначен
-только для добавления, а не для редактирования уже имеющихся атрибутов.
+Учтите, что когда что-то выделено, это не отражается в разделе диалогового
+окна <strong>Добавить атрибут</strong>, так как этот раздел предназначен только для
+добавления, а не для редактирования уже имеющихся атрибутов.
 </p>
 
 <p>
@@ -158,12 +160,15 @@
 </ul>
 
 <p>
-Допустимыми значениями <code>pintype</code> являются: <code>in</code>, <code>out</code>, <code>io</code>, <code>oc</code>, <code>oe</code>, <code>pas</code>, <code>tp</code>, <code>tri</code>, <code>clk</code>, <code>pwr</code>. Более подробную информацию о нём см. в <a href="geda-master_attributes_list.ru.html#pintype" class="wikilink1" title="geda-master_attributes_list.ru.html">Перечне основных атрибутов</a>.
+Допустимыми значениями <code>pintype</code> являются: <code>in</code>, <code>out</code>, <code>io</code>,
+<code>oc</code>, <code>oe</code>, <code>pas</code>, <code>tp</code>, <code>tri</code>, <code>clk</code>, <code>pwr</code>. Более подробную
+информацию о нём см. в <a href="geda-master_attributes_list.ru.html#pintype" class="wikilink1" title="geda-master_attributes_list.ru.html">Перечне основных
+атрибутов</a>.
 </p>
 
 </div>
-<!-- EDIT1208 SECTION "Размещение выводов" [4846-9798] -->
-<h3 class="sectionedit1209"><a name="добавление_атрибутов_к_символу" id="добавление_атрибутов_к_символу">Добавление атрибутов к символу</a></h3>
+<!-- EDIT6 SECTION "Размещение выводов" [4985-9939] -->
+<h3 class="sectionedit7"><a name="добавление_атрибутов_к_символу" id="добавление_атрибутов_к_символу">Добавление атрибутов к символу</a></h3>
 <div class="level3">
 
 <p>
@@ -172,8 +177,8 @@
 </p>
 
 <p>
-Сначала мы добавим все нужные нам атрибуты, а затем
-отключим видимость тех из них, которые должны быть невидимыми.
+Сначала мы добавим все нужные нам атрибуты, а затем отключим видимость тех
+из них, которые должны быть невидимыми.
 </p>
 <ol>
 <li class="level1"><div class="li"> В символ нужно добавить атрибут <code>device=НАЗВАНИЕ_УСТРОЙСТВА</code>. Название устройства не должно содержать ничего, кроме прописных букв, дефисов, чисел и символов подчёркивания. Если символ определяет чисто графический объект, то значение атрибута <code>device=</code> должно быть <code>none</code> (<code>device=none</code>).</div>
@@ -198,8 +203,8 @@
 </p>
 
 </div>
-<!-- EDIT1209 SECTION "Добавление атрибутов к символу" [9799-14013] -->
-<h3 class="sectionedit1210"><a name="завершение" id="завершение">Завершение</a></h3>
+<!-- EDIT7 SECTION "Добавление атрибутов к символу" [9940-14154] -->
+<h3 class="sectionedit8"><a name="завершение" id="завершение">Завершение</a></h3>
 <div class="level3">
 <ol>
 <li class="level1"><div class="li"> Добавьте к своему символу обозначение, выбрав <strong><em>Добавить</em></strong> → <strong><em>Текст…</em></strong> [<strong><em>Add</em></strong> → <strong><em>Text…</em></strong>] или нажав <kbd>A</kbd> <kbd>T</kbd>. Наберите своё обозначение и переместите его в верхнюю часть символа.</div>
@@ -211,7 +216,7 @@
 </li>
 <li class="level1"><div class="li"> Сохраните символ с помощью <strong><em>Файл</em></strong> → <strong><em>Сохранить</em></strong> [<strong><em>File</em></strong> → <strong><em>Save</em></strong>] или <strong><em>Файл</em></strong> → <strong><em>Сохранить как…</em></strong> [<strong><em>File</em></strong> → <strong><em>Save As…</em></strong>].</div>
 </li>
-<li class="level1"><div class="li"> Поместите символ в один из каталогов, определённых ключевым словом <code>component-library</code> в файле <em><code>system-gafrc</code></em>. Как только это сделано, символ должен немедленно стать видимым и может быть выбран и помещён в схему из меню <strong><em>Добавить</em></strong> → <strong><em>Компонент…</em></strong> [<strong><em>Add</em></strong> → <strong><em>Select Component…</em></strong>]. В Debian помещение файлов в <em><code>/usr/share/gEDA/sym/local/</code></em> работать будет, но потребует настройки привилегий.</div>
+<li class="level1"><div class="li"> Поместите символ в один из каталогов, заданных как библиотека символов в файле настроек gEDA suite (в одном из файлов <em><code>gafrc</code></em>).  Объяснение того, как настроить библиотеки символов см. в <a href="geda-gschem_ug-config.ru.html" class="wikilink1" title="geda-gschem_ug-config.ru.html">Руководстве пользователя gEDA gschem</a>. Как только это сделано, символ должен немедленно стать видимым и может быть выбран и помещён в схему из меню <strong><em>Добавить</em></strong> → <strong><em>Компонент…</em></strong> [<strong><em>Add</em></strong> → <strong><em>Select Component…</em></strong>]. В Debian помещение файлов в <em><code>/usr/share/gEDA/sym/local/</code></em> работать будет, но потребует настройки привилегий.</div>
 </li>
 </ol>
 
@@ -227,8 +232,8 @@
 </p>
 
 </div>
-<!-- EDIT1210 SECTION "Завершение" [14014-15985] -->
-<h2 class="sectionedit1211"><a name="общие_соглашения_об_именовании_символов" id="общие_соглашения_об_именовании_символов">Общие соглашения об именовании символов</a></h2>
+<!-- EDIT8 SECTION "Завершение" [14155-16360] -->
+<h2 class="sectionedit9"><a name="общие_соглашения_об_именовании_символов" id="общие_соглашения_об_именовании_символов">Общие соглашения об именовании символов</a></h2>
 <div class="level2">
 <ol>
 <li class="level1"><div class="li"> Символы именуются следующим образом: <em><code>symbolname-#.sym</code></em></div>
@@ -244,19 +249,20 @@
 </ol>
 
 </div>
-<!-- EDIT1211 SECTION "Общие соглашения об именовании символов" [15986-16969] -->
-<h2 class="sectionedit1212"><a name="требования_к_символам" id="требования_к_символам">Требования к символам</a></h2>
+<!-- EDIT9 SECTION "Общие соглашения об именовании символов" [16361-17343] -->
+<h2 class="sectionedit10"><a name="требования_к_символам" id="требования_к_символам">Требования к символам</a></h2>
 <div class="level2">
 
 <p>
 В данном разделе описываются различные требования, которые необходимо
-соблюдать для создания правильного символа в плане отображения его на
-экране и создания для него <a href="geda-glossary.ru.html#список_соединений" class="wikilink1" title="geda-glossary.ru.html">списков соединений</a> в системе gEDA/gaf.
+соблюдать для создания правильного символа в плане отображения его на экране
+и создания для него <a href="geda-glossary.ru.html#список_соединений" class="wikilink1" title="geda-glossary.ru.html">списков
+соединений</a> в системе gEDA/gaf.
 </p>
 
 </div>
-<!-- EDIT1212 SECTION "Требования к символам" [16970-17452] -->
-<h3 class="sectionedit1213"><a name="выводы" id="выводы">Выводы</a></h3>
+<!-- EDIT10 SECTION "Требования к символам" [17344-17826] -->
+<h3 class="sectionedit11"><a name="выводы" id="выводы">Выводы</a></h3>
 <div class="level3">
 <ol>
 <li class="level1"><div class="li"> К каждому выводу должен быть прикреплён атрибут <code>pinseq</code>. Это число, определяющее порядок работы программы <strong>gnetlist</strong> с атрибутами. Это просто порядковый номер, последовательно увеличивающийся, начиная с 1.</div>
@@ -270,13 +276,12 @@
 </ol>
 
 </div>
-<!-- EDIT1213 SECTION "Выводы" [17453-19174] -->
-<h3 class="sectionedit1214"><a name="атрибуты" id="атрибуты">Атрибуты</a></h3>
+<!-- EDIT11 SECTION "Выводы" [17827-19548] -->
+<h3 class="sectionedit12"><a name="атрибуты" id="атрибуты">Атрибуты</a></h3>
 <div class="level3">
 
 <p>
-Более подробную информацию о представленных здесь атрибутах можно
-найти в
+Более подробную информацию о представленных здесь атрибутах можно найти в
 <a href="geda-master_attributes_list.ru.html" class="wikilink1" title="geda-master_attributes_list.ru.html">Перечне основных атрибутов</a>.
 </p>
 <ol>
@@ -303,15 +308,15 @@
 <ol>
 <li class="level1"><div class="li"> Если компонент содержит несколько элементов (<a href="geda-glossary.ru.html#секция_компонента" class="wikilink1" title="geda-glossary.ru.html">секций</a>) в одном физическом корпусе (как, например, 7400, имеющий 4 элемента 2И-НЕ в одном корпусе), то необходим атрибут <code>numslots=#</code>. Число <code>#</code> задаёт количество элементов в физическом устройстве. В этом случае в символе должен быть атрибут <code>numslots=</code> и его следует сделать невидимым. Другие обязательные атрибуты, относящиеся к <a href="geda-glossary.ru.html#многосекционный_компонент" class="wikilink1" title="geda-glossary.ru.html">многосекционным компонентам</a>, описываются ниже.</div>
 </li>
-<li class="level1"><div class="li"> Если компонент содержит несколько элементов (секций) в одном физическом корпусе, то для каждой секции необходимо также задать атрибут <code>slotdef=#:#,#,#…</code> Первое число <code>#</code> соответствует номеру секции. Если устройство содержит 4 элемента, то в символе должны быть атрибуты <code>slotdef=1:…</code>, <code>slotdef=2:…</code>, <code>slotdef=3:…</code> и <code>slotdef=4:…</code>, их следует сделать невидимыми. Последующие числа <code>#</code> один к одному соответствуют атрибутам <code>pinseq=#</code> и определяют номер вывода <code>pinnumber=#</code>, который должен устанавливаться при назначении данной секции. В качестве примера того, как всё это должно работать, см. <a href="#пример" title=":geda:gschem_symbol_creation.ru.txt &crarr;" class="wikilink1">приведённый ниже символ 7400-1.sym</a>.</div>
+<li class="level1"><div class="li"> Если компонент содержит несколько элементов (секций) в одном физическом корпусе, то для каждой секции необходимо также задать атрибут <code>slotdef=#:#,#,#…</code> Первое число <code>#</code> соответствует номеру секции. Если устройство содержит 4 элемента, то в символе должны быть атрибуты <code>slotdef=1:…</code>, <code>slotdef=2:…</code>, <code>slotdef=3:…</code> и <code>slotdef=4:…</code>, их следует сделать невидимыми. Последующие числа <code>#</code> один к одному соответствуют атрибутам <code>pinseq=#</code> и определяют номер вывода <code>pinnumber=#</code>, который должен устанавливаться при назначении данной секции. В качестве примера того, как всё это должно работать, см. <a href="#пример" title="geda:gschem_symbol_creation.ru &crarr;" class="wikilink1">приведённый ниже символ 7400-1.sym</a>.</div>
 </li>
 <li class="level1"><div class="li"> В символы многосекционных компонентов рекомендуется добавлять атрибут <code>slot=1</code>.</div>
 </li>
 </ol>
 
 </div>
-<!-- EDIT1214 SECTION "Атрибуты" [19175-24954] -->
-<h2 class="sectionedit1215"><a name="проверка_символа" id="проверка_символа">Проверка символа</a></h2>
+<!-- EDIT12 SECTION "Атрибуты" [19549-25330] -->
+<h2 class="sectionedit13"><a name="проверка_символа" id="проверка_символа">Проверка символа</a></h2>
 <div class="level2">
 
 <p>
@@ -322,8 +327,8 @@
 </p>
 
 </div>
-<!-- EDIT1215 SECTION "Проверка символа" [24955-25432] -->
-<h2 class="sectionedit1216"><a name="стиль" id="стиль">Стиль</a></h2>
+<!-- EDIT13 SECTION "Проверка символа" [25331-25808] -->
+<h2 class="sectionedit14"><a name="стиль" id="стиль">Стиль</a></h2>
 <div class="level2">
 
 <p>
@@ -332,8 +337,8 @@
 </p>
 
 </div>
-<!-- EDIT1216 SECTION "Стиль" [25433-25622] -->
-<h3 class="sectionedit1217"><a name="текст" id="текст">Текст</a></h3>
+<!-- EDIT14 SECTION "Стиль" [25809-25998] -->
+<h3 class="sectionedit15"><a name="текстовые_объекты" id="текстовые_объекты">Текстовые объекты</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Все текстовые обозначения должны быть размером 10 пунктов.</div>
@@ -345,8 +350,8 @@
 </ul>
 
 </div>
-<!-- EDIT1217 SECTION "Текст" [25623-26153] -->
-<h3 class="sectionedit1218"><a name="атрибуты1" id="атрибуты1">Атрибуты</a></h3>
+<!-- EDIT15 SECTION "Текстовые объекты" [25999-26552] -->
+<h3 class="sectionedit16"><a name="атрибуты1" id="атрибуты1">Атрибуты</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> В качестве номеров выводов должны отображаться атрибуты <code>pinnumber</code> (не <code>pinseq</code>), и их размер должен составлять 8 пунктов.</div>
@@ -364,8 +369,8 @@
 </ul>
 
 </div>
-<!-- EDIT1218 SECTION "Атрибуты" [26154-28623] -->
-<h3 class="sectionedit1219"><a name="графика" id="графика">Графика</a></h3>
+<!-- EDIT16 SECTION "Атрибуты" [26553-29021] -->
+<h3 class="sectionedit17"><a name="графические_примитивы" id="графические_примитивы">Графические примитивы</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Цветовой индекс линий, прямоугольников, дуг и других графических объектов должен быть равен 3 (graphic | зелёный).</div>
@@ -377,15 +382,15 @@
 </ul>
 
 </div>
-<!-- EDIT1219 SECTION "Графика" [28624-29395] -->
-<h3 class="sectionedit1220"><a name="выводы1" id="выводы1">Выводы</a></h3>
+<!-- EDIT17 SECTION "Графические примитивы" [29022-29819] -->
+<h3 class="sectionedit18"><a name="выводы1" id="выводы1">Выводы</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Длина выводов должна составлять 300 милов (3 интервала сетки).</div>
 </li>
 <li class="level1"><div class="li"> Длина выводов, располагаемых рядом со знаком логической инверсии, должна составлять 200 милов (2 интервала сетки), окружность знака логической инверсии должна иметь диаметр 100 милов. Чтобы начертить окружность диаметром 100 милов, нужно изменить размер сетки на 50.</div>
 </li>
-<li class="level1"><div class="li"> Вывод имеет два конца: один помечен красной точкой, другой — нет. Красная точка означает место подключения соединений. Для правильного размещения активного конца можно либо поворачивать сам вывод, либо вручную отредактировать файл символа, изменив параметр “whichend” нужного вывода. Подробности см. в документации по <a href="geda-file_format_spec.ru.html#вывод" class="wikilink1" title="geda-file_format_spec.ru.html">Формату файлов</a>.</div>
+<li class="level1"><div class="li"> Вывод имеет два конца: один помечен красной точкой, другой — нет. Красная точка означает место подключения соединений. Для правильного размещения активного конца можно либо поворачивать сам вывод, либо вручную отредактировать файл символа, изменив параметр «whichend» нужного вывода. Подробности см. в документации по <a href="geda-file_format_spec.ru.html#вывод" class="wikilink1" title="geda-file_format_spec.ru.html">Формату файлов</a>.</div>
 </li>
 <li class="level1"><div class="li"> Все концы выводов, предназначенные для соединений, должны размещаться по сетке размером 100 милов. Другие, неактивные концы могут быть при необходимости расположены не по сетке.</div>
 </li>
@@ -408,8 +413,8 @@
 </ul>
 
 </div>
-<!-- EDIT1220 SECTION "Выводы" [29396-33352] -->
-<h3 class="sectionedit1221"><a name="схемотехника" id="схемотехника">Схемотехника</a></h3>
+<!-- EDIT18 SECTION "Выводы" [29820-33777] -->
+<h3 class="sectionedit19"><a name="схемотехника" id="схемотехника">Схемотехника</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Не чертите выводы питания. Такая информация обычно передаётся посредством атрибутов (смотрите <a href="geda-na_howto.ru.html" class="wikilink1" title="geda-na_howto.ru.html">Мини-HOWTO по атрибуту net=</a>).</div>
@@ -423,13 +428,13 @@
 </ul>
 
 </div>
-<!-- EDIT1221 SECTION "Схемотехника" [33353-34650] -->
-<h2 class="sectionedit1222"><a name="советы_и_подсказки" id="советы_и_подсказки">Советы и подсказки</a></h2>
+<!-- EDIT19 SECTION "Схемотехника" [33778-35074] -->
+<h2 class="sectionedit20"><a name="советы_и_подсказки" id="советы_и_подсказки">Советы и подсказки</a></h2>
 <div class="level2">
 
 <p>
-В данном разделе приводится несколько советов и подсказок, чтобы облегчить вам
-труд по созданию символов.
+В данном разделе приводится несколько советов и подсказок, чтобы облегчить
+вам труд по созданию символов.
 </p>
 <ul>
 <li class="level1"><div class="li"> Выводы ДОЛЖНЫ быть выровнены по сетке размером 100.</div>
@@ -449,17 +454,16 @@
 </ul>
 
 </div>
-<!-- EDIT1222 SECTION "Советы и подсказки" [34651-37242] -->
-<h2 class="sectionedit1223"><a name="пример" id="пример">Пример</a></h2>
+<!-- EDIT20 SECTION "Советы и подсказки" [35075-37666] -->
+<h2 class="sectionedit21"><a name="пример" id="пример">Пример</a></h2>
 <div class="level2">
 
 <p>
-В данном разделе приведён простой пример, в котором мы
-стараемся следовать всем вышеуказанным правилам. Это
-символ 7400 (И-НЕ).
+В данном разделе приведён простой пример, в котором мы стараемся следовать
+всем вышеуказанным правилам. Это символ 7400 (И-НЕ).
 </p>
 <dl class="code">
-<dt><a href="/./_export/code/:geda:gschem_symbol_creation.ru.txt?codeblock=0" title="Download Snippet" class="mediafile mf_sym">7400-1.sym</a></dt>
+<dt><a href="_export/code/geda:gschem_symbol_creation.ru?codeblock=0" title="Download Snippet" class="mediafile mf_sym">7400-1.sym</a></dt>
 <dd><pre class="code gschem">v 20031231 1
 L 300 200 300 800 3 0 0 0 -1 -1
 T 300 0 9 8 1 0 0 0 1
@@ -530,23 +534,25 @@ documentation=http://www-s.ti.com/sc/ds/sn74hc00.pdf</pre>
 </dd></dl>
 
 <p>
-Результат, полученный в данном примере, выглядит в
-<strong>gschem</strong> следующим образом:
+Результат, полученный в данном примере, выглядит в <strong>gschem</strong> следующим
+образом:
 </p>
 
 <p>
-<a href="media/geda/symbol_7400-1_hidden.png" class="media" target="_blank" title="geda:symbol_7400-1_hidden.png"><img src="media/geda/symbol_7400-1_hidden.png" class="media" title=":geda:symbol_7400-1_hidden.png" alt=":geda:symbol_7400-1_hidden.png" /></a>
+<a href="media/geda/symbol_7400-1_hidden.png?id=geda%3Agschem_symbol_creation.ru" class="media" title="geda:symbol_7400-1_hidden.png"><img src="media/geda/symbol_7400-1_hidden.png" class="media" title=":geda:symbol_7400-1_hidden.png" alt=":geda:symbol_7400-1_hidden.png" /></a>
 </p>
 
 <p>
-Вот тот же самый символ, весь скрытый текст которого видим
-(меню <strong><em>Правка</em></strong> → <strong><em>Показать/Скрыть невидимый текст</em></strong> [<strong><em>Edit</em></strong> → <strong><em>Show/Hide Inv Text</em></strong>]):
+Вот тот же самый символ, весь скрытый текст которого видим (меню
+<strong><em>Правка</em></strong> → <strong><em>Показать/Скрыть невидимый текст</em></strong> [<strong><em>Edit</em></strong> →
+<strong><em>Show/Hide Inv Text</em></strong>]):
 </p>
 
 <p>
-<a href="media/geda/symbol_7400-1.png" class="media" target="_blank" title="geda:symbol_7400-1.png"><img src="media/geda/symbol_7400-1.png" class="media" title=":geda:symbol_7400-1.png" alt=":geda:symbol_7400-1.png" /></a>
+<a href="media/geda/symbol_7400-1.png?id=geda%3Agschem_symbol_creation.ru" class="media" title="geda:symbol_7400-1.png"><img src="media/geda/symbol_7400-1.png" class="media" title=":geda:symbol_7400-1.png" alt=":geda:symbol_7400-1.png" /></a>
 </p>
 
 </div>
-<!-- EDIT1223 SECTION "Пример" [37243-] --></body>
+<!-- EDIT21 SECTION "Пример" [37667-] --></div>
+</body>
 </html>

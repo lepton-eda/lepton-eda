@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,14 +9,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
-
-<h1 class="sectionedit1960"><a name="data_structure_design_discussion" id="data_structure_design_discussion">Data structure design discussion</a></h1>
+<h1 class="sectionedit1"><a name="data_structure_design_discussion" id="data_structure_design_discussion">Data structure design discussion</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT1960 SECTION "Data structure design discussion" [1-48] -->
-<h1 class="sectionedit1961"><a name="concept_diagram" id="concept_diagram">Concept diagram</a></h1>
+<!-- EDIT1 SECTION "Data structure design discussion" [1-48] -->
+<h1 class="sectionedit2"><a name="concept_diagram" id="concept_diagram">Concept diagram</a></h1>
 <div class="level1">
 
 <p>
@@ -25,17 +24,17 @@
 </p>
 
 <p>
-<a href="/./lib/exe/fetch.php?hash=d4505f&amp;media=http%3A%2F%2Fwww2.eng.cam.ac.uk%2F~pcjc2%2Fgeda%2Fdatastructures.png" class="media" title="http://www2.eng.cam.ac.uk/~pcjc2/geda/datastructures.png"><img src="media/http///www2.eng.cam.ac.uk/~pcjc2/geda/datastructures.png" class="media" alt="" /></a>
+<a href="/./lib/exe/fetch.php?hash=d4505f&media=http%3A%2F%2Fwww2.eng.cam.ac.uk%2F~pcjc2%2Fgeda%2Fdatastructures.png" class="media" title="http://www2.eng.cam.ac.uk/~pcjc2/geda/datastructures.png"><img src="exe/fetch.php?hash=d4505f&media=http%3A%2F%2Fwww2.eng.cam.ac.uk%2F~pcjc2%2Fgeda%2Fdatastructures.png" class="media" alt="" /></a>
 </p>
 
 </div>
-<!-- EDIT1961 SECTION "Concept diagram" [49-178] -->
-<h2 class="sectionedit1962"><a name="concepts_behind_the_structures" id="concepts_behind_the_structures">Concepts behind the structures</a></h2>
+<!-- EDIT2 SECTION "Concept diagram" [49-178] -->
+<h2 class="sectionedit3"><a name="concepts_behind_the_structures" id="concepts_behind_the_structures">Concepts behind the structures</a></h2>
 <div class="level2">
 
 </div>
-<!-- EDIT1962 SECTION "Concepts behind the structures" [179-222] -->
-<h3 class="sectionedit1963"><a name="design" id="design">Design</a></h3>
+<!-- EDIT3 SECTION "Concepts behind the structures" [179-222] -->
+<h3 class="sectionedit4"><a name="design" id="design">Design</a></h3>
 <div class="level3">
 
 <p>
@@ -43,8 +42,8 @@ This is might not exist as a “file”, as such, but exists as a data structure
 </p>
 
 </div>
-<!-- EDIT1963 SECTION "Design" [223-446] -->
-<h3 class="sectionedit1964"><a name="circuit" id="circuit">Circuit</a></h3>
+<!-- EDIT4 SECTION "Design" [223-446] -->
+<h3 class="sectionedit5"><a name="circuit" id="circuit">Circuit</a></h3>
 <div class="level3">
 
 <p>
@@ -56,8 +55,8 @@ We may also define a <strong>symbolic</strong> (graphic) representation of a cir
 </p>
 
 </div>
-<!-- EDIT1964 SECTION "Circuit" [447-1004] -->
-<h3 class="sectionedit1965"><a name="mport" id="mport">MPort</a></h3>
+<!-- EDIT5 SECTION "Circuit" [447-1004] -->
+<h3 class="sectionedit6"><a name="mport" id="mport">MPort</a></h3>
 <div class="level3">
 
 <p>
@@ -65,8 +64,8 @@ If it is to be useful as a re-usable block, a sub-<strong>circuit</strong> must 
 </p>
 
 </div>
-<!-- EDIT1965 SECTION "MPort" [1005-1541] -->
-<h3 class="sectionedit1966"><a name="instance" id="instance">Instance</a></h3>
+<!-- EDIT6 SECTION "MPort" [1005-1541] -->
+<h3 class="sectionedit7"><a name="instance" id="instance">Instance</a></h3>
 <div class="level3">
 
 <p>
@@ -74,8 +73,8 @@ A <strong>circuit</strong> represents a re-usable electrical entity which we may
 </p>
 
 </div>
-<!-- EDIT1966 SECTION "Instance" [1542-1929] -->
-<h3 class="sectionedit1967"><a name="attrib" id="attrib">Attrib</a></h3>
+<!-- EDIT7 SECTION "Instance" [1542-1929] -->
+<h3 class="sectionedit8"><a name="attrib" id="attrib">Attrib</a></h3>
 <div class="level3">
 
 <p>
@@ -87,8 +86,8 @@ In a break from gEDA&#039;s current <strong>attrib</strong> model, it makes sens
 </p>
 
 </div>
-<!-- EDIT1967 SECTION "Attrib" [1930-2569] -->
-<h3 class="sectionedit1968"><a name="netlist" id="netlist">Netlist</a></h3>
+<!-- EDIT8 SECTION "Attrib" [1930-2569] -->
+<h3 class="sectionedit9"><a name="netlist" id="netlist">Netlist</a></h3>
 <div class="level3">
 
 <p>
@@ -108,8 +107,8 @@ This has real applications in back-annotation and in design verification.
 </p>
 
 </div>
-<!-- EDIT1968 SECTION "Netlist" [2570-3435] -->
-<h3 class="sectionedit1969"><a name="net" id="net">Net</a></h3>
+<!-- EDIT9 SECTION "Netlist" [2570-3435] -->
+<h3 class="sectionedit10"><a name="net" id="net">Net</a></h3>
 <div class="level3">
 
 <p>
@@ -121,8 +120,8 @@ As we also have a graphical representation of the wires (<strong>ConnSegment</st
 </p>
 
 </div>
-<!-- EDIT1969 SECTION "Net" [3436-3940] -->
-<h3 class="sectionedit1970"><a name="page" id="page">Page</a></h3>
+<!-- EDIT10 SECTION "Net" [3436-3940] -->
+<h3 class="sectionedit11"><a name="page" id="page">Page</a></h3>
 <div class="level3">
 
 <p>
@@ -166,8 +165,8 @@ Whilst most objects on a <strong>page</strong> are graphic primitives, there are
 </ul>
 
 </div>
-<!-- EDIT1970 SECTION "Page" [3941-5460] -->
-<h1 class="sectionedit1971"><a name="brainstorms" id="brainstorms">Brainstorms</a></h1>
+<!-- EDIT11 SECTION "Page" [3941-5460] -->
+<h1 class="sectionedit12"><a name="brainstorms" id="brainstorms">Brainstorms</a></h1>
 <div class="level1">
 
 <p>
@@ -195,5 +194,6 @@ Whilst most objects on a <strong>page</strong> are graphic primitives, there are
 </ul>
 
 </div>
-<!-- EDIT1971 SECTION "Brainstorms" [5461-] --></body>
+<!-- EDIT12 SECTION "Brainstorms" [5461-] --></div>
+</body>
 </html>

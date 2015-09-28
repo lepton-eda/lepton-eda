@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Эта страница доступна также на следующих языках:</em>
+<a href="geda-file_format_spec.html" class="wikilink1" title="geda-file_format_spec.html">English</a>
+</p>
 
-<h1 class="sectionedit1845"><a name="формат_файлов_geda_gaf" id="формат_файлов_geda_gaf">Формат файлов gEDA/gaf</a></h1>
+<h1 class="sectionedit1"><a name="формат_файлов_geda_gaf" id="формат_файлов_geda_gaf">Формат файлов gEDA/gaf</a></h1>
 <div class="level1">
 
 <p>
@@ -28,31 +32,24 @@
 31 декабря 2003 г.
 </p>
 
-<p>
-Перевод: Владимир Жбанов, 2009–2011 гг.
-</p>
-
 </div>
-<!-- EDIT1845 SECTION "Формат файлов gEDA/gaf" [1-336] -->
-<h2 class="sectionedit1846"><a name="обзор" id="обзор">Обзор</a></h2>
+<!-- EDIT1 SECTION "Формат файлов gEDA/gaf" [125-394] -->
+<h2 class="sectionedit2"><a name="обзор" id="обзор">Обзор</a></h2>
 <div class="level2">
 
 <p>
-Здесь представлена официальная документация формата файлов
-gEDA/gaf (<em class="u">g</em>schem <em class="u">a</em>nd <em class="u">f</em>riends). Основным форматом в gEDA/gaf является
+Здесь представлена официальная документация формата файлов gEDA/gaf
+(<em class="u">g</em>schem <em class="u">a</em>nd <em class="u">f</em>riends).  Основным форматом в gEDA/gaf является
 формат файлов <a href="geda-glossary.ru.html#принципиальная_схема" class="wikilink1" title="geda-glossary.ru.html">электрических
-принципиальных схем</a> и <a href="geda-glossary.ru.html#символ" class="wikilink1" title="geda-glossary.ru.html">символов</a> для них. Файлы с
-именами, заканчивающимися на <em><code>.sch</code></em> и <em><code>.sym</code></em>, являются соответственно файлами
-схем и символов. Пока в gEDA/gaf нет других типов файлов, настоящий документ
-будет относиться только к формату файлов схем/символов.
-</p>
+принципиальных схем</a> и <a href="geda-glossary.ru.html#символ" class="wikilink1" title="geda-glossary.ru.html">символов</a> для них. Файлы
+с именами, заканчивающимися на <em><code>.sch</code></em> и <em><code>.sym</code></em>, являются
+соответственно файлами схем и символов. Пока в gEDA/gaf нет других типов
+файлов, настоящий документ будет относиться только к формату файлов
+схем/символов.<br/>
 
-<p>
 Настоящий документ находится в обращении с версии gEDA/gaf 20040111. Он
-охватывает версии формата 1 и 2.
-</p>
+охватывает версии формата 1 и 2.<br/>
 
-<p>
 Обратите внимание, что данный формат и любые другие форматы файлов,
 относящиеся к gEDA, находятся под лицензией General Public License (<acronym title="GNU General Public License">GPL</acronym>)
 версии 2.0. Авторские права на формат файлов схем/символов gEDA/gaf
@@ -60,14 +57,12 @@ gEDA/gaf (<em class="u">g</em>schem <em class="u">a</em>nd <em class="u">f</em>r
 </p>
 
 </div>
-<!-- EDIT1846 SECTION "Обзор" [337-1786] -->
-<h2 class="sectionedit1847"><a name="система_координат" id="система_координат">Система координат</a></h2>
+<!-- EDIT2 SECTION "Обзор" [395-1848] -->
+<h2 class="sectionedit3"><a name="система_координат" id="система_координат">Система координат</a></h2>
 <div class="level2">
 
 <p>
-Все координаты задаются в милах (1/1000 дюйма). Это произвольное решение.
-Запомните, что в схемах и символах нет понятия физических длин/размеров
-(только при разработке принципиальных схем).
+Все координаты задаются в милах (1/1000 дюйма). Это произвольное решение.  Запомните, что в схемах и символах нет понятия физических длин/размеров (только при разработке принципиальных схем).
 </p>
 <ul>
 <li class="level1"><div class="li"> Начало координат находится в левом нижнем углу.</div>
@@ -81,41 +76,41 @@ gEDA/gaf (<em class="u">g</em>schem <em class="u">a</em>nd <em class="u">f</em>r
 <p>
 Следующий рисунок показывает настройку координатной системы:
 </p>
-<div class="table sectionedit1848"><table class="inline">
+<div class="table sectionedit4"><table class="inline">
 	<tr class="row0">
-		<td class="col0"><a href="media/geda/coordinatespace.ru.png" class="media" target="_blank" title="geda:coordinatespace.ru.png"><img src="media/geda/coordinatespace.ru.png" class="mediaright" title=":geda:coordinatespace.ru.png " alt=":geda:coordinatespace.ru.png " /></a></td>
+		<td class="col0"><a href="media/geda/coordinatespace.ru.png?id=geda%3Afile_format_spec.ru" class="media" title="geda:coordinatespace.ru.png"><img src="media/geda/coordinatespace.ru.png" class="mediaright" align="right" title=":geda:coordinatespace.ru.png " alt=":geda:coordinatespace.ru.png " /></a></td>
 	</tr>
 </table></div>
-<!-- EDIT1848 TABLE [2891-2956] -->
+<!-- EDIT4 TABLE [2954-3019] -->
 <p>
 Значение по оси X возрастает слева направо, по оси Y — снизу вверх.
-Координатная система располагается в “пейзажной” ориентации и соответствует
+Координатная система располагается в «пейзажной» ориентации и соответствует
 листу, повёрнутому длинной стороной вниз.
 </p>
 
 </div>
-<!-- EDIT1847 SECTION "Система координат" [1787-3298] -->
-<h2 class="sectionedit1849"><a name="имена_файлов" id="имена_файлов">Имена файлов</a></h2>
+<!-- EDIT3 SECTION "Система координат" [1849-3362] -->
+<h2 class="sectionedit5"><a name="имена_файлов" id="имена_файлов">Имена файлов</a></h2>
 <div class="level2">
 
 <p>
-Имена файлов символов заканчиваются на <em><code>.sym</code></em>. Для имён файлов символов в
-gEDA/gaf используется только одно соглашение: если есть несколько экземпляров
-символов с одинаковыми именами (как, например, 7400), то к концу основы имени
-файла добавляется суффикс -1, -2, -3, … -N . Пример: <em><code>7400-1.sym</code></em>, <em><code>7400-2.sym</code></em>,
-<em><code>7400-3.sym</code></em>…
+Имена файлов символов заканчиваются на <em><code>.sym</code></em>. Для имён файлов
+символов в gEDA/gaf используется только одно соглашение: если есть несколько
+экземпляров символов с одинаковыми именами (как, например, 7400), то к концу
+основы имени файла добавляется суффикс -1, -2, -3, … -N . Пример:
+<em><code>7400-1.sym</code></em>, <em><code>7400-2.sym</code></em>, <em><code>7400-3.sym</code></em>…
 </p>
 
 <p>
-Имена файлов схем заканчиваются на <em><code>.sch</code></em>. Раньше существовало соглашение об
-именах файлов схем (о добавлении -1 .. -N к основе имени файла), но
-сейчас оно устарело. Для схем их создатель может выбирать любые осмысленные
-имена.
+Имена файлов схем заканчиваются на <em><code>.sch</code></em>. Раньше существовало
+соглашение об именах файлов схем (о добавлении -1 .. -N к основе имени
+файла), но сейчас оно устарело. Для схем их создатель может выбирать любые
+осмысленные имена.
 </p>
 
 </div>
-<!-- EDIT1849 SECTION "Имена файлов" [3299-4301] -->
-<h2 class="sectionedit1850"><a name="типы_объектов" id="типы_объектов">Типы объектов</a></h2>
+<!-- EDIT5 SECTION "Имена файлов" [3363-4364] -->
+<h2 class="sectionedit6"><a name="типы_объектов" id="типы_объектов">Типы объектов</a></h2>
 <div class="level2">
 
 <p>
@@ -124,7 +119,7 @@ gEDA/gaf используется только одно соглашение: е
 <ul>
 <li class="level1"><div class="li"> Версия (v) как первый элемент в файле. Это обязательно.</div>
 </li>
-<li class="level1"><div class="li"> Любое количество объектов с правильными данными. Объекты указываются с помощью “типа объекта”.</div>
+<li class="level1"><div class="li"> Любое количество объектов с правильными данными. Объекты указываются с помощью «типа объекта».</div>
 </li>
 <li class="level1"><div class="li"> Большинство объектов описываются одной строкой, но текстовые — двумя и более.</div>
 </li>
@@ -140,29 +135,29 @@ gEDA/gaf используется только одно соглашение: е
 </p>
 
 <p>
-Файлы схем и символов имеют общий формат. <a href="geda-glossary.ru.html#символ" class="wikilink1" title="geda-glossary.ru.html">Символ</a> — это
-не что иное, как
-совокупность примитивных объектов (линий, прямоугольников, окружностей, дуг,
-текста и выводов). Схема представляет собой набор символов (компонентов),
+Файлы схем и символов имеют общий формат. <a href="geda-glossary.ru.html#символ" class="wikilink1" title="geda-glossary.ru.html">Символ</a> —
+это не что иное, как совокупность примитивных объектов (линий,
+прямоугольников, окружностей, дуг, текста и выводов). Схема представляет
+собой набор символов (компонентов),
 <a href="geda-glossary.ru.html#соединение" class="wikilink1" title="geda-glossary.ru.html">соединений</a> и <a href="geda-glossary.ru.html#шина" class="wikilink1" title="geda-glossary.ru.html">шин</a>.
 </p>
 
 <p>
-Следующие разделы описывают особенности каждого из распознаваемых типов
-объектов. Каждый раздел содержит название объекта, описание того, в каком типе
-файла (sch/sym) объект может присутствовать, формат данных, описание каждого
-отдельного поля, подробности и предостережения для данных полей и, наконец,
-пример с пояснением.
+В следующих разделах приводится подробное описание каждого из распознаваемых
+типов объектов. Каждый раздел содержит название объекта, описание того, в
+каком типе файла (sch/sym) объект может присутствовать, формат данных,
+описание каждого отдельного поля, подробности и предостережения для данных
+полей и, наконец, пример с пояснением.
 </p>
 
 <p>
 Информация об индексе цвета (который используется практически для всех
-объектов) находится в разделе <a href="#цвета" title=":geda:file_format_spec.ru.txt &crarr;" class="wikilink1">Цвета</a>.
+объектов) находится в разделе <a href="#цвета" title="geda:file_format_spec.ru &crarr;" class="wikilink1">Цвета</a>.
 </p>
 
 </div>
-<!-- EDIT1850 SECTION "Типы объектов" [4302-6777] -->
-<h3 class="sectionedit1851"><a name="версия" id="версия">Версия</a></h3>
+<!-- EDIT6 SECTION "Типы объектов" [4365-6870] -->
+<h3 class="sectionedit7"><a name="версия" id="версия">Версия</a></h3>
 <div class="level3">
 
 <p>
@@ -172,7 +167,7 @@ gEDA/gaf используется только одно соглашение: е
 <p>
 <strong><code>type version fileformat_version</code></strong>
 </p>
-<div class="table sectionedit1852"><table class="inline">
+<div class="table sectionedit8"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -186,8 +181,8 @@ gEDA/gaf используется только одно соглашение: е
 		<td class="col0 rightalign">  2 </td><td class="col1">fileformat_version</td><td class="col2">int</td><td class="col3">Номер версии формата файла gEDA/gaf</td>
 	</tr>
 </table></div>
-<!-- EDIT1852 TABLE [6912-7183] --><ul>
-<li class="level1"><div class="li"> Тип обозначается буквой “v” в нижнем регистре (как в слове Victor).</div>
+<!-- EDIT8 TABLE [7005-7276] --><ul>
+<li class="level1"><div class="li"> Тип обозначается буквой «v» в нижнем регистре (как в слове Victor).</div>
 </li>
 <li class="level1"><div class="li"> Данный объект должен находиться в каждом файле, используемом или создаваемом программными средствами gEDA/gaf.</div>
 </li>
@@ -195,7 +190,7 @@ gEDA/gaf используется только одно соглашение: е
 </li>
 <li class="level1"><div class="li"> Номер версии не является произвольным временным штампом. Не выдумывайте номер версии, а в противном случае не ожидайте, что программы будут работать правильно.</div>
 </li>
-<li class="level1"><div class="li"> “Версия gEDA/gaf, в которой был сохранён данный файл” использовалась во всех версиях gEDA/gaf до 20030921 как версия формата файла. Это поле не должно больше использоваться для определения формата файла. Сейчас оно используется только для информационных целей.</div>
+<li class="level1"><div class="li"> «Версия gEDA/gaf, в которой был сохранён данный файл» использовалась во всех версиях gEDA/gaf до 20030921 как версия формата файла. Это поле не должно больше использоваться для определения формата файла. Сейчас оно используется только для информационных целей.</div>
 </li>
 <li class="level1"><div class="li"> Начиная с gEDA/gaf версии 20031004 и позже, поле <code>fileformat_version</code> используется для определения версии формата файла. Весь код формата файла должен отталкиваться от этого поля.</div>
 </li>
@@ -221,8 +216,8 @@ gEDA/gaf используется только одно соглашение: е
 <pre class="code">v 20040111 1</pre>
 
 </div>
-<!-- EDIT1851 SECTION "Версия" [6778-10123] -->
-<h3 class="sectionedit1853"><a name="линия" id="линия">Линия</a></h3>
+<!-- EDIT7 SECTION "Версия" [6871-10219] -->
+<h3 class="sectionedit9"><a name="линия" id="линия">Линия</a></h3>
 <div class="level3">
 
 <p>
@@ -232,7 +227,7 @@ gEDA/gaf используется только одно соглашение: е
 <p>
 <strong><code>type x1 y1 x2 y2 color width capstyle dashstyle dashlength dashspace</code></strong>
 </p>
-<div class="table sectionedit1854"><table class="inline">
+<div class="table sectionedit10"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -270,7 +265,7 @@ gEDA/gaf используется только одно соглашение: е
 		<td class="col0 rightalign">  10 </td><td class="col1">dashspace</td><td class="col2">int/милы</td><td class="col3">Интервал между штрихами</td>
 	</tr>
 </table></div>
-<!-- EDIT1854 TABLE [10293-10983] --><ul>
+<!-- EDIT10 TABLE [10389-11079] --><ul>
 <li class="level1"><div class="li"> Параметр <code>capstyle</code> перечислимого типа:</div>
 <ul>
 <li class="level2"><div class="li"> END NONE = 0 (без стиля)</div>
@@ -313,8 +308,8 @@ gEDA/gaf используется только одно соглашение: е
 </p>
 
 </div>
-<!-- EDIT1853 SECTION "Линия" [10124-12266] -->
-<h3 class="sectionedit1855"><a name="изображение" id="изображение">Изображение</a></h3>
+<!-- EDIT9 SECTION "Линия" [10220-12360] -->
+<h3 class="sectionedit11"><a name="изображение" id="изображение">Изображение</a></h3>
 <div class="level3">
 
 <p>
@@ -330,7 +325,7 @@ filename<br/>
 
 encoded picture end]</code></strong>
 </p>
-<div class="table sectionedit1856"><table class="inline">
+<div class="table sectionedit12"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -368,7 +363,7 @@ encoded picture end]</code></strong>
 		<td class="col0 rightalign">  10 </td><td class="col1">encoded picture end</td><td class="col2">string</td><td class="col3">Строка, содержащая только символ точки</td>
 	</tr>
 </table></div>
-<!-- EDIT1856 TABLE [12485-13565] --><ul>
+<!-- EDIT12 TABLE [12579-13659] --><ul>
 <li class="level1"><div class="li"> Данный объект является объектом изображения. Первая строка содержит все параметры изображения, вторая строка представляет собой путь доступа и имя файла изображения. Имя файла не используется, если изображение внедрено.</div>
 </li>
 <li class="level1"><div class="li"> Параметр угла поворота изображения <code>angle</code> может принимать только одно из следующих значений: 0, 90, 180, 270.</div>
@@ -407,11 +402,10 @@ encoded picture end]</code></strong>
 
 <p>
 Объект изображения с левым нижним углом в (16900, 35800). Ширина изображения
-1400 милов, высота 2175 милов.
-Поворот изображения 0 градусов и оно ни отражённое, ни внедрённое.
-</p>
+1400 милов, высота 2175 милов.<br/>
 
-<p>
+Поворот изображения 0 градусов и оно ни отражённое, ни внедрённое.<br/>
+
 Путь доступа и имя файла изображения отображается во второй строке.
 </p>
 
@@ -426,27 +420,21 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
 <p>
 Объект изображения с левым нижним углом в (16900, 35800). Ширина изображения
-1400 милов, высота 2175 милов.
-</p>
+1400 милов, высота 2175 милов.<br/>
 
-<p>
-Поворот изображения 0 градусов, оно не отражённое, но внедрённое.
-</p>
+Поворот изображения 0 градусов, оно не отражённое, но внедрённое.<br/>
 
-<p>
 Путь доступа и имя файла изображения отображается во второй строке. Так как
-это изображение внедрённое, путь доступа и имя файла не используются.
-</p>
+это изображение внедрённое, путь доступа и имя файла не используются.<br/>
 
-<p>
 Закодированные данные изображения являются только примером (это не настоящие
 данные). Последняя строка, содержащая один символ точки &#039;.&#039; указывает конец
 закодированных данных.
 </p>
 
 </div>
-<!-- EDIT1855 SECTION "Изображение" [12267-16979] -->
-<h3 class="sectionedit1857"><a name="прямоугольник" id="прямоугольник">Прямоугольник</a></h3>
+<!-- EDIT11 SECTION "Изображение" [12361-17078] -->
+<h3 class="sectionedit13"><a name="прямоугольник" id="прямоугольник">Прямоугольник</a></h3>
 <div class="level3">
 
 <p>
@@ -454,9 +442,10 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 </p>
 
 <p>
-<strong><code>type x y width height color width capstyle dashstyle dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
+<strong><code>type x y width height color width capstyle dashstyle dashlength
+dashspace filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
 </p>
-<div class="table sectionedit1858"><table class="inline">
+<div class="table sectionedit14"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -512,7 +501,7 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 		<td class="col0 rightalign">  16 </td><td class="col1">pitch2</td><td class="col2">int/милы</td><td class="col3">Второй шаг/интервал заполнения</td>
 	</tr>
 </table></div>
-<!-- EDIT1858 TABLE [17217-18450] --><ul>
+<!-- EDIT14 TABLE [17316-18549] --><ul>
 <li class="level1"><div class="li"> Параметр <code>capstyle</code> перечислимого типа:</div>
 <ul>
 <li class="level2"><div class="li"> END NONE = 0 (без стиля)</div>
@@ -572,14 +561,14 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
 <p>
 Прямоугольник с нижним левым углом в (33000, 67300) шириной и высотой (2000,
-2000), цветовой индекс 3, толщина линий 60 милов, без стиля концов, штриховые
-линии, длина штриха 75 милов, интервал между штрихами 50 милов, без
-заполнения, остальные параметры не установлены.
+2000), цветовой индекс 3, толщина линий 60 милов, без стиля концов,
+штриховые линии, длина штриха 75 милов, интервал между штрихами 50 милов,
+без заполнения, остальные параметры не установлены.
 </p>
 
 </div>
-<!-- EDIT1857 SECTION "Прямоугольник" [16980-20926] -->
-<h3 class="sectionedit1859"><a name="окружность" id="окружность">Окружность</a></h3>
+<!-- EDIT13 SECTION "Прямоугольник" [17079-21024] -->
+<h3 class="sectionedit15"><a name="окружность" id="окружность">Окружность</a></h3>
 <div class="level3">
 
 <p>
@@ -587,9 +576,10 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 </p>
 
 <p>
-<strong><code>type x y radius color width capstyle dashstyle dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
+<strong><code>type x y radius color width capstyle dashstyle dashlength dashspace
+filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
 </p>
-<div class="table sectionedit1860"><table class="inline">
+<div class="table sectionedit16"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -642,7 +632,7 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 		<td class="col0 rightalign">  15 </td><td class="col1">pitch2</td><td class="col2">int/милы</td><td class="col3">Второй шаг/интервал заполнения</td>
 	</tr>
 </table></div>
-<!-- EDIT1860 TABLE [21152-22220] --><ul>
+<!-- EDIT16 TABLE [21250-22318] --><ul>
 <li class="level1"><div class="li"> Параметр <code>dashstyle</code> перечислимого типа:</div>
 <ul>
 <li class="level2"><div class="li"> TYPE SOLID = 0 (сплошная линия)</div>
@@ -691,17 +681,17 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 <pre class="code">V 38000 67000 900 3 0 0 2 75 50 2 10 20 30 90 50</pre>
 
 <p>
-Окружность с центром в (38000, 67000) и радиусом 900 милов, цветовой индекс 3,
-толщина линии 0 милов (наименьший размер), без стиля концов, штриховая линия,
-длина штриха 75 милов, интервал между штрихами 50 милов, заполнение сеткой,
-линии сетки толщиной 10 милов, первая линия сетки под углом 20 градусов с
-интервалом в 30 милов, вторая линия сетки под углом 90 градусов с интервалом в
-50 милов.
+Окружность с центром в (38000, 67000) и радиусом 900 милов, цветовой индекс
+3, толщина линии 0 милов (наименьший размер), без стиля концов, штриховая
+линия, длина штриха 75 милов, интервал между штрихами 50 милов, заполнение
+сеткой, линии сетки толщиной 10 милов, первая линия сетки под углом 20
+градусов с интервалом в 30 милов, вторая линия сетки под углом 90 градусов с
+интервалом в 50 милов.
 </p>
 
 </div>
-<!-- EDIT1859 SECTION "Окружность" [20927-24697] -->
-<h3 class="sectionedit1861"><a name="дуга" id="дуга">Дуга</a></h3>
+<!-- EDIT15 SECTION "Окружность" [21025-24794] -->
+<h3 class="sectionedit17"><a name="дуга" id="дуга">Дуга</a></h3>
 <div class="level3">
 
 <p>
@@ -709,9 +699,10 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 </p>
 
 <p>
-<strong><code>type x y radius startangle sweepangle color width capstyle dashstyle dashlength dashspace</code></strong>
+<strong><code>type x y radius startangle sweepangle color width capstyle dashstyle
+dashlength dashspace</code></strong>
 </p>
-<div class="table sectionedit1862"><table class="inline">
+<div class="table sectionedit18"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -752,7 +743,7 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 		<td class="col0 rightalign">  11 </td><td class="col1">dashspace</td><td class="col2">int/милы</td><td class="col3">Интервал между штрихами</td>
 	</tr>
 </table></div>
-<!-- EDIT1862 TABLE [24886-25631] --><ul>
+<!-- EDIT18 TABLE [24983-25728] --><ul>
 <li class="level1"><div class="li"> Угол <code>startangle</code> может быть отрицательным, но это не рекомендуется.</div>
 </li>
 <li class="level1"><div class="li"> Угол <code>sweepangle</code> может быть отрицательным, но это не рекомендуется.</div>
@@ -793,22 +784,19 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 <pre class="code">A 30600 75000 2000 0 45 3 0 0 3 75 50</pre>
 
 <p>
-Дуга с центром в (30600, 75000) и радиусом 2000 милов, начальный угол 0
-градусов, угол разворота дуги 45 градусов, цветовой индекс 3, толщина линии 0
-милов (наименьший размер), без стиля концов, штрих-пунктир, длина штриха 75
-милов, интервал между штрихами 50 милов.
+Дуга с центром в (30600, 75000) и радиусом 2000 милов, начальный угол 0 градусов, угол разворота дуги 45 градусов, цветовой индекс 3, толщина линии 0 милов (наименьший размер), без стиля концов, штрих-пунктир, длина штриха 75 милов, интервал между штрихами 50 милов.
 </p>
 
 </div>
-<!-- EDIT1861 SECTION "Дуга" [24698-27363] -->
-<h3 class="sectionedit1863"><a name="текст_и_атрибуты" id="текст_и_атрибуты">Текст и атрибуты</a></h3>
+<!-- EDIT17 SECTION "Дуга" [24795-27459] -->
+<h3 class="sectionedit19"><a name="текст_и_атрибуты" id="текст_и_атрибуты">Текст и атрибуты</a></h3>
 <div class="level3">
 
 <p>
 В зависимости от контекста текстовые объекты могут играть разные роли. Вне
 какого-либо окружения они представляют собой строки текста, содержащие
-какую-либо информацию. Заключённые в фигурные скобки, они интерпретируются как
-атрибуты. См. раздел <a href="geda-file_format_spec.ru.html#атрибуты" class="wikilink1" title="geda-file_format_spec.ru.html">Атрибуты</a>.
+какую-либо информацию. Заключённые в фигурные скобки, они интерпретируются
+как атрибуты. См. раздел <span class="curid"><a href="geda-file_format_spec.ru.html#атрибуты" class="wikilink1" title="geda-file_format_spec.ru.html">Атрибуты</a></span>.
 </p>
 
 <p>
@@ -816,7 +804,8 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 </p>
 
 <p>
-<strong><code>type x y color size visibility show_name_value angle alignment num_lines<br/>
+<strong><code>type x y color size visibility show_name_value angle alignment
+num_lines<br/>
 
 string line 1<br/>
 
@@ -828,7 +817,7 @@ string line 3<br/>
 
 string line N</code></strong>
 </p>
-<div class="table sectionedit1864"><table class="inline">
+<div class="table sectionedit20"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -866,7 +855,7 @@ string line N</code></strong>
 		<td class="col0 rightalign">  10 </td><td class="col1">string line 1 … N</td><td class="col2">string</td><td class="col3">Собственно отдельные строки текста</td>
 	</tr>
 </table></div>
-<!-- EDIT1864 TABLE [28128-28959] --><ul>
+<!-- EDIT20 TABLE [28224-29055] --><ul>
 <li class="level1"><div class="li"> Данный объект является многострочным. Первая строка содержит все параметры текста, а последующие содержат собственно текст.</div>
 </li>
 <li class="level1"><div class="li"> Должно быть точно <code>num_lines</code> строк текста, следующих за строкой T … .</div>
@@ -909,13 +898,13 @@ string line N</code></strong>
 </ul>
 
 <p>
- <a href="media/geda/fileformat_textgraphic.jpg" class="media" target="_blank" title="geda:fileformat_textgraphic.jpg"><img src="media/geda/fileformat_textgraphic.jpg" class="media" alt="" /></a>
+<a href="media/geda/fileformat_textgraphic.jpg?id=geda%3Afile_format_spec.ru" class="media" title="geda:fileformat_textgraphic.jpg"><img src="media/geda/fileformat_textgraphic.jpg" class="media" title="fileformat_textgraphic.jpg" alt="fileformat_textgraphic.jpg" /></a>
 </p>
 <ul>
 <li class="level1"><div class="li"> Исходное значение параметра <code>num_lines</code> всегда равно 1. <br/>
 Поле <code>num_lines</code> было добавлено начиная с версии 1 формата файла. Предыдущие версии (0 и ранее) поддерживали только однострочные текстовые объекты.</div>
 </li>
-<li class="level1"><div class="li"> Горизонтальная черта над текстовыми строками задаётся ограничивающими текст с двух сторон маркерами надчёркивания вида <strong>“\_”</strong>. Символ обратной косой черты записывается в виде <strong>“\\”</strong>.</div>
+<li class="level1"><div class="li"> Горизонтальная черта над текстовыми строками задаётся ограничивающими текст с двух сторон маркерами надчёркивания вида <strong>«\_»</strong>. Символ обратной косой черты записывается в виде <strong>«\\»</strong>.</div>
 </li>
 </ul>
 
@@ -927,9 +916,9 @@ Text string!</pre>
 
 <p>
 Текстовый объект с точкой привязки в (16900, 35800), цветовой индекс 3,
-размером 10 пунктов, видимый, флаги атрибута не действуют (объект не является
-атрибутом), точка привязки в левом нижнем углу, без поворота, строка:
-Text string!
+размером 10 пунктов, видимый, флаги атрибута не действуют (объект не
+является атрибутом), точка привязки в левом нижнем углу, без поворота,
+строка: Text string!
 </p>
 
 <p>
@@ -943,8 +932,8 @@ Text string line 4
 Text string line 5</pre>
 
 <p>
-Данный текстовый объект подобен указанному в примере выше, но здесь пять строк
-текста.
+Данный текстовый объект подобен указанному в примере выше, но здесь пять
+строк текста.
 </p>
 
 <p>
@@ -954,15 +943,15 @@ Text string line 5</pre>
 pinlabel=R/\_W\_</pre>
 
 <p>
-Текстовый объект с точкой привязки (10000, 20000), цветовой индекс 3, размером
-10 пунктов, видимый, видимо только значение атрибута, точка привязки находится
-в верхнем правом углу, текст повёрнут на 90 градусов, строка: “R/W”, над
-буквой “W” горизонтальная черта.
+Текстовый объект с точкой привязки (10000, 20000), цветовой индекс 3,
+размером 10 пунктов, видимый, видимо только значение атрибута, точка
+привязки находится в верхнем правом углу, текст повёрнут на 90 градусов,
+строка: «R/W», над буквой «W» горизонтальная черта.
 </p>
 
 </div>
-<!-- EDIT1863 SECTION "Текст и атрибуты" [27364-33321] -->
-<h3 class="sectionedit1865"><a name="соединение" id="соединение">Соединение</a></h3>
+<!-- EDIT19 SECTION "Текст и атрибуты" [27460-33424] -->
+<h3 class="sectionedit21"><a name="соединение" id="соединение">Соединение</a></h3>
 <div class="level3">
 
 <p>
@@ -972,7 +961,7 @@ pinlabel=R/\_W\_</pre>
 <p>
 <strong><code>type x1 y1 x2 y2 color</code></strong>
 </p>
-<div class="table sectionedit1866"><table class="inline">
+<div class="table sectionedit22"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -995,7 +984,7 @@ pinlabel=R/\_W\_</pre>
 		<td class="col0 rightalign">   5 </td><td class="col1">color</td><td class="col2">int</td><td class="col3">Цветовой индекс</td>
 	</tr>
 </table></div>
-<!-- EDIT1866 TABLE [33448-33857] --><ul>
+<!-- EDIT22 TABLE [33551-33960] --><ul>
 <li class="level1"><div class="li"> Соединения могут использоваться только в файлах схем.</div>
 </li>
 <li class="level1"><div class="li"> Нельзя использовать соединения нулевой длины (они отбрасываются программами).</div>
@@ -1008,12 +997,13 @@ pinlabel=R/\_W\_</pre>
 <pre class="code">N 12700 29400 32900 29400 4</pre>
 
 <p>
-Сегмент соединения от (12700, 29400) до (32900, 29400) с цветовым индексом 4.
+Сегмент соединения от (12700, 29400) до (32900, 29400) с цветовым индексом
+4.
 </p>
 
 </div>
-<!-- EDIT1865 SECTION "Соединение" [33322-34286] -->
-<h3 class="sectionedit1867"><a name="шина" id="шина">Шина</a></h3>
+<!-- EDIT21 SECTION "Соединение" [33425-34388] -->
+<h3 class="sectionedit23"><a name="шина" id="шина">Шина</a></h3>
 <div class="level3">
 
 <p>
@@ -1023,7 +1013,7 @@ pinlabel=R/\_W\_</pre>
 <p>
 <strong><code>type x1 y1 x2 y2 color ripperdir</code></strong>
 </p>
-<div class="table sectionedit1868"><table class="inline">
+<div class="table sectionedit24"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -1049,7 +1039,7 @@ pinlabel=R/\_W\_</pre>
 		<td class="col0 rightalign">   6 </td><td class="col1">ripperdir</td><td class="col2">int</td><td class="col3">Направление ответвлений от шины</td>
 	</tr>
 </table></div>
-<!-- EDIT1868 TABLE [34411-34902] --><ul>
+<!-- EDIT24 TABLE [34513-35004] --><ul>
 <li class="level1"><div class="li"> Значение параметра <code>ripperdir</code> для свежесозданной шины устанавливается в 0.</div>
 </li>
 <li class="level1"><div class="li"> При первом подключении соединения к шине параметр <code>ripperdir</code> принимает значение 1 или -1. Это значение определяет направление символа ответвления (ripper). Направление ответвления для объекта шины остаётся одним и тем же на всё время существования данного объекта.</div>
@@ -1071,8 +1061,8 @@ pinlabel=R/\_W\_</pre>
 </p>
 
 </div>
-<!-- EDIT1867 SECTION "Шина" [34287-35999] -->
-<h3 class="sectionedit1869"><a name="вывод" id="вывод">Вывод</a></h3>
+<!-- EDIT23 SECTION "Шина" [34389-36100] -->
+<h3 class="sectionedit25"><a name="вывод" id="вывод">Вывод</a></h3>
 <div class="level3">
 
 <p>
@@ -1082,7 +1072,7 @@ pinlabel=R/\_W\_</pre>
 <p>
 <strong><code>type x1 y1 x2 y2 color pintype whichend</code></strong>
 </p>
-<div class="table sectionedit1870"><table class="inline">
+<div class="table sectionedit26"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -1111,7 +1101,7 @@ pinlabel=R/\_W\_</pre>
 		<td class="col0 rightalign">   7 </td><td class="col1">whichend</td><td class="col2">int</td><td class="col3">Указывает активный конец</td>
 	</tr>
 </table></div>
-<!-- EDIT1870 TABLE [36141-36658] --><ul>
+<!-- EDIT26 TABLE [36242-36759] --><ul>
 <li class="level1"><div class="li"> Параметр <code>pintype</code> перечислимого типа:</div>
 <ul>
 <li class="level2"><div class="li"> NORMAL <acronym title="Personal Identification Number">PIN</acronym> = 0</div>
@@ -1141,8 +1131,8 @@ pinlabel=R/\_W\_</pre>
 </p>
 
 </div>
-<!-- EDIT1869 SECTION "Вывод" [36000-37670] -->
-<h3 class="sectionedit1871"><a name="компонент" id="компонент">Компонент</a></h3>
+<!-- EDIT25 SECTION "Вывод" [36101-37770] -->
+<h3 class="sectionedit27"><a name="компонент" id="компонент">Компонент</a></h3>
 <div class="level3">
 
 <p>
@@ -1152,7 +1142,7 @@ pinlabel=R/\_W\_</pre>
 <p>
 <strong><code>type x y selectable angle mirror basename</code></strong>
 </p>
-<div class="table sectionedit1872"><table class="inline">
+<div class="table sectionedit28"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -1178,7 +1168,7 @@ pinlabel=R/\_W\_</pre>
 		<td class="col0 rightalign">   6 </td><td class="col1">basename</td><td class="col2">string</td><td class="col3">Имя файла компонента</td>
 	</tr>
 </table></div>
-<!-- EDIT1872 TABLE [37814-38305] --><ul>
+<!-- EDIT28 TABLE [37914-38405] --><ul>
 <li class="level1"><div class="li"> Параметр <code>selectable</code> принимает значение 1 для выделяемых, и 0 для невыделяемых компонентов.</div>
 </li>
 <li class="level1"><div class="li"> Параметр угла поворота компонента <code>angle</code> может принимать только одно из следующих значений: 0, 90, 180, 270.</div>
@@ -1199,13 +1189,13 @@ pinlabel=R/\_W\_</pre>
 <pre class="code">C 18600 19900 1 0 0 7400-1.sym</pre>
 
 <p>
-Компонент с точкой привязки в (18600,19900), выделяемый,
-без поворота, без отражения, имя файла компонента 7400-1.sym.
+Компонент с точкой привязки в (18600,19900), выделяемый, без поворота, без
+отражения, имя файла компонента 7400-1.sym.
 </p>
 
 </div>
-<!-- EDIT1871 SECTION "Компонент" [37671-39584] -->
-<h3 class="sectionedit1873"><a name="контур" id="контур">Контур</a></h3>
+<!-- EDIT27 SECTION "Компонент" [37771-39684] -->
+<h3 class="sectionedit29"><a name="контур" id="контур">Контур</a></h3>
 <div class="level3">
 
 <p>
@@ -1217,7 +1207,8 @@ pinlabel=R/\_W\_</pre>
 </p>
 
 <p>
-<strong><code>type color width capstyle dashstyle dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2 numlines<br/>
+<strong><code>type color width capstyle dashstyle dashlength dashspace filltype
+fillwidth angle1 pitch1 angle2 pitch2 numlines<br/>
 
 path data line 1<br/>
 
@@ -1229,7 +1220,7 @@ path data line 3<br/>
 
 path data line N</code></strong>
 </p>
-<div class="table sectionedit1874"><table class="inline">
+<div class="table sectionedit30"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -1279,7 +1270,7 @@ path data line N</code></strong>
 		<td class="col0 rightalign">  14 </td><td class="col1">path data line 1 … N</td><td class="col2">path data</td><td class="col3">Отдельные строки данных контура</td>
 	</tr>
 </table></div>
-<!-- EDIT1874 TABLE [39974-41056] --><ul>
+<!-- EDIT30 TABLE [40074-41156] --><ul>
 <li class="level1"><div class="li"> Параметр <code>capstyle</code> перечислимого типа:</div>
 <ul>
 <li class="level2"><div class="li"> END NONE = 0 (без стиля)</div>
@@ -1290,6 +1281,8 @@ path data line N</code></strong>
 </li>
 </ul>
 </li>
+</ul>
+<ul>
 <li class="level1"><div class="li"> Параметр <code>dashstyle</code> перечислимого типа:</div>
 <ul>
 <li class="level2"><div class="li"> TYPE SOLID = 0 (сплошная линия)</div>
@@ -1308,6 +1301,8 @@ path data line N</code></strong>
 </li>
 <li class="level1"><div class="li"> Параметр <code>dashspace</code> не используется для типа SOLID. В случае использования данного типа он должен принимать значение -1.</div>
 </li>
+</ul>
+<ul>
 <li class="level1"><div class="li"> Параметр <code>filltype</code> перечислимого типа:</div>
 <ul>
 <li class="level2"><div class="li"> FILLING HOLLOW = 0 (без заполнения)</div>
@@ -1334,7 +1329,7 @@ path data line N</code></strong>
 <ul>
 <li class="level1"><div class="li"> Формат данных контура умышленно выбран подобным формату <a href="http://www.w3.org/TR/SVG/paths.html" class="urlextern" title="http://www.w3.org/TR/SVG/paths.html"  rel="nofollow">контуров в стандарте W3C SVG</a>.</div>
 </li>
-<li class="level1"><div class="li"> Выпущенное в gEDA подмножество синтаксиса контуров <acronym title="Scalable Vector Graphics">SVG</acronym> документировано ниже в разделе <a href="#данные_контура" title=":geda:file_format_spec.ru.txt &crarr;" class="wikilink1">Данные контура</a>.</div>
+<li class="level1"><div class="li"> Выпущенное в gEDA подмножество синтаксиса контуров <acronym title="Scalable Vector Graphics">SVG</acronym> документировано ниже в разделе <a href="#данные_контура" title="geda:file_format_spec.ru &crarr;" class="wikilink1">Данные контура</a>.</div>
 </li>
 <li class="level1"><div class="li"> Детали реализации; код <strong>libgeda</strong> взят из <strong>librsvg</strong>, библиотеки синтаксического анализа <acronym title="Scalable Vector Graphics">SVG</acronym>. В результате большая часть синтаксиса контуров <acronym title="Scalable Vector Graphics">SVG</acronym> читается правильно, однако синтаксис всегда внутренне нормализуется в абсолютные команды <code>move</code>, <code>line</code>, <code>bezier curve</code> и <code>close-path</code> (и сохраняется в таком виде).</div>
 </li>
@@ -1360,8 +1355,8 @@ z</pre>
 </p>
 
 </div>
-<!-- EDIT1873 SECTION "Контур" [39585-44596] -->
-<h3 class="sectionedit1875"><a name="шрифт" id="шрифт">Шрифт</a></h3>
+<!-- EDIT29 SECTION "Контур" [39685-44697] -->
+<h3 class="sectionedit31"><a name="шрифт" id="шрифт">Шрифт</a></h3>
 <div class="level3">
 
 <p>
@@ -1371,7 +1366,7 @@ z</pre>
 <p>
 <strong><code>type character width flag</code></strong>
 </p>
-<div class="table sectionedit1876"><table class="inline">
+<div class="table sectionedit32"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Поз.</th><th class="col1">Поле</th><th class="col2">Тип/единица</th><th class="col3">Описание</th>
 	</tr>
@@ -1388,7 +1383,7 @@ z</pre>
 		<td class="col0 rightalign">   3 </td><td class="col1">flag</td><td class="col2">int</td><td class="col3">Специальный флаг пробела</td>
 	</tr>
 </table></div>
-<!-- EDIT1876 TABLE [44745-45018] --><ul>
+<!-- EDIT32 TABLE [44846-45119] --><ul>
 <li class="level1"><div class="li"> Это специальный объект, который должен использоваться ТОЛЬКО в файлах определения шрифтов.</div>
 </li>
 <li class="level1"><div class="li"> Если определяемый символ шрифта является символом пробела (с кодом 32), то значение флага <code>flag</code> должно быть 1, иначе 0.</div>
@@ -1405,18 +1400,18 @@ z</pre>
 </p>
 
 </div>
-<!-- EDIT1875 SECTION "Шрифт" [44597-45542] -->
-<h2 class="sectionedit1877"><a name="цвета" id="цвета">Цвета</a></h2>
+<!-- EDIT31 SECTION "Шрифт" [44698-45643] -->
+<h2 class="sectionedit33"><a name="цвета" id="цвета">Цвета</a></h2>
 <div class="level2">
 
 <p>
 В формате файлов символов и схем gEDA/gaf цвета определяются посредством
-целочисленного индекса. Соответствие между числом и цветом основывается
-на типе объекта. Для каждого типа объекта обычно используется один или более
-цветов. Здесь
-приведена таблица соответствия цветовых индексов типам объектов:
+целочисленного индекса. Соответствие между числом и цветом основывается на
+типе объекта. Для каждого типа объекта обычно используется один или более
+цветов. Здесь приведена таблица соответствия цветовых индексов типам
+объектов:
 </p>
-<div class="table sectionedit1878"><table class="inline">
+<div class="table sectionedit34"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Индекс</th><th class="col1">Тип объекта</th><th class="col2">Примечание</th>
 	</tr>
@@ -1442,7 +1437,7 @@ z</pre>
 		<td class="col0">6</td><td class="col1">LOGIC_BUBBLE_COLOR</td><td class="col2">Логическая инверсия</td>
 	</tr>
 	<tr class="row8">
-		<td class="col0">7</td><td class="col1">GRID_COLOR</td><td class="col2">Сетка</td>
+		<td class="col0">7</td><td class="col1">DOTS_GRID_COLOR</td><td class="col2">Сетка</td>
 	</tr>
 	<tr class="row9">
 		<td class="col0">8</td><td class="col1">DETACHED_ATTRIBUTE_COLOR</td><td class="col2">Неприкреплённый атрибут</td>
@@ -1493,7 +1488,7 @@ z</pre>
 		<td class="col0">23</td><td class="col1">MESH_GRID_MINOR_COLOR</td><td class="col2">Второстепенная штриховка сетки</td>
 	</tr>
 </table></div>
-<!-- EDIT1878 TABLE [46118-47371] -->
+<!-- EDIT34 TABLE [46219-47477] -->
 <p>
 Фактический цвет, связанный с цветовым индексом, определяется на основе
 используемых инструментов. Объектам обычно назначается соответствующий им
@@ -1502,16 +1497,16 @@ z</pre>
 </p>
 
 </div>
-<!-- EDIT1877 SECTION "Цвета" [45543-47829] -->
-<h2 class="sectionedit1879"><a name="атрибуты" id="атрибуты">Атрибуты</a></h2>
+<!-- EDIT33 SECTION "Цвета" [45644-47934] -->
+<h2 class="sectionedit35"><a name="атрибуты" id="атрибуты">Атрибуты</a></h2>
 <div class="level2">
 
 <p>
 Атрибуты заключаются в фигурные скобки {} и могут быть только текстовыми
 объектами. Атрибуты представляют собой текстовые элементы вида
-<code>имя_атрибута=значение</code>. Если текст не содержит пары <code>имя_атрибута=значение</code>, он не
-является атрибутом.  Атрибуты прикрепляются к предшествующему объекту. Вот
-пример:
+<code>имя_атрибута=значение</code>. Если текст не содержит пары
+<code>имя_атрибута=значение</code>, он не является атрибутом.  Атрибуты прикрепляются
+к предшествующему объекту. Вот пример:
 </p>
 <pre class="code">P 988 500 1300 500 1
 {
@@ -1522,15 +1517,16 @@ pinnumber=3
 }</pre>
 
 <p>
-Данный объект является выводом, имеющим атрибуты <code>pinnumber=3</code> и <code>pinseq=3</code>
-(<code>имя_атрибута=значение</code>). Внутри фигурных скобок {} может находиться несколько
-текстовых объектов (T … и текстовая строка обязательны). С версии 20021103 в
-качестве атрибутов можно использовать только текстовые элементы. Прикрепление
-других типов объектов в качестве атрибутов не поддерживается.
+Данный объект является выводом, имеющим атрибуты <code>pinnumber=3</code> и
+<code>pinseq=3</code> (<code>имя_атрибута=значение</code>). Внутри фигурных скобок {} может
+находиться несколько текстовых объектов (T … и текстовая строка
+обязательны). С версии 20021103 в качестве атрибутов можно использовать
+только текстовые элементы. Прикрепление других типов объектов в качестве
+атрибутов не поддерживается.
 </p>
 
 <p>
-Можно использовать также атрибуты “верхнего уровня”. Эти атрибуты не
+Можно использовать также атрибуты «верхнего уровня». Эти атрибуты не
 прикрепляются ни к какому объекту, а просто представляют собой текстовые
 объекты вида <code>имя_атрибута=значение</code>.
 </p>
@@ -1542,17 +1538,17 @@ pinnumber=3
 </p>
 
 </div>
-<!-- EDIT1879 SECTION "Атрибуты" [47830-49861] -->
-<h2 class="sectionedit1880"><a name="внедрённые_компоненты" id="внедрённые_компоненты">Внедрённые компоненты</a></h2>
+<!-- EDIT35 SECTION "Атрибуты" [47935-49967] -->
+<h2 class="sectionedit36"><a name="внедрённые_компоненты" id="внедрённые_компоненты">Внедрённые компоненты</a></h2>
 <div class="level2">
 
 <p>
 Внедрённые компоненты — это компоненты, определение которых полностью
 содержится внутри файла схемы. Когда пользователи помещают компоненты на
-страницы схемы, есть возможность делать компоненты внедрёнными. Это отличается
-от простого сохранения всей информации символа непосредственно в схеме,
-внедрённый компонент — это просто несколько иной компонент. Внедрённые
-компоненты указываются следующим образом:
+страницы схемы, есть возможность делать компоненты внедрёнными. Это
+отличается от простого сохранения всей информации символа непосредственно в
+схеме, внедрённый компонент — это просто несколько иной
+компонент. Внедрённые компоненты указываются следующим образом:
 </p>
 <pre class="code">C 18600 21500 1 0 0 EMBEDDED555-1.sym
 [
@@ -1564,13 +1560,13 @@ pinnumber=3
 <p>
 В примере выше, <em><code>555-1.sym</code></em> — это компонент. Тег EMBEDDED и [ ] —
 отличительные характеристики внедрённого компонента. Если требуется отменить
-внедрение компонента, символ <em><code>имя_компонента.sym</code></em> должен присутствовать в
-одной из используемых библиотек.
+внедрение компонента, символ <em><code>имя_компонента.sym</code></em> должен
+присутствовать в одной из используемых библиотек.
 </p>
 
 </div>
-<!-- EDIT1880 SECTION "Внедрённые компоненты" [49862-51223] -->
-<h2 class="sectionedit1881"><a name="данные_контура" id="данные_контура">Данные контура</a></h2>
+<!-- EDIT36 SECTION "Внедрённые компоненты" [49968-51333] -->
+<h2 class="sectionedit37"><a name="данные_контура" id="данные_контура">Данные контура</a></h2>
 <div class="level2">
 
 <p>
@@ -1583,13 +1579,9 @@ pinnumber=3
 </li>
 <li class="level1"><div class="li"> Координаты всего контура указываются в стандартной координатной системе <strong>gschem</strong>.</div>
 </li>
-</ul>
-<ul>
 <li class="level1"><div class="li"> Команды для контуров, выводимые и гарантированно обрабатываемые в gEDA, перечислены в нижеследующей таблице.<br/>
 (Текст взят из вышеуказанной спецификации <acronym title="Scalable Vector Graphics">SVG</acronym>).</div>
 </li>
-</ul>
-<ul>
 <li class="level1"><div class="li"> В приведённой ниже таблице используются следующие условные обозначения:</div>
 <ul>
 <li class="level2"><div class="li"> (): группировка параметров</div>
@@ -1599,7 +1591,7 @@ pinnumber=3
 </ul>
 </li>
 </ul>
-<div class="table sectionedit1882"><table class="inline">
+<div class="table sectionedit38"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Команда</th><th class="col1">Название</th><th class="col2">Параметры</th><th class="col3">Описание</th>
 	</tr>
@@ -1616,7 +1608,7 @@ pinnumber=3
 		<td class="col0">Z или z</td><td class="col1">closepath</td><td class="col2">(нет)</td><td class="col3">Закрывает текущий подконтур вычерчиванием прямой линии из текущей точки в исходную точку данного подконтура.</td>
 	</tr>
 </table></div>
-<!-- EDIT1882 TABLE [52779-55768] --><ul>
+<!-- EDIT38 TABLE [52887-55876] --><ul>
 <li class="level1"><div class="li"> В настоящее время вывод вышеуказанных команд в gEDA производится только в виде версий с абсолютными координатами.</div>
 </li>
 <li class="level1"><div class="li"> В настоящее время вывод команд <code>M</code>, <code>L</code>, <code>C</code> в gEDA производится перед каждым набором координат, даже в случаях, если они могли бы быть опущены в соответствии со спецификацией <acronym title="Scalable Vector Graphics">SVG</acronym>.</div>
@@ -1654,34 +1646,35 @@ z</pre>
 </p>
 
 <p>
-<a href="media/geda/path_example_and_gate-smaller.png" class="media" target="_blank" title="geda:path_example_and_gate-smaller.png"><img src="media/geda/path_example_and_gate-smaller.png" class="media" title="" alt="" /></a>
+<a href="media/geda/path_example_and_gate-smaller.png?id=geda%3Afile_format_spec.ru" class="media" title="geda:path_example_and_gate-smaller.png"><img src="media/geda/path_example_and_gate-smaller.png" class="media" alt="" /></a>
 </p>
 
 </div>
-<!-- EDIT1881 SECTION "Данные контура" [51224-57509] -->
-<h2 class="sectionedit1883"><a name="история_изменений_документа" id="история_изменений_документа">История изменений документа</a></h2>
+<!-- EDIT37 SECTION "Данные контура" [51334-57616] -->
+<h2 class="sectionedit39"><a name="история_изменений_документа" id="история_изменений_документа">История изменений документа</a></h2>
 <div class="level2">
-<div class="table sectionedit1884"><table class="inline">
+<div class="table sectionedit40"><table class="inline">
 	<tr class="row0">
-		<td class="col0">30 ноября 2002 г.</td><td class="col1">Создан fileformats.tex из fileformats.html.</td>
+		<td class="col0">30 ноября 2002 г. </td><td class="col1 leftalign">Создан fileformats.tex из fileformats.html.                   </td>
 	</tr>
 	<tr class="row1">
-		<td class="col0">1 декабря 2002 г.</td><td class="col1">Продолжена работа над данным документом.</td>
+		<td class="col0">1 декабря 2002 г. </td><td class="col1 leftalign">Продолжена работа над данным документом.                      </td>
 	</tr>
 	<tr class="row2">
-		<td class="col0">4 октября 2003 г.</td><td class="col1">Добавлена информация о новом флаге версии формата файла.</td>
+		<td class="col0">4 октября 2003 г. </td><td class="col1 leftalign">Добавлена информация о новом флаге версии формата файла.      </td>
 	</tr>
 	<tr class="row3">
-		<td class="col0">19 октября 2003 г.</td><td class="col1">Добавлено поле <code>num_lines</code> для текстового объекта.</td>
+		<td class="col0">19 октября 2003 г.</td><td class="col1 leftalign">Добавлено поле <code>num_lines</code> для текстового объекта.          </td>
 	</tr>
 	<tr class="row4">
-		<td class="col0">2 ноября 2008 г.</td><td class="col1">Добавлен объект контура, версия формата файла изменена на 2</td>
+		<td class="col0 leftalign">2 ноября 2008 г.  </td><td class="col1 leftalign">Добавлен объект контура, версия формата файла изменена на 2.  </td>
 	</tr>
 	<tr class="row5">
-		<td class="col0">26 мая, 2011 г.</td><td class="col1">В таблицы параметров добавлены столбцы позиции</td>
+		<td class="col0 leftalign">26 мая, 2011 г.   </td><td class="col1 leftalign">В таблицы параметров добавлены столбцы позиции.               </td>
 	</tr>
 </table></div>
-<!-- EDIT1884 TABLE [57576-58251] -->
+<!-- EDIT40 TABLE [57682-58441] -->
 </div>
-<!-- EDIT1883 SECTION "История изменений документа" [57510-] --></body>
+<!-- EDIT39 SECTION "История изменений документа" [57617-] --></div>
+</body>
 </html>

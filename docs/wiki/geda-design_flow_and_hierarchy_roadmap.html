@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,18 +9,26 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
-
-<h1 class="sectionedit1135"><a name="required_for_production_circuits" id="required_for_production_circuits">Required for production circuits</a></h1>
+<h1 class="sectionedit1"><a name="required_for_production_circuits" id="required_for_production_circuits">Required for production circuits</a></h1>
 <div class="level1">
 <ul>
 <li class="level1"><div class="li"> hierarchy in schematic and netlist and pcb – modules that can be reused, arrayed.</div>
 </li>
 </ul>
 
+<p>
+    The classic example of this is a stereo amplifier. You enter the schematic of an amplifier channel and a second one showing controls and power. You enter a symbol for the unit that points to three schematic pages.       
+</p>
+<pre class="code">  Page 1 is the control/power , Page 2 is the amplifier with macro substitutions of right and U100 for all nets and Refdes, Page 3 is the amplifier with macro substitutions of left and U200 for all nets and Refdes.
+  
+  
+  Extra credit if the number of channels is controlled by an attribute set when you instantiate the unit symbol. This is comparable to the verilog generate command.</pre>
+
 </div>
-<!-- EDIT1135 SECTION "Required for production circuits" [1-135] -->
-<h2 class="sectionedit1136"><a name="intermediate_translation_file_format_vhdl_edif" id="intermediate_translation_file_format_vhdl_edif">intermediate translation file format VHDL? EDIF?</a></h2>
+<!-- EDIT1 SECTION "Required for production circuits" [1-753] -->
+<h2 class="sectionedit2"><a name="intermediate_translation_file_format_vhdl_edif" id="intermediate_translation_file_format_vhdl_edif">intermediate translation file format VHDL? EDIF?</a></h2>
 <div class="level2">
 
 </div>
@@ -73,13 +80,13 @@ one reason for my preference.  It&#039;s not all technical[Al Davis]
 </p>
 
 </div>
-<!-- EDIT1136 SECTION "intermediate translation file format VHDL? EDIF?" [136-2788] -->
-<h2 class="sectionedit1137"><a name="hierarchical_buses" id="hierarchical_buses">Hierarchical Buses</a></h2>
+<!-- EDIT2 SECTION "intermediate translation file format VHDL? EDIF?" [754-3406] -->
+<h2 class="sectionedit3"><a name="hierarchical_buses" id="hierarchical_buses">Hierarchical Buses</a></h2>
 <div class="level2">
 
 </div>
-<!-- EDIT1137 SECTION "Hierarchical Buses" [2789-2821] -->
-<h2 class="sectionedit1138"><a name="ipc_improvements" id="ipc_improvements">IPC Improvements</a></h2>
+<!-- EDIT3 SECTION "Hierarchical Buses" [3407-3439] -->
+<h2 class="sectionedit4"><a name="ipc_improvements" id="ipc_improvements">IPC Improvements</a></h2>
 <div class="level2">
 
 <p>
@@ -95,8 +102,8 @@ one reason for my preference.  It&#039;s not all technical[Al Davis]
 </p>
 
 </div>
-<!-- EDIT1138 SECTION "IPC Improvements" [2822-3368] -->
-<h2 class="sectionedit1139"><a name="robust_function" id="robust_function">Robust Function</a></h2>
+<!-- EDIT4 SECTION "IPC Improvements" [3440-3986] -->
+<h2 class="sectionedit5"><a name="robust_function" id="robust_function">Robust Function</a></h2>
 <div class="level2">
 
 <p>
@@ -124,8 +131,8 @@ one reason for my preference.  It&#039;s not all technical[Al Davis]
 </p>
 
 </div>
-<!-- EDIT1139 SECTION "Robust Function" [3369-4944] -->
-<h2 class="sectionedit1140"><a name="other_improvements" id="other_improvements">Other Improvements</a></h2>
+<!-- EDIT5 SECTION "Robust Function" [3987-5562] -->
+<h2 class="sectionedit6"><a name="other_improvements" id="other_improvements">Other Improvements</a></h2>
 <div class="level2">
 
 <p>
@@ -173,8 +180,8 @@ It is very useful I think to let DRC run to completion and <strong>have a DRC la
 </p>
 
 </div>
-<!-- EDIT1140 SECTION "Other Improvements" [4945-6847] -->
-<h2 class="sectionedit1141"><a name="too_detailed" id="too_detailed">Too Detailed</a></h2>
+<!-- EDIT6 SECTION "Other Improvements" [5563-7465] -->
+<h2 class="sectionedit7"><a name="too_detailed" id="too_detailed">Too Detailed</a></h2>
 <div class="level2">
 
 <p>
@@ -206,8 +213,8 @@ It is very useful I think to let DRC run to completion and <strong>have a DRC la
 </p>
 
 </div>
-<!-- EDIT1141 SECTION "Too Detailed" [6848-7493] -->
-<h2 class="sectionedit1142"><a name="implementation" id="implementation">Implementation</a></h2>
+<!-- EDIT7 SECTION "Too Detailed" [7466-8111] -->
+<h2 class="sectionedit8"><a name="implementation" id="implementation">Implementation</a></h2>
 <div class="level2">
 
 <p>
@@ -240,5 +247,6 @@ It is very useful I think to let DRC run to completion and <strong>have a DRC la
 </p>
 
 </div>
-<!-- EDIT1142 SECTION "Implementation" [7494-] --></body>
+<!-- EDIT8 SECTION "Implementation" [8112-] --></div>
+</body>
 </html>

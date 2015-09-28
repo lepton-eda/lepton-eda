@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Translations of this page are also available in the following languages:</em> <a href="geda-glossary.fr.html" class="wikilink1" title="geda-glossary.fr.html">Français</a>, <a href="geda-glossary.ru.html" class="wikilink1" title="geda-glossary.ru.html">Русский</a>.
+</p>
 
-<h1 class="sectionedit2291"><a name="glossary_of_geda_and_eda_terms" id="glossary_of_geda_and_eda_terms">Glossary of gEDA (and EDA) terms</a></h1>
+<h1 class="sectionedit1"><a name="glossary_of_geda_and_eda_terms" id="glossary_of_geda_and_eda_terms">Glossary of gEDA (and EDA) terms</a></h1>
 <div class="level1">
 
 <p>
@@ -36,13 +39,13 @@ The design of electronics involves a host of specific terms. Some words have a m
 </li>
 <li class="level1"><div class="li"> <strong>footprint</strong>: The pattern of metal and silkscreen which defines where you place a component on a PCB. Footprints are the placed by the user onto the PC board during the “placement” phase of PCB layout (using e.g. the open-source tool PCB). A footprint is also sometimes called called a “decal” (PADS), or a “land-pattern”.</div>
 </li>
-<li class="level1"><div class="li"> <strong>gedasymbols.org</strong>: A website dedicated to present symbols, footprints, scripts, plug-ins and other stuff users contributed to the geda project. Contributions can be accessed by mouse click. The whole site can be downloaded via concurrent versions system (<a href="http://en.wikipedia.org/wiki/Concurrent_Versions_System" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Concurrent_Versions_System">CVS</a>). This also the way users maintain their page on the site. See, <a href="http://gedasymbols.org" class="urlextern" title="http://gedasymbols.org"  rel="nofollow">http://gedasymbols.org</a>.</div>
+<li class="level1"><div class="li"> <strong>gedasymbols.org</strong>: A website dedicated to present symbols, footprints, scripts, plug-ins and other stuff users contributed to the geda project. Contributions can be accessed by mouse click. The whole site can be downloaded via concurrent versions system (<a href="http://en.wikipedia.org/wiki/Concurrent_Versions_System" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Concurrent_Versions_System">CVS</a>). This also the way users maintain their page on the site. See, <a href="http://gedasymbols.org/" class="urlextern" title="http://gedasymbols.org"  rel="nofollow">http://gedasymbols.org</a>.</div>
 </li>
 <li class="level1"><div class="li"> <strong>gerbers</strong>: A set of files sent to a fab representing the geometry of tracks, silk, solder mask and the outline of the board. Because each layer is represented by a separate file, it is customary to bundle them in a zip file. The offical name of the file format is “Gerber RS274X”. See <a href="http://www.artwork.com/gerber/appl2.htm" class="urlextern" title="http://www.artwork.com/gerber/appl2.htm"  rel="nofollow">this web page</a> for a cursory description of the format and <a href="http://www.artwork.com/gerber/appl2.htm" class="urlextern" title="http://www.artwork.com/gerber/appl2.htm"  rel="nofollow">this PDF</a> for a comprehensive specification.</div>
 </li>
 <li class="level1"><div class="li"> <strong>GTK-HID</strong>: The GTK version of the pcb user interface. “HID” is an acronym for “human interface device”. As the name sugests, GTK-HID uses the GTK+ widgetset and tries to comply with GTK usability standards.This is the default <acronym title="Graphical User Interface">GUI</acronym> of pcb. Menu and keyboard configuration is read from gpcb-menu.res. (See Lesstif-HID for an alternative)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Lesstif-HID</strong>: The Lesstif version of the pcb user interface.  It uses the Lesstif widgetset, which is the open source version of Motif. Menu and keyboard configuration read from <code>pcb-menu.res</code> try to comply with Lesstif usability standards. If you want to give this interface a try, you have to give the option <code>–with-gui=lesstif</code> at compile time.</div>
+<li class="level1"><div class="li"> <strong>Lesstif-HID</strong>: The Lesstif version of the pcb user interface.  It uses the Lesstif widgetset, which is the open source version of Motif. Menu and keyboard configuration read from <code>pcb-menu.res</code> try to comply with Lesstif usability standards. If you want to give this interface a try, you have to give the option <code>--with-gui=lesstif</code> at compile time.</div>
 </li>
 <li class="level1"><div class="li"> <strong>net</strong>: A net is the representation of a wire, or electrical connection in your schematic diagram. It is basically a line connecting two symbol pins. The term “net” is also sometimes used loosely to talk about an electrical connection (via a wire or PCB trace) in a real circuit. Some schematic capture tools call a net a “wire”.</div>
 </li>
@@ -56,7 +59,7 @@ The design of electronics involves a host of specific terms. Some words have a m
 <ol>
 <li class="level2"><div class="li"> An abbreviation of “printed circuit board”. This is the actual hardware that is used to connect electronic components. It is also sometimes called a “printed wiring board” (PWB), although this usage may be dying out.</div>
 </li>
-<li class="level2"><div class="li"> A powerful, open-source tool used to design the layout of a printed circuit board. The output of the gaf tools can be used as an input to pcb.(<a href="http://pcb.geda-project.org" class="urlextern" title="http://pcb.geda-project.org"  rel="nofollow">home page of pcb</a>)</div>
+<li class="level2"><div class="li"> A powerful, open-source tool used to design the layout of a printed circuit board. The output of the gaf tools can be used as an input to pcb.(<a href="http://pcb.geda-project.org/" class="urlextern" title="http://pcb.geda-project.org"  rel="nofollow">home page of pcb</a>)</div>
 </li>
 </ol>
 </li>
@@ -81,5 +84,6 @@ The design of electronics involves a host of specific terms. Some words have a m
 </ul>
 
 </div>
+<!-- EDIT1 SECTION "Glossary of gEDA (and EDA) terms" [138-] --></div>
 </body>
 </html>

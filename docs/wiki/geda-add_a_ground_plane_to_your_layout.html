@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div class="dokuwiki export">
+
+<p>
+How to do no-fuss auto-routing with ground planes that works well:
+</p>
+<ul>
+<li class="level1"><div class="li"> Group bottom, ground, and bottom layer together.</div>
+</li>
+<li class="level1"><div class="li"> Group top, power, and power layer together.</div>
+</li>
+<li class="level1"><div class="li"> Lay out your circuit, yadda yadda.</div>
+</li>
+<li class="level1"><div class="li"> Run ground traces on the ground layer and power traces on the power layer:</div>
+</li>
+<li class="level1"><div class="li"> Do these steps for both top/power and bottom/ground:</div>
+<ul>
+<li class="level2"><div class="li"> Turn off all layers but the top layer.</div>
+</li>
+<li class="level2"><div class="li"> Use Ctrl-F on any power connection.</div>
+</li>
+<li class="level2"><div class="li"> Use Select/Select all found.</div>
+</li>
+<li class="level2"><div class="li"> Use Connects/Auto-route selected rats.</div>
+</li>
+<li class="level2"><div class="li"> Auto-optimize and miter.</div>
+</li>
+<li class="level2"><div class="li"> Turn on the top and bottom layers.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Route everything else using Connects/Auto-route all rats.</div>
+</li>
+<li class="level1"><div class="li"> Auto-optimize and miter.</div>
+</li>
+<li class="level1"><div class="li"> The Message Log will report that your layout is complete.</div>
+</li>
+<li class="level1"><div class="li"> Select the top and draw a rectangle.</div>
+</li>
+<li class="level1"><div class="li"> Select the bottom and draw a rectangle.</div>
+</li>
+<li class="level1"><div class="li"> This fills-in the ground plane, but you&#039;re not done, because you still have the traces.</div>
+</li>
+<li class="level1"><div class="li"> Do these steps for both ground and power:</div>
+<ul>
+<li class="level2"><div class="li"> Use Ctrl-F on any ground connection (best where the power comes in).</div>
+</li>
+<li class="level2"><div class="li"> While you&#039;re there, select the Via tool and drop a via on that connection.</div>
+</li>
+<li class="level2"><div class="li"> Use Select/Select all found</div>
+</li>
+<li class="level2"><div class="li"> Use Select/Rip up selected auto-routed tracks.</div>
+</li>
+<li class="level2"><div class="li"> Use Connects/Optimize rats nest again.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Use Connects/Auto-route all rats.</div>
+</li>
+<li class="level1"><div class="li"> The Message Log will report that your layout is complete.</div>
+</li>
+</ul>
+
+<p>
+There&#039;s a bunch of steps, but it will work a champ every time, because first routing power and ground ensures that when you flood it with power and ground planes, you&#039;ll have full connectivity. The only drawback is that you can get unnecessarily long traces and jumps to the other plane involving extra vias. On a 27 part board, I only spotted two jumps and one derp trace.
+</p>
+
+<p>
+All of this is necessary because the auto-router doesn&#039;t know that the ground plane will magically disappear when you lay a trace across it.
+</p>
+</div>
+</body>
+</html>
