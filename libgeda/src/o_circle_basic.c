@@ -42,7 +42,7 @@
  */
 int dist(int x1, int y1, int x2, int y2)
 {
-  return sqrt(pow(x1-x2,2)+pow(y1-y2,2));
+  return hypot(x1-x2,y1-y2);
 }
 
 /*! \brief Create and add circle OBJECT to list.

@@ -235,8 +235,7 @@ void o_net_find_magnetic(GschemToplevel *w_current,
 	min_x = o_current->line->x[o_current->whichend];
 	min_y = o_current->line->y[o_current->whichend];
 
-	mindist = sqrt((double) (w_x - min_x)*(w_x - min_x)
-		       + (double) (w_y - min_y)*(w_y - min_y));
+	mindist = hypot(w_x - min_x, w_y - min_y);
 	weight = mindist / MAGNETIC_PIN_WEIGHT;
       }
 
@@ -249,10 +248,8 @@ void o_net_find_magnetic(GschemToplevel *w_current,
 	x2 = o_current->line->x[1];
 	y2 = o_current->line->y[1];
 	/* endpoint tests */
-	dist1 = sqrt((double) (w_x - x1)*(w_x - x1)
-		     + (double) (w_y - y1)*(w_y - y1));
-	dist2 = sqrt((double) (w_x - x2)*(w_x - x2)
-		     + (double) (w_y - y2)*(w_y - y2));
+	dist1 = hypot(w_x - x1, w_y - y1);
+	dist2 = hypot(w_x - x2, w_y - y2);
 	if (dist1 < dist2) {
 	  min_x = x1;
 	  min_y = y1;

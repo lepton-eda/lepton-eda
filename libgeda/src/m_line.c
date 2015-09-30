@@ -87,5 +87,5 @@ double m_line_shortest_distance (LINE *line, int x, int y)
     dy = y - cy;
   }
 
-  return sqrt ((dx * dx) + (dy * dy));
+  return hypot (dx, dy);
 }

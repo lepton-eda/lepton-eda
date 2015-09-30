@@ -519,8 +519,8 @@ double o_line_length(OBJECT *object)
   dx = object->line->x[0]-object->line->x[1];
   dy = object->line->y[0]-object->line->y[1];
 
-  length = sqrt((dx*dx) + (dy*dy));
-                
+  length = hypot(dx, dy);
+
   return(length);
 }
 

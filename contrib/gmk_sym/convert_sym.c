@@ -1263,7 +1263,7 @@ do_arc(FILE *fp)
   yo  = yop + y1;
 
 
-  radius = sqrt(xop*xop + yop*yop);
+  radius = hypot(xop, yop);
 
   /* calculate start and end angles */
   to_rad = 180.0/atan2(0,-1);

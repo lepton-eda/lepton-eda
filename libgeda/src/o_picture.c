@@ -824,7 +824,7 @@ double o_picture_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
   dx = min (dx, 0);
   dy = min (dy, 0);
 
-  return sqrt ((dx * dx) + (dy * dy));
+  return hypot (dx, dy);
 }
 
 /*! \brief Test whether a picture object is embedded.

@@ -176,7 +176,7 @@ void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines)
 
   while ( sweep_y < radius ) {
     LINE line;
-    gint x = round(sqrt(pow(radius,2) - pow(sweep_y,2)));
+    gint x = round(hypot(radius, sweep_y));
 
     line.x[0] = -x;
     line.y[0] = sweep_y;

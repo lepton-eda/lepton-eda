@@ -689,7 +689,7 @@ double o_text_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
   dx = min (dx, 0);
   dy = min (dy, 0);
 
-  return sqrt ((dx * dx) + (dy * dy));
+  return hypot (dx, dy);
 }
 
 /*! \brief Set the string displayed by a text object.

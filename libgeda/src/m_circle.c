@@ -53,7 +53,7 @@ double m_circle_shortest_distance (CIRCLE *circle, int x, int y, int solid)
   dx = ((double)x) - ((double)circle->center_x);
   dy = ((double)y) - ((double)circle->center_y);
 
-  distance_to_center = sqrt ((dx * dx) + (dy * dy));
+  distance_to_center = hypot (dx, dy);
 
   if (solid) {
     shortest_distance = max (distance_to_center - circle->radius, 0);

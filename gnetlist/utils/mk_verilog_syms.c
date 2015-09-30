@@ -424,7 +424,7 @@ Pin(FILE *fp, int x1, int y1, int x2, int y2, int bubble)
       /* compute a unit vector */
       dx = x2-x1;
       dy = y2-y1;
-      denom = sqrt( dx*dx + dy*dy);
+      denom = hypot(dx, dy);
       if(denom < 1e-6)
 	{
 	  fprintf(stderr, "Error: Length of pin too small in %s()\n",
