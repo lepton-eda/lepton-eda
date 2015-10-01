@@ -286,16 +286,13 @@ for t in $all_tests ; do
             diff -w ${out}.tmp2 ${out}.tmp3 >/dev/null ; then
             echo "PASS"
             good=1
-        # If neither output nor golden file exists, then succeed
-        elif test ! -f ${out} -a ! -f ${ref} ; then
-            echo "PASS"
-            good=1
         else
             echo "FAILED:  See diff -w ${ref} ${out}"
             bad=1
         fi
     elif test ! -f $out ; then
         # No output file, but this is expected since there was no reference file
+        echo "PASS"
         good=1
     else
         echo "No reference file.  Skipping"
