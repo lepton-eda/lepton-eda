@@ -43,31 +43,31 @@ do
     in
 
     -d|--debug)
-	debug=yes
-	shift
-	;;
+        debug=yes
+        shift
+        ;;
 
     -h|--help)
-	usage
-	exit 0
-	;;
+        usage
+        exit 0
+        ;;
 
     -r|--regen)
-	# regenerate the 'golden' output files.  Use this with caution.
-	# In particular, all differences should be noted and understood.
-	regen=yes
-	shift
-	;;
+        # regenerate the 'golden' output files.  Use this with caution.
+        # In particular, all differences should be noted and understood.
+        regen=yes
+        shift
+        ;;
 
     -*)
-	echo "unknown option: $1"
-	usage
-	exit 1
-	;;
+        echo "unknown option: $1"
+        usage
+        exit 1
+        ;;
 
     *)
-	break
-	;;
+        break
+        ;;
 
     esac
 done
@@ -175,7 +175,7 @@ for t in $all_tests ; do
         code=0
     fi
     if test "X$code" = "X" ; then
-	code=0
+        code=0
     fi
 
     echo "Schematics to copy   = $schematics"
@@ -188,7 +188,7 @@ for t in $all_tests ; do
             echo "Running test because $condition = yes"
         else
             echo "Skipping test because $condition = $ctest"
-	    continue
+            continue
         fi
     fi
 
@@ -196,37 +196,37 @@ for t in $all_tests ; do
 
     # create temporary run directory and required subdirs
     if test ! -d $rundir ; then
-	mkdir -p $rundir
-	mkdir -p $rundir/sym
-	mkdir -p $rundir/models
+        mkdir -p $rundir
+        mkdir -p $rundir/sym
+        mkdir -p $rundir/models
     fi
 
     # Create the files needed
     # Note that we need to include not only the .sch files,
     # but also the contents of the sym and model directories.
     if test ! -z "$schematics" ; then
-	echo "Copying over schematics to run dir"
-	for f in $schematics ; do
-	    echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
-	    cp ${INPUT_DIR}/${f} ${rundir}/${f}
-	    chmod 644 ${rundir}/${f}
-	done
+        echo "Copying over schematics to run dir"
+        for f in $schematics ; do
+            echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
+            cp ${INPUT_DIR}/${f} ${rundir}/${f}
+            chmod 644 ${rundir}/${f}
+        done
     fi
     if test ! -z "$auxfiles" ; then
-	echo "Copying over aux files to run dir"
-	for f in $auxfiles ; do
-	    echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
-	    cp ${INPUT_DIR}/${f} ${rundir}/${f}
-	    chmod 644 ${rundir}/${f}
-	done
+        echo "Copying over aux files to run dir"
+        for f in $auxfiles ; do
+            echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
+            cp ${INPUT_DIR}/${f} ${rundir}/${f}
+            chmod 644 ${rundir}/${f}
+        done
     fi
     if test ! -z "$always_copy" ; then
-	echo "Copying over always copied files to run dir"
-	for f in $always_copy ; do
-	    echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
-	    cp ${INPUT_DIR}/${f} ${rundir}/${f}
-	    chmod 644 ${rundir}/${f}
-	done
+        echo "Copying over always copied files to run dir"
+        for f in $always_copy ; do
+            echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
+            cp ${INPUT_DIR}/${f} ${rundir}/${f}
+            chmod 644 ${rundir}/${f}
+        done
     fi
 
     # run gnetlist -g $backend
@@ -261,45 +261,45 @@ for t in $all_tests ; do
             rm ${ref}
         fi
 
-	echo "$rc1" > $refcode
-	echo "Regenerated ${ref}"
+        echo "$rc1" > $refcode
+        echo "Regenerated ${ref}"
         good=1
     elif test $rc1 -ne $code ; then
-	echo "FAILED:  gnetlist -g $backend returned $rc1 which did not match the expected $code"
-	bad=1
+        echo "FAILED:  gnetlist -g $backend returned $rc1 which did not match the expected $code"
+        bad=1
     elif test $rc2 -ne $code ; then
-	echo "FAILED:  gnetlist -g $backend -o - returned $rc2 which did not match the expected $code"
-	bad=1
+        echo "FAILED:  gnetlist -g $backend -o - returned $rc2 which did not match the expected $code"
+        bad=1
     elif test -f ${ref} ; then
 
-	sed '/gnetlist -g/d' ${ref} > ${out}.tmp1
-	sed '/gnetlist -g/d' ${out} > ${out}.tmp2
-	sed '/gnetlist -g/d' ${std} > ${out}.tmp3
+        sed '/gnetlist -g/d' ${ref} > ${out}.tmp1
+        sed '/gnetlist -g/d' ${out} > ${out}.tmp2
+        sed '/gnetlist -g/d' ${std} > ${out}.tmp3
 
-    # Hack to help with allegro backend
-    # Device files are ignored as yet
-    if test "X$backend" = "Xallegro" ; then
-        sed '/gnetlist -g/d' ${std} | sed '/^\$END$/ q' > ${out}.tmp3
-    fi
+        # Hack to help with allegro backend
+        # Device files are ignored as yet
+        if test "X$backend" = "Xallegro" ; then
+            sed '/gnetlist -g/d' ${std} | sed '/^\$END$/ q' > ${out}.tmp3
+        fi
 
-	if diff -w ${out}.tmp1 ${out}.tmp2 >/dev/null &&
-	    diff -w ${out}.tmp2 ${out}.tmp3 >/dev/null ; then
-	    echo "PASS"
+        if diff -w ${out}.tmp1 ${out}.tmp2 >/dev/null &&
+            diff -w ${out}.tmp2 ${out}.tmp3 >/dev/null ; then
+            echo "PASS"
             good=1
         # If neither output nor golden file exists, then succeed
         elif test ! -f ${out} -a ! -f ${ref} ; then
             echo "PASS"
             good=1
-	else
-	    echo "FAILED:  See diff -w ${ref} ${out}"
-	    bad=1
-	fi
+        else
+            echo "FAILED:  See diff -w ${ref} ${out}"
+            bad=1
+        fi
     elif test ! -f $out ; then
-	# No output file, but this is expected since there was no reference file
-	good=1
+        # No output file, but this is expected since there was no reference file
+        good=1
     else
-	echo "No reference file.  Skipping"
-	soso=1
+        echo "No reference file.  Skipping"
+        soso=1
     fi
 
     pass=`expr $pass + $good`
