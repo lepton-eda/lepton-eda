@@ -282,13 +282,15 @@ for t in $all_tests ; do
             sed '/gnetlist -g/d' ${std} | sed '/^\$END$/ q' > ${out}.tmp3
         fi
 
-        if diff -w ${out}.tmp1 ${out}.tmp2 >/dev/null &&
-            diff -w ${out}.tmp2 ${out}.tmp3 >/dev/null ; then
+        if ! diff -w ${out}.tmp1 ${out}.tmp2 >/dev/null; then
+            echo "FAILED: Wrong plain output. See diff -w ${ref} ${out}"
+            bad=1
+        elif ! diff -w ${out}.tmp1 ${out}.tmp3 >/dev/null; then
+            echo "FAILED: Wrong stdout output. See diff -w ${ref} ${std}"
+            bad=1
+        else
             echo "PASS"
             good=1
-        else
-            echo "FAILED:  See diff -w ${ref} ${out}"
-            bad=1
         fi
     elif test ! -f $out ; then
         # No output file, but this is expected since there was no reference file
