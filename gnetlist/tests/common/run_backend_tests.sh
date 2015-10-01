@@ -236,6 +236,10 @@ for t in $all_tests ; do
     echo "${GNETLIST} -g $backend -o - $args $schematics > stdout.net"
     ${GNETLIST} -g $backend -o - $args $schematics > stdout.net
     rc2=$?
+    echo "${GNETLIST} -g $backend -v -o verbose.net $args $schematics"
+    ${GNETLIST} -g $backend -v -o verbose.net $args $schematics
+    rc3=$?
+
 
     # OK, now check results of run.
     good=0
@@ -245,10 +249,14 @@ for t in $all_tests ; do
     ref=${GOLDEN_DIR}/${t}-output.net
     out=${rundir}/output.net
     std=${rundir}/stdout.net
+    vrb=${rundir}/verbose.net
 
     # Hack to help with vams backend
     if [ -f ${rundir}/default_entity_arc.net ]; then
       mv ${rundir}/default_entity_arc.net $out
+      # vams intentionally outputs data into several files, so checking it with
+      # the option '-o verbose.net' is nonsense
+      cp $out $vrb
     fi
 
     if test "X$regen" = "Xyes" ; then
@@ -270,11 +278,15 @@ for t in $all_tests ; do
     elif test $rc2 -ne $code ; then
         echo "FAILED:  gnetlist -g $backend -o - returned $rc2 which did not match the expected $code"
         bad=1
+    elif test $rc3 -ne $code ; then
+        echo "FAILED:  gnetlist -g $backend -v returned $rc3 which did not match the expected $code"
+        bad=1
     elif test -f ${ref} ; then
 
         sed '/gnetlist -g/d' ${ref} > ${out}.tmp1
         sed '/gnetlist -g/d' ${out} > ${out}.tmp2
         sed '/gnetlist -g/d' ${std} > ${out}.tmp3
+        sed '/gnetlist -g/d' ${vrb} > ${out}.tmp4
 
         # Hack to help with allegro backend
         # Device files are ignored as yet
@@ -287,6 +299,9 @@ for t in $all_tests ; do
             bad=1
         elif ! diff -w ${out}.tmp1 ${out}.tmp3 >/dev/null; then
             echo "FAILED: Wrong stdout output. See diff -w ${ref} ${std}"
+            bad=1
+        elif ! diff -w ${out}.tmp1 ${out}.tmp4 >/dev/null; then
+            echo "FAILED: Wrong verbose output. See diff -w ${ref} ${vrb}"
             bad=1
         else
             echo "PASS"
