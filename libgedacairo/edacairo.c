@@ -161,10 +161,9 @@ eda_cairo_box (cairo_t *cr, int flags, double line_width,
 
   /* Allow filled boxes (inferred from line_width == -1)
    * to touch an extra pixel, so the filled span is inclusive */
-  /* FIXME this has no effect */
   if (line_width == -1) {
-    if (x1 > x2) x1 += 1; else x2 += 1;
-    if (y1 > y2) y1 += 1; else y2 += 1;
+    if (s_x1 > s_x2) s_x1 += 1; else s_x2 += 1;
+    if (s_y1 > s_y2) s_y1 += 1; else s_y2 += 1;
   }
 
   s_x1 += offset; s_y1 += offset;
