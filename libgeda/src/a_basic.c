@@ -532,7 +532,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
     }
   }
 
-  tb = s_textbuffer_free(tb);
+  s_textbuffer_free(tb);
 
   new_object_list = g_list_reverse(new_object_list);
   object_list = g_list_concat (object_list, new_object_list);
