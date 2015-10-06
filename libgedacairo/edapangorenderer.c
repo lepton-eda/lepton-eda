@@ -139,9 +139,8 @@ eda_pango_renderer_constructor (GType type,
   object = parent_object_class->constructor (type, n_construct_properties,
                                              construct_params);
 
-  renderer = EDA_PANGO_RENDERER (object);
-
   #ifndef G_DISABLE_ASSERT
+  renderer = EDA_PANGO_RENDERER (object);
   if (renderer->priv->cr == NULL) {
     g_warning ("EdaPangoRenderer: Cairo context must be specified at construction.");
   }
