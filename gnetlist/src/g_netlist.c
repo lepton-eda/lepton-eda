@@ -273,7 +273,6 @@ SCM g_get_all_connections(SCM scm_netname)
 
 			if (n_current->connected_to) {
 
-			    pairlist = SCM_EOL;
 			    pin = (char *) g_malloc(sizeof(char) *
 						  strlen(n_current->
 							 connected_to));
@@ -371,7 +370,6 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 
         if (!n_current->connected_to) continue;
 
-        pairlist = SCM_EOL;
         pin = (char *) g_malloc(sizeof(char) *
                                 strlen
                                 (n_current->
