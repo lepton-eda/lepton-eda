@@ -1410,8 +1410,6 @@ DEFINE_I_CALLBACK(page_prev)
   if ( iter == NULL  )
     return;
 
-  p_new = (PAGE *)iter->data;
-
   if (w_current->enforce_hierarchy) {
     p_new = s_hierarchy_find_prev_page(toplevel->pages, p_current);
   } else {
