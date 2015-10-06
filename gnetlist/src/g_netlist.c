@@ -342,8 +342,6 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
   wanted_pin = scm_to_utf8_string (scm_pin);
   scm_dynwind_free (wanted_pin);
 
-  nl_current = netlist_head;
-
   /* search for the first instance */
   /* through the entire list */
   for (nl_current = netlist_head;
