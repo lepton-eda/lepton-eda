@@ -122,6 +122,7 @@ main(int argc, char **argv)
 	  {
 	    fprintf(stderr,"Error: Symbol creation failed in %s()\n",
 		    __func__);
+	    fclose(fp);
 	    return 1;
 	  }
 
