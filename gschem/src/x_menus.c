@@ -154,7 +154,6 @@ get_main_menu(GschemToplevel *w_current)
 
         if(scm_is_false (scm_item_func)) {
           menu_item = gtk_menu_item_new_with_mnemonic(menu_item_name);
-          menu_item_keys = "";
         } else {
 
           GtkStockItem stock_info;
