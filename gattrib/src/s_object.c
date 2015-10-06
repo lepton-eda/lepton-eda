@@ -308,8 +308,6 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
   OBJECT *o_current;
   OBJECT *new_obj;
 
-  color = DETACHED_ATTRIBUTE_COLOR;
-
   o_current = object;
 
   /* creating a toplevel or unattached attribute */
