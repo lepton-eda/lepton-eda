@@ -1072,7 +1072,8 @@ static gchar *
 expand_dir (gchar * dir)
 {
   gchar *s;
-
+  if (dir == NULL)
+    return NULL;
   if (*dir == '~')
     s = g_build_filename ((gchar *) g_get_home_dir (), dir + 1, NULL);
   else
@@ -1170,11 +1171,12 @@ parse_config (gchar * config, gchar * arg)
     return 0;
   }
   if (!strcmp (config, "elements-dir") || !strcmp (config, "d")) {
+    gchar *elements_dir = expand_dir (arg);
     if (verbose > 1)
       printf ("\tAdding directory to file element directory list: %s\n",
-              expand_dir (arg));
+              elements_dir);
     element_directory_list =
-      g_list_prepend (element_directory_list, expand_dir (arg));
+      g_list_prepend (element_directory_list, elements_dir);
   } else if (!strcmp (config, "output-name") || !strcmp (config, "o"))
     sch_basename = g_strdup (arg);
   else if (!strcmp (config, "schematics"))
