@@ -274,7 +274,6 @@ s_hierarchy_setup_rename(TOPLEVEL * pr_current, NETLIST * head, char *uref,
     nl_current = head;
     while (nl_current != NULL) {
 	if (nl_current->component_uref) {
-	    pl_current = nl_current->cpins;
 	    if (strcmp(nl_current->component_uref, wanted_uref) == 0) {
 		if (nl_current->cpins) {
 		    /* skip over head of special io symbol */
