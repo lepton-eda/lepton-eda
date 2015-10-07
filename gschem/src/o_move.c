@@ -113,9 +113,9 @@ void o_move_end_lowlevel (GschemToplevel *w_current,
     case (OBJ_NET):
     case (OBJ_BUS):
     case (OBJ_PIN):
-      s_conn_remove_object (page->toplevel, object);
+      s_conn_remove_object_connections (page->toplevel, object);
       o_translate_world (page->toplevel, diff_x, diff_y, object);
-      s_conn_update_object (page->toplevel, object);
+      s_conn_update_object (page, object);
       break;
 
     default:
@@ -647,7 +647,7 @@ void o_move_end_rubberband (GschemToplevel *w_current,
         object->type == OBJ_BUS) {
 
       /* remove the object's connections */
-      s_conn_remove_object (page->toplevel, object);
+      s_conn_remove_object_connections (page->toplevel, object);
 
       object->line->x[whichone] += w_dx;
       object->line->y[whichone] += w_dy;
@@ -660,8 +660,7 @@ void o_move_end_rubberband (GschemToplevel *w_current,
       }
 
       object->w_bounds_valid_for = NULL;
-      s_tile_update_object (page->toplevel, object);
-      s_conn_update_object (page->toplevel, object);
+      s_conn_update_object (page, object);
       *objects = g_list_append (*objects, object);
     }
   }

@@ -81,7 +81,7 @@ void o_net_guess_direction(GschemToplevel *w_current,
   int x1, y1, x2, y2;
   int xmin, ymin, xmax, ymax;
   int orientation;
-  GList *objectlists, *iter1, *iter2;
+  GList *object_list, *iter1, *iter2;
   OBJECT *o_current;
 
   int *current_rules;
@@ -92,9 +92,9 @@ void o_net_guess_direction(GschemToplevel *w_current,
 
   g_return_if_fail (page != NULL);
 
-  objectlists = s_tile_get_objectlists(page->toplevel, page, wx, wy, wx, wy);
+  object_list = g_list_append (NULL, page->connectible_list);
 
-  for (iter1 = objectlists; iter1 != NULL; iter1 = g_list_next(iter1)) {
+  for (iter1 = object_list; iter1 != NULL; iter1 = g_list_next(iter1)) {
     for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {
       o_current = (OBJECT*) iter2->data;
 
@@ -184,7 +184,7 @@ void o_net_guess_direction(GschemToplevel *w_current,
   printf("o_net_guess_direction: up=%d down=%d left=%d right=%d direction=%d\n",
 	 up, down, left, right, w_current->net_direction);
 #endif
-  g_list_free(objectlists);
+  g_list_free (object_list);
 }
 
 /*! \brief find the closest possible location to connect to
@@ -202,13 +202,13 @@ void o_net_find_magnetic(GschemToplevel *w_current,
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   PAGE *page = gschem_page_view_get_page (page_view);
-  int x1, x2, y1, y2, min_x, min_y, w_magnetic_reach;
+  int x1, x2, y1, y2, min_x, min_y;
   double mindist, minbest, dist1, dist2;
   double weight, min_weight;
   int magnetic_reach = 0;
   OBJECT *o_current;
   OBJECT *o_magnetic = NULL;
-  GList *objectlists, *iter1, *iter2;
+  GList *object_list, *iter1, *iter2;
 
   g_return_if_fail (page != NULL);
 
@@ -218,17 +218,10 @@ void o_net_find_magnetic(GschemToplevel *w_current,
   /* max distance of all the different reaches */
   magnetic_reach = max(MAGNETIC_PIN_REACH, MAGNETIC_NET_REACH);
   magnetic_reach = max(magnetic_reach, MAGNETIC_BUS_REACH);
-  w_magnetic_reach = gschem_page_view_WORLDabs (page_view, magnetic_reach);
 
-  /* get the objects of the tiles around the reach region */
-  x1 = w_x - w_magnetic_reach;
-  y1 = w_y - w_magnetic_reach;
-  x2 = w_x + w_magnetic_reach;
-  y2 = w_y + w_magnetic_reach;
+  object_list = g_list_append (NULL, page->connectible_list);
 
-  objectlists = s_tile_get_objectlists(page->toplevel, page, x1, y1, x2, y2);
-
-  for (iter1 = objectlists; iter1 != NULL; iter1 = g_list_next(iter1)) {
+  for (iter1 = object_list; iter1 != NULL; iter1 = g_list_next(iter1)) {
     for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {
       int left, top, right, bottom;
       o_current = (OBJECT*) iter2->data;
@@ -328,7 +321,7 @@ void o_net_find_magnetic(GschemToplevel *w_current,
     w_current->magnetic_wy = -1;
   }
 
-  g_list_free(objectlists);
+  g_list_free (object_list);
 }
 
 /*! \brief calcutates the net route to the magnetic marker
@@ -1026,7 +1019,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
   }
 
   if (made_changes) {
-    s_conn_remove_object (page->toplevel, net_obj);
+    s_conn_remove_object_connections (page->toplevel, net_obj);
 
     if (w_current->bus_ripper_type == COMP_BUS_RIPPER) {
       GList *symlist =
@@ -1061,7 +1054,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
       }
     }
 
-    s_conn_update_object (page->toplevel, net_obj);
+    s_conn_update_object (page, net_obj);
     return(TRUE);
   }
 

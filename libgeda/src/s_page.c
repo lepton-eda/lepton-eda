@@ -67,11 +67,8 @@ object_added (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 #endif
   object->page = page;
 
-  /* Add object to tile system. */
-  s_tile_add_object (toplevel, object);
-
   /* Update object connection tracking */
-  s_conn_update_object (toplevel, object);
+  s_conn_update_object (page, object);
 
   o_emit_change_notify (toplevel, object);
 }
@@ -81,6 +78,9 @@ static void
 pre_object_removed (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
   o_emit_pre_change_notify (toplevel, object);
+
+  /* Remove object from the list of connectible objects */
+  s_conn_remove_object (page, object);
 
   /* Clear object parent pointer */
 #ifndef NDEBUG
@@ -96,10 +96,7 @@ pre_object_removed (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
   }
 
   /* Remove object from connection system */
-  s_conn_remove_object (toplevel, object);
-
-  /* Remove object from tile system */
-  s_tile_remove_object (object);
+  s_conn_remove_object_connections (toplevel, object);
 }
 
 /*! \brief create a new page object
@@ -135,8 +132,8 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   page->up = -2;
   page->page_control = 0;
 
-  /* Init tile array */
-  s_tile_init (toplevel, page);
+  /* Init connectible objects array */
+  page->connectible_list = NULL;
 
   /* Init the object list */
   page->_object_list = NULL;
@@ -231,11 +228,16 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   s_delete_object_glist (toplevel, page->place_list);
   page->place_list = NULL;
 
-#if DEBUG
-  printf("Freeing page: %s\n", page->page_filename);
-  s_tile_print(toplevel, page);
-#endif
-  s_tile_free_all (page);
+  /*  This removes all objects from the list of connectible objects
+   *  of the given \a page. */
+  if (g_list_length (page->connectible_list) != 0) {
+    fprintf (stderr,
+            "OOPS! page->connectible_list had something in it when it was freed!\n");
+    fprintf (stderr, "Length: %d\n", g_list_length (page->connectible_list));
+  }
+
+  g_list_free (page->connectible_list);
+  page->connectible_list = NULL;
 
   /* free current page undo structs */
   s_undo_free_all (toplevel, page); 
@@ -245,10 +247,6 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   g_free (page->page_filename);
 
   geda_list_remove( toplevel->pages, page );
-
-#if DEBUG
-  s_tile_print (toplevel, page);
-#endif
 
   s_weakref_notify (page, page->weak_refs);
 

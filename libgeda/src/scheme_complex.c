@@ -256,9 +256,10 @@ SCM_DEFINE (complex_append_x, "%complex-append!", 2, 0, 0,
   OBJECT *parent = edascm_to_object (complex_s);
   OBJECT *child = edascm_to_object (obj_s);
 
+  PAGE* page = o_get_page (toplevel, child);
   /* Check that object is not already attached to a page or a
      different complex. */
-  if ((o_get_page (toplevel, child) != NULL)
+  if ((page != NULL)
       || ((child->parent != NULL) && (child->parent != parent))) {
     scm_error (edascm_object_state_sym,
                s_complex_append_x,
@@ -281,9 +282,11 @@ SCM_DEFINE (complex_append_x, "%complex-append!", 2, 0, 0,
 
   parent->w_bounds_valid_for = NULL;
 
+  PAGE* parent_page = o_get_page (toplevel, parent);
   /* We may need to update connections */
-  s_tile_update_object (toplevel, child);
-  s_conn_update_object (toplevel, child);
+  if (parent_page != NULL) {
+    s_conn_update_object (parent_page, child);
+  }
 
   o_emit_change_notify (toplevel, parent);
 
@@ -358,8 +361,8 @@ SCM_DEFINE (complex_remove_x, "%complex-remove!", 2, 0, 0,
   child->parent = NULL;
 
   /* We may need to update connections */
-  s_tile_remove_object (child);
-  s_conn_remove_object (toplevel, child);
+  s_conn_remove_object (child_page, child);
+  s_conn_remove_object_connections (toplevel, child);
 
   o_emit_change_notify (toplevel, parent);
 

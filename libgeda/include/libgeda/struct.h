@@ -46,7 +46,6 @@ typedef struct st_page PAGE;
 typedef struct st_toplevel TOPLEVEL;
 typedef struct st_color COLOR;
 typedef struct st_undo UNDO;
-typedef struct st_tile TILE;
 typedef struct st_bounds BOUNDS;
 
 typedef struct st_conn CONN;
@@ -233,8 +232,6 @@ struct st_object {
   PICTURE *picture;
   PATH *path;
 
-  GList *tiles;			/* tiles */
-
   GList *conn_list;			/* List of connections */
   /* to and from this object */
 
@@ -356,18 +353,6 @@ struct st_undo {
 };
 
 
-/*! \brief structure to split a page into tiles
- *  
- *  This structure is used to track objects that are inside
- *  a smaller TILE of o a page.
- *  See s_tile.c for further informations.
- */
-struct st_tile {
-  GList *objects;
-
-  int top, left, right, bottom;
-};
-
 struct st_page {
 
   TOPLEVEL* toplevel;
@@ -377,11 +362,10 @@ struct st_page {
   SELECTION *selection_list; /* new selection mechanism */
   GList *place_list;
   OBJECT *object_lastplace; /* the last found item */
+  GList *connectible_list;  /* connectible page objects */
 
   char *page_filename; 
   int CHANGED;			/* changed flag */
-
-  TILE world_tiles[MAX_TILES_X][MAX_TILES_Y];
 
   /* Undo/Redo Stacks and pointers */	
   /* needs to go into page mechanism actually */

@@ -83,8 +83,6 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
   new_node->text = NULL;
   new_node->complex = NULL;
 
-  new_node->tiles = NULL;
-
   new_node->conn_list = NULL;
 
   new_node->complex_basename = NULL;
@@ -211,7 +209,7 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
       s_page_remove (toplevel, o_current->page, o_current);
     }
 
-    s_conn_remove_object (toplevel, o_current);
+    s_conn_remove_object_connections (toplevel, o_current);
 
     if (o_current->attached_to != NULL) {
       /* do the actual remove */

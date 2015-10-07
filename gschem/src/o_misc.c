@@ -202,7 +202,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
-    s_conn_remove_object (toplevel, o_current);
+    s_conn_remove_object_connections (toplevel, o_current);
   }
 
   o_glist_rotate_world( toplevel, centerx, centery, angle, list );
@@ -214,7 +214,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
-    s_conn_update_object (toplevel, o_current);
+    s_conn_update_object (o_current->page, o_current);
   }
 
   o_invalidate_glist (w_current, list);
@@ -260,7 +260,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
-    s_conn_remove_object (toplevel, o_current);
+    s_conn_remove_object_connections (toplevel, o_current);
   }
 
   o_glist_mirror_world( toplevel, centerx, centery, list );
@@ -272,7 +272,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
-    s_conn_update_object (toplevel, o_current);
+    s_conn_update_object (o_current->page, o_current);
   }
 
   o_invalidate_glist (w_current, list);

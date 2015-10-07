@@ -37,8 +37,7 @@
 #define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
 
 /* These values are the default extents of the schematic drawing
- * area. If they do not cover the actual schematic, weird things
- * happen because the tile mechanism breaks. */
+ * area. */
 int   default_init_right = 121000;
 int   default_init_bottom = 90750;
 

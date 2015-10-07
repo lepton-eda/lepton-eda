@@ -307,8 +307,8 @@ SCM s_color_map_to_scm (const COLOR *map);
 void s_color_map_from_scm (COLOR *map, SCM lst, const char *scheme_proc_name);
 
 /* s_conn.c */
-void s_conn_remove_object(TOPLEVEL *toplevel, OBJECT *to_remove);
-void s_conn_update_object(TOPLEVEL *toplevel, OBJECT *object);
+void s_conn_remove_object_connections (TOPLEVEL *toplevel, OBJECT *to_remove);
+void s_conn_update_object (PAGE* page, OBJECT *object);
 int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list);
 GList *s_conn_return_others(GList *input_list, OBJECT *object);
 
@@ -383,10 +383,6 @@ void s_slib_print_dirs(void);
 /* s_slot.c */
 char *s_slot_search_slot(OBJECT *object, OBJECT **return_found);
 void s_slot_update_object(TOPLEVEL *toplevel, OBJECT *object);
-
-/* s_tile.c */
-void s_tile_update_object(TOPLEVEL *toplevel, OBJECT *object);
-GList *s_tile_get_objectlists(TOPLEVEL *toplevel, PAGE *p_current, int world_x1, int world_y1, int world_x2, int world_y2);
 
 /* s_undo.c */
 UNDO *s_undo_return_tail(UNDO *head);

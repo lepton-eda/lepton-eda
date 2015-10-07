@@ -185,7 +185,7 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
   for (iter = s_page_objects (toplevel->page_current);
        iter != NULL; iter = g_list_next (iter)) {
     o_current = iter->data;
-    s_conn_remove_object (toplevel, o_current);
+    s_conn_remove_object_connections (toplevel, o_current);
   }
 
   if (offset == 0) {
@@ -202,7 +202,7 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
   for (iter = s_page_objects (toplevel->page_current);
        iter != NULL;  iter = g_list_next (iter)) {
     o_current = iter->data;
-    s_conn_update_object (toplevel, o_current);
+    s_conn_update_object (toplevel->page_current, o_current);
   }
 
   /* this is an experimental mod, to be able to translate to all

@@ -379,11 +379,6 @@ void x_grid_draw_region (GschemToplevel *w_current,
       break;
     default: g_assert_not_reached ();
   }
-
-#if DEBUG
-  /* highly temp, just for diag purposes */
-  x_draw_tiles(w_current, cr);
-#endif
 }
 
 
@@ -411,69 +406,5 @@ int x_grid_query_drawn_spacing (GschemToplevel *w_current)
     case GRID_MODE_NONE: return -1;
     case GRID_MODE_DOTS: return query_dots_grid_spacing (w_current);
     case GRID_MODE_MESH: return query_mesh_grid_spacing (w_current);
-  }
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_draw_tiles(GschemToplevel *w_current, cairo_t *cr)
-{
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  TILE *t_current;
-  int i,j;
-  char *tempstring;
-  GdkColor *color;
-  cairo_text_extents_t extents;
-
-  color = x_get_color (LOCK_COLOR);
-
-  cairo_set_source_rgb (cr,
-                        color->red   / 65535.0,
-                        color->green / 65535.0,
-                        color->blue  / 65535.0);
-
-  cairo_select_font_face (cr,
-                          "Sans",
-                          CAIRO_FONT_SLANT_NORMAL,
-                          CAIRO_FONT_WEIGHT_BOLD);
-
-  cairo_set_font_size (cr, 2000);
-
-  for (j = 0; j < MAX_TILES_Y; j++) {
-    for (i = 0; i < MAX_TILES_X; i++) {
-      t_current = &toplevel->page_current->world_tiles[i][j];
-
-      cairo_rectangle (cr,
-                       t_current->left,
-                       t_current->top,
-                       t_current->right - t_current->left,
-                       t_current->bottom - t_current->top);
-
-      cairo_save (cr);
-
-      cairo_translate (cr,
-                      (t_current->left + t_current->right) / 2.0,
-                      (t_current->top + t_current->bottom) / 2.0);
-
-      tempstring = g_strdup_printf("(%d,%d)", i, j);
-
-      cairo_scale (cr, 1.0, -1.0);
-
-      cairo_text_extents (cr, tempstring, &extents);
-
-      cairo_move_to (cr,
-                     extents.width / -2.0,
-                     extents.height / 2.0);
-
-      cairo_show_text (cr, tempstring);
-
-      g_free(tempstring);
-
-      cairo_restore (cr);
-    }
   }
 }

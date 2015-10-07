@@ -1,6 +1,7 @@
 Makefile
 Makefile.in
 .deps
+.libs
 gnetlist
 gnetlist.exe
 *.o

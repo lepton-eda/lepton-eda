@@ -158,37 +158,20 @@ int s_conn_remove_other (TOPLEVEL *toplevel, OBJECT *other_object,
     return (FALSE);
 }
 
-/*! \brief removes a GList of OBJECTs from the connection system
- *
- *  \par Function Description
- *  This function removes all connections from and to the OBJECTS
- *  of the given GList.
- *
- *  \param toplevel  (currently not used)
- *  \param obj_list  GList of OBJECTs to unconnected from all other objects
- */
-static void s_conn_remove_glist (TOPLEVEL *toplevel, GList *obj_list)
-{
-  OBJECT *o_current;
-  GList *iter;
-
-  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    o_current = iter->data;
-    s_conn_remove_object (toplevel, o_current);
-  }
-}
-
 /*! \brief remove an OBJECT from the connection system
  *  \par Function Description
  *  This function removes all connections from and to the OBJECT
  *  <b>to_remove</b>.
- *  \param toplevel (currently not used)
+ *  \param toplevel  The TOPLEVEL structure
  *  \param to_remove OBJECT to unconnected from all other objects
  */
-void s_conn_remove_object (TOPLEVEL *toplevel, OBJECT *to_remove)
+void
+s_conn_remove_object_connections (TOPLEVEL *toplevel, OBJECT *to_remove)
 {
   GList *c_iter;
   CONN *conn;
+  GList *iter;
+  OBJECT *o_current;
 
   switch (to_remove->type) {
     case OBJ_PIN:
@@ -213,7 +196,10 @@ void s_conn_remove_object (TOPLEVEL *toplevel, OBJECT *to_remove)
 
     case OBJ_COMPLEX:
     case OBJ_PLACEHOLDER:
-      s_conn_remove_glist (toplevel, to_remove->complex->prim_objs);
+      for (iter = to_remove->complex->prim_objs; iter != NULL; iter = g_list_next (iter)) {
+        o_current = iter->data;
+        s_conn_remove_object_connections (toplevel, o_current);
+      }
       break;
   }
 }
@@ -278,17 +264,17 @@ OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
  *  This function adds all connections from and to the OBJECTS
  *  of the given GList.
  *
- *  \param toplevel  (currently not used)
+ *  \param page      The PAGE structure
  *  \param obj_list  GList of OBJECTs to add into the connection system
  */
-void s_conn_update_glist (TOPLEVEL *toplevel, GList *obj_list)
+void s_conn_update_glist (PAGE* page, GList *obj_list)
 {
   OBJECT *o_current;
   GList *iter;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
     o_current = iter->data;
-    s_conn_update_object (toplevel, o_current);
+    s_conn_update_object (page, o_current);
   }
 }
 
@@ -344,150 +330,145 @@ static void add_connection (OBJECT *object, OBJECT *other_object,
  *  <b>object</b> to all other connectable objects. It adds connections
  *  to the object and from all other
  *  objects to this one.
- *  \param toplevel (currently not used)
+ *  \param page   The PAGE structure
  *  \param object OBJECT to add into the connection system
  */
-static void s_conn_update_line_object (TOPLEVEL *toplevel, OBJECT *object)
+static void s_conn_update_line_object (PAGE* page, OBJECT *object)
 {
-  TILE *t_current;
-  GList *tl_current;
   GList *object_list;
   OBJECT *other_object;
   OBJECT *found;
   int j, k;
   OBJECT *complex, *other_complex;
+  TOPLEVEL *toplevel;
+
+  toplevel = page->toplevel;
+  g_return_if_fail (toplevel != NULL);
 
   complex = o_get_parent (toplevel, object);
 
-  /* loop over all tiles which object appears in */
-  for (tl_current = object->tiles;
-       tl_current != NULL;
-       tl_current = g_list_next (tl_current)) {
-    t_current = tl_current->data;
+  /* loop over all connectible objects */
+  for (object_list = page->connectible_list;
+       object_list != NULL;
+       object_list = g_list_next (object_list)) {
+    other_object = object_list->data;
 
-    for (object_list = t_current->objects;
-         object_list != NULL;
-         object_list = g_list_next (object_list)) {
-      other_object = object_list->data;
+    if (object == other_object)
+      continue;
 
-      if (object == other_object)
+    other_complex = o_get_parent (toplevel, other_object);
+
+    /* An object inside a symbol can only be connected up to another
+     * object if they are (a) both inside the same object, or (b)
+     * the object inside a symbol is a pin. */
+
+    /* 1. Both objects are inside a symbol */
+    if (complex && other_complex) {
+      /* If inside different symbols, both must be pins to connect. */
+      if (complex != other_complex
+          && (object->type != OBJ_PIN || other_object->type != OBJ_PIN)) {
+        continue;
+      }
+
+    /* 2. Updating object is inside a symbol, but other object is not. */
+    } else if (complex && !other_complex) {
+      if (object->type != OBJ_PIN) continue;
+    /* 3. Updating object not inside symbol, but other object is. */
+    } else if (!complex && other_complex) {
+      if (other_object->type != OBJ_PIN) continue;
+    }
+
+    /* Here is where you check the end points */
+    /* Check both end points of the other object */
+    for (k = 0; k < 2; k++) {
+
+      /* If the other object is a pin, only check the correct end */
+      if (other_object->type == OBJ_PIN && other_object->whichend != k)
         continue;
 
-      other_complex = o_get_parent (toplevel, other_object);
-
-      /* An object inside a symbol can only be connected up to another
-       * object if they are (a) both inside the same object, or (b)
-       * the object inside a symbol is a pin. */
-
-      /* 1. Both objects are inside a symbol */
-      if (complex && other_complex) {
-        /* If inside different symbols, both must be pins to connect. */
-        if (complex != other_complex
-            && (object->type != OBJ_PIN || other_object->type != OBJ_PIN)) {
-          continue;
-        }
-
-      /* 2. Updating object is inside a symbol, but other object is not. */
-      } else if (complex && !other_complex) {
-        if (object->type != OBJ_PIN) continue;
-      /* 3. Updating object not inside symbol, but other object is. */
-      } else if (!complex && other_complex) {
-        if (other_object->type != OBJ_PIN) continue;
-      }
-
-      /* Here is where you check the end points */
-      /* Check both end points of the other object */
-      for (k = 0; k < 2; k++) {
-
-        /* If the other object is a pin, only check the correct end */
-        if (other_object->type == OBJ_PIN && other_object->whichend != k)
-          continue;
-
-        /* Check both end points of the object */
-        for (j = 0; j < 2; j++) {
-
-          /* If the object is a pin, only check the correct end */
-          if (object->type == OBJ_PIN && object->whichend != j)
-            continue;
-
-          /* Check for coincidence and compatibility between
-             the objects being tested. */
-          if (object->line->x[j] == other_object->line->x[k] &&
-              object->line->y[j] == other_object->line->y[k] &&
-              check_direct_compat (object, other_object)) {
-
-            o_emit_pre_change_notify (toplevel, other_object);
-
-            add_connection (object, other_object, CONN_ENDPOINT,
-                            other_object->line->x[k],
-                            other_object->line->y[k], j, k);
-
-            add_connection (other_object, object, CONN_ENDPOINT,
-                            object->line->x[j],
-                            object->line->y[j], k, j);
-
-            o_emit_change_notify (toplevel, other_object);
-          }
-        }
-      }
-
-      /* Check both end points of the object against midpoints of the other */
-      for (k = 0; k < 2; k++) {
+      /* Check both end points of the object */
+      for (j = 0; j < 2; j++) {
 
         /* If the object is a pin, only check the correct end */
-        if (object->type == OBJ_PIN && object->whichend != k)
+        if (object->type == OBJ_PIN && object->whichend != j)
           continue;
 
-        /* check for midpoint of other object, k endpoint of current obj*/
-        found = s_conn_check_midpoint (other_object, object->line->x[k],
-                                                     object->line->y[k]);
+        /* Check for coincidence and compatibility between
+           the objects being tested. */
+        if (object->line->x[j] == other_object->line->x[k] &&
+            object->line->y[j] == other_object->line->y[k] &&
+            check_direct_compat (object, other_object)) {
 
-        /* Pins are not allowed midpoint connections onto them. */
-        /* Allow nets to connect to the middle of buses. */
-        /* Allow compatible objects to connect. */
-        if (found && other_object->type != OBJ_PIN &&
-            ((object->type == OBJ_NET && other_object->type == OBJ_BUS) ||
-              check_direct_compat (object, other_object))) {
+          o_emit_pre_change_notify (toplevel, other_object);
 
-          add_connection (object, other_object, CONN_MIDPOINT,
-                          object->line->x[k],
-                          object->line->y[k], k, -1);
+          add_connection (object, other_object, CONN_ENDPOINT,
+                          other_object->line->x[k],
+                          other_object->line->y[k], j, k);
 
-          add_connection (other_object, object, CONN_MIDPOINT,
-                          object->line->x[k],
-                          object->line->y[k], -1, k);
+          add_connection (other_object, object, CONN_ENDPOINT,
+                          object->line->x[j],
+                          object->line->y[j], k, j);
+
+          o_emit_change_notify (toplevel, other_object);
         }
       }
+    }
 
-      /* Check both end points of the other object against midpoints of the first */
-      for (k = 0; k < 2; k++) {
+    /* Check both end points of the object against midpoints of the other */
+    for (k = 0; k < 2; k++) {
 
-        /* If the other object is a pin, only check the correct end */
-        if (other_object->type == OBJ_PIN && other_object->whichend != k)
-          continue;
+      /* If the object is a pin, only check the correct end */
+      if (object->type == OBJ_PIN && object->whichend != k)
+        continue;
 
-        /* do object's endpoints cross the middle of other_object? */
-        /* check for midpoint of other object, k endpoint of current obj*/
-        found = s_conn_check_midpoint (object, other_object->line->x[k],
-                                               other_object->line->y[k]);
+      /* check for midpoint of other object, k endpoint of current obj*/
+      found = s_conn_check_midpoint (other_object, object->line->x[k],
+                                                   object->line->y[k]);
 
-        /* Pins are not allowed midpoint connections onto them. */
-        /* Allow nets to connect to the middle of buses. */
-        /* Allow compatible objects to connect. */
-        if (found && object->type != OBJ_PIN &&
-             ((object->type == OBJ_BUS && other_object->type == OBJ_NET) ||
-               check_direct_compat (object, other_object))) {
+      /* Pins are not allowed midpoint connections onto them. */
+      /* Allow nets to connect to the middle of buses. */
+      /* Allow compatible objects to connect. */
+      if (found && other_object->type != OBJ_PIN &&
+          ((object->type == OBJ_NET && other_object->type == OBJ_BUS) ||
+            check_direct_compat (object, other_object))) {
 
-          add_connection (object, other_object, CONN_MIDPOINT,
-                          other_object->line->x[k],
-                          other_object->line->y[k], -1, k);
+        add_connection (object, other_object, CONN_MIDPOINT,
+                        object->line->x[k],
+                        object->line->y[k], k, -1);
 
-          add_connection (other_object, object, CONN_MIDPOINT,
-                          other_object->line->x[k],
-                          other_object->line->y[k], k, -1);
-        }
+        add_connection (other_object, object, CONN_MIDPOINT,
+                        object->line->x[k],
+                        object->line->y[k], -1, k);
       }
+    }
 
+    /* Check both end points of the other object against midpoints of the first */
+    for (k = 0; k < 2; k++) {
+
+      /* If the other object is a pin, only check the correct end */
+      if (other_object->type == OBJ_PIN && other_object->whichend != k)
+        continue;
+
+      /* do object's endpoints cross the middle of other_object? */
+      /* check for midpoint of other object, k endpoint of current obj*/
+      found = s_conn_check_midpoint (object, other_object->line->x[k],
+                                             other_object->line->y[k]);
+
+      /* Pins are not allowed midpoint connections onto them. */
+      /* Allow nets to connect to the middle of buses. */
+      /* Allow compatible objects to connect. */
+      if (found && object->type != OBJ_PIN &&
+           ((object->type == OBJ_BUS && other_object->type == OBJ_NET) ||
+             check_direct_compat (object, other_object))) {
+
+        add_connection (object, other_object, CONN_MIDPOINT,
+                        other_object->line->x[k],
+                        other_object->line->y[k], -1, k);
+
+        add_connection (other_object, object, CONN_MIDPOINT,
+                        other_object->line->x[k],
+                        other_object->line->y[k], k, -1);
+      }
     }
   }
 
@@ -503,21 +484,25 @@ static void s_conn_update_line_object (TOPLEVEL *toplevel, OBJECT *object)
  *  <b>object</b> to all other connectable objects. It adds connections
  *  to the object and from all other objects to this one.
  *
- *  \param toplevel (currently not used)
+ *  \param page   The PAGE structure
  *  \param object OBJECT to add into the connection system
  */
-void s_conn_update_object (TOPLEVEL *toplevel, OBJECT *object)
+void s_conn_update_object (PAGE* page, OBJECT *object)
 {
+
+  /* Add object to the list of connectible objects */
+  s_conn_add_object (page, object);
+
   switch (object->type) {
     case OBJ_PIN:
     case OBJ_NET:
     case OBJ_BUS:
-      s_conn_update_line_object (toplevel, object);
+      s_conn_update_line_object (page, object);
       break;
 
     case OBJ_COMPLEX:
     case OBJ_PLACEHOLDER:
-      s_conn_update_glist (toplevel, object->complex->prim_objs);
+      s_conn_update_glist (page, object->complex->prim_objs);
       break;
   }
 }
@@ -657,4 +642,80 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object)
   }
 
   return return_list;
+}
+
+/*! \brief add a line object to the list of connectible objects
+ *  \par Function Description
+ *  \param page   The PAGE structure
+ *  \param object The line OBJECT to add
+ */
+static void s_conn_add_line_object (PAGE *page, OBJECT *object)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+
+#if DEBUG
+  printf ("name: %s\n", object->name);
+#endif
+
+  if (page == NULL) {
+    return;
+  }
+
+  if (!g_list_find (page->connectible_list, object)) {
+    page->connectible_list = g_list_append (page->connectible_list, object);
+  }
+}
+
+/*! \brief add an object to the list of connectible objects
+ *  \par Function Description
+ *  This function takes dispatches the object to the correct
+ *  function, depending on its type.
+ *
+ *  \param page   The PAGE structure
+ *  \param object The line OBJECT to add
+ */
+void s_conn_add_object (PAGE *page, OBJECT *object)
+{
+  GList *iter;
+
+  switch (object->type) {
+    case OBJ_NET:
+    case OBJ_PIN:
+    case OBJ_BUS:
+      s_conn_add_line_object (page, object);
+      break;
+
+  case OBJ_COMPLEX:
+  case OBJ_PLACEHOLDER:
+    for (iter = object->complex->prim_objs;
+         iter != NULL;
+         iter = g_list_next (iter)) {
+      s_conn_add_object (page, iter->data);
+    }
+  }
+}
+
+/*! \brief remove an object from the list of connectible objects
+ *  \par Function Description
+ *  \param object The object to remove
+ */
+void s_conn_remove_object(PAGE* page, OBJECT *object)
+{
+  GList *iter;
+
+  if (page == NULL) {
+    return;
+  }
+
+  /* Correctly deal with compound objects */
+  if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) {
+    for (iter = object->complex->prim_objs;
+         iter != NULL;
+         iter = g_list_next (iter)) {
+      s_conn_remove_object (page, iter->data);
+    }
+  }
+
+  page->connectible_list = g_list_remove (page->connectible_list, object);
 }

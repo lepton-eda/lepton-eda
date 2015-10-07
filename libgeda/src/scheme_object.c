@@ -754,7 +754,7 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   int y2 = scm_to_int (y2_s);
 
   /* We may need to update connectivity. */
-  s_conn_remove_object (toplevel, obj);
+  s_conn_remove_object_connections (toplevel, obj);
 
   switch (obj->type) {
   case OBJ_LINE:
@@ -780,8 +780,10 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
   /* We may need to update connectivity. */
-  s_tile_update_object (toplevel, obj);
-  s_conn_update_object (toplevel, obj);
+  PAGE *page = o_get_page (toplevel, obj);
+  if (page != NULL) {
+    s_conn_update_object (page, obj);
+  }
 
   o_page_changed (toplevel, obj);
 
