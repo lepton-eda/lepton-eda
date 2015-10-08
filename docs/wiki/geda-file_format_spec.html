@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Translations of this page are also available in the following languages:</em> <a href="geda-file_format_spec.ru.html" class="wikilink1" title="geda-file_format_spec.ru.html">Русский</a>.
+</p>
 
-<h1 class="sectionedit1776"><a name="geda_gaf_file_format_document" id="geda_gaf_file_format_document">gEDA/gaf File Format Document</a></h1>
+<h1 class="sectionedit1"><a name="geda_gaf_file_format_document" id="geda_gaf_file_format_document">gEDA/gaf File Format Document</a></h1>
 <div class="level1">
 
 <p>
@@ -28,8 +31,8 @@ December 31st, 2003
 </p>
 
 </div>
-<!-- EDIT1776 SECTION "gEDA/gaf File Format Document" [1-187] -->
-<h2 class="sectionedit1777"><a name="overview" id="overview">Overview</a></h2>
+<!-- EDIT1 SECTION "gEDA/gaf File Format Document" [119-305] -->
+<h2 class="sectionedit2"><a name="overview" id="overview">Overview</a></h2>
 <div class="level2">
 
 <p>
@@ -41,13 +44,12 @@ Note, this file format and any other file formats associated with gEDA are place
 </p>
 
 </div>
-<!-- EDIT1777 SECTION "Overview" [188-902] -->
-<h2 class="sectionedit1778"><a name="coordinate_space" id="coordinate_space">Coordinate Space</a></h2>
+<!-- EDIT2 SECTION "Overview" [306-1020] -->
+<h2 class="sectionedit3"><a name="coordinate_space" id="coordinate_space">Coordinate Space</a></h2>
 <div class="level2">
 
 <p>
-All coordinates are in mils (1/1000 of an inch). This is an arbitrary decision. Remember in there is no concept of physical lengths/dimensions in schematics and symbols (for schematic capture only).<br/>
-
+All coordinates are in mils (1/1000 of an inch). This is an arbitrary decision. Remember in there is no concept of physical lengths/dimensions in schematics and symbols (for schematic capture only).
 </p>
 <ul>
 <li class="level1"><div class="li"> Origin is in lower left hand corner.</div>
@@ -61,19 +63,19 @@ All coordinates are in mils (1/1000 of an inch). This is an arbitrary decision. 
 <p>
 The following figure shows how the coordinate space is setup:
 </p>
-<div class="table sectionedit1779"><table class="inline">
+<div class="table sectionedit4"><table class="inline">
 	<tr class="row0">
-		<td class="col0"><a href="media/geda/coordinatespace.jpg" class="media" target="_blank" title="geda:coordinatespace.jpg"><img src="media/geda/coordinatespace.jpg" class="mediaright" title=":geda:coordinatespace.jpg " alt=":geda:coordinatespace.jpg " /></a></td>
+		<td class="col0"><a href="media/geda/coordinatespace.jpg?id=geda%3Afile_format_spec" class="media" title="geda:coordinatespace.jpg"><img src="media/geda/coordinatespace.jpg" class="mediaright" align="right" title=":geda:coordinatespace.jpg " alt=":geda:coordinatespace.jpg " /></a></td>
 	</tr>
 </table></div>
-<!-- EDIT1779 TABLE [1498-1557] -->
+<!-- EDIT4 TABLE [1614-1673] -->
 <p>
 X axis increases going to the right. Y axis increase going up. Coordinate system is landscape and corresponds to a sheet of paper turned on its side.
 </p>
 
 </div>
-<!-- EDIT1778 SECTION "Coordinate Space" [903-1709] -->
-<h2 class="sectionedit1780"><a name="filenames" id="filenames">Filenames</a></h2>
+<!-- EDIT3 SECTION "Coordinate Space" [1021-1825] -->
+<h2 class="sectionedit5"><a name="filenames" id="filenames">Filenames</a></h2>
 <div class="level2">
 
 <p>
@@ -83,8 +85,8 @@ Schematics end in .sch. There used to be a schematic filename convention (adding
 </p>
 
 </div>
-<!-- EDIT1780 SECTION "Filenames" [1710-2246] -->
-<h2 class="sectionedit1781"><a name="object_types" id="object_types">Object types</a></h2>
+<!-- EDIT5 SECTION "Filenames" [1826-2362] -->
+<h2 class="sectionedit6"><a name="object_types" id="object_types">Object types</a></h2>
 <div class="level2">
 
 <p>
@@ -114,8 +116,8 @@ For information on the color index (which is used in practically all objects), s
 </p>
 
 </div>
-<!-- EDIT1781 SECTION "Object types" [2247-3519] -->
-<h3 class="sectionedit1782"><a name="version" id="version">version</a></h3>
+<!-- EDIT6 SECTION "Object types" [2363-3635] -->
+<h3 class="sectionedit7"><a name="version" id="version">version</a></h3>
 <div class="level3">
 
 <p>
@@ -123,7 +125,7 @@ Valid in: Schematic and Symbol files<br/>
 
 <strong><code>type version fileformat_version</code></strong>
 </p>
-<div class="table sectionedit1783"><table class="inline">
+<div class="table sectionedit8"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -137,7 +139,7 @@ Valid in: Schematic and Symbol files<br/>
 		<td class="col0 rightalign">  2 </td><td class="col1">fileformat_version</td><td class="col2">int</td><td class="col3">gEDA/gaf file format version number</td>
 	</tr>
 </table></div>
-<!-- EDIT1783 TABLE [3618-3797] --><ul>
+<!-- EDIT8 TABLE [3734-3913] --><ul>
 <li class="level1"><div class="li"> The type is a lower case “v” (as in Victor).</div>
 </li>
 <li class="level1"><div class="li"> This object must be in every file used or created by the gEDA/gaf tools.</div>
@@ -167,14 +169,13 @@ Valid in: Schematic and Symbol files<br/>
 </ul>
 
 <p>
-Example:<br/>
-
+Example:
 </p>
 <pre class="code">v 20040111 1</pre>
 
 </div>
-<!-- EDIT1782 SECTION "version" [3520-5657] -->
-<h3 class="sectionedit1784"><a name="line" id="line">line</a></h3>
+<!-- EDIT7 SECTION "version" [3636-5771] -->
+<h3 class="sectionedit9"><a name="line" id="line">line</a></h3>
 <div class="level3">
 
 <p>
@@ -182,7 +183,7 @@ Valid in: Schematic and Symbol files<br/>
 
 <strong><code>type x1 y1 x2 y2 color width capstyle dashstyle dashlength dashspace</code></strong>
 </p>
-<div class="table sectionedit1785"><table class="inline">
+<div class="table sectionedit10"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -220,7 +221,7 @@ Valid in: Schematic and Symbol files<br/>
 		<td class="col0 rightalign">  10 </td><td class="col1">dashspace</td><td class="col2">int/mils</td><td class="col3">Space inbetween dashes</td>
 	</tr>
 </table></div>
-<!-- EDIT1785 TABLE [5790-6239] --><ul>
+<!-- EDIT10 TABLE [5904-6353] --><ul>
 <li class="level1"><div class="li"> The capstyle is an enumerated type:</div>
 <ul>
 <li class="level2"><div class="li"> END NONE = 0</div>
@@ -252,8 +253,7 @@ Valid in: Schematic and Symbol files<br/>
 </ul>
 
 <p>
-Example:<br/>
-
+Example:
 </p>
 <pre class="code">L 23000 69000 28000 69000 3 40 0 1 -1 75</pre>
 
@@ -262,8 +262,8 @@ A line segment from (23000, 69000) to (28000, 69000) with color index 3, 40 mils
 </p>
 
 </div>
-<!-- EDIT1784 SECTION "line" [5658-6973] -->
-<h3 class="sectionedit1786"><a name="picture" id="picture">picture</a></h3>
+<!-- EDIT9 SECTION "line" [5772-7085] -->
+<h3 class="sectionedit11"><a name="picture" id="picture">picture</a></h3>
 <div class="level3">
 
 <p>
@@ -277,7 +277,7 @@ filename<br/>
 
 encoded picture end]</code></strong>
 </p>
-<div class="table sectionedit1787"><table class="inline">
+<div class="table sectionedit12"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -315,7 +315,7 @@ encoded picture end]</code></strong>
 		<td class="col0 rightalign">  10 </td><td class="col1">encoded picture end</td><td class="col2">string</td><td class="col3">A line containing only a dot character</td>
 	</tr>
 </table></div>
-<!-- EDIT1787 TABLE [7146-7749] --><ul>
+<!-- EDIT12 TABLE [7258-7861] --><ul>
 <li class="level1"><div class="li"> This object is a picture object. The first line contains all the picture parameters, and the second line is the path and filename of the picture. The filename is not used if the picture is embedded.</div>
 </li>
 <li class="level1"><div class="li"> The angle of the picture can only take on one of the following values: 0, 90, 180, 270.</div>
@@ -347,8 +347,7 @@ encoded picture end]</code></strong>
 </ul>
 
 <p>
-Example:<br/>
-
+Example 1:
 </p>
 <pre class="code">G 16900 35800 1400 2175 0 0 0
 ../bitmaps/logo.jpg</pre>
@@ -356,10 +355,11 @@ Example:<br/>
 <p>
 A picture object with the lower left corner at (16900, 35800). The width of the image is 1400 mils, and its height is 2175 mils. The picture rotation is 0 degrees and the picture is not mirrored, neither embedded.<br/>
 
-The picture path and filename is showed in the second line.<br/>
+The picture path and filename is showed in the second line.
+</p>
 
-Example:<br/>
-
+<p>
+Example 2:
 </p>
 <pre class="code">G 16900 35800 1400 2175 0 0 1
 ../bitmaps/logo.jpg
@@ -378,8 +378,8 @@ The encoded picture data is only an example (it is not real data). The last line
 </p>
 
 </div>
-<!-- EDIT1786 SECTION "picture" [6974-9750] -->
-<h3 class="sectionedit1788"><a name="box" id="box">box</a></h3>
+<!-- EDIT11 SECTION "picture" [7086-9861] -->
+<h3 class="sectionedit13"><a name="box" id="box">box</a></h3>
 <div class="level3">
 
 <p>
@@ -388,7 +388,7 @@ Valid in: Schematic and Symbol files<br/>
 <strong><code>type x y width height color width capstyle dashstyle dashlength dashspace
 filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
 </p>
-<div class="table sectionedit1789"><table class="inline">
+<div class="table sectionedit14"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -444,7 +444,7 @@ filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
 		<td class="col0 rightalign">  16 </td><td class="col1">pitch2</td><td class="col2">int/mils</td><td class="col3">Second pitch/spacing of fill</td>
 	</tr>
 </table></div>
-<!-- EDIT1789 TABLE [9934-10722] --><ul>
+<!-- EDIT14 TABLE [10045-10833] --><ul>
 <li class="level1"><div class="li"> The capstyle is an enumerated type:</div>
 <ul>
 <li class="level2"><div class="li"> END NONE = 0</div>
@@ -498,8 +498,7 @@ filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
 </ul>
 
 <p>
-Example:<br/>
-
+Example:
 </p>
 <pre class="code">B 33000 67300 2000 2000 3 60 0 2 75 50 0 -1 -1 -1 -1 -1</pre>
 
@@ -508,8 +507,8 @@ A box with the lower left hand corner at (33000, 67300) and a width and height o
 </p>
 
 </div>
-<!-- EDIT1788 SECTION "box" [9751-12065] -->
-<h3 class="sectionedit1790"><a name="circle" id="circle">circle</a></h3>
+<!-- EDIT13 SECTION "box" [9862-12174] -->
+<h3 class="sectionedit15"><a name="circle" id="circle">circle</a></h3>
 <div class="level3">
 
 <p>
@@ -518,7 +517,7 @@ Valid in: Schematic and Symbol files<br/>
 <strong><code>type x y radius color width capstyle dashstyle dashlength dashspace
 filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
 </p>
-<div class="table sectionedit1791"><table class="inline">
+<div class="table sectionedit16"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -571,7 +570,7 @@ filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
 		<td class="col0 rightalign">  15 </td><td class="col1">pitch2</td><td class="col2">int/mils</td><td class="col3">Second pitch/spacing of fill</td>
 	</tr>
 </table></div>
-<!-- EDIT1791 TABLE [12246-12951] --><ul>
+<!-- EDIT16 TABLE [12355-13060] --><ul>
 <li class="level1"><div class="li"> The dashstyle is an enumerated type:</div>
 <ul>
 <li class="level2"><div class="li"> TYPE SOLID = 0</div>
@@ -615,8 +614,7 @@ filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
 </ul>
 
 <p>
-Example:<br/>
-
+Example:
 </p>
 <pre class="code">V 38000 67000 900 3 0 0 2 75 50 2 10 20 30 90 50</pre>
 
@@ -625,8 +623,8 @@ A circle with the center at (38000, 67000) and a radius of 900 mils, color index
 </p>
 
 </div>
-<!-- EDIT1790 SECTION "circle" [12066-14293] -->
-<h3 class="sectionedit1792"><a name="arc" id="arc">arc</a></h3>
+<!-- EDIT15 SECTION "circle" [12175-14400] -->
+<h3 class="sectionedit17"><a name="arc" id="arc">arc</a></h3>
 <div class="level3">
 
 <p>
@@ -635,7 +633,7 @@ Valid in: Schematic and Symbol files<br/>
 <strong><code>type x y radius startangle sweepangle color width capstyle dashstyle
 dashlength dashspace</code></strong>
 </p>
-<div class="table sectionedit1793"><table class="inline">
+<div class="table sectionedit18"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -676,7 +674,7 @@ dashlength dashspace</code></strong>
 		<td class="col0 rightalign">  11 </td><td class="col1">dashspace</td><td class="col2">int/mils</td><td class="col3">Space inbetween dashes</td>
 	</tr>
 </table></div>
-<!-- EDIT1793 TABLE [14446-14969] --><ul>
+<!-- EDIT18 TABLE [14553-15076] --><ul>
 <li class="level1"><div class="li"> The startangle can be negative, but not recommended.</div>
 </li>
 <li class="level1"><div class="li"> The sweepangle can be negative, but not recommended.</div>
@@ -712,8 +710,7 @@ dashlength dashspace</code></strong>
 </ul>
 
 <p>
-Example:<br/>
-
+Example:
 </p>
 <pre class="code">A 30600 75000 2000 0 45 3 0 0 3 75 50</pre>
 
@@ -722,12 +719,12 @@ An arc with the center at (30600, 75000) and a radius of 2000 mils, a starting a
 </p>
 
 </div>
-<!-- EDIT1792 SECTION "arc" [14294-15888] -->
-<h3 class="sectionedit1794"><a name="text_and_attributes" id="text_and_attributes">text and attributes</a></h3>
+<!-- EDIT17 SECTION "arc" [14401-15993] -->
+<h3 class="sectionedit19"><a name="text_and_attributes" id="text_and_attributes">text and attributes</a></h3>
 <div class="level3">
 
 <p>
-Depending on context, text objects can play different roles. Outside any environment, they represent informative lines of text. When enclosed by curly braces, they are interpreted as attributes. See the <a href="geda-file_format_spec.html#attributes" class="wikilink1" title="geda-file_format_spec.html">attributes section</a>.
+Depending on context, text objects can play different roles. Outside any environment, they represent informative lines of text. When enclosed by curly braces, they are interpreted as attributes. See the <span class="curid"><a href="geda-file_format_spec.html#attributes" class="wikilink1" title="geda-file_format_spec.html">attributes section</a></span>.
 </p>
 
 <p>
@@ -745,7 +742,7 @@ string line 3<br/>
 
 string line N</code></strong>
 </p>
-<div class="table sectionedit1795"><table class="inline">
+<div class="table sectionedit20"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -783,7 +780,7 @@ string line N</code></strong>
 		<td class="col0 rightalign">  10 </td><td class="col1">string line 1 … N</td><td class="col2">string</td><td class="col3">The text strings, on a separate line</td>
 	</tr>
 </table></div>
-<!-- EDIT1795 TABLE [16371-16890] --><ul>
+<!-- EDIT20 TABLE [16476-16995] --><ul>
 <li class="level1"><div class="li"> This object is a multi line object. The first line contains all the text parameters and the subsequent lines are the text strings.</div>
 </li>
 <li class="level1"><div class="li"> There must be exactly num lines of text following the T … string.</div>
@@ -826,7 +823,7 @@ The following diagram shows what the values for the alignment field mean:</div>
 </ul>
 
 <p>
- <a href="media/geda/fileformat_textgraphic.jpg" class="media" target="_blank" title="geda:fileformat_textgraphic.jpg"><img src="media/geda/fileformat_textgraphic.jpg" class="media" alt="" /></a>
+ <a href="media/geda/fileformat_textgraphic.jpg?id=geda%3Afile_format_spec" class="media" title="geda:fileformat_textgraphic.jpg"><img src="media/geda/fileformat_textgraphic.jpg" class="media" title="fileformat_textgraphic.jpg" alt="fileformat_textgraphic.jpg" /></a>
 </p>
 <ul>
 <li class="level1"><div class="li"> The num_lines field always starts at 1.<br/>
@@ -837,8 +834,7 @@ The num_lines field was added starting with file format version 1. Past versions
 </ul>
 
 <p>
-Example 1:<br/>
-
+Example 1:
 </p>
 <pre class="code">T 16900 35800 3 10 1 0 0 0 1
 Text string!</pre>
@@ -849,8 +845,7 @@ flags not valid (not an attribute), origin at lower left, not rotated, string: T
 </p>
 
 <p>
-Example 2:<br/>
-
+Example 2:
 </p>
 <pre class="code">T 16900 35800 3 10 1 0 0 0 5
 Text string line 1
@@ -864,8 +859,7 @@ This is a similar text object as the above example, however here there are five 
 </p>
 
 <p>
-Example 3:<br/>
-
+Example 3:
 </p>
 <pre class="code">T 10000 20000 3 10 1 1 8 90 1
 pinlabel=R/\_W\_</pre>
@@ -875,8 +869,8 @@ A text object with the origin at (10000, 20000), color index 3, 10 points in siz
 </p>
 
 </div>
-<!-- EDIT1794 SECTION "text and attributes" [15889-19393] -->
-<h3 class="sectionedit1796"><a name="net" id="net">net</a></h3>
+<!-- EDIT19 SECTION "text and attributes" [15994-19492] -->
+<h3 class="sectionedit21"><a name="net" id="net">net</a></h3>
 <div class="level3">
 
 <p>
@@ -884,7 +878,7 @@ Valid in: Schematic files ONLY<br/>
 
 <strong><code>type x1 y1 x2 y2 color</code></strong>
 </p>
-<div class="table sectionedit1797"><table class="inline">
+<div class="table sectionedit22"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -907,7 +901,7 @@ Valid in: Schematic files ONLY<br/>
 		<td class="col0 rightalign">   5 </td><td class="col1">color</td><td class="col2">int</td><td class="col3">Color index</td>
 	</tr>
 </table></div>
-<!-- EDIT1797 TABLE [19473-19715] --><ul>
+<!-- EDIT22 TABLE [19572-19814] --><ul>
 <li class="level1"><div class="li"> Nets can only appear in schematic files.</div>
 </li>
 <li class="level1"><div class="li"> You cannot have a zero length net (the tools will throw them away).</div>
@@ -915,8 +909,7 @@ Valid in: Schematic files ONLY<br/>
 </ul>
 
 <p>
-Example:<br/>
-
+Example:
 </p>
 <pre class="code">N 12700 29400 32900 29400 4</pre>
 
@@ -925,8 +918,8 @@ A net segment from (12700, 29400) to (32900, 29400) with color index 4.
 </p>
 
 </div>
-<!-- EDIT1796 SECTION "net" [19394-19960] -->
-<h3 class="sectionedit1798"><a name="bus" id="bus">bus</a></h3>
+<!-- EDIT21 SECTION "net" [19493-20057] -->
+<h3 class="sectionedit23"><a name="bus" id="bus">bus</a></h3>
 <div class="level3">
 
 <p>
@@ -934,7 +927,7 @@ Valid in: Schematic files ONLY<br/>
 
 <strong><code>type x1 y1 x2 y2 color ripperdir</code></strong>
 </p>
-<div class="table sectionedit1799"><table class="inline">
+<div class="table sectionedit24"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -960,7 +953,7 @@ Valid in: Schematic files ONLY<br/>
 		<td class="col0 rightalign">   6 </td><td class="col1">ripperdir</td><td class="col2">int</td><td class="col3">Direction of bus rippers</td>
 	</tr>
 </table></div>
-<!-- EDIT1799 TABLE [20050-20339] --><ul>
+<!-- EDIT24 TABLE [20147-20436] --><ul>
 <li class="level1"><div class="li"> The ripperdir field for an brand new bus is 0.</div>
 </li>
 <li class="level1"><div class="li"> The ripperdir field takes on a value of 1 or -1 when a net is connected to the bus for the first time. This value indicates the direction of the ripper symbol. The ripper direction is set to the same value for the entire life of the bus object.</div>
@@ -972,8 +965,7 @@ Valid in: Schematic files ONLY<br/>
 </ul>
 
 <p>
-Example:<br/>
-
+Example:
 </p>
 <pre class="code">U 27300 37400 27300 35300 3 0</pre>
 
@@ -982,8 +974,8 @@ A bus segment from (27300, 37400) to (27300, 35300) with color index 3 and no ne
 </p>
 
 </div>
-<!-- EDIT1798 SECTION "bus" [19961-20939] -->
-<h3 class="sectionedit1800"><a name="pin" id="pin">pin</a></h3>
+<!-- EDIT23 SECTION "bus" [20058-21034] -->
+<h3 class="sectionedit25"><a name="pin" id="pin">pin</a></h3>
 <div class="level3">
 
 <p>
@@ -991,7 +983,7 @@ Valid in: Symbol files ONLY<br/>
 
 <strong><code>type x1 y1 x2 y2 color pintype whichend</code></strong>
 </p>
-<div class="table sectionedit1801"><table class="inline">
+<div class="table sectionedit26"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -1020,7 +1012,7 @@ Valid in: Symbol files ONLY<br/>
 		<td class="col0 rightalign">   7 </td><td class="col1">whichend</td><td class="col2">int</td><td class="col3">Specifies the active end</td>
 	</tr>
 </table></div>
-<!-- EDIT1801 TABLE [21033-21353] --><ul>
+<!-- EDIT26 TABLE [21128-21448] --><ul>
 <li class="level1"><div class="li"> The pintype is an enumerated type:</div>
 <ul>
 <li class="level2"><div class="li"> NORMAL <acronym title="Personal Identification Number">PIN</acronym> = 0</div>
@@ -1040,8 +1032,7 @@ Valid in: Symbol files ONLY<br/>
 </ul>
 
 <p>
-Example:<br/>
-
+Example:
 </p>
 <pre class="code">P 0 200 200 200 1 0 0</pre>
 
@@ -1050,8 +1041,8 @@ A pin from (0, 200) to (200, 200) with color index 1, a regular pin, and the fir
 </p>
 
 </div>
-<!-- EDIT1800 SECTION "pin" [20940-21950] -->
-<h3 class="sectionedit1802"><a name="component" id="component">component</a></h3>
+<!-- EDIT25 SECTION "pin" [21035-22043] -->
+<h3 class="sectionedit27"><a name="component" id="component">component</a></h3>
 <div class="level3">
 
 <p>
@@ -1059,7 +1050,7 @@ Valid in: Schematic files ONLY<br/>
 
 <strong><code>type x y selectable angle mirror basename</code></strong>
 </p>
-<div class="table sectionedit1803"><table class="inline">
+<div class="table sectionedit28"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -1085,7 +1076,7 @@ Valid in: Schematic files ONLY<br/>
 		<td class="col0 rightalign">   6 </td><td class="col1">basename</td><td class="col2">string</td><td class="col3">The filename of the component</td>
 	</tr>
 </table></div>
-<!-- EDIT1803 TABLE [22055-22369] --><ul>
+<!-- EDIT28 TABLE [22148-22462] --><ul>
 <li class="level1"><div class="li"> The selectable field is either 1 for selectable or 0 if not selectable.</div>
 </li>
 <li class="level1"><div class="li"> The angle field can only take on the following values: 0, 90, 180, 270.</div>
@@ -1101,8 +1092,7 @@ Valid in: Schematic files ONLY<br/>
 </ul>
 
 <p>
-Example:<br/>
-
+Example:
 </p>
 <pre class="code">C 18600 19900 1 0 0 7400-1.sym</pre>
 
@@ -1111,8 +1101,8 @@ A component who&#039;s origin is at (18600,19900), is selectable, not rotated, n
 </p>
 
 </div>
-<!-- EDIT1802 SECTION "component" [21951-23006] -->
-<h3 class="sectionedit1804"><a name="path" id="path">path</a></h3>
+<!-- EDIT27 SECTION "component" [22044-23097] -->
+<h3 class="sectionedit29"><a name="path" id="path">path</a></h3>
 <div class="level3">
 
 <p>
@@ -1132,7 +1122,7 @@ path data line 3<br/>
 
 path data line N</code></strong>
 </p>
-<div class="table sectionedit1805"><table class="inline">
+<div class="table sectionedit30"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -1182,7 +1172,7 @@ path data line N</code></strong>
 		<td class="col0 rightalign">  14 </td><td class="col1">path data line 1 … N</td><td class="col2">path data</td><td class="col3">The path data, on separate lines</td>
 	</tr>
 </table></div>
-<!-- EDIT1805 TABLE [23317-24028] --><ul>
+<!-- EDIT30 TABLE [23408-24119] --><ul>
 <li class="level1"><div class="li"> The capstyle is an enumerated type:</div>
 <ul>
 <li class="level2"><div class="li"> END NONE = 0</div>
@@ -1241,7 +1231,7 @@ path data line N</code></strong>
 <ul>
 <li class="level1"><div class="li"> The format of path data is deliberately similar to that of <a href="http://www.w3.org/TR/SVG/paths.html" class="urlextern" title="http://www.w3.org/TR/SVG/paths.html"  rel="nofollow">paths in the W3C SVG standard</a>.</div>
 </li>
-<li class="level1"><div class="li"> The subset of the <acronym title="Scalable Vector Graphics">SVG</acronym> path syntax emitted by gEDA is documented below in section <a href="geda-file_format_spec.html#path_data" class="wikilink1" title="geda-file_format_spec.html">Path Data</a>.</div>
+<li class="level1"><div class="li"> The subset of the <acronym title="Scalable Vector Graphics">SVG</acronym> path syntax emitted by gEDA is documented below in section <span class="curid"><a href="geda-file_format_spec.html?&#path_data" class="wikilink1" title="geda-file_format_spec.html">Path Data</a></span>.</div>
 </li>
 <li class="level1"><div class="li"> As an implementation detail; libgeda takes code from librsvg, an <acronym title="Scalable Vector Graphics">SVG</acronym> parsing library. As a result, the majority of <acronym title="Scalable Vector Graphics">SVG</acronym> path syntax is read correctly, however this is always normalised to absolute move, line, Bézier curve and close-path commands internally (and is saved as such).</div>
 </li>
@@ -1264,8 +1254,8 @@ A path starting at (410,240) with lines drawn from there, and joining points (50
 </p>
 
 </div>
-<!-- EDIT1804 SECTION "path" [23007-26023] -->
-<h3 class="sectionedit1806"><a name="font" id="font">font</a></h3>
+<!-- EDIT29 SECTION "path" [23098-26114] -->
+<h3 class="sectionedit31"><a name="font" id="font">font</a></h3>
 <div class="level3">
 
 <p>
@@ -1273,7 +1263,7 @@ Valid in: Special font files ONLY<br/>
 
 <strong><code>type character width flag</code></strong>
 </p>
-<div class="table sectionedit1807"><table class="inline">
+<div class="table sectionedit32"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Pos.</th><th class="col1">Field</th><th class="col2">Type/unit</th><th class="col3">Description</th>
 	</tr>
@@ -1290,7 +1280,7 @@ Valid in: Special font files ONLY<br/>
 		<td class="col0 rightalign">   3 </td><td class="col1">flag</td><td class="col2">int</td><td class="col3">Special space flag</td>
 	</tr>
 </table></div>
-<!-- EDIT1807 TABLE [26110-26304] --><ul>
+<!-- EDIT32 TABLE [26201-26395] --><ul>
 <li class="level1"><div class="li"> This is a special tag and should ONLY show up in font definition files.</div>
 </li>
 <li class="level1"><div class="li"> If the font character being defined is the space character (32) then flag should be 1, otherwise 0.</div>
@@ -1298,8 +1288,7 @@ Valid in: Special font files ONLY<br/>
 </ul>
 
 <p>
-Example:<br/>
-
+Example:
 </p>
 <pre class="code">F 11 1</pre>
 
@@ -1308,14 +1297,14 @@ The above font definition is for the space character.
 </p>
 
 </div>
-<!-- EDIT1806 SECTION "font" [26024-26574] -->
-<h2 class="sectionedit1808"><a name="colors" id="colors">Colors</a></h2>
+<!-- EDIT31 SECTION "font" [26115-26663] -->
+<h2 class="sectionedit33"><a name="colors" id="colors">Colors</a></h2>
 <div class="level2">
 
 <p>
 In the gEDA/gaf schematic and symbol file format colors are specified via an integer index. The relationship between integer and color is based on object type. Each object type typically has one or more colors. Here is a table of color index to object type:
 </p>
-<div class="table sectionedit1809"><table class="inline">
+<div class="table sectionedit34"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Index</th><th class="col1">Object type</th>
 	</tr>
@@ -1392,14 +1381,14 @@ In the gEDA/gaf schematic and symbol file format colors are specified via an int
 		<td class="col0">23</td><td class="col1">MESH_GRID_MINOR_COLOR</td>
 	</tr>
 </table></div>
-<!-- EDIT1809 TABLE [26853-27370] -->
+<!-- EDIT34 TABLE [26942-27459] -->
 <p>
 The actual color associated with the color index is defined on a per tool bases. Objects are typically assigned their corresponding color index, but it is permissible (sometimes) to assign other color index values to different object types.
 </p>
 
 </div>
-<!-- EDIT1808 SECTION "Colors" [26575-27613] -->
-<h2 class="sectionedit1810"><a name="attributes" id="attributes">Attributes</a></h2>
+<!-- EDIT33 SECTION "Colors" [26664-27702] -->
+<h2 class="sectionedit35"><a name="attributes" id="attributes">Attributes</a></h2>
 <div class="level2">
 
 <p>
@@ -1422,8 +1411,8 @@ These attributes are useful when you need to convey some info about a schematic 
 </p>
 
 </div>
-<!-- EDIT1810 SECTION "Attributes" [27614-28601] -->
-<h2 class="sectionedit1811"><a name="embedded_components" id="embedded_components">Embedded Components</a></h2>
+<!-- EDIT35 SECTION "Attributes" [27703-28690] -->
+<h2 class="sectionedit36"><a name="embedded_components" id="embedded_components">Embedded Components</a></h2>
 <div class="level2">
 
 <p>
@@ -1441,8 +1430,8 @@ In the example above, <strong>555-1.sym</strong> is the component. The EMBEDDED 
 </p>
 
 </div>
-<!-- EDIT1811 SECTION "Embedded Components" [28602-29366] -->
-<h2 class="sectionedit1812"><a name="path_data" id="path_data">Path data</a></h2>
+<!-- EDIT36 SECTION "Embedded Components" [28691-29455] -->
+<h2 class="sectionedit37"><a name="path_data" id="path_data">Path data</a></h2>
 <div class="level2">
 
 <p>
@@ -1465,7 +1454,7 @@ The gEDA/gaf path data format has been deliberately specified to match a subset 
 </ul>
 </li>
 </ul>
-<div class="table sectionedit1813"><table class="inline">
+<div class="table sectionedit38"><table class="inline">
 	<tr class="row0">
 		<th class="col0">Command</th><th class="col1">Name</th><th class="col2">Parameters</th><th class="col3">Description</th>
 	</tr>
@@ -1482,7 +1471,7 @@ The gEDA/gaf path data format has been deliberately specified to match a subset 
 		<td class="col0">Z or z</td><td class="col1">closepath</td><td class="col2">(none)</td><td class="col3">Close the current subpath by drawing a straight line from the current point to current subpath&#039;s initial point.</td>
 	</tr>
 </table></div>
-<!-- EDIT1813 TABLE [30214-31793] --><ul>
+<!-- EDIT38 TABLE [30303-31882] --><ul>
 <li class="level1"><div class="li"> gEDA&#039;s output currently emits only the absolute coordinate versions of the above commands.</div>
 </li>
 <li class="level1"><div class="li"> gEDA&#039;s output currently emits the commands, M, L, C before every set of coordinates, even where they could be omitted according to the <acronym title="Scalable Vector Graphics">SVG</acronym> specification.</div>
@@ -1518,14 +1507,14 @@ The resulting path (with control points drawn on to illustrate their positions) 
 </p>
 
 <p>
-<a href="media/geda/path_example_and_gate-smaller.png" class="media" target="_blank" title="geda:path_example_and_gate-smaller.png"><img src="media/geda/path_example_and_gate-smaller.png" class="media" title="" alt="" /></a>
+<a href="media/geda/path_example_and_gate-smaller.png?id=geda%3Afile_format_spec" class="media" title="geda:path_example_and_gate-smaller.png"><img src="media/geda/path_example_and_gate-smaller.png" class="media" alt="" /></a>
 </p>
 
 </div>
-<!-- EDIT1812 SECTION "Path data" [29367-32796] -->
-<h2 class="sectionedit1814"><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
+<!-- EDIT37 SECTION "Path data" [29456-32885] -->
+<h2 class="sectionedit39"><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
 <div class="level2">
-<div class="table sectionedit1815"><table class="inline">
+<div class="table sectionedit40"><table class="inline">
 	<tr class="row0">
 		<td class="col0">November 30th, 2002</td><td class="col1">Created fleformats.tex from fleformats.html.</td>
 	</tr>
@@ -1545,7 +1534,8 @@ The resulting path (with control points drawn on to illustrate their positions) 
 		<td class="col0">May 26th, 2011</td><td class="col1">Added a column for the position of parameters in the tables</td>
 	</tr>
 </table></div>
-<!-- EDIT1815 TABLE [32835-33215] -->
+<!-- EDIT40 TABLE [32924-33304] -->
 </div>
-<!-- EDIT1814 SECTION "Document Revision History" [32797-] --></body>
+<!-- EDIT39 SECTION "Document Revision History" [32886-] --></div>
+</body>
 </html>

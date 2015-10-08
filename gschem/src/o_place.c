@@ -111,7 +111,7 @@ void o_place_end (GschemToplevel *w_current,
     s_page_append (page->toplevel, page, o_current);
 
     /* Update object connectivity */
-    s_conn_update_object (page->toplevel, o_current);
+    s_conn_update_object (page, o_current);
     connected_objects = s_conn_return_others (connected_objects, o_current);
   }
 

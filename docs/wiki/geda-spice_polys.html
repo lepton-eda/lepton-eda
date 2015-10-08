@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,18 +9,22 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Translations of this page are also available in the following languages:</em> <a href="geda-spice_polys.ru.html" class="wikilink1" title="geda-spice_polys.ru.html">Русский</a>
+</p>
 
-<h1 class="sectionedit1464"><a name="spice_poly_constructs" id="spice_poly_constructs">Spice POLY Constructs</a></h1>
+<h1 class="sectionedit1"><a name="spice_poly_constructs" id="spice_poly_constructs">Spice POLY Constructs</a></h1>
 <div class="level1">
 
 <p>
-This is a draft of what I&#039;ve learned about POLYs. I&#039;m not sure 
+This is a draft of what I&#039;ve learned about POLYs. I&#039;m not sure
 it&#039;s completely accurate, so anyone should feel free to make corrections.
 </p>
 
 <p>
-Different versions of spice use different methods of modeling non-linear 
+Different versions of spice use different methods of modeling non-linear
 dependent sources, Eg. ASRC, Bxxxx, Exxxx, Gxxxx, Fxxxx, Hxxxx, etc…
 </p>
 
@@ -44,7 +47,7 @@ The other method is to use an arbitrary expression with something like if-then-e
 </p>
 
 <p>
-A lot of effort has gone into having the best of both worlds. The PWL functions often use small curves to smooth the transition from one derivative to the next. and the expressions using the if-then-else 
+A lot of effort has gone into having the best of both worlds. The PWL functions often use small curves to smooth the transition from one derivative to the next. and the expressions using the if-then-else
 functions are forced to make gradual transitions between different values. In general the libraries use polynomial approximations where they can and constrain them to areas where they are useful. Examples of this in Gnucap are the fit and table statements.
 </p>
 
@@ -57,7 +60,7 @@ However, if you want to try out your models in other spice versions you&#039;ll 
 </p>
 
 <p>
-To do the curve fitting I suppose you could use tools like <a href="http://www.gnuplot.info" class="urlextern" title="http://www.gnuplot.info"  rel="nofollow">Gnuplot</a>, <a href="http://plasma-gate.weizmann.ac.il/Grace" class="urlextern" title="http://plasma-gate.weizmann.ac.il/Grace"  rel="nofollow">Grace</a>, or <a href="http://www.simfit.man.ac.uk" class="urlextern" title="http://www.simfit.man.ac.uk"  rel="nofollow">Simfit</a>.
+To do the curve fitting I suppose you could use tools like <a href="http://www.gnuplot.info/" class="urlextern" title="http://www.gnuplot.info"  rel="nofollow">Gnuplot</a>, <a href="http://plasma-gate.weizmann.ac.il/Grace" class="urlextern" title="http://plasma-gate.weizmann.ac.il/Grace"  rel="nofollow">Grace</a>, or <a href="http://www.simfit.man.ac.uk/" class="urlextern" title="http://www.simfit.man.ac.uk"  rel="nofollow">Simfit</a>.
 </p>
 
 <p>
@@ -70,5 +73,6 @@ Note that for Ngspice to support POLYs you need to set that compile time option 
 </p>
 
 </div>
+<!-- EDIT1 SECTION "Spice POLY Constructs" [113-] --></div>
 </body>
 </html>

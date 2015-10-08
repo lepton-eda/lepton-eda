@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
-
-<h1 class="sectionedit615"><a name="xml_file_formats" id="xml_file_formats">XML File Formats</a></h1>
+<h1 class="sectionedit1"><a name="xml_file_formats" id="xml_file_formats">XML File Formats</a></h1>
 <div class="level1">
 
 <p>
@@ -24,7 +23,7 @@ One major goal of this effort is to provide advanced file format features while 
 </p>
 
 <p>
-Another main goal is to start addressing the Symbol Library Hacker task discussed at <a href="geda-tasks.html" class="wikilink1" title="geda-tasks.html">tasks</a>.
+Another main goal is to start addressing the Symbol Library Hacker task discussed at <a href="geda-todos.html" class="wikilink1" title="geda-todos.html">todos</a>.
 </p>
 
 <p>
@@ -105,5 +104,23 @@ Work that needs to be done to get this effort really started:
 </ul>
 
 </div>
+<!-- EDIT1 SECTION "XML File Formats" [1-3523] -->
+<h1 class="sectionedit2"><a name="ip-xact" id="ip-xact">IP-Xact</a></h1>
+<div class="level1">
+
+<p>
+IP-Xact (IEEE-1685] is an industry standard xml schema for packaging and distributing IP and could be adopted by gEDA for internal use as well. Its main advantage is that it uses a component name that is guaranteed to be unique and will never have name collisions with any other IP-Xact components in the world. Each component has a four field identifier called the VLNV ( Vendor name, Library name, Component name and Version) Vendors use a <acronym title="Uniform Resource Locator">URL</acronym> that they own for their vendor name and no other IP-Xact file in the world will use that same name. 
+</p>
+
+<p>
+The vendor name can also be the <acronym title="Uniform Resource Locator">URL</acronym> where the IP repository is available for download. Instantiating a VLNV  with github.com, github username and user repo name not only identifies the repository but can automatically download it if it is not already in you local design environment.
+</p>
+
+<p>
+IP-Xact allows for the creation of a geda namespace and the addition of any geda specific extensions through the use of &lt;spirit:vendorExtensions&gt;
+</p>
+
+</div>
+<!-- EDIT2 SECTION "IP-Xact" [3524-] --></div>
 </body>
 </html>

@@ -202,8 +202,6 @@ void o_bus_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
 
   /* Update bounding box */
   object->w_bounds_valid_for = NULL;
-
-  s_tile_update_object(toplevel, object);
 }
 
 /*! \brief create a copy of a bus object
@@ -439,8 +437,4 @@ void o_bus_modify(TOPLEVEL *toplevel, OBJECT *object,
   object->line->y[whichone] = y;
 
   object->w_bounds_valid_for = NULL;
-
-  s_tile_update_object(toplevel, object);
 }
-
-

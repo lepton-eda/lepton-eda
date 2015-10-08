@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,93 +9,125 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<a href="start.html" class="wikilink1" title="start.html">gEDA</a> » <a href="geda-documentation.html" class="wikilink1" title="geda-documentation.html">Documentation</a> » <a href="geda-icarus.html" class="wikilink1" title="geda-icarus.html">Icarus Verilog</a> » <span class="curid"><a href="geda-icarus_quick_start.html" class="wikilink1" title="geda-icarus_quick_start.html">Getting Started</a></span>
+</p>
 
-<h1 class="sectionedit921"><a name="getting_started_with_icarus_verilog" id="getting_started_with_icarus_verilog">Getting Started with Icarus Verilog</a></h1>
+<h1 class="sectionedit1"><a name="getting_started_with_icarus_verilog" id="getting_started_with_icarus_verilog">Getting Started with Icarus Verilog</a></h1>
 <div class="level1">
-<pre class="code">* Getting Started with Icarus Verilog
 
+<p>
 Icarus Verilog is a Verilog compiler. It is suitable for use as a
 simulator, and, to some degree, synthesizer. Icarus Verilog runs under
 Linux and a variety of UNIX systems, as well as Windows as a command
 line tool, so the instructions are generally applicable to all
 environments. Note that this is only a quick start. For more detailed
 documentation, see the manual page for the iverilog command.
+</p>
 
+</div>
+<!-- EDIT1 SECTION "Getting Started with Icarus Verilog" [87-539] -->
+<h2 class="sectionedit2"><a name="hello_world" id="hello_world">Hello, World!</a></h2>
+<div class="level2">
 
-* Hello, World!
-
+<p>
 The first thing you want to do as a user is learn how to compile and
 execute even the most trivial design. For the purposes of simulation,
-we use as our example *the* most trivial simulation:
+we use as our example <em>the</em> most trivial simulation:
+</p>
+<dl class="code">
+<dt><a href="_export/code/geda:icarus_quick_start?codeblock=0" title="Download Snippet" class="mediafile mf_vl_">&quot;hello.vl&quot;</a></dt>
+<dd><pre class="code verilog"><span class="kw1">module</span> main<span class="sy0">;</span>
+&nbsp;
+<span class="kw1">initial</span>
+  <span class="kw1">begin</span>
+    <span class="kw2">$display</span><span class="br0">&#40;</span><span class="st0">&quot;Hello, World&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw2">$finish</span> <span class="sy0">;</span>
+  <span class="kw1">end</span>
+&nbsp;
+<span class="kw1">endmodule</span></pre>
+</dd></dl>
 
-  module main;
+<p>
+<a href="_export/code/geda:icarus_quick_start?codeblock=0" class="urlextern" title="_export/code/geda:icarus_quick_start?codeblock=0"  rel="nofollow">Download</a> this program,
+or copy it from the Icarus Verilog examples directory.
+Next, compile it with a command like this:
+</p>
+<pre class="code">% iverilog -o hello hello.vl</pre>
 
-  initial
-    begin
-      $display(&quot;Hello, World&quot;);
-      $finish ;
-    end
-
-  endmodule
-
-By a text editor (or copy hello.vl from the Icarus Verilog examples
-directory) arrange for this program to be in a text file, &quot;hello.vl&quot;.
-Next, compile this program with a command like this:
-
-	% iverilog -o hello hello.vl
-
-The results of this compile are placed into the file &quot;hello&quot;, as the
-&quot;-o&quot; flag tells the compiler where to place the compiled result. Next,
+<p>
+The results of this compile are placed into the file <code>hello</code>, as the
+<code>-o</code> flag tells the compiler where to place the compiled result. Next,
 execute the compiled program like so:
+</p>
+<pre class="code">% vvp hello
+Hello, World</pre>
 
-	% vvp hello
-	Hello, World
-
+<p>
 And there it is, the program has been executed. So what happened? The
-first step, the &quot;iverilog&quot; command, read and interpreted the source
+first step, the <code>iverilog</code> command, read and interpreted the source
 file, then generated a compiled result. The compiled form may be
 selected by command line switches, but the default form is the VVP
-format, which is actually run by the &quot;vvp&quot; command.
+format, which is actually run by the <code>vvp</code> command.
+</p>
 
-The &quot;iverilog&quot; and &quot;vvp&quot; commands are the only commands that users
+<p>
+The <code>iverilog</code> and <code>vvp</code> commands are the only commands that users
 use to invoke Icarus Verilog. What the compiler actually does is
 controlled by command line switches. In our little example, we asked
 the compiler to compile the source program to the default vvp form,
 which is in turn executed by the vvp program.
-
-
-* Windows Install
-
-The easiest way to install under Windows is to get a precompiled
-installer for the version you wish to install. Icarus Verilog is
-distributed for Windows users as a self-installing .exe. Just execute
-the installer and follow the instructions. During the install, take
-note of the directory where the program is installed: for example,
-C:\iverilog is a good place to install.
-
-Once the binary is installed, you need to add the bin directory to
-your execution path. The executables you need are in C:\iverilog\bin,
-where the &quot;C:\iverilog&quot; part is actually the root of where you
-installed the package. The programs are in the bin subdirectory. Put
-this directory in your PATH environment variable, and the above
-commands become accessible to you at the command line prompt, or even
-in batch files.
-
-
-* Linux Install
-
-Under Linux, the install is even easier. For RedHat and Mandrake based
-systems, there is the appropriate RPM file. Just install the package
-with the &quot;rpm -U &lt;file&gt;&quot; command. Debian users should get Icarus
-Verilog packages from the main Debian software site.
-
-
-* Install From Source
-
-In this case, see README.txt and other documentation that comes with
-the source.</pre>
+</p>
 
 </div>
+<!-- EDIT2 SECTION "Hello, World!" [540-1981] -->
+<h2 class="sectionedit3"><a name="windows_install" id="windows_install">Windows Install</a></h2>
+<div class="level2">
+
+<p>
+The easiest way to install under Windows is to get a precompiled
+installer for the version you wish to install. Icarus Verilog is
+distributed for Windows users as a self-installing <code>.exe</code>. Just execute
+the installer and follow the instructions. During the install, take
+note of the directory where the program is installed: for example,
+<code>C:\iverilog</code> is a good place to install.
+</p>
+
+<p>
+Once the binary is installed, you need to add the bin directory to
+your execution path. The executables you need are in <code>C:\iverilog\bin</code>,
+where the <code>C:\iverilog</code> part is actually the root of where you
+installed the package. The programs are in the bin subdirectory. Put
+this directory in your <code>PATH</code> environment variable, and the above
+commands become accessible to you at the command line prompt, or even
+in batch files.
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Windows Install" [1982-2825] -->
+<h2 class="sectionedit4"><a name="linux_install" id="linux_install">Linux Install</a></h2>
+<div class="level2">
+
+<p>
+Under Linux, the install is even easier. For RedHat and Mandrake based
+systems, there is the appropriate RPM file. Just install the package
+with the <code>rpm -U &lt;file&gt;</code> command. Debian users should get Icarus
+Verilog packages from the main Debian software site.
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Linux Install" [2826-3114] -->
+<h2 class="sectionedit5"><a name="install_from_source" id="install_from_source">Install From Source</a></h2>
+<div class="level2">
+
+<p>
+In this case, see <a href="geda-icarus_readme.html" class="wikilink1" title="geda-icarus_readme.html">The Icarus Verilog Compilation System</a>
+and other documentation that comes with the source.
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Install From Source" [3115-] --></div>
 </body>
 </html>

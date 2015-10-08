@@ -1,6 +1,7 @@
 Makefile
 Makefile.in
 .deps
+.libs
 gsymcheck
 gsymcheck.exe
 *.o

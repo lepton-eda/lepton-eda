@@ -163,6 +163,8 @@ int s_conn_uniq(GList *conn_list, CONN *input_conn);
 int s_conn_remove_other(TOPLEVEL *toplevel, OBJECT *other_object, OBJECT *to_remove);
 OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y);
 void s_conn_print(GList *conn_list);
+void s_conn_add_object(PAGE *page, OBJECT *object);
+void s_conn_remove_object(PAGE *page, OBJECT *object);
 
 /* s_encoding.c */
 gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean strict);
@@ -177,13 +179,6 @@ TextBuffer *s_textbuffer_new (const gchar *data, const gint size);
 TextBuffer *s_textbuffer_free (TextBuffer *tb);
 const gchar *s_textbuffer_next (TextBuffer *tb, const gssize count);
 const gchar *s_textbuffer_next_line (TextBuffer *tb);
-
-/* s_tile.c */
-void s_tile_init(TOPLEVEL *toplevel, PAGE *p_current);
-void s_tile_add_object(TOPLEVEL *toplevel, OBJECT *object);
-void s_tile_remove_object(OBJECT *object);
-void s_tile_print(TOPLEVEL *toplevel, PAGE *page);
-void s_tile_free_all(PAGE *p_current);
 
 /* s_weakref.c */
 void s_weakref_notify (void *dead_ptr, GList *weak_refs);

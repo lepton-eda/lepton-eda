@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gsymcheck\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2015-01-02 00:03+0100\n"
+"POT-Creation-Date: 2015-08-22 13:37+0300\n"
 "PO-Revision-Date: 2015-01-12 10:15+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: gsymcheck/src/g_rc.c:58
+#: gsymcheck/src/g_rc.c:57
 #, c-format
 msgid ""
 "You are running gEDA/gaf version [%s%s.%s],\n"

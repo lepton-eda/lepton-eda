@@ -18,7 +18,8 @@ noinst_MANS = mk_verilog_syms.1
 	  (display (strftime "%B %-d, %Y" \
 	  (car (strptime "%Y%m%d" (cadr (program-arguments))))))' $(DATE_VERSION)` ; \
 	v="$(DOTTED_VERSION).$(DATE_VERSION)" ; \
-	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" < $< > $@
+	y=`echo $(DATE_VERSION)| sed -e"s/\(....\).*/\1/"`; \
+	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" -e"s:[@]YEAR@:$$y:" < $< > $@
 
 # Rules for converting man->html
 html_man_files = $(dist_man_MANS:%.1=%.html)

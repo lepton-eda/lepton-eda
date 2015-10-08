@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,105 +9,127 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<a href="start.html" class="wikilink1" title="start.html">gEDA</a> » <a href="geda-documentation.html" class="wikilink1" title="geda-documentation.html">Documentation</a> » <a href="geda-icarus.html" class="wikilink1" title="geda-icarus.html">Icarus Verilog</a> » <span class="curid"><a href="geda-icarus_readme.html" class="wikilink1" title="geda-icarus_readme.html">The Icarus Verilog Compilation System</a></span>
+</p>
 
-<h1 class="sectionedit2300"><a name="the_icarus_verilog_compilation_system" id="the_icarus_verilog_compilation_system">The Icarus Verilog Compilation System</a></h1>
+<h1 class="sectionedit1"><a name="the_icarus_verilog_compilation_system" id="the_icarus_verilog_compilation_system">The Icarus Verilog Compilation System</a></h1>
 <div class="level1">
-<pre class="code">		THE ICARUS VERILOG COMPILATION SYSTEM
-		Copyright 2000-2004 Stephen Williams
 
+<p>
+Copyright 2000-2004 Stephen Williams
+</p>
 
-1.0 What is ICARUS Verilog?
+</div>
+<!-- EDIT1 SECTION "The Icarus Verilog Compilation System" [109-198] -->
+<h2 class="sectionedit2"><a name="what_is_icarus_verilog" id="what_is_icarus_verilog">What is ICARUS Verilog?</a></h2>
+<div class="level2">
 
+<p>
 Icarus Verilog is intended to compile ALL of the Verilog HDL as
 described in the IEEE-1364 standard. Of course, it&#039;s not quite there
 yet. It does currently handle a mix of structural and behavioral
 constructs. For a view of the current state of Icarus Verilog, see its
-home page at &lt;http://www.icarus.com/eda/verilog&gt;.
+home page at <a href="http://www.icarus.com/eda/verilog" class="urlextern" title="http://www.icarus.com/eda/verilog"  rel="nofollow">http://www.icarus.com/eda/verilog</a>.
+</p>
 
+<p>
 Icarus Verilog is not aimed at being a simulator in the traditional
 sense, but a compiler that generates code employed by back-end
-tools. These back-end tools currently include a simulator engine
-called VVP, an XNF (Xilinx Netlist Format) generator and an EDIF FPGA
-netlist generator. In the future, backends are expected for EDIF/LPM,
-structural Verilog, VHDL, etc.
+tools.
+</p>
 
-    For instructions on how to run Icarus Verilog,
-    see the ``iverilog&#039;&#039; man page.
+<p>
+For instructions on how to run Icarus Verilog, see the <code><a href="geda-icarus_mp.html" class="wikilink1" title="geda-icarus_mp.html">iverilog(1)</a></code> man page.
+</p>
 
+</div>
+<!-- EDIT2 SECTION "What is ICARUS Verilog?" [199-789] -->
+<h2 class="sectionedit3"><a name="building_installing_icarus_verilog_from_source" id="building_installing_icarus_verilog_from_source">Building/Installing Icarus Verilog From Source</a></h2>
+<div class="level2">
 
-2.0 Building/Installing Icarus Verilog From Source
-
+<p>
 If you are starting from source, the build process is designed to be
 as simple as practical. Someone basically familiar with the target
 system and C/C++ compilation should be able to build the source
 distribution with little effort. Some actual programming skills are
 not required, but helpful in case of problems.
+</p>
 
+<p>
 If you are building for Windows, see the mingw.txt file.
+</p>
 
-2.1 Compile Time Prerequisites
+</div>
+<!-- EDIT3 SECTION "Building/Installing Icarus Verilog From Source" [790-1223] -->
+<h3 class="sectionedit4"><a name="compile_time_prerequisites" id="compile_time_prerequisites">Compile Time Prerequisites</a></h3>
+<div class="level3">
 
+<p>
 You need the following software to compile Icarus Verilog from source
 on a UNIX-like system:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>GNU Make</strong><br/>
+The Makefiles use some GNU extensions, so a basic POSIX make will not work. Linux systems typically come with a satisfactory make. BSD based systems (i.e., NetBSD, FreeBSD) typically have GNU make as the gmake program.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <strong><acronym title="International Organization for Standardization">ISO</acronym> C++ Compiler</strong><br/>
+The <code>ivl</code> and <code>ivlpp</code> programs are written in C++ and make use of templates and some of the standard C++ library. egcs and recent gcc compilers with the associated libstdc++ are known to work. MSVC++ 5 and 6 are known to definitely *not* work.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <strong>bison and flex</strong></div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <strong>gperf 2.7</strong><br/>
+The lexical analyzer doesn&#039;t recognize keywords directly, but instead matches symbols and looks them up in a hash table in order to get the proper lexical code. The gperf program generates the lookup table.<br/>
+A version problem with this program is the most common cause of difficulty. See the Icarus Verilog <acronym title="Frequently Asked Questions">FAQ</acronym>.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <strong>readline 4.2</strong><br/>
+On Linux systems, this usually means the <code>readline-devel</code> rpm. In any case, it is the development headers of readline that are needed.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <strong>termcap</strong><br/>
+The readline library in turn uses termcap.</div>
+</li>
+</ul>
 
-	- GNU Make
-	  The Makefiles use some GNU extensions, so a basic POSIX
-	  make will not work. Linux systems typically come with a
-	  satisfactory make. BSD based systems (i.e., NetBSD, FreeBSD)
-	  typically have GNU make as the gmake program.
-
-	- ISO C++ Compiler
-	  The ivl and ivlpp programs are written in C++ and make use
-	  of templates and some of the standard C++ library. egcs and
-	  recent gcc compilers with the associated libstdc++ are known
-	  to work. MSVC++ 5 and 6 are known to definitely *not* work.
-
-	- bison and flex
-
-	- gperf 2.7
-	  The lexical analyzer doesn&#039;t recognize keywords directly,
-	  but instead matches symbols and looks them up in a hash
-	  table in order to get the proper lexical code. The gperf
-	  program generates the lookup table.
-
-	  A version problem with this program is the most common cause
-	  of difficulty. See the Icarus Verilog FAQ.
-
-	- readline 4.2
-	  On Linux systems, this usually means the readline-devel
-	  rpm. In any case, it is the development headers of readline
-	  that are needed.
-
-	- termcap
-	  The readline library in turn uses termcap.
-
-If you are building from CVS, you will also need software to generate
+<p>
+If you are building from git, you will also need software to generate
 the configure scripts.
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>autoconf 2.53</strong><br/>
+This generates configure scripts from <code>configure.in</code>. The 2.53 or later versions are known to work, autoconf 2.13 is reported to *not* work.</div>
+</li>
+</ul>
 
-	- autoconf 2.53
-	  This generates configure scripts from configure.in. The 2.53
-	  or later versions are known to work, autoconf 2.13 is
-	  reported to *not* work.
+</div>
+<!-- EDIT4 SECTION "Compile Time Prerequisites" [1224-2706] -->
+<h3 class="sectionedit5"><a name="compilation" id="compilation">Compilation</a></h3>
+<div class="level3">
 
-2.2 Compilation
-
-Unpack the tar-ball and cd into the verilog-######### directory
-(presumably that is how you got to this README) and compile the source
+<p>
+Unpack the tar-ball and cd into the <code>verilog-#########</code> directory and compile the source
 with the commands:
+</p>
+<pre class="code">./configure
+make</pre>
 
-  ./configure
-  make
-
+<p>
 Normally, this command automatically figures out everything it needs
 to know. It generally works pretty well. There are a few flags to the
 configure script that modify its behavior:
-
-	--without-ipal
-	    This turns off support for Icarus PAL, whether ipal
-	    libraries are installed or not.
-
-	--prefix=&lt;root&gt;
+</p>
+<pre class="code">	--prefix=&lt;root&gt;
 	    The default is /usr/local, which causes the tool suite to
 	    be compiled for install in /usr/local/bin,
 	    /usr/local/share/ivl, etc.
@@ -118,267 +139,383 @@ configure script that modify its behavior:
 	    common to use --prefix=/opt.  You can configure for a non-root
 	    install with --prefix=$HOME.
 
-	--enable-vvp32 (experimental)
-	    If compiling on AMD64 systems, this enables the
-	    compilation of 32bit compatible vvp (vvp32) and the vpi
-	    modules that match.
+	--enable-suffix
+	--enable-suffix=&lt;your-suffix&gt;
+	--disable-suffix
+	    Enable/disable changing the names of install files to use
+	    a suffix string so that this version or install can co-
+	    exist with other versions. This renames the installed
+	    commands (iverilog, iverilog-vpi, vvp) and the installed
+	    library files and include directory so that installations
+	    with the same prefix but different suffix are guaranteed
+	    to not interfere with each other.</pre>
 
-2.2.1 Special AMD64 Instructions
+</div>
+<!-- EDIT5 SECTION "Compilation" [2707-3922] -->
+<h3 class="sectionedit6"><a name="optional_testing" id="optional_testing">(Optional) Testing</a></h3>
+<div class="level3">
 
-(The Icarus Verilog RPM for x86_64 is build using these instructions.)
-
-If you are building for Linux/AMD64 (a.k.a x86_64) then to get the
-most out of your install, first make sure you have both 64bit and
-32bit development libraries installed. Then configure with this
-somewhat more complicated command:
-
-  ./configure libdir64=&#039;$(prefix)/lib64&#039; vpidir1=vpi64 vpidir2=. --enable-vvp32
-
-This reflects the convention on AMD64 systems that 64bit libraries go
-into lib64 directories. The &quot;--enable-vvp32&quot; also turns on 32bit
-compatibility files. A 32bit version of vvp (vvp32) will be created,
-as well as 32bit versions of the development libraries and bundled VPI
-libraries.
-
-2.3 (Optional) Testing
-
+<p>
 To run a simple test before installation, execute
+</p>
+<pre class="code">make check</pre>
 
-  make check
-
+<p>
 The commands printed by this run might help you in running Icarus
 Verilog on your own Verilog sources before the package is installed
 by root.
+</p>
 
-2.4 Installation
+</div>
+<!-- EDIT6 SECTION "(Optional) Testing" [3923-4161] -->
+<h3 class="sectionedit7"><a name="installation" id="installation">Installation</a></h3>
+<div class="level3">
 
+<p>
 Now install the files in an appropriate place. (The makefiles by
-default install in /usr/local unless you specify a different prefix
-with the --prefix=&lt;path&gt; flag to the configure command.) You may need
+default install in <code>/usr/local</code> unless you specify a different prefix
+with the <code>–prefix=&lt;path&gt;</code> flag to the configure command.) You may need
 to do this as root to gain access to installation directories.
+</p>
+<pre class="code">make install</pre>
 
-  make install
+</div>
+<!-- EDIT7 SECTION "Installation" [4162-4476] -->
+<h3 class="sectionedit8"><a name="uninstallation" id="uninstallation">Uninstallation</a></h3>
+<div class="level3">
 
-2.5 Uninstallation
+<p>
+The generated Makefiles also include the <code>uninstall</code> target. This should
+remove all the files that <code>make install</code> creates.
+</p>
 
-The generated Makefiles also include the uninstall target. This should
-remove all the files that ``make install&#039;&#039; creates.
+</div>
+<!-- EDIT8 SECTION "Uninstallation" [4477-4630] -->
+<h2 class="sectionedit9"><a name="how_icarus_verilog_works" id="how_icarus_verilog_works">How Icarus Verilog Works</a></h2>
+<div class="level2">
 
-3.0 How Icarus Verilog Works
-
+<p>
 This tool includes a parser which reads in Verilog (plus extensions)
 and generates an internal netlist. The netlist is passed to various
 processing steps that transform the design to more optimal/practical
 forms, then is passed to a code generator for final output. The
 processing steps and the code generator are selected by command line
 switches.
+</p>
 
-3.1 Preprocessing
+</div>
+<!-- EDIT9 SECTION "How Icarus Verilog Works" [4631-5018] -->
+<h3 class="sectionedit10"><a name="preprocessing" id="preprocessing">Preprocessing</a></h3>
+<div class="level3">
 
-There is a separate program, ivlpp, that does the preprocessing. This
-program implements the `include and `define directives producing
+<p>
+There is a separate program, <code>ivlpp</code>, that does the preprocessing. This
+program implements the <code>`include</code> and <code>`define</code> directives producing
 output that is equivalent but without the directives. The output is a
 single file with line number directives, so that the actual compiler
-only sees a single input file. See ivlpp/ivlpp.txt for details.
+only sees a single input file. See <code>ivlpp/ivlpp.txt</code> for details.
+</p>
 
-3.2 Parse
+</div>
+<!-- EDIT10 SECTION "Preprocessing" [5019-5398] -->
+<h3 class="sectionedit11"><a name="parse" id="parse">Parse</a></h3>
+<div class="level3">
 
+<p>
 The Verilog compiler starts by parsing the Verilog source file. The
-output of the parse is a list of Module objects in &quot;pform&quot;. The pform
-(see pform.h) is mostly a direct reflection of the compilation
+output of the parse is a list of Module objects in “pform”. The pform
+(see <code>pform.h</code>) is mostly a direct reflection of the compilation
 step. There may be dangling references, and it is not yet clear which
 module is the root.
+</p>
 
+<p>
 One can see a human readable version of the final pform by using the
-``-P &lt;path&gt;&#039;&#039; flag to the compiler. This will cause iverilog to dump
-the pform into the file named &lt;path&gt;.
+<code>-P &lt;path&gt;</code> flag to the <code>ivl</code> subcommand. This will cause <code>ivl</code>
+to dump the pform into the file named <code>&lt;path&gt;</code>. (Note that this is not
+normally done, unless debugging the <code>ivl</code> subcommand.)
+</p>
 
-3.3 Elaboration
+</div>
+<!-- EDIT11 SECTION "Parse" [5399-5981] -->
+<h3 class="sectionedit12"><a name="elaboration" id="elaboration">Elaboration</a></h3>
+<div class="level3">
 
+<p>
 This phase takes the pform and generates a netlist. The driver selects
 (by user request or lucky guess) the root module to elaborate,
 resolves references and expands the instantiations to form the design
-netlist. (See netlist.txt.) Final semantic checks are performed during
+netlist. (See <code>netlist.txt</code>.) Final semantic checks are performed during
 elaboration, and some simple optimizations are performed. The netlist
 includes all the behavioral descriptions, as well as gates and wires.
+</p>
 
-The elaborate() function performs the elaboration.
+<p>
+The <code>elaborate()</code> function performs the elaboration.
+</p>
 
+<p>
 One can see a human readable version of the final, elaborated and
-optimized netlist by using the ``-N &lt;path&gt;&#039;&#039; flag to the compiler. If
+optimized netlist by using the <code>-N &lt;path&gt;</code> flag to the compiler. If
 elaboration succeeds, the final netlist (i.e., after optimizations but
-before code generation) will be dumped into the file named &lt;path&gt;.
+before code generation) will be dumped into the file named <code>&lt;path&gt;</code>.
+</p>
 
+<p>
 Elaboration is actually performed in two steps: scopes and parameters
 first, followed by the structural and behavioral elaboration.
+</p>
 
-3.3.1 Scope Elaboration
+</div>
 
+<h4><a name="scope_elaboration" id="scope_elaboration">Scope Elaboration</a></h4>
+<div class="level4">
+
+<p>
 This pass scans through the pform looking for scopes and parameters. A
-tree of NetScope objects is built up and placed in the Design object,
-with the root module represented by the root NetScope object. The
-elab_scope.cc and elab_pexpr.cc files contain most of the code for
-handling this phase.
+tree of <code>NetScope</code> objects is built up and placed in the <code>Design</code> object,
+with the root module represented by the root <code>NetScope</code> object. The
+<code>elab_scope.cc</code> file contains most of the code for handling this phase.
+</p>
 
-The tail of the elaborate_scope behavior (after the pform is
-traversed) includes a scan of the NetScope tree to locate defparam
+<p>
+The tail of the <code>elaborate_scope</code> behavior (after the pform is
+traversed) includes a scan of the <code>NetScope</code> tree to locate defparam
 assignments that were collected during scope elaboration. This is when
 the defparam overrides are applied to the parameters.
+</p>
 
-3.3.2 Netlist Elaboration
+</div>
 
-After the scopes and parameters are generated and the NetScope tree
+<h4><a name="netlist_elaboration" id="netlist_elaboration">Netlist Elaboration</a></h4>
+<div class="level4">
+
+<p>
+After the scopes and parameters are generated and the <code>NetScope</code> tree
 fully formed, the elaboration runs through the pform again, this time
 generating the structural and behavioral netlist. Parameters are
 elaborated and evaluated by now so all the constants of code
 generation are now known locally, so the netlist can be generated by
 simply passing through the pform.
+</p>
 
-3.4 Optimization
+</div>
+<!-- EDIT12 SECTION "Elaboration" [5982-7876] -->
+<h3 class="sectionedit13"><a name="optimization" id="optimization">Optimization</a></h3>
+<div class="level3">
 
+<p>
 This is actually a collection of processing steps that perform
 optimizations that do not depend on the target technology. Examples of
 some useful transformations are
+</p>
+<ul>
+<li class="level1"><div class="li"> eliminate null effect circuitry</div>
+</li>
+<li class="level1"><div class="li"> combinational reduction</div>
+</li>
+<li class="level1"><div class="li"> constant propagation</div>
+</li>
+</ul>
 
-	- eliminate null effect circuitry
-	- combinational reduction
-	- constant propagation
+<p>
+The actual functions performed are specified on the <code>ivl</code> command line by
+the <code>-F</code> flags (see below).
+</p>
 
-The actual functions performed are specified on the ivl command line by
-the -F flags (see below).
+</div>
+<!-- EDIT13 SECTION "Optimization" [7877-8261] -->
+<h3 class="sectionedit14"><a name="code_generation" id="code_generation">Code Generation</a></h3>
+<div class="level3">
 
-3.5 Code Generation
-
+<p>
 This step takes the design netlist and uses it to drive the code
-generator (see target.h). This may require transforming the
+generator (see <code>target.h</code>). This may require transforming the
 design to suit the technology.
+</p>
 
-The emit() method of the Design class performs this step. It runs
+<p>
+The <code>emit()</code> method of the <code>Design</code> class performs this step. It runs
 through the design elements, calling target functions as need arises
 to generate actual output.
+</p>
 
-The user selects the target code generator with the -t flag on the
+<p>
+The user selects the target code generator with the <code>-t</code> flag on the
 command line.
+</p>
 
-3.6 ATTRIBUTES
+</div>
+<!-- EDIT14 SECTION "Code Generation" [8262-8706] -->
+<h3 class="sectionedit15"><a name="attributes" id="attributes">Attributes</a></h3>
+<div class="level3">
 
-    NOTE: The $attribute syntax will soon be deprecated in favor of the
-    Verilog-2001 attribute syntax, which is cleaner and standardized.
+<p>
+<p><div class="notetip">
+The <code>$attribute</code> syntax will soon be deprecated in favor of the
+Verilog-2001 attribute syntax, which is cleaner and standardized.
 
-The parser accepts, as an extension to Verilog, the $attribute module
-item. The syntax of the $attribute item is:
+</div></p>
+</p>
 
-	$attribute (&lt;identifier&gt;, &lt;key&gt;, &lt;value&gt;);
+<p>
+The parser accepts, as an extension to Verilog, the <code>$attribute</code> module
+item. The syntax of the <code>$attribute</code> item is:
+</p>
+<pre class="code">$attribute (&lt;identifier&gt;, &lt;key&gt;, &lt;value&gt;);</pre>
 
-The $attribute keyword looks like a system task invocation. The
-difference here is that the parameters are more restricted then those
-of a system task. The &lt;identifier&gt; must be an identifier. This will be
-the item to get an attribute. The &lt;key&gt; and &lt;value&gt; are strings, not
+<p>
+The <code>$attribute</code> keyword looks like a system task invocation. The
+difference here is that the parameters are more restricted than those
+of a system task. The <code>&lt;identifier&gt;</code> must be an identifier. This will be
+the item to get an attribute. The <code>&lt;key&gt;</code> and <code>&lt;value&gt;</code> are strings, not
 expressions, that give the key and the value of the attribute to be
 attached to the identified object.
+</p>
 
-Attributes are [&lt;key&gt; &lt;value&gt;] pairs and are used to communicate with
+<p>
+Attributes are <code>[&lt;key&gt; &lt;value&gt;]</code> pairs and are used to communicate with
 the various processing steps. See the documentation for the processing
 step for a list of the pertinent attributes.
+</p>
 
+<p>
 Attributes can also be applied to gate types. When this is done, the
 attribute is given to every instantiation of the primitive. The syntax
-for the attribute statement is the same, except that the &lt;identifier&gt;
+for the attribute statement is the same, except that the <code>&lt;identifier&gt;</code>
 names a primitive earlier in the compilation unit and the statement is
 placed in global scope, instead of within a module. The semicolon is
 not part of a type attribute.
+</p>
 
+<p>
 Note that attributes are also occasionally used for communication
 between processing steps. Processing steps that are aware of others
 may place attributes on netlist objects to communicate information to
 later steps.
+</p>
 
+<p>
 Icarus Verilog also accepts the Verilog 2001 syntax for
-attributes. They have the same general meaning as with the $attribute
+attributes. They have the same general meaning as with the <code>$attribute</code>
 syntax, but they are attached to objects by position instead of by
 name. Also, the key is a Verilog identifier instead of a string.
+</p>
 
-4.0 Running iverilog
+</div>
+<!-- EDIT15 SECTION "Attributes" [8707-10499] -->
+<h2 class="sectionedit16"><a name="running_iverilog" id="running_iverilog">Running iverilog</a></h2>
+<div class="level2">
 
-The preferred way to invoke the compiler is with the iverilog(1)
-command. This program invokes the preprocessor (ivlpp) and the
-compiler (ivl) with the proper command line options to get the job
-done in a friendly way. See the iverilog(1) man page for usage details.
+<p>
+The preferred way to invoke the compiler is with the <code>iverilog(1)</code>
+command. This program invokes the preprocessor (<code>ivlpp</code>) and the
+compiler (<code>ivl</code>) with the proper command line options to get the job
+done in a friendly way. See the <code><a href="geda-icarus_mp.html" class="wikilink1" title="geda-icarus_mp.html">iverilog(1)</a></code> man page for usage details.
+</p>
 
+</div>
+<!-- EDIT16 SECTION "Running iverilog" [10500-10828] -->
+<h3 class="sectionedit17"><a name="examples" id="examples">Examples</a></h3>
+<div class="level3">
 
-4.1 EXAMPLES
+<p>
+Example: Compiling <code>hello.vl</code>
+</p>
+<dl class="code">
+<dt><a href="_export/code/geda:icarus_readme?codeblock=1" title="Download Snippet" class="mediafile mf_vl_">&quot;hello.vl&quot;</a></dt>
+<dd><pre class="code verilog"><span class="kw1">module</span> main<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">initial</span>
+  <span class="kw1">begin</span>
+    <span class="kw2">$display</span><span class="br0">&#40;</span><span class="st0">&quot;Hi there&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="kw2">$finish</span> <span class="sy0">;</span>
+  <span class="kw1">end</span>
+&nbsp;
+<span class="kw1">endmodule</span></pre>
+</dd></dl>
 
-Example: Compiling &quot;hello.vl&quot;
-
------------------------- hello.vl ----------------------------
-module main();
-
-initial
-  begin
-    $display(&quot;Hi there&quot;);
-    $finish ;
-  end
-
-endmodule
-
---------------------------------------------------------------
-
-Ensure that &quot;iverilog&quot; is on your search path, and the vpi library
+<p>
+Ensure that <code>iverilog</code> is on your search path, and the <code>vpi</code> library
 is available.
+</p>
 
+<p>
 To compile the program:
+</p>
+<pre class="code">iverilog hello.vl</pre>
 
-  iverilog hello.vl
-
-(The above presumes that /usr/local/include and /usr/local/lib are
+<p>
+(The above presumes that <code>/usr/local/include</code> and <code>/usr/local/lib</code> are
 part of the compiler search path, which is usually the case for gcc.)
+</p>
 
+<p>
 To run the program:
+</p>
+<pre class="code">./a.out</pre>
 
-  ./a.out
+<p>
+You can use the <code>-o</code> switch to name the output command to be generated
+by the compiler. See the <code><a href="geda-icarus_mp.html" class="wikilink1" title="geda-icarus_mp.html">iverilog(1)</a></code> man page.
+</p>
 
-You can use the &quot;-o&quot; switch to name the output command to be generated
-by the compiler. See the iverilog(1) man page.
+</div>
+<!-- EDIT17 SECTION "Examples" [10829-11456] -->
+<h2 class="sectionedit18"><a name="unsupported_constructs" id="unsupported_constructs">Unsupported Constructs</a></h2>
+<div class="level2">
 
-5.0 Unsupported Constructs
-
-Icarus Verilog is in development - as such it still only supports a
+<p>
+Icarus Verilog is in development—as such it still only supports a
 (growing) subset of Verilog.  Below is a description of some of the
 currently unsupported Verilog features. This list is not exhaustive,
 and does not account for errors in the compiler. See the Icarus
 Verilog web page for the current state of support for Verilog, and in
 particular, browse the bug report database for reported unsupported
 constructs.
+</p>
+<ul>
+<li class="level1"><div class="li"> System functions are supported, but the return value is a little tricky. See SYSTEM FUNCTION TABLE FILES in the <a href="geda-icarus_mp.html" class="wikilink1" title="geda-icarus_mp.html">iverilog man page</a>.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Specify blocks are parsed but ignored in general.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <code>trireg</code> is not supported. <code>tri0</code> and <code>tri1</code> are supported.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> tran primitives, i.e. <code>tran</code>, <code>tranif1</code>, <code>tranif0</code>, <code>rtran</code>, <code>rtranif1</code> and <code>rtranif0</code> are not supported.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Net delays, of the form <code>wire #N foo;</code> do not work. Delays in every other context do work properly, including the V2001 form <code>wire #5 foo = bar;</code></div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Event controls inside non-blocking assignments are not supported. i.e.: <code>a ⇐ @(posedge clk) b;</code></div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Macro arguments are not supported. <code>`define</code> macros are supported, but they cannot take arguments.</div>
+</li>
+</ul>
 
-  - System functions are supported, but the return value is a little
-    tricky. See SYSTEM FUNCTION TABLE FILES in the iverilog man page.
+</div>
+<!-- EDIT18 SECTION "Unsupported Constructs" [11457-12676] -->
+<h3 class="sectionedit19"><a name="nonstandard_constructs_or_behaviors" id="nonstandard_constructs_or_behaviors">Nonstandard Constructs or Behaviors</a></h3>
+<div class="level3">
 
-  - Specify blocks are parsed but ignored in general.
-
-  - trireg is not supported. tri0 and tri1 are supported.
-
-  - tran primitives, i.e. tran, tranif1, tranif0, rtran, rtranif1
-    and rtranif0 are not supported.
-
-  - Net delays, of the form &quot;wire #N foo;&quot; do not work. Delays in
-    every other context do work properly, including the V2001 form
-    &quot;wire #5 foo = bar;&quot;
-
-  - Event controls inside non-blocking assignments are not supported.
-    i.e.: a &lt;= @(posedge clk) b;
-
-  - Macro arguments are not supported. `define macros are supported,
-    but they cannot take arguments.
-
-5.1 Nonstandard Constructs or Behaviors
-
+<p>
 Icarus Verilog includes some features that are not part of the
 IEEE1364 standard, but have well defined meaning, and also sometimes
 gives nonstandard (but extended) meanings to some features of the
-language that are defined. See the &quot;extensions.txt&quot; documentation for
+language that are defined. See the <code>extensions.txt</code> documentation for
 more details.
-
-    $is_signed(&lt;expr&gt;)
+</p>
+<pre class="code">    $is_signed(&lt;expr&gt;)
 	This system function returns 1 if the expression contained is
 	signed, or 0 otherwise. This is mostly of use for compiler
 	regression tests.
@@ -499,17 +636,23 @@ more details.
 
 	... and so forth. The syntax can be turned off by using the
 	-g2 flag to iverilog, and turned on explicitly with the -g2x
-	flag to iverilog.
+	flag to iverilog.</pre>
 
-6.0 CREDITS
+</div>
+<!-- EDIT19 SECTION "Nonstandard Constructs or Behaviors" [12677-17701] -->
+<h2 class="sectionedit20"><a name="credits" id="credits">Credits</a></h2>
+<div class="level2">
 
-Except where otherwise noted, Icarus Verilog, ivl and ivlpp are
+<p>
+Except where otherwise noted, Icarus Verilog, <code>ivl</code> and <code>ivlpp</code> are
 Copyright Stephen Williams. The proper notices are in the head of each
 file. However, I have early on received aid in the form of fixes,
 Verilog guidance, and especially testing from many people. Testers in
-particular include a larger community of people interested in a GPL
-Verilog for Linux.</pre>
+particular include a larger community of people interested in a <acronym title="GNU General Public License">GPL</acronym>
+Verilog for Linux.
+</p>
 
 </div>
+<!-- EDIT20 SECTION "Credits" [17702-] --></div>
 </body>
 </html>

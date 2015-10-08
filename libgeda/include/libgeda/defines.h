@@ -122,10 +122,6 @@
 #define CONN_ENDPOINT		1
 #define CONN_MIDPOINT		2
 
-/* used by world_tiles to set the size of the array */
-#define MAX_TILES_X		10
-#define MAX_TILES_Y		10
-
 /* used for undo_savestate flag */
 #define UNDO_ALL		0
 #define UNDO_VIEWPORT_ONLY	1

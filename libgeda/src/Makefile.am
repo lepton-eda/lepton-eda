@@ -80,7 +80,6 @@ libgeda_la_SOURCES = \
 	s_slib.c \
 	s_slot.c \
 	s_textbuffer.c \
-	s_tile.c \
 	s_toplevel.c \
 	s_undo.c \
 	s_weakref.c \

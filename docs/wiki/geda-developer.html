@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,61 +9,66 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
-
-
-<h1 class="sectionedit1439"><a name="geda_developer_information" id="geda_developer_information">gEDA Developer Information</a></h1>
-<div class="level1">
-
-</div>
-<!-- EDIT1439 SECTION "gEDA Developer Information" [1-43] -->
-<h2 class="sectionedit1440"><a name="resources" id="resources">Resources</a></h2>
-<div class="level2">
-
-</div>
-
-<h4><a name="source_code_repository" id="source_code_repository">Source Code Repository</a></h4>
-<div class="level4">
-<ul>
-<li class="level1"><div class="li"> <a href="http://git.geda-project.org/" class="urlextern" title="http://git.geda-project.org/"  rel="nofollow"> gEDA repositories web view </a></div>
-</li>
-</ul>
-
-</div>
-
-<h4><a name="bug_trackers" id="bug_trackers">Bug Trackers</a></h4>
-<div class="level4">
-<ul>
-<li class="level1"><div class="li"> <a href="http://launchpad.net/geda/+bugs" class="urlextern" title="http://launchpad.net/geda/+bugs"  rel="nofollow"> gEDA/gaf bug tracker </a> <a href="http://launchpad.net/geda/+filebug" class="urlextern" title="http://launchpad.net/geda/+filebug"  rel="nofollow"> Submit new bug </a></div>
-</li>
-<li class="level1"><div class="li"> <a href="http://launchpad.net/pcb/+bugs" class="urlextern" title="http://launchpad.net/pcb/+bugs"  rel="nofollow"> pcb      bug tracker </a> <a href="http://launchpad.net/pcb/+filebug" class="urlextern" title="http://launchpad.net/pcb/+filebug"  rel="nofollow"> Submit new bug </a></div>
-</li>
-</ul>
+<div class="dokuwiki export">
 
 <p>
-<a href="geda-bug_triage_guide.html" class="wikilink1" title="geda-bug_triage_guide.html"> Bug Triage Guide (for gEDA/gaf and pcb) </a>
+<a href="start.html" class="wikilink1" title="start.html">gEDA</a> » <span class="curid"><a href="geda-developer.html" class="wikilink1" title="geda-developer.html">Development</a></span>
 </p>
+
+<p>
+<em>Translations of this page are also available in the following languages:</em> <a href="geda-developer.ru.html" class="wikilink1" title="geda-developer.ru.html">Русский</a>.
+</p>
+
+<h1 class="sectionedit1"><a name="developer_documentation" id="developer_documentation">Developer Documentation</a></h1>
+<div class="level1">
 <ul>
-<li class="level1"><div class="li"> <a href="http://sourceforge.net/tracker/?atid=409538&amp;group_id=33921" class="urlextern" title="http://sourceforge.net/tracker/?atid=409538&amp;group_id=33921"  rel="nofollow"> Submit gerbv bug report </a></div>
+<li class="level1"><div class="li"> <a href="geda-devel-tips.html" class="wikilink1" title="geda-devel-tips.html">devel-tips</a> : Various tips and tricks when doing gEDA development.</div>
 </li>
-<li class="level1"><div class="li"> <a href="http://sourceforge.net/tracker/?atid=409540&amp;group_id=33921" class="urlextern" title="http://sourceforge.net/tracker/?atid=409540&amp;group_id=33921"  rel="nofollow"> Submit gerbv patch </a></div>
+<li class="level1"><div class="li"> <a href="geda-release_engineering.html" class="wikilink1" title="geda-release_engineering.html">Release Engineering</a> : Creating a new gEDA/gaf release.</div>
 </li>
-<li class="level1"><div class="li"> <a href="http://sourceforge.net/tracker/?atid=409541&amp;group_id=33921" class="urlextern" title="http://sourceforge.net/tracker/?atid=409541&amp;group_id=33921"  rel="nofollow"> Submit gerbv feature request </a></div>
+<li class="level1"><div class="li"> <a href="geda-experiences.html" class="wikilink1" title="geda-experiences.html">User experiences with the gEDA suite</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-pcb_developer_introduction.html" class="wikilink1" title="geda-pcb_developer_introduction.html">pcb development introduction</a> : Introduction for new PCB developers.</div>
 </li>
 </ul>
 
 </div>
+<!-- EDIT1 SECTION "Developer Documentation" [153-512] -->
+<h2 class="sectionedit2"><a name="source_code_repository" id="source_code_repository">Source Code Repository</a></h2>
+<div class="level2">
 
-<h4><a name="symbols" id="symbols">Symbols</a></h4>
-<div class="level4">
+<p>
+To clone the gEDA/gaf repository using anonymous git access:
+</p>
+<pre class="code">git clone git://git.geda-project.org/geda-gaf.git</pre>
 <ul>
-<li class="level1"><div class="li"> <a href="http://gedasymbols.org" class="urlextern" title="http://gedasymbols.org"  rel="nofollow"> Contribute symbol </a></div>
+<li class="level1"><div class="li"> <a href="geda-scm.html" class="wikilink1" title="geda-scm.html"> Source Control Management </a> : How to access the gEDA/gaf repository using git.</div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-gaf_building_git_version.html" class="wikilink1" title="geda-gaf_building_git_version.html"> Building gEDA/gaf from git</a> : How to build the git repository version of gEDA/gaf.</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://git.geda-project.org/" class="urlextern" title="http://git.geda-project.org/"  rel="nofollow"> gEDA repositories web view </a> : cgit interface to the repositories of the various projects.</div>
 </li>
 </ul>
 
 </div>
+<!-- EDIT2 SECTION "Source Code Repository" [513-1013] -->
+<h2 class="sectionedit3"><a name="bug_trackers" id="bug_trackers">Bug Trackers</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="http://launchpad.net/geda/+bugs" class="urlextern" title="http://launchpad.net/geda/+bugs"  rel="nofollow"> gEDA/gaf bug tracker </a> at Launchpad</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://launchpad.net/pcb/+bugs" class="urlextern" title="http://launchpad.net/pcb/+bugs"  rel="nofollow"> pcb      bug tracker </a> at Launchpad</div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-bug_triage_guide.html" class="wikilink1" title="geda-bug_triage_guide.html">Triaging bugs and feature requests</a> (for gEDA/gaf and pcb)</div>
+</li>
+<li class="level1"><div class="li"> gerbv bug tracker at Sourceforge: <a href="http://sourceforge.net/tracker/?atid=409538&group_id=33921" class="urlextern" title="http://sourceforge.net/tracker/?atid=409538&amp;group_id=33921"  rel="nofollow"> bugs </a>, <a href="http://sourceforge.net/tracker/?atid=409540&group_id=33921" class="urlextern" title="http://sourceforge.net/tracker/?atid=409540&amp;group_id=33921"  rel="nofollow"> patches </a>, <a href="http://sourceforge.net/tracker/?atid=409541&group_id=33921" class="urlextern" title="http://sourceforge.net/tracker/?atid=409541&amp;group_id=33921"  rel="nofollow"> feature requests </a></div>
+</li>
+</ul>
 
-<h4><a name="developer_mailing_list" id="developer_mailing_list">Developer Mailing List</a></h4>
-<div class="level4">
+</div>
+<!-- EDIT3 SECTION "Bug Trackers" [1014-1555] -->
+<h2 class="sectionedit4"><a name="developer_mailing_list" id="developer_mailing_list">Developer Mailing List</a></h2>
+<div class="level2">
 <ul>
 <li class="level1"><div class="li"> The <strong>geda-developer</strong> mailing list is a “subscription by invitation only” list.</div>
 </li>
@@ -74,16 +78,16 @@
 </li>
 <li class="level1"><div class="li"> New developers: As you interact with the project (and the various individuals), you will be invited to join the <strong>geda-developer</strong> mailing list.</div>
 </li>
-<li class="level1"><div class="li"> <a href="https://launchpad.net/~geda-developers" class="urlextern" title="https://launchpad.net/~geda-developers"  rel="nofollow"> Web interface</a>.</div>
+<li class="level1"><div class="li"> <a href="https://launchpad.net/~geda-developers" class="urlextern" title="https://launchpad.net/~geda-developers"  rel="nofollow"> Launchpad team</a>.</div>
 </li>
 <li class="level1"><div class="li"> <a href="https://lists.launchpad.net/geda-developers/" class="urlextern" title="https://lists.launchpad.net/geda-developers/"  rel="nofollow"> List archive</a>.</div>
 </li>
 </ul>
 
 </div>
-
-<h4><a name="old_developer_mailing_list" id="old_developer_mailing_list">Old Developer Mailing List</a></h4>
-<div class="level4">
+<!-- EDIT4 SECTION "Developer Mailing List" [1556-2182] -->
+<h3 class="sectionedit5"><a name="old_developer_mailing_list" id="old_developer_mailing_list">Old Developer Mailing List</a></h3>
+<div class="level3">
 <ul>
 <li class="level1"><div class="li"> Access: <a href="http://www.seul.org/cgi-bin/mailman/listinfo/geda-dev" class="urlextern" title="http://www.seul.org/cgi-bin/mailman/listinfo/geda-dev"  rel="nofollow"> Web interface</a></div>
 </li>
@@ -92,32 +96,95 @@
 </ul>
 
 </div>
-<!-- EDIT1440 SECTION "Resources" [44-1734] -->
-<h2 class="sectionedit1441"><a name="accessing_geda_s_source_code_repositories" id="accessing_geda_s_source_code_repositories">Accessing gEDA&#039;s source code repositories</a></h2>
+<!-- EDIT5 SECTION "Old Developer Mailing List" [2183-2428] -->
+<h2 class="sectionedit6"><a name="tasks_todos_and_projects" id="tasks_todos_and_projects">Tasks, todos and projects</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="geda-todos.html" class="wikilink1" title="geda-todos.html">Todos</a> : Lists of pending project enhancements and todos.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <a href="glue-projects.html" class="wikilink1" title="glue-projects.html">Wishlist: General, “glue” projects</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="gschem-projects.html" class="wikilink1" title="gschem-projects.html">Wishlist: gschem projects</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="pcb-projects.html" class="wikilink1" title="pcb-projects.html">Wishlist: PCB projects</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="gerbv-projects.html" class="wikilink1" title="gerbv-projects.html">Wishlist: gerbv projects</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="gtkwave-projects.html" class="wikilink1" title="gtkwave-projects.html">Wishlist: GTKWave projects</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="gwave-projects.html" class="wikilink1" title="gwave-projects.html">Wishlist: Gwave projects</a></div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <a href="gsoc2007_projects.html" class="wikilink1" title="gsoc2007_projects.html">List of suggested projects for Google Summer of Code 2007</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="gsoc2008_projects.html" class="wikilink1" title="gsoc2008_projects.html">List of suggested projects for Google Summer of Code 2008</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="gsoc2009_projects.html" class="wikilink1" title="gsoc2009_projects.html">List of suggested projects for Google Summer of Code 2009</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="gsoc2010_projects.html" class="wikilink1" title="gsoc2010_projects.html">List of suggested projects for Google Summer of Code 2010</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT6 SECTION "Tasks, todos and projects" [2429-3191] -->
+<h2 class="sectionedit7"><a name="work-in-progress_and_or_brainstorming" id="work-in-progress_and_or_brainstorming">Work-in-Progress and/or Brainstorming</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="libgeda3.html" class="wikilink1" title="libgeda3.html">libgeda3</a> : Discussion of <acronym title="Application Programming Interface">API</acronym> and design for a next generation libgeda.</div>
+</li>
+<li class="level1"><div class="li"> <a href="libgeda3_object_based_design.html" class="wikilink1" title="libgeda3_object_based_design.html">libgeda3_object_based_design</a> : Discussion of <acronym title="Application Programming Interface">API</acronym> and design for a next generation libgeda – object based design.</div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-circuit_simulation_improvements.html" class="wikilink1" title="geda-circuit_simulation_improvements.html">Circuit Simulation Improvements</a> : Discussion on how to better integrate circuit simulations, gschem and gnetlist.</div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-data_plotting_improvements.html" class="wikilink1" title="geda-data_plotting_improvements.html">Data Plotting Improvements</a> : Discussion on how to better plot simulation data.</div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-design_flow_and_hierarchy_roadmap.html" class="wikilink1" title="geda-design_flow_and_hierarchy_roadmap.html">Design Flow and Hierarchy Roadmap</a> : Discussion of wants for circuit design, reusing modules in a hierarchy.</div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-pcb_funding_sow.html" class="wikilink1" title="geda-pcb_funding_sow.html"> PCB Funding SOW</a> : An SOW specifying improvements to PCB performed within a funding program.</div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-format_translation.html" class="wikilink1" title="geda-format_translation.html">format translation</a> : Some notes on file format translation.</div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-gparts_tc.html" class="wikilink1" title="geda-gparts_tc.html">Parts Manager</a> : A working document for a gEDA parts manager</div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-pcb_layers.html" class="wikilink1" title="geda-pcb_layers.html">PCB layers</a> : Goals for an improved handling of layers in PCB.</div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-data_structure_design_discussion.html" class="wikilink1" title="geda-data_structure_design_discussion.html">Discussion about data structure design</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-pcb_funding_sow-fwdann_ideas.html" class="wikilink1" title="geda-pcb_funding_sow-fwdann_ideas.html">Forward Annotation</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-pcb_funding_sow-gui_ideas.html" class="wikilink1" title="geda-pcb_funding_sow-gui_ideas.html">Ideas for GUI Enhancement</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-wip-clipboard.html" class="wikilink1" title="geda-wip-clipboard.html">Clipboard Support</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-xml_file_formats.html" class="wikilink1" title="geda-xml_file_formats.html">XML file formats</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="pcb-roadmap.html" class="wikilink1" title="pcb-roadmap.html">PCB releases and roadmap</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT7 SECTION "Work-in-Progress and/or Brainstorming" [3192-4498] -->
+<h2 class="sectionedit8"><a name="google_summer_of_code" id="google_summer_of_code">Google Summer of Code</a></h2>
 <div class="level2">
 
 <p>
-Please see the gEDA <a href="geda-scm.html" class="wikilink1" title="geda-scm.html"> Source Control Management</a> page for information on how to access the gEDA/gaf repository using git.
+The gEDA project has participated in the Google Summer of Code.
 </p>
-
-</div>
-<!-- EDIT1441 SECTION "Accessing gEDA's source code repositories" [1735-1927] -->
-<h2 class="sectionedit1442"><a name="building_geda_gaf_from_git" id="building_geda_gaf_from_git">Building gEDA/gaf from git</a></h2>
-<div class="level2">
 
 <p>
-Please see the <a href="geda-gaf_building_git_version.html" class="wikilink1" title="geda-gaf_building_git_version.html"> gEDA/gaf building from git</a> page for more information on how to build the git repository version of gEDA/gaf.
+Here are archived instructions and ideas from previous years:
+<a href="gsoc2007.html" class="wikilink1" title="gsoc2007.html">2007</a>, <a href="gsoc2008.html" class="wikilink1" title="gsoc2008.html">2008</a>, <a href="gsoc2009.html" class="wikilink1" title="gsoc2009.html">2009</a>, <a href="gsoc2010.html" class="wikilink1" title="gsoc2010.html">2010</a>
+(gEDA did not participate in 2009 and 2010).
 </p>
-
-</div>
-<!-- EDIT1442 SECTION "Building gEDA/gaf from git" [1928-2129] -->
-<h2 class="sectionedit1443"><a name="developers" id="developers">Developers</a></h2>
-<div class="level2">
 
 <p>
-Please see the <a href="http://www.geda-project.org/people.html" class="urlextern" title="http://www.geda-project.org/people.html"  rel="nofollow"> people</a> page for a list of all active and inactive gEDA developers.
+Through our experience, we have <a href="best_practices.html" class="wikilink1" title="best_practices.html">learned a couple of things</a> about running a successful program.
 </p>
 
 </div>
-<!-- EDIT1443 SECTION "Developers" [2130-] --></body>
+<!-- EDIT8 SECTION "Google Summer of Code" [4499-] --></div>
+</body>
 </html>

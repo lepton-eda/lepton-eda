@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Translations of this page are also available in the following languages:</em> <a href="geda-devmacosx.ru.html" class="wikilink1" title="geda-devmacosx.ru.html">Русский</a>.
+</p>
 
-<h2 class="sectionedit1481"><a name="geda_on_the_mac" id="geda_on_the_mac">gEDA On The Mac</a></h2>
+<p>
+See also: <a href="http://jschneider.net/pcb-build.html" class="urlextern" title="http://jschneider.net/pcb-build.html"  rel="nofollow">Building the pcb package on OS X</a> by Jon Schneider
+</p>
+
+<h2 class="sectionedit1"><a name="geda_on_the_mac" id="geda_on_the_mac">gEDA On The Mac</a></h2>
 <div class="level2">
 
 <p>
@@ -33,32 +40,32 @@ do
 	break
 done
 echo &quot;Setting path to prefer $NAME.&quot;
-case $NAME in 
-macports) export PATH=/opt/local/bin:${PATH} PS1=&quot;opt-\A-[\w]\$&quot; ;; 
-fink) test -r /sw/bin/init.sh &amp;&amp; . /sw/bin/init.sh PS1=&quot;sw-\A-[\w\\$&quot; ;; 
-*) PS1=&quot;osx-\A-[\w]\$&quot; ;; 
+case $NAME in
+macports) export PATH=/opt/local/bin:${PATH} PS1=&quot;opt-\A-[\w]\$&quot; ;;
+fink) test -r /sw/bin/init.sh &amp;&amp; . /sw/bin/init.sh PS1=&quot;sw-\A-[\w\\$&quot; ;;
+*) PS1=&quot;osx-\A-[\w]\$&quot; ;;
 esac
 
 echo &quot;Path set to &quot; $PATH</pre>
 
 </div>
-<!-- EDIT1481 SECTION "gEDA On The Mac" [1-1251] -->
-<h2 class="sectionedit1482"><a name="geda_via_fink" id="geda_via_fink">gEDA via Fink</a></h2>
+<!-- EDIT1 SECTION "gEDA On The Mac" [214-1460] -->
+<h2 class="sectionedit2"><a name="geda_via_fink" id="geda_via_fink">gEDA via Fink</a></h2>
 <div class="level2">
 
 <p>
-You can link to instructions on installing gEDA via fink from the gEDA <a href="http://www.geda.seul.org/download.html" class="urlextern" title="http://www.geda.seul.org/download.html"  rel="nofollow">download page</a> or go directly to <a href="http://www.ghz.cc/charles/fink/" class="urlextern" title="http://www.ghz.cc/charles/fink/"  rel="nofollow">http://www.ghz.cc/charles/fink/</a>.  Using fink, gEDA can be installed from binaries or compiled from a recent development snapshot, if the fink unstable branch is enabled.   (Please see the Fink documentation on how to enable the unstable branch.)  
+You can link to instructions on installing gEDA via fink from the gEDA <a href="http://www.geda.seul.org/download.html" class="urlextern" title="http://www.geda.seul.org/download.html"  rel="nofollow">download page</a> or go directly to <a href="http://www.ghz.cc/charles/fink/" class="urlextern" title="http://www.ghz.cc/charles/fink/"  rel="nofollow">http://www.ghz.cc/charles/fink/</a>.  Using fink, gEDA can be installed from binaries or compiled from a recent development snapshot, if the fink unstable branch is enabled.   (Please see the Fink documentation on how to enable the unstable branch.)
 </p>
 
 <p>
-Once Fink is installed, gEDA (and other programs) can be installed from the command line or through a graphical tool called <a href="http://finkcommander.sourceforge.net/" class="urlextern" title="http://finkcommander.sourceforge.net/"  rel="nofollow">fink commander</a>.   
+Once Fink is installed, gEDA (and other programs) can be installed from the command line or through a graphical tool called <a href="http://finkcommander.sourceforge.net/" class="urlextern" title="http://finkcommander.sourceforge.net/"  rel="nofollow">fink commander</a>.
 From the command line, the principal gEDA suite programs can be installed with the command:
 </p>
 <pre class="code">fink install geda-bundle</pre>
 
 </div>
-<!-- EDIT1482 SECTION "gEDA via Fink" [1252-1994] -->
-<h2 class="sectionedit1483"><a name="geda_via_macports" id="geda_via_macports">gEDA via macports</a></h2>
+<!-- EDIT2 SECTION "gEDA via Fink" [1461-2198] -->
+<h2 class="sectionedit3"><a name="geda_via_macports" id="geda_via_macports">gEDA via macports</a></h2>
 <div class="level2">
 
 <p>
@@ -83,9 +90,14 @@ Until the macports release is ready, you can use Porticus (or macports command l
 I&#039;ve also installed python25 and python_select.  python_select let&#039;s you choose what version of python your mac will run as the default python.
 </p>
 
+<p>
+As described here: <a href="geda-gaf_building_git_version.html#macports" class="wikilink1" title="geda-gaf_building_git_version.html">Building gEDA/gaf</a>, to run the software, you need to set an environment variable to allow Guile to load its shared libraries:
+</p>
+<pre class="code">$ export LTDL_LIBRARY_PATH=/opt/local/lib</pre>
+
 </div>
-<!-- EDIT1483 SECTION "gEDA via macports" [1995-2641] -->
-<h2 class="sectionedit1484"><a name="building_the_project" id="building_the_project">Building The Project</a></h2>
+<!-- EDIT3 SECTION "gEDA via macports" [2199-3088] -->
+<h2 class="sectionedit4"><a name="building_the_project" id="building_the_project">Building The Project</a></h2>
 <div class="level2">
 
 <p>
@@ -93,8 +105,8 @@ Once you have the dependencies installed (either via fink or macports) just foll
 </p>
 
 </div>
-<!-- EDIT1484 SECTION "Building The Project" [2642-3145] -->
-<h2 class="sectionedit1485"><a name="working_with_python" id="working_with_python">Working With Python</a></h2>
+<!-- EDIT4 SECTION "Building The Project" [3089-3592] -->
+<h2 class="sectionedit5"><a name="working_with_python" id="working_with_python">Working With Python</a></h2>
 <div class="level2">
 
 <p>
@@ -102,8 +114,8 @@ Currently I am working with myEclipse and the PyDev python plugin.  You can down
 </p>
 
 </div>
-<!-- EDIT1485 SECTION "Working With Python" [3146-3644] -->
-<h2 class="sectionedit1486"><a name="current_mac_issues" id="current_mac_issues">Current Mac Issues</a></h2>
+<!-- EDIT5 SECTION "Working With Python" [3593-4091] -->
+<h2 class="sectionedit6"><a name="current_mac_issues" id="current_mac_issues">Current Mac Issues</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> gEDA Manager does not currently run because it needs pyinotify which is based on Linux kernel infrastructure.  If anyone knows a way to get gEDA Manager running on mac that is appreciated.  Otherwise I plan on looking at a cross platform way to modify gEDA Manager.</div>
@@ -111,8 +123,8 @@ Currently I am working with myEclipse and the PyDev python plugin.  You can down
 </ul>
 
 </div>
-<!-- EDIT1486 SECTION "Current Mac Issues" [3645-3949] -->
-<h2 class="sectionedit1487"><a name="geda_via_virtualbox" id="geda_via_virtualbox">gEDA via VirtualBox</a></h2>
+<!-- EDIT6 SECTION "Current Mac Issues" [4092-4396] -->
+<h2 class="sectionedit7"><a name="geda_via_virtualbox" id="geda_via_virtualbox">gEDA via VirtualBox</a></h2>
 <div class="level2">
 
 <p>
@@ -133,5 +145,6 @@ sudo apt-get install gerbv
 sudo apt-get install geda-xgsch2pcb</pre>
 
 </div>
-<!-- EDIT1487 SECTION "gEDA via VirtualBox" [3950-] --></body>
+<!-- EDIT7 SECTION "gEDA via VirtualBox" [4397-] --></div>
+</body>
 </html>

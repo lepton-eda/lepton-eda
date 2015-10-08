@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Эта страница доступна также на следующих языках:</em>
+<a href="geda-installation.html" class="wikilink1" title="geda-installation.html">English</a>, <a href="geda-installation.fr.html" class="wikilink1" title="geda-installation.fr.html">Français</a>.
+</p>
 
-<h1 class="sectionedit2138"><a name="справка_по_установке" id="справка_по_установке">Справка по установке</a></h1>
+<h1 class="sectionedit1"><a name="справка_по_установке" id="справка_по_установке">Справка по установке</a></h1>
 <div class="level1">
 
 <p>
@@ -20,32 +24,36 @@
 установить программы gEDA на свой компьютер.
 </p>
 
+<p>
+Информацию более общего плана см. на <a href="geda-download.ru.html" class="wikilink1" title="geda-download.ru.html">странице загрузки</a>.
+</p>
+
 </div>
-<!-- EDIT2138 SECTION "Справка по установке" [1-277] -->
-<h2 class="sectionedit2139"><a name="дистрибутивы_debian" id="дистрибутивы_debian">Дистрибутивы Debian</a></h2>
+<!-- EDIT1 SECTION "Справка по установке" [153-546] -->
+<h2 class="sectionedit2"><a name="дистрибутивы_debian" id="дистрибутивы_debian">Дистрибутивы Debian</a></h2>
 <div class="level2">
 
 <p>
 Репозиторий дистрибутива Debian содержит
-<a href="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=geda" class="urlextern" title="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=geda"  rel="nofollow">двоичные пакеты</a>
-основных программных средств gEDA/gaf, включающие
-<a href="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=gschem" class="urlextern" title="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=gschem"  rel="nofollow">gschem</a>,
-<a href="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=pcb" class="urlextern" title="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=pcb"  rel="nofollow">pcb</a>,
-<a href="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=gnucap" class="urlextern" title="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=gnucap"  rel="nofollow">gnucap</a>
+<a href="http://packages.debian.org/search?suite=default&section=all&arch=any&searchon=names&keywords=geda" class="urlextern" title="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=geda"  rel="nofollow">двоичные
+пакеты</a> основных программных средств gEDA/gaf, включающие
+<a href="http://packages.debian.org/search?suite=default&section=all&arch=any&searchon=names&keywords=gschem" class="urlextern" title="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=gschem"  rel="nofollow">gschem</a>,
+<a href="http://packages.debian.org/search?suite=default&section=all&arch=any&searchon=names&keywords=pcb" class="urlextern" title="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=pcb"  rel="nofollow">pcb</a>,
+<a href="http://packages.debian.org/search?suite=default&section=all&arch=any&searchon=names&keywords=gnucap" class="urlextern" title="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=gnucap"  rel="nofollow">gnucap</a>
 и
-<a href="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=gerbv" class="urlextern" title="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=gerbv"  rel="nofollow">gerbv</a>.
+<a href="http://packages.debian.org/search?suite=default&section=all&arch=any&searchon=names&keywords=gerbv" class="urlextern" title="http://packages.debian.org/search?suite=default&amp;section=all&amp;arch=any&amp;searchon=names&amp;keywords=gerbv"  rel="nofollow">gerbv</a>.
 Из-за специфики лицензирования некоторые программные средства, такие как,
 например, <strong>ngspice</strong>, не могут входить в дистрибутив Debian (либо могут
-находиться лишь в разделе несвободных пакетов “non-free”). Однако gEDA Suite
-прекрасно будет работать в Debian, если вы заранее установите на своей машине
-некоторые пакеты для разработчиков (dev-пакеты) и соберёте <strong>ngspice</strong>
-самостоятельно или установите эту программу откуда-то ещё. Подробности см. в
-<a href="geda-debian.ru.html" class="wikilink1" title="geda-debian.ru.html">замечаниях по установке в Debian</a>.
+находиться лишь в разделе несвободных пакетов «non-free»). Однако gEDA Suite
+прекрасно будет работать в Debian, если вы заранее установите на своей
+машине некоторые пакеты для разработчиков (dev-пакеты) и соберёте
+<strong>ngspice</strong> самостоятельно или установите эту программу откуда-то
+ещё. Подробности см. в <a href="geda-debian.ru.html" class="wikilink1" title="geda-debian.ru.html">замечаниях по установке в Debian</a>.
 </p>
 
 </div>
-<!-- EDIT2139 SECTION "Дистрибутивы Debian" [278-1901] -->
-<h2 class="sectionedit2140"><a name="дистрибутивы_fedora_и_redhat" id="дистрибутивы_fedora_и_redhat">Дистрибутивы Fedora и RedHat</a></h2>
+<!-- EDIT2 SECTION "Дистрибутивы Debian" [547-2171] -->
+<h2 class="sectionedit3"><a name="дистрибутивы_fedora_и_redhat" id="дистрибутивы_fedora_и_redhat">Дистрибутивы Fedora и RedHat</a></h2>
 <div class="level2">
 
 <p>
@@ -55,69 +63,103 @@
 </p>
 
 <p>
-С версии Fedora Core 5 большая часть gEDA доступна на странице
-<a href="http://fedoraproject.org/wiki/Extras?highlight(CategoryExtras)" class="urlextern" title="http://fedoraproject.org/wiki/Extras?highlight(CategoryExtras)"  rel="nofollow">Fedora Core Extra</a>.
+С версии Fedora Core 5 большая часть gEDA доступна на странице <a href="http://fedoraproject.org/wiki/Extras?highlight(CategoryExtras)" class="urlextern" title="http://fedoraproject.org/wiki/Extras?highlight(CategoryExtras)"  rel="nofollow">Fedora Core
+Extra</a>.
 </p>
 
 <p>
-Подробности см. в
-<a href="geda-fedora_rpm_installation.ru.html" class="wikilink1" title="geda-fedora_rpm_installation.ru.html"> замечаниях по установке rpm для Fedora</a>.
+Подробности см. в <a href="geda-fedora_rpm_installation.ru.html" class="wikilink1" title="geda-fedora_rpm_installation.ru.html"> замечаниях по
+установке rpm для Fedora</a>.
 </p>
+<ul>
+<li class="level1"><div class="li"> <a href="geda-fc4.html" class="interwiki iw_geda" title="geda-fc4.html">Замечания по установке в Fedora Core 4</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-fc3.html" class="interwiki iw_geda" title="geda-fc3.html">Замечания по установке в Fedora Core 3</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-fc2.html" class="interwiki iw_geda" title="geda-fc2.html">Замечания по установке в Fedora Core 2</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-fc1.html" class="interwiki iw_geda" title="geda-fc1.html">Замечания по установке в Fedora Core 1</a></div>
+</li>
+</ul>
 
 </div>
-<!-- EDIT2140 SECTION "Дистрибутивы Fedora и RedHat" [1902-2498] -->
-<h2 class="sectionedit2141"><a name="дистрибутивы_suse_и_opensuse" id="дистрибутивы_suse_и_opensuse">Дистрибутивы SuSE и OpenSuSE</a></h2>
+<!-- EDIT3 SECTION "Дистрибутивы Fedora и RedHat" [2172-3096] -->
+<h2 class="sectionedit4"><a name="дистрибутивы_suse_и_opensuse" id="дистрибутивы_suse_и_opensuse">Дистрибутивы SuSE и OpenSuSE</a></h2>
 <div class="level2">
 
 <p>
-Для дистрибутивов SuSE и OpenSuSE есть rpm-пакеты отдельных относящихся к gEDA
-программ. Их подготовил <em>Werner Hoch</em> с помощью <strong>OpenSuSE Build Service</strong>.
+Для дистрибутивов SuSE и OpenSuSE есть rpm-пакеты отдельных относящихся к
+gEDA программ. Их подготовил <em>Werner Hoch</em> с помощью <strong>OpenSuSE Build
+Service</strong>.
 </p>
 
 <p>
-rpm-пакеты можно установить с помощью <strong>YaST</strong>, <strong>yum</strong> или многих других программ
-установки. Пакеты находятся в yum-репозитории на странице
-<a href="http://download.opensuse.org/repositories/science/" class="urlextern" title="http://download.opensuse.org/repositories/science/"  rel="nofollow">OpenSuSE</a> или
-<a href="ftp://ftp-1.gwdg.de/pub/opensuse/repositories/science/" class="urlextern" title="ftp://ftp-1.gwdg.de/pub/opensuse/repositories/science/"  rel="nofollow">зеркала OpenSuSE</a>.
+rpm-пакеты можно установить с помощью <strong>YaST</strong>, <strong>yum</strong> или многих других программ установки. Пакеты находятся в yum-репозитории на странице <a href="http://download.opensuse.org/repositories/science/" class="urlextern" title="http://download.opensuse.org/repositories/science/"  rel="nofollow">OpenSuSE</a> или <a href="ftp://ftp-1.gwdg.de/pub/opensuse/repositories/science/" class="urlextern" title="ftp://ftp-1.gwdg.de/pub/opensuse/repositories/science/"  rel="nofollow">зеркала OpenSuSE</a>.
 </p>
 
 <p>
-Подробности см. в
-<a href="geda-suse_rpm_installation.ru.html" class="wikilink1" title="geda-suse_rpm_installation.ru.html"> замечаниях по установке rpm для SuSE</a>.
+Подробности см. в <a href="geda-suse_rpm_installation.ru.html" class="wikilink1" title="geda-suse_rpm_installation.ru.html"> замечаниях по установке
+rpm для SuSE</a>.
 </p>
+<ul>
+<li class="level1"><div class="li"> <a href="geda-suse_10.1.html" class="interwiki iw_geda" title="geda-suse_10.1.html">Замечания по установке в Suse 10.1</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-suse_10.0.html" class="interwiki iw_geda" title="geda-suse_10.0.html">Замечания по установке в Suse 10.0</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-suse_9.3.html" class="interwiki iw_geda" title="geda-suse_9.3.html">Замечания по установке в Suse 9.3</a></div>
+</li>
+</ul>
 
 </div>
-<!-- EDIT2141 SECTION "Дистрибутивы SuSE и OpenSuSE" [2499-3314] -->
-<h2 class="sectionedit2142"><a name="дистрибутивы_mac_osx" id="дистрибутивы_mac_osx">Дистрибутивы Mac OSX</a></h2>
+<!-- EDIT4 SECTION "Дистрибутивы SuSE и OpenSuSE" [3097-4162] -->
+<h2 class="sectionedit5"><a name="дистрибутивы_ubuntu" id="дистрибутивы_ubuntu">Дистрибутивы Ubuntu</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="geda-ubuntu.html" class="interwiki iw_geda" title="geda-ubuntu.html">Замечания по установке в Ubuntu</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT5 SECTION "Дистрибутивы Ubuntu" [4163-4286] -->
+<h2 class="sectionedit6"><a name="дистрибутивы_mac_osx" id="дистрибутивы_mac_osx">Дистрибутивы Mac OSX</a></h2>
 <div class="level2">
 
 <p>
-Для дистрибутивов Mac OSX можно загрузить
-<a href="http://www.geda.seul.org/download.html" class="urlextern" title="http://www.geda.seul.org/download.html"  rel="nofollow">последние двоичные пакеты для Fink</a>,
-которые подготовил <em>Charles Lepple</em>.
-См. также
-<a href="geda-devmacosx.ru.html" class="wikilink1" title="geda-devmacosx.ru.html">замечания по использованию gEDA на платформе Mac</a>.
+Для дистрибутивов Mac OSX можно загрузить <a href="http://www.geda.seul.org/download.html" class="urlextern" title="http://www.geda.seul.org/download.html"  rel="nofollow">последние двоичные пакеты для Fink</a>, которые подготовил <em>Charles Lepple</em>.  См. также <a href="geda-devmacosx.ru.html" class="wikilink1" title="geda-devmacosx.ru.html">замечания по использованию gEDA на платформе Mac</a>.
 </p>
 
 </div>
-<!-- EDIT2142 SECTION "Дистрибутивы Mac OSX" [3315-3718] -->
-<h2 class="sectionedit2143"><a name="дистрибутивы_windows" id="дистрибутивы_windows">Дистрибутивы Windows</a></h2>
+<!-- EDIT6 SECTION "Дистрибутивы Mac OSX" [4287-4690] -->
+<h2 class="sectionedit7"><a name="windows" id="windows">Windows</a></h2>
 <div class="level2">
 
 <p>
-Функции перехвата <strong>MinGW</strong> встроены во многие приложения gEDA.  Поэтому умелые
-люди уже смогли собрать, установить и запустить многие программы в системах
-Windows. Кроме того, программы запускаются в Windows в окружении
+gEDA — это набор программ для GNU/Linux или Unix. Для Windows
+поддерживаемой версии нет. Но так как многие программы основаны на
+кроссплатформенных библиотеках <strong>GTK+</strong>, версию для Windows можно
+собрать. Поэтому, если вам нужна версия для Windows, скачивайте исходники и
+пробуйте собрать её самостоятельно.
+</p>
+
+<p>
+Экспериментальные выпуски <a href="http://www.delorie.com/pcb/geda-windows/" class="urlextern" title="http://www.delorie.com/pcb/geda-windows/"  rel="nofollow"> gEDA
+для Microsoft Windows</a>™. Всё ещё в стадии разработки.
+</p>
+
+<p>
+Функции перехвата <strong>MinGW</strong> встроены во многие приложения gEDA.  Поэтому
+умелые люди уже смогли собрать, установить и запустить многие программы в
+системах Windows. Кроме того, программы запускаются в Windows в окружении
 <a href="http://www.cygwin.com/" class="urlextern" title="http://www.cygwin.com/"  rel="nofollow">Cygwin</a>.  Однако исполняемые файлы в двоичном виде
 для большей части gEDA Suite в настоящее время проектом gEDA не
-распространяются. Если вы — разработчик, и хотели бы осуществлять постоянную
-поддержку версий для Windows, свяжитесь, пожалуйста, с проектом через список рассылки
-<em>geda-user</em>.
+распространяются. Если вы — разработчик, и хотели бы осуществлять
+постоянную поддержку версий для Windows, свяжитесь, пожалуйста, с проектом
+через список рассылки <em>geda-user</em>.
 </p>
 
 <p>
-Подробности о сборке gEDA с помощью <strong>Cygwin</strong> см. на
-странице по <a href="geda-cygwin.ru.html" class="wikilink1" title="geda-cygwin.ru.html">Cygwin</a> в этой wiki.
+Подробности о сборке gEDA с помощью <strong>Cygwin</strong> см. на странице по
+<a href="geda-cygwin.ru.html" class="wikilink1" title="geda-cygwin.ru.html">Cygwin</a> в этой wiki.
 </p>
 
 <p>
@@ -134,9 +176,9 @@ Windows. Кроме того, программы запускаются в Windo
 </li>
 <li class="level1"><div class="li"> Установите переменные окружения в Control panel → System → вкладка Advanced</div>
 <ol>
-<li class="level2"><div class="li"> Щёлкните по “Environment Variables” (внизу)</div>
+<li class="level2"><div class="li"> Щёлкните по «Environment Variables» (внизу)</div>
 </li>
-<li class="level2"><div class="li"> Создайте следующие “User Variables” (для создания щёлкните “New”):</div>
+<li class="level2"><div class="li"> Создайте следующие «User Variables» (для создания щёлкните «New»):</div>
 <ol>
 <li class="level3"><div class="li"> Name: PATH	Value: \gEDA\bin</div>
 </li>
@@ -157,37 +199,6 @@ Windows. Кроме того, программы запускаются в Windo
 </ol>
 
 </div>
-<!-- EDIT2143 SECTION "Дистрибутивы Windows" [3719-6548] -->
-<h2 class="sectionedit2144"><a name="gitнестабильные_тестируемые_версии" id="gitнестабильные_тестируемые_версии">git: нестабильные/тестируемые версии</a></h2>
-<div class="level2">
-
-<p>
-Для тех, кто уже хорошо знаком с приложениями gEDA/gaf, а также для тех, кому нужно
-всё самое свежее, доступен рабочий репозиторий исходного кода программ. В
-нём находится последняя рабочая версия исходного кода приложений.<br/>
-
-Установка из нестабильного/тестируемого репозитория подходит для тех, кто:
-</p>
-<ul>
-<li class="level1"><div class="li"> ищет решения специфической проблемы, которая была представлена на рассмотрение команде разработчиков, например, хочет протестировать “исправление”, чтобы проинформировать затем разработчиков о том, что оно работает;</div>
-</li>
-<li class="level1"><div class="li"> имеет существенные познания в области работы программных средств gEDA и хотя бы небольшое представление об использовании программы <strong>git</strong> и установке с её помощью программ.</div>
-</li>
-</ul>
-
-<p>
-Обычно для этого необходимо иметь доступ к нескольким заведомо рабочим в
-текущей стабильной версии gEDA Suite проектам устройств, с тем чтобы можно
-было производить сравнения и доводить проблемы до сведения сообщества
-разработчиков и пользователей (через списки рассылки или систему отслеживания
-ошибок).
-</p>
-
-<p>
-Информацию о том, как получить <strong>git</strong>-репозиторий gEDA, можно найти
-<a href="geda-scm.ru.html" class="wikilink1" title="geda-scm.ru.html">здесь</a>.
-</p>
-
-</div>
-<!-- EDIT2144 SECTION "git: нестабильные/тестируемые версии" [6549-] --></body>
+<!-- EDIT7 SECTION "Windows" [4691-] --></div>
+</body>
 </html>

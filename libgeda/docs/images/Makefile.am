@@ -5,8 +5,7 @@ svg_images = \
 	o_text_font_overview.svg \
 	o_text_text_overview.svg \
 	s_conn_overview.svg \
-	s_page_overview.svg \
-	s_tile_overview.svg
+	s_page_overview.svg
 
 EXTRA_DIST = $(svg_images)
 

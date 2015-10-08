@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Translations of this page are also available in the following languages:</em> <a href="geda-example_hsm.ru.html" class="wikilink1" title="geda-example_hsm.ru.html">Русский</a>.
+</p>
 
-<h1 class="sectionedit1079"><a name="hierarchical_spice_model" id="hierarchical_spice_model">Hierarchical SPICE model</a></h1>
+<h1 class="sectionedit1"><a name="hierarchical_spice_model" id="hierarchical_spice_model">Hierarchical SPICE model</a></h1>
 <div class="level1">
 
 <p>
@@ -35,7 +38,7 @@ follows:
 RF_Amp (base directory)
 
 MSA-2643.sch -- schematic of stuff inside device package (as shown in
-p. 7 of datasheet.  Note that I have not included the transmission 
+p. 7 of datasheet.  Note that I have not included the transmission
 lines in this schematic because no value of Z was included in the data
 sheet.   (Yes, it&#039;s probably 50 ohms, but including them was a
 sideshow compared to my main intent: build a hierarchical model of an
@@ -51,7 +54,7 @@ Q2.cir -- netlisted circuit holding .SUBCKT model of Q2.
 README -- this file.
 
 Simulation.cmd -- a file holding SPICE analysis commands which is read
-at simulation time by the SPICE simulator.  
+at simulation time by the SPICE simulator.
 
 5980-2396E.pdf -- Agilent datasheet about the MSA-2643.
 
@@ -78,7 +81,7 @@ This project exemplifies construction of a hierarchical SPICE
 simulation using gEDA.  The project is built in the following way:
 
 1.  Use a text editor to create .mod files containing SPICE models of
-the transistors and diodes on p. 8 of the datasheet.  
+the transistors and diodes on p. 8 of the datasheet.
 
 2.  Create Q1 and Q2 transistor model schematics using gschem.  Place
 the .SUBCKT SPICE block on the schematic to alert the netlister that
@@ -98,11 +101,11 @@ symbol &quot;DEVICE&quot; attribute = NPN_TRANSISTOR_subcircuit.  This causes
 the netlister to use &quot;write-default-component&quot; to write out the SPICE
 line for the component.  Make sure that the &quot;REFDES&quot; attribute is X?
 and not Q? -- this enables the .SUBCKT file to be attached to the
-device. 
+device.
 
 5.  Create the higher layer schematic MSA-2643.sch.  Place
 two copies of Q_Model.sym onto the schematic, corresponding to Q1 and
-Q2.  Make Q1 point to its model by setting the following attributes: 
+Q2.  Make Q1 point to its model by setting the following attributes:
 
 model-name: Q1_MSA26F
 file: Q1.cir
@@ -131,5 +134,6 @@ Stuart Brorson
 mailto:sdb@cloud9.net</pre>
 
 </div>
+<!-- EDIT1 SECTION "Hierarchical SPICE model" [114-] --></div>
 </body>
 </html>

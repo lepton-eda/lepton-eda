@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,26 +9,31 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Эта страница доступна также на следующих языках:</em>
+<a href="geda-faq-gsch2pcb.html" class="wikilink1" title="geda-faq-gsch2pcb.html">English</a>, <a href="geda-faq-gsch2pcb.fr.html" class="wikilink1" title="geda-faq-gsch2pcb.fr.html">Français</a>.
+</p>
 
-<h1 class="sectionedit2021"><a name="gsch2pcb" id="gsch2pcb">gsch2pcb</a></h1>
+<h1 class="sectionedit1"><a name="gsch2pcb" id="gsch2pcb">gsch2pcb</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT2021 SECTION "gsch2pcb" [1-25] -->
-<h2 class="sectionedit2022"><a name="обзор" id="обзор">Обзор</a></h2>
+<!-- EDIT1 SECTION "gsch2pcb" [153-176] -->
+<h2 class="sectionedit2"><a name="обзор" id="обзор">Обзор</a></h2>
 <div class="level2">
 
 <p>
-<strong>gsch2pcb</strong> — это оболочка для <a href="geda-gnetlist_ug.ru.html" class="wikilink1" title="geda-gnetlist_ug.ru.html">gnetlist</a>, предназначенная
-для автоматизации процесса переноса
-разработки из <strong>gschem</strong> в <strong>pcb</strong>. Он извлекает из схемы (или из набора схем)
-информацию о посадочных местах компонентов (атрибуты <code>footprint</code>) и о значениях элементов
-(атрибуты <code>value</code>) и пропускает их через <a href="geda-glossary.ru.html#генератор_списка_соединений" class="wikilink1" title="geda-glossary.ru.html">генератор списка соединений</a>. В
-результате получается набор файлов, в которых содержатся основные данные для
-разработки печатной платы в <strong>pcb</strong>:
-<a href="geda-glossary.ru.html#посадочное_место" class="wikilink1" title="geda-glossary.ru.html">посадочные места</a> компонентов,
-<a href="geda-glossary.ru.html#список_соединений" class="wikilink1" title="geda-glossary.ru.html">список соединений</a>, определяющий все
+<strong>gsch2pcb</strong> — это оболочка для <a href="geda-gnetlist_ug.ru.html" class="wikilink1" title="geda-gnetlist_ug.ru.html">gnetlist</a>,
+предназначенная для автоматизации процесса переноса разработки из <strong>gschem</strong>
+в <strong>pcb</strong>. Он извлекает из схемы (или из набора схем) информацию о
+посадочных местах компонентов (атрибуты <code>footprint</code>) и о значениях
+элементов (атрибуты <code>value</code>) и пропускает их через
+<a href="geda-glossary.ru.html#генератор_списка_соединений" class="wikilink1" title="geda-glossary.ru.html">генератор списка соединений</a>. В результате получается
+набор файлов, в которых содержатся основные данные для разработки печатной
+платы в <strong>pcb</strong>: <a href="geda-glossary.ru.html#посадочное_место" class="wikilink1" title="geda-glossary.ru.html">посадочные места</a>
+компонентов, <a href="geda-glossary.ru.html#список_соединений" class="wikilink1" title="geda-glossary.ru.html">список соединений</a>, определяющий все
 <a href="geda-glossary.ru.html#соединение" class="wikilink1" title="geda-glossary.ru.html">соединения</a> между компонентами, физические
 размеры платы и любая заданная в схемах физическая информация, как например,
 графические объекты (контуры платы, к примеру).
@@ -42,26 +46,23 @@
 </p>
 
 </div>
-<!-- EDIT2022 SECTION "Обзор" [26-1646] -->
-<h2 class="sectionedit2023"><a name="ресурсы_по_gsch2pcb" id="ресурсы_по_gsch2pcb">Ресурсы по gsch2pcb</a></h2>
+<!-- EDIT2 SECTION "Обзор" [177-1797] -->
+<h2 class="sectionedit3"><a name="ресурсы_по_gsch2pcb" id="ресурсы_по_gsch2pcb">Ресурсы по gsch2pcb</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Знаменитый <a href="geda-gsch2pcb_tutorial.ru.html" class="wikilink1" title="geda-gsch2pcb_tutorial.ru.html">учебник</a> по <strong>gsch2pcb</strong>, который написал <em>Bill Wilson</em>.</div>
 </li>
-<li class="level1"><div class="li"> Скрипт-обёртка для <strong>gsch2pcb</strong> под названием <a href="geda-pcb_tips.ru.html#вот_я_набрал_себе_посадочных_мест._куда_их_теперь_складывать" class="wikilink1" title="geda-pcb_tips.ru.html">sch2pcb</a>.</div>
+<li class="level1"><div class="li"> Скрипт-обёртка для <strong>gsch2pcb</strong> под названием <a href="geda-pcb_tips.ru.html#вот_я_набрал_себе_посадочных_мест_куда_их_теперь_складывать" class="wikilink1" title="geda-pcb_tips.ru.html">sch2pcb</a>.</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT2023 SECTION "Ресурсы по gsch2pcb" [1647-2039] -->
-<h2 class="sectionedit2024"><a name="откуда_можно_загрузить_gsch2pcb" id="откуда_можно_загрузить_gsch2pcb">Откуда можно загрузить gsch2pcb?</a></h2>
+<!-- EDIT3 SECTION "Ресурсы по gsch2pcb" [1798-2189] -->
+<h2 class="sectionedit4"><a name="откуда_можно_загрузить_gsch2pcb" id="откуда_можно_загрузить_gsch2pcb">Откуда можно загрузить gsch2pcb?</a></h2>
 <div class="level2">
 
 <p>
-Программа <strong>gsch2pcb</strong> — это утилита gEDA/gaf. Обычно она
-устанавливается по умолчанию (вместе со всеми остальными программами) при
-установке системы gEDA/gaf. Если по какой-либо причине на вашей машине она
-не установлена, то можно либо целиком загрузить tar-архив gEDA/gaf со страницы:
+Программа <strong>gsch2pcb</strong> — это утилита gEDA/gaf. Обычно она устанавливается по умолчанию (вместе со всеми остальными программами) при установке системы gEDA/gaf. Если по какой-либо причине на вашей машине она не установлена, то можно либо целиком загрузить tar-архив gEDA/gaf со страницы:
 </p>
 <ul>
 <li class="level1"><div class="li"> <a href="http://wiki.geda-project.org/geda:download.ru" class="urlextern" title="http://wiki.geda-project.org/geda:download.ru"  rel="nofollow">http://wiki.geda-project.org/geda:download.ru</a></div>
@@ -77,21 +78,20 @@
 </ul>
 
 </div>
-<!-- EDIT2024 SECTION "Откуда можно загрузить gsch2pcb?" [2040-2783] -->
-<h2 class="sectionedit2025"><a name="gsch2pcb_не_может_найти_некоторые_из_моих_посадочных_мест_или_выдаёт_ошибку_как_продиагностировать_мою_проблему" id="gsch2pcb_не_может_найти_некоторые_из_моих_посадочных_мест_или_выдаёт_ошибку_как_продиагностировать_мою_проблему">gsch2pcb не может найти некоторые из моих посадочных мест или выдаёт ошибку. Как продиагностировать мою проблему?</a></h2>
+<!-- EDIT4 SECTION "Откуда можно загрузить gsch2pcb?" [2190-2933] -->
+<h2 class="sectionedit5"><a name="gsch2pcb_не_может_найти_некоторые_из_моих_посадочных_мест_или_выдаёт_ошибку_как_продиагностировать_мою_проблему" id="gsch2pcb_не_может_найти_некоторые_из_моих_посадочных_мест_или_выдаёт_ошибку_как_продиагностировать_мою_проблему">gsch2pcb не может найти некоторые из моих посадочных мест или выдаёт ошибку. Как продиагностировать мою проблему?</a></h2>
 <div class="level2">
 
 <p>
-Попробуйте запуск <strong>gsch2pcb</strong> в режиме удвоенных подробностей:
-<strong><code>gsch2pcb -v -v</code></strong>.
-Это вызовет фонтан сообщений о том, где программа пытается найти
+Попробуйте запуск <strong>gsch2pcb</strong> в режиме удвоенных подробностей: <strong><code>gsch2pcb
+-v -v</code></strong>.  Это вызовет фонтан сообщений о том, где программа пытается найти
 файлы посадочных мест. А также будет сказано, где она нашла те посадочные
 места, которые использует.
 </p>
 
 </div>
-<!-- EDIT2025 SECTION "gsch2pcb не может найти некоторые из моих посадочных мест или выдаёт ошибку. Как продиагностировать мою проблему?" [2784-3433] -->
-<h2 class="sectionedit2026"><a name="набор_слоёв_используемый_по_умолчанию_в_gsch2pcb_мне_не_нравится_как_его_изменить" id="набор_слоёв_используемый_по_умолчанию_в_gsch2pcb_мне_не_нравится_как_его_изменить">Набор слоёв, используемый по умолчанию в gsch2pcb, мне не нравится. Как его изменить?</a></h2>
+<!-- EDIT5 SECTION "gsch2pcb не может найти некоторые из моих посадочных мест или выдаёт ошибку. Как продиагностировать мою проблему?" [2934-3584] -->
+<h2 class="sectionedit6"><a name="набор_слоёв_используемый_по_умолчанию_в_gsch2pcb_мне_не_нравится_как_его_изменить" id="набор_слоёв_используемый_по_умолчанию_в_gsch2pcb_мне_не_нравится_как_его_изменить">Набор слоёв, используемый по умолчанию в gsch2pcb, мне не нравится. Как его изменить?</a></h2>
 <div class="level2">
 
 <p>
@@ -114,10 +114,10 @@
     (newline port)))</pre>
 
 <p>
-Учтите, последним двум слоям будут соответствовать <a href="geda-glossary.ru.html#слой_шелкографии" class="wikilink1" title="geda-glossary.ru.html">слои шелкографии</a> для обеих сторон платы. Поэтому вам придётся
-определить на два слоя больше, чем нужно для разработки топологии проводников.
+Учтите, последним двум слоям будут соответствовать <a href="geda-glossary.ru.html#слой_шелкографии" class="wikilink1" title="geda-glossary.ru.html">слои шелкографии</a> для обеих сторон платы. Поэтому вам придётся определить на два слоя больше, чем нужно для разработки топологии проводников.
 </p>
 
 </div>
-<!-- EDIT2026 SECTION "Набор слоёв, используемый по умолчанию в gsch2pcb, мне не нравится. Как его изменить?" [3434-] --></body>
+<!-- EDIT6 SECTION "Набор слоёв, используемый по умолчанию в gsch2pcb, мне не нравится. Как его изменить?" [3585-] --></div>
+</body>
 </html>

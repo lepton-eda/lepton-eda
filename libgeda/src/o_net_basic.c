@@ -183,8 +183,6 @@ void o_net_translate_world(TOPLEVEL *toplevel, int dx, int dy,
 
   /* Update bounding box */
   object->w_bounds_valid_for = NULL;
-
-  s_tile_update_object(toplevel, object);
 }
 
 /*! \brief create a copy of a net object
@@ -487,8 +485,7 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
 
           s_delete_object (toplevel, other_object);
           object->w_bounds_valid_for = NULL;
-          s_tile_update_object(toplevel, object);
-          s_conn_update_object (toplevel, object);
+          s_conn_update_object (page, object);
           return(-1);
         }
       }
@@ -556,6 +553,4 @@ void o_net_modify(TOPLEVEL *toplevel, OBJECT *object,
   object->line->y[whichone] = y;
 
   object->w_bounds_valid_for = NULL;
-
-  s_tile_update_object(toplevel, object);
 }

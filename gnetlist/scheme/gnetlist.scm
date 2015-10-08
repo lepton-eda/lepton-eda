@@ -35,7 +35,7 @@
 (define debug-spew
   (lambda (debug-string)
     (if (= 1 (gnetlist:get-verbosity))
-        (display debug-string)
+        (message debug-string)
 )))
 
 

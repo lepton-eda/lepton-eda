@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Translations of this page are also available in the following languages:</em> <a href="geda-todos.ru.html" class="wikilink1" title="geda-todos.ru.html">Русский</a>.
+</p>
 
-<h1 class="sectionedit1153"><a name="todos" id="todos">Todos</a></h1>
+<h1 class="sectionedit1"><a name="todos" id="todos">Todos</a></h1>
 <div class="level1">
 
 <p>
@@ -28,8 +31,30 @@ The <a href="pcb-roadmap.html" class="wikilink1" title="pcb-roadmap.html"> PCB R
 </p>
 
 </div>
-<!-- EDIT1153 SECTION "Todos" [1-361] -->
-<h2 class="sectionedit1154"><a name="release_roadmap" id="release_roadmap">Release roadmap</a></h2>
+<!-- EDIT1 SECTION "Todos" [108-467] -->
+<h2 class="sectionedit2"><a name="tasks_for_programmers" id="tasks_for_programmers">Tasks for programmers</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <strong>Netlist Hacker</strong><br/>
+Somebody who is familiar with the generation/management of netlists is needed to help work on and improve gnetlist. Whether the existing gnetlist is used or if a total rewrite is needed is always an open option. Must be extremely familiar with UNIX/C/C++ programming.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Symbol Library Hacker</strong><br/>
+Somebody is needed to help get the symbol library up to the current symbol <acronym title="specification">spec</acronym>. This individual would also help in the integration of new symbols and making sure that they meet the current symbol <acronym title="specification">spec</acronym>. The task of getting the symbol library up to <acronym title="specification">spec</acronym> is a combination of manual effort and automated updating (this sort of automated updating lends itself very well to a person with shell/perl scripting familiarity).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Windows Port Hacker/Manager</strong><br/>
+Somebody with expertise building and testing gEDA on UNIX systems and familiarity with the <acronym title="Microsoft">MS</acronym> Windows 95/98/NT platform is needed to manage the gEDA Windows port. Testing, bug fixing, packaging, and releasing of gEDA on the Windows platform would be the primary responsibility of this person. This task requires a person who knows C, GTK+, UNIX, and <acronym title="Microsoft">MS</acronym> Windows programming. The Windows port will NOT move forward if this task is not filled.</div>
+</li>
+<li class="level1"><div class="li"> <strong>MacOS port manager</strong><br/>
+Have the issues mentioned in <a href="http://www.evilmadscientist.com/article.php/pcbtools" class="urlextern" title="http://www.evilmadscientist.com/article.php/pcbtools"  rel="nofollow"> &quot;Laying out printed circuit boards with open-source tools&quot;</a> been fixed already?</div>
+</li>
+<li class="level1"><div class="li"> <strong>Release Hacker</strong><br/>
+Somebody who wants to create and manage releases is needed. Releases occur when the code is ready to be released, so there&#039;s no marketing pressure. This task requires gEDA building/testing familiarity as well perhaps some minor code hacking.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "Tasks for programmers" [468-2188] -->
+<h2 class="sectionedit3"><a name="release_roadmap" id="release_roadmap">Release roadmap</a></h2>
 <div class="level2">
 
 <p>
@@ -37,10 +62,10 @@ This section should contain a list of <strong>only</strong> those issues that ar
 </p>
 
 </div>
-<!-- EDIT1154 SECTION "Release roadmap" [362-678] -->
-<h3 class="sectionedit1155"><a name="wishlist_for_next_releases" id="wishlist_for_next_releases">Wishlist for next releases</a></h3>
+<!-- EDIT3 SECTION "Release roadmap" [2189-2505] -->
+<h3 class="sectionedit4"><a name="wishlist_for_next_releases" id="wishlist_for_next_releases">Wishlist for next releases</a></h3>
 <div class="level3">
-<div class="table sectionedit1156"><table class="inline">
+<div class="table sectionedit5"><table class="inline">
 	<tr class="row0">
 		<th class="col0 leftalign"> Description    </th><th class="col1 centeralign">  <a href="https://bugs.launchpad.net/geda/" class="urlextern" title="https://bugs.launchpad.net/geda/"  rel="nofollow">Launchpad bug</a>   </th><th class="col2 centeralign">  Developer(s)        </th><th class="col3 centeralign">  Status      </th>
 	</tr>
@@ -75,10 +100,10 @@ This section should contain a list of <strong>only</strong> those issues that ar
 		<td class="col0"> Config <acronym title="Graphical User Interface">GUI</acronym> for gschem (and gattrib?) </td><td class="col1 leftalign">                                 </td><td class="col2 centeralign">  Peter B             </td><td class="col3 leftalign">              </td>
 	</tr>
 	<tr class="row11">
-		<td class="col0"> More non-modal dialog boxes in gschem </td><td class="col1 leftalign">                                </td><td class="col2 leftalign">                      </td><td class="col3 leftalign">              </td>
+		<td class="col0"> More non-modal dialog boxes in gschem </td><td class="col1 leftalign">                                </td><td class="col2 centeralign">  Edward H            </td><td class="col3 leftalign">              </td>
 	</tr>
 	<tr class="row12">
-		<td class="col0"> Refactor gschem&#039;s action state machine and event dispatching code </td><td class="col1 leftalign">    </td><td class="col2 centeralign">  Ed                  </td><td class="col3 leftalign">              </td>
+		<td class="col0"> Refactor gschem&#039;s action state machine and event dispatching code </td><td class="col1 leftalign">    </td><td class="col2 centeralign">  Edward H            </td><td class="col3 leftalign">              </td>
 	</tr>
 	<tr class="row13">
 		<td class="col0 leftalign"> Edit embedded symbols                                             </td><td class="col1 leftalign">    </td><td class="col2 leftalign">                      </td><td class="col3 leftalign">              </td>
@@ -132,27 +157,27 @@ This section should contain a list of <strong>only</strong> those issues that ar
 		<td class="col0"> Prettify symbols (e.g. gates) using paths </td><td class="col1 centeralign">  n/a  </td><td class="col2 leftalign">  </td><td class="col3 leftalign">  </td>
 	</tr>
 </table></div>
-<!-- EDIT1156 TABLE [717-4007] -->
+<!-- EDIT5 TABLE [2544-5834] -->
 </div>
-<!-- EDIT1155 SECTION "Wishlist for next releases" [679-4009] -->
-<h2 class="sectionedit1157"><a name="longer_term_upgrades_desired_for_specific_tools" id="longer_term_upgrades_desired_for_specific_tools">Longer term upgrades desired for specific tools</a></h2>
+<!-- EDIT4 SECTION "Wishlist for next releases" [2506-5835] -->
+<h2 class="sectionedit6"><a name="longer_term_upgrades_desired_for_specific_tools" id="longer_term_upgrades_desired_for_specific_tools">Longer term upgrades desired for specific tools</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>Libgeda</strong>:</div>
 <ul>
 <li class="level2"><div class="li"> Enable handling of .sch files with symbols having some (but not all) pins promoted onto the .sch file. This will enable pin-swapping via backannotation from PCB.  (Architectural change)</div>
 </li>
-<li class="level2"><div class="li"> Merge per-page netlisting from gnetlist (or re-write if necessary).  (Bounty)</div>
+<li class="level2"><div class="li"> Merge per-page netlisting from gnetlist (or re-write if necessary).</div>
 </li>
 </ul>
 </li>
 <li class="level1"><div class="li"> <strong>Gschem</strong>:</div>
 <ul>
-<li class="level2"><div class="li"> Create a button in gschem which will invoke gsch2pcb to create a netlist file ready for PCB to read in.  (Bounty, once PCB is modified to support an action file.)</div>
+<li class="level2"><div class="li"> Create a button in gschem which will invoke gsch2pcb to create a netlist file ready for PCB to read in.</div>
 </li>
 <li class="level2"><div class="li"> Enable hierarchical bus support.  (Architectural change)</div>
 </li>
-<li class="level2"><div class="li"> Make gschemrc variables settable from within gschem using a “settings” pull-down menu item (new).  The idea is to update the contents of the gschemrc or gafrc files using pull-down menus, and write the changes out to the correct RC files.  (Bounty)</div>
+<li class="level2"><div class="li"> Make gschemrc variables settable from within gschem using a “settings” pull-down menu item (new).  The idea is to update the contents of the gschemrc or gafrc files using pull-down menus, and write the changes out to the correct RC files.</div>
 </li>
 <li class="level2"><div class="li"> Improve symbol library to handle very large symbol collections better.</div>
 </li>
@@ -186,7 +211,7 @@ This section should contain a list of <strong>only</strong> those issues that ar
 </li>
 <li class="level1"><div class="li"> <strong>Gattrib</strong>:</div>
 <ul>
-<li class="level2"><div class="li"> Get printing working.  (Bounty)</div>
+<li class="level2"><div class="li"> Get printing working.</div>
 </li>
 <li class="level2"><div class="li"> Enable attachment of attributes to nets.  (Architectural)</div>
 </li>
@@ -200,40 +225,40 @@ This section should contain a list of <strong>only</strong> those issues that ar
 </li>
 <li class="level1"><div class="li"> <strong>Refdes_renum</strong>:</div>
 <ul>
-<li class="level2"><div class="li"> Doesn’t currently work properly with slotted parts (it gives new refdes numbers to slotted parts). Fix it so it recognizes slotted parts and assigns refdes appropriately.  (Bounty)</div>
+<li class="level2"><div class="li"> Doesn’t currently work properly with slotted parts (it gives new refdes numbers to slotted parts). Fix it so it recognizes slotted parts and assigns refdes appropriately.</div>
 </li>
 </ul>
 </li>
 <li class="level1"><div class="li"> <strong>PCB</strong></div>
 <ul>
-<li class="level2"><div class="li"> Put various commands which are only accessible via a :command(foo) into the top menu.  Newbies want to see what actions are in the menus since that way they know what PCB can do.  (Bounty on a per-action basis)</div>
+<li class="level2"><div class="li"> Put various commands which are only accessible via a :command(foo) into the top menu.  Newbies want to see what actions are in the menus since that way they know what PCB can do.</div>
 </li>
-<li class="level2"><div class="li"> Provide a toolbar of buttons for common actions.  (Bounty)</div>
+<li class="level2"><div class="li"> Provide a toolbar of buttons for common actions.</div>
 </li>
 <li class="level2"><div class="li"> Make the difference between editing footprints and PCBs much more obvious.  If you&#039;re in footprint editing mode, then perhaps make the background color change.  (Architectural)</div>
 </li>
-<li class="level2"><div class="li"> Create a “file → save” dialog window.  In the dialog window, provide a pull-down giving the option to save as a PCB (default) or as a footprint.  (Bounty)</div>
+<li class="level2"><div class="li"> Create a “file → save” dialog window.  In the dialog window, provide a pull-down giving the option to save as a PCB (default) or as a footprint.</div>
 </li>
 </ul>
 </li>
 </ul>
 
 </div>
-<!-- EDIT1157 SECTION "Longer term upgrades desired for specific tools" [4010-6665] -->
-<h2 class="sectionedit1158"><a name="ideas_for_new_tools_or_geda_suite-wide_enhancements" id="ideas_for_new_tools_or_geda_suite-wide_enhancements">Ideas for new tools or gEDA Suite-wide enhancements</a></h2>
+<!-- EDIT6 SECTION "Longer term upgrades desired for specific tools" [5836-8340] -->
+<h2 class="sectionedit7"><a name="ideas_for_new_tools_or_geda_suite-wide_enhancements" id="ideas_for_new_tools_or_geda_suite-wide_enhancements">Ideas for new tools or gEDA Suite-wide enhancements</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Develop scheme for backward annotation of changes from PCB to gschem. Requires modifications to libgeda to support, e.g. pin promotion from .sym file to .sch file (enabling pin swapping).  (Architectural)</div>
 </li>
-<li class="level1"><div class="li"> Create a Gerber → .pcb conversion tool. Result is metal layer or footprint editable by PCB. This might be a <acronym title="Practical Extraction and Report Language">Perl</acronym> script.  (Bounty)</div>
+<li class="level1"><div class="li"> Create a Gerber → .pcb conversion tool. Result is metal layer or footprint editable by PCB. This might be a <acronym title="Practical Extraction and Report Language">Perl</acronym> script.</div>
 </li>
-<li class="level1"><div class="li"> Implement lockfiles between gattrib and gschem.  (Bounty)</div>
+<li class="level1"><div class="li"> Implement lockfiles between gattrib and gschem.</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT1158 SECTION "Ideas for new tools or gEDA Suite-wide enhancements" [6666-7138] -->
-<h2 class="sectionedit1159"><a name="code_cleanup_and_refactoring" id="code_cleanup_and_refactoring">Code cleanup and refactoring</a></h2>
+<!-- EDIT7 SECTION "Ideas for new tools or gEDA Suite-wide enhancements" [8341-8793] -->
+<h2 class="sectionedit8"><a name="code_cleanup_and_refactoring" id="code_cleanup_and_refactoring">Code cleanup and refactoring</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Remove use of non GList linked lists. This is very invasive work, but allows much code cleanup where mixtures of the old and GList methods were available.</div>
@@ -251,5 +276,6 @@ This section should contain a list of <strong>only</strong> those issues that ar
 </ul>
 
 </div>
-<!-- EDIT1159 SECTION "Code cleanup and refactoring" [7139-] --></body>
+<!-- EDIT8 SECTION "Code cleanup and refactoring" [8794-] --></div>
+</body>
 </html>

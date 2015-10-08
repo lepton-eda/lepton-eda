@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaf_ru\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2013-08-31 10:34+0100\n"
+"POT-Creation-Date: 2015-08-22 12:59+0300\n"
 "PO-Revision-Date: 2014-03-08 20:49+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gaf/gaf.c:65
+#: gaf/gaf.c:66
 #, c-format
 msgid ""
 "Usage: gaf [OPTION...] COMMAND [ARGS ...]\n"
@@ -55,7 +55,7 @@ msgstr ""
 "\n"
 "Сообщайте об ошибках по адресу: %s\n"
 
-#: gaf/gaf.c:88
+#: gaf/gaf.c:89
 #, c-format
 msgid ""
 "gEDA/gaf %s (g%.7s)\n"
@@ -72,7 +72,7 @@ msgstr ""
 "gEDA. Нет НИКАКИХ ГАРАНТИЙ в рамках, допустимых имеющимся "
 "законодательством.\n"
 
-#: gaf/gaf.c:136
+#: gaf/gaf.c:137
 #, c-format
 msgid ""
 "\n"
@@ -81,7 +81,7 @@ msgstr ""
 "\n"
 "Подробности см. в выводе команды «gaf --help».\n"
 
-#: gaf/gaf.c:148
+#: gaf/gaf.c:149
 #, c-format
 msgid ""
 "ERROR: You must specify a command to run.\n"
@@ -92,7 +92,7 @@ msgstr ""
 "\n"
 "Подробности см. в выводе команды «gaf --help».\n"
 
-#: gaf/gaf.c:166
+#: gaf/gaf.c:167
 #, c-format
 msgid ""
 "ERROR: Unrecognised command `%s'.\n"
@@ -164,7 +164,7 @@ msgstr "ВНИМАНИЕ: не удалось загрузить «%s»: %s.\n"
 msgid "ERROR: You must specify both configuration group and key.\n"
 msgstr "ОШИБКА: необходимо указать и группу настроек, и ключевое слово.\n"
 
-#: gaf/config.c:182 gaf/config.c:196 gaf/export.c:318
+#: gaf/config.c:182 gaf/config.c:196 gaf/export.c:317
 #, c-format
 msgid "ERROR: %s.\n"
 msgstr "ОШИБКА: %s.\n"
@@ -182,39 +182,39 @@ msgstr ""
 "\n"
 "Подробности см. в выводе команды «gaf export --help».\n"
 
-#: gaf/export.c:188
+#: gaf/export.c:187
 #, c-format
 msgid "ERROR: Cannot infer output format from filename '%s'.\n"
 msgstr "ОШИБКА: не удалось определить формат выходного файла «%s».\n"
 
-#: gaf/export.c:205
+#: gaf/export.c:204
 #, c-format
 msgid "ERROR: Cannot find supported format for filename '%s'.\n"
 msgstr "ОШИБКА: не удалось найти поддерживаемый формат для файла «%s».\n"
 
-#: gaf/export.c:210
+#: gaf/export.c:209
 #, c-format
 msgid "ERROR: Unsupported output format '%s'.\n"
 msgstr "ОШИБКА: вывод в формате «%s» не поддерживается.\n"
 
-#: gaf/export.c:222
+#: gaf/export.c:221
 #, c-format
 msgid "ERROR: Selected output format does not support multipage output\n"
 msgstr ""
 "ОШИБКА: многостраничный вывод не поддерживается для выбранного выходного "
 "формата.\n"
 
-#: gaf/export.c:234
+#: gaf/export.c:233
 #, c-format
 msgid "ERROR: Failed to load '%s': %s\n"
 msgstr "ОШИБКА: не удалось загрузить «%s»: %s.\n"
 
-#: gaf/export.c:240
+#: gaf/export.c:239
 #, c-format
 msgid "ERROR: Failed to change directory to '%s': %s\n"
 msgstr "ОШИБКА: Не удалось изменить каталог на «%s»: %s.\n"
 
-#: gaf/export.c:904
+#: gaf/export.c:903
 #, c-format
 msgid ""
 "Usage: gaf export [OPTION ...] -o OUTPUT [--] FILE ...\n"
@@ -265,12 +265,12 @@ msgstr ""
 "\n"
 "Отчёты об ошибках отправляйте по адресу %s.\n"
 
-#: gaf/export.c:1083
+#: gaf/export.c:1082
 #, c-format
 msgid "ERROR: You must specify at least one input filename.\n"
 msgstr "ОШИБКА: необходимо задать имя хотя бы одного входного файла.\n"
 
-#: gaf/export.c:1092
+#: gaf/export.c:1091
 #, c-format
 msgid "ERROR: You must specify an output filename.\n"
 msgstr "ОШИБКА: необходимо задать имя выходного файла.\n"

@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Эта страница доступна также на следующих языках:</em> <a href="geda-cygwin.html" class="wikilink1" title="geda-cygwin.html">English</a>
+</p>
 
-<h1 class="sectionedit922"><a name="установка_geda_gaf_в_windows_с_помощью_cygwin" id="установка_geda_gaf_в_windows_с_помощью_cygwin">Установка gEDA/gaf в Windows с помощью Cygwin</a></h1>
+<h1 class="sectionedit1"><a name="установка_geda_gaf_в_windows_с_помощью_cygwin" id="установка_geda_gaf_в_windows_с_помощью_cygwin">Установка gEDA/gaf в Windows с помощью Cygwin</a></h1>
 <div class="level1">
 
 <p>
@@ -23,13 +26,13 @@
 </p>
 
 </div>
-<!-- EDIT922 SECTION "Установка gEDA/gaf в Windows с помощью Cygwin" [1-429] -->
-<h2 class="sectionedit923"><a name="инструкции" id="инструкции">Инструкции</a></h2>
+<!-- EDIT1 SECTION "Установка gEDA/gaf в Windows с помощью Cygwin" [115-543] -->
+<h2 class="sectionedit2"><a name="инструкции" id="инструкции">Инструкции</a></h2>
 <div class="level2">
 
 <p>
 <strong>1. Загрузите и запустите setup.exe с веб-страницы cygwin:</strong>
-<a href="http://www.cygwin.com" class="urlextern" title="http://www.cygwin.com"  rel="nofollow">http://www.cygwin.com</a>.
+<a href="http://www.cygwin.com/" class="urlextern" title="http://www.cygwin.com"  rel="nofollow">http://www.cygwin.com</a>.
 </p>
 
 <p>
@@ -37,8 +40,8 @@
 </p>
 
 <p>
-(Подсказка: нажмите один раз кнопку <strong><em>View</em></strong>, чтобы вывести список в алфавитном
-порядке)
+(Подсказка: нажмите один раз кнопку <strong><em>View</em></strong>, чтобы вывести список в
+алфавитном порядке)
 </p>
 <pre class="code">atk-devel
 crypt
@@ -75,9 +78,9 @@ export PKG_CONFIG_PATH=$HOME/geda/lib/pkgconfig:$PKG_CONFIG_PATH</pre>
 </p>
 
 <p>
-Из группы gEDA/gaf загрузите <strong>только</strong> те пакеты, версии которых
-обозначены в виде дат. Необходимые зависимости уже были установлены в шаге 1.
-Однако, если вы не установили или не собрали пакет <strong>libstroke</strong>, не забудьте
+Из группы gEDA/gaf загрузите <strong>только</strong> те пакеты, версии которых обозначены
+в виде дат. Необходимые зависимости уже были установлены в шаге 1.  Однако,
+если вы не установили или не собрали пакет <strong>libstroke</strong>, не забудьте
 добавить в строку <code>opts=</code> ключ
 </p>
 <pre class="code">--disable-stroke</pre>
@@ -128,5 +131,6 @@ $ gschemdoc -m
 </p>
 
 </div>
-<!-- EDIT923 SECTION "Инструкции" [430-] --></body>
+<!-- EDIT2 SECTION "Инструкции" [544-] --></div>
+</body>
 </html>

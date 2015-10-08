@@ -230,12 +230,6 @@ OBJECT:		A graphical object on the gschem page.  Can be a net
 		segment, a component complex, a bit of text, a
 		component's pin, or whatever.  Each page holds a
 		doubly linked list of OBJECTs present on that page.
-TILE:		A section of the graphical page.  Important in
-		gschem, a TILE holds a single linked list of OBJECTs
-		present in its subsection of the page.  Each page
-		holds a two dimensional doubly linked list of TILEs.  
-		A TILE is used to quickly locate a particular object 
-		when handling the graphical drawing of a schematic.
 NETLIST:	Important in gnetlist.  This is a doubly linked list
 		of component objects and pins.
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gnetlist\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2014-03-08 21:51+0000\n"
+"POT-Creation-Date: 2015-08-22 13:37+0300\n"
 "PO-Revision-Date: 2014-05-20 08:55+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA Developers\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gnetlist/src/g_netlist.c:405
+#: gnetlist/src/g_netlist.c:404
 #, c-format
 msgid "Invalid refdes ('%s') and pin ('%s') passed to get-nets\n"
 msgstr "get-nets: недопустимое позиционное обозначение («%s») и вывод («%s»)\n"
@@ -102,7 +102,7 @@ msgstr ""
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
 
-#: gnetlist/src/g_rc.c:56
+#: gnetlist/src/g_rc.c:55
 #, c-format
 msgid ""
 "You are running gEDA/gaf version [%s%s.%s],\n"
@@ -115,7 +115,7 @@ msgstr ""
 "%s\n"
 "Удостоверьтесь, что у вас последняя версия файла настроек.\n"
 
-#: gnetlist/src/parsecmd.c:68
+#: gnetlist/src/parsecmd.c:67
 #, c-format
 msgid ""
 "Usage: %s [OPTION ...] [-g BACKEND] [--] FILE ...\n"
@@ -164,7 +164,7 @@ msgstr ""
 "Отчёты об ошибках отправляйте по адресу <https://bugs.launchpad.net/geda>\n"
 "Домашняя страница gEDA/gaf: <http://www.geda-project.org/>\n"
 
-#: gnetlist/src/parsecmd.c:103
+#: gnetlist/src/parsecmd.c:102
 #, c-format
 msgid ""
 "gEDA %s (g%.7s)\n"
@@ -181,7 +181,7 @@ msgstr ""
 "Нет НИКАКИХ ГАРАНТИЙ в рамках, допустимых имеющимся\n"
 "законодательством.\n"
 
-#: gnetlist/src/parsecmd.c:117
+#: gnetlist/src/parsecmd.c:116
 #, c-format
 msgid ""
 "\n"
@@ -192,7 +192,7 @@ msgstr ""
 "Обнаружена ошибка; имя тега\n"
 "        "
 
-#: gnetlist/src/parsecmd.c:223
+#: gnetlist/src/parsecmd.c:222
 #, c-format
 msgid ""
 "ERROR: -%c option requires an argument.\n"
@@ -201,7 +201,7 @@ msgstr ""
 "ОШИБКА: для опции -%c необходим аргумент.\n"
 "\n"
 
-#: gnetlist/src/parsecmd.c:226
+#: gnetlist/src/parsecmd.c:225
 #, c-format
 msgid ""
 "ERROR: Unknown option -%c.\n"
@@ -210,7 +210,7 @@ msgstr ""
 "ОШИБКА: Неизвестная опция -%c.\n"
 "\n"
 
-#: gnetlist/src/parsecmd.c:228
+#: gnetlist/src/parsecmd.c:227
 #, c-format
 msgid ""
 "ERROR: Unknown option character `\\x%x'.\n"
@@ -219,7 +219,7 @@ msgstr ""
 "ОШИБКА: Неизвестный символ опции «\\x%x».\n"
 "\n"
 
-#: gnetlist/src/parsecmd.c:232
+#: gnetlist/src/parsecmd.c:231
 #, c-format
 msgid ""
 "\n"
@@ -293,32 +293,32 @@ msgstr ""
 "Недопустимый атрибут «net» («net=%s»)\n"
 "В атрибуте «net» отсутствует символ «:»\n"
 
-#: gnetlist/src/s_net.c:185
+#: gnetlist/src/s_net.c:184
 #, c-format
 msgid "Missing Attributes (refdes and pin number)\n"
 msgstr "Отсутствуют атрибуты «refdes» и «pinnumber»\n"
 
-#: gnetlist/src/s_net.c:291 gnetlist/src/s_net.c:328
+#: gnetlist/src/s_net.c:290 gnetlist/src/s_net.c:327
 #, c-format
 msgid "Found duplicate net name, renaming [%s] to [%s]\n"
 msgstr "Обнаружено ещё одно имя для соединения «%s», переименование в «%s»\n"
 
-#: gnetlist/src/s_net.c:440
+#: gnetlist/src/s_net.c:439
 #, c-format
 msgid "s_net_name: incorrect connectivity type %i\n"
 msgstr "s_net_name: неверный тип соединения «%i»\n"
 
-#: gnetlist/src/s_net.c:460
+#: gnetlist/src/s_net.c:459
 #, c-format
 msgid "Increase number of unnamed nets (s_net.c)\n"
 msgstr "Увеличьте количество безымянных соединений (в s_net.c)\n"
 
-#: gnetlist/src/s_rename.c:67
+#: gnetlist/src/s_rename.c:66
 #, c-format
 msgid "ERROR: Overwriting a valid rename list.\n"
 msgstr "ОШИБКА: Перезапись действующего списка переименований.\n"
 
-#: gnetlist/src/s_rename.c:147
+#: gnetlist/src/s_rename.c:146
 #, c-format
 msgid ""
 "WARNING: Trying to rename something twice:\n"
@@ -329,13 +329,13 @@ msgstr ""
 "\t%s и %s\n"
 "оба являются именами источника и назначения\n"
 
-#: gnetlist/src/s_rename.c:148
+#: gnetlist/src/s_rename.c:147
 #, c-format
 msgid "This warning is okay if you have multiple levels of hierarchy!\n"
 msgstr ""
 "Это предупреждение несущественно, если имеется несколько уровней иерархии!\n"
 
-#: gnetlist/src/s_traverse.c:177
+#: gnetlist/src/s_traverse.c:176
 #, c-format
 msgid ""
 "WARNING: Found a placeholder/missing component, are you missing a symbol "
@@ -344,7 +344,7 @@ msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: Найден временный/отсутствующий компонент, может быть нет "
 "файла символа для «%s»?\n"
 
-#: gnetlist/src/s_traverse.c:236
+#: gnetlist/src/s_traverse.c:235
 #, c-format
 msgid ""
 "Could not find refdes on component and could not find any special "
@@ -353,18 +353,18 @@ msgstr ""
 "Не удалось обнаружить ни позиционное обозначение компонента, ни каких-либо "
 "специальных атрибутов!\n"
 
-#: gnetlist/src/s_traverse.c:331
+#: gnetlist/src/s_traverse.c:330
 msgid "Non-connectable object being queried for connection type\n"
 msgstr "Запрос типа соединения для неприсоединяемого объекта.\n"
 
-#: gnetlist/src/s_traverse.c:369
+#: gnetlist/src/s_traverse.c:368
 #, c-format
 msgid "WARNING: Found label=%s. label= is deprecated, please use netname=\n"
 msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: Найден атрибут «label=%s». Использовать «label» не "
 "рекомендуется, вместо него следует использовать «netname».\n"
 
-#: gnetlist/src/s_traverse.c:423
+#: gnetlist/src/s_traverse.c:422
 #, c-format
 msgid "Found a possible net/pin infinite connection\n"
 msgstr ""

@@ -194,7 +194,7 @@ See the `AUTHORS' file included with this program.
 
 .SH COPYRIGHT
 .nf
-Copyright \(co 2012 gEDA Contributors.  License GPLv2+: GNU GPL
+Copyright \(co 2012-@YEAR@ gEDA Contributors.  License GPLv2+: GNU GPL
 version 2 or later.  Please see the `COPYING' file included with this
 program for full details.
 .PP

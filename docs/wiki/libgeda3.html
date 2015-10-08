@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,14 +9,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
-
-<h1 class="sectionedit12"><a name="geda_library_v3_specification" id="geda_library_v3_specification">gEDA Library v3 Specification</a></h1>
+<h1 class="sectionedit1"><a name="geda_library_v3_specification" id="geda_library_v3_specification">gEDA Library v3 Specification</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT12 SECTION "gEDA Library v3 Specification" [1-45] -->
-<h2 class="sectionedit13"><a name="rationale" id="rationale">Rationale</a></h2>
+<!-- EDIT1 SECTION "gEDA Library v3 Specification" [1-45] -->
+<h2 class="sectionedit2"><a name="rationale" id="rationale">Rationale</a></h2>
 <div class="level2">
 
 <p>
@@ -45,13 +44,13 @@ This page is an attempt to itemise in detail what is required of libgeda, and wh
 </ul>
 
 </div>
-<!-- EDIT13 SECTION "Rationale" [46-643] -->
-<h2 class="sectionedit14"><a name="requirements" id="requirements">Requirements</a></h2>
+<!-- EDIT2 SECTION "Rationale" [46-643] -->
+<h2 class="sectionedit3"><a name="requirements" id="requirements">Requirements</a></h2>
 <div class="level2">
 
 </div>
-<!-- EDIT14 SECTION "Requirements" [644-669] -->
-<h3 class="sectionedit15"><a name="core" id="core">Core</a></h3>
+<!-- EDIT3 SECTION "Requirements" [644-669] -->
+<h3 class="sectionedit4"><a name="core" id="core">Core</a></h3>
 <div class="level3">
 <ol>
 <li class="level1"><div class="li"> Define data structures for representing schematics</div>
@@ -67,8 +66,8 @@ This page is an attempt to itemise in detail what is required of libgeda, and wh
 </ol>
 
 </div>
-<!-- EDIT15 SECTION "Core" [670-1013] -->
-<h3 class="sectionedit16"><a name="secondary" id="secondary">Secondary</a></h3>
+<!-- EDIT4 SECTION "Core" [670-1013] -->
+<h3 class="sectionedit5"><a name="secondary" id="secondary">Secondary</a></h3>
 <div class="level3">
 <ol>
 <li class="level1"><div class="li"> Make no assumptions about applications which will use the library</div>
@@ -84,8 +83,8 @@ This page is an attempt to itemise in detail what is required of libgeda, and wh
 </ol>
 
 </div>
-<!-- EDIT16 SECTION "Secondary" [1014-1367] -->
-<h2 class="sectionedit17"><a name="coordinate_system" id="coordinate_system">Coordinate System</a></h2>
+<!-- EDIT5 SECTION "Secondary" [1014-1367] -->
+<h2 class="sectionedit6"><a name="coordinate_system" id="coordinate_system">Coordinate System</a></h2>
 <div class="level2">
 
 <p>
@@ -93,8 +92,8 @@ Because libgeda should “make no assumptions about applications which will use 
 </p>
 
 </div>
-<!-- EDIT17 SECTION "Coordinate System" [1368-1659] -->
-<h2 class="sectionedit18"><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT6 SECTION "Coordinate System" [1368-1659] -->
+<h2 class="sectionedit7"><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
 <p>
@@ -130,13 +129,13 @@ It might, therefore, make more sense to provide a complete <acronym title="Appli
 </p>
 
 </div>
-<!-- EDIT18 SECTION "Configuration" [1660-2523] -->
-<h2 class="sectionedit19"><a name="dependencies" id="dependencies">Dependencies</a></h2>
+<!-- EDIT7 SECTION "Configuration" [1660-2523] -->
+<h2 class="sectionedit8"><a name="dependencies" id="dependencies">Dependencies</a></h2>
 <div class="level2">
 
 </div>
-<!-- EDIT19 SECTION "Dependencies" [2524-2549] -->
-<h3 class="sectionedit20"><a name="glib" id="glib">glib</a></h3>
+<!-- EDIT8 SECTION "Dependencies" [2524-2549] -->
+<h3 class="sectionedit9"><a name="glib" id="glib">glib</a></h3>
 <div class="level3">
 
 <p>
@@ -156,8 +155,8 @@ Not having to reinvent the wheel – and letting a much larger project be respon
 </p>
 
 </div>
-<!-- EDIT20 SECTION "glib" [2550-3350] -->
-<h3 class="sectionedit21"><a name="gobject" id="gobject">gobject</a></h3>
+<!-- EDIT9 SECTION "glib" [2550-3350] -->
+<h3 class="sectionedit10"><a name="gobject" id="gobject">gobject</a></h3>
 <div class="level3">
 
 <p>
@@ -173,8 +172,8 @@ GObject is currently used in libgeda for the GedaList class which wrapps a GList
 </p>
 
 </div>
-<!-- EDIT21 SECTION "gobject" [3351-4335] -->
-<h2 class="sectionedit22"><a name="references" id="references">References</a></h2>
+<!-- EDIT10 SECTION "gobject" [3351-4335] -->
+<h2 class="sectionedit11"><a name="references" id="references">References</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <a href="http://www.unet.univie.ac.at/aix/aixprggd/genprogc/writing_reentrant_thread_safe_code.htm" class="urlextern" title="http://www.unet.univie.ac.at/aix/aixprggd/genprogc/writing_reentrant_thread_safe_code.htm"  rel="nofollow">Writing Reentrant and Thread-Safe Code</a></div>
@@ -182,5 +181,6 @@ GObject is currently used in libgeda for the GedaList class which wrapps a GList
 </ul>
 
 </div>
-<!-- EDIT22 SECTION "References" [4336-] --></body>
+<!-- EDIT11 SECTION "References" [4336-] --></div>
+</body>
 </html>

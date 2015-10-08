@@ -2,7 +2,6 @@
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title></title>
   <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
   <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
   <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
@@ -10,9 +9,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div class="dokuwiki export">
 
+<p>
+<em>Это руководство доступно также на следующих языках:</em>
+<a href="geda-gnetlist_scheme_tutorial.html" class="wikilink1" title="geda-gnetlist_scheme_tutorial.html">English</a>
+</p>
 
-<h1 class="sectionedit1452"><a name="написание_скриптов_драйверов_gnetlist_на_scheme" id="написание_скриптов_драйверов_gnetlist_на_scheme">Написание скриптов драйверов gnetlist на Scheme</a></h1>
+<h1 class="sectionedit1"><a name="написание_скриптов_драйверов_gnetlist_на_scheme" id="написание_скриптов_драйверов_gnetlist_на_scheme">Написание скриптов драйверов gnetlist на Scheme</a></h1>
 <div class="level1">
 
 <p>
@@ -32,25 +36,25 @@
 <p>
 Если ты никогда не писал программы на <strong>Lisp</strong>, это выглядит страшновато. Но
 это намного легче, чем кажется. Добавь в <strong>Lisp</strong> чуть-чуть синтаксического
-сахара<sup><a href="#fn__1" name="fnt__1" id="fnt__1" class="fn_top">1)</a></sup> и он превращается в
-<strong>Logo</strong>, который могут изучить даже дети из начальной школы.
+сахара<sup><a href="#fn__1" name="fnt__1" id="fnt__1" class="fn_top">1)</a></sup> и он
+превращается в <strong>Logo</strong>, который могут изучить даже дети из начальной школы.
 </p>
 
 <p>
 И просто для объяснения значения некоторых из этих странных слов:
 <a href="http://en.wikipedia.org/wiki/Lisp_(programming_language)" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp</a> — компьютерный язык,
-<a href="http://en.wikipedia.org/wiki/Scheme_(programming_language)" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</a> — диалект <strong>Lisp</strong>&#039;а,
-и <a href="http://en.wikipedia.org/wiki/GNU_Guile" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/GNU_Guile">Guile</a> — реализация <strong>Scheme</strong>.
-<strong>Guile</strong> в gEDA используется для написания скриптов. В частности,
-оболочка <strong>gnetlist</strong>, написанная на <strong>C</strong>, выделяет из схем информацию о
-топологии и атрибутах, а затем отдаёт данные низкоуровневым скриптам
-(драйверам) на <strong>Guile</strong> для обработки и вывода.
+<a href="http://en.wikipedia.org/wiki/Scheme_(programming_language)" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</a> — диалект <strong>Lisp</strong>&#039;а, и
+<a href="http://en.wikipedia.org/wiki/GNU_Guile" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/GNU_Guile">Guile</a> — реализация <strong>Scheme</strong>.  <strong>Guile</strong> в gEDA
+используется для написания скриптов. В частности, оболочка <strong>gnetlist</strong>,
+написанная на <strong>C</strong>, выделяет из схем информацию о топологии и атрибутах, а
+затем отдаёт данные низкоуровневым скриптам (драйверам) на <strong>Guile</strong> для
+обработки и вывода.
 </p>
 
 <p>
-Это руководство именно по программированию драйверов
-<strong>gnetlist</strong> на <strong>Scheme</strong>. Если ты ещё не знаешь <strong>Scheme</strong>, тебе, наверно,
-стоит взглянуть и на другие материалы, такие как:
+Это руководство именно по программированию драйверов <strong>gnetlist</strong> на
+<strong>Scheme</strong>. Если ты ещё не знаешь <strong>Scheme</strong>, тебе, наверно, стоит взглянуть
+и на другие материалы, такие как:
 </p>
 
 <p>
@@ -58,7 +62,7 @@
 </p>
 
 <p>
-Или поищи “Учебник по Scheme” в своём любимом поисковике: их много.
+Или поищи «Учебник по Scheme» в своём любимом поисковике: их много.
 </p>
 
 <p>
@@ -82,18 +86,18 @@
 <span class="br0">&#41;</span></pre>
 
 <p>
-Чтобы это применить, сохрани всё в файле <em><code>gnet-devel.scm</code></em>. Скопируй этот
-файл туда, где в твоей системе хранятся файлы <strong>Scheme</strong>. На машине, на
+Чтобы это применить, сохрани всё в файле <em><code>gnet-devel.scm</code></em>. Скопируй
+этот файл туда, где в твоей системе хранятся файлы <strong>Scheme</strong>. На машине, на
 которой я сейчас работаю, команда такова:
 </p>
 <pre class="code bash">$ <span class="kw2">sudo</span> <span class="kw2">cp</span> gnet-devel.scm <span class="sy0">/</span>sw<span class="sy0">/</span>share<span class="sy0">/</span>gEDA<span class="sy0">/</span>scheme<span class="sy0">/</span></pre>
 
 <p>
-<em><code>/sw/</code></em> для многих устанавливаемых в Linux пакетов надо
-заменить на <em><code>/usr/</code></em>, может быть на <em><code>/usr/local</code></em>, или — при
-установке из tar-архива — на <em><code>~/mygeda/</code></em>. Это нужно выяснить. Если ты
-можешь записывать в целевой каталог без прав суперпользователя, <strong><code>sudo</code></strong>
-не нужно.
+<em><code>/sw/</code></em> для многих устанавливаемых в Linux пакетов надо заменить на
+<em><code>/usr/</code></em>, может быть на <em><code>/usr/local</code></em>, или — при установке из
+tar-архива — на <em><code>~/mygeda/</code></em>. Это нужно выяснить. Если ты можешь
+записывать в целевой каталог без прав суперпользователя, <strong><code>sudo</code></strong> не
+нужно.
 </p>
 
 <p>
@@ -102,7 +106,8 @@
 <pre class="code bash">$ gnetlist <span class="re5">-g</span> devel <span class="sy0">/</span>sw<span class="sy0">/</span>share<span class="sy0">/</span>gEDA<span class="sy0">/</span>examples<span class="sy0">/</span>lightning_detector<span class="sy0">/</span>lightning.sch</pre>
 
 <p>
-Ты должен увидеть обычный текст стандартного приглашения, за которым следует:
+Ты должен увидеть обычный текст стандартного приглашения, за которым
+следует:
 </p>
 <pre class="code">guile&gt;</pre>
 
@@ -118,9 +123,9 @@
 
 <p>
 <code>packages</code> — удобная переменная, содержащая список всех уникальных
-значений атрибутов <code>refdes=</code>. Набрав её, ты скормил её “REPL” — циклу
-чтения, оценки, вывода (Read, Evaluate, Print Loop). Итак,
-REPL считал её, оценил (создав список) и вывел.
+значений атрибутов <code>refdes=</code>. Набрав её, ты скормил её «REPL» — циклу
+чтения, вычисления, вывода (Read, Evaluate, Print Loop).  Итак, REPL считал
+её, вычислил (получив список) и вывел.
 </p>
 
 <p>
@@ -130,7 +135,7 @@ REPL считал её, оценил (создав список) и вывел.
 25</pre>
 
 <p>
-Что здесь произошло? Здесь REPL оценил список.
+Что здесь произошло? Здесь REPL вычислил список.
 </p>
 <pre class="code lisp"><span class="br0">&#40;</span><span class="kw1">length</span> packages<span class="br0">&#41;</span></pre>
 
@@ -141,7 +146,7 @@ REPL считал её, оценил (создав список) и вывел.
 </p>
 
 <p>
-Такая же запись используется для арифметических вычислений. Например, “2+3”
+Такая же запись используется для арифметических вычислений. Например, «2+3»
 вычисляется так:
 </p>
 <pre class="code">guile&gt; (+ 2 3)
@@ -161,9 +166,10 @@ guile&gt; (+ 1 2 3)
 </p>
 
 <p>
-Строки про <code>readline</code> в нашем драйвере <em><code>gnet-devel.scm</code></em> позволят тебе
-пользоваться стрелками на клавиатуре для перемещения по истории и для
-редактирования вводимых строк. Очень удобно в интерактивном режиме. Попробуй.
+Строки про <code>readline</code> в нашем драйвере <em><code>gnet-devel.scm</code></em> позволят
+тебе пользоваться стрелками на клавиатуре для перемещения по истории и для
+редактирования вводимых строк. Очень удобно в интерактивном
+режиме. Попробуй.
 </p>
 
 <p>
@@ -180,12 +186,12 @@ guile&gt; (+ 1 2 3)
 ((&quot;1&quot; &quot;2&quot; &quot;3&quot;) (&quot;2&quot; &quot;3&quot; &quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;1&quot;) (&quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;2&quot; &quot;3&quot; &quot;1&quot;) (&quot;2&quot; &quot;3&quot; &quot;1&quot;) (&quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;2&quot; &quot;3&quot; &quot;1&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot;) (&quot;1&quot;))</pre>
 
 <p>
-Заметь, это немного сложнее, чем в предыдущих примерах: это список списков, а
-не просто список строк. Каждый из списков соответствует выводам компонента.
-Есть одна штука, которую мы могли бы вытащить отсюда, — это подсчёт
-количества выводов. Мы не можем просто взять длину <code>all-pins</code>, чтобы
-получить его: это даст нам только количество списков, содержащихся там, равное
-количеству компонентов:
+Заметь, это немного сложнее, чем в предыдущих примерах: это список списков,
+а не просто список строк. Каждый из списков соответствует выводам
+компонента.  Есть одна штука, которую мы могли бы вытащить отсюда, — это
+подсчёт количества выводов. Мы не можем просто взять длину <code>all-pins</code>,
+чтобы получить его: это даст нам только количество списков, содержащихся
+там, равное количеству компонентов:
 </p>
 <pre class="code">guile&gt; (length all-pins)
 25</pre>
@@ -198,10 +204,10 @@ guile&gt; (+ 1 2 3)
 (3 3 2 2 2 2 2 2 2 2 2 2 2 2 1 1 2 3 3 1 2 3 2 1 1)</pre>
 
 <p>
-Это один из простых способов сделать “цикл” на <strong>Scheme</strong>; <code>(map p x)</code>
+Это один из простых способов сделать «цикл» на <strong>Scheme</strong>; <code>(map p x)</code>
 выдаёт список результатов вызываемой процедуры <code>p</code> отдельно для каждого
-элемента из <code>x</code>. Затем мы можем их сложить с помощью “цикла” несколько иного
-типа:
+элемента из <code>x</code>. Затем мы можем их сложить с помощью «цикла» несколько
+иного типа:
 </p>
 <pre class="code">guile&gt; (apply + (map length all-pins))
 50</pre>
@@ -233,17 +239,18 @@ guile&gt; (add1 100)
 101</pre>
 
 <p>
-Когда видишь <code>lambda</code>, думай — “процедура”. Сразу следом за <code>lambda</code> идёт
-первый элемент (технический термин — “выражение”<sup><a href="#fn__2" name="fnt__2" id="fnt__2" class="fn_top">2)</a></sup>) — список аргументов процедуры, в данном случае
-<code>(x)</code>. Когда вызывается процедура, <strong>Guile</strong> оценивает оставшиеся выражения,
-в данном случае только одно, <code>(+ x 1)</code>, с подстановкой текущих аргументов.
-Результат процедуры — это результат оценки последнего выражения. Так,
-<code>(add1 100)</code> становится <code>(+ 100 1)</code>, что даёт 101.
+Когда видишь <code>lambda</code>, думай — «процедура». Сразу следом за <code>lambda</code>
+идёт первый элемент (технический термин — «выражение»<sup><a href="#fn__2" name="fnt__2" id="fnt__2" class="fn_top">2)</a></sup>) — список аргументов процедуры, в
+данном случае <code>(x)</code>. Когда вызывается процедура, <strong>Guile</strong> вычисляет
+оставшиеся выражения, в данном случае только одно, <code>(+ x 1)</code>, с
+подстановкой текущих аргументов.  Результат процедуры — это результат
+вычисления последнего выражения. Так, <code>(add1 100)</code> становится <code>(+ 100
+1)</code>, что даёт 101.
 </p>
 
 <p>
-Теперь мы можем объединить наш сбор статистики в драйвер.
-Сначала определим процедуру для записи выходной строки:
+Теперь мы можем объединить наш сбор статистики в драйвер. Сначала определим
+процедуру для записи выходной строки:
 </p>
 <pre class="code lisp"><span class="br0">&#40;</span>define format-line
      <span class="br0">&#40;</span><span class="kw1">lambda</span> <span class="br0">&#40;</span><span class="kw1">name</span> <span class="kw1">value</span><span class="br0">&#41;</span>
@@ -254,8 +261,8 @@ guile&gt; (add1 100)
 <span class="br0">&#41;</span></pre>
 
 <p>
-Здесь мы используем две новых встроенных процедуры, <code>display</code> и <code>newline</code>,
-названия которых говорят сами за себя. Теперь:
+Здесь мы используем две новых встроенных процедуры, <code>display</code> и
+<code>newline</code>, названия которых говорят сами за себя. Теперь:
 </p>
 <pre class="code lisp"><span class="br0">&#40;</span>define display-stats
      <span class="br0">&#40;</span><span class="kw1">lambda</span> <span class="br0">&#40;</span><span class="br0">&#41;</span>                  <span class="co1">; без аргументов</span>
@@ -270,10 +277,10 @@ packages: 25
 nets:     13</pre>
 
 <p>
-Чтобы завершить драйвер, нам нужна “основная программа”. По соглашению она
-называется так же, как и сам драйвер. Также она отвечает за открывание выходного файла.
-Итак, целиком файл драйвера сбора статистики “stats” будет выглядеть
-примерно так:
+Чтобы завершить драйвер, нам нужна «основная программа». По соглашению она
+называется так же, как и сам драйвер. Также она отвечает за открывание
+выходного файла.  Итак, целиком файл драйвера сбора статистики «stats» будет
+выглядеть примерно так:
 </p>
 <pre class="code lisp"><span class="co1">;; драйвер gnetlist для получения статистики по проекту</span>
 <span class="co1">;;</span>
@@ -319,20 +326,21 @@ nets:     13</pre>
 </p>
 
 <p>
-Довольно просто, а? А также полезно. Недавно я проектировал системы, состоящие
-из множества плат: статистика, подобная этой, помогает мне выяснить, какие
-подсистемы лучше скомбинировать на каждой из плат.
+Довольно просто, а? А также полезно. Недавно я проектировал системы,
+состоящие из множества плат: статистика, подобная этой, помогает мне
+выяснить, какие подсистемы лучше скомбинировать на каждой из плат.
 </p>
 
 </div>
-<div class="footnotes">
+<!-- EDIT1 SECTION "Написание скриптов драйверов gnetlist на Scheme" [139-] --><div class="footnotes">
 <div class="fn"><sup><a href="#fnt__1" id="fn__1" name="fn__1" class="fn_bot">1)</a></sup> 
-“Синтаксический сахар” — конструкция языка программирования,
-полностью эквивалентная другой его конструкции, но имеющая более естественную
-запись (Компьютерный словарь). — <em>Прим. перев.</em></div>
+«Синтаксический сахар» — конструкция языка программирования,
+полностью эквивалентная другой его конструкции, но имеющая более
+естественную запись (Компьютерный словарь). — <em>Прим. перев.</em></div>
 <div class="fn"><sup><a href="#fnt__2" id="fn__2" name="fn__2" class="fn_bot">2)</a></sup> 
-Англоязычный термин —
-“form”. — <em>Прим. перев.</em></div>
+Англоязычный термин
+— «form». — <em>Прим. перев.</em></div>
+</div>
 </div>
 </body>
 </html>

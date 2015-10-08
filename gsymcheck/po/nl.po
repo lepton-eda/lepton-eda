@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gsymcheck\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2014-08-30 14:03+0200\n"
+"POT-Creation-Date: 2015-08-22 13:37+0300\n"
 "PO-Revision-Date: 2014-08-31 22:48+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
-#: gsymcheck/src/g_rc.c:58
+#: gsymcheck/src/g_rc.c:57
 #, c-format
 msgid ""
 "You are running gEDA/gaf version [%s%s.%s],\n"
@@ -62,8 +62,10 @@ msgstr ""
 "Gebruik: %s [OPTIES] bestandsnaam1 ... bestandsnaamN\n"
 "  -h, --help           Druk gebruik af\n"
 "  -q, --quiet          Stille modus\n"
-"  -v, --verbose        Woordrijke modus (cumulatief: fouten, waarschuwingen, info)\n"
-"                       Gebruik dit om een actuele symbool fout bericht te krijgen\n"
+"  -v, --verbose        Woordrijke modus (cumulatief: fouten, waarschuwingen, "
+"info)\n"
+"                       Gebruik dit om een actuele symbool fout bericht te "
+"krijgen\n"
 "\n"
 "bestandsnaam1 ... bestandsnaamN zijn de te controleren symbolen\n"
 "\n"
@@ -90,8 +92,7 @@ msgstr "Geen fouten gevonden\n"
 msgid "1 ERROR found "
 msgstr "1 FOUT gevonden "
 
-#: gsymcheck/src/s_check.c:143
-#: gsymcheck/src/s_check.c:152
+#: gsymcheck/src/s_check.c:143 gsymcheck/src/s_check.c:152
 msgid "(use -v to view details)\n"
 msgstr "(gebruik -v om details te zien)\n"
 
@@ -128,17 +129,23 @@ msgstr "Verkeerd bevestigd attribuut: [%s=%s] gevonden\n"
 #: gsymcheck/src/s_check.c:253
 #, c-format
 msgid "Found a simple text object with only SHOW_NAME or SHOW_VALUE set [%s]\n"
-msgstr "Een eenvoudig tekst object gevonden met alleen SHOW_NAME of SHOW_VALUE ingesteld [%s]\n"
+msgstr ""
+"Een eenvoudig tekst object gevonden met alleen SHOW_NAME of SHOW_VALUE "
+"ingesteld [%s]\n"
 
 #: gsymcheck/src/s_check.c:318
 #, c-format
 msgid "Found text with a '\\' in it: consider to escape it with '\\\\' [%s]\n"
-msgstr "Tekst met een '\\' gevonden: overweeg om met een '\\\\' stuurcode te ontkomen [%s]\n"
+msgstr ""
+"Tekst met een '\\' gevonden: overweeg om met een '\\\\' stuurcode te "
+"ontkomen [%s]\n"
 
 #: gsymcheck/src/s_check.c:330
 #, c-format
 msgid "Found text with a trailing '': consider to escape it with '\\\\' [%s]\n"
-msgstr "Tekst met een achterblijvende '': overweeg om met een '\\\\' stuurcode te ontkomen [%s]\n"
+msgstr ""
+"Tekst met een achterblijvende '': overweeg om met een '\\\\' stuurcode te "
+"ontkomen [%s]\n"
 
 #: gsymcheck/src/s_check.c:339
 #, c-format
@@ -190,8 +197,7 @@ msgstr "Dubbel pinseq=%s attribuut in het symbool gevonden\n"
 msgid "Found net=%s attribute\n"
 msgstr "net=%s attribuut gevonden\n"
 
-#: gsymcheck/src/s_check.c:562
-#: gsymcheck/src/s_check.c:569
+#: gsymcheck/src/s_check.c:562 gsymcheck/src/s_check.c:569
 #, c-format
 msgid "Bad net= attribute [net=%s]\n"
 msgstr "Slecht net= attribuut [net=%s]\n"
@@ -235,8 +241,11 @@ msgstr "pinnumber=0 attribuut gevonden\n"
 
 #: gsymcheck/src/s_check.c:691
 #, c-format
-msgid "Found the same number in a pinnumber attribute and in a net attribute [%s]\n"
-msgstr "Hetzelfde nummer in een pen nummer attribuut en in een net attribuut [%s] gevonden\n"
+msgid ""
+"Found the same number in a pinnumber attribute and in a net attribute [%s]\n"
+msgstr ""
+"Hetzelfde nummer in een pen nummer attribuut en in een net attribuut [%s] "
+"gevonden\n"
 
 #: gsymcheck/src/s_check.c:709
 #, c-format
@@ -272,10 +281,8 @@ msgstr "%s slotdef= attributen gevonden.  Verwachtte %s slotdef= attributen\n"
 msgid "Found slotdef=%s attribute\n"
 msgstr "slotdef=%s attribuut gevonden\n"
 
-#: gsymcheck/src/s_check.c:847
-#: gsymcheck/src/s_check.c:886
-#: gsymcheck/src/s_check.c:898
-#: gsymcheck/src/s_check.c:910
+#: gsymcheck/src/s_check.c:847 gsymcheck/src/s_check.c:886
+#: gsymcheck/src/s_check.c:898 gsymcheck/src/s_check.c:910
 #, c-format
 msgid "Invalid slotdef=%s attributes, not continuing\n"
 msgstr "Ongeldige slotdef=%s attributen, ga niet door\n"
@@ -361,8 +368,7 @@ msgstr "Meerdere  %s=%s attributen op een pen gevonden\n"
 msgid "Found %s=%s attribute\n"
 msgstr "%s=%s attribuut gevonden\n"
 
-#: gsymcheck/src/s_check.c:1327
-#: gsymcheck/src/s_check.c:1336
+#: gsymcheck/src/s_check.c:1327 gsymcheck/src/s_check.c:1336
 #, c-format
 msgid "Found %s attribute\n"
 msgstr "%s attribuut gevonden\n"
@@ -407,4 +413,3 @@ msgstr "Waarschuwing: %s"
 #, c-format
 msgid "ERROR: %s"
 msgstr "FOUT: %s"
-

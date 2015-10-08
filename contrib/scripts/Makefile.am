@@ -15,7 +15,8 @@ EXTRA_DIST = gnet_hier_verilog.sh sarlacc_sym pads_backannotate \
 	  (display (strftime "%B %-d, %Y" \
 	  (car (strptime "%Y%m%d" (cadr (program-arguments))))))' $(DATE_VERSION)` ; \
 	v="$(DOTTED_VERSION).$(DATE_VERSION)" ; \
-	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" < $< > $@
+	y=`echo $(DATE_VERSION)| sed -e"s/\(....\).*/\1/"`; \
+	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" -e"s:[@]YEAR@:$$y:" < $< > $@
 
 SUFFIXES = .1.in .1
 
