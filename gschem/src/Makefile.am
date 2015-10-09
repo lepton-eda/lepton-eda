@@ -50,6 +50,7 @@ gschem_SOURCES = \
 	gschem_page_geometry.c \
 	gschem_page_view.c \
 	gschem_pin_type_combo.c \
+	gschem_preview.c \
 	gschem_selection_adapter.c \
 	gschem_show_hide_text_widget.c \
 	gschem_slot_edit_dialog.c \
@@ -109,7 +110,6 @@ gschem_SOURCES = \
 	x_multiattrib.c \
 	x_newtext.c \
 	x_pagesel.c \
-	x_preview.c \
 	x_print.c \
 	x_rc.c \
 	x_rotatecb.c \

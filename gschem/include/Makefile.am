@@ -6,7 +6,7 @@ noinst_HEADERS = \
 	globals.h i_vars.h prototype.h x_dialog.h x_states.h \
 	gettext.h \
 	x_compselect.h \
-	x_multiattrib.h x_pagesel.h x_preview.h \
+	x_multiattrib.h x_pagesel.h \
 	gschem.h \
 	gschemhotkeystore.h \
 	gschem_accel_label.h \
@@ -31,6 +31,7 @@ noinst_HEADERS = \
 	gschem_page_geometry.h \
 	gschem_page_view.h \
 	gschem_pin_type_combo.h \
+	gschem_preview.h \
 	gschem_selection_adapter.h \
 	gschem_show_hide_text_widget.h \
 	gschem_struct.h \
