@@ -5,4 +5,5 @@ Makefile.in
 lepton-symcheck
 lepton-symcheck.exe
 *.o
+*.x
 *~

@@ -243,6 +243,7 @@ AC_CONFIG_FILES([Makefile
                  symcheck/src/Makefile
                  symcheck/tests/Makefile
                  symcheck/Makefile
+                 symcheck/scheme/Makefile
 
                  gnetlist/Makefile
                  gnetlist/po/Makefile.in

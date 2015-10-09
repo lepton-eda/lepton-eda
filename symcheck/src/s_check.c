@@ -33,19 +33,23 @@
 #endif
 
 #include <liblepton/liblepton.h>
+#include <liblepton/libgedaguile.h>
 
 #include "../include/struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
-int
-s_check_all(TOPLEVEL *pr_current)
+SCM_DEFINE (check_all_symbols, "%check-all-symbols", 0, 0, 0,
+            (), "Check all symbols.")
 {
+  TOPLEVEL* pr_current;
   GList *iter;
   PAGE *p_current;
   int return_status=0;
 
+ /* C code to check all symbols */
+  pr_current = edascm_c_current_toplevel ();
 
   for ( iter = geda_list_get_glist( pr_current->pages );
         iter != NULL;
@@ -61,7 +65,7 @@ s_check_all(TOPLEVEL *pr_current)
     }
   }
 
-  return(return_status);
+  return scm_from_int (return_status);
 }
 
 
@@ -1356,4 +1360,25 @@ void s_check_pintype (const GList *obj_list, SYMCHECK *s_current)
       }
     }
   }
+}
+
+static void
+init_module_symbol_core_check ()
+{
+  /* Register the functions */
+  #include "s_check.x"
+
+  /* Register the functions and add them to the module's public
+   * definitions. */
+  scm_c_export (s_check_all_symbols,
+                NULL);
+}
+
+void
+s_init_check ()
+{
+  /* Define the (symbol core check) module */
+  scm_c_define_module ("symbol core check",
+                       (void (*)(void*)) init_module_symbol_core_check,
+                       NULL);
 }

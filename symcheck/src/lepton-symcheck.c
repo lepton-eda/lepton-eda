@@ -32,6 +32,7 @@
 #endif
 
 #include <liblepton/liblepton.h>
+#include <liblepton/libgedaguile.h>
 
 #include "../include/struct.h"
 #include "../include/globals.h"
@@ -55,6 +56,7 @@ main_prog(void *closure, int argc, char *argv[])
   char *cwd;
 
   TOPLEVEL *pr_current;
+  SCM check_all_symbols;
   
   argv_index = parse_commandline(argc, argv);
   cwd = g_get_current_dir();
@@ -76,8 +78,15 @@ main_prog(void *closure, int argc, char *argv[])
   
   /* register guile (scheme) functions */
   g_register_funcs();
+  s_init_check ();
+  check_all_symbols = scm_c_public_lookup ("symbol check",
+                                           "check-all-symbols");
+
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
   pr_current = s_toplevel_new ();
+  edascm_dynwind_toplevel (pr_current);
+
   g_rc_parse (pr_current, argv[0], "gsymcheckrc", rc_filename);
 
   i_vars_set(pr_current);
@@ -130,12 +139,14 @@ main_prog(void *closure, int argc, char *argv[])
   
   if (!quiet_mode) s_log_message("\n");
 
-  exit_status = s_check_all(pr_current);
+  exit_status = scm_to_int (scm_call_0 (scm_variable_ref (check_all_symbols)));
 
   s_page_delete_list(pr_current);
   gsymcheck_quit();
 
   exit(exit_status);
+
+  scm_dynwind_end ();
 }
 
 int 

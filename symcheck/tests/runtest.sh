@@ -1,9 +1,11 @@
 #!/bin/sh
 
 INPUT=$1
-BUILDDIR=$2
-SRCDIR=$3
-rundir=${BUILDDIR}/run
+rundir=${abs_builddir}/run
+SYMCHECK=${abs_top_builddir}/symcheck/src/lepton-symcheck
+# Hack to enable `make distcheck'
+GEDADATA="${abs_top_srcdir}/symcheck"
+export GEDADATA
 
 # create temporary run directory and required subdirs
 mkdir -m 0700 -p ${rundir}
@@ -14,17 +16,15 @@ if test $rc -ne 0 ; then
 	exit 1
 fi
 
-TESTDIR=${BUILDDIR}
-export TESTDIR
-
 symbasename=`basename $INPUT .sym`
 
 in="${INPUT}"
-ref="${SRCDIR}/${symbasename}.output"
+ref="${abs_srcdir}/${symbasename}.output"
 new="${rundir}/new_${symbasename}.output"
 tmpfile=${rundir}/tmp$$
 
-${BUILDDIR}/../src/lepton-symcheck -vv ${in} 1> ${tmpfile} 2> ${rundir}/allerrors.output
+cd ${rundir} &&
+    ${SYMCHECK} -vv ${in} 1> ${tmpfile} 2> ${rundir}/allerrors.output
 
 cat ${tmpfile} | \
 	grep -v "Checking: " | \
