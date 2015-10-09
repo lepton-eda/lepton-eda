@@ -37,20 +37,21 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
 
 check_SCRIPTS = tests
 
-BUILDDIR=$(builddir)
-SRCDIR=$(srcdir)
-
 tests:
 
 # Cleanup
-	rm -f $(BUILDDIR)/new_*
+	rm -f $(builddir)/new_*
 
+	abs_builddir='$(abs_builddir)'; export abs_builddir; \
+	abs_top_builddir='$(abs_top_builddir)'; export abs_top_builddir; \
+	abs_srcdir='$(abs_srcdir)'; export abs_srcdir; \
+	abs_top_srcdir='$(abs_top_srcdir)'; export abs_top_srcdir; \
 	fail=0 ; \
 	pass=0 ; \
-	for file in $(SRCDIR)/*.sym; do \
+	for file in $(abs_srcdir)/*.sym; do \
 	  base=`basename $$file`; \
 	  GEDADATARC=$(builddir)/../lib \
-	  $(SHELL) $(SRCDIR)/runtest.sh $$file $(BUILDDIR) $(SRCDIR); \
+	  $(SHELL) $(srcdir)/runtest.sh $$file; \
           if [ $$? -ne 0 ]; then \
 	     echo "$$base FAILED!"; \
              fail=`expr $$pass + 1`; \
@@ -62,11 +63,6 @@ tests:
 	echo "passed: $$pass" ; \
 	echo "failed: $$fail" ; \
 	exit $$fail
-
-
-# Cleanup
-#	rm -f $(BUILDDIR)/new_*
-
 
 
 MOSTLYCLEANFILES = *.log *~ new_*

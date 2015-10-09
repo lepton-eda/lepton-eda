@@ -1,5 +1,5 @@
 
-SUBDIRS = po src include lib docs tests
+SUBDIRS = po src include lib docs tests scheme
 
 EXTRA_DIST = ChangeLog ChangeLog-1.0
 
