@@ -32,7 +32,7 @@ static void
 x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
 {
   GtkFileFilter *filter;
-  
+
   /* file filter for schematic files (*.sch) */
   filter = gtk_file_filter_new ();
   gtk_file_filter_set_name (filter, _("Schematics"));
@@ -72,7 +72,7 @@ static void
 x_fileselect_callback_update_preview (GtkFileChooser *chooser,
                                       gpointer user_data)
 {
-  Preview *preview = PREVIEW (user_data);
+  GschemPreview *preview = GSCHEM_PREVIEW (user_data);
   gchar *filename, *preview_filename = NULL;
 
   filename = gtk_file_chooser_get_preview_filename (chooser);
@@ -125,8 +125,9 @@ x_fileselect_add_preview (GtkFileChooser *filechooser)
                                         "xalign", 0.5,
                                         "yalign", 0.5,
                                         NULL));
-  preview = GTK_WIDGET (g_object_new (TYPE_PREVIEW,
-                                      NULL));
+
+  preview = gschem_preview_new ();
+
   gtk_container_add (GTK_CONTAINER (alignment), preview);
   gtk_container_add (GTK_CONTAINER (frame), alignment);
   gtk_widget_show_all (frame);
@@ -136,13 +137,13 @@ x_fileselect_add_preview (GtkFileChooser *filechooser)
                 "use-preview-label", FALSE,
                 "preview-widget", frame,
                 NULL);
-  
+
   /* connect callback to update preview */
   g_signal_connect (filechooser,
                     "update-preview",
                     G_CALLBACK (x_fileselect_callback_update_preview),
                     preview);
-  
+
 }
 
 /*! \brief Opens a file chooser for opening one or more schematics.
@@ -177,7 +178,7 @@ x_fileselect_open(GschemToplevel *w_current)
 					  GTK_RESPONSE_CANCEL,
 					  -1);
 
-  x_fileselect_add_preview (GTK_FILE_CHOOSER (dialog));  
+  x_fileselect_add_preview (GTK_FILE_CHOOSER (dialog));
   g_object_set (dialog,
                 /* GtkFileChooser */
                 "select-multiple", TRUE,
@@ -193,7 +194,7 @@ x_fileselect_open(GschemToplevel *w_current)
     GSList *tmp, *filenames =
       gtk_file_chooser_get_filenames (GTK_FILE_CHOOSER (dialog));
 
-    /* open each file */ 
+    /* open each file */
     for (tmp = filenames; tmp != NULL;tmp = g_slist_next (tmp)) {
       page = x_window_open_page (w_current, (gchar*)tmp->data);
     }
@@ -241,7 +242,7 @@ x_fileselect_save (GschemToplevel *w_current)
 					  GTK_RESPONSE_CANCEL,
 					  -1);
 
-  /* set default response signal. This is usually triggered by the 
+  /* set default response signal. This is usually triggered by the
      "Return" key */
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
 				  GTK_RESPONSE_ACCEPT);
@@ -279,9 +280,9 @@ x_fileselect_save (GschemToplevel *w_current)
     /* If the file already exists, display a dialog box to check if
        the user really wants to overwrite it. */
     if ((filename != NULL) && g_file_test (filename, G_FILE_TEST_EXISTS)) {
-      GtkWidget *checkdialog = 
+      GtkWidget *checkdialog =
         gtk_message_dialog_new (GTK_WINDOW(dialog),
-                                (GTK_DIALOG_MODAL | 
+                                (GTK_DIALOG_MODAL |
                                  GTK_DIALOG_DESTROY_WITH_PARENT),
                                 GTK_MESSAGE_QUESTION,
                                 GTK_BUTTONS_YES_NO,
@@ -347,11 +348,11 @@ int x_fileselect_load_backup(void *user_data, GString *message)
 
   gtk_widget_show (dialog);
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_YES) {
-    gtk_widget_destroy(dialog);  
+    gtk_widget_destroy(dialog);
     return TRUE;
   }
   else {
-    gtk_widget_destroy(dialog);  
+    gtk_widget_destroy(dialog);
     return FALSE;
   }
 }

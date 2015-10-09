@@ -17,6 +17,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+/*!
+ *  \file gschem_preview.c
+ *
+ *  \brief A widget for viewing a symbol or schematic
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -44,8 +50,8 @@ enum {
 static GObjectClass *preview_parent_class = NULL;
 
 
-static void preview_class_init (PreviewClass *class);
-static void preview_init       (Preview *preview);
+static void preview_class_init (GschemPreviewClass *class);
+static void preview_init       (GschemPreview *preview);
 static void preview_set_property (GObject *object,
                                   guint property_id,
                                   const GValue *value,
@@ -57,11 +63,19 @@ static void preview_get_property (GObject *object,
 static void preview_dispose (GObject *self);
 
 
+/*! \brief create a new preview widget
+ */
+GtkWidget*
+gschem_preview_new ()
+{
+  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_PREVIEW, NULL));
+}
+
 
 /*! \brief get the filename for the current page
  */
 static char*
-preview_get_filename (Preview *preview)
+preview_get_filename (GschemPreview *preview)
 {
   PAGE *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview));
 
@@ -85,7 +99,7 @@ static void
 preview_callback_realize (GtkWidget *widget,
                           gpointer user_data)
 {
-  Preview *preview = PREVIEW (widget);
+  GschemPreview *preview = GSCHEM_PREVIEW (widget);
   GschemToplevel *preview_w_current = preview->preview_w_current;
   GschemPageView *preview_view = GSCHEM_PAGE_VIEW (preview);
 
@@ -116,7 +130,7 @@ preview_callback_button_press (GtkWidget *widget,
                                GdkEventButton *event,
                                gpointer user_data)
 {
-  Preview *preview = PREVIEW (widget);
+  GschemPreview *preview = GSCHEM_PREVIEW (widget);
   GschemToplevel *preview_w_current = preview->preview_w_current;
   gint wx, wy;
 
@@ -159,7 +173,7 @@ preview_callback_button_press (GtkWidget *widget,
  *  \param [in] preview The preview widget.
  */
 static void
-preview_update (Preview *preview)
+preview_update (GschemPreview *preview)
 {
   int left, top, right, bottom;
   int width, height;
@@ -228,25 +242,25 @@ preview_update (Preview *preview)
 }
 
 GType
-preview_get_type ()
+gschem_preview_get_type ()
 {
   static GType preview_type = 0;
 
   if (!preview_type) {
     static const GTypeInfo preview_info = {
-      sizeof(PreviewClass),
+      sizeof(GschemPreviewClass),
       NULL, /* base_init */
       NULL, /* base_finalize */
       (GClassInitFunc) preview_class_init,
       NULL, /* class_finalize */
       NULL, /* class_data */
-      sizeof(Preview),
+      sizeof(GschemPreview),
       0,    /* n_preallocs */
       (GInstanceInitFunc) preview_init,
     };
 
     preview_type = g_type_register_static (GSCHEM_TYPE_PAGE_VIEW,
-                                           "Preview",
+                                           "GschemPreview",
                                            &preview_info, 0);
   }
 
@@ -254,7 +268,7 @@ preview_get_type ()
 }
 
 static void
-preview_class_init (PreviewClass *klass)
+preview_class_init (GschemPreviewClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
@@ -295,7 +309,7 @@ preview_event_configure (GtkWidget         *widget,
                          gpointer           user_data)
 {
   gboolean retval;
-  GschemToplevel *preview_w_current = PREVIEW (widget)->preview_w_current;
+  GschemToplevel *preview_w_current = GSCHEM_PREVIEW (widget)->preview_w_current;
 
   retval = x_event_configure (GSCHEM_PAGE_VIEW (widget), event, preview_w_current);
 
@@ -308,14 +322,14 @@ preview_event_scroll (GtkWidget *widget,
                       GdkEventScroll *event,
                       GschemToplevel *w_current)
 {
-  if (!PREVIEW (widget)->active) {
+  if (!GSCHEM_PREVIEW (widget)->active) {
     return TRUE;
   }
-  return x_event_scroll (widget, event, PREVIEW (widget)->preview_w_current);
+  return x_event_scroll (widget, event, GSCHEM_PREVIEW (widget)->preview_w_current);
 }
 
 static void
-preview_init (Preview *preview)
+preview_init (GschemPreview *preview)
 {
   struct event_reg_t {
     gchar *detailed_signal;
@@ -386,7 +400,7 @@ preview_set_property (GObject *object,
                       const GValue *value,
                       GParamSpec *pspec)
 {
-  Preview *preview = PREVIEW (object);
+  GschemPreview *preview = GSCHEM_PREVIEW (object);
   GschemToplevel *preview_w_current = preview->preview_w_current;
 
   g_assert (preview_w_current != NULL);
@@ -428,7 +442,7 @@ preview_get_property (GObject *object,
                       GValue *value,
                       GParamSpec *pspec)
 {
-  Preview *preview = PREVIEW (object);
+  GschemPreview *preview = GSCHEM_PREVIEW (object);
 
   switch(property_id) {
       case PROP_FILENAME:
@@ -447,7 +461,7 @@ preview_get_property (GObject *object,
 static void
 preview_dispose (GObject *self)
 {
-  Preview *preview = PREVIEW (self);
+  GschemPreview *preview = GSCHEM_PREVIEW (self);
   GschemToplevel *preview_w_current = preview->preview_w_current;
 
   if (preview_w_current != NULL) {

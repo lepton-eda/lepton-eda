@@ -1484,13 +1484,13 @@ compselect_constructor (GType type,
                                         "xalign",         0.5,
                                         "yalign",         0.5,
                                         NULL));
-  preview = GTK_WIDGET (g_object_new (TYPE_PREVIEW,
-                                      /* Preview */
-                                      NULL));
+
+  preview = gschem_preview_new ();
+
   gtk_container_add (GTK_CONTAINER (alignment), preview);
   gtk_container_add (GTK_CONTAINER (frame), alignment);
   /* set preview of compselect */
-  compselect->preview = PREVIEW (preview);
+  compselect->preview = GSCHEM_PREVIEW (preview);
 
   gtk_paned_pack1 (GTK_PANED (vpaned), frame, FALSE, FALSE);
 
