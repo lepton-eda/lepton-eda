@@ -52,6 +52,7 @@ gschem_SOURCES = \
 	gschem_page_view.c \
 	gschem_pin_type_combo.c \
 	gschem_preview.c \
+	gschem_rotation_combo.c \
 	gschem_selection_adapter.c \
 	gschem_show_hide_text_widget.c \
 	gschem_slot_edit_dialog.c \
@@ -112,7 +113,6 @@ gschem_SOURCES = \
 	x_pagesel.c \
 	x_print.c \
 	x_rc.c \
-	x_rotatecb.c \
 	x_script.c \
 	x_stroke.c \
 	x_window.c

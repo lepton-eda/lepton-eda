@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file x_rotatecb.c
+/*! \file gschem_rotation_combo.c
  *
  *  \brief A GtkComboBox with the gschem text rotation.
  */
@@ -89,7 +89,7 @@ create_rotation_list_store ()
  *  \return A widget for selecting the gschem text rotations
  */
 GtkWidget*
-x_rotatecb_new ()
+gschem_rotation_combo_new ()
 {
   GtkComboBox *combo;
   GtkCellLayout *layout;
@@ -118,7 +118,7 @@ x_rotatecb_new ()
  *  \return The currently selected rotation angle
  */
 int
-x_rotatecb_get_angle (GtkWidget *widget)
+gschem_rotation_combo_get_angle (GtkWidget *widget)
 {
   int index = -1;
   GtkTreeIter iter;
@@ -141,7 +141,7 @@ x_rotatecb_get_angle (GtkWidget *widget)
  *  \param [in]     angle   The angle to select
  */
 void
-x_rotatecb_set_angle (GtkWidget *widget, int angle)
+gschem_rotation_combo_set_angle (GtkWidget *widget, int angle)
 {
   g_return_if_fail (rotation_list_store != NULL);
 

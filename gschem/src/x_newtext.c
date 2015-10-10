@@ -119,7 +119,7 @@ dialog_response_apply (NewText *dialog)
     size = value;
   }
 
-  value = x_rotatecb_get_angle (dialog->rotatecb);
+  value = gschem_rotation_combo_get_angle (dialog->rotatecb);
   if (value >= 0) {
     rotate = value;
   }
@@ -289,8 +289,8 @@ static void newtext_init(NewText *dialog)
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
   gtk_table_attach(GTK_TABLE(table), label, 0,1,3,4, GTK_FILL,0,0,0);
 
-  dialog->rotatecb = x_rotatecb_new ();
-  x_rotatecb_set_angle(dialog->rotatecb, 0);
+  dialog->rotatecb = gschem_rotation_combo_new ();
+  gschem_rotation_combo_set_angle(dialog->rotatecb, 0);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->rotatecb, 1,2,3,4);
 
 
