@@ -303,19 +303,6 @@ preview_class_init (GschemPreviewClass *klass)
 
 }
 
-static gboolean
-preview_event_configure (GtkWidget         *widget,
-                         GdkEventConfigure *event,
-                         gpointer           user_data)
-{
-  gboolean retval;
-  GschemToplevel *preview_w_current = GSCHEM_PREVIEW (widget)->preview_w_current;
-
-  retval = x_event_configure (GSCHEM_PAGE_VIEW (widget), event, preview_w_current);
-
-  return retval;
-}
-
 
 static gboolean
 preview_event_scroll (GtkWidget *widget,
@@ -338,7 +325,7 @@ preview_init (GschemPreview *preview)
     { "realize",              G_CALLBACK (preview_callback_realize)       },
     { "expose_event",         G_CALLBACK (x_event_expose)                 },
     { "button_press_event",   G_CALLBACK (preview_callback_button_press)  },
-    { "configure_event",      G_CALLBACK (preview_event_configure)        },
+    { "configure_event",      G_CALLBACK (x_event_configure)              },
     { "scroll_event",         G_CALLBACK (preview_event_scroll)           },
     { NULL,                   NULL                                        }
   }, *tmp;
