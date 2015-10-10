@@ -573,10 +573,10 @@ int parse_commandline(int argc, char *argv[]);
 GList *s_stretch_add(GList *list, OBJECT *object, int whichone);
 GList *s_stretch_remove(GList *list, OBJECT *object);
 void s_stretch_destroy_all(GList *list);
-/* x_aligncb.c */
-GtkWidget* x_aligncb_new ();
-int x_aligncb_get_align (GtkWidget *widget);
-void x_aligncb_set_align (GtkWidget *widget, int align);
+/* gschem_alignment_combo.c */
+GtkWidget* gschem_alignment_combo_new ();
+int gschem_alignment_combo_get_align (GtkWidget *widget);
+void gschem_alignment_combo_set_align (GtkWidget *widget, int align);
 /* x_attribedit.c */
 gint option_menu_get_history(GtkOptionMenu *option_menu);
 void attrib_edit_dialog_ok(GtkWidget *w, GschemToplevel *w_current);

@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file x_aligncb.c
+/*! \file gschem_alignment_combo.c
  *
  *  \brief A GtkComboBox with the gschem text alignments.
  */
@@ -100,7 +100,7 @@ create_align_list_store ()
  *  \return A GtkWidget for selecting text alignments.
  */
 GtkWidget*
-x_aligncb_new ()
+gschem_alignment_combo_new ()
 {
   GtkCellRenderer *cell;
   GtkComboBox *combo;
@@ -128,7 +128,7 @@ x_aligncb_new ()
  *  \return The currently selected text alignment
  */
 int
-x_aligncb_get_align (GtkWidget *widget)
+gschem_alignment_combo_get_align (GtkWidget *widget)
 {
   int align = -1;
   GtkTreeIter iter;
@@ -155,7 +155,7 @@ x_aligncb_get_align (GtkWidget *widget)
  *  \param [in]     align  The text alignment to select
  */
 void
-x_aligncb_set_align (GtkWidget *widget, int align)
+gschem_alignment_combo_set_align (GtkWidget *widget, int align)
 {
   g_return_if_fail (align_list_store != NULL);
 

@@ -27,6 +27,7 @@ gschem_SOURCES = \
 	gschem_about_dialog.c \
 	gschem_accel_label.c \
 	gschem_action.c \
+	gschem_alignment_combo.c \
 	gschem_arc_dialog.c \
 	gschem_bin.c \
 	gschem_binding.c \
@@ -88,7 +89,6 @@ gschem_SOURCES = \
 	o_undo.c \
 	parsecmd.c \
 	s_stretch.c \
-	x_aligncb.c \
 	x_attribedit.c \
 	x_autonumber.c \
 	x_basic.c \

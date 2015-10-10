@@ -109,7 +109,7 @@ dialog_response_apply (NewText *dialog)
     color = value;
   }
 
-  value = x_aligncb_get_align (dialog->aligncb);
+  value = gschem_alignment_combo_get_align (dialog->aligncb);
   if (value >= 0) {
     align = value;
   }
@@ -281,8 +281,8 @@ static void newtext_init(NewText *dialog)
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
   gtk_table_attach(GTK_TABLE(table), label, 0,1,2,3, GTK_FILL,0,0,0);
 
-  dialog->aligncb = x_aligncb_new ();
-  x_aligncb_set_align(dialog->aligncb, LOWER_LEFT);
+  dialog->aligncb = gschem_alignment_combo_new ();
+  gschem_alignment_combo_set_align(dialog->aligncb, LOWER_LEFT);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->aligncb, 1,2,2,3);
 
   label = gtk_label_new (_("Rotation:"));

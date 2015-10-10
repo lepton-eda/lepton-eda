@@ -316,7 +316,7 @@ create_text_property_section (GschemTextPropertiesWidget *widget)
 
   editor[0] = widget->colorcb = x_colorcb_new ();
   editor[1] = widget->textsizecb = gschem_integer_combo_box_new ();
-  editor[2] = widget->aligncb = x_aligncb_new();
+  editor[2] = widget->aligncb = gschem_alignment_combo_new();
   editor[3] = widget->rotatecb = x_rotatecb_new();
 
   table = gschem_dialog_misc_create_property_table (label, editor, 4);
@@ -584,7 +584,7 @@ update_text_alignment_model (GschemTextPropertiesWidget *widget)
   g_return_if_fail (widget->aligncb != NULL);
 
   if (widget->adapter != NULL) {
-    int alignment = x_aligncb_get_align (widget->aligncb);
+    int alignment = gschem_alignment_combo_get_align (widget->aligncb);
 
     if (alignment >= 0) {
       gschem_selection_adapter_set_text_alignment (widget->adapter, alignment);
@@ -612,7 +612,7 @@ update_text_alignment_widget (GschemTextPropertiesWidget *widget)
                                      G_CALLBACK (update_text_alignment_model),
                                      widget);
 
-    x_aligncb_set_align (widget->aligncb, alignment);
+    gschem_alignment_combo_set_align (widget->aligncb, alignment);
 
     g_signal_handlers_unblock_by_func (G_OBJECT (widget->aligncb),
                                        G_CALLBACK (update_text_alignment_model),
