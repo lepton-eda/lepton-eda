@@ -28,7 +28,6 @@
 
 #include <liblepton/liblepton.h>
 
-#include "../include/struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 #include "../include/gettext.h"

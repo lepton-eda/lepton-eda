@@ -8,4 +8,4 @@ symcheck/src/i_vars.c
 symcheck/src/parsecmd.c
 symcheck/src/s_check.c
 symcheck/src/s_log.c
-symcheck/src/s_symstruct.c
+symcheck/scheme/symbol/check.scm

@@ -37,7 +37,6 @@
 
 #include <liblepton/liblepton.h>
 
-#include "../include/struct.h"
 #include "../include/globals.h"
 #include "../include/i_vars.h"
 #include "../include/prototype.h"

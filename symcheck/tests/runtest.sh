@@ -24,7 +24,8 @@ new="${rundir}/new_${symbasename}.output"
 tmpfile=${rundir}/tmp$$
 
 cd ${rundir} &&
-    ${SYMCHECK} -vv ${in} 1> ${tmpfile} 2> ${rundir}/allerrors.output
+    GUILE_LOAD_PATH="${abs_top_srcdir}/liblepton/scheme:${abs_top_builddir}/liblepton/scheme" \
+                   ${SYMCHECK} -vv ${in} 1> ${tmpfile} 2> ${rundir}/allerrors.output
 
 cat ${tmpfile} | \
 	grep -v "Checking: " | \
