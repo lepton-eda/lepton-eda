@@ -25,7 +25,6 @@
 
 #include <liblepton/liblepton.h>
 
-#include "../include/struct.h"
 #include "../include/prototype.h"
 
 
