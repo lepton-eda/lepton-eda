@@ -96,23 +96,14 @@ preview_get_filename (GschemPreview *preview)
  *  \param [in] user_data Unused user data.
  */
 static void
-preview_callback_realize (GtkWidget *widget,
-                          gpointer user_data)
+preview_callback_realize (GtkWidget *widget, gpointer user_data)
 {
-  GschemPreview *preview = GSCHEM_PREVIEW (widget);
-  GschemToplevel *preview_w_current = preview->preview_w_current;
-  GschemPageView *preview_view = GSCHEM_PAGE_VIEW (preview);
+  g_return_if_fail (widget != NULL);
 
-  g_return_if_fail (preview_view != NULL);
-  PAGE *preview_page = preview_view->page;
-  g_return_if_fail (preview_page != NULL);
-  TOPLEVEL *preview_toplevel = preview_page->toplevel;
-  g_return_if_fail (preview_toplevel != NULL);
-
-  gtk_widget_grab_focus (preview_w_current->drawing_area);
-
-  gschem_page_view_zoom_extents (preview_view, NULL);
+  gtk_widget_grab_focus (widget);
+  gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (widget), NULL);
 }
+
 
 /*! \brief Handles the press on a mouse button.
  *  \par Function Description
