@@ -5,9 +5,6 @@ typedef struct st_symcheck SYMCHECK;
 /* gsymcheck structure */
 struct st_symcheck {
 
-  /* unused for now */
-  int unattached_attribs;
-
   /* info / warning / error messages */
   GList* info_messages;
   GList* warning_messages;

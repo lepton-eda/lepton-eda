@@ -62,7 +62,6 @@ s_symstruct_init(void)
   s_symcheck->slotting_errors=FALSE;
   s_symcheck->found_oldpin_attrib=FALSE;
   s_symcheck->found_oldslot_attrib=FALSE;
-  s_symcheck->unattached_attribs=FALSE;
   s_symcheck->found_net=FALSE;
   s_symcheck->found_bus=FALSE;
   s_symcheck->found_connection=FALSE;
