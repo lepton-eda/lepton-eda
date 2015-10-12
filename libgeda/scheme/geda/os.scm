@@ -31,21 +31,19 @@
 (define-public (platform? x)
   (member x (platform)))
 
+; Deprecated and must be removed after version 1.10.
 (define-public separator-char
-  (if (platform? 'win32-native) #\\ #\/))
+  (car (char-set->list (string->char-set file-name-separator-string))))
 
-(define-public separator (string separator-char))
+; Deprecated and must be removed after version 1.10.
+(define-public separator file-name-separator-string)
 
 (define-public path-separator-char
   (if (platform? 'win32-native) #\; #\:))
 
 (define-public path-separator (string path-separator-char))
 
-(define-public separator-char?
-  (if (platform? 'win32-native)
-      (let ((cls (char-set #\\ #\/)))
-        (lambda (x) (char-set-contains? cls x)))
-      (lambda (x) (eq? separator-char x))))
+(define-public separator-char? file-name-separator?)
 
 (define-public sys-data-dirs %sys-data-dirs)
 (define-public sys-config-dirs %sys-config-dirs)
@@ -57,12 +55,12 @@
     ;; On some systems, such as WinXP, $HOME may be not defined.
     ;; In such a case, we can use the $HOMEDRIVE-$HOMEPATH pair instead.
     (if home-path
-      (string-join (list home-path ".gEDA") separator)
+      (string-join (list home-path ".gEDA") file-name-separator-string)
       (if home-path-alt
         (string-join
           (list
             (string-append home-drive-alt home-path-alt) ".gEDA")
-          separator)
+          file-name-separator-string)
         ;; Return #f if any home variable has not been found.
         #f))))
 

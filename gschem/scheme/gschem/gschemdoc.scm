@@ -38,7 +38,7 @@ Get the directory where gEDA documentation is stored."
   ;; Given a gEDA data directory path, guess the installation prefix.
   (define (guess-prefix dir)
     (let ((ofs (string-contains
-                dir (string-append separator "share"))))
+                dir (string-append file-name-separator-string "share"))))
       (and ofs (substring dir 0 ofs))))
 
   ;; Guess the gEDA documentation directory, using the gEDA data
@@ -51,7 +51,7 @@ Get the directory where gEDA documentation is stored."
        (let ((docdir
               (string-join (list (guess-prefix dir)
                                  "share" "doc" "geda-gaf")
-                           separator)))
+                           file-name-separator-string)))
          (and (false-if-exception
                (eq? 'directory (stat:type (stat docdir))))
               docdir)))
@@ -70,7 +70,7 @@ Get the directory where per-user gEDA documentation is stored."
 
   (string-join (list (user-data-dir)
                      "doc" "geda-gaf")
-               separator))
+               file-name-separator-string))
 
 ;; Munge a wiki page name so that it can be used in a filename
 (define (wiki-munge name)
@@ -93,7 +93,7 @@ wiki."
   (show-uri
    (string-append "file://"
                   (string-join (list (sys-doc-dir) "wiki")
-                               separator 'suffix)
+                               file-name-separator-string 'suffix)
                   (wiki-munge page)
                   ".html")))
 
@@ -135,7 +135,7 @@ wiki."
 ;; case-insensitively.  If no file was found, returns #f.
 (define* (directory-doc-search dirname basename #:optional (ext ""))
   (define (test-dir-entry entry)
-    (let ((filename (string-append dirname separator entry)))
+    (let ((filename (string-append dirname file-name-separator-string entry)))
       (and (string-prefix-ci? basename entry)
            (string-suffix-ci? ext entry)
            (file-exists? filename)

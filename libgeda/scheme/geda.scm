@@ -1,6 +1,6 @@
 ; -*-Scheme-*-
 (use-modules (geda os) (ice-9 optargs) (ice-9 ftw))
-(define path-sep separator)
+(define path-sep file-name-separator-string)
 (define geda-data-path (car (sys-data-dirs)))
 (define geda-rc-path (car (sys-config-dirs)))
 

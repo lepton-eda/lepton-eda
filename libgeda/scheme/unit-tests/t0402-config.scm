@@ -8,12 +8,12 @@
 (or (defined? 'define-syntax)
     (use-modules (ice-9 syncase)))
 
-(define *testdir* (string-append (getcwd) separator "t0402-tmp"))
-(define *testdirconf* (string-append *testdir* separator "geda.conf"))
-(define *testdirA* (string-append *testdir* separator "A"))
-(define *testdirAconf* (string-append *testdirA* separator "geda.conf"))
-(define *testdirB* (string-append *testdir* separator "B"))
-(define *testdirBconf* (string-append *testdirB* separator "geda.conf"))
+(define *testdir*      (string-append (getcwd)   file-name-separator-string "t0402-tmp"))
+(define *testdirconf*  (string-append *testdir*  file-name-separator-string "geda.conf"))
+(define *testdirA*     (string-append *testdir*  file-name-separator-string "A"))
+(define *testdirAconf* (string-append *testdirA* file-name-separator-string "geda.conf"))
+(define *testdirB*     (string-append *testdir*  file-name-separator-string "B"))
+(define *testdirBconf* (string-append *testdirB* file-name-separator-string "geda.conf"))
 
 ;; Setup/teardown of directories / files needed by tests
 (define (config-test-setup)

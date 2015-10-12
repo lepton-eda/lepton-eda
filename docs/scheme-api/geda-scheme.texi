@@ -2035,10 +2035,18 @@ operating system gEDA is running on.
 @defvar separator-char
 The directory separator character that should be used on the host
 platform.
+
+The @code{separator-char} function is deprecated and must not be used in
+the newly written code. It will be removed after version 1.10.
+There is no replacement for it.
 @end defvar
 
 @defvar separator
 A string containing @code{separator-char}.
+
+The @code{separator} function is deprecated and must not be used in
+the newly written code. It will be removed after version 1.10.
+Use the guile function @code{file-name-separator-string} instead.
 @end defvar
 
 @defvar path-separator-char
