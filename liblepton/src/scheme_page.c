@@ -29,7 +29,7 @@
 
 SCM_SYMBOL (edascm_string_format_sym , "string-format");
 
-/*! \brief Get a of open pages.
+/*! \brief Get a list of open pages.
  * \par Function Description
  * Retrieves a Scheme list of currently-opened pages.
  *
