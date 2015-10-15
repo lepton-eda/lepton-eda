@@ -11,4 +11,5 @@ symcheck/src/s_log.c
 symcheck/scheme/symbol/blame.scm
 symcheck/scheme/symbol/check.scm
 symcheck/scheme/symbol/check/attrib.scm
+symcheck/scheme/symbol/check/pin-attrib.scm
 symcheck/scheme/symbol/check/text.scm

@@ -3,6 +3,7 @@
   ; Import C procedures and variables
   #:use-module (symbol core check)
 
+  #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
@@ -11,13 +12,15 @@
   #:use-module (geda object)
   #:use-module (geda attrib)
   #:use-module (symbol check attrib)
+  #:use-module (symbol check pin-attrib)
   #:use-module (symbol check text))
 
 (define-public (check-all-symbols)
   (apply + (map check-symbol (active-pages))))
 
-
-(define-public check-symbol-pintype %check-symbol-pintype)
+;;; Check all pintype attributes for all symbol pins.
+(define-public (check-symbol-pintype page)
+  (for-each check-pin-pintype (page-contents page)))
 
 (define-public check-symbol-missing-attribute %check-symbol-missing-attribute)
 
