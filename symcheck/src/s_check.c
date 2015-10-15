@@ -55,18 +55,6 @@ guint numslots = 0;
 guint numslotpins = 0;
 
 
-static gboolean
-s_check_list_has_item(char **list , char *item)
-{
-  gint cur;
-  for (cur = 0; list[cur] != NULL; cur++) {
-    if (strcmp(item, list[cur]) == 0)
-      return TRUE;
-  }
-  return FALSE;
-}
-
-
 SCM_DEFINE (symbol_check_glist_append, "%symbol-check-glist-append", 2, 0, 0,
             (SCM type_s, SCM message_s), "Check symbol text primitives")
 {
@@ -1103,46 +1091,6 @@ SCM_DEFINE (check_symbol_missing_attributes, "%check-symbol-missing-attributes",
   return SCM_BOOL_T;
 }
 
-SCM_DEFINE (check_symbol_pintype, "%check-symbol-pintype", 1, 0, 0,
-            (SCM page_s), "Check symbol pintype attribute")
-{
-  const GList *iter;
-  int counter=0;
-  char *pintype;
-  char *message;
-  char *pintypes[] = {"in", "out", "io", "oc", "oe",
-		      "pas", "tp", "tri", "clk", "pwr",
-		      NULL};
-
-  PAGE* p_current = edascm_to_page (page_s);
-  const GList *obj_list = s_page_objects (p_current);
-
-  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
-
-    if (o_current->type == OBJ_PIN) {
-
-      for (counter = 0;
-           (pintype = o_attrib_search_object_attribs_by_name (o_current, "pintype",
-                                                              counter)) != NULL;
-           counter++) {
-
-        message = g_strdup_printf(_("Found pintype=%1$s attribute\n"), pintype);
-        info_messages = g_list_append (info_messages, message);
-
-        if ( ! s_check_list_has_item(pintypes, pintype)) {
-          message = g_strdup_printf (_("Invalid pintype=%1$s attribute\n"), pintype);
-          error_messages = g_list_append (error_messages, message);
-        }
-
-        g_free(pintype);
-      }
-    }
-  }
-
-  return SCM_BOOL_T;
-}
-
 /*! \brief Get a list of info messages.
  * \par Function Description
  * Retrieves a Scheme list of info messages.
@@ -1252,7 +1200,6 @@ init_module_symbol_core_check ()
                 s_check_symbol_device,
                 s_check_symbol_missing_attribute,
                 s_check_symbol_missing_attributes,
-                s_check_symbol_pintype,
                 s_check_symbol_pinseq,
                 s_check_symbol_pinnumber,
                 s_check_symbol_pins_on_grid,

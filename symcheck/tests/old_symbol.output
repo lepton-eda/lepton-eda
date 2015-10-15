@@ -2,7 +2,6 @@ Warning: Missing pintype= attribute
 Warning: Missing pintype= attribute
 Warning: Missing pinlabel= attribute
 Warning: Missing refdes= attribute
-ERROR: Invalid pintype=123just a type attribute
 ERROR: Missing pinseq= attribute
 ERROR: Missing pinseq= attribute
 ERROR: Missing pinseq= attribute
@@ -22,6 +21,7 @@ Warning: Found unknown slot3= attribute: [slot3=9,10,8]
 Warning: Found unknown slot4= attribute: [slot4=12,13,11]
 Warning: Found unknown pin3= attribute: [pin3=3]
 Warning: Found unknown pin2= attribute: [pin2=2]
+ERROR: Invalid pintype=123just a type attribute
 Warning: Found unknown pin1= attribute: [pin1=1]
 Warning: Found obsolete uref= attribute: [uref=U?]
 12 warnings found
