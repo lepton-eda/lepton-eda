@@ -46,7 +46,9 @@
 
 (define-public check-symbol-graphical %check-symbol-graphical)
 
-(define-public check-symbol-text %check-symbol-text)
+(define-public (check-symbol-text page)
+  (for-each (lambda (object) (check-text-string object))
+            (page-contents page)))
 
 (define symbol-check-glist-append %symbol-check-glist-append)
 

@@ -71,89 +71,6 @@ SCM_DEFINE (symbol_check_glist_append, "%symbol-check-glist-append", 2, 0, 0,
   return SCM_BOOL_T;
 }
 
-SCM_DEFINE (check_symbol_text, "%check-symbol-text", 1, 0, 0,
-            (SCM page_s), "Check symbol text primitives")
-{
-  const GList *iter;
-  OBJECT *o_current;
-  gboolean overbar_started, escape, leave_parser;
-  char *message;
-  const char *text_string;
-  const char *ptr;
-  gunichar current_char;
-
-  PAGE* p_current = edascm_to_page (page_s);
-  const GList *obj_list = s_page_objects (p_current);
-
-  for (iter = obj_list; iter != NULL; iter = g_list_next(iter)) {
-    o_current = (OBJECT*) iter->data;
-
-    if (o_current->type != OBJ_TEXT)
-      continue;
-
-    overbar_started = escape = leave_parser = FALSE;
-    text_string = geda_text_object_get_string (o_current);
-
-    for (ptr = text_string;
-         ptr != NULL && !leave_parser;
-         ptr = g_utf8_find_next_char (ptr, NULL)) {
-
-      current_char = g_utf8_get_char_validated (ptr, -1);
-
-      /* state machine to interpret the string:
-       * there are two independant state variables overbar_started and escape.
-       */
-      switch (current_char) {
-      case '\0':
-        /* end of the string */
-        leave_parser = TRUE;
-        break;
-      case '\\':
-        if (escape == TRUE) {
-          escape = FALSE;
-        } else {
-          escape = TRUE;
-        }
-        break;
-      case '_':
-        if (escape == TRUE) {
-          escape = FALSE;
-          if (overbar_started == TRUE) {
-            overbar_started = FALSE;
-          } else {
-            overbar_started = TRUE;
-          }
-        }
-        break;
-      default:
-        if (escape == TRUE) {
-          message = g_strdup_printf (_("Found text with a '\\' in it: consider"
-                                     " to escape it with '\\\\' [%1$s]\n"),
-                                     text_string);
-          warning_messages = g_list_append (warning_messages, message);
-          escape = FALSE;
-        }
-      }
-    }
-
-    if (escape == TRUE) {
-      message = g_strdup_printf (_("Found text with a trailing '\': consider to "
-                                 "escape it with '\\\\' [%1$s]\n"),
-                                 text_string);
-      warning_messages = g_list_append (warning_messages, message);
-    }
-
-    if (overbar_started == TRUE) {
-      message = g_strdup_printf (_("Found text with unbalanced overbar "
-                                 "markers '\\_' in it' [%1$s]\n"),
-                                 text_string);
-      warning_messages = g_list_append (warning_messages, message);
-    }
-  }
-
-  return SCM_BOOL_T;
-}
-
 SCM_DEFINE (check_symbol_graphical, "%check-symbol-graphical", 1, 0, 0,
             (SCM page_s), "Check graphical symbol attribute")
 {
@@ -1195,8 +1112,7 @@ init_module_symbol_core_check ()
 
   /* Register the functions and add them to the module's public
    * definitions. */
-  scm_c_export (s_check_symbol_text,
-                s_check_symbol_graphical,
+  scm_c_export (s_check_symbol_graphical,
                 s_check_symbol_device,
                 s_check_symbol_missing_attribute,
                 s_check_symbol_missing_attributes,
