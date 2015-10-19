@@ -4,7 +4,17 @@
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
 
-  #:export (check-attribute))
+  #:export (graphical-attrib?
+            check-attribute))
+
+
+(define (graphical-attrib? object)
+  "Checks if object is attribute 'graphical=1'."
+  (and (attribute? object)
+       (not (attrib-attachment object)) ; floating
+       (string=? (attrib-name object) "graphical")
+       (string=? (attrib-value object) "1")))
+
 
 (define (check-attribute object)
   "Checks attribute OBJECT."

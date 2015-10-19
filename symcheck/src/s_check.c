@@ -44,8 +44,6 @@ GList *info_messages = NULL;
 GList *warning_messages = NULL;
 GList *error_messages = NULL;
 
-gboolean graphical_symbol = FALSE;
-
 guint found_footprint = FALSE;
 guint found_refdes = FALSE;
 
@@ -71,27 +69,8 @@ SCM_DEFINE (symbol_check_glist_append, "%symbol-check-glist-append", 2, 0, 0,
   return SCM_BOOL_T;
 }
 
-SCM_DEFINE (check_symbol_graphical, "%check-symbol-graphical", 1, 0, 0,
-            (SCM page_s), "Check graphical symbol attribute")
-{
-  char *temp;
-
-  PAGE* p_current = edascm_to_page (page_s);
-  const GList *obj_list = s_page_objects (p_current);
-
-  /* look for special graphical tag */
-  temp = o_attrib_search_floating_attribs_by_name (obj_list, "graphical", 0);
-
-  if (temp) {
-    graphical_symbol=TRUE;
-    g_free(temp);
-  }
-
-  return SCM_BOOL_T;
-}
-
-SCM_DEFINE (check_symbol_device, "%check-symbol-device", 1, 0, 0,
-            (SCM page_s), "Check symbol device attribute")
+SCM_DEFINE (check_symbol_device, "%check-symbol-device", 2, 0, 0,
+            (SCM is_graphical_s, SCM page_s), "Check symbol device attribute")
 {
   char *temp;
   char *message;
@@ -112,12 +91,14 @@ SCM_DEFINE (check_symbol_device, "%check-symbol-device", 1, 0, 0,
   }
 
   /* check for device = none for graphical symbols */
-  if (temp && graphical_symbol && (strcmp (temp, "none") == 0)) {
-    message = g_strdup (_("Found graphical symbol, device=none\n"));
-    info_messages = g_list_append (info_messages, message);
-  } else if (graphical_symbol) {
-    message = g_strdup (_("Found graphical symbol, device= should be set to none\n"));
-    warning_messages = g_list_append (warning_messages, message);
+  if (scm_is_true (is_graphical_s)) {
+    if (temp && (strcmp (temp, "none") == 0)) {
+      message = g_strdup (_("Found graphical symbol, device=none\n"));
+      info_messages = g_list_append (info_messages, message);
+    } else {
+      message = g_strdup (_("Found graphical symbol, device= should be set to none\n"));
+      warning_messages = g_list_append (warning_messages, message);
+    }
   }
 
   g_free(temp);
@@ -1112,8 +1093,7 @@ init_module_symbol_core_check ()
 
   /* Register the functions and add them to the module's public
    * definitions. */
-  scm_c_export (s_check_symbol_graphical,
-                s_check_symbol_device,
+  scm_c_export (s_check_symbol_device,
                 s_check_symbol_missing_attribute,
                 s_check_symbol_missing_attributes,
                 s_check_symbol_pinseq,
