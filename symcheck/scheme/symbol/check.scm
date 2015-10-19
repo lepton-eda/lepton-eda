@@ -47,7 +47,15 @@
 
 (define-public check-symbol-pinnumber %check-symbol-pinnumber)
 
-(define-public check-symbol-pinseq %check-symbol-pinseq)
+
+;;; Check symbol pinseq attribute
+(define (check-symbol-pinseq page)
+  (define (pinseq object)
+    (and (pin? object)
+         (check-pin-pinseq object)))
+
+  (check-attrib-duplicates (filter-map pinseq (page-contents page))))
+
 
 (define-public (check-symbol-device is-graphical page)
   (define (is-device-attrib? object)

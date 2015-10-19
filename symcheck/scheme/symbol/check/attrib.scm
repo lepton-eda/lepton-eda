@@ -1,4 +1,6 @@
 (define-module (symbol check attrib)
+  #:use-module (ice-9 match)
+  #:use-module (srfi srfi-1)
   #:use-module (geda page)
   #:use-module (geda object)
   #:use-module (geda attrib)
@@ -8,7 +10,8 @@
   #:export (graphical-attrib?
             check-attribute
             check-device-attribs
-            check-required-attribs))
+            check-required-attribs
+            check-attrib-duplicates))
 
 
 (define (graphical-attrib? object)
@@ -122,3 +125,44 @@ device= value which should be 'none' for graphical symbols."
                                    aname
                                    aname
                                    avalue)))))))
+
+
+;;; Sorts attrib list LS and transforms it into a list where
+;;; duplicated attributes are gathered together into sublists.
+(define (attrib-duplicates ls)
+  (define (attrib-value<? a b)
+    (string<? (attrib-value a) (attrib-value b)))
+
+  (define (attrib-value=? a b)
+    (string=? (attrib-value a) (attrib-value b)))
+
+  (fold-right
+   (lambda (elem ret)
+     (match ret
+       (((x . xrest) . rest)
+        (if (attrib-value=? elem x)
+            `((,elem . (,x . ,xrest)) . ,rest)
+            `(,elem . ,ret)))
+       ((x . rest)
+        (if (attrib-value=? elem x)
+            `((,elem ,x) . ,rest)
+            `(,elem . ,ret)))
+       (_ `(,elem . ,ret))))
+   '()
+   (sort ls attrib-value<?)))
+
+
+(define (check-attrib-duplicates ls)
+  "Checks for duplicated attributes in LS."
+  (define (blame-duplicate object)
+    (blame-object object
+                  'error
+                  (format #f
+                          (_ "Found duplicate ~A=~A attribute in the symbol\n")
+                          (attrib-name object)
+                          (attrib-value object))))
+  (define (blame-if-list ls)
+    (when (list? ls)
+      (for-each blame-duplicate ls)))
+
+  (for-each blame-if-list (attrib-duplicates ls)))

@@ -5,6 +5,7 @@
   #:use-module (symbol blame)
 
   #:export (check-pin-pintype
+            check-pin-pinseq
             check-pin-required-attribs))
 
 (define %valid-pintype-values
@@ -30,6 +31,32 @@
                                        'error
                                        (invalid-attrib 'pintype value))))))
                  (object-attribs object))))
+
+;;; Returns OBJECT's attribute pinseq= if it is valid, otherwise returns #f.
+(define (check-pin-pinseq object)
+  (let ((attrib-list (filter
+                      (lambda (obj) (string=? (attrib-name obj) "pinseq"))
+                      (object-attribs object))))
+
+    (if (null? attrib-list)
+        (begin
+          (blame-object object
+                        'error
+                        (format #f (_ "Missing ~A= attribute\n") 'pinseq))
+          #f)
+        (if (null? (cdr attrib-list))
+            (let ((value (attrib-value (car attrib-list))))
+              (if (string=? value "0")
+                  (begin
+                    (blame-object object 'error (format #f (_ "Found ~A=~A attribute\n") 'pinseq value))
+                    #f)
+                  (car attrib-list)))
+            (begin
+              (blame-object object
+                           'error
+                           (format #f (_ "Found multiple ~A= attributes on one pin\n") 'pinseq))
+              #f)))))
+
 
 (define (check-pin-required-attribs object attr-name)
   "Checks pin required attributes ATTR-NAME of pin OBJECT."
