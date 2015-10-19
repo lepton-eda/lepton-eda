@@ -44,7 +44,9 @@
 
 (define-public check-symbol-device %check-symbol-device)
 
-(define-public check-symbol-graphical %check-symbol-graphical)
+;;; Check if symbol is graphical.
+(define-public (check-symbol-is-graphical? page)
+  (not (null? (filter graphical-attrib? (page-contents page)))))
 
 (define-public (check-symbol-text page)
   (for-each (lambda (object) (check-text-string object))
@@ -96,11 +98,8 @@
     ; test all text elements
     (check-symbol-text page)
 
-    ; check for graphical attribute
-    (check-symbol-graphical page)
-
     ; check for device attribute
-    (check-symbol-device page)
+    (check-symbol-device (check-symbol-is-graphical? page) page)
 
     ; check for missing attributes
     (check-symbol-missing-attributes page)
