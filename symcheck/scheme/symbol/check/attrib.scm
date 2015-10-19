@@ -1,4 +1,5 @@
 (define-module (symbol check attrib)
+  #:use-module (geda page)
   #:use-module (geda object)
   #:use-module (geda attrib)
   #:use-module (symbol gettext)
@@ -6,7 +7,8 @@
 
   #:export (graphical-attrib?
             check-attribute
-            check-device-attribs))
+            check-device-attribs
+            check-required-attribs))
 
 
 (define (graphical-attrib? object)
@@ -42,6 +44,25 @@ device= value which should be 'none' for graphical symbols."
                                 (format #f (_ "Conflicting attribute: ~A.\n") 'device)))
                 device-list)))
 
+(define (check-required-attribs page attr-name)
+  "Checks required toplevel attributes ATTR-NAME on PAGE."
+  (define (filter-attrib object)
+    (and (attribute? object)
+         (string=? (attrib-name object) attr-name)
+         (blame-object object
+                       'info
+                       (format #f (_ "Found ~A=~A\n") attr-name (text-string object)))
+         object))
+
+  (let ((attrib-list (filter filter-attrib (page-contents page))))
+    (if (null? attrib-list)
+        (blame-object page
+                      'warning
+                      (format #f (_ "Missing ~A= attribute\n") attr-name))
+        (unless (null? (cdr attrib-list))
+          (blame-object page
+                        'error
+                        (format #f (_ "Multiple ~A= attributes found\n") attr-name))))))
 
 (define (check-attribute object)
   "Checks attribute OBJECT."

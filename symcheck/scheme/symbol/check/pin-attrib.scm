@@ -4,7 +4,8 @@
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
 
-  #:export (check-pin-pintype))
+  #:export (check-pin-pintype
+            check-pin-required-attribs))
 
 (define %valid-pintype-values
   '(in out io oc oe pas tp tri clk pwr))
@@ -29,3 +30,25 @@
                                        'error
                                        (invalid-attrib 'pintype value))))))
                  (object-attribs object))))
+
+(define (check-pin-required-attribs object attr-name)
+  "Checks pin required attributes ATTR-NAME of pin OBJECT."
+  (define (filter-attrib object)
+    (and (string=? (attrib-name object) attr-name)
+         object))
+
+  (and (pin? object)
+       (let ((attrib-list (filter filter-attrib (object-attribs object))))
+         (if (null? attrib-list)
+             (blame-object object
+                              'warning
+                              (format #f (_ "Missing ~A= attribute\n") attr-name))
+             (unless (null? (cdr attrib-list))
+               (blame-object object
+                             'error (format #f
+                                            (_"Found multiple ~A=~A attributes on one pin\n")
+                                            attr-name
+                                            (attrib-value (car
+                                                           ;; reverse attributes for backward
+                                                           ;; compatibility
+                                                           (reverse attrib-list))))))))))

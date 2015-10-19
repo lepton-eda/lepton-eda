@@ -830,126 +830,6 @@ SCM_DEFINE (check_symbol_connections, "%check-symbol-connections", 1, 0, 0,
   return SCM_BOOL_T;
 }
 
-SCM_DEFINE (check_symbol_missing_attribute, "%check-symbol-missing-attribute", 2, 0, 0,
-            (SCM object_s, SCM attrib_name), "Check for named symbol missing attribute")
-{
-  char *string;
-  int found_first=FALSE;
-  int counter=0;
-  char *message;
-
-  OBJECT *object = edascm_to_object (object_s);
-  char *attribute = scm_to_utf8_string (attrib_name);
-
-  if (!attribute) {
-    return SCM_BOOL_T;
-  }
-
-  string = o_attrib_search_object_attribs_by_name (object, attribute, counter);
-  if (!string)
-  {
-    message = g_strdup_printf (
-      _("Missing %1$s= attribute\n"),
-      attribute);
-    warning_messages = g_list_append (warning_messages, message);
-  }
-
-  while (string)
-  {
-
-    if (found_first) {
-      message = g_strdup_printf (
-        _("Found multiple %1$s=%2$s attributes on one pin\n"),
-        attribute, string);
-      error_messages = g_list_append (error_messages, message);
-    }
-        
-    /* this is the first attribute found */
-    if (!found_first) {
-
-      message = g_strdup_printf (
-        _("Found %1$s=%2$s attribute\n"),
-        attribute, string);
-      info_messages = g_list_append (info_messages, message);
-      found_first=TRUE;
-    }
-
-    g_free(string);
-
-    counter++;
-    string = o_attrib_search_object_attribs_by_name (object, attribute, counter);
-  }
-
-  return SCM_BOOL_T;
-}
-
-SCM_DEFINE (check_symbol_missing_attributes, "%check-symbol-missing-attributes", 1, 0, 0,
-            (SCM page_s), "Check symbol missing attributes")
-{
-  const GList *iter;
-  char *message;
-
-  SCM obj_s;
-  SCM attrib_name_s;
-
-  PAGE* p_current = edascm_to_page (page_s);
-  const GList *obj_list = s_page_objects (p_current);
-
-  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
-
-    if (o_current->type == OBJ_PIN)
-    {
-      obj_s = edascm_from_object (o_current);
-      attrib_name_s = scm_from_utf8_string ("pinlabel");
-      check_symbol_missing_attribute (obj_s, attrib_name_s);
-      attrib_name_s = scm_from_utf8_string ("pintype");
-      check_symbol_missing_attribute (obj_s, attrib_name_s);
-    }
-
-    if (o_current->type == OBJ_TEXT)
-    {
-      if (strstr(geda_text_object_get_string (o_current), "footprint=")) {
-        message = g_strdup_printf (
-          _("Found %1$s attribute\n"),
-          geda_text_object_get_string (o_current));
-        info_messages = g_list_append (info_messages, message);
-        found_footprint++;
-      }
-
-      if (strstr(geda_text_object_get_string (o_current), "refdes=")) {
-        message = g_strdup_printf (
-          _("Found %1$s attribute\n"),
-          geda_text_object_get_string (o_current));
-        info_messages = g_list_append (info_messages, message);
-        found_refdes++;
-      }
-
-    }
-  }
-
-  if (found_footprint == 0) {
-    message = g_strdup (_("Missing footprint= attribute\n"));
-    warning_messages = g_list_append (warning_messages, message);
-  }
-
-    if (found_footprint > 1) {
-    message = g_strdup (_("Multiple footprint= attributes found\n"));
-    error_messages = g_list_append (error_messages, message);
-  }
-
-  if (found_refdes == 0) {
-    message = g_strdup (_("Missing refdes= attribute\n"));
-    warning_messages = g_list_append (warning_messages, message);
-  }
-
-  if (found_refdes > 1) {
-    message = g_strdup (_("Multiple refdes= attributes found\n"));
-    error_messages = g_list_append (error_messages, message);
-  }
-
-  return SCM_BOOL_T;
-}
 
 /*! \brief Get a list of info messages.
  * \par Function Description
@@ -1055,9 +935,7 @@ init_module_symbol_core_check ()
 
   /* Register the functions and add them to the module's public
    * definitions. */
-  scm_c_export (s_check_symbol_missing_attribute,
-                s_check_symbol_missing_attributes,
-                s_check_symbol_pinseq,
+  scm_c_export (s_check_symbol_pinseq,
                 s_check_symbol_pinnumber,
                 s_check_symbol_pins_on_grid,
                 s_check_symbol_slotdef,
