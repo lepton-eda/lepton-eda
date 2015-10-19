@@ -54,7 +54,7 @@ tests:
 	  $(SHELL) $(srcdir)/runtest.sh $$file; \
           if [ $$? -ne 0 ]; then \
 	     echo "$$base FAILED!"; \
-             fail=`expr $$pass + 1`; \
+             fail=`expr $$fail + 1`; \
 	   else \
 	     echo "$$base passed."; \
              pass=`expr $$pass + 1`; \
