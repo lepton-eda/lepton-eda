@@ -69,44 +69,6 @@ SCM_DEFINE (symbol_check_glist_append, "%symbol-check-glist-append", 2, 0, 0,
   return SCM_BOOL_T;
 }
 
-SCM_DEFINE (check_symbol_device, "%check-symbol-device", 2, 0, 0,
-            (SCM is_graphical_s, SCM page_s), "Check symbol device attribute")
-{
-  char *temp;
-  char *message;
-
-  PAGE* p_current = edascm_to_page (page_s);
-  const GList *obj_list = s_page_objects (p_current);
-
-  /* search for device attribute */
-  temp = o_attrib_search_floating_attribs_by_name (obj_list, "device", 0);
-  if (!temp) {
-    /* did not find device= attribute */
-    message = g_strdup (_("Missing device= attribute\n"));
-    error_messages = g_list_append (error_messages, message);
-  } else {
-    /* found device= attribute */
-    message = g_strdup_printf (_("Found device=%1$s\n"), temp);
-    info_messages = g_list_append (info_messages, message);
-  }
-
-  /* check for device = none for graphical symbols */
-  if (scm_is_true (is_graphical_s)) {
-    if (temp && (strcmp (temp, "none") == 0)) {
-      message = g_strdup (_("Found graphical symbol, device=none\n"));
-      info_messages = g_list_append (info_messages, message);
-    } else {
-      message = g_strdup (_("Found graphical symbol, device= should be set to none\n"));
-      warning_messages = g_list_append (warning_messages, message);
-    }
-  }
-
-  g_free(temp);
-
-  return SCM_BOOL_T;
-}
-
-
 SCM_DEFINE (check_symbol_pinseq, "%check-symbol-pinseq", 1, 0, 0,
             (SCM page_s), "Check symbol pinseq attribute")
 {
@@ -1093,8 +1055,7 @@ init_module_symbol_core_check ()
 
   /* Register the functions and add them to the module's public
    * definitions. */
-  scm_c_export (s_check_symbol_device,
-                s_check_symbol_missing_attribute,
+  scm_c_export (s_check_symbol_missing_attribute,
                 s_check_symbol_missing_attributes,
                 s_check_symbol_pinseq,
                 s_check_symbol_pinnumber,
