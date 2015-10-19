@@ -69,117 +69,6 @@ SCM_DEFINE (symbol_check_glist_append, "%symbol-check-glist-append", 2, 0, 0,
   return SCM_BOOL_T;
 }
 
-SCM_DEFINE (check_symbol_pinseq, "%check-symbol-pinseq", 1, 0, 0,
-            (SCM page_s), "Check symbol pinseq attribute")
-{
-  char *string;
-  int found_first=FALSE;
-  int counter=0;
-
-  GList *found_numbers = NULL;
-  GList *ptr1 = NULL;
-  GList *ptr2 = NULL;
-  const GList *iter;
-  char *number;
-  char *message;
-
-  PAGE* p_current = edascm_to_page (page_s);
-  const GList *obj_list = s_page_objects (p_current);
-
-  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
-    
-    if (o_current->type == OBJ_PIN)
-    {
-      found_first = FALSE;
-      counter = 0;
-      
-      string = o_attrib_search_object_attribs_by_name (o_current, "pinseq",
-                                                       counter);
-      if (!string)
-      {
-        message = g_strdup (_("Missing pinseq= attribute\n"));
-        error_messages = g_list_append (error_messages, message);
-      }
-
-      while (string)
-      {
-
-        message = g_strdup_printf (_("Found pinseq=%1$s attribute\n"), string);
-        info_messages = g_list_append (info_messages, message);
-
-        number = g_strdup (string);
-
-        if (strcmp(number, "0") == 0) {
-          message = g_strdup (_("Found pinseq=0 attribute\n"));
-          error_messages = g_list_append (error_messages, message);
-        }
-
-        if (found_first) {
-          message = g_strdup_printf (
-            _("Found multiple pinseq=%1$s attributes on one pin\n"),
-            string);
-          error_messages = g_list_append (error_messages, message);
-        }
-
-        g_free(string);
-        
-        /* this is the first attribute found */
-        if (!found_first) {
-          found_numbers = g_list_append(found_numbers, number);
-          found_first=TRUE;
-        } else {
-          g_free(number);
-        }
-        
-        counter++;
-        string = o_attrib_search_object_attribs_by_name (o_current, "pinseq",
-                                                         counter);
-      }
-    }
-
-  }
-
-  ptr1 = found_numbers;
-  while (ptr1)
-  {
-    char *string = (char *) ptr1->data;
-    int found = 0;
-    
-    ptr2 = found_numbers;
-    while(ptr2 && string)
-    {
-      char *current = (char *) ptr2->data;
-
-      if (current && strcmp(string, current) == 0) {
-        found++;
-      }
-      
-      ptr2 = g_list_next(ptr2);
-    }
-
-    if (found > 1)
-    {
-      message = g_strdup_printf (
-        _("Found duplicate pinseq=%1$s attribute in the symbol\n"),
-        string);
-      error_messages = g_list_append (error_messages, message);
-    }
-    
-    ptr1 = g_list_next(ptr1);
-  }
-
-  ptr1 = found_numbers;
-  while (ptr1)
-  {
-    g_free(ptr1->data);
-    ptr1 = g_list_next(ptr1);
-  }
-  g_list_free(found_numbers);
-
-  return SCM_BOOL_T;
-}
-
 SCM_DEFINE (check_symbol_pinnumber, "%check-symbol-pinnumber", 1, 0, 0,
             (SCM page_s), "Check symbol pinnumber attribute")
 {
@@ -935,8 +824,7 @@ init_module_symbol_core_check ()
 
   /* Register the functions and add them to the module's public
    * definitions. */
-  scm_c_export (s_check_symbol_pinseq,
-                s_check_symbol_pinnumber,
+  scm_c_export (s_check_symbol_pinnumber,
                 s_check_symbol_pins_on_grid,
                 s_check_symbol_slotdef,
                 s_check_symbol_oldpin,

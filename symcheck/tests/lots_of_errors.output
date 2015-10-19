@@ -1,4 +1,3 @@
-ERROR: Missing pinseq= attribute
 ERROR: Missing pinnumber= attribute
 ERROR: Too many pins in slotdef=1:1,2,3,5,6
 ERROR: Not enough pins in slotdef=2:4,5
@@ -12,6 +11,7 @@ Warning: Found unknown device_missing= attribute: [device_missing=7400]
 Warning: Missing pintype= attribute
 Warning: Missing pinlabel= attribute
 Warning: Found unknown pinnumbe= attribute: [pinnumbe=3]
+ERROR: Missing pinseq= attribute
 Warning: Missing pintype= attribute
 Warning: Missing pinlabel= attribute
 Warning: Found unknown pineq= attribute: [pineq=2]
