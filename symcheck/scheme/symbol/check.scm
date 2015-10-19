@@ -22,9 +22,16 @@
 (define-public (check-symbol-pintype page)
   (for-each check-pin-pintype (page-contents page)))
 
-(define-public check-symbol-missing-attribute %check-symbol-missing-attribute)
+;;; Check symbol required attributes.
+(define-public (check-symbol-required-attributes page)
+  (for-each
+    (lambda (object)
+      (check-pin-required-attribs object "pinlabel")
+      (check-pin-required-attribs object "pintype"))
+    (page-contents page))
 
-(define-public check-symbol-missing-attributes %check-symbol-missing-attributes)
+  (check-required-attribs page "refdes")
+  (check-required-attribs page "footprint"))
 
 (define-public check-symbol-connections %check-symbol-connections)
 
@@ -115,7 +122,7 @@
     (check-symbol-device (check-symbol-is-graphical? page) page)
 
     ; check for missing attributes
-    (check-symbol-missing-attributes page)
+    (check-symbol-required-attributes page)
 
     ; check for pintype attribute (and multiples) on all pins
     (check-symbol-pintype page)

@@ -1,5 +1,3 @@
-Warning: Missing pinlabel= attribute
-Warning: Missing pintype= attribute
 ERROR: Missing pinseq= attribute
 ERROR: Missing pinnumber= attribute
 ERROR: Not enough pins in slotdef=1:1,2,3
@@ -8,5 +6,7 @@ ERROR: Not enough pins in slotdef=3:9,10,8
 ERROR: Not enough pins in slotdef=4:12,13,11
 ERROR: Found a connection inside a symbol
 ERROR: Found a connection inside a symbol
+Warning: Missing pintype= attribute
+Warning: Missing pinlabel= attribute
 2 warnings found
 8 ERRORS found
