@@ -42,7 +42,20 @@
 
 (define-public check-symbol-pinseq %check-symbol-pinseq)
 
-(define-public check-symbol-device %check-symbol-device)
+(define-public (check-symbol-device is-graphical page)
+  (define (is-device-attrib? object)
+    (and (attribute? object)
+         (not (attrib-attachment object)) ; floating
+         (string=? (attrib-name object) "device")
+         object))
+
+  (let ((device-list (filter is-device-attrib? (page-contents page))))
+    (if (null? device-list)
+        (blame-object page
+                      'error
+                      (format #f (_ "Missing ~A= attribute\n") 'device))
+        (check-device-attribs is-graphical device-list))))
+
 
 ;;; Check if symbol is graphical.
 (define-public (check-symbol-is-graphical? page)
@@ -139,7 +152,7 @@
         (check-symbol-output-results)
         (apply report-statistics (map +
                                       `(0 ,warning-count ,error-count 0)
-                                      (report-blames (page-contents page)))))
+                                      (report-blames `(,page . ,(page-contents page))))))
 
 
     ; return code

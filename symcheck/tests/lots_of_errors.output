@@ -6,7 +6,6 @@ Warning: Missing pinlabel= attribute
 Warning: Missing pintype= attribute
 Warning: Missing footprint= attribute
 Warning: Missing refdes= attribute
-ERROR: Missing device= attribute
 ERROR: Missing pinseq= attribute
 ERROR: Missing pinnumber= attribute
 ERROR: Too many pins in slotdef=1:1,2,3,5,6
@@ -14,6 +13,7 @@ ERROR: Not enough pins in slotdef=2:4,5
 ERROR: Slot 8 is larger then the maximum number (5) of slots
 ERROR: Invalid slotdef=a attributes, not continuing
 ERROR: Malformed slotdef= (the format is #:#,#,#,...)
+ERROR: Missing device= attribute
 Warning: Found unknown device_missing= attribute: [device_missing=7400]
 Warning: Found unknown pinnumbe= attribute: [pinnumbe=3]
 Warning: Found unknown pineq= attribute: [pineq=2]
