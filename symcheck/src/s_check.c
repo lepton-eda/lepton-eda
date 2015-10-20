@@ -68,53 +68,6 @@ SCM_DEFINE (symbol_check_glist_append, "%symbol-check-glist-append", 2, 0, 0,
   return SCM_BOOL_T;
 }
 
-SCM_DEFINE (check_symbol_pins_on_grid, "%check-symbol-pins-on-grid", 1, 0, 0,
-            (SCM page_s), "Check for whether all symbol pins are on grid")
-{
-  int x1, x2, y1, y2;
-  const GList *iter;
-  char *message;
-
-  PAGE* p_current = edascm_to_page (page_s);
-  const GList *obj_list = s_page_objects (p_current);
-
-  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
-
-    if (o_current->type == OBJ_PIN) {
-      x1 = o_current->line->x[0];
-      y1 = o_current->line->y[0];
-      x2 = o_current->line->x[1];
-      y2 = o_current->line->y[1];
-      
-      if (x1 % 100 != 0 || y1 % 100 != 0) {
-        message = g_strdup_printf(_("Found offgrid pin at location"
-                                  " (x1=%1$d,y1=%2$d)\n"), x1, y1);
-        /* error if it is the whichend, warning if not */
-        if (o_current->whichend == 0) {
-          error_messages = g_list_append (error_messages, message);
-        }
-        else {
-          warning_messages = g_list_append (warning_messages, message);
-        }
-      }
-      if (x2 % 100 != 0 || y2 % 100 != 0) {
-        message = g_strdup_printf(_("Found offgrid pin at location"
-                                  " (x2=%1$d,y2=%2$d)\n"), x2, y2);
-        /* error when whichend, warning if not */
-        if (o_current-> whichend != 0) {
-          error_messages = g_list_append (error_messages, message);
-        }
-        else {
-          warning_messages = g_list_append (warning_messages, message);
-        }
-      }
-    }
-  }
-
-  return SCM_BOOL_T;
-}
-
 SCM_DEFINE (check_symbol_slotdef, "%check-symbol-slotdef", 2, 0, 0,
             (SCM numpins_s, SCM page_s), "Check symbol slotdef attribute")
 {
@@ -664,8 +617,7 @@ init_module_symbol_core_check ()
 
   /* Register the functions and add them to the module's public
    * definitions. */
-  scm_c_export (s_check_symbol_pins_on_grid,
-                s_check_symbol_slotdef,
+  scm_c_export (s_check_symbol_slotdef,
                 s_check_symbol_oldpin,
                 s_check_symbol_oldslot,
                 s_check_symbol_nets_buses,
