@@ -47,7 +47,6 @@ GList *error_messages = NULL;
 guint found_footprint = FALSE;
 guint found_refdes = FALSE;
 
-guint numpins = 0;
 guint numnetpins = 0;
 guint numslots = 0;
 guint numslotpins = 0;
@@ -65,166 +64,6 @@ SCM_DEFINE (symbol_check_glist_append, "%symbol-check-glist-append", 2, 0, 0,
   } else {
     g_assert_not_reached ();
   }
-
-  return SCM_BOOL_T;
-}
-
-SCM_DEFINE (check_symbol_pinnumber, "%check-symbol-pinnumber", 1, 0, 0,
-            (SCM page_s), "Check symbol pinnumber attribute")
-{
-  char *string;
-  int counter=0;
-  int i;
-
-  gchar **net_tokens;
-  gchar **pin_tokens;
-  GList *net_numbers = NULL;
-  GList *pin_numbers = NULL;
-  GList *cur = NULL;
-  GList *cur2 = NULL;
-  const GList *iter;
-  char *message;
-  char *net = NULL;
-
-  PAGE* p_current = edascm_to_page (page_s);
-  const GList *obj_list = s_page_objects (p_current);
-
-  /* collect all net pins */
-  for (counter = 0;
-       (net = o_attrib_search_floating_attribs_by_name (obj_list, "net", counter)) != NULL;
-       counter++) {
-    message = g_strdup_printf (_("Found net=%1$s attribute\n"), net);
-    info_messages = g_list_append (info_messages, message);
-
-    net_tokens = g_strsplit(net,":", -1);
-    /* length of net tokens have to be 2 */
-    if (net_tokens[1] == NULL) {
-      message = g_strdup_printf (_("Bad net= attribute [net=%1$s]\n"), net);
-      error_messages = g_list_append (error_messages, message);
-      g_strfreev(net_tokens);
-      continue;
-    } else if (net_tokens[2] != NULL) { /* more than 2 tokens */
-      message = g_strdup_printf (_("Bad net= attribute [net=%1$s]\n"), net);
-      error_messages = g_list_append (error_messages, message);
-      g_strfreev(net_tokens);
-      continue;
-    }
-
-    pin_tokens = g_strsplit(net_tokens[1],",",-1);
-    
-    for (i = 0; pin_tokens[i] != NULL; i++) {
-      net_numbers = g_list_append(net_numbers, g_strdup(pin_tokens[i]));
-      message = g_strdup_printf (_("Found pin number %1$s in net attribute\n"),
-                                 pin_tokens[i]);
-      info_messages = g_list_append (info_messages, message);
-      numnetpins++;
-    }
-    g_free(net);
-    g_strfreev(net_tokens);
-    g_strfreev(pin_tokens);
-  }
-  
-  /* check for duplicate net pin numbers */
-  net_numbers = g_list_sort(net_numbers, (GCompareFunc)strcmp);
-
-  for (cur = net_numbers;
-       cur != NULL && g_list_next(cur) != NULL;
-       cur = g_list_next(cur)) {
-    if (strcmp((gchar*)cur->data, (gchar*) cur->next->data) == 0) {
-      message = g_strdup_printf (_("Found duplicate pin in net= "
-                                 "attributes [%1$s]\n"), (gchar*) cur->data);
-      error_messages = g_list_append (error_messages, message);
-    }
-    if (strcmp((gchar*) cur->data, "0") == 0) {
-      message = g_strdup (_("Found pinnumber 0 in net= attribute\n"));
-      error_messages = g_list_append (error_messages, message);
-    }
-  }
-
-  /* collect all pin numbers */
-  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
-    
-    if (o_current->type == OBJ_PIN) {
-      numpins++;
-
-      for (counter = 0;
-	   (string = o_attrib_search_object_attribs_by_name (o_current, "pinnumber",
-	                                                     counter)) != NULL;
-	   counter++) {
-	
-        message = g_strdup_printf (_("Found pinnumber=%1$s attribute\n"), string);
-        info_messages = g_list_append (info_messages, message);
-
-	if (counter == 0) { /* collect the first appearance */
-	  pin_numbers = g_list_append(pin_numbers, string);
-	}
-        if (counter >= 1) {
-          message = g_strdup_printf (_("Found multiple pinnumber=%1$s attributes"
-                                     " on one pin\n"), string);
-          error_messages = g_list_append (error_messages, message);
-          g_free(string);
-        }
-      }
-	   
-      if (counter == 0) {
-        message = g_strdup (_("Missing pinnumber= attribute\n"));
-        error_messages = g_list_append (error_messages, message);
-      }
-    }
-  }
-
-  /* check for duplicate pinlabel numbers */
-  pin_numbers = g_list_sort(pin_numbers, (GCompareFunc)strcmp);
-  for (cur = pin_numbers;
-       cur != NULL && g_list_next(cur) != NULL;
-       cur = g_list_next(cur)) { 
-    if (strcmp((gchar*)cur->data, (gchar*) cur->next->data) == 0) {
-      message = g_strdup_printf (_("Found duplicate pinnumber=%1$s attribute "
-                                 "in the symbol\n"), (gchar*) cur->data);
-      error_messages = g_list_append (error_messages, message);
-    }
-    if (strcmp((gchar*) cur->data, "0") == 0) {
-      message = g_strdup (_("Found pinnumber=0 attribute\n"));
-      error_messages = g_list_append (error_messages, message);
-    }
-  }
-
-  /* Check for all pins that are in both lists and print a warning.
-     Sometimes this is useful and sometimes it's an error. */
-
-  cur = net_numbers;
-  cur2 = pin_numbers;
-
-  while (cur != NULL && cur2 != NULL) {
-    
-    i = strcmp((gchar*)cur->data, (gchar*)cur2->data);
-
-    if (i == 0) {
-      message = g_strdup_printf (_("Found the same number in a pinnumber "
-                                 "attribute and in a net attribute [%1$s]\n"),
-                                 (gchar*) cur->data);
-      warning_messages = g_list_append (warning_messages, message);
-      cur = g_list_next(cur);
-
-    } else if ( i > 0 ) {
-      cur2 = g_list_next(cur2);
-
-    } else { /* i < 0 */
-      cur = g_list_next(cur);
-    }
-  }
-
-  /* FIXME: this is not correct if a pinnumber is defined as pinnumber and
-     inside a net. We have to calculate the union set */
-  message = g_strdup_printf (_("Found %1$d pins inside symbol\n"),
-                             numpins + numnetpins);
-  info_messages = g_list_append(info_messages, message);
-
-  g_list_foreach(pin_numbers, (GFunc) g_free, NULL);
-  g_list_free(pin_numbers);
-  g_list_foreach(net_numbers, (GFunc) g_free, NULL);
-  g_list_free(net_numbers);
 
   return SCM_BOOL_T;
 }
@@ -276,8 +115,8 @@ SCM_DEFINE (check_symbol_pins_on_grid, "%check-symbol-pins-on-grid", 1, 0, 0,
   return SCM_BOOL_T;
 }
 
-SCM_DEFINE (check_symbol_slotdef, "%check-symbol-slotdef", 1, 0, 0,
-            (SCM page_s), "Check symbol slotdef attribute")
+SCM_DEFINE (check_symbol_slotdef, "%check-symbol-slotdef", 2, 0, 0,
+            (SCM numpins_s, SCM page_s), "Check symbol slotdef attribute")
 {
   char* value = NULL;
   char* slotdef = NULL;
@@ -301,6 +140,7 @@ SCM_DEFINE (check_symbol_slotdef, "%check-symbol-slotdef", 1, 0, 0,
 
   PAGE* p_current = edascm_to_page (page_s);
   const GList *obj_list = s_page_objects (p_current);
+  int numpins = scm_to_int (numpins_s);
 
   /* look for numslots to see if this symbol has slotting info */
   value = o_attrib_search_floating_attribs_by_name (obj_list, "numslots", 0);
@@ -824,8 +664,7 @@ init_module_symbol_core_check ()
 
   /* Register the functions and add them to the module's public
    * definitions. */
-  scm_c_export (s_check_symbol_pinnumber,
-                s_check_symbol_pins_on_grid,
+  scm_c_export (s_check_symbol_pins_on_grid,
                 s_check_symbol_slotdef,
                 s_check_symbol_oldpin,
                 s_check_symbol_oldslot,
