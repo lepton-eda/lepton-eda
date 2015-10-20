@@ -45,17 +45,26 @@
 
 (define-public check-symbol-pins-on-grid %check-symbol-pins-on-grid)
 
-(define-public check-symbol-pinnumber %check-symbol-pinnumber)
 
+;;; Check symbol pinnumber attribute
+(define (check-symbol-pinnumber page)
+  (let* ((objects (page-contents page))
+         (nets (sort (net-numbers objects) string<?))
+         (pinnumbers (filter-map check-pin-pinnumber objects))
+         (pinnumber-values (sort (map attrib-value pinnumbers) string<?)))
+
+    (check-duplicate-net-pinnumbers page nets)
+    (check-attrib-duplicates pinnumbers)
+    (check-duplicate-net-pinnumber-numbers page pinnumber-values nets)
+
+    ;; This is not correct if a pin number is defined both as
+    ;; pinnumber= and inside net=. We have to calculate the union
+    ;; set.
+    (length (filter pin? objects))))
 
 ;;; Check symbol pinseq attribute
 (define (check-symbol-pinseq page)
-  (define (pinseq object)
-    (and (pin? object)
-         (check-pin-pinseq object)))
-
-  (check-attrib-duplicates (filter-map pinseq (page-contents page))))
-
+  (check-attrib-duplicates (filter-map check-pin-pinseq (page-contents page))))
 
 (define-public (check-symbol-device is-graphical page)
   (define (is-device-attrib? object)
@@ -138,14 +147,12 @@
     ; check for pinseq attribute (and multiples) on all pins
     (check-symbol-pinseq page)
 
-    ; check for pinnumber attribute (and multiples) on all pins
-    (check-symbol-pinnumber page)
-
     ; check for whether all pins are on grid
     (check-symbol-pins-on-grid page)
 
+    ; check for pinnumber attribute (and multiples) on all pins
     ; check for slotdef attribute on all pins (if numslots exists)
-    (check-symbol-slotdef page)
+    (check-symbol-slotdef (check-symbol-pinnumber page) page)
 
     ; check for old pin#=# attributes
     (check-symbol-oldpin page)
