@@ -11,6 +11,7 @@
   #:use-module (geda log)
   #:use-module (geda object)
   #:use-module (geda attrib)
+  #:use-module (symbol check alignment)
   #:use-module (symbol check attrib)
   #:use-module (symbol check pin-attrib)
   #:use-module (symbol check text))
@@ -43,7 +44,10 @@
 
 (define-public check-symbol-slotdef %check-symbol-slotdef)
 
-(define-public check-symbol-pins-on-grid %check-symbol-pins-on-grid)
+;;; Check for whether all symbol pins are on grid
+(define (check-symbol-pins-on-grid page)
+  (for-each check-pin-alignment
+            (filter pin? (page-contents page))))
 
 
 ;;; Check symbol pinnumber attribute
