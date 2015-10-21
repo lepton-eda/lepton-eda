@@ -14,6 +14,7 @@
   #:use-module (symbol check alignment)
   #:use-module (symbol check attrib)
   #:use-module (symbol check pin-attrib)
+  #:use-module (symbol check slot)
   #:use-module (symbol check text))
 
 (define-public (check-all-symbols)
@@ -42,7 +43,10 @@
 
 (define-public check-symbol-oldpin %check-symbol-oldpin)
 
-(define-public check-symbol-slotdef %check-symbol-slotdef)
+;;; Check symbol slotting attributes.
+(define (check-symbol-slots numpins page)
+  (check-slots page numpins (page-contents page)))
+
 
 ;;; Check for whether all symbol pins are on grid
 (define (check-symbol-pins-on-grid page)
@@ -60,24 +64,15 @@
     (check-duplicate-net-pinnumbers page nets)
     (check-attrib-duplicates pinnumbers)
     (check-duplicate-net-pinnumber-numbers page pinnumber-values nets)
-
-    ;; This is not correct if a pin number is defined both as
-    ;; pinnumber= and inside net=. We have to calculate the union
-    ;; set.
-    (length (filter pin? objects))))
+    ;; Return pins.
+    (filter pin? objects)))
 
 ;;; Check symbol pinseq attribute
 (define (check-symbol-pinseq page)
   (check-attrib-duplicates (filter-map check-pin-pinseq (page-contents page))))
 
 (define-public (check-symbol-device is-graphical page)
-  (define (is-device-attrib? object)
-    (and (attribute? object)
-         (not (attrib-attachment object)) ; floating
-         (string=? (attrib-name object) "device")
-         object))
-
-  (let ((device-list (filter is-device-attrib? (page-contents page))))
+  (let ((device-list (filter-floating-attribs 'device (page-contents page))))
     (if (null? device-list)
         (blame-object page
                       'error
@@ -156,7 +151,7 @@
 
     ; check for pinnumber attribute (and multiples) on all pins
     ; check for slotdef attribute on all pins (if numslots exists)
-    (check-symbol-slotdef (check-symbol-pinnumber page) page)
+    (check-symbol-slots (check-symbol-pinnumber page) page)
 
     ; check for old pin#=# attributes
     (check-symbol-oldpin page)

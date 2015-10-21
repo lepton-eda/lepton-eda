@@ -8,6 +8,7 @@ nobase_dist_scmdata_DATA = \
 	symbol/check/attrib.scm \
 	symbol/check/duplicate.scm \
 	symbol/check/pin-attrib.scm \
+	symbol/check/slot.scm \
 	symbol/check/text.scm \
 	symbol/gettext.scm
 
