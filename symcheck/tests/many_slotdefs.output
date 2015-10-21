@@ -1,5 +1,3 @@
-ERROR: Found 5 slotdef= attributes.  Expecting 4 slotdef= attributes
-ERROR: Slot 5 is larger then the maximum number (4) of slots
-ERROR: Found 6 slotdef= attributes.  Expecting 4 slotdef= attributes
-ERROR: Slot 6 is larger then the maximum number (4) of slots
-4 ERRORS found
+ERROR: Slot number 5 (slotdef=5:12,13,11) is greater than the maximum slot number (4)
+ERROR: Slot number 6 (slotdef=6:12,13,11) is greater than the maximum slot number (4)
+2 ERRORS found

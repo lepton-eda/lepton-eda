@@ -1,12 +1,15 @@
-ERROR: Too many pins in slotdef=1:1,2,3,5,6
-ERROR: Not enough pins in slotdef=2:4,5
-ERROR: Slot 8 is larger then the maximum number (5) of slots
-ERROR: Invalid slotdef=a attributes, not continuing
-ERROR: Malformed slotdef= (the format is #:#,#,#,...)
+ERROR: Missing slotdef=5:... (there should be 5 slotdef= attributes)
+ERROR: Missing slotdef=4:... (there should be 5 slotdef= attributes)
 Warning: Missing footprint= attribute
 Warning: Missing refdes= attribute
 ERROR: Missing device= attribute
 Warning: Found unknown device_missing= attribute: [device_missing=7400]
+ERROR: Too many pins in slotdef=1:1,2,3,5,6 (must be 3)
+ERROR: Duplicate pin number 5 in slotdef=1:1,2,3,5,6 and other slotdef
+ERROR: Not enough pins in slotdef=2:4,5 (must be 3)
+ERROR: Duplicate pin number 5 in slotdef=2:4,5 and other slotdef
+ERROR: Slot number 8 (slotdef=8:9,10,8) is greater than the maximum slot number (5)
+ERROR: Invalid slotdef=a attribute (the format is #:#,#,#,...)
 ERROR: Missing pinnumber= attribute
 Warning: Missing pintype= attribute
 Warning: Missing pinlabel= attribute
@@ -19,4 +22,4 @@ Warning: Missing pintype= attribute
 Warning: Missing pinlabel= attribute
 Warning: Found obsolete uref= attribute: [uref=U?]
 12 warnings found
-8 ERRORS found
+11 ERRORS found

@@ -13,4 +13,5 @@ symcheck/scheme/symbol/check.scm
 symcheck/scheme/symbol/check/alignment.scm
 symcheck/scheme/symbol/check/attrib.scm
 symcheck/scheme/symbol/check/pin-attrib.scm
+symcheck/scheme/symbol/check/slot.scm
 symcheck/scheme/symbol/check/text.scm

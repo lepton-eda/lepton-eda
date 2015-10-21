@@ -7,12 +7,22 @@
   #:use-module (symbol blame)
   #:use-module (symbol check duplicate)
 
-  #:export (graphical-attrib?
+  #:export (filter-floating-attribs
+            graphical-attrib?
             check-attribute
             check-device-attribs
             check-required-attribs
             check-attrib-duplicates))
 
+(define (filter-floating-attribs name object-list)
+  "Filters OBJECT-LIST to contain only attributes named NAME which
+must be a symbol."
+  (define (floating-attrib-with-name object)
+    (and (attribute? object)
+         (not (attrib-attachment object)) ; floating
+         (eq? (string->symbol (attrib-name object)) name)))
+
+  (filter floating-attrib-with-name object-list))
 
 (define (graphical-attrib? object)
   "Checks if object is attribute 'graphical=1'."
