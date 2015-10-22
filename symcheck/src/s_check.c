@@ -68,60 +68,6 @@ SCM_DEFINE (symbol_check_glist_append, "%symbol-check-glist-append", 2, 0, 0,
   return SCM_BOOL_T;
 }
 
-SCM_DEFINE (check_symbol_nets_buses, "%check-symbol-nets-buses", 1, 0, 0,
-            (SCM page_s), "Check symbol for nets or buses completely disallowed within it")
-{
-  const GList *iter;
-  char *message;
-
-  PAGE* p_current = edascm_to_page (page_s);
-  const GList *obj_list = s_page_objects (p_current);
-
-  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
-
-    if (o_current->type == OBJ_NET)
-    {
-      message = 
-        g_strdup (_("Found a net inside a symbol\n"));
-      error_messages = g_list_append (error_messages, message);
-    }
-
-    if (o_current->type == OBJ_BUS)
-    {
-      message = 
-        g_strdup (_("Found a bus inside a symbol\n"));
-      error_messages = g_list_append (error_messages, message);
-    }
-
-  }
-
-  return SCM_BOOL_T;
-}
-
-SCM_DEFINE (check_symbol_connections, "%check-symbol-connections", 1, 0, 0,
-            (SCM page_s), "Check symbol for connections completely disallowed within it")
-{
-  const GList *iter;
-  char *message;
-
-  PAGE* p_current = edascm_to_page (page_s);
-  const GList *obj_list = s_page_objects (p_current);
-
-  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
-
-    if (o_current->conn_list) {
-      message = 
-        g_strdup (_("Found a connection inside a symbol\n"));
-      error_messages = g_list_append (error_messages, message);
-    }
-  }
-
-  return SCM_BOOL_T;
-}
-
-
 /*! \brief Get a list of info messages.
  * \par Function Description
  * Retrieves a Scheme list of info messages.
@@ -226,9 +172,7 @@ init_module_symbol_core_check ()
 
   /* Register the functions and add them to the module's public
    * definitions. */
-  scm_c_export (s_check_symbol_nets_buses,
-                s_check_symbol_connections,
-                s_check_info_messages,
+  scm_c_export (s_check_info_messages,
                 s_check_warning_messages,
                 s_check_error_messages,
                 s_check_get_quiet_mode,

@@ -1,9 +1,9 @@
-ERROR: Found a connection inside a symbol
-ERROR: Found a connection inside a symbol
 ERROR: Not enough pins in slotdef=1:1,2,3 (must be 4)
 ERROR: Not enough pins in slotdef=2:4,5,6 (must be 4)
 ERROR: Not enough pins in slotdef=3:9,10,8 (must be 4)
 ERROR: Not enough pins in slotdef=4:12,13,11 (must be 4)
+ERROR: Found a connection inside a symbol
+ERROR: Found a connection inside a symbol
 ERROR: Missing pinnumber= attribute
 ERROR: Missing pinseq= attribute
 Warning: Missing pintype= attribute
