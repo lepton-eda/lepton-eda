@@ -13,6 +13,7 @@
   #:use-module (geda attrib)
   #:use-module (symbol check alignment)
   #:use-module (symbol check attrib)
+  #:use-module (symbol check connection)
   #:use-module (symbol check obsolete)
   #:use-module (symbol check pin-attrib)
   #:use-module (symbol check slot)
@@ -37,9 +38,13 @@
   (check-required-attribs page "refdes")
   (check-required-attribs page "footprint"))
 
-(define-public check-symbol-connections %check-symbol-connections)
+;;; Check symbol for connections completely disallowed within it.
+(define (check-symbol-connections page)
+  (for-each check-connections (page-contents page)))
 
-(define-public check-symbol-nets-buses %check-symbol-nets-buses)
+;;; Check symbol for nets or buses completely disallowed within it.
+(define (check-symbol-nets-buses page)
+  (for-each check-net/bus (page-contents page)))
 
 ;;; Check for old pin#=# and slot#=# attributes.
 (define (check-symbol-obsolete-attribs page)

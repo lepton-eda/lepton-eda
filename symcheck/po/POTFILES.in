@@ -12,6 +12,7 @@ symcheck/scheme/symbol/blame.scm
 symcheck/scheme/symbol/check.scm
 symcheck/scheme/symbol/check/alignment.scm
 symcheck/scheme/symbol/check/attrib.scm
+symcheck/scheme/symbol/check/connection.scm
 symcheck/scheme/symbol/check/obsolete.scm
 symcheck/scheme/symbol/check/pin-attrib.scm
 symcheck/scheme/symbol/check/slot.scm
