@@ -12,7 +12,8 @@
             pin-attribs
             net-numbers
             check-duplicate-net-pinnumbers
-            check-duplicate-net-pinnumber-numbers))
+            check-duplicate-net-pinnumber-numbers
+            check-old-pin))
 
 (define %valid-pintype-values
   '(in out io oc oe pas tp tri clk pwr))

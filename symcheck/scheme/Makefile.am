@@ -7,6 +7,7 @@ nobase_dist_scmdata_DATA = \
 	symbol/check/alignment.scm \
 	symbol/check/attrib.scm \
 	symbol/check/duplicate.scm \
+	symbol/check/obsolete.scm \
 	symbol/check/pin-attrib.scm \
 	symbol/check/slot.scm \
 	symbol/check/text.scm \

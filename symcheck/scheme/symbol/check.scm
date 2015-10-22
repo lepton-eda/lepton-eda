@@ -13,9 +13,11 @@
   #:use-module (geda attrib)
   #:use-module (symbol check alignment)
   #:use-module (symbol check attrib)
+  #:use-module (symbol check obsolete)
   #:use-module (symbol check pin-attrib)
   #:use-module (symbol check slot)
-  #:use-module (symbol check text))
+  #:use-module (symbol check text)
+  #:use-module (ice-9 regex))
 
 (define-public (check-all-symbols)
   (apply + (map check-symbol (active-pages))))
@@ -39,9 +41,9 @@
 
 (define-public check-symbol-nets-buses %check-symbol-nets-buses)
 
-(define-public check-symbol-oldslot %check-symbol-oldslot)
-
-(define-public check-symbol-oldpin %check-symbol-oldpin)
+;;; Check for old pin#=# and slot#=# attributes.
+(define (check-symbol-obsolete-attribs page)
+  (for-each check-obsolete-attrib (page-contents page)))
 
 ;;; Check symbol slotting attributes.
 (define (check-symbol-slots numpins page)
@@ -153,11 +155,8 @@
     ; check for slotdef attribute on all pins (if numslots exists)
     (check-symbol-slots (check-symbol-pinnumber page) page)
 
-    ; check for old pin#=# attributes
-    (check-symbol-oldpin page)
-
-    ; check for old slot#=# attributes
-    (check-symbol-oldslot page)
+    ; check for old pin#=# and slot#=# attributes
+    (check-symbol-obsolete-attribs page)
 
     ; check for nets or buses within the symbol (completely disallowed)
     (check-symbol-nets-buses page)
