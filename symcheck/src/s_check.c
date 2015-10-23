@@ -40,105 +40,6 @@
 #include "../include/gettext.h"
 
 
-GList *info_messages = NULL;
-GList *warning_messages = NULL;
-GList *error_messages = NULL;
-
-guint found_footprint = FALSE;
-guint found_refdes = FALSE;
-
-guint numnetpins = 0;
-guint numslots = 0;
-guint numslotpins = 0;
-
-
-SCM_DEFINE (symbol_check_glist_append, "%symbol-check-glist-append", 2, 0, 0,
-            (SCM type_s, SCM message_s), "Check symbol text primitives")
-{
-  if (type_s == scm_string_to_symbol (scm_from_utf8_string ("error"))) {
-    error_messages = g_list_append (error_messages, scm_to_utf8_string (message_s));
-  } else if (type_s == scm_string_to_symbol (scm_from_utf8_string ("warning"))) {
-    warning_messages = g_list_append (warning_messages, scm_to_utf8_string (message_s));
-  } else if (type_s == scm_string_to_symbol (scm_from_utf8_string ("info"))) {
-    info_messages = g_list_append (info_messages, scm_to_utf8_string (message_s));
-  } else {
-    g_assert_not_reached ();
-  }
-
-  return SCM_BOOL_T;
-}
-
-/*! \brief Get a list of info messages.
- * \par Function Description
- * Retrieves a Scheme list of info messages.
- *
- * \return a Scheme list of #CHECK_INFO smobs.
- */
-SCM_DEFINE (check_info_messages, "%check-info-messages", 0, 0, 0,
-            (), "Retrieve a list of symcheck info messages")
-{
-  SCM lst = SCM_EOL;
-  SCM rlst;
-  GList *msg_list = g_list_copy (info_messages);
-
-  while (msg_list != NULL) {
-    lst = scm_cons (scm_from_utf8_string ((char*) msg_list->data), lst);
-    msg_list = g_list_next (msg_list);
-  }
-
-  rlst = scm_reverse (lst);
-  scm_remember_upto_here_1 (lst);
-  return rlst;
-}
-
-/*! \brief Get a list of warning messages.
- * \par Function Description
- * Retrieves a Scheme list of warning messages.
- *
- * \return a Scheme list of #CHECK_WARNING smobs.
- */
-SCM_DEFINE (check_warning_messages, "%check-warning-messages", 0, 0, 0,
-            (), "Retrieve a list of symcheck warning messages")
-{
-  SCM lst = SCM_EOL;
-  SCM rlst;
-  GList *msg_list = g_list_copy (warning_messages);
-
-  while (msg_list != NULL) {
-    lst = scm_cons (scm_from_utf8_string ((char*) msg_list->data), lst);
-    msg_list = g_list_next (msg_list);
-  }
-
-  rlst = scm_reverse (lst);
-  scm_remember_upto_here_1 (lst);
-  return rlst;
-}
-
-/*! \brief Get a list of error messages.
- * \par Function Description
- * Retrieves a Scheme list of error messages.
- *
- * \return a Scheme list of #CHECK_ERROR smobs.
- */
-SCM_DEFINE (check_error_messages, "%check-error-messages", 0, 0, 0,
-            (), "Retrieve a list of symcheck error messages")
-{
-  SCM lst = SCM_EOL;
-  SCM rlst;
-  GList *msg_list = g_list_copy (error_messages);
-
-  msg_list = g_list_copy (error_messages);
-
-  while (msg_list != NULL) {
-    lst = scm_cons (scm_from_utf8_string ((char*) msg_list->data), lst);
-    msg_list = g_list_next (msg_list);
-  }
-
-  rlst = scm_reverse (lst);
-  scm_remember_upto_here_1 (lst);
-  return rlst;
-}
-
 /*! \brief Output state of the quiet_mode variable
  * \par Function Description
  * Outputs current state of the quiet_mode variable
@@ -172,12 +73,8 @@ init_module_symbol_core_check ()
 
   /* Register the functions and add them to the module's public
    * definitions. */
-  scm_c_export (s_check_info_messages,
-                s_check_warning_messages,
-                s_check_error_messages,
-                s_check_get_quiet_mode,
+  scm_c_export (s_check_get_quiet_mode,
                 s_check_get_verbose_mode,
-                s_symbol_check_glist_append,
                 NULL);
 }
 

@@ -95,9 +95,6 @@
   (for-each (lambda (object) (check-text-string object))
             (page-contents page)))
 
-(define symbol-check-glist-append %symbol-check-glist-append)
-
-
 ;;; Check symbol attributes
 (define-public (check-symbol-attribs page)
   (for-each
@@ -106,26 +103,6 @@
      (check-attribute object))
    (page-contents page)))
 
-
-(define check-info-messages %check-info-messages)
-(define check-warning-messages %check-warning-messages)
-(define check-error-messages %check-error-messages)
-
-; Print out results of symbol check
-(define-public (check-symbol-output-results)
-  (let ((verbose (%check-get-verbose-mode)))
-
-    (if (> verbose 2)
-      (for-each (cut log! 'message (_ "Info: ~A") <>)
-                (check-info-messages)))
-
-    (if (> verbose 1)
-      (for-each (cut log! 'message (_ "Warning: ~A") <>)
-                (check-warning-messages)))
-
-    (if (> verbose 0)
-      (for-each (cut log! 'message (_ "ERROR: ~A") <>)
-                (check-error-messages)))))
 
 (define-public (check-symbol page)
 
@@ -169,21 +146,13 @@
     ; check for connections with in a symbol (completely disallowed)
     (check-symbol-connections page)
 
-    (let ((error-count   (length (check-error-messages)))
-          (warning-count (length (check-warning-messages))))
-      ; now report the info/warnings/errors to the user
-      (when (not quiet)
-        ;; done, now print out the messages
-        (check-symbol-output-results)
-        (apply report-statistics (map +
-                                      `(0 ,warning-count ,error-count 0)
-                                      (report-blames `(,page . ,(page-contents page))))))
+    ;; now report the info/warnings/errors to the user
+    (when (not quiet)
+      ;; done, now print out the messages
+      (apply report-statistics
+             (report-blames `(,page . ,(page-contents page)))))
 
-
-    ; return code
-    (if (not (zero? error-count))
-        2
-        (if (not (zero? warning-count)) 1 0)))))
+    ))
 
 (define (report-statistics info-count
                            warning-count
@@ -208,4 +177,9 @@
                              error-count)
                 error-count)
           (when (< verbose 1)
-            (log! 'message (_ "(use -v to view details)")))))))
+            (log! 'message (_ "(use -v to view details)")))))
+
+    ;; return code
+    (if (zero? error-count)
+        (if (zero? warning-count) 0 1)
+        2)))
