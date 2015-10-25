@@ -1,5 +1,5 @@
 /* gEDA - GPL Electronic Design Automation
- * gnetlist - gEDA Netlist 
+ * gnetlist - gEDA Netlist
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
  *
@@ -179,4 +179,3 @@ SCM g_rc_hierarchy_uref_order(SCM mode)
 }
 
 /*************************** GUILE end done *********************************/
-

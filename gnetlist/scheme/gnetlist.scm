@@ -51,7 +51,7 @@ code should use `gnetlist:get-backend-arguments' directly."
 ;;---------------------------------------------------------------
 ;; calling-flag?
 ;;   Returns #t or #f depending upon the corresponding flag
-;;   was set in the calling flags given to gnetlist.  
+;;   was set in the calling flags given to gnetlist.
 ;;   9.7.2003 -- SDB.
 ;;---------------------------------------------------------------
 (define calling-flag?
@@ -69,7 +69,7 @@ code should use `gnetlist:get-backend-arguments' directly."
             (if (string=? calling-flag searched-4-flag)
                 flag-value                                                 ;; return flag-value if sort_mode found
                 (calling-flag? searched-4-flag (cdr calling-flag-list))    ;; otherwise recurse until sort_mode is found
-            )  ;; end if  
+            )  ;; end if
           )  ;; end of let*
      )  ;; end of if (null?
 ))
@@ -89,7 +89,7 @@ code should use `gnetlist:get-backend-arguments' directly."
 ;;  1.4.2006 -- SDB.
 (define strncmp?
   (lambda (string1 string2 end)
-    (and 
+    (and
      (string-ci=? (substring string1 0 (min end (string-length string1)))
 		  (substring string2 0 (min end (string-length string2))))
      (>= (min (string-length string1) (string-length string2)) end)
@@ -195,7 +195,7 @@ REFDES. As a result, slots may be repeated in the returned list."
                device)))))
 
 
-;; return all pins for a particular package 
+;; return all pins for a particular package
 (define pins
    (lambda (package)
       (gnetlist:get-pins package)))
@@ -203,7 +203,7 @@ REFDES. As a result, slots may be repeated in the returned list."
 ;; this is really crude, but I'm tired... :)
 (define display-nl
    (lambda (list)
-      (display list) 
+      (display list)
       (newline)))
 
 
@@ -230,10 +230,10 @@ REFDES. As a result, slots may be repeated in the returned list."
 ;; Returns the first package which matches the devicename
 (define find-device
    (lambda (components devicename)
-      (if (not (null? components))       
+      (if (not (null? components))
          (if (string=? devicename (get-device (car components)))
             (car components)
-            (find-device (cdr components) devicename))))) 
+            (find-device (cdr components) devicename)))))
 
 
 ;; ETTUS
@@ -287,7 +287,7 @@ REFDES. As a result, slots may be repeated in the returned list."
             (cdr (car numberlist))
             (get-net-number netname (cdr numberlist))))))
 
-;; 
+;;
 ;; Useful output functions contributed by Andrew Bardsley
 ;;
 (define (print-to-port port . l)
@@ -308,8 +308,8 @@ REFDES. As a result, slots may be repeated in the returned list."
 	       (display "Couldn't wrap string  at requested position\n")
 	       " Wrap error!")
 	      (else
-	       (string-append 
-		(substring string-to-wrap 0 pos) 
+	       (string-append
+		(substring string-to-wrap 0 pos)
 		wrap-char
 		"\n "
 		(gnetlist:wrap (substring string-to-wrap (+ pos 1)) wrap-length wrap-char)))))))

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_PROGRAMS = gnetlist 
+bin_PROGRAMS = gnetlist
 
 # don't forget all *.h files */
 gnetlist_SOURCES = \
@@ -35,4 +35,3 @@ MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in
-

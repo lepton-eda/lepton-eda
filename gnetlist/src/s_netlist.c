@@ -13,8 +13,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License 
- * along with this program; if not, write to the Free Software 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
@@ -172,7 +172,7 @@ void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
 				       nl_current->hierarchy_tag,
 				       pl_current->type);
 
-			/* put this name also in the first 
+			/* put this name also in the first
 			   node of the nets linked list */
 			if (pl_current->net_name && pl_current->nets) {
 			    if (pl_current->nets->next) {
@@ -221,12 +221,12 @@ void s_netlist_name_named_nets (TOPLEVEL *pr_current,
   CPINLIST *pl_current;
   NET *n_current;
   char *net_name;
-  
+
   if (verbose_mode) {
     printf("\n- Staring post processing\n");
     printf("- Naming nets of graphical objects:\n");
   }
-  
+
   /* this pass gives all nets a name, whether specified or creates a */
   /* name */
   nl_current = unnamed_netlist;
@@ -234,11 +234,11 @@ void s_netlist_name_named_nets (TOPLEVEL *pr_current,
     if (nl_current->cpins) {
       pl_current = nl_current->cpins;
       while (pl_current != NULL) {
-	
+
 	if (pl_current->plid != -1) {
 	  verbose_print("p");
 	}
-	
+
 	if (pl_current->plid != -1 && pl_current->nets) {
 	  verbose_print("n");
 	  net_name = NULL;
@@ -248,7 +248,7 @@ void s_netlist_name_named_nets (TOPLEVEL *pr_current,
 	    n_current->net_name = s_netlist_netname_of_netid(pr_current,
 							     named_netlist,
 							     n_current->nid);
-	    
+
 	    if (n_current->net_name != NULL) {
 	      net_name = n_current->net_name;
 	    }
@@ -265,7 +265,7 @@ void s_netlist_name_named_nets (TOPLEVEL *pr_current,
   }
 
   verbose_done();
-    
+
 }
 
 char *s_netlist_netname_of_netid (TOPLEVEL *pr_current,
@@ -275,9 +275,9 @@ char *s_netlist_netname_of_netid (TOPLEVEL *pr_current,
   NETLIST *nl_current;
   CPINLIST *pl_current;
   NET *n_current;
-  
+
   nl_current = netlist_head;
-  
+
   /* walk through the list of components, and through the list
    * of individual pins on each, looking for the net identifier
    */
@@ -296,6 +296,6 @@ char *s_netlist_netname_of_netid (TOPLEVEL *pr_current,
       pl_current = pl_current->next;
     }
     nl_current = nl_current->next;
-    } 
+    }
   return NULL;
 }

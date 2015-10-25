@@ -40,7 +40,7 @@ EXAMPLE:
 
             Schematic:
                      module_name=test_sch2sysc
-     
+
             Wires:
                      netname=a<user_type>
                      netname=b<float>
@@ -65,7 +65,7 @@ EXAMPLE:
 		 	/* Wires from the design */
 			sc_signal<float> b;
 			sc_signal<packet_type> a;
-	
+
 			/* Package instantiations */
 			sink snk1;
 			source src1;
@@ -82,4 +82,3 @@ EXAMPLE:
 			  	alg1.OUT(b);
 			}
 		};
-

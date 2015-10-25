@@ -2,7 +2,7 @@
 
 EXTRA_DIST = gnetlistrc.hierarchy2 hierarchy2.geda top.sch under.sch under.sym
 
-# Temporarily disabled make check, since this is interfering with 
+# Temporarily disabled make check, since this is interfering with
 # make distcheck
 check_SCRIPTS = tests
 

@@ -27,7 +27,7 @@ III.  Initial Setup
 -----------------------------------------------------------------
   1)  Set your symbol search path for gschem and gnetlist by adding
       the following line to the 'gschemrc' and 'gnetlistrc' files in
-      your project directory.  
+      your project directory.
 
         (component-library "/path/to/sym/switcap")
 
@@ -43,7 +43,7 @@ III.  Initial Setup
       You will need to replace /path/to/scheme with the path to where
       you have installed the gnet-switcap.scm file.
 
-  3)  
+  3)
 
 -----------------------------------------------------------------
 IV.  Creating Schematics
@@ -103,7 +103,7 @@ D.  Switches
 
 When placing switches on your schematic, you will need to define
 which clock they are controlled with.  This is done by setting
-the clock attribute on the switch to the reference designator 
+the clock attribute on the switch to the reference designator
 of the clock which should control it.
 
 -----------------------------------------------------------------
@@ -132,5 +132,3 @@ so I can use command history to rerun SWITCAP without having to
 manually type the file names each time.
 
 Refer to the SWITCAP manual for more details.
-
-

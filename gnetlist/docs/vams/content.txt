@@ -1,7 +1,7 @@
 VHDL-AMS support for gEDA gnetlist tool
 
    1. functionality
-      1. ARCHITECTURE generation   
+      1. ARCHITECTURE generation
       2. ENTITY generation
       3. automatisate gnetlist calls
 
@@ -17,13 +17,13 @@ VHDL-AMS support for gEDA gnetlist tool
 	 2. new c-code
 	    1. routines
 	    2. code-adaptation
-      
+
       2. automatic generating gnetlist calls in gEDA gschem
 	 1. generated gEDA gnetlist calls
 	 2. scheme
 	    1. generate_netlist.scm
 	    2. settings
-	 
+
 	 3. new c-code
 	    1. routines
 	    2. code-adaptation

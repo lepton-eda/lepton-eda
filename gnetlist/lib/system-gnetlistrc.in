@@ -1,25 +1,25 @@
 
-; 
+;
 ; Init file for gnetlist
 ;
 
 ;  ;'s are comments
 ;  keywords are case sensitive (guile feature)
 ;  mode strings are case sensitive
-;  colors are not case sensitive 
-;  
+;  colors are not case sensitive
+;
 
 ; gnetlist-version string
 ;
-; Specifies the version of this file.  This number is used to make sure 
-; that the rc file is compatible with the version of gschem that is 
+; Specifies the version of this file.  This number is used to make sure
+; that the rc file is compatible with the version of gschem that is
 ; being run. The end user should *not* change this value.
 ;
 (gnetlist-version "@DATE_VERSION@")
 
 ; hierarchy-uref-mangle string
 ;
-; Controls if uref names are mangled to make them uniq when traversing 
+; Controls if uref names are mangled to make them uniq when traversing
 ; down into the hierarchy.  If this is disabled then urefs are not changed
 ; and it is the user's responsibility to make sure they are unique.
 ; If you disable this, you really are taking your netlist's life into your
@@ -31,8 +31,8 @@
 
 ; hierarchy-netname-mangle string
 ;
-; Controls if net names are mangled to make them uniq when traversing 
-; down into the hierarchy.  If this is disabled then the net names are not 
+; Controls if net names are mangled to make them uniq when traversing
+; down into the hierarchy.  If this is disabled then the net names are not
 ; changed and it is the user's responsibility to make sure they are unique.
 ; If you disable this, you really are taking your netlist's life into your
 ; own hands.  This basically has the effect of making all same named nets
@@ -44,10 +44,10 @@
 
 ; hierarchy-netattrib-mangle string
 ;
-; Controls if net created by using the net= attribute are renamed to make 
-; them uniq when traversing down into the hierarchy.  If this is disabled 
+; Controls if net created by using the net= attribute are renamed to make
+; them uniq when traversing down into the hierarchy.  If this is disabled
 ; then the net= created nets are not changed.  This feature is handy to have
-; global nets which spawn the entire hierarchy (like power or ground nets). 
+; global nets which spawn the entire hierarchy (like power or ground nets).
 ; Please make sure you know what you are doing.
 ;
 (hierarchy-netattrib-mangle "enabled")
@@ -56,8 +56,8 @@
 ; hierarchy-uref-separator string
 ;
 ; Specifies what the separator string between the various hierarchy tags
-; for all urefs.  This string can also be "" (empty) to specify that no 
-; chars should be used.  This keyword is ignored if hierarchy-uref-mangle 
+; for all urefs.  This string can also be "" (empty) to specify that no
+; chars should be used.  This keyword is ignored if hierarchy-uref-mangle
 ; is disabled (though a default "/" is used in this case, and then all the
 ; internal mangling is removed so it is not seen by the user).  This keyword
 ; is used in conjunction with the respective hierarchy-*-order keyword.
@@ -68,8 +68,8 @@
 ; hierarchy-netname-separator string
 ;
 ; Specifies what the separator string between the various hierarchy tags
-; for all nets (excluding net= nets, see below for those).  This string can 
-; also be "" (empty) to specify that no chars should be used.  This keyword 
+; for all nets (excluding net= nets, see below for those).  This string can
+; also be "" (empty) to specify that no chars should be used.  This keyword
 ; is ignored if hierarchy-netname-mangle is disabled.  This keyword
 ; is used in conjunction with the respective hierarchy-*-order keyword.
 ;
@@ -84,8 +84,8 @@
 ;
 ; Specifies what the separator string between the various hierarchy tags
 ; for net= created nets.  This string can also be "" (empty) to specify
-; that no chars should be used.  This keyword is ignored if 
-; hierarchy-netattrib-mangle is disabled.  This keyword is used in 
+; that no chars should be used.  This keyword is ignored if
+; hierarchy-netattrib-mangle is disabled.  This keyword is used in
 ; conjunction with the respective hierarchy-*-order keyword.
 ;
 (hierarchy-netattrib-separator "/")
@@ -93,15 +93,15 @@
 
 ; hierarchy-uref-order string
 ;
-; Specifies the order in which the hierarchy tags are applied to all 
-; urefs 
+; Specifies the order in which the hierarchy tags are applied to all
+; urefs
 ;
 (hierarchy-uref-order "append")
 ;(hierarchy-uref-order "prepend")
 
 ; hierarchy-netname-order string
 ;
-; Specifies the order in which the hierarchy tags are applied to all 
+; Specifies the order in which the hierarchy tags are applied to all
 ; regular nets
 ;
 (hierarchy-netname-order "append")
@@ -130,7 +130,7 @@
 
 ; world-size width height border
 ;
-; Specifies the size of the world and a border 
+; Specifies the size of the world and a border
 ; Be sure all inputs are reals (floats/doubles) and don't try to reverse
 ; the values: to get a portrait mode.  Code to support that needs to be added
 ; The code that implements this automatically transforms the dimensions into
@@ -140,6 +140,3 @@
 ;
 (world-size 120.0 90.0 1.0)
 ;(world-size 60.0 45.0 1.0)
-
-
-

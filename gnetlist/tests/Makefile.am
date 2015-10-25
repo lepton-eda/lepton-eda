@@ -30,19 +30,19 @@ tests:
 	mkdir $(BUILDDIR)/devfiles
 	cp -f $(srcdir)/gnetlistrc.orig $(builddir)/gnetlistrc
 
-# netattrib gEDA 
+# netattrib gEDA
 	$(SRCDIR)/runtest.sh $(SRCDIR)/netattrib.sch geda \
 		$(BUILDDIR) $(SRCDIR)
 
-# stack gEDA 
+# stack gEDA
 	$(SRCDIR)/runtest.sh $(SRCDIR)/../examples/stack_1.sch geda \
 		$(BUILDDIR) $(SRCDIR)
 
-# singlenet gEDA 
+# singlenet gEDA
 	$(SRCDIR)/runtest.sh $(SRCDIR)/singlenet.sch geda \
 		$(BUILDDIR) $(SRCDIR)
 
-# singlenet PCB 
+# singlenet PCB
 	$(SRCDIR)/runtest.sh $(SRCDIR)/singlenet.sch PCB \
 		$(BUILDDIR) $(SRCDIR)
 
@@ -98,7 +98,7 @@ tests:
 	$(SRCDIR)/runtest.sh $(SRCDIR)/powersupply.sch liquidpcb \
 		$(BUILDDIR) $(SRCDIR)
 
-# multiple equals in attributes SPICE-SDB 
+# multiple equals in attributes SPICE-SDB
 	$(SRCDIR)/runtest.sh $(SRCDIR)/multiequal.sch spice-sdb \
 		$(BUILDDIR) $(SRCDIR)
 
@@ -121,17 +121,17 @@ tests_ales:
 	rm -rf $(BUILDDIR)/devfiles
 	mkdir $(BUILDDIR)/devfiles
 
-# amp SPICE 
+# amp SPICE
 	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/amp.sch spice \
 		$(BUILDDIR) $(SRCDIR)
 
-# darlington SPICE 
+# darlington SPICE
 	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/darlington.sch spice \
 		$(BUILDDIR) $(SRCDIR)
 
 # amp SPICE SDB
 	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/amp.sch spice-sdb \
-		$(BUILDDIR) $(SRCDIR) 
+		$(BUILDDIR) $(SRCDIR)
 
 # darlington SPICE SDB
 	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/darlington.sch spice-sdb \

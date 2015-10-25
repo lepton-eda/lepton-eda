@@ -13,8 +13,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License 
- * along with this program; if not, write to the Free Software 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
@@ -23,7 +23,7 @@
   *
   * Changes are Copyright (C) 2005 Carlos A. R. Azevedo
   */
-  
+
 #include <config.h>
 
 #include <stdio.h>
@@ -72,7 +72,7 @@ void s_rename_destroy_all(void)
 {
     RENAME * temp;
     void * to_free;
-    
+
     for (; first_set;)
     {
         for (temp = first_set->first_rename; temp;)
@@ -93,7 +93,7 @@ void s_rename_destroy_all(void)
 void s_rename_next_set(void)
 {
     SET * new_set;
-    
+
     new_set = g_malloc(sizeof(SET));
     memset(new_set,0,sizeof(SET));
     if (first_set)
@@ -119,7 +119,7 @@ void s_rename_print(void)
         {
             printf("%d) Source: _%s_", i, temp_rename->src);
             printf(" -> Dest: _%s_\n", temp_rename->dest);
-        } 
+        }
     }
 }
 
@@ -134,14 +134,14 @@ int s_rename_search(char *src, char *dest, int quiet_flag)
     {
         for (temp = last_set->first_rename; temp; temp = temp->next)
         {
-            if (strcmp(src, temp->src) == 0) 
+            if (strcmp(src, temp->src) == 0)
             {
                 return (TRUE);
             }
 
-            if (strcmp(dest, temp->src) == 0) 
+            if (strcmp(dest, temp->src) == 0)
 	    {
-                if (!quiet_flag) 
+                if (!quiet_flag)
 	        {
                     fprintf(stderr, _("WARNING: Trying to rename something twice:\n\t%s and %s\nare both a src and dest name\n"), dest, temp->src);
                     fprintf(stderr, _("This warning is okay if you have multiple levels of hierarchy!\n"));
@@ -186,14 +186,14 @@ void s_rename_add(char *src, char *dest)
     RENAME * new_rename;
     SET * new_set;
 
-    if (src == NULL || dest == NULL) 
+    if (src == NULL || dest == NULL)
     {
         return;
     }
 
     flag = s_rename_search(src, dest, FALSE);
 
-    if (flag) 
+    if (flag)
     {
         /* If found follow the original behaviour, limiting the operation to the current end-of-list */
 	last = last_set->last_rename;
@@ -233,8 +233,8 @@ void s_rename_add(char *src, char *dest)
                 break;
             }
         }
-    } 
-    else 
+    }
+    else
     {
         /* Check for a valid set */
 	if (first_set == NULL)
@@ -242,7 +242,7 @@ void s_rename_add(char *src, char *dest)
 	    new_set = g_malloc(sizeof(SET));
 	        memset(new_set,0,sizeof(SET));
 		first_set = last_set = new_set;
-	}    
+	}
         new_rename = g_malloc(sizeof(RENAME));
 	     new_rename->next = NULL;
              new_rename->src = g_strdup(src);
@@ -255,7 +255,7 @@ void s_rename_add(char *src, char *dest)
 	     {
 	         last_set->last_rename->next = new_rename;
 		 last_set->last_rename = new_rename;
-	     } 
+	     }
     }
 }
 
@@ -266,16 +266,16 @@ void s_rename_all_lowlevel(NETLIST * netlist_head, char *src, char *dest)
 
     nl_current = netlist_head;
 
-    while (nl_current != NULL) 
+    while (nl_current != NULL)
     {
-        if (nl_current->cpins) 
+        if (nl_current->cpins)
 	{
             pl_current = nl_current->cpins;
-            while (pl_current != NULL) 
+            while (pl_current != NULL)
 	    {
-                if (pl_current->net_name != NULL) 
+                if (pl_current->net_name != NULL)
 		{
-                    if (strcmp(pl_current->net_name, src) == 0) 
+                    if (strcmp(pl_current->net_name, src) == 0)
 		    {
                         pl_current->net_name = g_strdup(dest);
                     }
@@ -290,7 +290,7 @@ void s_rename_all_lowlevel(NETLIST * netlist_head, char *src, char *dest)
 void s_rename_all(TOPLEVEL * pr_current, NETLIST * netlist_head)
 {
     RENAME * temp;
-    
+
 #if DEBUG
     s_rename_print();
 #endif

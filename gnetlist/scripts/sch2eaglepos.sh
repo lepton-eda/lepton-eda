@@ -34,7 +34,7 @@ if test $rc -ne 0 ; then
 
 $0: ERROR -- Failed to create $tmpdir with 0700 permissions.  mkdir returned $rc.
 
-Make sure that $tmpdir does not already exist and that you have permissions to 
+Make sure that $tmpdir does not already exist and that you have permissions to
 create it.
 
 EOF
@@ -55,4 +55,3 @@ while read; do
     echo "MOVE '$PART' ($X $Y);"
 done < $tmpf
 rm -fr "${tmpdir}"
-

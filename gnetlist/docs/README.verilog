@@ -12,7 +12,7 @@ Latest README:
 
 	To facilitate board level simulations, the Verilog netlister now
 outputs `escaped' Verilog identifiers for any net, port or instance name
-that does not appear to be a valid Verilog identifier.  In this way, 
+that does not appear to be a valid Verilog identifier.  In this way,
 chips with numbered pins can be netlisted and models constructed to run
 digital simulations of complete circuits.
 
@@ -78,7 +78,7 @@ to verilog.
 	      somewhere on the schematic, near the title block is
 	      good.  This will name the generated Verilog module
 	      `Your_Module'.
-		
+
 	   6) Save your design.
 
 	   7) Run the schematic through the netlister:
@@ -90,7 +90,7 @@ to verilog.
 
 	   8) Feed the netlist to your favorite simulator/synthesis tool.
 
-	
+
 					Mike Jarabek
 
 
@@ -117,17 +117,17 @@ to verilog.
            symbol on the schematic.
 
         3) Added bufif?, notif?, not and buf symbols.
-        
+
         4) Added example of positional port module instantiation to
            the example schematic
-        
+
         5) Added 7447 example schematic
 
         Coming:
 
         1) Module instantiation parameters. (probably by an attribute)
 
-	
+
         Included in this tar-ball are three patch files against the
         19990705 version of gEDA.  Apply g_netlist.c.diff and
         g_register.c.diff to the files in gnetlist/src/ and
@@ -210,7 +210,7 @@ eventually get fixed, I hope..)
 
 
       The netlister does some neat things:
-      
+
 
 	   1) It outputs a verilog module with proper port
               declarations, outputs are declared as outputs, inputs
@@ -230,7 +230,7 @@ eventually get fixed, I hope..)
               made by name, and not by order, because I can't be sure
               that the order will be right coming off the schematic.
               (anyway, that's better for the long run.)
-              
+
 	   5) A comment is inserted at the top of the module to say
               that the file was automatically generated.
 
@@ -289,7 +289,7 @@ The mechanics:
     has spelling errors, then the module instantiation won't work.
     You will have to manually trace back to find the error.
 
-    
+
 				Mike Jarabek
 
 
@@ -335,7 +335,7 @@ eventually get fixed, I hope..)
 
 
       The netlister does some neat things:
-      
+
 
 	   1) It outputs a verilog module with proper port
               declarations, outputs are declared as outputs, inputs
@@ -355,7 +355,7 @@ eventually get fixed, I hope..)
               made by name, and not by order, because I can't be sure
               that the order will be right coming off the schematic.
               (anyway, that's better for the long run.)
-              
+
 	   5) A comment is inserted at the top of the module to say
               that the file was automatically generated.
 
@@ -414,5 +414,5 @@ The mechanics:
     has spelling errors, then the module instantiation won't work.
     You will have to manually trace back to find the error.
 
-    
+
 				Mike Jarabek

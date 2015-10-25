@@ -1,4 +1,4 @@
-/*  mk_verilog_syms.c: 
+/*  mk_verilog_syms.c:
  *
  *  Create a set of n-input gate symbols for the geda verilog netlister.
  *
@@ -49,7 +49,7 @@ int GetStringDisplayLength(char *str,int font_size);  /* char_width.c */
 
 
 /* local prototypes */
-int MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, 
+int MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles,
 	       int outputBubbles,
 	       int (*body)(FILE *, int, int, unsigned int, unsigned int));
 
@@ -57,7 +57,7 @@ int AndBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour);
 int OrBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour);
 int XorBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour);
 int Pin(FILE *fp, int x1, int y1, int x2, int y2, int bubble);
-int PinAttribute(FILE *fp, int x, int y, unsigned int n, char *value); 
+int PinAttribute(FILE *fp, int x, int y, unsigned int n, char *value);
 int WidenBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour);
 
 /* globals */
@@ -115,7 +115,7 @@ main(int argc, char **argv)
 	    return 1;
 	  }
 
-	rc = MakeSymbol(fp, j, 
+	rc = MakeSymbol(fp, j,
 			generate[i].inputBubbles, generate[i].outputBubbles,
 			generate[i].body);
 	if(rc)
@@ -187,7 +187,7 @@ MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles,
   if(pins >= 3) /* do we need to add to the height ? */
     totalHeight += (pins-3) * PinSpacing;
 
-  
+
   bodyx = PinLength;
   bodyy = totalHeight/2;
 
@@ -216,7 +216,7 @@ MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles,
       return 1;
     }
   /* attach pin attribute */
-  rc = PinAttribute(fp, outputx, outputy, pinCount++, "OUT"); 
+  rc = PinAttribute(fp, outputx, outputy, pinCount++, "OUT");
   if(rc)
     {
       fprintf(stderr, "Error: Pin Attribute function failed for output pin "
@@ -267,7 +267,7 @@ MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles,
 /* produce an and shaped body at the given offset.
  * The origin is along the horizontal midline of the shape.
  */
-int 
+int
 AndBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour)
 {
 
@@ -280,10 +280,10 @@ AndBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour)
 
   /* top and bottom lines */
   fprintf(fp, "L %d %d %d %d %u\n",
-	  x, y+300, x+400, y+300, colour); 
+	  x, y+300, x+400, y+300, colour);
   fprintf(fp, "L %d %d %d %d %u\n",
 	  x, y-300, x+400, y-300, colour);
- 
+
   /* left line */
   fprintf(fp, "L %d %d %d %d %u\n",
 	  x, y-300, x, y+300, colour);
@@ -315,14 +315,14 @@ int OrBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour)
 
   /* left arc */
   fprintf(fp, "A %d %d %d %d %d %u\n",
-	  x-260, y, 400, -48, 97, colour); 
+	  x-260, y, 400, -48, 97, colour);
 
   /* right top and bottom arcs */
   fprintf(fp, "A %d %d %d %d %d %u\n",
-	  x+300, y+100, 400, 270, 76, colour); 
+	  x+300, y+100, 400, 270, 76, colour);
   fprintf(fp, "A %d %d %d %d %d %u\n",
 	  x+300, y-100, 400, 90, -76, colour);
- 
+
   return WidenBody(fp, x, y, pins, colour);
 }
 
@@ -346,17 +346,17 @@ int XorBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour)
 
   /* left arc 1 */
   fprintf(fp, "A %d %d %d %d %d %u\n",
-	  x-260, y, 400, -48, 97, colour);  
+	  x-260, y, 400, -48, 97, colour);
  /* left arc 2 */
   fprintf(fp, "A %d %d %d %d %d %u\n",
-	  x-160, y, 400, -48, 97, colour); 
-  
+	  x-160, y, 400, -48, 97, colour);
+
 
   /* right top and bottom arcs */
   fprintf(fp, "A %d %d %d %d %d %u\n",
-	  x+300, y+100, 400, 270, 76, colour); 
+	  x+300, y+100, 400, 270, 76, colour);
   fprintf(fp, "A %d %d %d %d %d %u\n",
-	  x+300, y-100, 400, 90, -76, colour); 
+	  x+300, y-100, 400, 90, -76, colour);
 
   return WidenBody(fp, x, y, pins, colour);
 }
@@ -365,7 +365,7 @@ int XorBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour)
 /* output two line segments that will serve to `widen' the
  * body of one of the above gates
  */
-int 
+int
 WidenBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour)
 {
   unsigned int distanceNeeded;
@@ -399,8 +399,8 @@ WidenBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour)
 
 /* Draw a pin, optionally with a bubble
  */
-int 
-Pin(FILE *fp, int x1, int y1, int x2, int y2, int bubble) 
+int
+Pin(FILE *fp, int x1, int y1, int x2, int y2, int bubble)
 {
   int bx, by;              /* bubble x and y locations */
   int px1, py1, px2, py2;  /* pin x and y locations */
@@ -431,7 +431,7 @@ Pin(FILE *fp, int x1, int y1, int x2, int y2, int bubble)
 		  __func__);
 	  return 1;
 	}
-      
+
       x = dx / denom;
       y = dy / denom;
 
@@ -442,10 +442,10 @@ Pin(FILE *fp, int x1, int y1, int x2, int y2, int bubble)
       /* figure location of first line end */
       px1 = x1 + x * 2 * br;
       py1 = y1 + y * 2 * br;
-      
+
       px2 = x2;
       py2 = y2;
-      
+
 
       /* draw the bubble */
       fprintf(fp, "V %d %d %d %d\n",
@@ -467,8 +467,8 @@ Pin(FILE *fp, int x1, int y1, int x2, int y2, int bubble)
   return 0;
 }
 
-int 
-PinAttribute(FILE *fp, int x, int y, unsigned int n, char *value) 
+int
+PinAttribute(FILE *fp, int x, int y, unsigned int n, char *value)
 {
   if(fp == NULL)
     {
@@ -476,7 +476,7 @@ PinAttribute(FILE *fp, int x, int y, unsigned int n, char *value)
 	      __func__);
       return 1;
     }
-  
+
   if(value == NULL)
     {
       fprintf(stderr, "Error: NULL value pointer passed to %s()\n",
@@ -488,6 +488,6 @@ PinAttribute(FILE *fp, int x, int y, unsigned int n, char *value)
   fprintf(fp, "T %d %d %u %u 0 0 0 0\n",x, y, YELLOW, 8);
   fprintf(fp, "pin%u=%s\n",n, value);
   fprintf(fp, "}\n");
-  
+
   return 0;
 }

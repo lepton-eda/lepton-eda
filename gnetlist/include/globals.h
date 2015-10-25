@@ -25,7 +25,7 @@ extern int logging_dest;
 
 /* gnetlist specific stuff */
 extern NETLIST *netlist_head;
-extern NETLIST *graphical_netlist_head; /* Special objects with 
+extern NETLIST *graphical_netlist_head; /* Special objects with
 					   graphical=1 attribute */
 extern char *guile_proc;
 extern int list_backends;

@@ -173,7 +173,7 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 	  if (attrib) {
 	     g_free(attrib);
 	     attrib = NULL;
-          } 
+          }
        }
     }
 }
@@ -644,4 +644,3 @@ int s_hierarchy_graphical_search (OBJECT* o_current, int count)
 
   return FALSE;
 }
-

@@ -19,7 +19,7 @@ GEDADATARC=$BUILDDIR/../lib \
   -o ${BUILDDIR}/new_${schbasename}.$BACKEND -g $BACKEND $INPUT
 status=$?
 
-if [ "$status" != 0 ] 
+if [ "$status" != 0 ]
 then
 	echo FAILED: gnetlist returned non-zero exit status
 	exit 1
@@ -38,5 +38,3 @@ if [ "$status" != 0 ]
 then
 	exit 2
 fi
-
-

@@ -190,11 +190,11 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
       if (g_strcmp0 (temp, "1") == 0) {
         /* traverse graphical elements, but adding them to the
 	   graphical netlist */
-	
+
 	netlist = s_netlist_return_tail(graphical_netlist_head);
 	is_graphical = TRUE;
-	
-    
+
+
       }
       g_free (temp);
       netlist = s_netlist_add(netlist);
@@ -214,29 +214,29 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
           netlist->component_uref = NULL;
         }
       }
-      
+
       if (hierarchy_tag) {
 	netlist->hierarchy_tag = g_strdup (hierarchy_tag);
       }
 
       netlist->object_ptr = o_current;
-      
+
       if (!netlist->component_uref) {
-	
+
 	/* search of net attribute */
 	/* maybe symbol is not a component */
 	/* but a power / gnd symbol */
 	temp = o_attrib_search_object_attribs_by_name (o_current, "net", 0);
-	
+
 	/* nope net attribute not found */
 	if ( (!temp) && (!is_graphical) ) {
-	  
+
 	  fprintf(stderr,
 		  _("Could not find refdes on component and could not find any special attributes!\n"));
-	  
+
 	  netlist->component_uref = g_strdup("U?");
 	} else {
-	  
+
 #if DEBUG
 	  printf("yeah... found a power symbol\n");
 #endif
@@ -244,18 +244,18 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
 	  netlist->component_uref = NULL;
 	  g_free(temp);
 	}
-	
+
       }
 
       netlist->cpins =
 	s_traverse_component(pr_current, o_current,
 			     hierarchy_tag);
-      
+
       /* here is where you deal with the */
       /* net attribute */
       s_netattrib_handle(pr_current, o_current, netlist,
 			 hierarchy_tag);
-      
+
       /* now you need to traverse any underlying schematics */
       if (is_hierarchy) {
 	s_hierarchy_traverse(pr_current, o_current, netlist);

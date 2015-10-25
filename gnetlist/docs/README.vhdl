@@ -1,7 +1,7 @@
 
 The VHDL backend
 
-Written by Magnus Danielson and improved by Thomas Heidel 
+Written by Magnus Danielson and improved by Thomas Heidel
 
 
 A few things you have to care about:
@@ -17,5 +17,3 @@ A few things you have to care about:
 3. Make sure your component-library picks up the vhdl symbols instead
    of the verilog symbols  Library paths that show up last are searched
    first!
-
-

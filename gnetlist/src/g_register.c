@@ -52,7 +52,7 @@ static struct gsubr_t gnetlist_funcs[] = {
 
   /* gnetlistrc functions */
   { "gnetlist-version",             1, 0, 0, g_rc_gnetlist_version },
-    
+
   { "hierarchy-uref-mangle",        1, 0, 0, g_rc_hierarchy_uref_mangle },
   { "hierarchy-netname-mangle",     1, 0, 0, g_rc_hierarchy_netname_mangle },
   { "hierarchy-netattrib-mangle",   1, 0, 0, g_rc_hierarchy_netattrib_mangle },
@@ -81,7 +81,7 @@ static struct gsubr_t gnetlist_funcs[] = {
   { "gnetlist:get-attribute-by-pinnumber", 3, 0, 0, g_get_attribute_by_pinnumber },
   { "gnetlist:vams-get-package-attributes", 1, 0, 0, vams_get_package_attributes },
 
-  { "gnetlist:graphical-objs-in-net-with-attrib-get-attrib",    
+  { "gnetlist:graphical-objs-in-net-with-attrib-get-attrib",
     3, 0, 0, g_graphical_objs_in_net_with_attrib_get_attrib },
 
   /* SDB -- 9.1.2003 */
@@ -94,7 +94,7 @@ static struct gsubr_t gnetlist_funcs[] = {
 void g_register_funcs(void)
 {
   struct gsubr_t *tmp = gnetlist_funcs;
-  
+
   while (tmp->name != NULL) {
     scm_c_define_gsubr (tmp->name, tmp->req, tmp->opt, tmp->rst, tmp->fnc);
     tmp++;

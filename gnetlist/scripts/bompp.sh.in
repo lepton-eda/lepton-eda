@@ -4,7 +4,7 @@
 if [ -z "$1" ] ; then
     echo "usage $0 geda-bom  # output on stdout"
     exit -1
-fi    
+fi
 cat $1 | @AWK@ '{print toupper($2)" "toupper($3)" "toupper($4)" "toupper($1)}'\
 | sort +0 | @AWK@ '\
 BEGIN {\
@@ -49,4 +49,3 @@ END{\
     printf(format3, array[i]);\
 }\
 }'
-

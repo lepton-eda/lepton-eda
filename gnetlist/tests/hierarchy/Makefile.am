@@ -5,7 +5,7 @@ EXTRA_DIST = 1217.geda bottom.sch bottom.sym gnetlistrc.hierarchy gschemrc \
 	     top.sch
 
 
-# Temporarily disabled make check, since this is interfering with 
+# Temporarily disabled make check, since this is interfering with
 # make distcheck
 check_SCRIPTS = tests
 

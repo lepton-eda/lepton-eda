@@ -20,9 +20,9 @@
 
 #include <config.h>
 
-#include <stdio.h> 
+#include <stdio.h>
 #ifdef HAVE_STRING_H
-#include <string.h> 
+#include <string.h>
 #endif
 #include <math.h>
 
@@ -91,7 +91,7 @@ SCM g_get_non_unique_packages(SCM level)
                          list);
       }
     }
-    
+
     return list;
 }
 
@@ -143,14 +143,14 @@ SCM g_get_all_nets(SCM scm_level)
     CPINLIST *pl_current;
     char *net_name;
 
-    SCM_ASSERT(scm_is_string (scm_level), scm_level, SCM_ARG1, 
+    SCM_ASSERT(scm_is_string (scm_level), scm_level, SCM_ARG1,
 	       "gnetlist:get-all-nets");
 
     nl_current = netlist_head;
 
     /* walk through the list of components, and through the list
      * of individual pins on each, adding net names to the list
-     * being careful to ignore duplicates, and unconnected pins 
+     * being careful to ignore duplicates, and unconnected pins
      */
     while (nl_current != NULL) {
 	pl_current = nl_current->cpins;
@@ -187,14 +187,14 @@ SCM g_get_all_unique_nets(SCM scm_level)
     CPINLIST *pl_current;
     char *net_name;
 
-    SCM_ASSERT(scm_is_string (scm_level), scm_level, SCM_ARG1, 
+    SCM_ASSERT(scm_is_string (scm_level), scm_level, SCM_ARG1,
 	       "gnetlist:get-all-unique-nets");
 
     nl_current = netlist_head;
 
     /* walk through the list of components, and through the list
      * of individual pins on each, adding net names to the list
-     * being careful to ignore duplicates, and unconnected pins 
+     * being careful to ignore duplicates, and unconnected pins
      */
     while (nl_current != NULL) {
 	pl_current = nl_current->cpins;
@@ -238,7 +238,7 @@ SCM g_get_all_connections(SCM scm_netname)
     char *pin;
     char *uref;
 
-    SCM_ASSERT(scm_is_string(scm_netname), scm_netname, SCM_ARG1, 
+    SCM_ASSERT(scm_is_string(scm_netname), scm_netname, SCM_ARG1,
 	       "gnetlist:get-all-connections");
 
     wanted_net_name = scm_to_utf8_string (scm_netname);
@@ -252,7 +252,7 @@ SCM g_get_all_connections(SCM scm_netname)
 
     /* walk through the list of components, and through the list
      * of individual pins on each, adding net names to the list
-     * being careful to ignore duplicates, and unconnected pins 
+     * being careful to ignore duplicates, and unconnected pins
      */
     while (nl_current != NULL) {
 	pl_current = nl_current->cpins;
@@ -328,10 +328,10 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
   char *pin;
   char *uref;
 
-  SCM_ASSERT(scm_is_string (scm_uref), scm_uref, SCM_ARG1, 
+  SCM_ASSERT(scm_is_string (scm_uref), scm_uref, SCM_ARG1,
              "gnetlist:get-nets");
 
-  SCM_ASSERT(scm_is_string (scm_pin), scm_pin, SCM_ARG2, 
+  SCM_ASSERT(scm_is_string (scm_pin), scm_pin, SCM_ARG2,
              "gnetlist:get-nets");
 
   scm_dynwind_begin (0);
@@ -408,7 +408,7 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 
 
 /* Given a uref, Return a list of pairs, each pair contains the name
- * of the pin, and the name of the net connected to that pin.  
+ * of the pin, and the name of the net connected to that pin.
  */
 SCM g_get_pins_nets(SCM scm_uref)
 {
@@ -458,8 +458,8 @@ SCM g_get_pins_nets(SCM scm_uref)
 
     free (wanted_uref);
 
-    pinslist = scm_reverse (pinslist);	/* pins are in reverse order on the way 
-					 * out 
+    pinslist = scm_reverse (pinslist);	/* pins are in reverse order on the way
+					 * out
 					 */
     return (pinslist);
 }
@@ -675,12 +675,12 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
 		    if (pinobject) {
 		      return_value="pwr";
 #if DEBUG
-		      
+
 		      printf("Supplied pintype 'pwr' for artificial pin '%s' of '%s'\n",
 			     pin, uref);
 #endif
 		    }
-		  }		
+		  }
 		}
 	    }
 	}
@@ -799,8 +799,8 @@ SCM g_get_input_files()
 }
 
 
-/* given a net name, an attribute, and a wanted attribute, return all 
-   the given attribute of all the graphical objects connected to that 
+/* given a net name, an attribute, and a wanted attribute, return all
+   the given attribute of all the graphical objects connected to that
    net name */
 SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has_attribute, SCM scm_wanted_attribute)
 {
@@ -816,15 +816,15 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
     char *has_attrib_value = NULL;
     char *has_attrib_name = NULL;
 
-    SCM_ASSERT(scm_is_string (scm_netname), scm_netname, SCM_ARG1, 
+    SCM_ASSERT(scm_is_string (scm_netname), scm_netname, SCM_ARG1,
 	       "gnetlist:graphical-objs-in-net-with-attrib-get-attrib");
 
     SCM_ASSERT(scm_is_string (scm_wanted_attribute),
-	       scm_wanted_attribute, SCM_ARG3, 
+	       scm_wanted_attribute, SCM_ARG3,
 	       "gnetlist:graphical-objs-in-net-with-attrib-get-attrib");
 
     SCM_ASSERT(scm_is_string (scm_has_attribute),
-	       scm_has_attribute, SCM_ARG2, 
+	       scm_has_attribute, SCM_ARG2,
 	       "gnetlist:graphical-objs-in-net-with-attrib-get-attrib");
 
     scm_dynwind_begin (0);
@@ -843,10 +843,10 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
     scm_dynwind_free (has_attrib);
 
     nl_current = graphical_netlist_head;
-    
+
     /* walk through the list of components, and through the list
      * of individual pins on each, adding net names to the list
-     * being careful to ignore duplicates, and unconnected pins 
+     * being careful to ignore duplicates, and unconnected pins
      */
     while (nl_current != NULL) {
 	pl_current = nl_current->cpins;
@@ -857,10 +857,10 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
 
 		  if (o_attrib_string_get_name_value (has_attrib, &has_attrib_name,
 					       &has_attrib_value) != 0) {
-		    attrib_value = 
+		    attrib_value =
 		      o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
 		                                              has_attrib_name, 0);
-		    
+
 		    if ( ((has_attrib_value == NULL) && (attrib_value == NULL)) ||
 			 ((has_attrib_value != NULL) && (attrib_value != NULL) &&
 			  (strcmp(attrib_value, has_attrib_value) == 0)) ) {
@@ -891,6 +891,6 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
 
 
 
-/* 
+/*
  * This function is in s_rename.c:  SCM g_get_renamed_nets(SCM scm_level)
  */

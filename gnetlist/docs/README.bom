@@ -12,10 +12,10 @@ This is a sample config file:
 
 device
 label
-name  
+name
 
-Just call it with 
-        gnetlist  -g bom -o test.bom test.sch 
+Just call it with
+        gnetlist  -g bom -o test.bom test.sch
 
 The config file must be called "attribs" and be in the pwd, because
 there is no way to pass arguments to the netlister (at least that I
@@ -27,4 +27,3 @@ have any ideas.
 
 Matt
 matt@ettus.com
-

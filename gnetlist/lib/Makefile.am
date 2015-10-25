@@ -1,8 +1,8 @@
 
 rcdatadir = @GEDARCDIR@
-rcdata_DATA = system-gnetlistrc 
+rcdata_DATA = system-gnetlistrc
 
-EXTRA_DIST = system-gnetlistrc.in 
+EXTRA_DIST = system-gnetlistrc.in
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

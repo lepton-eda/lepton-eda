@@ -13,8 +13,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License 
- * along with this program; if not, write to the Free Software 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
@@ -373,7 +373,7 @@ char *s_net_name (TOPLEVEL * pr_current, NETLIST * netlist_head,
 #if DEBUG
     printf("didn't find named net\n");
 #endif
-    
+
     /* didn't find a name */
     /* go looking for another net which might have already been named */
     /* ie you don't want to create a new unnamed net if the net has */
