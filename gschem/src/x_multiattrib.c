@@ -1496,7 +1496,8 @@ multiattrib_callback_value_key_pressed (GtkWidget *widget,
   /*  - the Return key without the Control modifier */
   /*  - the Tab key without the Control modifier */
   if ((event->keyval == GDK_Return || event->keyval == GDK_KP_Enter) ||
-      (event->keyval == GDK_Tab    || event->keyval == GDK_KP_Tab)) {
+      (event->keyval == GDK_Tab    || event->keyval == GDK_KP_Tab ||
+       event->keyval == GDK_ISO_Left_Tab)) {
     /* Control modifier activated? */
     if (event->state & GDK_CONTROL_MASK) {
       /* yes the modifier in event structure and let event propagate */
@@ -2220,7 +2221,7 @@ multiattrib_init (Multiattrib *multiattrib)
                              g_object_new (GTK_TYPE_SCROLLED_WINDOW,
                                            /* GtkScrolledWindow */
                                            "hscrollbar-policy",
-                                           GTK_POLICY_NEVER,
+                                           GTK_POLICY_AUTOMATIC,
                                            "vscrollbar-policy",
                                            GTK_POLICY_AUTOMATIC,
                                            "shadow-type",
@@ -2228,9 +2229,9 @@ multiattrib_init (Multiattrib *multiattrib)
                                            NULL));
   /*! \todo Forcing the size request is a horrible band-aid and
    *  should be replaced by a better heuristic. */
-  textview = GTK_WIDGET (g_object_new (GTK_TYPE_TEXT_VIEW,
-                                       "height-request", 50,
-                                       NULL));
+  textview = GTK_WIDGET (g_object_new (GTK_TYPE_TEXT_VIEW, NULL));
+  gtk_widget_set_tooltip_text (GTK_WIDGET (textview),
+                  _("Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"));
   g_signal_connect (textview,
                     "key_press_event",
                     G_CALLBACK (multiattrib_callback_value_key_pressed),
