@@ -1483,8 +1483,7 @@ DEFINE_I_CALLBACK(page_revert)
   up = gschem_toplevel_get_toplevel (w_current)->page_current->up;
 
   /* delete the page, then re-open the file as a new page */
-  s_page_delete (gschem_toplevel_get_toplevel (w_current), gschem_toplevel_get_toplevel (w_current)->page_current);
-  gschem_toplevel_page_changed (w_current);
+  x_window_close_page (w_current, gschem_toplevel_get_toplevel (w_current)->page_current);
 
   page = x_window_open_page (w_current, filename);
 
