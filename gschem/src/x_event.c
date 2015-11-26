@@ -430,13 +430,17 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 #endif /* HAVE_LIBSTROKE */
 
       case(MID_MOUSEPAN_ENABLED):
-      gschem_page_view_pan_end (page_view, w_current);
+        if (gschem_page_view_pan_end (page_view) && w_current->undo_panzoom) {
+          o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
+        }
       break;
     }
 
   } else if (event->button == 3) {
       /* just for ending a mouse pan */
-      gschem_page_view_pan_end (page_view, w_current);
+      if (gschem_page_view_pan_end (page_view) && w_current->undo_panzoom) {
+        o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
+      }
   }
  end_button_released:
   scm_dynwind_end ();

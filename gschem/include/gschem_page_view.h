@@ -110,8 +110,8 @@ gschem_page_view_pan_start(GschemPageView *page_view, int x, int y);
 void
 gschem_page_view_pan_motion (GschemPageView *view, int mousepan_gain, int x, int y);
 
-void
-gschem_page_view_pan_end(GschemPageView *page_view, GschemToplevel *w_current);
+gboolean
+gschem_page_view_pan_end(GschemPageView *page_view);
 
 int
 gschem_page_view_SCREENabs(GschemPageView *view, int val);

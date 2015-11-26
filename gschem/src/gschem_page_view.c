@@ -825,23 +825,20 @@ gschem_page_view_pan_motion (GschemPageView *view, int mousepan_gain, int x, int
 /*! \brief End mouse panning in the view
  *  \par Function Description
  *  This function resets the view pan mode and invalidates the
- *  view.  If undo_panzoom is enabled, the current viewport
- *  data are saved for undo.
+ *  view after panning.
  *
  *  \param [in,out] view      This GschemPageView
- *  \param [in]     w_current The GschemToplevel
+ *  \returns TRUE if panning has been finished, or FALSE if there was no panning
  */
-void
-gschem_page_view_pan_end (GschemPageView *view, GschemToplevel *w_current)
+gboolean
+gschem_page_view_pan_end (GschemPageView *view)
 {
   if (view->doing_pan) {
     gschem_page_view_invalidate_all (view);
-
-    if (w_current->undo_panzoom) {
-      o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
-    }
-
     view->doing_pan = FALSE;
+    return TRUE;
+  } else {
+    return FALSE;
   }
 }
 
@@ -1351,5 +1348,4 @@ gschem_page_view_zoom_text (GschemPageView *view, OBJECT *object)
 
     gschem_page_view_invalidate_all (view);
   }
-
 }
