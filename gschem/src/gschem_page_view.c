@@ -1393,3 +1393,38 @@ gschem_page_view_zoom_text (GschemPageView *view, OBJECT *object)
     gschem_page_view_invalidate_all (view);
   }
 }
+
+
+/*! \brief Redraw page on the view
+ *
+ *  \param [in] view      The GschemPageView object which page to redraw
+ */
+void
+gschem_page_view_redraw (GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current)
+{
+  GschemPageGeometry *geometry;
+  PAGE *page;
+
+#if DEBUG
+  printf("EXPOSE\n");
+#endif
+
+  g_return_val_if_fail (view != NULL, 0);
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  page = gschem_page_view_get_page (view);
+
+  if (page != NULL) {
+    geometry = gschem_page_view_get_page_geometry (view);
+
+    g_return_val_if_fail (view != NULL, 0);
+
+    o_redraw_rects (w_current,
+                    gtk_widget_get_window (GTK_WIDGET(view)),
+                    gschem_page_view_get_gc (view),
+                    page,
+                    geometry,
+                    &(event->area),
+                    1);
+  }
+}

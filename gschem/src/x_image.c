@@ -509,7 +509,6 @@ GdkPixbuf
   TOPLEVEL toplevel;
   GdkRectangle rect;
   GschemPageGeometry *old_geometry, *new_geometry;
-  cairo_t *cr;
   GdkPixmap *window = NULL;
 
   page_view = gschem_toplevel_get_current_page_view (w_current);
@@ -527,7 +526,6 @@ GdkPixbuf
   new_w_current.options = &options;
 
   window = gdk_pixmap_new (gtk_widget_get_window (GTK_WIDGET(page_view)), width, height, -1);
-  cr = gdk_cairo_create (window);
 
   gschem_options_set_grid_mode (new_w_current.options, GRID_MODE_NONE);
 
@@ -558,7 +556,6 @@ GdkPixbuf
                                                    toplevel.init_bottom);
 
   o_redraw_rects (&new_w_current,
-                  cr,
                   window,
                   NULL,
                   toplevel.page_current,
@@ -578,8 +575,6 @@ GdkPixbuf
   {
     x_image_convert_to_greyscale(pixbuf);
   }
-
-  cairo_destroy (cr);
 
   if (window != NULL) {
     g_object_unref(window);

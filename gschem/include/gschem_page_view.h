@@ -113,6 +113,9 @@ gschem_page_view_pan_motion (GschemPageView *view, int mousepan_gain, int x, int
 gboolean
 gschem_page_view_pan_end(GschemPageView *page_view);
 
+void
+gschem_page_view_redraw (GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current);
+
 int
 gschem_page_view_SCREENabs(GschemPageView *view, int val);
 

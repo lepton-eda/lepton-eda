@@ -37,7 +37,6 @@ extern COLOR display_outline_colors[MAX_COLORS];
  *
  */
 void o_redraw_rects (GschemToplevel *w_current,
-                     cairo_t *cr,
                      GdkDrawable *drawable,
                      GdkGC *gc,
                      PAGE *page,
@@ -59,12 +58,18 @@ void o_redraw_rects (GschemToplevel *w_current,
   int render_flags;
   GArray *render_color_map = NULL;
   GArray *render_outline_color_map = NULL;
+  cairo_t *cr;
 
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (w_current->toplevel == toplevel);
   g_return_if_fail (page != NULL);
   g_return_if_fail (geometry != NULL);
+
+  cr = gdk_cairo_create (drawable);
+
+  gdk_cairo_rectangle (cr, rectangles);
+  cairo_clip (cr);
 
   cairo_save (cr);
   cairo_set_matrix (cr, gschem_page_geometry_get_world_to_screen_matrix (geometry));
@@ -257,6 +262,8 @@ void o_redraw_rects (GschemToplevel *w_current,
   g_object_unref (G_OBJECT (renderer));
   g_array_free (render_color_map, TRUE);
   g_array_free (render_outline_color_map, TRUE);
+
+  cairo_destroy (cr);
 }
 
 

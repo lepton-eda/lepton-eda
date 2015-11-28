@@ -45,35 +45,7 @@ static int DOING_STROKE = FALSE;
 gint
 x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current)
 {
-  GschemPageGeometry *geometry;
-  PAGE *page;
-
-#if DEBUG
-  printf("EXPOSE\n");
-#endif
-
-  g_return_val_if_fail (w_current != NULL, 0);
-
-  page = gschem_page_view_get_page (view);
-  geometry = gschem_page_view_get_page_geometry (view);
-
-  if (page != NULL) {
-    cairo_t *cr = gdk_cairo_create (GTK_WIDGET (view)->window);
-
-    gdk_cairo_rectangle (cr, &(event->area));
-    cairo_clip (cr);
-
-    o_redraw_rects (w_current,
-                    cr,
-                    gtk_widget_get_window (GTK_WIDGET(view)),
-                    gschem_page_view_get_gc (view),
-                    page,
-                    geometry,
-                    &(event->area),
-                    1);
-
-    cairo_destroy (cr);
-  }
+  gschem_page_view_redraw (view, event, w_current);
 
   return(0);
 }
