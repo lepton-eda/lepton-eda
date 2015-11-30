@@ -36,13 +36,12 @@ extern COLOR display_outline_colors[MAX_COLORS];
  *  \par Function Description
  *
  */
-void o_redraw_rects (GschemToplevel *w_current,
-                     GdkDrawable *drawable,
-                     GdkGC *gc,
-                     PAGE *page,
-                     GschemPageGeometry *geometry,
-                     GdkRectangle *rectangles,
-                     int n_rectangles)
+void o_redraw_rect (GschemToplevel *w_current,
+                    GdkDrawable *drawable,
+                    GdkGC *gc,
+                    PAGE *page,
+                    GschemPageGeometry *geometry,
+                    GdkRectangle *rectangle)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean draw_selected;
@@ -50,7 +49,6 @@ void o_redraw_rects (GschemToplevel *w_current,
   double cue_half_size;
   int bloat;
   double dummy = 0.0;
-  int i;
   GList *obj_list;
   GList *iter;
   BOX *world_rect;
@@ -68,16 +66,14 @@ void o_redraw_rects (GschemToplevel *w_current,
 
   cr = gdk_cairo_create (drawable);
 
-  gdk_cairo_rectangle (cr, rectangles);
+  gdk_cairo_rectangle (cr, rectangle);
   cairo_clip (cr);
 
   cairo_save (cr);
   cairo_set_matrix (cr, gschem_page_geometry_get_world_to_screen_matrix (geometry));
 
-  for (i = 0; i < n_rectangles; i++) {
-    x_repaint_background_region (w_current, cr, drawable, gc, rectangles[i].x, rectangles[i].y,
-                                 rectangles[i].width, rectangles[i].height);
-  }
+  x_repaint_background_region (w_current, cr, drawable, gc, rectangle->x, rectangle->y,
+                               rectangle->width, rectangle->height);
 
   grip_half_size = GRIP_SIZE / 2;
   cue_half_size = CUE_BOX_SIZE;
@@ -85,27 +81,25 @@ void o_redraw_rects (GschemToplevel *w_current,
   bloat = MAX (grip_half_size, (int)cue_half_size);
 
 
-  world_rect = g_new (BOX, n_rectangles);
+  world_rect = g_new (BOX, 1);
 
-  for (i = 0; i < n_rectangles; i++) {
-    double lower_x = rectangles[i].x - bloat;
-    double lower_y = rectangles[i].y + rectangles[i].height + bloat;
-    double upper_x = rectangles[i].x + rectangles[i].width + bloat;
-    double upper_y = rectangles[i].y - bloat;
+  double lower_x = rectangle->x - bloat;
+  double lower_y = rectangle->y + rectangle->height + bloat;
+  double upper_x = rectangle->x + rectangle->width + bloat;
+  double upper_y = rectangle->y - bloat;
 
-    cairo_device_to_user (cr, &lower_x, &lower_y);
-    cairo_device_to_user (cr, &upper_x, &upper_y);
+  cairo_device_to_user (cr, &lower_x, &lower_y);
+  cairo_device_to_user (cr, &upper_x, &upper_y);
 
-    world_rect[i].lower_x = floor (lower_x);
-    world_rect[i].lower_y = floor (lower_y);
-    world_rect[i].upper_x = ceil (upper_x);
-    world_rect[i].upper_y = ceil (upper_y);
-  }
+  world_rect->lower_x = floor (lower_x);
+  world_rect->lower_y = floor (lower_y);
+  world_rect->upper_x = ceil (upper_x);
+  world_rect->upper_y = ceil (upper_y);
 
   obj_list = s_page_objects_in_regions (toplevel,
                                         page,
                                         world_rect,
-                                        n_rectangles);
+                                        1);
 
   g_free (world_rect);
 

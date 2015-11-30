@@ -555,13 +555,12 @@ GdkPixbuf
                                                    toplevel.init_right,
                                                    toplevel.init_bottom);
 
-  o_redraw_rects (&new_w_current,
-                  window,
-                  NULL,
-                  toplevel.page_current,
-                  new_geometry,
-                  &rect,
-                  1);
+  o_redraw_rect (&new_w_current,
+                 window,
+                 NULL,
+                 toplevel.page_current,
+                 new_geometry,
+                 &rect);
 
   gschem_page_geometry_free (new_geometry);
 

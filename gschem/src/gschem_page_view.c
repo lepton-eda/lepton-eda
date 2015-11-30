@@ -1419,12 +1419,11 @@ gschem_page_view_redraw (GschemPageView *view, GdkEventExpose *event, GschemTopl
 
     g_return_val_if_fail (view != NULL, 0);
 
-    o_redraw_rects (w_current,
-                    gtk_widget_get_window (GTK_WIDGET(view)),
-                    gschem_page_view_get_gc (view),
-                    page,
-                    geometry,
-                    &(event->area),
-                    1);
+    o_redraw_rect (w_current,
+                   gtk_widget_get_window (GTK_WIDGET(view)),
+                   gschem_page_view_get_gc (view),
+                   page,
+                   geometry,
+                   &(event->area));
   }
 }
