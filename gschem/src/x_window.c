@@ -286,7 +286,7 @@ x_window_select_text (GschemFindTextState *state, OBJECT *object, GschemToplevel
     gschem_page_view_set_page (view, object->page);
   }
 
-  gschem_page_view_zoom_text (view, object, w_current);
+  gschem_page_view_zoom_text (view, object);
 }
 
 static void
