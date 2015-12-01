@@ -1252,9 +1252,6 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
 
 
 /*! \brief Transform WORLD coordinates to SCREEN coordinates
- *
- *  A temporary function until a GschemToplevel is not required for coordinate
- *  conversions. See the function WORLDtoSCREEN.
  */
 void
 gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int *py)
