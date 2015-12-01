@@ -793,17 +793,16 @@ void gschem_page_view_pan_start (GschemPageView *view, int x, int y)
  *  \par Function Description
  *  In the view pan mode, this function calculates displacement of
  *  the mouse pointer relative to its previous position and repans
- *  the view taking in account the mousepan_gain setting of
- *  w_current. Then it replaces pan_x and pan_y with the new
- *  coordinates.
+ *  the view taking into account the given mouse pan gain setting.
+ *  Then it replaces pan_x and pan_y with the new coordinates.
  *
- *  \param [in,out] view      This GschemPageView
- *  \param [in]     w_current The GschemToplevel
- *  \param [in]     x         The new screen x coordinate
- *  \param [in]     y         The new screen y coordinate
+ *  \param [in,out] view            This GschemPageView
+ *  \param [in]     mousepan_gain   Mouse pan gain
+ *  \param [in]     x               The new screen x coordinate
+ *  \param [in]     y               The new screen y coordinate
  */
 void
-gschem_page_view_pan_motion (GschemPageView *view, GschemToplevel *w_current, int x, int y)
+gschem_page_view_pan_motion (GschemPageView *view, int mousepan_gain, int x, int y)
 {
   int pdiff_x, pdiff_y;
 
@@ -813,8 +812,8 @@ gschem_page_view_pan_motion (GschemPageView *view, GschemToplevel *w_current, in
 
     if (!(view->throttle % 5)) {
       gschem_page_view_pan_mouse(view,
-                                 pdiff_x*w_current->mousepan_gain,
-                                 pdiff_y*w_current->mousepan_gain);
+                                 pdiff_x * mousepan_gain,
+                                 pdiff_y * mousepan_gain);
 
       view->pan_x = x;
       view->pan_y = y;
