@@ -1026,15 +1026,19 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
 
 
-/*! \brief Get absolute SCREEN coordinate.
+/*! \brief Get absolute SCREEN value
  *
- *  A temporary function until a GschemToplevel is not required for coordinate
- *  conversions. See the function SCREENabs.
+ *  \par Function Description
+ *  Converts WORLD value \a val to absolute SCREEN value.
+ *
+ *  \param [in]     view       This GschemPageView
+ *  \param [in]     val        The value to convert
+ *  \return The converted value in SCREEN pixels
  */
 int
 gschem_page_view_SCREENabs(GschemPageView *view, int val)
 {
-  double f0,f1,f;
+  double f0,f1;
   double i;
   int j;
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
@@ -1045,8 +1049,7 @@ gschem_page_view_SCREENabs(GschemPageView *view, int val)
 
   f0 = gschem_page_geometry_get_viewport_left  (geometry);
   f1 = gschem_page_geometry_get_viewport_right (geometry);
-  f = gschem_page_view_get_page_geometry (view)->screen_width / (f1 - f0);
-  i = f * (double)(val);
+  i = (double)(geometry->screen_width) * (double)(val) / (f1 - f0);
 
 #ifdef HAS_RINT
   j = rint(i);
