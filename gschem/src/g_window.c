@@ -308,7 +308,7 @@ init_module_gschem_core_window ()
     SCM geda_page_module = scm_c_resolve_module ("geda core page");
     SCM close_page_proc =
       scm_variable_ref (scm_c_lookup (s_override_close_page_x));
-    scm_c_module_define (geda_page_module, "close-page!", close_page_proc);
+    scm_c_module_define (geda_page_module, "%close-page!", close_page_proc);
   }
 }
 
