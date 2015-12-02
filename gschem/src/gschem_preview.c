@@ -87,10 +87,8 @@ preview_get_filename (GschemPreview *preview)
 
 /*! \brief Completes initialitation of the widget after realization.
  *  \par Function Description
- *  This function terminates the initialization of preview's GschemToplevel
- *  and TOPLEVEL environments after the widget has been realized.
- *
- *  It creates a preview page in the TOPLEVEL environment.
+ *  This function terminates the initialization of the preview widget
+ *  after it has been realized.
  *
  *  \param [in] widget    The preview widget.
  *  \param [in] user_data Unused user data.
