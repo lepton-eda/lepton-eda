@@ -640,14 +640,27 @@ DEFINE_I_CALLBACK(edit_color)
  */
 DEFINE_I_CALLBACK(edit_rotate_90)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
   GList *object_list;
+  GschemToplevel *w_current = NULL;
+  GschemPageView *view = NULL;
+  PAGE* page = NULL;
+
+  w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
 
-  if (w_current->inside_action &&
-      (gschem_toplevel_get_current_page_view (w_current)->page->place_list != NULL)) {
+  view = (gschem_toplevel_get_current_page_view (w_current));
+
+  g_return_if_fail (view != NULL);
+
+  page = (gschem_page_view_get_page (view));
+
+  if (page == NULL) {
+    return;
+  }
+
+  if (w_current->inside_action && (page->place_list != NULL)) {
     o_place_rotate (w_current);
     return;
   }
@@ -677,14 +690,27 @@ DEFINE_I_CALLBACK(edit_rotate_90)
  */
 DEFINE_I_CALLBACK(edit_mirror)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
   GList *object_list;
+  GschemToplevel *w_current = NULL;
+  GschemPageView *view = NULL;
+  PAGE* page = NULL;
+
+  w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
 
-  if (w_current->inside_action &&
-      (gschem_toplevel_get_current_page_view (w_current)->page->place_list != NULL)) {
+  view = (gschem_toplevel_get_current_page_view (w_current));
+
+  g_return_if_fail (view != NULL);
+
+  page = (gschem_page_view_get_page (view));
+
+  if (page == NULL) {
+    return;
+  }
+
+  if (w_current->inside_action && (page->place_list != NULL)) {
     o_place_mirror (w_current);
     return;
   }
@@ -1431,14 +1457,18 @@ DEFINE_I_CALLBACK(page_prev)
 DEFINE_I_CALLBACK(page_close)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
   g_return_if_fail (w_current != NULL);
 
-  if (gschem_toplevel_get_toplevel (w_current)->page_current->CHANGED
-      && !x_dialog_close_changed_page (w_current, gschem_toplevel_get_toplevel (w_current)->page_current))
-    return;
+  PAGE *page = gschem_toplevel_get_toplevel (w_current)->page_current;
 
-  x_window_close_page (w_current, gschem_toplevel_get_toplevel (w_current)->page_current);
+  if (page != NULL) {
+    if (page->CHANGED
+        && !x_dialog_close_changed_page (w_current, page)) {
+      return;
+    }
+
+    x_window_close_page (w_current, page);
+  }
 }
 
 /*! \todo Finish function documentation!!!

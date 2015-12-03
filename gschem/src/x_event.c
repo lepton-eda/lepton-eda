@@ -116,6 +116,10 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
   g_return_val_if_fail ((w_current != NULL), 0);
 
+  if (page == NULL) {
+    return TRUE; /* terminate event */
+  }
+
   if (!gtk_widget_has_focus (GTK_WIDGET (page_view))) {
     gtk_widget_grab_focus (GTK_WIDGET (page_view));
   }
@@ -165,7 +169,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
   if (event->button == 1) {
     if (w_current->inside_action) {
       /* End action */
-      if (page_view->page->place_list != NULL) {
+      if (page->place_list != NULL) {
         switch(w_current->event_state) {
           case (COMPMODE)   : o_place_end(w_current, w_x, w_y, w_current->continue_component_place,
                                 "%add-objects-hook"); break;
@@ -333,11 +337,16 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 gint
 x_event_button_released (GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current)
 {
+  PAGE *page = gschem_page_view_get_page (page_view);
   int unsnapped_wx, unsnapped_wy;
   int w_x, w_y;
 
   g_return_val_if_fail ((page_view != NULL), 0);
   g_return_val_if_fail ((w_current != NULL), 0);
+
+  if (page == NULL) {
+    return TRUE; /* terminate event */
+  }
 
 #if DEBUG
   printf("released! %d \n", w_current->event_state);
@@ -361,7 +370,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
   if (event->button == 1) {
 
     if (w_current->inside_action) {
-      if (page_view->page->place_list != NULL) {
+      if (page->place_list != NULL) {
         switch(w_current->event_state) {
           case (COPYMODE)  :
           case (MCOPYMODE) : o_copy_end(w_current); break;
@@ -414,7 +423,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 
     switch(w_current->middle_button) {
       case(ACTION):
-        if (w_current->inside_action && (page_view->page->place_list != NULL)) {
+        if (w_current->inside_action && (page->place_list != NULL)) {
           switch(w_current->event_state) {
             case (COPYMODE): o_copy_end(w_current); break;
             case (MOVEMODE): o_move_end(w_current); break;
@@ -456,12 +465,17 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 gint
 x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current)
 {
+  PAGE *page = gschem_page_view_get_page (page_view);
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
   int skip_event=0;
   GdkEvent *test_event;
 
   g_return_val_if_fail ((w_current != NULL), 0);
+
+  if (page == NULL) {
+    return TRUE; /* terminate event */
+  }
 
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
@@ -511,7 +525,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   g_dynwind_window (w_current);
 
   if (w_current->inside_action) {
-    if (page_view->page->place_list != NULL) {
+    if (page->place_list != NULL) {
       switch(w_current->event_state) {
         case (COPYMODE)   :
         case (MCOPYMODE)  :

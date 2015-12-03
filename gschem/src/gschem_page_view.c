@@ -56,6 +56,7 @@ enum
 };
 
 
+typedef void (*NotifyFunction) (void*,void*);
 
 static void
 dispose (GObject *object);
@@ -161,12 +162,11 @@ dispose (GObject *object)
   g_hash_table_foreach (view->geometry_table, (GHFunc)remove_page_weak_reference, view);
   g_hash_table_remove_all (view->geometry_table);
 
-  /* According to the GObject Manual the dispose function might be
-   * called several times. We don't want to call
-   * gschem_page_view_set_page twice here  */
-  if (view->page != NULL) {
-    gschem_page_view_set_page (view, NULL);
-  }
+  /* We aren't bothering about invoking
+   *   gschem_page_view_set_page (view, NULL)
+   * directly here since the current page itself must use its weak
+   * reference to call cleanup closure (page_deleted) for this
+   * view */
 
   if (view->gc != NULL) {
     g_object_unref (view->gc);
@@ -398,8 +398,6 @@ gschem_page_view_get_page (GschemPageView *view)
 GschemPageGeometry*
 gschem_page_view_get_page_geometry (GschemPageView *view)
 {
-  typedef void (*NotifyFunction) (void*,void*);
-
   PAGE *page = NULL;
   GschemPageGeometry *geometry = NULL;
   int screen_width;
@@ -430,7 +428,6 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
                                                      view->page->toplevel->init_bottom);
 
     g_hash_table_insert (view->geometry_table, page, geometry);
-    s_page_weak_ref (page, (NotifyFunction) page_deleted, view);
 
     gschem_page_geometry_zoom_extents (geometry,
                                        view->page->toplevel,
@@ -531,14 +528,16 @@ gschem_page_view_invalidate_object (GschemPageView *view, OBJECT *object)
     return;
   }
 
-  if (view->page != NULL) {
+  PAGE *page = gschem_page_view_get_page (view);
+
+  if (page != NULL) {
     gboolean success;
     int world_bottom;
     int world_right;
     int world_left;
     int world_top;
 
-    success = world_get_single_object_bounds (view->page->toplevel,
+    success = world_get_single_object_bounds (page->toplevel,
                                               object,
                                               &world_left,
                                               &world_top,
@@ -670,13 +669,29 @@ gschem_page_view_init (GschemPageView *view)
 
 
 /*! \brief Create a new instance of the GschemPageView
+ *  \par Function Description
+ *  This function creates a new instance of the GschemPageView
+ *  structure. The resulting view becomes a "viewport" for the
+ *  given \a page. If the page is not NULL, a weak reference
+ *  callback is added for \a page so that it can do necessary
+ *  clean-up for the view when the page is deleted (e.g. due to
+ *  using close-page! Scheme function).
+ *
+ *  \param [in] page The page to refer to.
  *
  *  \return A new instance of the GschemPageView
  */
 GschemPageView*
 gschem_page_view_new_with_page (PAGE *page)
 {
-  return GSCHEM_PAGE_VIEW (g_object_new (GSCHEM_TYPE_PAGE_VIEW, "page", page, NULL));
+  GschemPageView *view = GSCHEM_PAGE_VIEW (g_object_new (GSCHEM_TYPE_PAGE_VIEW,
+                                                         "page", page,
+                                                         NULL));
+  if (page) {
+    s_page_weak_ref (page, (NotifyFunction) page_deleted, view);
+  }
+
+  return view;
 }
 
 
@@ -907,8 +922,7 @@ gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustme
 /*! \brief Set the page for this view
  *
  *  The toplevel property must be set and the page must belong to that
- *  toplevel. Currently, the codebase does not allow the page to be
- *  NULL.
+ *  toplevel.
  *
  *  \param [in,out] view The view
  *  \param [in]     page The page
@@ -919,16 +933,21 @@ gschem_page_view_set_page (GschemPageView *view, PAGE *page)
   g_return_if_fail (view != NULL);
   g_return_if_fail (view->geometry_table != NULL);
 
-  view->page = page;
+  if (page != view->page) {
 
-  if (page != NULL) {
-    g_return_if_fail (page->toplevel != NULL);
-    s_page_goto (page->toplevel, page);
+    view->page = page;
+
+    if (page) {
+      s_page_weak_ref (page, (NotifyFunction) page_deleted, view);
+
+      g_return_if_fail (page->toplevel != NULL);
+      s_page_goto (page->toplevel, page);
+
+      g_object_notify (G_OBJECT (view), "page");
+      g_object_notify (G_OBJECT (view), "page-geometry");
+      g_signal_emit_by_name (view, "update-grid-info");
+    }
   }
-
-  g_object_notify (G_OBJECT (view), "page");
-  g_object_notify (G_OBJECT (view), "page-geometry");
-  g_signal_emit_by_name (view, "update-grid-info");
 }
 
 
@@ -1200,6 +1219,7 @@ page_deleted (PAGE *page, GschemPageView *view)
   g_return_if_fail (view->geometry_table != NULL);
 
   g_hash_table_remove (view->geometry_table, page);
+  gschem_page_view_set_page (view, NULL);
 }
 
 
