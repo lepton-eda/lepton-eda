@@ -1450,7 +1450,8 @@ DEFINE_I_CALLBACK(page_close)
 DEFINE_I_CALLBACK(page_revert)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  PAGE *page;
+  PAGE *page_current = NULL;
+  PAGE *page = NULL;
   gchar *filename;
   int page_control;
   int up;
@@ -1458,6 +1459,8 @@ DEFINE_I_CALLBACK(page_revert)
   GtkWidget* dialog;
 
   g_return_if_fail (w_current != NULL);
+
+  page_current = gschem_toplevel_get_toplevel (w_current)->page_current;
 
   dialog = gtk_message_dialog_new ((GtkWindow*) w_current->main_window,
                                    GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -1478,12 +1481,12 @@ DEFINE_I_CALLBACK(page_revert)
     return;
 
   /* save this for later */
-  filename = g_strdup (gschem_toplevel_get_toplevel (w_current)->page_current->page_filename);
-  page_control = gschem_toplevel_get_toplevel (w_current)->page_current->page_control;
-  up = gschem_toplevel_get_toplevel (w_current)->page_current->up;
+  filename = g_strdup (page_current->page_filename);
+  page_control = page_current->page_control;
+  up = page_current->up;
 
   /* delete the page, then re-open the file as a new page */
-  x_window_close_page (w_current, gschem_toplevel_get_toplevel (w_current)->page_current);
+  x_window_close_page (w_current, page_current);
 
   page = x_window_open_page (w_current, filename);
 
