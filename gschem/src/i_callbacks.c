@@ -2273,8 +2273,8 @@ DEFINE_I_CALLBACK(hierarchy_up)
   } else {
     if (page->CHANGED && !x_dialog_close_changed_page (w_current, page))
       return;
-    x_window_set_current_page(w_current, up_page);
     x_window_close_page (w_current, page);
+    x_window_set_current_page(w_current, up_page);
   }
 }
 
