@@ -883,9 +883,6 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, NULL);
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  g_return_val_if_fail (page_view != NULL, NULL);
-
   /* Generate untitled filename if none was specified */
   if (filename == NULL) {
     gchar *cwd, *tmp, *untitled_name;
@@ -947,17 +944,7 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
     g_run_hook_page (w_current, "%new-page-hook", toplevel->page_current);
   }
 
-  gschem_page_view_set_page (page_view,
-                             toplevel->page_current);
-
   o_undo_savestate (w_current, toplevel->page_current, UNDO_ALL);
-
-  /* This line is generally un-needed, however if some code
-   * wants to open a page, yet not bring it to the front, it is
-   * needed needed to add it into the page manager. Otherwise,
-   * it will get done in x_window_set_current_page(...)
-   */
-  x_pagesel_update (w_current); /* ??? */
 
   g_free (fn);
 
