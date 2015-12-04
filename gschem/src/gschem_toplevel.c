@@ -692,6 +692,6 @@ notify_options (GschemToplevel *w_current)
      */
 
     i_update_grid_info (w_current);
-    o_invalidate_all (w_current);
+    gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
   }
 }

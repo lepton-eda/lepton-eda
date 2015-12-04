@@ -820,7 +820,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   g_list_free(searchtext_list);
   s_page_goto(w_current->toplevel, pages->data); /* go back to the root page */
   gschem_toplevel_page_changed (w_current);
-  o_invalidate_all (w_current);
+  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
   g_list_free(pages);
   o_undo_savestate_old(w_current, UNDO_ALL);
 }

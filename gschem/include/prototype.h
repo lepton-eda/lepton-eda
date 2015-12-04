@@ -398,7 +398,6 @@ void o_redraw_rects(GschemToplevel *w_current, cairo_t *cr, GdkDrawable *drawabl
 int o_invalidate_rubber(GschemToplevel *w_current);
 int o_redraw_cleanstates(GschemToplevel *w_current);
 void o_invalidate_rect(GschemToplevel *w_current, int x1, int y1, int x2, int y2);
-void o_invalidate_all(GschemToplevel *w_current);
 void o_invalidate(GschemToplevel *w_current, OBJECT *object);
 void o_invalidate_glist(GschemToplevel *w_current, GList *list);
 /* o_box.c */

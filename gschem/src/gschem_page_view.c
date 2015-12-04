@@ -503,7 +503,10 @@ gschem_page_view_invalidate_all (GschemPageView *view)
 {
   GdkWindow *window;
 
-  g_return_if_fail (view != NULL);
+  /* this function can be called early during initialization */
+  if (view == NULL) {
+    return;
+  }
 
   window = gtk_widget_get_window (GTK_WIDGET (view));
 

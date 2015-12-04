@@ -1119,9 +1119,9 @@ DEFINE_I_CALLBACK(view_status)
 DEFINE_I_CALLBACK(view_redraw)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
   g_return_if_fail (w_current != NULL);
-  o_invalidate_all (w_current);
+
+  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
 
 /*! \todo Finish function documentation!!!
@@ -1347,7 +1347,7 @@ DEFINE_I_CALLBACK (view_dark_colors)
   g_scm_c_eval_string_protected ("(load (build-path geda-rc-path \"gschem-colormap-darkbg\"))");
   x_color_allocate ();
 
-  o_invalidate_all (w_current);
+  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
 
 /*! \todo Finish function documentation!!!
@@ -1364,7 +1364,7 @@ DEFINE_I_CALLBACK (view_light_colors)
   g_scm_c_eval_string_protected ("(load (build-path geda-rc-path \"gschem-colormap-lightbg\"))");
   x_color_allocate ();
 
-  o_invalidate_all (w_current);
+  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
 
 /*! \todo Finish function documentation!!!
@@ -1381,7 +1381,7 @@ DEFINE_I_CALLBACK (view_bw_colors)
   g_scm_c_eval_string_protected ("(load (build-path geda-rc-path \"gschem-colormap-bw\"))");
   x_color_allocate ();
 
-  o_invalidate_all (w_current);
+  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
 
 /*! \section page-menu Page Menu Callback Functions */
@@ -2818,7 +2818,7 @@ DEFINE_I_CALLBACK(cancel)
   /* clear the key guile command-sequence */
   g_keys_reset (w_current);
 
-  o_invalidate_all (w_current);
+  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 
   i_action_stop (w_current);
 }

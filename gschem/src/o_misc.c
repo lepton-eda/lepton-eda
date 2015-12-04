@@ -335,7 +335,7 @@ void o_edit_show_hidden (GschemToplevel *w_current, const GList *o_list)
   i_show_state(w_current, NULL); /* update screen status */
 
   o_edit_show_hidden_lowlevel(w_current, o_list);
-  o_invalidate_all (w_current);
+  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 
   if (w_current->toplevel->show_hidden_text) {
     s_log_message(_("Hidden text is now visible\n"));
@@ -375,7 +375,7 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
     iter = g_list_next (iter);
   }
   o_undo_savestate_old(w_current, UNDO_ALL);
-  o_invalidate_all (w_current);
+  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
 
 /*! \todo Finish function documentation!!!

@@ -168,7 +168,7 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
 
   /* first zoom extents */
   gschem_page_view_zoom_extents (view, NULL);
-  o_invalidate_all (w_current);
+  gschem_page_view_invalidate_all (view);
 
   world_get_object_glist_bounds (toplevel,
                                  s_page_objects (toplevel->page_current),
@@ -210,7 +210,7 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
    * places */
   gschem_page_view_zoom_extents (view, NULL);
   if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
-  o_invalidate_all (w_current);
+  gschem_page_view_invalidate_all (view);
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   o_undo_savestate_old(w_current, UNDO_ALL);
   i_update_menus(w_current);

@@ -360,7 +360,7 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
       i_set_state(w_current, SELECT);
 
       /* from i_callback_cancel() */
-      o_invalidate_all (w_current);
+      gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
       return TRUE;
 
     /* all remaining states without dc changes */
@@ -414,27 +414,6 @@ void o_invalidate_rect (GschemToplevel *w_current,
                                            y1,
                                            x2,
                                            y2);
-}
-
-
-/*! \brief Invalidate the whole on-screen area
- *
- *  \par Function Description
- *  This function calls gdk_window_invalidate_rect() with a rect
- *  of NULL, causing the entire drawing area to be invalidated.
- *
- *  \param [in] w_current  The GschemToplevel object.
- */
-void o_invalidate_all (GschemToplevel *w_current)
-{
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-
-  /* this function can be called early during initialization */
-  if (page_view == NULL) {
-    return;
-  }
-
-  gschem_page_view_invalidate_all (page_view);
 }
 
 

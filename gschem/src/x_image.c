@@ -235,8 +235,10 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
   GError *gerror = NULL;
   GtkWidget *dialog;
   float prop;
+  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
 
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (gschem_toplevel_get_current_page_view (w_current));
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  g_return_if_fail (geometry != NULL);
 
   w_current->image_width = width = desired_width;
   w_current->image_height = height = desired_height;
@@ -322,7 +324,7 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
   gschem_page_geometry_set_viewport_top    (geometry, save_page_top   );
   gschem_page_geometry_set_viewport_bottom (geometry, save_page_bottom);
 
-  o_invalidate_all (w_current);
+  gschem_page_view_invalidate_all (view);
 }
 
 /*! \brief Display the image file selection dialog.
