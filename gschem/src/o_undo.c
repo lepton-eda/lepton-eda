@@ -85,7 +85,6 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
   g_return_if_fail (page != NULL);
 
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
-  g_return_if_fail (geometry != NULL);
 
   /* save autosave backups if necessary */
   o_autosave_backups(w_current);
@@ -141,15 +140,25 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
 
   page->undo_tos = page->undo_current;
 
-  page->undo_tos =
-  s_undo_add(page->undo_tos,
-             flag, filename, object_list,
-             geometry->viewport_left,
-             geometry->viewport_top,
-             geometry->viewport_right,
-             geometry->viewport_bottom,
-             page->page_control,
-             page->up);
+  if (geometry != NULL) {
+    page->undo_tos = s_undo_add(page->undo_tos,
+                                flag, filename, object_list,
+                                (geometry->viewport_left + geometry->viewport_right) / 2,
+                                (geometry->viewport_top + geometry->viewport_bottom) / 2,
+                                /* scale */
+                                max (((double) abs (geometry->viewport_right - geometry->viewport_left) / geometry->screen_width),
+                                  ((double) abs (geometry->viewport_top - geometry->viewport_bottom) / geometry->screen_height)),
+                                page->page_control,
+                                page->up);
+  } else {
+    page->undo_tos = s_undo_add(page->undo_tos,
+                                flag, filename, object_list,
+                                0, /* center x */
+                                0, /* center y */
+                                0, /* scale */
+                                page->page_control,
+                                page->up);
+  }
 
   page->undo_current =
       page->undo_tos;
@@ -425,11 +434,15 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
 
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
 
-  gschem_page_geometry_set_viewport_left   (geometry, u_current->left);
-  gschem_page_geometry_set_viewport_right  (geometry, u_current->right);
-  gschem_page_geometry_set_viewport_top    (geometry, u_current->top);
-  gschem_page_geometry_set_viewport_bottom (geometry, u_current->bottom);
-  gschem_page_view_pan (view, (u_current->left + u_current->right)/2, (u_current->top + u_current->bottom)/2);
+  if (u_current->scale != 0) {
+    gschem_page_geometry_set_viewport (geometry,
+                                       u_current->x,
+                                       u_current->y,
+                                       u_current->scale);
+    gschem_page_view_invalidate_all (view);
+  } else {
+    gschem_page_view_zoom_extents (view, u_current->object_list);
+  }
 
   /* restore logging */
   do_logging = save_logging;

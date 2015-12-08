@@ -346,6 +346,7 @@ gschem_page_geometry_new_with_values (int screen_width,
   GschemPageGeometry *geometry = g_new0 (GschemPageGeometry, 1);
 
   gschem_page_geometry_set_values (geometry,
+                                   max (abs ((double)(viewport_right - viewport_left) / screen_width), (abs ((double)(viewport_top - viewport_bottom) / screen_height))),
                                    screen_width,
                                    screen_height,
                                    viewport_left,
@@ -574,6 +575,7 @@ gschem_page_geometry_set_screen_width (GschemPageGeometry *geometry, int screen_
  */
 void
 gschem_page_geometry_set_values (GschemPageGeometry *geometry,
+                                 double scale,
                                  int screen_width,
                                  int screen_height,
                                  int viewport_left,
@@ -594,6 +596,28 @@ gschem_page_geometry_set_values (GschemPageGeometry *geometry,
   geometry->viewport_top    = MIN (viewport_top, viewport_bottom);
   geometry->viewport_right  = MAX (viewport_left, viewport_right);
   geometry->viewport_bottom = MAX (viewport_top, viewport_bottom);
+
+  update_constants (geometry);
+  geometry->world_to_screen_calculated = FALSE;
+}
+
+
+
+/*! \brief Set the viewport in world coordinates
+ *
+ *  \param [in,out] geometry The GschemPageGeometry
+ *  \param [in]     x        Center x coordinate of the viewport
+ *  \param [in]     y        Center y coordinate of the viewport
+ *  \param [in]     scale    Scale factor for the viewport
+ */
+void
+gschem_page_geometry_set_viewport (GschemPageGeometry *geometry, int x, int y, double scale)
+{
+  g_return_if_fail (geometry != NULL);
+  geometry->viewport_left   = x - (int) (geometry->screen_width  * scale / 2);
+  geometry->viewport_right  = x + (int) (geometry->screen_width  * scale / 2);
+  geometry->viewport_bottom = y - (int) (geometry->screen_height * scale / 2);
+  geometry->viewport_top    = y + (int) (geometry->screen_height * scale / 2);
 
   update_constants (geometry);
   geometry->world_to_screen_calculated = FALSE;

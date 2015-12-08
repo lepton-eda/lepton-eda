@@ -42,6 +42,8 @@ struct _GschemPageGeometry
   int world_right;
   int world_bottom;
 
+  double scale; /* world to screen factor */
+
   double to_screen_x_constant;
   double to_screen_y_constant;
 
@@ -129,12 +131,15 @@ gschem_page_geometry_pix_y (GschemPageGeometry *geometry, int value);
 
 void
 gschem_page_geometry_set_values (GschemPageGeometry *geometry,
+                                 double scale,
                                  int screen_width,
                                  int screen_height,
                                  int viewport_left,
                                  int viewport_top,
                                  int viewport_right,
                                  int viewport_bottom);
+void
+gschem_page_geometry_set_viewport (GschemPageGeometry *geometry, int x, int y, double scale);
 
 void
 gschem_page_geometry_set_viewport_bottom (GschemPageGeometry *geometry, int viewport_bottom);

@@ -341,7 +341,8 @@ struct st_undo {
   int type;
 
   /* viewport information */
-  int left, top, right, bottom;
+  int x, y;
+  double scale;
 
   /* up and down the hierarchy */
   int up;

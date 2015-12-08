@@ -438,6 +438,7 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
   }
   else {
     gschem_page_geometry_set_values (geometry,
+                                     max (abs ((double)(gschem_page_geometry_get_viewport_right (geometry) - gschem_page_geometry_get_viewport_left (geometry)) / screen_width), (abs ((double)(gschem_page_geometry_get_viewport_top (geometry) - gschem_page_geometry_get_viewport_bottom (geometry)) / screen_height))),
                                      screen_width,
                                      screen_height,
                                      gschem_page_geometry_get_viewport_left (geometry),
@@ -1381,6 +1382,7 @@ gschem_page_view_zoom_text (GschemPageView *view, OBJECT *object)
     viewport_width  = geometry->screen_width  * k;
 
     gschem_page_geometry_set_values (geometry,
+                                     k,
                                      geometry->screen_width,
                                      geometry->screen_height,
                                      viewport_center_x - viewport_width / 2,
