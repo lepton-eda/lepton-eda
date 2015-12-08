@@ -75,8 +75,6 @@ void o_net_reset(GschemToplevel *w_current)
 void o_net_guess_direction(GschemToplevel *w_current,
 			   int wx, int wy)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   int up=0, down=0, left=0, right=0;
   int x1, y1, x2, y2;
   int xmin, ymin, xmax, ymax;
@@ -90,6 +88,10 @@ void o_net_guess_direction(GschemToplevel *w_current,
   const int bus_rules[] = {90, 0, 40};
   const int net_rules[] = {80, 30, 0};
 
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   object_list = g_list_append (NULL, page->connectible_list);
@@ -200,8 +202,6 @@ void o_net_guess_direction(GschemToplevel *w_current,
 void o_net_find_magnetic(GschemToplevel *w_current,
 			 int w_x, int w_y)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   int x1, x2, y1, y2, min_x, min_y;
   double mindist, minbest, dist1, dist2;
   double weight, min_weight;
@@ -210,6 +210,10 @@ void o_net_find_magnetic(GschemToplevel *w_current,
   OBJECT *o_magnetic = NULL;
   GList *object_list, *iter1, *iter2;
 
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   minbest = min_x = min_y = 0;
@@ -450,8 +454,6 @@ void o_net_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   int primary_zero_length, secondary_zero_length;
   int found_primary_connection = FALSE;
   int save_wx, save_wy;
@@ -463,6 +465,12 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
   GList *added_objects = NULL;
 
   g_assert( w_current->inside_action != 0 );
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
+  g_return_if_fail (page != NULL);
 
   o_net_invalidate_rubber (w_current);
 
@@ -641,7 +649,6 @@ void o_net_motion (GschemToplevel *w_current, int w_x, int w_y)
 void
 o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   int size = NET_WIDTH, w_magnetic_halfsize;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);
   GArray *color_map = eda_renderer_get_color_map (renderer);
@@ -649,6 +656,9 @@ o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer)
   gboolean magnetic_net_mode;
 
   g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
 
   eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
 
@@ -685,12 +695,14 @@ o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer)
  */
 void o_net_invalidate_rubber (GschemToplevel *w_current)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   int size = 0, magnetic_halfsize;
   int magnetic_x, magnetic_y;
   gboolean magnetic_net_mode;
 
   g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
 
   gschem_page_view_WORLDtoSCREEN (page_view,
                                   w_current->magnetic_wx, w_current->magnetic_wy,
@@ -734,8 +746,6 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
                          GList *prev_conn_objects)
 
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   OBJECT *new_obj;
   GList *cl_current = NULL;
   OBJECT *bus_object = NULL;
@@ -754,6 +764,10 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
   int complex_angle = 0;
   const CLibSymbol *rippersym = NULL;
 
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_val_if_fail (page_view != NULL, FALSE);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_val_if_fail (page != NULL, FALSE);
 
   length = o_line_length(net_obj);

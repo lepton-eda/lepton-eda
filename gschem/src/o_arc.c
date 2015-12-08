@@ -30,9 +30,9 @@
  */
 void o_arc_invalidate_rubber (GschemToplevel *w_current)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-
   g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
   /* FIXME: This isn't a tight bounding box */
 
@@ -132,12 +132,15 @@ void o_arc_end4(GschemToplevel *w_current, int radius,
 		int start_angle, int end_angle)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
-  TOPLEVEL *toplevel = page->toplevel;
-  OBJECT *new_obj;
+  g_return_if_fail (page_view != NULL);
 
-  g_return_if_fail (toplevel != NULL);
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
+
+  TOPLEVEL *toplevel = page->toplevel;
+  g_return_if_fail (toplevel != NULL);
+
+  OBJECT *new_obj;
 
   /* create, initialize and link the new arc object */
   new_obj = o_arc_new (toplevel, OBJ_ARC, GRAPHIC_COLOR,

@@ -289,7 +289,11 @@ void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
  */
 void o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
 {
+  g_return_if_fail (w_current != NULL);
+
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
   int diff_x, diff_y, dist;
 
   diff_x = abs(w_current->first_wx - w_x);
@@ -351,9 +355,10 @@ void o_select_box_motion (GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_select_box_invalidate_rubber (GschemToplevel *w_current)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-
   g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
 
   gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->first_wx,

@@ -302,11 +302,13 @@ path_next_sections (GschemToplevel *w_current)
 void
 o_path_invalidate_rubber (GschemToplevel *w_current)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   int added_sections;
   int min_x, min_y, max_x, max_y;
 
   g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
 
   /* Calculate any new sections */
   added_sections = path_next_sections (w_current);
@@ -441,9 +443,6 @@ o_path_motion (GschemToplevel *w_current, int w_x, int w_y)
 void
 o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
-  TOPLEVEL *toplevel = page->toplevel;
   gboolean close_path, end_path, start_path;
   PATH *p;
   PATH_SECTION *section, *prev_section;
@@ -454,8 +453,15 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
   g_assert (w_current->toplevel);
   g_assert (w_current->temp_path != NULL);
   g_assert (w_current->temp_path->sections != NULL);
-  g_assert (toplevel != NULL);
-  g_assert (page != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
+  g_return_if_fail (page != NULL);
+
+  TOPLEVEL *toplevel = page->toplevel;
+  g_return_if_fail (toplevel != NULL);
 
   o_path_invalidate_rubber (w_current);
 
@@ -569,8 +575,10 @@ o_path_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 void
 o_path_invalidate_rubber_grips (GschemToplevel *w_current)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   int min_x, min_y, max_x, max_y;
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
 
   path_rubber_bbox (w_current, NULL,
                     &min_x, &max_y, &max_x, &min_y);

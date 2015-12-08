@@ -94,12 +94,7 @@ void x_pagesel_update (GschemToplevel *w_current)
     pagesel_update (PAGESEL (w_current->pswindow));
   }
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  if (page_view == NULL) {
-    return;
-  }
-
-  PAGE *page = gschem_page_view_get_page (page_view);
+  PAGE *page = gschem_page_view_get_page (gschem_toplevel_get_current_page_view (w_current));
   if (page == NULL) {
     return;
   }

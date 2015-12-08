@@ -90,6 +90,8 @@ void
 x_stroke_record (GschemToplevel *w_current, gint x, gint y)
 {
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (view != NULL);
+
   GdkGC *view_gc = gschem_page_view_get_gc (view);
 
   g_assert (stroke_points != NULL);

@@ -52,7 +52,6 @@ x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_cu
   printf("EXPOSE\n");
 #endif
 
-  g_return_val_if_fail (view != NULL, 0);
   g_return_val_if_fail (w_current != NULL, 0);
 
   page = gschem_page_view_get_page (view);
@@ -660,6 +659,8 @@ x_event_key (GschemPageView *page_view, GdkEventKey *event, GschemToplevel *w_cu
   int pressed;
   gboolean special = FALSE;
 
+  g_return_val_if_fail (page_view != NULL, FALSE);
+
 #if DEBUG
   printf("x_event_key_pressed: Pressed key %i.\n", event->keyval);
 #endif
@@ -696,7 +697,7 @@ x_event_key (GschemPageView *page_view, GdkEventKey *event, GschemToplevel *w_cu
   /* Special case to update the object being drawn or placed after
    * scrolling when Shift or Control were pressed */
   if (special) {
-    x_event_faked_motion (gschem_toplevel_get_current_page_view (w_current), event);
+    x_event_faked_motion (page_view, event);
   }
 
   if (pressed)
@@ -810,7 +811,7 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
 
-  x_event_faked_motion (gschem_toplevel_get_current_page_view (w_current), NULL);
+  x_event_faked_motion (view, NULL);
   /* Stop further processing of this signal */
   return TRUE;
 }
@@ -833,7 +834,6 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
 gboolean
 x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint *wx, gint *wy)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   int width;
   int height;
   int sx;
@@ -841,7 +841,9 @@ x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint 
   int x;
   int y;
 
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_val_if_fail (page_view != NULL, FALSE);
+
   g_return_val_if_fail (GTK_WIDGET (page_view)->window != NULL, FALSE);
 
   /* \todo The following line is depricated in GDK 2.24 */

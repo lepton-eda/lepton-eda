@@ -39,9 +39,9 @@
  */
 void o_box_invalidate_rubber (GschemToplevel *w_current)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-
   g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
   gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->first_wx,
@@ -98,16 +98,21 @@ void o_box_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_box_end(GschemToplevel *w_current, int w_x, int w_y)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
-  TOPLEVEL *toplevel = page->toplevel;
   OBJECT *new_obj;
-  int box_width, box_height;
-  int box_left, box_top;
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
 
   g_assert( w_current->inside_action != 0 );
-  g_return_if_fail (toplevel != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
+
+  TOPLEVEL *toplevel = page->toplevel;
+  g_return_if_fail (toplevel != NULL);
+
+  int box_width, box_height;
+  int box_left, box_top;
 
   /* get the last coords of the pointer */
   w_current->second_wx = w_x;

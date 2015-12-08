@@ -168,7 +168,7 @@ a_zoom_box(GschemToplevel *w_current)
   world_pan_center_y = (w_current->first_wy + w_current->second_wy) / 2.0;
 
   /* and create the new window*/
-  gschem_page_view_pan_general (gschem_toplevel_get_current_page_view (w_current),
+  gschem_page_view_pan_general (page_view,
                                 world_pan_center_x,
                                 world_pan_center_y,
                                 relativ_zoom_factor);
@@ -234,9 +234,9 @@ void a_zoom_box_motion (GschemToplevel *w_current, int w_x, int w_y)
  */
 void a_zoom_box_invalidate_rubber (GschemToplevel *w_current)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-
   g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
   gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->first_wx,

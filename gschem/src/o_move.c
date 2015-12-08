@@ -30,12 +30,16 @@
  */
 void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   GList *s_iter;
 
-  g_return_if_fail (page != NULL);
   g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
+  g_return_if_fail (page != NULL);
+
   g_return_if_fail (w_current->stretch_list == NULL);
 
   if (o_select_selected (w_current)) {
@@ -104,8 +108,9 @@ void o_move_end_lowlevel (GschemToplevel *w_current,
                          int diff_x, int diff_y)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
+  g_return_if_fail (page_view != NULL);
 
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   switch (object->type) {
@@ -132,7 +137,11 @@ void o_move_end_lowlevel (GschemToplevel *w_current,
 void o_move_end(GschemToplevel *w_current)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
   PAGE *page = gschem_page_view_get_page (page_view);
+  g_return_if_fail (page != NULL);
+
   GList *s_current = NULL;
   OBJECT *object;
   int diff_x, diff_y;
@@ -243,12 +252,15 @@ void o_move_end(GschemToplevel *w_current)
  */
 void o_move_cancel (GschemToplevel *w_current)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   GList *s_iter;
 
-  g_return_if_fail (page != NULL);
   g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
+  g_return_if_fail (page != NULL);
 
   /* Unset the dont_redraw flag on rubberbanded objects.
    * We set this above, in o_move_start(). */
@@ -274,17 +286,20 @@ void o_move_cancel (GschemToplevel *w_current)
  */
 void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   GList *selection, *s_current;
   OBJECT *object;
   gint object_x, object_y;
   gboolean resnap = FALSE;
   SNAP_STATE snap_mode;
 
+  g_assert (w_current->inside_action != 0);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
   g_return_if_fail (page->place_list != NULL);
-  g_assert (w_current->inside_action != 0);
 
   snap_mode = gschem_options_get_snap_mode (w_current->options);
 
@@ -345,12 +360,14 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_move_invalidate_rubber (GschemToplevel *w_current, int drawing)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   GList *s_iter;
   int dx1, dx2, dy1, dy2;
   gboolean net_rubber_band_mode;
 
   g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
 
   net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
 
@@ -469,13 +486,15 @@ int o_move_return_whichone(OBJECT * object, int x, int y)
  */
 void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   GList *cl_current;
   CONN *c_current;
   OBJECT *other;
   int whichone;
 
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   if (!object)
@@ -562,13 +581,15 @@ void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
  */
 void o_move_prep_rubberband(GschemToplevel *w_current)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   GList *s_current;
   OBJECT *object;
   OBJECT *o_current;
   GList *iter;
 
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   for (s_current = geda_list_get_glist (page->selection_list);
@@ -630,9 +651,13 @@ void o_move_end_rubberband (GschemToplevel *w_current,
                             int w_dx, int w_dy,
                             GList** objects)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   GList *s_iter, *s_iter_next;
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
+  g_return_if_fail (page != NULL);
 
   for (s_iter = w_current->stretch_list;
        s_iter != NULL; s_iter = s_iter_next) {

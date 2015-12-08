@@ -236,8 +236,7 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
   GtkWidget *dialog;
   float prop;
 
-  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (gschem_toplevel_get_current_page_view (w_current));
 
   w_current->image_width = width = desired_width;
   w_current->image_height = height = desired_height;
@@ -514,6 +513,7 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   GdkPixmap *window = NULL;
 
   page_view = gschem_toplevel_get_current_page_view (w_current);
+
   old_geometry = gschem_page_view_get_page_geometry (page_view);
 
   /* Do a copy of the w_current struct and work with it */

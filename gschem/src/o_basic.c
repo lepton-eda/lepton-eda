@@ -483,10 +483,12 @@ void o_invalidate (GschemToplevel *w_current, OBJECT *object)
  */
 void o_invalidate_glist (GschemToplevel *w_current, GList *list)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   int left, top, bottom, right;
 
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   if (world_get_object_glist_bounds (page->toplevel, list, &left,  &top,

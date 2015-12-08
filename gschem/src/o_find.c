@@ -128,7 +128,11 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
                         gboolean change_selection)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_val_if_fail (page_view != NULL, FALSE);
+
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_val_if_fail (toplevel != NULL, FALSE);
+
   int w_slack;
   const GList *iter = NULL;
 
@@ -191,7 +195,11 @@ gboolean
 o_find_selected_object (GschemToplevel *w_current, int w_x, int w_y)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_val_if_fail (page_view != NULL, FALSE);
+
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_val_if_fail (toplevel != NULL, FALSE);
+
   int w_slack = gschem_page_view_WORLDabs (page_view, w_current->select_slack_pixels);
   GList *s_current;
 

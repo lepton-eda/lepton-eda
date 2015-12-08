@@ -163,10 +163,11 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
   OBJECT *o_current;
   const GList *iter;
   int x, y;
+  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (view != NULL);
 
   /* first zoom extents */
-  gschem_page_view_zoom_extents (gschem_toplevel_get_current_page_view (w_current),
-                                 NULL);
+  gschem_page_view_zoom_extents (view, NULL);
   o_invalidate_all (w_current);
 
   world_get_object_glist_bounds (toplevel,
@@ -207,8 +208,7 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
 
   /* this is an experimental mod, to be able to translate to all
    * places */
-  gschem_page_view_zoom_extents (gschem_toplevel_get_current_page_view (w_current),
-                                 NULL);
+  gschem_page_view_zoom_extents (view, NULL);
   if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
   o_invalidate_all (w_current);
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);

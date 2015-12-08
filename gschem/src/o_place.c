@@ -67,17 +67,20 @@ void o_place_end (GschemToplevel *w_current,
                   int continue_placing,
                   const char* hook_name)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   int w_diff_x, w_diff_y;
   OBJECT *o_current;
   GList *temp_dest_list = NULL;
   GList *connected_objects = NULL;
   GList *iter;
 
-  g_return_if_fail (page != NULL);
   g_return_if_fail (w_current != NULL);
   g_assert (w_current->inside_action != 0);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
+  g_return_if_fail (page != NULL);
 
   /* erase old image */
   /* o_place_invalidate_rubber (w_current, FALSE); */
@@ -149,12 +152,10 @@ void o_place_end (GschemToplevel *w_current,
  */
 void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
-
+  PAGE *page = gschem_page_view_get_page (gschem_toplevel_get_current_page_view (w_current));
   g_return_if_fail (page != NULL);
+
   g_return_if_fail (page->place_list != NULL);
-  g_return_if_fail (w_current != NULL);
   g_assert (w_current->inside_action != 0);
 
   if (w_current->rubber_visible)
@@ -200,14 +201,17 @@ void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
   int diff_x, diff_y;
   int left, top, bottom, right;
 
+  g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
   g_return_if_fail (page->place_list != NULL);
-  g_return_if_fail (w_current != NULL);
 
   /* If drawing is true, then don't worry about the previous drawing
    * method and movement constraints, use with the current settings */
@@ -272,14 +276,17 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
 void
 o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
-  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
   int diff_x, diff_y;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
 
+  g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
   g_return_if_fail (page->place_list != NULL);
-  g_return_if_fail (w_current != NULL);
 
   /* Don't worry about the previous drawing method and movement
    * constraints, use with the current settings */
@@ -347,8 +354,9 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 void o_place_rotate (GschemToplevel *w_current)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
+  g_return_if_fail (page_view != NULL);
 
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   o_place_invalidate_rubber (w_current, FALSE);
@@ -378,8 +386,9 @@ void o_place_rotate (GschemToplevel *w_current)
 void o_place_mirror (GschemToplevel *w_current)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
+  g_return_if_fail (page_view != NULL);
 
+  PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   o_place_invalidate_rubber (w_current, FALSE);

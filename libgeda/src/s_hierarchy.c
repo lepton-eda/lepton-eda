@@ -190,6 +190,7 @@ s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol,
 PAGE *
 s_hierarchy_find_up_page (GedaPageList *page_list, PAGE *current_page)
 {
+  g_return_val_if_fail (current_page != NULL, NULL);
   if (current_page->up < 0) {
     s_log_message(_("There are no schematics above the current one!\n"));
     return NULL;

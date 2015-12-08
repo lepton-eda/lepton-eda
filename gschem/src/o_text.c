@@ -40,17 +40,20 @@ int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
                                 int *min_x, int *min_y,
                                 int *max_x, int *max_y)
 {
-  GschemToplevel *w_current = (GschemToplevel *) user_data;
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   TOPLEVEL *toplevel;
   EdaRenderer *renderer;
   cairo_t *cr;
   cairo_matrix_t render_mtx;
   int result, render_flags = 0;
   double t, l, r, b;
-
+  GschemToplevel *w_current = (GschemToplevel *) user_data;
   g_return_val_if_fail ((w_current != NULL), FALSE);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_val_if_fail ((page_view != NULL), FALSE);
+
   toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_val_if_fail ((toplevel != NULL), FALSE);
 
   cr = gdk_cairo_create (gtk_widget_get_window (GTK_WIDGET(page_view)));
 
@@ -94,11 +97,16 @@ int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
 void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int align, int rotate, int size)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
-  TOPLEVEL *toplevel = page->toplevel;
+  g_return_if_fail (page_view != NULL);
 
+  PAGE *page = gschem_page_view_get_page (page_view);
+  if (page == NULL) {
+    return;
+  }
+
+  TOPLEVEL *toplevel = page->toplevel;
   g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (page != NULL);
+
 
   /* Insert the new object into the buffer at world coordinates (0,0).
    * It will be translated to the mouse coordinates during placement. */
@@ -139,7 +147,11 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
 void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string,
 		   int visibility, int show)
 {
+  g_return_if_fail (w_current != NULL);
+
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
   PAGE *page = gschem_page_view_get_page (page_view);
   TOPLEVEL *toplevel = page->toplevel;
 

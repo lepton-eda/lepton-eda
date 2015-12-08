@@ -62,13 +62,18 @@
  */
 OBJECT *o_grips_search_world(GschemToplevel *w_current, int x, int y, int *whichone)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *object=NULL;
   OBJECT *found=NULL;
   GList *s_current;
   int size;
   int w_size;
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_val_if_fail (page_view != NULL, NULL);
+
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_val_if_fail (toplevel != NULL, NULL);
+
 
   if (!whichone) {
     return(NULL);

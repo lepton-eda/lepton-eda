@@ -36,7 +36,7 @@ static int prog_pid=0;
 static char* tmp_path = NULL;
 
 /* this is additional number of levels (or history) at which point the */
-/* undo stack will be trimmed, it's used a safety to prevent running out */ 
+/* undo stack will be trimmed, it's used a safety to prevent running out */
 /* of entries to free */
 #define UNDO_PADDING  5
 
@@ -62,7 +62,7 @@ void o_undo_init(void)
  *  \brief
  *  \par Function Description
  *
- *  
+ *
  *  <B>flag</B> can be one of the following values:
  *  <DL>
  *    <DT>*</DT><DD>UNDO_ALL
@@ -79,9 +79,12 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
   UNDO *u_current;
   UNDO *u_current_next;
 
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (gschem_toplevel_get_current_page_view (w_current));
+  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (view != NULL);
 
   g_return_if_fail (page != NULL);
+
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
 
   /* save autosave backups if necessary */
@@ -93,7 +96,7 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
 
   if (flag == UNDO_ALL) {
 
-    /* Increment the number of operations since last backup if 
+    /* Increment the number of operations since last backup if
        auto-save is enabled */
     if (toplevel->auto_save_interval != 0) {
       page->ops_since_last_backup++;
@@ -116,7 +119,7 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
                                prog_pid, undo_file_index++);
 
     /* Changed from f_save to o_save when adding backup copy creation. */
-    /* f_save manages the creaton of backup copies. 
+    /* f_save manages the creaton of backup copies.
        This way, f_save is called only when saving a file, and not when
        saving an undo backup copy */
     o_save (toplevel, s_page_objects (page), filename, NULL);
@@ -167,7 +170,7 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
 
   g_free(filename);
 
-  /* Now go through and see if we need to free/remove some undo levels */ 
+  /* Now go through and see if we need to free/remove some undo levels */
   /* so we stay within the limits */
 
   /* only check history every 10 undo savestates */
@@ -253,6 +256,8 @@ void
 o_undo_savestate_old (GschemToplevel *w_current, int flag)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
   PAGE *page = gschem_page_view_get_page (page_view);
 
   o_undo_savestate (w_current, page, flag);
@@ -276,7 +281,7 @@ char *o_undo_find_prev_filename(UNDO *start)
     u_current = u_current->prev;
   }
 
-  return(NULL); 
+  return(NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -297,7 +302,7 @@ GList *o_undo_find_prev_object_head (UNDO *start)
     u_current = u_current->prev;
   }
 
-  return(NULL); 
+  return(NULL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -323,6 +328,9 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
   int find_prev_data=FALSE;
 
   char *save_filename;
+
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (page != NULL);
 
   if (w_current->undo_control == FALSE) {
     s_log_message(_("Undo/Redo disabled in rc file\n"));
@@ -413,6 +421,8 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
   gschem_toplevel_page_content_changed (w_current, page);
 
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (view != NULL);
+
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
 
   gschem_page_geometry_set_viewport_left   (geometry, u_current->left);

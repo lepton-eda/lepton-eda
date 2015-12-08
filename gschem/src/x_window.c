@@ -277,7 +277,10 @@ static void
 x_window_select_text (GschemFindTextState *state, OBJECT *object, GschemToplevel *w_current)
 {
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (view != NULL);
+
   PAGE *page = gschem_page_view_get_page (view);
+  g_return_if_fail (page != NULL);
 
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->page != NULL);
@@ -874,12 +877,14 @@ void x_window_close_all(GschemToplevel *w_current)
 PAGE*
 x_window_open_page (GschemToplevel *w_current, const gchar *filename)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   PAGE *page;
   gchar *fn;
 
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_val_if_fail (page_view != NULL, NULL);
 
   /* Generate untitled filename if none was specified */
   if (filename == NULL) {
@@ -976,9 +981,9 @@ void
 x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
 
   g_return_if_fail (page != NULL);
-  g_return_if_fail (page_view != NULL);
 
   o_redraw_cleanstates (w_current);
 
