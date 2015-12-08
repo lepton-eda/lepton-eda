@@ -420,7 +420,6 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
   gschem_page_geometry_set_viewport_top    (geometry, u_current->top);
   gschem_page_geometry_set_viewport_bottom (geometry, u_current->bottom);
   gschem_page_view_pan (view, (u_current->left + u_current->right)/2, (u_current->top + u_current->bottom)/2);
-  gschem_page_view_update_scroll_adjustments (view);
 
   /* restore logging */
   do_logging = save_logging;
@@ -432,9 +431,6 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
   /* final redraw */
   x_pagesel_update (w_current);
   x_multiattrib_update (w_current);
-
-  /* Let the caller to decide if redraw or not */
-  o_invalidate_all (w_current);
   i_update_menus(w_current);
 
   /* restore saved undo structures */

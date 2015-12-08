@@ -83,6 +83,8 @@ x_fileselect_callback_update_preview (GtkFileChooser *chooser,
 
   /* update preview */
   g_object_set (preview,
+                "width-request",  160,
+                "height-request", 120,
                 "filename", preview_filename,
                 "active", (preview_filename != NULL),
                 NULL);

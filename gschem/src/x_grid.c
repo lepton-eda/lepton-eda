@@ -46,12 +46,16 @@
 static int query_dots_grid_spacing (GschemToplevel *w_current)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_val_if_fail (page_view != NULL, -1);
+
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (page_view);
   int incr, screen_incr;
   int snap_size = gschem_options_get_snap_size (w_current->options);
 
-  g_return_val_if_fail (geometry != NULL, -1);
-  g_return_val_if_fail (page_view != NULL, -1);
+  /* geometry may be NULL if page_view has no underlying page */
+  if (geometry == NULL) {
+    return -1;
+  }
 
   if (w_current->dots_grid_mode == DOTS_GRID_VARIABLE_MODE) {
     /* In the variable mode around every (DOTS_VARIABLE_MODE_SPACING)'th

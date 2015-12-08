@@ -626,10 +626,6 @@ x_event_configure (GschemPageView    *page_view,
 
   gschem_page_view_set_page (page_view, p_current);
 
-  /* redraw the current page and update UI */
-  gschem_page_view_invalidate_all (page_view);
-  gschem_page_view_update_scroll_adjustments (page_view);
-
   return FALSE;
 }
 
@@ -729,8 +725,19 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   gboolean zoom = FALSE;
   int pan_direction = 1;
   int zoom_direction = ZOOM_IN;
+  GschemPageView *view = NULL;
+  PAGE *page = NULL;
 
   g_return_val_if_fail ((w_current != NULL), 0);
+
+  view = GSCHEM_PAGE_VIEW (widget);
+  g_return_val_if_fail ((view != NULL), 0);
+
+  page = gschem_page_view_get_page (view);
+
+  if (page == NULL) {
+    return FALSE; /* we cannot zoom page if it doesn't exist :) */
+  }
 
   /* update the state of the modifiers */
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;

@@ -346,16 +346,10 @@ preview_init (GschemPreview *preview)
   preview_w_current->drawing_area = GTK_WIDGET (preview);
   preview->preview_w_current = preview_w_current;
 
-  g_object_set (GTK_WIDGET (preview),
-                "width-request",  160,
-                "height-request", 120,
-                NULL);
-
   preview->active   = FALSE;
   preview->filename = NULL;
   preview->buffer   = NULL;
-  PAGE *preview_page = s_page_new (preview->preview_w_current->toplevel, "preview");
-  gschem_page_view_set_page (GSCHEM_PAGE_VIEW (preview), preview_page);
+  GSCHEM_PAGE_VIEW (preview)->page = s_page_new (preview->preview_w_current->toplevel, "preview");
 
   gtk_widget_set_events (GTK_WIDGET (preview),
                          GDK_EXPOSURE_MASK |

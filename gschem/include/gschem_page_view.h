@@ -128,9 +128,6 @@ gschem_page_view_set_page (GschemPageView *view, PAGE *page);
 void
 gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustment);
 
-void
-gschem_page_view_update_scroll_adjustments (GschemPageView *view);
-
 int
 gschem_page_view_WORLDabs(GschemPageView *view, int val);
 

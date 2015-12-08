@@ -989,9 +989,6 @@ x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
 
   x_pagesel_update (w_current);
   x_multiattrib_update (w_current);
-
-  gschem_page_view_update_scroll_adjustments (page_view);
-  gschem_page_view_invalidate_all (page_view);
 }
 
 /*! \brief Saves a page to a file.

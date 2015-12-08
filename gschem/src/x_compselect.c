@@ -1491,6 +1491,10 @@ compselect_constructor (GType type,
   gtk_container_add (GTK_CONTAINER (frame), alignment);
   /* set preview of compselect */
   compselect->preview = GSCHEM_PREVIEW (preview);
+  g_object_set (GTK_WIDGET (preview),
+                "width-request",  160,
+                "height-request", 120,
+                NULL);
 
   gtk_paned_pack1 (GTK_PANED (vpaned), frame, FALSE, FALSE);
 

@@ -80,6 +80,9 @@ static void
 gschem_page_view_update_vadjustment (GschemPageView *view);
 
 static void
+gschem_page_view_update_scroll_adjustments (GschemPageView *view);
+
+static void
 hadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
 
 static void
@@ -737,6 +740,9 @@ gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
   /* Trigger a motion event to update the objects being drawn */
   /* This works e.g. if the view is centered at the mouse pointer position */
   x_event_faked_motion (view, NULL);
+
+  gschem_page_view_update_scroll_adjustments (view);
+  gschem_page_view_invalidate_all (view);
 }
 
 
@@ -943,9 +949,23 @@ gschem_page_view_set_page (GschemPageView *view, PAGE *page)
       g_return_if_fail (page->toplevel != NULL);
       s_page_goto (page->toplevel, page);
 
+      /* redraw the current page and update UI */
+      gschem_page_view_invalidate_all (view);
+      gschem_page_view_update_scroll_adjustments (view);
+
       g_object_notify (G_OBJECT (view), "page");
       g_object_notify (G_OBJECT (view), "page-geometry");
       g_signal_emit_by_name (view, "update-grid-info");
+
+    } else {
+      if (view->hadjustment != NULL) {
+        gtk_adjustment_set_page_size (view->hadjustment,
+                                      gtk_adjustment_get_upper (view->hadjustment));
+      }
+      if (view->vadjustment != NULL) {
+        gtk_adjustment_set_page_size (view->vadjustment,
+                                      gtk_adjustment_get_upper (view->vadjustment));
+      }
     }
   }
 }
@@ -994,9 +1014,8 @@ hadjustment_value_changed (GtkAdjustment *hadjustment, GschemPageView *view)
   g_return_if_fail (view != NULL);
 
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
-  g_return_if_fail (geometry != NULL);
 
-  if (view->hadjustment != NULL) {
+  if (view->hadjustment != NULL && geometry != NULL) {
     int current_left;
     int new_left;
 
@@ -1084,10 +1103,9 @@ gschem_page_view_update_hadjustment (GschemPageView *view)
 {
   g_return_if_fail (view != NULL);
 
-  if (view->hadjustment != NULL) {
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
 
-    GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
-    g_return_if_fail (geometry != NULL);
+  if (view->hadjustment != NULL && geometry != NULL) {
 
     gtk_adjustment_set_page_increment (view->hadjustment,
                                        fabs (geometry->viewport_right - geometry->viewport_left) - 100.0);
@@ -1112,7 +1130,7 @@ gschem_page_view_update_hadjustment (GschemPageView *view)
 
 /*! \brief Update the scroll adjustments
  */
-void
+static void
 gschem_page_view_update_scroll_adjustments (GschemPageView *view)
 {
   g_return_if_fail (view != NULL);
@@ -1130,10 +1148,9 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
 {
   g_return_if_fail (view != NULL);
 
-  if (view->vadjustment != NULL) {
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
 
-    GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
-    g_return_if_fail (geometry != NULL);
+  if (view->vadjustment != NULL && geometry != NULL) {
 
     gtk_adjustment_set_page_increment(view->vadjustment,
                                       fabs (geometry->viewport_bottom - geometry->viewport_top) - 100.0);
@@ -1246,14 +1263,13 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
   g_return_if_fail (vadjustment != NULL);
   g_return_if_fail (view != NULL);
 
-  if (view->vadjustment != NULL) {
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+
+  if (view->vadjustment != NULL && geometry != NULL) {
     int current_bottom;
     int new_bottom;
 
     g_return_if_fail (view->vadjustment == vadjustment);
-
-    GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
-    g_return_if_fail (geometry != NULL);
 
     current_bottom = geometry->viewport_bottom;
     new_bottom = geometry->world_bottom - (int) vadjustment->value;
@@ -1294,9 +1310,13 @@ void
 gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
 {
   GschemPageGeometry *geometry = NULL;
+  PAGE *page = NULL;
   const GList *temp = objects;
 
   g_return_if_fail (view != NULL);
+
+  page = gschem_page_view_get_page (view);
+  g_return_if_fail (page != NULL);
 
   geometry = gschem_page_view_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
@@ -1305,7 +1325,7 @@ gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
     temp = s_page_objects (gschem_page_view_get_page (view));
   }
 
-  gschem_page_geometry_zoom_extents (geometry, view->page->toplevel, temp);
+  gschem_page_geometry_zoom_extents (geometry, page->toplevel, temp);
 
   /* Trigger a motion event to update the objects being drawn */
   x_event_faked_motion (view, NULL);
