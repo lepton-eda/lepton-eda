@@ -218,17 +218,16 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
  *  dialog by the user.
  *  \param w_current [in] the GschemToplevel structure.
  *  \param filename  [in] the image filename.
- *  \param desired_width  [in] the image width chosen by the user.
- *  \param desired_height [in] the image height chosen by the user.
- *  \param filetype [in] image filetype.
+ *  \param width     [in] the image width chosen by the user.
+ *  \param height    [in] the image height chosen by the user.
+ *  \param filetype  [in] image filetype.
  *  \return nothing
  *
  */
 void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
-    int desired_width, int desired_height, char *filetype)
+    int width, int height, char *filetype)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  int width, height;
   int save_page_left, save_page_right, save_page_top, save_page_bottom;
   int page_width, page_height, page_center_left, page_center_top;
   GdkPixbuf *pixbuf;
@@ -240,19 +239,17 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
 
-  w_current->image_width = width = desired_width;
-  w_current->image_height = height = desired_height;
-
+  /* Save geometry */
   save_page_left = geometry->viewport_left;
   save_page_right = geometry->viewport_right;
   save_page_top = geometry->viewport_top;
   save_page_bottom = geometry->viewport_bottom;
 
-  page_width = save_page_right - save_page_left;
-  page_height = save_page_bottom - save_page_top;
+  page_width = geometry->viewport_right - geometry->viewport_left;
+  page_height = geometry->viewport_bottom - geometry->viewport_top;
 
-  page_center_left = save_page_left + (page_width / 2);
-  page_center_top = save_page_top + (page_height / 2);
+  page_center_left = geometry->viewport_left + (page_width / 2);
+  page_center_top = geometry->viewport_top + (page_height / 2);
 
   /* Preserve proportions */
   prop = (float)width / height;
@@ -273,7 +270,7 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
   if (strcmp(filetype, "pdf") == 0)
     x_print_export_pdf (w_current, filename);
   else {
-    pixbuf = x_image_get_pixbuf(w_current);
+    pixbuf = x_image_get_pixbuf(w_current, width, height);
     if (pixbuf != NULL) {
       if (!gdk_pixbuf_save(pixbuf, filename, filetype, &gerror, NULL)) {
         s_log_message(_("x_image_lowlevel: Unable to write %s file %s.\n"),
@@ -319,6 +316,7 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
     }
   }
 
+  /* Restore geometry */
   gschem_page_geometry_set_viewport_left   (geometry, save_page_left  );
   gschem_page_geometry_set_viewport_right  (geometry, save_page_right );
   gschem_page_geometry_set_viewport_top    (geometry, save_page_top   );
@@ -500,12 +498,12 @@ static void x_image_convert_to_greyscale(GdkPixbuf *pixbuf)
  *  \par Function Description
  *
  */
-GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
+GdkPixbuf
+*x_image_get_pixbuf (GschemToplevel *w_current, int width, int height)
 {
   GdkPixbuf *pixbuf;
   GschemPageView *page_view;
   int origin_x, origin_y, bottom, right;
-  int size_x, size_y;
   GschemToplevel new_w_current;
   GschemOptions options;
   TOPLEVEL toplevel;
@@ -528,10 +526,7 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   new_w_current.toplevel = &toplevel;
   new_w_current.options = &options;
 
-  size_x = new_w_current.image_width;
-  size_y = new_w_current.image_height;
-
-  window = gdk_pixmap_new (gtk_widget_get_window (GTK_WIDGET(page_view)), size_x, size_y, -1);
+  window = gdk_pixmap_new (gtk_widget_get_window (GTK_WIDGET(page_view)), width, height, -1);
   cr = gdk_cairo_create (window);
 
   gschem_options_set_grid_mode (new_w_current.options, GRID_MODE_NONE);
@@ -543,16 +538,16 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   }
 
   origin_x = origin_y = 0;
-  right = size_x;
-  bottom = size_y;
+  right = width;
+  bottom = height;
 
   rect.x = origin_x;
   rect.y = origin_y;
   rect.width = right - origin_x;
   rect.height = bottom - origin_y;
 
-  new_geometry = gschem_page_geometry_new_with_values (size_x,
-                                                   size_y,
+  new_geometry = gschem_page_geometry_new_with_values (width,
+                                                   height,
                                                    old_geometry->viewport_left,
                                                    old_geometry->viewport_top,
                                                    old_geometry->viewport_right,

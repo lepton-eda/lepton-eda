@@ -660,7 +660,7 @@ int x_grid_query_drawn_spacing(GschemToplevel *w_current);
 void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
 		      int desired_width, int desired_height, char *filetype);
 void x_image_setup(GschemToplevel *w_current);
-GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current);
+GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current, int width, int height);
 /* x_integerls.c */
 GtkListStore* x_integerls_new ();
 GtkListStore* x_integerls_new_with_values (const char *value[], int count);
