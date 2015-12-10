@@ -43,7 +43,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "add-menu",                     2, 0, 0, (SCM (*) ()) g_rc_add_menu },
 
   /* general guile functions */
-  { "gschem-exit",                  0, 0, 0, (SCM (*) ()) g_funcs_exit },
   { "gschem-log",                   1, 0, 0, (SCM (*) ()) g_funcs_log },
   { "gschem-msg",                   1, 0, 0, (SCM (*) ()) g_funcs_msg },
   { "gschem-confirm",               1, 0, 0, (SCM (*) ()) g_funcs_confirm },

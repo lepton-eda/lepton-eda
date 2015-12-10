@@ -40,16 +40,6 @@
  *  \par Function Description
  *
  */
-SCM g_funcs_exit(void)
-{
-  exit(0);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_funcs_log(SCM scm_msg)
 {
   char *msg;

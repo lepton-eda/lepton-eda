@@ -560,3 +560,6 @@
 (define-public help-about %help-about)
 (define-public help-hotkeys %help-hotkeys)
 (define-public cancel %cancel)
+
+;; - defined in the gschem source code
+(define-public (gschem-exit) (primitive-exit 0))
