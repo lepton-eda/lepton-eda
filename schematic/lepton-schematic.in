@@ -22,7 +22,9 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 
-(use-modules (system foreign))
+(use-modules (ice-9 getopt-long)
+             (ice-9 match)
+             (system foreign))
 
 ;;; Load and initialize liblepton library.
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
@@ -30,11 +32,6 @@ exec @GUILE@ -s "$0" "$@"
 
 (define libleptongui (dynamic-link "libleptongui"))
 
-(define main
-  (pointer->procedure
-   void
-   (dynamic-func "main_prog" libleptongui)
-   (list int '*)))
 
 ;;; Localization.
 (define %textdomain "lepton-schematic")
@@ -44,5 +41,118 @@ exec @GUILE@ -s "$0" "$@"
 (setlocale LC_ALL "")
 (setlocale LC_NUMERIC "C")
 
+(define (G_ msg) (gettext msg %textdomain))
+
+(primitive-eval '(use-modules (lepton log)
+                              (lepton version)))
+
+(define option-spec
+  '((help (single-char #\h))
+    (version (single-char #\V))
+    (quiet (single-char #\q))
+    (verbose (single-char #\v))
+    (loaddir (single-char #\L) (value #t))
+    (script (single-char #\s) (value #t))
+    (expr (single-char #\c) (value #t))
+    ))
+
+
+(define %options (getopt-long (command-line) option-spec))
+
+
+;;; Contains a Scheme expression arising from command-line
+;;; arguments.  This is evaluated after initialising
+;;; lepton-schematic, but before loading any rc files.
+(define s-pre-load-expr '())
+
+;;; Contains a Scheme expression arising from command-line
+;;; arguments.  This is evaluated after loading lepton-schematic
+;;; and any schematic files specified on the command-line.
+(define s-post-load-expr '())
+
+
+;;; Print brief help message describing lepton-schematic usage and
+;;; command-line options, and exit with exit status 0.
+(define (usage)
+  (match (lepton-version)
+    ((prepend dotted date commit bugs url msg)
+     (format #t
+             (G_ "Usage: ~A [OPTION ...] [--] [FILE ...]
+
+
+Interactively edit Lepton EDA schematics or symbols.
+If one or more FILEs are specified, open them for
+editing; otherwise, create a new, empty schematic.
+
+Options:
+  -q, --quiet              Quiet mode.
+  -v, --verbose            Verbose mode.
+  -L DIR                   Add DIR to Scheme search path.
+  -c EXPR                  Scheme expression to run at startup.
+  -s FILE                  Scheme script to run at startup.
+  -V, --version            Show version information.
+  -h, --help               Help; this message.
+  --                       Treat all remaining arguments as filenames.
+
+Report bugs at ~S
+Lepton EDA homepage: ~S\n")
+             (car (program-arguments))
+             bugs
+             url)))
+  (primitive-exit 0))
+
+
+;;; Print lepton-schematic version and copyright/warranty notices,
+;;; and exit with exit status 0, if output to stdout is requested,
+;;; that is, STDOUT is not #f.
+(define* (lepton-schematic-version #:optional stdout)
+  (define (version-msg . args)
+    (apply format #f "Lepton EDA/lepton-schematic ~A~A.~A (git: ~A)\n" args))
+
+  (define copyrights
+    (G_ "Copyright (C) 1998-2016 gEDA developers
+Copyright (C) 2017-2020 Lepton EDA developers
+This is free software, and you are welcome to redistribute it
+under certain conditions. For details, see the file `COPYING',
+which is included in the Lepton EDA distribution.
+There is NO WARRANTY, to the extent permitted by law.\n"))
+
+  (match (lepton-version)
+    ((prepend dotted date commit bugs url msg)
+     (let ((version-message (version-msg prepend dotted date (string-take commit 7))))
+       (if stdout
+           (begin
+             (display version-message)
+             (display copyrights)
+             (primitive-exit 0))
+           (log! 'message version-message))))))
+
+
+;;; Parse lepton-schematic command-line options, displaying usage
+;;; message or version information as required.
+(define (parse-commandline)
+  "Parse command line options"
+  (let ((help              (option-ref %options 'help #f))
+        (verbose           (option-ref %options 'verbose #f))
+        (version           (option-ref %options 'version #f))
+        (quiet-mode        (option-ref %options 'quiet-mode #f))
+        (rc-filename       (option-ref %options 'rc-filename #f))
+        (pre-load-expr     (option-ref %options 'pre-load-expr #f))
+        (post-load-expr    (option-ref %options 'post-load-expr #f))
+        (schematics        (option-ref %options '() #f)))
+    (cond (help (usage))
+          (version (lepton-schematic-version 'stdout))
+          (verbose (display "Verbose\n")))
+    ;; Return schematic names to open.
+    schematics))
+
+
+(define main
+  (pointer->procedure
+   void
+   (dynamic-func "main_prog" libleptongui)
+   (list int '*)))
+
+(parse-commandline)
 ;;; FIXME: Arguments are not supported yet.
 (main 0 %null-pointer)
