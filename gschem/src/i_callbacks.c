@@ -105,7 +105,7 @@ DEFINE_I_CALLBACK(file_new_window)
 
   x_window_set_current_page (w_current, page);
 
-  s_log_message (_("New Window created [%s]\n"), page);
+  s_log_message (_("New Window created [%s]\n"), page->page_filename);
 }
 
 /*! \todo Finish function documentation!!!
