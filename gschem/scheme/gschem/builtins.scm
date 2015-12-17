@@ -23,6 +23,7 @@
   #:use-module (gschem core builtins)
   #:use-module (gschem action)
   #:use-module (gschem gschemdoc)
+  #:use-module (gschem repl)
   #:use-module (gschem selection)
   #:use-module (gschem window)
   #:use-module (srfi srfi-1))
@@ -78,6 +79,9 @@
 
 (define-action-public (&file-quit #:label (_ "Quit") #:icon "gtk-quit")
   (%file-quit))
+
+(define-action-public (&file-repl #:label (_ "Terminal REPL") #:icon "gtk-execute")
+  (start-repl-in-background-terminal))
 
 ;; -------------------------------------------------------------------
 ;;;; General editing actions

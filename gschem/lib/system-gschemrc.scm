@@ -994,6 +994,7 @@
 (global-set-key "F R" '&page-revert)
 (global-set-key "F I" '&file-image)
 (global-set-key "F T" '&file-script)
+(global-set-key "F <Shift>R" '&file-repl)
 (global-set-key "F C" '&file-close-window)
 (global-set-key "F Q" '&file-quit)
 
@@ -1133,6 +1134,7 @@
            (,(N_ "Write _image...")   &file-image             #f)
            ("SEPARATOR"               #f                      #f                      #f)
            (,(N_ "Execute Script...") &file-script            "gtk-execute")
+           (,(N_ "REPL...")           &file-repl              "gtk-execute")
            ("SEPARATOR"               #f                      #f                      #f)
            (,(N_ "New Window")        &file-new-window        "window-new")
            (,(N_ "_Close Window")     &file-close-window      "gtk-close")
