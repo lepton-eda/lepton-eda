@@ -83,9 +83,6 @@ typedef enum {END_NONE, END_SQUARE, END_ROUND, END_VOID} OBJECT_END;
 /*! \brief line style of lines, rect, circles, arcs */
 typedef enum {TYPE_SOLID, TYPE_DOTTED, TYPE_DASHED, TYPE_CENTER, TYPE_PHANTOM, TYPE_ERASE} OBJECT_TYPE;
 
-/*! \brief fill style of objects like cirle, rect, path */
-typedef enum {FILLING_HOLLOW, FILLING_FILL, FILLING_MESH, FILLING_HATCH, FILLING_VOID} OBJECT_FILLING;
-
 struct st_line {
   int x[2];
   int y[2];
@@ -145,7 +142,7 @@ struct st_bezier {
 
 struct st_box {
   /* upper is considered the origin */
-  int upper_x, upper_y; /* world */	
+  int upper_x, upper_y; /* world */
   int lower_x, lower_y;
 
 };
@@ -167,7 +164,7 @@ struct st_picture {
   char embedded;
 
   /* upper is considered the origin */
-  int upper_x, upper_y; /* world */	
+  int upper_x, upper_y; /* world */
   int lower_x, lower_y;
 
 };
@@ -185,7 +182,7 @@ struct st_text {
   char *disp_string;
   int length;
   int size;
-  int alignment;	
+  int alignment;
   int angle;
 };
 
@@ -193,7 +190,7 @@ struct st_complex {
   int x, y;		/* world origin */
 
   int angle;				/* orientation, only multiples
-                                         * of 90 degrees allowed */   
+                                         * of 90 degrees allowed */
   /* in degrees */
   int mirror;
 
@@ -224,8 +221,8 @@ struct st_object {
   TOPLEVEL *w_bounds_valid_for;
 
   COMPLEX *complex;
-  LINE *line; 
-  CIRCLE *circle; 
+  LINE *line;
+  CIRCLE *circle;
   ARC *arc;
   BOX *box;
   TEXT *text;
@@ -281,7 +278,7 @@ struct st_object {
   OBJECT *copied_to;    /* used when copying attributes */
 
   GList *weak_refs; /* Weak references */
-}; 
+};
 
 
 /*! \brief Structure for connections between OBJECTs
@@ -299,7 +296,7 @@ struct st_conn {
   /*! \brief x coord of the connection position */
   int x;
   /*! \brief y coord of the connection position */
-  int y;		
+  int y;
   /*! \brief which endpoint of the current object caused this connection */
   int whichone;
   /*! \brief which endpoint of the "other" object caused this connection */
@@ -333,7 +330,7 @@ struct st_transform {
 struct st_undo {
 
   /* one of these is used, depending on if you are doing in-memory */
-  /* or file based undo state saving */	
+  /* or file based undo state saving */
   char *filename;
   GList *object_list;
 
@@ -365,12 +362,12 @@ struct st_page {
   OBJECT *object_lastplace; /* the last found item */
   GList *connectible_list;  /* connectible page objects */
 
-  char *page_filename; 
+  char *page_filename;
   int CHANGED;			/* changed flag */
 
-  /* Undo/Redo Stacks and pointers */	
+  /* Undo/Redo Stacks and pointers */
   /* needs to go into page mechanism actually */
-  UNDO *undo_bottom;	
+  UNDO *undo_bottom;
   UNDO *undo_current;
   UNDO *undo_tos; 	/* Top Of Stack */
 
@@ -411,7 +408,7 @@ struct st_netlist {
 
   OBJECT *object_ptr;
 
-  CPINLIST *cpins;		
+  CPINLIST *cpins;
 
   char *hierarchy_tag;
   int composite_component;

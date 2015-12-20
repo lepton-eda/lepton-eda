@@ -28,8 +28,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include <libgeda/defines.h>
-#include <libgeda/struct.h>
 #include <libgeda/geda_fill_type.h>
+#include <libgeda/struct.h>
 #include <libgeda/s_toplevel.h>
 #include <libgeda/globals.h>
 #include <libgeda/o_types.h>
