@@ -43,8 +43,6 @@ enum
 {
     COLUMN_NAME,
     COLUMN_INDEX,
-    COLUMN_USE_LENGTH,
-    COLUMN_USE_SPACE,
     COLUMN_COUNT
 };
 
@@ -70,16 +68,12 @@ create_line_type_list_store ()
 
   store = gtk_list_store_new (COLUMN_COUNT,
                               G_TYPE_STRING,
-                              G_TYPE_INT,
-                              G_TYPE_BOOLEAN,
-                              G_TYPE_BOOLEAN);
+                              G_TYPE_INT);
 
   gtk_list_store_append (store, &iter);
   gtk_list_store_set (store, &iter,
     COLUMN_NAME,       _("Solid"),
     COLUMN_INDEX,      TYPE_SOLID,
-    COLUMN_USE_LENGTH, FALSE,
-    COLUMN_USE_SPACE,  FALSE,
     -1
     );
 
@@ -87,8 +81,6 @@ create_line_type_list_store ()
   gtk_list_store_set (store, &iter,
     COLUMN_NAME,       _("Dotted"),
     COLUMN_INDEX,      TYPE_DOTTED,
-    COLUMN_USE_LENGTH, FALSE,
-    COLUMN_USE_SPACE,  TRUE,
     -1
     );
 
@@ -96,8 +88,6 @@ create_line_type_list_store ()
   gtk_list_store_set (store, &iter,
     COLUMN_NAME,       _("Dashed"),
     COLUMN_INDEX,      TYPE_DASHED,
-    COLUMN_USE_LENGTH, TRUE,
-    COLUMN_USE_SPACE,  TRUE,
     -1
     );
 
@@ -105,8 +95,6 @@ create_line_type_list_store ()
   gtk_list_store_set (store, &iter,
     COLUMN_NAME,       _("Center"),
     COLUMN_INDEX,      TYPE_CENTER,
-    COLUMN_USE_LENGTH, TRUE,
-    COLUMN_USE_SPACE,  TRUE,
     -1
     );
 
@@ -114,8 +102,6 @@ create_line_type_list_store ()
   gtk_list_store_set (store, &iter,
     COLUMN_NAME,       _("Phantom"),
     COLUMN_INDEX,      TYPE_PHANTOM,
-    COLUMN_USE_LENGTH, TRUE,
-    COLUMN_USE_SPACE,  TRUE,
     -1
     );
 
