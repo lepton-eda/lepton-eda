@@ -42,9 +42,6 @@ enum
 {
     COLUMN_NAME,
     COLUMN_INDEX,
-    COLUMN_USE_WIDTH,
-    COLUMN_USE1,
-    COLUMN_USE2,
     COLUMN_COUNT
 };
 
@@ -70,18 +67,12 @@ create_fstyle_list_store ()
 
   store = gtk_list_store_new (COLUMN_COUNT,
                               G_TYPE_STRING,
-                              G_TYPE_INT,
-                              G_TYPE_BOOLEAN,
-                              G_TYPE_BOOLEAN,
-                              G_TYPE_BOOLEAN);
+                              G_TYPE_INT);
 
   gtk_list_store_append (store, &iter);
   gtk_list_store_set (store, &iter,
     COLUMN_NAME,      _("Hollow"),
     COLUMN_INDEX,     FILLING_HOLLOW,
-    COLUMN_USE_WIDTH, FALSE,
-    COLUMN_USE1,      FALSE,
-    COLUMN_USE2,      FALSE,
     -1
     );
 
@@ -89,9 +80,6 @@ create_fstyle_list_store ()
   gtk_list_store_set (store, &iter,
     COLUMN_NAME,      _("Filled"),
     COLUMN_INDEX,     FILLING_FILL,
-    COLUMN_USE_WIDTH, FALSE,
-    COLUMN_USE1,      FALSE,
-    COLUMN_USE2,      FALSE,
     -1
     );
 
@@ -99,9 +87,6 @@ create_fstyle_list_store ()
   gtk_list_store_set (store, &iter,
     COLUMN_NAME,      _("Mesh"),
     COLUMN_INDEX,     FILLING_MESH,
-    COLUMN_USE_WIDTH, TRUE,
-    COLUMN_USE1,      TRUE,
-    COLUMN_USE2,      TRUE,
     -1
     );
 
@@ -109,9 +94,6 @@ create_fstyle_list_store ()
   gtk_list_store_set (store, &iter,
     COLUMN_NAME,      _("Hatch"),
     COLUMN_INDEX,     FILLING_HATCH,
-    COLUMN_USE_WIDTH, TRUE,
-    COLUMN_USE1,      TRUE,
-    COLUMN_USE2,      FALSE,
     -1
     );
 
