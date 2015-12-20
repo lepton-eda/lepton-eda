@@ -272,7 +272,7 @@ render (GtkCellRenderer      *cell,
 
     cairo_close_path (cr);
 
-    if ((swatch->fill_type == FILLING_HATCH) || (swatch->fill_type == FILLING_MESH)) {
+    if (geda_fill_type_draw_first_hatch (swatch->fill_type)) {
       BOX box;
       int index;
       GArray *lines = g_array_new (FALSE, FALSE, sizeof (LINE));
@@ -288,7 +288,7 @@ render (GtkCellRenderer      *cell,
 
       m_hatch_box (&box, 135, SWATCH_LINE_PITCH, lines);
 
-      if (swatch->fill_type == FILLING_MESH) {
+      if (geda_fill_type_draw_second_hatch (swatch->fill_type)) {
         m_hatch_box (&box, 45, SWATCH_LINE_PITCH, lines);
       }
 

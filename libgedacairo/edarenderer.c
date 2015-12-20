@@ -587,15 +587,11 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, OBJECT *object)
 
   /* Handle mesh and hatch fill types */
   fill_lines = g_array_new (FALSE, FALSE, sizeof (LINE));
-  switch (object->fill_type) {
-  case FILLING_MESH:
-    hatch_func (hatch_data, object->fill_angle2, object->fill_pitch2, fill_lines);
-    /* Intentionally fall through */
-  case FILLING_HATCH:
+  if (geda_fill_type_draw_first_hatch (object->fill_type)) {
     hatch_func (hatch_data, object->fill_angle1, object->fill_pitch1, fill_lines);
-    break;
-  default:
-    break;
+  }
+  if (geda_fill_type_draw_second_hatch (object->fill_type)) {
+    hatch_func (hatch_data, object->fill_angle2, object->fill_pitch2, fill_lines);
   }
 
   /* Draw fill pattern */

@@ -199,48 +199,32 @@ void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
   }
 
   /* do some error checking / correcting */
-  switch(type) {
-    case(FILLING_MESH):
-      if (width < 0) {
-        width = 1;
-      }
-      if (angle1 < 0) {
-        angle1 = 45;
-      }
-      if (pitch1 < 0) {
-        pitch1 = 100;
-      }
-      if (angle2 < 0) {
-        angle2 = 135;
-      }
-      if (pitch2 < 0) {
-        pitch2 = 100;
-      }
-      break;
+  if (geda_fill_type_draw_first_hatch (type)) {
+    if (width < 0) {
+      width = 1;
+    }
+    if (angle1 < 0) {
+      angle1 = 45;
+    }
+    if (pitch1 < 0) {
+      pitch1 = 100;
+    }
+  } else {
+    width = -1;
+    angle1 = -1;
+    pitch1 = -1;
+  }
 
-    case(FILLING_HATCH):
-      if (width < 0) {
-        width = 1;
-      }
-      if (angle1 < 0) {
-        angle1 = 45;
-      }
-      if (pitch1 < 0) {
-        pitch1 = 100;
-      }
-      angle2 = -1;
-      pitch2 = -1;
-      break;
-
-    case(FILLING_HOLLOW):
-    case(FILLING_FILL):
-    default:
-      width = -1;
-      angle1 = -1;
-      pitch1 = -1;
-      angle2 = -1;
-      pitch2 = -1;
-      break;
+  if (geda_fill_type_draw_second_hatch (type)) {
+    if (angle2 < 0) {
+      angle2 = 135;
+    }
+    if (pitch2 < 0) {
+      pitch2 = 100;
+    }
+  } else {
+    angle2 = -1;
+    pitch2 = -1;
   }
 
   o_emit_pre_change_notify (toplevel, o_current);

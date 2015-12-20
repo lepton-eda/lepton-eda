@@ -38,6 +38,7 @@ libgeda_la_SOURCES = \
 	f_basic.c \
 	g_basic.c \
 	geda_list.c \
+	geda_fill_type.c \
 	g_rc.c \
 	g_register.c \
 	i_vars.c \
