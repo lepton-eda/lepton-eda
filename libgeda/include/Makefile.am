@@ -10,6 +10,7 @@ libgedainclude_HEADERS = \
 	libgeda/edascmvaluetypes.h \
 	libgeda/funcs.h \
 	libgeda/geda_fill_type.h \
+	libgeda/geda_line_type.h \
 	libgeda/geda_list.h \
 	libgeda/globals.h \
 	libgeda/libgeda.h \

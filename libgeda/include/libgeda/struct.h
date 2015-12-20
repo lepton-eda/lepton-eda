@@ -80,9 +80,6 @@ typedef enum { F_OPEN_RC           = 1,
 /*! \brief line end style for an open line of an object */
 typedef enum {END_NONE, END_SQUARE, END_ROUND, END_VOID} OBJECT_END;
 
-/*! \brief line style of lines, rect, circles, arcs */
-typedef enum {TYPE_SOLID, TYPE_DOTTED, TYPE_DASHED, TYPE_CENTER, TYPE_PHANTOM, TYPE_ERASE} OBJECT_TYPE;
-
 struct st_line {
   int x[2];
   int y[2];

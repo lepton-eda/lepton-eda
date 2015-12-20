@@ -29,6 +29,7 @@
 
 #include <libgeda/defines.h>
 #include <libgeda/geda_fill_type.h>
+#include <libgeda/geda_line_type.h>
 #include <libgeda/struct.h>
 #include <libgeda/s_toplevel.h>
 #include <libgeda/globals.h>
