@@ -44,8 +44,6 @@ void i_vars_libgeda_freenames();
 void libgeda_init(void);
 
 /* m_basic.c */
-void rotate_point(int x, int y, int angle, int *newx, int *newy);
-void rotate_point_90(int x, int y, int angle, int *newx, int *newy);
 void PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom);
 
 /* m_hatch.c */
@@ -85,7 +83,6 @@ GList *o_attrib_return_attribs(OBJECT *object);
 int o_attrib_is_inherited(OBJECT *attrib);
 
 /* o_basic.c */
-int inside_region(int xmin, int ymin, int xmax, int ymax, int x, int y);
 void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_END end, OBJECT_TYPE type, int width, int length, int space);
 gboolean o_get_line_options(OBJECT *object, OBJECT_END *end, OBJECT_TYPE *type, int *width, int *length, int *space);
 void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_FILLING type, int width, int pitch1, int angle1, int pitch2, int angle2);
@@ -360,10 +357,6 @@ void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page);
 const GList *s_page_objects (PAGE *page);
 GList *s_page_objects_in_region (TOPLEVEL *toplevel, PAGE *page, int min_x, int min_y, int max_x, int max_y);
 GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page, BOX *rects, int n_rects);
-
-/* s_path.c */
-PATH *s_path_parse (const char *path_str);
-char *s_path_string_from_path (const PATH *path);
 
 /* s_slib.c */
 int s_slib_add_entry(char *new_path);

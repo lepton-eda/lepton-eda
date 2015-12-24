@@ -7,10 +7,34 @@
 
 /* Public libgeda headers */
 #include "defines.h"
+
+#include "geda_color.h"
 #include "geda_fill_type.h"
 #include "geda_line_type.h"
+#include "geda_line_cap_type.h"
+#include "geda_point.h"
+
+#include "geda_arc.h"
+#include "geda_bezier.h"
+#include "geda_bounds.h"
+#include "geda_box.h"
+#include "geda_circle.h"
+#include "geda_complex.h"
+#include "geda_line.h"
+#include "geda_path.h"
+#include "geda_picture.h"
+#include "geda_text.h"
+#include "geda_transform.h"
+#include "geda_undo.h"
+
+#include "geda_forward.h"
+
 #include "struct.h"
-#include "s_toplevel.h"
+#include "geda_object.h"
+#include "geda_page.h"
+#include "geda_toplevel.h"
+
+
 #include "globals.h"
 #include "o_types.h"
 #include "colors.h"

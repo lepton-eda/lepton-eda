@@ -17,28 +17,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file geda_fill_type.h
+/*! \file geda_text.h
  */
 
-typedef enum _GedaFillType GedaFillType;
-typedef enum _GedaFillType OBJECT_FILLING;
+typedef struct st_text GedaText;
+typedef struct st_text TEXT;
 
-/*! \brief The fill type of objects like box, circle, and path
- *
- *  The numeric values of this enumeration are used inside files and must be
- *  preserved for compatibility.
- */
-enum _GedaFillType
+struct st_text
 {
-  FILLING_HOLLOW,
-  FILLING_FILL,
-  FILLING_MESH,
-  FILLING_HATCH,
-  FILLING_VOID
+  int x, y;		/* world origin */
+
+  char *string;			/* text stuff */
+  char *disp_string;
+  int length;
+  int size;
+  int alignment;
+  int angle;
 };
-
-gboolean
-geda_fill_type_draw_first_hatch (int fill_type);
-
-gboolean
-geda_fill_type_draw_second_hatch (int fill_type);

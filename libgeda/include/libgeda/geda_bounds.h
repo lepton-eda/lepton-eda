@@ -17,28 +17,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file geda_fill_type.h
+/*! \file geda_bounds.h
  */
 
-typedef enum _GedaFillType GedaFillType;
-typedef enum _GedaFillType OBJECT_FILLING;
+typedef struct st_bounds GedaBounds;
+typedef struct st_bounds BOUNDS;
 
-/*! \brief The fill type of objects like box, circle, and path
- *
- *  The numeric values of this enumeration are used inside files and must be
- *  preserved for compatibility.
- */
-enum _GedaFillType
+struct st_bounds
 {
-  FILLING_HOLLOW,
-  FILLING_FILL,
-  FILLING_MESH,
-  FILLING_HATCH,
-  FILLING_VOID
+  gint min_x;
+  gint min_y;
+  gint max_x;
+  gint max_y;
 };
 
-gboolean
-geda_fill_type_draw_first_hatch (int fill_type);
+int
+inside_region (int xmin, int ymin, int xmax, int ymax, int x, int y);
 
-gboolean
-geda_fill_type_draw_second_hatch (int fill_type);
+void
+m_bounds_init (BOUNDS *bounds);
+
+void
+m_bounds_of_points (BOUNDS *bounds, sPOINT points[], gint count);

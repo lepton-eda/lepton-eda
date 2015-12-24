@@ -17,28 +17,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file geda_fill_type.h
+/*! \file geda_complex.h
  */
 
-typedef enum _GedaFillType GedaFillType;
-typedef enum _GedaFillType OBJECT_FILLING;
+typedef struct st_complex GedaComplex;
+typedef struct st_complex COMPLEX;
 
-/*! \brief The fill type of objects like box, circle, and path
- *
- *  The numeric values of this enumeration are used inside files and must be
- *  preserved for compatibility.
- */
-enum _GedaFillType
+struct st_complex
 {
-  FILLING_HOLLOW,
-  FILLING_FILL,
-  FILLING_MESH,
-  FILLING_HATCH,
-  FILLING_VOID
+  int x, y;            /* world origin */
+
+  int angle;           /* orientation, only multiples of 90 degrees allowed */
+                       /* in degrees */
+  int mirror;
+
+  GList *prim_objs;    /* Primitive objects */
+                       /* objects which make up the */
+                       /* complex */
 };
-
-gboolean
-geda_fill_type_draw_first_hatch (int fill_type);
-
-gboolean
-geda_fill_type_draw_second_hatch (int fill_type);

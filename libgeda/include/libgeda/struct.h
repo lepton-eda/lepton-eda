@@ -28,28 +28,7 @@ typedef struct _GedaList SELECTION;
 typedef struct _GedaList GedaPageList;
 
 /* gschem structures (gschem) */
-typedef struct st_complex COMPLEX;
-typedef struct st_line LINE;
-typedef struct st_path_section PATH_SECTION;
-typedef struct st_path PATH;
-typedef struct st_circle CIRCLE;
-typedef struct st_arc ARC;
-typedef struct st_box BOX;
-typedef struct st_picture PICTURE;
-typedef struct st_text TEXT;
-typedef struct st_point sPOINT;
-typedef struct st_transform TRANSFORM;
-typedef struct st_bezier BEZIER;
-
-typedef struct st_object OBJECT;
-typedef struct st_page PAGE;
-typedef struct st_toplevel TOPLEVEL;
-typedef struct st_color COLOR;
-typedef struct st_undo UNDO;
-typedef struct st_bounds BOUNDS;
-
 typedef struct st_conn CONN;
-typedef struct st_bus_ripper BUS_RIPPER;
 
 /* netlist structures (gnetlist) */
 typedef struct st_netlist NETLIST;
@@ -77,206 +56,26 @@ typedef enum { F_OPEN_RC           = 1,
                F_OPEN_RESTORE_CWD  = 4,
 } FOpenFlags;
 
-/*! \brief line end style for an open line of an object */
-typedef enum {END_NONE, END_SQUARE, END_ROUND, END_VOID} OBJECT_END;
-
-struct st_line {
-  int x[2];
-  int y[2];
-};
-
-struct st_point {
-  gint x;
-  gint y;
-};
-
 #define LINE_END1 0
 #define LINE_END2 1
-
-typedef enum {
-    PATH_MOVETO,
-    PATH_MOVETO_OPEN,
-    PATH_CURVETO,
-    PATH_LINETO,
-    PATH_END
-} PATH_CODE;
-
-struct st_path_section {
-  PATH_CODE code;
-  int x1;
-  int y1;
-  int x2;
-  int y2;
-  int x3;
-  int y3;
-};
-
-struct st_path {
-  PATH_SECTION *sections; /* Bezier path segments  */
-  int num_sections;       /* Number with data      */
-  int num_sections_max;   /* Number allocated      */
-};
-
-struct st_arc {
-  int x, y; /* world */
-
-  int width;
-  int height;
-
-  int start_angle;
-  int end_angle;
-};
 
 #define ARC_CENTER 0
 #define ARC_RADIUS 1
 #define ARC_START_ANGLE 2
 #define ARC_END_ANGLE 3
 
-struct st_bezier {
-  int x[4];
-  int y[4];
-};
-
-struct st_box {
-  /* upper is considered the origin */
-  int upper_x, upper_y; /* world */
-  int lower_x, lower_y;
-
-};
-
 #define BOX_UPPER_LEFT 0
 #define BOX_LOWER_RIGHT 1
 #define BOX_UPPER_RIGHT 2
 #define BOX_LOWER_LEFT 3
-
-struct st_picture {
-  GdkPixbuf *pixbuf;
-  gchar *file_content;
-  gsize file_length;
-
-  double ratio;
-  char *filename;
-  int angle;
-  char mirrored;
-  char embedded;
-
-  /* upper is considered the origin */
-  int upper_x, upper_y; /* world */
-  int lower_x, lower_y;
-
-};
 
 #define PICTURE_UPPER_LEFT 0
 #define PICTURE_LOWER_RIGHT 1
 #define PICTURE_UPPER_RIGHT 2
 #define PICTURE_LOWER_LEFT 3
 
-
-struct st_text {
-  int x, y;		/* world origin */
-
-  char *string;			/* text stuff */
-  char *disp_string;
-  int length;
-  int size;
-  int alignment;
-  int angle;
-};
-
-struct st_complex {
-  int x, y;		/* world origin */
-
-  int angle;				/* orientation, only multiples
-                                         * of 90 degrees allowed */
-  /* in degrees */
-  int mirror;
-
-  GList *prim_objs;			/* Primitive objects */
-  /* objects which make up the */
-  /* complex */
-};
-
-struct st_circle {
-  int center_x, center_y; /* world */
-  int radius;
-};
-
 #define CIRCLE_CENTER 0
 #define CIRCLE_RADIUS 1
-
-struct st_object {
-  int type;				/* Basic information */
-  int sid;
-  char *name;
-
-  PAGE *page; /* Parent page */
-
-  int w_top;				/* Bounding box information */
-  int w_left;				/* in world coords */
-  int w_right;
-  int w_bottom;
-  TOPLEVEL *w_bounds_valid_for;
-
-  COMPLEX *complex;
-  LINE *line;
-  CIRCLE *circle;
-  ARC *arc;
-  BOX *box;
-  TEXT *text;
-  PICTURE *picture;
-  PATH *path;
-
-  GList *conn_list;			/* List of connections */
-  /* to and from this object */
-
-  /* every graphical primitive have more or less the same options. */
-  /* depending on its nature a primitive is concerned with one or more */
-  /* of these fields. If not, value must be ignored. */
-  OBJECT_END line_end;
-  OBJECT_TYPE line_type;
-  int line_width;
-  int line_space;
-  int line_length;
-
-  OBJECT_FILLING fill_type;
-  int fill_width;
-  int fill_angle1, fill_pitch1;
-  int fill_angle2, fill_pitch2;
-
-  gboolean complex_embedded;                    /* is embedded component? */
-  gchar *complex_basename;              /* Component Library Symbol name */
-  OBJECT *parent;                       /* Parent object pointer */
-
-  int color; 				/* Which color */
-  int dont_redraw;			/* Flag to skip redrawing */
-  int selectable;			/* object selectable flag */
-  int selected;				/* object selected flag */
-  int locked_color; 			/* Locked color (used to save */
-  /* the object's real color */
-  /* when the object is locked) */
-
-  /* controls which direction bus rippers go */
-  /* it is either 0 for un-inited, */
-  /* 1 for right, -1 for left (horizontal bus) */
-  /* 1 for up, -1 for down (vertial bus) */
-  int bus_ripper_direction;             /* only valid on buses */
-
-
-  int font_text_size;			/* used only with fonts defs */
-  GList *font_prim_objs;			/* used only with fonts defs */
-
-  int whichend;    /* for pins only, either 0 or 1 */
-  int pin_type;    /* for pins only, either NET or BUS */
-
-  GList *attribs;       /* attribute stuff */
-  int show_name_value;
-  int visibility;
-  OBJECT *attached_to;  /* when object is an attribute */
-  OBJECT *copied_to;    /* used when copying attributes */
-
-  GList *weak_refs; /* Weak references */
-};
-
 
 /*! \brief Structure for connections between OBJECTs
  *
@@ -298,91 +97,6 @@ struct st_conn {
   int whichone;
   /*! \brief which endpoint of the "other" object caused this connection */
   int other_whichone;
-};
-
-/* this structure is used in gschem to add rippers when drawing nets */
-/* it is never stored in any object, it is only temporary */
-struct st_bus_ripper
-{
-  int x[2];
-  int y[2];
-};
-
-struct st_bounds {
-  gint min_x;
-  gint min_y;
-  gint max_x;
-  gint max_y;
-};
-
-/** A structure to store a 2D affine transform.
- *
- *  The transforms get stored in a 3x3 matrix. Code assumes the bottom row to
- *  remain constant at [0 0 1].
- */
-struct st_transform {
-  gdouble m[2][3];    /* m[row][column] */
-};
-
-struct st_undo {
-
-  /* one of these is used, depending on if you are doing in-memory */
-  /* or file based undo state saving */
-  char *filename;
-  GList *object_list;
-
-  /* either UNDO_ALL or UNDO_VIEWPORT_ONLY */
-  int type;
-
-  /* viewport information */
-  int x, y;
-  double scale;
-
-  /* up and down the hierarchy */
-  int up;
-  /* used to control which pages are viewable when moving around */
-  int page_control;
-
-  UNDO *prev;
-  UNDO *next;
-};
-
-
-struct st_page {
-
-  TOPLEVEL* toplevel;
-  int pid;
-
-  GList *_object_list;
-  SELECTION *selection_list; /* new selection mechanism */
-  GList *place_list;
-  OBJECT *object_lastplace; /* the last found item */
-  GList *connectible_list;  /* connectible page objects */
-
-  char *page_filename;
-  int CHANGED;			/* changed flag */
-
-  /* Undo/Redo Stacks and pointers */
-  /* needs to go into page mechanism actually */
-  UNDO *undo_bottom;
-  UNDO *undo_current;
-  UNDO *undo_tos; 	/* Top Of Stack */
-
-  /* up and down the hierarchy */
-  /* this holds the pid of the parent page */
-  int up;
-  /* int down; not needed */
-
-  /* used to control which pages are viewable when moving around */
-  int page_control;
-
-  /* backup variables */
-  GTimeVal last_load_or_save_time;
-  char saved_since_first_loaded;
-  gint ops_since_last_backup;
-  gchar do_autosave_backup;
-
-  GList *weak_refs; /* Weak references */
 };
 
 /*! \brief Type of callback function for calculating text bounds */
@@ -470,13 +184,6 @@ struct st_chkerrs{
   OBJECT * err_obj;
   CHKERRS * next;
 
-};
-
-
-
-struct st_color {
-  guint8 r, g, b, a;
-  gboolean enabled;
 };
 
 /* used by the rc loading mechanisms */

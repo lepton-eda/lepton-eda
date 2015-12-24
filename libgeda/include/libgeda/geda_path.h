@@ -17,28 +17,49 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file geda_fill_type.h
+/*! \file geda_path.h
  */
 
-typedef enum _GedaFillType GedaFillType;
-typedef enum _GedaFillType OBJECT_FILLING;
+typedef struct st_path_section PATH_SECTION;
 
-/*! \brief The fill type of objects like box, circle, and path
- *
- *  The numeric values of this enumeration are used inside files and must be
- *  preserved for compatibility.
- */
-enum _GedaFillType
+typedef struct st_path GedaPath;
+typedef struct st_path PATH;
+
+typedef enum
 {
-  FILLING_HOLLOW,
-  FILLING_FILL,
-  FILLING_MESH,
-  FILLING_HATCH,
-  FILLING_VOID
+    PATH_MOVETO,
+    PATH_MOVETO_OPEN,
+    PATH_CURVETO,
+    PATH_LINETO,
+    PATH_END
+} PATH_CODE;
+
+struct st_path_section
+{
+  PATH_CODE code;
+  int x1;
+  int y1;
+  int x2;
+  int y2;
+  int x3;
+  int y3;
 };
 
-gboolean
-geda_fill_type_draw_first_hatch (int fill_type);
+struct st_path
+{
+  PATH_SECTION *sections; /* Bezier path segments  */
+  int num_sections;       /* Number with data      */
+  int num_sections_max;   /* Number allocated      */
+};
 
-gboolean
-geda_fill_type_draw_second_hatch (int fill_type);
+PATH*
+s_path_parse (const char *path_str);
+
+double
+s_path_shortest_distance (PATH *path, int x, int y, int solid);
+
+char*
+s_path_string_from_path (const PATH *path);
+
+int
+s_path_to_polygon(PATH *path, GArray *points);

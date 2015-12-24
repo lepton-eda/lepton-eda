@@ -17,28 +17,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file geda_fill_type.h
+/*! \file geda_arc.h
  */
 
-typedef enum _GedaFillType GedaFillType;
-typedef enum _GedaFillType OBJECT_FILLING;
+typedef struct st_arc GedaArc;
+typedef struct st_arc ARC;
 
-/*! \brief The fill type of objects like box, circle, and path
- *
- *  The numeric values of this enumeration are used inside files and must be
- *  preserved for compatibility.
- */
-enum _GedaFillType
+struct st_arc
 {
-  FILLING_HOLLOW,
-  FILLING_FILL,
-  FILLING_MESH,
-  FILLING_HATCH,
-  FILLING_VOID
+  int x, y; /* world */
+
+  int width;
+  int height;
+
+  int start_angle;
+  int end_angle;
 };
 
 gboolean
-geda_fill_type_draw_first_hatch (int fill_type);
-
-gboolean
-geda_fill_type_draw_second_hatch (int fill_type);
+o_arc_within_sweep (ARC *arc, gint x, gint y);

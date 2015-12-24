@@ -27,43 +27,17 @@ SCM g_rc_print_color_map (SCM scm_map);
 void g_register_libgeda_funcs(void);
 void g_register_libgeda_dirs (void);
 
-/* m_bounds.c */
-void m_bounds_init(BOUNDS *bounds);
-void m_bounds_of_points(BOUNDS *bounds, sPOINT points[], gint count);
-
-/* m_box.c */
-double m_box_shortest_distance (BOX *box, int x, int y, int solid);
-
-/* m_circle.c */
-double m_circle_shortest_distance (CIRCLE *circle, int x, int y, int solid);
-
 /* m_hatch.c */
 void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines);
-
-/* m_line.c */
-double m_line_shortest_distance (LINE *circle, int x, int y);
 
 /* m_polygon.c */
 gboolean m_polygon_interior_point(GArray *points, int x, int y);
 double m_polygon_shortest_distance(GArray *points, int x, int y, gboolean closed);
 
-/* m_transform.c */
-void m_transform_combine(TRANSFORM *result, TRANSFORM *a, TRANSFORM *b );
-void m_transform_init(TRANSFORM *transform);
-void m_transform_invert(TRANSFORM *transform, TRANSFORM *inverse);
-void m_transform_line(TRANSFORM *transform, LINE *line );
-void m_transform_lines(TRANSFORM *transform, GArray *lines);
-void m_transform_point(TRANSFORM *transform, gint *x, gint *y);
-void m_transform_points(TRANSFORM *transform, GArray *points);
-void m_transform_rotate(TRANSFORM *transform, gdouble angle);
-void m_transform_scale(TRANSFORM *transform, gdouble factor);
-void m_transform_translate(TRANSFORM *transform, gdouble dx, gdouble dy);
-
 /* o_arc_basic.c */
 OBJECT *o_arc_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_arc_save(TOPLEVEL *toplevel, OBJECT *object);
 double o_arc_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
-gboolean o_arc_within_sweep(ARC *arc, gint x, gint y);
 void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 gboolean o_arc_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 
@@ -169,10 +143,6 @@ void s_conn_remove_object(PAGE *page, OBJECT *object);
 /* s_encoding.c */
 gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean strict);
 gchar* s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp);
-
-/* s_path.c */
-int s_path_to_polygon(PATH *path, GArray *points);
-double s_path_shortest_distance (PATH *path, int x, int y, int solid);
 
 /* s_textbuffer.c */
 TextBuffer *s_textbuffer_new (const gchar *data, const gint size);

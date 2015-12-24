@@ -17,28 +17,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file geda_fill_type.h
- */
-
-typedef enum _GedaFillType GedaFillType;
-typedef enum _GedaFillType OBJECT_FILLING;
-
-/*! \brief The fill type of objects like box, circle, and path
+/*! \file geda_line_cap_type.h
  *
- *  The numeric values of this enumeration are used inside files and must be
- *  preserved for compatibility.
+ *  \brief line end style for an open line of an object
  */
-enum _GedaFillType
+
+typedef enum _GedaLineCapType GedaLineCapType;
+typedef enum _GedaLineCapType OBJECT_END;
+
+enum _GedaLineCapType
 {
-  FILLING_HOLLOW,
-  FILLING_FILL,
-  FILLING_MESH,
-  FILLING_HATCH,
-  FILLING_VOID
+  END_NONE,
+  END_SQUARE,
+  END_ROUND,
+  END_VOID
 };
-
-gboolean
-geda_fill_type_draw_first_hatch (int fill_type);
-
-gboolean
-geda_fill_type_draw_second_hatch (int fill_type);
