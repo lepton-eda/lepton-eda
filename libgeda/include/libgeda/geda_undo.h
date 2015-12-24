@@ -20,9 +20,6 @@
 /*! \file geda_undo.h
  */
 
-typedef struct st_undo GedaUndo;
-typedef struct st_undo UNDO;
-
 struct st_undo
 {
   /* one of these is used, depending on if you are doing in-memory */
@@ -45,3 +42,39 @@ struct st_undo
   UNDO *prev;
   UNDO *next;
 };
+
+UNDO*
+s_undo_return_tail (UNDO *head);
+
+UNDO *
+s_undo_return_head (UNDO *tail);
+
+UNDO *
+s_undo_new_head (void);
+
+void
+s_undo_destroy_head (UNDO *u_head);
+
+UNDO *
+s_undo_add (UNDO *head, int type, char *filename, GList *object_list, int x, int y, double scale, int page_control, int up);
+
+void
+s_undo_print_all (UNDO *head);
+
+void
+s_undo_destroy_all (TOPLEVEL *toplevel, UNDO *head);
+
+void
+s_undo_remove (TOPLEVEL *toplevel, UNDO *head, UNDO *u_tos);
+
+void
+s_undo_remove_rest (TOPLEVEL *toplevel, UNDO *head);
+
+int
+s_undo_levels (UNDO *head);
+
+void
+s_undo_init (PAGE *p_current);
+
+void
+s_undo_free_all (TOPLEVEL *toplevel, PAGE *p_current);

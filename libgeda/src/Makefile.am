@@ -44,8 +44,12 @@ libgeda_la_SOURCES = \
 	geda_line.c \
 	geda_list.c \
 	geda_fill_type.c \
+	geda_page.c \
+	geda_path.c \
 	geda_point.c \
+	geda_toplevel.c \
 	geda_transform.c \
+	geda_undo.c \
 	g_rc.c \
 	g_register.c \
 	i_vars.c \
@@ -78,13 +82,9 @@ libgeda_la_SOURCES = \
 	s_hierarchy.c \
 	s_log.c \
 	s_menu.c \
-	s_page.c \
-	s_path.c \
 	s_slib.c \
 	s_slot.c \
 	s_textbuffer.c \
-	s_toplevel.c \
-	s_undo.c \
 	s_weakref.c \
 	u_basic.c
 

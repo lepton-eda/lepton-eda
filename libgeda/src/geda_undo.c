@@ -17,6 +17,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+/*! \file geda_undo.c
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -117,7 +120,7 @@ UNDO *s_undo_add (UNDO *head, int type, char *filename, GList *object_list,
   u_new = (UNDO *) g_malloc(sizeof(UNDO));
 
   u_new->filename = g_strdup (filename);
-	
+
   u_new->object_list = object_list;
 
   u_new->type = type;
@@ -158,11 +161,11 @@ void s_undo_print_all( UNDO *head )
   while(u_current != NULL) {
 
     if (u_current->filename) printf("%s\n", u_current->filename);
-		
+
     if (u_current->object_list) {
       print_struct_forw (u_current->object_list);
     }
-		
+
     printf("\t%d %d %f\n", u_current->x, u_current->y, u_current->scale);
     u_current = u_current->next;
   }
@@ -186,9 +189,9 @@ void s_undo_destroy_all(TOPLEVEL *toplevel, UNDO *head)
   u_current = s_undo_return_tail(head);
 
   while (u_current != NULL) {
-    u_prev = u_current->prev;	
+    u_prev = u_current->prev;
     g_free(u_current->filename);
-		
+
     if (u_current->object_list) {
       s_delete_object_glist (toplevel, u_current->object_list);
       u_current->object_list = NULL;
@@ -213,7 +216,7 @@ void s_undo_remove(TOPLEVEL *toplevel, UNDO *head, UNDO *u_tos)
     return;
   }
 
-  u_current = head;	
+  u_current = head;
 
   while (u_current != NULL) {
     if (u_current == u_tos) {
@@ -227,7 +230,7 @@ void s_undo_remove(TOPLEVEL *toplevel, UNDO *head, UNDO *u_tos)
       else
         u_current->prev = NULL;
 
-      g_free(u_current->filename);	
+      g_free(u_current->filename);
 
       if (u_current->object_list) {
         s_delete_object_glist (toplevel, u_current->object_list);
@@ -254,7 +257,7 @@ void s_undo_remove_rest(TOPLEVEL *toplevel, UNDO *head)
   u_current = head;
 
   while (u_current != NULL) {
-    u_next = u_current->next;	
+    u_next = u_current->next;
 
     if (u_current->filename) {
       unlink(u_current->filename);
@@ -280,16 +283,16 @@ int s_undo_levels(UNDO *head)
 {
   UNDO *u_current;
   int count = 0;
-	
+
   u_current = head;
   while (u_current != NULL) {
     if (u_current->filename || u_current->object_list) {
-      count++;	
-    } 	
-		
+      count++;
+    }
+
     u_current = u_current->next;
   }
-	
+
   return(count);
 }
 

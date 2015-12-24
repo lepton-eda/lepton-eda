@@ -8,6 +8,7 @@ libgeda/src/f_basic.c
 libgeda/src/g_basic.c
 libgeda/src/g_rc.c
 libgeda/src/geda_fill_type.c
+libgeda/src/geda_page.c
 libgeda/src/o_arc_basic.c
 libgeda/src/o_attrib.c
 libgeda/src/o_basic.c
@@ -25,7 +26,6 @@ libgeda/src/o_text_basic.c
 libgeda/src/s_clib.c
 libgeda/src/s_color.c
 libgeda/src/s_hierarchy.c
-libgeda/src/s_page.c
 libgeda/src/s_slib.c
 libgeda/src/s_slot.c
 libgeda/src/edaconfig.c

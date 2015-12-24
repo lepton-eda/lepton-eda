@@ -29,3 +29,5 @@ typedef struct st_page PAGE;
 typedef struct st_toplevel GedaToplevel;
 typedef struct st_toplevel TOPLEVEL;
 
+typedef struct st_undo GedaUndo;
+typedef struct st_undo UNDO;

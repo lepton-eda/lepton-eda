@@ -332,32 +332,6 @@ void s_menu_print(void);
 void s_menu_free(void);
 void s_menu_init(void);
 
-/* s_page.c */
-PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename);
-void s_page_delete (TOPLEVEL *toplevel, PAGE *page);
-void s_page_delete_list(TOPLEVEL *toplevel);
-void s_page_weak_ref (PAGE *page, void (*notify_func)(void *, void *), void *user_data);
-void s_page_weak_unref (PAGE *page, void (*notify_func)(void *, void *), void *user_data);
-void s_page_add_weak_ptr (PAGE *page, void *weak_pointer_loc);
-void s_page_remove_weak_ptr (PAGE *page, void *weak_pointer_loc);
-void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new);
-PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename);
-PAGE *s_page_search_by_page_id (GedaPageList *list, int pid);
-void s_page_print_all (TOPLEVEL *toplevel);
-gint s_page_save_all (TOPLEVEL *toplevel);
-gboolean s_page_check_changed (GedaPageList *list);
-void s_page_clear_changed (GedaPageList *list);
-void s_page_autosave_init(TOPLEVEL *toplevel);
-gint s_page_autosave (TOPLEVEL *toplevel);
-void s_page_append (TOPLEVEL *toplevel, PAGE *page, OBJECT *object);
-void s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list);
-void s_page_remove (TOPLEVEL *toplevel, PAGE *page, OBJECT *object);
-void s_page_replace (TOPLEVEL *toplevel, PAGE *page, OBJECT *object1, OBJECT *object2);
-void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page);
-const GList *s_page_objects (PAGE *page);
-GList *s_page_objects_in_region (TOPLEVEL *toplevel, PAGE *page, int min_x, int min_y, int max_x, int max_y);
-GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page, BOX *rects, int n_rects);
-
 /* s_slib.c */
 int s_slib_add_entry(char *new_path);
 int s_slib_search_for_dirname(char *dir_name);
@@ -376,20 +350,6 @@ void s_slib_print_dirs(void);
 /* s_slot.c */
 char *s_slot_search_slot(OBJECT *object, OBJECT **return_found);
 void s_slot_update_object(TOPLEVEL *toplevel, OBJECT *object);
-
-/* s_undo.c */
-UNDO *s_undo_return_tail(UNDO *head);
-UNDO *s_undo_return_head(UNDO *tail);
-UNDO *s_undo_new_head(void);
-void s_undo_destroy_head(UNDO *u_head);
-UNDO *s_undo_add(UNDO *head, int type, char *filename, GList *object_list, int x, int y, double scale, int page_control, int up);
-void s_undo_print_all(UNDO *head);
-void s_undo_destroy_all(TOPLEVEL *toplevel, UNDO *head);
-void s_undo_remove(TOPLEVEL *toplevel, UNDO *head, UNDO *u_tos);
-void s_undo_remove_rest(TOPLEVEL *toplevel, UNDO *head);
-int s_undo_levels(UNDO *head);
-void s_undo_init(PAGE *p_current);
-void s_undo_free_all(TOPLEVEL *toplevel, PAGE *p_current);
 
 /* u_basic.c */
 char *u_basic_breakup_string(char *string, char delimiter, int count);

@@ -18,8 +18,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file s_toplevel.c
+/*! \file geda_toplevel.c
  */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -122,7 +123,7 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
 
   g_free (toplevel->bitmap_directory);
   g_free (toplevel->bus_ripper_symname);
-  
+
   /* free all fonts */
   /* if you close a window, then you free the font set... */
   /* this is probably a bad idea... */

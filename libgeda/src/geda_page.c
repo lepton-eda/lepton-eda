@@ -18,10 +18,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file s_page.c
+/*! \file geda_page.c
  *  \brief The page system
  *
- *  libgeda can handle multiple schematic or symbol pages. libgeda keeps 
+ *  libgeda can handle multiple schematic or symbol pages. libgeda keeps
  *  track of the currently opened pages with a managed _GedaList.
  *  The currently used page is refered with an extra pointer.
  *
@@ -126,7 +126,7 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
     page->page_filename = g_build_filename (pwd, filename, NULL);
     g_free (pwd);
   }
-	
+
   g_assert (toplevel->init_bottom != 0);
 
   page->up = -2;
@@ -145,11 +145,11 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
 
   /* init undo struct pointers */
   s_undo_init(page);
-  
+
   page->object_lastplace = NULL;
 
   page->weak_refs = NULL;
-  
+
   /* Backup variables */
   g_get_current_time (&page->last_load_or_save_time);
   page->ops_since_last_backup = 0;
@@ -197,7 +197,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 
   /* Get the real filename and file permissions */
   real_filename = follow_symlinks (page->page_filename, NULL);
-  
+
   if (real_filename == NULL) {
     s_log_message (_("s_page_delete: Can't get the real filename of %s."),
                    page->page_filename);
@@ -206,7 +206,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
     backup_filename = f_get_autosave_filename (real_filename);
 
     /* Delete the backup file */
-    if ( (g_file_test (backup_filename, G_FILE_TEST_EXISTS)) && 
+    if ( (g_file_test (backup_filename, G_FILE_TEST_EXISTS)) &&
 	 (!g_file_test(backup_filename, G_FILE_TEST_IS_DIR)) )
     {
       if (unlink(backup_filename) != 0) {
@@ -240,7 +240,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   page->connectible_list = NULL;
 
   /* free current page undo structs */
-  s_undo_free_all (toplevel, page); 
+  s_undo_free_all (toplevel, page);
 
   /* ouch, deal with parents going away and the children still around */
   page->up = -2;
@@ -376,7 +376,7 @@ s_page_remove_weak_ptr (PAGE *page,
  *  \param toplevel  The TOPLEVEL object
  *  \param p_new     The PAGE to go to
  */
-void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new) 
+void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new)
 {
   gchar *dirname;
 
@@ -398,7 +398,7 @@ void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new)
  *
  *  \param toplevel  The TOPLEVEL object
  *  \param filename  The filename string to search for
- *  
+ *
  *  \return PAGE pointer to a matching page, NULL otherwise.
  */
 PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename)
@@ -560,7 +560,7 @@ void s_page_autosave_init(TOPLEVEL *toplevel)
   if (toplevel->auto_save_interval != 0) {
 
     /* 1000 converts seconds into milliseconds */
-    toplevel->auto_save_timeout = 
+    toplevel->auto_save_timeout =
       g_timeout_add(toplevel->auto_save_interval*1000,
                     (GSourceFunc) s_page_autosave,
                     toplevel);
@@ -576,7 +576,7 @@ void s_page_autosave_init(TOPLEVEL *toplevel)
  *  \param [in] toplevel  The TOPLEVEL object.
  *  \return The length in milliseconds to set for next interval.
  */
-gint s_page_autosave (TOPLEVEL *toplevel) 
+gint s_page_autosave (TOPLEVEL *toplevel)
 {
   const GList *iter;
   PAGE *p_current;

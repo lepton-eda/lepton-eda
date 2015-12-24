@@ -25,7 +25,6 @@
 #include "geda_picture.h"
 #include "geda_text.h"
 #include "geda_transform.h"
-#include "geda_undo.h"
 
 #include "geda_forward.h"
 
@@ -33,7 +32,7 @@
 #include "geda_object.h"
 #include "geda_page.h"
 #include "geda_toplevel.h"
-
+#include "geda_undo.h"
 
 #include "globals.h"
 #include "o_types.h"

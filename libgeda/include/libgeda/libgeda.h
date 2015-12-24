@@ -46,7 +46,6 @@
 #include <libgeda/geda_picture.h>
 #include <libgeda/geda_text.h>
 #include <libgeda/geda_transform.h>
-#include <libgeda/geda_undo.h>
 
 #include <libgeda/geda_forward.h>
 
@@ -54,6 +53,7 @@
 #include <libgeda/geda_object.h>
 #include <libgeda/geda_page.h>
 #include <libgeda/geda_toplevel.h>
+#include <libgeda/geda_undo.h>
 
 #include <libgeda/globals.h>
 #include <libgeda/o_types.h>

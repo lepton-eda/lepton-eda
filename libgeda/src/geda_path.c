@@ -29,6 +29,8 @@
  *  Boston, MA 02110-1301 USA
  *
  */
+/*! \file geda_path.c
+ */
 
 #include "config.h"
 
