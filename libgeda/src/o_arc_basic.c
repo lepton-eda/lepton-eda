@@ -40,7 +40,7 @@
  *
  *  All dimensions are in world unit, except start_angle and
  *  end_angle in degrees.
- *  
+ *
  *  A new object of type OBJECT is allocated. Its type and color
  *  are initilized. The description of the arc characteristics
  *  are stored in a new ARC structure.
@@ -79,8 +79,8 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
    */
 
   /* World coordinates */
-  new_node->arc->x      = x; 
-  new_node->arc->y      = y; 
+  new_node->arc->x      = x;
+  new_node->arc->y      = y;
   new_node->arc->width  = 2 * radius;
   new_node->arc->height = 2 * radius;
 
@@ -90,7 +90,7 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
     end_angle = -end_angle;
   }
   if(start_angle < 0) start_angle = 360 + start_angle;
-  
+
   new_node->arc->start_angle = start_angle;
   new_node->arc->end_angle   = end_angle;
 
@@ -107,7 +107,7 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
   return new_node;
 }
 
-/*! \brief 
+/*! \brief
  *  \par Function Description
  *  This function creates a new object representing an arc.
  *
@@ -159,7 +159,7 @@ OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  <B>x</B> is in degrees. <B>y</B> is ignored.
  *
  *  \param [in]     toplevel  The TOPLEVEL object.
- *  \param [in,out] object     
+ *  \param [in,out] object
  *  \param [in]     x
  *  \param [in]     y
  *  \param [in]     whichone
@@ -176,7 +176,7 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
 		object->arc->x = x;
 		object->arc->y = y;
 		break;
-		
+
 		case ARC_RADIUS:
 		/* modify the radius of arc object */
 		object->arc->width  = 2 * x;
@@ -214,12 +214,12 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
  *
  *  To get information on the various file formats have a
  *  look to the fileformats.html document.
- *  
+ *
  *  The object is initialized with the functions #o_set_line_options() and #o_set_fill_options().
  *  The second one is only used to put initialize unused values for an arc as an arc can not be filled.
- * 
+ *
  *  The arc is allocated initialized with the function #o_arc_new().
- * 
+ *
  *  A negative or null radius is not allowed.
  *
  *  \param [in] toplevel    The TOPLEVEL object.
@@ -232,7 +232,7 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
            unsigned int release_ver, unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;
-  char type; 
+  char type;
   int x1, y1;
   int radius;
   int start_angle, end_angle;
@@ -273,7 +273,7 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
                    type, x1, y1, radius, start_angle, end_angle, color);
     radius = 0;
   }
-	
+
   if (color < 0 || color > MAX_COLORS) {
     s_log_message(_("Found an invalid color [ %s ]\n"), buf);
     s_log_message(_("Setting color to default color\n"));
@@ -412,8 +412,8 @@ void o_arc_rotate_world(TOPLEVEL *toplevel,
 
   /* update the screen coords and the bounding box */
   object->w_bounds_valid_for = NULL;
-  
-}                                   
+
+}
 
 /*! \brief Mirror the WORLD coordinates of an ARC.
  *  \par Function Description
@@ -448,14 +448,14 @@ void o_arc_mirror_world(TOPLEVEL *toplevel,
   /* start_angle *MUST* be positive */
   if(object->arc->start_angle < 0) object->arc->start_angle += 360;
   object->arc->end_angle = -object->arc->end_angle;
-	
+
   /* translate object back to its previous position */
   object->arc->x += world_centerx;
   object->arc->y += world_centery;
 
   /* update the screen coords and bounding box */
   object->w_bounds_valid_for = NULL;
-	
+
 }
 
 
@@ -509,7 +509,7 @@ void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
    *  If so, the rectangle is extended in these directions.
    *
    *  In the mirror mode, the sweep angle is negativ. To get a
-   *  CCW arc before this calculation we have to move the 
+   *  CCW arc before this calculation we have to move the
    *  start angle to the end angle and reverse the sweep angle.
    */
   if (end_angle < 0) {
@@ -608,46 +608,3 @@ double o_arc_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
 
   return shortest_distance;
 }
-
-/*! \brief Determines if a point lies within the sweep of the arc.
- *
- *  \param [in] arc The arc of object
- *  \param [in] x The x coordinate of the given point.
- *  \param [in] y The y coordinate of the given point.
- *  \return TRUE if the point lies within the sweep of the arc.
- *  FALSE if the point lies outside the sweep of the arc. With an 
- *  invalid parameter, this function returns FALSE.
- */
-gboolean o_arc_within_sweep(ARC *arc, gint x, gint y)
-{
-  gdouble a0;
-  gdouble a1;
-  gdouble angle;
-  gdouble dx;
-  gdouble dy;
-
-  if (arc == NULL) {
-    g_critical("o_arc_within_sweep(): arc == NULL\n");
-    return FALSE;
-  }
-
-  dx = ((gdouble) x) - ((gdouble) arc->x);
-  dy = ((gdouble) y) - ((gdouble) arc->y);
-
-  angle = 180 * atan2(dy, dx) / G_PI;
-
-  if (arc->end_angle > 0) {
-    a0 = arc->start_angle;
-    a1 = arc->start_angle + arc->end_angle;
-  } else {
-    a0 = arc->start_angle + arc->end_angle + 360;
-    a1 = arc->start_angle + 360;
-  }
-
-  while (angle < a0) {
-    angle+=360;
-  }
-
-  return (angle < a1);
-}
-

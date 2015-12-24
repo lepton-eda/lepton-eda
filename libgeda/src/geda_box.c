@@ -17,10 +17,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-
-/*! \file m_box.c
+/*! \file geda_box.c
  *
- *  \brief Low-level mathmatical functions for boxes
+ *  \brief Low-level mathematical functions for boxes
  */
 
 #include <config.h>
@@ -42,7 +41,8 @@
  *  shape, this function returns a distance of zero for interior points.  With
  *  an invalid parameter, this function returns G_MAXDOUBLE.
  */
-double m_box_shortest_distance (BOX *box, int x, int y, int solid)
+double
+m_box_shortest_distance (BOX *box, int x, int y, int solid)
 {
   double shortest_distance;
   double x1, y1, x2, y2;

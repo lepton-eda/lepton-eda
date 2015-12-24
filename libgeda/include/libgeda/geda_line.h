@@ -18,6 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*! \file geda_line.h
+ *
+ *  \brief Low-level mathematical functions for lines
  */
 
 typedef struct st_line GedaLine;

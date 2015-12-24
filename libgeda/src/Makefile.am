@@ -37,20 +37,22 @@ libgeda_la_SOURCES = \
 	edaerrors.c \
 	f_basic.c \
 	g_basic.c \
+	geda_arc.c \
+	geda_bounds.c \
+	geda_box.c \
+	geda_circle.c \
+	geda_line.c \
 	geda_list.c \
 	geda_fill_type.c \
+	geda_point.c \
+	geda_transform.c \
 	g_rc.c \
 	g_register.c \
 	i_vars.c \
 	libgeda.c \
 	m_basic.c \
-	m_bounds.c \
-	m_box.c \
-	m_circle.c \
 	m_hatch.c \
-	m_line.c \
 	m_polygon.c \
-	m_transform.c \
 	o_arc_basic.c \
 	o_attrib.c \
 	o_basic.c \

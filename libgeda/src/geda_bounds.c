@@ -17,15 +17,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+/*! \file geda_bounds.c
+ */
+
 #include <config.h>
 #include <libgeda_priv.h>
+
 
 /*! \brief Initialize a bounds by setting it to empty
  *
  *  \param bounds [in] The bounds to set to empty.  This parameter must not
  *  be NULL.
  */
-void m_bounds_init(BOUNDS *bounds)
+void
+m_bounds_init(BOUNDS *bounds)
 {
   bounds->min_x = G_MAXINT;
   bounds->min_y = G_MAXINT;
@@ -44,7 +49,8 @@ void m_bounds_init(BOUNDS *bounds)
  *  zero, this parameter must not be NULL.
  *  \param count [in] The number of points in the set.
  */
-void m_bounds_of_points(BOUNDS *bounds, sPOINT points[], gint count)
+void
+m_bounds_of_points(BOUNDS *bounds, sPOINT points[], gint count)
 {
   gint index;
 

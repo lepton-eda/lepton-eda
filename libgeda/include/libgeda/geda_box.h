@@ -18,6 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*! \file geda_box.h
+ *
+ *  \brief Low-level mathematical functions for boxes
  */
 
 typedef struct st_box GedaBox;

@@ -45,6 +45,13 @@
 #define QUADRANT3  0x04
 #define QUADRANT4  0x08
 
+typedef struct st_bus_ripper BUS_RIPPER;
+
+struct st_bus_ripper
+{
+  int x[2];
+  int y[2];
+};
 
 /*! \brief Reset all variables used for net drawing
  *  \par Function Description

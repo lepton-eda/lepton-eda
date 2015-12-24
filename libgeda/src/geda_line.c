@@ -17,10 +17,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-
-/*! \file m_line.c
+/*! \file geda_line.c
  *
- *  \brief Low-level mathmatical functions for lines
+ *  \brief Low-level mathematical functions for lines
  */
 
 #include <config.h>
@@ -46,7 +45,8 @@
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double m_line_shortest_distance (LINE *line, int x, int y)
+double
+m_line_shortest_distance (LINE *line, int x, int y)
 {
   double cx, cy;
   double dx, dy;

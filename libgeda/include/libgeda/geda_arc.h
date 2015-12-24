@@ -18,6 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*! \file geda_arc.h
+ *
+ *  \brief Low-level mathematical functions for arcs
  */
 
 typedef struct st_arc GedaArc;

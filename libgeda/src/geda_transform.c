@@ -17,9 +17,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+/*! \file geda_bounds.c
+ */
+
 #include <config.h>
 #include <math.h>
 #include <libgeda_priv.h>
+
 
 /*! \brief Combines two transformations
  *
@@ -30,7 +34,8 @@
  *  \param a [in] The second operand.
  *  \param b [in] The second operand.
  */
-void m_transform_combine(TRANSFORM *result, TRANSFORM *a, TRANSFORM *b )
+void
+m_transform_combine(TRANSFORM *result, TRANSFORM *a, TRANSFORM *b )
 {
   g_return_if_fail(result!=NULL);
   g_return_if_fail(a!=NULL);
@@ -48,7 +53,8 @@ void m_transform_combine(TRANSFORM *result, TRANSFORM *a, TRANSFORM *b )
  *
  *  \param transform [out] The transform to initialize with the identity matrix.
  */
-void m_transform_init(TRANSFORM *transform)
+void
+m_transform_init(TRANSFORM *transform)
 {
   g_return_if_fail(transform!=NULL);
 
@@ -65,7 +71,8 @@ void m_transform_init(TRANSFORM *transform)
  *  \param transform [in] The given matrix
  *  \param inverse [out] The inverse of the given matrix.
  */
-void m_transform_invert(TRANSFORM *transform, TRANSFORM *inverse)
+void
+m_transform_invert(TRANSFORM *transform, TRANSFORM *inverse)
 {
   gdouble d;
 
@@ -87,7 +94,8 @@ void m_transform_invert(TRANSFORM *transform, TRANSFORM *inverse)
  *  \param transform [in] The transform function.
  *  \param line [inout] The line to transform.
  */
-void m_transform_line(TRANSFORM *transform, LINE *line)
+void
+m_transform_line(TRANSFORM *transform, LINE *line)
 {
   g_return_if_fail(transform!=NULL);
   g_return_if_fail(line!=NULL);
@@ -101,7 +109,8 @@ void m_transform_line(TRANSFORM *transform, LINE *line)
  *  \param transform [in] The transform function.
  *  \param lines [inout] The GArray of LINE to transform.
  */
-void m_transform_lines(TRANSFORM *transform, GArray *lines)
+void
+m_transform_lines(TRANSFORM *transform, GArray *lines)
 {
   gint index;
 
@@ -120,7 +129,8 @@ void m_transform_lines(TRANSFORM *transform, GArray *lines)
  *  \param y [inout] The y coordinate to transform.
  *  \param transform [in] The transform function.
  */
-void m_transform_point(TRANSFORM *transform, gint *x, gint *y)
+void
+m_transform_point(TRANSFORM *transform, gint *x, gint *y)
 {
   gdouble tx;
   gdouble ty;
@@ -141,7 +151,8 @@ void m_transform_point(TRANSFORM *transform, gint *x, gint *y)
  *  \param transform [in] The transform function.
  *  \param points [inout] The GArray of sPOINT to transform.
  */
-void m_transform_points(TRANSFORM *transform, GArray *points)
+void
+m_transform_points(TRANSFORM *transform, GArray *points)
 {
   gint index;
 
@@ -159,7 +170,8 @@ void m_transform_points(TRANSFORM *transform, GArray *points)
  *  \param transform [inout] The given matrix
  *  \param angle [in] The angle to rotate
  */
-void m_transform_rotate(TRANSFORM *transform, gdouble angle)
+void
+m_transform_rotate(TRANSFORM *transform, gdouble angle)
 {
   gdouble r = G_PI*angle/180.0;
   gdouble c = cos(r);
@@ -182,7 +194,8 @@ void m_transform_rotate(TRANSFORM *transform, gdouble angle)
  *  \param factor [in] The amount to scale the transform.  This parameter must
  *  not be zero, or the matrix becomes singular.
  */
-void m_transform_scale(TRANSFORM *transform, gdouble factor)
+void
+m_transform_scale(TRANSFORM *transform, gdouble factor)
 {
   g_return_if_fail(transform!=NULL);
   g_return_if_fail(factor!=0);
@@ -199,7 +212,8 @@ void m_transform_scale(TRANSFORM *transform, gdouble factor)
  *  \param dx [in] The amount to translate on the x axis.
  *  \param dy [in] The amount to translate on the y axis.
  */
-void m_transform_translate(TRANSFORM *transform, gdouble dx, gdouble dy)
+void
+m_transform_translate(TRANSFORM *transform, gdouble dx, gdouble dy)
 {
   g_return_if_fail(transform!=NULL);
 
