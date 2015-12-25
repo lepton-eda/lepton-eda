@@ -33,8 +33,14 @@ struct _GedaBounds
 int
 inside_region (int xmin, int ymin, int xmax, int ymax, int x, int y);
 
+gboolean
+geda_bounds_empty (GedaBounds *bounds);
+
 void
 geda_bounds_init (GedaBounds *bounds);
 
+gboolean
+geda_bounds_interior_point (GedaBounds *bounds, gint x, gint y);
+
 void
-geda_bounds_of_points (GedaBounds *bounds, sPOINT points[], gint count);
+geda_bounds_of_points (GedaBounds *bounds, GedaPoint points[], gint count);

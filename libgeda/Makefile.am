@@ -1,5 +1,5 @@
 
-SUBDIRS = po data docs include lib src scheme
+SUBDIRS = po data docs include lib src scheme tests
 
 EXTRA_DIST = HACKING BUGS ChangeLog ChangeLog-1.0 po/domain.mak.in
 

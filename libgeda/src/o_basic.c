@@ -55,25 +55,6 @@
 #include "libgeda_priv.h"
 
 
-/*! \brief Check if point is inside a region
- *  \par Function Description
- *  This function takes a rectangular region and a point.  It will check
- *  if the point is located in the region or not.
- *
- *  \param [in] xmin    Smaller x coordinate of the region.
- *  \param [in] ymin    Smaller y coordinate of the region.
- *  \param [in] xmax    Larger x coordinate of the region.
- *  \param [in] ymax    Larger y coordinate of the region.
- *  \param [in] x       x coordinate of the point to check.
- *  \param [in] y       y coordinate of the point to check.
- *  \return 1 if the point is inside the region, 0 otherwise.
- */
-int inside_region(int xmin, int ymin, int xmax, int ymax, int x, int y)
-{
-  return ((x >= xmin && x <= xmax && y >= ymin && y <= ymax) ? 1 : 0);
-}
-
-
 /*! \brief Set an #OBJECT's line options.
  *  \par Function Description
  *  This function allows a line's end, type, width, length and space to be set.
