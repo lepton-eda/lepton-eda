@@ -72,6 +72,9 @@ rotate_point_90(int x, int y, int angle, int *newx, int *newy)
   double costheta=1;
   double sintheta=0;
 
+  g_return_if_fail (geda_angle_is_normal (angle));
+  g_return_if_fail (geda_angle_is_ortho (angle));
+
   /* I could have used sine/cosine for this, but I want absolute
    * accuracy */
   switch(angle) {

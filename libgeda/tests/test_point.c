@@ -50,7 +50,7 @@ check_rotate_90 ()
   gint count;
 
   for (count = 0; count < 10000; count++) {
-    gint angle = 90 * g_test_rand_int_range (0, 3);
+    gint angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
     gint x0 = g_test_rand_int_range (-80000, 80001);
     gint y0 = g_test_rand_int_range (-80000, 80001);
     gint x1;
