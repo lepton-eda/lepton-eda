@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file geda_bounds.c
+/*! \file geda_transform.c
  */
 
 #include <config.h>
@@ -35,7 +35,7 @@
  *  \param b [in] The second operand.
  */
 void
-m_transform_combine(TRANSFORM *result, TRANSFORM *a, TRANSFORM *b )
+geda_transform_combine (GedaTransform *result, GedaTransform *a, GedaTransform *b)
 {
   g_return_if_fail(result!=NULL);
   g_return_if_fail(a!=NULL);
@@ -54,7 +54,7 @@ m_transform_combine(TRANSFORM *result, TRANSFORM *a, TRANSFORM *b )
  *  \param transform [out] The transform to initialize with the identity matrix.
  */
 void
-m_transform_init(TRANSFORM *transform)
+geda_transform_init (GedaTransform *transform)
 {
   g_return_if_fail(transform!=NULL);
 
@@ -72,7 +72,7 @@ m_transform_init(TRANSFORM *transform)
  *  \param inverse [out] The inverse of the given matrix.
  */
 void
-m_transform_invert(TRANSFORM *transform, TRANSFORM *inverse)
+geda_transform_invert (GedaTransform *transform, GedaTransform *inverse)
 {
   gdouble d;
 
@@ -95,13 +95,13 @@ m_transform_invert(TRANSFORM *transform, TRANSFORM *inverse)
  *  \param line [inout] The line to transform.
  */
 void
-m_transform_line(TRANSFORM *transform, LINE *line)
+geda_transform_line (GedaTransform *transform, LINE *line)
 {
   g_return_if_fail(transform!=NULL);
   g_return_if_fail(line!=NULL);
 
-  m_transform_point(transform, &(line->x[0]), &(line->y[0]));
-  m_transform_point(transform, &(line->x[1]), &(line->y[1]));
+  geda_transform_point(transform, &(line->x[0]), &(line->y[0]));
+  geda_transform_point(transform, &(line->x[1]), &(line->y[1]));
 }
 
 /*! \brief Transforms multiple line segments
@@ -110,7 +110,7 @@ m_transform_line(TRANSFORM *transform, LINE *line)
  *  \param lines [inout] The GArray of LINE to transform.
  */
 void
-m_transform_lines(TRANSFORM *transform, GArray *lines)
+geda_transform_lines (GedaTransform *transform, GArray *lines)
 {
   gint index;
 
@@ -119,7 +119,7 @@ m_transform_lines(TRANSFORM *transform, GArray *lines)
 
   for (index=0; index<lines->len; index++) {
     LINE *line = &g_array_index(lines, LINE, index);
-    m_transform_line(transform, line);
+    geda_transform_line(transform, line);
   }
 }
 
@@ -130,7 +130,7 @@ m_transform_lines(TRANSFORM *transform, GArray *lines)
  *  \param transform [in] The transform function.
  */
 void
-m_transform_point(TRANSFORM *transform, gint *x, gint *y)
+geda_transform_point (GedaTransform *transform, gint *x, gint *y)
 {
   gdouble tx;
   gdouble ty;
@@ -152,7 +152,7 @@ m_transform_point(TRANSFORM *transform, gint *x, gint *y)
  *  \param points [inout] The GArray of sPOINT to transform.
  */
 void
-m_transform_points(TRANSFORM *transform, GArray *points)
+geda_transform_points (GedaTransform *transform, GArray *points)
 {
   gint index;
 
@@ -161,7 +161,7 @@ m_transform_points(TRANSFORM *transform, GArray *points)
 
   for (index=0; index<points->len; index++) {
     sPOINT *point = &g_array_index(points, sPOINT, index);
-    m_transform_point(transform, &(point->x), &(point->y));
+    geda_transform_point(transform, &(point->x), &(point->y));
   }
 }
 
@@ -171,12 +171,12 @@ m_transform_points(TRANSFORM *transform, GArray *points)
  *  \param angle [in] The angle to rotate
  */
 void
-m_transform_rotate(TRANSFORM *transform, gdouble angle)
+geda_transform_rotate (GedaTransform *transform, gdouble angle)
 {
   gdouble r = G_PI*angle/180.0;
   gdouble c = cos(r);
   gdouble s = sin(r);
-  TRANSFORM temp;
+  GedaTransform temp;
 
   g_return_if_fail(transform!=NULL);
 
@@ -195,7 +195,7 @@ m_transform_rotate(TRANSFORM *transform, gdouble angle)
  *  not be zero, or the matrix becomes singular.
  */
 void
-m_transform_scale(TRANSFORM *transform, gdouble factor)
+geda_transform_scale (GedaTransform *transform, gdouble factor)
 {
   g_return_if_fail(transform!=NULL);
   g_return_if_fail(factor!=0);
@@ -213,7 +213,7 @@ m_transform_scale(TRANSFORM *transform, gdouble factor)
  *  \param dy [in] The amount to translate on the y axis.
  */
 void
-m_transform_translate(TRANSFORM *transform, gdouble dx, gdouble dy)
+geda_transform_translate (GedaTransform *transform, gdouble dx, gdouble dy)
 {
   g_return_if_fail(transform!=NULL);
 

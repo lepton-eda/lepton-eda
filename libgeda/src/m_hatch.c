@@ -159,17 +159,17 @@ void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines)
  */
 void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines)
 {
-  gint      radius;
-  gint      sweep_y;
-  TRANSFORM transform;
+  gint          radius;
+  gint          sweep_y;
+  GedaTransform transform;
 
   g_return_if_fail(circle!=NULL);
   g_return_if_fail(lines!=NULL);
 
-  m_transform_init(&transform);
-  m_transform_rotate(&transform, angle);
-  m_transform_scale(&transform, 0.01);
-  m_transform_translate(&transform, circle->center_x, circle->center_y );
+  geda_transform_init(&transform);
+  geda_transform_rotate(&transform, angle);
+  geda_transform_scale(&transform, 0.01);
+  geda_transform_translate(&transform, circle->center_x, circle->center_y );
 
   radius = 100 * circle->radius;
   sweep_y = calculate_initial_sweep(100 * pitch, -radius, radius);
@@ -183,7 +183,7 @@ void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines)
     line.x[1] = x;
     line.y[1] = sweep_y;
 
-    m_transform_line(&transform, &line);
+    geda_transform_line(&transform, &line);
     g_array_append_val(lines, line);
 
     sweep_y += 100 * pitch;
@@ -236,13 +236,13 @@ void m_hatch_path (PATH *path, gint angle, gint pitch, GArray *lines)
  */
 void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
 {
-  BOUNDS bounds;
+  GedaBounds bounds;
   GArray *events;
-  TRANSFORM inverse;
+  GedaTransform inverse;
   GArray *points2;
   GArray *status;
   gint sweep_y;
-  TRANSFORM transform;
+  GedaTransform transform;
 
   g_return_if_fail(points!=NULL);
   g_return_if_fail(pitch>0);
@@ -252,13 +252,13 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
   points2 = g_array_sized_new(FALSE, FALSE, sizeof(sPOINT), points->len);
   status = g_array_new(FALSE, FALSE, sizeof(SWEEP_STATUS));
 
-  m_transform_init(&transform);
-  m_transform_scale(&transform, 10);
-  m_transform_rotate(&transform, -angle);
-  m_transform_invert(&transform, &inverse);
+  geda_transform_init(&transform);
+  geda_transform_scale(&transform, 10);
+  geda_transform_rotate(&transform, -angle);
+  geda_transform_invert(&transform, &inverse);
 
   g_array_append_vals(points2, points->data, points->len);
-  m_transform_points(&transform, points2);
+  geda_transform_points(&transform, points2);
 
   /* build list of sweep events */
   if ( points2->len > 1 ) {
@@ -281,7 +281,7 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
   /* sort sweep events in ascending order by starting y coordinate */
   g_array_sort(events, compare_events);
 
-  m_bounds_of_points(&bounds, (sPOINT*)points2->data, points2->len);
+  geda_bounds_of_points(&bounds, (sPOINT*)points2->data, points2->len);
   sweep_y = calculate_initial_sweep(10 * pitch, bounds.min_y, bounds.max_y);
 
   while ( events->len > 0 || status->len > 0 ) {
@@ -325,7 +325,7 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
       line.y[0] = sweep_y;
       line.x[1] = g_array_index(status, SWEEP_STATUS, index+1 ).x;
       line.y[1] = sweep_y;
-      m_transform_line(&inverse, &line);
+      geda_transform_line(&inverse, &line);
       g_array_append_val(lines, line);
       index += 2;
     }

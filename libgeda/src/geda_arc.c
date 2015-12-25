@@ -39,7 +39,7 @@
  *  invalid parameter, this function returns FALSE.
  */
 gboolean
-o_arc_within_sweep(ARC *arc, gint x, gint y)
+geda_arc_within_sweep (GedaArc *arc, gint x, gint y)
 {
   gdouble a0;
   gdouble a1;
@@ -48,7 +48,7 @@ o_arc_within_sweep(ARC *arc, gint x, gint y)
   gdouble dy;
 
   if (arc == NULL) {
-    g_critical("o_arc_within_sweep(): arc == NULL\n");
+    g_critical("geda_arc_within_sweep(): arc == NULL\n");
     return FALSE;
   }
 

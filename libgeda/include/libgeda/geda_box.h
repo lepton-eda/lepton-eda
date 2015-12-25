@@ -22,10 +22,10 @@
  *  \brief Low-level mathematical functions for boxes
  */
 
-typedef struct st_box GedaBox;
-typedef struct st_box BOX;
+typedef struct _GedaBox GedaBox;
+typedef struct _GedaBox BOX;
 
-struct st_box
+struct _GedaBox
 {
   /* upper is considered the origin */
   int upper_x, upper_y; /* world */
@@ -33,4 +33,4 @@ struct st_box
 };
 
 double
-m_box_shortest_distance (BOX *box, int x, int y, int solid);
+geda_box_shortest_distance (GedaBox *box, int x, int y, int solid);

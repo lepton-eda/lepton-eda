@@ -290,7 +290,7 @@ static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
   /* always promote symversion= attribute, even if it is invisible */
   if (strncmp(object->text->string, "symversion=", 11) == 0)
     return TRUE;
-  
+
   /* check list against attributes which can be promoted */
   if (toplevel->always_promote_attributes != NULL) {
     if (o_attrib_get_name_value (object, &name, NULL)) {
@@ -494,17 +494,17 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
     new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
-                           x, y + 50, x, y - 50); 
+                           x, y + 50, x, y - 50);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
 
     /* Add some useful text */
-    not_found_text = 
+    not_found_text =
       g_strdup_printf (_("Component not found:\n %s"),
            new_node->complex_basename);
     new_prim_obj = o_text_new(toplevel,
-                           OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
-                           x + NOT_FOUND_TEXT_X, 
-                           y + NOT_FOUND_TEXT_Y, LOWER_LEFT, 0, 
+                           OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR,
+                           x + NOT_FOUND_TEXT_X,
+                           y + NOT_FOUND_TEXT_Y, LOWER_LEFT, 0,
                            not_found_text, 8,
                            VISIBLE, SHOW_NAME_VALUE);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
@@ -518,35 +518,35 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
     /* add hazard triangle */
     new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
-                           x + NOT_FOUND_TEXT_X + x_offset, 
-                           y + NOT_FOUND_TEXT_Y + y_offset, 
-                           x + NOT_FOUND_TEXT_X + x_offset + 600, 
-                           y + NOT_FOUND_TEXT_Y + y_offset); 
+                           x + NOT_FOUND_TEXT_X + x_offset,
+                           y + NOT_FOUND_TEXT_Y + y_offset,
+                           x + NOT_FOUND_TEXT_X + x_offset + 600,
+                           y + NOT_FOUND_TEXT_Y + y_offset);
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
     new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
-                           x + NOT_FOUND_TEXT_X + x_offset, 
-                           y + NOT_FOUND_TEXT_Y + y_offset, 
-                           x + NOT_FOUND_TEXT_X + x_offset + 300, 
-                           y + NOT_FOUND_TEXT_Y + y_offset + 500); 
+                           x + NOT_FOUND_TEXT_X + x_offset,
+                           y + NOT_FOUND_TEXT_Y + y_offset,
+                           x + NOT_FOUND_TEXT_X + x_offset + 300,
+                           y + NOT_FOUND_TEXT_Y + y_offset + 500);
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
     new_prim_obj = o_line_new(toplevel, OBJ_LINE,
                            DETACHED_ATTRIBUTE_COLOR,
-                           x + NOT_FOUND_TEXT_X + x_offset + 300, 
-                           y + NOT_FOUND_TEXT_Y + y_offset + 500, 
-                           x + NOT_FOUND_TEXT_X + x_offset + 600, 
-                           y + NOT_FOUND_TEXT_Y + y_offset); 
+                           x + NOT_FOUND_TEXT_X + x_offset + 300,
+                           y + NOT_FOUND_TEXT_Y + y_offset + 500,
+                           x + NOT_FOUND_TEXT_X + x_offset + 600,
+                           y + NOT_FOUND_TEXT_Y + y_offset);
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
     new_prim_obj = o_text_new(toplevel,
-                           OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
-                           x + NOT_FOUND_TEXT_X + x_offset + 270, 
-                           y + NOT_FOUND_TEXT_Y + y_offset + 90, 
+                           OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR,
+                           x + NOT_FOUND_TEXT_X + x_offset + 270,
+                           y + NOT_FOUND_TEXT_Y + y_offset + 90,
                            LOWER_LEFT, 0, "!", 18,
                            VISIBLE, SHOW_NAME_VALUE);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
@@ -610,7 +610,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
       if (mirror) {
         o_glist_mirror_world (toplevel, 0, 0, new_node->complex->prim_objs);
       }
-      
+
       o_glist_rotate_world (toplevel, 0, 0, angle, new_node->complex->prim_objs);
       o_glist_translate_world (toplevel, x, y, new_node->complex->prim_objs);
     }
@@ -659,7 +659,7 @@ OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel,
 
   new_node->complex->angle = angle;
   new_node->complex->mirror = mirror;
-	
+
   new_node->complex_basename = g_strdup(basename);
 
   new_node->complex_embedded = TRUE;
@@ -679,7 +679,7 @@ OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel,
  *  This function reads a complex object from the buffer \a buf.
  *  If the complex object was read successfully, a new object is
  *  allocated and appended to the \a object_list.
- *  
+ *
  *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] buf          a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
@@ -691,7 +691,7 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
                         unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;
-  char type; 
+  char type;
   int x1, y1;
   int angle;
 
@@ -726,25 +726,25 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
     case(1):
 
       break;
-		
+
     default:
       s_log_message(_("Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"), type, x1, y1, selectable, angle, mirror, basename);
       s_log_message (_("Setting mirror to 0\n"));
       mirror = 0;
   }
   if (strncmp(basename, "EMBEDDED", 8) == 0) {
-    
+
     new_obj = o_complex_new_embedded(toplevel, type,
                                      DEFAULT_COLOR, x1, y1, angle, mirror,
                                      basename + 8,
                                      selectable);
   } else {
-    
+
     const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
 
     new_obj = o_complex_new(toplevel, type,
                                 DEFAULT_COLOR,
-                                x1, y1, 
+                                x1, y1,
                                 angle, mirror, clib,
                                 basename, selectable);
     /* Delete or hide attributes eligible for promotion inside the complex */
@@ -1001,12 +1001,12 @@ OBJECT *o_complex_find_pin_by_attribute (OBJECT *object, char *name, char *wante
 
 /*! \brief check the symversion of a complex object
  *  \par Function Description
- *  This function compares the symversion of a symbol with it's 
+ *  This function compares the symversion of a symbol with it's
  *  earlier saved symversion in a schematic.
- *  Major symversion changes are added to the toplevel object 
+ *  Major symversion changes are added to the toplevel object
  *  (toplevel->major_changed_refdes), minor changes are reported
  *  to the messaging system.
- *  
+ *
  *  \param toplevel  The TOPLEVEL object
  *  \param object    The complex OBJECT
  */
@@ -1023,9 +1023,9 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   int outside_present = FALSE;
   double inside_major, inside_minor;
   double outside_major, outside_minor;
-  
+
   g_return_if_fail (object != NULL);
-  g_return_if_fail ((object->type == OBJ_COMPLEX || 
+  g_return_if_fail ((object->type == OBJ_COMPLEX ||
 		     object->type == OBJ_PLACEHOLDER));
   g_return_if_fail (object->complex != NULL);
 
@@ -1041,14 +1041,14 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   {
     refdes = g_strdup ("unknown");
   }
-  
+
   if (inside)
   {
     inside_value = strtod(inside, &err_check);
     if (inside_value == 0 && inside == err_check)
     {
       if (inside)
-      { 
+      {
         s_log_message(_("WARNING: Symbol version parse error on refdes %s:\n"
                         "\tCould not parse symbol file symversion=%s\n"),
                       refdes, inside);
@@ -1074,7 +1074,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
                     refdes, outside);
       goto done;
     }
-    outside_present = TRUE; 
+    outside_present = TRUE;
   } else {
     outside_present = FALSE;  /* attribute not outside */
   }
@@ -1083,7 +1083,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   printf("%s:\n\tinside: %.1f outside: %.1f\n\n", object->name,
          inside_value, outside_value);
 #endif
-  
+
   /* symversion= is not present anywhere */
   if (!inside_present && !outside_present)
   {
@@ -1107,7 +1107,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   if ((inside_present && !outside_present) ||
       ((inside_present && outside_present) && (inside_value > outside_value)))
   {
-    
+
     s_log_message(_("WARNING: Symbol version mismatch on refdes %s (%s):\n"
                     "\tSymbol in library is newer than "
                     "instantiated symbol\n"),
@@ -1132,7 +1132,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
     printf("i: %f %f %f\n", inside_value, inside_major, inside_minor);
     printf("o: %f %f %f\n", outside_value, outside_major, outside_minor);
 #endif
-    
+
     if (inside_major > outside_major)
     {
       char* refdes_copy;
@@ -1149,7 +1149,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
         g_list_append(toplevel->major_changed_refdes, refdes_copy);
 
       /* don't bother checking minor changes if there are major ones*/
-      goto done; 
+      goto done;
     }
 
     if (inside_minor > outside_minor)
@@ -1239,7 +1239,7 @@ double o_complex_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
   }
 
   if (found_line_bounds) {
-    distance = m_box_shortest_distance (&line_bounds, x, y, TRUE);
+    distance = geda_box_shortest_distance (&line_bounds, x, y, TRUE);
     shortest_distance = min (shortest_distance, distance);
   }
 

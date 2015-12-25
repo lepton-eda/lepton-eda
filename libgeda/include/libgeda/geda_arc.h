@@ -22,10 +22,10 @@
  *  \brief Low-level mathematical functions for arcs
  */
 
-typedef struct st_arc GedaArc;
-typedef struct st_arc ARC;
+typedef struct _GedaArc GedaArc;
+typedef struct _GedaArc ARC;
 
-struct st_arc
+struct _GedaArc
 {
   int x, y; /* world */
 
@@ -37,4 +37,4 @@ struct st_arc
 };
 
 gboolean
-o_arc_within_sweep (ARC *arc, gint x, gint y);
+geda_arc_within_sweep (GedaArc *arc, gint x, gint y);

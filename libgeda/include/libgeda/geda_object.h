@@ -36,7 +36,7 @@ struct st_object
 
   COMPLEX *complex;
   LINE *line;
-  CIRCLE *circle;
+  GedaCircle *circle;
   ARC *arc;
   BOX *box;
   TEXT *text;

@@ -42,7 +42,7 @@
  *  an invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-m_circle_shortest_distance (CIRCLE *circle, int x, int y, int solid)
+geda_circle_shortest_distance (GedaCircle *circle, int x, int y, int solid)
 {
   double shortest_distance;
   double distance_to_center;

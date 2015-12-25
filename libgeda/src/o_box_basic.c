@@ -64,7 +64,7 @@ OBJECT *o_box_new(TOPLEVEL *toplevel,
   new_node = s_basic_new_object(type, "box");
   new_node->color = color;
 
-  box = (BOX *) g_malloc(sizeof(BOX));
+  box = (GedaBox*) g_malloc(sizeof(GedaBox));
   new_node->box   = box;
 
   /* describe the box with its upper left and lower right corner */
@@ -125,7 +125,7 @@ OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   /* new_obj->attribute = 0;*/
 
   return new_obj;
-} 
+}
 
 /*! \brief Modify a BOX OBJECT's coordinates.
  * \par Function Description
@@ -194,43 +194,43 @@ void o_box_modify(TOPLEVEL *toplevel, OBJECT *object,
 			object->box->upper_x = x;
 			object->box->upper_y = y;
 			break;
-			
+
 		case BOX_LOWER_LEFT:
 			object->box->upper_x = x;
 			object->box->lower_y = y;
 			break;
-			
+
 		case BOX_UPPER_RIGHT:
 			object->box->lower_x = x;
 			object->box->upper_y = y;
 			break;
-			
+
 		case BOX_LOWER_RIGHT:
 			object->box->lower_x = x;
 			object->box->lower_y = y;
 			break;
-			
+
 		default:
 			return;
 	}
-	
+
 	/* need to update the upper left and lower right corners */
 	if(object->box->upper_x > object->box->lower_x) {
 		tmp                  = object->box->upper_x;
 		object->box->upper_x = object->box->lower_x;
 		object->box->lower_x = tmp;
 	}
-	
+
 	if(object->box->upper_y < object->box->lower_y) {
 		tmp                  = object->box->upper_y;
 		object->box->upper_y = object->box->lower_y;
 		object->box->lower_y = tmp;
 	}
-	
+
 	/* recalculate the world coords and the boundings */
 	object->w_bounds_valid_for = NULL;
 	o_emit_change_notify (toplevel, object);
-  
+
 }
 
 /*! \brief Create a box from a character string.
@@ -370,7 +370,7 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, const char buf[],
  */
 char *o_box_save(TOPLEVEL *toplevel, OBJECT *object)
 {
-  int x1, y1; 
+  int x1, y1;
   int width, height;
   int box_width, box_space, box_length;
   int fill_width, angle1, pitch1, angle2, pitch2;
@@ -386,7 +386,7 @@ char *o_box_save(TOPLEVEL *toplevel, OBJECT *object)
    */
 
   /* calculate the width and height of the box */
-  width  = abs(object->box->lower_x - object->box->upper_x); 
+  width  = abs(object->box->lower_x - object->box->upper_x);
   height = abs(object->box->upper_y - object->box->lower_y);
 
   /* calculate the lower left corner of the box */
@@ -403,7 +403,7 @@ char *o_box_save(TOPLEVEL *toplevel, OBJECT *object)
   box_type   = object->line_type;
   box_length = object->line_length;
   box_space  = object->line_space;
-  
+
   /* description of the filling of the box */
   box_fill   = object->fill_type;
   fill_width = object->fill_width;
@@ -412,13 +412,13 @@ char *o_box_save(TOPLEVEL *toplevel, OBJECT *object)
   angle2     = object->fill_angle2;
   pitch2     = object->fill_pitch2;
 
-  buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
+  buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
 			object->type,
 			x1, y1, width, height, object->color,
-			box_width, box_end, box_type, box_length, box_space, 
+			box_width, box_end, box_type, box_length, box_space,
 			box_fill,
 			fill_width, angle1, pitch1, angle2, pitch2);
-			
+
   return(buf);
 }
 
@@ -444,7 +444,7 @@ void o_box_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
   object->w_bounds_valid_for = NULL;
 }
 
-/*! \brief Rotate BOX OBJECT using WORLD coordinates. 
+/*! \brief Rotate BOX OBJECT using WORLD coordinates.
  *  \par Function Description
  *  The function #o_box_rotate_world() rotate the box described by
  *  <B>*object</B> around the (<B>world_centerx</B>, <B>world_centery</B>) point by
@@ -485,27 +485,27 @@ void o_box_rotate_world(TOPLEVEL *toplevel,
   object->box->upper_y -= world_centery;
   object->box->lower_x -= world_centerx;
   object->box->lower_y -= world_centery;
-  
+
   /* rotate the upper left corner of the box */
   rotate_point_90(object->box->upper_x, object->box->upper_y, angle,
 		  &newx1, &newy1);
-  
+
   /* rotate the lower left corner of the box */
   rotate_point_90(object->box->lower_x, object->box->lower_y, angle,
 		  &newx2, &newy2);
-  
+
   /* reorder the corners after rotation */
   object->box->upper_x = min(newx1,newx2);
   object->box->upper_y = max(newy1,newy2);
   object->box->lower_x = max(newx1,newx2);
   object->box->lower_y = min(newy1,newy2);
-  
+
   /* translate object back to normal position */
   object->box->upper_x += world_centerx;
   object->box->upper_y += world_centery;
   object->box->lower_x += world_centerx;
   object->box->lower_y += world_centery;
-  
+
   /* recalc boundings and world coords */
   object->w_bounds_valid_for = NULL;
 }
@@ -556,7 +556,7 @@ void o_box_mirror_world(TOPLEVEL *toplevel,
 
   /* recalc boundings and world coords */
   object->w_bounds_valid_for = NULL;
-  
+
 }
 
 /*! \brief Get BOX bounding rectangle in WORLD coordinates.
@@ -629,6 +629,6 @@ double o_box_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
 
   solid = force_solid || object->fill_type != FILLING_HOLLOW;
 
-  return m_box_shortest_distance (object->box, x, y, solid);
+  return geda_box_shortest_distance (object->box, x, y, solid);
 }
 

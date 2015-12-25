@@ -20,10 +20,9 @@
 /*! \file geda_bounds.h
  */
 
-typedef struct st_bounds GedaBounds;
-typedef struct st_bounds BOUNDS;
+typedef struct _GedaBounds GedaBounds;
 
-struct st_bounds
+struct _GedaBounds
 {
   gint min_x;
   gint min_y;
@@ -35,7 +34,7 @@ int
 inside_region (int xmin, int ymin, int xmax, int ymax, int x, int y);
 
 void
-m_bounds_init (BOUNDS *bounds);
+geda_bounds_init (GedaBounds *bounds);
 
 void
-m_bounds_of_points (BOUNDS *bounds, sPOINT points[], gint count);
+geda_bounds_of_points (GedaBounds *bounds, sPOINT points[], gint count);

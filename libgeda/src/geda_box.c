@@ -42,7 +42,7 @@
  *  an invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-m_box_shortest_distance (BOX *box, int x, int y, int solid)
+geda_box_shortest_distance (GedaBox *box, int x, int y, int solid)
 {
   double shortest_distance;
   double x1, y1, x2, y2;

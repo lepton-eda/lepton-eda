@@ -20,10 +20,9 @@
 /*! \file geda_bezier.h
  */
 
-typedef struct st_bezier GedaBezier;
-typedef struct st_bezier BEZIER;
+typedef struct _GedaBezier GedaBezier;
 
-struct st_bezier
+struct _GedaBezier
 {
   int x[4];
   int y[4];

@@ -20,14 +20,14 @@
 /*! \file geda_circle.h
  */
 
-typedef struct st_circle GedaCircle;
-typedef struct st_circle CIRCLE;
+typedef struct _GedaCircle GedaCircle;
+typedef struct _GedaCircle CIRCLE;
 
-struct st_circle
+struct _GedaCircle
 {
   int center_x, center_y; /* world */
   int radius;
 };
 
 double
-m_circle_shortest_distance (CIRCLE *circle, int x, int y, int solid);
+geda_circle_shortest_distance (GedaCircle *circle, int x, int y, int solid);

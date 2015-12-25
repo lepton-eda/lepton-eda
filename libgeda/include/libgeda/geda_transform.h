@@ -20,45 +20,44 @@
 /*! \file geda_transform.h
  */
 
-typedef struct st_transform GedaTransform;
-typedef struct st_transform TRANSFORM;
+typedef struct _GedaTransform GedaTransform;
 
 /** A structure to store a 2D affine transform.
  *
  *  The transforms get stored in a 3x3 matrix. Code assumes the bottom row to
  *  remain constant at [0 0 1].
  */
-struct st_transform
+struct _GedaTransform
 {
   gdouble m[2][3];    /* m[row][column] */
 };
 
 void
-m_transform_combine (TRANSFORM *result, TRANSFORM *a, TRANSFORM *b );
+geda_transform_combine (GedaTransform *result, GedaTransform *a, GedaTransform *b);
 
 void
-m_transform_init (TRANSFORM *transform);
+geda_transform_init (GedaTransform *transform);
 
 void
-m_transform_invert (TRANSFORM *transform, TRANSFORM *inverse);
+geda_transform_invert (GedaTransform *transform, GedaTransform *inverse);
 
 void
-m_transform_line (TRANSFORM *transform, LINE *line );
+geda_transform_line (GedaTransform *transform, LINE *line);
 
 void
-m_transform_lines (TRANSFORM *transform, GArray *lines);
+geda_transform_lines (GedaTransform *transform, GArray *lines);
 
 void
-m_transform_point (TRANSFORM *transform, gint *x, gint *y);
+geda_transform_point (GedaTransform *transform, gint *x, gint *y);
 
 void
-m_transform_points (TRANSFORM *transform, GArray *points);
+geda_transform_points (GedaTransform *transform, GArray *points);
 
 void
-m_transform_rotate (TRANSFORM *transform, gdouble angle);
+geda_transform_rotate (GedaTransform *transform, gdouble angle);
 
 void
-m_transform_scale (TRANSFORM *transform, gdouble factor);
+geda_transform_scale (GedaTransform *transform, gdouble factor);
 
 void
-m_transform_translate (TRANSFORM *transform, gdouble dx, gdouble dy);
+geda_transform_translate (GedaTransform *transform, gdouble dx, gdouble dy);

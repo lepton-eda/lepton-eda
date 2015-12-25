@@ -74,19 +74,19 @@ OBJECT *o_circle_new(TOPLEVEL *toplevel,
 		     char type, int color,
 		     int x, int y, int radius)
 {
-  OBJECT *new_node;	
+  OBJECT *new_node;
 
   /* create the object */
   new_node = s_basic_new_object(type, "circle");
   new_node->color  = color;
-  
-  new_node->circle = (CIRCLE *) g_malloc(sizeof(CIRCLE));
-  
+
+  new_node->circle = (GedaCircle*) g_malloc(sizeof(GedaCircle));
+
   /* describe the circle with its center and radius */
   new_node->circle->center_x = x;
   new_node->circle->center_y = y;
   new_node->circle->radius   = radius;
-  
+
   /* line type and filling initialized to default */
   o_set_line_options(toplevel, new_node,
 		     DEFAULT_OBJECT_END, TYPE_SOLID, 0, -1, -1);
@@ -125,7 +125,7 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   new_obj->circle->center_x = o_current->circle->center_x;
   new_obj->circle->center_y = o_current->circle->center_y;
   new_obj->circle->radius   = o_current->circle->radius;
-  
+
   o_set_line_options(toplevel, new_obj, o_current->line_end,
 		     o_current->line_type, o_current->line_width,
 		     o_current->line_length, o_current->line_space);
@@ -133,7 +133,7 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 		     o_current->fill_type, o_current->fill_width,
 		     o_current->fill_pitch1, o_current->fill_angle1,
 		     o_current->fill_pitch2, o_current->fill_angle2);
-  
+
   new_obj->w_bounds_valid_for = NULL;
 
   /*	new_obj->attribute = 0;*/
@@ -153,7 +153,7 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  If <B>whichone</B> is equal to <B>CIRCLE_RADIUS</B>, the radius is given by
  *  <B>x</B> - in world units. <B>y</B> is ignored.
  *
- *  The bounding box of the circle object is updated after the modification of its 
+ *  The bounding box of the circle object is updated after the modification of its
  *  parameters.
  *
  *  \param [in]     toplevel  The TOPLEVEL object.
@@ -219,7 +219,7 @@ OBJECT *o_circle_read (TOPLEVEL *toplevel, const char buf[],
               unsigned int release_ver, unsigned int fileformat_ver, GError ** err)
 {
   OBJECT *new_obj;
-  char type; 
+  char type;
   int x1, y1;
   int radius;
   int color;
@@ -245,21 +245,21 @@ OBJECT *o_circle_read (TOPLEVEL *toplevel, const char buf[],
     circle_type  = TYPE_SOLID;
     circle_length= -1;
     circle_space = -1;
-    
+
     circle_fill  = FILLING_HOLLOW;
     fill_width  = 0;
     angle1      = -1;
     pitch1      = -1;
     angle2      = -1;
     pitch2      = -1;
-			
+
   } else {
-	
+
     /*
      * The current line format to describe a circle is a space separated
      * list of characters and numbers in plain ASCII on a single line. The
      * meaning of each item is described in the file format documentation.
-     */  
+     */
     if (sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
 	       &type, &x1, &y1, &radius, &color,
 	       &circle_width, &circle_end, &circle_type,
@@ -277,14 +277,14 @@ OBJECT *o_circle_read (TOPLEVEL *toplevel, const char buf[],
     s_log_message (_("Setting radius to 0\n"));
     radius = 0;
   }
-  
+
   if (color < 0 || color > MAX_COLORS) {
     s_log_message(_("Found an invalid color [ %s ]\n"), buf);
     s_log_message(_("Setting color to default color\n"));
     color = DEFAULT_COLOR;
   }
 
-  /* 
+  /*
    * A circle is internally described by its center and its radius.
    *
    * A new object is allocated, initialized and added to the object list.
@@ -293,7 +293,7 @@ OBJECT *o_circle_read (TOPLEVEL *toplevel, const char buf[],
    */
   new_obj = o_circle_new(toplevel, type, color, x1, y1, radius);
   o_set_line_options(toplevel, new_obj,
-		     circle_end, circle_type, circle_width, 
+		     circle_end, circle_type, circle_width,
 		     circle_length, circle_space);
   o_set_fill_options(toplevel, new_obj,
 		     circle_fill, fill_width, pitch1, angle1, pitch2, angle2);
@@ -331,14 +331,14 @@ char *o_circle_save(TOPLEVEL *toplevel, OBJECT *object)
   x = object->circle->center_x;
   y = object->circle->center_y;
   radius = object->circle->radius;
-  
+
   /* line type parameters */
   circle_width = object->line_width;
   circle_end   = object->line_end;
   circle_type  = object->line_type;
   circle_length= object->line_length;
   circle_space = object->line_space;
-  
+
   /* filling parameters */
   circle_fill  = object->fill_type;
   fill_width   = object->fill_width;
@@ -346,19 +346,19 @@ char *o_circle_save(TOPLEVEL *toplevel, OBJECT *object)
   pitch1       = object->fill_pitch1;
   angle2       = object->fill_angle2;
   pitch2       = object->fill_pitch2;
-  
-  buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
+
+  buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
 			object->type, x, y, radius, object->color,
-			circle_width, circle_end, circle_type, circle_length, 
+			circle_width, circle_end, circle_type, circle_length,
 			circle_space, circle_fill,
 			fill_width, angle1, pitch1, angle2, pitch2);
   return(buf);
 }
-           
+
 /*! \brief Translate a circle position in WORLD coordinates by a delta.
  *  \par Function Description
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the circle
- *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit. 
+ *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
  *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in]     dx         x distance to move.
@@ -371,13 +371,13 @@ void o_circle_translate_world(TOPLEVEL *toplevel,
   /* Do world coords */
   object->circle->center_x = object->circle->center_x + dx;
   object->circle->center_y = object->circle->center_y + dy;
-  
+
   /* recalc the screen coords and the bounding box */
   object->w_bounds_valid_for = NULL;
-  
+
 }
 
-/*! \brief Rotate Circle OBJECT using WORLD coordinates. 
+/*! \brief Rotate Circle OBJECT using WORLD coordinates.
  *  \par Function Description
  *  The function #o_circle_rotate_world() rotate the circle described by
  *  <B>*object</B> around the (<B>world_centerx</B>,<B>world_centery</B>) point by
@@ -402,7 +402,7 @@ void o_circle_rotate_world(TOPLEVEL *toplevel,
   if(angle < 0) angle = -angle;
   /* angle must be a 90 multiple or no rotation performed */
   if((angle % 90) != 0) return;
-  
+
   /*
    * The center of rotation (<B>world_centerx</B>,<B>world_centery</B>) is
    * translated to the origin. The rotation of the center around the origin
@@ -413,20 +413,20 @@ void o_circle_rotate_world(TOPLEVEL *toplevel,
   /* translate object to origin */
   object->circle->center_x -= world_centerx;
   object->circle->center_y -= world_centery;
-  
+
   /* rotate the center of the circle around the origin */
   x = object->circle->center_x;
   y = object->circle->center_y;
   rotate_point_90(x, y, angle, &newx, &newy);
   object->circle->center_x = newx;
   object->circle->center_y = newy;
-  
+
   /* translate back in position */
   object->circle->center_x += world_centerx;
   object->circle->center_y += world_centery;
 
   object->w_bounds_valid_for = NULL;
-  
+
 }
 
 /*! \brief Mirror circle using WORLD coordinates.
@@ -460,7 +460,7 @@ void o_circle_mirror_world(TOPLEVEL *toplevel,
 
   /* recalc boundings and screen coords */
   object->w_bounds_valid_for = NULL;
-  
+
 }
 
 /*! \brief Get circle bounding rectangle in WORLD coordinates.
@@ -534,6 +534,6 @@ double o_circle_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
 
   solid = force_solid || object->fill_type != FILLING_HOLLOW;
 
-  return m_circle_shortest_distance (object->circle, x, y, solid);
+  return geda_circle_shortest_distance (object->circle, x, y, solid);
 }
 

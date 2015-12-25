@@ -30,7 +30,7 @@
  *  be NULL.
  */
 void
-m_bounds_init(BOUNDS *bounds)
+geda_bounds_init (GedaBounds *bounds)
 {
   bounds->min_x = G_MAXINT;
   bounds->min_y = G_MAXINT;
@@ -50,11 +50,11 @@ m_bounds_init(BOUNDS *bounds)
  *  \param count [in] The number of points in the set.
  */
 void
-m_bounds_of_points(BOUNDS *bounds, sPOINT points[], gint count)
+geda_bounds_of_points(GedaBounds *bounds, sPOINT points[], gint count)
 {
   gint index;
 
-  m_bounds_init(bounds);
+  geda_bounds_init(bounds);
 
   for (index=0; index<count; index++) {
     gint x = points[index].x;

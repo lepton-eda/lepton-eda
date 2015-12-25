@@ -68,7 +68,7 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
 
   new_node->color = color;
 
-  new_node->arc = (ARC *) g_malloc(sizeof(ARC));
+  new_node->arc = (GedaArc*) g_malloc(sizeof(GedaArc));
 
   /*! \note
    *  The ARC structure is initialized with the parameters.
@@ -576,7 +576,7 @@ double o_arc_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
 
   radius = ((double)object->arc->width) / 2.0;
 
-  if (o_arc_within_sweep (object->arc, x, y)) {
+  if (geda_arc_within_sweep (object->arc, x, y)) {
     double distance_to_center;
 
     distance_to_center = hypot (x - object->arc->x, y - object->arc->y);

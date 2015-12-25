@@ -46,11 +46,11 @@
 #define NUM_BEZIER_SEGMENTS 100
 
 
-PATH *s_path_new (void)
+GedaPath *s_path_new (void)
 {
-  PATH *path;
+  GedaPath *path;
 
-  path = g_new (PATH, 1);
+  path = g_new (GedaPath, 1);
   path->num_sections = 0;
   path->num_sections_max = 16;
   path->sections = g_new (PATH_SECTION, path->num_sections_max);
@@ -59,9 +59,9 @@ PATH *s_path_new (void)
 }
 
 
-PATH *s_path_new_from (PATH_SECTION *sections)
+GedaPath *s_path_new_from (PATH_SECTION *sections)
 {
-  PATH *path;
+  GedaPath *path;
   int i;
 
   g_return_val_if_fail (sections != NULL, NULL);
@@ -70,7 +70,7 @@ PATH *s_path_new_from (PATH_SECTION *sections)
   if (i <= 0)
     return s_path_new ();
 
-  path = g_new (PATH, 1);
+  path = g_new (GedaPath, 1);
 
   path->num_sections = i;
   path->num_sections_max = i;
@@ -81,7 +81,7 @@ PATH *s_path_new_from (PATH_SECTION *sections)
 }
 
 
-void s_path_free (PATH * path)
+void s_path_free (GedaPath * path)
 {
   g_return_if_fail (path != NULL);
 
@@ -90,7 +90,7 @@ void s_path_free (PATH * path)
 }
 
 
-void s_path_moveto (PATH *path, double x, double y)
+void s_path_moveto (GedaPath *path, double x, double y)
 {
   PATH_SECTION *sections;
   int num_sections;
@@ -120,7 +120,7 @@ void s_path_moveto (PATH *path, double x, double y)
 }
 
 
-void s_path_lineto (PATH *path, double x, double y)
+void s_path_lineto (GedaPath *path, double x, double y)
 {
   PATH_SECTION *sections;
   int num_sections;
@@ -138,7 +138,7 @@ void s_path_lineto (PATH *path, double x, double y)
 }
 
 
-void s_path_curveto (PATH *path, double x1, double y1,
+void s_path_curveto (GedaPath *path, double x1, double y1,
                      double x2, double y2, double x3, double y3)
 {
   PATH_SECTION *sections;
@@ -161,7 +161,7 @@ void s_path_curveto (PATH *path, double x1, double y1,
 }
 
 
-void s_path_art_finish (PATH * path)
+void s_path_art_finish (GedaPath * path)
 {
   int num_sections;
 
@@ -175,7 +175,7 @@ void s_path_art_finish (PATH * path)
 }
 
 
-/* This module parses an SVG style path element into a PATH.
+/* This module parses an SVG style path element into a GedaPath.
 
   At present, there is no support for <marker> or any other contextual
   information from the SVG file. The API will need to change rather
@@ -187,7 +187,7 @@ void s_path_art_finish (PATH * path)
 typedef struct _RSVGParsePathCtx RSVGParsePathCtx;
 
 struct _RSVGParsePathCtx {
-  PATH *path;
+  GedaPath *path;
   double cpx, cpy;    /* current point */
   double rpx, rpy;    /* reflection point (for 's' and 't' commands) */
   double mpx, mpy;    /* Last moved to point (for path closures) */
@@ -636,7 +636,7 @@ static void s_path_parse_data (RSVGParsePathCtx * ctx, const char *data)
 }
 
 
-PATH *s_path_parse (const char *path_str)
+GedaPath *s_path_parse (const char *path_str)
 {
   RSVGParsePathCtx ctx;
 
@@ -657,7 +657,7 @@ PATH *s_path_parse (const char *path_str)
 }
 
 
-char *s_path_string_from_path (const PATH *path)
+char *s_path_string_from_path (const GedaPath *path)
 {
   PATH_SECTION *section;
   GString *path_string;
@@ -707,7 +707,7 @@ char *s_path_string_from_path (const PATH *path)
  *  must not be NULL.
  *  \return TRUE if the path is closed, FALSE if it is open.
  */
-int s_path_to_polygon (PATH *path, GArray *points)
+int s_path_to_polygon (GedaPath *path, GArray *points)
 {
   int closed = FALSE;
   int i;
@@ -718,7 +718,7 @@ int s_path_to_polygon (PATH *path, GArray *points)
   }
 
   for (i = 0; i < path->num_sections; i++) {
-    BEZIER bezier;
+    GedaBezier bezier;
     PATH_SECTION *section = &path->sections[i];
 
     switch (section->code) {
@@ -767,7 +767,7 @@ int s_path_to_polygon (PATH *path, GArray *points)
  *  shape, this function returns a distance of zero for interior points.  With
  *  an invalid parameter, this function returns G_MAXDOUBLE.
  */
-double s_path_shortest_distance (PATH *path, int x, int y, int solid)
+double s_path_shortest_distance (GedaPath *path, int x, int y, int solid)
 {
   double shortest_distance = G_MAXDOUBLE;
   int closed;

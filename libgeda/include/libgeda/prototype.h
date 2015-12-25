@@ -47,12 +47,12 @@ void libgeda_init(void);
 void PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom);
 
 /* m_hatch.c */
-void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines);
-void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines);
-void m_hatch_path(PATH *path, gint angle, gint pitch, GArray *lines);
+void m_hatch_box(GedaBox *box, gint angle, gint pitch, GArray *lines);
+void m_hatch_circle(GedaCircle *circle, gint angle, gint pitch, GArray *lines);
+void m_hatch_path(GedaPath *path, gint angle, gint pitch, GArray *lines);
 
 /* m_polygon.c */
-void m_polygon_append_bezier(GArray *points, BEZIER *bezier, int segments);
+void m_polygon_append_bezier(GArray *points, GedaBezier *bezier, int segments);
 void m_polygon_append_point(GArray *points, int x, int y);
 
 
