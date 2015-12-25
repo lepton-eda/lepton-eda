@@ -40,7 +40,7 @@
  *  \param [out] newy   Output point y coordinate.
  */
 void
-rotate_point(int x, int y, int angle, int *newx, int *newy)
+geda_point_rotate (int x, int y, int angle, int *newx, int *newy)
 {
   double costheta, sintheta;
   double rad;
@@ -67,7 +67,7 @@ rotate_point(int x, int y, int angle, int *newx, int *newy)
  *  \param [out] newy   Output point y coordinate.
  */
 void
-rotate_point_90(int x, int y, int angle, int *newx, int *newy)
+geda_point_rotate_90 (int x, int y, int angle, int *newx, int *newy)
 {
   double costheta=1;
   double sintheta=0;

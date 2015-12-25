@@ -394,9 +394,9 @@ void o_arc_rotate_world(TOPLEVEL *toplevel,
   x = object->arc->x;
   y = object->arc->y;
   if(angle % 90 == 0) {
-	  rotate_point_90(x, y, angle % 360, &newx, &newy);
+    geda_point_rotate_90 (x, y, angle % 360, &newx, &newy);
   } else {
-	  rotate_point(x, y, angle % 360, &newx, &newy);
+    geda_point_rotate (x, y, angle % 360, &newx, &newy);
   }
   object->arc->x = newx;
   object->arc->y = newy;

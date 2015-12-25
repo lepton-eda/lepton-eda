@@ -898,7 +898,7 @@ void o_complex_rotate_world(TOPLEVEL *toplevel,
   x = object->complex->x + (-centerx);
   y = object->complex->y + (-centery);
 
-  rotate_point_90(x, y, angle, &newx, &newy);
+  geda_point_rotate_90 (x, y, angle, &newx, &newy);
 
   x = newx + (centerx);
   y = newy + (centery);

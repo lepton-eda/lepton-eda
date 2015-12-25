@@ -417,7 +417,7 @@ void o_circle_rotate_world(TOPLEVEL *toplevel,
   /* rotate the center of the circle around the origin */
   x = object->circle->center_x;
   y = object->circle->center_y;
-  rotate_point_90(x, y, angle, &newx, &newy);
+  geda_point_rotate_90 (x, y, angle, &newx, &newy);
   object->circle->center_x = newx;
   object->circle->center_y = newy;
 

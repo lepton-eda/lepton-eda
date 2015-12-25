@@ -487,11 +487,11 @@ void o_box_rotate_world(TOPLEVEL *toplevel,
   object->box->lower_y -= world_centery;
 
   /* rotate the upper left corner of the box */
-  rotate_point_90(object->box->upper_x, object->box->upper_y, angle,
+  geda_point_rotate_90 (object->box->upper_x, object->box->upper_y, angle,
 		  &newx1, &newy1);
 
   /* rotate the lower left corner of the box */
-  rotate_point_90(object->box->lower_x, object->box->lower_y, angle,
+  geda_point_rotate_90 (object->box->lower_x, object->box->lower_y, angle,
 		  &newx2, &newy2);
 
   /* reorder the corners after rotation */

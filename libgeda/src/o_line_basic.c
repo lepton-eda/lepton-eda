@@ -58,7 +58,7 @@
  *  \return A pointer to the new end of the object list.
  */
 OBJECT *o_line_new(TOPLEVEL *toplevel,
-		   char type, int color, 
+		   char type, int color,
 		   int x1, int y1, int x2, int y2)
 {
   OBJECT *new_node;
@@ -66,15 +66,15 @@ OBJECT *o_line_new(TOPLEVEL *toplevel,
   /* create the object */
   new_node = s_basic_new_object(type, "line");
   new_node->color = color;
-  
+
   new_node->line  = (LINE *) g_malloc(sizeof(LINE));
-  
+
   /* describe the line with its two ends */
   new_node->line->x[0] = x1;
   new_node->line->y[0] = y1;
   new_node->line->x[1] = x2;
   new_node->line->y[1] = y2;
-  
+
   /* line type and filling initialized to default */
   o_set_line_options(toplevel, new_node,
 		     DEFAULT_OBJECT_END, TYPE_SOLID, 0, -1, -1);
@@ -120,10 +120,10 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 		     o_current->fill_type, o_current->fill_width,
 		     o_current->fill_pitch1, o_current->fill_angle1,
 		     o_current->fill_pitch2, o_current->fill_angle2);
-  
+
   /* calc the bounding box */
   o_current->w_bounds_valid_for = NULL;
-  
+
   /* new_obj->attribute = 0;*/
 
   /* return the new tail of the object list */
@@ -305,14 +305,14 @@ char *o_line_save(TOPLEVEL *toplevel, OBJECT *object)
   y1 = object->line->y[0];
   x2 = object->line->x[1];
   y2 = object->line->y[1];
-  
+
   /* description of the line type */
   line_width = object->line_width;
   line_end   = object->line_end;
   line_type  = object->line_type;
   line_length= object->line_length;
   line_space = object->line_space;
-  
+
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d", object->type,
 			x1, y1, x2, y2, object->color,
 			line_width, line_end, line_type,
@@ -339,13 +339,13 @@ void o_line_translate_world(TOPLEVEL *toplevel,
   object->line->y[0] = object->line->y[0] + dy;
   object->line->x[1] = object->line->x[1] + dx;
   object->line->y[1] = object->line->y[1] + dy;
-  
+
   /* Update bounding box */
   object->w_bounds_valid_for = NULL;
 }
 
-/*! \brief Rotate Line OBJECT using WORLD coordinates. 
- *  \par Function Description 
+/*! \brief Rotate Line OBJECT using WORLD coordinates.
+ *  \par Function Description
  *  This function rotates the line described by
  *  <B>*object</B> around the (<B>world_centerx</B>,<B>world_centery</B>)
  *  point by <B>angle</B> degrees.
@@ -362,8 +362,8 @@ void o_line_rotate_world(TOPLEVEL *toplevel,
 			 OBJECT *object)
 {
   int newx, newy;
-	
-  if (angle == 0) 
+
+  if (angle == 0)
     return;
 
   /* angle must be positive */
@@ -381,22 +381,22 @@ void o_line_rotate_world(TOPLEVEL *toplevel,
   o_line_translate_world(toplevel, -world_centerx, -world_centery, object);
 
   /* rotate line end 1 */
-  rotate_point_90(object->line->x[0], object->line->y[0], angle,
+  geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
 		  &newx, &newy);
 
   object->line->x[0] = newx;
   object->line->y[0] = newy;
-  
+
   /* rotate line end 2 */
-  rotate_point_90(object->line->x[1], object->line->y[1], angle,
+  geda_point_rotate_90 (object->line->x[1], object->line->y[1], angle,
 		  &newx, &newy);
-  
+
   object->line->x[1] = newx;
   object->line->y[1] = newy;
 
   /* translate object back to normal position */
   o_line_translate_world(toplevel, world_centerx, world_centery, object);
-  
+
 }
 
 /*! \brief Mirror a line using WORLD coordinates.
@@ -424,7 +424,7 @@ void o_line_mirror_world(TOPLEVEL *toplevel, int world_centerx,
 
   /* translate back in position */
   o_line_translate_world(toplevel, world_centerx, world_centery, object);
-  
+
 }
 
 /*! \brief Get line bounding rectangle in WORLD coordinates.
@@ -496,7 +496,7 @@ void o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale,
 
   /* update boundingbox */
   object->w_bounds_valid_for = NULL;
-  
+
 }
 
 
@@ -511,7 +511,7 @@ double o_line_length(OBJECT *object)
 {
   double length;
   double dx, dy;
-  
+
   if (!object->line) {
     return 0.0;
   }

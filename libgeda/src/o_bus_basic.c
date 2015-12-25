@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file o_bus_basic.c 
+/*! \file o_bus_basic.c
  *  \brief functions for the bus object
  */
 
@@ -64,7 +64,7 @@ void world_get_bus_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *to
 /*! \brief create a new bus object
  *  \par Function Description
  *  This function creates and returns a new bus object.
- *  
+ *
  *  \param [in]     toplevel    The TOPLEVEL object.
  *  \param [in]     type        The OBJECT type (usually OBJ_BUS)
  *  \param [in]     color       The color of the bus
@@ -86,7 +86,7 @@ OBJECT *o_bus_new(TOPLEVEL *toplevel,
   new_node->color = color;
 
   new_node->line = (LINE *) g_malloc(sizeof(LINE));
-  /* check for null */	
+  /* check for null */
 
   new_node->line->x[0] = x1;
   new_node->line->y[0] = y1;
@@ -106,7 +106,7 @@ OBJECT *o_bus_new(TOPLEVEL *toplevel,
  *  This function reads a bus object from the buffer \a buf.
  *  If the bus object was read successfully, a new bus object is
  *  allocated and appended to the \a object_list.
- *  
+ *
  *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] buf          a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
@@ -117,7 +117,7 @@ OBJECT *o_bus_read (TOPLEVEL *toplevel, const char buf[],
                     unsigned int release_ver, unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;
-  char type; 
+  char type;
   int x1, y1;
   int x2, y2;
   int color;
@@ -182,7 +182,7 @@ char *o_bus_save(TOPLEVEL *toplevel, OBJECT *object)
           x1, y1, x2, y2, object->color, object->bus_ripper_direction);
   return(buf);
 }
-       
+
 /*! \brief move a bus object
  *  \par Function Description
  *  This function changes the position of a bus \a object.
@@ -232,7 +232,7 @@ OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \par Function Description
  *  This function rotates a bus \a object around the point
  *  (\a world_centerx, \a world_centery).
- *  
+ *
  *  \param [in] toplevel      The TOPLEVEL object
  *  \param [in] world_centerx x-coord of the rotation center
  *  \param [in] world_centery y-coord of the rotation center
@@ -252,13 +252,13 @@ void o_bus_rotate_world(TOPLEVEL *toplevel,
   /* translate object to origin */
   o_bus_translate_world(toplevel, -world_centerx, -world_centery, object);
 
-  rotate_point_90(object->line->x[0], object->line->y[0], angle,
+  geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
                   &newx, &newy);
 
   object->line->x[0] = newx;
   object->line->y[0] = newy;
 
-  rotate_point_90(object->line->x[1], object->line->y[1], angle,
+  geda_point_rotate_90 (object->line->x[1], object->line->y[1], angle,
                   &newx, &newy);
 
   object->line->x[1] = newx;
@@ -271,7 +271,7 @@ void o_bus_rotate_world(TOPLEVEL *toplevel,
  *  \par Function Description
  *  This function mirrors a bus \a object horizontaly at the point
  *  (\a world_centerx, \a world_centery).
- *  
+ *
  *  \param [in] toplevel      The TOPLEVEL object
  *  \param [in] world_centerx x-coord of the mirror position
  *  \param [in] world_centery y-coord of the mirror position
@@ -307,7 +307,7 @@ int o_bus_orientation(OBJECT *object)
     return(VERTICAL);
   }
 
-  return(NEITHER);	
+  return(NEITHER);
 }
 
 
@@ -336,16 +336,16 @@ static void o_bus_consolidate_lowlevel (OBJECT *object,
 
   if (orient == HORIZONTAL) {
 
-    temp1 = min(object->line->x[0], 
+    temp1 = min(object->line->x[0],
                 del_object->line->x[0]);
-    temp2 = min(object->line->x[1], 
+    temp2 = min(object->line->x[1],
                 del_object->line->x[1]);
 
     final1 = min(temp1, temp2);
 
-    temp1 = max(object->line->x[0], 
+    temp1 = max(object->line->x[0],
                 del_object->line->x[0]);
-    temp2 = max(object->line->x[1], 
+    temp2 = max(object->line->x[1],
                 del_object->line->x[1]);
 
     final2 = max(temp1, temp2);
@@ -356,16 +356,16 @@ static void o_bus_consolidate_lowlevel (OBJECT *object,
   }
 
   if (orient == VERTICAL) {
-    temp1 = min(object->line->y[0], 
+    temp1 = min(object->line->y[0],
                 del_object->line->y[0]);
-    temp2 = min(object->line->y[1], 
+    temp2 = min(object->line->y[1],
                 del_object->line->y[1]);
 
     final1 = min(temp1, temp2);
 
-    temp1 = max(object->line->y[0], 
+    temp1 = max(object->line->y[0],
                 del_object->line->y[0]);
-    temp2 = max(object->line->y[1], 
+    temp2 = max(object->line->y[1],
                 del_object->line->y[1]);
 
     final2 = max(temp1, temp2);
@@ -411,7 +411,7 @@ static int o_bus_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
 /* \brief
  * \par Function Description
  *
- * \todo Not Implemented Yet 
+ * \todo Not Implemented Yet
  */
 void o_bus_consolidate(TOPLEVEL *toplevel)
 {
@@ -423,7 +423,7 @@ void o_bus_consolidate(TOPLEVEL *toplevel)
  *  This function modifies one point of a bus \a object. The point
  *  is specified by the \a whichone variable and the new coordinate
  *  is (\a x, \a y).
- *  
+ *
  *  \param toplevel   The TOPLEVEL object
  *  \param object     The bus OBJECT to modify
  *  \param x          new x-coord of the bus point

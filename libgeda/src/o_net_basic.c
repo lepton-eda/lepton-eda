@@ -24,7 +24,7 @@
 
 #include "libgeda_priv.h"
 
-/*! \file o_net_basic.c 
+/*! \file o_net_basic.c
  *  \brief functions for the net object
  */
 
@@ -64,7 +64,7 @@ void world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
 /*! \brief create a new net object
  *  \par Function Description
  *  This function creates and returns a new net object.
- *  
+ *
  *  \param [in]     toplevel    The TOPLEVEL object.
  *  \param [in]     type        The OBJECT type (usually OBJ_NET)
  *  \param [in]     color       The color of the net
@@ -212,7 +212,7 @@ OBJECT *o_net_copy(TOPLEVEL *toplevel,  OBJECT *o_current)
  *  \par Function Description
  *  This function rotates a net \a object around the point
  *  (\a world_centerx, \a world_centery).
- *  
+ *
  *  \param [in] toplevel      The TOPLEVEL object
  *  \param [in] world_centerx x-coord of the rotation center
  *  \param [in] world_centery y-coord of the rotation center
@@ -233,13 +233,13 @@ void o_net_rotate_world(TOPLEVEL *toplevel,
   o_net_translate_world(toplevel, -world_centerx, -world_centery,
                         object);
 
-  rotate_point_90(object->line->x[0], object->line->y[0], angle,
+  geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
                   &newx, &newy);
 
   object->line->x[0] = newx;
   object->line->y[0] = newy;
 
-  rotate_point_90(object->line->x[1], object->line->y[1], angle,
+  geda_point_rotate_90 (object->line->x[1], object->line->y[1], angle,
                   &newx, &newy);
 
   object->line->x[1] = newx;
@@ -252,7 +252,7 @@ void o_net_rotate_world(TOPLEVEL *toplevel,
  *  \par Function Description
  *  This function mirrors a net \a object horizontaly at the point
  *  (\a world_centerx, \a world_centery).
- *  
+ *
  *  \param [in] toplevel      The TOPLEVEL object
  *  \param [in] world_centerx x-coord of the mirror position
  *  \param [in] world_centery y-coord of the mirror position
@@ -299,12 +299,12 @@ int o_net_orientation(OBJECT *object)
  *  connected segments. The first net segment is extended to the length of
  *  both objects.
  *  The second object (\a del_object) is the object that should be deleted.
- *  
+ *
  *  \param [in] object     A net object to extend
  *  \param [in] del_object A net object to be merged into \a object
  *  \param [in] orient     The orientation of both net objects
  *
- *  \note The first net \a object gets the attributes of the second net 
+ *  \note The first net \a object gets the attributes of the second net
  *  \a del_object if the two nets are merged together.
  */
 static void o_net_consolidate_lowlevel (OBJECT *object,
@@ -385,7 +385,7 @@ static void o_net_consolidate_lowlevel (OBJECT *object,
  *  This function checks if the \a object is connected to another net
  *  between it's endpoints. Net segment's only can be merged if there
  *  is no midpoint connection.
- *  
+ *
  *  \param object  a net OBJECT to check
  *  \param x       x-coord of the connection location
  *  \param y       y-coord of the connection location
@@ -403,13 +403,13 @@ static int o_net_consolidate_nomidpoint (OBJECT *object, int x, int y)
       if (conn->other_object->sid != object->sid &&
           conn->x == x && conn->y == y &&
           conn->type == CONN_MIDPOINT) {
-#if DEBUG        
-        printf("Found one! %s\n", conn->other_object->name); 
-#endif         
+#if DEBUG
+        printf("Found one! %s\n", conn->other_object->name);
+#endif
         return(FALSE);
       }
     }
-    
+
     c_current = g_list_next(c_current);
   }
 
@@ -420,7 +420,7 @@ static int o_net_consolidate_nomidpoint (OBJECT *object, int x, int y)
  *  \par Function Description
  *  This function tries to consolidate a net with any other object
  *  that is connected to the current \a object.
- *  
+ *
  *  \param toplevel   The TOPLEVEL object
  *  \param object     The object to consolidate
  *  \return 0 if no consolidation was possible, -1 otherwise
@@ -489,7 +489,7 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
           return(-1);
         }
       }
-      
+
     }
 
     c_current = g_list_next (c_current);
@@ -538,7 +538,7 @@ void o_net_consolidate(TOPLEVEL *toplevel, PAGE *page)
  *  This function modifies one point of a net \a object. The point
  *  is specified by the \a whichone variable and the new coordinate
  *  is (\a x, \a y).
- *  
+ *
  *  \param toplevel   The TOPLEVEL object
  *  \param object     The net OBJECT to modify
  *  \param x          new x-coord of the net point

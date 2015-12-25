@@ -428,8 +428,8 @@ void o_path_rotate_world (TOPLEVEL *toplevel,
       /* Two control point grips */
       section->x1 -= world_centerx; section->y1 -= world_centery;
       section->x2 -= world_centerx; section->y2 -= world_centery;
-      rotate_point_90 (section->x1, section->y1, angle, &section->x1, &section->y1);
-      rotate_point_90 (section->x2, section->y2, angle, &section->x2, &section->y2);
+      geda_point_rotate_90 (section->x1, section->y1, angle, &section->x1, &section->y1);
+      geda_point_rotate_90 (section->x2, section->y2, angle, &section->x2, &section->y2);
       section->x1 += world_centerx; section->y1 += world_centery;
       section->x2 += world_centerx; section->y2 += world_centery;
       /* Fall through */
@@ -438,7 +438,7 @@ void o_path_rotate_world (TOPLEVEL *toplevel,
     case PATH_LINETO:
       /* Destination point grip */
       section->x3 -= world_centerx; section->y3 -= world_centery;
-      rotate_point_90 (section->x3, section->y3, angle, &section->x3, &section->y3);
+      geda_point_rotate_90 (section->x3, section->y3, angle, &section->x3, &section->y3);
       section->x3 += world_centerx; section->y3 += world_centery;
       break;
     case PATH_END:

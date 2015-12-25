@@ -569,11 +569,11 @@ void o_picture_rotate_world(TOPLEVEL *toplevel,
   object->picture->lower_y -= world_centery;
 
   /* rotate the upper left corner of the picture */
-  rotate_point_90(object->picture->upper_x, object->picture->upper_y, angle,
+  geda_point_rotate_90 (object->picture->upper_x, object->picture->upper_y, angle,
                   &newx1, &newy1);
 
   /* rotate the lower left corner of the picture */
-  rotate_point_90(object->picture->lower_x, object->picture->lower_y, angle,
+  geda_point_rotate_90 (object->picture->lower_x, object->picture->lower_y, angle,
                   &newx2, &newy2);
 
   /* reorder the corners after rotation */

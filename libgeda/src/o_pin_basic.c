@@ -66,7 +66,7 @@ gboolean o_pin_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
 /*! \brief create a new pin object
  *  \par Function Description
  *  This function creates and returns a new pin object.
- *  
+ *
  *  \param [in]     toplevel    The TOPLEVEL object.
  *  \param [in]     type        The OBJECT type (usually OBJ_PIN)
  *  \param [in]     color       The color of the pin
@@ -119,7 +119,7 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
                     unsigned int release_ver, unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;
-  char type; 
+  char type;
   int x1, y1;
   int x2, y2;
   int color;
@@ -176,7 +176,7 @@ char *o_pin_save(TOPLEVEL *toplevel, OBJECT *object)
   int x1, x2, y1, y2;
   int pin_type, whichend;
   char *buf;
-  
+
   x1 = object->line->x[0];
   y1 = object->line->y[0];
   x2 = object->line->x[1];
@@ -184,7 +184,7 @@ char *o_pin_save(TOPLEVEL *toplevel, OBJECT *object)
 
   pin_type = object->pin_type;
   whichend = object->whichend;
-  
+
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d", object->type,
 		   x1, y1, x2, y2, object->color, pin_type, whichend);
   return(buf);
@@ -235,7 +235,7 @@ OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \par Function Description
  *  This function rotates a pin \a object around the point
  *  (\a world_centerx, \a world_centery).
- *  
+ *
  *  \param [in] toplevel      The TOPLEVEL object
  *  \param [in] world_centerx x-coord of the rotation center
  *  \param [in] world_centery y-coord of the rotation center
@@ -248,20 +248,20 @@ void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx,
 			OBJECT *object)
 {
   int newx, newy;
-	
+
   if (angle == 0)
     return;
 
   /* translate object to origin */
   o_pin_translate_world(toplevel, -world_centerx, -world_centery, object);
 
-  rotate_point_90(object->line->x[0], object->line->y[0], angle,
+  geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
                   &newx, &newy);
 
   object->line->x[0] = newx;
   object->line->y[0] = newy;
 
-  rotate_point_90(object->line->x[1], object->line->y[1], angle,
+  geda_point_rotate_90 (object->line->x[1], object->line->y[1], angle,
                   &newx, &newy);
 
   object->line->x[1] = newx;
@@ -274,7 +274,7 @@ void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx,
  *  \par Function Description
  *  This function mirrors a pin \a object horizontaly at the point
  *  (\a world_centerx, \a world_centery).
- *  
+ *
  *  \param [in] toplevel      The TOPLEVEL object
  *  \param [in] world_centerx x-coord of the mirror position
  *  \param [in] world_centery y-coord of the mirror position
@@ -298,7 +298,7 @@ void o_pin_mirror_world(TOPLEVEL *toplevel,
  *  This function modifies one point of a pin \a object. The point
  *  is specified by the \a whichone variable and the new coordinate
  *  is (\a x, \a y).
- *  
+ *
  *  \param toplevel   The TOPLEVEL object
  *  \param object     The pin OBJECT to modify
  *  \param x          new x-coord of the pin point
@@ -318,12 +318,12 @@ void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object,
 /*! \brief guess the whichend of pins of object list
  *  \par Function Description
  *  This function determines the whichend of the pins in the \a object_list.
- *  In older libgeda file format versions there was no information about the 
+ *  In older libgeda file format versions there was no information about the
  *  active end of pins.
  *  This function calculates the bounding box of all pins in the object list.
  *  The side of the pins that are closer to the boundary of the box are
  *  set as active ends of the pins.
- *  
+ *
  *  \param toplevel    The TOPLEVEL object
  *  \param object_list list of OBJECTs
  *  \param num_pins    pin count in the object list
@@ -385,7 +385,7 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
     if (o_current->type == OBJ_PIN && o_current->whichend == -1) {
       if (o_current->line->y[0] == o_current->line->y[1]) {
         /* horizontal */
-        
+
         d1 = abs(o_current->line->x[0] - left);
         d2 = abs(o_current->line->x[1] - left);
         d3 = abs(o_current->line->x[0] - right);
@@ -412,10 +412,10 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
         } else {
           o_current->whichend = min1_whichend;
         }
-           
+
       } else if (o_current->line->x[0] == o_current->line->x[1]) {
         /* vertical */
-        
+
         d1 = abs(o_current->line->y[0] - top);
         d2 = abs(o_current->line->y[1] - top);
         d3 = abs(o_current->line->y[0] - bottom);

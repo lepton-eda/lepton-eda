@@ -30,7 +30,7 @@ struct st_point
 };
 
 void
-rotate_point (int x, int y, int angle, int *newx, int *newy);
+geda_point_rotate (int x, int y, int angle, int *newx, int *newy);
 
 void
-rotate_point_90 (int x, int y, int angle, int *newx, int *newy);
+geda_point_rotate_90 (int x, int y, int angle, int *newx, int *newy);
