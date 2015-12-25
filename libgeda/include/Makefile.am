@@ -9,6 +9,7 @@ libgedainclude_HEADERS = \
 	libgeda/edascmhookproxy.h \
 	libgeda/edascmvaluetypes.h \
 	libgeda/funcs.h \
+	libgeda/geda_angle.h \
 	libgeda/geda_arc.h \
 	libgeda/geda_bezier.h \
 	libgeda/geda_bounds.h \

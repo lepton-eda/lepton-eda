@@ -37,6 +37,7 @@ libgeda_la_SOURCES = \
 	edaerrors.c \
 	f_basic.c \
 	g_basic.c \
+	geda_angle.c \
 	geda_arc.c \
 	geda_bounds.c \
 	geda_box.c \

@@ -1,17 +1,21 @@
 
 check_PROGRAMS = \
+	test_angle \
 	test_arc \
 	test_bounds \
 	test_box \
 	test_circle \
-	test_line
+	test_line \
+	test_point
 
 TESTS = \
+	test_angle \
 	test_arc \
 	test_bounds \
 	test_box \
 	test_circle \
-	test_line
+	test_line \
+	test_point
 
 AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"  $(DATADIR_DEFS) \
 	-I$(srcdir)/../include -I$(srcdir)/../include/libgeda -I$(top_srcdir)

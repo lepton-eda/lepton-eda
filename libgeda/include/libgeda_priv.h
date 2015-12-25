@@ -14,6 +14,7 @@
 #include "geda_line_cap_type.h"
 #include "geda_point.h"
 
+#include "geda_angle.h"
 #include "geda_arc.h"
 #include "geda_bezier.h"
 #include "geda_bounds.h"

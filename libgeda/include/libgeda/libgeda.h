@@ -35,6 +35,7 @@
 #include <libgeda/geda_line_cap_type.h>
 #include <libgeda/geda_point.h>
 
+#include <libgeda/geda_angle.h>
 #include <libgeda/geda_arc.h>
 #include <libgeda/geda_bezier.h>
 #include <libgeda/geda_bounds.h>
