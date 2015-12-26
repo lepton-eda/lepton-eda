@@ -30,17 +30,29 @@ struct _GedaBounds
   gint max_y;
 };
 
-int
-inside_region (int xmin, int ymin, int xmax, int ymax, int x, int y);
+gboolean
+geda_bounds_empty (const GedaBounds *bounds);
 
 gboolean
-geda_bounds_empty (GedaBounds *bounds);
+geda_bounds_equal (const GedaBounds *a, const GedaBounds *b);
+
+void
+geda_bounds_expand (GedaBounds *r, const GedaBounds *a, gint x, gint y);
 
 void
 geda_bounds_init (GedaBounds *bounds);
 
+void
+geda_bounds_init_with_points (GedaBounds *bounds, gint x0, gint y0, gint x1, gint y1);
+
 gboolean
-geda_bounds_interior_point (GedaBounds *bounds, gint x, gint y);
+geda_bounds_interior_point (const GedaBounds *bounds, gint x, gint y);
 
 void
-geda_bounds_of_points (GedaBounds *bounds, GedaPoint points[], gint count);
+geda_bounds_of_points (GedaBounds *bounds, const GedaPoint points[], gint count);
+
+void
+geda_bounds_union (GedaBounds *r, const GedaBounds *a, const GedaBounds *b);
+
+int
+inside_region (int xmin, int ymin, int xmax, int ymax, int x, int y);
