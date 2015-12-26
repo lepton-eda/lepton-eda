@@ -35,6 +35,18 @@
 #include "geda_toplevel.h"
 #include "geda_undo.h"
 
+#include "geda_arc_object.h"
+#include "geda_box_object.h"
+#include "geda_bus_object.h"
+#include "geda_circle_object.h"
+#include "geda_complex_object.h"
+#include "geda_line_object.h"
+#include "geda_net_object.h"
+#include "geda_path_object.h"
+#include "geda_picture_object.h"
+#include "geda_pin_object.h"
+#include "geda_text_object.h"
+
 #include "globals.h"
 #include "o_types.h"
 #include "colors.h"

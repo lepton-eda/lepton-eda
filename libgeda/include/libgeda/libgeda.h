@@ -56,6 +56,18 @@
 #include <libgeda/geda_toplevel.h>
 #include <libgeda/geda_undo.h>
 
+#include <libgeda/geda_arc_object.h>
+#include <libgeda/geda_box_object.h>
+#include <libgeda/geda_bus_object.h>
+#include <libgeda/geda_circle_object.h>
+#include <libgeda/geda_complex_object.h>
+#include <libgeda/geda_line_object.h>
+#include <libgeda/geda_net_object.h>
+#include <libgeda/geda_path_object.h>
+#include <libgeda/geda_picture_object.h>
+#include <libgeda/geda_pin_object.h>
+#include <libgeda/geda_text_object.h>
+
 #include <libgeda/globals.h>
 #include <libgeda/o_types.h>
 #include <libgeda/funcs.h>

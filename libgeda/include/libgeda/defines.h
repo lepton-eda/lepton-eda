@@ -49,9 +49,6 @@
 /* for color mechanism used in gschem */
 #define MAX_COLORS 25
 
-/* X's obsession with *64 */
-#define FULL_CIRCLE 360*64
-
 /* for show_name_value in st_objects */
 #define SHOW_NAME_VALUE         0
 #define SHOW_VALUE              1
@@ -62,10 +59,6 @@
 #define INVISIBLE               0
 #define VISIBLE                 1
 #define LEAVE_VISIBILITY_ALONE  -1
-
-/* For pin and net styles */
-#define THIN            0     
-#define THICK           1
 
 /* various thicknesses (in mils) */
 #define LINE_WIDTH	10
@@ -89,7 +82,7 @@
 #define max(a,b) ((a) > (b) ? (a) : (b))
 
 #undef min
-#define min(a,b) ((a) < (b) ? (a) : (b)) 
+#define min(a,b) ((a) < (b) ? (a) : (b))
 
 /* for s_clib_getfilename() */
 #define OPEN_DIR	0
@@ -144,21 +137,12 @@
 #define HIERARCHY_POSTORDER (1<<1)
 #define HIERARCHY_INNERLOOP (1<<7)
 
-#define MILS_PER_INCH		1000 
-
-/* for text_output */
-#define VECTOR_FONTS		0
-#define PS_FONTS		1
+#define MILS_PER_INCH		1000
 
 /* for print dialog box */
 #define EXTENTS			0
 #define WINDOW			1
 #define EXTENTS_NOMARGINS	2
-
-/* for output-capstyle */ 
-#define BUTT_CAP 		0
-#define ROUND_CAP 		1
-#define SQUARE_CAP 		2
 
 /* for print dialog box */
 #define LANDSCAPE		0

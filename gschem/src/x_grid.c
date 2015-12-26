@@ -31,6 +31,9 @@
 
 #define MESH_COARSE_GRID_MULTIPLIER  5
 
+/* X's obsession with *64 */
+#define FULL_CIRCLE 360*64
+
 
 /*! \brief Query the spacing in world coordinates at which the dots grid is drawn.
  *

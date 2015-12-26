@@ -55,15 +55,6 @@ void m_hatch_path(GedaPath *path, gint angle, gint pitch, GArray *lines);
 void m_polygon_append_bezier(GArray *points, GedaBezier *bezier, int segments);
 void m_polygon_append_point(GArray *points, int x, int y);
 
-
-/* o_arc_basic.c */
-OBJECT *o_arc_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int radius, int start_angle, int end_angle);
-OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-void o_arc_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
-void o_arc_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_arc_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-
 /* o_attrib.c */
 void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item);
 gboolean o_attrib_is_attached (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object);
@@ -82,84 +73,9 @@ char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int co
 GList *o_attrib_return_attribs(OBJECT *object);
 int o_attrib_is_inherited(OBJECT *attrib);
 
-/* o_basic.c */
-void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_END end, OBJECT_TYPE type, int width, int length, int space);
-gboolean o_get_line_options(OBJECT *object, OBJECT_END *end, OBJECT_TYPE *type, int *width, int *length, int *space);
-void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_FILLING type, int width, int pitch1, int angle1, int pitch2, int angle2);
-gboolean o_get_fill_options(OBJECT *object, OBJECT_FILLING *type, int *width, int *pitch1, int *angle1, int *pitch2, int *angle2);
-gboolean o_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
-void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object);
-void o_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-double o_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y);
-void o_set_color(TOPLEVEL *toplevel, OBJECT *object, int color);
-PAGE *o_get_page (TOPLEVEL *toplevel, OBJECT *object);
-OBJECT *o_get_parent (TOPLEVEL *toplevel, OBJECT *object);
-void o_add_change_notify(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_func, ChangeNotifyFunc change_func, void *user_data);
-void o_remove_change_notify(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_func, ChangeNotifyFunc change_func, void *user_data);
-gboolean o_is_visible (TOPLEVEL *toplevel, OBJECT *object);
-void o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility);
-
-/* o_box_basic.c */
-OBJECT *o_box_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
-OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_box_modify_all (TOPLEVEL *toplevel, OBJECT *object, int x1, int y1, int x2, int y2);
-void o_box_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-void o_box_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
-void o_box_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_box_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-
-/* o_bus_basic.c */
-OBJECT *o_bus_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2, int bus_ripper_direction);
-void o_bus_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
-OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_bus_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_bus_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-int o_bus_orientation(OBJECT *object);
-void o_bus_consolidate(TOPLEVEL *toplevel);
-void o_bus_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-
-/* o_circle_basic.c */
-int dist(int x1, int y1, int x2, int y2);
-OBJECT *o_circle_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int radius);
-OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_circle_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-void o_circle_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
-void o_circle_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_circle_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-
-/* o_complex_basic.c */
-int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
-			      int *rleft, int *rtop,
-			      int *rright, int *rbottom);
-int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *o_list,
-			     int *left, int *top,
-			     int *right, int *bottom);
-int o_complex_is_embedded(OBJECT *o_current);
-GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object);
-OBJECT *o_complex_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const CLibSymbol *clib_sym, const gchar *basename, int selectable);
-OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const gchar *basename, int selectable);
-void o_complex_set_filename(TOPLEVEL *toplevel, const char *basename);
-void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
-OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_complex_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_complex_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-OBJECT *o_complex_find_pin_by_attribute(OBJECT *object, char *name, char *wanted_value);
-void o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object);
-
 /* o_embed.c */
 void o_embed(TOPLEVEL *toplevel, OBJECT *o_current);
 void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current);
-
-/* o_line_basic.c */
-OBJECT *o_line_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
-OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_line_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-void o_line_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
-void o_line_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_line_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-void o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale, OBJECT *object);
-double o_line_length(OBJECT *object);
 
 /* o_list.c */
 OBJECT *o_object_copy(TOPLEVEL *toplevel, OBJECT *selected);
@@ -169,59 +85,6 @@ void o_glist_rotate_world(TOPLEVEL *toplevel, int x, int y, int angle, const GLi
 void o_glist_mirror_world(TOPLEVEL *toplevel, int x, int y, const GList *list);
 void o_glist_set_color(TOPLEVEL *toplevel, const GList *list, int color);
 
-/* o_net_basic.c */
-OBJECT *o_net_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
-void o_net_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
-OBJECT *o_net_copy(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_net_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_net_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-int o_net_orientation(OBJECT *object);
-void o_net_consolidate(TOPLEVEL *toplevel, PAGE *page);
-void o_net_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-
-/* o_path_basic.c */
-OBJECT *o_path_new(TOPLEVEL *toplevel, char type, int color, const char *path_string);
-OBJECT *o_path_new_take_path (TOPLEVEL *toplevel, char type, int color, PATH *path_data);
-OBJECT *o_path_copy(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_path_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-void o_path_translate_world(TOPLEVEL *toplevel, int x, int y, OBJECT *object);
-void o_path_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_path_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-
-/* o_picture.c */
-OBJECT *o_picture_new(TOPLEVEL *toplevel,
-                      const gchar *file_content, gsize file_length,
-                      const gchar *filename, char type,
-                      int x1, int y1, int x2, int y2, int angle, int mirrored,
-                      int embedded) G_GNUC_WARN_UNUSED_RESULT;
-double o_picture_get_ratio (TOPLEVEL *toplevel, OBJECT *object);
-void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-void o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object, int x1, int y1, int x2, int y2);
-void o_picture_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle,OBJECT *object);
-void o_picture_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-void o_picture_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
-OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *o_current) G_GNUC_WARN_UNUSED_RESULT;
-gboolean o_picture_is_embedded (TOPLEVEL *toplevel, OBJECT *object);
-GdkPixbuf *o_picture_get_pixbuf (TOPLEVEL *toplevel, OBJECT *object) G_GNUC_WARN_UNUSED_RESULT;
-const char *o_picture_get_data (TOPLEVEL *toplevel, OBJECT *object,
-                                size_t *len);
-gboolean o_picture_set_from_buffer (TOPLEVEL *toplevel, OBJECT *object,
-                                    const gchar *filename, const gchar *data,
-                                    size_t len, GError **error);
-gboolean o_picture_set_from_file (TOPLEVEL *toplevel, OBJECT *object,
-                                  const gchar *filename, GError **error);
-const gchar *o_picture_get_filename (TOPLEVEL *toplevel, OBJECT *object);
-GdkPixbuf *o_picture_get_fallback_pixbuf (TOPLEVEL *toplevel) G_GNUC_WARN_UNUSED_RESULT;
-
-/* o_pin_basic.c */
-OBJECT *o_pin_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2, int pin_type, int whichend);
-void o_pin_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
-OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_pin_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-void o_pin_update_whichend(TOPLEVEL *toplevel, GList *object_list, int num_pins);
-void o_pin_set_type(TOPLEVEL *toplevel, OBJECT *o_current, int pin_type);
 /* o_selection.c */
 SELECTION *o_selection_new( void );
 void o_selection_add(TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected);
@@ -229,19 +92,6 @@ void o_selection_print_all(const SELECTION *selection);
 void o_selection_remove(TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected);
 void o_selection_select(TOPLEVEL *toplevel, OBJECT *object) G_GNUC_DEPRECATED;
 void o_selection_unselect(TOPLEVEL *toplevel, OBJECT *object) G_GNUC_DEPRECATED;
-
-/* o_text_basic.c */
-int o_text_num_lines(const char *string);
-OBJECT *o_text_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int alignment, int angle, const char *string, int size, int visibility, int show_name_value);
-void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_text_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *o_current);
-OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_text_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_text_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-void o_text_set_string(TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string);
-const gchar *o_text_get_string(TOPLEVEL *toplevel, OBJECT *obj);
-void o_text_set_rendered_bounds_func (TOPLEVEL *toplevel, RenderedBoundsFunc func, void *user_data);
-double o_text_get_font_size_in_points(TOPLEVEL *toplevel, OBJECT *object);
 
 /* s_attrib.c */
 int s_attrib_add_entry(char *new_attrib);

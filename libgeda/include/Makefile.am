@@ -11,24 +11,35 @@ libgedainclude_HEADERS = \
 	libgeda/funcs.h \
 	libgeda/geda_angle.h \
 	libgeda/geda_arc.h \
+	libgeda/geda_arc_object.h \
 	libgeda/geda_bezier.h \
 	libgeda/geda_bounds.h \
 	libgeda/geda_box.h \
+	libgeda/geda_box_object.h \
+	libgeda/geda_bus_object.h \
 	libgeda/geda_circle.h \
+	libgeda/geda_circle_object.h \
 	libgeda/geda_color.h \
 	libgeda/geda_complex.h \
+	libgeda/geda_complex_object.h \
 	libgeda/geda_forward.h \
 	libgeda/geda_fill_type.h \
 	libgeda/geda_line.h \
 	libgeda/geda_line_type.h \
+	libgeda/geda_line_object.h \
 	libgeda/geda_line_cap_type.h \
 	libgeda/geda_list.h \
+	libgeda/geda_net_object.h \
 	libgeda/geda_object.h \
 	libgeda/geda_page.h \
 	libgeda/geda_path.h \
+	libgeda/geda_path_object.h \
 	libgeda/geda_picture.h \
+	libgeda/geda_picture_object.h \
+	libgeda/geda_pin_object.h \
 	libgeda/geda_point.h \
 	libgeda/geda_text.h \
+	libgeda/geda_text_object.h \
 	libgeda/geda_toplevel.h \
 	libgeda/geda_transform.h \
 	libgeda/geda_undo.h \
