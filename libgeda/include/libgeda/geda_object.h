@@ -110,7 +110,7 @@ gboolean
 o_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 
 void
-geda_object_translate (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object);
+geda_object_translate (GedaObject *object, gint dx, gint dy);
 
 void
 geda_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);

@@ -659,13 +659,12 @@ void geda_picture_object_mirror(TOPLEVEL *toplevel,
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the picture
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world units.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
+ *  \param [in,out] object     Picture GedaObject to translate.
  *  \param [in]     dx         x distance to move.
  *  \param [in]     dy         y distance to move.
- *  \param [in,out] object     Picture OBJECT to translate.
  */
-void geda_picture_object_translate (TOPLEVEL *toplevel,
-                               int dx, int dy, OBJECT *object)
+void
+geda_picture_object_translate (GedaObject *object, int dx, int dy)
 {
   /* Do world coords */
   object->picture->upper_x = object->picture->upper_x + dx;

@@ -339,13 +339,12 @@ char *o_arc_save(TOPLEVEL *toplevel, OBJECT *object)
  *  This function applies a translation of (<B>dx</B>,<B>dy</B>)
  *  to the arc described in <B>*object</B>. <B>dx</B> and <B>dy</B> are in world unit.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] dx
- *  \param [in] dy
- *  \param [in] object
+ *  \param [in,out] object     Arc GedaObject to translate.
+ *  \param [in]     dx         x distance to move.
+ *  \param [in]     dy         y distance to move.
  */
-void geda_arc_object_translate (TOPLEVEL *toplevel, int dx, int dy,
-			   OBJECT *object)
+void
+geda_arc_object_translate (GedaObject *object, int dx, int dy)
 {
   if (object == NULL) {
     return;

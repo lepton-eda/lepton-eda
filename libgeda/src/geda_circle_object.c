@@ -360,13 +360,12 @@ char *o_circle_save(TOPLEVEL *toplevel, OBJECT *object)
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the circle
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
- *  \param [in]     dx         x distance to move.
- *  \param [in]     dy         y distance to move.
- *  \param [in,out] object     Circle OBJECT to translate.
+ *  \param [in,out] object  Circle GedaObject to translate.
+ *  \param [in]     dx      x distance to move.
+ *  \param [in]     dy      y distance to move.
  */
-void geda_circle_object_translate (TOPLEVEL *toplevel,
-			      int dx, int dy, OBJECT *object)
+void
+geda_circle_object_translate (GedaObject *object, int dx, int dy)
 {
   /* Do world coords */
   object->circle->center_x = object->circle->center_x + dx;

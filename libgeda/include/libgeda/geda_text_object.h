@@ -32,7 +32,7 @@ void
 o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
-geda_text_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *o_current);
+geda_text_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
 o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current);

@@ -326,13 +326,12 @@ char *o_line_save(TOPLEVEL *toplevel, OBJECT *object)
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the line
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
+ *  \param [in,out] object     Line GedaObject to translate.
  *  \param [in]     dx         x distance to move.
  *  \param [in]     dy         y distance to move.
- *  \param [in,out] object     Line OBJECT to translate.
  */
-void geda_line_object_translate (TOPLEVEL *toplevel,
-			    int dx, int dy, OBJECT *object)
+void
+geda_line_object_translate (GedaObject *object, int dx, int dy)
 {
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
@@ -378,7 +377,7 @@ void geda_line_object_rotate (TOPLEVEL *toplevel,
    * back to its previous location.
    */
   /* translate object to origin */
-  geda_line_object_translate (toplevel, -world_centerx, -world_centery, object);
+  geda_line_object_translate (object, -world_centerx, -world_centery);
 
   /* rotate line end 1 */
   geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
@@ -395,7 +394,7 @@ void geda_line_object_rotate (TOPLEVEL *toplevel,
   object->line->y[1] = newy;
 
   /* translate object back to normal position */
-  geda_line_object_translate (toplevel, world_centerx, world_centery, object);
+  geda_line_object_translate (object, world_centerx, world_centery);
 
 }
 
@@ -416,14 +415,14 @@ void geda_line_object_mirror (TOPLEVEL *toplevel, int world_centerx,
 			 int world_centery, OBJECT *object)
 {
   /* translate object to origin */
-  geda_line_object_translate (toplevel, -world_centerx, -world_centery, object);
+  geda_line_object_translate (object, -world_centerx, -world_centery);
 
   /* mirror the line ends */
   object->line->x[0] = -object->line->x[0];
   object->line->x[1] = -object->line->x[1];
 
   /* translate back in position */
-  geda_line_object_translate (toplevel, world_centerx, world_centery, object);
+  geda_line_object_translate (object, world_centerx, world_centery);
 
 }
 

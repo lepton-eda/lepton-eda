@@ -104,7 +104,7 @@ void o_place_end (GschemToplevel *w_current,
     page->place_list = NULL;
   }
 
-  geda_object_list_translate (page->toplevel, w_diff_x, w_diff_y, temp_dest_list);
+  geda_object_list_translate (temp_dest_list, w_diff_x, w_diff_y);
 
   /* Attach each item back onto the page's object list. Update object
    * connectivity and add the new objects to the selection list.*/

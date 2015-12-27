@@ -612,7 +612,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
       }
 
       geda_object_list_rotate (toplevel, 0, 0, angle, new_node->complex->prim_objs);
-      geda_object_list_translate (toplevel, x, y, new_node->complex->prim_objs);
+      geda_object_list_translate (new_node->complex->prim_objs, x, y);
     }
 
     g_free (buffer);
@@ -796,13 +796,12 @@ char *o_complex_save(TOPLEVEL *toplevel, OBJECT *object)
  *  \par Function Description
  *  This function changes the position of a complex \a object.
  *
- *  \param [in] toplevel     The TOPLEVEL object
- *  \param [in] dx           The x-distance to move the object
- *  \param [in] dy           The y-distance to move the object
- *  \param [in] object       The complex OBJECT to be moved
+ *  \param [ref] object  The complex GedaObject to be moved
+ *  \param [in]  dx      The x-distance to move the object
+ *  \param [in]  dy      The y-distance to move the object
  */
-void geda_complex_object_translate (TOPLEVEL *toplevel, int dx, int dy,
-                               OBJECT *object)
+void
+geda_complex_object_translate (GedaObject *object, int dx, int dy)
 {
   g_return_if_fail (object != NULL &&
                     (object->type == OBJ_COMPLEX ||
@@ -811,7 +810,7 @@ void geda_complex_object_translate (TOPLEVEL *toplevel, int dx, int dy,
   object->complex->x = object->complex->x + dx;
   object->complex->y = object->complex->y + dy;
 
-  geda_object_list_translate (toplevel, dx, dy, object->complex->prim_objs);
+  geda_object_list_translate (object->complex->prim_objs, dx, dy);
 
   object->w_bounds_valid_for = NULL;
 }
@@ -903,15 +902,14 @@ void geda_complex_object_rotate (TOPLEVEL *toplevel,
   x = newx + (centerx);
   y = newy + (centery);
 
-  geda_complex_object_translate (toplevel,
-                            -object->complex->x,
-                            -object->complex->y, object);
+  geda_complex_object_translate (object, -object->complex->x, -object->complex->y);
+
   geda_object_list_rotate (toplevel, 0, 0, angle, object->complex->prim_objs);
 
   object->complex->x = 0;
   object->complex->y = 0;
 
-  geda_complex_object_translate (toplevel, x, y, object);
+  geda_complex_object_translate (object, x, y);
 
   object->complex->angle = ( object->complex->angle + angle ) % 360;
 }
@@ -936,9 +934,7 @@ void geda_complex_object_mirror (TOPLEVEL *toplevel,
   x = 2 * world_centerx - object->complex->x;
   y = object->complex->y;
 
-  geda_complex_object_translate (toplevel,
-                            -object->complex->x,
-                            -object->complex->y, object);
+  geda_complex_object_translate (object, -object->complex->x, -object->complex->y);
 
   geda_object_list_mirror (toplevel, 0, 0, object->complex->prim_objs);
 
@@ -955,7 +951,7 @@ void geda_complex_object_mirror (TOPLEVEL *toplevel,
 
   object->complex->mirror = !object->complex->mirror;
 
-  geda_complex_object_translate (toplevel, x, y, object);
+  geda_complex_object_translate (object, x, y);
 }
 
 

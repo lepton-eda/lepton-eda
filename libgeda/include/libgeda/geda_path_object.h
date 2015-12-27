@@ -35,7 +35,7 @@ void
 o_path_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 void
-geda_path_object_translate (TOPLEVEL *toplevel, int x, int y, OBJECT *object);
+geda_path_object_translate (GedaObject *object, int dx, int dy);
 
 void
 geda_path_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);

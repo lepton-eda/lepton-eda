@@ -119,12 +119,12 @@ void o_move_end_lowlevel (GschemToplevel *w_current,
     case (OBJ_BUS):
     case (OBJ_PIN):
       s_conn_remove_object_connections (page->toplevel, object);
-      geda_object_translate (page->toplevel, diff_x, diff_y, object);
+      geda_object_translate (object, diff_x, diff_y);
       s_conn_update_object (page, object);
       break;
 
     default:
-      geda_object_translate (page->toplevel, diff_x, diff_y, object);
+      geda_object_translate (object, diff_x, diff_y);
       break;
   }
 }

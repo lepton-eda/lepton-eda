@@ -26,7 +26,7 @@ OBJECT*
 o_pin_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2, int pin_type, int whichend);
 
 void
-geda_pin_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
+geda_pin_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
 o_pin_copy(TOPLEVEL *toplevel, OBJECT *o_current);

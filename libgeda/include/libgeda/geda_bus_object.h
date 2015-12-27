@@ -26,7 +26,7 @@ OBJECT*
 o_bus_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2, int bus_ripper_direction);
 
 void
-geda_bus_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
+geda_bus_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
 o_bus_copy(TOPLEVEL *toplevel, OBJECT *o_current);

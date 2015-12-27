@@ -44,7 +44,7 @@ void
 geda_picture_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 void
-geda_picture_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
+geda_picture_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
 o_picture_copy(TOPLEVEL *toplevel, OBJECT *o_current) G_GNUC_WARN_UNUSED_RESULT;

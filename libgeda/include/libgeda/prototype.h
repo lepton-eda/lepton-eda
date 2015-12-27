@@ -80,7 +80,7 @@ void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current);
 /* o_list.c */
 OBJECT *o_object_copy(TOPLEVEL *toplevel, OBJECT *selected);
 GList *o_glist_copy_all(TOPLEVEL *toplevel, const GList *src_list, GList *dest_list);
-void geda_object_list_translate (TOPLEVEL *toplevel, int dx, int dy, const GList *list);
+void geda_object_list_translate (const GList *objects, int dx, int dy);
 void geda_object_list_rotate (TOPLEVEL *toplevel, int x, int y, int angle, const GList *list);
 void geda_object_list_mirror (TOPLEVEL *toplevel, int x, int y, const GList *list);
 void o_glist_set_color(TOPLEVEL *toplevel, const GList *list, int color);

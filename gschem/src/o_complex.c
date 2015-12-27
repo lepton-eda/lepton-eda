@@ -191,13 +191,11 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
 
   if (offset == 0) {
     s_log_message(_("Translating schematic [%d %d]\n"), -x, -y);
-    geda_object_list_translate (toplevel, -x, -y,
-                                s_page_objects (toplevel->page_current));
+    geda_object_list_translate (s_page_objects (toplevel->page_current), -x, -y);
   } else {
     s_log_message(_("Translating schematic [%d %d]\n"),
                   offset, offset);
-    geda_object_list_translate (toplevel, offset, offset,
-                                s_page_objects (toplevel->page_current));
+    geda_object_list_translate (s_page_objects (toplevel->page_current), offset, offset);
   }
 
   for (iter = s_page_objects (toplevel->page_current);

@@ -217,18 +217,21 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
 }
 
 
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
+/*! \brief Translate a list of objects
+ *
+ *  \param [ref] objects A GList of objects to translate.
+ *  \param [in]  dx      The x distance to move.
+ *  \param [in]  dy      The y distance to move.
  */
-void geda_object_list_translate (TOPLEVEL *toplevel, int dx, int dy, const GList *list)
+void
+geda_object_list_translate (const GList *objects, int dx, int dy)
 {
-  const GList *iter = list;
-  OBJECT *o_current;
+  const GList *iter = objects;
 
-  while ( iter != NULL ) {
-    o_current = (OBJECT *)iter->data;
-    geda_object_translate (toplevel, dx, dy, o_current);
+  while (iter != NULL) {
+    GedaObject *object = (GedaObject*)iter->data;
+
+    geda_object_translate (object, dx, dy);
     iter = g_list_next (iter);
   }
 }

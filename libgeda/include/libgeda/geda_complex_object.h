@@ -44,7 +44,7 @@ void
 o_complex_set_filename(TOPLEVEL *toplevel, const char *basename);
 
 void
-geda_complex_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
+geda_complex_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT *
 o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current);

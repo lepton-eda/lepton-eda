@@ -301,20 +301,20 @@ gboolean o_get_position (TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object)
  *  This function translates the object <B>object</B> by
  *  <B>dx</B> and <B>dy</B>.
  *
- *  \param [in] toplevel The toplevel environment.
+ *  \param [in] object   The object to translate.
  *  \param [in] dx       Amount to horizontally translate object
  *  \param [in] dy       Amount to vertically translate object
- *  \param [in] object   The object to translate.
  */
-void geda_object_translate (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object)
+void
+geda_object_translate (GedaObject *object, gint dx, gint dy)
 {
-  void (*func) (TOPLEVEL*, int, int, OBJECT*) = NULL;
+  void (*func) (GedaObject*, int, int) = NULL;
 
   switch (object->type) {
       case OBJ_LINE:    func = geda_line_object_translate;    break;
       case OBJ_NET:     func = geda_net_object_translate;     break;
-      case OBJ_BUS:     func = geda_bus_object_translate; break;
-      case OBJ_BOX:     func = geda_box_object_translate; break;
+      case OBJ_BUS:     func = geda_bus_object_translate;     break;
+      case OBJ_BOX:     func = geda_box_object_translate;     break;
       case OBJ_PICTURE: func = geda_picture_object_translate; break;
       case OBJ_CIRCLE:  func = geda_circle_object_translate;  break;
       case OBJ_PLACEHOLDER:
@@ -322,14 +322,14 @@ void geda_object_translate (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object
       case OBJ_TEXT:    func = geda_text_object_translate;    break;
       case OBJ_PATH:    func = geda_path_object_translate;    break;
       case OBJ_PIN:     func = geda_pin_object_translate;     break;
-      case OBJ_ARC:     func = geda_arc_object_translate; break;
+      case OBJ_ARC:     func = geda_arc_object_translate;     break;
       default:
         g_critical ("geda_object_translate: object %p has bad type '%c'\n",
                     object, object->type);
   }
 
   if (func != NULL) {
-    (*func) (toplevel, dx, dy, object);
+    (*func) (object, dx, dy);
   }
 }
 

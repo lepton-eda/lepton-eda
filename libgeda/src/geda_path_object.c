@@ -363,13 +363,12 @@ void o_path_modify (TOPLEVEL *toplevel, OBJECT *object,
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the path
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
+ *  \param [in,out] object     Line OBJECT to translate.
  *  \param [in]     dx         x distance to move.
  *  \param [in]     dy         y distance to move.
- *  \param [in,out] object     Line OBJECT to translate.
  */
-void geda_path_object_translate (TOPLEVEL *toplevel,
-                             int dx, int dy, OBJECT *object)
+void
+geda_path_object_translate (GedaObject *object, int dx, int dy)
 {
   PATH_SECTION *section;
   int i;
