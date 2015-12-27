@@ -39,15 +39,28 @@ libgeda_la_SOURCES = \
 	g_basic.c \
 	geda_angle.c \
 	geda_arc.c \
+	geda_arc_object.c \
 	geda_bounds.c \
 	geda_box.c \
+	geda_box_object.c \
+	geda_bus_object.c \
 	geda_circle.c \
-	geda_line.c \
-	geda_list.c \
+	geda_circle_object.c \
+	geda_complex_object.c \
 	geda_fill_type.c \
+	geda_line.c \
+	geda_line_object.c \
+	geda_list.c \
+	geda_net_object.c \
+	geda_object.c \
+	geda_object_list.c \
 	geda_page.c \
 	geda_path.c \
+	geda_path_object.c \
+	geda_picture_object.c \
+	geda_pin_object.c \
 	geda_point.c \
+	geda_text_object.c \
 	geda_toplevel.c \
 	geda_transform.c \
 	geda_undo.c \
@@ -58,22 +71,9 @@ libgeda_la_SOURCES = \
 	m_basic.c \
 	m_hatch.c \
 	m_polygon.c \
-	o_arc_basic.c \
 	o_attrib.c \
-	o_basic.c \
-	o_box_basic.c \
-	o_bus_basic.c \
-	o_circle_basic.c \
-	o_complex_basic.c \
 	o_embed.c \
-	o_line_basic.c \
-	o_list.c \
-	o_net_basic.c \
-	o_path_basic.c \
-	o_picture.c \
-	o_pin_basic.c \
 	o_selection.c \
-	o_text_basic.c \
 	s_attrib.c \
 	s_basic.c \
 	s_clib.c \
