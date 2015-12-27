@@ -443,9 +443,9 @@ void o_line_mirror_world(TOPLEVEL *toplevel, int world_centerx,
 void world_get_line_bounds(TOPLEVEL *toplevel, OBJECT *object,
                            int *left, int *top, int *right, int *bottom)
 {
-  int halfwidth;
+  int expand;
 
-  halfwidth = object->line_width / 2;
+  expand = ceil (0.5 * G_SQRT2 * object->line_width);
 
   *left = min( object->line->x[0], object->line->x[1] );
   *top = min( object->line->y[0], object->line->y[1] );
@@ -453,10 +453,10 @@ void world_get_line_bounds(TOPLEVEL *toplevel, OBJECT *object,
   *bottom = max( object->line->y[0], object->line->y[1] );
 
   /* This isn't strictly correct, but a 1st order approximation */
-  *left   -= halfwidth;
-  *top    -= halfwidth;
-  *right  += halfwidth;
-  *bottom += halfwidth;
+  *left   -= expand;
+  *top    -= expand;
+  *right  += expand;
+  *bottom += expand;
 }
 
 /*! \brief get the position of the first line point
