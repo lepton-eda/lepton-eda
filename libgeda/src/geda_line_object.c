@@ -331,7 +331,7 @@ char *o_line_save(TOPLEVEL *toplevel, OBJECT *object)
  *  \param [in]     dy         y distance to move.
  *  \param [in,out] object     Line OBJECT to translate.
  */
-void o_line_translate_world(TOPLEVEL *toplevel,
+void geda_line_object_translate (TOPLEVEL *toplevel,
 			    int dx, int dy, OBJECT *object)
 {
   /* Update world coords */
@@ -357,7 +357,7 @@ void o_line_translate_world(TOPLEVEL *toplevel,
  *  \param [in]      angle          Rotation angle in degrees (See note below).
  *  \param [in,out]  object         Line OBJECT to rotate.
  */
-void o_line_rotate_world(TOPLEVEL *toplevel,
+void geda_line_object_rotate (TOPLEVEL *toplevel,
 			 int world_centerx, int world_centery, int angle,
 			 OBJECT *object)
 {
@@ -378,7 +378,7 @@ void o_line_rotate_world(TOPLEVEL *toplevel,
    * back to its previous location.
    */
   /* translate object to origin */
-  o_line_translate_world(toplevel, -world_centerx, -world_centery, object);
+  geda_line_object_translate (toplevel, -world_centerx, -world_centery, object);
 
   /* rotate line end 1 */
   geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
@@ -395,7 +395,7 @@ void o_line_rotate_world(TOPLEVEL *toplevel,
   object->line->y[1] = newy;
 
   /* translate object back to normal position */
-  o_line_translate_world(toplevel, world_centerx, world_centery, object);
+  geda_line_object_translate (toplevel, world_centerx, world_centery, object);
 
 }
 
@@ -412,18 +412,18 @@ void o_line_rotate_world(TOPLEVEL *toplevel,
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         Line OBJECT to mirror.
  */
-void o_line_mirror_world(TOPLEVEL *toplevel, int world_centerx,
+void geda_line_object_mirror (TOPLEVEL *toplevel, int world_centerx,
 			 int world_centery, OBJECT *object)
 {
   /* translate object to origin */
-  o_line_translate_world(toplevel, -world_centerx, -world_centery, object);
+  geda_line_object_translate (toplevel, -world_centerx, -world_centery, object);
 
   /* mirror the line ends */
   object->line->x[0] = -object->line->x[0];
   object->line->x[1] = -object->line->x[1];
 
   /* translate back in position */
-  o_line_translate_world(toplevel, world_centerx, world_centery, object);
+  geda_line_object_translate (toplevel, world_centerx, world_centery, object);
 
 }
 

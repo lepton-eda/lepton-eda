@@ -344,7 +344,7 @@ char *o_arc_save(TOPLEVEL *toplevel, OBJECT *object)
  *  \param [in] dy
  *  \param [in] object
  */
-void o_arc_translate_world(TOPLEVEL *toplevel, int dx, int dy,
+void geda_arc_object_translate (TOPLEVEL *toplevel, int dx, int dy,
 			   OBJECT *object)
 {
   if (object == NULL) {
@@ -380,7 +380,7 @@ void o_arc_translate_world(TOPLEVEL *toplevel, int dx, int dy,
  *  \param [in] angle
  *  \param [in] object
  */
-void o_arc_rotate_world(TOPLEVEL *toplevel,
+void geda_arc_object_rotate (TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, int angle,
 			OBJECT *object)
 {
@@ -431,7 +431,7 @@ void o_arc_rotate_world(TOPLEVEL *toplevel,
  *  \param [in] world_centery
  *  \param [in] object
  */
-void o_arc_mirror_world(TOPLEVEL *toplevel,
+void geda_arc_object_mirror (TOPLEVEL *toplevel,
 			int world_centerx, int world_centery,
 			OBJECT *object)
 {

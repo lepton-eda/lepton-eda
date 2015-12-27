@@ -2082,7 +2082,7 @@ SCM_DEFINE (translate_object_x, "%translate-object!", 3, 0, 0,
   int dy = scm_to_int (dy_s);
 
   o_emit_pre_change_notify (toplevel, obj);
-  o_translate_world (toplevel, dx, dy, obj);
+  geda_object_translate (toplevel, dx, dy, obj);
   o_emit_change_notify (toplevel, obj);
   o_page_changed (toplevel, obj);
 
@@ -2133,7 +2133,7 @@ SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
               SCM_ARG4, s_rotate_object_x);
 
   o_emit_pre_change_notify (toplevel, obj);
-  o_rotate_world (toplevel, x, y, angle, obj);
+  geda_object_rotate (toplevel, x, y, angle, obj);
   o_emit_change_notify (toplevel, obj);
   o_page_changed (toplevel, obj);
 
@@ -2166,7 +2166,7 @@ SCM_DEFINE (mirror_object_x, "%mirror-object!", 2, 0, 0,
   int x = scm_to_int (x_s);
 
   o_emit_pre_change_notify (toplevel, obj);
-  o_mirror_world (toplevel, x, 0, obj);
+  geda_object_mirror (toplevel, x, 0, obj);
   o_emit_change_notify (toplevel, obj);
   o_page_changed (toplevel, obj);
 

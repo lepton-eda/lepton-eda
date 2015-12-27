@@ -172,7 +172,7 @@ char *o_net_save(TOPLEVEL *toplevel, OBJECT *object)
  *  \param [in] object       The net OBJECT to be moved
  *
  */
-void o_net_translate_world(TOPLEVEL *toplevel, int dx, int dy,
+void geda_net_object_translate (TOPLEVEL *toplevel, int dx, int dy,
 			   OBJECT *object)
 {
   /* Update world coords */
@@ -220,7 +220,7 @@ OBJECT *o_net_copy(TOPLEVEL *toplevel,  OBJECT *o_current)
  *  \param [in] object        The net object
  *  \note only steps of 90 degrees are allowed for the \a angle
  */
-void o_net_rotate_world(TOPLEVEL *toplevel,
+void geda_net_object_rotate (TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, int angle,
 			OBJECT *object)
 {
@@ -230,7 +230,7 @@ void o_net_rotate_world(TOPLEVEL *toplevel,
     return;
 
   /* translate object to origin */
-  o_net_translate_world(toplevel, -world_centerx, -world_centery,
+  geda_net_object_translate (toplevel, -world_centerx, -world_centery,
                         object);
 
   geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
@@ -245,7 +245,7 @@ void o_net_rotate_world(TOPLEVEL *toplevel,
   object->line->x[1] = newx;
   object->line->y[1] = newy;
 
-  o_net_translate_world(toplevel, world_centerx, world_centery, object);
+  geda_net_object_translate (toplevel, world_centerx, world_centery, object);
 }
 
 /*! \brief mirror a net object horizontaly at a centerpoint
@@ -258,18 +258,18 @@ void o_net_rotate_world(TOPLEVEL *toplevel,
  *  \param [in] world_centery y-coord of the mirror position
  *  \param [in] object        The net object
  */
-void o_net_mirror_world(TOPLEVEL *toplevel, int world_centerx,
+void geda_net_object_mirror (TOPLEVEL *toplevel, int world_centerx,
 			int world_centery, OBJECT *object)
 {
   /* translate object to origin */
-  o_net_translate_world(toplevel, -world_centerx, -world_centery,
+  geda_net_object_translate (toplevel, -world_centerx, -world_centery,
                         object);
 
   object->line->x[0] = -object->line->x[0];
 
   object->line->x[1] = -object->line->x[1];
 
-  o_net_translate_world(toplevel, world_centerx, world_centery, object);
+  geda_net_object_translate (toplevel, world_centerx, world_centery, object);
 }
 
 /*! \brief calculate the orientation of a net object

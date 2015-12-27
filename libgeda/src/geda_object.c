@@ -306,25 +306,25 @@ gboolean o_get_position (TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object)
  *  \param [in] dy       Amount to vertically translate object
  *  \param [in] object   The object to translate.
  */
-void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object)
+void geda_object_translate (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object)
 {
   void (*func) (TOPLEVEL*, int, int, OBJECT*) = NULL;
 
   switch (object->type) {
-      case OBJ_LINE:    func = o_line_translate_world;    break;
-      case OBJ_NET:     func = o_net_translate_world;     break;
-      case OBJ_BUS:     func = o_bus_translate_world;     break;
-      case OBJ_BOX:     func = o_box_translate_world;     break;
-      case OBJ_PICTURE: func = o_picture_translate_world; break;
-      case OBJ_CIRCLE:  func = o_circle_translate_world;  break;
+      case OBJ_LINE:    func = geda_line_object_translate;    break;
+      case OBJ_NET:     func = geda_net_object_translate;     break;
+      case OBJ_BUS:     func = geda_bus_object_translate; break;
+      case OBJ_BOX:     func = geda_box_object_translate; break;
+      case OBJ_PICTURE: func = geda_picture_object_translate; break;
+      case OBJ_CIRCLE:  func = geda_circle_object_translate;  break;
       case OBJ_PLACEHOLDER:
-      case OBJ_COMPLEX: func = o_complex_translate_world; break;
-      case OBJ_TEXT:    func = o_text_translate_world;    break;
-      case OBJ_PATH:    func = o_path_translate_world;    break;
-      case OBJ_PIN:     func = o_pin_translate_world;     break;
-      case OBJ_ARC:     func = o_arc_translate_world;     break;
+      case OBJ_COMPLEX: func = geda_complex_object_translate; break;
+      case OBJ_TEXT:    func = geda_text_object_translate;    break;
+      case OBJ_PATH:    func = geda_path_object_translate;    break;
+      case OBJ_PIN:     func = geda_pin_object_translate;     break;
+      case OBJ_ARC:     func = geda_arc_object_translate; break;
       default:
-        g_critical ("o_translate_world: object %p has bad type '%c'\n",
+        g_critical ("geda_object_translate: object %p has bad type '%c'\n",
                     object, object->type);
   }
 
@@ -345,25 +345,25 @@ void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object)
  *  \param [in] angle          Angle of rotation (degrees)
  *  \param [in] object         The object to rotate.
  */
-void o_rotate_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object)
+void geda_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object)
 {
   void (*func) (TOPLEVEL*, int, int, int, OBJECT*) = NULL;
 
   switch (object->type) {
-      case OBJ_LINE:    func = o_line_rotate_world;       break;
-      case OBJ_NET:     func = o_net_rotate_world;        break;
-      case OBJ_BUS:     func = o_bus_rotate_world;        break;
-      case OBJ_BOX:     func = o_box_rotate_world;        break;
-      case OBJ_PICTURE: func = o_picture_rotate_world;    break;
-      case OBJ_CIRCLE:  func = o_circle_rotate_world;     break;
+      case OBJ_LINE:    func = geda_line_object_rotate;    break;
+      case OBJ_NET:     func = geda_net_object_rotate;     break;
+      case OBJ_BUS:     func = geda_bus_object_rotate;     break;
+      case OBJ_BOX:     func = geda_box_object_rotate;     break;
+      case OBJ_PICTURE: func = geda_picture_object_rotate; break;
+      case OBJ_CIRCLE:  func = geda_circle_object_rotate;  break;
       case OBJ_PLACEHOLDER:
-      case OBJ_COMPLEX: func = o_complex_rotate_world;    break;
-      case OBJ_TEXT:    func = o_text_rotate_world;       break;
-      case OBJ_PATH:    func = o_path_rotate_world;       break;
-      case OBJ_PIN:     func = o_pin_rotate_world;        break;
-      case OBJ_ARC:     func = o_arc_rotate_world;        break;
+      case OBJ_COMPLEX: func = geda_complex_object_rotate; break;
+      case OBJ_TEXT:    func = geda_text_object_rotate;    break;
+      case OBJ_PATH:    func = geda_path_object_rotate;    break;
+      case OBJ_PIN:     func = geda_pin_object_rotate;     break;
+      case OBJ_ARC:     func = geda_arc_object_rotate;     break;
       default:
-        g_critical ("o_rotate_world: object %p has bad type '%c'\n",
+        g_critical ("geda_object_rotate: object %p has bad type '%c'\n",
                     object, object->type);
   }
 
@@ -383,25 +383,25 @@ void o_rotate_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, i
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         The OBJECT to mirror.
  */
-void o_mirror_world (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object)
+void geda_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object)
 {
   void (*func) (TOPLEVEL*, int, int, OBJECT*) = NULL;
 
   switch (object->type) {
-      case OBJ_LINE:    func = o_line_mirror_world;       break;
-      case OBJ_NET:     func = o_net_mirror_world;        break;
-      case OBJ_BUS:     func = o_bus_mirror_world;        break;
-      case OBJ_BOX:     func = o_box_mirror_world;        break;
-      case OBJ_PICTURE: func = o_picture_mirror_world;    break;
-      case OBJ_CIRCLE:  func = o_circle_mirror_world;     break;
+      case OBJ_LINE:    func = geda_line_object_mirror;    break;
+      case OBJ_NET:     func = geda_net_object_mirror;     break;
+      case OBJ_BUS:     func = geda_bus_object_mirror;     break;
+      case OBJ_BOX:     func = geda_box_object_mirror;     break;
+      case OBJ_PICTURE: func = geda_picture_object_mirror; break;
+      case OBJ_CIRCLE:  func = geda_circle_object_mirror;  break;
       case OBJ_PLACEHOLDER:
-      case OBJ_COMPLEX: func = o_complex_mirror_world;    break;
-      case OBJ_TEXT:    func = o_text_mirror_world;       break;
-      case OBJ_PATH:    func = o_path_mirror_world;       break;
-      case OBJ_PIN:     func = o_pin_mirror_world;        break;
-      case OBJ_ARC:     func = o_arc_mirror_world;        break;
+      case OBJ_COMPLEX: func = geda_complex_object_mirror; break;
+      case OBJ_TEXT:    func = geda_text_object_mirror;    break;
+      case OBJ_PATH:    func = geda_path_object_mirror;    break;
+      case OBJ_PIN:     func = geda_pin_object_mirror;     break;
+      case OBJ_ARC:     func = geda_arc_object_mirror;     break;
       default:
-        g_critical ("o_mirror_world: object %p has bad type '%c'\n",
+        g_critical ("geda_object_mirror: object %p has bad type '%c'\n",
                     object, object->type);
   }
 

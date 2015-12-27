@@ -368,7 +368,7 @@ void o_path_modify (TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in]     dy         y distance to move.
  *  \param [in,out] object     Line OBJECT to translate.
  */
-void o_path_translate_world (TOPLEVEL *toplevel,
+void geda_path_object_translate (TOPLEVEL *toplevel,
                              int dx, int dy, OBJECT *object)
 {
   PATH_SECTION *section;
@@ -413,7 +413,7 @@ void o_path_translate_world (TOPLEVEL *toplevel,
  *  \param [in]      angle          Rotation angle in degrees (See note below).
  *  \param [in,out]  object         Line OBJECT to rotate.
  */
-void o_path_rotate_world (TOPLEVEL *toplevel,
+void geda_path_object_rotate (TOPLEVEL *toplevel,
                           int world_centerx, int world_centery, int angle,
                           OBJECT *object)
 {
@@ -459,7 +459,7 @@ void o_path_rotate_world (TOPLEVEL *toplevel,
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         Line OBJECT to mirror.
  */
-void o_path_mirror_world (TOPLEVEL *toplevel, int world_centerx,
+void geda_path_object_mirror (TOPLEVEL *toplevel, int world_centerx,
                           int world_centery, OBJECT *object)
 {
   PATH_SECTION *section;

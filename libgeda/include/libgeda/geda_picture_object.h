@@ -38,13 +38,13 @@ void
 o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object, int x1, int y1, int x2, int y2);
 
 void
-o_picture_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle,OBJECT *object);
+geda_picture_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle,OBJECT *object);
 
 void
-o_picture_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_picture_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 void
-o_picture_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
+geda_picture_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
 
 OBJECT*
 o_picture_copy(TOPLEVEL *toplevel, OBJECT *o_current) G_GNUC_WARN_UNUSED_RESULT;

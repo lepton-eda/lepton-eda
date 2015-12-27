@@ -110,13 +110,13 @@ gboolean
 o_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 
 void
-o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object);
+geda_object_translate (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object);
 
 void
-o_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+geda_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 
 void
-o_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 double
 o_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y);

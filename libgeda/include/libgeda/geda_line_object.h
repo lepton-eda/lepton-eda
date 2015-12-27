@@ -32,13 +32,13 @@ void
 o_line_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 void
-o_line_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
+geda_line_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
 
 void
-o_line_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+geda_line_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 
 void
-o_line_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_line_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 void
 o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale, OBJECT *object);

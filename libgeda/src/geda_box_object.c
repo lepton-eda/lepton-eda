@@ -432,7 +432,7 @@ char *o_box_save(TOPLEVEL *toplevel, OBJECT *object)
  *  \param [in]     dy         y distance to move.
  *  \param [in,out] object     BOX OBJECT to translate.
  */
-void o_box_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
+void geda_box_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
 {
   /* Do world coords */
   object->box->upper_x = object->box->upper_x + dx;
@@ -458,7 +458,7 @@ void o_box_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
  *  \param [in,out]  object         BOX OBJECT to rotate.
  *
  */
-void o_box_rotate_world(TOPLEVEL *toplevel,
+void geda_box_object_rotate (TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, int angle,
 			OBJECT *object)
 {
@@ -523,7 +523,7 @@ void o_box_rotate_world(TOPLEVEL *toplevel,
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         BOX OBJECT to mirror.
  */
-void o_box_mirror_world(TOPLEVEL *toplevel,
+void geda_box_object_mirror (TOPLEVEL *toplevel,
 			int world_centerx, int world_centery,
 			OBJECT *object)
 {

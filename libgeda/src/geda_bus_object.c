@@ -192,7 +192,7 @@ char *o_bus_save(TOPLEVEL *toplevel, OBJECT *object)
  *  \param [in] dy           The y-distance to move the object
  *  \param [in] object       The bus OBJECT to be moved
  */
-void o_bus_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
+void geda_bus_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
 {
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
@@ -240,7 +240,7 @@ OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in] object        The bus object
  *  \note only steps of 90 degrees are allowed for the \a angle
  */
-void o_bus_rotate_world(TOPLEVEL *toplevel,
+void geda_bus_object_rotate (TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, int angle,
 			OBJECT *object)
 {
@@ -250,7 +250,7 @@ void o_bus_rotate_world(TOPLEVEL *toplevel,
   return;
 
   /* translate object to origin */
-  o_bus_translate_world(toplevel, -world_centerx, -world_centery, object);
+  geda_bus_object_translate (toplevel, -world_centerx, -world_centery, object);
 
   geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
                   &newx, &newy);
@@ -264,7 +264,7 @@ void o_bus_rotate_world(TOPLEVEL *toplevel,
   object->line->x[1] = newx;
   object->line->y[1] = newy;
 
-  o_bus_translate_world(toplevel, world_centerx, world_centery, object);
+  geda_bus_object_translate (toplevel, world_centerx, world_centery, object);
 }
 
 /*! \brief mirror a bus object horizontaly at a centerpoint
@@ -277,17 +277,17 @@ void o_bus_rotate_world(TOPLEVEL *toplevel,
  *  \param [in] world_centery y-coord of the mirror position
  *  \param [in] object        The bus object
  */
-void o_bus_mirror_world(TOPLEVEL *toplevel,
+void geda_bus_object_mirror (TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, OBJECT *object)
 {
   /* translate object to origin */
-  o_bus_translate_world(toplevel, -world_centerx, -world_centery, object);
+  geda_bus_object_translate (toplevel, -world_centerx, -world_centery, object);
 
   object->line->x[0] = -object->line->x[0];
 
   object->line->x[1] = -object->line->x[1];
 
-  o_bus_translate_world(toplevel, world_centerx, world_centery, object);
+  geda_bus_object_translate (toplevel, world_centerx, world_centery, object);
 }
 
 /*! \brief calculate the orientation of a bus object

@@ -228,11 +228,11 @@ int o_save (TOPLEVEL *toplevel, const GList *object_list,
 
   /* Check to see if real filename is writable; if file doesn't exists
      we assume all is well */
-  if (g_file_test(filename, G_FILE_TEST_EXISTS) && 
+  if (g_file_test(filename, G_FILE_TEST_EXISTS) &&
       g_access(filename, W_OK) != 0) {
     g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_PERM,
                  _("File %s is read-only"), filename);
-    return 0;      
+    return 0;
   }
 
   buffer = o_save_buffer (toplevel, object_list);
@@ -393,7 +393,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         new_object_list = g_list_prepend (new_object_list, new_obj);
         break;
 
-      case(STARTATTACH_ATTR): 
+      case(STARTATTACH_ATTR):
         /* first is the fp */
         /* 2nd is the object to get the attributes */
         if (new_obj != NULL) {
@@ -449,7 +449,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         if (embedded_level>0) {
           /* don't do this since objects are already
            * stored/read translated
-           * o_complex_translate_world (toplevel, new_object_list->x,
+           * geda_complex_object_translate (toplevel, new_object_list->x,
            *                            new_object_list->y, new_object_list->complex);
            */
           new_object_list = g_list_reverse (new_object_list);
@@ -567,7 +567,7 @@ GList *o_read (TOPLEVEL *toplevel, GList *object_list, char *filename,
 
   if (!g_file_get_contents(filename, &buffer, &size, err)) {
     return NULL;
-  } 
+  }
 
   /* Parse file contents */
   result = o_read_buffer (toplevel, object_list, buffer, size, filename, err);

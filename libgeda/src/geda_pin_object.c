@@ -199,7 +199,7 @@ char *o_pin_save(TOPLEVEL *toplevel, OBJECT *object)
  *  \param [in] dy           The y-distance to move the object
  *  \param [in] object       The pin OBJECT to be moved
  */
-void o_pin_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
+void geda_pin_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
 {
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
@@ -243,7 +243,7 @@ OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in] object        The pin object
  *  \note only steps of 90 degrees are allowed for the \a angle
  */
-void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx,
+void geda_pin_object_rotate (TOPLEVEL *toplevel, int world_centerx,
 			int world_centery, int angle,
 			OBJECT *object)
 {
@@ -253,7 +253,7 @@ void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx,
     return;
 
   /* translate object to origin */
-  o_pin_translate_world(toplevel, -world_centerx, -world_centery, object);
+  geda_pin_object_translate (toplevel, -world_centerx, -world_centery, object);
 
   geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
                   &newx, &newy);
@@ -267,7 +267,7 @@ void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx,
   object->line->x[1] = newx;
   object->line->y[1] = newy;
 
-  o_pin_translate_world(toplevel, world_centerx, world_centery, object);
+  geda_pin_object_translate (toplevel, world_centerx, world_centery, object);
 }
 
 /*! \brief mirror a pin object horizontaly at a centerpoint
@@ -280,17 +280,17 @@ void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx,
  *  \param [in] world_centery y-coord of the mirror position
  *  \param [in] object        The pin object
  */
-void o_pin_mirror_world(TOPLEVEL *toplevel,
+void geda_pin_object_mirror (TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, OBJECT *object)
 {
   /* translate object to origin */
-  o_pin_translate_world(toplevel, -world_centerx, -world_centery, object);
+  geda_pin_object_translate (toplevel, -world_centerx, -world_centery, object);
 
   object->line->x[0] = -object->line->x[0];
 
   object->line->x[1] = -object->line->x[1];
 
-  o_pin_translate_world(toplevel, world_centerx, world_centery, object);
+  geda_pin_object_translate (toplevel, world_centerx, world_centery, object);
 }
 
 /*! \brief modify one point of a pin object

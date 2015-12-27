@@ -542,7 +542,7 @@ o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in]      angle          Rotation angle in degrees (See note below).
  *  \param [in,out]  object         Picture OBJECT to rotate.
  */
-void o_picture_rotate_world(TOPLEVEL *toplevel,
+void geda_picture_object_rotate (TOPLEVEL *toplevel,
                             int world_centerx, int world_centery, int angle,
                             OBJECT *object)
 {
@@ -606,7 +606,7 @@ void o_picture_rotate_world(TOPLEVEL *toplevel,
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         Picture OBJECT to mirror.
  */
-void o_picture_mirror_world(TOPLEVEL *toplevel,
+void geda_picture_object_mirror(TOPLEVEL *toplevel,
                             int world_centerx, int world_centery,
                             OBJECT *object)
 {
@@ -664,7 +664,7 @@ void o_picture_mirror_world(TOPLEVEL *toplevel,
  *  \param [in]     dy         y distance to move.
  *  \param [in,out] object     Picture OBJECT to translate.
  */
-void o_picture_translate_world(TOPLEVEL *toplevel,
+void geda_picture_object_translate (TOPLEVEL *toplevel,
                                int dx, int dy, OBJECT *object)
 {
   /* Do world coords */

@@ -35,11 +35,11 @@ void
 o_circle_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 void
-o_circle_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
+geda_circle_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
 
 void
-o_circle_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+geda_circle_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 
 void
-o_circle_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_circle_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 

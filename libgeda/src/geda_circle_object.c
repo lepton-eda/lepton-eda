@@ -365,7 +365,7 @@ char *o_circle_save(TOPLEVEL *toplevel, OBJECT *object)
  *  \param [in]     dy         y distance to move.
  *  \param [in,out] object     Circle OBJECT to translate.
  */
-void o_circle_translate_world(TOPLEVEL *toplevel,
+void geda_circle_object_translate (TOPLEVEL *toplevel,
 			      int dx, int dy, OBJECT *object)
 {
   /* Do world coords */
@@ -379,7 +379,7 @@ void o_circle_translate_world(TOPLEVEL *toplevel,
 
 /*! \brief Rotate Circle OBJECT using WORLD coordinates.
  *  \par Function Description
- *  The function #o_circle_rotate_world() rotate the circle described by
+ *  The function #geda_circle_object_rotate() rotate the circle described by
  *  <B>*object</B> around the (<B>world_centerx</B>,<B>world_centery</B>) point by
  *  angle <B>angle</B> degrees.
  *  The center of rotation is in world unit.
@@ -390,7 +390,7 @@ void o_circle_translate_world(TOPLEVEL *toplevel,
  *  \param [in]      angle          Rotation angle in degrees (See note below).
  *  \param [in,out]  object         Circle OBJECT to rotate.
  */
-void o_circle_rotate_world(TOPLEVEL *toplevel,
+void geda_circle_object_rotate (TOPLEVEL *toplevel,
 			   int world_centerx, int world_centery, int angle,
 			   OBJECT *object)
 {
@@ -442,7 +442,7 @@ void o_circle_rotate_world(TOPLEVEL *toplevel,
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         Circle OBJECT to mirror.
  */
-void o_circle_mirror_world(TOPLEVEL *toplevel,
+void geda_circle_object_mirror (TOPLEVEL *toplevel,
 			   int world_centerx, int world_centery,
 			   OBJECT *object)
 {

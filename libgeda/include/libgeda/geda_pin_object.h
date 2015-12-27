@@ -26,16 +26,16 @@ OBJECT*
 o_pin_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2, int pin_type, int whichend);
 
 void
-o_pin_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
+geda_pin_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
 
 OBJECT*
 o_pin_copy(TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
-o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+geda_pin_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 
 void
-o_pin_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_pin_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 void
 o_pin_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);

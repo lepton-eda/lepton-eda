@@ -221,14 +221,14 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
  *  \brief
  *  \par Function Description
  */
-void o_glist_translate_world(TOPLEVEL *toplevel, int dx, int dy, const GList *list)
+void geda_object_list_translate (TOPLEVEL *toplevel, int dx, int dy, const GList *list)
 {
   const GList *iter = list;
   OBJECT *o_current;
 
   while ( iter != NULL ) {
     o_current = (OBJECT *)iter->data;
-    o_translate_world(toplevel, dx, dy, o_current);
+    geda_object_translate (toplevel, dx, dy, o_current);
     iter = g_list_next (iter);
   }
 }
@@ -238,14 +238,14 @@ void o_glist_translate_world(TOPLEVEL *toplevel, int dx, int dy, const GList *li
  *  \brief
  *  \par Function Description
  */
-void o_glist_rotate_world (TOPLEVEL *toplevel, int x, int y, int angle, const GList *list)
+void geda_object_list_rotate (TOPLEVEL *toplevel, int x, int y, int angle, const GList *list)
 {
   const GList *iter = list;
   OBJECT *o_current;
 
   while ( iter != NULL ) {
     o_current = (OBJECT *)iter->data;
-    o_rotate_world (toplevel, x, y, angle, o_current);
+    geda_object_rotate (toplevel, x, y, angle, o_current);
     iter = g_list_next (iter);
   }
 }
@@ -255,14 +255,14 @@ void o_glist_rotate_world (TOPLEVEL *toplevel, int x, int y, int angle, const GL
  *  \brief
  *  \par Function Description
  */
-void o_glist_mirror_world (TOPLEVEL *toplevel, int x, int y, const GList *list)
+void geda_object_list_mirror (TOPLEVEL *toplevel, int x, int y, const GList *list)
 {
   const GList *iter = list;
   OBJECT *o_current;
 
   while ( iter != NULL ) {
     o_current = (OBJECT *)iter->data;
-    o_mirror_world (toplevel, x, y, o_current);
+    geda_object_mirror (toplevel, x, y, o_current);
     iter = g_list_next (iter);
   }
 }

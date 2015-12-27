@@ -26,16 +26,16 @@ OBJECT*
 o_net_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
 
 void
-o_net_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
+geda_net_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
 
 OBJECT*
 o_net_copy(TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
-o_net_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+geda_net_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 
 void
-o_net_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_net_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 int
 o_net_orientation(OBJECT *object);

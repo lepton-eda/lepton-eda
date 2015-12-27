@@ -494,7 +494,7 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in] dy           The y-distance to move the object
  *  \param [in] o_current    The text OBJECT to be moved
  */
-void o_text_translate_world(TOPLEVEL *toplevel,
+void geda_text_object_translate (TOPLEVEL *toplevel,
                             int dx, int dy, OBJECT *o_current)
 {
   o_current->text->x = o_current->text->x + dx;
@@ -540,7 +540,7 @@ OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in] object        The text object
  *  \note only steps of 90 degrees are allowed for the \a angle
  */
-void o_text_rotate_world(TOPLEVEL *toplevel,
+void geda_text_object_rotate (TOPLEVEL *toplevel,
                          int world_centerx, int world_centery,
                          int angle, OBJECT *object)
 {
@@ -560,7 +560,7 @@ void o_text_rotate_world(TOPLEVEL *toplevel,
   x = newx + (world_centerx);
   y = newy + (world_centery);
 
-  o_text_translate_world(toplevel, x-object->text->x, y-object->text->y, object);
+  geda_text_object_translate (toplevel, x-object->text->x, y-object->text->y, object);
 
   o_text_recreate(toplevel, object);
 }
@@ -576,7 +576,7 @@ void o_text_rotate_world(TOPLEVEL *toplevel,
  *  \param [in] world_centery y-coord of the mirror position
  *  \param [in] object        The text object
  */
-void o_text_mirror_world(TOPLEVEL *toplevel,
+void geda_text_object_mirror (TOPLEVEL *toplevel,
 			 int world_centerx, int world_centery,
 			 OBJECT *object)
 {

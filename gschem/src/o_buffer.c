@@ -190,8 +190,8 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   x = snap_grid (w_current, rleft);
   y = snap_grid (w_current, rtop);
 
-  o_glist_translate_world (toplevel, w_x - x, w_y - y,
-                           toplevel->page_current->place_list);
+  geda_object_list_translate (toplevel, w_x - x, w_y - y,
+                              toplevel->page_current->place_list);
 
   i_set_state(w_current, PASTEMODE);
   o_place_start (w_current, w_x, w_y);

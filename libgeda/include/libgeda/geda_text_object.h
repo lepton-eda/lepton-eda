@@ -32,16 +32,16 @@ void
 o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
-o_text_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *o_current);
+geda_text_object_translate (TOPLEVEL *toplevel, int dx, int dy, OBJECT *o_current);
 
 OBJECT*
 o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
-o_text_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+geda_text_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 
 void
-o_text_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_text_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 void
 o_text_set_string(TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string);

@@ -153,10 +153,10 @@ SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
 
   int x = scm_to_int (x_s);
   int y = scm_to_int (y_s);
-  o_translate_world (toplevel,
-                     x - obj->complex->x,
-                     y - obj->complex->y,
-                     obj);
+  geda_object_translate (toplevel,
+                         x - obj->complex->x,
+                         y - obj->complex->y,
+                         obj);
   obj->complex->angle = angle;
   obj->complex->mirror = scm_is_true (mirror_s);
   obj->selectable = scm_is_false (locked_s);
