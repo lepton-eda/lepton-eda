@@ -39,14 +39,14 @@
  *  If the line represents a single point (the endpoints are the same), this
  *  function calcualtes the distance to that point.
  *
- *  \param [in] line  The LINE object.
+ *  \param [in] line  The GedaLine object.
  *  \param [in] x     The x coordinate of the given point.
  *  \param [in] y     The y coordinate of the given point.
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-m_line_shortest_distance (LINE *line, int x, int y)
+geda_line_shortest_distance (GedaLine *line, int x, int y)
 {
   double cx, cy;
   double dx, dy;

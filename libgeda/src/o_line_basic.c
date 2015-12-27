@@ -545,6 +545,6 @@ double o_line_length(OBJECT *object)
 double o_line_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
                                  int x, int y, int force_solid)
 {
-  return m_line_shortest_distance (object->line, x, y);
+  return geda_line_shortest_distance (object->line, x, y);
 }
 

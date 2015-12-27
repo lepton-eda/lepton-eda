@@ -32,4 +32,4 @@ struct st_line
 };
 
 double
-m_line_shortest_distance (LINE *circle, int x, int y);
+geda_line_shortest_distance (GedaLine *line, int x, int y);
