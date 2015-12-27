@@ -201,6 +201,10 @@ char *o_pin_save(TOPLEVEL *toplevel, OBJECT *object)
 void
 geda_pin_object_translate (GedaObject *object, int dx, int dy)
 {
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_PIN);
+
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
   object->line->y[0] = object->line->y[0] + dy;
@@ -249,6 +253,10 @@ void geda_pin_object_rotate (TOPLEVEL *toplevel, int world_centerx,
 {
   int newx, newy;
 
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_PIN);
+
   if (angle == 0)
     return;
 
@@ -283,6 +291,10 @@ void geda_pin_object_rotate (TOPLEVEL *toplevel, int world_centerx,
 void geda_pin_object_mirror (TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, OBJECT *object)
 {
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_PIN);
+
   /* translate object to origin */
   geda_pin_object_translate (object, -world_centerx, -world_centery);
 

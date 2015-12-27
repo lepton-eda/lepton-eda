@@ -367,6 +367,10 @@ char *o_circle_save(TOPLEVEL *toplevel, OBJECT *object)
 void
 geda_circle_object_translate (GedaObject *object, int dx, int dy)
 {
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->circle != NULL);
+  g_return_if_fail (object->type == OBJ_CIRCLE);
+
   /* Do world coords */
   object->circle->center_x = object->circle->center_x + dx;
   object->circle->center_y = object->circle->center_y + dy;
@@ -395,6 +399,10 @@ void geda_circle_object_rotate (TOPLEVEL *toplevel,
 {
   int newx, newy;
   int x, y;
+
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->circle != NULL);
+  g_return_if_fail (object->type == OBJ_CIRCLE);
 
   /* Only 90 degree multiple and positive angles are allowed. */
   /* angle must be positive */
@@ -445,6 +453,10 @@ void geda_circle_object_mirror (TOPLEVEL *toplevel,
 			   int world_centerx, int world_centery,
 			   OBJECT *object)
 {
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->circle != NULL);
+  g_return_if_fail (object->type == OBJ_CIRCLE);
+
   /* translate object to origin */
   object->circle->center_x -= world_centerx;
   object->circle->center_y -= world_centery;

@@ -363,7 +363,7 @@ void o_path_modify (TOPLEVEL *toplevel, OBJECT *object,
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the path
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
- *  \param [in,out] object     Line OBJECT to translate.
+ *  \param [in,out] object     Line GedaObject to translate.
  *  \param [in]     dx         x distance to move.
  *  \param [in]     dy         y distance to move.
  */
@@ -372,6 +372,10 @@ geda_path_object_translate (GedaObject *object, int dx, int dy)
 {
   PATH_SECTION *section;
   int i;
+
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->path != NULL);
+  g_return_if_fail (object->type == OBJ_PATH);
 
   for (i = 0; i < object->path->num_sections; i++) {
     section = &object->path->sections[i];
@@ -419,6 +423,10 @@ void geda_path_object_rotate (TOPLEVEL *toplevel,
   PATH_SECTION *section;
   int i;
 
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->path != NULL);
+  g_return_if_fail (object->type == OBJ_PATH);
+
   for (i = 0; i < object->path->num_sections; i++) {
     section = &object->path->sections[i];
 
@@ -463,6 +471,10 @@ void geda_path_object_mirror (TOPLEVEL *toplevel, int world_centerx,
 {
   PATH_SECTION *section;
   int i;
+
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->path != NULL);
+  g_return_if_fail (object->type == OBJ_PATH);
 
   for (i = 0; i < object->path->num_sections; i++) {
     section = &object->path->sections[i];

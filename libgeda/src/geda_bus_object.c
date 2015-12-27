@@ -194,6 +194,10 @@ char *o_bus_save(TOPLEVEL *toplevel, OBJECT *object)
 void
 geda_bus_object_translate (GedaObject *object, int dx, int dy)
 {
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_BUS);
+
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
   object->line->y[0] = object->line->y[0] + dy;
@@ -246,6 +250,10 @@ void geda_bus_object_rotate (TOPLEVEL *toplevel,
 {
   int newx, newy;
 
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_BUS);
+
   if (angle == 0)
   return;
 
@@ -280,6 +288,10 @@ void geda_bus_object_rotate (TOPLEVEL *toplevel,
 void geda_bus_object_mirror (TOPLEVEL *toplevel,
 			int world_centerx, int world_centery, OBJECT *object)
 {
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_BUS);
+
   /* translate object to origin */
   geda_bus_object_translate (object, -world_centerx, -world_centery);
 

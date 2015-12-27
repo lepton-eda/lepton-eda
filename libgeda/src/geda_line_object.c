@@ -333,6 +333,10 @@ char *o_line_save(TOPLEVEL *toplevel, OBJECT *object)
 void
 geda_line_object_translate (GedaObject *object, int dx, int dy)
 {
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_LINE);
+
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
   object->line->y[0] = object->line->y[0] + dy;
@@ -361,6 +365,10 @@ void geda_line_object_rotate (TOPLEVEL *toplevel,
 			 OBJECT *object)
 {
   int newx, newy;
+
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_LINE);
 
   if (angle == 0)
     return;
@@ -414,6 +422,10 @@ void geda_line_object_rotate (TOPLEVEL *toplevel,
 void geda_line_object_mirror (TOPLEVEL *toplevel, int world_centerx,
 			 int world_centery, OBJECT *object)
 {
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_LINE);
+
   /* translate object to origin */
   geda_line_object_translate (object, -world_centerx, -world_centery);
 

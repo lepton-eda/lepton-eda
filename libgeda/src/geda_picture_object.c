@@ -549,6 +549,10 @@ void geda_picture_object_rotate (TOPLEVEL *toplevel,
   int newx1, newy1;
   int newx2, newy2;
 
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->picture != NULL);
+  g_return_if_fail (object->type == OBJ_PICTURE);
+
   /* Only 90 degree multiple and positive angles are allowed. */
   /* angle must be positive */
   if(angle < 0) angle = -angle;
@@ -613,6 +617,10 @@ void geda_picture_object_mirror(TOPLEVEL *toplevel,
   int newx1, newy1;
   int newx2, newy2;
 
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->picture != NULL);
+  g_return_if_fail (object->type == OBJ_PICTURE);
+
   /* Set info in object. Sometimes it's necessary to change the
    * rotation angle as well as the mirror flag. */
   object->picture->mirrored = !object->picture->mirrored;
@@ -666,6 +674,10 @@ void geda_picture_object_mirror(TOPLEVEL *toplevel,
 void
 geda_picture_object_translate (GedaObject *object, int dx, int dy)
 {
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->picture != NULL);
+  g_return_if_fail (object->type == OBJ_PICTURE);
+
   /* Do world coords */
   object->picture->upper_x = object->picture->upper_x + dx;
   object->picture->upper_y = object->picture->upper_y + dy;
