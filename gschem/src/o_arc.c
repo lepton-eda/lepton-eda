@@ -118,7 +118,7 @@ void o_arc_end1(GschemToplevel *w_current, int w_x, int w_y)
 /*! \brief Ends the process of arc input.
  *  \par Function Description
  *  The #o_arc_end4() function ends the process of the input of an arc.
- *  <B>start_angle</B> and <B>end_angle</B> are the start and end angle of the
+ *  <B>start_angle</B> and <B>sweep_angle</B> are the start and sweep angle of the
  *  arc in degrees. The partial internal representation of the arc, i.e.
  *  the center and the radius of the arc, are converted in world units.
  *  A new object is created and linked to the object list.
@@ -126,10 +126,10 @@ void o_arc_end1(GschemToplevel *w_current, int w_x, int w_y)
  *  \param [in] w_current    The GschemToplevel object.
  *  \param [in] radius       Radius of the arc
  *  \param [in] start_angle  Start of angle in degrees.
- *  \param [in] end_angle    End of angle in degrees.
+ *  \param [in] sweep_angle  Angle sweep in degrees.
  */
-void o_arc_end4(GschemToplevel *w_current, int radius, 
-		int start_angle, int end_angle)
+void o_arc_end4(GschemToplevel *w_current, int radius,
+		int start_angle, int sweep_angle)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
@@ -145,7 +145,7 @@ void o_arc_end4(GschemToplevel *w_current, int radius,
   /* create, initialize and link the new arc object */
   new_obj = o_arc_new (toplevel, OBJ_ARC, GRAPHIC_COLOR,
                        w_current->first_wx, w_current->first_wy,
-                       radius, start_angle, end_angle);
+                       radius, start_angle, sweep_angle);
   s_page_append (toplevel, page, new_obj);
 
   w_current->first_wx  = -1;
@@ -191,7 +191,7 @@ void o_arc_end4(GschemToplevel *w_current, int radius,
  *    <DT>ARC_START_ANGLE</DT>
  *    <DD>at one end of the arc. It corresponds to the starting
  *        angle of the arc.
- *    <DT>ARC_END_ANGLE</DT>
+ *    <DT>ARC_SWEEP_ANGLE</DT>
  *    <DD>at the other end of the arc. It corresponds to the
  *        ending angle of the arc.
  *  </DL>
@@ -210,12 +210,12 @@ void o_arc_motion (GschemToplevel *w_current, int w_x, int w_y, int whichone)
     /*
      * The radius is taken as the biggest distance on the x and y
      * axis between the center of the arc and the mouse position.
-     */		
+     */
     diff_x = abs(w_current->first_wx - snap_grid (w_current, w_x));
     diff_y = abs(w_current->first_wy - snap_grid (w_current, w_y));
     w_current->distance = max(diff_x, diff_y);
   }
-  else if((whichone == ARC_START_ANGLE) || (whichone == ARC_END_ANGLE)) {
+  else if((whichone == ARC_START_ANGLE) || (whichone == ARC_SWEEP_ANGLE)) {
     /* compute the angle */
     diff_x = w_x - w_current->first_wx;
     diff_y = w_y - w_current->first_wy;
@@ -227,10 +227,10 @@ void o_arc_motion (GschemToplevel *w_current, int w_x, int w_y, int whichone)
       w_current->second_wx = (angle_deg + 360) % 360;
       break;
 
-    case ARC_END_ANGLE:
+    case ARC_SWEEP_ANGLE:
       w_current->second_wy = (((angle_deg + 360) % 360) -
                               w_current->second_wx + 360) % 360;
-      if (w_current->which_object->arc->end_angle < 0)
+      if (w_current->which_object->arc->sweep_angle < 0)
         w_current->second_wy = w_current->second_wy - 360;
       if (w_current->second_wy == 0)
         w_current->second_wy = 360;

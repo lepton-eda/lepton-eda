@@ -23,7 +23,7 @@
  */
 
 OBJECT*
-o_arc_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int radius, int start_angle, int end_angle);
+o_arc_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int radius, int start_angle, int sweep_angle);
 
 OBJECT*
 o_arc_copy(TOPLEVEL *toplevel, OBJECT *o_current);

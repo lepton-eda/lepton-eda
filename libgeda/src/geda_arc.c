@@ -57,11 +57,11 @@ geda_arc_within_sweep (GedaArc *arc, gint x, gint y)
 
   angle = 180 * atan2(dy, dx) / G_PI;
 
-  if (arc->end_angle > 0) {
+  if (arc->sweep_angle > 0) {
     a0 = arc->start_angle;
-    a1 = arc->start_angle + arc->end_angle;
+    a1 = arc->start_angle + arc->sweep_angle;
   } else {
-    a0 = arc->start_angle + arc->end_angle + 360;
+    a0 = arc->start_angle + arc->sweep_angle + 360;
     a1 = arc->start_angle + 360;
   }
 

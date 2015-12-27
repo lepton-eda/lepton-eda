@@ -62,7 +62,7 @@ typedef enum { F_OPEN_RC           = 1,
 #define ARC_CENTER 0
 #define ARC_RADIUS 1
 #define ARC_START_ANGLE 2
-#define ARC_END_ANGLE 3
+#define ARC_SWEEP_ANGLE 3
 
 #define BOX_UPPER_LEFT 0
 #define BOX_LOWER_RIGHT 1

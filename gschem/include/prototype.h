@@ -383,7 +383,7 @@ double round_5_2_1(double unrounded);
 void o_arc_invalidate_rubber(GschemToplevel *w_current);
 void o_arc_start(GschemToplevel *w_current, int x, int y);
 void o_arc_end1(GschemToplevel *w_current, int x, int y);
-void o_arc_end4(GschemToplevel *w_current, int radius, int start_angle, int end_angle);
+void o_arc_end4(GschemToplevel *w_current, int radius, int start_angle, int sweep_angle);
 void o_arc_motion(GschemToplevel *w_current, int x, int y, int whichone);
 void o_arc_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
 /* o_attrib.c */

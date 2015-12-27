@@ -1225,7 +1225,7 @@ SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
                    ARC_CENTER);
   o_arc_modify (toplevel, obj, scm_to_int(r_s), 0, ARC_RADIUS);
   o_arc_modify (toplevel, obj, scm_to_int(start_angle_s), 0, ARC_START_ANGLE);
-  o_arc_modify (toplevel, obj, scm_to_int(end_angle_s), 0, ARC_END_ANGLE);
+  o_arc_modify (toplevel, obj, scm_to_int(end_angle_s), 0, ARC_SWEEP_ANGLE);
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
   o_page_changed (toplevel, obj);
@@ -1263,7 +1263,7 @@ SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
                      scm_from_int (obj->arc->y),
                      scm_from_int (obj->arc->width / 2),
                      scm_from_int (obj->arc->start_angle),
-                     scm_from_int (obj->arc->end_angle),
+                     scm_from_int (obj->arc->sweep_angle),
                      scm_from_int (obj->color),
                      SCM_UNDEFINED);
 }

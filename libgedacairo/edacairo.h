@@ -41,11 +41,11 @@ void eda_cairo_center_box (cairo_t *cr, int flags, double center_width,
                            double half_width, double half_height);
 
 void eda_cairo_arc (cairo_t *cr, int flags, double width, double x, double y,
-                    double radius, double start_angle, double end_angle);
+                    double radius, double start_angle, double sweep_angle);
 
 void eda_cairo_center_arc (cairo_t *cr, int flags, double center_width,
                            double line_width, double x, double y,
-                           double radius, double start_angle, double end_angle);
+                           double radius, double start_angle, double sweep_angle);
 
 void eda_cairo_stroke (cairo_t *cr, int flags, int line_type, int line_end,
                        double wwidth, double wlength, double wspace);

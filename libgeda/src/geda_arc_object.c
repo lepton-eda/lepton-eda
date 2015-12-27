@@ -35,11 +35,11 @@
  *
  *  The arc is defined by its center in parameters x and y.
  *  The radius parameter specifies the radius of the arc. The start
- *  angle is given by start_angle and the end angle by end_angle.
+ *  angle is given by start_angle and the sweep angle by sweep_angle.
  *  The line and fill type of the created arc are set to default.
  *
  *  All dimensions are in world unit, except start_angle and
- *  end_angle in degrees.
+ *  sweep_angle in degrees.
  *
  *  A new object of type OBJECT is allocated. Its type and color
  *  are initilized. The description of the arc characteristics
@@ -54,12 +54,12 @@
  *  \param [in] y
  *  \param [in] radius
  *  \param [in] start_angle
- *  \param [in] end_angle
+ *  \param [in] sweep_angle
  *  \return
  */
 OBJECT *o_arc_new(TOPLEVEL *toplevel,
 		  char type, int color,
-		  int x, int y, int radius, int start_angle, int end_angle)
+		  int x, int y, int radius, int start_angle, int sweep_angle)
 {
 
   OBJECT *new_node;
@@ -84,15 +84,15 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
   new_node->arc->width  = 2 * radius;
   new_node->arc->height = 2 * radius;
 
-  /* must check the sign of start_angle, end_angle ... */
-  if(end_angle < 0) {
-    start_angle = start_angle + end_angle;
-    end_angle = -end_angle;
+  /* must check the sign of start_angle, sweep_angle ... */
+  if(sweep_angle < 0) {
+    start_angle = start_angle + sweep_angle;
+    sweep_angle = -sweep_angle;
   }
   if(start_angle < 0) start_angle = 360 + start_angle;
 
   new_node->arc->start_angle = start_angle;
-  new_node->arc->end_angle   = end_angle;
+  new_node->arc->sweep_angle = sweep_angle;
 
   /* Default init */
   o_set_line_options(toplevel, new_node,
@@ -128,7 +128,7 @@ OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *o_current)
                        o_current->arc->x, o_current->arc->y,
                        o_current->arc->width / 2,
                        o_current->arc->start_angle,
-                       o_current->arc->end_angle);
+                       o_current->arc->sweep_angle);
   o_set_line_options(toplevel, new_obj,
                      o_current->line_end, o_current->line_type,
                      o_current->line_width,
@@ -155,7 +155,7 @@ OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  If <B>whichone</B> is equal to #ARC_START_ANGLE, the <B>x</B> parameter is the starting angle of the arc.
  *  <B>x</B> is in degrees. <B>y</B> is ignored.
  *
- *  If <B>whichone</B> is equal to #ARC_END_ANGLE, the <B>x</B> parameter is the ending angle of the arc.
+ *  If <B>whichone</B> is equal to #ARC_SWEEP_ANGLE, the <B>x</B> parameter is the ending angle of the arc.
  *  <B>x</B> is in degrees. <B>y</B> is ignored.
  *
  *  \param [in]     toplevel  The TOPLEVEL object.
@@ -188,9 +188,9 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
 		object->arc->start_angle = x;
 		break;
 
-		case ARC_END_ANGLE:
+		case ARC_SWEEP_ANGLE:
 		/* modify the end angle of the arc object */
-		object->arc->end_angle = x;
+		object->arc->sweep_angle = x;
 		break;
 
 		default:
@@ -235,7 +235,8 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
   char type;
   int x1, y1;
   int radius;
-  int start_angle, end_angle;
+  int start_angle;
+  int sweep_angle;
   int color;
   int arc_width, arc_length, arc_space;
   int arc_type;
@@ -248,7 +249,7 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
    */
   if(release_ver <= VERSION_20000704) {
     if (sscanf(buf, "%c %d %d %d %d %d %d", &type,
-	       &x1, &y1, &radius, &start_angle, &end_angle, &color) != 7) {
+	       &x1, &y1, &radius, &start_angle, &sweep_angle, &color) != 7) {
       g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse arc object"));
       return NULL;
     }
@@ -260,7 +261,7 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
     arc_length= -1;
   } else {
     if (sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d", &type,
-	       &x1, &y1, &radius, &start_angle, &end_angle, &color,
+	       &x1, &y1, &radius, &start_angle, &sweep_angle, &color,
 	       &arc_width, &arc_end, &arc_type, &arc_length, &arc_space) != 12) {
       g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse arc object"));
       return NULL;
@@ -270,7 +271,7 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
   /* Error check */
   if (radius <= 0) {
     s_log_message (_("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"),
-                   type, x1, y1, radius, start_angle, end_angle, color);
+                   type, x1, y1, radius, start_angle, sweep_angle, color);
     radius = 0;
   }
 
@@ -282,7 +283,7 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
 
   /* Allocation and initialization */
   new_obj = o_arc_new(toplevel, OBJ_ARC, color,
-                      x1, y1, radius, start_angle, end_angle);
+                      x1, y1, radius, start_angle, sweep_angle);
   o_set_line_options(toplevel, new_obj,
                      arc_end, arc_type, arc_width, arc_length,
                      arc_space);
@@ -306,7 +307,7 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
  */
 char *o_arc_save(TOPLEVEL *toplevel, OBJECT *object)
 {
-  int x, y, radius, start_angle, end_angle;
+  int x, y, radius, start_angle, sweep_angle;
   int arc_width, arc_length, arc_space;
   char *buf;
   OBJECT_END arc_end;
@@ -317,7 +318,7 @@ char *o_arc_save(TOPLEVEL *toplevel, OBJECT *object)
   x           = object->arc->x;
   y           = object->arc->y;
   start_angle = object->arc->start_angle;
-  end_angle   = object->arc->end_angle;
+  sweep_angle = object->arc->sweep_angle;
 
   /* line type parameters */
   arc_width  = object->line_width;
@@ -328,7 +329,7 @@ char *o_arc_save(TOPLEVEL *toplevel, OBJECT *object)
 
   /* Describe a circle with post-20000704 file format */
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d", object->type,
-			x, y, radius, start_angle, end_angle, object->color,
+			x, y, radius, start_angle, sweep_angle, object->color,
 			arc_width, arc_end, arc_type, arc_length, arc_space);
 
   return(buf);
@@ -406,8 +407,6 @@ void geda_arc_object_rotate (TOPLEVEL *toplevel,
 
   /* apply rotation to angles */
   object->arc->start_angle = (object->arc->start_angle + angle) % 360;
-  /* end_angle is unchanged as it is the sweep of the arc */
-  /* object->arc->end_angle = (object->arc->end_angle); */
 
   /* translate object to its previous place */
   object->arc->x += world_centerx;
@@ -454,7 +453,7 @@ void geda_arc_object_mirror (TOPLEVEL *toplevel,
   object->arc->start_angle = (180 - object->arc->start_angle) % 360;
   /* start_angle *MUST* be positive */
   if(object->arc->start_angle < 0) object->arc->start_angle += 360;
-  object->arc->end_angle = -object->arc->end_angle;
+  object->arc->sweep_angle = -object->arc->sweep_angle;
 
   /* translate object back to its previous position */
   object->arc->x += world_centerx;
@@ -488,7 +487,7 @@ void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
 			  int *top, int *right, int *bottom)
 {
   int x1, y1, x2, y2, x3, y3;
-  int radius, start_angle, end_angle;
+  int radius, start_angle, sweep_angle;
   int i, angle;
   int halfwidth;
 
@@ -496,14 +495,14 @@ void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
 
   radius      = object->arc->width / 2;
   start_angle = object->arc->start_angle;
-  end_angle   = object->arc->end_angle;
+  sweep_angle = object->arc->sweep_angle;
 
   x1 = object->arc->x;
   y1 = object->arc->y;
   x2 = x1 + radius * cos(start_angle * M_PI / 180);
   y2 = y1 + radius * sin(start_angle * M_PI / 180);
-  x3 = x1 + radius * cos((start_angle + end_angle) * M_PI / 180);
-  y3 = y1 + radius * sin((start_angle + end_angle) * M_PI / 180);
+  x3 = x1 + radius * cos((start_angle + sweep_angle) * M_PI / 180);
+  y3 = y1 + radius * sin((start_angle + sweep_angle) * M_PI / 180);
 
   *left   = (x1 < x2) ? ((x1 < x3) ? x1 : x3) : ((x2 < x3) ? x2 : x3);
   *right  = (x1 > x2) ? ((x1 > x3) ? x1 : x3) : ((x2 > x3) ? x2 : x3);
@@ -519,14 +518,14 @@ void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
    *  CCW arc before this calculation we have to move the
    *  start angle to the end angle and reverse the sweep angle.
    */
-  if (end_angle < 0) {
-    start_angle = (start_angle + end_angle + 360) % 360;
-    end_angle = -end_angle;
+  if (sweep_angle < 0) {
+    start_angle = (start_angle + sweep_angle + 360) % 360;
+    sweep_angle = -sweep_angle;
   }
   angle = ((int) (start_angle / 90)) * 90;
   for(i = 0; i < 4; i++) {
     angle = angle + 90;
-    if(angle < start_angle + end_angle) {
+    if(angle < start_angle + sweep_angle) {
       if(angle % 360 == 0)   *right  = x1 + radius;
       if(angle % 360 == 90)  *bottom = y1 + radius;
       if(angle % 360 == 180) *left   = x1 - radius;
@@ -603,7 +602,7 @@ double o_arc_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
 
     distance_to_end0 = hypot (dx, dy);
 
-    angle += G_PI * ((double)object->arc->end_angle) / 180;
+    angle += G_PI * ((double)object->arc->sweep_angle) / 180;
 
     dx = ((double)x) - radius * cos (angle) - ((double)object->arc->x);
     dy = ((double)y) - radius * sin (angle) - ((double)object->arc->y);

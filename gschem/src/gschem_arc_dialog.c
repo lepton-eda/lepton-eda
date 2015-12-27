@@ -67,7 +67,7 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
     if (arc_object != NULL) {
       o_arc_modify(w_current->toplevel, arc_object, radius, 0, ARC_RADIUS);
       o_arc_modify(w_current->toplevel, arc_object, start_angle, 0, ARC_START_ANGLE);
-      o_arc_modify(w_current->toplevel, arc_object, sweep_angle, 0, ARC_END_ANGLE);
+      o_arc_modify(w_current->toplevel, arc_object, sweep_angle, 0, ARC_SWEEP_ANGLE);
     } else {
       o_arc_end4(w_current, radius, start_angle, sweep_angle);
     }
@@ -174,7 +174,7 @@ void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget[1]),
 			      arc_object->arc->start_angle);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget[2]),
-			      arc_object->arc->end_angle);
+			      arc_object->arc->sweep_angle);
   }
 
   gtk_widget_grab_focus(widget[0]);

@@ -33,7 +33,7 @@ struct _GedaArc
   int height;
 
   int start_angle;
-  int end_angle;
+  int sweep_angle;
 };
 
 gboolean
