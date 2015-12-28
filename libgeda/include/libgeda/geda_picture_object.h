@@ -22,6 +22,11 @@
  *  \brief Functions operating on picture drawing objects
  */
 
+#define PICTURE_UPPER_LEFT  0
+#define PICTURE_LOWER_RIGHT 1
+#define PICTURE_UPPER_RIGHT 2
+#define PICTURE_LOWER_LEFT  3
+
 OBJECT *o_picture_new(TOPLEVEL *toplevel,
                       const gchar *file_content, gsize file_length,
                       const gchar *filename, char type,

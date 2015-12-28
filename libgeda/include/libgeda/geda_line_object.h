@@ -22,6 +22,9 @@
  *  \brief Functions operating on line objects
  */
 
+#define LINE_END1 0
+#define LINE_END2 1
+
 OBJECT*
 geda_line_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
 

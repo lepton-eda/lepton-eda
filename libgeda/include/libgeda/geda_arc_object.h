@@ -22,6 +22,11 @@
  *  \brief Functions operating on arc drawing objects
  */
 
+#define ARC_CENTER      0
+#define ARC_RADIUS      1
+#define ARC_START_ANGLE 2
+#define ARC_SWEEP_ANGLE 3
+
 OBJECT*
 geda_arc_object_new (TOPLEVEL *toplevel, char type, int color, int x, int y, int radius, int start_angle, int sweep_angle);
 

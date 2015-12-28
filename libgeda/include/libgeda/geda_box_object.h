@@ -22,6 +22,11 @@
  *  \brief Functions operating on box drawing objects
  */
 
+#define BOX_UPPER_LEFT  0
+#define BOX_LOWER_RIGHT 1
+#define BOX_UPPER_RIGHT 2
+#define BOX_LOWER_LEFT  3
+
 OBJECT*
 geda_box_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
 

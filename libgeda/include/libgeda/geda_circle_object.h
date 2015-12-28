@@ -22,6 +22,9 @@
  *  \brief Functions operating on circle drawing objects
  */
 
+#define CIRCLE_CENTER 0
+#define CIRCLE_RADIUS 1
+
 OBJECT*
 geda_circle_object_new (TOPLEVEL *toplevel, char type, int color, int x, int y, int radius);
 

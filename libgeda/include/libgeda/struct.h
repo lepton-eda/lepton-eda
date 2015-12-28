@@ -56,26 +56,6 @@ typedef enum { F_OPEN_RC           = 1,
                F_OPEN_RESTORE_CWD  = 4,
 } FOpenFlags;
 
-#define LINE_END1 0
-#define LINE_END2 1
-
-#define ARC_CENTER 0
-#define ARC_RADIUS 1
-#define ARC_START_ANGLE 2
-#define ARC_SWEEP_ANGLE 3
-
-#define BOX_UPPER_LEFT 0
-#define BOX_LOWER_RIGHT 1
-#define BOX_UPPER_RIGHT 2
-#define BOX_LOWER_LEFT 3
-
-#define PICTURE_UPPER_LEFT 0
-#define PICTURE_LOWER_RIGHT 1
-#define PICTURE_UPPER_RIGHT 2
-#define PICTURE_LOWER_LEFT 3
-
-#define CIRCLE_CENTER 0
-#define CIRCLE_RADIUS 1
 
 /*! \brief Structure for connections between OBJECTs
  *
