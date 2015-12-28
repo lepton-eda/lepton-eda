@@ -92,7 +92,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
       break;
 
     case(OBJ_ARC):
-      new_obj = o_arc_copy (toplevel, selected);
+      new_obj = geda_arc_object_copy (toplevel, selected);
       break;
 
     default:

@@ -998,11 +998,12 @@ void o_grips_cancel(GschemToplevel *w_current)
  *
  *  If the grip at the center of the arc has been moved - modifying the radius
  *  of the arc -, the new radius is calculated expressed in world unit
- *  (the center is unchanged). It is updated with the function #o_arc_modify().
+ *  (the center is unchanged). It is updated with the function
+ *  #geda_arc_object_modify().
  *
  *  If one of the end of arc grip has been moved - modifying one of the
  *  angles describing the arc -, this angle is updated with the
- *  #o_arc_modify() function.
+ *  #geda_arc_object_modify() function.
  *
  *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] o_current  Arc OBJECT to end modification on.
@@ -1045,7 +1046,7 @@ static void o_grips_end_arc(GschemToplevel *w_current, OBJECT *o_current,
   }
 
   /* modify the arc with the parameters determined above */
-  o_arc_modify(toplevel, o_current, arg1, arg2, whichone);
+  geda_arc_object_modify (toplevel, o_current, arg1, arg2, whichone);
 }
 
 /*! \todo Finish function documentation!!!

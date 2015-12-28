@@ -1172,9 +1172,9 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
 SCM_DEFINE (make_arc, "%make-arc", 0, 0, 0,
             (), "Create a new arc object.")
 {
-  OBJECT *obj = o_arc_new (edascm_c_current_toplevel (),
-                              OBJ_ARC, DEFAULT_COLOR,
-                           0, 0, 1, 0, 0);
+  OBJECT *obj = geda_arc_object_new (edascm_c_current_toplevel (),
+                                     OBJ_ARC, DEFAULT_COLOR,
+                                     0, 0, 1, 0, 0);
 
   SCM result = edascm_from_object (obj);
 
@@ -1221,11 +1221,10 @@ SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (arc_s);
-  o_arc_modify (toplevel, obj, scm_to_int(x_s), scm_to_int(y_s),
-                   ARC_CENTER);
-  o_arc_modify (toplevel, obj, scm_to_int(r_s), 0, ARC_RADIUS);
-  o_arc_modify (toplevel, obj, scm_to_int(start_angle_s), 0, ARC_START_ANGLE);
-  o_arc_modify (toplevel, obj, scm_to_int(end_angle_s), 0, ARC_SWEEP_ANGLE);
+  geda_arc_object_modify (toplevel, obj, scm_to_int(x_s), scm_to_int(y_s), ARC_CENTER);
+  geda_arc_object_modify (toplevel, obj, scm_to_int(r_s), 0, ARC_RADIUS);
+  geda_arc_object_modify (toplevel, obj, scm_to_int(start_angle_s), 0, ARC_START_ANGLE);
+  geda_arc_object_modify (toplevel, obj, scm_to_int(end_angle_s), 0, ARC_SWEEP_ANGLE);
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
   o_page_changed (toplevel, obj);

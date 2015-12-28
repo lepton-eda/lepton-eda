@@ -23,13 +23,13 @@
  */
 
 OBJECT*
-o_arc_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int radius, int start_angle, int sweep_angle);
+geda_arc_object_new (TOPLEVEL *toplevel, char type, int color, int x, int y, int radius, int start_angle, int sweep_angle);
 
 OBJECT*
-o_arc_copy(TOPLEVEL *toplevel, OBJECT *o_current);
+geda_arc_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
-o_arc_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+geda_arc_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 void
 geda_arc_object_translate (GedaObject *object, int dx, int dy);

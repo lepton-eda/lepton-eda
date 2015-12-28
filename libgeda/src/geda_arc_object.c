@@ -57,9 +57,9 @@
  *  \param [in] sweep_angle
  *  \return
  */
-OBJECT *o_arc_new(TOPLEVEL *toplevel,
-		  char type, int color,
-		  int x, int y, int radius, int start_angle, int sweep_angle)
+OBJECT*
+geda_arc_object_new (TOPLEVEL *toplevel, char type, int color, int x, int y,
+                     int radius, int start_angle, int sweep_angle)
 {
 
   OBJECT *new_node;
@@ -120,15 +120,16 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
  *  \param [in] o_current
  *  \return The new OBJECT
  */
-OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *o_current)
+OBJECT*
+geda_arc_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
 
-  new_obj = o_arc_new (toplevel, OBJ_ARC, o_current->color,
-                       o_current->arc->x, o_current->arc->y,
-                       o_current->arc->width / 2,
-                       o_current->arc->start_angle,
-                       o_current->arc->sweep_angle);
+  new_obj = geda_arc_object_new (toplevel, OBJ_ARC, o_current->color,
+                                 o_current->arc->x, o_current->arc->y,
+                                 o_current->arc->width / 2,
+                                 o_current->arc->start_angle,
+                                 o_current->arc->sweep_angle);
   o_set_line_options(toplevel, new_obj,
                      o_current->line_end, o_current->line_type,
                      o_current->line_width,
@@ -164,8 +165,8 @@ OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in]     y
  *  \param [in]     whichone
  */
-void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
-		  int x, int y, int whichone)
+void
+geda_arc_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone)
 {
 
 	o_emit_pre_change_notify (toplevel, object);
@@ -218,7 +219,7 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  The object is initialized with the functions #o_set_line_options() and #o_set_fill_options().
  *  The second one is only used to put initialize unused values for an arc as an arc can not be filled.
  *
- *  The arc is allocated initialized with the function #o_arc_new().
+ *  The arc is allocated initialized with the function #geda_arc_object_new().
  *
  *  A negative or null radius is not allowed.
  *
@@ -282,8 +283,8 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
   }
 
   /* Allocation and initialization */
-  new_obj = o_arc_new(toplevel, OBJ_ARC, color,
-                      x1, y1, radius, start_angle, sweep_angle);
+  new_obj = geda_arc_object_new (toplevel, OBJ_ARC, color,
+                                 x1, y1, radius, start_angle, sweep_angle);
   o_set_line_options(toplevel, new_obj,
                      arc_end, arc_type, arc_width, arc_length,
                      arc_space);
