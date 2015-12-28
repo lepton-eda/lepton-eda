@@ -51,7 +51,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
   switch(selected->type) {
 
     case(OBJ_LINE):
-      new_obj = o_line_copy (toplevel, selected);
+      new_obj = geda_line_object_copy (toplevel, selected);
       break;
 
     case(OBJ_NET):

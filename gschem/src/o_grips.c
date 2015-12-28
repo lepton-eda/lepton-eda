@@ -1190,8 +1190,8 @@ static void o_grips_end_line(GschemToplevel *w_current, OBJECT *o_current,
   }
 
   /* modify the right line end according to whichone */
-  o_line_modify(toplevel, o_current,
-		w_current->second_wx, w_current->second_wy, whichone);
+  geda_line_object_modify(toplevel, o_current,
+                          w_current->second_wx, w_current->second_wy, whichone);
 }
 
 

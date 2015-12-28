@@ -23,13 +23,13 @@
  */
 
 OBJECT*
-o_line_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
+geda_line_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
 
 OBJECT*
-o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current);
+geda_line_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
-o_line_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+geda_line_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 void
 geda_line_object_translate (GedaObject *object, int dx, int dy);
@@ -41,4 +41,4 @@ void
 geda_line_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 double
-o_line_length(OBJECT *object);
+geda_line_object_length (OBJECT *object);

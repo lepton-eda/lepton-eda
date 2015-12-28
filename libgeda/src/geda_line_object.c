@@ -57,9 +57,9 @@
  *  \param [in]     y2           Lower y coordinate.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *o_line_new(TOPLEVEL *toplevel,
-		   char type, int color,
-		   int x1, int y1, int x2, int y2)
+OBJECT*
+geda_line_object_new (TOPLEVEL *toplevel, char type, int color,
+                      int x1, int y1, int x2, int y2)
 {
   OBJECT *new_node;
 
@@ -96,15 +96,16 @@ OBJECT *o_line_new(TOPLEVEL *toplevel,
  *  \param [in]  o_current  Line OBJECT to copy.
  *  \return The new OBJECT
  */
-OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
+OBJECT*
+geda_line_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
 
-  /* A new line object is created with #o_line_new().
+  /* A new line object is created with #geda_line_object_new().
    * Values for its fields are default and need to be modified. */
-  new_obj = o_line_new (toplevel, OBJ_LINE, o_current->color,
-                        o_current->line->x[0], o_current->line->y[0],
-                        o_current->line->x[1], o_current->line->y[1]);
+  new_obj = geda_line_object_new (toplevel, OBJ_LINE, o_current->color,
+                                  o_current->line->x[0], o_current->line->y[0],
+                                  o_current->line->x[1], o_current->line->y[1]);
 
   /*
    * The coordinates of the ends of the new line are set with the ones
@@ -152,8 +153,9 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *    <DT>*</DT><DD>LINE_END2
  *  </DL>
  */
-void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
-                   int x, int y, int whichone)
+void
+geda_line_object_modify (TOPLEVEL *toplevel, OBJECT *object,
+                         int x, int y, int whichone)
 {
   o_emit_pre_change_notify (toplevel, object);
 
@@ -265,7 +267,7 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, const char buf[],
    * type is set according to the values of the fields on the line.
    */
   /* create and add the line to the list */
-  new_obj = o_line_new (toplevel, type, color, x1, y1, x2, y2);
+  new_obj = geda_line_object_new (toplevel, type, color, x1, y1, x2, y2);
   /* set its line options */
   o_set_line_options (toplevel, new_obj,
                       line_end, line_type, line_width, line_length,
@@ -495,7 +497,8 @@ gboolean o_line_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
  *  \param [in] object  a line OBJECT
  *  \return The length of the line
  */
-double o_line_length(OBJECT *object)
+double
+geda_line_object_length (OBJECT *object)
 {
   double length;
   double dx, dy;

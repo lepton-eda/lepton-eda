@@ -777,7 +777,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
   PAGE *page = gschem_page_view_get_page (page_view);
   g_return_val_if_fail (page != NULL, FALSE);
 
-  length = o_line_length(net_obj);
+  length = geda_line_object_length (net_obj);
 
   if (!prev_conn_objects) {
     return(FALSE);

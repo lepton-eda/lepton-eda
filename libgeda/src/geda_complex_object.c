@@ -488,13 +488,13 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
     new_node->type = OBJ_PLACEHOLDER;
 
     /* Mark the origin of the missing component */
-    new_prim_obj = o_line_new(toplevel, OBJ_LINE,
-                           DETACHED_ATTRIBUTE_COLOR,
-                           x - 50, y, x + 50, y);
+    new_prim_obj = geda_line_object_new (toplevel, OBJ_LINE,
+                                        DETACHED_ATTRIBUTE_COLOR,
+                                        x - 50, y, x + 50, y);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
-    new_prim_obj = o_line_new(toplevel, OBJ_LINE,
-                           DETACHED_ATTRIBUTE_COLOR,
-                           x, y + 50, x, y - 50);
+    new_prim_obj = geda_line_object_new (toplevel, OBJ_LINE,
+                                         DETACHED_ATTRIBUTE_COLOR,
+                                         x, y + 50, x, y - 50);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
 
     /* Add some useful text */
@@ -516,30 +516,30 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
     y_offset = bottom - top + 100;  /* 100 is just an additional offset */
 
     /* add hazard triangle */
-    new_prim_obj = o_line_new(toplevel, OBJ_LINE,
-                           DETACHED_ATTRIBUTE_COLOR,
-                           x + NOT_FOUND_TEXT_X + x_offset,
-                           y + NOT_FOUND_TEXT_Y + y_offset,
-                           x + NOT_FOUND_TEXT_X + x_offset + 600,
-                           y + NOT_FOUND_TEXT_Y + y_offset);
+    new_prim_obj = geda_line_object_new (toplevel, OBJ_LINE,
+                                         DETACHED_ATTRIBUTE_COLOR,
+                                         x + NOT_FOUND_TEXT_X + x_offset,
+                                         y + NOT_FOUND_TEXT_Y + y_offset,
+                                         x + NOT_FOUND_TEXT_X + x_offset + 600,
+                                         y + NOT_FOUND_TEXT_Y + y_offset);
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
-    new_prim_obj = o_line_new(toplevel, OBJ_LINE,
-                           DETACHED_ATTRIBUTE_COLOR,
-                           x + NOT_FOUND_TEXT_X + x_offset,
-                           y + NOT_FOUND_TEXT_Y + y_offset,
-                           x + NOT_FOUND_TEXT_X + x_offset + 300,
-                           y + NOT_FOUND_TEXT_Y + y_offset + 500);
+    new_prim_obj = geda_line_object_new (toplevel, OBJ_LINE,
+                                         DETACHED_ATTRIBUTE_COLOR,
+                                         x + NOT_FOUND_TEXT_X + x_offset,
+                                         y + NOT_FOUND_TEXT_Y + y_offset,
+                                         x + NOT_FOUND_TEXT_X + x_offset + 300,
+                                         y + NOT_FOUND_TEXT_Y + y_offset + 500);
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
-    new_prim_obj = o_line_new(toplevel, OBJ_LINE,
-                           DETACHED_ATTRIBUTE_COLOR,
-                           x + NOT_FOUND_TEXT_X + x_offset + 300,
-                           y + NOT_FOUND_TEXT_Y + y_offset + 500,
-                           x + NOT_FOUND_TEXT_X + x_offset + 600,
-                           y + NOT_FOUND_TEXT_Y + y_offset);
+    new_prim_obj = geda_line_object_new (toplevel, OBJ_LINE,
+                                         DETACHED_ATTRIBUTE_COLOR,
+                                         x + NOT_FOUND_TEXT_X + x_offset + 300,
+                                         y + NOT_FOUND_TEXT_Y + y_offset + 500,
+                                         x + NOT_FOUND_TEXT_X + x_offset + 600,
+                                         y + NOT_FOUND_TEXT_Y + y_offset);
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
