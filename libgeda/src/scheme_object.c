@@ -1078,9 +1078,9 @@ SCM_DEFINE (box_info, "%box-info", 1, 0, 0,
 SCM_DEFINE (make_circle, "%make-circle", 0, 0, 0,
             (), "Create a new circle object.")
 {
-  OBJECT *obj = o_circle_new (edascm_c_current_toplevel (),
-                              OBJ_CIRCLE, DEFAULT_COLOR,
-                              0, 0, 1);
+  OBJECT *obj = geda_circle_object_new (edascm_c_current_toplevel (),
+                                        OBJ_CIRCLE, DEFAULT_COLOR,
+                                        0, 0, 1);
 
   SCM result = edascm_from_object (obj);
 
@@ -1120,9 +1120,9 @@ SCM_DEFINE (set_circle_x, "%set-circle!", 5, 0, 0,
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (circle_s);
-  o_circle_modify (toplevel, obj, scm_to_int(x_s), scm_to_int(y_s),
-                   CIRCLE_CENTER);
-  o_circle_modify (toplevel, obj, scm_to_int(r_s), 0, CIRCLE_RADIUS);
+  geda_circle_object_modify (toplevel, obj, scm_to_int(x_s), scm_to_int(y_s),
+                             CIRCLE_CENTER);
+  geda_circle_object_modify (toplevel, obj, scm_to_int(r_s), 0, CIRCLE_RADIUS);
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
   o_page_changed (toplevel, obj);

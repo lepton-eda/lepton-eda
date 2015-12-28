@@ -54,9 +54,9 @@
  *  \param [in]     radius       Radius of new circle.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *o_circle_new(TOPLEVEL *toplevel,
-		     char type, int color,
-		     int x, int y, int radius)
+OBJECT*
+geda_circle_object_new (TOPLEVEL *toplevel, char type, int color,
+                        int x, int y, int radius)
 {
   OBJECT *new_node;
 
@@ -85,20 +85,21 @@ OBJECT *o_circle_new(TOPLEVEL *toplevel,
 
 /*! \brief Create a copy of a circle.
  *  \par Function Description
- *  The function #o_circle_copy() creates a verbatim copy of the object
+ *  The function #geda_circle_object_copy() creates a verbatim copy of the object
  *  pointed by <B>o_current</B> describing a circle.
  *
  *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  o_current  Circle OBJECT to copy.
  *  \return The new OBJECT
  */
-OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current)
+OBJECT*
+geda_circle_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
 
-  /* A new circle object is created with #o_circle_new().
+  /* A new circle object is created with #geda_circle_object_new().
    * Values for its fields are default and need to be modified. */
-  new_obj = o_circle_new (toplevel, OBJ_CIRCLE, o_current->color, 0, 0, 0);
+  new_obj = geda_circle_object_new (toplevel, OBJ_CIRCLE, o_current->color, 0, 0, 0);
 
   /*
    * The parameters of the new circle are set with the ones of the original
@@ -153,8 +154,8 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *    <DT>*</DT><DD>CIRCLE_RADIUS
  *  </DL>
  */
-void o_circle_modify(TOPLEVEL *toplevel, OBJECT *object,
-		     int x, int y, int whichone)
+void
+geda_circle_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone)
 {
   o_emit_pre_change_notify (toplevel, object);
 
@@ -275,7 +276,7 @@ OBJECT *o_circle_read (TOPLEVEL *toplevel, const char buf[],
    * Its filling and line type are set according to the values of the field
    * on the line.
    */
-  new_obj = o_circle_new(toplevel, type, color, x1, y1, radius);
+  new_obj = geda_circle_object_new (toplevel, type, color, x1, y1, radius);
   o_set_line_options(toplevel, new_obj,
 		     circle_end, circle_type, circle_width,
 		     circle_length, circle_space);

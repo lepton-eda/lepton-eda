@@ -23,13 +23,13 @@
  */
 
 OBJECT*
-o_circle_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int radius);
+geda_circle_object_new (TOPLEVEL *toplevel, char type, int color, int x, int y, int radius);
 
 OBJECT*
-o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current);
+geda_circle_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
-o_circle_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+geda_circle_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 void
 geda_circle_object_translate (GedaObject *object, int dx, int dy);

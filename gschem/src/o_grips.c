@@ -1155,7 +1155,7 @@ static void o_grips_end_circle(GschemToplevel *w_current, OBJECT *o_current,
   }
 
   /* modify the radius of the circle */
-  o_circle_modify(toplevel, o_current, w_current->distance, -1, CIRCLE_RADIUS);
+  geda_circle_object_modify (toplevel, o_current, w_current->distance, -1, CIRCLE_RADIUS);
 }
 
 /*! \brief End process of modifying line object with grip.
