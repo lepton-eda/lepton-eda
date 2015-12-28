@@ -63,7 +63,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
       break;
 
     case(OBJ_BOX):
-      new_obj = o_box_copy (toplevel, selected);
+      new_obj = geda_box_object_copy (toplevel, selected);
       break;
 
     case(OBJ_PICTURE):

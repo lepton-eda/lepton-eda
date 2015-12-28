@@ -23,16 +23,16 @@
  */
 
 OBJECT*
-o_box_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
+geda_box_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
 
 OBJECT*
-o_box_copy(TOPLEVEL *toplevel, OBJECT *o_current);
+geda_box_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
-o_box_modify_all (TOPLEVEL *toplevel, OBJECT *object, int x1, int y1, int x2, int y2);
+geda_box_object_modify_all (TOPLEVEL *toplevel, OBJECT *object, int x1, int y1, int x2, int y2);
 
 void
-o_box_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+geda_box_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 void
 geda_box_object_translate (GedaObject *object, int dx, int dy);

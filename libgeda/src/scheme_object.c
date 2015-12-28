@@ -980,9 +980,9 @@ SCM_DEFINE (pin_type, "%pin-type", 1, 0, 0,
 SCM_DEFINE (make_box, "%make-box", 0, 0, 0,
             (), "Create a new box object.")
 {
-  OBJECT *obj = o_box_new (edascm_c_current_toplevel (),
-                           OBJ_BOX, DEFAULT_COLOR,
-                           0, 0, 0, 0);
+  OBJECT *obj = geda_box_object_new (edascm_c_current_toplevel (),
+                                     OBJ_BOX, DEFAULT_COLOR,
+                                     0, 0, 0, 0);
 
   SCM result = edascm_from_object (obj);
 
@@ -1024,9 +1024,9 @@ SCM_DEFINE (set_box_x, "%set-box!", 6, 0, 0,
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (box_s);
-  o_box_modify_all (toplevel, obj,
-                    scm_to_int (x1_s), scm_to_int (y1_s),
-                    scm_to_int (x2_s), scm_to_int (y2_s));
+  geda_box_object_modify_all (toplevel, obj,
+                              scm_to_int (x1_s), scm_to_int (y1_s),
+                              scm_to_int (x2_s), scm_to_int (y2_s));
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
   o_page_changed (toplevel, obj);
