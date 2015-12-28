@@ -78,9 +78,9 @@ gboolean o_pin_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
  *  \param [in]     whichend    The connectable end of the pin
  *  \return A new pin OBJECT
  */
-OBJECT *o_pin_new(TOPLEVEL *toplevel,
-		  char type, int color,
-		  int x1, int y1, int x2, int y2, int pin_type, int whichend)
+OBJECT*
+geda_pin_object_new (TOPLEVEL *toplevel, char type, int color,
+                     int x1, int y1, int x2, int y2, int pin_type, int whichend)
 {
   OBJECT *new_node;
 
@@ -94,7 +94,7 @@ OBJECT *o_pin_new(TOPLEVEL *toplevel,
   new_node->line->x[1] = x2;
   new_node->line->y[1] = y2;
 
-  o_pin_set_type (toplevel, new_node, pin_type);
+  geda_pin_object_set_type (toplevel, new_node, pin_type);
 
   new_node->w_bounds_valid_for = NULL;
 
@@ -156,8 +156,8 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
     color = DEFAULT_COLOR;
   }
 
-  new_obj = o_pin_new (toplevel, type, color, x1, y1, x2, y2,
-                       pin_type, whichend);
+  new_obj = geda_pin_object_new (toplevel, type, color, x1, y1, x2, y2,
+                                 pin_type, whichend);
 
   return new_obj;
 }
@@ -223,14 +223,15 @@ geda_pin_object_translate (GedaObject *object, int dx, int dy)
  *  \param [in] o_current    The object that is copied
  *  \return a new pin object
  */
-OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *o_current)
+OBJECT*
+geda_pin_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
 
-  new_obj = o_pin_new (toplevel, OBJ_PIN, o_current->color,
-                       o_current->line->x[0], o_current->line->y[0],
-                       o_current->line->x[1], o_current->line->y[1],
-                       o_current->pin_type, o_current->whichend);
+  new_obj = geda_pin_object_new (toplevel, OBJ_PIN, o_current->color,
+                                 o_current->line->x[0], o_current->line->y[0],
+                                 o_current->line->x[1], o_current->line->y[1],
+                                 o_current->pin_type, o_current->whichend);
 
   return new_obj;
 }
@@ -318,8 +319,8 @@ void geda_pin_object_mirror (TOPLEVEL *toplevel,
  *  \param whichone   pin point to modify
  *
  */
-void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object,
-		  int x, int y, int whichone)
+void
+geda_pin_object_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone)
 {
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
@@ -341,8 +342,9 @@ void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  \param num_pins    pin count in the object list
  *
  */
-void o_pin_update_whichend(TOPLEVEL *toplevel,
-                           GList *object_list, int num_pins)
+void
+geda_pin_object_update_whichend (TOPLEVEL *toplevel,
+                                 GList *object_list, int num_pins)
 {
   OBJECT *o_current;
   GList *iter;
@@ -470,12 +472,13 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
  *  \param [in] o_current  The pin OBJECT being modified
  *  \param [in] pin_type   The new type of this pin
  */
-void o_pin_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type)
+void
+geda_pin_object_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type)
 {
   o_emit_pre_change_notify (toplevel, o_current);
   switch (pin_type) {
     default:
-      g_critical ("o_pin_set_type: Got invalid pin type %i\n", pin_type);
+      g_critical ("geda_pin_object_set_type: Got invalid pin type %i\n", pin_type);
       /* Fall through */
     case PIN_TYPE_NET:
       o_current->line_width = PIN_WIDTH_NET;

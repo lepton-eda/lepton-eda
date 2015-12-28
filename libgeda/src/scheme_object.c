@@ -771,8 +771,8 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
     break;
   case OBJ_PIN:
     /* Swap ends according to pin's whichend flag. */
-    o_pin_modify (toplevel, obj, x1, y1, obj->whichend ? 1 : 0);
-    o_pin_modify (toplevel, obj, x2, y2, obj->whichend ? 0 : 1);
+    geda_pin_object_modify (toplevel, obj, x1, y1, obj->whichend ? 1 : 0);
+    geda_pin_object_modify (toplevel, obj, x2, y2, obj->whichend ? 0 : 1);
     break;
   default:
     return line_s;
@@ -921,8 +921,8 @@ SCM_DEFINE (make_pin, "%make-pin", 1, 0, 0,
                     scm_list_1 (type_s));
   }
 
-  OBJECT *obj = o_pin_new (edascm_c_current_toplevel (),
-                           OBJ_PIN, PIN_COLOR, 0, 0, 0, 0, type, 0);
+  OBJECT *obj = geda_pin_object_new (edascm_c_current_toplevel (),
+                                     OBJ_PIN, PIN_COLOR, 0, 0, 0, 0, type, 0);
   SCM result = edascm_from_object (obj);
 
   /* At the moment, the only pointer to the object is owned by the

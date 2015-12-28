@@ -23,13 +23,13 @@
  */
 
 OBJECT*
-o_pin_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2, int pin_type, int whichend);
+geda_pin_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2, int pin_type, int whichend);
 
 void
 geda_pin_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
-o_pin_copy(TOPLEVEL *toplevel, OBJECT *o_current);
+geda_pin_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
 geda_pin_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
@@ -38,10 +38,10 @@ void
 geda_pin_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 void
-o_pin_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+geda_pin_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 void
-o_pin_update_whichend(TOPLEVEL *toplevel, GList *object_list, int num_pins);
+geda_pin_object_update_whichend (TOPLEVEL *toplevel, GList *object_list, int num_pins);
 
 void
-o_pin_set_type(TOPLEVEL *toplevel, OBJECT *o_current, int pin_type);
+geda_pin_object_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type);

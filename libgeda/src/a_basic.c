@@ -528,7 +528,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
   if (found_pin) {
     if (release_ver <= VERSION_20020825) {
-      o_pin_update_whichend (toplevel, new_object_list, found_pin);
+      geda_pin_object_update_whichend (toplevel, new_object_list, found_pin);
     }
   }
 
