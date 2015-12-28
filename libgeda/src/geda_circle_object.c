@@ -28,22 +28,6 @@
 
 #include "libgeda_priv.h"
 
-/*! \brief calculate the distance between two points
- *  \par Function Description
- *  This function calculates the distance between two points.
- *  The two points are defined by the (\a x1, \a y1) and (\a x2, \a y2)
- *  parameters.
- *  \param [in]  x1  x-value of the first point
- *  \param [in]  y1  y-value of the first point
- *  \param [in]  x2  x-value of the second point
- *  \param [in]  y2  y-value of the second point
- *  \return the distance
- *  \todo Move this function to a different place
- */
-int dist(int x1, int y1, int x2, int y2)
-{
-  return hypot(x1-x2,y1-y2);
-}
 
 /*! \brief Create and add circle OBJECT to list.
  *  \par Function Description

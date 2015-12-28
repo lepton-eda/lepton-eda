@@ -22,9 +22,6 @@
  *  \brief Functions operating on circle drawing objects
  */
 
-int
-dist(int x1, int y1, int x2, int y2);
-
 OBJECT*
 o_circle_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int radius);
 
