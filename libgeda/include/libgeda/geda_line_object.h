@@ -40,8 +40,5 @@ geda_line_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_center
 void
 geda_line_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
-void
-o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale, OBJECT *object);
-
 double
 o_line_length(OBJECT *object);

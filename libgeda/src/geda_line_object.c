@@ -488,29 +488,6 @@ gboolean o_line_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
   return TRUE;
 }
 
-/*! \brief
- *  \par Function Description
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] x_scale
- *  \param [in] y_scale
- *  \param [in] object
- */
-void o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale,
-			OBJECT *object)
-{
-  /* scale the line world coords */
-  object->line->x[0] = object->line->x[0] * x_scale;
-  object->line->y[0] = object->line->y[0] * y_scale;
-  object->line->x[1] = object->line->x[1] * x_scale;
-  object->line->y[1] = object->line->y[1] * y_scale;
-
-  /* update boundingbox */
-  object->w_bounds_valid_for = NULL;
-
-}
-
-
 /*! \brief calculate the length of a line object
  *  \par Function Description
  *  This function calculates the length of a line object
