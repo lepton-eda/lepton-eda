@@ -84,7 +84,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
       break;
 
     case(OBJ_PATH):
-      new_obj = o_path_copy (toplevel, selected);
+      new_obj = geda_path_object (toplevel, selected);
       break;
 
     case(OBJ_PIN):

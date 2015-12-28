@@ -498,8 +498,8 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 
   if (end_path || close_path) {
     /* Add object to page and clean up path drawing state */
-    OBJECT *obj = o_path_new_take_path (toplevel, OBJ_PATH,
-                                        GRAPHIC_COLOR, p);
+    OBJECT *obj = geda_path_object_new_take_path (toplevel, OBJ_PATH,
+                                                  GRAPHIC_COLOR, p);
     w_current->temp_path = NULL;
     w_current->first_wx = -1;
     w_current->first_wy = -1;

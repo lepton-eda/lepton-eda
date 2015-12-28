@@ -1574,8 +1574,8 @@ SCM_DEFINE (object_complex, "%object-complex", 1, 0, 0,
 SCM_DEFINE (make_path, "%make-path", 0, 0, 0,
             (), "Create a new path object")
 {
-  OBJECT *obj = o_path_new (edascm_c_current_toplevel (),
-                            OBJ_PATH, DEFAULT_COLOR, "");
+  OBJECT *obj = geda_path_object_new (edascm_c_current_toplevel (),
+                                      OBJ_PATH, DEFAULT_COLOR, "");
 
   SCM result = edascm_from_object (obj);
 

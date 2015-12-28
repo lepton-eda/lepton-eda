@@ -23,16 +23,16 @@
  */
 
 OBJECT*
-o_path_new(TOPLEVEL *toplevel, char type, int color, const char *path_string);
+geda_path_object_new (TOPLEVEL *toplevel, char type, int color, const char *path_string);
 
 OBJECT*
-o_path_new_take_path (TOPLEVEL *toplevel, char type, int color, PATH *path_data);
+geda_path_object_new_take_path (TOPLEVEL *toplevel, char type, int color, PATH *path_data);
 
 OBJECT*
-o_path_copy(TOPLEVEL *toplevel, OBJECT *o_current);
+geda_path_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
-o_path_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+geda_path_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 void
 geda_path_object_translate (GedaObject *object, int dx, int dy);

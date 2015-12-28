@@ -66,11 +66,11 @@ typedef void (*FILL_FUNC) (TOPLEVEL *toplevel, FILE *fp, PATH *path,
  *  \param [in]     path_string  The string representation of the path
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *o_path_new (TOPLEVEL *toplevel,
-                    char type, int color, const char *path_string)
+OBJECT *geda_path_object_new (TOPLEVEL *toplevel,
+                              char type, int color, const char *path_string)
 {
-  return o_path_new_take_path (toplevel, type, color,
-                               s_path_parse (path_string));
+  return geda_path_object_new_take_path (toplevel, type, color,
+                                         s_path_parse (path_string));
 }
 
 
@@ -80,7 +80,7 @@ OBJECT *o_path_new (TOPLEVEL *toplevel,
  *  using the path shape data stored in \a path_data.  The \a
  *  path_data is subsequently owned by the returned OBJECT.
  *
- *  \see o_path_new().
+ *  \see geda_path_object_new().
  *
  *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     type         Must be OBJ_PATH.
@@ -88,8 +88,9 @@ OBJECT *o_path_new (TOPLEVEL *toplevel,
  *  \param [in]     path_data    The #PATH data structure to use.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *o_path_new_take_path (TOPLEVEL *toplevel,
-                              char type, int color, PATH *path_data)
+OBJECT*
+geda_path_object_new_take_path (TOPLEVEL *toplevel,
+                                char type, int color, PATH *path_data)
 {
   OBJECT *new_node;
 
@@ -123,13 +124,14 @@ OBJECT *o_path_new_take_path (TOPLEVEL *toplevel,
  *  \param [in]  o_current  Line OBJECT to copy.
  *  \return A new pointer to the end of the object list.
  */
-OBJECT *o_path_copy (TOPLEVEL *toplevel, OBJECT *o_current)
+OBJECT*
+geda_path_object (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
   char *path_string;
 
   path_string = s_path_string_from_path (o_current->path);
-  new_obj = o_path_new (toplevel, OBJ_PATH, o_current->color, path_string);
+  new_obj = geda_path_object_new (toplevel, OBJ_PATH, o_current->color, path_string);
   g_free (path_string);
 
   /* copy the path type and filling options */
@@ -233,7 +235,7 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
   string = remove_last_nl (string);
 
   /* create a new path */
-  new_obj = o_path_new (toplevel, type, color, string);
+  new_obj = geda_path_object_new (toplevel, type, color, string);
   g_free (string);
 
   /* set its line options */
@@ -314,8 +316,9 @@ char *o_path_save (TOPLEVEL *toplevel, OBJECT *object)
  *  \param [in]     y         New y coordinate for the control point
  *  \param [in]     whichone  Which control point is being modified
  */
-void o_path_modify (TOPLEVEL *toplevel, OBJECT *object,
-                    int x, int y, int whichone)
+void
+geda_path_object_modify (TOPLEVEL *toplevel, OBJECT *object,
+                         int x, int y, int whichone)
 {
   int i;
   int grip_no = 0;

@@ -1089,8 +1089,8 @@ static void o_grips_end_box(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_path(GschemToplevel *w_current, OBJECT *o_current,
                              int whichone)
 {
-  o_path_modify (w_current->toplevel, o_current,
-                 w_current->second_wx, w_current->second_wy, whichone);
+  geda_path_object_modify (w_current->toplevel, o_current,
+                           w_current->second_wx, w_current->second_wy, whichone);
 }
 
 /*! \todo Finish function documentation!!!
