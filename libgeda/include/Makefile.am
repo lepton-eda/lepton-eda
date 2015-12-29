@@ -31,6 +31,7 @@ libgedainclude_HEADERS = \
 	libgeda/geda_list.h \
 	libgeda/geda_net_object.h \
 	libgeda/geda_object.h \
+	libgeda/geda_object_list.h \
 	libgeda/geda_page.h \
 	libgeda/geda_path.h \
 	libgeda/geda_path_object.h \

@@ -52,6 +52,7 @@
 
 #include <libgeda/struct.h>
 #include <libgeda/geda_object.h>
+#include <libgeda/geda_object_list.h>
 #include <libgeda/geda_page.h>
 #include <libgeda/geda_toplevel.h>
 #include <libgeda/geda_undo.h>

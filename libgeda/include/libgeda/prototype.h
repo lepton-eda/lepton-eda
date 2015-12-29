@@ -76,13 +76,6 @@ int o_attrib_is_inherited(OBJECT *attrib);
 void o_embed(TOPLEVEL *toplevel, OBJECT *o_current);
 void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current);
 
-/* o_list.c */
-GList *o_glist_copy_all(TOPLEVEL *toplevel, const GList *src_list, GList *dest_list);
-void geda_object_list_translate (const GList *objects, int dx, int dy);
-void geda_object_list_rotate (const GList *objects, int x, int y, int angle, TOPLEVEL *toplevel);
-void geda_object_list_mirror (const GList *objects, int x, int y, TOPLEVEL *toplevel);
-void geda_object_list_set_color (const GList *objects, int color, TOPLEVEL *toplevel);
-
 /* o_selection.c */
 SELECTION *o_selection_new( void );
 void o_selection_add(TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected);
