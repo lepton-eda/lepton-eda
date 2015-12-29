@@ -1649,21 +1649,13 @@ gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap
 void
 gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int color)
 {
-  GList *iter;
-
   g_return_if_fail (adapter != NULL);
   g_return_if_fail (color >= 0);
   g_return_if_fail (color < MAX_COLORS);
 
-  iter = geda_list_get_glist (adapter->selection);
-
-  while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
-
-    o_set_color (adapter->toplevel, object, color);
-
-    iter = g_list_next (iter);
-  }
+  geda_object_list_set_color (geda_list_get_glist (adapter->selection),
+                              color,
+                              adapter->toplevel);
 
   g_object_notify (G_OBJECT (adapter), "object-color");
   g_object_notify (G_OBJECT (adapter), "text-color");
