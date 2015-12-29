@@ -197,7 +197,7 @@ geda_net_object_translate (GedaObject *object, int dx, int dy)
  *  \return a new net object
  */
 OBJECT*
-geda_net_object(TOPLEVEL *toplevel,  OBJECT *o_current)
+geda_net_object_copy (TOPLEVEL *toplevel,  OBJECT *o_current)
 {
   OBJECT *new_obj;
 
