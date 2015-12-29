@@ -108,7 +108,7 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
      * triggered before it was removed from o_save_buffer().
      */
     if (toplevel->net_consolidate == TRUE)
-      o_net_consolidate (toplevel, page);
+      geda_net_object_consolidate (toplevel, page);
   }
 
   if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {

@@ -149,11 +149,6 @@
 #define PORTRAIT 		1
 #define AUTOLAYOUT 		2
 
-/* for o_net_orientation */
-#define NEITHER			0
-#define HORIZONTAL		1
-#define VERTICAL		2
-
 /* for pin_type */
 #define PIN_TYPE_NET		0
 #define PIN_TYPE_BUS		1

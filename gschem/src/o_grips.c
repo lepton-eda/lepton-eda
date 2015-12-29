@@ -1227,8 +1227,8 @@ static void o_grips_end_net(GschemToplevel *w_current, OBJECT *o_current,
   }
 
   s_conn_remove_object_connections (toplevel, o_current);
-  o_net_modify (toplevel, o_current, w_current->second_wx,
-                w_current->second_wy, w_current->which_grip);
+  geda_net_object_modify (toplevel, o_current, w_current->second_wx,
+                          w_current->second_wy, w_current->which_grip);
   s_conn_update_object (o_current->page, o_current);
 
   /* add bus rippers if necessary */

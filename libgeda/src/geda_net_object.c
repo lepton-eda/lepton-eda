@@ -74,8 +74,9 @@ void world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
  *  \param [in]     y2          y-coord of the second point
  *  \return A new net OBJECT
  */
-OBJECT *o_net_new(TOPLEVEL *toplevel, char type,
-		  int color, int x1, int y1, int x2, int y2)
+OBJECT*
+geda_net_object_new (TOPLEVEL *toplevel, char type,
+                     int color, int x1, int y1, int x2, int y2)
 {
   OBJECT *new_node;
 
@@ -134,7 +135,7 @@ OBJECT *o_net_read (TOPLEVEL *toplevel, const char buf[],
     color = DEFAULT_COLOR;
   }
 
-  new_obj = o_net_new (toplevel, type, color, x1, y1, x2, y2);
+  new_obj = geda_net_object_new (toplevel, type, color, x1, y1, x2, y2);
 
   return new_obj;
 }
@@ -195,7 +196,8 @@ geda_net_object_translate (GedaObject *object, int dx, int dy)
  *  \param [in] o_current    The object that is copied
  *  \return a new net object
  */
-OBJECT *o_net_copy(TOPLEVEL *toplevel,  OBJECT *o_current)
+OBJECT*
+geda_net_object(TOPLEVEL *toplevel,  OBJECT *o_current)
 {
   OBJECT *new_obj;
 
@@ -203,9 +205,9 @@ OBJECT *o_net_copy(TOPLEVEL *toplevel,  OBJECT *o_current)
   /* still doesn't work... you need to pass in the new values */
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
-  new_obj = o_net_new (toplevel, OBJ_NET, o_current->color,
-                       o_current->line->x[0], o_current->line->y[0],
-                       o_current->line->x[1], o_current->line->y[1]);
+  new_obj = geda_net_object_new (toplevel, OBJ_NET, o_current->color,
+                                 o_current->line->x[0], o_current->line->y[0],
+                                 o_current->line->x[1], o_current->line->y[1]);
 
   return new_obj;
 }
@@ -287,7 +289,8 @@ void geda_net_object_mirror (TOPLEVEL *toplevel, int world_centerx,
  *  \param [in] object   The net object
  *  \return The orientation: HORIZONTAL, VERTICAL or NEITHER
  */
-int o_net_orientation(OBJECT *object)
+int
+geda_net_object_orientation (OBJECT *object)
 {
     if (object->line->y[0] == object->line->y[1]) {
 	return (HORIZONTAL);
@@ -452,7 +455,7 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
   page = o_get_page (toplevel, object);
   g_return_val_if_fail ((page != NULL), 0);
 
-  object_orient = o_net_orientation(object);
+  object_orient = geda_net_object_orientation (object);
 
   c_current = object->conn_list;
   while(c_current != NULL) {
@@ -465,7 +468,7 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
         o_net_consolidate_nomidpoint(object, conn->x, conn->y) ) {
 
       if (other_object->type == OBJ_NET) {
-        other_orient = o_net_orientation(other_object);
+        other_orient = geda_net_object_orientation (other_object);
 
         /* - both objects have the same orientation (either vert or horiz) */
         /* - it's not the same object */
@@ -514,7 +517,8 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
  *  \param toplevel  The TOPLEVEL object.
  *  \param page      The PAGE to consolidate nets in.
  */
-void o_net_consolidate(TOPLEVEL *toplevel, PAGE *page)
+void
+geda_net_object_consolidate (TOPLEVEL *toplevel, PAGE *page)
 {
   OBJECT *o_current;
   const GList *iter;
@@ -554,8 +558,9 @@ void o_net_consolidate(TOPLEVEL *toplevel, PAGE *page)
  *  \param whichone   net point to modify
  *
  */
-void o_net_modify(TOPLEVEL *toplevel, OBJECT *object,
-		  int x, int y, int whichone)
+void
+geda_net_object_modify (TOPLEVEL *toplevel, OBJECT *object,
+                        int x, int y, int whichone)
 {
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;

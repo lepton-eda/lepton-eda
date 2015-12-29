@@ -22,14 +22,19 @@
  *  \brief Functions operating on net drawing objects
  */
 
+/* for geda_net_object_orientation */
+#define NEITHER    0
+#define HORIZONTAL 1
+#define VERTICAL   2
+
 OBJECT*
-o_net_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
+geda_net_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
 
 void
 geda_net_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
-o_net_copy(TOPLEVEL *toplevel, OBJECT *o_current);
+geda_net_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
 geda_net_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
@@ -38,10 +43,10 @@ void
 geda_net_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 int
-o_net_orientation(OBJECT *object);
+geda_net_object_orientation (OBJECT *object);
 
 void
-o_net_consolidate(TOPLEVEL *toplevel, PAGE *page);
+geda_net_object_consolidate (TOPLEVEL *toplevel, PAGE *page);
 
 void
-o_net_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+geda_net_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
