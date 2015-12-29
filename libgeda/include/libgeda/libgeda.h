@@ -43,6 +43,7 @@
 #include <libgeda/geda_box.h>
 #include <libgeda/geda_circle.h>
 #include <libgeda/geda_complex.h>
+#include <libgeda/geda_coord.h>
 #include <libgeda/geda_line.h>
 #include <libgeda/geda_path.h>
 #include <libgeda/geda_picture.h>

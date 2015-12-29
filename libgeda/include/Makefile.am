@@ -22,6 +22,7 @@ libgedainclude_HEADERS = \
 	libgeda/geda_color_map.h \
 	libgeda/geda_complex.h \
 	libgeda/geda_complex_object.h \
+	libgeda/geda_coord.h \
 	libgeda/geda_forward.h \
 	libgeda/geda_fill_type.h \
 	libgeda/geda_line.h \

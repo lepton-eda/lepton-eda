@@ -47,6 +47,7 @@ libgeda_la_SOURCES = \
 	geda_circle.c \
 	geda_circle_object.c \
 	geda_complex_object.c \
+	geda_coord.c \
 	geda_fill_type.c \
 	geda_line.c \
 	geda_line_object.c \
