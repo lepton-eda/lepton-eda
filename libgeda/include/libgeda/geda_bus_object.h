@@ -23,13 +23,13 @@
  */
 
 OBJECT*
-o_bus_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2, int bus_ripper_direction);
+geda_bus_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2, int bus_ripper_direction);
 
 void
 geda_bus_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
-o_bus_copy(TOPLEVEL *toplevel, OBJECT *o_current);
+geda_bus_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
 geda_bus_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
@@ -38,11 +38,8 @@ void
 geda_bus_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 int
-o_bus_orientation(OBJECT *object);
+geda_bus_object_orientation (OBJECT *object);
 
 void
-o_bus_consolidate(TOPLEVEL *toplevel);
-
-void
-o_bus_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+geda_bus_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 

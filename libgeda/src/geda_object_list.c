@@ -59,7 +59,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
       break;
 
     case(OBJ_BUS):
-      new_obj = o_bus_copy (toplevel, selected);
+      new_obj = geda_bus_object_copy (toplevel, selected);
       break;
 
     case(OBJ_BOX):

@@ -75,10 +75,10 @@ void world_get_bus_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *to
  *  \param [in]  bus_ripper_direction direction of the bus rippers
  *  \return A new bus OBJECT
  */
-OBJECT *o_bus_new(TOPLEVEL *toplevel,
-		  char type, int color,
-		  int x1, int y1, int x2, int y2,
-		  int bus_ripper_direction)
+OBJECT*
+geda_bus_object_new (TOPLEVEL *toplevel, char type, int color,
+                     int x1, int y1, int x2, int y2,
+                     int bus_ripper_direction)
 {
   OBJECT *new_node;
 
@@ -154,7 +154,7 @@ OBJECT *o_bus_read (TOPLEVEL *toplevel, const char buf[],
     ripper_dir = 0;
   }
 
-  new_obj = o_bus_new (toplevel, type, color, x1, y1, x2, y2, ripper_dir);
+  new_obj = geda_bus_object_new (toplevel, type, color, x1, y1, x2, y2, ripper_dir);
 
   return new_obj;
 }
@@ -216,7 +216,8 @@ geda_bus_object_translate (GedaObject *object, int dx, int dy)
  *  \param [in] o_current    The object that is copied
  *  \return a new bus object
  */
-OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *o_current)
+OBJECT*
+geda_bus_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
 
@@ -224,10 +225,10 @@ OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   /* still doesn't work... you need to pass in the new values */
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
-  new_obj = o_bus_new (toplevel, OBJ_BUS, o_current->color,
-                       o_current->line->x[0], o_current->line->y[0],
-                       o_current->line->x[1], o_current->line->y[1],
-                       o_current->bus_ripper_direction);
+  new_obj = geda_bus_object_new (toplevel, OBJ_BUS, o_current->color,
+                                 o_current->line->x[0], o_current->line->y[0],
+                                 o_current->line->x[1], o_current->line->y[1],
+                                 o_current->bus_ripper_direction);
 
   return new_obj;
 }
@@ -309,7 +310,8 @@ void geda_bus_object_mirror (TOPLEVEL *toplevel,
  *  \param [in] object   The bus object
  *  \return The orientation: HORIZONTAL, VERTICAL or NEITHER
  */
-int o_bus_orientation(OBJECT *object)
+int
+geda_bus_object_orientation (OBJECT *object)
 {
   if (object->line->y[0] == object->line->y[1]) {
     return(HORIZONTAL);
@@ -420,16 +422,6 @@ static int o_bus_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
   return(0);
 }
 
-/* \brief
- * \par Function Description
- *
- * \todo Not Implemented Yet
- */
-void o_bus_consolidate(TOPLEVEL *toplevel)
-{
-
-}
-
 /*! \brief modify one point of a bus object
  *  \par Function Description
  *  This function modifies one point of a bus \a object. The point
@@ -442,8 +434,9 @@ void o_bus_consolidate(TOPLEVEL *toplevel)
  *  \param y          new y-coord of the bus point
  *  \param whichone   bus point to modify
  */
-void o_bus_modify(TOPLEVEL *toplevel, OBJECT *object,
-		  int x, int y, int whichone)
+void
+geda_bus_object_modify (TOPLEVEL *toplevel, OBJECT *object,
+                        int x, int y, int whichone)
 {
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
