@@ -2,7 +2,6 @@
 
 libgedaincludedir = $(includedir)/libgeda
 libgedainclude_HEADERS = \
-	libgeda/colors.h \
 	libgeda/defines.h \
 	libgeda/edaconfig.h \
 	libgeda/edaerrors.h \
@@ -20,6 +19,7 @@ libgedainclude_HEADERS = \
 	libgeda/geda_circle.h \
 	libgeda/geda_circle_object.h \
 	libgeda/geda_color.h \
+	libgeda/geda_color_map.h \
 	libgeda/geda_complex.h \
 	libgeda/geda_complex_object.h \
 	libgeda/geda_forward.h \

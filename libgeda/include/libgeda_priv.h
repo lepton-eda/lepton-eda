@@ -9,6 +9,7 @@
 #include "defines.h"
 
 #include "geda_color.h"
+#include "geda_color_map.h"
 #include "geda_fill_type.h"
 #include "geda_line_type.h"
 #include "geda_line_cap_type.h"
@@ -50,7 +51,6 @@
 
 #include "globals.h"
 #include "o_types.h"
-#include "colors.h"
 #include "prototype.h"
 #include "funcs.h"
 #include "edaconfig.h"

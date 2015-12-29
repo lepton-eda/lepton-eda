@@ -30,6 +30,7 @@
 #include <libgeda/defines.h>
 
 #include <libgeda/geda_color.h>
+#include <libgeda/geda_color_map.h>
 #include <libgeda/geda_fill_type.h>
 #include <libgeda/geda_line_type.h>
 #include <libgeda/geda_line_cap_type.h>
@@ -72,7 +73,6 @@
 #include <libgeda/globals.h>
 #include <libgeda/o_types.h>
 #include <libgeda/funcs.h>
-#include <libgeda/colors.h>
 #include <libgeda/prototype.h>
 #include <libgeda/edaconfig.h>
 #include <libgeda/edaerrors.h>
