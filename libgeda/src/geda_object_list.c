@@ -219,9 +219,9 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
 
 /*! \brief Translate a list of objects
  *
- *  \param [ref] objects A GList of objects to translate.
- *  \param [in]  dx      The x distance to move.
- *  \param [in]  dy      The y distance to move.
+ *  \param [in,out] objects A GList of objects to translate.
+ *  \param [in]     dx      The x distance to move.
+ *  \param [in]     dy      The y distance to move.
  */
 void
 geda_object_list_translate (const GList *objects, int dx, int dy)
@@ -236,36 +236,43 @@ geda_object_list_translate (const GList *objects, int dx, int dy)
   }
 }
 
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
+/*! \brief Rotate a list of objects
+ *
+ *  \param [in,out] objects  A GList of objects to translate.
+ *  \param [in]     x        The x center of rotation.
+ *  \param [in]     y        The y center of rotation.
+ *  \param [in]     angle    The angle rotation in multiples of 90 degrees.
+ *  \param [in]     toplevel The toplevel object. (used for change notification)
  */
-void geda_object_list_rotate (TOPLEVEL *toplevel, int x, int y, int angle, const GList *list)
+void
+geda_object_list_rotate (const GList *objects, int x, int y, int angle, TOPLEVEL *toplevel)
 {
-  const GList *iter = list;
-  OBJECT *o_current;
+  const GList *iter = objects;
 
-  while ( iter != NULL ) {
-    o_current = (OBJECT *)iter->data;
-    geda_object_rotate (toplevel, x, y, angle, o_current);
+  while (iter != NULL) {
+    GedaObject *object = (GedaObject*)iter->data;
+
+    geda_object_rotate (toplevel, x, y, angle, object);
     iter = g_list_next (iter);
   }
 }
 
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
+/*! \brief Mirror a list of objects
+ *
+ *  \param [in,out] objects  A GList of objects to mirror.
+ *  \param [in]     x        The x center of mirroring
+ *  \param [in]     y        Unused, essentially
+ *  \param [in]     toplevel The toplevel object. (used for change notification)
  */
-void geda_object_list_mirror (TOPLEVEL *toplevel, int x, int y, const GList *list)
+void
+geda_object_list_mirror (const GList *objects, int x, int y, TOPLEVEL *toplevel)
 {
-  const GList *iter = list;
-  OBJECT *o_current;
+  const GList *iter = objects;
 
-  while ( iter != NULL ) {
-    o_current = (OBJECT *)iter->data;
-    geda_object_mirror (toplevel, x, y, o_current);
+  while (iter != NULL) {
+    GedaObject *object = (GedaObject*)iter->data;
+
+    geda_object_mirror (toplevel, x, y, object);
     iter = g_list_next (iter);
   }
 }
@@ -273,17 +280,19 @@ void geda_object_list_mirror (TOPLEVEL *toplevel, int x, int y, const GList *lis
 
 /*! \brief Change the color of a list of objects
  *
- *  \par Function Description
- *  This function changes the the new color of a list of objects
- *
- *  \param [in] toplevel  The TOPLEVEL structure.
- *  \param [in] list      The list of OBJECTs to change color.
- *  \param [in] color     The new color.
+ *  \param [in,out] objects  A GList of objects to mirror.
+ *  \param [in]     color    The new color.
+ *  \param [in]     toplevel The toplevel object. (used for change notification)
  */
-void o_glist_set_color (TOPLEVEL *toplevel, const GList *list, int color)
+void
+geda_object_list_set_color (const GList *objects, int color, TOPLEVEL *toplevel)
 {
-  const GList *iter;
+  const GList *iter = objects;
 
-  for (iter = list; iter != NULL; iter = g_list_next (iter))
-    o_set_color (toplevel, iter->data, color);
+  while (iter != NULL) {
+    GedaObject *object = (GedaObject*)iter->data;
+
+    o_set_color (toplevel, object, color);
+    iter = g_list_next (iter);
+  }
 }

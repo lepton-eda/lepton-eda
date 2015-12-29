@@ -608,10 +608,10 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
     }
     else {
       if (mirror) {
-        geda_object_list_mirror (toplevel, 0, 0, new_node->complex->prim_objs);
+        geda_object_list_mirror (new_node->complex->prim_objs, 0, 0, toplevel);
       }
 
-      geda_object_list_rotate (toplevel, 0, 0, angle, new_node->complex->prim_objs);
+      geda_object_list_rotate (new_node->complex->prim_objs, 0, 0, angle, toplevel);
       geda_object_list_translate (new_node->complex->prim_objs, x, y);
     }
 
@@ -904,7 +904,7 @@ void geda_complex_object_rotate (TOPLEVEL *toplevel,
 
   geda_complex_object_translate (object, -object->complex->x, -object->complex->y);
 
-  geda_object_list_rotate (toplevel, 0, 0, angle, object->complex->prim_objs);
+  geda_object_list_rotate (object->complex->prim_objs, 0, 0, angle, toplevel);
 
   object->complex->x = 0;
   object->complex->y = 0;
@@ -936,7 +936,7 @@ void geda_complex_object_mirror (TOPLEVEL *toplevel,
 
   geda_complex_object_translate (object, -object->complex->x, -object->complex->y);
 
-  geda_object_list_mirror (toplevel, 0, 0, object->complex->prim_objs);
+  geda_object_list_mirror (object->complex->prim_objs, 0, 0, toplevel);
 
   switch(object->complex->angle) {
     case(90):

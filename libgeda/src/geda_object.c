@@ -510,7 +510,7 @@ void o_set_color (TOPLEVEL *toplevel, OBJECT *object, int color)
 
   if (object->type == OBJ_COMPLEX ||
       object->type == OBJ_PLACEHOLDER)
-    o_glist_set_color (toplevel, object->complex->prim_objs, color);
+    geda_object_list_set_color (object->complex->prim_objs, color, toplevel);
 }
 
 

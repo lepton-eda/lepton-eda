@@ -361,11 +361,11 @@ void o_place_rotate (GschemToplevel *w_current)
 
   o_place_invalidate_rubber (w_current, FALSE);
 
-  geda_object_list_rotate (page->toplevel,
+  geda_object_list_rotate (page->place_list,
                            w_current->first_wx,
                            w_current->first_wy,
                            90,
-                           page->place_list);
+                           page->toplevel);
 
   /* Run rotate-objects-hook */
   g_run_hook_object_list (w_current, "%rotate-objects-hook", page->place_list);
@@ -393,10 +393,10 @@ void o_place_mirror (GschemToplevel *w_current)
 
   o_place_invalidate_rubber (w_current, FALSE);
 
-  geda_object_list_mirror (page->toplevel,
+  geda_object_list_mirror (page->place_list,
                            w_current->first_wx,
                            w_current->first_wy,
-                           page->place_list);
+                           page->toplevel);
 
   /* Run mirror-objects-hook */
   g_run_hook_object_list (w_current, "%mirror-objects-hook", page->place_list);
