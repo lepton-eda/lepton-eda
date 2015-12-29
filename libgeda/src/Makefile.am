@@ -44,6 +44,7 @@ libgeda_la_SOURCES = \
 	geda_box.c \
 	geda_box_object.c \
 	geda_bus_object.c \
+	geda_color_map.c \
 	geda_circle.c \
 	geda_circle_object.c \
 	geda_complex_object.c \

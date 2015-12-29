@@ -596,7 +596,7 @@ void x_color_init (void);
 void x_color_free (void);
 void x_color_allocate (void);
 GdkColor *x_get_color(int color);
-COLOR *x_color_lookup(int color);
+COLOR *x_color_lookup(GschemToplevel *toplevel, int color);
 gboolean x_color_display_enabled (int index);
 /* x_colorcb.c */
 GtkWidget* x_colorcb_new ();

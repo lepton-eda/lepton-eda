@@ -24,8 +24,8 @@
 
 #define INVALIDATE_MARGIN 1
 
-extern COLOR display_colors[MAX_COLORS];
-extern COLOR display_outline_colors[MAX_COLORS];
+extern GedaColorMap display_colors;
+extern GedaColorMap display_outline_colors;
 
 /*! \todo Lots of Gross code... needs lots of cleanup - mainly
  * readability issues

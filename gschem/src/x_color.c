@@ -27,8 +27,8 @@
 
 #include "gschem.h"
 
-COLOR display_colors[MAX_COLORS];
-COLOR display_outline_colors[MAX_COLORS];
+GedaColorMap display_colors;
+GedaColorMap display_outline_colors;
 
 static GdkColor* gdk_colors[MAX_COLORS];
 static GdkColor* gdk_outline_colors[MAX_COLORS];
@@ -46,8 +46,8 @@ x_color_init (void)
   colormap = gdk_colormap_get_system ();
 
   /* Initialise default color maps */
-  s_color_map_defaults (display_colors);
-  s_color_map_defaults (display_outline_colors);
+  geda_color_map_init (display_colors);
+  geda_color_map_init (display_outline_colors);
 }
 
 /*! \brief Frees memory used by the color system.
@@ -79,7 +79,7 @@ x_color_free (void)
 void x_color_allocate (void)
 {
   int error;
-  int i;		
+  int i;
   COLOR c;
 
   gdk_color_parse ("black", &black);
@@ -169,15 +169,10 @@ GdkColor *x_get_color(int color)
  *  \par Function Documentation
  *
  */
-COLOR *x_color_lookup (int color)
+GedaColor*
+x_color_lookup (GschemToplevel *toplevel, int color)
 {
-  if (color < 0 || color >= MAX_COLORS ||
-      !display_colors[color].enabled) {
-    fprintf(stderr, _("Tried to get an invalid color: %d\n"), color);
-    return &display_colors[DEFAULT_COLOR];
-  } else {
-    return &display_colors[color];
-  }
+  geda_color_map_get_color (display_colors, color);
 }
 
 gboolean
