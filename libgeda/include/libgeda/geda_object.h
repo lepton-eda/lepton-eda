@@ -94,6 +94,9 @@ struct st_object
   GList *weak_refs; /* Weak references */
 };
 
+OBJECT*
+o_object_copy (TOPLEVEL *toplevel, OBJECT *selected);
+
 void
 o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_END end, OBJECT_TYPE type, int width, int length, int space);
 

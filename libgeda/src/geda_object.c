@@ -54,6 +54,90 @@
 
 #include "libgeda_priv.h"
 
+/*! \todo Finish documentation!!!!
+ *  \brief
+ *  \par Function Description
+ *  returns head !!!!!!!!!!!!!!!!!!!
+ *  look at above.. this returns what was passed in!!!!
+ *  copies selected to list_head (!! returns new list)
+ *
+ *  \param [in]  toplevel   The TOPLEVEL object.
+ *  \param [in]  selected
+ *  \return OBJECT pointer.
+ */
+OBJECT *o_object_copy (TOPLEVEL *toplevel,
+                       OBJECT *selected)
+{
+  OBJECT *new_obj;
+
+  g_return_val_if_fail (toplevel != NULL, NULL);
+  g_return_val_if_fail (selected != NULL, NULL);
+
+  switch(selected->type) {
+
+    case(OBJ_LINE):
+      new_obj = geda_line_object_copy (toplevel, selected);
+      break;
+
+    case(OBJ_NET):
+      new_obj = geda_net_object_copy (toplevel, selected);
+      break;
+
+    case(OBJ_BUS):
+      new_obj = geda_bus_object_copy (toplevel, selected);
+      break;
+
+    case(OBJ_BOX):
+      new_obj = geda_box_object_copy (toplevel, selected);
+      break;
+
+    case(OBJ_PICTURE):
+      new_obj = o_picture_copy (toplevel, selected);
+      break;
+
+    case(OBJ_CIRCLE):
+      new_obj = geda_circle_object_copy (toplevel, selected);
+      break;
+
+    case(OBJ_COMPLEX):
+    case(OBJ_PLACEHOLDER):
+      new_obj = o_complex_copy (toplevel, selected);
+      break;
+
+    case(OBJ_TEXT):
+      new_obj = o_text_copy (toplevel, selected);
+      break;
+
+    case(OBJ_PATH):
+      new_obj = geda_path_object (toplevel, selected);
+      break;
+
+    case(OBJ_PIN):
+      new_obj = geda_pin_object_copy (toplevel, selected);
+      break;
+
+    case(OBJ_ARC):
+      new_obj = geda_arc_object_copy (toplevel, selected);
+      break;
+
+    default:
+      g_critical ("o_list_copy_to: object %p has bad type '%c'\n",
+                  selected, selected->type);
+      return NULL;
+  }
+
+  /* Store a reference in the copied object to where it was copied.
+   * Used to retain associations when copying attributes */
+  selected->copied_to = new_obj;
+
+  /* make sure sid is the same! */
+  if (selected) {
+    new_obj->sid = selected->sid;
+  }
+
+  return new_obj;
+}
+
 
 /*! \brief Set an #OBJECT's line options.
  *  \par Function Description
