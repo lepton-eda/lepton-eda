@@ -136,14 +136,6 @@ const CLibSymbol *s_clib_get_symbol_by_name (const gchar *name);
 gchar *s_clib_symbol_get_data_by_name (const gchar *name);
 GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel);
 
-/* s_color.c */
-void s_color_map_defaults (COLOR *map);
-gboolean s_color_rgba_decode (const gchar *rgba,
-                              guchar *r, guchar *g, guchar *b, guchar *a);
-gchar *s_color_rgba_encode (guint8 r, guint8 g, guint8 b, guint8 a);
-SCM s_color_map_to_scm (const COLOR *map);
-void s_color_map_from_scm (COLOR *map, SCM lst, const char *scheme_proc_name);
-
 /* s_conn.c */
 void s_conn_remove_object_connections (TOPLEVEL *toplevel, OBJECT *to_remove);
 void s_conn_update_object (PAGE* page, OBJECT *object);

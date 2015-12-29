@@ -46,9 +46,6 @@
 /* FIX-1.0.0.20060906. */
 #define PREPEND_VERSION_STRING ""
 
-/* for color mechanism used in gschem */
-#define MAX_COLORS 25
-
 /* for show_name_value in st_objects */
 #define SHOW_NAME_VALUE         0
 #define SHOW_VALUE              1

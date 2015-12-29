@@ -53,4 +53,19 @@
 
 #define DEFAULT_COLOR                   GRAPHIC_COLOR
 
+/* for color mechanism used in gschem */
+#define MAX_COLORS 25
+
+/* Color map for printing */
+extern COLOR print_colors[MAX_COLORS];
+
+void
+s_color_map_defaults (COLOR *map);
+
+void
+s_color_map_from_scm (COLOR *map, SCM lst, const char *scheme_proc_name);
+
+SCM
+s_color_map_to_scm (const COLOR *map);
+
 #endif
