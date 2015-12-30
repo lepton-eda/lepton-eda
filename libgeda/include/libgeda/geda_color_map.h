@@ -67,6 +67,9 @@ GedaColor*
 geda_color_map_get_color (GedaColorMap map, int index);
 
 void
+s_color_init (void);
+
+void
 s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name);
 
 SCM

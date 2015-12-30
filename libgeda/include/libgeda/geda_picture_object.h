@@ -74,3 +74,24 @@ o_picture_get_filename (TOPLEVEL *toplevel, OBJECT *object);
 
 GdkPixbuf*
 o_picture_get_fallback_pixbuf (TOPLEVEL *toplevel) G_GNUC_WARN_UNUSED_RESULT;
+
+OBJECT*
+o_picture_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+
+char*
+o_picture_save(TOPLEVEL *toplevel, OBJECT *object);
+
+double
+o_picture_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+
+void
+world_get_picture_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
+
+gboolean
+o_picture_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
+
+void
+o_picture_embed(TOPLEVEL *toplevel, OBJECT *object);
+
+void
+o_picture_unembed(TOPLEVEL *toplevel, OBJECT *object);

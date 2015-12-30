@@ -60,3 +60,23 @@ o_complex_find_pin_by_attribute(OBJECT *object, char *name, char *wanted_value);
 
 void
 o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object);
+
+OBJECT*
+o_complex_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+
+char*
+o_complex_save(TOPLEVEL *toplevel, OBJECT *object);
+
+double
+o_complex_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+
+void
+world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex, int *left, int *top, int *right, int *bottom);
+
+gboolean
+o_complex_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
+
+GList*
+o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach);
+
+

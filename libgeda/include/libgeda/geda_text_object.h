@@ -54,3 +54,20 @@ o_text_set_rendered_bounds_func (TOPLEVEL *toplevel, RenderedBoundsFunc func, vo
 
 double
 o_text_get_font_size_in_points(TOPLEVEL *toplevel, OBJECT *object);
+
+OBJECT*
+o_text_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+
+char*
+o_text_save(TOPLEVEL *toplevel, OBJECT *object);
+
+double
+o_text_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+
+int
+world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
+
+gboolean
+o_text_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
+
+

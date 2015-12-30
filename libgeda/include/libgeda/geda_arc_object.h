@@ -44,3 +44,18 @@ geda_arc_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery
 
 void
 geda_arc_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+
+OBJECT*
+o_arc_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+
+char*
+o_arc_save(TOPLEVEL *toplevel, OBJECT *object);
+
+double
+o_arc_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+
+void
+world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
+
+gboolean
+o_arc_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);

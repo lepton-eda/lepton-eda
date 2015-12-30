@@ -42,3 +42,18 @@ geda_path_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_center
 
 void
 geda_path_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+
+OBJECT*
+o_path_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+
+char*
+o_path_save(TOPLEVEL *toplevel, OBJECT *object);
+
+double
+o_path_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+
+void
+world_get_path_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
+
+gboolean
+o_path_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);

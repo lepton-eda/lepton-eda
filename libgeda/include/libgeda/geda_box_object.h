@@ -47,3 +47,18 @@ geda_box_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery
 
 void
 geda_box_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+
+OBJECT*
+o_box_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+
+char*
+o_box_save(TOPLEVEL *toplevel, OBJECT *object);
+
+double
+o_box_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+
+void
+world_get_box_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
+
+gboolean
+o_box_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
