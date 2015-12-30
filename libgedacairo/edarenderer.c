@@ -532,7 +532,7 @@ eda_renderer_is_drawable_color (EdaRenderer *renderer, int color,
   g_return_val_if_fail ((color >= 0) || (color < map->len), FALSE);
 
   /* Otherwise, return enabled flag of object's color */
-  return (&g_array_index (map, COLOR, color))->enabled;
+  return (&g_array_index (map, GedaColor, color))->enabled;
 }
 
 static int

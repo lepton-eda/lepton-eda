@@ -27,6 +27,68 @@
 
 #include "libgeda_priv.h"
 
+
+
+/*! \brief Get the color blue value as a double
+ *
+ *  A getter until colors convert to double natively
+ *
+ *  \param [in] color the color
+ *  \return the blue value
+ */
+gdouble
+geda_color_get_blue_double (const GedaColor *color)
+{
+  g_return_val_if_fail (color != NULL, 1.0);
+
+  return color->b / 255.0;
+}
+
+/*! \brief Get the color green value as a double
+ *
+ *  A getter until colors convert to double natively
+ *
+ *  \param [in] color the color
+ *  \return the green value
+ */
+gdouble
+geda_color_get_green_double (const GedaColor *color)
+{
+  g_return_val_if_fail (color != NULL, 1.0);
+
+  return color->g / 255.0;
+}
+
+/*! \brief Get the color red value as a double
+ *
+ *  A getter until colors convert to double natively
+ *
+ *  \param [in] color the color
+ *  \return the red value
+ */
+gdouble
+geda_color_get_red_double (const GedaColor *color)
+{
+  g_return_val_if_fail (color != NULL, 1.0);
+
+  return color->r / 255.0;
+}
+
+/*! \brief Get the color alpha value as a double
+ *
+ *  A getter until colors convert to double natively
+ *
+ *  \param [in] color the color
+ *  \return the alpha value
+ */
+gdouble
+geda_color_get_alpha_double (const GedaColor *color)
+{
+  g_return_val_if_fail (color != NULL, 1.0);
+
+  return color->a / 255.0;
+}
+
 /* \brief Decode a hexadecimal RGB or RGBA color code.
  * \par Function Description
  * Accepts a hexadecimal color code \a rgba of either the form #RRGGBB
@@ -114,14 +176,14 @@ s_color_rgba_encode (guint8 r, guint8 g, guint8 b, guint8 a)
 }
 
 SCM
-s_color_map_to_scm (const COLOR *map)
+s_color_map_to_scm (const GedaColor *map)
 {
   SCM result = SCM_EOL;
   int i;
   for (i = MAX_COLORS - 1; i >= 0; i--) {
     SCM color_val = SCM_BOOL_F;
     if (map[i].enabled) {
-      COLOR c = map[i];
+      GedaColor c = map[i];
       gchar *rgba = s_color_rgba_encode (c.r, c.g, c.b, c.a);
       color_val = scm_from_utf8_string (rgba);
       g_free (rgba);
@@ -135,7 +197,7 @@ s_color_map_to_scm (const COLOR *map)
  * \warning This function should ONLY be called from Scheme procedures.
  */
 void
-s_color_map_from_scm (COLOR *map, SCM lst, const char *scheme_proc_name)
+s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name)
 {
   SCM curr = lst;
   SCM wrong_type_arg_sym = scm_from_utf8_symbol ("wrong-type-arg");
@@ -144,7 +206,7 @@ s_color_map_from_scm (COLOR *map, SCM lst, const char *scheme_proc_name)
     int i;
     char *rgba;
     SCM s;
-    COLOR c = {0x00, 0x00, 0x00, FALSE};
+    GedaColor c = {0x00, 0x00, 0x00, FALSE};
     gboolean result;
     SCM entry = scm_car (curr);
 

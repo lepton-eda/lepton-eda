@@ -29,7 +29,7 @@
 
 
 typedef void (*FILL_FUNC) (GschemToplevel *w_current,
-                           COLOR *color, PATH *path,
+                           GedaColor *color, PATH *path,
                            gint fill_width,
                            gint angle1, gint pitch1, gint angle2, gint pitch2);
 

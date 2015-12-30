@@ -114,14 +114,14 @@ void o_redraw_rect (GschemToplevel *w_current,
 
   /* This color map is used for "normal" rendering. */
   render_color_map =
-    g_array_sized_new (FALSE, FALSE, sizeof(COLOR), MAX_COLORS);
+    g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), MAX_COLORS);
   render_color_map =
     g_array_append_vals (render_color_map, display_colors, MAX_COLORS);
 
   /* This color map is used for rendering rubberbanding nets and
      buses, and objects which are in the process of being placed. */
   render_outline_color_map =
-    g_array_sized_new (FALSE, FALSE, sizeof(COLOR), MAX_COLORS);
+    g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), MAX_COLORS);
   render_outline_color_map =
     g_array_append_vals (render_outline_color_map, display_outline_colors,
                          MAX_COLORS);

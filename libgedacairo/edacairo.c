@@ -57,13 +57,13 @@ WORLDtoSCREEN (cairo_t *cr, double wx, double wy, double *sx, double *sy)
 void
 eda_cairo_set_source_color (cairo_t *cr, int color, GArray *map)
 {
-  COLOR c;
+  GedaColor c;
 
   g_return_if_fail (color >= 0);
   g_return_if_fail (map != NULL);
   g_return_if_fail ((color >= 0) && (map->len > color));
 
-  c = g_array_index (map, COLOR, color);
+  c = g_array_index (map, GedaColor, color);
 
   cairo_set_source_rgba (cr, (double)c.r / 255.0,
                              (double)c.g / 255.0,

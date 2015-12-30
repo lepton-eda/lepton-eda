@@ -15,6 +15,7 @@ libgeda/src/geda_object.c
 libgeda/src/geda_box_object.c
 libgeda/src/geda_bus_object.c
 libgeda/src/geda_circle_object.c
+libgeda/src/geda_color.c
 libgeda/src/geda_complex_object.c
 libgeda/src/o_embed.c
 libgeda/src/geda_line_object.c
@@ -24,7 +25,6 @@ libgeda/src/geda_picture_object.c
 libgeda/src/geda_pin_object.c
 libgeda/src/geda_text_object.c
 libgeda/src/s_clib.c
-libgeda/src/s_color.c
 libgeda/src/s_hierarchy.c
 libgeda/src/s_slib.c
 libgeda/src/s_slot.c

@@ -21,7 +21,7 @@
  */
 
 typedef struct st_color GedaColor;
-typedef struct st_color COLOR;
+//typedef struct st_color COLOR;
 
 struct st_color
 {
@@ -29,6 +29,17 @@ struct st_color
   gboolean enabled;
 };
 
+gdouble
+geda_color_get_blue_double (const GedaColor *color);
+
+gdouble
+geda_color_get_green_double (const GedaColor *color);
+
+gdouble
+geda_color_get_red_double (const GedaColor *color);
+
+gdouble
+geda_color_get_alpha_double (const GedaColor *color);
 
 gboolean
 s_color_rgba_decode (const gchar *rgba, guchar *r, guchar *g, guchar *b, guchar *a);

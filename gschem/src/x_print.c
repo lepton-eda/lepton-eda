@@ -158,12 +158,12 @@ x_print_draw_page (TOPLEVEL *toplevel, PAGE *page,
    * transform the print color map into a black-and-white color map by
    * making the background color transparent and replacing all other
    * enabled colors with solid black. */
-  color_map = g_array_sized_new (FALSE, FALSE, sizeof(COLOR), MAX_COLORS);
+  color_map = g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), MAX_COLORS);
   color_map = g_array_append_vals (color_map, print_colors, MAX_COLORS);
   if (!is_color) {
     int i;
     for (i = 0; i < MAX_COLORS; i++) {
-      COLOR *c = &g_array_index (color_map, COLOR, i);
+      GedaColor *c = &g_array_index (color_map, GedaColor, i);
       if (!c->enabled) continue;
 
       /* Disable background color & fully-transparent colors */

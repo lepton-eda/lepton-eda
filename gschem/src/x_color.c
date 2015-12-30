@@ -80,7 +80,7 @@ void x_color_allocate (void)
 {
   int error;
   int i;
-  COLOR c;
+  GedaColor c;
 
   gdk_color_parse ("black", &black);
   if (!gdk_colormap_alloc_color (colormap,

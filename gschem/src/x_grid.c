@@ -170,7 +170,7 @@ static void draw_dots_grid_region (GschemToplevel *w_current,
 static void draw_mesh (GschemToplevel *w_current,
                        cairo_t *cr,
                        cairo_matrix_t *user_to_device_matrix,
-                       COLOR *color,
+                       GedaColor *color,
                        int x_start, int y_start, int x_end, int y_end,
                        int incr, int coarse_mult)
 {
@@ -195,10 +195,10 @@ static void draw_mesh (GschemToplevel *w_current,
   }
 
   cairo_set_source_rgba (cr,
-                         (double)color->r / 255.0,
-                         (double)color->g / 255.0,
-                         (double)color->b / 255.0,
-                         (double)color->a / 255.0);
+                         geda_color_get_red_double (color),
+                         geda_color_get_green_double (color),
+                         geda_color_get_blue_double (color),
+                         geda_color_get_alpha_double (color));
 
   cairo_set_line_width (cr, 1.);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);

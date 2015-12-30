@@ -256,16 +256,16 @@ cmd_export_impl (void *data, int argc, char **argv)
 
   /* Create color map */
   render_color_map =
-    g_array_sized_new (FALSE, FALSE, sizeof(COLOR), MAX_COLORS);
+    g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), MAX_COLORS);
   render_color_map =
     g_array_append_vals (render_color_map, print_colors, MAX_COLORS);
   if (!settings.color) {
     /* Create a black and white color map.  All non-background colors
      * are black. */
-    COLOR white = {~0, ~0, ~0, ~0, TRUE};
-    COLOR black = {0, 0, 0, ~0, TRUE};
+    GedaColor white = {~0, ~0, ~0, ~0, TRUE};
+    GedaColor black = {0, 0, 0, ~0, TRUE};
     for (i = 0; i < MAX_COLORS; i++) {
-      COLOR *c = &g_array_index (render_color_map, COLOR, i);
+      GedaColor *c = &g_array_index (render_color_map, GedaColor, i);
       if (!c->enabled) continue;
 
       if (c->a == 0) {
