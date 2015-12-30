@@ -1,8 +1,6 @@
 G_BEGIN_DECLS
 
 /* a_basic.c */
-const gchar *o_file_format_header();
-gchar *o_save_buffer (TOPLEVEL *toplevel, const GList *object_list);
 int o_save (TOPLEVEL *toplevel, const GList *object_list, const char *filename, GError **err);
 GList *o_read_buffer(TOPLEVEL *toplevel, GList *object_list, char *buffer, const int size, const char *name, GError **err);
 GList *o_read(TOPLEVEL *toplevel, GList *object_list, char *filename, GError **err);

@@ -391,7 +391,7 @@ SCM_DEFINE (page_to_string, "%page->string", 1, 0, 0,
   PAGE *page = edascm_to_page (page_s);
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
-  gchar *buf = o_save_buffer (toplevel, s_page_objects (page));
+  gchar *buf = geda_object_list_to_buffer (s_page_objects (page), toplevel);
   scm_dynwind_begin (0);
   scm_dynwind_unwind_handler (g_free, buf, SCM_F_WIND_EXPLICITLY);
   SCM result = scm_from_utf8_string (buf);

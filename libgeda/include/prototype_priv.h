@@ -1,6 +1,3 @@
-/* a_basic.c */
-gchar *o_save_objects(TOPLEVEL *toplevel, const GList *object_list, gboolean save_attribs);
-
 /* g_rc.c */
 int vstbl_lookup_str(const vstbl_entry *table, int size, const char *str);
 int vstbl_get_val(const vstbl_entry *table, int index);
