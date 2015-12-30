@@ -294,7 +294,8 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, const char buf[],
  *  Caller must g_free returned character string.
  *
  */
-char *o_line_save(TOPLEVEL *toplevel, OBJECT *object)
+char*
+geda_line_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object)
 {
   int x1, x2, y1, y2;
   int line_width, line_space, line_length;

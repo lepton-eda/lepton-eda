@@ -171,7 +171,8 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
  *  \param [in] object  a pin OBJECT
  *  \return the string representation of the pin OBJECT
  */
-char *o_pin_save(TOPLEVEL *toplevel, OBJECT *object)
+char*
+geda_pin_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object)
 {
   int x1, x2, y1, y2;
   int pin_type, whichend;

@@ -443,7 +443,8 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
  *  \param [in] object  a text OBJECT
  *  \return the string representation of the text OBJECT
  */
-char *o_text_save(TOPLEVEL *toplevel, OBJECT *object)
+char*
+geda_text_object_to_buffer(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x, y;
   int size;

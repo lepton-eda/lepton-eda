@@ -79,7 +79,7 @@ OBJECT*
 o_picture_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 
 char*
-o_picture_save(TOPLEVEL *toplevel, OBJECT *object);
+geda_picture_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object);
 
 double
 o_picture_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);

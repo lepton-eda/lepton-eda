@@ -176,7 +176,8 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
  *  Caller must g_free returned character string.
  *
  */
-char *o_picture_save(TOPLEVEL *toplevel, OBJECT *object)
+char*
+geda_picture_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object)
 {
   int width, height, x1, y1;
   gchar *encoded_picture=NULL;

@@ -52,7 +52,7 @@ OBJECT*
 o_box_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 
 char*
-o_box_save(TOPLEVEL *toplevel, OBJECT *object);
+geda_box_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object);
 
 double
 o_box_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);

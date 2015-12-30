@@ -302,27 +302,27 @@ o_save_objects (TOPLEVEL *toplevel, const GList *object_list, gboolean save_attr
       switch (o_current->type) {
 
         case(OBJ_LINE):
-          out = o_line_save(toplevel, o_current);
+          out = geda_line_object_to_buffer (toplevel, o_current);
           break;
 
         case(OBJ_NET):
-          out = o_net_save(toplevel, o_current);
+          out = geda_net_object_to_buffer (toplevel, o_current);
           break;
 
         case(OBJ_BUS):
-          out = o_bus_save(toplevel, o_current);
+          out = geda_bus_object_to_buffer (toplevel, o_current);
           break;
 
         case(OBJ_BOX):
-          out = o_box_save(toplevel, o_current);
+          out = geda_box_object_to_buffer (toplevel, o_current);
           break;
 
         case(OBJ_CIRCLE):
-          out = o_circle_save(toplevel, o_current);
+          out = geda_circle_object_to_buffer (toplevel, o_current);
           break;
 
         case(OBJ_COMPLEX):
-          out = o_complex_save(toplevel, o_current);
+          out = geda_complex_object_to_buffer (toplevel, o_current);
           g_string_append_printf(acc, "%s\n", out);
           already_wrote = TRUE;
           g_free(out); /* need to free here because of the above flag */
@@ -339,27 +339,27 @@ o_save_objects (TOPLEVEL *toplevel, const GList *object_list, gboolean save_attr
           break;
 
         case(OBJ_PLACEHOLDER):  /* new type by SDB 1.20.2005 */
-          out = o_complex_save(toplevel, o_current);
+          out = geda_complex_object_to_buffer (toplevel, o_current);
           break;
 
         case(OBJ_TEXT):
-          out = o_text_save(toplevel, o_current);
+          out = geda_text_object_to_buffer (toplevel, o_current);
           break;
 
         case(OBJ_PATH):
-          out = o_path_save(toplevel, o_current);
+          out = geda_path_object_to_buffer (toplevel, o_current);
           break;
 
         case(OBJ_PIN):
-          out = o_pin_save(toplevel, o_current);
+          out = geda_pin_object_to_buffer (toplevel, o_current);
           break;
 
         case(OBJ_ARC):
-          out = o_arc_save(toplevel, o_current);
+          out = geda_arc_object_to_buffer (toplevel, o_current);
           break;
 
         case(OBJ_PICTURE):
-          out = o_picture_save(toplevel, o_current);
+          out = geda_picture_object_to_buffer (toplevel, o_current);
           break;
 
         default:

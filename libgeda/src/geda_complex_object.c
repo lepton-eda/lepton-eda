@@ -766,7 +766,8 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
  *  \param [in] object  a complex OBJECT
  *  \return the string representation of the complex OBJECT
  */
-char *o_complex_save(TOPLEVEL *toplevel, OBJECT *object)
+char*
+geda_complex_object_to_buffer(TOPLEVEL *toplevel, OBJECT *object)
 {
   int selectable;
   char *buf = NULL;

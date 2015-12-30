@@ -149,7 +149,8 @@ OBJECT *o_net_read (TOPLEVEL *toplevel, const char buf[],
  *  \param [in] object  a net OBJECT
  *  \return the string representation of the net OBJECT
  */
-char *o_net_save(TOPLEVEL *toplevel, OBJECT *object)
+char*
+geda_net_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object)
 {
   int x1, x2, y1, y2;
   char *buf;

@@ -168,7 +168,8 @@ OBJECT *o_bus_read (TOPLEVEL *toplevel, const char buf[],
  *  \param [in] object  a bus OBJECT
  *  \return the string representation of the bus OBJECT
  */
-char *o_bus_save(TOPLEVEL *toplevel, OBJECT *object)
+char*
+geda_bus_object_to_buffer(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x1, x2, y1, y2;
   char *buf;

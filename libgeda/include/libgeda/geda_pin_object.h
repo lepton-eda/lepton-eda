@@ -50,7 +50,7 @@ OBJECT*
 o_pin_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 
 char*
-o_pin_save(TOPLEVEL *toplevel, OBJECT *object);
+geda_pin_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object);
 
 void
 world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);

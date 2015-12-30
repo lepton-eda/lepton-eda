@@ -262,7 +262,8 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
  *  Caller must g_free returned character string.
  *
  */
-char *o_path_save (TOPLEVEL *toplevel, OBJECT *object)
+char*
+geda_path_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object)
 {
   int line_width, line_space, line_length;
   char *buf;

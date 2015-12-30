@@ -301,7 +301,8 @@ OBJECT *o_circle_read (TOPLEVEL *toplevel, const char buf[],
  *  Caller must g_free returned character string.
  *
  */
-char *o_circle_save(TOPLEVEL *toplevel, OBJECT *object)
+char*
+geda_circle_object_to_buffer(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x,y;
   int radius;

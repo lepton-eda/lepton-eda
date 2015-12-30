@@ -306,7 +306,8 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
  *  \param [in] object
  *  \return the string representation of the arc object
  */
-char *o_arc_save(TOPLEVEL *toplevel, OBJECT *object)
+char*
+geda_arc_object_to_buffer(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x, y, radius, start_angle, sweep_angle;
   int arc_width, arc_length, arc_space;

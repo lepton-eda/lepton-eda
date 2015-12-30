@@ -369,7 +369,8 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, const char buf[],
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_box_save(TOPLEVEL *toplevel, OBJECT *object)
+char*
+geda_box_object_to_buffer(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x1, y1;
   int width, height;

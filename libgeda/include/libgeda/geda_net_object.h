@@ -55,7 +55,7 @@ OBJECT*
 o_net_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 
 char*
-o_net_save(TOPLEVEL *toplevel, OBJECT *object);
+geda_net_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object);
 
 void
 world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
