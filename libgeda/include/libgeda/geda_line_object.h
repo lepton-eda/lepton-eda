@@ -59,4 +59,4 @@ void
 world_get_line_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 
 gboolean
-o_line_get_position (const GedaObject *object, gint *x, gint *y);
+geda_line_object_get_position (const GedaObject *object, gint *x, gint *y);

@@ -53,4 +53,4 @@ void
 world_get_bus_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 
 gboolean
-o_bus_get_position (const GedaObject *object, gint *x, gint *y);
+geda_bus_object_get_position (const GedaObject *object, gint *x, gint *y);

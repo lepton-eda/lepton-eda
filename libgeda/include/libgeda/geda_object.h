@@ -113,7 +113,7 @@ gboolean
 o_get_fill_options(OBJECT *object, OBJECT_FILLING *type, int *width, int *pitch1, int *angle1, int *pitch2, int *angle2);
 
 gboolean
-o_get_position (const GedaObject *object, gint *x, gint *y);
+geda_object_get_position (const GedaObject *object, gint *x, gint *y);
 
 void
 geda_object_translate (GedaObject *object, gint dx, gint dy);

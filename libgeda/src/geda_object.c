@@ -352,27 +352,27 @@ gboolean o_get_fill_options(OBJECT *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-o_get_position (const GedaObject *object, gint *x, gint *y)
+geda_object_get_position (const GedaObject *object, gint *x, gint *y)
 {
   gboolean (*func) (const GedaObject*, int*, int*) = NULL;
 
   g_return_val_if_fail (object != NULL, FALSE);
 
   switch (object->type) {
-      case OBJ_LINE:    func = o_line_get_position;    break;
-      case OBJ_NET:     func = o_net_get_position;     break;
-      case OBJ_BUS:     func = o_bus_get_position;     break;
-      case OBJ_BOX:     func = o_box_get_position;     break;
-      case OBJ_PICTURE: func = o_picture_get_position; break;
-      case OBJ_CIRCLE:  func = o_circle_get_position;  break;
+      case OBJ_LINE:    func = geda_line_object_get_position;    break;
+      case OBJ_NET:     func = geda_net_object_get_position;     break;
+      case OBJ_BUS:     func = geda_bus_object_get_position;     break;
+      case OBJ_BOX:     func = geda_box_object_get_position;     break;
+      case OBJ_PICTURE: func = geda_picture_object_get_position; break;
+      case OBJ_CIRCLE:  func = geda_circle_object_get_position;  break;
       case OBJ_PLACEHOLDER:
-      case OBJ_COMPLEX: func = o_complex_get_position; break;
-      case OBJ_TEXT:    func = o_text_get_position;    break;
-      case OBJ_PATH:    func = o_path_get_position;    break;
-      case OBJ_PIN:     func = o_pin_get_position;     break;
-      case OBJ_ARC:     func = o_arc_get_position;     break;
+      case OBJ_COMPLEX: func = geda_complex_object_get_position; break;
+      case OBJ_TEXT:    func = geda_text_object_get_position;    break;
+      case OBJ_PATH:    func = geda_path_object_get_position;    break;
+      case OBJ_PIN:     func = geda_pin_object_get_position;     break;
+      case OBJ_ARC:     func = geda_arc_object_get_position;     break;
       default:
-        g_critical ("o_get_position: object %p has bad type '%c'\n",
+        g_critical ("geda_object_get_position: object %p has bad type '%c'\n",
                     object, object->type);
   }
 

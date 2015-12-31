@@ -61,4 +61,4 @@ void
 world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 
 gboolean
-o_net_get_position (const GedaObject *object, gint *x, gint *y);
+geda_net_object_get_position (const GedaObject *object, gint *x, gint *y);

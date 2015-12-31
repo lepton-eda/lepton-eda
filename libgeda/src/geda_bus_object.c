@@ -38,7 +38,7 @@
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-o_bus_get_position (const GedaObject *object, gint *x, gint *y)
+geda_bus_object_get_position (const GedaObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->type == OBJ_BUS, FALSE);

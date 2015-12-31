@@ -58,4 +58,4 @@ void
 world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 
 gboolean
-o_arc_get_position (const GedaObject *object, gint *x, gint *y);
+geda_arc_object_get_position (const GedaObject *object, gint *x, gint *y);
