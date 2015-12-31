@@ -58,8 +58,20 @@ void world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *to
 gboolean o_pin_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
                              OBJECT *object)
 {
-  *x = object->line->x[object->whichend];
-  *y = object->line->y[object->whichend];
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_PIN, FALSE);
+  g_return_val_if_fail (object->line != NULL, FALSE);
+  g_return_val_if_fail (object->whichend >= 0, FALSE);
+  g_return_val_if_fail (object->whichend < 2, FALSE);
+
+  if (x != NULL) {
+    *x = object->line->x[object->whichend];
+  }
+
+  if (y != NULL) {
+    *y = object->line->y[object->whichend];
+  }
+
   return TRUE;
 }
 

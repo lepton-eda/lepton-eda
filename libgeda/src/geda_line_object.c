@@ -485,8 +485,18 @@ void world_get_line_bounds(TOPLEVEL *toplevel, OBJECT *object,
 gboolean o_line_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
                               OBJECT *object)
 {
-  *x = object->line->x[0];
-  *y = object->line->y[0];
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_LINE, FALSE);
+  g_return_val_if_fail (object->line != NULL, FALSE);
+
+  if (x != NULL) {
+    *x = object->line->x[0];
+  }
+
+  if (y != NULL) {
+    *y = object->line->y[0];
+  }
+
   return TRUE;
 }
 

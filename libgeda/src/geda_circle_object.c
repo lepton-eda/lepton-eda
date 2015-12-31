@@ -505,8 +505,18 @@ void world_get_circle_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
 gboolean o_circle_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
                               OBJECT *object)
 {
-  *x = object->circle->center_x;
-  *y = object->circle->center_y;
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_CIRCLE, FALSE);
+  g_return_val_if_fail (object->circle != NULL, FALSE);
+
+  if (x != NULL) {
+    *x = object->circle->center_x;
+  }
+
+  if (y != NULL) {
+    *y = object->circle->center_y;
+  }
+
   return TRUE;
 }
 

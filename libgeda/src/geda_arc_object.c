@@ -557,8 +557,18 @@ void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
 gboolean o_arc_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
                              OBJECT *object)
 {
-  *x = object->arc->x;
-  *y = object->arc->y;
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_ARC, FALSE);
+  g_return_val_if_fail (object->arc != NULL, FALSE);
+
+  if (x != NULL) {
+    *x = object->arc->x;
+  }
+
+  if (y != NULL) {
+    *y = object->arc->y;
+  }
+
   return TRUE;
 }
 

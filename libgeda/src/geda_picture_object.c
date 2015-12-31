@@ -367,8 +367,18 @@ void world_get_picture_bounds(TOPLEVEL *toplevel, OBJECT *object,
 gboolean o_picture_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
                               OBJECT *object)
 {
-  *x = min(object->picture->lower_x, object->picture->upper_x);
-  *y = min(object->picture->lower_y, object->picture->upper_y);
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_PICTURE, FALSE);
+  g_return_val_if_fail (object->picture != NULL, FALSE);
+
+  if (x != NULL) {
+    *x = min (object->picture->lower_x, object->picture->upper_x);
+  }
+
+  if (y != NULL) {
+    *y = min (object->picture->lower_y, object->picture->upper_y);
+  }
+
   return TRUE;
 }
 

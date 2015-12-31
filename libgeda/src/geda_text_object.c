@@ -176,8 +176,18 @@ int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
 gboolean o_text_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
                               OBJECT *object)
 {
-  *x = object->text->x;
-  *y = object->text->y;
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_TEXT, FALSE);
+  g_return_val_if_fail (object->text != NULL, FALSE);
+
+  if (x != NULL) {
+    *x = object->text->x;
+  }
+
+  if (y != NULL) {
+    *y = object->text->y;
+  }
+
   return TRUE;
 }
 

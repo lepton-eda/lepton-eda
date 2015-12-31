@@ -267,8 +267,18 @@ void world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex,
 gboolean o_complex_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
                               OBJECT *object)
 {
-  *x = object->complex->x;
-  *y = object->complex->y;
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (((object->type == OBJ_COMPLEX) || (object->type == OBJ_PLACEHOLDER)), FALSE);
+  g_return_val_if_fail (object->complex != NULL, FALSE);
+
+  if (x != NULL) {
+    *x = object->complex->x;
+  }
+
+  if (y != NULL) {
+    *y = object->complex->y;
+  }
+
   return TRUE;
 }
 

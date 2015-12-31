@@ -617,8 +617,18 @@ void world_get_box_bounds(TOPLEVEL *toplevel, OBJECT *object,
 gboolean o_box_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
                               OBJECT *object)
 {
-  *x = min(object->box->lower_x, object->box->upper_x);
-  *y = min(object->box->lower_y, object->box->upper_y);
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_BOX, FALSE);
+  g_return_val_if_fail (object->box != NULL, FALSE);
+
+  if (x != NULL) {
+    *x = min (object->box->lower_x, object->box->upper_x);
+  }
+
+  if (y != NULL) {
+    *y = min (object->box->lower_y, object->box->upper_y);
+  }
+
   return TRUE;
 }
 

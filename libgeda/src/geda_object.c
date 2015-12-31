@@ -355,6 +355,8 @@ gboolean o_get_position (TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object)
 {
   gboolean (*func) (TOPLEVEL*, int*, int*, OBJECT*) = NULL;
 
+  g_return_val_if_fail (object != NULL, FALSE);
+
   switch (object->type) {
       case OBJ_LINE:    func = o_line_get_position;    break;
       case OBJ_NET:     func = o_net_get_position;     break;

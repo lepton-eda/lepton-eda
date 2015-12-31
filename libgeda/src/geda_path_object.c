@@ -581,11 +581,22 @@ void world_get_path_bounds (TOPLEVEL *toplevel, OBJECT *object,
 gboolean o_path_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
                               OBJECT *object)
 {
-  if (object->path->num_sections == 0)
-    return FALSE;
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_PATH, FALSE);
+  g_return_val_if_fail (object->path != NULL, FALSE);
 
-  *x = object->path->sections[0].x3;
-  *y = object->path->sections[0].y3;
+  if (object->path->num_sections == 0) {
+    return FALSE;
+  }
+
+  if (x != NULL) {
+    *x = object->path->sections[0].x3;
+  }
+
+  if (y != NULL) {
+    *y = object->path->sections[0].y3;
+  }
+
   return TRUE;
 }
 
