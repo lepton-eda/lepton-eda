@@ -362,7 +362,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
   return(object_list);
  error:
-  s_delete_object_glist(toplevel, new_object_list);
+  geda_object_list_delete (toplevel, new_object_list);
   return NULL;
 }
 

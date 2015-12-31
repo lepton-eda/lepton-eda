@@ -274,7 +274,7 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 
       if (o_current->complex->prim_objs) {
         /* printf("sdeleting complex->primitive_objects\n");*/
-        s_delete_object_glist (toplevel, o_current->complex->prim_objs);
+        geda_object_list_delete (toplevel, o_current->complex->prim_objs);
         o_current->complex->prim_objs = NULL;
       }
 

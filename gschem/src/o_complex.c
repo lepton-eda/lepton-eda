@@ -45,7 +45,7 @@ void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
   i_action_start (w_current);
 
   /* remove the old place list if it exists */
-  s_delete_object_glist(toplevel, toplevel->page_current->place_list);
+  geda_object_list_delete (toplevel, toplevel->page_current->place_list);
   toplevel->page_current->place_list = NULL;
 
   /* Insert the new object into the buffer at world coordinates (0,0).

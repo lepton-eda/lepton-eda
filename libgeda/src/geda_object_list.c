@@ -147,7 +147,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
  *  \param [in] objects A GList of objects to delete.
  */
 void
-s_delete_object_glist (TOPLEVEL *toplevel, GList *objects)
+geda_object_list_delete (TOPLEVEL *toplevel, GList *objects)
 {
   OBJECT *o_current=NULL;
   GList *ptr;

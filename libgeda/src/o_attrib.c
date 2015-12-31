@@ -20,7 +20,7 @@
 
 /*! \file o_attrib.c
  *  \brief utility functions for attributes
- *  
+ *
  *  Attributes are normal text objects. An attribute is a text object
  *  that has a text string that is delimited by an equal "=" character.
  *  The part before the equal character is called <b>name</b> the
@@ -29,10 +29,10 @@
  *  Attributes are attached to OBJECTs (st_object). Each attribute has
  *  a reference to the object it is attached to. Each object that has
  *  attributes has a list of pionters to its attributes.
- *  
+ *
  *  \image html o_attrib_overview.png
  *  \image latex o_attrib_overview.pdf "attribute overview" width=14cm
- * 
+ *
  *  \note
  *  Be sure in o_copy o_move o_delete you maintain the attributes
  *  delete is a bare, because you will have to unattach the other end
@@ -70,7 +70,7 @@ void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item)
 
 /*! \brief Check whether a attrib is attached to another object
  *  \par Function Description
- *  This function checks whether the object \a attrib is attached to 
+ *  This function checks whether the object \a attrib is attached to
  *  the \a object.
  *
  *  \param [in]  toplevel   The TOPLEVEL object.
@@ -78,7 +78,7 @@ void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item)
  *  \param [in]  object     The object where you want to add item as an attribute.
  *  \return TRUE if attrib is an attribute of object, FALSE otherwise
  */
-gboolean o_attrib_is_attached (TOPLEVEL *toplevel, 
+gboolean o_attrib_is_attached (TOPLEVEL *toplevel,
                                OBJECT *attrib, OBJECT *object)
 {
   if (attrib == NULL || object == NULL)
@@ -331,7 +331,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
                _("Unexpected end-of-file in attribute list"));
 
 error:
-  s_delete_object_glist(toplevel, object_list);
+  geda_object_list_delete (toplevel, object_list);
   return NULL;
 }
 
