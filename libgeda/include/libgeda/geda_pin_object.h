@@ -56,4 +56,4 @@ void
 world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 
 gboolean
-o_pin_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
+o_pin_get_position (const GedaObject *object, gint *x, gint *y);

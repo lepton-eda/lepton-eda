@@ -351,9 +351,10 @@ gboolean o_get_fill_options(OBJECT *object,
  *  \param [in] object   The object to get the position.
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
-gboolean o_get_position (TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object)
+gboolean
+o_get_position (const GedaObject *object, gint *x, gint *y)
 {
-  gboolean (*func) (TOPLEVEL*, int*, int*, OBJECT*) = NULL;
+  gboolean (*func) (const GedaObject*, int*, int*) = NULL;
 
   g_return_val_if_fail (object != NULL, FALSE);
 
@@ -376,7 +377,7 @@ gboolean o_get_position (TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object)
   }
 
   if (func != NULL) {
-    return (*func) (toplevel, x, y, object);
+    return (*func) (object, x, y);
   }
   return FALSE;
 }

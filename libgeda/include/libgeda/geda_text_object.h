@@ -68,6 +68,6 @@ int
 world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
 
 gboolean
-o_text_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
+o_text_get_position (const GedaObject *object, gint *x, gint *y);
 
 

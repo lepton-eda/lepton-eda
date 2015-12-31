@@ -89,7 +89,7 @@ void
 world_get_picture_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 
 gboolean
-o_picture_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
+o_picture_get_position (const GedaObject *object, gint *x, gint *y);
 
 void
 o_picture_embed(TOPLEVEL *toplevel, OBJECT *object);

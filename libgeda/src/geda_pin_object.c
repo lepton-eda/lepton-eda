@@ -49,14 +49,13 @@ void world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *to
  *  \par Function Description
  *  This function gets the position of the whichend side of a pin object.
  *
- *  \param [in] toplevel The toplevel environment.
+ *  \param [in] object   The object to get the position.
  *  \param [out] x       pointer to the x-position
  *  \param [out] y       pointer to the y-position
- *  \param [in] object   The object to get the position.
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
-gboolean o_pin_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
-                             OBJECT *object)
+gboolean
+o_pin_get_position (const GedaObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->type == OBJ_PIN, FALSE);

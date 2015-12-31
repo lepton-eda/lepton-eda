@@ -339,7 +339,7 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
     /* manipulate w_x and w_y in a way that will lead to a position
        of the object that is aligned with the grid */
     if (resnap) {
-      if (o_get_position(page->toplevel, &object_x, &object_y, object)) {
+      if (o_get_position(object, &object_x, &object_y)) {
         w_x += snap_grid (w_current, object_x) - object_x;
         w_y += snap_grid (w_current, object_y) - object_y;
       }
