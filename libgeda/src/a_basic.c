@@ -58,7 +58,7 @@ int o_save (TOPLEVEL *toplevel, const GList *object_list,
     return 0;
   }
 
-  buffer = geda_object_list_to_buffer (object_list, toplevel);
+  buffer = geda_object_list_to_buffer (object_list);
   if (!g_file_set_contents (filename, buffer, strlen(buffer), err)) {
     g_free (buffer);
     return 0;

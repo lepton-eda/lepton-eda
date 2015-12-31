@@ -49,8 +49,8 @@ geda_pin_object_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type);
 OBJECT*
 o_pin_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 
-char*
-geda_pin_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object);
+gchar*
+geda_pin_object_to_buffer (const GedaObject *object);
 
 void
 world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);

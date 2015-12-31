@@ -30,7 +30,7 @@ void
 geda_object_list_set_color (const GList *objects, int color, TOPLEVEL *toplevel);
 
 gchar*
-geda_object_list_to_buffer (const GList *objects, TOPLEVEL *toplevel);
+geda_object_list_to_buffer (const GList *objects);
 
 void
 geda_object_list_translate (const GList *objects, int dx, int dy);

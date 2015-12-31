@@ -46,8 +46,8 @@ geda_bus_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int wh
 OBJECT*
 o_bus_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 
-char*
-geda_bus_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object);
+gchar*
+geda_bus_object_to_buffer (const GedaObject *object);
 
 void
 world_get_bus_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);

@@ -439,12 +439,11 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
  *  This function takes a text \a object and return a string
  *  according to the file format definition.
  *
- *  \param [in] toplevel  a TOPLEVEL structure
  *  \param [in] object  a text OBJECT
  *  \return the string representation of the text OBJECT
  */
-char*
-geda_text_object_to_buffer(TOPLEVEL *toplevel, OBJECT *object)
+gchar*
+geda_text_object_to_buffer (const GedaObject *object)
 {
   int x, y;
   int size;
@@ -463,7 +462,7 @@ geda_text_object_to_buffer(TOPLEVEL *toplevel, OBJECT *object)
 
   buf = g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d\n%s", object->type,
                          x, y, object->color, size,
-                         o_is_visible (toplevel, object) ? VISIBLE : INVISIBLE,
+                         geda_object_get_visible (object),
                          object->show_name_value, object->text->angle,
                          object->text->alignment, num_lines, string);
 

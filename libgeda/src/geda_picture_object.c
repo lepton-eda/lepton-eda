@@ -168,7 +168,6 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
  *  This function formats a string in the buffer <B>*buff</B> to describe
  *  the picture object <B>*object</B>.
  *
- *  \param [in] toplevel  a TOPLEVEL structure
  *  \param [in] object  Picture OBJECT to create string from.
  *  \return A pointer to the picture OBJECT character string.
  *
@@ -176,8 +175,8 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
  *  Caller must g_free returned character string.
  *
  */
-char*
-geda_picture_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object)
+gchar*
+geda_picture_object_to_buffer (const GedaObject *object)
 {
   int width, height, x1, y1;
   gchar *encoded_picture=NULL;
@@ -198,7 +197,7 @@ geda_picture_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object)
 #endif
 
   /* Encode the picture if it's embedded */
-  if (o_picture_is_embedded (toplevel, object)) {
+  if (o_picture_is_embedded (object)) {
     encoded_picture =
       s_encoding_base64_encode( (char *)object->picture->file_content,
                                 object->picture->file_length,
@@ -210,10 +209,10 @@ geda_picture_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object)
   }
 
   /* Cope with null filename */
-  filename = o_picture_get_filename (toplevel, object);
+  filename = o_picture_get_filename (object);
   if (filename == NULL) filename = "";
 
-  if (o_picture_is_embedded (toplevel, object) &&
+  if (o_picture_is_embedded (object) &&
       encoded_picture != NULL) {
     out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s\n%s\n%s",
                           object->type,
@@ -751,10 +750,10 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
  */
 void o_picture_embed (TOPLEVEL *toplevel, OBJECT *object)
 {
-  const gchar *filename = o_picture_get_filename (toplevel, object);
+  const gchar *filename = o_picture_get_filename (object);
   gchar *basename;
 
-  if (o_picture_is_embedded (toplevel, object)) return;
+  if (o_picture_is_embedded (object)) return;
 
   if (object->picture->file_content == NULL) {
     s_log_message (_("Picture [%s] has no image data.\n"), filename);
@@ -782,10 +781,10 @@ void o_picture_embed (TOPLEVEL *toplevel, OBJECT *object)
 void o_picture_unembed (TOPLEVEL *toplevel, OBJECT *object)
 {
   GError *err = NULL;
-  const gchar *filename = o_picture_get_filename (toplevel, object);
+  const gchar *filename = o_picture_get_filename (object);
   gchar *basename;
 
-  if (!o_picture_is_embedded (toplevel, object)) return;
+  if (!o_picture_is_embedded (object)) return;
 
   o_picture_set_from_file (toplevel, object, filename, &err);
 
@@ -845,12 +844,11 @@ double o_picture_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
  * in a schematic or symbol file; returns FALSE if its data will be
  * obtained from a separate file.
  *
- * \param toplevel  The current #TOPLEVEL.
  * \param object    The picture #OBJECT to inspect.
  * \return TRUE if \a object is embedded.
  */
 gboolean
-o_picture_is_embedded (TOPLEVEL *toplevel, OBJECT *object)
+o_picture_is_embedded (const OBJECT *object)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->picture != NULL, FALSE);
@@ -1006,7 +1004,7 @@ o_picture_set_from_file (TOPLEVEL *toplevel, OBJECT *object,
  * \return the filename associated with \a object.
  */
 const gchar *
-o_picture_get_filename (TOPLEVEL *toplevel, OBJECT *object)
+o_picture_get_filename (const GedaObject *object)
 {
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->picture != NULL, NULL);

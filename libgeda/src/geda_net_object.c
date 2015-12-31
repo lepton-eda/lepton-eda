@@ -145,12 +145,11 @@ OBJECT *o_net_read (TOPLEVEL *toplevel, const char buf[],
  *  This function takes a net \a object and return a string
  *  according to the file format definition.
  *
- *  \param [in] toplevel  a TOPLEVEL structure
  *  \param [in] object  a net OBJECT
  *  \return the string representation of the net OBJECT
  */
-char*
-geda_net_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object)
+gchar*
+geda_net_object_to_buffer (const GedaObject *object)
 {
   int x1, x2, y1, y2;
   char *buf;

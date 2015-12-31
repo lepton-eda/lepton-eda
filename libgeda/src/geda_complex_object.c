@@ -762,12 +762,11 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
  *  This function takes a complex \a object and return a string
  *  according to the file format definition.
  *
- *  \param [in] toplevel  a TOPLEVEL structure
  *  \param [in] object  a complex OBJECT
  *  \return the string representation of the complex OBJECT
  */
-char*
-geda_complex_object_to_buffer(TOPLEVEL *toplevel, OBJECT *object)
+gchar*
+geda_complex_object_to_buffer (const GedaObject *object)
 {
   int selectable;
   char *buf = NULL;

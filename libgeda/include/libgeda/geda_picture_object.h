@@ -54,7 +54,8 @@ geda_picture_object_translate (GedaObject *object, int dx, int dy);
 OBJECT*
 o_picture_copy(TOPLEVEL *toplevel, OBJECT *o_current) G_GNUC_WARN_UNUSED_RESULT;
 
-gboolean o_picture_is_embedded (TOPLEVEL *toplevel, OBJECT *object);
+gboolean
+o_picture_is_embedded (const OBJECT *object);
 
 GdkPixbuf *o_picture_get_pixbuf (TOPLEVEL *toplevel, OBJECT *object) G_GNUC_WARN_UNUSED_RESULT;
 
@@ -70,7 +71,7 @@ gboolean
 o_picture_set_from_file (TOPLEVEL *toplevel, OBJECT *object,
                                   const gchar *filename, GError **error);
 const gchar*
-o_picture_get_filename (TOPLEVEL *toplevel, OBJECT *object);
+o_picture_get_filename (const GedaObject *object);
 
 GdkPixbuf*
 o_picture_get_fallback_pixbuf (TOPLEVEL *toplevel) G_GNUC_WARN_UNUSED_RESULT;
@@ -78,8 +79,8 @@ o_picture_get_fallback_pixbuf (TOPLEVEL *toplevel) G_GNUC_WARN_UNUSED_RESULT;
 OBJECT*
 o_picture_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 
-char*
-geda_picture_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object);
+gchar*
+geda_picture_object_to_buffer (const GedaObject *object);
 
 double
 o_picture_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);

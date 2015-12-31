@@ -94,6 +94,9 @@ struct st_object
   GList *weak_refs; /* Weak references */
 };
 
+gboolean
+geda_object_get_visible (const GedaObject *object);
+
 OBJECT*
 o_object_copy (TOPLEVEL *toplevel, OBJECT *selected);
 

@@ -58,8 +58,8 @@ o_text_get_font_size_in_points(TOPLEVEL *toplevel, OBJECT *object);
 OBJECT*
 o_text_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 
-char*
-geda_text_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object);
+gchar*
+geda_text_object_to_buffer (const GedaObject *object);
 
 double
 o_text_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);

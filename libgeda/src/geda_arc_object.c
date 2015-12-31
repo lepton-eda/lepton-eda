@@ -302,12 +302,11 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
  *  A pointer to the new allocated and formated string is returned.
  *  The string must be freed at some point.
  *
- *  \param [in] toplevel
  *  \param [in] object
  *  \return the string representation of the arc object
  */
-char*
-geda_arc_object_to_buffer(TOPLEVEL *toplevel, OBJECT *object)
+gchar*
+geda_arc_object_to_buffer (const GedaObject *object)
 {
   int x, y, radius, start_angle, sweep_angle;
   int arc_width, arc_length, arc_space;

@@ -31,7 +31,7 @@ static const gchar*
 o_file_format_header ();
 
 static gchar*
-o_save_objects (TOPLEVEL *toplevel, const GList *object_list, gboolean save_attribs);
+o_save_objects (const GList *object_list, gboolean save_attribs);
 
 
 /*! global which is used in o_list_copy_all */
@@ -230,16 +230,14 @@ geda_object_list_set_color (const GList *objects, int color, TOPLEVEL *toplevel)
  *  \returns a buffer containing schematic data or NULL on failure.
  */
 gchar*
-geda_object_list_to_buffer (const GList *objects, TOPLEVEL *toplevel)
+geda_object_list_to_buffer (const GList *objects)
 {
   GString *acc;
   gchar *buffer;
 
-  if (toplevel == NULL) return NULL;
-
   acc = g_string_new (o_file_format_header());
 
-  buffer = o_save_objects (toplevel, objects, FALSE);
+  buffer = o_save_objects (objects, FALSE);
   g_string_append (acc, buffer);
   g_free (buffer);
 
@@ -282,7 +280,7 @@ static const gchar
  *  \returns a buffer containing schematic data or NULL on failure.
  */
 static gchar*
-o_save_objects (TOPLEVEL *toplevel, const GList *object_list, gboolean save_attribs)
+o_save_objects (const GList *object_list, gboolean save_attribs)
 {
   OBJECT *o_current;
   const GList *iter;
@@ -302,27 +300,27 @@ o_save_objects (TOPLEVEL *toplevel, const GList *object_list, gboolean save_attr
       switch (o_current->type) {
 
         case(OBJ_LINE):
-          out = geda_line_object_to_buffer (toplevel, o_current);
+          out = geda_line_object_to_buffer (o_current);
           break;
 
         case(OBJ_NET):
-          out = geda_net_object_to_buffer (toplevel, o_current);
+          out = geda_net_object_to_buffer (o_current);
           break;
 
         case(OBJ_BUS):
-          out = geda_bus_object_to_buffer (toplevel, o_current);
+          out = geda_bus_object_to_buffer (o_current);
           break;
 
         case(OBJ_BOX):
-          out = geda_box_object_to_buffer (toplevel, o_current);
+          out = geda_box_object_to_buffer (o_current);
           break;
 
         case(OBJ_CIRCLE):
-          out = geda_circle_object_to_buffer (toplevel, o_current);
+          out = geda_circle_object_to_buffer (o_current);
           break;
 
         case(OBJ_COMPLEX):
-          out = geda_complex_object_to_buffer (toplevel, o_current);
+          out = geda_complex_object_to_buffer (o_current);
           g_string_append_printf(acc, "%s\n", out);
           already_wrote = TRUE;
           g_free(out); /* need to free here because of the above flag */
@@ -330,7 +328,7 @@ o_save_objects (TOPLEVEL *toplevel, const GList *object_list, gboolean save_attr
           if (o_complex_is_embedded(o_current)) {
             g_string_append(acc, "[\n");
 
-            out = o_save_objects(toplevel, o_current->complex->prim_objs, FALSE);
+            out = o_save_objects(o_current->complex->prim_objs, FALSE);
             g_string_append (acc, out);
             g_free(out);
 
@@ -339,27 +337,27 @@ o_save_objects (TOPLEVEL *toplevel, const GList *object_list, gboolean save_attr
           break;
 
         case(OBJ_PLACEHOLDER):  /* new type by SDB 1.20.2005 */
-          out = geda_complex_object_to_buffer (toplevel, o_current);
+          out = geda_complex_object_to_buffer (o_current);
           break;
 
         case(OBJ_TEXT):
-          out = geda_text_object_to_buffer (toplevel, o_current);
+          out = geda_text_object_to_buffer (o_current);
           break;
 
         case(OBJ_PATH):
-          out = geda_path_object_to_buffer (toplevel, o_current);
+          out = geda_path_object_to_buffer (o_current);
           break;
 
         case(OBJ_PIN):
-          out = geda_pin_object_to_buffer (toplevel, o_current);
+          out = geda_pin_object_to_buffer (o_current);
           break;
 
         case(OBJ_ARC):
-          out = geda_arc_object_to_buffer (toplevel, o_current);
+          out = geda_arc_object_to_buffer (o_current);
           break;
 
         case(OBJ_PICTURE):
-          out = geda_picture_object_to_buffer (toplevel, o_current);
+          out = geda_picture_object_to_buffer (o_current);
           break;
 
         default:
@@ -386,7 +384,7 @@ o_save_objects (TOPLEVEL *toplevel, const GList *object_list, gboolean save_attr
       if (o_current->attribs != NULL) {
         g_string_append (acc, "{\n");
 
-        out = o_save_objects (toplevel, o_current->attribs, TRUE);
+        out = o_save_objects (o_current->attribs, TRUE);
         g_string_append (acc, out);
         g_free(out);
 

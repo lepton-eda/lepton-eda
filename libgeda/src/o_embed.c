@@ -58,7 +58,7 @@ void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
 
   /* If it's a picture and it's not embedded */
   if ( (o_current->type == OBJ_PICTURE) &&
-       !o_picture_is_embedded (toplevel, o_current) ) {
+       !o_picture_is_embedded (o_current) ) {
     o_picture_embed (toplevel, o_current);
 
     page_modified = 1;
@@ -84,12 +84,12 @@ void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
   const CLibSymbol *sym;
   PAGE *page = o_get_page (toplevel, o_current);
   int page_modified = 0;
-  
+
   /* check o_current is an embedded complex */
   if (o_current->type == OBJ_COMPLEX &&
       o_complex_is_embedded (o_current))
   {
-        
+
     /* search for the symbol in the library */
     sym = s_clib_get_symbol_by_name (o_current->complex_basename);
 
@@ -98,21 +98,21 @@ void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
       s_log_message (_("Could not find component [%s], while trying to "
                        "unembed. Component is still embedded\n"),
                      o_current->complex_basename);
-      
+
     } else {
       /* clear the embedded flag */
       o_current->complex_embedded = FALSE;
 
       s_log_message (_("Component [%s] has been successfully unembedded\n"),
                      o_current->complex_basename);
-      
+
       page_modified = 1;
     }
   }
 
   /* If it's a picture and it's embedded */
   if ( (o_current->type == OBJ_PICTURE) &&
-       o_picture_is_embedded (toplevel, o_current)) {
+       o_picture_is_embedded (o_current)) {
     o_picture_unembed (toplevel, o_current);
 
     page_modified = 1;

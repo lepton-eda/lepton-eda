@@ -46,8 +46,8 @@ geda_path_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_center
 OBJECT*
 o_path_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 
-char*
-geda_path_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object);
+gchar*
+geda_path_object_to_buffer (const GedaObject *object);
 
 double
 o_path_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);

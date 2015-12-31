@@ -254,7 +254,6 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
  *  The function formats a string in the buffer <B>*buff</B> to describe
  *  the path object <B>*object</B>.
  *
- *  \param [in] toplevel  a TOPLEVEL structure
  *  \param [in] object  path OBJECT to create string from.
  *  \return A pointer to the path OBJECT character string.
  *
@@ -262,8 +261,8 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
  *  Caller must g_free returned character string.
  *
  */
-char*
-geda_path_object_to_buffer (TOPLEVEL *toplevel, OBJECT *object)
+gchar*
+geda_path_object_to_buffer (const GedaObject *object)
 {
   int line_width, line_space, line_length;
   char *buf;

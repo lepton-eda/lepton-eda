@@ -1904,7 +1904,7 @@ SCM_DEFINE (picture_info, "%picture-info", 1, 0, 0,
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
-  const gchar *filename = o_picture_get_filename (toplevel, obj);
+  const gchar *filename = o_picture_get_filename (obj);
 
   SCM filename_s = SCM_BOOL_F;
   if (filename != NULL) {

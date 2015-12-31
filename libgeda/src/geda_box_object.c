@@ -362,15 +362,14 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, const char buf[],
  *  It follows the post-20000704 release file format that handle the line type
  *  and fill options.
  *
- *  \param [in] toplevel  The TOPLEVEL structure.
  *  \param [in] object  The BOX OBJECT to create string from.
  *  \return A pointer to the BOX character string.
  *
  *  \warning
  *  Caller must g_free returned character string.
  */
-char*
-geda_box_object_to_buffer(TOPLEVEL *toplevel, OBJECT *object)
+gchar*
+geda_box_object_to_buffer (const GedaObject *object)
 {
   int x1, y1;
   int width, height;

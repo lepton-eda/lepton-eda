@@ -781,6 +781,14 @@ o_is_visible (TOPLEVEL *toplevel, OBJECT *object)
   return object->visibility == VISIBLE;
 }
 
+gboolean
+geda_object_get_visible (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, FALSE);
+
+  return object->visibility;
+}
+
 /*! \brief Set visibility of the object.
  *  \par Function Description
  *  Set value of visibility field within the object.
