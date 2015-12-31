@@ -21,6 +21,9 @@
  */
 
 void
+s_delete_object_glist (TOPLEVEL *toplevel, GList *list);
+
+void
 geda_object_list_mirror (const GList *objects, int x, int y, TOPLEVEL *toplevel);
 
 void

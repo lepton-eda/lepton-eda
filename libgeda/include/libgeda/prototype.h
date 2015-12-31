@@ -96,7 +96,6 @@ OBJECT *s_basic_new_object(int type, char const *prefix);
 void print_struct_forw(GList *list);
 void print_struct(OBJECT *ptr);
 void s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current);
-void s_delete_object_glist(TOPLEVEL *toplevel, GList *list);
 void s_object_weak_ref (OBJECT *object, void (*notify_func)(void *, void *), void *user_data);
 void s_object_weak_unref (OBJECT *object, void (*notify_func)(void *, void *), void *user_data);
 void s_object_add_weak_ptr (OBJECT *object, void *weak_pointer_loc);

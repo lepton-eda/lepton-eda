@@ -139,6 +139,29 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
   return(dest);
 }
 
+/*! \brief Delete a list of objects
+ *
+ *  This function deletes everything, including the GList.
+ *
+ *  \param [in] toplevel The toplevel object.
+ *  \param [in] objects A GList of objects to delete.
+ */
+void
+s_delete_object_glist (TOPLEVEL *toplevel, GList *objects)
+{
+  OBJECT *o_current=NULL;
+  GList *ptr;
+
+  ptr = g_list_last(objects);
+
+  /* do the delete backwards */
+  while(ptr != NULL) {
+    o_current = (OBJECT *) ptr->data;
+    s_delete_object(toplevel, o_current);
+    ptr = g_list_previous (ptr);
+  }
+  g_list_free(objects);
+}
 
 /*! \brief Translate a list of objects
  *

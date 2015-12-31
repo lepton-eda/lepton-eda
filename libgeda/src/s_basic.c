@@ -87,7 +87,7 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
 
   new_node->complex_basename = NULL;
   new_node->parent = NULL;
-		
+
   /* Setup the color */
   new_node->color = DEFAULT_COLOR;
   new_node->dont_redraw = FALSE;
@@ -107,7 +107,7 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
   new_node->fill_angle2 = 0;
   new_node->fill_pitch1 = 0;
   new_node->fill_pitch2 = 0;
-	
+
   new_node->attribs = NULL;
   new_node->attached_to = NULL;
   new_node->copied_to = NULL;
@@ -253,7 +253,7 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 
     if (o_current->text) {
       /*printf("sdeleting text->string\n");*/
-      g_free(o_current->text->string); 
+      g_free(o_current->text->string);
       o_current->text->string = NULL;
       g_free(o_current->text->disp_string);
       /*	printf("sdeleting text\n");*/
@@ -267,7 +267,7 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 
 
     /*	printf("sdeleting complex_basename\n");*/
-    g_free(o_current->complex_basename); 
+    g_free(o_current->complex_basename);
     o_current->complex_basename = NULL;
 
     if (o_current->complex) {
@@ -290,29 +290,6 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 
     o_current=NULL;		/* misc clean up */
   }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* deletes everything include the GList */
-void
-s_delete_object_glist(TOPLEVEL *toplevel, GList *list)
-{
-  OBJECT *o_current=NULL;
-  GList *ptr;
-
-  ptr = g_list_last(list);
-
-  /* do the delete backwards */
-  while(ptr != NULL) {
-    o_current = (OBJECT *) ptr->data;
-    s_delete_object(toplevel, o_current);
-    ptr = g_list_previous (ptr);
-  }
-  g_list_free(list);
 }
 
 /*! \brief Add a weak reference watcher to an OBJECT.
@@ -405,10 +382,10 @@ char *remove_nl(char *string)
 
   if (!string)
     return NULL;
-  
+
   i = 0;
   while(string[i] != '\0' && string[i] != '\n' && string[i] != '\r') {
-    i++; 
+    i++;
   }
 
   string[i] = '\0';
@@ -427,12 +404,12 @@ char *remove_last_nl(char *string)
   int len;
 
   if (!string)
-    return NULL;		
+    return NULL;
 
   len = strlen(string);
   if (string[len-1] == '\n' || string[len-1] == '\r')
     string[len-1] = '\0';
-     
+
   return(string);
 }
 
@@ -522,7 +499,7 @@ s_expand_env_variables (const gchar *string)
           /* an escaped '$' */
           g_string_append_c (gstring, string[i++]);
           break;
-          
+
         default:
           /* an isolated '$', put it in output */
           g_string_append_c (gstring, '$');
