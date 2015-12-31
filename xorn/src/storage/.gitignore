@@ -1,0 +1,8 @@
+.deps
+Makefile
+Makefile.in
+*.o
+*.lo
+*.la
+*~
+TAGS
