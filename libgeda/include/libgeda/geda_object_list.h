@@ -27,6 +27,9 @@ void
 geda_object_list_mirror (const GList *objects, int x, int y, TOPLEVEL *toplevel);
 
 void
+geda_object_list_print (GList *objects);
+
+void
 geda_object_list_rotate (const GList *objects, int x, int y, int angle, TOPLEVEL *toplevel);
 
 void

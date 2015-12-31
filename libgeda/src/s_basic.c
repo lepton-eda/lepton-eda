@@ -137,36 +137,6 @@ OBJECT *s_basic_new_object(int type, char const *prefix)
   return s_basic_init_object(g_malloc(sizeof (OBJECT)), type, prefix);
 }
 
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void print_struct_forw (GList *list)
-{
-  OBJECT *o_current=NULL;
-  GList *iter;
-
-  iter = list;
-  printf("TRYING to PRINT\n");
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-    printf("Name: %s\n", o_current->name);
-    printf("Type: %d\n", o_current->type);
-    printf("Sid: %d\n", o_current->sid);
-
-    if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
-      print_struct_forw(o_current->complex->prim_objs);
-    }
-
-    o_attrib_print (o_current->attribs);
-
-    printf("----\n");
-    iter = g_list_next (iter);
-  }
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

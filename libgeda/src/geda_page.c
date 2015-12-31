@@ -461,7 +461,7 @@ void s_page_print_all (TOPLEVEL *toplevel)
 
     page = (PAGE *)iter->data;
     printf ("FILENAME: %s\n", page->page_filename);
-    print_struct_forw (page->_object_list);
+    geda_object_list_print (page->_object_list);
   }
 }
 

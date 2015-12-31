@@ -163,6 +163,37 @@ geda_object_list_delete (TOPLEVEL *toplevel, GList *objects)
   g_list_free(objects);
 }
 
+/*! \brief Print a list of objects
+ *
+ *  Prints a list of objects to stdout, for debugging.
+ *
+ *  \param [in] objects A GList of objects to print.
+ */
+void
+geda_object_list_print (GList *objects)
+{
+  OBJECT *o_current=NULL;
+  GList *iter;
+
+  iter = objects;
+  printf("TRYING to PRINT\n");
+  while (iter != NULL) {
+    o_current = (OBJECT *)iter->data;
+    printf("Name: %s\n", o_current->name);
+    printf("Type: %d\n", o_current->type);
+    printf("Sid: %d\n", o_current->sid);
+
+    if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
+      geda_object_list_print (o_current->complex->prim_objs);
+    }
+
+    o_attrib_print (o_current->attribs);
+
+    printf("----\n");
+    iter = g_list_next (iter);
+  }
+}
+
 /*! \brief Translate a list of objects
  *
  *  \param [in,out] objects A GList of objects to translate.
