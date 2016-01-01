@@ -568,15 +568,19 @@ double o_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object,
  *  will be recalculated next time the OBJECT's bounds are requested
  *  (e.g. via world_get_single_object_bounds() ).
  *  \param [in] toplevel
- *  \param [in] obj
+ *  \param [in] object
  *
  *  \todo Turn this into a macro?
  */
-void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *obj)
+void
+o_bounds_invalidate (TOPLEVEL *toplevel, GedaObject *object)
 {
-  do {
-      obj->w_bounds_valid_for = NULL;
-  } while ((obj = obj->parent) != NULL);
+  GedaObject *iter = object;
+
+  while (iter != NULL) {
+    iter->w_bounds_valid_for = NULL;
+    iter = iter->parent;
+  }
 }
 
 
