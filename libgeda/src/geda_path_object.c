@@ -610,8 +610,9 @@ geda_path_object_get_position (const GedaObject *object, gint *x, gint *y)
  *  \return The shortest distance from the object to the point.  With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_path_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
-                                 int x, int y, int force_solid)
+double
+geda_path_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                    int x, int y, int force_solid)
 {
   int solid;
 

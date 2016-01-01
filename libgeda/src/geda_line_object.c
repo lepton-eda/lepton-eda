@@ -542,8 +542,9 @@ geda_line_object_length (OBJECT *object)
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_line_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
-                                 int x, int y, int force_solid)
+double
+geda_line_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                    int x, int y, int force_solid)
 {
   return geda_line_shortest_distance (object->line, x, y);
 }

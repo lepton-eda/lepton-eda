@@ -50,7 +50,7 @@ gchar*
 geda_circle_object_to_buffer (const GedaObject *object);
 
 double
-o_circle_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+geda_circle_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 
 void
 world_get_circle_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);

@@ -125,7 +125,10 @@ void
 geda_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 double
-o_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y);
+geda_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y);
+
+double
+geda_object_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_solid);
 
 void
 o_set_color(TOPLEVEL *toplevel, OBJECT *object, int color);

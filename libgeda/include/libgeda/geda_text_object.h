@@ -62,7 +62,7 @@ gchar*
 geda_text_object_to_buffer (const GedaObject *object);
 
 double
-o_text_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+geda_text_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 
 int
 world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left, int *top, int *right, int *bottom);

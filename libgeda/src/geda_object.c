@@ -510,9 +510,10 @@ void geda_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_center
  *  number (G_MAXDOUBLE).  If an error occurs, this function returns
  *  G_MAXDOUBLE.
  */
-double o_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y)
+double
+geda_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y)
 {
-  return o_shortest_distance_full (toplevel, object, x, y, FALSE);
+  return geda_object_shortest_distance_full (toplevel, object, x, y, FALSE);
 }
 
 /*! \brief Calculates the distance between the given point and the closest
@@ -528,8 +529,9 @@ double o_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y)
  *  number (G_MAXDOUBLE).  If an error occurs, this function returns
  *  G_MAXDOUBLE.
  */
-double o_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object,
-                                 int x, int y, int force_solid)
+double
+geda_object_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object,
+                                    int x, int y, int force_solid)
 {
   double shortest_distance = G_MAXDOUBLE;
   double (*func) (TOPLEVEL *, OBJECT *, int, int, int) = NULL;
@@ -540,17 +542,17 @@ double o_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object,
     case OBJ_BUS:
     case OBJ_NET:
     case OBJ_PIN:
-    case OBJ_LINE:        func = o_line_shortest_distance;     break;
-    case OBJ_BOX:         func = o_box_shortest_distance;      break;
-    case OBJ_PICTURE:     func = o_picture_shortest_distance;  break;
-    case OBJ_CIRCLE:      func = o_circle_shortest_distance;   break;
+    case OBJ_LINE:        func = geda_line_object_shortest_distance;     break;
+    case OBJ_BOX:         func = geda_box_object_shortest_distance;      break;
+    case OBJ_PICTURE:     func = geda_picture_object_shortest_distance;  break;
+    case OBJ_CIRCLE:      func = geda_circle_object_shortest_distance;   break;
     case OBJ_PLACEHOLDER:
-    case OBJ_COMPLEX:     func = o_complex_shortest_distance;  break;
-    case OBJ_TEXT:        func = o_text_shortest_distance;     break;
-    case OBJ_PATH:        func = o_path_shortest_distance;     break;
-    case OBJ_ARC:         func = o_arc_shortest_distance;      break;
+    case OBJ_COMPLEX:     func = geda_complex_object_shortest_distance;  break;
+    case OBJ_TEXT:        func = geda_text_object_shortest_distance;     break;
+    case OBJ_PATH:        func = geda_path_object_shortest_distance;     break;
+    case OBJ_ARC:         func = geda_arc_object_shortest_distance;      break;
     default:
-      g_critical ("o_shortest_distance: object %p has bad type '%c'\n",
+      g_critical ("geda_object_shortest_distance: object %p has bad type '%c'\n",
                   object, object->type);
   }
 

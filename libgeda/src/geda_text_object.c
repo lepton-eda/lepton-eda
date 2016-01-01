@@ -688,8 +688,9 @@ void geda_text_object_mirror (TOPLEVEL *toplevel,
  *  number (G_MAXDOUBLE).  With an invalid parameter, this funciton
  *  returns G_MAXDOUBLE.
  */
-double o_text_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
-                                 int x, int y, int force_solid)
+double
+geda_text_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                    int x, int y, int force_solid)
 {
   int left, top, right, bottom;
   double dx, dy;

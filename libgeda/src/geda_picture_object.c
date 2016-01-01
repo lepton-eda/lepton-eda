@@ -825,8 +825,9 @@ void o_picture_unembed (TOPLEVEL *toplevel, OBJECT *object)
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_picture_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
-                                    int x, int y, int force_solid)
+double
+geda_picture_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                       int x, int y, int force_solid)
 {
   double dx, dy;
   double x1, y1, x2, y2;

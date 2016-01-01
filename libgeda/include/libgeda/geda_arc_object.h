@@ -52,7 +52,7 @@ gchar*
 geda_arc_object_to_buffer (const GedaObject *object);
 
 double
-o_arc_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+geda_arc_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 
 void
 world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);

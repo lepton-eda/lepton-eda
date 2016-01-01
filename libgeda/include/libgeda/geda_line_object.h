@@ -53,7 +53,7 @@ gchar*
 geda_line_object_to_buffer (const GedaObject *object);
 
 double
-o_line_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+geda_line_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 
 void
 world_get_line_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
