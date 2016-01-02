@@ -172,7 +172,4 @@ void s_slib_print_dirs(void);
 char *s_slot_search_slot(OBJECT *object, OBJECT **return_found);
 void s_slot_update_object(TOPLEVEL *toplevel, OBJECT *object);
 
-/* u_basic.c */
-char *u_basic_breakup_string(char *string, char delimiter, int count);
-
 G_END_DECLS

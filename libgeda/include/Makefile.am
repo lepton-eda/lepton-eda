@@ -40,6 +40,7 @@ libgedainclude_HEADERS = \
 	libgeda/geda_picture_object.h \
 	libgeda/geda_pin_object.h \
 	libgeda/geda_point.h \
+	libgeda/geda_string.h \
 	libgeda/geda_text.h \
 	libgeda/geda_text_object.h \
 	libgeda/geda_toplevel.h \

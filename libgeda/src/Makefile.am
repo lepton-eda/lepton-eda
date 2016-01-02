@@ -63,6 +63,7 @@ libgeda_la_SOURCES = \
 	geda_picture_object.c \
 	geda_pin_object.c \
 	geda_point.c \
+	geda_string.c \
 	geda_text_object.c \
 	geda_toplevel.c \
 	geda_transform.c \
@@ -88,8 +89,7 @@ libgeda_la_SOURCES = \
 	s_slib.c \
 	s_slot.c \
 	s_textbuffer.c \
-	s_weakref.c \
-	u_basic.c
+	s_weakref.c
 
 libgeda_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"  $(DATADIR_DEFS) \
 	-I$(srcdir)/../include -I$(srcdir)/../include/libgeda -I$(top_srcdir)
