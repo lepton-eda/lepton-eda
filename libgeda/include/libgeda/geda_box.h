@@ -32,5 +32,11 @@ struct _GedaBox
   int lower_x, lower_y;
 };
 
+GedaBox*
+geda_box_new ();
+
+void
+geda_box_free (GedaBox *box);
+
 double
 geda_box_shortest_distance (GedaBox *box, int x, int y, int solid);

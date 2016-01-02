@@ -28,6 +28,25 @@
 
 #include "libgeda_priv.h"
 
+/*! \brief Allocate an arc
+ *
+ *  \return a pointer to an arc, which must be freed with geda_arc_free.
+ */
+GedaArc*
+geda_arc_new ()
+{
+  return g_new0 (GedaArc, 1);
+}
+
+/*! \brief Free memory associated with the arc
+ *
+ *  \param [in] arc the arc to be freed
+ */
+void
+geda_arc_free (GedaArc *arc)
+{
+  g_free (arc);
+}
 
 /*! \brief Determines if a point lies within the sweep of the arc.
  *

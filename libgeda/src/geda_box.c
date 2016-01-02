@@ -28,6 +28,26 @@
 
 #include "libgeda_priv.h"
 
+/*! \brief Allocate an box
+ *
+ *  \return a pointer to an box, which must be freed with geda_box_free.
+ */
+GedaBox*
+geda_box_new ()
+{
+  return g_new0 (GedaBox, 1);
+}
+
+/*! \brief Free memory associated with the box
+ *
+ *  \param [in] box the box to be freed
+ */
+void
+geda_box_free (GedaBox *box)
+{
+  g_free (box);
+}
+
 
 /*! \brief Calculates the distance between the given point and the closest
  *  point on the perimeter or interior of the box.

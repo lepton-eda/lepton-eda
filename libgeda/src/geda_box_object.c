@@ -64,7 +64,7 @@ geda_box_object_new (TOPLEVEL *toplevel, char type, int color,
   new_node = s_basic_new_object(type, "box");
   new_node->color = color;
 
-  box = (GedaBox*) g_malloc(sizeof(GedaBox));
+  box = geda_box_new ();
   new_node->box   = box;
 
   /* describe the box with its upper left and lower right corner */

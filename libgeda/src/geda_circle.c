@@ -29,6 +29,26 @@
 #include "libgeda_priv.h"
 
 
+/*! \brief Allocate an circle
+ *
+ *  \return a pointer to a circle, which must be freed with geda_circle_free.
+ */
+GedaCircle*
+geda_circle_new ()
+{
+  return g_new0 (GedaCircle, 1);
+}
+
+/*! \brief Free memory associated with the circle
+ *
+ *  \param [in] circle the circle to be freed
+ */
+void
+geda_circle_free (GedaCircle *circle)
+{
+  g_free (circle);
+}
+
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter or interior of the circle.
  *

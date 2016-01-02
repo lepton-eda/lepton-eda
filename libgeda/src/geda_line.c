@@ -29,6 +29,26 @@
 #include "libgeda_priv.h"
 
 
+/*! \brief Allocate a line
+ *
+ *  \return a pointer to an line, which must be freed with geda_line_free.
+ */
+GedaLine*
+geda_line_new ()
+{
+  return g_new0 (GedaLine, 1);
+}
+
+/*! \brief Free memory associated with the line
+ *
+ *  \param [in] line the line to be freed
+ */
+void
+geda_line_free (GedaLine *line)
+{
+  g_free (line);
+}
+
 /*! \brief Calculates the distance between the given point and the closest
  *  point on the given line segment.
  *

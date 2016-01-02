@@ -98,7 +98,7 @@ geda_pin_object_new (TOPLEVEL *toplevel, char type, int color,
   new_node = s_basic_new_object(type, "pin");
   new_node->color = color;
 
-  new_node->line = (LINE *) g_malloc(sizeof(LINE));
+  new_node->line = geda_line_new ();
 
   new_node->line->x[0] = x1;
   new_node->line->y[0] = y1;

@@ -68,7 +68,7 @@ geda_arc_object_new (TOPLEVEL *toplevel, char type, int color, int x, int y,
 
   new_node->color = color;
 
-  new_node->arc = (GedaArc*) g_malloc(sizeof(GedaArc));
+  new_node->arc = geda_arc_new ();
 
   /*! \note
    *  The ARC structure is initialized with the parameters.

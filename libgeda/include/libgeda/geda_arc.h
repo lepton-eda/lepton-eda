@@ -35,5 +35,11 @@ struct _GedaArc
   int sweep_angle;
 };
 
+GedaArc*
+geda_arc_new ();
+
+void
+geda_arc_free (GedaArc *arc);
+
 gboolean
 geda_arc_within_sweep (GedaArc *arc, gint x, gint y);

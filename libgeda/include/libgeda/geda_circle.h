@@ -29,5 +29,11 @@ struct _GedaCircle
   int radius;
 };
 
+GedaCircle*
+geda_circle_new ();
+
+void
+geda_circle_free (GedaCircle *arc);
+
 double
 geda_circle_shortest_distance (GedaCircle *circle, int x, int y, int solid);

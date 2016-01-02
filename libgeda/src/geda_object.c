@@ -180,10 +180,8 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
       o_attrib_remove(toplevel, &o_current->attached_to->attribs, o_current);
     }
 
-    if (o_current->line) {
-      /*	printf("sdeleting line\n");*/
-      g_free(o_current->line);
-    }
+    /* printf("sdeleting line\n"); */
+    geda_line_free (o_current->line);
     o_current->line = NULL;
 
     if (o_current->path) {
@@ -192,15 +190,15 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
     o_current->path = NULL;
 
     /*	printf("sdeleting circle\n");*/
-    g_free(o_current->circle);
+    geda_circle_free (o_current->circle);
     o_current->circle = NULL;
 
     /*	printf("sdeleting arc\n");*/
-    g_free(o_current->arc);
+    geda_arc_free (o_current->arc);
     o_current->arc = NULL;
 
     /*	printf("sdeleting box\n");*/
-    g_free(o_current->box);
+    geda_box_free (o_current->box);
     o_current->box = NULL;
 
     if (o_current->picture) {

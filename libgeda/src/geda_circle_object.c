@@ -64,7 +64,7 @@ geda_circle_object_new (TOPLEVEL *toplevel, char type, int color,
   new_node = s_basic_new_object(type, "circle");
   new_node->color  = color;
 
-  new_node->circle = (GedaCircle*) g_malloc(sizeof(GedaCircle));
+  new_node->circle = geda_circle_new ();
 
   /* describe the circle with its center and radius */
   new_node->circle->center_x = x;

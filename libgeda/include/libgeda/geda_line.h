@@ -31,5 +31,11 @@ struct st_line
   int y[2];
 };
 
+GedaLine*
+geda_line_new ();
+
+void
+geda_line_free (GedaLine *line);
+
 double
 geda_line_shortest_distance (GedaLine *line, int x, int y);
