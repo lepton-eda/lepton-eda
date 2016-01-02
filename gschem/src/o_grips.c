@@ -211,11 +211,11 @@ OBJECT *o_grips_search_arc_world(GschemToplevel *w_current, OBJECT *o_current,
   int centerx, centery, radius, start_angle, sweep_angle;
   double tmp;
 
-  centerx     = o_current->arc->x;
-  centery     = o_current->arc->y;
-  radius      = o_current->arc->width / 2;
-  start_angle = o_current->arc->start_angle;
-  sweep_angle = o_current->arc->sweep_angle;
+  centerx     = geda_arc_object_get_center_x (o_current);
+  centery     = geda_arc_object_get_center_y (o_current);
+  radius      = geda_arc_object_get_radius (o_current);
+  start_angle = geda_arc_object_get_start_angle (o_current);
+  sweep_angle = geda_arc_object_get_sweep_angle (o_current);
 
   /* check the grip on the center of the arc */
   if (inside_grip(x, y, centerx, centery, size)) {
@@ -557,13 +557,13 @@ static void o_grips_start_arc(GschemToplevel *w_current, OBJECT *o_current,
 
   /* describe the arc with GschemToplevel variables */
   /* center */
-  w_current->first_wx = o_current->arc->x;
-  w_current->first_wy = o_current->arc->y;
+  w_current->first_wx = geda_arc_object_get_center_x (o_current);
+  w_current->first_wy = geda_arc_object_get_center_y (o_current);
   /* radius */
-  w_current->distance = o_current->arc->width / 2;
+  w_current->distance = geda_arc_object_get_radius (o_current);
   /* angles */
-  w_current->second_wx = o_current->arc->start_angle;
-  w_current->second_wy = o_current->arc->sweep_angle;
+  w_current->second_wx = geda_arc_object_get_start_angle (o_current);
+  w_current->second_wy = geda_arc_object_get_sweep_angle (o_current);
 
   /* draw the first temporary arc */
   /* o_arc_invalidate_rubber (w_current); */

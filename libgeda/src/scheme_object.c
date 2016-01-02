@@ -1258,11 +1258,11 @@ SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
 
   OBJECT *obj = edascm_to_object (arc_s);
 
-  return scm_list_n (scm_from_int (obj->arc->x),
-                     scm_from_int (obj->arc->y),
-                     scm_from_int (obj->arc->width / 2),
-                     scm_from_int (obj->arc->start_angle),
-                     scm_from_int (obj->arc->sweep_angle),
+  return scm_list_n (scm_from_int (geda_arc_object_get_center_x (obj)),
+                     scm_from_int (geda_arc_object_get_center_y (obj)),
+                     scm_from_int (geda_arc_object_get_radius (obj)),
+                     scm_from_int (geda_arc_object_get_start_angle (obj)),
+                     scm_from_int (geda_arc_object_get_sweep_angle (obj)),
                      scm_from_int (obj->color),
                      SCM_UNDEFINED);
 }

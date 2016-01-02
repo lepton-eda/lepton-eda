@@ -140,6 +140,157 @@ geda_arc_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
   return new_obj;
 }
 
+/*! \brief Get the x coordinate of the center of the arc
+ *
+ *  \param [in] object The arc
+ *  \return The x coordinate of the center of the arc
+ */
+gint
+geda_arc_object_get_center_x (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->arc != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_ARC, 0);
+
+  return object->arc->x;
+}
+
+/*! \brief Get the y coordinate of the center of the arc
+ *
+ *  \param [in] object The arc
+ *  \return The y coordinate of the center of the arc
+ */
+gint
+geda_arc_object_get_center_y (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->arc != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_ARC, 0);
+
+  return object->arc->y;
+}
+
+/*! \brief Get the radius of the arc
+ *
+ *  \param [in] object The arc
+ *  \return The raduis of the arc
+ */
+gint
+geda_arc_object_get_radius (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->arc != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_ARC, 0);
+
+  return object->arc->width / 2;
+}
+
+/*! \brief Get the starting angle of the arc
+ *
+ *  \param [in] object The arc
+ *  \return The starting angle of the arc
+ */
+gint
+geda_arc_object_get_start_angle (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->arc != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_ARC, 0);
+
+  return object->arc->start_angle;
+}
+
+/*! \brief Get the sweep angle of the arc
+ *
+ *  \param [in] object The arc
+ *  \return The sweep angle of the arc
+ */
+gint
+geda_arc_object_get_sweep_angle (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->arc != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_ARC, 0);
+
+  return object->arc->sweep_angle;
+}
+
+/*! \brief Set the x coordinate of the center of the arc
+ *
+ *  \param [in,out] object The arc
+ *  \param [in] x The new y coordinate for the arc center
+ */
+void
+geda_arc_object_set_center_x (GedaObject *object, gint x)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->arc != NULL);
+  g_return_if_fail (object->type == OBJ_ARC);
+
+  object->arc->x = x;
+}
+
+/*! \brief Set the y coordinate of the center of the arc
+ *
+ *  \param [in,out] object The arc
+ *  \param [in] y The new y coordinate for the arc center
+ */
+void
+geda_arc_object_set_center_y (GedaObject *object, gint y)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->arc != NULL);
+  g_return_if_fail (object->type == OBJ_ARC);
+
+  object->arc->y = y;
+}
+
+/*! \brief Set the radius of the arc
+ *
+ *  \param [in,out] object The arc
+ *  \param [in] radius The new raduis for the arc
+ */
+void
+geda_arc_object_set_radius (GedaObject *object, gint radius)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->arc != NULL);
+  g_return_if_fail (object->type == OBJ_ARC);
+
+  object->arc->width = 2 * radius;
+  object->arc->height = 2 * radius;
+}
+
+/*! \brief Set the starting angle of the arc
+ *
+ *  \param [in,out] object The arc
+ *  \param [in] angle The new starting angle for the arc
+ */
+void
+geda_arc_object_set_start_angle (GedaObject *object, gint angle)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->arc != NULL);
+  g_return_if_fail (object->type == OBJ_ARC);
+
+  object->arc->start_angle = angle;
+}
+
+/*! \brief Set the sweep angle of the arc
+ *
+ *  \param [in,out] object The arc
+ *  \param [in] angle The new sweep angle for the arc
+ */
+void
+geda_arc_object_set_sweep_angle (GedaObject *object, gint angle)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->arc != NULL);
+  g_return_if_fail (object->type == OBJ_ARC);
+
+  object->arc->sweep_angle = angle;
+}
+
 /*! \brief
  *  \par Function Description
  *  This function modifies the internal values of the arc object

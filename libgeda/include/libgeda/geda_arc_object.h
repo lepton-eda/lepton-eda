@@ -59,3 +59,33 @@ world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, in
 
 gboolean
 geda_arc_object_get_position (const GedaObject *object, gint *x, gint *y);
+
+gint
+geda_arc_object_get_radius (const GedaObject *object);
+
+gint
+geda_arc_object_get_start_angle (const GedaObject *object);
+
+gint
+geda_arc_object_get_center_x (const GedaObject *object);
+
+gint
+geda_arc_object_get_center_y (const GedaObject *object);
+
+gint
+geda_arc_object_get_sweep_angle (const GedaObject *object);
+
+void
+geda_arc_object_set_radius (GedaObject *object, gint radius);
+
+void
+geda_arc_object_set_start_angle (GedaObject *object, gint angle);
+
+void
+geda_arc_object_set_sweep_angle (GedaObject *object, gint angle);
+
+void
+geda_arc_object_set_center_x (GedaObject *object, gint x);
+
+void
+geda_arc_object_set_center_y (GedaObject *object, gint y);

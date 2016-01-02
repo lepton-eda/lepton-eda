@@ -709,11 +709,11 @@ eda_renderer_draw_arc (EdaRenderer *renderer, OBJECT *object)
 {
   eda_cairo_arc (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                  object->line_width,
-                 object->arc->x,
-                 object->arc->y,
-                 object->arc->width / 2,
-                 object->arc->start_angle,
-                 object->arc->sweep_angle);
+                 geda_arc_object_get_center_x (object),
+                 geda_arc_object_get_center_y (object),
+                 geda_arc_object_get_radius (object),
+                 geda_arc_object_get_start_angle (object),
+                 geda_arc_object_get_sweep_angle (object));
 
   eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     object->line_type,
@@ -1197,12 +1197,12 @@ eda_renderer_draw_arc_grips (EdaRenderer *renderer, OBJECT *object)
    *   <DT>*</DT><DD>one at the end of the arc - at (<B>x2</B>,<B>y2</B>).
    */
 
-  x1 = object->arc->x;
-  y1 = object->arc->y;
+  x1 = geda_arc_object_get_center_x (object);
+  y1 = geda_arc_object_get_center_y (object);
 
-  radius      = object->arc->width / 2.;
-  start_angle = object->arc->start_angle;
-  sweep_angle = object->arc->sweep_angle;
+  radius      = geda_arc_object_get_radius (object);
+  start_angle = geda_arc_object_get_start_angle (object);
+  sweep_angle = geda_arc_object_get_sweep_angle (object);
 
   x2 = x1 + radius * cos ( start_angle                * M_PI / 180);
   y2 = y1 + radius * sin ( start_angle                * M_PI / 180);

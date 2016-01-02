@@ -222,7 +222,7 @@ void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
 /* This function no longer returns NULL, but will always return the new */
 /* text item */
 OBJECT *o_attrib_add_attrib(GschemToplevel *w_current,
-			    const char *text_string, int visibility, 
+			    const char *text_string, int visibility,
 			    int show_name_value, OBJECT *object)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -252,8 +252,8 @@ OBJECT *o_attrib_add_attrib(GschemToplevel *w_current,
         break;
 
       case(OBJ_ARC):
-        world_x = o_current->arc->x;
-        world_y = o_current->arc->y;
+        world_x = geda_arc_object_get_center_x (o_current);
+        world_y = geda_arc_object_get_center_y (o_current);
         align = LOWER_LEFT;
         angle = 0;
         color = ATTRIBUTE_COLOR;
@@ -340,10 +340,10 @@ OBJECT *o_attrib_add_attrib(GschemToplevel *w_current,
     world_get_object_glist_bounds (toplevel,
                                    s_page_objects (toplevel->page_current),
                                    &left, &top, &right, &bottom);
-	
-    /* this really is the lower left hand corner */	
-    world_x = left; 
-    world_y = top;  
+
+    /* this really is the lower left hand corner */
+    world_x = left;
+    world_y = top;
 
     /* printf("%d %d\n", world_x, world_y); */
     align = LOWER_LEFT;

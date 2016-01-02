@@ -170,11 +170,11 @@ void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget[2]), 90);
   } else {
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget[0]),
-			      arc_object->arc->width / 2);
+                              geda_arc_object_get_radius (arc_object));
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget[1]),
-			      arc_object->arc->start_angle);
+                              geda_arc_object_get_start_angle (arc_object));
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget[2]),
-			      arc_object->arc->sweep_angle);
+                              geda_arc_object_get_sweep_angle (arc_object));
   }
 
   gtk_widget_grab_focus(widget[0]);

@@ -41,7 +41,6 @@ OBJECT *o_attrib_find_attrib_by_name(const GList *list, char *name, int count);
 
 /* o_basic.c */
 void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *object);
-double o_shortest_distance_full(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_solid);
 void o_emit_pre_change_notify(TOPLEVEL *toplevel, OBJECT *object);
 void o_emit_change_notify(TOPLEVEL *toplevel, OBJECT *object);
 
