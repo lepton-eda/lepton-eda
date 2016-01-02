@@ -94,6 +94,12 @@ struct st_object
   GList *weak_refs; /* Weak references */
 };
 
+OBJECT*
+s_basic_new_object (int type, char const *prefix);
+
+void
+s_delete_object (TOPLEVEL *toplevel, OBJECT *o_current);
+
 gboolean
 geda_object_get_visible (const GedaObject *object);
 
@@ -150,3 +156,15 @@ o_is_visible (TOPLEVEL *toplevel, OBJECT *object);
 
 void
 o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility);
+
+void
+s_object_weak_ref (OBJECT *object, void (*notify_func)(void *, void *), void *user_data);
+
+void
+s_object_weak_unref (OBJECT *object, void (*notify_func)(void *, void *), void *user_data);
+
+void
+s_object_add_weak_ptr (OBJECT *object, void *weak_pointer_loc);
+
+void
+s_object_remove_weak_ptr (OBJECT *object, void *weak_pointer_loc);

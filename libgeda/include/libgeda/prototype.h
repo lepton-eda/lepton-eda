@@ -91,13 +91,6 @@ void s_attrib_init(void);
 char *s_attrib_get(int counter);
 
 /* s_basic.c */
-OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name);
-OBJECT *s_basic_new_object(int type, char const *prefix);
-void s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current);
-void s_object_weak_ref (OBJECT *object, void (*notify_func)(void *, void *), void *user_data);
-void s_object_weak_unref (OBJECT *object, void (*notify_func)(void *, void *), void *user_data);
-void s_object_add_weak_ptr (OBJECT *object, void *weak_pointer_loc);
-void s_object_remove_weak_ptr (OBJECT *object, void *weak_pointer_loc);
 char *remove_nl(char *string);
 char *remove_last_nl(char *string);
 gchar *s_expand_env_variables (const gchar *string);
