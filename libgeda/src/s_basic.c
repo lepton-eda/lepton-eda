@@ -142,34 +142,6 @@ OBJECT *s_basic_new_object(int type, char const *prefix)
  *  \par Function Description
  *
  */
-void print_struct(OBJECT *ptr)
-{
-  OBJECT *o_current=NULL;
-
-  o_current = ptr;
-
-  if (o_current != NULL) {
-    printf("Name: %s\n", o_current->name);
-    printf("Type: %d\n", o_current->type);
-    printf("Sid: %d\n", o_current->sid);
-    if (o_current->line != NULL) {
-      printf("Line points.x1: %d\n", o_current->line->x[0]);
-      printf("Line points.y1: %d\n", o_current->line->y[0]);
-      printf("Line points.x2: %d\n", o_current->line->x[1]);
-      printf("Line points.y2: %d\n", o_current->line->y[1]);
-    }
-
-    o_attrib_print (o_current->attribs);
-
-    printf("----\n");
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 void
 s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 {

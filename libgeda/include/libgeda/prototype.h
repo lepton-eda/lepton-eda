@@ -93,7 +93,6 @@ char *s_attrib_get(int counter);
 /* s_basic.c */
 OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name);
 OBJECT *s_basic_new_object(int type, char const *prefix);
-void print_struct(OBJECT *ptr);
 void s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current);
 void s_object_weak_ref (OBJECT *object, void (*notify_func)(void *, void *), void *user_data);
 void s_object_weak_unref (OBJECT *object, void (*notify_func)(void *, void *), void *user_data);
