@@ -91,8 +91,6 @@ void s_attrib_init(void);
 char *s_attrib_get(int counter);
 
 /* s_basic.c */
-char *remove_nl(char *string);
-char *remove_last_nl(char *string);
 gchar *s_expand_env_variables (const gchar *string);
 const char *s_path_sys_data ();
 const char *s_path_sys_config ();

@@ -21,4 +21,10 @@
  */
 
 char*
+remove_last_nl (char *string);
+
+char*
+remove_nl (char *string);
+
+char*
 u_basic_breakup_string (char *string, char delimiter, int count);

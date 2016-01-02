@@ -42,49 +42,6 @@
 #  endif
 #endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* used by o_text_read */
-char *remove_nl(char *string)
-{
-  int i;
-
-  if (!string)
-    return NULL;
-
-  i = 0;
-  while(string[i] != '\0' && string[i] != '\n' && string[i] != '\r') {
-    i++;
-  }
-
-  string[i] = '\0';
-
-  return(string);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* used by o_text_read */
-char *remove_last_nl(char *string)
-{
-  int len;
-
-  if (!string)
-    return NULL;
-
-  len = strlen(string);
-  if (string[len-1] == '\n' || string[len-1] == '\r')
-    string[len-1] = '\0';
-
-  return(string);
-}
-
 /*! \brief Expand environment variables in string.
  *  \par Function Description
  *  This function returns the passed string with environment variables

@@ -35,6 +35,51 @@
  *  \par Function Description
  *
  */
+/* used by o_text_read */
+char*
+remove_last_nl (char *string)
+{
+  int len;
+
+  if (!string)
+    return NULL;
+
+  len = strlen(string);
+  if (string[len-1] == '\n' || string[len-1] == '\r')
+    string[len-1] = '\0';
+
+  return(string);
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+/* used by o_text_read */
+char*
+remove_nl (char *string)
+{
+  int i;
+
+  if (!string)
+    return NULL;
+
+  i = 0;
+  while(string[i] != '\0' && string[i] != '\n' && string[i] != '\r') {
+    i++;
+  }
+
+  string[i] = '\0';
+
+  return(string);
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
 /* the delimiter is what is passed in or spaces */
 /* count starts at zero */
 char *u_basic_breakup_string(char *string, char delimiter, int count)
@@ -52,7 +97,7 @@ char *u_basic_breakup_string(char *string, char delimiter, int count)
     i++;
   }
 
-  /* Allocate space for temp string storage (+1 for null character) */ 
+  /* Allocate space for temp string storage (+1 for null character) */
   return_value = g_malloc(sizeof(char)*(strlen(string) + 1));
 
   while(!done) {
@@ -80,8 +125,8 @@ char *u_basic_breakup_string(char *string, char delimiter, int count)
       i++; j++;
     }
 
-    if (internal_counter == count)  { 
-      done = TRUE;	
+    if (internal_counter == count)  {
+      done = TRUE;
     } else {
       internal_counter++;
       i++; /* skip the offending character */
