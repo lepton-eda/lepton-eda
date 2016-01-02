@@ -817,10 +817,10 @@ SCM_DEFINE (line_info, "%line-info", 1, 0, 0,
               line_s, SCM_ARG1, s_line_info);
 
   OBJECT *obj = edascm_to_object (line_s);
-  SCM x1 = scm_from_int (obj->line->x[0]);
-  SCM y1 = scm_from_int (obj->line->y[0]);
-  SCM x2 = scm_from_int (obj->line->x[1]);
-  SCM y2 = scm_from_int (obj->line->y[1]);
+  SCM x1 = scm_from_int (geda_line_object_get_x0 (obj));
+  SCM y1 = scm_from_int (geda_line_object_get_y0 (obj));
+  SCM x2 = scm_from_int (geda_line_object_get_x1 (obj));
+  SCM y2 = scm_from_int (geda_line_object_get_y1 (obj));
   SCM color = scm_from_int (obj->color);
 
   /* Swap ends according to pin's whichend flag. */
