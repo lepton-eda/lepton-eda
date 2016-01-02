@@ -281,7 +281,7 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
   /* create the object */
   new_node = s_basic_new_object(type, "picture");
 
-  picture = (PICTURE *) g_malloc0 (sizeof(PICTURE));
+  picture = geda_picture_new ();
   new_node->picture = picture;
 
   /* describe the picture with its upper left and lower right corner */

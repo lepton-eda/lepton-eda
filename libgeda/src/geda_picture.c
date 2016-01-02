@@ -17,31 +17,39 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file geda_picture.h
+/*! \file geda_picture.c
  */
 
-typedef struct st_picture GedaPicture;
-typedef struct st_picture PICTURE;
+#include "config.h"
 
-struct st_picture
-{
-  GdkPixbuf *pixbuf;
-  gchar *file_content;
-  gsize file_length;
+#include "libgeda_priv.h"
 
-  double ratio;
-  char *filename;
-  int angle;
-  char mirrored;
-  char embedded;
-
-  /* upper is considered the origin */
-  int upper_x, upper_y; /* world */
-  int lower_x, lower_y;
-};
-
+/*! \brief Allocate a picture
+ *
+ *  \return a pointer to an picture, which must be freed with geda_picture_free.
+ */
 GedaPicture*
-geda_picture_new ();
+geda_picture_new ()
+{
+  return g_new0 (GedaPicture, 1);
+}
 
+/*! \brief Free memory associated with the picture
+ *
+ *  \param [in] picture the picture to be freed
+ */
 void
-geda_picture_free (GedaPicture *picture);
+geda_picture_free (GedaPicture *picture)
+{
+  if (picture) {
+
+    g_free (picture->file_content);
+
+    if (picture->pixbuf) {
+      g_object_unref (picture->pixbuf);
+    }
+
+    g_free (picture->filename);
+    g_free (picture);
+  }
+}

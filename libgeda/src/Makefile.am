@@ -60,6 +60,7 @@ libgeda_la_SOURCES = \
 	geda_page.c \
 	geda_path.c \
 	geda_path_object.c \
+	geda_picture.c \
 	geda_picture_object.c \
 	geda_pin_object.c \
 	geda_point.c \
