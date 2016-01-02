@@ -126,6 +126,99 @@ geda_circle_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   return new_obj;
 }
 
+/*! \brief Get the x coordinate of the center of the circle
+ *
+ *  \param [in] object The circle
+ *  \return The x coordinate of the center of the circle
+ */
+gint
+geda_circle_object_get_center_x (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->circle != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_CIRCLE, 0);
+
+  return object->circle->center_x;
+}
+
+/*! \brief Get the y coordinate of the center of the circle
+ *
+ *  \param [in] object The circle
+ *  \return The y coordinate of the center of the circle
+ */
+gint
+geda_circle_object_get_center_y (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->circle != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_CIRCLE, 0);
+
+  return object->circle->center_y;
+}
+
+/*! \brief Get the radius of the circle
+ *
+ *  \param [in] object The circle
+ *  \return The radius of the circle
+ */
+gint
+geda_circle_object_get_radius (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->circle != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_CIRCLE, 0);
+
+  return object->circle->radius;
+}
+
+/*! \brief Set the x coordinate of the center of the circle
+ *
+ *  \param [in,out] object The circle
+ *  \param [in] x The new y coordinate for the circle center
+ */
+void
+geda_circle_object_set_center_x (GedaObject *object, gint x)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->circle != NULL);
+  g_return_if_fail (object->type == OBJ_CIRCLE);
+
+  object->circle->center_x = x;
+}
+
+/*! \brief Set the y coordinate of the center of the circle
+ *
+ *  \param [in,out] object The circle
+ *  \param [in] y The new y coordinate for the circle center
+ */
+void
+geda_circle_object_set_center_y (GedaObject *object, gint y)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->circle != NULL);
+  g_return_if_fail (object->type == OBJ_CIRCLE);
+
+  object->circle->center_y = y;
+}
+
+/*! \brief Set the radius of the circle
+ *
+ *  The radius must be greater than zero.
+ *
+ *  \param [in,out] object The circle
+ *  \param [in] radius The new radius for the circle
+ */
+void
+geda_circle_object_set_radius (GedaObject *object, gint radius)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->circle != NULL);
+  g_return_if_fail (object->type == OBJ_CIRCLE);
+  g_return_if_fail (radius > 0);
+
+  object->circle->radius = radius;
+}
+
 /*! \brief Modify the description of a circle OBJECT.
  *  \par Function Description
  *  This function modifies the description of the circle object <B>*object</B>
@@ -161,18 +254,14 @@ geda_circle_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int
 
   switch(whichone) {
     case CIRCLE_CENTER:
-      /* modify the center of the circle */
-      object->circle->center_x = x;
-      object->circle->center_y = y;
+      geda_circle_object_set_center_x (object, x);
+      geda_circle_object_set_center_y (object, y);
       break;
+
     case CIRCLE_RADIUS:
-      /* modify the radius of the circle */
-      if (x == 0) {
-	s_log_message(_("Null radius circles are not allowed\n"));
-	return;
-      }
-      object->circle->radius = x;
+      geda_circle_object_set_radius (object, x);
       break;
+
     default:
       break;
   }

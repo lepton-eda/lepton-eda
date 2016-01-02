@@ -471,10 +471,14 @@ OBJECT *o_grips_search_picture_world(GschemToplevel *w_current, OBJECT *o_curren
 OBJECT *o_grips_search_circle_world(GschemToplevel *w_current, OBJECT *o_current,
                                     int x, int y, int size, int *whichone)
 {
+  gint center_x = geda_circle_object_get_center_x (o_current);
+  gint center_y = geda_circle_object_get_center_y (o_current);
+  gint radius = geda_circle_object_get_radius (o_current);
+
   /* check the grip for radius */
   if (inside_grip(x, y,
-                  o_current->circle->center_x + o_current->circle->radius,
-                  o_current->circle->center_y - o_current->circle->radius,
+                  center_x + radius,
+                  center_y - radius,
                   size)) {
     *whichone = CIRCLE_RADIUS;
     return(o_current);
@@ -799,9 +803,9 @@ static void o_grips_start_circle(GschemToplevel *w_current, OBJECT *o_current,
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* store circle center and radius in GschemToplevel structure */
-  w_current->first_wx = o_current->circle->center_x;
-  w_current->first_wy = o_current->circle->center_y;
-  w_current->distance = o_current->circle->radius;
+  w_current->first_wx = geda_circle_object_get_center_x (o_current);
+  w_current->first_wy = geda_circle_object_get_center_y (o_current);
+  w_current->distance = geda_circle_object_get_radius (o_current);
 
   /* draw the first temporary circle */
   /* o_circle_invalidate_rubber (w_current); */

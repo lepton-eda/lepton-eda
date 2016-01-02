@@ -734,8 +734,10 @@ eda_renderer_draw_circle (EdaRenderer *renderer, OBJECT *object)
   /* Draw outline of circle */
   eda_cairo_arc (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                  object->line_width,
-                 object->circle->center_x, object->circle->center_y,
-                 object->circle->radius, 0, 360);
+                 geda_circle_object_get_center_x (object),
+                 geda_circle_object_get_center_y (object),
+                 geda_circle_object_get_radius (object),
+                 0, 360);
   if (fill_solid) cairo_fill_preserve (renderer->priv->cr);
   eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     object->line_type, object->line_end,
@@ -1115,8 +1117,8 @@ eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object)
   case OBJ_CIRCLE:
     /* Grip at bottom right of containing square */
     eda_renderer_draw_grips_impl (renderer, GRIP_SQUARE, 1,
-        object->circle->center_x + object->circle->radius,
-        object->circle->center_y - object->circle->radius);
+        geda_circle_object_get_center_x (object) + geda_circle_object_get_radius (object),
+        geda_circle_object_get_center_y (object) - geda_circle_object_get_radius (object));
     break;
   case OBJ_PATH:
     eda_renderer_draw_path_grips (renderer, object);

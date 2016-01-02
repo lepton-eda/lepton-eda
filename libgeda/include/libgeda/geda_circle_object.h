@@ -58,3 +58,20 @@ world_get_circle_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top,
 gboolean
 geda_circle_object_get_position (const GedaObject *object, gint *x, gint *y);
 
+gint
+geda_circle_object_get_center_x (const GedaObject *object);
+
+gint
+geda_circle_object_get_center_y (const GedaObject *object);
+
+gint
+geda_circle_object_get_radius (const GedaObject *object);
+
+void
+geda_circle_object_set_center_x (GedaObject *object, gint x);
+
+void
+geda_circle_object_set_center_y (GedaObject *object, gint y);
+
+void
+geda_circle_object_set_radius (GedaObject *object, gint radius);

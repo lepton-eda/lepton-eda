@@ -260,8 +260,8 @@ OBJECT *o_attrib_add_attrib(GschemToplevel *w_current,
         break;
 
       case(OBJ_CIRCLE):
-        world_x = o_current->circle->center_x;
-        world_y = o_current->circle->center_y;
+        world_x = geda_circle_object_get_center_x (o_current);
+        world_y = geda_circle_object_get_center_y (o_current);
         align = LOWER_LEFT;
         angle = 0;
         color = ATTRIBUTE_COLOR;

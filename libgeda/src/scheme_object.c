@@ -1152,9 +1152,9 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
 
   OBJECT *obj = edascm_to_object (circle_s);
 
-  return scm_list_n (scm_from_int (obj->circle->center_x),
-                     scm_from_int (obj->circle->center_y),
-                     scm_from_int (obj->circle->radius),
+  return scm_list_n (scm_from_int (geda_circle_object_get_center_x (obj)),
+                     scm_from_int (geda_circle_object_get_center_y (obj)),
+                     scm_from_int (geda_circle_object_get_radius (obj)),
                      scm_from_int (obj->color),
                      SCM_UNDEFINED);
 }
