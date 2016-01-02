@@ -185,7 +185,7 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
     o_current->line = NULL;
 
     if (o_current->path) {
-      g_free(o_current->path);
+      s_path_free (o_current->path);
     }
     o_current->path = NULL;
 
