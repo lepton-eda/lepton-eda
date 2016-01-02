@@ -52,6 +52,9 @@ struct st_path
   int num_sections_max;   /* Number allocated      */
 };
 
+void
+geda_path_free (GedaPath *path);
+
 PATH*
 s_path_parse (const char *path_str);
 

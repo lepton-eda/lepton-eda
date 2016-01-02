@@ -81,12 +81,13 @@ GedaPath *s_path_new_from (PATH_SECTION *sections)
 }
 
 
-void s_path_free (GedaPath * path)
+void
+geda_path_free (GedaPath * path)
 {
-  g_return_if_fail (path != NULL);
-
-  g_free (path->sections);
-  g_free (path);
+  if (path != NULL) {
+    g_free (path->sections);
+    g_free (path);
+  }
 }
 
 

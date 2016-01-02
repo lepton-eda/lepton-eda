@@ -184,9 +184,7 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
     geda_line_free (o_current->line);
     o_current->line = NULL;
 
-    if (o_current->path) {
-      s_path_free (o_current->path);
-    }
+    geda_path_free (o_current->path);
     o_current->path = NULL;
 
     /*	printf("sdeleting circle\n");*/
