@@ -379,7 +379,7 @@ geda_pin_object_update_whichend (TOPLEVEL *toplevel,
       while (iter != NULL) {
         o_current = (OBJECT *)iter->data;
         if (o_current->type == OBJ_PIN) {
-          (void) world_get_single_object_bounds(
+          (void) geda_object_calculate_visible_bounds(
             toplevel, o_current, &rleft, &rtop, &rright, &rbottom);
 
           if ( found ) {

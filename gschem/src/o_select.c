@@ -404,7 +404,7 @@ void o_select_box_search(GschemToplevel *w_current)
     if (o_is_visible (toplevel, o_current) || toplevel->show_hidden_text) {
       int cleft, ctop, cright, cbottom;
 
-      if ( world_get_single_object_bounds(toplevel, o_current,
+      if ( geda_object_calculate_visible_bounds(toplevel, o_current,
                                           &cleft, &ctop, &cright, &cbottom) &&
            cleft   >= left &&
            cright  <= right  &&

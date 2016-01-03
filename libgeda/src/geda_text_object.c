@@ -697,7 +697,7 @@ geda_text_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
 
   g_return_val_if_fail (object->text != NULL, G_MAXDOUBLE);
 
-  if (!world_get_single_object_bounds(toplevel, object,
+  if (!geda_object_calculate_visible_bounds(toplevel, object,
                                       &left, &top, &right, &bottom))
     return G_MAXDOUBLE;
 

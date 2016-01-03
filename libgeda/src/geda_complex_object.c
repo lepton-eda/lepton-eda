@@ -37,147 +37,6 @@
 
 #include "libgeda_priv.h"
 
-
-/*! \brief Return the bounds of the given object.
- *  \par Given an object, calculate the bounds coordinates.
- *  \param [in] toplevel The toplevel structure.
- *  \param [in] o_current The object to look the bounds for.
- *  \param [out] rleft   pointer to the left coordinate of the object.
- *  \param [out] rtop    pointer to the top coordinate of the object.
- *  \param [out] rright  pointer to the right coordinate of the object.
- *  \param [out] rbottom pointer to the bottom coordinate of the object.
- *  \return If any bounds were found for the object
- *  \retval 0 No bound was found
- *  \retval 1 Bound was found
- */
-int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
-                                   int *rleft, int *rtop, int *rright, int *rbottom)
-{
-  if (o_current == NULL) {
-    return 0;
-  }
-
-  /* only do bounding boxes for visible or doing show_hidden_text*/
-  /* you might lose some attrs though */
-  if (o_current->type == OBJ_TEXT &&
-      ! (o_is_visible (toplevel, o_current) || toplevel->show_hidden_text)) {
-    return 0;
-  }
-
-  if (o_current->w_bounds_valid_for != toplevel) {
-    int left, right, top, bottom;
-    switch(o_current->type) {
-
-      case(OBJ_LINE):
-        if (o_current->line == NULL) {
-          return 0;
-        }
-        world_get_line_bounds(toplevel, o_current,
-                              &left, &top, &right, &bottom);
-        break;
-
-      case(OBJ_NET):
-        if (o_current->line == NULL) {
-          return 0;
-        }
-        world_get_net_bounds(toplevel, o_current,
-                             &left, &top, &right, &bottom);
-        break;
-
-      case(OBJ_BUS):
-        if (o_current->line == NULL) {
-          return 0;
-        }
-        world_get_bus_bounds(toplevel, o_current,
-                             &left, &top, &right, &bottom);
-        break;
-
-      case(OBJ_BOX):
-        if (o_current->box == NULL) {
-          return 0;
-        }
-        world_get_box_bounds(toplevel, o_current,
-                             &left, &top, &right, &bottom);
-        break;
-
-      case(OBJ_PATH):
-        g_return_val_if_fail (o_current->path != NULL, 0);
-        if (o_current->path->num_sections <= 0) {
-          return 0;
-        }
-        world_get_path_bounds (toplevel, o_current,
-                               &left, &top, &right, &bottom);
-        break;
-
-      case(OBJ_PICTURE):
-        if (o_current->picture == NULL) {
-          return 0;
-        }
-        world_get_picture_bounds(toplevel, o_current,
-                                 &left, &top, &right, &bottom);
-        break;
-
-      case(OBJ_CIRCLE):
-        if (o_current->circle == NULL) {
-          return 0;
-        }
-        world_get_circle_bounds(toplevel, o_current,
-                                &left, &top, &right, &bottom);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        /* realc routine Add this somewhere */
-        /* libhack */
-        /* o_recalc(toplevel, o_current->complex);*/
-
-        if (o_current->complex->prim_objs == NULL)
-          return 0;
-
-        world_get_complex_bounds(toplevel, o_current,
-                                 &left, &top, &right, &bottom);
-        break;
-
-      case(OBJ_PIN):
-        if (o_current->line == NULL) {
-          return 0;
-        }
-        world_get_pin_bounds(toplevel, o_current,
-                             &left, &top, &right, &bottom);
-        break;
-
-      case(OBJ_ARC):
-        if (o_current->arc == NULL) {
-          return 0;
-        }
-        world_get_arc_bounds(toplevel, o_current,
-                             &left, &top, &right, &bottom);
-        break;
-
-      case(OBJ_TEXT):
-        if ( !world_get_text_bounds(toplevel, o_current,
-                                    &left, &top, &right, &bottom) ) {
-          return 0;
-        }
-        break;
-
-      default:
-        return 0;
-    }
-    o_current->w_left   = left;
-    o_current->w_top    = top;
-    o_current->w_right  = right;
-    o_current->w_bottom = bottom;
-    o_current->w_bounds_valid_for = toplevel;
-  }
-  *rleft = o_current->w_left;
-  *rtop = o_current->w_top;
-  *rright = o_current->w_right;
-  *rbottom = o_current->w_bottom;
-  return 1;
-}
-
-
 /*! \brief Return the bounds of the given GList of objects.
  *  \par Given a list of objects, calcule the bounds coordinates.
  *  \param [in]  toplevel The TOPLEVEL structure.
@@ -207,7 +66,7 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *head,
     /* Sanity check */
     g_return_val_if_fail ((o_current != NULL), found);
 
-    if ( world_get_single_object_bounds( toplevel, o_current, &rleft, &rtop, &rright, &rbottom) ) {
+    if ( geda_object_calculate_visible_bounds( toplevel, o_current, &rleft, &rtop, &rright, &rbottom) ) {
       if ( found ) {
         *left = min( *left, rleft );
         *top = min( *top, rtop );
@@ -1221,7 +1080,7 @@ geda_complex_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
 
     /* Collect the bounds of any lines and arcs in the symbol */
     if ((obj->type == OBJ_LINE || obj->type == OBJ_ARC) &&
-        world_get_single_object_bounds(toplevel, obj,
+        geda_object_calculate_visible_bounds(toplevel, obj,
                                        &left, &top, &right, &bottom)) {
       if (found_line_bounds) {
         line_bounds.lower_x = min (line_bounds.lower_x, left);

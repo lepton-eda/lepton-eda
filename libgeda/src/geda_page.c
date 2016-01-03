@@ -778,7 +778,7 @@ GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page,
     int left, top, right, bottom;
     int visible;
 
-    visible = world_get_single_object_bounds (toplevel, object,
+    visible = geda_object_calculate_visible_bounds (toplevel, object,
                                               &left, &top, &right, &bottom);
     if (visible) {
       for (i = 0; i < n_rects; i++) {

@@ -441,7 +441,7 @@ void o_invalidate (GschemToplevel *w_current, OBJECT *object)
     return;
   }
 
-  if (world_get_single_object_bounds(page->toplevel, object, &left,  &top,
+  if (geda_object_calculate_visible_bounds(page->toplevel, object, &left,  &top,
                                                        &right, &bottom)) {
     gschem_page_view_invalidate_world_rect (page_view,
                                             left,

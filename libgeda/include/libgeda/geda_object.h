@@ -101,6 +101,14 @@ void
 s_delete_object (TOPLEVEL *toplevel, OBJECT *o_current);
 
 gboolean
+geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
+                                      OBJECT *o_current,
+                                      gint *rleft,
+                                      gint *rtop,
+                                      gint *rright,
+                                      gint *rbottom);
+
+gboolean
 geda_object_get_visible (const GedaObject *object);
 
 OBJECT*

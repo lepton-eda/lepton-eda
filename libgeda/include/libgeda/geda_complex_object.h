@@ -22,9 +22,6 @@
  *  \brief Functions operating on complex objects
  */
 
-int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
-			      int *rleft, int *rtop,
-			      int *rright, int *rbottom);
 int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *o_list,
 			     int *left, int *top,
 			     int *right, int *bottom);

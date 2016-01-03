@@ -58,7 +58,7 @@ is_object_hit (GschemToplevel *w_current, OBJECT *object,
   /* Do a coarse test first to avoid computing distances for objects ouside
    * of the hit range.
    */
-  if (!world_get_single_object_bounds(w_current->toplevel, object,
+  if (!geda_object_calculate_visible_bounds(w_current->toplevel, object,
                                       &left, &top, &right, &bottom) ||
       !inside_region (left  - w_slack, top    - w_slack,
                       right + w_slack, bottom + w_slack,
