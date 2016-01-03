@@ -59,7 +59,7 @@ geda_pin_object_calculate_bounds (TOPLEVEL *toplevel,
 
   width = geda_pin_object_get_width (object);
 
-  expand = (width + 1) / 2;
+  expand = ceil (0.5 * G_SQRT2 * width);
 
   /* This isn't strictly correct, but a 1st order approximation */
   geda_bounds_expand (bounds, bounds, expand, expand);

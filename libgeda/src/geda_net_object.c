@@ -82,7 +82,7 @@ geda_net_object_calculate_bounds (TOPLEVEL *toplevel,
                                 object->line->x[1],
                                 object->line->y[1]);
 
-  expand = (NET_WIDTH + 1) / 2;
+  expand = ceil (0.5 * G_SQRT2 * NET_WIDTH);
 
   /* This isn't strictly correct, but a 1st order approximation */
   geda_bounds_expand (bounds, bounds, expand, expand);
