@@ -34,6 +34,14 @@ OBJECT*
 geda_arc_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
+geda_arc_object_calculate_bounds (TOPLEVEL *toplevel,
+                                  const OBJECT *object,
+                                  gint *left,
+                                  gint *top,
+                                  gint *right,
+                                  gint *bottom);
+
+void
 geda_arc_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 void
@@ -53,9 +61,6 @@ geda_arc_object_to_buffer (const GedaObject *object);
 
 double
 geda_arc_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
-
-void
-world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 
 gboolean
 geda_arc_object_get_position (const GedaObject *object, gint *x, gint *y);

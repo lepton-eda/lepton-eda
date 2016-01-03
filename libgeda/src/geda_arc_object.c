@@ -632,8 +632,13 @@ void geda_arc_object_mirror (TOPLEVEL *toplevel,
  *  \param [out] right
  *  \param [out] bottom
  */
-void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
-			  int *top, int *right, int *bottom)
+void
+geda_arc_object_calculate_bounds (TOPLEVEL *toplevel,
+                                  const OBJECT *object,
+                                  gint *left,
+                                  gint *top,
+                                  gint *right,
+                                  gint *bottom)
 {
   int x1, y1, x2, y2, x3, y3;
   int radius, start_angle, sweep_angle;

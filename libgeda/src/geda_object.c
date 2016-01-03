@@ -1038,32 +1038,32 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
         if (o_current->line == NULL) {
           return 0;
         }
-        world_get_line_bounds(toplevel, o_current,
-                              &left, &top, &right, &bottom);
+        geda_line_object_calculate_bounds (toplevel, o_current,
+                                           &left, &top, &right, &bottom);
         break;
 
       case(OBJ_NET):
         if (o_current->line == NULL) {
           return 0;
         }
-        world_get_net_bounds(toplevel, o_current,
-                             &left, &top, &right, &bottom);
+        geda_net_object_calculate_bounds (toplevel, o_current,
+                                          &left, &top, &right, &bottom);
         break;
 
       case(OBJ_BUS):
         if (o_current->line == NULL) {
           return 0;
         }
-        world_get_bus_bounds(toplevel, o_current,
-                             &left, &top, &right, &bottom);
+        geda_bus_object_calculate_bounds(toplevel, o_current,
+                                         &left, &top, &right, &bottom);
         break;
 
       case(OBJ_BOX):
         if (o_current->box == NULL) {
           return 0;
         }
-        world_get_box_bounds(toplevel, o_current,
-                             &left, &top, &right, &bottom);
+        geda_box_object_calculate_bounds (toplevel, o_current,
+                                         &left, &top, &right, &bottom);
         break;
 
       case(OBJ_PATH):
@@ -1071,24 +1071,24 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
         if (o_current->path->num_sections <= 0) {
           return 0;
         }
-        world_get_path_bounds (toplevel, o_current,
-                               &left, &top, &right, &bottom);
+        geda_path_object_calculate_bounds (toplevel, o_current,
+                                           &left, &top, &right, &bottom);
         break;
 
       case(OBJ_PICTURE):
         if (o_current->picture == NULL) {
           return 0;
         }
-        world_get_picture_bounds(toplevel, o_current,
-                                 &left, &top, &right, &bottom);
+        geda_picture_object_calculate_bounds (toplevel, o_current,
+                                              &left, &top, &right, &bottom);
         break;
 
       case(OBJ_CIRCLE):
         if (o_current->circle == NULL) {
           return 0;
         }
-        world_get_circle_bounds(toplevel, o_current,
-                                &left, &top, &right, &bottom);
+        geda_circle_object_calculate_bounds (toplevel, o_current,
+                                             &left, &top, &right, &bottom);
         break;
 
       case(OBJ_COMPLEX):
@@ -1100,23 +1100,23 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
         if (o_current->complex->prim_objs == NULL)
           return 0;
 
-        world_get_complex_bounds(toplevel, o_current,
-                                 &left, &top, &right, &bottom);
+        geda_complex_object_calculate_bounds(toplevel, o_current,
+                                             &left, &top, &right, &bottom);
         break;
 
       case(OBJ_PIN):
         if (o_current->line == NULL) {
           return 0;
         }
-        world_get_pin_bounds(toplevel, o_current,
-                             &left, &top, &right, &bottom);
+        geda_pin_object_calculate_bounds (toplevel, o_current,
+                                          &left, &top, &right, &bottom);
         break;
 
       case(OBJ_ARC):
         if (o_current->arc == NULL) {
           return 0;
         }
-        world_get_arc_bounds(toplevel, o_current,
+        geda_arc_object_calculate_bounds (toplevel, o_current,
                              &left, &top, &right, &bottom);
         break;
 

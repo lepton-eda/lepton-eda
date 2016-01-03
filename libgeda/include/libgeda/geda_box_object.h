@@ -34,6 +34,14 @@ OBJECT*
 geda_box_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
+geda_box_object_calculate_bounds (TOPLEVEL *toplevel,
+                                  const OBJECT *object,
+                                  gint *left,
+                                  gint *top,
+                                  gint *right,
+                                  gint *bottom);
+
+void
 geda_box_object_modify_all (TOPLEVEL *toplevel, OBJECT *object, int x1, int y1, int x2, int y2);
 
 void
@@ -57,8 +65,6 @@ geda_box_object_to_buffer (const GedaObject *object);
 double
 geda_box_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 
-void
-world_get_box_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 
 gboolean
 geda_box_object_get_position (const GedaObject *object, gint *x, gint *y);

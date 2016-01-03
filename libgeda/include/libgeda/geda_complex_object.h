@@ -38,6 +38,14 @@ OBJECT*
 o_complex_new_embedded(TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const gchar *basename, int selectable);
 
 void
+geda_complex_object_calculate_bounds (TOPLEVEL *toplevel,
+                                      const OBJECT *complex,
+                                      gint *left,
+                                      gint *top,
+                                      gint *right,
+                                      gint *bottom);
+
+void
 o_complex_set_filename(TOPLEVEL *toplevel, const char *basename);
 
 void
@@ -66,9 +74,6 @@ geda_complex_object_to_buffer (const GedaObject *object);
 
 double
 geda_complex_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
-
-void
-world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 
 gboolean
 geda_complex_object_get_position (const GedaObject *object, gint *x, gint *y);

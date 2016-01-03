@@ -31,6 +31,14 @@ OBJECT*
 geda_net_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
 
 void
+geda_net_object_calculate_bounds (TOPLEVEL *toplevel,
+                                  const OBJECT *object,
+                                  gint *left,
+                                  gint *top,
+                                  gint *right,
+                                  gint *bottom);
+
+void
 geda_net_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
@@ -56,9 +64,6 @@ o_net_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsig
 
 gchar*
 geda_net_object_to_buffer (const GedaObject *object);
-
-void
-world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 
 gboolean
 geda_net_object_get_position (const GedaObject *object, gint *x, gint *y);

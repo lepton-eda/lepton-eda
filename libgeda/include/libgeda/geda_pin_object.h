@@ -32,6 +32,14 @@ OBJECT*
 geda_pin_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
+geda_pin_object_calculate_bounds (TOPLEVEL *toplevel,
+                                  const OBJECT *object,
+                                  gint *left,
+                                  gint *top,
+                                  gint *right,
+                                  gint *bottom);
+
+void
 geda_pin_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 
 void
@@ -51,9 +59,6 @@ o_pin_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsig
 
 gchar*
 geda_pin_object_to_buffer (const GedaObject *object);
-
-void
-world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 
 gboolean
 geda_pin_object_get_position (const GedaObject *object, gint *x, gint *y);

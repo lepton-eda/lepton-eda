@@ -585,8 +585,13 @@ void geda_box_object_mirror (TOPLEVEL *toplevel,
  *  \param [out] right      Right box coordinate in WORLD units.
  *  \param [out] bottom     Bottom box coordinate in WORLD units.
  */
-void world_get_box_bounds(TOPLEVEL *toplevel, OBJECT *object,
-                          int *left, int *top, int *right, int *bottom)
+void
+geda_box_object_calculate_bounds (TOPLEVEL *toplevel,
+                                  const OBJECT *object,
+                                  gint *left,
+                                  gint *top,
+                                  gint *right,
+                                  gint *bottom)
 {
   int halfwidth;
 

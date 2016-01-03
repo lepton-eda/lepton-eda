@@ -519,8 +519,13 @@ void geda_path_object_mirror (TOPLEVEL *toplevel, int world_centerx,
  *  \param [out] right      Right path coordinate in WORLD units.
  *  \param [out] bottom     Bottom path coordinate in WORLD units.
  */
-void world_get_path_bounds (TOPLEVEL *toplevel, OBJECT *object,
-                            int *left, int *top, int *right, int *bottom)
+void
+geda_path_object_calculate_bounds (TOPLEVEL *toplevel,
+                                   const OBJECT *object,
+                                   gint *left,
+                                   gint *top,
+                                   gint *right,
+                                   gint *bottom)
 {
   PATH_SECTION *section;
   int halfwidth;

@@ -604,8 +604,13 @@ void geda_line_object_mirror (TOPLEVEL *toplevel, int world_centerx,
  *  \param [out] right      Right line coordinate in WORLD units.
  *  \param [out] bottom     Bottom line coordinate in WORLD units.
  */
-void world_get_line_bounds(TOPLEVEL *toplevel, OBJECT *object,
-                           int *left, int *top, int *right, int *bottom)
+void
+geda_line_object_calculate_bounds (TOPLEVEL *toplevel,
+                                   const OBJECT *object,
+                                   gint *left,
+                                   gint *top,
+                                   gint *right,
+                                   gint *bottom)
 {
   int expand;
 

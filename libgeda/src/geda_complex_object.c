@@ -101,8 +101,13 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *head,
  *  \param [out] bottom    The bottom edge of the bounding box (in
  *                         screen units).
  */
-void world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex,
-			      int *left, int *top, int *right, int *bottom)
+void
+geda_complex_object_calculate_bounds (TOPLEVEL *toplevel,
+                                      const OBJECT *complex,
+                                      gint *left,
+                                      gint *top,
+                                      gint *right,
+                                      gint *bottom)
 {
   g_return_if_fail (complex != NULL &&
                     (complex->type == OBJ_COMPLEX ||

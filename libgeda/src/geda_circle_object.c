@@ -561,8 +561,13 @@ void geda_circle_object_mirror (TOPLEVEL *toplevel,
  *  \param [out] right      Right circle coordinate in WORLD units.
  *  \param [out] bottom     Bottom circle coordinate in WORLD units.
  */
-void world_get_circle_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
-                             int *top, int *right, int *bottom)
+void
+geda_circle_object_calculate_bounds (TOPLEVEL *toplevel,
+                                     const OBJECT *object,
+                                     gint *left,
+                                     gint *top,
+                                     gint *right,
+                                     gint *bottom)
 {
   int halfwidth;
 

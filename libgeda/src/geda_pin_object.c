@@ -39,10 +39,15 @@
  *  \param [out] right     the right world coord
  *  \param [out] bottom    the bottom world coord
  */
-void world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top,
-			  int *right, int *bottom)
+void
+geda_pin_object_calculate_bounds (TOPLEVEL *toplevel,
+                                  const OBJECT *object,
+                                  gint *left,
+                                  gint *top,
+                                  gint *right,
+                                  gint *bottom)
 {
-  world_get_line_bounds( toplevel, object, left, top, right, bottom );
+  geda_line_object_calculate_bounds (toplevel, object, left, top, right, bottom);
 }
 
 /*! \brief get the position of a whichend of the pin object

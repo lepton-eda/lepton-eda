@@ -32,6 +32,14 @@ OBJECT*
 geda_circle_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
+geda_circle_object_calculate_bounds (TOPLEVEL *toplevel,
+                                     const OBJECT *object,
+                                     gint *left,
+                                     gint *top,
+                                     gint *right,
+                                     gint *bottom);
+
+void
 geda_circle_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 void
@@ -52,8 +60,6 @@ geda_circle_object_to_buffer (const GedaObject *object);
 double
 geda_circle_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 
-void
-world_get_circle_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 
 gboolean
 geda_circle_object_get_position (const GedaObject *object, gint *x, gint *y);

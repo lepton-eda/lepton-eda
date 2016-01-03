@@ -33,6 +33,14 @@ OBJECT *o_picture_new(TOPLEVEL *toplevel,
                       int x1, int y1, int x2, int y2, int angle, int mirrored,
                       int embedded) G_GNUC_WARN_UNUSED_RESULT;
 
+void
+geda_picture_object_calculate_bounds (TOPLEVEL *toplevel,
+                                      const OBJECT *object,
+                                      gint *left,
+                                      gint *top,
+                                      gint *right,
+                                      gint *bottom);
+
 double
 o_picture_get_ratio (TOPLEVEL *toplevel, OBJECT *object);
 
@@ -84,9 +92,6 @@ geda_picture_object_to_buffer (const GedaObject *object);
 
 double
 geda_picture_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
-
-void
-world_get_picture_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 
 gboolean
 geda_picture_object_get_position (const GedaObject *object, gint *x, gint *y);

@@ -344,8 +344,13 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
  *  \param [out] right      Right picture coordinate in WORLD units.
  *  \param [out] bottom     Bottom picture coordinate in WORLD units.
  */
-void world_get_picture_bounds(TOPLEVEL *toplevel, OBJECT *object,
-                              int *left, int *top, int *right, int *bottom)
+void
+geda_picture_object_calculate_bounds (TOPLEVEL *toplevel,
+                                      const OBJECT *object,
+                                      gint *left,
+                                      gint *top,
+                                      gint *right,
+                                      gint *bottom)
 {
   *left   = min(object->picture->upper_x, object->picture->lower_x);
   *top    = min(object->picture->upper_y, object->picture->lower_y);
