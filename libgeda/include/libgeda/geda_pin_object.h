@@ -36,6 +36,9 @@ geda_pin_object_calculate_bounds (TOPLEVEL *toplevel,
                                   const OBJECT *object,
                                   GedaBounds *bounds);
 
+gint
+geda_pin_object_get_width (const GedaObject *object);
+
 void
 geda_pin_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 

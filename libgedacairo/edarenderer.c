@@ -662,17 +662,7 @@ eda_renderer_draw_bus (EdaRenderer *renderer, OBJECT *object)
 static void
 eda_renderer_draw_pin (EdaRenderer *renderer, OBJECT *object)
 {
-  int width = 0;
-  switch (object->pin_type) {
-  case PIN_TYPE_NET:
-    width = PIN_WIDTH_NET;
-    break;
-  case PIN_TYPE_BUS:
-    width = PIN_WIDTH_BUS;
-    break;
-  default:
-    g_return_if_reached ();
-  }
+  int width = geda_pin_object_get_width (object);
 
   eda_cairo_line (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                   END_SQUARE, width,

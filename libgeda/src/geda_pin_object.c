@@ -42,6 +42,7 @@ geda_pin_object_calculate_bounds (TOPLEVEL *toplevel,
                                   GedaBounds *bounds)
 {
   gint expand;
+  gint width;
 
   geda_bounds_init (bounds);
 
@@ -55,23 +56,45 @@ geda_pin_object_calculate_bounds (TOPLEVEL *toplevel,
                                 object->line->x[1],
                                 object->line->y[1]);
 
-  switch (object->pin_type)
-  {
-    case PIN_TYPE_NET:
-      expand = (NET_WIDTH + 1) / 2;
-      break;
 
-    case PIN_TYPE_BUS:
-      expand = (BUS_WIDTH + 1) / 2;
-      break;
+  width = geda_pin_object_get_width (object);
 
-    default:
-      expand = (max (BUS_WIDTH, NET_WIDTH) + 1) / 2;
-      g_warning ("geda_pin_object_calculate_bounds: invalid pin_type");
-  }
+  expand = (width + 1) / 2;
 
   /* This isn't strictly correct, but a 1st order approximation */
   geda_bounds_expand (bounds, bounds, expand, expand);
+}
+
+/*! \brief Get the width to draw the pin
+ *
+ *  On failure, this function returns PIN_WIDTH_NET.
+ *
+ *  \param [in]  object   The pin object
+ *  \return The line width to draw the pin
+ */
+gint
+geda_pin_object_get_width (const GedaObject *object)
+{
+  gint width = PIN_WIDTH_NET;
+
+  g_return_val_if_fail (object != NULL, PIN_WIDTH_NET);
+  g_return_val_if_fail (object->type == OBJ_PIN, PIN_WIDTH_NET);
+
+  switch (object->pin_type)
+  {
+    case PIN_TYPE_NET:
+      width = PIN_WIDTH_NET;
+      break;
+
+    case PIN_TYPE_BUS:
+      width = PIN_WIDTH_BUS;
+      break;
+
+    default:
+      g_warning ("geda_pin_object_calculate_bounds: invalid pin_type");
+  }
+
+  return width;
 }
 
 /*! \brief get the position of a whichend of the pin object
