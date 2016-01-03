@@ -76,11 +76,7 @@ geda_net_object_calculate_bounds (TOPLEVEL *toplevel,
   g_return_if_fail (object->type == OBJ_NET);
   g_return_if_fail (object->line != NULL);
 
-  geda_bounds_init_with_points (bounds,
-                                object->line->x[0],
-                                object->line->y[0],
-                                object->line->x[1],
-                                object->line->y[1]);
+  geda_line_calculate_bounds (object->line, bounds);
 
   expand = ceil (0.5 * G_SQRT2 * NET_WIDTH);
 

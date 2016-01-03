@@ -36,5 +36,8 @@ geda_line_new ();
 void
 geda_line_free (GedaLine *line);
 
+void
+geda_line_calculate_bounds (const GedaLine *line, GedaBounds *bounds);
+
 gdouble
 geda_line_shortest_distance (const GedaLine *line, gint x, gint y);

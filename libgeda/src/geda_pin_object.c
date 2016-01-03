@@ -50,12 +50,7 @@ geda_pin_object_calculate_bounds (TOPLEVEL *toplevel,
   g_return_if_fail (object->type == OBJ_PIN);
   g_return_if_fail (object->line != NULL);
 
-  geda_bounds_init_with_points (bounds,
-                                object->line->x[0],
-                                object->line->y[0],
-                                object->line->x[1],
-                                object->line->y[1]);
-
+  geda_line_calculate_bounds (object->line, bounds);
 
   width = geda_pin_object_get_width (object);
 

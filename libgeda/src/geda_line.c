@@ -49,6 +49,30 @@ geda_line_free (GedaLine *line)
   g_free (line);
 }
 
+/*! \brief Calculate the bounds of a line
+ *
+ *  Calculates the bounds of a line with zero width.
+ *
+ *  If this function fails, the bounds will be set to empty.
+ *
+ *  \param [in] line the line
+ *  \param [out] bounds the bounds of the line
+ */
+void
+geda_line_calculate_bounds (const GedaLine *line, GedaBounds *bounds)
+{
+  if (line == NULL) {
+    geda_bounds_init (bounds);
+    g_return_if_fail (line != NULL);
+  }
+
+  geda_bounds_init_with_points (bounds,
+                                line->x[0],
+                                line->y[0],
+                                line->x[1],
+                                line->y[1]);
+}
+
 /*! \brief Calculates the distance between the given point and the closest
  *  point on the given line segment.
  *
