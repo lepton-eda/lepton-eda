@@ -27,41 +27,74 @@
 #define BOX_UPPER_RIGHT 2
 #define BOX_LOWER_LEFT  3
 
+/* construction, destruction */
+
 OBJECT*
-geda_box_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
+geda_box_object_new (TOPLEVEL *toplevel,
+                     char type,
+                     int color,
+                     int x1,
+                     int y1,
+                     int x2,
+                     int y2);
 
 OBJECT*
 geda_box_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+
+/* methods */
 
 void
 geda_box_object_calculate_bounds (TOPLEVEL *toplevel,
                                   const OBJECT *object,
                                   GedaBounds *bounds);
 
-void
-geda_box_object_modify_all (TOPLEVEL *toplevel, OBJECT *object, int x1, int y1, int x2, int y2);
+gboolean
+geda_box_object_get_position (const GedaObject *object, gint *x, gint *y);
 
 void
-geda_box_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+geda_box_object_mirror (TOPLEVEL *toplevel,
+                        int world_centerx,
+                        int world_centery,
+                        OBJECT *object);
 
 void
-geda_box_object_translate (GedaObject *object, int dx, int dy);
+geda_box_object_modify (TOPLEVEL *toplevel,
+                        OBJECT *object,
+                        int x,
+                        int y,
+                        int whichone);
 
 void
-geda_box_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+geda_box_object_modify_all (TOPLEVEL *toplevel,
+                            OBJECT *object,
+                            int x1,
+                            int y1,
+                            int x2,
+                            int y2);
 
 void
-geda_box_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_box_object_rotate (TOPLEVEL *toplevel,
+                        int world_centerx,
+                        int world_centery,
+                        int angle,
+                        OBJECT *object);
 
-OBJECT*
-o_box_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+double
+geda_box_object_shortest_distance (TOPLEVEL *toplevel,
+                                   OBJECT *object,
+                                   int x,
+                                   int y,
+                                   int force_soild);
 
 gchar*
 geda_box_object_to_buffer (const GedaObject *object);
 
-double
-geda_box_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+void
+geda_box_object_translate (GedaObject *object, int dx, int dy);
 
-
-gboolean
-geda_box_object_get_position (const GedaObject *object, gint *x, gint *y);
+OBJECT*
+o_box_read (TOPLEVEL *toplevel,
+            const char buf[],
+            unsigned int release_ver,
+            unsigned int fileformat_ver,
+            GError **err);
