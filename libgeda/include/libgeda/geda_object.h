@@ -28,10 +28,7 @@ struct st_object
 
   PAGE *page; /* Parent page */
 
-  int w_top;				/* Bounding box information */
-  int w_left;				/* in world coords */
-  int w_right;
-  int w_bottom;
+  GedaBounds bounds;
   TOPLEVEL *w_bounds_valid_for;
 
   COMPLEX *complex;

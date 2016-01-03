@@ -1132,16 +1132,26 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
       default:
         return 0;
     }
-    o_current->w_left   = bounds.min_x;
-    o_current->w_top    = bounds.min_y;
-    o_current->w_right  = bounds.max_x;
-    o_current->w_bottom = bounds.max_y;
+
+    o_current->bounds = bounds;
     o_current->w_bounds_valid_for = toplevel;
   }
-  *rleft = o_current->w_left;
-  *rtop = o_current->w_top;
-  *rright = o_current->w_right;
-  *rbottom = o_current->w_bottom;
+
+  if (rleft != NULL) {
+    *rleft = o_current->bounds.min_x;
+  }
+
+  if (rtop != NULL) {
+    *rtop = o_current->bounds.min_y;
+  }
+
+  if (rright != NULL) {
+    *rright = o_current->bounds.max_x;
+  }
+
+  if (rbottom != NULL) {
+    *rbottom = o_current->bounds.max_y;
+  }
   return 1;
 }
 
@@ -1169,10 +1179,7 @@ s_basic_init_object (OBJECT *new_node, int type, char const *name)
   new_node->page = NULL;
 
   /* Setup the bounding box */
-  new_node->w_top = 0;
-  new_node->w_left = 0;
-  new_node->w_right = 0;
-  new_node->w_bottom = 0;
+  geda_bounds_init (&(new_node->bounds));
   new_node->w_bounds_valid_for = NULL;
 
   /* Setup line/circle structs */

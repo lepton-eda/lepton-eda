@@ -774,8 +774,8 @@ eda_renderer_draw_text (EdaRenderer *renderer, OBJECT *object)
   /* If text outline mode is selected, draw an outline */
   if (EDA_RENDERER_CHECK_FLAG (renderer, FLAG_TEXT_OUTLINE)) {
     eda_cairo_box (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
-                   0, object->w_left, object->w_bottom,
-                   object->w_right, object->w_top);
+                   0, object->bounds.min_x, object->bounds.max_y,
+                   object->bounds.max_x, object->bounds.min_y);
     eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                       TYPE_SOLID, END_SQUARE,
                       EDA_RENDERER_STROKE_WIDTH (renderer, 0),
