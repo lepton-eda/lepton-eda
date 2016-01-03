@@ -586,7 +586,7 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, OBJECT *object)
   }
 
   /* Handle mesh and hatch fill types */
-  fill_lines = g_array_new (FALSE, FALSE, sizeof (LINE));
+  fill_lines = g_array_new (FALSE, FALSE, sizeof (GedaLine));
   if (geda_fill_type_draw_first_hatch (object->fill_type)) {
     hatch_func (hatch_data, object->fill_angle1, object->fill_pitch1, fill_lines);
   }
@@ -596,7 +596,7 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, OBJECT *object)
 
   /* Draw fill pattern */
   for (i = 0; i < fill_lines->len; i++) {
-    LINE *line = &g_array_index (fill_lines, LINE, i);
+    GedaLine *line = &g_array_index (fill_lines, GedaLine, i);
     eda_cairo_line (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     END_NONE, object->fill_width,
                     line->x[0], line->y[0], line->x[1], line->y[1]);

@@ -157,7 +157,7 @@ void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines)
  *  segments.  This function appends new line segments to the GArray and leaves
  *  existing GArray contents unchanged.
  */
-void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines)
+void m_hatch_circle(GedaCircle *circle, gint angle, gint pitch, GArray *lines)
 {
   gint          radius;
   gint          sweep_y;
@@ -175,7 +175,7 @@ void m_hatch_circle(CIRCLE *circle, gint angle, gint pitch, GArray *lines)
   sweep_y = calculate_initial_sweep(100 * pitch, -radius, radius);
 
   while ( sweep_y < radius ) {
-    LINE line;
+    GedaLine line;
     gint x = round(sqrt(pow(radius,2) - pow(sweep_y,2)));
 
     line.x[0] = -x;
@@ -320,7 +320,7 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
     /* draw hatch segments */
     index = 0;
     while ( index+1 < status->len ) {
-      LINE line;
+      GedaLine line;
       line.x[0] = g_array_index(status, SWEEP_STATUS, index ).x;
       line.y[0] = sweep_y;
       line.x[1] = g_array_index(status, SWEEP_STATUS, index+1 ).x;

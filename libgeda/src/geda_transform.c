@@ -95,7 +95,7 @@ geda_transform_invert (GedaTransform *transform, GedaTransform *inverse)
  *  \param line [inout] The line to transform.
  */
 void
-geda_transform_line (GedaTransform *transform, LINE *line)
+geda_transform_line (GedaTransform *transform, GedaLine *line)
 {
   g_return_if_fail(transform!=NULL);
   g_return_if_fail(line!=NULL);
@@ -118,7 +118,7 @@ geda_transform_lines (GedaTransform *transform, GArray *lines)
   g_return_if_fail(lines!=NULL);
 
   for (index=0; index<lines->len; index++) {
-    LINE *line = &g_array_index(lines, LINE, index);
+    GedaLine *line = &g_array_index(lines, GedaLine, index);
     geda_transform_line(transform, line);
   }
 }

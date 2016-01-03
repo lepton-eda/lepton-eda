@@ -65,8 +65,8 @@ geda_line_free (GedaLine *line)
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double
-geda_line_shortest_distance (GedaLine *line, int x, int y)
+gdouble
+geda_line_shortest_distance (const GedaLine *line, gint x, gint y)
 {
   double cx, cy;
   double dx, dy;

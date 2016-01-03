@@ -23,16 +23,16 @@
  */
 
 typedef struct _GedaArc GedaArc;
-typedef struct _GedaArc ARC;
 
 struct _GedaArc
 {
-  int x, y; /* world */
+  gint x;
+  gint y;
 
-  int radius;
+  gint radius;
 
-  int start_angle;
-  int sweep_angle;
+  gint start_angle;
+  gint sweep_angle;
 };
 
 GedaArc*
@@ -42,4 +42,4 @@ void
 geda_arc_free (GedaArc *arc);
 
 gboolean
-geda_arc_within_sweep (GedaArc *arc, gint x, gint y);
+geda_arc_within_sweep (const GedaArc *arc, gint x, gint y);

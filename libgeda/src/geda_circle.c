@@ -61,8 +61,11 @@ geda_circle_free (GedaCircle *circle)
  *  shape, this function returns a distance of zero for interior points.  With
  *  an invalid parameter, this function returns G_MAXDOUBLE.
  */
-double
-geda_circle_shortest_distance (GedaCircle *circle, int x, int y, int solid)
+gdouble
+geda_circle_shortest_distance (const GedaCircle *circle,
+                               gint x,
+                               gint y,
+                               gboolean solid)
 {
   double shortest_distance;
   double distance_to_center;

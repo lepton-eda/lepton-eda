@@ -94,8 +94,7 @@ geda_net_object_new (TOPLEVEL *toplevel, char type,
   new_node = s_basic_new_object(type, "net");
   new_node->color = color;
 
-  new_node->line = (LINE *) g_malloc(sizeof(LINE));
-  /* check for null */
+  new_node->line = geda_line_new ();
 
   new_node->line->x[0] = x1;
   new_node->line->y[0] = y1;

@@ -22,13 +22,12 @@
  *  \brief Low-level mathematical functions for lines
  */
 
-typedef struct st_line GedaLine;
-typedef struct st_line LINE;
+typedef struct _GedaLine GedaLine;
 
-struct st_line
+struct _GedaLine
 {
-  int x[2];
-  int y[2];
+  gint x[2];
+  gint y[2];
 };
 
 GedaLine*
@@ -37,5 +36,5 @@ geda_line_new ();
 void
 geda_line_free (GedaLine *line);
 
-double
-geda_line_shortest_distance (GedaLine *line, int x, int y);
+gdouble
+geda_line_shortest_distance (const GedaLine *line, gint x, gint y);

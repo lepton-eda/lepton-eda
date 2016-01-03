@@ -42,7 +42,7 @@ void
 geda_transform_invert (GedaTransform *transform, GedaTransform *inverse);
 
 void
-geda_transform_line (GedaTransform *transform, LINE *line);
+geda_transform_line (GedaTransform *transform, GedaLine *line);
 
 void
 geda_transform_lines (GedaTransform *transform, GArray *lines);

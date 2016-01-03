@@ -58,7 +58,7 @@ geda_arc_free (GedaArc *arc)
  *  invalid parameter, this function returns FALSE.
  */
 gboolean
-geda_arc_within_sweep (GedaArc *arc, gint x, gint y)
+geda_arc_within_sweep (const GedaArc *arc, gint x, gint y)
 {
   gdouble a0;
   gdouble a1;
@@ -66,10 +66,7 @@ geda_arc_within_sweep (GedaArc *arc, gint x, gint y)
   gdouble dx;
   gdouble dy;
 
-  if (arc == NULL) {
-    g_critical("geda_arc_within_sweep(): arc == NULL\n");
-    return FALSE;
-  }
+  g_return_val_if_fail (arc != NULL, FALSE);
 
   dx = ((gdouble) x) - ((gdouble) arc->x);
   dy = ((gdouble) y) - ((gdouble) arc->y);

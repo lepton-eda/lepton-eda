@@ -35,9 +35,9 @@ struct st_object
   TOPLEVEL *w_bounds_valid_for;
 
   COMPLEX *complex;
-  LINE *line;
+  GedaLine *line;
   GedaCircle *circle;
-  ARC *arc;
+  GedaArc *arc;
   BOX *box;
   TEXT *text;
   PICTURE *picture;

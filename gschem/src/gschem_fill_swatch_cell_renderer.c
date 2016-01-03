@@ -275,7 +275,7 @@ render (GtkCellRenderer      *cell,
     if (geda_fill_type_draw_first_hatch (swatch->fill_type)) {
       BOX box;
       int index;
-      GArray *lines = g_array_new (FALSE, FALSE, sizeof (LINE));
+      GArray *lines = g_array_new (FALSE, FALSE, sizeof (GedaLine));
       cairo_path_t *save_path = cairo_copy_path (cr);
 
       cairo_save (cr);
@@ -293,7 +293,7 @@ render (GtkCellRenderer      *cell,
       }
 
       for (index=0; index<lines->len; index++) {
-        LINE *line = &g_array_index (lines, LINE, index);
+        GedaLine *line = &g_array_index (lines, GedaLine, index);
 
         cairo_move_to (cr, line->x[0], line->y[0]);
         cairo_line_to (cr, line->x[1], line->y[1]);

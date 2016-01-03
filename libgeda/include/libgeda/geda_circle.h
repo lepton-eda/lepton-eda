@@ -21,19 +21,23 @@
  */
 
 typedef struct _GedaCircle GedaCircle;
-typedef struct _GedaCircle CIRCLE;
 
 struct _GedaCircle
 {
-  int center_x, center_y; /* world */
-  int radius;
+  gint center_x;
+  gint center_y;
+
+  gint radius;
 };
 
 GedaCircle*
 geda_circle_new ();
 
 void
-geda_circle_free (GedaCircle *arc);
+geda_circle_free (GedaCircle *circle);
 
-double
-geda_circle_shortest_distance (GedaCircle *circle, int x, int y, int solid);
+gdouble
+geda_circle_shortest_distance (const GedaCircle *circle,
+                               gint x,
+                               gint y,
+                               gboolean solid);
