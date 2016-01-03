@@ -564,26 +564,22 @@ void geda_circle_object_mirror (TOPLEVEL *toplevel,
 void
 geda_circle_object_calculate_bounds (TOPLEVEL *toplevel,
                                      const OBJECT *object,
-                                     gint *left,
-                                     gint *top,
-                                     gint *right,
-                                     gint *bottom)
+                                     GedaBounds *bounds)
 {
-  int halfwidth;
+  gint expand;
 
-  halfwidth = object->line_width / 2;
+  geda_bounds_init (bounds);
 
-  *left   = object->circle->center_x - object->circle->radius;
-  *top    = object->circle->center_y - object->circle->radius;
-  *right  = object->circle->center_x + object->circle->radius;
-  *bottom = object->circle->center_y + object->circle->radius;
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->type == OBJ_CIRCLE);
+  g_return_if_fail (object->circle != NULL);
+
+  geda_circle_calculate_bounds (object->circle, bounds);
+
+  expand = (object->line_width + 1) / 2;
 
   /* This isn't strictly correct, but a 1st order approximation */
-  *left   -= halfwidth;
-  *top    -= halfwidth;
-  *right  += halfwidth;
-  *bottom += halfwidth;
-
+  geda_bounds_expand (bounds, bounds, expand, expand);
 }
 
 /*! \brief get the position of the center point

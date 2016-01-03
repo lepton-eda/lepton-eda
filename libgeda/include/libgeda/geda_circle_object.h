@@ -34,10 +34,7 @@ geda_circle_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 void
 geda_circle_object_calculate_bounds (TOPLEVEL *toplevel,
                                      const OBJECT *object,
-                                     gint *left,
-                                     gint *top,
-                                     gint *right,
-                                     gint *bottom);
+                                     GedaBounds *bounds);
 
 void
 geda_circle_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);

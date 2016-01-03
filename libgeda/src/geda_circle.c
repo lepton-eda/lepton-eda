@@ -49,6 +49,30 @@ geda_circle_free (GedaCircle *circle)
   g_free (circle);
 }
 
+/*! \brief Calculate the bounds of a circle
+ *
+ *  Calculates the bounds of a circle with zero width.
+ *
+ *  If this function fails, the bounds will be set to empty.
+ *
+ *  \param [in] circle the circle
+ *  \param [out] bounds the bounds of the circle
+ */
+void
+geda_circle_calculate_bounds (const GedaCircle *circle, GedaBounds *bounds)
+{
+  if (circle == NULL) {
+    geda_bounds_init (bounds);
+    g_return_if_fail (circle != NULL);
+  }
+
+  geda_bounds_init_with_points (bounds,
+                                circle->center_x - circle->radius,
+                                circle->center_y - circle->radius,
+                                circle->center_x + circle->radius,
+                                circle->center_y + circle->radius);
+}
+
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter or interior of the circle.
  *

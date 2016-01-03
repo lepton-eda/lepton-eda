@@ -1094,11 +1094,7 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
         if (o_current->circle == NULL) {
           return 0;
         }
-        geda_circle_object_calculate_bounds (toplevel, o_current,
-                                             &bounds.min_x,
-                                             &bounds.min_y,
-                                             &bounds.max_x,
-                                             &bounds.max_y);
+        geda_circle_object_calculate_bounds (toplevel, o_current, &bounds);
         break;
 
       case(OBJ_COMPLEX):

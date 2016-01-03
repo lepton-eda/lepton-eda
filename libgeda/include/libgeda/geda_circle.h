@@ -36,6 +36,9 @@ geda_circle_new ();
 void
 geda_circle_free (GedaCircle *circle);
 
+void
+geda_circle_calculate_bounds (const GedaCircle *circle, GedaBounds *bounds);
+
 gdouble
 geda_circle_shortest_distance (const GedaCircle *circle,
                                gint x,
