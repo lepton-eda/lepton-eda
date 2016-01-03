@@ -503,74 +503,62 @@ void geda_path_object_mirror (TOPLEVEL *toplevel, int world_centerx,
 }
 
 
-/*! \brief Get path bounding rectangle in WORLD coordinates.
- *  \par Function Description
- *  This function sets the <B>left</B>, <B>top</B>, <B>right</B> and
- *  <B>bottom</B> parameters to the boundings of the path object described
- *  in <B>*path</B> in world units.
+/*! \brief Calculate the bounds of the path
  *
- *  \note Bounding box for bezier curves is loose because we just consider
- *        the convex hull of the curve control and end-points.
+ *  On failure, this function sets the bounds to empty.
  *
- *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [in]  object     Line OBJECT to read coordinates from.
- *  \param [out] left       Left path coordinate in WORLD units.
- *  \param [out] top        Top path coordinate in WORLD units.
- *  \param [out] right      Right path coordinate in WORLD units.
- *  \param [out] bottom     Bottom path coordinate in WORLD units.
+ *  \param [in]  toplevel  Unused
+ *  \param [in]  object    The path to calculate bounds of.
+ *  \param [out] bounds    The bounds of the path
  */
 void
 geda_path_object_calculate_bounds (TOPLEVEL *toplevel,
                                    const OBJECT *object,
-                                   gint *left,
-                                   gint *top,
-                                   gint *right,
-                                   gint *bottom)
+                                   GedaBounds *bounds)
 {
-  PATH_SECTION *section;
-  int halfwidth;
-  int i;
-  int found_bound = FALSE;
+  gint expand;
+  gint i;
+
+  geda_bounds_init (bounds);
+
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->type == OBJ_PATH);
+  g_return_if_fail (object->path != NULL);
 
   /* Find the bounds of the path region */
   for (i = 0; i < object->path->num_sections; i++) {
-    section = &object->path->sections[i];
+    PATH_SECTION *section = &object->path->sections[i];
+
     switch (section->code) {
       case PATH_CURVETO:
         /* Bezier curves with this construction of control points will lie
          * within the convex hull of the control and curve end points */
-        *left   = (found_bound) ? MIN (*left,   section->x1) : section->x1;
-        *top    = (found_bound) ? MIN (*top,    section->y1) : section->y1;
-        *right  = (found_bound) ? MAX (*right,  section->x1) : section->x1;
-        *bottom = (found_bound) ? MAX (*bottom, section->y1) : section->y1;
-        found_bound = TRUE;
-        *left   = MIN (*left,   section->x2);
-        *top    = MIN (*top,    section->y2);
-        *right  = MAX (*right,  section->x2);
-        *bottom = MAX (*bottom, section->y2);
+        bounds->min_x = MIN (bounds->min_x, section->x1);
+        bounds->min_y = MIN (bounds->min_y, section->y1);
+        bounds->max_x = MAX (bounds->max_x, section->x1);
+        bounds->max_y = MAX (bounds->max_y, section->y1);
+        bounds->min_x = MIN (bounds->min_x, section->x2);
+        bounds->min_y = MIN (bounds->min_y, section->y2);
+        bounds->max_x = MAX (bounds->max_x, section->x2);
+        bounds->max_y = MAX (bounds->max_y, section->y2);
         /* Fall through */
       case PATH_MOVETO:
       case PATH_MOVETO_OPEN:
       case PATH_LINETO:
-        *left   = (found_bound) ? MIN (*left,   section->x3) : section->x3;
-        *top    = (found_bound) ? MIN (*top,    section->y3) : section->y3;
-        *right  = (found_bound) ? MAX (*right,  section->x3) : section->x3;
-        *bottom = (found_bound) ? MAX (*bottom, section->y3) : section->y3;
-        found_bound = TRUE;
+        bounds->min_x = MIN (bounds->min_x, section->x3);
+        bounds->min_y = MIN (bounds->min_y, section->y3);
+        bounds->max_x = MAX (bounds->max_x, section->x3);
+        bounds->max_y = MAX (bounds->max_y, section->y3);
         break;
       case PATH_END:
         break;
     }
   }
 
-  if (found_bound) {
-    /* This isn't strictly correct, but a 1st order approximation */
-    halfwidth = object->line_width / 2;
-    *left   -= halfwidth;
-    *top    -= halfwidth;
-    *right  += halfwidth;
-    *bottom += halfwidth;
-  }
+  expand = ceil (0.5 * G_SQRT2 * object->line_width);
+
+  /* This isn't strictly correct, but a 1st order approximation */
+  geda_bounds_expand (bounds, bounds, expand, expand);
 }
 
 /*! \brief get the position of the first path point
