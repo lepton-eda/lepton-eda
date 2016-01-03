@@ -94,11 +94,18 @@ struct st_object
   GList *weak_refs; /* Weak references */
 };
 
+/* construction, destruction */
+
 OBJECT*
 s_basic_new_object (int type, char const *prefix);
 
+OBJECT*
+o_object_copy (TOPLEVEL *toplevel, OBJECT *selected);
+
 void
 s_delete_object (TOPLEVEL *toplevel, OBJECT *o_current);
+
+/* methods */
 
 gboolean
 geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
@@ -109,43 +116,56 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
                                       gint *rbottom);
 
 gboolean
+geda_object_get_position (const GedaObject *object, gint *x, gint *y);
+
+gboolean
 geda_object_get_visible (const GedaObject *object);
 
-OBJECT*
-o_object_copy (TOPLEVEL *toplevel, OBJECT *selected);
+void
+geda_object_rotate (TOPLEVEL *toplevel,
+                    int world_centerx,
+                    int world_centery,
+                    int angle,
+                    OBJECT *object);
 
 void
-o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_END end, OBJECT_TYPE type, int width, int length, int space);
+geda_object_mirror (TOPLEVEL *toplevel,
+                    int world_centerx,
+                    int world_centery,
+                    OBJECT *object);
 
-gboolean
-o_get_line_options(OBJECT *object, OBJECT_END *end, OBJECT_TYPE *type, int *width, int *length, int *space);
+double
+geda_object_shortest_distance (TOPLEVEL *toplevel,
+                               OBJECT *object,
+                               int x,
+                               int y);
 
-void
-o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_FILLING type, int width, int pitch1, int angle1, int pitch2, int angle2);
-
-gboolean
-o_get_fill_options(OBJECT *object, OBJECT_FILLING *type, int *width, int *pitch1, int *angle1, int *pitch2, int *angle2);
-
-gboolean
-geda_object_get_position (const GedaObject *object, gint *x, gint *y);
+double
+geda_object_shortest_distance_full (TOPLEVEL *toplevel,
+                                    OBJECT *object,
+                                    int x,
+                                    int y,
+                                    int force_solid);
 
 void
 geda_object_translate (GedaObject *object, gint dx, gint dy);
 
-void
-geda_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+gboolean
+o_get_fill_options (OBJECT *object,
+                    OBJECT_FILLING *type,
+                    int *width,
+                    int *pitch1,
+                    int *angle1,
+                    int *pitch2,
+                    int *angle2);
 
-void
-geda_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-
-double
-geda_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y);
-
-double
-geda_object_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_solid);
-
-void
-o_set_color(TOPLEVEL *toplevel, OBJECT *object, int color);
+gboolean
+o_get_line_options (OBJECT *object,
+                    OBJECT_END *end,
+                    OBJECT_TYPE *type,
+                    int *width,
+                    int *length,
+                    int *space);
 
 PAGE*
 o_get_page (TOPLEVEL *toplevel, OBJECT *object);
@@ -153,23 +173,55 @@ o_get_page (TOPLEVEL *toplevel, OBJECT *object);
 OBJECT*
 o_get_parent (TOPLEVEL *toplevel, OBJECT *object);
 
-void
-o_add_change_notify(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_func, ChangeNotifyFunc change_func, void *user_data);
-
-void
-o_remove_change_notify(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_func, ChangeNotifyFunc change_func, void *user_data);
-
 gboolean
 o_is_visible (TOPLEVEL *toplevel, OBJECT *object);
+
+void
+o_set_color(TOPLEVEL *toplevel, OBJECT *object, int color);
+
+void
+o_set_fill_options(TOPLEVEL *toplevel,
+                   OBJECT *o_current,
+                   OBJECT_FILLING type,
+                   int width,
+                   int pitch1,
+                   int angle1,
+                   int pitch2,
+                   int angle2);
+
+void
+o_set_line_options (TOPLEVEL *toplevel,
+                    OBJECT *o_current,
+                    OBJECT_END end,
+                    OBJECT_TYPE type,
+                    int width,
+                    int length,
+                    int space);
 
 void
 o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility);
 
 void
-s_object_weak_ref (OBJECT *object, void (*notify_func)(void *, void *), void *user_data);
+o_add_change_notify (TOPLEVEL *toplevel,
+                     ChangeNotifyFunc pre_change_func,
+                     ChangeNotifyFunc change_func,
+                     void *user_data);
 
 void
-s_object_weak_unref (OBJECT *object, void (*notify_func)(void *, void *), void *user_data);
+o_remove_change_notify (TOPLEVEL *toplevel,
+                        ChangeNotifyFunc pre_change_func,
+                        ChangeNotifyFunc change_func,
+                        void *user_data);
+
+void
+s_object_weak_ref (OBJECT *object,
+                   void (*notify_func)(void *, void *),
+                   void *user_data);
+
+void
+s_object_weak_unref (OBJECT *object,
+                     void (*notify_func)(void *, void *),
+                     void *user_data);
 
 void
 s_object_add_weak_ptr (OBJECT *object, void *weak_pointer_loc);
