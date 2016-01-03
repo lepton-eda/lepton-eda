@@ -588,25 +588,22 @@ void geda_box_object_mirror (TOPLEVEL *toplevel,
 void
 geda_box_object_calculate_bounds (TOPLEVEL *toplevel,
                                   const OBJECT *object,
-                                  gint *left,
-                                  gint *top,
-                                  gint *right,
-                                  gint *bottom)
+                                  GedaBounds *bounds)
 {
-  int halfwidth;
+  gint expand;
 
-  halfwidth = object->line_width / 2;
+  geda_bounds_init (bounds);
 
-  *left   = min(object->box->upper_x, object->box->lower_x);
-  *top    = min(object->box->upper_y, object->box->lower_y);
-  *right  = max(object->box->upper_x, object->box->lower_x);
-  *bottom = max(object->box->upper_y, object->box->lower_y);
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->type == OBJ_BOX);
+  g_return_if_fail (object->box != NULL);
+
+  geda_box_calculate_bounds (object->box, bounds);
+
+  expand = (object->line_width + 1) / 2;
 
   /* This isn't strictly correct, but a 1st order approximation */
-  *left   -= halfwidth;
-  *top    -= halfwidth;
-  *right  += halfwidth;
-  *bottom += halfwidth;
+  geda_bounds_expand (bounds, bounds, expand, expand);
 }
 
 /*! \brief get the position of the left bottom point

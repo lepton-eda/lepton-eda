@@ -38,5 +38,8 @@ geda_box_new ();
 void
 geda_box_free (GedaBox *box);
 
+void
+geda_box_calculate_bounds (const GedaBox *box, GedaBounds *bounds);
+
 double
 geda_box_shortest_distance (GedaBox *box, int x, int y, int solid);

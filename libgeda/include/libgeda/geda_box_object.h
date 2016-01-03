@@ -36,10 +36,7 @@ geda_box_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 void
 geda_box_object_calculate_bounds (TOPLEVEL *toplevel,
                                   const OBJECT *object,
-                                  gint *left,
-                                  gint *top,
-                                  gint *right,
-                                  gint *bottom);
+                                  GedaBounds *bounds);
 
 void
 geda_box_object_modify_all (TOPLEVEL *toplevel, OBJECT *object, int x1, int y1, int x2, int y2);

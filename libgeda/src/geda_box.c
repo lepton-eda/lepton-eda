@@ -49,6 +49,29 @@ geda_box_free (GedaBox *box)
 }
 
 
+/*! \brief Calculate the bounds of a box
+ *
+ *  Calculates the bounds of a box with zero line width.
+ *
+ *  If this function fails, the bounds will be set to empty.
+ *
+ *  \param [in] box the circle
+ *  \param [out] bounds the bounds of the box
+ */
+void
+geda_box_calculate_bounds (const GedaBox *box, GedaBounds *bounds)
+{
+  if (box == NULL) {
+    geda_bounds_init (bounds);
+    g_return_if_fail (box != NULL);
+  }
+
+  geda_bounds_init_with_points (bounds,
+                                box->lower_x,
+                                box->lower_y,
+                                box->upper_x,
+                                box->upper_y);
+}
 /*! \brief Calculates the distance between the given point and the closest
  *  point on the perimeter or interior of the box.
  *
