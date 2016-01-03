@@ -85,37 +85,31 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *head,
   return found;
 }
 
-/*! \brief Queries the bounds of a complex object.
- *  \par Function Description
- *  This function returns the bounding box of the complex object
- *  <B>object</B>.
+/*! \brief Calculate the bounds of a complex object
  *
- *  \param [in]  toplevel The toplevel environment.
- *  \param [in]  complex   The complex object.
- *  \param [out] left      The leftmost edge of the bounding box (in
- *                         world units).
- *  \param [out] top       The upper edge of the bounding box (in
- *                         world units).
- *  \param [out] right     The rightmost edge of the bounding box (in
- *                         world units).
- *  \param [out] bottom    The bottom edge of the bounding box (in
- *                         screen units).
+ *  On failure, this function sets the bounds to empty.
+ *
+ *  \param [in] toplevel The toplevel object.
+ *  \param [in] object The complex object.
+ *  \param [out] bounds The bounds of the complex object
  */
 void
 geda_complex_object_calculate_bounds (TOPLEVEL *toplevel,
-                                      const OBJECT *complex,
-                                      gint *left,
-                                      gint *top,
-                                      gint *right,
-                                      gint *bottom)
+                                      const OBJECT *object,
+                                      GedaBounds *bounds)
 {
-  g_return_if_fail (complex != NULL &&
-                    (complex->type == OBJ_COMPLEX ||
-                     complex->type == OBJ_PLACEHOLDER) &&
-                    complex->complex != NULL);
+  geda_bounds_init (bounds);
 
-  world_get_object_glist_bounds (toplevel, complex->complex->prim_objs,
-                                 left, top, right, bottom);
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (((object->type == OBJ_COMPLEX) || (object->type == OBJ_PLACEHOLDER)));
+  g_return_if_fail (object->complex != NULL);
+
+  world_get_object_glist_bounds (toplevel,
+                                 object->complex->prim_objs,
+                                 &(bounds->min_x),
+                                 &(bounds->min_y),
+                                 &(bounds->max_x),
+                                 &(bounds->max_y));
 }
 
 /*! \brief get the position of the complex base point

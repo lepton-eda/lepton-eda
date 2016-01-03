@@ -40,10 +40,7 @@ o_complex_new_embedded(TOPLEVEL *toplevel, char type, int color, int x, int y, i
 void
 geda_complex_object_calculate_bounds (TOPLEVEL *toplevel,
                                       const OBJECT *complex,
-                                      gint *left,
-                                      gint *top,
-                                      gint *right,
-                                      gint *bottom);
+                                      GedaBounds *bounds);
 
 void
 o_complex_set_filename(TOPLEVEL *toplevel, const char *basename);
