@@ -28,10 +28,7 @@ geda_bus_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, i
 void
 geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
                                   const OBJECT *object,
-                                  gint *left,
-                                  gint *top,
-                                  gint *right,
-                                  gint *bottom);
+                                  GedaBounds *bounds);
 
 void
 geda_bus_object_translate (GedaObject *object, int dx, int dy);

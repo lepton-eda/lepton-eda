@@ -28,26 +28,50 @@
  *  \brief functions for the pin object
  */
 
-/*! \brief calculate and return the boundaries of a pin object
- *  \par Function Description
- *  This function calculates the object boudaries of a pin \a object.
+/*! \brief Calculate the bounds of a pin
  *
- *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [in]  object    a pin object
- *  \param [out] left      the left world coord
- *  \param [out] top       the top world coord
- *  \param [out] right     the right world coord
- *  \param [out] bottom    the bottom world coord
+ *  On failure, this function sets the bounds to empty.
+ *
+ *  \param [in]  toplevel Unused
+ *  \param [in]  object   The pin object
+ *  \param [out] bounds   The bounds of the pin
  */
 void
 geda_pin_object_calculate_bounds (TOPLEVEL *toplevel,
                                   const OBJECT *object,
-                                  gint *left,
-                                  gint *top,
-                                  gint *right,
-                                  gint *bottom)
+                                  GedaBounds *bounds)
 {
-  geda_line_object_calculate_bounds (toplevel, object, left, top, right, bottom);
+  gint expand;
+
+  geda_bounds_init (bounds);
+
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->type == OBJ_PIN);
+  g_return_if_fail (object->line != NULL);
+
+  geda_bounds_init_with_points (bounds,
+                                object->line->x[0],
+                                object->line->y[0],
+                                object->line->x[1],
+                                object->line->y[1]);
+
+  switch (object->pin_type)
+  {
+    case PIN_TYPE_NET:
+      expand = (NET_WIDTH + 1) / 2;
+      break;
+
+    case PIN_TYPE_BUS:
+      expand = (BUS_WIDTH + 1) / 2;
+      break;
+
+    default:
+      expand = (max (BUS_WIDTH, NET_WIDTH) + 1) / 2;
+      g_warning ("geda_pin_object_calculate_bounds: invalid pin_type");
+  }
+
+  /* This isn't strictly correct, but a 1st order approximation */
+  geda_bounds_expand (bounds, bounds, expand, expand);
 }
 
 /*! \brief get the position of a whichend of the pin object

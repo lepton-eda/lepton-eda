@@ -1039,33 +1039,21 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
         if (o_current->line == NULL) {
           return 0;
         }
-        geda_line_object_calculate_bounds (toplevel, o_current,
-                                           &bounds.min_x,
-                                           &bounds.min_y,
-                                           &bounds.max_x,
-                                           &bounds.max_y);
+        geda_line_object_calculate_bounds (toplevel, o_current, &bounds);
         break;
 
       case(OBJ_NET):
         if (o_current->line == NULL) {
           return 0;
         }
-        geda_net_object_calculate_bounds (toplevel, o_current,
-                                          &bounds.min_x,
-                                          &bounds.min_y,
-                                          &bounds.max_x,
-                                          &bounds.max_y);
+        geda_net_object_calculate_bounds (toplevel, o_current, &bounds);
         break;
 
       case(OBJ_BUS):
         if (o_current->line == NULL) {
           return 0;
         }
-        geda_bus_object_calculate_bounds(toplevel, o_current,
-                                         &bounds.min_x,
-                                         &bounds.min_y,
-                                         &bounds.max_x,
-                                         &bounds.max_y);
+        geda_bus_object_calculate_bounds(toplevel, o_current, &bounds);
         break;
 
       case(OBJ_BOX):
@@ -1133,11 +1121,7 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
         if (o_current->line == NULL) {
           return 0;
         }
-        geda_pin_object_calculate_bounds (toplevel, o_current,
-                                          &bounds.min_x,
-                                          &bounds.min_y,
-                                          &bounds.max_x,
-                                          &bounds.max_y);
+        geda_pin_object_calculate_bounds (toplevel, o_current, &bounds);
         break;
 
       case(OBJ_ARC):

@@ -55,26 +55,37 @@ geda_bus_object_get_position (const GedaObject *object, gint *x, gint *y)
   return TRUE;
 }
 
-/*! \brief calculate and return the boundaries of a bus object
- *  \par Function Description
- *  This function calculates the object boudaries of a bus \a object.
+/*! \brief Calculate the bounds of the bus
  *
- *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [in]  object    a bus object
- *  \param [out] left      the left world coord
- *  \param [out] top       the top world coord
- *  \param [out] right     the right world coord
- *  \param [out] bottom    the bottom world coord
+ *  On failure, this function sets the bounds to empty.
+ *
+ *  \param [in]  toplevel Unused
+ *  \param [in]  object   The bus object
+ *  \param [out] bounds   The bounds of the bus
  */
 void
 geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
                                   const OBJECT *object,
-                                  gint *left,
-                                  gint *top,
-                                  gint *right,
-                                  gint *bottom)
+                                  GedaBounds *bounds)
 {
-  geda_line_object_calculate_bounds ( toplevel, object, left, top, right, bottom );
+  gint expand;
+
+  geda_bounds_init (bounds);
+
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->type == OBJ_BUS);
+  g_return_if_fail (object->line != NULL);
+
+  geda_bounds_init_with_points (bounds,
+                                object->line->x[0],
+                                object->line->y[0],
+                                object->line->x[1],
+                                object->line->y[1]);
+
+  expand = (BUS_WIDTH + 1) / 2;
+
+  /* This isn't strictly correct, but a 1st order approximation */
+  geda_bounds_expand (bounds, bounds, expand, expand);
 }
 
 /*! \brief create a new bus object

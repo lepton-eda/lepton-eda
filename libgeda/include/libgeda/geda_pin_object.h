@@ -34,10 +34,7 @@ geda_pin_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 void
 geda_pin_object_calculate_bounds (TOPLEVEL *toplevel,
                                   const OBJECT *object,
-                                  gint *left,
-                                  gint *top,
-                                  gint *right,
-                                  gint *bottom);
+                                  GedaBounds *bounds);
 
 void
 geda_pin_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
