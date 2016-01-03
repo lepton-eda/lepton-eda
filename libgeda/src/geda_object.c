@@ -1031,7 +1031,8 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
   }
 
   if (o_current->w_bounds_valid_for != toplevel) {
-    int left, right, top, bottom;
+    GedaBounds bounds;
+
     switch(o_current->type) {
 
       case(OBJ_LINE):
@@ -1039,7 +1040,10 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
           return 0;
         }
         geda_line_object_calculate_bounds (toplevel, o_current,
-                                           &left, &top, &right, &bottom);
+                                           &bounds.min_x,
+                                           &bounds.min_y,
+                                           &bounds.max_x,
+                                           &bounds.max_y);
         break;
 
       case(OBJ_NET):
@@ -1047,7 +1051,10 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
           return 0;
         }
         geda_net_object_calculate_bounds (toplevel, o_current,
-                                          &left, &top, &right, &bottom);
+                                          &bounds.min_x,
+                                          &bounds.min_y,
+                                          &bounds.max_x,
+                                          &bounds.max_y);
         break;
 
       case(OBJ_BUS):
@@ -1055,7 +1062,10 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
           return 0;
         }
         geda_bus_object_calculate_bounds(toplevel, o_current,
-                                         &left, &top, &right, &bottom);
+                                         &bounds.min_x,
+                                         &bounds.min_y,
+                                         &bounds.max_x,
+                                         &bounds.max_y);
         break;
 
       case(OBJ_BOX):
@@ -1063,7 +1073,10 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
           return 0;
         }
         geda_box_object_calculate_bounds (toplevel, o_current,
-                                         &left, &top, &right, &bottom);
+                                          &bounds.min_x,
+                                          &bounds.min_y,
+                                          &bounds.max_x,
+                                          &bounds.max_y);
         break;
 
       case(OBJ_PATH):
@@ -1072,7 +1085,10 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
           return 0;
         }
         geda_path_object_calculate_bounds (toplevel, o_current,
-                                           &left, &top, &right, &bottom);
+                                           &bounds.min_x,
+                                           &bounds.min_y,
+                                           &bounds.max_x,
+                                           &bounds.max_y);
         break;
 
       case(OBJ_PICTURE):
@@ -1080,7 +1096,10 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
           return 0;
         }
         geda_picture_object_calculate_bounds (toplevel, o_current,
-                                              &left, &top, &right, &bottom);
+                                              &bounds.min_x,
+                                              &bounds.min_y,
+                                              &bounds.max_x,
+                                              &bounds.max_y);
         break;
 
       case(OBJ_CIRCLE):
@@ -1088,7 +1107,10 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
           return 0;
         }
         geda_circle_object_calculate_bounds (toplevel, o_current,
-                                             &left, &top, &right, &bottom);
+                                             &bounds.min_x,
+                                             &bounds.min_y,
+                                             &bounds.max_x,
+                                             &bounds.max_y);
         break;
 
       case(OBJ_COMPLEX):
@@ -1101,7 +1123,10 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
           return 0;
 
         geda_complex_object_calculate_bounds(toplevel, o_current,
-                                             &left, &top, &right, &bottom);
+                                             &bounds.min_x,
+                                             &bounds.min_y,
+                                             &bounds.max_x,
+                                             &bounds.max_y);
         break;
 
       case(OBJ_PIN):
@@ -1109,7 +1134,10 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
           return 0;
         }
         geda_pin_object_calculate_bounds (toplevel, o_current,
-                                          &left, &top, &right, &bottom);
+                                          &bounds.min_x,
+                                          &bounds.min_y,
+                                          &bounds.max_x,
+                                          &bounds.max_y);
         break;
 
       case(OBJ_ARC):
@@ -1117,12 +1145,18 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
           return 0;
         }
         geda_arc_object_calculate_bounds (toplevel, o_current,
-                             &left, &top, &right, &bottom);
+                                          &bounds.min_x,
+                                          &bounds.min_y,
+                                          &bounds.max_x,
+                                          &bounds.max_y);
         break;
 
       case(OBJ_TEXT):
         if ( !world_get_text_bounds(toplevel, o_current,
-                                    &left, &top, &right, &bottom) ) {
+                                              &bounds.min_x,
+                                              &bounds.min_y,
+                                              &bounds.max_x,
+                                              &bounds.max_y) ) {
           return 0;
         }
         break;
@@ -1130,10 +1164,10 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
       default:
         return 0;
     }
-    o_current->w_left   = left;
-    o_current->w_top    = top;
-    o_current->w_right  = right;
-    o_current->w_bottom = bottom;
+    o_current->w_left   = bounds.min_x;
+    o_current->w_top    = bounds.min_y;
+    o_current->w_right  = bounds.max_x;
+    o_current->w_bottom = bounds.max_y;
     o_current->w_bounds_valid_for = toplevel;
   }
   *rleft = o_current->w_left;
