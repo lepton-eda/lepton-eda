@@ -36,10 +36,7 @@ OBJECT *o_picture_new(TOPLEVEL *toplevel,
 void
 geda_picture_object_calculate_bounds (TOPLEVEL *toplevel,
                                       const OBJECT *object,
-                                      gint *left,
-                                      gint *top,
-                                      gint *right,
-                                      gint *bottom);
+                                      GedaBounds *bounds);
 
 double
 o_picture_get_ratio (TOPLEVEL *toplevel, OBJECT *object);

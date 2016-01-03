@@ -332,31 +332,29 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
 }
 
 /*! \brief Get picture bounding rectangle in WORLD coordinates.
- *  \par Function Description
- *  This function sets the <B>left</B>, <B>top</B>, <B>right</B> and
- *  <B>bottom</B> parameters to the boundings of the picture object
- *  described in <B>*picture</B> in WORLD units.
  *
- *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [in]  object     Picture OBJECT to read coordinates from.
- *  \param [out] left       Left picture coordinate in WORLD units.
- *  \param [out] top        Top picture coordinate in WORLD units.
- *  \param [out] right      Right picture coordinate in WORLD units.
- *  \param [out] bottom     Bottom picture coordinate in WORLD units.
+ *  On failure, this function sets the bounds to empty.
+ *
+ *  \param [in]  toplevel  Unused
+ *  \param [in]  object    Picture OBJECT to read coordinates from.
+ *  \param [out] bounds    The bounds of the picture
  */
 void
 geda_picture_object_calculate_bounds (TOPLEVEL *toplevel,
                                       const OBJECT *object,
-                                      gint *left,
-                                      gint *top,
-                                      gint *right,
-                                      gint *bottom)
+                                      GedaBounds *bounds)
 {
-  *left   = min(object->picture->upper_x, object->picture->lower_x);
-  *top    = min(object->picture->upper_y, object->picture->lower_y);
-  *right  = max(object->picture->upper_x, object->picture->lower_x);
-  *bottom = max(object->picture->upper_y, object->picture->lower_y);
+  geda_bounds_init (bounds);
 
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->type == OBJ_PICTURE);
+  g_return_if_fail (object->picture != NULL);
+
+  geda_bounds_init_with_points (bounds,
+                                object->picture->lower_x,
+                                object->picture->lower_y,
+                                object->picture->upper_x,
+                                object->picture->upper_y);
 }
 
 /*! \brief get the position of the left bottom point
