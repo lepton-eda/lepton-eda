@@ -22,38 +22,63 @@
  *  \brief Functions operating on bus objects
  */
 
+/* construction, destruction */
+
 OBJECT*
-geda_bus_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2, int bus_ripper_direction);
+geda_bus_object_new (TOPLEVEL *toplevel,
+                     char type,
+                     int color,
+                     int x1,
+                     int y1,
+                     int x2,
+                     int y2,
+                     int bus_ripper_direction);
+
+OBJECT*
+geda_bus_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+
+/* methods */
 
 void
 geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
                                   const OBJECT *object,
                                   GedaBounds *bounds);
 
-void
-geda_bus_object_translate (GedaObject *object, int dx, int dy);
-
-OBJECT*
-geda_bus_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+gboolean
+geda_bus_object_get_position (const GedaObject *object, gint *x, gint *y);
 
 void
-geda_bus_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+geda_bus_object_mirror (TOPLEVEL *toplevel,
+                        int world_centerx,
+                        int world_centery,
+                        OBJECT *object);
 
 void
-geda_bus_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_bus_object_modify (TOPLEVEL *toplevel,
+                        OBJECT *object,
+                        int x,
+                        int y,
+                        int whichone);
 
 int
 geda_bus_object_orientation (OBJECT *object);
 
 void
-geda_bus_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-
-OBJECT*
-o_bus_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+geda_bus_object_rotate (TOPLEVEL *toplevel,
+                        int world_centerx,
+                        int world_centery,
+                        int angle,
+                        OBJECT *object);
 
 gchar*
 geda_bus_object_to_buffer (const GedaObject *object);
 
+void
+geda_bus_object_translate (GedaObject *object, int dx, int dy);
 
-gboolean
-geda_bus_object_get_position (const GedaObject *object, gint *x, gint *y);
+OBJECT*
+o_bus_read (TOPLEVEL *toplevel,
+            const char buf[],
+            unsigned int release_ver,
+            unsigned int fileformat_ver,
+            GError **err);
