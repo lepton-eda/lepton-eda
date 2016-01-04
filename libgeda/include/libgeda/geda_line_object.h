@@ -25,40 +25,25 @@
 #define LINE_END1 0
 #define LINE_END2 1
 
+/* construction, destruction */
 OBJECT*
-geda_line_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
+geda_line_object_new (TOPLEVEL *toplevel,
+                      char type,
+                      int color,
+                      int x1,
+                      int y1,
+                      int x2,
+                      int y2);
 
 OBJECT*
 geda_line_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+
+/* methods */
 
 void
 geda_line_object_calculate_bounds (TOPLEVEL *toplevel,
                                    const OBJECT *object,
                                    GedaBounds *bounds);
-
-void
-geda_line_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-
-void
-geda_line_object_translate (GedaObject *object, int dx, int dy);
-
-void
-geda_line_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-
-void
-geda_line_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-
-double
-geda_line_object_length (OBJECT *object);
-
-OBJECT*
-o_line_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
-
-gchar*
-geda_line_object_to_buffer (const GedaObject *object);
-
-double
-geda_line_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 
 gboolean
 geda_line_object_get_position (const GedaObject *object, gint *x, gint *y);
@@ -75,6 +60,29 @@ geda_line_object_get_y0 (const GedaObject *object);
 gint
 geda_line_object_get_y1 (const GedaObject *object);
 
+double
+geda_line_object_length (OBJECT *object);
+
+void
+geda_line_object_mirror (TOPLEVEL *toplevel,
+                         int world_centerx,
+                         int world_centery,
+                         OBJECT *object);
+
+void
+geda_line_object_modify (TOPLEVEL *toplevel,
+                         OBJECT *object,
+                         int x,
+                         int y,
+                         int whichone);
+
+void
+geda_line_object_rotate (TOPLEVEL *toplevel,
+                         int world_centerx,
+                         int world_centery,
+                         int angle,
+                         OBJECT *object);
+
 void
 geda_line_object_set_x0 (GedaObject *object, gint x);
 
@@ -86,3 +94,23 @@ geda_line_object_set_y0 (GedaObject *object, gint y);
 
 void
 geda_line_object_set_y1 (GedaObject *object, gint y);
+
+double
+geda_line_object_shortest_distance (TOPLEVEL *toplevel,
+                                    OBJECT *object,
+                                    int x,
+                                    int y,
+                                    int force_soild);
+
+gchar*
+geda_line_object_to_buffer (const GedaObject *object);
+
+void
+geda_line_object_translate (GedaObject *object, int dx, int dy);
+
+OBJECT*
+o_line_read (TOPLEVEL *toplevel,
+             const char buf[],
+             unsigned int release_ver,
+             unsigned int fileformat_ver,
+             GError **err);
