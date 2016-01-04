@@ -25,41 +25,25 @@
 #define CIRCLE_CENTER 0
 #define CIRCLE_RADIUS 1
 
+/* construction, destruction */
+
 OBJECT*
-geda_circle_object_new (TOPLEVEL *toplevel, char type, int color, int x, int y, int radius);
+geda_circle_object_new (TOPLEVEL *toplevel,
+                        char type,
+                        int color,
+                        int x,
+                        int y,
+                        int radius);
 
 OBJECT*
 geda_circle_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+
+/* methods */
 
 void
 geda_circle_object_calculate_bounds (TOPLEVEL *toplevel,
                                      const OBJECT *object,
                                      GedaBounds *bounds);
-
-void
-geda_circle_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-
-void
-geda_circle_object_translate (GedaObject *object, int dx, int dy);
-
-void
-geda_circle_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-
-void
-geda_circle_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-
-OBJECT*
-o_circle_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
-
-gchar*
-geda_circle_object_to_buffer (const GedaObject *object);
-
-double
-geda_circle_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
-
-
-gboolean
-geda_circle_object_get_position (const GedaObject *object, gint *x, gint *y);
 
 gint
 geda_circle_object_get_center_x (const GedaObject *object);
@@ -67,8 +51,31 @@ geda_circle_object_get_center_x (const GedaObject *object);
 gint
 geda_circle_object_get_center_y (const GedaObject *object);
 
+gboolean
+geda_circle_object_get_position (const GedaObject *object, gint *x, gint *y);
+
 gint
 geda_circle_object_get_radius (const GedaObject *object);
+
+void
+geda_circle_object_mirror (TOPLEVEL *toplevel,
+                           int world_centerx,
+                           int world_centery,
+                           OBJECT *object);
+
+void
+geda_circle_object_modify (TOPLEVEL *toplevel,
+                           OBJECT *object,
+                           int x,
+                           int y,
+                           int whichone);
+
+void
+geda_circle_object_rotate (TOPLEVEL *toplevel,
+                           int world_centerx,
+                           int world_centery,
+                           int angle,
+                           OBJECT *object);
 
 void
 geda_circle_object_set_center_x (GedaObject *object, gint x);
@@ -78,3 +85,23 @@ geda_circle_object_set_center_y (GedaObject *object, gint y);
 
 void
 geda_circle_object_set_radius (GedaObject *object, gint radius);
+
+double
+geda_circle_object_shortest_distance (TOPLEVEL *toplevel,
+                                      OBJECT *object,
+                                      int x,
+                                      int y,
+                                      int force_soild);
+
+gchar*
+geda_circle_object_to_buffer (const GedaObject *object);
+
+void
+geda_circle_object_translate (GedaObject *object, int dx, int dy);
+
+OBJECT*
+o_circle_read (TOPLEVEL *toplevel,
+               const char buf[],
+               unsigned int release_ver,
+               unsigned int fileformat_ver,
+               GError **err);
