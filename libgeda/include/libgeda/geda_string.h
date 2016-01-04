@@ -20,6 +20,9 @@
 /*! \file geda_string.h
  */
 
+int
+o_text_num_lines(const char *string);
+
 char*
 remove_last_nl (char *string);
 

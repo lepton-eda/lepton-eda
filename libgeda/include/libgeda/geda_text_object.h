@@ -22,9 +22,6 @@
  *  \brief Functions operating on text drawing objects
  */
 
-int
-o_text_num_lines(const char *string);
-
 OBJECT*
 o_text_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int alignment, int angle, const char *string, int size, int visibility, int show_name_value);
 

@@ -30,6 +30,39 @@
 
 #include "libgeda_priv.h"
 
+/*! \brief count the lines of a text string
+ *  \par Function Description
+ *  This function just counts the number of lines that are
+ *  in the \a string.
+
+ *  \param [in] string  text string to count the lines
+ *  \return the number of lines
+ */
+int
+o_text_num_lines(const char *string)
+{
+  int line_count = 0;
+  const gchar *aux;
+  gunichar current_char;
+
+  if (string == NULL) {
+    return 0;
+  }
+
+  /* if it's not null, then we have at least one line */
+  line_count++;
+  /* Count how many \n are in the string */
+  aux = string;
+  while (aux && ((gunichar) (*aux) != 0) ) {
+    current_char = g_utf8_get_char_validated(aux, -1);
+    if (current_char == '\n')
+      line_count++;
+    aux = g_utf8_find_next_char(aux, NULL);
+  }
+
+  return (line_count);
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
