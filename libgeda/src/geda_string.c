@@ -45,9 +45,7 @@ o_text_num_lines(const char *string)
   const gchar *aux;
   gunichar current_char;
 
-  if (string == NULL) {
-    return 0;
-  }
+  g_return_val_if_fail (string != NULL, 0);
 
   /* if it's not null, then we have at least one line */
   line_count++;
@@ -74,8 +72,7 @@ remove_last_nl (char *string)
 {
   int len;
 
-  if (!string)
-    return NULL;
+  g_return_val_if_fail (string != NULL, NULL);
 
   len = strlen(string);
   if (string[len-1] == '\n' || string[len-1] == '\r')
@@ -95,8 +92,7 @@ remove_nl (char *string)
 {
   int i;
 
-  if (!string)
-    return NULL;
+  g_return_val_if_fail (string != NULL, NULL);
 
   i = 0;
   while(string[i] != '\0' && string[i] != '\n' && string[i] != '\r') {
@@ -122,8 +118,7 @@ char *u_basic_breakup_string(char *string, char delimiter, int count)
   int done=FALSE;
   char *return_value;
 
-  g_return_val_if_fail ((string != NULL),
-                        NULL);
+  g_return_val_if_fail (string != NULL, NULL);
 
   /* skip over any leading white space */
   while(string[i] == ' ' && !string[i]) {
