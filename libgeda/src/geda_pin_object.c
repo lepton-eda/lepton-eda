@@ -235,6 +235,10 @@ geda_pin_object_to_buffer (const GedaObject *object)
   int pin_type, whichend;
   char *buf;
 
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->line != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_PIN, NULL);
+
   x1 = object->line->x[0];
   y1 = object->line->y[0];
   x2 = object->line->x[1];
@@ -285,6 +289,10 @@ OBJECT*
 geda_pin_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
+
+  g_return_if_fail (o_current != NULL);
+  g_return_if_fail (o_current->line != NULL);
+  g_return_if_fail (o_current->type == OBJ_PIN);
 
   new_obj = geda_pin_object_new (toplevel, OBJ_PIN, o_current->color,
                                  o_current->line->x[0], o_current->line->y[0],
@@ -380,6 +388,12 @@ void geda_pin_object_mirror (TOPLEVEL *toplevel,
 void
 geda_pin_object_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone)
 {
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_PIN);
+  g_return_if_fail (object->whichend >= 0);
+  g_return_if_fail (object->whichend < 2);
+
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
 
@@ -533,6 +547,9 @@ geda_pin_object_update_whichend (TOPLEVEL *toplevel,
 void
 geda_pin_object_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type)
 {
+  g_return_if_fail (o_current != NULL);
+  g_return_if_fail (o_current->type == OBJ_PIN);
+
   o_emit_pre_change_notify (toplevel, o_current);
   switch (pin_type) {
     default:
