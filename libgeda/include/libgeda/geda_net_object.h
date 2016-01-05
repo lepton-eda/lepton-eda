@@ -27,8 +27,21 @@
 #define HORIZONTAL 1
 #define VERTICAL   2
 
+/* construction, destruction */
+
 OBJECT*
-geda_net_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
+geda_net_object_new (TOPLEVEL *toplevel,
+                     char type,
+                     int color,
+                     int x1,
+                     int y1,
+                     int x2,
+                     int y2);
+
+OBJECT*
+geda_net_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+
+/* methods */
 
 void
 geda_net_object_calculate_bounds (TOPLEVEL *toplevel,
@@ -36,31 +49,43 @@ geda_net_object_calculate_bounds (TOPLEVEL *toplevel,
                                   GedaBounds *bounds);
 
 void
-geda_net_object_translate (GedaObject *object, int dx, int dy);
+geda_net_object_consolidate (TOPLEVEL *toplevel, PAGE *page);
 
-OBJECT*
-geda_net_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
-
-void
-geda_net_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+gboolean
+geda_net_object_get_position (const GedaObject *object, gint *x, gint *y);
 
 void
-geda_net_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_net_object_mirror (TOPLEVEL *toplevel,
+                        int world_centerx,
+                        int world_centery,
+                        OBJECT *object);
+
+void
+geda_net_object_modify (TOPLEVEL *toplevel,
+                        OBJECT *object,
+                        int x,
+                        int y,
+                        int whichone);
 
 int
 geda_net_object_orientation (OBJECT *object);
 
 void
-geda_net_object_consolidate (TOPLEVEL *toplevel, PAGE *page);
-
-void
-geda_net_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-
-OBJECT*
-o_net_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+geda_net_object_rotate (TOPLEVEL *toplevel,
+                        int world_centerx,
+                        int world_centery,
+                        int angle,
+                        OBJECT *object);
 
 gchar*
 geda_net_object_to_buffer (const GedaObject *object);
 
-gboolean
-geda_net_object_get_position (const GedaObject *object, gint *x, gint *y);
+void
+geda_net_object_translate (GedaObject *object, int dx, int dy);
+
+OBJECT*
+o_net_read (TOPLEVEL *toplevel,
+            const char buf[],
+            unsigned int release_ver,
+            unsigned int fileformat_ver,
+            GError **err);
