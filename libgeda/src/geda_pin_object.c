@@ -221,35 +221,38 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
 }
 
 /*! \brief Create a string representation of the pin object
- *  \par Function Description
- *  This function takes a pin \a object and return a string
+ *
+ *  This function takes a pin \a object and returns a string
  *  according to the file format definition.
  *
- *  \param [in] object  a pin OBJECT
- *  \return the string representation of the pin OBJECT
+ *  On failure, this function returns NULL.
+ *
+ *  The caller must free the returned string when no longer needed using
+ *  g_free().
+ *
+ *  \param [in] object a pin object
+ *  \return a string representation of the pin object
  */
 gchar*
 geda_pin_object_to_buffer (const GedaObject *object)
 {
-  int x1, x2, y1, y2;
-  int pin_type, whichend;
-  char *buf;
+  gchar *buffer;
 
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
   g_return_val_if_fail (object->type == OBJ_PIN, NULL);
 
-  x1 = object->line->x[0];
-  y1 = object->line->y[0];
-  x2 = object->line->x[1];
-  y2 = object->line->y[1];
+  buffer = g_strdup_printf ("%c %d %d %d %d %d %d %d",
+                            object->type,
+                            object->line->x[0],
+                            object->line->y[0],
+                            object->line->x[1],
+                            object->line->y[1],
+                            object->color,
+                            object->pin_type,
+                            object->whichend);
 
-  pin_type = object->pin_type;
-  whichend = object->whichend;
-
-  buf = g_strdup_printf("%c %d %d %d %d %d %d %d", object->type,
-		   x1, y1, x2, y2, object->color, pin_type, whichend);
-  return(buf);
+  return buffer;
 }
 
 /*! \brief move a pin object
