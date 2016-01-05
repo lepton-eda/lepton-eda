@@ -22,43 +22,72 @@
  *  \brief Functions operating on pin drawing objects
  */
 
-OBJECT*
-geda_pin_object_new (TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2, int pin_type, int whichend);
+/* construction, destruction */
 
-void
-geda_pin_object_translate (GedaObject *object, int dx, int dy);
+OBJECT*
+geda_pin_object_new (TOPLEVEL *toplevel,
+                     char type,
+                     int color,
+                     int x1,
+                     int y1,
+                     int x2,
+                     int y2,
+                     int pin_type,
+                     int whichend);
 
 OBJECT*
 geda_pin_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+
+/* methods */
 
 void
 geda_pin_object_calculate_bounds (TOPLEVEL *toplevel,
                                   const OBJECT *object,
                                   GedaBounds *bounds);
 
+gboolean
+geda_pin_object_get_position (const GedaObject *object, gint *x, gint *y);
+
 gint
 geda_pin_object_get_width (const GedaObject *object);
 
 void
-geda_pin_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+geda_pin_object_mirror (TOPLEVEL *toplevel,
+                        int world_centerx,
+                        int world_centery,
+                        OBJECT *object);
 
 void
-geda_pin_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_pin_object_modify (TOPLEVEL *toplevel,
+                        OBJECT *object,
+                        int x,
+                        int y,
+                        int whichone);
 
 void
-geda_pin_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-
-void
-geda_pin_object_update_whichend (TOPLEVEL *toplevel, GList *object_list, int num_pins);
+geda_pin_object_rotate (TOPLEVEL *toplevel,
+                        int world_centerx,
+                        int world_centery,
+                        int angle,
+                        OBJECT *object);
 
 void
 geda_pin_object_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type);
 
-OBJECT*
-o_pin_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
-
 gchar*
 geda_pin_object_to_buffer (const GedaObject *object);
 
-gboolean
-geda_pin_object_get_position (const GedaObject *object, gint *x, gint *y);
+void
+geda_pin_object_translate (GedaObject *object, int dx, int dy);
+
+void
+geda_pin_object_update_whichend (TOPLEVEL *toplevel,
+                                 GList *object_list,
+                                 int num_pins);
+
+OBJECT*
+o_pin_read (TOPLEVEL *toplevel,
+            const char buf[],
+            unsigned int release_ver,
+            unsigned int fileformat_ver,
+            GError **err);
