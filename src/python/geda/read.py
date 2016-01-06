@@ -458,7 +458,7 @@ def read_circle(buf, (origin_x, origin_y), format):
 
 def read_arc(buf, (origin_x, origin_y), format):
     if not format.supports_linefill_attributes:
-        type, x1, y1, radius, start_angle, end_angle, color = sscanf(
+        type, x1, y1, radius, start_angle, sweep_angle, color = sscanf(
             buf, "%c %d %d %d %d %d %d\n", _("Failed to parse arc object"))
 
         arc_width = 0
@@ -467,7 +467,7 @@ def read_arc(buf, (origin_x, origin_y), format):
         arc_space = -1
         arc_length = -1
     else:
-        type, x1, y1, radius, start_angle, end_angle, color, \
+        type, x1, y1, radius, start_angle, sweep_angle, color, \
         arc_width, arc_end, arc_type, arc_length, arc_space = sscanf(
             buf, "%c %d %d %d %d %d %d %d %d %d %d %d\n",
             _("Failed to parse arc object"))
@@ -477,7 +477,7 @@ def read_arc(buf, (origin_x, origin_y), format):
 
     if radius <= 0:
         print _("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n") % (
-            type, x1, y1, radius, start_angle, end_angle, color)
+            type, x1, y1, radius, start_angle, sweep_angle, color)
         radius = 0
 
     if color < 0 or color > MAX_COLORS:
@@ -490,7 +490,7 @@ def read_arc(buf, (origin_x, origin_y), format):
         y = y1 - origin_y,
         radius = radius,
         startangle = start_angle,
-        sweepangle = end_angle,
+        sweepangle = sweep_angle,
         color = color,
         line = xorn.storage.LineAttr(
             width = arc_width,
