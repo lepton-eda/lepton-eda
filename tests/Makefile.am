@@ -82,8 +82,10 @@ pythontests = \
 	cpython/string.py \
 	cpython/transient.py \
 	cpython/guile.py \
+	python/snippets/xml_writer.py \
 	python/base64.py \
 	python/proxy.py \
+	python/xml_writer.py \
 	python/geda/attrib.py \
 	python/geda/complex.py \
 	python/geda/parse_attrib.py \

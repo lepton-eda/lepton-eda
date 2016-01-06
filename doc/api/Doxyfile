@@ -768,6 +768,7 @@ INPUT                  = .. \
                          ./xorn/guile.py \
                          ./xorn/proxy.py \
                          ./xorn/storage.py \
+                         ./xorn/xml_writer.py \
                          ./xorn/geda/__init__.py \
                          ./xorn/geda/attrib.py \
                          ./xorn/geda/clib.py \
@@ -868,7 +869,8 @@ EXCLUDE_SYMBOLS        = DECLARE_OBJECT_FUNCTIONS \
 # command).
 
 EXAMPLE_PATH           = ../../tests/storage/snippets \
-                         ../../tests/cpython/snippets
+                         ../../tests/cpython/snippets \
+                         ../../tests/python/snippets
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and

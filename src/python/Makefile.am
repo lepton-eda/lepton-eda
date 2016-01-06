@@ -20,6 +20,7 @@ nobase_pkgpython_PYTHON = \
 	command.py \
 	fileutils.py \
 	proxy.py \
+	xml_writer.py \
 	geda/__init__.py \
 	geda/attrib.py \
 	geda/clib.py \
