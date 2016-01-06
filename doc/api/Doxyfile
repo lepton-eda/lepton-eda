@@ -767,6 +767,7 @@ INPUT                  = .. \
                          ./xorn/fileutils.py \
                          ./xorn/fixednum.py \
                          ./xorn/guile.py \
+                         ./xorn/hybridnum.py \
                          ./xorn/proxy.py \
                          ./xorn/storage.py \
                          ./xorn/xml_writer.py \

@@ -20,6 +20,7 @@ nobase_pkgpython_PYTHON = \
 	command.py \
 	fileutils.py \
 	fixednum.py \
+	hybridnum.py \
 	proxy.py \
 	xml_writer.py \
 	geda/__init__.py \

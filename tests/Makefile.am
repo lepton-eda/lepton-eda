@@ -85,6 +85,7 @@ pythontests = \
 	python/snippets/xml_writer.py \
 	python/base64.py \
 	python/fixednum.py \
+	python/hybridnum.py \
 	python/proxy.py \
 	python/xml_writer.py \
 	python/geda/attrib.py \
