@@ -103,6 +103,7 @@ get_property (GObject    *object,
 
     case PROP_ENABLED:
       g_value_set_boolean (value, swatch->enabled);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
