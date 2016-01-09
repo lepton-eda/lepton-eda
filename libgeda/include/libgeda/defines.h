@@ -58,18 +58,16 @@
 #define LEAVE_VISIBILITY_ALONE  -1
 
 /* various thicknesses (in mils) */
-#define LINE_WIDTH	10
-#define NET_WIDTH	10
-#define PIN_WIDTH_NET	10
-#define BUS_WIDTH	30
-#define PIN_WIDTH_BUS	30
+#define LINE_WIDTH       10
+#define NET_WIDTH        10
+#define PIN_WIDTH_NET    (NET_WIDTH)
+#define BUS_WIDTH        30
+#define PIN_WIDTH_BUS    (BUS_WIDTH)
 
 /* various visual cue sizes (in mils) */
-#define CUE_BOX_SIZE 		30
-#define JUNCTION_CUE_SIZE_NET	50
-#define JUNCTION_CUE_SIZE_BUS	30
-#define PIN_CUE_SIZE_NET	30
-#define PIN_CUE_SIZE_BUS	50
+#define CUE_BOX_SIZE             30
+#define JUNCTION_CUE_SIZE_NET    (NET_WIDTH + 40)
+#define JUNCTION_CUE_SIZE_BUS    (BUS_WIDTH + 40)
 
 /* For text location on component not found graphics */
 #define NOT_FOUND_TEXT_X	100
