@@ -1433,7 +1433,7 @@ static void
 eda_renderer_draw_junction_cue (EdaRenderer *renderer, int x, int y, int is_bus)
 {
   double width = (is_bus ? BUS_WIDTH : NET_WIDTH);
-  double radius = (is_bus ? JUNCTION_CUE_SIZE_BUS : JUNCTION_CUE_SIZE_NET) / 2;
+  double radius = (is_bus ? JUNCTION_CUE_SIZE_BUS : JUNCTION_CUE_SIZE_NET) / 2.0;
 
   if (!eda_renderer_is_drawable_color (renderer, JUNCTION_COLOR, 1)) {
     return;
