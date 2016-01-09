@@ -93,27 +93,31 @@ geda_string_remove_ending_newline (gchar *string)
   return string;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Gets the first line of the string
  *
+ *  This function modifies the string in place, so statically allocated strings
+ *  cannot be passed to this function.
+ *
+ *  \param [in,out] string the input UTF-8 string, NUL terminated
+ *  \return the first line of the string with no ending newline
  */
-/* used by o_text_read */
-char*
-remove_nl (char *string)
+gchar*
+geda_string_get_first_line (gchar *string)
 {
-  int i;
+  gchar *iter = string;
 
   g_return_val_if_fail (string != NULL, NULL);
 
-  i = 0;
-  while(string[i] != '\0' && string[i] != '\n' && string[i] != '\r') {
-    i++;
+  while ((iter != NULL) && (*iter != '\0')) {
+    if ((*iter == '\n') || (*iter == '\r')) {
+      *iter = '\0';
+      break;
+    }
+
+    iter = g_utf8_find_next_char (iter, NULL);
   }
 
-  string[i] = '\0';
-
-  return(string);
+  return string;
 }
 
 /*! \todo Finish function documentation!!!

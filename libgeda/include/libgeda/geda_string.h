@@ -26,8 +26,8 @@ o_text_num_lines(const char *string);
 gchar*
 geda_string_remove_ending_newline (gchar *string);
 
-char*
-remove_nl (char *string);
+gchar*
+geda_string_get_first_line (gchar *string);
 
 char*
 u_basic_breakup_string (char *string, char delimiter, int count);

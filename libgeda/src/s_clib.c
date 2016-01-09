@@ -36,7 +36,7 @@
  *  To initialise the component library, s_clib_init() is called.  To
  *  clean up when it is no longer needed, s_clib_free() should be
  *  called.
- * 
+ *
  *  A directory which contains one or more symbol files in gEDA
  *  format may be used as a component source. Each symbol file should
  *  have a filename ending in ".sym" (case insensitive).  A
@@ -63,7 +63,7 @@
  *    -# Do not begin a symbol name with "EMBEDDED"
  *    -# Do not use whitespace, or any of the characters "<tt>/:!*?</tt>".
  *    -# Try to use unique names.
- *  
+ *
  *  The component database may be queried using s_clib_search().  A
  *  null-terminated buffer containing symbol data (suitable for
  *  loading using o_read_buffer()) may be obtained using
@@ -156,10 +156,10 @@
  */
 
 /*! Valid types of component source */
-enum CLibSourceType { 
+enum CLibSourceType {
   CLIB_NONE = 0,
   /*! Directory source */
-  CLIB_DIR, 
+  CLIB_DIR,
   /*! Command source */
   CLIB_CMD,
   /*! Guile function source */
@@ -235,7 +235,7 @@ static gint compare_source_name (gconstpointer a, gconstpointer b);
 static gint compare_symbol_name (gconstpointer a, gconstpointer b);
 static void cache_find_oldest (gpointer key, gpointer value, gpointer user_data);
 static gchar *run_source_command (const gchar *command);
-static CLibSymbol *source_has_symbol (const CLibSource *source, 
+static CLibSymbol *source_has_symbol (const CLibSource *source,
 				      const gchar *name);
 static gchar *uniquify_source_name (const gchar *name);
 static void refresh_directory (CLibSource *source);
@@ -430,7 +430,7 @@ static void cache_find_oldest (gpointer key,
  *  Execute a library command, returning the standard output, or \b
  *  NULL if the command fails for some reason.  The system \b PATH is
  *  used to find the program to execute.
- *  The command can write messages to the standard error output. They 
+ *  The command can write messages to the standard error output. They
  *  are forwarded to the libgeda logging mechanism.
  *
  *  Private function used only in s_clib.c.
@@ -464,7 +464,7 @@ static gchar *run_source_command (const gchar *command)
   } else if (WIFSIGNALED(exit_status)) {
     s_log_message (_("Library command failed [%s]: Uncaught signal %i.\n"),
                    command, WTERMSIG(exit_status));
-    
+
   } else if (WIFEXITED(exit_status) && WEXITSTATUS(exit_status)) {
     s_log_message (_("Library command failed [%s]\n"), command);
     s_log_message(_("Error output was:\n%s\n"), standard_error);
@@ -478,7 +478,7 @@ static gchar *run_source_command (const gchar *command)
     s_log_message ("%s", standard_error);
 
   g_free (standard_error);
-  
+
   if (success) return standard_output;
 
   g_free (standard_output);
@@ -512,16 +512,16 @@ GList *s_clib_get_sources (const gboolean sorted)
  *  \param name The symbol name to look for.
  *  \return The matching symbol, or \b NULL if no match was found.
  */
-static CLibSymbol *source_has_symbol (const CLibSource *source, 
+static CLibSymbol *source_has_symbol (const CLibSource *source,
 				      const gchar *name)
 {
   GList *symlist;
   CLibSymbol *symbol;
 
-  for (symlist = g_list_first(source->symbols); 
-       symlist != NULL; 
+  for (symlist = g_list_first(source->symbols);
+       symlist != NULL;
        symlist = g_list_next(symlist)) {
-    
+
     symbol = (CLibSymbol *) symlist->data;
 
     if (strcmp (symbol->name, name) == 0) return symbol;
@@ -584,7 +584,7 @@ static void refresh_directory (CLibSource *source)
   /* Clear the current symbol list */
   g_list_foreach (source->symbols, (GFunc) free_symbol, NULL);
   g_list_free (source->symbols);
-  source->symbols = NULL;  
+  source->symbols = NULL;
 
   /* Open the directory for reading. */
   dir = g_dir_open (source->directory, 0, &e);
@@ -608,7 +608,7 @@ static void refresh_directory (CLibSource *source)
 
     /* skip filenames that we already know about. */
     if (source_has_symbol (source, entry) != NULL) continue;
-    
+
     /* skip filenames which don't have the right suffix. */
     low_entry = g_utf8_strdown (entry, -1);
     if (!g_str_has_suffix (low_entry, SYM_FILENAME_FILTER)) {
@@ -631,7 +631,7 @@ static void refresh_directory (CLibSource *source)
   g_dir_close (dir);
 
   /* Now sort the list of symbols by name. */
-  source->symbols = g_list_sort (source->symbols, 
+  source->symbols = g_list_sort (source->symbols,
 				 (GCompareFunc) compare_symbol_name);
 
   s_clib_flush_search_cache();
@@ -659,7 +659,7 @@ static void refresh_command (CLibSource *source)
   /* Clear the current symbol list */
   g_list_foreach (source->symbols, (GFunc) free_symbol, NULL);
   g_list_free (source->symbols);
-  source->symbols = NULL;  
+  source->symbols = NULL;
 
   /* Run the command to get the list of symbols */
   cmdout = run_source_command (source->list_cmd);
@@ -673,7 +673,7 @@ static void refresh_command (CLibSource *source)
     if (line == NULL) break;
     if (line[0] == '.') continue;  /* TODO is this sane? */
 
-    name = remove_nl(g_strdup(line));
+    name = geda_string_get_first_line (g_strdup(line));
 
     /* skip symbols already known about */
     if (source_has_symbol (source, name) != NULL) {
@@ -687,14 +687,14 @@ static void refresh_command (CLibSource *source)
 
     /* Prepend because it's faster and it doesn't matter what order we
      * add them. */
-    source->symbols = g_list_prepend (source->symbols, symbol);    
+    source->symbols = g_list_prepend (source->symbols, symbol);
   }
 
   s_textbuffer_free (tb);
   g_free (cmdout);
 
   /* Sort all symbols by name. */
-  source->symbols = g_list_sort (source->symbols, 
+  source->symbols = g_list_sort (source->symbols,
 				 (GCompareFunc) compare_symbol_name);
 
   s_clib_flush_search_cache();
@@ -750,12 +750,12 @@ static void refresh_scm (CLibSource *source)
        * add them. */
       source->symbols = g_list_prepend (source->symbols, symbol);
     }
- 
+
     symlist = SCM_CDR (symlist);
   }
 
   /* Now sort the list of symbols by name. */
-  source->symbols = g_list_sort (source->symbols, 
+  source->symbols = g_list_sort (source->symbols,
 				 (GCompareFunc) compare_symbol_name);
 
   s_clib_flush_search_cache();
@@ -776,10 +776,10 @@ void s_clib_refresh ()
   GList *sourcelist;
   CLibSource *source;
 
-  for (sourcelist = clib_sources; 
-       sourcelist != NULL; 
+  for (sourcelist = clib_sources;
+       sourcelist != NULL;
        sourcelist = g_list_next(sourcelist)) {
-    
+
     source = (CLibSource *) sourcelist->data;
     switch (source->type)
       {
@@ -804,7 +804,7 @@ void s_clib_refresh ()
  *  \par Function Description
  *  Iterates through the known component sources, checking if there is
  *  a source with the given \a name.
- *  
+ *
  *  \param name The source name to look for.
  *
  *  \return The matching source, or \b NULL if no match was found.
@@ -814,8 +814,8 @@ const CLibSource *s_clib_get_source_by_name (const gchar *name)
   GList *sourcelist;
   CLibSource *source;
 
-  for (sourcelist = clib_sources; 
-       sourcelist != NULL; 
+  for (sourcelist = clib_sources;
+       sourcelist != NULL;
        sourcelist = g_list_next(sourcelist)) {
 
     source = (CLibSource *) sourcelist->data;
@@ -839,7 +839,7 @@ const CLibSource *s_clib_get_source_by_name (const gchar *name)
  *  \param name      A descriptive name for the directory.
  *  \return The #CLibSource associated with the directory.
  */
-const CLibSource *s_clib_add_directory (const gchar *directory, 
+const CLibSource *s_clib_add_directory (const gchar *directory,
 					const gchar *name)
 {
   CLibSource *source;
@@ -848,14 +848,14 @@ const CLibSource *s_clib_add_directory (const gchar *directory,
   if (directory == NULL) {
     return NULL;
   }
-  
+
   if (name == NULL) {
     intname = g_path_get_basename (directory);
     realname = uniquify_source_name (intname);
     g_free (intname);
   } else {
     realname = uniquify_source_name (name);
-  }  
+  }
 
   source = g_new0 (CLibSource, 1);
   source->type = CLIB_DIR;
@@ -877,7 +877,7 @@ const CLibSource *s_clib_add_directory (const gchar *directory,
  *  of an executable name followed by any arguments required.
  *  Executables are resolved using the current PATH.  See page \ref
  *  libcmds for more information on library commands.
- *  
+ *
  *  \param list_cmd The executable & arguments used to list available
  *                   symbols.
  *  \param get_cmd  The executable & arguments used to retrieve symbol
@@ -891,12 +891,12 @@ const CLibSource *s_clib_add_command (const gchar *list_cmd,
 {
   CLibSource *source;
   gchar *realname;
-  
+
   if (name == NULL) {
     s_log_message (_("Cannot add library: name not specified\n"));
     return NULL;
   }
-  
+
   realname = uniquify_source_name (name);
 
   if (list_cmd == NULL || get_cmd == NULL) {
@@ -942,11 +942,11 @@ const CLibSource *s_clib_add_scm (SCM listfunc, SCM getfunc, const gchar *name)
   if (name == NULL) {
     s_log_message (_("Cannot add library: name not specified\n"));
     return NULL;
-  }  
-  
+  }
+
   realname = uniquify_source_name (name);
 
-  if (scm_is_false (scm_procedure_p (listfunc)) 
+  if (scm_is_false (scm_procedure_p (listfunc))
       && scm_is_false (scm_procedure_p (getfunc))) {
     s_log_message (_("Cannot add Scheme-library [%s]: callbacks must be closures\n"),
 		   realname);
@@ -986,7 +986,7 @@ const gchar *s_clib_source_get_name (const CLibSource *source)
  *
  *  \warning The returned \b GList will not be consistent over a call to
  *  s_clib_refresh().  It should be freed when no longer needed.
- *  
+ *
  *  \param source Source to be examined.
  *  \return A \b GList of #CLibSymbol.
  */
@@ -1011,7 +1011,7 @@ const gchar *s_clib_symbol_get_name (const CLibSymbol *symbol)
   return symbol->name;
 }
 
-/*! \brief Get a filename for editing a symbol.  
+/*! \brief Get a filename for editing a symbol.
  *  \par Function Description
  *  Get the filename of the file a symbol was loaded from, if possible
  *  (e.g. to allow loading for user editing).
@@ -1069,7 +1069,7 @@ static gchar *get_data_directory (const CLibSymbol *symbol)
   g_return_val_if_fail ((symbol != NULL), NULL);
   g_return_val_if_fail ((symbol->source->type == CLIB_DIR), NULL);
 
-  filename = g_build_filename(symbol->source->directory, 
+  filename = g_build_filename(symbol->source->directory,
 			      symbol->name, NULL);
 
   g_file_get_contents (filename, &data, NULL, &e);
@@ -1101,8 +1101,8 @@ static gchar *get_data_command (const CLibSymbol *symbol)
 
   g_return_val_if_fail ((symbol != NULL), NULL);
   g_return_val_if_fail ((symbol->source->type == CLIB_CMD), NULL);
-  
-  command = g_strdup_printf ("%s %s", symbol->source->get_cmd, 
+
+  command = g_strdup_printf ("%s %s", symbol->source->get_cmd,
                           symbol->name);
 
   result = run_source_command ( command );
@@ -1131,7 +1131,7 @@ static gchar *get_data_scm (const CLibSymbol *symbol)
   g_return_val_if_fail ((symbol != NULL), NULL);
   g_return_val_if_fail ((symbol->source->type == CLIB_SCM), NULL);
 
-  symdata = scm_call_1 (symbol->source->get_fn, 
+  symdata = scm_call_1 (symbol->source->get_fn,
 			scm_from_utf8_string (symbol->name));
 
   if (!scm_is_string (symdata)) {
@@ -1221,9 +1221,9 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
   return data;
 }
 
-/*! \brief Find all symbols matching a pattern.  
+/*! \brief Find all symbols matching a pattern.
  *
- *  \par Function Description 
+ *  \par Function Description
  *  Searches the library, returning all symbols whose
  *  names match \a pattern.
  *
@@ -1244,7 +1244,7 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
  *  \return A \b GList of matching #CLibSymbol structures.
  */
 GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
-{  
+{
   GList *sourcelist;
   GList *symlist;
   GList *result = NULL;
@@ -1282,8 +1282,8 @@ GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
     globpattern = g_pattern_spec_new(pattern);
   }
 
-  for (sourcelist = clib_sources; 
-       sourcelist != NULL; 
+  for (sourcelist = clib_sources;
+       sourcelist != NULL;
        sourcelist = g_list_next(sourcelist)) {
 
     source = (CLibSource *) sourcelist->data;
@@ -1291,7 +1291,7 @@ GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
     for (symlist = source->symbols;
 	 symlist != NULL;
 	 symlist = g_list_next(symlist)) {
-    
+
       symbol = (CLibSymbol *) symlist->data;
 
       switch (mode)
@@ -1455,7 +1455,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
       o = (OBJECT *)o_iter->data;
       if (o->type != OBJ_COMPLEX) continue;
       if (o->complex_basename == NULL)  continue;
-      
+
       /* Since we're not looking at embedded symbols, the first
        * component with the given name will be the one we need.
        * N.b. we don't use s_clib_get_symbol_by_name() because it's
@@ -1464,7 +1464,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
       if (symlist == NULL) continue;
       sym = (CLibSymbol *) symlist->data;
       g_list_free (symlist);
-      
+
       /* We do the list insertion by evilly comparing pointers.  This
        * is okay, because we always take the first symbol with the
        * given name, and symbol pointers don't change while this
@@ -1484,7 +1484,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
       }
       if (iter == NULL) {
         /* not in list yet, and at end of list */
-        result = g_list_append (result, sym);    
+        result = g_list_append (result, sym);
       }
     }
   }
