@@ -293,9 +293,9 @@ geda_pin_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
 
-  g_return_if_fail (o_current != NULL);
-  g_return_if_fail (o_current->line != NULL);
-  g_return_if_fail (o_current->type == OBJ_PIN);
+  g_return_val_if_fail (o_current != NULL, NULL);
+  g_return_val_if_fail (o_current->line != NULL, NULL);
+  g_return_val_if_fail (o_current->type == OBJ_PIN, NULL);
 
   new_obj = geda_pin_object_new (toplevel, OBJ_PIN, o_current->color,
                                  o_current->line->x[0], o_current->line->y[0],
