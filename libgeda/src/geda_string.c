@@ -61,24 +61,36 @@ o_text_num_lines(const char *string)
   return (line_count);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Remove the ending newline
  *
+ *  This function removes the ending newline from the string. If no newline
+ *  exists at the end of the string, this function returns the passed in
+ *  string.
+ *
+ *  This function modifies the string in place, so statically allocated strings
+ *  cannot be passed to this function.
+ *
+ *  \param [in,out] string the input UTF-8 string
+ *  \return the string with no ending newline
  */
-/* used by o_text_read */
-char*
-remove_last_nl (char *string)
+gchar*
+geda_string_remove_ending_newline (gchar *string)
 {
-  int len;
+  glong length;
 
   g_return_val_if_fail (string != NULL, NULL);
 
-  len = strlen(string);
-  if (string[len-1] == '\n' || string[len-1] == '\r')
-    string[len-1] = '\0';
+  length = g_utf8_strlen (string, -1);
 
-  return(string);
+  if (length > 0) {
+    gchar *last_char = g_utf8_offset_to_pointer (string, length - 1);
+
+    if ((*last_char == '\n') || (*last_char == '\r')) {
+      *last_char = '\0';
+    }
+  }
+
+  return string;
 }
 
 /*! \todo Finish function documentation!!!

@@ -23,8 +23,8 @@
 int
 o_text_num_lines(const char *string);
 
-char*
-remove_last_nl (char *string);
+gchar*
+geda_string_remove_ending_newline (gchar *string);
 
 char*
 remove_nl (char *string);

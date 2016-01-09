@@ -382,7 +382,7 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
   /* retrieve the character string from the GString */
   string = g_string_free (textstr, FALSE);
 
-  string = remove_last_nl(string);
+  string = geda_string_remove_ending_newline (string);
 
   /* convert the character string to UTF-8 if necessary */
   if (!g_utf8_validate (string, -1, NULL)) {

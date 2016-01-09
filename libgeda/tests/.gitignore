@@ -17,4 +17,5 @@ test_circle
 test_coord
 test_line
 test_point
+test_string
 

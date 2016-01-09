@@ -7,7 +7,8 @@ check_PROGRAMS = \
 	test_circle \
 	test_coord \
 	test_line \
-	test_point
+	test_point \
+	test_string
 
 TESTS = \
 	test_angle \
@@ -17,7 +18,8 @@ TESTS = \
 	test_circle \
 	test_coord \
 	test_line \
-	test_point
+	test_point \
+	test_string
 
 AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"  $(DATADIR_DEFS) \
 	-I$(srcdir)/../include -I$(srcdir)/../include/libgeda -I$(top_srcdir)

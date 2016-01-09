@@ -232,7 +232,7 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
 
   /* retrieve the character string from the GString */
   string = g_string_free (pathstr, FALSE);
-  string = remove_last_nl (string);
+  string = geda_string_remove_ending_newline (string);
 
   /* create a new path */
   new_obj = geda_path_object_new (toplevel, type, color, string);

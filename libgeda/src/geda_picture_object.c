@@ -108,7 +108,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
   }
 
   filename = g_strdup(s_textbuffer_next_line(tb));
-  filename = remove_last_nl(filename);
+  filename = geda_string_remove_ending_newline (filename);
 
   /* Handle empty filenames */
   if (strlen (filename) == 0) {
