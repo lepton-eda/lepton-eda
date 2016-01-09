@@ -171,11 +171,11 @@ void
 x_fstylecb_set_index (GtkWidget *widget, int style)
 {
   GtkTreeIter *active = NULL;
+  GtkTreeIter iter;
 
   g_return_if_fail (fstyle_list_store != NULL);
 
   if (style >= 0) {
-    GtkTreeIter iter;
     gboolean success;
     GValue value = {0};
 

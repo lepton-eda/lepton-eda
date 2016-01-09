@@ -466,11 +466,11 @@ void
 gschem_find_text_widget_set_find_type (GschemFindTextWidget *widget, int type)
 {
   GtkTreeIter *active = NULL;
+  GtkTreeIter iter;
 
   g_return_if_fail (widget != NULL);
 
   if (type >= 0) {
-    GtkTreeIter iter;
     gboolean success;
     GValue value = {0};
 
