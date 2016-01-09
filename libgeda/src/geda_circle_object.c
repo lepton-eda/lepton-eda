@@ -533,15 +533,12 @@ void geda_circle_object_mirror (TOPLEVEL *toplevel,
 
   /* translate object to origin */
   object->circle->center_x -= world_centerx;
-  object->circle->center_y -= world_centery;
 
   /* mirror the center of the circle */
   object->circle->center_x = -object->circle->center_x;
-  object->circle->center_y =  object->circle->center_y;
 
   /* translate back in position */
   object->circle->center_x += world_centerx;
-  object->circle->center_y += world_centery;
 
   /* recalc boundings and screen coords */
   object->w_bounds_valid_for = NULL;
