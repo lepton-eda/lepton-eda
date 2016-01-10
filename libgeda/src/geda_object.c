@@ -75,6 +75,64 @@ geda_object_get_color (const GedaObject *object)
   return object->color;
 }
 
+/*! \brief Get the color for drawing the object
+ *
+ *  If this function fails, it returns the DEFAULT_COLOR.
+ *
+ *  The output of this funtion is ependent on other variables than just the
+ *  object color. If the object is locked, it will return the LOCK_COLOR.
+ *  This value should not be used for saving or editing the object.
+ *
+ *  \param [in] object the object to obtain the color of
+ *  \return the color index the draw the object
+ */
+gint
+geda_object_get_drawing_color (const GedaObject *object)
+{
+  gint color;
+
+  g_return_val_if_fail (object != NULL, DEFAULT_COLOR);
+
+  color = object->selectable ? object->color : LOCK_COLOR;
+
+  g_return_val_if_fail (color >= 0, DEFAULT_COLOR);
+  g_return_val_if_fail (color < MAX_COLORS, DEFAULT_COLOR);
+
+  return color;
+}
+
+/*! \brief Determines if the object can be selected
+ *
+ *  Locked is alternate terminology for not selectable.
+ *
+ *  \param [in] object the object
+ *  \retval TRUE if the object can be selected
+ *  \retval FALSE if the object cannot be selected
+ *  \retval FALSE if a failure occured
+ */
+gboolean
+geda_object_get_selectable (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, FALSE);
+
+  return object->selectable;
+}
+
+/*! \brief Sets if the object can be selected
+ *
+ *  Locked is alternate terminology for not selectable.
+ *
+ *  \param [in,out] object the object
+ *  \param [in] selectable true if the object is selectable
+ */
+void
+geda_object_set_selectable (GedaObject *object, gboolean selectable)
+{
+  g_return_if_fail (object != NULL);
+
+  object->selectable = selectable;
+}
+
 static OBJECT*
 s_basic_init_object (OBJECT *new_node, int type, char const *name);
 

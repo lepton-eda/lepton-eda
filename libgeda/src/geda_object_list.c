@@ -274,6 +274,24 @@ geda_object_list_set_color (const GList *objects, int color, TOPLEVEL *toplevel)
   }
 }
 
+/*! \brief Set a list of objects as selectable or not
+ *
+ *  \param [in] objects the list of objects to set as selectable or not
+ *  \param [in] selectable the new state of the objects
+ */
+void
+geda_object_list_set_selectable (const GList *objects, gboolean selectable)
+{
+  const GList *iter = objects;
+
+  while (iter != NULL) {
+    GedaObject *object = (GedaObject*)iter->data;
+
+    geda_object_set_selectable (object, selectable);
+    iter = g_list_next (iter);
+  }
+}
+
 /*! \brief "Save" a file into a string buffer
  *  \par Function Description
  *  This function saves a whole schematic into a buffer in libgeda

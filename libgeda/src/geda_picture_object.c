@@ -721,7 +721,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
   new_node->picture = picture;
 
   new_node->color = geda_object_get_color (object);
-  new_node->selectable = object->selectable;
+  new_node->selectable = geda_object_get_selectable (object);
 
   /* describe the picture with its upper left and lower right corner */
   picture->upper_x = object->picture->upper_x;

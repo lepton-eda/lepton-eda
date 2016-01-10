@@ -115,8 +115,14 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
 gint
 geda_object_get_color (const GedaObject *object);
 
+gint
+geda_object_get_drawing_color (const GedaObject *object);
+
 gboolean
 geda_object_get_position (const GedaObject *object, gint *x, gint *y);
+
+gboolean
+geda_object_get_selectable (const GedaObject *object);
 
 gboolean
 geda_object_get_visible (const GedaObject *object);
@@ -133,6 +139,9 @@ geda_object_mirror (TOPLEVEL *toplevel,
                     int world_centerx,
                     int world_centery,
                     OBJECT *object);
+
+void
+geda_object_set_selectable (GedaObject *object, gboolean selectable);
 
 double
 geda_object_shortest_distance (TOPLEVEL *toplevel,

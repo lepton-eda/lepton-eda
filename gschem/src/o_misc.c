@@ -100,29 +100,15 @@ void o_edit(GschemToplevel *w_current, GList *list)
  * this cannot be called recursively */
 void o_lock(GschemToplevel *w_current)
 {
-  OBJECT *object = NULL;
-  GList *s_current = NULL;
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->toplevel != NULL);
+  g_return_if_fail (w_current->toplevel->page_current != NULL);
 
-  /* skip over head */
-  s_current = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
+  geda_object_list_set_selectable (
+      geda_list_get_glist (w_current->toplevel->page_current->selection_list),
+      FALSE);
 
-  while(s_current != NULL) {
-    object = (OBJECT *) s_current->data;
-    if (object) {
-      /* check to see if locked_color is already being used */
-      if (object->locked_color == -1) {
-        object->selectable = FALSE;
-        object->locked_color = geda_object_get_color (object);
-        object->color = LOCK_COLOR;
-        gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
-      } else {
-        s_log_message(_("Object already locked\n"));
-      }
-    }
-
-    s_current = g_list_next(s_current);
-  }
-
+  gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
   if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
   o_undo_savestate_old(w_current, UNDO_ALL);
   i_update_menus(w_current);
@@ -139,27 +125,15 @@ void o_lock(GschemToplevel *w_current)
 /* this cannot be called recursively */
 void o_unlock(GschemToplevel *w_current)
 {
-  OBJECT *object = NULL;
-  GList *s_current = NULL;
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->toplevel != NULL);
+  g_return_if_fail (w_current->toplevel->page_current != NULL);
 
-  s_current = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
+  geda_object_list_set_selectable (
+      geda_list_get_glist (w_current->toplevel->page_current->selection_list),
+      TRUE);
 
-  while(s_current != NULL) {
-    object = (OBJECT *) s_current->data;
-    if (object) {
-      /* only unlock if the object is locked */
-      if (object->selectable == FALSE) {
-        object->selectable = TRUE;
-        object->color = object->locked_color;
-        object->locked_color = -1;
-        gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
-      } else {
-        s_log_message(_("Object already unlocked\n"));
-      }
-    }
-
-    s_current = g_list_next(s_current);
-  }
+  gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
   o_undo_savestate_old(w_current, UNDO_ALL);
 }
 

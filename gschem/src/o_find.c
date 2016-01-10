@@ -46,8 +46,9 @@ is_object_hit (GschemToplevel *w_current, OBJECT *object,
 {
   int left, top, right, bottom;
 
-  if (!object->selectable)
+  if (!geda_object_get_selectable (object)) {
     return FALSE;
+  }
 
   /* We can't hit invisible (text) objects unless show_hidden_text is active.
    */

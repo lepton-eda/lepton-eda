@@ -641,7 +641,7 @@ geda_complex_object_to_buffer (const GedaObject *object)
 
   g_return_val_if_fail (object != NULL, NULL);
 
-  selectable = (object->selectable) ? 1 : 0;
+  selectable = geda_object_get_selectable (object);
 
   if ((object->type == OBJ_COMPLEX) || (object->type == OBJ_PLACEHOLDER)) {
     basename = g_strdup_printf ("%s%s",
