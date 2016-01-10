@@ -11,6 +11,7 @@ libgeda.la
 *.trs
 test_angle
 test_arc
+test_arc_object
 test_bounds
 test_box
 test_circle

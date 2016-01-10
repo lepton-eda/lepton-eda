@@ -2,6 +2,7 @@
 check_PROGRAMS = \
 	test_angle \
 	test_arc \
+	test_arc_object \
 	test_bounds \
 	test_box \
 	test_circle \
@@ -13,6 +14,7 @@ check_PROGRAMS = \
 TESTS = \
 	test_angle \
 	test_arc \
+	test_arc_object \
 	test_bounds \
 	test_box \
 	test_circle \
