@@ -202,7 +202,7 @@ geda_bus_object_to_buffer(const GedaObject *object)
   y2 = object->line->y[1];
 
   buf = g_strdup_printf("%c %d %d %d %d %d %d", object->type,
-          x1, y1, x2, y2, object->color, object->bus_ripper_direction);
+          x1, y1, x2, y2, geda_object_get_color (object), object->bus_ripper_direction);
   return(buf);
 }
 

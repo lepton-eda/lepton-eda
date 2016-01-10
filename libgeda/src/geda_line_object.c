@@ -467,7 +467,7 @@ geda_line_object_to_buffer (const GedaObject *object)
   line_space = object->line_space;
 
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d", object->type,
-			x1, y1, x2, y2, object->color,
+			x1, y1, x2, y2, geda_object_get_color (object),
 			line_width, line_end, line_type,
 			line_length, line_space);
 

@@ -504,7 +504,7 @@ eda_renderer_default_draw (EdaRenderer *renderer, OBJECT *object)
     g_return_if_reached ();
   }
 
-  eda_renderer_set_color (renderer, object->color);
+  eda_renderer_set_color (renderer, geda_object_get_color (object));
   draw_func (renderer, object);
 }
 
@@ -538,7 +538,7 @@ eda_renderer_is_drawable_color (EdaRenderer *renderer, int color,
 static int
 eda_renderer_is_drawable (EdaRenderer *renderer, OBJECT *object)
 {
-  int color = object->color;
+  int color = geda_object_get_color (object);
   /* Always attempt to draw complex objects */
   if ((object->type == OBJ_COMPLEX) || (object->type == OBJ_PLACEHOLDER)) {
     return TRUE;

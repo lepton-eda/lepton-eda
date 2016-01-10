@@ -112,6 +112,9 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
                                       gint *rright,
                                       gint *rbottom);
 
+gint
+geda_object_get_color (const GedaObject *object);
+
 gboolean
 geda_object_get_position (const GedaObject *object, gint *x, gint *y);
 

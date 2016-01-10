@@ -653,7 +653,7 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
         (object->type == OBJ_LINE)   ||
         (object->type == OBJ_PATH)   ||
         (object->type == OBJ_TEXT))) {
-      color = object->color;
+      color = geda_object_get_color (object);
       break;
     }
   }
@@ -669,7 +669,7 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
         (object->type == OBJ_LINE)   ||
         (object->type == OBJ_PATH)   ||
         (object->type == OBJ_TEXT))) {
-      if (color != object->color) {
+      if (color != geda_object_get_color (object)) {
         color = MULTIPLE_VALUES;
         break;
       }
@@ -793,7 +793,7 @@ gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter)
     OBJECT* object = (OBJECT *) iter->data;
     iter = g_list_next (iter);
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
-      color = object->color;
+      color = geda_object_get_color (object);
       break;
     }
   }
@@ -803,7 +803,7 @@ gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     OBJECT* object = (OBJECT *) iter->data;
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
-      if (color != object->color) {
+      if (color != geda_object_get_color (object)) {
         color = MULTIPLE_VALUES;
         break;
       }

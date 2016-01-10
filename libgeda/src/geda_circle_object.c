@@ -422,7 +422,7 @@ geda_circle_object_to_buffer (const GedaObject *object)
   pitch2       = object->fill_pitch2;
 
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
-			object->type, x, y, radius, object->color,
+			object->type, x, y, radius, geda_object_get_color (object),
 			circle_width, circle_end, circle_type, circle_length,
 			circle_space, circle_fill,
 			fill_width, angle1, pitch1, angle2, pitch2);

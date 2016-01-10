@@ -57,6 +57,24 @@
 /*! this is modified here and in o_list.c */
 int global_sid=0;
 
+
+/*! \brief Get the color index of the object
+ *
+ *  If this function fails, it returns the DEFAULT_COLOR.
+ *
+ *  \param [in] object the object to obtain the color of
+ *  \return the color index of the object
+ */
+gint
+geda_object_get_color (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, DEFAULT_COLOR);
+  g_return_val_if_fail (object->color >= 0, DEFAULT_COLOR);
+  g_return_val_if_fail (object->color < MAX_COLORS, DEFAULT_COLOR);
+
+  return object->color;
+}
+
 static OBJECT*
 s_basic_init_object (OBJECT *new_node, int type, char const *name);
 

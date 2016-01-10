@@ -720,7 +720,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
   picture = g_malloc(sizeof(PICTURE));
   new_node->picture = picture;
 
-  new_node->color = object->color;
+  new_node->color = geda_object_get_color (object);
   new_node->selectable = object->selectable;
 
   /* describe the picture with its upper left and lower right corner */

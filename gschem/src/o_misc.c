@@ -112,7 +112,7 @@ void o_lock(GschemToplevel *w_current)
       /* check to see if locked_color is already being used */
       if (object->locked_color == -1) {
         object->selectable = FALSE;
-        object->locked_color = object->color;
+        object->locked_color = geda_object_get_color (object);
         object->color = LOCK_COLOR;
         gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
       } else {

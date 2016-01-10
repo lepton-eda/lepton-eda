@@ -248,7 +248,7 @@ geda_pin_object_to_buffer (const GedaObject *object)
                             object->line->y[0],
                             object->line->x[1],
                             object->line->y[1],
-                            object->color,
+                            geda_object_get_color (object),
                             object->pin_type,
                             object->whichend);
 

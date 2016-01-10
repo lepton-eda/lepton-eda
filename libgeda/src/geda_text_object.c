@@ -436,7 +436,7 @@ geda_text_object_to_buffer (const GedaObject *object)
   num_lines = o_text_num_lines(string);
 
   buf = g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d\n%s", object->type,
-                         x, y, object->color, size,
+                         x, y, geda_object_get_color (object), size,
                          geda_object_get_visible (object),
                          object->show_name_value, object->text->angle,
                          object->text->alignment, num_lines, string);

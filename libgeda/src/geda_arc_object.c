@@ -482,7 +482,7 @@ geda_arc_object_to_buffer (const GedaObject *object)
 
   /* Describe a circle with post-20000704 file format */
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d", object->type,
-			x, y, radius, start_angle, sweep_angle, object->color,
+			x, y, radius, start_angle, sweep_angle, geda_object_get_color (object),
 			arc_width, arc_end, arc_type, arc_length, arc_space);
 
   return(buf);

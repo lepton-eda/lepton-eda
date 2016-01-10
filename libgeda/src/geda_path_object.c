@@ -291,7 +291,7 @@ geda_path_object_to_buffer (const GedaObject *object)
   path_string = s_path_string_from_path (object->path);
   num_lines = o_text_num_lines (path_string);
   buf = g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d %d %d %d\n%s",
-                         object->type, object->color, line_width, line_end,
+                         object->type, geda_object_get_color (object), line_width, line_end,
                          line_type, line_length, line_space, fill_type,
                          fill_width, angle1, pitch1, angle2, pitch2,
                          num_lines, path_string);
