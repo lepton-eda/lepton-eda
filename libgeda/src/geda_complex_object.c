@@ -629,34 +629,41 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
  *  This function takes a complex \a object and return a string
  *  according to the file format definition.
  *
+ *  On failure, this function returns NULL.
+ *
  *  \param [in] object  a complex OBJECT
  *  \return the string representation of the complex OBJECT
  */
 gchar*
 geda_complex_object_to_buffer (const GedaObject *object)
 {
-  int selectable;
-  char *buf = NULL;
-  char *basename;
+  gchar *basename;
+  gchar *buffer;
 
   g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->complex != NULL, NULL);
+  g_return_val_if_fail ((object->type == OBJ_COMPLEX) ||
+                        (object->type == OBJ_PLACEHOLDER), NULL);
 
-  selectable = geda_object_get_selectable (object);
+  basename = g_strdup_printf ("%s%s",
+                              object->complex_embedded ? "EMBEDDED" : "",
+                              object->complex_basename);
 
-  if ((object->type == OBJ_COMPLEX) || (object->type == OBJ_PLACEHOLDER)) {
-    basename = g_strdup_printf ("%s%s",
-				object->complex_embedded ? "EMBEDDED" : "",
-				object->complex_basename);
-    /* We force the object type to be output as OBJ_COMPLEX for both
-     * these object types. */
-    buf = g_strdup_printf("%c %d %d %d %d %d %s", OBJ_COMPLEX,
-                          object->complex->x, object->complex->y,
-                          selectable, object->complex->angle,
-                          object->complex->mirror, basename);
-    g_free (basename);
-  }
+  /* We force the object type to be output as OBJ_COMPLEX for both these object
+   * types.
+   */
+  buffer = g_strdup_printf ("%c %d %d %d %d %d %s",
+                            OBJ_COMPLEX,
+                            object->complex->x,
+                            object->complex->y,
+                            geda_object_get_selectable (object),
+                            object->complex->angle,
+                            object->complex->mirror,
+                            basename);
 
-  return(buf);
+  g_free (basename);
+
+  return buffer;
 }
 
 /*! \brief move a complex object
