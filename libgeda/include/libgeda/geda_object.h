@@ -65,9 +65,6 @@ struct st_object
   int dont_redraw;			/* Flag to skip redrawing */
   int selectable;			/* object selectable flag */
   int selected;				/* object selected flag */
-  int locked_color; 			/* Locked color (used to save */
-  /* the object's real color */
-  /* when the object is locked) */
 
   /* controls which direction bus rippers go */
   /* it is either 0 for un-inited, */

@@ -1274,7 +1274,6 @@ s_basic_init_object (OBJECT *new_node, int type, char const *name)
   new_node->dont_redraw = FALSE;
   new_node->selectable = TRUE;
   new_node->selected = FALSE;
-  new_node->locked_color = -1;
 
   new_node->bus_ripper_direction = 0;
 
