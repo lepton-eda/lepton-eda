@@ -2,7 +2,7 @@
  *
  *  Convert a Viewlogic symbol/schematic to gEDA gschem format
  *
- *  accept one argument, the name of the file to 
+ *  accept one argument, the name of the file to
  *  convert, converted output is displayed on stdout.
  *
  *     Copyright (C) 1999-2010  Mike Jarabek
@@ -18,22 +18,22 @@
  *       - Mapped ViewDraw "SIGNAL" attribute to gEDA "net" attribute
  *       - Mapped ViewDraw "HETERO" attribute to a new "split" attribute
  *       - Mapped ViewDraw "PINTYPE" attributes to correct gEDA pintypes
- *   
+ *
  *   This program is free software; you can redistribute it and/or
  *   modify it under the terms of the GNU General Public License
  *   as published by the Free Software Foundation; either version 2
  *   of the License, or (at your option) any later version.
- *   
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- *   
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- * 	$Id$	 
+ * 	$Id$
  */
 
 #include <stdio.h>
@@ -44,7 +44,7 @@
 #include <math.h>
 
 #include <config.h>
-#include <libgeda/colors.h>
+#include <libgeda/libgeda.h>
 
 /*
  * make it so we can use __attribute__((unused)) on gcc without
@@ -75,11 +75,6 @@ extern int optind;
 #define MAX_POINTS       1024
 
 /* gEDA style enumerators */
-typedef enum {END_NONE, END_SQUARE, END_ROUND} OBJECT_END;
-typedef enum {TYPE_SOLID, TYPE_DOTTED, TYPE_DASHED, TYPE_CENTER,
-              TYPE_PHANTOM, TYPE_ERASE} OBJECT_TYPE;
-typedef enum {FILLING_HOLLOW, FILLING_FILL, FILLING_MESH, FILLING_HATCH,
-              FILLING_VOID} OBJECT_FILLING;
 typedef enum {NORMAL_PIN, BUS_PIN} OBJECT_PINTYPE;
 
 /* Viewdraw Colours
@@ -158,8 +153,8 @@ struct FillStyle {
 };
 
 /* index is ViewDraw fill style, entry is above gEDA FillStyle struct */
-struct FillStyle fillmap[26] = 
-{  
+struct FillStyle fillmap[26] =
+{
   /* 0  = Hollow, no fill */
   {FILLING_HOLLOW, -1,  -1, -1,  -1, -1},
   /* 1  = Solid, full fill */
@@ -225,8 +220,8 @@ struct LineStyle {
   int line_dashspace;         /* space between line dashes */
 };
 
-struct LineStyle linemap[8] = 
-{  
+struct LineStyle linemap[8] =
+{
   /* 0 = Solid */
   {0, END_NONE, TYPE_SOLID,    -1,  -1},
   /* 1 = Dash */
@@ -259,7 +254,7 @@ struct Translation {
 #define KILL             2
 #define WARN_USER        3
 
-struct Translation translations[] = 
+struct Translation translations[] =
 {
   {"PKG_TYPE", "footprint", REPLACE_NAME},
   {"LEVEL",    "",          KILL},
@@ -278,7 +273,7 @@ unsigned int strindex(char *s, char c);
 unsigned int strrindex(char *s, char c);
 void         strtolower(char *s);
 int get_continued_string(char *buf, size_t buffer_size, FILE *fp);
-int get_style(FILE *fp, unsigned int *colour, 
+int get_style(FILE *fp, unsigned int *colour,
 	      struct LineStyle *linestyle,
 	      struct FillStyle *fillstyle);
 void set_orientation(int *angle, int *mirror, int orientation);
@@ -303,10 +298,10 @@ void do_instance(FILE *fp);
 
 /* output objects */
 void text_object(int x, int y, unsigned int color, unsigned int size,
-		 unsigned int visibility, unsigned int show_name_value, 
+		 unsigned int visibility, unsigned int show_name_value,
 		 int angle, char *text, unsigned int origin);
 void attribute_object(int x, int y, unsigned int color, unsigned int  size,
-		      unsigned int visibility, unsigned int show_name_value, 
+		      unsigned int visibility, unsigned int show_name_value,
 		      int angle, char *name, char *value, unsigned int origin);
 void line_object(int x1, int y1, int x2, int y2, unsigned int color,
                  struct LineStyle *linestyle);
@@ -317,13 +312,13 @@ void pin_object(int x1, int y1, int x2, int y2, unsigned int color,
 void box_object(int x1, int y1, unsigned int width, unsigned int height,
 		unsigned int color, struct LineStyle *linestyle,
                 struct FillStyle *fillstyle);
-void arc_object(int x1, int y1, unsigned int radius, 
+void arc_object(int x1, int y1, unsigned int radius,
 		int start_angle, int sweep_angle, unsigned int color,
                 struct LineStyle *linestyle);
 void net_segment(int x1, int y1, int x2, int y2, unsigned int color);
 void bus_segment(int x1, int y1, int x2, int y2, unsigned int color,
                  int ripperdir);
-void complex_object(int x, int y, unsigned int selectable, 
+void complex_object(int x, int y, unsigned int selectable,
 	       int angle, unsigned int mirror, char *name);
 void begin_attach(void);
 void end_attach(void);
@@ -384,7 +379,7 @@ main(int argc, char **argv)
     case 's':
       symbol_mode = 1;
       break;
-*/      
+*/
     case '?':
     case 'h':
     default:
@@ -433,10 +428,10 @@ convert_file(FILE *fp)
     {
       switch(c) /* branch to appropriate handler */
 	{
-	case 'D': 
+	case 'D':
 	  do_bounding_box(fp);
 	  break;
-	    
+
 	case 'U':
 	  do_unattached_attribute(fp);
 	  break;
@@ -486,7 +481,7 @@ convert_file(FILE *fp)
 	case 'B':
 	  do_net_segment_bus(fp);
 	  break;
-	
+
 	case 'I':
 	  do_instance(fp);
 	  break;
@@ -496,7 +491,7 @@ convert_file(FILE *fp)
 	case 'Z':
 	  do_nop(fp);
 	  break;
-	
+
 	case 'Q':
 	  fprintf(stderr,"Warning 'Q' record found and not handled at"
 		  "record %d, contact maintainer\n",records_processed);
@@ -593,11 +588,11 @@ do_unattached_attribute(FILE *fp)
   reset_attributes();
 
   /* for the moment just represent as text */
-  
+
   /* viewlogic unnatached attributes have this format:
    * U #X #Y #SIZE #ROTATION #origin #Visibility ATTR_TEXT
    */
-  if(fscanf(fp,"%d %d %u %d %u %u", &x, &y, &size, &angle, &origin, 
+  if(fscanf(fp,"%d %d %u %d %u %u", &x, &y, &size, &angle, &origin,
 	    &viewvis) != 6)
     {
       fprintf(stderr,"Error: Invalid Unattached attribute record #%d "
@@ -640,7 +635,7 @@ do_unattached_attribute(FILE *fp)
       visibility = 1;
       show_name_value = 1;
       break;
-      
+
     default:
       fprintf(stderr,"Error: Invalid visibility value %d in "
 	      "viewlogic file at record #%d in function %s()\n",
@@ -678,11 +673,11 @@ do_attached_attribute(FILE *fp)
   struct FillStyle fillstyle;
 
   /* for the moment just represent as text */
-  
+
   /* attached attributes have the following format:
    *    A #X #Y #SIZE #ROTATION #ORIGIN #VISIBILITY ATTR_TEXT
    */
-  if(fscanf(fp,"%d %d %u %d %u %u", &x, &y, &size, &angle, &origin, 
+  if(fscanf(fp,"%d %d %u %d %u %u", &x, &y, &size, &angle, &origin,
             &viewvis) != 6)
   {
     fprintf(stderr,"Error: Invalid attached attribute record #%d"
@@ -723,7 +718,7 @@ do_attached_attribute(FILE *fp)
       visibility = 1;
       show_name_value = 1;
       break;
-      
+
     default:
       fprintf(stderr,"Error: Invalid visibility value %d in "
 	      "viewlogic file at record #%d, in function %s()\n",
@@ -733,7 +728,7 @@ do_attached_attribute(FILE *fp)
 
   begin_attach();
   if(pin_attributes) /* are we adding to a pin ? */
-  {   
+  {
     /* translate pintype attribute */
     if (strncmp(text, "PINTYPE=", 8) == 0)
     {
@@ -840,7 +835,7 @@ do_attached_attribute(FILE *fp)
       value = &text[index+1];
       attribute_object( x, y, color, size, visibility, show_name_value,
                         angle, name, value, origin );
-      
+
 #ifdef HAVE_SNPRINTF
       snprintf(text, MAX_TEXTLEN, "pinnumber=%s", &text2[2]);
 #else
@@ -848,8 +843,8 @@ do_attached_attribute(FILE *fp)
 #endif
       /* pinnumber is visible */
       visibility = 1;         /* overide any previous settings */
-      show_name_value = 1; 
-  
+      show_name_value = 1;
+
       name = text;
       index = strindex(text,'=');
       text[index] = 0;
@@ -861,7 +856,7 @@ do_attached_attribute(FILE *fp)
       return;
     }
   }
-  
+
   name = text;
   index = strindex(text,'=');
   if (text[index] == '=')
@@ -873,12 +868,12 @@ do_attached_attribute(FILE *fp)
   {
     value = NULL;
   }
-  
+
   attribute_object( x, y, color, size, visibility, show_name_value, angle,
                     name, value, origin );
 }
 
-void 
+void
 do_text(FILE *fp)
 {
   int x,y,angle;
@@ -889,14 +884,14 @@ do_text(FILE *fp)
   struct LineStyle linestyle;
   struct FillStyle fillstyle;
 
-  
+
   /* if we are inside of a pin definition, terminate */
   reset_attributes();
 
   /* viewlogic text have the following format:
    *  T #X #Y #SIZE #ROTATION #ORIGIN TEXT
    */
-  if(fscanf(fp,"%d %d %u %d %u",&x, &y, &size, &angle, 
+  if(fscanf(fp,"%d %d %u %d %u",&x, &y, &size, &angle,
 	    &origin) != 5)
     {
       fprintf(stderr,"Error: Invalid text record #%d in %s()\n",
@@ -931,13 +926,13 @@ do_line(FILE *fp)
   unsigned int pairs,color,i;
   struct LineStyle linestyle;
   struct FillStyle fillstyle;
-  
+
 
   /* if we are inside of a pin definition, terminate */
   reset_attributes();
 
-      
-  /* the viewlogic line primitive is composed of 
+
+  /* the viewlogic line primitive is composed of
    *         l #PAIRS #X1 #Y1 #X2 #Y2 ...   - Line
    */
 
@@ -950,7 +945,7 @@ do_line(FILE *fp)
     }
 
   /* scan in all the co-ordinate pairs and pop them into our array */
-  for (i=0; i < pairs; i++) 
+  for (i=0; i < pairs; i++)
     {
       if(fscanf(fp,"%d %d", &x[i], &y[i]) != 2)
 	{
@@ -959,7 +954,7 @@ do_line(FILE *fp)
 		  i+1, records_processed, __func__);
 	  exit(1);
 	}
-	  
+
       x[i] *= scale;
       y[i] *= scale;
     }
@@ -981,7 +976,7 @@ do_line(FILE *fp)
 }
 
 
-void 
+void
 do_pin(FILE *fp)
 {
   unsigned int pindir, pinsense, color;
@@ -996,19 +991,19 @@ do_pin(FILE *fp)
 
   /* if we are inside of a pin definition, terminate */
   reset_attributes();
-      
+
   /* viewlogic pin primitives have the following format:
    *  P #PININSTANCE #X1 #Y1 #X2 #Y2 # #PINDIRECTION #PINSENSE
    */
 
-  if(fscanf(fp,"%*d %d %d %d %d %*d %u %u\n",&x1, &y1, &x2, &y2, 
+  if(fscanf(fp,"%*d %d %d %d %d %*d %u %u\n",&x1, &y1, &x2, &y2,
 	    &pindir, &pinsense) != 6)
     {
       fprintf(stderr,"Error:Invalid pin record #%d in %s()\n",
 	      records_processed, __func__);
       exit(1);
     }
-	
+
   x1 *= scale;
   y1 *= scale;
   x2 *= scale;
@@ -1125,7 +1120,7 @@ do_pin(FILE *fp)
 
 }
 
-void 
+void
 do_box(FILE *fp)
 {
   int x1, y1, x2, y2, width, height;
@@ -1133,7 +1128,7 @@ do_box(FILE *fp)
   struct LineStyle linestyle;
   struct FillStyle fillstyle;
 
-  
+
   /* if we are inside of a pin definition, terminate */
   reset_attributes();
 
@@ -1184,7 +1179,7 @@ do_circle(FILE *fp)
 	      records_processed, __func__);
       exit(1);
     }
-  
+
   x *= scale;
   y *= scale;
   radius *=  scale;
@@ -1197,12 +1192,12 @@ do_circle(FILE *fp)
   circle_object(x,y,radius,color,&linestyle,&fillstyle);
 }
 
-void 
+void
 do_arc(FILE *fp)
 {
   int x1, y1, x2, y2, x3, y3;
   unsigned int color;
-  double x2p, y2p, x3p, y3p, yop, xop, xo, yo; 
+  double x2p, y2p, x3p, y3p, yop, xop, xo, yo;
   double to_rad;
   double gstart, sweep_angle, start_angle, end_angle;
   double radius;
@@ -1218,14 +1213,14 @@ do_arc(FILE *fp)
    *   center, radius, start angle, stop angle.
    */
 
-  if(fscanf(fp,"%d %d %d %d %d %d\n", 
+  if(fscanf(fp,"%d %d %d %d %d %d\n",
 	    &x1, &y1, &x2, &y2, &x3, &y3) != 6)
     {
       fprintf(stderr,"Error: Invalid arc record #%d, in %s()\n",
 	      records_processed, __func__);
       exit(1);
     }
-      
+
   x1 *= scale;
   y1 *= scale;
   x2 *= scale;
@@ -1253,8 +1248,8 @@ do_arc(FILE *fp)
       line_object(x2,y2,x3,y3,color,&linestyle);
       return;
     }
-      
-  yop = ((x2p * ( x3p*x3p + y3p*y3p ) - x3p * ( x2p*x2p + y2p*y2p )) / 
+
+  yop = ((x2p * ( x3p*x3p + y3p*y3p ) - x3p * ( x2p*x2p + y2p*y2p )) /
 	 (2 * (x2p * y3p - y2p * x3p)));
 
   xop = (x2p*x2p - 2*y2p*yop) / (2 * x2p);
@@ -1274,25 +1269,25 @@ do_arc(FILE *fp)
     {
       gstart = end_angle;
       sweep_angle = start_angle - end_angle;
-    } 
-  else 
+    }
+  else
     {
       gstart = start_angle;
       sweep_angle = end_angle - start_angle;
     }
 
-  /* end_angle   = 
+  /* end_angle   =
    * end_angle   = int(atan2(y1-yo, x1-xo) * to_rad) % 360;
    * start_angle = int(atan2(y3-yo, x3-xo) * to_rad) % 360;
    */
 
-  
+
   arc_object((int)xo,(int)yo, (unsigned int)radius,
 	     (int)gstart,(int)sweep_angle, color, &linestyle);
 
 }
 
-void 
+void
 do_label(FILE *fp)
 {
   int x, y, angle, global, overbar;
@@ -1379,18 +1374,18 @@ do_label(FILE *fp)
 }
 
 /* four functions for doing net stuff */
-void 
+void
 do_net_start(FILE *fp)
 {
   reset_attributes();
 
   fscanf(fp,"%*d\n");  /* just dispose of the net instance number */
-      
+
   reading_net = 1;
   segment_count = 1;
 }
 
-void 
+void
 do_net_node(FILE *fp)
 {
   int x,y,type;
@@ -1447,11 +1442,11 @@ do_net_segment(FILE *fp)
 	      records_processed, __func__);
       exit(1);
     }
-      
+
   color = NET_COLOR;
 
   /* output a geda net segment */
-  net_segment(net_nodes_x[n1], net_nodes_y[n1], 
+  net_segment(net_nodes_x[n1], net_nodes_y[n1],
 	      net_nodes_x[n2], net_nodes_y[n2], color);
 
   /* there could be attributes to follow */
@@ -1485,7 +1480,7 @@ do_net_segment_bus(FILE *fp)
   ripperdir = 0;
 
   /* output a geda bus segment */
-  bus_segment(net_nodes_x[n1], net_nodes_y[n1], 
+  bus_segment(net_nodes_x[n1], net_nodes_y[n1],
 	      net_nodes_x[n2], net_nodes_y[n2], color, ripperdir);
 
   /* there could be attributes to follow */
@@ -1494,7 +1489,7 @@ do_net_segment_bus(FILE *fp)
   net_attributes = 1;   /* and that they are net attributes */
 }
 
-void 
+void
 do_instance(FILE *fp)
 {
   char text[MAX_TEXTLEN];
@@ -1541,7 +1536,7 @@ do_instance(FILE *fp)
             records_processed, __func__, lib,name,extension, x, y);
     exit(1);
   }
-      
+
   x *= scale;
   y *= scale;
 
@@ -1550,7 +1545,7 @@ do_instance(FILE *fp)
 
   /* Correct orientation */
   set_orientation(&angle, &mirror, orientation);
-      
+
   /* fix case */
   strtolower(name);
 
@@ -1578,9 +1573,9 @@ do_instance(FILE *fp)
 /* ViewDraw mirrors components over the x-axis, but gSchem mirrors over the */
 /* y-axis. */
 /* This makes (270, 1) viewlogic -> (90, 1) gschem */
-/*        and (90, 1)  viewlogic -> (270, 1) gschem */ 
-/*        and (180, 1)  viewlogic -> (0, 1) gschem */ 
-/*        and (0, 1)  viewlogic -> (180, 1) gschem */ 
+/*        and (90, 1)  viewlogic -> (270, 1) gschem */
+/*        and (180, 1)  viewlogic -> (0, 1) gschem */
+/*        and (0, 1)  viewlogic -> (180, 1) gschem */
 void
 set_orientation(int *angle, int *mirror, int orientation)
 {
@@ -1627,12 +1622,12 @@ set_orientation(int *angle, int *mirror, int orientation)
 /* output a geda text object */
 void
 text_object(int x, int y, unsigned int color, unsigned int size,
-	    unsigned int visibility, unsigned int show_name_value, 
+	    unsigned int visibility, unsigned int show_name_value,
 	    int angle, char *text, unsigned int origin)
 {
   unsigned int text_size;
 #if 0
-  unsigned int textlen; 
+  unsigned int textlen;
 #endif
   unsigned int numlines;
 
@@ -1662,16 +1657,16 @@ text_object(int x, int y, unsigned int color, unsigned int size,
   /* by gEDA */
 #if 0
   /* emulate the viewdraw text origin by shifting the text around */
-  
+
   /* if the origin is one of the ones that are along the center line,
    * adjust y
    */
-  if ( (origin == 2) || (origin == 5) || (origin == 8) ) 
+  if ( (origin == 2) || (origin == 5) || (origin == 8) )
     {
       y -= (size * scale) / 2;
     }
 
-  if( (origin == 1) || (origin == 4) || (origin == 7) ) 
+  if( (origin == 1) || (origin == 4) || (origin == 7) )
     {
       y -= size * scale;
     }
@@ -1683,17 +1678,17 @@ text_object(int x, int y, unsigned int color, unsigned int size,
     case 0:   /* measure whole text length */
       textlen = GetStringDisplayLength(text,text_size);
       break;
-  
+
     case 1:   /* measure just the value part */
       textlen = GetStringDisplayLength(&text[strindex(text,'=') + 1],
 				       text_size);
       break;
 
     case 2:   /* measure just the name part */
-      textlen = GetStringDisplayLength(text, text_size) 
+      textlen = GetStringDisplayLength(text, text_size)
 	- GetStringDisplayLength(&text[strindex(text,'=')],text_size);
       break;
-      
+
     default:
       fprintf(stderr,"Error: invalid show_name_value: %d at record #%d, "
 	      "in %s()\n",
@@ -1704,7 +1699,7 @@ text_object(int x, int y, unsigned int color, unsigned int size,
   /* if the origin is one of the middle ones
    * fix the x coordinate
    */
-  if( (origin == 4) || (origin == 5) || (origin == 6) ) 
+  if( (origin == 4) || (origin == 5) || (origin == 6) )
     {
       x -= textlen / 2;
     }
@@ -1760,7 +1755,7 @@ text_object(int x, int y, unsigned int color, unsigned int size,
   /* always 1 */
   numlines = 1;
 
-  printf( "T %d %d %u %u %u %u %d %u %u\n%s\n", x, y, color, text_size, 
+  printf( "T %d %d %u %u %u %u %d %u %u\n%s\n", x, y, color, text_size,
 	  visibility, show_name_value, angle, origin, numlines, text);
 
 }
@@ -1768,8 +1763,8 @@ text_object(int x, int y, unsigned int color, unsigned int size,
 
 void
 attribute_object(int x, int y, unsigned int color, unsigned int  size,
-		 unsigned int visibility, unsigned int show_name_value, 
-		 int angle, char *name, char *value, unsigned int origin) 
+		 unsigned int visibility, unsigned int show_name_value,
+		 int angle, char *name, char *value, unsigned int origin)
 {
 
   char text[MAX_TEXTLEN], text2[MAX_TEXTLEN];
@@ -1786,9 +1781,9 @@ attribute_object(int x, int y, unsigned int color, unsigned int  size,
     strncpy(tmpValue, value, MAX_TEXTLEN-1);
     tmpValue[MAX_TEXTLEN-1] = 0;   /* terminate in case strncpy doesnt */
   }
-  
+
   /* look up attribute name in translation attribute list
-   * and translate or print approprate message 
+   * and translate or print approprate message
    */
   done = 0;
   for(i=0; (i<nTranslations) && !done; i++)
@@ -1893,12 +1888,12 @@ attribute_object(int x, int y, unsigned int color, unsigned int  size,
   /* just add an = into the middle */
 #ifdef HAVE_SNPRINTF
   snprintf(text, MAX_TEXTLEN, "%s=%s", tmpName, tmpValue);
-#else  
+#else
   sprintf(text, "%s=%s", tmpName, tmpValue);
 #endif
 
   text_object( x, y, color, size, visibility, show_name_value, \
-	       angle, text, origin); 
+	       angle, text, origin);
 
 }
 
@@ -1916,7 +1911,7 @@ line_object(int x1, int y1, int x2, int y2, unsigned int color,
 void
 circle_object(int bx, int by, unsigned int radius, unsigned int bcolor,
               struct LineStyle *linestyle, struct FillStyle *fillstyle)
-{  
+{
   printf("V %d %d %u %u %i %i %i %i %i %i %i %i %i %i %i\n",
          bx, by, radius, bcolor,
          linestyle->line_width, linestyle->line_capstyle,
@@ -1951,11 +1946,11 @@ box_object(int x1, int y1, unsigned int width, unsigned int height,
 }
 
 void
-arc_object(int x1, int y1, unsigned int radius, 
+arc_object(int x1, int y1, unsigned int radius,
 	   int start_angle, int sweep_angle, unsigned int color,
            struct LineStyle *linestyle)
 {
-  printf("A %d %d %u %d %d %u %i %i %i %i %i\n", x1, y1, radius, 
+  printf("A %d %d %u %d %d %u %i %i %i %i %i\n", x1, y1, radius,
 	 start_angle, sweep_angle, color,
          linestyle->line_width, linestyle->line_capstyle,
          linestyle->line_dashstyle, linestyle->line_dashlength,
@@ -1975,7 +1970,7 @@ bus_segment(int x1, int y1, int x2, int y2, unsigned int color, int ripperdir)
 }
 
 void
-complex_object(int x, int y, unsigned int selectable, 
+complex_object(int x, int y, unsigned int selectable,
 	       int angle, unsigned int mirror, char *name)
 {
   printf("C %d %d %u %d %u %s\n", x, y, selectable, angle, mirror, name);
@@ -1993,7 +1988,7 @@ begin_attach(void)
 }
 
 void
-end_attach(void) 
+end_attach(void)
 {
   printf("}\n");
 }
@@ -2021,9 +2016,9 @@ reset_attributes(void)
 }
 
 /* read a string possibly containing continuation characters
- * from the given stream 
+ * from the given stream
  */
-int 
+int
 get_continued_string(char *buf, size_t buffer_size, FILE *fp)
 {
   int c;
@@ -2032,7 +2027,7 @@ get_continued_string(char *buf, size_t buffer_size, FILE *fp)
   /* skip leading whitespace */
   while(isspace((c=fgetc(fp))));
   ungetc(c,fp);  /* push back last char, cause it's not whitespace */
-  
+
   /* read in the text */
   fgets(buf, buffer_size, fp);
   records_processed++;
@@ -2068,7 +2063,7 @@ get_continued_string(char *buf, size_t buffer_size, FILE *fp)
 }
 
 /* read in a possible style record to modify the current style */
-int get_style(FILE *fp, unsigned int *colour, 
+int get_style(FILE *fp, unsigned int *colour,
 	      struct LineStyle *linestyle,
 	      struct FillStyle *fillstyle)
 {
@@ -2093,7 +2088,7 @@ int get_style(FILE *fp, unsigned int *colour,
 		  *colour,records_processed, __func__);
 	  exit(1);
 	}
-      *colour = colormap[*colour]; 
+      *colour = colormap[*colour];
 
       /* re-map vdfillstyle to gEDA FillStyle */
       if (vdfillstyle > 25)
@@ -2140,10 +2135,10 @@ strindex(char *s, char c)
   return 0;
 }
 
-/* return the index of the last occurance of character c in 
+/* return the index of the last occurance of character c in
  * the string pointed to by s
  */
-unsigned int 
+unsigned int
 strrindex(char *s, char c)
 {
   char *p;

@@ -36,7 +36,7 @@
 #include <getopt.h>
 #endif
 
-#include <libgeda/colors.h>
+#include <libgeda/libgeda.h>
 
 /*
  *  command line options
@@ -54,7 +54,7 @@ int scale = DEFAULT_SCALE;
 /*
  *  orcad
  */
-#define GET_TAG(VAL) (VAL & 0x0F) 
+#define GET_TAG(VAL) (VAL & 0x0F)
 
 int CONV16(char *base,int offset)
 {
@@ -173,7 +173,7 @@ void parse_header(int fd1,int fd2)
 	exit(1);
     }
 
-    length=CONV32(localbuf,BYTECOUNT);    
+    length=CONV32(localbuf,BYTECOUNT);
     fprintf(stderr,"length: %d\n",length);
 
     lseek(fd2,length+HDR_LEN,SEEK_SET);
@@ -186,7 +186,7 @@ void parse_titleblock(int fd)
     char localbuf[1000];
     char data[100];
     char pagesize;
-	
+
     size = read_block(fd,localbuf,5,sizeof(localbuf));
     // fprintf(stderr,"\nTitleblock %d bytes\n",size);
 
@@ -237,11 +237,11 @@ void parse_component(int fd1,int fd2)
 
     char flags;
     char vis;
-	
+
     int pointer;
     FILE *cfp;
     char buff[128];
-	
+
     size = read_block(fd1,localbuf,29,sizeof(localbuf));
 
     x=CONV16(localbuf,0);
@@ -249,7 +249,7 @@ void parse_component(int fd1,int fd2)
 
     refx = CONVX(x + CONV16(localbuf,4));
     refy = CONVY(y + CONV16(localbuf,6));
-	
+
     valx = CONVX(x + CONV16(localbuf,8));
     valy = CONVY(y + CONV16(localbuf,10));
 
@@ -283,7 +283,7 @@ void parse_component(int fd1,int fd2)
  // fprintf(stderr,"Component %s: %s\n",refdes,partname);
     snprintf(filename,sizeof(filename),"%s-1.sym", partname);
     if (symbol_dir) {
-	snprintf(full_filename,sizeof(full_filename),"%s/%s", 
+	snprintf(full_filename,sizeof(full_filename),"%s/%s",
 					       symbol_dir, filename);
     } else {
 	snprintf(full_filename,sizeof(full_filename),"%s", filename);
@@ -295,7 +295,7 @@ void parse_component(int fd1,int fd2)
 	while (!feof(cfp)) {
 	  fgets(buff, 128, cfp);
 	  if (!strncmp(buff, "sarlacc_dim=", 12)) {
-	    sscanf(buff+12, "%d,%d,%d,%d", 
+	    sscanf(buff+12, "%d,%d,%d,%d",
 	    &sarlacc_xoffset,&sarlacc_yoffset,&sarlacc_xsize,&sarlacc_ysize);
 	  }
 	}
@@ -417,7 +417,7 @@ void parse_sheet (int fd)
     // fprintf(stderr,"Sheet %d bytes\n",size);
 
     x1=CONVX(CONV16(localbuf,0));
-    y1=CONVY(CONV16(localbuf,2));    
+    y1=CONVY(CONV16(localbuf,2));
 
     x2=CONV(CONV16(localbuf,4));
     y2=CONV(CONV16(localbuf,6));
@@ -449,7 +449,7 @@ void parse_sheet (int fd)
 		   "%s\n",x1,(y1-y2)-scale,ATTRIBUTE_COLOR,TEXTSIZE,filetext);
     fprintf(stdout,"}\n");
 }
-	
+
 static int pending_netlabel=0;
 static char netlabel[256];
 static int netlabel_x, netlabel_y, netlabel_angle;
@@ -467,7 +467,7 @@ static void wire_or_bus(int fd, char kind, int color)
     y1=CONVY(CONV16(localbuf,2));
 
     x2=CONVX(CONV16(localbuf,4));
-    y2=CONVY(CONV16(localbuf,6));                         
+    y2=CONVY(CONV16(localbuf,6));
     fprintf(stdout,"%c %d %d %d %d %d 0 0 0 -1 -1\n",kind,x1,y1,x2,y2,color);
     if (pending_netlabel) {
       fprintf(stdout,"{\n");
@@ -489,7 +489,7 @@ void parse_wire (int fd)
 void parse_bus (int fd)
 {
     wire_or_bus(fd, 'U', BUS_COLOR);
-}  
+}
 
 /*  BAD How do we handle junctions in GEDA? */
 /* 19990726 I think we don't need to worry
@@ -506,7 +506,7 @@ void parse_junction (int fd)
 /*
     x=CONVX(CONV16(localbuf,0));
     y=CONVY(CONV16(localbuf,2));
-    fprintf(stderr,"Junctions %d %d\n",x,y); 
+    fprintf(stderr,"Junctions %d %d\n",x,y);
 */
 
 }
@@ -549,7 +549,7 @@ void parse_port (int fd)
 		   "T %d %d %d 8 1 1 0 0\nvalue=%s\n"
 		   "}\n",x,y,GRAPHIC_COLOR,
 								      textbuf);
-}  
+}
 
 /* BAD Fix Labels attach to wire.  Multiline issues?*/
 /* Fix text sizing */
@@ -583,7 +583,7 @@ void parse_label (int fd)
     netlabel_x = x;
     netlabel_y = y;
     netlabel_angle = angle;
-}  
+}
 
 /* BAD Fix Entries */
 
@@ -615,7 +615,7 @@ void parse_dashed (int fd)
 
     x=CONVX(CONV16(localbuf,0));
     y=CONVY(CONV16(localbuf,2));
-    type=localbuf[4];                                    
+    type=localbuf[4];
 }
 
 /* BAD Fix power */
@@ -648,7 +648,7 @@ void parse_power (int fd)
     }
     switch(type & 0x03)
     {
-/*  BAD  GEDA only has bar and circle pix.  Also, they 
+/*  BAD  GEDA only has bar and circle pix.  Also, they
  *  All say VCC or VDD, which they should not */
 	case 0x02:
 		symbol = "vcc-orcad-bar-1.sym";break; /* BAR */
@@ -698,9 +698,9 @@ void parse_text (int fd)
     fprintf(stdout,"%s\n",textbuf);
 }
 
-/* BAD - Markers are unimplemented in gEDA (yet).  
+/* BAD - Markers are unimplemented in gEDA (yet).
  * They are the no-connects that you can place on pins to
- * exempt them from the connectivity checks in DRC/ERC 
+ * exempt them from the connectivity checks in DRC/ERC
  */
 
 void parse_marker (int fd)
@@ -767,8 +767,8 @@ int parse_block(int fd1,int fd2)
 	    exit(-1);
 	    break;
     }
-	
-		
+
+
     return 1;
 }
 
@@ -811,7 +811,7 @@ main(int argc, char **argv)
     {
 	goto usage;
     }
-	
+
     /* BAD update to latest file format.. */
     fprintf(stdout,"v %s\n",GEDAVERSION);
 
@@ -827,13 +827,13 @@ main(int argc, char **argv)
 	fprintf(stderr,"\n  Could not open input file part deux\n");
 	exit(-1);
     }
-	
+
     parse_header(fd1,fd2);
-	
+
     while(parse_block(fd1,fd2));
     fprintf(stderr,"\n Normal End\n");
 
-    return(0);    
+    return(0);
 }
 
 
