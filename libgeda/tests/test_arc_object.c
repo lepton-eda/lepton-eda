@@ -16,7 +16,6 @@ check_construction ()
     gint sweep_angle = g_test_rand_int_range (0, 360);
 
     GedaObject *object0 = geda_arc_object_new (toplevel,
-                                               OBJ_ARC,
                                                color,
                                                center_x,
                                                center_y,
@@ -70,7 +69,6 @@ check_accessors ()
     gint sweep_angle = g_test_rand_int_range (0, 360);
 
     GedaObject *object0 = geda_arc_object_new (toplevel,
-                                               OBJ_ARC,
                                                color,
                                                center_x,
                                                center_y,
@@ -128,7 +126,6 @@ check_serialization ()
     gint sweep_angle = g_test_rand_int_range (0, 360);
 
     GedaObject *object0 = geda_arc_object_new (toplevel,
-                                               OBJ_ARC,
                                                color,
                                                center_x,
                                                center_y,

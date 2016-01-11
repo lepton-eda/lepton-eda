@@ -29,42 +29,32 @@
 
 #include "libgeda_priv.h"
 
-/*! \brief
- *  \par Function Description
- *  The function creates a new OBJECT of type arc.
+/*! \brief create a new arc object
  *
- *  The arc is defined by its center in parameters x and y.
- *  The radius parameter specifies the radius of the arc. The start
- *  angle is given by start_angle and the sweep angle by sweep_angle.
  *  The line and fill type of the created arc are set to default.
- *
- *  All dimensions are in world unit, except start_angle and
- *  sweep_angle in degrees.
- *
- *  A new object of type OBJECT is allocated. Its type and color
- *  are initilized. The description of the arc characteristics
- *  are stored in a new ARC structure.
- *
- *  Now fixed for world coordinates.
- *
- *  \param [in] toplevel    The TOPLEVEL object.
- *  \param [in] type
- *  \param [in] color
- *  \param [in] x
- *  \param [in] y
- *  \param [in] radius
- *  \param [in] start_angle
- *  \param [in] sweep_angle
- *  \return
+*
+ *  \param [in] toplevel The TOPLEVEL object.
+ *  \param [in] color the color index of the arc
+ *  \param [in] center_x the x coordinate of the center
+ *  \param [in] center_y the y coordinate of the center
+ *  \param [in] radius the radius of the arc
+ *  \param [in] start_angle the starting angle in degrees
+ *  \param [in] sweep_angle the sweep angle in degrees
+ *  \return the new arc object
  */
-OBJECT*
-geda_arc_object_new (TOPLEVEL *toplevel, char type, int color, int x, int y,
-                     int radius, int start_angle, int sweep_angle)
+GedaObject*
+geda_arc_object_new (TOPLEVEL *toplevel,
+                     gint color,
+                     gint center_x,
+                     gint center_y,
+                     gint radius,
+                     gint start_angle,
+                     gint sweep_angle)
 {
 
-  OBJECT *new_node;
+  GedaObject *new_node;
 
-  new_node = s_basic_new_object(type, "arc");
+  new_node = s_basic_new_object (OBJ_ARC, "arc");
 
   new_node->color = color;
 
@@ -79,8 +69,8 @@ geda_arc_object_new (TOPLEVEL *toplevel, char type, int color, int x, int y,
    */
 
   /* World coordinates */
-  new_node->arc->x      = x;
-  new_node->arc->y      = y;
+  new_node->arc->x      = center_x;
+  new_node->arc->y      = center_y;
   new_node->arc->radius = radius;
 
   /* must check the sign of start_angle, sweep_angle ... */
@@ -124,11 +114,14 @@ geda_arc_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
 
-  new_obj = geda_arc_object_new (toplevel, OBJ_ARC, o_current->color,
-                                 o_current->arc->x, o_current->arc->y,
+  new_obj = geda_arc_object_new (toplevel,
+                                 o_current->color,
+                                 o_current->arc->x,
+                                 o_current->arc->y,
                                  o_current->arc->radius,
                                  o_current->arc->start_angle,
                                  o_current->arc->sweep_angle);
+
   o_set_line_options(toplevel, new_obj,
                      o_current->line_end, o_current->line_type,
                      o_current->line_width,
@@ -431,8 +424,14 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
   }
 
   /* Allocation and initialization */
-  new_obj = geda_arc_object_new (toplevel, OBJ_ARC, color,
-                                 x1, y1, radius, start_angle, sweep_angle);
+  new_obj = geda_arc_object_new (toplevel,
+                                 color,
+                                 x1,
+                                 y1,
+                                 radius,
+                                 start_angle,
+                                 sweep_angle);
+
   o_set_line_options(toplevel, new_obj,
                      arc_end, arc_type, arc_width, arc_length,
                      arc_space);

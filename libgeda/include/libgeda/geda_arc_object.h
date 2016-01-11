@@ -29,15 +29,14 @@
 
 /* construction, destruction */
 
-OBJECT*
+GedaObject*
 geda_arc_object_new (TOPLEVEL *toplevel,
-                     char type,
-                     int color,
-                     int x,
-                     int y,
-                     int radius,
-                     int start_angle,
-                     int sweep_angle);
+                     gint color,
+                     gint center_x,
+                     gint center_y,
+                     gint radius,
+                     gint start_angle,
+                     gint sweep_angle);
 
 OBJECT*
 geda_arc_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);

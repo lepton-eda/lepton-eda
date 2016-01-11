@@ -1172,11 +1172,15 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
 SCM_DEFINE (make_arc, "%make-arc", 0, 0, 0,
             (), "Create a new arc object.")
 {
-  OBJECT *obj = geda_arc_object_new (edascm_c_current_toplevel (),
-                                     OBJ_ARC, DEFAULT_COLOR,
-                                     0, 0, 1, 0, 0);
+  GedaObject *object = geda_arc_object_new (edascm_c_current_toplevel (),
+                                            DEFAULT_COLOR,
+                                            0,
+                                            0,
+                                            1,
+                                            0,
+                                            0);
 
-  SCM result = edascm_from_object (obj);
+  SCM result = edascm_from_object (object);
 
   /* At the moment, the only pointer to the object is owned by the
    * smob. */
