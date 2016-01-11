@@ -84,8 +84,14 @@ geda_arc_object_new (TOPLEVEL *toplevel,
   new_node->arc->sweep_angle = sweep_angle;
 
   /* Default init */
-  o_set_line_options(toplevel, new_node,
-                     DEFAULT_OBJECT_END, TYPE_SOLID, 0, -1, -1);
+  o_set_line_options (toplevel,
+                      new_node,
+                      DEFAULT_OBJECT_END,
+                      TYPE_SOLID,
+                      LINE_WIDTH,
+                      -1,
+                      -1);
+
   o_set_fill_options(toplevel, new_node,
                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
 

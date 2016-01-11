@@ -74,8 +74,14 @@ geda_box_object_new (TOPLEVEL *toplevel, char type, int color,
   box->lower_y = y2;
 
   /* line type and filling initialized to default */
-  o_set_line_options(toplevel, new_node,
-		     DEFAULT_OBJECT_END, TYPE_SOLID, 0, -1, -1);
+  o_set_line_options (toplevel,
+                      new_node,
+                      DEFAULT_OBJECT_END,
+                      TYPE_SOLID,
+                      LINE_WIDTH,
+                      -1,
+                      -1);
+
   o_set_fill_options(toplevel, new_node,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
 

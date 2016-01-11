@@ -78,7 +78,7 @@ geda_circle_object_new (TOPLEVEL *toplevel,
                       new_node,
                       DEFAULT_OBJECT_END,
                       TYPE_SOLID,
-                      0,
+                      LINE_WIDTH,
                       -1,
                       -1);
 

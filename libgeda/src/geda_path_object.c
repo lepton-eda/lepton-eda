@@ -101,8 +101,14 @@ geda_path_object_new_take_path (TOPLEVEL *toplevel,
   new_node->path  = path_data;
 
   /* path type and filling initialized to default */
-  o_set_line_options (toplevel, new_node,
-                      DEFAULT_OBJECT_END, TYPE_SOLID, 0, -1, -1);
+  o_set_line_options (toplevel,
+                      new_node,
+                      DEFAULT_OBJECT_END,
+                      TYPE_SOLID,
+                      LINE_WIDTH,
+                      -1,
+                      -1);
+
   o_set_fill_options (toplevel, new_node,
                       FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
