@@ -6,6 +6,7 @@ check_PROGRAMS = \
 	test_bounds \
 	test_box \
 	test_circle \
+	test_circle_object \
 	test_coord \
 	test_line \
 	test_point \
@@ -18,6 +19,7 @@ TESTS = \
 	test_bounds \
 	test_box \
 	test_circle \
+	test_circle_object \
 	test_coord \
 	test_line \
 	test_point \
