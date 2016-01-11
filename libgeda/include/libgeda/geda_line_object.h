@@ -26,14 +26,14 @@
 #define LINE_END2 1
 
 /* construction, destruction */
-OBJECT*
+
+GedaObject*
 geda_line_object_new (TOPLEVEL *toplevel,
-                      char type,
-                      int color,
-                      int x1,
-                      int y1,
-                      int x2,
-                      int y2);
+                      gint color,
+                      gint x1,
+                      gint y1,
+                      gint x2,
+                      gint y2);
 
 OBJECT*
 geda_line_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);

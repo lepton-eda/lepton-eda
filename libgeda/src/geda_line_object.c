@@ -57,14 +57,18 @@
  *  \param [in]     y2           Lower y coordinate.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT*
-geda_line_object_new (TOPLEVEL *toplevel, char type, int color,
-                      int x1, int y1, int x2, int y2)
+GedaObject*
+geda_line_object_new (TOPLEVEL *toplevel,
+                      gint color,
+                      gint x1,
+                      gint y1,
+                      gint x2,
+                      gint y2)
 {
   OBJECT *new_node;
 
   /* create the object */
-  new_node = s_basic_new_object(type, "line");
+  new_node = s_basic_new_object (OBJ_LINE, "line");
   new_node->color = color;
 
   new_node->line  = geda_line_new ();
@@ -76,10 +80,22 @@ geda_line_object_new (TOPLEVEL *toplevel, char type, int color,
   new_node->line->y[1] = y2;
 
   /* line type and filling initialized to default */
-  o_set_line_options(toplevel, new_node,
-		     DEFAULT_OBJECT_END, TYPE_SOLID, 0, -1, -1);
-  o_set_fill_options(toplevel, new_node,
-		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
+  o_set_line_options (toplevel,
+                      new_node,
+                      DEFAULT_OBJECT_END,
+                      TYPE_SOLID,
+                      0,
+                      -1,
+                      -1);
+
+  o_set_fill_options (toplevel,
+                      new_node,
+                      FILLING_HOLLOW,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1);
 
   /* compute bounding box */
   new_node->w_bounds_valid_for = NULL;
@@ -101,33 +117,33 @@ geda_line_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
 
-  /* A new line object is created with #geda_line_object_new().
-   * Values for its fields are default and need to be modified. */
-  new_obj = geda_line_object_new (toplevel, OBJ_LINE, o_current->color,
-                                  o_current->line->x[0], o_current->line->y[0],
-                                  o_current->line->x[1], o_current->line->y[1]);
-
-  /*
-   * The coordinates of the ends of the new line are set with the ones
-   * of the original line. The two lines have the sale line type and
-   * filling options.
-   */
+  new_obj = geda_line_object_new (toplevel,
+                                  o_current->color,
+                                  o_current->line->x[0],
+                                  o_current->line->y[0],
+                                  o_current->line->x[1],
+                                  o_current->line->y[1]);
 
   /* copy the line type and filling options */
-  o_set_line_options(toplevel, new_obj, o_current->line_end,
-		     o_current->line_type, o_current->line_width,
-		     o_current->line_length, o_current->line_space);
-  o_set_fill_options(toplevel, new_obj,
-		     o_current->fill_type, o_current->fill_width,
-		     o_current->fill_pitch1, o_current->fill_angle1,
-		     o_current->fill_pitch2, o_current->fill_angle2);
+  o_set_line_options (toplevel,
+                      new_obj,
+                      o_current->line_end,
+                      o_current->line_type,
+                      o_current->line_width,
+                      o_current->line_length,
+                      o_current->line_space);
 
-  /* calc the bounding box */
+  o_set_fill_options(toplevel,
+                     new_obj,
+                     o_current->fill_type,
+                     o_current->fill_width,
+                     o_current->fill_pitch1,
+                     o_current->fill_angle1,
+                     o_current->fill_pitch2,
+                     o_current->fill_angle2);
+
   o_current->w_bounds_valid_for = NULL;
 
-  /* new_obj->attribute = 0;*/
-
-  /* return the new tail of the object list */
   return new_obj;
 }
 
@@ -418,7 +434,13 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, const char buf[],
    * type is set according to the values of the fields on the line.
    */
   /* create and add the line to the list */
-  new_obj = geda_line_object_new (toplevel, type, color, x1, y1, x2, y2);
+  new_obj = geda_line_object_new (toplevel,
+                                  color,
+                                  x1,
+                                  y1,
+                                  x2,
+                                  y2);
+
   /* set its line options */
   o_set_line_options (toplevel, new_obj,
                       line_end, line_type, line_width, line_length,
