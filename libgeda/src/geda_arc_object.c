@@ -450,48 +450,39 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
 }
 
 /*! \brief create the string representation of an arc object
- *  \par Function Description
- *  This function formats a string in the buffer <B>*buf</B> to describe
- *  the arc object <B>*object</B>.
- *  A pointer to the new allocated and formated string is returned.
- *  The string must be freed at some point.
  *
- *  \param [in] object
+ *  This function converts the arc object to a string representation for
+ *  seiralization. The arc object only uses a single line.
+ *
+ *  The end of the returned string does not have a newline.
+ *
+ *  When no longer needed, free the returned string using g_free().
+ *
+ *  \param [in] object the arc object to convert to string representation
  *  \return the string representation of the arc object
  */
 gchar*
 geda_arc_object_to_buffer (const GedaObject *object)
 {
-  int x, y, radius, start_angle, sweep_angle;
-  int arc_width, arc_length, arc_space;
-  char *buf;
-  OBJECT_END arc_end;
-  OBJECT_TYPE arc_type;
-
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->arc != NULL, NULL);
   g_return_val_if_fail (object->type == OBJ_ARC, NULL);
 
-  /* radius, center and angles of the arc */
-  radius      = object->arc->radius;
-  x           = object->arc->x;
-  y           = object->arc->y;
-  start_angle = object->arc->start_angle;
-  sweep_angle = object->arc->sweep_angle;
-
-  /* line type parameters */
-  arc_width  = object->line_width;
-  arc_end    = object->line_end;
-  arc_type   = object->line_type;
-  arc_length = object->line_length;
-  arc_space  = object->line_space;
-
   /* Describe a circle with post-20000704 file format */
-  buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d", object->type,
-			x, y, radius, start_angle, sweep_angle, geda_object_get_color (object),
-			arc_width, arc_end, arc_type, arc_length, arc_space);
 
-  return(buf);
+  return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d %d",
+                          OBJ_ARC,
+                          geda_arc_object_get_center_x (object),
+                          geda_arc_object_get_center_y (object),
+                          geda_arc_object_get_radius (object),
+                          geda_arc_object_get_start_angle (object),
+                          geda_arc_object_get_sweep_angle (object),
+                          geda_object_get_color (object),
+                          object->line_width,
+                          object->line_end,
+                          object->line_type,
+                          object->line_length,
+                          object->line_space);
 }
 
 /*! \brief
