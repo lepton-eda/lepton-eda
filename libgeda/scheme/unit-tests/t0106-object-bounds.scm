@@ -13,10 +13,10 @@
     (assert-equal #f (object-bounds))
 
     ;; Single argument
-    (assert-equal '((0 . 1) . (1 . 0)) (object-bounds x))
+    (assert-equal '((-5 . 6) . (6 . -5)) (object-bounds x))
 
     ;; Multiple arguments
-    (assert-equal '((0 . 3) . (3 . 0)) (object-bounds x y))
+    (assert-equal '((-5 . 8) . (8 . -5)) (object-bounds x y))
 
     ;; Unfortunately, libgeda has no text renderer, so text never has
     ;; any bounds.  What a shame.
@@ -28,7 +28,7 @@
 
     ;; ... but they should get bounds when you add stuff to them.
     (component-append! C x)
-    (assert-equal '((0 . 1) . (1 . 0)) (object-bounds x))
+    (assert-equal '((-5 . 6) . (6 . -5)) (object-bounds x))
     ))
 
 (begin-test 'fold-bounds
@@ -46,7 +46,7 @@
     ;; > 1 argument
     (let ((a (object-bounds x))
           (b (object-bounds y)))
-      (assert-equal '((0 . 3) . (3 . 0))
+      (assert-equal '((-5 . 8) . (8 . -5))
                     (fold-bounds a b))
       (assert-equal a (fold-bounds #f a))
       (assert-equal a (fold-bounds a #f))
