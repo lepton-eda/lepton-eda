@@ -18,21 +18,21 @@
     (assert-equal a (path-insert! a -1 'lineto '(0 . 0)))
     (assert-equal 1 (path-length a))
     (assert-equal '(lineto (0 . 0)) (path-ref a 0))
-    (assert-equal '((0 . 0) . (0 . 0)) (object-bounds a))
+    (assert-equal '((-8 . 8) . (8 . -8)) (object-bounds a))
 
     ; Add a move to the start
     (assert-equal a (path-insert! a 0 'moveto '(1 . 0)))
     (assert-equal 2 (path-length a))
     (assert-equal '(moveto (1 . 0)) (path-ref a 0))
     (assert-equal '(lineto (0 . 0)) (path-ref a 1))
-    (assert-equal '((0 . 0) . (1 . 0)) (object-bounds a))
+    (assert-equal '((-8 . 8) . (9 . -8)) (object-bounds a))
 
     ; Remove the line
     (assert-equal a (path-remove! a 1))
     (assert-equal 1 (path-length a))
     (assert-thrown 'out-of-range (path-ref a 1))
     (assert-thrown 'out-of-range (path-remove! a 1))
-    (assert-equal '((1 . 0) . (1 . 0)) (object-bounds a))
+    (assert-equal '((-7 . 8) . (9 . -8)) (object-bounds a))
 
     ; Add a line, a curve and a closepath.
     (assert-equal a (path-insert! a -1 'lineto '(1 . 2)))
