@@ -47,35 +47,49 @@
  *  with #o_set_line_options() and #o_set_fill_options().
  *
  *  \param [in]     toplevel     The TOPLEVEL object.
- *  \param [in]     type         Must be OBJ_CIRCLE.
  *  \param [in]     color        Circle line color.
- *  \param [in]     x            Center x coordinate.
- *  \param [in]     y            Center y coordinate.
+ *  \param [in]     center_x     Center x coordinate.
+ *  \param [in]     center_y     Center y coordinate.
  *  \param [in]     radius       Radius of new circle.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT*
-geda_circle_object_new (TOPLEVEL *toplevel, char type, int color,
-                        int x, int y, int radius)
+GedaObject*
+geda_circle_object_new (TOPLEVEL *toplevel,
+                        gint color,
+                        gint center_x,
+                        gint center_y,
+                        gint radius)
 {
-  OBJECT *new_node;
+  GedaObject *new_node;
 
   /* create the object */
-  new_node = s_basic_new_object(type, "circle");
+  new_node = s_basic_new_object (OBJ_CIRCLE, "circle");
   new_node->color  = color;
 
   new_node->circle = geda_circle_new ();
 
   /* describe the circle with its center and radius */
-  new_node->circle->center_x = x;
-  new_node->circle->center_y = y;
+  new_node->circle->center_x = center_x;
+  new_node->circle->center_y = center_y;
   new_node->circle->radius   = radius;
 
   /* line type and filling initialized to default */
-  o_set_line_options(toplevel, new_node,
-		     DEFAULT_OBJECT_END, TYPE_SOLID, 0, -1, -1);
-  o_set_fill_options(toplevel, new_node,
-		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
+  o_set_line_options (toplevel,
+                      new_node,
+                      DEFAULT_OBJECT_END,
+                      TYPE_SOLID,
+                      0,
+                      -1,
+                      -1);
+
+  o_set_fill_options (toplevel,
+                      new_node,
+                      FILLING_HOLLOW,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1);
 
   /* compute the bounding box coords */
   new_node->w_bounds_valid_for = NULL;
@@ -99,7 +113,11 @@ geda_circle_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 
   /* A new circle object is created with #geda_circle_object_new().
    * Values for its fields are default and need to be modified. */
-  new_obj = geda_circle_object_new (toplevel, OBJ_CIRCLE, o_current->color, 0, 0, 0);
+  new_obj = geda_circle_object_new (toplevel,
+                                    o_current->color,
+                                    0,
+                                    0,
+                                    0);
 
   /*
    * The parameters of the new circle are set with the ones of the original
@@ -365,7 +383,8 @@ OBJECT *o_circle_read (TOPLEVEL *toplevel, const char buf[],
    * Its filling and line type are set according to the values of the field
    * on the line.
    */
-  new_obj = geda_circle_object_new (toplevel, type, color, x1, y1, radius);
+  new_obj = geda_circle_object_new (toplevel, color, x1, y1, radius);
+
   o_set_line_options(toplevel, new_obj,
 		     circle_end, circle_type, circle_width,
 		     circle_length, circle_space);

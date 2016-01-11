@@ -1078,11 +1078,13 @@ SCM_DEFINE (box_info, "%box-info", 1, 0, 0,
 SCM_DEFINE (make_circle, "%make-circle", 0, 0, 0,
             (), "Create a new circle object.")
 {
-  OBJECT *obj = geda_circle_object_new (edascm_c_current_toplevel (),
-                                        OBJ_CIRCLE, DEFAULT_COLOR,
-                                        0, 0, 1);
+  GedaObject *object = geda_circle_object_new (edascm_c_current_toplevel (),
+                                               DEFAULT_COLOR,
+                                               0,
+                                               0,
+                                               1);
 
-  SCM result = edascm_from_object (obj);
+  SCM result = edascm_from_object (object);
 
   /* At the moment, the only pointer to the object is owned by the
    * smob. */

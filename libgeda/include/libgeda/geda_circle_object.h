@@ -27,13 +27,12 @@
 
 /* construction, destruction */
 
-OBJECT*
+GedaObject*
 geda_circle_object_new (TOPLEVEL *toplevel,
-                        char type,
-                        int color,
-                        int x,
-                        int y,
-                        int radius);
+                        gint color,
+                        gint x,
+                        gint y,
+                        gint radius);
 
 OBJECT*
 geda_circle_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);

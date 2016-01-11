@@ -117,9 +117,12 @@ void o_circle_end(GschemToplevel *w_current, int w_x, int w_y)
   }
 
   /* create the object */
-  new_obj = geda_circle_object_new (toplevel, OBJ_CIRCLE, GRAPHIC_COLOR,
-                                    w_current->first_wx, w_current->first_wy,
+  new_obj = geda_circle_object_new (toplevel,
+                                    GRAPHIC_COLOR,
+                                    w_current->first_wx,
+                                    w_current->first_wy,
                                     w_current->distance);
+
   s_page_append (toplevel, page, new_obj);
 
   /* Call add-objects-hook */
