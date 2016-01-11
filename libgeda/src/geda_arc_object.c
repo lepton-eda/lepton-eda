@@ -96,40 +96,47 @@ geda_arc_object_new (TOPLEVEL *toplevel,
   return new_node;
 }
 
-/*! \brief
- *  \par Function Description
- *  This function creates a new object representing an arc.
+/*! \brief create a copy of an existing arc object
  *
- *  The values of the <B>o_current</B> pointed OBJECT are then copied to the new object.
- *
- *  The arc, the line options are initialized whereas the fill options are
- *  initialized to passive values - as an arc can not be filled.
- *
- *  \param [in] toplevel  The TOPLEVEL object
- *  \param [in] o_current
- *  \return The new OBJECT
+ *  \param [in] toplevel The TOPLEVEL object
+ *  \param [in] object the arc object to copy
+ *  \return The new arc object
  */
-OBJECT*
-geda_arc_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
+GedaObject*
+geda_arc_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
 {
-  OBJECT *new_obj;
+  GedaObject *new_object;
 
-  new_obj = geda_arc_object_new (toplevel,
-                                 o_current->color,
-                                 o_current->arc->x,
-                                 o_current->arc->y,
-                                 o_current->arc->radius,
-                                 o_current->arc->start_angle,
-                                 o_current->arc->sweep_angle);
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->arc != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_ARC, NULL);
 
-  o_set_line_options(toplevel, new_obj,
-                     o_current->line_end, o_current->line_type,
-                     o_current->line_width,
-                     o_current->line_length, o_current->line_space);
-  o_set_fill_options(toplevel, new_obj,
-                     FILLING_HOLLOW, -1, -1, -1, -1, -1);
+  new_object = geda_arc_object_new (toplevel,
+                                    object->color,
+                                    object->arc->x,
+                                    object->arc->y,
+                                    object->arc->radius,
+                                    object->arc->start_angle,
+                                    object->arc->sweep_angle);
 
-  return new_obj;
+  o_set_line_options (toplevel,
+                      new_object,
+                      object->line_end,
+                      object->line_type,
+                      object->line_width,
+                      object->line_length,
+                      object->line_space);
+
+  o_set_fill_options (toplevel,
+                      new_object,
+                      FILLING_HOLLOW,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1);
+
+  return new_object;
 }
 
 /*! \brief Get the x coordinate of the center of the arc

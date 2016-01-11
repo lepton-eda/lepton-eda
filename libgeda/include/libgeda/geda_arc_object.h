@@ -38,8 +38,8 @@ geda_arc_object_new (TOPLEVEL *toplevel,
                      gint start_angle,
                      gint sweep_angle);
 
-OBJECT*
-geda_arc_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+GedaObject*
+geda_arc_object_copy (TOPLEVEL *toplevel, const GedaObject *object);
 
 /* methods */
 
