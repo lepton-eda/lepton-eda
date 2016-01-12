@@ -31,8 +31,6 @@ G_BEGIN_DECLS
  *
  * This GType provides an easy way for Guile's SCM values to be used
  * directly with the GValue polymorphic type system.
- *
- * \since 1.10.
  */
 
 #define EDASCM_TYPE_SCM (edascm_scm_get_type ())
@@ -55,8 +53,6 @@ SCM edascm_value_get_scm (const GValue *value);
  * This GParamSpec can be used with #EdascmSCM and the GObject
  * property system to define GObjects that have Guile Scheme objects
  * as properties.
- *
- * \since 1.10.
  */
 
 #define EDASCM_TYPE_PARAM_SCM (edascm_param_spec_scm_get_type ())

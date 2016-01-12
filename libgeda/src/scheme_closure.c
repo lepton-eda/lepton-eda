@@ -84,8 +84,6 @@ edascm_closure_marshal (SCM args, SCM smob) {
  *
  * \return a newly-created closure, or \c SCM_BOOL_F if an error
  * occurs.
- *
- * \since 1.10.
  */
 SCM
 edascm_c_make_closure (SCM (*func)(SCM, gpointer), gpointer user_data)

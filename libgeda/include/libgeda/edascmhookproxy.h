@@ -51,8 +51,6 @@ G_BEGIN_DECLS
  *
  * \b Properties: One property, \b "hook", the hook to proxy as an
  * unpacked Scheme value.
- *
- * \since 1.10.
  */
 
 #define EDASCM_TYPE_HOOK_PROXY (edascm_hook_proxy_get_type ())
