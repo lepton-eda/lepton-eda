@@ -366,8 +366,6 @@ edascm_to_object (SCM smob)
  *
  * \param cfg Configuration context to create a smob for.
  * \return a smob representing \a cfg.
- *
- * \since 1.10.
  */
 SCM
 edascm_from_config (EdaConfig *cfg)
@@ -385,8 +383,6 @@ edascm_from_config (EdaConfig *cfg)
  *
  * \param [in] smob Guile value to retrieve #EdaConfig from.
  * \return the #EdaConfig represented by \a smob.
- *
- * \since 1.10.
  */
 EdaConfig *
 edascm_to_config (SCM smob)
@@ -477,8 +473,6 @@ edascm_is_page (SCM smob)
  *
  * \param [in] smob Guile value to test.
  * \return non-zero iff \a smob is an #EdaConfig instance.
- *
- * \since 1.10.
  */
 int
 edascm_is_config (SCM smob)
