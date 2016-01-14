@@ -411,41 +411,27 @@ OBJECT *o_circle_read (TOPLEVEL *toplevel, const char buf[],
 gchar*
 geda_circle_object_to_buffer (const GedaObject *object)
 {
-  int x,y;
-  int radius;
-  int circle_width, circle_space, circle_length;
-  int fill_width, angle1, pitch1, angle2, pitch2;
-  char *buf;
-  OBJECT_END circle_end;
-  OBJECT_TYPE circle_type;
-  OBJECT_FILLING circle_fill;
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->circle != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_CIRCLE, NULL);
 
-  /* circle center and radius */
-  x = object->circle->center_x;
-  y = object->circle->center_y;
-  radius = object->circle->radius;
-
-  /* line type parameters */
-  circle_width = object->line_width;
-  circle_end   = object->line_end;
-  circle_type  = object->line_type;
-  circle_length= object->line_length;
-  circle_space = object->line_space;
-
-  /* filling parameters */
-  circle_fill  = object->fill_type;
-  fill_width   = object->fill_width;
-  angle1       = object->fill_angle1;
-  pitch1       = object->fill_pitch1;
-  angle2       = object->fill_angle2;
-  pitch2       = object->fill_pitch2;
-
-  buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
-			object->type, x, y, radius, geda_object_get_color (object),
-			circle_width, circle_end, circle_type, circle_length,
-			circle_space, circle_fill,
-			fill_width, angle1, pitch1, angle2, pitch2);
-  return(buf);
+  return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
+                          OBJ_CIRCLE,
+                          geda_circle_object_get_center_x (object),
+                          geda_circle_object_get_center_y (object),
+                          geda_circle_object_get_radius (object),
+                          geda_object_get_color (object),
+                          object->line_width,
+                          object->line_end,
+                          object->line_type,
+                          object->line_length,
+                          object->line_space,
+                          object->fill_type,
+                          object->fill_width,
+                          object->fill_angle1,
+                          object->fill_pitch1,
+                          object->fill_angle2,
+                          object->fill_pitch2);
 }
 
 /*! \brief Translate a circle position in WORLD coordinates by a delta.
