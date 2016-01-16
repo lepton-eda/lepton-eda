@@ -65,7 +65,7 @@ SCM g_rc_gattrib_version(SCM scm_version)
 	      SCM_ARG1, "gattrib-version");
 
   version = scm_to_utf8_string (scm_version);
-  if (g_strcasecmp (version, PACKAGE_DATE_VERSION) != 0) {
+  if (g_ascii_strcasecmp (version, PACKAGE_DATE_VERSION) != 0) {
     fprintf(stderr,
             _("You are running gEDA/gaf version [%s%s.%s],\nbut you have a version [%s] gattribrc file.\nPlease be sure that you have the latest rc file.\n"),
             PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,

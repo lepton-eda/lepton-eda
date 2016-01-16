@@ -1,18 +1,21 @@
 # Very basic Travis CI (http://travis-ci.org) control file that allows
 # some basic Linux-based continuous integration testing (for free).
 
+sudo: required
+dist: trusty
+
 language: c
 
 # Before setting up the source tree, install necessary development
 # headers
 before_install: >
+  sudo apt-get update && 
   sudo apt-get install -y \
     libgtk2.0-dev autopoint libgettextpo-dev libstroke0-dev \
     guile-2.0-dev flex bison groff texinfo
 
-# Set up the source tree by fetching Linux-specific prebuilt objects
+# Set up the source tree by running autotools
 install: ./autogen.sh && ./configure --disable-update-xdg-database
 
-# Bootstrap the LCB compiler, build the default target set and run a
-# the default test suite.
-script: make -s all check
+# Compile gEDA and run its tests
+script: make -ks all && make check

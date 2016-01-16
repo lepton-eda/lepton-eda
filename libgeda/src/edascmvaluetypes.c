@@ -220,7 +220,6 @@ edascm_scm_get_type (void)
  *
  * \param value a valid GValue of #EDASCM_TYPE_SCM type.
  * \param v_scm SCM value to set.
- * \since 1.10.
  */
 void
 edascm_value_set_scm (GValue *value, SCM v_scm)
@@ -248,7 +247,6 @@ edascm_value_set_scm (GValue *value, SCM v_scm)
  *
  * \param value a valid GValue of #EDASCM_TYPE_SCM type.
  * \return SCM value contents of \a value.
- * \since 1.10.
  */
 SCM
 edascm_value_get_scm (const GValue *value)
@@ -311,7 +309,6 @@ edascm_param_spec_scm_get_type (void)
  * \param blurb description of the property specified.
  * \param flags flags for the property specified.
  * \return a newly created parameter specification.
- * \since 1.10.
  */
 GParamSpec *edascm_param_spec_scm (const gchar *name,
                                    const gchar *nick,

@@ -49,7 +49,6 @@ clip_get (GtkClipboard *cb, GtkSelectionData *selection_data,
           guint info, gpointer user_data_or_owner)
 {
   GschemToplevel *w_current = (GschemToplevel *) user_data_or_owner;
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GdkAtom type = gdk_atom_intern (MIME_TYPE_SCHEMATIC, FALSE);
   gchar *buf;
   if (info != CLIP_TYPE_SCHEMATIC) return;
