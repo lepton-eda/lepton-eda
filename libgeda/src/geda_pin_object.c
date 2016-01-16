@@ -388,23 +388,19 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
 gchar*
 geda_pin_object_to_buffer (const GedaObject *object)
 {
-  gchar *buffer;
-
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
   g_return_val_if_fail (object->type == OBJ_PIN, NULL);
 
-  buffer = g_strdup_printf ("%c %d %d %d %d %d %d %d",
-                            object->type,
-                            object->line->x[0],
-                            object->line->y[0],
-                            object->line->x[1],
-                            object->line->y[1],
-                            geda_object_get_color (object),
-                            object->pin_type,
-                            object->whichend);
-
-  return buffer;
+  return g_strdup_printf ("%c %d %d %d %d %d %d %d",
+                          OBJ_PIN,
+                          geda_pin_object_get_x0 (object),
+                          geda_pin_object_get_y0 (object),
+                          geda_pin_object_get_x1 (object),
+                          geda_pin_object_get_y1 (object),
+                          geda_object_get_color (object),
+                          object->pin_type,
+                          object->whichend);
 }
 
 /*! \brief move a pin object
