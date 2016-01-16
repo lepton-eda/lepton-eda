@@ -25,6 +25,10 @@
 
 #include <config.h>
 
+#ifdef HAVE_MATH_H
+#include <math.h>
+#endif
+
 #include "libgeda_priv.h"
 
 /*! \brief Get the ripper direction
@@ -431,21 +435,25 @@ geda_bus_object_translate (GedaObject *object, gint dx, gint dy)
  *  \return a new bus object
  */
 GedaObject*
-geda_bus_object_copy (TOPLEVEL *toplevel, const GedaObject *o_current)
+geda_bus_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
 {
   GedaObject *new_obj;
+
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_BUS);
 
   /* make sure you fix this in pin and bus as well */
   /* still doesn't work... you need to pass in the new values */
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
   new_obj = geda_bus_object_new (toplevel,
-                                 o_current->color,
-                                 o_current->line->x[0],
-                                 o_current->line->y[0],
-                                 o_current->line->x[1],
-                                 o_current->line->y[1],
-                                 o_current->bus_ripper_direction);
+                                 object->color,
+                                 object->line->x[0],
+                                 object->line->y[0],
+                                 object->line->x[1],
+                                 object->line->y[1],
+                                 object->bus_ripper_direction);
 
   return new_obj;
 }
@@ -469,26 +477,34 @@ geda_bus_object_rotate (TOPLEVEL *toplevel,
                         gint angle,
                         GedaObject *object)
 {
-  int newx, newy;
+  gint newx, newy;
 
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
   g_return_if_fail (object->type == OBJ_BUS);
+  g_return_if_fail (geda_angle_is_ortho (angle));
 
-  if (angle == 0)
-  return;
+  if (angle == 0) {
+    return;
+  }
 
   /* translate object to origin */
   geda_bus_object_translate (object, -world_centerx, -world_centery);
 
-  geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
-                  &newx, &newy);
+  geda_point_rotate_90 (object->line->x[0],
+                        object->line->y[0],
+                        angle,
+                        &newx,
+                        &newy);
 
   object->line->x[0] = newx;
   object->line->y[0] = newy;
 
-  geda_point_rotate_90 (object->line->x[1], object->line->y[1], angle,
-                  &newx, &newy);
+  geda_point_rotate_90 (object->line->x[1],
+                        object->line->y[1],
+                        angle,
+                        &newx,
+                        &newy);
 
   object->line->x[1] = newx;
   object->line->y[1] = newy;
@@ -536,6 +552,10 @@ geda_bus_object_mirror (TOPLEVEL *toplevel,
 gint
 geda_bus_object_orientation (const GedaObject *object)
 {
+  g_return_val_if_fail (object != NULL, NEITHER);
+  g_return_val_if_fail (object->line != NULL, NEITHER);
+  g_return_val_if_fail (object->type == OBJ_BUS, NEITHER);
+
   if (object->line->y[0] == object->line->y[1]) {
     return(HORIZONTAL);
   }
@@ -566,6 +586,12 @@ geda_bus_object_modify (TOPLEVEL *toplevel,
                         gint y,
                         gint whichone)
 {
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_BUS);
+  g_return_if_fail (whichone >= LINE_END1);
+  g_return_if_fail (whichone <= LINE_END2);
+
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
 
