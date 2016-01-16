@@ -47,6 +47,9 @@ gboolean
 geda_bus_object_get_position (const GedaObject *object, gint *x, gint *y);
 
 gint
+geda_bus_object_get_ripper_direction (const GedaObject *object);
+
+gint
 geda_bus_object_get_x0 (const GedaObject *object);
 
 gint
@@ -80,6 +83,9 @@ geda_bus_object_rotate (TOPLEVEL *toplevel,
                         int world_centery,
                         int angle,
                         OBJECT *object);
+
+void
+geda_bus_object_set_ripper_direction (GedaObject *object, gint direction);
 
 void
 geda_bus_object_set_x0 (GedaObject *object, gint x);

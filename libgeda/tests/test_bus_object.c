@@ -31,6 +31,7 @@ check_construction ()
     g_assert_cmpint (x1, ==, geda_bus_object_get_x1 (object0));
     g_assert_cmpint (y1, ==, geda_bus_object_get_y1 (object0));
     g_assert_cmpint (color, ==, geda_object_get_color (object0));
+    g_assert_cmpint (ripper, ==, geda_bus_object_get_ripper_direction (object0));
 
     GedaObject *object1 = geda_bus_object_copy (toplevel, object0);
 
@@ -45,6 +46,7 @@ check_construction ()
     g_assert_cmpint (x1, ==, geda_bus_object_get_x1 (object1));
     g_assert_cmpint (y1, ==, geda_bus_object_get_y1 (object1));
     g_assert_cmpint (color, ==, geda_object_get_color (object1));
+    g_assert_cmpint (ripper, ==, geda_bus_object_get_ripper_direction (object1));
 
     s_delete_object (toplevel, object1);
   }
@@ -82,18 +84,21 @@ check_accessors ()
     x1 = g_test_rand_int ();
     y1 = g_test_rand_int ();
     color = g_test_rand_int_range (0, MAX_COLORS - 1);
+    ripper = g_test_rand_int_range (-1, 2);
 
     geda_bus_object_set_x0 (object0, x0);
     geda_bus_object_set_y0 (object0, y0);
     geda_bus_object_set_x1 (object0, x1);
     geda_bus_object_set_y1 (object0, y1);
     o_set_color (toplevel, object0, color);
+    geda_bus_object_set_ripper_direction (object0, ripper);
 
     g_assert_cmpint (x0, ==, geda_bus_object_get_x0 (object0));
     g_assert_cmpint (y0, ==, geda_bus_object_get_y0 (object0));
     g_assert_cmpint (x1, ==, geda_bus_object_get_x1 (object0));
     g_assert_cmpint (y1, ==, geda_bus_object_get_y1 (object0));
     g_assert_cmpint (color, ==, geda_object_get_color (object0));
+    g_assert_cmpint (ripper, ==, geda_bus_object_get_ripper_direction (object0));
 
     s_delete_object (toplevel, object0);
   }
@@ -147,6 +152,7 @@ check_serialization ()
     g_assert_cmpint (x1, ==, geda_bus_object_get_x1 (object1));
     g_assert_cmpint (y1, ==, geda_bus_object_get_y1 (object1));
     g_assert_cmpint (color, ==, geda_object_get_color (object1));
+    g_assert_cmpint (ripper, ==, geda_bus_object_get_ripper_direction (object1));
 
     gchar *buffer1 = geda_bus_object_to_buffer (object1);
     s_delete_object (toplevel, object1);

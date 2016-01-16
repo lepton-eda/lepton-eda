@@ -28,6 +28,22 @@
 
 #include "libgeda_priv.h"
 
+/*! \brief Get the ripper direction
+ *
+ *  \param [in] object The bus object
+ *  \return The ripper direction
+ */
+gint
+geda_bus_object_get_ripper_direction (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_BUS, 0);
+  g_return_val_if_fail (object->bus_ripper_direction >= -1, -1);
+  g_return_val_if_fail (object->bus_ripper_direction <= 1, 1);
+
+  return object->bus_ripper_direction;
+}
+
 /*! \brief Get the x coordinate of first endpoint
  *
  *  The coordinate properties are broken out individually to make it easier for
@@ -102,6 +118,22 @@ geda_bus_object_get_y1 (const GedaObject *object)
   g_return_val_if_fail (object->type == OBJ_BUS, 0);
 
   return object->line->y[1];
+}
+
+/*! \brief Set the ripper direction
+ *
+ *  \param [in,out] object The bus object
+ *  \param [in] direction The ripper direction
+ */
+void
+geda_bus_object_set_ripper_direction (GedaObject *object, gint direction)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_BUS, 0);
+  g_return_val_if_fail (direction >= -1, -1);
+  g_return_val_if_fail (direction <= 1, 1);
+
+  object->bus_ripper_direction = direction;
 }
 
 /*! \brief Set the x coordinate of first endpoint
@@ -359,7 +391,7 @@ geda_bus_object_to_buffer (const GedaObject *object)
                           geda_bus_object_get_x1 (object),
                           geda_bus_object_get_y1 (object),
                           geda_object_get_color (object),
-                          object->bus_ripper_direction);
+                          geda_bus_object_get_ripper_direction (object));
 }
 
 /*! \brief move a bus object
