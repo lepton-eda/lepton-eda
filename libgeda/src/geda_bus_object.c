@@ -351,10 +351,10 @@ geda_bus_object_to_buffer (const GedaObject *object)
 
   return g_strdup_printf ("%c %d %d %d %d %d %d",
                           OBJ_BUS,
-                          object->line->x[0],
-                          object->line->y[0],
-                          object->line->x[1],
-                          object->line->y[1],
+                          geda_bus_object_get_x0 (object),
+                          geda_bus_object_get_y0 (object),
+                          geda_bus_object_get_x1 (object),
+                          geda_bus_object_get_y1 (object),
                           geda_object_get_color (object),
                           object->bus_ripper_direction);
 }
