@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's Library
  * Copyright (C) 2011-2012 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,12 +48,6 @@ struct _EdaConfigPrivate
   gboolean changed;
 };
 
-/*! Default value for XDG_CONFIG_DIRS if no system configuration
- * found. */
-#define XDG_CONFIG_DIRS_DEFAULT "/etc/xdg/"
-/*! Subdirectory of XDG directories (config, data, cache etc.) to check
- * for gEDA files. */
-#define XDG_SUBDIR "gEDA"
 /*! Filename for gEDA system configuration files */
 #define SYSTEM_CONFIG_NAME "geda-system.conf"
 /*! Filename for gEDA user configuration files */
@@ -309,11 +304,8 @@ eda_config_get_default_context ()
  * \brief Return the system configuration context.
  *
  * The system context is used for system-wide configuration.  It is
- * located:
- *
- * -# By searching "${XDG_CONFIG_DIRS}" for a "gEDA/geda-system.conf"
- *    configuration file.
- * -# By checking "${sysconfdir}/gEDA" for a configuration file.
+ * located by searching the system configuration path for a
+ * "geda-system.conf" configuration file.
  *
  * Its parent context is the default context.
  *
@@ -322,70 +314,66 @@ eda_config_get_default_context ()
 EdaConfig *
 eda_config_get_system_context ()
 {
-  static gsize initialized = 0;
-  static EdaConfig *config = NULL;
-  if (g_once_init_enter (&initialized)) {
-    gchar *filename = NULL;
-    GFile *file;
-    const gchar * const *xdg_dirs;
-    int i;
+	static EdaConfig *system_config = NULL;
+	if (g_once_init_enter (&system_config)) {
+		/* Candidate configuration file in the first system configuration
+		 * directory. */
+		GFile *first_file = NULL;
+		/* Actual file to use */
+		GFile *found_file = NULL;
 
-    /* Search for a system configuration file in XDG_CONFIG_DIRS */
-    xdg_dirs = g_get_system_config_dirs ();
-    for (i = 0; xdg_dirs[i] != NULL; i++) {
-      filename = g_build_filename (xdg_dirs[i], XDG_SUBDIR,
-                                   SYSTEM_CONFIG_NAME, NULL);
-      if (g_file_test (filename, G_FILE_TEST_EXISTS)) {
-        break;
-      }
+		/* Search for a system configuration file in the system config
+		 * search path. */
+		const gchar * const * dirs = eda_get_system_config_dirs();
+		for (gint i = 0; !found_file && dirs[i]; ++i) {
+			gchar *tmp_filename =
+				g_build_filename(dirs[i], SYSTEM_CONFIG_NAME, NULL);
+			GFile *tmp_file = g_file_new_for_path(tmp_filename);
+			g_free(tmp_filename);
 
-      g_free (filename);
-      filename = NULL;
-    }
+			/* Keep track of the the first path's config filename in case we
+			 * need to fall back to it */
+			if (!first_file) {
+				first_file = g_object_ref(tmp_file);
+			}
 
-    /* If we didn't find a configuration file, just use a filename in
-     * the traditional location. */
-    if (filename == NULL) {
-      filename = g_build_filename (s_path_sys_config (),
-                                   SYSTEM_CONFIG_NAME, NULL);
-      if (!g_file_test (filename, G_FILE_TEST_EXISTS)) {
-        g_free (filename);
-        filename = NULL;
-      }
-    }
+			if (g_file_query_exists(tmp_file, NULL)) {
+				found_file = g_object_ref(tmp_file);
+			}
+			g_object_unref(tmp_file);
+		}
 
-    /* Finally, fall back to default XDG location */
-    if (filename == NULL) {
-      if (xdg_dirs[0] != NULL) {
-        filename = g_build_filename (xdg_dirs[0], XDG_SUBDIR,
-                                     SYSTEM_CONFIG_NAME, NULL);
-      } else {
-        filename = g_build_filename (XDG_CONFIG_DIRS_DEFAULT, XDG_SUBDIR,
-                                     SYSTEM_CONFIG_NAME, NULL);
-      }
-    }
+		/* No pre-existing file found; fall back to file in the first
+		 * system config directory. */
+		if (!found_file) {
+			g_return_val_if_fail(first_file, NULL);
+			found_file = g_object_ref(first_file);
+		} else {
+			g_object_unref(first_file);
+		}
 
-    g_return_val_if_fail (filename != NULL, NULL);
+		/* Construct the system configuration context */
+		g_return_val_if_fail(found_file, NULL);
 
-    file = g_file_new_for_path (filename);
-    config = g_object_new (EDA_TYPE_CONFIG,
-                           "file", file,
-                           "parent", eda_config_get_default_context (),
-                           "trusted", TRUE,
-                           NULL);
-    g_free (filename);
-    g_object_unref (file);
-    g_once_init_leave (&initialized, 1);
-  }
-  return config;
+		EdaConfig *config =
+			g_object_new (EDA_TYPE_CONFIG,
+			              "file", found_file,
+			              "parent", eda_config_get_default_context (),
+			              "trusted", TRUE,
+			              NULL);
+		g_object_unref (found_file);
+
+		g_once_init_leave (&system_config, config);
+	}
+	return system_config;
 }
 
 /*! \public \memberof EdaConfig
  * \brief Return the user configuration context.
  *
  * The user context is used for user-specific configuration, and is
- * loaded from "${XDG_CONFIG_HOME}/gEDA/geda-user.conf". Its parent
- * context is the system context.
+ * loaded from the user configuration directory.. Its parent context
+ * is the system context.
  *
  * \return the user #EdaConfig configuration context.
  */
@@ -399,7 +387,7 @@ eda_config_get_user_context ()
     GFile *file;
 
     /* Search for a user configuration file in XDG_CONFIG_HOME */
-    filename = g_build_filename (g_get_user_config_dir (), XDG_SUBDIR,
+    filename = g_build_filename (eda_get_user_config_dir(),
                                  USER_CONFIG_NAME, NULL);
     file = g_file_new_for_path (filename);
 
