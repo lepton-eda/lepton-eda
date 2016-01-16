@@ -5,6 +5,7 @@ libgedainclude_HEADERS = \
 	libgeda/defines.h \
 	libgeda/edaconfig.h \
 	libgeda/edaerrors.h \
+	libgeda/edapaths.h \
 	libgeda/edascmhookproxy.h \
 	libgeda/edascmvaluetypes.h \
 	libgeda/funcs.h \
