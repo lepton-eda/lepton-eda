@@ -118,6 +118,41 @@ SCM_DEFINE (sys_config_dirs, "%sys-config-dirs", 0, 0, 0, (),
 	return lst_s;
 }
 
+/*! \brief Get user data directory.
+ * \par Function Description
+ * Returns the directory where per-user data should be stored
+ *
+ * \note Scheme API: Implements the %user-data-dir procedure is the
+ * (geda core os) module.
+ *
+ * \return a string.
+ */
+SCM_DEFINE (user_data_dir, "%user-data-dir", 0, 0, 0, (),
+            "Return the directory for user data.")
+{
+  /* eda_get_user_data_dir() returns a raw environment string, so assume
+   * it's in the current locale's encoding. */
+  return scm_from_locale_string(eda_get_user_data_dir());
+}
+
+/*! \brief Get user config directory.
+ * \par Function Description
+ * Returns the directory where per-user configuration information
+ * should be stored
+ *
+ * \note Scheme API: Implements the %user-config-dir procedure is the
+ * (geda core os) module.
+ *
+ * \return a string.
+ */
+SCM_DEFINE (user_config_dir, "%user-config-dir", 0, 0, 0, (),
+            "Return the directory for user configuration.")
+{
+  /* eda_get_user_config_dir() returns a raw environment string, so assume
+   * it's in the current locale's encoding. */
+  return scm_from_locale_string(eda_get_user_config_dir());
+}
+
 /*!
  * \brief Create the (geda core os) Scheme module.
  * \par Function Description
@@ -132,6 +167,7 @@ init_module_geda_core_os ()
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_platform, s_sys_data_dirs, s_sys_config_dirs,
+                s_user_data_dir, s_user_config_dir,
                 NULL);
 }
 

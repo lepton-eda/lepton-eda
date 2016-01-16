@@ -47,24 +47,8 @@
 
 (define-public sys-data-dirs %sys-data-dirs)
 (define-public sys-config-dirs %sys-config-dirs)
-
-(define-public (user-data-dir)
-  (let ((home-path (getenv "HOME"))
-        (home-path-alt (getenv "HOMEPATH"))
-        (home-drive-alt (getenv "HOMEDRIVE")))
-    ;; On some systems, such as WinXP, $HOME may be not defined.
-    ;; In such a case, we can use the $HOMEDRIVE-$HOMEPATH pair instead.
-    (if home-path
-      (string-join (list home-path ".gEDA") file-name-separator-string)
-      (if home-path-alt
-        (string-join
-          (list
-            (string-append home-drive-alt home-path-alt) ".gEDA")
-          file-name-separator-string)
-        ;; Return #f if any home variable has not been found.
-        #f))))
-
-(define-public user-config-dir user-data-dir)
+(define-public user-data-dir %user-data-dir)
+(define-public user-config-dir %user-config-dir)
 
 (define-public expand-env-variables
   ;; Only compile regular expression once
