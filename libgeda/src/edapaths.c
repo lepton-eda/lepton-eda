@@ -30,6 +30,7 @@
 #endif
 
 static const gchar const DATA_ENV[] = "GEDADATA";
+static const gchar const CONFIG_ENV[] = "GEDADATARC";
 static const gchar const DATA_XDG_SUBDIR[] = "gEDA";
 static const gchar const DATA_GUESS_FILE[] = "scheme/geda.scm";
 
@@ -211,6 +212,45 @@ eda_get_system_data_dirs(void)
 	return system_data_dirs;
 }
 
+/*!
+ * \brief Get an ordered list of gEDA configuration directories
+ * \par Function Description
+ * Return an ordered list of directories to be searched for
+ * system-wide gEDA configuration.  This list is computed as follows:
+ *
+ * 1. If the $GEDADATARC environment variable is set, add it to the
+ *    list.  Otherwise, if $GEDADATA is set, add that to the list.
+ *
+ * 2. If neither environment variable is set, add the "gEDA"
+ *    subdirectory of each of the platform-specific system-wide
+ *    application directories, as provided by
+ *    g_get_system_config_dirs().
+ *
+ * 3. For non-relocatable builds the configuration installation
+ * directory configured at build time is appended to the list.
+ *
+ * \return An ordered list of directories to be searched for system
+ * configuration.
+ */
+const gchar * const *
+eda_get_system_config_dirs(void)
+{
+	static const gchar **system_config_dirs;
+
+	if (g_once_init_enter(&system_config_dirs)) {
+		const gchar * const env_names[] = { CONFIG_ENV, DATA_ENV, NULL };
+		const gchar * const * xdg_dirs = g_get_system_config_dirs();
+		const gchar * const cfg_dirs[] = { GEDARCDIR, NULL };
+
+		const gchar **dirs =
+			build_search_list(env_names, xdg_dirs, cfg_dirs);
+
+		g_once_init_leave(&system_config_dirs, dirs);
+	}
+
+	return system_config_dirs;
+}
+
 /* ================================================================
  * Module initialisation
  * ================================================================ */
@@ -226,5 +266,6 @@ void
 eda_paths_init(void)
 {
 	eda_get_system_data_dirs();
+	eda_get_system_config_dirs();
 	eda_paths_init_env();
 }
