@@ -18,13 +18,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file o_circle_basic.c
- *  \brief functions for the circle object
+/*! \file geda_circle_object.c
+ *
+ *  \brief Functions operating on circle drawing objects
  */
 
 #include <config.h>
-#include <stdio.h>
+
+#ifdef HAVE_MATH_H
 #include <math.h>
+#endif
 
 #include "libgeda_priv.h"
 
@@ -106,10 +109,10 @@ geda_circle_object_new (TOPLEVEL *toplevel,
  *  \param [in]  o_current  Circle OBJECT to copy.
  *  \return The new OBJECT
  */
-OBJECT*
-geda_circle_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
+GedaObject*
+geda_circle_object_copy (TOPLEVEL *toplevel, const GedaObject *o_current)
 {
-  OBJECT *new_obj;
+  GedaObject *new_obj;
 
   /* A new circle object is created with #geda_circle_object_new().
    * Values for its fields are default and need to be modified. */
@@ -266,7 +269,11 @@ geda_circle_object_set_radius (GedaObject *object, gint radius)
  *  </DL>
  */
 void
-geda_circle_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone)
+geda_circle_object_modify (TOPLEVEL *toplevel,
+                           GedaObject *object,
+                           gint x,
+                           gint y,
+                           gint whichone)
 {
   o_emit_pre_change_notify (toplevel, object);
 
@@ -307,10 +314,14 @@ geda_circle_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new circle object, or NULL on error.
  */
-OBJECT *o_circle_read (TOPLEVEL *toplevel, const char buf[],
-              unsigned int release_ver, unsigned int fileformat_ver, GError ** err)
+GedaObject*
+o_circle_read (TOPLEVEL *toplevel,
+               const char buf[],
+               unsigned int release_ver,
+               unsigned int fileformat_ver,
+               GError ** err)
 {
-  OBJECT *new_obj;
+  GedaObject *new_obj;
   char type;
   int x1, y1;
   int radius;
@@ -444,7 +455,7 @@ geda_circle_object_to_buffer (const GedaObject *object)
  *  \param [in]     dy      y distance to move.
  */
 void
-geda_circle_object_translate (GedaObject *object, int dx, int dy)
+geda_circle_object_translate (GedaObject *object, gint dx, gint dy)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->circle != NULL);
@@ -472,9 +483,12 @@ geda_circle_object_translate (GedaObject *object, int dx, int dy)
  *  \param [in]      angle          Rotation angle in degrees (See note below).
  *  \param [in,out]  object         Circle OBJECT to rotate.
  */
-void geda_circle_object_rotate (TOPLEVEL *toplevel,
-			   int world_centerx, int world_centery, int angle,
-			   OBJECT *object)
+void
+geda_circle_object_rotate (TOPLEVEL *toplevel,
+                           gint world_centerx,
+                           gint world_centery,
+                           gint angle,
+                           GedaObject *object)
 {
   int newx, newy;
   int x, y;
@@ -512,7 +526,6 @@ void geda_circle_object_rotate (TOPLEVEL *toplevel,
   object->circle->center_y += world_centery;
 
   object->w_bounds_valid_for = NULL;
-
 }
 
 /*! \brief Mirror circle using WORLD coordinates.
@@ -523,14 +536,16 @@ void geda_circle_object_rotate (TOPLEVEL *toplevel,
  *  The circle coordinates and its bounding are recalculated as well as the
  *  OBJECT specific (line width, filling ...).
  *
- *  \param [in]     toplevel      The TOPLEVEL object.
+ *  \param [in]     toplevel       The TOPLEVEL object.
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         Circle OBJECT to mirror.
  */
-void geda_circle_object_mirror (TOPLEVEL *toplevel,
-			   int world_centerx, int world_centery,
-			   OBJECT *object)
+void
+geda_circle_object_mirror (TOPLEVEL *toplevel,
+                           gint world_centerx,
+                           gint world_centery,
+                           GedaObject *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->circle != NULL);
@@ -547,7 +562,6 @@ void geda_circle_object_mirror (TOPLEVEL *toplevel,
 
   /* recalc boundings and screen coords */
   object->w_bounds_valid_for = NULL;
-
 }
 
 /*! \brief Get circle bounding rectangle in WORLD coordinates.
@@ -557,15 +571,12 @@ void geda_circle_object_mirror (TOPLEVEL *toplevel,
  *  in world units.
  *
  *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [in]  object     Circle OBJECT to read coordinates from.
- *  \param [out] left       Left circle coordinate in WORLD units.
- *  \param [out] top        Top circle coordinate in WORLD units.
- *  \param [out] right      Right circle coordinate in WORLD units.
- *  \param [out] bottom     Bottom circle coordinate in WORLD units.
+ *  \param [in]  object    Circle OBJECT to read coordinates from.
+ *  \param [out] bounds    The bounds of the circle object.
  */
 void
 geda_circle_object_calculate_bounds (TOPLEVEL *toplevel,
-                                     const OBJECT *object,
+                                     const GedaObject *object,
                                      GedaBounds *bounds)
 {
   gint expand;
@@ -622,11 +633,14 @@ geda_circle_object_get_position (const GedaObject *object, gint *x, gint *y)
  *  \return The shortest distance from the object to the point.  With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double
-geda_circle_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
-                                      int x, int y, int force_solid)
+gdouble
+geda_circle_object_shortest_distance (TOPLEVEL *toplevel,
+                                      const GedaObject *object,
+                                      gint x,
+                                      gint y,
+                                      gint force_solid)
 {
-  int solid;
+  gboolean solid;
 
   g_return_val_if_fail (object->circle != NULL, G_MAXDOUBLE);
 

@@ -111,7 +111,7 @@ AC_HEADER_STDC
 # even vaguely sane libc implementation provides them; we don't use
 # any of their functions in favour of GLib alternatives; or we don't
 # provide an alternative, so the build will fail anyway.
-AC_CHECK_HEADERS([stdlib.h string.h unistd.h])
+AC_CHECK_HEADERS([math.h stdlib.h string.h unistd.h])
 
 # FIXME since we don't have a sensible alternative, if these headers
 # are missing we should fail. Also need to remove HAVE_ERRNO_H tests
