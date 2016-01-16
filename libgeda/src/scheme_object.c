@@ -1928,7 +1928,6 @@ SCM_DEFINE (picture_info, "%picture-info", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PICTURE), obj_s,
               SCM_ARG1, s_picture_info);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   const gchar *filename = o_picture_get_filename (obj);
 
