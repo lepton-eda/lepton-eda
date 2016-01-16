@@ -406,10 +406,12 @@ TESTS = stack_1-geda.out \
 XFAIL_TESTS = \
 	common/SlottedOpamps-futurenet2.out \
 	common/SlottedOpamps-spice_noqsi.out \
+	common/SlottedOpamps-spice_sdb.out \
 	common/SlottedOpamps-switcap.out \
 	common/cascade-spice_noqsi.out \
 	common/netattrib-spice_noqsi.out \
-	common/singlenet-spice_noqsi.out
+	common/singlenet-spice_noqsi.out \
+	common/singlenet-spice_sdb.out
 
 testdata = \
 	common/JD-extras/models/openIP_5.cir \
