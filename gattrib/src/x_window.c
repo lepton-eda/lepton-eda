@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
  * Copyright (C) 2003-2010 Stuart D. Brorson.
+ * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -262,7 +263,6 @@ static const GtkActionEntry actions[] = {
 static void
 x_window_create_menu(GtkWindow *window, GtkWidget **menubar)
 {
-  gchar *menu_file;
   GtkUIManager *ui;
   GtkActionGroup *action_group;
   GError *error = NULL;
@@ -276,7 +276,22 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar)
 
   gtk_ui_manager_insert_action_group(ui, action_group, 0);
 
-  menu_file = g_build_filename(s_path_sys_data (), "gattrib-menus.xml", NULL);
+	/* Load the menu path from the system data path */
+	gchar *menu_file = NULL;
+	const gchar * const *sys_dirs = eda_get_system_data_dirs();
+	for (gint i = 0; sys_dirs[i]; ++i) {
+		if (menu_file) {
+			g_free(menu_file);
+			menu_file = NULL;
+		}
+
+		menu_file = g_build_filename(sys_dirs[i],
+		                             "gattrib-menus.xml", NULL);
+
+		if (g_file_test(menu_file, G_FILE_TEST_IS_REGULAR)) {
+			break;
+		}
+	}
 
   gtk_ui_manager_add_ui_from_file(ui, menu_file, &error);
   if(error != NULL) {
