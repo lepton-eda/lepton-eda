@@ -6,6 +6,8 @@
 #include <glib/gstdio.h>
 
 /* Public libgeda headers */
+#define __LIBGEDA_INTERNAL_API__
+
 #include "defines.h"
 
 #include "geda_color.h"
