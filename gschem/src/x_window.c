@@ -2,6 +2,7 @@
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1152,14 +1153,18 @@ void x_window_set_default_icon( void )
 void
 x_window_init_icons (void)
 {
-  gchar *icon_path;
-
-  g_return_if_fail (s_path_sys_data () != NULL);
-
-  icon_path = g_build_filename (s_path_sys_data (), "icons", NULL);
-  gtk_icon_theme_append_search_path (gtk_icon_theme_get_default (),
-                                     icon_path);
-  g_free (icon_path);
+	/* System icons */
+	/* FIXME this shouldn't be necessary; gschem should just install its
+	 * icons in the system hicolor icon theme and they'll be picked up
+	 * automatically. */
+	const gchar * const * sys_dirs = eda_get_system_data_dirs();
+	for (gint i = 0; sys_dirs[i]; ++i) {
+		gchar *icon_dir;
+		icon_dir = g_build_filename (sys_dirs[i], "icons", NULL);
+		gtk_icon_theme_append_search_path (gtk_icon_theme_get_default(),
+		                                   icon_dir);
+		g_free (icon_dir);
+	}
 }
 
 /*! \brief Creates a new X window.
