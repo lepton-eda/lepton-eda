@@ -2,6 +2,7 @@
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,22 +36,36 @@
 
 #include "gschem.h"
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*!
+ *  \brief Load gschem's GTK+ resource files
  *  \par Function Description
- *
+ *  Load GTK system and user resource files.  These can be used to
+ *  customize gschem's appearance.  The first such file in the system
+ *  configuration file is loaded, followed by any resource file in the
+ *  per-user configuration directory.
  */
-void g_rc_parse_gtkrc()
+void
+g_rc_parse_gtkrc(void)
 {
-  gchar *filename;
+#if defined(ENABLE_DEPRECATED)
+	gchar *filename;
 
-  filename = g_build_filename (s_path_sys_config (), "gschem-gtkrc", NULL);
+	/* Search for the first gschem-gtkrc file in the system
+	 * configuration path. */
+	const gchar * const * sys_dirs = g_get_system_config_dirs();
+	for (gint i = 0; sys_dirs[i]; ++i) {
+		filename = g_build_filename (sys_dirs[i], "gschem-gtkrc", NULL);
+		if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
+			gtk_rc_parse (filename);
+		}
+		g_free (filename);
+	}
+
+	filename = g_build_filename (eda_get_user_config_dir(),
+	                             "gschem-gtkrc", NULL);
   gtk_rc_parse (filename);
   g_free (filename);
-
-  filename = g_build_filename (s_path_user_config (), "gschem-gtkrc", NULL);
-  gtk_rc_parse (filename);
-  g_free (filename);
+#endif /* ENABLE_DEPRECATED */
 }
 
 /*! \brief Verify the version of the RC file under evaluation.
