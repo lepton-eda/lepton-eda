@@ -469,31 +469,22 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, const char buf[],
 gchar*
 geda_line_object_to_buffer (const GedaObject *object)
 {
-  int x1, x2, y1, y2;
-  int line_width, line_space, line_length;
-  char *buf;
-  OBJECT_END line_end;
-  OBJECT_TYPE line_type;
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->line != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_LINE, NULL);
 
-  /* get the two ends */
-  x1 = object->line->x[0];
-  y1 = object->line->y[0];
-  x2 = object->line->x[1];
-  y2 = object->line->y[1];
-
-  /* description of the line type */
-  line_width = object->line_width;
-  line_end   = object->line_end;
-  line_type  = object->line_type;
-  line_length= object->line_length;
-  line_space = object->line_space;
-
-  buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d", object->type,
-			x1, y1, x2, y2, geda_object_get_color (object),
-			line_width, line_end, line_type,
-			line_length, line_space);
-
-  return(buf);
+  return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d",
+                          OBJ_LINE,
+                          geda_line_object_get_x0 (object),
+                          geda_line_object_get_y0 (object),
+                          geda_line_object_get_x1 (object),
+                          geda_line_object_get_y1 (object),
+                          geda_object_get_color (object),
+                          object->line_width,
+                          object->line_end,
+                          object->line_type,
+                          object->line_length,
+                          object->line_space);
 }
 
 /*! \brief Translate a line position in WORLD coordinates by a delta.
