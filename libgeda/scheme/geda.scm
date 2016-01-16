@@ -1,8 +1,14 @@
 ; -*-Scheme-*-
 (use-modules (geda os) (ice-9 optargs) (ice-9 ftw))
+
 (define path-sep file-name-separator-string)
-(define geda-data-path (car (sys-data-dirs)))
-(define geda-rc-path (car (sys-config-dirs)))
+
+;; Legacy gEDA data & configuration directories.  These functions will
+;; usually return #f if gEDA was compiled with --disable-deprecated.
+;; Use the sys-data-dirs and sys-config-dirs functions from the (geda
+;; os) module instead.
+(define geda-data-path (getenv "GEDADATA"))
+(define geda-rc-path (or (getenv "GEDADATARC") (getenv "GEDADATA")))
 
 (define (build-path first . rest)
   (if (null? rest) first
