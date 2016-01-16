@@ -343,19 +343,20 @@ OBJECT *o_bus_read (TOPLEVEL *toplevel, const char buf[],
  *  \return the string representation of the bus OBJECT
  */
 gchar*
-geda_bus_object_to_buffer(const GedaObject *object)
+geda_bus_object_to_buffer (const GedaObject *object)
 {
-  int x1, x2, y1, y2;
-  char *buf;
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->line != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_BUS, NULL);
 
-  x1 = object->line->x[0];
-  y1 = object->line->y[0];
-  x2 = object->line->x[1];
-  y2 = object->line->y[1];
-
-  buf = g_strdup_printf("%c %d %d %d %d %d %d", object->type,
-          x1, y1, x2, y2, geda_object_get_color (object), object->bus_ripper_direction);
-  return(buf);
+  return g_strdup_printf ("%c %d %d %d %d %d %d",
+                          OBJ_BUS,
+                          object->line->x[0],
+                          object->line->y[0],
+                          object->line->x[1],
+                          object->line->y[1],
+                          geda_object_get_color (object),
+                          object->bus_ripper_direction);
 }
 
 /*! \brief move a bus object
