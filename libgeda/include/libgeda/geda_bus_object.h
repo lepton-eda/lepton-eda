@@ -47,6 +47,18 @@ geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
 gboolean
 geda_bus_object_get_position (const GedaObject *object, gint *x, gint *y);
 
+gint
+geda_bus_object_get_x0 (const GedaObject *object);
+
+gint
+geda_bus_object_get_x1 (const GedaObject *object);
+
+gint
+geda_bus_object_get_y0 (const GedaObject *object);
+
+gint
+geda_bus_object_get_y1 (const GedaObject *object);
+
 void
 geda_bus_object_mirror (TOPLEVEL *toplevel,
                         int world_centerx,
@@ -69,6 +81,18 @@ geda_bus_object_rotate (TOPLEVEL *toplevel,
                         int world_centery,
                         int angle,
                         OBJECT *object);
+
+void
+geda_bus_object_set_x0 (GedaObject *object, gint x);
+
+void
+geda_bus_object_set_x1 (GedaObject *object, gint x);
+
+void
+geda_bus_object_set_y0 (GedaObject *object, gint y);
+
+void
+geda_bus_object_set_y1 (GedaObject *object, gint y);
 
 gchar*
 geda_bus_object_to_buffer (const GedaObject *object);

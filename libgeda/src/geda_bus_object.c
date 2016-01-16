@@ -28,6 +28,158 @@
 
 #include "libgeda_priv.h"
 
+/*! \brief Get the x coordinate of first endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in] object The line
+ *  \return The x coordinate for the first endpoint
+ */
+gint
+geda_bus_object_get_x0 (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->line != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_BUS, 0);
+
+  return object->line->x[0];
+}
+
+/*! \brief Get the x coordinate of second endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in] object The line
+ *  \return The x coordinate for the second endpoint
+ */
+gint
+geda_bus_object_get_x1 (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->line != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_BUS, 0);
+
+  return object->line->x[1];
+}
+
+/*! \brief Get the y coordinate of first endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in] object The line
+ *  \return The y coordinate for the first endpoint
+ */
+gint
+geda_bus_object_get_y0 (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->line != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_BUS, 0);
+
+  return object->line->y[0];
+}
+
+/*! \brief Get the y coordinate of second endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in] object The line
+ *  \return The y coordinate for the second endpoint
+ */
+gint
+geda_bus_object_get_y1 (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->line != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_BUS, 0);
+
+  return object->line->y[1];
+}
+
+/*! \brief Set the x coordinate of first endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in,out] object The line
+ *  \param [in] x The new x coordinate for the first endpoint
+ */
+void
+geda_bus_object_set_x0 (GedaObject *object, gint x)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_BUS);
+
+  object->line->x[0] = x;
+}
+
+/*! \brief Set the x coordinate of second endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in,out] object The line
+ *  \param [in] x The new x coordinate for the second endpoint
+ */
+void
+geda_bus_object_set_x1 (GedaObject *object, gint x)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_BUS);
+
+  object->line->x[1] = x;
+}
+
+/*! \brief Set the y coordinate of first endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in,out] object The line
+ *  \param [in] y The new y coordinate for the first endpoint
+ */
+void
+geda_bus_object_set_y0 (GedaObject *object, gint y)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_BUS);
+
+  object->line->y[0] = y;
+}
+
+/*! \brief Set the y coordinate of second endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in,out] object The line
+ *  \param [in] y The new y coordinate for the second endpoint
+ */
+void
+geda_bus_object_set_y1 (GedaObject *object, gint y)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_BUS);
+
+  object->line->y[1] = y;
+}
+
 /*! \brief get the position of the first bus point
  *  \par Function Description
  *  This function gets the position of the first point of a bus object.
