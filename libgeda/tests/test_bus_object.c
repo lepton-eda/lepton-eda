@@ -16,7 +16,6 @@ check_construction ()
     gint ripper = g_test_rand_int_range (-1, 2);
 
     GedaObject *object0 = geda_bus_object_new (toplevel,
-                                               OBJ_BUS,
                                                color,
                                                x0,
                                                y0,
@@ -68,7 +67,6 @@ check_accessors ()
     gint ripper = g_test_rand_int_range (-1, 2);
 
     GedaObject *object0 = geda_bus_object_new (toplevel,
-                                               OBJ_BUS,
                                                color,
                                                x0,
                                                y0,
@@ -123,7 +121,6 @@ check_serialization ()
     gint ripper = g_test_rand_int_range (-1, 2);
 
     GedaObject *object0 = geda_bus_object_new (toplevel,
-                                               OBJ_BUS,
                                                color,
                                                x0,
                                                y0,

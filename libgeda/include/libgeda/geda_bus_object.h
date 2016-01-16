@@ -26,7 +26,6 @@
 
 OBJECT*
 geda_bus_object_new (TOPLEVEL *toplevel,
-                     char type,
                      int color,
                      int x1,
                      int y1,

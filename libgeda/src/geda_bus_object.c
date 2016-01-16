@@ -241,7 +241,6 @@ geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
  *  This function creates and returns a new bus object.
  *
  *  \param [in]     toplevel    The TOPLEVEL object.
- *  \param [in]     type        The OBJECT type (usually OBJ_BUS)
  *  \param [in]     color       The color of the bus
  *  \param [in]     x1          x-coord of the first point
  *  \param [in]     y1          y-coord of the first point
@@ -251,13 +250,17 @@ geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
  *  \return A new bus OBJECT
  */
 OBJECT*
-geda_bus_object_new (TOPLEVEL *toplevel, char type, int color,
-                     int x1, int y1, int x2, int y2,
+geda_bus_object_new (TOPLEVEL *toplevel,
+                     int color,
+                     int x1,
+                     int y1,
+                     int x2,
+                     int y2,
                      int bus_ripper_direction)
 {
   OBJECT *new_node;
 
-  new_node = s_basic_new_object(type, "bus");
+  new_node = s_basic_new_object(OBJ_BUS, "bus");
   new_node->color = color;
 
   new_node->line = geda_line_new ();
@@ -329,7 +332,7 @@ OBJECT *o_bus_read (TOPLEVEL *toplevel, const char buf[],
     ripper_dir = 0;
   }
 
-  new_obj = geda_bus_object_new (toplevel, type, color, x1, y1, x2, y2, ripper_dir);
+  new_obj = geda_bus_object_new (toplevel, color, x1, y1, x2, y2, ripper_dir);
 
   return new_obj;
 }
@@ -401,9 +404,12 @@ geda_bus_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
   /* still doesn't work... you need to pass in the new values */
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
-  new_obj = geda_bus_object_new (toplevel, OBJ_BUS, o_current->color,
-                                 o_current->line->x[0], o_current->line->y[0],
-                                 o_current->line->x[1], o_current->line->y[1],
+  new_obj = geda_bus_object_new (toplevel,
+                                 o_current->color,
+                                 o_current->line->x[0],
+                                 o_current->line->y[0],
+                                 o_current->line->x[1],
+                                 o_current->line->y[1],
                                  o_current->bus_ripper_direction);
 
   return new_obj;

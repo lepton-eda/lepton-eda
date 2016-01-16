@@ -884,7 +884,11 @@ SCM_DEFINE (make_bus, "%make-bus", 0, 0, 0,
   SCM result;
 
   obj = geda_bus_object_new (edascm_c_current_toplevel (),
-                             OBJ_BUS, BUS_COLOR, 0, 0, 0, 0,
+                             BUS_COLOR,
+                             0,
+                             0,
+                             0,
+                             0,
                              0); /* Bus ripper direction */
 
   result = edascm_from_object (obj);
