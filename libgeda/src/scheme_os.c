@@ -107,10 +107,15 @@ SCM_DEFINE (sys_data_dirs, "%sys-data-dirs", 0, 0, 0, (),
 SCM_DEFINE (sys_config_dirs, "%sys-config-dirs", 0, 0, 0, (),
             "Return a list of search directories for system configuration.")
 {
-  /* s_path_sys_data() returns a raw environment string, so assume
-   * it's in the current locale's encoding. */
-  SCM dir = scm_from_locale_string (s_path_sys_config ());
-  return scm_list_1 (dir);
+	const gchar * const * dirs = eda_get_system_config_dirs();
+	SCM lst_s = SCM_EOL;
+
+	/* dirs contains raw environment strings, so assume it's in the
+	 * current locale's encoding. */
+	for (gint i = 0; dirs[i]; ++i) {
+		lst_s = scm_cons(scm_from_locale_string (dirs[i]), lst_s);
+	}
+	return lst_s;
 }
 
 /*!
