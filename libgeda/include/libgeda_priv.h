@@ -59,6 +59,7 @@
 #include "funcs.h"
 #include "edaconfig.h"
 #include "edaerrors.h"
+#include "edapaths.h"
 
 #include "geda_list.h"
 

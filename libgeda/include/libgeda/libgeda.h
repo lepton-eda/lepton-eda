@@ -78,6 +78,7 @@
 #include <libgeda/prototype.h>
 #include <libgeda/edaconfig.h>
 #include <libgeda/edaerrors.h>
+#include <libgeda/edapaths.h>
 #include <libgeda/geda_list.h>
 
 #endif

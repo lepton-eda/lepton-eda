@@ -33,6 +33,7 @@ scheme_api_sources = \
 libgeda_la_SOURCES = \
 	$(scheme_api_sources) \
 	a_basic.c \
+	edapaths.c \
 	edaconfig.c \
 	edaerrors.c \
 	f_basic.c \
