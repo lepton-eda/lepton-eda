@@ -131,7 +131,7 @@ geda_path_object_new_take_path (TOPLEVEL *toplevel,
  *  \return A new pointer to the end of the object list.
  */
 OBJECT*
-geda_path_object (TOPLEVEL *toplevel, OBJECT *o_current)
+geda_path_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
   char *path_string;
