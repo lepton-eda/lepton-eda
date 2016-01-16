@@ -925,7 +925,13 @@ SCM_DEFINE (make_pin, "%make-pin", 1, 0, 0,
   }
 
   OBJECT *obj = geda_pin_object_new (edascm_c_current_toplevel (),
-                                     OBJ_PIN, PIN_COLOR, 0, 0, 0, 0, type, 0);
+                                     PIN_COLOR,
+                                     0,
+                                     0,
+                                     0,
+                                     0,
+                                     type,
+                                     0);
   SCM result = edascm_from_object (obj);
 
   /* At the moment, the only pointer to the object is owned by the
