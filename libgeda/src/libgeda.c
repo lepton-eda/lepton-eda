@@ -50,8 +50,6 @@ void libgeda_init(void)
 #endif
 
   eda_paths_init();
-  s_path_sys_data ();
-  s_path_sys_config ();
 
   s_clib_init();
   s_slib_init();
