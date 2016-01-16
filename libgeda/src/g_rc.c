@@ -264,7 +264,7 @@ g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
   /* Default to gafrc */
   rcname = (rcname != NULL) ? rcname : "gafrc";
 
-  rcfile = g_build_filename (s_path_user_config (), rcname, NULL);
+  rcfile = g_build_filename (eda_get_user_config_dir (), rcname, NULL);
   status = g_rc_parse_file (toplevel, rcfile,
                             eda_config_get_user_context (), err);
   g_free (rcfile);
