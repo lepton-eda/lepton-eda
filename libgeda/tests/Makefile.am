@@ -11,6 +11,7 @@ check_PROGRAMS = \
 	test_coord \
 	test_line \
 	test_line_object \
+	test_net_object \
 	test_point \
 	test_string
 
@@ -26,6 +27,7 @@ TESTS = \
 	test_coord \
 	test_line \
 	test_line_object \
+	test_net_object \
 	test_point \
 	test_string
 
