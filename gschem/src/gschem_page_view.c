@@ -1409,15 +1409,15 @@ gschem_page_view_redraw (GschemPageView *view, GdkEventExpose *event, GschemTopl
   printf("EXPOSE\n");
 #endif
 
-  g_return_val_if_fail (view != NULL, 0);
-  g_return_val_if_fail (w_current != NULL, 0);
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (w_current != NULL);
 
   page = gschem_page_view_get_page (view);
 
   if (page != NULL) {
     geometry = gschem_page_view_get_page_geometry (view);
 
-    g_return_val_if_fail (view != NULL, 0);
+    g_return_if_fail (view != NULL);
 
     o_redraw_rect (w_current,
                    gtk_widget_get_window (GTK_WIDGET(view)),

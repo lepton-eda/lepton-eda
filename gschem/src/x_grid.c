@@ -410,7 +410,7 @@ int x_grid_query_drawn_spacing (GschemToplevel *w_current)
 {
   GRID_MODE grid_mode;
 
-  g_return_val_if_fail (w_current != NULL, NULL);
+  g_return_val_if_fail (w_current != NULL, -1);
 
   grid_mode = gschem_options_get_grid_mode (w_current->options);
 
