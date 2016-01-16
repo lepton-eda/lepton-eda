@@ -9,6 +9,7 @@ check_PROGRAMS = \
 	test_circle_object \
 	test_coord \
 	test_line \
+	test_line_object \
 	test_point \
 	test_string
 
@@ -22,6 +23,7 @@ TESTS = \
 	test_circle_object \
 	test_coord \
 	test_line \
+	test_line_object \
 	test_point \
 	test_string
 
