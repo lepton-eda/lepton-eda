@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
  * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,10 +83,15 @@ SCM_DEFINE (platform, "%platform", 0, 0, 0, (),
 SCM_DEFINE (sys_data_dirs, "%sys-data-dirs", 0, 0, 0, (),
             "Return a list of search directories for system data.")
 {
-  /* s_path_sys_data() returns a raw environment string, so assume
-   * it's in the current locale's encoding. */
-  SCM dir = scm_from_locale_string (s_path_sys_data ());
-  return scm_list_1 (dir);
+	const gchar * const * dirs = eda_get_system_data_dirs();
+	SCM lst_s = SCM_EOL;
+
+	/* dirs contains raw environment strings, so assume it's in the
+	 * current locale's encoding. */
+	for (gint i = 0; dirs[i]; ++i) {
+		lst_s = scm_cons(scm_from_locale_string(dirs[i]), lst_s);
+	}
+	return lst_s;
 }
 
 /*! \brief Get system config directory directories.
