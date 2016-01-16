@@ -2,6 +2,7 @@
  * libgeda - gEDA's library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,15 +88,16 @@ void g_register_libgeda_funcs (void)
 
 /*! \brief Register some libgeda directories with Scheme.
  * \par Function Description
- * Ensures that the default gEDA Scheme directory is added to the
- * Guile load path.
+ * Ensures that the gEDA Scheme directories are added to the Guile
+ * load path.
  */
 void
 g_register_libgeda_dirs (void)
 {
-  char *scheme_dir;
-
-  scheme_dir = g_build_filename (s_path_sys_data (), "scheme", NULL);
-  g_rc_scheme_directory (scm_from_utf8_string (scheme_dir));
-  g_free (scheme_dir);
+	const gchar * const *dirs = eda_get_system_data_dirs();
+	for (gint i = 0; dirs[i]; ++i) {
+		gchar *scheme_dir = g_build_filename (dirs[i], "scheme", NULL);
+		g_rc_scheme_directory (scm_from_locale_string (scheme_dir));
+		g_free (scheme_dir);
+	}
 }
