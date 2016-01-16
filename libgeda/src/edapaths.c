@@ -33,6 +33,7 @@ static const gchar const DATA_ENV[] = "GEDADATA";
 static const gchar const CONFIG_ENV[] = "GEDADATARC";
 static const gchar const DATA_XDG_SUBDIR[] = "gEDA";
 static const gchar const DATA_GUESS_FILE[] = "scheme/geda.scm";
+static const gchar const USER_DOTDIR[] = ".gEDA";
 
 /* ================================================================
  * Private initialisation functions
@@ -169,6 +170,20 @@ eda_paths_init_env(void)
 #endif /* ENABLE_DEPRECATED */
 }
 
+static gchar *
+get_user_dotdir(void)
+{
+#if defined(ENABLE_DEPRECATED)
+	gchar *dotdir = g_build_filename(g_get_home_dir(),
+	                                 USER_DOTDIR, NULL);
+	if (g_file_test(dotdir, G_FILE_TEST_IS_DIR)) {
+		return dotdir;
+	}
+	g_free(dotdir);
+#endif /* ENABLE_DEPRECATED */
+	return NULL;
+}
+
 /* ================================================================
  * Public accessors
  * ================================================================ */
@@ -251,6 +266,45 @@ eda_get_system_config_dirs(void)
 	return system_config_dirs;
 }
 
+const gchar *
+eda_get_user_data_dir(void)
+{
+	static gchar *user_data_dir;
+
+	if (g_once_init_enter(&user_data_dir)) {
+		gchar *dir = get_user_dotdir();
+
+		if (!dir) {
+			dir = g_build_filename(g_get_user_data_dir(),
+
+			                       DATA_XDG_SUBDIR, NULL);
+		}
+
+		g_once_init_leave(&user_data_dir, dir);
+	}
+
+	return user_data_dir;
+}
+
+const gchar *
+eda_get_user_config_dir(void)
+{
+	static gchar *user_config_dir;
+
+	if (g_once_init_enter(&user_config_dir)) {
+		gchar *dir = get_user_dotdir();
+
+		if (!dir) {
+			dir = g_build_filename(g_get_user_config_dir(),
+			                       DATA_XDG_SUBDIR, NULL);
+		}
+
+		g_once_init_leave(&user_config_dir, dir);
+	}
+
+	return user_config_dir;
+}
+
 /* ================================================================
  * Module initialisation
  * ================================================================ */
@@ -265,7 +319,11 @@ eda_get_system_config_dirs(void)
 void
 eda_paths_init(void)
 {
+	/* Force initialisation */
 	eda_get_system_data_dirs();
 	eda_get_system_config_dirs();
+	eda_get_user_data_dir();
+	eda_get_user_config_dir();
+
 	eda_paths_init_env();
 }
