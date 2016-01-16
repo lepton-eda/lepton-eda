@@ -18,13 +18,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file o_bus_basic.c
- *  \brief functions for the bus object
+/*! \file geda_bus_object.c
+ *
+ *  \brief Functions operating on bus objects
  */
 
 #include <config.h>
-#include <stdio.h>
-#include <math.h>
 
 #include "libgeda_priv.h"
 
@@ -249,7 +248,7 @@ geda_bus_object_get_position (const GedaObject *object, gint *x, gint *y)
  */
 void
 geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
-                                  const OBJECT *object,
+                                  const GedaObject *object,
                                   GedaBounds *bounds)
 {
   gint expand;
@@ -281,16 +280,16 @@ geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
  *  \param [in]  bus_ripper_direction direction of the bus rippers
  *  \return A new bus OBJECT
  */
-OBJECT*
+GedaObject*
 geda_bus_object_new (TOPLEVEL *toplevel,
-                     int color,
-                     int x1,
-                     int y1,
-                     int x2,
-                     int y2,
-                     int bus_ripper_direction)
+                     gint color,
+                     gint x1,
+                     gint y1,
+                     gint x2,
+                     gint y2,
+                     gint bus_ripper_direction)
 {
-  OBJECT *new_node;
+  GedaObject *new_node;
 
   new_node = s_basic_new_object(OBJ_BUS, "bus");
   new_node->color = color;
@@ -323,10 +322,14 @@ geda_bus_object_new (TOPLEVEL *toplevel,
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  */
-OBJECT *o_bus_read (TOPLEVEL *toplevel, const char buf[],
-                    unsigned int release_ver, unsigned int fileformat_ver, GError **err)
+GedaObject*
+o_bus_read (TOPLEVEL *toplevel,
+            const char buf[],
+            unsigned int release_ver,
+            unsigned int fileformat_ver,
+            GError **err)
 {
-  OBJECT *new_obj;
+  GedaObject *new_obj;
   char type;
   int x1, y1;
   int x2, y2;
@@ -398,12 +401,12 @@ geda_bus_object_to_buffer (const GedaObject *object)
  *  \par Function Description
  *  This function changes the position of a bus \a object.
  *
- *  \param [ref] object The bus GedaObject to be moved
- *  \param [in]  dx     The x-distance to move the object
- *  \param [in]  dy     The y-distance to move the object
+ *  \param [in,out] object The bus GedaObject to be moved
+ *  \param [in]     dx     The x-distance to move the object
+ *  \param [in]     dy     The y-distance to move the object
  */
 void
-geda_bus_object_translate (GedaObject *object, int dx, int dy)
+geda_bus_object_translate (GedaObject *object, gint dx, gint dy)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -427,10 +430,10 @@ geda_bus_object_translate (GedaObject *object, int dx, int dy)
  *  \param [in] o_current    The object that is copied
  *  \return a new bus object
  */
-OBJECT*
-geda_bus_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
+GedaObject*
+geda_bus_object_copy (TOPLEVEL *toplevel, const GedaObject *o_current)
 {
-  OBJECT *new_obj;
+  GedaObject *new_obj;
 
   /* make sure you fix this in pin and bus as well */
   /* still doesn't work... you need to pass in the new values */
@@ -452,16 +455,19 @@ geda_bus_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
  *  This function rotates a bus \a object around the point
  *  (\a world_centerx, \a world_centery).
  *
- *  \param [in] toplevel      The TOPLEVEL object
- *  \param [in] world_centerx x-coord of the rotation center
- *  \param [in] world_centery y-coord of the rotation center
- *  \param [in] angle         The angle to rotate the bus object
- *  \param [in] object        The bus object
+ *  \param [in]     toplevel      The TOPLEVEL object
+ *  \param [in]     world_centerx x-coord of the rotation center
+ *  \param [in]     world_centery y-coord of the rotation center
+ *  \param [in]     angle         The angle to rotate the bus object
+ *  \param [in,out] object        The bus object
  *  \note only steps of 90 degrees are allowed for the \a angle
  */
-void geda_bus_object_rotate (TOPLEVEL *toplevel,
-			int world_centerx, int world_centery, int angle,
-			OBJECT *object)
+void
+geda_bus_object_rotate (TOPLEVEL *toplevel,
+                        gint world_centerx,
+                        gint world_centery,
+                        gint angle,
+                        GedaObject *object)
 {
   int newx, newy;
 
@@ -495,13 +501,16 @@ void geda_bus_object_rotate (TOPLEVEL *toplevel,
  *  This function mirrors a bus \a object horizontaly at the point
  *  (\a world_centerx, \a world_centery).
  *
- *  \param [in] toplevel      The TOPLEVEL object
- *  \param [in] world_centerx x-coord of the mirror position
- *  \param [in] world_centery y-coord of the mirror position
- *  \param [in] object        The bus object
+ *  \param [in]     toplevel      The TOPLEVEL object
+ *  \param [in]     world_centerx x-coord of the mirror position
+ *  \param [in]     world_centery y-coord of the mirror position
+ *  \param [in,out] object        The bus object
  */
-void geda_bus_object_mirror (TOPLEVEL *toplevel,
-			int world_centerx, int world_centery, OBJECT *object)
+void
+geda_bus_object_mirror (TOPLEVEL *toplevel,
+                        gint world_centerx,
+                        gint world_centery,
+                        GedaObject *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -524,8 +533,8 @@ void geda_bus_object_mirror (TOPLEVEL *toplevel,
  *  \param [in] object   The bus object
  *  \return The orientation: HORIZONTAL, VERTICAL or NEITHER
  */
-int
-geda_bus_object_orientation (OBJECT *object)
+gint
+geda_bus_object_orientation (const GedaObject *object)
 {
   if (object->line->y[0] == object->line->y[1]) {
     return(HORIZONTAL);
@@ -544,15 +553,18 @@ geda_bus_object_orientation (OBJECT *object)
  *  is specified by the \a whichone variable and the new coordinate
  *  is (\a x, \a y).
  *
- *  \param toplevel   The TOPLEVEL object
- *  \param object     The bus OBJECT to modify
- *  \param x          new x-coord of the bus point
- *  \param y          new y-coord of the bus point
- *  \param whichone   bus point to modify
+ *  \param [in]     toplevel   The TOPLEVEL object
+ *  \param [in,out] object     The bus OBJECT to modify
+ *  \param [in]     x          new x-coord of the bus point
+ *  \param [in]     y          new y-coord of the bus point
+ *  \param [in]     whichone   bus point to modify
  */
 void
-geda_bus_object_modify (TOPLEVEL *toplevel, OBJECT *object,
-                        int x, int y, int whichone)
+geda_bus_object_modify (TOPLEVEL *toplevel,
+                        GedaObject *object,
+                        gint x,
+                        gint y,
+                        gint whichone)
 {
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
