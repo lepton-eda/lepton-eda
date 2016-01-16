@@ -110,35 +110,36 @@ geda_circle_object_new (TOPLEVEL *toplevel,
  *  \return The new OBJECT
  */
 GedaObject*
-geda_circle_object_copy (TOPLEVEL *toplevel, const GedaObject *o_current)
+geda_circle_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
 {
   GedaObject *new_obj;
 
-  /* A new circle object is created with #geda_circle_object_new().
-   * Values for its fields are default and need to be modified. */
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->circle != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_CIRCLE, NULL);
+
   new_obj = geda_circle_object_new (toplevel,
-                                    o_current->color,
-                                    0,
-                                    0,
-                                    0);
+                                    object->color,
+                                    object->circle->center_x,
+                                    object->circle->center_y,
+                                    object->circle->radius);
 
-  /*
-   * The parameters of the new circle are set with the ones of the original
-   * circle. The two circle have the same line type and the same filling
-   * options.
-   */
-  /* modify */
-  new_obj->circle->center_x = o_current->circle->center_x;
-  new_obj->circle->center_y = o_current->circle->center_y;
-  new_obj->circle->radius   = o_current->circle->radius;
+  o_set_line_options (toplevel,
+                      new_obj,
+                      object->line_end,
+                      object->line_type,
+                      object->line_width,
+                      object->line_length,
+                      object->line_space);
 
-  o_set_line_options(toplevel, new_obj, o_current->line_end,
-		     o_current->line_type, o_current->line_width,
-		     o_current->line_length, o_current->line_space);
-  o_set_fill_options(toplevel, new_obj,
-		     o_current->fill_type, o_current->fill_width,
-		     o_current->fill_pitch1, o_current->fill_angle1,
-		     o_current->fill_pitch2, o_current->fill_angle2);
+  o_set_fill_options (toplevel,
+                      new_obj,
+                      object->fill_type,
+                      object->fill_width,
+                      object->fill_pitch1,
+                      object->fill_angle1,
+                      object->fill_pitch2,
+                      object->fill_angle2);
 
   new_obj->w_bounds_valid_for = NULL;
 
@@ -642,7 +643,9 @@ geda_circle_object_shortest_distance (TOPLEVEL *toplevel,
 {
   gboolean solid;
 
+  g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->circle != NULL, G_MAXDOUBLE);
+  g_return_val_if_fail (object->type == OBJ_CIRCLE, FALSE);
 
   solid = force_solid || object->fill_type != FILLING_HOLLOW;
 
