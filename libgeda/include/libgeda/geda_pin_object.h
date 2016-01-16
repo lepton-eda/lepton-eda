@@ -51,6 +51,18 @@ geda_pin_object_get_position (const GedaObject *object, gint *x, gint *y);
 gint
 geda_pin_object_get_width (const GedaObject *object);
 
+gint
+geda_pin_object_get_x0 (const GedaObject *object);
+
+gint
+geda_pin_object_get_x1 (const GedaObject *object);
+
+gint
+geda_pin_object_get_y0 (const GedaObject *object);
+
+gint
+geda_pin_object_get_y1 (const GedaObject *object);
+
 void
 geda_pin_object_mirror (TOPLEVEL *toplevel,
                         int world_centerx,
@@ -73,6 +85,18 @@ geda_pin_object_rotate (TOPLEVEL *toplevel,
 
 void
 geda_pin_object_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type);
+
+void
+geda_pin_object_set_x0 (GedaObject *object, gint x);
+
+void
+geda_pin_object_set_x1 (GedaObject *object, gint x);
+
+void
+geda_pin_object_set_y0 (GedaObject *object, gint y);
+
+void
+geda_pin_object_set_y1 (GedaObject *object, gint y);
 
 gchar*
 geda_pin_object_to_buffer (const GedaObject *object);
