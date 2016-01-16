@@ -59,13 +59,13 @@ AC_DEFUN([AX_DATA_DIRS],
     GEDADATADIR_expand=`eval "echo $GEDADATADIR" | sed -e"s:^NONE:$ac_default_prefix:"`
     AC_DEFINE_UNQUOTED([GEDADATADIR], ["$GEDADATADIR_expand"],
       [Define to gEDA/gaf shared data directory.
-Only libgeda should use this - apps should use s_path_sys_data()])
+Only libgeda should use this - apps should use eda_get_system_data_dirs()])
 
     if test "x$GEDARCDIR" != "x"; then
       GEDARCDIR_expand=`eval "echo $GEDARCDIR" | sed -e"s:^NONE:$ac_default_prefix:"`
       AC_DEFINE_UNQUOTED([GEDARCDIR], ["$GEDARCDIR_expand"],
         [Define to gEDA/gaf rc directory if different from GEDADATADIR.
-Only libgeda should use this - apps should use s_path_sys_config()])
+Only libgeda should use this - apps should use eda_get_system_data_dirs()])
     fi
   fi
 

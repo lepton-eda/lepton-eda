@@ -92,9 +92,6 @@ char *s_attrib_get(int counter);
 
 /* s_basic.c */
 gchar *s_expand_env_variables (const gchar *string);
-const char *s_path_sys_data ();
-const char *s_path_sys_config ();
-const char *s_path_user_config ();
 
 /* s_clib.c */
 void s_clib_free (void);
