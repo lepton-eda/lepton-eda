@@ -22,6 +22,23 @@
  *  \brief Functions operating on text drawing objects
  */
 
+/* construction, destruction */
+
+GedaObject*
+geda_text_object_new (TOPLEVEL *toplevel,
+                      gchar type,
+                      gint color,
+                      gint x,
+                      gint y,
+                      gint alignment,
+                      gint angle,
+                      const gchar *string,
+                      gint size,
+                      gint visibility,
+                      gint show_name_value);
+
+/* methods */
+
 gint
 geda_text_object_get_alignment (const GedaObject *object);
 
@@ -54,9 +71,6 @@ geda_text_object_set_x (GedaObject *object, gint x);
 
 void
 geda_text_object_set_y (GedaObject *object, gint y);
-
-OBJECT*
-o_text_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int alignment, int angle, const char *string, int size, int visibility, int show_name_value);
 
 void
 o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current);

@@ -32,17 +32,17 @@ check_construction ()
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
     gboolean visible = g_test_rand_bit ();
 
-    GedaObject *object0 = o_text_new (toplevel,
-                                      OBJ_TEXT,
-                                      color,
-                                      x,
-                                      y,
-                                      alignment,
-                                      angle,
-                                      string,
-                                      size,
-                                      visible,
-                                      show_name_value);
+    GedaObject *object0 = geda_text_object_new (toplevel,
+                                                OBJ_TEXT,
+                                                color,
+                                                x,
+                                                y,
+                                                alignment,
+                                                angle,
+                                                string,
+                                                size,
+                                                visible,
+                                                show_name_value);
 
     g_assert (object0 != NULL);
     g_assert_cmpint (OBJ_TEXT, ==, object0->type);
@@ -96,17 +96,17 @@ check_accessors ()
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
     gboolean visible = g_test_rand_bit ();
 
-    GedaObject *object0 = o_text_new (toplevel,
-                                      OBJ_TEXT,
-                                      color,
-                                      x,
-                                      y,
-                                      alignment,
-                                      angle,
-                                      string,
-                                      size,
-                                      visible,
-                                      show_name_value);
+    GedaObject *object0 = geda_text_object_new (toplevel,
+                                                OBJ_TEXT,
+                                                color,
+                                                x,
+                                                y,
+                                                alignment,
+                                                angle,
+                                                string,
+                                                size,
+                                                visible,
+                                                show_name_value);
 
     g_assert (object0 != NULL);
     g_assert_cmpint (OBJ_TEXT, ==, object0->type);
@@ -173,17 +173,17 @@ check_serialization ()
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
     gboolean visible = g_test_rand_bit ();
 
-    GedaObject *object0 = o_text_new (toplevel,
-                                      OBJ_TEXT,
-                                      color,
-                                      x,
-                                      y,
-                                      alignment,
-                                      angle,
-                                      string,
-                                      size,
-                                      visible,
-                                      show_name_value);
+    GedaObject *object0 = geda_text_object_new (toplevel,
+                                                OBJ_TEXT,
+                                                color,
+                                                x,
+                                                y,
+                                                alignment,
+                                                angle,
+                                                string,
+                                                size,
+                                                visible,
+                                                show_name_value);
 
     g_assert (object0 != NULL);
 

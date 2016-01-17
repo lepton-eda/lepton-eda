@@ -362,12 +362,20 @@ int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
  *  \note
  *  Caller is responsible for string; this function allocates its own copy.
  */
-OBJECT *o_text_new(TOPLEVEL *toplevel,
-		   char type, int color, int x, int y, int alignment,
-		   int angle, const char *string, int size,
-		   int visibility, int show_name_value)
+GedaObject*
+geda_text_object_new (TOPLEVEL *toplevel,
+                      gchar type,
+                      gint color,
+                      gint x,
+                      gint y,
+                      gint alignment,
+                      gint angle,
+                      const gchar *string,
+                      gint size,
+                      gint visibility,
+                      gint show_name_value)
 {
-  OBJECT *new_node=NULL;
+  GedaObject *new_node=NULL;
   TEXT *text;
 
   if (string == NULL) {
@@ -552,9 +560,17 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
     }
   }
 
-  new_obj = o_text_new(toplevel, type, color, x, y,
-                       alignment, angle, string,
-                       size, visibility, show_name_value);
+  new_obj = geda_text_object_new (toplevel,
+                                  type,
+                                  color,
+                                  x,
+                                  y,
+                                  alignment,
+                                  angle,
+                                  string,
+                                  size,
+                                  visibility,
+                                  show_name_value);
   g_free(string);
 
   return new_obj;
@@ -640,14 +656,17 @@ OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
 
-  new_obj = o_text_new (toplevel, OBJ_TEXT, o_current->color,
-                        o_current->text->x, o_current->text->y,
-                        o_current->text->alignment,
-                        o_current->text->angle,
-                        o_current->text->string,
-                        o_current->text->size,
-                        o_is_visible (toplevel, o_current) ? VISIBLE : INVISIBLE,
-                        o_current->show_name_value);
+  new_obj = geda_text_object_new (toplevel,
+                                  OBJ_TEXT,
+                                  o_current->color,
+                                  o_current->text->x,
+                                  o_current->text->y,
+                                  o_current->text->alignment,
+                                  o_current->text->angle,
+                                  o_current->text->string,
+                                  o_current->text->size,
+                                  o_is_visible (toplevel, o_current) ? VISIBLE : INVISIBLE,
+                                  o_current->show_name_value);
 
   return new_obj;
 }
