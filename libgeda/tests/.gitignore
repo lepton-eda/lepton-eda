@@ -24,4 +24,4 @@ test_net_object
 test_pin_object
 test_point
 test_string
-
+test_text_object

@@ -88,6 +88,157 @@
 /*! Size of a tab in characters */
 int tab_in_chars = 8;
 
+
+/*! \brief Get the text alignment
+ *
+ *  \param [in] object The text object
+ *  \return The text alignmemt
+ */
+gint
+geda_text_object_get_alignment (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, LOWER_LEFT);
+  g_return_val_if_fail (object->text != NULL, LOWER_LEFT);
+  g_return_val_if_fail (object->type == OBJ_TEXT, LOWER_LEFT);
+
+  return object->text->alignment;
+}
+
+/*! \brief Get the text angle
+ *
+ *  \param [in] object The text object
+ *  \return The text angle
+ */
+gint
+geda_text_object_get_angle (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->text != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
+
+  return object->text->angle;
+}
+
+/*! \brief Get the text size
+ *
+ *  \param [in] object The text object
+ *  \return The text size
+ */
+gint
+geda_text_object_get_size (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->text != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
+
+  return object->text->size;
+}
+
+/*! \brief Get the x coordinate of the text insertion point
+ *
+ *  \param [in] object The text object
+ *  \return The x coordinate of the insertion point
+ */
+gint
+geda_text_object_get_x (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->text != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
+
+  return object->text->x;
+}
+
+/*! \brief Get the y coordinate of the text insertion point
+ *
+ *  \param [in] object The text object
+ *  \return The y coodinate of the insertion point
+ */
+gint
+geda_text_object_get_y (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->text != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
+
+  return object->text->y;
+}
+
+/*! \brief Set the text alignment
+ *
+ *  \param [in,out] object The text object
+ *  \param [in] alignment The text alignmemt
+ */
+void
+geda_text_object_set_alignment (GedaObject *object, gint alignment)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->text != NULL);
+  g_return_if_fail (object->type == OBJ_TEXT);
+
+  object->text->alignment = alignment;
+}
+
+/*! \brief Set the text angle
+ *
+ *  \param [in,out] object The text object
+ *  \param [in] angle The text angle
+ */
+void
+geda_text_object_set_angle (GedaObject *object, gint angle)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->text != NULL);
+  g_return_if_fail (object->type == OBJ_TEXT);
+
+  object->text->angle = angle;
+}
+
+/*! \brief Set the text size
+ *
+ *  \param [in,out] object The text object
+ *  \param [in] size The text size
+ */
+void
+geda_text_object_set_size (GedaObject *object, gint size)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->text != NULL);
+  g_return_if_fail (object->type == OBJ_TEXT);
+
+  object->text->size = size;
+}
+
+/*! \brief Set the x coordinate of the text insertion point
+ *
+ *  \param [in,out] object The text object
+ *  \param [in] x the x coordinate of the text insertion point
+ */
+void
+geda_text_object_set_x (GedaObject *object, gint x)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->text != NULL);
+  g_return_if_fail (object->type == OBJ_TEXT);
+
+  object->text->x = x;
+}
+
+/*! \brief Set the y coordinate of the text insertion point
+ *
+ *  \param [in,out] object The text object
+ *  \param [in] y the y coordinate of the text insertion point
+ */
+void
+geda_text_object_set_y (GedaObject *object, gint y)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->text != NULL);
+  g_return_if_fail (object->type == OBJ_TEXT);
+
+  object->text->y = y;
+}
+
 /*! \brief update the visible part of a string
  *  \par Function Description
  *  If a string is an attribute, then it is possible to hide

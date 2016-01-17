@@ -22,6 +22,36 @@
  *  \brief Functions operating on text drawing objects
  */
 
+gint
+geda_text_object_get_alignment (const GedaObject *object);
+
+gint
+geda_text_object_get_angle (const GedaObject *object);
+
+gint
+geda_text_object_get_size (const GedaObject *object);
+
+gint
+geda_text_object_get_x (const GedaObject *object);
+
+gint
+geda_text_object_get_y (const GedaObject *object);
+
+void
+geda_text_object_set_alignment (GedaObject *object, gint alignment);
+
+void
+geda_text_object_set_angle (GedaObject *object, gint angle);
+
+void
+geda_text_object_set_size (GedaObject *object, gint size);
+
+void
+geda_text_object_set_x (GedaObject *object, gint x);
+
+void
+geda_text_object_set_y (GedaObject *object, gint y);
+
 OBJECT*
 o_text_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int alignment, int angle, const char *string, int size, int visibility, int show_name_value);
 
