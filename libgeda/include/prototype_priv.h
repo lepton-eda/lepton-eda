@@ -60,12 +60,6 @@ void s_conn_remove_object(PAGE *page, OBJECT *object);
 gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean strict);
 gchar* s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp);
 
-/* s_textbuffer.c */
-TextBuffer *s_textbuffer_new (const gchar *data, const gint size);
-TextBuffer *s_textbuffer_free (TextBuffer *tb);
-const gchar *s_textbuffer_next (TextBuffer *tb, const gssize count);
-const gchar *s_textbuffer_next_line (TextBuffer *tb);
-
 /* s_weakref.c */
 void s_weakref_notify (void *dead_ptr, GList *weak_refs);
 GList *s_weakref_add (GList *weak_refs, void (*notify_func)(void *, void *), void *user_data);
