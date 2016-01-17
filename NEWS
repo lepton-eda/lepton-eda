@@ -2,10 +2,35 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2015 gEDA Developers
+Copyright (C) 1998-2016 gEDA Developers
 
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
+
+Notable changes in gEDA/gaf 1.9.2.1p
+====================================
+
+* gEDA/gaf tools now search for data and configuration files in the
+  standard XDG directories.  By default, these are:
+
+  - `/usr/local/share/gEDA/` and `/usr/share/gEDA` for system data
+  - `/etc/xdg/gEDA/` for system configuration
+  - `$HOME/.local/share/gEDA/` for per-user data
+  - `$HOME/.config/gEDA/` for per-user configuration.
+
+  However, gEDA/gaf tools will still use `$HOME/.gEDA` for per-user
+  files if that directory exists, they still obey the `$GEDADATA` and
+  `$GEDADATARC` environment variables, and by default the search path
+  includes the installation prefix selected when compiling gEDA/gaf.
+
+* The configure script now supports an `--enable-relocatable` switch.
+  When specified, gEDA/gaf tools do not have the configured prefix
+  compiled into them.
+
+* The configure script now supports a `--disable-deprecated` switch.
+  When specified, various deprecated features and behaviour are
+  disabled, which may break backward-compatibility with some
+  configurations.
 
 Notable changes in gEDA/gaf 1.9.2
 =================================
