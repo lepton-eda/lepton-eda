@@ -19,6 +19,10 @@
 
 #include <config.h>
 
+#if !defined(G_OS_WIN32)
+#	include <libgen.h>
+#endif
+
 #include "libgeda_priv.h"
 
 /* For convenience in this file only! */
@@ -38,6 +42,45 @@ static const gchar const USER_DOTDIR[] = ".gEDA";
 /* ================================================================
  * Private initialisation functions
  * ================================================================ */
+
+/*! \brief Get the gEDA installation's data directory.
+ * Attempt to find the "share/gEDA" directory in the prefix where gEDA
+ * was installed. */
+static const gchar *
+get_install_data_dir(void)
+{
+	static const gchar *install_dir = NULL;
+	static gsize is_init = 0;
+	if (g_once_init_enter(&is_init)) {
+		gchar *tmp_dir = NULL;
+
+#if defined(G_OS_WIN32)
+		/* The installation data directory should be the last element in
+		 *  g_get_system_data_dirs(). */
+		static const gchar * const *sys_dirs;
+		for (gint i = 0; sys_dirs[i]; ++i, tmp_dir = sys_dirs[i]);
+
+#elif defined(ENABLE_RELOCATABLE)
+		/* Look at /proc/self/exe, if it exists */
+		if (g_file_test("/proc/self/exe", G_FILE_TEST_IS_SYMLINK)) {
+			gchar *bin = canonicalize_file_name("/proc/self/exe");
+			gchar *prefix = dirname(dirname(bin));
+			tmp_dir = g_build_filename(prefix, "share/gEDA", NULL);
+			free(bin);
+		}
+#endif
+
+		/* Check that the directory actually exists */
+		if (tmp_dir && !g_file_test(tmp_dir, G_FILE_TEST_IS_DIR)) {
+			g_free(tmp_dir);
+		} else {
+			install_dir = tmp_dir;
+		}
+
+		g_once_init_leave(&is_init, 1);
+	}
+	return install_dir;
+}
 
 /*! \brief Copy search paths into result structure.
  * Helper function that duplicated search paths from the various
@@ -90,7 +133,18 @@ copy_search_list(const gchar **output,
 		}
 		++copied;
 	}
-#endif /* !G_OS_WIN32 && !ENABLE_RELOCATABLE */
+#else
+	/* Append the guessed install directory to the list, if it's not in
+	 * there already.*/
+	const gchar *install_dir = get_install_data_dir();
+	if (install_dir) {
+		if (output && !g_strv_contains(output, install_dir)) {
+			output[copied] = g_strdup(install_dir);
+		}
+		++copied;
+	}
+#endif
+
 
 	if (output) output[copied] = NULL;
 	++copied;
@@ -144,8 +198,11 @@ eda_paths_init_env(void)
 #if defined(ENABLE_DEPRECATED)
 	static gsize is_init = 0;
 
-	/* If $GEDADATA is not set, find a directory containing scheme/geda.scm
-	 * and set $GEDADATA to it. */
+	/* If $GEDADATA is not set, find a directory containing
+	 * scheme/geda.scm and set $GEDADATA to it.  Note that this
+	 * *doesn't* use get_install_data_dir() because the user might have
+	 * deliberately set $XDG_DATA_DIRS to put other directories ahead of
+	 * the installation data directory. */
 	if (g_once_init_enter(&is_init)) {
 
 		gboolean found = FALSE;
