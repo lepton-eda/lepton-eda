@@ -1,0 +1,219 @@
+==============================
+ gEDA Relocatable Directories
+==============================
+
+:Author: Peter Brett
+:Status: Proposed Specification
+
+..
+  This document can be processed with docutils <http://docutils.sf.net>
+  to generate HTML or LaTeX.  However, the markup is designed to be
+  fully human-readable as-is.
+
+.. contents::
+..
+    1  Introduction
+    2  Backwards compatibility
+    3  Directories logic
+      3.1  System data search path
+    4  References
+
+Introduction
+============
+
+This document describes a new API and approach for libgeda for
+locating gEDA's resource files, configuration files, and other
+run-time resources.  In particular, the new API is designed to:
+
+* facilitate relocatable builds (where a gEDA installation tree can be
+  moved around the system without needing any further configuration)
+
+* improve the experience for Windows users by reducing the number of
+  environment variables that need to be correctly configured in order
+  for gEDA to run
+
+* better respect the *XDG Base Directory Specification* [XDGDIRS]_ on
+  UNIX platforms.
+
+The API takes advantage of relevant functions provided by [GLIB]_.
+
+Backwards compatibility
+=======================
+
+There are some key considerations for backwards compatibility:
+
+1) gEDA historically observes the `$GEDADATA` environment variable by
+   using the directory it specifies as the *sole* source of system
+   data.  Similarly, `$GEDARCDIR` specifies the directory for system
+   configuration.
+
+2) gEDA also historically *ensures* that `$GEDADATA` points to the
+   directory into which gEDA was installed, and there are a lot users
+   who depend on that being the case.
+
+3) In the past the installation path (specified with the `--prefix`
+   argument to `--configure` has been used as the sole location for
+   system data in the absence of the `$GEDADATA`.  And similarly, the
+   `--with-rcdir` option has been used to provide a compiled-in
+   default for the system configuration directory.
+
+4) The legacy location for user data and configuration is
+   `$HOME/.gEDA` (or `$HOMEDRIVE$HOMEPATH/.gEDA` on Windows.
+
+The scheme proposed in this specification provides backwards
+compatibility with these behaviours.
+
+Directories API
+===============
+
+System data search path
+-----------------------
+
+C function::
+
+  const gchar * const * eda_get_system_data_dirs(void)
+
+Scheme function::
+
+  sys-data-dirs
+
+The system data search path consists of multiple directories, all
+searched in order.  The list is constructed as follows:
+
+1. If the `$GEDADATA` environment variable is set and deprecated
+   features are enabled, it is added to the list.  Otherwise, the
+   "gEDA" subdirectory of each entry in `g_get_system_data_dirs()` is
+   added to the list.
+
+2. If neither relocatable builds are enabled nor the target platform
+   is Windows, the value of the `GEDADATADIR` preprocessor macro
+   (usually `${prefix}/share/gEDA`) is appended to the list.
+
+For backwards compatibility, if the `$GEDADATA` environment variable
+is not set, then it is set to the first directory in the search path
+that contains a distinctive installed file (e.g. `scheme/geda.scm`).
+
+System configuration search path
+--------------------------------
+
+C function::
+
+  const gchar * const * eda_get_system_config_dirs(void)
+
+Scheme function::
+
+  sys-config-dirs
+
+The system configuration search path also consists of multiple
+directories to be searched in order.  The list is constructed as
+follows:
+
+1. If the `$GEDADATARC` environment variable is set and deprecated
+   features are enabled, it is added to the list.  Otherwise, if
+   `$GEDADATA` is set and deprecated features are enabled, *that* is
+   added to the list.  Otherwise, the "gEDA" subdirectory of each
+   entry in `g_get_system_config_dirs()` is added to the list.
+
+2. If neither relocatable builds are enabled nor the target platform
+   is Windows, the value of the `GEDARCDIR` preprocessor macro
+   (usually `${prefix}/share/gEDA`) is appended to the list.
+
+Per-user data path
+------------------
+
+C function::
+
+  const gchar * eda_get_user_data_dir(void)
+
+Scheme function::
+
+  (user-data-dir)
+
+Per-user data is read from a single directory.
+
+1. If `$HOME/.gEDA` exists (or `$HOMEDRIVE/$HOMEPATH/.gEDA` on
+   Windows), this directory is returned.
+
+2. Otherwise, the `gEDA` subdirectory of `g_get_user_data_dir()` is
+   returned.
+
+Per-user configuration path
+---------------------------
+
+C function::
+
+  const gchar * eda_get_user_config_dir(void)
+
+Scheme function::
+
+  (user-config-dir)
+
+Per-user data is stored in a single directory.
+
+1. If `$HOME/.gEDA` exists (or `$HOMEDRIVE/$HOMEPATH/.gEDA` on
+   Windows), this directory is returned.
+
+2. Otherwise, the `gEDA` subdirectory of `g_get_user_config_dir()` is
+   returned.
+
+Related changes
+===============
+
+libgeda APIs
+------------
+
+* During libgeda initialisation, the `scheme` subdirectory of each of
+  the `eda_get_system_data_paths()` should be added to the Guile load
+  path.
+
+* The `s_path_sys_config()`, `s_path_sys_data()` and
+  `s_path_user_config()` functions should be removed.
+
+* The `EdaConfig` API should use `eda_get_system_config_dirs()` and
+  `eda_get_user_config_dir()` instead of its own path searching logic.
+
+Scheme APIs
+-----------
+
+* `sys-data-dirs`, `sys-config-dirs`, `user-data-dir` and
+  `user-config-dir` should be re-implemented to match the
+  specification above.
+
+gschem
+------
+
+* `gschem-gtkrc` file loading should load the first such file found in
+  the system configuration path, before loading any `gschem-gtkrc`
+  file in the per-user configuration path.
+
+* There's no need to show a warning dialog if the system data search
+  path is empty (since it should *never* be empty).  It should become
+  an unrecoverable error.
+
+* The `icons` subdirectory of each of the directories in the system
+  configuration path should be added to the GTK+ icon theme search
+  path.
+
+* The colour map-switching actions in the gschem UI should search for
+  the colour map in the system configuration directories.
+
+gattrib
+-------
+
+* The `gattrib-menus.xml` file should be found by searching the system
+  data search path.
+
+References
+==========
+
+.. [GLIB]    The GNOME Project, "GLib Reference Manual".
+             <http://library.gnome.org/devel/glib/stable/>
+
+.. [XDGDIRS] W. Bastian, R. Lortie and L. Poettering, "XDG Base
+             Directory Specification", Version 0.7.
+             <http://www.freedesktop.org/wiki/Standards/basedir-spec>
+
+..
+   Local Variables:
+   mode: rst
+   End:

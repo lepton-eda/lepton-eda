@@ -1,6 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
  * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,10 +83,15 @@ SCM_DEFINE (platform, "%platform", 0, 0, 0, (),
 SCM_DEFINE (sys_data_dirs, "%sys-data-dirs", 0, 0, 0, (),
             "Return a list of search directories for system data.")
 {
-  /* s_path_sys_data() returns a raw environment string, so assume
-   * it's in the current locale's encoding. */
-  SCM dir = scm_from_locale_string (s_path_sys_data ());
-  return scm_list_1 (dir);
+	const gchar * const * dirs = eda_get_system_data_dirs();
+	SCM lst_s = SCM_EOL;
+
+	/* dirs contains raw environment strings, so assume it's in the
+	 * current locale's encoding. */
+	for (gint i = 0; dirs[i]; ++i) {
+		lst_s = scm_cons(scm_from_locale_string(dirs[i]), lst_s);
+	}
+	return lst_s;
 }
 
 /*! \brief Get system config directory directories.
@@ -101,10 +107,50 @@ SCM_DEFINE (sys_data_dirs, "%sys-data-dirs", 0, 0, 0, (),
 SCM_DEFINE (sys_config_dirs, "%sys-config-dirs", 0, 0, 0, (),
             "Return a list of search directories for system configuration.")
 {
-  /* s_path_sys_data() returns a raw environment string, so assume
+	const gchar * const * dirs = eda_get_system_config_dirs();
+	SCM lst_s = SCM_EOL;
+
+	/* dirs contains raw environment strings, so assume it's in the
+	 * current locale's encoding. */
+	for (gint i = 0; dirs[i]; ++i) {
+		lst_s = scm_cons(scm_from_locale_string (dirs[i]), lst_s);
+	}
+	return lst_s;
+}
+
+/*! \brief Get user data directory.
+ * \par Function Description
+ * Returns the directory where per-user data should be stored
+ *
+ * \note Scheme API: Implements the %user-data-dir procedure is the
+ * (geda core os) module.
+ *
+ * \return a string.
+ */
+SCM_DEFINE (user_data_dir, "%user-data-dir", 0, 0, 0, (),
+            "Return the directory for user data.")
+{
+  /* eda_get_user_data_dir() returns a raw environment string, so assume
    * it's in the current locale's encoding. */
-  SCM dir = scm_from_locale_string (s_path_sys_config ());
-  return scm_list_1 (dir);
+  return scm_from_locale_string(eda_get_user_data_dir());
+}
+
+/*! \brief Get user config directory.
+ * \par Function Description
+ * Returns the directory where per-user configuration information
+ * should be stored
+ *
+ * \note Scheme API: Implements the %user-config-dir procedure is the
+ * (geda core os) module.
+ *
+ * \return a string.
+ */
+SCM_DEFINE (user_config_dir, "%user-config-dir", 0, 0, 0, (),
+            "Return the directory for user configuration.")
+{
+  /* eda_get_user_config_dir() returns a raw environment string, so assume
+   * it's in the current locale's encoding. */
+  return scm_from_locale_string(eda_get_user_config_dir());
 }
 
 /*!
@@ -121,6 +167,7 @@ init_module_geda_core_os ()
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_platform, s_sys_data_dirs, s_sys_config_dirs,
+                s_user_data_dir, s_user_config_dir,
                 NULL);
 }
 

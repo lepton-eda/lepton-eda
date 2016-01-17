@@ -1,8 +1,8 @@
 # geda-data-dirs.m4                                     -*-Autoconf-*-
-# serial 1.0
+# serial 2.0
 
 dnl gEDA data and configuration directories
-dnl Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
+dnl Copyright (C) 2009, 2016  Peter Brett <peter@peter-b.co.uk>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ dnl Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 AC_DEFUN([AX_DATA_DIRS],
 [
   AC_PREREQ([2.60])dnl
+  AC_REQUIRE([AX_OPTION_RELOCATABLE])dnl
 
   # Check where to install ordinary data files (e.g. symbols and
   # gnetlist backends)
@@ -52,22 +53,25 @@ AC_DEFUN([AX_DATA_DIRS],
     [ AC_MSG_RESULT([$GEDADATADIR])
   ])
 
-  # Now define some preprocessor symbols with the *expanded* values
-  GEDADATADIR_expand=`eval "echo $GEDADATADIR" | sed -e"s:^NONE:$ac_default_prefix:"`
-  AC_DEFINE_UNQUOTED([GEDADATADIR], ["$GEDADATADIR_expand"],
-    [Define to gEDA/gaf shared data directory.
-Only libgeda should use this - apps should use s_path_sys_data()])
+  # Now define some preprocessor symbols with the *expanded* values,
+  # but only if not doing a relocatable build.
+  if test "x$enable_relocatable" != "xyes"; then
+    GEDADATADIR_expand=`eval "echo $GEDADATADIR" | sed -e"s:^NONE:$ac_default_prefix:"`
+    AC_DEFINE_UNQUOTED([GEDADATADIR], ["$GEDADATADIR_expand"],
+      [Define to gEDA/gaf shared data directory.
+Only libgeda should use this - apps should use eda_get_system_data_dirs()])
 
-  if test "x$GEDARCDIR" != "x"; then
-    GEDARCDIR_expand=`eval "echo $GEDARCDIR" | sed -e"s:^NONE:$ac_default_prefix:"`
-    AC_DEFINE_UNQUOTED([GEDARCDIR], ["$GEDARCDIR_expand"],
-      [Define to gEDA/gaf rc directory if different from GEDADATADIR.
-Only libgeda should use this - apps should use s_path_sys_config()])
-
-  else
-    GEDARCDIR=$GEDADATADIR
+    if test "x$GEDARCDIR" != "x"; then
+      GEDARCDIR_expand=`eval "echo $GEDARCDIR" | sed -e"s:^NONE:$ac_default_prefix:"`
+      AC_DEFINE_UNQUOTED([GEDARCDIR], ["$GEDARCDIR_expand"],
+        [Define to gEDA/gaf rc directory if different from GEDADATADIR.
+Only libgeda should use this - apps should use eda_get_system_data_dirs()])
+    fi
   fi
 
+  if test "x$GEDARCDIR" != "x"; then
+    GEDARCDIR=$GEDADATADIR
+  fi
   AC_SUBST([GEDADATADIR])
   AC_SUBST([GEDARCDIR])
 

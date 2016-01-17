@@ -2,6 +2,7 @@
  * libgeda - gEDA's library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -231,14 +232,27 @@ g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
   gchar *sysname = NULL;
   gchar *rcfile = NULL;
   gboolean status;
+	const gchar * const * sys_dirs = eda_get_system_config_dirs();
+	EdaConfig *cfg = eda_config_get_system_context();
 
   /* Default to gafrc */
   rcname = (rcname != NULL) ? rcname : "gafrc";
 
   sysname = g_strdup_printf ("system-%s", rcname);
-  rcfile = g_build_filename (s_path_sys_config (), sysname, NULL);
-  status = g_rc_parse_file (toplevel, rcfile,
-                            eda_config_get_system_context (), err);
+	for (gint i = 0; sys_dirs[i]; ++i)
+	{
+		rcfile = g_build_filename (sys_dirs[i], sysname, NULL);
+		if (g_file_test(rcfile, G_FILE_TEST_IS_REGULAR)) {
+			break;
+		}
+		g_free(rcfile);
+		rcfile = NULL;
+	}
+
+	if (rcfile) {
+		status = g_rc_parse_file (toplevel, rcfile, cfg, err);
+	}
+
   g_free (rcfile);
   g_free (sysname);
   return status;
@@ -264,7 +278,7 @@ g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
   /* Default to gafrc */
   rcname = (rcname != NULL) ? rcname : "gafrc";
 
-  rcfile = g_build_filename (s_path_user_config (), rcname, NULL);
+  rcfile = g_build_filename (eda_get_user_config_dir (), rcname, NULL);
   status = g_rc_parse_file (toplevel, rcfile,
                             eda_config_get_user_context (), err);
   g_free (rcfile);

@@ -49,7 +49,7 @@ AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 
 AM_PROG_CC_C_O
-AX_GCC_FLAGS([-Wall])
+AX_GCC_FLAGS([-Wall -std=gnu99])
 
 AC_PROG_MKDIR_P
 AM_PROG_LEX
@@ -151,6 +151,8 @@ AX_AWK_FEATURES
 
 # Assertions
 AX_OPTION_ASSERT
+# Deprecated features
+AX_OPTION_DEPRECATED
 # Viewing documentation
 AX_OPTION_URI_VIEWER
 # API documentation

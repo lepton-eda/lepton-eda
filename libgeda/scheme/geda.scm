@@ -1,8 +1,14 @@
 ; -*-Scheme-*-
 (use-modules (geda os) (ice-9 optargs) (ice-9 ftw))
+
 (define path-sep file-name-separator-string)
-(define geda-data-path (car (sys-data-dirs)))
-(define geda-rc-path (car (sys-config-dirs)))
+
+;; Legacy gEDA data & configuration directories.  These functions will
+;; usually return #f if gEDA was compiled with --disable-deprecated.
+;; Use the sys-data-dirs and sys-config-dirs functions from the (geda
+;; os) module instead.
+(define geda-data-path (getenv "GEDADATA"))
+(define geda-rc-path (or (getenv "GEDADATARC") (getenv "GEDADATA")))
 
 (define (build-path first . rest)
   (if (null? rest) first
@@ -51,6 +57,30 @@
       (closedir dir))
     #f
   )))
+
+;; Load an rc file from the system configuration path (rather than the
+;; regular Scheme load path)
+(define (load-rc-from-sys-config-dirs basename)
+  (define any (@ (srfi srfi-1) any))
+  (define sys-config-dirs (@ (geda os) sys-config-dirs))
+
+  (define (dir-has-file? dir ext)
+    (let ((path (build-path dir
+                            (string-append basename ext))))
+      (and (file-exists? path)
+           (regular-file? path)
+           path)))
+
+  (define (dir-has-scm? dir)
+    (any (lambda (x) (dir-has-file? dir x))
+          '("" ".scm")))
+
+  (define (find-first-file)
+    (any dir-has-scm? (sys-config-dirs)))
+
+  (let ((rc-file (find-first-file)))
+    ;; Use primitive-load to suppress autocompilation
+    (if rc-file (primitive-load rc-file))))
 
 ;; Add all symbol libraries found below DIR to be searched for
 ;; components, naming them with an optional PREFIX.

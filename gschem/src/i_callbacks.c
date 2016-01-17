@@ -1344,7 +1344,7 @@ DEFINE_I_CALLBACK (view_dark_colors)
 
   x_color_free ();
   /* Change the scheme here */
-  g_scm_c_eval_string_protected ("(load (build-path geda-rc-path \"gschem-colormap-darkbg\"))");
+  g_scm_c_eval_string_protected ("(load-rc-from-sys-config-dirs \"gschem-colormap-darkbg\")");
   x_color_allocate ();
 
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
@@ -1361,7 +1361,7 @@ DEFINE_I_CALLBACK (view_light_colors)
 
   x_color_free ();
   /* Change the scheme here */
-  g_scm_c_eval_string_protected ("(load (build-path geda-rc-path \"gschem-colormap-lightbg\"))");
+  g_scm_c_eval_string_protected ("(load-rc-from-sys-config-dirs \"gschem-colormap-lightbg\")");
   x_color_allocate ();
 
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
@@ -1378,7 +1378,7 @@ DEFINE_I_CALLBACK (view_bw_colors)
 
   x_color_free ();
   /* Change the scheme here */
-  g_scm_c_eval_string_protected ("(load (build-path geda-rc-path \"gschem-colormap-bw\"))");
+  g_scm_c_eval_string_protected ("(load-rc-from-sys-config-dirs \"gschem-colormap-bw\")");
   x_color_allocate ();
 
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
