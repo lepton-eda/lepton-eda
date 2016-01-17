@@ -121,12 +121,163 @@ geda_pin_object_get_position (const GedaObject *object, gint *x, gint *y)
   return TRUE;
 }
 
+/*! \brief Get the x coordinate of first endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in] object The line
+ *  \return The x coordinate for the first endpoint
+ */
+gint
+geda_pin_object_get_x0 (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->line != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_PIN, 0);
+
+  return object->line->x[0];
+}
+
+/*! \brief Get the x coordinate of second endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in] object The line
+ *  \return The x coordinate for the second endpoint
+ */
+gint
+geda_pin_object_get_x1 (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->line != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_PIN, 0);
+
+  return object->line->x[1];
+}
+
+/*! \brief Get the y coordinate of first endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in] object The line
+ *  \return The y coordinate for the first endpoint
+ */
+gint
+geda_pin_object_get_y0 (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->line != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_PIN, 0);
+
+  return object->line->y[0];
+}
+
+/*! \brief Get the y coordinate of second endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in] object The line
+ *  \return The y coordinate for the second endpoint
+ */
+gint
+geda_pin_object_get_y1 (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->line != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_PIN, 0);
+
+  return object->line->y[1];
+}
+
+/*! \brief Set the x coordinate of first endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in,out] object The line
+ *  \param [in] x The new x coordinate for the first endpoint
+ */
+void
+geda_pin_object_set_x0 (GedaObject *object, gint x)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_PIN);
+
+  object->line->x[0] = x;
+}
+
+/*! \brief Set the x coordinate of second endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in,out] object The line
+ *  \param [in] x The new x coordinate for the second endpoint
+ */
+void
+geda_pin_object_set_x1 (GedaObject *object, gint x)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_PIN);
+
+  object->line->x[1] = x;
+}
+
+/*! \brief Set the y coordinate of first endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in,out] object The line
+ *  \param [in] y The new y coordinate for the first endpoint
+ */
+void
+geda_pin_object_set_y0 (GedaObject *object, gint y)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_PIN);
+
+  object->line->y[0] = y;
+}
+
+/*! \brief Set the y coordinate of second endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in,out] object The line
+ *  \param [in] y The new y coordinate for the second endpoint
+ */
+void
+geda_pin_object_set_y1 (GedaObject *object, gint y)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_PIN);
+
+  object->line->y[1] = y;
+}
+
 /*! \brief create a new pin object
  *  \par Function Description
  *  This function creates and returns a new pin object.
  *
  *  \param [in]     toplevel    The TOPLEVEL object.
- *  \param [in]     type        The OBJECT type (usually OBJ_PIN)
  *  \param [in]     color       The color of the pin
  *  \param [in]     x1          x-coord of the first point
  *  \param [in]     y1          y-coord of the first point
@@ -137,12 +288,18 @@ geda_pin_object_get_position (const GedaObject *object, gint *x, gint *y)
  *  \return A new pin OBJECT
  */
 OBJECT*
-geda_pin_object_new (TOPLEVEL *toplevel, char type, int color,
-                     int x1, int y1, int x2, int y2, int pin_type, int whichend)
+geda_pin_object_new (TOPLEVEL *toplevel,
+                     int color,
+                     int x1,
+                     int y1,
+                     int x2,
+                     int y2,
+                     int pin_type,
+                     int whichend)
 {
   OBJECT *new_node;
 
-  new_node = s_basic_new_object(type, "pin");
+  new_node = s_basic_new_object(OBJ_PIN, "pin");
   new_node->color = color;
 
   new_node->line = geda_line_new ();
@@ -214,8 +371,14 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
     color = DEFAULT_COLOR;
   }
 
-  new_obj = geda_pin_object_new (toplevel, type, color, x1, y1, x2, y2,
-                                 pin_type, whichend);
+  new_obj = geda_pin_object_new (toplevel,
+                                 color,
+                                 x1,
+                                 y1,
+                                 x2,
+                                 y2,
+                                 pin_type,
+                                 whichend);
 
   return new_obj;
 }
@@ -236,23 +399,19 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
 gchar*
 geda_pin_object_to_buffer (const GedaObject *object)
 {
-  gchar *buffer;
-
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
   g_return_val_if_fail (object->type == OBJ_PIN, NULL);
 
-  buffer = g_strdup_printf ("%c %d %d %d %d %d %d %d",
-                            object->type,
-                            object->line->x[0],
-                            object->line->y[0],
-                            object->line->x[1],
-                            object->line->y[1],
-                            geda_object_get_color (object),
-                            object->pin_type,
-                            object->whichend);
-
-  return buffer;
+  return g_strdup_printf ("%c %d %d %d %d %d %d %d",
+                          OBJ_PIN,
+                          geda_pin_object_get_x0 (object),
+                          geda_pin_object_get_y0 (object),
+                          geda_pin_object_get_x1 (object),
+                          geda_pin_object_get_y1 (object),
+                          geda_object_get_color (object),
+                          object->pin_type,
+                          object->whichend);
 }
 
 /*! \brief move a pin object
@@ -297,10 +456,14 @@ geda_pin_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   g_return_val_if_fail (o_current->line != NULL, NULL);
   g_return_val_if_fail (o_current->type == OBJ_PIN, NULL);
 
-  new_obj = geda_pin_object_new (toplevel, OBJ_PIN, o_current->color,
-                                 o_current->line->x[0], o_current->line->y[0],
-                                 o_current->line->x[1], o_current->line->y[1],
-                                 o_current->pin_type, o_current->whichend);
+  new_obj = geda_pin_object_new (toplevel,
+                                 o_current->color,
+                                 o_current->line->x[0],
+                                 o_current->line->y[0],
+                                 o_current->line->x[1],
+                                 o_current->line->y[1],
+                                 o_current->pin_type,
+                                 o_current->whichend);
 
   return new_obj;
 }

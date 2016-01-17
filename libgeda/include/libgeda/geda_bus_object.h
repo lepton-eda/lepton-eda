@@ -24,28 +24,30 @@
 
 /* construction, destruction */
 
-OBJECT*
+GedaObject*
 geda_bus_object_new (TOPLEVEL *toplevel,
-                     char type,
-                     int color,
-                     int x1,
-                     int y1,
-                     int x2,
-                     int y2,
-                     int bus_ripper_direction);
+                     gint color,
+                     gint x1,
+                     gint y1,
+                     gint x2,
+                     gint y2,
+                     gint bus_ripper_direction);
 
-OBJECT*
-geda_bus_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+GedaObject*
+geda_bus_object_copy (TOPLEVEL *toplevel, const GedaObject *o_current);
 
 /* methods */
 
 void
 geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
-                                  const OBJECT *object,
+                                  const GedaObject *object,
                                   GedaBounds *bounds);
 
 gboolean
 geda_bus_object_get_position (const GedaObject *object, gint *x, gint *y);
+
+gint
+geda_bus_object_get_ripper_direction (const GedaObject *object);
 
 gint
 geda_bus_object_get_x0 (const GedaObject *object);
@@ -61,26 +63,29 @@ geda_bus_object_get_y1 (const GedaObject *object);
 
 void
 geda_bus_object_mirror (TOPLEVEL *toplevel,
-                        int world_centerx,
-                        int world_centery,
+                        gint world_centerx,
+                        gint world_centery,
                         OBJECT *object);
 
 void
 geda_bus_object_modify (TOPLEVEL *toplevel,
-                        OBJECT *object,
-                        int x,
-                        int y,
-                        int whichone);
+                        GedaObject *object,
+                        gint x,
+                        gint y,
+                        gint whichone);
 
-int
-geda_bus_object_orientation (OBJECT *object);
+gint
+geda_bus_object_orientation (const GedaObject *object);
 
 void
 geda_bus_object_rotate (TOPLEVEL *toplevel,
-                        int world_centerx,
-                        int world_centery,
-                        int angle,
-                        OBJECT *object);
+                        gint world_centerx,
+                        gint world_centery,
+                        gint angle,
+                        GedaObject *object);
+
+void
+geda_bus_object_set_ripper_direction (GedaObject *object, gint direction);
 
 void
 geda_bus_object_set_x0 (GedaObject *object, gint x);
@@ -98,9 +103,9 @@ gchar*
 geda_bus_object_to_buffer (const GedaObject *object);
 
 void
-geda_bus_object_translate (GedaObject *object, int dx, int dy);
+geda_bus_object_translate (GedaObject *object, gint dx, gint dy);
 
-OBJECT*
+GedaObject*
 o_bus_read (TOPLEVEL *toplevel,
             const char buf[],
             unsigned int release_ver,

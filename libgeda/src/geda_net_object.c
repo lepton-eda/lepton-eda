@@ -55,6 +55,158 @@ geda_net_object_get_position (const GedaObject *object, gint *x, gint *y)
   return TRUE;
 }
 
+/*! \brief Get the x coordinate of first endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in] object The line
+ *  \return The x coordinate for the first endpoint
+ */
+gint
+geda_net_object_get_x0 (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->line != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_NET, 0);
+
+  return object->line->x[0];
+}
+
+/*! \brief Get the x coordinate of second endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in] object The line
+ *  \return The x coordinate for the second endpoint
+ */
+gint
+geda_net_object_get_x1 (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->line != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_NET, 0);
+
+  return object->line->x[1];
+}
+
+/*! \brief Get the y coordinate of first endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in] object The line
+ *  \return The y coordinate for the first endpoint
+ */
+gint
+geda_net_object_get_y0 (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->line != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_NET, 0);
+
+  return object->line->y[0];
+}
+
+/*! \brief Get the y coordinate of second endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in] object The line
+ *  \return The y coordinate for the second endpoint
+ */
+gint
+geda_net_object_get_y1 (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->line != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_NET, 0);
+
+  return object->line->y[1];
+}
+
+/*! \brief Set the x coordinate of first endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in,out] object The line
+ *  \param [in] x The new x coordinate for the first endpoint
+ */
+void
+geda_net_object_set_x0 (GedaObject *object, gint x)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_NET);
+
+  object->line->x[0] = x;
+}
+
+/*! \brief Set the x coordinate of second endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in,out] object The line
+ *  \param [in] x The new x coordinate for the second endpoint
+ */
+void
+geda_net_object_set_x1 (GedaObject *object, gint x)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_NET);
+
+  object->line->x[1] = x;
+}
+
+/*! \brief Set the y coordinate of first endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in,out] object The line
+ *  \param [in] y The new y coordinate for the first endpoint
+ */
+void
+geda_net_object_set_y0 (GedaObject *object, gint y)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_NET);
+
+  object->line->y[0] = y;
+}
+
+/*! \brief Set the y coordinate of second endpoint
+ *
+ *  The coordinate properties are broken out individually to make it easier for
+ *  the GUI. This way, the GUI does not need as many adapters to interface to
+ *  a line boxed type.
+ *
+ *  \param [in,out] object The line
+ *  \param [in] y The new y coordinate for the second endpoint
+ */
+void
+geda_net_object_set_y1 (GedaObject *object, gint y)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->line != NULL);
+  g_return_if_fail (object->type == OBJ_NET);
+
+  object->line->y[1] = y;
+}
+
 /*! \brief Calculate the bounds of the net
  *
  *  On failure, this function sets the bounds to empty.
@@ -173,22 +325,17 @@ OBJECT *o_net_read (TOPLEVEL *toplevel, const char buf[],
 gchar*
 geda_net_object_to_buffer (const GedaObject *object)
 {
-  int x1, x2, y1, y2;
-  char *buf;
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->line != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_NET, NULL);
 
-  x1 = object->line->x[0];
-  y1 = object->line->y[0];
-  x2 = object->line->x[1];
-  y2 = object->line->y[1];
-
-  buf = g_strdup_printf ("%c %d %d %d %d %d",
-                         object->type,
-                         x1,
-                         y1,
-                         x2,
-                         y2,
-                         geda_object_get_color (object));
-  return (buf);
+  return g_strdup_printf ("%c %d %d %d %d %d",
+                          OBJ_NET,
+                          geda_net_object_get_x0 (object),
+                          geda_net_object_get_y0 (object),
+                          geda_net_object_get_x1 (object),
+                          geda_net_object_get_y1 (object),
+                          geda_object_get_color (object));
 }
 
 /*! \brief move a net object
