@@ -649,24 +649,29 @@ geda_text_object_translate (GedaObject *object, int dx, int dy)
  *  This function creates a copy of the text object \a o_current.
  *
  *  \param [in] toplevel     The TOPLEVEL object
- *  \param [in] o_current    The object that is copied
+ *  \param [in] object    The object that is copied
  *  \return a new text object
  */
-OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
+GedaObject*
+geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
 {
-  OBJECT *new_obj;
+  GedaObject *new_obj;
+
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->text != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_TEXT, NULL);
 
   new_obj = geda_text_object_new (toplevel,
                                   OBJ_TEXT,
-                                  o_current->color,
-                                  o_current->text->x,
-                                  o_current->text->y,
-                                  o_current->text->alignment,
-                                  o_current->text->angle,
-                                  o_current->text->string,
-                                  o_current->text->size,
-                                  o_is_visible (toplevel, o_current) ? VISIBLE : INVISIBLE,
-                                  o_current->show_name_value);
+                                  object->color,
+                                  object->text->x,
+                                  object->text->y,
+                                  object->text->alignment,
+                                  object->text->angle,
+                                  object->text->string,
+                                  object->text->size,
+                                  o_is_visible (toplevel, object) ? VISIBLE : INVISIBLE,
+                                  object->show_name_value);
 
   return new_obj;
 }

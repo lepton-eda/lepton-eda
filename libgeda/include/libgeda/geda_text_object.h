@@ -37,6 +37,9 @@ geda_text_object_new (TOPLEVEL *toplevel,
                       gint visibility,
                       gint show_name_value);
 
+GedaObject*
+geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object);
+
 /* methods */
 
 gint
@@ -77,9 +80,6 @@ o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
 geda_text_object_translate (GedaObject *object, int dx, int dy);
-
-OBJECT*
-o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
 geda_text_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
