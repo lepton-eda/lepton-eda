@@ -231,7 +231,7 @@ g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
 {
   gchar *sysname = NULL;
   gchar *rcfile = NULL;
-  gboolean status;
+  gboolean status = TRUE;
 	const gchar * const * sys_dirs = eda_get_system_config_dirs();
 	EdaConfig *cfg = eda_config_get_system_context();
 
