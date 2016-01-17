@@ -69,7 +69,7 @@ Only libgeda should use this - apps should use eda_get_system_data_dirs()])
     fi
   fi
 
-  if test "x$GEDARCDIR" != "x"; then
+  if test "x$GEDARCDIR" = "x"; then
     GEDARCDIR=$GEDADATADIR
   fi
   AC_SUBST([GEDADATADIR])
