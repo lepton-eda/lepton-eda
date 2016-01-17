@@ -131,10 +131,10 @@ geda_bus_object_get_y1 (const GedaObject *object)
 void
 geda_bus_object_set_ripper_direction (GedaObject *object, gint direction)
 {
-  g_return_val_if_fail (object != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_BUS, 0);
-  g_return_val_if_fail (direction >= -1, -1);
-  g_return_val_if_fail (direction <= 1, 1);
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->type == OBJ_BUS);
+  g_return_if_fail (direction >= -1);
+  g_return_if_fail (direction <= 1);
 
   object->bus_ripper_direction = direction;
 }
