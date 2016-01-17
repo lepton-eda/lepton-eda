@@ -54,6 +54,9 @@ geda_text_object_get_position (const GedaObject *object, gint *x, gint *y);
 gint
 geda_text_object_get_size (const GedaObject *object);
 
+const gchar*
+geda_text_object_get_string (const GedaObject *object);
+
 gint
 geda_text_object_get_x (const GedaObject *object);
 

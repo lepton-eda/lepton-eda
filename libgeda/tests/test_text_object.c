@@ -54,7 +54,7 @@ check_construction ()
     g_assert_cmpint (size, ==, geda_text_object_get_size (object0));
     g_assert_cmpint (color, ==, geda_object_get_color (object0));
     g_assert_cmpint (visible, ==, geda_object_get_visible (object0));
-    g_assert_cmpstr (string, ==, o_text_get_string (toplevel, object0));
+    g_assert_cmpstr (string, ==, geda_text_object_get_string (object0));
 
     GedaObject *object1 = geda_text_object_copy (toplevel, object0);
 
@@ -71,7 +71,7 @@ check_construction ()
     g_assert_cmpint (size, ==, geda_text_object_get_size (object1));
     g_assert_cmpint (color, ==, geda_object_get_color (object1));
     g_assert_cmpint (visible, ==, geda_object_get_visible (object1));
-    g_assert_cmpstr (string, ==, o_text_get_string (toplevel, object1));
+    g_assert_cmpstr (string, ==, geda_text_object_get_string (object1));
 
     s_delete_object (toplevel, object1);
   }
@@ -137,7 +137,7 @@ check_accessors ()
     g_assert_cmpint (size, ==, geda_text_object_get_size (object0));
     g_assert_cmpint (color, ==, geda_object_get_color (object0));
     g_assert_cmpint (visible, ==, geda_object_get_visible (object0));
-    g_assert_cmpstr (string, ==, o_text_get_string (toplevel, object0));
+    g_assert_cmpstr (string, ==, geda_text_object_get_string (object0));
 
     gint temp_x;
     gint temp_y;
@@ -211,7 +211,7 @@ check_serialization ()
     g_assert_cmpint (size, ==, geda_text_object_get_size (object1));
     g_assert_cmpint (color, ==, geda_object_get_color (object1));
     g_assert_cmpint (visible, ==, geda_object_get_visible (object1));
-    g_assert_cmpstr (string, ==, o_text_get_string (toplevel, object1));
+    g_assert_cmpstr (string, ==, geda_text_object_get_string (object1));
 
     gchar *buffer1 = geda_text_object_to_buffer (object1);
     s_delete_object (toplevel, object1);

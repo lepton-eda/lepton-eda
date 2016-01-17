@@ -162,6 +162,23 @@ geda_text_object_get_size (const GedaObject *object)
   return object->text->size;
 }
 
+/*! \brief Get the text string
+ *
+ *  \param [in] object The text object
+ *  \return Returns the text string. The returned value is owned by the text
+ *  object -- do not free.
+ */
+const gchar*
+geda_text_object_get_string (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->text != NULL, NULL);
+  g_return_val_if_fail (object->text->string != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_TEXT, NULL);
+
+  return object->text->string;
+}
+
 /*! \brief Get the x coordinate of the text insertion point
  *
  *  \param [in] object The text object
@@ -588,9 +605,13 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
 gchar*
 geda_text_object_to_buffer (const GedaObject *object)
 {
+  const gchar *string;
+
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->text != NULL, NULL);
   g_return_val_if_fail (object->type == OBJ_TEXT, NULL);
+
+  string = geda_text_object_get_string (object);
 
   return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d\n%s",
                           OBJ_TEXT,
@@ -602,8 +623,8 @@ geda_text_object_to_buffer (const GedaObject *object)
                           object->show_name_value,
                           geda_text_object_get_angle (object),
                           geda_text_object_get_alignment (object),
-                          o_text_num_lines (object->text->string),
-                          object->text->string);
+                          o_text_num_lines (string),
+                          string);
 }
 
 /*! \brief recreate the graphics of a text object
