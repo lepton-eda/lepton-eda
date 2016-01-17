@@ -28,6 +28,9 @@ geda_text_object_get_alignment (const GedaObject *object);
 gint
 geda_text_object_get_angle (const GedaObject *object);
 
+gboolean
+geda_text_object_get_position (const GedaObject *object, gint *x, gint *y);
+
 gint
 geda_text_object_get_size (const GedaObject *object);
 
@@ -93,8 +96,5 @@ geda_text_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, i
 
 int
 world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
-
-gboolean
-geda_text_object_get_position (const GedaObject *object, gint *x, gint *y);
 
 

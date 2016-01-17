@@ -119,6 +119,34 @@ geda_text_object_get_angle (const GedaObject *object)
   return object->text->angle;
 }
 
+/*! \brief Get the insertion point of the text
+ *
+ *  This function returns FALSE when encountering a logic/programming error. In
+ *  this case, both output parameters will remain uninitialized.
+ *
+ *  \param [in] object the object to get the position.
+ *  \param [out] x the x coordinate of the insertion point [allow none]
+ *  \param [out] y the y coordinate of the insertion point [allow none]
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean
+geda_text_object_get_position (const GedaObject *object, gint *x, gint *y)
+{
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object->text != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_TEXT, FALSE);
+
+  if (x != NULL) {
+    *x = geda_text_object_get_x (object);
+  }
+
+  if (y != NULL) {
+    *y = geda_text_object_get_y (object);
+  }
+
+  return TRUE;
+}
+
 /*! \brief Get the text size
  *
  *  \param [in] object The text object
@@ -312,33 +340,6 @@ int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
   }
 
   return FALSE;
-}
-
-/*! \brief get the position of a text object
- *  \par Function Description
- *  This function gets the position of the base point of a text object.
- *
- *  \param [in] object   The object to get the position.
- *  \param [out] x       pointer to the x-position
- *  \param [out] y       pointer to the y-position
- *  \return TRUE if successfully determined the position, FALSE otherwise
- */
-gboolean
-geda_text_object_get_position (const GedaObject *object, gint *x, gint *y)
-{
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_TEXT, FALSE);
-  g_return_val_if_fail (object->text != NULL, FALSE);
-
-  if (x != NULL) {
-    *x = object->text->x;
-  }
-
-  if (y != NULL) {
-    *y = object->text->y;
-  }
-
-  return TRUE;
 }
 
 /*! \brief Creates a text OBJECT and the graphical objects representing it

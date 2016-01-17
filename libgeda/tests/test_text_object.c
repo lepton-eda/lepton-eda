@@ -139,6 +139,12 @@ check_accessors ()
     g_assert_cmpint (visible, ==, geda_object_get_visible (object0));
     g_assert_cmpstr (string, ==, o_text_get_string (toplevel, object0));
 
+    gint temp_x;
+    gint temp_y;
+    geda_text_object_get_position (object0, &temp_x, &temp_y);
+    g_assert_cmpint (x, ==, temp_x);
+    g_assert_cmpint (y, ==, temp_y);
+
     s_delete_object (toplevel, object0);
   }
 
