@@ -60,6 +60,10 @@ There are some key considerations for backwards compatibility:
 4) The legacy location for user data and configuration is
    `$HOME/.gEDA` (or `$HOMEDRIVE$HOMEPATH/.gEDA` on Windows.
 
+5) Finally, gEDA expects the default configuration files (such as
+   `system-gafrc`) to be loaded from the installation *data*
+   directory.
+
 The scheme proposed in this specification provides backwards
 compatibility with these behaviours.
 
@@ -89,6 +93,10 @@ searched in order.  The list is constructed as follows:
    is Windows, the value of the `GEDADATADIR` preprocessor macro
    (usually `${prefix}/share/gEDA`) is appended to the list.
 
+3. Finally, if relocatable builds *are* enabled, guess the
+   installation prefix, add the corresponding "share/gEDA" directory
+   to it to, and append it to the list
+
 For backwards compatibility, if the `$GEDADATA` environment variable
 is not set, then it is set to the first directory in the search path
 that contains a distinctive installed file (e.g. `scheme/geda.scm`).
@@ -117,6 +125,12 @@ follows:
 2. If neither relocatable builds are enabled nor the target platform
    is Windows, the value of the `GEDARCDIR` preprocessor macro
    (usually `${prefix}/share/gEDA`) is appended to the list.
+
+3. Finally, if relocatable builds *are* enabled, guess the
+   installation prefix, add the corresponding "share/gEDA" directory
+   to it to, and append it to the list.  This ensures that the default
+   configuration files in the installation tree are in the
+   configuration search path.
 
 Per-user data path
 ------------------
