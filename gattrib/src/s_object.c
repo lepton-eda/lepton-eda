@@ -23,21 +23,21 @@
  *
  * This file holds functions involved in manipulating the OBJECT data
  * structure.  OBJECT is defined in libgeda.  An OBJECT is a graphical
- * primitive normally used in gschem.  Example OBJECTs: some text, 
- * a component (complex), a pin, a line, etc. 
+ * primitive normally used in gschem.  Example OBJECTs: some text,
+ * a component (complex), a pin, a line, etc.
  *
  * The functions herein are functions which I wrote as wrappers to the
- * fcns in libgeda.  
+ * fcns in libgeda.
  */
 
 #include <config.h>
- 
+
 #include <stdio.h>
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
 #include <math.h>
- 
+
 /*------------------------------------------------------------------
  * Gattrib specific includes
  *------------------------------------------------------------------*/
@@ -60,7 +60,7 @@
 /*! \brief Add an attribute to an OBJECT
  *
  * This fcn adds a new attrib to o_current, when o_current is a
- * component.  It does it in the following 
+ * component.  It does it in the following
  * way:
  * -# It creates an object -- "attrib_graphic" -- and fills it in.
  * -# It gets the position info from o_current's refdes attrib and
@@ -94,7 +94,7 @@ s_object_add_comp_attrib_to_object (TOPLEVEL *toplevel,
                                           show_name_value,
                                           o_current);
   }
-  
+
   return;
 
 }
@@ -118,7 +118,7 @@ s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
 /*! \brief Add a new attribute to an pin OBJECT
  *
  * Add a new attribute to o_current, when o_current is a
- * pin.  It does it in the following 
+ * pin.  It does it in the following
  * way:
  * -# It creates an object -- "attrib_graphic" -- and fills it in.
  * -# It gets the position info from o_current's refdes attrib and
@@ -168,9 +168,9 @@ s_object_add_pin_attrib_to_object (TOPLEVEL *toplevel,
  */
 void s_object_replace_attrib_in_object(TOPLEVEL *toplevel,
 				       OBJECT *o_current,
-				       char *new_attrib_name, 
+				       char *new_attrib_name,
 				       char *new_attrib_value,
-				       gint visibility, 
+				       gint visibility,
 				       gint show_name_value)
 {
   GList *a_iter;
@@ -185,11 +185,11 @@ void s_object_replace_attrib_in_object(TOPLEVEL *toplevel,
     a_current = a_iter->data;
     if (a_current->type == OBJ_TEXT
 	&& a_current->text != NULL) {  /* found an attribute */
-      
+
       /* may need to check more thoroughly here. . . . */
       old_attrib_text = g_strdup(a_current->text->string);
       old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
-      
+
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
 	/* create attrib=value text string & stuff it back into toplevel */
 	new_attrib_text = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
@@ -208,13 +208,13 @@ void s_object_replace_attrib_in_object(TOPLEVEL *toplevel,
 	g_free(old_attrib_name);
       }  /* if (strcmp . . . . */
     } /* if (a_current . . . . */
-  
+
     a_iter = g_list_next (a_iter);
   }  /* while */
 
   /* if we get here, it's because we have failed to find the attrib on the component.
    * This is an error condition. */
-  fprintf(stderr, 
+  fprintf(stderr,
 	 _("In s_object_replace_attrib_in_object, we have failed to find the attrib %s on the component.  Exiting . . .\n"),
 	 new_attrib_name);
   exit(-1);
@@ -240,17 +240,17 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
   OBJECT *attribute_object;
   char *old_attrib_text;
   char *old_attrib_name;
-  
+
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
     a_current = a_iter->data;
     if (a_current->type == OBJ_TEXT
 	&& a_current->text != NULL) {  /* found an attribute */
-      
+
       /* may need to check more thoroughly here. . . . */
       old_attrib_text = g_strdup(a_current->text->string);
       old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
-      
+
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
 	/* We've found the attrib.  Delete it and then return. */
 
@@ -270,10 +270,10 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
     }
     a_iter = g_list_next (a_iter);
   }
-  
+
   /* if we get here, it's because we have failed to find the attrib on the component.
    * This is an error condition. */
-  fprintf(stderr, 
+  fprintf(stderr,
 	 _("In s_object_remove_attrib_in_object, we have failed to find the attrib %s on the component.  Exiting . . .\n"),
 	 new_attrib_name);
   exit(-1);
@@ -353,10 +353,17 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
   printf("     show_name_value = %d \n", show_name_value);
 #endif
 
-  new_obj = o_text_new (toplevel, OBJ_TEXT, color, world_x, world_y,
-                        LOWER_LEFT, 0, /* zero is angle */
-                        text_string, DEFAULT_TEXT_SIZE,
-                        visibility, show_name_value);
+  new_obj = geda_text_object_new (toplevel,
+                                  OBJ_TEXT,
+                                  color,
+                                  world_x,
+                                  world_y,
+                                  LOWER_LEFT,
+                                  0, /* zero is angle */
+                                  text_string,
+                                  DEFAULT_TEXT_SIZE,
+                                  visibility,
+                                  show_name_value);
   s_page_append (toplevel, toplevel->page_current, new_obj);
 
   /* now toplevel->page_current->object_tail contains new text item */
@@ -378,7 +385,7 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
 
 
 
- 
+
 /*------------------------------------------------------------------*/
 /*! \brief Delete text object
  *
@@ -396,7 +403,7 @@ s_object_delete_text_object_in_object (TOPLEVEL *toplevel,
   s_delete_object (toplevel, text_object);
   toplevel->page_current->CHANGED = 1;
 }
-                                                                                                    
+
 
 /*------------------------------------------------------------------*/
 /*! \brief Ensure object has a symbol file
@@ -418,7 +425,7 @@ int s_object_has_sym_file(OBJECT *object)
   } else {
 #ifdef DEBUG
     printf("In s_object_has_sym_file, found object with no attached symbol file.\n");
-#endif 
+#endif
     return 1;
   }
 }

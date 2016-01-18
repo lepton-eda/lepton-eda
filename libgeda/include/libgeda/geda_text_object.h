@@ -22,17 +22,67 @@
  *  \brief Functions operating on text drawing objects
  */
 
-OBJECT*
-o_text_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int alignment, int angle, const char *string, int size, int visibility, int show_name_value);
+/* construction, destruction */
+
+GedaObject*
+geda_text_object_new (TOPLEVEL *toplevel,
+                      gchar type,
+                      gint color,
+                      gint x,
+                      gint y,
+                      gint alignment,
+                      gint angle,
+                      const gchar *string,
+                      gint size,
+                      gint visibility,
+                      gint show_name_value);
+
+GedaObject*
+geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object);
+
+/* methods */
+
+gint
+geda_text_object_get_alignment (const GedaObject *object);
+
+gint
+geda_text_object_get_angle (const GedaObject *object);
+
+gboolean
+geda_text_object_get_position (const GedaObject *object, gint *x, gint *y);
+
+gint
+geda_text_object_get_size (const GedaObject *object);
+
+const gchar*
+geda_text_object_get_string (const GedaObject *object);
+
+gint
+geda_text_object_get_x (const GedaObject *object);
+
+gint
+geda_text_object_get_y (const GedaObject *object);
+
+void
+geda_text_object_set_alignment (GedaObject *object, gint alignment);
+
+void
+geda_text_object_set_angle (GedaObject *object, gint angle);
+
+void
+geda_text_object_set_size (GedaObject *object, gint size);
+
+void
+geda_text_object_set_x (GedaObject *object, gint x);
+
+void
+geda_text_object_set_y (GedaObject *object, gint y);
 
 void
 o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
 geda_text_object_translate (GedaObject *object, int dx, int dy);
-
-OBJECT*
-o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
 geda_text_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
@@ -63,8 +113,5 @@ geda_text_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, i
 
 int
 world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
-
-gboolean
-geda_text_object_get_position (const GedaObject *object, gint *x, gint *y);
 
 

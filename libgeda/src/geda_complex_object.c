@@ -368,12 +368,16 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
     not_found_text =
       g_strdup_printf (_("Component not found:\n %s"),
            new_node->complex_basename);
-    new_prim_obj = o_text_new(toplevel,
-                           OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR,
-                           x + NOT_FOUND_TEXT_X,
-                           y + NOT_FOUND_TEXT_Y, LOWER_LEFT, 0,
-                           not_found_text, 8,
-                           VISIBLE, SHOW_NAME_VALUE);
+    new_prim_obj = geda_text_object_new (toplevel,
+                                         OBJ_TEXT,
+                                         DETACHED_ATTRIBUTE_COLOR,
+                                         x + NOT_FOUND_TEXT_X,
+                                         y + NOT_FOUND_TEXT_Y,
+                                         LOWER_LEFT,
+                                         0,
+                                         not_found_text,
+                                         8,
+                                         VISIBLE, SHOW_NAME_VALUE);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
     g_free(not_found_text);
 
@@ -410,12 +414,17 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
-    new_prim_obj = o_text_new(toplevel,
-                           OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR,
-                           x + NOT_FOUND_TEXT_X + x_offset + 270,
-                           y + NOT_FOUND_TEXT_Y + y_offset + 90,
-                           LOWER_LEFT, 0, "!", 18,
-                           VISIBLE, SHOW_NAME_VALUE);
+    new_prim_obj = geda_text_object_new (toplevel,
+                                         OBJ_TEXT,
+                                         DETACHED_ATTRIBUTE_COLOR,
+                                         x + NOT_FOUND_TEXT_X + x_offset + 270,
+                                         y + NOT_FOUND_TEXT_Y + y_offset + 90,
+                                         LOWER_LEFT,
+                                         0,
+                                         "!",
+                                         18,
+                                         VISIBLE,
+                                         SHOW_NAME_VALUE);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
     new_node->complex->prim_objs = g_list_reverse(new_node->complex->prim_objs);
 }

@@ -14,7 +14,8 @@ check_PROGRAMS = \
 	test_net_object \
 	test_pin_object \
 	test_point \
-	test_string
+	test_string \
+	test_text_object
 
 TESTS = \
 	test_angle \
@@ -31,7 +32,8 @@ TESTS = \
 	test_net_object \
 	test_pin_object \
 	test_point \
-	test_string
+	test_string \
+	test_text_object
 
 AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"  $(DATADIR_DEFS) \
 	-I$(srcdir)/../include -I$(srcdir)/../include/libgeda -I$(top_srcdir)

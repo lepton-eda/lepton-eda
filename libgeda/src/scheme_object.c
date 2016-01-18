@@ -1299,10 +1299,17 @@ SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
 SCM_DEFINE (make_text, "%make-text", 0, 0, 0,
             (), "Create a new text object.")
 {
-  OBJECT *obj = o_text_new (edascm_c_current_toplevel (),
-                            OBJ_TEXT, DEFAULT_COLOR,
-                            0, 0, LOWER_LEFT, 0, "", 10,
-                            VISIBLE, SHOW_NAME_VALUE);
+  OBJECT *obj = geda_text_object_new (edascm_c_current_toplevel (),
+                                      OBJ_TEXT,
+                                      DEFAULT_COLOR,
+                                      0,
+                                      0,
+                                      LOWER_LEFT,
+                                      0,
+                                      "",
+                                      10,
+                                      VISIBLE,
+                                      SHOW_NAME_VALUE);
 
   SCM result = edascm_from_object (obj);
 

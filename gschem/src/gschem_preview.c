@@ -204,8 +204,17 @@ preview_update (GschemPreview *preview)
       }
       else {
         s_page_append (preview_toplevel, preview_page,
-                       o_text_new(preview_toplevel, OBJ_TEXT, 2, 100, 100, LOWER_MIDDLE, 0,
-                                  err->message, 10, VISIBLE, SHOW_NAME_VALUE));
+                       geda_text_object_new (preview_toplevel,
+                                             OBJ_TEXT,
+                                             2,
+                                             100,
+                                             100,
+                                             LOWER_MIDDLE,
+                                             0,
+                                             err->message,
+                                             10,
+                                             VISIBLE,
+                                             SHOW_NAME_VALUE));
         g_error_free(err);
       }
     }

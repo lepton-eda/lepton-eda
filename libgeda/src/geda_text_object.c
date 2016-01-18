@@ -88,6 +88,202 @@
 /*! Size of a tab in characters */
 int tab_in_chars = 8;
 
+
+/*! \brief Get the text alignment
+ *
+ *  \param [in] object The text object
+ *  \return The text alignmemt
+ */
+gint
+geda_text_object_get_alignment (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, LOWER_LEFT);
+  g_return_val_if_fail (object->text != NULL, LOWER_LEFT);
+  g_return_val_if_fail (object->type == OBJ_TEXT, LOWER_LEFT);
+
+  return object->text->alignment;
+}
+
+/*! \brief Get the text angle
+ *
+ *  \param [in] object The text object
+ *  \return The text angle
+ */
+gint
+geda_text_object_get_angle (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->text != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
+
+  return object->text->angle;
+}
+
+/*! \brief Get the insertion point of the text
+ *
+ *  This function returns FALSE when encountering a logic/programming error. In
+ *  this case, both output parameters will remain uninitialized.
+ *
+ *  \param [in] object the object to get the position.
+ *  \param [out] x the x coordinate of the insertion point [allow none]
+ *  \param [out] y the y coordinate of the insertion point [allow none]
+ *  \return TRUE if successfully determined the position, FALSE otherwise
+ */
+gboolean
+geda_text_object_get_position (const GedaObject *object, gint *x, gint *y)
+{
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object->text != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_TEXT, FALSE);
+
+  if (x != NULL) {
+    *x = geda_text_object_get_x (object);
+  }
+
+  if (y != NULL) {
+    *y = geda_text_object_get_y (object);
+  }
+
+  return TRUE;
+}
+
+/*! \brief Get the text size
+ *
+ *  \param [in] object The text object
+ *  \return The text size
+ */
+gint
+geda_text_object_get_size (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->text != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
+
+  return object->text->size;
+}
+
+/*! \brief Get the text string
+ *
+ *  \param [in] object The text object
+ *  \return Returns the text string. The returned value is owned by the text
+ *  object -- do not free.
+ */
+const gchar*
+geda_text_object_get_string (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->text != NULL, NULL);
+  g_return_val_if_fail (object->text->string != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_TEXT, NULL);
+
+  return object->text->string;
+}
+
+/*! \brief Get the x coordinate of the text insertion point
+ *
+ *  \param [in] object The text object
+ *  \return The x coordinate of the insertion point
+ */
+gint
+geda_text_object_get_x (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->text != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
+
+  return object->text->x;
+}
+
+/*! \brief Get the y coordinate of the text insertion point
+ *
+ *  \param [in] object The text object
+ *  \return The y coodinate of the insertion point
+ */
+gint
+geda_text_object_get_y (const GedaObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->text != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
+
+  return object->text->y;
+}
+
+/*! \brief Set the text alignment
+ *
+ *  \param [in,out] object The text object
+ *  \param [in] alignment The text alignmemt
+ */
+void
+geda_text_object_set_alignment (GedaObject *object, gint alignment)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->text != NULL);
+  g_return_if_fail (object->type == OBJ_TEXT);
+
+  object->text->alignment = alignment;
+}
+
+/*! \brief Set the text angle
+ *
+ *  \param [in,out] object The text object
+ *  \param [in] angle The text angle
+ */
+void
+geda_text_object_set_angle (GedaObject *object, gint angle)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->text != NULL);
+  g_return_if_fail (object->type == OBJ_TEXT);
+
+  object->text->angle = angle;
+}
+
+/*! \brief Set the text size
+ *
+ *  \param [in,out] object The text object
+ *  \param [in] size The text size
+ */
+void
+geda_text_object_set_size (GedaObject *object, gint size)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->text != NULL);
+  g_return_if_fail (object->type == OBJ_TEXT);
+
+  object->text->size = size;
+}
+
+/*! \brief Set the x coordinate of the text insertion point
+ *
+ *  \param [in,out] object The text object
+ *  \param [in] x the x coordinate of the text insertion point
+ */
+void
+geda_text_object_set_x (GedaObject *object, gint x)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->text != NULL);
+  g_return_if_fail (object->type == OBJ_TEXT);
+
+  object->text->x = x;
+}
+
+/*! \brief Set the y coordinate of the text insertion point
+ *
+ *  \param [in,out] object The text object
+ *  \param [in] y the y coordinate of the text insertion point
+ */
+void
+geda_text_object_set_y (GedaObject *object, gint y)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->text != NULL);
+  g_return_if_fail (object->type == OBJ_TEXT);
+
+  object->text->y = y;
+}
+
 /*! \brief update the visible part of a string
  *  \par Function Description
  *  If a string is an attribute, then it is possible to hide
@@ -163,33 +359,6 @@ int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
   return FALSE;
 }
 
-/*! \brief get the position of a text object
- *  \par Function Description
- *  This function gets the position of the base point of a text object.
- *
- *  \param [in] object   The object to get the position.
- *  \param [out] x       pointer to the x-position
- *  \param [out] y       pointer to the y-position
- *  \return TRUE if successfully determined the position, FALSE otherwise
- */
-gboolean
-geda_text_object_get_position (const GedaObject *object, gint *x, gint *y)
-{
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_TEXT, FALSE);
-  g_return_val_if_fail (object->text != NULL, FALSE);
-
-  if (x != NULL) {
-    *x = object->text->x;
-  }
-
-  if (y != NULL) {
-    *y = object->text->y;
-  }
-
-  return TRUE;
-}
-
 /*! \brief Creates a text OBJECT and the graphical objects representing it
  *  \par Function Description
  *  Create an OBJECT of type OBJ_TEXT.
@@ -210,12 +379,20 @@ geda_text_object_get_position (const GedaObject *object, gint *x, gint *y)
  *  \note
  *  Caller is responsible for string; this function allocates its own copy.
  */
-OBJECT *o_text_new(TOPLEVEL *toplevel,
-		   char type, int color, int x, int y, int alignment,
-		   int angle, const char *string, int size,
-		   int visibility, int show_name_value)
+GedaObject*
+geda_text_object_new (TOPLEVEL *toplevel,
+                      gchar type,
+                      gint color,
+                      gint x,
+                      gint y,
+                      gint alignment,
+                      gint angle,
+                      const gchar *string,
+                      gint size,
+                      gint visibility,
+                      gint show_name_value)
 {
-  OBJECT *new_node=NULL;
+  GedaObject *new_node=NULL;
   TEXT *text;
 
   if (string == NULL) {
@@ -400,9 +577,17 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
     }
   }
 
-  new_obj = o_text_new(toplevel, type, color, x, y,
-                       alignment, angle, string,
-                       size, visibility, show_name_value);
+  new_obj = geda_text_object_new (toplevel,
+                                  type,
+                                  color,
+                                  x,
+                                  y,
+                                  alignment,
+                                  angle,
+                                  string,
+                                  size,
+                                  visibility,
+                                  show_name_value);
   g_free(string);
 
   return new_obj;
@@ -414,34 +599,32 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
  *  This function takes a text \a object and return a string
  *  according to the file format definition.
  *
- *  \param [in] object  a text OBJECT
- *  \return the string representation of the text OBJECT
+ *  \param [in] object the text object
+ *  \return the string representation of the text object
  */
 gchar*
 geda_text_object_to_buffer (const GedaObject *object)
 {
-  int x, y;
-  int size;
-  char *string;
-  char *buf;
-  int num_lines;
+  const gchar *string;
 
-  x = object->text->x;
-  y = object->text->y;
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->text != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_TEXT, NULL);
 
-  string = object->text->string;
-  size = object->text->size;
+  string = geda_text_object_get_string (object);
 
-  /* string can have multiple lines (seperated by \n's) */
-  num_lines = o_text_num_lines(string);
-
-  buf = g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d\n%s", object->type,
-                         x, y, geda_object_get_color (object), size,
-                         geda_object_get_visible (object),
-                         object->show_name_value, object->text->angle,
-                         object->text->alignment, num_lines, string);
-
-  return(buf);
+  return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d\n%s",
+                          OBJ_TEXT,
+                          geda_text_object_get_x (object),
+                          geda_text_object_get_y (object),
+                          geda_object_get_color (object),
+                          geda_text_object_get_size (object),
+                          geda_object_get_visible (object),
+                          object->show_name_value,
+                          geda_text_object_get_angle (object),
+                          geda_text_object_get_alignment (object),
+                          o_text_num_lines (string),
+                          string);
 }
 
 /*! \brief recreate the graphics of a text object
@@ -487,21 +670,29 @@ geda_text_object_translate (GedaObject *object, int dx, int dy)
  *  This function creates a copy of the text object \a o_current.
  *
  *  \param [in] toplevel     The TOPLEVEL object
- *  \param [in] o_current    The object that is copied
+ *  \param [in] object    The object that is copied
  *  \return a new text object
  */
-OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
+GedaObject*
+geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
 {
-  OBJECT *new_obj;
+  GedaObject *new_obj;
 
-  new_obj = o_text_new (toplevel, OBJ_TEXT, o_current->color,
-                        o_current->text->x, o_current->text->y,
-                        o_current->text->alignment,
-                        o_current->text->angle,
-                        o_current->text->string,
-                        o_current->text->size,
-                        o_is_visible (toplevel, o_current) ? VISIBLE : INVISIBLE,
-                        o_current->show_name_value);
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->text != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_TEXT, NULL);
+
+  new_obj = geda_text_object_new (toplevel,
+                                  OBJ_TEXT,
+                                  object->color,
+                                  object->text->x,
+                                  object->text->y,
+                                  object->text->alignment,
+                                  object->text->angle,
+                                  object->text->string,
+                                  object->text->size,
+                                  o_is_visible (toplevel, object) ? VISIBLE : INVISIBLE,
+                                  object->show_name_value);
 
   return new_obj;
 }
