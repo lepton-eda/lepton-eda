@@ -1423,7 +1423,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
 
   obj->text->x = scm_to_int (x_s);
   obj->text->y = scm_to_int (y_s);
-  obj->text->alignment = align;
+  geda_text_object_set_alignment (obj, align);
   obj->text->angle = angle;
 
   geda_text_object_set_size (obj, scm_to_int (size_s));
@@ -1477,7 +1477,7 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
   OBJECT *obj = edascm_to_object (text_s);
   SCM align_s, visible_s, show_s;
 
-  switch (obj->text->alignment) {
+  switch (geda_text_object_get_alignment (obj)) {
   case LOWER_LEFT:    align_s = lower_left_sym;    break;
   case MIDDLE_LEFT:   align_s = middle_left_sym;   break;
   case UPPER_LEFT:    align_s = upper_left_sym;    break;
@@ -1490,7 +1490,7 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
   default:
     scm_misc_error (s_text_info,
                     _("Text object ~A has invalid text alignment ~A"),
-                    scm_list_2 (text_s, scm_from_int (obj->text->alignment)));
+                    scm_list_2 (text_s, scm_from_int (geda_text_object_get_alignment (obj))));
   }
 
   switch (obj->visibility) {

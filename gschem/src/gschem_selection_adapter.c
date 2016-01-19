@@ -756,7 +756,7 @@ gschem_selection_adapter_get_text_alignment (GschemSelectionAdapter *adapter)
     OBJECT *object = (OBJECT*) iter->data;
 
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
-      int temp_alignment = object->text->alignment;
+      int temp_alignment = geda_text_object_get_alignment (object);
 
       if (alignment < 0) {
         alignment = temp_alignment;
@@ -1765,7 +1765,7 @@ gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, in
     OBJECT *object = (OBJECT*) iter->data;
 
     if (object->type == OBJ_TEXT) {
-      object->text->alignment = alignment;
+      geda_text_object_set_alignment (object, alignment);
       o_text_recreate(adapter->toplevel, object);
     }
 

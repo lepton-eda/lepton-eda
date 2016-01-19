@@ -967,7 +967,7 @@ eda_renderer_calc_text_position (EdaRenderer *renderer, OBJECT *object,
     temp = x_left;  x_left  = x_right; x_right = temp;
   }
 
-  switch (object->text->alignment) {
+  switch (geda_text_object_get_alignment (object)) {
     default:
       /* Fall through to LOWER_left case */
     case LOWER_LEFT:    *y = y_lower;  *x = x_left;   break;
