@@ -1300,7 +1300,6 @@ SCM_DEFINE (make_text, "%make-text", 0, 0, 0,
             (), "Create a new text object.")
 {
   OBJECT *obj = geda_text_object_new (edascm_c_current_toplevel (),
-                                      OBJ_TEXT,
                                       DEFAULT_COLOR,
                                       0,
                                       0,

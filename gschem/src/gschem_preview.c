@@ -205,7 +205,6 @@ preview_update (GschemPreview *preview)
       else {
         s_page_append (preview_toplevel, preview_page,
                        geda_text_object_new (preview_toplevel,
-                                             OBJ_TEXT,
                                              2,
                                              100,
                                              100,

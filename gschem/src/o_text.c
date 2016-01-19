@@ -124,7 +124,6 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
   page->place_list =
     g_list_append(page->place_list,
                   geda_text_object_new (toplevel,
-                                        OBJ_TEXT,
                                         color,
                                         0,
                                         0,

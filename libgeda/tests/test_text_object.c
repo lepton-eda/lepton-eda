@@ -33,7 +33,6 @@ check_construction ()
     gboolean visible = g_test_rand_bit ();
 
     GedaObject *object0 = geda_text_object_new (toplevel,
-                                                OBJ_TEXT,
                                                 color,
                                                 x,
                                                 y,
@@ -97,7 +96,6 @@ check_accessors ()
     gboolean visible = g_test_rand_bit ();
 
     GedaObject *object0 = geda_text_object_new (toplevel,
-                                                OBJ_TEXT,
                                                 color,
                                                 x,
                                                 y,
@@ -174,7 +172,6 @@ check_serialization ()
     gboolean visible = g_test_rand_bit ();
 
     GedaObject *object0 = geda_text_object_new (toplevel,
-                                                OBJ_TEXT,
                                                 color,
                                                 x,
                                                 y,

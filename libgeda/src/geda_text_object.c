@@ -381,7 +381,6 @@ int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
  */
 GedaObject*
 geda_text_object_new (TOPLEVEL *toplevel,
-                      gchar type,
                       gint color,
                       gint x,
                       gint y,
@@ -399,7 +398,7 @@ geda_text_object_new (TOPLEVEL *toplevel,
     return(NULL);
   }
 
-  new_node = s_basic_new_object(type, "text");
+  new_node = s_basic_new_object (OBJ_TEXT, "text");
 
   text = (TEXT *) g_malloc(sizeof(TEXT));
 
@@ -578,7 +577,6 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
   }
 
   new_obj = geda_text_object_new (toplevel,
-                                  type,
                                   color,
                                   x,
                                   y,
@@ -683,7 +681,6 @@ geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
   g_return_val_if_fail (object->type == OBJ_TEXT, NULL);
 
   new_obj = geda_text_object_new (toplevel,
-                                  OBJ_TEXT,
                                   object->color,
                                   object->text->x,
                                   object->text->y,

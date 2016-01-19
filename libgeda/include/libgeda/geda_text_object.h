@@ -26,7 +26,6 @@
 
 GedaObject*
 geda_text_object_new (TOPLEVEL *toplevel,
-                      gchar type,
                       gint color,
                       gint x,
                       gint y,
