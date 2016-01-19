@@ -633,6 +633,8 @@ geda_text_object_to_buffer (const GedaObject *object)
 
   string = geda_text_object_get_string (object);
 
+  g_return_val_if_fail (string != NULL, NULL);
+
   return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d\n%s",
                           OBJ_TEXT,
                           geda_text_object_get_x (object),
