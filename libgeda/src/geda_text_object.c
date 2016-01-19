@@ -305,7 +305,8 @@ geda_text_object_set_y (GedaObject *object, gint y)
  *
  *  \param [in] object  The OBJECT to update
  */
-static void update_disp_string (OBJECT *object)
+static void
+update_disp_string (OBJECT *object)
 {
   char *name = NULL;
   char *value = NULL;
@@ -358,8 +359,13 @@ static void update_disp_string (OBJECT *object)
  *  \param [out] right     the right world coord
  *  \param [out] bottom    the bottom world coord
  */
-int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
-                          int *top, int *right, int *bottom)
+int
+world_get_text_bounds (TOPLEVEL *toplevel,
+                       OBJECT *o_current,
+                       int *left,
+                       int *top,
+                       int *right,
+                       int *bottom)
 {
   if (toplevel->rendered_text_bounds_func != NULL) {
     return
@@ -449,12 +455,13 @@ geda_text_object_new (TOPLEVEL *toplevel,
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  */
-OBJECT *o_text_read (TOPLEVEL *toplevel,
-		    const char *first_line,
-		    TextBuffer *tb,
-		    unsigned int release_ver,
-            unsigned int fileformat_ver,
-            GError **err)
+OBJECT*
+o_text_read (TOPLEVEL *toplevel,
+             const char *first_line,
+             TextBuffer *tb,
+             unsigned int release_ver,
+             unsigned int fileformat_ver,
+             GError **err)
 {
   OBJECT *new_obj;
   char type;
@@ -636,7 +643,8 @@ geda_text_object_to_buffer (const GedaObject *object)
  *  \param toplevel  The TOPLEVEL object
  *  \param o_current The text object to update
  */
-void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
+void
+o_text_recreate (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   o_emit_pre_change_notify (toplevel, o_current);
   update_disp_string (o_current);
@@ -709,9 +717,12 @@ geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
  *  \param [in] object        The text object
  *  \note only steps of 90 degrees are allowed for the \a angle
  */
-void geda_text_object_rotate (TOPLEVEL *toplevel,
-                         int world_centerx, int world_centery,
-                         int angle, OBJECT *object)
+void
+geda_text_object_rotate (TOPLEVEL *toplevel,
+                         int world_centerx,
+                         int world_centery,
+                         int angle,
+                         OBJECT *object)
 {
   int x, y;
   int newx, newy;
@@ -747,9 +758,11 @@ void geda_text_object_rotate (TOPLEVEL *toplevel,
  *  \param [in] world_centery y-coord of the mirror position
  *  \param [in] object        The text object
  */
-void geda_text_object_mirror (TOPLEVEL *toplevel,
-			 int world_centerx, int world_centery,
-			 OBJECT *object)
+void
+geda_text_object_mirror (TOPLEVEL *toplevel,
+                         int world_centerx,
+                         int world_centery,
+                         OBJECT *object)
 {
   int origx, origy;
   int x, y;
@@ -847,8 +860,11 @@ void geda_text_object_mirror (TOPLEVEL *toplevel,
  *  returns G_MAXDOUBLE.
  */
 double
-geda_text_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
-                                    int x, int y, int force_solid)
+geda_text_object_shortest_distance (TOPLEVEL *toplevel,
+                                    OBJECT *object,
+                                    int x,
+                                    int y,
+                                    int force_solid)
 {
   int left, top, right, bottom;
   double dx, dy;
@@ -876,8 +892,8 @@ geda_text_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in]  obj                   The text object.
  *  \param [in]  new_string            The new value.
  */
-void o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj,
-                        const gchar *new_string)
+void
+o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string)
 {
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (obj != NULL);
@@ -902,7 +918,8 @@ void o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj,
  *  \param [in]  obj                   The text object.
  *  \return The text object's string, or NULL on failure.
  */
-const gchar *o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj)
+const gchar*
+o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj)
 {
   g_return_val_if_fail (toplevel != NULL, NULL);
   g_return_val_if_fail (obj != NULL, NULL);
@@ -921,9 +938,11 @@ const gchar *o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj)
  *  \param [in] func      Function to use.
  *  \param [in] user_data User data to be passed to the function.
  */
-void o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
-                                      RenderedBoundsFunc func,
-                                      void *user_data) {
+void
+o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
+                                 RenderedBoundsFunc func,
+                                 void *user_data)
+{
   toplevel->rendered_text_bounds_func = func;
   toplevel->rendered_text_bounds_data = user_data;
 }
