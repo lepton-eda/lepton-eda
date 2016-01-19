@@ -22,6 +22,9 @@
  *  \brief Functions operating on text drawing objects
  */
 
+#define DEFAULT_TEXT_SIZE 10
+#define MINIMUM_TEXT_SIZE 1
+
 /* construction, destruction */
 
 GedaObject*

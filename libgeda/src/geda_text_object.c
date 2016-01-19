@@ -155,9 +155,11 @@ geda_text_object_get_position (const GedaObject *object, gint *x, gint *y)
 gint
 geda_text_object_get_size (const GedaObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
-  g_return_val_if_fail (object->text != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
+  g_return_val_if_fail (object != NULL, DEFAULT_TEXT_SIZE);
+  g_return_val_if_fail (object->text != NULL, DEFAULT_TEXT_SIZE);
+  g_return_val_if_fail (object->type == OBJ_TEXT, DEFAULT_TEXT_SIZE);
+  g_return_val_if_fail (object->text->size >= MINIMUM_TEXT_SIZE,
+                        DEFAULT_TEXT_SIZE);
 
   return object->text->size;
 }
@@ -262,6 +264,9 @@ geda_text_object_set_angle (GedaObject *object, gint angle)
 
 /*! \brief Set the text size
  *
+ *  The text size must be greater than or equal to the MINUMUM_TEXT_SIZE. In
+ *  the case of an invalid text size, the property remains unchanged.
+ *
  *  \param [in,out] object The text object
  *  \param [in] size The text size
  */
@@ -271,6 +276,7 @@ geda_text_object_set_size (GedaObject *object, gint size)
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
   g_return_if_fail (object->type == OBJ_TEXT);
+  g_return_if_fail (size >= MINIMUM_TEXT_SIZE);
 
   object->text->size = size;
 }
@@ -512,13 +518,14 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
     num_lines = 1; /* only support a single line */
   }
 
-  if (size == 0) {
-    s_log_message(_("Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"), type, x, y, color, size, visibility, show_name_value, angle, alignment);
+  if (size >= MINIMUM_TEXT_SIZE) {
+    s_log_message (_("Found an invalid text size [ %s ]\n"), first_line);
+    size = DEFAULT_TEXT_SIZE;
+    s_log_message (_("Setting text size to %d\n"), size);
   }
 
   if (!geda_angle_is_ortho (angle)) {
-    s_log_message (_("Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"),
-                   type, x, y, color, size, visibility, show_name_value, angle, alignment);
+    s_log_message (_("Found an unsupported text angle [ %s ]\n"), first_line);
     angle = geda_angle_make_ortho (angle);
     s_log_message (_("Setting angle to %d\n"), angle);
   }
@@ -537,17 +544,17 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
     break;
 
     default:
-      s_log_message(_("Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"),
-                    type, x, y, color, size, visibility, show_name_value, angle, alignment);
-      s_log_message(_("Setting alignment to LOWER_LEFT\n"));
+      s_log_message (_("Found an unsupported text alignment [ %s ]\n"),
+                     first_line);
       alignment = LOWER_LEFT;
+      s_log_message(_("Setting alignment to LOWER_LEFT\n"));
       break;
   }
 
   if (color < 0 || color > MAX_COLORS) {
     s_log_message(_("Found an invalid color [ %s ]\n"), first_line);
-    s_log_message(_("Setting color to default color\n"));
     color = DEFAULT_COLOR;
+    s_log_message(_("Setting color to default color\n"));
   }
 
   g_assert(num_lines && num_lines > 0);
