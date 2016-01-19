@@ -18,26 +18,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file o_text_basic.c
+/*! \file geda_text_object.c
+ *
  *  \brief functions for the text and fonts
- *
- *  \par The font definitions
- *
- *  Each letter of the font is defined in a single font symbol file. In
- *  the font symbol file, the character width is defined in the second
- *  line. The first line contains the file format version.
- *
- *  All remaining lines are basic graphical lines. They build the
- *  appearance of the character.
- *
- *  \image html o_text_font_overview.png
- *  \image latex o_text_font_overview.pdf "font overview" width=14cm
- *
- *  The height of capital characters in the font files is 26. The size
- *  of small letters is 16. The space below the zero line is used by
- *  characters like <b>g</b>, <b>p</b> or <b>q</b>. The space above 26
- *  is used by diacritic marks like accents, breve, circumflex mostly in
- *  european characters.
  *
  *  \par The text definitions
  *
@@ -53,10 +36,6 @@
  *
  *  \image html o_text_text_overview.png
  *  \image latex o_text_text_overview.pdf "text overview" width=14cm
- *
- *  To draw the text in gschem, the string is interpreted and converted
- *  to a list of basic graphical objects. The basic line objects are
- *  collected from the font character objects.
  */
 
 #include <config.h>
