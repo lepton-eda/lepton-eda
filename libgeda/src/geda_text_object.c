@@ -740,8 +740,9 @@ void geda_text_object_rotate (TOPLEVEL *toplevel,
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
   g_return_if_fail (object->type == OBJ_TEXT);
+  g_return_if_fail (geda_angle_is_ortho (angle));
 
-  object->text->angle = ( object->text->angle + angle ) % 360;
+  object->text->angle = geda_angle_normalize (object->text->angle + angle);
 
   x = object->text->x + (-world_centerx);
   y = object->text->y + (-world_centery);
