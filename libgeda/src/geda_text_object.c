@@ -226,8 +226,14 @@ geda_text_object_set_alignment (GedaObject *object, gint alignment)
 
 /*! \brief Set the text angle
  *
+ *  The text angle must be orthagonal to an axis, i.e., the text angle must be
+ *  a multiple of 90 degrees. In case of an invalid text angle, the property
+ *  remains unchanged.
+ *
+ *  If the text angle is not normal [0,360), then the angle will be normalized.
+ *
  *  \param [in,out] object The text object
- *  \param [in] angle The text angle
+ *  \param [in] angle The text angle in degrees.
  */
 void
 geda_text_object_set_angle (GedaObject *object, gint angle)
@@ -235,8 +241,9 @@ geda_text_object_set_angle (GedaObject *object, gint angle)
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
   g_return_if_fail (object->type == OBJ_TEXT);
+  g_return_if_fail (geda_angle_is_ortho (angle));
 
-  object->text->angle = angle;
+  object->text->angle = geda_angle_normalize (angle);
 }
 
 /*! \brief Set the text size
@@ -495,21 +502,11 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
     s_log_message(_("Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"), type, x, y, color, size, visibility, show_name_value, angle, alignment);
   }
 
-  switch(angle) {
-
-    case(0):
-    case(90):
-    case(180):
-    case(270):
-    break;
-
-    default:
-      s_log_message(_("Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"),
-                    type, x, y, color, size, visibility, show_name_value, angle, alignment);
-      s_log_message(_("Setting angle to 0\n"));
-      angle=0;
-      break;
-
+  if (!geda_angle_is_ortho (angle)) {
+    s_log_message (_("Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"),
+                   type, x, y, color, size, visibility, show_name_value, angle, alignment);
+    angle = geda_angle_make_ortho (angle);
+    s_log_message (_("Setting angle to %d\n"), angle);
   }
 
   switch(alignment) {
