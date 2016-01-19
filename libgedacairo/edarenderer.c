@@ -859,6 +859,7 @@ eda_renderer_get_font_descent (EdaRenderer *renderer,
 static int
 eda_renderer_prepare_text (EdaRenderer *renderer, OBJECT *object)
 {
+  gint angle;
   double points_size, dx, dy;
   int size, descent;
   char *draw_string;
@@ -906,9 +907,9 @@ eda_renderer_prepare_text (EdaRenderer *renderer, OBJECT *object)
   cairo_translate (renderer->priv->cr, object->text->x, object->text->y);
 
   /* Special case turns upside-down text back upright */
-  if (object->text->angle != 180) {
-    cairo_rotate (renderer->priv->cr,
-                  M_PI * object->text->angle / 180.);
+  angle = geda_text_object_get_angle (object);
+  if (angle != 180) {
+    cairo_rotate (renderer->priv->cr, M_PI * angle / 180.);
   }
 
   cairo_scale (renderer->priv->cr, 1, -1);
@@ -962,7 +963,7 @@ eda_renderer_calc_text_position (EdaRenderer *renderer, OBJECT *object,
    * the text is rotated to 180 degrees, since the drawing code
    * does not rotate the text to be shown upside down.
    */
-  if (object->text->angle == 180) {
+  if (geda_text_object_get_angle (object) == 180) {
     temp = y_lower; y_lower = y_upper; y_upper = temp;
     temp = x_left;  x_left  = x_right; x_right = temp;
   }

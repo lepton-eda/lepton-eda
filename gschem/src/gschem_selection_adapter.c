@@ -834,7 +834,7 @@ gschem_selection_adapter_get_text_rotation (GschemSelectionAdapter *adapter)
     OBJECT *object = (OBJECT*) iter->data;
 
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
-      int temp_angle = object->text->angle;
+      int temp_angle = geda_text_object_get_angle (object);
 
       if (angle < 0) {
         angle = temp_angle;
@@ -1833,7 +1833,7 @@ gschem_selection_adapter_set_text_rotation (GschemSelectionAdapter *adapter, int
     OBJECT *object = (OBJECT*) iter->data;
 
     if (object->type == OBJ_TEXT) {
-      object->text->angle = angle;
+      geda_text_object_set_angle (object, angle);
       o_text_recreate(adapter->toplevel, object);
     }
 
