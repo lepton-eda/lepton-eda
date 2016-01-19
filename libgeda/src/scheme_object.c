@@ -1426,7 +1426,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   obj->text->alignment = align;
   obj->text->angle = angle;
 
-  obj->text->size = scm_to_int (size_s);
+  geda_text_object_set_size (obj, scm_to_int (size_s));
   obj->visibility = visibility;
   obj->show_name_value = show;
 
@@ -1517,7 +1517,7 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
                      align_s,
                      scm_from_int (obj->text->angle),
                      scm_from_utf8_string (o_text_get_string (toplevel, obj)),
-                     scm_from_int (obj->text->size),
+                     scm_from_int (geda_text_object_get_size (obj)),
                      visible_s,
                      show_s,
                      scm_from_int (obj->color),

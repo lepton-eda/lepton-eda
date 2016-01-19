@@ -871,7 +871,7 @@ gschem_selection_adapter_get_text_size (GschemSelectionAdapter *adapter)
     OBJECT *object = (OBJECT*) iter->data;
 
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
-      int temp_size = object->text->size;
+      int temp_size = geda_text_object_get_size (object);
 
       if (size < 0) {
         size = temp_size;
@@ -1859,7 +1859,7 @@ gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int siz
 
   g_return_if_fail (adapter != NULL);
   g_return_if_fail (adapter->toplevel != NULL);
-  g_return_if_fail (size >= 0);
+  g_return_if_fail (size >= MINIMUM_TEXT_SIZE);
 
   iter = geda_list_get_glist (adapter->selection);
 
@@ -1867,7 +1867,7 @@ gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int siz
     OBJECT *object = (OBJECT*) iter->data;
 
     if (object->type == OBJ_TEXT) {
-      object->text->size = size;
+      geda_text_object_set_size (object, size);
       o_text_recreate(adapter->toplevel, object);
     }
 
