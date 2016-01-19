@@ -53,6 +53,9 @@ geda_text_object_get_position (const GedaObject *object, gint *x, gint *y);
 gint
 geda_text_object_get_size (const GedaObject *object);
 
+gdouble
+geda_text_object_get_size_in_points (const GedaObject *object);
+
 const gchar*
 geda_text_object_get_string (const GedaObject *object);
 
@@ -97,9 +100,6 @@ o_text_get_string(TOPLEVEL *toplevel, OBJECT *obj);
 
 void
 o_text_set_rendered_bounds_func (TOPLEVEL *toplevel, RenderedBoundsFunc func, void *user_data);
-
-double
-o_text_get_font_size_in_points(TOPLEVEL *toplevel, OBJECT *object);
 
 OBJECT*
 o_text_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);

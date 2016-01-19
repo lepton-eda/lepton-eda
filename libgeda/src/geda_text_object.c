@@ -162,6 +162,20 @@ geda_text_object_get_size (const GedaObject *object)
   return object->text->size;
 }
 
+/*! \brief Get the text size in postscript points
+ *
+ *  gEDA fonts are specified in a non-standard unit. This function applies an
+ *  appopriate scaling to return the font size in postscript points.
+ *
+ *  \param [in] object The text object
+ *  \return The text size in postscript points.
+ */
+gdouble
+geda_text_object_get_size_in_points (const GedaObject *object)
+{
+  return GEDA_FONT_FACTOR * geda_text_object_get_size (object);
+}
+
 /*! \brief Get the text string
  *
  *  \param [in] object The text object
@@ -919,23 +933,4 @@ void o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
                                       void *user_data) {
   toplevel->rendered_text_bounds_func = func;
   toplevel->rendered_text_bounds_data = user_data;
-}
-
-
-/*! \brief Return font size of a text object in postscript points.
- *
- *  \par Description
- *  gEDA fonts are specified in a non-standard unit. This
- *  function applies an appopriate scaling to return the
- *  font size in postscript points.
- *
- *  \param [in] toplevel  The TOPLEVEL object
- *  \param [in] object    The text OBJECT whos font size to return
- *  \return The font size converted to postscript points.
- */
-double o_text_get_font_size_in_points (TOPLEVEL *toplevel, OBJECT *object)
-{
-  g_return_val_if_fail (object->type == OBJ_TEXT, 0.);
-
-  return object->text->size * GEDA_FONT_FACTOR;
 }
