@@ -369,7 +369,6 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
       g_strdup_printf (_("Component not found:\n %s"),
            new_node->complex_basename);
     new_prim_obj = geda_text_object_new (toplevel,
-                                         OBJ_TEXT,
                                          DETACHED_ATTRIBUTE_COLOR,
                                          x + NOT_FOUND_TEXT_X,
                                          y + NOT_FOUND_TEXT_Y,
@@ -415,7 +414,6 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
                        50, -1, -1);
     new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
     new_prim_obj = geda_text_object_new (toplevel,
-                                         OBJ_TEXT,
                                          DETACHED_ATTRIBUTE_COLOR,
                                          x + NOT_FOUND_TEXT_X + x_offset + 270,
                                          y + NOT_FOUND_TEXT_Y + y_offset + 90,

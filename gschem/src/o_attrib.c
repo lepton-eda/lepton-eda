@@ -353,7 +353,6 @@ OBJECT *o_attrib_add_attrib(GschemToplevel *w_current,
 
   /* first create text item */
   new_obj = geda_text_object_new (toplevel,
-                                  OBJ_TEXT,
                                   color,
                                   world_x,
                                   world_y,

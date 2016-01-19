@@ -28,12 +28,11 @@ check_construction ()
     gint angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
     gint color = g_test_rand_int_range (0, MAX_COLORS - 1);
     gint show_name_value = g_test_rand_int_range (0, 3);
-    gint size = g_test_rand_int_range (0, G_MAXINT);
+    gint size = g_test_rand_int_range (MINIMUM_TEXT_SIZE, G_MAXINT);
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
     gboolean visible = g_test_rand_bit ();
 
     GedaObject *object0 = geda_text_object_new (toplevel,
-                                                OBJ_TEXT,
                                                 color,
                                                 x,
                                                 y,
@@ -92,12 +91,11 @@ check_accessors ()
     gint angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
     gint color = g_test_rand_int_range (0, MAX_COLORS - 1);
     gint show_name_value = g_test_rand_int_range (0, 3);
-    gint size = g_test_rand_int_range (0, G_MAXINT);
+    gint size = g_test_rand_int_range (MINIMUM_TEXT_SIZE, G_MAXINT);
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
     gboolean visible = g_test_rand_bit ();
 
     GedaObject *object0 = geda_text_object_new (toplevel,
-                                                OBJ_TEXT,
                                                 color,
                                                 x,
                                                 y,
@@ -169,12 +167,11 @@ check_serialization ()
     gint angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
     gint color = g_test_rand_int_range (0, MAX_COLORS - 1);
     gint show_name_value = g_test_rand_int_range (0, 3);
-    gint size = g_test_rand_int_range (0, G_MAXINT);
+    gint size = g_test_rand_int_range (MINIMUM_TEXT_SIZE, G_MAXINT);
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
     gboolean visible = g_test_rand_bit ();
 
     GedaObject *object0 = geda_text_object_new (toplevel,
-                                                OBJ_TEXT,
                                                 color,
                                                 x,
                                                 y,

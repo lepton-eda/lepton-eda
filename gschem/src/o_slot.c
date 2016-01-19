@@ -118,7 +118,6 @@ void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
     /* here you need to do the add the slot
        attribute since it doesn't exist */
     new_obj = geda_text_object_new (toplevel,
-                                    OBJ_TEXT,
                                     ATTRIBUTE_COLOR,
                                     object->complex->x,
                                     object->complex->y,

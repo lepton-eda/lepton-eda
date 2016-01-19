@@ -22,11 +22,13 @@
  *  \brief Functions operating on text drawing objects
  */
 
+#define DEFAULT_TEXT_SIZE 10
+#define MINIMUM_TEXT_SIZE 1
+
 /* construction, destruction */
 
 GedaObject*
 geda_text_object_new (TOPLEVEL *toplevel,
-                      gchar type,
                       gint color,
                       gint x,
                       gint y,
@@ -54,6 +56,9 @@ geda_text_object_get_position (const GedaObject *object, gint *x, gint *y);
 gint
 geda_text_object_get_size (const GedaObject *object);
 
+gdouble
+geda_text_object_get_size_in_points (const GedaObject *object);
+
 const gchar*
 geda_text_object_get_string (const GedaObject *object);
 
@@ -62,6 +67,19 @@ geda_text_object_get_x (const GedaObject *object);
 
 gint
 geda_text_object_get_y (const GedaObject *object);
+
+void
+geda_text_object_mirror (TOPLEVEL *toplevel,
+                         int world_centerx,
+                         int world_centery,
+                         OBJECT *object);
+
+void
+geda_text_object_rotate (TOPLEVEL *toplevel,
+                         int world_centerx,
+                         int world_centery,
+                         int angle,
+                         OBJECT *object);
 
 void
 geda_text_object_set_alignment (GedaObject *object, gint alignment);
@@ -78,40 +96,47 @@ geda_text_object_set_x (GedaObject *object, gint x);
 void
 geda_text_object_set_y (GedaObject *object, gint y);
 
-void
-o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current);
-
-void
-geda_text_object_translate (GedaObject *object, int dx, int dy);
-
-void
-geda_text_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
-
-void
-geda_text_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-
-void
-o_text_set_string(TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string);
-
-const gchar*
-o_text_get_string(TOPLEVEL *toplevel, OBJECT *obj);
-
-void
-o_text_set_rendered_bounds_func (TOPLEVEL *toplevel, RenderedBoundsFunc func, void *user_data);
-
 double
-o_text_get_font_size_in_points(TOPLEVEL *toplevel, OBJECT *object);
-
-OBJECT*
-o_text_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+geda_text_object_shortest_distance (TOPLEVEL *toplevel,
+                                    OBJECT *object,
+                                    int x,
+                                    int y,
+                                    int force_soild);
 
 gchar*
 geda_text_object_to_buffer (const GedaObject *object);
 
-double
-geda_text_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+void
+geda_text_object_translate (GedaObject *object, int dx, int dy);
+
+/* older methods, need renaming */
+
+void
+o_text_recreate (TOPLEVEL *toplevel, OBJECT *o_current);
+
+void
+o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string);
+
+const gchar*
+o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj);
+
+void
+o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
+                                 RenderedBoundsFunc func,
+                                 void *user_data);
+
+OBJECT*
+o_text_read (TOPLEVEL *toplevel,
+             const char *first_line,
+             TextBuffer *tb,
+             unsigned int release_ver,
+             unsigned int fileformat_ver,
+             GError **err);
 
 int
-world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
-
-
+world_get_text_bounds (TOPLEVEL *toplevel,
+                       OBJECT *o_current,
+                       int *left,
+                       int *top,
+                       int *right,
+                       int *bottom);

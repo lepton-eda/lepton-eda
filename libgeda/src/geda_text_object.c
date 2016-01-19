@@ -18,26 +18,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file o_text_basic.c
+/*! \file geda_text_object.c
+ *
  *  \brief functions for the text and fonts
- *
- *  \par The font definitions
- *
- *  Each letter of the font is defined in a single font symbol file. In
- *  the font symbol file, the character width is defined in the second
- *  line. The first line contains the file format version.
- *
- *  All remaining lines are basic graphical lines. They build the
- *  appearance of the character.
- *
- *  \image html o_text_font_overview.png
- *  \image latex o_text_font_overview.pdf "font overview" width=14cm
- *
- *  The height of capital characters in the font files is 26. The size
- *  of small letters is 16. The space below the zero line is used by
- *  characters like <b>g</b>, <b>p</b> or <b>q</b>. The space above 26
- *  is used by diacritic marks like accents, breve, circumflex mostly in
- *  european characters.
  *
  *  \par The text definitions
  *
@@ -53,10 +36,6 @@
  *
  *  \image html o_text_text_overview.png
  *  \image latex o_text_text_overview.pdf "text overview" width=14cm
- *
- *  To draw the text in gschem, the string is interpreted and converted
- *  to a list of basic graphical objects. The basic line objects are
- *  collected from the font character objects.
  */
 
 #include <config.h>
@@ -100,6 +79,8 @@ geda_text_object_get_alignment (const GedaObject *object)
   g_return_val_if_fail (object != NULL, LOWER_LEFT);
   g_return_val_if_fail (object->text != NULL, LOWER_LEFT);
   g_return_val_if_fail (object->type == OBJ_TEXT, LOWER_LEFT);
+  g_return_val_if_fail (object->text->alignment >= LOWER_LEFT, LOWER_LEFT);
+  g_return_val_if_fail (object->text->alignment <= UPPER_RIGHT, LOWER_LEFT);
 
   return object->text->alignment;
 }
@@ -155,11 +136,27 @@ geda_text_object_get_position (const GedaObject *object, gint *x, gint *y)
 gint
 geda_text_object_get_size (const GedaObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
-  g_return_val_if_fail (object->text != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
+  g_return_val_if_fail (object != NULL, DEFAULT_TEXT_SIZE);
+  g_return_val_if_fail (object->text != NULL, DEFAULT_TEXT_SIZE);
+  g_return_val_if_fail (object->type == OBJ_TEXT, DEFAULT_TEXT_SIZE);
+  g_return_val_if_fail (object->text->size >= MINIMUM_TEXT_SIZE,
+                        DEFAULT_TEXT_SIZE);
 
   return object->text->size;
+}
+
+/*! \brief Get the text size in postscript points
+ *
+ *  gEDA fonts are specified in a non-standard unit. This function applies an
+ *  appopriate scaling to return the font size in postscript points.
+ *
+ *  \param [in] object The text object
+ *  \return The text size in postscript points.
+ */
+gdouble
+geda_text_object_get_size_in_points (const GedaObject *object)
+{
+  return GEDA_FONT_FACTOR * geda_text_object_get_size (object);
 }
 
 /*! \brief Get the text string
@@ -211,6 +208,8 @@ geda_text_object_get_y (const GedaObject *object)
 
 /*! \brief Set the text alignment
  *
+ *  In case of an invalid text alignment, the property remains unchanged.
+ *
  *  \param [in,out] object The text object
  *  \param [in] alignment The text alignmemt
  */
@@ -220,14 +219,22 @@ geda_text_object_set_alignment (GedaObject *object, gint alignment)
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
   g_return_if_fail (object->type == OBJ_TEXT);
+  g_return_if_fail (alignment >= LOWER_LEFT);
+  g_return_if_fail (alignment <= UPPER_RIGHT);
 
   object->text->alignment = alignment;
 }
 
 /*! \brief Set the text angle
  *
+ *  The text angle must be orthagonal to an axis, i.e., the text angle must be
+ *  a multiple of 90 degrees. In case of an invalid text angle, the property
+ *  remains unchanged.
+ *
+ *  If the text angle is not normal [0,360), then the angle will be normalized.
+ *
  *  \param [in,out] object The text object
- *  \param [in] angle The text angle
+ *  \param [in] angle The text angle in degrees.
  */
 void
 geda_text_object_set_angle (GedaObject *object, gint angle)
@@ -235,11 +242,15 @@ geda_text_object_set_angle (GedaObject *object, gint angle)
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
   g_return_if_fail (object->type == OBJ_TEXT);
+  g_return_if_fail (geda_angle_is_ortho (angle));
 
-  object->text->angle = angle;
+  object->text->angle = geda_angle_normalize (angle);
 }
 
 /*! \brief Set the text size
+ *
+ *  The text size must be greater than or equal to the MINUMUM_TEXT_SIZE. In
+ *  the case of an invalid text size, the property remains unchanged.
  *
  *  \param [in,out] object The text object
  *  \param [in] size The text size
@@ -250,6 +261,7 @@ geda_text_object_set_size (GedaObject *object, gint size)
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
   g_return_if_fail (object->type == OBJ_TEXT);
+  g_return_if_fail (size >= MINIMUM_TEXT_SIZE);
 
   object->text->size = size;
 }
@@ -293,7 +305,8 @@ geda_text_object_set_y (GedaObject *object, gint y)
  *
  *  \param [in] object  The OBJECT to update
  */
-static void update_disp_string (OBJECT *object)
+static void
+update_disp_string (OBJECT *object)
 {
   char *name = NULL;
   char *value = NULL;
@@ -346,8 +359,13 @@ static void update_disp_string (OBJECT *object)
  *  \param [out] right     the right world coord
  *  \param [out] bottom    the bottom world coord
  */
-int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
-                          int *top, int *right, int *bottom)
+int
+world_get_text_bounds (TOPLEVEL *toplevel,
+                       OBJECT *o_current,
+                       int *left,
+                       int *top,
+                       int *right,
+                       int *bottom)
 {
   if (toplevel->rendered_text_bounds_func != NULL) {
     return
@@ -381,7 +399,6 @@ int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
  */
 GedaObject*
 geda_text_object_new (TOPLEVEL *toplevel,
-                      gchar type,
                       gint color,
                       gint x,
                       gint y,
@@ -395,11 +412,9 @@ geda_text_object_new (TOPLEVEL *toplevel,
   GedaObject *new_node=NULL;
   TEXT *text;
 
-  if (string == NULL) {
-    return(NULL);
-  }
+  g_return_val_if_fail (string != NULL, NULL);
 
-  new_node = s_basic_new_object(type, "text");
+  new_node = s_basic_new_object (OBJ_TEXT, "text");
 
   text = (TEXT *) g_malloc(sizeof(TEXT));
 
@@ -440,12 +455,13 @@ geda_text_object_new (TOPLEVEL *toplevel,
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  */
-OBJECT *o_text_read (TOPLEVEL *toplevel,
-		    const char *first_line,
-		    TextBuffer *tb,
-		    unsigned int release_ver,
-            unsigned int fileformat_ver,
-            GError **err)
+OBJECT*
+o_text_read (TOPLEVEL *toplevel,
+             const char *first_line,
+             TextBuffer *tb,
+             unsigned int release_ver,
+             unsigned int fileformat_ver,
+             GError **err)
 {
   OBJECT *new_obj;
   char type;
@@ -492,25 +508,16 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
     num_lines = 1; /* only support a single line */
   }
 
-  if (size == 0) {
-    s_log_message(_("Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"), type, x, y, color, size, visibility, show_name_value, angle, alignment);
+  if (size < MINIMUM_TEXT_SIZE) {
+    s_log_message (_("Found an invalid text size [ %s ]\n"), first_line);
+    size = DEFAULT_TEXT_SIZE;
+    s_log_message (_("Setting text size to %d\n"), size);
   }
 
-  switch(angle) {
-
-    case(0):
-    case(90):
-    case(180):
-    case(270):
-    break;
-
-    default:
-      s_log_message(_("Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"),
-                    type, x, y, color, size, visibility, show_name_value, angle, alignment);
-      s_log_message(_("Setting angle to 0\n"));
-      angle=0;
-      break;
-
+  if (!geda_angle_is_ortho (angle)) {
+    s_log_message (_("Found an unsupported text angle [ %s ]\n"), first_line);
+    angle = geda_angle_make_ortho (angle);
+    s_log_message (_("Setting angle to %d\n"), angle);
   }
 
   switch(alignment) {
@@ -527,17 +534,17 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
     break;
 
     default:
-      s_log_message(_("Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"),
-                    type, x, y, color, size, visibility, show_name_value, angle, alignment);
-      s_log_message(_("Setting alignment to LOWER_LEFT\n"));
+      s_log_message (_("Found an unsupported text alignment [ %s ]\n"),
+                     first_line);
       alignment = LOWER_LEFT;
+      s_log_message(_("Setting alignment to LOWER_LEFT\n"));
       break;
   }
 
   if (color < 0 || color > MAX_COLORS) {
     s_log_message(_("Found an invalid color [ %s ]\n"), first_line);
-    s_log_message(_("Setting color to default color\n"));
     color = DEFAULT_COLOR;
+    s_log_message(_("Setting color to default color\n"));
   }
 
   g_assert(num_lines && num_lines > 0);
@@ -578,7 +585,6 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
   }
 
   new_obj = geda_text_object_new (toplevel,
-                                  type,
                                   color,
                                   x,
                                   y,
@@ -613,6 +619,8 @@ geda_text_object_to_buffer (const GedaObject *object)
 
   string = geda_text_object_get_string (object);
 
+  g_return_val_if_fail (string != NULL, NULL);
+
   return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d\n%s",
                           OBJ_TEXT,
                           geda_text_object_get_x (object),
@@ -635,7 +643,8 @@ geda_text_object_to_buffer (const GedaObject *object)
  *  \param toplevel  The TOPLEVEL object
  *  \param o_current The text object to update
  */
-void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
+void
+o_text_recreate (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   o_emit_pre_change_notify (toplevel, o_current);
   update_disp_string (o_current);
@@ -683,7 +692,6 @@ geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
   g_return_val_if_fail (object->type == OBJ_TEXT, NULL);
 
   new_obj = geda_text_object_new (toplevel,
-                                  OBJ_TEXT,
                                   object->color,
                                   object->text->x,
                                   object->text->y,
@@ -691,7 +699,7 @@ geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
                                   object->text->angle,
                                   object->text->string,
                                   object->text->size,
-                                  o_is_visible (toplevel, object) ? VISIBLE : INVISIBLE,
+                                  geda_object_get_visible (object),
                                   object->show_name_value);
 
   return new_obj;
@@ -709,9 +717,12 @@ geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
  *  \param [in] object        The text object
  *  \note only steps of 90 degrees are allowed for the \a angle
  */
-void geda_text_object_rotate (TOPLEVEL *toplevel,
-                         int world_centerx, int world_centery,
-                         int angle, OBJECT *object)
+void
+geda_text_object_rotate (TOPLEVEL *toplevel,
+                         int world_centerx,
+                         int world_centery,
+                         int angle,
+                         OBJECT *object)
 {
   int x, y;
   int newx, newy;
@@ -719,8 +730,9 @@ void geda_text_object_rotate (TOPLEVEL *toplevel,
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
   g_return_if_fail (object->type == OBJ_TEXT);
+  g_return_if_fail (geda_angle_is_ortho (angle));
 
-  object->text->angle = ( object->text->angle + angle ) % 360;
+  object->text->angle = geda_angle_normalize (object->text->angle + angle);
 
   x = object->text->x + (-world_centerx);
   y = object->text->y + (-world_centery);
@@ -746,9 +758,11 @@ void geda_text_object_rotate (TOPLEVEL *toplevel,
  *  \param [in] world_centery y-coord of the mirror position
  *  \param [in] object        The text object
  */
-void geda_text_object_mirror (TOPLEVEL *toplevel,
-			 int world_centerx, int world_centery,
-			 OBJECT *object)
+void
+geda_text_object_mirror (TOPLEVEL *toplevel,
+                         int world_centerx,
+                         int world_centery,
+                         OBJECT *object)
 {
   int origx, origy;
   int x, y;
@@ -846,8 +860,11 @@ void geda_text_object_mirror (TOPLEVEL *toplevel,
  *  returns G_MAXDOUBLE.
  */
 double
-geda_text_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
-                                    int x, int y, int force_solid)
+geda_text_object_shortest_distance (TOPLEVEL *toplevel,
+                                    OBJECT *object,
+                                    int x,
+                                    int y,
+                                    int force_solid)
 {
   int left, top, right, bottom;
   double dx, dy;
@@ -875,8 +892,8 @@ geda_text_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in]  obj                   The text object.
  *  \param [in]  new_string            The new value.
  */
-void o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj,
-                        const gchar *new_string)
+void
+o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string)
 {
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (obj != NULL);
@@ -901,7 +918,8 @@ void o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj,
  *  \param [in]  obj                   The text object.
  *  \return The text object's string, or NULL on failure.
  */
-const gchar *o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj)
+const gchar*
+o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj)
 {
   g_return_val_if_fail (toplevel != NULL, NULL);
   g_return_val_if_fail (obj != NULL, NULL);
@@ -920,28 +938,11 @@ const gchar *o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj)
  *  \param [in] func      Function to use.
  *  \param [in] user_data User data to be passed to the function.
  */
-void o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
-                                      RenderedBoundsFunc func,
-                                      void *user_data) {
+void
+o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
+                                 RenderedBoundsFunc func,
+                                 void *user_data)
+{
   toplevel->rendered_text_bounds_func = func;
   toplevel->rendered_text_bounds_data = user_data;
-}
-
-
-/*! \brief Return font size of a text object in postscript points.
- *
- *  \par Description
- *  gEDA fonts are specified in a non-standard unit. This
- *  function applies an appopriate scaling to return the
- *  font size in postscript points.
- *
- *  \param [in] toplevel  The TOPLEVEL object
- *  \param [in] object    The text OBJECT whos font size to return
- *  \return The font size converted to postscript points.
- */
-double o_text_get_font_size_in_points (TOPLEVEL *toplevel, OBJECT *object)
-{
-  g_return_val_if_fail (object->type == OBJ_TEXT, 0.);
-
-  return object->text->size * GEDA_FONT_FACTOR;
 }

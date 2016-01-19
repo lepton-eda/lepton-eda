@@ -31,7 +31,7 @@
 
 /* Absolute default used when default_... strings are NULL */
 
-int   default_text_size = 10;
+int   default_text_size = DEFAULT_TEXT_SIZE;
 int   default_text_caps = LOWER;
 int   default_attribute_color = ATTRIBUTE_COLOR;
 int   default_detachattr_color = DETACHED_ATTRIBUTE_COLOR;

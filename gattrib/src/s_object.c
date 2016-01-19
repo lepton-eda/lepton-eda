@@ -354,7 +354,6 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
 #endif
 
   new_obj = geda_text_object_new (toplevel,
-                                  OBJ_TEXT,
                                   color,
                                   world_x,
                                   world_y,
