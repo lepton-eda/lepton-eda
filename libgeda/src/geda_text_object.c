@@ -100,6 +100,8 @@ geda_text_object_get_alignment (const GedaObject *object)
   g_return_val_if_fail (object != NULL, LOWER_LEFT);
   g_return_val_if_fail (object->text != NULL, LOWER_LEFT);
   g_return_val_if_fail (object->type == OBJ_TEXT, LOWER_LEFT);
+  g_return_val_if_fail (object->text->alignment >= LOWER_LEFT, LOWER_LEFT);
+  g_return_val_if_fail (object->text->alignment <= UPPER_RIGHT, LOWER_LEFT);
 
   return object->text->alignment;
 }
@@ -227,6 +229,8 @@ geda_text_object_get_y (const GedaObject *object)
 
 /*! \brief Set the text alignment
  *
+ *  In case of an invalid text alignment, the property remains unchanged.
+ *
  *  \param [in,out] object The text object
  *  \param [in] alignment The text alignmemt
  */
@@ -236,6 +240,8 @@ geda_text_object_set_alignment (GedaObject *object, gint alignment)
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
   g_return_if_fail (object->type == OBJ_TEXT);
+  g_return_if_fail (alignment >= LOWER_LEFT);
+  g_return_if_fail (alignment <= UPPER_RIGHT);
 
   object->text->alignment = alignment;
 }
