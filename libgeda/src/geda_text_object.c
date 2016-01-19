@@ -712,7 +712,7 @@ geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
                                   object->text->angle,
                                   object->text->string,
                                   object->text->size,
-                                  o_is_visible (toplevel, object) ? VISIBLE : INVISIBLE,
+                                  geda_object_get_visible (object),
                                   object->show_name_value);
 
   return new_obj;

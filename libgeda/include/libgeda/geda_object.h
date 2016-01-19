@@ -121,7 +121,7 @@ geda_object_get_position (const GedaObject *object, gint *x, gint *y);
 gboolean
 geda_object_get_selectable (const GedaObject *object);
 
-gboolean
+gint
 geda_object_get_visible (const GedaObject *object);
 
 void

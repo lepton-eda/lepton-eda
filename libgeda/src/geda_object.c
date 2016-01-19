@@ -1048,10 +1048,15 @@ o_is_visible (TOPLEVEL *toplevel, OBJECT *object)
   return object->visibility == VISIBLE;
 }
 
-gboolean
+/*! \brief Get the visibility of an object
+ *
+ *  \param [in] object The OBJECT structure to be queried
+ *  \return VISIBLE or INVISIBLE
+ */
+gint
 geda_object_get_visible (const GedaObject *object)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object != NULL, VISIBLE);
 
   return object->visibility;
 }
