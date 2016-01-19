@@ -524,7 +524,7 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
     num_lines = 1; /* only support a single line */
   }
 
-  if (size >= MINIMUM_TEXT_SIZE) {
+  if (size < MINIMUM_TEXT_SIZE) {
     s_log_message (_("Found an invalid text size [ %s ]\n"), first_line);
     size = DEFAULT_TEXT_SIZE;
     s_log_message (_("Setting text size to %d\n"), size);
