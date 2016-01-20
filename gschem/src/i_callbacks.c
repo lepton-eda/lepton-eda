@@ -1539,6 +1539,9 @@ DEFINE_I_CALLBACK(page_revert)
   /* delete the page, then re-open the file as a new page */
   x_window_close_page (w_current, page_current);
 
+  /* Force symbols to be re-loaded from disk */
+  s_clib_refresh();
+
   page = x_window_open_page (w_current, filename);
   g_return_if_fail (page != NULL);
 
