@@ -767,9 +767,6 @@ static void refresh_scm (CLibSource *source)
  *  Resets the list of symbols available from each source, and
  *  repopulates it from scratch.  Useful e.g. for checking for new
  *  symbols.
- *
- *  \bug Disabled for now because it would break cached CLibSymbols used
- *  all over the place (e.g. in #st_object).
  */
 void s_clib_refresh ()
 {
