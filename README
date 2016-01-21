@@ -92,7 +92,7 @@ In order to compile gEDA from the distributed source archives, you
 
 The following tools and libraries are *highly recommended*:
 
- - GNU `gettext', version 0.16 or newer.
+ - GNU `gettext', version 0.18 or newer.
    <http://www.gnu.org/software/gettext/>
 
  - GNU `troff' (`groff'). <http://www.gnu.org/software/groff/>

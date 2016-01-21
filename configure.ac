@@ -63,7 +63,7 @@ AC_PATH_PROGS([M4], [gm4 m4], [m4])
 
 AM_NLS
 AM_GNU_GETTEXT
-AM_GNU_GETTEXT_VERSION([0.16])
+AM_GNU_GETTEXT_VERSION([0.18])
 AX_DESKTOP_I18N
 
 #####################################################################
