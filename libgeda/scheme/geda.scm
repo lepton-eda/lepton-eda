@@ -3,6 +3,10 @@
 
 (define path-sep file-name-separator-string)
 
+;; Clean up logfiles
+;; FIXME this should be a plugin
+(use-modules (geda log-rotate))
+
 ;; Legacy gEDA data & configuration directories.  These functions will
 ;; usually return #f if gEDA was compiled with --disable-deprecated.
 ;; Use the sys-data-dirs and sys-config-dirs functions from the (geda
