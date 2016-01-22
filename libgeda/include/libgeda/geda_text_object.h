@@ -44,9 +44,9 @@ geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object);
 
 /* methods */
 
-gint
+gboolean
 geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
-                                   GedaObject *o_current,
+                                   const GedaObject *object,
                                    gint *left,
                                    gint *top,
                                    gint *right,

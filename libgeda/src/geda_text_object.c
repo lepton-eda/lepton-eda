@@ -73,15 +73,15 @@ int tab_in_chars = 8;
  *  This function calculates the object boudaries of a text \a object.
  *
  *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [in]  o_current a text object
+ *  \param [in]  object    a text object
  *  \param [out] left      the left world coord
  *  \param [out] top       the top world coord
  *  \param [out] right     the right world coord
  *  \param [out] bottom    the bottom world coord
  */
-gint
+gboolean
 geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
-                                   GedaObject *o_current,
+                                   const GedaObject *object,
                                    gint *left,
                                    gint *top,
                                    gint *right,
@@ -90,7 +90,7 @@ geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
   if (toplevel->rendered_text_bounds_func != NULL) {
     return
       toplevel->rendered_text_bounds_func (toplevel->rendered_text_bounds_data,
-                                           o_current,
+                                           object,
                                            left, top, right, bottom);
   }
 

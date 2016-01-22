@@ -555,7 +555,13 @@ void o_select_move_to_place_list(GschemToplevel *w_current);
 void o_slot_start(GschemToplevel *w_current, OBJECT *object);
 void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string);
 /* o_text.c */
-int o_text_get_rendered_bounds(void *user_data, OBJECT *object, int *min_x, int *min_y, int *max_x, int *max_y);
+gboolean
+o_text_get_rendered_bounds (void *user_data,
+                            const GedaObject *o_current,
+                            gint *min_x,
+                            gint *min_y,
+                            gint *max_x,
+                            gint *max_y);
 void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int align, int rotate, int size);
 void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string, int visibility, int show);
 /* o_undo.c */

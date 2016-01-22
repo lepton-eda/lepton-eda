@@ -36,9 +36,13 @@
  *  \par Function Description
  *
  */
-int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
-                                int *min_x, int *min_y,
-                                int *max_x, int *max_y)
+gboolean
+o_text_get_rendered_bounds (void *user_data,
+                            const GedaObject *o_current,
+                            gint *min_x,
+                            gint *min_y,
+                            gint *max_x,
+                            gint *max_y)
 {
   TOPLEVEL *toplevel;
   EdaRenderer *renderer;
