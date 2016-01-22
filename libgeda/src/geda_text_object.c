@@ -68,6 +68,35 @@
 int tab_in_chars = 8;
 
 
+/*! \brief calculate and return the boundaries of a text object
+ *  \par Function Description
+ *  This function calculates the object boudaries of a text \a object.
+ *
+ *  \param [in]  toplevel  The TOPLEVEL object.
+ *  \param [in]  o_current a text object
+ *  \param [out] left      the left world coord
+ *  \param [out] top       the top world coord
+ *  \param [out] right     the right world coord
+ *  \param [out] bottom    the bottom world coord
+ */
+gint
+geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
+                                   GedaObject *o_current,
+                                   gint *left,
+                                   gint *top,
+                                   gint *right,
+                                   gint *bottom)
+{
+  if (toplevel->rendered_text_bounds_func != NULL) {
+    return
+      toplevel->rendered_text_bounds_func (toplevel->rendered_text_bounds_data,
+                                           o_current,
+                                           left, top, right, bottom);
+  }
+
+  return FALSE;
+}
+
 /*! \brief Get the text alignment
  *
  *  \param [in] object The text object
@@ -346,35 +375,6 @@ update_disp_string (OBJECT *object)
   } else {
     text->disp_string = g_strdup (text->string);
   }
-}
-
-/*! \brief calculate and return the boundaries of a text object
- *  \par Function Description
- *  This function calculates the object boudaries of a text \a object.
- *
- *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [in]  o_current a text object
- *  \param [out] left      the left world coord
- *  \param [out] top       the top world coord
- *  \param [out] right     the right world coord
- *  \param [out] bottom    the bottom world coord
- */
-int
-world_get_text_bounds (TOPLEVEL *toplevel,
-                       OBJECT *o_current,
-                       int *left,
-                       int *top,
-                       int *right,
-                       int *bottom)
-{
-  if (toplevel->rendered_text_bounds_func != NULL) {
-    return
-      toplevel->rendered_text_bounds_func (toplevel->rendered_text_bounds_data,
-                                           o_current,
-                                           left, top, right, bottom);
-  }
-
-  return FALSE;
 }
 
 /*! \brief Creates a text OBJECT and the graphical objects representing it

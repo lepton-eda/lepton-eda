@@ -1197,11 +1197,11 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
         break;
 
       case(OBJ_TEXT):
-        if ( !world_get_text_bounds(toplevel, o_current,
-                                              &bounds.min_x,
-                                              &bounds.min_y,
-                                              &bounds.max_x,
-                                              &bounds.max_y) ) {
+        if ( !geda_text_object_calculate_bounds(toplevel, o_current,
+                                                &bounds.min_x,
+                                                &bounds.min_y,
+                                                &bounds.max_x,
+                                                &bounds.max_y) ) {
           return 0;
         }
         break;
