@@ -47,10 +47,7 @@ geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object);
 gboolean
 geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
                                    const GedaObject *object,
-                                   gint *left,
-                                   gint *top,
-                                   gint *right,
-                                   gint *bottom);
+                                   GedaBounds *bounds);
 
 gint
 geda_text_object_get_alignment (const GedaObject *object);

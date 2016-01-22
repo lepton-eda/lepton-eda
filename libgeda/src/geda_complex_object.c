@@ -344,9 +344,9 @@ static void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *obj
 
 static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, int y)
 {
+    GedaBounds bounds;
     OBJECT *new_prim_obj;
     char *not_found_text = NULL;
-    int left, right, top, bottom;
     int x_offset, y_offset;
 
     /* Put placeholder into object list.  Changed by SDB on
@@ -383,12 +383,9 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
     /* figure out where to put the hazard triangle */
     geda_text_object_calculate_bounds (toplevel,
                                        new_prim_obj,
-                                       &left,
-                                       &top,
-                                       &right,
-                                       &bottom);
-    x_offset = (right - left) / 4;
-    y_offset = bottom - top + 100;  /* 100 is just an additional offset */
+                                       &bounds);
+    x_offset = (bounds.max_x - bounds.min_x) / 4;
+    y_offset = bounds.max_y - bounds.min_y + 100;  /* 100 is just an additional offset */
 
     /* add hazard triangle */
     new_prim_obj = geda_line_object_new (toplevel,

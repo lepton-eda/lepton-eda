@@ -69,32 +69,35 @@ int tab_in_chars = 8;
 
 
 /*! \brief calculate and return the boundaries of a text object
- *  \par Function Description
- *  This function calculates the object boudaries of a text \a object.
+ *
+ *  The responsibility of calculating the bounds of any object should probably
+ *  be moved to EdaRenderer. And, this method should not be a virtual method
+ *  of GedaObject.
  *
  *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  object    a text object
- *  \param [out] left      the left world coord
- *  \param [out] top       the top world coord
- *  \param [out] right     the right world coord
- *  \param [out] bottom    the bottom world coord
+ *  \param [out] bounds    the bounds of the text
+ *  \return TRUE if successful, FALSE if unsuccessful
  */
 gboolean
 geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
                                    const GedaObject *object,
-                                   gint *left,
-                                   gint *top,
-                                   gint *right,
-                                   gint *bottom)
+                                   GedaBounds *bounds)
 {
-  if (toplevel->rendered_text_bounds_func != NULL) {
-    return
-      toplevel->rendered_text_bounds_func (toplevel->rendered_text_bounds_data,
-                                           object,
-                                           left, top, right, bottom);
-  }
+  geda_bounds_init (bounds);
 
-  return FALSE;
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object->text != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_TEXT, FALSE);
+  g_return_val_if_fail (toplevel != NULL, FALSE);
+  g_return_val_if_fail (toplevel->rendered_text_bounds_func != NULL, FALSE);
+
+  return toplevel->rendered_text_bounds_func (toplevel->rendered_text_bounds_data,
+                                              object,
+                                              &bounds->min_x,
+                                              &bounds->min_y,
+                                              &bounds->max_x,
+                                              &bounds->max_y);
 }
 
 /*! \brief Get the text alignment
