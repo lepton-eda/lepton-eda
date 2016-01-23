@@ -4,7 +4,7 @@ endif
 if XORN
   XORN_DIR = xorn
 endif
-SUBDIRS = intl libgeda libgedacairo gaf gschem ${GATTRIB_DIR} \
+SUBDIRS = libgeda libgedacairo gaf gschem ${GATTRIB_DIR} \
 	gsymcheck gnetlist utils symbols docs examples contrib $(XORN_DIR)
 
 ACLOCAL_AMFLAGS = -I m4

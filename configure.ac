@@ -62,7 +62,7 @@ AC_PATH_PROGS([M4], [gm4 m4], [m4])
 #####################################################################
 
 AM_NLS
-AM_GNU_GETTEXT
+AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.18])
 AX_DESKTOP_I18N
 
@@ -207,7 +207,6 @@ AC_CONFIG_SUBDIRS([xorn])
 #####################################################################
 
 AC_CONFIG_FILES([Makefile
-                 intl/Makefile
 
                  libgeda/Makefile
                  libgeda/libgeda.pc

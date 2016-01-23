@@ -81,6 +81,9 @@ In order to compile gEDA from the distributed source archives, you
  - GTK+ (the Gimp Toolkit), version 2.18.0 or later.
    <http://www.gtk.org/>
 
+ - GNU `gettext', version 0.18 or newer.
+   <http://www.gnu.org/software/gettext/>
+
  - The `lex' tool for generating lexical scanners.  The `flex'
    implementation recommended.  <http://flex.sourceforge.net/>
 
@@ -91,9 +94,6 @@ In order to compile gEDA from the distributed source archives, you
    headers.  <https://www.python.org/downloads/>
 
 The following tools and libraries are *highly recommended*:
-
- - GNU `gettext', version 0.18 or newer.
-   <http://www.gnu.org/software/gettext/>
 
  - GNU `troff' (`groff'). <http://www.gnu.org/software/groff/>
 

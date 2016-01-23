@@ -118,7 +118,7 @@ gschem_SOURCES = \
 	x_window.c
 
 gschem_CPPFLAGS = -I$(top_srcdir)/libgeda/include  -I$(srcdir)/../include \
-	-I$(top_srcdir) -I$(includedir) -I$(top_srcdir)/intl
+	-I$(top_srcdir) -I$(includedir)
 gschem_CFLAGS = $(GCC_CFLAGS) $(LIBSTROKE_CFLAGS) \
 	$(MINGW_CFLAGS) \
 	$(GLIB_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS)
@@ -126,8 +126,7 @@ gschem_LDFLAGS = $(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
 	$(GTHREAD_LIBS) $(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
 gschem_LDADD = \
 	$(top_builddir)/libgedacairo/libgedacairo.la \
-	$(top_builddir)/libgeda/src/libgeda.la \
-	@LIBINTL@
+	$(top_builddir)/libgeda/src/libgeda.la
 
 
 # This is used to generate boilerplate for defining Scheme functions
