@@ -6,6 +6,3 @@
 
 /* Current git commit. */
 /* #undef PACKAGE_GIT_COMMIT */
-
-/* Current 'git describe' version string. */
-/* #undef PACKAGE_GIT_VERSION */
