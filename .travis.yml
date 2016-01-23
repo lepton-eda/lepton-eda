@@ -19,4 +19,4 @@ before_install: >
 install: ./autogen.sh && ./configure --disable-update-xdg-database
 
 # Compile gEDA and run its tests
-script: make -ks all && make check
+script: make -kj4 distcheck
