@@ -1,8 +1,8 @@
 # geda-git-version.m4                                   -*-Autoconf-*-
-# serial 2
+# serial 3
 
 dnl Extract gEDA version parameters from a git repository, if present.
-dnl Copyright (C) 2009-2011  Peter Brett <peter@peter-b.co.uk>
+dnl Copyright (C) 2009-2011, 2016  Peter Brett <peter@peter-b.co.uk>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -38,25 +38,38 @@ changequote([,])
   # describe.
   if test "X$HAVE_GIT_REPO" = "Xyes"; then
     AC_MSG_CHECKING([version from git repository])
-    GIT_VERSION=`cd $srcdir && $GIT describe`
+    GIT_VERSION=`cd $srcdir && $GIT rev-parse HEAD 2>/dev/null`
     AC_MSG_RESULT([$GIT_VERSION])
+
+    AC_MSG_CHECKING([descriptive git version])
+    GIT_DESCRIBE_VERSION=`cd $srcdir && $GIT describe 2>/dev/null`
+    if test "$?" = "0"; then
+      AC_MSG_RESULT([$GIT_DESCRIBE_VERSION])
+    else
+      AC_MSG_RESULT([no])
+    fi
   fi
 
   # If there's an annotated tag available, test that the git version
   # and AC_INIT versions agree.
-  if (cd $srcdir && git describe > /dev/null); then
+  if test "X$GIT_DESCRIBE_VERSION" != "X"; then
+    AC_MSG_CHECKING([whether git version matches configured version])
 changequote(,)
     git_sed_pattern="^\([^-]*\)-\([^-]*\).*"
 changequote([,])
-    GIT_DOTTED_VERSION=`echo $GIT_VERSION | sed -e"s/$git_sed_pattern/\1/"`
-    GIT_DATE_VERSION=`echo $GIT_VERSION | sed -e"s/$git_sed_pattern/\2/"`
+    GIT_DOTTED_VERSION=`echo $GIT_DESCRIBE_VERSION |
+                        sed -e"s/$git_sed_pattern/\1/"`
+    GIT_DATE_VERSION=`echo $GIT_DESCRIBE_VERSION |
+                      sed -e"s/$git_sed_pattern/\2/"`
 
     if (test "X$GIT_DOTTED_VERSION" != "X$DOTTED_VERSION") ||
        (test "X$GIT_DATE_VERSION" != "X$DATE_VERSION");
     then
-
+      AC_MSG_RESULT([no])
       AC_MSG_WARN([The latest git tag name doesn't appear to match the version specified
 by the configure script.])
+    else
+      AC_MSG_RESULT([yes])
     fi
   fi
 
