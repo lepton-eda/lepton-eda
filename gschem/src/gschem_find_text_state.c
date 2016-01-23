@@ -237,7 +237,7 @@ assign_store (GschemFindTextState *state, GSList *objects)
       continue;
     }
 
-    str = o_text_get_string (object->page->toplevel, object);
+    str = geda_text_object_get_string (object);
 
     if (str == NULL) {
       g_warning ("NULL string encountered");
@@ -413,7 +413,7 @@ find_objects_using_pattern (GSList *pages, const char *text)
         continue;
       }
 
-      str = o_text_get_string (object->page->toplevel, object);
+      str = geda_text_object_get_string (object);
 
       if (str == NULL) {
         g_warning ("NULL string encountered");
@@ -490,7 +490,7 @@ find_objects_using_regex (GSList *pages, const char *text, GError **error)
         continue;
       }
 
-      str = o_text_get_string (object->page->toplevel, object);
+      str = geda_text_object_get_string (object);
 
       if (str == NULL) {
         g_warning ("NULL string encountered");
@@ -555,7 +555,7 @@ find_objects_using_substring (GSList *pages, const char *text)
         continue;
       }
 
-      str = o_text_get_string (object->page->toplevel, object);
+      str = geda_text_object_get_string (object);
 
       if (str == NULL) {
         g_warning ("NULL string encountered");

@@ -42,23 +42,23 @@
 /* autonumber text structs and enums */
 enum {
   AUTONUMBER_SORT_DIAGONAL,
-  AUTONUMBER_SORT_YX, 
-  AUTONUMBER_SORT_YX_REV, 
-  AUTONUMBER_SORT_XY, 
-  AUTONUMBER_SORT_XY_REV, 
-  AUTONUMBER_SORT_FILE 
+  AUTONUMBER_SORT_YX,
+  AUTONUMBER_SORT_YX_REV,
+  AUTONUMBER_SORT_XY,
+  AUTONUMBER_SORT_XY_REV,
+  AUTONUMBER_SORT_FILE
 };
 
 enum {
-  AUTONUMBER_IGNORE, 
-  AUTONUMBER_RENUMBER, 
+  AUTONUMBER_IGNORE,
+  AUTONUMBER_RENUMBER,
   AUTONUMBER_RESPECT
 };
 
 enum {
-  SCOPE_SELECTED, 
-  SCOPE_PAGE, 
-  SCOPE_HIERARCHY 
+  SCOPE_SELECTED,
+  SCOPE_PAGE,
+  SCOPE_HIERARCHY
 };
 
 typedef struct autonumber_text_t AUTONUMBER_TEXT;
@@ -89,7 +89,7 @@ struct autonumber_text_t {
   /** @brief Automatic assignments of slots */
   gboolean slotting;
 
-  /** @brief Pointer to the dialog */ 
+  /** @brief Pointer to the dialog */
   GtkWidget *dialog;
 
   /** @brief Pointer to the GschemToplevel struct */
@@ -98,7 +98,7 @@ struct autonumber_text_t {
   /* variables used while autonumbering */
   gchar * current_searchtext;
   gint root_page;      /* flag whether its the root page or not */
-  GList *used_numbers; /* list of used numbers */ 
+  GList *used_numbers; /* list of used numbers */
   GList *free_slots;   /* list of FREE_SLOT objects */
   GList *used_slots;   /* list of USED_SLOT objects */
 };
@@ -129,9 +129,9 @@ gint autonumber_sort_numbers(gconstpointer a, gconstpointer b) {
   return 0;
 }
 
-/*! \brief GCompareFunc function to sort text objects by there location 
- *  \par Function Description 
- *  This Funcion takes two <B>OBJECT*</B> arguments and compares the  
+/*! \brief GCompareFunc function to sort text objects by there location
+ *  \par Function Description
+ *  This Funcion takes two <B>OBJECT*</B> arguments and compares the
  *  location of the two text objects. The first sort criteria is the x location,
  *  the second sort criteria is the y location.
  *  The Function is used as GCompareFunc by g_list_sort().
@@ -151,9 +151,9 @@ gint autonumber_sort_xy(gconstpointer a, gconstpointer b) {
   return 0;
 }
 
-/*! \brief GCompareFunc function to sort text objects by there location 
+/*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This funcion takes two <B>OBJECT*</B> arguments and compares the  
+ *  This funcion takes two <B>OBJECT*</B> arguments and compares the
  *  location of the two text objects. The first sort criteria is the x location,
  *  the second sort criteria is the y location.
  *  This function sorts the objects in reverse order.
@@ -174,9 +174,9 @@ gint autonumber_sort_xy_rev(gconstpointer a, gconstpointer b) {
   return 0;
 }
 
-/*! \brief GCompareFunc function to sort text objects by there location 
+/*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This funcion takes two <B>OBJECT*</B> arguments and compares the 
+ *  This funcion takes two <B>OBJECT*</B> arguments and compares the
  *  location of the two text objects. The first sort criteria is the y location,
  *  the second sort criteria is the x location.
  *  The function is used as GCompareFunc by g_list_sort().
@@ -196,9 +196,9 @@ int autonumber_sort_yx(gconstpointer a, gconstpointer b) {
   return 0;
 }
 
-/*! \brief GCompareFunc function to sort text objects by there location 
+/*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This Funcion takes two <B>OBJECT*</B> arguments and compares the 
+ *  This Funcion takes two <B>OBJECT*</B> arguments and compares the
  *  location of the two text objects. The first sort criteria is the y location,
  *  the second sort criteria is the x location.
  *  This function sorts the objects in reverse order.
@@ -219,10 +219,10 @@ int autonumber_sort_yx_rev(gconstpointer a, gconstpointer b) {
   return 0;
 }
 
-/*! \brief GCompareFunc function to sort text objects by there location 
+/*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This Funcion takes two <B>OBJECT*</B> arguments and compares the 
- *  location of the two text objects. The sort criteria is the combined x- and the 
+ *  This Funcion takes two <B>OBJECT*</B> arguments and compares the
+ *  location of the two text objects. The sort criteria is the combined x- and the
  *  y-location. The function sorts from top left to bottom right.
  *  The function is used as GCompareFunc by g_list_sort().
  */
@@ -239,17 +239,17 @@ int autonumber_sort_diagonal(gconstpointer a, gconstpointer b) {
 /*! \brief GCompareFunc function to acces <B>AUTONUMBER_SLOT</B> object in a GList
  *  \par Function Description
  *  This Funcion takes two <B>AUTONUMBER_SLOT*</B> arguments and compares them.
- *  Sorting criteria is are the AUTONUMBER_SLOT members: first the symbolname, than the 
+ *  Sorting criteria is are the AUTONUMBER_SLOT members: first the symbolname, than the
  *  number and last the slotnr.
- *  If the number or the slotnr is set to zero it acts as a wildcard. 
+ *  If the number or the slotnr is set to zero it acts as a wildcard.
  *  The function is used as GCompareFunc by GList functions.
  */
-gint freeslot_compare(gconstpointer a, gconstpointer b) 
+gint freeslot_compare(gconstpointer a, gconstpointer b)
 {
   AUTONUMBER_SLOT *aa, *bb;
   gint res;
   aa = (AUTONUMBER_SLOT *) a;  bb = (AUTONUMBER_SLOT *) b;
-  
+
   if ((res = strcmp(aa->symbolname, bb->symbolname)) != 0)
     return res;
 
@@ -280,7 +280,7 @@ gint freeslot_compare(gconstpointer a, gconstpointer b)
 void freeslot_print(GList *list) {
   GList *item;
   AUTONUMBER_SLOT *fs;
-  
+
   printf("freeslot_print(): symname, number, slot\n");
   for (item = list; item != NULL; item = g_list_next(item)) {
     fs = item ->data;
@@ -316,14 +316,14 @@ void autonumber_clear_database (AUTONUMBER_TEXT *autotext)
  *  \par Function Description
  *  The criterias are those of the autonumber text dialog. The function decides
  *  whether the <B>OBJECT</B> has to be renumberd, ignored or taken care of when
- *  renumbering all other objects.  
- *  \return one of these integer values: <B>AUTONUMBER_IGNORE</B>, 
+ *  renumbering all other objects.
+ *  \return one of these integer values: <B>AUTONUMBER_IGNORE</B>,
  *  <B>AUTONUMBER_RESPECT</B> or <B>AUTONUMBER_RENUMBER</B> and the current number
  *  of the text object in <B>*number</B>.
  */
 gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number)
 {
-  gint i, len, isnumbered=1; 
+  gint i, len, isnumbered=1;
   const gchar *str = NULL;
 
   len = strlen(autotext->current_searchtext);
@@ -331,7 +331,7 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number
   if (o_current->type != OBJ_TEXT)  /* text object */
     return AUTONUMBER_IGNORE;
 
-  str = o_text_get_string (autotext->w_current->toplevel, o_current);
+  str = geda_text_object_get_string (o_current);
 
   if (!(strlen(str) - len > 0)
       || !g_str_has_prefix(str, autotext->current_searchtext))
@@ -348,21 +348,21 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number
   else {
     if (!isdigit( (int) (str[len]) )) /* has at least one digit */
       return AUTONUMBER_IGNORE;
-    
+
     for (i=len+1; str[i]; i++) /* and only digits */
       if (!isdigit( (int) (str[i]) ))
 	return AUTONUMBER_IGNORE;
   }
-  
+
   /* we have six cases, 3 from focus multiplied by 2 selection cases */
   if ((autotext->root_page || autotext->scope_number == SCOPE_HIERARCHY)
-      && (o_current->selected 
+      && (o_current->selected
 	  || autotext->scope_number == SCOPE_HIERARCHY || autotext->scope_number == SCOPE_PAGE)
       && (!isnumbered || (autotext->scope_overwrite)))
     return AUTONUMBER_RENUMBER;
-  
+
   if (isnumbered
-      && !(autotext->scope_skip == SCOPE_SELECTED 
+      && !(autotext->scope_skip == SCOPE_SELECTED
 	   && !(o_current->selected)  && autotext->root_page)) {
     sscanf(&(str[len])," %d", number);
     return AUTONUMBER_RESPECT; /* numbered objects which we don't renumber */
@@ -389,7 +389,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
   GList *slot_item;
   char *numslot_str, *slot_str;
   const GList *iter;
-  
+
   for (iter = s_page_objects (w_current->toplevel->page_current);
        iter != NULL;
        iter = g_list_next (iter)) {
@@ -405,7 +405,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
 	  sscanf(numslot_str," %d",&numslots);
 	  g_free(numslot_str);
 
-	  if (numslots > 0) { 
+	  if (numslots > 0) {
 	    slot_str = o_attrib_search_object_attribs_by_name (o_parent, "slot", 0);
 	    if (slot_str == NULL) {
 	      s_log_message(_("slotted object without slot attribute may cause "
@@ -417,7 +417,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
 	      slot->number = number;
 	      slot->slotnr = slotnr;
 	      slot->symbolname = o_parent->complex_basename;
-	
+
 
 	      slot_item = g_list_find_custom(autotext->used_slots,
 						 slot,
@@ -432,7 +432,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
 		autotext->used_slots = g_list_insert_sorted(autotext->used_slots,
 							    slot,
 							    (GCompareFunc) freeslot_compare);
-		
+
 		slot_item = g_list_find_custom(autotext->free_slots,
 						   slot,
 						   (GCompareFunc) freeslot_compare);
@@ -468,14 +468,14 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
 
 /*! \brief Gets or generates free numbers for the autonumbering process.
  *  \par Function Description
- *  This function gets or generates new numbers for the <B>OBJECT o_current</B>. 
+ *  This function gets or generates new numbers for the <B>OBJECT o_current</B>.
  *  It uses the element numbers <B>used_numbers</B> and the list of the free slots
  *  <B>free_slots</B> of the <B>AUTONUMBER_TEXT</B> struct.
- *  \return 
+ *  \return
  *  The new number is returned into the <B>number</B> parameter.
  *  <B>slot</B> is set if autoslotting is active, else it is set to zero.
  */
-void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current, 
+void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
 				gint *number, gint *slot)
 {
   GList *item;
@@ -486,7 +486,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
   gchar *numslot_str;
 
   new_number = autotext->startnum;
-  
+
   /* Check for slots first */
   /* 1. are there any unused slots in the database? */
   o_parent = o_current->attached_to;
@@ -506,13 +506,13 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
       *slot = freeslot->slotnr;
       g_free(freeslot);
       autotext->free_slots = g_list_delete_link(autotext->free_slots, freeslot_item);
-      
+
       return;
     }
   }
 
   /* get a new number */
-  item = autotext->used_numbers; 
+  item = autotext->used_numbers;
   while (1) {
     while (item != NULL && GPOINTER_TO_INT(item->data) < new_number)
       item = g_list_next(item);
@@ -524,7 +524,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
   }
   *number = new_number;
   *slot = 0;
-  
+
   /* insert the new number to the used list */
   autotext->used_numbers = g_list_insert_sorted(autotext->used_numbers,
 						GINT_TO_POINTER(new_number),
@@ -537,7 +537,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
     if (numslot_str != NULL) {
       sscanf(numslot_str," %d",&numslots);
       g_free(numslot_str);
-      if (numslots > 0) { 
+      if (numslots > 0) {
 	/* Yes! -> new number and slot=1; add the other slots to the database */
 	*slot = 1;
 	for (i=2; i <=numslots; i++) {
@@ -626,7 +626,7 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
  *  the the autonumber text dialog in an <B>AUTONUMBER_TEXT</B> structure.
  *  First it collects all pages of a hierarchical schematic.
  *  Second it gets all matching text elements for the searchtext.
- *  Then it renumbers all text elements of all schematic pages. The renumbering 
+ *  Then it renumbers all text elements of all schematic pages. The renumbering
  *  follows the rules of the parameters given in the autonumber text dialog.
  */
 void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
@@ -642,7 +642,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   gint i, number, slot;
   GList *o_list = NULL;
   const GList *iter;
-  
+
   w_current = autotext->w_current;
   autotext->current_searchtext = NULL;
   autotext->root_page = 1;
@@ -660,7 +660,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   /*  g_list_foreach(pages, (GFunc) s_hierarchy_print_page, NULL); */
 
   /* Step2: if searchtext has an asterisk at the end we have to find
-     all matching searchtextes. 
+     all matching searchtextes.
 
      Example:  "refdes=*" will match each text that starts with "refdes="
      and has a trailing "?" or a trailing number if the "all"-option is set.
@@ -668,7 +668,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 
      If there is only one search pattern, it becomes a single item
      in the searchtext list */
-  
+
   if (strlen(scope_text) == 0) {
     s_log_message(_("No searchstring given in autonumber text.\n"));
     return; /* error */
@@ -694,7 +694,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 	  if (autotext->scope_number == SCOPE_HIERARCHY
 	      || autotext->scope_number == SCOPE_PAGE
 	      || ((autotext->scope_number == SCOPE_SELECTED) && (o_current->selected))) {
-            const gchar *str = o_text_get_string (w_current->toplevel, o_current);
+            const gchar *str = geda_text_object_get_string (o_current);
 	    if (g_str_has_prefix (str, searchtext)) {
 	      /* the beginnig of the current text matches with the searchtext now */
 	      /* strip of the trailing [0-9?] chars and add it too the searchtext */
@@ -704,7 +704,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 			 || isdigit( (int) (str[i]) ));
 		   i--)
 		; /* void */
-		
+
 	      new_searchtext = g_strndup (str, i+1);
 	      if (g_list_find_custom(searchtext_list, new_searchtext,
 				     (GCompareFunc) strcmp) == NULL ) {
@@ -744,7 +744,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 	}
       }
     }
-    
+
     /* renumber the elements */
     for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
       s_page_goto(w_current->toplevel, page_item->data);
@@ -754,7 +754,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
       if (autotext->scope_skip == SCOPE_PAGE || autotext->scope_skip == SCOPE_SELECTED) {
 	autonumber_get_used(w_current, autotext);
       }
-      
+
       /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
       /* 1. get objects to renumber */
       for (iter = s_page_objects (w_current->toplevel->page_current);
@@ -787,12 +787,12 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
       default:
 	; /* unsorted file order */
       }
-	 
+
       /* 3. renumber/reslot the objects */
       for(obj_item=o_list; obj_item != NULL; obj_item=g_list_next(obj_item)) {
 	o_current= obj_item->data;
       	if(autotext->removenum) {
-	  autonumber_remove_number(autotext, o_current);		
+	  autonumber_remove_number(autotext, o_current);
 	} else {
 	  /* get valid numbers from the database */
 	  autonumber_get_new_numbers(autotext, o_current, &number, &slot);
@@ -804,11 +804,11 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
       o_list = NULL;
 
       /* destroy the page database */
-      if (autotext->scope_skip == SCOPE_PAGE 
-	  || autotext->scope_skip == SCOPE_SELECTED) 
+      if (autotext->scope_skip == SCOPE_PAGE
+	  || autotext->scope_skip == SCOPE_SELECTED)
 	autonumber_clear_database(autotext);
 
-      if (autotext->scope_number == SCOPE_SELECTED 
+      if (autotext->scope_number == SCOPE_SELECTED
 	  || autotext->scope_number == SCOPE_PAGE)
 	break; /* only renumber the parent page (the first page) */
     }
@@ -836,7 +836,7 @@ GtkWidget* lookup_widget(GtkWidget *widget, const gchar *widget_name)
 {
   GtkWidget *found_widget;
 
-  found_widget = (GtkWidget*) g_object_get_data(G_OBJECT(widget), 
+  found_widget = (GtkWidget*) g_object_get_data(G_OBJECT(widget),
 						widget_name);
 
   return found_widget;
@@ -856,7 +856,7 @@ void autonumber_sortorder_create(GschemToplevel *w_current, GtkWidget *sort_orde
   gchar *path;
   GError *error=NULL;
 
-  gchar *filenames[] = {"gschem-diagonal.png", 
+  gchar *filenames[] = {"gschem-diagonal.png",
 			"gschem-top2bottom.png", "gschem-bottom2top.png",
 			"gschem-left2right.png", "gschem-right2left.png",
 			"gschem-fileorder.png",
@@ -868,7 +868,7 @@ void autonumber_sortorder_create(GschemToplevel *w_current, GtkWidget *sort_orde
 		    NULL};
   gint i;
 
-  store = gtk_list_store_new(2, G_TYPE_STRING, GDK_TYPE_PIXBUF); 
+  store = gtk_list_store_new(2, G_TYPE_STRING, GDK_TYPE_PIXBUF);
 
   for (i=0; filenames[i] != NULL; i++) {
     path=g_build_filename(w_current->toplevel->bitmap_directory,
@@ -876,7 +876,7 @@ void autonumber_sortorder_create(GschemToplevel *w_current, GtkWidget *sort_orde
     pixbuf = gdk_pixbuf_new_from_file(path, &error);
     g_free(path);
     gtk_list_store_append(store, &iter);
-    gtk_list_store_set(store, &iter, 
+    gtk_list_store_set(store, &iter,
 		       0, _(names[i]),
 		       1, pixbuf,
 		       -1);
@@ -943,7 +943,7 @@ GList *autonumber_history_add(GList *history, gchar *text)
 
 /** @brief Allocate and initialize the state structure
  *
- * @return Pointer to the allocated structure or NULL on error. 
+ * @return Pointer to the allocated structure or NULL on error.
  */
 AUTONUMBER_TEXT *autonumber_init_state()
 {
@@ -951,19 +951,19 @@ AUTONUMBER_TEXT *autonumber_init_state()
 
   /* Default contents of the combo box history */
   gchar *default_text[] = {
-    "refdes=*", 
-    "refdes=C?", 
-    "refdes=D?", 
+    "refdes=*",
+    "refdes=C?",
+    "refdes=D?",
     "refdes=I?",
-    "refdes=L?", 
-    "refdes=Q?", 
-    "refdes=R?", 
+    "refdes=L?",
+    "refdes=Q?",
+    "refdes=R?",
     "refdes=T?",
-    "refdes=U?", 
-    "refdes=X?", 
-    "netname=*", 
+    "refdes=U?",
+    "refdes=X?",
+    "netname=*",
     "netname=A?",
-    "netname=D?", 
+    "netname=D?",
     NULL
   };
   gchar **t;
@@ -975,7 +975,7 @@ AUTONUMBER_TEXT *autonumber_init_state()
   autotext->scope_text = NULL;
   t=default_text;
   while(*t!=NULL) {
-    autotext->scope_text=g_list_append(autotext->scope_text, 
+    autotext->scope_text=g_list_append(autotext->scope_text,
 				       g_strdup(*t));
     t++;
   }
@@ -1010,10 +1010,10 @@ void autonumber_set_state(AUTONUMBER_TEXT *autotext)
   /* Search text history */
   widget = lookup_widget(autotext->dialog, "scope_text");
 
-  /* Simple way to clear the ComboBox. Owen from #gtk+ says: 
+  /* Simple way to clear the ComboBox. Owen from #gtk+ says:
    *
-   * Yeah, it's just slightly "shady" ... if you want to stick to fully 
-   * advertised API, you need to remember how many rows you added and 
+   * Yeah, it's just slightly "shady" ... if you want to stick to fully
+   * advertised API, you need to remember how many rows you added and
    * use gtk_combo_box_remove_text() */
 
   model = gtk_combo_box_get_model(GTK_COMBO_BOX(widget));
@@ -1031,23 +1031,23 @@ void autonumber_set_state(AUTONUMBER_TEXT *autotext)
 			   autotext->scope_skip);
 
   widget = lookup_widget(autotext->dialog, "scope_number");
-  gtk_combo_box_set_active(GTK_COMBO_BOX(widget), 
+  gtk_combo_box_set_active(GTK_COMBO_BOX(widget),
 			   autotext->scope_number);
 
   widget = lookup_widget(autotext->dialog, "scope_overwrite");
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), 
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
 			       autotext->scope_overwrite);
 
   /* Options */
   widget = lookup_widget(autotext->dialog, "opt_startnum");
-  gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget), 
+  gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget),
 			    autotext->startnum);
 
   widget = lookup_widget(autotext->dialog, "sort_order");
   gtk_combo_box_set_active(GTK_COMBO_BOX(widget), autotext->order);
 
   widget = lookup_widget(autotext->dialog, "opt_removenum");
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), 
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget),
 			       autotext->removenum);
 
   widget = lookup_widget(autotext->dialog, "opt_slotting");
@@ -1104,7 +1104,7 @@ void autonumber_get_state(AUTONUMBER_TEXT *autotext)
 
 /*! \brief response  callback for the autonumber text dialog
  *  \par Function Description
- *  The function just closes the dialog if the close button is pressed or the 
+ *  The function just closes the dialog if the close button is pressed or the
  *  user closes the dialog window.
  *  Triggering the apply button will call the autonumber action functions.
  */
@@ -1135,12 +1135,12 @@ void autonumber_text_response(GtkWidget * widget, gint response,
 }
 
 
-/** @brief Callback that activates or deactivates "overwrite existing numbers" 
+/** @brief Callback that activates or deactivates "overwrite existing numbers"
  * check box.
  *
  * This gets called each time "remove numbers" check box gets clicked.
  */
-void autonumber_removenum_toggled(GtkWidget * opt_removenum, 
+void autonumber_removenum_toggled(GtkWidget * opt_removenum,
 				  AUTONUMBER_TEXT *autotext)
 {
   GtkWidget *scope_overwrite;
@@ -1166,7 +1166,7 @@ void autonumber_removenum_toggled(GtkWidget * opt_removenum,
  * Only modification was the following substitution:
  *
  * %s/create_pixmap (autonumber_text, "\(.*\)")/autonumber_create_pixmap("gschem-\1", w_current)/
- * 
+ *
  * and addition of the "w_current" parameter.
  *
  * @param w_current Pointer to the top level struct.
@@ -1216,7 +1216,7 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
 					  -1);
 
   gtk_window_set_position (GTK_WINDOW (autonumber_text), GTK_WIN_POS_MOUSE);
-  
+
   gtk_container_set_border_width (GTK_CONTAINER (autonumber_text),
                                   DIALOG_BORDER_SPACING);
   vbox1 = GTK_DIALOG(autonumber_text)->vbox;
@@ -1232,7 +1232,7 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   alignment1 = gtk_alignment_new (0, 0, 1, 1);
   gtk_widget_show (alignment1);
   gtk_box_pack_start (GTK_BOX (vbox1), alignment1, TRUE, TRUE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment1), 
+  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment1),
 			     0, 0, DIALOG_INDENTATION, 0);
 
   vbox3 = gtk_vbox_new (FALSE, 0);
@@ -1305,7 +1305,7 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   alignment3 = gtk_alignment_new (0, 0, 1, 1);
   gtk_widget_show (alignment3);
   gtk_box_pack_start(GTK_BOX(vbox1), alignment3, TRUE, TRUE, 0);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment3), 
+  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment3),
 			     0, 0, DIALOG_INDENTATION, 0);
 
   vbox4 = gtk_vbox_new (FALSE, 3);
@@ -1399,7 +1399,7 @@ void autonumber_text_dialog(GschemToplevel *w_current)
 
     autonumber_sortorder_create(w_current, sort_order);
 
-    gtk_dialog_set_default_response (GTK_DIALOG (autotext->dialog), 
+    gtk_dialog_set_default_response (GTK_DIALOG (autotext->dialog),
                                      GTK_RESPONSE_ACCEPT);
 
     g_signal_connect (G_OBJECT (autotext->dialog), "response",

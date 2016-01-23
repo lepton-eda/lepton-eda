@@ -907,7 +907,7 @@ gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter)
 
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
       if (string == NULL) {
-        string = o_text_get_string (adapter->toplevel, object);
+        string = geda_text_object_get_string (object);
       } else {
         string = NULL;
         break;

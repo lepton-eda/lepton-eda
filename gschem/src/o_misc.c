@@ -75,7 +75,7 @@ void o_edit(GschemToplevel *w_current, GList *list)
     arc_angle_dialog(w_current, o_current);
     break;
     case(OBJ_TEXT):
-      str = o_text_get_string (w_current->toplevel, o_current);
+      str = geda_text_object_get_string (o_current);
       if (o_attrib_get_name_value (o_current, NULL, NULL) &&
         /* attribute editor only accept 1-line values for attribute */
         o_text_num_lines (str) == 1) {
@@ -336,7 +336,7 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
     o_current = (OBJECT *)iter->data;
 
     if (o_current->type == OBJ_TEXT) {
-      const gchar *str = o_text_get_string (w_current->toplevel, o_current);
+      const gchar *str = geda_text_object_get_string (o_current);
       if (!strncmp (stext, str, strlen (stext))) {
         if (o_is_visible (toplevel, o_current)) {
           o_set_visibility (toplevel, o_current, INVISIBLE);
@@ -370,7 +370,7 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
     o_current = (OBJECT *)iter->data;
 
     if (o_current->type == OBJ_TEXT) {
-      const gchar *str = o_text_get_string (w_current->toplevel, o_current);
+      const gchar *str = geda_text_object_get_string (o_current);
       if (!strncmp (stext, str, strlen (stext))) {
         if (!o_is_visible (toplevel, o_current)) {
           o_set_visibility (toplevel, o_current, VISIBLE);

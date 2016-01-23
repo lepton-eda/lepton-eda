@@ -613,7 +613,7 @@ multiattrib_action_duplicate_attributes (Multiattrib *multiattrib,
 
     /* create a new attribute and link it */
     o_attrib_add_attrib (w_current,
-                         o_text_get_string (w_current->toplevel, o_attrib),
+                         geda_text_object_get_string (o_attrib),
                          o_is_visible (w_current->toplevel, o_attrib),
                          o_attrib->show_name_value,
                          o_attrib->attached_to);
@@ -645,7 +645,7 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
     if (o_is_visible (toplevel, o_attrib)) {
       /* If the attribute we're promoting is visible, don't clone its location */
       o_attrib_add_attrib (w_current,
-                           o_text_get_string (w_current->toplevel, o_attrib),
+                           geda_text_object_get_string (o_attrib),
                            VISIBLE,
                            o_attrib->show_name_value,
                            o_attrib->parent);
@@ -726,7 +726,7 @@ multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
 
       /* create a new attribute and link it */
       o_attrib_add_attrib (w_current,
-                           o_text_get_string (w_current->toplevel, attrib_to_copy),
+                           geda_text_object_get_string (attrib_to_copy),
                            visibility,
                            attrib_to_copy->show_name_value,
                            object);

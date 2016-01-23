@@ -910,28 +910,6 @@ o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string)
   o_text_recreate (toplevel, obj);
 }
 
-
-
-/*! \brief Get the string displayed by a text object.
- *  \par Function Description
- *  Retrieve the text string from a text object. The returned string
- *  should be treated as constant.
- *
- *  \param [in]  toplevel              The TOPLEVEL object.
- *  \param [in]  obj                   The text object.
- *  \return The text object's string, or NULL on failure.
- */
-const gchar*
-o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj)
-{
-  g_return_val_if_fail (toplevel != NULL, NULL);
-  g_return_val_if_fail (obj != NULL, NULL);
-  g_return_val_if_fail (obj->type == OBJ_TEXT, NULL);
-  g_return_val_if_fail (obj->text != NULL, NULL);
-
-  return obj->text->string;
-}
-
 /*! \brief Set the font-renderer-specific bounds function.
  *  \par Function Description
  *  Set the function to be used to calculate text bounds for a given
