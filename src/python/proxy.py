@@ -15,11 +15,11 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 ## \namespace xorn.proxy
-#  \brief High-level proxy classes for the storage backend.
+## High-level proxy classes for the storage backend.
 
 import xorn.storage
 
-## \brief High-level revision proxy class.
+## High-level revision proxy class.
 
 class RevisionProxy:
     def __init__(self, rev):
@@ -72,7 +72,7 @@ class RevisionProxy:
     def finalize(self):
         self.rev.finalize()
 
-## \brief High-level object proxy class.
+## High-level object proxy class.
 
 class ObjectProxy:
     def __init__(self, rev, ob):
@@ -144,7 +144,7 @@ class ObjectProxy:
         else:
             self.rev.set_object_data(self.ob, data)
 
-## \brief High-level line/fill attribute proxy class.
+## High-level line/fill attribute proxy class.
 
 class AttributeProxy:
     def __init__(self, rev, ob, name):
