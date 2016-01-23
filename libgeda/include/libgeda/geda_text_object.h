@@ -134,11 +134,3 @@ o_text_read (TOPLEVEL *toplevel,
              unsigned int release_ver,
              unsigned int fileformat_ver,
              GError **err);
-
-int
-world_get_text_bounds (TOPLEVEL *toplevel,
-                       OBJECT *o_current,
-                       int *left,
-                       int *top,
-                       int *right,
-                       int *bottom);
