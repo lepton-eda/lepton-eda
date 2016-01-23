@@ -121,9 +121,9 @@ def expand_env_variables(s):
             pass
         i = j + 1
 
-# \param [in] name  optional descriptive name for library directory
+## Add a directory to the symbol library.
 
-def symbol_library(path):
+def symbol_library(path, recursive, option_name):
     # take care of any shell variables
     path = expand_env_variables(path)
 
@@ -131,38 +131,12 @@ def symbol_library(path):
     if not os.path.isdir(path):
         sys.stderr.write(_("%s: \"%s\" is not a directory (passed to %s)\n")
                          % (xorn.command.program_short_name, path,
-                            '--symbol-library'))
+                            option_name))
         sys.exit(1)
 
     xorn.geda.clib.add_source(
-        xorn.geda.clib.DirectorySource(path),
+        xorn.geda.clib.DirectorySource(path, recursive),
         xorn.geda.clib.uniquify_source_name(os.path.basename(path)))
-
-## Add all symbol libraries found below \a rootdir to be searched for
-## symbols, naming them with an optional \a prefix.
-
-def symbol_library_search(rootdir, prefix = None):
-    dht = []
-    rootdir = expand_env_variables(rootdir)
-
-    # Build symbol directory list
-    for dirpath, dirnames, filenames in os.walk(rootdir):
-        for filename in filenames:
-            if filename.lower().endswith('.sym') and \
-                   os.path.isfile(os.path.join(dirpath, filename)):
-                dht.append(dirpath)
-                break
-
-    # Fill symbol library tree
-    dht.sort()
-    dht.reverse()
-    for path in dht:
-        name = path[len(rootdir):]
-        if prefix is not None:
-            name = prefix + name
-        xorn.geda.clib.add_source(
-            xorn.geda.clib.DirectorySource(path),
-            xorn.geda.clib.uniquify_source_name(name))
 
 ## Add a command to the symbol library.
 #
@@ -481,9 +455,9 @@ def main():
                   "executing scheme code is not supported") % option)
 
         elif option == '--symbol-library':
-            symbol_library(value)
+            symbol_library(value, False, '--symbol-library')
         elif option == '--symbol-library-search':
-            symbol_library_search(value)
+            symbol_library(value, True, '--symbol-library-search')
         elif option == '--symbol-library-command':
             symbol_library_command(value)
         elif option == '--symbol-library-funcs':

@@ -94,29 +94,31 @@ _symbol_cache = {}
 # ignored.
 
 class DirectorySource:
-    def __init__(self, directory):
+    def __init__(self, directory, recursive):
         ## Path to directory
         self.directory = directory
+        ## Whether to recurse into subdirectories.
+        self.recursive = recursive
 
     ## Scan the directory for symbols.
-    #
-    # \todo Does this need to do something more sane with
-    #       subdirectories than just skipping them silently?
 
     def list(self):
-        return (entry for entry in os.listdir(self.directory)
-                # skip ".", ".." & hidden files
+        return (entry for dirpath, dirnames, filenames
+                          in sorted(os.walk(self.directory))
+                      for entry in sorted(filenames)
+                # skip hidden files ("." and ".." are excluded by os.walk)
                 if entry[0] != '.'
-                # skip subdirectories (for now)
-                and stat.S_ISREG(
-                    os.stat(os.path.join(self.directory, entry)).st_mode)
                 # skip filenames which don't have the right suffix
                 and entry.lower().endswith(SYM_FILENAME_FILTER))
 
     ## Get symbol data for a given symbol name.
 
     def get(self, symbol):
-        return xorn.geda.read.read(os.path.join(self.directory, symbol))
+        for dirpath, dirnames, filenames in sorted(os.walk(self.directory)):
+            if symbol in filenames:
+                return xorn.geda.read.read(os.path.join(dirpath, symbol))
+
+        raise ValueError, 'symbol "%s" not found in library' % symbol
 
 
 ## Source object representing a pair of symbol-generating commands.
