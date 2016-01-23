@@ -304,6 +304,10 @@ class Object:
     def __cmp__(...):
         pass
 
+    ## x.__hash__() <==> hash(x)
+    def __hash__(...):
+        pass
+
 ## The identity of a set of objects across revisions.
 #
 # A value of this type is used as a set of keys for mass object
