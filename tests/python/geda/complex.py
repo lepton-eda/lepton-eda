@@ -123,5 +123,5 @@ for data, embedded in [(PICTURE0_SCH, False),
     pixmap = ob.data().pixmap
     assert isinstance(pixmap, xorn.geda.ref.Pixmap)
     assert pixmap.filename == 'hello-world'
-    assert pixmap.file_content == ('Hello world\n' if embedded else None)
+    assert pixmap.data == ('Hello world\n' if embedded else None)
     assert pixmap.embedded == embedded

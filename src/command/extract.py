@@ -109,7 +109,7 @@ def main():
         if isinstance(data, xorn.storage.Picture) and data.pixmap.embedded:
             filename = os.path.basename(data.pixmap.filename)
             if not filename in embedded_pixmaps:
-                embedded_pixmaps[filename.encode()] = data.pixmap.file_content
+                embedded_pixmaps[filename.encode()] = data.pixmap.data
 
     for filename in args[1:]:
         basename = os.path.basename(filename)

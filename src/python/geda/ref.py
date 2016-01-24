@@ -45,12 +45,12 @@ class Symbol:
         # o_complex_remove_promotable_attribs(new_obj)
 
 class Pixmap:
-    def __init__(self, filename, file_content, embedded):
+    def __init__(self, filename, data, embedded):
         ## Path and filename of the pixmap.
         #
         # Not used if the picture is embedded.
         self.filename = filename
         ## String object containing the pixmap data.
-        self.file_content = file_content
+        self.data = data
         ## Whether the pixmap is embedded.
         self.embedded = embedded

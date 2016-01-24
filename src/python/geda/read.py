@@ -805,7 +805,7 @@ def read_picture(first_line, f, (origin_x, origin_y), format):
     if embedded == 1:
         # Read the encoded picture
         try:
-            pixmap.file_content = xorn.base64.decode(f, delim = '.')
+            pixmap.data = xorn.base64.decode(f, delim = '.')
         except xorn.base64.DecodingError as e:
             print _("Failed to load image from embedded data [%s]: "
                     "%s\n") % (filename, e.message)

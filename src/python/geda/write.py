@@ -293,7 +293,7 @@ def write_object(f, ob, offset_x, offset_y):
                 data.pixmap.filename))
 
         if data.pixmap.embedded:
-            xorn.base64.encode(f, data.pixmap.file_content, delim = '.')
+            xorn.base64.encode(f, data.pixmap.data, delim = '.')
     else:
         raise ValueError, \
             _("Encountered an object with unknown type %s") % type(data)
