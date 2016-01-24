@@ -195,6 +195,22 @@ def read_file(f, name, load_symbols = False,
                        override_bus_color = None,
                        override_pin_color = None,
                        force_boundingbox = False):
+    # Mock-ups for referenced symbols if we aren't loading them
+    referenced_symbols = {}
+
+    def load_symbol(basename):
+        if load_symbols:
+            # Look up the symbol from the component library, loading
+            # it if necessary.
+            return xorn.geda.clib.lookup_symbol(basename)
+
+        try:
+            return referenced_symbols[basename]
+        except KeyError:
+            symbol = xorn.geda.ref.Symbol(basename, None, False)
+            referenced_symbols[basename] = symbol
+            return symbol
+
     # "Stack" of outer contexts for embedded components
     object_lists_save = []
 
@@ -232,7 +248,7 @@ def read_file(f, name, load_symbols = False,
             ob = rev.add_object(read_circle(line, origin, format))
         elif objtype == OBJ_COMPLEX:
             ob = rev.add_object(read_complex(line, origin, format,
-                                             load_symbols))
+                                             load_symbol))
         elif objtype == OBJ_TEXT:
             ob = rev.add_object(read_text(line, f, origin, format))
         elif objtype == OBJ_PATH:
@@ -607,9 +623,8 @@ def read_complex(buf, (origin_x, origin_y), format, load_symbol):
     if basename.startswith('EMBEDDED'):
         symbol = xorn.geda.ref.Symbol(basename[8:], None, True)
     else:
-        symbol = xorn.geda.ref.Symbol(basename, None, False)
-        if load_symbol:
-            symbol.load()
+        symbol = load_symbol(basename)
+        assert not symbol.embedded
 
     return xorn.storage.Component(
         x = x1 - origin_x,

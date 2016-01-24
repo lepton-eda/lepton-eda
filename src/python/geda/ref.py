@@ -20,8 +20,6 @@
 ## \namespace xorn.geda.ref
 ## Referenced symbols and pixmaps.
 
-import xorn.geda.clib
-
 class Symbol:
     def __init__(self, basename, prim_objs, embedded):
         ## Last part of the symbol filename.
@@ -30,19 +28,6 @@ class Symbol:
         self.prim_objs = prim_objs
         ## Whether the symbol is embedded.
         self.embedded = embedded
-
-    ## Look up the symbol from the component library, loading it if necessary.
-
-    def load(self):
-        if self.embedded:
-            raise ValueError  # can't load an embedded symbol
-        if self.prim_objs is not None:
-            return            # symbol is already loaded
-
-        self.prim_objs = xorn.geda.clib.lookup_symbol(self.basename)
-
-        # # Delete or hide attributes eligible for promotion inside the complex
-        # o_complex_remove_promotable_attribs(new_obj)
 
 class Pixmap:
     def __init__(self, filename, data, embedded):

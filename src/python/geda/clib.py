@@ -52,6 +52,7 @@
 import collections, fnmatch, os, shlex, stat, subprocess, sys
 from gettext import gettext as _
 import xorn.geda.read
+import xorn.geda.ref
 import xorn.proxy
 import xorn.storage
 
@@ -324,10 +325,10 @@ def reset():
     _symbol_cache.clear()
 
 
-## Get symbol data for a given source object and symbol name.
+## Get symbol object for a given source object and symbol name.
 #
-# Returns a revision object containing the symbol data for the symbol
-# called \a symbol from the component source \a source.
+# Returns a xorn.geda.ref.Symbol object containing the symbol called
+# \a symbol from the component source \a source.
 #
 # \throws ValueError if the source object's \c get function doesn't
 #                    return a xorn.storage.Revision or
@@ -352,10 +353,12 @@ def get_symbol(source, symbol):
             "from source [%s]" % (symbol, source.name)
     data.finalize()
 
-    # Cache the symbol data
-    _symbol_cache[id(source), symbol] = data
+    symbol_ = xorn.geda.ref.Symbol(symbol, data, False)
 
-    return data
+    # Cache the symbol data
+    _symbol_cache[id(source), symbol] = symbol_
+
+    return symbol_
 
 ## Invalidate cached data about a symbol.
 
@@ -414,11 +417,12 @@ def lookup_symbol_source(name):
     assert symbol == name
     return source
 
-## Get symbol data for a given symbol name.
+## Get symbol object for a given symbol name.
 #
-# Returns the data for the first symbol found with the given name.
-# This is a helper function for the schematic load system, as it will
-# always want to load symbols given only their name.
+# Returns the xorn.geda.ref.Symbol object for the first symbol found
+# with the given name.  This is a helper function for the schematic
+# load system, as it will always want to load symbols given only their
+# name.
 #
 # \throws ValueError if the component was not found
 
