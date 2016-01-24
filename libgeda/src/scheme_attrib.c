@@ -52,7 +52,6 @@ SCM_DEFINE (parse_attrib, "%parse-attrib", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (text_s, OBJ_TEXT), text_s,
               SCM_ARG1, s_parse_attrib);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *text = edascm_to_object (text_s);
 
   scm_dynwind_begin (0);
