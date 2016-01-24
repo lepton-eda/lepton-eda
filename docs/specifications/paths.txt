@@ -3,7 +3,7 @@
 ==============================
 
 :Author: Peter Brett
-:Status: Proposed Specification
+:Status: Implemented
 
 ..
   This document can be processed with docutils <http://docutils.sf.net>
@@ -14,9 +14,17 @@
 ..
     1  Introduction
     2  Backwards compatibility
-    3  Directories logic
+    3  Directories API
       3.1  System data search path
-    4  References
+      3.2  System configuration search path
+      3.3  Per-user data path
+      3.4  Per-user configuration path
+    4  Related changes
+      4.1  libgeda APIs
+      4.2  Scheme APIs
+      4.3  gschem
+      4.4  gattrib
+    5  References
 
 Introduction
 ============
