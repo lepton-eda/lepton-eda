@@ -636,7 +636,7 @@ geda_circle_object_get_position (const GedaObject *object, gint *x, gint *y)
  */
 gdouble
 geda_circle_object_shortest_distance (TOPLEVEL *toplevel,
-                                      const GedaObject *object,
+                                      GedaObject *object,
                                       gint x,
                                       gint y,
                                       gint force_solid)
