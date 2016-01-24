@@ -25,6 +25,7 @@ nobase_pkgpython_PYTHON = \
 	geda/clib.py \
 	geda/fileformat.py \
 	geda/read.py \
+	geda/ref.py \
 	geda/write.py \
 	geda/netlist/__init__.py \
 	geda/netlist/backend.py \

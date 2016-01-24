@@ -32,6 +32,7 @@ import xorn.base64
 import xorn.proxy
 import xorn.storage
 import xorn.geda.clib
+import xorn.geda.ref
 from xorn.geda.fileformat import *
 
 ## Raised when parsing a malformed file.
@@ -88,41 +89,6 @@ class FileFormat:
 
         ## Can text objects have multiple lines?
         self.supports_multiline_text = fileformat_ver >= 1
-
-class Symbol:
-    # basename: The filename of the component
-
-    # The just basename is the filename of the component. This
-    # filename is not the full path.
-
-    def __init__(self, basename, embedded):
-        self.basename = basename
-        self.prim_objs = None
-        self.embedded = embedded
-
-    ## Look up the symbol from the component library, loading it if necessary.
-
-    def load(self):
-        if self.embedded:
-            raise ValueError  # can't load an embedded symbol
-        if self.prim_objs is not None:
-            return            # symbol is already loaded
-
-        self.prim_objs = xorn.geda.clib.lookup_symbol(self.basename)
-
-        # # Delete or hide attributes eligible for promotion inside the complex
-        # o_complex_remove_promotable_attribs(new_obj)
-
-class Pixmap:
-    # In gEDA, the filename is not used if the picture is embedded.
-
-    # filename: Path and filename of a not embedded picture.
-    # picture_data: Serialized picture
-
-    def __init__(self, filename, embedded):
-        self.file_content = None
-        self.filename = filename
-        self.embedded = embedded
 
 ## Helper function for \ref sscanf.
 
@@ -639,9 +605,9 @@ def read_complex(buf, (origin_x, origin_y), format, load_symbol):
     # color = DEFAULT_COLOR
 
     if basename.startswith('EMBEDDED'):
-        symbol = Symbol(basename[8:], True)
+        symbol = xorn.geda.ref.Symbol(basename[8:], True)
     else:
-        symbol = Symbol(basename, False)
+        symbol = xorn.geda.ref.Symbol(basename, False)
         if load_symbol:
             symbol.load()
 
@@ -834,7 +800,7 @@ def read_picture(first_line, f, (origin_x, origin_y), format):
         print _("Found an image with no filename.")
         filename = None
 
-    pixmap = Pixmap(filename, False)
+    pixmap = xorn.geda.ref.Pixmap(filename, False)
 
     if embedded == 1:
         # Read the encoded picture

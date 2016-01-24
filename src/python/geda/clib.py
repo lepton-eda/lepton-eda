@@ -430,7 +430,7 @@ def lookup_symbol(name):
 #
 # The list is free of duplicates and preserves the order of the
 # symbols as they appear first in the file.  Each symbol is
-# represented by its actual xorn.geda.read.Symbol object.
+# represented by its actual xorn.geda.ref.Symbol object.
 
 def used_symbols0(rev):
     symbols = []

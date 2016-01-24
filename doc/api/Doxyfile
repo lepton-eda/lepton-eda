@@ -772,6 +772,7 @@ INPUT                  = .. \
                          ./xorn/geda/clib.py \
                          ./xorn/geda/fileformat.py \
                          ./xorn/geda/read.py \
+                         ./xorn/geda/ref.py \
                          ./xorn/geda/write.py \
                          ./xorn/geda/netlist/__init__.py \
                          ./xorn/geda/netlist/backend.py \
