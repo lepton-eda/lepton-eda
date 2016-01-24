@@ -100,7 +100,6 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
   GList *iter;
   unsigned int release_ver = 0;
   unsigned int fileformat_ver = 0;
-  unsigned int current_fileformat_ver = FILEFORMAT_VERSION;
   int found_pin = 0;
   OBJECT* last_complex = NULL;
   int itemsread = 0;
