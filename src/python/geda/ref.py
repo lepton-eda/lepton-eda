@@ -23,14 +23,12 @@
 import xorn.geda.clib
 
 class Symbol:
-    # basename: The filename of the component
-
-    # The just basename is the filename of the component. This
-    # filename is not the full path.
-
-    def __init__(self, basename, embedded):
+    def __init__(self, basename, prim_objs, embedded):
+        ## Last part of the symbol filename.
         self.basename = basename
-        self.prim_objs = None
+        ## Revision object containing the symbol data.
+        self.prim_objs = prim_objs
+        ## Whether the symbol is embedded.
         self.embedded = embedded
 
     ## Look up the symbol from the component library, loading it if necessary.
@@ -47,12 +45,12 @@ class Symbol:
         # o_complex_remove_promotable_attribs(new_obj)
 
 class Pixmap:
-    # In gEDA, the filename is not used if the picture is embedded.
-
-    # filename: Path and filename of a not embedded picture.
-    # picture_data: Serialized picture
-
-    def __init__(self, filename, embedded):
-        self.file_content = None
+    def __init__(self, filename, file_content, embedded):
+        ## Path and filename of the pixmap.
+        #
+        # Not used if the picture is embedded.
         self.filename = filename
+        ## String object containing the pixmap data.
+        self.file_content = file_content
+        ## Whether the pixmap is embedded.
         self.embedded = embedded

@@ -605,9 +605,9 @@ def read_complex(buf, (origin_x, origin_y), format, load_symbol):
     # color = DEFAULT_COLOR
 
     if basename.startswith('EMBEDDED'):
-        symbol = xorn.geda.ref.Symbol(basename[8:], True)
+        symbol = xorn.geda.ref.Symbol(basename[8:], None, True)
     else:
-        symbol = xorn.geda.ref.Symbol(basename, False)
+        symbol = xorn.geda.ref.Symbol(basename, None, False)
         if load_symbol:
             symbol.load()
 
@@ -800,7 +800,7 @@ def read_picture(first_line, f, (origin_x, origin_y), format):
         print _("Found an image with no filename.")
         filename = None
 
-    pixmap = xorn.geda.ref.Pixmap(filename, False)
+    pixmap = xorn.geda.ref.Pixmap(filename, None, False)
 
     if embedded == 1:
         # Read the encoded picture
