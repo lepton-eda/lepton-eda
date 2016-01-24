@@ -80,7 +80,7 @@ struct st_conn {
 };
 
 /*! \brief Type of callback function for calculating text bounds */
-typedef int(*RenderedBoundsFunc)(void *, OBJECT *, int *, int *, int *, int *);
+typedef gboolean(*RenderedBoundsFunc)(void*, const GedaObject*, gint*, gint*, gint*, gint*);
 
 /*! \brief Type of callback function for object damage notification */
 typedef int(*ChangeNotifyFunc)(void *, OBJECT *);

@@ -68,6 +68,38 @@
 int tab_in_chars = 8;
 
 
+/*! \brief calculate and return the boundaries of a text object
+ *
+ *  The responsibility of calculating the bounds of any object should probably
+ *  be moved to EdaRenderer. And, this method should not be a virtual method
+ *  of GedaObject.
+ *
+ *  \param [in]  toplevel  The TOPLEVEL object.
+ *  \param [in]  object    a text object
+ *  \param [out] bounds    the bounds of the text
+ *  \return TRUE if successful, FALSE if unsuccessful
+ */
+gboolean
+geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
+                                   const GedaObject *object,
+                                   GedaBounds *bounds)
+{
+  geda_bounds_init (bounds);
+
+  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (object->text != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_TEXT, FALSE);
+  g_return_val_if_fail (toplevel != NULL, FALSE);
+  g_return_val_if_fail (toplevel->rendered_text_bounds_func != NULL, FALSE);
+
+  return toplevel->rendered_text_bounds_func (toplevel->rendered_text_bounds_data,
+                                              object,
+                                              &bounds->min_x,
+                                              &bounds->min_y,
+                                              &bounds->max_x,
+                                              &bounds->max_y);
+}
+
 /*! \brief Get the text alignment
  *
  *  \param [in] object The text object
@@ -346,35 +378,6 @@ update_disp_string (OBJECT *object)
   } else {
     text->disp_string = g_strdup (text->string);
   }
-}
-
-/*! \brief calculate and return the boundaries of a text object
- *  \par Function Description
- *  This function calculates the object boudaries of a text \a object.
- *
- *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [in]  o_current a text object
- *  \param [out] left      the left world coord
- *  \param [out] top       the top world coord
- *  \param [out] right     the right world coord
- *  \param [out] bottom    the bottom world coord
- */
-int
-world_get_text_bounds (TOPLEVEL *toplevel,
-                       OBJECT *o_current,
-                       int *left,
-                       int *top,
-                       int *right,
-                       int *bottom)
-{
-  if (toplevel->rendered_text_bounds_func != NULL) {
-    return
-      toplevel->rendered_text_bounds_func (toplevel->rendered_text_bounds_data,
-                                           o_current,
-                                           left, top, right, bottom);
-  }
-
-  return FALSE;
 }
 
 /*! \brief Creates a text OBJECT and the graphical objects representing it
@@ -905,28 +908,6 @@ o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string)
   obj->text->string = g_strdup (new_string);
 
   o_text_recreate (toplevel, obj);
-}
-
-
-
-/*! \brief Get the string displayed by a text object.
- *  \par Function Description
- *  Retrieve the text string from a text object. The returned string
- *  should be treated as constant.
- *
- *  \param [in]  toplevel              The TOPLEVEL object.
- *  \param [in]  obj                   The text object.
- *  \return The text object's string, or NULL on failure.
- */
-const gchar*
-o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj)
-{
-  g_return_val_if_fail (toplevel != NULL, NULL);
-  g_return_val_if_fail (obj != NULL, NULL);
-  g_return_val_if_fail (obj->type == OBJ_TEXT, NULL);
-  g_return_val_if_fail (obj->text != NULL, NULL);
-
-  return obj->text->string;
 }
 
 /*! \brief Set the font-renderer-specific bounds function.

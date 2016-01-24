@@ -39,20 +39,20 @@
  *  \par Function Documentation
  *
  */
-gint option_menu_get_history (GtkOptionMenu *option_menu) 
-{ 
-  GtkWidget *active_widget; 
-         
-  g_return_val_if_fail (GTK_IS_OPTION_MENU (option_menu), -1); 
-         
-  active_widget = gtk_menu_get_active (GTK_MENU (option_menu->menu)); 
+gint option_menu_get_history (GtkOptionMenu *option_menu)
+{
+  GtkWidget *active_widget;
 
-  if (active_widget) 
-    return g_list_index (GTK_MENU_SHELL (option_menu->menu)->children, 
-			 active_widget); 
-  else 
-    return -1; 
-} 
+  g_return_val_if_fail (GTK_IS_OPTION_MENU (option_menu), -1);
+
+  active_widget = gtk_menu_get_active (GTK_MENU (option_menu->menu));
+
+  if (active_widget)
+    return g_list_index (GTK_MENU_SHELL (option_menu->menu)->children,
+			 active_widget);
+  else
+    return -1;
+}
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -97,7 +97,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
     g_free(newtext);
     return;
   }
-  
+
   if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(visbutton)))
   vis = VISIBLE;
   else
@@ -189,7 +189,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
             if (replace) {
               while (a_iter != NULL) {
                 a_current = a_iter->data;
-                const gchar *str = o_text_get_string (toplevel, a_current);
+                const gchar *str = geda_text_object_get_string (a_current);
                 if (str) {
                   if (!strncmp (str, newtext, strchr (newtext, '=') - newtext)) {
                     o_text_change(w_current, a_current, newtext, vis, show);
@@ -221,7 +221,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
       wy =
         GPOINTER_TO_INT (g_object_get_data (G_OBJECT (w_current->aewindow),
                                             "position_wy"));
-      
+
 #if DEBUG
       printf("invocation flag: %d\n", invocation_flag);
 #endif
@@ -251,7 +251,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
  *  This function catches the user response for the add and edit
  *  attribute dialog.
  */
-void attribute_edit_dialog_response(GtkWidget *w, gint response, 
+void attribute_edit_dialog_response(GtkWidget *w, gint response,
 				 GschemToplevel *w_current)
 {
   switch(response) {
@@ -303,7 +303,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   char *val = NULL;
   OBJECT *attrib = NULL;
   gint wx, wy;
-  
+
   /* gschem specific */
   if (w_current->aewindow)
     return;
@@ -331,7 +331,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 					  GTK_RESPONSE_APPLY,
 					  GTK_RESPONSE_REJECT,
 					  -1);
-					 
+
   g_signal_connect (G_OBJECT (aewindow), "response",
                     G_CALLBACK (attribute_edit_dialog_response),
                     w_current);
@@ -342,7 +342,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
                                   GTK_RESPONSE_APPLY);
 
   vbox = GTK_DIALOG(aewindow)->vbox;
-  gtk_container_set_border_width(GTK_CONTAINER(aewindow), 
+  gtk_container_set_border_width(GTK_CONTAINER(aewindow),
 				 DIALOG_BORDER_SPACING);
   gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
@@ -352,10 +352,10 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
     label = gtk_label_new(_("<b>Add Attribute</b>"));
   gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
-  gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);  
-  
+  gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
+
   alignment = gtk_alignment_new(0,0,1,1);
-  gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 
+  gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
 			    DIALOG_INDENTATION, 0);
   gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
 
@@ -425,16 +425,16 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   gtk_menu_shell_append (GTK_MENU_SHELL (show_options_menu), glade_menuitem);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (show_options), show_options_menu);
   gtk_option_menu_set_history (GTK_OPTION_MENU (show_options), 0);
-  
+
   if (nsel > 1) { /* gschem specific */
-    
+
     label = gtk_label_new(_("<b>Attach Options</b>"));
     gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
     gtk_misc_set_alignment(GTK_MISC(label),0,0);
-    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);  
-    
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
+
     alignment = gtk_alignment_new(0,0,1,1);
-    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 
+    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
 			    DIALOG_INDENTATION, 0);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
 
@@ -450,7 +450,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
                             (GtkDestroyNotify) g_object_unref);
     gtk_table_attach(GTK_TABLE(table), addtoallbutton, 0, 1, 0, 1,
 		     (GtkAttachOptions) (GTK_FILL), 0, 0, 0);
-		     
+
     addtocompsbutton = gtk_radio_button_new_with_label (hbox2_group, _("Components"));
     hbox2_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (addtocompsbutton));
     g_object_ref (addtocompsbutton);
@@ -524,7 +524,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   }
   g_object_set_data (G_OBJECT (aewindow), "position_wx", GINT_TO_POINTER(wx));
   g_object_set_data (G_OBJECT (aewindow), "position_wy", GINT_TO_POINTER(wy));
-  
+
   /* gschem specific */
   i = 0;
   string = (char *) s_attrib_get(i);
@@ -542,16 +542,16 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   gtk_entry_completion_set_inline_completion(attrib_combo_entry_completion, TRUE);
   gtk_entry_completion_set_popup_single_match(attrib_combo_entry_completion, FALSE);
   gtk_entry_set_completion(GTK_ENTRY(attrib_combo_entry), attrib_combo_entry_completion);
-  
+
   /* gschem specific */
   gtk_widget_show_all(aewindow);
   w_current->aewindow = aewindow;
 
   gtk_grab_add(w_current->aewindow);
 
-  if (attrib || (name && strcmp(name, "netname") == 0)) { 
+  if (attrib || (name && strcmp(name, "netname") == 0)) {
     gtk_widget_grab_focus(value_entry);
-  } else {  
+  } else {
     gtk_widget_grab_focus(attrib_combo_entry);
   }
 

@@ -41,9 +41,9 @@ struct _EdaRendererClass
   void (*draw)(EdaRenderer *renderer, OBJECT *object);
   void (*draw_grips)(EdaRenderer *renderer, OBJECT *object);
   void (*draw_cues)(EdaRenderer *renderer, OBJECT *object);
-  int (*user_bounds)(EdaRenderer *renderer, OBJECT *object,
-                      double *left, double *top,
-                      double *right, double *bottom);
+  gboolean (*user_bounds)(EdaRenderer *renderer, const GedaObject *object,
+                          double *left, double *top,
+                          double *right, double *bottom);
 };
 
 struct _EdaRenderer
@@ -88,9 +88,13 @@ void eda_renderer_set_color_map (EdaRenderer *renderer, GArray *map);
 cairo_t *eda_renderer_get_cairo_context (EdaRenderer *renderer);
 int eda_renderer_get_cairo_flags (EdaRenderer *renderer);
 
-int eda_renderer_get_user_bounds (EdaRenderer *renderer, OBJECT *object,
-                                  double *left, double *top,
-                                  double *right, double *bottom);
+gboolean
+eda_renderer_get_user_bounds (EdaRenderer *renderer,
+                              const GedaObject *object,
+                              double *left,
+                              double *top,
+                              double *right,
+                              double *bottom);
 
 G_END_DECLS
 

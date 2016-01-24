@@ -44,6 +44,11 @@ geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object);
 
 /* methods */
 
+gboolean
+geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
+                                   const GedaObject *object,
+                                   GedaBounds *bounds);
+
 gint
 geda_text_object_get_alignment (const GedaObject *object);
 
@@ -117,9 +122,6 @@ o_text_recreate (TOPLEVEL *toplevel, OBJECT *o_current);
 void
 o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string);
 
-const gchar*
-o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj);
-
 void
 o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
                                  RenderedBoundsFunc func,
@@ -132,11 +134,3 @@ o_text_read (TOPLEVEL *toplevel,
              unsigned int release_ver,
              unsigned int fileformat_ver,
              GError **err);
-
-int
-world_get_text_bounds (TOPLEVEL *toplevel,
-                       OBJECT *o_current,
-                       int *left,
-                       int *top,
-                       int *right,
-                       int *bottom);

@@ -182,7 +182,7 @@ void find_text_dialog (GschemToplevel *w_current)
   if ((object != NULL) && (object->type == OBJ_TEXT)) {
     gschem_find_text_widget_set_find_text_string(
             GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget),
-            o_text_get_string (w_current->toplevel, object)
+            geda_text_object_get_string (object)
             );
   }
 

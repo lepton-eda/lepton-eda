@@ -42,10 +42,14 @@
 #include <cairo-pdf.h>
 #include <cairo-ps.h>
 
-static int export_text_rendered_bounds (void *user_data,
-                                        OBJECT *object,
-                                        int *left, int *top,
-                                        int *right, int *bottom);
+static gboolean
+export_text_rendered_bounds (void *user_data,
+                             const GedaObject *object,
+                             gint *left,
+                             gint *top,
+                             gint *right,
+                             gint *bottom);
+
 static void export_layout_page (PAGE *page, cairo_rectangle_t *extents,
                                 cairo_matrix_t *mtx);
 static void export_draw_page (PAGE *page);
@@ -293,9 +297,13 @@ cmd_export_impl (void *data, int argc, char **argv)
  * "bounds" functions to get text bounds using the renderer.  If a
  * "rendered bounds" function isn't provided, text objects don't get
  * used when calculating the extents of the drawing. */
-static int
-export_text_rendered_bounds (void *user_data, OBJECT *object,
-                             int *left, int *top, int *right, int *bottom)
+static gboolean
+export_text_rendered_bounds (void *user_data,
+                             const GedaObject *object,
+                             gint *left,
+                             gint *top,
+                             gint *right,
+                             gint *bottom)
 {
   int result;
   double t, l, r, b;

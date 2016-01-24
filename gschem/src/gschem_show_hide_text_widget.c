@@ -92,7 +92,7 @@ void hide_text_dialog (GschemToplevel *w_current)
   if ((object != NULL) && (object->type == OBJ_TEXT)) {
     gschem_show_hide_text_widget_set_text_string(
             GSCHEM_SHOW_HIDE_TEXT_WIDGET (w_current->hide_text_widget),
-            o_text_get_string (w_current->toplevel, object)
+            geda_text_object_get_string (object)
             );
   }
 
@@ -116,7 +116,7 @@ void show_text_dialog (GschemToplevel *w_current)
   if ((object != NULL) && (object->type == OBJ_TEXT)) {
     gschem_show_hide_text_widget_set_text_string(
             GSCHEM_SHOW_HIDE_TEXT_WIDGET (w_current->show_text_widget),
-            o_text_get_string (w_current->toplevel, object)
+            geda_text_object_get_string (object)
             );
   }
 
