@@ -1473,7 +1473,6 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (text_s, OBJ_TEXT),
               text_s, SCM_ARG1, s_text_info);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (text_s);
   SCM align_s, visible_s, show_s;
 

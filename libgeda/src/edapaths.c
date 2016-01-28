@@ -45,9 +45,11 @@ static const gchar const USER_DOTDIR[] = ".gEDA";
 
 /*! \brief Get the gEDA installation's data directory.
  * Attempt to find the "share/gEDA" directory in the prefix where gEDA
- * was installed. */
+ * was installed.  Returns NULL if not on Windows and not a
+ * relocatable build (in that case, the install location should have
+ * been compiled in via configure options) */
 static const gchar *
-get_install_data_dir(void)
+guess_install_data_dir(void)
 {
 	static const gchar *install_dir = NULL;
 	static gsize is_init = 0;
@@ -133,18 +135,30 @@ copy_search_list(const gchar **output,
 		}
 		++copied;
 	}
-#else
-	/* Append the guessed install directory to the list, if it's not in
-	 * there already.*/
-	const gchar *install_dir = get_install_data_dir();
-	if (install_dir) {
-		if (output && !g_strv_contains(output, install_dir)) {
-			output[copied] = g_strdup(install_dir);
-		}
-		++copied;
-	}
 #endif
 
+	/* Append the guessed install directory to the list, if it's not in
+	 * there already. */
+	const gchar *install_dir = guess_install_data_dir();
+	if (install_dir) {
+		if (output) {
+			/* Only append to search path if not already an element.
+			 * N.b. we could use g_strv_contains() here, but it's only
+			 * available in quite recent versions of GLib.*/
+			gboolean found = FALSE;
+			for (gint i = 0; !found && i < copied; ++i) {
+				found = (0 == strcmp(install_dir, output[i]));
+			}
+
+			if (!found) {
+				output[copied] = g_strdup(install_dir);
+				++copied;
+			}
+		} else {
+			/* Allow space just in case */
+			++copied;
+		}
+	}
 
 	if (output) output[copied] = NULL;
 	++copied;
@@ -200,9 +214,9 @@ eda_paths_init_env(void)
 
 	/* If $GEDADATA is not set, find a directory containing
 	 * scheme/geda.scm and set $GEDADATA to it.  Note that this
-	 * *doesn't* use get_install_data_dir() because the user might have
-	 * deliberately set $XDG_DATA_DIRS to put other directories ahead of
-	 * the installation data directory. */
+	 * *doesn't* use guess_install_data_dir() because the user might
+	 * have deliberately set $XDG_DATA_DIRS to put other directories
+	 * ahead of the installation data directory. */
 	if (g_once_init_enter(&is_init)) {
 
 		gboolean found = FALSE;

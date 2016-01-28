@@ -87,7 +87,7 @@ geda_circle_object_set_radius (GedaObject *object, gint radius);
 
 gdouble
 geda_circle_object_shortest_distance (TOPLEVEL *toplevel,
-                                      const GedaObject *object,
+                                      GedaObject *object,
                                       gint x,
                                       gint y,
                                       gint force_soild);
