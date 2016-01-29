@@ -6,9 +6,7 @@ bin_SCRIPTS = refdes_renum \
 	      tragesym pcb_backannotate garchive gsymfix \
 	      schdiff
 
-noinst_SCRIPTS = gschupdate
-
-EXTRA_DIST = gschupdate refdes_renum gsymfix \
+EXTRA_DIST = refdes_renum gsymfix \
 	     tragesym pcb_backannotate garchive.py \
 	     schdiff
 
