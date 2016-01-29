@@ -270,16 +270,12 @@ AC_CONFIG_FILES([Makefile
                  utils/examples/gsch2pcb/Makefile
                  utils/examples/tragesym/Makefile
                  utils/gschlas/Makefile
-                 utils/gxyrs/Makefile
                  utils/include/Makefile
                  utils/lib/Makefile
                  utils/lib/system-gschlasrc
                  utils/scripts/Makefile
                  utils/src/Makefile
                  utils/tests/Makefile
-                 utils/tests/gxyrs/Makefile
-                 utils/tests/gxyrs/inputs/Makefile
-                 utils/tests/gxyrs/outputs/Makefile
                  utils/tests/refdes_renum/Makefile
                  utils/tests/refdes_renum/inputs/Makefile
                  utils/tests/refdes_renum/outputs/Makefile

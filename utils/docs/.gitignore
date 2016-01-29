@@ -6,7 +6,6 @@ latex
 *.1
 grenum.html
 gsch2pcb.html
-gxyrs.html
 pcb_backannotate.html
 refdes_renum.html
 schdiff.html

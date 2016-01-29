@@ -1,5 +1,5 @@
 
-SUBDIRS = refdes_renum gxyrs
+SUBDIRS = refdes_renum
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
