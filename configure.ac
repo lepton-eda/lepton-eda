@@ -182,23 +182,6 @@ AX_LIBGEDA([45:0:0])
 AX_LIBGEDACAIRO([1:1:0])
 
 #####################################################################
-# Recurse into Xorn configuration
-#####################################################################
-
-AC_ARG_ENABLE([xorn],
-	      [AS_HELP_STRING([--disable-xorn],
-			      [don't build and install Xorn])],
-	      [], [export enable_xorn; enable_xorn=yes])
-
-case "${enable_xorn}" in
-  yes|no) ;;
-  *) AC_MSG_ERROR([bad value ${enable_xorn} for --enable-xorn]) ;;
-esac
-
-AM_CONDITIONAL([XORN], [test x$enable_xorn = xyes])
-AC_CONFIG_SUBDIRS([xorn])
-
-#####################################################################
 # Generate output
 #####################################################################
 
