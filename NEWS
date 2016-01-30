@@ -10,6 +10,12 @@ more information, please consult the `ChangeLog' file.
 Notable changes in gEDA/gaf 1.9.2.1p
 ====================================
 
+* The gEDA/gaf now contains *only* the following tools:
+
+    gschem                       gattrib
+    gnetlist                     gaf
+    gsch2pcb
+
 * The gEDA/gaf source tarball no longer includes libintl.  When
   building gEDA/gaf with internationalisation support, a GNU
   gettext-compatible libintl is now required.
