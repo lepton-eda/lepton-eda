@@ -50,9 +50,6 @@ The major components of the gEDA suite are:
   A command-line utility for streamlining the workflow where `PCB'
   <http://pcb.geda-project.org/> and `gschem' are used together.
 
-`gsymcheck'
-  A utility for checking for common errors in schematic symbol files.
-
 `gaf'
   A utility for interactive and batch mode working with gEDA Scheme
   API, exporting schematics into various formats, and

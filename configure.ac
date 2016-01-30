@@ -229,15 +229,6 @@ AC_CONFIG_FILES([Makefile
                  gattrib/src/Makefile
                  gattrib/data/Makefile
 
-                 gsymcheck/docs/Makefile
-                 gsymcheck/include/Makefile
-                 gsymcheck/lib/Makefile
-                 gsymcheck/lib/system-gsymcheckrc
-                 gsymcheck/po/Makefile.in
-                 gsymcheck/src/Makefile
-                 gsymcheck/tests/Makefile
-                 gsymcheck/Makefile
-
                  gnetlist/Makefile
                  gnetlist/po/Makefile.in
                  gnetlist/src/Makefile
