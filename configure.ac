@@ -268,8 +268,6 @@ AC_CONFIG_FILES([Makefile
                  utils/docs/Makefile
                  utils/examples/Makefile
                  utils/examples/gsch2pcb/Makefile
-                 utils/examples/tragesym/Makefile
-                 utils/scripts/Makefile
                  utils/src/Makefile
 
                  symbols/Makefile

@@ -21,26 +21,6 @@ README for utilities
 
 - Utilities
 
-    tragesym
-    Werner Hoch
-
-    tragesym is a symbol creator for gEDA/gaf.  The aim of this python
-    script is to make it easier (and faster) to create symbols for gEDA.
-
-    Program features:
-
-    * create pins and arrange their elements (clocksign, dot, type, pinnumber, 
-      label)
-    * sort pins alphabetical and numerical
-    * swap words of pinlabels if wished
-    * draw negation lines on the labels
-    * rotate pinlabels if wished
-    * some syntax check to the input file
- 
-    Please see the README.tragesym and ChangeLog.tragesym for more info.  
-    Be sure to look at the examples in examples/tragesym.  There you will
-    find the template.src file referenced in the README.tragesym file.
-   
     gsch2pcb 
     Bill Wilson
   
@@ -66,7 +46,6 @@ README for utilities
 	Copyright 1998-2006 by Ales Hvezda and the respective original
 	authors (which are listed on the respective files)
 
-        tragesym is Copyright 2001-2003 by Werner Hoch
         gsch2pcb is Copyright 2003-2004 by Bill Wilson
 
 

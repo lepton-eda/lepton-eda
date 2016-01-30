@@ -1,7 +1,7 @@
 
-SUBDIRS = src scripts examples docs
+SUBDIRS = src examples docs
 
-EXTRA_DIST = ChangeLog ChangeLog.tragesym-1.0 ChangeLog.gsch2pcb-1.0 \
+EXTRA_DIST = ChangeLog ChangeLog.gsch2pcb-1.0 \
 	ChangeLog-1.0 AUTHORS
 
 if HAVE_GIT_REPO
