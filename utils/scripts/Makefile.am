@@ -3,12 +3,10 @@
 ## Process this file with automake to produce Makefile.in
 
 bin_SCRIPTS = refdes_renum \
-	      tragesym pcb_backannotate garchive gsymfix \
-	      schdiff
+	      tragesym pcb_backannotate garchive gsymfix
 
 EXTRA_DIST = refdes_renum gsymfix \
-	     tragesym pcb_backannotate garchive.py \
-	     schdiff
+	     tragesym pcb_backannotate garchive.py
 
 ##  SDB's stuff to enable garchive.  This hardcodes the path to the
 ##  system libraries into garchive prior to installation.
