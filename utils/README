@@ -66,19 +66,6 @@ README for utilities
     examples/gsch2pcb/project.sample for an example of a project file.
 
 
-    garchive
-    Stuart Brorson
-
-    This program is used to create a gEDA design archive.  It operates
-    in two modes: archive mode and extract mode.  In archive mode it
-    creates a project archive from a bunch of project files, and in
-    extract mode it extracts the files from the archive and places them in
-    the local dir.
-
-    garchive requires python to run.  
-    Run:  garchive -h  for help information.
- 
-
 - License  
 
         gEDA/gaf (which includes libgeda, gschem, gnetlist, geda, setup,
@@ -94,7 +81,6 @@ README for utilities
         refdes_renum is Copyright 2003 by Dan McMahill
         tragesym is Copyright 2001-2003 by Werner Hoch
         gsch2pcb is Copyright 2003-2004 by Bill Wilson
-        garchive is Copyright 2003 by Stuart Brorson
 
 
 
