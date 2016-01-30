@@ -3,9 +3,9 @@
 ## Process this file with automake to produce Makefile.in
 
 bin_SCRIPTS = \
-	      tragesym pcb_backannotate gsymfix
+	      tragesym pcb_backannotate
 
-EXTRA_DIST = gsymfix \
+EXTRA_DIST = \
 	     tragesym pcb_backannotate
 
 MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
