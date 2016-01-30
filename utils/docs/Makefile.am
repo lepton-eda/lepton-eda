@@ -1,12 +1,12 @@
 dist_man_MANS = gsch2pcb.1 grenum.1 \
-	pcb_backannotate.1 refdes_renum.1 tragesym.1 \
+	pcb_backannotate.1 tragesym.1 \
 	gsymfix.1
 
 EXTRA_DIST = README.gsch2pcb README.tragesym README.grenum \
 	TODO.grenum why.grenum logo.png utils-main.txt \
 	what-is-geda.html what-is-utils.html utils.dox \
 	gsch2pcb.1.in grenum.1.in \
-	pcb_backannotate.1.in refdes_renum.1.in \
+	pcb_backannotate.1.in \
 	tragesym.1.in \
 	gsymfix.1.in
 

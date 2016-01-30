@@ -2,10 +2,10 @@
 ##
 ## Process this file with automake to produce Makefile.in
 
-bin_SCRIPTS = refdes_renum \
+bin_SCRIPTS = \
 	      tragesym pcb_backannotate gsymfix
 
-EXTRA_DIST = refdes_renum gsymfix \
+EXTRA_DIST = gsymfix \
 	     tragesym pcb_backannotate
 
 MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~

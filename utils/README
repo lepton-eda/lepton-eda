@@ -20,18 +20,6 @@ README for utilities
 
 
 - Utilities
-    
-    refdes_renum
-    Dan McMahill
-
-    refdes_renum reads a gschem schematic file or files and renumbers
-    all reference designators.  The reference designators are numbered
-    starting with 1 and the old schematic file is replaced by the modified
-    schematic file.
-
-    Run the program with no parameters or with --help to see usage 
-    information.
-
 
     tragesym
     Werner Hoch
@@ -78,7 +66,6 @@ README for utilities
 	Copyright 1998-2006 by Ales Hvezda and the respective original
 	authors (which are listed on the respective files)
 
-        refdes_renum is Copyright 2003 by Dan McMahill
         tragesym is Copyright 2001-2003 by Werner Hoch
         gsch2pcb is Copyright 2003-2004 by Bill Wilson
 

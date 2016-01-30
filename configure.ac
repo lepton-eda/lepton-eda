@@ -271,10 +271,6 @@ AC_CONFIG_FILES([Makefile
                  utils/examples/tragesym/Makefile
                  utils/scripts/Makefile
                  utils/src/Makefile
-                 utils/tests/Makefile
-                 utils/tests/refdes_renum/Makefile
-                 utils/tests/refdes_renum/inputs/Makefile
-                 utils/tests/refdes_renum/outputs/Makefile
 
                  symbols/Makefile
                  symbols/documentation/Makefile
