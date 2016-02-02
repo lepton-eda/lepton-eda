@@ -32,6 +32,10 @@ Notable changes in gEDA/gaf 1.9.2.1p
   disabled, which may break backward-compatibility with some
   configurations.
 
+* A new Scheme API function, `log!`, has been added to the `(geda
+  log)` module.  It allows Scheme code to emit log messages in the
+  same way that the tools' C code does.
+
 Notable changes in gEDA/gaf 1.9.2
 =================================
 * Build system changes:
