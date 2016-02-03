@@ -344,6 +344,7 @@ available to be used in all gEDA applications.
 * Core object functions::
 * Core attribute functions::
 * Configuration functions::
+* Logging functions::
 * System information::
 @end menu
 
@@ -2013,6 +2014,25 @@ A requested configuration group was not found.
 @item invalid-value
 A configuration value could not be parsed into the requested format.
 @end table
+
+@node Logging functions
+@section Logging functions
+
+To use the functions described in this section, you will need to load
+the @code{(geda log)} module.
+
+@defun log! level message [format-args...]
+Emit a log message with the specified @var{level}.  The @var{message}
+is interpreted as a format string, with @var{format-args} as its
+parameters.
+
+The @var{level} should be one of the symbols @code{error},
+@code{critical}, @code{warning}, @code{message}, @code{info} or
+@code{debug}.
+
+Generally, if the @var{level} is not @code{debug}, then the message
+should be localised.
+@end defun
 
 @node System information
 @section System information
