@@ -279,17 +279,25 @@ void o_move_cancel (GschemToplevel *w_current)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Handle motion during a move operation, resnapping if necessary
+ * \par Function Description
+ * Handle movement during a move operation, by updating the global
+ * candidate transformation parameters.  The \a w_x and \b w_y
+ * parameters are the incremental translation to be handled.
  *
+ * This function mostly exists to implement the "resnapping" logic,
+ * which destructively puts objects back onto the grid during a move
+ * operation, as long as specific criteria are met.
+ *
+ * \param w_current  Global gschem state structure.
+ * \param w_x        X-axis translation
+ * \param w_y        Y-axis translation
  */
 void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   GList *selection, *s_current;
   OBJECT *object = NULL;
   gint object_x, object_y;
-  gboolean resnap = FALSE;
   SNAP_STATE snap_mode;
 
   g_assert (w_current->inside_action != 0);
@@ -305,44 +313,78 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
 
   selection = geda_list_get_glist (page->selection_list);
 
-  /* realign the object if we are in resnap mode */
-  if ((selection != NULL) && (snap_mode == SNAP_RESNAP)) {
-    if (g_list_length(selection) > 1) {
-      /* find an object that is not attached to any other object */
-      for (s_current = selection;
-           s_current != NULL;
-           s_current = g_list_next(s_current)) {
-        if (((OBJECT *) s_current->data)->attached_to == NULL) {
-          object = (OBJECT *) s_current->data;
-          resnap = TRUE;
-          break;
-        }
-      }
+  /* There are three posssibilities:
+   *
+   * 1. There is exactly one object selected, in which case it is
+   *    snapped.
+   *
+   * 2. There are multiple objects selected, but there is some object
+   *    O[i] such that all other selected objects O[j!=i] are attached
+   *    as attributes of O[i].  In that case, the O[i] is snapped.
+   *
+   * 3. Other cases, in which case no snapping occurs.
+   */
 
-      /* Only resnap single elements. This is also the case if
-         the selection contains one object and all other object
-         elements are attributes of the object element.*/
-      for (s_current = selection;
-           s_current != NULL && resnap == TRUE;
-           s_current = g_list_next(s_current)) {
-        if (!(object == (OBJECT *) s_current->data)
-            && !o_attrib_is_attached(page->toplevel,
-                                     (OBJECT *) s_current->data, object)) {
-          resnap = FALSE;
+  if (NULL == selection || SNAP_RESNAP != snap_mode) {
+    object = NULL;
+
+  } else if (1 == g_list_length (selection)) {
+    object = (OBJECT *) selection->data;
+
+  } else {
+
+    /* The object that things are supposed to be attached to */
+    OBJECT *attached = NULL;
+
+    /* Scan the selection, searching for an object that's not attached
+     * to any other object.  As we go, also check whether everything
+     * in the list that *is* attached as an attribute is attached to
+     * the same object. */
+    for (s_current = selection;
+         NULL != s_current;
+         s_current = g_list_next (s_current)) {
+
+      OBJECT *candidate = (OBJECT *) s_current->data;
+
+      if (NULL == candidate->attached_to) {
+
+        /* If the object is *not* attached as an attribute, then check
+         * whether we previously found an independent object.  If we
+         * did, we can't do snapping, so give up. */
+        if (NULL == object) {
+          object = candidate;
+        } else if (candidate != object) {
+          break; /* Give up */
+        }
+
+      } else {
+
+        /* If the object is attached as an attribute, then check if
+         * it's attached as an attribute of the same object as
+         * everything else is.  If not, we can't do snapping, so give
+         * up. */
+        if (NULL == attached) {
+          attached = candidate->attached_to;
+        } else if (attached != candidate->attached_to) {
+          break; /* Give up */
         }
       }
-    } else { /* single object */
-      resnap = TRUE;
-      object = (OBJECT *) selection->data;
     }
 
-    /* manipulate w_x and w_y in a way that will lead to a position
-       of the object that is aligned with the grid */
-    if (resnap) {
-      if (geda_object_get_position (object, &object_x, &object_y)) {
-        w_x += snap_grid (w_current, object_x) - object_x;
-        w_y += snap_grid (w_current, object_y) - object_y;
-      }
+    if (NULL == object ||
+        (NULL != attached && object != attached)) {
+      object = NULL;
+    } else {
+      g_assert (NULL != object);
+    }
+  }
+
+  /* manipulate w_x and w_y in a way that will lead to a position
+     of the object that is aligned with the grid */
+  if (NULL != object) {
+    if (geda_object_get_position (object, &object_x, &object_y)) {
+      w_x += snap_grid (w_current, object_x) - object_x;
+      w_y += snap_grid (w_current, object_y) - object_y;
     }
   }
 
