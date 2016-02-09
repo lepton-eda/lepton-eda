@@ -6,6 +6,11 @@ dist: trusty
 
 language: c
 
+env:
+  global:
+    # COVERITY_SCAN_TOKEN
+    - secure: "BIl7HDdWo2EpK63Nta2Sjy/V2rMYt4E5Jl+tWEkWR3be+s61oRg2DoIqdTTntvo8os8gq90Fb8WJJWZQ2806BfsNF+Z+DZqN59iNQOEB2aiA0BhggyOHnF+OoZZfgv7q4Eq0XOS7KLSrnCu18E0qQKxJSjnBrO9k1cLS3QnKDCA="
+
 # Before setting up the source tree, install necessary development
 # headers
 before_install: >
@@ -19,4 +24,19 @@ before_install: >
 install: ./autogen.sh && ./configure --disable-update-xdg-database
 
 # Compile gEDA and run its tests
-script: make -kj4 distcheck
+script: >
+  if test "${COVERITY_SCAN_BRANCH}" != "1"; then
+    make -kj4 distcheck
+  fi
+
+addons:
+  # In order to trigger static analysis with Coverity Scan, push to
+  # the coverity_scan branch.  You should only usually scan the tip of
+  # "master-ng".
+  coverity_scan:
+    project:
+      name: peter-b/geda-gaf
+      description: Build submitted via Travis CI
+    notification_email: peter@peter-b.co.uk
+    build_command: make all
+    branch_pattern: coverity_scan
