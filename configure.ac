@@ -182,23 +182,6 @@ AX_LIBGEDA([45:0:0])
 AX_LIBGEDACAIRO([1:1:0])
 
 #####################################################################
-# Recurse into Xorn configuration
-#####################################################################
-
-AC_ARG_ENABLE([xorn],
-	      [AS_HELP_STRING([--disable-xorn],
-			      [don't build and install Xorn])],
-	      [], [export enable_xorn; enable_xorn=yes])
-
-case "${enable_xorn}" in
-  yes|no) ;;
-  *) AC_MSG_ERROR([bad value ${enable_xorn} for --enable-xorn]) ;;
-esac
-
-AM_CONDITIONAL([XORN], [test x$enable_xorn = xyes])
-AC_CONFIG_SUBDIRS([xorn])
-
-#####################################################################
 # Generate output
 #####################################################################
 
@@ -246,15 +229,6 @@ AC_CONFIG_FILES([Makefile
                  gattrib/src/Makefile
                  gattrib/data/Makefile
 
-                 gsymcheck/docs/Makefile
-                 gsymcheck/include/Makefile
-                 gsymcheck/lib/Makefile
-                 gsymcheck/lib/system-gsymcheckrc
-                 gsymcheck/po/Makefile.in
-                 gsymcheck/src/Makefile
-                 gsymcheck/tests/Makefile
-                 gsymcheck/Makefile
-
                  gnetlist/Makefile
                  gnetlist/po/Makefile.in
                  gnetlist/src/Makefile
@@ -284,23 +258,8 @@ AC_CONFIG_FILES([Makefile
                  utils/Makefile
                  utils/docs/Makefile
                  utils/examples/Makefile
-                 utils/examples/gmk_sym/Makefile
                  utils/examples/gsch2pcb/Makefile
-                 utils/examples/tragesym/Makefile
-                 utils/gschlas/Makefile
-                 utils/gxyrs/Makefile
-                 utils/include/Makefile
-                 utils/lib/Makefile
-                 utils/lib/system-gschlasrc
-                 utils/scripts/Makefile
                  utils/src/Makefile
-                 utils/tests/Makefile
-                 utils/tests/gxyrs/Makefile
-                 utils/tests/gxyrs/inputs/Makefile
-                 utils/tests/gxyrs/outputs/Makefile
-                 utils/tests/refdes_renum/Makefile
-                 utils/tests/refdes_renum/inputs/Makefile
-                 utils/tests/refdes_renum/outputs/Makefile
 
                  symbols/Makefile
                  symbols/documentation/Makefile
@@ -318,13 +277,5 @@ AC_CONFIG_FILES([Makefile
                  examples/TwoStageAmp/Makefile
                  examples/gTAG/Makefile
                  examples/lightning_detector/Makefile
-
-                 contrib/Makefile
-                 contrib/smash_megafile/Makefile
-                 contrib/olib/Makefile
-                 contrib/gmk_sym/Makefile
-                 contrib/sarlacc_schem/Makefile
-                 contrib/scripts/Makefile
-                 contrib/scripts/sw2asc
 ])
 AC_OUTPUT

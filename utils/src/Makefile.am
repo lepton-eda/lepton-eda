@@ -1,9 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_PROGRAMS = gsch2pcb grenum
-
-# don't forget all *.h files */
-grenum_SOURCES = grenum.c grenum.h
+bin_PROGRAMS = gsch2pcb
 
 gsch2pcb_SOURCES = gsch2pcb.c
 gsch2pcb_CPPFLAGS = \

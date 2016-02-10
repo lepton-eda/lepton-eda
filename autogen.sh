@@ -224,5 +224,4 @@ fi
   run_tool "$ACLOCAL" $aclocal_flags &&
   run_tool "$AUTOHEADER" &&
   run_tool "$AUTOMAKE" -Wall --copy --add-missing --gnu &&
-  run_tool "$AUTOCONF" &&
-  (cd xorn && autoreconf -if))
+  run_tool "$AUTOCONF" )
