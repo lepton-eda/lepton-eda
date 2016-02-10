@@ -6,7 +6,7 @@
 #include <glib/gstdio.h>
 
 /* Public libgeda headers */
-#define __LIBGEDA_INTERNAL_API__
+#define __LIBGEDA_INTERNAL_API__ 1
 
 #include "defines.h"
 
