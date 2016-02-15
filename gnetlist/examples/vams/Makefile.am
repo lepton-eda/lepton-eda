@@ -19,7 +19,7 @@ sym_files = \
 
 SUBDIRS = vhdl
 
-EXTRA_DIST = README commonrc gnetlistrc gschemrc gschemrc.orig \
+EXTRA_DIST = README commonrc gnetlistrc gschemrc \
 	$(sch_files) $(sym_files)
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
