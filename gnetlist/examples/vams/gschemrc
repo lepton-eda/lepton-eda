@@ -1,8 +1,5 @@
 (load "./commonrc")
-(load (string-append examples-path "/../../../gschem/scheme/generate_netlist.scm"))
-
-(global-set-key "G N" generate-netlist)
-(global-set-key "G E" generate-entity)
+(load "../../../gschem/scheme/generate_netlist.scm")
 
 (attribute-promotion "enabled")
 (promote-invisible "enabled")
@@ -15,7 +12,8 @@
 (attribute-name "entity")
 (attribute-name "architecture")
 
-(define vhdl-path (string-append examples-path "/vhdl/new-vhdl"))
+(define vhdl-path "./vhdl/new-vhdl")
+(define schematic-path "./sch")
 
 (display "loaded local gschemrc\n")
 

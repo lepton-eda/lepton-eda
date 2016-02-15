@@ -56,6 +56,7 @@
                             "not found")
                            "default_entity")
                           (else (gnetlist:get-toplevel-attribute "entity")))))
+           (top-attribs (map symbol->string top-attribs))
 
            ;; search all ports of a schematic. for entity generation only.
            (port-list  (vams:generate-port-list (vams:get-uref top-attribs)))
@@ -992,9 +993,9 @@
     (if (null? ls)
         '()
         (append
-         (if (not (or (string-prefix=? "refdes=" (car ls))
-                      (string-prefix=? "source=" (car ls))
-                      (string-prefix=? "architecture=" (car ls))))
+         (if (not (or (string-prefix? "refdes=" (car ls))
+                      (string-prefix? "source=" (car ls))
+                      (string-prefix? "architecture=" (car ls))))
              (list
               (if (string-index (car ls) #\=)
                   (list
@@ -1040,7 +1041,7 @@
     (begin
       (if (null? liste)
           '()
-          (if (string-prefix=? "refdes=" (symbol->string (car liste)))
+          (if (string-prefix? "refdes=" (car liste))
               (begin
                 (append (substring (car liste) 5
                                    (string-length (car liste)))))

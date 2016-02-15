@@ -24,10 +24,12 @@
 ;; This function only put together the gnetlist command for the
 ;; generating-netlist-call.
 
+(use-modules (geda page) (geda object) (geda attrib))
+
 (define generate-netlist
   (lambda ()
     (let* ((command "")
-	   (source-file (get-selected-filename))
+	   (source-file (page-filename (active-page)))
 	   (source-file-length (string-length source-file))
 	   
 	   ;;generate a sensible output-filename (<old-path>/<old-basefilename>.vhdl)
@@ -39,24 +41,14 @@
 			 ".vhdl")))
 
       ;;generating the complex gnetlist command
-      (display (getenv 'PWD))
-      (set! command "gnetlist")
+      (display (getcwd))
+      (set! command "gnetlist -c '(chdir \"..\") (display (getcwd)) (newline)'")
       (set! command (string-append command " -o " vhdl-path "/" target-file))
       (set! command (string-append command " -g vams " source-file))
       (display "\ngenerating netlist from current schematic\n")
       (display command)
       (newline)
-      (system command)
-
-      ;; this part is not really important
-      ;;(set! command (string-append "dtpad " vhdl-path "/" 
-      ;;			   (string-append (substring target-file 0 
-      ;;						     (string-rindex 
-      ;;					      target-file #\. 0)) 
-      ;;			  "_arc.vhdl")
-      ;;   " &"))
-      ;;(system command)
-)))
+      (system command))))
 
 ;; Makes the same like generate-netlist, but its activate a 
 ;; generating-entity-call.
@@ -88,7 +80,7 @@
      (set! guile-comm 
 	   (string-append guile-comm "\"(define top-attribs " "'" 
 			  (list2string top-attribs) ") (define generate-mode '2)\"")) 
-     (set! command (string-append "gnetlist -c " guile-comm 
+     (set! command (string-append "gnetlist -c '(chdir \"..\")' -c " guile-comm
 				  " -o " vhdl-path "/" target-file
 				  " -g vams " (get-selected-filename)))
      (display command)
@@ -122,7 +114,7 @@
 (define which-source-file
   (lambda (top-attribs)
     (if (not (null? top-attribs))
-	(if (string-prefix=? "source=" (car top-attribs))
+	(if (string-prefix? "source=" (car top-attribs))
 	    (begin
 	      (append (substring (car top-attribs) 7 
 				 (string-length (car top-attribs)))))
@@ -133,5 +125,19 @@
 ;; define the default vhdl-path, where netlist- and entity-files are
 ;; saved to.
 (define vhdl-path ".")
+(define schematic-path ".")
+
+(define menu-items
+  `((,(N_ "Generate _Netlist") generate-netlist "gtk-execute")
+    (,(N_ "Generate _Entity") generate-entity "gtk-execute")))
+
+(begin
+  ;; (begin...) is necessary here for guile 2.0.
+  ;; See 'info guile' "R6RS Incompatibilities" for information on bug related
+  ;; to syntax-transformers in top-level programs (N_ is a syntax transformer)
+  (add-menu (N_ "_Gnetlist") menu-items))
+
+(global-set-key "G N" 'generate-netlist)
+(global-set-key "G E" 'generate-entity)
 
 (display "loaded generate-netlist.scm\n")
