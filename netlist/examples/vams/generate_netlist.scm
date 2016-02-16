@@ -37,6 +37,17 @@
             (string-split (basename name) #\.)))))
    "."))
 
+(define (schematic-name->entity-vhdl-name name)
+  (string-append
+   (substring name
+              (if (string-rindex name #\/ 0
+                                 (string-length name))
+                  (+ (string-rindex name #\/ 0
+                                    (string-length name)) 1)
+                  0)
+              (- (string-length name) 4))
+   ".vhdl"))
+
 (define generate-netlist
   (lambda ()
     (let* ((command "")
@@ -68,16 +79,7 @@
 	  (source-file (which-source-file top-attribs))
 
 	  ;; generates the target-file, like <source-filebasename>.vhdl
-	  (target-file (string-append
-			(substring source-file
-				   (if (string-rindex source-file #\/ 0
-						     (string-length source-file))
-				       (+ (string-rindex source-file #\/ 0
-						     (string-length source-file)) 1)
-				       0)
-				   (- (string-length source-file) 4))
-			".vhdl")))
-
+	  (target-file (schematic-name->entity-vhdl-name source-file)))
 
      (system*
        "lepton-netlist"
