@@ -98,15 +98,8 @@
 ;; HELP FUNCTIONS
 
 ;; generates a string from a list. 
-(define list2string 
-  (lambda (list)
-    (let ((string "("))
-      (for-each (lambda (element)
-		  (set! string (string-append string element " ")))
-		list)
-      (set! string (string-append string ")"))
-      (append string))))
-
+(define (list2string ls)
+  (string-append "(" (string-join ls " ") ")"))
 
 ;; search the right source-file, when selected component contents a
 ;; underlying schematic. which is saved in the source-attribute of
