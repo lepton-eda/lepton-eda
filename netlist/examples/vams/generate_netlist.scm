@@ -38,16 +38,20 @@
 
 (define generate-netlist
   (lambda ()
-    (let* ((command "")
-	   (source-file (page-filename (active-page)))
-	   (source-file-length (string-length source-file))
-           (target-file (schematic-name->vhdl-name source-file)))
+    (let* ((source-file (page-filename (active-page)))
+	   (target-file (schematic-name->vhdl-name source-file))
+           (command (string-append "lepton-netlist"
+                                   " -c "
+                                   "'(chdir \"..\")'"
+                                   " -o "
+                                   vhdl-path
+                                   "/"
+                                   target-file
+                                   " -g " "vams "
+                                   source-file)))
 
       ;;generating the complex gnetlist command
       (display (getcwd))
-      (set! command "lepton-netlist -c '(chdir \"..\") (display (getcwd)) (newline)'")
-      (set! command (string-append command " -o " vhdl-path "/" target-file))
-      (set! command (string-append command " -g vams " source-file))
       (display "\ngenerating netlist from current schematic\n")
       (display command)
       (newline)
