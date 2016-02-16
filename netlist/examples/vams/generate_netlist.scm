@@ -26,8 +26,7 @@
 
 (use-modules (geda page) (geda object) (geda attrib))
 
-;; Generate a sensible output-filename
-;; <old-path>/<old-basefilename>.vhdl.
+;;; Generate vhdl file name for given schematic NAME.
 (define (schematic-name->vhdl-name name)
   (string-join
    (reverse
@@ -36,17 +35,6 @@
            (reverse
             (string-split (basename name) #\.)))))
    "."))
-
-(define (schematic-name->entity-vhdl-name name)
-  (string-append
-   (substring name
-              (if (string-rindex name #\/ 0
-                                 (string-length name))
-                  (+ (string-rindex name #\/ 0
-                                    (string-length name)) 1)
-                  0)
-              (- (string-length name) 4))
-   ".vhdl"))
 
 (define generate-netlist
   (lambda ()
@@ -79,7 +67,7 @@
 	  (source-file (which-source-file top-attribs))
 
 	  ;; generates the target-file, like <source-filebasename>.vhdl
-	  (target-file (schematic-name->entity-vhdl-name source-file)))
+	  (target-file (schematic-name->vhdl-name source-file)))
 
      (system*
        "lepton-netlist"
