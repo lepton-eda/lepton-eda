@@ -83,7 +83,7 @@
                    (string-append
                      (dirname output-filename)
                      "/"
-                     (string-downcase! entity)
+                     (string-downcase entity)
                      "_arc"
                      (substring output-filename
                                 (string-rindex output-filename #\. 0
@@ -109,14 +109,14 @@
                    (string-append
                      (dirname output-filename)
                      "/"
-                     (string-downcase!
+                     (string-downcase
                        (get-device (vams:get-uref top-attribs)))
                      ".vhdl"))
                  (set! output-filename
                        (string-append
                          (dirname output-filename)
                          "/"
-                         (string-downcase! entity)
+                         (string-downcase entity)
                          ".vhdl"))))
 
              (message output-filename)
