@@ -65,14 +65,20 @@
 ;; Makes the same like generate-netlist, but its activate a
 ;; generating-entity-call.
 
-(define generate-entity
- (lambda ()
-   (let* ((top-attribs (get-selected-component-attributes))
+(define (generate-entity)
+  ;; Helper procedure searching for a proper source file with
+  ;; underlying schematic for selected component if it has the
+  ;; "source=" attribute.
+  (define (which-source-file top-attribs)
+    (if (not (null? top-attribs))
+        (if (string-prefix? "source=" (car top-attribs))
+            (append (substring (car top-attribs) 7
+                               (string-length (car top-attribs))))
+            (which-source-file (cdr top-attribs)))
+        (append (get-selected-filename))))
 
-	  ;; search the right schematic-file for gnetlist call
-	  ;; Is necessary, when the selected component contents a
-	  ;; underlying schematic (hierachical schematic)
-	  (source-file (which-source-file top-attribs))
+  (let* ((top-attribs (get-selected-component-attributes))
+         (source-file (which-source-file top-attribs))
 
          ;; generates the target-file, like <source-filebasename>.vhdl
          (target-file (schematic-name->vhdl-name source-file))
@@ -94,23 +100,7 @@
     (log! 'message (format #f "Generate entity for ~A:\n~A\n"
                            (get-selected-filename)
                            command))
-    (apply system* command))))
-
-
-;; HELP FUNCTIONS
-
-;; search the right source-file, when selected component contents a
-;; underlying schematic. which is saved in the source-attribute of
-;; this component
-(define which-source-file
-  (lambda (top-attribs)
-    (if (not (null? top-attribs))
-	(if (string-prefix? "source=" (car top-attribs))
-	    (append (substring (car top-attribs) 7
-                               (string-length (car top-attribs))))
-	    (which-source-file (cdr top-attribs)))
-	(append (get-selected-filename)))))
-
+    (apply system* command)))
 
 ;; define the default vhdl-path, where netlist- and entity-files are
 ;; saved to.
