@@ -1,4 +1,3 @@
-(load "./commonrc")
 (load "generate_netlist.scm")
 
 (attribute-promotion "enabled")
@@ -16,4 +15,3 @@
 (define schematic-path "./sch")
 
 (display "loaded local gschemrc\n")
-
