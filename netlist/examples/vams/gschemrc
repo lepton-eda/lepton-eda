@@ -12,6 +12,5 @@
 (attribute-name "architecture")
 
 (define vhdl-path "./vhdl/new-vhdl")
-(define schematic-path "./sch")
 
 (display "loaded local gschemrc\n")

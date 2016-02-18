@@ -110,7 +110,6 @@
 ;; define the default vhdl-path, where netlist- and entity-files are
 ;; saved to.
 (define vhdl-path ".")
-(define schematic-path ".")
 
 (define menu-items
   `((,(N_ "Generate _Netlist") generate-netlist "gtk-execute")
