@@ -111,16 +111,19 @@
 ;; saved to.
 (define vhdl-path ".")
 
+;;; Define menu for gnetlist invocation.
 (define menu-items
   `((,(N_ "Generate _Netlist") generate-netlist "gtk-execute")
     (,(N_ "Generate _Entity") generate-entity "gtk-execute")))
 
+;;; Actually add the menu defined above.
 (begin
   ;; (begin...) is necessary here for guile 2.0.
   ;; See 'info guile' "R6RS Incompatibilities" for information on bug related
   ;; to syntax-transformers in top-level programs (N_ is a syntax transformer)
   (add-menu (N_ "_Gnetlist") menu-items))
 
+;;; Shortcuts.
 (global-set-key "G N" 'generate-netlist)
 (global-set-key "G E" 'generate-entity)
 
