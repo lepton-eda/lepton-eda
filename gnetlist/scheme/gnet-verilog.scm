@@ -579,7 +579,7 @@
             (begin
               (newline)
               (for-each (lambda (pin)
-                          (if (not (strncmp? "unconnected_pin" (cdr pin) 15))
+                          (if (not (string-prefix-ci? "unconnected_pin" (cdr pin)))
                               (begin
                                 ;; handle commas after the first pin
                                 (if comma_pending

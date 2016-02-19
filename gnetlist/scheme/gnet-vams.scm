@@ -740,7 +740,7 @@
     (begin
       (display (car pin))
       (display " => ")
-      (if (strncmp? (cdr pin) "unconnected_pin" 15)
+      (if (string-prefix-ci? "unconnected_pin" (cdr pin))
           (display "OPEN")
           (display (vams:port-test pin))))))
 

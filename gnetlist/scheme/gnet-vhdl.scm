@@ -726,7 +726,7 @@
     (begin
       (display (car pin))
       (display " => ")
-      (if (strncmp? "unconnected_pin" (cdr pin) 15)
+      (if (string-prefix-ci? "unconnected_pin" (cdr pin))
           (display "OPEN")
           (display (cdr pin))))))
 

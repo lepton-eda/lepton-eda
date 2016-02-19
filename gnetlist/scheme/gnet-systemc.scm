@@ -621,7 +621,7 @@
             (begin
               (newline)
               (for-each (lambda (pin)
-                          (if (not  (strncmp? (cdr pin) "unconnected_pin" 15) )
+                          (if (not (string-prefix-ci? "unconnected_pin" (cdr pin)))
                               (begin
                                 (display "    ")(systemc:display-escaped-identifier package)
                                 (systemc:display-pin pin positional)
