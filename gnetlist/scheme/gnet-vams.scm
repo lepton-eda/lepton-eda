@@ -37,100 +37,99 @@
 ;;;   its evaluate things like output-file, generate-mode, top-attribs
 ;;;   and starts the major subroutines.
 
-(define vams
-  (lambda (output-filename)
-    (let* (
-           ;; generate correctly architecture name
-           (architecture (vams:change-all-whitespaces-to-underlines
-                          (cond
-                           ((string=?
-                             (gnetlist:get-toplevel-attribute "architecture")
-                             "not found") "default_architecture")
-                           (else
-                            (gnetlist:get-toplevel-attribute "architecture")))))
+(define (vams output-filename)
+  (let* (
+         ;; generate correctly architecture name
+         (architecture (vams:change-all-whitespaces-to-underlines
+                        (cond
+                         ((string=?
+                           (gnetlist:get-toplevel-attribute "architecture")
+                           "not found") "default_architecture")
+                         (else
+                          (gnetlist:get-toplevel-attribute "architecture")))))
 
-           ;; generate correctly entity name
-           (entity (vams:change-all-whitespaces-to-underlines
-                    (cond ((string=?
-                            (gnetlist:get-toplevel-attribute "entity")
-                            "not found")
-                           "default_entity")
-                          (else (gnetlist:get-toplevel-attribute "entity")))))
-           (top-attribs (map symbol->string top-attribs))
+         ;; generate correctly entity name
+         (entity (vams:change-all-whitespaces-to-underlines
+                  (cond ((string=?
+                          (gnetlist:get-toplevel-attribute "entity")
+                          "not found")
+                         "default_entity")
+                        (else (gnetlist:get-toplevel-attribute "entity")))))
+         (top-attribs (map symbol->string top-attribs))
 
-           ;; search all ports of a schematic. for entity generation only.
-           (port-list  (vams:generate-port-list (vams:get-uref top-attribs)))
+         ;; search all ports of a schematic. for entity generation only.
+         (port-list  (vams:generate-port-list (vams:get-uref top-attribs)))
 
-           ;; search all generic of a schematic. for entity generatin only.
-           (generic-list (vams:generate-generic-list top-attribs)))
+         ;; search all generic of a schematic. for entity generatin only.
+         (generic-list (vams:generate-generic-list top-attribs)))
 
 
-      ;; generate-mode : 1 (default) -> generate a architecture (netlist) of a
-      ;;                                schematic
-      ;;                 2           -> is selected a component then generate
-      ;;                                a entity of this, else generate
-      ;;                                a toplevel entity. called from gschem
-      ;;                                normally.
+    ;; generate-mode : 1 (default) -> generate a architecture (netlist) of a
+    ;;                                schematic
+    ;;                 2           -> is selected a component then generate
+    ;;                                a entity of this, else generate
+    ;;                                a toplevel entity. called from gschem
+    ;;                                normally.
 
-      (cond ((= generate-mode 1)
-             (begin
-               (message "\ngenerating architecture of current schematic in ")
+    (cond ((= generate-mode 1)
+           (begin
+             (message "\ngenerating architecture of current schematic in ")
 
-               ;; generate output-filename, like
-               ;; (<entity>_arc.<output-file-extension>)
-               (if (not (gnetlist:stdout? output-filename))
+             ;; generate output-filename, like
+             ;; (<entity>_arc.<output-file-extension>)
+             (if (not (gnetlist:stdout? output-filename))
                  (set! output-filename
                    (string-append
-                     (dirname output-filename)
-                     "/"
-                     (string-downcase entity)
-                     "_arc"
-                     (substring output-filename
-                                (string-rindex output-filename #\. 0
-                                               (string-length output-filename))
-                                (string-length output-filename)))))
+                    (dirname output-filename)
+                    "/"
+                    (string-downcase entity)
+                    "_arc"
+                    (substring output-filename
+                               (string-rindex output-filename #\. 0
+                                              (string-length output-filename))
+                               (string-length output-filename)))))
 
-               (set-current-output-port (gnetlist:output-port output-filename))
-               (message output-filename)
-               (message "\n")
-               (display "-- Structural VAMS generated by gnetlist\n")
-               (vams:write-secondary-unit architecture entity)
-               (close-output-port (current-output-port))))
-
-            ((= generate-mode 2)
-             (message "\n\ngenerating entity of current schematic in ")
-
-             ;; if one component selected, then generate output-filename
-             ;; (<device of selected component>.vhdl), else
-             ;; <entity>.vhdl
-            (if (not (gnetlist:stdout? output-filename))
-             (if (not (null? top-attribs))
-                 (set! output-filename
-                   (string-append
-                     (dirname output-filename)
-                     "/"
-                     (string-downcase
-                       (get-device (vams:get-uref top-attribs)))
-                     ".vhdl"))
-                 (set! output-filename
-                       (string-append
-                         (dirname output-filename)
-                         "/"
-                         (string-downcase entity)
-                         ".vhdl"))))
-
+             (set-current-output-port (gnetlist:output-port output-filename))
              (message output-filename)
              (message "\n")
-             (set-current-output-port (gnetlist:output-port output-filename))
+             (display "-- Structural VAMS generated by gnetlist\n")
+             (vams:write-secondary-unit architecture entity)
+             (close-output-port (current-output-port))))
 
-             ;; decide about the right parameters for entity-declaration
-             (if (not (null? (vams:get-uref top-attribs)))
-                 (vams:write-primary-unit (get-device (vams:get-uref top-attribs))
-                                          port-list
-                                          generic-list)
-                 (vams:write-primary-unit  entity port-list generic-list))
+          ((= generate-mode 2)
+           (message "\n\ngenerating entity of current schematic in ")
 
-             (close-output-port (current-output-port)))))))
+           ;; if one component selected, then generate output-filename
+           ;; (<device of selected component>.vhdl), else
+           ;; <entity>.vhdl
+           (if (not (gnetlist:stdout? output-filename))
+               (if (not (null? top-attribs))
+                   (set! output-filename
+                     (string-append
+                      (dirname output-filename)
+                      "/"
+                      (string-downcase
+                       (get-device (vams:get-uref top-attribs)))
+                      ".vhdl"))
+                   (set! output-filename
+                     (string-append
+                      (dirname output-filename)
+                      "/"
+                      (string-downcase entity)
+                      ".vhdl"))))
+
+           (message output-filename)
+           (message "\n")
+           (set-current-output-port (gnetlist:output-port output-filename))
+
+           ;; decide about the right parameters for entity-declaration
+           (if (not (null? (vams:get-uref top-attribs)))
+               (vams:write-primary-unit (get-device (vams:get-uref top-attribs))
+                                        port-list
+                                        generic-list)
+               (vams:write-primary-unit  entity port-list generic-list))
+
+           (close-output-port (current-output-port))))))
 
 
 ;;;                  TOP LEVEL FUNCTION
@@ -318,46 +317,39 @@
 ;;; It requires a list of ports. ports stand for a list of all
 ;;; pin-attributes.
 
-(define vams:write-port-clause
-  (lambda (port-list)
-    (if (not (null? port-list))
-        (begin
-          (display "\t PORT (\t")
-          (display "\t")
-          (if (list? (car port-list))
-              (begin
-                (display (cadar port-list))
-                (display " \t")
-                (display (caar port-list))
-                (display " \t: ")
-                (if (equal? (cadar port-list) 'quantity)
-                    (display (car (cdddar port-list))))
-                (display " \t")
-                (display (caddar port-list))))
-          (vams:write-port-list (cdr port-list))
-          (display " );\n")))))
+(define (vams:write-port-clause port-list)
+  (if (not (null? port-list))
+      (begin
+        (display "\t PORT (\t\t")
+        (if (list? (car port-list))
+            (format #t "~A \t~A \t: ~A \t~A"
+		    (cadar port-list)
+		    (caar port-list)
+		    (if (equal? (cadar port-list) 'quantity)
+			(car (cdddar port-list))
+			"")
+		    (caddar port-list)))
+        (vams:write-port-list (cdr port-list))
+        (display " );\n"))))
 
 ;;; This little routine writes a single pin on the port-clause.
 ;;; It requires a list containing (port_name, port_object, port_type, port_mode)
 ;;; such like
 ;;; ((heat quantity thermal in) (base terminal electrical unknown) .. )
 
-(define vams:write-port-list
-  (lambda (port-list)
-    (if (not (null? port-list))
-        (begin
-          (display ";\n\t\t\t")
-          (if (equal? (length (car port-list)) 4)
-              (begin
-                (display (cadar port-list))
-                (display " \t")
-                (display (caar port-list))
-                (display " \t: ")
-                (if (equal? (cadar port-list) 'quantity)
-                    (display (car (cdddar port-list))))
-                (display " \t")
-                (display (caddar port-list))))
-          (vams:write-port-list (cdr port-list))))))
+(define (vams:write-port-list port-list)
+  (if (not (null? port-list))
+      (begin
+        (display ";\n\t\t\t")
+        (if (equal? (length (car port-list)) 4)
+            (format #t "~A \t~A \t: ~A \t~A"
+		    (cadar port-list)
+		    (caar port-list)
+		    (if (equal? (cadar port-list) 'quantity)
+			(car (cdddar port-list))
+			"")
+		    (caddar port-list)))
+        (vams:write-port-list (cdr port-list)))))
 
 
 
@@ -434,20 +426,16 @@
 ;;; requires architecture and entity name and the port, where
 ;;; the architecture should wrote to.
 
-(define vams:write-secondary-unit
-  (lambda (architecture entity)
-    (display "-- Secondary unit\n\n")
-    (display "ARCHITECTURE ")
-    (display architecture)
-    (display " OF ")
-    (display entity)
-    (display " IS\n")
-    (vams:write-architecture-declarative-part)
-    (display "BEGIN\n")
-    (vams:write-architecture-statement-part packages)
-    (display "END ARCHITECTURE ")
-    (display architecture)
-    (display ";\n")))
+(define (vams:write-secondary-unit architecture entity)
+  (format #t "-- Secondary unit
+
+ARCHITECTURE ~A OF ~A IS
+" architecture entity)
+  (vams:write-architecture-declarative-part)
+  (display "BEGIN\n")
+  (vams:write-architecture-statement-part packages)
+  (format #t "END ARCHITECTURE ~A;\n" architecture)
+  )
 
 
 ;;;
@@ -484,33 +472,20 @@
 ;;; it's something more complex, because it's checking all signals
 ;;; for consistence. it only needs the output-port as parameter.
 
-(define vams:write-signal-declarations
-  (lambda ()
-    (begin
-      (for-each
-       (lambda (net)
-         (let*((connlist (gnetlist:get-all-connections net))
-               (port_object (vams:net-consistence "port_object" connlist))
-               (port_type (vams:net-consistence "port_type" connlist))
-               )
-           (if (and port_object
-                    port_type
-                    (if (equal? port_object "quantity")
-                        (port_mode (vams:net-consistence 'port_mode connlist))))
-               (begin
-                 (display "\t")
-                 (display port_object)
-                 (display " ")
-                 (display net)
-                 (display " \t: ")
-                 (display " ")
-                 (display port_type)
-                 (display ";\n"))
-               (begin
-                 (display "-- error in subnet : ")
-                 (display net)
-                 (newline)))))
-       (vams:all-necessary-nets)))))
+(define (vams:write-signal-declarations)
+  (for-each
+   (lambda (net)
+     (let*((connlist (gnetlist:get-all-connections net))
+           (port_object (vams:net-consistence "port_object" connlist))
+           (port_type (vams:net-consistence "port_type" connlist))
+           )
+       (if (and port_object
+                port_type
+                (if (equal? port_object "quantity")
+                    (port_mode (vams:net-consistence 'port_mode connlist))))
+           (format #t "\t~A ~A \t:  ~A;\n" port_object net port_type)
+           (format #t "-- error in subnet : ~A\n"))))
+   (vams:all-necessary-nets)))
 
 
 ;;; Architecture Statement Part
@@ -587,54 +562,48 @@
 ;;; required all used packages, which are necessary for netlist-
 ;;; generation, and the output-port.
 
-(define vams:write-architecture-statement-part
-  (lambda (packages)
-    (begin
-      (display "-- Architecture statement part")
-      (newline)
-      (for-each (lambda (package)
-                  (begin
-                    (let ((device (get-device package))
-                          (architecture
-                           (gnetlist:get-package-attribute
-                            package
-                            "architecture")))
-                      (if (not (memv (string->symbol device)
-                                     (map string->symbol
-                                          (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
+(define (vams:write-architecture-statement-part packages)
+  (display "-- Architecture statement part\n")
+  (for-each (lambda (package)
+              (let ((device (get-device package))
+                    (architecture
+                     (gnetlist:get-package-attribute
+                      package
+                      "architecture")))
+                (if (not (memv (string->symbol device)
+                               (map string->symbol
+                                    (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
+                    (begin
+                      (format #t " \n  ~A : ENTITY ~A"
+                              package   ; writes instance-label
+                              (get-device package) ; writes entity
+                                        ; name, which should
+                                        ; instanciated
+                              )
+
+                      ;; write the architecture of an entity in brackets after
+                      ;; the entity, when necessary.
+                      (if (not (equal? architecture "unknown"))
                           (begin
-                            (display " \n  ")
+                            (display "(")
+                            (if (equal?
+                                 (string-ref
+                                  (gnetlist:get-package-attribute package
+                                                                  "architecture") 0)
+                                 #\?)
+                                (display (substring architecture 1))
+                                (display architecture))
+                            (display ")")))
+                      (newline)
 
-                            ;; writes instance-label
-                            (display package)
-                            (display " : ENTITY ")
+                      ;; writes generic map
+                      (vams:write-generic-map package)
 
-                            ;; writes entity name, which should instanciated
-                            (display (get-device package))
+                      ;; writes port map
+                      (vams:write-port-map package)
 
-                            ;; write the architecture of an entity in brackets after
-                            ;; the entity, when necessary.
-                            (if (not (equal? architecture "unknown"))
-                                (begin
-                                  (display "(")
-                                  (if (equal?
-                                       (string-ref
-                                        (gnetlist:get-package-attribute package
-                                                                        "architecture") 0)
-                                       #\?)
-                                      (display (substring architecture 1))
-                                      (display architecture))
-                                  (display ")")))
-                            (newline)
-
-                            ;; writes generic map
-                            (vams:write-generic-map package)
-
-                            ;; writes port map
-                            (vams:write-port-map package)
-
-                            (display ";\n"))))))
-                (vams:all-necessary-packages)))))
+                      (display ";\n")))))
+            (vams:all-necessary-packages)))
 
 
 
@@ -643,19 +612,18 @@
 ;; Don't ask why .... it's not the right place to discuss this.
 ;; requires the output-port and a uref
 
-(define vams:write-generic-map
-  (lambda (uref)
-    (let ((new-ls (vams:all-used-generics
+(define (vams:write-generic-map uref)
+  (let ((new-ls (vams:all-used-generics
+                 (vams:list-without-str-attrib
+                  (vams:list-without-str-attrib
                    (vams:list-without-str-attrib
-                    (vams:list-without-str-attrib
-                     (vams:list-without-str-attrib
-                      (gnetlist:vams-get-package-attributes uref)
-                      "refdes") "source") "architecture") uref)))
-      (if (not (null? new-ls))
-          (begin
-            (display "\tGENERIC MAP (\n")
-            (vams:write-component-attributes uref new-ls)
-            (display ")\n"))))))
+                    (gnetlist:vams-get-package-attributes uref)
+                    "refdes") "source") "architecture") uref)))
+    (if (not (null? new-ls))
+        (begin
+          (display "\tGENERIC MAP (\n")
+          (vams:write-component-attributes uref new-ls)
+          (display ")\n")))))
 
 
 
@@ -673,20 +641,18 @@
 ;;; writes the port map of the component.
 ;;; required output-port and uref.
 
-(define vams:write-port-map
-  (lambda (uref)
-    (begin
-      (let ((pin-list (gnetlist:get-pins-nets uref)))
-        (if (not (null? pin-list))
-            (begin
-              (display "\tPORT MAP (\t")
-              (vams:write-association-element (car pin-list))
-              (for-each (lambda (pin)
-                          (display ",\n")
-                          (display "\t\t\t")
-                          (vams:write-association-element pin))
-                        (cdr pin-list))
-              (display ")")))))))
+(define (vams:write-port-map uref)
+  (let ((pin-list (gnetlist:get-pins-nets uref)))
+    (if (not (null? pin-list))
+        (begin
+          (display "\tPORT MAP (\t")
+          (vams:write-association-element (car pin-list))
+          (for-each (lambda (pin)
+                      (display ",\n")
+                      (display "\t\t\t")
+                      (vams:write-association-element pin))
+                    (cdr pin-list))
+          (display ")")))))
 
 
 ;;; Association element
@@ -736,14 +702,12 @@
 ;;; the purpose of this function is very easy: write OPEN if pin
 ;;; unconnected and normal output if it connected.
 
-(define vams:write-association-element
-  (lambda (pin)
-    (begin
-      (display (car pin))
-      (display " => ")
-      (if (string-prefix-ci? "unconnected_pin" (cdr pin))
-          (display "OPEN")
-          (display (vams:port-test pin))))))
+(define (vams:write-association-element pin)
+  (format #t "~A => ~A"
+          (car pin)
+          (if (string-prefix-ci? "unconnected_pin" (cdr pin))
+              "OPEN"
+              (vams:port-test pin))))
 
 
 
@@ -751,38 +715,29 @@
 ;;; generic map. needs components uref, the generic-list and
 ;;; an output-port
 
-(define vams:write-component-attributes
- (lambda (uref generic-list)
-   (if (not (null? generic-list))
-       (let ((attrib (car generic-list))
-             (value (gnetlist:get-package-attribute uref (car generic-list))))
-         (begin
+(define (vams:write-component-attributes uref generic-list)
+  (if (not (null? generic-list))
+      (let ((attrib (car generic-list))
+            (value (gnetlist:get-package-attribute uref (car generic-list))))
+        (if (string=? value "unknown")
+            (vams:write-component-attributes uref (cdr generic-list))
+            (begin
+              (format #t "\t\t\t~A => ~A" attrib value)
+              (vams:write-component-attributes-helper uref (cdr generic-list)))))))
 
-           (if (string=? value "unknown")
-             (vams:write-component-attributes uref (cdr generic-list))
-             (begin
-               (display "\t\t\t")
-               (display attrib)
-               (display " => ")
-               (display value)
-               (vams:write-component-attributes-helper uref (cdr generic-list)))))))))
-
-(define vams:write-component-attributes-helper
- (lambda (uref generic-list)
-   (if (not (null? generic-list))
-       (let ((attrib (car generic-list))
-             (value (gnetlist:get-package-attribute uref (car generic-list))))
-         (begin
-
-           (if (not (string=? value "unknown"))
-             (begin
-               (display ", ")
-               (newline)
-               (display "\t\t\t")
-               (display attrib)
-               (display " => ")
-               (display value)
-               (vams:write-component-attributes-helper uref (cdr generic-list)))))))))
+(define (vams:write-component-attributes-helper uref generic-list)
+  (if (not (null? generic-list))
+      (let ((attrib (car generic-list))
+            (value (gnetlist:get-package-attribute uref (car generic-list))))
+        (if (not (string=? value "unknown"))
+            (begin
+              (display ", ")
+              (newline)
+              (display "\t\t\t")
+              (display attrib)
+              (display " => ")
+              (display value)
+              (vams:write-component-attributes-helper uref (cdr generic-list)))))))
 
 
 ;;;           ARCHITECTURE GENERATING PART
@@ -797,14 +752,13 @@
 ;;; returns a list, whitout the specified string.
 ;;; requires: a list and a string
 
-(define vams:list-without-str-attrib
-  (lambda (ls str)
-    (cond ((null? ls) '())
-          (else
-           (append
-            (cond ((string=? (car ls) str) '())
-                  (else (list (car ls))))
-            (vams:list-without-str-attrib (cdr ls) str))))))
+(define (vams:list-without-str-attrib ls str)
+  (cond ((null? ls) '())
+        (else
+         (append
+          (cond ((string=? (car ls) str) '())
+                (else (list (car ls))))
+          (vams:list-without-str-attrib (cdr ls) str)))))
 
 
 
@@ -812,16 +766,14 @@
 ;; After our definitions, all attribs, which values not started with a
 ;; '?' - character.
 
-(define vams:all-used-generics
-  (lambda (ls uref)
-    (begin
-      (if (null? ls)
-          '()
-          (append
-           (if (equal? (string-ref (gnetlist:get-package-attribute uref (car ls)) 0) #\?)
-               '()
-               (list (car ls)))
-           (vams:all-used-generics (cdr ls) uref))))))
+(define (vams:all-used-generics ls uref)
+  (if (null? ls)
+      '()
+      (append
+       (if (equal? (string-ref (gnetlist:get-package-attribute uref (car ls)) 0) #\?)
+           '()
+           (list (car ls)))
+       (vams:all-used-generics (cdr ls) uref))))
 
 
 
@@ -829,81 +781,74 @@
 ;; of view (pin-attributes).
 ;; requires: a pin-attribute and the subnet
 
-(define vams:net-consistence
-  (lambda (attribute connlist)
-    (begin
-      (if (equal? connlist '())
-          #f
-          (if (= (length connlist) 1)
-              (if (equal? attribute 'port_mode)
-                  (if (equal? (gnetlist:get-attribute-by-pinnumber (car (car connlist))
-                                                          (car (cdr (car connlist)))
-                                                          attribute)
-                              'out)
-                      #t
-                      #f)
+(define (vams:net-consistence attribute connlist)
+  (if (equal? connlist '())
+      #f
+      (if (= (length connlist) 1)
+          (if (equal? attribute 'port_mode)
+              (if (equal? (gnetlist:get-attribute-by-pinnumber (car (car connlist))
+                                                               (car (cdr (car connlist)))
+                                                               attribute)
+                          'out)
+                  #t
+                  #f)
+              (append (gnetlist:get-attribute-by-pinnumber (car (car connlist))
+                                                           (car (cdr (car connlist)))
+                                                           attribute)))
+          (if (equal? attribute 'port_mode)
+              (if (equal? (gnetlist:get-attribute-by-pinnumber (car (car connlist))
+                                                               (car (cdr (car connlist)))
+                                                               attribute)
+                          'out)
+                  #t
+                  (vams:net-consistence attribute (cdr connlist)))
+              (if (equal? (gnetlist:get-attribute-by-pinnumber (car (car connlist))
+                                                               (car (cdr (car connlist)))
+                                                               attribute)
+                          (vams:net-consistence attribute (cdr connlist)))
                   (append (gnetlist:get-attribute-by-pinnumber (car (car connlist))
-                                                      (car (cdr (car connlist)))
-                                                      attribute)))
-              (if (equal? attribute 'port_mode)
-                  (if (equal? (gnetlist:get-attribute-by-pinnumber (car (car connlist))
-                                                          (car (cdr (car connlist)))
-                                                          attribute)
-                              'out)
-                      #t
-                      (vams:net-consistence attribute (cdr connlist)))
-                  (if (equal? (gnetlist:get-attribute-by-pinnumber (car (car connlist))
-                                                          (car (cdr (car connlist)))
-                                                          attribute)
-                              (vams:net-consistence attribute (cdr connlist)))
-                      (append (gnetlist:get-attribute-by-pinnumber (car (car connlist))
-                                                          (car (cdr (car connlist)))
-                                                          attribute))
-                      #f)))))))
+                                                               (car (cdr (car connlist)))
+                                                               attribute))
+                  #f)))))
 
 
 
 ;; returns a string, where are all whitespaces replaced to underlines
 ;; requires: a string only
 
-(define vams:change-all-whitespaces-to-underlines
-  (lambda (str)
-    (begin
-      (if (string-index str #\ )
+(define (vams:change-all-whitespaces-to-underlines str)
+  (if (string-index str #\ )
+      (if (= (string-index str #\ ) (- (string-length str) 1))
+          (vams:change-all-whitespaces-to-underlines
+           (substring str 0 (- (string-length str) 1)))
           (begin
-            (if (= (string-index str #\ ) (- (string-length str) 1))
-                (vams:change-all-whitespaces-to-underlines
-                 (substring str 0 (- (string-length str) 1)))
-                (begin
-                  (string-set! str (string-index str #\ ) #\_ )
-                  (vams:change-all-whitespaces-to-underlines str))))
-          (append str)))))
+            (string-set! str (string-index str #\ ) #\_ )
+            (vams:change-all-whitespaces-to-underlines str)))
+      (append str)))
 
 
 
 ;; returns all nets, which a given list of pins are conneted to.
 ;; requires: uref and its pins
 
-(define vams:all-pins-nets
-  (lambda (uref pins)
-    (if (null? pins)
-        '()
-        (append (list (car (gnetlist:get-nets uref (car pins))))
-                (vams:all-pins-nets uref (cdr pins))))))
+(define (vams:all-pins-nets uref pins)
+  (if (null? pins)
+      '()
+      (append (list (car (gnetlist:get-nets uref (car pins))))
+              (vams:all-pins-nets uref (cdr pins)))))
 
 
 
 ;; returns all nets, which a given list of urefs are connetd to
 ;; requires: list of urefs :-)
 
-(define vams:all-packages-nets
-  (lambda (urefs)
-    (if (null? urefs)
-        '()
-        (append
-         (vams:all-pins-nets (car urefs)
-                             (gnetlist:get-pins (car urefs)))
-         (vams:all-packages-nets (cdr urefs))))))
+(define (vams:all-packages-nets urefs)
+  (if (null? urefs)
+      '()
+      (append
+       (vams:all-pins-nets (car urefs)
+                           (gnetlist:get-pins (car urefs)))
+       (vams:all-packages-nets (cdr urefs)))))
 
 
 
@@ -913,27 +858,24 @@
 ;; The port-attributes are saved on toplevel of this special component.
 ;; requires: list of urefs
 
-(define vams:all-ports-in-list
-  (lambda (urefs)
-    (begin
-      (if (null? urefs)
-          '()
-          (append
-           (if (equal? "PORT" (get-device (car urefs)))
-               (list (car urefs))
-               '())
-           (vams:all-ports-in-list (cdr urefs)))))))
+(define (vams:all-ports-in-list urefs)
+  (if (null? urefs)
+      '()
+      (append
+       (if (equal? "PORT" (get-device (car urefs)))
+           (list (car urefs))
+           '())
+       (vams:all-ports-in-list (cdr urefs)))))
 
 
 
 ;; returns all nets in the schematic, which not
 ;; directly connected to a port.
 
-(define vams:all-necessary-nets
-  (lambda ()
-    (vams:only-different-nets all-unique-nets
-                              (vams:all-packages-nets
-                               (vams:all-ports-in-list packages)))))
+(define (vams:all-necessary-nets)
+  (vams:only-different-nets all-unique-nets
+                            (vams:all-packages-nets
+                             (vams:all-ports-in-list packages))))
 
 
 
@@ -945,10 +887,9 @@
 
 ;; sort all port-components out
 
-(define vams:all-necessary-packages
-  (lambda ()
-    (vams:only-different-nets packages
-                              (vams:all-ports-in-list packages))))
+(define (vams:all-necessary-packages)
+  (vams:only-different-nets packages
+                            (vams:all-ports-in-list packages)))
 
 
 
@@ -956,96 +897,86 @@
 ;; else return the net, which the pin is connetcted to.
 ;; requires: a pin only
 
-(define vams:port-test
-  (lambda (pin)
-    (if (member (cdr pin)
-                (vams:all-packages-nets (vams:all-ports-in-list packages)))
-        (append (vams:which-port
-                 pin
-                 (vams:all-ports-in-list packages)))
-        (append (cdr pin)))))
+(define (vams:port-test pin)
+  (if (member (cdr pin)
+              (vams:all-packages-nets (vams:all-ports-in-list packages)))
+      (vams:which-port pin (vams:all-ports-in-list packages))
+      (cdr pin)))
 
 
 
 ;; returns the port, when is in port-list, which the pin is connected to
 ;; requires: a pin and a port-list
 
-(define vams:which-port
-  (lambda (pin ports)
-    (begin
-       (if (null? ports)
-           '()
-           (if (equal? (cdr pin)
-                       (car (gnetlist:get-nets
+(define (vams:which-port pin ports)
+  (if (null? ports)
+      '()
+      (if (equal? (cdr pin)
+                  (car (gnetlist:get-nets
                         (car ports)
                         (car (gnetlist:get-pins (car ports))))))
-               (append (car ports))
-               (append
-                (vams:which-port pin (cdr ports))))))))
+          (append (car ports))
+          (append
+           (vams:which-port pin (cdr ports))))))
 
 
 
 ;; generate generic list for generic clause
 ;;((generic value) (generic value) .. ())
 
-(define vams:generate-generic-list
-  (lambda (ls)
-    (if (null? ls)
-        '()
-        (append
-         (if (not (or (string-prefix? "refdes=" (car ls))
-                      (string-prefix? "source=" (car ls))
-                      (string-prefix? "architecture=" (car ls))))
-             (list
-              (if (string-index (car ls) #\=)
-                  (list
-                   (substring (car ls) 0 (string-rindex (car ls) #\= 0))
-                   (substring (car ls) (+ (string-rindex (car ls) #\= 0)
-                                          (if (equal? (string-ref
-                                                       (car ls)
-                                                       (1+ (string-rindex (car ls) #\= 0)))
-                                                       #\?)
-                                              2 1))
-                              (string-length (car ls))))
-                  (car ls)))
-             '())
-         (vams:generate-generic-list (cdr ls))))))
+(define (vams:generate-generic-list ls)
+  (if (null? ls)
+      '()
+      (append
+       (if (not (or (string-prefix? "refdes=" (car ls))
+                    (string-prefix? "source=" (car ls))
+                    (string-prefix? "architecture=" (car ls))))
+           (list
+            (if (string-index (car ls) #\=)
+                (list
+                 (substring (car ls) 0 (string-rindex (car ls) #\= 0))
+                 (substring (car ls) (+ (string-rindex (car ls) #\= 0)
+                                        (if (equal? (string-ref
+                                                     (car ls)
+                                                     (1+ (string-rindex (car ls) #\= 0)))
+                                                    #\?)
+                                            2 1))
+                            (string-length (car ls))))
+                (car ls)))
+           '())
+       (vams:generate-generic-list (cdr ls)))))
 
 
 
 ;;; generates a port list of the current schematic, or returns
 ;;; a empty list, if no port reachable.
 
-(define vams:generate-port-list
-  (lambda (uref)
-    (let ((port-list  (list '())))
-      (if (null? uref)
-          '()
-          (begin
-            (for-each (lambda (pin)
-                        (append! port-list
-                                 (list (list pin
-                                             (gnetlist:get-attribute-by-pinnumber uref pin "port_object")
-                                             (gnetlist:get-attribute-by-pinnumber uref pin "port_type")
-                                             (gnetlist:get-attribute-by-pinnumber uref pin "port_mode")))))
-                      (gnetlist:get-pins uref))
-            (append (cdr port-list)))))))
+(define (vams:generate-port-list uref)
+  (let ((port-list  (list '())))
+    (if (null? uref)
+        '()
+        (begin
+          (for-each (lambda (pin)
+                      (append! port-list
+                               (list (list pin
+                                           (gnetlist:get-attribute-by-pinnumber uref pin "port_object")
+                                           (gnetlist:get-attribute-by-pinnumber uref pin "port_type")
+                                           (gnetlist:get-attribute-by-pinnumber uref pin "port_mode")))))
+                    (gnetlist:get-pins uref))
+          (append (cdr port-list))))))
 
 
 
 ;;; gets the uref value from the top-attribs-list, which is assigned from gschem.
 ;;; only important for automatic-gnetlist-calls from gschem !!!
 
-(define vams:get-uref
-  (lambda (liste)
-    (begin
-      (if (null? liste)
-          '()
-          (if (string-prefix? "refdes=" (car liste))
-              (begin
-                (append (substring (car liste) 7
-                                   (string-length (car liste)))))
-              (vams:get-uref (cdr liste)))))))
+(define (vams:get-uref liste)
+  (if (null? liste)
+      '()
+      (if (string-prefix? "refdes=" (car liste))
+          (append (substring (car liste) 7
+                             (string-length (car liste))))
+          (vams:get-uref (cdr liste)))))
 
 
 ;;; set generate-mode to default (1), when not defined before.
