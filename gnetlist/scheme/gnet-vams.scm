@@ -573,36 +573,27 @@ ARCHITECTURE ~A OF ~A IS
                 (if (not (memv (string->symbol device)
                                (map string->symbol
                                     (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
-                    (begin
-                      (format #t " \n  ~A : ENTITY ~A"
-                              package   ; writes instance-label
-                              (get-device package) ; writes entity
+                    (format #t " \n  ~A : ENTITY ~A~A\n~A~A;\n"
+			    package	; writes instance-label
+			    (get-device package) ; writes entity
                                         ; name, which should
                                         ; instanciated
-                              )
-
-                      ;; write the architecture of an entity in brackets after
-                      ;; the entity, when necessary.
-                      (if (not (equal? architecture "unknown"))
-                          (begin
-                            (display "(")
-                            (if (equal?
-                                 (string-ref
-                                  (gnetlist:get-package-attribute package
-                                                                  "architecture") 0)
-                                 #\?)
-                                (display (substring architecture 1))
-                                (display architecture))
-                            (display ")")))
-                      (newline)
-
-                      ;; writes generic map
-                      (vams:write-generic-map package)
-
-                      ;; writes port map
-                      (vams:write-port-map package)
-
-                      (display ";\n")))))
+			    (if (equal? architecture "unknown")
+				""
+				;; write the architecture of an
+				;; entity in brackets after the
+				;; entity, when necessary.
+				(format #f "(~A)"
+					(if (char=?
+					     (string-ref
+					      (gnetlist:get-package-attribute package
+									      "architecture") 0)
+					     #\?)
+					    (substring architecture 1)
+					    architecture))
+				)
+			    (vams:write-generic-map package)
+			    (vams:write-port-map package)))))
             (vams:all-necessary-packages)))
 
 
@@ -613,17 +604,39 @@ ARCHITECTURE ~A OF ~A IS
 ;; requires the output-port and a uref
 
 (define (vams:write-generic-map uref)
-  (let ((new-ls (vams:all-used-generics
-                 (vams:list-without-str-attrib
-                  (vams:list-without-str-attrib
-                   (vams:list-without-str-attrib
-                    (gnetlist:vams-get-package-attributes uref)
-                    "refdes") "source") "architecture") uref)))
-    (if (not (null? new-ls))
-        (begin
-          (display "\tGENERIC MAP (\n")
-          (vams:write-component-attributes uref new-ls)
-          (display ")\n")))))
+
+  (define (permitted-attrib->pair attrib)
+    (let ((value (gnetlist:get-package-attribute uref attrib)))
+      (and (not (or (string=? attrib "refdes")
+                    (string=? attrib "source")
+                    (string=? attrib "architecture")
+                    (string=? "unknown" value)))
+           (cons attrib value))))
+
+  (define (write-attribute attrib-value)
+    (let ((attrib (car attrib-value))
+          (value (cdr attrib-value)))
+      (format #f "\t\t\t~A => ~A" attrib value)))
+
+  ;; Returns all not default-setted generics, i.e. all attribs,
+  ;; which values not started with '?'.
+  (define (filter-generics uref)
+    (filter-map
+     (lambda (x)
+       (and (not (char=?
+		  (string-ref
+		   (gnetlist:get-package-attribute uref x)
+		   0)
+		  #\?))
+	    x))
+     (gnetlist:vams-get-package-attributes uref)))
+
+  (let ((ls (filter-map permitted-attrib->pair
+                        (filter-generics uref))))
+    (if (null? ls)
+	""
+	(format #f "\tGENERIC MAP (\n~A)\n"
+		(string-join (map write-attribute ls) ", \n")))))
 
 
 
@@ -643,16 +656,12 @@ ARCHITECTURE ~A OF ~A IS
 
 (define (vams:write-port-map uref)
   (let ((pin-list (gnetlist:get-pins-nets uref)))
-    (if (not (null? pin-list))
-        (begin
-          (display "\tPORT MAP (\t")
-          (vams:write-association-element (car pin-list))
-          (for-each (lambda (pin)
-                      (display ",\n")
-                      (display "\t\t\t")
-                      (vams:write-association-element pin))
-                    (cdr pin-list))
-          (display ")")))))
+    (if (null? pin-list)
+	""
+	(format #f "\tPORT MAP (\t~A)"
+		(string-join (map vams:write-association-element
+				  pin-list)
+			     ",\n\t\t\t")))))
 
 
 ;;; Association element
@@ -703,41 +712,13 @@ ARCHITECTURE ~A OF ~A IS
 ;;; unconnected and normal output if it connected.
 
 (define (vams:write-association-element pin)
-  (format #t "~A => ~A"
+  (format #f "~A => ~A"
           (car pin)
           (if (string-prefix-ci? "unconnected_pin" (cdr pin))
               "OPEN"
               (vams:port-test pin))))
 
 
-
-;;; writes all generics of a component into the
-;;; generic map. needs components uref, the generic-list and
-;;; an output-port
-
-(define (vams:write-component-attributes uref generic-list)
-  (if (not (null? generic-list))
-      (let ((attrib (car generic-list))
-            (value (gnetlist:get-package-attribute uref (car generic-list))))
-        (if (string=? value "unknown")
-            (vams:write-component-attributes uref (cdr generic-list))
-            (begin
-              (format #t "\t\t\t~A => ~A" attrib value)
-              (vams:write-component-attributes-helper uref (cdr generic-list)))))))
-
-(define (vams:write-component-attributes-helper uref generic-list)
-  (if (not (null? generic-list))
-      (let ((attrib (car generic-list))
-            (value (gnetlist:get-package-attribute uref (car generic-list))))
-        (if (not (string=? value "unknown"))
-            (begin
-              (display ", ")
-              (newline)
-              (display "\t\t\t")
-              (display attrib)
-              (display " => ")
-              (display value)
-              (vams:write-component-attributes-helper uref (cdr generic-list)))))))
 
 
 ;;;           ARCHITECTURE GENERATING PART
@@ -747,33 +728,6 @@ ARCHITECTURE ~A OF ~A IS
 
 ;;;
 ;;;           REALLY IMPORTANT HELP FUNCTIONS
-
-
-;;; returns a list, whitout the specified string.
-;;; requires: a list and a string
-
-(define (vams:list-without-str-attrib ls str)
-  (cond ((null? ls) '())
-        (else
-         (append
-          (cond ((string=? (car ls) str) '())
-                (else (list (car ls))))
-          (vams:list-without-str-attrib (cdr ls) str)))))
-
-
-
-;; returns all not default-setted generics
-;; After our definitions, all attribs, which values not started with a
-;; '?' - character.
-
-(define (vams:all-used-generics ls uref)
-  (if (null? ls)
-      '()
-      (append
-       (if (equal? (string-ref (gnetlist:get-package-attribute uref (car ls)) 0) #\?)
-           '()
-           (list (car ls)))
-       (vams:all-used-generics (cdr ls) uref))))
 
 
 
@@ -858,14 +812,11 @@ ARCHITECTURE ~A OF ~A IS
 ;; The port-attributes are saved on toplevel of this special component.
 ;; requires: list of urefs
 
-(define (vams:all-ports-in-list urefs)
-  (if (null? urefs)
-      '()
-      (append
-       (if (equal? "PORT" (get-device (car urefs)))
-           (list (car urefs))
-           '())
-       (vams:all-ports-in-list (cdr urefs)))))
+(define (vams:all-ports-in-list refdes-list)
+  (define (is-port? refdes)
+    (and (equal? "PORT" (get-device refdes))
+          refdes))
+  (filter-map is-port? refdes-list))
 
 
 
