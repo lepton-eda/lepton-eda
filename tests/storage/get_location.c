@@ -65,7 +65,7 @@ static void assert_object_location(xorn_revision_t rev, xorn_object_t ob,
 	assert(position == assert_position);
 }
 
-static void check_order()
+static void check_order(void)
 {
 	xorn_revision_t rev0, rev1, rev2, rev3, rev4;
 	xorn_object_t ob0, ob1a, ob1b, ob2;
@@ -120,7 +120,7 @@ static void check_order()
 	xorn_free_revision(rev0);
 }
 
-static void check_attach()
+static void check_attach(void)
 {
 	xorn_revision_t rev;
 	xorn_object_t N, a, b;
@@ -167,7 +167,7 @@ static void check_attach()
 	xorn_free_revision(rev);
 }
 
-int main()
+int main(void)
 {
 	check_order();
 	check_attach();

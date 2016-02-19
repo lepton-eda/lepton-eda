@@ -85,7 +85,7 @@ static void assert_selected_objects_3(
 	assert(xorn_selection_is_empty(rev, sel) == false);
 }
 
-int main()
+int main(void)
 {
 	xorn_revision_t rev0, rev1, rev2, rev3;
 	xorn_object_t ob0, ob1a, ob1b;

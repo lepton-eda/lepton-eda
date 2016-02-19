@@ -18,7 +18,7 @@
 #include <xornstorage.h>
 
 
-int main()
+int main(void)
 {
 	xorn_revision_t rev;
 	rev = xorn_new_revision(NULL);

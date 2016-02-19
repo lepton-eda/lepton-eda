@@ -21,7 +21,7 @@
 
 /* This test is only meaningful when being run under memcheck. */
 
-int main()
+int main(void)
 {
 	xorn_revision_t rev;
 	struct xornsch_text data;

@@ -127,7 +127,7 @@ static void assert_four(xorn_revision_t rev, xorn_selection_t sel,
 	assert(xorn_object_is_selected(rev, sel, text1) == false);
 }
 
-int main()
+int main(void)
 {
 	xorn_revision_t src, dest;
 	struct xornsch_net net_data;
