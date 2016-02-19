@@ -232,7 +232,7 @@ static int prepare_data(PyObject *obj, xorn_obtype_t *type_return,
 	return 0;
 }
 
-static PyObject *not_transient()
+static PyObject *not_transient(void)
 {
 	PyErr_SetString(PyExc_ValueError,
 			"Revision can only be changed while transient");

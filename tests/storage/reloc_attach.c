@@ -308,7 +308,7 @@ static void do_it(xorn_revision_t rev, xorn_object_t ob,
 	(*fun)(rev, fN, fa, fb);
 }
 
-int main()
+int main(void)
 {
 	xorn_revision_t rev;
 	struct xornsch_net net_data;

@@ -17,7 +17,7 @@
 #include "Setup.h"
 
 
-int main()
+int main(void)
 {
 	xorn_revision_t rev0, rev1, rev2, rev3;
 	xorn_object_t ob0, ob1a, ob1b;

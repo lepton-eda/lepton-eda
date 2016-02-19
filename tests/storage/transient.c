@@ -55,7 +55,7 @@ static void try_modify(xorn_revision_t rev, xorn_object_t existing_ob,
 	xorn_free_selection(sel0);
 }
 
-int main()
+int main(void)
 {
 	xorn_revision_t rev0, rev1, rev2;
 	xorn_object_t ob;

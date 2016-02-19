@@ -68,7 +68,7 @@ static void check_attached(xorn_revision_t rev,
 	free(objects);
 }
 
-int main()
+int main(void)
 {
 	xorn_revision_t rev;
 	xorn_object_t ob0, ob1;
