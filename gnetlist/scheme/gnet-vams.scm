@@ -157,14 +157,14 @@
 ;;; writes some needed library insertions staticly
 ;;; not really clever, but a first solution
 
-(define vams:write-context-clause
-  (lambda ()
-    (display "LIBRARY ieee,disciplines;\n")
-    (display "USE ieee.math_real.all;\n")
-    (display "USE ieee.math_real.all;\n")
-    (display "USE work.electrical_system.all;\n")
-    (display "USE work.all;\n")))
-
+(define (vams:write-context-clause)
+  (format #t "LIBRARY ieee,disciplines;
+USE ieee.math_real.all;
+USE ieee.math_real.all;
+USE work.electrical_system.all;
+USE work.all;
+"
+          ))
 
 
 ;;; Primary unit
@@ -213,19 +213,22 @@
 ;;; of this entity and the output-port. the output-port defines where
 ;;; this all should wrote to.
 
-(define vams:write-primary-unit
-  (lambda (entity port-list generic-list)
-    (begin
-      (vams:write-context-clause)
-      (display "-- Entity declaration -- \n\n")
-      (display "ENTITY ")
-      (display entity)
-      (display " IS\n")
-      (vams:write-generic-clause generic-list)
-      (vams:write-port-clause port-list)
-      (display "END ENTITY ")
-      (display entity)
-      (display "; \n\n"))))
+(define (vams:write-primary-unit entity port-list generic-list)
+
+  (format #t "~A
+-- Entity declaration -- 
+
+ENTITY ~A IS
+~A
+~A
+END ENTITY ~A; 
+
+"
+          (vams:write-context-clause)
+          entity
+          (vams:write-generic-clause generic-list)
+          (vams:write-port-clause port-list)
+          entity))
 
 
 
@@ -286,31 +289,29 @@
 ;;; vams:write-generic-clause requires a list of all generics and
 ;;; its values, such like ((power 12.2) (velocity 233.34))
 
-(define vams:write-generic-clause
-  (lambda (generic-list)
-    (if (not (null? generic-list))
-        (begin
-          (display "\t GENERIC (")
-          (display "\t")
-          (if (= 2 (length (car generic-list)))
-              (begin
-                (display (caar generic-list))
-                (display " : REAL := ")
-                (display (cadar generic-list))))
-          (vams:write-generic-list (cdr generic-list))
-          (display " );\n")))))
+(define (vams:write-generic-clause generic-list)
+  (if (not (null? generic-list))
+      (begin
+        (display "\t GENERIC (")
+        (display "\t")
+        (if (= 2 (length (car generic-list)))
+            (begin
+              (display (caar generic-list))
+              (display " : REAL := ")
+              (display (cadar generic-list))))
+        (vams:write-generic-list (cdr generic-list))
+        (display " );\n"))))
 
-(define vams:write-generic-list
-  (lambda (generic-list)
-    (if (not (null? generic-list))
-        (begin
-          (display ";\n\t\t\t")
-          (if (= 2 (length (car generic-list)))
-              (begin
-                (display (caar generic-list))
-                (display " : REAL := ")
-                (display (cadar generic-list))))
-          (vams:write-generic-list (cdr generic-list))))))
+(define (vams:write-generic-list generic-list)
+  (if (not (null? generic-list))
+      (begin
+        (display ";\n\t\t\t")
+        (if (= 2 (length (car generic-list)))
+            (begin
+              (display (caar generic-list))
+              (display " : REAL := ")
+              (display (cadar generic-list))))
+        (vams:write-generic-list (cdr generic-list)))))
 
 
 ;;; this function writes the port-clause in the entity-declarartion
@@ -441,14 +442,12 @@ ARCHITECTURE ~A OF ~A IS
 ;;;
 ;;; at this time, it only calls the signal declarations
 
-(define vams:write-architecture-declarative-part
-  (lambda ()
-    (begin
-      ; Due to my taste will the component declarations go first
-      ; XXX - Broken until someday
-      ; (vams:write-component-declarations packages)
-      ; Then comes the signal declatations
-      (vams:write-signal-declarations))))
+(define (vams:write-architecture-declarative-part)
+  ;; Due to my taste will the component declarations go first
+  ;; XXX - Broken until someday
+  ;; (vams:write-component-declarations packages)
+  ;; Then comes the signal declatations
+  (vams:write-signal-declarations))
 
 
 ;;; Signal Declaration
