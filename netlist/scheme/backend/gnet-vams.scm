@@ -529,6 +529,9 @@ ARCHITECTURE ~A OF ~A IS
 ;;;    as well as replicating the identifier as component simple name just to
 ;;;    be in line with good VAMS-93 practice and keep compilers happy.
 
+(define (default-generic-value? val)
+  (char=? (string-ref val 0) #\?))
+
 ;;; writes the architecture body.
 ;;; required all used packages, which are necessary for netlist-
 ;;; generation, and the output-port.
@@ -553,11 +556,9 @@ ARCHITECTURE ~A OF ~A IS
 				;; entity in brackets after the
 				;; entity, when necessary.
 				(format #f "(~A)"
-					(if (char=?
-					     (string-ref
-					      (gnetlist:get-package-attribute package
-									      "architecture") 0)
-					     #\?)
+					(if (default-generic-value?
+					     (gnetlist:get-package-attribute package
+                                                                             "architecture"))
 					    (substring architecture 1)
 					    architecture))
 				)
@@ -606,11 +607,8 @@ ARCHITECTURE ~A OF ~A IS
   (define (filter-generics uref)
     (filter-map
      (lambda (x)
-       (and (not (char=?
-		  (string-ref
-		   (gnetlist:get-package-attribute uref x)
-		   0)
-		  #\?))
+       (and (not (default-generic-value?
+                  (gnetlist:get-package-attribute uref x)))
 	    x))
      (vams-get-package-attributes uref)))
 
