@@ -9,6 +9,5 @@ USE work.all;
 ENTITY unknown IS
 	 GENERIC (	device : REAL := 7404;
 			footprint : REAL := DIP14 );
-#<unspecified>
 END ENTITY unknown;
 

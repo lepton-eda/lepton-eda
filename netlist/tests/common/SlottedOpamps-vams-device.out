@@ -3,6 +3,12 @@ USE ieee.math_real.all;
 USE ieee.math_real.all;
 USE work.electrical_system.all;
 USE work.all;
+#t
+-- Entity declaration --
+
+ENTITY LM324 IS
+	 GENERIC (	device : REAL := 7404;
+			footprint : REAL := DIP14 );
 	 PORT (		unknown 	1 	:  	unknown;
 			unknown 	2 	:  	unknown;
 			unknown 	3 	:  	unknown;
@@ -15,12 +21,5 @@ USE work.all;
 			unknown 	12 	:  	unknown;
 			unknown 	13 	:  	unknown;
 			unknown 	14 	:  	unknown );
-#t
--- Entity declaration --
-
-ENTITY LM324 IS
-	 GENERIC (	device : REAL := 7404;
-			footprint : REAL := DIP14 );
-#<unspecified>
 END ENTITY LM324;
 

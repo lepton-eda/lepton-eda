@@ -7,6 +7,5 @@ USE work.all;
 -- Entity declaration --
 
 ENTITY default_entity IS
-#<unspecified>
 END ENTITY default_entity;
 

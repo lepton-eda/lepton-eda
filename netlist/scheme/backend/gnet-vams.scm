@@ -212,7 +212,7 @@ USE work.all;
 
 ENTITY ~A IS
 ~A~
-~A
+~A~
 END ENTITY ~A;
 
 "
@@ -298,40 +298,29 @@ END ENTITY ~A;
 ;;; this function writes the port-clause in the entity-declarartion
 ;;; It requires a list of ports. ports stand for a list of all
 ;;; pin-attributes.
-
-(define (vams:write-port-clause port-list)
-  (if (not (null? port-list))
-      (begin
-        (display "\t PORT (\t\t")
-        (if (list? (car port-list))
-            (format #t "~A \t~A \t: ~A \t~A"
-		    (cadar port-list)
-		    (caar port-list)
-		    (if (equal? (cadar port-list) 'quantity)
-			(car (cdddar port-list))
-			"")
-		    (caddar port-list)))
-        (vams:write-port-list (cdr port-list))
-        (display " );\n"))))
-
 ;;; This little routine writes a single pin on the port-clause.
 ;;; It requires a list containing (port_name, port_object, port_type, port_mode)
 ;;; such like
 ;;; ((heat quantity thermal in) (base terminal electrical unknown) .. )
 
-(define (vams:write-port-list port-list)
-  (if (not (null? port-list))
-      (begin
-        (display ";\n\t\t\t")
-        (if (equal? (length (car port-list)) 4)
-            (format #t "~A \t~A \t: ~A \t~A"
-		    (cadar port-list)
-		    (caar port-list)
-		    (if (equal? (cadar port-list) 'quantity)
-			(car (cdddar port-list))
-			"")
-		    (caddar port-list)))
-        (vams:write-port-list (cdr port-list)))))
+
+(define (vams:write-port-clause port-list)
+  (define (format-port port)
+    (if (equal? (length port) 4)
+	  (let ((name (first port))
+		(object (second port))
+		(type (third port))
+		(mode (fourth port)))
+	    (format #f "~A \t~A \t: ~A \t~A"
+		    object
+		    name
+		    (if (equal? object 'quantity) mode "")
+		    type))
+	  ""))
+  (if (null? port-list)
+      ""
+      (format #f "\t PORT (\t\t~A );\n"
+              (string-join (map format-port port-list) ";\n\t\t\t"))))
 
 
 
