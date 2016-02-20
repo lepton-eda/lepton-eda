@@ -764,12 +764,14 @@ ARCHITECTURE ~A OF ~A IS
       (append str)))
 
 
-;;; Returns all net names associated with all pins of PACKAGES.
-(define (vams:all-packages-nets packages)
-  (map (lambda (package)
-         (map (cut package-pin-netname package <>)
-              (get-pins package)))
-       packages))
+;;; Returns all net names associated with all pins of packages in
+;;; REFDES-LIST.
+(define (vams:all-packages-nets refdes-list)
+  (define (pin-net-names package)
+    (map (cut package-pin-netname package <>)
+         (get-pins package)))
+
+  (map pin-net-names refdes-list))
 
 
 ;; returns all ports from a list of urefs.
