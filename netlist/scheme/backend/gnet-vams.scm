@@ -211,7 +211,7 @@ USE work.all;
 -- Entity declaration --
 
 ENTITY ~A IS
-~A
+~A~
 ~A
 END ENTITY ~A;
 
@@ -282,28 +282,17 @@ END ENTITY ~A;
 ;;; its values, such like ((power 12.2) (velocity 233.34))
 
 (define (vams:write-generic-clause generic-list)
-  (if (not (null? generic-list))
-      (begin
-        (display "\t GENERIC (")
-        (display "\t")
-        (if (= 2 (length (car generic-list)))
-            (begin
-              (display (caar generic-list))
-              (display " : REAL := ")
-              (display (cadar generic-list))))
-        (vams:write-generic-list (cdr generic-list))
-        (display " );\n"))))
+  (define (format-generic generic)
+    (if (= 2 (length generic))
+	(let ((name (first generic))
+	      (value (second generic)))
+	  (format #f "~A : REAL := ~A" name value))
+	""))
+  (if (null? generic-list)
+      ""
+      (format #f "\t GENERIC (\t~A );\n"
+              (string-join (map format-generic generic-list) ";\n\t\t\t"))))
 
-(define (vams:write-generic-list generic-list)
-  (if (not (null? generic-list))
-      (begin
-        (display ";\n\t\t\t")
-        (if (= 2 (length (car generic-list)))
-            (begin
-              (display (caar generic-list))
-              (display " : REAL := ")
-              (display (cadar generic-list))))
-        (vams:write-generic-list (cdr generic-list)))))
 
 
 ;;; this function writes the port-clause in the entity-declarartion

@@ -8,6 +8,5 @@ USE work.all;
 
 ENTITY default_entity IS
 #<unspecified>
-#<unspecified>
 END ENTITY default_entity;
 
