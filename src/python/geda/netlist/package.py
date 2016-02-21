@@ -199,16 +199,16 @@ class PackagePin:
     # an error.
 
     def get_attribute(self, name, default = KeyError):
-        has_real_pins = False
-        for cpin in self.cpins:
-            if cpin.blueprint.ob is not None:
-                has_real_pins = True
-
         # Treat "pinnumber" specially: return the value of self.number
         # which recognizes slotting.  For backwards compatibility,
         # artificial pins do not have a pinnumber.
 
         if name == 'pinnumber':
+            has_real_pins = False
+            for cpin in self.cpins:
+                if cpin.blueprint.ob is not None:
+                    has_real_pins = True
+
             if has_real_pins:
                 return self.number
             else:
