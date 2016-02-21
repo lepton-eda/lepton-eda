@@ -948,7 +948,6 @@
 
 (gnetlist:vams-get-package-attributes "A3")
 <<<<<
-"file"
 "device"
 "value"
 "refdes"
