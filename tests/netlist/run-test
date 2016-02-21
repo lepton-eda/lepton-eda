@@ -44,6 +44,10 @@ backend="${backend_tmp%.out}"
 backend_options=
 
 case "${backend}" in
+guile)
+    backend_options="-O load=${srcdir}/gnet-apitest.scm \
+                     -O guile-proc=apitest -O -- -O foo -O bar"
+    ;;
 spice_sdb-nomunge)
     backend=spice_sdb
     backend_options="-O nomunge_mode"

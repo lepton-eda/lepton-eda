@@ -44,6 +44,10 @@ backend="${backend_tmp%.out}"
 backend_options=
 
 case "${backend}" in
+guile)
+    backend=apitest
+    backend_options="-O foo -O bar"
+    ;;
 spice_noqsi)
     backend=spice-noqsi
     ;;

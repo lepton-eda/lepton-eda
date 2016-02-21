@@ -1,0 +1,565 @@
+(gnetlist:get-packages "placeholder")
+<<<<<
+"U1"
+>>>>>
+
+(gnetlist:get-non-unique-packages "placeholder")
+<<<<<
+"U1"
+"U1"
+"U1"
+"U1"
+>>>>>
+
+(gnetlist:get-all-nets "placeholder")
+<<<<<
+"samenet_output_c"
+"minusin_slot4_pin13_b"
+"plusin_slot4_pin12_a"
+"samenet_output_c"
+"minusin_slot3_pin_b"
+"plusin_slot3_pin10_a"
+"samenet_output_c"
+"minusin_slot2_pin6_b"
+"plusin_slot2_pin5_a"
+"samenet_output_c"
+"minusin_slot1_pin_b"
+"plusin_slot1_pin3_a"
+>>>>>
+
+(gnetlist:get-all-unique-nets "placeholder")
+<<<<<
+"minusin_slot4_pin13_b"
+"plusin_slot4_pin12_a"
+"minusin_slot3_pin_b"
+"plusin_slot3_pin10_a"
+"minusin_slot2_pin6_b"
+"plusin_slot2_pin5_a"
+"samenet_output_c"
+"minusin_slot1_pin_b"
+"plusin_slot1_pin3_a"
+>>>>>
+
+(gnetlist:get-toplevel-attribute "tnMERqW0")
+"not found"
+
+(gnetlist:get-pins "U1")
+<<<<<
+"14"
+"13"
+"12"
+"8"
+"9"
+"10"
+"7"
+"6"
+"5"
+"1"
+"2"
+"3"
+>>>>>
+
+(gnetlist:get-pins-nets "U1")
+<<<<<
+("3" . "plusin_slot1_pin3_a")
+("2" . "minusin_slot1_pin_b")
+("1" . "samenet_output_c")
+("5" . "plusin_slot2_pin5_a")
+("6" . "minusin_slot2_pin6_b")
+("7" . "samenet_output_c")
+("10" . "plusin_slot3_pin10_a")
+("9" . "minusin_slot3_pin_b")
+("8" . "samenet_output_c")
+("12" . "plusin_slot4_pin12_a")
+("13" . "minusin_slot4_pin13_b")
+("14" . "samenet_output_c")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "U1")
+<<<<<
+"slot"
+"refdes"
+"device"
+>>>>>
+
+(gnetlist:get-all-package-attributes "U1" "device")
+<<<<<
+"LM324"
+"LM324"
+"LM324"
+"LM324"
+>>>>>
+
+(gnetlist:get-nets "U1" "14")
+<<<<<
+"samenet_output_c"
+("U1" "14")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U1" "14" "pinnumber")
+"14"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "14" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "14" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "14" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U1" "13")
+<<<<<
+"minusin_slot4_pin13_b"
+("U1" "13")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U1" "13" "pinnumber")
+"13"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "13" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "13" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "13" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U1" "12")
+<<<<<
+"plusin_slot4_pin12_a"
+("U1" "12")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U1" "12" "pinnumber")
+"12"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "12" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "12" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "12" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pinnumber")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U1" "8")
+<<<<<
+"samenet_output_c"
+("U1" "8")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U1" "8" "pinnumber")
+"8"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "8" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "8" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "8" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U1" "9")
+<<<<<
+"minusin_slot3_pin_b"
+("U1" "9")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U1" "9" "pinnumber")
+"9"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "9" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "9" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "9" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U1" "10")
+<<<<<
+"plusin_slot3_pin10_a"
+("U1" "10")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U1" "10" "pinnumber")
+"10"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "10" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "10" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "10" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pinnumber")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U1" "7")
+<<<<<
+"samenet_output_c"
+("U1" "7")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U1" "7" "pinnumber")
+"7"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "7" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "7" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "7" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U1" "6")
+<<<<<
+"minusin_slot2_pin6_b"
+("U1" "6")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U1" "6" "pinnumber")
+"6"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "6" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "6" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "6" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U1" "5")
+<<<<<
+"plusin_slot2_pin5_a"
+("U1" "5")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U1" "5" "pinnumber")
+"5"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "5" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "5" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "5" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pinnumber")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U1" "1")
+<<<<<
+"samenet_output_c"
+("U1" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "1" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "1" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "1" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U1" "2")
+<<<<<
+"minusin_slot1_pin_b"
+("U1" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "2" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "2" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "2" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U1" "3")
+<<<<<
+"plusin_slot1_pin3_a"
+("U1" "3")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U1" "3" "pinnumber")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "3" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "3" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U1" "3" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pinnumber")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U1" "3" "pintype")
+"unknown"
+
+(gnetlist:get-pins "tnMERqW0")
+<<<<<
+>>>>>
+
+(gnetlist:get-pins-nets "tnMERqW0")
+<<<<<
+>>>>>
+
+(gnetlist:vams-get-package-attributes "tnMERqW0")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "minusin_slot4_pin13_b")
+<<<<<
+("U1" "13")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "minusin_slot4_pin13_b" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "plusin_slot4_pin12_a")
+<<<<<
+("U1" "12")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "plusin_slot4_pin12_a" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "minusin_slot3_pin_b")
+<<<<<
+("U1" "9")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "minusin_slot3_pin_b" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "plusin_slot3_pin10_a")
+<<<<<
+("U1" "10")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "plusin_slot3_pin10_a" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "minusin_slot2_pin6_b")
+<<<<<
+("U1" "6")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "minusin_slot2_pin6_b" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "plusin_slot2_pin5_a")
+<<<<<
+("U1" "5")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "plusin_slot2_pin5_a" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "samenet_output_c")
+<<<<<
+("U1" "14")
+("U1" "8")
+("U1" "7")
+("U1" "1")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "samenet_output_c" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "minusin_slot1_pin_b")
+<<<<<
+("U1" "2")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "minusin_slot1_pin_b" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "plusin_slot1_pin3_a")
+<<<<<
+("U1" "3")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "plusin_slot1_pin3_a" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "tnMERqW0")
+<<<<<
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "tnMERqW0" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-backend-arguments)
+<<<<<
+"foo"
+"bar"
+>>>>>
+
+(gnetlist:get-verbosity)
+0
+

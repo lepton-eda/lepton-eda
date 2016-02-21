@@ -32,7 +32,7 @@ attribs:
 all-local: attribs
 
 dist_check_SCRIPTS = run-test
-EXTRA_DIST = $(TESTS) $(testdata) gschemrc common/gschemrc
+EXTRA_DIST = $(TESTS) $(testdata) gnet-apitest.scm gschemrc common/gschemrc
 # dist_check_DATA would be more appropriate for $(TESTS) and $(testdata)
 # but triggers a lot of "Nothing to be done for '...'" messages.
 
@@ -85,6 +85,7 @@ TESTS = stack_1-geda.out \
 	common/JD-geda.out \
 	common/JD-gossip.out \
 	common/JD-gsch2pcb.out \
+	common/JD-guile.out \
 	common/JD-liquidpcb.out \
 	common/JD-mathematica.out \
 	common/JD-maxascii.out \
@@ -131,6 +132,7 @@ TESTS = stack_1-geda.out \
 	common/SlottedOpamps-geda.out \
 	common/SlottedOpamps-gossip.out \
 	common/SlottedOpamps-gsch2pcb.out \
+	common/SlottedOpamps-guile.out \
 	common/SlottedOpamps-liquidpcb.out \
 	common/SlottedOpamps-mathematica.out \
 	common/SlottedOpamps-maxascii.out \
@@ -172,6 +174,7 @@ TESTS = stack_1-geda.out \
 	common/TwoStageAmp-geda.out \
 	common/TwoStageAmp-gossip.out \
 	common/TwoStageAmp-gsch2pcb.out \
+	common/TwoStageAmp-guile.out \
 	common/TwoStageAmp-liquidpcb.out \
 	common/TwoStageAmp-mathematica.out \
 	common/TwoStageAmp-maxascii.out \
@@ -216,6 +219,7 @@ TESTS = stack_1-geda.out \
 	common/cascade-geda.out \
 	common/cascade-gossip.out \
 	common/cascade-gsch2pcb.out \
+	common/cascade-guile.out \
 	common/cascade-liquidpcb.out \
 	common/cascade-mathematica.out \
 	common/cascade-maxascii.out \
@@ -257,6 +261,7 @@ TESTS = stack_1-geda.out \
 	common/multiequal-geda.out \
 	common/multiequal-gossip.out \
 	common/multiequal-gsch2pcb.out \
+	common/multiequal-guile.out \
 	common/multiequal-liquidpcb.out \
 	common/multiequal-mathematica.out \
 	common/multiequal-maxascii.out \
@@ -298,6 +303,7 @@ TESTS = stack_1-geda.out \
 	common/netattrib-geda.out \
 	common/netattrib-gossip.out \
 	common/netattrib-gsch2pcb.out \
+	common/netattrib-guile.out \
 	common/netattrib-liquidpcb.out \
 	common/netattrib-mathematica.out \
 	common/netattrib-maxascii.out \
@@ -339,6 +345,7 @@ TESTS = stack_1-geda.out \
 	common/powersupply-geda.out \
 	common/powersupply-gossip.out \
 	common/powersupply-gsch2pcb.out \
+	common/powersupply-guile.out \
 	common/powersupply-liquidpcb.out \
 	common/powersupply-mathematica.out \
 	common/powersupply-maxascii.out \
@@ -380,6 +387,7 @@ TESTS = stack_1-geda.out \
 	common/singlenet-geda.out \
 	common/singlenet-gossip.out \
 	common/singlenet-gsch2pcb.out \
+	common/singlenet-guile.out \
 	common/singlenet-liquidpcb.out \
 	common/singlenet-mathematica.out \
 	common/singlenet-maxascii.out \
