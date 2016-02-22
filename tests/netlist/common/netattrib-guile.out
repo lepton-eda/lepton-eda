@@ -392,8 +392,8 @@
 <<<<<
 "one"
 ("U100" "3")
-("U300" "1")
 ("U200" "1")
+("U300" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "U200" "1" "pinnumber")
@@ -602,9 +602,9 @@
 (gnetlist:get-nets "U100" "3")
 <<<<<
 "one"
-("U300" "1")
-("U200" "1")
 ("U100" "3")
+("U200" "1")
+("U300" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "U100" "3" "pinnumber")

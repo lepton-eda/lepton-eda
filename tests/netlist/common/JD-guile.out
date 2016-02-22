@@ -151,9 +151,9 @@
 (gnetlist:get-nets "Cm" "1")
 <<<<<
 "m"
-("Rlm" "1")
-("Rt" "2")
 ("X1" "4")
+("Rt" "2")
+("Rlm" "1")
 ("Cm" "1")
 >>>>>
 
@@ -238,9 +238,9 @@
 (gnetlist:get-nets "Cp" "1")
 <<<<<
 "p"
+("X1" "5")
 ("Rt" "1")
 ("Rlp" "1")
-("X1" "5")
 ("Cp" "1")
 >>>>>
 
@@ -294,10 +294,10 @@
 (gnetlist:get-nets "Rlp" "1")
 <<<<<
 "p"
-("Cp" "1")
-("Rt" "1")
 ("X1" "5")
+("Rt" "1")
 ("Rlp" "1")
+("Cp" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "Rlp" "1" "pinnumber")
@@ -328,8 +328,8 @@
 <<<<<
 "Vdd1"
 ("X1" "6")
-("M1" "B")
 ("M1" "S")
+("M1" "B")
 ("Vdd" "1")
 ("Rlp" "2")
 >>>>>
@@ -384,10 +384,10 @@
 (gnetlist:get-nets "Rlm" "1")
 <<<<<
 "m"
-("Cm" "1")
-("Rt" "2")
 ("X1" "4")
+("Rt" "2")
 ("Rlm" "1")
+("Cm" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "Rlm" "1" "pinnumber")
@@ -500,11 +500,11 @@
 (gnetlist:get-nets "Vdd" "1")
 <<<<<
 "Vdd1"
-("Rlp" "2")
 ("X1" "6")
-("M1" "B")
 ("M1" "S")
+("M1" "B")
 ("Vdd" "1")
+("Rlp" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "Vdd" "1" "pinnumber")
@@ -641,10 +641,10 @@
 (gnetlist:get-nets "Rt" "1")
 <<<<<
 "p"
-("Cp" "1")
-("Rlp" "1")
 ("X1" "5")
 ("Rt" "1")
+("Rlp" "1")
+("Cp" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "Rt" "1" "pinnumber")
@@ -674,10 +674,10 @@
 (gnetlist:get-nets "Rt" "2")
 <<<<<
 "m"
-("Cm" "1")
-("Rlm" "1")
 ("X1" "4")
 ("Rt" "2")
+("Rlm" "1")
+("Cm" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "Rt" "2" "pinnumber")
@@ -761,8 +761,8 @@
 (gnetlist:get-nets "Rb" "2")
 <<<<<
 "LVH"
-("M1" "D")
 ("X1" "3")
+("M1" "D")
 ("M1" "G")
 ("Rb" "2")
 >>>>>
@@ -824,10 +824,10 @@
 (gnetlist:get-nets "M1" "G")
 <<<<<
 "LVH"
-("Rb" "2")
-("M1" "D")
 ("X1" "3")
+("M1" "D")
 ("M1" "G")
+("Rb" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "M1" "G" "pinnumber")
@@ -857,10 +857,10 @@
 (gnetlist:get-nets "M1" "D")
 <<<<<
 "LVH"
-("Rb" "2")
-("M1" "G")
 ("X1" "3")
 ("M1" "D")
+("M1" "G")
+("Rb" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "M1" "D" "pinnumber")
@@ -890,11 +890,11 @@
 (gnetlist:get-nets "M1" "B")
 <<<<<
 "Vdd1"
-("Rlp" "2")
 ("X1" "6")
-("Vdd" "1")
 ("M1" "S")
 ("M1" "B")
+("Vdd" "1")
+("Rlp" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "M1" "B" "pinnumber")
@@ -924,11 +924,11 @@
 (gnetlist:get-nets "M1" "S")
 <<<<<
 "Vdd1"
-("Rlp" "2")
 ("X1" "6")
-("Vdd" "1")
-("M1" "B")
 ("M1" "S")
+("M1" "B")
+("Vdd" "1")
+("Rlp" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "M1" "S" "pinnumber")
@@ -1021,11 +1021,11 @@
 (gnetlist:get-nets "X1" "6")
 <<<<<
 "Vdd1"
-("Rlp" "2")
-("M1" "B")
-("M1" "S")
-("Vdd" "1")
 ("X1" "6")
+("M1" "S")
+("M1" "B")
+("Vdd" "1")
+("Rlp" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "X1" "6" "pinnumber")
@@ -1085,10 +1085,10 @@
 (gnetlist:get-nets "X1" "3")
 <<<<<
 "LVH"
-("Rb" "2")
+("X1" "3")
 ("M1" "D")
 ("M1" "G")
-("X1" "3")
+("Rb" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "X1" "3" "pinnumber")
@@ -1118,8 +1118,8 @@
 (gnetlist:get-nets "X1" "1")
 <<<<<
 "i"
-("V1" "1")
 ("X1" "1")
+("V1" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "X1" "1" "pinnumber")
@@ -1149,10 +1149,10 @@
 (gnetlist:get-nets "X1" "5")
 <<<<<
 "p"
-("Cp" "1")
+("X1" "5")
 ("Rt" "1")
 ("Rlp" "1")
-("X1" "5")
+("Cp" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "X1" "5" "pinnumber")
@@ -1182,10 +1182,10 @@
 (gnetlist:get-nets "X1" "4")
 <<<<<
 "m"
-("Cm" "1")
-("Rlm" "1")
-("Rt" "2")
 ("X1" "4")
+("Rt" "2")
+("Rlm" "1")
+("Cm" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "X1" "4" "pinnumber")
@@ -1227,9 +1227,9 @@
 (gnetlist:get-all-connections "Vdd1")
 <<<<<
 ("Rlp" "2")
+("Vdd" "1")
 ("M1" "B")
 ("M1" "S")
-("Vdd" "1")
 ("X1" "6")
 >>>>>
 
@@ -1256,8 +1256,8 @@
 (gnetlist:get-all-connections "LVH")
 <<<<<
 ("Rb" "2")
-("M1" "D")
 ("M1" "G")
+("M1" "D")
 ("X1" "3")
 >>>>>
 
@@ -1278,8 +1278,8 @@
 (gnetlist:get-all-connections "p")
 <<<<<
 ("Cp" "1")
-("Rt" "1")
 ("Rlp" "1")
+("Rt" "1")
 ("X1" "5")
 >>>>>
 

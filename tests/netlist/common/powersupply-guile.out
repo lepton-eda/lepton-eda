@@ -110,9 +110,9 @@
 (gnetlist:get-nets "U2" "1")
 <<<<<
 "ten"
-("C3" "1")
 ("R2" "1")
 ("R1" "2")
+("C3" "1")
 ("U2" "1")
 >>>>>
 
@@ -143,9 +143,9 @@
 (gnetlist:get-nets "U2" "3")
 <<<<<
 "eight"
-("C2" "1")
-("C1" "1")
 ("U1" "1")
+("C1" "1")
+("C2" "1")
 ("U2" "3")
 >>>>>
 
@@ -176,8 +176,8 @@
 (gnetlist:get-nets "U2" "2")
 <<<<<
 "eleven"
-("C4" "1")
 ("R2" "2")
+("C4" "1")
 ("U2" "2")
 >>>>>
 
@@ -231,12 +231,12 @@
 (gnetlist:get-nets "C4" "2")
 <<<<<
 "nine"
-("C3" "2")
-("R1" "3")
-("R1" "1")
-("C2" "2")
 ("U1" "2")
 ("C1" "2")
+("C2" "2")
+("R1" "3")
+("R1" "1")
+("C3" "2")
 ("C4" "2")
 >>>>>
 
@@ -267,9 +267,9 @@
 (gnetlist:get-nets "C4" "1")
 <<<<<
 "eleven"
-("U2" "2")
 ("R2" "2")
 ("C4" "1")
+("U2" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "C4" "1" "pinnumber")
@@ -322,13 +322,13 @@
 (gnetlist:get-nets "C3" "2")
 <<<<<
 "nine"
-("C4" "2")
-("R1" "3")
-("R1" "1")
-("C2" "2")
 ("U1" "2")
 ("C1" "2")
+("C2" "2")
+("R1" "3")
+("R1" "1")
 ("C3" "2")
+("C4" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "C3" "2" "pinnumber")
@@ -358,10 +358,10 @@
 (gnetlist:get-nets "C3" "1")
 <<<<<
 "ten"
-("U2" "1")
-("R1" "2")
 ("R2" "1")
+("R1" "2")
 ("C3" "1")
+("U2" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "C3" "1" "pinnumber")
@@ -416,13 +416,13 @@
 (gnetlist:get-nets "R1" "1")
 <<<<<
 "nine"
-("C4" "2")
-("C3" "2")
-("R1" "3")
-("C2" "2")
 ("U1" "2")
 ("C1" "2")
+("C2" "2")
+("R1" "3")
 ("R1" "1")
+("C3" "2")
+("C4" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "R1" "1" "pinnumber")
@@ -452,10 +452,10 @@
 (gnetlist:get-nets "R1" "2")
 <<<<<
 "ten"
-("U2" "1")
-("C3" "1")
 ("R2" "1")
 ("R1" "2")
+("C3" "1")
+("U2" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "R1" "2" "pinnumber")
@@ -485,13 +485,13 @@
 (gnetlist:get-nets "R1" "3")
 <<<<<
 "nine"
-("C4" "2")
-("C3" "2")
-("R1" "1")
-("C2" "2")
 ("U1" "2")
 ("C1" "2")
+("C2" "2")
 ("R1" "3")
+("R1" "1")
+("C3" "2")
+("C4" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "R1" "3" "pinnumber")
@@ -544,13 +544,13 @@
 (gnetlist:get-nets "C2" "2")
 <<<<<
 "nine"
-("C4" "2")
-("C3" "2")
-("R1" "3")
-("R1" "1")
 ("U1" "2")
 ("C1" "2")
 ("C2" "2")
+("R1" "3")
+("R1" "1")
+("C3" "2")
+("C4" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "C2" "2" "pinnumber")
@@ -580,10 +580,10 @@
 (gnetlist:get-nets "C2" "1")
 <<<<<
 "eight"
-("U2" "3")
-("C1" "1")
 ("U1" "1")
+("C1" "1")
 ("C2" "1")
+("U2" "3")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "C2" "1" "pinnumber")
@@ -636,10 +636,10 @@
 (gnetlist:get-nets "R2" "1")
 <<<<<
 "ten"
-("U2" "1")
+("R2" "1")
 ("R1" "2")
 ("C3" "1")
-("R2" "1")
+("U2" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "R2" "1" "pinnumber")
@@ -669,9 +669,9 @@
 (gnetlist:get-nets "R2" "2")
 <<<<<
 "eleven"
-("U2" "2")
-("C4" "1")
 ("R2" "2")
+("C4" "1")
+("U2" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "R2" "2" "pinnumber")
@@ -724,13 +724,13 @@
 (gnetlist:get-nets "C1" "2")
 <<<<<
 "nine"
-("C4" "2")
-("C3" "2")
-("R1" "3")
-("R1" "1")
-("C2" "2")
 ("U1" "2")
 ("C1" "2")
+("C2" "2")
+("R1" "3")
+("R1" "1")
+("C3" "2")
+("C4" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "C1" "2" "pinnumber")
@@ -760,10 +760,10 @@
 (gnetlist:get-nets "C1" "1")
 <<<<<
 "eight"
-("U2" "3")
-("C2" "1")
 ("U1" "1")
 ("C1" "1")
+("C2" "1")
+("U2" "3")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "C1" "1" "pinnumber")
@@ -962,8 +962,8 @@
 (gnetlist:get-nets "CONN1" "1")
 <<<<<
 "one"
-("S1" "1")
 ("CONN1" "1")
+("S1" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "CONN1" "1" "pinnumber")
@@ -1112,8 +1112,8 @@
 (gnetlist:get-nets "T1" "2")
 <<<<<
 "five"
-("CONN1" "2")
 ("T1" "2")
+("CONN1" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "T1" "2" "pinnumber")
@@ -1165,8 +1165,8 @@
 (gnetlist:get-nets "F1" "2")
 <<<<<
 "three"
-("T1" "1")
 ("F1" "2")
+("T1" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "F1" "2" "pinnumber")
@@ -1196,8 +1196,8 @@
 (gnetlist:get-nets "F1" "1")
 <<<<<
 "two"
-("S1" "2")
 ("F1" "1")
+("S1" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "F1" "1" "pinnumber")
@@ -1253,8 +1253,8 @@
 (gnetlist:get-nets "U1" "4")
 <<<<<
 "six"
-("T1" "3")
 ("U1" "4")
+("T1" "3")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "U1" "4" "pinnumber")
@@ -1284,8 +1284,8 @@
 (gnetlist:get-nets "U1" "3")
 <<<<<
 "seven"
-("T1" "4")
 ("U1" "3")
+("T1" "4")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "U1" "3" "pinnumber")
@@ -1315,13 +1315,13 @@
 (gnetlist:get-nets "U1" "2")
 <<<<<
 "nine"
-("C4" "2")
-("C3" "2")
+("U1" "2")
+("C1" "2")
+("C2" "2")
 ("R1" "3")
 ("R1" "1")
-("C2" "2")
-("C1" "2")
-("U1" "2")
+("C3" "2")
+("C4" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "U1" "2" "pinnumber")
@@ -1351,10 +1351,10 @@
 (gnetlist:get-nets "U1" "1")
 <<<<<
 "eight"
-("U2" "3")
-("C2" "1")
-("C1" "1")
 ("U1" "1")
+("C1" "1")
+("C2" "1")
+("U2" "3")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "U1" "1" "pinnumber")
@@ -1396,8 +1396,8 @@
 (gnetlist:get-all-connections "ten")
 <<<<<
 ("U2" "1")
-("R1" "2")
 ("C3" "1")
+("R1" "2")
 ("R2" "1")
 >>>>>
 
@@ -1489,8 +1489,8 @@
 <<<<<
 ("C4" "2")
 ("C3" "2")
-("R1" "3")
 ("R1" "1")
+("R1" "3")
 ("C2" "2")
 ("C1" "2")
 ("U1" "2")

@@ -140,8 +140,8 @@
 (gnetlist:get-nets "R1" "1")
 <<<<<
 "GND"
-("V1" "2")
 ("R1" "1")
+("V1" "2")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "R1" "1" "pinnumber")
@@ -171,8 +171,8 @@
 (gnetlist:get-nets "R1" "2")
 <<<<<
 "unnamed_net1"
-("V1" "1")
 ("R1" "2")
+("V1" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "R1" "2" "pinnumber")

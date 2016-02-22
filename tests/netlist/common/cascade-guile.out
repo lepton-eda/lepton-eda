@@ -171,8 +171,8 @@
 (gnetlist:get-nets "T1" "2")
 <<<<<
 "unnamed_net6"
-("AMP2" "1")
 ("T1" "2")
+("AMP2" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "T1" "2" "pinnumber")
@@ -260,8 +260,8 @@
 (gnetlist:get-nets "MX1" "2")
 <<<<<
 "unnamed_net5"
-("T1" "1")
 ("MX1" "2")
+("T1" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "MX1" "2" "pinnumber")
@@ -348,8 +348,8 @@
 (gnetlist:get-nets "FL1" "2")
 <<<<<
 "unnamed_net4"
-("MX1" "1")
 ("FL1" "2")
+("MX1" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "FL1" "2" "pinnumber")
@@ -437,8 +437,8 @@
 (gnetlist:get-nets "DEF1" "2")
 <<<<<
 "unnamed_net3"
-("FL1" "1")
 ("DEF1" "2")
+("FL1" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "DEF1" "2" "pinnumber")
@@ -526,8 +526,8 @@
 (gnetlist:get-nets "AMP1" "2")
 <<<<<
 "unnamed_net2"
-("DEF1" "1")
 ("AMP1" "2")
+("DEF1" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "AMP1" "2" "pinnumber")
@@ -613,8 +613,8 @@
 (gnetlist:get-nets "SOURCE" "1")
 <<<<<
 "unnamed_net1"
-("AMP1" "1")
 ("SOURCE" "1")
+("AMP1" "1")
 >>>>>
 
 (gnetlist:get-attribute-by-pinnumber "SOURCE" "1" "pinnumber")
