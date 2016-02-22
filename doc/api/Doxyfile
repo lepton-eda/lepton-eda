@@ -779,6 +779,7 @@ INPUT                  = .. \
                          ./xorn/geda/netlist/backend.py \
                          ./xorn/geda/netlist/blueprint.py \
                          ./xorn/geda/netlist/conn.py \
+                         ./xorn/geda/netlist/guile.py \
                          ./xorn/geda/netlist/instance.py \
                          ./xorn/geda/netlist/net.py \
                          ./xorn/geda/netlist/netlist.py \

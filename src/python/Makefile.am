@@ -31,6 +31,7 @@ nobase_pkgpython_PYTHON = \
 	geda/netlist/backend.py \
 	geda/netlist/blueprint.py \
 	geda/netlist/conn.py \
+	geda/netlist/guile.py \
 	geda/netlist/instance.py \
 	geda/netlist/net.py \
 	geda/netlist/netlist.py \

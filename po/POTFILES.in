@@ -8,6 +8,7 @@ src/python/geda/read.py
 src/python/geda/write.py
 src/python/geda/netlist/backend.py
 src/python/geda/netlist/blueprint.py
+src/python/geda/netlist/guile.py
 src/python/geda/netlist/net.py
 src/python/geda/netlist/netlist.py
 src/python/geda/netlist/package.py
