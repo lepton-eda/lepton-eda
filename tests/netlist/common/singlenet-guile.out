@@ -41,13 +41,9 @@
 
 (gnetlist:get-pins "U100")
 <<<<<
-"7"
-"14"
 "9"
 "10"
 "8"
-"7"
-"14"
 "1"
 "2"
 "3"
@@ -68,13 +64,9 @@
 ("3" . "SING_N_2")
 ("2" . "unconnected_pin-1")
 ("1" . "SING_N_2")
-("14" . "Vcc")
-("7" . "GND")
 ("8" . "SING_N")
 ("10" . "SING_N")
 ("9" . "SING_N")
-("14" . "Vcc")
-("7" . "GND")
 >>>>>
 
 (gnetlist:vams-get-package-attributes "U100")
@@ -89,70 +81,6 @@
 "7400"
 "7400"
 >>>>>
-
-(gnetlist:get-nets "U100" "7")
-<<<<<
-"GND"
-("U100" "7")
-("U100" "7")
-("U100" "7")
->>>>>
-
-(gnetlist:get-attribute-by-pinnumber "U100" "7" "pinnumber")
-"unknown"
-
-(gnetlist:get-attribute-by-pinnumber "U100" "7" "pinseq")
-"unknown"
-
-(gnetlist:get-attribute-by-pinnumber "U100" "7" "pinlabel")
-"unknown"
-
-(gnetlist:get-attribute-by-pinnumber "U100" "7" "pintype")
-"pwr"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinnumber")
-"unknown"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinseq")
-"unknown"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinlabel")
-"unknown"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pintype")
-"unknown"
-
-(gnetlist:get-nets "U100" "14")
-<<<<<
-"Vcc"
-("U100" "14")
-("U100" "14")
-("U100" "14")
->>>>>
-
-(gnetlist:get-attribute-by-pinnumber "U100" "14" "pinnumber")
-"unknown"
-
-(gnetlist:get-attribute-by-pinnumber "U100" "14" "pinseq")
-"unknown"
-
-(gnetlist:get-attribute-by-pinnumber "U100" "14" "pinlabel")
-"unknown"
-
-(gnetlist:get-attribute-by-pinnumber "U100" "14" "pintype")
-"pwr"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinnumber")
-"unknown"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinseq")
-"unknown"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinlabel")
-"unknown"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pintype")
-"unknown"
 
 (gnetlist:get-nets "U100" "9")
 <<<<<
@@ -258,70 +186,6 @@
 
 (gnetlist:get-attribute-by-pinseq "U100" "3" "pintype")
 "out"
-
-(gnetlist:get-nets "U100" "7")
-<<<<<
-"GND"
-("U100" "7")
-("U100" "7")
-("U100" "7")
->>>>>
-
-(gnetlist:get-attribute-by-pinnumber "U100" "7" "pinnumber")
-"unknown"
-
-(gnetlist:get-attribute-by-pinnumber "U100" "7" "pinseq")
-"unknown"
-
-(gnetlist:get-attribute-by-pinnumber "U100" "7" "pinlabel")
-"unknown"
-
-(gnetlist:get-attribute-by-pinnumber "U100" "7" "pintype")
-"pwr"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinnumber")
-"unknown"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinseq")
-"unknown"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinlabel")
-"unknown"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pintype")
-"unknown"
-
-(gnetlist:get-nets "U100" "14")
-<<<<<
-"Vcc"
-("U100" "14")
-("U100" "14")
-("U100" "14")
->>>>>
-
-(gnetlist:get-attribute-by-pinnumber "U100" "14" "pinnumber")
-"unknown"
-
-(gnetlist:get-attribute-by-pinnumber "U100" "14" "pinseq")
-"unknown"
-
-(gnetlist:get-attribute-by-pinnumber "U100" "14" "pinlabel")
-"unknown"
-
-(gnetlist:get-attribute-by-pinnumber "U100" "14" "pintype")
-"pwr"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinnumber")
-"unknown"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinseq")
-"unknown"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinlabel")
-"unknown"
-
-(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pintype")
-"unknown"
 
 (gnetlist:get-nets "U100" "1")
 <<<<<
