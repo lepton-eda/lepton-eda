@@ -439,9 +439,9 @@ geda_bus_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
 {
   GedaObject *new_obj;
 
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_BUS);
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->line != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_BUS, NULL);
 
   /* make sure you fix this in pin and bus as well */
   /* still doesn't work... you need to pass in the new values */
