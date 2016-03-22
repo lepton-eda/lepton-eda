@@ -45,6 +45,7 @@ backend_PYTHON = \
 	gnet_geda.py \
 	gnet_gossip.py \
 	gnet_gsch2pcb.py \
+	gnet_guile.py \
 	gnet_liquidpcb.py \
 	gnet_makedepend.py \
 	gnet_mathematica.py \
