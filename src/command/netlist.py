@@ -50,84 +50,9 @@ def parse_order(value):
         sys.exit(1)
 
 
-## Expand environment variables in a string.
-#
-# This function returns the passed string with environment variables
-# expanded.
-#
-# The invocations of environment variables MUST be in the form \c
-# '${variable_name}'; \c '$variable_name' is not valid here.
-# Environment variable names can consist solely of letters, digits and
-# \c '_'.  It is possible to escape a \c '$' character in the string
-# as \c '$$'.
-#
-# Prints error messages to stderr and leaves the malformed and bad
-# variable names in the returned string.
-
-def expand_env_variables(s):
-    result = ''
-    i = 0
-
-    while True:
-        try:
-            # look for next variable name
-            j = s.index('$', i)
-        except ValueError:
-            # no variable left
-            result += s[i:]
-            return result
-
-        result += s[i:j]
-
-        if j + 1 >= len(s):     # '$' is the last character in the string
-            result += '$'
-            return result
-        if s[j + 1] == '$':     # an escaped '$'
-            result += s[j + 1]
-            i = j + 2
-            continue
-        if s[j + 1] != '{':     # an isolated '$', put it in output
-            result += '$'
-            i = j + 1
-            continue
-
-        # discard "${"
-        i = j + 2
-
-        # look for the end of the variable name
-        try:
-            j = s.index('}', i)
-        except ValueError:
-            # problem: no closing '}' to variable
-            sys.stderr.write(_("Found malformed environment variable "
-                               "in '%s'\n") % s)
-            result += s[i - 2:]  # include "${"
-            return result
-
-        # test characters of variable name
-        bad_characters = [ch for ch in s[i:j]
-                          if not ch.isalnum() and ch != '_']
-        if bad_characters:
-            # illegal character detected in variable name
-            sys.stderr.write(_("Found bad character(s) [%s] "
-                               "in variable name.\n") % ''.join(bad_characters))
-            result += s[i - 2:j + 1]  # include "${" and "}"
-            i = j + 1
-            continue
-
-        # extract variable name from string and expand it
-        try:
-            result += os.environ[s[i:j]]
-        except KeyError:
-            pass
-        i = j + 1
-
 ## Add a directory to the symbol library.
 
 def symbol_library(path, recursive, option_name):
-    # take care of any shell variables
-    path = expand_env_variables(path)
-
     # invalid path?
     if not os.path.isdir(path):
         sys.stderr.write(_("%s: \"%s\" is not a directory (passed to %s)\n")
@@ -154,18 +79,10 @@ def symbol_library_command(value):
         sys.exit(1)
     listcmd, getcmd, name = tokens
 
-    # take care of any shell variables
-    # \bug this may be a security risk!
-    listcmd = expand_env_variables(listcmd)
-    getcmd = expand_env_variables(getcmd)
-
     xorn.geda.clib.add_source(xorn.geda.clib.CommandSource(listcmd, getcmd),
                               xorn.geda.clib.uniquify_source_name(name))
 
 def source_library(path):
-    # take care of any shell variables
-    path = expand_env_variables(path)
-
     # invalid path?
     if not os.path.isdir(path):
         sys.stderr.write(_("%s: \"%s\" is not a directory (passed to %s)\n")
@@ -176,9 +93,6 @@ def source_library(path):
     xorn.geda.netlist.slib.slib.append(path)
 
 def source_library_search(path):
-    # take care of any shell variables
-    path = expand_env_variables(path)
-
     # invalid path?
     if not os.path.isdir(path):
         sys.stderr.write(_("%s: \"%s\" is not a directory (passed to %s)\n")

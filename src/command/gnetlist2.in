@@ -48,6 +48,78 @@ import xorn.guile
 APPEND, PREPEND = xrange(2)
 
 
+## Expand environment variables in a string.
+#
+# This function returns the passed string with environment variables
+# expanded.
+#
+# The invocations of environment variables MUST be in the form \c
+# '${variable_name}'; \c '$variable_name' is not valid here.
+# Environment variable names can consist solely of letters, digits and
+# \c '_'.  It is possible to escape a \c '$' character in the string
+# as \c '$$'.
+#
+# Prints error messages to stderr and leaves the malformed and bad
+# variable names in the returned string.
+
+def expand_env_variables(s):
+    result = ''
+    i = 0
+
+    while True:
+        try:
+            # look for next variable name
+            j = s.index('$', i)
+        except ValueError:
+            # no variable left
+            result += s[i:]
+            return result
+
+        result += s[i:j]
+
+        if j + 1 >= len(s):     # '$' is the last character in the string
+            result += '$'
+            return result
+        if s[j + 1] == '$':     # an escaped '$'
+            result += s[j + 1]
+            i = j + 2
+            continue
+        if s[j + 1] != '{':     # an isolated '$', put it in output
+            result += '$'
+            i = j + 1
+            continue
+
+        # discard "${"
+        i = j + 2
+
+        # look for the end of the variable name
+        try:
+            j = s.index('}', i)
+        except ValueError:
+            # problem: no closing '}' to variable
+            sys.stderr.write(_("Found malformed environment variable "
+                               "in '%s'\n") % s)
+            result += s[i - 2:]  # include "${"
+            return result
+
+        # test characters of variable name
+        bad_characters = [ch for ch in s[i:j]
+                          if not ch.isalnum() and ch != '_']
+        if bad_characters:
+            # illegal character detected in variable name
+            sys.stderr.write(_("Found bad character(s) [%s] "
+                               "in variable name.\n") % ''.join(bad_characters))
+            result += s[i - 2:j + 1]  # include "${" and "}"
+            i = j + 1
+            continue
+
+        # extract variable name from string and expand it
+        try:
+            result += os.environ[s[i:j]]
+        except KeyError:
+            pass
+        i = j + 1
+
 ## Helper function for checking the type of an API function argument.
 #
 # When constructing an error message, \a fun and \a i are used to
@@ -111,7 +183,8 @@ traverse_hierarchy = True
 
 ## Add a directory to the Guile load path.
 #
-# Prepends \a path to the Guile system \c '%load-path'.
+# Prepends \a path to the Guile system \c '%load-path', after
+# expanding environment variables.
 #
 # \param [in] path  path to be added
 #
@@ -119,6 +192,9 @@ traverse_hierarchy = True
 
 def rc_scheme_directory(path):
     check_argument_type('scheme-directory', 1, path, basestring)
+
+    # take care of any shell variables
+    path = expand_env_variables(path)
 
     load_path = list(xorn.guile.lookup('%load-path'))
     load_path.insert(0, path)
@@ -151,6 +227,9 @@ def rc_component_library(path, name = None):
     if name is not None:
         check_argument_type('component-library', 2, name, basestring)
 
+    # take care of any shell variables
+    path = expand_env_variables(path)
+
     # invalid path?
     if not os.path.isdir(path):
         sys.stderr.write(
@@ -179,6 +258,11 @@ def rc_component_library_command(listcmd, getcmd, name):
     check_argument_type('component-library-command', 1, listcmd, basestring)
     check_argument_type('component-library-command', 2, getcmd, basestring)
     check_argument_type('component-library-command', 3, name, basestring)
+
+    # take care of any shell variables
+    # \bug this may be a security risk!
+    listcmd = expand_env_variables(listcmd)
+    getcmd = expand_env_variables(getcmd)
 
     symbol_library.extend(['--symbol-library-command',
                            '%s:%s:%s' % (listcmd, getcmd, name)])
@@ -220,6 +304,9 @@ def rc_reset_component_library():
 def rc_source_library(path):
     check_argument_type('source-library', 1, path, basestring)
 
+    # take care of any shell variables
+    path = expand_env_variables(path)
+
     # invalid path?
     if not os.path.isdir(path):
         sys.stderr.write(
@@ -246,6 +333,9 @@ def rc_reset_source_library():
 
 def rc_bitmap_directory(path):
     check_argument_type('bitmap-directory', 1, path, basestring)
+
+    # take care of any shell variables
+    path = expand_env_variables(path)
 
     # invalid path?
     if not os.path.isdir(path):
