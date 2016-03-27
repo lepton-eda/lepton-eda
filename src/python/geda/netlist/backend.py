@@ -71,8 +71,7 @@ def list_backends():
 
             for suffix, mode, type in imp.get_suffixes():
                 if d_name.endswith(suffix, len(BACKEND_PREFIX)):
-                    # Copy filename and remove prefix & suffix.
-                    # Add to list of backend names.
+                    # Remove prefix & suffix.  Add to list of backend names.
                     backend_names.add(d_name[len(BACKEND_PREFIX):-len(suffix)])
                     break
 
