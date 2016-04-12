@@ -55,10 +55,11 @@ def parse_order(value):
 # This function returns the passed string with environment variables
 # expanded.
 #
-# The invocations of environment variables MUST be in the form
-# '${variable_name}'; '$variable_name' is not valid here.  Environment
-# variable names can consist solely of letters, digits and '_'.  It is
-# possible to escape a '$' character in the string as '$$'.
+# The invocations of environment variables MUST be in the form \c
+# '${variable_name}'; \c '$variable_name' is not valid here.
+# Environment variable names can consist solely of letters, digits and
+# \c '_'.  It is possible to escape a \c '$' character in the string
+# as \c '$$'.
 #
 # Prints error messages to stderr and leaves the malformed and bad
 # variable names in the returned string.
