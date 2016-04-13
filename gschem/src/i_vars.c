@@ -33,10 +33,6 @@
 
 int   default_text_size = DEFAULT_TEXT_SIZE;
 int   default_text_caps = LOWER;
-int   default_attribute_color = ATTRIBUTE_COLOR;
-int   default_detachattr_color = DETACHED_ATTRIBUTE_COLOR;
-int   default_net_endpoint_color = NET_ENDPOINT_COLOR;
-int   default_junction_color = JUNCTION_COLOR;
 int   default_net_direction_mode = TRUE;
 int   default_net_selection_mode = 0;
 int   default_actionfeedback_mode = OUTLINE;
