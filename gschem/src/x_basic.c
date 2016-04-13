@@ -29,29 +29,6 @@
  *  \par Function Description
  *
  */
-void x_repaint_background_region (GschemToplevel *w_current,
-                                  cairo_t *cr,
-                                  GdkDrawable *drawable,
-                                  GdkGC *gc,
-                                  int x, int y, int width, int height)
-{
-  GdkColor *color = x_get_color (w_current->background_color);
-
-  cairo_set_source_rgb (cr,
-                        color->red   / 65535.0,
-                        color->green / 65535.0,
-                        color->blue  / 65535.0);
-
-  cairo_paint (cr);
-
-  x_grid_draw_region (w_current, cr, drawable, gc, x, y, width, height);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 void x_basic_warp_cursor (GtkWidget* widget, gint x, gint y)
 {
   GdkScreen *screen;
