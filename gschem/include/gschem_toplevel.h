@@ -107,11 +107,6 @@ struct st_gschem_toplevel {
   double pixbuf_wh_ratio;               /* width/height ratio of the pixbuf */
   char *pixbuf_filename;
 
-  /* ---------------- */
-  /* Drawing surfaces */
-  /* ---------------- */
-  int background_color;
-
   /* ------------- */
   /* Drawing state */
   /* ------------- */

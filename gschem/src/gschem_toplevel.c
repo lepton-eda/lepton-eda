@@ -216,11 +216,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->pixbuf_filename = NULL;
   w_current->pixbuf_wh_ratio = 0;
 
-  /* ---------------- */
-  /* Drawing surfaces */
-  /* ---------------- */
-  w_current->background_color = 0;
-
   /* ------------- */
   /* Drawing state */
   /* ------------- */

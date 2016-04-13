@@ -39,7 +39,6 @@ int   default_net_endpoint_color = NET_ENDPOINT_COLOR;
 int   default_junction_color = JUNCTION_COLOR;
 int   default_net_direction_mode = TRUE;
 int   default_net_selection_mode = 0;
-int   default_background_color = BACKGROUND_COLOR;
 int   default_actionfeedback_mode = OUTLINE;
 int   default_zoom_with_pan = TRUE;
 int   default_do_logging = TRUE;
@@ -121,8 +120,6 @@ void i_vars_set(GschemToplevel *w_current)
 
   w_current->text_size     = default_text_size;
   w_current->text_caps     = default_text_caps;
-
-  w_current->background_color = default_background_color;
 
   w_current->net_direction_mode = default_net_direction_mode;
   w_current->net_selection_mode = default_net_selection_mode;

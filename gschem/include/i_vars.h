@@ -4,7 +4,6 @@ extern int default_text_caps;
 extern gchar *default_print_command;
 extern int default_net_direction_mode;
 extern int default_net_selection_mode;
-extern int default_background_color;
 extern int default_zoom_with_pan;
 extern int default_actionfeedback_mode;
 extern int default_do_logging;
