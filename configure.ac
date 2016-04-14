@@ -42,6 +42,7 @@ AC_CONFIG_FILES([
 	po/Makefile.in
 	src/storage/Makefile
 	src/cpython/Makefile
+	src/cpython/guile/Makefile
 	src/python/Makefile
 	src/command/Makefile
 	src/backend/Makefile
