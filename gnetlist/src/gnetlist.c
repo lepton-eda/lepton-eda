@@ -190,7 +190,21 @@ void main_prog(void *closure, int argc, char *argv[])
      * are loaded. */
     scm_eval (pre_rc_list, scm_current_module ());
 
+    scm_c_define ("use-new-frontend", SCM_BOOL_F);
     g_rc_parse (pr_current, argv[0], "gnetlistrc", rc_filename);
+
+    /* If `use-new-frontend' has been set to #t in the configuration,
+       switch to the refactored netlister frontend. */
+    if (scm_is_true (scm_variable_ref (scm_c_lookup ("use-new-frontend")))) {
+      const char *path = BINDIR "/gnetlist2";
+      errno = 0;
+      execv (path, argv);
+      fprintf (stderr, _(
+                 "ERROR: Can't pass control to the gnetlist2 executable: %s\n"
+                 "[%s]\n"), strerror (errno), path);
+      exit (1);
+    }
+
     /* immediately setup user params */
     i_vars_init_gnetlist_defaults ();
     i_vars_set (pr_current);
