@@ -1,3 +1,24 @@
+April 2016
+==========
+
+- Added Python module `xorn.guile' which allows adding Guile as a
+  script interpreter to a Python application
+
+- Added gnetlist Guile API to the netlister
+
+- Added `guile' backend which allows using backends written in Scheme
+  with the new netlister
+
+- Added wrapper script `gnetlist2' as a drop-in replacement for
+  gnetlist
+
+
+January 2016
+============
+
+- Directory sources can now be recursive
+
+
 September 2015
 ==============
 
