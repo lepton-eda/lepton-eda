@@ -173,7 +173,7 @@ hierarchy_refdes_order = APPEND
 hierarchy_netname_order = APPEND
 hierarchy_netattrib_order = APPEND
 
-# netlisting-relevant options which can only be set via geda.conf
+# deprecated gnetlistrc options
 prefer_netname_attribute = False
 default_net_name = 'unnamed_net'
 default_bus_name = 'unnamed_bus'
@@ -532,6 +532,28 @@ def rc_hierarchy_uref_order(mode):
                            % (mode, 'hierarchy-uref-order'))
         return False
 
+# ----------------------------------------------------------------------------
+
+def rc_unnamed_netname(name):
+    check_argument_type('unnamed-netname', 1, name, basestring)
+    global default_net_name
+    default_net_name = name
+
+def rc_unnamed_busname(name):
+    check_argument_type('unnamed-busname', 1, name, basestring)
+    global default_bus_name
+    default_bus_name = name
+
+def rc_hierarchy_traversal(mode):
+    check_argument_type('hierarchy-traversal', 1, mode, basestring)
+    global traverse_hierarchy
+    traverse_hierarchy = mode == 'enabled'
+
+def rc_net_naming_priority(mode):
+    check_argument_type('net-naming-priority', 1, mode, basestring)
+    global prefer_netname_attribute
+    prefer_netname_attribute = x == 'netname'
+
 # ============================================================================
 
 ## Path to gEDA data shared between all users.
@@ -688,6 +710,16 @@ def rc1_parse(rcname, rcfile):
     for name, context in rc1_files(rcname, rcfile):
         rc1_parse_file(name, context)
 
+        # Re-export deprecated RC functions (these are overwritten by
+        # geda-deprecated-config.scm)
+        for name_, value in {
+                'unnamed-netname': rc_unnamed_netname,
+                'unnamed-busname': rc_unnamed_busname,
+                'hierarchy-traversal': rc_hierarchy_traversal,
+                'net-naming-priority': rc_net_naming_priority,
+            }.iteritems():
+            xorn.guile.define(name_, value)
+
 # ----------------------------------------------------------------------------
 
 for name, value in {
@@ -720,6 +752,11 @@ for name, value in {
         'hierarchy-netattrib-order': rc_hierarchy_netattrib_order,
         'hierarchy-netname-order': rc_hierarchy_netname_order,
         'hierarchy-uref-order': rc_hierarchy_uref_order,
+
+        'unnamed-netname': rc_unnamed_netname,
+        'unnamed-busname': rc_unnamed_busname,
+        'hierarchy-traversal': rc_hierarchy_traversal,
+        'net-naming-priority': rc_net_naming_priority,
 
         'eda-config-is-loaded': eda_config_is_loaded,
         'eda-config-load': eda_config_load,
