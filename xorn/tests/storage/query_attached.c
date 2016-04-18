@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2015 Roland Lutz
+/* Copyright (C) 2013-2016 Roland Lutz
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -155,7 +155,7 @@ static void assert_attached_objects_f(
 	assert(xorn_select_attached_to(rev, attached_to) == NULL);
 }
 
-int main()
+int main(void)
 {
 	xorn_revision_t rev;
 	struct xornsch_net net_data;

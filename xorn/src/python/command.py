@@ -1,4 +1,4 @@
-# Copyright (C) 2013-2015 Roland Lutz
+# Copyright (C) 2013-2016 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -120,7 +120,7 @@ def invalid_arguments(message):
 
 def core_version():
     sys.stdout.write("%s\n" % xorn.config.PACKAGE_STRING)
-    sys.stdout.write(_("Copyright (C) 2015 Roland Lutz\n"))
+    sys.stdout.write(_("Copyright (C) 2016 Roland Lutz\n"))
     sys.stdout.write("\n")
     sys.stdout.write(_(
 "This program is free software; you can redistribute it and/or\n"

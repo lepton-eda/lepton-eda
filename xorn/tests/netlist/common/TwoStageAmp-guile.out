@@ -1,0 +1,2154 @@
+(gnetlist:get-packages "placeholder")
+<<<<<
+"C2"
+"R4"
+"R3"
+"R8"
+"CE2"
+"RE2"
+"RC1"
+"Q2"
+"C1"
+"A3"
+"A2"
+"A1"
+"VCC"
+"Vinput"
+"CE1"
+"Cout"
+"RL"
+"RC2"
+"RE1"
+"R2"
+"R1"
+"R5"
+"Q1"
+>>>>>
+
+(gnetlist:get-non-unique-packages "placeholder")
+<<<<<
+"C2"
+"R4"
+"R3"
+"R8"
+"CE2"
+"RE2"
+"RC1"
+"Q2"
+"C1"
+"A3"
+"A2"
+"A1"
+"VCC"
+"Vinput"
+"CE1"
+"Cout"
+"RL"
+"RC2"
+"RE1"
+"R2"
+"R1"
+"R5"
+"Q1"
+>>>>>
+
+(gnetlist:get-all-nets "placeholder")
+<<<<<
+"Vbase2"
+"unnamed_net2"
+"GND"
+"Vbase2"
+"Vbase2"
+"Vcc"
+"Vcoll1"
+"unnamed_net2"
+"Vem2"
+"GND"
+"GND"
+"Vem2"
+"Vcoll1"
+"Vcc"
+"Vbase2"
+"Vem2"
+"VColl2"
+"Vbase1"
+"unnamed_net1"
+"GND"
+"Vcc"
+"GND"
+"Vin"
+"Vem1"
+"GND"
+"Vout"
+"VColl2"
+"GND"
+"Vout"
+"VColl2"
+"Vcc"
+"GND"
+"Vem1"
+"GND"
+"Vbase1"
+"Vbase1"
+"Vcc"
+"Vin"
+"unnamed_net1"
+"Vbase1"
+"Vem1"
+"Vcoll1"
+>>>>>
+
+(gnetlist:get-all-unique-nets "placeholder")
+<<<<<
+"unnamed_net2"
+"Vbase2"
+"Vem2"
+"Vout"
+"VColl2"
+"GND"
+"Vcc"
+"Vin"
+"unnamed_net1"
+"Vbase1"
+"Vem1"
+"Vcoll1"
+>>>>>
+
+(gnetlist:get-toplevel-attribute "tnMERqW0")
+"not found"
+
+(gnetlist:get-pins "C2")
+<<<<<
+"2"
+"1"
+>>>>>
+
+(gnetlist:get-pins-nets "C2")
+<<<<<
+("1" . "unnamed_net2")
+("2" . "Vbase2")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "C2")
+<<<<<
+"symversion"
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "C2" "device")
+<<<<<
+"CAPACITOR"
+>>>>>
+
+(gnetlist:get-nets "C2" "2")
+<<<<<
+"Vbase2"
+("Q2" "2")
+("R3" "1")
+("R4" "2")
+("C2" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "C2" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "C2" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "C2" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "C2" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "C2" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "C2" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "C2" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "C2" "2" "pintype")
+"pas"
+
+(gnetlist:get-nets "C2" "1")
+<<<<<
+"unnamed_net2"
+("R8" "2")
+("C2" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "C2" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "C2" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "C2" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "C2" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "C2" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "C2" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "C2" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "C2" "1" "pintype")
+"pas"
+
+(gnetlist:get-pins "R4")
+<<<<<
+"1"
+"2"
+>>>>>
+
+(gnetlist:get-pins-nets "R4")
+<<<<<
+("2" . "Vbase2")
+("1" . "GND")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "R4")
+<<<<<
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "R4" "device")
+<<<<<
+"RESISTOR"
+>>>>>
+
+(gnetlist:get-nets "R4" "1")
+<<<<<
+"GND"
+("R4" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "R4" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R4" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R4" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R4" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "R4" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R4" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R4" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R4" "1" "pintype")
+"pas"
+
+(gnetlist:get-nets "R4" "2")
+<<<<<
+"Vbase2"
+("Q2" "2")
+("R3" "1")
+("R4" "2")
+("C2" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "R4" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R4" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R4" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R4" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "R4" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R4" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R4" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R4" "2" "pintype")
+"pas"
+
+(gnetlist:get-pins "R3")
+<<<<<
+"1"
+"2"
+>>>>>
+
+(gnetlist:get-pins-nets "R3")
+<<<<<
+("2" . "Vcc")
+("1" . "Vbase2")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "R3")
+<<<<<
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "R3" "device")
+<<<<<
+"RESISTOR"
+>>>>>
+
+(gnetlist:get-nets "R3" "1")
+<<<<<
+"Vbase2"
+("Q2" "2")
+("R3" "1")
+("R4" "2")
+("C2" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "R3" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R3" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R3" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R3" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "R3" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R3" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R3" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R3" "1" "pintype")
+"pas"
+
+(gnetlist:get-nets "R3" "2")
+<<<<<
+"Vcc"
+("R3" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "R3" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R3" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R3" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R3" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "R3" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R3" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R3" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R3" "2" "pintype")
+"pas"
+
+(gnetlist:get-pins "R8")
+<<<<<
+"1"
+"2"
+>>>>>
+
+(gnetlist:get-pins-nets "R8")
+<<<<<
+("2" . "unnamed_net2")
+("1" . "Vcoll1")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "R8")
+<<<<<
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "R8" "device")
+<<<<<
+"RESISTOR"
+>>>>>
+
+(gnetlist:get-nets "R8" "1")
+<<<<<
+"Vcoll1"
+("Q1" "3")
+("RC1" "1")
+("R8" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "R8" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R8" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R8" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R8" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "R8" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R8" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R8" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R8" "1" "pintype")
+"pas"
+
+(gnetlist:get-nets "R8" "2")
+<<<<<
+"unnamed_net2"
+("R8" "2")
+("C2" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "R8" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R8" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R8" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R8" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "R8" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R8" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R8" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R8" "2" "pintype")
+"pas"
+
+(gnetlist:get-pins "CE2")
+<<<<<
+"2"
+"1"
+>>>>>
+
+(gnetlist:get-pins-nets "CE2")
+<<<<<
+("1" . "GND")
+("2" . "Vem2")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "CE2")
+<<<<<
+"symversion"
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "CE2" "device")
+<<<<<
+"CAPACITOR"
+>>>>>
+
+(gnetlist:get-nets "CE2" "2")
+<<<<<
+"Vem2"
+("Q2" "1")
+("RE2" "2")
+("CE2" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "CE2" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "CE2" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "CE2" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "CE2" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "CE2" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "CE2" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "CE2" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "CE2" "2" "pintype")
+"pas"
+
+(gnetlist:get-nets "CE2" "1")
+<<<<<
+"GND"
+("CE2" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "CE2" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "CE2" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "CE2" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "CE2" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "CE2" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "CE2" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "CE2" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "CE2" "1" "pintype")
+"pas"
+
+(gnetlist:get-pins "RE2")
+<<<<<
+"1"
+"2"
+>>>>>
+
+(gnetlist:get-pins-nets "RE2")
+<<<<<
+("2" . "Vem2")
+("1" . "GND")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "RE2")
+<<<<<
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "RE2" "device")
+<<<<<
+"RESISTOR"
+>>>>>
+
+(gnetlist:get-nets "RE2" "1")
+<<<<<
+"GND"
+("RE2" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "RE2" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RE2" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RE2" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RE2" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "RE2" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RE2" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RE2" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RE2" "1" "pintype")
+"pas"
+
+(gnetlist:get-nets "RE2" "2")
+<<<<<
+"Vem2"
+("Q2" "1")
+("RE2" "2")
+("CE2" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "RE2" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RE2" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RE2" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RE2" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "RE2" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RE2" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RE2" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RE2" "2" "pintype")
+"pas"
+
+(gnetlist:get-pins "RC1")
+<<<<<
+"1"
+"2"
+>>>>>
+
+(gnetlist:get-pins-nets "RC1")
+<<<<<
+("2" . "Vcc")
+("1" . "Vcoll1")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "RC1")
+<<<<<
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "RC1" "device")
+<<<<<
+"RESISTOR"
+>>>>>
+
+(gnetlist:get-nets "RC1" "1")
+<<<<<
+"Vcoll1"
+("Q1" "3")
+("RC1" "1")
+("R8" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "RC1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RC1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RC1" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RC1" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "RC1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RC1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RC1" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RC1" "1" "pintype")
+"pas"
+
+(gnetlist:get-nets "RC1" "2")
+<<<<<
+"Vcc"
+("RC1" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "RC1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RC1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RC1" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RC1" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "RC1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RC1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RC1" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RC1" "2" "pintype")
+"pas"
+
+(gnetlist:get-pins "Q2")
+<<<<<
+"2"
+"1"
+"3"
+>>>>>
+
+(gnetlist:get-pins-nets "Q2")
+<<<<<
+("3" . "VColl2")
+("1" . "Vem2")
+("2" . "Vbase2")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "Q2")
+<<<<<
+"device"
+"model-name"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "Q2" "device")
+<<<<<
+"NPN_TRANSISTOR"
+>>>>>
+
+(gnetlist:get-nets "Q2" "2")
+<<<<<
+"Vbase2"
+("Q2" "2")
+("R3" "1")
+("R4" "2")
+("C2" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "Q2" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "Q2" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "Q2" "2" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "Q2" "2" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "Q2" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "Q2" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "Q2" "2" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "Q2" "2" "pintype")
+"unknown"
+
+(gnetlist:get-nets "Q2" "1")
+<<<<<
+"Vem2"
+("Q2" "1")
+("RE2" "2")
+("CE2" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "Q2" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "Q2" "1" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "Q2" "1" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "Q2" "1" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "Q2" "3" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "Q2" "3" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "Q2" "3" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "Q2" "3" "pintype")
+"unknown"
+
+(gnetlist:get-nets "Q2" "3")
+<<<<<
+"VColl2"
+("RC2" "1")
+("Cout" "1")
+("Q2" "3")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "Q2" "3" "pinnumber")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "Q2" "3" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "Q2" "3" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "Q2" "3" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "Q2" "1" "pinnumber")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "Q2" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "Q2" "1" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "Q2" "1" "pintype")
+"unknown"
+
+(gnetlist:get-pins "C1")
+<<<<<
+"2"
+"1"
+>>>>>
+
+(gnetlist:get-pins-nets "C1")
+<<<<<
+("1" . "unnamed_net1")
+("2" . "Vbase1")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "C1")
+<<<<<
+"symversion"
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "C1" "device")
+<<<<<
+"CAPACITOR"
+>>>>>
+
+(gnetlist:get-nets "C1" "2")
+<<<<<
+"Vbase1"
+("Q1" "2")
+("R1" "1")
+("R2" "2")
+("C1" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "C1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "C1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "C1" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "C1" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "C1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "C1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "C1" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "C1" "2" "pintype")
+"pas"
+
+(gnetlist:get-nets "C1" "1")
+<<<<<
+"unnamed_net1"
+("R5" "2")
+("C1" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "C1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "C1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "C1" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "C1" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "C1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "C1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "C1" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "C1" "1" "pintype")
+"pas"
+
+(gnetlist:get-pins "A3")
+<<<<<
+>>>>>
+
+(gnetlist:get-pins-nets "A3")
+<<<<<
+>>>>>
+
+(gnetlist:vams-get-package-attributes "A3")
+<<<<<
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "A3" "device")
+<<<<<
+"directive"
+>>>>>
+
+(gnetlist:get-pins "A2")
+<<<<<
+>>>>>
+
+(gnetlist:get-pins-nets "A2")
+<<<<<
+>>>>>
+
+(gnetlist:vams-get-package-attributes "A2")
+<<<<<
+"device"
+"file"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "A2" "device")
+<<<<<
+"include"
+>>>>>
+
+(gnetlist:get-pins "A1")
+<<<<<
+>>>>>
+
+(gnetlist:get-pins-nets "A1")
+<<<<<
+>>>>>
+
+(gnetlist:vams-get-package-attributes "A1")
+<<<<<
+"device"
+"file"
+"model-name"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "A1" "device")
+<<<<<
+"model"
+>>>>>
+
+(gnetlist:get-pins "VCC")
+<<<<<
+"2"
+"1"
+>>>>>
+
+(gnetlist:get-pins-nets "VCC")
+<<<<<
+("1" . "Vcc")
+("2" . "GND")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "VCC")
+<<<<<
+"footprint"
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "VCC" "device")
+<<<<<
+"VOLTAGE_SOURCE"
+>>>>>
+
+(gnetlist:get-nets "VCC" "2")
+<<<<<
+"GND"
+("VCC" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "VCC" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "VCC" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "VCC" "2" "pinlabel")
+"-"
+
+(gnetlist:get-attribute-by-pinnumber "VCC" "2" "pintype")
+"pwr"
+
+(gnetlist:get-attribute-by-pinseq "VCC" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "VCC" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "VCC" "2" "pinlabel")
+"-"
+
+(gnetlist:get-attribute-by-pinseq "VCC" "2" "pintype")
+"pwr"
+
+(gnetlist:get-nets "VCC" "1")
+<<<<<
+"Vcc"
+("VCC" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "VCC" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "VCC" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "VCC" "1" "pinlabel")
+"+"
+
+(gnetlist:get-attribute-by-pinnumber "VCC" "1" "pintype")
+"pwr"
+
+(gnetlist:get-attribute-by-pinseq "VCC" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "VCC" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "VCC" "1" "pinlabel")
+"+"
+
+(gnetlist:get-attribute-by-pinseq "VCC" "1" "pintype")
+"pwr"
+
+(gnetlist:get-pins "Vinput")
+<<<<<
+"2"
+"1"
+>>>>>
+
+(gnetlist:get-pins-nets "Vinput")
+<<<<<
+("1" . "Vin")
+("2" . "GND")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "Vinput")
+<<<<<
+"footprint"
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "Vinput" "device")
+<<<<<
+"vsin"
+>>>>>
+
+(gnetlist:get-nets "Vinput" "2")
+<<<<<
+"GND"
+("Vinput" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "Vinput" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "Vinput" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "Vinput" "2" "pinlabel")
+"-"
+
+(gnetlist:get-attribute-by-pinnumber "Vinput" "2" "pintype")
+"pwr"
+
+(gnetlist:get-attribute-by-pinseq "Vinput" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "Vinput" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "Vinput" "2" "pinlabel")
+"-"
+
+(gnetlist:get-attribute-by-pinseq "Vinput" "2" "pintype")
+"pwr"
+
+(gnetlist:get-nets "Vinput" "1")
+<<<<<
+"Vin"
+("R5" "1")
+("Vinput" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "Vinput" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "Vinput" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "Vinput" "1" "pinlabel")
+"+"
+
+(gnetlist:get-attribute-by-pinnumber "Vinput" "1" "pintype")
+"pwr"
+
+(gnetlist:get-attribute-by-pinseq "Vinput" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "Vinput" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "Vinput" "1" "pinlabel")
+"+"
+
+(gnetlist:get-attribute-by-pinseq "Vinput" "1" "pintype")
+"pwr"
+
+(gnetlist:get-pins "CE1")
+<<<<<
+"2"
+"1"
+>>>>>
+
+(gnetlist:get-pins-nets "CE1")
+<<<<<
+("1" . "GND")
+("2" . "Vem1")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "CE1")
+<<<<<
+"symversion"
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "CE1" "device")
+<<<<<
+"CAPACITOR"
+>>>>>
+
+(gnetlist:get-nets "CE1" "2")
+<<<<<
+"Vem1"
+("Q1" "1")
+("RE1" "2")
+("CE1" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "CE1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "CE1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "CE1" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "CE1" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "CE1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "CE1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "CE1" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "CE1" "2" "pintype")
+"pas"
+
+(gnetlist:get-nets "CE1" "1")
+<<<<<
+"GND"
+("CE1" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "CE1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "CE1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "CE1" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "CE1" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "CE1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "CE1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "CE1" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "CE1" "1" "pintype")
+"pas"
+
+(gnetlist:get-pins "Cout")
+<<<<<
+"2"
+"1"
+>>>>>
+
+(gnetlist:get-pins-nets "Cout")
+<<<<<
+("1" . "VColl2")
+("2" . "Vout")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "Cout")
+<<<<<
+"symversion"
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "Cout" "device")
+<<<<<
+"CAPACITOR"
+>>>>>
+
+(gnetlist:get-nets "Cout" "2")
+<<<<<
+"Vout"
+("RL" "2")
+("Cout" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "Cout" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "Cout" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "Cout" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "Cout" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "Cout" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "Cout" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "Cout" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "Cout" "2" "pintype")
+"pas"
+
+(gnetlist:get-nets "Cout" "1")
+<<<<<
+"VColl2"
+("RC2" "1")
+("Cout" "1")
+("Q2" "3")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "Cout" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "Cout" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "Cout" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "Cout" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "Cout" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "Cout" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "Cout" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "Cout" "1" "pintype")
+"pas"
+
+(gnetlist:get-pins "RL")
+<<<<<
+"1"
+"2"
+>>>>>
+
+(gnetlist:get-pins-nets "RL")
+<<<<<
+("2" . "Vout")
+("1" . "GND")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "RL")
+<<<<<
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "RL" "device")
+<<<<<
+"RESISTOR"
+>>>>>
+
+(gnetlist:get-nets "RL" "1")
+<<<<<
+"GND"
+("RL" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "RL" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RL" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RL" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RL" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "RL" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RL" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RL" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RL" "1" "pintype")
+"pas"
+
+(gnetlist:get-nets "RL" "2")
+<<<<<
+"Vout"
+("RL" "2")
+("Cout" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "RL" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RL" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RL" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RL" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "RL" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RL" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RL" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RL" "2" "pintype")
+"pas"
+
+(gnetlist:get-pins "RC2")
+<<<<<
+"1"
+"2"
+>>>>>
+
+(gnetlist:get-pins-nets "RC2")
+<<<<<
+("2" . "Vcc")
+("1" . "VColl2")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "RC2")
+<<<<<
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "RC2" "device")
+<<<<<
+"RESISTOR"
+>>>>>
+
+(gnetlist:get-nets "RC2" "1")
+<<<<<
+"VColl2"
+("RC2" "1")
+("Cout" "1")
+("Q2" "3")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "RC2" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RC2" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RC2" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RC2" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "RC2" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RC2" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RC2" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RC2" "1" "pintype")
+"pas"
+
+(gnetlist:get-nets "RC2" "2")
+<<<<<
+"Vcc"
+("RC2" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "RC2" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RC2" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RC2" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RC2" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "RC2" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RC2" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RC2" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RC2" "2" "pintype")
+"pas"
+
+(gnetlist:get-pins "RE1")
+<<<<<
+"1"
+"2"
+>>>>>
+
+(gnetlist:get-pins-nets "RE1")
+<<<<<
+("2" . "Vem1")
+("1" . "GND")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "RE1")
+<<<<<
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "RE1" "device")
+<<<<<
+"RESISTOR"
+>>>>>
+
+(gnetlist:get-nets "RE1" "1")
+<<<<<
+"GND"
+("RE1" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "RE1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RE1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RE1" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "RE1" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "RE1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RE1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RE1" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "RE1" "1" "pintype")
+"pas"
+
+(gnetlist:get-nets "RE1" "2")
+<<<<<
+"Vem1"
+("Q1" "1")
+("RE1" "2")
+("CE1" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "RE1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RE1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RE1" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "RE1" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "RE1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RE1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RE1" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "RE1" "2" "pintype")
+"pas"
+
+(gnetlist:get-pins "R2")
+<<<<<
+"1"
+"2"
+>>>>>
+
+(gnetlist:get-pins-nets "R2")
+<<<<<
+("2" . "Vbase1")
+("1" . "GND")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "R2")
+<<<<<
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "R2" "device")
+<<<<<
+"RESISTOR"
+>>>>>
+
+(gnetlist:get-nets "R2" "1")
+<<<<<
+"GND"
+("R2" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "R2" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R2" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R2" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R2" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "R2" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R2" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R2" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R2" "1" "pintype")
+"pas"
+
+(gnetlist:get-nets "R2" "2")
+<<<<<
+"Vbase1"
+("Q1" "2")
+("R1" "1")
+("R2" "2")
+("C1" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "R2" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R2" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R2" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R2" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "R2" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R2" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R2" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R2" "2" "pintype")
+"pas"
+
+(gnetlist:get-pins "R1")
+<<<<<
+"1"
+"2"
+>>>>>
+
+(gnetlist:get-pins-nets "R1")
+<<<<<
+("2" . "Vcc")
+("1" . "Vbase1")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "R1")
+<<<<<
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "R1" "device")
+<<<<<
+"RESISTOR"
+>>>>>
+
+(gnetlist:get-nets "R1" "1")
+<<<<<
+"Vbase1"
+("Q1" "2")
+("R1" "1")
+("R2" "2")
+("C1" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "R1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R1" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R1" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "R1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R1" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R1" "1" "pintype")
+"pas"
+
+(gnetlist:get-nets "R1" "2")
+<<<<<
+"Vcc"
+("R1" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "R1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R1" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R1" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "R1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R1" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R1" "2" "pintype")
+"pas"
+
+(gnetlist:get-pins "R5")
+<<<<<
+"1"
+"2"
+>>>>>
+
+(gnetlist:get-pins-nets "R5")
+<<<<<
+("2" . "unnamed_net1")
+("1" . "Vin")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "R5")
+<<<<<
+"device"
+"value"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "R5" "device")
+<<<<<
+"RESISTOR"
+>>>>>
+
+(gnetlist:get-nets "R5" "1")
+<<<<<
+"Vin"
+("R5" "1")
+("Vinput" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "R5" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R5" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R5" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "R5" "1" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "R5" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R5" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R5" "1" "pinlabel")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "R5" "1" "pintype")
+"pas"
+
+(gnetlist:get-nets "R5" "2")
+<<<<<
+"unnamed_net1"
+("R5" "2")
+("C1" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "R5" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R5" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R5" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "R5" "2" "pintype")
+"pas"
+
+(gnetlist:get-attribute-by-pinseq "R5" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R5" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R5" "2" "pinlabel")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "R5" "2" "pintype")
+"pas"
+
+(gnetlist:get-pins "Q1")
+<<<<<
+"2"
+"1"
+"3"
+>>>>>
+
+(gnetlist:get-pins-nets "Q1")
+<<<<<
+("3" . "Vcoll1")
+("1" . "Vem1")
+("2" . "Vbase1")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "Q1")
+<<<<<
+"device"
+"model-name"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "Q1" "device")
+<<<<<
+"NPN_TRANSISTOR"
+>>>>>
+
+(gnetlist:get-nets "Q1" "2")
+<<<<<
+"Vbase1"
+("Q1" "2")
+("R1" "1")
+("R2" "2")
+("C1" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "Q1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "Q1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "Q1" "2" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "Q1" "2" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "Q1" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "Q1" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "Q1" "2" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "Q1" "2" "pintype")
+"unknown"
+
+(gnetlist:get-nets "Q1" "1")
+<<<<<
+"Vem1"
+("Q1" "1")
+("RE1" "2")
+("CE1" "2")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "Q1" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "Q1" "1" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "Q1" "1" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "Q1" "1" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "Q1" "3" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "Q1" "3" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "Q1" "3" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "Q1" "3" "pintype")
+"unknown"
+
+(gnetlist:get-nets "Q1" "3")
+<<<<<
+"Vcoll1"
+("Q1" "3")
+("RC1" "1")
+("R8" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "Q1" "3" "pinnumber")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "Q1" "3" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "Q1" "3" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "Q1" "3" "pintype")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "Q1" "1" "pinnumber")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "Q1" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "Q1" "1" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "Q1" "1" "pintype")
+"unknown"
+
+(gnetlist:get-pins "tnMERqW0")
+<<<<<
+>>>>>
+
+(gnetlist:get-pins-nets "tnMERqW0")
+<<<<<
+>>>>>
+
+(gnetlist:vams-get-package-attributes "tnMERqW0")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "unnamed_net2")
+<<<<<
+("C2" "1")
+("R8" "2")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "unnamed_net2" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "Vbase2")
+<<<<<
+("C2" "2")
+("R4" "2")
+("R3" "1")
+("Q2" "2")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "Vbase2" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "Vem2")
+<<<<<
+("CE2" "2")
+("RE2" "2")
+("Q2" "1")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "Vem2" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "Vout")
+<<<<<
+("Cout" "2")
+("RL" "2")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "Vout" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "VColl2")
+<<<<<
+("Q2" "3")
+("Cout" "1")
+("RC2" "1")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "VColl2" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "GND")
+<<<<<
+("R4" "1")
+("CE2" "1")
+("RE2" "1")
+("VCC" "2")
+("Vinput" "2")
+("CE1" "1")
+("RL" "1")
+("RE1" "1")
+("R2" "1")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "GND" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "Vcc")
+<<<<<
+("R3" "2")
+("RC1" "2")
+("VCC" "1")
+("RC2" "2")
+("R1" "2")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "Vcc" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "Vin")
+<<<<<
+("Vinput" "1")
+("R5" "1")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "Vin" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "unnamed_net1")
+<<<<<
+("C1" "1")
+("R5" "2")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "unnamed_net1" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "Vbase1")
+<<<<<
+("C1" "2")
+("R2" "2")
+("R1" "1")
+("Q1" "2")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "Vbase1" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "Vem1")
+<<<<<
+("CE1" "2")
+("RE1" "2")
+("Q1" "1")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "Vem1" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "Vcoll1")
+<<<<<
+("R8" "1")
+("RC1" "1")
+("Q1" "3")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "Vcoll1" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "tnMERqW0")
+<<<<<
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "tnMERqW0" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-backend-arguments)
+<<<<<
+"foo"
+"bar"
+>>>>>
+
+(gnetlist:get-verbosity)
+0
+

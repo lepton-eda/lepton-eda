@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2015 Roland Lutz
+/* Copyright (C) 2013-2016 Roland Lutz
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -127,7 +127,7 @@ static void assert_four(xorn_revision_t rev, xorn_selection_t sel,
 	assert(xorn_object_is_selected(rev, sel, text1) == false);
 }
 
-int main()
+int main(void)
 {
 	xorn_revision_t src, dest;
 	struct xornsch_net net_data;

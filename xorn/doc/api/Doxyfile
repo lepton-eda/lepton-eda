@@ -765,6 +765,7 @@ INPUT                  = .. \
                          ./xorn/base64.py \
                          ./xorn/command.py \
                          ./xorn/fileutils.py \
+                         ./xorn/guile.py \
                          ./xorn/proxy.py \
                          ./xorn/storage.py \
                          ./xorn/geda/__init__.py \
@@ -772,11 +773,13 @@ INPUT                  = .. \
                          ./xorn/geda/clib.py \
                          ./xorn/geda/fileformat.py \
                          ./xorn/geda/read.py \
+                         ./xorn/geda/ref.py \
                          ./xorn/geda/write.py \
                          ./xorn/geda/netlist/__init__.py \
                          ./xorn/geda/netlist/backend.py \
                          ./xorn/geda/netlist/blueprint.py \
                          ./xorn/geda/netlist/conn.py \
+                         ./xorn/geda/netlist/guile.py \
                          ./xorn/geda/netlist/instance.py \
                          ./xorn/geda/netlist/net.py \
                          ./xorn/geda/netlist/netlist.py \

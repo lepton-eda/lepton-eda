@@ -1,7 +1,7 @@
 # xorn.geda - Python library for manipulating gEDA files
 # Copyright (C) 1998-2010 Ales Hvezda
 # Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
-# Copyright (C) 2013-2015 Roland Lutz
+# Copyright (C) 2013-2016 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ import xorn.base64
 import xorn.proxy
 import xorn.storage
 import xorn.geda.clib
+import xorn.geda.ref
 from xorn.geda.fileformat import *
 
 ## Raised when parsing a malformed file.
@@ -88,41 +89,6 @@ class FileFormat:
 
         ## Can text objects have multiple lines?
         self.supports_multiline_text = fileformat_ver >= 1
-
-class Symbol:
-    # basename: The filename of the component
-
-    # The just basename is the filename of the component. This
-    # filename is not the full path.
-
-    def __init__(self, basename, embedded):
-        self.basename = basename
-        self.prim_objs = None
-        self.embedded = embedded
-
-    ## Look up the symbol from the component library, loading it if necessary.
-
-    def load(self):
-        if self.embedded:
-            raise ValueError  # can't load an embedded symbol
-        if self.prim_objs is not None:
-            return            # symbol is already loaded
-
-        self.prim_objs = xorn.geda.clib.lookup_symbol(self.basename)
-
-        # # Delete or hide attributes eligible for promotion inside the complex
-        # o_complex_remove_promotable_attribs(new_obj)
-
-class Pixmap:
-    # In gEDA, the filename is not used if the picture is embedded.
-
-    # filename: Path and filename of a not embedded picture.
-    # picture_data: Serialized picture
-
-    def __init__(self, filename, embedded):
-        self.file_content = None
-        self.filename = filename
-        self.embedded = embedded
 
 ## Helper function for \ref sscanf.
 
@@ -229,6 +195,22 @@ def read_file(f, name, load_symbols = False,
                        override_bus_color = None,
                        override_pin_color = None,
                        force_boundingbox = False):
+    # Mock-ups for referenced symbols if we aren't loading them
+    referenced_symbols = {}
+
+    def load_symbol(basename):
+        if load_symbols:
+            # Look up the symbol from the component library, loading
+            # it if necessary.
+            return xorn.geda.clib.lookup_symbol(basename)
+
+        try:
+            return referenced_symbols[basename]
+        except KeyError:
+            symbol = xorn.geda.ref.Symbol(basename, None, False)
+            referenced_symbols[basename] = symbol
+            return symbol
+
     # "Stack" of outer contexts for embedded components
     object_lists_save = []
 
@@ -266,7 +248,7 @@ def read_file(f, name, load_symbols = False,
             ob = rev.add_object(read_circle(line, origin, format))
         elif objtype == OBJ_COMPLEX:
             ob = rev.add_object(read_complex(line, origin, format,
-                                             load_symbols))
+                                             load_symbol))
         elif objtype == OBJ_TEXT:
             ob = rev.add_object(read_text(line, f, origin, format))
         elif objtype == OBJ_PATH:
@@ -458,7 +440,7 @@ def read_circle(buf, (origin_x, origin_y), format):
 
 def read_arc(buf, (origin_x, origin_y), format):
     if not format.supports_linefill_attributes:
-        type, x1, y1, radius, start_angle, end_angle, color = sscanf(
+        type, x1, y1, radius, start_angle, sweep_angle, color = sscanf(
             buf, "%c %d %d %d %d %d %d\n", _("Failed to parse arc object"))
 
         arc_width = 0
@@ -467,7 +449,7 @@ def read_arc(buf, (origin_x, origin_y), format):
         arc_space = -1
         arc_length = -1
     else:
-        type, x1, y1, radius, start_angle, end_angle, color, \
+        type, x1, y1, radius, start_angle, sweep_angle, color, \
         arc_width, arc_end, arc_type, arc_length, arc_space = sscanf(
             buf, "%c %d %d %d %d %d %d %d %d %d %d %d\n",
             _("Failed to parse arc object"))
@@ -477,7 +459,7 @@ def read_arc(buf, (origin_x, origin_y), format):
 
     if radius <= 0:
         print _("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n") % (
-            type, x1, y1, radius, start_angle, end_angle, color)
+            type, x1, y1, radius, start_angle, sweep_angle, color)
         radius = 0
 
     if color < 0 or color > MAX_COLORS:
@@ -490,7 +472,7 @@ def read_arc(buf, (origin_x, origin_y), format):
         y = y1 - origin_y,
         radius = radius,
         startangle = start_angle,
-        sweepangle = end_angle,
+        sweepangle = sweep_angle,
         color = color,
         line = xorn.storage.LineAttr(
             width = arc_width,
@@ -639,11 +621,10 @@ def read_complex(buf, (origin_x, origin_y), format, load_symbol):
     # color = DEFAULT_COLOR
 
     if basename.startswith('EMBEDDED'):
-        symbol = Symbol(basename[8:], True)
+        symbol = xorn.geda.ref.Symbol(basename[8:], None, True)
     else:
-        symbol = Symbol(basename, False)
-        if load_symbol:
-            symbol.load()
+        symbol = load_symbol(basename)
+        assert not symbol.embedded
 
     return xorn.storage.Component(
         x = x1 - origin_x,
@@ -834,12 +815,12 @@ def read_picture(first_line, f, (origin_x, origin_y), format):
         print _("Found an image with no filename.")
         filename = None
 
-    pixmap = Pixmap(filename, False)
+    pixmap = xorn.geda.ref.Pixmap(filename, None, False)
 
     if embedded == 1:
         # Read the encoded picture
         try:
-            pixmap.file_content = xorn.base64.decode(f, delim = '.')
+            pixmap.data = xorn.base64.decode(f, delim = '.')
         except xorn.base64.DecodingError as e:
             print _("Failed to load image from embedded data [%s]: "
                     "%s\n") % (filename, e.message)

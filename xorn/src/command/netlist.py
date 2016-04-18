@@ -1,7 +1,7 @@
 # xorn.geda.netlist - gEDA Netlist Extraction and Generation
 # Copyright (C) 1998-2010 Ales Hvezda
 # Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
-# Copyright (C) 2013-2015 Roland Lutz
+# Copyright (C) 2013-2016 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -50,119 +50,19 @@ def parse_order(value):
         sys.exit(1)
 
 
-## Expand environment variables in a string.
-#
-# This function returns the passed string with environment variables
-# expanded.
-#
-# The invocations of environment variables MUST be in the form
-# '${variable_name}'; '$variable_name' is not valid here.  Environment
-# variable names can consist solely of letters, digits and '_'.  It is
-# possible to escape a '$' character in the string as '$$'.
-#
-# Prints error messages to stderr and leaves the malformed and bad
-# variable names in the returned string.
+## Add a directory to the symbol library.
 
-def expand_env_variables(s):
-    result = ''
-    i = 0
-
-    while True:
-        try:
-            # look for next variable name
-            j = s.index('$', i)
-        except ValueError:
-            # no variable left
-            result += s[i:]
-            return result
-
-        result += s[i:j]
-
-        if j + 1 >= len(s):     # '$' is the last character in the string
-            result += '$'
-            return result
-        if s[j + 1] == '$':     # an escaped '$'
-            result += s[j + 1]
-            i = j + 2
-            continue
-        if s[j + 1] != '{':     # an isolated '$', put it in output
-            result += '$'
-            i = j + 1
-            continue
-
-        # discard "${"
-        i = j + 2
-
-        # look for the end of the variable name
-        try:
-            j = s.index('}', i)
-        except ValueError:
-            # problem: no closing '}' to variable
-            sys.stderr.write(_("Found malformed environment variable "
-                               "in '%s'\n") % s)
-            result += s[i - 2:]  # include "${"
-            return result
-
-        # test characters of variable name
-        bad_characters = [ch for ch in s[i:j]
-                          if not ch.isalnum() and ch != '_']
-        if bad_characters:
-            # illegal character detected in variable name
-            sys.stderr.write(_("Found bad character(s) [%s] "
-                               "in variable name.\n") % ''.join(bad_characters))
-            result += s[i - 2:j + 1]  # include "${" and "}"
-            i = j + 1
-            continue
-
-        # extract variable name from string and expand it
-        try:
-            result += os.environ[s[i:j]]
-        except KeyError:
-            pass
-        i = j + 1
-
-# \param [in] name  optional descriptive name for library directory
-
-def symbol_library(path):
-    # take care of any shell variables
-    path = expand_env_variables(path)
-
+def symbol_library(path, recursive, option_name):
     # invalid path?
     if not os.path.isdir(path):
         sys.stderr.write(_("%s: \"%s\" is not a directory (passed to %s)\n")
                          % (xorn.command.program_short_name, path,
-                            '--symbol-library'))
+                            option_name))
         sys.exit(1)
 
     xorn.geda.clib.add_source(
-        xorn.geda.clib.DirectorySource(path),
+        xorn.geda.clib.DirectorySource(path, recursive),
         xorn.geda.clib.uniquify_source_name(os.path.basename(path)))
-
-## Add all symbol libraries found below \a rootdir to be searched for
-## symbols, naming them with an optional \a prefix.
-
-def symbol_library_search(rootdir, prefix = None):
-    dht = []
-    rootdir = expand_env_variables(rootdir)
-
-    # Build symbol directory list
-    for dirpath, dirnames, filenames in os.walk(rootdir):
-        for filename in filenames:
-            if filename.lower().endswith('.sym') and \
-                   os.path.isfile(os.path.join(dirpath, filename)):
-                dht.append(dirpath)
-                break
-
-    # Fill symbol library tree
-    dht.sort()
-    dht.reverse()
-    for path in dht:
-        name = path[len(rootdir):]
-        if prefix is not None:
-            name = prefix + name
-        xorn.geda.clib.add_source(
-            xorn.geda.clib.DirectorySource(path),
-            xorn.geda.clib.uniquify_source_name(name))
 
 ## Add a command to the symbol library.
 #
@@ -179,18 +79,10 @@ def symbol_library_command(value):
         sys.exit(1)
     listcmd, getcmd, name = tokens
 
-    # take care of any shell variables
-    # \bug this may be a security risk!
-    listcmd = expand_env_variables(listcmd)
-    getcmd = expand_env_variables(getcmd)
-
     xorn.geda.clib.add_source(xorn.geda.clib.CommandSource(listcmd, getcmd),
                               xorn.geda.clib.uniquify_source_name(name))
 
 def source_library(path):
-    # take care of any shell variables
-    path = expand_env_variables(path)
-
     # invalid path?
     if not os.path.isdir(path):
         sys.stderr.write(_("%s: \"%s\" is not a directory (passed to %s)\n")
@@ -201,9 +93,6 @@ def source_library(path):
     xorn.geda.netlist.slib.slib.append(path)
 
 def source_library_search(path):
-    # take care of any shell variables
-    path = expand_env_variables(path)
-
     # invalid path?
     if not os.path.isdir(path):
         sys.stderr.write(_("%s: \"%s\" is not a directory (passed to %s)\n")
@@ -332,7 +221,7 @@ Miscellaneous options:
 def version():
     sys.stdout.write("%s - gEDA netlister\n" % xorn.config.PACKAGE_STRING)
     sys.stdout.write(_("Copyright (C) 1998-2012 gEDA developers\n"))
-    sys.stdout.write(_("Copyright (C) 2015 Roland Lutz\n"))
+    sys.stdout.write(_("Copyright (C) 2016 Roland Lutz\n"))
     sys.stdout.write("\n")
     sys.stdout.write(_(
 "This program is free software; you can redistribute it and/or\n"
@@ -481,9 +370,9 @@ def main():
                   "executing scheme code is not supported") % option)
 
         elif option == '--symbol-library':
-            symbol_library(value)
+            symbol_library(value, False, '--symbol-library')
         elif option == '--symbol-library-search':
-            symbol_library_search(value)
+            symbol_library(value, True, '--symbol-library-search')
         elif option == '--symbol-library-command':
             symbol_library_command(value)
         elif option == '--symbol-library-funcs':

@@ -1,4 +1,4 @@
-# Copyright (C) 2013-2015 Roland Lutz
+# Copyright (C) 2013-2016 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,11 +25,13 @@ nobase_pkgpython_PYTHON = \
 	geda/clib.py \
 	geda/fileformat.py \
 	geda/read.py \
+	geda/ref.py \
 	geda/write.py \
 	geda/netlist/__init__.py \
 	geda/netlist/backend.py \
 	geda/netlist/blueprint.py \
 	geda/netlist/conn.py \
+	geda/netlist/guile.py \
 	geda/netlist/instance.py \
 	geda/netlist/net.py \
 	geda/netlist/netlist.py \

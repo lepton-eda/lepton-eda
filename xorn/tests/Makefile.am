@@ -1,4 +1,4 @@
-# Copyright (C) 2013-2015 Roland Lutz
+# Copyright (C) 2013-2016 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -57,6 +57,7 @@ check_PROGRAMS = \
 
 pythontests = \
 	cpython/snippets/functions.py \
+	cpython/snippets/guile.py \
 	cpython/copy_attached.py \
 	cpython/copy_object.py \
 	cpython/copy_objects.py \
@@ -80,6 +81,7 @@ pythontests = \
 	cpython/stat.py \
 	cpython/string.py \
 	cpython/transient.py \
+	cpython/guile.py \
 	python/base64.py \
 	python/proxy.py \
 	python/geda/attrib.py \

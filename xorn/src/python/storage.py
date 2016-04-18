@@ -1,4 +1,4 @@
-# Copyright (C) 2013-2015 Roland Lutz
+# Copyright (C) 2013-2016 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 ## \file storage.py
-#  \brief Placeholder file for xorn.storage documentation.
+## Placeholder file for xorn.storage documentation.
 #
 # This file DOES NOT contain the actual source code of the
 # xorn.storage module.  It contains documented stubs of the code from
@@ -23,18 +23,18 @@
 # definition of the module, see the Python extension in \c src/cpython/.
 
 ## \namespace xorn.storage
-#  \brief Xorn storage backend.
+## Xorn storage backend.
 #
 # Python extension providing access to the storage library.
 #
 # \sa \ref storage
 # \sa xornstorage.h
 
-## \brief A particular state of the contents of a file.
+## A particular state of the contents of a file.
 
 class Revision:
-    ## \brief Create a new revision, either from scratch or by copying
-    #         an existing one.
+    ## Create a new revision, either from scratch or by copying an
+    ## existing one.
     #
     # \param rev %Revision to copy, or \c None.
     #
@@ -45,14 +45,14 @@ class Revision:
     # \throw MemoryError if there is not enough memory
 
     def __init__(self, rev = None):
-        ## \brief Whether the revision is transient.
+        ## Whether the revision is transient.
         #
         # Reading and writing this is equivalent to calling \ref
         # is_transient and \ref finalize.  Cannot be set to \c True.
 
         self.transient = True
 
-    ## \brief Return whether a revision can be changed.
+    ## Return whether a revision can be changed.
     #
     # When a revision is created, it is initially \a transient,
     # i.e. changeable.  This can be changed by calling \ref finalize.
@@ -62,7 +62,7 @@ class Revision:
     def is_transient(self):
         pass
 
-    ## \brief Prevent further changes to a revision.
+    ## Prevent further changes to a revision.
     #
     # When a revision is created, it is initially \a transient,
     # i.e. changeable.  However, it is typically not desired for a
@@ -76,7 +76,7 @@ class Revision:
     def finalize(self):
         pass
 
-    ## \brief Return a list of all objects in a revision.
+    ## Return a list of all objects in a revision.
     #
     # The objects are returned in their actual order.  Attached
     # objects are listed after the object they are attached to.
@@ -89,12 +89,12 @@ class Revision:
     def get_objects(self):
         pass
 
-    ## \brief Return whether an object exists in a revision.
+    ## Return whether an object exists in a revision.
 
     def object_exists(self, ob):
         pass
 
-    ## \brief Get the data of an object in a revision.
+    ## Get the data of an object in a revision.
     #
     # Changing the returned data will not have an effect on the
     # object; use \ref set_object_data to change the object.
@@ -112,7 +112,7 @@ class Revision:
     def get_object_data(self, ob):
         pass
 
-    ## \brief Get the location of an object in the object structure.
+    ## Get the location of an object in the object structure.
     #
     # \return Returns a tuple <tt>(attached_to, pos)</tt> where \c
     # attached_to is the object to which \a ob is attached and \c pos
@@ -123,7 +123,7 @@ class Revision:
     def get_object_location(self, ob):
         pass
 
-    ## \brief Add a new object to a transient revision.
+    ## Add a new object to a transient revision.
     #
     # The object is appended to the end of the object list.
     #
@@ -142,7 +142,7 @@ class Revision:
     def add_object(self, data):
         pass
 
-    ## \brief Set the data of an object in a transient revision.
+    ## Set the data of an object in a transient revision.
     #
     # If the object does not exist in the revision, it is created and
     # appended to the end of the object list.
@@ -176,8 +176,8 @@ class Revision:
     def set_object_data(self, ob, data):
         pass
 
-    ## \brief Change the location of an object in the object structure
-    #         of a transient revision.
+    ## Change the location of an object in the object structure of a
+    ## transient revision.
     #
     # This function performs two distinct operations:
     #
@@ -219,7 +219,7 @@ class Revision:
     def relocate_object(self, ob, attach_to, insert_before):
         pass
 
-    ## \brief Copy an object to a transient revision.
+    ## Copy an object to a transient revision.
     #
     # Any objects attached to \a ob are copied as well, their copies
     # being attached to the copy of \a ob, which is appended to the
@@ -238,7 +238,7 @@ class Revision:
     def copy_object(self, rev, ob):
         pass
 
-    ## \brief Copy some objects to a transient revision.
+    ## Copy some objects to a transient revision.
     #
     # Any objects attached to the objects are copied as well and
     # attached to the corresponding new object.  The copied objects
@@ -258,7 +258,7 @@ class Revision:
     def copy_objects(self, rev, sel):
         pass
 
-    ## \brief Delete an object from a transient revision.
+    ## Delete an object from a transient revision.
     #
     # Any objects attached to \a ob are deleted as well.
     #
@@ -273,7 +273,7 @@ class Revision:
     def delete_object(self, ob):
         pass
 
-    ## \brief Delete some objects from a transient revision.
+    ## Delete some objects from a transient revision.
     #
     # Any objects attached to a deleted object are deleted as well.
     #
@@ -289,7 +289,7 @@ class Revision:
     def delete_objects(self, sel):
         pass
 
-## \brief The identity of an object across revisions.
+## The identity of an object across revisions.
 #
 # A value of this type is used as a key to look up and change the
 # state of an object in a revision.  It is created by
@@ -300,11 +300,15 @@ class Revision:
 # This type can't be directly instantiated.
 
 class Object:
-    ## \brief x.__cmp__(y) <==> cmp(x,y)
+    ## x.__cmp__(y) <==> cmp(x,y)
     def __cmp__(...):
         pass
 
-## \brief The identity of a set of objects across revisions.
+    ## x.__hash__() <==> hash(x)
+    def __hash__(...):
+        pass
+
+## The identity of a set of objects across revisions.
 #
 # A value of this type is used as a set of keys for mass object
 # inspection or manipulation and does not designate a specific order
@@ -316,8 +320,8 @@ class Object:
 class Selection:
     pass
 
-## \brief Return a list of objects in a revision which are attached
-#         to a certain object.
+## Return a list of objects in a revision which are attached to a
+## certain object.
 #
 # If \a ob is \c None, return all objects in the revision which are
 # *not* attached.  The objects are returned in their actual order.
@@ -329,8 +333,8 @@ class Selection:
 def get_objects_attached_to(rev, ob):
     pass
 
-## \brief Return a list of objects which are in a revision as well as
-#         in a selection.
+## Return a list of objects which are in a revision as well as in a
+## selection.
 #
 # The objects are not necessarily returned in a meaningful order.
 #
@@ -339,8 +343,8 @@ def get_objects_attached_to(rev, ob):
 def get_selected_objects(rev, sel):
     pass
 
-## \brief Return a list of objects which are in one revision but not
-#         in another.
+## Return a list of objects which are in one revision but not in
+## another.
 #
 # Returns objects in \a to which are not in \a from.  They are not
 # necessarily returned in a meaningful order.
@@ -350,8 +354,8 @@ def get_selected_objects(rev, sel):
 def get_added_objects(from, to):
     pass
 
-## \brief Return a list of objects which are in one revision but not
-#         in another.
+## Return a list of objects which are in one revision but not in
+## another.
 #
 # Returns objects in \a from which are not in \a to.  They are not
 # necessarily returned in a meaningful order.
@@ -361,8 +365,8 @@ def get_added_objects(from, to):
 def get_removed_objects(from, to):
     pass
 
-## \brief Return a list of objects which exist in two revisions but
-#         have different type or data.
+## Return a list of objects which exist in two revisions but have
+## different type or data.
 #
 # The objects are not necessarily returned in a meaningful order.
 #
@@ -371,22 +375,22 @@ def get_removed_objects(from, to):
 def get_modified_objects(from, to):
     pass
 
-## \brief Return an empty selection.
+## Return an empty selection.
 #
 # \throw MemoryError if there is not enough memory
 
 def select_none():
     pass
 
-## \brief Return a selection containing a single object.
+## Return a selection containing a single object.
 #
 # \throw MemoryError if there is not enough memory
 
 def select_object(ob):
     pass
 
-## \brief Return a selection containing all objects in a revision
-#         attached to a given object.
+## Return a selection containing all objects in a revision attached to
+## a given object.
 #
 # The object may be \c None, in which case the selection contains all
 # objects which are *not* attached.
@@ -397,73 +401,72 @@ def select_object(ob):
 def select_attached_to(rev, ob):
     pass
 
-## \brief Return a selection containing all objects in a revision.
+## Return a selection containing all objects in a revision.
 #
 # \throw MemoryError if there is not enough memory
 
 def select_all(rev):
     pass
 
-## \brief Return a selection containing all objects in a revision
-#         except those in a given selection.
+## Return a selection containing all objects in a revision except
+## those in a given selection.
 #
 # \throw MemoryError if there is not enough memory
 
 def select_all_except(rev, sel):
     pass
 
-## \brief Return a selection which contains all the objects in an
-#         existing selection plus a given object.
+## Return a selection which contains all the objects in an existing
+## selection plus a given object.
 #
 # \throw MemoryError if there is not enough memory
 
 def select_including(sel, ob):
     pass
 
-## \brief Return a selection which contains all the objects in an
-#         existing selection minus a given object.
+## Return a selection which contains all the objects in an existing
+## selection minus a given object.
 #
 # \throw MemoryError if there is not enough memory
 
 def select_excluding(sel, ob):
     pass
 
-## \brief Return a selection containing the objects in either given
-#         selection.
+## Return a selection containing the objects in either given
+## selection.
 #
 # \throw MemoryError if there is not enough memory
 
 def select_union(sel0, sel1):
     pass
 
-## \brief Return a selection containing the objects in both given
-#         selections.
+## Return a selection containing the objects in both given selections.
 #
 # \throw MemoryError if there is not enough memory
 
 def select_intersection(sel0, sel1):
     pass
 
-## \brief Return a selection containing the objects contained in one
-#         given selection, but not the other.
+## Return a selection containing the objects contained in one given
+## selection, but not the other.
 #
 # \throw MemoryError if there is not enough memory
 
 def select_difference(sel0, sel1):
     pass
 
-## \brief Return whether a selection is empty in a given revision.
+## Return whether a selection is empty in a given revision.
 
 def selection_is_empty(rev, sel):
     pass
 
-## \brief Return whether an object exists in a revision and is
-#         selected in a selection.
+## Return whether an object exists in a revision and is selected in a
+## selection.
 
 def object_is_selected(rev, sel, ob):
     pass
 
-## \brief Schematic line style.
+## Schematic line style.
 
 class LineAttr:
     def __init__(self):
@@ -473,7 +476,7 @@ class LineAttr:
         self.dash_length = 0.
         self.dash_space = 0.
 
-## \brief Schematic fill style.
+## Schematic fill style.
 
 class FillAttr:
     def __init__(self):
@@ -484,7 +487,7 @@ class FillAttr:
         self.angle1 = 0
         self.pitch1 = 0.
 
-## \brief Schematic arc.
+## Schematic arc.
 
 class Arc:
     def __init__(self):
@@ -496,7 +499,7 @@ class Arc:
         self.color = 0
         self.line = LineAttr()
 
-## \brief Schematic box.
+## Schematic box.
 
 class Box:
     def __init__(self):
@@ -508,7 +511,7 @@ class Box:
         self.line = LineAttr()
         self.fill = FillAttr()
 
-## \brief Schematic circle.
+## Schematic circle.
 
 class Circle:
     def __init__(self):
@@ -519,7 +522,7 @@ class Circle:
         self.line = LineAttr()
         self.fill = FillAttr()
 
-## \brief Schematic component.
+## Schematic component.
 
 class Component:
     def __init__(self):
@@ -530,7 +533,7 @@ class Component:
         self.mirror = False
         self.symbol = None
 
-## \brief Schematic line.
+## Schematic line.
 
 class Line:
     def __init__(self):
@@ -541,7 +544,7 @@ class Line:
         self.color = 0
         self.line = LineAttr()
 
-## \brief Schematic net segment, bus segment, or pin.
+## Schematic net segment, bus segment, or pin.
 
 class Net:
     def __init__(self):
@@ -554,7 +557,7 @@ class Net:
         self.is_pin = False
         self.is_inverted = False
 
-## \brief Schematic path.
+## Schematic path.
 
 class Path:
     def __init__(self):
@@ -563,7 +566,7 @@ class Path:
         self.line = LineAttr()
         self.fill = FillAttr()
 
-## \brief Schematic picture.
+## Schematic picture.
 
 class Picture:
     def __init__(self):
@@ -575,7 +578,7 @@ class Picture:
         self.mirror = False
         self.pixmap = None
 
-## \brief Schematic text or attribute.
+## Schematic text or attribute.
 
 class Text:
     def __init__(self):

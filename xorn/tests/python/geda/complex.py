@@ -1,4 +1,4 @@
-# Copyright (C) 2013-2015 Roland Lutz
+# Copyright (C) 2013-2016 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@ import StringIO
 import xorn.proxy
 import xorn.storage
 import xorn.geda.read
+import xorn.geda.ref
 
 SYMBOL_SYM = """v 20140308 2
 P 100 200 200 200 1 0 0
@@ -90,7 +91,7 @@ for data, load_symbols, embedded in [(COMPONENT0_SCH, False, False),
                                    load_symbols = load_symbols)
     ob, = rev.toplevel_objects()
     symbol = ob.data().symbol
-    assert isinstance(symbol, xorn.geda.read.Symbol)
+    assert isinstance(symbol, xorn.geda.ref.Symbol)
     assert symbol.basename == 'symbol.sym'
     assert symbol.embedded == embedded
 
@@ -120,7 +121,7 @@ for data, embedded in [(PICTURE0_SCH, False),
     rev = xorn.geda.read.read_file(StringIO.StringIO(data), '<test data>')
     ob, = rev.toplevel_objects()
     pixmap = ob.data().pixmap
-    assert isinstance(pixmap, xorn.geda.read.Pixmap)
+    assert isinstance(pixmap, xorn.geda.ref.Pixmap)
     assert pixmap.filename == 'hello-world'
-    assert pixmap.file_content == ('Hello world\n' if embedded else None)
+    assert pixmap.data == ('Hello world\n' if embedded else None)
     assert pixmap.embedded == embedded

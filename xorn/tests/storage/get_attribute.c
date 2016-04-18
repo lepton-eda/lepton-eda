@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2015 Roland Lutz
+/* Copyright (C) 2013-2016 Roland Lutz
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ static void assert_fill(xorn_revision_t rev, xorn_selection_t sel,
 	assert(memcmp(&expected_fill, &real_fill, sizeof expected_fill) == 0);
 }
 
-int main()
+int main(void)
 {
 	xorn_revision_t rev0, rev1, rev2, rev3;
 	xorn_object_t ob0, ob1a, ob1b;

@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2015 Roland Lutz
+/* Copyright (C) 2013-2016 Roland Lutz
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 #include <string.h>
 
 
-int main()
+int main(void)
 {
 	xorn_revision_t rev0, rev1, rev2;
 	struct xornsch_line line_data;

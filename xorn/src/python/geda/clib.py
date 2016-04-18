@@ -1,7 +1,7 @@
 # xorn.geda - Python library for manipulating gEDA files
 # Copyright (C) 1998-2010 Ales Hvezda
 # Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
-# Copyright (C) 2013-2015 Roland Lutz
+# Copyright (C) 2013-2016 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -52,6 +52,7 @@
 import collections, fnmatch, os, shlex, stat, subprocess, sys
 from gettext import gettext as _
 import xorn.geda.read
+import xorn.geda.ref
 import xorn.proxy
 import xorn.storage
 
@@ -94,29 +95,31 @@ _symbol_cache = {}
 # ignored.
 
 class DirectorySource:
-    def __init__(self, directory):
+    def __init__(self, directory, recursive):
         ## Path to directory
         self.directory = directory
+        ## Whether to recurse into subdirectories.
+        self.recursive = recursive
 
     ## Scan the directory for symbols.
-    #
-    # \todo Does this need to do something more sane with
-    #       subdirectories than just skipping them silently?
 
     def list(self):
-        return (entry for entry in os.listdir(self.directory)
-                # skip ".", ".." & hidden files
+        return (entry for dirpath, dirnames, filenames
+                          in sorted(os.walk(self.directory))
+                      for entry in sorted(filenames)
+                # skip hidden files ("." and ".." are excluded by os.walk)
                 if entry[0] != '.'
-                # skip subdirectories (for now)
-                and stat.S_ISREG(
-                    os.stat(os.path.join(self.directory, entry)).st_mode)
                 # skip filenames which don't have the right suffix
                 and entry.lower().endswith(SYM_FILENAME_FILTER))
 
     ## Get symbol data for a given symbol name.
 
     def get(self, symbol):
-        return xorn.geda.read.read(os.path.join(self.directory, symbol))
+        for dirpath, dirnames, filenames in sorted(os.walk(self.directory)):
+            if symbol in filenames:
+                return xorn.geda.read.read(os.path.join(dirpath, symbol))
+
+        raise ValueError, 'symbol "%s" not found in library' % symbol
 
 
 ## Source object representing a pair of symbol-generating commands.
@@ -322,10 +325,10 @@ def reset():
     _symbol_cache.clear()
 
 
-## Get symbol data for a given source object and symbol name.
+## Get symbol object for a given source object and symbol name.
 #
-# Returns a revision object containing the symbol data for the symbol
-# called \a symbol from the component source \a source.
+# Returns a xorn.geda.ref.Symbol object containing the symbol called
+# \a symbol from the component source \a source.
 #
 # \throws ValueError if the source object's \c get function doesn't
 #                    return a xorn.storage.Revision or
@@ -350,10 +353,12 @@ def get_symbol(source, symbol):
             "from source [%s]" % (symbol, source.name)
     data.finalize()
 
-    # Cache the symbol data
-    _symbol_cache[id(source), symbol] = data
+    symbol_ = xorn.geda.ref.Symbol(symbol, data, False)
 
-    return data
+    # Cache the symbol data
+    _symbol_cache[id(source), symbol] = symbol_
+
+    return symbol_
 
 ## Invalidate cached data about a symbol.
 
@@ -412,11 +417,12 @@ def lookup_symbol_source(name):
     assert symbol == name
     return source
 
-## Get symbol data for a given symbol name.
+## Get symbol object for a given symbol name.
 #
-# Returns the data for the first symbol found with the given name.
-# This is a helper function for the schematic load system, as it will
-# always want to load symbols given only their name.
+# Returns the xorn.geda.ref.Symbol object for the first symbol found
+# with the given name.  This is a helper function for the schematic
+# load system, as it will always want to load symbols given only their
+# name.
 #
 # \throws ValueError if the component was not found
 
@@ -428,7 +434,7 @@ def lookup_symbol(name):
 #
 # The list is free of duplicates and preserves the order of the
 # symbols as they appear first in the file.  Each symbol is
-# represented by its actual xorn.geda.read.Symbol object.
+# represented by its actual xorn.geda.ref.Symbol object.
 
 def used_symbols0(rev):
     symbols = []

@@ -1,7 +1,7 @@
 # xorn.geda.netlist - gEDA Netlist Extraction and Generation
 # Copyright (C) 1998-2010 Ales Hvezda
 # Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
-# Copyright (C) 2013-2015 Roland Lutz
+# Copyright (C) 2013-2016 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ class Package:
         self.netlist = netlist
         self.namespace = namespace
         self.unmangled_refdes = unmangled_refdes
-        self.refdes = None  # populated by netlist ctor
+        self.refdes = None  # set by netlist ctor
         self.components = []
         self.pins = []
         self.pins_by_number = {}
@@ -199,16 +199,16 @@ class PackagePin:
     # an error.
 
     def get_attribute(self, name, default = KeyError):
-        has_real_pins = False
-        for cpin in self.cpins:
-            if cpin.blueprint.ob is not None:
-                has_real_pins = True
-
         # Treat "pinnumber" specially: return the value of self.number
         # which recognizes slotting.  For backwards compatibility,
         # artificial pins do not have a pinnumber.
 
         if name == 'pinnumber':
+            has_real_pins = False
+            for cpin in self.cpins:
+                if cpin.blueprint.ob is not None:
+                    has_real_pins = True
+
             if has_real_pins:
                 return self.number
             else:

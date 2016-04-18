@@ -1,7 +1,7 @@
 # xorn.geda.netlist - gEDA Netlist Extraction and Generation
 # Copyright (C) 1998-2010 Ales Hvezda
 # Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
-# Copyright (C) 2013-2015 Roland Lutz
+# Copyright (C) 2013-2016 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -128,7 +128,7 @@ class Component:
         # populated by schematic loader
         self.composite_sources = None
 
-        # populated by xorn.geda.netlist.pp_graphical
+        # set by xorn.geda.netlist.pp_graphical
         self.is_graphical = False
 
         # populated by xorn.geda.netlist.pp_slotting
@@ -266,11 +266,11 @@ class Pin:
 
         ## The "identifier" of the pin.
         #
-        # populated by xorn.geda.netlist.pp_slotting and
+        # set by xorn.geda.netlist.pp_slotting and
         # xorn.geda.netlist.pp_netattrib
         self.number = None
 
-        # populated by xorn.geda.netlist.pp_netattrib
+        # set by xorn.geda.netlist.pp_netattrib
         self.has_netattrib = False
 
         component.pins.append(self)
@@ -326,19 +326,23 @@ class Pin:
 
     def error(self, msg):
         # TODO: calculate pin coordinates
+        refdes = self.component.refdes
+        if refdes is None:
+            refdes = '<no refdes>'
         data = self.component.ob.data()
         sys.stderr.write(_("%s:%s-%s(%sx%s): error: %s\n") % (
-            self.component.schematic.filename,
-            self.component.refdes, self.number,
+            self.component.schematic.filename, refdes, self.number,
             format_coord(data.x), format_coord(data.y), msg))
-        self.netlister_run.failed = True
+        self.component.schematic.netlister_run.failed = True
 
     def warn(self, msg):
         # TODO: calculate pin coordinates
+        refdes = self.component.refdes
+        if refdes is None:
+            refdes = '<no refdes>'
         data = self.component.ob.data()
         sys.stderr.write(_("%s:%s-%s(%sx%s): warning: %s\n") % (
-            self.component.schematic.filename,
-            self.component.refdes, self.number,
+            self.component.schematic.filename, refdes, self.number,
             format_coord(data.x), format_coord(data.y), msg))
 
 ## Visually connected net piece in a single schematic's netlist.

@@ -1,7 +1,7 @@
 # xorn.geda - Python library for manipulating gEDA files
 # Copyright (C) 1998-2010 Ales Hvezda
 # Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
-# Copyright (C) 2013-2015 Roland Lutz
+# Copyright (C) 2013-2016 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -156,15 +156,15 @@ def bus_ripper_direction(bus_ob):
 # line type and fill options.
 #
 # \param [in] f          A file-like object to which to write.
-# \param [in] o_current  The object which should be written.
+# \param [in] ob         The object which should be written.
 # \param [in] offset_x, offset_y  Coordinate offset for embedded symbols.
 #
 # \return \c None.
 #
 # \throw ValueError if an object with an unknown type is encountered
 
-def write_object(f, o_current, offset_x, offset_y):
-    data = o_current.data()
+def write_object(f, ob, offset_x, offset_y):
+    data = ob.data()
 
     if isinstance(data, xorn.storage.Line):
         f.write('%c %d %d %d %d %d %s\n' % (
@@ -199,7 +199,7 @@ def write_object(f, o_current, offset_x, offset_y):
                     offset_x + data.x + data.width,
                     offset_y + data.y + data.height,
                     data.color,
-                    bus_ripper_direction(o_current)))
+                    bus_ripper_direction(ob)))
         else:
             f.write('%c %d %d %d %d %d\n' % (
                     xorn.geda.fileformat.OBJ_NET,
@@ -244,9 +244,9 @@ def write_object(f, o_current, offset_x, offset_y):
 
         if data.symbol.embedded:
             f.write('[\n')
-            for ob in xorn.proxy.RevisionProxy(
+            for ob_ in xorn.proxy.RevisionProxy(
                     data.symbol.prim_objs).toplevel_objects():
-                write_object(f, ob, offset_x + data.x, offset_y + data.y)
+                write_object(f, ob_, offset_x + data.x, offset_y + data.y)
             f.write(']\n')
     elif isinstance(data, xorn.storage.Text):
         # string can have multiple lines (seperated by \n's)
@@ -293,15 +293,15 @@ def write_object(f, o_current, offset_x, offset_y):
                 data.pixmap.filename))
 
         if data.pixmap.embedded:
-            xorn.base64.encode(f, data.pixmap.file_content, delim = '.')
+            xorn.base64.encode(f, data.pixmap.data, delim = '.')
     else:
         raise ValueError, \
             _("Encountered an object with unknown type %s") % type(data)
 
     # save any attributes
-    attribs = o_current.attached_objects()
+    attribs = ob.attached_objects()
     if attribs:
         f.write('{\n')
-        for ob in attribs:
-            write_object(f, ob, offset_x, offset_y)
+        for attrib in attribs:
+            write_object(f, attrib, offset_x, offset_y)
         f.write('}\n')

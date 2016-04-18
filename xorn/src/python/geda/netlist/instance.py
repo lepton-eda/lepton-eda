@@ -1,7 +1,7 @@
 # xorn.geda.netlist - gEDA Netlist Extraction and Generation
 # Copyright (C) 1998-2010 Ales Hvezda
 # Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
-# Copyright (C) 2013-2015 Roland Lutz
+# Copyright (C) 2013-2016 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -67,7 +67,8 @@ class Component:
         self.sheet = sheet
         self.blueprint = blueprint
 
-        self.refdes = None # populated by netlist ctor
+        # set by netlist ctor
+        self.refdes = None
 
         self.cpins = [] # list of ComponentPin
         self.cpins_by_blueprint = {}

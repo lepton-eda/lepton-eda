@@ -1,0 +1,520 @@
+(gnetlist:get-packages "placeholder")
+<<<<<
+"U100"
+>>>>>
+
+(gnetlist:get-non-unique-packages "placeholder")
+<<<<<
+"U100"
+"U100"
+"U100"
+>>>>>
+
+(gnetlist:get-all-nets "placeholder")
+<<<<<
+"GND"
+"Vcc"
+"SING_N"
+"SING_N"
+"SING_N"
+"GND"
+"Vcc"
+"SING_N_2"
+"SING_N_2"
+"GND"
+"Vcc"
+"SING_N"
+"SING_N"
+"SING_N"
+>>>>>
+
+(gnetlist:get-all-unique-nets "placeholder")
+<<<<<
+"SING_N_2"
+"GND"
+"Vcc"
+"SING_N"
+>>>>>
+
+(gnetlist:get-toplevel-attribute "tnMERqW0")
+"not found"
+
+(gnetlist:get-pins "U100")
+<<<<<
+"9"
+"10"
+"8"
+"1"
+"2"
+"3"
+"7"
+"14"
+"4"
+"5"
+"6"
+>>>>>
+
+(gnetlist:get-pins-nets "U100")
+<<<<<
+("6" . "SING_N")
+("5" . "SING_N")
+("4" . "SING_N")
+("14" . "Vcc")
+("7" . "GND")
+("3" . "SING_N_2")
+("2" . "unconnected_pin-1")
+("1" . "SING_N_2")
+("8" . "SING_N")
+("10" . "SING_N")
+("9" . "SING_N")
+>>>>>
+
+(gnetlist:vams-get-package-attributes "U100")
+<<<<<
+"slot"
+"refdes"
+>>>>>
+
+(gnetlist:get-all-package-attributes "U100" "device")
+<<<<<
+"7400"
+"7400"
+"7400"
+>>>>>
+
+(gnetlist:get-nets "U100" "9")
+<<<<<
+"SING_N"
+("U100" "6")
+("U100" "5")
+("U100" "4")
+("U100" "8")
+("U100" "10")
+("U100" "9")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U100" "9" "pinnumber")
+"9"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "9" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "9" "pinlabel")
+"A"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "9" "pintype")
+"in"
+
+(gnetlist:get-attribute-by-pinseq "U100" "1" "pinnumber")
+"4"
+
+(gnetlist:get-attribute-by-pinseq "U100" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "U100" "1" "pinlabel")
+"A"
+
+(gnetlist:get-attribute-by-pinseq "U100" "1" "pintype")
+"in"
+
+(gnetlist:get-nets "U100" "10")
+<<<<<
+"SING_N"
+("U100" "6")
+("U100" "5")
+("U100" "4")
+("U100" "8")
+("U100" "10")
+("U100" "9")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U100" "10" "pinnumber")
+"10"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "10" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "10" "pinlabel")
+"B"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "10" "pintype")
+"in"
+
+(gnetlist:get-attribute-by-pinseq "U100" "2" "pinnumber")
+"5"
+
+(gnetlist:get-attribute-by-pinseq "U100" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "U100" "2" "pinlabel")
+"B"
+
+(gnetlist:get-attribute-by-pinseq "U100" "2" "pintype")
+"in"
+
+(gnetlist:get-nets "U100" "8")
+<<<<<
+"SING_N"
+("U100" "6")
+("U100" "5")
+("U100" "4")
+("U100" "8")
+("U100" "10")
+("U100" "9")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U100" "8" "pinnumber")
+"8"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "8" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "8" "pinlabel")
+"Y"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "8" "pintype")
+"out"
+
+(gnetlist:get-attribute-by-pinseq "U100" "3" "pinnumber")
+"6"
+
+(gnetlist:get-attribute-by-pinseq "U100" "3" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "U100" "3" "pinlabel")
+"Y"
+
+(gnetlist:get-attribute-by-pinseq "U100" "3" "pintype")
+"out"
+
+(gnetlist:get-nets "U100" "1")
+<<<<<
+"SING_N_2"
+("U100" "3")
+("U100" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U100" "1" "pinnumber")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "1" "pinlabel")
+"A"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "1" "pintype")
+"in"
+
+(gnetlist:get-attribute-by-pinseq "U100" "1" "pinnumber")
+"4"
+
+(gnetlist:get-attribute-by-pinseq "U100" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "U100" "1" "pinlabel")
+"A"
+
+(gnetlist:get-attribute-by-pinseq "U100" "1" "pintype")
+"in"
+
+(gnetlist:get-nets "U100" "2")
+<<<<<
+"unconnected_pin-1"
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U100" "2" "pinnumber")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "2" "pinlabel")
+"B"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "2" "pintype")
+"in"
+
+(gnetlist:get-attribute-by-pinseq "U100" "2" "pinnumber")
+"5"
+
+(gnetlist:get-attribute-by-pinseq "U100" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "U100" "2" "pinlabel")
+"B"
+
+(gnetlist:get-attribute-by-pinseq "U100" "2" "pintype")
+"in"
+
+(gnetlist:get-nets "U100" "3")
+<<<<<
+"SING_N_2"
+("U100" "3")
+("U100" "1")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U100" "3" "pinnumber")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "3" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "3" "pinlabel")
+"Y"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "3" "pintype")
+"out"
+
+(gnetlist:get-attribute-by-pinseq "U100" "3" "pinnumber")
+"6"
+
+(gnetlist:get-attribute-by-pinseq "U100" "3" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "U100" "3" "pinlabel")
+"Y"
+
+(gnetlist:get-attribute-by-pinseq "U100" "3" "pintype")
+"out"
+
+(gnetlist:get-nets "U100" "7")
+<<<<<
+"GND"
+("U100" "7")
+("U100" "7")
+("U100" "7")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U100" "7" "pinnumber")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "7" "pinseq")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "7" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "7" "pintype")
+"pwr"
+
+(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinnumber")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinseq")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U100" "14")
+<<<<<
+"Vcc"
+("U100" "14")
+("U100" "14")
+("U100" "14")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U100" "14" "pinnumber")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "14" "pinseq")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "14" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "14" "pintype")
+"pwr"
+
+(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinnumber")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinseq")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pinlabel")
+"unknown"
+
+(gnetlist:get-attribute-by-pinseq "U100" "unknown" "pintype")
+"unknown"
+
+(gnetlist:get-nets "U100" "4")
+<<<<<
+"SING_N"
+("U100" "6")
+("U100" "5")
+("U100" "4")
+("U100" "8")
+("U100" "10")
+("U100" "9")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U100" "4" "pinnumber")
+"4"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "4" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "4" "pinlabel")
+"A"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "4" "pintype")
+"in"
+
+(gnetlist:get-attribute-by-pinseq "U100" "1" "pinnumber")
+"4"
+
+(gnetlist:get-attribute-by-pinseq "U100" "1" "pinseq")
+"1"
+
+(gnetlist:get-attribute-by-pinseq "U100" "1" "pinlabel")
+"A"
+
+(gnetlist:get-attribute-by-pinseq "U100" "1" "pintype")
+"in"
+
+(gnetlist:get-nets "U100" "5")
+<<<<<
+"SING_N"
+("U100" "6")
+("U100" "5")
+("U100" "4")
+("U100" "8")
+("U100" "10")
+("U100" "9")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U100" "5" "pinnumber")
+"5"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "5" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "5" "pinlabel")
+"B"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "5" "pintype")
+"in"
+
+(gnetlist:get-attribute-by-pinseq "U100" "2" "pinnumber")
+"5"
+
+(gnetlist:get-attribute-by-pinseq "U100" "2" "pinseq")
+"2"
+
+(gnetlist:get-attribute-by-pinseq "U100" "2" "pinlabel")
+"B"
+
+(gnetlist:get-attribute-by-pinseq "U100" "2" "pintype")
+"in"
+
+(gnetlist:get-nets "U100" "6")
+<<<<<
+"SING_N"
+("U100" "6")
+("U100" "5")
+("U100" "4")
+("U100" "8")
+("U100" "10")
+("U100" "9")
+>>>>>
+
+(gnetlist:get-attribute-by-pinnumber "U100" "6" "pinnumber")
+"6"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "6" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "6" "pinlabel")
+"Y"
+
+(gnetlist:get-attribute-by-pinnumber "U100" "6" "pintype")
+"out"
+
+(gnetlist:get-attribute-by-pinseq "U100" "3" "pinnumber")
+"6"
+
+(gnetlist:get-attribute-by-pinseq "U100" "3" "pinseq")
+"3"
+
+(gnetlist:get-attribute-by-pinseq "U100" "3" "pinlabel")
+"Y"
+
+(gnetlist:get-attribute-by-pinseq "U100" "3" "pintype")
+"out"
+
+(gnetlist:get-pins "tnMERqW0")
+<<<<<
+>>>>>
+
+(gnetlist:get-pins-nets "tnMERqW0")
+<<<<<
+>>>>>
+
+(gnetlist:vams-get-package-attributes "tnMERqW0")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "SING_N_2")
+<<<<<
+("U100" "1")
+("U100" "3")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "SING_N_2" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "GND")
+<<<<<
+("U100" "7")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "GND" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "Vcc")
+<<<<<
+("U100" "14")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "Vcc" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "SING_N")
+<<<<<
+("U100" "9")
+("U100" "10")
+("U100" "8")
+("U100" "4")
+("U100" "5")
+("U100" "6")
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "SING_N" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-all-connections "tnMERqW0")
+<<<<<
+>>>>>
+
+(gnetlist:graphical-objs-in-net-with-attrib-get-attrib "tnMERqW0" "device=DRC_Directive" "value")
+<<<<<
+>>>>>
+
+(gnetlist:get-backend-arguments)
+<<<<<
+"foo"
+"bar"
+>>>>>
+
+(gnetlist:get-verbosity)
+0
+

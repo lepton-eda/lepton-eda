@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2015 Roland Lutz
+/* Copyright (C) 2013-2016 Roland Lutz
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -232,7 +232,7 @@ static int prepare_data(PyObject *obj, xorn_obtype_t *type_return,
 	return 0;
 }
 
-static PyObject *not_transient()
+static PyObject *not_transient(void)
 {
 	PyErr_SetString(PyExc_ValueError,
 			"Revision can only be changed while transient");

@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2015 Roland Lutz
+/* Copyright (C) 2013-2016 Roland Lutz
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ static void relocate_and_assert_2(
 	free(objects);
 }
 
-int main()
+int main(void)
 {
 	xorn_revision_t rev0, rev1, rev2, rev3;
 	xorn_object_t ob0, ob1a, ob1b;
