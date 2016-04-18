@@ -194,6 +194,10 @@ case "${enable_xorn}" in
 esac
 
 AM_CONDITIONAL([XORN], [test x$enable_xorn = xyes])
+
+export GEDADATADIR
+export GEDARCDIR
+
 AC_CONFIG_SUBDIRS([xorn])
 
 #####################################################################
