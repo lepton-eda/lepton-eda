@@ -14,9 +14,9 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-noinst_SCRIPTS = xorn
-CLEANFILES = xorn xornT
-EXTRA_DIST = xorn.in
+noinst_SCRIPTS = xorn gnetlist2
+CLEANFILES = xorn xornT gnetlist2 gnetlist2T
+EXTRA_DIST = xorn.in gnetlist2.in
 
 xorn: $(srcdir)/xorn.in Makefile
 	$(AM_V_GEN)sed \
@@ -31,19 +31,39 @@ xornT: $(srcdir)/xorn.in Makefile
 	    -e 's,[@]commanddir[@],$(commanddir),g' \
 		$(srcdir)/xorn.in > $@
 
-install-exec-local: xornT
+gnetlist2: $(srcdir)/gnetlist2.in Makefile
+	$(AM_V_GEN)sed \
+	    -e 's,[@]pythondir[@],$(abs_top_builddir)/built-packages,g' \
+	    -e 's,[@]XORN[@],$(abs_builddir)/xorn,g' \
+	    -e 's,[@]gedadatadir[@],$(gedadatadir),g' \
+	    -e 's,[@]gedasysconfdir[@],$(gedasysconfdir),g' \
+		$(srcdir)/$@.in > $@; \
+	chmod +x $@
+
+gnetlist2T: $(srcdir)/gnetlist2.in Makefile
+	$(AM_V_GEN)sed \
+	    -e 's,[@]pythondir[@],$(pythondir),g' \
+	    -e 's,[@]XORN[@],$(bindir)/xorn,g' \
+	    -e 's,[@]gedadatadir[@],$(gedadatadir),g' \
+	    -e 's,[@]gedasysconfdir[@],$(gedasysconfdir),g' \
+		$(srcdir)/gnetlist2.in > $@
+
+install-exec-local: xornT gnetlist2T
 	@$(NORMAL_INSTALL)
 	@test -n "$(bindir)" || exit 0; \
 	echo " $(MKDIR_P) '$(DESTDIR)$(bindir)'"; \
 	$(MKDIR_P) "$(DESTDIR)$(bindir)" || exit 1; \
 	name=`echo "xorn" | sed -e 's,.*/,,;$(transform)'`; \
 	echo " $(INSTALL_SCRIPT) xornT '$(DESTDIR)$(bindir)/$$name'"; \
-	$(INSTALL_SCRIPT) xornT "$(DESTDIR)$(bindir)/$$name" || exit $$?
+	$(INSTALL_SCRIPT) xornT "$(DESTDIR)$(bindir)/$$name" || exit $$?; \
+	name=`echo "gnetlist2" | sed -e 's,.*/,,;$(transform)'`; \
+	echo " $(INSTALL_SCRIPT) gnetlist2T '$(DESTDIR)$(bindir)/$$name'"; \
+	$(INSTALL_SCRIPT) gnetlist2T "$(DESTDIR)$(bindir)/$$name" || exit $$?
 
 uninstall-local:
 	@$(NORMAL_UNINSTALL)
 	@test -n "$(bindir)" || exit 0; \
-	files=`echo "xorn" | sed -e 's,.*/,,;$(transform)'`; \
+	files=`echo "xorn" "gnetlist2" | sed -e 's,.*/,,;$(transform)'`; \
 	dir='$(DESTDIR)$(bindir)'; \
 	$(am__uninstall_files_from_dir)
 
