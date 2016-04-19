@@ -171,11 +171,6 @@ dispose (GObject *object)
    * reference to call cleanup closure (page_deleted) for this
    * view */
 
-  if (view->gc != NULL) {
-    g_object_unref (view->gc);
-    view->gc = NULL;
-  }
-
   /* lastly, chain up to the parent dispose */
 
   g_return_if_fail (gschem_page_view_parent_class != NULL);
@@ -195,8 +190,6 @@ event_realize(GtkWidget *widget, gpointer unused)
   g_return_if_fail (view != NULL);
   g_return_if_fail (window != NULL);
 
-  view->gc = gdk_gc_new (window);
-
   gtk_widget_get_allocation (widget, &(view->previous_allocation));
 }
 
@@ -210,11 +203,6 @@ event_unrealize(GtkWidget *widget, gpointer unused)
   GschemPageView *view = GSCHEM_PAGE_VIEW(widget);
 
   g_return_if_fail (view != NULL);
-
-  if (view->gc != NULL) {
-    g_object_unref (view->gc);
-    view->gc = NULL;
-  }
 }
 
 
@@ -344,21 +332,6 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
     g_cclosure_marshal_VOID__VOID,
     G_TYPE_NONE,
     0);
-}
-
-
-
-/*! \brief Get a graphics context for this view
- *
- *  \param [in] view The view
- *  \return The graphics context, or NULL if the window is not realized
- */
-GdkGC*
-gschem_page_view_get_gc (GschemPageView *view)
-{
-  g_return_val_if_fail (view != NULL, NULL);
-
-  return view->gc;
 }
 
 
@@ -1421,7 +1394,6 @@ gschem_page_view_redraw (GschemPageView *view, GdkEventExpose *event, GschemTopl
 
     o_redraw_rect (w_current,
                    gtk_widget_get_window (GTK_WIDGET(view)),
-                   gschem_page_view_get_gc (view),
                    page,
                    geometry,
                    &(event->area));

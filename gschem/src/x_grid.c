@@ -26,13 +26,9 @@
 
 #include "gschem.h"
 
-#define DOTS_POINTS_ARRAY_SIZE       5000
 #define DOTS_VARIABLE_MODE_SPACING   30
 
 #define MESH_COARSE_GRID_MULTIPLIER  5
-
-/* X's obsession with *64 */
-#define FULL_CIRCLE 360*64
 
 
 /*! \brief Query the spacing in world coordinates at which the dots grid is drawn.
@@ -86,7 +82,6 @@ static int query_dots_grid_spacing (GschemToplevel *w_current)
   return incr;
 }
 
-
 /*! \brief Draw an area of the screen with a dotted grid pattern
  *
  *  \par Function Description
@@ -98,70 +93,67 @@ static int query_dots_grid_spacing (GschemToplevel *w_current)
  *  \param [in] width      The width of the region to draw.
  *  \param [in] height     The height of the region to draw.
  */
-static void draw_dots_grid_region (GschemToplevel *w_current,
-                                   GdkDrawable *drawable,
-                                   GdkGC *gc,
-                                   int x, int y, int width, int height)
+static void
+draw_dots_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int width, int height)
 {
-  int i, j;
-  int dot_x, dot_y;
-  int x_start, y_start, x_end, y_end;
-  int count = 0;
-  GdkPoint points[DOTS_POINTS_ARRAY_SIZE];
-
-  g_assert (w_current != NULL);
-
   int incr = query_dots_grid_spacing (w_current);
 
   if (incr == -1)
     return;
 
-  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  int dot_size = min (w_current->dots_grid_dot_size, 5);
 
-  gdk_gc_set_foreground (gc, x_get_color (DOTS_GRID_COLOR));
+  GedaColor *color = x_color_lookup (w_current, DOTS_GRID_COLOR);
+  cairo_set_source_rgba (cr,
+                         geda_color_get_red_double (color),
+                         geda_color_get_green_double (color),
+                         geda_color_get_blue_double (color),
+                         geda_color_get_alpha_double (color));
 
-  gschem_page_view_SCREENtoWORLD (view, x - 1, y + height + 1, &x_start, &y_start);
-  gschem_page_view_SCREENtoWORLD (view, x + width + 1, y - 1, &x_end, &y_end);
+  cairo_matrix_t user_to_device_matrix;
+  double x_start = x - 1;
+  double y_start = y + height + 1;
+  double x_end = x + width + 1;
+  double y_end = y - 1;
+  int xs, ys, xe, ye;
+  int i, j;
+  double x1, y1;
+
+  cairo_device_to_user (cr, &x_start, &y_start);
+  cairo_device_to_user (cr, &x_end, &y_end);
+
+  cairo_get_matrix (cr, &user_to_device_matrix);
+  cairo_save (cr);
+  cairo_identity_matrix (cr);
 
   /* figure starting grid coordinates, work by taking the start
-   * and end coordinates and rounding down to the nearest
-   * increment */
-  x_start -= (x_start % incr);
-  y_start -= (y_start % incr);
+   * and end coordinates and rounding down to the nearest increment */
+  xs = (floor (x_start/incr) - 1) * incr;
+  ys = (floor (y_start/incr) - 1) * incr;
+  xe = ceil (x_end);
+  ye = ceil (y_end);
 
-  for (i = x_start; i <= x_end; i = i + incr) {
-    for(j = y_start; j <= y_end; j = j + incr) {
-      gschem_page_view_WORLDtoSCREEN (view, i,j, &dot_x, &dot_y);
-      if (inside_region (geometry->viewport_left,
-                         geometry->viewport_top,
-                         geometry->viewport_right,
-                         geometry->viewport_bottom, i, j)) {
+  for (j = ys; j < ye; j = j + incr) {
+    for (i = xs; i < xe; i = i + incr) {
+      x1 = i;
+      y1 = j;
 
-        if (w_current->dots_grid_dot_size == 1) {
-          points[count].x = dot_x;
-          points[count].y = dot_y;
-          count++;
+      cairo_matrix_transform_point (&user_to_device_matrix, &x1, &y1);
 
-          /* get out of loop if we're hit the end of the array */
-          if (count == DOTS_POINTS_ARRAY_SIZE) {
-            gdk_draw_points (drawable, gc, points, count);
-            count = 0;
-          }
-        } else {
-          gdk_draw_arc (drawable, gc,
-                        TRUE, dot_x, dot_y,
-                        w_current->dots_grid_dot_size,
-                        w_current->dots_grid_dot_size, 0, FULL_CIRCLE);
-        }
+      if (w_current->dots_grid_dot_size == 1) {
+        cairo_rectangle (cr, round (x1), round (y1), 1, 1);
+      } else {
+        cairo_move_to (cr, round (x1), round (y1));
+        cairo_arc (cr, round (x1), round (y1),
+                   dot_size/2,
+                   0,
+                   2*M_PI);
       }
     }
   }
 
-  /* now draw all the points in one step */
-  if(count != 0) {
-    gdk_draw_points (drawable, gc, points, count);
-  }
+  cairo_fill (cr);
+  cairo_restore (cr);
 }
 
 
@@ -366,8 +358,6 @@ draw_mesh_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int
  */
 void x_grid_draw_region (GschemToplevel *w_current,
                          cairo_t *cr,
-                         GdkDrawable *drawable,
-                         GdkGC *gc,
                          int x,
                          int y,
                          int width,
@@ -384,7 +374,7 @@ void x_grid_draw_region (GschemToplevel *w_current,
       return;
 
     case GRID_MODE_DOTS:
-      draw_dots_grid_region (w_current, drawable, gc, x, y, width, height);
+      draw_dots_grid_region (w_current, cr, x, y, width, height);
       break;
 
     case GRID_MODE_MESH:

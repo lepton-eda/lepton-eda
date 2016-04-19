@@ -557,7 +557,6 @@ GdkPixbuf
 
   o_redraw_rect (&new_w_current,
                  window,
-                 NULL,
                  toplevel.page_current,
                  new_geometry,
                  &rect);

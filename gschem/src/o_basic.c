@@ -38,7 +38,6 @@ extern GedaColorMap display_outline_colors;
  */
 void o_redraw_rect (GschemToplevel *w_current,
                     GdkDrawable *drawable,
-                    GdkGC *gc,
                     PAGE *page,
                     GschemPageGeometry *geometry,
                     GdkRectangle *rectangle)
@@ -144,7 +143,7 @@ void o_redraw_rect (GschemToplevel *w_current,
   cairo_paint (cr);
 
   /* Draw grid lines */
-  x_grid_draw_region (w_current, cr, drawable, gc,
+  x_grid_draw_region (w_current, cr,
                       rectangle->x, rectangle->y,
                       rectangle->width, rectangle->height);
 

@@ -89,10 +89,12 @@ x_stroke_free (void)
 void
 x_stroke_record (GschemToplevel *w_current, gint x, gint y)
 {
+  cairo_matrix_t user_to_device_matrix;
+  double x0, y0;
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);
-
-  GdkGC *view_gc = gschem_page_view_get_gc (view);
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  g_return_if_fail (geometry != NULL);
 
   g_assert (stroke_points != NULL);
 
@@ -103,8 +105,28 @@ x_stroke_record (GschemToplevel *w_current, gint x, gint y)
 
     g_array_append_val (stroke_points, point);
 
-    gdk_gc_set_foreground (view_gc, x_get_color (STROKE_COLOR));
-    gdk_draw_point (gtk_widget_get_window (GTK_WIDGET(view)), view_gc, x, y);
+    cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (GTK_WIDGET(view)));
+    GedaColor *color = x_color_lookup (w_current, STROKE_COLOR);
+    cairo_set_source_rgba (cr,
+                           geda_color_get_red_double (color),
+                           geda_color_get_green_double (color),
+                           geda_color_get_blue_double (color),
+                           geda_color_get_alpha_double (color));
+
+    cairo_set_matrix (cr, gschem_page_geometry_get_world_to_screen_matrix (geometry));
+    x0 = x;
+    y0 = y;
+    cairo_device_to_user (cr, &x0, &y0);
+    cairo_get_matrix (cr, &user_to_device_matrix);
+    cairo_save (cr);
+    cairo_identity_matrix (cr);
+
+    cairo_matrix_transform_point (&user_to_device_matrix, &x0, &y0);
+
+    cairo_rectangle (cr, x0, y0, 1, 1);
+    cairo_fill (cr);
+    cairo_restore (cr);
+    cairo_destroy (cr);
   }
 
 }

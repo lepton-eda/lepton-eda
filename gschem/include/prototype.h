@@ -394,7 +394,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object);
 void o_attrib_toggle_show_name_value(GschemToplevel *w_current, OBJECT *object, int new_show_name_value);
 OBJECT *o_attrib_add_attrib(GschemToplevel *w_current, const char *text_string, int visibility, int show_name_value, OBJECT *object);
 /* o_basic.c */
-void o_redraw_rect (GschemToplevel *w_current, GdkDrawable *drawable, GdkGC *gc, PAGE *page, GschemPageGeometry *geometry, GdkRectangle *rectangle);
+void o_redraw_rect (GschemToplevel *w_current, GdkDrawable *drawable, PAGE *page, GschemPageGeometry *geometry, GdkRectangle *rectangle);
 int o_invalidate_rubber(GschemToplevel *w_current);
 int o_redraw_cleanstates(GschemToplevel *w_current);
 void o_invalidate_rect(GschemToplevel *w_current, int x1, int y1, int x2, int y2);
@@ -589,7 +589,6 @@ void attrib_edit_dialog(GschemToplevel *w_current, OBJECT *attr_obj, int flag);
 /* x_autonumber.c */
 void autonumber_text_dialog(GschemToplevel *w_current);
 /* x_basic.c */
-void x_repaint_background_region(GschemToplevel *w_current, cairo_t *cr, GdkDrawable *drawable, GdkGC *gc, int x, int y, int width, int height);
 void x_basic_warp_cursor(GtkWidget *widget, gint x, gint y);
 /* x_clipboard.c */
 void x_clipboard_init (GschemToplevel *w_current);
@@ -660,7 +659,7 @@ GtkWidget* x_fstylecb_new ();
 int x_fstylecb_get_index (GtkWidget *widget);
 void x_fstylecb_set_index (GtkWidget *widget, int style);
 /* x_grid.c */
-void x_grid_draw_region(GschemToplevel *w_current, cairo_t *cr, GdkDrawable *drawable, GdkGC *gc, int x, int y, int width, int height);
+void x_grid_draw_region(GschemToplevel *w_current, cairo_t *cr, int x, int y, int width, int height);
 int x_grid_query_drawn_spacing(GschemToplevel *w_current);
 /* x_image.c */
 void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
