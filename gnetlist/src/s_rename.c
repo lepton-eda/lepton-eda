@@ -153,11 +153,25 @@ int s_rename_search(char *src, char *dest, int quiet_flag)
     return (FALSE);
 }
 
+static int
+s_rename_compare_strings (const RENAME *rename,
+                          const char *src,
+                          const char *dest)
+{
+  return (0 == strcmp(rename->src, src) &&
+          0 == strcmp(rename->dest, dest));
+}
+
 static void s_rename_add_lowlevel (const char *src, const char *dest)
 {
     RENAME *new_rename;
 
     g_return_if_fail(last_set != NULL);
+
+    /* Avoid adding unnecessary duplicate renames */
+    if (s_rename_compare_strings(last_set->last_rename, src, dest)) {
+      return;
+    }
 
     new_rename = g_malloc(sizeof (RENAME));
 
