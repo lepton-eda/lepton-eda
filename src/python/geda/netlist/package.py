@@ -263,12 +263,12 @@ def postproc_blueprints(netlist):
                 component.error(_("component has neither refdes nor pins"))
                 continue
 
-            for pin in component.pins:
-                if not pin.has_netattrib:
-                    # pin is missing a net= attribute
-                    pin.error(_(
-                        "could not find refdes on component and "
-                        "could not find net= attribute on pin"))
+            if not next((True for pin in component.pins
+                              if pin.has_netattrib), False):
+                # pin is missing a net= attribute
+                component.error(_(
+                    "could not find refdes on component and "
+                    "could not find net= attribute on pin"))
 
 def postproc_instances(netlist, flat_namespace):
     netlist.packages = []
