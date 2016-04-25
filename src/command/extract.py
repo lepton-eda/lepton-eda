@@ -21,19 +21,8 @@ import xorn.config
 import xorn.fileutils
 import xorn.proxy
 import xorn.storage
-import xorn.geda.attrib
 import xorn.geda.read
 import xorn.geda.write
-
-def unhide_attributes(ob):
-    for attached in xorn.geda.attrib.find_attached_attribs(ob):
-        attached_name, attached_value = \
-            xorn.geda.attrib.parse_string(attached.text)
-        for inherited in xorn.geda.attrib.find_inherited_attribs(ob):
-            inherited_name, inherited_value = \
-                xorn.geda.attrib.parse_string(inherited.text)
-            if inherited_name == attached_name:
-                inherited.visibility = attached.visibility
 
 def read(path):
     try:
@@ -103,7 +92,6 @@ def main():
         data = ob.data()
         if isinstance(data, xorn.storage.Component) and data.symbol.embedded \
                 and not data.symbol.basename in embedded_symbols:
-            unhide_attributes(ob)
             embedded_symbols[data.symbol.basename.encode()] = \
                 data.symbol.prim_objs
         if isinstance(data, xorn.storage.Picture) and data.pixmap.embedded:

@@ -31,6 +31,7 @@ from gettext import gettext as _
 import xorn.base64
 import xorn.proxy
 import xorn.storage
+import xorn.geda.attrib
 import xorn.geda.clib
 import xorn.geda.ref
 from xorn.geda.fileformat import *
@@ -410,10 +411,25 @@ def read_file(f, name, log = None,
 
     for ob in rev.get_objects():
         data = rev.get_object_data(ob)
-        if isinstance(data, xorn.storage.Component) \
-               and data.symbol.embedded \
-               and data.symbol.prim_objs is None:
+        if not isinstance(data, xorn.storage.Component) \
+               or not data.symbol.embedded:
+            continue
+        if data.symbol.prim_objs is None:
             log.error(_("embedded symbol is missing"))
+            continue
+
+        # un-hide overwritten attributes in embedded symbol
+        ob = xorn.proxy.ObjectProxy(rev, ob)
+        visibility = {}
+        for attached in xorn.geda.attrib.find_attached_attribs(ob):
+            attached_name, attached_value = \
+                xorn.geda.attrib.parse_string(attached.text)
+            visibility[attached_name] = attached.visibility
+        for inherited in xorn.geda.attrib.find_inherited_attribs(ob):
+            inherited_name, inherited_value = \
+                xorn.geda.attrib.parse_string(inherited.text)
+            if inherited_name in visibility:
+                inherited.visibility = visibility[inherited_name]
 
     if not format.enhanced_pinbus_format:
         pin_update_whichend(rev, force_boundingbox, log)

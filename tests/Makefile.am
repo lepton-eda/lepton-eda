@@ -88,7 +88,8 @@ pythontests = \
 	python/geda/complex.py \
 	python/geda/parse_attrib.py \
 	python/geda/read_log.py \
-	python/geda/ripperdir.py
+	python/geda/ripperdir.py \
+	python/geda/unhide_attrib.py
 
 testdata = \
 	python/geda/ripperdir.sch
