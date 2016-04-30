@@ -131,6 +131,7 @@ void s_log_init (const gchar *prefix)
 
     if (n > last_exist_logn) last_exist_logn = n;
   }
+  g_dir_close (logdir);
 
   /* Now try and create a new file. When we fail, increment the number. */
   i = 0;
