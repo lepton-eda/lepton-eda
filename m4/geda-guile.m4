@@ -34,20 +34,9 @@ AC_DEFUN([AX_CHECK_GUILE],
   GUILE_MIN_MINOR=`echo ${GUILE_MIN_VER} | sed -e 's;[[^\.]]*\.;;' -e 's;\..*;;g'`
   GUILE_MIN_TEENY=`echo ${GUILE_MIN_VER} | sed -e 's;.*\.;;'`
 
-  _found_pkg_config_guile=yes
   PKG_CHECK_MODULES(GUILE, [guile-2.0 >= $GUILE_MIN_VER],
-                           [GUILE_PKG_NAME=guile-2.0], [_found_pkg_config_guile=no])
-
-  if test "${_found_pkg_config_guile}" = "no" ; then
-   PKG_CHECK_MODULES(GUILE, [guile-1.8 >= $GUILE_MIN_VER],
-                            [_found_pkg_config_guile=yes
-                             GUILE_PKG_NAME=guile-1.8],
-                            [_found_pkg_config_guile=no])
-  fi
-
-  if test "${_found_pkg_config_guile}" = "no" ; then
-    AC_MSG_ERROR([you need at least version ${GUILE_MIN_VER} of guile])
-  fi
+                           [GUILE_PKG_NAME=guile-2.0],
+                           [AC_MSG_ERROR([you need at least version ${GUILE_MIN_VER} of guile])])
 
   AC_SUBST([GUILE_PKG_NAME])
 
@@ -64,7 +53,7 @@ will not be able to be carried out.])
   # --------------------------------------
   AC_ARG_VAR([GUILE_SNARF], [path to guile-snarf utility])
 
-  AC_CHECK_PROGS([GUILE_SNARF], [guile-snarf guile-1.8-snarf], [no])
+  AC_CHECK_PROG([GUILE_SNARF], [guile-snarf], [guile-snarf], [no])
   if test "x$GUILE_SNARF" = xno ; then
     AC_MSG_ERROR([The `guile-snarf' tool could not be found. Please ensure that the
 Guile development headers and tools are correctly installed, and rerun
