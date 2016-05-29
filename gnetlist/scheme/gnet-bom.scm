@@ -57,9 +57,8 @@ filename)
            (attriblist (bom:parseconfig (bom:open-input-file options) options)))
       (set-current-output-port (gnetlist:output-port output-filename))
       (and attriblist
-           (begin (bom:printlist (cons "refdes" attriblist))
-                  (bom:components packages attriblist)
-                  ))
+           (bom:printlist (cons "refdes" attriblist))
+           (bom:components packages attriblist))
       (close-output-port (current-output-port)))))
 
 (define (bom:printlist ls)
