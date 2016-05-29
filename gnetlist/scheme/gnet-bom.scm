@@ -34,21 +34,25 @@
 (use-modules (ice-9 rdelim) ;; guile-1.8 fix
              (gnetlist backend-getopt))
 
+(define (bom:error)
+  (format
+   (current-error-port)
+   "ERROR: Attribute file '~A' not found. You must do one of the following:
+         - Create an 'attribs' file
+         - Specify an attribute file using -Oattrib_file=<filename>
+         - Specify which attributes to include using -Oattribs=attrib1,attrib2,... (no spaces)
+"
+          filename)
+  (primitive-exit 1))
+
 (define bom:open-input-file
   (lambda (options)
     (let ((filename (backend-option-ref options 'attrib_file "attribs")))
       (if (file-exists? filename)
           (open-input-file filename)
-          (if (backend-option-ref options 'attribs) #f
-              (begin
-                (format (current-error-port)
-"ERROR: Attribute file '~A' not found. You must do one of the following:
-         - Create an 'attribs' file
-         - Specify an attribute file using -Oattrib_file=<filename>
-         - Specify which attributes to include using -Oattribs=attrib1,attrib2,... (no spaces)
-"
-filename)
-                (primitive-exit 1)))))))
+          (if (backend-option-ref options 'attribs)
+              #f
+              (bom:error))))))
 
 (define bom
   (lambda (output-filename)
