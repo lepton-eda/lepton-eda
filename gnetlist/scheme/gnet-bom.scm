@@ -78,17 +78,21 @@ filename)
                        (else
                         (cons read-from-file (bom:parseconfig port options))))))))))
 
-(define bom:components
-  (lambda (ls attriblist)
-    (if (not (null? ls))
-        (let ((package (car ls)))
-          (if (not (string=? "1" (gnetlist:get-package-attribute package "nobom")))
-              (bom:printlist
-               (cons package
-                     (map (lambda (attrib)
-                            (gnetlist:get-package-attribute package attrib))
-                          attriblist))))
-          (bom:components (cdr ls) attriblist)))))
+(define (bom:components ls attriblist)
+  (define (no-bom-package? package)
+    (string=? "1" (gnetlist:get-package-attribute package "nobom")))
+
+  (define (component-attrib-values package attriblist)
+    (map (lambda (attrib)
+           (gnetlist:get-package-attribute package attrib))
+         attriblist))
+
+  (define (output-component-attrib-values package)
+    (and (not (no-bom-package? package))
+         (bom:printlist
+          (cons package (component-attrib-values package attriblist)))))
+
+  (for-each output-component-attrib-values ls))
 
 ;;
 ;; Bill of Material backend written by Matt Ettus ends here
