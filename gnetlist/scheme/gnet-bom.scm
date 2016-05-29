@@ -85,15 +85,10 @@ filename)
           (if (not (string=? "1" (gnetlist:get-package-attribute package "nobom")))
               (bom:printlist
                (cons package
-                     (bom:find-attribs package attriblist))))
+                     (map (lambda (attrib)
+                            (gnetlist:get-package-attribute package attrib))
+                          attriblist))))
           (bom:components (cdr ls) attriblist)))))
-
-(define bom:find-attribs
-  (lambda (package attriblist)
-    (if (null? attriblist)
-        '()
-        (cons (gnetlist:get-package-attribute package (car attriblist))
-              (bom:find-attribs package (cdr attriblist))))))
 
 ;;
 ;; Bill of Material backend written by Matt Ettus ends here
