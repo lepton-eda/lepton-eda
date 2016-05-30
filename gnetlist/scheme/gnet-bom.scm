@@ -59,7 +59,8 @@
     (let* ((options (backend-getopt
                      (gnetlist:get-backend-arguments)
                      '((attrib_file (value #t)) (attribs (value #t)))))
-           (attriblist (bom:parseconfig (bom:open-input-file options) options)))
+           (port (bom:open-input-file options))
+           (attriblist (bom:parseconfig port options)))
       (and attriblist
            (with-output-to-port (gnetlist:output-port output-filename)
              (lambda ()
