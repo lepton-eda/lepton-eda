@@ -34,7 +34,10 @@
 (use-modules (ice-9 rdelim) ;; guile-1.8 fix
              (gnetlist backend-getopt))
 
+
 (define (bom:error)
+  "Prints an error, if the bom backend cannot find an appropriate
+source to read attributes, and exits with return code 1."
   (format
    (current-error-port)
    "ERROR: Attribute file '~A' not found. You must do one of the following:
@@ -47,9 +50,15 @@
 
 
 (define (bom:printlist ls)
+  "Outputs the given list LS to the standard output as a tab
+separated list."
   (format #t "~A\n" (string-join ls "\t")))
 
+
 (define (bom:read-attrib-list)
+  "Reads text from the standard input and translates it into a
+list of attribute names. The attribute names must be delimited by
+spaces, tabs, or newlines."
   (define delimiters
     (string->char-set " \n\t"))
 
@@ -59,15 +68,23 @@
   (filter non-empty-string?
           (string-split (read-string) delimiters)))
 
-; Parses attrib file or argument. Returns a list of read attributes.
+
 (define (bom:parseconfig filename attribs)
+  "Reads attribute names from the list ATTRIBS which must be a CSV
+list. If ATTRIBS is #f, reads FILENAME for the list of
+attributes. If the file is not found, outputs an error."
   (if attribs
       (string-split attribs #\,)
       (if (file-exists? filename)
           (with-input-from-file filename bom:read-attrib-list)
           (bom:error))))
 
+
 (define (bom:components ls attriblist)
+  "Outputs a tab separated list of attribute values for each
+attribute name in ATTRIBLIST for components from the list
+LS. The component instances in LS having the attribute \"nobom=1\"
+are filtered out."
   (define (no-bom-package? package)
     (string=? "1" (gnetlist:get-package-attribute package "nobom")))
 
@@ -85,6 +102,23 @@
 
 
 (define (bom output-filename)
+  "Outputs BOM (Bill of Materials) to OUTPUT-FILENAME.
+First line is a list of attribute names, all others are lists of
+corresponding attribute values for all schematic
+components. Attributes for components having the attribute
+\"nobom=1\" are not output.
+The following gnetlist options may be used to provide the list of
+attribute names:
+  - -Oattribs=<attrib-name-list>, where <attrib-name-list> must be a
+    CSV list,
+  - -Oattrib_file=<filename>.
+The second option defines the file from which the attribute names
+must be read, if the first option was not given. If no option is
+given, the procedure tries to read the attribute names from file
+\"attribs\" in the current directory.
+If the attribute names are read from a source file, they must be
+separated by spaces, tabs, or newlines.
+An error will be displayed, if no attribute name source is found."
   (let* ((options (backend-getopt
                    (gnetlist:get-backend-arguments)
                    '((attrib_file (value #t)) (attribs (value #t)))))
