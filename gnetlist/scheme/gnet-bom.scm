@@ -70,19 +70,22 @@
 (define (bom:printlist ls)
   (format #t "~A\n" (string-join ls "\t")))
 
+(define (bom:read-attrib-list)
+  (let ((read-from-file (read-delimited " \n\t")))
+    (cond ((eof-object? read-from-file)
+           '())
+          ((= 0 (string-length read-from-file))
+           (bom:read-attrib-list))
+          (else
+           (cons read-from-file (bom:read-attrib-list))))))
+
 ; Parses attrib file or argument. Returns a list of read attributes.
 (define bom:parseconfig
   (lambda (port options)
     (let ((attribs (backend-option-ref options 'attribs)))
       (if attribs (string-split attribs #\,)
           (and port
-               (let ((read-from-file (read-delimited " \n\t" port)))
-                 (cond ((eof-object? read-from-file)
-                        '())
-                       ((= 0 (string-length read-from-file))
-                        (bom:parseconfig port options))
-                       (else
-                        (cons read-from-file (bom:parseconfig port options))))))))))
+               (with-input-from-port port bom:read-attrib-list))))))
 
 (define (bom:components ls attriblist)
   (define (no-bom-package? package)
