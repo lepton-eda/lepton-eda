@@ -71,13 +71,14 @@
   (format #t "~A\n" (string-join ls "\t")))
 
 (define (bom:read-attrib-list)
-  (let ((read-from-file (read-delimited " \n\t")))
-    (cond ((eof-object? read-from-file)
-           '())
-          ((= 0 (string-length read-from-file))
-           (bom:read-attrib-list))
-          (else
-           (cons read-from-file (bom:read-attrib-list))))))
+  (define delimiters
+    (string->char-set " \n\t"))
+
+  (define (non-empty-string? s)
+    (not (string=? "" s)))
+
+  (filter non-empty-string?
+          (string-split (read-string) delimiters)))
 
 ; Parses attrib file or argument. Returns a list of read attributes.
 (define (bom:parseconfig port attribs)
