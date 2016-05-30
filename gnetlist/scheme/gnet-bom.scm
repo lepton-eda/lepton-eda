@@ -45,13 +45,6 @@
           filename)
   (primitive-exit 1))
 
-(define (bom:open-input-file options file-name attrib-list)
-  (if (file-exists? file-name)
-      (open-input-file file-name)
-      (if attrib-list
-          #f
-          (bom:error))))
-
 (define bom
   (lambda (output-filename)
     (let* ((options (backend-getopt
@@ -60,8 +53,7 @@
            (option-filename
             (backend-option-ref options 'attrib_file "attribs"))
            (option-attribs (backend-option-ref options 'attribs))
-           (port (bom:open-input-file options option-filename option-attribs))
-           (attriblist (bom:parseconfig port option-attribs)))
+           (attriblist (bom:parseconfig option-filename option-attribs)))
       (and attriblist
            (with-output-to-port (gnetlist:output-port output-filename)
              (lambda ()
@@ -82,10 +74,12 @@
           (string-split (read-string) delimiters)))
 
 ; Parses attrib file or argument. Returns a list of read attributes.
-(define (bom:parseconfig port attribs)
-  (if attribs (string-split attribs #\,)
-      (and port
-           (with-input-from-port port bom:read-attrib-list))))
+(define (bom:parseconfig filename attribs)
+  (if attribs
+      (string-split attribs #\,)
+      (if (file-exists? filename)
+          (with-input-from-file filename bom:read-attrib-list)
+          (bom:error))))
 
 (define (bom:components ls attriblist)
   (define (no-bom-package? package)
