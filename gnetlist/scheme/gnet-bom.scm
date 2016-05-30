@@ -60,7 +60,7 @@
                      (gnetlist:get-backend-arguments)
                      '((attrib_file (value #t)) (attribs (value #t)))))
            (port (bom:open-input-file options))
-           (attriblist (bom:parseconfig port options)))
+           (attriblist (bom:parseconfig port (backend-option-ref options 'attribs))))
       (and attriblist
            (with-output-to-port (gnetlist:output-port output-filename)
              (lambda ()
@@ -80,12 +80,10 @@
            (cons read-from-file (bom:read-attrib-list))))))
 
 ; Parses attrib file or argument. Returns a list of read attributes.
-(define bom:parseconfig
-  (lambda (port options)
-    (let ((attribs (backend-option-ref options 'attribs)))
-      (if attribs (string-split attribs #\,)
-          (and port
-               (with-input-from-port port bom:read-attrib-list))))))
+(define (bom:parseconfig port attribs)
+  (if attribs (string-split attribs #\,)
+      (and port
+           (with-input-from-port port bom:read-attrib-list))))
 
 (define (bom:components ls attriblist)
   (define (no-bom-package? package)
