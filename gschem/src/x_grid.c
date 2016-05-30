@@ -165,7 +165,7 @@ static void draw_dots_grid_region (GschemToplevel *w_current,
 }
 
 
-/*! \brief Helper function for draw_mesh_grid_regin
+/*! \brief Helper function for draw_mesh_grid_region
  */
 static void draw_mesh (GschemToplevel *w_current,
                        cairo_t *cr,
