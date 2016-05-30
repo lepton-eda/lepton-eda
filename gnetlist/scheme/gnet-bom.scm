@@ -45,22 +45,23 @@
           filename)
   (primitive-exit 1))
 
-(define bom:open-input-file
-  (lambda (options)
-    (let ((filename (backend-option-ref options 'attrib_file "attribs")))
-      (if (file-exists? filename)
-          (open-input-file filename)
-          (if (backend-option-ref options 'attribs)
-              #f
-              (bom:error))))))
+(define (bom:open-input-file options file-name attrib-list)
+  (if (file-exists? file-name)
+      (open-input-file file-name)
+      (if attrib-list
+          #f
+          (bom:error))))
 
 (define bom
   (lambda (output-filename)
     (let* ((options (backend-getopt
                      (gnetlist:get-backend-arguments)
                      '((attrib_file (value #t)) (attribs (value #t)))))
-           (port (bom:open-input-file options))
-           (attriblist (bom:parseconfig port (backend-option-ref options 'attribs))))
+           (option-filename
+            (backend-option-ref options 'attrib_file "attribs"))
+           (option-attribs (backend-option-ref options 'attribs))
+           (port (bom:open-input-file options option-filename option-attribs))
+           (attriblist (bom:parseconfig port option-attribs)))
       (and attriblist
            (with-output-to-port (gnetlist:output-port output-filename)
              (lambda ()
