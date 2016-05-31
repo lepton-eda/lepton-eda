@@ -31,7 +31,7 @@
 ;;; Questions? Contact matt@ettus.com
 ;;; This software is released under the terms of the GNU GPL
 
-(use-modules (ice-9 rdelim) ;; guile-1.8 fix
+(use-modules (ice-9 rdelim)
              (gnetlist backend-getopt))
 
 
