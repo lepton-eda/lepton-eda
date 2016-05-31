@@ -45,19 +45,6 @@
           filename)
   (primitive-exit 1))
 
-(define bom
-  (lambda (output-filename)
-    (let* ((options (backend-getopt
-                     (gnetlist:get-backend-arguments)
-                     '((attrib_file (value #t)) (attribs (value #t)))))
-           (option-filename
-            (backend-option-ref options 'attrib_file "attribs"))
-           (option-attribs (backend-option-ref options 'attribs))
-           (attriblist (bom:parseconfig option-filename option-attribs)))
-      (with-output-to-port (gnetlist:output-port output-filename)
-        (lambda ()
-          (bom:printlist (cons "refdes" attriblist))
-          (bom:components packages attriblist))))))
 
 (define (bom:printlist ls)
   (format #t "~A\n" (string-join ls "\t")))
@@ -95,6 +82,20 @@
           (cons package (component-attrib-values package attriblist)))))
 
   (for-each output-component-attrib-values ls))
+
+
+(define (bom output-filename)
+  (let* ((options (backend-getopt
+                   (gnetlist:get-backend-arguments)
+                   '((attrib_file (value #t)) (attribs (value #t)))))
+         (option-filename
+          (backend-option-ref options 'attrib_file "attribs"))
+         (option-attribs (backend-option-ref options 'attribs))
+         (attriblist (bom:parseconfig option-filename option-attribs)))
+    (with-output-to-port (gnetlist:output-port output-filename)
+      (lambda ()
+        (bom:printlist (cons "refdes" attriblist))
+        (bom:components packages attriblist)))))
 
 ;;
 ;; Bill of Material backend written by Matt Ettus ends here
