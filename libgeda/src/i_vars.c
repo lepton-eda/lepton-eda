@@ -36,9 +36,14 @@
 #define DEFAULT_BITMAP_DIRECTORY "../lib/bitmaps"
 #define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
 
-/* These values are the default extents of the schematic drawing
- * area. */
+/* These values are the default extents of the schematic drawing area.
+ *
+ * The negative values allow symbols, residing at the origin, to be edited
+ * without translation to other coordinates.
+ */
+int   default_init_left = -60500;
 int   default_init_right = 121000;
+int   default_init_top = -45375;
 int   default_init_bottom = 90750;
 
 char *default_bitmap_directory = NULL;
@@ -62,7 +67,9 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
 {
   GList *iter;
 
+  toplevel->init_left    = default_init_left;
   toplevel->init_right   = default_init_right;
+  toplevel->init_top     = default_init_top;
   toplevel->init_bottom  = default_init_bottom;
 
   toplevel->attribute_promotion = default_attribute_promotion;

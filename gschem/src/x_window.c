@@ -556,7 +556,7 @@ void x_window_create_main(GschemToplevel *w_current)
 
   /* Setup a GtkScrolledWindow for the drawing area */
   hadjustment = GTK_ADJUSTMENT (gtk_adjustment_new (0.0,
-                                                    0.0,
+                                                    toplevel->init_left,
                                                     toplevel->init_right,
                                                     100.0,
                                                     100.0,
@@ -564,7 +564,7 @@ void x_window_create_main(GschemToplevel *w_current)
 
   vadjustment = GTK_ADJUSTMENT (gtk_adjustment_new (toplevel->init_bottom,
                                                     0.0,
-                                                    toplevel->init_bottom,
+                                                    toplevel->init_bottom - toplevel->init_top,
                                                     100.0,
                                                     100.0,
                                                     10.0));
