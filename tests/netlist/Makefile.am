@@ -32,7 +32,8 @@ attribs:
 all-local: attribs
 
 dist_check_SCRIPTS = run-test
-EXTRA_DIST = $(TESTS) $(testdata) gnet-apitest.scm gschemrc common/gschemrc
+EXTRA_DIST = $(TESTS) $(testdata) gnet-apitest.scm \
+             gschemrc regression/gschemrc common/gschemrc
 # dist_check_DATA would be more appropriate for $(TESTS) and $(testdata)
 # but triggers a lot of "Nothing to be done for '...'" messages.
 
@@ -46,6 +47,7 @@ mostlyclean-local:
 TESTS = stack_1-geda.out \
 	hierarchy-geda.out \
 	hierarchy2-geda.out \
+	regression/override_netname-geda.out \
 	drc2/connected_noconnects-drc2.out \
 	drc2/duplicated_refdes-drc2.out \
 	drc2/duplicated_slot-drc2.out \
@@ -464,6 +466,9 @@ testdata = \
 	hierarchy2-sources/under.sch \
 	hierarchy2-symbols/under.sym \
 	hierarchy2.sch \
+	regression/override_netname-symbols/component.sym \
+	regression/override_netname-symbols/power.sym \
+	regression/override_netname.sch \
 	stack_1.sch \
 	std-symbols/74/7400-1.sym \
 	std-symbols/74/7404-1.sym \
