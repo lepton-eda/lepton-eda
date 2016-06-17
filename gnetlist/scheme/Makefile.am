@@ -24,6 +24,16 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
 	   gnet-mathematica.scm gnet-liquidpcb.scm \
 	   gnetlist/backend-getopt.scm gnet-makedepend.scm
 
+TESTS = unit-tests/partlist.scm
+TEST_EXTENSIONS = .scm
+# $(srcdir) and $(builddir) are added here and not in
+# AM_SCM_LOG_FLAGS below because guile must know where to find
+# gnetlist modules before it runs tests
+SCM_LOG_DRIVER = $(GUILE) -L $(srcdir) -L $(builddir) --no-auto-compile -e main -s unit-test.scm
+AM_SCM_LOG_FLAGS = --
+AM_TESTS_ENVIRONMENT = GUILE_AUTO_COMPILE=0
+
+dist_noinst_DATA = unit-test.scm $(TESTS)
 
 EXTRA_DIST = $(DIST_SCM) $(SCM_SRCS)
 
