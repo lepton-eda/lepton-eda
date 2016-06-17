@@ -1,1 +1,3 @@
+(source-library "component_refdes-sources")
+(component-library "component_refdes-symbols")
 (component-library "override_netname-symbols")

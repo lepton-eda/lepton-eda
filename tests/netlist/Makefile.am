@@ -47,6 +47,7 @@ mostlyclean-local:
 TESTS = stack_1-geda.out \
 	hierarchy-geda.out \
 	hierarchy2-geda.out \
+	regression/component_refdes-dumptext.out \
 	regression/override_netname-geda.out \
 	drc2/connected_noconnects-drc2.out \
 	drc2/duplicated_refdes-drc2.out \
@@ -466,6 +467,10 @@ testdata = \
 	hierarchy2-sources/under.sch \
 	hierarchy2-symbols/under.sym \
 	hierarchy2.sch \
+	regression/component_refdes-sources/sub.sch \
+	regression/component_refdes-symbols/component.sym \
+	regression/component_refdes-symbols/sub.sym \
+	regression/component_refdes.sch \
 	regression/override_netname-symbols/component.sym \
 	regression/override_netname-symbols/power.sym \
 	regression/override_netname.sch \
