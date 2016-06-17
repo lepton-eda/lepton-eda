@@ -1,0 +1,17 @@
+START header
+
+gEDA's netlist format
+Created specifically for testing of gnetlist
+
+END header
+
+START components
+
+
+END components
+
+START nets
+
+
+END nets
+

@@ -48,6 +48,7 @@ TESTS = stack_1-geda.out \
 	hierarchy-geda.out \
 	hierarchy2-geda.out \
 	regression/component_refdes-dumptext.out \
+	regression/duplicate_local_net-geda.out \
 	regression/override_netname-geda.out \
 	regression/refdes_promotion-geda.out \
 	drc2/connected_noconnects-drc2.out \
@@ -472,6 +473,10 @@ testdata = \
 	regression/component_refdes-symbols/component.sym \
 	regression/component_refdes-symbols/sub.sym \
 	regression/component_refdes.sch \
+	regression/duplicate_local_net-sources/sub.sch \
+	regression/duplicate_local_net-symbols/sub.sym \
+	regression/duplicate_local_net-symbols/sym.sym \
+	regression/duplicate_local_net.sch \
 	regression/override_netname-symbols/component.sym \
 	regression/override_netname-symbols/power.sym \
 	regression/override_netname.sch \
