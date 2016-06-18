@@ -26,7 +26,7 @@
 # doc/geda/file_format_spec or
 # [here](http://wiki.geda-project.org/geda:file_format_spec).
 
-import codecs
+import codecs, sys
 from gettext import gettext as _
 import xorn.base64
 import xorn.proxy
@@ -39,6 +39,30 @@ from xorn.geda.fileformat import *
 
 class ParseError(Exception):
     pass
+
+## Default behavior for handling file read errors and warnings.
+#
+# When reading a file, a log object can be specified which handles any
+# errors and warnings which occur while reading the file.  If no log
+# object is specified, a new DefaultLog instance is used instead.
+#
+# The behavior of DefaultLog is to print any messages to \c sys.stderr
+# along with the file name passed to the constructor, and to raise a
+# ParseError exception on error.
+
+class DefaultLog:
+    def __init__(self, name):
+        self.name = name
+        self.lineno = 0
+
+    def error(self, message):
+        sys.stderr.write("%s:%d: error: %s\n" % (
+            self.name, self.lineno + 1, message))
+        raise ParseError
+
+    def warn(self, message):
+        sys.stderr.write("%s:%d: warning: %s\n" % (
+            self.name, self.lineno + 1, message))
 
 ## Describes the properties of a gEDA schematic/symbol file format version.
 #
@@ -92,25 +116,19 @@ class FileFormat:
 
 ## Helper function for \ref sscanf.
 
-def parse_token(s, fmt, message):
+def parse_token(s, fmt):
     if fmt == '%c':
         if len(s) != 1:
-            raise ParseError, message
+            raise ValueError
         return s
 
     if fmt == '%d':
-        try:
-            return int(s)
-        except ValueError:
-            raise ParseError, message
+        return int(s)
 
     if fmt == '%u':
-        try:
-            val = int(s)
-        except ValueError:
-            raise ParseError, message
+        val = int(s)
         if val < 0:
-            raise ParseError, message
+            raise ValueError
         return val
 
     if fmt == '%s':
@@ -126,30 +144,32 @@ def parse_token(s, fmt, message):
 # exactly match this pattern.  Only the tokens \c %%c, \c %%d, \c %%s,
 # and \c %%u are allowed.
 #
-# \throw ParseError if the string does not match the format
+# \throw ValueError if the string does not match the format
 # \throw ValueError if an invalid format token is passed
 #
 # \return a tuple containing the parsed values
 
-def sscanf(s, fmt, message):
+def sscanf(s, fmt):
     while fmt.endswith('\n'):
         if not s.endswith('\n'):
-            raise ParseError, message
+            raise ValueError
         fmt = fmt[:-1]
         s = s[:-1]
 
     if s.endswith('\n'):
-        raise ParseError, message
+        raise ValueError
 
-    s = s.rstrip(' ') # whatever??
+    # gEDA/gaf ignores trailing spaces and, in some older versions,
+    # wrote them for text objects
+    s = s.rstrip(' ')
 
     stok = s.split(' ')
     fmttok = fmt.split(' ')
 
     if len(stok) != len(fmttok):
-        raise ParseError, message
+        raise ValueError
 
-    return [parse_token(st, ft, message) for (st, ft) in zip(stok, fmttok)]
+    return [parse_token(st, ft) for (st, ft) in zip(stok, fmttok)]
 
 ## Replace "\r\n" line endings with "\n" line endings.
 
@@ -180,6 +200,11 @@ def read(filename, **kwds):
 # \param [in] f                   A file-like object from which to read.
 # \param [in] name                The file name displayed in warning
 #                                 and error messages.
+# \param [in] log                 An object to which errors are logged.
+#                                 If this is \c None (the default), a
+#                                 new DefaultLog instance is used
+#                                 which raises a ParseError on error
+#                                 and writes messages to \c sys.stderr.
 # \param [in] load_symbols        Load referenced symbol files as well
 # \param [in] override_net_color  Reset the color of nets do default?
 # \param [in] override_bus_color  Reset the color of buses do default?
@@ -190,11 +215,21 @@ def read(filename, **kwds):
 #
 # \throw ParseError if the file is not a valid gEDA schematic/symbol file
 
-def read_file(f, name, load_symbols = False,
-                       override_net_color = None,
-                       override_bus_color = None,
-                       override_pin_color = None,
-                       force_boundingbox = False):
+def read_file(f, name, log = None,
+              load_symbols = False,
+              override_net_color = None,
+              override_bus_color = None,
+              override_pin_color = None,
+              force_boundingbox = False):
+    if log is None:
+        log = DefaultLog(name)
+
+    def lineno_incrementor(f):
+        for line in f:
+            yield line
+            log.lineno += 1
+    f = lineno_incrementor(f)
+
     # Mock-ups for referenced symbols if we aren't loading them
     referenced_symbols = {}
 
@@ -231,45 +266,43 @@ def read_file(f, name, load_symbols = False,
         objtype = line[0]
 
         if objtype == OBJ_LINE:
-            ob = rev.add_object(read_line(line, origin, format))
+            ob = rev.add_object(read_line(line, origin, format, log))
         elif objtype == OBJ_NET:
-            ob = rev.add_object(read_net(line, origin, format))
+            ob = rev.add_object(read_net(line, origin, format, log))
             if override_net_color is not None:
                 ob.color = override_net_color
         elif objtype == OBJ_BUS:
-            ob = rev.add_object(read_bus(line, origin, format))
+            ob = rev.add_object(read_bus(line, origin, format, log))
             if override_bus_color is not None:
                 ob.color = override_bus_color
         elif objtype == OBJ_BOX:
-            ob = rev.add_object(read_box(line, origin, format))
+            ob = rev.add_object(read_box(line, origin, format, log))
         elif objtype == OBJ_PICTURE:
-            ob = rev.add_object(read_picture(line, f, origin, format))
+            ob = rev.add_object(read_picture(line, f, origin, format, log))
         elif objtype == OBJ_CIRCLE:
-            ob = rev.add_object(read_circle(line, origin, format))
+            ob = rev.add_object(read_circle(line, origin, format, log))
         elif objtype == OBJ_COMPLEX:
-            ob = rev.add_object(read_complex(line, origin, format,
+            ob = rev.add_object(read_complex(line, origin, format, log,
                                              load_symbol))
         elif objtype == OBJ_TEXT:
-            ob = rev.add_object(read_text(line, f, origin, format))
+            ob = rev.add_object(read_text(line, f, origin, format, log))
         elif objtype == OBJ_PATH:
-            ob = rev.add_object(read_path(line, f, origin, format))
+            ob = rev.add_object(read_path(line, f, origin, format, log))
         elif objtype == OBJ_PIN:
-            ob = rev.add_object(read_pin(line, origin, format))
+            ob = rev.add_object(read_pin(line, origin, format, log))
             if override_pin_color is not None:
                 color = override_pin_color
         elif objtype == OBJ_ARC:
-            ob = rev.add_object(read_arc(line, origin, format))
+            ob = rev.add_object(read_arc(line, origin, format, log))
         elif objtype == STARTATTACH_ATTR:
             if ob is None:
-                raise ParseError, \
-                    _("Read unexpected attach symbol start marker in [%s] :\n"
-                      ">>\n%s<<\n") % (name, line)
+                log.error(_("read unexpected attach symbol start marker"))
 
             while True:
                 try:
                     line = f.next()
                 except StopIteration:
-                    raise ParseError, _("Unterminated attribute list")
+                    log.error(_("unterminated attribute list"))
 
                 if not line:
                     continue
@@ -278,39 +311,36 @@ def read_file(f, name, load_symbols = False,
                     break
 
                 if line[0] != OBJ_TEXT:
-                    raise ParseError, \
-                        _("Tried to attach a non-text item as an attribute")
+                    log.error(
+                        _("tried to attach a non-text item as an attribute"))
 
-                attrib = read_text(line, f, origin, format)
+                attrib = read_text(line, f, origin, format, log)
                 rev.relocate_object(rev.add_object(attrib), ob, None)
 
             ob = None
         elif objtype == START_EMBEDDED:
             if ob is None:
-                raise ParseError, \
-                    _("Read unexpected embedded symbol start marker in [%s] :\n"
-                      ">>\n%s<<\n") % (name, line)
+                log.error(_("read unexpected embedded symbol start marker"))
             component_data = rev.get_object_data(ob)
             if type(component_data) != xorn.storage.Component:
-                raise ParseError, \
-                    _("Read unexpected embedded symbol start marker in [%s] :\n"
-                      ">>\n%s<<\n") % (name, line)
+                log.error(_("embedded symbol start marker following "
+                            "non-component object"))
             if not component_data.symbol.embedded:
-                raise ParseError
+                log.error(_("embedded symbol start marker following "
+                            "component with non-embedded symbol"))
             if component_data.symbol.prim_objs is not None:
-                raise ParseError
+                log.error(_("embedded symbol start marker following "
+                            "embedded symbol"))
             object_lists_save.append((rev, ob, origin))
             rev = xorn.storage.Revision()
             component_data.symbol.prim_objs = rev
             origin = origin[0] + component_data.x, origin[1] + component_data.y
         elif objtype == END_EMBEDDED:
             if not object_lists_save:
-                raise ParseError, \
-                    _("Read unexpected embedded symbol end marker in [%s] :\n"
-                      ">>\n%s<<\n") % (name, line)
+                log.error(_("read unexpected embedded symbol end marker"))
             rev, ob, origin = object_lists_save.pop()
         elif objtype == ENDATTACH_ATTR:
-            raise ParseError, "Unexpected '}'"
+            log.error(_("unexpected '}'"))
         elif objtype == INFO_FONT:
             # NOP
             pass
@@ -320,11 +350,12 @@ def read_file(f, name, load_symbols = False,
         elif objtype == VERSION_CHAR:
             try:
                 objtype, release_ver, fileformat_ver = \
-                    sscanf(line, "%c %u %u\n", None)
-            except ParseError:
-                objtype, release_ver = \
-                    sscanf(line, "%c %u\n",
-                           _("Failed to parse version from buffer."))
+                    sscanf(line, "%c %u %u\n")
+            except ValueError:
+                try:
+                    objtype, release_ver = sscanf(line, "%c %u\n")
+                except ValueError:
+                    log.error(_("failed to parse version from buffer"))
                 fileformat_ver = 0
 
             assert objtype == VERSION_CHAR
@@ -335,20 +366,19 @@ def read_file(f, name, load_symbols = False,
                 fileformat_ver = 0
 
             if fileformat_ver == 0:
-                print _("Read an old format sym/sch file!\n"
-                        "Please run g[sym|sch]update on:\n[%s]\n") % name
+                log.warn(_("Read an old format sym/sch file! "
+                           "Please run g[sym|sch]update on this file"))
 
             format = FileFormat(release_ver, fileformat_ver)
         else:
-            raise ParseError, _("Read garbage in [%s] :\n"
-                                ">>\n%s<<\n") % (name, line)
+            log.error(_("read garbage"))
 
     for ob in rev.get_objects():
         data = rev.get_object_data(ob)
         if isinstance(data, xorn.storage.Component) \
                and data.symbol.embedded \
                and data.symbol.prim_objs is None:
-            raise ParseError
+            log.error(_("embedded symbol is missing"))
 
     if not format.enhanced_pinbus_format:
         pin_update_whichend(rev, force_boundingbox)
@@ -374,42 +404,42 @@ def pin_update_whichend(rev, force_boundingbox):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a circle object
 
-def read_circle(buf, (origin_x, origin_y), format):
-    if not format.supports_linefill_attributes:
-        type, x1, y1, radius, color = sscanf(
-            buf, "%c %d %d %d %d\n", _("Failed to parse circle object"))
+def read_circle(buf, (origin_x, origin_y), format, log):
+    try:
+        if not format.supports_linefill_attributes:
+            type, x1, y1, radius, color = sscanf(buf, "%c %d %d %d %d\n")
+            circle_width = 0
+            circle_end = 0
+            circle_type = 0
+            circle_length = -1
+            circle_space = -1
 
-        circle_width = 0
-        circle_end = 0
-        circle_type = 0
-        circle_length = -1
-        circle_space = -1
-
-        circle_fill = 0
-        fill_width = 0
-        angle1 = -1
-        pitch1 = -1
-        angle2 = -1
-        pitch2 = -1
-    else:
-        type, x1, y1, radius, color, \
-        circle_width, circle_end, circle_type, circle_length, circle_space, \
-        circle_fill, fill_width, angle1, pitch1, angle2, pitch2 = sscanf(
-            buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-            _("Failed to parse circle object"))
+            circle_fill = 0
+            fill_width = 0
+            angle1 = -1
+            pitch1 = -1
+            angle2 = -1
+            pitch2 = -1
+        else:
+            type, x1, y1, radius, color, circle_width, \
+            circle_end, circle_type, circle_length, circle_space, \
+            circle_fill, fill_width, angle1, pitch1, angle2, pitch2 = sscanf(
+                buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n")
+    except ValueError:
+        log.error(_("failed to parse circle object"))
 
     if type != OBJ_CIRCLE:
         raise ValueError
 
-    if radius <= 0:
-        print _("Found a zero or negative radius circle "
-                "[ %c %d %d %d %d ]\n") % (type, x1, y1, radius, color)
-        print _("Setting radius to 0\n")
+    if radius == 0:
+        log.warn(_("circle has radius zero"))
+    elif radius < 0:
+        log.warn(_("circle has negative radius (%d), setting to 0") % radius)
         radius = 0
 
     if color < 0 or color > MAX_COLORS:
-        print _("Found an invalid color [ %s ]\n") % buf
-        print _("Setting color to default color\n")
+        log.warn(_("circle has invalid color (%d), setting to %d")
+                 % (color, DEFAULT_COLOR))
         color = DEFAULT_COLOR
 
     return xorn.storage.Circle(
@@ -438,33 +468,35 @@ def read_circle(buf, (origin_x, origin_y), format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a arc object
 
-def read_arc(buf, (origin_x, origin_y), format):
-    if not format.supports_linefill_attributes:
-        type, x1, y1, radius, start_angle, sweep_angle, color = sscanf(
-            buf, "%c %d %d %d %d %d %d\n", _("Failed to parse arc object"))
-
-        arc_width = 0
-        arc_end = 0
-        arc_type = 0
-        arc_space = -1
-        arc_length = -1
-    else:
-        type, x1, y1, radius, start_angle, sweep_angle, color, \
-        arc_width, arc_end, arc_type, arc_length, arc_space = sscanf(
-            buf, "%c %d %d %d %d %d %d %d %d %d %d %d\n",
-            _("Failed to parse arc object"))
+def read_arc(buf, (origin_x, origin_y), format, log):
+    try:
+        if not format.supports_linefill_attributes:
+            type, x1, y1, radius, start_angle, sweep_angle, color = sscanf(
+                buf, "%c %d %d %d %d %d %d\n")
+            arc_width = 0
+            arc_end = 0
+            arc_type = 0
+            arc_space = -1
+            arc_length = -1
+        else:
+            type, x1, y1, radius, start_angle, sweep_angle, color, \
+            arc_width, arc_end, arc_type, arc_length, arc_space = sscanf(
+                buf, "%c %d %d %d %d %d %d %d %d %d %d %d\n")
+    except ValueError:
+        log.error(_("failed to parse arc object"))
 
     if type != OBJ_ARC:
         raise ValueError
 
-    if radius <= 0:
-        print _("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n") % (
-            type, x1, y1, radius, start_angle, sweep_angle, color)
+    if radius == 0:
+        log.warn(_("arc has radius zero"))
+    elif radius < 0:
+        log.warn(_("arc has negative radius (%d), setting to 0") % radius)
         radius = 0
 
     if color < 0 or color > MAX_COLORS:
-        print _("Found an invalid color [ %s ]\n") % buf
-        print _("Setting color to default color\n")
+        log.warn(_("arc has invalid color (%d), setting to %d")
+                 % (color, DEFAULT_COLOR))
         color = DEFAULT_COLOR
 
     return xorn.storage.Arc(
@@ -486,40 +518,40 @@ def read_arc(buf, (origin_x, origin_y), format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a box object
 
-def read_box(buf, (origin_x, origin_y), format):
-    if not format.supports_linefill_attributes:
-        type, x1, y1, width, height, color = sscanf(
-            buf, "%c %d %d %d %d %d\n", _("Failed to parse box object"))
+def read_box(buf, (origin_x, origin_y), format, log):
+    try:
+        if not format.supports_linefill_attributes:
+            type, x1, y1, width, height, color = sscanf(
+                buf, "%c %d %d %d %d %d\n")
+            box_width = 0
+            box_end = 0
+            box_type = 0
+            box_length = -1
+            box_space = -1
 
-        box_width = 0
-        box_end = 0
-        box_type = 0
-        box_length = -1
-        box_space = -1
-
-        box_filling = 0
-        fill_width = 0
-        angle1 = -1
-        pitch1 = -1
-        angle2 = -1
-        pitch2 = -1
-    else:
-        type, x1, y1, width, height, color, \
-        box_width, box_end, box_type, box_length, box_space, \
-        box_filling, fill_width, angle1, pitch1, angle2, pitch2 = sscanf(
-            buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-            _("Failed to parse box object"))
+            box_filling = 0
+            fill_width = 0
+            angle1 = -1
+            pitch1 = -1
+            angle2 = -1
+            pitch2 = -1
+        else:
+            type, x1, y1, width, height, color, \
+            box_width, box_end, box_type, box_length, box_space, \
+            box_filling, fill_width, angle1, pitch1, angle2, pitch2 = sscanf(
+                buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n")
+    except ValueError:
+        log.error(_("failed to parse box object"))
 
     if type != OBJ_BOX:
         raise ValueError
 
     if width == 0 or height == 0:
-        print _("Found a zero width/height box [ %c %d %d %d %d %d ]\n") % (
-            type, x1, y1, width, height, color)
+        log.warn(_("box has width/height zero"))
 
     if color < 0 or color > MAX_COLORS:
-        print _("Found an invalid color [ %s ]\n") % buf
-        print _("Setting color to default color\n")
+        log.warn(_("box has invalid color (%d), setting to %d")
+                 % (color, DEFAULT_COLOR))
         color = DEFAULT_COLOR
 
     # In libgeda, a box is internally represented by its lower right
@@ -553,31 +585,32 @@ def read_box(buf, (origin_x, origin_y), format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a bus object
 
-def read_bus(buf, (origin_x, origin_y), format):
-    if not format.enhanced_pinbus_format:
-        type, x1, y1, x2, y2, color = sscanf(
-            buf, "%c %d %d %d %d %d\n", _("Failed to parse bus object"))
-        ripper_dir = 0
-    else:
-        type, x1, y1, x2, y2, color, ripper_dir = sscanf(
-            buf, "%c %d %d %d %d %d %d\n", _("Failed to parse bus object"))
+def read_bus(buf, (origin_x, origin_y), format, log):
+    try:
+        if not format.enhanced_pinbus_format:
+            type, x1, y1, x2, y2, color = sscanf(
+                buf, "%c %d %d %d %d %d\n")
+            ripper_dir = 0
+        else:
+            type, x1, y1, x2, y2, color, ripper_dir = sscanf(
+                buf, "%c %d %d %d %d %d %d\n")
+    except ValueError:
+        log.error(_("failed to parse bus object"))
 
     if type != OBJ_BUS:
         raise ValueError
 
     if x1 == x2 and y1 == y2:
-        print _("Found a zero length bus [ %c %d %d %d %d %d ]\n") % (
-            type, x1, y1, x2, y2, color)
+        log.warn(_("bus has length zero"))
 
     if color < 0 or color > MAX_COLORS:
-        print _("Found an invalid color [ %s ]\n") % buf
-        print _("Setting color to default color\n")
+        log.warn(_("bus has invalid color (%d), setting to %d")
+                 % (color, DEFAULT_COLOR))
         color = DEFAULT_COLOR
 
     if ripper_dir < -1 or ripper_dir > 1:
-        print _("Found an invalid bus ripper direction [ %s ]\n") % buf
-        print _("Resetting direction to neutral (no direction)\n")
-        ripper_dir = 0
+        log.warn(_("bus has invalid ripper direction (%d)") % ripper_dir)
+        ripper_dir = 0  # isn't used
 
     return xorn.storage.Net(
         x = x1 - origin_x,
@@ -597,25 +630,23 @@ def read_bus(buf, (origin_x, origin_y), format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a component object
 
-def read_complex(buf, (origin_x, origin_y), format, load_symbol):
-    type, x1, y1, selectable, angle, mirror, basename = sscanf(
-        buf, "%c %d %d %d %d %d %s\n", _("Failed to parse complex object"))
+def read_complex(buf, (origin_x, origin_y), format, log, load_symbol):
+    try:
+        type, x1, y1, selectable, angle, mirror, basename = sscanf(
+            buf, "%c %d %d %d %d %d %s\n")
+    except ValueError:
+        log.error(_("failed to parse complex object"))
 
     if type != OBJ_COMPLEX:
         raise ValueError
 
     if angle not in [0, 90, 180, 270]:
-        print _("Found a component with an invalid rotation "
-                "[ %c %d %d %d %d %d %s ]\n") % (
-            type, x1, y1, selectable, angle, mirror, basename)
-        print _("Setting angle to 0\n")
+        log.warn(_("component has invalid angle (%d), setting to 0") % angle)
         angle = 0
 
     if mirror != 0 and mirror != 1:
-        print _("Found a component with an invalid mirror flag "
-                "[ %c %d %d %d %d %d %s ]\n") % (
-            type, x1, y1, selectable, angle, mirror, basename)
-        print _("Setting mirror to 0\n")
+        log.warn(_("component has invalid mirror flag (%d), "
+                   "setting to 0") % mirror)
         mirror = 0
 
     # color = DEFAULT_COLOR
@@ -639,21 +670,21 @@ def read_complex(buf, (origin_x, origin_y), format, load_symbol):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a line object
 
-def read_line(buf, (origin_x, origin_y), format):
-    if not format.supports_linefill_attributes:
-        type, x1, y1, x2, y2, color = sscanf(
-            buf, "%c %d %d %d %d %d\n", _("Failed to parse line object"))
-
-        line_width = 0
-        line_end = 0
-        line_type = 0
-        line_length = -1
-        line_space = -1
-    else:
-        type, x1, y1, x2, y2, color, \
-        line_width, line_end, line_type, line_length, line_space = sscanf(
-            buf, "%c %d %d %d %d %d %d %d %d %d %d\n",
-            _("Failed to parse line object"))
+def read_line(buf, (origin_x, origin_y), format, log):
+    try:
+        if not format.supports_linefill_attributes:
+            type, x1, y1, x2, y2, color = sscanf(buf, "%c %d %d %d %d %d\n")
+            line_width = 0
+            line_end = 0
+            line_type = 0
+            line_length = -1
+            line_space = -1
+        else:
+            type, x1, y1, x2, y2, color, \
+            line_width, line_end, line_type, line_length, line_space = sscanf(
+                buf, "%c %d %d %d %d %d %d %d %d %d %d\n")
+    except ValueError:
+        log.error(_("failed to parse line object"))
 
     if type != OBJ_LINE:
         raise ValueError
@@ -661,12 +692,11 @@ def read_line(buf, (origin_x, origin_y), format):
     # Null length line are not allowed.  If such a line is detected, a
     # message is issued.
     if x1 == x2 and y1 == y2:
-        print _("Found a zero length line [ %c %d %d %d %d %d ]\n") % (
-            type, x1, y1, x2, y2, color)
+        log.warn(_("line has length zero"))
 
     if color < 0 or color > MAX_COLORS:
-        print _("Found an invalid color [ %s ]\n") % buf
-        print _("Setting color to default color\n")
+        log.warn(_("line has invalid color (%d), setting to %d")
+                 % (color, DEFAULT_COLOR))
         color = DEFAULT_COLOR
 
     return xorn.storage.Line(
@@ -687,20 +717,21 @@ def read_line(buf, (origin_x, origin_y), format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a net object
 
-def read_net(buf, (origin_x, origin_y), format):
-    type, x1, y1, x2, y2, color = sscanf(
-        buf, "%c %d %d %d %d %d\n", _("Failed to parse net object"))
+def read_net(buf, (origin_x, origin_y), format, log):
+    try:
+        type, x1, y1, x2, y2, color = sscanf(buf, "%c %d %d %d %d %d\n")
+    except ValueError:
+        log.error(_("failed to parse net object"))
 
     if type != OBJ_NET:
         raise ValueError
 
     if x1 == x2 and y1 == y2:
-        print _("Found a zero length net [ %c %d %d %d %d %d ]\n") % (
-            type, x1, y1, x2, y2, color)
+        log.warn(_("net has length zero"))
 
     if color < 0 or color > MAX_COLORS:
-        print _("Found an invalid color [ %s ]\n") % buf
-        print _("Setting color to default color\n")
+        log.warn(_("net has invalid color (%d), setting to %d")
+                 % (color, DEFAULT_COLOR))
         color = DEFAULT_COLOR
 
     return xorn.storage.Net(
@@ -722,21 +753,23 @@ def read_net(buf, (origin_x, origin_y), format):
 # \throw ParseError if not enough lines could be read from the file
 # \throw ValueError if \a first_line doesn't describe a path object
 
-def read_path(first_line, f, (origin_x, origin_y), format):
-    type, color, \
-    line_width, line_end, line_type, line_length, line_space, \
-    fill_type, fill_width, angle1, pitch1, angle2, pitch2, \
-    num_lines = sscanf(
-        first_line, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-        _("Failed to parse path object"))
+def read_path(first_line, f, (origin_x, origin_y), format, log):
+    try:
+        type, color, \
+        line_width, line_end, line_type, line_length, line_space, \
+        fill_type, fill_width, angle1, pitch1, angle2, pitch2, \
+        num_lines = sscanf(
+            first_line, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d\n")
+    except ValueError:
+        log.error(_("failed to parse path object"))
 
     if type != OBJ_PATH:
         raise ValueError
 
     # Checks if the required color is valid.
     if color < 0 or color > MAX_COLORS:
-        print _("Found an invalid color [ %s ]\n") % first_line
-        print _("Setting color to default color\n")
+        log.warn(_("path has invalid color (%d), setting to %d")
+                 % (color, DEFAULT_COLOR))
         color = DEFAULT_COLOR
 
     pathstr = ''
@@ -744,8 +777,8 @@ def read_path(first_line, f, (origin_x, origin_y), format):
         try:
             line = f.next()
         except StopIteration:
-            raise ParseError, _("Unexpected end-of-file after %d lines "
-                                "while reading path") % i
+            log.error(_("unexpected end of file after %d lines "
+                        "while reading path") % i)
 
         pathstr += line
 
@@ -778,41 +811,39 @@ def read_path(first_line, f, (origin_x, origin_y), format):
 # \throw ParseError if the picture data could be read from the file
 # \throw ValueError if \a first_line doesn't describe a picture object
 
-def read_picture(first_line, f, (origin_x, origin_y), format):
-    type, x1, y1, width, height, angle, mirrored, embedded = sscanf(
-        first_line, "%c %d %d %d %d %d %d %d\n",
-        _("Failed to parse picture definition"))
+def read_picture(first_line, f, (origin_x, origin_y), format, log):
+    try:
+        type, x1, y1, width, height, angle, mirrored, embedded = sscanf(
+            first_line, "%c %d %d %d %d %d %d %d\n")
+    except ValueError:
+        log.error(_("failed to parse picture definition"))
 
     if type != OBJ_PICTURE:
         raise ValueError
 
     if width == 0 or height == 0:
-        print _("Found a zero width/height picture [ %c %d %d %d %d ]\n") % (
-            type, x1, y1, width, height)
+        log.warn(_("picture has width/height zero"))
 
     if mirrored != 0 and mirrored != 1:
-        print _("Found a picture with a wrong 'mirrored' parameter: "
-                "%d.\n") % mirrored
-        print _("Setting mirrored to 0\n")
+        log.warn(_("picture has wrong 'mirrored' parameter (%d), "
+                   "setting to 0") % mirrored)
         mirrored = 0
 
     if angle not in [0, 90, 180, 270]:
-        print _("Found an unsupported picture angle [ %d ]\n") % angle
-        print _("Setting angle to 0\n")
+        log.warn(_("picture has unsupported angle (%d), setting to 0") % angle)
         angle = 0
 
     try:
         filename = f.next()
     except StopIteration:
-        raise ParseError, _("Unexpected end-of-file "
-                            "while reading picture file name")
+        log.error(_("unexpected end of file while reading picture file name"))
 
     if filename.endswith('\n'):
         filename = filename[:-1]
 
     # Handle empty filenames
     if not filename:
-        print _("Found an image with no filename.")
+        log.warn(_("image has no filename"))
         filename = None
 
     pixmap = xorn.geda.ref.Pixmap(filename, None, False)
@@ -822,16 +853,15 @@ def read_picture(first_line, f, (origin_x, origin_y), format):
         try:
             pixmap.data = xorn.base64.decode(f, delim = '.')
         except xorn.base64.DecodingError as e:
-            print _("Failed to load image from embedded data [%s]: "
-                    "%s\n") % (filename, e.message)
+            log.warn(_("Failed to load image \"%s\" from embedded data: %s. "
+                       "Falling back to file loading. Picture unembedded")
+                     % (filename, e.message))
             # _("Base64 decoding failed.")
-            print _("Falling back to file loading. Picture unembedded.\n")
         else:
             pixmap.embedded = True
     elif embedded != 0:
-        print _("Found a picture with a wrong 'embedded' parameter: "
-                "%d.\n") % embedded
-        print _("Setting embedded to False\n")
+        log.warn(_("picture has wrong 'embedded' parameter (%d), "
+                   "setting to not embedded") % embedded)
 
     return xorn.storage.Picture(
         x = x1 - origin_x,
@@ -847,31 +877,32 @@ def read_picture(first_line, f, (origin_x, origin_y), format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a pin object
 
-def read_pin(buf, (origin_x, origin_y), format):
-    if not format.enhanced_pinbus_format:
-        type, x1, y1, x2, y2, color = sscanf(
-            buf, "%c %d %d %d %d %d\n", _("Failed to parse pin object"))
-
-        pin_type = 0
-        whichend = -1
-    else:
-        type, x1, y1, x2, y2, color, pin_type, whichend = sscanf(
-            buf, "%c %d %d %d %d %d %d %d\n", _("Failed to parse pin object"))
+def read_pin(buf, (origin_x, origin_y), format, log):
+    try:
+        if not format.enhanced_pinbus_format:
+            type, x1, y1, x2, y2, color = sscanf(buf, "%c %d %d %d %d %d\n")
+            pin_type = 0
+            whichend = -1
+        else:
+            type, x1, y1, x2, y2, color, pin_type, whichend = sscanf(
+                buf, "%c %d %d %d %d %d %d %d\n")
+    except ValueError:
+        log.error(_("failed to parse pin object"))
 
     if type != OBJ_PIN:
         raise ValueError
 
     if whichend == -1:
-        print _("Found a pin which did not have the whichone field set.\n"
-                "Verify and correct manually.\n")
+        log.warn(_("pin does not have the whichone field set--"
+                   "verify and correct manually!"))
     elif whichend < -1 or whichend > 1:
-        print _("Found an invalid whichend on a pin (reseting to zero): "
-                "%d\n") % whichend
+        log.warn(_("pin has invalid whichend (%d), "
+                   "setting to first end") % whichend)
         whichend = 0
 
     if color < 0 or color > MAX_COLORS:
-        print _("Found an invalid color [ %s ]\n") % buf
-        print _("Setting color to default color\n")
+        log.warn(_("pin has invalid color (%d), setting to %d")
+                 % (color, DEFAULT_COLOR))
         color = DEFAULT_COLOR
 
     if pin_type == 0:
@@ -879,15 +910,14 @@ def read_pin(buf, (origin_x, origin_y), format):
     elif pin_type == 1:
         is_bus = True
     else:
-        raise ParseError
+        log.warn(_("pin has invalid type (%d), setting to 0") % pin_type)
+        is_bus = False
 
-    if whichend == 0:
+    if whichend != 1:
         is_inverted = False
-    elif whichend == 1:
+    else:
         x1, y1, x2, y2 = x2, y2, x1, y1
         is_inverted = True
-    else:
-        raise ParseError
 
     return xorn.storage.Net(
         x = x1 - origin_x,
@@ -908,66 +938,56 @@ def read_pin(buf, (origin_x, origin_y), format):
 # \throw ParseError if not enough lines could be read from the file
 # \throw ValueError if \a first_line doesn't describe a text object
 
-def read_text(first_line, f, (origin_x, origin_y), format):
-    if format.supports_multiline_text:
-        type, x, y, color, size, visibility, show_name_value, angle, \
-        alignment, num_lines = sscanf(
-            first_line, "%c %d %d %d %d %d %d %d %d %d\n",
-            _("Failed to parse text object"))
-    elif not format.supports_text_alignment:
-        type, x, y, color, size, visibility, show_name_value, angle = sscanf(
-            first_line, "%c %d %d %d %d %d %d %d\n",
-            _("Failed to parse text object"))
-        alignment = LOWER_LEFT  # older versions didn't have this
-        num_lines = 1           # only support a single line
-    else:
-        type, x, y, color, size, visibility, show_name_value, angle, \
-        alignment = sscanf(
-            first_line, "%c %d %d %d %d %d %d %d %d\n",
-            _("Failed to parse text object"))
-        num_lines = 1           # only support a single line
+def read_text(first_line, f, (origin_x, origin_y), format, log):
+    try:
+        if format.supports_multiline_text:
+            type, x, y, color, size, visibility, show_name_value, angle, \
+            alignment, num_lines = sscanf(
+                first_line, "%c %d %d %d %d %d %d %d %d %d\n")
+        elif not format.supports_text_alignment:
+            type, x, y, color, size, visibility, show_name_value, angle = \
+                sscanf(first_line, "%c %d %d %d %d %d %d %d\n")
+            alignment = LOWER_LEFT  # older versions didn't have this
+            num_lines = 1           # only support a single line
+        else:
+            type, x, y, color, size, visibility, show_name_value, angle, \
+            alignment = sscanf(
+                first_line, "%c %d %d %d %d %d %d %d %d\n")
+            num_lines = 1           # only support a single line
+    except ValueError:
+        log.error(_("failed to parse text object"))
 
     if type != OBJ_TEXT:
         raise ValueError
 
     if size == 0:
-        print _("Found a zero size text string "
-                "[ %c %d %d %d %d %d %d %d %d ]\n") % (
-            type, x, y, color, size, visibility, show_name_value, angle,
-            alignment)
+        log.warn(_("text has size zero"))
 
     if angle not in [0, 90, 180, 270]:
-        print _("Found an unsupported text angle "
-                "[ %c %d %d %d %d %d %d %d %d ]\n") % (
-            type, x, y, color, size, visibility, show_name_value, angle,
-            alignment)
-        print _("Setting angle to 0\n")
+        log.warn(_("text has unsupported angle (%d), setting to 0") % angle)
         angle = 0
 
     if alignment not in [LOWER_LEFT, MIDDLE_LEFT, UPPER_LEFT,
                          LOWER_MIDDLE, MIDDLE_MIDDLE, UPPER_MIDDLE,
                          LOWER_RIGHT, MIDDLE_RIGHT, UPPER_RIGHT]:
-        print _("Found an unsupported text alignment "
-                "[ %c %d %d %d %d %d %d %d %d ]\n") % (
-            type, x, y, color, size, visibility, show_name_value, angle,
-            alignment)
-        print _("Setting alignment to LOWER_LEFT\n")
+        log.warn(_("text has unsupported alignment (%d), "
+                   "setting to LOWER_LEFT") % alignment)
         alignment = LOWER_LEFT
 
     if color < 0 or color > MAX_COLORS:
-        print _("Found an invalid color [ %s ]\n") % first_line
-        print _("Setting color to default color\n")
+        log.warn(_("text has invalid color (%d), setting to %d")
+                 % (color, DEFAULT_COLOR))
         color = DEFAULT_COLOR
 
     if num_lines <= 0:
-        raise ParseError
+        log.error(_("text has invalid number of lines (%d)") % num_lines)
 
     text = ''
     for i in xrange(0, num_lines):
         try:
             line = f.next()
         except StopIteration:
-            raise ParseError, _("Unexpected end-of-file after %d lines") % i
+            log.error(_("unexpected end of file after %d lines of text") % i)
 
         text += line
 
