@@ -87,6 +87,7 @@ pythontests = \
 	python/geda/attrib.py \
 	python/geda/complex.py \
 	python/geda/parse_attrib.py \
+	python/geda/read_log.py \
 	python/geda/ripperdir.py
 
 testdata = \
