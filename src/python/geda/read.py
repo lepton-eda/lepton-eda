@@ -297,6 +297,9 @@ def read_file(f, name, log = None,
         elif objtype == STARTATTACH_ATTR:
             if ob is None:
                 log.error(_("read unexpected attach symbol start marker"))
+            if not isinstance(rev.get_object_data(ob), xorn.storage.Net) and \
+               not isinstance(rev.get_object_data(ob), xorn.storage.Component):
+                log.error(_("can't attach attributes to this object type"))
 
             while True:
                 try:
