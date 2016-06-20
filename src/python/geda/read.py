@@ -358,7 +358,7 @@ def read_file(f, name, log = None,
                 try:
                     objtype, release_ver = sscanf(line, "%c %u\n")
                 except ValueError:
-                    log.error(_("failed to parse version from buffer"))
+                    log.error(_("failed to parse version string"))
                 fileformat_ver = 0
 
             assert objtype == VERSION_CHAR
