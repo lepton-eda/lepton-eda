@@ -291,7 +291,7 @@ def read_file(f, name, log = None,
         elif objtype == OBJ_PIN:
             ob = rev.add_object(read_pin(line, origin, format, log))
             if override_pin_color is not None:
-                color = override_pin_color
+                ob.color = override_pin_color
         elif objtype == OBJ_ARC:
             ob = rev.add_object(read_arc(line, origin, format, log))
         elif objtype == STARTATTACH_ATTR:
