@@ -416,7 +416,7 @@ def read_file(f, name, log = None,
             log.error(_("embedded symbol is missing"))
 
     if not format.enhanced_pinbus_format:
-        pin_update_whichend(rev, force_boundingbox)
+        pin_update_whichend(rev, force_boundingbox, log)
 
     return xorn.proxy.RevisionProxy(rev)
 
@@ -430,8 +430,8 @@ def read_file(f, name, log = None,
 #
 # \warning This function is not implemented.  See Xorn bug #148.
 
-def pin_update_whichend(rev, force_boundingbox):
-    raise NotImplementedError
+def pin_update_whichend(rev, force_boundingbox, log):
+    log.error(_("file is lacking pin orientation information"))
 
 
 ## Read a circle object from a string in gEDA format.
