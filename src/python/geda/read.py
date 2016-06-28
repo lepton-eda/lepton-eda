@@ -266,46 +266,70 @@ def read_file(f, name, log = None,
         objtype = line[0]
 
         if objtype == OBJ_LINE:
-            ob = rev.add_object(read_line(line, origin, format, log))
+            data = read_line(line, origin, format, log)
+            if data is not None:
+                ob = rev.add_object(data)
         elif objtype == OBJ_NET:
-            ob = rev.add_object(read_net(line, origin, format, log))
-            if override_net_color is not None:
-                ob.color = override_net_color
+            data = read_net(line, origin, format, log)
+            if data is not None:
+                if override_net_color is not None:
+                    data.color = override_net_color
+                ob = rev.add_object(data)
         elif objtype == OBJ_BUS:
-            ob = rev.add_object(read_bus(line, origin, format, log))
-            if override_bus_color is not None:
-                ob.color = override_bus_color
+            data = read_bus(line, origin, format, log)
+            if data is not None:
+                if override_bus_color is not None:
+                    data.color = override_bus_color
+                ob = rev.add_object(data)
         elif objtype == OBJ_BOX:
-            ob = rev.add_object(read_box(line, origin, format, log))
+            data = read_box(line, origin, format, log)
+            if data is not None:
+                ob = rev.add_object(data)
         elif objtype == OBJ_PICTURE:
-            ob = rev.add_object(read_picture(line, f, origin, format, log))
+            data = read_picture(line, f, origin, format, log)
+            if data is not None:
+                ob = rev.add_object(data)
         elif objtype == OBJ_CIRCLE:
-            ob = rev.add_object(read_circle(line, origin, format, log))
+            data = read_circle(line, origin, format, log)
+            if data is not None:
+                ob = rev.add_object(data)
         elif objtype == OBJ_COMPLEX:
-            ob = rev.add_object(read_complex(line, origin, format, log,
-                                             load_symbol))
+            data = read_complex(line, origin, format, log, load_symbol)
+            if data is not None:
+                ob = rev.add_object(data)
         elif objtype == OBJ_TEXT:
-            ob = rev.add_object(read_text(line, f, origin, format, log))
+            data = read_text(line, f, origin, format, log)
+            if data is not None:
+                ob = rev.add_object(data)
         elif objtype == OBJ_PATH:
-            ob = rev.add_object(read_path(line, f, origin, format, log))
+            data = read_path(line, f, origin, format, log)
+            if data is not None:
+                ob = rev.add_object(data)
         elif objtype == OBJ_PIN:
-            ob = rev.add_object(read_pin(line, origin, format, log))
-            if override_pin_color is not None:
-                ob.color = override_pin_color
+            data = read_pin(line, origin, format, log)
+            if data is not None:
+                if override_pin_color is not None:
+                    data.color = override_pin_color
+                ob = rev.add_object(data)
         elif objtype == OBJ_ARC:
-            ob = rev.add_object(read_arc(line, origin, format, log))
+            data = read_arc(line, origin, format, log)
+            if data is not None:
+                ob = rev.add_object(data)
         elif objtype == STARTATTACH_ATTR:
             if ob is None:
                 log.error(_("read unexpected attach symbol start marker"))
+                continue
             if not isinstance(rev.get_object_data(ob), xorn.storage.Net) and \
                not isinstance(rev.get_object_data(ob), xorn.storage.Component):
                 log.error(_("can't attach attributes to this object type"))
+                continue
 
             while True:
                 try:
                     line = f.next()
                 except StopIteration:
                     log.error(_("unterminated attribute list"))
+                    break
 
                 if not line:
                     continue
@@ -316,24 +340,30 @@ def read_file(f, name, log = None,
                 if line[0] != OBJ_TEXT:
                     log.error(
                         _("tried to attach a non-text item as an attribute"))
+                    continue
 
                 attrib = read_text(line, f, origin, format, log)
-                rev.relocate_object(rev.add_object(attrib), ob, None)
+                if attrib is not None:
+                    rev.relocate_object(rev.add_object(attrib), ob, None)
 
             ob = None
         elif objtype == START_EMBEDDED:
             if ob is None:
                 log.error(_("read unexpected embedded symbol start marker"))
+                continue
             component_data = rev.get_object_data(ob)
             if type(component_data) != xorn.storage.Component:
                 log.error(_("embedded symbol start marker following "
                             "non-component object"))
+                continue
             if not component_data.symbol.embedded:
                 log.error(_("embedded symbol start marker following "
                             "component with non-embedded symbol"))
+                continue
             if component_data.symbol.prim_objs is not None:
                 log.error(_("embedded symbol start marker following "
                             "embedded symbol"))
+                continue
             object_lists_save.append((rev, ob, origin))
             rev = xorn.storage.Revision()
             component_data.symbol.prim_objs = rev
@@ -341,6 +371,7 @@ def read_file(f, name, log = None,
         elif objtype == END_EMBEDDED:
             if not object_lists_save:
                 log.error(_("read unexpected embedded symbol end marker"))
+                continue
             rev, ob, origin = object_lists_save.pop()
         elif objtype == ENDATTACH_ATTR:
             log.error(_("unexpected '}'"))
@@ -359,6 +390,7 @@ def read_file(f, name, log = None,
                     objtype, release_ver = sscanf(line, "%c %u\n")
                 except ValueError:
                     log.error(_("failed to parse version string"))
+                    continue
                 fileformat_ver = 0
 
             assert objtype == VERSION_CHAR
@@ -430,6 +462,7 @@ def read_circle(buf, (origin_x, origin_y), format, log):
                 buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n")
     except ValueError:
         log.error(_("failed to parse circle object"))
+        return None
 
     if type != OBJ_CIRCLE:
         raise ValueError
@@ -487,6 +520,7 @@ def read_arc(buf, (origin_x, origin_y), format, log):
                 buf, "%c %d %d %d %d %d %d %d %d %d %d %d\n")
     except ValueError:
         log.error(_("failed to parse arc object"))
+        return None
 
     if type != OBJ_ARC:
         raise ValueError
@@ -545,6 +579,7 @@ def read_box(buf, (origin_x, origin_y), format, log):
                 buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n")
     except ValueError:
         log.error(_("failed to parse box object"))
+        return None
 
     if type != OBJ_BOX:
         raise ValueError
@@ -599,6 +634,7 @@ def read_bus(buf, (origin_x, origin_y), format, log):
                 buf, "%c %d %d %d %d %d %d\n")
     except ValueError:
         log.error(_("failed to parse bus object"))
+        return None
 
     if type != OBJ_BUS:
         raise ValueError
@@ -639,6 +675,7 @@ def read_complex(buf, (origin_x, origin_y), format, log, load_symbol):
             buf, "%c %d %d %d %d %d %s\n")
     except ValueError:
         log.error(_("failed to parse complex object"))
+        return None
 
     if type != OBJ_COMPLEX:
         raise ValueError
@@ -688,6 +725,7 @@ def read_line(buf, (origin_x, origin_y), format, log):
                 buf, "%c %d %d %d %d %d %d %d %d %d %d\n")
     except ValueError:
         log.error(_("failed to parse line object"))
+        return None
 
     if type != OBJ_LINE:
         raise ValueError
@@ -725,6 +763,7 @@ def read_net(buf, (origin_x, origin_y), format, log):
         type, x1, y1, x2, y2, color = sscanf(buf, "%c %d %d %d %d %d\n")
     except ValueError:
         log.error(_("failed to parse net object"))
+        return None
 
     if type != OBJ_NET:
         raise ValueError
@@ -765,6 +804,7 @@ def read_path(first_line, f, (origin_x, origin_y), format, log):
             first_line, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d\n")
     except ValueError:
         log.error(_("failed to parse path object"))
+        return None
 
     if type != OBJ_PATH:
         raise ValueError
@@ -782,6 +822,7 @@ def read_path(first_line, f, (origin_x, origin_y), format, log):
         except StopIteration:
             log.error(_("unexpected end of file after %d lines "
                         "while reading path") % i)
+            break
 
         pathstr += line
 
@@ -820,6 +861,7 @@ def read_picture(first_line, f, (origin_x, origin_y), format, log):
             first_line, "%c %d %d %d %d %d %d %d\n")
     except ValueError:
         log.error(_("failed to parse picture definition"))
+        return None
 
     if type != OBJ_PICTURE:
         raise ValueError
@@ -840,14 +882,15 @@ def read_picture(first_line, f, (origin_x, origin_y), format, log):
         filename = f.next()
     except StopIteration:
         log.error(_("unexpected end of file while reading picture file name"))
+        filename = ''
+    else:
+        if filename.endswith('\n'):
+            filename = filename[:-1]
 
-    if filename.endswith('\n'):
-        filename = filename[:-1]
-
-    # Handle empty filenames
-    if not filename:
-        log.warn(_("image has no filename"))
-        filename = None
+        # Handle empty filenames
+        if not filename:
+            log.warn(_("image has no filename"))
+            filename = None
 
     pixmap = xorn.geda.ref.Pixmap(filename, None, False)
 
@@ -891,6 +934,7 @@ def read_pin(buf, (origin_x, origin_y), format, log):
                 buf, "%c %d %d %d %d %d %d %d\n")
     except ValueError:
         log.error(_("failed to parse pin object"))
+        return None
 
     if type != OBJ_PIN:
         raise ValueError
@@ -959,6 +1003,7 @@ def read_text(first_line, f, (origin_x, origin_y), format, log):
             num_lines = 1           # only support a single line
     except ValueError:
         log.error(_("failed to parse text object"))
+        return None
 
     if type != OBJ_TEXT:
         raise ValueError
@@ -991,6 +1036,7 @@ def read_text(first_line, f, (origin_x, origin_y), format, log):
             line = f.next()
         except StopIteration:
             log.error(_("unexpected end of file after %d lines of text") % i)
+            break
 
         text += line
 
