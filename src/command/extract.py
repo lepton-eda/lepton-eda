@@ -21,6 +21,7 @@ import xorn.config
 import xorn.fileutils
 import xorn.proxy
 import xorn.storage
+import xorn.geda.attrib
 import xorn.geda.read
 import xorn.geda.write
 
@@ -71,12 +72,11 @@ def main():
         data = ob.data()
         if isinstance(data, xorn.storage.Component) and data.symbol.embedded \
                 and not data.symbol.basename in embedded_symbols:
-            embedded_symbols[data.symbol.basename.encode()] = \
-                data.symbol.prim_objs
+            embedded_symbols[data.symbol.basename.encode()] = ob
         if isinstance(data, xorn.storage.Picture) and data.pixmap.embedded:
             filename = os.path.basename(data.pixmap.filename)
             if not filename in embedded_pixmaps:
-                embedded_pixmaps[filename.encode()] = data.pixmap.data
+                embedded_pixmaps[filename.encode()] = ob
 
     for filename in args[1:]:
         basename = os.path.basename(filename)
@@ -90,9 +90,14 @@ def main():
     for filename in args[1:]:
         basename = os.path.basename(filename)
         if basename in embedded_symbols:
+            ob = embedded_symbols[basename]
+            if xorn.geda.attrib.search_all(ob, 'slot'):
+                sys.stderr.write(
+                    _("Warning: Symbol \"%s\" is slotted; "
+                      "pin numbers may have changed.\n") % basename)
             try:
                 xorn.geda.write.write(
-                    xorn.proxy.RevisionProxy(embedded_symbols[basename]),
+                    xorn.proxy.RevisionProxy(ob.data().symbol.prim_objs),
                     filename)
             except (IOError, OSError) as e:
                 sys.stderr.write(_("%s: can't write %s: %s\n") % (
@@ -101,7 +106,7 @@ def main():
         else:
             try:
                 def write_func(f):
-                    f.write(embedded_pixmaps[basename])
+                    f.write(embedded_pixmaps[basename].data().pixmap.data)
                 xorn.fileutils.write(filename, write_func)
             except (IOError, OSError) as e:
                 sys.stderr.write(_("%s: can't write %s: %s\n") % (
