@@ -317,7 +317,7 @@ def read_file(f, name, log = None,
                 ob = rev.add_object(data)
         elif objtype == STARTATTACH_ATTR:
             if ob is None:
-                log.error(_("read unexpected attribute list start marker"))
+                log.error(_("unexpected attribute list start marker"))
                 continue
             if not isinstance(rev.get_object_data(ob), xorn.storage.Net) and \
                not isinstance(rev.get_object_data(ob), xorn.storage.Component):
@@ -349,7 +349,7 @@ def read_file(f, name, log = None,
             ob = None
         elif objtype == START_EMBEDDED:
             if ob is None:
-                log.error(_("read unexpected embedded symbol start marker"))
+                log.error(_("unexpected embedded symbol start marker"))
                 continue
             component_data = rev.get_object_data(ob)
             if type(component_data) != xorn.storage.Component:
@@ -370,11 +370,11 @@ def read_file(f, name, log = None,
             origin = origin[0] + component_data.x, origin[1] + component_data.y
         elif objtype == END_EMBEDDED:
             if not object_lists_save:
-                log.error(_("read unexpected embedded symbol end marker"))
+                log.error(_("unexpected embedded symbol end marker"))
                 continue
             rev, ob, origin = object_lists_save.pop()
         elif objtype == ENDATTACH_ATTR:
-            log.error(_("read unexpected attribute list end marker"))
+            log.error(_("unexpected attribute list end marker"))
         elif objtype == INFO_FONT:
             # NOP
             pass
