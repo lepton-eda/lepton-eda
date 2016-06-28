@@ -317,7 +317,7 @@ def read_file(f, name, log = None,
                 ob = rev.add_object(data)
         elif objtype == STARTATTACH_ATTR:
             if ob is None:
-                log.error(_("read unexpected attach symbol start marker"))
+                log.error(_("read unexpected attribute list start marker"))
                 continue
             if not isinstance(rev.get_object_data(ob), xorn.storage.Net) and \
                not isinstance(rev.get_object_data(ob), xorn.storage.Component):
@@ -374,7 +374,7 @@ def read_file(f, name, log = None,
                 continue
             rev, ob, origin = object_lists_save.pop()
         elif objtype == ENDATTACH_ATTR:
-            log.error(_("unexpected '}'"))
+            log.error(_("read unexpected attribute list end marker"))
         elif objtype == INFO_FONT:
             # NOP
             pass
