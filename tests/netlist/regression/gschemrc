@@ -2,5 +2,6 @@
 (source-library "duplicate_local_net-sources")
 (component-library "component_refdes-symbols")
 (component-library "duplicate_local_net-symbols")
+(component-library "missing_pinseq-symbols")
 (component-library "override_netname-symbols")
 (component-library "refdes_promotion-symbols")
