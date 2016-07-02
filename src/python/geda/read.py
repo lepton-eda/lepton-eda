@@ -190,9 +190,9 @@ def strip_carriage_return(f):
 # \throw ParseError if the file is not a valid gEDA schematic/symbol file
 
 def read(path, **kwds):
-    f = codecs.open(path, encoding = 'utf-8')
+    f = open(path, 'rb')
     try:
-        return read_file(strip_carriage_return(f), path, **kwds)
+        return read_file(f, path, **kwds)
     finally:
         f.close()
 
@@ -218,6 +218,9 @@ def read_file(f, name, log = None,
               force_boundingbox = False):
     if log is None:
         log = DefaultLog(name)
+
+    f = codecs.iterdecode(f, 'utf-8')
+    f = strip_carriage_return(f)
 
     def lineno_incrementor(f):
         for line in f:
