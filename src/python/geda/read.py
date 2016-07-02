@@ -667,7 +667,7 @@ def read_bus(buf, (origin_x, origin_y), format, log):
 
 ## Read a component object from a string in gEDA format.
 #
-# If the symbol is not embedded and \a load_symbol is \c True, try to
+# If the symbol is not embedded, use the function \a load_symbol to
 # load it from the component library.
 #
 # \throw ParseError if the string could not be parsed
