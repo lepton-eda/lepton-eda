@@ -189,10 +189,10 @@ def strip_carriage_return(f):
 #
 # \throw ParseError if the file is not a valid gEDA schematic/symbol file
 
-def read(filename, **kwds):
-    f = codecs.open(filename, encoding = 'utf-8')
+def read(path, **kwds):
+    f = codecs.open(path, encoding = 'utf-8')
     try:
-        return read_file(strip_carriage_return(f), filename, **kwds)
+        return read_file(strip_carriage_return(f), path, **kwds)
     finally:
         f.close()
 
