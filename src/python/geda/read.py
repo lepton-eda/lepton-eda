@@ -207,9 +207,6 @@ def read(filename, **kwds):
 #                                 which raises a ParseError on error
 #                                 and writes messages to \c sys.stderr.
 # \param [in] load_symbols        Load referenced symbol files as well
-# \param [in] override_net_color  Reset the color of nets do default?
-# \param [in] override_bus_color  Reset the color of buses do default?
-# \param [in] override_pin_color  Reset the color of pins do default?
 # \param [in] force_boundingbox   <i>currently unused</i>
 #
 # \return The new revision.
@@ -218,9 +215,6 @@ def read(filename, **kwds):
 
 def read_file(f, name, log = None,
               load_symbols = False,
-              override_net_color = None,
-              override_bus_color = None,
-              override_pin_color = None,
               force_boundingbox = False):
     if log is None:
         log = DefaultLog(name)
@@ -273,14 +267,10 @@ def read_file(f, name, log = None,
         elif objtype == OBJ_NET:
             data = read_net(line, origin, format, log)
             if data is not None:
-                if override_net_color is not None:
-                    data.color = override_net_color
                 ob = rev.add_object(data)
         elif objtype == OBJ_BUS:
             data = read_bus(line, origin, format, log)
             if data is not None:
-                if override_bus_color is not None:
-                    data.color = override_bus_color
                 ob = rev.add_object(data)
         elif objtype == OBJ_BOX:
             data = read_box(line, origin, format, log)
@@ -309,8 +299,6 @@ def read_file(f, name, log = None,
         elif objtype == OBJ_PIN:
             data = read_pin(line, origin, format, log)
             if data is not None:
-                if override_pin_color is not None:
-                    data.color = override_pin_color
                 ob = rev.add_object(data)
         elif objtype == OBJ_ARC:
             data = read_arc(line, origin, format, log)
