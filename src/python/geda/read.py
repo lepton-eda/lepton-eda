@@ -26,7 +26,7 @@
 # doc/geda/file_format_spec or
 # [here](http://wiki.geda-project.org/geda:file_format_spec).
 
-import codecs, sys
+import codecs, os, sys
 from gettext import gettext as _
 import xorn.base64
 import xorn.proxy
@@ -192,7 +192,8 @@ def strip_carriage_return(f):
 def read(path, **kwds):
     f = open(path, 'rb')
     try:
-        return read_file(f, path, **kwds)
+        return read_file(
+            f, path, pixmap_basepath = os.path.dirname(path), **kwds)
     finally:
         f.close()
 
@@ -207,6 +208,8 @@ def read(path, **kwds):
 #                                 which raises a ParseError on error
 #                                 and writes messages to \c sys.stderr.
 # \param [in] load_symbols        Load referenced symbol files as well
+# \param [in] load_pixmaps        Load referenced pixmap files as well
+# \param [in] pixmap_basepath     Base directory for relative pixmap paths
 # \param [in] force_boundingbox   <i>currently unused</i>
 #
 # \return The new revision.
@@ -215,6 +218,8 @@ def read(path, **kwds):
 
 def read_file(f, name, log = None,
               load_symbols = False,
+              load_pixmaps = False,
+              pixmap_basepath = None,
               force_boundingbox = False):
     if log is None:
         log = DefaultLog(name)
@@ -230,6 +235,8 @@ def read_file(f, name, log = None,
 
     # Mock-ups for referenced symbols if we aren't loading them
     referenced_symbols = {}
+    # Mock-ups for or already loaded pixmaps
+    referenced_pixmaps = {}
 
     def load_symbol(basename):
         if load_symbols:
@@ -243,6 +250,28 @@ def read_file(f, name, log = None,
             symbol = xorn.geda.ref.Symbol(basename, None, False)
             referenced_symbols[basename] = symbol
             return symbol
+
+    def load_pixmap(filename):
+        try:
+            return referenced_pixmaps[filename]
+        except KeyError:
+            pixmap = xorn.geda.ref.Pixmap(filename, None, False)
+            if load_pixmaps:
+                if pixmap_basepath is not None:
+                    real_filename = os.path.join(pixmap_basepath, filename)
+                else:
+                    real_filename = filename
+                try:
+                    f = open(real_filename, 'rb')
+                    try:
+                        pixmap.data = f.read()
+                    finally:
+                        f.close()
+                except IOError as e:
+                    log.error(_("can't read pixmap file \"%s\": %s")
+                              % (real_filename, e.strerror))
+            referenced_pixmaps[filename] = pixmap
+            return pixmap
 
     # "Stack" of outer contexts for embedded components
     object_lists_save = []
@@ -280,7 +309,7 @@ def read_file(f, name, log = None,
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == OBJ_PICTURE:
-            data = read_picture(line, f, origin, format, log)
+            data = read_picture(line, f, origin, format, log, load_pixmap)
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == OBJ_CIRCLE:
@@ -855,14 +884,17 @@ def read_path(first_line, f, (origin_x, origin_y), format, log):
 
 ## Read a picture object from a string and a file in gEDA format.
 #
-# Creates a picture object from the string \a first_line and, if the
-# picture is specified as embedded, reads the picture data from \a f.
+# Creates a picture object from the string \a first_line.  If the
+# pixmap is not embedded, uses the function \a load_pixmap to load it
+# from an external file.  If the pixmap is embedded, reads its data in
+# base64 encoding from \a f.
 #
 # \throw ParseError if the string could not be parsed
 # \throw ParseError if the picture data could be read from the file
 # \throw ValueError if \a first_line doesn't describe a picture object
 
-def read_picture(first_line, f, (origin_x, origin_y), format, log):
+def read_picture(first_line, f, (origin_x, origin_y), format, log,
+                 load_pixmap):
     try:
         type, x1, y1, width, height, angle, mirrored, embedded = sscanf(
             first_line, "%c %d %d %d %d %d %d %d\n")
@@ -899,22 +931,21 @@ def read_picture(first_line, f, (origin_x, origin_y), format, log):
             log.warn(_("image has no filename"))
             filename = None
 
-    pixmap = xorn.geda.ref.Pixmap(filename, None, False)
-
-    if embedded == 1:
+    if embedded != 1:
+        if embedded != 0:
+            log.warn(_("picture has wrong 'embedded' parameter (%d), "
+                       "setting to not embedded") % embedded)
+        pixmap = load_pixmap(filename)
+        assert not pixmap.embedded
+    else:
+        pixmap = xorn.geda.ref.Pixmap(filename, None, True)
         # Read the encoded picture
         try:
             pixmap.data = xorn.base64.decode(f, delim = '.')
         except xorn.base64.DecodingError as e:
-            log.warn(_("Failed to load image \"%s\" from embedded data: %s. "
-                       "Falling back to file loading. Picture unembedded")
-                     % (filename, e.message))
-            # _("Base64 decoding failed.")
-        else:
-            pixmap.embedded = True
-    elif embedded != 0:
-        log.warn(_("picture has wrong 'embedded' parameter (%d), "
-                   "setting to not embedded") % embedded)
+            log.error(_("failed to load image from embedded data: %s")
+                      % e.message)
+            pixmap.data = ''
 
     return xorn.storage.Picture(
         x = x1 - origin_x,

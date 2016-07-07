@@ -87,11 +87,13 @@ pythontests = \
 	python/geda/attrib.py \
 	python/geda/complex.py \
 	python/geda/parse_attrib.py \
+	python/geda/pixmap.py \
 	python/geda/read_log.py \
 	python/geda/ripperdir.py \
 	python/geda/unhide_attrib.py
 
 testdata = \
+	python/geda/pixmap.data \
 	python/geda/ripperdir.sch
 
 TESTS = $(check_PROGRAMS) $(pythontests)

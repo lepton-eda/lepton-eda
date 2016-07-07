@@ -385,7 +385,7 @@ G 0 0 100 100 0 0 1
 pixmap.png
 !
 """, [
-    '5: warning: Failed to load image "pixmap.png" from embedded data: Unexpected end-of-file. Falling back to file loading. Picture unembedded'
+    '5: error: failed to load image from embedded data: Unexpected end-of-file'
 ])
 
 ### text objects ###
