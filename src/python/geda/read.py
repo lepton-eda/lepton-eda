@@ -242,7 +242,11 @@ def read_file(f, name, log = None,
         if load_symbols:
             # Look up the symbol from the component library, loading
             # it if necessary.
-            return xorn.geda.clib.lookup_symbol(basename)
+            try:
+                return xorn.geda.clib.lookup_symbol(basename)
+            except ValueError:
+                log.error(_("symbol \"%s\" not found in library") % basename)
+                # fallthrough
 
         try:
             return referenced_symbols[basename]

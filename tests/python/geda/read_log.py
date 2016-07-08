@@ -34,11 +34,11 @@ class TestLog:
         assert self.messages[0] == message
         del self.messages[0]
 
-def assert_read(data, messages):
+def assert_read(data, messages, **kwds):
     log = TestLog(messages)
     try:
         rev = xorn.geda.read.read_file(
-            cStringIO.StringIO(data), '<test data>', log)
+            cStringIO.StringIO(data), '<test data>', log, **kwds)
     except xorn.geda.read.ParseError:
         pass
     assert not log.messages
@@ -173,6 +173,12 @@ C 0 0 1 0 2 sym.sym
 """, [
     '2: warning: component has invalid mirror flag (2), setting to 0'
 ])
+
+assert_read("""v 20150930 2
+C 0 0 1 0 0 missing.sym
+""", [
+    '2: error: symbol "missing.sym" not found in library'
+], load_symbols = True)
 
 ### line objects ###
 
