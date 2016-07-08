@@ -765,6 +765,7 @@ INPUT                  = .. \
                          ./xorn/base64.py \
                          ./xorn/command.py \
                          ./xorn/fileutils.py \
+                         ./xorn/fixednum.py \
                          ./xorn/guile.py \
                          ./xorn/proxy.py \
                          ./xorn/storage.py \

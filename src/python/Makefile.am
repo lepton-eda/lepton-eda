@@ -19,6 +19,7 @@ nobase_pkgpython_PYTHON = \
 	base64.py \
 	command.py \
 	fileutils.py \
+	fixednum.py \
 	proxy.py \
 	xml_writer.py \
 	geda/__init__.py \
