@@ -60,9 +60,6 @@ def main():
                          % (xorn.command.program_short_name, args[0], str(e)))
         sys.exit(1)
     except xorn.geda.read.ParseError:
-        sys.stderr.write(_("%s: can't read %s: %s\n")
-                         % (xorn.command.program_short_name,
-                            args[0], _("parse error")))
         sys.exit(1)
 
     embedded_symbols = {}

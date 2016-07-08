@@ -53,9 +53,6 @@ def find_symbols(root, pinout):
                                     path, str(e)))
                 continue
             except xorn.geda.read.ParseError:
-                sys.stderr.write(_("%s: can't read %s: %s\n")
-                                 % (xorn.command.program_short_name,
-                                    path, _("parse error")))
                 continue
 
             ok = True
