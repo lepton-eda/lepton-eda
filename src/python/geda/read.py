@@ -1081,6 +1081,12 @@ def read_text(first_line, f, (origin_x, origin_y), format, log):
     if text.endswith('\n'):
         text = text[:-1]
 
+    tmp = text.replace('\\\\', '')
+    if tmp.count('\\_') % 2:
+        log.warn(_("mismatched overbar markers"))
+    if '\\' in tmp.replace('\\_', ''):
+        log.warn(_("stray backslash character(s)"))
+
     return xorn.storage.Text(
         x = x - origin_x,
         y = y - origin_y,

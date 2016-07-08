@@ -444,6 +444,32 @@ T 0 0 9 12 1 0 0 0 1
     '3: error: unexpected end of file after 0 lines of text'
 ])
 
+assert_read("""v 20150930 2
+T 0 0 9 12 1 0 0 0 1
+A\\B
+""", [
+    '3: warning: stray backslash character(s)'
+])
+
+assert_read("""v 20150930 2
+T 0 0 9 12 1 0 0 0 1
+A\\\\B
+""", [
+])
+
+assert_read("""v 20150930 2
+T 0 0 9 12 1 0 0 0 1
+A\\_B\\_C\\_D
+""", [
+    '3: warning: mismatched overbar markers'
+])
+
+assert_read("""v 20150930 2
+T 0 0 9 12 1 0 0 0 1
+A\\_B\\_C\\_D\\_E
+""", [
+])
+
 ### attribute lists ###
 
 assert_read("""v 20150930 2
