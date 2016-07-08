@@ -104,10 +104,20 @@ class DirectorySource:
     ## Scan the directory for symbols.
 
     def list(self):
-        return (entry for dirpath, dirnames, filenames
+        if not self.recursive:
+            # skip subdirectories and anything else that isn't a
+            # regular file (this is what libgeda does)
+            entries = (entry for entry in os.listdir(self.directory)
+                       if stat.S_ISREG(
+                         os.stat(os.path.join(self.directory, entry)).st_mode))
+        else:
+            entries = (entry for dirpath, dirnames, filenames
                           in sorted(os.walk(self.directory))
-                      for entry in sorted(filenames)
-                # skip hidden files ("." and ".." are excluded by os.walk)
+                       for entry in sorted(filenames))
+
+        return (entry for entry in entries
+                # skip hidden files ("." and ".." are excluded by
+                # os.walk but not by os.listdir)
                 if entry[0] != '.'
                 # skip filenames which don't have the right suffix
                 and entry.lower().endswith(SYM_FILENAME_FILTER))
@@ -115,9 +125,20 @@ class DirectorySource:
     ## Get symbol data for a given symbol name.
 
     def get(self, symbol):
-        for dirpath, dirnames, filenames in sorted(os.walk(self.directory)):
-            if symbol in filenames:
-                return xorn.geda.read.read(os.path.join(dirpath, symbol))
+        if not self.recursive:
+            path = os.path.join(self.directory, symbol)
+            if not os.path.isfile(path):  # resolves symlinks
+                path = None
+        else:
+            path = None
+            for dirpath, dirnames, filenames in \
+                    sorted(os.walk(self.directory)):
+                if symbol in filenames:
+                    path = os.path.join(dirpath, symbol)
+                    break
+
+        if path is not None:
+            return xorn.geda.read.read(path)
 
         raise ValueError, 'symbol "%s" not found in library' % symbol
 
