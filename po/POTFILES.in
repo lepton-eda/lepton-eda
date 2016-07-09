@@ -19,6 +19,7 @@ src/python/geda/netlist/pp_hierarchy.py
 src/python/geda/netlist/pp_netattrib.py
 src/python/geda/netlist/pp_slotting.py
 src/command/xorn.in
+src/command/convert.py
 src/command/extract.py
 src/command/find-symbol-by-pinout.py
 src/command/gnetlist2.in

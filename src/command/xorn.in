@@ -48,6 +48,10 @@ def main():
 "  Valid commands are:\n"))
             sys.stdout.write("\n")
             sys.stdout.write(_(
+"    convert\n"
+"        Convert files from one file format to another.\n"))
+            sys.stdout.write("\n")
+            sys.stdout.write(_(
 "    extract\n"
 "        Extract objects embedded in a schematic into a separate file.\n"))
             sys.stdout.write("\n")
