@@ -24,6 +24,9 @@ nobase_pkgpython_PYTHON = \
 	geda/attrib.py \
 	geda/clib.py \
 	geda/fileformat.py \
+	geda/plainformat.py \
+	geda/plainread.py \
+	geda/plainwrite.py \
 	geda/read.py \
 	geda/ref.py \
 	geda/write.py \

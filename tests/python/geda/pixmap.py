@@ -15,6 +15,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 import StringIO, os, sys
+import xorn.geda.fileformat
 import xorn.geda.read
 import xorn.geda.ref
 
@@ -59,6 +60,7 @@ oqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX
 for load_pixmaps in [False, True]:
     rev = xorn.geda.read.read_file(
         StringIO.StringIO(PICTURES_SCH), '<test data>',
+        xorn.geda.fileformat.FORMAT_SCH,
         load_pixmaps = load_pixmaps,
         pixmap_basepath = os.path.dirname(sys.argv[0]))
     p0, p1, p2, p3 = (ob.data().pixmap for ob in rev.toplevel_objects())

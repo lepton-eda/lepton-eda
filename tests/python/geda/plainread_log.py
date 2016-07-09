@@ -15,6 +15,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 import cStringIO
+import xorn.geda.fileformat
 import xorn.geda.read
 
 class TestLog:
@@ -38,7 +39,8 @@ def assert_read(data, messages, **kwds):
     log = TestLog(messages)
     try:
         rev = xorn.geda.read.read_file(
-            cStringIO.StringIO(data), '<test data>', log, **kwds)
+            cStringIO.StringIO(data), '<test data>',
+            xorn.geda.fileformat.FORMAT_SCH, log, **kwds)
     except xorn.geda.read.ParseError:
         pass
     assert not log.messages

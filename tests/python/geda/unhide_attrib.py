@@ -16,6 +16,7 @@
 
 import StringIO
 import xorn.geda.attrib
+import xorn.geda.fileformat
 import xorn.geda.read
 
 data = """v 20150930 2
@@ -38,7 +39,8 @@ d=y
 }
 """
 
-rev = xorn.geda.read.read_file(StringIO.StringIO(data), '<test data>')
+rev = xorn.geda.read.read_file(StringIO.StringIO(data), '<test data>',
+                               xorn.geda.fileformat.FORMAT_SCH)
 ob, = rev.toplevel_objects()
 a, b, c, d = xorn.geda.attrib.inherited_objects(ob)
 assert a.visibility == False

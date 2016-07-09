@@ -88,7 +88,7 @@ pythontests = \
 	python/geda/complex.py \
 	python/geda/parse_attrib.py \
 	python/geda/pixmap.py \
-	python/geda/read_log.py \
+	python/geda/plainread_log.py \
 	python/geda/ripperdir.py \
 	python/geda/unhide_attrib.py
 

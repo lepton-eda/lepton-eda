@@ -772,6 +772,9 @@ INPUT                  = .. \
                          ./xorn/geda/attrib.py \
                          ./xorn/geda/clib.py \
                          ./xorn/geda/fileformat.py \
+                         ./xorn/geda/plainformat.py \
+                         ./xorn/geda/plainread.py \
+                         ./xorn/geda/plainwrite.py \
                          ./xorn/geda/read.py \
                          ./xorn/geda/ref.py \
                          ./xorn/geda/write.py \

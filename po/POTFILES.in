@@ -4,8 +4,9 @@ src/python/base64.py
 src/python/command.py
 src/python/fileutils.py
 src/python/geda/clib.py
+src/python/geda/plainread.py
+src/python/geda/plainwrite.py
 src/python/geda/read.py
-src/python/geda/write.py
 src/python/geda/netlist/backend.py
 src/python/geda/netlist/blueprint.py
 src/python/geda/netlist/guile.py

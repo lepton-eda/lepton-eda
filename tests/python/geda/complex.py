@@ -17,6 +17,7 @@
 import StringIO
 import xorn.proxy
 import xorn.storage
+import xorn.geda.fileformat
 import xorn.geda.read
 import xorn.geda.ref
 
@@ -77,7 +78,8 @@ class MockupSource:
         if symbol != 'symbol.sym':
             raise ValueError
         rev = xorn.geda.read.read_file(
-            StringIO.StringIO(SYMBOL_SYM), '<test data>')
+            StringIO.StringIO(SYMBOL_SYM), '<test data>',
+            xorn.geda.fileformat.FORMAT_SYM)
         assert rev.is_transient()
         return rev
 
@@ -88,6 +90,7 @@ for data, load_symbols, embedded in [(COMPONENT0_SCH, False, False),
                                      (COMPONENT0_SCH, True, False),
                                      (COMPONENT1_SCH, True, True)]:
     rev = xorn.geda.read.read_file(StringIO.StringIO(data), '<test data>',
+                                   xorn.geda.fileformat.FORMAT_SCH,
                                    load_symbols = load_symbols)
     ob, = rev.toplevel_objects()
     symbol = ob.data().symbol
@@ -110,7 +113,8 @@ for data in [COMPONENT0_SCH.replace('symbol.sym', 'EMBEDDEDsymbol.sym'),
              COMPONENT1_SCH.replace('EMBEDDEDsymbol.sym', 'symbol.sym')]:
     # Test if inconsistencies trigger an exception
     try:
-        xorn.geda.read.read_file(StringIO.StringIO(data), '<test data>')
+        xorn.geda.read.read_file(StringIO.StringIO(data), '<test data>',
+                                 xorn.geda.fileformat.FORMAT_SCH)
     except xorn.geda.read.ParseError:
         pass
     else:
@@ -118,7 +122,8 @@ for data in [COMPONENT0_SCH.replace('symbol.sym', 'EMBEDDEDsymbol.sym'),
 
 for data, embedded in [(PICTURE0_SCH, False),
                        (PICTURE1_SCH, True)]:
-    rev = xorn.geda.read.read_file(StringIO.StringIO(data), '<test data>')
+    rev = xorn.geda.read.read_file(StringIO.StringIO(data), '<test data>',
+                                   xorn.geda.fileformat.FORMAT_SCH)
     ob, = rev.toplevel_objects()
     pixmap = ob.data().pixmap
     assert isinstance(pixmap, xorn.geda.ref.Pixmap)
