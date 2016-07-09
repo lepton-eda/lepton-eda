@@ -29,6 +29,10 @@ bit easier:
 * Coordinates are represented as fixed-point values; a value of
   “12345” becomes “123.45”.  Floating-point values are supported by
   Xorn but are rounded to the nearest integer when saving to a file.
+  The XML format has an optional \a hybridnum feature which allows
+  preserving the fractional part; since it can't be represented
+  exactly in base 10, it's appended in hexadecimal notation after the
+  fixed-point part, so a value of “12345.75” would become “123.45:c”.
 
 * Fields which have a default value are optional.
 
@@ -90,6 +94,14 @@ specified as a space-separated list in the attribute \c
 file-format-features of the root element of the document.
 Currently, the following file format features are defined:
 
+## <tt>hybridnum</tt>
+
+Coordinates and lengths are specified in a hybrid fixed/floating point
+number format.  For example, the value \c "400" would be represented
+as \c "4.00" which can be abbreviated as \c "4", and the value \c
+"0.75" would be represented as \c "0.00:c" which can be abbreviated as
+\c ":c".
+
 ## <tt>experimental</tt>
 
 Indicates that the file format is experimental and should not be
@@ -108,7 +120,7 @@ respectively.
 
     <?xml version="1.0" encoding="UTF-8"?>
     <schematic xmlns="https://hedmen.org/xorn/schematic/"
-               file-format-features="experimental">
+               file-format-features="experimental hybridnum">
       <content>
         ...
       </content>

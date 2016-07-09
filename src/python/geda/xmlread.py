@@ -21,6 +21,7 @@ import cStringIO, xml.parsers.expat
 from gettext import gettext as _
 import xorn.base64
 import xorn.fixednum
+import xorn.hybridnum
 import xorn.proxy
 import xorn.storage
 import xorn.geda.ref
@@ -410,9 +411,13 @@ class LoadContext:
         self.pixmap_refs = []
         self.load_symbol = load_symbol
         self.load_pixmap = load_pixmap
+        self.use_hybridnum = False
 
     def parse(self, x):
-        return float(xorn.fixednum.parse(x, 2))
+        if self.use_hybridnum:
+            return xorn.hybridnum.parse(x, 2)
+        else:
+            return float(xorn.fixednum.parse(x, 2))
 
     def parse_attribute(self, d, key, default, processor, msg_fragment):
         try:
@@ -618,6 +623,10 @@ def read_file(f, name, log, load_symbol, load_pixmap):
                 continue
             if feature == 'experimental':
                 pass
+            elif feature == 'hybridnum':
+                if context.use_hybridnum:
+                    log.error(_("duplicate file format feature"))
+                context.use_hybridnum = True
             else:
                 log.error(_("unsupported file format feature \"%s\"")
                           % feature)

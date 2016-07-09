@@ -18,15 +18,17 @@
 ## Writing gEDA schematic/symbol files in XML format.
 
 import xorn.fixednum
+import xorn.hybridnum
 import xorn.storage
 import xorn.xml_writer
 import xorn.geda.attrib
 from xorn.geda.xmlformat import *
 
 class Writer:
-    def __init__(self, raw_file, w, omit_symbols, omit_pixmaps):
+    def __init__(self, raw_file, w, use_hybridnum, omit_symbols, omit_pixmaps):
         self.raw_file = raw_file
         self.w = w
+        self.use_hybridnum = use_hybridnum
         self.omit_symbols = omit_symbols
         self.omit_pixmaps = omit_pixmaps
 
@@ -34,7 +36,10 @@ class Writer:
         self.pixmap_ids = {}
 
     def fmt(self, x):
-        return xorn.fixednum.format(int(round(x)), 2)
+        if self.use_hybridnum:
+            return xorn.hybridnum.format(x, 2)
+        else:
+            return xorn.fixednum.format(int(round(x)), 2)
 
     def write_line(self, line):
         if line.width:
@@ -311,7 +316,9 @@ class Writer:
                     self.write_pixmap(data.pixmap)
                     written_pixmaps.add(data.pixmap)
 
-def write_file(f, rev, is_symbol, omit_symbols = False, omit_pixmaps = False):
+def write_file(f, rev, is_symbol, use_hybridnum = False,
+                                  omit_symbols = False,
+                                  omit_pixmaps = False):
     w = xorn.xml_writer.XMLWriter(lambda s: f.write(s.encode('utf-8')))
     if is_symbol:
         w.start_element('symbol')
@@ -319,8 +326,10 @@ def write_file(f, rev, is_symbol, omit_symbols = False, omit_pixmaps = False):
         w.start_element('schematic')
     w.write_attribute('xmlns', NAMESPACE)
     fff = ['experimental']
+    if use_hybridnum:
+        fff.append('hybridnum')
     if fff:
         w.write_attribute('file-format-features', ' '.join(fff))
-    Writer(f, w, omit_symbols, omit_pixmaps).write_rev(rev)
+    Writer(f, w, use_hybridnum, omit_symbols, omit_pixmaps).write_rev(rev)
     w.end_element()
     assert w.is_done()

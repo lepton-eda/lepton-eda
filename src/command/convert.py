@@ -39,6 +39,7 @@ def main():
                 'symbol-library=', 'symbol-library-search=',
                   'symbol-library-command=', 'reset-symbol-library',
                 'omit-symbols', 'omit-pixmaps',
+                'enable-hybridnum', 'disable-hybridnum',
                 'help', 'version'])
     except getopt.GetoptError as e:
         xorn.command.invalid_arguments(e.msg)
@@ -50,6 +51,8 @@ def main():
 
     omit_symbols = False
     omit_pixmaps = False
+
+    use_hybridnum = False
 
     for option, value in options:
         if option == '-o' or option == '--output-file':
@@ -112,6 +115,13 @@ def main():
         elif option == '--omit-pixmaps':
             omit_pixmaps = True
 
+        # file format features
+
+        elif option == '--enable-hybridnum':
+            use_hybridnum = True
+        elif option == '--disable-hybridnum':
+            use_hybridnum = False
+
         elif option == '--help':
             sys.stdout.write(_(
 "Usage: %s [OPTION]... INPUT-FILE [OUTPUT-FILE]\n"
@@ -137,6 +147,9 @@ def main():
 
   --omit-symbols                don't include referenced symbols in the output
   --omit-pixmaps                don't include referenced pixmaps in the output
+
+  --enable-hybridnum            enable/disable use of hybrid number format
+  --disable-hybridnum
 """))
             sys.stdout.write("\n")
             sys.stdout.write(_("Valid formats are: %s\n") %
@@ -225,7 +238,8 @@ def main():
 
     if output_format == xorn.geda.fileformat.FORMAT_SYM_XML or \
        output_format == xorn.geda.fileformat.FORMAT_SCH_XML:
-        kwds = { 'omit_symbols': omit_symbols,
+        kwds = { 'use_hybridnum': use_hybridnum,
+                 'omit_symbols': omit_symbols,
                  'omit_pixmaps': omit_pixmaps }
     else:
         kwds = {}
