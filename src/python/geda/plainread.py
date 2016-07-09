@@ -637,7 +637,7 @@ def read_complex(buf, (origin_x, origin_y), format, log, load_symbol):
     if basename.startswith('EMBEDDED'):
         symbol = xorn.geda.ref.Symbol(basename[8:], None, True)
     else:
-        symbol = load_symbol(basename)
+        symbol = load_symbol(basename, False)
         assert not symbol.embedded
 
     return xorn.storage.Component(
@@ -846,7 +846,7 @@ def read_picture(first_line, f, (origin_x, origin_y), format, log,
         if embedded != 0:
             log.warn(_("picture has wrong 'embedded' parameter (%d), "
                        "setting to not embedded") % embedded)
-        pixmap = load_pixmap(filename)
+        pixmap = load_pixmap(filename, False)
         assert not pixmap.embedded
     else:
         pixmap = xorn.geda.ref.Pixmap(filename, None, True)

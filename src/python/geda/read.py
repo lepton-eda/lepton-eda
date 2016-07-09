@@ -111,15 +111,23 @@ def read_file(f, name, format, log = None,
     # Mock-ups for or already loaded pixmaps
     referenced_pixmaps = {}
 
-    def load_symbol(basename):
+    def load_symbol(basename, fallback_available):
         if load_symbols:
             # Look up the symbol from the component library, loading
             # it if necessary.
             try:
                 return xorn.geda.clib.lookup_symbol(basename)
             except ValueError:
-                log.error(_("symbol \"%s\" not found in library") % basename)
+                if fallback_available:
+                    log.warn(
+                        _("symbol \"%s\" not found in library") % basename)
+                else:
+                    log.error(
+                        _("symbol \"%s\" not found in library") % basename)
                 # fallthrough
+
+        if fallback_available:
+            return None
 
         try:
             return referenced_symbols[basename]
@@ -128,11 +136,13 @@ def read_file(f, name, format, log = None,
             referenced_symbols[basename] = symbol
             return symbol
 
-    def load_pixmap(filename):
+    def load_pixmap(filename, fallback_available):
         try:
-            return referenced_pixmaps[filename]
+            pixmap = referenced_pixmaps[filename]
         except KeyError:
             pixmap = xorn.geda.ref.Pixmap(filename, None, False)
+            referenced_pixmaps[filename] = pixmap
+
             if load_pixmaps:
                 if pixmap_basepath is not None:
                     real_filename = os.path.join(pixmap_basepath, filename)
@@ -145,10 +155,16 @@ def read_file(f, name, format, log = None,
                     finally:
                         f.close()
                 except IOError as e:
-                    log.error(_("can't read pixmap file \"%s\": %s")
-                              % (real_filename, e.strerror))
-            referenced_pixmaps[filename] = pixmap
-            return pixmap
+                    if fallback_available:
+                        log.warn(_("can't read pixmap file \"%s\": %s")
+                                 % (real_filename, e.strerror))
+                    else:
+                        log.error(_("can't read pixmap file \"%s\": %s")
+                                  % (real_filename, e.strerror))
+
+        if pixmap.data is None and fallback_available:
+            return None
+        return pixmap
 
     if format == xorn.geda.fileformat.FORMAT_SYM or \
        format == xorn.geda.fileformat.FORMAT_SCH:

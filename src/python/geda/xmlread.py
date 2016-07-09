@@ -378,9 +378,10 @@ class ContentHandler(NullHandler):
         return VoidHandler()
 
 class PixmapHandler(NullHandler):
-    def __init__(self, log, pixmap):
+    def __init__(self, log, pixmap, just_verify):
         self.log = log
         self.pixmap = pixmap
+        self.just_verify = just_verify
         self.f = cStringIO.StringIO()
 
     def character_data(self, data):
@@ -393,7 +394,7 @@ class PixmapHandler(NullHandler):
         except xorn.base64.DecodingError:
             self.log.error(_("base64 decoding error"))
             return
-        if self.pixmap.embedded:
+        if not self.just_verify:
             self.pixmap.data = data
         elif data != self.pixmap.data:
             self.log.warn(_("contents of pixmap file \"%s\" don't match "
@@ -518,7 +519,10 @@ class RootElementHandler(NullHandler):
             if is_embedded:
                 symbol = xorn.geda.ref.Symbol(name, None, True)
             else:
-                symbol = self.c.load_symbol(name)
+                symbol = self.c.load_symbol(name, read_symbol)
+                if symbol is None:
+                    symbol = xorn.geda.ref.Symbol(name, None, False)
+                    is_embedded = True
                 assert not symbol.embedded
             try:
                 symbol_id = attributes.pop('id')
@@ -570,7 +574,10 @@ class RootElementHandler(NullHandler):
             if is_embedded:
                 pixmap = xorn.geda.ref.Pixmap(name, None, True)
             else:
-                pixmap = self.c.load_pixmap(name)
+                pixmap = self.c.load_pixmap(name, read_pixmap)
+                if pixmap is None:
+                    pixmap = xorn.geda.ref.Pixmap(name, None, False)
+                    is_embedded = True
                 assert not pixmap.embedded
             try:
                 pixmap_id = attributes.pop('id')
@@ -586,7 +593,7 @@ class RootElementHandler(NullHandler):
             self.c.ids.add(pixmap_id)
             self.c.pixmaps[pixmap_id] = pixmap
             if read_pixmap:
-                return PixmapHandler(self.c.log, pixmap)
+                return PixmapHandler(self.c.log, pixmap, not is_embedded)
             else:
                 return NullHandler(self.c.log)
 
