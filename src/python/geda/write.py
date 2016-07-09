@@ -35,15 +35,15 @@ RELEASE_VERSION = 20121203
 
 FILEFORMAT_VERSION = 2
 
-## Save a schematic or symbol file in libgeda format.
+## Save a symbol or schematic file in libgeda format.
 #
 # See \ref xorn.fileutils.write for a description of the keyword
 # arguments.
 #
-# \return \c None.
+# \returns \c None
 #
-# \throw IOError, OSError if a filesystem error occurred
-# \throw ValueError       if an object with an unknown type is encountered
+# \throws IOError, OSError if a filesystem error occurred
+# \throws ValueError       if an object with an unknown type is encountered
 
 def write(rev, filename, **kwds):
     def write_func(f):
@@ -59,14 +59,14 @@ def write(rev, filename, **kwds):
 def file_format_header():
     return 'v %s %u\n' % (RELEASE_VERSION, FILEFORMAT_VERSION)
 
-## Write a schematic or symbol to a file in libgeda format.
+## Write a symbol or schematic to a file in libgeda format.
 #
-# \param [in] f    A file-like object to which to write.
-# \param [in] rev  The schematic or symbol which should be written.
+# \param [in] f    A file-like object to which to write
+# \param [in] rev  The symbol or schematic which should be written
 #
-# \return \c None.
+# \returns \c None
 #
-# \throw ValueError if an object with an unknown type is encountered
+# \throws ValueError if an object with an unknown type is encountered
 
 def write_file(f, rev):
     f.write(file_format_header())

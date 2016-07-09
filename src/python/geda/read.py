@@ -181,13 +181,14 @@ def strip_carriage_return(f):
         else:
             yield line
 
-## Read a file in libgeda format.
+## Read a symbol or schematic file in libgeda format.
 #
 # See \ref read_file for a description of the keyword arguments.
 #
-# \return The new revision.
+# \returns a transient xorn.proxy.RevisionProxy instance containing
+#          the file's contents
 #
-# \throw ParseError if the file is not a valid gEDA schematic/symbol file
+# \throws ParseError if the file is not a valid gEDA schematic/symbol file
 
 def read(path, **kwds):
     f = open(path, 'rb')
@@ -197,24 +198,25 @@ def read(path, **kwds):
     finally:
         f.close()
 
-## Read a file in libgeda format from a file object.
+## Read a symbol or schematic file in libgeda format from a file object.
 #
-# \param [in] f                   A file-like object from which to read.
-# \param [in] name                The file name displayed in warning
-#                                 and error messages.
+# \param [in] f                   A file-like object from which to read
+# \param [in] name                The file name displayed in warning and
+#                                 error messages
 # \param [in] log                 An object to which errors are logged.
 #                                 If this is \c None (the default), a
-#                                 new DefaultLog instance is used
-#                                 which raises a ParseError on error
-#                                 and writes messages to \c sys.stderr.
+#                                 new DefaultLog instance is used which
+#                                 raises a ParseError exception on error
+#                                 and writes messages to \c sys.stderr
 # \param [in] load_symbols        Load referenced symbol files as well
 # \param [in] load_pixmaps        Load referenced pixmap files as well
 # \param [in] pixmap_basepath     Base directory for relative pixmap paths
 # \param [in] force_boundingbox   <i>currently unused</i>
 #
-# \return The new revision.
+# \returns a transient xorn.proxy.RevisionProxy instance containing
+#          the file's contents
 #
-# \throw ParseError if the file is not a valid gEDA schematic/symbol file
+# \throws ParseError if the file is not a valid gEDA schematic/symbol file
 
 def read_file(f, name, log = None,
               load_symbols = False,
