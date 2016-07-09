@@ -19,5 +19,6 @@ src/python/geda/netlist/pp_slotting.py
 src/command/xorn.in
 src/command/extract.py
 src/command/find-symbol-by-pinout.py
+src/command/gnetlist2.in
 src/command/netlist.py
 src/backend/util_alias.py
