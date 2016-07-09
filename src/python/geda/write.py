@@ -23,6 +23,7 @@
 import xorn.fileutils
 import xorn.geda.fileformat
 import xorn.geda.plainwrite
+import xorn.geda.xmlwrite
 
 ## Save a symbol or schematic file.
 #
@@ -58,4 +59,8 @@ def write_file(f, rev, format, **kwds):
     if format == xorn.geda.fileformat.FORMAT_SYM or \
        format == xorn.geda.fileformat.FORMAT_SCH:
         return xorn.geda.plainwrite.write_file(f, rev, **kwds)
+    if format == xorn.geda.fileformat.FORMAT_SYM_XML or \
+       format == xorn.geda.fileformat.FORMAT_SCH_XML:
+        return xorn.geda.xmlwrite.write_file(
+            f, rev, format == xorn.geda.fileformat.FORMAT_SYM_XML, **kwds)
     raise ValueError

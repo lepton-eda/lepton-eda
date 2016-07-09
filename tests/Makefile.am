@@ -93,11 +93,21 @@ pythontests = \
 	python/geda/pixmap.py \
 	python/geda/plainread_log.py \
 	python/geda/ripperdir.py \
-	python/geda/unhide_attrib.py
+	python/geda/unhide_attrib.py \
+	python/geda/xmlread.py \
+	python/geda/xmlread_log.py \
+	python/geda/xmlwrite.py
 
 testdata = \
 	python/geda/pixmap.data \
-	python/geda/ripperdir.sch
+	python/geda/ripperdir.sch \
+	python/geda/xmlread.sch \
+	python/geda/xmlread.sch.xml \
+	python/geda/xmlwrite.sch.xml
+
+MOSTLYCLEANFILES = \
+	python/geda/xmlread.out \
+	python/geda/xmlwrite.out
 
 TESTS = $(check_PROGRAMS) $(pythontests)
 

@@ -58,7 +58,8 @@ EXTRA_DIST = \
 	doc/geda/fileformat_textgraphic.jpg \
 	doc/geda/filltype.svg \
 	doc/geda/linetype.svg \
-	doc/geda/path_example_and_gate-smaller.png
+	doc/geda/path_example_and_gate-smaller.png \
+	doc/geda/xml-file-format.md
 
 dist-hook:
 	if test -d $(srcdir)/.git; \

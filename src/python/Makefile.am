@@ -32,6 +32,9 @@ nobase_pkgpython_PYTHON = \
 	geda/read.py \
 	geda/ref.py \
 	geda/write.py \
+	geda/xmlformat.py \
+	geda/xmlread.py \
+	geda/xmlwrite.py \
 	geda/netlist/__init__.py \
 	geda/netlist/backend.py \
 	geda/netlist/blueprint.py \

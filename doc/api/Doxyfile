@@ -780,6 +780,9 @@ INPUT                  = .. \
                          ./xorn/geda/read.py \
                          ./xorn/geda/ref.py \
                          ./xorn/geda/write.py \
+                         ./xorn/geda/xmlformat.py \
+                         ./xorn/geda/xmlread.py \
+                         ./xorn/geda/xmlwrite.py \
                          ./xorn/geda/netlist/__init__.py \
                          ./xorn/geda/netlist/backend.py \
                          ./xorn/geda/netlist/blueprint.py \

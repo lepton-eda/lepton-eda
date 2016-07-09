@@ -22,11 +22,13 @@
 
 import os.path
 
-FORMAT_SCH, FORMAT_SYM = xrange(4)
+FORMAT_SCH, FORMAT_SYM, FORMAT_SCH_XML, FORMAT_SYM_XML = xrange(4)
 
 VALID_FORMATS = {
     'sch': FORMAT_SCH,
-    'sym': FORMAT_SYM
+    'sym': FORMAT_SYM,
+    'schxml': FORMAT_SCH_XML,
+    'symxml': FORMAT_SYM_XML
 }
 
 ## Raised when the format of a file isn't specified and can't be
@@ -41,4 +43,8 @@ def guess_format(path):
         return FORMAT_SCH
     if basename.endswith('.sym'):
         return FORMAT_SYM
+    if basename.endswith('.sch.xml'):
+        return FORMAT_SCH_XML
+    if basename.endswith('.sym.xml'):
+        return FORMAT_SYM_XML
     raise UnknownFormatError

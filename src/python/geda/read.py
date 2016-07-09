@@ -26,6 +26,7 @@ import xorn.geda.clib
 import xorn.geda.fileformat
 import xorn.geda.plainread
 import xorn.geda.ref
+import xorn.geda.xmlread
 
 ## Raised when parsing a malformed file.
 
@@ -152,5 +153,9 @@ def read_file(f, name, format, log = None,
     if format == xorn.geda.fileformat.FORMAT_SYM or \
        format == xorn.geda.fileformat.FORMAT_SCH:
         return xorn.geda.plainread.read_file(
+            f, name, log, load_symbol, load_pixmap, **kwds)
+    if format == xorn.geda.fileformat.FORMAT_SYM_XML or \
+       format == xorn.geda.fileformat.FORMAT_SCH_XML:
+        return xorn.geda.xmlread.read_file(
             f, name, log, load_symbol, load_pixmap, **kwds)
     raise ValueError

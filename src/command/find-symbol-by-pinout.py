@@ -42,7 +42,8 @@ def has_pin(rev, number, label):
 def find_symbols(root, pinout):
     for dirpath, dirnames, filenames in os.walk(root):
         for filename in filenames:
-            if not filename.endswith('.sym'):
+            if not filename.endswith('.sym') and \
+               not filename.endswith('.sym.xml'):
                 continue
             path = os.path.join(dirpath, filename)
             try:

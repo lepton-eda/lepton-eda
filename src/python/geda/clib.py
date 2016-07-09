@@ -56,11 +56,12 @@ import xorn.geda.ref
 import xorn.proxy
 import xorn.storage
 
-## All symbols in directory sources end with this string.
-#
-# Must be lowercase.
+## Decide based on filename whether a file in a directory source is
+## considered a symbol.
 
-SYM_FILENAME_FILTER = '.sym'
+def sym_filename_filter(basename):
+    return basename.lower().endswith('.sym') or \
+           basename.lower().endswith('.sym.xml')
 
 ## Named tuple class for storing data about a particular component source.
 
@@ -120,7 +121,7 @@ class DirectorySource:
                 # os.walk but not by os.listdir)
                 if entry[0] != '.'
                 # skip filenames which don't have the right suffix
-                and entry.lower().endswith(SYM_FILENAME_FILTER))
+                and sym_filename_filter(entry))
 
     ## Get symbol data for a given symbol name.
 
