@@ -329,9 +329,6 @@ def uniquify_source_name(name):
         i += 1
         newname = '%s<%i>' % (name, i)
 
-    if i != 0:
-        sys.stderr.write(_("Library name [%s] already in use.  Using [%s].\n")
-                         % (name, newname))
     return newname
 
 ## Rescan all available component libraries.
