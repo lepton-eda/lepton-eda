@@ -86,6 +86,13 @@ _search_cache = {}
 
 _symbol_cache = {}
 
+## Whether to load pixmaps referenced by symbols.
+#
+# This should be set before reading any symbols.  Otherwise, cached
+# symbols loaded with the wrong \a load_pixmaps flag may be returned.
+
+load_pixmaps = False
+
 
 ## Source object representing a directory of symbol files.
 #
@@ -139,7 +146,7 @@ class DirectorySource:
                     break
 
         if path is not None:
-            return xorn.geda.read.read(path)
+            return xorn.geda.read.read(path, load_pixmaps = load_pixmaps)
 
         raise ValueError, 'symbol "%s" not found in library' % symbol
 
@@ -195,7 +202,8 @@ class CommandSource:
     def get(self, symbol):
         return _run_source_command(
             shlex.split(self.get_cmd) + [symbol],
-            lambda f: xorn.geda.read.read_file(f, '<pipe>'))
+            lambda f: xorn.geda.read.read_file(
+                f, '<pipe>', load_pixmaps = load_pixmaps))
 
 
 ## Execute a library command.
