@@ -15,16 +15,19 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
            gnet-pads.scm gnetlist.scm gnetlist-post.scm \
            gnet-bae.scm gnet-protelII.scm \
            gnet-bom2.scm gnet-gossip.scm gnet-drc.scm gnet-vams.scm \
-	   partslist-common.scm gnet-partslist1.scm \
+	   gnet-partslist1.scm \
 	   gnet-partslist2.scm gnet-partslist3.scm gnet-maxascii.scm \
 	   gnet-switcap.scm gnet-spice-sdb.scm gnet-drc2.scm \
 	   gnet-futurenet2.scm gnet-cascade.scm \
 	   gnet-redac.scm gnet-systemc.scm gnet-eagle.scm \
 	   gnet-pcbpins.scm gnet-calay.scm gnet-osmond.scm \
 	   gnet-mathematica.scm gnet-liquidpcb.scm \
-	   gnetlist/backend-getopt.scm gnet-makedepend.scm
+	   gnet-makedepend.scm \
+	   gnetlist/backend-getopt.scm gnetlist/partlist.scm \
+	   gnetlist/partlist/common.scm gnetlist/attrib/compare.scm
 
-TESTS = unit-tests/partlist.scm
+TESTS = unit-tests/test-gnetlist-partlist.scm \
+	unit-tests/test-gnetlist-attrib.scm
 TEST_EXTENSIONS = .scm
 # $(srcdir) and $(builddir) are added here and not in
 # AM_SCM_LOG_FLAGS below because guile must know where to find

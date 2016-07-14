@@ -1,5 +1,4 @@
-; Copyright (C) 2001-2010 MIYAMOTO Takanori
-; gnet-partslist2.scm
+; Copyright (C) 2016 gEDA Contributors
 ;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -15,26 +14,22 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-(load-from-path "partslist-common.scm")
-
-(define (partslist2:write-top-header)
-  (display ".START\n")
-  (display "..refdes\tdevice\tvalue\tfootprint\tquantity\n"))
-
-(define (partslist2:write-partslist ls)
-  (if (null? ls)
-      '()
-      (begin (write-one-row (append (car ls) (list 1)) "\t" "\n")
-             (partslist2:write-partslist (cdr ls)))))
-
-(define (partslist2:write-bottom-footer)
-  (display ".END")
-  (newline))
+(use-modules (gnetlist partlist)
+             (gnetlist partlist common)
+             (gnetlist attrib compare))
 
 (define (partslist2 output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
-  (let ((parts-table (marge-sort-with-multikey (get-parts-table packages) '(1 2 3 0))))
-    (partslist2:write-top-header)
-    (partslist2:write-partslist parts-table)
-    (partslist2:write-bottom-footer))
-  (close-output-port (current-output-port)))
+  (display
+   (partlist->string
+    (make-partlist '(device value footprint refdes))
+    #:sort-order `((device . ,string-ci<?)
+                   (value . ,value<?)
+                   (footprint . ,string-ci<?)
+                   (refdes . ,refdes<?))
+    #:output-order '(refdes device value footprint #{}#)
+    #:header ".START\n.."
+    #:footer "\n.END\n"
+    #:prepend-names? #t
+    #:remove '((device . "include"))
+    )
+   (gnetlist:output-port output-filename)))

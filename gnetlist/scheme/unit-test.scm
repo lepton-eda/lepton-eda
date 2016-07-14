@@ -163,7 +163,7 @@ Actual error:
                                 "\nLoading: ~S\n"
                                 name)
                         log-port)
-                (load name))
+                (load-from-path name))
               (lambda (key . args) 
                 (report (format #f
                                 "ERROR:\n Unexpected exception on loading file ~S:\n~S\n"
