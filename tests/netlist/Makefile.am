@@ -33,7 +33,7 @@ all-local: attribs
 
 dist_check_SCRIPTS = run-test
 EXTRA_DIST = $(TESTS) $(testdata) gnet-apitest.scm run-test.gnetlist \
-             gschemrc regression/gschemrc common/gschemrc
+             gschemrc regression/gschemrc drc2/gschemrc common/gschemrc
 # dist_check_DATA would be more appropriate for $(TESTS) and $(testdata)
 # but triggers a lot of "Nothing to be done for '...'" messages.
 
