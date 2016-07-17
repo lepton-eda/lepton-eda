@@ -1048,7 +1048,7 @@ GNU General Public License for more details.
             sys.stderr.write(_("Error loading \"%s\"\n") % guile_source)
             sys.exit(1)
 
-    if guile_proc:
+    if guile_proc is not None:
         # 7. Load backend code
         fn = search_load_path('gnet-%s.scm' % guile_proc)
         if fn is False:
@@ -1109,7 +1109,7 @@ GNU General Public License for more details.
     for value in guile_sources:
         cmd += ['-O', 'load=' + value]
 
-    if guile_proc and not interactive_mode:
+    if guile_proc is not None and not interactive_mode:
         # if both `-i' and `-g' are specified, the backend is loaded
         # but not executed (don't ask me, that's what gnetlist does)
         cmd += ['-O', 'guile-proc=' + guile_proc]
