@@ -32,6 +32,18 @@
 import os.path
 import xorn.geda.netlist.guile
 
+def get_package_attribute(refdes, name):
+    xorn.geda.netlist.guile.check_argument_type(
+        'gnetlist:get-package-attribute', 1, refdes, basestring)
+    xorn.geda.netlist.guile.check_argument_type(
+        'gnetlist:get-package-attribute', 2, name, basestring)
+
+    try:
+        return xorn.geda.netlist.guile.the_netlist \
+            .packages_by_refdes[refdes].get_attribute(name)
+    except KeyError:
+        return 'unknown'
+
 def run(f, netlist, args):
     try:
         pos = args.index('--')
@@ -114,6 +126,8 @@ def run(f, netlist, args):
                 netlist.error(
                     "can't add \"%s\" to the Guile load path" % value)
                 return
+
+    xorn.guile.define('gnetlist:get-package-attribute', get_package_attribute)
 
     try:
         xorn.guile.lookup(guile_proc)('/proc/self/fd/%d' % f.fileno())
