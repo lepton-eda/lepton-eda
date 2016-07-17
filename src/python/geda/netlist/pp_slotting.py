@@ -123,7 +123,12 @@ def postproc_blueprints(netlist):
                     pin.error(_("non-numeric pinseq value: %s") % value)
                     continue
                 if pinseq in component.pins_by_pinseq:
-                    pin.error(_("duplicate pinseq \"%s\"") % pinseq)
+                    if component.slotdef \
+                           and pinseq - 1 >= 0 \
+                           and pinseq - 1 < len(component.slotdef):
+                        pin.error(_("duplicate pinseq \"%s\"") % pinseq)
+                    else:
+                        pin.warn(_("duplicate pinseq \"%s\"") % pinseq)
                     continue
                 component.pins_by_pinseq[pinseq] = pin
                 if component.slotdef is not None \
