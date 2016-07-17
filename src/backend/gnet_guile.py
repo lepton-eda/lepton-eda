@@ -89,10 +89,6 @@ def run(f, netlist, args):
                           % option)
             return
 
-    if guile_proc is None:
-        netlist.error("required option \"-O guile-proc=NAME\" not found")
-        return
-
     xorn.geda.netlist.guile.the_netlist = netlist
     xorn.geda.netlist.guile.the_backend_arguments = passed_args
     xorn.geda.netlist.guile.the_verbosity = verbosity
@@ -128,6 +124,10 @@ def run(f, netlist, args):
                 return
 
     xorn.guile.define('gnetlist:get-package-attribute', get_package_attribute)
+
+    if guile_proc is None:
+        netlist.warn("Guile environment loaded, but not invoking a backend")
+        return
 
     try:
         xorn.guile.lookup(guile_proc)('/proc/self/fd/%d' % f.fileno())
