@@ -32,7 +32,8 @@ attribs:
 all-local: attribs
 
 dist_check_SCRIPTS = run-test
-EXTRA_DIST = $(TESTS) $(testdata) gnet-apitest.scm gschemrc common/gschemrc
+EXTRA_DIST = $(TESTS) $(testdata) gnet-apitest.scm \
+             gschemrc regression/gschemrc common/gschemrc
 # dist_check_DATA would be more appropriate for $(TESTS) and $(testdata)
 # but triggers a lot of "Nothing to be done for '...'" messages.
 
@@ -46,6 +47,11 @@ mostlyclean-local:
 TESTS = stack_1-geda.out \
 	hierarchy-geda.out \
 	hierarchy2-geda.out \
+	regression/component_refdes-dumptext.out \
+	regression/duplicate_local_net-geda.out \
+	regression/missing_pinseq-geda.out \
+	regression/override_netname-geda.out \
+	regression/refdes_promotion-geda.out \
 	drc2/connected_noconnects-drc2.out \
 	drc2/duplicated_refdes-drc2.out \
 	drc2/duplicated_slot-drc2.out \
@@ -412,6 +418,7 @@ TESTS = stack_1-geda.out \
 	common/singlenet-vipec.out
 
 XFAIL_TESTS = \
+	regression/missing_pinseq-geda.out \
 	common/SlottedOpamps-futurenet2.out \
 	common/SlottedOpamps-spice_noqsi.out \
 	common/SlottedOpamps-spice_sdb.out \
@@ -466,6 +473,20 @@ testdata = \
 	hierarchy2-sources/under.sch \
 	hierarchy2-symbols/under.sym \
 	hierarchy2.sch \
+	regression/component_refdes-sources/sub.sch \
+	regression/component_refdes-symbols/component.sym \
+	regression/component_refdes-symbols/sub.sym \
+	regression/component_refdes.sch \
+	regression/duplicate_local_net-sources/sub.sch \
+	regression/duplicate_local_net-symbols/sub.sym \
+	regression/duplicate_local_net-symbols/sym.sym \
+	regression/duplicate_local_net.sch \
+	regression/missing_pinseq.sch \
+	regression/override_netname-symbols/component.sym \
+	regression/override_netname-symbols/power.sym \
+	regression/override_netname.sch \
+	regression/refdes_promotion-symbols/named-power.sym \
+	regression/refdes_promotion.sch \
 	stack_1.sch \
 	std-symbols/74/7400-1.sym \
 	std-symbols/74/7404-1.sym \

@@ -1,3 +1,39 @@
+July 2016
+=========
+
+- Missing symbols are now handled properly
+
+- Added python module `xorn.xml_writer' which provides general-purpose
+  XML writing functionality
+
+- Added python modules `xorn.fixednum' and `xorn.hybridnum' which
+  implement a fixed-point number format without and with a hexadecimal
+  floating-point part, respectively
+
+- Added XML schematic/symbol file format
+
+- Added subcommand `xorn convert' which allows converting a schematic
+  or symbol file from one format to another
+
+- When reading a schematic file which contains fallback versions of
+  symbols or pixmaps and a symbol or pixmap can't be found, a warning
+  is now issued (instead of an error) and the fallback version used
+
+
+June 2016
+=========
+
+- Fixed a bug which caused a net segment to be internally listed twice
+
+- Added regression tests for fixed bugs
+
+- A pin which occurs in the slot definition of a slotted component but
+  is missing from the symbol is now considered an error
+
+- Errors while reading a file are now reported to a callback object
+  and don't cause the state to become invalid
+
+
 April 2016
 ==========
 

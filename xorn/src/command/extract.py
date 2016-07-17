@@ -25,48 +25,6 @@ import xorn.geda.attrib
 import xorn.geda.read
 import xorn.geda.write
 
-def unhide_attributes(ob):
-    for attached in xorn.geda.attrib.find_attached_attribs(ob):
-        attached_name, attached_value = \
-            xorn.geda.attrib.parse_string(attached.text)
-        for inherited in xorn.geda.attrib.find_inherited_attribs(ob):
-            inherited_name, inherited_value = \
-                xorn.geda.attrib.parse_string(inherited.text)
-            if inherited_name == attached_name:
-                inherited.visibility = attached.visibility
-
-def read(path):
-    try:
-        return xorn.geda.read.read(path)
-    except UnicodeDecodeError as e:
-        sys.stderr.write(_("%s: can't read %s: %s\n")
-                         % (xorn.command.program_short_name, path, str(e)))
-        sys.exit(1)
-    except xorn.geda.read.ParseError:
-        sys.stderr.write(_("%s: can't read %s: %s\n")
-                         % (xorn.command.program_short_name,
-                            path, _("parse error")))
-        sys.exit(1)
-
-def write(rev, path):
-    try:
-        xorn.geda.write.write(rev, path)
-    except (IOError, OSError) as e:
-        sys.stderr.write(_("%s: can't write %s: %s\n")
-                         % (xorn.command.program_short_name, path, e.strerror))
-        sys.exit(1)
-
-def write_file(data, path):
-    try:
-        def write_func(f):
-            f.write(data)
-
-        xorn.fileutils.write(path, write_func)
-    except (IOError, OSError) as e:
-        sys.stderr.write(_("%s: can't write %s: %s\n")
-                         % (xorn.command.program_short_name, path, e.strerror))
-        sys.exit(1)
-
 def main():
     try:
         options, args = getopt.getopt(
@@ -95,7 +53,15 @@ def main():
     if len(args) < 2:
         xorn.command.invalid_arguments(_("not enough arguments"))
 
-    rev = read(args[0])
+    try:
+        rev = xorn.geda.read.read(args[0])
+    except UnicodeDecodeError as e:
+        sys.stderr.write(_("%s: can't read %s: %s\n")
+                         % (xorn.command.program_short_name, args[0], str(e)))
+        sys.exit(1)
+    except xorn.geda.read.ParseError:
+        sys.exit(1)
+
     embedded_symbols = {}
     embedded_pixmaps = {}
 
@@ -103,13 +69,11 @@ def main():
         data = ob.data()
         if isinstance(data, xorn.storage.Component) and data.symbol.embedded \
                 and not data.symbol.basename in embedded_symbols:
-            unhide_attributes(ob)
-            embedded_symbols[data.symbol.basename.encode()] = \
-                data.symbol.prim_objs
+            embedded_symbols[data.symbol.basename.encode()] = ob
         if isinstance(data, xorn.storage.Picture) and data.pixmap.embedded:
             filename = os.path.basename(data.pixmap.filename)
             if not filename in embedded_pixmaps:
-                embedded_pixmaps[filename.encode()] = data.pixmap.data
+                embedded_pixmaps[filename.encode()] = ob
 
     for filename in args[1:]:
         basename = os.path.basename(filename)
@@ -123,7 +87,25 @@ def main():
     for filename in args[1:]:
         basename = os.path.basename(filename)
         if basename in embedded_symbols:
-            write(xorn.proxy.RevisionProxy(
-                    embedded_symbols[basename]), filename)
+            ob = embedded_symbols[basename]
+            if xorn.geda.attrib.search_all(ob, 'slot'):
+                sys.stderr.write(
+                    _("Warning: Symbol \"%s\" is slotted; "
+                      "pin numbers may have changed.\n") % basename)
+            try:
+                xorn.geda.write.write(
+                    xorn.proxy.RevisionProxy(ob.data().symbol.prim_objs),
+                    filename)
+            except (IOError, OSError) as e:
+                sys.stderr.write(_("%s: can't write %s: %s\n") % (
+                    xorn.command.program_short_name, filename, e.strerror))
+                sys.exit(1)
         else:
-            write_file(embedded_pixmaps[basename], filename)
+            try:
+                def write_func(f):
+                    f.write(embedded_pixmaps[basename].data().pixmap.data)
+                xorn.fileutils.write(filename, write_func)
+            except (IOError, OSError) as e:
+                sys.stderr.write(_("%s: can't write %s: %s\n") % (
+                    xorn.command.program_short_name, filename, e.strerror))
+                sys.exit(1)

@@ -136,6 +136,7 @@ def postproc_instances(netlist, flat_namespace, prefer_netname_attribute,
 
                 if local_net.net is None:
                     local_net.net = net
+                    net.local_nets.append(local_net)
                 else:
                     a = netlist.nets.index(local_net.net)
                     b = netlist.nets.index(net)
@@ -147,8 +148,7 @@ def postproc_instances(netlist, flat_namespace, prefer_netname_attribute,
                         net_dict[name] = dst
 
                     src.merge_into(dst)
-
-                net.local_nets.append(local_net)
+                    assert local_net in dst.local_nets
 
     # prioritize net names
     prio = not prefer_netname_attribute

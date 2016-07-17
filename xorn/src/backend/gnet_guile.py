@@ -32,6 +32,18 @@
 import os.path
 import xorn.geda.netlist.guile
 
+def get_package_attribute(refdes, name):
+    xorn.geda.netlist.guile.check_argument_type(
+        'gnetlist:get-package-attribute', 1, refdes, basestring)
+    xorn.geda.netlist.guile.check_argument_type(
+        'gnetlist:get-package-attribute', 2, name, basestring)
+
+    try:
+        return xorn.geda.netlist.guile.the_netlist \
+            .packages_by_refdes[refdes].get_attribute(name)
+    except KeyError:
+        return 'unknown'
+
 def run(f, netlist, args):
     try:
         pos = args.index('--')
@@ -77,10 +89,6 @@ def run(f, netlist, args):
                           % option)
             return
 
-    if guile_proc is None:
-        netlist.error("required option \"-O guile-proc=NAME\" not found")
-        return
-
     xorn.geda.netlist.guile.the_netlist = netlist
     xorn.geda.netlist.guile.the_backend_arguments = passed_args
     xorn.geda.netlist.guile.the_verbosity = verbosity
@@ -114,6 +122,12 @@ def run(f, netlist, args):
                 netlist.error(
                     "can't add \"%s\" to the Guile load path" % value)
                 return
+
+    xorn.guile.define('gnetlist:get-package-attribute', get_package_attribute)
+
+    if guile_proc is None:
+        netlist.warn("Guile environment loaded, but not invoking a backend")
+        return
 
     try:
         xorn.guile.lookup(guile_proc)('/proc/self/fd/%d' % f.fileno())

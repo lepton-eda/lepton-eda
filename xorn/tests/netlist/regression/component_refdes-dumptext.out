@@ -1,0 +1,16 @@
+element	U1
+element-pins	U1	U1-1
+pin-attrib	U1-1	pinseq	unknown
+pin-attrib	U1-1	pintype	unknown
+pin-attrib	U1-1	pinlabel	unknown
+pin-conn	U1-1	unconnected_pin-1
+element-attrib	U1	refdes	U1
+element	sub/U1
+element-pins	sub/U1	sub/U1-1
+pin-attrib	sub/U1-1	pinseq	unknown
+pin-attrib	sub/U1-1	pintype	unknown
+pin-attrib	sub/U1-1	pinlabel	unknown
+pin-conn	sub/U1-1	sub/net
+element-attrib	sub/U1	refdes	U1
+net	sub/net
+net-conns	sub/net	sub/U1-1

@@ -103,42 +103,60 @@ def get_slotdef(component_blueprint):
 
     return list(strtok(cptr, SLOTDEF_ATTRIB_DELIMITERS))
 
-## Get the \c "pinnumber=" attribute of a component pin.
-#
-# If the component is an instantiation of a slotted part, determines
-# the correct pinlabel based on the \c "pinseq=" attribute of the pin
-# and the \c "slotdef=" and \c "slot=" attributes of the component.
-# For non-slotted parts, just returns the \c "pinnumber=" attribute of
-# the pin, or \c None if that attribute doesn't exist.
-
-def get_pinnumber_considering_slotting(pin_blueprint):
-    try:
-        value = pin_blueprint.get_attribute('pinseq')
-    except KeyError:
-        return pin_blueprint.get_attribute('pinnumber', None)
-
-    try:
-        pinseq = int(value)
-    except ValueError:
-        pin_blueprint.error(_("non-numeric pinseq value: %s") % value)
-        return None
-
-    pin_blueprint.component.pins_by_pinseq[pinseq] = pin_blueprint
-    slotdef = pin_blueprint.component.slotdef
-    if slotdef is not None and pinseq - 1 < len(slotdef):
-        return slotdef[pinseq - 1]
-
-    # no slotting or invalid attributes
-    return pin_blueprint.get_attribute('pinnumber', None)
-
 def postproc_blueprints(netlist):
     for schematic in netlist.schematics:
         for component in schematic.components:
-            component.pins_by_pinseq = {}
-            component.pins_by_number = {}
+            # parse the slotdef= and slot= attributes of the component
+            # and extract the effective list of pinnumbers for this slot
             component.slotdef = get_slotdef(component)
+
+            # create a dictionary of pins by pinseq
+            component.pins_by_pinseq = {}
             for pin in component.pins:
-                pin.number = get_pinnumber_considering_slotting(pin)
+                try:
+                    value = pin.get_attribute('pinseq')
+                except KeyError:
+                    continue
+                try:
+                    pinseq = int(value)
+                except ValueError:
+                    pin.error(_("non-numeric pinseq value: %s") % value)
+                    continue
+                if pinseq in component.pins_by_pinseq:
+                    if component.slotdef \
+                           and pinseq - 1 >= 0 \
+                           and pinseq - 1 < len(component.slotdef):
+                        pin.error(_("duplicate pinseq \"%s\"") % pinseq)
+                    else:
+                        pin.warn(_("duplicate pinseq \"%s\"") % pinseq)
+                    continue
+                component.pins_by_pinseq[pinseq] = pin
+                if component.slotdef is not None \
+                       and pinseq - 1 >= len(component.slotdef):
+                    pin.warn(_("pin has pinseq=%d, but only %d pins are "
+                               "covered by slot definition") % (
+                                   pinseq, len(component.slotdef)))
+
+            # for non-slotted components, just assign regular pinnumbers
+            for pin in component.pins:
+                pin.number = pin.get_attribute('pinnumber', None)
+
+            # override these pinnumbers with the ones from the slot definition
+            if component.slotdef is not None:
+                for i, pinnumber in enumerate(component.slotdef):
+                    try:
+                        pin = component.pins_by_pinseq[i + 1]
+                    except KeyError:
+                        component.error(
+                            _("slot definition covers %d pins, "
+                              "but there is no pin with pinseq=%d") % (
+                                  len(component.slotdef), i + 1))
+                    else:
+                        pin.number = pinnumber
+
+            # create a dictionary of pins by pinnumber
+            component.pins_by_number = {}
+            for pin in component.pins:
                 if pin.number is None:
                     pin.error(_("pinnumber missing"))
                 elif pin.number in component.pins_by_number:

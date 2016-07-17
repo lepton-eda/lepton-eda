@@ -82,15 +82,33 @@ pythontests = \
 	cpython/string.py \
 	cpython/transient.py \
 	cpython/guile.py \
+	python/snippets/xml_writer.py \
 	python/base64.py \
+	python/fixednum.py \
+	python/hybridnum.py \
 	python/proxy.py \
+	python/xml_writer.py \
 	python/geda/attrib.py \
 	python/geda/complex.py \
 	python/geda/parse_attrib.py \
-	python/geda/ripperdir.py
+	python/geda/pixmap.py \
+	python/geda/plainread_log.py \
+	python/geda/ripperdir.py \
+	python/geda/unhide_attrib.py \
+	python/geda/xmlread.py \
+	python/geda/xmlread_log.py \
+	python/geda/xmlwrite.py
 
 testdata = \
-	python/geda/ripperdir.sch
+	python/geda/pixmap.data \
+	python/geda/ripperdir.sch \
+	python/geda/xmlread.sch \
+	python/geda/xmlread.sch.xml \
+	python/geda/xmlwrite.sch.xml
+
+MOSTLYCLEANFILES = \
+	python/geda/xmlread.out \
+	python/geda/xmlwrite.out
 
 TESTS = $(check_PROGRAMS) $(pythontests)
 

@@ -147,10 +147,12 @@ class Component:
 
         # check refdes, then uref, then return None.
         try:
-            self.refdes = self.get_attribute('refdes')
+            self.refdes = self.get_attribute(
+                'refdes', search_inherited = False)
         except KeyError:
             try:
-                self.refdes = self.get_attribute('uref')
+                self.refdes = self.get_attribute(
+                    'uref', search_inherited = False)
             except KeyError:
                 self.refdes = None
             else:
@@ -180,14 +182,15 @@ class Component:
     #
     # Searches the attributes attached to this component for
     # attributes with the name \a name and returns a list with their
-    # values.  If no matching attributes are attached, searches the
-    # attributes inherited from the symbol instead.
+    # values.  If no matching attributes are attached and \a
+    # search_inherited is not \c False, searches the attributes
+    # inherited from the symbol instead.
 
-    def get_attributes(self, name):
+    def get_attributes(self, name, search_inherited = True):
         # look outside first
         values = xorn.geda.attrib.search_attached(self.ob, name)
 
-        if not values:
+        if not values and search_inherited:
             # okay we were looking outside and didn't find anything,
             # so now we need to look inside the symbol
             values = xorn.geda.attrib.search_inherited(self.ob, name)
@@ -201,16 +204,17 @@ class Component:
     # default is given, returns that value instead.
     #
     # Searches the attributes attached to the component first.  If no
-    # matching attributes are found, searches the attributes inherited
-    # from the symbol.  It is an error for the component to contain
-    # multiple attached or inherited values with different values.
+    # matching attributes are found and \a search_inherited is not \c
+    # False, searches the attributes inherited from the symbol.  It is
+    # an error for the component to contain multiple attached or
+    # inherited values with different values.
     #
     # If an attribute has the value \c unknown, it is treated as if it
     # didn't exist.  This can be used to un-set an attribute inherited
     # from the symbol.
 
-    def get_attribute(self, name, default = KeyError):
-        raw_values = self.get_attributes(name)
+    def get_attribute(self, name, default = KeyError, search_inherited = True):
+        raw_values = self.get_attributes(name, search_inherited)
         values = []
         for value in raw_values:
             if value not in values:

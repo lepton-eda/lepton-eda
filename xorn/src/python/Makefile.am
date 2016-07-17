@@ -19,14 +19,23 @@ nobase_pkgpython_PYTHON = \
 	base64.py \
 	command.py \
 	fileutils.py \
+	fixednum.py \
+	hybridnum.py \
 	proxy.py \
+	xml_writer.py \
 	geda/__init__.py \
 	geda/attrib.py \
 	geda/clib.py \
 	geda/fileformat.py \
+	geda/plainformat.py \
+	geda/plainread.py \
+	geda/plainwrite.py \
 	geda/read.py \
 	geda/ref.py \
 	geda/write.py \
+	geda/xmlformat.py \
+	geda/xmlread.py \
+	geda/xmlwrite.py \
 	geda/netlist/__init__.py \
 	geda/netlist/backend.py \
 	geda/netlist/blueprint.py \

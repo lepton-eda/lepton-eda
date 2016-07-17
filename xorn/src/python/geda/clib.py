@@ -56,11 +56,12 @@ import xorn.geda.ref
 import xorn.proxy
 import xorn.storage
 
-## All symbols in directory sources end with this string.
-#
-# Must be lowercase.
+## Decide based on filename whether a file in a directory source is
+## considered a symbol.
 
-SYM_FILENAME_FILTER = '.sym'
+def sym_filename_filter(basename):
+    return basename.lower().endswith('.sym') or \
+           basename.lower().endswith('.sym.xml')
 
 ## Named tuple class for storing data about a particular component source.
 
@@ -85,6 +86,13 @@ _search_cache = {}
 
 _symbol_cache = {}
 
+## Whether to load pixmaps referenced by symbols.
+#
+# This should be set before reading any symbols.  Otherwise, cached
+# symbols loaded with the wrong \a load_pixmaps flag may be returned.
+
+load_pixmaps = False
+
 
 ## Source object representing a directory of symbol files.
 #
@@ -104,20 +112,41 @@ class DirectorySource:
     ## Scan the directory for symbols.
 
     def list(self):
-        return (entry for dirpath, dirnames, filenames
+        if not self.recursive:
+            # skip subdirectories and anything else that isn't a
+            # regular file (this is what libgeda does)
+            entries = (entry for entry in os.listdir(self.directory)
+                       if stat.S_ISREG(
+                         os.stat(os.path.join(self.directory, entry)).st_mode))
+        else:
+            entries = (entry for dirpath, dirnames, filenames
                           in sorted(os.walk(self.directory))
-                      for entry in sorted(filenames)
-                # skip hidden files ("." and ".." are excluded by os.walk)
+                       for entry in sorted(filenames))
+
+        return (entry for entry in entries
+                # skip hidden files ("." and ".." are excluded by
+                # os.walk but not by os.listdir)
                 if entry[0] != '.'
                 # skip filenames which don't have the right suffix
-                and entry.lower().endswith(SYM_FILENAME_FILTER))
+                and sym_filename_filter(entry))
 
     ## Get symbol data for a given symbol name.
 
     def get(self, symbol):
-        for dirpath, dirnames, filenames in sorted(os.walk(self.directory)):
-            if symbol in filenames:
-                return xorn.geda.read.read(os.path.join(dirpath, symbol))
+        if not self.recursive:
+            path = os.path.join(self.directory, symbol)
+            if not os.path.isfile(path):  # resolves symlinks
+                path = None
+        else:
+            path = None
+            for dirpath, dirnames, filenames in \
+                    sorted(os.walk(self.directory)):
+                if symbol in filenames:
+                    path = os.path.join(dirpath, symbol)
+                    break
+
+        if path is not None:
+            return xorn.geda.read.read(path, load_pixmaps = load_pixmaps)
 
         raise ValueError, 'symbol "%s" not found in library' % symbol
 
@@ -173,7 +202,8 @@ class CommandSource:
     def get(self, symbol):
         return _run_source_command(
             shlex.split(self.get_cmd) + [symbol],
-            lambda f: xorn.geda.read.read_file(f, '<pipe>'))
+            lambda f: xorn.geda.read.read_file(
+                f, '<pipe>', load_pixmaps = load_pixmaps))
 
 
 ## Execute a library command.
@@ -299,9 +329,6 @@ def uniquify_source_name(name):
         i += 1
         newname = '%s<%i>' % (name, i)
 
-    if i != 0:
-        sys.stderr.write(_("Library name [%s] already in use.  Using [%s].\n")
-                         % (name, newname))
     return newname
 
 ## Rescan all available component libraries.

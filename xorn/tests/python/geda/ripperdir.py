@@ -15,6 +15,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 import cStringIO, sys
+import xorn.geda.fileformat
 import xorn.geda.read
 import xorn.geda.write
 
@@ -23,10 +24,11 @@ data = f.read()
 f.close()
 
 f = cStringIO.StringIO(data)
-rev = xorn.geda.read.read_file(f, '<test data>')
+rev = xorn.geda.read.read_file(f, '<test data>',
+                               xorn.geda.fileformat.FORMAT_SCH)
 f.close()
 
 f = cStringIO.StringIO()
-xorn.geda.write.write_file(f, rev)
+xorn.geda.write.write_file(f, rev, xorn.geda.fileformat.FORMAT_SCH)
 assert f.getvalue() == data
 f.close()

@@ -244,6 +244,32 @@ def rc_component_library(path, name = None):
 
     return True
 
+# \param [in] prefix  optional prefix for library names \e (ignored)
+#
+# \returns \c True on success, \c False otherwise
+
+def rc_component_library_search(path, prefix = None):
+    check_argument_type('component-library-search', 1, path, basestring)
+    if prefix is not None:
+        check_argument_type('component-library-search', 2, prefix, basestring)
+
+    # take care of any shell variables
+    path = expand_env_variables(path)
+
+    # invalid path?
+    if not os.path.isdir(path):
+        sys.stderr.write(
+            _("Invalid path [%s] passed to component-library-search\n") % path)
+        return False
+
+    if os.path.isabs(path):
+        symbol_library.extend(['--symbol-library-search', path])
+    else:
+        symbol_library.extend(['--symbol-library-search',
+                               os.path.join(os.getcwd(), path)])
+
+    return True
+
 ## Add a library command.
 #
 # Add a command to the component library.
@@ -290,8 +316,6 @@ def rc_component_library_funcs(listfunc, getfunc, name):
     check_argument_type('component-library-funcs', 3, name, basestring)
 
     raise NotImplementedError
-
-# component-library-search is defined in geda.scm
 
 # \returns \c True
 
@@ -710,6 +734,11 @@ def rc1_parse(rcname, rcfile):
     for name, context in rc1_files(rcname, rcfile):
         rc1_parse_file(name, context)
 
+        # Re-export function component-library-search (this is
+        # overwritten by geda.scm)
+        xorn.guile.define('component-library-search',
+                          rc_component_library_search)
+
         # Re-export deprecated RC functions (these are overwritten by
         # geda-deprecated-config.scm)
         for name_, value in {
@@ -729,6 +758,7 @@ for name, value in {
         'gnetlist-version': rc_gnetlist_version,
 
         'component-library': rc_component_library,
+        'component-library-search': rc_component_library_search,
         'component-library-command': rc_component_library_command,
         'component-library-funcs': rc_component_library_funcs,
         'reset-component-library': rc_reset_component_library,
@@ -1018,7 +1048,7 @@ GNU General Public License for more details.
             sys.stderr.write(_("Error loading \"%s\"\n") % guile_source)
             sys.exit(1)
 
-    if guile_proc:
+    if guile_proc is not None:
         # 7. Load backend code
         fn = search_load_path('gnet-%s.scm' % guile_proc)
         if fn is False:
@@ -1079,7 +1109,7 @@ GNU General Public License for more details.
     for value in guile_sources:
         cmd += ['-O', 'load=' + value]
 
-    if guile_proc and not interactive_mode:
+    if guile_proc is not None and not interactive_mode:
         # if both `-i' and `-g' are specified, the backend is loaded
         # but not executed (don't ask me, that's what gnetlist does)
         cmd += ['-O', 'guile-proc=' + guile_proc]
