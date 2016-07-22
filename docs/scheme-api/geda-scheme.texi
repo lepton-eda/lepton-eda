@@ -1133,7 +1133,7 @@ Sets the picture transformation for @var{picture}.
 Returns the parameters of @var{picture} as a list in the form:
 
 @example
-((top-left-x . top-left-y) (bottom-right-x . bottom-right-y) angle mirror)
+(filename (top-left-x . top-left-y) (bottom-right-x . bottom-right-y) angle mirror)
 @end example
 @end defun
 
