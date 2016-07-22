@@ -1083,7 +1083,7 @@ element is appended to the path.  For example, to append a straight
 line section to the current path:
 
 @example
-(path-insert! path -1 'lineto '(500. 100))
+(path-insert! path -1 'lineto '(500 . 100))
 @end example
 @end defun
 
