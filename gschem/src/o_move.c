@@ -287,7 +287,7 @@ void o_move_cancel (GschemToplevel *w_current)
 void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   GList *selection, *s_current;
-  OBJECT *object;
+  OBJECT *object = NULL;
   gint object_x, object_y;
   gboolean resnap = FALSE;
   SNAP_STATE snap_mode;
