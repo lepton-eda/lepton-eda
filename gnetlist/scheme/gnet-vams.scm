@@ -1043,7 +1043,7 @@
           '()
           (if (string-prefix? "refdes=" (car liste))
               (begin
-                (append (substring (car liste) 5
+                (append (substring (car liste) 7
                                    (string-length (car liste)))))
               (vams:get-uref (cdr liste)))))))
 
