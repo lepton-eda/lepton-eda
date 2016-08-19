@@ -72,24 +72,27 @@
 	  ;; underlying schematic (hierachical schematic)
 	  (source-file (which-source-file top-attribs))
 
-	  ;; generates the target-file, like <source-filebasename>.vhdl
-	  (target-file (schematic-name->vhdl-name source-file)))
+         ;; generates the target-file, like <source-filebasename>.vhdl
+         (target-file (schematic-name->vhdl-name source-file))
+         (command (list "lepton-netlist"
+                        "-c"
+                        (format #f "(chdir \"..\")~
+                                    (define top-attribs '~a)~
+                                    (define generate-mode '2)"
+                                top-attribs)
+                        "-o"
+                        (format #f
+                                "~a/~a"
+                                vhdl-path
+                                target-file)
+                        "-g"
+                        "vams"
+                        (get-selected-filename))))
 
-     (system*
-       "lepton-netlist"
-       "-c"
-       (format #f "(chdir \"..\")~
-                   (define top-attribs '~a)~
-                   (define generate-mode '2)"
-               top-attribs)
-       "-o"
-       (format #f "~a/~a"
-                  vhdl-path
-                  target-file)
-       "-g"
-       "vams"
-       (get-selected-filename)
-       ))))
+    (log! 'message (format #f "Generate entity for ~A:\n~A\n"
+                           (get-selected-filename)
+                           command))
+    (apply system* command))))
 
 
 ;; HELP FUNCTIONS
