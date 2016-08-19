@@ -29,14 +29,12 @@
              (geda object)
              (geda page))
 
-;;; Generate vhdl file name for given schematic NAME.
-(define (schematic-name->vhdl-name name)
+;;; Replace extension in the basename of a file NAME with EXT
+(define (replace-extension #;in name #;with ext)
   (string-join
    (reverse
-    (cons "vhdl"
-          (cdr
-           (reverse
-            (string-split (basename name) #\.)))))
+    (cons ext
+          (cdr (reverse (string-split name #\.)))))
    "."))
 
 ;;; Composes lepton-netlist command.
@@ -55,7 +53,7 @@
 ;;; Generates full VAMS netlist.
 (define (generate-netlist)
   (let* ((sch-name (page-filename (active-page)))
-         (vhdl-name (schematic-name->vhdl-name sch-name))
+         (vhdl-name (replace-extension (basename sch-name) "vhdl"))
          (command (make-netlist-command
                    ".."
                    sch-name
@@ -85,9 +83,8 @@
 
   (let* ((top-attribs (get-selected-component-attributes))
          (source-name (which-source-file top-attribs))
-
          ;; generates the vhdl-name, like <source-filebasename>.vhdl
-         (vhdl-name (schematic-name->vhdl-name source-name))
+         (vhdl-name (replace-extension (basename source-name) "vhdl"))
          (command (list "lepton-netlist"
                         "-c"
                         (format #f "(chdir \"..\")~
