@@ -84,10 +84,10 @@
         (append (get-selected-filename))))
 
   (let* ((top-attribs (get-selected-component-attributes))
-         (source-file (which-source-file top-attribs))
+         (source-name (which-source-file top-attribs))
 
-         ;; generates the target-file, like <source-filebasename>.vhdl
-         (target-file (schematic-name->vhdl-name source-file))
+         ;; generates the vhdl-name, like <source-filebasename>.vhdl
+         (vhdl-name (schematic-name->vhdl-name source-name))
          (command (list "lepton-netlist"
                         "-c"
                         (format #f "(chdir \"..\")~
@@ -97,7 +97,7 @@
                         "-o"
                         (string-append vhdl-path
                                        file-name-separator-string
-                                       target-file)
+                                       vhdl-name)
                         "-g"
                         "vams"
                         (get-selected-filename))))
