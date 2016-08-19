@@ -39,22 +39,27 @@
             (string-split (basename name) #\.)))))
    "."))
 
+;;; Composes lepton-netlist command.
+(define (make-netlist-command working-directory
+                              input-file-name
+                              output-file-name)
+  (list "lepton-netlist"
+        "-c"
+        (format #f "(chdir \"~a\")" working-directory)
+        "-g"
+        "vams"
+        "-o"
+        output-file-name
+        input-file-name))
+
 ;;; Generates full VAMS netlist.
 (define (generate-netlist)
   (let* ((source-file (page-filename (active-page)))
          (target-file (schematic-name->vhdl-name source-file))
-         (command (list "lepton-netlist"
-                        "-c"
-                        "(chdir \"..\")"
-                        "-o"
-                        (format #f
-                                "~a/~a"
-                                vhdl-path
-                                target-file)
-                        "-g"
-                        "vams"
-                        source-file)))
-
+         (command (make-netlist-command
+                   ".."
+                   source-file
+                   (format #f "~a/~a" vhdl-path target-file))))
     (log! 'message
           (format #f "Generate netlist from current schematic\n~A\n"
                   command))
