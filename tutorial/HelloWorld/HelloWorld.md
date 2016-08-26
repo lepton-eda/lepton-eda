@@ -60,6 +60,7 @@ HelloWorld.cir : HelloWorld.sch
 	gnetlist -g spice-noqsi HelloWorld.sch -o HelloWorld.cir
 
 clean : 
-	rm -f HelloWorld.cir
-
+	rm -f HelloWorld.cir *~ \#*
 ```
+
+With the Makefile, `make` or `make HelloWorld` will display the plot. `make clean` will clean up, removing the derived HelloWorld.cir along with temporary files gEDA tends to leave around.
