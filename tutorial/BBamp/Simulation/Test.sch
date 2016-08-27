@@ -64,7 +64,7 @@ refdes=Vin
 T 45500 44650 5 10 1 1 0 0 3
 value=dc 0
 +ac 1
-+pulse 0 0.1 10n 1n 1n 10n
++pulse 0 0.1 10n 200p 200p 10n
 }
 C 44700 47200 1 0 0 vdc-1.sym
 {
@@ -87,15 +87,16 @@ T 50300 40200 9 10 1 0 0 0 1
 1
 T 51900 40200 9 10 1 0 0 0 1
 1
-T 41300 44700 8 10 1 1 0 0 10
+T 40800 41200 8 10 1 1 0 0 11
 spice-epilog=.control
-ac dec 100 20k 1g
+ac dec 100 10k 1g
 plot db(out)-db(in)
-tran 100p 25n
+tran 25p 25n
 plot in out
-noise v(out) vin dec 10 20k 1G
+noise v(out) vin dec 10 10k 1G
 setplot noise1
-plot 10^9*sqrt(inoise_spectrum)
+let noise_figure=db(inoise_spectrum)/2-db(2*sqrt(boltz*300*50))
+plot noise_figure
 .endc
 
 C 49400 45100 1 90 0 resistor-1.sym
