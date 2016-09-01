@@ -87,15 +87,15 @@ T 50300 40200 9 10 1 0 0 0 1
 1
 T 51900 40200 9 10 1 0 0 0 1
 1
-T 40800 41200 8 10 1 1 0 0 11
+T 43100 42700 9 10 1 1 0 0 11
 spice-epilog=.control
 ac dec 100 10k 1g
 plot db(out)-db(in)
 tran 25p 25n
-plot in out
+plot in out xamp1.e
 noise v(out) vin dec 10 10k 1G
 setplot noise1
-let noise_figure=db(inoise_spectrum)/2-db(2*sqrt(boltz*300*50))
+let noise_figure=db(inoise_spectrum)/2-db(2*sqrt(boltz*290*50))
 plot noise_figure
 .endc
 
