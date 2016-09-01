@@ -5,8 +5,12 @@
 
 See the INSTALL file for installation instructions. 
 
+For a tutorial introduction, see:
+<file:tutorial/HelloWorld/HelloWorld.md>
+
+
 ## Atributes and expansions
-The process of creating a SPICE file is driven by attributes attached to symbols. In the text below, *italics* represent variable text you supply, lower case and symbols are literal. Quick reference for these attributes:
+The process of creating a SPICE file is driven by attributes attached to symbols. In the definitions below, *italics* represent variable text you supply, normal text and symbols are literal. Quick reference for these attributes:
 
 file=*F*
 
