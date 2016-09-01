@@ -6,7 +6,7 @@
 See the INSTALL file for installation instructions. 
 
 For a tutorial introduction, see:
-<file:tutorial/HelloWorld/HelloWorld.md>
+[Hello World](file:tutorial/HelloWorld/HelloWorld.md)
 
 
 ## Atributes and expansions
