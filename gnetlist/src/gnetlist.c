@@ -301,8 +301,7 @@ void main_prog(void *closure, int argc, char *argv[])
       scm_eval (post_backend_list, scm_current_module ());
     }
 
-    s_traverse_init();
-    s_traverse_start(pr_current);
+    s_traverse (pr_current);
 
     /* Change back to the directory where we started AGAIN.  This is done */
     /* because the s_traverse functions can change the Current Working Directory. */

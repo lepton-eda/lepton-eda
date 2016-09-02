@@ -77,7 +77,8 @@ s_traverse_clear_all_visited (const GList *obj_list)
                                NULL);
 }
 
-void s_traverse_init(void)
+static void
+s_traverse_init (void)
 {
     netlist_head = s_netlist_add(NULL);
     netlist_head->nlid = -1;	/* head node */
@@ -111,10 +112,13 @@ void s_traverse_init(void)
                                     g_direct_equal);
 }
 
-void s_traverse_start(TOPLEVEL * pr_current)
+void
+s_traverse (TOPLEVEL *pr_current)
 {
   GList *iter;
   PAGE *p_current;
+
+  s_traverse_init ();
 
   for ( iter = geda_list_get_glist( pr_current->pages );
         iter != NULL;
