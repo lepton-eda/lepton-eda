@@ -34,7 +34,7 @@
 #include "../include/gettext.h"
 
 
-SCM g_scm_c_get_uref (TOPLEVEL *toplevel, OBJECT *object)
+SCM g_scm_c_get_uref (OBJECT *object)
 {
   SCM func = scm_variable_ref (scm_c_lookup ("get-uref"));
   SCM object_smob = edascm_from_object (object);

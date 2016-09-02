@@ -154,7 +154,7 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
     printf("found pinnum: %s\n", pinnum);
 #endif
 
-    scm_uref = g_scm_c_get_uref(pr_current, o_current->parent);
+    scm_uref = g_scm_c_get_uref(o_current->parent);
 
     if (scm_is_string( scm_uref )) {
       temp_uref = scm_to_utf8_string (scm_uref);

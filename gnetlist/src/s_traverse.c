@@ -204,7 +204,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
       netlist = s_netlist_add(netlist);
       netlist->nlid = o_current->sid;
 
-      scm_uref = g_scm_c_get_uref(pr_current, o_current);
+      scm_uref = g_scm_c_get_uref (o_current);
 
       if (scm_is_string( scm_uref )) {
         temp_uref = scm_to_utf8_string (scm_uref);
