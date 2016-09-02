@@ -107,17 +107,22 @@ code should use `gnetlist:get-backend-arguments' directly."
   )
 )
 
-;; Default resolver: returns value associated with first symbol instance
-;; in file order and warns if instances have different values.
+;;; Default resolver: Returns the first valid (non-#F) value from
+;;; VALUES, or #F, if there is no valid attribute value. If any
+;;; other valid value in the list is different, yields a warning
+;;; reporting REFDES of affected symbol instances and attribute
+;;; NAME.
 (define (unique-attribute refdes name values)
-    (let ((value (car values)))
-      (or (every (lambda (x) (equal? x value)) values)
-          (format (current-error-port) "\
+  (let ((values (filter-map identity values)))
+    (and (not (null? values))
+         (let ((value (car values)))
+           (or (every (lambda (x) (equal? x value)) values)
+               (format (current-error-port) "\
 Possible attribute conflict for refdes: ~A
 name: ~A
 values: ~A
 " refdes name values))
-      value))
+           value))))
 
 (define (gnetlist:get-package-attribute refdes name)
   "Return the value associated with attribute NAME on package
@@ -127,23 +132,12 @@ It actually computes a single value from the full list of values
 produced by 'gnetlist:get-all-package-attributes' as that list is
 passed through 'unique-attribute'.
 
-For backward compatibility, the default behavior is to return the
-value associated with the first symbol instance for REFDES. If all
-instances of REFDES do not have the same value for NAME, it prints a
-warning.
-
-This can be modified by redefining 'unique-attribute' that is a
-procedure that gets provided a non-empty list of attribute values, the
-REFDES and the NAME used for the search. It is expected to return a
-single value as a string or #f for an empty or non-existent attribute
-value.
-
-Note that given the current load sequence of gnetlist, this
-customization can only happen in the backend itself or in a file
-loaded after the backend ('-m' option of gnetlist)."
+The default behavior is to return the value associated with the
+first symbol instance for REFDES having the attribute NAME. If
+some of the instances of REFDES have different value for NAME, it
+prints a warning."
   (let* ((values (gnetlist:get-all-package-attributes refdes name))
-         (value  (and (not (null? values))
-                      (unique-attribute refdes name values))))
+         (value  (unique-attribute refdes name values)))
     (or value "unknown")))
 
 (define (gnetlist:get-slots refdes)
