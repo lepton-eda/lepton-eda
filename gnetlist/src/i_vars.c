@@ -31,9 +31,6 @@
 #include "../include/prototype.h"
 
 #define DEFAULT_BITMAP_DIRECTORY   "non-existant"
-#define DEFAULT_HIERARCHY_NETNAME_SEPARATOR "/"
-#define DEFAULT_HIERARCHY_NETATTRIB_SEPARATOR "/"
-#define DEFAULT_HIERARCHY_UREF_SEPARATOR "/"
 
 #define INIT_STR(w, name, str) {                            \
     g_free((w)->name);                                      \
@@ -41,57 +38,10 @@
                           (default_ ## name) : (str));      \
 }
 
-int default_hierarchy_uref_mangle = TRUE;
-int default_hierarchy_netname_mangle = TRUE;
-int default_hierarchy_netattrib_mangle = TRUE;
-int default_hierarchy_netattrib_order = APPEND;
-int default_hierarchy_netname_order = APPEND;
-int default_hierarchy_uref_order = APPEND;
-char *default_hierarchy_netname_separator = NULL;
-char *default_hierarchy_netattrib_separator = NULL;
-char *default_hierarchy_uref_separator = NULL;
 
 void i_vars_set(TOPLEVEL * pr_current)
 {
-    i_vars_libgeda_set(pr_current);
-
-    pr_current->hierarchy_uref_mangle = default_hierarchy_uref_mangle;
-    pr_current->hierarchy_netname_mangle =
-	default_hierarchy_netname_mangle;
-    pr_current->hierarchy_netattrib_mangle =
-	default_hierarchy_netattrib_mangle;
-    pr_current->hierarchy_netattrib_order =
-	default_hierarchy_netattrib_order;
-    pr_current->hierarchy_netname_order = default_hierarchy_netname_order;
-    pr_current->hierarchy_uref_order = default_hierarchy_uref_order;
-
-    if (pr_current->hierarchy_uref_mangle == FALSE) {
-	if (pr_current->hierarchy_uref_separator) {
-	    strcpy(pr_current->hierarchy_uref_separator, "/");
-	} else {
-	    pr_current->hierarchy_uref_separator = g_strdup("/");
-	}
-    }
-
-    if (!default_hierarchy_netname_separator) {
-      default_hierarchy_netname_separator =
-        g_strdup (DEFAULT_HIERARCHY_NETNAME_SEPARATOR);
-    }
-    if (!default_hierarchy_netattrib_separator) {
-      default_hierarchy_netattrib_separator =
-        g_strdup (DEFAULT_HIERARCHY_NETATTRIB_SEPARATOR);
-    }
-    if (!default_hierarchy_uref_separator) {
-      default_hierarchy_uref_separator =
-        g_strdup (DEFAULT_HIERARCHY_UREF_SEPARATOR);
-    }
-
-    INIT_STR(pr_current, hierarchy_netname_separator,
-             default_hierarchy_netname_separator);
-    INIT_STR(pr_current, hierarchy_netattrib_separator,
-             default_hierarchy_netattrib_separator);
-    INIT_STR(pr_current, hierarchy_uref_separator,
-             default_hierarchy_uref_separator);
+  i_vars_libgeda_set(pr_current);
 }
 
 
@@ -113,9 +63,45 @@ i_vars_init_gnetlist_defaults(void)
    * no explicit name via the netname= or net= attributes. */
   eda_config_set_string (cfg, "gnetlist", "default-bus-name", "unnamed_bus");
 
-  /* By default, hierarchy processing is enabled. */
-  eda_config_set_boolean (cfg, "gnetlist", "traverse-hierarchy", TRUE);
-
   /* By default, net= attributes beat netname= attributes. */
   eda_config_set_string (cfg, "gnetlist", "net-naming-priority", "net-attribute");
+
+  /* By default, hierarchy processing is enabled. */
+  eda_config_set_boolean (cfg, "gnetlist.hierarchy", "traverse-hierarchy", TRUE);
+
+  /* By default, sub-schematic attributes 'refdes' are built
+     accounting for the parent schematic's ones. */
+  eda_config_set_boolean (cfg, "gnetlist.hierarchy", "mangle-refdes-attribute", TRUE);
+
+  /* By default, sub-schematic attributes 'refdese' are appended to the parent
+     schematic's ones to build hierarchical attributes 'refdes'. */
+  eda_config_set_boolean (cfg, "gnetlist.hierarchy", "refdes-attribute-order", APPEND);
+
+  /* This is the default separator which is used to built hierarchical
+     refdeses of any component in sub-schematics. */
+  eda_config_set_string (cfg, "gnetlist.hierarchy", "refdes-attribute-separator", "/");
+
+  /* By default, sub-schematic attributes 'netname' are built
+     accounting for the parent schematic's ones. */
+  eda_config_set_boolean (cfg, "gnetlist.hierarchy", "mangle-netname-attribute", TRUE);
+
+  /* By default, sub-schematic attributes 'netname' are appended to the parent
+     schematic's ones to build hierarchical netnames. */
+  eda_config_set_boolean (cfg, "gnetlist.hierarchy", "hierarchy-netname-order", APPEND);
+
+  /* This is the default separator which is used to built hierarchical
+     attributes 'netname' for nets in sub-schematics. */
+  eda_config_set_string (cfg, "gnetlist.hierarchy", "hierarchy-netname-separator", "/");
+
+  /* By default, sub-schematic attributes 'net' are built
+     accounting for the parent schematic's ones. */
+  eda_config_set_boolean (cfg, "gnetlist.hierarchy", "mangle-net-attribute", TRUE);
+
+  /* By default, sub-schematic attributes 'net' are appended to the parent
+     schematic's ones to build hierarchical netnames. */
+  eda_config_set_boolean (cfg, "gnetlist.hierarchy", "net-attribute-order", APPEND);
+
+  /* This is the default separator which is used to built hierarchical
+     attributes 'net' for nets in sub-schematics. */
+  eda_config_set_string (cfg, "gnetlist.hierarchy", "net-attribute-separator", "/");
 }

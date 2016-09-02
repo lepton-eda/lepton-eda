@@ -81,16 +81,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->always_promote_attributes = NULL;
 
-  toplevel->hierarchy_uref_mangle = 0;
-  toplevel->hierarchy_netname_mangle = 0;
-  toplevel->hierarchy_netattrib_mangle = 0;
-  toplevel->hierarchy_uref_separator      = NULL;
-  toplevel->hierarchy_netname_separator   = NULL;
-  toplevel->hierarchy_netattrib_separator = NULL;
-  toplevel->hierarchy_netattrib_order = 0;
-  toplevel->hierarchy_netname_order = 0;
-  toplevel->hierarchy_uref_order = 0;
-
   toplevel->rendered_text_bounds_func = NULL;
   toplevel->rendered_text_bounds_data = NULL;
 

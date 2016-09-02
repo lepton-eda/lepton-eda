@@ -149,8 +149,8 @@
 #define PIN_TYPE_BUS		1
 
 /* gnetlist: hierarchy_*_order */
-#define APPEND			0
-#define PREPEND			1
+#define APPEND			FALSE
+#define PREPEND			TRUE
 
 /* gnetlist: netlist_mode */
 #define gEDA			0

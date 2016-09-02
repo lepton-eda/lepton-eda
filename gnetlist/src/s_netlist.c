@@ -136,81 +136,93 @@ void s_netlist_print(NETLIST * ptr)
 
 void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
 {
-    NETLIST *nl_current;
-    CPINLIST *pl_current;
+  NETLIST *nl_current;
+  CPINLIST *pl_current;
+  GError *err = NULL;
+  EdaConfig *cfg;
+  gboolean mangle_refdes = TRUE;
 
-    if (verbose_mode) {
-	printf("\n- Staring post processing\n");
-	printf("- Naming nets:\n");
-    }
+  cfg = eda_config_get_context_for_file (NULL);
 
-    /* this pass gives all nets a name, whether specified or creates a */
-    /* name */
-    nl_current = head;
-    while (nl_current != NULL) {
-	if (nl_current->cpins) {
+  mangle_refdes = eda_config_get_boolean (cfg, "gnetlist", "mangle-refdes-attribute", &err);
+  if (err != NULL) {
+    mangle_refdes = TRUE;
+    g_clear_error (&err);
+  }
+
+  if (verbose_mode) {
+    printf("\n- Staring post processing\n");
+    printf("- Naming nets:\n");
+  }
+
+  /* this pass gives all nets a name, whether specified or creates a */
+  /* name */
+  nl_current = head;
+  while (nl_current != NULL) {
+    if (nl_current->cpins) {
 	    pl_current = nl_current->cpins;
 	    while (pl_current != NULL) {
 
-		if (pl_current->plid != -1) {
-		    verbose_print("p");
-		}
+        if (pl_current->plid != -1) {
+          verbose_print("p");
+        }
 
-		if (pl_current->plid != -1 && pl_current->nets) {
+        if (pl_current->plid != -1 && pl_current->nets) {
 
-		    g_free(pl_current->net_name);
+          g_free(pl_current->net_name);
 
-		    verbose_print("n");
+          verbose_print("n");
 
-		    /* only name nets of components which */
-		    /* have a uref */
-		    if (nl_current->component_uref) {
-			pl_current->net_name =
-			    s_net_name(pr_current,
-				       head,
-				       pl_current->nets,
-				       nl_current->hierarchy_tag,
-				       pl_current->type);
+          /* only name nets of components which */
+          /* have a uref */
+          if (nl_current->component_uref) {
+            pl_current->net_name =
+              s_net_name(pr_current,
+                         head,
+                         pl_current->nets,
+                         nl_current->hierarchy_tag,
+                         pl_current->type);
 
-			/* put this name also in the first
-			   node of the nets linked list */
-			if (pl_current->net_name && pl_current->nets) {
-			    if (pl_current->nets->next) {
-				pl_current->nets->next->net_name =
-				    g_strdup (pl_current->net_name);
-			    }
-			}
-		    }
-		}
+            /* put this name also in the first
+               node of the nets linked list */
+            if (pl_current->net_name && pl_current->nets) {
+              if (pl_current->nets->next) {
+                pl_current->nets->next->net_name =
+                  g_strdup (pl_current->net_name);
+              }
+            }
+          }
+        }
 
-		pl_current = pl_current->next;
+        pl_current = pl_current->next;
 	    }
-	}
-	nl_current = nl_current->next;
     }
+    nl_current = nl_current->next;
+  }
 
-    verbose_done();
+  verbose_done();
+  if (verbose_mode) {
+    printf("- Renaming nets:\n");
+  }
+
+  s_rename_all(pr_current, head);
+
+  verbose_done();
+  if (verbose_mode) {
+    printf("- Resolving hierarchy:\n");
+  }
+  s_hierarchy_post_process(pr_current, head);
+
+  verbose_done();
+
+  if (!mangle_refdes) {
     if (verbose_mode) {
-	printf("- Renaming nets:\n");
+      printf("- Removing refdes mangling:\n");
     }
+    s_hierarchy_remove_uref_mangling(pr_current, head);
+  }
 
-    s_rename_all(pr_current, head);
-
-    verbose_done();
-    if (verbose_mode) {
-	printf("- Resolving hierarchy:\n");
-    }
-    s_hierarchy_post_process(pr_current, head);
-
-    verbose_done();
-    if (pr_current->hierarchy_uref_mangle == FALSE) {
-	if (verbose_mode) {
-	    printf("- Removing refdes mangling:\n");
-	}
-	s_hierarchy_remove_uref_mangling(pr_current, head);
-    }
-
-    verbose_done();
+  verbose_done();
 }
 
 void s_netlist_name_named_nets (TOPLEVEL *pr_current,

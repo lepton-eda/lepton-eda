@@ -19,15 +19,6 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib);
 SCM g_graphical_objs_in_net_with_attrib_get_attrib(SCM scm_netname, SCM scm_has_attribute, SCM scm_wanted_attribute);
 /* g_rc.c */
 SCM g_rc_gnetlist_version(SCM version);
-SCM g_rc_hierarchy_uref_mangle(SCM mode);
-SCM g_rc_hierarchy_netname_mangle(SCM mode);
-SCM g_rc_hierarchy_netattrib_mangle(SCM mode);
-SCM g_rc_hierarchy_netname_separator(SCM name);
-SCM g_rc_hierarchy_netattrib_separator(SCM name);
-SCM g_rc_hierarchy_uref_separator(SCM name);
-SCM g_rc_hierarchy_netattrib_order(SCM mode);
-SCM g_rc_hierarchy_netname_order(SCM mode);
-SCM g_rc_hierarchy_uref_order(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 SCM g_quit(void);

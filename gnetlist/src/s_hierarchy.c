@@ -370,174 +370,231 @@ void s_hierarchy_remove_compsite_all(NETLIST * head)
 char *s_hierarchy_create_uref(TOPLEVEL * pr_current, char *basename,
 			      char *hierarchy_tag)
 {
-    char *return_value = NULL;
+  char *return_value = NULL;
+  GError *err = NULL;
+  EdaConfig *cfg;
+  gboolean refdes_order = APPEND;
+  gchar *refdes_separator = NULL;
 
-    if (hierarchy_tag) {
-	if (basename) {
+  cfg = eda_config_get_context_for_file (NULL);
 
-	    if (pr_current->hierarchy_uref_separator) {
-		switch (pr_current->hierarchy_uref_order) {
-		case (APPEND):
-		    return_value =
-			g_strconcat (hierarchy_tag,
-                         pr_current->hierarchy_uref_separator,
-                         basename, NULL);
-		    break;
-		case (PREPEND):
-		    return_value =
-			g_strconcat (basename,
-                         pr_current->hierarchy_uref_separator,
-                         hierarchy_tag, NULL);
+  refdes_order = eda_config_get_boolean (cfg,
+                                         "gnetlist.hierarchy",
+                                         "refdes-attribute-order",
+                                         &err);
+  if (err != NULL) {
+    refdes_order = APPEND;
+    g_clear_error (&err);
+  }
 
-		    break;
-		}
+  refdes_separator = eda_config_get_string (cfg,
+                                            "gnetlist.hierarchy",
+                                            "refdes-attribute-separator",
+                                            &err);
+  if (err != NULL) {
+    refdes_separator = g_strdup ("/");
+    g_clear_error (&err);
+  }
+
+  if (hierarchy_tag) {
+    if (basename) {
+      if (refdes_separator) {
+        switch (refdes_order) {
+        case (APPEND):
+          return_value = g_strconcat (hierarchy_tag, refdes_separator, basename, NULL);
+          break;
+        case (PREPEND):
+          return_value = g_strconcat (basename, refdes_separator, hierarchy_tag, NULL);
+          break;
+        }
 	    } else {
-		switch (pr_current->hierarchy_uref_order) {
-		case (APPEND):
-		    return_value =
-			g_strconcat (hierarchy_tag, basename, NULL);
-		    break;
-		case (PREPEND):
-		    return_value =
-			g_strconcat (basename, hierarchy_tag, NULL);
-		    break;
-
-		}
+        switch (refdes_order) {
+        case (APPEND):
+          return_value = g_strconcat (hierarchy_tag, basename, NULL);
+          break;
+        case (PREPEND):
+          return_value =
+            g_strconcat (basename, hierarchy_tag, NULL);
+          break;
+        }
 	    }
-	} else {
-	    return_value = NULL;
-	}
     } else {
-	if (basename) {
-	    return_value = g_strdup (basename);
-	} else {
 	    return_value = NULL;
-	}
     }
+  } else {
+    if (basename) {
+	    return_value = g_strdup (basename);
+    } else {
+	    return_value = NULL;
+    }
+  }
 
-    return (return_value);
+  return (return_value);
 }
 
 char *s_hierarchy_create_netname(TOPLEVEL * pr_current, char *basename,
 				 char *hierarchy_tag)
 {
-    char *return_value = NULL;
+  char *return_value = NULL;
+  GError *err = NULL;
+  EdaConfig *cfg;
+  gboolean netname_order = APPEND;
+  gboolean mangle_netname = TRUE;
+  gchar *netname_separator = NULL;
 
-    if (pr_current->hierarchy_netname_mangle == FALSE) {
-	if (basename) {
+  cfg = eda_config_get_context_for_file (NULL);
+
+  netname_order = eda_config_get_boolean (cfg,
+                                          "gnetlist.hierarchy",
+                                          "netname-attribute-order",
+                                          &err);
+  if (err != NULL) {
+    netname_order = APPEND;
+    g_clear_error (&err);
+  }
+
+  mangle_netname = eda_config_get_boolean (cfg,
+                                           "gnetlist.hierarchy",
+                                           "mangle-netname-attribute",
+                                           &err);
+  if (err != NULL) {
+    mangle_netname = TRUE;
+    g_clear_error (&err);
+  }
+
+  netname_separator = eda_config_get_string (cfg,
+                                             "gnetlist.hierarchy",
+                                             "netname-attribute-separator",
+                                             &err);
+  if (err != NULL) {
+    netname_separator = g_strdup ("/");
+    g_clear_error (&err);
+  }
+
+
+  if (mangle_netname == FALSE) {
+    if (basename) {
 	    return (g_strdup (basename));
-	} else {
-	    return (NULL);
-	}
-    }
-
-    if (hierarchy_tag) {
-	if (basename) {
-
-	    if (pr_current->hierarchy_netname_separator) {
-		switch (pr_current->hierarchy_netname_order) {
-		case (APPEND):
-		    return_value =
-			g_strconcat (hierarchy_tag,
-                         pr_current->hierarchy_netname_separator,
-                         basename, NULL);
-
-		    break;
-
-		case (PREPEND):
-		    return_value =
-			g_strconcat (basename,
-                         pr_current->hierarchy_netname_separator,
-                         hierarchy_tag, NULL);
-
-		    break;
-
-		}
-	    } else {
-		switch (pr_current->hierarchy_netname_order) {
-		case (APPEND):
-
-		    return_value =
-			g_strconcat (hierarchy_tag, basename, NULL);
-		    break;
-		case (PREPEND):
-		    return_value =
-			g_strconcat (basename, hierarchy_tag, NULL);
-
-		    break;
-		}
-
-	    }
-	} else {
-	    return_value = NULL;
-	}
     } else {
-	if (basename) {
-	    return_value = g_strdup (basename);
-	} else {
-	    return_value = NULL;
-	}
+	    return (NULL);
     }
+  }
 
-    return (return_value);
+  if (hierarchy_tag) {
+    if (basename) {
+	    if (netname_separator) {
+        switch (netname_order) {
+        case (APPEND):
+          return_value = g_strconcat (hierarchy_tag, netname_separator, basename, NULL);
+          break;
+        case (PREPEND):
+          return_value = g_strconcat (basename, netname_separator, hierarchy_tag, NULL);
+          break;
+        }
+	    } else {
+        switch (netname_order) {
+        case (APPEND):
+          return_value = g_strconcat (hierarchy_tag, basename, NULL);
+          break;
+        case (PREPEND):
+          return_value = g_strconcat (basename, hierarchy_tag, NULL);
+          break;
+        }
+      }
+    } else {
+	    return_value = NULL;
+    }
+  } else {
+    if (basename) {
+	    return_value = g_strdup (basename);
+    } else {
+	    return_value = NULL;
+    }
+  }
+
+  return (return_value);
 }
 
 char *s_hierarchy_create_netattrib(TOPLEVEL * pr_current, char *basename,
 				   char *hierarchy_tag)
 {
-    char *return_value = NULL;
+  char *return_value = NULL;
+  GError *err = NULL;
+  EdaConfig *cfg;
+  gboolean net_order = APPEND;
+  gboolean mangle_net = TRUE;
+  gchar *net_separator = NULL;
 
-    if (pr_current->hierarchy_netattrib_mangle == FALSE) {
-	if (basename) {
+  cfg = eda_config_get_context_for_file (NULL);
+
+  net_order = eda_config_get_boolean (cfg,
+                                      "gnetlist.hierarchy",
+                                      "net-attribute-order",
+                                      &err);
+  if (err != NULL) {
+    net_order = APPEND;
+    g_clear_error (&err);
+  }
+
+  mangle_net = eda_config_get_boolean (cfg,
+                                       "gnetlist.hierarchy",
+                                       "mangle-net-attribute",
+                                       &err);
+  if (err != NULL) {
+    mangle_net = TRUE;
+    g_clear_error (&err);
+  }
+
+  net_separator = eda_config_get_string (cfg,
+                                         "gnetlist.hierarchy",
+                                         "net-attribute-separator",
+                                         &err);
+  if (err != NULL) {
+    net_separator = g_strdup ("/");
+    g_clear_error (&err);
+  }
+
+  if (!mangle_net) {
+    if (basename) {
 	    return (g_strdup (basename));
-	} else {
-	    return (NULL);
-	}
-    }
-
-    if (hierarchy_tag) {
-	if (basename) {
-
-	    if (pr_current->hierarchy_netattrib_separator) {
-		switch (pr_current->hierarchy_netattrib_order) {
-		case (APPEND):
-		    return_value =
-			g_strconcat (hierarchy_tag,
-                         pr_current->hierarchy_netattrib_separator,
-                         basename, NULL);
-		    break;
-		case (PREPEND):
-		    return_value =
-			g_strconcat (basename,
-                         pr_current->hierarchy_netattrib_separator,
-                         hierarchy_tag, NULL);
-
-		    break;
-		}
-	    } else {
-		switch (pr_current->hierarchy_netattrib_order) {
-		case (APPEND):
-		    return_value =
-			g_strconcat (hierarchy_tag, basename, NULL);
-                    break;
-		case (PREPEND):
-		    return_value =
-			g_strconcat (basename, hierarchy_tag, NULL);
-		    break;
-		}
-	    }
-	} else {
-	    return_value = NULL;
-	}
     } else {
-	if (basename) {
-	    return_value = g_strdup (basename);
-	} else {
-	    return_value = NULL;
-	}
+	    return (NULL);
     }
+  }
 
-    return (return_value);
+  if (hierarchy_tag) {
+    if (basename) {
+	    if (net_separator) {
+        switch (net_order) {
+        case (APPEND):
+          return_value = g_strconcat (hierarchy_tag, net_separator, basename, NULL);
+          break;
+        case (PREPEND):
+          return_value = g_strconcat (basename, net_separator, hierarchy_tag, NULL);
+          break;
+        }
+	    } else {
+        switch (net_order) {
+        case (APPEND):
+          return_value = g_strconcat (hierarchy_tag, basename, NULL);
+          break;
+        case (PREPEND):
+          return_value = g_strconcat (basename, hierarchy_tag, NULL);
+          break;
+        }
+	    }
+    } else {
+	    return_value = NULL;
+    }
+  } else {
+    if (basename) {
+	    return_value = g_strdup (basename);
+    } else {
+	    return_value = NULL;
+    }
+  }
+
+  return (return_value);
 }
 
 void
@@ -593,42 +650,55 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
     char *start_of_base = NULL;
     char *end_of_base = NULL;
 
+  GError *err = NULL;
+  EdaConfig *cfg;
+  gboolean refdes_order = APPEND;
+
+  cfg = eda_config_get_context_for_file (NULL);
+
+  refdes_order = eda_config_get_boolean (cfg,
+                                         "gnetlist.hierarchy",
+                                         "refdes-attribute-order",
+                                         &err);
+  if (err != NULL) {
+    refdes_order = APPEND;
+    g_clear_error (&err);
+  }
+
     /* use hierarchy separator */
 
-    if (uref == NULL) {
-	return (NULL);
-    }
+  if (uref == NULL) {
+    return (NULL);
+  }
 #if DEBUG
-    printf("Got uref: _%s_\n", uref);
+  printf("Got uref: _%s_\n", uref);
 #endif
 
+  if (refdes_order == APPEND) {
+    start_of_base = strrchr(uref, '/');	/* separator is always '/' */
 
-    if (pr_current->hierarchy_uref_order == APPEND) {
-
-	start_of_base = strrchr(uref, '/');	/* separator is always '/' */
-
-	if (start_of_base == NULL) {
+    if (start_of_base == NULL) {
 	    return (g_strdup (uref));
-	}
-
-	return_value = g_strdup (start_of_base + 1);
-
-    } else if (pr_current->hierarchy_uref_order == PREPEND) {
-
-	end_of_base = strchr(uref, '/');
-
-	if (end_of_base == NULL) {
-	    return (g_strdup (uref));
-	}
-
-	return_value = g_strndup(uref, end_of_base - uref);
     }
 
+    return_value = g_strdup (start_of_base + 1);
+
+  } else if (refdes_order == PREPEND) {
+
+    end_of_base = strchr(uref, '/');
+
+    if (end_of_base == NULL) {
+	    return (g_strdup (uref));
+    }
+
+    return_value = g_strndup(uref, end_of_base - uref);
+  }
+
 #if DEBUG
-    printf("new uref return_value = %s\n\n\n", return_value);
+  printf("new uref return_value = %s\n\n\n", return_value);
 #endif
 
-    return (return_value);
+  return (return_value);
 }
 
 int s_hierarchy_graphical_search (OBJECT* o_current, int count)

@@ -168,8 +168,35 @@ release.  Please use configuration files instead.
   unnamed-busname "gnetlist" "default-bus-name"
   rc-deprecated-string-transformer)
 (define-rc-deprecated-config
-  hierarchy-traversal "gnetlist" "traverse-hierarchy"
-  rc-deprecated-string-boolean-transformer)
-(define-rc-deprecated-config
   net-naming-priority "gnetlist" "net-naming-priority"
   (lambda (x) (if (string=? x "netname") "netname-attribute" "net-attribute")))
+(define-rc-deprecated-config
+  hierarchy-traversal "gnetlist.hierarchy" "traverse-hierarchy"
+  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+  hierarchy-uref-mangle "gnetlist.hierarchy" "mangle-refdes-attribute"
+  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+  hierarchy-uref-order "gnetlist.hierarchy" "refdes-attribute-order"
+  (lambda (x) (string=? "prepend" x)))
+(define-rc-deprecated-config
+  hierarchy-uref-separator "gnetlist.hierarchy" "refdes-attribute-separator"
+  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+  hierarchy-netname-mangle "gnetlist.hierarchy" "mangle-netname-attribute"
+  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+  hierarchy-netname-order "gnetlist.hierarchy" "netname-attribute-order"
+  (lambda (x) (string=? "prepend" x)))
+(define-rc-deprecated-config
+  hierarchy-netname-separator "gnetlist.hierarchy" "netname-attribute-separator"
+  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+  hierarchy-netattrib-mangle "gnetlist.hierarchy" "mangle-net-attribute"
+  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+  hierarchy-netattrib-order "gnetlist.hierarchy" "net-attribute-order"
+  (lambda (x) (string=? "prepend" x)))
+(define-rc-deprecated-config
+  hierarchy-netattrib-separator "gnetlist.hierarchy" "net-attribute-separator"
+  rc-deprecated-string-transformer)

@@ -53,16 +53,6 @@ static struct gsubr_t gnetlist_funcs[] = {
   /* gnetlistrc functions */
   { "gnetlist-version",             1, 0, 0, g_rc_gnetlist_version },
 
-  { "hierarchy-uref-mangle",        1, 0, 0, g_rc_hierarchy_uref_mangle },
-  { "hierarchy-netname-mangle",     1, 0, 0, g_rc_hierarchy_netname_mangle },
-  { "hierarchy-netattrib-mangle",   1, 0, 0, g_rc_hierarchy_netattrib_mangle },
-  { "hierarchy-uref-separator",     1, 0, 0, g_rc_hierarchy_uref_separator },
-  { "hierarchy-netname-separator",  1, 0, 0, g_rc_hierarchy_netname_separator },
-  { "hierarchy-netattrib-separator", 1, 0, 0, g_rc_hierarchy_netattrib_separator },
-  { "hierarchy-netattrib-order",    1, 0, 0, g_rc_hierarchy_netattrib_order },
-  { "hierarchy-netname-order",      1, 0, 0, g_rc_hierarchy_netname_order },
-  { "hierarchy-uref-order",         1, 0, 0, g_rc_hierarchy_uref_order },
-
   /* netlist functions */
   { "gnetlist:get-packages",        1, 0, 0, g_get_packages },
   { "gnetlist:get-non-unique-packages", 1, 0, 0, g_get_non_unique_packages },
