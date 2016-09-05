@@ -135,11 +135,10 @@ s_traverse (TOPLEVEL *pr_current)
 
   /* now that all the sheets have been read, go through and do the */
   /* post processing work */
-  s_netlist_post_process(pr_current, netlist_head);
+  s_netlist_post_process (netlist_head);
 
   /* Now match the graphical netlist with the net names already assigned */
-  s_netlist_name_named_nets(pr_current, netlist_head,
-                            graphical_netlist_head);
+  s_netlist_name_named_nets (netlist_head, graphical_netlist_head);
 
   if (verbose_mode) {
     printf("\nInternal netlist representation:\n\n");
@@ -209,7 +208,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
       if (scm_is_string( scm_uref )) {
         temp_uref = scm_to_utf8_string (scm_uref);
         netlist->component_uref =
-          s_hierarchy_create_uref(pr_current, temp_uref, hierarchy_tag);
+          s_hierarchy_create_uref (temp_uref, hierarchy_tag);
         g_free(temp_uref);
       } else {
         if (hierarchy_tag) {
@@ -257,8 +256,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
 
       /* here is where you deal with the */
       /* net attribute */
-      s_netattrib_handle(pr_current, o_current, netlist,
-			 hierarchy_tag);
+      s_netattrib_handle (o_current, netlist, hierarchy_tag);
 
       /* now you need to traverse any underlying schematics */
       if (is_hierarchy) {
@@ -310,8 +308,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 
     /* This avoids us adding an unnamed net for an unconnected pin */
     if (o_current->conn_list != NULL) {
-      s_traverse_net (pr_current, nets, TRUE,
-		      o_current, hierarchy_tag, cpins->type);
+      s_traverse_net (nets, TRUE, o_current, hierarchy_tag, cpins->type);
       s_traverse_clear_all_visited (s_page_objects (pr_current->page_current));
     }
 
@@ -337,8 +334,8 @@ static int connection_type (OBJECT *object)
 }
 
 
-NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
-                     OBJECT *object, char *hierarchy_tag, int type)
+NET*
+s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, int type)
 {
   NET *new_net;
   CONN *c_current;
@@ -361,18 +358,14 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
       temp = o_attrib_search_object_attribs_by_name (object, "netname", 0);
 
     if (temp) {
-      new_net->net_name =
-        s_hierarchy_create_netname(pr_current, temp,
-                                   hierarchy_tag);
+      new_net->net_name = s_hierarchy_create_netname (temp, hierarchy_tag);
       g_free(temp);
     } else if (object->type == OBJ_NET) {
       /* search for the old label= attribute on nets */
       temp = o_attrib_search_object_attribs_by_name (object, "label", 0);
       if (temp) {
         printf(_("WARNING: Found label=%s. label= is deprecated, please use netname=\n"), temp);
-        new_net->net_name =
-          s_hierarchy_create_netname(pr_current, temp,
-                                     hierarchy_tag);
+        new_net->net_name = s_hierarchy_create_netname (temp, hierarchy_tag);
         g_free(temp);
       }
     }
@@ -386,7 +379,7 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
     verbose_print (starting ? "p" : "P");
 
     new_net->connected_to =
-      s_net_return_connected_string (pr_current, object, hierarchy_tag);
+      s_net_return_connected_string (object, hierarchy_tag);
 
     temp = o_attrib_search_object_attribs_by_name (object, "pinlabel", 0);
 
@@ -402,9 +395,7 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
       printf("going to find netname %s \n", nets->connected_to);
 #endif
       nets->net_name =
-        s_netattrib_return_netname (pr_current, object,
-                                    nets->connected_to,
-                                    hierarchy_tag);
+        s_netattrib_return_netname (object, nets->connected_to, hierarchy_tag);
       nets->net_name_has_priority = TRUE;
       g_free(nets->connected_to);
       nets->connected_to = NULL;
@@ -436,8 +427,11 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
 
       if (!is_visited(c_current->other_object) &&
           c_current->other_object != object) {
-        nets = s_traverse_net (pr_current, nets, FALSE,
-                               c_current->other_object, hierarchy_tag, type);
+        nets = s_traverse_net (nets,
+                               FALSE,
+                               c_current->other_object,
+                               hierarchy_tag,
+                               type);
       }
 
     }

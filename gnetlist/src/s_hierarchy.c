@@ -179,7 +179,8 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 }
 
 
-void s_hierarchy_post_process(TOPLEVEL * pr_current, NETLIST * head)
+void
+s_hierarchy_post_process (NETLIST * head)
 {
     NETLIST *nl_current;
     CPINLIST *pl_current;
@@ -217,9 +218,7 @@ void s_hierarchy_post_process(TOPLEVEL * pr_current, NETLIST * head)
 			       pl_current->pin_label);
 #endif
 			/* get source net name, all nets are named already */
-			source_net_name =
-			    s_net_name_search(pr_current,
-					      pl_current->nets);
+      source_net_name = s_net_name_search (pl_current->nets);
 #if DEBUG
 			printf("name: %s\n", source_net_name);
 			printf("Now we need to search for: %s/%s\n",
@@ -227,11 +226,10 @@ void s_hierarchy_post_process(TOPLEVEL * pr_current, NETLIST * head)
 			       pl_current->pin_label);
 #endif
 
-			did_work =
-			    s_hierarchy_setup_rename(pr_current, head,
-						     nl_current->component_uref,
-						     pl_current->pin_label,
-						     source_net_name);
+			did_work = s_hierarchy_setup_rename (head,
+                                           nl_current->component_uref,
+                                           pl_current->pin_label,
+                                           source_net_name);
 			if (!did_work) {
 			    fprintf(stderr,
 				    _("Missing I/O symbol with refdes [%s] inside schematic for symbol [%s]\n"),
@@ -247,13 +245,12 @@ void s_hierarchy_post_process(TOPLEVEL * pr_current, NETLIST * head)
 	nl_current = nl_current->next;
     }
 
-    s_rename_all(pr_current, head);
+    s_rename_all (head);
     s_hierarchy_remove_compsite_all(head);
 }
 
 int
-s_hierarchy_setup_rename(TOPLEVEL * pr_current, NETLIST * head, char *uref,
-			 char *label, char *new_name)
+s_hierarchy_setup_rename (NETLIST *head, char *uref, char *label, char *new_name)
 {
     NETLIST *nl_current;
     CPINLIST *pl_current;
@@ -264,7 +261,7 @@ s_hierarchy_setup_rename(TOPLEVEL * pr_current, NETLIST * head, char *uref,
     /* same as the #if 0'ed out line */
     /* search for the uref which has the name: label/uref (or whatever the */
     /* hierarchy tag/separator order is) */
-    wanted_uref = s_hierarchy_create_uref(pr_current, label, uref);
+    wanted_uref = s_hierarchy_create_uref (label, uref);
 
 #if DEBUG
     printf("label: %s, uref: %s, wanted_uref: %s\n", label, uref,
@@ -367,8 +364,8 @@ void s_hierarchy_remove_compsite_all(NETLIST * head)
 
 }
 
-char *s_hierarchy_create_uref(TOPLEVEL * pr_current, char *basename,
-			      char *hierarchy_tag)
+char*
+s_hierarchy_create_uref (char *basename, char *hierarchy_tag)
 {
   char *return_value = NULL;
   GError *err = NULL;
@@ -432,8 +429,8 @@ char *s_hierarchy_create_uref(TOPLEVEL * pr_current, char *basename,
   return (return_value);
 }
 
-char *s_hierarchy_create_netname(TOPLEVEL * pr_current, char *basename,
-				 char *hierarchy_tag)
+char*
+s_hierarchy_create_netname (char *basename, char *hierarchy_tag)
 {
   char *return_value = NULL;
   GError *err = NULL;
@@ -515,8 +512,8 @@ char *s_hierarchy_create_netname(TOPLEVEL * pr_current, char *basename,
   return (return_value);
 }
 
-char *s_hierarchy_create_netattrib(TOPLEVEL * pr_current, char *basename,
-				   char *hierarchy_tag)
+char*
+s_hierarchy_create_netattrib (char *basename, char *hierarchy_tag)
 {
   char *return_value = NULL;
   GError *err = NULL;
@@ -598,7 +595,7 @@ char *s_hierarchy_create_netattrib(TOPLEVEL * pr_current, char *basename,
 }
 
 void
-s_hierarchy_remove_uref_mangling(TOPLEVEL * pr_current, NETLIST * head)
+s_hierarchy_remove_uref_mangling (NETLIST * head)
 {
     NETLIST *nl_current;
     CPINLIST *pl_current;
@@ -612,9 +609,7 @@ s_hierarchy_remove_uref_mangling(TOPLEVEL * pr_current, NETLIST * head)
 
 	if (nl_current->component_uref) {
 	    verbose_print("u");
-	    new_uref =
-		s_hierarchy_return_baseuref(pr_current,
-					    nl_current->component_uref);
+	    new_uref = s_hierarchy_return_baseuref (nl_current->component_uref);
 	    g_free(nl_current->component_uref);
 	    nl_current->component_uref = new_uref;
 	}
@@ -629,7 +624,7 @@ s_hierarchy_remove_uref_mangling(TOPLEVEL * pr_current, NETLIST * head)
 		    verbose_print("U");
 		    sscanf(n_current->connected_to, "%s %s", uref, pin);
 		    new_uref =
-			s_hierarchy_return_baseuref(pr_current, uref);
+			s_hierarchy_return_baseuref(uref);
 		    new_connected_to = g_strdup_printf("%s %s", new_uref, pin);
 		    g_free(n_current->connected_to);
 		    n_current->connected_to = new_connected_to;
@@ -644,7 +639,8 @@ s_hierarchy_remove_uref_mangling(TOPLEVEL * pr_current, NETLIST * head)
 }
 
 
-char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
+char*
+s_hierarchy_return_baseuref (char *uref)
 {
     char *return_value = NULL;
     char *start_of_base = NULL;

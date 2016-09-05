@@ -103,9 +103,10 @@ char *s_netattrib_extract_netname(char *value)
 
 /* if this function creates a cpinlist list, it will not have a head node */
 void
-s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
-			NETLIST * netlist, char *value,
-			char *hierarchy_tag)
+s_netattrib_create_pins (OBJECT *o_current,
+                         NETLIST *netlist,
+                         char *value,
+                         char *hierarchy_tag)
 {
     NETLIST *netlist_tail = NULL;
     CPINLIST *cpinlist_tail = NULL;
@@ -153,8 +154,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 
 
 		old_cpin->nets->net_name =
-		    s_hierarchy_create_netattrib(pr_current, net_name,
-						 hierarchy_tag);
+      s_hierarchy_create_netattrib (net_name, hierarchy_tag);
 		old_cpin->nets->net_name_has_priority = TRUE;
 		connected_to = g_strdup_printf("%s %s",
                                    netlist->component_uref,
@@ -175,8 +175,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 		new_cpin->nets = s_net_add(NULL);
 		new_cpin->nets->net_name_has_priority = TRUE;
 		new_cpin->nets->net_name =
-		    s_hierarchy_create_netattrib(pr_current, net_name,
-						 hierarchy_tag);
+      s_hierarchy_create_netattrib (net_name, hierarchy_tag);
 
 		connected_to = g_strdup_printf("%s %s",
                                    netlist->component_uref,
@@ -204,8 +203,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 
 
 void
-s_netattrib_handle (TOPLEVEL * pr_current, OBJECT * o_current,
-                    NETLIST * netlist, char *hierarchy_tag)
+s_netattrib_handle (OBJECT *o_current, NETLIST *netlist, char *hierarchy_tag)
 {
   char *value;
   int counter;
@@ -219,8 +217,7 @@ s_netattrib_handle (TOPLEVEL * pr_current, OBJECT * o_current,
 
     counter++;
 
-    s_netattrib_create_pins (pr_current, o_current,
-                             netlist, value, hierarchy_tag);
+    s_netattrib_create_pins (o_current, netlist, value, hierarchy_tag);
     g_free (value);
   }
 
@@ -233,8 +230,7 @@ s_netattrib_handle (TOPLEVEL * pr_current, OBJECT * o_current,
 
     counter++;
 
-    s_netattrib_create_pins (pr_current, o_current,
-                             netlist, value, hierarchy_tag);
+    s_netattrib_create_pins (o_current, netlist, value, hierarchy_tag);
     g_free (value);
   }
 }
@@ -319,8 +315,8 @@ char *s_netattrib_net_search (OBJECT * o_current, const gchar *wanted_pin)
   return return_value;
 }
 
-char *s_netattrib_return_netname(TOPLEVEL * pr_current, OBJECT * o_current,
-				 char *pinnumber, char *hierarchy_tag)
+char*
+s_netattrib_return_netname (OBJECT * o_current, char *pinnumber, char *hierarchy_tag)
 {
     const gchar *current_pin;
     char *netname;
@@ -333,9 +329,7 @@ char *s_netattrib_return_netname(TOPLEVEL * pr_current, OBJECT * o_current,
     temp_netname = s_netattrib_net_search(o_current->parent,
                                           current_pin);
 
-    netname =
-	s_hierarchy_create_netattrib(pr_current, temp_netname,
-				     hierarchy_tag);
+    netname = s_hierarchy_create_netattrib (temp_netname, hierarchy_tag);
 
 #if DEBUG
     printf("netname: %s\n", netname);

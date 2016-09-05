@@ -135,8 +135,8 @@ void s_net_print(NET * ptr)
 
 
 /* object being a pin */
-char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
-				    char *hierarchy_tag)
+char*
+s_net_return_connected_string (OBJECT *object, char *hierarchy_tag)
 {
     OBJECT *o_current;
     char *pinnum = NULL;
@@ -161,7 +161,7 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
     }
 
     /* apply the hierarchy name to the uref */
-    uref = s_hierarchy_create_uref(pr_current, temp_uref, hierarchy_tag);
+    uref = s_hierarchy_create_uref (temp_uref, hierarchy_tag);
 
     if (uref && pinnum) {
 	string = g_strdup_printf("%s %s", uref, pinnum);
@@ -172,9 +172,7 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
           string = s_netattrib_pinnum_get_connected_string (pinnum);
 	} else {
 	    if (hierarchy_tag) {
-		misc =
-		    s_hierarchy_create_uref(pr_current, "U?",
-					    hierarchy_tag);
+		misc = s_hierarchy_create_uref("U?", hierarchy_tag);
 		string = g_strdup_printf("%s ?", misc);
 		g_free(misc);
 	    } else {
@@ -209,7 +207,8 @@ int s_net_find(NET * net_head, NET * node)
     return (FALSE);
 }
 
-char *s_net_name_search(TOPLEVEL * pr_current, NET * net_head)
+char*
+s_net_name_search (NET * net_head)
 {
     NET *n_current;
     char *name = NULL;
@@ -350,8 +349,8 @@ char *s_net_name_search(TOPLEVEL * pr_current, NET * net_head)
     }
 }
 
-char *s_net_name (TOPLEVEL * pr_current, NETLIST * netlist_head,
-                  NET * net_head, char *hierarchy_tag, int type)
+char*
+s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type)
 {
     char *string = NULL;
     NET *n_start;
@@ -364,7 +363,7 @@ char *s_net_name (TOPLEVEL * pr_current, NETLIST * netlist_head,
     char *unnamed_string = NULL;
     EdaConfig *cfg;
 
-    net_name = s_net_name_search(pr_current, net_head);
+    net_name = s_net_name_search (net_head);
 
     if (net_name) {
 	return (net_name);
@@ -389,8 +388,7 @@ char *s_net_name (TOPLEVEL * pr_current, NETLIST * netlist_head,
 			found = s_net_find(n_start->next, net_head->next);
 
 			if (found) {
-			    net_name =
-				s_net_name_search(pr_current, n_start);
+			    net_name = s_net_name_search (n_start);
 			    if (net_name) {
 				return (net_name);
 			    }
@@ -448,7 +446,7 @@ char *s_net_name (TOPLEVEL * pr_current, NETLIST * netlist_head,
         } else {
           temp = g_strdup_printf ("%s%d", unnamed_string, (*unnamed_counter)++);
           if (hierarchy_tag) {
-            string = s_hierarchy_create_netname (pr_current, temp, hierarchy_tag);
+            string = s_hierarchy_create_netname (temp, hierarchy_tag);
             g_free (temp);
           } else {
             string = temp;

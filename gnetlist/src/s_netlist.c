@@ -134,7 +134,8 @@ void s_netlist_print(NETLIST * ptr)
     printf("\n");
 }
 
-void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
+void
+s_netlist_post_process (NETLIST *head)
 {
   NETLIST *nl_current;
   CPINLIST *pl_current;
@@ -177,11 +178,10 @@ void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
           /* have a uref */
           if (nl_current->component_uref) {
             pl_current->net_name =
-              s_net_name(pr_current,
-                         head,
-                         pl_current->nets,
-                         nl_current->hierarchy_tag,
-                         pl_current->type);
+              s_net_name (head,
+                          pl_current->nets,
+                          nl_current->hierarchy_tag,
+                          pl_current->type);
 
             /* put this name also in the first
                node of the nets linked list */
@@ -205,13 +205,13 @@ void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
     printf("- Renaming nets:\n");
   }
 
-  s_rename_all(pr_current, head);
+  s_rename_all (head);
 
   verbose_done();
   if (verbose_mode) {
     printf("- Resolving hierarchy:\n");
   }
-  s_hierarchy_post_process(pr_current, head);
+  s_hierarchy_post_process (head);
 
   verbose_done();
 
@@ -219,15 +219,15 @@ void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
     if (verbose_mode) {
       printf("- Removing refdes mangling:\n");
     }
-    s_hierarchy_remove_uref_mangling(pr_current, head);
+    s_hierarchy_remove_uref_mangling (head);
   }
 
   verbose_done();
 }
 
-void s_netlist_name_named_nets (TOPLEVEL *pr_current,
-				NETLIST *named_netlist,
-				NETLIST *unnamed_netlist) {
+void
+s_netlist_name_named_nets (NETLIST *named_netlist, NETLIST *unnamed_netlist)
+{
 
   NETLIST *nl_current;
   CPINLIST *pl_current;
@@ -257,9 +257,7 @@ void s_netlist_name_named_nets (TOPLEVEL *pr_current,
 	  n_current = pl_current->nets;
 	  while (n_current != NULL) {
 	    g_free (n_current->net_name);
-	    n_current->net_name = s_netlist_netname_of_netid(pr_current,
-							     named_netlist,
-							     n_current->nid);
+      n_current->net_name = s_netlist_netname_of_netid (named_netlist, n_current->nid);
 
 	    if (n_current->net_name != NULL) {
 	      net_name = n_current->net_name;
@@ -280,10 +278,9 @@ void s_netlist_name_named_nets (TOPLEVEL *pr_current,
 
 }
 
-char *s_netlist_netname_of_netid (TOPLEVEL *pr_current,
-				  NETLIST *netlist_head,
-				  int net_id) {
-
+char*
+s_netlist_netname_of_netid (NETLIST *netlist_head, int net_id)
+{
   NETLIST *nl_current;
   CPINLIST *pl_current;
   NET *n_current;
