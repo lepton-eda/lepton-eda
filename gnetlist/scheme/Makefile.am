@@ -24,7 +24,8 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
 	   gnet-mathematica.scm gnet-liquidpcb.scm \
 	   gnet-makedepend.scm \
 	   gnetlist/backend-getopt.scm gnetlist/partlist.scm \
-	   gnetlist/partlist/common.scm gnetlist/attrib/compare.scm
+	   gnetlist/partlist/common.scm gnetlist/attrib/compare.scm \
+	   gnetlist/traverse.scm
 
 TESTS = unit-tests/test-gnetlist-partlist.scm \
 	unit-tests/test-gnetlist-attrib.scm

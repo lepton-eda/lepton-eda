@@ -91,10 +91,10 @@ void s_rename_all_lowlevel(NETLIST *netlist_head, char *src, char *dest);
 void s_rename_all (NETLIST *netlist_head);
 SCM g_get_renamed_nets(SCM scm_level);
 /* s_traverse.c */
-void s_traverse (TOPLEVEL *pr_current);
 void s_traverse_sheet(TOPLEVEL *pr_current, const GList *obj_list, char *hierarchy_tag);
 CPINLIST *s_traverse_component(TOPLEVEL *pr_current, OBJECT *component, char *hierarchy_tag);
 NET *s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, int type);
+void s_init_traverse (void);
 /* vams_misc.c */
 SCM vams_get_attribs_list(OBJECT *object);
 SCM vams_get_package_attributes(SCM scm_uref);

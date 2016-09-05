@@ -142,6 +142,7 @@ void main_prog(void *closure, int argc, char *argv[])
     gchar *filename;
 
     TOPLEVEL *pr_current;
+    SCM traverse;
 
     /* set default output filename */
     output_filename = g_strdup("output.net");
@@ -181,6 +182,9 @@ void main_prog(void *closure, int argc, char *argv[])
 
     /* register guile (scheme) functions */
     g_register_funcs();
+    s_init_traverse ();
+    traverse = scm_c_public_lookup ("gnetlist traverse", "traverse");
+
 
     scm_dynwind_begin (0);
     pr_current = s_toplevel_new ();
@@ -301,7 +305,7 @@ void main_prog(void *closure, int argc, char *argv[])
       scm_eval (post_backend_list, scm_current_module ());
     }
 
-    s_traverse (pr_current);
+    (scm_call_0 (scm_variable_ref (traverse)));
 
     /* Change back to the directory where we started AGAIN.  This is done */
     /* because the s_traverse functions can change the Current Working Directory. */

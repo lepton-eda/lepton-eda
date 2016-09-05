@@ -2,6 +2,9 @@
 
 bin_PROGRAMS = gnetlist
 
+BUILT_SOURCES = \
+	s_traverse.x
+
 # don't forget all *.h files */
 gnetlist_SOURCES = \
 	g_netlist.c \
@@ -31,7 +34,15 @@ gnetlist_LDADD = $(top_builddir)/libgeda/src/libgeda.la
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
+# This is used to generate boilerplate for defining Scheme functions
+# in C.
+SUFFIXES = .x
+snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(gnetlist_CPPFLAGS) $(AM_CFLAGS) $(gnetlist_CFLAGS)
+.c.x:
+	CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
+
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
-CLEANFILES = *.log *.ps core FILE *~
+CLEANFILES = *.log *.ps core FILE *~ $(BUILT_SOURCES)
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in

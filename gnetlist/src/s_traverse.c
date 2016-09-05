@@ -27,6 +27,7 @@
 #include <math.h>
 
 #include <libgeda/libgeda.h>
+#include <libgeda/libgedaguile.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
@@ -112,13 +113,16 @@ s_traverse_init (void)
                                     g_direct_equal);
 }
 
-void
-s_traverse (TOPLEVEL *pr_current)
+SCM_DEFINE (traverse, "%traverse", 0, 0, 0,
+            (), "Traverse hierarchy.")
 {
+  TOPLEVEL *pr_current;
   GList *iter;
   PAGE *p_current;
 
   s_traverse_init ();
+
+  pr_current = edascm_c_current_toplevel ();
 
   for ( iter = geda_list_get_glist( pr_current->pages );
         iter != NULL;
@@ -144,6 +148,8 @@ s_traverse (TOPLEVEL *pr_current)
     printf("\nInternal netlist representation:\n\n");
     s_netlist_print(netlist_head);
   }
+
+  return SCM_BOOL_T;
 }
 
 
@@ -439,4 +445,26 @@ s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, in
   }
 
   return (nets);
+}
+
+
+static void
+init_module_gnetlist_core_traverse ()
+{
+  /* Register the functions */
+  #include "s_traverse.x"
+
+  /* Register the functions and add them to the module's public
+   * definitions. */
+  scm_c_export (s_traverse,
+                NULL);
+}
+
+void
+s_init_traverse ()
+{
+  /* Define the (gsymcheck core check) module */
+  scm_c_define_module ("gnetlist core traverse",
+                       init_module_gnetlist_core_traverse,
+                       NULL);
 }

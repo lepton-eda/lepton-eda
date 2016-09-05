@@ -5,4 +5,5 @@ Makefile.in
 gnetlist
 gnetlist.exe
 *.o
+*.x
 *~
