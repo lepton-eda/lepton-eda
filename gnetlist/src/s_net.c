@@ -45,39 +45,6 @@ static int unnamed_pin_counter = 1;
 #define MAX_UNNAMED_NETS 99999999
 #define MAX_UNNAMED_PINS 99999999
 
-/* hack rename this to be s_return_tail */
-/* update object_tail or any list of that matter */
-NET *s_net_return_tail(NET * head)
-{
-    NET *n_current = NULL;
-    NET *ret_struct = NULL;
-
-    n_current = head;
-    while (n_current != NULL) {	/* goto end of list */
-	ret_struct = n_current;
-	n_current = n_current->next;
-    }
-
-    return (ret_struct);
-}
-
-/* hack rename this to be s_return_head */
-/* update object_tail or any list of that matter */
-NET *s_net_return_head(NET * tail)
-{
-    NET *n_current = NULL;
-    NET *ret_struct = NULL;
-
-    n_current = tail;
-    while (n_current != NULL) {	/* goto end of list */
-	ret_struct = n_current;
-	n_current = n_current->prev;
-    }
-
-    return (ret_struct);
-}
-
-
 NET *s_net_add(NET * ptr)
 {
     NET *new_node;

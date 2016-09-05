@@ -57,8 +57,6 @@ void verbose_print(char *string);
 void verbose_done(void);
 void verbose_reset_index(void);
 /* s_net.c */
-NET *s_net_return_tail(NET *head);
-NET *s_net_return_head(NET *tail);
 NET *s_net_add(NET *ptr);
 void s_net_print(NET *ptr);
 char *s_net_return_connected_string (OBJECT *object, char *hierarchy_tag);
