@@ -62,15 +62,4 @@ SCM g_rc_gnetlist_version(SCM scm_version)
   free (version);
   return ret;
 }
-
-static char *
-g_strdup_scm_string(SCM scm_s)
-{
-  char *s, *ret;
-
-  s = scm_to_utf8_string (scm_s);
-  ret = g_strdup (s);
-  free (s);
-  return ret;
-}
 /*************************** GUILE end done *********************************/
