@@ -1,0 +1,2 @@
+(source-library ".")
+(component-library "../Symbols")
