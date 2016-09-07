@@ -53,22 +53,6 @@ CPINLIST *s_cpinlist_return_tail(CPINLIST * head)
     return (ret_struct);
 }
 
-/* hack rename this to be s_return_head */
-/* update object_tail or any list of that matter */
-CPINLIST *s_cpinlist_return_head(CPINLIST * tail)
-{
-    CPINLIST *pl_current = NULL;
-    CPINLIST *ret_struct = NULL;
-
-    pl_current = tail;
-    while (pl_current != NULL) {	/* goto end of list */
-	ret_struct = pl_current;
-	pl_current = pl_current->prev;
-    }
-
-    return (ret_struct);
-}
-
 
 /* returns new node */
 CPINLIST *s_cpinlist_add(CPINLIST * ptr)

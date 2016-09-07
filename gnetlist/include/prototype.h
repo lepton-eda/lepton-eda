@@ -36,7 +36,6 @@ GSList *create_input_files_list(int argi, int argc, char *argv[]);
 int parse_commandline(int argc, char *argv[]);
 /* s_cpinlist.c */
 CPINLIST *s_cpinlist_return_tail(CPINLIST *head);
-CPINLIST *s_cpinlist_return_head(CPINLIST *tail);
 CPINLIST *s_cpinlist_add(CPINLIST *ptr);
 void s_cpinlist_print(CPINLIST *ptr);
 CPINLIST *s_cpinlist_search_pin(CPINLIST *ptr, char *pin_number);
