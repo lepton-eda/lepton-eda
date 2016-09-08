@@ -42,7 +42,9 @@
              (gnetlist attrib compare)
              (gnetlist sort)
              (gnetlist option)
-             (gnetlist verbose))
+             (gnetlist verbose)
+             ((gnetlist rename) #:select (get-rename-list)))
+
 
 ;;----------------------------------------------------------------------
 ;; The below functions added by SDB in Sept 2003 to support command-line flag
@@ -564,6 +566,14 @@ PACKAGE."
        (get-all-connections netname)))
 (define (gnetlist:get-backend-arguments)
   (gnetlist-option-ref 'backend-option))
+(define (gnetlist:get-renamed-nets level)
+  (map
+   (lambda (rename)
+     (match rename
+       ((src . dest)
+        (list src dest))
+       (_ #f)))
+   (get-rename-list)))
 
 ;;
 ;; Functions for dealing with naming requirements for different

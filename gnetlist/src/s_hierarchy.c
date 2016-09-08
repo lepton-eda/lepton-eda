@@ -187,10 +187,6 @@ s_hierarchy_post_process (NETLIST * head)
     char *source_net_name = NULL;
     int did_work = FALSE;
 
-    s_rename_all (head);
-
-    s_rename_next_set();
-
     nl_current = head;
     while (nl_current != NULL) {
 	if (nl_current->composite_component) {
@@ -243,8 +239,6 @@ s_hierarchy_post_process (NETLIST * head)
 	}
 	nl_current = nl_current->next;
     }
-
-    s_rename_all (head);
 }
 
 int

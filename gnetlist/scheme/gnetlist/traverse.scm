@@ -8,6 +8,7 @@
   #:use-module (geda attrib)
   #:use-module (geda object)
   #:use-module (gnetlist config)
+  #:use-module (gnetlist rename)
   #:use-module (gnetlist package)
   #:use-module (gnetlist package-pin)
   #:use-module (gnetlist pin-net)
@@ -175,7 +176,8 @@
     ;; done because (%traverse) can change the current working
     ;; directory.
     (chdir cwd)
-    (hierarchy-remove-all-composite
-     ((if (gnetlist-config-ref 'mangle-refdes)
-          identity
-          remove-refdes-mangling) netlist))))
+    (rename-all
+     (hierarchy-remove-all-composite
+      ((if (gnetlist-config-ref 'mangle-refdes)
+           identity
+           remove-refdes-mangling) netlist)))))

@@ -47,7 +47,6 @@
 void gnetlist_quit(void)
 {
     s_clib_free();
-    s_rename_destroy_all();
 
     /* Free GSList *backend_params */
     g_slist_free (backend_params);
@@ -204,10 +203,12 @@ void main_prog(void *closure, int argc, char *argv[])
     scm_eval (pre_rc_list, scm_current_module ());
 
     scm_c_use_module ("geda library");
+    scm_c_use_module ("gnetlist rename");
 
     g_rc_parse (pr_current, argv[0], "gnetlistrc", rc_filename);
 
     init_config_settings ();
+    init_rename_procs ();
 
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));

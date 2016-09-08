@@ -42,8 +42,3 @@ SCM g_scm_c_get_uref (OBJECT *object)
 
   return g_scm_eval_protected (exp, SCM_UNDEFINED);
 }
-
-
-/*
- * This function is in s_rename.c:  SCM g_get_renamed_nets(SCM scm_level)
- */

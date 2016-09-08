@@ -53,15 +53,10 @@ NETLIST *s_netlist_add(NETLIST *ptr);
 void s_netlist_post_process (NETLIST *head, SCM netlist_mode);
 SCM scm_from_netlist_list (NETLIST *netlist_list);
 /* s_rename.c */
+void init_rename_procs (void);
 void s_rename_init(void);
-void s_rename_destroy_all(void);
-void s_rename_next_set(void);
-void s_rename_print(void);
 int s_rename_search(char *src, char *dest, int quiet_flag);
 void s_rename_add(char *src, char *dest);
-void s_rename_all_lowlevel(NETLIST *netlist_head, char *src, char *dest);
-void s_rename_all (NETLIST *netlist_head);
-SCM g_get_renamed_nets(SCM scm_level);
 /* s_traverse.c */
 void s_traverse_sheet(TOPLEVEL *pr_current, const GList *obj_list, char *hierarchy_tag);
 CPINLIST *s_traverse_component(TOPLEVEL *pr_current, OBJECT *component, char *hierarchy_tag);
