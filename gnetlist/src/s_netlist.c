@@ -53,23 +53,6 @@ NETLIST *s_netlist_return_tail(NETLIST * head)
     return (ret_struct);
 }
 
-/* hack rename this to be s_return_head */
-/* update object_tail or any list of that matter */
-NETLIST *s_netlist_return_head(NETLIST * tail)
-{
-    NETLIST *nl_current = NULL;
-    NETLIST *ret_struct = NULL;
-
-    nl_current = tail;
-    while (nl_current != NULL) {	/* goto end of list */
-	ret_struct = nl_current;
-	nl_current = nl_current->prev;
-    }
-
-    return (ret_struct);
-}
-
-
 /* returns new node */
 NETLIST *s_netlist_add(NETLIST * ptr)
 {
