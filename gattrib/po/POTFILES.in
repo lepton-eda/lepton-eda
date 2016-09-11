@@ -13,7 +13,6 @@ gattrib/src/parsecmd.c
 gattrib/src/s_attrib.c
 gattrib/src/s_misc.c
 gattrib/src/s_object.c
-gattrib/src/s_rename.c
 gattrib/src/s_sheet_data.c
 gattrib/src/s_string_list.c
 gattrib/src/s_table.c
