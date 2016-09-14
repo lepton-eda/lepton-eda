@@ -184,96 +184,13 @@ s_netattrib_handle (OBJECT *o_current, NETLIST *netlist, char *hierarchy_tag)
   }
 }
 
-char *s_netattrib_net_search (OBJECT * o_current, const gchar *wanted_pin)
-{
-  char *value = NULL;
-  char *char_ptr = NULL;
-  char *net_name = NULL;
-  char *current_pin = NULL;
-  char *start_of_pinlist = NULL;
-  char *return_value = NULL;
-  int counter;
-
-  if (o_current == NULL ||
-      o_current->complex == NULL)
-    return NULL;
-
-  /* for now just look inside the component */
-  for (counter = 0; ;) {
-    value = o_attrib_search_inherited_attribs_by_name (o_current,
-                                                       "net", counter);
-    if (value == NULL)
-      break;
-
-    counter++;
-
-    SCM net_name_s = scm_call_1 (scm_c_public_ref ("gnetlist net",
-                                                   "netattrib-netname"),
-                                 value ? scm_from_utf8_string (value) : SCM_BOOL_F);
-
-    if (scm_is_true (net_name_s)) {
-      net_name = scm_to_utf8_string (net_name_s);
-    } else {
-      g_free (value);
-      return NULL;
-    }
-
-    char_ptr = strchr (value, ':');
-    start_of_pinlist = char_ptr + 1;
-    current_pin = strtok (start_of_pinlist, DELIMITERS);
-    while (current_pin && !return_value) {
-      if (strcmp (current_pin, wanted_pin) == 0) {
-        return_value = net_name;
-      }
-      current_pin = strtok (NULL, DELIMITERS);
-    }
-
-    g_free (value);
-  }
-
-  /* now look outside the component */
-  for (counter = 0; ;) {
-    value = o_attrib_search_attached_attribs_by_name (o_current,
-                                                      "net", counter);
-    if (value == NULL)
-      break;
-
-    counter++;
-
-    SCM net_name_s = scm_call_1 (scm_c_public_ref ("gnetlist net",
-                                                   "netattrib-netname"),
-                                 value ? scm_from_utf8_string (value) : SCM_BOOL_F);
-
-    if (scm_is_true (net_name_s)) {
-      net_name = scm_to_utf8_string (net_name_s);
-    } else {
-      g_free (value);
-      return NULL;
-    }
-
-    char_ptr = strchr (value, ':');
-    start_of_pinlist = char_ptr + 1;
-    current_pin = strtok (start_of_pinlist, DELIMITERS);
-    while (current_pin) {
-      if (strcmp (current_pin, wanted_pin) == 0) {
-        g_free (return_value);
-        return net_name;
-      }
-      current_pin = strtok (NULL, DELIMITERS);
-    }
-
-    g_free (value);
-  }
-
-  return return_value;
-}
 
 char*
 s_netattrib_return_netname (OBJECT * o_current, char *pinnumber, char *hierarchy_tag)
 {
     SCM current_pin_s;
     char *netname;
-    char *temp_netname;
+    SCM temp_netname_s;
 
     current_pin_s =
       scm_call_1 (scm_c_public_ref ("gnetlist net",
@@ -283,13 +200,15 @@ s_netattrib_return_netname (OBJECT * o_current, char *pinnumber, char *hierarchy
     if (scm_is_false (current_pin_s)) return NULL;
 
     /* use hierarchy tag here to make this net uniq */
-    temp_netname = s_netattrib_net_search (o_current->parent,
-                                           scm_to_utf8_string (current_pin_s));
+    temp_netname_s = scm_call_2 (scm_c_public_ref ("gnetlist net",
+                                                   "netattrib-search-net"),
+                                 edascm_from_object (o_current->parent),
+                                 current_pin_s);
 
     SCM net_name_s =
       (scm_call_2 (scm_c_public_ref ("gnetlist net",
                                      "create-netattrib"),
-                   temp_netname ? scm_from_utf8_string (temp_netname) : SCM_BOOL_F,
+                   temp_netname_s,
                    hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F));
     netname = scm_is_true (net_name_s) ? scm_to_utf8_string (net_name_s) : NULL;
 

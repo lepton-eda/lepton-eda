@@ -17,13 +17,20 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (gnetlist net)
+  #:use-module (srfi srfi-1)
+  #:use-module (geda attrib)
+  #:use-module (geda log)
+  #:use-module (geda object)
   #:use-module (gnetlist config)
+  #:use-module (gnetlist core gettext)
+
   #:export (create-netattrib
             create-netname
             netattrib-netname
             netattrib-pinnum-get-connected-string
             netattrib-connected-string-get-pinnum
-            netattrib-check-connected-string))
+            netattrib-check-connected-string
+            netattrib-search-net))
 
 (define (create-netattrib basename hierarchy-tag)
   (define mangle? (gnetlist-config-ref 'mangle-net))
@@ -47,14 +54,18 @@
           (string-append hierarchy-tag (or separator "") basename))
       basename))
 
+(define (blame-missing-colon net-attrib-value)
+  (log! 'critical
+        (_ "Invalid attribute (missing ':'): net=~A")
+        net-attrib-value)
+  #f)
+
 (define (netattrib-netname s)
   (and s
        (let ((colon-position (string-index s #\:)))
          (if colon-position
              (string-take s colon-position)
-             (begin
-               (log! 'critical (_ "Invalid attribute (missing ':'): net=~A" s))
-               #f)))))
+             (blame-missing-colon s)))))
 
 (define %pin-net-prefix "__netattrib_power_pin ")
 
@@ -70,3 +81,38 @@
     (log! 'error
           (_ "Name ~S is reserved for internal use.")
           %pin-net-prefix)))
+
+(define %delimiters (string->char-set ",; "))
+
+(define (netattrib-search-net object wanted-pin)
+  (define (search-pin value)
+    (let ((colon-position (string-index value #\:)))
+      (if colon-position
+          (let ((net-name (netattrib-netname value))
+                (pin-part (string-drop value (1+ colon-position))))
+            (let loop ((pin-list (string-split pin-part %delimiters)))
+              (and (not (null? pin-list))
+                   (if (string=? (car pin-list) wanted-pin)
+                       net-name
+                       (loop (cdr pin-list))))))
+          (blame-missing-colon value))))
+
+  (define (search-in-values ls)
+    (and (not (null? ls))
+         (or (search-pin (car ls))
+             (search-in-values (cdr ls)))))
+
+  (define (net-values attribs)
+    (define (net-value attrib)
+      (and (string=? (attrib-name attrib) "net")
+           (attrib-value attrib)))
+    (filter-map net-value attribs))
+
+  (and object
+       (component? object)
+       ;; first look inside the component (for backward compatibility)
+       (let ((inherited (search-in-values (net-values (inherited-attribs object)))))
+             (or
+              ;; now look outside the component
+              (search-in-values (net-values (object-attribs object)))
+              inherited))))
