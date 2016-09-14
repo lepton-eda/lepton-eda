@@ -44,13 +44,6 @@
 /* used by the extract functions below */
 #define DELIMITERS ",; "
 
-gchar *
-s_netattrib_pinnum_get_connected_string (const gchar *pinnum)
-{
-  gchar *str = g_strdup_printf (PIN_NET_PREFIX "%s", pinnum);
-  return str;
-}
-
 const gchar *
 s_netattrib_connected_string_get_pinnum (const gchar *str)
 {

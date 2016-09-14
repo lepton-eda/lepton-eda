@@ -37,7 +37,6 @@ char *s_net_name_search (NET *net_head);
 char *s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type, SCM netlist_mode);
 SCM scm_from_net_list (NET *net_list);
 /* s_netattrib.c */
-gchar *s_netattrib_pinnum_get_connected_string (const gchar *pinnum) G_GNUC_WARN_UNUSED_RESULT;
 const gchar *s_netattrib_connected_string_get_pinnum (const gchar *str);
 void s_netattrib_check_connected_string (const gchar *str);
 void s_netattrib_create_pins (OBJECT *o_current, NETLIST *netlist, char *value, char *hierarchy_tag);

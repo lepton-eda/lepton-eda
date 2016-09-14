@@ -20,7 +20,8 @@
   #:use-module (gnetlist config)
   #:export (create-netattrib
             create-netname
-            netattrib-netname))
+            netattrib-netname
+            netattrib-pinnum-get-connected-string))
 
 (define (create-netattrib basename hierarchy-tag)
   (define mangle? (gnetlist-config-ref 'mangle-net))
@@ -52,3 +53,8 @@
              (begin
                (log! 'critical (_ "Invalid attribute (missing ':'): net=~A" s))
                #f)))))
+
+(define %pin-net-prefix "__netattrib_power_pin ")
+
+(define (netattrib-pinnum-get-connected-string pinnum)
+  (string-append %pin-net-prefix pinnum))
