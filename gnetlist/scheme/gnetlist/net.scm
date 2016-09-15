@@ -30,7 +30,7 @@
             netattrib-pinnum-get-connected-string
             netattrib-connected-string-get-pinnum
             netattrib-check-connected-string
-            netattrib-search-net))
+            netattrib-return-netname))
 
 (define (create-netattrib basename hierarchy-tag)
   (define mangle? (gnetlist-config-ref 'mangle-net))
@@ -116,3 +116,10 @@
               ;; now look outside the component
               (search-in-values (net-values (object-attribs object)))
               inherited))))
+
+(define (netattrib-return-netname object pinnumber hierarchy-tag)
+  ;; use hierarchy tag here to make this net unique
+  (create-netattrib (netattrib-search-net
+                     (object-component object)
+                     (netattrib-connected-string-get-pinnum pinnumber))
+                    hierarchy-tag))
