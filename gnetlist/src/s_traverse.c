@@ -388,8 +388,14 @@ s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, in
 #if DEBUG
       printf("going to find netname %s \n", nets->connected_to);
 #endif
-      nets->net_name =
-        s_netattrib_return_netname (object, nets->connected_to, hierarchy_tag);
+      SCM netattrib_s =
+        scm_call_3 (scm_c_public_ref ("gnetlist net",
+                                      "netattrib-return-netname"),
+                    edascm_from_object (object),
+                    nets->connected_to ? scm_from_utf8_string (nets->connected_to) : SCM_BOOL_F,
+                    hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F);
+
+      nets->net_name = scm_is_true (netattrib_s) ? scm_to_utf8_string (netattrib_s) : NULL;
       nets->net_name_has_priority = TRUE;
       g_free(nets->connected_to);
       nets->connected_to = NULL;

@@ -183,38 +183,3 @@ s_netattrib_handle (OBJECT *o_current, NETLIST *netlist, char *hierarchy_tag)
     g_free (value);
   }
 }
-
-
-char*
-s_netattrib_return_netname (OBJECT * o_current, char *pinnumber, char *hierarchy_tag)
-{
-    SCM current_pin_s;
-    char *netname;
-    SCM temp_netname_s;
-
-    current_pin_s =
-      scm_call_1 (scm_c_public_ref ("gnetlist net",
-                                    "netattrib-connected-string-get-pinnum"),
-                  scm_from_utf8_string (pinnumber));
-
-    if (scm_is_false (current_pin_s)) return NULL;
-
-    /* use hierarchy tag here to make this net uniq */
-    temp_netname_s = scm_call_2 (scm_c_public_ref ("gnetlist net",
-                                                   "netattrib-search-net"),
-                                 edascm_from_object (o_current->parent),
-                                 current_pin_s);
-
-    SCM net_name_s =
-      (scm_call_2 (scm_c_public_ref ("gnetlist net",
-                                     "create-netattrib"),
-                   temp_netname_s,
-                   hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F));
-    netname = scm_is_true (net_name_s) ? scm_to_utf8_string (net_name_s) : NULL;
-
-#if DEBUG
-    printf("netname: %s\n", netname);
-#endif
-
-    return (netname);
-}
