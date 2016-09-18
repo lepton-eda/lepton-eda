@@ -333,9 +333,12 @@ class Pin:
         refdes = self.component.refdes
         if refdes is None:
             refdes = '<no refdes>'
+        number = self.number
+        if number is None:
+            number = '?'
         data = self.component.ob.data()
         sys.stderr.write(_("%s:%s-%s(%sx%s): error: %s\n") % (
-            self.component.schematic.filename, refdes, self.number,
+            self.component.schematic.filename, refdes, number,
             format_coord(data.x), format_coord(data.y), msg))
         self.component.schematic.netlister_run.failed = True
 
@@ -344,9 +347,12 @@ class Pin:
         refdes = self.component.refdes
         if refdes is None:
             refdes = '<no refdes>'
+        number = self.number
+        if number is None:
+            number = '?'
         data = self.component.ob.data()
         sys.stderr.write(_("%s:%s-%s(%sx%s): warning: %s\n") % (
-            self.component.schematic.filename, refdes, self.number,
+            self.component.schematic.filename, refdes, number,
             format_coord(data.x), format_coord(data.y), msg))
 
 ## Visually connected net piece in a single schematic's netlist.
