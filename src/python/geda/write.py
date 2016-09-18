@@ -38,7 +38,7 @@ import xorn.geda.xmlwrite
 
 def write(rev, filename, format = None, write_kwds = {}, **format_kwds):
     if format is None:
-        format = xorn.geda.fileformat.guess_format(path)
+        format = xorn.geda.fileformat.guess_format(filename)
 
     def write_func(f):
         write_file(f, rev, format, **format_kwds)
