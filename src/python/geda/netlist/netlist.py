@@ -55,8 +55,7 @@ class Netlist:
     #     whether to descend into sub-schematics
     #
     # \param [in] verbose_mode
-    #     whether to print "Loading schematic" and "Going to traverse
-    #     source" messages
+    #     whether to print "Loading schematic" messages
     #
     # \param [in] prefer_netname_attribute
     #     whether to prefer net names set via a net segment's \c
@@ -172,10 +171,6 @@ class Netlist:
                                 % filename)
                             continue
 
-                        if verbose_mode:
-                            sys.stderr.write(
-                                _("Going to traverse source [%s]\n")
-                                % full_filename)
                         load_schematic(full_filename)
                         component.composite_sources.append(
                             self.schematics_by_filename[full_filename])
