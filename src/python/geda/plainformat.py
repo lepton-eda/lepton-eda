@@ -20,6 +20,9 @@
 ## \namespace xorn.geda.plainformat
 ## %gEDA schematic/symbol file format constants
 
+import xorn.proxy
+import xorn.storage
+
 # release version which had file format changes
 # New file format changes after 20030921 use the above version
 # and not these #defines anymore.
@@ -76,3 +79,209 @@ UPPER_MIDDLE = 5
 LOWER_RIGHT = 6
 MIDDLE_RIGHT = 7
 UPPER_RIGHT = 8
+
+## Rotate/translate objects in an embedded symbol for saving.
+
+def transform(rev, delta_x, delta_y, angle, mirror):
+    def translate(x, y):
+        return x + delta_x, y + delta_y
+
+    def rotate(x, y):
+        if not mirror:
+            if angle == 0:
+                return x, y
+            if angle == 90:
+                return -y, x
+            if angle == 180:
+                return -x, -y
+            if angle == 270:
+                return y, -x
+        else:
+            if angle == 0:
+                return -x, y
+            if angle == 90:
+                return -y, -x
+            if angle == 180:
+                return x, -y
+            if angle == 270:
+                return y, x
+
+    def rotate_rect(x, y, width, height):
+        if not mirror:
+            if angle == 0:
+                return x, y, width, height
+            if angle == 90:
+                return -y - height, x, height, width
+            if angle == 180:
+                return -x - width, -y - height, width, height
+            if angle == 270:
+                return y, -x - width, height, width
+        else:
+            if angle == 0:
+                return -x - width, y, width, height
+            if angle == 90:
+                return -y - height, -x - width, height, width
+            if angle == 180:
+                return x, -y - height, width, height
+            if angle == 270:
+                return y, x, height, width
+
+    for ob in xorn.proxy.RevisionProxy(rev).all_objects():
+        data = ob.data()
+
+        if isinstance(data, xorn.storage.Arc):
+            ob.x, ob.y = rotate(ob.x, ob.y)
+            ob.x, ob.y = translate(ob.x, ob.y)
+            if mirror:
+                ob.startangle = 180 - ob.startangle
+                ob.sweepangle = -ob.sweepangle
+            ob.startangle += angle
+            ob.startangle %= 360
+        elif isinstance(data, xorn.storage.Box):
+            ob.x, ob.y, ob.width, ob.height = \
+                rotate_rect(ob.x, ob.y, ob.width, ob.height)
+            ob.x, ob.y = translate(ob.x, ob.y)
+        elif isinstance(data, xorn.storage.Circle):
+            ob.x, ob.y = rotate(ob.x, ob.y)
+            ob.x, ob.y = translate(ob.x, ob.y)
+        elif isinstance(data, xorn.storage.Component):
+            ob.x, ob.y = rotate(ob.x, ob.y)
+            ob.x, ob.y = translate(ob.x, ob.y)
+            if mirror:
+                ob.angle = -ob.angle
+            ob.angle += angle
+            ob.angle %= 360
+            ob.mirror ^= mirror
+        elif isinstance(data, xorn.storage.Line):
+            ob.x, ob.y = rotate(ob.x, ob.y)
+            ob.width, ob.height = rotate(ob.width, ob.height)
+            ob.x, ob.y = translate(ob.x, ob.y)
+        elif isinstance(data, xorn.storage.Net):
+            ob.x, ob.y = rotate(ob.x, ob.y)
+            ob.width, ob.height = rotate(ob.width, ob.height)
+            ob.x, ob.y = translate(ob.x, ob.y)
+        elif isinstance(data, xorn.storage.Path):
+            pass  # not supported
+        elif isinstance(data, xorn.storage.Picture):
+            ob.x, ob.y, ob.width, ob.height = \
+                rotate_rect(ob.x, ob.y, ob.width, ob.height)
+            ob.x, ob.y = translate(ob.x, ob.y)
+            if mirror:
+                ob.angle = -ob.angle
+            ob.angle += angle
+            ob.angle %= 360
+            ob.mirror ^= mirror
+        elif isinstance(data, xorn.storage.Text):
+            ob.x, ob.y = rotate(ob.x, ob.y)
+            ob.x, ob.y = translate(ob.x, ob.y)
+            if mirror:
+                v_align = ob.alignment % 3
+                if ob.angle % 180 == 90:
+                    ob.alignment = (ob.alignment - v_align) + (2 - v_align)
+                else:
+                    ob.alignment = 6 - (ob.alignment - v_align) + v_align
+            ob.angle += angle
+            ob.angle %= 360
+
+## Rotate/translate objects in an embedded symbol back to normal.
+
+def untransform(rev, delta_x, delta_y, angle, mirror):
+    def untranslate(x, y):
+        return x - delta_x, y - delta_y
+
+    def unrotate(x, y):
+        if not mirror:
+            if angle == 0:
+                return x, y
+            if angle == 90:
+                return y, -x
+            if angle == 180:
+                return -x, -y
+            if angle == 270:
+                return -y, x
+        else:
+            if angle == 0:
+                return -x, y
+            if angle == 90:
+                return -y, -x
+            if angle == 180:
+                return x, -y
+            if angle == 270:
+                return y, x
+
+    def unrotate_rect(x, y, width, height):
+        if not mirror:
+            if angle == 0:
+                return x, y, width, height
+            if angle == 90:
+                return y, -x - width, height, width
+            if angle == 180:
+                return -x - width, -y - height, width, height
+            if angle == 270:
+                return -y - height, x, height, width
+        else:
+            if angle == 0:
+                return -x - width, y, width, height
+            if angle == 90:
+                return -y - height, -x - width, height, width
+            if angle == 180:
+                return x, -y - height, width, height
+            if angle == 270:
+                return y, x, height, width
+
+    for ob in xorn.proxy.RevisionProxy(rev).all_objects():
+        data = ob.data()
+
+        if isinstance(data, xorn.storage.Arc):
+            ob.x, ob.y = untranslate(ob.x, ob.y)
+            ob.x, ob.y = unrotate(ob.x, ob.y)
+            ob.startangle -= angle
+            if mirror:
+                ob.startangle = 180 - ob.startangle
+                ob.sweepangle = -ob.sweepangle
+            ob.startangle %= 360
+        elif isinstance(data, xorn.storage.Box):
+            ob.x, ob.y = untranslate(ob.x, ob.y)
+            ob.x, ob.y, ob.width, ob.height = \
+                unrotate_rect(ob.x, ob.y, ob.width, ob.height)
+        elif isinstance(data, xorn.storage.Circle):
+            ob.x, ob.y = untranslate(ob.x, ob.y)
+            ob.x, ob.y = unrotate(ob.x, ob.y)
+        elif isinstance(data, xorn.storage.Component):
+            ob.x, ob.y = untranslate(ob.x, ob.y)
+            ob.x, ob.y = unrotate(ob.x, ob.y)
+            ob.angle -= angle
+            if mirror:
+                ob.angle = -ob.angle
+            ob.angle %= 360
+            ob.mirror ^= mirror
+        elif isinstance(data, xorn.storage.Line):
+            ob.x, ob.y = untranslate(ob.x, ob.y)
+            ob.x, ob.y = unrotate(ob.x, ob.y)
+            ob.width, ob.height = unrotate(ob.width, ob.height)
+        elif isinstance(data, xorn.storage.Net):
+            ob.x, ob.y = untranslate(ob.x, ob.y)
+            ob.x, ob.y = unrotate(ob.x, ob.y)
+            ob.width, ob.height = unrotate(ob.width, ob.height)
+        elif isinstance(data, xorn.storage.Path):
+            pass  # not supported
+        elif isinstance(data, xorn.storage.Picture):
+            ob.x, ob.y = untranslate(ob.x, ob.y)
+            ob.x, ob.y, ob.width, ob.height = \
+                unrotate_rect(ob.x, ob.y, ob.width, ob.height)
+            ob.angle -= angle
+            if mirror:
+                ob.angle = -ob.angle
+            ob.angle %= 360
+            ob.mirror ^= mirror
+        elif isinstance(data, xorn.storage.Text):
+            ob.x, ob.y = untranslate(ob.x, ob.y)
+            ob.x, ob.y = unrotate(ob.x, ob.y)
+            ob.angle -= angle
+            if mirror:
+                v_align = ob.alignment % 3
+                if ob.angle % 180 == 90:
+                    ob.alignment = (ob.alignment - v_align) + (2 - v_align)
+                else:
+                    ob.alignment = 6 - (ob.alignment - v_align) + v_align
+            ob.angle %= 360

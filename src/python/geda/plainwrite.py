@@ -55,7 +55,7 @@ def file_format_header():
 def write_file(f, rev):
     f.write(file_format_header())
     for ob in rev.toplevel_objects():
-        write_object(f, ob, 0, 0)
+        write_object(f, ob)
 
 ## Format a line style to a string.
 
@@ -139,24 +139,23 @@ def bus_ripper_direction(bus_ob):
 # It follows the post-20000704 release file format that handles the
 # line type and fill options.
 #
-# \param [in] f          A file-like object to which to write.
-# \param [in] ob         The object which should be written.
-# \param [in] offset_x, offset_y  Coordinate offset for embedded symbols.
+# \param [in] f   A file-like object to which to write.
+# \param [in] ob  The object which should be written.
 #
 # \return \c None.
 #
 # \throw ValueError if an object with an unknown type is encountered
 
-def write_object(f, ob, offset_x, offset_y):
+def write_object(f, ob):
     data = ob.data()
 
     if isinstance(data, xorn.storage.Line):
         f.write('%c %d %d %d %d %d %s\n' % (
                 xorn.geda.plainformat.OBJ_LINE,
-                offset_x + data.x,
-                offset_y + data.y,
-                offset_x + data.x + data.width,
-                offset_y + data.y + data.height,
+                data.x,
+                data.y,
+                data.x + data.width,
+                data.y + data.height,
                 data.color,
                 format_line(data.line)))
     elif isinstance(data, xorn.storage.Net):
@@ -170,33 +169,32 @@ def write_object(f, ob, offset_x, offset_y):
 
             f.write('%c %d %d %d %d %d %d %d\n' % (
                     xorn.geda.plainformat.OBJ_PIN,
-                    offset_x + x0, offset_y + y0,
-                    offset_x + x1, offset_y + y1,
+                    x0, y0, x1, y1,
                     data.color,
                     data.is_bus,
                     data.is_inverted))
         elif data.is_bus:
             f.write('%c %d %d %d %d %d %d\n' % (
                     xorn.geda.plainformat.OBJ_BUS,
-                    offset_x + data.x,
-                    offset_y + data.y,
-                    offset_x + data.x + data.width,
-                    offset_y + data.y + data.height,
+                    data.x,
+                    data.y,
+                    data.x + data.width,
+                    data.y + data.height,
                     data.color,
                     bus_ripper_direction(ob)))
         else:
             f.write('%c %d %d %d %d %d\n' % (
                     xorn.geda.plainformat.OBJ_NET,
-                    offset_x + data.x,
-                    offset_y + data.y,
-                    offset_x + data.x + data.width,
-                    offset_y + data.y + data.height,
+                    data.x,
+                    data.y,
+                    data.x + data.width,
+                    data.y + data.height,
                     data.color))
     elif isinstance(data, xorn.storage.Box):
         f.write('%c %d %d %d %d %d %s %s\n' % (
                 xorn.geda.plainformat.OBJ_BOX,
-                offset_x + data.x,
-                offset_y + data.y,
+                data.x,
+                data.y,
                 data.width,
                 data.height,
                 data.color,
@@ -205,8 +203,8 @@ def write_object(f, ob, offset_x, offset_y):
     elif isinstance(data, xorn.storage.Circle):
         f.write('%c %d %d %d %d %s %s\n' % (
                 xorn.geda.plainformat.OBJ_CIRCLE,
-                offset_x + data.x,
-                offset_y + data.y,
+                data.x,
+                data.y,
                 data.radius,
                 data.color,
                 format_line(data.line),
@@ -219,25 +217,27 @@ def write_object(f, ob, offset_x, offset_y):
 
         f.write('%c %d %d %d %d %d %s\n' % (
                 xorn.geda.plainformat.OBJ_COMPLEX,
-                offset_x + data.x,
-                offset_y + data.y,
+                data.x,
+                data.y,
                 data.selectable,
                 data.angle,
                 data.mirror,
                 basename))
 
         if data.symbol.embedded:
+            emb_rev = xorn.storage.Revision(data.symbol.prim_objs)
+            xorn.geda.plainformat.transform(
+                emb_rev, data.x, data.y, data.angle, data.mirror)
             f.write('[\n')
-            for ob_ in xorn.proxy.RevisionProxy(
-                    data.symbol.prim_objs).toplevel_objects():
-                write_object(f, ob_, offset_x + data.x, offset_y + data.y)
+            for emb_ob in xorn.proxy.RevisionProxy(emb_rev).toplevel_objects():
+                write_object(f, emb_ob)
             f.write(']\n')
     elif isinstance(data, xorn.storage.Text):
         # string can have multiple lines (seperated by \n's)
         f.write('%c %d %d %d %d %d %d %d %d %d\n' % (
                 xorn.geda.plainformat.OBJ_TEXT,
-                offset_x + data.x,
-                offset_y + data.y,
+                data.x,
+                data.y,
                 data.color,
                 data.text_size,
                 data.visibility,
@@ -257,8 +257,8 @@ def write_object(f, ob, offset_x, offset_y):
     elif isinstance(data, xorn.storage.Arc):
         f.write('%c %d %d %d %d %d %d %s\n' % (
                 xorn.geda.plainformat.OBJ_ARC,
-                offset_x + data.x,
-                offset_y + data.y,
+                data.x,
+                data.y,
                 data.radius,
                 data.startangle,
                 data.sweepangle,
@@ -267,8 +267,8 @@ def write_object(f, ob, offset_x, offset_y):
     elif isinstance(data, xorn.storage.Picture):
         f.write('%c %d %d %d %d %d %d %d\n%s\n' % (
                 xorn.geda.plainformat.OBJ_PICTURE,
-                offset_x + data.x,
-                offset_y + data.y,
+                data.x,
+                data.y,
                 data.width,
                 data.height,
                 data.angle,
@@ -287,5 +287,5 @@ def write_object(f, ob, offset_x, offset_y):
     if attribs:
         f.write('{\n')
         for attrib in attribs:
-            write_object(f, attrib, offset_x, offset_y)
+            write_object(f, attrib)
         f.write('}\n')

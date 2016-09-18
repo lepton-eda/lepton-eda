@@ -52,6 +52,7 @@ TESTS = stack_1-geda.out \
 	regression/missing_pinseq-geda.out \
 	regression/override_netname-geda.out \
 	regression/refdes_promotion-geda.out \
+	regression/transform_symbols-geda.out \
 	drc2/connected_noconnects-drc2.out \
 	drc2/duplicated_refdes-drc2.out \
 	drc2/duplicated_slot-drc2.out \
@@ -485,6 +486,8 @@ testdata = \
 	regression/override_netname.sch \
 	regression/refdes_promotion-symbols/named-power.sym \
 	regression/refdes_promotion.sch \
+	regression/transform_symbols-symbols/L.sym \
+	regression/transform_symbols.sch \
 	stack_1.sch \
 	std-symbols/74/7400-1.sym \
 	std-symbols/74/7404-1.sym \

@@ -188,9 +188,6 @@ def read_file(f, name, log, load_symbol, load_pixmap,
     # This is where read objects end up.  Will be swapped for embedded comps.
     rev = xorn.storage.Revision()
 
-    # origin for embedded components
-    origin = 0, 0
-
     format = FileFormat(0, 0)  # no file format definition at all
 
     for line in f:
@@ -199,47 +196,47 @@ def read_file(f, name, log, load_symbol, load_pixmap,
         objtype = line[0]
 
         if objtype == OBJ_LINE:
-            data = read_line(line, origin, format, log)
+            data = read_line(line, format, log)
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == OBJ_NET:
-            data = read_net(line, origin, format, log)
+            data = read_net(line, format, log)
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == OBJ_BUS:
-            data = read_bus(line, origin, format, log)
+            data = read_bus(line, format, log)
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == OBJ_BOX:
-            data = read_box(line, origin, format, log)
+            data = read_box(line, format, log)
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == OBJ_PICTURE:
-            data = read_picture(line, f, origin, format, log, load_pixmap)
+            data = read_picture(line, f, format, log, load_pixmap)
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == OBJ_CIRCLE:
-            data = read_circle(line, origin, format, log)
+            data = read_circle(line, format, log)
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == OBJ_COMPLEX:
-            data = read_complex(line, origin, format, log, load_symbol)
+            data = read_complex(line, format, log, load_symbol)
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == OBJ_TEXT:
-            data = read_text(line, f, origin, format, log)
+            data = read_text(line, f, format, log)
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == OBJ_PATH:
-            data = read_path(line, f, origin, format, log)
+            data = read_path(line, f, format, log)
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == OBJ_PIN:
-            data = read_pin(line, origin, format, log)
+            data = read_pin(line, format, log)
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == OBJ_ARC:
-            data = read_arc(line, origin, format, log)
+            data = read_arc(line, format, log)
             if data is not None:
                 ob = rev.add_object(data)
         elif objtype == STARTATTACH_ATTR:
@@ -269,7 +266,7 @@ def read_file(f, name, log, load_symbol, load_pixmap,
                         _("tried to attach a non-text item as an attribute"))
                     continue
 
-                attrib = read_text(line, f, origin, format, log)
+                attrib = read_text(line, f, format, log)
                 if attrib is not None:
                     rev.relocate_object(rev.add_object(attrib), ob, None)
 
@@ -291,15 +288,14 @@ def read_file(f, name, log, load_symbol, load_pixmap,
                 log.error(_("embedded symbol start marker following "
                             "embedded symbol"))
                 continue
-            object_lists_save.append((rev, ob, origin))
+            object_lists_save.append((rev, ob))
             rev = xorn.storage.Revision()
             component_data.symbol.prim_objs = rev
-            origin = origin[0] + component_data.x, origin[1] + component_data.y
         elif objtype == END_EMBEDDED:
             if not object_lists_save:
                 log.error(_("unexpected embedded symbol end marker"))
                 continue
-            rev, ob, origin = object_lists_save.pop()
+            rev, ob = object_lists_save.pop()
         elif objtype == ENDATTACH_ATTR:
             log.error(_("unexpected attribute list end marker"))
         elif objtype == INFO_FONT:
@@ -344,6 +340,10 @@ def read_file(f, name, log, load_symbol, load_pixmap,
             log.error(_("embedded symbol is missing"))
             continue
 
+        # rotate/translate objects back to normal
+        xorn.geda.plainformat.untransform(
+            data.symbol.prim_objs, data.x, data.y, data.angle, data.mirror)
+
         # un-hide overwritten attributes in embedded symbol
         ob = xorn.proxy.ObjectProxy(rev, ob)
         visibility = {}
@@ -381,7 +381,7 @@ def pin_update_whichend(rev, force_boundingbox, log):
 # \throw xorn.geda.read.ParseError if the string could not be parsed
 # \throw ValueError                if \a buf doesn't describe a circle object
 
-def read_circle(buf, (origin_x, origin_y), format, log):
+def read_circle(buf, format, log):
     try:
         if not format.supports_linefill_attributes:
             type, x1, y1, radius, color = sscanf(buf, "%c %d %d %d %d\n")
@@ -421,8 +421,8 @@ def read_circle(buf, (origin_x, origin_y), format, log):
         color = DEFAULT_COLOR
 
     return xorn.storage.Circle(
-        x = x1 - origin_x,
-        y = y1 - origin_y,
+        x = x1,
+        y = y1,
         radius = radius,
         color = color,
         line = xorn.storage.LineAttr(
@@ -446,7 +446,7 @@ def read_circle(buf, (origin_x, origin_y), format, log):
 # \throw xorn.geda.read.ParseError if the string could not be parsed
 # \throw ValueError                if \a buf doesn't describe a arc object
 
-def read_arc(buf, (origin_x, origin_y), format, log):
+def read_arc(buf, format, log):
     try:
         if not format.supports_linefill_attributes:
             type, x1, y1, radius, start_angle, sweep_angle, color = sscanf(
@@ -479,8 +479,8 @@ def read_arc(buf, (origin_x, origin_y), format, log):
         color = DEFAULT_COLOR
 
     return xorn.storage.Arc(
-        x = x1 - origin_x,
-        y = y1 - origin_y,
+        x = x1,
+        y = y1,
         radius = radius,
         startangle = start_angle,
         sweepangle = sweep_angle,
@@ -497,7 +497,7 @@ def read_arc(buf, (origin_x, origin_y), format, log):
 # \throw xorn.geda.read.ParseError if the string could not be parsed
 # \throw ValueError                if \a buf doesn't describe a box object
 
-def read_box(buf, (origin_x, origin_y), format, log):
+def read_box(buf, format, log):
     try:
         if not format.supports_linefill_attributes:
             type, x1, y1, width, height, color = sscanf(
@@ -541,8 +541,8 @@ def read_box(buf, (origin_x, origin_y), format, log):
     # We don't care and just use the file format representation.
 
     return xorn.storage.Box(
-        x = x1 - origin_x,
-        y = y1 - origin_y,
+        x = x1,
+        y = y1,
         width = width,
         height = height,
         color = color,
@@ -565,7 +565,7 @@ def read_box(buf, (origin_x, origin_y), format, log):
 # \throw xorn.geda.read.ParseError if the string could not be parsed
 # \throw ValueError                if \a buf doesn't describe a bus object
 
-def read_bus(buf, (origin_x, origin_y), format, log):
+def read_bus(buf, format, log):
     try:
         if not format.enhanced_pinbus_format:
             type, x1, y1, x2, y2, color = sscanf(
@@ -594,8 +594,8 @@ def read_bus(buf, (origin_x, origin_y), format, log):
         ripper_dir = 0  # isn't used
 
     return xorn.storage.Net(
-        x = x1 - origin_x,
-        y = y1 - origin_y,
+        x = x1,
+        y = y1,
         width = x2 - x1,
         height = y2 - y1,
         color = color,
@@ -612,7 +612,7 @@ def read_bus(buf, (origin_x, origin_y), format, log):
 # \throw ValueError                if \a buf doesn't describe a
 #                                  component object
 
-def read_complex(buf, (origin_x, origin_y), format, log, load_symbol):
+def read_complex(buf, format, log, load_symbol):
     try:
         type, x1, y1, selectable, angle, mirror, basename = sscanf(
             buf, "%c %d %d %d %d %d %s\n")
@@ -641,8 +641,8 @@ def read_complex(buf, (origin_x, origin_y), format, log, load_symbol):
         assert not symbol.embedded
 
     return xorn.storage.Component(
-        x = x1 - origin_x,
-        y = y1 - origin_y,
+        x = x1,
+        y = y1,
         selectable = selectable,
         angle = angle,
         mirror = mirror,
@@ -653,7 +653,7 @@ def read_complex(buf, (origin_x, origin_y), format, log, load_symbol):
 # \throw xorn.geda.read.ParseError if the string could not be parsed
 # \throw ValueError                if \a buf doesn't describe a line object
 
-def read_line(buf, (origin_x, origin_y), format, log):
+def read_line(buf, format, log):
     try:
         if not format.supports_linefill_attributes:
             type, x1, y1, x2, y2, color = sscanf(buf, "%c %d %d %d %d %d\n")
@@ -684,8 +684,8 @@ def read_line(buf, (origin_x, origin_y), format, log):
         color = DEFAULT_COLOR
 
     return xorn.storage.Line(
-        x = x1 - origin_x,
-        y = y1 - origin_y,
+        x = x1,
+        y = y1,
         width = x2 - x1,
         height = y2 - y1,
         color = color,
@@ -701,7 +701,7 @@ def read_line(buf, (origin_x, origin_y), format, log):
 # \throw xorn.geda.read.ParseError if the string could not be parsed
 # \throw ValueError                if \a buf doesn't describe a net object
 
-def read_net(buf, (origin_x, origin_y), format, log):
+def read_net(buf, format, log):
     try:
         type, x1, y1, x2, y2, color = sscanf(buf, "%c %d %d %d %d %d\n")
     except ValueError:
@@ -720,8 +720,8 @@ def read_net(buf, (origin_x, origin_y), format, log):
         color = DEFAULT_COLOR
 
     return xorn.storage.Net(
-        x = x1 - origin_x,
-        y = y1 - origin_y,
+        x = x1,
+        y = y1,
         width = x2 - x1,
         height = y2 - y1,
         color = color,
@@ -740,7 +740,7 @@ def read_net(buf, (origin_x, origin_y), format, log):
 # \throw ValueError                if \a first_line doesn't describe a
 #                                  path object
 
-def read_path(first_line, f, (origin_x, origin_y), format, log):
+def read_path(first_line, f, format, log):
     try:
         type, color, \
         line_width, line_end, line_type, line_length, line_space, \
@@ -804,8 +804,7 @@ def read_path(first_line, f, (origin_x, origin_y), format, log):
 # \throw ValueError                if \a first_line doesn't describe a
 #                                  picture object
 
-def read_picture(first_line, f, (origin_x, origin_y), format, log,
-                 load_pixmap):
+def read_picture(first_line, f, format, log, load_pixmap):
     try:
         type, x1, y1, width, height, angle, mirrored, embedded = sscanf(
             first_line, "%c %d %d %d %d %d %d %d\n")
@@ -859,8 +858,8 @@ def read_picture(first_line, f, (origin_x, origin_y), format, log,
             pixmap.data = ''
 
     return xorn.storage.Picture(
-        x = x1 - origin_x,
-        y = y1 - origin_y,
+        x = x1,
+        y = y1,
         width = width,
         height = height,
         angle = angle,
@@ -872,7 +871,7 @@ def read_picture(first_line, f, (origin_x, origin_y), format, log,
 # \throw xorn.geda.read.ParseError if the string could not be parsed
 # \throw ValueError                if \a buf doesn't describe a pin object
 
-def read_pin(buf, (origin_x, origin_y), format, log):
+def read_pin(buf, format, log):
     try:
         if not format.enhanced_pinbus_format:
             type, x1, y1, x2, y2, color = sscanf(buf, "%c %d %d %d %d %d\n")
@@ -916,8 +915,8 @@ def read_pin(buf, (origin_x, origin_y), format, log):
         is_inverted = True
 
     return xorn.storage.Net(
-        x = x1 - origin_x,
-        y = y1 - origin_y,
+        x = x1,
+        y = y1,
         width = x2 - x1,
         height = y2 - y1,
         color = color,
@@ -936,7 +935,7 @@ def read_pin(buf, (origin_x, origin_y), format, log):
 # \throw ValueError                if \a first_line doesn't describe a
 #                                  text object
 
-def read_text(first_line, f, (origin_x, origin_y), format, log):
+def read_text(first_line, f, format, log):
     try:
         if format.supports_multiline_text:
             type, x, y, color, size, visibility, show_name_value, angle, \
@@ -1001,8 +1000,8 @@ def read_text(first_line, f, (origin_x, origin_y), format, log):
         log.warn(_("stray backslash character(s)"))
 
     return xorn.storage.Text(
-        x = x - origin_x,
-        y = y - origin_y,
+        x = x,
+        y = y,
         color = color,
         text_size = size,
         visibility = visibility,
