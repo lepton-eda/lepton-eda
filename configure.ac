@@ -191,7 +191,8 @@ AC_ARG_ENABLE([xorn],
 	      [], [export enable_xorn; enable_xorn=yes])
 
 case "${enable_xorn}" in
-  yes|no) ;;
+  yes) AC_DEFINE([HAVE_XORN], 1, [Define to 1 if using Xorn.]) ;;
+  no) ;;
   *) AC_MSG_ERROR([bad value ${enable_xorn} for --enable-xorn]) ;;
 esac
 
