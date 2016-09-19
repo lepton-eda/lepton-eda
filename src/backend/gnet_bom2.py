@@ -26,7 +26,7 @@
 # Questions? Contact matt@ettus.com
 # This software is released under the terms of the GNU GPL
 
-import collections
+import collections, errno
 from util_getopt import *
 
 BOMEntry = collections.namedtuple('BOMEntry', ['refdes_list', 'attribs'])
