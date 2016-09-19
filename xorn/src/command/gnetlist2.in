@@ -1015,7 +1015,7 @@ GNU General Public License for more details.
     # prevent loading of actual "geda deprecated" module
     xorn.guile.eval_string('(define-module (geda deprecated)) #f')
 
-    xorn.guile.define('use-new-frontend', False)
+    xorn.guile.define('use-legacy-frontend', False)
     rc1_parse('gnetlistrc', None)
 
     # 4. Print a list of available netlist backends if requested.

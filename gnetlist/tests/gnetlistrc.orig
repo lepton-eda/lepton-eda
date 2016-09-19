@@ -6,3 +6,5 @@
 (map (lambda (x) (component-library (string-join (list "${SYMDIR}/" x) "")))
      '("74" "analog" "misc" "memory" "power" "connector" "switch" "linear"
        "diode" "spice" "cascade" "titleblock"))
+
+(set! use-legacy-frontend #t)

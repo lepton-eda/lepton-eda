@@ -23,8 +23,4 @@
 ;(hierarchy-uref-order "prepend")
 ;(hierarchy-netattrib-order "prepend")
 
-
-
-
-
-
+(set! use-legacy-frontend #t)

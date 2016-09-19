@@ -1,5 +1,6 @@
 input_files = \
 	inputs/gafrc \
+	inputs/gnetlistrc \
 	inputs/LVDfoo.sch \
 	inputs/Simulation.cmd \
 	inputs/TwoStageAmp.sch \
