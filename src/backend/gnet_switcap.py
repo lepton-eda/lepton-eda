@@ -109,7 +109,7 @@ def write_analysis(fname):
         else:
             sys.stderr.write("ERROR: Can't open analysis file '%s': %s\n"
                              % (fname, e.strerror))
-        sys.exit(1)
+        sys.exit(3)
     try:
         for line in g:
             f.write(line)

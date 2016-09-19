@@ -256,7 +256,7 @@ def get_drc_matrix_element(row, column):
     except KeyError:
         sys.stderr.write("INTERNAL ERROR: DRC matrix has unknown value "
                          "on position %s,%s\n" % (row, column))
-        sys.exit(1)
+        sys.exit(3)
 
 # ======================== Symbol checking functions =========================
 
@@ -567,7 +567,7 @@ def run(f, netlist, args):
                  if not isinstance(x, int) or x not in [0, 1]), True):
         sys.stderr.write("INTERNAL ERROR: List of pins which can drive a net "
                          "bad specified.\n")
-        sys.exit(1)
+        sys.exit(3)
 
     # Perform DRC-matrix sanity checks.
     # See if all elements of the matrix are chars
@@ -578,12 +578,12 @@ def run(f, netlist, args):
             if not isinstance(c, basestring) or len(c) != 1:
                 sys.stderr.write("INTERNAL ERROR: DRC matrix has unknown "
                                  "value on position %s,%s\n" % (row, column))
-                sys.exit(1)
+                sys.exit(3)
 
     if action_unused_slots not in 'wce':
         sys.stderr.write("INTERNAL ERROR: Action when unused slots are found "
                          "has a wrong value.\n")
-        sys.exit(1)
+        sys.exit(3)
 
     # Check non-numbered symbols
     if not dont_check_non_numbered_parts:
