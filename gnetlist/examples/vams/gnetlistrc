@@ -4,9 +4,6 @@
 ;; was originally written
 (hierarchy-traversal "disabled")
 
-(define-module (ice-9 ls) :use-module (ice-9 common-list)
-			  :use-module (ice-9 string-fun))
-
 ;; AVH not really needed
 ;; (load (string-append examples-path "/../../scheme/gnet-vams.scm"))
 (display "loaded local gnetlistrc\n")
