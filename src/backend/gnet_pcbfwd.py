@@ -48,7 +48,7 @@ def run(f, netlist):
     f.write('ElementList(Start)\n')
 
     for package in reversed(netlist.packages):
-	f.write('ElementList(Need,%s,%s,%s)\n' % (
+        f.write('ElementList(Need,%s,%s,%s)\n' % (
             quote_string(package.refdes),
             quote_string(package.get_attribute('footprint', 'unknown')),
             quote_string(package.get_attribute('value', 'unknown'))))
