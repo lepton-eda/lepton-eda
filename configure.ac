@@ -333,3 +333,17 @@ AC_CONFIG_FILES([Makefile
                  contrib/scripts/sw2asc
 ])
 AC_OUTPUT
+
+if test "x${enable_xorn}" != "xyes"
+then	cat <<EOF >&2
+
+    ########################################################################
+    ##                                                                    ##
+    ##    You chose to disable Xorn during configuration.  This means     ##
+    ##    core functionality will not be available.  Most notably, you    ##
+    ##    won't be able to use the new gnetlist frontend.                 ##
+    ##                                                                    ##
+    ########################################################################
+
+EOF
+fi
