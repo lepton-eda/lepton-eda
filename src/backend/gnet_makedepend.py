@@ -113,7 +113,8 @@ def run(f, netlist):
     if match is None:
         sys.stderr.write("ERROR: Schematic file name must take the form: "
                          "BASE-PAGENUM.EXT\n")
-        sys.exit(1)
+        netlist.failed = True
+        return
     base = match.group(1)
     # page = match.group(2)
     # ext = match.group(3)

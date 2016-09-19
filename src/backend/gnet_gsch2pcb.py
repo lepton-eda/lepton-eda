@@ -105,7 +105,8 @@ def run(f, netlist):
         if status != 0:
             sys.stderr.write("%s returned exit status %d\n"
                              % (pcb_m4_command, status))
-            sys.exit(1)
+            netlist.failed = True
+            return
     else:
         sys.stderr.write("Skipping the m4 processor for pcb footprints\n")
         for package in reversed(netlist.packages):

@@ -57,7 +57,8 @@ You must do one of the following:
         - Specify which attributes to include using
             -Oattribs=attrib1,attrib2,... (no spaces)
 """ % str(e))
-            sys.exit(1)
+            netlist.failed = True
+            return
 
         attriblist = []
         start = 0
