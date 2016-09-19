@@ -92,6 +92,7 @@ pythontests = \
 	python/geda/complex.py \
 	python/geda/parse_attrib.py \
 	python/geda/pixmap.py \
+	python/geda/plain_transform.py \
 	python/geda/plainread_log.py \
 	python/geda/ripperdir.py \
 	python/geda/unhide_attrib.py \
@@ -101,6 +102,8 @@ pythontests = \
 
 testdata = \
 	python/geda/pixmap.data \
+	python/geda/plain_transform.sch \
+	python/geda/plain_transform.sch.xml \
 	python/geda/ripperdir.sch \
 	python/geda/xmlread.sch \
 	python/geda/xmlread.sch.xml \

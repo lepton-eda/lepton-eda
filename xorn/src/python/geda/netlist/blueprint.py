@@ -328,26 +328,57 @@ class Pin:
 
         return values[0]
 
+    ## Calculate the position of the pin's active end in the schematic.
+
+    def position(self):
+        data = self.ob.data()
+        assert isinstance(data, xorn.storage.Net)
+
+        x = data.x
+        y = data.y
+
+        data = self.component.ob.data()
+        assert isinstance(data, xorn.storage.Component)
+
+        if data.mirror:
+            x = -x
+
+        if data.angle == 90:
+            x, y = -y, x
+        elif data.angle == 180:
+            x, y = -x, -y
+        elif data.angle == 270:
+            x, y = y, -x
+
+        x += data.x
+        y += data.y
+
+        return x, y
+
     def error(self, msg):
-        # TODO: calculate pin coordinates
         refdes = self.component.refdes
         if refdes is None:
             refdes = '<no refdes>'
-        data = self.component.ob.data()
+        number = self.number
+        if number is None:
+            number = '?'
+        x, y = self.position()
         sys.stderr.write(_("%s:%s-%s(%sx%s): error: %s\n") % (
-            self.component.schematic.filename, refdes, self.number,
-            format_coord(data.x), format_coord(data.y), msg))
+            self.component.schematic.filename, refdes, number,
+            format_coord(x), format_coord(y), msg))
         self.component.schematic.netlister_run.failed = True
 
     def warn(self, msg):
-        # TODO: calculate pin coordinates
         refdes = self.component.refdes
         if refdes is None:
             refdes = '<no refdes>'
-        data = self.component.ob.data()
+        number = self.number
+        if number is None:
+            number = '?'
+        x, y = self.position()
         sys.stderr.write(_("%s:%s-%s(%sx%s): warning: %s\n") % (
-            self.component.schematic.filename, refdes, self.number,
-            format_coord(data.x), format_coord(data.y), msg))
+            self.component.schematic.filename, refdes, number,
+            format_coord(x), format_coord(y), msg))
 
 ## Visually connected net piece in a single schematic's netlist.
 

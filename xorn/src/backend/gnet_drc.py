@@ -31,7 +31,8 @@ def run(f, netlist):
     except IOError as e:
         sys.stderr.write("ERROR: Can't read attribute file\n")
         sys.stderr.write(str(e) + "\n")
-        sys.exit(1)
+        netlist.failed = True
+        return
 
     for package in reversed(netlist.packages):
         for attrib in attriblist:

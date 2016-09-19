@@ -36,14 +36,14 @@ def main():
 
     for option, value in options:
         if option == '--help':
-	    sys.stdout.write(_(
+            sys.stdout.write(_(
 "Usage: %s COMMAND [ARGS]...\n"
 "       %s --help\n"
 "       %s --version\n")
                              % (xorn.command.program_name,
                                 xorn.command.program_name,
                                 xorn.command.program_name))
-	    sys.stdout.write("\n")
+            sys.stdout.write("\n")
             sys.stdout.write(_(
 "  Valid commands are:\n"))
             sys.stdout.write("\n")
@@ -67,12 +67,12 @@ def main():
 "    For more information about an individual command, type:\n"
 "      `%s COMMAND --help'\n") % xorn.command.program_name)
             sys.stdout.write("\n")
-	    sys.stdout.write(_(
+            sys.stdout.write(_(
 "  Command-line options:\n"
 "      --help            give this help\n"
 "      --version         display version number\n"))
-	    sys.stdout.write("\n")
-	    sys.stdout.write(_("Report %s bugs to %s\n")
+            sys.stdout.write("\n")
+            sys.stdout.write(_("Report %s bugs to %s\n")
                              % (xorn.config.PACKAGE_NAME,
                                 xorn.config.PACKAGE_BUGREPORT))
             sys.exit(0)

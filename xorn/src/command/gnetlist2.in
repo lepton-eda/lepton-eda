@@ -1007,8 +1007,10 @@ GNU General Public License for more details.
 (define-public (%%platform) '(linux))
 (define-public (%%sys-data-dirs) '("%s"))
 (define-public (%%sys-config-dirs) '("%s"))
+(define-public (%%user-data-dir) "%s")
+(define-public (%%user-config-dir) "%s")
 #f
-''' % (sys_data_path, sys_config_path))
+''' % (sys_data_path, sys_config_path, user_config_path, user_config_path))
 
     # prevent loading of actual "geda deprecated" module
     xorn.guile.eval_string('(define-module (geda deprecated)) #f')

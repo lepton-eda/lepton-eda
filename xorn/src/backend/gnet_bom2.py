@@ -26,7 +26,7 @@
 # Questions? Contact matt@ettus.com
 # This software is released under the terms of the GNU GPL
 
-import collections
+import collections, errno
 from util_getopt import *
 
 BOMEntry = collections.namedtuple('BOMEntry', ['refdes_list', 'attribs'])
@@ -67,7 +67,8 @@ ERROR: Attribute file '%s' not found. You must do one of the following:
 """ % filename)
             else:
                 sys.stderr.write("%s\n" % str(e))
-            sys.exit(1)
+            netlist.failed = True
+            return
         try:
             attriblist = list(strtok(g.read(), ' \n\t'))
         finally:

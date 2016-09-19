@@ -32,8 +32,8 @@ attribs:
 all-local: attribs
 
 dist_check_SCRIPTS = run-test
-EXTRA_DIST = $(TESTS) $(testdata) gnet-apitest.scm \
-             gschemrc regression/gschemrc common/gschemrc
+EXTRA_DIST = $(TESTS) $(testdata) gnet-apitest.scm run-test.gnetlist \
+             gschemrc regression/gschemrc drc2/gschemrc common/gschemrc
 # dist_check_DATA would be more appropriate for $(TESTS) and $(testdata)
 # but triggers a lot of "Nothing to be done for '...'" messages.
 
@@ -52,6 +52,7 @@ TESTS = stack_1-geda.out \
 	regression/missing_pinseq-geda.out \
 	regression/override_netname-geda.out \
 	regression/refdes_promotion-geda.out \
+	regression/transform_symbols-geda.out \
 	drc2/connected_noconnects-drc2.out \
 	drc2/duplicated_refdes-drc2.out \
 	drc2/duplicated_slot-drc2.out \
@@ -487,6 +488,8 @@ testdata = \
 	regression/override_netname.sch \
 	regression/refdes_promotion-symbols/named-power.sym \
 	regression/refdes_promotion.sch \
+	regression/transform_symbols-symbols/L.sym \
+	regression/transform_symbols.sch \
 	stack_1.sch \
 	std-symbols/74/7400-1.sym \
 	std-symbols/74/7404-1.sym \

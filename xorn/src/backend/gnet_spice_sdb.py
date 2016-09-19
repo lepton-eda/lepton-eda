@@ -203,7 +203,7 @@ def handle_spice_file(f, file_name):
 def insert_text_file(f, model_filename):
     if not os.path.isfile(model_filename):
         sys.stderr.write("ERROR: File '%s' not found.\n" % model_filename)
-        sys.exit(1)
+        sys.exit(3)
 
     model_file = open(model_filename)
     try:
@@ -282,7 +282,7 @@ def get_IO_nets(package_list):
 def get_file_type(model_filename):
     if not os.path.isfile(model_filename):
         sys.stderr.write("ERROR: File '%s' not found.\n" % model_filename)
-        sys.exit(1)
+        sys.exit(3)
 
     model_file = open(model_filename)
     try:

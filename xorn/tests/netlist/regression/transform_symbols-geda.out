@@ -1,0 +1,37 @@
+START header
+
+gEDA's netlist format
+Created specifically for testing of gnetlist
+
+END header
+
+START components
+
+Ue31 device=unknown
+Ue21 device=unknown
+Ue11 device=unknown
+Ue01 device=unknown
+Ue30 device=unknown
+Ue20 device=unknown
+Ue10 device=unknown
+Ue00 device=unknown
+Ur31 device=unknown
+Ur21 device=unknown
+Ur11 device=unknown
+Ur01 device=unknown
+Ur30 device=unknown
+Ur20 device=unknown
+Ur10 device=unknown
+Ur00 device=unknown
+
+END components
+
+START nets
+
+4 : Ue31 4, Ue21 4, Ue11 4, Ue01 4, Ue30 4, Ue20 4, Ue10 4, Ue00 4, Ur31 4, Ur21 4, Ur11 4, Ur01 4, Ur30 4, Ur20 4, Ur10 4, Ur00 4 
+3 : Ue31 3, Ue21 3, Ue11 3, Ue01 3, Ue30 3, Ue20 3, Ue10 3, Ue00 3, Ur31 3, Ur21 3, Ur11 3, Ur01 3, Ur30 3, Ur20 3, Ur10 3, Ur00 3 
+2 : Ue31 2, Ue21 2, Ue11 2, Ue01 2, Ue30 2, Ue20 2, Ue10 2, Ue00 2, Ur31 2, Ur21 2, Ur11 2, Ur01 2, Ur30 2, Ur20 2, Ur10 2, Ur00 2 
+1 : Ue31 1, Ue21 1, Ue11 1, Ue01 1, Ue30 1, Ue20 1, Ue10 1, Ue00 1, Ur31 1, Ur21 1, Ur11 1, Ur01 1, Ur30 1, Ur20 1, Ur10 1, Ur00 1 
+
+END nets
+

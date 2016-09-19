@@ -1,3 +1,5 @@
+(reset-component-library)
+(component-library-search "../std-symbols")
 (component-library "JD-symbols")
 (component-library "SlottedOpamps-symbols")
 (component-library "TwoStageAmp-symbols")

@@ -80,7 +80,7 @@ def backend_getopt(args, grammar, raise_exception = False):
         if raise_exception:
             raise OptionError, msg
         sys.stderr.write(msg + "\n")
-        sys.exit(1)
+        sys.exit(3)
 
     options = {}
 
