@@ -33,21 +33,21 @@ public:
 	key_iterator(I i) : i(i) {
 	}
 	key_iterator &operator++() {
-		i.operator++();
+		i++;
 		return *this;
 	}
 	key_iterator &operator--() {
-		i.operator--();
+		i--;
 		return *this;
 	}
 	bool operator==(key_iterator x) {
-		return i.operator==(x.i);
+		return i == x.i;
 	}
 	bool operator!=(key_iterator x) {
-		return i.operator!=(x.i);
+		return i != x.i;
 	}
 	value_type operator*() {
-		return i.operator*().first;
+		return i->first;
 	}
 };
 
