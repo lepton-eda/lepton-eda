@@ -29,9 +29,8 @@ LT_INIT([])
 AC_PROG_CXX
 
 AM_PATH_PYTHON([2.7])
-AC_CHECK_HEADERS(
-	[python${PYTHON_VERSION}/Python.h], [],
-	[AC_MSG_ERROR([python headers not found])])
+PKG_CHECK_MODULES([PYTHON], [python2 >= 2.7])
+PKG_CHECK_MODULES([GUILE], [guile-2.0])
 
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.18.2])
