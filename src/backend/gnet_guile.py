@@ -130,7 +130,7 @@ def run(f, netlist, args):
         return
 
     try:
-        xorn.guile.lookup(guile_proc)('/proc/self/fd/%d' % f.fileno())
+        xorn.guile.lookup(guile_proc)('/dev/fd/%d' % f.fileno())
     except xorn.guile.GuileError:
         # Guile has already printed an error message
         netlist.error("running the Guile backend failed")
