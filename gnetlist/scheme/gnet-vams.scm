@@ -1024,7 +1024,7 @@
             (for-each (lambda (pin)
                         (append! port-list
                                  (list (list pin
-                                             (gnetlist:get-attribute-by-pinnnumber uref pin "port_object")
+                                             (gnetlist:get-attribute-by-pinnumber uref pin "port_object")
                                              (gnetlist:get-attribute-by-pinnumber uref pin "port_type")
                                              (gnetlist:get-attribute-by-pinnumber uref pin "port_mode")))))
                       (gnetlist:get-pins uref))
