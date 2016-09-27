@@ -27,7 +27,7 @@ static void assert_color(xorn_revision_t rev, xorn_object_t ob,
 	sel = xorn_select_object(ob);
 	assert(sel != NULL);
 	xornsch_get_color(rev, sel, &state, &real_color);
-	assert(state == has_color ? xorn_attst_consistent : xorn_attst_na);
+	assert(state == (has_color ? xorn_attst_consistent : xorn_attst_na));
 	assert(real_color == color);
 	xorn_free_selection(sel);
 }
@@ -42,8 +42,8 @@ static void assert_line_width(xorn_revision_t rev, xorn_object_t ob,
 	sel = xorn_select_object(ob);
 	assert(sel != NULL);
 	xornsch_get_line_width(rev, sel, &state, &real_line_width);
-	assert(state == has_line_width ? xorn_attst_consistent
-				       : xorn_attst_na);
+	assert(state == (has_line_width ? xorn_attst_consistent
+					: xorn_attst_na));
 	assert(real_line_width == line_width);
 	xorn_free_selection(sel);
 }
@@ -58,7 +58,8 @@ static void assert_position(xorn_revision_t rev, xorn_object_t ob,
 	sel = xorn_select_object(ob);
 	assert(sel != NULL);
 	xornsch_get_pos(rev, sel, &state, &real_position);
-	assert(state == has_position ? xorn_attst_consistent : xorn_attst_na);
+	assert(state == (has_position ? xorn_attst_consistent
+				      : xorn_attst_na));
 	assert(real_position.x == x);
 	assert(real_position.y == y);
 	xorn_free_selection(sel);
@@ -74,7 +75,7 @@ static void assert_text(xorn_revision_t rev, xorn_object_t ob,
 	sel = xorn_select_object(ob);
 	assert(sel != NULL);
 	xornsch_get_text(rev, sel, &state, &real_text);
-	assert(state == has_text ? xorn_attst_consistent : xorn_attst_na);
+	assert(state == (has_text ? xorn_attst_consistent : xorn_attst_na));
 	assert(real_text.len == strlen(text));
 	assert(memcmp(real_text.s, text, real_text.len) == 0);
 	xorn_free_selection(sel);
@@ -98,7 +99,7 @@ static void assert_line(xorn_revision_t rev, xorn_object_t ob, bool has_line,
 	sel = xorn_select_object(ob);
 	assert(sel != NULL);
 	xornsch_get_line(rev, sel, &state, &real_line);
-	assert(state == has_line ? xorn_attst_consistent : xorn_attst_na);
+	assert(state == (has_line ? xorn_attst_consistent : xorn_attst_na));
 	assert(memcmp(&expected_line, &real_line, sizeof expected_line) == 0);
 	xorn_free_selection(sel);
 }
@@ -122,7 +123,7 @@ static void assert_fill(xorn_revision_t rev, xorn_object_t ob, bool has_fill,
 	sel = xorn_select_object(ob);
 	assert(sel != NULL);
 	xornsch_get_fill(rev, sel, &state, &real_fill);
-	assert(state == has_fill ? xorn_attst_consistent : xorn_attst_na);
+	assert(state == (has_fill ? xorn_attst_consistent : xorn_attst_na));
 	assert(memcmp(&expected_fill, &real_fill, sizeof expected_fill) == 0);
 	xorn_free_selection(sel);
 }

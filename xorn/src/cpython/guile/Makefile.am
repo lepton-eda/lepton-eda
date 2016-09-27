@@ -14,8 +14,7 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-AM_CPPFLAGS = -I/usr/include/python$(PYTHON_VERSION) \
-	      -pthread -I/usr/include/guile/2.0
+AM_CPPFLAGS = $(PYTHON_CFLAGS) $(GUILE_CFLAGS)
 AM_CFLAGS = -Wall -W -Wno-unused-parameter -fno-strict-aliasing
 
 pkgpyexec_LTLIBRARIES = guilemodule.la
@@ -27,4 +26,4 @@ guilemodule_la_SOURCES = \
 	scm2py.c
 guilemodule_la_LDFLAGS = -module -avoid-version \
 			 -export-symbols-regex '^initguile$$' \
-			 -lguile-2.0 -lgc
+			 $(GUILE_LIBS)

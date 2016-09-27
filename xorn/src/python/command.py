@@ -24,7 +24,7 @@
 # A typical \c xorn subcommand looks like this:
 #
 # \code{.py}
-# #!/usr/bin/python
+# #!/usr/bin/env python2
 # import xorn.command
 #
 # xorn.command.bugreport = 'example@example.com'

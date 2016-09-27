@@ -14,7 +14,7 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-AM_CPPFLAGS = -I/usr/include/python$(PYTHON_VERSION) -I$(top_srcdir)/include
+AM_CPPFLAGS = $(PYTHON_CFLAGS) -I$(top_srcdir)/include
 AM_CFLAGS = -Wall -W -Wno-unused-parameter -fno-strict-aliasing
 
 AM_V_M4 = $(am__v_M4_@AM_V@)

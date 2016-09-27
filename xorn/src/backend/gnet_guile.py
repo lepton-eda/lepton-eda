@@ -29,7 +29,7 @@
 # use-spice-netnames    omit the "unknown_net" part from net names
 # --                    pass all further options to the Scheme backend
 
-import os.path
+import os.path, sys
 import xorn.geda.netlist.guile
 
 def get_package_attribute(refdes, name):
@@ -124,13 +124,14 @@ def run(f, netlist, args):
                 return
 
     xorn.guile.define('gnetlist:get-package-attribute', get_package_attribute)
+    xorn.guile.define('gnetlist:get-command-line', lambda: ' '.join(sys.argv))
 
     if guile_proc is None:
         netlist.warn("Guile environment loaded, but not invoking a backend")
         return
 
     try:
-        xorn.guile.lookup(guile_proc)('/proc/self/fd/%d' % f.fileno())
+        xorn.guile.lookup(guile_proc)('/dev/fd/%d' % f.fileno())
     except xorn.guile.GuileError:
         # Guile has already printed an error message
         netlist.error("running the Guile backend failed")
