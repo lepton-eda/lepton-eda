@@ -10,8 +10,8 @@ following components:
 
 - \ref xorn "Xorn", a Python library for high-level object manipulation
 
-For more general information about these projects, see
-http://hedmen.org/xi/.
+For more general information about this project, see
+http://hedmen.org/xorn/.
 
 --------------------------------------------------------------------------------
 

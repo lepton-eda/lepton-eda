@@ -18,7 +18,7 @@
 AC_PREREQ([2.61])
 LT_PREREQ([2.4.2])
 
-AC_INIT([Xorn], [0.0], [bug-xorn@hedmen.org])
+AC_INIT([Xorn], [0.0], [bug-xorn@hedmen.org], [], [http://hedmen.org/xorn/])
 AC_CONFIG_SRCDIR([src/cpython/module.c])
 AC_CONFIG_MACRO_DIR([m4])
 
