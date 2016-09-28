@@ -237,6 +237,27 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
   return result;
 }
 
+/*! \brief Get the internal id of an object.
+ * \par Function Description
+ * Returns an internal id number of the #OBJECT smob \a obj_s.
+ *
+ * \note Scheme API: Implements the %object-id procedure in the
+ * (geda core object) module.
+ *
+ * \param [in] obj_s an #OBJECT smob.
+ * \return a Scheme symbol representing the object type.
+ */
+SCM_DEFINE (object_id, "%object-id", 1, 0, 0,
+            (SCM obj_s), "Get an object smob's id")
+{
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
+              SCM_ARG1, s_object_type);
+
+  OBJECT *obj = edascm_to_object (obj_s);
+
+  return scm_from_int (obj->sid);
+}
+
 /*! \brief Get the bounds of a list of objects
  * \par Function Description
  * Returns the bounds of the objects in the variable-length argument
@@ -2208,7 +2229,8 @@ init_module_geda_core_object ()
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_object_type, s_copy_object, s_object_bounds,
+  scm_c_export (s_object_id,
+                s_object_type, s_copy_object, s_object_bounds,
                 s_object_stroke, s_set_object_stroke_x,
                 s_object_fill, s_set_object_fill_x,
                 s_object_color, s_set_object_color_x,
