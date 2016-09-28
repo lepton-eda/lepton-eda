@@ -1,7 +1,7 @@
 input_files = \
 	inputs/gafrc \
 	inputs/gnetlistrc \
-	inputs/LVDfoo.sch \
+	inputs/JD.sch \
 	inputs/Simulation.cmd \
 	inputs/TwoStageAmp.sch \
 	inputs/SlottedOpamps.sch \

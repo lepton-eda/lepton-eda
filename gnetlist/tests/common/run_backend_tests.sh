@@ -132,10 +132,9 @@ for t in $all_tests ; do
 
     # figure out what files we need to copy for this test and what
     # arguments to feed gnetlist
-    schematics=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $2}'`
-    auxfiles=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $3}'`
-    args=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $4}'`
-    condition=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $5}' | sed 's; ;;g'`
+    auxfiles=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $2}'`
+    args=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $3}'`
+    condition=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $4}' | sed 's; ;;g'`
 
     refcode=${GOLDEN_DIR}/${t}.retcode
 
@@ -154,7 +153,7 @@ for t in $all_tests ; do
     ref=${GOLDEN_DIR}/${t}-output.net
 
     regen="${regen}" debug="${debug}" \
-    ${srcdir}/run-test "${schematics}" "${auxfiles}" \
+    ${srcdir}/run-test "${t}" "${auxfiles}" \
                        "${backend}" "${args}" "${ref}" "${refcode}"
 
     case "$?" in

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-schematics=$1
+stem=$1
 auxfiles=$2
 backend=$3
 args=$4
@@ -29,6 +29,8 @@ export GEDASCMDIR
 export GEDABUILTSCMDIR
 export GNETLISTSCMDIR
 export SYMDIR
+
+schematics="${stem}.sch"
 
 rundir=${here}/run
 
