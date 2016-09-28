@@ -167,10 +167,4 @@ done
 
 echo "Passed $pass, failed $fail, skipped $skip out of $tot tests."
 
-rc=0
-if test $pass -ne $tot ; then
-    rc=`expr $tot - $pass`
-
-fi
-
-exit $rc
+exit $fail

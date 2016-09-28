@@ -89,6 +89,29 @@ if test ! -z "$always_copy" ; then
     done
 fi
 
+case "${backend}" in
+spice-sdb-nomunge)
+    backend=spice-sdb
+    args="${args} -O nomunge_mode"
+    ;;
+spice-sdb-include)
+    backend=spice-sdb
+    args="${args} -O include_mode"
+    ;;
+spice-sdb-include-nomunge)
+    backend=spice-sdb
+    args="${args} -O include_mode -O nomunge_mode"
+    ;;
+spice-sdb-sort)
+    backend=spice-sdb
+    args="${args} -O sort_mode"
+    ;;
+spice-sdb-sort-nomunge)
+    backend=spice-sdb
+    args="${args} -O sort_mode -O nomunge_mode"
+    ;;
+esac
+
 # run gnetlist -g $backend
 echo "${GNETLIST} -g $backend $args $schematics"
 (cd ${rundir} && ${GNETLIST} -g $backend $args $schematics)

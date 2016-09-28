@@ -27,6 +27,11 @@ protelII
 redac
 spice
 spice-sdb
+spice-sdb-nomunge
+spice-sdb-include
+spice-sdb-include-nomunge
+spice-sdb-sort
+spice-sdb-sort-nomunge
 switcap
 systemc
 tango
