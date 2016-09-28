@@ -95,12 +95,14 @@ GEDADATARC="${builddir}/../../lib"
 SCMDIR="${builddir}/../../scheme"
 GEDASCMDIR="${srcdir}/../../../libgeda/scheme"
 GEDABUILTSCMDIR="${builddir}/../../../libgeda/scheme"
+GNETLISTSCMDIR="${srcdir}/../../../gnetlist/scheme"
 SYMDIR="${srcdir}/../../../symbols"
 export GEDADATA
 export GEDADATARC
 export SCMDIR
 export GEDASCMDIR
 export GEDABUILTSCMDIR
+export GNETLISTSCMDIR
 export SYMDIR
 
 rundir=${here}/run
@@ -147,6 +149,7 @@ GEDADATARC: ${GEDATADARC}
 SCMDIR:     ${SCMDIR}
 GEDASCMDIR: ${GEDASCMDIR}
 GEDABUILTSCMDIR: ${GEDABUILTSCMDIR}
+GNETLISTSCMDIR: ${GNETLISTSCMDIR}
 SYMDIR:     ${SYMDIR}
 all_tests:
 

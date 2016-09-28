@@ -3,6 +3,7 @@
 (scheme-directory "${SCMDIR}")
 (scheme-directory "${GEDASCMDIR}")
 (scheme-directory "${GEDABUILTSCMDIR}")
+(scheme-directory "${GNETLISTSCMDIR}")
 
 ;; We want to use the symbols that haven't been installed yet
 (map (lambda (x) (component-library (string-join (list "${SYMDIR}/" x) "")))

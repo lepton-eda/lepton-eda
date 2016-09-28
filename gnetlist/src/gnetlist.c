@@ -183,8 +183,6 @@ void main_prog(void *closure, int argc, char *argv[])
     /* register guile (scheme) functions */
     g_register_funcs();
     s_init_traverse ();
-    traverse = scm_c_public_lookup ("gnetlist traverse", "traverse");
-
 
     scm_dynwind_begin (0);
     pr_current = s_toplevel_new ();
@@ -313,6 +311,8 @@ void main_prog(void *closure, int argc, char *argv[])
       /* Evaluate second set of Scheme expressions. */
       scm_eval (post_backend_list, scm_current_module ());
     }
+
+    traverse = scm_c_public_lookup ("gnetlist traverse", "traverse");
 
     (scm_call_0 (scm_variable_ref (traverse)));
 

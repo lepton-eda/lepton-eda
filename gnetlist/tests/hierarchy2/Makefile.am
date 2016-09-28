@@ -20,6 +20,7 @@ tests:
 	  $(GNETLIST) \
 	     -L $(top_srcdir)/libgeda/scheme \
 	     -L $(top_builddir)/libgeda/scheme \
+	     -L $(top_srcdir)/gnetlist/scheme \
 	     -o $(BUILDDIR)/new_hierarchy2.geda -g geda \
 	     $(SRCDIR)/top.sch )
 	diff $(SRCDIR)/hierarchy2.geda $(BUILDDIR)/new_hierarchy2.geda;

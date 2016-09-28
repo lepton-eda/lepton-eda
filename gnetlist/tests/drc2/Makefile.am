@@ -67,6 +67,7 @@ tests:
 	    SYMDIR=${top_srcdir}/symbols \
 	    $(GNETLIST) -L$(top_srcdir)/libgeda/scheme \
 	                -L$(top_builddir)/libgeda/scheme \
+	                -L$(top_srcdir)/gnetlist/scheme \
 	                -g drc2 \
 	                -o $(BUILDDIR)/new_$$file_basename.drc2 \
 	                $$file ); \

@@ -16,6 +16,7 @@ SYMDIR=$SRCDIR/../../symbols \
 GEDADATARC=$BUILDDIR/../lib \
 ../src/gnetlist -L ${SRCDIR}/../../libgeda/scheme \
   -L ${BUILDDIR}/../../libgeda/scheme \
+  -L ${SRCDIR}/../../gnetlist/scheme \
   -o ${BUILDDIR}/new_${schbasename}.$BACKEND -g $BACKEND $INPUT
 status=$?
 
