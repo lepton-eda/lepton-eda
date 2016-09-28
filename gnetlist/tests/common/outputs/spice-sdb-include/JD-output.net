@@ -5,7 +5,7 @@
 * provides advanced spice netlisting capability.        *
 * Documentation at http://www.brorson.com/gEDA/SPICE/   *
 *********************************************************
-.INCLUDE ./models/openIP_5.cir
+.INCLUDE ./openIP_5.cir
 *==============  Begin SPICE netlist of main design ============
 Cm m 0 20p  
 Cp p 0 20p  

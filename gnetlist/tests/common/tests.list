@@ -18,10 +18,10 @@ powersupply | | |
 singlenet | | |
 
 # The two stage amp
-TwoStageAmp | Simulation.cmd models/2N3904.mod | |
+TwoStageAmp | | |
 
 # John Doty's test circuit
-JD | models/openIP_5.cir | |
+JD | | |
 
 # Tests for slotted parts
 SlottedOpamps | | |

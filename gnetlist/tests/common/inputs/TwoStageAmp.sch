@@ -144,7 +144,7 @@ refdes=A1
 T 27800 55800 5 10 1 1 0 0 1
 model-name=2N3904
 T 27000 55600 5 10 1 1 0 0 1
-file=./models/2N3904.mod
+file=./2N3904.mod
 T 26600 56200 5 10 0 1 0 0 1
 device=model
 }

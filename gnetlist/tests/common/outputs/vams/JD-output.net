@@ -13,7 +13,7 @@ BEGIN
  
   A1 : ENTITY model
 	GENERIC MAP (
-			file => ./models/openIP_5.cir, 
+			file => ./openIP_5.cir, 
 			model-name => unknown_LVD, 
 			device => model)
 ;

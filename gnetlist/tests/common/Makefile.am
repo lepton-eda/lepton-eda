@@ -2,7 +2,6 @@ input_files = \
 	inputs/gafrc \
 	inputs/gnetlistrc \
 	inputs/JD.sch \
-	inputs/Simulation.cmd \
 	inputs/TwoStageAmp.sch \
 	inputs/SlottedOpamps.sch \
 	inputs/cascade.sch \
@@ -13,8 +12,9 @@ input_files = \
 	inputs/stack-torture.sch \
 	inputs/attribs \
 	\
-	inputs/models/2N3904.mod \
-	inputs/models/openIP_5.cir \
+	inputs/JD-extras/openIP_5.cir \
+	inputs/TwoStageAmp-extras/2N3904.mod \
+	inputs/TwoStageAmp-extras/Simulation.cmd \
 	\
 	inputs/JD-symbols/LVD.sym \
 	inputs/SlottedOpamps-symbols/LM324_slotted-1.sym \

@@ -56,10 +56,9 @@ echo "Args to copy         = $args"
 echo "Always copying       = $always_copy"
 echo "Expected return code = \"$code\""
 
-# create temporary run directory and required subdirs
+# create temporary run directory
 if test ! -d $rundir ; then
     mkdir -p $rundir
-    mkdir -p $rundir/models
 fi
 
 # Create the files needed
@@ -78,6 +77,14 @@ if test ! -z "$auxfiles" ; then
     for f in $auxfiles ; do
         echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
         cp ${INPUT_DIR}/${f} ${rundir}/${f}
+        chmod 644 ${rundir}/${f}
+    done
+fi
+if test -d "${INPUT_DIR}/${stem}-extras" ; then
+    echo "Copying over aux files to run dir"
+    for f in "${INPUT_DIR}/${stem}-extras"/* ; do
+        echo "cp ${f} ${rundir}/"
+        cp ${f} ${rundir}/
         chmod 644 ${rundir}/${f}
     done
 fi

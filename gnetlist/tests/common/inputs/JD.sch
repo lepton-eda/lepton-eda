@@ -156,5 +156,5 @@ refdes=A1
 T 7100 87700 5 10 1 1 0 0 1
 model-name=unknown_LVD
 T 6300 87500 5 10 1 1 0 0 1
-file=./models/openIP_5.cir
+file=./openIP_5.cir
 }

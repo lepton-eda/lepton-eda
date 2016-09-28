@@ -5,10 +5,10 @@
 * provides advanced spice netlisting capability.        *
 * Documentation at http://www.brorson.com/gEDA/SPICE/   *
 *********************************************************
-*vvvvvvvv  Included SPICE model from ./models/openIP_5.cir vvvvvvvv
+*vvvvvvvv  Included SPICE model from ./openIP_5.cir vvvvvvvv
 *
 .model unknown_LVD (stuff)
-*^^^^^^^^  End of included SPICE model from ./models/openIP_5.cir ^^^^^^^^
+*^^^^^^^^  End of included SPICE model from ./openIP_5.cir ^^^^^^^^
 *
 *==============  Begin SPICE netlist of main design ============
 Cm m 0 20p  

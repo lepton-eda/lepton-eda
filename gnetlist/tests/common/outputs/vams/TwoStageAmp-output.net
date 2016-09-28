@@ -99,7 +99,7 @@ BEGIN
   A1 : ENTITY model
 	GENERIC MAP (
 			device => model, 
-			file => ./models/2N3904.mod, 
+			file => ./2N3904.mod, 
 			model-name => 2N3904)
 ;
  

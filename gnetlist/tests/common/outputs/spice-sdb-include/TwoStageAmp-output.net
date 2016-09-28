@@ -5,7 +5,7 @@
 * provides advanced spice netlisting capability.        *
 * Documentation at http://www.brorson.com/gEDA/SPICE/   *
 *********************************************************
-.INCLUDE ./models/2N3904.mod
+.INCLUDE ./2N3904.mod
 *==============  Begin SPICE netlist of main design ============
 C2 2 Vbase2 2.2uF  
 R4 0 Vbase2 2.8K  
