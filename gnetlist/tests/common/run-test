@@ -59,13 +59,12 @@ echo "Expected return code = \"$code\""
 # create temporary run directory and required subdirs
 if test ! -d $rundir ; then
     mkdir -p $rundir
-    mkdir -p $rundir/sym
     mkdir -p $rundir/models
 fi
 
 # Create the files needed
 # Note that we need to include not only the .sch files,
-# but also the contents of the sym and model directories.
+# but also the contents of the model directory.
 if test ! -z "$schematics" ; then
     echo "Copying over schematics to run dir"
     for f in $schematics ; do
@@ -89,6 +88,12 @@ if test ! -z "$always_copy" ; then
         cp ${INPUT_DIR}/${f} ${rundir}/${f}
         chmod 644 ${rundir}/${f}
     done
+fi
+
+if test -d "${INPUT_DIR}/${stem}-symbols" ; then
+    cat >> "${rundir}/gafrc" << EOF
+(component-library "${INPUT_DIR}/${stem}-symbols")
+EOF
 fi
 
 case "${backend}" in

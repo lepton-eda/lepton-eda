@@ -16,9 +16,9 @@ input_files = \
 	inputs/models/2N3904.mod \
 	inputs/models/openIP_5.cir \
 	\
-	inputs/sym/LVD.sym \
-	inputs/sym/transistor.sym \
-	inputs/sym/LM324_slotted-1.sym
+	inputs/JD-symbols/LVD.sym \
+	inputs/SlottedOpamps-symbols/LM324_slotted-1.sym \
+	inputs/TwoStageAmp-symbols/transistor.sym
 
 AM_TESTS_ENVIRONMENT= PERL=${PERL}
 
