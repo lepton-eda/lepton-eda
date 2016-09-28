@@ -14,7 +14,7 @@ SRCDIR=$(srcdir)
 GNETLIST=$(top_builddir)/gnetlist/src/gnetlist
 
 tests:
-	rm -f $(BUILDDIR)/new_*
+	rm -f $(BUILDDIR)/new_hierarchy.geda
 	cp -f $(SRCDIR)/gnetlistrc.hierarchy $(BUILDDIR)/gnetlistrc
 	( TESTDIR=$(SRCDIR) \
 	  GEDADATARC=$(top_builddir)/gnetlist/lib \
@@ -29,7 +29,4 @@ tests:
 	diff $(SRCDIR)/hierarchy.geda $(BUILDDIR)/new_hierarchy.geda;
 	rm -f $(BUILDDIR)/gnetlistrc
 
-MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~ gnetlistrc
-CLEANFILES = new_* core *.log FILE *.ps *~ gnetlistrc
-DISTCLEANFILES = *.log core FILE *~ gnetlistrc
-MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in gnetlistrc
+MOSTLYCLEANFILES = new_hierarchy.geda gnetlistrc

@@ -106,10 +106,11 @@ tests:
 	$(SRCDIR)/runtest.sh $(SRCDIR)/cascade.sch cascade \
 		$(BUILDDIR) $(SRCDIR)
 
-# Cleanup
-	rm -f $(BUILDDIR)/new_*
-	rm -rf $(BUILDDIR)/devfiles
-	rm -f $(builddir)/gnetlistrc
+
+MOSTLYCLEANFILES = new_* gnetlistrc
+
+mostlyclean-local:
+	rm -rf devfiles
 
 
 # These tests are internal to Ales and will not work without the schematics
@@ -156,8 +157,3 @@ tests_ales:
 # cleanup
 	rm -f $(BUILDDIR)/new_*
 	rm -rf $(BUILDDIR)/devfiles
-
-MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
-CLEANFILES = new_* core *.log FILE *.ps *~
-DISTCLEANFILES = new_* *.log core FILE *.ps *~
-MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in

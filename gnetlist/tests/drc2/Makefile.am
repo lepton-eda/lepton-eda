@@ -88,7 +88,4 @@ tests:
 	fi
 	rm -f $(BUILDDIR)/gnetlistrc
 
-MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~ gnetlistrc
-CLEANFILES = new_* core *.log FILE *.ps *~ gnetlistrc
-DISTCLEANFILES = *.log core FILE *~ gnetlistrc
-MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in gnetlistrc
+MOSTLYCLEANFILES = new_* failed.log gnetlistrc
