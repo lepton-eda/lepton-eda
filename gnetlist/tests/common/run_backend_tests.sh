@@ -106,7 +106,7 @@ tot=0
 # here's where we look at the test.list file and extract the names of all
 # the tests we want to run.
 if test -z "$1" ; then
-    all_tests=`awk 'BEGIN{FS="|"} /^#/{next} /^[ \t]*$/{next} {print $1}' $TESTLIST | sed 's; ;;g'`
+    all_tests=`awk '/^#/{next} /^[ \t]*$/{next} {print $0}' $TESTLIST | sed 's; ;;g'`
 else
     all_tests=$*
 fi
@@ -132,29 +132,15 @@ for t in $all_tests ; do
 
     # figure out what files we need to copy for this test and what
     # arguments to feed gnetlist
-    auxfiles=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $2}'`
-    args=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $3}'`
-    condition=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $4}' | sed 's; ;;g'`
 
     refcode=${GOLDEN_DIR}/${t}.retcode
-
-    if test "X$condition" != "X" ; then
-        eval "ctest=\`echo \$$condition\`"
-        if test X$ctest = "Xyes" ; then
-            echo "Running test because $condition = yes"
-        else
-            echo "Skipping test because $condition = $ctest"
-            continue
-        fi
-    fi
 
     tot=`expr $tot + 1`
 
     ref=${GOLDEN_DIR}/${t}-output.net
 
     regen="${regen}" debug="${debug}" \
-    ${srcdir}/run-test "${t}" "${auxfiles}" \
-                       "${backend}" "${args}" "${ref}" "${refcode}"
+    ${srcdir}/run-test "${t}" "${backend}" "${ref}" "${refcode}"
 
     case "$?" in
         0) pass=`expr $pass + 1` ;;

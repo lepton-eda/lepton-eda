@@ -1,30 +1,18 @@
-# Format:
-#
-# test_name | aux files | \ 
-# extra flags to pass to gnetlist -g spice-sdb | \
-# variable which must be set for the test to run
-#
-
-
-# -----------------------------------------
-# Simple netlisting tests
-# -----------------------------------------
-
 # Some test schematics copied from the toplevel tests dir
-cascade | | |
-multiequal | | |
-netattrib | | |
-powersupply | | |
-singlenet | | |
+cascade
+multiequal
+netattrib
+powersupply
+singlenet
 
 # The two stage amp
-TwoStageAmp | | |
+TwoStageAmp
 
 # John Doty's test circuit
-JD | | |
+JD
 
 # Tests for slotted parts
-SlottedOpamps | | |
+SlottedOpamps
 
 # Stack torture test
-stack-torture | | |
+stack-torture
