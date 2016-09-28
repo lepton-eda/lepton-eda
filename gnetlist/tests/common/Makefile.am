@@ -1,6 +1,4 @@
 input_files = \
-	inputs/gafrc \
-	inputs/gnetlistrc \
 	inputs/JD.sch \
 	inputs/TwoStageAmp.sch \
 	inputs/SlottedOpamps.sch \
@@ -10,7 +8,6 @@ input_files = \
 	inputs/powersupply.sch \
 	inputs/singlenet.sch \
 	inputs/stack-torture.sch \
-	inputs/attribs \
 	\
 	inputs/JD-extras/openIP_5.cir \
 	inputs/TwoStageAmp-extras/2N3904.mod \
@@ -26,7 +23,7 @@ check-local:
 	$(AM_TESTS_ENVIRONMENT) srcdir=$(srcdir) $(SHELL) $(srcdir)/run_tests.sh
 
 EXTRA_DIST= run_backend_tests.sh run_tests.sh run-test \
-	tests.list backends.list always-copy.list $(input_files)
+	tests.list backends.list $(input_files)
 
 dist-hook: tests.list backends.list
 	@tests=`cat $(srcdir)/tests.list | sed -e "s:#.*$$::" | sed -e "s:|.*$$::"`; \

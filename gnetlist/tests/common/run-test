@@ -22,23 +22,12 @@ GNETLISTSCMDIR="${srcdir}/../../../gnetlist/scheme"
 SYMDIR="${srcdir}/../../../symbols"
 export GEDADATA
 export GEDADATARC
-export SCMDIR
-export GEDASCMDIR
-export GEDABUILTSCMDIR
-export GNETLISTSCMDIR
-export SYMDIR
 
 schematics="${stem}.sch"
 
 rundir=${here}/run
 
 INPUT_DIR=${srcdir}/inputs
-
-ALWAYSCOPYLIST=${srcdir}/always-copy.list
-
-# here's where we look at always-copy.list file and extract the names of all
-# the extra files we want to copy for every test
-always_copy=`cat $ALWAYSCOPYLIST | sed '/^#/d'`
 
 if test -f $refcode; then
     code=`grep -v "^#" $refcode | sed 's; ;;g;'`
@@ -50,7 +39,6 @@ if test "X$code" = "X" ; then
 fi
 
 echo "Schematics to copy   = $schematics"
-echo "Always copying       = $always_copy"
 echo "Expected return code = \"$code\""
 
 # create temporary run directory
@@ -77,14 +65,27 @@ if test -d "${INPUT_DIR}/${stem}-extras" ; then
         chmod 644 ${rundir}/${f}
     done
 fi
-if test ! -z "$always_copy" ; then
-    echo "Copying over always copied files to run dir"
-    for f in $always_copy ; do
-        echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
-        cp ${INPUT_DIR}/${f} ${rundir}/${f}
-        chmod 644 ${rundir}/${f}
-    done
-fi
+
+(echo refdes; echo value; echo device) > "${rundir}/attribs"
+echo "(set! use-legacy-frontend #t)" > "${rundir}/gnetlistrc"
+
+cat > "${rundir}/gafrc" << EOF
+;; We want to point at the scheme code that hasn't been installed yet so that
+;; 'make check' during development can work correctly.
+(scheme-directory "${SCMDIR}")
+(scheme-directory "${GEDASCMDIR}")
+(scheme-directory "${GEDABUILTSCMDIR}")
+(scheme-directory "${GNETLISTSCMDIR}")
+
+;; We want to use the symbols that haven't been installed yet
+(map (lambda (x) (component-library (string-join (list "${SYMDIR}/" x) "")))
+     '("io" "74" "analog" "power" "misc" "diode" "linear" "connector" "switch"
+       "asic" "spice" "cascade" "titleblock"))
+
+;; Rather than checking what m4 and pcb's m4 files do with
+;; the output we produce, just see what output gnetlist produces.
+(define gsch2pcb:pcb-m4-command-line "cat - >>")
+EOF
 
 if test -d "${INPUT_DIR}/${stem}-symbols" ; then
     cat >> "${rundir}/gafrc" << EOF
