@@ -25,8 +25,8 @@ AM_TESTS_ENVIRONMENT= PERL=${PERL}
 check-local:
 	$(AM_TESTS_ENVIRONMENT) srcdir=$(srcdir) $(SHELL) $(srcdir)/run_tests.sh
 
-EXTRA_DIST= run_backend_tests.sh run_tests.sh tests.list backends.list \
-	always-copy.list $(input_files)
+EXTRA_DIST= run_backend_tests.sh run_tests.sh run-test \
+	tests.list backends.list always-copy.list $(input_files)
 
 dist-hook: tests.list backends.list
 	@tests=`cat $(srcdir)/tests.list | sed -e "s:#.*$$::" | sed -e "s:|.*$$::"`; \

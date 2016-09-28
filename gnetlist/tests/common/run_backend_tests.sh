@@ -87,31 +87,10 @@ echo "********USING BACKEND ${backend}*********"
 here=`pwd`
 srcdir=${srcdir:-$here}
 srcdir=`cd $srcdir && pwd`
-builddir="${here}"
-
-GNETLIST="${builddir}/../../src/gnetlist"
-GEDADATA="${srcdir}/../.." # HACKHACKHACK
-GEDADATARC="${builddir}/../../lib"
-SCMDIR="${builddir}/../../scheme"
-GEDASCMDIR="${srcdir}/../../../libgeda/scheme"
-GEDABUILTSCMDIR="${builddir}/../../../libgeda/scheme"
-GNETLISTSCMDIR="${srcdir}/../../../gnetlist/scheme"
-SYMDIR="${srcdir}/../../../symbols"
-export GEDADATA
-export GEDADATARC
-export SCMDIR
-export GEDASCMDIR
-export GEDABUILTSCMDIR
-export GNETLISTSCMDIR
-export SYMDIR
-
-rundir=${here}/run
 
 GOLDEN_DIR=${srcdir}/outputs/${backend}
-INPUT_DIR=${srcdir}/inputs
 
 TESTLIST=${srcdir}/tests.list
-ALWAYSCOPYLIST=${srcdir}/always-copy.list
 
 if test ! -f $TESTLIST ; then
     echo "ERROR: ($0)  Test list $TESTLIST does not exist"
@@ -133,24 +112,11 @@ else
 fi
 echo All tests = $all_tests
 
-# here's where we look at always-copy.list file and extract the names of all
-# the extra files we want to copy for every test
-always_copy=`cat $ALWAYSCOPYLIST | sed '/^#/d'`
-
 cat << EOF
 
 Starting tests in $here
 srcdir:     $srcdir
-INPUT_DIR:  ${INPUT_DIR}
 GOLDEN_DIR: ${GOLDEN_DIR}
-GNETLIST:   ${GNETLIST}
-GEDADATA:   ${GEDATADA}
-GEDADATARC: ${GEDATADARC}
-SCMDIR:     ${SCMDIR}
-GEDASCMDIR: ${GEDASCMDIR}
-GEDABUILTSCMDIR: ${GEDABUILTSCMDIR}
-GNETLISTSCMDIR: ${GNETLISTSCMDIR}
-SYMDIR:     ${SYMDIR}
 all_tests:
 
 ${all_tests}
@@ -172,19 +138,7 @@ for t in $all_tests ; do
     condition=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $5}' | sed 's; ;;g'`
 
     refcode=${GOLDEN_DIR}/${t}.retcode
-    if test -f $refcode; then
-        code=`grep -v "^#" $refcode | sed 's; ;;g;'`
-    else
-        code=0
-    fi
-    if test "X$code" = "X" ; then
-        code=0
-    fi
 
-    echo "Schematics to copy   = $schematics"
-    echo "Args to copy         = $args"
-    echo "Always copying       = $always_copy"
-    echo "Expected return code = \"$code\""
     if test "X$condition" != "X" ; then
         eval "ctest=\`echo \$$condition\`"
         if test X$ctest = "Xyes" ; then
@@ -197,136 +151,17 @@ for t in $all_tests ; do
 
     tot=`expr $tot + 1`
 
-    # create temporary run directory and required subdirs
-    if test ! -d $rundir ; then
-        mkdir -p $rundir
-        mkdir -p $rundir/sym
-        mkdir -p $rundir/models
-    fi
-
-    # Create the files needed
-    # Note that we need to include not only the .sch files,
-    # but also the contents of the sym and model directories.
-    if test ! -z "$schematics" ; then
-        echo "Copying over schematics to run dir"
-        for f in $schematics ; do
-            echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
-            cp ${INPUT_DIR}/${f} ${rundir}/${f}
-            chmod 644 ${rundir}/${f}
-        done
-    fi
-    if test ! -z "$auxfiles" ; then
-        echo "Copying over aux files to run dir"
-        for f in $auxfiles ; do
-            echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
-            cp ${INPUT_DIR}/${f} ${rundir}/${f}
-            chmod 644 ${rundir}/${f}
-        done
-    fi
-    if test ! -z "$always_copy" ; then
-        echo "Copying over always copied files to run dir"
-        for f in $always_copy ; do
-            echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
-            cp ${INPUT_DIR}/${f} ${rundir}/${f}
-            chmod 644 ${rundir}/${f}
-        done
-    fi
-
-    # run gnetlist -g $backend
-    echo "${GNETLIST} -g $backend $args $schematics"
-    cd ${rundir} && ${GNETLIST} -g $backend $args $schematics
-    rc1=$?
-    echo "${GNETLIST} -g $backend -o - $args $schematics > stdout.net"
-    ${GNETLIST} -g $backend -o - $args $schematics > stdout.net
-    rc2=$?
-    echo "${GNETLIST} -g $backend -v -o verbose.net $args $schematics"
-    ${GNETLIST} -g $backend -v -o verbose.net $args $schematics
-    rc3=$?
-
-
-    # OK, now check results of run.
-    good=0
-    bad=0
-    soso=0
-
     ref=${GOLDEN_DIR}/${t}-output.net
-    out=${rundir}/output.net
-    std=${rundir}/stdout.net
-    vrb=${rundir}/verbose.net
 
-    # Hack to help with vams backend
-    if [ -f ${rundir}/default_entity_arc.net ]; then
-      mv ${rundir}/default_entity_arc.net $out
-      # vams intentionally outputs data into several files, so checking it with
-      # the option '-o verbose.net' is nonsense
-      cp $out $vrb
-    fi
+    regen="${regen}" debug="${debug}" \
+    ${srcdir}/run-test "${schematics}" "${auxfiles}" \
+                       "${backend}" "${args}" "${ref}" "${refcode}"
 
-    if test "X$regen" = "Xyes" ; then
-
-        # Copy output on top of golden output, accounting for the case
-        # that no output file was generated.
-        if test -f ${out} ; then
-            cp ${out} ${ref}
-        else
-            rm ${ref}
-        fi
-
-        echo "$rc1" > $refcode
-        echo "Regenerated ${ref}"
-        good=1
-    elif test $rc1 -ne $code ; then
-        echo "FAILED:  gnetlist -g $backend returned $rc1 which did not match the expected $code"
-        bad=1
-    elif test $rc2 -ne $code ; then
-        echo "FAILED:  gnetlist -g $backend -o - returned $rc2 which did not match the expected $code"
-        bad=1
-    elif test $rc3 -ne $code ; then
-        echo "FAILED:  gnetlist -g $backend -v returned $rc3 which did not match the expected $code"
-        bad=1
-    elif test -f ${ref} ; then
-
-        sed '/gnetlist -g/d' ${ref} > ${out}.tmp1
-        sed '/gnetlist -g/d' ${out} > ${out}.tmp2
-        sed '/gnetlist -g/d' ${std} > ${out}.tmp3
-        sed '/gnetlist -g/d' ${vrb} > ${out}.tmp4
-
-        # Hack to help with allegro backend
-        # Device files are ignored as yet
-        if test "X$backend" = "Xallegro" ; then
-            sed '/gnetlist -g/d' ${std} | sed '/^\$END$/ q' > ${out}.tmp3
-        fi
-
-        if ! diff -w ${out}.tmp1 ${out}.tmp2 >/dev/null; then
-            echo "FAILED: Wrong plain output. See diff -w ${ref} ${out}"
-            bad=1
-        elif ! diff -w ${out}.tmp1 ${out}.tmp3 >/dev/null; then
-            echo "FAILED: Wrong stdout output. See diff -w ${ref} ${std}"
-            bad=1
-        elif ! diff -w ${out}.tmp1 ${out}.tmp4 >/dev/null; then
-            echo "FAILED: Wrong verbose output. See diff -w ${ref} ${vrb}"
-            bad=1
-        else
-            echo "PASS"
-            good=1
-        fi
-    elif test ! -f $out ; then
-        # No output file, but this is expected since there was no reference file
-        echo "PASS"
-        good=1
-    else
-        echo "No reference file.  Skipping"
-        soso=1
-    fi
-
-    pass=`expr $pass + $good`
-    fail=`expr $fail + $bad`
-    skip=`expr $skip + $soso`
-
-    cd $here
-
-    # Delete the run directory in prep for the next test
-    test "$debug" = "no" && rm -fr ${rundir}
+    case "$?" in
+        0) pass=`expr $pass + 1` ;;
+        1) fail=`expr $fail + 1` ;;
+        77) skip=`expr $skip + 1` ;;
+    esac
 
 done
 
