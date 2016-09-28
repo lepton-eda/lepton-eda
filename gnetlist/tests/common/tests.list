@@ -1,6 +1,6 @@
 # Format:
 #
-# test_name | aux files (gafrc, etc) | \ 
+# test_name | aux files | \ 
 # extra flags to pass to gnetlist -g spice-sdb | \
 # variable which must be set for the test to run
 #
@@ -18,13 +18,13 @@ powersupply | | |
 singlenet | | |
 
 # The two stage amp
-TwoStageAmp | Simulation.cmd gafrc models/2N3904.mod | |
+TwoStageAmp | Simulation.cmd models/2N3904.mod | |
 
 # John Doty's test circuit
-JD | gafrc models/openIP_5.cir | |
+JD | models/openIP_5.cir | |
 
 # Tests for slotted parts
-SlottedOpamps | gafrc | |
+SlottedOpamps | | |
 
 # Stack torture test
 stack-torture | | |
