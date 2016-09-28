@@ -112,6 +112,11 @@ spice-sdb-sort-nomunge)
     ;;
 esac
 
+if test ! -f ${ref} ; then
+    echo "No reference file.  Skipping"
+    exit 77
+fi
+
 # run gnetlist -g $backend
 echo "${GNETLIST} -g $backend $args $schematics"
 (cd ${rundir} && ${GNETLIST} -g $backend $args $schematics)
@@ -161,7 +166,7 @@ elif test $rc2 -ne $code ; then
 elif test $rc3 -ne $code ; then
     echo "FAILED:  gnetlist -g $backend -v returned $rc3 which did not match the expected $code"
     status=1
-elif test -f ${ref} ; then
+else
 
     sed '/gnetlist -g/d' ${ref} > ${out}.tmp1
     sed '/gnetlist -g/d' ${out} > ${out}.tmp2
@@ -187,13 +192,6 @@ elif test -f ${ref} ; then
         echo "PASS"
         status=0
     fi
-elif test ! -f $out ; then
-    # No output file, but this is expected since there was no reference file
-    echo "PASS"
-    status=0
-else
-    echo "No reference file.  Skipping"
-    status=77
 fi
 
 cd $here
