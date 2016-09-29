@@ -11,7 +11,7 @@ GEDADATARC="${abs_top_builddir}/gnetlist/lib"
 export GEDADATA
 export GEDADATARC
 
-schematic="${stem}.sch"
+schematic="${abs_srcdir}/${stem}.sch"
 
 rundir="run.$$"
 
@@ -19,8 +19,6 @@ rundir="run.$$"
 mkdir -p "${rundir}"
 
 # Create the files needed
-cp "${srcdir}/${schematic}" "${rundir}/${schematic}"
-
 if test -d "${srcdir}/${stem}-extras" ; then
     for f in "${srcdir}/${stem}-extras"/* ; do
         cp "${f}" "${rundir}/"
