@@ -1,9 +1,11 @@
 #!/bin/sh
 
-stem=$1
-backend=$2
-ref=$3
-refcode=$4
+ref="$1"
+tmp="`echo "x$1" | sed -e 's:-output\\.net$::'`"
+refcode="`echo "x${tmp}" | sed -e 's:^xx::'`.retcode"
+stem="`echo "x${tmp}" | sed -e 's:.*/::'`"
+tmp="`echo "x$1" | sed -e 's:/[^/]*$::'`"
+backend="`echo "x${tmp}" | sed -e 's:.*/::'`"
 
 # make sure we have the right paths when running this from inside the
 # source tree and also from outside the source tree.

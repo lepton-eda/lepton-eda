@@ -131,14 +131,12 @@ for t in $all_tests ; do
     # figure out what files we need to copy for this test and what
     # arguments to feed gnetlist
 
-    refcode=${GOLDEN_DIR}/${t}.retcode
-
     tot=`expr $tot + 1`
 
     ref=${GOLDEN_DIR}/${t}-output.net
 
     REGEN="${REGEN}" debug="${debug}" \
-    ${srcdir}/run-test "${t}" "${backend}" "${ref}" "${refcode}"
+    ${srcdir}/run-test "${ref}"
 
     case "$?" in
         0) pass=`expr $pass + 1` ;;
