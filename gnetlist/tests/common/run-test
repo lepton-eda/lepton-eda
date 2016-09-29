@@ -5,52 +5,25 @@ tmp="`echo "x$1" | sed -e 's:.*/::' -e 's:\\.out$::'`"
 stem="`echo "${tmp}" | sed -e 's:-spice-.*:@@@:' -e 's:\\(-[^-@]*\\|@@@\\)$::'`"
 backend="`echo "${tmp}" | sed -e "s:^${stem}-::"`"
 
-# make sure we have the right paths when running this from inside the
-# source tree and also from outside the source tree.
-here="`pwd`"
-srcdir="${srcdir:-$here}"
-srcdir="`cd ${srcdir} && pwd`"
-builddir="${here}"
-
-GNETLIST="${builddir}/../../src/gnetlist"
-GEDADATA="${srcdir}/../.." # HACKHACKHACK
-GEDADATARC="${builddir}/../../lib"
-SCMDIR="${builddir}/../../scheme"
-GEDASCMDIR="${srcdir}/../../../libgeda/scheme"
-GEDABUILTSCMDIR="${builddir}/../../../libgeda/scheme"
-GNETLISTSCMDIR="${srcdir}/../../../gnetlist/scheme"
-SYMDIR="${srcdir}/../../../symbols"
+GNETLIST="${abs_top_builddir}/gnetlist/src/gnetlist"
+GEDADATA="${abs_top_srcdir}/gnetlist" # HACKHACKHACK
+GEDADATARC="${abs_top_builddir}/gnetlist/lib"
 export GEDADATA
 export GEDADATARC
 
-schematics="${stem}.sch"
+schematic="${stem}.sch"
 
-rundir="${here}/run.$$"
-
-echo "Schematics to copy   = ${schematics}"
+rundir="run.$$"
 
 # create temporary run directory
-if test ! -d "${rundir}" ; then
-    mkdir -p "${rundir}"
-fi
+mkdir -p "${rundir}"
 
 # Create the files needed
-# Note that we need to include not only the .sch files,
-# but also the contents of the model directory.
-if test ! -z "${schematics}" ; then
-    echo "Copying over schematics to run dir"
-    for f in "${schematics}" ; do
-        echo "cp ${srcdir}/${f} ${rundir}/${f}"
-        cp "${srcdir}/${f}" "${rundir}/${f}"
-        chmod 644 "${rundir}/${f}"
-    done
-fi
+cp "${srcdir}/${schematic}" "${rundir}/${schematic}"
+
 if test -d "${srcdir}/${stem}-extras" ; then
-    echo "Copying over aux files to run dir"
     for f in "${srcdir}/${stem}-extras"/* ; do
-        echo "cp ${f} ${rundir}/"
         cp "${f}" "${rundir}/"
-        chmod 644 "${rundir}/${f}"
     done
 fi
 
@@ -60,13 +33,15 @@ echo "(set! use-legacy-frontend #t)" > "${rundir}/gnetlistrc"
 cat > "${rundir}/gafrc" << EOF
 ;; We want to point at the scheme code that hasn't been installed yet so that
 ;; 'make check' during development can work correctly.
-(scheme-directory "${SCMDIR}")
-(scheme-directory "${GEDASCMDIR}")
-(scheme-directory "${GEDABUILTSCMDIR}")
-(scheme-directory "${GNETLISTSCMDIR}")
+(scheme-directory "${abs_top_srcdir}/gnetlist/scheme")
+(scheme-directory "${abs_top_builddir}/gnetlist/scheme")
+(scheme-directory "${abs_top_srcdir}/libgeda/scheme")
+(scheme-directory "${abs_top_builddir}/libgeda/scheme")
 
 ;; We want to use the symbols that haven't been installed yet
-(map (lambda (x) (component-library (string-join (list "${SYMDIR}/" x) "")))
+(map (lambda (x)
+       (component-library
+        (string-join (list "${abs_top_srcdir}/symbols/" x) "")))
      '("io" "74" "analog" "power" "misc" "diode" "linear" "connector" "switch"
        "asic" "spice" "cascade" "titleblock"))
 
@@ -77,7 +52,7 @@ EOF
 
 if test -d "${srcdir}/${stem}-symbols" ; then
     cat >> "${rundir}/gafrc" << EOF
-(component-library "${srcdir}/${stem}-symbols")
+(component-library "${abs_srcdir}/${stem}-symbols")
 EOF
 fi
 
@@ -105,17 +80,20 @@ spice-sdb-sort-nomunge)
     ;;
 esac
 
-# run gnetlist -g ${backend}
-echo "${GNETLIST} -g ${backend} ${args} ${schematics}"
-(cd "${rundir}" && "${GNETLIST}" -g "${backend}" ${args} "${schematics}")
+# run gnetlist
+echo "${GNETLIST} -g ${backend} ${args} ${schematic}"
+(cd "${rundir}" && "${GNETLIST}" -g "${backend}" ${args} "${schematic}")
 rc1=$?
-echo "${GNETLIST} -g ${backend} -o - ${args} ${schematics} > stdout.net"
-(cd "${rundir}" && "${GNETLIST}" -g "${backend}" -o - ${args} "${schematics}" > stdout.net)
-rc2=$?
-echo "${GNETLIST} -g ${backend} -v -o verbose.net ${args} ${schematics}"
-(cd "${rundir}" && "${GNETLIST}" -g "${backend}" -v -o verbose.net ${args} "${schematics}")
-rc3=$?
 
+echo "${GNETLIST} -g ${backend} -o - ${args} ${schematic} > stdout.net"
+(cd "${rundir}" && "${GNETLIST}" -g "${backend}" \
+                                 -o - ${args} "${schematic}" > stdout.net)
+rc2=$?
+
+echo "${GNETLIST} -g ${backend} -v -o verbose.net ${args} ${schematic}"
+(cd "${rundir}" && "${GNETLIST}" -g "${backend}" -v \
+                                 -o verbose.net ${args} "${schematic}")
+rc3=$?
 
 # OK, now check results of run.
 status=99
@@ -133,15 +111,8 @@ if [ -f "${rundir}/default_entity_arc.net" ]; then
 fi
 
 if test "X${REGEN}" = "X1" ; then
-
-    # Copy output on top of golden output, accounting for the case
-    # that no output file was generated.
-    if test -f "${out}" ; then
-        cp "${out}" "${ref}"
-    else
-        rm "${ref}"
-    fi
-
+    # copy output on top of golden output
+    cp "${out}" "${ref}"
     echo "Regenerated ${ref}"
     status=0
 elif test ${rc1} -ne 0 ; then
@@ -154,7 +125,6 @@ elif test ${rc3} -ne 0 ; then
     echo "FAILED:  gnetlist -g ${backend} -v returned ${rc3}"
     status=1
 else
-
     sed '/gnetlist -g/d' "${ref}" > "${out}.tmp1"
     sed '/gnetlist -g/d' "${out}" > "${out}.tmp2"
     sed '/gnetlist -g/d' "${std}" > "${out}.tmp3"
@@ -180,8 +150,6 @@ else
         status=0
     fi
 fi
-
-cd $here
 
 # Delete the run directory in prep for the next test
 rm -fr "${rundir}"

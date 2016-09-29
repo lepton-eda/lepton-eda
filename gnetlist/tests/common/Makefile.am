@@ -1,7 +1,11 @@
 TEST_EXTENSIONS = .out
 
 AM_TESTS_ENVIRONMENT = \
-	srcdir='$(srcdir)'; export srcdir;
+	srcdir='$(srcdir)'; export srcdir; \
+	abs_builddir='$(abs_builddir)'; export abs_builddir; \
+	abs_top_builddir='$(abs_top_builddir)'; export abs_top_builddir; \
+	abs_srcdir='$(abs_srcdir)'; export abs_srcdir; \
+	abs_top_srcdir='$(abs_top_srcdir)'; export abs_top_srcdir;
 OUT_LOG_COMPILER = $(srcdir)/run-test
 
 dist_check_SCRIPTS = run-test
