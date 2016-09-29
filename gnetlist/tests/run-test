@@ -139,14 +139,14 @@ else
         sed '/gnetlist -g/d' "${std}" | sed '/^\$END$/ q' > "${out}.tmp3"
     fi
 
-    if ! diff -w "${out}.tmp1" "${out}.tmp2" >/dev/null; then
-        echo "FAILED: Wrong plain output. See diff -w ${ref} ${out}"
+    if ! diff "${out}.tmp1" "${out}.tmp2" >/dev/null; then
+        echo "FAILED: Wrong plain output. See diff ${ref} ${out}"
         status=1
-    elif ! diff -w "${out}.tmp1" "${out}.tmp3" >/dev/null; then
-        echo "FAILED: Wrong stdout output. See diff -w ${ref} ${std}"
+    elif ! diff "${out}.tmp1" "${out}.tmp3" >/dev/null; then
+        echo "FAILED: Wrong stdout output. See diff ${ref} ${std}"
         status=1
-    elif ! diff -w "${out}.tmp1" "${out}.tmp4" >/dev/null; then
-        echo "FAILED: Wrong verbose output. See diff -w ${ref} ${vrb}"
+    elif ! diff "${out}.tmp1" "${out}.tmp4" >/dev/null; then
+        echo "FAILED: Wrong verbose output. See diff ${ref} ${vrb}"
         status=1
     else
         echo "PASS"
