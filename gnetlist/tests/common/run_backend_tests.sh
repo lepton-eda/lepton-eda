@@ -3,8 +3,6 @@
 # This script runs the tests called out for in test.list
 #
 
-regen=no
-
 usage() {
 cat << EOF
 
@@ -55,7 +53,7 @@ do
     -r|--regen)
         # regenerate the 'golden' output files.  Use this with caution.
         # In particular, all differences should be noted and understood.
-        regen=yes
+        REGEN=1
         shift
         ;;
 
@@ -139,7 +137,7 @@ for t in $all_tests ; do
 
     ref=${GOLDEN_DIR}/${t}-output.net
 
-    regen="${regen}" debug="${debug}" \
+    REGEN="${REGEN}" debug="${debug}" \
     ${srcdir}/run-test "${t}" "${backend}" "${ref}" "${refcode}"
 
     case "$?" in

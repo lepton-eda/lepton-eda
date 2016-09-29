@@ -149,7 +149,7 @@ if [ -f ${rundir}/default_entity_arc.net ]; then
   cp $out $vrb
 fi
 
-if test "X$regen" = "Xyes" ; then
+if test "X$REGEN" = "X1" ; then
 
     # Copy output on top of golden output, accounting for the case
     # that no output file was generated.

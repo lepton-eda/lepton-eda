@@ -3,8 +3,6 @@
 # This script runs run_backend_tests.sh on each backend listed in backends.list
 #
 
-regen=no
-
 usage() {
 cat << EOF
 
@@ -47,7 +45,7 @@ do
     -r|--regen)
 	# regenerate the 'golden' output files.  Use this with caution.
 	# In particular, all differences should be noted and understood.
-	regen=yes
+	REGEN=1
 	shift
 	;;
 
@@ -89,9 +87,9 @@ for backend in $all_tests ; do
 
     tot=`expr $tot + 1`
 
-    if test "X$regen" = "Xyes" ; then
+    if test "X$REGEN" = "X1" ; then
       echo "Regenerating test results on backend \"$backend\""
-      $srcdir/run_backend_tests.sh --regen $backend 2> $backend.stderr.log > $backend.stdout.log
+      REGEN=1 $srcdir/run_backend_tests.sh $backend 2> $backend.stderr.log > $backend.stdout.log
       rc=$?
     else
       echo "Running tests on backend \"$backend\""
