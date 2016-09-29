@@ -13,9 +13,17 @@ must also run the tests with all of the gEDA packages in ../..
 
 To run the tests type:
 
-	make tests
+	make check
 
 	The diffs should NOT generate any output.
+
+To regenerate the 'golden' output files, type:
+
+	make check REGEN=1
+
+	Use this with caution. In particular, all differences
+	should be noted and understood. You must hand verify
+	the results before committing to the repository.
 
 
 Eventually the tests here will become a bit sophisticated.
