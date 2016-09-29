@@ -17,10 +17,8 @@ input_files = \
 	inputs/SlottedOpamps-symbols/LM324_slotted-1.sym \
 	inputs/TwoStageAmp-symbols/transistor.sym
 
-AM_TESTS_ENVIRONMENT= PERL=${PERL}
-
 check-local:
-	$(AM_TESTS_ENVIRONMENT) srcdir=$(srcdir) $(SHELL) $(srcdir)/run_tests.sh
+	srcdir=$(srcdir) $(SHELL) $(srcdir)/run_tests.sh
 
 EXTRA_DIST= run_backend_tests.sh run_tests.sh run-test \
 	tests.list backends.list $(input_files)
