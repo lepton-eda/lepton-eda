@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-EXTRA_DIST = 1217.geda bottom.sch bottom.sym gnetlistrc.hierarchy gschemrc \
+EXTRA_DIST = bottom.sch bottom.sym gnetlistrc.hierarchy gschemrc \
 	     gschlasrc hierarchy.geda middle.sch middle.sym rock.sch rock.sym \
 	     top.sch
 
