@@ -3,18 +3,18 @@
 SUBDIRS = hierarchy hierarchy2 drc2 common
 
 EXTRA_DIST = runtest.sh \
-	     7447.vhdl README amp.spice cascade.sch cascade.cascade \
-	     darlington.spice netattrib.geda \
+	     README cascade.sch cascade.cascade \
+	     netattrib.geda \
 	     netattrib.sch powersupply.PCB powersupply.allegro \
              powersupply.bae powersupply.geda powersupply.maxascii \
              powersupply.pads powersupply.protelII powersupply.sch \
              powersupply.tango singlenet.PCB singlenet.geda singlenet.pads \
 	     powersupply.liquidpcb \
              singlenet.pcbpins \
-             singlenet.protelII singlenet.sch stack_1.geda amp.spice-sdb \
+             singlenet.protelII singlenet.sch stack_1.geda \
 	     singlenet.liquidpcb \
-	     darlington.spice-sdb skt.switcap test.ana multiequal.sch \
-	     multiequal.spice-sdb gnetlistrc.vhdl gnetlistrc.orig
+	     multiequal.sch \
+	     multiequal.spice-sdb gnetlistrc.orig
 
 check_SCRIPTS = tests
 
@@ -111,49 +111,3 @@ MOSTLYCLEANFILES = new_* gnetlistrc
 
 mostlyclean-local:
 	rm -rf devfiles
-
-
-# These tests are internal to Ales and will not work without the schematics
-# which I am unable to distribute (due to copyright laws).
-tests_ales:
-
-# cleanup
-	rm -f $(BUILDDIR)/new_*
-	rm -rf $(BUILDDIR)/devfiles
-	mkdir $(BUILDDIR)/devfiles
-
-# amp SPICE
-	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/amp.sch spice \
-		$(BUILDDIR) $(SRCDIR)
-
-# darlington SPICE
-	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/darlington.sch spice \
-		$(BUILDDIR) $(SRCDIR)
-
-# amp SPICE SDB
-	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/amp.sch spice-sdb \
-		$(BUILDDIR) $(SRCDIR)
-
-# darlington SPICE SDB
-	$(SRCDIR)/runtest.sh $(HOME)/gEDA/alesch/darlington.sch spice-sdb \
-		$(BUILDDIR) $(SRCDIR)
-
-# switcap (does not work with make distcheck due to local test.ana file)
-	$(GNETLIST) -L $(top_srcdir)/libgeda/scheme \
-		-L $(top_builddir)/libgeda/scheme \
-		-o $(BUILDDIR)/new_skt.switcap -g switcap \
-		$(SRCDIR)/../examples/switcap/ckt.sch \
-		$(SRCDIR)/../examples/switcap/clocks.sch \
-		$(SRCDIR)/../examples/switcap/analysis.sch
-	diff $(SRCDIR)/skt.switcap $(BUILDDIR)/new_skt.switcap
-	diff $(SRCDIR)/../examples/switcap/example.scn $(SRCDIR)/new_skt.switcap
-
-# 7447 VHDL
-	cp -f $(SRCDIR)/gnetlistrc.vhdl $(BUILDDIR)/gnetlistrc
-	$(SRCDIR)/runtest.sh $(SRCDIR)/../examples/7447.sch vhdl \
-		$(BUILDDIR) $(SRCDIR)
-	rm -f $(BUILDDIR)/gnetlistrc
-
-# cleanup
-	rm -f $(BUILDDIR)/new_*
-	rm -rf $(BUILDDIR)/devfiles
