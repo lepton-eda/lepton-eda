@@ -13,6 +13,9 @@ EXTRA_DIST = $(input_files) $(TESTS) README gschemrc common/gschemrc
 # dist_check_DATA would be more appropriate for $(input_files) and $(TESTS)
 # but triggers a lot of "Nothing to be done for '...'" messages.
 
+mostlyclean-local:
+	rm -rf run.*
+
 input_files = \
 	stack_1.sch \
 	hierarchy-sources/bottom.sch \
