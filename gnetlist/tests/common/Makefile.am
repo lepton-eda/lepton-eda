@@ -27,24 +27,7 @@ input_files = \
 	inputs/stack-torture.sch
 
 XFAIL_TESTS = \
-	outputs/cascade/JD-output.net \
-	outputs/cascade/SlottedOpamps-output.net \
-	outputs/cascade/TwoStageAmp-output.net \
-	outputs/cascade/multiequal-output.net \
-	outputs/cascade/netattrib-output.net \
-	outputs/cascade/powersupply-output.net \
-	outputs/cascade/singlenet-output.net \
-	outputs/cascade/stack-torture-output.net \
 	outputs/futurenet2/SlottedOpamps-output.net \
-	outputs/makedepend/JD-output.net \
-	outputs/makedepend/SlottedOpamps-output.net \
-	outputs/makedepend/TwoStageAmp-output.net \
-	outputs/makedepend/cascade-output.net \
-	outputs/makedepend/multiequal-output.net \
-	outputs/makedepend/netattrib-output.net \
-	outputs/makedepend/powersupply-output.net \
-	outputs/makedepend/singlenet-output.net \
-	outputs/makedepend/stack-torture-output.net \
 	outputs/switcap/SlottedOpamps-output.net
 
 TESTS = outputs/PCB/JD-output.net \
@@ -101,15 +84,7 @@ TESTS = outputs/PCB/JD-output.net \
 	outputs/calay/powersupply-output.net \
 	outputs/calay/singlenet-output.net \
 	outputs/calay/stack-torture-output.net \
-	outputs/cascade/JD-output.net \
-	outputs/cascade/SlottedOpamps-output.net \
-	outputs/cascade/TwoStageAmp-output.net \
 	outputs/cascade/cascade-output.net \
-	outputs/cascade/multiequal-output.net \
-	outputs/cascade/netattrib-output.net \
-	outputs/cascade/powersupply-output.net \
-	outputs/cascade/singlenet-output.net \
-	outputs/cascade/stack-torture-output.net \
 	outputs/drc/JD-output.net \
 	outputs/drc/SlottedOpamps-output.net \
 	outputs/drc/TwoStageAmp-output.net \
@@ -191,15 +166,6 @@ TESTS = outputs/PCB/JD-output.net \
 	outputs/liquidpcb/powersupply-output.net \
 	outputs/liquidpcb/singlenet-output.net \
 	outputs/liquidpcb/stack-torture-output.net \
-	outputs/makedepend/JD-output.net \
-	outputs/makedepend/SlottedOpamps-output.net \
-	outputs/makedepend/TwoStageAmp-output.net \
-	outputs/makedepend/cascade-output.net \
-	outputs/makedepend/multiequal-output.net \
-	outputs/makedepend/netattrib-output.net \
-	outputs/makedepend/powersupply-output.net \
-	outputs/makedepend/singlenet-output.net \
-	outputs/makedepend/stack-torture-output.net \
 	outputs/mathematica/JD-output.net \
 	outputs/mathematica/SlottedOpamps-output.net \
 	outputs/mathematica/TwoStageAmp-output.net \
