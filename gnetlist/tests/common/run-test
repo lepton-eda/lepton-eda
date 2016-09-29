@@ -53,6 +53,11 @@ if test -d "${srcdir}/${stem}-symbols" ; then
 (component-library "${abs_srcdir}/${stem}-symbols")
 EOF
 fi
+if test -d "${srcdir}/${stem}-sources" ; then
+    cat >> "${rundir}/gafrc" << EOF
+(source-library "${abs_srcdir}/${stem}-sources")
+EOF
+fi
 
 args=
 case "${backend}" in
