@@ -25,7 +25,7 @@ export GEDADATARC
 
 schematics="${stem}.sch"
 
-rundir=${here}/run
+rundir="${here}/run.$$"
 
 INPUT_DIR=${srcdir}/inputs
 
