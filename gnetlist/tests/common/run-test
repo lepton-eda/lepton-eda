@@ -126,10 +126,10 @@ vrb="${rundir}/verbose.net"
 
 # Hack to help with vams backend
 if [ -f "${rundir}/default_entity_arc.net" ]; then
-  mv "${rundir}/default_entity_arc.net" "${out}"
-  # vams intentionally outputs data into several files, so checking it with
-  # the option '-o verbose.net' is nonsense
-  cp "${out}" "${vrb}"
+    mv "${rundir}/default_entity_arc.net" "${out}"
+    # vams intentionally outputs data into several files, so checking it with
+    # the option '-o verbose.net' is nonsense
+    cp "${out}" "${vrb}"
 fi
 
 if test "X${REGEN}" = "X1" ; then
