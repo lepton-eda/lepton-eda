@@ -27,8 +27,6 @@ schematics="${stem}.sch"
 
 rundir="${here}/run.$$"
 
-INPUT_DIR=${srcdir}/inputs
-
 echo "Schematics to copy   = $schematics"
 
 # create temporary run directory
@@ -42,14 +40,14 @@ fi
 if test ! -z "$schematics" ; then
     echo "Copying over schematics to run dir"
     for f in $schematics ; do
-        echo "cp ${INPUT_DIR}/${f} ${rundir}/${f}"
-        cp ${INPUT_DIR}/${f} ${rundir}/${f}
+        echo "cp ${srcdir}/${f} ${rundir}/${f}"
+        cp ${srcdir}/${f} ${rundir}/${f}
         chmod 644 ${rundir}/${f}
     done
 fi
-if test -d "${INPUT_DIR}/${stem}-extras" ; then
+if test -d "${srcdir}/${stem}-extras" ; then
     echo "Copying over aux files to run dir"
-    for f in "${INPUT_DIR}/${stem}-extras"/* ; do
+    for f in "${srcdir}/${stem}-extras"/* ; do
         echo "cp ${f} ${rundir}/"
         cp ${f} ${rundir}/
         chmod 644 ${rundir}/${f}
@@ -77,9 +75,9 @@ cat > "${rundir}/gafrc" << EOF
 (define gsch2pcb:pcb-m4-command-line "cat - >>")
 EOF
 
-if test -d "${INPUT_DIR}/${stem}-symbols" ; then
+if test -d "${srcdir}/${stem}-symbols" ; then
     cat >> "${rundir}/gafrc" << EOF
-(component-library "${INPUT_DIR}/${stem}-symbols")
+(component-library "${srcdir}/${stem}-symbols")
 EOF
 fi
 
