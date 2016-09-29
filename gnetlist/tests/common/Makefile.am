@@ -9,7 +9,7 @@ AM_TESTS_ENVIRONMENT = \
 OUT_LOG_COMPILER = $(srcdir)/run-test
 
 dist_check_SCRIPTS = run-test
-EXTRA_DIST = $(input_files) $(TESTS)
+EXTRA_DIST = $(input_files) $(TESTS) gschemrc
 # dist_check_DATA would be more appropriate for $(input_files) and $(TESTS)
 # but triggers a lot of "Nothing to be done for '...'" messages.
 
