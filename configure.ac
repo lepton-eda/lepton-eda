@@ -267,10 +267,6 @@ AC_CONFIG_FILES([Makefile
                  gnetlist/scheme/Makefile
                  gnetlist/examples/Makefile
                  gnetlist/tests/Makefile
-                 gnetlist/tests/hierarchy/Makefile
-                 gnetlist/tests/hierarchy2/Makefile
-                 gnetlist/tests/drc2/Makefile
-                 gnetlist/tests/common/Makefile
                  gnetlist/docs/Makefile
                  gnetlist/docs/vams/Makefile
                  gnetlist/examples/vams/Makefile

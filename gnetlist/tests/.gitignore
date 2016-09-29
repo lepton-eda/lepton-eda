@@ -1,5 +1,4 @@
 Makefile
 Makefile.in
-devfiles
-new_*
 *~
+*.log
