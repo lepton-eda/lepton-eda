@@ -7,9 +7,9 @@ backend="`echo "${tmp}" | sed -e "s:^${stem}-::"`"
 
 # make sure we have the right paths when running this from inside the
 # source tree and also from outside the source tree.
-here=`pwd`
-srcdir=${srcdir:-$here}
-srcdir=`cd $srcdir && pwd`
+here="`pwd`"
+srcdir="${srcdir:-$here}"
+srcdir="`cd ${srcdir} && pwd`"
 builddir="${here}"
 
 GNETLIST="${builddir}/../../src/gnetlist"
@@ -27,30 +27,30 @@ schematics="${stem}.sch"
 
 rundir="${here}/run.$$"
 
-echo "Schematics to copy   = $schematics"
+echo "Schematics to copy   = ${schematics}"
 
 # create temporary run directory
-if test ! -d $rundir ; then
-    mkdir -p $rundir
+if test ! -d "${rundir}" ; then
+    mkdir -p "${rundir}"
 fi
 
 # Create the files needed
 # Note that we need to include not only the .sch files,
 # but also the contents of the model directory.
-if test ! -z "$schematics" ; then
+if test ! -z "${schematics}" ; then
     echo "Copying over schematics to run dir"
-    for f in $schematics ; do
+    for f in "${schematics}" ; do
         echo "cp ${srcdir}/${f} ${rundir}/${f}"
-        cp ${srcdir}/${f} ${rundir}/${f}
-        chmod 644 ${rundir}/${f}
+        cp "${srcdir}/${f}" "${rundir}/${f}"
+        chmod 644 "${rundir}/${f}"
     done
 fi
 if test -d "${srcdir}/${stem}-extras" ; then
     echo "Copying over aux files to run dir"
     for f in "${srcdir}/${stem}-extras"/* ; do
         echo "cp ${f} ${rundir}/"
-        cp ${f} ${rundir}/
-        chmod 644 ${rundir}/${f}
+        cp "${f}" "${rundir}/"
+        chmod 644 "${rundir}/${f}"
     done
 fi
 
@@ -105,74 +105,74 @@ spice-sdb-sort-nomunge)
     ;;
 esac
 
-# run gnetlist -g $backend
-echo "${GNETLIST} -g $backend $args $schematics"
-(cd ${rundir} && ${GNETLIST} -g $backend $args $schematics)
+# run gnetlist -g ${backend}
+echo "${GNETLIST} -g ${backend} ${args} ${schematics}"
+(cd "${rundir}" && "${GNETLIST}" -g "${backend}" ${args} "${schematics}")
 rc1=$?
-echo "${GNETLIST} -g $backend -o - $args $schematics > stdout.net"
-(cd ${rundir} && ${GNETLIST} -g $backend -o - $args $schematics > stdout.net)
+echo "${GNETLIST} -g ${backend} -o - ${args} ${schematics} > stdout.net"
+(cd "${rundir}" && "${GNETLIST}" -g "${backend}" -o - ${args} "${schematics}" > stdout.net)
 rc2=$?
-echo "${GNETLIST} -g $backend -v -o verbose.net $args $schematics"
-(cd ${rundir} && ${GNETLIST} -g $backend -v -o verbose.net $args $schematics)
+echo "${GNETLIST} -g ${backend} -v -o verbose.net ${args} ${schematics}"
+(cd "${rundir}" && "${GNETLIST}" -g "${backend}" -v -o verbose.net ${args} "${schematics}")
 rc3=$?
 
 
 # OK, now check results of run.
 status=99
 
-out=${rundir}/output.net
-std=${rundir}/stdout.net
-vrb=${rundir}/verbose.net
+out="${rundir}/output.net"
+std="${rundir}/stdout.net"
+vrb="${rundir}/verbose.net"
 
 # Hack to help with vams backend
-if [ -f ${rundir}/default_entity_arc.net ]; then
-  mv ${rundir}/default_entity_arc.net $out
+if [ -f "${rundir}/default_entity_arc.net" ]; then
+  mv "${rundir}/default_entity_arc.net" "${out}"
   # vams intentionally outputs data into several files, so checking it with
   # the option '-o verbose.net' is nonsense
-  cp $out $vrb
+  cp "${out}" "${vrb}"
 fi
 
-if test "X$REGEN" = "X1" ; then
+if test "X${REGEN}" = "X1" ; then
 
     # Copy output on top of golden output, accounting for the case
     # that no output file was generated.
-    if test -f ${out} ; then
-        cp ${out} ${ref}
+    if test -f "${out}" ; then
+        cp "${out}" "${ref}"
     else
-        rm ${ref}
+        rm "${ref}"
     fi
 
     echo "Regenerated ${ref}"
     status=0
-elif test $rc1 -ne 0 ; then
-    echo "FAILED:  gnetlist -g $backend returned $rc1"
+elif test ${rc1} -ne 0 ; then
+    echo "FAILED:  gnetlist -g ${backend} returned ${rc1}"
     status=1
-elif test $rc2 -ne 0 ; then
-    echo "FAILED:  gnetlist -g $backend -o - returned $rc2"
+elif test ${rc2} -ne 0 ; then
+    echo "FAILED:  gnetlist -g ${backend} -o - returned ${rc2}"
     status=1
-elif test $rc3 -ne 0 ; then
-    echo "FAILED:  gnetlist -g $backend -v returned $rc3"
+elif test ${rc3} -ne 0 ; then
+    echo "FAILED:  gnetlist -g ${backend} -v returned ${rc3}"
     status=1
 else
 
-    sed '/gnetlist -g/d' ${ref} > ${out}.tmp1
-    sed '/gnetlist -g/d' ${out} > ${out}.tmp2
-    sed '/gnetlist -g/d' ${std} > ${out}.tmp3
-    sed '/gnetlist -g/d' ${vrb} > ${out}.tmp4
+    sed '/gnetlist -g/d' "${ref}" > "${out}.tmp1"
+    sed '/gnetlist -g/d' "${out}" > "${out}.tmp2"
+    sed '/gnetlist -g/d' "${std}" > "${out}.tmp3"
+    sed '/gnetlist -g/d' "${vrb}" > "${out}.tmp4"
 
     # Hack to help with allegro backend
     # Device files are ignored as yet
-    if test "X$backend" = "Xallegro" ; then
-        sed '/gnetlist -g/d' ${std} | sed '/^\$END$/ q' > ${out}.tmp3
+    if test "X${backend}" = "Xallegro" ; then
+        sed '/gnetlist -g/d' "${std}" | sed '/^\$END$/ q' > "${out}.tmp3"
     fi
 
-    if ! diff -w ${out}.tmp1 ${out}.tmp2 >/dev/null; then
+    if ! diff -w "${out}.tmp1" "${out}.tmp2" >/dev/null; then
         echo "FAILED: Wrong plain output. See diff -w ${ref} ${out}"
         status=1
-    elif ! diff -w ${out}.tmp1 ${out}.tmp3 >/dev/null; then
+    elif ! diff -w "${out}.tmp1" "${out}.tmp3" >/dev/null; then
         echo "FAILED: Wrong stdout output. See diff -w ${ref} ${std}"
         status=1
-    elif ! diff -w ${out}.tmp1 ${out}.tmp4 >/dev/null; then
+    elif ! diff -w "${out}.tmp1" "${out}.tmp4" >/dev/null; then
         echo "FAILED: Wrong verbose output. See diff -w ${ref} ${vrb}"
         status=1
     else
@@ -184,6 +184,6 @@ fi
 cd $here
 
 # Delete the run directory in prep for the next test
-rm -fr ${rundir}
+rm -fr "${rundir}"
 
-exit $status
+exit ${status}
