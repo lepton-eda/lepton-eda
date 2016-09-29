@@ -119,11 +119,6 @@ spice-sdb-sort-nomunge)
     ;;
 esac
 
-if test ! -f ${ref} ; then
-    echo "No reference file.  Skipping"
-    exit 77
-fi
-
 # run gnetlist -g $backend
 echo "${GNETLIST} -g $backend $args $schematics"
 (cd ${rundir} && ${GNETLIST} -g $backend $args $schematics)
@@ -204,6 +199,6 @@ fi
 cd $here
 
 # Delete the run directory in prep for the next test
-test "$debug" = "no" && rm -fr ${rundir}
+rm -fr ${rundir}
 
 exit $status
