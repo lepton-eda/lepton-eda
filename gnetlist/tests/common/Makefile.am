@@ -5,24 +5,9 @@ AM_TESTS_ENVIRONMENT = \
 NET_LOG_COMPILER = $(srcdir)/run-test
 
 dist_check_SCRIPTS = run-test
-EXTRA_DIST = $(input_files) $(TESTS) tests.list backends.list
+EXTRA_DIST = $(input_files) $(TESTS)
 # dist_check_DATA would be more appropriate for $(input_files) and $(TESTS)
 # but triggers a lot of "Nothing to be done for '...'" messages.
-
-dist-hook: tests.list backends.list
-	@tests=`cat $(srcdir)/tests.list | sed -e "s:#.*$$::" | sed -e "s:|.*$$::"`; \
-	backends=`cat $(srcdir)/backends.list`; \
-	$(MKDIR_P) $(distdir)/outputs || exit $$?; \
-	for backend in $$backends; do \
-	  dir=outputs/$$backend; \
-	  $(MKDIR_P) $(distdir)/$$dir; \
-	  for test in $$tests; do \
-	    if test -f $(srcdir)/$$dir/$$test.retcode ; then \
-	      cp -p $(srcdir)/$$dir/$$test.retcode $(distdir)/$$dir \
-	        || exit $$?; \
-	    fi; \
-	  done; \
-	done;
 
 input_files = \
 	inputs/JD-extras/openIP_5.cir \
@@ -40,6 +25,27 @@ input_files = \
 	inputs/powersupply.sch \
 	inputs/singlenet.sch \
 	inputs/stack-torture.sch
+
+XFAIL_TESTS = \
+	outputs/cascade/JD-output.net \
+	outputs/cascade/SlottedOpamps-output.net \
+	outputs/cascade/TwoStageAmp-output.net \
+	outputs/cascade/multiequal-output.net \
+	outputs/cascade/netattrib-output.net \
+	outputs/cascade/powersupply-output.net \
+	outputs/cascade/singlenet-output.net \
+	outputs/cascade/stack-torture-output.net \
+	outputs/futurenet2/SlottedOpamps-output.net \
+	outputs/makedepend/JD-output.net \
+	outputs/makedepend/SlottedOpamps-output.net \
+	outputs/makedepend/TwoStageAmp-output.net \
+	outputs/makedepend/cascade-output.net \
+	outputs/makedepend/multiequal-output.net \
+	outputs/makedepend/netattrib-output.net \
+	outputs/makedepend/powersupply-output.net \
+	outputs/makedepend/singlenet-output.net \
+	outputs/makedepend/stack-torture-output.net \
+	outputs/switcap/SlottedOpamps-output.net
 
 TESTS = outputs/PCB/JD-output.net \
 	outputs/PCB/SlottedOpamps-output.net \

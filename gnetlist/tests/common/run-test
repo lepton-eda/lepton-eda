@@ -2,7 +2,6 @@
 
 ref="$1"
 tmp="`echo "x$1" | sed -e 's:-output\\.net$::'`"
-refcode="`echo "x${tmp}" | sed -e 's:^xx::'`.retcode"
 stem="`echo "x${tmp}" | sed -e 's:.*/::'`"
 tmp="`echo "x$1" | sed -e 's:/[^/]*$::'`"
 backend="`echo "x${tmp}" | sed -e 's:.*/::'`"
@@ -31,17 +30,7 @@ rundir="${here}/run.$$"
 
 INPUT_DIR=${srcdir}/inputs
 
-if test -f $refcode; then
-    code=`grep -v "^#" $refcode | sed 's; ;;g;'`
-else
-    code=0
-fi
-if test "X$code" = "X" ; then
-    code=0
-fi
-
 echo "Schematics to copy   = $schematics"
-echo "Expected return code = \"$code\""
 
 # create temporary run directory
 if test ! -d $rundir ; then
@@ -156,17 +145,16 @@ if test "X$REGEN" = "X1" ; then
         rm ${ref}
     fi
 
-    echo "$rc1" > $refcode
     echo "Regenerated ${ref}"
     status=0
-elif test $rc1 -ne $code ; then
-    echo "FAILED:  gnetlist -g $backend returned $rc1 which did not match the expected $code"
+elif test $rc1 -ne 0 ; then
+    echo "FAILED:  gnetlist -g $backend returned $rc1"
     status=1
-elif test $rc2 -ne $code ; then
-    echo "FAILED:  gnetlist -g $backend -o - returned $rc2 which did not match the expected $code"
+elif test $rc2 -ne 0 ; then
+    echo "FAILED:  gnetlist -g $backend -o - returned $rc2"
     status=1
-elif test $rc3 -ne $code ; then
-    echo "FAILED:  gnetlist -g $backend -v returned $rc3 which did not match the expected $code"
+elif test $rc3 -ne 0 ; then
+    echo "FAILED:  gnetlist -g $backend -v returned $rc3"
     status=1
 else
 
