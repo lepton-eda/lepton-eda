@@ -25,6 +25,7 @@ input_files = \
 	hierarchy2-sources/under.sch \
 	hierarchy2-symbols/under.sym \
 	hierarchy2.sch \
+	stack-torture.sch \
 	drc2/connected-noconnects.sch \
 	drc2/duplicated-refdes.sch \
 	drc2/duplicated_slot.sch \
@@ -58,8 +59,7 @@ input_files = \
 	common/multiequal.sch \
 	common/netattrib.sch \
 	common/powersupply.sch \
-	common/singlenet.sch \
-	common/stack-torture.sch
+	common/singlenet.sch
 
 XFAIL_TESTS = \
 	common/SlottedOpamps-futurenet2.out \
@@ -68,6 +68,7 @@ XFAIL_TESTS = \
 TESTS = stack_1-geda.out \
 	hierarchy-geda.out \
 	hierarchy2-geda.out \
+	stack-torture-geda.out \
 	drc2/connected-noconnects-drc2.out \
 	drc2/duplicated-refdes-drc2.out \
 	drc2/duplicated_slot-drc2.out \
@@ -367,38 +368,4 @@ TESTS = stack_1-geda.out \
 	common/singlenet-vams.out \
 	common/singlenet-verilog.out \
 	common/singlenet-vhdl.out \
-	common/singlenet-vipec.out \
-	common/stack-torture-PCB.out \
-	common/stack-torture-allegro.out \
-	common/stack-torture-bae.out \
-	common/stack-torture-bom.out \
-	common/stack-torture-bom2.out \
-	common/stack-torture-calay.out \
-	common/stack-torture-drc.out \
-	common/stack-torture-drc2.out \
-	common/stack-torture-eagle.out \
-	common/stack-torture-ewnet.out \
-	common/stack-torture-futurenet2.out \
-	common/stack-torture-geda.out \
-	common/stack-torture-gossip.out \
-	common/stack-torture-gsch2pcb.out \
-	common/stack-torture-liquidpcb.out \
-	common/stack-torture-mathematica.out \
-	common/stack-torture-maxascii.out \
-	common/stack-torture-osmond.out \
-	common/stack-torture-pads.out \
-	common/stack-torture-partslist1.out \
-	common/stack-torture-partslist2.out \
-	common/stack-torture-partslist3.out \
-	common/stack-torture-pcbpins.out \
-	common/stack-torture-protelII.out \
-	common/stack-torture-redac.out \
-	common/stack-torture-spice-sdb.out \
-	common/stack-torture-spice.out \
-	common/stack-torture-switcap.out \
-	common/stack-torture-systemc.out \
-	common/stack-torture-tango.out \
-	common/stack-torture-vams.out \
-	common/stack-torture-verilog.out \
-	common/stack-torture-vhdl.out \
-	common/stack-torture-vipec.out
+	common/singlenet-vipec.out
