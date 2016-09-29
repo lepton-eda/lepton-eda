@@ -1,10 +1,9 @@
 #!/bin/sh
 
 ref="$1"
-tmp="`echo "x$1" | sed -e 's:-output\\.net$::'`"
-stem="`echo "x${tmp}" | sed -e 's:.*/::'`"
-tmp="`echo "x$1" | sed -e 's:/[^/]*$::'`"
-backend="`echo "x${tmp}" | sed -e 's:.*/::'`"
+tmp="`echo "x$1" | sed -e 's:.*/::' -e 's:\\.out$::'`"
+stem="`echo "${tmp}" | sed -e 's:-spice-.*:@@@:' -e 's:\\(-[^-@]*\\|@@@\\)$::'`"
+backend="`echo "${tmp}" | sed -e "s:^${stem}-::"`"
 
 # make sure we have the right paths when running this from inside the
 # source tree and also from outside the source tree.
