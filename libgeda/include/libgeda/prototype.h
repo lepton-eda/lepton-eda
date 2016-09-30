@@ -153,15 +153,10 @@ int s_slib_add_entry(char *new_path);
 int s_slib_search_for_dirname(char *dir_name);
 char *s_slib_search_dirs(const char *basename);
 char *s_slib_search_lowlevel(const char *basename);
-char *s_slib_getbasename(const char *rawname);
 char *s_slib_search_single(const char *filename);
 void s_slib_free(void);
 void s_slib_init(void);
-char *s_slib_getdir(int index);
-char *s_slib_getfiles(char *directory, int flag);
-void s_slib_print(void);
 int s_slib_uniq(char *path);
-void s_slib_print_dirs(void);
 
 /* s_slot.c */
 char *s_slot_search_slot(OBJECT *object, OBJECT **return_found);
