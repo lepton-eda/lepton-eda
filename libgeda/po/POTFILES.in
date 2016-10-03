@@ -26,7 +26,6 @@ libgeda/src/geda_pin_object.c
 libgeda/src/geda_text_object.c
 libgeda/src/s_clib.c
 libgeda/src/s_hierarchy.c
-libgeda/src/s_slib.c
 libgeda/src/s_slot.c
 libgeda/src/edaconfig.c
 libgeda/src/scheme_attrib.c
@@ -36,3 +35,4 @@ libgeda/src/scheme_page.c
 libgeda/src/edascmhookproxy.c
 
 libgeda/scheme/geda/attrib.scm
+libgeda/scheme/geda/library.scm

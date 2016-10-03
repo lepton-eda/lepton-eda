@@ -89,7 +89,6 @@ void gschem_quit(void)
   g_list_free(exit_functions);
 
   s_clib_free();
-  s_slib_free();
   s_menu_free();
   /* o_text_freeallfonts();*/
   s_attrib_free();

@@ -69,12 +69,17 @@ s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
   g_return_val_if_fail ((filename != NULL), NULL);
   g_return_val_if_fail ((parent != NULL), NULL);
 
-  string = s_slib_search_single(filename);
-  if (string == NULL) {
+  SCM string_s = scm_call_1 (scm_c_public_ref ("geda library",
+                                               "get-source-library-file"),
+                             scm_from_utf8_string (filename));
+
+  if (scm_is_false (string_s)) {
     g_set_error (err, EDA_ERROR, EDA_ERROR_NOLIB,
                  _("Schematic not found in source library."));
     return NULL;
   }
+
+  string = scm_to_utf8_string (string_s);
 
   switch (flag) {
   case HIERARCHY_NORMAL_LOAD:
@@ -224,14 +229,17 @@ s_hierarchy_load_subpage (PAGE *page, const char *filename, GError **error)
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (page != NULL, NULL);
 
-  string = s_slib_search_single (filename);
+  SCM string_s = scm_call_1 (scm_c_public_ref ("geda library",
+                                               "get-source-library-file"),
+                             scm_from_utf8_string (filename));
 
-  if (string == NULL) {
+  if (scm_is_false (string_s)) {
     g_set_error (error,
                  EDA_ERROR,
                  EDA_ERROR_NOLIB,
                  _("Schematic not found in source library."));
   } else {
+    string = scm_to_utf8_string (string_s);
     gchar *normalized = f_normalize_filename (string, error);
 
     subpage = s_page_search (page->toplevel, normalized);

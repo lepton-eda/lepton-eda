@@ -47,9 +47,7 @@
 void gnetlist_quit(void)
 {
     s_clib_free();
-    s_slib_free();
     s_rename_destroy_all();
-    /* o_text_freeallfonts(); */
 
     /* Free GSList *backend_params */
     g_slist_free (backend_params);
@@ -190,6 +188,8 @@ void main_prog(void *closure, int argc, char *argv[])
     /* Evaluate Scheme expressions that need to be run before rc files
      * are loaded. */
     scm_eval (pre_rc_list, scm_current_module ());
+
+    scm_c_use_module ("geda library");
 
     g_rc_parse (pr_current, argv[0], "gnetlistrc", rc_filename);
 

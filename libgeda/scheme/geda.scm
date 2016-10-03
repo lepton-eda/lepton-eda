@@ -1,5 +1,5 @@
 ; -*-Scheme-*-
-(use-modules (geda os) (ice-9 optargs) (ice-9 ftw))
+(use-modules (geda os) (ice-9 optargs) (ice-9 ftw) (geda library))
 
 (define path-sep file-name-separator-string)
 

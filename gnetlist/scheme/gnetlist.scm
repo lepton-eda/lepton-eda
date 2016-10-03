@@ -19,6 +19,7 @@
 ;;; MA 02111-1301 USA.
 
 (use-modules (srfi srfi-1))
+(use-modules (geda library))
 (use-modules (geda deprecated))
 
 ;;----------------------------------------------------------------------

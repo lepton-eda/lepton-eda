@@ -89,7 +89,6 @@ gint gattrib_quit(gint return_code)
 {
   /*   s_clib_cache_free(); */
   s_clib_free();
-  s_slib_free();
 #ifdef DEBUG
   fflush(stderr);
   fflush(stdout);

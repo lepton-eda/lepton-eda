@@ -90,7 +90,6 @@ libgeda_la_SOURCES = \
 	s_hierarchy.c \
 	s_log.c \
 	s_menu.c \
-	s_slib.c \
 	s_slot.c \
 	s_textbuffer.c \
 	s_weakref.c

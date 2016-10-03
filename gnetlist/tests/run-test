@@ -84,17 +84,24 @@ esac
 
 # run gnetlist
 echo "${GNETLIST} -g ${backend} ${args} ${schematic}"
-(cd "${rundir}" && "${GNETLIST}" -g "${backend}" ${args} "${schematic}")
+(cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
+                                 -L "${abs_top_builddir}/libgeda/scheme" \
+                                 -g "${backend}" \
+                                 ${args} "${schematic}")
 rc1=$?
 
 echo "${GNETLIST} -g ${backend} -o - ${args} ${schematic} > stdout.net"
-(cd "${rundir}" && "${GNETLIST}" -g "${backend}" \
+(cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
+                                 -L "${abs_top_builddir}/libgeda/scheme" \
+                                 -g "${backend}" \
                                  -o - ${args} "${schematic}" > stdout.net)
 rc2=$?
 
 echo "${GNETLIST} -g ${backend} -v -o verbose.net ${args} ${schematic}"
-(cd "${rundir}" && "${GNETLIST}" -g "${backend}" -v \
-                                 -o verbose.net ${args} "${schematic}")
+(cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
+                                 -L "${abs_top_builddir}/libgeda/scheme" \
+                                 -g "${backend}" \
+                                 -v -o verbose.net ${args} "${schematic}")
 rc3=$?
 
 # OK, now check results of run.
@@ -127,10 +134,10 @@ elif test ${rc3} -ne 0 ; then
     echo "FAILED:  gnetlist -g ${backend} -v returned ${rc3}"
     status=1
 else
-    sed '/gnetlist -g/d' "${ref}" > "${out}.tmp1"
-    sed '/gnetlist -g/d' "${out}" > "${out}.tmp2"
-    sed '/gnetlist -g/d' "${std}" > "${out}.tmp3"
-    sed '/gnetlist -g/d' "${vrb}" > "${out}.tmp4"
+    sed '/gnetlist -g/d; /gnetlist -L/d' "${ref}" > "${out}.tmp1"
+    sed '/gnetlist -g/d; /gnetlist -L/d' "${out}" > "${out}.tmp2"
+    sed '/gnetlist -g/d; /gnetlist -L/d' "${std}" > "${out}.tmp3"
+    sed '/gnetlist -g/d; /gnetlist -L/d' "${vrb}" > "${out}.tmp4"
 
     # Hack to help with allegro backend
     # Device files are ignored as yet

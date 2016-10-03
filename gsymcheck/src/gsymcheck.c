@@ -43,7 +43,6 @@ gsymcheck_quit(void)
 {
   
   s_clib_free();
-  s_slib_free();
 
 }
 

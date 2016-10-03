@@ -148,16 +148,6 @@ void s_menu_print(void);
 void s_menu_free(void);
 void s_menu_init(void);
 
-/* s_slib.c */
-int s_slib_add_entry(char *new_path);
-int s_slib_search_for_dirname(char *dir_name);
-char *s_slib_search_dirs(const char *basename);
-char *s_slib_search_lowlevel(const char *basename);
-char *s_slib_search_single(const char *filename);
-void s_slib_free(void);
-void s_slib_init(void);
-int s_slib_uniq(char *path);
-
 /* s_slot.c */
 char *s_slot_search_slot(OBJECT *object, OBJECT **return_found);
 void s_slot_update_object(TOPLEVEL *toplevel, OBJECT *object);

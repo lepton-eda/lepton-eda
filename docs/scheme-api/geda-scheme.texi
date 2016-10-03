@@ -12,6 +12,7 @@
 This manual is for gEDA/gaf, version @value{VERSION}.
 
 Copyright @copyright{} 2011-2013 Peter TB Brett
+Copyright @copyright{} 2011-2016 gEDA developers
 
 The text of and illustrations in this document are licensed under a
 Creative Commons Attribution–Share Alike 3.0 Unported license
@@ -343,6 +344,7 @@ available to be used in all gEDA applications.
 * Core page functions::
 * Core object functions::
 * Core attribute functions::
+* Core source library functions::
 * Configuration functions::
 * Logging functions::
 * System information::
@@ -1582,6 +1584,26 @@ are added to the @code{page}, and attached as attributes of @var{component}.
 
 The promoted attributes are returned.  If @var{component} is not in
 fact a component @code{object}, does nothing and returns the empty list.
+@end defun
+
+@node Core source library functions
+@section Core source library functions
+
+To use the functions described in this section, you will need to load
+the @code{(geda library)} module.
+
+@defvar %default-source-library
+Default source library used in the tools.
+@end defvar
+
+@defun source-library-contents library
+Returns the contents of source @var{library}.
+@end defun
+
+@defun set-source-library-contents! library contents
+Sets the contents of given source @var{library} into
+@var{contents}. The value of @var{contents} must be a list of paths
+where source files are stored or @code{'()}.
 @end defun
 
 @node Configuration functions
