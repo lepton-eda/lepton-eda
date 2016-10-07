@@ -773,7 +773,7 @@
         (not-defined? 'dont-check-duplicated-references
                       => (drc2:check-duplicated-references
                           packages
-                          (gnetlist:get-non-unique-packages "")))
+                          non-unique-packages))
 
         ;; Check for NoConnection nets with more than one pin connected.
         (not-defined? 'dont-check-connected-noconnects

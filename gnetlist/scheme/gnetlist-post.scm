@@ -30,19 +30,19 @@
 ;;; because (traverse) can change the current working directory.
 (chdir gnetlist:cwd)
 
+(define non-unique-packages
+  (sort (filter-map package-refdes netlist) refdes<?))
+
 (define (get-packages netlist)
   "Returns a sorted list of unique packages in NETLIST."
   ;; Uniqueness of packages is guaranteed by the hashtable.
   (define ht (make-hash-table (length netlist)))
   (define (get-value key value) value)
   (for-each (lambda (s) (hashq-set! ht (string->symbol s) s))
-            (filter-map package-refdes netlist))
+            non-unique-packages)
   (sort (hash-map->list get-value ht) refdes<?))
 
-
-;; get all packages for a particular schematic page
-;; eventually placeholder will be either the hierarchical level or something
-;; of the sort
+;;; Only unique packages
 (define packages (get-packages netlist))
 
 ;; return a list of all unique the nets in the design

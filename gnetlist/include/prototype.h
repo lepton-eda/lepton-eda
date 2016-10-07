@@ -4,8 +4,6 @@ SCM g_scm_c_get_uref (OBJECT *object);
 SCM g_get_verbosity ();
 SCM g_get_backend_arguments ();
 SCM g_get_input_files();
-SCM g_get_packages(SCM level);
-SCM g_get_non_unique_packages(SCM level);
 SCM g_get_pins(SCM uref);
 SCM g_get_all_nets(SCM scm_level);
 SCM g_get_all_unique_nets(SCM scm_level);

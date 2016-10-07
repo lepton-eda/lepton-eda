@@ -43,28 +43,6 @@ SCM g_scm_c_get_uref (OBJECT *object)
   return g_scm_eval_protected (exp, SCM_UNDEFINED);
 }
 
-
-/* this function will only return a non unique list of packages */
-SCM g_get_non_unique_packages(SCM level)
-{
-    SCM list = SCM_EOL;
-
-    NETLIST *nl_current = NULL;
-
-    SCM_ASSERT(scm_is_string (level), level, SCM_ARG1, "gnetlist:get-non-unique-packages");
-
-    for (nl_current = netlist_head; nl_current != NULL;
-         nl_current = nl_current->next) {
-      if (nl_current->component_uref != NULL) {
-        list = scm_cons (scm_from_utf8_string (nl_current->component_uref),
-                         list);
-      }
-    }
-
-    return list;
-}
-
-
 SCM g_get_pins(SCM scm_uref)
 {
     char *uref;
