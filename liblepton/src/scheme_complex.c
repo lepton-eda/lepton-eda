@@ -188,7 +188,9 @@ SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
 SCM_DEFINE (complex_info, "%complex-info", 1, 0, 0,
             (SCM complex_s), "Get complex object parameters.")
 {
-  SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPLEX), complex_s,
+  SCM_ASSERT ((edascm_is_object_type (complex_s, OBJ_COMPLEX) ||
+               edascm_is_object_type (complex_s, OBJ_PLACEHOLDER)),
+              complex_s,
               SCM_ARG1, s_complex_info);
 
   OBJECT *obj = edascm_to_object (complex_s);
@@ -215,12 +217,17 @@ SCM_DEFINE (complex_info, "%complex-info", 1, 0, 0,
 SCM_DEFINE (complex_contents, "%complex-contents", 1, 0, 0,
             (SCM complex_s), "Get complex object contents.")
 {
-  SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPLEX), complex_s,
-              SCM_ARG1, s_complex_contents);
+  SCM_ASSERT ((edascm_is_object_type (complex_s, OBJ_COMPLEX) ||
+               edascm_is_object_type (complex_s, OBJ_PLACEHOLDER)),
+              complex_s, SCM_ARG1, s_complex_contents);
 
   OBJECT *obj = edascm_to_object (complex_s);
 
-  return edascm_from_object_glist (obj->complex->prim_objs);
+  if (edascm_is_object_type (complex_s, OBJ_COMPLEX)) {
+    return edascm_from_object_glist (obj->complex->prim_objs);
+  } else {
+    return SCM_EOL;
+  }
 }
 
 /*! \brief Add a primitive object to a complex object.
