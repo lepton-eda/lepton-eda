@@ -2,8 +2,10 @@
              (gnetlist attrib compare))
 
 (test-begin "attrib:refdes<?")
+(test-assert (refdes<? "DA0" "DA1"))
 (test-assert (refdes<? "3R5" "R1"))
-(test-assert (refdes<? "R5" "R05"))
+(test-assert (refdes<? "R05" "R5"))
+(test-assert (refdes<? "R005" "R05"))
 (test-assert (refdes<? "00R1" "0R1"))
 (test-assert (refdes<? "R5" "X5"))
 (test-assert (refdes<? "40R5" "40R5A10"))

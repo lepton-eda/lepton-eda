@@ -1,7 +1,6 @@
 (define-module (gnetlist attrib compare)
-  #:use-module (ice-9 match)
+  #:use-module (ice-9 regex)
   #:use-module (srfi srfi-1)
-  #:use-module (srfi srfi-26)
   #:use-module (gnetlist attrib compare)
   #:export (refdes<?
             value<?))
@@ -18,86 +17,11 @@
     (G . 10e+9)
     (T . 10e+12)))
 
-;;; Outputs list of pairs (type . char) for every char of S which
-;;; must be a string.  Type is #t for numeric chars and #f for
-;;; others.  Zeros are treated differently, see comments for
-;;; refdes->alpha-numeric-list below.
-(define (string->char-pairs s)
-  (with-input-from-string s
-    (lambda ()
-      (let loop ((result '())
-                 (previous #f))
-        (let ((c (read-char)))
-          (if (eof-object? c)
-              result
-              (let ((type (if (eq? c #\0)
-                              previous
-                              (char-numeric? c))))
-                (loop `((,type . ,c) . ,result) type))))))))
+(define refdes-regex
+  (make-regexp "([^0-9]+|[0-9]+)"))
 
-;;; Groups char pairs in LS to form a list of typed char-sets,
-;;; where each char-set is of the form (type . list-of-chars).
-;;; Type is #t for numeric values and #f for others.
-(define (group-char-pairs ls)
-  (fold
-   (lambda (n p)
-     (match n
-       ((ntype . nvalue)
-        (match p
-          (((ptype . pvalue) . rest)
-           (if (eq? ntype ptype)
-               `((,ptype . (,nvalue . ,pvalue)) . ,rest)
-               `((,ntype ,nvalue) . ,p)
-               ))
-          (_ `((,ntype ,nvalue)))))))
-   '()
-   ls))
-
-;;; Given list of typed char sets LS, outputs a list of values,
-;;; that is a list of alternating string and number, depending on
-;;; the type of each charset.  Type is #t for numeric values and
-;;; #f for others.
-(define (char-set-list->value-list ls)
-  (define (char-set->value x)
-    (match x
-      ((numeric? . value)
-       ((if numeric? string->number identity) (list->string value)))))
-
-  (map char-set->value ls))
-
-
-;;; Breaks up string S and forms a list of strings and
-;;; numbers. For example, if S is "R15a2", the result is '("R" 15
-;;; "a" 2). Trailing zeros and zeros being a part of zero padded
-;;; numbers become a part of a string to provide means for
-;;; comparison of refdeses with zero padded numbers and ordinary
-;;; refdeses. For example, "R99" is less than "R099".
-(define (refdes->alpha-numeric-list s)
-  (let ((ls (char-set-list->value-list
-             (group-char-pairs
-              (string->char-pairs s)))))
-    `(,(number? (car ls)) . ,ls)))
-
-;;; Compares two lists L1 and L2 which must be alphanumeric such
-;;; as produced by refdes->alpha-numeric-list.
-(define (rlist<? l1 l2)
-    (match `(,l1 ,l2)
-      (((same-numeric? . rest1) (same-numeric? . rest2))
-       (let loop ((l1 rest1)
-                  (l2 rest2)
-                  (numeric? same-numeric?))
-         (and (not (null? l2))
-              (or (null? l1)
-                  (let ((equal? (if numeric? = string=?))
-                        (less? (if numeric? < string<?)))
-                    (if (equal? (car l1) (car l2))
-                        (loop (cdr l1) (cdr l2) (not numeric?))
-                        (less? (car l1) (car l2))))))))
-      (((numeric1? . rest1) (numeric2? . rest2))
-       ;; It's enough that first list begins with a number and second
-       ;; with a string
-       numeric1?)))
-
+(define leading-zeros-regex
+  (make-regexp "(^[0]+|[^0].*)"))
 
 (define (refdes<? a b)
   "Compares two strings A and B alphanumerically. Parts of the
@@ -106,8 +30,40 @@ compared as numbers. Other parts are compared as strings. Starting
 number is considered to be less than starting string. Zero padded
 numbers are considered to be more than plain ones to avoid
 ambiguity. Example usage is sorting of reference designators."
-  (rlist<? (refdes->alpha-numeric-list a)
-           (refdes->alpha-numeric-list b)))
+
+  (define (alphanumeric-split s)
+    (map match:substring (list-matches refdes-regex s)))
+  (define (zero-pad-split s)
+    (map match:substring (list-matches leading-zeros-regex s)))
+
+  (define (split s)
+    (append-map zero-pad-split (alphanumeric-split s)))
+
+  (define (less? xs ys)
+    (and (not (string=? xs ys))
+         (let ((x (string->number xs))
+               (y (string->number ys)))
+           (if x                        ; x is a number
+               (or (not y)              ; but y is a string
+                   (< x y)              ; or y is a number and less than x
+                   (and (= x y)         ; or they are equal
+                        (string>? xs ys))) ; then the first string must
+                                        ; be greater since the
+                                        ; second one has to be
+                                        ; zero padded if the numbers
+                                        ; are equal (like "x5" vs "x05")
+
+               (and (not y)             ; both are strings,
+                    (string<? xs ys)))))) ; then just compare them
+
+  ;; first split both initial strings
+  (let loop ((a-ls (split a))
+             (b-ls (split b)))
+    (and (not (null? b-ls))             ; #f if second list is shorter
+         (or (null? a-ls)               ; #t if first is shorter
+             (less? (first a-ls) (first b-ls)) ; check for less
+             (and (string=? (first a-ls) (first b-ls)) ; if first elems are equal
+                  (loop (cdr a-ls) (cdr b-ls))))))) ; continue with others
 
 
 (define (value<? a b)

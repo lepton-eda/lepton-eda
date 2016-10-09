@@ -243,7 +243,7 @@
 X7	NONE	X7	modeL
 X2	DIP16	X2	DeViCe
 X1, X3, X4	DIP14	X1, X3, X4	DeViCe
-N99-N102, N099	NONE	N99-N102, N099	Spice-nuLLor
+N099, N99-N102	NONE	N099, N99-N102	Spice-nuLLor
 D1	AXIAL2	D1	diodE"
   (partlist->string
    parts-with-refdes
@@ -284,7 +284,7 @@ D1	AXIAL2	D1	diodE"
 (test-equal
     (string-append document-header
                    "diodE & AXIAL2 & D1 \\\\
-Spice-nuLLor & NONE & N99--N102; N099 \\\\
+Spice-nuLLor & NONE & N099; N99--N102 \\\\
 DeViCe & DIP14 & X1; X3; X4 \\\\
 DeViCe & DIP16 & X2 \\\\
 modeL & NONE & X7 \\\\
@@ -309,7 +309,7 @@ unknown & DIP16 & X10; X20"
     (string-append transposed-document-header
                    "device & diodE & Spice-nuLLor & DeViCe & DeViCe & modeL & unknown \\\\
 footprint & AXIAL2 & NONE & DIP14 & DIP16 & NONE & DIP16 \\\\
-refdes & D1 & N99--N102; N099 & X1; X3; X4 & X2 & X7 & X10; X20"
+refdes & D1 & N099; N99--N102 & X1; X3; X4 & X2 & X7 & X10; X20"
                    document-footer)
   (partlist->string
    parts-with-refdes
@@ -329,7 +329,7 @@ refdes & D1 & N99--N102; N099 & X1; X3; X4 & X2 & X7 & X10; X20"
 (test-equal
     (string-append document-header
                    "diodE & AXIAL2 & D1 & 1 \\\\
-Spice-nuLLor & NONE & N99--N102; N099 & 5 \\\\
+Spice-nuLLor & NONE & N099; N99--N102 & 5 \\\\
 DeViCe & DIP14 & X1; X3; X4 & 3 \\\\
 DeViCe & DIP16 & X2 & 1 \\\\
 modeL & NONE & X7 & 1 \\\\
@@ -352,7 +352,7 @@ unknown & DIP16 & X10; X20 & 2"
 
 (test-equal
     (string-append document-header
-                   "Spice-nuLLor & NONE & N99--N102; N099 & 5 \\\\
+                   "Spice-nuLLor & NONE & N099; N99--N102 & 5 \\\\
 DeViCe & DIP14 & X1; X3; X4 & 3 \\\\
 unknown & DIP16 & X10; X20 & 2 \\\\
 diodE & AXIAL2 & D1 & 1 \\\\
@@ -377,7 +377,7 @@ modeL & NONE & X7 & 1"
 
 (test-equal
   "d1___DIODE___AXIAL2
-n99-n102, n099___SPICE-nullor___NONE
+n099, n99-n102___SPICE-nullor___NONE
 x1, x3, x4___DeViCe___DIP14
 x2___DeViCe___DIP16
 x7___model___NONE
@@ -393,7 +393,7 @@ x10, x20___unknown___DIP16"
    ))
 
 (test-equal
-  "N99, N100, N101, N102, N099___spice-nullor___NONE
+  "N099, N99, N100, N101, N102___spice-nullor___NONE
 X7___model___NONE
 X10, X20___unknown___DIP16"
   (partlist->string
