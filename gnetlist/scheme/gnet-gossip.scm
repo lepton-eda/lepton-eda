@@ -101,15 +101,16 @@
 (define (gossip:signals nets)
   (format #t "(signals ~A)\n" nets))
 
-(define (gossip:write-block-header)
-  (format #t "(define-block (~A (\n"
-          (gnetlist:get-toplevel-attribute "blockname")))
+(define (gossip:write-block-header blockname)
+  (format #t "(define-block (~A (\n" blockname))
 
 (define (gossip output-filename)
   (let ((nets (schematic-nets toplevel-schematic))
-        (packages (schematic-packages toplevel-schematic)))
+        (packages (schematic-packages toplevel-schematic))
+        (blockname (or (schematic-toplevel-attrib toplevel-schematic 'blockname)
+                       "not found")))
     (gossip:write-top-header)
     (gossip:get-libraries packages '())
-    (gossip:write-block-header)
+    (gossip:write-block-header blockname)
     (gossip:signals nets)
     (gossip:blocks packages nets)))

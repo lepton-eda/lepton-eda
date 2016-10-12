@@ -61,20 +61,15 @@
   (let* (
          ;; generate correctly architecture name
          (architecture (vams:change-all-whitespaces-to-underlines
-                        (cond
-                         ((string=?
-                           (gnetlist:get-toplevel-attribute "architecture")
-                           "not found") "default_architecture")
-                         (else
-                          (gnetlist:get-toplevel-attribute "architecture")))))
+                        (or (schematic-toplevel-attrib toplevel-schematic
+                                                       'architecture)
+                            "default_architecture")))
 
          ;; generate correctly entity name
          (entity (vams:change-all-whitespaces-to-underlines
-                  (cond ((string=?
-                          (gnetlist:get-toplevel-attribute "entity")
-                          "not found")
-                         "default_entity")
-                        (else (gnetlist:get-toplevel-attribute "entity")))))
+                  (or (schematic-toplevel-attrib toplevel-schematic
+                                                 'entity)
+                      "default_entity")))
          (top-attribs (map symbol->string top-attribs))
 
          ;; search all ports of a schematic. for entity generation only.

@@ -8,23 +8,27 @@
   #:use-module (gnetlist package)
   #:use-module (gnetlist package-pin)
   #:use-module (geda page)
+  #:use-module (geda attrib)
   #:use-module (geda object)
   #:export (make-schematic schematic?
             schematic-id set-schematic-id!
             schematic-toplevel-pages set-schematic-toplevel-pages!
+            schematic-toplevel-attribs set-schematic-toplevel-attribs!
             schematic-tree set-schematic-tree!
             schematic-netlist set-schematic-netlist!
             schematic-non-unique set-schematic-non-unique
             schematic-non-unique-packages set-schematic-non-unique-packages!
             schematic-packages set-schematic-packages!
             schematic-nets set-schematic-nets!
-            make-toplevel-schematic))
+            make-toplevel-schematic
+            schematic-toplevel-attrib))
 
 (define-record-type <schematic>
-  (make-schematic id toplevel-pages tree netlist non-unique-packages packages nets)
+  (make-schematic id toplevel-pages toplevel-attribs tree netlist non-unique-packages packages nets)
   schematic?
   (id schematic-id set-schematic-id!)
   (toplevel-pages schematic-toplevel-pages set-schematic-toplevel-pages!)
+  (toplevel-attribs schematic-toplevel-attribs set-schematic-toplevel-attribs!)
   (tree schematic-tree set-schematic-tree!)
   (netlist schematic-netlist set-schematic-netlist!)
   (non-unique-packages schematic-non-unique-packages set-schematic-non-unique-packages!)
@@ -115,13 +119,27 @@
                           refdes<?))
 
 
+(define (get-toplevel-attributes toplevel-pages)
+  (define (toplevel-attrib? object)
+    (and (attribute? object)
+         (cons (string->symbol (attrib-name object))
+               (attrib-value object))))
+
+  (filter-map toplevel-attrib? (append-map page-contents toplevel-pages)))
+
+
 (define (make-toplevel-schematic toplevel-pages)
   "Creates a new schematic record based on TOPLEVEL-PAGES which
 must be a list of pages."
   (let* ((id (next-schematic-id))
+         (toplevel-attribs (get-toplevel-attributes toplevel-pages))
          (netlist (traverse))
          (tree (schematic->sxml netlist toplevel-pages))
          (nu-packages (non-unique-packages netlist))
          (packages (get-packages nu-packages))
          (nets (get-nets netlist)))
-    (make-schematic id toplevel-pages tree netlist nu-packages packages nets)))
+    (make-schematic id toplevel-pages toplevel-attribs tree netlist nu-packages packages nets)))
+
+(define (schematic-toplevel-attrib schematic attrib-name)
+  "Returns value of toplevel attribute ATTRIB-NAME for SCHEMATIC."
+  (assq-ref (schematic-toplevel-attribs schematic) attrib-name))

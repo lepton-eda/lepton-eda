@@ -219,49 +219,6 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
     return (scm_return_value);
 }
 
-
-/* returns value of attribute otherwise string "none" */
-/* still highly temp and doesn't work right */
-SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
-{
-  const GList *p_iter;
-  PAGE *p_current;
-  char *wanted_attrib;
-  char *attrib_value = NULL;
-  SCM scm_return_value;
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-
-  SCM_ASSERT(scm_is_string (scm_wanted_attrib),
-             scm_wanted_attrib, SCM_ARG1, "gnetlist:get-toplevel-attribute");
-
-  wanted_attrib = scm_to_utf8_string (scm_wanted_attrib);
-
-  for (p_iter = geda_list_get_glist (toplevel->pages); p_iter != NULL;
-       p_iter = g_list_next (p_iter)) {
-    p_current = p_iter->data;
-
-    /* only look for first occurrance of the attribute on each page */
-    attrib_value =
-      o_attrib_search_floating_attribs_by_name (s_page_objects (p_current),
-                                                wanted_attrib, 0);
-
-    /* Stop when we find the first one */
-    if (attrib_value != NULL)
-      break;
-  }
-
-  free (wanted_attrib);
-
-  if (attrib_value != NULL) {
-    scm_return_value = scm_from_utf8_string (attrib_value);
-    g_free (attrib_value);
-  } else {
-    scm_return_value = scm_from_utf8_string ("not found");
-  }
-
-  return (scm_return_value);
-}
-
 /*! \brief Indicate the verbosity level for messages.
  * \par Function Description
  * If the "-q" gnetlist command-line option was specified, returns -1.
