@@ -7,7 +7,6 @@ SCM g_get_input_files();
 SCM g_get_pins(SCM uref);
 SCM g_get_all_nets(SCM scm_level);
 SCM g_get_all_unique_nets(SCM scm_level);
-SCM g_get_all_connections(SCM scm_netname);
 SCM g_get_nets(SCM scm_uref, SCM scm_pin);
 SCM g_get_pins_nets(SCM scm_uref);
 SCM g_get_all_package_attributes(SCM scm_uref, SCM scm_wanted_attrib);

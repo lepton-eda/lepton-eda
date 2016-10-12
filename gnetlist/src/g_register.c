@@ -57,7 +57,6 @@ static struct gsubr_t gnetlist_funcs[] = {
   { "gnetlist:get-pins",            1, 0, 0, g_get_pins },
   { "gnetlist:get-all-nets",        1, 0, 0, g_get_all_nets },
   { "gnetlist:get-all-unique-nets", 1, 0, 0, g_get_all_unique_nets },
-  { "gnetlist:get-all-connections", 1, 0, 0, g_get_all_connections },
   { "gnetlist:get-nets",            2, 0, 0, g_get_nets },
   { "gnetlist:get-pins-nets",       1, 0, 0, g_get_pins_nets },
 
