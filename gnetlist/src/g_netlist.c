@@ -264,64 +264,6 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 }
 
 
-/* Given a uref, Return a list of pairs, each pair contains the name
- * of the pin, and the name of the net connected to that pin.
- */
-SCM g_get_pins_nets(SCM scm_uref)
-{
-    SCM pinslist = SCM_EOL;
-    SCM pairlist = SCM_EOL;
-    NETLIST *nl_current = NULL;
-    CPINLIST *pl_current = NULL;
-
-    char *wanted_uref = NULL;
-    char *net_name = NULL;
-    char *pin = NULL;
-
-    SCM_ASSERT(scm_is_string (scm_uref),
-	       scm_uref, SCM_ARG1, "gnetlist:get-pins-nets");
-
-    wanted_uref = scm_to_utf8_string (scm_uref);
-
-    /* search for the any instances */
-    /* through the entire list */
-    for (nl_current = netlist_head; nl_current != NULL;
-	 nl_current = nl_current->next) {
-
-	/* is there a uref? */
-	if (nl_current->component_uref) {
-	    /* is it the one we want ? */
-	    if (strcmp(nl_current->component_uref, wanted_uref) == 0) {
-
-		for (pl_current = nl_current->cpins; pl_current != NULL;
-		     pl_current = pl_current->next) {
-		    /* is there a valid pin number and a valid name ? */
-		    if (pl_current->pin_number) {
-			if (pl_current->net_name) {
-			    /* yes, add it to the list */
-			    pin = pl_current->pin_number;
-			    net_name = pl_current->net_name;
-
-			    pairlist = scm_cons (scm_from_utf8_string (pin),
-                                                 scm_from_utf8_string (net_name));
-			    pinslist = scm_cons (pairlist, pinslist);
-			}
-
-		    }
-		}
-	    }
-	}
-    }
-
-    free (wanted_uref);
-
-    pinslist = scm_reverse (pinslist);	/* pins are in reverse order on the way
-					 * out
-					 */
-    return (pinslist);
-}
-
-
 /*! \brief Get attribute value(s) from a package with given uref.
  *  \par Function Description
  *  This function returns the values of a specific attribute type
