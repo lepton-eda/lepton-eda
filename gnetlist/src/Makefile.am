@@ -21,8 +21,7 @@ gnetlist_SOURCES = \
 	s_netattrib.c \
 	s_netlist.c \
 	s_rename.c \
-	s_traverse.c \
-	vams_misc.c
+	s_traverse.c
 
 gnetlist_CPPFLAGS = -I$(top_srcdir)/libgeda/include -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir) -DBINDIR=\"$(bindir)\"

@@ -86,6 +86,3 @@ void s_traverse_sheet(TOPLEVEL *pr_current, const GList *obj_list, char *hierarc
 CPINLIST *s_traverse_component(TOPLEVEL *pr_current, OBJECT *component, char *hierarchy_tag);
 NET *s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, int type);
 void s_init_traverse (void);
-/* vams_misc.c */
-SCM vams_get_attribs_list(OBJECT *object);
-SCM vams_get_package_attributes(SCM scm_uref);

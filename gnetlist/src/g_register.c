@@ -59,7 +59,6 @@ static struct gsubr_t gnetlist_funcs[] = {
   { "gnetlist:get-renamed-nets",    1, 0, 0, g_get_renamed_nets },
   { "gnetlist:get-attribute-by-pinseq",    3, 0, 0, g_get_attribute_by_pinseq },
   { "gnetlist:get-attribute-by-pinnumber", 3, 0, 0, g_get_attribute_by_pinnumber },
-  { "gnetlist:vams-get-package-attributes", 1, 0, 0, vams_get_package_attributes },
 
   { "gnetlist:graphical-objs-in-net-with-attrib-get-attrib",
     3, 0, 0, g_graphical_objs_in_net_with_attrib_get_attrib },

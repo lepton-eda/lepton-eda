@@ -593,6 +593,17 @@ ARCHITECTURE ~A OF ~A IS
 
 
 
+(define-public (vams-get-package-attributes refdes)
+  (let loop ((netlist (schematic-netlist toplevel-schematic)))
+    (if (null? netlist)
+        '()
+        (let ((package (car netlist)))
+          (if (and (package-refdes package)
+                   (string=? (package-refdes package) refdes))
+              (map symbol->string (map car (package-attribs package)))
+              (loop (cdr netlist)))))))
+
+
 ;; Given a uref, prints all generics attribute => values, without some
 ;; special attribs, like uref,source and architecture.
 ;; Don't ask why .... it's not the right place to discuss this.
@@ -624,7 +635,7 @@ ARCHITECTURE ~A OF ~A IS
 		   0)
 		  #\?))
 	    x))
-     (gnetlist:vams-get-package-attributes uref)))
+     (vams-get-package-attributes uref)))
 
   (let ((ls (filter-map permitted-attrib->pair
                         (filter-generics uref))))

@@ -14,4 +14,3 @@ gnetlist/src/s_net.c
 gnetlist/src/s_netlist.c
 gnetlist/src/s_rename.c
 gnetlist/src/s_traverse.c
-gnetlist/src/vams_misc.c
