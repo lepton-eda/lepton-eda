@@ -49,3 +49,5 @@
 (define-public action-property-hook %action-property-hook)
 
 (define-public bind-keys-hook %bind-keys-hook)
+
+(define-public switch-action-mode-hook %switch-action-mode-hook)
