@@ -35,10 +35,6 @@ typedef struct st_netlist NETLIST;
 typedef struct st_cpinlist CPINLIST;
 typedef struct st_net NET;
 
-/* sch check structures (gschcheck) */
-typedef struct st_schcheck SCHCHECK;
-typedef struct st_chkerrs CHKERRS;
-
 /* Managed text buffers */
 typedef struct _TextBuffer TextBuffer;
 
@@ -139,32 +135,6 @@ struct st_net {
   NET *next;
 };
 
-/* By Jamil Khatib */
-/* typedef struct st_chkerrs CHKERRS; */
-
-/* Schem check struct */
-struct st_schcheck {
-  int no_errors;                /* No of Errors */
-  int no_warnings;              /* No of Warinings */
-
-  CHKERRS * sheet_errs;
-
-  CHKERRS *float_nets;           /* Header of the list of floating nets */
-  int net_errs;                 /* No of floating nets */
-
-  OBJECT *float_pins;           /* Header of List of floating pins*/
-  int pin_errs;                 /* No of floating pins */
-
-  int net_names;                /* No of mismatched net names */
-};
-
-
-struct st_chkerrs{
-
-  OBJECT * err_obj;
-  CHKERRS * next;
-
-};
 
 /* used by the rc loading mechanisms */
 typedef struct {
