@@ -132,6 +132,32 @@ g_run_hook_page (GschemToplevel *w_current, const char *name, PAGE *page)
   scm_remember_upto_here_1 (expr);
 }
 
+/*! \brief Runs a change action mode hook.
+ * \par Function Description
+ * Runs a hook called \a name, which should expect the single #MODE \a
+ * mode as its argument.
+ *
+ * \param name name of hook to run
+ * \param mode #MODE argument for hook.
+ */
+void
+g_run_hook_action_mode (GschemToplevel *w_current,
+                        const gchar *name,
+                        const gchar *action_mode)
+{
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+  g_dynwind_window (w_current);
+
+  SCM expr = scm_list_3 (run_hook_sym,
+                         g_get_hook_by_name (name),
+                         scm_list_2 (scm_from_utf8_symbol ("quote"),
+                                     scm_from_utf8_symbol (action_mode)));
+
+  g_scm_eval_protected (expr, scm_interaction_environment ());
+  scm_dynwind_end ();
+  scm_remember_upto_here_1 (expr);
+}
+
 /*! \brief Creates an EdascmHookProxy for a named hook.
  * Return a newly-created hook proxy object for the hook called \a
  * name.
@@ -179,6 +205,7 @@ init_module_gschem_core_hook (void *unused)
   DEFINE_HOOK ("%new-page-hook",1);
   DEFINE_HOOK ("%action-property-hook",3);
   DEFINE_HOOK ("%bind-keys-hook",3);
+  DEFINE_HOOK ("%switch-action-mode-hook",1);
 }
 
 /*!
