@@ -1298,6 +1298,8 @@ s_basic_init_object (OBJECT *new_node, int type, char const *name)
   new_node->pin_type = PIN_TYPE_NET;
   new_node->whichend = -1;
 
+  new_node->smob = SCM_BOOL_F;
+
   new_node->weak_refs = NULL;
 
   return(new_node);
