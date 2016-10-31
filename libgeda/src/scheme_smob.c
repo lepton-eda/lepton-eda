@@ -85,6 +85,7 @@ smob_weakref_notify (void *target, void *smob) {
 static void
 smob_weakref2_notify (void *target, void *smob) {
   SCM s = (SCM) smob;
+  SCM_SET_SMOB_DATA (s, NULL);
   SCM_SET_SMOB_DATA_2 (s, NULL);
 }
 
@@ -115,9 +116,7 @@ smob_free (SCM smob)
   case GEDA_SMOB_OBJECT:
     /* See edascm_from_object() for an explanation of why OBJECT
      * smobs store a TOPLEVEL in the second data word */
-    s_object_weak_unref ((OBJECT *) data, smob_weakref_notify, smob);
-    s_toplevel_weak_unref ((TOPLEVEL *) SCM_SMOB_DATA_2 (smob),
-                           smob_weakref2_notify, smob);
+    s_object_weak_unref ((OBJECT *) data, smob_weakref2_notify, smob);
     break;
   case GEDA_SMOB_CONFIG:
     g_object_unref (G_OBJECT (data));
@@ -333,8 +332,7 @@ edascm_from_object (OBJECT *object)
   SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_OBJECT);
 
   /* Set weak references */
-  s_object_weak_ref (object, smob_weakref_notify, smob);
-  s_toplevel_weak_ref (toplevel, smob_weakref2_notify, smob);
+  s_object_weak_ref (object, smob_weakref2_notify, smob);
 
   return smob;
 }
