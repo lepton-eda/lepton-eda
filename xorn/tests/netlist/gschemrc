@@ -1,6 +1,0 @@
-(source-library "hierarchy-sources")
-(source-library "hierarchy2-sources")
-(reset-component-library)
-(component-library-search "std-symbols")
-(component-library "hierarchy-symbols")
-(component-library "hierarchy2-symbols")

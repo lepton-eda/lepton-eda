@@ -182,28 +182,6 @@ AX_LIBGEDA([45:0:0])
 AX_LIBGEDACAIRO([1:1:0])
 
 #####################################################################
-# Recurse into Xorn configuration
-#####################################################################
-
-AC_ARG_ENABLE([xorn],
-	      [AS_HELP_STRING([--disable-xorn],
-			      [don't build and install Xorn])],
-	      [], [export enable_xorn; enable_xorn=yes])
-
-case "${enable_xorn}" in
-  yes) AC_DEFINE([HAVE_XORN], 1, [Define to 1 if using Xorn.]) ;;
-  no) ;;
-  *) AC_MSG_ERROR([bad value ${enable_xorn} for --enable-xorn]) ;;
-esac
-
-AM_CONDITIONAL([XORN], [test x$enable_xorn = xyes])
-
-export GEDADATADIR
-export GEDARCDIR
-
-AC_CONFIG_SUBDIRS([xorn])
-
-#####################################################################
 # Generate output
 #####################################################################
 
@@ -329,17 +307,3 @@ AC_CONFIG_FILES([Makefile
                  contrib/scripts/sw2asc
 ])
 AC_OUTPUT
-
-if test "x${enable_xorn}" != "xyes"
-then	cat <<EOF >&2
-
-    ########################################################################
-    ##                                                                    ##
-    ##    You chose to disable Xorn during configuration.  This means     ##
-    ##    core functionality will not be available.  Most notably, you    ##
-    ##    won't be able to use the new gnetlist frontend.                 ##
-    ##                                                                    ##
-    ########################################################################
-
-EOF
-fi

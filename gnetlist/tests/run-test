@@ -26,7 +26,6 @@ if test -d "${srcdir}/${stem}-extras" ; then
 fi
 
 (echo refdes; echo value; echo device) > "${rundir}/attribs"
-echo "(set! use-legacy-frontend #t)" > "${rundir}/gnetlistrc"
 
 cat > "${rundir}/gafrc" << EOF
 ;; We want to point at the scheme code that hasn't been installed yet so that
