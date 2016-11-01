@@ -35,7 +35,7 @@
              (gnetlist backend-getopt))
 
 
-(define (bom:error)
+(define (bom:error filename)
   "Prints an error, if the bom backend cannot find an appropriate
 source to read attributes, and exits with return code 1."
   (format
@@ -77,7 +77,7 @@ attributes. If the file is not found, outputs an error."
       (string-split attribs #\,)
       (if (file-exists? filename)
           (with-input-from-file filename bom:read-attrib-list)
-          (bom:error))))
+          (bom:error filename))))
 
 
 (define (bom:components ls attriblist)
