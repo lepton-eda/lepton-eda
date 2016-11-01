@@ -7,7 +7,7 @@ Copyright (C) 1998-2016 gEDA Developers
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
 
-Notable changes in gEDA/gaf 1.9.2.1p
+Notable changes in gEDA/gaf 1.9.3
 ====================================
 
 * The gEDA/gaf source tarball no longer includes libintl.  When
@@ -43,6 +43,38 @@ Notable changes in gEDA/gaf 1.9.2.1p
 * A new Scheme API function, `log!`, has been added to the `(geda
   log)` module.  It allows Scheme code to emit log messages in the
   same way that the tools' C code does.
+
+* Gschem multiattrib dialog improvements:
+
+  - Shift+Tab can be used to move focus backward from `value' to
+    `name'.
+
+  - Tooltip to the `value' text entry has been added explaning how
+    to enter newline or tab.
+
+  - Horizontal scrollbar for `value' has been added to prevent
+    resizing of the dialog.
+
+* Gschem undo information now contains center of viewport and
+  current page scale, so if gschem window size changes before
+  undo, page will be zoomed accordingly.
+
+* Faster redrawing of pages in gschem.
+
+* Menu entry to launch Scheme REPL in gschem's background terminal
+  has been added.
+
+* Changed calculation of the size of bus and net junctions.
+
+* `Bom` gnetlist backend has been refactored, all its functions
+  have help now.
+
+* View bounds in gschem window has been changed so symbols can be
+  edited without translation.
+
+* New Scheme module for part list creation has been added for
+  gnetlist.
+
 
 Notable changes in gEDA/gaf 1.9.2
 =================================
