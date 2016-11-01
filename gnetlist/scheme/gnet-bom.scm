@@ -63,7 +63,7 @@ spaces, tabs, or newlines."
     (string->char-set " \n\t"))
 
   (define (non-empty-string? s)
-    (not (string=? "" s)))
+    (not (string-null? s)))
 
   (filter non-empty-string?
           (string-split (read-string) delimiters)))
