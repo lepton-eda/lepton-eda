@@ -156,3 +156,28 @@ CPINLIST *s_cpinlist_search_pin(CPINLIST * ptr, char *pin_number)
 
     return (NULL);
 }
+
+static SCM
+scm_from_pin (CPINLIST *pin)
+{
+  return scm_list_n (scm_from_int (pin->plid),
+                     scm_from_int (pin->type),
+                     pin->pin_number ? scm_from_utf8_string (pin->pin_number) : SCM_BOOL_F,
+                     pin->net_name ? scm_from_utf8_string (pin->net_name) : SCM_BOOL_F,
+                     pin->pin_label ? scm_from_utf8_string (pin->pin_label) : SCM_BOOL_F,
+                     scm_from_net_list (pin->nets),
+                     SCM_UNDEFINED);
+}
+
+SCM
+scm_from_pin_list (CPINLIST *pin_list)
+{
+  CPINLIST *pin;
+  SCM lst = SCM_EOL;
+
+  for (pin = pin_list; pin; pin = pin->next) {
+    lst = scm_cons (scm_from_pin (pin), lst);
+  }
+
+  return scm_reverse (lst);
+}

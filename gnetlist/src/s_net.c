@@ -429,3 +429,26 @@ s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type)
     return string;
 
 }
+
+static SCM
+scm_from_net (NET *net)
+{
+  return scm_list_4 (scm_from_int (net->nid),
+                     scm_from_bool (net->net_name_has_priority),
+                     net->net_name ? scm_from_utf8_string (net->net_name) : SCM_BOOL_F,
+                     net->connected_to ? scm_from_utf8_string (net->connected_to) : SCM_BOOL_F);
+}
+
+SCM
+scm_from_net_list (NET *net_list)
+{
+  NET *net;
+  SCM lst = SCM_EOL;
+
+  for (net = net_list; net; net = net->next) {
+    lst = scm_cons (scm_from_net (net), lst);
+  }
+
+  return scm_reverse (lst);
+}
+

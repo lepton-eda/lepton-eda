@@ -149,7 +149,7 @@ SCM_DEFINE (traverse, "%traverse", 0, 0, 0,
     s_netlist_print(netlist_head);
   }
 
-  return SCM_BOOL_T;
+  return scm_from_netlist_list (netlist_head);
 }
 
 

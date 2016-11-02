@@ -308,3 +308,30 @@ s_netlist_netname_of_netid (NETLIST *netlist_head, int net_id)
     }
   return NULL;
 }
+
+
+static SCM
+scm_from_netlist (NETLIST *netlist)
+{
+  return scm_list_n (scm_from_int (netlist->nlid),
+                     netlist->component_uref ? scm_from_utf8_string (netlist->component_uref) : SCM_BOOL_F,
+                     netlist->hierarchy_tag ? scm_from_utf8_string (netlist->hierarchy_tag) : SCM_BOOL_F,
+                     scm_from_bool (netlist->composite_component),
+                     netlist->object_ptr ? edascm_from_object (netlist->object_ptr) : SCM_BOOL_F,
+                     scm_from_pin_list (netlist->cpins),
+                     SCM_UNDEFINED);
+}
+
+
+SCM
+scm_from_netlist_list (NETLIST *netlist_list)
+{
+  NETLIST *netlist;
+  SCM lst = SCM_EOL;
+
+  for (netlist = netlist_list; netlist; netlist = netlist->next) {
+    lst = scm_cons (scm_from_netlist (netlist), lst);
+  }
+
+  return scm_reverse (lst);
+}

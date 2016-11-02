@@ -39,6 +39,7 @@ CPINLIST *s_cpinlist_return_tail(CPINLIST *head);
 CPINLIST *s_cpinlist_add(CPINLIST *ptr);
 void s_cpinlist_print(CPINLIST *ptr);
 CPINLIST *s_cpinlist_search_pin(CPINLIST *ptr, char *pin_number);
+SCM scm_from_pin_list (CPINLIST *pin_list);
 /* s_hierarchy.c */
 void s_hierarchy_traverse(TOPLEVEL *pr_current, OBJECT *o_current, NETLIST *netlist);
 void s_hierarchy_post_process (NETLIST *head);
@@ -62,6 +63,7 @@ char *s_net_return_connected_string (OBJECT *object, char *hierarchy_tag);
 int s_net_find(NET *net_head, NET *node);
 char *s_net_name_search (NET *net_head);
 char *s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type);
+SCM scm_from_net_list (NET *net_list);
 /* s_netattrib.c */
 gchar *s_netattrib_pinnum_get_connected_string (const gchar *pinnum) G_GNUC_WARN_UNUSED_RESULT;
 const gchar *s_netattrib_connected_string_get_pinnum (const gchar *str);
@@ -79,6 +81,7 @@ void s_netlist_print(NETLIST *ptr);
 void s_netlist_post_process (NETLIST *head);
 void s_netlist_name_named_nets (NETLIST *named_netlist, NETLIST *unnamed_netlist);
 char *s_netlist_netname_of_netid (NETLIST *netlist_head, int net_id);
+SCM scm_from_netlist_list (NETLIST *netlist_list);
 /* s_rename.c */
 void s_rename_init(void);
 void s_rename_destroy_all(void);
