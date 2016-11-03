@@ -1372,48 +1372,23 @@
       file-info-list ;; end of packages processed.  Return file-info-list
       (let* ((package (car package-list)) ;; otherwise get next package (i.e. refdes)
              (model (gnetlist:get-package-attribute package "model-name"))
-             (value (gnetlist:get-package-attribute package "value"))
-             (model-file (gnetlist:get-package-attribute package "file")))
+             (model-file (gnetlist:get-package-attribute package "file"))
+             ;; Now run a series of checks to see if we should stick
+             ;; this file into the file-info-list.
+             ;; First check to see if "file" attribute is non-empty,
+             ;; then check to see if file is in file-info-list.  If
+             ;; file is new, open it, find out what type it is and, if
+             ;; file-type is known, push info into file-info-list.
+             (file-type (and (not (string-ci=? model-file "unknown"))
+                             (not (spice-sdb:in-file-info-list? model-file
+                                                                file-info-list))
+                             (spice-sdb:get-file-type model-file))))
 
-        ;; Now run a series of checks to see if we should stick this file into the file-info-list
-        ;; Check to see if "file" attribute is non-empty
-        (if (not (string-ci=? model-file "unknown"))
-            (begin
-              ;;  ******* Debug stuff
-              (debug-spew
-               (format #f "found file attribute for ~A.  File name = ~A\n" package model-file))
-
-              ;; Now check to see if file is in file-info-list
-              (if (not (spice-sdb:in-file-info-list? model-file file-info-list))
-
-                  ;; File is new.  Open file, find out what type
-                  ;; it is, and push info into file-info-list
-                  (let ((file-type (spice-sdb:get-file-type model-file)))
-                    (debug-spew
-                     (format #f "File is new.  New file type is ~A\n" file-type))
-
-                    ;; Check to see if file-type is known.
-                    (if file-type
-                        ;; file-type is OK.  Return file-info-list
-                        ;; with new triplet attached.
-                        (begin
-                          (debug-spew
-                           (format #f "Inserting ~A into list of known model files.\n" model-file))
-                          (set! file-info-list (cons (list model model-file file-type)
-                                                     file-info-list)))
-
-                        ;;  Otherwise, file type is not a model
-                        ;;  type.  Don't stick it in list.  Print
-                        ;;  debug spew if desired.
-                        (debug-spew "File type is unknown, and therefore will not be entered in known model file list.\n")))
-
-                  ;;  File is already in list.  Print debug spew
-                  ;;  if desired.
-                  (debug-spew "File has already been seen and entered into known model file list.\n"))))
-
-        ;; having done checking and processing of this package,
-        ;; iterate to the next one.
-        (spice-sdb:create-file-info-list (cdr package-list) file-info-list))))
+        (spice-sdb:create-file-info-list
+         (cdr package-list)
+         (if file-type
+             (cons (list model model-file file-type) file-info-list)
+             file-info-list)))))
 
 
 ;;; Helper function.  Returns #t if file is already in
