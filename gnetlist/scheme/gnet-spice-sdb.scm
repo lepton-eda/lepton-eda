@@ -329,20 +329,6 @@
   )
 )
 
-
-;;----------------------------------------------------------
-;;  This returns #t if the string is composed only of
-;;  whitespace.  It works by turning the string into
-;;  a list, and then checking to see if it is the empty
-;;  list.  If so, it returns #t.
-;;----------------------------------------------------------
-(define empty-string?
-  (lambda (string)
-    (null? (string->list string))
-  )
-)
-
-
 ;;----------------------------------------------------------
 ;;  This returns a list of all the integers from start to
 ;;  stop, with the optional step size.
@@ -377,7 +363,7 @@
          ((eof-object? file-line)         ;;  Arrived at end of line without finding .MODEL or .SUBCKT.  Return "OTHER"
             "OTHER")
 
-         ((empty-string? file-line)
+         ((string-null? file-line)
             (while (read-line model-file)) )        ;; Found empty line.  Iterate before doing anything else.
 
          ((string=? (string (string-ref file-line 0)) "*")
