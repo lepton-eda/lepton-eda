@@ -1455,27 +1455,14 @@
 )
 
 
-;;  in-file-info-list? -- helper function.  Returns #t if file is already in file-info-list, otherwise #f
-;;  assumes file-info-list of form: ((model1 file1 file-type1)  (model2 file2 file-type2) . . . .)
-(define spice-sdb:in-file-info-list?
-  (lambda (model-file file-info-list)
-    (if (null? file-info-list)
-        (begin
-          #f                                            ;; return #f if file-info-list itself is empty.
-        )
-        (let ((list-element (car file-info-list)) )   ;; otherwise process list-element
-          (if (null? list-element)
-              #f                                      ;;  item not found.  Return #f.  Note that we should never get here . . .
-              (let ((list-file-name (cadr list-element)) )
-                (if (string=? list-file-name model-file)
-                   #t                            ;; item found.  Return #t
-                   (spice-sdb:in-file-info-list? model-file (cdr file-info-list))  ;; iterate . . .
-                )  ;; end if (string=?
-              )  ;; end of let . . .
-          )  ;; end if (null? list-element . . .
-        )  ;; end let* ((list-element . . .
-    )  ;; end if (null? file-info-list . .
-))  ;; end define spice-sdb:in-file-info-list?
+;;; Helper function.  Returns #t if file is already in
+;;; file-info-list, otherwise #f.
+;;; Assumes file-info-list of form:
+;;; ((model1 file1 file-type1) (model2 file2 file-type2) . . . .)
+(define (spice-sdb:in-file-info-list? model-file file-info-list)
+  (define (is-model-file? elem)
+    (string=? (second elem) model-file))
+  (any is-model-file? file-info-list))
 
 
 ;;--------------------------------------------------------------
