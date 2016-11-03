@@ -196,27 +196,18 @@
   )
 )
 
-
-;;----------------------------------------------------------
-;; Figure out if this schematic is a .SUBCKT lower level.
-;; This is determined if there is a spice-subcircuit-LL
-;; device instantiated somewhere on the schematic.
-;; If it is a .SUBCKT, return ".SUBCKT model-name"
-;;----------------------------------------------------------
-(define spice-sdb:get-schematic-type
-  (lambda (ls)
-     (if (not (null? ls))
-      (let* ((package (car ls))             ;; assign package
-             (device (get-device package))  ;; assign device.
-            )                               ;; end of let* assignments
-        (if (string=? device "spice-subcircuit-LL")  ;; look for subcircuit label
-              (string-append ".SUBCKT " (gnetlist:get-package-attribute package "model-name"))
-              (spice-sdb:get-schematic-type (cdr ls))  ;; otherwise just iterate to next package.
-        )
-      )    ; end of let*
-      "normal schematic"   ; return "normal schematic" if no spice-subcircuit-LL is found
-    )    ; end of if
-))
+;;; Determines the schematic type, ie. a normal schematic or a
+;;; .SUBCKT lower level by searching for a "spice-subcircuit-LL"
+;;; device amongst PACKAGE-LIST. If such package is found, returns
+;;; ".SUBCKT model-name" else return "normal schematic".
+(define (spice-sdb:get-schematic-type package-list)
+  (define (subckt-name package)
+    (and (string=? (gnetlist:get-package-attribute package "device")
+                   "spice-subcircuit-LL")
+         (string-append ".SUBCKT "
+                        (gnetlist:get-package-attribute package
+                                                        "model-name"))))
+  (any subckt-name package-list))
 
 
 ;;----------------------------------------------------------
@@ -1551,14 +1542,15 @@ the name is changed to canonical."
 ;; or if it is a regular schematic.
 ;;
     (set-current-output-port (gnetlist:output-port output-filename))
-    (let* ((schematic-type (spice-sdb:get-schematic-type packages))
+    (let* ((subckt? (spice-sdb:get-schematic-type packages))
+           (schematic-type (or subckt? "normal schematic"))
            (model-name (spice-sdb:get-subcircuit-modelname schematic-type))
            (file-info-list (list))
           )
       (message "Using SPICE backend by SDB -- Version of 4.28.2007\n")
       (message (string-append "schematic-type = " schematic-type "\n"))
 
-      (if (not (string=? schematic-type "normal schematic"))
+      (if subckt?
       ;; we have found a .SUBCKT type schematic.
           (let* ((io-pin-packages (spice-sdb:get-spice-IO-pins packages (list) ))
                  (io-pin-packages-ordered (spice-sdb:sort-spice-IO-pins io-pin-packages))
@@ -1625,7 +1617,7 @@ the name is changed to canonical."
 ;;  Now write out .END(S) of netlist, depending upon whether this schematic is a
 ;;  "normal schematic" or a .SUBCKT.
 ;;
-      (if (not (string=? schematic-type "normal schematic"))
+      (if subckt?
           (begin
             (spice-sdb:write-bottom-footer (string-append ".ends " model-name))
             (display "*******************************\n")
