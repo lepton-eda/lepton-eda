@@ -123,24 +123,6 @@
 (load-from-path "spice-common.scm")
 
 ;;--------------------------------------------------------------------------------
-;; spice-sdb:loop-through-files -- loops through the model-file list, and for each file
-;;  name discovered in the list, it processes the file by invoking handle-spice-file.
-;;--------------------------------------------------------------------------------
-(define spice-sdb:loop-through-files
-  (lambda (file-info-list)
-    (if (not (null? file-info-list))
-        (let*  ((list-element (car file-info-list))
-                (model-name (car list-element))
-                (file-name (cadr list-element))
-                (file-type (caddr list-element))
-               )
-          (spice-sdb:handle-spice-file file-name)
-          (spice-sdb:loop-through-files (cdr file-info-list))
-        )  ;; end of let*
-)))
-
-
-;;--------------------------------------------------------------------------------
 ;; spice-sdb:get-file-info-list-item  -- loops through the model-file list looking
 ;;  for triplet corresponding to model-name.  If found, it returns the corresponding
 ;;  list.  If not found, returns #f
@@ -1648,7 +1630,7 @@ the name is changed to canonical."
 ;;  to stick the corresponding stuff into the output SPICE file.
 ;;
       (debug-spew "Now process the items in model file list -- stick appropriate references to models in output SPICE file.\n")
-      (spice-sdb:loop-through-files file-info-list)
+      (for-each spice-sdb:handle-spice-file (map second file-info-list))
       (debug-spew "Done processing items in model file list.\n")
 
 
