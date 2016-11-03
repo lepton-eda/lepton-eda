@@ -297,29 +297,6 @@
   )
 )
 
-
-;;----------------------------------------------------------
-;;  This takes a list and turns it into a string.
-;;  The difference between this and list->string is that
-;;  this fun can handle lists made up of multi-char strings.
-;;----------------------------------------------------------
-(define list-2-string
-  (lambda (ls)
-    (let while
-        ((st (string))
-         (local-list ls)
-        )
-      (if (null? local-list)
-          st                                                    ;; end iteration & return string if list is empty.
-          (begin                                                ;; otherwise turn next element of list into string. . .
-            (set! st (string-append (car local-list) " " st))   ;; stuff next element onto st
-            (while st (cdr local-list))                         ;; iterate with remainder of ls
-          )
-      ) ;; end of if
-    )
-  )
-)
-
 ;;----------------------------------------------------------
 ;;  This returns a list of all the integers from start to
 ;;  stop, with the optional step size.
@@ -1504,10 +1481,7 @@ the name is changed to canonical."
             (debug-spew "found .SUBCKT type schematic")
       ;; now write out .SUBCKT header and .SUBCKT line
             (spice-sdb:write-subcircuit-header)
-            (let ((io-nets-string (list-2-string io-nets-list)) )
-              (display (string-append schematic-type " " (list-2-string io-nets-list) "\n"))
-            )
-          )
+            (format #t "~A\n" (string-join (cons schematic-type io-nets-list) " ")))
 
       ;; Otherwise it's a regular schematic.  Write out command line followed by comments in file header.
           (begin
