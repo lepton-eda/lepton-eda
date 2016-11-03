@@ -117,32 +117,29 @@
 ;;**********************************************************************************
 
 ;; The following is needed to make guile 1.8.x happy.
-(use-modules (ice-9 rdelim) (srfi srfi-1))
+(use-modules (ice-9 rdelim)
+             (ice-9 match)
+             (srfi srfi-1))
 
 ;; Common functions for the `spice' and `spice-sdb' backends
 (load-from-path "spice-common.scm")
+
+(define (unknown? value)
+  (string=? value "unknown"))
 
 ;;--------------------------------------------------------------------------------
 ;; spice-sdb:get-file-info-list-item  -- loops through the model-file list looking
 ;;  for triplet corresponding to model-name.  If found, it returns the corresponding
 ;;  list.  If not found, returns #f
 ;;--------------------------------------------------------------------------------
-(define spice-sdb:get-file-info-list-item
-  (lambda (model-name file-info-list)
-    (if (null? file-info-list)
-        '()                                           ;; return #f upon empty list.
-                                                      ;; #f replaced with '() by peter
-        (let*  ((list-element (car file-info-list))   ;; else process list-item
-                (list-elt-model-name (car list-element))
-                (list-elt-file-name (cadr list-element))
-                (list-elt-file-type (caddr list-element))
-               )
-          (if (string=? list-elt-model-name model-name)
-              list-element                                                        ;; found model-name.  Return list-element.
-              (spice-sdb:get-file-info-list-item model-name (cdr file-info-list)) ;; otherwise, recurse.
-          )
-        )  ;; end of let*
-)))
+(define (spice-sdb:get-file-info-list-item model-name file-info-list)
+  (define (found? elem)
+    (match elem
+      ((name file type)
+       (and (string=? name model-name)
+            type))
+      (_ #f)))
+  (any found? file-info-list))
 
 
 ;;--------------------------------------------------------------------------
@@ -566,79 +563,50 @@
 ;;
 ;;----------------------------------------------------------------
 (define (spice-sdb:write-ic package file-info-list)
-
-    ;; First do local assignments
-    (let ((first-char (string (string-ref package 0)))  ;; extract first char of refdes
-          (model-name (gnetlist:get-package-attribute package "model-name"))
-          (model (gnetlist:get-package-attribute package "model"))
-          (value (gnetlist:get-package-attribute package "value"))
-          (type  (gnetlist:get-package-attribute package "type"))
-          (model-file (gnetlist:get-package-attribute package "file"))
-          (list-item (list))
-         )   ;; end of local assignments
-
-      (cond
-        ((string=? first-char "U") (debug-spew (string-append "Found ic.  Refdes = " package "\n")))
-        ((string=? first-char "X") (debug-spew (string-append "Found subcircuit.  Refdes = " package "\n")))
-      )
-
-    ;; First, if model-name is empty, we use value attribute instead.
-    ;; We do this by sticking the contents of "value" into "model-name".
-      (if (string=? model-name "unknown")
-          (set! model-name value))
-
-    ;; Now get item from file-info-list using model-name as key
-      (set! list-item (spice-sdb:get-file-info-list-item model-name file-info-list))
+  ;; First do local assignments
+  (let* ((first-char (string-take package 1)) ;; extract first char of refdes
+         (orig-model-name (gnetlist:get-package-attribute package "model-name"))
+         (model (gnetlist:get-package-attribute package "model"))
+         (value (gnetlist:get-package-attribute package "value"))
+         (type  (gnetlist:get-package-attribute package "type"))
+         (model-file (gnetlist:get-package-attribute package "file"))
+         ;; First, if model-name is empty, we use value attribute instead.
+         ;; We do this by sticking the contents of "value" into "model-name".
+         (model-name (if (unknown? orig-model-name) value orig-model-name))
+         ;; Now get item from file-info-list using model-name as key
+         (file-type (spice-sdb:get-file-info-list-item model-name file-info-list)))
 
     ;; check to see if list-item is null.
-      (if (null? list-item)
+    (if (not file-type)
 
-    ;; list-item is null.  Evidently, we didn't discover any files holding this model.
-    ;; Instead we look for model attribute
-          (if (not (string=? model "unknown"))
-            (begin                                     ;; model attribute exists -- write out card and model.
-              (debug-spew "Model info not found in model file list, but model attribute exists.  Write out spice card and .model line..\n")
-              (spice-sdb:write-component-no-value package)
-              (display (string-append model-name "\n" ))
-              (display (string-append ".MODEL " model-name " "))
-              (if (not (string=? type "unknown")) (display (string-append type " ")))  ;; If no type then just skip it.
-              (display (string-append "(" model ")\n"))
-            )
-            (begin                                     ;; no model attribute either.  Just write out card.
-              (debug-spew "Model info not found in model file list.  No model attribute either.  Just write what we know.\n")
-              (spice-sdb:write-component-no-value package)
-              (display (string-append model-name "\n" ))
-            )
-          )   ;; end if (not (string=? . . . .
+        ;; Evidently, we didn't discover any files holding this model.
+        ;; Instead we look for model attribute
+        (begin
+          (spice-sdb:write-component-no-value package)
+          (display (string-append model-name "\n"))
+          (and (not (unknown? model))
+               (format #t ".MODEL ~A ~A(~A)\n"
+                       model-name
+                       (if (not (unknown? type))
+                           (string-append type " ")
+                           "")
+                       model)))
 
-    ;; list-item is not null.  Therefore we process line depending upon contents of list-item
-          (let ((file-type (caddr list-item)) )
-           (cond
-              ;; ---- file holds a model ----
-              ((string=? file-type ".MODEL")
-               (begin
-                (debug-spew (string-append "Found .MODEL with model-file and model-name for " package "\n"))
-                 (spice-sdb:write-prefix package "U")  ;; this prepends an "U" to the refdes if needed, since we have a .model
-                 (spice-sdb:write-component-no-value package)
-                 (display (string-append model-name "\n" ))
-                (debug-spew "We'll handle the file contents later . . .\n")
-               ))
+        ;; We found file type.  Therefore we process line depending upon its value.
+        (cond
+         ;; ---- file holds a model ----
+         ((string=? file-type ".MODEL")
+          (begin
+            (spice-sdb:write-prefix package "U") ;; this prepends an "U" to the refdes if needed, since we have a .model
+            (spice-sdb:write-component-no-value package)
+            (display (string-append model-name "\n"))))
 
-              ;; ---- file holds a subcircuit ----
-              ((string=? file-type ".SUBCKT")
-               (begin
-                 (debug-spew (string-append "Found .SUBCKT with model-file and model-name for " package "\n"))
-                 (spice-sdb:write-prefix package "X")  ;; this prepends an "X" to the refdes if needed, since we have a .subckt
-                 (spice-sdb:write-component-no-value package)
-                 (display (string-append model-name "\n" ))
-                 (debug-spew "We'll handle the file contents later . . .\n")
-               ))
-           )  ;; close of inner cond
-         )   ;; end of inner let
-       )  ;; end of if (null? list-item
-
-  ) ;; end of outer let
-)
+         ;; ---- file holds a subcircuit ----
+         ((string=? file-type ".SUBCKT")
+          (begin
+            (spice-sdb:write-prefix package "X") ;; this prepends an "X" to the refdes if needed, since we have a .subckt
+            (spice-sdb:write-component-no-value package)
+            (display (string-append model-name "\n"))))))))
 
 
 ;;-----------------------------------------------------------
