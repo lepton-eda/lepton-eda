@@ -78,15 +78,6 @@ code should use `gnetlist:get-backend-arguments' directly."
 
 ;; Support functions
 
-;;  This fcn returns the first len characters of the string str.  If
-;;  str has less than len characters, it returns the whole string
-;;  (but doesn't choke)
-(define safe-string-head
-  (lambda (str len)
-    (substring str 0 (min len (string-length str)))
-  )
-)
-
 ;;; Default resolver: Returns the first valid (non-#F) value from
 ;;; VALUES, or #F, if there is no valid attribute value. If any
 ;;; other valid value in the list is different, yields a warning

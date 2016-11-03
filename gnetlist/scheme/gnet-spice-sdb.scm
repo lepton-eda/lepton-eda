@@ -336,61 +336,43 @@
 )
 
 
-;;----------------------------------------------------------
-;; Given a filename, open the file, get the first line,
-;; and see if it is a .MODEL or .SUBCKT file.
-;; Returns either ".MODEL" or ".SUBCKT" or "OTHER"
-;; Calling form is "(spice-sdb:get-file-type input-file)"
-;; The function opens input-file, and closes it when it is done.
-;;----------------------------------------------------------
-(define spice-sdb:get-file-type
-  (lambda (model-filename)
+;;; Given a MODEL-FILENAME, open the file, get the first line,
+;;; and see if it is a .MODEL or .SUBCKT file.
+;;; Returns either ".MODEL" or ".SUBCKT" or #f if nothing has been found.
+;;; The function opens input-file, and closes it when it is done.
+(define (spice-sdb:get-file-type model-filename)
+  (if (file-exists? model-filename)
+      (let ((model-file (open-input-file model-filename)) )
+        (let while ((file-line (read-line model-file)) )
 
-    (if (file-exists? model-filename)
-    (let ((model-file (open-input-file model-filename)) )
-      (let while ((file-line (read-line model-file)) )
+          (cond
+           ((eof-object? file-line) ;;  Arrived at end of line without finding .MODEL or .SUBCKT.
+            #f)
 
-        (cond
-         ((eof-object? file-line)         ;;  Arrived at end of line without finding .MODEL or .SUBCKT.  Return "OTHER"
-            "OTHER")
+           ((string-null? file-line)
+            (while (read-line model-file))) ;; Found empty line.  Iterate before doing anything else.
 
-         ((string-null? file-line)
-            (while (read-line model-file)) )        ;; Found empty line.  Iterate before doing anything else.
+           ((string-prefix? "*" file-line)
+            (while (read-line model-file))) ;; Found *comment.  Iterate.
 
-         ((string=? (string (string-ref file-line 0)) "*")
-            (while (read-line model-file)) )                       ;; Found *comment.  Iterate.
+           ((string-prefix? "." file-line)
+            (begin
+              (debug-spew "In get-file-type, first-char = .\n") ;; DEBUG stuff
+              (cond
 
-         ((string=? (string (string-ref file-line 0)) ".")
-          (begin
-            (debug-spew "In get-file-type, first-char = .\n")  ;; DEBUG stuff
-            (cond
+               ((string-prefix-ci? ".subckt" file-line) ;; found .subckt as first line.
+                ".SUBCKT" )
 
-              ((string-ci=? (safe-string-head file-line 7) ".subckt")  ;; found .subckt as first line.
-               ".SUBCKT" )
+               ((string-prefix-ci? ".model" file-line) ;; found .model as first line.
+                ".MODEL"  )
 
-              ((string-ci=? (safe-string-head file-line 6) ".model")   ;; found .model as first line.
-               ".MODEL"  )
+               (else #f)))) ;; first . spice card is neither .model nor .subckt
 
-              (else "OTHER")   ;; first . spice card is neither .model nor .subckt
-
-            ) ; inner cond
-          ) ; inner begin
-         )
-
-         (else
-            (while (read-line model-file))
-          )
-
-        ) ; outer cond
-
-       ) ;; end of inner lets
-      ) ;; end of outer let
-    (begin
-      (message (string-append "ERROR: File '" model-filename "' not found.\n"))
-      (primitive-exit 1))
-    )
-  )
-) ;; end define
+           (else
+            (while (read-line model-file))))))
+      (begin
+        (message (string-append "ERROR: File '" model-filename "' not found.\n"))
+        (primitive-exit 1))))
 
 
 ;;---------------------------------------------------------------
@@ -1411,7 +1393,7 @@
                      (format #f "File is new.  New file type is ~A\n" file-type))
 
                     ;; Check to see if file-type is known.
-                    (if (not (string=? file-type "OTHER"))
+                    (if file-type
                         ;; file-type is OK.  Return file-info-list
                         ;; with new triplet attached.
                         (begin
@@ -1423,7 +1405,7 @@
                         ;;  Otherwise, file type is not a model
                         ;;  type.  Don't stick it in list.  Print
                         ;;  debug spew if desired.
-                        (debug-spew "File type is OTHER, and therefore will not be entered in known model file list.\n")))
+                        (debug-spew "File type is unknown, and therefore will not be entered in known model file list.\n")))
 
                   ;;  File is already in list.  Print debug spew
                   ;;  if desired.
