@@ -205,25 +205,12 @@
   (filter-map spice-io? ls))
 
 
-;;----------------------------------------------------------------
-;;  Given a list of spice-IO packages (refdeses), this function returns the list
-;;  of nets attached to the IOs.
-;;----------------------------------------------------------------
-(define spice-sdb:get-IO-nets
-  (lambda (package-list net-list)
-    (if (null? package-list)
-
-        net-list        ;; end iteration & return net-list if ls is empty.
-
-        (let* ((package (car package-list))                  ;; otherwise process package. . .
-               (net (car (gnetlist:get-nets package "1")))   ;; get the net attached to pin 1
-              )
-         ;; now iterate
-          (spice-sdb:get-IO-nets (cdr package-list) (cons net net-list))
-        )
-    ) ;; end of if
-  )
-)
+;;; Given a list of spice-IO packages (refdeses), this function
+;;; returns the list of nets attached to the IOs.
+(define (spice-sdb:get-io-nets package-list)
+  (map
+   (lambda (package) (car (gnetlist:get-nets package "1")))
+   package-list))
 
 ;;----------------------------------------------------------
 ;;  This returns a list of all the integers from start to
@@ -1375,7 +1362,7 @@ the name is changed to canonical."
       ;; we have found a .SUBCKT type schematic.
           (let* ((io-pin-packages (spice-sdb:get-spice-io-pins packages))
                  (io-pin-packages-ordered (sort io-pin-packages refdes<?))
-                 (io-nets-list (spice-sdb:get-IO-nets io-pin-packages-ordered (list) ))
+                 (io-nets-list (spice-sdb:get-io-nets io-pin-packages-ordered))
                 )
             (debug-spew "found .SUBCKT type schematic")
       ;; now write out .SUBCKT header and .SUBCKT line
