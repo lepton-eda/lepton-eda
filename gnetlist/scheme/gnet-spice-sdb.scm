@@ -922,17 +922,12 @@
 )
 
 
-;;-------------------------------------------------------------------
-;; Write the refdes and the net names connected to pins on this component.
-;; No return, and no component value is written, or extra attribs.
-;; Those are handled later.
-;;-------------------------------------------------------------------
-(define spice-sdb:write-refdes-nets
-  (lambda (package)
-    (display (string-append package " "))  ;; write component refdes
-    (spice-sdb:write-net-names-on-component package)
-  )
-)
+;;; Write the refdes and the net names connected to pins on
+;;; PACKAGE.  No component value is written or extra attributes.
+;;; Those are handled later.
+(define (spice-sdb:write-refdes-nets package)
+  (display (string-append package " ")) ;; write component refdes
+  (spice-sdb:write-net-names-on-component package))
 
 
 ;;------------------------------------------------------------
