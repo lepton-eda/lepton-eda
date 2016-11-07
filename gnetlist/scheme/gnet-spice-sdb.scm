@@ -158,40 +158,23 @@
     )  ;; end of if (calling-flag
 ))
 
-
-;;--------------------------------------------------------------------------
-;; Given a filename, open the file, get the contents, and dump them
-;; into the spice file.
-;; Calling form is "(insert-text-file input-file output-file)"
-;; The function opens input-file, but assumes that output-file is
-;; already open.
-;;
-;; This function is usually used to include spice models contained in
-;; files into the netlist.  Note that it doesn't
-;; check the correctness of the spice code in the file -- you're on your own!
-;;---------------------------------------------------------------------------
-(define spice-sdb:insert-text-file
-  (lambda (model-filename)
-    (if (file-exists? model-filename)
-    (let ((model-file (open-input-file model-filename)) )
-      (display (string-append "*vvvvvvvv  Included SPICE model from " model-filename " vvvvvvvv\n"))
-      (let while ((model-line (read-line model-file)))
-          (if (not (eof-object? model-line))
-                   (begin
-                     (display (string-append model-line "\n"))
-                     (while (read-line model-file))
-                   )  ;; end of inner begin
-          ) ;; end of if
-        )  ;; end of inner let
-        (close-port model-file)
-        (display (string-append "*^^^^^^^^  End of included SPICE model from " model-filename " ^^^^^^^^\n*\n"))
-     ) ;; end of outer let
-    (begin
-      (message (string-append "ERROR: File '" model-filename "' not found.\n"))
-      (primitive-exit 1))
-    )
-  )
-)
+;;; Opens MODEL-FILENAME and inserts its contents into the spice
+;;; file.  This function is usually used to include spice models
+;;; contained in files into the netlist.  Note that it doesn't
+;;; check the correctness of the spice code in the file -- you're
+;;; on your own!
+(define (spice-sdb:insert-text-file model-filename)
+  (if (file-exists? model-filename)
+      (format #t "*vvvvvvvv  Included SPICE model from ~A vvvvvvvv
+~A*^^^^^^^^  End of included SPICE model from ~A ^^^^^^^^
+*
+"
+              model-filename
+              (with-input-from-file model-filename read-string)
+              model-filename)
+      (begin
+        (message (format #t "ERROR: File ~S not found.\n" model-filename))
+        (primitive-exit 1))))
 
 ;;; Determines the schematic type, ie. a normal schematic or a
 ;;; .SUBCKT lower level by searching for a "spice-subcircuit-LL"
