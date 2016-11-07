@@ -490,120 +490,59 @@
             (display (string-append model-name "\n"))))))))
 
 
-;;-----------------------------------------------------------
-;;  write npn bipolar transistor
-;;  This writes out a valid transistor refdes & then calls
-;;  the function which writes the rest of the line.
-;;-----------------------------------------------------------
-(define spice-sdb:write-npn-bipolar-transistor
-  (lambda (package)
-    (debug-spew (string-append "Found npn bipolar transistor.  Refdes = " package "\n"))
-    (let ((attrib-list (list "ic" "temp") ))
-      (spice-sdb:write-component package "Q" "NPN" attrib-list))
-  )
-)
+;;; Writes NPN bipolar transistor SPICE card for PACKAGE.
+(define (spice-sdb:write-npn-bipolar-transistor package)
+  (spice-sdb:write-component package "Q" "NPN" '("ic" "temp")))
 
 
-;;-----------------------------------------------------------
-;;  write pnp bipolar transistor
-;;-----------------------------------------------------------
-(define spice-sdb:write-pnp-bipolar-transistor
-  (lambda (package)
-    (debug-spew (string-append "Found pnp bipolar transistor.  Refdes = " package "\n"))
-    (let ((attrib-list (list "ic" "temp") ))
-      (spice-sdb:write-component package "Q" "PNP" attrib-list))
-  )
-)
+;;; Writes PNP bipolar transistor SPICE card for PACKAGE.
+(define (spice-sdb:write-pnp-bipolar-transistor package)
+  (spice-sdb:write-component package "Q" "PNP" '("ic" "temp")))
 
 
-;;-----------------------------------------------------------
-;;  write n-channel jfet transistor
-;;-----------------------------------------------------------
-(define spice-sdb:write-nfet-transistor
-  (lambda (package)
-    (debug-spew (string-append "Found n-channel JFET.  Refdes = " package "\n"))
-    (let ((attrib-list (list "ic" "temp") ))
-      (spice-sdb:write-component package "J" "NJF" attrib-list))
-  )
-)
+;;; Writes N-channel JFET transistor SPICE card for PACKAGE.
+(define (spice-sdb:write-nfet-transistor package)
+  (spice-sdb:write-component package "J" "NJF" '("ic" "temp")))
 
 
-;;-----------------------------------------------------------
-;;  write p-channel jfet transistor
-;;-----------------------------------------------------------
-(define spice-sdb:write-pfet-transistor
-  (lambda (package)
-    (debug-spew (string-append "Found p-channel JFET.  Refdes = " package "\n"))
-    (let ((attrib-list (list "ic" "temp") ))
-      (spice-sdb:write-component package "J" "PJF" attrib-list))
-  )
-)
+;;; Writes P-channel JFET transistor SPICE card for PACKAGE.
+(define (spice-sdb:write-pfet-transistor package)
+  (spice-sdb:write-component package "J" "PJF" '("ic" "temp")))
 
 
-;;------------------------------------------------------
-;;  write pmos transistor
-;;------------------------------------------------------
-(define spice-sdb:write-pmos-transistor
-  (lambda (package)
-    (debug-spew (string-append "Found PMOS transistor.  Refdes = " package "\n"))
-    (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
-      (spice-sdb:write-component package "M" "PMOS" attrib-list))
-  )
-)
+;;; Writes PMOS transistor SPICE card for PACKAGE.
+(define (spice-sdb:write-pmos-transistor package)
+  (spice-sdb:write-component package "M" "PMOS"
+                             '("l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
 
 
-;;------------------------------------------------------
-;;  write nmos transistor
-;;------------------------------------------------------
-(define spice-sdb:write-nmos-transistor
-  (lambda (package)
-    (debug-spew (string-append "Found NMOS transistor.  Refdes = " package "\n"))
-    (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
-      (spice-sdb:write-component package "M" "NMOS" attrib-list))
-  )
-)
+;;; Writes NMOS transistor SPICE card for PACKAGE.
+(define (spice-sdb:write-nmos-transistor package)
+  (spice-sdb:write-component package "M" "NMOS"
+                             '("l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
 
 
-;;------------------------------------------------------
-;;  write subckt pmos transistor
-;;------------------------------------------------------
-(define spice-sdb:write-subckt-pmos-transistor
-  (lambda (package)
-    (debug-spew (string-append "Found PMOS subcircuit transistor.  Refdes = " package "\n"))
-    (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
-      (spice-sdb:write-component package "X" "PMOS" attrib-list))
-  )
-)
-
-;;------------------------------------------------------
-;;  write subckt nmos transistor
-;;------------------------------------------------------
-(define spice-sdb:write-subckt-nmos-transistor
-  (lambda (package)
-    (debug-spew (string-append "Found NMOS subcircuit transistor.  Refdes = " package "\n"))
-    (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
-      (spice-sdb:write-component package "X" "NMOS" attrib-list))
-  )
-)
-;;------------------------------------------------------------
-;;  write mesfet transistor
-;;------------------------------------------------------------
-;; ************  Fix this!!!!!!!!!!  **************
-(define spice-sdb:write-mesfet-transistor
-  (lambda (package)
-    (spice-sdb:write-component package "Z" "MESFET" (list))))  ;; XXXXXX Fix this!!!
+;;; Writes subckt PMOS transistor SPICE card for PACKAGE.
+(define (spice-sdb:write-subckt-pmos-transistor package)
+  (spice-sdb:write-component package "X" "PMOS"
+                             '("l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
 
 
-;;-----------------------------------------------------------
-;;  write voltage controled switch
-;;-----------------------------------------------------------
-(define spice-sdb:write-vc-switch
-  (lambda (package)
-    (debug-spew (string-append "Found voltage controlled switch.  Refdes = " package "\n"))
-    (let ((attrib-list (list " " ) ))
-      (spice-sdb:write-component package "S" "SW" attrib-list))
-  )
-)
+;;; Writes subckt NMOS transistor SPICE card for PACKAGE.
+(define (spice-sdb:write-subckt-nmos-transistor package)
+  (spice-sdb:write-component package "X" "NMOS"
+                             '("l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
+
+;;; Writes MESFET transistor SPICE card for PACKAGE.
+;;; FIXME: fix attribute list
+(define (spice-sdb:write-mesfet-transistor package)
+  (spice-sdb:write-component package "Z" "MESFET" '())) ;; XXXXXX Fix this!!!
+
+
+;;; Writes voltage controled switch SPICE card for PACKAGE.
+;;; FIXME: fix attribute list
+(define (spice-sdb:write-vc-switch package)
+  (spice-sdb:write-component package "S" "SW" '()))
 
 
 ;;--------------------------------------------------------------------
