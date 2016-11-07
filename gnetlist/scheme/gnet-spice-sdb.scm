@@ -193,34 +193,15 @@
 )
 
 
-;;-----------------------------------------------------------
-;;  This iterates through the schematic and compiles a list of
-;;  all spice-IO pins found.  This is used when writing out
-;;  a .SUBCKT lower level netlist.
-;;-----------------------------------------------------------
-(define spice-sdb:get-spice-IO-pins
-  (lambda (ls spice-io-package-list)
-    (if (null? ls)
-
-        spice-io-package-list        ;; end iteration & return list if ls is empty.
-
-        (let* ((package (car ls))    ;; otherwise process package. . .
-               (device (get-device package))
-              )
-           (if (string=? device "spice-IO")  ;; look for subcircuit label
-
-               ;; we have found a spice-IO pin.
-               (spice-sdb:get-spice-IO-pins (cdr ls) (cons package spice-io-package-list))
-
-               ;; no spice-IO pin found.  Iterate . . . .
-               (spice-sdb:get-spice-IO-pins (cdr ls) spice-io-package-list)
-
-           ) ;; end of if string=?
-
-        )  ;; end of let*
-   ) ;; end if null
- )
-)
+;;; Returns a list of packages from PACKAGE-LIST whose "device="
+;;; attribute value is "spice-io" (case insensitive).  This is
+;;; used when writing out a .SUBCKT lower level netlist.
+(define (spice-sdb:get-spice-io-pins package-list)
+  (define (spice-io? package)
+    (and (string-ci=? (gnetlist:get-package-attribute package "device")
+                      "spice-io")
+         package))
+  (filter-map spice-io? ls))
 
 
 ;;----------------------------------------------------------------
@@ -1417,7 +1398,7 @@ the name is changed to canonical."
 
       (if subckt?
       ;; we have found a .SUBCKT type schematic.
-          (let* ((io-pin-packages (spice-sdb:get-spice-IO-pins packages (list) ))
+          (let* ((io-pin-packages (spice-sdb:get-spice-io-pins packages))
                  (io-pin-packages-ordered (spice-sdb:sort-spice-IO-pins io-pin-packages))
                  (io-nets-list (spice-sdb:get-IO-nets io-pin-packages-ordered (list) ))
                 )
