@@ -354,99 +354,71 @@
 ;;***************  Dealing with nets, devices, & SPICE cards.    *******************
 ;;**********************************************************************************
 
+;;; Writes out component followed by model or model file
+;;; associated with the component.
+;;; Argument List :
+;;;   PACKAGE     - The refdes of a component eg. Q1
+;;;   PREFIX      - The correct refdes prefix for this package type
+;;;   TYPE        - The SPICE model type eg. NPN or JFT
+;;;   ATTRIB-LIST - A list of attributes for the package
+;;; This function does the following:
+;;;   1.  Writes out the correct refdes prefix (if specified and necessary).
+;;;   2.  Writes out the refdes and nets
+;;;   3.  Looks for "model-name" attribute. Writes it out if it exists.
+;;;   4.  If there is no "model-name" attribute, it writes out the
+;;;       "value" attribute.  If there is no "value" attribute, it
+;;;       writes out "unknown" and returns, causing the spice
+;;;       simulator to puke when the netlist is run.  This is
+;;;       important because the spice simulator needs to have some
+;;;       indication of what model to look for.
+;;;   5.  Outputs optional attributes attached to device, if any.
+;;;   6.  Outputs a new line
+;;;   7.  Looks for a "model" attribute.  If it exists, it writes out
+;;;       a .MODEL line like this:
+;;;         .MODEL model-name type (model)
+(define (spice-sdb:write-component package prefix type attrib-list)
+  (let ((model-name (gnetlist:get-package-attribute package "model-name"))
+        (model (gnetlist:get-package-attribute package "model"))
+        (value (gnetlist:get-package-attribute package "value"))
+        (area (gnetlist:get-package-attribute package "area"))
+        (off (gnetlist:get-package-attribute package "off"))
+        (model-file (gnetlist:get-package-attribute package "file")))
 
-;;----------------------------------------------------------------
-;;
-;; Write-component: writes out component followed by
-;; model or model file associated
-;; with the component.
-;;  This function does the following:
-;;   1.  Writes out the correct refdes prefix (if specified and necessary).
-;;   2.  Writes out the refdes and nets
-;;   3.  Looks for "model-name" attribute. Writes it out if it exists.
-;;   4.  If there is no "model-name" attribute, it writes out the "value"
-;;       attribute.  If there is no "value" attribute, it writes out "unknown"
-;;       and returns, causing the spice simulator to puke when the netlist
-;;       is run.  This is important
-;;       'cause the spice simulator needs to have some indication of what
-;;       model to look for.
-;;   5.  Outputs optional attributes attached to device, if any.  Feature
-;;       added by SDB on 12.25.2003.
-;;   6.  Outputs a new line
-;;   7.  Looks for a the "model" attribute.  If it exists, it it writes out
-;;       a .MODEL line like this:  .MODEL model-name type (model)
-;;
-;;----------------------------------------------------------------
-(define spice-sdb:write-component
-  (lambda (package prefix type attrib-list)
+    ;; Write out the refdes prefix, if specified and necessary.
+    (when prefix (spice-sdb:write-prefix package prefix))
 
-    ;; First do local assignments
-    (let ((model-name (gnetlist:get-package-attribute package "model-name"))
-          (model (gnetlist:get-package-attribute package "model"))
-          (value (gnetlist:get-package-attribute package "value"))
-          (area (gnetlist:get-package-attribute package "area"))
-          (off (gnetlist:get-package-attribute package "off"))
-          (model-file (gnetlist:get-package-attribute package "file"))
-         )   ;; end of local assignments
+    ;; Next we write out the refdes and nets.
+    (spice-sdb:write-refdes-nets package)
 
-   ;; Write out the refdes prefix, if specified and necessary.
-      (if prefix
-        (spice-sdb:write-prefix package prefix)
-      )
+    ;; Next look for "model-name" attribute.  Write it out if it exists.
+    ;; otherwise look for "value" attribute.
+    (format #t "~A " (if (unknown? model-name)
+                         value
+                         model-name))
 
-   ;; Next we write out the refdes and nets.
-      (spice-sdb:write-refdes-nets package)
+    ;; Next write out attributes if they exist
+    ;; First attribute is area.  It is written as a simple string
+    (when (not (unknown? area))
+      (format #t "~A "))
 
-   ;; next look for "model-name" attribute.  Write it out if it exists.
-   ;; otherwise look for "value" attribute.
-      (if (not (string=? model-name "unknown"))
-          (display (string-append model-name " " ))  ;; display model-name if known
-          (display (string-append value " ")))       ;; otherwise display value
+    ;; Next attribute is off.    It is written as a simple string
+    (when (not (unknown? off))
+      (format #t "~A " off))
 
-  ;; Next write out attributes if they exist
-  ;; First attribute is area.  It is written as a simple string
-      (if (not (string=? area "unknown"))
-          (display (string-append area " ")))
+    ;; Write out remaining attributes
+    (spice:write-list-of-attributes package attrib-list)
 
-  ;; Next attribute is off.    It is written as a simple string
-      (if (not (string=? off "unknown"))
-          (display (string-append off " ")))
+    ;; Now write out newline in preparation for writing out model.
+    (newline)
 
-  ;; Write out remaining attributes
-      (spice:write-list-of-attributes package attrib-list)
-
-  ;; Now write out newline in preparation for writing out model.
-      (newline)
-
-     ;; Now write out any model which is pointed to by the part.
-        (cond
-
-     ;; one line model and model name exist
-         ( (not (or (string=? model "unknown") (string=? model-name "unknown")))
-           (debug-spew (string-append "found model and model-name for " package "\n"))
-           (display (string-append ".MODEL " model-name " " type " (" model ")\n")) )
-
-     ;; one line model and component value exist
-         ( (not (or (string=? model "unknown") (string=? value "unknown")))
-           (debug-spew (string-append "found model and value for " package "\n"))
-           (display (string-append ".MODEL " model-name " " type " (" value ")\n")) )
-
-     ;; model file and model name exist
-         ( (not (or (string=? model-file "unknown") (string=? model-name "unknown")))
-           (debug-spew (string-append "found file and model-name for " package "\n"))
-           (debug-spew "I'll deal with the file later . . .\n")
-         )
-
-     ;; model file and component value exist
-         ( (not (or (string=? model-file "unknown") (string=? value "unknown")))
-           (debug-spew (string-append "found file and value for " package "\n"))
-           (debug-spew "I'll deal with the file later . . .\n")
-         )
-
-         )  ;; close of cond
-        )
-    )
-)
+    ;; Now write out any model which is pointed to by the part.
+    (when (not (unknown? model))
+      (let ((package-model (or (and (not (unknown? model-name))
+                                    model-name)
+                               (and (not (unknown? value))
+                                    value))))
+        (when package-model
+          (format #t ".MODEL ~A ~A (~A)\n" model-name type package-model))))))
 
 
 ;;----------------------------------------------------------------
