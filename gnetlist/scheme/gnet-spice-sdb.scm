@@ -142,21 +142,13 @@
   (any found? file-info-list))
 
 
-;;--------------------------------------------------------------------------
-;; handle-spice-file:  This wraps insert-text-file.
-;; Calling form: (handle-spice-file file-name)
-;; It looks to see if the -I flag was set at the command line.  If so,
-;; it just writes a .INCLUDE card with the file name.  If not,  it calls
-;; insert-text-file to stick the file's contents into the SPICE netlist.
-;;--------------------------------------------------------------------------
-(define spice-sdb:handle-spice-file
-  (lambda (file-name)
-    (debug-spew (string-append "Handling spice model file " file-name "\n"))
-    (if (calling-flag? "include_mode" (gnetlist:get-calling-flags))
-        (display (string-append ".INCLUDE " file-name "\n"))       ;; -I found: just print out .INCLUDE card
-        (spice-sdb:insert-text-file file-name)                     ;; -I not found: invoke insert-text-file
-    )  ;; end of if (calling-flag
-))
+;;; Writes an .INCLUDE card with the given FILE-NAME if
+;;; "include_mode" has been enabled, otherwise inserts the
+;;; FILE-NAME contents into the netlist.
+(define (spice-sdb:handle-spice-file file-name)
+  (if (calling-flag? "include_mode" (gnetlist:get-calling-flags))
+      (format #t ".INCLUDE ~A\n" file-name)
+      (spice-sdb:insert-text-file file-name)))
 
 ;;; Opens MODEL-FILENAME and inserts its contents into the spice
 ;;; file.  This function is usually used to include spice models
