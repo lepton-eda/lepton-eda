@@ -119,7 +119,8 @@
 ;; The following is needed to make guile 1.8.x happy.
 (use-modules (ice-9 rdelim)
              (ice-9 match)
-             (srfi srfi-1))
+             (srfi srfi-1)
+             (gnetlist attrib compare))
 
 ;; Common functions for the `spice' and `spice-sdb' backends
 (load-from-path "spice-common.scm")
@@ -202,32 +203,6 @@
                       "spice-io")
          package))
   (filter-map spice-io? ls))
-
-
-;;----------------------------------------------------------------
-;;  This takes the list of io-pin-packages and sorts it in order of
-;;  refdes.
-;;  Repaired on 12.27.2005 to correctly sort pin numbers > 9.
-;;----------------------------------------------------------------
-(define spice-sdb:sort-spice-IO-pins
-  (lambda (package-list)
-    ;;  Yes, this isn't good Scheme form.  Tough!  Writing this out
-    ;;  in a functional programming form would be totally confusing!
-    ;;  Note that this fcn requires that
-    ;;  each spice-IO pin have the same, single character prefix (i.e. 'P')
-    (let* ((char-prefixes              (map car (map string->list package-list)))  ;; Pull off first char (prefix)
-           (prefixes                   (map string char-prefixes))                 ;; Make list of strings from prefixes
-           (split-numbers-list         (map cdr (map string->list package-list)))  ;; Pull off refdes numbers as list elements
-           (string-numbers-list        (map list->string split-numbers-list))      ;; Recombine split up (multidigit) number strings
-           (numbers-list               (map string->number string-numbers-list))   ;; Convert strings to numbers for sorting
-           (sorted-numbers-list        (sort numbers-list <))                      ;; Sort refdes numbers as numbers
-           (sorted-string-numbers-list (map number->string sorted-numbers-list)) ) ;; Create sorted list of refdes strings.
-
-      (map-in-order string-append  prefixes sorted-string-numbers-list)  ;; Laminate prefixes back onto refdes numbers & return.
-
-    )
-  )
-)
 
 
 ;;----------------------------------------------------------------
@@ -1399,7 +1374,7 @@ the name is changed to canonical."
       (if subckt?
       ;; we have found a .SUBCKT type schematic.
           (let* ((io-pin-packages (spice-sdb:get-spice-io-pins packages))
-                 (io-pin-packages-ordered (spice-sdb:sort-spice-IO-pins io-pin-packages))
+                 (io-pin-packages-ordered (sort io-pin-packages refdes<?))
                  (io-nets-list (spice-sdb:get-IO-nets io-pin-packages-ordered (list) ))
                 )
             (debug-spew "found .SUBCKT type schematic")
