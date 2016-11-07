@@ -1122,10 +1122,54 @@
   )
 )
 
+;;; Dummy function, which outputs nothing for PACKAGE.
+(define (write-nothing package)
+  (display ""))
 
 ;;**********************************************************************************
 ;;***************  High-level functions for program control  ***********************
 ;;**********************************************************************************
+
+(define device-func-alist
+  `(
+    ;; do nothing for graphical symbols, subcircuit
+    ;; declarations, and SPICE IO pins.
+    (none . ,write-nothing)
+    (spice-subcircuit-ll . ,write-nothing)
+    (spice-io . ,write-nothing)
+    (spice-ccvs . ,spice:write-ccvs)
+    (spice-cccs . ,spice:write-cccs)
+    (spice-vcvs . ,spice:write-vcvs)
+    (spice-vccs . ,spice:write-vccs)
+    (spice-nullor . ,spice:write-nullor)
+    (diode . ,spice-sdb:write-diode)
+    (pmos_transistor . ,spice-sdb:write-pmos-transistor)
+    (nmos_transistor . ,spice-sdb:write-nmos-transistor)
+    (pnp_transistor . ,spice-sdb:write-pnp-bipolar-transistor)
+    (spice-pnp . ,spice-sdb:write-pnp-bipolar-transistor)
+    (npn_transistor . ,spice-sdb:write-npn-bipolar-transistor)
+    (spice-npn . ,spice-sdb:write-npn-bipolar-transistor)
+    (pfet_transistor . ,spice-sdb:write-pfet-transistor)
+    (nfet_transistor . ,spice-sdb:write-nfet-transistor)
+    (mesfet_transistor . ,spice-sdb:write-mesfet-transistor)
+    (spice-vc-switch . ,spice-sdb:write-vc-switch)
+    (resistor . ,spice-sdb:write-resistor)
+    (capacitor . ,spice-sdb:write-capacitor)
+    (polarized_capacitor . ,spice-sdb:write-capacitor)
+    (inductor . ,spice-sdb:write-inductor)
+    ;; Added to enable netlisting of coil-*.sym
+    (coil . ,spice-sdb:write-inductor)
+    (voltage_source . ,spice-sdb:write-independent-voltage-source)
+    (current_source . ,spice-sdb:write-independent-current-source)
+    (josephson_junction . ,spice-sdb:write-josephson-junction)
+    (k . ,spice-sdb:write-coupling-coefficient)
+    (model . ,spice-sdb:write-model)
+    (options . ,spice-sdb:write-options)
+    (directive . ,spice-sdb:write-directive)
+    (include . ,spice-sdb:write-include)
+    (testpoint . ,spice-sdb:write-probe)
+    (subckt_pmos . ,spice-sdb:write-subckt-pmos-transistor)
+    (subckt_nmos . ,spice-sdb:write-subckt-nmos-transistor)))
 
 ;;----------------------------------------------------------------------
 ;; write-netlist is passed a list of refdesses (ls).  It uses
@@ -1137,91 +1181,20 @@
 ;; value and optional extra attributes
 ;; check if the component is a special spice component.
 ;;----------------------------------------------------------------------
-(define spice-sdb:write-netlist
-  (lambda (file-info-list ls)
-     (if (not (null? ls))
-      (let* ((package (car ls))             ;; assign package
-             (device (get-device package))  ;; assign device.
-            )                               ;; end of let* assignments
+(define (spice-sdb:write-netlist file-info-list ls)
+  (define (get-write-func package)
+    (assq-ref device-func-alist
+              (string->symbol
+               (string-downcase
+                (gnetlist:get-package-attribute package "device")))))
 
-;; Super debug stuff -- outputs line describing device being processed.
-        (debug-spew (string-append "--- checking package = " package "\n"))
-        (debug-spew (string-append "    device = " device "\n"))
-;; done with debug stuff
-
-        (cond
-          ( (string=? device "none"))                 ;; do nothing for graphical symbols.
-          ( (string=? device "spice-subcircuit-LL"))  ;; do nothing for subcircuit declaration.
-          ( (string=? device "spice-IO"))             ;; do nothing for SPICE IO pins.
-          ( (string=? device "SPICE-ccvs")
-              (spice:write-ccvs package))
-          ( (string=? device "SPICE-cccs")
-              (spice:write-cccs package))
-          ( (string=? device "SPICE-vcvs")
-              (spice:write-vcvs package))
-          ( (string=? device "SPICE-vccs")
-              (spice:write-vccs package))
-          ( (string=? device "SPICE-nullor")
-              (spice:write-nullor package))
-          ( (string=? device "DIODE")
-              (spice-sdb:write-diode package))
-          ( (string=? device "PMOS_TRANSISTOR")
-              (spice-sdb:write-pmos-transistor package))
-          ( (string=? device "NMOS_TRANSISTOR")
-              (spice-sdb:write-nmos-transistor package))
-          ( (string=? device "PNP_TRANSISTOR")
-              (spice-sdb:write-pnp-bipolar-transistor package))
-          ( (string=? device "SPICE-PNP")
-              (spice-sdb:write-pnp-bipolar-transistor package))
-          ( (string=? device "NPN_TRANSISTOR")
-              (spice-sdb:write-npn-bipolar-transistor package))
-          ( (string=? device "SPICE-NPN")
-              (spice-sdb:write-npn-bipolar-transistor package))
-          ( (string=? device "PFET_TRANSISTOR")
-              (spice-sdb:write-pfet-transistor package))
-          ( (string=? device "NFET_TRANSISTOR")
-              (spice-sdb:write-nfet-transistor package))
-          ( (string=? device "MESFET_TRANSISTOR")
-              (spice-sdb:write-mesfet-transistor package))
-          ( (string=? device "SPICE-VC-switch")
-              (spice-sdb:write-vc-switch package))
-          ( (string=? device "RESISTOR")
-              (spice-sdb:write-resistor package))
-          ( (string=? device "CAPACITOR")
-              (spice-sdb:write-capacitor package))
-          ( (string=? device "POLARIZED_CAPACITOR")
-              (spice-sdb:write-capacitor package))                       ;; change someday
-          ( (string=? device "INDUCTOR")
-              (spice-sdb:write-inductor package))
-          ( (string=? device "COIL")           ;; Added to enable netlisting of coil-*.sym
-              (spice-sdb:write-inductor package))
-          ( (string=? device "VOLTAGE_SOURCE")
-              (spice-sdb:write-independent-voltage-source package)) ;; change someday
-          ( (string=? device "CURRENT_SOURCE")
-              (spice-sdb:write-independent-current-source package)) ;; change someday
-          ( (string=? device "JOSEPHSON_JUNCTION")
-              (spice-sdb:write-josephson-junction package))
-          ( (string=? device "K")
-              (spice-sdb:write-coupling-coefficient package))
-          ( (string=? device "model")
-              (spice-sdb:write-model package))
-          ( (string=? device "options")
-              (spice-sdb:write-options package))
-          ( (string=? device "directive")
-              (spice-sdb:write-directive package))
-          ( (string=? device "include")
-              (spice-sdb:write-include package))
-          ( (string=? device "TESTPOINT")
-              (spice-sdb:write-probe package))
-          ( (string=? device "SUBCKT_PMOS")
-              (spice-sdb:write-subckt-pmos-transistor package))
-          ( (string=? device "SUBCKT_NMOS")
-              (spice-sdb:write-subckt-nmos-transistor package))
-          ( else
-              (spice-sdb:write-default-component package file-info-list))
-        ) ;; end of cond
-        (spice-sdb:write-netlist file-info-list (cdr ls))
-         ))))
+  (for-each
+   (lambda (package)
+     (let ((write-func (get-write-func package)))
+       (if write-func
+           (write-func package)
+           (spice-sdb:write-default-component package file-info-list))))
+   ls))
 
 
 ;;----------------------------------------------------------------------
