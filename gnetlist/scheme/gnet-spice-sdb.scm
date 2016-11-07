@@ -536,10 +536,11 @@
 
 ;;; Writes SPICE card for PACKAGE which must be a passive
 ;;; (resistor, capacitor, or inductor) with ATTRIBS in the end.
-(define (write-passive package attribs)
+(define (write-passive package prefix attribs)
   (let ((value (spice:component-value package))
         (model-name (gnetlist:get-package-attribute package "model-name")))
 
+    (spice-sdb:write-prefix package prefix)
     (spice-sdb:write-refdes-nets package)
     (display (string-join (filter-known value model-name) " "))
     (display " ")
@@ -552,18 +553,18 @@
 ;;; Writes resistor SPICE card for PACKAGE.
 (define (spice-sdb:write-resistor package)
   ;; Non-standard "area" attrib is here per popular demand.
-  (write-passive package '("area" "l" "w" "temp")))
+  (write-passive package "R" '("area" "l" "w" "temp")))
 
 
 ;;; Writes capacitor SPICE card for PACKAGE.
 (define (spice-sdb:write-capacitor package)
   ;; Non-standard "area" attrib is here per request of Peter Kaiser.
-  (write-passive package '("area" "l" "w" "ic")))
+  (write-passive package "C" '("area" "l" "w" "ic")))
 
 
 ;;; Writes inductor SPICE card for PACKAGE.
 (define (spice-sdb:write-inductor package)
-  (write-passive package '("l" "w" "ic")))
+  (write-passive package "L" '("l" "w" "ic")))
 
 
 ;;-------------------------------------------------------------------------
