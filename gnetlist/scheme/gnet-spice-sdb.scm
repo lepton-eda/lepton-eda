@@ -128,6 +128,9 @@
 (define (unknown? value)
   (string=? value "unknown"))
 
+(define (filter-known . ls)
+  (filter-map (lambda (x) (and (not (unknown? x)) x)) ls))
+
 ;;--------------------------------------------------------------------------------
 ;; spice-sdb:get-file-info-list-item  -- loops through the model-file list looking
 ;;  for triplet corresponding to model-name.  If found, it returns the corresponding
@@ -377,12 +380,13 @@
 ;;;       a .MODEL line like this:
 ;;;         .MODEL model-name type (model)
 (define (spice-sdb:write-component package prefix type attrib-list)
-  (let ((model-name (gnetlist:get-package-attribute package "model-name"))
-        (model (gnetlist:get-package-attribute package "model"))
-        (value (spice:component-value package))
-        (area (gnetlist:get-package-attribute package "area"))
-        (off (gnetlist:get-package-attribute package "off"))
-        (model-file (gnetlist:get-package-attribute package "file")))
+  (let* ((model-name (gnetlist:get-package-attribute package "model-name"))
+         (model (gnetlist:get-package-attribute package "model"))
+         (value (spice:component-value package))
+         (area (gnetlist:get-package-attribute package "area"))
+         (off (gnetlist:get-package-attribute package "off"))
+         (model-file (gnetlist:get-package-attribute package "file"))
+         (package-model (if (unknown? model-name) value model-name)))
 
     ;; Write out the refdes prefix, if specified and necessary.
     (when prefix (spice-sdb:write-prefix package prefix))
@@ -390,35 +394,21 @@
     ;; Next we write out the refdes and nets.
     (spice-sdb:write-refdes-nets package)
 
-    ;; Next look for "model-name" attribute.  Write it out if it exists.
-    ;; otherwise look for "value" attribute.
-    (format #t "~A " (if (unknown? model-name)
-                         value
-                         model-name))
-
-    ;; Next write out attributes if they exist
-    ;; First attribute is area.  It is written as a simple string
-    (when (not (unknown? area))
-      (format #t "~A "))
-
-    ;; Next attribute is off.    It is written as a simple string
-    (when (not (unknown? off))
-      (format #t "~A " off))
+    ;; Write out "model-name=" or "value=" attribute as well as
+    ;; "area=" and "off=" if they exist.
+    (display (string-join (filter-known package-model area off) " "))
 
     ;; Write out remaining attributes
-    (spice:write-list-of-attributes package attrib-list)
+    (when (not (null? attrib-list))
+      (display " ")
+      (spice:write-list-of-attributes package attrib-list))
 
     ;; Now write out newline in preparation for writing out model.
     (newline)
 
     ;; Now write out any model which is pointed to by the part.
     (when (not (unknown? model))
-      (let ((package-model (or (and (not (unknown? model-name))
-                                    model-name)
-                               (and (not (unknown? value))
-                                    value))))
-        (when package-model
-          (format #t ".MODEL ~A ~A (~A)\n" model-name type package-model))))))
+      (format #t ".MODEL ~A ~A (~A)\n" model-name type package-model))))
 
 
 ;;  Writes diode SPICE card for PACKAGE.
