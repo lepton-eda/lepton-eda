@@ -379,7 +379,7 @@
 (define (spice-sdb:write-component package prefix type attrib-list)
   (let ((model-name (gnetlist:get-package-attribute package "model-name"))
         (model (gnetlist:get-package-attribute package "model"))
-        (value (gnetlist:get-package-attribute package "value"))
+        (value (spice:component-value package))
         (area (gnetlist:get-package-attribute package "area"))
         (off (gnetlist:get-package-attribute package "off"))
         (model-file (gnetlist:get-package-attribute package "file")))
