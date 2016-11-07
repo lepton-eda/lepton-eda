@@ -357,7 +357,7 @@
 
 ;;----------------------------------------------------------------
 ;;
-;; Write-transistor-diode: writes out component followed by
+;; Write-component: writes out component followed by
 ;; model or model file associated
 ;; with the component.
 ;;  This function does the following:
@@ -377,7 +377,7 @@
 ;;       a .MODEL line like this:  .MODEL model-name type (model)
 ;;
 ;;----------------------------------------------------------------
-(define spice-sdb:write-transistor-diode
+(define spice-sdb:write-component
   (lambda (package prefix type attrib-list)
 
     ;; First do local assignments
@@ -395,7 +395,7 @@
       )
 
    ;; Next we write out the refdes and nets.
-      (spice-sdb:write-component-no-value package)
+      (spice-sdb:write-refdes-nets package)
 
    ;; next look for "model-name" attribute.  Write it out if it exists.
    ;; otherwise look for "value" attribute.
@@ -458,7 +458,7 @@
   (lambda (package)
     (debug-spew (string-append "Found diode.  Refdes = " package "\n"))
     (let ((attrib-list (list "ic" "temp") ))
-      (spice-sdb:write-transistor-diode package "D" "D" attrib-list))
+      (spice-sdb:write-component package "D" "D" attrib-list))
   )
 )
 
@@ -500,7 +500,7 @@
         ;; Evidently, we didn't discover any files holding this model.
         ;; Instead we look for model attribute
         (begin
-          (spice-sdb:write-component-no-value package)
+          (spice-sdb:write-refdes-nets package)
           (display (string-append model-name "\n"))
           (and (not (unknown? model))
                (format #t ".MODEL ~A ~A(~A)\n"
@@ -516,14 +516,14 @@
          ((string=? file-type ".MODEL")
           (begin
             (spice-sdb:write-prefix package "U") ;; this prepends an "U" to the refdes if needed, since we have a .model
-            (spice-sdb:write-component-no-value package)
+            (spice-sdb:write-refdes-nets package)
             (display (string-append model-name "\n"))))
 
          ;; ---- file holds a subcircuit ----
          ((string=? file-type ".SUBCKT")
           (begin
             (spice-sdb:write-prefix package "X") ;; this prepends an "X" to the refdes if needed, since we have a .subckt
-            (spice-sdb:write-component-no-value package)
+            (spice-sdb:write-refdes-nets package)
             (display (string-append model-name "\n"))))))))
 
 
@@ -536,7 +536,7 @@
   (lambda (package)
     (debug-spew (string-append "Found npn bipolar transistor.  Refdes = " package "\n"))
     (let ((attrib-list (list "ic" "temp") ))
-      (spice-sdb:write-transistor-diode package "Q" "NPN" attrib-list))
+      (spice-sdb:write-component package "Q" "NPN" attrib-list))
   )
 )
 
@@ -548,7 +548,7 @@
   (lambda (package)
     (debug-spew (string-append "Found pnp bipolar transistor.  Refdes = " package "\n"))
     (let ((attrib-list (list "ic" "temp") ))
-      (spice-sdb:write-transistor-diode package "Q" "PNP" attrib-list))
+      (spice-sdb:write-component package "Q" "PNP" attrib-list))
   )
 )
 
@@ -560,7 +560,7 @@
   (lambda (package)
     (debug-spew (string-append "Found n-channel JFET.  Refdes = " package "\n"))
     (let ((attrib-list (list "ic" "temp") ))
-      (spice-sdb:write-transistor-diode package "J" "NJF" attrib-list))
+      (spice-sdb:write-component package "J" "NJF" attrib-list))
   )
 )
 
@@ -572,7 +572,7 @@
   (lambda (package)
     (debug-spew (string-append "Found p-channel JFET.  Refdes = " package "\n"))
     (let ((attrib-list (list "ic" "temp") ))
-      (spice-sdb:write-transistor-diode package "J" "PJF" attrib-list))
+      (spice-sdb:write-component package "J" "PJF" attrib-list))
   )
 )
 
@@ -584,7 +584,7 @@
   (lambda (package)
     (debug-spew (string-append "Found PMOS transistor.  Refdes = " package "\n"))
     (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
-      (spice-sdb:write-transistor-diode package "M" "PMOS" attrib-list))
+      (spice-sdb:write-component package "M" "PMOS" attrib-list))
   )
 )
 
@@ -596,7 +596,7 @@
   (lambda (package)
     (debug-spew (string-append "Found NMOS transistor.  Refdes = " package "\n"))
     (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
-      (spice-sdb:write-transistor-diode package "M" "NMOS" attrib-list))
+      (spice-sdb:write-component package "M" "NMOS" attrib-list))
   )
 )
 
@@ -608,7 +608,7 @@
   (lambda (package)
     (debug-spew (string-append "Found PMOS subcircuit transistor.  Refdes = " package "\n"))
     (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
-      (spice-sdb:write-transistor-diode package "X" "PMOS" attrib-list))
+      (spice-sdb:write-component package "X" "PMOS" attrib-list))
   )
 )
 
@@ -619,7 +619,7 @@
   (lambda (package)
     (debug-spew (string-append "Found NMOS subcircuit transistor.  Refdes = " package "\n"))
     (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
-      (spice-sdb:write-transistor-diode package "X" "NMOS" attrib-list))
+      (spice-sdb:write-component package "X" "NMOS" attrib-list))
   )
 )
 ;;------------------------------------------------------------
@@ -628,7 +628,7 @@
 ;; ************  Fix this!!!!!!!!!!  **************
 (define spice-sdb:write-mesfet-transistor
   (lambda (package)
-    (spice-sdb:write-transistor-diode package "Z" "MESFET" (list))))  ;; XXXXXX Fix this!!!
+    (spice-sdb:write-component package "Z" "MESFET" (list))))  ;; XXXXXX Fix this!!!
 
 
 ;;-----------------------------------------------------------
@@ -638,7 +638,7 @@
   (lambda (package)
     (debug-spew (string-append "Found voltage controlled switch.  Refdes = " package "\n"))
     (let ((attrib-list (list " " ) ))
-      (spice-sdb:write-transistor-diode package "S" "SW" attrib-list))
+      (spice-sdb:write-component package "S" "SW" attrib-list))
   )
 )
 
@@ -652,7 +652,7 @@
     (debug-spew (string-append "Found resistor.  Refdes = " package "\n"))
 
     ;; first write out refdes and attached nets
-    (spice-sdb:write-component-no-value package)
+    (spice-sdb:write-refdes-nets package)
 
     ;; next write out mandatory resistor value if it exists.
     (let ((value (gnetlist:get-package-attribute package "value")))
@@ -689,7 +689,7 @@
     (debug-spew (string-append "Found capacitor.  Refdes = " package "\n"))
 
     ;; first write out refdes and attached nets
-    (spice-sdb:write-component-no-value package)
+    (spice-sdb:write-refdes-nets package)
 
     ;; next write capacitor value, if any.  Note that if the
     ;; component value is not assigned nothing will be written out.
@@ -727,7 +727,7 @@
     (debug-spew (string-append "Found inductor.  Refdes = " package "\n"))
 
     ;; first write out refdes and attached nets
-    (spice-sdb:write-component-no-value package)
+    (spice-sdb:write-refdes-nets package)
 
 
     ;; next write inductor value, if any.  Note that if the
@@ -758,7 +758,7 @@
     (debug-spew (string-append "Found independent voltage source.  Refdes = " package "\n"))
 
             ;; first write out refdes and attached nets
-    (spice-sdb:write-component-no-value package)
+    (spice-sdb:write-refdes-nets package)
 
             ;; next write voltage value, if any.  Note that if the
             ;; voltage value is not assigned, then it will write "unknown"
@@ -781,7 +781,7 @@
         (debug-spew (string-append "Found independent current source.  Refdes = " package "\n"))
 
             ;; first write out refdes and attached nets
-    (spice-sdb:write-component-no-value package)
+    (spice-sdb:write-refdes-nets package)
 
             ;; next write current value, if any.  Note that if the
             ;; current value is not assigned, then it will write "unknown"
@@ -803,7 +803,7 @@
     (debug-spew (string-append "Found Josephson junction.  Refdes = " package "\n"))
 
     ;; first write out refdes and attached nets
-    (spice-sdb:write-component-no-value package)
+    (spice-sdb:write-refdes-nets package)
 
     ;; next, add a dummy node for JJ phase. Unlike in Xic netlister, give it
     ;; a reasonable name, not a number, e.g., refdes.
@@ -832,7 +832,7 @@
     (debug-spew (string-append "Found mutual inductance.  Refdes = " package "\n"))
 
     ;; first write out refdes and attached nets (none)
-    (spice-sdb:write-component-no-value package)
+    (spice-sdb:write-refdes-nets package)
 
     ;; next two inductor names and value
     (let ((inductors (gnetlist:get-package-attribute package "inductors"))
@@ -927,7 +927,7 @@
 ;; No return, and no component value is written, or extra attribs.
 ;; Those are handled later.
 ;;-------------------------------------------------------------------
-(define spice-sdb:write-component-no-value
+(define spice-sdb:write-refdes-nets
   (lambda (package)
     (display (string-append package " "))  ;; write component refdes
     (spice-sdb:write-net-names-on-component package)
@@ -1082,7 +1082,7 @@
 ;;      A? -- Invokes write-ic. This provides the opportunity for a code model
 ;;            which may include a .model line.
 ;;      D? -- Invokes write-diode
-;;      Q? -- Invokes write-transistor-diode. (The "type" attribute is <unknown>
+;;      Q? -- Invokes write-component. (The "type" attribute is <unknown>
 ;;            in this case so that the spice simulator will barf if the user
 ;;            has been careless.)
 ;;      M? -- Same as Q
@@ -1103,15 +1103,15 @@
       (cond
        ((string=? first-char "A") (spice-sdb:write-ic package file-info-list))
        ((string=? first-char "D") (spice-sdb:write-diode package))
-       ((string=? first-char "Q") (spice-sdb:write-transistor-diode package #f "<unknown>" (list)))
-       ((string=? first-char "M") (spice-sdb:write-transistor-diode package #f "<unknown>" (list)))
+       ((string=? first-char "Q") (spice-sdb:write-component package #f "<unknown>" (list)))
+       ((string=? first-char "M") (spice-sdb:write-component package #f "<unknown>" (list)))
        ((string=? first-char "U") (spice-sdb:write-ic package file-info-list))
        ((string=? first-char "V") (spice-sdb:write-independent-voltage-source package))
        ((string=? first-char "I") (spice-sdb:write-independent-current-source package))
        ((string=? first-char "X") (spice-sdb:write-ic package file-info-list))
        (else
         (message (string-append "Found unknown component.  Refdes = " package "\n"))
-        (spice-sdb:write-component-no-value package)
+        (spice-sdb:write-refdes-nets package)
         ;; write component value, if components have a label "value=#"
         ;; what if a component has no value label, currently unknown is written
         (display (spice:component-value package))
