@@ -421,18 +421,9 @@
           (format #t ".MODEL ~A ~A (~A)\n" model-name type package-model))))))
 
 
-;;----------------------------------------------------------------
-;;  write diode
-;;  This writes out a valid diode refdes & then calls
-;;  the function which writes the rest of the line.
-;;----------------------------------------------------------------
-(define spice-sdb:write-diode
-  (lambda (package)
-    (debug-spew (string-append "Found diode.  Refdes = " package "\n"))
-    (let ((attrib-list (list "ic" "temp") ))
-      (spice-sdb:write-component package "D" "D" attrib-list))
-  )
-)
+;;  Writes diode SPICE card for PACKAGE.
+(define (spice-sdb:write-diode package)
+  (spice-sdb:write-component package "D" "D" '("ic" "temp")))
 
 
 ;;----------------------------------------------------------------
