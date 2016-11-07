@@ -534,111 +534,36 @@
 (define (spice-sdb:write-vc-switch package)
   (spice-sdb:write-component package "S" "SW" '()))
 
+;;; Writes SPICE card for PACKAGE which must be a passive
+;;; (resistor, capacitor, or inductor) with ATTRIBS in the end.
+(define (write-passive package attribs)
+  (let ((value (spice:component-value package))
+        (model-name (gnetlist:get-package-attribute package "model-name")))
 
-;;--------------------------------------------------------------------
-;;  write resistor
-;;--------------------------------------------------------------------
-(define spice-sdb:write-resistor
-  (lambda (package)
-
-    (debug-spew (string-append "Found resistor.  Refdes = " package "\n"))
-
-    ;; first write out refdes and attached nets
     (spice-sdb:write-refdes-nets package)
-
-    ;; next write out mandatory resistor value if it exists.
-    (let ((value (gnetlist:get-package-attribute package "value")))
-        (if (not (string=? value "unknown"))
-                (display (string-append value " " )))
-    )
-
-    ;; next write our model name if it exists
-    (let ((model-name (gnetlist:get-package-attribute package "model-name")))
-        (if (not (string=? model-name "unknown"))
-                (display (string-append model-name " " )))
-    )
-
-    ;; next create list of attributes which can be attached to a resistor.
-    ;; I include non-standard "area" attrib here per popular demand.
-    (let ((attrib-list (list "area" "l" "w" "temp")))
-            ;; write the attributes (if any) separately
-      (spice:write-list-of-attributes package attrib-list)
-      (display " "))  ;; add additional space. . . .
-
-    ;; finally output a new line
-    (newline)
-
-  )
-)
+    (display (string-join (filter-known value model-name) " "))
+    (display " ")
+    ;; Create list of attributes which can be attached to a passive.
+    (spice:write-list-of-attributes package attribs)
+    (display " ") ;; add additional space. . . .
+    (newline)))
 
 
-;;----------------------------------------------------------------------------
-;;  write capacitor
-;;----------------------------------------------------------------------------
-(define spice-sdb:write-capacitor
-  (lambda (package)
-
-    (debug-spew (string-append "Found capacitor.  Refdes = " package "\n"))
-
-    ;; first write out refdes and attached nets
-    (spice-sdb:write-refdes-nets package)
-
-    ;; next write capacitor value, if any.  Note that if the
-    ;; component value is not assigned nothing will be written out.
-    (let ((value (gnetlist:get-package-attribute package "value")))
-        (if (not (string=? value "unknown"))
-                (display (string-append value " " )))
-    )
-
-    ;; next write capacitor model name, if any.  This is applicable to
-    ;; semiconductor caps used in chip design.
-    (let ((model-name (gnetlist:get-package-attribute package "model-name")))
-        (if (not (string=? model-name "unknown"))
-                (display (string-append model-name " " )))
-    )
-
-    ;; Next write out attributes if they exist.  Use
-    ;; a list of attributes which can be attached to a capacitor.
-    ;; I include non-standard "area" attrib here per request of Peter Kaiser.
-    (let ((attrib-list (list "area" "l" "w" "ic")))
-      (spice:write-list-of-attributes package attrib-list)
-            ;; write the off attribute separately
-                (display " "))  ;; add additional space. . . .
-
-    (newline)
-  )
-)
+;;; Writes resistor SPICE card for PACKAGE.
+(define (spice-sdb:write-resistor package)
+  ;; Non-standard "area" attrib is here per popular demand.
+  (write-passive package '("area" "l" "w" "temp")))
 
 
-;;----------------------------------------------------------------------------
-;;  write inductor
-;;----------------------------------------------------------------------------
-(define spice-sdb:write-inductor
-  (lambda (package)
-
-    (debug-spew (string-append "Found inductor.  Refdes = " package "\n"))
-
-    ;; first write out refdes and attached nets
-    (spice-sdb:write-refdes-nets package)
+;;; Writes capacitor SPICE card for PACKAGE.
+(define (spice-sdb:write-capacitor package)
+  ;; Non-standard "area" attrib is here per request of Peter Kaiser.
+  (write-passive package '("area" "l" "w" "ic")))
 
 
-    ;; next write inductor value, if any.  Note that if the
-    ;; component value is not assigned, then it will write "unknown"
-    (let ((value (gnetlist:get-package-attribute package "value")))
-                (display value)
-    )
-
-
-    ;; create list of attributes which can be attached to a inductor
-    (let ((attrib-list (list "l" "w" "ic")))
-      (spice:write-list-of-attributes package attrib-list)
-
-      ;; write the off attribute separately
-      (display " "))  ;; add additional space. . . .
-
-    (newline)
-  )
-)
+;;; Writes inductor SPICE card for PACKAGE.
+(define (spice-sdb:write-inductor package)
+  (write-passive package '("l" "w" "ic")))
 
 
 ;;-------------------------------------------------------------------------
