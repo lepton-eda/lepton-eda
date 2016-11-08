@@ -688,38 +688,19 @@
         model spice:component-value))))
 
 
-;;----------------------------------------------------------
-;; Include SPICE statements from a SPICE directive block.
-;;----------------------------------------------------------
-(define spice-sdb:write-directive
-  (lambda (package)
-             ;; Collect variables used in creating spice code
-        (let ((value (gnetlist:get-package-attribute package "value"))
-              (file (gnetlist:get-package-attribute package "file"))
-             )   ;; end of local assignments
-
-          (debug-spew (string-append "Found SPICE directive box.  Refdes = " package "\n"))
-
-          (cond
-
-              ;; First look to see if there is a value.
-           ((not (string=? value "unknown"))
-            (begin
-              (display (string-append value "\n"))
-              (debug-spew (string-append "Appending value = \"" value "\" to output file.\n"))
-            ))
-
-              ;; since there is no value, look for file.
-           ((not (string=? file "unknown"))
-            (begin
-              (spice-sdb:insert-text-file file)   ;; Note that we don't wait until the end here.  Is that OK?
-              (debug-spew (string-append "Inserting contents of file = " file " into output file.\n"))
-            ))
-
-          ) ;; close of cond
-        ) ;; close of let
-    ) ;; close of lambda
-) ;; close of define
+;;; Includes SPICE statements from a SPICE directive block
+;;; PACKAGE.
+(define (spice-sdb:write-directive package)
+  (let ((value (gnetlist:get-package-attribute package "value"))
+        (file (gnetlist:get-package-attribute package "file")))
+    (cond
+     ;; First look to see if there is a value.
+     ((not (unknown? value))
+      (format #t "~A\n" value))
+     ;; Since there is no value, look for file.
+     ((not (unknown? file))
+      ;; Note that we don't wait until the end here.  Is that OK?
+      (spice-sdb:insert-text-file file)))))
 
 
 ;;----------------------------------------------------------
