@@ -116,7 +116,6 @@
 ;;************  Program housekeeping, handling calling flags, etc.  ****************
 ;;**********************************************************************************
 
-;; The following is needed to make guile 1.8.x happy.
 (use-modules (ice-9 rdelim)
              (ice-9 match)
              (srfi srfi-1)
