@@ -177,21 +177,8 @@
   (define (subckt-name package)
     (and (string=? (gnetlist:get-package-attribute package "device")
                    "spice-subcircuit-LL")
-         (string-append ".SUBCKT "
-                        (gnetlist:get-package-attribute package
-                                                        "model-name"))))
+         (gnetlist:get-package-attribute package "model-name")))
   (any subckt-name package-list))
-
-
-;;----------------------------------------------------------
-;; Extract the modelname from the .SUBCKT modelname line.
-;; Just grab the chars from char 8 to the end of the string.
-;;---------------------------------------------------------
-(define spice-sdb:get-subcircuit-modelname
-  (lambda (schematic-type)
-    (substring schematic-type 8 (string-length schematic-type))
-  )
-)
 
 
 ;;; Returns a list of packages from PACKAGE-LIST whose "device="
@@ -979,10 +966,9 @@ the name is changed to canonical."
 ;;
     (set-current-output-port (gnetlist:output-port output-filename))
     (let* ((subckt? (spice-sdb:get-schematic-type packages))
-           (schematic-type (or subckt? "normal schematic"))
-           (model-name (spice-sdb:get-subcircuit-modelname schematic-type))
-           (file-info-list (list))
-          )
+           (schematic-type (or (and subckt? (string-append ".SUBCKT " subckt?))
+                               "normal schematic"))
+           (file-info-list (list)))
       (message "Using SPICE backend by SDB -- Version of 4.28.2007\n")
       (message (string-append "schematic-type = " schematic-type "\n"))
 
@@ -1052,7 +1038,7 @@ the name is changed to canonical."
 ;;
       (if subckt?
           (begin
-            (spice-sdb:write-bottom-footer (string-append ".ends " model-name))
+            (spice-sdb:write-bottom-footer (string-append ".ends " subckt?))
             (display "*******************************\n")
           )
           (if (not (calling-flag? "no_end_card" (gnetlist:get-calling-flags)))
