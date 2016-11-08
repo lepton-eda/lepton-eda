@@ -567,49 +567,24 @@
   (write-passive package "L" '("l" "w" "ic")))
 
 
-;;-------------------------------------------------------------------------
-;;  write independent voltage source
-;;  The behavior of the voltage source is held in the "value" attribute
-;;-------------------------------------------------------------------------
-(define spice-sdb:write-independent-voltage-source
-  (lambda (package)
-    (debug-spew (string-append "Found independent voltage source.  Refdes = " package "\n"))
-
-            ;; first write out refdes and attached nets
-    (spice-sdb:write-refdes-nets package)
-
-            ;; next write voltage value, if any.  Note that if the
-            ;; voltage value is not assigned, then it will write "unknown"
-    (let ((value (gnetlist:get-package-attribute package "value")))
-                (display value)
-    )
-
-    (newline)
-  )
-)
+;;; Writes independent voltage source SPICE card for PACKAGE.
+;;; The behavior of the voltage source is held in the "value"
+;;; attribute.
+(define (spice-sdb:write-independent-voltage-source package)
+  (spice-sdb:write-prefix package "V")
+  (spice-sdb:write-refdes-nets package)
+  (display (spice:component-value package))
+  (newline))
 
 
-;;-------------------------------------------------------------------------
-;;  write independent current source
-;;  The behavior of the current source is held in the "value" attribute
-;;-------------------------------------------------------------------------
-(define spice-sdb:write-independent-current-source
-  (lambda (package)
-
-        (debug-spew (string-append "Found independent current source.  Refdes = " package "\n"))
-
-            ;; first write out refdes and attached nets
-    (spice-sdb:write-refdes-nets package)
-
-            ;; next write current value, if any.  Note that if the
-            ;; current value is not assigned, then it will write "unknown"
-    (let ((value (gnetlist:get-package-attribute package "value")))
-                (display value)
-    )
-
-    (newline)
-  )
-)
+;;; Writes independent current source SPICE card for PACKAGE.
+;;; The behavior of the current source is held in the "value"
+;;; attribute.
+(define (spice-sdb:write-independent-current-source package)
+  (spice-sdb:write-prefix package "I")
+  (spice-sdb:write-refdes-nets package)
+  (display (spice:component-value package))
+  (newline))
 
 
 ;;----------------------------------------------------------------------------
