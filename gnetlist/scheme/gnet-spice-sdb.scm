@@ -623,11 +623,11 @@
   ;; Helper function. Called with pinseq, returns net name, or #f
   ;; if net name found is "ERROR_INVALID_PIN".
   (define (get-net-name pin)
-    (let ((net (car (spice:get-net refdes
-                                   (gnetlist:get-attribute-by-pinseq
-                                    refdes
-                                    (number->string pin)
-                                    "pinnumber")))))
+    (let ((net (spice:get-net refdes
+                              (gnetlist:get-attribute-by-pinseq
+                               refdes
+                               (number->string pin)
+                               "pinnumber"))))
       (and (not (string=? net "ERROR_INVALID_PIN"))
            net)))
 

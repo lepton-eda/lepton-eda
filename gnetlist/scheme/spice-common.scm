@@ -31,9 +31,9 @@
 (define spice:write-two-pin-names
   (lambda (package pin-a pin-b)
     (display (string-append
-      (car (spice:get-net package (gnetlist:get-attribute-by-pinseq package pin-a "pinnumber"))) " "))
+              (spice:get-net package (gnetlist:get-attribute-by-pinseq package pin-a "pinnumber")) " "))
     (display (string-append
-      (car (spice:get-net package (gnetlist:get-attribute-by-pinseq package pin-b "pinnumber"))) " "))))
+              (spice:get-net package (gnetlist:get-attribute-by-pinseq package pin-b "pinnumber")) " "))))
 
 
 ;;--------------------------------------------------------------------
@@ -46,7 +46,7 @@
   (do ((i 1 (1+ i)))
       ((> i  (length (gnetlist:get-pins refdes))))
     (let ((pin-name (number->string i)))
-      (display (car (spice:get-net refdes (gnetlist:get-attribute-by-pinseq refdes pin-name "pinnumber"))))
+      (display (spice:get-net refdes (gnetlist:get-attribute-by-pinseq refdes pin-name "pinnumber")))
       (write-char #\space))))
 
 
@@ -202,8 +202,8 @@
 ;;-----------------------------------------------------------
 ;; gnet-spice replacement of gnetlist:get-nets, a net labeled "GND" becomes 0
 ;;-----------------------------------------------------------
-(define spice:get-net
-  (lambda (refdes pin-name)
-    (let ((net-name (gnetlist:get-nets refdes pin-name)))
-      (cond ((string=? (car net-name) "GND") (cons "0" #t))
-            (else                            (cons (car net-name) #t))))))
+(define (spice:get-net package pin-name)
+  (let ((net-name (car (gnetlist:get-nets package pin-name))))
+    (if (string=? net-name "GND")
+        "0"
+        net-name)))
