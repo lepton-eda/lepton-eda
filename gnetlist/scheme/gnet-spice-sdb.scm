@@ -587,33 +587,24 @@
   (newline))
 
 
-;;----------------------------------------------------------------------------
-;;  write Josephson junction in wrspice format. Paul Bunyk, Sep 2, 2005
-;;----------------------------------------------------------------------------
-(define spice-sdb:write-josephson-junction
-  (lambda (package)
+;;; Writes Josephson junction SPICE card in wrspice format for PACKAGE.
+;;; Paul Bunyk, Sep 2, 2005.
+;;; A dummy node is used for JJ phase. Unlike in Xic netlister it has
+;;; a reasonable name (package), not a number.
+;;; Using Josephson junctions in SPICE is documented, e.g. at
+;;;   https://embedded.eecs.berkeley.edu/pubs/downloads/spice/josephsonJunctionsInSPICE2G5.pdf
+(define (spice-sdb:write-josephson-junction package)
+  (spice-sdb:write-prefix package "B")
+  (spice-sdb:write-refdes-nets package)
 
-    (debug-spew (string-append "Found Josephson junction.  Refdes = " package "\n"))
-
-    ;; first write out refdes and attached nets
-    (spice-sdb:write-refdes-nets package)
-
-    ;; next, add a dummy node for JJ phase. Unlike in Xic netlister, give it
-    ;; a reasonable name, not a number, e.g., refdes.
-    (display (string-append package " "))
-
-    ;; next write JJ model name, if any.
-    (let ((model-name (gnetlist:get-package-attribute package "model-name")))
-        (if (not (string=? model-name "unknown"))
-                (display (string-append model-name " " )))
-    )
-
-    ;; Next write out attributes if they exist.  Use
-    ;; a list of attributes which can be attached to a junction.
-    (spice:write-list-of-attributes package (list "area"))
-    (newline)
-  )
-)
+  (display
+   (string-join
+    (filter-known package
+                  (gnetlist:get-package-attribute package "model-name"))
+    " "))
+  (display " ")
+  (spice:write-list-of-attributes package '("area"))
+  (newline))
 
 
 ;;----------------------------------------------------------------------------
