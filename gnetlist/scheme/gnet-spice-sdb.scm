@@ -625,28 +625,20 @@
   (newline))
 
 
-;;----------------------------------------------------------------------------
-;; write a voltage probe
-;;----------------------------------------------------------------------------
+;;; Writes voltage probe SPICE card for PACKAGE.
 (define (spice-sdb:write-probe package)
-    ;; fetch only one attr we care about, so far
-    (let ((value (gnetlist:get-package-attribute package "value"))
-         ) ;; end of local assignments
-
-    (debug-spew (string-append "Found Probe item, refdes = " package "\n"))
-
-    (if (string=? value "unknown")
-      (set! value "TRAN"))
-
-    (display (string-append "* Probe device " package " on nets "))
+  (let ((value (gnetlist:get-package-attribute package "value")))
+    (format #t "* Probe device ~A on nets " package)
     (spice-sdb:write-net-names-on-component package)
     (newline)
-    (display (string-append ".print " value " +"))
-    (spice-sdb:write-net-names-on-component package
-      (string-join (map (lambda (x) "V(~a)") (gnetlist:get-pins package)) " " 'infix) ) ;; make format string
-    (newline)
-  ) ;; end of let
-) ;; close of define
+    (format #t ".print ~A +" (if (unknown? value) "TRAN" value))
+    ;; make format string
+    (spice-sdb:write-net-names-on-component
+     package
+     (string-join
+      (map (lambda (x) "V(~a)") (gnetlist:get-pins package))
+      " " 'infix))
+    (newline)))
 
 
 ;;--------------------------------------------------------------------
