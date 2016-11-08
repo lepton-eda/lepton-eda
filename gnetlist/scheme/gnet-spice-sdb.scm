@@ -628,53 +628,33 @@
     (newline)))
 
 
-;;--------------------------------------------------------------------
-;; Given a refdes, and optionally a format string, this writes
-;; out the nets attached to the component's pins. If it's not called
-;; with a format string it looks for one in the net-format attribute,
-;; otherwise it writes out the pins unformatted. This is used to write
-;; out non-slotted parts.
-;;--------------------------------------------------------------------
-(define (spice-sdb:write-net-names-on-component refdes . format)
+;;; Given REFDES, and optional FORMAT which is a format string,
+;;; this writes out the nets attached to the component's pins. If
+;;; it's not called with a format string it looks for one in the
+;;; "net-format" attribute, otherwise it writes out the pins
+;;; unformatted. This is used to write out non-slotted parts.
+(define* (spice-sdb:write-net-names-on-component refdes
+                                                 #:optional (format #f))
+  ;; Helper function. Called with pinseq, returns net name, or #f
+  ;; if net name found is "ERROR_INVALID_PIN".
+  (define (get-net-name pin)
+    (let ((net (car (spice:get-net refdes
+                                   (gnetlist:get-attribute-by-pinseq
+                                    refdes
+                                    (number->string pin)
+                                    "pinnumber")))))
+      (and (not (string=? net "ERROR_INVALID_PIN"))
+           net)))
 
-;; get-net-name -- helper function. Called with pinseq, returns net name,
-;; unless net name is "ERROR_INVALID_PIN" then it returns false.
-    (define (get-net-name pin)
-        (set! pin (number->string pin))
+  (let ((netnames (filter-map get-net-name (range 1 (length (gnetlist:get-pins refdes)))))
+        ;; Format argument takes priority, otherwise use attribute "net-format"
+        (format (or format (gnetlist:get-package-attribute refdes "net-format"))))
 
-;; -------  Super debug stuff  --------
-          (if #f
-            (begin
-              (debug-spew "  In write-net-names-on-component. . . . \n")
-              (debug-spew (string-append "     pin-name = " pin "\n"))
-              (debug-spew (string-append "     pinnumber = " (gnetlist:get-attribute-by-pinseq refdes pin "pinnumber") "\n"))
-              (debug-spew (string-append "     pinseq = " (gnetlist:get-attribute-by-pinseq refdes pin "pinseq")))
-              (if (not (string=? pin (gnetlist:get-attribute-by-pinseq refdes pin "pinseq")))
-                (debug-spew " <== INCONSISTENT!\n")
-                (debug-spew "\n") )
-              (debug-spew (string-append "     netname = " (car (spice:get-net refdes (gnetlist:get-attribute-by-pinseq refdes pin "pinnumber"))) "\n"))
-          )) ;; if #T for super debugging
-;; -------------------------------------
-
-        (set! pin (car (spice:get-net refdes (gnetlist:get-attribute-by-pinseq refdes pin "pinnumber"))))
-        (if (string=? pin "ERROR_INVALID_PIN")
-          (begin
-            (debug-spew (string-append "For " refdes ", found pin with no pinseq attribute.  Ignoring. . . .\n"))
-            #f)  ;; begin
-        pin)  ;; if
-    )  ;; define get-net-name
-
-    ;; First do local assignments
-    (let ((netnames (filter-map get-net-name (range 1 (length (gnetlist:get-pins refdes)))))
-         )  ;; let
-      (if (null? format) ;; Format agument take priority, otherwise use attribute
-        (set! format (gnetlist:get-package-attribute refdes "net-format"))
-        (set! format (car format)) )
-      (if (string=? format "unknown")
-        (display (string-join netnames " " 'suffix))               ;; write out nets.
-        (apply simple-format (cons #t (cons format netnames))) )   ;; write out nets with format string
-    )  ;; let
-)
+    (if (unknown? format)
+        ;; write out nets.
+        (display (string-join netnames " " 'suffix))
+        ;; write out nets with format string
+        (apply simple-format (cons #t (cons format netnames))))))
 
 
 ;;; Write the refdes and the net names connected to pins on
