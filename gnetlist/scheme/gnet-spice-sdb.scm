@@ -269,28 +269,15 @@
         (message (string-append "ERROR: File '" model-filename "' not found.\n"))
         (primitive-exit 1))))
 
+;;; Check nomunge_mode flag.
+(define nomunge (calling-flag? "nomunge_mode" (gnetlist:get-calling-flags)))
 
-;;---------------------------------------------------------------
-;;  write prefix if first char of refdes is improper,
-;;  eg. if MOSFET is named T1 then becomes MT1 in SPICE
-;;---------------------------------------------------------------
-(define spice-sdb:write-prefix
-    (lambda (package prefix)
-      (let ((different-prefix (not (string=? (substring package 0 1) prefix)) )
-            (nomunge (calling-flag? "nomunge_mode" (gnetlist:get-calling-flags)) )
-           )
-        (debug-spew (string-append "Checking prefix.  Package prefix =" (substring package 0 1) "\n"))
-        (debug-spew (string-append "                  correct prefix =" prefix "\n"))
-        (debug-spew "   nomunge mode = ")
-        (debug-spew nomunge)
-        (debug-spew (string-append "\n  different-prefix="))
-        (debug-spew different-prefix)
-        (debug-spew "\n")
-        (if (and different-prefix (not nomunge))
-            (display prefix) )
-      )
-    )
-)
+;;; Writes PREFIX if the first char of PACKAGE doesn't match it,
+;;; eg. if MOSFET is named T1 then it becomes MT1.
+(define (spice-sdb:write-prefix package prefix)
+  (when (and (not nomunge)
+             (not (string=? (string-take package 1) prefix)))
+    (display prefix)))
 
 
 ;;---------------------------------------------------------------
