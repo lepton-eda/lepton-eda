@@ -215,21 +215,6 @@
    (lambda (package) (car (gnetlist:get-nets package "1")))
    package-list))
 
-;;----------------------------------------------------------
-;;  This returns a list of all the integers from start to
-;;  stop, with the optional step size.
-;;  It is similar to perl's range operator '..'
-;;----------------------------------------------------------
-(define (range start stop . step)
-  (if (null? step)
-    (iota (+ (- stop start) 1) start)
-    (begin
-      (set! step (car step))
-      (iota (+ (ceiling (/ (- stop start) step)) 1) start step)
-    )
-  )
-)
-
 
 ;;; Given a MODEL-FILENAME, open the file, get the first line,
 ;;; and see if it is a .MODEL or .SUBCKT file.
@@ -646,7 +631,7 @@
       (and (not (string=? net "ERROR_INVALID_PIN"))
            net)))
 
-  (let ((netnames (filter-map get-net-name (range 1 (length (gnetlist:get-pins refdes)))))
+  (let ((netnames (filter-map get-net-name (iota (1+ (length (gnetlist:get-pins refdes))) 1)))
         ;; Format argument takes priority, otherwise use attribute "net-format"
         (format (or format (gnetlist:get-package-attribute refdes "net-format"))))
 
