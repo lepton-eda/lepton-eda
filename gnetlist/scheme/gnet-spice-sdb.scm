@@ -702,30 +702,19 @@
       ;; Note that we don't wait until the end here.  Is that OK?
       (spice-sdb:insert-text-file file)))))
 
+;;; Check embedd_mode flag.
+(define embed-mode (calling-flag? "embedd_mode" (gnetlist:get-calling-flags)))
 
-;;----------------------------------------------------------
-;; Include a file using an .INCLUDE directive
-;; Changed on 6.12.2005: to embed the contents of the file,
-;; you must call gnetlist with the -e flag set.
-;;----------------------------------------------------------
-(define spice-sdb:write-include
-  (lambda (package)
-    (let ((file (gnetlist:get-package-attribute package "file")))
-
-      (debug-spew (string-append "Found SPICE include box.  Refdes = " package "\n"))
-
-      (if (not (string=? file "unknown"))
-        (if  (calling-flag? "embedd_mode" (gnetlist:get-calling-flags))
-              (begin
-                (spice-sdb:insert-text-file file)                 ;; -e found: invoke insert-text-file
-                (debug-spew (string-append "embedding contents of file " file " into netlist.\n")))
-              (begin
-                (display (string-append ".INCLUDE " file "\n"))   ;; -e not found: just print out .INCLUDE card
-                (debug-spew "placing .include directive string into netlist.\n"))
-          )
-        (debug-spew "silently skip \"unknown\" file.\n")
-       )
-)))
+;;; If the "embedd_mode" option is set, inserts the contents of
+;;; the file specified in the "file" attribute of PACKAGE,
+;;; otherwise, if the value of the attribute is defined, just adds
+;;; .INCLUDE SPICE card with the value to the output netlist.
+(define (spice-sdb:write-include package)
+  (let ((file (gnetlist:get-package-attribute package "file")))
+    (when (not (unknown? file))
+      (if embed-mode
+          (spice-sdb:insert-text-file file)
+          (format #t ".INCLUDE ~A\n" file)))))
 
 
 ;;----------------------------------------------------------
