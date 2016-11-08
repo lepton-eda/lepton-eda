@@ -607,30 +607,22 @@
   (newline))
 
 
-;;----------------------------------------------------------------------------
-;;  write mutual inductance(actually K). Paul Bunyk, Sep 2, 2005
-;;----------------------------------------------------------------------------
-(define spice-sdb:write-coupling-coefficient
-  (lambda (package)
-
-    (debug-spew (string-append "Found mutual inductance.  Refdes = " package "\n"))
-
-    ;; first write out refdes and attached nets (none)
-    (spice-sdb:write-refdes-nets package)
-
-    ;; next two inductor names and value
-    (let ((inductors (gnetlist:get-package-attribute package "inductors"))
-          (value (gnetlist:get-package-attribute package "value")) )
-        (if (not (string=? inductors "unknown"))
-                (display (string-append inductors " " )))
-        (if (not (string=? value "unknown"))
-                (display (string-append value " " )))
-
-    )
-
-    (newline)
-  )
-)
+;;; Writes coupled (mutual) inductance SPICE card for PACKAGE.
+;;; Inductor value must be in range 0 .. 1.
+;;; Paul Bunyk, Sep 2, 2005.
+;;; FIXME: inductors= is required and must not be just thrown if
+;;;        unknown.
+;;; FIXME: it would be better to have two inductor attributes,
+;;;        say, inductor1= and inductor2=.
+(define (spice-sdb:write-coupling-coefficient package)
+  (spice-sdb:write-prefix package "K")
+  (spice-sdb:write-refdes-nets package)
+  (display
+   (string-join
+    (filter-known (gnetlist:get-package-attribute package "inductors")
+                  (spice:component-value package))
+    " "))
+  (newline))
 
 
 ;;----------------------------------------------------------------------------
