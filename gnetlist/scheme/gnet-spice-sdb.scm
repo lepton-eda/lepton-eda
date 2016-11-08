@@ -717,13 +717,10 @@
           (format #t ".INCLUDE ~A\n" file)))))
 
 
-;;----------------------------------------------------------
-;; Include an option using an .OPTIONS directive
-;;----------------------------------------------------------
-(define spice-sdb:write-options
-  (lambda (package)
-    (debug-spew (string-append "Found .OPTIONS box.  Refdes = " package "\n"))
-    (display (string-append ".OPTIONS " (spice:component-value package) "\n"))))
+;;; Adds .OPTIONS SPICE card with value of the "value" attribute
+;;; of PACKAGE.
+(define (spice-sdb:write-options package)
+  (format #t ".OPTIONS ~A\n" (spice:component-value package)))
 
 
 ;;----------------------------------------------------------
