@@ -723,50 +723,26 @@
   (format #t ".OPTIONS ~A\n" (spice:component-value package)))
 
 
-;;----------------------------------------------------------
-;; Include a spice model (instantiated as a model box on the schematic)
-;;  Two types of model can be included:
-;;  1.  An embedded model, which is a one- or multi-line string held in the attribute "model".
-;;      In this case, the following attributes are mandatory:
-;;      --  model (i.e. list of parameter=value strings)
-;;      --  model-name
-;;      --  type
-;;      In this case, the function creates and formats the correct spice model line(s).
-;;  2.  A model held in a file whose name is held in the attribute "file"
-;;      In this case, the following attribute are mandatory:
-;;      --  file (i.e. list of parameter=value strings)
-;;      In this case, the function just opens the file and dumps the contents
-;;      into the netlist.
-;;----------------------------------------------------------
-(define spice-sdb:write-model
-  (lambda (package)
-             ;; Collect variables used in creating spice code
-        (let ((model-name (gnetlist:get-package-attribute package "model-name"))
-              (model-file (gnetlist:get-package-attribute package "file"))
-              (model (gnetlist:get-package-attribute package "model"))
-              (type (gnetlist:get-package-attribute package "type"))
-             )   ;; end of local assignments
+;;; Include a spice model (instantiated as a model box on the schematic)
+;;;  Two types of model can be included:
+;;;  1.  An embedded model, which is a one- or multi-line string held in the attribute "model".
+;;;      In this case, the following attributes are mandatory:
+;;;      --  model (i.e. list of parameter=value strings)
+;;;      --  model-name
+;;;      --  type
+;;;      In this case, the function creates and formats the correct spice model line(s).
+;;;  2.  A model held in a file whose name is held in the attribute "file"
+;;;      In this case, the following attribute are mandatory:
+;;;      --  file (i.e. list of parameter=value strings)
+;;;      This case is being handled in some other function.
+(define (spice-sdb:write-model package)
+  (let ((model-name (gnetlist:get-package-attribute package "model-name"))
+        (model (gnetlist:get-package-attribute package "model"))
+        (type (gnetlist:get-package-attribute package "type")))
 
-          (debug-spew (string-append "Found .MODEL box.  Refdes = " package "\n"))
-
-          ;; Now, depending upon what combination of model, model-file, and model-name
-          ;; exist (as described above) write out lines into spice netlist.
-          (cond
-             ;; one model and model name exist
-           ( (not (or (string=? model "unknown") (string=? model-name "unknown")))
-             (debug-spew (string-append "found model and model-name for " package "\n"))
-             (display (string-append ".MODEL " model-name " " type " (" model ")\n")) )
-
-             ;; model file exists
-           ( (not (or (string=? model-file "unknown") ))
-             (debug-spew (string-append "found model-file for " package "\n"))
-             ;; (spice-sdb:insert-text-file model-file)   ;; don't write it out -- it's handled after the second pass.
-           )
-
-          )  ;; close of cond
-        ) ;; close of let
-    ) ;; close of lambda
-) ;; close of define
+    (and (not (unknown? model))
+         (not (unknown? model-name))
+         (format #t ".MODEL ~A ~A (~A)\n" model-name type model))))
 
 
 ;;-------------------------------------------------------------------
