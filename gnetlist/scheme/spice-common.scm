@@ -25,7 +25,7 @@
 
 
 (define (unknown? value)
-  (string=? value "unknown"))
+  (string-ci=? value "unknown"))
 
 
 ;;---------------------------------------------------------------------

@@ -870,7 +870,7 @@
              ;; then check to see if file is in file-info-list.  If
              ;; file is new, open it, find out what type it is and, if
              ;; file-type is known, push info into file-info-list.
-             (file-type (and (not (string-ci=? model-file "unknown"))
+             (file-type (and (not (unknown? model-file))
                              (not (spice-sdb:in-file-info-list? model-file
                                                                 file-info-list))
                              (spice-sdb:get-file-type model-file))))
