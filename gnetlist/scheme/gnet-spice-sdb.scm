@@ -125,9 +125,6 @@
 ;; Common functions for the `spice' and `spice-sdb' backends
 (load-from-path "spice-common.scm")
 
-(define (unknown? value)
-  (string=? value "unknown"))
-
 (define (filter-known . ls)
   (filter-map (lambda (x) (and (not (unknown? x)) x)) ls))
 
@@ -658,7 +655,7 @@
 (define spice-sdb:component-optional-value
   (lambda (package)
     (let ((value (gnetlist:get-package-attribute package "value")))
-      (if (not (string=? value "unknown"))
+      (if (not (unknown? value))
         (string-append value " ")
         ""))))
 
@@ -669,7 +666,7 @@
 (define spice-sdb:component-model
   (lambda (package)
     (let ((model (gnetlist:get-package-attribute package "model")))
-      (if (not (string=? model "unknown"))
+      (if (not (unknown? model))
         model spice:component-value))))
 
 

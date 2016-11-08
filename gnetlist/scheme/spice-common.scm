@@ -24,6 +24,10 @@
 ;; --------------------------------------------------------------------------
 
 
+(define (unknown? value)
+  (string=? value "unknown"))
+
+
 ;;---------------------------------------------------------------------
 ;; write netnames connected to pin-a and pin-b
 ;;   (currently used by the controlled sources (e, g, f and h)
@@ -156,7 +160,7 @@
           ;; implement the controlled voltage source
       (display (string-append "E_" package " "))
       (spice:write-net-names-on-component package)
-      (display (string-append (if (string=? value "unknown") "1000Meg" value) "\n"))
+      (display (string-append (if (unknown? value) "1000Meg" value) "\n"))
           ;; implement the voltage measuring current source
           ;; imagine yourself copying the voltage of a voltage source with an internal
           ;; impedance, spice starts complaining about unconnected nets if this current
@@ -182,7 +186,7 @@
             ; Is it possible to make no differentiation between upper and lower case?
             ; That relieves you of mixed case forms e.g. As, AS, as..., they are the
             ; same attributes, spice3f5 is case insensitive.  And other spice versions?
-        (if (not (string=? attrib "unknown"))
+        (if (not (unknown? attrib))
           (display (string-append  " " (car attrib-list) "=" attrib)))
         (spice:write-list-of-attributes package (cdr attrib-list))))))
 
@@ -195,7 +199,7 @@
 (define spice:component-value
   (lambda (package)
     (let ((value (gnetlist:get-package-attribute package "value")))
-      (if (not (string=? value "unknown"))
+      (if (not (unknown? value))
         value
         "<No valid value attribute found>"))))
 
