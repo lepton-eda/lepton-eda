@@ -815,6 +815,11 @@
                (string-downcase
                 (gnetlist:get-package-attribute package "device")))))
 
+  ;; First process external files.  This lets numparam to work
+  ;; with ngspice, because numparam will at the subckt definition
+  ;; come before the main netlist.
+  (spice-sdb:process-spice-files file-info-list)
+
   (display "*==============  Begin SPICE netlist of main design ============\n")
 
   (for-each
@@ -976,28 +981,9 @@ the name is changed to canonical."
         ;; line followed by comments in file header.
         (spice-sdb:write-top-header))
 
-
-    ;; Now loop through all devices and process all "FILE" attributes.  Create
-    ;; file-info-list.
-    ;; Thanks to Carlos Nieves Onega for his e-mail to
-    ;; geda-dev which is the genesis of this section.
-    (let ((file-info-list (spice-sdb:create-file-info-list packages)))
-
-      ;;  Moved this loop before the next one to get numparam to
-      ;;  work with ngspice, because numparam will at the subckt
-      ;;  definition come before the main netlist.  Change
-      ;;  suggested by Dominique Michel; implemented in code on
-      ;;  6.12.2005.
-
-      ;;  Next loop through all items in file-info-list in the
-      ;;  SPICE netlist.  For each model-name, open up the
-      ;;  corresponding file, and call handle-spice-file to stick
-      ;;  the corresponding stuff into the output SPICE file.
-      ;; Process external files
-      (spice-sdb:process-spice-files file-info-list)
-
-      ;; Write actual netlist.
-      (spice-sdb:write-netlist file-info-list packages))
+    ;; Create file-info-list and write actual netlist.
+    (spice-sdb:write-netlist (spice-sdb:create-file-info-list packages)
+                             packages)
 
     ;;  Now write out .END(S) of netlist, depending upon whether this schematic is a
     ;;  "normal schematic" or a .SUBCKT.
