@@ -796,17 +796,13 @@
     (subckt_pmos . ,spice-sdb:write-subckt-pmos-transistor)
     (subckt_nmos . ,spice-sdb:write-subckt-nmos-transistor)))
 
-;;----------------------------------------------------------------------
-;; write-netlist is passed a list of refdesses (ls).  It uses
-;; each refdes to get the corresponding
-;; "device" attribute.  Depending upon the device, it then invokes one or another of the
-;; spice line output fcns to output a line of the spice netlist.
-;; I have enlarged the number of devices it recognizes -- SDB.
-;; write the refdes, to the pin# connected net and component
-;; value and optional extra attributes
-;; check if the component is a special spice component.
-;;----------------------------------------------------------------------
-(define (spice-sdb:write-netlist file-info-list ls)
+
+;;; Writes netlist for PACKAGES receiving info about file type
+;;; (for writing IC's info) from FILE-INFO-LIST.  If sort mode is
+;;; requested (when the calling flag 'sort_mode' is used),
+;;; packages are sorted so SPICE directives are output last and in
+;;; increasing order.
+(define (spice-sdb:write-netlist file-info-list packages)
   (define (get-write-func package)
     (assq-ref device-func-alist
               (string->symbol
@@ -821,7 +817,11 @@
        (if write-func
            (write-func package)
            (spice-sdb:write-default-component package file-info-list))))
-   ls))
+   (if sort-mode?
+       ;; sort on refdes
+       (sort packages spice-sdb:packsort)
+       ;; don't sort.
+       packages)))
 
 
 ;;----------------------------------------------------------------------
@@ -989,18 +989,8 @@ the name is changed to canonical."
       ;;  the corresponding stuff into the output SPICE file.
       (for-each (lambda (x) (spice-sdb:handle-spice-file (second x))) file-info-list)
 
-      ;; Now write out netlist as before.  But don't write file
-      ;; contents out.
-      ;; **** Modified by kh to sort list of packages so Spice
-      ;; directives, etc. (A?) are output last, and in increasing
-      ;; order.
-
-      (spice-sdb:write-netlist file-info-list
-                               (if sort-mode?
-                                   ;; sort on refdes
-                                   (sort packages spice-sdb:packsort)
-                                   ;; don't sort.
-                                   packages)))
+      ;; Write actual netlist.
+      (spice-sdb:write-netlist file-info-list packages))
 
     ;;  Now write out .END(S) of netlist, depending upon whether this schematic is a
     ;;  "normal schematic" or a .SUBCKT.
