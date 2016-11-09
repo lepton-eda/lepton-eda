@@ -157,13 +157,19 @@
       (_ #f)))
   (any found? file-info-list))
 
-;;; Writes an .INCLUDE card with the given FILE-NAME if
-;;; "include_mode" has been enabled, otherwise inserts the
-;;; FILE-NAME contents into the netlist.
-(define (spice-sdb:handle-spice-file file-name)
-  (if include-mode?
-      (format #t ".INCLUDE ~A\n" file-name)
-      (spice-sdb:insert-text-file file-name)))
+;;; If "include_mode" calling flag has been enabled, the procedure
+;;; writes an .INCLUDE card for each file from the FILE-INFO-LIST,
+;;; otherwise inserts contents of the files into the netlist.
+(define (spice-sdb:process-spice-files file-info-list)
+  (define (write-include file-name)
+    (format #t ".INCLUDE ~A\n" file-name))
+  (let ((process-func (if include-mode?
+                          write-include
+                          spice-sdb:insert-text-file)))
+    (for-each
+     ;; file-name is the second element in file info triplet
+     (lambda (info) (process-func (second info)))
+     file-info-list)))
 
 ;;; Opens MODEL-FILENAME and inserts its contents into the spice
 ;;; file.  This function is usually used to include spice models
@@ -987,7 +993,8 @@ the name is changed to canonical."
       ;;  SPICE netlist.  For each model-name, open up the
       ;;  corresponding file, and call handle-spice-file to stick
       ;;  the corresponding stuff into the output SPICE file.
-      (for-each (lambda (x) (spice-sdb:handle-spice-file (second x))) file-info-list)
+      ;; Process external files
+      (spice-sdb:process-spice-files file-info-list)
 
       ;; Write actual netlist.
       (spice-sdb:write-netlist file-info-list packages))
