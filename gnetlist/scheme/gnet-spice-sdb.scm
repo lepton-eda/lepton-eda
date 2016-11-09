@@ -897,12 +897,10 @@
             (string-join (cons subckt-name io-nets-list) " "))))
 
 
-;;---------------------------------------------------------------
-;; Write the .END line
-;;---------------------------------------------------------------
-(define (spice-sdb:write-bottom-footer salutation)
-  (display salutation)
-  (newline))
+;;; Writes toplevel footer.
+(define (spice-sdb:write-bottom-footer)
+  (if (not no-end-mode?)
+      (display ".end\n")))
 
 (define (get-command-line)
   "Outputs gnetlist command line as a string.
@@ -917,6 +915,13 @@ the name is changed to canonical."
         name))
   (let ((name (remove-lt-prefix (basename (car (program-arguments))))))
     (string-join (cons name (cdr (program-arguments))) " ")))
+
+;;; Writes a subcircuit footer for SUBCKT-NAME.
+(define (spice-sdb:write-subcircuit-footer subckt-name)
+  (format #t ".ends ~A
+*******************************
+"
+          subckt-name))
 
 ;;---------------------------------------------------------------
 ;; Spice netlist generation
@@ -1000,11 +1005,8 @@ the name is changed to canonical."
     ;;  Now write out .END(S) of netlist, depending upon whether this schematic is a
     ;;  "normal schematic" or a .SUBCKT.
     (if subckt?
-        (begin
-          (spice-sdb:write-bottom-footer (string-append ".ends " subckt?))
-          (display "*******************************\n"))
-        (if (not no-end-mode?)
-            (spice-sdb:write-bottom-footer ".end"))))
+        (spice-sdb:write-subcircuit-footer subckt?)
+        (spice-sdb:write-bottom-footer)))
 
   ;;  Finally, close up and go home.
   (close-output-port (current-output-port)))
