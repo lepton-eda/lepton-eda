@@ -954,90 +954,75 @@ the name is changed to canonical."
 ;;   5.  If the schematic-type is .SUBCKT:  write out .ENDS,  Otherwise: write out .END
 ;;   6.  Close up the SPICE netlist file and return.
 ;;---------------------------------------------------------------
-(define spice-sdb
-  (lambda (output-filename)
-    ;; Redefine write-net-names-on-component
-    (set! spice:write-net-names-on-component spice-sdb:write-net-names-on-component)
+(define (spice-sdb output-filename)
+  ;; Redefine write-net-names-on-component
+  (set! spice:write-net-names-on-component spice-sdb:write-net-names-on-component)
 
-;;
-;; First find out if this is a .SUBCKT lower level,
-;; or if it is a regular schematic.
-;;
-    (set-current-output-port (gnetlist:output-port output-filename))
-    (let* ((subckt? (spice-sdb:get-schematic-type packages))
-           (schematic-type (or (and subckt? (string-append ".SUBCKT " subckt?))
-                               "normal schematic"))
-           (file-info-list (list)))
-      (message "Using SPICE backend by SDB -- Version of 4.28.2007\n")
-      (message (string-append "schematic-type = " schematic-type "\n"))
+  ;; First find out if this is a .SUBCKT lower level,
+  ;; or if it is a regular schematic.
+  (set-current-output-port (gnetlist:output-port output-filename))
+  (let* ((subckt? (spice-sdb:get-schematic-type packages))
+         (schematic-type (or (and subckt? (string-append ".SUBCKT " subckt?))
+                             "normal schematic"))
+         (file-info-list (list)))
+    (message "Using SPICE backend by SDB -- Version of 4.28.2007\n")
+    (message (string-append "schematic-type = " schematic-type "\n"))
 
-      (if subckt?
-      ;; we have found a .SUBCKT type schematic.
-          (let* ((io-pin-packages (spice-sdb:get-spice-io-pins packages))
-                 (io-pin-packages-ordered (sort io-pin-packages refdes<?))
-                 (io-nets-list (spice-sdb:get-io-nets io-pin-packages-ordered)))
-      ;; now write out .SUBCKT header and .SUBCKT line
-            (spice-sdb:write-subcircuit-header)
-            (format #t "~A\n" (string-join (cons schematic-type io-nets-list) " ")))
+    (if subckt?
+        ;; we have found a .SUBCKT type schematic.
+        (let* ((io-pin-packages (spice-sdb:get-spice-io-pins packages))
+               (io-pin-packages-ordered (sort io-pin-packages refdes<?))
+               (io-nets-list (spice-sdb:get-io-nets io-pin-packages-ordered)))
+          ;; now write out .SUBCKT header and .SUBCKT line
+          (spice-sdb:write-subcircuit-header)
+          (format #t "~A\n" (string-join (cons schematic-type io-nets-list) " ")))
 
-      ;; Otherwise it's a regular schematic.  Write out command line followed by comments in file header.
-          (begin
-            (print-command-line)
-            (spice-sdb:write-top-header)
-          )
-
-      ) ;; end of if (not (string=? . . . .
+        ;; Otherwise it's a regular schematic.  Write out command
+        ;; line followed by comments in file header.
+        (begin
+          (print-command-line)
+          (spice-sdb:write-top-header)))
 
 
-;;
-;; Now loop through all devices and process all "FILE" attributes.  Create
-;; file-info-list.
-;; Thanks to Carlos Nieves Onega for his e-mail to
-;; geda-dev which is the genesis of this section.
-;;
-      (set! file-info-list (spice-sdb:create-file-info-list packages file-info-list))
+    ;; Now loop through all devices and process all "FILE" attributes.  Create
+    ;; file-info-list.
+    ;; Thanks to Carlos Nieves Onega for his e-mail to
+    ;; geda-dev which is the genesis of this section.
+    (set! file-info-list (spice-sdb:create-file-info-list packages file-info-list))
 
 
-;;
-;;  Moved this loop before the next one to get numparam to work with ngspice,
-;;  because numparam will at the subckt definition come before the main netlist.
-;;  Change suggested by Dominique Michel; implemented in code on 6.12.2005.
-;;
-;;  Next loop through all items in file-info-list in the SPICE netlist.
-;;  For each model-name, open up the corresponding file, and call handle-spice-file
-;;  to stick the corresponding stuff into the output SPICE file.
-;;
-      (for-each spice-sdb:handle-spice-file (map second file-info-list))
+    ;;  Moved this loop before the next one to get numparam to work with ngspice,
+    ;;  because numparam will at the subckt definition come before the main netlist.
+    ;;  Change suggested by Dominique Michel; implemented in code on 6.12.2005.
+    ;;
+    ;;  Next loop through all items in file-info-list in the SPICE netlist.
+    ;;  For each model-name, open up the corresponding file, and call handle-spice-file
+    ;;  to stick the corresponding stuff into the output SPICE file.
+    (for-each (lambda (x) (spice-sdb:handle-spice-file (second x))) file-info-list)
 
-;;
-;; Now write out netlist as before.  But don't write file contents out.
-;; **** Modified by kh to sort list of packages so Spice directives, etc. (A?) are output last,
-;; **** and in increasing order.
-;;
+    ;; Now write out netlist as before.  But don't write file contents out.
+    ;; **** Modified by kh to sort list of packages so Spice directives, etc. (A?) are output last,
+    ;; **** and in increasing order.
 
-      (display "*==============  Begin SPICE netlist of main design ============\n")
-      (if (spice-sdb:sort-refdes? (gnetlist:get-calling-flags))
-          (spice-sdb:write-netlist file-info-list (sort packages spice-sdb:packsort))  ;; sort on refdes
-          (spice-sdb:write-netlist file-info-list packages)                            ;; don't sort.
-      )
+    (display "*==============  Begin SPICE netlist of main design ============\n")
+    (spice-sdb:write-netlist file-info-list
+                             (if (spice-sdb:sort-refdes? (gnetlist:get-calling-flags))
+                                 ;; sort on refdes
+                                 (sort packages spice-sdb:packsort)
+                                 ;; don't sort.
+                                 packages))
 
-;;
-;;  Now write out .END(S) of netlist, depending upon whether this schematic is a
-;;  "normal schematic" or a .SUBCKT.
-;;
-      (if subckt?
-          (begin
-            (spice-sdb:write-bottom-footer (string-append ".ends " subckt?))
-            (display "*******************************\n")
-          )
-          (if (not (calling-flag? "no_end_card" (gnetlist:get-calling-flags)))
-              (spice-sdb:write-bottom-footer ".end"))))
-;;
-;;  Finally, close up and go home.
-;;
-    (close-output-port (current-output-port))
- )
-)
+    ;;  Now write out .END(S) of netlist, depending upon whether this schematic is a
+    ;;  "normal schematic" or a .SUBCKT.
+    (if subckt?
+        (begin
+          (spice-sdb:write-bottom-footer (string-append ".ends " subckt?))
+          (display "*******************************\n"))
+        (if (not (calling-flag? "no_end_card" (gnetlist:get-calling-flags)))
+            (spice-sdb:write-bottom-footer ".end"))))
+
+  ;;  Finally, close up and go home.
+  (close-output-port (current-output-port)))
 
 
 ;; Custom get-uref function to append ".${SLOT}" where a component
