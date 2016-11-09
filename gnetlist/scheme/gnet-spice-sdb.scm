@@ -975,16 +975,13 @@ the name is changed to canonical."
       ;; we have found a .SUBCKT type schematic.
           (let* ((io-pin-packages (spice-sdb:get-spice-io-pins packages))
                  (io-pin-packages-ordered (sort io-pin-packages refdes<?))
-                 (io-nets-list (spice-sdb:get-io-nets io-pin-packages-ordered))
-                )
-            (debug-spew "found .SUBCKT type schematic")
+                 (io-nets-list (spice-sdb:get-io-nets io-pin-packages-ordered)))
       ;; now write out .SUBCKT header and .SUBCKT line
             (spice-sdb:write-subcircuit-header)
             (format #t "~A\n" (string-join (cons schematic-type io-nets-list) " ")))
 
       ;; Otherwise it's a regular schematic.  Write out command line followed by comments in file header.
           (begin
-            (debug-spew "found normal type schematic")
             (print-command-line)
             (spice-sdb:write-top-header)
           )
@@ -998,9 +995,7 @@ the name is changed to canonical."
 ;; Thanks to Carlos Nieves Onega for his e-mail to
 ;; geda-dev which is the genesis of this section.
 ;;
-      (debug-spew "\nMake first pass through design and create list of all model files referenced.\n")
       (set! file-info-list (spice-sdb:create-file-info-list packages file-info-list))
-      (debug-spew "Done creating file-info-list.\n\n")
 
 
 ;;
@@ -1012,24 +1007,19 @@ the name is changed to canonical."
 ;;  For each model-name, open up the corresponding file, and call handle-spice-file
 ;;  to stick the corresponding stuff into the output SPICE file.
 ;;
-      (debug-spew "Now process the items in model file list -- stick appropriate references to models in output SPICE file.\n")
       (for-each spice-sdb:handle-spice-file (map second file-info-list))
-      (debug-spew "Done processing items in model file list.\n")
-
 
 ;;
 ;; Now write out netlist as before.  But don't write file contents out.
 ;; **** Modified by kh to sort list of packages so Spice directives, etc. (A?) are output last,
 ;; **** and in increasing order.
 ;;
-      (debug-spew "Make second pass through design and write out a SPICE card for each component found.\n")
+
       (display "*==============  Begin SPICE netlist of main design ============\n")
       (if (spice-sdb:sort-refdes? (gnetlist:get-calling-flags))
           (spice-sdb:write-netlist file-info-list (sort packages spice-sdb:packsort))  ;; sort on refdes
           (spice-sdb:write-netlist file-info-list packages)                            ;; don't sort.
       )
-      (debug-spew "Done writing SPICE cards . . .\n\n")
-
 
 ;;
 ;;  Now write out .END(S) of netlist, depending upon whether this schematic is a
@@ -1041,12 +1031,7 @@ the name is changed to canonical."
             (display "*******************************\n")
           )
           (if (not (calling-flag? "no_end_card" (gnetlist:get-calling-flags)))
-              (spice-sdb:write-bottom-footer ".end"))
-      )
-
-
-      (debug-spew "\nOutput file is written.  We are done.\n")
-   )
+              (spice-sdb:write-bottom-footer ".end"))))
 ;;
 ;;  Finally, close up and go home.
 ;;
