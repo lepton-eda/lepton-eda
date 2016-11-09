@@ -124,6 +124,22 @@
 ;; Common functions for the `spice' and `spice-sdb' backends
 (load-from-path "spice-common.scm")
 
+;;; Flags to check.
+(define include-mode? #f)
+(define nomunge-mode? #f)
+(define sort-mode? #f)
+(define embed-mode? #f)
+(define no-end-mode? #f)
+
+;;; Closure storing calling flags.
+(let ((flags (gnetlist:get-calling-flags)))
+  (set! include-mode? (calling-flag? "include_mode" flags))
+  (set! nomunge-mode? (calling-flag? "nomunge_mode" flags))
+  (set! sort-mode? (calling-flag? "sort_mode" flags))
+  (set! embed-mode? (calling-flag? "embedd_mode" flags))
+  (set! no-end-mode? (calling-flag? "no_end_card" flags)))
+
+
 (define (filter-known . ls)
   (filter-map (lambda (x) (and (not (unknown? x)) x)) ls))
 
@@ -141,12 +157,11 @@
       (_ #f)))
   (any found? file-info-list))
 
-
 ;;; Writes an .INCLUDE card with the given FILE-NAME if
 ;;; "include_mode" has been enabled, otherwise inserts the
 ;;; FILE-NAME contents into the netlist.
 (define (spice-sdb:handle-spice-file file-name)
-  (if (calling-flag? "include_mode" (gnetlist:get-calling-flags))
+  (if include-mode?
       (format #t ".INCLUDE ~A\n" file-name)
       (spice-sdb:insert-text-file file-name)))
 
@@ -237,13 +252,11 @@
         (message (string-append "ERROR: File '" model-filename "' not found.\n"))
         (primitive-exit 1))))
 
-;;; Check nomunge_mode flag.
-(define nomunge (calling-flag? "nomunge_mode" (gnetlist:get-calling-flags)))
 
 ;;; Writes PREFIX if the first char of PACKAGE doesn't match it,
 ;;; eg. if MOSFET is named T1 then it becomes MT1.
 (define (spice-sdb:write-prefix package prefix)
-  (when (and (not nomunge)
+  (when (and (not nomunge-mode?)
              (not (string=? (string-take package 1) prefix)))
     (display prefix)))
 
@@ -279,33 +292,6 @@
 
 (define (string-tail string start)
   (substring string start (string-length string)))
-
-
-;;---------------------------------------------------------------
-;; spice-sdb:sort_refdes?
-;;   Returns #t or #f depending upon if -s was discovered in
-;;   the calling flags given to gnetlist.   Used in conjunction with
-;;   spice-sdb:packsort.
-;;   Calling form: (spice-sdb:sort-refdes? (gnetlist:get-calling-flags))
-;;   9.1.2003 -- SDB.
-;;---------------------------------------------------------------
-;;  Note:  I should re-write this to use calling-flag? . . . .
-(define spice-sdb:sort-refdes?
-  (lambda (calling-flag-list)
-
-    (if (null? calling-flag-list)
-          '#f                                             ;; return #f if null list -- sort_mode not found.
-          (let* ((calling-pair (car calling-flag-list))   ;; otherwise look for sort_mode in remainder of list.
-                 (calling-flag (car calling-pair))
-                 (flag-value (cadr calling-pair))  )
-
-            (if (string=? calling-flag "sort_mode")
-                flag-value                                               ;; return flag-value if sort_mode found
-                (spice-sdb:sort-refdes? (cdr calling-flag-list))    ;; otherwise recurse until sort_mode is found
-            )  ;; end if
-          )  ;; end of let*
-     )  ;; end of if
-))
 
 
 ;;**********************************************************************************
@@ -670,8 +656,6 @@
       ;; Note that we don't wait until the end here.  Is that OK?
       (spice-sdb:insert-text-file file)))))
 
-;;; Check embedd_mode flag.
-(define embed-mode (calling-flag? "embedd_mode" (gnetlist:get-calling-flags)))
 
 ;;; If the "embedd_mode" option is set, inserts the contents of
 ;;; the file specified in the "file" attribute of PACKAGE,
@@ -680,7 +664,7 @@
 (define (spice-sdb:write-include package)
   (let ((file (gnetlist:get-package-attribute package "file")))
     (when (not (unknown? file))
-      (if embed-mode
+      (if embed-mode?
           (spice-sdb:insert-text-file file)
           (format #t ".INCLUDE ~A\n" file)))))
 
@@ -1009,7 +993,7 @@ the name is changed to canonical."
 
       (display "*==============  Begin SPICE netlist of main design ============\n")
       (spice-sdb:write-netlist file-info-list
-                               (if (spice-sdb:sort-refdes? (gnetlist:get-calling-flags))
+                               (if sort-mode?
                                    ;; sort on refdes
                                    (sort packages spice-sdb:packsort)
                                    ;; don't sort.
@@ -1021,7 +1005,7 @@ the name is changed to canonical."
         (begin
           (spice-sdb:write-bottom-footer (string-append ".ends " subckt?))
           (display "*******************************\n"))
-        (if (not (calling-flag? "no_end_card" (gnetlist:get-calling-flags)))
+        (if (not no-end-mode?)
             (spice-sdb:write-bottom-footer ".end"))))
 
   ;;  Finally, close up and go home.
