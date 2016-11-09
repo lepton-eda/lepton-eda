@@ -813,6 +813,8 @@
                (string-downcase
                 (gnetlist:get-package-attribute package "device")))))
 
+  (display "*==============  Begin SPICE netlist of main design ============\n")
+
   (for-each
    (lambda (package)
      (let ((write-func (get-write-func package)))
@@ -991,7 +993,6 @@ the name is changed to canonical."
       ;; directives, etc. (A?) are output last, and in increasing
       ;; order.
 
-      (display "*==============  Begin SPICE netlist of main design ============\n")
       (spice-sdb:write-netlist file-info-list
                                (if sort-mode?
                                    ;; sort on refdes
