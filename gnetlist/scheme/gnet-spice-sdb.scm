@@ -844,28 +844,29 @@
 ;;   "FILE" attribute, it gets the file info & uses it to build the
 ;;   file-info-list.  When done, it returns the file-info-list.
 ;;----------------------------------------------------------------------
-(define (spice-sdb:create-file-info-list package-list file-info-list)
-  (if (null? package-list)
-      file-info-list ;; end of packages processed.  Return file-info-list
-      (let* ((package (car package-list)) ;; otherwise get next package (i.e. refdes)
-             (model (gnetlist:get-package-attribute package "model-name"))
-             (model-file (gnetlist:get-package-attribute package "file"))
-             ;; Now run a series of checks to see if we should stick
-             ;; this file into the file-info-list.
-             ;; First check to see if "file" attribute is non-empty,
-             ;; then check to see if file is in file-info-list.  If
-             ;; file is new, open it, find out what type it is and, if
-             ;; file-type is known, push info into file-info-list.
-             (file-type (and (not (unknown? model-file))
-                             (not (spice-sdb:in-file-info-list? model-file
-                                                                file-info-list))
-                             (spice-sdb:get-file-type model-file))))
+(define (spice-sdb:create-file-info-list package-list)
+  (let loop ((package-list package-list)
+             (file-list '()))
+    (if (null? package-list)
+        file-list ;; end of packages processed.  Return file-list
+        (let* ((package (car package-list)) ;; otherwise get next package (i.e. refdes)
+               (model (gnetlist:get-package-attribute package "model-name"))
+               (model-file (gnetlist:get-package-attribute package "file"))
+               ;; Now run a series of checks to see if we should stick
+               ;; this file into the file-list.
+               ;; First check to see if "file" attribute is non-empty,
+               ;; then check to see if file is in file-list.  If
+               ;; file is new, open it, find out what type it is and, if
+               ;; file-type is known, push info into file-list.
+               (file-type (and (not (unknown? model-file))
+                               (not (spice-sdb:in-file-info-list? model-file
+                                                                  file-list))
+                               (spice-sdb:get-file-type model-file))))
 
-        (spice-sdb:create-file-info-list
-         (cdr package-list)
-         (if file-type
-             (cons (list model model-file file-type) file-info-list)
-             file-info-list)))))
+          (loop (cdr package-list)
+                (if file-type
+                    (cons (list model model-file file-type) file-list)
+                    file-list))))))
 
 
 ;;; Helper function.  Returns #t if file is already in
@@ -963,8 +964,8 @@ the name is changed to canonical."
   (set-current-output-port (gnetlist:output-port output-filename))
   (let* ((subckt? (spice-sdb:get-schematic-type packages))
          (schematic-type (or (and subckt? (string-append ".SUBCKT " subckt?))
-                             "normal schematic"))
-         (file-info-list (list)))
+                             "normal schematic")))
+
     (message "Using SPICE backend by SDB -- Version of 4.28.2007\n")
     (message (string-append "schematic-type = " schematic-type "\n"))
 
@@ -986,29 +987,33 @@ the name is changed to canonical."
     ;; file-info-list.
     ;; Thanks to Carlos Nieves Onega for his e-mail to
     ;; geda-dev which is the genesis of this section.
-    (set! file-info-list (spice-sdb:create-file-info-list packages file-info-list))
+    (let ((file-info-list (spice-sdb:create-file-info-list packages)))
 
+      ;;  Moved this loop before the next one to get numparam to
+      ;;  work with ngspice, because numparam will at the subckt
+      ;;  definition come before the main netlist.  Change
+      ;;  suggested by Dominique Michel; implemented in code on
+      ;;  6.12.2005.
 
-    ;;  Moved this loop before the next one to get numparam to work with ngspice,
-    ;;  because numparam will at the subckt definition come before the main netlist.
-    ;;  Change suggested by Dominique Michel; implemented in code on 6.12.2005.
-    ;;
-    ;;  Next loop through all items in file-info-list in the SPICE netlist.
-    ;;  For each model-name, open up the corresponding file, and call handle-spice-file
-    ;;  to stick the corresponding stuff into the output SPICE file.
-    (for-each (lambda (x) (spice-sdb:handle-spice-file (second x))) file-info-list)
+      ;;  Next loop through all items in file-info-list in the
+      ;;  SPICE netlist.  For each model-name, open up the
+      ;;  corresponding file, and call handle-spice-file to stick
+      ;;  the corresponding stuff into the output SPICE file.
+      (for-each (lambda (x) (spice-sdb:handle-spice-file (second x))) file-info-list)
 
-    ;; Now write out netlist as before.  But don't write file contents out.
-    ;; **** Modified by kh to sort list of packages so Spice directives, etc. (A?) are output last,
-    ;; **** and in increasing order.
+      ;; Now write out netlist as before.  But don't write file
+      ;; contents out.
+      ;; **** Modified by kh to sort list of packages so Spice
+      ;; directives, etc. (A?) are output last, and in increasing
+      ;; order.
 
-    (display "*==============  Begin SPICE netlist of main design ============\n")
-    (spice-sdb:write-netlist file-info-list
-                             (if (spice-sdb:sort-refdes? (gnetlist:get-calling-flags))
-                                 ;; sort on refdes
-                                 (sort packages spice-sdb:packsort)
-                                 ;; don't sort.
-                                 packages))
+      (display "*==============  Begin SPICE netlist of main design ============\n")
+      (spice-sdb:write-netlist file-info-list
+                               (if (spice-sdb:sort-refdes? (gnetlist:get-calling-flags))
+                                   ;; sort on refdes
+                                   (sort packages spice-sdb:packsort)
+                                   ;; don't sort.
+                                   packages)))
 
     ;;  Now write out .END(S) of netlist, depending upon whether this schematic is a
     ;;  "normal schematic" or a .SUBCKT.
