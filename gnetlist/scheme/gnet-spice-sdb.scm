@@ -625,29 +625,6 @@
   (spice-sdb:write-net-names-on-component package))
 
 
-;;------------------------------------------------------------
-;; Given a refdes, returns the device attribute "value" as string
-;; Used when "value" is an optional attribute.
-;; Returns "unknown" if not available.
-;;------------------------------------------------------------
-(define spice-sdb:component-optional-value
-  (lambda (package)
-    (let ((value (gnetlist:get-package-attribute package "value")))
-      (if (not (unknown? value))
-        (string-append value " ")
-        ""))))
-
-
-;;-----------------------------------------------------------
-;; Given a refdes, returns the device attribute "model" as string
-;;-----------------------------------------------------------
-(define spice-sdb:component-model
-  (lambda (package)
-    (let ((model (gnetlist:get-package-attribute package "model")))
-      (if (not (unknown? model))
-        model spice:component-value))))
-
-
 ;;; Includes SPICE statements from a SPICE directive block
 ;;; PACKAGE.
 (define (spice-sdb:write-directive package)
