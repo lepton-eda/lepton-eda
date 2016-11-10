@@ -326,10 +326,6 @@ REFDES. As a result, slots may be repeated in the returned list."
 ;; define the default handler for get-uref
 (define get-uref gnetlist:get-uref)
 
-(define (gnetlist:get-command-line)
-  "Return the command line used to invoke the program."
-  (string-join (program-arguments)))
-
 (define (gnetlist:stdout? output-filename)
   (string=? output-filename "-"))
 

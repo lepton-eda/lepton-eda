@@ -1541,6 +1541,21 @@
   (display salutation)
   (newline))
 
+(define (print-command-line)
+  "Prints gnetlist command line.
+Only basename of the command is output.
+If gnetlist is called from libtool wrapper,
+the name is changed to canonical."
+  (define libtool-prefix "lt-")
+  (define lt-prefix-length (string-length libtool-prefix))
+  (define (remove-lt-prefix name)
+    (if (string-prefix? libtool-prefix name)
+        (string-drop name lt-prefix-length)
+        name))
+  (let ((name (remove-lt-prefix (basename (car (program-arguments))))))
+    (format #t "* ~A ~A\n"
+            name
+            (string-join (cdr (program-arguments)) " "))))
 
 ;;---------------------------------------------------------------
 ;; Spice netlist generation
@@ -1605,7 +1620,7 @@
       ;; Otherwise it's a regular schematic.  Write out command line followed by comments in file header.
           (begin
             (debug-spew "found normal type schematic")
-            (display (string-append "* " (gnetlist:get-command-line) "\n"))
+            (print-command-line)
             (spice-sdb:write-top-header)
           )
 
