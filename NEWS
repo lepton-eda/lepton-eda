@@ -75,7 +75,8 @@ Notable changes in gEDA/gaf 1.9.3
 * New Scheme module for part list creation has been added for
   gnetlist.
 
-* Allegro backend netlist output is sorted by package names.
+* Netlist output of several gnetlist backends is sorted by package
+  names.
 
 
 Notable changes in gEDA/gaf 1.9.2

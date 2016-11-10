@@ -30,6 +30,7 @@
 ;; END.
 ;;
 
+(use-modules (gnetlist attrib compare))
 ;;
 ;; Top level component writing
 ;;
@@ -74,7 +75,7 @@
     (lambda ()
       (display "LAYOUT board;\n")
       (display "PARTS\n")
-      (bae:components packages)
+      (bae:components (sort packages refdes<?))
       (display "CONNECT\n")
       (bae:nets)
       (display "END.\n"))))

@@ -3,13 +3,13 @@ PARTS
     A1 : unknown;
     Cm : unknown;
     Cp : unknown;
-    Rlp : unknown;
-    Rlm : unknown;
-    Vdd : none;
-    V1 : none;
-    Rt : unknown;
-    Rb : unknown;
     M1 : unknown;
+    Rb : unknown;
+    Rlm : unknown;
+    Rlp : unknown;
+    Rt : unknown;
+    V1 : none;
+    Vdd : none;
     X1 : unknown;
 CONNECT
     /'Vdd1'/ Rlp.2=M1.B=M1.S=Vdd.1=X1.6;
