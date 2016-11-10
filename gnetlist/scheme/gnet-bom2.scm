@@ -33,6 +33,7 @@
 
 (use-modules (ice-9 rdelim)
              (gnetlist backend-getopt)
+             (gnetlist attrib compare)
              (srfi srfi-26))
 
 (define bom2:open-input-file
@@ -61,7 +62,7 @@ filename)
            (begin
              (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) #\:)
              (newline)
-             (bom2:printbom (bom2:components packages attriblist) 0)
+             (bom2:printbom (bom2:components (sort packages refdes<?) attriblist) 0)
              ))
       (close-output-port (current-output-port)))))
 
@@ -132,7 +133,7 @@ filename)
 
 (define (bom2:components-impl ls attriblist bomlist)
   (if (null? ls)
-      (reverse bomlist)
+      bomlist
       (let* ((package (car ls))
              (attribs (bom2:find-attribs package attriblist)))
         (bom2:components-impl (cdr ls) attriblist
