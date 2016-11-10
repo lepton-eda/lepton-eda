@@ -31,109 +31,50 @@
 ;;
 
 ;;
-;; Top level header
-;;
-(define (bae:write-top-header)
-  (display "LAYOUT board;")
-  (newline))
-
-;;
-;; header for components section
-;;
-(define (bae:start-components)
-  (display "PARTS")
-  (newline))
-;; no header for components
-
-;;
-;; header for nets section
-;;
-(define (bae:start-nets)
-  (display "CONNECT")
-  (newline))
-
-;;
-;; footer for net section
-;;
-(define (bae:end-nets)
-  (display "END.")
-  (newline))
-
-;;
 ;; Top level component writing
 ;;
 (define (bae:components ls)
-  (if (not (null? ls))
-     (let ((package (car ls)))
-        (begin
-           (display "    ")
-           (display package)
-           (display " : ")
-           (display (gnetlist:get-package-attribute package  "footprint"))
-           (display ";")
-           (newline)
-           (bae:components (cdr ls))))))
+  (define (output-package package)
+    (format #t "    ~A : ~A;\n"
+            package
+            (gnetlist:get-package-attribute package "footprint")))
+  (for-each output-package ls))
 
 ;;
 ;; Display the individual net connections
 ;;
-(define (bae:display-connections nets)
-  (if (not (null? nets))
-     (begin
-        (let ((package (car (car nets))))
-           (display package)
-           (write-char #\.)
-           (display (car (cdr (car nets)))))
-        (if (not (null? (cdr nets)))
-           (begin
-              (display #\=)))
-        (bae:display-connections (cdr nets)))))
-
-;;
-;; Display all nets
-;;
-(define (bae:display-name-nets nets)
-  (begin
-     (bae:display-connections nets)
-     (write-char #\;)))
+(define (bae:format-connections nets)
+  (string-join
+   (map
+    (lambda (net) (let ((package (car net))
+                   (connection (cadr net)))
+               (format #f "~A.~A" package connection)))
+    nets)
+   "="))
 
 ;;
 ;; Write netname : uref pin, uref pin, ...
 ;;
-(define (bae:write-net netnames)
-  (if (not (null? netnames))
-    (let ((netname (car netnames)))
-      (begin
-        (display "    ")
-        (display "/'")
-        (display netname)
-        (display "'/ ")
-        (bae:display-name-nets (gnetlist:get-all-connections netname))
-        (newline)
-        (bae:write-net (cdr netnames))))))
+(define (bae:write-net netname)
+  (format #t "    /'~A'/ ~A;\n" netname
+          (bae:format-connections (gnetlist:get-all-connections netname))))
 
 ;;
 ;; Write the net part of the gEDA format
 ;;
 (define (bae:nets)
-  (let ((all-uniq-nets (gnetlist:get-all-unique-nets "dummy")))
-     (bae:write-net all-uniq-nets)))
+  (for-each bae:write-net (gnetlist:get-all-unique-nets "dummy")))
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
 ;;;
 (define (bae output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
-    (begin
-      (bae:write-top-header)
-      (bae:start-components)
+  (with-output-to-port
+      (gnetlist:output-port output-filename)
+    (lambda ()
+      (display "LAYOUT board;\n")
+      (display "PARTS\n")
       (bae:components packages)
-      (bae:start-nets)
+      (display "CONNECT\n")
       (bae:nets)
-      (bae:end-nets))
-    (close-output-port (current-output-port)))
-
-;;
-;; gEDA's native test netlist format specific functions ends
-;;
-;; --------------------------------------------------------------------------
+      (display "END.\n"))))
