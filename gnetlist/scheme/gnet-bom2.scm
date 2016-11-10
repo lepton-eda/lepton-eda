@@ -31,8 +31,9 @@
 ;;; Questions? Contact matt@ettus.com
 ;;; This software is released under the terms of the GNU GPL
 
-(use-modules (ice-9 rdelim) ;; guile-1.8 fix
-             (gnetlist backend-getopt))
+(use-modules (ice-9 rdelim)
+             (gnetlist backend-getopt)
+             (srfi srfi-26))
 
 (define bom2:open-input-file
   (lambda (options)
@@ -142,12 +143,8 @@ filename)
 (define (bom2:components ls attriblist)
    (bom2:components-impl ls attriblist '()))
 
-(define bom2:find-attribs
-  (lambda (package attriblist)
-    (if (null? attriblist)
-        '()
-        (cons (gnetlist:get-package-attribute package (car attriblist))
-              (bom2:find-attribs package (cdr attriblist))))))
+(define (bom2:find-attribs package attriblist)
+  (map (cut gnetlist:get-package-attribute package <>) attriblist))
 
 ;;
 ;; Bill of Material backend written by Matt Ettus ends here
