@@ -32,7 +32,8 @@
 ;;; This software is released under the terms of the GNU GPL
 
 (use-modules (ice-9 rdelim)
-             (gnetlist backend-getopt))
+             (gnetlist backend-getopt)
+             (gnetlist attrib compare))
 
 
 (define (bom:error filename)
@@ -129,7 +130,7 @@ An error will be displayed, if no attribute name source is found."
     (with-output-to-port (gnetlist:output-port output-filename)
       (lambda ()
         (bom:printlist (cons "refdes" attriblist))
-        (bom:components packages attriblist)))))
+        (bom:components (sort packages refdes<?) attriblist)))))
 
 ;;
 ;; Bill of Material backend written by Matt Ettus ends here
