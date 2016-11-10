@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gaf\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2015-08-22 12:59+0300\n"
+"POT-Creation-Date: 2016-09-13 13:40+0300\n"
 "PO-Revision-Date: 2014-08-31 20:24+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers\n"
@@ -162,17 +162,17 @@ msgstr "WAARSCHUWING: Kan '%s': %s niet laden.\n"
 msgid "ERROR: You must specify both configuration group and key.\n"
 msgstr "FOUT: U moet beide configuratie groep en sleutel specificeren.\n"
 
-#: gaf/config.c:182 gaf/config.c:196 gaf/export.c:317
+#: gaf/config.c:182 gaf/config.c:196 gaf/export.c:325
 #, c-format
 msgid "ERROR: %s.\n"
 msgstr "FOUT: %s.\n"
 
-#: gaf/export.c:146
+#: gaf/export.c:150
 #, c-format
 msgid "ERROR: Bad argument '%s' to %s option.\n"
 msgstr "FOUT: Slecht argument '%s' voor %s optie.\n"
 
-#: gaf/export.c:147
+#: gaf/export.c:151
 msgid ""
 "\n"
 "Run `gaf export --help' for more information.\n"
@@ -180,38 +180,38 @@ msgstr ""
 "\n"
 "Voer `gaf export --help' uit voor meer informatie.\n"
 
-#: gaf/export.c:187
+#: gaf/export.c:191
 #, c-format
 msgid "ERROR: Cannot infer output format from filename '%s'.\n"
 msgstr "FOUT: Kan geen uitvoerformaat afleiden van bestandsnaam '%s'.\n"
 
-#: gaf/export.c:204
+#: gaf/export.c:208
 #, c-format
 msgid "ERROR: Cannot find supported format for filename '%s'.\n"
 msgstr "FOUT: Kan geen ondersteund formaat vinden voor bestandsnaam '%s'.\n"
 
-#: gaf/export.c:209
+#: gaf/export.c:213
 #, c-format
 msgid "ERROR: Unsupported output format '%s'.\n"
 msgstr "FOUT: Niet ondersteund uitvoer formaat '%s'.\n"
 
-#: gaf/export.c:221
+#: gaf/export.c:225
 #, c-format
 msgid "ERROR: Selected output format does not support multipage output\n"
 msgstr ""
 "FOUT: Geselecteerde uitvoer formaat ondersteund geen meerbladige uitvoer\n"
 
-#: gaf/export.c:233
+#: gaf/export.c:237
 #, c-format
 msgid "ERROR: Failed to load '%s': %s\n"
 msgstr "FOUT: Faalde om '%s': %s te laden\n"
 
-#: gaf/export.c:239
+#: gaf/export.c:243
 #, c-format
 msgid "ERROR: Failed to change directory to '%s': %s\n"
 msgstr "Faalde om bestandenmap te wijzigen naar '%s': %s\n"
 
-#: gaf/export.c:903
+#: gaf/export.c:911
 #, c-format
 msgid ""
 "Usage: gaf export [OPTION ...] -o OUTPUT [--] FILE ...\n"
@@ -258,12 +258,12 @@ msgstr ""
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
 
-#: gaf/export.c:1082
+#: gaf/export.c:1090
 #, c-format
 msgid "ERROR: You must specify at least one input filename.\n"
 msgstr "FOUT: U moet tenminste een invoer bestandsnaam specificeren.\n"
 
-#: gaf/export.c:1091
+#: gaf/export.c:1099
 #, c-format
 msgid "ERROR: You must specify an output filename.\n"
 msgstr "FOUT: U moet een uitvoer bestandnaam specificeren.\n"

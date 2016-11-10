@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2015-09-26 23:29+0300\n"
+"POT-Creation-Date: 2016-09-13 13:40+0300\n"
 "PO-Revision-Date: 2010-02-06 22:09+0000\n"
 "Last-Translator: Jarosław Ogrodnik <nobodythere@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -42,21 +42,16 @@ msgstr "Schemat Obwodu gEDA"
 msgid "gEDA Schematic Symbol"
 msgstr "Element Schematu gEDA"
 
-#: libgeda/src/a_basic.c:178
-#, c-format
-msgid "o_save_objects: object %p has unknown type '%c'\n"
-msgstr "o_save_objects: objekt %p jest nieznanego typu '%c'\n"
-
-#: libgeda/src/a_basic.c:234 libgeda/src/f_basic.c:372
+#: libgeda/src/a_basic.c:57 libgeda/src/f_basic.c:372
 #, c-format
 msgid "File %s is read-only"
 msgstr ""
 
-#: libgeda/src/a_basic.c:292
+#: libgeda/src/a_basic.c:114
 msgid "Schematic data was not valid UTF-8"
 msgstr ""
 
-#: libgeda/src/a_basic.c:424
+#: libgeda/src/a_basic.c:246
 #, fuzzy, c-format
 msgid ""
 "Read unexpected attach symbol start marker in [%s] :\n"
@@ -67,7 +62,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:441
+#: libgeda/src/a_basic.c:263
 #, c-format
 msgid ""
 "Read unexpected embedded symbol start marker in [%s] :\n"
@@ -78,7 +73,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:472
+#: libgeda/src/a_basic.c:294
 #, c-format
 msgid ""
 "Read unexpected embedded symbol end marker in [%s] :\n"
@@ -89,7 +84,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:507
+#: libgeda/src/a_basic.c:329
 #, c-format
 msgid ""
 "Read an old format sym/sch file!\n"
@@ -100,7 +95,7 @@ msgstr ""
 "Uruchom program gsymupdate/gschemupdate na pliku:\n"
 "[%s]\n"
 
-#: libgeda/src/a_basic.c:513
+#: libgeda/src/a_basic.c:335
 #, c-format
 msgid ""
 "Read garbage in [%s] :\n"
@@ -212,66 +207,66 @@ msgid ""
 "Backtrace:\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:98
+#: libgeda/src/g_rc.c:99
 #, c-format
 msgid "Invalid mode [%s] passed to %s\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:138
+#: libgeda/src/g_rc.c:139
 #, fuzzy
 msgid "RC file already loaded"
 msgstr "plik RC [%s] został już wczytany.\n"
 
-#: libgeda/src/g_rc.c:182
+#: libgeda/src/g_rc.c:183
 #, fuzzy, c-format
 msgid "Failed to load config from '%s': %s\n"
 msgstr "Błąd odczytu obrazka z pliku [%s]: %s\n"
 
-#: libgeda/src/g_rc.c:206
+#: libgeda/src/g_rc.c:207
 #, fuzzy, c-format
 msgid "Loaded RC file [%s]\n"
 msgstr "Wczytano podany plik %s [%%s]\n"
 
-#: libgeda/src/g_rc.c:210
+#: libgeda/src/g_rc.c:211
 #, fuzzy, c-format
 msgid "Failed to load RC file [%s]: "
 msgstr "Błąd odczytu obrazka z pliku [%s]: %s\n"
 
-#: libgeda/src/g_rc.c:327
+#: libgeda/src/g_rc.c:341
 msgid "ERROR: An unknown error occurred while parsing configuration files."
 msgstr ""
 
-#: libgeda/src/g_rc.c:339 libgeda/src/g_rc.c:340
+#: libgeda/src/g_rc.c:353 libgeda/src/g_rc.c:354
 #, c-format
 msgid "ERROR: %s\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:346
+#: libgeda/src/g_rc.c:360
 #, c-format
 msgid "ERROR: The %s log may contain more information.\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:467
+#: libgeda/src/g_rc.c:481
 #, fuzzy, c-format
 msgid "Invalid path [%s] passed to component-library\n"
 msgstr "Nie odnaleziono komponentu [%s] w bibliotece komponentów\n"
 
-#: libgeda/src/g_rc.c:606
+#: libgeda/src/g_rc.c:620
 #, c-format
 msgid "Invalid path [%s] passed to source-library\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:653 libgeda/src/g_rc.c:662
+#: libgeda/src/g_rc.c:667 libgeda/src/g_rc.c:676
 #, c-format
 msgid "Invalid path [%s] passed to source-library-search\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:862
+#: libgeda/src/g_rc.c:876
 #, c-format
 msgid "Invalid path [%s] passed to bitmap-directory\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:995
+#: libgeda/src/g_rc.c:1009
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
@@ -279,33 +274,53 @@ msgstr ""
 "UWAGA: użycie napisu jako wartości 'always-promote-attributes' jest "
 "niezalecane. Użyj listy napisów\n"
 
-#: libgeda/src/g_rc.c:1017
+#: libgeda/src/g_rc.c:1031
 msgid "always-promote-attribute: list element is not a string"
 msgstr ""
 
-#: libgeda/src/o_arc_basic.c:252 libgeda/src/o_arc_basic.c:265
+#: libgeda/src/geda_page.c:202
+#, c-format
+msgid "s_page_delete: Can't get the real filename of %s."
+msgstr "s_page_delete: nie można uzyskać rzeczywistej nazwy pliku %s."
+
+#: libgeda/src/geda_page.c:213
+#, c-format
+msgid "s_page_delete: Unable to delete backup file %s."
+msgstr "s_page_delete: Nie można skasować kopii zapasowej %s."
+
+#: libgeda/src/geda_page.c:491
+#, c-format
+msgid "Saved [%s]\n"
+msgstr "Zapisano [%s]\n"
+
+#: libgeda/src/geda_page.c:497
+#, c-format
+msgid "Could NOT save [%s]\n"
+msgstr "Nie można zapisać [%s]\n"
+
+#: libgeda/src/geda_arc_object.c:408 libgeda/src/geda_arc_object.c:421
 msgid "Failed to parse arc object"
 msgstr ""
 
-#: libgeda/src/o_arc_basic.c:272
+#: libgeda/src/geda_arc_object.c:428
 #, c-format
 msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
 msgstr "Napotkano łuk o zerowym promieniu [ %c %d, %d, %d, %d, %d, %d ]\n"
 
-#: libgeda/src/o_arc_basic.c:278 libgeda/src/o_box_basic.c:320
-#: libgeda/src/o_bus_basic.c:146 libgeda/src/o_circle_basic.c:282
-#: libgeda/src/o_line_basic.c:257 libgeda/src/o_net_basic.c:132
-#: libgeda/src/o_path_basic.c:206 libgeda/src/o_pin_basic.c:154
-#: libgeda/src/o_text_basic.c:386
+#: libgeda/src/geda_arc_object.c:434 libgeda/src/geda_box_object.c:327
+#: libgeda/src/geda_bus_object.c:363 libgeda/src/geda_circle_object.c:386
+#: libgeda/src/geda_line_object.c:426 libgeda/src/geda_net_object.c:307
+#: libgeda/src/geda_path_object.c:214 libgeda/src/geda_pin_object.c:369
+#: libgeda/src/geda_text_object.c:548
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
 msgstr "Napotkano niepoprawny kolor [ %s ]\n"
 
-#: libgeda/src/o_arc_basic.c:279 libgeda/src/o_box_basic.c:321
-#: libgeda/src/o_bus_basic.c:147 libgeda/src/o_circle_basic.c:283
-#: libgeda/src/o_line_basic.c:258 libgeda/src/o_net_basic.c:133
-#: libgeda/src/o_path_basic.c:207 libgeda/src/o_pin_basic.c:155
-#: libgeda/src/o_text_basic.c:387
+#: libgeda/src/geda_arc_object.c:435 libgeda/src/geda_box_object.c:328
+#: libgeda/src/geda_bus_object.c:364 libgeda/src/geda_circle_object.c:387
+#: libgeda/src/geda_line_object.c:427 libgeda/src/geda_net_object.c:308
+#: libgeda/src/geda_path_object.c:215 libgeda/src/geda_pin_object.c:370
+#: libgeda/src/geda_text_object.c:550
 msgid "Setting color to default color\n"
 msgstr "Użyję domyślnego koloru\n"
 
@@ -332,53 +347,61 @@ msgstr "Próba użycia innego obiektu niż tekst jako atrybut!\n"
 msgid "Unexpected end-of-file in attribute list"
 msgstr ""
 
-#: libgeda/src/o_box_basic.c:280 libgeda/src/o_box_basic.c:309
+#: libgeda/src/geda_box_object.c:287 libgeda/src/geda_box_object.c:316
 msgid "Failed to parse box object"
 msgstr ""
 
-#: libgeda/src/o_box_basic.c:315
+#: libgeda/src/geda_box_object.c:322
 #, c-format
 msgid "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
 msgstr ""
 "Napotkano prostokąt o zerowej wysokości/szerokości [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_bus_basic.c:128 libgeda/src/o_bus_basic.c:135
+#: libgeda/src/geda_bus_object.c:345 libgeda/src/geda_bus_object.c:352
 msgid "Failed to parse bus object"
 msgstr ""
 
-#: libgeda/src/o_bus_basic.c:141
+#: libgeda/src/geda_bus_object.c:358
 #, c-format
 msgid "Found a zero length bus [ %c %d %d %d %d %d ]\n"
 msgstr "Napotkano magistralę o zerowej długości [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_bus_basic.c:152
+#: libgeda/src/geda_bus_object.c:369
 #, c-format
 msgid "Found an invalid bus ripper direction [ %s ]\n"
 msgstr "Napotkano odczep magistrali z błędnym ustawieniem kierunku [ %s ]\n"
 
-#: libgeda/src/o_bus_basic.c:153
+#: libgeda/src/geda_bus_object.c:370
 msgid "Resetting direction to neutral (no direction)\n"
 msgstr "Ustawię kierunek na neutralny (brak kierunku)\n"
 
-#: libgeda/src/o_circle_basic.c:186
-msgid "Null radius circles are not allowed\n"
-msgstr "Koła o zerowym promieniu są niedozwolone\n"
-
-#: libgeda/src/o_circle_basic.c:239 libgeda/src/o_circle_basic.c:268
+#: libgeda/src/geda_circle_object.c:343 libgeda/src/geda_circle_object.c:372
 msgid "Failed to parse circle object"
 msgstr ""
 
-#: libgeda/src/o_circle_basic.c:275
+#: libgeda/src/geda_circle_object.c:379
 #, fuzzy, c-format
 msgid "Found a zero or negative radius circle [ %c %d %d %d %d ]\n"
 msgstr "Napotkano koło o zerowym promieniu [ %c %d %d %d %d ]\n"
 
-#: libgeda/src/o_circle_basic.c:277
+#: libgeda/src/geda_circle_object.c:381
 #, fuzzy
 msgid "Setting radius to 0\n"
 msgstr "Użyję nachylenia równego 0\n"
 
-#: libgeda/src/o_complex_basic.c:502
+#: libgeda/src/geda_color.c:217
+msgid "Color map entry must be a two-element list"
+msgstr "Wpis w mapie kolorów musi być dwuelementową listą"
+
+#: libgeda/src/geda_color.c:225
+msgid "Index in color map entry must be an integer"
+msgstr "Indeks koloru musi być liczbą całkowitą"
+
+#: libgeda/src/geda_color.c:251
+msgid "Value in color map entry must be #f or a string"
+msgstr "Wpis w mapie kolorów musi być wartością #f lub napisem"
+
+#: libgeda/src/geda_complex_object.c:369
 #, c-format
 msgid ""
 "Component not found:\n"
@@ -387,22 +410,21 @@ msgstr ""
 "Nie odnaleziono komponentu:\n"
 " %s"
 
-#: libgeda/src/o_complex_basic.c:705
+#: libgeda/src/geda_complex_object.c:581
 msgid "Failed to parse complex object"
 msgstr ""
 
-#: libgeda/src/o_complex_basic.c:718
+#: libgeda/src/geda_complex_object.c:594
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 "Napotkano komponent o błędnej specyfikacji rotacji [ %c %d %d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:719 libgeda/src/o_picture.c:104
-#: libgeda/src/o_text_basic.c:358
+#: libgeda/src/geda_complex_object.c:595 libgeda/src/geda_picture_object.c:104
 msgid "Setting angle to 0\n"
 msgstr "Użyję nachylenia równego 0\n"
 
-#: libgeda/src/o_complex_basic.c:731
+#: libgeda/src/geda_complex_object.c:607
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
@@ -410,12 +432,12 @@ msgstr ""
 "Napotkano komponent z nieprawidłową wartością flagi odbicia lustrzanego [ %c "
 "%d %d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:732
+#: libgeda/src/geda_complex_object.c:608
 #, fuzzy
 msgid "Setting mirror to 0\n"
 msgstr "Przyjmuję 'odbity' równe 0\n"
 
-#: libgeda/src/o_complex_basic.c:1052
+#: libgeda/src/geda_complex_object.c:931
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -424,7 +446,7 @@ msgstr ""
 "UWAGA: Błąd parsowania wersji symbolu o identyfikatorze %s:\n"
 "\tNiepowodzenie podczas parsowania pliku symbolu symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1056
+#: libgeda/src/geda_complex_object.c:935
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -433,7 +455,7 @@ msgstr ""
 "UWAGA: Błąd parsowania wersji symbolu o identyfikatorze %s:\n"
 "\tNiepowodzenie podczas parsowania pliku symbolu symversion=\n"
 
-#: libgeda/src/o_complex_basic.c:1072
+#: libgeda/src/geda_complex_object.c:951
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -442,7 +464,7 @@ msgstr ""
 "UWAGA: Błąd parsowania wersji symbolu o identyfikatorze %s:\n"
 "\tNiepowodzenie podczas parsowania dołączonego atrybutu symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1097
+#: libgeda/src/geda_complex_object.c:976
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -453,7 +475,7 @@ msgstr ""
 "\tAtrybut symversion=%s dołączony do symbolu, ale brak atrybutu symversion= "
 "w pliku symbolu\n"
 
-#: libgeda/src/o_complex_basic.c:1111
+#: libgeda/src/geda_complex_object.c:990
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -462,17 +484,17 @@ msgstr ""
 "UWAGA: Niezgodność wersji symbolu o identyfikatorze %s (%s):\n"
 "\tWersja symbolu w bibliotece jest nowsza niż wersja tej instancji symbolu\n"
 
-#: libgeda/src/o_complex_basic.c:1139
+#: libgeda/src/geda_complex_object.c:1018
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr "\tZNACZĄCA ZMIANA WERSJI (plik %.3f, użyto %.3f, %s)!\n"
 
-#: libgeda/src/o_complex_basic.c:1157
+#: libgeda/src/geda_complex_object.c:1036
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tPomniejsza zmiana wersji (plik %.3f, użyto %.3f)\n"
 
-#: libgeda/src/o_complex_basic.c:1168
+#: libgeda/src/geda_complex_object.c:1047
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -500,140 +522,140 @@ msgstr ""
 msgid "Component [%s] has been successfully unembedded\n"
 msgstr "Komponent [%s] nie jest już osadzony\n"
 
-#: libgeda/src/o_line_basic.c:222 libgeda/src/o_line_basic.c:240
+#: libgeda/src/geda_line_object.c:391 libgeda/src/geda_line_object.c:409
 msgid "Failed to parse line object"
 msgstr ""
 
-#: libgeda/src/o_line_basic.c:252
+#: libgeda/src/geda_line_object.c:421
 #, c-format
 msgid "Found a zero length line [ %c %d %d %d %d %d ]\n"
 msgstr "Napotkano linię o zerowej długości [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_net_basic.c:122
+#: libgeda/src/geda_net_object.c:297
 msgid "Failed to parse net object"
 msgstr ""
 
-#: libgeda/src/o_net_basic.c:127
+#: libgeda/src/geda_net_object.c:302
 #, c-format
 msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
 msgstr "Napotkano połączenie o zerowej długości [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_path_basic.c:198
+#: libgeda/src/geda_path_object.c:206
 msgid "Failed to parse path object"
 msgstr ""
 
-#: libgeda/src/o_path_basic.c:224
+#: libgeda/src/geda_path_object.c:232
 msgid "Unexpected end-of-file when reading path"
 msgstr ""
 
-#: libgeda/src/o_picture.c:71
+#: libgeda/src/geda_picture_object.c:71
 msgid "Failed to parse picture definition"
 msgstr ""
 
-#: libgeda/src/o_picture.c:76
+#: libgeda/src/geda_picture_object.c:76
 #, c-format
 msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
 msgstr "Napotkano obrazek o zerowej wysokości/szerokości [ %c %d %d %d %d ]\n"
 
-#: libgeda/src/o_picture.c:81
+#: libgeda/src/geda_picture_object.c:81
 #, fuzzy, c-format
 msgid "Found a picture with a wrong 'mirrored' parameter: %d.\n"
 msgstr "Napotkano obrazek o niepoprawnej wartości 'odbity': %c.\n"
 
-#: libgeda/src/o_picture.c:83
+#: libgeda/src/geda_picture_object.c:83
 msgid "Setting mirrored to 0\n"
 msgstr "Przyjmuję 'odbity' równe 0\n"
 
-#: libgeda/src/o_picture.c:88
+#: libgeda/src/geda_picture_object.c:88
 #, fuzzy, c-format
 msgid "Found a picture with a wrong 'embedded' parameter: %d.\n"
 msgstr "Napotkano obrazek o niepoprawnej wartości 'osadzony': %c.\n"
 
-#: libgeda/src/o_picture.c:90
+#: libgeda/src/geda_picture_object.c:90
 msgid "Setting embedded to 0\n"
 msgstr "Przyjmuję 'osadzony' równe 0\n"
 
-#: libgeda/src/o_picture.c:103
+#: libgeda/src/geda_picture_object.c:103
 #, c-format
 msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr "Napotkano obrazek z nieprawidłową wartością nachylenia [ %d ]\n"
 
-#: libgeda/src/o_picture.c:115
+#: libgeda/src/geda_picture_object.c:115
 msgid "Found an image with no filename."
 msgstr ""
 
-#: libgeda/src/o_picture.c:146
+#: libgeda/src/geda_picture_object.c:146
 #, c-format
 msgid "Failed to load image from embedded data [%s]: %s\n"
 msgstr "Błąd odczytu obrazka z osadzonych danych [%s]: %s\n"
 
-#: libgeda/src/o_picture.c:147
+#: libgeda/src/geda_picture_object.c:147
 msgid "Base64 decoding failed."
 msgstr "Błąd dekodowania Base64."
 
-#: libgeda/src/o_picture.c:148
+#: libgeda/src/geda_picture_object.c:148
 msgid "Falling back to file loading. Picture unembedded.\n"
 msgstr "Spróbuję odczytać obrazek z pliku. Obrazek nie będzie osadzony.\n"
 
-#: libgeda/src/o_picture.c:207
+#: libgeda/src/geda_picture_object.c:207
 msgid "ERROR: o_picture_save: unable to encode the picture.\n"
 msgstr "BŁĄD: o_picture_save: nie można zapisać obrazka.\n"
 
-#: libgeda/src/o_picture.c:307
+#: libgeda/src/geda_picture_object.c:307
 #, fuzzy, c-format
 msgid "Failed to load buffer image [%s]: %s\n"
 msgstr "Błąd podczas ładowania symbolu z pliku [%s]: %s\n"
 
-#: libgeda/src/o_picture.c:320
+#: libgeda/src/geda_picture_object.c:320
 #, fuzzy, c-format
 msgid "Failed to load image from [%s]: %s\n"
 msgstr "Błąd odczytu obrazka z pliku [%s]: %s\n"
 
-#: libgeda/src/o_picture.c:402
+#: libgeda/src/geda_picture_object.c:414
 #, c-format
 msgid "Picture %p has invalid angle %i\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:748
+#: libgeda/src/geda_picture_object.c:771
 #, fuzzy, c-format
 msgid "Picture [%s] has no image data.\n"
 msgstr "Obrazek [%s] został osadzony\n"
 
-#: libgeda/src/o_picture.c:749
+#: libgeda/src/geda_picture_object.c:772
 #, fuzzy
 msgid "Falling back to file loading. Picture is still unembedded.\n"
 msgstr "Spróbuję odczytać obrazek z pliku. Obrazek nie będzie osadzony.\n"
 
-#: libgeda/src/o_picture.c:757
+#: libgeda/src/geda_picture_object.c:780
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "Obrazek [%s] został osadzony\n"
 
-#: libgeda/src/o_picture.c:781
+#: libgeda/src/geda_picture_object.c:804
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr "Błąd odczytu obrazka z pliku [%s]: %s\n"
 
-#: libgeda/src/o_picture.c:783
+#: libgeda/src/geda_picture_object.c:806
 #, fuzzy
 msgid "Picture is still embedded.\n"
 msgstr "Obrazek [%s] został osadzony\n"
 
-#: libgeda/src/o_picture.c:791
+#: libgeda/src/geda_picture_object.c:814
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Obrazek [%s] nie jest już osadzony\n"
 
-#: libgeda/src/o_picture.c:1028
+#: libgeda/src/geda_picture_object.c:1051
 #, fuzzy, c-format
 msgid "Failed to load fallback image %s: %s.\n"
 msgstr "Błąd odczytu obrazka z pliku [%s]: %s\n"
 
-#: libgeda/src/o_pin_basic.c:131 libgeda/src/o_pin_basic.c:139
+#: libgeda/src/geda_pin_object.c:346 libgeda/src/geda_pin_object.c:354
 msgid "Failed to parse pin object"
 msgstr ""
 
-#: libgeda/src/o_pin_basic.c:145
+#: libgeda/src/geda_pin_object.c:360
 #, fuzzy
 msgid ""
 "Found a pin which did not have the whichend field set.\n"
@@ -642,41 +664,48 @@ msgstr ""
 "Napotkano pin bez ustawionego pola 'whichone'.\n"
 "Popraw plik manualnie.\n"
 
-#: libgeda/src/o_pin_basic.c:148
+#: libgeda/src/geda_pin_object.c:363
 #, c-format
 msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
 msgstr ""
 "Napotkano nieprawidłową wartość 'whichend' przypisaną do pinu (użyję "
 "wartości 0): %d\n"
 
-#: libgeda/src/o_text_basic.c:317 libgeda/src/o_text_basic.c:327
-#: libgeda/src/o_text_basic.c:337
+#: libgeda/src/geda_text_object.c:488 libgeda/src/geda_text_object.c:498
+#: libgeda/src/geda_text_object.c:508
 msgid "Failed to parse text object"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:344
-#, c-format
-msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
-msgstr "Napotkano napis o zerowych wymiarach [ %c %d %d %d %d %d %d %d %d ]\n"
+#: libgeda/src/geda_text_object.c:515
+#, fuzzy, c-format
+msgid "Found an invalid text size [ %s ]\n"
+msgstr "Napotkano niepoprawny kolor [ %s ]\n"
 
-#: libgeda/src/o_text_basic.c:356
-#, c-format
-msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
-msgstr ""
-"Napotkano napis z nieprawidłowym nachyleniem [ %c %d %d %d %d %d %d %d %d ]\n"
+#: libgeda/src/geda_text_object.c:517
+#, fuzzy, c-format
+msgid "Setting text size to %d\n"
+msgstr "Przyjmuję 'odbity' równe 0\n"
 
-#: libgeda/src/o_text_basic.c:378
-#, c-format
-msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
-msgstr ""
-"Napotkano napis z nieprawidłowym wyrównaniem tekstu [ %c %d %d %d %d %d %d "
-"%d %d ]\n"
+#: libgeda/src/geda_text_object.c:521
+#, fuzzy, c-format
+msgid "Found an unsupported text angle [ %s ]\n"
+msgstr "Napotkano obrazek z nieprawidłową wartością nachylenia [ %d ]\n"
 
-#: libgeda/src/o_text_basic.c:380
+#: libgeda/src/geda_text_object.c:523
+#, fuzzy, c-format
+msgid "Setting angle to %d\n"
+msgstr "Użyję nachylenia równego 0\n"
+
+#: libgeda/src/geda_text_object.c:540
+#, fuzzy, c-format
+msgid "Found an unsupported text alignment [ %s ]\n"
+msgstr "Napotkano obrazek z nieprawidłową wartością nachylenia [ %d ]\n"
+
+#: libgeda/src/geda_text_object.c:543
 msgid "Setting alignment to LOWER_LEFT\n"
 msgstr "Użyję wyrównania do dolnego lewego rogu\n"
 
-#: libgeda/src/o_text_basic.c:401
+#: libgeda/src/geda_text_object.c:563
 #, c-format
 msgid "Unexpected end-of-file after %d lines"
 msgstr ""
@@ -727,55 +756,43 @@ msgid "Non-string symbol name while scanning library [%s]\n"
 msgstr ""
 "Napotkano niepoprawną nazwę symbolu podczas przeszukiwania biblioteki [%s]\n"
 
-#: libgeda/src/s_clib.c:896 libgeda/src/s_clib.c:943
+#: libgeda/src/s_clib.c:893 libgeda/src/s_clib.c:940
 msgid "Cannot add library: name not specified\n"
 msgstr "Nie można dodać biblioteki: nie podano nazwy\n"
 
-#: libgeda/src/s_clib.c:903
+#: libgeda/src/s_clib.c:900
 #, c-format
 msgid ""
 "Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
 msgstr ""
 "Nie można dodać biblioteki [%s]: komendy 'list' i 'get' muszą być podane\n"
 
-#: libgeda/src/s_clib.c:951
+#: libgeda/src/s_clib.c:948
 #, c-format
 msgid "Cannot add Scheme-library [%s]: callbacks must be closures\n"
 msgstr "Nie można dodać biblioteki Scheme [%s]: callbacks must be closures\n"
 
-#: libgeda/src/s_clib.c:1078
+#: libgeda/src/s_clib.c:1075
 #, c-format
 msgid "Failed to load symbol from file [%s]: %s\n"
 msgstr "Błąd podczas ładowania symbolu z pliku [%s]: %s\n"
 
-#: libgeda/src/s_clib.c:1138
+#: libgeda/src/s_clib.c:1135
 #, c-format
 msgid "Failed to load symbol data [%s] from source [%s]\n"
 msgstr "Odczyt danych symbolu [%s] z pliku [%s] nie powiódł się\n"
 
-#: libgeda/src/s_clib.c:1380
+#: libgeda/src/s_clib.c:1377
 #, c-format
 msgid "Component [%s] was not found in the component library\n"
 msgstr "Nie odnaleziono komponentu [%s] w bibliotece komponentów\n"
 
-#: libgeda/src/s_clib.c:1386
+#: libgeda/src/s_clib.c:1383
 #, c-format
 msgid "More than one component found with name [%s]\n"
 msgstr "Odnaleziono więcej niż jeden komponent o nazwie [%s]\n"
 
-#: libgeda/src/s_color.c:231
-msgid "Color map entry must be a two-element list"
-msgstr "Wpis w mapie kolorów musi być dwuelementową listą"
-
-#: libgeda/src/s_color.c:239
-msgid "Index in color map entry must be an integer"
-msgstr "Indeks koloru musi być liczbą całkowitą"
-
-#: libgeda/src/s_color.c:265
-msgid "Value in color map entry must be #f or a string"
-msgstr "Wpis w mapie kolorów musi być wartością #f lub napisem"
-
-#: libgeda/src/s_hierarchy.c:75 libgeda/src/s_hierarchy.c:232
+#: libgeda/src/s_hierarchy.c:75 libgeda/src/s_hierarchy.c:233
 msgid "Schematic not found in source library."
 msgstr ""
 
@@ -783,34 +800,14 @@ msgstr ""
 msgid "Hierarchy contains a circular dependency."
 msgstr ""
 
-#: libgeda/src/s_hierarchy.c:194
+#: libgeda/src/s_hierarchy.c:195
 msgid "There are no schematics above the current one!\n"
 msgstr "Jesteś już na szczycie hierarchii schematów!\n"
 
-#: libgeda/src/s_hierarchy.c:332
+#: libgeda/src/s_hierarchy.c:333
 #, fuzzy, c-format
 msgid "Failed to descend hierarchy into '%s': %s\n"
 msgstr "Błąd otwarcia katalogu [%s]: %s\n"
-
-#: libgeda/src/s_page.c:205
-#, c-format
-msgid "s_page_delete: Can't get the real filename of %s."
-msgstr "s_page_delete: nie można uzyskać rzeczywistej nazwy pliku %s."
-
-#: libgeda/src/s_page.c:216
-#, c-format
-msgid "s_page_delete: Unable to delete backup file %s."
-msgstr "s_page_delete: Nie można skasować kopii zapasowej %s."
-
-#: libgeda/src/s_page.c:491
-#, c-format
-msgid "Saved [%s]\n"
-msgstr "Zapisano [%s]\n"
-
-#: libgeda/src/s_page.c:497
-#, c-format
-msgid "Could NOT save [%s]\n"
-msgstr "Nie można zapisać [%s]\n"
 
 #: libgeda/src/s_slot.c:158
 msgid "Did not find slotdef=#:#,#,#... attribute\n"
@@ -828,33 +825,33 @@ msgstr "Nie odnaleziono atrybutu slotdef=#:#,#,#...\n"
 msgid "component missing pinseq= attribute\n"
 msgstr "komponent nie ma atrybutu pinseq=\n"
 
-#: libgeda/src/edaconfig.c:659 libgeda/src/edaconfig.c:745
+#: libgeda/src/edaconfig.c:647 libgeda/src/edaconfig.c:733
 msgid "Undefined configuration filename"
 msgstr ""
 
-#: libgeda/src/edaconfig.c:1070 libgeda/src/edaconfig.c:1134
+#: libgeda/src/edaconfig.c:1058 libgeda/src/edaconfig.c:1122
 #, c-format
 msgid "Configuration does not have group '%s'"
 msgstr ""
 
-#: libgeda/src/edaconfig.c:1148
+#: libgeda/src/edaconfig.c:1136
 #, c-format
 msgid "Configuration does not have key '%s'"
 msgstr ""
 
-#: libgeda/src/scheme_attrib.c:67
+#: libgeda/src/scheme_attrib.c:66
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr ""
 
-#: libgeda/src/scheme_attrib.c:172
+#: libgeda/src/scheme_attrib.c:171
 msgid "Objects ~A and ~A are not part of the same page and/or complex object"
 msgstr ""
 
-#: libgeda/src/scheme_attrib.c:179 libgeda/src/scheme_attrib.c:184
+#: libgeda/src/scheme_attrib.c:178 libgeda/src/scheme_attrib.c:183
 msgid "Object ~A is already attached as an attribute"
 msgstr ""
 
-#: libgeda/src/scheme_attrib.c:233
+#: libgeda/src/scheme_attrib.c:232
 msgid "Object ~A is attribute of wrong object"
 msgstr ""
 
@@ -862,7 +859,7 @@ msgstr ""
 msgid "Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
-#: libgeda/src/scheme_complex.c:265 libgeda/src/scheme_page.c:249
+#: libgeda/src/scheme_complex.c:263 libgeda/src/scheme_page.c:249
 msgid "Object ~A is already attached to something"
 msgstr ""
 
@@ -939,51 +936,51 @@ msgstr ""
 msgid "Missing angle parameter for fill style ~A."
 msgstr ""
 
-#: libgeda/src/scheme_object.c:918
+#: libgeda/src/scheme_object.c:927
 msgid "Invalid pin type ~A, must be 'net or 'bus"
 msgstr ""
 
-#: libgeda/src/scheme_object.c:961
+#: libgeda/src/scheme_object.c:976
 msgid "Object ~A has invalid pin type."
 msgstr ""
 
-#: libgeda/src/scheme_object.c:1356
+#: libgeda/src/scheme_object.c:1382
 msgid "Invalid text alignment ~A."
 msgstr ""
 
-#: libgeda/src/scheme_object.c:1372
+#: libgeda/src/scheme_object.c:1398
 msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
-#: libgeda/src/scheme_object.c:1391
+#: libgeda/src/scheme_object.c:1417
 msgid "Invalid text name/value visibility ~A."
 msgstr ""
 
-#: libgeda/src/scheme_object.c:1466
+#: libgeda/src/scheme_object.c:1491
 msgid "Text object ~A has invalid text alignment ~A"
 msgstr ""
 
-#: libgeda/src/scheme_object.c:1475
+#: libgeda/src/scheme_object.c:1500
 msgid "Text object ~A has invalid visibility ~A"
 msgstr ""
 
-#: libgeda/src/scheme_object.c:1485
+#: libgeda/src/scheme_object.c:1510
 msgid "Text object ~A has invalid text attribute visibility ~A"
 msgstr ""
 
-#: libgeda/src/scheme_object.c:1526
+#: libgeda/src/scheme_object.c:1551
 msgid "Object ~A is not included in a page."
 msgstr ""
 
-#: libgeda/src/scheme_object.c:1679
+#: libgeda/src/scheme_object.c:1704
 msgid "Path object ~A has invalid element type ~A at index ~A"
 msgstr ""
 
-#: libgeda/src/scheme_object.c:1793
+#: libgeda/src/scheme_object.c:1818
 msgid "Invalid path element type ~A."
 msgstr ""
 
-#: libgeda/src/scheme_object.c:1966
+#: libgeda/src/scheme_object.c:1990
 msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
@@ -991,7 +988,7 @@ msgstr ""
 msgid "Object ~A is attached to a complex or different page"
 msgstr ""
 
-#: libgeda/src/scheme_page.c:442
+#: libgeda/src/scheme_page.c:441
 msgid "Parse error: ~s"
 msgstr ""
 
@@ -1007,6 +1004,26 @@ msgstr ""
 #, scheme-format
 msgid "Object ~A is not part of a page"
 msgstr ""
+
+#~ msgid "o_save_objects: object %p has unknown type '%c'\n"
+#~ msgstr "o_save_objects: objekt %p jest nieznanego typu '%c'\n"
+
+#~ msgid "Null radius circles are not allowed\n"
+#~ msgstr "Koła o zerowym promieniu są niedozwolone\n"
+
+#~ msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Napotkano napis o zerowych wymiarach [ %c %d %d %d %d %d %d %d %d ]\n"
+
+#~ msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Napotkano napis z nieprawidłowym nachyleniem [ %c %d %d %d %d %d %d %d "
+#~ "%d ]\n"
+
+#~ msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Napotkano napis z nieprawidłowym wyrównaniem tekstu [ %c %d %d %d %d %d "
+#~ "%d %d %d ]\n"
 
 #~ msgid "Invalid space specified, setting to 100\n"
 #~ msgstr "Błędna specyfikacja odstępu, użyję wartości 100\n"

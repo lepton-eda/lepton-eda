@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2015-09-13 16:27+0300\n"
+"POT-Creation-Date: 2016-11-01 15:16+0300\n"
 "PO-Revision-Date: 2010-02-06 22:09+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -31,7 +31,7 @@ msgstr "Edytuj atrybuty elementów za pomocą gattrib"
 msgid "o_save: Could not open [%s]\n"
 msgstr ""
 
-#: gattrib/src/gattrib.c:154
+#: gattrib/src/gattrib.c:153
 #, c-format
 msgid ""
 "gEDA/gattrib version %s%s.%s\n"
@@ -42,7 +42,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: gattrib/src/gattrib.c:190
+#: gattrib/src/gattrib.c:189
 #, c-format
 msgid "Couldn't find file [%s]\n"
 msgstr ""
@@ -126,40 +126,11 @@ msgid ""
 "the component.  Exiting . . .\n"
 msgstr ""
 
-#: gattrib/src/s_object.c:332
+#: gattrib/src/s_object.c:330
 #, c-format
 msgid ""
 "In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex "
 "or non-net!\n"
-msgstr ""
-
-#: gattrib/src/s_rename.c:117
-#, c-format
-msgid "Increase number of rename_pair sets in s_net.c\n"
-msgstr ""
-
-#: gattrib/src/s_rename.c:135
-#, c-format
-msgid "%d) Source: _%s_"
-msgstr ""
-
-#: gattrib/src/s_rename.c:139
-#, c-format
-msgid " -> Dest: _%s_\n"
-msgstr ""
-
-#: gattrib/src/s_rename.c:170
-#, c-format
-msgid ""
-"WARNING: Trying to rename something twice:\n"
-"\t%s and %s\n"
-"are both a src and dest name\n"
-"This warning is okay if you have multiple levels of hierarchy!\n"
-msgstr ""
-
-#: gattrib/src/s_rename.c:236
-#, c-format
-msgid "Increase number of rename_pairs (MAX_RENAME) in s_rename.c\n"
 msgstr ""
 
 #: gattrib/src/s_sheet_data.c:116
@@ -441,31 +412,31 @@ msgstr ""
 msgid "couldn't allocate color"
 msgstr ""
 
-#: gattrib/src/x_window.c:93
+#: gattrib/src/x_window.c:94
 #, fuzzy
 msgid "gattrib -- gEDA attribute editor"
 msgstr "gEDA Edytor atrybutów"
 
-#: gattrib/src/x_window.c:284
+#: gattrib/src/x_window.c:299
 #, c-format
 msgid ""
 "Error loading %s:\n"
 "%s\n"
 msgstr ""
 
-#: gattrib/src/x_window.c:321
+#: gattrib/src/x_window.c:336
 msgid ""
 "No components found in entire design!\n"
 "Do you have refdeses on your components?"
 msgstr ""
 
-#: gattrib/src/x_window.c:326
+#: gattrib/src/x_window.c:341
 msgid ""
 "No configurable component attributes found in entire design!\n"
 "Please attach at least some attributes before running gattrib."
 msgstr ""
 
-#: gattrib/src/x_window.c:331
+#: gattrib/src/x_window.c:346
 msgid ""
 "No pins found on any components!\n"
 "Please check your design."

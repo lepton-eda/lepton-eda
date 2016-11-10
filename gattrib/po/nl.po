@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2015-09-13 16:27+0300\n"
+"POT-Creation-Date: 2016-11-01 15:16+0300\n"
 "PO-Revision-Date: 2014-08-31 20:31+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -33,7 +33,7 @@ msgstr "Manipuleer componenten attributen met gattrib"
 msgid "o_save: Could not open [%s]\n"
 msgstr "o_save: Kan [%s] niet openen\n"
 
-#: gattrib/src/gattrib.c:154
+#: gattrib/src/gattrib.c:153
 #, c-format
 msgid ""
 "gEDA/gattrib version %s%s.%s\n"
@@ -51,7 +51,7 @@ msgstr ""
 "condities; zie alstublieft het COPYING bestand voor meer details.\n"
 "\n"
 
-#: gattrib/src/gattrib.c:190
+#: gattrib/src/gattrib.c:189
 #, c-format
 msgid "Couldn't find file [%s]\n"
 msgstr "Kan bestand [%s] niet vinden\n"
@@ -174,7 +174,7 @@ msgstr ""
 "In s_object_remove_attrib_in_object, is gefaald om attrib %s in de component "
 "te vinden.  Afsluiten . . .\n"
 
-#: gattrib/src/s_object.c:332
+#: gattrib/src/s_object.c:330
 #, c-format
 msgid ""
 "In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex "
@@ -182,39 +182,6 @@ msgid ""
 msgstr ""
 "In s_object_attrib_add_attrib_in_object, geprobeerd om attrib toe te voegen "
 "aan een non-complex of niet-net!\n"
-
-#: gattrib/src/s_rename.c:117
-#, c-format
-msgid "Increase number of rename_pair sets in s_net.c\n"
-msgstr "Verhoog het aantal rename_pair sets in s_net.c\n"
-
-#: gattrib/src/s_rename.c:135
-#, c-format
-msgid "%d) Source: _%s_"
-msgstr "%d) Bron: _%s_"
-
-#: gattrib/src/s_rename.c:139
-#, c-format
-msgid " -> Dest: _%s_\n"
-msgstr " -> Best: _%s_\n"
-
-#: gattrib/src/s_rename.c:170
-#, c-format
-msgid ""
-"WARNING: Trying to rename something twice:\n"
-"\t%s and %s\n"
-"are both a src and dest name\n"
-"This warning is okay if you have multiple levels of hierarchy!\n"
-msgstr ""
-"WAARSCHUWING: U probeert iets twee keer te hernoemen:\n"
-"\t%s en %s\n"
-"zijn beide een bron en bestemming naam\n"
-"Deze waarschuwing is in orde als U meervoudige hiërarchie niveaus heeft!\n"
-
-#: gattrib/src/s_rename.c:236
-#, c-format
-msgid "Increase number of rename_pairs (MAX_RENAME) in s_rename.c\n"
-msgstr "Verhoog het aantal rename_pairs (MAX_RENAME) in s_rename.c\n"
 
 #: gattrib/src/s_sheet_data.c:116
 #, c-format
@@ -545,11 +512,11 @@ msgstr "NTD"
 msgid "couldn't allocate color"
 msgstr "kan geen kleur toewijzen"
 
-#: gattrib/src/x_window.c:93
+#: gattrib/src/x_window.c:94
 msgid "gattrib -- gEDA attribute editor"
 msgstr "gattrib -- gEDA attribuut editor"
 
-#: gattrib/src/x_window.c:284
+#: gattrib/src/x_window.c:299
 #, c-format
 msgid ""
 "Error loading %s:\n"
@@ -558,7 +525,7 @@ msgstr ""
 "Fout tijdens laden %s:\n"
 "%s\n"
 
-#: gattrib/src/x_window.c:321
+#: gattrib/src/x_window.c:336
 msgid ""
 "No components found in entire design!\n"
 "Do you have refdeses on your components?"
@@ -566,7 +533,7 @@ msgstr ""
 "Geen componenten gevonden in het gehele ontwerp!\n"
 "Heeft U wel refdeses aan Uw componenten?"
 
-#: gattrib/src/x_window.c:326
+#: gattrib/src/x_window.c:341
 msgid ""
 "No configurable component attributes found in entire design!\n"
 "Please attach at least some attributes before running gattrib."
@@ -574,13 +541,36 @@ msgstr ""
 "Geen configureerbare component attributen gevonden in het gehele ontwerp!\n"
 "Bevestig alstublieft ten minste enige attributen voor gattrib te starten. "
 
-#: gattrib/src/x_window.c:331
+#: gattrib/src/x_window.c:346
 msgid ""
 "No pins found on any components!\n"
 "Please check your design."
 msgstr ""
 "Geen pennen gevonden op geen van de componenten!\n"
 "Controleer alstublieft uw ontwerp."
+
+#~ msgid "Increase number of rename_pair sets in s_net.c\n"
+#~ msgstr "Verhoog het aantal rename_pair sets in s_net.c\n"
+
+#~ msgid "%d) Source: _%s_"
+#~ msgstr "%d) Bron: _%s_"
+
+#~ msgid " -> Dest: _%s_\n"
+#~ msgstr " -> Best: _%s_\n"
+
+#~ msgid ""
+#~ "WARNING: Trying to rename something twice:\n"
+#~ "\t%s and %s\n"
+#~ "are both a src and dest name\n"
+#~ "This warning is okay if you have multiple levels of hierarchy!\n"
+#~ msgstr ""
+#~ "WAARSCHUWING: U probeert iets twee keer te hernoemen:\n"
+#~ "\t%s en %s\n"
+#~ "zijn beide een bron en bestemming naam\n"
+#~ "Deze waarschuwing is in orde als U meervoudige hiërarchie niveaus heeft!\n"
+
+#~ msgid "Increase number of rename_pairs (MAX_RENAME) in s_rename.c\n"
+#~ msgstr "Verhoog het aantal rename_pairs (MAX_RENAME) in s_rename.c\n"
 
 #~ msgid "In gattrib_quit, calling gtk_main_quit()\n"
 #~ msgstr "In gattrib_quit, ga gtk_main_quit() aanroepen\n"
