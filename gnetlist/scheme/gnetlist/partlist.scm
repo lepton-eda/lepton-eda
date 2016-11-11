@@ -488,7 +488,7 @@ arguments may be used:
   corresponding sorting functions, or just a list of attribute names
   in which case the parts are sorted using default functions defined
   for corresponding attributes. If no sorting function is defined
-  for an attribute name, the case insenstive string sorting function
+  for an attribute name, the case sensitive string sorting function
   string<? is used. No sorting is carried out for attribute names
   missing in the list. The priority of sorting lowers from the first
   element to the last, that is, last attributes are taken into
