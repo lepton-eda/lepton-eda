@@ -509,20 +509,17 @@
 ;;   If the number of ocurrences of a reference in the schematic doesn't match the number
 ;;   of unique slots used by that part, then that reference is used more than one time in
 ;;   the schematic.
-(define drc2:check-duplicated-references
-  (lambda (list)
-    (if (null? list)
-        0
-        (let ( (refdes (car list)))
-               (if (> (drc2:count-reference-in-list refdes (gnetlist:get-non-unique-packages ""))
-                      (length (gnetlist:get-unique-slots refdes)))
-                   (begin
-                     (display (string-append "ERROR: Duplicated reference " refdes "."))
-                     (newline)
-                     (set! errors_number (+ errors_number 1))))
-               (drc2:check-duplicated-references (cdr list))
-               ))
-))
+(define (drc2:check-duplicated-references packages non-unique-packages)
+  (define (duplicated? package)
+    (and (> (drc2:count-reference-in-list package non-unique-packages)
+            (length (gnetlist:get-unique-slots package)))
+         package))
+
+  (let ((duplicated (filter-map duplicated? packages)))
+    (set! errors_number (+ errors_number (length duplicated)))
+    (display "Checking duplicated references...\n")
+    (for-each (cut format #t "ERROR: Duplicated reference ~A.\n" <>) duplicated)
+    (newline)))
 
 
 ;
@@ -925,9 +922,8 @@
 
         ;; Check for duplicated references
         (when (not (defined? 'dont-check-duplicated-references))
-          (display "Checking duplicated references...\n")
-          (drc2:check-duplicated-references packages)
-          (newline))
+          (drc2:check-duplicated-references packages
+                                            (gnetlist:get-non-unique-packages "")))
 
         ;; Check for NoConnection nets with more than one pin connected.
         (when (not (defined? 'dont-check-connected-noconnects))
