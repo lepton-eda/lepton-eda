@@ -1006,25 +1006,13 @@
 
         ;; Display total number of warnings
         (if (> warnings_number 0)
-            (begin
-              (display "Found ")
-              (display warnings_number)
-              (display " warnings.")
-              (newline))
-            (begin
-              (display "No warnings found. ")
-              (newline)))
+            (format #t "Found ~A warnings.\n" warnings_number)
+            (display "No warnings found.\n"))
 
         ;; Display total number of errors
         (if (> errors_number 0)
-            (begin
-              (display "Found ")
-              (display errors_number)
-              (display " errors.")
-              (newline))
-            (begin
-              (display "No errors found. ")
-              (newline)))
+            (format #t "Found ~A errors.\n" errors_number)
+            (display "No errors found.\n"))
 
      (close-output-port (current-output-port))
 
