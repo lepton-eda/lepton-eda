@@ -6,8 +6,8 @@ ERROR: Duplicated reference R1.
 Checking NoConnection nets for connections...
 
 Checking nets with only one connection...
-ERROR: Net 'GND' is connected to only one pin: R1:1 .
-ERROR: Net 'unnamed_net1' is connected to only one pin: R1:2 .
+ERROR: Net 'GND' is connected to only one pin: R1:1.
+ERROR: Net 'unnamed_net1' is connected to only one pin: R1:2.
 
 Checking pins without the 'pintype' attribute...
 

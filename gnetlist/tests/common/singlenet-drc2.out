@@ -5,15 +5,15 @@ Checking duplicated references...
 Checking NoConnection nets for connections...
 
 Checking nets with only one connection...
-ERROR: Net 'GND' is connected to only one pin: U100:7 .
-ERROR: Net 'Vcc' is connected to only one pin: U100:14 .
+ERROR: Net 'GND' is connected to only one pin: U100:7.
+ERROR: Net 'Vcc' is connected to only one pin: U100:14.
 
 Checking pins without the 'pintype' attribute...
 
 Checking type of pins connected to a net...
-ERROR: Pin(s) with pintype 'output': U100:8 U100:6 
+ERROR: Pin(s) with pintype 'output': U100:8 U100:6
 	are connected by net 'SING_N'
-	to pin(s) with pintype 'output': U100:8 U100:6 
+	to pin(s) with pintype 'output': U100:8 U100:6
 
 Checking unconnected pins...
 ERROR: Unconnected pin U100:2

@@ -501,7 +501,8 @@
             (display (string-append "ERROR: Net '"
                             netname "' has connections, but "
                             "has the NoConnection DRC directive: "))
-            (drc2:display-pins-of-type "all" (gnetlist:get-all-connections netname))
+            (display (drc2:display-pins-of-type "all"
+                                                (gnetlist:get-all-connections netname)))
             (display ".")
             (newline)
             (set! errors_number (1+ errors_number))))))
@@ -531,7 +532,8 @@
                     (if (eq? (length (gnetlist:get-all-connections netname)) '1)
                         (begin (display (string-append "ERROR: Net '"
                                                        netname "' is connected to only one pin: "))
-                               (drc2:display-pins-of-type "all" (gnetlist:get-all-connections netname))
+                               (display (drc2:display-pins-of-type "all"
+                                                                   (gnetlist:get-all-connections netname)))
                                (display ".")
                                (newline)
                                (set! errors_number (+ errors_number 1))
@@ -592,24 +594,17 @@
 ;; type: number of the position of the type in the vector, or
 ;;       the string "all" to display all the pins.
 ;; connections: ((U100 1) (U101 1)), for example.
-(define drc2:display-pins-of-type
-  (lambda (type connections)
-    (if (not (null? connections))
-        (begin
-          (let ((device (car (car connections)))
-                (pin (car (cdr (car connections)))))
-            (if (or (and (string? type) (string-ci=? type "all"))
-                    (string-ci=? (list-ref pintype-names type)
-                                 (gnetlist:get-attribute-by-pinnumber device pin "pintype"))
-                    )
-                (begin
-                  (display device)
-                  (display ":")
-                  (display pin)
-                  (display " ")))
-            (drc2:display-pins-of-type type (cdr connections))
-            ""
-            )))))
+(define (drc2:display-pins-of-type type connections)
+  (string-join
+   (filter-map
+    (lambda (conn)
+      (let ((device (first conn))
+            (pin (second conn)))
+        (and (or (and (string? type) (string-ci=? type "all"))
+                 (string-ci=? (list-ref pintype-names type)
+                              (gnetlist:get-attribute-by-pinnumber device pin "pintype")))
+             (format #f "~A:~A" device pin))))
+    connections)))
 
 ;;
 ;; Check connection between two pintypes
@@ -639,20 +634,12 @@
                        (display "ERROR: ")
                        (set! errors_number (+ errors_number 1))
                        ))
-                   (display "Pin(s) with pintype '")
-                   (display (drc2:get-full-name-of-pintype-by-number type1))
-                   (display "': ")
-                   (display (drc2:display-pins-of-type type1
-                                                         connections))
-                   (display (string-append "\n\tare connected by net '" netname))
-                   (display "'\n\tto pin(s) with pintype '")
-                   (display (drc2:get-full-name-of-pintype-by-number type2))
-                   (display "': ")
-                   (display (drc2:display-pins-of-type type2
-                                                         connections))
-                   (newline)
-                   )
-                 ))))))
+                   (format #t "Pin(s) with pintype '~A': ~A\n\tare connected by net '~A'\n\tto pin(s) with pintype '~A': ~A\n"
+                           (drc2:get-full-name-of-pintype-by-number type1)
+                           (drc2:display-pins-of-type type1 connections)
+                           netname
+                           (drc2:get-full-name-of-pintype-by-number type2)
+                           (drc2:display-pins-of-type type2 connections)))))))))
 
 ;;
 ;; Check pintypes of the pins connected to a single net
@@ -820,13 +807,19 @@
          (+ count
             (list-ref pintype-count (drc2:position-of-pintype "unknown")))))
      0 nets))
+
   (define (display-unknown-pintypes nets)
-    (for-each
-     (lambda (netname)
-       (drc2:display-pins-of-type
-                                  (drc2:position-of-pintype "unknown")
-                                  (gnetlist:get-all-connections netname)))
-     nets))
+    (display
+     (string-join
+      (filter-map
+       (lambda (netname)
+         (let ((pins (drc2:display-pins-of-type
+                      (drc2:position-of-pintype "unknown")
+                      (gnetlist:get-all-connections netname))))
+           (and (not (string-null? pins))
+                pins)))
+       nets))))
+
   (and (> (count-unknown-pintypes nets) 0)
        (begin
          (display "NOTE: Found pins without the 'pintype' attribute: ")
