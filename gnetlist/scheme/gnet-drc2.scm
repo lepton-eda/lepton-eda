@@ -258,6 +258,13 @@
 ;; Number of errors and warnings found
 (define errors_number 0)
 (define warnings_number 0)
+(define (drc2:error msg . params)
+  (set! errors_number (1+ errors_number))
+  (format #t "ERROR: ~A\n" (apply format #f msg params)))
+
+(define (drc2:warning msg . params)
+  (set! warnings_number (1+ warnings_number))
+  (format #t "WARNING: ~A\n" (apply format #f msg params)))
 
 (define-undefined action-unused-slots #\w)
 
@@ -329,14 +336,12 @@
 ;; example of packages: (U100 U101 U102)
 (define (drc2:check-non-numbered-items packages)
   (define (non-numbered? package)
-    (and (string-index package #\?) package))
+    (and (string-index package #\?)
+         (drc2:error "Reference not numbered: ~A" package)))
 
-  (let ((non-numbered (filter-map non-numbered? packages)))
-    (set! errors_number (+ errors_number (length non-numbered)))
-    (display "Checking non-numbered parts...\n")
-    (for-each (cut format #t "ERROR: Reference not numbered: ~A\n" <>)
-              non-numbered)
-    (newline)))
+  (display "Checking non-numbered parts...\n")
+  (for-each non-numbered? packages)
+  (newline))
 
 
 ;;
@@ -348,10 +353,9 @@
     (define (check-slots-loop slots-list)
       (when (> (length slots-list) 1)
         (when (member (car slots-list) (cdr slots-list))
-          (format #t "ERROR: duplicated slot ~A of refdes ~A\n"
+          (drc2:error "duplicated slot ~A of refdes ~A"
                   (number->string (car slots-list))
-                  refdes)
-          (set! errors_number (+ errors_number 1)))
+                  refdes))
         (check-slots-loop (cdr slots-list))))
 
     (check-slots-loop (gnetlist:get-slots refdes)))
@@ -371,17 +375,12 @@
       (let ( (numslots (string->number (gnetlist:get-package-attribute refdes "numslots"))) )
         (when (not (member slot_number slots-list))
           (when (not (char=? action-unused-slots #\c))
-            (if (char=? action-unused-slots #\e)
-                (begin
-                  (format #t "ERROR: Unused slot ~A of refdes ~A\n"
+            (let ((error-func (if (char=? action-unused-slots #\e)
+                                  drc2:error
+                                  drc2:warning)))
+              (error-func "Unused slot ~A of refdes ~A"
                           (number->string slot_number)
-                          refdes)
-                  (set! errors_number (+ errors_number 1)))
-                (begin
-                  (format #t "WARNING: Unused slot ~A of refdes ~A\n"
-                          (number->string slot_number)
-                          refdes)
-                  (set! warnings_number (+ warnings_number 1))))))
+                          refdes))))
         (when (< slot_number numslots)
           (check-slots-loop (+ slot_number 1) slots-list))))
 
@@ -409,11 +408,9 @@
               (if (and (integer? this-slot)
                        (not (and (<= this-slot numslots) (>= this-slot 1))))
                   ;; If slot is not between 1 and numslots, then report an error.
-                  (begin
-                    (format #t "ERROR: Reference ~A: Slot out of range (~A).\n"
-                            refdes
-                            (number->string this-slot))
-                    (set! errors_number (+ errors_number 1))))
+                  (drc2:error "Reference ~A: Slot out of range (~A)."
+                              refdes
+                              (number->string this-slot)))
 
               (check-slots-loop (cdr slots-list)))))
       (if (string-ci=? slot-string "unknown")
@@ -428,33 +425,25 @@
                 ;; report the situation to the user.
                 (if (integer? numslots)
                     ;; If no slot attribute, but numslots is defined and not zero.
-                    (begin
-                      ;; If numslots is a number, then slot should be defined.
-                      (format #t "ERROR: Multislotted reference ~A has no slot attribute defined.\n"
-                              refdes)
-
-                      (set! errors_number (+ errors_number 1)))
-                    (begin
-                      (format #t "ERROR: Reference ~A: Incorrect value of numslots attribute (~A).\n"
-                              refdes numslots-string)
-                      (set! errors_number (+ errors_number 1))))))
+                    ;; If numslots is a number, then slot should be defined.
+                    (drc2:error "Multislotted reference ~A has no slot attribute defined."
+                                refdes)
+                    (drc2:error "Reference ~A: Incorrect value of numslots attribute (~A)."
+                                refdes
+                                numslots-string))))
           ;; Slot attribute defined.
           ;; If it's a number, then check slots. If it's not, then report an error.
           (if (integer? slot)
               (if (integer? numslots)
                   (check-slots-loop (gnetlist:get-unique-slots refdes))
-                  (begin
-                    ;; Slot is defined and it's a number, but numslots it's not a number.
-                    (format #t "ERROR: Reference ~A: Incorrect value of numslots attribute (~A).\n"
-                            refdes
-                            numslots-string)
-                    (set! errors_number (+ errors_number 1))))
-              (begin
-                ;; Slot attribute is not a number.
-                (format #t "ERROR: Reference ~A: Incorrect value of slot attribute (~A).\n"
-                        refdes
-                        slot-string)
-                (set! errors_number (+ errors_number 1)))))))
+                  ;; Slot is defined and it's a number, but numslots it's not a number.
+                  (drc2:error "Reference ~A: Incorrect value of numslots attribute (~A)."
+                              refdes
+                              numslots-string))
+              ;; Slot attribute is not a number.
+              (drc2:error "Reference ~A: Incorrect value of slot attribute (~A)."
+                          refdes
+                          slot-string)))))
 
 
   (display "Checking slots...\n")
@@ -476,13 +465,11 @@
   (define (duplicated? package)
     (and (> (drc2:count-reference-in-list package non-unique-packages)
             (length (gnetlist:get-unique-slots package)))
-         package))
+         (drc2:error "Duplicated reference ~A." package)))
 
-  (let ((duplicated (filter-map duplicated? packages)))
-    (set! errors_number (+ errors_number (length duplicated)))
-    (display "Checking duplicated references...\n")
-    (for-each (cut format #t "ERROR: Duplicated reference ~A.\n" <>) duplicated)
-    (newline)))
+  (display "Checking duplicated references...\n")
+  (for-each duplicated? packages)
+  (newline))
 
 
 ;
@@ -538,11 +525,8 @@
               (if (not (member "NoConnection" directives))
                   (begin
                     (if (eq? (length (gnetlist:get-all-connections netname)) '0)
-                        (begin (display (string-append "ERROR: Net '"
-                                                       netname "' has no connections."))
-                               (newline)
-                               (set! errors_number (+ errors_number 1))
-                               )
+                        (drc2:error "ERROR: Net '~A' has no connections."
+                                    netname)
                         )
                     (if (eq? (length (gnetlist:get-all-connections netname)) '1)
                         (begin (display (string-append "ERROR: Net '"
@@ -767,17 +751,7 @@
                       (if (and (not (member "DontCheckIfDriven" directives))
                                (not (member "NoConnection" directives)))
                           (if (eqv? (drc2:check-if-net-is-driven pintype-count 0) #f)
-                              (begin
-                                (set! errors_number (+ errors_number 1))
-                                (display "ERROR: Net ")
-                                (display netname)
-                                (display " is not driven.")
-                                (newline)
-                                ))
-                          )
-                      ))
-
-                )
+                              (drc2:error "Net ~A is not driven." netname))))))
               (drc2:check-pintypes-of-nets (cdr all-nets))
   )))
 ))
