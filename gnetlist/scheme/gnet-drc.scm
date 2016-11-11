@@ -46,11 +46,11 @@
    "attribs"))
 
 (define (drc output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
-  (drc:device-rules drc:attriblist packages)
-  (drc:net-rules (gnetlist:get-all-unique-nets "dummy"))
-  (drc:pin-rules packages)
-  (close-output-port (current-output-port)))
+  (with-output-to-port (gnetlist:output-port output-filename)
+    (lambda ()
+      (drc:device-rules drc:attriblist packages)
+      (drc:net-rules (gnetlist:get-all-unique-nets "dummy"))
+      (drc:pin-rules packages))))
 
 
 (define drc:net-rules
