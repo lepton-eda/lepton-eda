@@ -395,95 +395,71 @@
 ;;
 ;; Check slot number is greater or equal than numslots for all packages
 ;;
-(define drc2:check-slots
-  (lambda ()
-    (define check-slots-of-package
-      (lambda (uref)
+(define (drc2:check-slots packages)
+  (define (check-slots-of-package refdes)
+    (let* ((numslots-string (gnetlist:get-package-attribute refdes "numslots"))
+           (numslots (string->number numslots-string))
+           (slot-string (let ((slots (gnetlist:get-all-package-attributes refdes "slot")))
+                          (if (or (null? slots) (not (car slots)))
+                              "unknown" (car slots))))
+           (slot (string->number slot-string)))
+      (define (check-slots-loop slots-list)
+        (if (not (null? slots-list))
+            (let ((this-slot (car slots-list)))
+              (if (and (integer? this-slot)
+                       (not (and (<= this-slot numslots) (>= this-slot 1))))
+                  ;; If slot is not between 1 and numslots, then report an error.
+                  (begin
+                    (format #t "ERROR: Reference ~A: Slot out of range (~A).\n"
+                            refdes
+                            (number->string this-slot))
+                    (set! errors_number (+ errors_number 1))))
 
-        (let* ( (numslots_string (gnetlist:get-package-attribute uref "numslots"))
-                (numslots (string->number numslots_string))
-                (slot_string (let ((slots (gnetlist:get-all-package-attributes uref "slot")))
-                               (if (or (null? slots) (not (car slots)))
-                                   "unknown" (car slots))))
-                (slot (string->number slot_string))
-                )
-          (let ()
-            (define check-slots-loop
-              (lambda (slots_list)
-                (if (not (null? slots_list))
-                    (let ((this_slot (car slots_list)))
-                      (if (integer? this_slot)
-                          (if (not (and (<= this_slot numslots) (>= this_slot 1)))
-                              ;; If slot is not between 1 and numslots, then report an error.
-                              (begin
-                                (display (string-append "ERROR: Reference " uref
-                                                        ": Slot out of range ("
-                                                        (number->string this_slot)
-                                                        ")."))
-                                (newline)
-                                (set! errors_number (+ errors_number 1)))))
+              (check-slots-loop (cdr slots-list)))))
+      (if (string-ci=? slot-string "unknown")
+          (begin
+            ;; If slot attribute is not defined.
+            (if (or (string-ci=? numslots-string "unknown") (= numslots 0))
+                ;; No slot neither numslots (or set to zero) attributes defined.
+                ;; This is correct.
+                (display "")
+                ;; Slot not defined, but numslots defined or different than 0.
+                ;; This is incorrect. Check if numslots is a number and
+                ;; report the situation to the user.
+                (if (integer? numslots)
+                    ;; If no slot attribute, but numslots is defined and not zero.
+                    (begin
+                      ;; If numslots is a number, then slot should be defined.
+                      (format #t "ERROR: Multislotted reference ~A has no slot attribute defined.\n"
+                              refdes)
 
-                      (check-slots-loop (cdr slots_list))
-                      ))))
-
-            (if (string-ci=? slot_string "unknown")
-                (begin
-                  ;; If slot attribute is not defined.
-                  (if (or (string-ci=? numslots_string "unknown") (= numslots 0))
-                      (begin
-                        ;; No slot neither numslots (or set to zero) attributes defined.
-                        ;; This is correct.
-                        ;;(display (string-append "No slotted reference: " uref))
-                        (display "")
-                        ;;(newline)
-                        )
-                      (begin
-                        ;; Slot not defined, but numslots defined or different than 0.
-                        ;; This is incorrect. Check if numslots is a number and
-                        ;; report the situation to the user.
-                        (if (integer? numslots)
-                            ;; If no slot attribute, but numslots is defined and not zero.
-                            (begin
-                              ;; If numslots is a number, then slot should be defined.
-                              (display (string-append "ERROR: Multislotted reference " uref
-                                                      " has no slot attribute defined."))
-                              (newline)
-                              (set! errors_number (+ errors_number 1)))
-                            (begin
-                              (display (string-append "ERROR: Reference " uref
-                                                      ": Incorrect value of numslots attribute ("
-                                                      numslots_string ")."))
-                              (newline)
-                               (set! errors_number (+ errors_number 1))
-                              )
-                            )
-                        ))
-                  )
-                (begin
-                  ;; Slot attribute defined.
-                  ;; If it's a number, then check slots. If it's not, then report an error.
-                  (if (integer? slot)
-                      (if (integer? numslots)
-                          (check-slots-loop (gnetlist:get-unique-slots uref))
-                          (begin
-                            ;; Slot is defined and it's a number, but numslots it's not a number.
-                            (display (string-append "ERROR: Reference " uref
-                                                    ": Incorrect value of numslots attribute ("
-                                                    numslots_string ")."))
-                            (newline)
-                            (set! errors_number (+ errors_number 1))))
-                      (begin
-                        ;; Slot attribute is not a number.
-                        (display (string-append "ERROR: Reference " uref
-                                                ": Incorrect value of slot attribute ("
-                                                slot_string ")."))
-                        (newline)
-                        (set! errors_number (+ errors_number 1))))
-                  ))))))
+                      (set! errors_number (+ errors_number 1)))
+                    (begin
+                      (format #t "ERROR: Reference ~A: Incorrect value of numslots attribute (~A).\n"
+                              refdes numslots-string)
+                      (set! errors_number (+ errors_number 1))))))
+          ;; Slot attribute defined.
+          ;; If it's a number, then check slots. If it's not, then report an error.
+          (if (integer? slot)
+              (if (integer? numslots)
+                  (check-slots-loop (gnetlist:get-unique-slots refdes))
+                  (begin
+                    ;; Slot is defined and it's a number, but numslots it's not a number.
+                    (format #t "ERROR: Reference ~A: Incorrect value of numslots attribute (~A).\n"
+                            refdes
+                            numslots-string)
+                    (set! errors_number (+ errors_number 1))))
+              (begin
+                ;; Slot attribute is not a number.
+                (format #t "ERROR: Reference ~A: Incorrect value of slot attribute (~A).\n"
+                        refdes
+                        slot-string)
+                (set! errors_number (+ errors_number 1)))))))
 
 
-    (for-each check-slots-of-package packages)
-    ))
+  (display "Checking slots...\n")
+  (for-each check-slots-of-package packages)
+  (newline))
 
 ;; Count the ocurrences of a given reference in the given list.
 (define (drc2:count-reference-in-list refdes lst)
@@ -945,9 +921,7 @@
 
         ;; Check slots
         (when (not (defined? 'dont-check-slots))
-          (display "Checking slots...\n")
-          (drc2:check-slots)
-          (newline))
+          (drc2:check-slots packages))
 
         ;; Check for duplicated slots
         (when (not (defined? 'dont-check-duplicated-slots))
