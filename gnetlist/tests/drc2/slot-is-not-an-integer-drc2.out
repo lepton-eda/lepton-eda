@@ -19,7 +19,7 @@ ERROR: Reference R1: Incorrect value of slot attribute (fa).
 Checking duplicated slots...
 
 Checking unused slots...
-WARNING: Unused slot 1 of uref R1
+WARNING: Unused slot 1 of refdes R1
 
 Found 1 warnings.
 Found 2 errors.

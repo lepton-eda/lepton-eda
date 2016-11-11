@@ -365,40 +365,32 @@
 ;;
 ;; Checks for slots not used.
 ;;
-(define drc2:check-unused-slots
-  (lambda ()
-    (define check-unused-slots-of-package
-      (lambda (uref)
+(define (drc2:check-unused-slots packages)
+  (define (check-unused-slots-of-package refdes)
+    (define (check-slots-loop slot_number slots-list)
+      (let ( (numslots (string->number (gnetlist:get-package-attribute refdes "numslots"))) )
+        (when (not (member slot_number slots-list))
+          (when (not (char=? action-unused-slots #\c))
+            (if (char=? action-unused-slots #\e)
+                (begin
+                  (format #t "ERROR: Unused slot ~A of refdes ~A\n"
+                          (number->string slot_number)
+                          refdes)
+                  (set! errors_number (+ errors_number 1)))
+                (begin
+                  (format #t "WARNING: Unused slot ~A of refdes ~A\n"
+                          (number->string slot_number)
+                          refdes)
+                  (set! warnings_number (+ warnings_number 1))))))
+        (when (< slot_number numslots)
+          (check-slots-loop (+ slot_number 1) slots-list))))
 
-        (define check-slots-loop
-          (lambda (slot_number slots_list)
-            (let ( (numslots (string->number (gnetlist:get-package-attribute uref "numslots"))) )
-              (if (not (member slot_number slots_list))
-                  (begin
-                    (if (not (char=? action-unused-slots #\c))
-                        (begin
-                          (if (char=? action-unused-slots #\e)
-                              (begin
-                                (display (string-append "ERROR: Unused slot "
-                                                        (number->string slot_number)
-                                                        " of uref " uref))
-                                (set! errors_number (+ errors_number 1)))
-                              (begin
-                                (display (string-append "WARNING: Unused slot "
-                                                        (number->string slot_number)
-                                                        " of uref " uref))
-                                (set! warnings_number (+ warnings_number 1))))
-                          (newline)))))
-              (if (< slot_number numslots)
-                  (check-slots-loop (+ slot_number 1) slots_list)))))
+    (when (integer? (string->number (gnetlist:get-package-attribute refdes "numslots")))
+      (check-slots-loop 1 (gnetlist:get-unique-slots refdes))))
 
-        (if (integer? (string->number (gnetlist:get-package-attribute uref "numslots")))
-            (check-slots-loop 1 (gnetlist:get-unique-slots uref))
-            )
-        ))
-
-    (for-each check-unused-slots-of-package packages)
-    ))
+  (display "Checking unused slots...\n")
+  (for-each check-unused-slots-of-package packages)
+  (newline))
 
 ;;
 ;; Check slot number is greater or equal than numslots for all packages
@@ -963,9 +955,7 @@
 
         ;; Check for unused slots
         (when (not (defined? 'dont-check-unused-slots))
-          (display "Checking unused slots...\n")
-          (drc2:check-unused-slots)
-          (newline))
+          (drc2:check-unused-slots packages))
 
         ;; Display total number of warnings
         (if (> warnings_number 0)

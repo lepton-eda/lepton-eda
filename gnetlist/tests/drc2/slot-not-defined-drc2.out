@@ -20,7 +20,7 @@ Checking duplicated slots...
 ERROR: duplicated slot 1 of refdes R1
 
 Checking unused slots...
-WARNING: Unused slot 2 of uref R1
+WARNING: Unused slot 2 of refdes R1
 
 Found 1 warnings.
 Found 3 errors.
