@@ -343,27 +343,22 @@
 ;; Check for duplicated slots
 ;;
 ;; Check if a slot of a package is used more than one time. Checks all packages in the design.
-(define drc2:check-duplicated-slots
-  (lambda ()
-    (define check-duplicated-slots-of-package
-      (lambda (uref)
-        (define check-slots-loop
-          (lambda (slots_list)
-            (if (> (length slots_list) 1)
-                (begin
-                  (if (member (car slots_list) (cdr slots_list))
-                      (begin
-                        (display (string-append "ERROR: duplicated slot "
-                                                (number->string (car slots_list))
-                                                " of uref "
-                                                uref))
-                        (newline)
-                        (set! errors_number (+ errors_number 1))))
-                  (check-slots-loop (cdr slots_list))
-                  ))))
-        (check-slots-loop (gnetlist:get-slots uref))))
-    (for-each check-duplicated-slots-of-package packages)
-))
+(define (drc2:check-duplicated-slots packages)
+  (define (check-duplicated-slots-of-package refdes)
+    (define (check-slots-loop slots-list)
+      (when (> (length slots-list) 1)
+        (when (member (car slots-list) (cdr slots-list))
+          (format #t "ERROR: duplicated slot ~A of refdes ~A\n"
+                  (number->string (car slots-list))
+                  refdes)
+          (set! errors_number (+ errors_number 1)))
+        (check-slots-loop (cdr slots-list))))
+
+    (check-slots-loop (gnetlist:get-slots refdes)))
+
+  (display "Checking duplicated slots...\n")
+  (for-each check-duplicated-slots-of-package packages)
+  (newline))
 
 
 
@@ -964,9 +959,7 @@
 
         ;; Check for duplicated slots
         (when (not (defined? 'dont-check-duplicated-slots))
-          (display "Checking duplicated slots...\n")
-          (drc2:check-duplicated-slots)
-          (newline))
+          (drc2:check-duplicated-slots packages))
 
         ;; Check for unused slots
         (when (not (defined? 'dont-check-unused-slots))
