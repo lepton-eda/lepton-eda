@@ -168,7 +168,8 @@
 ;; IMPORTANT: Don't modify anything below unless you know what you are doing.
 ;; -------------------------------------------------------------------------------
 
-(use-modules (srfi srfi-1))
+(use-modules (srfi srfi-1)
+             (srfi srfi-26))
 (or (defined? 'define-syntax)
     (use-modules (ice-9 syncase)))
 
@@ -326,19 +327,16 @@
 ;; Check for symbols not numbered.
 ;;
 ;; example of packages: (U100 U101 U102)
-(define drc2:check-non-numbered-items
-   (lambda (packages)
-      (if (not (null? packages))
-         (let ((package (car packages)))
-            (begin
-               (if (not (eq? (string-index package #\?) #f))
-                   (begin (display "ERROR: Reference not numbered: ")
-                          (display package)
-                          (newline)
-                          (set! errors_number (+ errors_number 1))
-                          )
-                   )
-               (drc2:check-non-numbered-items (cdr packages)))))))
+(define (drc2:check-non-numbered-items packages)
+  (define (non-numbered? package)
+    (and (string-index package #\?) package))
+
+  (let ((non-numbered (filter-map non-numbered? packages)))
+    (set! errors_number (+ errors_number (length non-numbered)))
+    (display "Checking non-numbered parts...\n")
+    (for-each (cut format #t "ERROR: Reference not numbered: ~A\n" <>)
+              non-numbered)
+    (newline)))
 
 
 ;;
@@ -923,9 +921,7 @@
 
         ;; Check non-numbered symbols
         (when (not (defined? 'dont-check-non-numbered-parts))
-          (display "Checking non-numbered parts...\n")
-          (drc2:check-non-numbered-items packages)
-          (newline))
+          (drc2:check-non-numbered-items packages))
 
         ;; Check for duplicated references
         (when (not (defined? 'dont-check-duplicated-references))
