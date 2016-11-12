@@ -598,29 +598,26 @@
 ;;
 ;; type1,type2: number of the position of the type in the vector.
 ;; connections: ((U100 1) (U101 1)), for example.
-(define drc2:check-connection-of-two-pintypes
-  (lambda (type1 type2 connections netname)
-    (let* (( drc-matrix-value (drc2:get-drc-matrix-element type1 type2)))
-      (cond
-       ((eqv? drc-matrix-value #\c) 1)
-       (else (if (and (not (eqv? drc-matrix-value #\e)) (not (eqv? drc-matrix-value #\w)))
-                 (begin
-                   (display "INTERNAL ERROR: DRC matrix has unknown value on position ")
-                   (display type1)
-                   (display ",")
-                   (display type2)
-                   (newline)
-                   (error "INTERNAL ERROR: DRC matrix has unknown value. See output for more information"))
-
-                 (let ((error-func (if (eqv? drc-matrix-value #\w)
-                                       drc2:warning
-                                       drc2:error)))
-                   (error-func "Pin(s) with pintype '~A': ~A\n\tare connected by net '~A'\n\tto pin(s) with pintype '~A': ~A"
-                               (drc2:get-full-name-of-pintype-by-number type1)
-                               (drc2:display-pins-of-type type1 connections)
-                               netname
-                               (drc2:get-full-name-of-pintype-by-number type2)
-                               (drc2:display-pins-of-type type2 connections)))))))))
+(define (drc2:check-connection-of-two-pintypes type1 type2 connections netname)
+  (let ((drc-matrix-value (drc2:get-drc-matrix-element type1 type2)))
+    (if (eqv? drc-matrix-value #\c)
+        1
+        (if (and (not (eqv? drc-matrix-value #\e))
+                 (not (eqv? drc-matrix-value #\w)))
+            (begin
+              (format #t "INTERNAL ERROR: DRC matrix has unknown value on position ~A,~A\n"
+                      type1
+                      type2)
+              (error "INTERNAL ERROR: DRC matrix has unknown value. See output for more information"))
+            (let ((error-func (if (eqv? drc-matrix-value #\w)
+                                  drc2:warning
+                                  drc2:error)))
+              (error-func "Pin(s) with pintype '~A': ~A\n\tare connected by net '~A'\n\tto pin(s) with pintype '~A': ~A"
+                          (drc2:get-full-name-of-pintype-by-number type1)
+                          (drc2:display-pins-of-type type1 connections)
+                          netname
+                          (drc2:get-full-name-of-pintype-by-number type2)
+                          (drc2:display-pins-of-type type2 connections)))))))
 
 ;;
 ;; Check pintypes of the pins connected to a single net
