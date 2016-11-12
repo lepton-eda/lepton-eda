@@ -754,71 +754,72 @@
 (define (drc2 output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
+      (let ((nets (gnetlist:get-all-unique-nets "dummy")))
 
-      ;; Perform DRC-matrix sanity checks.
-      ;; See if all elements of the matrix are valid.
-      (when (not (drc2:drc-matrix-elements-are-correct?))
-        (display "INTERNAL ERROR: DRC matrix elements are NOT all valid.\n\n")
-        (error "INTERNAL ERROR. DRC matrix elements are NOT all valid."))
+        ;; Perform DRC-matrix sanity checks.
+        ;; See if all elements of the matrix are valid.
+        (when (not (drc2:drc-matrix-elements-are-correct?))
+          (display "INTERNAL ERROR: DRC matrix elements are NOT all valid.\n\n")
+          (error "INTERNAL ERROR. DRC matrix elements are NOT all valid."))
 
-      ;; Check non-numbered symbols
-      (when (not (defined? 'dont-check-non-numbered-parts))
-        (drc2:check-non-numbered-items packages))
+        ;; Check non-numbered symbols
+        (when (not (defined? 'dont-check-non-numbered-parts))
+          (drc2:check-non-numbered-items packages))
 
-      ;; Check for duplicated references
-      (when (not (defined? 'dont-check-duplicated-references))
-        (drc2:check-duplicated-references packages
-                                          (gnetlist:get-non-unique-packages "")))
+        ;; Check for duplicated references
+        (when (not (defined? 'dont-check-duplicated-references))
+          (drc2:check-duplicated-references packages
+                                            (gnetlist:get-non-unique-packages "")))
 
-      ;; Check for NoConnection nets with more than one pin connected.
-      (when (not (defined? 'dont-check-connected-noconnects))
-        (display "Checking NoConnection nets for connections...\n")
-        (drc2:check-connected-noconnects (gnetlist:get-all-unique-nets "dummy"))
-        (newline))
+        ;; Check for NoConnection nets with more than one pin connected.
+        (when (not (defined? 'dont-check-connected-noconnects))
+          (display "Checking NoConnection nets for connections...\n")
+          (drc2:check-connected-noconnects nets)
+          (newline))
 
-      ;; Check nets with only one connection
-      (when (not (defined? 'dont-check-one-connection-nets))
-        (display "Checking nets with only one connection...\n")
-        (drc2:check-single-nets (gnetlist:get-all-unique-nets "dummy"))
-        (newline))
+        ;; Check nets with only one connection
+        (when (not (defined? 'dont-check-one-connection-nets))
+          (display "Checking nets with only one connection...\n")
+          (drc2:check-single-nets nets)
+          (newline))
 
-      ;; Check "unknown" pintypes
-      (when (not (defined? 'dont-report-unknown-pintypes))
-        (display "Checking pins without the 'pintype' attribute...\n")
-        (drc2:report-unknown-pintypes (gnetlist:get-all-unique-nets "dummy"))
-        (newline))
+        ;; Check "unknown" pintypes
+        (when (not (defined? 'dont-report-unknown-pintypes))
+          (display "Checking pins without the 'pintype' attribute...\n")
+          (drc2:report-unknown-pintypes nets)
+          (newline))
 
-      ;; Check pintypes of the pins connected to every net
-      (when (not (defined? 'dont-check-pintypes-of-nets))
-        (display "Checking type of pins connected to a net...\n")
-        (drc2:check-pintypes-of-nets (gnetlist:get-all-unique-nets "dummy"))
-        (newline))
+        ;; Check pintypes of the pins connected to every net
+        (when (not (defined? 'dont-check-pintypes-of-nets))
+          (display "Checking type of pins connected to a net...\n")
+          (drc2:check-pintypes-of-nets nets)
+          (newline))
 
-      ;; Check unconnected pins
-      (when (not (defined? 'dont-check-unconnected-pins))
-        (drc2:check-unconnected-pins packages))
+        ;; Check unconnected pins
+        (when (not (defined? 'dont-check-unconnected-pins))
+          (drc2:check-unconnected-pins packages))
 
-      ;; Check slots
-      (when (not (defined? 'dont-check-slots))
-        (drc2:check-slots packages))
+        ;; Check slots
+        (when (not (defined? 'dont-check-slots))
+          (drc2:check-slots packages))
 
-      ;; Check for duplicated slots
-      (when (not (defined? 'dont-check-duplicated-slots))
-        (drc2:check-duplicated-slots packages))
+        ;; Check for duplicated slots
+        (when (not (defined? 'dont-check-duplicated-slots))
+          (drc2:check-duplicated-slots packages))
 
-      ;; Check for unused slots
-      (when (not (defined? 'dont-check-unused-slots))
-        (drc2:check-unused-slots packages))
+        ;; Check for unused slots
+        (when (not (defined? 'dont-check-unused-slots))
+          (drc2:check-unused-slots packages))
 
-      ;; Display total number of warnings
-      (if (> warnings_number 0)
-          (format #t "Found ~A warnings.\n" warnings_number)
-          (display "No warnings found.\n"))
+        ;; Display total number of warnings
+        (if (> warnings_number 0)
+            (format #t "Found ~A warnings.\n" warnings_number)
+            (display "No warnings found.\n"))
 
-      ;; Display total number of errors
-      (if (> errors_number 0)
-          (format #t "Found ~A errors.\n" errors_number)
-          (display "No errors found.\n"))))
+        ;; Display total number of errors
+        (if (> errors_number 0)
+            (format #t "Found ~A errors.\n" errors_number)
+            (display "No errors found.\n")))))
 
   ;; Make gnetlist return an error if there are DRC errors.
   ;; If there are only warnings and it's in quiet mode, then
