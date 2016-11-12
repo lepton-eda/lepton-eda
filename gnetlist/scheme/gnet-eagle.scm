@@ -22,108 +22,59 @@
 
 ;; EAGLE netlist format
 
+(use-modules (srfi srfi-1))
+
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid eagle net name.
-;;
-(define eagle:map-net-names
-  (lambda (net-name)
-    (let ((net-alias net-name)
-          )
-      ;; Convert to all upper case because Eagle seems
-      ;; to do that internally anyway and we'd rather do
-      ;; it here to catch shorts created by not preserving
-      ;; case.  Plus we can eliminate lots of ECO changes
-      ;; that will show up during backannotation.
-      (string-upcase net-alias)
-      )
-    )
-  )
+(define (eagle:map-net-names net-name)
+  (let ((net-alias net-name))
+    ;; Convert to all upper case because Eagle seems
+    ;; to do that internally anyway and we'd rather do
+    ;; it here to catch shorts created by not preserving
+    ;; case.  Plus we can eliminate lots of ECO changes
+    ;; that will show up during backannotation.
+    (string-upcase net-alias)))
 
-(define eagle:components
-   (lambda (packages)
-      (if (not (null? packages))
-         (begin
-            (let ((pattern (gnetlist:get-package-attribute (car packages)
-                                                           "pattern"))
-            ;; The above pattern should stay as "pattern" and not "footprint"
-                  (package (car packages))
-                  (lib (gnetlist:get-package-attribute (car packages) "lib"))
-                  (value (gnetlist:get-package-attribute (car packages) "value"))
-                  (device (gnetlist:get-package-attribute (car packages) "device"))
-                  )
-               (if (not (string=? pattern "unknown"))
-                  (display pattern))
-               (display "ADD '")
-               (display package)
-               (display "' ")
-;;             (display "' TQFP144@atmel (0 0)")
-;;;            (write-char #\tab)
-               (display (gnetlist:get-package-attribute package "footprint"))
-               (display "@")
-               (if (not (string=? lib "unknown"))
-                   (display lib)
-                   (display "smd-ipc"))
-               (display " (1 1);")
-               (newline)
-               (if (not (string=? value "unknown"))
-                   (begin
-                     (display "VALUE '")
-                     (display package)
-                     (display "' '")
-                     (display value)
-                     (display "';")
-                     (newline)
-                     )
-                   (if (not (string=? device "unknown"))
-                       (begin
-                         (display "VALUE '")
-                         (display package)
-                         (display "' '")
-                         (display device)
-                         (display "';")
-                         (newline)
-                         )
-                   ))
-               )
-            (eagle:components (cdr packages))))))
+
+(define (eagle:components packages)
+  (for-each
+   (lambda (package)
+     (let ((pattern (gnetlist:get-package-attribute package "pattern"))
+           ;; The above pattern should stay as "pattern" and not "footprint"
+           (lib (gnetlist:get-package-attribute package "lib"))
+           (value (gnetlist:get-package-attribute package "value"))
+           (device (gnetlist:get-package-attribute package "device")))
+
+       (and (not (string=? pattern "unknown"))
+            (display pattern))
+       (format #t "ADD '~A' ~A@~A (1 1);\n"
+               package
+               (gnetlist:get-package-attribute package "footprint")
+               (if (not (string=? lib "unknown")) lib "smd-ipc"))
+
+       (if (not (string=? value "unknown"))
+           (format #t "VALUE '~A' '~A';\n" package value)
+           (and (not (string=? device "unknown"))
+                (format #t "VALUE '~A' '~A';\n" package device)))))
+   packages))
 
 (define (eagle:display-connections nets)
-  (let ((k ""))
-    (for-each (lambda (in-string)
-                (set! k (string-append k in-string)))
-              (map (lambda (net)
-                     (string-append "   '" (car net) "' '" (car (cdr net)) "'\r\n"))
-                   nets))
-    (string-append k ";\n")))
+  (string-join
+   (map (lambda (net)
+          (format #f "   '~A' '~A'" (first net) (second net)))
+        nets)
+   "\r\n"
+   'suffix))
 
 
-; This function is replaced with the above one. Due to non existent
-; verification, this function is left commented out.
-; /spe, 2002-01-08
-;(define (eagle:display-connections nets)
-;  (if (not (null? nets))
-;      (string-append " " (car (car nets)) "." (car (cdr (car nets)))
-;       (eagle:display-connections (cdr nets)))
-;      "\n"))
+(define (eagle:write-net netnames)
+  (define (write-netname netname)
+    (format #t "SIGNAL '~A'\n~A;\n"
+            (gnetlist:alias-net netname)
+            (eagle:display-connections (gnetlist:get-all-connections netname))))
 
+  (for-each write-netname netnames))
 
-
-(define eagle:write-net
-   (lambda (netnames)
-      (if (not (null? netnames))
-         (let ((netname (car netnames)))
-            (display "SIGNAL '")
-            (display (gnetlist:alias-net netname))
-            (display "'")
-            (newline)
-;            (display (gnetlist:wrap
-;                     (eagle:display-connections
-;                      (gnetlist:get-all-connections netname))
-;                     78
-;                     ""))
-            (display (eagle:display-connections
-                       (gnetlist:get-all-connections netname)))
-            (eagle:write-net (cdr netnames))))))
 
 (define (eagle output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
