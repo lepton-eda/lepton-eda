@@ -734,11 +734,12 @@
                 pins)))
        nets))))
 
+  (display "Checking pins without the 'pintype' attribute...\n")
   (and (> (count-unknown-pintypes nets) 0)
-       (begin
-         (display "NOTE: Found pins without the 'pintype' attribute: ")
-         (display-unknown-pintypes nets)
-         (message "\n"))))
+       (display "NOTE: Found pins without the 'pintype' attribute: ")
+       (display-unknown-pintypes nets)
+       (message "\n"))
+  (newline))
 
 ;
 ;  End of Net checking functions
@@ -780,9 +781,7 @@
 
         ;; Check "unknown" pintypes
         (when (not (defined? 'dont-report-unknown-pintypes))
-          (display "Checking pins without the 'pintype' attribute...\n")
-          (drc2:report-unknown-pintypes nets)
-          (newline))
+          (drc2:report-unknown-pintypes nets))
 
         ;; Check pintypes of the pins connected to every net
         (when (not (defined? 'dont-check-pintypes-of-nets))
