@@ -497,15 +497,10 @@
         (and
           (member "NoConnection" directives)
           ( >  (length (gnetlist:get-all-connections netname)) '1)
-          (begin
-            (display (string-append "ERROR: Net '"
-                            netname "' has connections, but "
-                            "has the NoConnection DRC directive: "))
-            (display (drc2:display-pins-of-type "all"
-                                                (gnetlist:get-all-connections netname)))
-            (display ".")
-            (newline)
-            (set! errors_number (1+ errors_number))))))
+          (drc2:error "Net '~A' has connections, but has the NoConnection DRC directive: ~A."
+                      netname
+                      (drc2:display-pins-of-type "all"
+                                                 (gnetlist:get-all-connections netname))))))
     all-nets))
 
 ;;
@@ -526,20 +521,12 @@
               (if (not (member "NoConnection" directives))
                   (begin
                     (if (eq? (length (gnetlist:get-all-connections netname)) '0)
-                        (drc2:error "ERROR: Net '~A' has no connections."
-                                    netname)
-                        )
+                        (drc2:error "Net '~A' has no connections." netname))
                     (if (eq? (length (gnetlist:get-all-connections netname)) '1)
-                        (begin (display (string-append "ERROR: Net '"
-                                                       netname "' is connected to only one pin: "))
-                               (display (drc2:display-pins-of-type "all"
-                                                                   (gnetlist:get-all-connections netname)))
-                               (display ".")
-                               (newline)
-                               (set! errors_number (+ errors_number 1))
-                               )
-                        )
-                    ))
+                        (drc2:error "Net '~A' is connected to only one pin: ~A."
+                                    netname
+                                    (drc2:display-pins-of-type "all"
+                                                               (gnetlist:get-all-connections netname))))))
               (drc2:check-single-nets (cdr all-nets)))))
   ))
 
@@ -625,21 +612,15 @@
                    (newline)
                    (error "INTERNAL ERROR: DRC matrix has unknown value. See output for more information"))
 
-                 (begin
-                   (if (eqv? drc-matrix-value #\w)
-                       (begin
-                         (display "WARNING: ")
-                         (set! warnings_number (+ warnings_number 1)))
-                     (begin
-                       (display "ERROR: ")
-                       (set! errors_number (+ errors_number 1))
-                       ))
-                   (format #t "Pin(s) with pintype '~A': ~A\n\tare connected by net '~A'\n\tto pin(s) with pintype '~A': ~A\n"
-                           (drc2:get-full-name-of-pintype-by-number type1)
-                           (drc2:display-pins-of-type type1 connections)
-                           netname
-                           (drc2:get-full-name-of-pintype-by-number type2)
-                           (drc2:display-pins-of-type type2 connections)))))))))
+                 (let ((error-func (if (eqv? drc-matrix-value #\w)
+                                       drc2:warning
+                                       drc2:error)))
+                   (error-func "Pin(s) with pintype '~A': ~A\n\tare connected by net '~A'\n\tto pin(s) with pintype '~A': ~A"
+                               (drc2:get-full-name-of-pintype-by-number type1)
+                               (drc2:display-pins-of-type type1 connections)
+                               netname
+                               (drc2:get-full-name-of-pintype-by-number type2)
+                               (drc2:display-pins-of-type type2 connections)))))))))
 
 ;;
 ;; Check pintypes of the pins connected to a single net
@@ -765,36 +746,18 @@
                         (let* ((position (drc2:position-of-pintype
                                           (gnetlist:get-attribute-by-pinnumber ref pin "pintype")))
                                (drc-matrix-value (drc2:get-drc-matrix-element undefined position)))
-                          (begin
-                            (if (eqv? drc-matrix-value #\c)
-                                #t
-                                (begin
-                                  (if (eqv? drc-matrix-value #\w)
-                                      (begin
-                                        (display "WARNING: ")
-                                        (set! warnings_number (+ warnings_number 1)))
-                                      (begin
-                                        (display "ERROR: ")
-                                        (set! errors_number (+ errors_number 1))
-                                        ))
-                                  (display "Unconnected pin ")
-                                  (display ref)
-                                  (display ":")
-                                  (display pin)
-                                  (newline)
-                                  (drc2:check-unconnected-pins ref-list (cdr pin-net))
-                                  ))
-                          ))
-                        )
-                      (drc2:check-unconnected-pins ref-list (cdr pin-net))
-                  )
-                ))
+                          (if (eqv? drc-matrix-value #\c)
+                              #t
+                              (let ((error-func (if (eqv? drc-matrix-value #\w)
+                                                    drc2:warning
+                                                    drc2:error)))
+                                (error-func "Unconnected pin ~A:~A" ref pin)
+                                (drc2:check-unconnected-pins ref-list (cdr pin-net))))))
+                      (drc2:check-unconnected-pins ref-list (cdr pin-net)))))
               (if (> (length ref-list) 1)
                   (drc2:check-unconnected-pins (cdr ref-list)
                                                (gnetlist:get-pins-nets (car (cdr ref-list)))))
-            ))
-        )
-    ))
+            )))))
 
 ; Report pins without the 'pintype' attribute (pintype=unknown)
 (define (drc2:report-unknown-pintypes nets)
