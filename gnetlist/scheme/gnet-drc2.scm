@@ -728,36 +728,28 @@
 ;; Check unconnected pins
 ;;
 ;; ref-list: ("U1" "U2"), for example.
-;; pin-net: ( (pin net) (pin net) ... )
-(define drc2:check-unconnected-pins
-  (lambda (ref-list pin-net)
-    (define ref "")
-    (if (not (null? ref-list))
-        (begin
-          (set! ref (car ref-list))
-          (if (not (null? pin-net))
-              (let* ( (pair (car pin-net))
-                      (pin (car pair))
-                      (connection (cdr pair))
-                      )
-                (begin
-                  (if (string-prefix-ci? "unconnected_pin" connection)
-                      (begin
-                        (let* ((position (drc2:position-of-pintype
-                                          (gnetlist:get-attribute-by-pinnumber ref pin "pintype")))
-                               (drc-matrix-value (drc2:get-drc-matrix-element undefined position)))
-                          (if (eqv? drc-matrix-value #\c)
-                              #t
-                              (let ((error-func (if (eqv? drc-matrix-value #\w)
-                                                    drc2:warning
-                                                    drc2:error)))
-                                (error-func "Unconnected pin ~A:~A" ref pin)
-                                (drc2:check-unconnected-pins ref-list (cdr pin-net))))))
-                      (drc2:check-unconnected-pins ref-list (cdr pin-net)))))
-              (if (> (length ref-list) 1)
-                  (drc2:check-unconnected-pins (cdr ref-list)
-                                               (gnetlist:get-pins-nets (car (cdr ref-list)))))
-            )))))
+;; pin-net-list: ( (pin net) (pin net) ... )
+(define (drc2:check-unconnected-pins packages)
+  (define (check-connection package pin-net)
+    (let ((pin (car pin-net))
+          (net (cdr pin-net)))
+      (if (string-prefix-ci? "unconnected_pin" net)
+          (let* ((position (drc2:position-of-pintype
+                            (gnetlist:get-attribute-by-pinnumber package pin "pintype")))
+                 (drc-matrix-value (drc2:get-drc-matrix-element undefined position)))
+            (or (eqv? drc-matrix-value #\c)
+                (let ((error-func (if (eqv? drc-matrix-value #\w)
+                                      drc2:warning
+                                      drc2:error)))
+                  (error-func "Unconnected pin ~A:~A" package pin)))))))
+
+  (display "Checking unconnected pins...\n")
+  (for-each
+   (lambda (package)
+     (let ((pin-net-list (gnetlist:get-pins-nets package)))
+       (for-each (cut check-connection package <>) pin-net-list)))
+   packages)
+  (newline))
 
 ; Report pins without the 'pintype' attribute (pintype=unknown)
 (define (drc2:report-unknown-pintypes nets)
@@ -844,10 +836,7 @@
 
         ;; Check unconnected pins
         (when (not (defined? 'dont-check-unconnected-pins))
-          (display "Checking unconnected pins...\n")
-          (if (not (null? packages))
-              (drc2:check-unconnected-pins packages (gnetlist:get-pins-nets (car packages))))
-          (newline))
+          (drc2:check-unconnected-pins packages))
 
         ;; Check slots
         (when (not (defined? 'dont-check-slots))
