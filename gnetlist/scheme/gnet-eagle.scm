@@ -126,23 +126,16 @@
             (eagle:write-net (cdr netnames))))))
 
 (define (eagle output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
-  ;; initialize the net-name aliasing
-  (gnetlist:build-net-aliases eagle:map-net-names all-unique-nets)
+  (with-output-to-port (gnetlist:output-port output-filename)
+    (lambda ()
+      ;; initialize the net-name aliasing
+      (gnetlist:build-net-aliases eagle:map-net-names all-unique-nets)
 
-  ;; print out the header
-;;(display "!EAGLE-POWERPCB-V3.0-MILS!\n")
-;;(display "\n*PART*\n")
-;;(display "/* CADSoft Eagle Scripted Netlist Format */\n")
-  (display "   ;\n")
+      ;; print out the header
+      (display "   ;\n")
 
-  ;; print out the parts
-  (eagle:components packages)
+      ;; print out the parts
+      (eagle:components packages)
 
-  ;; print out the net information
-;;(display "\n*NET*\n")
-  (eagle:write-net (gnetlist:get-all-unique-nets "dummy"))
-
-  ;; print out the footer
-;;(display "\n*END*\n")
-  (close-output-port (current-output-port)))
+      ;; print out the net information
+      (eagle:write-net (gnetlist:get-all-unique-nets "dummy")))))
