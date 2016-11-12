@@ -24,19 +24,19 @@ Checking slots...
 Checking duplicated slots...
 
 Checking unused slots...
-WARNING: Unused slot 2 of refdes U300
-WARNING: Unused slot 3 of refdes U300
-WARNING: Unused slot 4 of refdes U300
-WARNING: Unused slot 5 of refdes U300
-WARNING: Unused slot 6 of refdes U300
+WARNING: Unused slot 2 of refdes U100
+WARNING: Unused slot 3 of refdes U100
+WARNING: Unused slot 4 of refdes U100
 WARNING: Unused slot 2 of refdes U200
 WARNING: Unused slot 3 of refdes U200
 WARNING: Unused slot 4 of refdes U200
 WARNING: Unused slot 5 of refdes U200
 WARNING: Unused slot 6 of refdes U200
-WARNING: Unused slot 2 of refdes U100
-WARNING: Unused slot 3 of refdes U100
-WARNING: Unused slot 4 of refdes U100
+WARNING: Unused slot 2 of refdes U300
+WARNING: Unused slot 3 of refdes U300
+WARNING: Unused slot 4 of refdes U300
+WARNING: Unused slot 5 of refdes U300
+WARNING: Unused slot 6 of refdes U300
 
 Found 13 warnings.
 Found 5 errors.

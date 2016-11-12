@@ -140,7 +140,8 @@
 ;; -------------------------------------------------------------------------------
 
 (use-modules (srfi srfi-1)
-             (srfi srfi-26))
+             (srfi srfi-26)
+             (gnetlist attrib compare))
 (or (defined? 'define-syntax)
     (use-modules (ice-9 syncase)))
 
@@ -756,7 +757,8 @@
 (define (drc2 output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((nets (gnetlist:get-all-unique-nets "dummy")))
+      (let ((packages (sort packages refdes<?))
+            (nets (gnetlist:get-all-unique-nets "dummy")))
 
         ;; Perform DRC-matrix sanity checks.
         ;; See if all elements of the matrix are valid.
