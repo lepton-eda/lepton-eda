@@ -652,33 +652,32 @@
 ;; Check pintype of the pins connected to every net in the design.
 ;;
 ;; all-nets: (net1 net2 net3), for example
-(define drc2:check-pintypes-of-nets
-  (lambda (all-nets)
-      (if (not (null? all-nets))
-          (let ((netname (car all-nets)))
-            (begin
-              (let*  ( (connections (gnetlist:get-all-connections netname))
-                       (pintypes    (drc2:get-pintypes-of-net-connections
-                                     connections
-                                     '()))
-                       (pintype-count (drc2:count-pintypes-of-net pintypes))
-                       (directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
-                                    netname
-                                    "device=DRC_Directive"
-                                    "value"))
-                       )
-                ; If some directives are defined, then it shouldn't be checked.
-                (if (not (member "DontCheckPintypes" directives))
-                    (drc2:check-pintypes-of-single-net connections pintypes pintype-count 0 0 netname))
-                (if (not (defined? 'dont-check-not-driven-nets))
-                    (begin
-                      (if (and (not (member "DontCheckIfDriven" directives))
-                               (not (member "NoConnection" directives)))
-                          (if (eqv? (drc2:check-if-net-is-driven pintype-count 0) #f)
-                              (drc2:error "Net ~A is not driven." netname))))))
-              (drc2:check-pintypes-of-nets (cdr all-nets))
-  )))
-))
+(define (drc2:check-pintypes-of-nets nets)
+  (define (check-net-pintype netname)
+    (let* ((connections (gnetlist:get-all-connections netname))
+           (pintypes (drc2:get-pintypes-of-net-connections connections '()))
+           (pintype-count (drc2:count-pintypes-of-net pintypes))
+           (directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
+                        netname
+                        "device=DRC_Directive"
+                        "value")))
+
+      ;; If some directives are defined, then it shouldn't be checked.
+      (and (not (member "DontCheckPintypes" directives))
+           (drc2:check-pintypes-of-single-net connections
+                                              pintypes
+                                              pintype-count
+                                              0
+                                              0
+                                              netname))
+      (and (not (defined? 'dont-check-not-driven-nets))
+           (not (member "DontCheckIfDriven" directives))
+           (not (member "NoConnection" directives))
+           (not (drc2:check-if-net-is-driven pintype-count 0))
+           (drc2:error "Net ~A is not driven." netname))))
+  (display "Checking type of pins connected to a net...\n")
+  (for-each check-net-pintype nets)
+  (newline))
 
 ;;
 ;; Check unconnected pins
@@ -782,9 +781,7 @@
 
         ;; Check pintypes of the pins connected to every net
         (when (not (defined? 'dont-check-pintypes-of-nets))
-          (display "Checking type of pins connected to a net...\n")
-          (drc2:check-pintypes-of-nets nets)
-          (newline))
+          (drc2:check-pintypes-of-nets nets))
 
         ;; Check unconnected pins
         (when (not (defined? 'dont-check-unconnected-pins))
