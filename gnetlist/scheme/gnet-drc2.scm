@@ -94,9 +94,9 @@
 ;; Values of slot and numslots attribs.    dont-check-slots                      whatever you want
 ;; Slot is used more than one time.        dont-check-duplicated-slots           whatever you want
 ;; Reports unused slots                    dont-check-unused-slots               whatever you want
-;;     Don't report anything               action-unused-slots                   #\c
-;;     Report them as a warning            action-unused-slots                   #\w
-;;     Report them as an error             action-unused-slots                   #\w
+;;     Don't report anything               action-unused-slots                   'correct
+;;     Report them as a warning            action-unused-slots                   'warning
+;;     Report them as an error             action-unused-slots                   'error
 ;;
 ;; Note 1: DRC checks are case sensitive by default. If you want them to be case insensitive, then you
 ;; only have to define the variable 'case_insensitive' to whatever value you want.
@@ -111,7 +111,7 @@
 ;; (define dont-check-unconnected-pins 1)
 ;; (define dont-check-duplicated-slots 1)
 ;; (define dont-check-unused-slots 1)
-;; (define action-unused-slots #\w)
+;; (define action-unused-slots 'warning)
 ;; (define case_insensitive 1)
 ;;
 ;; The check for not driven nets only is performed when checking the type of the pins connected
@@ -132,36 +132,7 @@
 ;; The DRC matrix can be specified before running this backend. Otherwise, the backend will use the
 ;; default values.
 ;;
-;; Example (default matrix):
-;;
-;;    (define drc-matrix (list
-;;;  Order is important !
-;;;             unknown in    out   io    oc    oe    pas   tp    tri   clk   pwr unconnected
-;;;unknown
-;;  '(            #\c )
-;;;in
-;;  '(            #\c   #\c)
-;;;out
-;;  '(            #\c   #\c   #\e )
-;;;io
-;;  '(            #\c   #\c   #\w   #\c)
-;;;oc
-;;  '(            #\c   #\c   #\e   #\w   #\e)
-;;;oe
-;;  '(            #\c   #\c   #\e   #\w   #\c   #\e)
-;;;pas
-;;  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c)
-;;;tp
-;;  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e)
-;;;tri
-;;  '(            #\c   #\c   #\e   #\c   #\c   #\c   #\c   #\e   #\c)
-;;;clk
-;;  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c)
-;;;pwr
-;;  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\e   #\c)
-;;;unconnected
-;;  '(            #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e )))
-
+;; See the drc-matrix variable below for an example.
 
 
 ;; -------------------------------------------------------------------------------
@@ -222,38 +193,37 @@
 ;                                unk in out io oc oe pas tp tri clk pwr undef
     (set! pintype-can-drive (list 1   0  1   1  1  1  1   1  1   0   1    0 )))
 
-; DRC matrix
-;
-; #\e: error    #\w: warning   #\c: correct
+
+;;; DRC matrix
+;;  Order is important !
 (define-undefined drc-matrix
-  (list
-;  Order is important !
-;             unknown in    out   io    oc    oe    pas   tp    tri   clk   pwr unconnected
-;unknown
-  '(            #\c )
-;in
-  '(            #\c   #\c   )
-;out
-  '(            #\c   #\c   #\e   )
-;io
-  '(            #\c   #\c   #\w   #\c   )
-;oc
-  '(            #\c   #\c   #\e   #\w   #\e   )
-;oe
-  '(            #\c   #\c   #\e   #\w   #\c   #\e   )
-;pas
-  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   )
-;tp
-  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   )
-;tri
-  '(            #\c   #\c   #\e   #\c   #\c   #\c   #\c   #\e   #\c   )
-;clk
-  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   )
-;pwr
-  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\e   #\c  )
-;unconnected
-  '(            #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e )
-))
+  '(
+    ;; unknown in    out     io      oc      oe      pas     tp      tri      clk     pwr    unconnected
+    ;; unknown
+    (correct)
+    ;; in
+    (correct correct)
+    ;; out
+    (correct correct error)
+    ;; io
+    (correct correct warning correct)
+    ;; oc
+    (correct correct error   warning error)
+    ;; oe
+    (correct correct error   warning correct error)
+    ;; pas
+    (correct correct correct correct correct correct correct)
+    ;; tp
+    (correct correct error   warning error   error   correct error)
+    ;; tri
+    (correct correct error   correct correct correct correct error   correct)
+    ;; clk
+    (correct correct correct correct correct correct correct correct correct correct)
+    ;; pwr
+    (correct correct error   warning error   error   correct error   error   error   correct)
+    ;; unconnected
+    (error   error   error   error   error   error   error   error   error   error   error   error)))
+    ;; unknown in    out     io      oc      oe      pas     tp      tri      clk     pwr    unconnected
 
 ;; Number of errors and warnings found
 (define errors_number 0)
@@ -266,15 +236,15 @@
   (set! warnings_number (1+ warnings_number))
   (format #t "WARNING: ~A\n" (apply format #f msg params)))
 
-(define-undefined action-unused-slots #\w)
+(define-undefined action-unused-slots 'warning)
 
 (if (or (not (char? action-unused-slots))
-        (not (or (char=? action-unused-slots #\w)
-                 (char=? action-unused-slots #\c)
-                 (char=? action-unused-slots #\e))))
+        (not (or (eq? action-unused-slots 'warning)
+                 (eq? action-unused-slots 'correct)
+                 (eq? action-unused-slots 'error))))
     (begin
       (message "INTERNAL ERROR: Action when unused slots are found has a wrong value. Using default.\n")
-      (set! action-unused-slots #\w)))
+      (set! action-unused-slots 'warning)))
 
 ;-----------------------------------------------------------------------
 ;   DRC matrix functions
@@ -303,24 +273,17 @@
         (list-ref (list-ref drc-matrix row) column))))
 
 ; Check if all elements of the DRC matrix are characters
-(define drc2:drc-matrix-elements-are-correct?
-  (lambda ()
-    (let check-row ((row 0))
-      (if (let check-column ((column 0))
-            (if (not (char? (drc2:get-drc-matrix-element row column)))
-                #f
-                (if (< column (- (length pintype-names) 1))
-                    (check-column (+ column 1))
-                    #t)
-                )
-            )
-          (if (< row (- (length pintype-names) 1))
-              (check-row (+ row 1))
-              #t)
-         #f)
-      )
+(define (drc2:drc-matrix-elements-are-correct?)
+  (define (valid? element)
+    (memq element '(correct warning error)))
 
-))
+  (let check-row ((row 0))
+    (and (let check-column ((column 0))
+           (and (valid? (drc2:get-drc-matrix-element row column))
+                (or (not (< column (- (length pintype-names) 1)))
+                    (check-column (+ column 1)))))
+         (or (not (< row (- (length pintype-names) 1)))
+             (check-row (+ row 1))))))
 
 ;
 ; End of DRC matrix functions
@@ -374,8 +337,8 @@
     (define (check-slots-loop slot_number slots-list)
       (let ( (numslots (string->number (gnetlist:get-package-attribute refdes "numslots"))) )
         (when (not (member slot_number slots-list))
-          (when (not (char=? action-unused-slots #\c))
-            (let ((error-func (if (char=? action-unused-slots #\e)
+          (when (not (eq? action-unused-slots 'correct))
+            (let ((error-func (if (eq? action-unused-slots 'error)
                                   drc2:error
                                   drc2:warning)))
               (error-func "Unused slot ~A of refdes ~A"
@@ -600,16 +563,16 @@
 ;; connections: ((U100 1) (U101 1)), for example.
 (define (drc2:check-connection-of-two-pintypes type1 type2 connections netname)
   (let ((drc-matrix-value (drc2:get-drc-matrix-element type1 type2)))
-    (if (eqv? drc-matrix-value #\c)
+    (if (eq? drc-matrix-value 'correct)
         1
-        (if (and (not (eqv? drc-matrix-value #\e))
-                 (not (eqv? drc-matrix-value #\w)))
+        (if (and (not (eq? drc-matrix-value 'error))
+                 (not (eq? drc-matrix-value 'warning)))
             (begin
               (format #t "INTERNAL ERROR: DRC matrix has unknown value on position ~A,~A\n"
                       type1
                       type2)
               (error "INTERNAL ERROR: DRC matrix has unknown value. See output for more information"))
-            (let ((error-func (if (eqv? drc-matrix-value #\w)
+            (let ((error-func (if (eq? drc-matrix-value 'warning)
                                   drc2:warning
                                   drc2:error)))
               (error-func "Pin(s) with pintype '~A': ~A\n\tare connected by net '~A'\n\tto pin(s) with pintype '~A': ~A"
@@ -734,8 +697,8 @@
           (let* ((position (drc2:position-of-pintype
                             (gnetlist:get-attribute-by-pinnumber package pin "pintype")))
                  (drc-matrix-value (drc2:get-drc-matrix-element undefined position)))
-            (or (eqv? drc-matrix-value #\c)
-                (let ((error-func (if (eqv? drc-matrix-value #\w)
+            (or (eq? drc-matrix-value 'correct)
+                (let ((error-func (if (eq? drc-matrix-value 'warning)
                                       drc2:warning
                                       drc2:error)))
                   (error-func "Unconnected pin ~A:~A" package pin)))))))
@@ -793,10 +756,10 @@
      (begin
 
         ;; Perform DRC-matrix sanity checks.
-        ; See if all elements of the matrix are chars
+        ;; See if all elements of the matrix are valid.
         (when (not (drc2:drc-matrix-elements-are-correct?))
-          (display "INTERNAL ERROR: DRC matrix elements are NOT all chars.\n\n")
-          (error "INTERNAL ERROR. DRC matrix elements are NOT all chars."))
+          (display "INTERNAL ERROR: DRC matrix elements are NOT all valid.\n\n")
+          (error "INTERNAL ERROR. DRC matrix elements are NOT all valid."))
 
         ;; Check non-numbered symbols
         (when (not (defined? 'dont-check-non-numbered-parts))
