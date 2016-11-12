@@ -642,14 +642,11 @@
 ;; pintype-count: vector with the number of pins connected to a single net, by pintype.
 ;;     (1 2 3 4 ... 10), for example.
 ;; position: number of the position the function is checking.
-(define drc2:check-if-net-is-driven
-  (lambda (pintype-count position)
-    (if (< position (- (length pintype-names) 1))
-        (if (and (> (list-ref pintype-count position) 0)
-                 (= (list-ref pintype-can-drive position) 1))
-            #t
-            (drc2:check-if-net-is-driven pintype-count (+ position 1)))
-        #f)))
+(define (drc2:check-if-net-is-driven pintype-count position)
+  (and (< position (- (length pintype-names) 1))
+       (or (and (> (list-ref pintype-count position) 0)
+                (= (list-ref pintype-can-drive position) 1))
+           (drc2:check-if-net-is-driven pintype-count (+ position 1)))))
 
 ;;
 ;; Check pintype of the pins connected to every net in the design.
