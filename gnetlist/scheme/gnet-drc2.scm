@@ -742,11 +742,17 @@
 ;-----------------------------------------------------------------------
 
 
+;;; Run expressions if var is not defined
+(define-syntax not-defined?
+  (syntax-rules (=>)
+    ((_ var => exp ...)
+     (when (not (defined? var))
+       (begin exp ...)))))
+
 
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
-;;;
 (define (drc2 output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
@@ -759,45 +765,46 @@
           (error "INTERNAL ERROR. DRC matrix elements are NOT all valid."))
 
         ;; Check non-numbered symbols
-        (when (not (defined? 'dont-check-non-numbered-parts))
-          (drc2:check-non-numbered-items packages))
+        (not-defined? 'dont-check-non-numbered-parts
+                      => (drc2:check-non-numbered-items packages))
 
         ;; Check for duplicated references
-        (when (not (defined? 'dont-check-duplicated-references))
-          (drc2:check-duplicated-references packages
-                                            (gnetlist:get-non-unique-packages "")))
+        (not-defined? 'dont-check-duplicated-references
+                      => (drc2:check-duplicated-references
+                          packages
+                          (gnetlist:get-non-unique-packages "")))
 
         ;; Check for NoConnection nets with more than one pin connected.
-        (when (not (defined? 'dont-check-connected-noconnects))
-          (drc2:check-connected-noconnects nets))
+        (not-defined? 'dont-check-connected-noconnects
+                      => (drc2:check-connected-noconnects nets))
 
         ;; Check nets with only one connection
-        (when (not (defined? 'dont-check-one-connection-nets))
-          (drc2:check-single-nets nets))
+        (not-defined? 'dont-check-one-connection-nets
+                      => (drc2:check-single-nets nets))
 
         ;; Check "unknown" pintypes
-        (when (not (defined? 'dont-report-unknown-pintypes))
-          (drc2:report-unknown-pintypes nets))
+        (not-defined? 'dont-report-unknown-pintypes
+                      => (drc2:report-unknown-pintypes nets))
 
         ;; Check pintypes of the pins connected to every net
-        (when (not (defined? 'dont-check-pintypes-of-nets))
-          (drc2:check-pintypes-of-nets nets))
+        (not-defined? 'dont-check-pintypes-of-nets
+                      => (drc2:check-pintypes-of-nets nets))
 
         ;; Check unconnected pins
-        (when (not (defined? 'dont-check-unconnected-pins))
-          (drc2:check-unconnected-pins packages))
+        (not-defined? 'dont-check-unconnected-pins
+                      => (drc2:check-unconnected-pins packages))
 
         ;; Check slots
-        (when (not (defined? 'dont-check-slots))
-          (drc2:check-slots packages))
+        (not-defined? 'dont-check-slots
+                      => (drc2:check-slots packages))
 
         ;; Check for duplicated slots
-        (when (not (defined? 'dont-check-duplicated-slots))
-          (drc2:check-duplicated-slots packages))
+        (not-defined? 'dont-check-duplicated-slots
+                      => (drc2:check-duplicated-slots packages))
 
         ;; Check for unused slots
-        (when (not (defined? 'dont-check-unused-slots))
-          (drc2:check-unused-slots packages))
+        (not-defined? 'dont-check-unused-slots
+                      => (drc2:check-unused-slots packages))
 
         ;; Display total number of warnings
         (if (> warnings_number 0)
