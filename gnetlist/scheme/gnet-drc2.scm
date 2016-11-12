@@ -471,28 +471,26 @@
 ;; Check for nets with less than two pins connected.
 ;;
 ;; Example of all-nets: (net1 net2 net3 net4)
-(define drc2:check-single-nets
-  (lambda (all-nets)
-      (if (not (null? all-nets))
-          (let* ((netname (car all-nets))
-                 (directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
-                              netname
-                              "device=DRC_Directive"
-                              "value")))
-            (begin
-              ; If one of the directives is NoConnection,
-              ; then it shouldn't be checked.
-              (if (not (member "NoConnection" directives))
-                  (begin
-                    (if (eq? (length (gnetlist:get-all-connections netname)) '0)
-                        (drc2:error "Net '~A' has no connections." netname))
-                    (if (eq? (length (gnetlist:get-all-connections netname)) '1)
-                        (drc2:error "Net '~A' is connected to only one pin: ~A."
-                                    netname
-                                    (drc2:display-pins-of-type "all"
-                                                               (gnetlist:get-all-connections netname))))))
-              (drc2:check-single-nets (cdr all-nets)))))
-  ))
+(define (drc2:check-single-nets nets)
+  (define (check-net netname)
+    (let ((directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
+                       netname
+                       "device=DRC_Directive"
+                       "value"))
+          (connections (gnetlist:get-all-connections netname)))
+      ;; If one of the directives is NoConnection,
+      ;; then it shouldn't be checked.
+      (when (not (member "NoConnection" directives))
+        (and (= (length connections) 0)
+             (drc2:error "Net '~A' has no connections." netname))
+        (and (= (length connections) 1)
+             (drc2:error "Net '~A' is connected to only one pin: ~A."
+                         netname
+                         (drc2:display-pins-of-type "all" connections))))))
+
+  (display "Checking nets with only one connection...\n")
+  (for-each check-net nets)
+  (newline))
 
 ;;
 ;; Return a list with the pintypes of the pins connected to a net.
@@ -778,9 +776,7 @@
 
         ;; Check nets with only one connection
         (when (not (defined? 'dont-check-one-connection-nets))
-          (display "Checking nets with only one connection...\n")
-          (drc2:check-single-nets nets)
-          (newline))
+          (drc2:check-single-nets nets))
 
         ;; Check "unknown" pintypes
         (when (not (defined? 'dont-report-unknown-pintypes))
