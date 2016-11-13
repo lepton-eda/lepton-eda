@@ -7,18 +7,18 @@ END header
 
 START components
 
-U2 device=LM317
-C4 device=POLARIZED_CAPACITOR
-C3 device=POLARIZED_CAPACITOR
-R1 device=VARIABLE_RESISTOR
-C2 device=POLARIZED_CAPACITOR
-R2 device=RESISTOR
 C1 device=POLARIZED_CAPACITOR
-S1 device=SPST
+C2 device=POLARIZED_CAPACITOR
+C3 device=POLARIZED_CAPACITOR
+C4 device=POLARIZED_CAPACITOR
 CONN1 device=MAINS_CONNECTOR
-T1 device=transformer
 F1 device=FUSE
+R1 device=VARIABLE_RESISTOR
+R2 device=RESISTOR
+S1 device=SPST
+T1 device=transformer
 U1 device=DIODE-BRIDGE
+U2 device=LM317
 
 END components
 

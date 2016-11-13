@@ -7,9 +7,9 @@ END header
 
 START components
 
-V1 device=VOLTAGE_SOURCE
-R1 device=RESISTOR
 A1 device=options
+R1 device=RESISTOR
+V1 device=VOLTAGE_SOURCE
 
 END components
 

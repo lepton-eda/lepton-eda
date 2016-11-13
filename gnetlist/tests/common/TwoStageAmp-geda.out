@@ -7,29 +7,29 @@ END header
 
 START components
 
-C2 device=CAPACITOR
-R4 device=RESISTOR
-R3 device=RESISTOR
-R8 device=RESISTOR
-CE2 device=CAPACITOR
-RE2 device=RESISTOR
-RC1 device=RESISTOR
-Q2 device=NPN_TRANSISTOR
-C1 device=CAPACITOR
-A3 device=directive
-A2 device=include
 A1 device=model
-VCC device=VOLTAGE_SOURCE
-Vinput device=vsin
+A2 device=include
+A3 device=directive
+C1 device=CAPACITOR
+C2 device=CAPACITOR
 CE1 device=CAPACITOR
+CE2 device=CAPACITOR
 Cout device=CAPACITOR
-RL device=RESISTOR
+Q1 device=NPN_TRANSISTOR
+Q2 device=NPN_TRANSISTOR
+R1 device=RESISTOR
+R2 device=RESISTOR
+R3 device=RESISTOR
+R4 device=RESISTOR
+R5 device=RESISTOR
+R8 device=RESISTOR
+RC1 device=RESISTOR
 RC2 device=RESISTOR
 RE1 device=RESISTOR
-R2 device=RESISTOR
-R1 device=RESISTOR
-R5 device=RESISTOR
-Q1 device=NPN_TRANSISTOR
+RE2 device=RESISTOR
+RL device=RESISTOR
+VCC device=VOLTAGE_SOURCE
+Vinput device=vsin
 
 END components
 

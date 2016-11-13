@@ -7,8 +7,8 @@ END header
 
 START components
 
-U102/Uunder device=7400
 U100/Uunder device=7400
+U102/Uunder device=7400
 
 END components
 
