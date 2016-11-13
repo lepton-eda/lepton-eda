@@ -21,6 +21,8 @@
 ;; See the Mathematica notebook gEDA.nb (obtainable at www.noqsi.com)
 ;; for usage.
 
+(use-modules (gnetlist attrib compare))
+
 (define (mathematica:quoted thing)
    (write-char #\")
    (display thing)
@@ -194,7 +196,7 @@
      (newline)
      (display "modelEquations={")
      (newline)
-     (mathematica:write-models packages #t)
+     (mathematica:write-models (sort packages refdes<?) #t)
      (display "};")
      (newline)
      (display "variables={")
