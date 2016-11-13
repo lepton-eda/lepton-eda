@@ -175,11 +175,69 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-Rlp
+M1
 FOOTPRINT
 unknown
 PARTTYPE
-1meg
+PMOS_TRANSISTOR
+DESCRIPTION
+PMOS_TRANSISTOR
+Part Field 1
+*
+Part Field 2
+*
+Part Field 3
+*
+Part Field 4
+*
+Part Field 5
+*
+Part Field 6
+*
+Part Field 7
+*
+Part Field 8
+*
+Part Field 9
+*
+Part Field 10
+*
+Part Field 11
+*
+Part Field 12
+*
+Part Field 13
+*
+Part Field 14
+*
+Part Field 15
+*
+Part Field 16
+*
+LIBRARYFIELD1
+
+LIBRARYFIELD2
+
+LIBRARYFIELD3
+
+LIBRARYFIELD4
+
+LIBRARYFIELD5
+
+LIBRARYFIELD6
+
+LIBRARYFIELD7
+
+LIBRARYFIELD8
+
+]
+[
+DESIGNATOR
+Rb
+FOOTPRINT
+unknown
+PARTTYPE
+5.6k
 DESCRIPTION
 RESISTOR
 Part Field 1
@@ -291,71 +349,13 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-Vdd
+Rlp
 FOOTPRINT
-none
+unknown
 PARTTYPE
-DC 3.3V
+1meg
 DESCRIPTION
-VOLTAGE_SOURCE
-Part Field 1
-*
-Part Field 2
-*
-Part Field 3
-*
-Part Field 4
-*
-Part Field 5
-*
-Part Field 6
-*
-Part Field 7
-*
-Part Field 8
-*
-Part Field 9
-*
-Part Field 10
-*
-Part Field 11
-*
-Part Field 12
-*
-Part Field 13
-*
-Part Field 14
-*
-Part Field 15
-*
-Part Field 16
-*
-LIBRARYFIELD1
-
-LIBRARYFIELD2
-
-LIBRARYFIELD3
-
-LIBRARYFIELD4
-
-LIBRARYFIELD5
-
-LIBRARYFIELD6
-
-LIBRARYFIELD7
-
-LIBRARYFIELD8
-
-]
-[
-DESIGNATOR
-V1
-FOOTPRINT
-none
-PARTTYPE
-pulse 3.3 0 1u 10p 10p 1.25u 2.5u
-DESCRIPTION
-vpulse
+RESISTOR
 Part Field 1
 *
 Part Field 2
@@ -465,13 +465,13 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-Rb
+V1
 FOOTPRINT
-unknown
+none
 PARTTYPE
-5.6k
+pulse 3.3 0 1u 10p 10p 1.25u 2.5u
 DESCRIPTION
-RESISTOR
+vpulse
 Part Field 1
 *
 Part Field 2
@@ -523,13 +523,13 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-M1
+Vdd
 FOOTPRINT
-unknown
+none
 PARTTYPE
-PMOS_TRANSISTOR
+DC 3.3V
 DESCRIPTION
-PMOS_TRANSISTOR
+VOLTAGE_SOURCE
 Part Field 1
 *
 Part Field 2

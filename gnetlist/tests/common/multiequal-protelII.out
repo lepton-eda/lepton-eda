@@ -1,13 +1,13 @@
 PROTEL NETLIST 2.0
 [
 DESIGNATOR
-V1
+A1
 FOOTPRINT
-none
+unknown
 PARTTYPE
-DC 1V
+abotol=1e-11
 DESCRIPTION
-VOLTAGE_SOURCE
+options
 Part Field 1
 *
 Part Field 2
@@ -117,13 +117,13 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-A1
+V1
 FOOTPRINT
-unknown
+none
 PARTTYPE
-abotol=1e-11
+DC 1V
 DESCRIPTION
-options
+VOLTAGE_SOURCE
 Part Field 1
 *
 Part Field 2

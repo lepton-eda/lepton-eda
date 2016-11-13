@@ -18,7 +18,8 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(use-modules (ice-9 optargs))
+(use-modules (ice-9 optargs)
+             (gnetlist attrib compare))
 
 ;; --------------------------------------------------------------------------
 ;;
@@ -324,7 +325,7 @@
   (set-current-output-port (gnetlist:output-port output-filename))
   (begin
     (protelII:write-top-header)
-    (protelII:components packages)
+    (protelII:components (sort packages refdes<?))
     (protelII:nets))
   (close-output-port (current-output-port)))
 
