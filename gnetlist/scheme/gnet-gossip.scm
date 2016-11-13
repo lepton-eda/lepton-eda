@@ -131,11 +131,10 @@
          (newline))))
 
 (define (gossip output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
-  (begin
-     (gossip:write-top-header)
-     (gossip:get-libraries packages '())
-     (gossip:write-block-header)
-     (gossip:signals)
-     (gossip:blocks packages (gnetlist:get-all-unique-nets "dummy")))
-  (close-output-port (current-output-port)))
+  (with-output-to-port (gnetlist:output-port output-filename)
+    (lambda ()
+      (gossip:write-top-header)
+      (gossip:get-libraries packages '())
+      (gossip:write-block-header)
+      (gossip:signals)
+      (gossip:blocks packages (gnetlist:get-all-unique-nets "dummy")))))
