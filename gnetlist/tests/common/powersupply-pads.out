@@ -1,18 +1,18 @@
 !PADS-POWERPCB-V3.0-MILS!
 
 *PART*
-U2	unknown
-C4	unknown
-C3	unknown
-R1	unknown
-C2	unknown
-R2	unknown
 C1	unknown
-S1	unknown
+C2	unknown
+C3	unknown
+C4	unknown
 CONN1	unknown
-T1	unknown
 F1	unknown
+R1	unknown
+R2	unknown
+S1	unknown
+T1	unknown
 U1	unknown
+U2	unknown
 
 *NET*
 *SIGNAL* TEN

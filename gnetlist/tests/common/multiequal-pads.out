@@ -1,9 +1,9 @@
 !PADS-POWERPCB-V3.0-MILS!
 
 *PART*
-V1	none
-R1	unknown
 A1	unknown
+R1	unknown
+V1	none
 
 *NET*
 *SIGNAL* GND

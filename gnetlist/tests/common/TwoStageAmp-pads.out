@@ -1,29 +1,29 @@
 !PADS-POWERPCB-V3.0-MILS!
 
 *PART*
-C2	unknown
-R4	unknown
-R3	unknown
-R8	unknown
-CE2	unknown
-RE2	unknown
-RC1	unknown
-Q2	unknown
-C1	unknown
-A3	unknown
-A2	unknown
 A1	unknown
-VCC	none
-VINPUT	none
+A2	unknown
+A3	unknown
+C1	unknown
+C2	unknown
 CE1	unknown
+CE2	unknown
 COUT	unknown
-RL	unknown
+Q1	unknown
+Q2	unknown
+R1	unknown
+R2	unknown
+R3	unknown
+R4	unknown
+R5	unknown
+R8	unknown
+RC1	unknown
 RC2	unknown
 RE1	unknown
-R2	unknown
-R1	unknown
-R5	unknown
-Q1	unknown
+RE2	unknown
+RL	unknown
+VCC	none
+VINPUT	none
 
 *NET*
 *SIGNAL* UNNAMED_NET2

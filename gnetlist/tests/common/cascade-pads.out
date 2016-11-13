@@ -1,14 +1,14 @@
 !PADS-POWERPCB-V3.0-MILS!
 
 *PART*
-AMP2	none
-T1	none
-MX1	none
-FL1	none
-DEF1	none
 AMP1	none
-SOURCE	none
+AMP2	none
+DEF1	none
 DEFAULTS	unknown
+FL1	none
+MX1	none
+SOURCE	none
+T1	none
 
 *NET*
 *SIGNAL* UNNAMED_NET6
