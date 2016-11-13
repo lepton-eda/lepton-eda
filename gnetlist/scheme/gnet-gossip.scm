@@ -24,6 +24,8 @@
 ;;  For more info see http://gossip.sourceforge.net
 ;;
 
+(use-modules (gnetlist attrib compare))
+
 (define gossip:write-top-header
    (lambda ()
       (display ";; Gossip Netlist Created by gNetlist")
@@ -133,8 +135,9 @@
 (define (gossip output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (gossip:write-top-header)
-      (gossip:get-libraries packages '())
-      (gossip:write-block-header)
-      (gossip:signals)
-      (gossip:blocks packages (gnetlist:get-all-unique-nets "dummy")))))
+      (let ((packages (sort packages refdes<?)))
+        (gossip:write-top-header)
+        (gossip:get-libraries packages '())
+        (gossip:write-block-header)
+        (gossip:signals)
+        (gossip:blocks packages (gnetlist:get-all-unique-nets "dummy"))))))
