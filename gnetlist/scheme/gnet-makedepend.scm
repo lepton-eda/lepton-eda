@@ -78,9 +78,9 @@
 ;;
 
 
-(use-modules (ice-9 regex))
-(use-modules (srfi srfi-1))
-
+(use-modules (ice-9 regex)
+             (srfi srfi-1)
+             (gnetlist attrib compare))
 
 
 ; Split a filename into 3 parts:
@@ -151,7 +151,7 @@
 
 (define (makedepend output-filename)
   (set-current-output-port (gnetlist:output-port output-filename))
-  (let* (
+  (let* ((packages (sort packages refdes<?))
          (source-attrs (makedepend:get-all-attr-values "source" packages))
          (file-attrs (makedepend:get-all-attr-values "file" packages))
          (input-files (gnetlist:get-input-files))
