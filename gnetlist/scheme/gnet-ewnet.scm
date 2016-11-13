@@ -29,6 +29,8 @@
 ;;; as to the right way to create these.  Full documentation would
 ;;; help considerably!
 
+(use-modules (gnetlist attrib compare))
+
 ;; Function:  ewnet:map-net-names
 ;;
 ;; This procedure takes a net name as determined by gnetlist and
@@ -272,7 +274,8 @@
     (message "---------------------------------\n\n")
 
     (set-current-output-port (gnetlist:output-port output-filename))
-    (let ((all-nets (gnetlist:get-all-unique-nets "dummy")))
+    (let ((all-nets (gnetlist:get-all-unique-nets "dummy"))
+          (packages (sort packages refdes<?)))
 
       ;; initialize the net-name aliasing
       (gnetlist:build-net-aliases ewnet:map-net-names all-unique-nets)

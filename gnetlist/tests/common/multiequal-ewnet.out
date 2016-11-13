@@ -39,9 +39,9 @@
 	)
 )
 (components
-	(instance "none" "V1"
-		(device "VOLTAGE_SOURCE")
-		(value "DC 1V")
+	(instance "unknown" "A1"
+		(device "options")
+		(value "abotol=1e-11")
 		(gateswap "0")
 		(pinswap "0")
 		(component_space "0.00000000e+000")
@@ -49,22 +49,6 @@
 		(settings_locked "0")
 		(comp_variants "Default1;")
 		(comp_variant_independent "0")
-		(pin "2"
-			(net "GND")
-			(pintype "BIDIR")
-			(gategroup "")
-			(pingroup "")
-			(label "2")
-			(gate "")
-		)
-		(pin "1"
-			(net "unnamed_net1")
-			(pintype "BIDIR")
-			(gategroup "")
-			(pingroup "")
-			(label "1")
-			(gate "")
-		)
 	)
 	(instance "unknown" "R1"
 		(device "RESISTOR")
@@ -93,9 +77,9 @@
 			(gate "")
 		)
 	)
-	(instance "unknown" "A1"
-		(device "options")
-		(value "abotol=1e-11")
+	(instance "none" "V1"
+		(device "VOLTAGE_SOURCE")
+		(value "DC 1V")
 		(gateswap "0")
 		(pinswap "0")
 		(component_space "0.00000000e+000")
@@ -103,6 +87,22 @@
 		(settings_locked "0")
 		(comp_variants "Default1;")
 		(comp_variant_independent "0")
+		(pin "2"
+			(net "GND")
+			(pintype "BIDIR")
+			(gategroup "")
+			(pingroup "")
+			(label "2")
+			(gate "")
+		)
+		(pin "1"
+			(net "unnamed_net1")
+			(pintype "BIDIR")
+			(gategroup "")
+			(pingroup "")
+			(label "1")
+			(gate "")
+		)
 	)
 )
 (layers
