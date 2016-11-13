@@ -19,6 +19,7 @@
 ;;; MA 02111-1301 USA.
 
 ;; MAXASCII netlist format
+(use-modules (gnetlist attrib compare))
 
 (define maxascii:components
    (lambda (packages)
@@ -91,7 +92,7 @@
 
   (display "*OrCAD\n*START\n")
 
-  (maxascii:components packages)
+  (maxascii:components (sort packages refdes<?))
 
   (maxascii:write-net (gnetlist:get-all-unique-nets "dummy"))
   (display "\n*END\n")
