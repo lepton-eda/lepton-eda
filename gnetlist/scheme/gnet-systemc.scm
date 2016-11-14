@@ -56,6 +56,8 @@
                        ( string-append "^(" id-regexp ")$" )))
 
 
+(define port-symbols '(IOPAD IPAD OPAD HIGH LOW))
+
 ;; return the top level block name for the module
 (define systemc:get-module-name
   ( gnetlist:get-toplevel-attribute "module_name" ))
@@ -119,8 +121,8 @@
       (for-each (lambda (package)         ; loop on packages
                   (begin
                     (let ((device (get-device package)))
-                      (if (not (memv (string->symbol device) ; ignore specials
-                                     (map string->symbol (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
+                      (if (not (memq (string->symbol device) ; ignore specials
+                                     port-symbols))
                           (begin
                             (display "#include \"")
                             (systemc:display-escaped-identifier (get-device package))
@@ -531,8 +533,8 @@
       (for-each (lambda (package)         ; loop on packages
                   (begin
                     (let ((device (get-device package)))
-                      (if (not (memv (string->symbol device) ; ignore specials
-                                     (map string->symbol (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
+                      (if (not (memq (string->symbol device) ; ignore specials
+                                     port-symbols))
                           (begin
                             (systemc:display-escaped-identifier (get-device package)) (display " ")
                             (systemc:display-escaped-identifier package) (display ";")
@@ -546,8 +548,8 @@
       (for-each (lambda (package)         ; loop on packages
                   (begin
                     (let ((device (get-device package)))
-                      (if (not (memv (string->symbol device) ; ignore specials
-                                     (map string->symbol (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
+                      (if (not (memq (string->symbol device) ; ignore specials
+                                     port-symbols))
                           (begin
                             (if c_p (begin (display ",") (newline)) (set! c_p #t))
                             (display "    ")
@@ -573,8 +575,8 @@
       (for-each (lambda (package)         ; loop on packages
                   (begin
                     (let ((device (get-device package)))
-                      (if (not (memv (string->symbol device) ; ignore specials
-                                     (map string->symbol (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
+                      (if (not (memq (string->symbol device) ; ignore specials
+                                     port-symbols))
                           (begin
                             ; if this module wants positional pins,
                             ; then output that format, otherwise
