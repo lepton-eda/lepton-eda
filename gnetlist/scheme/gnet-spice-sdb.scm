@@ -493,7 +493,6 @@
     (display " ")
     ;; Create list of attributes which can be attached to a passive.
     (spice:write-list-of-attributes package attribs)
-    (display " ") ;; add additional space. . . .
     (newline)))
 
 
