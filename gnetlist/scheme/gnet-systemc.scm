@@ -214,19 +214,11 @@
          (simple-id (regexp-exec simple-id-reg netname))
          (systemc   (regexp-exec systemc-reg netname)))
 
-;;      (newline)
-;;      (display "    systemc:net-parse ")
-;;      (if systemc (begin (display systemc) (display "->") (display (match:substring systemc 2) )))
-;;      (if simple-id (display simple-id))
-;;      (newline)
-
       ;; check over each expression type, and build the appropriate
       ;; result
-      ;(display netname) (display ": ")
       (cond
        ;; is it a bit range?
        (bit-range
-        ;(display "bit-range" )
         (list (match:substring bit-range 1)
               (list (string->number (match:substring bit-range 2))
                     (string->number (match:substring bit-range 3))
@@ -236,7 +228,6 @@
 
        ;; just a single bit?
        (single-bit
-        ;(display "single-bit")
         (list (match:substring single-bit 1)
               (list (string->number (match:substring single-bit 2))
                     (string->number (match:substring single-bit 2))
@@ -245,11 +236,9 @@
        ;; just a systemc signal?
        (systemc
          (begin
-;;            (display "done systemc")(newline)
            (list (match:substring systemc 1)
              (list (string->number (match:substring systemc 2))
                (match:substring systemc 2)
-;;                (string->number (match:substring systemc 2))
                     '#f '#f netname)))
 )
 
@@ -324,14 +313,6 @@
           (rn2 (if increasing
                    (max n2 old-n2)     ; originally increasing
                    (min n2 old-n2))))
-;      (display (string-append "increasing:"
-;                             (if increasing "increasing" "decreasing")
-;                             " rn1:" (number->string rn1)
-;                             " rn2:" (number->string rn2)
-;                             " n1:" (number->string n1)
-;                             " n2:" (number->string n2)
-;                             " old-n1:" (number->string old-n1)
-;                             " old-n2:" (number->string old-n2))) (newline)
       (list rn1 rn2)
 
       )))
@@ -373,11 +354,6 @@
             ; parse the netname, and see if it is already on the list
             (let* ((parsed (systemc:net-parse netname))
                    (listed (assoc (car parsed) the-nets)))
-
-;;             (display  "systemc:get-nets(parsed)-> ")
-;;             (display parsed)(display " (listed)-> ")
-;;             (display listed)
-;;             (newline)
 
              (if listed
                  (begin ; it is, do some checks, and update the record
@@ -462,7 +438,6 @@
                    (append the-nets
                            (list parsed))))
            ))
-;;         (display  "systemc:get-nets(parsed)-> ")
          )
 
         all-unique-nets)
@@ -671,9 +646,7 @@
   (begin
     (systemc:get-nets-once!)
     (systemc:write-top-header)
-;;    (display "***** start write-wires ********")(newline)
     (systemc:write-wires)
-;;    (display "***** end write-wires ********")(newline)
     (systemc:write-continuous-assigns)
     (systemc:components packages)
     (systemc:write-bottom-footer)
