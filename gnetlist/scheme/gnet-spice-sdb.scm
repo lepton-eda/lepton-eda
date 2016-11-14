@@ -951,7 +951,8 @@ the name is changed to canonical."
   (with-output-to-port
       (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((subckt? (spice-sdb:get-schematic-type packages)))
+      (let* ((packages (sort packages refdes<?))
+             (subckt? (spice-sdb:get-schematic-type packages)))
 
         (if subckt?
             ;; now write out .SUBCKT header and .SUBCKT line
