@@ -34,7 +34,8 @@
     (spice:write-one-component package)
             ;; create list of attributes which can be attached to a mosfet
     (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic")))
-      (spice:write-list-of-attributes package attrib-list))
+      (display (string-join (spice:format-attrib-list package attrib-list)
+                            " " 'prefix)))
             ;; write the off attribute separately
     (let ((off-value (gnetlist:get-package-attribute package "off")))
       (cond ((string=? off-value "#t") (display " off"))

@@ -8,8 +8,8 @@
 *==============  Begin SPICE netlist of main design ============
 AMP1 1 2 unknown
 AMP2 6 unconnected_pin-1 unknown
-DEF1 2 3 <No valid value attribute found> 
-DEFAULTS <No valid value attribute found> 
+DEF1 2 3 <No valid value attribute found>
+DEFAULTS <No valid value attribute found>
 FL1 3 4 <No valid value attribute found>
 MX1 4 5 <No valid value attribute found>
 SOURCE 1 <No valid value attribute found>

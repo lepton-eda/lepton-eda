@@ -343,12 +343,10 @@
 
     ;; Write out "model-name=" or "value=" attribute as well as
     ;; "area=" and "off=" if they exist.
-    (display (string-join (filter-known package-model area off) " "))
-
-    ;; Write out remaining attributes
-    (when (not (null? attrib-list))
-      (display " ")
-      (spice:write-list-of-attributes package attrib-list))
+    ;; Then write out remaining attributes
+    (display (string-join (append (filter-known package-model area off)
+                                  (spice:format-attrib-list package attrib-list))
+                          " "))
 
     ;; Now write out newline in preparation for writing out model.
     (newline)
@@ -489,10 +487,12 @@
 
     (spice-sdb:write-prefix package prefix)
     (spice-sdb:write-refdes-nets package)
-    (display (string-join (filter-known value model-name) " "))
-    (display " ")
-    ;; Create list of attributes which can be attached to a passive.
-    (spice:write-list-of-attributes package attribs)
+    (display (string-join (append (filter-known value model-name)
+                                  ;; Create list of attributes
+                                  ;; which can be attached to a
+                                  ;; passive.
+                                  (spice:format-attrib-list package attribs))
+                          " "))
     (newline)))
 
 
@@ -545,11 +545,10 @@
 
   (display
    (string-join
-    (filter-known package
-                  (gnetlist:get-package-attribute package "model-name"))
+    (append (filter-known package
+                          (gnetlist:get-package-attribute package "model-name"))
+            (spice:format-attrib-list package '("area")))
     " "))
-  (display " ")
-  (spice:write-list-of-attributes package '("area"))
   (newline))
 
 

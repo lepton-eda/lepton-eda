@@ -23,6 +23,7 @@
 ;; By S. Gieltjes and others.
 ;; --------------------------------------------------------------------------
 
+(use-modules (srfi srfi-1))
 
 (define (unknown? value)
   (string-ci=? value "unknown"))
@@ -176,19 +177,20 @@
       (display "* end of nullor expansion\n"))))
 
 
-;;-------------------------------------------------------------------
-;; write all listed and available attributes in the form of <variable>=<value>
-;;-------------------------------------------------------------------
-(define spice:write-list-of-attributes
-  (lambda (package attrib-list)
-    (if (not (null? attrib-list))
-      (let ((attrib (gnetlist:get-package-attribute package (car attrib-list))))
-            ; Is it possible to make no differentiation between upper and lower case?
-            ; That relieves you of mixed case forms e.g. As, AS, as..., they are the
-            ; same attributes, spice3f5 is case insensitive.  And other spice versions?
-        (if (not (unknown? attrib))
-          (display (string-append  " " (car attrib-list) "=" attrib)))
-        (spice:write-list-of-attributes package (cdr attrib-list))))))
+;;; Given the list of attribute names ATTRIB-LIST returns
+;;; attributes of PACKAGE as the list of strings in the form
+;;; "<attrib-name>=<attrib-value>". Unknown attributes are
+;;; filtered out.
+(define (spice:format-attrib-list package attrib-list)
+  (filter-map
+   (lambda (attrib)
+     (let ((attrib-value (gnetlist:get-package-attribute package attrib)))
+       ;; Is it possible to make no differentiation between upper and lower case?
+       ;; That relieves you of mixed case forms e.g. As, AS, as..., they are the
+       ;; same attributes, spice3f5 is case insensitive.  And other spice versions?
+       (and (not (unknown? attrib-value))
+            (string-append attrib "=" attrib-value))))
+   attrib-list))
 
 
 ;;-----------------------------------------------------------
