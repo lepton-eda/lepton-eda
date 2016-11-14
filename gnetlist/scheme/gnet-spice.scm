@@ -23,6 +23,8 @@
 ;; SPICE netlist backend written by S. Gieltjes starts here
 ;;
 
+(use-modules (gnetlist attrib compare))
+
 ;; Common functions for the `spice' and `spice-sdb' backends
 (load-from-path "spice-common.scm")
 
@@ -114,7 +116,7 @@
 (define (spice output-filename)
   (set-current-output-port (gnetlist:output-port output-filename))
   (spice:write-top-header)
-  (spice:write-netlist packages)
+  (spice:write-netlist (sort packages refdes<?))
   (spice:write-bottom-footer)
   (close-output-port (current-output-port)))
 
