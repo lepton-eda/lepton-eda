@@ -525,7 +525,7 @@
       (systemc:get-nets-once!)
       (systemc:write-top-header (sort packages refdes<?))
       (systemc:write-wires)
-      (systemc:write-continuous-assigns packages)
+      (systemc:write-continuous-assigns (sort packages refdes<?))
       (systemc:components packages)
       (systemc:write-bottom-footer)
       )))
