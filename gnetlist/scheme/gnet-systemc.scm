@@ -65,9 +65,8 @@
 
 ;; return a list of nets whose pins have the desired attribute name/value
 ;; pair
-(define systemc:get-matching-nets
-  (lambda (attribute value)
-    (map car (systemc:filter attribute value packages))))
+(define (systemc:get-matching-nets attribute value)
+  (map car (systemc:filter attribute value packages)))
 
 ;; This function takes an attribute name, desired value, and a list of
 ;; packages.  For each of the packages, it looks up that attribute, and
@@ -99,12 +98,11 @@
 ;; build three lists one each for the inputs, outputs and inouts
 ;; return the a list of three lists that contain the pins in the order
 ;; we want.
-(define systemc:get-port-list
-  (lambda ()
-    ;; construct list
-    (list (systemc:get-matching-nets "device" "IPAD")
-          (systemc:get-matching-nets "device" "OPAD")
-          (systemc:get-matching-nets "device" "IOPAD"))))
+(define (systemc:get-port-list)
+  ;; construct list
+  (list (systemc:get-matching-nets "device" "IPAD")
+        (systemc:get-matching-nets "device" "OPAD")
+        (systemc:get-matching-nets "device" "IOPAD")))
 
 ;;
 ;; output the meat of the module port section
@@ -164,9 +162,7 @@
 ;; Footer for file
 ;;
 (define (systemc:write-bottom-footer)
-  (display "  }\n};\n")
-  (newline)
-)
+  (display "  }\n};\n\n"))
 
 ;;
 ;; Take a netname and parse it into a structure that describes the net:
@@ -243,11 +239,11 @@
       ;; result
       ;(display netname) (display ": ")
       (cond
-       (bit-range  `#t )
-       (single-bit `#t )
-       (simple-id  `#t )
-       (systemc    `#t )
-       (else       `#f )
+       (bit-range  #t )
+       (single-bit #t )
+       (simple-id  #t )
+       (systemc    #t )
+       (else       #f )
        ))))
 
 
