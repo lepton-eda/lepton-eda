@@ -160,11 +160,6 @@ REFDES. As a result, slots may be repeated in the returned list."
                device)))))
 
 
-;; return all pins for a particular package
-(define pins
-   (lambda (package)
-      (gnetlist:get-pins package)))
-
 ;; this is really crude, but I'm tired... :)
 (define display-nl
    (lambda (list)

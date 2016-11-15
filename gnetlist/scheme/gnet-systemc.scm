@@ -85,7 +85,7 @@
            (cons
             (map (lambda (pin)
                    (car (gnetlist:get-nets (car package-list) pin)))
-                 (pins (car package-list)))
+                 (gnetlist:get-pins (car package-list)))
             (systemc:filter attribute value (cdr package-list))))
           (else (systemc:filter attribute value (cdr package-list)))))
 )
