@@ -69,26 +69,20 @@
 (define (systemc:get-matching-nets attribute value)
   (map car (systemc:filter attribute value packages)))
 
-;; This function takes an attribute name, desired value, and a list of
-;; packages.  For each of the packages, it looks up that attribute, and
-;; if it matches, that package name is added to the list, and the function
-;; recurses on the remaining packages.  If the attribute does not match,
-;; the function just recuses on the remaing packages. Thanks to Mohina Lal
-;; for this trick.
-;;
+;;; Returns a list of lists of pin netnames for packages in
+;;; PACKAGE-LIST having an attribute named ATTRIBUTE which
+;;; value is VALUE.
+(define (systemc:filter attribute value package-list)
+  (define (get-package-pin-netname package pin)
+    (car (gnetlist:get-nets package pin)))
 
-(define systemc:filter
-  (lambda (attribute value package-list)
-    (cond ((null? package-list) '())
-          ((string=? (gnetlist:get-package-attribute (car package-list)
-                                                      attribute) value)
-           (cons
-            (map (lambda (pin)
-                   (car (gnetlist:get-nets (car package-list) pin)))
-                 (gnetlist:get-pins (car package-list)))
-            (systemc:filter attribute value (cdr package-list))))
-          (else (systemc:filter attribute value (cdr package-list)))))
-)
+  (define (get-package-pin-netnames package)
+    (and (string=? (gnetlist:get-package-attribute package attribute)
+                   value)
+         (map (cut get-package-pin-netname package <>)
+              (gnetlist:get-pins package))))
+
+  (filter-map get-package-pin-netnames package-list))
 
 
 ;;
