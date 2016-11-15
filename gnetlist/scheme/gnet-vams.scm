@@ -860,14 +860,18 @@ ARCHITECTURE ~A OF ~A IS
 ;; requires: a pin and a port-list
 
 (define (vams:which-port pin ports)
+  (define (first-pin port)
+    (car (gnetlist:get-pins port)))
+
+  (define (first-pin-net port)
+    (car (gnetlist:get-nets port (first-pin port))))
+
   (if (null? ports)
       '()
-      (if (equal? (cdr pin)
-                  (car (gnetlist:get-nets
-                        (car ports)
-                        (car (gnetlist:get-pins (car ports))))))
-          (car ports)
-          (vams:which-port pin (cdr ports)))))
+      (let ((port (car ports)))
+        (if (equal? (cdr pin) (first-pin-net port))
+            port
+            (vams:which-port pin (cdr ports))))))
 
 
 
