@@ -64,13 +64,9 @@
 (define systemc:get-module-name
   ( gnetlist:get-toplevel-attribute "module_name" ))
 
-;; return a list of nets whose pins have the desired attribute name/value
-;; pair
-(define (systemc:get-matching-nets attribute value)
-  (map car (systemc:filter attribute value packages)))
 
-;;; Returns a list of lists of pin netnames for packages in
-;;; PACKAGE-LIST having an attribute named ATTRIBUTE which
+;;; Returns a list of first pin netnames for those packages in
+;;; PACKAGE-LIST that have an attribute named ATTRIBUTE which
 ;;; value is VALUE.
 (define (systemc:filter attribute value package-list)
   (define (get-package-pin-netname package pin)
@@ -79,8 +75,8 @@
   (define (get-package-pin-netnames package)
     (and (string=? (gnetlist:get-package-attribute package attribute)
                    value)
-         (map (cut get-package-pin-netname package <>)
-              (gnetlist:get-pins package))))
+         (get-package-pin-netname package
+                                  (car (gnetlist:get-pins package)))))
 
   (filter-map get-package-pin-netnames package-list))
 
@@ -95,9 +91,9 @@
 ;; we want.
 (define (systemc:get-port-list)
   ;; construct list
-  (list (systemc:get-matching-nets "device" "IPAD")
-        (systemc:get-matching-nets "device" "OPAD")
-        (systemc:get-matching-nets "device" "IOPAD")))
+  (list (systemc:filter "device" "IPAD" packages)
+        (systemc:filter "device" "OPAD" packages)
+        (systemc:filter "device" "IOPAD" packages)))
 
 ;;
 ;; output the meat of the module port section
@@ -400,12 +396,12 @@
   ;; XXX fixme, multiple bit widths!
   (for-each
    (lambda (wire) (format #t "assign ~A = 1'b1;\n" wire))
-   (systemc:get-matching-nets "device" "HIGH"))
+   (systemc:filter "device" "HIGH" packages))
 
   ;; XXX fixme, multiple bit widths!
   (for-each
    (lambda (wire) (format #t "assign ~A = 1'b0;\n" wire))
-   (systemc:get-matching-nets "device" "LOW"))
+   (systemc:filter "device" "LOW" packages))
 
   (newline))
 
