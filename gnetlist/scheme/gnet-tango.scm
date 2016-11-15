@@ -132,11 +132,10 @@
 ;;; Write tango netlist format
 ;;;
 (define (tango output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
-  (begin
-     (tango:components (sort packages refdes<?))
-     (tango:nets))
-  (close-output-port (current-output-port)))
+  (with-output-to-port (gnetlist:output-port output-filename)
+    (lambda ()
+      (tango:components (sort packages refdes<?))
+      (tango:nets))))
 
 ;;
 ;; TANGO netlist backend written by Nuno Sucena ends here
