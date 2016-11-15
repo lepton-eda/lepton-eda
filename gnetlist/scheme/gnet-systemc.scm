@@ -383,37 +383,18 @@
 ))
 
 ;;
-;;  Display wires from the design
-;;
-;;  Display a net in a legal systemc format, based on the object passed
-(define systemc:display-wire
-  (lambda (wire)
-    ;; figure out if we need a bit range
-    (let ((name            (car wire))
-          (n1              (car (cadr wire)))
-          (n2              (cadr (cadr wire)))
-          (increasing      (caddr (cadr wire)))
-          )
-
-      (display name)
-    )
-  )
-)
-
-;;
 ;;  Loop over the list of nets in the design, writing one by one
 ;;
 (define (systemc:write-wires)
-  (display "/* Wires from the design */")
-  (newline)
-  (for-each (lambda (wire)          ; print a wire statement for each
-              (display "sc_signal<")
-              (display (cadr (cadr wire)))
-              (display "> ")
-              (systemc:display-wire wire)
-              (display ";")
-              (newline))
-            systemc:get-nets )
+  (display "/* Wires from the design */\n")
+  (for-each
+   (lambda (wire)
+     ;; print a wire statement for each
+     (format #t "sc_signal<~A> ~A;\n"
+             (second (second wire))
+             ;; wire name
+             (first wire)))
+            systemc:get-nets)
   (newline))
 
 ;;
