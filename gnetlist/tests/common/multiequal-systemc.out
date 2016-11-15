@@ -23,20 +23,20 @@ sc_signal<0> unnamed_net1;
 
 
 /* Package instantiations */
-VOLTAGE_SOURCE V1;
-RESISTOR R1;
 options A1;
+RESISTOR R1;
+VOLTAGE_SOURCE V1;
 
 SC_CTOR(not found):
-    V1("V1"),
+    A1("A1"),
     R1("R1"),
-    A1("A1")
+    V1("V1")
   {
-    V1.1(unnamed_net1);
-    V1.2(GND);
-
     R1.2(unnamed_net1);
     R1.1(GND);
+
+    V1.1(unnamed_net1);
+    V1.2(GND);
   }
 };
 

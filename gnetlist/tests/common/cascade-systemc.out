@@ -33,45 +33,45 @@ sc_signal<0> GND;
 
 
 /* Package instantiations */
-cascade-amp AMP2;
-cascade-transformer T1;
-cascade-mixer MX1;
-cascade-filter FL1;
-cascade-defaults DEF1;
 cascade-amp AMP1;
-cascade-source SOURCE;
+cascade-amp AMP2;
+cascade-defaults DEF1;
 cascade-defaults-top DEFAULTS;
+cascade-filter FL1;
+cascade-mixer MX1;
+cascade-source SOURCE;
+cascade-transformer T1;
 
 SC_CTOR(not found):
-    AMP2("AMP2"),
-    T1("T1"),
-    MX1("MX1"),
-    FL1("FL1"),
-    DEF1("DEF1"),
     AMP1("AMP1"),
+    AMP2("AMP2"),
+    DEF1("DEF1"),
+    DEFAULTS("DEFAULTS"),
+    FL1("FL1"),
+    MX1("MX1"),
     SOURCE("SOURCE"),
-    DEFAULTS("DEFAULTS")
+    T1("T1")
   {
+    AMP1.1(unnamed_net1);
+    AMP1.2(unnamed_net2);
+
     AMP2.1(unnamed_net6);
-
-    T1.1(unnamed_net5);
-    T1.2(unnamed_net6);
-
-    MX1.1(unnamed_net4);
-    MX1.2(unnamed_net5);
-
-    FL1.1(unnamed_net3);
-    FL1.2(unnamed_net4);
 
     DEF1.1(unnamed_net2);
     DEF1.2(unnamed_net3);
 
-    AMP1.1(unnamed_net1);
-    AMP1.2(unnamed_net2);
+    DEFAULTS.1(GND);
+
+    FL1.1(unnamed_net3);
+    FL1.2(unnamed_net4);
+
+    MX1.1(unnamed_net4);
+    MX1.2(unnamed_net5);
 
     SOURCE.1(unnamed_net1);
 
-    DEFAULTS.1(GND);
+    T1.1(unnamed_net5);
+    T1.2(unnamed_net6);
   }
 };
 

@@ -38,26 +38,26 @@ sc_signal<0> m;
 model A1;
 CAPACITOR Cm;
 CAPACITOR Cp;
-RESISTOR Rlp;
-RESISTOR Rlm;
-VOLTAGE_SOURCE Vdd;
-vpulse V1;
-RESISTOR Rt;
-RESISTOR Rb;
 PMOS_TRANSISTOR M1;
+RESISTOR Rb;
+RESISTOR Rlm;
+RESISTOR Rlp;
+RESISTOR Rt;
+vpulse V1;
+VOLTAGE_SOURCE Vdd;
 LVD X1;
 
 SC_CTOR(not found):
     A1("A1"),
     Cm("Cm"),
     Cp("Cp"),
-    Rlp("Rlp"),
-    Rlm("Rlm"),
-    Vdd("Vdd"),
-    V1("V1"),
-    Rt("Rt"),
-    Rb("Rb"),
     M1("M1"),
+    Rb("Rb"),
+    Rlm("Rlm"),
+    Rlp("Rlp"),
+    Rt("Rt"),
+    V1("V1"),
+    Vdd("Vdd"),
     X1("X1")
   {
     Cm.1(m);
@@ -66,28 +66,28 @@ SC_CTOR(not found):
     Cp.1(p);
     Cp.2(GND);
 
-    Rlp.2(Vdd1);
-    Rlp.1(p);
-
-    Rlm.2(GND);
-    Rlm.1(m);
-
-    Vdd.1(Vdd1);
-    Vdd.2(GND);
-
-    V1.1(i);
-    V1.2(GND);
-
-    Rt.2(m);
-    Rt.1(p);
-
-    Rb.2(LVH);
-    Rb.1(GND);
-
     M1.S(Vdd1);
     M1.B(Vdd1);
     M1.D(LVH);
     M1.G(LVH);
+
+    Rb.2(LVH);
+    Rb.1(GND);
+
+    Rlm.2(GND);
+    Rlm.1(m);
+
+    Rlp.2(Vdd1);
+    Rlp.1(p);
+
+    Rt.2(m);
+    Rt.1(p);
+
+    V1.1(i);
+    V1.2(GND);
+
+    Vdd.1(Vdd1);
+    Vdd.2(GND);
 
     X1.4(m);
     X1.5(p);
