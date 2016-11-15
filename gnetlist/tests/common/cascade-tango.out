@@ -1,28 +1,14 @@
 [
-AMP2
+AMP1
 none
 cascade-amp
 
 
 ]
 [
-T1
+AMP2
 none
-cascade-transformer
-
-
-]
-[
-MX1
-none
-cascade-mixer
-
-
-]
-[
-FL1
-none
-cascade-filter
+cascade-amp
 
 
 ]
@@ -34,9 +20,23 @@ cascade-defaults
 
 ]
 [
-AMP1
+DEFAULTS
+PATTERN
+cascade-defaults-top
+
+
+]
+[
+FL1
 none
-cascade-amp
+cascade-filter
+
+
+]
+[
+MX1
+none
+cascade-mixer
 
 
 ]
@@ -48,9 +48,9 @@ cascade-source
 
 ]
 [
-DEFAULTS
-PATTERN
-cascade-defaults-top
+T1
+none
+cascade-transformer
 
 
 ]

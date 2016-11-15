@@ -1,8 +1,8 @@
 [
-V1
-none
-VOLTAGE_SOURCE
-DC 1V
+A1
+PATTERN
+options
+abotol=1e-11
 
 ]
 [
@@ -13,10 +13,10 @@ RESISTOR
 
 ]
 [
-A1
-PATTERN
-options
-abotol=1e-11
+V1
+none
+VOLTAGE_SOURCE
+DC 1V
 
 ]
 (

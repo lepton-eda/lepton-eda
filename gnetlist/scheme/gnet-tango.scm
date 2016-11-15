@@ -23,6 +23,8 @@
 ;; TANGO netlist backend written by Nuno Sucena starts here
 ;;
 
+(use-modules (gnetlist attrib compare))
+
 ;;
 ;; Given a uref, returns the device attribute value (for tango-netlist)
 ;;
@@ -132,7 +134,7 @@
 (define (tango output-filename)
   (set-current-output-port (gnetlist:output-port output-filename))
   (begin
-     (tango:components packages)
+     (tango:components (sort packages refdes<?))
      (tango:nets))
   (close-output-port (current-output-port)))
 

@@ -20,38 +20,10 @@ CAPACITOR
 
 ]
 [
-Rlp
+M1
 PATTERN
-RESISTOR
-1meg
+PMOS_TRANSISTOR
 
-]
-[
-Rlm
-PATTERN
-RESISTOR
-500k
-
-]
-[
-Vdd
-none
-VOLTAGE_SOURCE
-DC 3.3V
-
-]
-[
-V1
-none
-vpulse
-pulse 3.3 0 1u 10p 10p 1.25u 2.5u
-
-]
-[
-Rt
-PATTERN
-RESISTOR
-1k
 
 ]
 [
@@ -62,10 +34,38 @@ RESISTOR
 
 ]
 [
-M1
+Rlm
 PATTERN
-PMOS_TRANSISTOR
+RESISTOR
+500k
 
+]
+[
+Rlp
+PATTERN
+RESISTOR
+1meg
+
+]
+[
+Rt
+PATTERN
+RESISTOR
+1k
+
+]
+[
+V1
+none
+vpulse
+pulse 3.3 0 1u 10p 10p 1.25u 2.5u
+
+]
+[
+Vdd
+none
+VOLTAGE_SOURCE
+DC 3.3V
 
 ]
 [
