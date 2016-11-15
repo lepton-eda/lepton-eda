@@ -216,12 +216,12 @@ USE work.all;
 (define (vams:write-primary-unit entity port-list generic-list)
 
   (format #t "~A
--- Entity declaration -- 
+-- Entity declaration --
 
 ENTITY ~A IS
 ~A
 ~A
-END ENTITY ~A; 
+END ENTITY ~A;
 
 "
           (vams:write-context-clause)
