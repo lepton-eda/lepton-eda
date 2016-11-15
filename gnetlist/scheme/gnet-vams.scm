@@ -26,6 +26,7 @@
 ;;; --------------------------------------------------------------------------
 
 (use-modules (srfi srfi-1)
+             (srfi srfi-26)
              (gnetlist attrib compare))
 
 ;;; ===================================================================================
@@ -429,26 +430,26 @@ END ENTITY ~A;
 ;;; the architecture should wrote to.
 
 (define (vams:write-secondary-unit architecture entity)
-  (format #t "-- Secondary unit
+  (let ((ports (vams:all-ports-in-list packages)))
+    (format #t "-- Secondary unit
 
 ARCHITECTURE ~A OF ~A IS
 " architecture entity)
-  (vams:write-architecture-declarative-part)
-  (display "BEGIN\n")
-  (vams:write-architecture-statement-part (sort packages refdes<?))
-  (format #t "END ARCHITECTURE ~A;\n" architecture)
-  )
+    (vams:write-architecture-declarative-part ports)
+    (display "BEGIN\n")
+    (vams:write-architecture-statement-part (sort packages refdes<?) ports)
+    (format #t "END ARCHITECTURE ~A;\n" architecture)))
 
 
 ;;;
 ;;; at this time, it only calls the signal declarations
 
-(define (vams:write-architecture-declarative-part)
+(define (vams:write-architecture-declarative-part ports)
   ;; Due to my taste will the component declarations go first
   ;; XXX - Broken until someday
   ;; (vams:write-component-declarations packages)
   ;; Then comes the signal declatations
-  (vams:write-signal-declarations))
+  (vams:write-signal-declarations ports))
 
 
 ;;; Signal Declaration
@@ -472,7 +473,7 @@ ARCHITECTURE ~A OF ~A IS
 ;;; it's something more complex, because it's checking all signals
 ;;; for consistence. it only needs the output-port as parameter.
 
-(define (vams:write-signal-declarations)
+(define (vams:write-signal-declarations ports)
   (for-each
    (lambda (net)
      (let*((connlist (gnetlist:get-all-connections net))
@@ -485,7 +486,7 @@ ARCHITECTURE ~A OF ~A IS
                     (port_mode (vams:net-consistence 'port_mode connlist))))
            (format #t "\t~A ~A \t:  ~A;\n" port_object net port_type)
            (format #t "-- error in subnet : ~A\n"))))
-   (vams:all-necessary-nets)))
+   (vams:all-necessary-nets ports)))
 
 
 ;;; Architecture Statement Part
@@ -562,7 +563,7 @@ ARCHITECTURE ~A OF ~A IS
 ;;; required all used packages, which are necessary for netlist-
 ;;; generation, and the output-port.
 
-(define (vams:write-architecture-statement-part packages)
+(define (vams:write-architecture-statement-part package-list ports)
   (display "-- Architecture statement part\n")
   (for-each (lambda (package)
               (let ((device (get-device package))
@@ -593,8 +594,8 @@ ARCHITECTURE ~A OF ~A IS
 					    architecture))
 				)
 			    (vams:write-generic-map package)
-			    (vams:write-port-map package)))))
-            (vams:all-necessary-packages)))
+                            (vams:write-port-map package ports)))))
+            (vams:all-necessary-packages ports)))
 
 
 
@@ -654,12 +655,12 @@ ARCHITECTURE ~A OF ~A IS
 ;;; writes the port map of the component.
 ;;; required output-port and uref.
 
-(define (vams:write-port-map uref)
+(define (vams:write-port-map uref ports)
   (let ((pin-list (gnetlist:get-pins-nets uref)))
     (if (null? pin-list)
 	""
 	(format #f "\tPORT MAP (\t~A)"
-		(string-join (map vams:write-association-element
+                (string-join (map (cut vams:write-association-element <> ports)
 				  pin-list)
 			     ",\n\t\t\t")))))
 
@@ -711,12 +712,12 @@ ARCHITECTURE ~A OF ~A IS
 ;;; the purpose of this function is very easy: write OPEN if pin
 ;;; unconnected and normal output if it connected.
 
-(define (vams:write-association-element pin)
+(define (vams:write-association-element pin ports)
   (format #f "~A => ~A"
           (car pin)
           (if (string-prefix-ci? "unconnected_pin" (cdr pin))
               "OPEN"
-              (vams:port-test pin))))
+              (vams:port-test pin ports))))
 
 
 
@@ -823,10 +824,9 @@ ARCHITECTURE ~A OF ~A IS
 ;; returns all nets in the schematic, which not
 ;; directly connected to a port.
 
-(define (vams:all-necessary-nets)
+(define (vams:all-necessary-nets ports)
   (vams:only-different-nets all-unique-nets
-                            (vams:all-packages-nets
-                             (vams:all-ports-in-list packages))))
+                            (vams:all-packages-nets ports)))
 
 
 
@@ -838,9 +838,8 @@ ARCHITECTURE ~A OF ~A IS
 
 ;; sort all port-components out
 
-(define (vams:all-necessary-packages)
-  (vams:only-different-nets packages
-                            (vams:all-ports-in-list packages)))
+(define (vams:all-necessary-packages ports)
+  (vams:only-different-nets packages ports))
 
 
 
@@ -848,11 +847,11 @@ ARCHITECTURE ~A OF ~A IS
 ;; else return the net, which the pin is connetcted to.
 ;; requires: a pin only
 
-(define (vams:port-test pin)
-  (if (member (cdr pin)
-              (vams:all-packages-nets (vams:all-ports-in-list packages)))
-      (vams:which-port pin (vams:all-ports-in-list packages))
-      (cdr pin)))
+(define (vams:port-test pin-net-pair ports)
+  (let ((netname (cdr pin-net-pair)))
+    (if (member netname (vams:all-packages-nets ports))
+        (vams:which-port pin-net-pair ports)
+        netname)))
 
 
 
