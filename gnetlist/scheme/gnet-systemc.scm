@@ -125,11 +125,11 @@
                                      port-symbols))
                           (begin
                             (display "#include \"")
-                            (systemc:display-escaped-identifier (get-device package))
+                            (display (get-device package))
                             (display ".h\"\n"))))))
                 packages)
       (newline)
-      (display "SC_MODULE (") (systemc:display-escaped-identifier module-name) (display ")\n{\n")
+      (display "SC_MODULE (") (display module-name) (display ")\n{\n")
     )
   )
 )
@@ -147,7 +147,7 @@
         (for-each (lambda (pin)
                     (begin
                       (display "sc_in<bool> ")
-                      (systemc:display-escaped-identifier (systemc:netname pin))
+                      (display (systemc:netname pin))
                       (display ";")
                       (newline)
                     )) in)       ; do each input
@@ -155,7 +155,7 @@
         (for-each (lambda (pin)
                     (begin
                       (display "sc_out<bool> ")
-                      (systemc:display-escaped-identifier
+                      (display
                        (systemc:netname pin))
                       (display ";")
                       (newline))) out)      ; do each output
@@ -163,7 +163,7 @@
         (for-each (lambda (pin)
                     (begin
                       (display "sc_inout<bool> ")
-                      (systemc:display-escaped-identifier
+                      (display
                        (systemc:netname pin))
                       (display ";")
                       (newline))) inout)    ; do each inout
@@ -280,15 +280,6 @@
        (systemc    `#t )
        (else       `#f )
        ))))
-
-;;
-;; Display a systemc identifier that is escaped if needed
-;;
-(define systemc:display-escaped-identifier
-  (lambda (netname)
-    (if (systemc:identifier? netname)
-        (display netname) ; just display the identifier
-        (display netname)))) ; need to escape
 
 
 ;;
@@ -461,7 +452,7 @@
           (increasing      (caddr (cadr wire)))
           )
 
-      (systemc:display-escaped-identifier name)
+      (display name)
     )
   )
 )
@@ -491,7 +482,7 @@
               (begin
                 (display "assign ")
                 ;; XXX fixme, multiple bit widths!
-                (systemc:display-escaped-identifier wire)
+                (display wire)
                 (display " = 1'b1;")
                 (newline)))
             (systemc:get-matching-nets "device" "HIGH"))
@@ -500,7 +491,7 @@
               (begin
                 (display "assign ")
                 ;; XXX fixme, multiple bit widths!
-                (systemc:display-escaped-identifier wire)
+                (display wire)
                 (display " = 1'b0;")
                 (newline)))
             (systemc:get-matching-nets "device" "LOW"))
@@ -536,13 +527,13 @@
                       (if (not (memq (string->symbol device) ; ignore specials
                                      port-symbols))
                           (begin
-                            (systemc:display-escaped-identifier (get-device package)) (display " ")
-                            (systemc:display-escaped-identifier package) (display ";")
+                            (display (get-device package)) (display " ")
+                            (display package) (display ";")
                             (newline))))))
                 packages)
 
       (newline)
-      (display "SC_CTOR(") (systemc:display-escaped-identifier systemc:get-module-name)
+      (display "SC_CTOR(") (display systemc:get-module-name)
       (display "):\n")
 
       (for-each (lambda (package)         ; loop on packages
@@ -553,9 +544,9 @@
                           (begin
                             (if c_p (begin (display ",") (newline)) (set! c_p #t))
                             (display "    ")
-                            (systemc:display-escaped-identifier package)
+                            (display package)
                             (display "(\"")
-                            (systemc:display-escaped-identifier package)
+                            (display package)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (do ((lp 1 (+ lp 1))) ((> lp 32))
@@ -600,7 +591,7 @@
               (for-each (lambda (pin)
                           (if (not (string-prefix-ci? "unconnected_pin" (cdr pin)))
                               (begin
-                                (display "    ")(systemc:display-escaped-identifier package)
+                                (display "    ")(display package)
                                 (systemc:display-pin pin positional)
                                 (display ";") (newline))))
                         pin-list)
@@ -631,11 +622,11 @@
                 (begin    ; else output a named port instance
                   (display ".")
                   ; Display the escaped version of the identifier
-                  (systemc:display-escaped-identifier (car pin))
+                  (display (car pin))
                   (display "(")
                   (if systemc
                     (display (match:substring systemc 1))
-                    (systemc:display-escaped-identifier (cdr pin)))
+                    (display (cdr pin)))
                   (display ")")))))))
 
 
