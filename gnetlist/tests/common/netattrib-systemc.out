@@ -9,9 +9,9 @@
 
 #include "systemc.h"
 #include "FUSE.h"
-#include "7404.h"
-#include "7404.h"
 #include "7400.h"
+#include "7404.h"
+#include "7404.h"
 
 SC_MODULE (not found)
 {

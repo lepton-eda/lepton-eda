@@ -8,9 +8,9 @@
 /* Author.....Jaume Masip                   */
 
 #include "systemc.h"
-#include "VOLTAGE_SOURCE.h"
-#include "RESISTOR.h"
 #include "options.h"
+#include "RESISTOR.h"
+#include "VOLTAGE_SOURCE.h"
 
 SC_MODULE (not found)
 {

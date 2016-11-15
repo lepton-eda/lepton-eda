@@ -8,18 +8,18 @@
 /* Author.....Jaume Masip                   */
 
 #include "systemc.h"
-#include "LM317.h"
 #include "POLARIZED_CAPACITOR.h"
 #include "POLARIZED_CAPACITOR.h"
-#include "VARIABLE_RESISTOR.h"
 #include "POLARIZED_CAPACITOR.h"
-#include "RESISTOR.h"
 #include "POLARIZED_CAPACITOR.h"
-#include "SPST.h"
 #include "MAINS_CONNECTOR.h"
-#include "transformer.h"
 #include "FUSE.h"
+#include "VARIABLE_RESISTOR.h"
+#include "RESISTOR.h"
+#include "SPST.h"
+#include "transformer.h"
 #include "DIODE-BRIDGE.h"
+#include "LM317.h"
 
 SC_MODULE (not found)
 {

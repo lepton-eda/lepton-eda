@@ -9,13 +9,13 @@
 
 #include "systemc.h"
 #include "cascade-amp.h"
-#include "cascade-transformer.h"
-#include "cascade-mixer.h"
-#include "cascade-filter.h"
-#include "cascade-defaults.h"
 #include "cascade-amp.h"
-#include "cascade-source.h"
+#include "cascade-defaults.h"
 #include "cascade-defaults-top.h"
+#include "cascade-filter.h"
+#include "cascade-mixer.h"
+#include "cascade-source.h"
+#include "cascade-transformer.h"
 
 SC_MODULE (not found)
 {

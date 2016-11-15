@@ -26,7 +26,8 @@
 ;;
 (use-modules (ice-9 regex)
              (srfi srfi-1)
-             (srfi srfi-26))
+             (srfi srfi-26)
+             (gnetlist attrib compare))
 
 (define id-regexp "[a-zA-Z_][a-zA-Z0-9_$]*")
 (define numeric  "[0-9]+")
@@ -522,7 +523,7 @@
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
       (systemc:get-nets-once!)
-      (systemc:write-top-header packages)
+      (systemc:write-top-header (sort packages refdes<?))
       (systemc:write-wires)
       (systemc:write-continuous-assigns packages)
       (systemc:components packages)
