@@ -573,26 +573,19 @@
 ;;
 ;;      .PINNAME ( NETNAME )
 ;;
-(define systemc:display-pin
-    (lambda (pin positional)
-      (let
-          ((systemc (regexp-exec systemc-reg (cdr pin))))
-          (begin
-            (if positional
-                (begin    ; output a positional port instance
-                  (display "  /* ")
-                  (display (car pin))  ; add in name for debugging
-                  (display " */ " )
-                  (display (cdr pin)))
-                (begin    ; else output a named port instance
-                  (display ".")
-                  ; Display the escaped version of the identifier
-                  (display (car pin))
-                  (display "(")
-                  (if systemc
-                    (display (match:substring systemc 1))
-                    (display (cdr pin)))
-                  (display ")")))))))
+(define (systemc:display-pin pin positional)
+  (let ((systemc (regexp-exec systemc-reg (cdr pin))))
+    (if positional
+        ;; Output a positional port instance.
+        ;; In name is added for debugging.
+        (format #t "  /* ~A */ ~A" (car pin) (cdr pin))
+        ;; Else output a named port instance.
+        (format #t ".~A(~A)"
+                ;; Display the escaped version of the identifier.
+                (car pin)
+                (if systemc
+                    (match:substring systemc 1)
+                    (cdr pin))))))
 
 
 
