@@ -223,29 +223,6 @@
        )))
 )
 
-;;
-;; Return #t if the passed name is something that might pass as a
-;; systemc identifier.
-;;
-(define systemc:identifier?
-  (lambda (netname)
-    (let
-        ((bit-range (regexp-exec bit-range-reg netname))
-         (single-bit (regexp-exec single-bit-reg netname))
-         (simple-id (regexp-exec simple-id-reg netname))
-         (systemc (regexp-exec systemc-reg netname)))
-
-      ;; check over each expression type, return
-      ;; result
-      ;(display netname) (display ": ")
-      (cond
-       (bit-range  #t )
-       (single-bit #t )
-       (simple-id  #t )
-       (systemc    #t )
-       (else       #f )
-       ))))
-
 
 ;;
 ;; return just the netname part of a systemc identifier
