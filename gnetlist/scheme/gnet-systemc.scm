@@ -423,67 +423,50 @@
 
 (define c_p #f)
 
-(define systemc:components
-  (lambda (packages)
-    (begin
-      (set! c_p #f)
-      (display "/* Package instantiations */") (newline)
+(define (systemc:components packages)
+  (define attrib-names (map (cut format #f "attr~A" <>) (iota 32 1)))
 
-      (for-each (lambda (package)         ; loop on packages
-                  (begin
-                    (let ((device (get-device package)))
-                      (if (not (memq (string->symbol device) ; ignore specials
-                                     port-symbols))
-                          (begin
-                            (display (get-device package)) (display " ")
-                            (display package) (display ";")
-                            (newline))))))
-                packages)
+  (set! c_p #f)
+  (display "/* Package instantiations */\n")
 
-      (newline)
-      (display "SC_CTOR(") (display systemc:get-module-name)
-      (display "):\n")
+  (for-each (lambda (package)                ; loop on packages
+              (let ((device (get-device package)))
+                (if (not (memq (string->symbol device) ; ignore specials
+                               port-symbols))
+                    (format #t "~A ~A;\n" device package))))
+            packages)
 
-      (for-each (lambda (package)         ; loop on packages
-                  (begin
-                    (let ((device (get-device package)))
-                      (if (not (memq (string->symbol device) ; ignore specials
-                                     port-symbols))
-                          (begin
-                            (if c_p (begin (display ",") (newline)) (set! c_p #t))
-                            (display "    ")
-                            (display package)
-                            (display "(\"")
-                            (display package)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (format #t "\nSC_CTOR(~A):\n" systemc:get-module-name)
 
-(do ((lp 1 (+ lp 1))) ((> lp 32))
-  (let* ((attr (string-append "attr" (number->string lp)))
-       (description (gnetlist:get-package-attribute package attr)))
-      (begin
-          (if (not (string=? description "unknown"))
-               (begin (display "\",\"") (display description)))))
-)
+  (for-each (lambda (package)                ; loop on packages
+              (let ((device (get-device package)))
+                (if (not (memq (string->symbol device) ; ignore specials
+                               port-symbols))
+                    (let ((attrib-values (filter-map known?
+                                                     (map (cut gnetlist:get-package-attribute
+                                                               package
+                                                               <>)
+                                                          attrib-names))))
+                      (begin
+                       (if c_p (display ",\n") (set! c_p #t))
+                       (format #t "    ~A(\"~A~A\")"
+                               package package (string-join attrib-values "\",\"")))))))
+            packages)
+  (display "\n  {")
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                             (display "\")")
-                            )))))
-                packages)
-      (display "\n  {")
-
-      (for-each (lambda (package)         ; loop on packages
-                  (begin
-                    (let ((device (get-device package)))
-                      (if (not (memq (string->symbol device) ; ignore specials
-                                     port-symbols))
-                          (begin
-                            ; if this module wants positional pins,
-                            ; then output that format, otherwise
-                            ; output normal named declaration
-                            (systemc:display-connections package
-                             (string=? (gnetlist:get-package-attribute package "VERILOG_PORTS" ) "POSITIONAL"))
-                            )))))
-                packages))))
+  (for-each (lambda (package)                ; loop on packages
+              (begin
+                (let ((device (get-device package)))
+                  (if (not (memq (string->symbol device) ; ignore specials
+                                 port-symbols))
+                      (begin
+                                        ; if this module wants positional pins,
+                                        ; then output that format, otherwise
+                                        ; output normal named declaration
+                        (systemc:display-connections package
+                                                     (string=? (gnetlist:get-package-attribute package "VERILOG_PORTS" ) "POSITIONAL"))
+                        )))))
+            packages))
 
 ;;
 ;; output a module connection for the package given to us with named ports
