@@ -25,6 +25,7 @@
 ;; some useful regexes for working with net-names
 ;;
 (use-modules (ice-9 regex)
+             (srfi srfi-1)
              (srfi srfi-26))
 
 (define id-regexp "[a-zA-Z_][a-zA-Z0-9_$]*")
@@ -293,19 +294,19 @@
              (if listed
                  (begin ; it is, do some checks, and update the record
                    ;; extract fields from list
-                   (let* ((list-name       (car listed))
-                          (list-n1         (car (cadr listed)))
-                          (list-n2         (cadr (cadr listed)))
-                          (list-increasing (caddr (cadr listed)))
-                          (list-sure       (cadddr (cadr listed)))
-                          (list-real       (cadddr (cdr (cadr listed))))
+                   (let* ((list-name       (first listed))
+                          (list-n1         (first (second listed)))
+                          (list-n2         (second (second listed)))
+                          (list-increasing (third (second listed)))
+                          (list-sure       (fourth (second listed)))
+                          (list-real       (fifth (second listed)))
 
-                          (name            (car parsed))
-                          (n1              (car (cadr parsed)))
-                          (n2              (cadr (cadr parsed)))
-                          (increasing      (caddr (cadr parsed)))
-                          (sure            (cadddr (cadr parsed)))
-                          (real            (cadddr (cdr (cadr parsed))))
+                          (name            (first parsed))
+                          (n1              (first (second parsed)))
+                          (n2              (second (second parsed)))
+                          (increasing      (third (second parsed)))
+                          (sure            (fourth (second parsed)))
+                          (real            (fifth (cdr (second parsed))))
 
                           (consistant      (or (and list-increasing increasing)
                                                (and (not list-increasing)
