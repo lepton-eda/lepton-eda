@@ -420,23 +420,17 @@
 ;; by placing `high' and `low' components on the board
 ;;
 (define (systemc:write-continuous-assigns)
-  (for-each (lambda (wire)             ; do high values
-              (begin
-                (display "assign ")
-                ;; XXX fixme, multiple bit widths!
-                (display wire)
-                (display " = 1'b1;")
-                (newline)))
-            (systemc:get-matching-nets "device" "HIGH"))
+  ;; do high values
+  ;; XXX fixme, multiple bit widths!
+  (for-each
+   (lambda (wire) (format #t "assign ~A = 1'b1;\n" wire))
+   (systemc:get-matching-nets "device" "HIGH"))
 
-  (for-each (lambda (wire)
-              (begin
-                (display "assign ")
-                ;; XXX fixme, multiple bit widths!
-                (display wire)
-                (display " = 1'b0;")
-                (newline)))
-            (systemc:get-matching-nets "device" "LOW"))
+  ;; XXX fixme, multiple bit widths!
+  (for-each
+   (lambda (wire) (format #t "assign ~A = 1'b0;\n" wire))
+   (systemc:get-matching-nets "device" "LOW"))
+
   (newline))
 
 
