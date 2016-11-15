@@ -39,6 +39,13 @@
 )))
 
 
+(define (unknown? value)
+  (string-ci=? value "unknown"))
+
+(define (known? value)
+  (not (unknown? value)))
+
+
 (define (gnetlist:get-calling-flags) ; DEPRECATED
   "Returns a list of `-O' arguments in the form:
 

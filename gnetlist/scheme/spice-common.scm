@@ -25,9 +25,6 @@
 
 (use-modules (srfi srfi-1))
 
-(define (unknown? value)
-  (string-ci=? value "unknown"))
-
 
 ;;---------------------------------------------------------------------
 ;; write netnames connected to pin-a and pin-b
