@@ -23,102 +23,63 @@
 ;; TANGO netlist backend written by Nuno Sucena starts here
 ;;
 
-(use-modules (gnetlist attrib compare))
+(use-modules (gnetlist attrib compare)
+             (srfi srfi-1))
 
 ;;
 ;; Given a uref, returns the device attribute value (for tango-netlist)
 ;;
-(define tango:get-device
-   (lambda (package)
-      (gnetlist:get-package-attribute package "device")))
+(define (tango:get-device package)
+  (gnetlist:get-package-attribute package "device"))
 
 ;;
 ;; Given a uref, returns the footprint attribute value (PATTERN if not defined)
 ;;
-(define tango:get-pattern
-   (lambda (package)
-      (define pattern (gnetlist:get-package-attribute package "footprint"))
-      (if (string=? "unknown" pattern)
-         "PATTERN"
-         pattern)))
-; how do i return "PATTERN" if not defined? humm... need to read some
-; guile stuff... i did, and see the result :)
+(define (tango:get-pattern package)
+  (let ((pattern (gnetlist:get-package-attribute package "footprint")))
+    (if (unknown? pattern) "PATTERN" pattern)))
 
 ;;
 ;; Given a uref, returns the value attribute (empty if not defined)
 ;;
-(define tango:get-value
-   (lambda (package)
-      (define value (gnetlist:get-package-attribute package "value"))
-      (if (string=? "unknown" value)
-         ""
-         value)))
+(define (tango:get-value package)
+  (let ((value (gnetlist:get-package-attribute package "value")))
+    (if (unknown? value) "" value)))
 
 ;;
 ;; Top level component writing
 ;;
-(define tango:components
-   (lambda (ls)
-      (if (not (null? ls))
-         (let ((package (car ls)))
-            (begin
-               (display "[")
-               (newline)
-               (display package)
-               (newline)
-               (display (tango:get-pattern package))
-               (newline)
-               (display (tango:get-device package))
-               (newline)
-               (display (tango:get-value package))
-               (newline)
-               (newline)
-               (display "]")
-               (newline)
-               (tango:components (cdr ls)))))))
+(define (tango:components ls)
+  (for-each
+   (lambda (package)
+     (format #t "[\n~A\n~A\n~A\n~A\n\n]\n"
+             package
+             (tango:get-pattern package)
+             (tango:get-device package)
+             (tango:get-value package)))
+   ls))
 
 ;;
 ;; Display the individual net connections
 ;;
-(define tango:display-connections
-   (lambda (nets)
-      (if (not (null? nets))
-         (begin
-            (display (car (car nets)))
-            (display "-")
-            (display (car (cdr (car nets))))
-            (if (not (null? (cdr nets)))
-                (begin
-                  (newline)))
-                  (tango:display-connections (cdr nets))))))
+(define (tango:display-connections nets)
+  (string-join
+   (map
+    (lambda (net) (format #f "~A-~A\n" (first net) (second net)))
+    nets)
+   ""))
 
-
-;;
-;; Properly format the name of the net and the actual net connections
-;;
-(define tango:display-name-nets
-   (lambda (nets)
-      (begin
-         (tango:display-connections nets))))
 
 ;;
 ;; Write out a net associated with a particular package and pin
 ;;
-(define tango:write-net
-   (lambda (netnames)
-      (if (not (null? netnames))
-         (let ((netname (car netnames)))
-            (begin
-               (display "(")
-               (newline)
-               (display netname)
-               (newline)
-
-               (tango:display-name-nets (gnetlist:get-all-connections netname))
-               (newline)
-               (display ")")
-               (newline)
-               (tango:write-net (cdr netnames)))))))
+(define (tango:write-net netnames)
+  (for-each
+   (lambda (netname)
+     (format #t "(\n~A\n~A)\n"
+             netname
+             (tango:display-connections (gnetlist:get-all-connections netname))))
+   netnames))
 
 
 ;;
