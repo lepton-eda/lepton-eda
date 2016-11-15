@@ -112,27 +112,18 @@
 ;;
 ;;       PORTNAME , <newline>
 ;;
-(define systemc:write-module-declaration
-  (lambda (module-name port-list)
-    (begin
+(define (systemc:write-module-declaration module-name port-list)
+  (display "#include \"systemc.h\"\n")
+  (for-each
+   (lambda (package)                         ; loop on packages
+     (let ((device (get-device package)))
+       (if (not (memq (string->symbol device) ; ignore specials
+                      port-symbols))
+           (format #t "#include \"~A.h\"\n" device))))
+   packages)
+  (format #t "\nSC_MODULE (~A)\n{\n" module-name))
 
-      (display "#include \"systemc.h\"\n")
 
-      (for-each (lambda (package)         ; loop on packages
-                  (begin
-                    (let ((device (get-device package)))
-                      (if (not (memq (string->symbol device) ; ignore specials
-                                     port-symbols))
-                          (begin
-                            (display "#include \"")
-                            (display (get-device package))
-                            (display ".h\"\n"))))))
-                packages)
-      (newline)
-      (display "SC_MODULE (") (display module-name) (display ")\n{\n")
-    )
-  )
-)
 ;;
 ;; output the module direction section
 ;;
