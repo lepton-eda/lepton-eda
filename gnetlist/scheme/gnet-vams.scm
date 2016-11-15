@@ -25,7 +25,8 @@
 ;;;
 ;;; --------------------------------------------------------------------------
 
-(use-modules (srfi srfi-1))
+(use-modules (srfi srfi-1)
+             (gnetlist attrib compare))
 
 ;;; ===================================================================================
 ;;;                  TOP LEVEL FUNCTION
@@ -434,7 +435,7 @@ ARCHITECTURE ~A OF ~A IS
 " architecture entity)
   (vams:write-architecture-declarative-part)
   (display "BEGIN\n")
-  (vams:write-architecture-statement-part packages)
+  (vams:write-architecture-statement-part (sort packages refdes<?))
   (format #t "END ARCHITECTURE ~A;\n" architecture)
   )
 
