@@ -24,7 +24,8 @@
 
 ;; some useful regexes for working with net-names
 ;;
-(use-modules (ice-9 regex))
+(use-modules (ice-9 regex)
+             (srfi srfi-26))
 
 (define id-regexp "[a-zA-Z_][a-zA-Z0-9_$]*")
 (define numeric  "[0-9]+")
@@ -124,42 +125,19 @@
   (format #t "\nSC_MODULE (~A)\n{\n" module-name))
 
 
-;;
-;; output the module direction section
-;;
-(define systemc:write-port-directions
-  (lambda (port-list)
-    (let ((in    (car   port-list))    ; extract list of pins
-          (out   (cadr  port-list))
-          (inout (caddr port-list)))
-      (begin
-        (display "/* Port directions begin here */")
-        (newline)
-        (for-each (lambda (pin)
-                    (begin
-                      (display "sc_in<bool> ")
-                      (display (systemc:netname pin))
-                      (display ";")
-                      (newline)
-                    )) in)       ; do each input
+;;; Outputs the module direction section for PORT-LIST which is a
+;;; list of lists of the form (in-ports out-ports inout-ports)
+(define (systemc:write-port-directions port-list)
+  (define (write-pin-direction type pin)
+    (format #t "sc_~A<bool> ~A;\n" type (systemc:netname pin)))
 
-        (for-each (lambda (pin)
-                    (begin
-                      (display "sc_out<bool> ")
-                      (display
-                       (systemc:netname pin))
-                      (display ";")
-                      (newline))) out)      ; do each output
+  (display "/* Port directions begin here */\n")
+  (for-each
+   (lambda (type ports)
+     (for-each (cut write-pin-direction type <>) ports))
+   '(in out inout) port-list))
 
-        (for-each (lambda (pin)
-                    (begin
-                      (display "sc_inout<bool> ")
-                      (display
-                       (systemc:netname pin))
-                      (display ";")
-                      (newline))) inout)    ; do each inout
 
-        ))))
 ;;
 ;; Top level header
 ;;
