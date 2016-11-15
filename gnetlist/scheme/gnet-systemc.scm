@@ -570,13 +570,12 @@
 ;;; Write Structural systemc representation of the schematic
 ;;;
 (define (systemc output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
-  (begin
-    (systemc:get-nets-once!)
-    (systemc:write-top-header)
-    (systemc:write-wires)
-    (systemc:write-continuous-assigns)
-    (systemc:components packages)
-    (systemc:write-bottom-footer)
-    )
-  (close-output-port (current-output-port)))
+  (with-output-to-port (gnetlist:output-port output-filename)
+    (lambda ()
+      (systemc:get-nets-once!)
+      (systemc:write-top-header)
+      (systemc:write-wires)
+      (systemc:write-continuous-assigns)
+      (systemc:components packages)
+      (systemc:write-bottom-footer)
+      )))
