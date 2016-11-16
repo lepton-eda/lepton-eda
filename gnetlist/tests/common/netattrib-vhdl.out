@@ -10,13 +10,13 @@ END not found;
 
 -- Secondary unit
 ARCHITECTURE netlist OF not found IS
+    COMPONENT FUSE
+    END COMPONENT ;
+
     COMPONENT 7400
     END COMPONENT ;
 
     COMPONENT 7404
-    END COMPONENT ;
-
-    COMPONENT FUSE
     END COMPONENT ;
 
     SIGNAL unnamed_net1 : Std_Logic;
@@ -31,20 +31,6 @@ BEGIN
         1 => one,
         2 => OPEN);
 
-    U300 : 7404
-    PORT MAP (
-        1 => one,
-        2 => unnamed_net1,
-        7 => GND,
-        14 => Vcc);
-
-    U200 : 7404
-    PORT MAP (
-        1 => one,
-        2 => netattrib,
-        7 => GND,
-        14 => Vcc);
-
     U100 : 7400
     PORT MAP (
         3 => one,
@@ -53,6 +39,20 @@ BEGIN
         14 => Vcc,
         7 => GND,
         5 => netattrib);
+
+    U200 : 7404
+    PORT MAP (
+        1 => one,
+        2 => netattrib,
+        7 => GND,
+        14 => Vcc);
+
+    U300 : 7404
+    PORT MAP (
+        1 => one,
+        2 => unnamed_net1,
+        7 => GND,
+        14 => Vcc);
 
 -- Signal assignment part
 END netlist;

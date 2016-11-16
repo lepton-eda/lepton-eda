@@ -23,18 +23,18 @@ ARCHITECTURE netlist OF not found IS
     SIGNAL unnamed_net1 : Std_Logic;
 BEGIN
 -- Architecture statement part
-    V1 : VOLTAGE_SOURCE
-    PORT MAP (
-        1 => unnamed_net1,
-        2 => GND);
+    A1 : options
+;
 
     R1 : RESISTOR
     PORT MAP (
         2 => unnamed_net1,
         1 => GND);
 
-    A1 : options
-;
+    V1 : VOLTAGE_SOURCE
+    PORT MAP (
+        1 => unnamed_net1,
+        2 => GND);
 
 -- Signal assignment part
 END netlist;

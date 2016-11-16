@@ -10,7 +10,10 @@ END not found;
 
 -- Secondary unit
 ARCHITECTURE netlist OF not found IS
-    COMPONENT LVD
+    COMPONENT model
+    END COMPONENT ;
+
+    COMPONENT CAPACITOR
     END COMPONENT ;
 
     COMPONENT PMOS_TRANSISTOR
@@ -25,10 +28,7 @@ ARCHITECTURE netlist OF not found IS
     COMPONENT VOLTAGE_SOURCE
     END COMPONENT ;
 
-    COMPONENT CAPACITOR
-    END COMPONENT ;
-
-    COMPONENT model
+    COMPONENT LVD
     END COMPONENT ;
 
     SIGNAL Vdd1 : Std_Logic;
@@ -52,42 +52,42 @@ BEGIN
         1 => p,
         2 => GND);
 
-    Rlp : RESISTOR
-    PORT MAP (
-        2 => Vdd1,
-        1 => p);
-
-    Rlm : RESISTOR
-    PORT MAP (
-        2 => GND,
-        1 => m);
-
-    Vdd : VOLTAGE_SOURCE
-    PORT MAP (
-        1 => Vdd1,
-        2 => GND);
-
-    V1 : vpulse
-    PORT MAP (
-        1 => i,
-        2 => GND);
-
-    Rt : RESISTOR
-    PORT MAP (
-        2 => m,
-        1 => p);
-
-    Rb : RESISTOR
-    PORT MAP (
-        2 => LVH,
-        1 => GND);
-
     M1 : PMOS_TRANSISTOR
     PORT MAP (
         S => Vdd1,
         B => Vdd1,
         D => LVH,
         G => LVH);
+
+    Rb : RESISTOR
+    PORT MAP (
+        2 => LVH,
+        1 => GND);
+
+    Rlm : RESISTOR
+    PORT MAP (
+        2 => GND,
+        1 => m);
+
+    Rlp : RESISTOR
+    PORT MAP (
+        2 => Vdd1,
+        1 => p);
+
+    Rt : RESISTOR
+    PORT MAP (
+        2 => m,
+        1 => p);
+
+    V1 : vpulse
+    PORT MAP (
+        1 => i,
+        2 => GND);
+
+    Vdd : VOLTAGE_SOURCE
+    PORT MAP (
+        1 => Vdd1,
+        2 => GND);
 
     X1 : LVD
     PORT MAP (
