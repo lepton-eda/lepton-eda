@@ -26,23 +26,13 @@ wire GND ;
 /* continuous assignments */
 
 /* Package instantiations */
+\cascade-amp  AMP1 ( 
+    .\1  ( unnamed_net1 ),
+    .\2  ( unnamed_net2 )
+    );
+
 \cascade-amp  AMP2 ( 
     .\1  ( unnamed_net6 )
-    );
-
-\cascade-transformer  T1 ( 
-    .\1  ( unnamed_net5 ),
-    .\2  ( unnamed_net6 )
-    );
-
-\cascade-mixer  MX1 ( 
-    .\1  ( unnamed_net4 ),
-    .\2  ( unnamed_net5 )
-    );
-
-\cascade-filter  FL1 ( 
-    .\1  ( unnamed_net3 ),
-    .\2  ( unnamed_net4 )
     );
 
 \cascade-defaults  DEF1 ( 
@@ -50,17 +40,27 @@ wire GND ;
     .\2  ( unnamed_net3 )
     );
 
-\cascade-amp  AMP1 ( 
-    .\1  ( unnamed_net1 ),
-    .\2  ( unnamed_net2 )
+\cascade-defaults-top  DEFAULTS ( 
+    .\1  ( GND )
+    );
+
+\cascade-filter  FL1 ( 
+    .\1  ( unnamed_net3 ),
+    .\2  ( unnamed_net4 )
+    );
+
+\cascade-mixer  MX1 ( 
+    .\1  ( unnamed_net4 ),
+    .\2  ( unnamed_net5 )
     );
 
 \cascade-source  SOURCE ( 
     .\1  ( unnamed_net1 )
     );
 
-\cascade-defaults-top  DEFAULTS ( 
-    .\1  ( GND )
+\cascade-transformer  T1 ( 
+    .\1  ( unnamed_net5 ),
+    .\2  ( unnamed_net6 )
     );
 
 endmodule

@@ -37,29 +37,11 @@ CAPACITOR Cp (
     .\2  ( GND )
     );
 
-RESISTOR Rlp ( 
-    .\2  ( Vdd1 ),
-    .\1  ( p )
-    );
-
-RESISTOR Rlm ( 
-    .\2  ( GND ),
-    .\1  ( m )
-    );
-
-VOLTAGE_SOURCE Vdd ( 
-    .\1  ( Vdd1 ),
-    .\2  ( GND )
-    );
-
-vpulse V1 ( 
-    .\1  ( i ),
-    .\2  ( GND )
-    );
-
-RESISTOR Rt ( 
-    .\2  ( m ),
-    .\1  ( p )
+PMOS_TRANSISTOR M1 ( 
+    .S ( Vdd1 ),
+    .B ( Vdd1 ),
+    .D ( LVH ),
+    .G ( LVH )
     );
 
 RESISTOR Rb ( 
@@ -67,11 +49,29 @@ RESISTOR Rb (
     .\1  ( GND )
     );
 
-PMOS_TRANSISTOR M1 ( 
-    .S ( Vdd1 ),
-    .B ( Vdd1 ),
-    .D ( LVH ),
-    .G ( LVH )
+RESISTOR Rlm ( 
+    .\2  ( GND ),
+    .\1  ( m )
+    );
+
+RESISTOR Rlp ( 
+    .\2  ( Vdd1 ),
+    .\1  ( p )
+    );
+
+RESISTOR Rt ( 
+    .\2  ( m ),
+    .\1  ( p )
+    );
+
+vpulse V1 ( 
+    .\1  ( i ),
+    .\2  ( GND )
+    );
+
+VOLTAGE_SOURCE Vdd ( 
+    .\1  ( Vdd1 ),
+    .\2  ( GND )
     );
 
 LVD X1 ( 
