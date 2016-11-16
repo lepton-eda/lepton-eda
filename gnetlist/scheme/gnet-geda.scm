@@ -23,8 +23,7 @@
 ;; gEDA's native test netlist format specific functions go here
 ;;
 
-(use-modules (srfi srfi-1)
-             (gnetlist attrib compare))
+(use-modules (srfi srfi-1))
 
 ;;
 ;; Top level header
@@ -134,7 +133,7 @@ END header
     (lambda ()
       (geda:write-top-header)
       (geda:start-components)
-      (geda:components (sort packages refdes<?))
+      (geda:components packages)
       (geda:end-components)
       (geda:start-renamed-nets)
       (geda:renamed-nets (gnetlist:get-renamed-nets "dummy"))

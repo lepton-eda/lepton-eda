@@ -22,8 +22,7 @@
 
 ;; EAGLE netlist format
 
-(use-modules (srfi srfi-1)
-             (gnetlist attrib compare))
+(use-modules (srfi srfi-1))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid eagle net name.
@@ -87,7 +86,7 @@
       (display "   ;\n")
 
       ;; print out the parts
-      (eagle:components (sort packages refdes<?))
+      (eagle:components packages)
 
       ;; print out the net information
       (eagle:write-net (gnetlist:get-all-unique-nets "dummy")))))

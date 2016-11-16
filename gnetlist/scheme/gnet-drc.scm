@@ -29,8 +29,6 @@
 ;; Net rules:  List of predicates of one variable, net name
 ;; Pin Rules:  List of predicates of 2 variables, uref and pin number
 
-(use-modules (gnetlist attrib compare))
-
 (define drc:parseconfig
   (lambda (port)
     (let ((read-from-file (read port)))
@@ -50,10 +48,9 @@
 (define (drc output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((packages (sort packages refdes<?)))
-        (drc:device-rules drc:attriblist packages)
-        (drc:net-rules (gnetlist:get-all-unique-nets "dummy"))
-        (drc:pin-rules packages)))))
+      (drc:device-rules drc:attriblist packages)
+      (drc:net-rules (gnetlist:get-all-unique-nets "dummy"))
+      (drc:pin-rules packages))))
 
 
 (define drc:net-rules

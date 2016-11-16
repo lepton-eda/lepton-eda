@@ -19,11 +19,9 @@
 
 ; Export a design to Osmond PCB
 
-(use-modules (gnetlist attrib compare))
-
 (define (osmond output-filename)
         (set-current-output-port (gnetlist:output-port output-filename))
-        (for-each osmond:part (sort packages refdes<?))
+        (for-each osmond:part packages)
         (for-each osmond:signal all-unique-nets))
 
 

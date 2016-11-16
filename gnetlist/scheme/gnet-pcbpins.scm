@@ -19,8 +19,7 @@
 ;;; MA 02111-1301 USA.
 
 
-(use-modules (ice-9 regex)
-             (gnetlist attrib compare))
+(use-modules (ice-9 regex))
 
 ;; A comma or close parenthesis will cause problems with the pcb
 ;; action script, so if one of the arguments to ChangePinName contains
@@ -100,7 +99,7 @@
   (display "# Pin name action command file\n")
 
   ;; write the components
-  (pcbpins:components (sort packages refdes<?) 1)
+  (pcbpins:components packages 1)
 
   ;; close netlist
   (close-output-port (current-output-port)))

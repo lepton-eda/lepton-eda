@@ -142,7 +142,6 @@ void main_prog(void *closure, int argc, char *argv[])
     gchar *filename;
 
     TOPLEVEL *pr_current;
-    SCM traverse;
 
     /* set default output filename */
     output_filename = g_strdup("output.net");
@@ -289,18 +288,6 @@ void main_prog(void *closure, int argc, char *argv[])
       /* Evaluate second set of Scheme expressions. */
       scm_eval (post_backend_list, scm_current_module ());
     }
-
-    traverse = scm_c_public_lookup ("gnetlist traverse", "traverse");
-
-    (scm_call_0 (scm_variable_ref (traverse)));
-
-    /* Change back to the directory where we started AGAIN.  This is done */
-    /* because the s_traverse functions can change the Current Working Directory. */
-    if (chdir (cwd)) {
-      /* Error occured with chdir */
-#warning FIXME: What do we do?
-    }
-    g_free(cwd);
 
     /* Run post-traverse code. */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist-post.scm"));

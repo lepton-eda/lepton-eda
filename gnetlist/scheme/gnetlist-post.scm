@@ -19,11 +19,31 @@
 ;;; MA 02111-1301 USA.
 
 
+(use-modules (srfi srfi-1)
+             (gnetlist traverse)
+             (gnetlist package)
+             (gnetlist attrib compare))
+
+(define gnetlist:cwd (getcwd))
+(define netlist (traverse))
+;;; Change back to the directory where we started.  This is done
+;;; because (traverse) can change the current working directory.
+(chdir gnetlist:cwd)
+
+(define (get-packages netlist)
+  "Returns a sorted list of unique packages in NETLIST."
+  ;; Uniqueness of packages is guaranteed by the hashtable.
+  (define ht (make-hash-table (length netlist)))
+  (define (get-value key value) value)
+  (for-each (lambda (s) (hashq-set! ht (string->symbol s) s))
+            (filter-map package-refdes netlist))
+  (sort (hash-map->list get-value ht) refdes<?))
+
+
 ;; get all packages for a particular schematic page
 ;; eventually placeholder will be either the hierarchical level or something
 ;; of the sort
-(define packages
-  (gnetlist:get-packages "placeholder"))
+(define packages (get-packages netlist))
 
 ;; return a list of all unique the nets in the design
 (define all-unique-nets

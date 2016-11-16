@@ -44,37 +44,6 @@ SCM g_scm_c_get_uref (OBJECT *object)
 }
 
 
-/* this function will only return a unique list of packages */
-SCM g_get_packages(SCM level)
-{
-    SCM list = SCM_EOL;
-    GHashTable *ht;
-
-    NETLIST *nl_current = NULL;
-
-    SCM_ASSERT(scm_is_string (level), level, SCM_ARG1, "gnetlist:get-packages");
-
-    /* build a hash table */
-    ht = g_hash_table_new (g_str_hash, g_str_equal);
-    for (nl_current = netlist_head; nl_current != NULL;
-         nl_current = nl_current->next) {
-      if (nl_current->component_uref != NULL) {
-        /* add component_uref in the hash table */
-        /* uniqueness of component_uref is guaranteed by the hashtable */
-
-        if (g_hash_table_lookup (ht, nl_current->component_uref) == NULL) {
-          g_hash_table_insert (ht, nl_current->component_uref,
-                                   nl_current->component_uref);
-          list = scm_cons (scm_from_utf8_string (nl_current->component_uref),
-                           list);
-        }
-      }
-    }
-    g_hash_table_destroy (ht);
-
-    return list;
-}
-
 /* this function will only return a non unique list of packages */
 SCM g_get_non_unique_packages(SCM level)
 {

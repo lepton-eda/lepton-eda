@@ -20,7 +20,6 @@
 
 ;; PADS netlist format
 
-(use-modules (gnetlist attrib compare))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid pads net name.
@@ -123,7 +122,7 @@
   (display "\r\n*PART*\r\n")
 
   ;; print out the parts
-  (pads:components (sort packages refdes<?))
+  (pads:components packages)
 
   ;; print out the net information
   (display "\r\n*NET*\r\n")

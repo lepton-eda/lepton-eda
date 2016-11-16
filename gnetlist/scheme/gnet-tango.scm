@@ -23,8 +23,7 @@
 ;; TANGO netlist backend written by Nuno Sucena starts here
 ;;
 
-(use-modules (gnetlist attrib compare)
-             (srfi srfi-1))
+(use-modules (srfi srfi-1))
 
 ;;
 ;; Given a uref, returns the device attribute value (for tango-netlist)
@@ -94,7 +93,7 @@
 (define (tango output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (tango:components (sort packages refdes<?))
+      (tango:components packages)
       (tango:nets))))
 
 ;;
