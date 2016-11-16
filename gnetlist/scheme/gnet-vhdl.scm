@@ -36,12 +36,11 @@
 ;;; busses. (Not complete yet!)
 ;;;
 
-(define vhdl:get-top-port-list
-  (lambda ()
-    ;; construct list
-    (list (vhdl:get-matching-urefs "device" "IPAD"  packages)
-          (vhdl:get-matching-urefs "device" "OPAD"  packages)
-          (vhdl:get-matching-urefs "device" "IOPAD" packages))))
+(define (vhdl:get-top-port-list packages)
+  ;; construct list
+  (list (vhdl:get-matching-urefs "device" "IPAD"  packages)
+        (vhdl:get-matching-urefs "device" "OPAD"  packages)
+        (vhdl:get-matching-urefs "device" "IOPAD" packages)))
 
 ;;; Get matching urefs
 (define vhdl:get-matching-urefs
@@ -289,33 +288,23 @@
 ;;;    as well as replicating the identifier as component simple name just to
 ;;;    be in line with good VHDL-93 practice and keep compilers happy.
 
-(define vhdl:write-component-declarations
-  (lambda (device-list)
-    (begin
-      (for-each
-        (lambda (device)
-          (begin
-            ; Hmm... I just grabbed this if stuff... do I need it?
-            (if (not (memv (string->symbol device) ; ignore specials
-                           (map string->symbol (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
-                (begin
-                     (display "    COMPONENT ")
-                     (display device)
-                     (newline)
-                     (vhdl:write-port-clause (vhdl:get-device-port-list
-                                                (find-device packages device)))
-                     (display "    END COMPONENT ")
-                     (display ";")
-                     (newline)
-                     (newline)
-                )
-            )
-          )
-        ) device-list
-      )
-    )
-  )
-)
+(define (vhdl:write-component-declarations device-list packages)
+  (for-each
+   (lambda (device)
+     ;; Hmm... I just grabbed this if stuff... do I need it?
+     (if (not (memv (string->symbol device) ; ignore specials
+                    (map string->symbol (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
+         (begin
+           (display "    COMPONENT ")
+           (display device)
+           (newline)
+           (vhdl:write-port-clause (vhdl:get-device-port-list
+                                    (find-device packages device)))
+           (display "    END COMPONENT ")
+           (display ";")
+           (newline)
+           (newline))))
+   device-list))
 
 ;;; THHE
 ;;; Build the port list from the symbols
@@ -371,10 +360,8 @@
 ;;; build a list of  all unique devices in the schematic
 ;;;
 
-(define unique-devices
-  (lambda nil
-    (vhdl:get-unique-devices (map get-device packages))
-))
+(define (unique-devices packages)
+  (vhdl:get-unique-devices (map get-device packages)))
 
 
 ;;; Signal Declaration
@@ -463,12 +450,12 @@
 ;;;    The component declaration will be used to convey the declarations of
 ;;;    any external entity being used within the architecture.
 
-(define (vhdl:write-architecture-declarative-part)
+(define (vhdl:write-architecture-declarative-part packages)
   (begin
     ; Due to my taste will the component declarations go first
     ; XXX - Broken until someday
     ; THHE fixed today ;-)
-    (vhdl:write-component-declarations (unique-devices))
+    (vhdl:write-component-declarations (unique-devices packages) packages)
     ; Then comes the signal declatations
     (vhdl:write-signal-declarations)
   )
@@ -758,24 +745,21 @@
 ;;;    will use good VHDL-93 custom to add the architecture keyword as well
 ;;;    as the architecture simple name to the trailer to keep compilers happy.
 
-(define vhdl:write-secondary-unit
-  (lambda (module-name)
-    (display "-- Secondary unit")
-    (newline)
-    (display "ARCHITECTURE netlist OF ")
-    (display module-name)
-    (display " IS")
-    (newline)
-    ; architecture_declarative_part
-    (vhdl:write-architecture-declarative-part)
-    (display "BEGIN")
-    (newline)
-    ; architecture_statement_part
-    (vhdl:write-architecture-statement-part packages)
-    (display "END netlist;")
-    (newline)
-  )
-)
+(define (vhdl:write-secondary-unit module-name packages)
+  (display "-- Secondary unit")
+  (newline)
+  (display "ARCHITECTURE netlist OF ")
+  (display module-name)
+  (display " IS")
+  (newline)
+                                        ; architecture_declarative_part
+  (vhdl:write-architecture-declarative-part packages)
+  (display "BEGIN")
+  (newline)
+                                        ; architecture_statement_part
+  (vhdl:write-architecture-statement-part packages)
+  (display "END netlist;")
+  (newline))
 
 ;;; Top level function
 ;;; Write structural VHDL representation of the schematic
@@ -783,14 +767,14 @@
 (define (vhdl output-filename)
   (set-current-output-port (gnetlist:output-port output-filename))
   (let ((module-name (gnetlist:get-toplevel-attribute "module-name"))
-        (port-list (vhdl:get-top-port-list)))
+        (port-list (vhdl:get-top-port-list packages)))
     (begin
       (display "-- Structural VHDL generated by gnetlist")
       (newline)
       (vhdl:write-context-clause)
       (vhdl:write-primary-unit module-name port-list)
       (newline)
-      (vhdl:write-secondary-unit module-name)
+      (vhdl:write-secondary-unit module-name packages)
     )
   )
   (close-output-port (current-output-port))
