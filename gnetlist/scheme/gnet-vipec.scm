@@ -18,6 +18,8 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
+(use-modules (gnetlist attrib compare))
+
 (define vipec:analysis-templates
    (list
       (cons
@@ -146,7 +148,8 @@
 (define (vipec output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((netnumbers (number-nets all-unique-nets 1)))
+      (let ((netnumbers (number-nets all-unique-nets 1))
+            (packages (sort packages refdes<?)))
        (vipec:header)
        (display "CKT\n")
        (vipec:component-writing packages netnumbers)

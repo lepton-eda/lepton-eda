@@ -5,13 +5,13 @@ CKT
 	error		% A1
 	CAP	5 0 C=20p		% Cm
 	CAP	4 0 C=20p		% Cp
-	RES	4 1 R=1meg		% Rlp
-	RES	5 0 R=500k		% Rlm
-	error	1 0 	% Vdd
-	error	3 0 	% V1
-	RES	4 5 R=1k		% Rt
-	RES	0 2 R=5.6k		% Rb
 	error	2 2 1 1 	% M1
+	RES	0 2 R=5.6k		% Rb
+	RES	5 0 R=500k		% Rlm
+	RES	4 1 R=1meg		% Rlp
+	RES	4 5 R=1k		% Rt
+	error	3 0 	% V1
+	error	1 0 	% Vdd
 	error	3 0 2 5 4 1 0 	% X1
 	DEF2P	#<unspecified>  #<unspecified>
 	TERM	50 50
