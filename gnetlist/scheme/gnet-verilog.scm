@@ -612,16 +612,15 @@
 ;;; Write Structural verilog representation of the schematic
 ;;;
 (define (verilog output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
-  (begin
-    (verilog:get-nets-once!)
-    (verilog:write-top-header packages)
-    (verilog:write-wires)
-    (verilog:write-continuous-assigns packages)
-    (verilog:components packages)
-    (verilog:write-bottom-footer)
-    )
-  (close-output-port (current-output-port)))
+  (with-output-to-port (gnetlist:output-port output-filename)
+    (lambda ()
+      (verilog:get-nets-once!)
+      (verilog:write-top-header packages)
+      (verilog:write-wires)
+      (verilog:write-continuous-assigns packages)
+      (verilog:components packages)
+      (verilog:write-bottom-footer)
+      )))
 ;;
 ;; Verilog netlist backend written by Mike Jarabek ends here
 ;;
