@@ -595,7 +595,7 @@ ARCHITECTURE ~A OF ~A IS
 				)
 			    (vams:write-generic-map package)
                             (vams:write-port-map package ports)))))
-            (vams:all-necessary-packages ports)))
+            (vams:all-necessary-packages package-list ports)))
 
 
 
@@ -838,8 +838,8 @@ ARCHITECTURE ~A OF ~A IS
 
 ;; sort all port-components out
 
-(define (vams:all-necessary-packages ports)
-  (vams:only-different-nets packages ports))
+(define (vams:all-necessary-packages package-list ports)
+  (vams:only-different-nets package-list ports))
 
 
 

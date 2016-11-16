@@ -7,11 +7,10 @@ ARCHITECTURE default_architecture OF default_entity IS
 BEGIN
 -- Architecture statement part
  
-  V1 : ENTITY VOLTAGE_SOURCE
+  A1 : ENTITY options
 	GENERIC MAP (
-			value => DC 1V)
-	PORT MAP (	1 => unnamed_net1,
-			2 => GND);
+			value => abotol=1e-11)
+;
  
   R1 : ENTITY RESISTOR
 	GENERIC MAP (
@@ -19,8 +18,9 @@ BEGIN
 	PORT MAP (	2 => unnamed_net1,
 			1 => GND);
  
-  A1 : ENTITY options
+  V1 : ENTITY VOLTAGE_SOURCE
 	GENERIC MAP (
-			value => abotol=1e-11)
-;
+			value => DC 1V)
+	PORT MAP (	1 => unnamed_net1,
+			2 => GND);
 END ARCHITECTURE default_architecture;

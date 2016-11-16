@@ -14,18 +14,6 @@ BEGIN
 	PORT MAP (	1 => one,
 			2 => OPEN);
  
-  U300 : ENTITY 7404
-	PORT MAP (	1 => one,
-			2 => unnamed_net1,
-			7 => GND,
-			14 => Vcc);
- 
-  U200 : ENTITY 7404
-	PORT MAP (	1 => one,
-			2 => netattrib,
-			7 => GND,
-			14 => Vcc);
- 
   U100 : ENTITY 7400
 	GENERIC MAP (
 			net => netattrib:5)
@@ -35,4 +23,16 @@ BEGIN
 			14 => Vcc,
 			7 => GND,
 			5 => netattrib);
+ 
+  U200 : ENTITY 7404
+	PORT MAP (	1 => one,
+			2 => netattrib,
+			7 => GND,
+			14 => Vcc);
+ 
+  U300 : ENTITY 7404
+	PORT MAP (	1 => one,
+			2 => unnamed_net1,
+			7 => GND,
+			14 => Vcc);
 END ARCHITECTURE default_architecture;
