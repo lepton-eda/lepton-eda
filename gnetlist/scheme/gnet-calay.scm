@@ -21,14 +21,12 @@
 ;;  Calay format (modified from Ales's gnet-PCB.scm by jpd)
 ;;  Netname translation cleaned up at Dan McMahill'suggestion -jpd
 
-(define (calay:display-connections nets)
-  (let ((k ""))
-    (for-each (lambda (in-string)
-                (set! k (string-append k in-string)))
-              (map (lambda (net)
-                     (string-append " " (car net) "(" (car (cdr net)) ")"))
-                   nets))
-    (string-append k ";\n")))
+(define (connections->string connections)
+  (define package car)
+  (define pinnumber cdr)
+  (define (connection->string connection)
+    (format #f "~A(~A)" (package connection) (pinnumber connection)))
+  (string-join (map connection->string connections)))
 
 ;;
 ;; Wrap a string into lines no longer than wrap-length
@@ -61,8 +59,10 @@
         (display "/")
         (display (gnetlist:alias-net netname))
         (display "\t")
-        (display (calay:wrap (calay:display-connections
-          (gnetlist:get-all-connections netname)) 66))
+        (display (calay:wrap
+                  (string-append (connections->string (get-all-connections netname))
+                                  ";\n")
+                  66))
         (calay:write-net (cdr netnames)))))
 
 
