@@ -41,10 +41,12 @@
 (define (PCB:write-net netnames)
   (if (not (null? netnames))
       (let ((netname (car netnames)))
-	(display netname)
-	(display "\t")
-        (display (gnetlist:wrap (PCB:display-connections (get-all-connections netname)) 200 " \\"))
-	(PCB:write-net (cdr netnames)))))
+        (display netname)
+        (display "\t")
+        (display (gnetlist:wrap (PCB:display-connections (get-all-connections netname))
+                                200
+                                " \\"))
+        (PCB:write-net (cdr netnames)))))
 
 
 (define (PCB output-filename)
