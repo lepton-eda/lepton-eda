@@ -45,6 +45,18 @@
         (primitive-exit 1))))
    "attribs"))
 
+
+;;; Checks connections of NETS.
+(define (drc:net-rules nets)
+  (for-each
+   (lambda (net)
+     (case (length (get-all-connections net))
+       ((0) (format #t "Net ~A has no connected pins\n" net))
+       ((1) (format #t "Net ~A has only 1 connected pin\n" net))))
+   nets))
+
+
+
 (define (drc output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
@@ -52,26 +64,6 @@
       (drc:net-rules (gnetlist:get-all-unique-nets "dummy"))
       (drc:pin-rules packages))))
 
-
-(define drc:net-rules
-  (lambda(nets)
-    (cond
-      ((null? nets) #t)
-      ((null? (get-all-connections (car nets)))
-          (begin
-            (display "Net ")
-            (display (car nets))
-            (display " has no connected pins\n")
-            (drc:net-rules (cdr nets))
-            #f))
-      ((null? (cdr (get-all-connections (car nets))))
-          (begin
-            (display "Net ")
-            (display (car nets))
-            (display " has only 1 connected pin\n")
-            (drc:net-rules (cdr nets))
-            #f))
-      (#t (drc:net-rules (cdr nets))))))
 
 (define drc:pin-rules
   (lambda(packages)
