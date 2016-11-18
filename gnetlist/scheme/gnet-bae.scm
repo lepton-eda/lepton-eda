@@ -44,21 +44,19 @@
 ;;
 ;; Display the individual net connections
 ;;
-(define (bae:format-connections nets)
-  (string-join
-   (map
-    (lambda (net) (let ((package (car net))
-                   (connection (cadr net)))
-               (format #f "~A.~A" package connection)))
-    nets)
-   "="))
+(define (connections->string connections)
+  (define package car)
+  (define pinnumber cdr)
+  (define (connection->string connection)
+    (format #f "~A.~A" (package connection) (pinnumber connection)))
+  (string-join (map connection->string connections) "="))
 
 ;;
 ;; Write netname : uref pin, uref pin, ...
 ;;
 (define (bae:write-net netname)
   (format #t "    /'~A'/ ~A;\n" netname
-          (bae:format-connections (gnetlist:get-all-connections netname))))
+          (connections->string (get-all-connections netname))))
 
 ;;
 ;; Write the net part of the gEDA format
