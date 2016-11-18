@@ -115,28 +115,19 @@
                (newline))
             (allegro:components (cdr packages))))))
 
-(define (allegro:display-connections nets)
+(define (connections->string connections)
   (define package car)
   (define pinnumber cdr)
-  (if (not (null? nets))
-      (let ((net (car nets)))
-        (format #t " ~A.~A" (package net) (pinnumber net))
-        (if (null? (cdr nets))
-            (newline)
-            (begin
-              (write-char #\,)
-              (newline)
-              (allegro:display-connections (cdr nets))
-              )))))
+  (define (connection->string connection)
+    (format #f " ~A.~A" (package connection) (pinnumber connection)))
+  (string-join (map connection->string connections) ",\n"))
 
-(define allegro:write-net
-   (lambda (netnames)
-      (if (not (null? netnames))
-         (let ((netname (car netnames)))
-            (display netname)
-            (display ";")
-            (allegro:display-connections (get-all-connections netname))
-            (allegro:write-net (cdr netnames))))))
+(define (nets->allegro-netlist netnames)
+  (define (net->string netname)
+    (format #f "~A;~A\n"
+            netname
+            (connections->string (get-all-connections netname))))
+  (map net->string netnames))
 
 (define (allegro output-filename)
   (let ((packages (sort packages refdes<?)))
@@ -145,7 +136,8 @@
     (display "$PACKAGES\n")
     (allegro:components packages)
     (display "$NETS\n")
-    (allegro:write-net (gnetlist:get-all-unique-nets "dummy"))
+    (for-each display
+              (nets->allegro-netlist (gnetlist:get-all-unique-nets "dummy")))
     (display "$END\n")
     (if (not (gnetlist:stdout? output-filename))
        (close-output-port (current-output-port)))
