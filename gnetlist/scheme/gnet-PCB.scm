@@ -27,17 +27,6 @@
   (apply format #f "~:@{~A-~A ~}\n" nets))
 
 
-; This function is replaced with the above one. Due to non existent
-; verification, this function is left commented out.
-; /spe, 2002-01-08
-;(define (PCB:display-connections nets)
-;  (if (not (null? nets))
-;      (string-append
-;       (car (car nets)) "-" (car (cdr (car nets))) " "
-;       (PCB:display-connections (cdr nets)))
-;      "\n"))
-
-
 (define (PCB:write-net netnames)
   (if (not (null? netnames))
       (let ((netname (car netnames)))
