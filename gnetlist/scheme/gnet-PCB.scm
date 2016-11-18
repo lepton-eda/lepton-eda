@@ -43,7 +43,7 @@
       (let ((netname (car netnames)))
 	(display netname)
 	(display "\t")
-	(display (gnetlist:wrap (PCB:display-connections (gnetlist:get-all-connections netname)) 200 " \\"))
+        (display (gnetlist:wrap (PCB:display-connections (get-all-connections netname)) 200 " \\"))
 	(PCB:write-net (cdr netnames)))))
 
 
