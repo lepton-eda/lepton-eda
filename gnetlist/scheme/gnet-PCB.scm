@@ -22,7 +22,7 @@
 
 (define (connection->string connection)
   (define refdes car)
-  (define pin-number cadr)
+  (define pin-number cdr)
   (string-append (refdes connection) "-" (pin-number connection)))
 
 (define (net->string netname)

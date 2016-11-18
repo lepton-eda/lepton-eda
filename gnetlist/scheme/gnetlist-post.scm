@@ -71,14 +71,6 @@
      (last-pair ls)
      ls)))
 
-;;; Temporary function to deal with gnetlist's net->connected_to
-;;; entries.
-(define (split-string-by-char s ch)
-  (let ((space-pos (string-index s ch)))
-    (and space-pos
-         (list (string-take s space-pos)
-               (string-drop s (1+ space-pos))))))
-
 
 (define (get-all-connections netname)
   "Returns all connections in the form of ((refdes pin) ...) for
@@ -90,9 +82,11 @@ NETNAME."
   (define (get-found-pin-connections pin)
     (if (found? (package-pin-name pin))
         (filter-map
-         (lambda (net) (let ((connection (pin-net-connection net)))
-                    (and connection
-                         (split-string-by-char connection #\space))))
+         (lambda (net) (let ((package (pin-net-connection-package net))
+                        (pinnumber (pin-net-connection-pinnumber net)))
+                    (and package
+                         pinnumber
+                         (cons package pinnumber))))
          (package-pin-nets pin))
         '()))
 
@@ -105,7 +99,7 @@ NETNAME."
   (define (pair-string<? a b)
     (or (refdes<? (car a) (car b))
         (and (string=? (car a) (car b))
-             (refdes<? (cadr a) (cadr b)))))
+             (refdes<? (cdr a) (cdr b)))))
 
   (sort-remove-duplicates (get-netlist-connections netlist)
                           pair-string<?))
