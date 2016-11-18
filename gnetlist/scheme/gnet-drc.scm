@@ -57,14 +57,14 @@
   (lambda(nets)
     (cond
       ((null? nets) #t)
-      ((null? (gnetlist:get-all-connections (car nets)))
+      ((null? (get-all-connections (car nets)))
           (begin
             (display "Net ")
             (display (car nets))
             (display " has no connected pins\n")
             (drc:net-rules (cdr nets))
             #f))
-      ((null? (cdr (gnetlist:get-all-connections (car nets))))
+      ((null? (cdr (get-all-connections (car nets))))
           (begin
             (display "Net ")
             (display (car nets))
