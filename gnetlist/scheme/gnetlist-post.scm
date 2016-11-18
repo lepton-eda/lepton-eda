@@ -22,6 +22,8 @@
 (use-modules (srfi srfi-1)
              (gnetlist traverse)
              (gnetlist package)
+             (gnetlist package-pin)
+             (gnetlist pin-net)
              (gnetlist attrib compare))
 
 (define gnetlist:cwd (getcwd))
@@ -59,6 +61,54 @@
 (define all-pins
    (map gnetlist:get-pins packages))
 
+(define (sort-remove-duplicates ls sort-func)
+  (let ((ls (sort ls sort-func)))
+    (fold-right
+     (lambda (elem ret)
+       (if (equal? elem (first ret))
+           ret
+           (cons elem ret)))
+     (last-pair ls)
+     ls)))
+
+;;; Temporary function to deal with gnetlist's net->connected_to
+;;; entries.
+(define (split-string-by-char s ch)
+  (let ((space-pos (string-index s ch)))
+    (and space-pos
+         (list (string-take s space-pos)
+               (string-drop s (1+ space-pos))))))
+
+
+(define (get-all-connections netname)
+  "Returns all connections in the form of ((refdes pin) ...) for
+NETNAME."
+  (define (found? x)
+    (and x
+         (string=? x netname)))
+
+  (define (get-found-pin-connections pin)
+    (if (found? (package-pin-name pin))
+        (filter-map
+         (lambda (net) (let ((connection (pin-net-connection net)))
+                    (and connection
+                         (split-string-by-char connection #\space))))
+         (package-pin-nets pin))
+        '()))
+
+  (define (get-netlist-connections netlist)
+    (append-map
+     (lambda (package)
+       (append-map get-found-pin-connections (package-pins package)))
+     netlist))
+
+  (define (pair-string<? a b)
+    (or (refdes<? (car a) (car b))
+        (and (string=? (car a) (car b))
+             (refdes<? (cadr a) (cadr b)))))
+
+  (sort-remove-duplicates (get-netlist-connections netlist)
+                          pair-string<?))
 
 ;;
 ;; Functions for dealing with naming requirements for different
