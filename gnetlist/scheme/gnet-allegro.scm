@@ -131,14 +131,13 @@
 
 (define (allegro output-filename)
   (let ((packages (sort packages refdes<?)))
-    (set-current-output-port (gnetlist:output-port output-filename))
-    (display "(Allegro netlister by M. Ettus)\n")
-    (display "$PACKAGES\n")
-    (allegro:components packages)
-    (display "$NETS\n")
-    (for-each display
-              (nets->allegro-netlist (gnetlist:get-all-unique-nets "dummy")))
-    (display "$END\n")
-    (if (not (gnetlist:stdout? output-filename))
-       (close-output-port (current-output-port)))
+    (with-output-to-port (gnetlist:output-port output-filename)
+      (lambda ()
+        (display "(Allegro netlister by M. Ettus)\n")
+        (display "$PACKAGES\n")
+        (allegro:components packages)
+        (display "$NETS\n")
+        (for-each display
+                  (nets->allegro-netlist (gnetlist:get-all-unique-nets "dummy")))
+        (display "$END\n")))
     (allegro:write-device-files packages '() (gnetlist:stdout? output-filename))))
