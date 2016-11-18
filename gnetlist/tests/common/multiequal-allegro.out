@@ -4,8 +4,8 @@ $PACKAGES
 ! RESISTOR! 20; R1
 none! VOLTAGE_SOURCE! DC 1V; V1
 $NETS
-GND; V1.2,
- R1.1
-unnamed_net1; V1.1,
- R1.2
+GND; R1.1,
+ V1.2
+unnamed_net1; R1.2,
+ V1.1
 $END

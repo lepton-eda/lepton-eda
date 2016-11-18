@@ -115,21 +115,19 @@
                (newline))
             (allegro:components (cdr packages))))))
 
-(define allegro:display-connections
-   (lambda (nets)
-      (if (not (null? nets))
-         (begin
-            (write-char #\space)
-            (display (car (car nets)))
-            (write-char #\.)
-            (display (car (cdr (car nets))))
-            (if (null? (cdr nets))
-               (newline)
-               (begin
-                  (write-char #\,)
-                  (newline)
-                  (allegro:display-connections (cdr nets))
-                ))))))
+(define (allegro:display-connections nets)
+  (define package car)
+  (define pinnumber cdr)
+  (if (not (null? nets))
+      (let ((net (car nets)))
+        (format #t " ~A.~A" (package net) (pinnumber net))
+        (if (null? (cdr nets))
+            (newline)
+            (begin
+              (write-char #\,)
+              (newline)
+              (allegro:display-connections (cdr nets))
+              )))))
 
 (define allegro:write-net
    (lambda (netnames)
@@ -137,7 +135,7 @@
          (let ((netname (car netnames)))
             (display netname)
             (display ";")
-            (allegro:display-connections (gnetlist:get-all-connections netname))
+            (allegro:display-connections (get-all-connections netname))
             (allegro:write-net (cdr netnames))))))
 
 (define (allegro output-filename)
