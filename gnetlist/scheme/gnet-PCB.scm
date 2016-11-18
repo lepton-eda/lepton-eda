@@ -20,25 +20,28 @@
 
 ;;  PCB format
 
-(use-modules (ice-9 format))
+(define (connection->string connection)
+  (define refdes car)
+  (define pin-number cadr)
+  (string-append (refdes connection) "-" (pin-number connection)))
 
+(define (net->string netname)
+  (let ((connections (get-all-connections netname)))
+    (string-append
+     netname
+     "\t"
+     (gnetlist:wrap (string-join (map connection->string connections))
+                    200
+                    " \\")
+     "\n")))
 
-(define (PCB:display-connections nets)
-  (apply format #f "~:@{~A-~A ~}\n" nets))
+(define (nets->PCB-netlist nets)
+  (map net->string nets))
 
-
-(define (PCB:write-net netnames)
-  (if (not (null? netnames))
-      (let ((netname (car netnames)))
-        (display netname)
-        (display "\t")
-        (display (gnetlist:wrap (PCB:display-connections (get-all-connections netname))
-                                200
-                                " \\"))
-        (PCB:write-net (cdr netnames)))))
-
+(define (PCB:display-netlist)
+  (for-each display
+            (nets->PCB-netlist (gnetlist:get-all-unique-nets "dummy"))))
 
 (define (PCB output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
-  (PCB:write-net (gnetlist:get-all-unique-nets "dummy"))
-  (close-output-port (current-output-port)))
+  (with-output-to-port (gnetlist:output-port output-filename)
+    PCB:display-netlist))
