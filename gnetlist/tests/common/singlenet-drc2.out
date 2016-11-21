@@ -11,9 +11,9 @@ ERROR: Net 'Vcc' is connected to only one pin: U100:14.
 Checking pins without the 'pintype' attribute...
 
 Checking type of pins connected to a net...
-ERROR: Pin(s) with pintype 'output': U100:8 U100:6
+ERROR: Pin(s) with pintype 'output': U100:6 U100:8
 	are connected by net 'SING_N'
-	to pin(s) with pintype 'output': U100:8 U100:6
+	to pin(s) with pintype 'output': U100:6 U100:8
 
 Checking unconnected pins...
 ERROR: Unconnected pin U100:2

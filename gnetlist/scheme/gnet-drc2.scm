@@ -457,7 +457,7 @@
                        netname
                        "device=DRC_Directive"
                        "value"))
-          (connections (gnetlist:get-all-connections netname)))
+          (connections (get-all-connections netname)))
        ;; Only check nets with a NoConnection directive
        (and
         (member "NoConnection" directives)
@@ -478,7 +478,7 @@
                        netname
                        "device=DRC_Directive"
                        "value"))
-          (connections (gnetlist:get-all-connections netname)))
+          (connections (get-all-connections netname)))
       ;; If one of the directives is NoConnection,
       ;; then it shouldn't be checked.
       (when (not (member "NoConnection" directives))
@@ -497,10 +497,12 @@
 ;;; Example of CONNECTIONS: ((U100 1) (U101 1))
 ;;; Example of output list: ("in" "out" "in")
 (define (connections-pintypes connections)
+  (define package car)
+  (define pinnumber cdr)
   (map
    (lambda (connection)
-     (let ((pack (first connection))
-           (pin (second connection)))
+     (let ((pack (package connection))
+           (pin (pinnumber connection)))
        (gnetlist:get-attribute-by-pinnumber pack pin "pintype")))
    connections))
 
@@ -534,14 +536,16 @@
 ;;       the string "all" to display all the pins.
 ;; connections: ((U100 1) (U101 1)), for example.
 (define (pins-of-type->string type connections)
+  (define package car)
+  (define pinnumber cdr)
   (define (wanted-type? pack pin)
     (or (and (string? type) (string-ci=? type "all"))
         (string-ci=? (list-ref pintype-names type)
                      (gnetlist:get-attribute-by-pinnumber pack pin "pintype"))))
 
   (define (package-pinnumber-of-type conn)
-    (let ((pack (first conn))
-          (pin (second conn)))
+    (let ((pack (package conn))
+          (pin (pinnumber conn)))
       (and (wanted-type? pack pin)
            (format #f "~A:~A" pack pin))))
 
@@ -646,7 +650,7 @@
 ;; all-nets: (net1 net2 net3), for example
 (define (drc2:check-pintypes-of-nets nets)
   (define (check-net-pintype netname)
-    (let* ((connections (gnetlist:get-all-connections netname))
+    (let* ((connections (get-all-connections netname))
            (pintypes (connections-pintypes connections))
            (pintype-count (drc2:count-pintypes-of-net pintypes))
            (directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
@@ -703,7 +707,7 @@
   (define (count-unknown-pintypes nets)
     (fold
      (lambda (netname count)
-       (let* ((connections (gnetlist:get-all-connections netname))
+       (let* ((connections (get-all-connections netname))
               (pintypes (connections-pintypes connections))
               (pintype-count (drc2:count-pintypes-of-net pintypes)))
          (+ count
@@ -717,7 +721,7 @@
        (lambda (netname)
          (let ((pins (pins-of-type->string
                       (drc2:position-of-pintype "unknown")
-                      (gnetlist:get-all-connections netname))))
+                      (get-all-connections netname))))
            (and (not (string-null? pins))
                 pins)))
        nets))))
