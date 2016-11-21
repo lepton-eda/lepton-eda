@@ -52,14 +52,15 @@
           (display " :")
           (display pinname)
           (write-char #\space)
-          (display (gossip:find-net uref pin allnets))
+          (display (or (gossip:find-net uref pin allnets)
+                       "Not Connected"))
           (gossip:list-pins allnets uref (+ 1 pin))))))
 
 (define (gossip:find-net uref pin allnets)
-  (cond
-   ((null? allnets) "Not Connected" )
-   ((gossip:finder uref pin (gnetlist:get-all-connections (car allnets)))(car allnets))
-   (#t (gossip:find-net uref pin (cdr allnets)))))
+  (and (not (null? allnets))
+       (if (gossip:finder uref pin (gnetlist:get-all-connections (car allnets)))
+           (car allnets)
+           (gossip:find-net uref pin (cdr allnets)))))
 
 (define (gossip:finder uref pin connections)
   (and (not (null? connections))
