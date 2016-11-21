@@ -464,7 +464,7 @@
         (>  (length connections) 1)
         (drc2:error "Net '~A' has connections, but has the NoConnection DRC directive: ~A."
                     netname
-                    (pins-of-type->string "all" connections)))))
+                    (pins-of-type->string 'all connections)))))
    all-nets)
   (newline))
 
@@ -487,7 +487,7 @@
         (and (= (length connections) 1)
              (drc2:error "Net '~A' is connected to only one pin: ~A."
                          netname
-                         (pins-of-type->string "all" connections))))))
+                         (pins-of-type->string 'all connections))))))
 
   (display "Checking nets with only one connection...\n")
   (for-each check-net nets)
@@ -533,13 +533,13 @@
 ;; Display pins of a specified type connected to a net
 ;;
 ;; type: number of the position of the type in the vector, or
-;;       the string "all" to display all the pins.
+;;       the symbol 'all to display all the pins.
 ;; connections: ((U100 1) (U101 1)), for example.
 (define (pins-of-type->string type connections)
   (define package car)
   (define pinnumber cdr)
   (define (wanted-type? pack pin)
-    (or (and (string? type) (string-ci=? type "all"))
+    (or (eq? type 'all)
         (string-ci=? (list-ref pintype-names type)
                      (gnetlist:get-attribute-by-pinnumber pack pin "pintype"))))
 
