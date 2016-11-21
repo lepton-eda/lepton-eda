@@ -58,15 +58,17 @@
 
 (define (gossip:find-net uref pin allnets)
   (and (not (null? allnets))
-       (if (gossip:finder uref pin (gnetlist:get-all-connections (car allnets)))
+       (if (gossip:finder uref pin (get-all-connections (car allnets)))
            (car allnets)
            (gossip:find-net uref pin (cdr allnets)))))
 
 (define (gossip:finder uref pin connections)
+  (define package car)
+  (define pinnumber cdr)
   (and (not (null? connections))
        (let ((connection (car connections)))
-         (or (and (string=? uref (car connection))
-                  (string=? (number->string pin) (cadr connection)))
+         (or (and (string=? uref (package connection))
+                  (string=? (number->string pin) (pinnumber connection)))
              (gossip:finder uref pin (cdr connections))))))
 
 (define (gossip:display-connections nets)
