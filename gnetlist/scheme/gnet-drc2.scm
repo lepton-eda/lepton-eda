@@ -493,27 +493,16 @@
   (for-each check-net nets)
   (newline))
 
-;;
-;; Return a list with the pintypes of the pins connected to a net.
-;;
-;; Example. net-conn: ((U100 1) (U101 1)). pintypes-list: ("in" "out" "in")
-(define drc2:get-pintypes-of-net-connections
-  (lambda (net-conn pintypes-list)
-    (if (not (null? net-conn))
-        (let* ( (element (car net-conn))
-                (device (car element))
-                (pin (car (cdr (car net-conn))))
-                (pintype (gnetlist:get-attribute-by-pinnumber device pin "pintype"))
-                )
-          (begin
-            (cons pintype
-                  (drc2:get-pintypes-of-net-connections (cdr net-conn)
-                                                          pintypes-list)
-                  )
-            ))
-        (list)
-        )
-))
+;;; Returns a list of pintype attributes for CONNECTIONS.
+;;; Example of CONNECTIONS: ((U100 1) (U101 1))
+;;; Example of output list: ("in" "out" "in")
+(define (connections-pintypes connections)
+  (map
+   (lambda (connection)
+     (let ((pack (first connection))
+           (pin (second connection)))
+       (gnetlist:get-attribute-by-pinnumber pack pin "pintype")))
+   connections))
 
 ;;
 ;;  Count pintypes of a net.
@@ -658,7 +647,7 @@
 (define (drc2:check-pintypes-of-nets nets)
   (define (check-net-pintype netname)
     (let* ((connections (gnetlist:get-all-connections netname))
-           (pintypes (drc2:get-pintypes-of-net-connections connections '()))
+           (pintypes (connections-pintypes connections))
            (pintype-count (drc2:count-pintypes-of-net pintypes))
            (directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
                         netname
@@ -715,7 +704,7 @@
     (fold
      (lambda (netname count)
        (let* ((connections (gnetlist:get-all-connections netname))
-              (pintypes (drc2:get-pintypes-of-net-connections connections '()))
+              (pintypes (connections-pintypes connections))
               (pintype-count (drc2:count-pintypes-of-net pintypes)))
          (+ count
             (list-ref pintype-count (drc2:position-of-pintype "unknown")))))
