@@ -58,11 +58,15 @@
                 (format #t "VALUE '~A' '~A';\n" package device)))))
    packages))
 
-(define (eagle:display-connections nets)
+(define (eagle:display-connections connections)
+  (define package car)
+  (define pinnumber cdr)
   (string-join
-   (map (lambda (net)
-          (format #f "   '~A' '~A'" (first net) (second net)))
-        nets)
+   (map (lambda (connection)
+          (format #f "   '~A' '~A'"
+                  (package connection)
+                  (pinnumber connection)))
+        connections)
    "\r\n"
    'suffix))
 
@@ -71,7 +75,7 @@
   (define (write-netname netname)
     (format #t "SIGNAL '~A'\n~A;\n"
             (gnetlist:alias-net netname)
-            (eagle:display-connections (gnetlist:get-all-connections netname))))
+            (eagle:display-connections (get-all-connections netname))))
 
   (for-each write-netname netnames))
 

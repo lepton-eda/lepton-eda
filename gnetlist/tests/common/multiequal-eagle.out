@@ -6,10 +6,10 @@ VALUE 'R1' '20';
 ADD 'V1' none@smd-ipc (1 1);
 VALUE 'V1' 'DC 1V';
 SIGNAL 'GND'
-   'V1' '2'
    'R1' '1'
+   'V1' '2'
 ;
 SIGNAL 'UNNAMED_NET1'
-   'V1' '1'
    'R1' '2'
+   'V1' '1'
 ;

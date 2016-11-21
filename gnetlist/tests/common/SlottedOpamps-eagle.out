@@ -20,10 +20,10 @@ SIGNAL 'PLUSIN_SLOT2_PIN5_A'
    'U1' '5'
 ;
 SIGNAL 'SAMENET_OUTPUT_C'
-   'U1' '14'
-   'U1' '8'
-   'U1' '7'
    'U1' '1'
+   'U1' '7'
+   'U1' '8'
+   'U1' '14'
 ;
 SIGNAL 'MINUSIN_SLOT1_PIN_B'
    'U1' '2'

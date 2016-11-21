@@ -22,26 +22,26 @@ VALUE 'Vdd' 'DC 3.3V';
 ADD 'X1' unknown@smd-ipc (1 1);
 VALUE 'X1' 'LVD';
 SIGNAL 'VDD1'
-   'Rlp' '2'
    'M1' 'B'
    'M1' 'S'
+   'Rlp' '2'
    'Vdd' '1'
    'X1' '6'
 ;
 SIGNAL 'GND'
    'Cm' '2'
    'Cp' '2'
-   'Rlm' '2'
-   'Vdd' '2'
-   'V1' '2'
    'Rb' '1'
-   'X1' '7'
+   'Rlm' '2'
+   'V1' '2'
+   'Vdd' '2'
    'X1' '2'
+   'X1' '7'
 ;
 SIGNAL 'LVH'
-   'Rb' '2'
    'M1' 'D'
    'M1' 'G'
+   'Rb' '2'
    'X1' '3'
 ;
 SIGNAL 'I'
@@ -50,8 +50,8 @@ SIGNAL 'I'
 ;
 SIGNAL 'P'
    'Cp' '1'
-   'Rt' '1'
    'Rlp' '1'
+   'Rt' '1'
    'X1' '5'
 ;
 SIGNAL 'M'
