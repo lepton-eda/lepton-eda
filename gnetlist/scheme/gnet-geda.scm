@@ -92,31 +92,25 @@ END header
      (format #t "~A -> ~A\n" (first renamed-pair) (second renamed-pair)))
    ls))
 
-;;
-;; Display the individual net connections
-;;
-(define (geda:display-connections nets)
-  (string-join
-   (map
-    (lambda (net)
-      (format #f "~A ~A" (first net) (second net)))
-    nets) ", "))
+;;; Returns formatted list of CONNECTIONS as a string.
+(define (connections->string connections)
+  (define package car)
+  (define pinnumber cdr)
+  (define (connection->string connection)
+    (format #f "~A ~A" (package connection) (pinnumber connection)))
+  (string-join (map connection->string connections) ", "))
 
-;;
-;; Display all nets
-;;
-(define (geda:display-name-nets nets)
-  (format #f "~A \n" (geda:display-connections nets)))
 
-;;
-;; Write netname : uref pin, uref pin, ...
-;;
+;;; Displays formatted output of NETNAMES and their connections
+;;; where each connection is a package-pin pair. Each output line
+;;; looks like:
+;;;   netname : package pin, package pin, ...
 (define (geda:write-net netnames)
   (for-each
    (lambda (netname)
-     (format #t "~A : ~A"
+     (format #t "~A : ~A\n"
              netname
-             (geda:display-name-nets (gnetlist:get-all-connections netname))))
+             (connections->string (get-all-connections netname))))
    netnames))
 
 ;;
