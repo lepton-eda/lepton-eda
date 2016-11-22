@@ -35,17 +35,12 @@
                ""))
 
 
-(define (mathematica:write-node-currents pins)
-   (let ((pin (car pins)))
-      (format #t "i[\"~A\",\"~A\"]" (car pin) (cadr pin))
-      (if (not (null? (cdr pins )))
-         (begin
-            (display "+")
-            (mathematica:write-node-currents (cdr pins))
-         )
-      )
-   )
-)
+(define (connections->node-currents connections)
+  (define package car)
+  (define pinnumber cadr)
+  (define (connection->node-current-string connection)
+    (format #f "i[\"~A\",\"~A\"]" (package connection) (pinnumber connection)))
+  (string-join (map connection->node-current-string connections) "+"))
 
 
 (define (mathematica:write-currents netnames first)
@@ -55,8 +50,8 @@
             (begin
               (if (not first)
                   (display ",\n"))
-               (mathematica:write-node-currents
-                  (gnetlist:get-all-connections netname))
+               (display (connections->node-currents
+                         (gnetlist:get-all-connections netname)))
                (display "==0")
                (mathematica:write-currents (cdr netnames) #f)
              )
