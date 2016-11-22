@@ -34,6 +34,8 @@
                     (gnetlist:get-all-connections netname))
                ""))
 
+(define (netnames->pin-voltages netnames)
+  (string-join (map netname-connections->pin-voltages netnames) ""))
 
 (define (netname->node-currents netname)
   (define package car)
@@ -102,8 +104,7 @@
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
       (let ((nets (gnetlist:get-all-unique-nets "dummy")))
-        (for-each display
-                  (map netname-connections->pin-voltages nets))
+        (display (netnames->pin-voltages nets))
         (display "nodeEquations={\n")
         (display (netnames->current-string nets))
         (display "};\n")
