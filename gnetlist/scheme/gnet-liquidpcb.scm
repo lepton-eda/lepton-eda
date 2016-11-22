@@ -25,39 +25,26 @@
 ;;
 ;; Write the individual net connections
 ;;
-(define (liquidpcb:write-connections nets)
-  (if (not (null? nets))
-      (begin
-        (display "\t\t\t<netnode component=\"")
-        (display (car (car nets)))
-        (display "\" pin=")
-        (display (car (cdr (car nets))))
-        (display " />")
-        (newline)
-        (liquidpcb:write-connections (cdr nets)))))
+(define (connections->string connections)
+  (define package car)
+  (define pinnumber cadr)
+  (define (connection->string connection)
+    (format #f "\t\t\t<netnode component=\"~A\" pin=~A />\n"
+            (package connection)
+            (pinnumber connection)))
+  (string-join (map connection->string connections) ""))
 
 
 ;;
 ;; Write netname : uref pin, uref pin, ...
 ;;
-(define (liquidpcb:write-net netnames)
-  (if (not (null? netnames))
-      (let ((netname (car netnames)))
-        (begin
-          (display "\t\t<net name=\"")
-          (display netname)
-          (display "\">")
-          (newline)
-          (liquidpcb:write-connections (gnetlist:get-all-connections netname))
-          (display "\t\t</net>")
-          (newline)
-          (liquidpcb:write-net (cdr netnames))))))
+(define (nets->liquidpcb-netlist netnames)
+  (define (net->string netname)
+    (format #f "\t\t<net name=\"~A\">\n~A\t\t</net>\n"
+            netname
+            (connections->string (gnetlist:get-all-connections netname))))
+  (map net->string netnames))
 
-;;
-;; Write the netlist section of the liquidPCB format
-;;
-(define (liquidpcb:write-netlist)
-  (liquidpcb:write-net (gnetlist:get-all-unique-nets "dummy")))
 
 ;;
 ;; Highest level function
@@ -67,7 +54,8 @@
     (lambda ()
       (display "<LiquidPCB>\n")
       (display "\t<netlist name=\"Main netlist\">\n")
-      (liquidpcb:write-netlist)
+      (for-each display
+                (nets->liquidpcb-netlist (gnetlist:get-all-unique-nets "dummy")))
       (display "\t</netlist>\n")
       (display "</LiquidPCB>\n"))))
 
