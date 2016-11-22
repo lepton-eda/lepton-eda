@@ -91,12 +91,12 @@
 
 (define (netnames->connection-currents netnames)
   (define package car)
-  (define pinnumber cadr)
+  (define pinnumber cdr)
   (define (connection->current-string connection)
     (format #f "i[\"~A\",\"~A\"]" (package connection) (pinnumber connection)))
 
   (string-join (map connection->current-string
-                    (append-map gnetlist:get-all-connections netnames))
+                    (append-map get-all-connections netnames))
                ",\n"))
 
 

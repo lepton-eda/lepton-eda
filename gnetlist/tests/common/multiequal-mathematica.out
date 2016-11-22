@@ -10,7 +10,7 @@ resistor[value->20]["R1"],
 voltage_source[value->DC 1V]["V1"]};
 variables={
 v["unnamed_net1"],
-i["V1","2"],
 i["R1","1"],
-i["V1","1"],
-i["R1","2"]};
+i["V1","2"],
+i["R1","2"],
+i["V1","1"]};
