@@ -35,19 +35,23 @@
                ""))
 
 
-(define (connections->node-currents connections)
+(define (netname->node-currents netname)
   (define package car)
   (define pinnumber cadr)
   (define (connection->node-current-string connection)
-    (format #f "i[\"~A\",\"~A\"]" (package connection) (pinnumber connection)))
-  (string-join (map connection->node-current-string connections) "+"))
+    (format #f "i[\"~A\",\"~A\"]"
+            (package connection)
+            (pinnumber connection)))
+  (string-join (map connection->node-current-string
+                    (gnetlist:get-all-connections netname))
+               "+"))
 
 
 (define (netnames->current-string netnames)
   (define (netname->current-string netname)
     (and (not (string=? netname "GND"))
          (format #f "~A==0"
-                 (connections->node-currents (gnetlist:get-all-connections netname)))))
+                 (netname->node-currents netname))))
   (string-join (filter-map netname->current-string netnames) ",\n"))
 
 
