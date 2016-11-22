@@ -21,27 +21,15 @@
 ;; See the Mathematica notebook gEDA.nb (obtainable at www.noqsi.com)
 ;; for usage.
 
-(define (mathematica:quoted thing)
-   (write-char #\")
-   (display thing)
-   (write-char #\")
-)
 
 (define (mathematica:write-pin-voltages netname pins)
-   (if (not (null? pins))
+  (if (not (null? pins))
       (let ((pin (car pins)))
-         (display "v[")
-         (mathematica:quoted (car pin))
-         (display ",")
-         (mathematica:quoted (car (cdr pin)))
-         (display "]=v[")
-         (mathematica:quoted netname)
-         (display "];")
-         (newline)
-         (mathematica:write-pin-voltages netname (cdr pins))
-      )
-   )
-)
+        (format #t "v[\"~A\",\"~A\"]=v[\"~A\"];\n"
+                (car pin)
+                (cadr pin)
+                netname)
+        (mathematica:write-pin-voltages netname (cdr pins)))))
 
 
 (define (mathematica:write-voltages netnames)
@@ -54,11 +42,7 @@
 
 (define (mathematica:write-node-currents pins)
    (let ((pin (car pins)))
-      (display "i[")
-      (mathematica:quoted (car pin))
-      (display ",")
-      (mathematica:quoted (car (cdr pin)))
-      (display "]")
+      (format #t "i[\"~A\",\"~A\"]" (car pin) (cadr pin))
       (if (not (null? (cdr pins )))
          (begin
             (display "+")
@@ -68,20 +52,14 @@
    )
 )
 
-(define (mathematica:,newline)
-   (display ",")
-   (newline)
-)
-
 
 (define (mathematica:write-currents netnames first)
    (if (not (null? netnames))
       (let ((netname (car netnames)))
          (if (not (equal? netname "GND"))
             (begin
-               (if (not first)
-                  (mathematica:,newline)
-                )
+              (if (not first)
+                  (display ",\n"))
                (mathematica:write-node-currents
                   (gnetlist:get-all-connections netname))
                (display "==0")
@@ -94,20 +72,13 @@
 )
 
 (define (mathematica:write-device-value device value refdes)
-   (display (string-downcase device))
-   (display "[value->")
-   (display value)
-   (display "][")
-   (mathematica:quoted refdes)
-   (display "]")
-)
+  (format #t "~A[value->~A][\"~A\"]"
+          (string-downcase device)
+          value
+          refdes))
 
 (define (mathematica:write-device-model model refdes)
-   (display model)
-   (display "[")
-   (mathematica:quoted refdes)
-   (display "]")
- )
+   (format #t "~A[\"~A\"]" model refdes))
 
 
 (define (mathematica:write-model refdes)
@@ -129,8 +100,7 @@
    (if (not (null? refdeses))
       (let ((refdes (car refdeses)))
          (if (not first)
-            (mathematica:,newline)
-         )
+             (display ",\n"))
          (mathematica:write-model refdes)
          (mathematica:write-models (cdr refdeses) #f)
       )
@@ -142,12 +112,9 @@
       (let ((netname (car netnames)))
          (if (not (equal? netname "GND"))
             (begin
-               (if (not first)
-                  (mathematica:,newline)
-                )
-                (display "v[")
-                (mathematica:quoted netname)
-                (display "]")
+              (if (not first)
+                  (display ",\n"))
+                (format #t "v[\"~A\"]" netname)
                 (mathematica:list-voltages (cdr netnames) #f)
              )
             (mathematica:list-voltages (cdr netnames) first)
@@ -160,12 +127,8 @@
 (define (mathematica:list-pin-currents pins)
    (if (not (null? pins))
       (let ((pin (car pins)))
-         (mathematica:,newline)
-         (display "i[")
-         (mathematica:quoted (car pin))
-         (display ",")
-         (mathematica:quoted (car (cdr pin)))
-         (display "]")
+        (display ",\n")
+        (format #t "i[\"~A\",\"~A\"]" (car pin) (cadr pin))
          (mathematica:list-pin-currents (cdr pins))
       )
    )
