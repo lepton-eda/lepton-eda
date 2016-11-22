@@ -50,30 +50,27 @@
                  (connections->node-currents (gnetlist:get-all-connections netname)))))
   (string-join (filter-map netname->current-string netnames) ",\n"))
 
-(define (mathematica:write-device-value device value refdes)
-  (format #t "~A[value->~A][\"~A\"]"
-          (string-downcase device)
-          value
-          refdes))
-
-(define (mathematica:write-device-model model refdes)
-   (format #t "~A[\"~A\"]" model refdes))
 
 
 (define (mathematica:write-model refdes)
-   (let ((device (gnetlist:get-package-attribute refdes "device"))
-         (value (gnetlist:get-package-attribute refdes "value"))
-         (model (gnetlist:get-package-attribute refdes "model")))
-      (if (equal? model "unknown")
-         (if (equal? value "unknown")
-            (mathematica:write-device-value device (string-downcase refdes)
-               refdes)
-            (mathematica:write-device-value device value refdes)
-         )
-         (mathematica:write-device-model model refdes)
-      )
-   )
-)
+  (define (write-device-model model refdes)
+    (format #t "~A[\"~A\"]" model refdes))
+
+  (define (write-device-value device value refdes)
+    (format #t "~A[value->~A][\"~A\"]"
+            (string-downcase device) value refdes))
+
+  (let ((device (gnetlist:get-package-attribute refdes "device"))
+        (value (gnetlist:get-package-attribute refdes "value"))
+        (model (gnetlist:get-package-attribute refdes "model")))
+
+    (if (unknown? model)
+        (write-device-value device
+                            (if (unknown? value)
+                                (string-downcase refdes)
+                                value)
+                            refdes)
+        (write-device-model model refdes))))
 
 (define (mathematica:write-models refdeses first)
    (if (not (null? refdeses))
