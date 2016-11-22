@@ -1,7 +1,7 @@
-v["V1","2"]=v["GND"];
 v["R1","1"]=v["GND"];
-v["V1","1"]=v["unnamed_net1"];
+v["V1","2"]=v["GND"];
 v["R1","2"]=v["unnamed_net1"];
+v["V1","1"]=v["unnamed_net1"];
 nodeEquations={
 i["V1","1"]+i["R1","2"]==0};
 modelEquations={

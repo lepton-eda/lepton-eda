@@ -24,14 +24,14 @@
 
 (define (netname-connections->pin-voltages netname)
   (define package car)
-  (define pinnumber cadr)
+  (define pinnumber cdr)
   (define (connection->voltage-equation connection)
     (format #f "v[\"~A\",\"~A\"]=v[\"~A\"];\n"
             (package connection)
             (pinnumber connection)
             netname))
   (string-join (map connection->voltage-equation
-                    (gnetlist:get-all-connections netname))
+                    (get-all-connections netname))
                ""))
 
 (define (netnames->pin-voltages netnames)
