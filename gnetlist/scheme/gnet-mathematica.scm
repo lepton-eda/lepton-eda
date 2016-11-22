@@ -52,12 +52,12 @@
 
 
 
-(define (mathematica:write-model refdes)
-  (define (write-device-model model refdes)
-    (format #t "~A[\"~A\"]" model refdes))
+(define (model->string refdes)
+  (define (get-device-model-string model refdes)
+    (format #f "~A[\"~A\"]" model refdes))
 
-  (define (write-device-value device value refdes)
-    (format #t "~A[value->~A][\"~A\"]"
+  (define (get-device-value-string device value refdes)
+    (format #f "~A[value->~A][\"~A\"]"
             (string-downcase device) value refdes))
 
   (let ((device (gnetlist:get-package-attribute refdes "device"))
@@ -65,23 +65,15 @@
         (model (gnetlist:get-package-attribute refdes "model")))
 
     (if (unknown? model)
-        (write-device-value device
-                            (if (unknown? value)
-                                (string-downcase refdes)
-                                value)
-                            refdes)
-        (write-device-model model refdes))))
+        (get-device-value-string device
+                                 (if (unknown? value)
+                                     (string-downcase refdes)
+                                     value)
+                                 refdes)
+        (get-device-model-string model refdes))))
 
-(define (mathematica:write-models refdeses first)
-   (if (not (null? refdeses))
-      (let ((refdes (car refdeses)))
-         (if (not first)
-             (display ",\n"))
-         (mathematica:write-model refdes)
-         (mathematica:write-models (cdr refdeses) #f)
-      )
-   )
-)
+(define (models->string refdeses)
+  (string-join (map model->string refdeses) ",\n"))
 
 (define (mathematica:list-voltages netnames first)
    (if (not (null? netnames))
@@ -132,7 +124,7 @@
         (display (netnames->current-string nets))
         (display "};\n")
         (display "modelEquations={\n")
-        (mathematica:write-models packages #t)
+        (display (models->string packages))
         (display "};\n")
         (display "variables={\n")
         (mathematica:list-voltages nets #t)
