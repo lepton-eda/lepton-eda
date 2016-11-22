@@ -3,7 +3,7 @@ v["V1","2"]=v["GND"];
 v["R1","2"]=v["unnamed_net1"];
 v["V1","1"]=v["unnamed_net1"];
 nodeEquations={
-i["V1","1"]+i["R1","2"]==0};
+i["R1","2"]+i["V1","1"]==0};
 modelEquations={
 options[value->abotol=1e-11]["A1"],
 resistor[value->20]["R1"],

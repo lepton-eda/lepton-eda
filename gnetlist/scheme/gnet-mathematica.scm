@@ -39,13 +39,13 @@
 
 (define (netname->node-currents netname)
   (define package car)
-  (define pinnumber cadr)
+  (define pinnumber cdr)
   (define (connection->node-current-string connection)
     (format #f "i[\"~A\",\"~A\"]"
             (package connection)
             (pinnumber connection)))
   (string-join (map connection->node-current-string
-                    (gnetlist:get-all-connections netname))
+                    (get-all-connections netname))
                "+"))
 
 

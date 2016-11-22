@@ -13,10 +13,10 @@ v["SOURCE","1"]=v["unnamed_net1"];
 v["DEFAULTS","1"]=v["GND"];
 nodeEquations={
 i["AMP2","1"]+i["T1","2"]==0,
-i["T1","1"]+i["MX1","2"]==0,
-i["MX1","1"]+i["FL1","2"]==0,
-i["FL1","1"]+i["DEF1","2"]==0,
-i["DEF1","1"]+i["AMP1","2"]==0,
+i["MX1","2"]+i["T1","1"]==0,
+i["FL1","2"]+i["MX1","1"]==0,
+i["DEF1","2"]+i["FL1","1"]==0,
+i["AMP1","2"]+i["DEF1","1"]==0,
 i["AMP1","1"]+i["SOURCE","1"]==0};
 modelEquations={
 cascade-amp[value->amp1]["AMP1"],
