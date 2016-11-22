@@ -43,23 +43,12 @@
   (string-join (map connection->node-current-string connections) "+"))
 
 
-(define (mathematica:write-currents netnames first)
-   (if (not (null? netnames))
-      (let ((netname (car netnames)))
-         (if (not (equal? netname "GND"))
-            (begin
-              (if (not first)
-                  (display ",\n"))
-               (display (connections->node-currents
-                         (gnetlist:get-all-connections netname)))
-               (display "==0")
-               (mathematica:write-currents (cdr netnames) #f)
-             )
-            (mathematica:write-currents (cdr netnames) first)
-         )
-      )
-   )
-)
+(define (netnames->current-string netnames)
+  (define (netname->current-string netname)
+    (and (not (string=? netname "GND"))
+         (format #f "~A==0"
+                 (connections->node-currents (gnetlist:get-all-connections netname)))))
+  (string-join (filter-map netname->current-string netnames) ",\n"))
 
 (define (mathematica:write-device-value device value refdes)
   (format #t "~A[value->~A][\"~A\"]"
@@ -143,7 +132,7 @@
         (for-each display
                   (map netname-connections->pin-voltages nets))
         (display "nodeEquations={\n")
-        (mathematica:write-currents nets #t)
+        (display (netnames->current-string nets))
         (display "};\n")
         (display "modelEquations={\n")
         (mathematica:write-models packages #t)
