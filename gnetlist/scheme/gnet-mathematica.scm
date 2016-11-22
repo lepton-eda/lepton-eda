@@ -75,43 +75,23 @@
 (define (models->string refdeses)
   (string-join (map model->string refdeses) ",\n"))
 
-(define (mathematica:list-voltages netnames first)
-   (if (not (null? netnames))
-      (let ((netname (car netnames)))
-         (if (not (equal? netname "GND"))
-            (begin
-              (if (not first)
-                  (display ",\n"))
-                (format #t "v[\"~A\"]" netname)
-                (mathematica:list-voltages (cdr netnames) #f)
-             )
-            (mathematica:list-voltages (cdr netnames) first)
-         )
-      )
-   )
-)
+(define (netnames->voltage-string netnames)
+  (define (netname->voltage-string netname)
+    (and (not (string=? netname "GND"))
+         (format #f "v[\"~A\"]" netname)))
+
+  (string-join (filter-map netname->voltage-string netnames) ",\n" 'suffix))
 
 
-(define (mathematica:list-pin-currents pins)
-   (if (not (null? pins))
-      (let ((pin (car pins)))
-        (display ",\n")
-        (format #t "i[\"~A\",\"~A\"]" (car pin) (cadr pin))
-         (mathematica:list-pin-currents (cdr pins))
-      )
-   )
-)
+(define (netnames->connection-currents netnames)
+  (define package car)
+  (define pinnumber cadr)
+  (define (connection->current-string connection)
+    (format #f "i[\"~A\",\"~A\"]" (package connection) (pinnumber connection)))
 
-
-(define (mathematica:list-currents netnames)
-   (if (not (null? netnames))
-      (let ((netname (car netnames)))
-         (mathematica:list-pin-currents
-            (gnetlist:get-all-connections netname))
-         (mathematica:list-currents (cdr netnames))
-      )
-   )
-)
+  (string-join (map connection->current-string
+                    (append-map gnetlist:get-all-connections netnames))
+               ",\n"))
 
 
 (define (mathematica output-filename)
@@ -127,6 +107,6 @@
         (display (models->string packages))
         (display "};\n")
         (display "variables={\n")
-        (mathematica:list-voltages nets #t)
-        (mathematica:list-currents nets)
+        (display (netnames->voltage-string nets))
+        (display (netnames->connection-currents nets))
         (display "};\n")))))
