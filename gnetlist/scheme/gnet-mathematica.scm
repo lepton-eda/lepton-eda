@@ -22,22 +22,17 @@
 ;; for usage.
 
 
-(define (mathematica:write-pin-voltages netname pins)
-  (if (not (null? pins))
-      (let ((pin (car pins)))
-        (format #t "v[\"~A\",\"~A\"]=v[\"~A\"];\n"
-                (car pin)
-                (cadr pin)
-                netname)
-        (mathematica:write-pin-voltages netname (cdr pins)))))
-
-
-(define (mathematica:write-voltages netnames)
-  (if (not (null? netnames))
-      (let ((netname (car netnames)))
-         (mathematica:write-pin-voltages netname
-            (gnetlist:get-all-connections netname))
-         (mathematica:write-voltages (cdr netnames)))))
+(define (netname-connections->pin-voltages netname)
+  (define package car)
+  (define pinnumber cadr)
+  (define (netname-connection->voltage-string connection)
+    (format #f "v[\"~A\",\"~A\"]=v[\"~A\"];\n"
+            (package connection)
+            (pinnumber connection)
+            netname))
+  (string-join (map netname-connection->voltage-string
+                    (gnetlist:get-all-connections netname))
+               ""))
 
 
 (define (mathematica:write-node-currents pins)
@@ -150,7 +145,8 @@
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
       (let ((nets (gnetlist:get-all-unique-nets "dummy")))
-        (mathematica:write-voltages nets)
+        (for-each display
+                  (map netname-connections->pin-voltages nets))
         (display "nodeEquations={\n")
         (mathematica:write-currents nets #t)
         (display "};\n")
