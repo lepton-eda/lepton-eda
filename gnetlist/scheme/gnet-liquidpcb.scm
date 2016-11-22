@@ -99,14 +99,13 @@
 ;; Highest level function
 ;;
 (define (liquidpcb output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
-  (begin
-     (liquidpcb:write-top-header)
-     (liquidpcb:start-netlist)
-     (liquidpcb:write-netlist)
-     (liquidpcb:end-netlist))
-     (liquidpcb:write-bottom-footer)
-  (close-output-port (current-output-port)))
+  (with-output-to-port (gnetlist:output-port output-filename)
+    (lambda ()
+      (liquidpcb:write-top-header)
+      (liquidpcb:start-netlist)
+      (liquidpcb:write-netlist)
+      (liquidpcb:end-netlist)
+      (liquidpcb:write-bottom-footer))))
 
 ;;
 ;; liquid PCB netlist backend ends
