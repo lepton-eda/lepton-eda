@@ -27,7 +27,7 @@
 ;;
 (define (connections->string connections)
   (define package car)
-  (define pinnumber cadr)
+  (define pinnumber cdr)
   (define (connection->string connection)
     (format #f "\t\t\t<netnode component=\"~A\" pin=~A />\n"
             (package connection)
@@ -42,7 +42,7 @@
   (define (net->string netname)
     (format #f "\t\t<net name=\"~A\">\n~A\t\t</net>\n"
             netname
-            (connections->string (gnetlist:get-all-connections netname))))
+            (connections->string (get-all-connections netname))))
   (map net->string netnames))
 
 

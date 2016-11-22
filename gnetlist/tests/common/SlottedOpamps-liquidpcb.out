@@ -19,10 +19,10 @@
 			<netnode component="U1" pin=5 />
 		</net>
 		<net name="samenet_output_c">
-			<netnode component="U1" pin=14 />
-			<netnode component="U1" pin=8 />
-			<netnode component="U1" pin=7 />
 			<netnode component="U1" pin=1 />
+			<netnode component="U1" pin=7 />
+			<netnode component="U1" pin=8 />
+			<netnode component="U1" pin=14 />
 		</net>
 		<net name="minusin_slot1_pin_b">
 			<netnode component="U1" pin=2 />
