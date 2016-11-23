@@ -43,7 +43,7 @@
 
 (define (osmond:signal net)
         (format #t "Signal \"~A\"\n  {" net)
-        (for-each osmond:pin (gnetlist:get-all-connections net))
+        (for-each osmond:pin (get-all-connections net))
         (format #t " }\n"))
 
 
@@ -52,7 +52,9 @@
 ; Convert to " refdes-pinnumber"
 
 (define (osmond:pin connection)
-        (format #t
-                " ~A-~A"
-                (car connection)        ; refdes
-                (cadr connection)))     ; pin number
+  (define package car)
+  (define pinnumber cdr)
+  (format #t
+          " ~A-~A"
+          (package connection)
+          (pinnumber connection)))
