@@ -126,26 +126,25 @@
 ;;
 ;; Top level component writing
 ;;
-(define protelII:components
-   (lambda (ls)
-      (if (not (null? ls))
-         (let ((package (car ls)))
-            (begin
-               (display "[\r\n")
-               (display "DESIGNATOR\r\n")
-               (display package)
-               (display "\r\nFOOTPRINT\r\n")
-               (display (gnetlist:get-package-attribute package  "footprint"))
-               (display "\r\nPARTTYPE\r\n")
-               (let ((value (get-value package)))          ;; This change by SDB on 10.12.2003.
-                     (if (string-ci=? value "unknown")
-                         (display (get-device package))
-                         (display value)
-                         )
-               )
-               (display "\r\nDESCRIPTION\r\n")
-               (display (get-device package))
-               (display "\r
+(define (protelII:components ls)
+   (if (not (null? ls))
+       (let ((package (car ls)))
+         (begin
+           (display "[\r\n")
+           (display "DESIGNATOR\r\n")
+           (display package)
+           (display "\r\nFOOTPRINT\r\n")
+           (display (gnetlist:get-package-attribute package  "footprint"))
+           (display "\r\nPARTTYPE\r\n")
+           (let ((value (get-value package)))          ;; This change by SDB on 10.12.2003.
+             (if (string-ci=? value "unknown")
+                 (display (get-device package))
+                 (display value)
+                 )
+             )
+           (display "\r\nDESCRIPTION\r\n")
+           (display (get-device package))
+           (display "\r
 Part Field 1\r
 *\r
 Part Field 2\r
@@ -196,27 +195,26 @@ LIBRARYFIELD8\r
 \r
 ]\r
 ")
-               (protelII:components (cdr ls)))))))
+           (protelII:components (cdr ls))))))
 
 ;;
 ;; Display the individual net connections
 ;;
-(define protelII:display-connections
-   (lambda (nets)
-      (if (not (null? nets))
-         (begin
-            (let ((package (car (car nets))))
-               (display package)
-               (write-char #\-)
-               (display (car (cdr (car nets))))
-               (display " ")
-               (display (get-device package))
-               (display "-")
-               (display (car (cdr (car nets))))
-               (display " PASSIVE"))
-            (if (not (null? (cdr nets)))
-                (display "\r\n"))
-            (protelII:display-connections (cdr nets))))))
+(define (protelII:display-connections nets)
+  (if (not (null? nets))
+      (begin
+        (let ((package (car (car nets))))
+          (display package)
+          (write-char #\-)
+          (display (car (cdr (car nets))))
+          (display " ")
+          (display (get-device package))
+          (display "-")
+          (display (car (cdr (car nets))))
+          (display " PASSIVE"))
+        (if (not (null? (cdr nets)))
+            (display "\r\n"))
+        (protelII:display-connections (cdr nets)))))
 
 ;;
 ;; Display all nets
@@ -228,25 +226,22 @@ LIBRARYFIELD8\r
 ;;
 ;; Write netname : uref pin, uref pin, ...
 ;;
-(define protelII:write-net
-   (lambda (netnames)
-      (if (not (null? netnames))
-         (let ((netname (car netnames)))
-            (begin
-               (display "(\r\n")
-               (display netname)
-               (display "\r\n")
-               (protelII:display-name-nets (gnetlist:get-all-connections netname))
-               (display ")\r\n")
-               (protelII:write-net (cdr netnames)))))))
+(define (protelII:write-net netnames)
+   (if (not (null? netnames))
+       (let ((netname (car netnames)))
+         (display "(\r\n")
+         (display netname)
+         (display "\r\n")
+         (protelII:display-name-nets (gnetlist:get-all-connections netname))
+         (display ")\r\n")
+         (protelII:write-net (cdr netnames)))))
 
 ;;
 ;; Write the net part of the gEDA format
 ;;
-(define protelII:nets
-   (lambda ()
-      (let ((all-uniq-nets (gnetlist:get-all-unique-nets "dummy")))
-         (protelII:write-net all-uniq-nets))))
+(define (protelII:nets)
+   (let ((all-uniq-nets (gnetlist:get-all-unique-nets "dummy")))
+     (protelII:write-net all-uniq-nets)))
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
