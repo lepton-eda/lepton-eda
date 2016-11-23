@@ -77,13 +77,11 @@
    netnames))
 
 (define (maxascii output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
+  (with-output-to-port (gnetlist:output-port output-filename)
+    (lambda ()
+      (display "*OrCAD\n*START\n")
 
-  (display "*OrCAD\n*START\n")
+      (maxascii:components packages)
 
-  (maxascii:components packages)
-
-  (maxascii:write-net (gnetlist:get-all-unique-nets "dummy"))
-  (display "\n*END\n")
-
-  (close-output-port (current-output-port)))
+      (maxascii:write-net (gnetlist:get-all-unique-nets "dummy"))
+      (display "\n*END\n"))))
