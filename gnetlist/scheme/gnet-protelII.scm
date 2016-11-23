@@ -126,25 +126,21 @@
 ;;
 ;; Top level component writing
 ;;
-(define (protelII:components ls)
-   (if (not (null? ls))
-       (let ((package (car ls)))
-         (begin
-           (display "[\r\n")
-           (display "DESIGNATOR\r\n")
-           (display package)
-           (display "\r\nFOOTPRINT\r\n")
-           (display (gnetlist:get-package-attribute package  "footprint"))
-           (display "\r\nPARTTYPE\r\n")
-           (let ((value (get-value package)))          ;; This change by SDB on 10.12.2003.
-             (if (string-ci=? value "unknown")
-                 (display (get-device package))
-                 (display value)
-                 )
-             )
-           (display "\r\nDESCRIPTION\r\n")
-           (display (get-device package))
-           (display "\r
+(define (protelII:components packages)
+  (for-each
+   (lambda (package)
+     (let* ((footprint (gnetlist:get-package-attribute package "footprint"))
+            (device (gnetlist:get-package-attribute package "device"))
+            (value (gnetlist:get-package-attribute package "value")))
+       (format #t "[\r
+DESIGNATOR\r
+~A\r
+FOOTPRINT\r
+~A\r
+PARTTYPE\r
+~A\r
+DESCRIPTION\r
+~A\r
 Part Field 1\r
 *\r
 Part Field 2\r
@@ -194,8 +190,12 @@ LIBRARYFIELD7\r
 LIBRARYFIELD8\r
 \r
 ]\r
-")
-           (protelII:components (cdr ls))))))
+"
+               package
+               footprint
+               (if (unknown? value) device value)
+               device)))
+   packages))
 
 ;;
 ;; Display the individual net connections
