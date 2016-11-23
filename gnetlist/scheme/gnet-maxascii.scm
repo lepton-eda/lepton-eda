@@ -38,11 +38,12 @@
                (newline))
             (maxascii:components (cdr packages))))))
 
-(define (maxascii:display-connections nets)
-  (if (not (null? nets))
-      (string-append " " (car (car nets)) ".\"" (car (cdr (car nets))) "\""
-       (maxascii:display-connections (cdr nets)))
-      "\n"))
+(define (connections->string connections)
+  (define package car)
+  (define pinnumber cadr)
+  (define (connection->string connection)
+    (format #f "~A.\"~A\"" (package connection) (cadr connection)))
+  (string-join (map connection->string connections) " "))
 
 
 ;;
@@ -75,12 +76,14 @@
             (display "*NET ")
             (display "\"")
             (display netname)
-            (display "\"")
+            (display "\" ")
             (display (maxascii:wrap
-                      (maxascii:display-connections
+                      (connections->string
                        (gnetlist:get-all-connections netname))
                       490 netname)
-                    )
+                     )
+            (newline)
+
 ;;            (display (maxascii:display-connections
 ;;                     (gnetlist:get-all-connections netname))
 ;;                  )
