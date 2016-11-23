@@ -227,14 +227,12 @@ LIBRARYFIELD8\r
 ;; Write netname : uref pin, uref pin, ...
 ;;
 (define (protelII:write-net netnames)
-   (if (not (null? netnames))
-       (let ((netname (car netnames)))
-         (display "(\r\n")
-         (display netname)
-         (display "\r\n")
-         (protelII:display-name-nets (gnetlist:get-all-connections netname))
-         (display ")\r\n")
-         (protelII:write-net (cdr netnames)))))
+  (for-each
+   (lambda (netname)
+     (format #t "(\r\n~A\r\n" netname)
+     (protelII:display-name-nets (gnetlist:get-all-connections netname))
+     (display ")\r\n"))
+   netnames))
 
 ;;
 ;; Write the net part of the gEDA format
