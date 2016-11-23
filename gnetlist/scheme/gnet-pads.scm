@@ -75,7 +75,7 @@
 
 (define (connections->string connections)
   (define package car)
-  (define pinnumber cadr)
+  (define pinnumber cdr)
   (define (connection->string connection)
     (format #f
             "~A.~A"
@@ -91,7 +91,7 @@
         (display (gnetlist:wrap
                   (string-append
                    (connections->string
-                    (gnetlist:get-all-connections netname))
+                    (get-all-connections netname))
                    "\r\n")
                   78
                   ""))
