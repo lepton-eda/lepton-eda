@@ -73,41 +73,29 @@
                (display "\r\n"))
             (pads:components (cdr packages))))))
 
-(define (pads:display-connections nets)
-  (let ((k ""))
-    (for-each (lambda (in-string)
-                (set! k (string-append k in-string)))
-              (map (lambda (net)
-                     (string-append " " (gnetlist:alias-refdes (car net)) "." (car (cdr net))))
-                   nets))
-    (string-append k "\r\n")))
+(define (connections->string connections)
+  (define package car)
+  (define pinnumber cadr)
+  (define (connection->string connection)
+    (format #f
+            "~A.~A"
+            (gnetlist:alias-refdes (package connection))
+            (pinnumber connection)))
+  (string-join (map connection->string connections) " " 'prefix))
 
 
-; This function is replaced with the above one. Due to non existent
-; verification, this function is left commented out.
-; /spe, 2002-01-08
-;(define (pads:display-connections nets)
-;  (if (not (null? nets))
-;      (string-append " " (car (car nets)) "." (car (cdr (car nets)))
-;       (pads:display-connections (cdr nets)))
-;      "\r\n"))
-
-
-
-(define pads:write-net
-   (lambda (netnames)
-      (if (not (null? netnames))
-         (let ((netname (car netnames)))
-            (display "*SIGNAL* ")
-            (display (gnetlist:alias-net netname))
-            (display "\r\n")
-            (display (gnetlist:wrap
-                      (pads:display-connections
-                       (gnetlist:get-all-connections netname))
-                      78
-                      "")
-                    )
-            (pads:write-net (cdr netnames))))))
+(define (pads:write-net netnames)
+  (if (not (null? netnames))
+      (let ((netname (car netnames)))
+        (format #t "*SIGNAL* ~A\r\n" (gnetlist:alias-net netname))
+        (display (gnetlist:wrap
+                  (string-append
+                   (connections->string
+                    (gnetlist:get-all-connections netname))
+                   "\r\n")
+                  78
+                  ""))
+        (pads:write-net (cdr netnames)))))
 
 (define (pads output-filename)
   (set-current-output-port (gnetlist:output-port output-filename))
