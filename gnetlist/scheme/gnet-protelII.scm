@@ -117,18 +117,11 @@
 ;; }
 ;;
 
-;; We redefine the newline function, because this file format requires
-;; Windows-style "\r\n" line endings rather than Unix-style "\n"
-;; endings.
-(define* (newline #:optional)
-  (display "\r\n" (or (current-output-port))))
-
 ;;
 ;; Top level header
 ;;
 (define (protelII:write-top-header)
-  (display "PROTEL NETLIST 2.0")
-  (newline))
+  (display "PROTEL NETLIST 2.0\r\n"))
 
 ;;
 ;; Top level component writing
@@ -138,127 +131,71 @@
       (if (not (null? ls))
          (let ((package (car ls)))
             (begin
-               (display "[")
-               (newline)
-               (display "DESIGNATOR")
-               (newline)
+               (display "[\r\n")
+               (display "DESIGNATOR\r\n")
                (display package)
-               (newline)
-               (display "FOOTPRINT")
-               (newline)
+               (display "\r\nFOOTPRINT\r\n")
                (display (gnetlist:get-package-attribute package  "footprint"))
-               (newline)
-               (display "PARTTYPE")
-               (newline)
+               (display "\r\nPARTTYPE\r\n")
                (let ((value (get-value package)))          ;; This change by SDB on 10.12.2003.
                      (if (string-ci=? value "unknown")
                          (display (get-device package))
                          (display value)
                          )
                )
-               (newline)
-               (display "DESCRIPTION")
-               (newline)
+               (display "\r\nDESCRIPTION\r\n")
                (display (get-device package))
-               (newline)
-               (display "Part Field 1")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 2")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 3")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 4")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 5")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 6")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 7")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 8")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 9")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 10")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 11")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 12")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 13")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 14")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 15")
-               (newline)
-               (display "*")
-               (newline)
-               (display "Part Field 16")
-               (newline)
-               (display "*")
-               (newline)
-               (display "LIBRARYFIELD1")
-               (newline)
-               (display "")
-               (newline)
-               (display "LIBRARYFIELD2")
-               (newline)
-               (display "")
-               (newline)
-               (display "LIBRARYFIELD3")
-               (newline)
-               (display "")
-               (newline)
-               (display "LIBRARYFIELD4")
-               (newline)
-               (display "")
-               (newline)
-               (display "LIBRARYFIELD5")
-               (newline)
-               (display "")
-               (newline)
-               (display "LIBRARYFIELD6")
-               (newline)
-               (display "")
-               (newline)
-               (display "LIBRARYFIELD7")
-               (newline)
-               (display "")
-               (newline)
-               (display "LIBRARYFIELD8")
-               (newline)
-               (display "")
-               (newline)
-               (display "]")
-               (newline)
+               (display "\r
+Part Field 1\r
+*\r
+Part Field 2\r
+*\r
+Part Field 3\r
+*\r
+Part Field 4\r
+*\r
+Part Field 5\r
+*\r
+Part Field 6\r
+*\r
+Part Field 7\r
+*\r
+Part Field 8\r
+*\r
+Part Field 9\r
+*\r
+Part Field 10\r
+*\r
+Part Field 11\r
+*\r
+Part Field 12\r
+*\r
+Part Field 13\r
+*\r
+Part Field 14\r
+*\r
+Part Field 15\r
+*\r
+Part Field 16\r
+*\r
+LIBRARYFIELD1\r
+\r
+LIBRARYFIELD2\r
+\r
+LIBRARYFIELD3\r
+\r
+LIBRARYFIELD4\r
+\r
+LIBRARYFIELD5\r
+\r
+LIBRARYFIELD6\r
+\r
+LIBRARYFIELD7\r
+\r
+LIBRARYFIELD8\r
+\r
+]\r
+")
                (protelII:components (cdr ls)))))))
 
 ;;
@@ -278,19 +215,15 @@
                (display (car (cdr (car nets))))
                (display " PASSIVE"))
             (if (not (null? (cdr nets)))
-               (begin
-                  (newline)))
+                (display "\r\n"))
             (protelII:display-connections (cdr nets))))))
 
 ;;
 ;; Display all nets
 ;;
-(define protelII:display-name-nets
-   (lambda (nets)
-      (begin
-         (protelII:display-connections nets)
-         (write-char #\space)
-         (newline))))
+(define (protelII:display-name-nets nets)
+   (protelII:display-connections nets)
+   (display " \r\n"))
 
 ;;
 ;; Write netname : uref pin, uref pin, ...
@@ -300,13 +233,11 @@
       (if (not (null? netnames))
          (let ((netname (car netnames)))
             (begin
-               (display "(")
-               (newline)
+               (display "(\r\n")
                (display netname)
-               (newline)
+               (display "\r\n")
                (protelII:display-name-nets (gnetlist:get-all-connections netname))
-               (display ")")
-               (newline)
+               (display ")\r\n")
                (protelII:write-net (cdr netnames)))))))
 
 ;;
