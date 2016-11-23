@@ -7,12 +7,12 @@
 *NET "unnamed_net1"
 *NET "unnamed_net1" U300."2"
 *NET "netattrib"
-*NET "netattrib" U200."2" U100."5"
+*NET "netattrib" U100."5" U200."2"
 *NET "GND"
-*NET "GND" U300."7" U200."7" U100."7"
+*NET "GND" U100."7" U200."7" U300."7"
 *NET "Vcc"
-*NET "Vcc" U300."14" U200."14" U100."14"
+*NET "Vcc" U100."14" U200."14" U300."14"
 *NET "one"
-*NET "one" F1."1" U300."1" U200."1" U100."3"
+*NET "one" F1."1" U100."3" U200."1" U300."1"
 
 *END

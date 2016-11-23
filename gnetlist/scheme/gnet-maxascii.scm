@@ -40,9 +40,9 @@
 
 (define (connections->string connections)
   (define package car)
-  (define pinnumber cadr)
+  (define pinnumber cdr)
   (define (connection->string connection)
-    (format #f "~A.\"~A\"" (package connection) (cadr connection)))
+    (format #f "~A.\"~A\"" (package connection) (pinnumber connection)))
   (string-join (map connection->string connections) " "))
 
 
@@ -72,7 +72,7 @@
              netname
              (maxascii:wrap
               (connections->string
-               (gnetlist:get-all-connections netname))
+               (get-all-connections netname))
               490 netname)))
    netnames))
 
