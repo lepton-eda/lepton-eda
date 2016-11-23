@@ -64,30 +64,17 @@
 
 
 
-(define maxascii:write-net
-   (lambda (netnames)
-      (if (not (null? netnames))
-         (let ((netname (car netnames)))
-            (display "*NET ")
-            (display "\"")
-            (display netname)
-            (display "\"")
-            (newline)
-            (display "*NET ")
-            (display "\"")
-            (display netname)
-            (display "\" ")
-            (display (maxascii:wrap
-                      (connections->string
-                       (gnetlist:get-all-connections netname))
-                      490 netname)
-                     )
-            (newline)
-
-;;            (display (maxascii:display-connections
-;;                     (gnetlist:get-all-connections netname))
-;;                  )
-            (maxascii:write-net (cdr netnames))))))
+(define (maxascii:write-net netnames)
+  (for-each
+   (lambda (netname)
+     (format #t "*NET \"~A\"\n" netname)
+     (format #t "*NET \"~A\" ~A\n"
+             netname
+             (maxascii:wrap
+              (connections->string
+               (gnetlist:get-all-connections netname))
+              490 netname)))
+   netnames))
 
 (define (maxascii output-filename)
   (set-current-output-port (gnetlist:output-port output-filename))
