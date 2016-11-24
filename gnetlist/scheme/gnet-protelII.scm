@@ -200,21 +200,21 @@ LIBRARYFIELD8\r
 ;;
 ;; Display the individual net connections
 ;;
-(define (protelII:display-connections nets)
-  (if (not (null? nets))
-      (begin
-        (let ((package (car (car nets))))
-          (display package)
-          (write-char #\-)
-          (display (car (cdr (car nets))))
-          (display " ")
-          (display (get-device package))
-          (display "-")
-          (display (car (cdr (car nets))))
-          (display " PASSIVE"))
-        (if (not (null? (cdr nets)))
-            (display "\r\n"))
-        (protelII:display-connections (cdr nets)))))
+(define (connections->string connections)
+  (define package car)
+  (define pinnumber cadr)
+  (define (connection->string connection)
+    (let* ((pack (package connection))
+           (pin (pinnumber connection))
+           (device (gnetlist:get-package-attribute pack "device")))
+      (format #f
+              "~A-~A ~A-~A PASSIVE"
+              pack
+              pin
+              device
+              pin)))
+
+  (string-join (map connection->string connections) "\r\n" 'suffix))
 
 ;;
 ;; Display all nets
@@ -229,9 +229,10 @@ LIBRARYFIELD8\r
 (define (protelII:write-net netnames)
   (for-each
    (lambda (netname)
-     (format #t "(\r\n~A\r\n" netname)
-     (protelII:display-name-nets (gnetlist:get-all-connections netname))
-     (display ")\r\n"))
+     (format #t
+             "(\r\n~A\r\n~A)\r\n"
+             netname
+             (connections->string (gnetlist:get-all-connections netname))))
    netnames))
 
 ;;
