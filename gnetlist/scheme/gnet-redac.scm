@@ -35,7 +35,7 @@
                     (display " ")
                     (redac:display-connections (cdr nets) (- k 1)))
                   (begin
-                    (display (string-append "\r\n"  item " "))
+                    (display "\r\n")
                     (redac:display-connections (cdr nets) (+ k 6))))))))))
 
 
