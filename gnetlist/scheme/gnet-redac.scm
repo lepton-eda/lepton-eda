@@ -20,23 +20,32 @@
 
 ;; RACAL-REDAC / Cadstar netlist format by Wojciech Kazubski 2003
 
+(use-modules (srfi srfi-1)
+             (ice-9 receive))
+
+;;; Transforms LS into list of groups where each group is a list
+;;; containig NUM elements.
+(define (group-elements ls num)
+  (receive
+      (head rest)
+      (if (> (length ls) num)
+          (split-at ls num)
+          (values ls '()))
+    (if (null? rest)
+        (list head)
+        (cons head (group-elements rest num)))))
+
 ;;
 ;; Display the individual net connections
 ;;
-(define redac:display-connections
-   (lambda (nets k)
-      (if (not (null? nets))
-         (let ((item (string-append (caar nets) " " (cadar nets))))
-            (display item)
-            (if (not (null? (cdr nets)))
-               (begin
-               (if (> k 0)
-                  (begin
-                    (display " ")
-                    (redac:display-connections (cdr nets) (- k 1)))
-                  (begin
-                    (display "\r\n")
-                    (redac:display-connections (cdr nets) (+ k 6))))))))))
+(define (redac:display-connections groups)
+  (define package car)
+  (define pinnumber cadr)
+  (define (connection->string connection)
+    (format #f "~A ~A" (package connection) (pinnumber connection)))
+  (define (group->string group)
+    (string-join (map connection->string group) " "))
+  (string-join (map group->string groups) "\r\n"))
 
 
 (define redac:write-net
@@ -46,8 +55,8 @@
             (display ".REM ")
             (display netname)
             (display "\r\n")
-            (redac:display-connections
-                       (gnetlist:get-all-connections netname) 7)
+            (display (redac:display-connections
+                      (group-elements (gnetlist:get-all-connections netname) 8)))
             (display "\r\n")
             (redac:write-net (cdr netnames))
             ))))
