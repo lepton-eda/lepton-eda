@@ -202,7 +202,7 @@ LIBRARYFIELD8\r
 ;;
 (define (connections->string connections)
   (define package car)
-  (define pinnumber cadr)
+  (define pinnumber cdr)
   (define (connection->string connection)
     (let* ((pack (package connection))
            (pin (pinnumber connection))
@@ -232,7 +232,7 @@ LIBRARYFIELD8\r
      (format #t
              "(\r\n~A\r\n~A)\r\n"
              netname
-             (connections->string (gnetlist:get-all-connections netname))))
+             (connections->string (get-all-connections netname))))
    netnames))
 
 ;;

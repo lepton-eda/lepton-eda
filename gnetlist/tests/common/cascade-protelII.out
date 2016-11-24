@@ -470,23 +470,23 @@ T1-2 cascade-transformer-2 PASSIVE
 )
 (
 unnamed_net5
-T1-1 cascade-transformer-1 PASSIVE
 MX1-2 cascade-mixer-2 PASSIVE
+T1-1 cascade-transformer-1 PASSIVE
 )
 (
 unnamed_net4
-MX1-1 cascade-mixer-1 PASSIVE
 FL1-2 cascade-filter-2 PASSIVE
+MX1-1 cascade-mixer-1 PASSIVE
 )
 (
 unnamed_net3
-FL1-1 cascade-filter-1 PASSIVE
 DEF1-2 cascade-defaults-2 PASSIVE
+FL1-1 cascade-filter-1 PASSIVE
 )
 (
 unnamed_net2
-DEF1-1 cascade-defaults-1 PASSIVE
 AMP1-2 cascade-amp-2 PASSIVE
+DEF1-1 cascade-defaults-1 PASSIVE
 )
 (
 unnamed_net1
