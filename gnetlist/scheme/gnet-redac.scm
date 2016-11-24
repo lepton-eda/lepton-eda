@@ -40,7 +40,7 @@
 ;;
 (define (redac:display-connections groups)
   (define package car)
-  (define pinnumber cadr)
+  (define pinnumber cdr)
   (define (connection->string connection)
     (format #f "~A ~A" (package connection) (pinnumber connection)))
   (define (group->string group)
@@ -54,7 +54,7 @@
             ".REM ~A\r\n~A\r\n"
             netname
             (redac:display-connections
-             (group-elements (gnetlist:get-all-connections netname) 8))))
+             (group-elements (get-all-connections netname) 8))))
   (for-each write-net-info netnames))
 
 
