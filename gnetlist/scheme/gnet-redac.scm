@@ -48,18 +48,15 @@
   (string-join (map group->string groups) "\r\n"))
 
 
-(define redac:write-net
-   (lambda (netnames)
-      (if (not (null? netnames))
-         (let ((netname (car netnames)))
-            (display ".REM ")
-            (display netname)
-            (display "\r\n")
-            (display (redac:display-connections
-                      (group-elements (gnetlist:get-all-connections netname) 8)))
-            (display "\r\n")
-            (redac:write-net (cdr netnames))
-            ))))
+(define (redac:write-net netnames)
+  (define (write-net-info netname)
+    (format #t
+            ".REM ~A\r\n~A\r\n"
+            netname
+            (redac:display-connections
+             (group-elements (gnetlist:get-all-connections netname) 8))))
+  (for-each write-net-info netnames))
+
 
 (define (redac output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
