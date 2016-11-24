@@ -62,9 +62,15 @@
 ;; Display the individual net connections
 ;;
 (define (tango:display-connections nets)
+  (define package car)
+  (define pinnumber cdr)
   (string-join
    (map
-    (lambda (net) (format #f "~A-~A\n" (first net) (second net)))
+    (lambda (net)
+      (format #f
+              "~A-~A\n"
+              (package net)
+              (pinnumber net)))
     nets)
    ""))
 
@@ -77,7 +83,7 @@
    (lambda (netname)
      (format #t "(\n~A\n~A)\n"
              netname
-             (tango:display-connections (gnetlist:get-all-connections netname))))
+             (tango:display-connections (get-all-connections netname))))
    netnames))
 
 
