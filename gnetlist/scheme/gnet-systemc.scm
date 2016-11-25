@@ -454,19 +454,19 @@
             packages)
   (display "\n  {")
 
-  (for-each (lambda (package)                ; loop on packages
-              (begin
-                (let ((device (get-device package)))
-                  (if (not (memq (string->symbol device) ; ignore specials
-                                 port-symbols))
-                      (begin
-                                        ; if this module wants positional pins,
-                                        ; then output that format, otherwise
-                                        ; output normal named declaration
-                        (systemc:display-connections package
-                                                     (string=? (gnetlist:get-package-attribute package "VERILOG_PORTS" ) "POSITIONAL"))
-                        )))))
-            packages))
+  (for-each
+   (lambda (package)                         ; loop on packages
+     (let ((device (get-device package)))
+       (if (not (memq (string->symbol device) ; ignore specials
+                      port-symbols))
+           ;; if this module wants positional pins,
+           ;; then output that format, otherwise
+           ;; output normal named declaration
+           (systemc:display-connections package
+                                        (string=? (gnetlist:get-package-attribute package
+                                                                                  "VERILOG_PORTS")
+                                                  "POSITIONAL")))))
+   packages))
 
 ;;
 ;; output a module connection for the package given to us with named ports
