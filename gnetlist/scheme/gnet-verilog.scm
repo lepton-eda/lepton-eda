@@ -539,7 +539,7 @@
                                 (if comma_pending
                                     (display ",\n")
                                     (set! comma_pending #t))
-                                (verilog:display-pin pin positional))))
+                                (verilog:display-pin-net pin positional))))
                         pin-list)
               (newline))))))
 )
@@ -554,19 +554,21 @@
 ;;
 ;;      .PINNAME ( NETNAME )
 ;;
-(define (verilog:display-pin pin positional)
+(define (verilog:display-pin-net pin-net positional)
+  (define pinnumber car)
+  (define netname cdr)
   (if positional
       ;; output a positional port instance
       ;; add in name for debugging
       (format #t
               "  /* ~A */ ~A"
-              (car pin)
-              (cdr pin))
+              (pinnumber pin-net)
+              (netname pin-net))
       ;; else output a named port instance
       (format #t
               "    .~A ( ~A )"
-              (escape-identifier (verilog:netname (car pin)))
-              (escape-identifier (cdr pin)))))
+              (escape-identifier (verilog:netname (pinnumber pin-net)))
+              (escape-identifier (netname pin-net)))))
 
 
 
