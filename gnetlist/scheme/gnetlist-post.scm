@@ -104,6 +104,41 @@ NETNAME."
   (sort-remove-duplicates (get-netlist-connections netlist)
                           pair-string<?))
 
+
+(define (get-pins-nets package)
+  "Returns a list of pairs (pin-name . net-name) where net-name is
+the name of the net connected to the pin pin-name for specified
+PACKAGE."
+
+  (define (found? x)
+    (and x
+         (string=? x package)))
+
+  (define (get-pin-netname-pair pin)
+    (let ((pin-number (package-pin-number pin))
+          (pin-name (package-pin-name pin)))
+      (and pin-number
+           pin-name
+           (cons pin-number pin-name))))
+
+  (define (get-pin-netname-list package)
+     (if (found? (package-refdes package))
+         (filter-map get-pin-netname-pair (package-pins package))
+         '()))
+
+  (define (pair<? x y)
+    (define pinnumber car)
+    (define netname cdr)
+    (or (refdes<? (pinnumber x) (pinnumber y))
+        (and (string=? (pinnumber x) (pinnumber y))
+             (refdes<? (netname x) (netname y)))))
+
+  ;; Currently, netlist can contain many `packages' with the same
+  ;; name, so we have to deal with this.
+  (let ((result-list (append-map get-pin-netname-list netlist)))
+    (sort result-list pair<?)))
+
+
 ;;
 ;; Functions for dealing with naming requirements for different
 ;; output netlist formats which may be more restrictive than
