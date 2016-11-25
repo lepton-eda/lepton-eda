@@ -15,8 +15,8 @@ BEGIN
   R1 : ENTITY RESISTOR
 	GENERIC MAP (
 			value => 20)
-	PORT MAP (	2 => unnamed_net1,
-			1 => GND);
+	PORT MAP (	1 => GND,
+			2 => unnamed_net1);
  
   V1 : ENTITY VOLTAGE_SOURCE
 	GENERIC MAP (

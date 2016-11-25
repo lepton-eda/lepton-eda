@@ -12,19 +12,15 @@ BEGIN
   U100 : ENTITY 7400
 	GENERIC MAP (
 			slot => 2)
-	PORT MAP (	6 => SING_N,
-			5 => SING_N,
-			4 => SING_N,
-			14 => Vcc,
-			7 => GND,
-			3 => SING_N_2,
+	PORT MAP (	1 => SING_N_2,
 			2 => OPEN,
-			1 => SING_N_2,
-			14 => Vcc,
+			3 => SING_N_2,
+			4 => SING_N,
+			5 => SING_N,
+			6 => SING_N,
 			7 => GND,
 			8 => SING_N,
-			10 => SING_N,
 			9 => SING_N,
-			14 => Vcc,
-			7 => GND);
+			10 => SING_N,
+			14 => Vcc);
 END ARCHITECTURE default_architecture;

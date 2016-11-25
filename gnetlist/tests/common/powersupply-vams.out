@@ -52,25 +52,25 @@ BEGIN
   R1 : ENTITY VARIABLE_RESISTOR
 	GENERIC MAP (
 			value => 5k)
-	PORT MAP (	3 => nine,
+	PORT MAP (	1 => nine,
 			2 => ten,
-			1 => nine);
+			3 => nine);
  
   R2 : ENTITY RESISTOR
 	GENERIC MAP (
 			value => 220)
-	PORT MAP (	2 => eleven,
-			1 => ten);
+	PORT MAP (	1 => ten,
+			2 => eleven);
  
   S1 : ENTITY SPST
-	PORT MAP (	2 => two,
-			1 => one);
+	PORT MAP (	1 => one,
+			2 => two);
  
   T1 : ENTITY transformer
-	PORT MAP (	2 => five,
-			1 => three,
-			4 => seven,
-			3 => six);
+	PORT MAP (	1 => three,
+			2 => five,
+			3 => six,
+			4 => seven);
  
   U1 : ENTITY DIODE-BRIDGE
 	PORT MAP (	1 => eight,
@@ -79,7 +79,7 @@ BEGIN
 			4 => six);
  
   U2 : ENTITY LM317
-	PORT MAP (	2 => eleven,
-			3 => eight,
-			1 => ten);
+	PORT MAP (	1 => ten,
+			2 => eleven,
+			3 => eight);
 END ARCHITECTURE default_architecture;

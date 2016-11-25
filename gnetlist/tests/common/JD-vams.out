@@ -39,35 +39,35 @@ BEGIN
 			l => 3u, 
 			w => 3u, 
 			model-name => pch)
-	PORT MAP (	S => Vdd1,
-			B => Vdd1,
+	PORT MAP (	B => Vdd1,
 			D => LVH,
-			G => LVH);
+			G => LVH,
+			S => Vdd1);
  
   Rb : ENTITY RESISTOR
 	GENERIC MAP (
 			device => RESISTOR, 
 			value => 5.6k)
-	PORT MAP (	2 => LVH,
-			1 => GND);
+	PORT MAP (	1 => GND,
+			2 => LVH);
  
   Rlm : ENTITY RESISTOR
 	GENERIC MAP (
 			value => 500k)
-	PORT MAP (	2 => GND,
-			1 => m);
+	PORT MAP (	1 => m,
+			2 => GND);
  
   Rlp : ENTITY RESISTOR
 	GENERIC MAP (
 			value => 1meg)
-	PORT MAP (	2 => Vdd1,
-			1 => p);
+	PORT MAP (	1 => p,
+			2 => Vdd1);
  
   Rt : ENTITY RESISTOR
 	GENERIC MAP (
 			value => 1k)
-	PORT MAP (	2 => m,
-			1 => p);
+	PORT MAP (	1 => p,
+			2 => m);
  
   V1 : ENTITY vpulse
 	GENERIC MAP (
@@ -84,11 +84,11 @@ BEGIN
   X1 : ENTITY LVD
 	GENERIC MAP (
 			model-name => unknown_LVD)
-	PORT MAP (	4 => m,
-			5 => p,
-			1 => i,
-			3 => LVH,
+	PORT MAP (	1 => i,
 			2 => GND,
+			3 => LVH,
+			4 => m,
+			5 => p,
 			6 => Vdd1,
 			7 => GND);
 END ARCHITECTURE default_architecture;

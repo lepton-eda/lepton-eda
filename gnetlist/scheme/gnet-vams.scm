@@ -657,7 +657,7 @@ ARCHITECTURE ~A OF ~A IS
 ;;; required output-port and uref.
 
 (define (vams:write-port-map uref ports)
-  (let ((pin-list (gnetlist:get-pins-nets uref)))
+  (let ((pin-list (get-pins-nets uref)))
     (if (null? pin-list)
 	""
 	(format #f "\tPORT MAP (\t~A)"
