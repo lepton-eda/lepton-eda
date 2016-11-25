@@ -699,14 +699,14 @@ ENTITY ~A IS
 ;;;    The actual part will not support either the function name or type mark
 ;;;    based forms, thus only the actual designator form is supported.
 
-(define vhdl:write-association-element
-  (lambda (pin)
-    (begin
-      (display (car pin))
-      (display " => ")
-      (if (string-prefix-ci? "unconnected_pin" (cdr pin))
-          (display "OPEN")
-          (display (cdr pin))))))
+(define (vhdl:write-association-element pin-net)
+  (let ((pinnumber (car pin-net))
+        (netname (cdr pin-net)))
+    (format #t "~A => ~A"
+            pinnumber
+            (if (string-prefix-ci? "unconnected_pin" netname)
+                "OPEN"
+                netname))))
 
 ;;; Secondary unit
 ;;;
