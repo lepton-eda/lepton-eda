@@ -505,44 +505,40 @@
                                      (map string->symbol
                                           (list "IOPAD" "IPAD" "OPAD"
                                                 "HIGH" "LOW"))))
-                          (begin
-                            (format #t
-                                    "~A ~A ( "
-                                    (escape-identifier (get-device package))
-                                    (escape-identifier package))
-                            ; if this module wants positional pins,
-                            ; then output that format, otherwise
-                            ; output normal named declaration
-                            (verilog:display-connections
-                             package
-                             (string=? (gnetlist:get-package-attribute
-                                        package "VERILOG_PORTS" )
-                                       "POSITIONAL"))
-                            (display "    );\n\n"))))))
+                          (format #t
+                                  "~A ~A ( ~A    );\n\n"
+                                  (escape-identifier (get-device package))
+                                  (escape-identifier package)
+                                  ;; if this module wants positional pins,
+                                  ;; then output that format, otherwise
+                                  ;; output normal named declaration
+                                  (pin-connections->string
+                                   package
+                                   (string=? (gnetlist:get-package-attribute
+                                              package "VERILOG_PORTS" )
+                                             "POSITIONAL")))))))
                 packages))))
 
 ;;
 ;; output a module connection for the package given to us with named ports
 ;;
-(define verilog:display-connections
-   (lambda (package positional)
-     (begin
-       (let ( (pin-list (gnetlist:get-pins-nets package))
-              (comma_pending #f) )
-        (if (not (null? pin-list))
-            (begin
-              (newline)
-              (for-each (lambda (pin)
-                          (if (not (string-prefix-ci? "unconnected_pin" (cdr pin)))
-                              (begin
-                                ;; handle commas after the first pin
-                                (if comma_pending
-                                    (display ",\n")
-                                    (set! comma_pending #t))
-                                (verilog:display-pin-net pin positional))))
-                        pin-list)
-              (newline))))))
-)
+(define (pin-connections->string package positional)
+  (define pinnumber car)
+  (define netname cdr)
+  (let ((pin-net-list (gnetlist:get-pins-nets package)))
+    (if (null? pin-net-list)
+        ""
+        (string-append
+         "\n"
+         (string-join
+          (filter-map
+           (lambda (pin-net)
+             (and (not (string-prefix-ci? "unconnected_pin"
+                                          (netname pin-net)))
+                  (verilog:display-pin-net pin-net positional)))
+           pin-net-list)
+          ",\n")
+         "\n"))))
 
 ;;
 ;; Display the individual net connections
@@ -560,12 +556,12 @@
   (if positional
       ;; output a positional port instance
       ;; add in name for debugging
-      (format #t
+      (format #f
               "  /* ~A */ ~A"
               (pinnumber pin-net)
               (netname pin-net))
       ;; else output a named port instance
-      (format #t
+      (format #f
               "    .~A ( ~A )"
               (escape-identifier (verilog:netname (pinnumber pin-net)))
               (escape-identifier (netname pin-net)))))
