@@ -71,6 +71,13 @@
      (last-pair ls)
      ls)))
 
+;;; Helper function for sorting connections.
+(define (pair<? a b)
+  (or (refdes<? (car a) (car b))
+      (and (string=? (car a) (car b))
+           (refdes<? (cdr a) (cdr b)))))
+
+
 
 (define (get-all-connections netname)
   "Returns all connections in the form of ((refdes pin) ...) for
@@ -96,13 +103,7 @@ NETNAME."
        (append-map get-found-pin-connections (package-pins package)))
      netlist))
 
-  (define (pair-string<? a b)
-    (or (refdes<? (car a) (car b))
-        (and (string=? (car a) (car b))
-             (refdes<? (cdr a) (cdr b)))))
-
-  (sort-remove-duplicates (get-netlist-connections netlist)
-                          pair-string<?))
+  (sort-remove-duplicates (get-netlist-connections netlist) pair<?))
 
 
 (define (get-pins-nets package)
@@ -125,13 +126,6 @@ PACKAGE."
      (if (found? (package-refdes package))
          (filter-map get-pin-netname-pair (package-pins package))
          '()))
-
-  (define (pair<? x y)
-    (define pinnumber car)
-    (define netname cdr)
-    (or (refdes<? (pinnumber x) (pinnumber y))
-        (and (string=? (pinnumber x) (pinnumber y))
-             (refdes<? (netname x) (netname y)))))
 
   ;; Currently, netlist can contain many `packages' with the same
   ;; name, so we have to deal with this.
