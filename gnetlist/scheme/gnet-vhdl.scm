@@ -36,6 +36,7 @@
 ;;; busses. (Not complete yet!)
 ;;;
 
+(use-modules (srfi srfi-1))
 
 (define (vhdl:get-top-port-list packages)
   ;; construct list
@@ -570,18 +571,17 @@ ENTITY ~A IS
 ;;; THHE
 ;;; get a list of the top-level ports (the urefs of the I/O-PADs)
 
-(define vhdl:get-top-level-ports
-  (lambda (package-list pad-type)
-    (cond ((null? package-list) '())
-          ((string=? (get-device (car package-list)) pad-type)
-           (cons (cons (car package-list)
-                       (cdar (gnetlist:get-pins-nets (car package-list))) )
-                 (vhdl:get-top-level-ports (cdr package-list ) pad-type )))
-           (else (vhdl:get-top-level-ports (cdr package-list ) pad-type ))
+(define (vhdl:get-top-level-ports package-list pad-type)
+  (define pinnumber car)
+  (define netname cdr)
+  (define (first-pin-netname package)
+    (netname (first (gnetlist:get-pins-nets package))))
 
-    )
-  )
-)
+  (filter-map
+   (lambda (package)
+     (and (string=? (get-device package) pad-type)
+          (cons package (first-pin-netname package))))
+   package-list))
 
 ;;;THHE
 (define vhdl:write-in-signal-assignment
