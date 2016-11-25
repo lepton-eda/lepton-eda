@@ -62,26 +62,26 @@ FUSE F1 (
     );
 
 VARIABLE_RESISTOR R1 ( 
-    .\3  ( nine ),
+    .\1  ( nine ),
     .\2  ( ten ),
-    .\1  ( nine )
+    .\3  ( nine )
     );
 
 RESISTOR R2 ( 
-    .\2  ( eleven ),
-    .\1  ( ten )
+    .\1  ( ten ),
+    .\2  ( eleven )
     );
 
 SPST S1 ( 
-    .\2  ( two ),
-    .\1  ( one )
+    .\1  ( one ),
+    .\2  ( two )
     );
 
 transformer T1 ( 
-    .\2  ( five ),
     .\1  ( three ),
-    .\4  ( seven ),
-    .\3  ( six )
+    .\2  ( five ),
+    .\3  ( six ),
+    .\4  ( seven )
     );
 
 \DIODE-BRIDGE  U1 ( 
@@ -92,9 +92,9 @@ transformer T1 (
     );
 
 LM317 U2 ( 
+    .\1  ( ten ),
     .\2  ( eleven ),
-    .\3  ( eight ),
-    .\1  ( ten )
+    .\3  ( eight )
     );
 
 endmodule

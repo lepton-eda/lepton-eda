@@ -525,7 +525,7 @@
 (define (pin-connections->string package positional)
   (define pinnumber car)
   (define netname cdr)
-  (let ((pin-net-list (gnetlist:get-pins-nets package)))
+  (let ((pin-net-list (get-pins-nets package)))
     (if (null? pin-net-list)
         ""
         (string-append

@@ -30,9 +30,9 @@ FUSE F1 (
 
 \7400  U100 ( 
     .\3  ( one ),
-    .\14  ( Vcc ),
+    .\5  ( netattrib ),
     .\7  ( GND ),
-    .\5  ( netattrib )
+    .\14  ( Vcc )
     );
 
 \7404  U200 ( 

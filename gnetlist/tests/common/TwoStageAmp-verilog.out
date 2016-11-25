@@ -63,70 +63,70 @@ CAPACITOR Cout (
     );
 
 NPN_TRANSISTOR Q1 ( 
-    .\3  ( Vcoll1 ),
     .\1  ( Vem1 ),
-    .\2  ( Vbase1 )
+    .\2  ( Vbase1 ),
+    .\3  ( Vcoll1 )
     );
 
 NPN_TRANSISTOR Q2 ( 
-    .\3  ( VColl2 ),
     .\1  ( Vem2 ),
-    .\2  ( Vbase2 )
+    .\2  ( Vbase2 ),
+    .\3  ( VColl2 )
     );
 
 RESISTOR R1 ( 
-    .\2  ( Vcc ),
-    .\1  ( Vbase1 )
+    .\1  ( Vbase1 ),
+    .\2  ( Vcc )
     );
 
 RESISTOR R2 ( 
-    .\2  ( Vbase1 ),
-    .\1  ( GND )
+    .\1  ( GND ),
+    .\2  ( Vbase1 )
     );
 
 RESISTOR R3 ( 
-    .\2  ( Vcc ),
-    .\1  ( Vbase2 )
+    .\1  ( Vbase2 ),
+    .\2  ( Vcc )
     );
 
 RESISTOR R4 ( 
-    .\2  ( Vbase2 ),
-    .\1  ( GND )
+    .\1  ( GND ),
+    .\2  ( Vbase2 )
     );
 
 RESISTOR R5 ( 
-    .\2  ( unnamed_net1 ),
-    .\1  ( Vin )
+    .\1  ( Vin ),
+    .\2  ( unnamed_net1 )
     );
 
 RESISTOR R8 ( 
-    .\2  ( unnamed_net2 ),
-    .\1  ( Vcoll1 )
+    .\1  ( Vcoll1 ),
+    .\2  ( unnamed_net2 )
     );
 
 RESISTOR RC1 ( 
-    .\2  ( Vcc ),
-    .\1  ( Vcoll1 )
+    .\1  ( Vcoll1 ),
+    .\2  ( Vcc )
     );
 
 RESISTOR RC2 ( 
-    .\2  ( Vcc ),
-    .\1  ( VColl2 )
+    .\1  ( VColl2 ),
+    .\2  ( Vcc )
     );
 
 RESISTOR RE1 ( 
-    .\2  ( Vem1 ),
-    .\1  ( GND )
+    .\1  ( GND ),
+    .\2  ( Vem1 )
     );
 
 RESISTOR RE2 ( 
-    .\2  ( Vem2 ),
-    .\1  ( GND )
+    .\1  ( GND ),
+    .\2  ( Vem2 )
     );
 
 RESISTOR RL ( 
-    .\2  ( Vout ),
-    .\1  ( GND )
+    .\1  ( GND ),
+    .\2  ( Vout )
     );
 
 VOLTAGE_SOURCE VCC ( 
