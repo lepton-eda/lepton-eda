@@ -41,9 +41,9 @@ SC_CTOR(not found):
     F1.1(one);
 
     U100.3(one);
-    U100.14(Vcc);
-    U100.7(GND);
     U100.5(netattrib);
+    U100.7(GND);
+    U100.14(Vcc);
 
     U200.1(one);
     U200.2(netattrib);

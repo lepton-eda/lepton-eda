@@ -28,20 +28,20 @@ sc_signal<0> SING_N;
 SC_CTOR(not found):
     U100("U100")
   {
-    U100.6(SING_N);
-    U100.5(SING_N);
-    U100.4(SING_N);
-    U100.14(Vcc);
-    U100.7(GND);
-    U100.3(SING_N_2);
     U100.1(SING_N_2);
-    U100.14(Vcc);
+    U100.3(SING_N_2);
+    U100.4(SING_N);
+    U100.5(SING_N);
+    U100.6(SING_N);
+    U100.7(GND);
+    U100.7(GND);
     U100.7(GND);
     U100.8(SING_N);
-    U100.10(SING_N);
     U100.9(SING_N);
+    U100.10(SING_N);
     U100.14(Vcc);
-    U100.7(GND);
+    U100.14(Vcc);
+    U100.14(Vcc);
   }
 };
 

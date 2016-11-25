@@ -474,7 +474,7 @@
 (define (systemc:display-connections package positional)
   (define pinnumber car)
   (define netname cdr)
-  (let ((pin-net-list (gnetlist:get-pins-nets package)))
+  (let ((pin-net-list (get-pins-nets package)))
     (if (not (null? pin-net-list))
         (begin
           (newline)

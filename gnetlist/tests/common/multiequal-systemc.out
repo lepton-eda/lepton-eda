@@ -32,8 +32,8 @@ SC_CTOR(not found):
     R1("R1"),
     V1("V1")
   {
-    R1.2(unnamed_net1);
     R1.1(GND);
+    R1.2(unnamed_net1);
 
     V1.1(unnamed_net1);
     V1.2(GND);

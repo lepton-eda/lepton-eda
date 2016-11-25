@@ -87,29 +87,29 @@ SC_CTOR(not found):
     F1.1(two);
     F1.2(three);
 
-    R1.3(nine);
-    R1.2(ten);
     R1.1(nine);
+    R1.2(ten);
+    R1.3(nine);
 
-    R2.2(eleven);
     R2.1(ten);
+    R2.2(eleven);
 
-    S1.2(two);
     S1.1(one);
+    S1.2(two);
 
-    T1.2(five);
     T1.1(three);
-    T1.4(seven);
+    T1.2(five);
     T1.3(six);
+    T1.4(seven);
 
     U1.1(eight);
     U1.2(nine);
     U1.3(seven);
     U1.4(six);
 
+    U2.1(ten);
     U2.2(eleven);
     U2.3(eight);
-    U2.1(ten);
   }
 };
 

@@ -117,46 +117,46 @@ SC_CTOR(not found):
     Cout.1(VColl2);
     Cout.2(Vout);
 
-    Q1.3(Vcoll1);
     Q1.1(Vem1);
     Q1.2(Vbase1);
+    Q1.3(Vcoll1);
 
-    Q2.3(VColl2);
     Q2.1(Vem2);
     Q2.2(Vbase2);
+    Q2.3(VColl2);
 
-    R1.2(Vcc);
     R1.1(Vbase1);
+    R1.2(Vcc);
 
-    R2.2(Vbase1);
     R2.1(GND);
+    R2.2(Vbase1);
 
-    R3.2(Vcc);
     R3.1(Vbase2);
+    R3.2(Vcc);
 
-    R4.2(Vbase2);
     R4.1(GND);
+    R4.2(Vbase2);
 
-    R5.2(unnamed_net1);
     R5.1(Vin);
+    R5.2(unnamed_net1);
 
-    R8.2(unnamed_net2);
     R8.1(Vcoll1);
+    R8.2(unnamed_net2);
 
-    RC1.2(Vcc);
     RC1.1(Vcoll1);
+    RC1.2(Vcc);
 
-    RC2.2(Vcc);
     RC2.1(VColl2);
+    RC2.2(Vcc);
 
-    RE1.2(Vem1);
     RE1.1(GND);
+    RE1.2(Vem1);
 
-    RE2.2(Vem2);
     RE2.1(GND);
+    RE2.2(Vem2);
 
-    RL.2(Vout);
     RL.1(GND);
+    RL.2(Vout);
 
     VCC.1(Vcc);
     VCC.2(GND);
