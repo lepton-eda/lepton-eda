@@ -105,7 +105,7 @@
   (lambda (module-name port-list)
     (begin
       (display "module ")
-      (verilog:display-escaped-identifier module-name)
+      (display (escape-identifier module-name))
       (display " (")
       (newline)
       (let ((the-pins ( append (car port-list)     ; build up list of pins
@@ -258,14 +258,12 @@
         single-bit
         simple-id)))
 
-;;
-;; Display a verilog identifier that is escaped if needed
-;;
-(define verilog:display-escaped-identifier
-  (lambda (netname)
-    (if (verilog:identifier? netname)
-        (display netname) ; just display the identifier
-        (display (string-append "\\" netname " "))))) ; need to escape
+;;; Escapes NETNAME if it is a verilog identifier, otherwise
+;;; returns it as is.
+(define (escape-identifier netname)
+  (if (verilog:identifier? netname)
+      netname
+      (string-append "\\" netname " ")))
 
 
 ;;
@@ -453,7 +451,7 @@
           )
         )
     ;; print the wire name
-      (verilog:display-escaped-identifier name))))
+      (display (escape-identifier name)))))
 
 ;;
 ;;  Loop over the list of nets in the design, writing one by one
@@ -486,7 +484,7 @@
               (begin
                 (display "assign ")
                 ;; XXX fixme, multiple bit widths!
-                (verilog:display-escaped-identifier wire)
+                (display (escape-identifier wire))
                 (display " = 1'b1;")
                 (newline)))
             (verilog:filter "device" "HIGH" packages))
@@ -495,7 +493,7 @@
               (begin
                 (display "assign ")
                 ;; XXX fixme, multiple bit widths!
-                (verilog:display-escaped-identifier wire)
+                (display (escape-identifier wire))
                 (display " = 1'b0;")
                 (newline)))
             (verilog:filter "device" "LOW" packages))
@@ -530,10 +528,9 @@
                                           (list "IOPAD" "IPAD" "OPAD"
                                                 "HIGH" "LOW"))))
                           (begin
-                            (verilog:display-escaped-identifier
-                             (get-device package))
+                            (display (escape-identifier (get-device package)))
                             (display " ")
-                            (verilog:display-escaped-identifier package)
+                            (display (escape-identifier package))
                             (display " ( ")
                             ; if this module wants positional pins,
                             ; then output that format, otherwise
@@ -596,9 +593,9 @@
             (begin    ; else output a named port instance
               (display "    .")
               ; Display the escaped version of the identifier
-              (verilog:display-escaped-identifier (verilog:netname (car pin)))
+              (display (escape-identifier (verilog:netname (car pin))))
               (display " ( ")
-              (verilog:display-escaped-identifier (cdr pin))
+              (display (escape-identifier (cdr pin)))
               (display " )"))))))
 
 
