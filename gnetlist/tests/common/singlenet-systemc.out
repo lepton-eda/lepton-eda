@@ -34,13 +34,9 @@ SC_CTOR(not found):
     U100.5(SING_N);
     U100.6(SING_N);
     U100.7(GND);
-    U100.7(GND);
-    U100.7(GND);
     U100.8(SING_N);
     U100.9(SING_N);
     U100.10(SING_N);
-    U100.14(Vcc);
-    U100.14(Vcc);
     U100.14(Vcc);
   }
 };

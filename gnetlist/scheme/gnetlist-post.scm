@@ -136,7 +136,7 @@ PACKAGE."
   ;; Currently, netlist can contain many `packages' with the same
   ;; name, so we have to deal with this.
   (let ((result-list (append-map get-pin-netname-list netlist)))
-    (sort result-list pair<?)))
+    (sort-remove-duplicates result-list pair<?)))
 
 
 ;;
