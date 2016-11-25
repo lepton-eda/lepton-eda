@@ -697,7 +697,7 @@
   (display "Checking unconnected pins...\n")
   (for-each
    (lambda (package)
-     (let ((pin-net-list (gnetlist:get-pins-nets package)))
+     (let ((pin-net-list (get-pins-nets package)))
        (for-each (cut check-connection package <>) pin-net-list)))
    packages)
   (newline))

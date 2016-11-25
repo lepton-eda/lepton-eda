@@ -16,8 +16,8 @@ ERROR: Pin(s) with pintype 'output': U200:2
 
 Checking unconnected pins...
 ERROR: Unconnected pin F1:2
-ERROR: Unconnected pin U100:2
 ERROR: Unconnected pin U100:1
+ERROR: Unconnected pin U100:2
 
 Checking slots...
 
