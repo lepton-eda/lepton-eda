@@ -104,10 +104,9 @@
 (define verilog:write-module-declaration
   (lambda (module-name port-list)
     (begin
-      (display "module ")
-      (display (escape-identifier module-name))
-      (display " (")
-      (newline)
+      (format #t
+              "module ~A (\n"
+              (escape-identifier module-name))
       (let ((the-pins ( append (car port-list)     ; build up list of pins
                                (cadr  port-list)
                                (caddr port-list))))
@@ -115,19 +114,13 @@
           ; do pins, but take care of last comma
           (if (not (null? the-pins))
               (begin
-                (display "       ")
-                (display (verilog:netname (car the-pins)))
+                (format #t "       " (verilog:netname (car the-pins)))
                 (if (not (null? (cdr the-pins)))
                     (for-each (lambda (pin)   ; loop over outputs
-                                (begin
-                                  (display " ,")
-                                  (newline)
-                                  (display "       ")
-                                  (display (verilog:netname pin))))
+                                (format #t " ,\n       ~A" (verilog:netname pin)))
                               (cdr the-pins) ))))
-        (newline)
-        (display "      );")
-        (newline))))))
+          (display "\n      );\n"))))))
+
 ;;
 ;; output the module direction section
 ;;
@@ -144,24 +137,24 @@
                       (display "input ")
                       (verilog:display-wire (verilog:get-net
                                              (verilog:netname pin)))
-                      (display " ;")
-                      (newline))) in)       ; do each input
+                      (display " ;\n")
+                      )) in)       ; do each input
 
         (for-each (lambda (pin)
                     (begin
                       (display "output ")
                       (verilog:display-wire (verilog:get-net
                                              (verilog:netname pin)))
-                      (display " ;")
-                      (newline))) out)      ; do each output
+                      (display " ;\n")
+                      )) out)      ; do each output
 
         (for-each (lambda (pin)
                     (begin
                       (display "inout ")
                       (verilog:display-wire (verilog:get-net
                                              (verilog:netname pin)))
-                      (display " ;")
-                      (newline))) inout)    ; do each inout
+                      (display " ;\n")
+                      )) inout)    ; do each inout
 
         (newline)))))
 ;;
@@ -190,9 +183,7 @@
 ;; Footer for file
 ;;
 (define (verilog:write-bottom-footer)
-  (display "endmodule")
-  (newline)
-)
+  (display "endmodule\n"))
 
 ;;
 ;; Take a netname and parse it into a structure that describes the net:
@@ -442,23 +433,16 @@
           )
 
       (if (not (and (zero? n1) (zero? n2)))
-          (begin     ;; yes, print it
-            (display "[ ")
-            (display n1)
-            (display " : ")
-            (display n2)
-            (display " ] ")
-          )
-        )
-    ;; print the wire name
+          ;; yes, print it
+          (format #t "[ ~A : ~A ] " n1 n2))
+      ;; print the wire name
       (display (escape-identifier name)))))
 
 ;;
 ;;  Loop over the list of nets in the design, writing one by one
 ;;
 (define (verilog:write-wires)
-  (display "/* Wires from the design */")
-  (newline)
+  (display "/* Wires from the design */\n")
   (for-each (lambda (wire)          ; print a wire statement for each
               ; if it does not appear to be a concatenated bus then print it
               (if (not (regexp-exec concat-bus-reg (car(cdr(cdr(cdr(cdr(cadr wire))))))))
@@ -479,26 +463,21 @@
 ;; by placing `high' and `low' components on the board
 ;;
 (define (verilog:write-continuous-assigns packages)
-  (display "/* continuous assignments */") (newline)
+  (display "/* continuous assignments */\n")
   (for-each (lambda (wire)             ; do high values
-              (begin
-                (display "assign ")
-                ;; XXX fixme, multiple bit widths!
-                (display (escape-identifier wire))
-                (display " = 1'b1;")
-                (newline)))
+              ;; XXX fixme, multiple bit widths!
+              (format #t
+                      "assign ~A = 1'b1;\n"
+                      (escape-identifier wire)))
             (verilog:filter "device" "HIGH" packages))
 
   (for-each (lambda (wire)
-              (begin
-                (display "assign ")
-                ;; XXX fixme, multiple bit widths!
-                (display (escape-identifier wire))
-                (display " = 1'b0;")
-                (newline)))
+              ;; XXX fixme, multiple bit widths!
+              (format #t
+                      "assign ~A = 1'b0;\n"
+                      (escape-identifier wire)))
             (verilog:filter "device" "LOW" packages))
-  (newline)
-)
+  (newline))
 
 
 
@@ -518,8 +497,7 @@
 (define verilog:components
   (lambda (packages)
     (begin
-      (display "/* Package instantiations */")
-      (newline)
+      (display "/* Package instantiations */\n")
       (for-each (lambda (package)         ; loop on packages
                   (begin
                     (let ((device (get-device package)))
@@ -528,10 +506,10 @@
                                           (list "IOPAD" "IPAD" "OPAD"
                                                 "HIGH" "LOW"))))
                           (begin
-                            (display (escape-identifier (get-device package)))
-                            (display " ")
-                            (display (escape-identifier package))
-                            (display " ( ")
+                            (format #t
+                                    "~A ~A ( "
+                                    (escape-identifier (get-device package))
+                                    (escape-identifier package))
                             ; if this module wants positional pins,
                             ; then output that format, otherwise
                             ; output normal named declaration
@@ -540,11 +518,8 @@
                              (string=? (gnetlist:get-package-attribute
                                         package "VERILOG_PORTS" )
                                        "POSITIONAL"))
-                            (display "    );")
-                            (newline)
-                            (newline))))))
-                packages)))
-)
+                            (display "    );\n\n"))))))
+                packages))))
 
 ;;
 ;; output a module connection for the package given to us with named ports
@@ -562,9 +537,7 @@
                               (begin
                                 ;; handle commas after the first pin
                                 (if comma_pending
-                                    (begin
-                                      (display ",")
-                                      (newline))
+                                    (display ",\n")
                                     (set! comma_pending #t))
                                 (verilog:display-pin pin positional))))
                         pin-list)
@@ -581,22 +554,19 @@
 ;;
 ;;      .PINNAME ( NETNAME )
 ;;
-(define verilog:display-pin
-    (lambda (pin positional)
-      (begin
-        (if positional
-            (begin    ; output a positional port instance
-              (display "  /* ")
-              (display (car pin))  ; add in name for debugging
-              (display " */ " )
-              (display (cdr pin)))
-            (begin    ; else output a named port instance
-              (display "    .")
-              ; Display the escaped version of the identifier
-              (display (escape-identifier (verilog:netname (car pin))))
-              (display " ( ")
-              (display (escape-identifier (cdr pin)))
-              (display " )"))))))
+(define (verilog:display-pin pin positional)
+  (if positional
+      ;; output a positional port instance
+      ;; add in name for debugging
+      (format #t
+              "  /* ~A */ ~A"
+              (car pin)
+              (cdr pin))
+      ;; else output a named port instance
+      (format #t
+              "    .~A ( ~A )"
+              (escape-identifier (verilog:netname (car pin)))
+              (escape-identifier (cdr pin)))))
 
 
 
