@@ -471,23 +471,21 @@
 ;;
 ;; output a module connection for the package given to us with named ports
 ;;
-(define systemc:display-connections
-   (lambda (package positional)
-     (begin
-       (let ( (pin-list (gnetlist:get-pins-nets package))
-              (comma_pending #f) )
-        (if (not (null? pin-list))
-            (begin
-              (newline)
-              (for-each (lambda (pin)
-                          (if (not (string-prefix-ci? "unconnected_pin" (cdr pin)))
-                              (begin
-                                (display "    ")(display package)
-                                (systemc:display-pin pin positional)
-                                (display ";") (newline))))
-                        pin-list)
-              )))))
-)
+(define (systemc:display-connections package positional)
+  (define pinnumber car)
+  (define netname cdr)
+  (let ((pin-net-list (gnetlist:get-pins-nets package)))
+    (if (not (null? pin-net-list))
+        (begin
+          (newline)
+          (for-each
+           (lambda (pin-net)
+             (and (not (string-prefix-ci? "unconnected_pin" (netname pin-net)))
+                  (format #t
+                          "    ~A~A;\n"
+                          package
+                          (pin-net->string pin-net positional))))
+                    pin-net-list)))))
 
 ;;
 ;; Display the individual net connections
@@ -499,19 +497,21 @@
 ;;
 ;;      .PINNAME ( NETNAME )
 ;;
-(define (systemc:display-pin pin positional)
-  (let ((systemc (regexp-exec systemc-reg (cdr pin))))
+(define (pin-net->string pin-net positional)
+  (define pinnumber car)
+  (define netname cdr)
+  (let ((systemc (regexp-exec systemc-reg (netname pin-net))))
     (if positional
         ;; Output a positional port instance.
         ;; In name is added for debugging.
-        (format #t "  /* ~A */ ~A" (car pin) (cdr pin))
+        (format #f "  /* ~A */ ~A" (pinnumber pin-net) (netname pin-net))
         ;; Else output a named port instance.
-        (format #t ".~A(~A)"
+        (format #f ".~A(~A)"
                 ;; Display the escaped version of the identifier.
-                (car pin)
+                (pinnumber pin-net)
                 (if systemc
                     (match:substring systemc 1)
-                    (cdr pin))))))
+                    (netname pin-net))))))
 
 
 
