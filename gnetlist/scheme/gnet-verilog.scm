@@ -245,23 +245,18 @@
 ;; Return #t if the passed name is something that might pass as a
 ;; verilog identifier.
 ;;
-(define verilog:identifier?
-  (lambda (netname)
-    (let
-        ((bit-range (regexp-exec bit-range-reg netname))
-         (concat-bus (regexp-exec concat-bus-reg netname))
-         (single-bit (regexp-exec single-bit-reg netname))
-         (simple-id (regexp-exec simple-id-reg netname)))
+(define (verilog:identifier? netname)
+  (let ((bit-range (regexp-exec bit-range-reg netname))
+        (concat-bus (regexp-exec concat-bus-reg netname))
+        (single-bit (regexp-exec single-bit-reg netname))
+        (simple-id (regexp-exec simple-id-reg netname)))
 
-      ;; check over each expression type, return
-      ;; result
-      (cond
-       (bit-range  `#t )
-       (concat-bus  `#t )
-       (single-bit `#t )
-       (simple-id  `#t )
-       (else       `#f )
-       ))))
+    ;; check over each expression type, return
+    ;; result
+    (or bit-range
+        concat-bus
+        single-bit
+        simple-id)))
 
 ;;
 ;; Display a verilog identifier that is escaped if needed
