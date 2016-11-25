@@ -631,30 +631,17 @@ ENTITY ~A IS
 ;;; association_list :=
 ;;;    association_element { , association_element }
 
-(define vhdl:write-port-map
-  (lambda (package)
-    (begin
-      (let ((pin-list (gnetlist:get-pins-nets package)))
-        (if (not (null? pin-list))
-            (begin
-              (display "    PORT MAP (")
-              (newline)
-              (display "        ")
-              (vhdl:write-association-element (car pin-list))
-              (for-each (lambda (pin)
-                          (display ",")
-                          (newline)
-                          (display "        ")
-                          (vhdl:write-association-element pin))
-                        (cdr pin-list))
-              (display ")")
-            )
-        )
-      )
+(define (vhdl:write-port-map package)
+  (let ((pin-list (gnetlist:get-pins-nets package)))
+    (if (not (null? pin-list))
+        (format #t "    PORT MAP (\n~A)"
+                (string-join
+                 (map
+                  (lambda (pin-net)
+                    (vhdl:write-association-element pin-net))
+                  pin-list)
+                 ",\n")))))
 
-    )
-  )
-)
 
 ;;; Association element
 ;;;
@@ -702,7 +689,7 @@ ENTITY ~A IS
 (define (vhdl:write-association-element pin-net)
   (let ((pinnumber (car pin-net))
         (netname (cdr pin-net)))
-    (format #t "~A => ~A"
+    (format #f "        ~A => ~A"
             pinnumber
             (if (string-prefix-ci? "unconnected_pin" netname)
                 "OPEN"
