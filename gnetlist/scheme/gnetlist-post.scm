@@ -134,6 +134,21 @@ PACKAGE."
     (sort-remove-duplicates result-list pair<?)))
 
 
+(define (get-pins refdes)
+  (define (found? x)
+    (and x
+         (string=? x refdes)))
+
+  (sort-remove-duplicates
+   (append-map
+    (lambda (package)
+      (if (found? (package-refdes package))
+          (filter-map package-pin-number (package-pins package))
+          '()))
+    netlist)
+   refdes<?))
+
+
 ;;; This procedure is buggy in the same way as gnetlist:get-nets.
 ;;; It should first search for netname, and then get all
 ;;; package-pin pairs by that netname.
