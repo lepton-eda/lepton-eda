@@ -83,26 +83,26 @@ BEGIN
 
     R1 : VARIABLE_RESISTOR
     PORT MAP (
-        3 => nine,
+        1 => nine,
         2 => ten,
-        1 => nine);
+        3 => nine);
 
     R2 : RESISTOR
     PORT MAP (
-        2 => eleven,
-        1 => ten);
+        1 => ten,
+        2 => eleven);
 
     S1 : SPST
     PORT MAP (
-        2 => two,
-        1 => one);
+        1 => one,
+        2 => two);
 
     T1 : transformer
     PORT MAP (
-        2 => five,
         1 => three,
-        4 => seven,
-        3 => six);
+        2 => five,
+        3 => six,
+        4 => seven);
 
     U1 : DIODE-BRIDGE
     PORT MAP (
@@ -113,9 +113,9 @@ BEGIN
 
     U2 : LM317
     PORT MAP (
+        1 => ten,
         2 => eleven,
-        3 => eight,
-        1 => ten);
+        3 => eight);
 
 -- Signal assignment part
 END netlist;

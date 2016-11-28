@@ -33,12 +33,12 @@ BEGIN
 
     U100 : 7400
     PORT MAP (
-        3 => one,
-        2 => OPEN,
         1 => OPEN,
-        14 => Vcc,
+        2 => OPEN,
+        3 => one,
+        5 => netattrib,
         7 => GND,
-        5 => netattrib);
+        14 => Vcc);
 
     U200 : 7404
     PORT MAP (

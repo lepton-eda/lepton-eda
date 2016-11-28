@@ -575,7 +575,7 @@ ENTITY ~A IS
   (define pinnumber car)
   (define netname cdr)
   (define (first-pin-netname package)
-    (netname (first (gnetlist:get-pins-nets package))))
+    (netname (first (get-pins-nets package))))
 
   (filter-map
    (lambda (package)
@@ -632,7 +632,7 @@ ENTITY ~A IS
 ;;;    association_element { , association_element }
 
 (define (vhdl:write-port-map package)
-  (let ((pin-list (gnetlist:get-pins-nets package)))
+  (let ((pin-list (get-pins-nets package)))
     (if (not (null? pin-list))
         (format #t "    PORT MAP (\n~A)"
                 (string-join

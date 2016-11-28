@@ -28,8 +28,8 @@ BEGIN
 
     R1 : RESISTOR
     PORT MAP (
-        2 => unnamed_net1,
-        1 => GND);
+        1 => GND,
+        2 => unnamed_net1);
 
     V1 : VOLTAGE_SOURCE
     PORT MAP (

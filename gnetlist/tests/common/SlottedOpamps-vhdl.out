@@ -26,15 +26,15 @@ BEGIN
 -- Architecture statement part
     U1 : LM324
     PORT MAP (
-        3 => plusin_slot1_pin3_a,
-        2 => minusin_slot1_pin_b,
         1 => samenet_output_c,
+        2 => minusin_slot1_pin_b,
+        3 => plusin_slot1_pin3_a,
         5 => plusin_slot2_pin5_a,
         6 => minusin_slot2_pin6_b,
         7 => samenet_output_c,
-        10 => plusin_slot3_pin10_a,
-        9 => minusin_slot3_pin_b,
         8 => samenet_output_c,
+        9 => minusin_slot3_pin_b,
+        10 => plusin_slot3_pin10_a,
         12 => plusin_slot4_pin12_a,
         13 => minusin_slot4_pin13_b,
         14 => samenet_output_c);

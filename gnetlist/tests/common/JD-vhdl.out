@@ -54,30 +54,30 @@ BEGIN
 
     M1 : PMOS_TRANSISTOR
     PORT MAP (
-        S => Vdd1,
         B => Vdd1,
         D => LVH,
-        G => LVH);
+        G => LVH,
+        S => Vdd1);
 
     Rb : RESISTOR
     PORT MAP (
-        2 => LVH,
-        1 => GND);
+        1 => GND,
+        2 => LVH);
 
     Rlm : RESISTOR
     PORT MAP (
-        2 => GND,
-        1 => m);
+        1 => m,
+        2 => GND);
 
     Rlp : RESISTOR
     PORT MAP (
-        2 => Vdd1,
-        1 => p);
+        1 => p,
+        2 => Vdd1);
 
     Rt : RESISTOR
     PORT MAP (
-        2 => m,
-        1 => p);
+        1 => p,
+        2 => m);
 
     V1 : vpulse
     PORT MAP (
@@ -91,11 +91,11 @@ BEGIN
 
     X1 : LVD
     PORT MAP (
+        1 => i,
+        2 => GND,
+        3 => LVH,
         4 => m,
         5 => p,
-        1 => i,
-        3 => LVH,
-        2 => GND,
         6 => Vdd1,
         7 => GND);
 
