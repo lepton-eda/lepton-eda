@@ -49,40 +49,30 @@
 
 ;; Locate and print out the "source" line and return the refdes of
 ;; the first element in the cascade
-(define cascade:write-source
-  (lambda (pkgs)
-    (if (not (null? pkgs))
-        (let ( (package (car pkgs) )
-               (sourcenet #f)
-               )
-          (if (string=? (get-device package) "cascade-source")
-              (begin
-                (set! sourcenet (get-nets package "1"))
-                (display "source ")
-                (map (lambda (attrib)
-                       (let ((val (gnetlist:get-package-attribute package attrib)))
-                         (if (not (string=? val "unknown"))
-                             (display (string-append attrib "=" val " "))
-                             )
-                         )
-                       )
-                     (list "c" "C" "cn0" "CN0" "cn" "CN" "bw" "BW")
-                     )
-                (newline)
+(define (cascade:write-source pkgs)
+  (define (write-source-statement package)
+    (format #t "source ~A\n"
+            (string-join
+             (filter-map
+              (lambda (attrib)
+                (let ((val (gnetlist:get-package-attribute package attrib)))
+                  (and (not (unknown? val))
+                       (format #f "~A=~A" attrib val))))
+              (list "c" "C" "cn0" "CN0" "cn" "CN" "bw" "BW"))
+             " ")))
 
+  (if (null? pkgs)
+      '()
+      (let ((package (car pkgs)))
+        (if (string=? (get-device package) "cascade-source")
+            (begin
+              (write-source-statement package)
+              ;; Return value
+              (let ((sourcenet (get-nets package "1")))
                 (if (string=? (caadr sourcenet) package)
                     (caaddr sourcenet)
-                    (caadr sourcenet)
-                    )
-                )
-              (cascade:write-source (cdr pkgs) )
-              )
-          )
-        ;; the list of packages is now empty
-        '()
-        )
-    )
-  )
+                    (caadr sourcenet))))
+            (cascade:write-source (cdr pkgs))))))
 
 ;; recursively follow the cascade and print out each element as its
 ;; found

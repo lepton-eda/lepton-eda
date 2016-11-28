@@ -5,7 +5,7 @@
 defaults RIN=50 ROUT=50 RHO=0 
 
 # Source definition
-source C=0 CN=70 BW=1 
+source C=0 CN=70 BW=1
 
 # Cascaded system
 AMP1 G=12 NF=5 IIP3=-2 
