@@ -83,7 +83,7 @@
              (newline)
 
              ;; write the pins
-             (pcbpins:component_pins package (gnetlist:get-pins package))
+             (pcbpins:component_pins package (get-pins package))
              )
            (pcbpins:components (cdr packages) (+ symcnt 1))
            )

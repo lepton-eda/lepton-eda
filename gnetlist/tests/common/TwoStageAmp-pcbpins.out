@@ -7,33 +7,33 @@
 # Start of element A3
 
 # Start of element C1
-ChangePinName(C1, 2, 2)
 ChangePinName(C1, 1, 1)
+ChangePinName(C1, 2, 2)
 
 # Start of element C2
-ChangePinName(C2, 2, 2)
 ChangePinName(C2, 1, 1)
+ChangePinName(C2, 2, 2)
 
 # Start of element CE1
-ChangePinName(CE1, 2, 2)
 ChangePinName(CE1, 1, 1)
+ChangePinName(CE1, 2, 2)
 
 # Start of element CE2
-ChangePinName(CE2, 2, 2)
 ChangePinName(CE2, 1, 1)
+ChangePinName(CE2, 2, 2)
 
 # Start of element Cout
-ChangePinName(Cout, 2, 2)
 ChangePinName(Cout, 1, 1)
+ChangePinName(Cout, 2, 2)
 
 # Start of element Q1
-ChangePinName(Q1, 2, 2)
 ChangePinName(Q1, 1, 1)
+ChangePinName(Q1, 2, 2)
 ChangePinName(Q1, 3, 3)
 
 # Start of element Q2
-ChangePinName(Q2, 2, 2)
 ChangePinName(Q2, 1, 1)
+ChangePinName(Q2, 2, 2)
 ChangePinName(Q2, 3, 3)
 
 # Start of element R1
@@ -81,9 +81,9 @@ ChangePinName(RL, 1, 1)
 ChangePinName(RL, 2, 2)
 
 # Start of element VCC
-ChangePinName(VCC, 2, -)
 ChangePinName(VCC, 1, +)
+ChangePinName(VCC, 2, -)
 
 # Start of element Vinput
-ChangePinName(Vinput, 2, -)
 ChangePinName(Vinput, 1, +)
+ChangePinName(Vinput, 2, -)
