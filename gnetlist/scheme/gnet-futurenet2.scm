@@ -169,8 +169,7 @@
               (display "\n")
 
               ;; write the pins
-              (futurenet2:component_pins package
-                                         (gnetlist:get-pins package))
+              (futurenet2:component_pins package (get-pins package))
 
               ;; close the part
               (display ")\n")
