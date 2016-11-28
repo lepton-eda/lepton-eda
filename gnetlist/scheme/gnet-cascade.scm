@@ -18,6 +18,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
+(use-modules (ice-9 match))
 
 ;; Locate and print out the global defaults if the element exists
 (define cascade:write-defaults-top
@@ -47,6 +48,12 @@
     )
   )
 
+(define (cascade:next-package package pinnumber)
+  (match (get-nets package pinnumber)
+    ((netname (p1 . n1) (p2 . n2) . rest)
+     (if (string=? p1 package) p2 p1))
+    (_ #f)))
+
 ;; Locate and print out the "source" line and return the refdes of
 ;; the first element in the cascade
 (define (cascade:write-source pkgs)
@@ -67,59 +74,35 @@
         (if (string=? (get-device package) "cascade-source")
             (begin
               (write-source-statement package)
-              ;; Return value
-              (let ((sourcenet (get-nets package "1")))
-                (if (string=? (caadr sourcenet) package)
-                    (caaddr sourcenet)
-                    (caadr sourcenet))))
+              ;; Return next package. It is connected to pin 1,
+              ;; since the source package has only one pin.
+              (cascade:next-package package "1"))
             (cascade:write-source (cdr pkgs))))))
 
 ;; recursively follow the cascade and print out each element as its
 ;; found
-(define cascade:follow-cascade
-  (lambda (pkg)
-    (if (not (null? pkg))
-        (begin
-          (let ((outnet (get-nets pkg "2")))
+(define (cascade:follow-cascade pkg)
+  (if pkg
+      (begin
+        ;; Is this a "defaults" element or a normal element?
+        ;; If its a defaults element, then print "defaults"
+        ;; instead of the reference designator because thats
+        ;; a keyword for cascade.
+        (if (string=? (get-device pkg) "cascade-defaults")
+            (display "defaults ")
+            (display (string-append pkg " ")))
 
-            ;; Is this a "defaults" element or a normal element?
-            ;; If its a defaults element, then print "defaults"
-            ;; instead of the reference designator because thats
-            ;; a keyword for cascade.
-            (if (string=? (get-device pkg) "cascade-defaults")
-                (display "defaults ")
-                (display (string-append pkg " "))
-                )
-
-            ;; spit out all the relevant attributes for element or
-            ;; defaults lines
-            (map (lambda (attrib)
-                   (let ((val (gnetlist:get-package-attribute pkg attrib)))
-                     (if (not (string=? val "unknown"))
-                         (display (string-append attrib "=" val " "))
-                         )
-                     )
-                   )
-                 (list "g" "G" "gp" "GP" "gv" "GV" "nf" "NF" "iip3"
-                       "IIP3" "r" "R" "rin" "RIN" "rout" "ROUT"
-                       "rho" "RHO")
-                 )
-            (newline)
-
-            ;;(display "cascade:follow-cascade  -- outnet = ")
-            ;;(display outnet)
-            ;;(newline)
-            (if (>= (length outnet) 3)
-                (if (string=? (caadr outnet) pkg)
-                    (cascade:follow-cascade(caaddr outnet))
-                    (cascade:follow-cascade (caadr outnet))
-                    )
-                )
-            )
-          )
-        )
-    )
-  )
+        ;; spit out all the relevant attributes for element or
+        ;; defaults lines
+        (map (lambda (attrib)
+               (let ((val (gnetlist:get-package-attribute pkg attrib)))
+                 (if (not (string=? val "unknown"))
+                     (display (string-append attrib "=" val " ")))))
+             (list "g" "G" "gp" "GP" "gv" "GV" "nf" "NF" "iip3"
+                   "IIP3" "r" "R" "rin" "RIN" "rout" "ROUT"
+                   "rho" "RHO"))
+        (newline)
+        (cascade:follow-cascade (cascade:next-package pkg "2")))))
 
 ;; The top level netlister for cascade
 (define cascade
