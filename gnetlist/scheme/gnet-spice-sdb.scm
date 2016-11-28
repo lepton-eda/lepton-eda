@@ -581,7 +581,7 @@
     (spice-sdb:write-net-names-on-component
      package
      (string-join
-      (map (lambda (x) "V(~a)") (gnetlist:get-pins package))
+      (map (lambda (x) "V(~a)") (get-pins package))
       " " 'infix))
     (newline)))
 
@@ -604,7 +604,7 @@
       (and (not (string=? net "ERROR_INVALID_PIN"))
            net)))
 
-  (let ((netnames (filter-map get-net-name (iota (1+ (length (gnetlist:get-pins refdes))) 1)))
+  (let ((netnames (filter-map get-net-name (iota (1+ (length (get-pins refdes))) 1)))
         ;; Format argument takes priority, otherwise use attribute "net-format"
         (format (or format (gnetlist:get-package-attribute refdes "net-format"))))
 
