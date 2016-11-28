@@ -180,8 +180,7 @@
               (display "\t\t(comp_variant_independent \"0\")\n")
 
               ;; write the pins
-              (ewnet:component_pins package
-                                         (gnetlist:get-pins package))
+              (ewnet:component_pins package (get-pins package))
 
               ;; close the part
               (display "\t)\n")
