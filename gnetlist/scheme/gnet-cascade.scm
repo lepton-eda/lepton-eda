@@ -57,7 +57,7 @@
                )
           (if (string=? (get-device package) "cascade-source")
               (begin
-                (set! sourcenet (gnetlist:get-nets package "1"))
+                (set! sourcenet (get-nets package "1"))
                 (display "source ")
                 (map (lambda (attrib)
                        (let ((val (gnetlist:get-package-attribute package attrib)))
@@ -90,8 +90,7 @@
   (lambda (pkg)
     (if (not (null? pkg))
         (begin
-          (let ( (outnet (gnetlist:get-nets pkg "2"))
-                 )
+          (let ((outnet (get-nets pkg "2")))
 
             ;; Is this a "defaults" element or a normal element?
             ;; If its a defaults element, then print "defaults"

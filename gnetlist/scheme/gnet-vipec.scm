@@ -77,7 +77,7 @@
   (do ((i 1 (1+ i)))
       ((> i number-of-pin))
     (let ((pin-name (number->string i)))
-      (display (get-net-number (car (gnetlist:get-nets uref (gnetlist:get-attribute-by-pinseq uref pin-name "pinnumber"))) netnumbers))
+      (display (get-net-number (car (get-nets uref (gnetlist:get-attribute-by-pinseq uref pin-name "pinnumber"))) netnumbers))
       (write-char #\space))))
 
 (define vipec:write-attribs

@@ -24,7 +24,8 @@
              (gnetlist package)
              (gnetlist package-pin)
              (gnetlist pin-net)
-             (gnetlist attrib compare))
+             (gnetlist attrib compare)
+             (ice-9 match))
 
 (define gnetlist:cwd (getcwd))
 (define netlist (traverse))
@@ -131,6 +132,60 @@ PACKAGE."
   ;; name, so we have to deal with this.
   (let ((result-list (append-map get-pin-netname-list netlist)))
     (sort-remove-duplicates result-list pair<?)))
+
+
+;;; This procedure is buggy in the same way as gnetlist:get-nets.
+;;; It should first search for netname, and then get all
+;;; package-pin pairs by that netname.
+(define (get-nets package pin-number)
+  (define (net-connections nets)
+    (filter-map
+     (lambda (net)
+       (let ((package (pin-net-connection-package net))
+             (pinnumber (pin-net-connection-pinnumber net)))
+         (and package
+              pinnumber
+              (cons package pinnumber))))
+     nets))
+
+  (define (lookup-through-nets nets package pin-number)
+    (let ((connections (net-connections nets)))
+      (and (not (null? connections))
+           (member (cons package pin-number) connections)
+           connections)))
+
+  (define (found-pin-number? x)
+    (and x
+         (string=? x pin-number)))
+
+  (define (lookup-through-pins pins)
+    (filter-map
+     (lambda (pin)
+       (and (found-pin-number? (package-pin-number pin))
+            (cons (package-pin-name pin)
+                  (lookup-through-nets (package-pin-nets pin)
+                                       package
+                                       pin-number))))
+     pins))
+
+  (define (found-package? x)
+    (and x
+         (string=? x package)))
+
+  (define (lookup-through-netlist netlist)
+    (append-map
+     (lambda (package)
+       (if (found-package? (package-refdes package))
+           (lookup-through-pins (package-pins package))
+           '()))
+     netlist))
+
+  (let ((found (lookup-through-netlist netlist)))
+    (match found
+      (() '("ERROR_INVALID_PIN"))
+      (((netname . rest) ...)
+       (cons (car netname) (append-map identity (filter-map identity rest))))
+      (_ '("ERROR_INVALID_PIN")))))
 
 
 ;;

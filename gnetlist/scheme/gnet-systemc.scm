@@ -70,7 +70,7 @@
 ;;; value is VALUE.
 (define (systemc:filter attribute value package-list)
   (define (get-package-pin-netname package pin)
-    (car (gnetlist:get-nets package pin)))
+    (car (get-nets package pin)))
 
   (define (get-package-pin-netnames package)
     (and (string=? (gnetlist:get-package-attribute package attribute)

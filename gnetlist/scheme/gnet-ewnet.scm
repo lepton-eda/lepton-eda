@@ -96,7 +96,7 @@
             ;; net
             (display "\t\t\t(net \"")
             (display
-             (gnetlist:alias-net (car (gnetlist:get-nets package pin))))
+             (gnetlist:alias-net (car (get-nets package pin))))
             (display "\")\n")
 
             ;; pin type.  I have seen "PWR", "GND", "IN", "OUT", "BIDIR"
