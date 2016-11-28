@@ -803,7 +803,7 @@ ARCHITECTURE ~A OF ~A IS
       '()
       (append
        (vams:all-pins-nets (car urefs)
-                           (gnetlist:get-pins (car urefs)))
+                           (get-pins (car urefs)))
        (vams:all-packages-nets (cdr urefs)))))
 
 
@@ -861,7 +861,7 @@ ARCHITECTURE ~A OF ~A IS
 
 (define (vams:which-port pin ports)
   (define (first-pin port)
-    (car (gnetlist:get-pins port)))
+    (car (get-pins port)))
 
   (define (first-pin-net port)
     (package-pin-netname port (first-pin port)))
@@ -916,7 +916,7 @@ ARCHITECTURE ~A OF ~A IS
                                            (gnetlist:get-attribute-by-pinnumber uref pin "port_object")
                                            (gnetlist:get-attribute-by-pinnumber uref pin "port_type")
                                            (gnetlist:get-attribute-by-pinnumber uref pin "port_mode")))))
-                    (gnetlist:get-pins uref))
+                    (get-pins uref))
           (append (cdr port-list))))))
 
 
