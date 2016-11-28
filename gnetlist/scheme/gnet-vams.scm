@@ -790,7 +790,7 @@ ARCHITECTURE ~A OF ~A IS
 (define (vams:all-pins-nets uref pins)
   (if (null? pins)
       '()
-      (cons (car (get-nets uref (car pins)))
+      (cons (package-pin-netname uref (car pins))
             (vams:all-pins-nets uref (cdr pins)))))
 
 
@@ -864,7 +864,7 @@ ARCHITECTURE ~A OF ~A IS
     (car (gnetlist:get-pins port)))
 
   (define (first-pin-net port)
-    (car (get-nets port (first-pin port))))
+    (package-pin-netname port (first-pin port)))
 
   (if (null? ports)
       '()

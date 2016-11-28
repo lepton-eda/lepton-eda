@@ -216,7 +216,7 @@
 ;;; returns the list of nets attached to the IOs.
 (define (spice-sdb:get-io-nets package-list)
   (map
-   (lambda (package) (car (get-nets package "1")))
+   (lambda (package) (package-pin-netname package "1"))
    package-list))
 
 

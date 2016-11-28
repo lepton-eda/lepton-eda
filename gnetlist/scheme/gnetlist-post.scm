@@ -188,6 +188,10 @@ PACKAGE."
       (_ '("ERROR_INVALID_PIN")))))
 
 
+(define (package-pin-netname package pinnumber)
+  (or (assoc-ref (get-pins-nets package) pinnumber)
+      "ERROR_INVALID_PIN"))
+
 ;;
 ;; Functions for dealing with naming requirements for different
 ;; output netlist formats which may be more restrictive than

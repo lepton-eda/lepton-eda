@@ -129,7 +129,7 @@
 ;;
 (define switcap:write-pin-net
   (lambda (package pin)
-    (display (gnetlist:alias-net (car (get-nets package pin))))
+    (display (gnetlist:alias-net (package-pin-netname package pin)))
     )
   )
 
