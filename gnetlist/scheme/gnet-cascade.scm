@@ -82,27 +82,30 @@
 ;; recursively follow the cascade and print out each element as its
 ;; found
 (define (cascade:follow-cascade pkg)
-  (if pkg
-      (begin
-        ;; Is this a "defaults" element or a normal element?
-        ;; If its a defaults element, then print "defaults"
-        ;; instead of the reference designator because thats
-        ;; a keyword for cascade.
-        (if (string=? (get-device pkg) "cascade-defaults")
-            (display "defaults ")
-            (display (string-append pkg " ")))
+  (when pkg
+    ;; Is this a "defaults" element or a normal element?
+    ;; If its a defaults element, then print "defaults"
+    ;; instead of the reference designator because thats
+    ;; a keyword for cascade.
+    (format #t
+            "~A ~A\n"
+            (if (string=? (get-device pkg) "cascade-defaults")
+                "defaults "
+                pkg)
 
-        ;; spit out all the relevant attributes for element or
-        ;; defaults lines
-        (map (lambda (attrib)
-               (let ((val (gnetlist:get-package-attribute pkg attrib)))
-                 (if (not (string=? val "unknown"))
-                     (display (string-append attrib "=" val " ")))))
-             (list "g" "G" "gp" "GP" "gv" "GV" "nf" "NF" "iip3"
-                   "IIP3" "r" "R" "rin" "RIN" "rout" "ROUT"
-                   "rho" "RHO"))
-        (newline)
-        (cascade:follow-cascade (cascade:next-package pkg "2")))))
+            ;; spit out all the relevant attributes for element or
+            ;; defaults lines
+            (string-join
+             (filter-map
+              (lambda (attrib)
+                (let ((val (gnetlist:get-package-attribute pkg attrib)))
+                  (and (not (unknown? val))
+                       (format #f "~A=~A" attrib val))))
+              (list "g" "G" "gp" "GP" "gv" "GV" "nf" "NF" "iip3"
+                    "IIP3" "r" "R" "rin" "RIN" "rout" "ROUT"
+                    "rho" "RHO")) " "))
+
+    (cascade:follow-cascade (cascade:next-package pkg "2"))))
 
 ;; The top level netlister for cascade
 (define cascade
