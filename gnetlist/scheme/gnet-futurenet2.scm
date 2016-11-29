@@ -201,18 +201,18 @@
    )
 
 ;; The top level netlister for futurenet2
-(define futurenet2
-   (lambda (output-filename)
-     (message "\n---------------------------------\n")
-     (message "gEDA/gnetlist FutureNet2 Backend\n")
-     (message "This backend is EXPERIMENTAL\n")
-     (message "Use at your own risk!\n\n")
-     (message "You may need to run the output netlist\n")
-     (message "through unix2dos before importing to\n")
-     (message "Ranger2 or other windows based layout tools\n")
-     (message "---------------------------------\n\n")
+(define (futurenet2 output-filename)
+  (message "\n---------------------------------\n")
+  (message "gEDA/gnetlist FutureNet2 Backend\n")
+  (message "This backend is EXPERIMENTAL\n")
+  (message "Use at your own risk!\n\n")
+  (message "You may need to run the output netlist\n")
+  (message "through unix2dos before importing to\n")
+  (message "Ranger2 or other windows based layout tools\n")
+  (message "---------------------------------\n\n")
 
-      (set-current-output-port (gnetlist:output-port output-filename))
+  (with-output-to-port (gnetlist:output-port output-filename)
+    (lambda ()
       (let ((all-nets (get-all-unique-nets)))
 
         ;; initialize the net-name aliasing
@@ -236,7 +236,4 @@
         (display ")\n")
 
         ;; close netlist
-        )
-      (close-output-port (current-output-port))
-      )
-   )
+        ))))
