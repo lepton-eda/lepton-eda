@@ -272,10 +272,10 @@
     (message "---------------------------------\n\n")
 
     (set-current-output-port (gnetlist:output-port output-filename))
-    (let ((all-nets (gnetlist:get-all-unique-nets "dummy")))
+    (let ((all-nets (get-all-unique-nets)))
 
       ;; initialize the net-name aliasing
-      (gnetlist:build-net-aliases ewnet:map-net-names all-unique-nets)
+      (gnetlist:build-net-aliases ewnet:map-net-names all-nets)
 
       ;; initialize the refdes aliasing
       (gnetlist:build-refdes-aliases ewnet:map-refdes packages)

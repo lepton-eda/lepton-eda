@@ -9,20 +9,6 @@
 	(units Mil)
 )
 (nets
-	( net "Vdd1"
-		(trackwidth "-1.00000000e+000")
-		(trackwidth_max "-1.00000000e+000")
-		(trackwidth_min "-1.00000000e+000")
-		(tracklength_max "-1.00000000e+000")
-		(tracklength_min "-1.00000000e+000")
-		(clearance_to_trace "-1.00000000e+000")
-		(clearance_to_pad "-1.00000000e+000")
-		(clearance_to_via "-1.00000000e+000")
-		(clearance_to_copper "-1.00000000e+000")
-		(routing_layer "")
-		(settings_locked "0")
-		(net_group "")
-	)
 	( net "GND"
 		(trackwidth "-1.00000000e+000")
 		(trackwidth_max "-1.00000000e+000")
@@ -51,6 +37,20 @@
 		(settings_locked "0")
 		(net_group "")
 	)
+	( net "Vdd1"
+		(trackwidth "-1.00000000e+000")
+		(trackwidth_max "-1.00000000e+000")
+		(trackwidth_min "-1.00000000e+000")
+		(tracklength_max "-1.00000000e+000")
+		(tracklength_min "-1.00000000e+000")
+		(clearance_to_trace "-1.00000000e+000")
+		(clearance_to_pad "-1.00000000e+000")
+		(clearance_to_via "-1.00000000e+000")
+		(clearance_to_copper "-1.00000000e+000")
+		(routing_layer "")
+		(settings_locked "0")
+		(net_group "")
+	)
 	( net "i"
 		(trackwidth "-1.00000000e+000")
 		(trackwidth_max "-1.00000000e+000")
@@ -65,7 +65,7 @@
 		(settings_locked "0")
 		(net_group "")
 	)
-	( net "p"
+	( net "m"
 		(trackwidth "-1.00000000e+000")
 		(trackwidth_max "-1.00000000e+000")
 		(trackwidth_min "-1.00000000e+000")
@@ -79,7 +79,7 @@
 		(settings_locked "0")
 		(net_group "")
 	)
-	( net "m"
+	( net "p"
 		(trackwidth "-1.00000000e+000")
 		(trackwidth_max "-1.00000000e+000")
 		(trackwidth_min "-1.00000000e+000")
