@@ -748,7 +748,7 @@
 (define (drc2 output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((nets (gnetlist:get-all-unique-nets "dummy")))
+      (let ((nets (get-all-unique-nets)))
 
         ;; Perform DRC-matrix sanity checks.
         ;; See if all elements of the matrix are valid.
