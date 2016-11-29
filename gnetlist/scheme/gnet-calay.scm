@@ -62,7 +62,7 @@
 
 (define (calay output-filename)
   (set-current-output-port (gnetlist:output-port output-filename))
-  (gnetlist:build-net-aliases calay:translate all-unique-nets)
-  (for-each display
-            (nets->calay-netlist (gnetlist:get-all-unique-nets "dummy")))
+  (let ((nets (get-all-unique-nets)))
+    (gnetlist:build-net-aliases calay:translate nets)
+    (for-each display (nets->calay-netlist nets)))
   (close-output-port (current-output-port)))
