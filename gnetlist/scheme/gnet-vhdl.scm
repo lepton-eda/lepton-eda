@@ -307,7 +307,7 @@ ENTITY ~A IS
 ;;;     the symbol and not to the instance of the symbol in the sheet!
 
 (define (vhdl:get-device-port-list device)
-  (let ((pins (gnetlist:get-pins device)))
+  (let ((pins (get-pins device)))
     (list (vhdl:get-device-matching-pins device pins "IN")
           (vhdl:get-device-matching-pins device pins "OUT")
           (vhdl:get-device-matching-pins device pins "INOUT"))))
