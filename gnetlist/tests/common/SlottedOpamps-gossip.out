@@ -5,5 +5,5 @@
 
 (use-library unknown *)
 (define-block (not found (
-(signals (minusin_slot4_pin13_b plusin_slot4_pin12_a minusin_slot3_pin_b plusin_slot3_pin10_a minusin_slot2_pin6_b plusin_slot2_pin5_a samenet_output_c minusin_slot1_pin_b plusin_slot1_pin3_a))
+(signals (minusin_slot1_pin_b minusin_slot2_pin6_b minusin_slot3_pin_b minusin_slot4_pin13_b plusin_slot1_pin3_a plusin_slot2_pin5_a plusin_slot3_pin10_a plusin_slot4_pin12_a samenet_output_c))
    (U1)

@@ -5,7 +5,7 @@
 
 (use-library unknown *)
 (define-block (not found (
-(signals (unnamed_net6 unnamed_net5 unnamed_net4 unnamed_net3 unnamed_net2 unnamed_net1 GND))
+(signals (GND unnamed_net1 unnamed_net2 unnamed_net3 unnamed_net4 unnamed_net5 unnamed_net6))
    (AMP1)
    (AMP2)
    (DEF1)

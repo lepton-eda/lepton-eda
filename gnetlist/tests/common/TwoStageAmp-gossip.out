@@ -5,7 +5,7 @@
 
 (use-library unknown *)
 (define-block (not found (
-(signals (unnamed_net2 Vbase2 Vem2 Vout VColl2 GND Vcc Vin unnamed_net1 Vbase1 Vem1 Vcoll1))
+(signals (GND VColl2 Vbase1 Vbase2 Vcc Vcoll1 Vem1 Vem2 Vin Vout unnamed_net1 unnamed_net2))
    (A1)
    (A2)
    (A3)

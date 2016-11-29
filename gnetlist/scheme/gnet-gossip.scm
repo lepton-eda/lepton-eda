@@ -96,9 +96,8 @@
         (gossip:list-pins allnets package 1)
         (gossip:blocks (cdr ls) allnets))))
 
-(define (gossip:signals)
-  (format #t "(signals ~A)\n"
-          (gnetlist:get-all-unique-nets "dummy")))
+(define (gossip:signals nets)
+  (format #t "(signals ~A)\n" nets))
 
 (define (gossip:write-block-header)
   (format #t "(define-block (~A (\n"
@@ -107,8 +106,9 @@
 (define (gossip output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (gossip:write-top-header)
-      (gossip:get-libraries packages '())
-      (gossip:write-block-header)
-      (gossip:signals)
-      (gossip:blocks packages (gnetlist:get-all-unique-nets "dummy")))))
+      (let ((nets (get-all-unique-nets)))
+        (gossip:write-top-header)
+        (gossip:get-libraries packages '())
+        (gossip:write-block-header)
+        (gossip:signals nets)
+        (gossip:blocks packages nets)))))

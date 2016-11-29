@@ -5,7 +5,7 @@
 
 (use-library unknown *)
 (define-block (not found (
-(signals (Vdd1 GND LVH i p m))
+(signals (GND LVH Vdd1 i m p))
    (A1)
    (Cm)
    (Cp)
