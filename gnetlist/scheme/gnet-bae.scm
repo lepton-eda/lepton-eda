@@ -62,7 +62,7 @@
 ;; Write the net part of the gEDA format
 ;;
 (define (bae:nets)
-  (for-each bae:write-net (gnetlist:get-all-unique-nets "dummy")))
+  (for-each bae:write-net (get-all-unique-nets)))
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
