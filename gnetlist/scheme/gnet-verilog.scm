@@ -69,14 +69,11 @@
 ;;; PACKAGE-LIST that have an attribute named ATTRIBUTE which
 ;;; value is VALUE.
 (define (verilog:filter attribute value package-list)
-  (define (get-package-pin-netname package pin)
-    (package-pin-netname package pin))
-
   (define (get-package-pin-netnames package)
     (and (string=? (gnetlist:get-package-attribute package attribute)
                    value)
-         (get-package-pin-netname package
-                                  (car (gnetlist:get-pins package)))))
+         (package-pin-netname package
+                              (car (get-pins package)))))
 
   (filter-map get-package-pin-netnames package-list))
 
