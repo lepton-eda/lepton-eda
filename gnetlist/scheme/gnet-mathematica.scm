@@ -96,7 +96,8 @@
     (format #f "i[\"~A\",\"~A\"]" (package connection) (pinnumber connection)))
 
   (string-join (map connection->current-string
-                    (append-map get-all-connections netnames))
+                    (sort (append-map get-all-connections netnames)
+                          pair<?))
                ",\n"))
 
 
