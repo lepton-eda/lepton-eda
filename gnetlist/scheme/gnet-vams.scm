@@ -783,29 +783,12 @@ ARCHITECTURE ~A OF ~A IS
       (append str)))
 
 
-
-;; returns all nets, which a given list of pins are conneted to.
-;; requires: uref and its pins
-
-(define (vams:all-pins-nets uref pins)
-  (if (null? pins)
-      '()
-      (cons (package-pin-netname uref (car pins))
-            (vams:all-pins-nets uref (cdr pins)))))
-
-
-
-;; returns all nets, which a given list of urefs are connetd to
-;; requires: list of urefs :-)
-
-(define (vams:all-packages-nets urefs)
-  (if (null? urefs)
-      '()
-      (append
-       (vams:all-pins-nets (car urefs)
-                           (get-pins (car urefs)))
-       (vams:all-packages-nets (cdr urefs)))))
-
+;;; Returns all net names associated with all pins of PACKAGES.
+(define (vams:all-packages-nets packages)
+  (map (lambda (package)
+         (map (cut package-pin-netname package <>)
+              (get-pins package)))
+       packages))
 
 
 ;; returns all ports from a list of urefs.
