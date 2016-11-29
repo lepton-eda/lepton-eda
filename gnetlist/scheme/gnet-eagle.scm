@@ -43,19 +43,20 @@
            ;; The above pattern should stay as "pattern" and not "footprint"
            (lib (gnetlist:get-package-attribute package "lib"))
            (value (gnetlist:get-package-attribute package "value"))
-           (device (gnetlist:get-package-attribute package "device")))
+           (device (gnetlist:get-package-attribute package "device"))
+           (footprint (gnetlist:get-package-attribute package "footprint")))
 
-       (and (not (string=? pattern "unknown"))
+       (and (known? pattern)
             (display pattern))
        (format #t "ADD '~A' ~A@~A (1 1);\n"
                package
-               (gnetlist:get-package-attribute package "footprint")
-               (if (not (string=? lib "unknown")) lib "smd-ipc"))
+               footprint
+               (if (known? lib) lib "smd-ipc"))
 
-       (if (not (string=? value "unknown"))
-           (format #t "VALUE '~A' '~A';\n" package value)
-           (and (not (string=? device "unknown"))
-                (format #t "VALUE '~A' '~A';\n" package device)))))
+       (let ((val (or (and (known? value) value)
+                      (and (known? device) device))))
+         (when val
+           (format #t "VALUE '~A' '~A';\n" package val)))))
    packages))
 
 (define (eagle:display-connections connections)
