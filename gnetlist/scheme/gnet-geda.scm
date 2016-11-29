@@ -117,7 +117,7 @@ END header
 ;; Write the net part of the gEDA format
 ;;
 (define (geda:nets)
-  (geda:write-net (gnetlist:get-all-unique-nets "dummy")))
+  (geda:write-net (get-all-unique-nets)))
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
