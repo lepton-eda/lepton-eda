@@ -108,7 +108,7 @@
          (display (cdr (car template)))
          (display "\t")
          (vipec:write-net-name-of-node package
-            (length (gnetlist:get-pins package)) netnumbers)
+            (length (get-pins package)) netnumbers)
          (vipec:write-attribs package (cdr template) "\t")
          (display (string-append "\t% " package))
          (newline))))
