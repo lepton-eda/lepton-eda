@@ -46,7 +46,7 @@
 ;;--------------------------------------------------------------------
 (define (spice:write-net-names-on-component refdes)
   (do ((i 1 (1+ i)))
-      ((> i  (length (gnetlist:get-pins refdes))))
+      ((> i  (length (get-pins refdes))))
     (let ((pin-name (number->string i)))
       (display (spice:get-net refdes (gnetlist:get-attribute-by-pinseq refdes pin-name "pinnumber")))
       (write-char #\space))))
