@@ -267,19 +267,18 @@
 
 (define systemc:get-nets '())
 
-(define systemc:get-nets-once!
-  (lambda nil
-    (define the-nets '())
-    (set! systemc:get-nets
-      (begin
-        (for-each
-          (lambda (netname)
-            ; parse the netname, and see if it is already on the list
-            (let* ((parsed (systemc:net-parse netname))
-                   (listed (assoc (car parsed) the-nets)))
+(define (systemc:get-nets-once!)
+  (define the-nets '())
+  (set! systemc:get-nets
+        (begin
+          (for-each
+           (lambda (netname)
+             ;; parse the netname, and see if it is already on the list
+             (let* ((parsed (systemc:net-parse netname))
+                    (listed (assoc (car parsed) the-nets)))
 
-             (if listed
-                 (begin ; it is, do some checks, and update the record
+               (if listed
+                   ;; it is, do some checks, and update the record
                    ;; extract fields from list
                    (let* ((list-name       (first listed))
                           (list-n1         (first (second listed)))
@@ -299,75 +298,58 @@
                                                (and (not list-increasing)
                                                     (not increasing))))
 
-                         )
+                          )
 
                      (cond
                       ((and list-sure consistant)
-                       (begin
-                         (set-cdr! listed
-                                   (systemc:update-record n1 n2
-                                                          list-n1 list-n2
-                                                          increasing
-                                                          #t
-                                                          real)
-                                   )))
-                       ((and list-sure (not sure) (zero? n1) (zero? n2))
-                        '() ;; this is a net without any expression, leave it
-                        )
-                      ((and list-sure (not consistant))
-                       (begin      ;; order is inconsistent
-                         (display
-                          (string-append "Warning: Net `" real "' has a "
-                                         "bit order that conflicts with "
-                                         "the original definition of `"
-                                         list-real "', ignoring `"
-                                         real "'"
-                                         ))
-                         (newline)))
-                       ((and (not list-sure) sure consistant)
-                        (begin
-                          (set-cdr! listed
-                                    (systemc:update-record n1 n2
-                                                           list-n1 list-n2
-                                                           increasing
-                                                           #t
-                                                           real))))
-
-                       ((and (not list-sure) sure (not consistant))
-                        (begin
-                          (set-cdr! listed
-                                    (systemc:update-record n1 n2
-                                                           list-n2 list-n1
-                                                           increasing
-                                                           #t
-                                                           real))))
-                       ((and (not list-sure) (not sure))
-                        (begin
-                          (set-cdr! listed
-                                    (systemc:update-record n1 n2
-                                                           list-n1 list-n2
-                                                           increasing
-                                                           #f
-                                                           real))))
-                       (else
-                        (begin
-                          (display "This should never happen!")
-                          (newline)))
+                       (set-cdr! listed
+                                 (systemc:update-record n1 n2
+                                                        list-n1 list-n2
+                                                        increasing
+                                                        #t
+                                                        real)
+                                 ))
+                      ((and list-sure (not sure) (zero? n1) (zero? n2))
+                       '() ;; this is a net without any expression, leave it
                        )
-                 )
-             )
-           (begin ; it is not, just add it to the end
-             (set! the-nets
-                   (append the-nets
-                           (list parsed))))
-           ))
-         )
+                      ((and list-sure (not consistant))
+                       ;; order is inconsistent
+                       (format #t
+                               "Warning: Net `~A' has a bit order that conflicts with the original definition of `~A', ignoring `~A'\n"
+                               real
+                               list-real
+                               real))
+                      ((and (not list-sure) sure consistant)
+                       (set-cdr! listed
+                                 (systemc:update-record n1 n2
+                                                        list-n1 list-n2
+                                                        increasing
+                                                        #t
+                                                        real)))
 
-        all-unique-nets)
-      the-nets)
-    )
-    systemc:get-nets
-))
+                      ((and (not list-sure) sure (not consistant))
+                       (set-cdr! listed
+                                 (systemc:update-record n1 n2
+                                                        list-n2 list-n1
+                                                        increasing
+                                                        #t
+                                                        real)))
+                      ((and (not list-sure) (not sure))
+                       (set-cdr! listed
+                                 (systemc:update-record n1 n2
+                                                        list-n1 list-n2
+                                                        increasing
+                                                        #f
+                                                        real)))
+                      (else (display "This should never happen!\n"))))
+                   ;; it is not, just add it to the end
+                   (set! the-nets
+                         (append the-nets
+                                 (list parsed))))))
+
+           all-unique-nets)
+          the-nets))
+  systemc:get-nets)
 
 ;;
 ;;  Loop over the list of nets in the design, writing one by one
