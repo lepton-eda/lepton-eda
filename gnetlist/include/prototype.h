@@ -4,7 +4,6 @@ SCM g_scm_c_get_uref (OBJECT *object);
 SCM g_get_verbosity ();
 SCM g_get_backend_arguments ();
 SCM g_get_input_files();
-SCM g_get_all_nets(SCM scm_level);
 SCM g_get_all_unique_nets(SCM scm_level);
 SCM g_get_all_package_attributes(SCM scm_uref, SCM scm_wanted_attrib);
 SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq, SCM scm_wanted_attrib);

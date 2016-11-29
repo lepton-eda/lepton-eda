@@ -52,11 +52,6 @@
 (define all-unique-nets
   (gnetlist:get-all-unique-nets "placeholder"))
 
-;; return a list of all the nets in the design
-;; Might return duplicates
-(define all-nets
-  (gnetlist:get-all-nets "placeholder"))
-
 
 (define (sort-remove-duplicates ls sort-func)
   (let ((ls (sort ls sort-func)))
@@ -101,6 +96,25 @@ NETNAME."
      netlist))
 
   (sort-remove-duplicates (get-netlist-connections netlist) pair<?))
+
+
+(define (get-all-nets)
+  (define (connected? pin)
+    (let ((netname (package-pin-name pin)))
+      (and (string? netname)
+           (not (string-prefix? "unconnected_pin" netname))
+           netname)))
+
+  (append-map
+   (lambda (package)
+     (filter-map connected? (package-pins package)))
+   netlist))
+
+
+;; return a list of all the nets in the design
+;; Might return duplicates
+(define all-nets
+  (get-all-nets))
 
 
 (define (get-pins-nets package)

@@ -44,49 +44,6 @@ SCM g_scm_c_get_uref (OBJECT *object)
 }
 
 
-SCM g_get_all_nets(SCM scm_level)
-{
-
-    SCM list = SCM_EOL;
-    NETLIST *nl_current;
-    CPINLIST *pl_current;
-    char *net_name;
-
-    SCM_ASSERT(scm_is_string (scm_level), scm_level, SCM_ARG1,
-	       "gnetlist:get-all-nets");
-
-    nl_current = netlist_head;
-
-    /* walk through the list of components, and through the list
-     * of individual pins on each, adding net names to the list
-     * being careful to ignore duplicates, and unconnected pins
-     */
-    while (nl_current != NULL) {
-	pl_current = nl_current->cpins;
-	while (pl_current != NULL) {
-	    if (pl_current->net_name) {
-
-		net_name = pl_current->net_name;
-		/* filter off unconnected pins */
-		if (strncmp(net_name, "unconnected_pin", 15) != 0) {
-		    /*printf("Got net: `%s'\n",net_name); */
-		    /* add the net name to the list */
-#if DEBUG
-		    printf("Got net: `%s'\n", net_name);
-		    printf("pin %s\n", pl_current->pin_number);
-#endif
-		    list = scm_cons (scm_from_utf8_string (net_name),
-                                     list);
-		}
-	    }
-	    pl_current = pl_current->next;
-	}
-	nl_current = nl_current->next;
-    }
-
-    return list;
-}
-
 SCM g_get_all_unique_nets(SCM scm_level)
 {
 
