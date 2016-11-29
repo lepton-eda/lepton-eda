@@ -22,7 +22,7 @@
 (define (osmond output-filename)
         (set-current-output-port (gnetlist:output-port output-filename))
         (for-each osmond:part packages)
-        (for-each osmond:signal all-unique-nets))
+        (for-each osmond:signal (get-all-unique-nets)))
 
 
 ; The first section of the file consists of a list of packages,
