@@ -83,14 +83,15 @@
 (define (eagle output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      ;; initialize the net-name aliasing
-      (gnetlist:build-net-aliases eagle:map-net-names all-unique-nets)
+      (let ((nets (gnetlist:get-all-unique-nets "dummy")))
+        ;; initialize the net-name aliasing
+        (gnetlist:build-net-aliases eagle:map-net-names nets)
 
-      ;; print out the header
-      (display "   ;\n")
+        ;; print out the header
+        (display "   ;\n")
 
-      ;; print out the parts
-      (eagle:components packages)
+        ;; print out the parts
+        (eagle:components packages)
 
-      ;; print out the net information
-      (eagle:write-net (gnetlist:get-all-unique-nets "dummy")))))
+        ;; print out the net information
+        (eagle:write-net nets)))))
