@@ -138,6 +138,6 @@
         (allegro:components packages)
         (display "$NETS\n")
         (for-each display
-                  (nets->allegro-netlist (gnetlist:get-all-unique-nets "dummy")))
+                  (nets->allegro-netlist (get-all-unique-nets)))
         (display "$END\n")))
     (allegro:write-device-files packages '() (gnetlist:stdout? output-filename))))
