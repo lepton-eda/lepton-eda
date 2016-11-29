@@ -180,12 +180,6 @@ REFDES. As a result, slots may be repeated in the returned list."
       (for-each display-nl pin-list)))
 
 
-;; ha. I'm playing with scheme here.. don't mind me
-(define display-all-pins
-   (lambda ()
-      (for-each display-pin all-pins)))
-
-
 ;; another misc function
 (define print-packages
    (lambda (plist)

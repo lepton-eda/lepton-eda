@@ -58,10 +58,6 @@
   (gnetlist:get-all-nets "placeholder"))
 
 
-;; not very useful, but amusing
-(define all-pins
-   (map gnetlist:get-pins packages))
-
 (define (sort-remove-duplicates ls sort-func)
   (let ((ls (sort ls sort-func)))
     (fold-right
