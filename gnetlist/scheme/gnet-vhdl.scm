@@ -306,15 +306,11 @@ ENTITY ~A IS
 ;;;     with the device rather than the component? pin names and atributes are locked to
 ;;;     the symbol and not to the instance of the symbol in the sheet!
 
-(define vhdl:get-device-port-list
-  (lambda (device)
-    ;; construct list
-    (list (vhdl:get-device-matching-pins device (gnetlist:get-pins device) "IN")
-          (vhdl:get-device-matching-pins device (gnetlist:get-pins device) "OUT")
-          (vhdl:get-device-matching-pins device (gnetlist:get-pins device) "INOUT")
-    )
-  )
-)
+(define (vhdl:get-device-port-list device)
+  (let ((pins (gnetlist:get-pins device)))
+    (list (vhdl:get-device-matching-pins device pins "IN")
+          (vhdl:get-device-matching-pins device pins "OUT")
+          (vhdl:get-device-matching-pins device pins "INOUT"))))
 
 ;;; THHE
 ;;; get a list of all pins of a given type
