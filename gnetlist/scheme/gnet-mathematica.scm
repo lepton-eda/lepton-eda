@@ -103,7 +103,7 @@
 (define (mathematica output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((nets (gnetlist:get-all-unique-nets "dummy")))
+      (let ((nets (get-all-unique-nets)))
         (display (netnames->pin-voltages nets))
         (display "nodeEquations={\n")
         (display (netnames->current-string nets))
