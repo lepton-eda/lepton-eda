@@ -61,7 +61,7 @@
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
       (drc:device-rules drc:attriblist packages)
-      (drc:net-rules (gnetlist:get-all-unique-nets "dummy")))))
+      (drc:net-rules (get-all-unique-nets)))))
 
 
 (define drc:device-rules
