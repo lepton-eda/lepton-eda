@@ -111,6 +111,10 @@ NETNAME."
    netlist))
 
 
+(define (get-all-unique-nets)
+  "Returns a list of unique nets in design."
+  (sort-remove-duplicates (get-all-nets) refdes<?))
+
 ;; return a list of all the nets in the design
 ;; Might return duplicates
 (define all-nets
