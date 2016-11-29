@@ -714,22 +714,18 @@
             (list-ref pintype-count (drc2:position-of-pintype "unknown")))))
      0 nets))
 
-  (define (display-unknown-pintypes nets)
-    (display
-     (string-join
-      (filter-map
-       (lambda (netname)
-         (let ((pins (pins-of-type->string
-                      (drc2:position-of-pintype "unknown")
-                      (get-all-connections netname))))
-           (and (not (string-null? pins))
-                pins)))
-       nets))))
+  (define (all-nets-connections nets)
+    (sort (append-map (cut get-all-connections <>) nets)
+          pair<?))
+
+  (define (get-unknown-pintypes nets)
+    (pins-of-type->string (drc2:position-of-pintype "unknown")
+                          (all-nets-connections nets)))
 
   (display "Checking pins without the 'pintype' attribute...\n")
   (and (> (count-unknown-pintypes nets) 0)
        (display "NOTE: Found pins without the 'pintype' attribute: ")
-       (display-unknown-pintypes nets)
+       (display (get-unknown-pintypes nets))
        (message "\n"))
   (newline))
 
