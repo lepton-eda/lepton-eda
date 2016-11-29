@@ -474,27 +474,26 @@
 ;; Switcap netlist generation -- top level
 ;; ----------------------------------------------------------------------------
 (define (switcap output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
+  (with-output-to-port (gnetlist:output-port output-filename)
+    (lambda ()
 
-  ;; initialize the net-name aliasing
-  (gnetlist:build-net-aliases switcap:map-net-names all-unique-nets)
+      ;; initialize the net-name aliasing
+      (gnetlist:build-net-aliases switcap:map-net-names all-unique-nets)
 
-  ;; initialize the refdes aliasing
-  (gnetlist:build-refdes-aliases switcap:map-refdes packages)
+      ;; initialize the refdes aliasing
+      (gnetlist:build-refdes-aliases switcap:map-refdes packages)
 
-  (switcap:write-top-header)
-  (switcap:write-title-block packages)
-  (display "TIMING;\n")
-  (switcap:write-timing-block packages)
-  (display "END;\n\n")
-  (display "CIRCUIT;\n")
-  (switcap:write-netlist packages)
-  (display "END;\n\n")
-  (switcap:write-analysis-block packages)
-  (display "\n\n/* End of SWITCAP netlist */\n")
-  (display "END;\n")
-
-  (close-output-port (current-output-port)))
+      (switcap:write-top-header)
+      (switcap:write-title-block packages)
+      (display "TIMING;\n")
+      (switcap:write-timing-block packages)
+      (display "END;\n\n")
+      (display "CIRCUIT;\n")
+      (switcap:write-netlist packages)
+      (display "END;\n\n")
+      (switcap:write-analysis-block packages)
+      (display "\n\n/* End of SWITCAP netlist */\n")
+      (display "END;\n"))))
 
 
 ;; --------------------------------------------------------------------------
