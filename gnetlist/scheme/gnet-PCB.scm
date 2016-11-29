@@ -40,7 +40,7 @@
 
 (define (PCB:display-netlist)
   (for-each display
-            (nets->PCB-netlist (gnetlist:get-all-unique-nets "dummy"))))
+            (nets->PCB-netlist (get-all-unique-nets))))
 
 (define (PCB output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
