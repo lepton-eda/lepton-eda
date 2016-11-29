@@ -98,24 +98,24 @@
         (pads:write-net (cdr netnames)))))
 
 (define (pads output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
-  ;; initialize the net-name aliasing
-  (gnetlist:build-net-aliases pads:map-net-names all-unique-nets)
+  (with-output-to-port (gnetlist:output-port output-filename)
+    (lambda ()
+      ;; initialize the net-name aliasing
+      (gnetlist:build-net-aliases pads:map-net-names all-unique-nets)
 
-  ;; initialize the refdes aliasing
-  (gnetlist:build-refdes-aliases pads:map-refdes packages)
+      ;; initialize the refdes aliasing
+      (gnetlist:build-refdes-aliases pads:map-refdes packages)
 
-  ;; print out the header
-  (display "!PADS-POWERPCB-V3.0-MILS!\r\n")
-  (display "\r\n*PART*\r\n")
+      ;; print out the header
+      (display "!PADS-POWERPCB-V3.0-MILS!\r\n")
+      (display "\r\n*PART*\r\n")
 
-  ;; print out the parts
-  (pads:components packages)
+      ;; print out the parts
+      (pads:components packages)
 
-  ;; print out the net information
-  (display "\r\n*NET*\r\n")
-  (pads:write-net (gnetlist:get-all-unique-nets "dummy"))
+      ;; print out the net information
+      (display "\r\n*NET*\r\n")
+      (pads:write-net (gnetlist:get-all-unique-nets "dummy"))
 
-  ;; print out the footer
-  (display "\r\n*END*\r\n")
-  (close-output-port (current-output-port)))
+      ;; print out the footer
+      (display "\r\n*END*\r\n"))))
