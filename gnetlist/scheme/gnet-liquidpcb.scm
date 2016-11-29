@@ -55,7 +55,7 @@
       (display "<LiquidPCB>\n")
       (display "\t<netlist name=\"Main netlist\">\n")
       (for-each display
-                (nets->liquidpcb-netlist (gnetlist:get-all-unique-nets "dummy")))
+                (nets->liquidpcb-netlist (get-all-unique-nets)))
       (display "\t</netlist>\n")
       (display "</LiquidPCB>\n"))))
 
