@@ -54,7 +54,6 @@ static struct gsubr_t gnetlist_funcs[] = {
   { "gnetlist-version",             1, 0, 0, g_rc_gnetlist_version },
 
   /* netlist functions */
-  { "gnetlist:get-pins",            1, 0, 0, g_get_pins },
   { "gnetlist:get-all-nets",        1, 0, 0, g_get_all_nets },
   { "gnetlist:get-all-unique-nets", 1, 0, 0, g_get_all_unique_nets },
 

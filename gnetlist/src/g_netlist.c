@@ -43,44 +43,6 @@ SCM g_scm_c_get_uref (OBJECT *object)
   return g_scm_eval_protected (exp, SCM_UNDEFINED);
 }
 
-SCM g_get_pins(SCM scm_uref)
-{
-    char *uref;
-    SCM list = SCM_EOL;
-    NETLIST *nl_current;
-    CPINLIST *pl_current;
-
-    SCM_ASSERT(scm_is_string (scm_uref), scm_uref, SCM_ARG1, "gnetlist:get-pins");
-
-    uref = scm_to_utf8_string (scm_uref);
-
-    /* here is where you make it multi page aware */
-    nl_current = netlist_head;
-
-    /* search for the first instance */
-    /* through the entire list */
-    while (nl_current != NULL) {
-
-	if (nl_current->component_uref) {
-	    if (strcmp(nl_current->component_uref, uref) == 0) {
-
-		pl_current = nl_current->cpins;
-		while (pl_current != NULL) {
-		    if (pl_current->pin_number) {
-              list = scm_cons (scm_from_utf8_string (pl_current->pin_number),
-                               list);
-		    }
-		    pl_current = pl_current->next;
-		}
-	    }
-	}
-	nl_current = nl_current->next;
-    }
-
-    free (uref);
-
-    return (list);
-}
 
 SCM g_get_all_nets(SCM scm_level)
 {
