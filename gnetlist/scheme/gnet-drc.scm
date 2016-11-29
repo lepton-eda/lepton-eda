@@ -29,6 +29,8 @@
 ;; Net rules:  List of predicates of one variable, net name
 ;; Pin Rules:  List of predicates of 2 variables, uref and pin number
 
+(use-modules (srfi srfi-26))
+
 (define drc:parseconfig
   (lambda (port)
     (let ((read-from-file (read port)))
@@ -56,33 +58,22 @@
    nets))
 
 
+(define (drc:device-rules attribs packages)
+  (define (drc:has-attributes? attribs package)
+    (for-each
+     (lambda (attrib)
+       (if (unknown? (gnetlist:get-package-attribute package attrib))
+           (format #t "~A Does not have attribute: ~A\n" package attrib)))
+     attribs))
+
+  (for-each (cut drc:has-attributes? attribs <>) packages))
+
 
 (define (drc output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
       (drc:device-rules drc:attriblist packages)
       (drc:net-rules (get-all-unique-nets)))))
-
-
-(define drc:device-rules
-  (lambda (attriblist packages)
-    (if (not (null? packages))
-      (begin
-        (drc:has-attributes? attriblist (car packages))
-        (drc:device-rules attriblist (cdr packages))))))
-
-(define drc:has-attributes?
-  (lambda (attriblist uref)
-    (if (not (null? attriblist))
-      (begin
-        (if (string=? "unknown" (gnetlist:get-package-attribute uref (car attriblist)))
-          (begin
-            (display uref)
-            (display " Does not have attribute: ")
-            (display (car attriblist))
-            (newline)))
-        (drc:has-attributes? (cdr attriblist) uref)))))
-
 
 ;;
 ;; DRC backend written by Matt Ettus ends here
