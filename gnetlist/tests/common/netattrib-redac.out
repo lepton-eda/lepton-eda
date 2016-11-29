@@ -3,14 +3,14 @@
 .CON
 .COD 2
 
-.REM unnamed_net1
-U300 2
-.REM netattrib
-U100 5 U200 2
 .REM GND
 U100 7 U200 7 U300 7
 .REM Vcc
 U100 14 U200 14 U300 14
+.REM netattrib
+U100 5 U200 2
 .REM one
 F1 1 U100 3 U200 1 U300 1
+.REM unnamed_net1
+U300 2
 .EOD

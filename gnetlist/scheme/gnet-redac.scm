@@ -65,5 +65,5 @@
       (display ".REM CREATED BY gEDA GNETLIST\r\n")
       (display ".CON\r\n")
       (display ".COD 2\r\n\r\n")
-      (redac:write-net (gnetlist:get-all-unique-nets "dummy"))
+      (redac:write-net (get-all-unique-nets))
       (display ".EOD\r\n"))))
