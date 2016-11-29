@@ -23,43 +23,23 @@ ADD 'U1' unknown@smd-ipc (1 1);
 VALUE 'U1' 'DIODE-BRIDGE';
 ADD 'U2' unknown@smd-ipc (1 1);
 VALUE 'U2' 'LM317';
-SIGNAL 'TEN'
-   'C3' '1'
-   'R1' '2'
-   'R2' '1'
-   'U2' '1'
+SIGNAL 'GND'
+   'CONN1' '3'
+;
+SIGNAL 'EIGHT'
+   'C1' '1'
+   'C2' '1'
+   'U1' '1'
+   'U2' '3'
 ;
 SIGNAL 'ELEVEN'
    'C4' '1'
    'R2' '2'
    'U2' '2'
 ;
-SIGNAL 'GND'
-   'CONN1' '3'
-;
-SIGNAL 'ONE'
-   'CONN1' '1'
-   'S1' '1'
-;
 SIGNAL 'FIVE'
    'CONN1' '2'
    'T1' '2'
-;
-SIGNAL 'THREE'
-   'F1' '2'
-   'T1' '1'
-;
-SIGNAL 'TWO'
-   'F1' '1'
-   'S1' '2'
-;
-SIGNAL 'SIX'
-   'T1' '3'
-   'U1' '4'
-;
-SIGNAL 'SEVEN'
-   'T1' '4'
-   'U1' '3'
 ;
 SIGNAL 'NINE'
    'C1' '2'
@@ -70,9 +50,29 @@ SIGNAL 'NINE'
    'R1' '3'
    'U1' '2'
 ;
-SIGNAL 'EIGHT'
-   'C1' '1'
-   'C2' '1'
-   'U1' '1'
-   'U2' '3'
+SIGNAL 'ONE'
+   'CONN1' '1'
+   'S1' '1'
+;
+SIGNAL 'SEVEN'
+   'T1' '4'
+   'U1' '3'
+;
+SIGNAL 'SIX'
+   'T1' '3'
+   'U1' '4'
+;
+SIGNAL 'TEN'
+   'C3' '1'
+   'R1' '2'
+   'R2' '1'
+   'U2' '1'
+;
+SIGNAL 'THREE'
+   'F1' '2'
+   'T1' '1'
+;
+SIGNAL 'TWO'
+   'F1' '1'
+   'S1' '2'
 ;

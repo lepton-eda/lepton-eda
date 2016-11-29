@@ -1,15 +1,8 @@
    ;
 ADD 'U100' DIP14@smd-ipc (1 1);
 VALUE 'U100' '7400';
-SIGNAL 'SING_N_2'
-   'U100' '1'
-   'U100' '3'
-;
 SIGNAL 'GND'
    'U100' '7'
-;
-SIGNAL 'VCC'
-   'U100' '14'
 ;
 SIGNAL 'SING_N'
    'U100' '4'
@@ -18,4 +11,11 @@ SIGNAL 'SING_N'
    'U100' '8'
    'U100' '9'
    'U100' '10'
+;
+SIGNAL 'SING_N_2'
+   'U100' '1'
+   'U100' '3'
+;
+SIGNAL 'VCC'
+   'U100' '14'
 ;

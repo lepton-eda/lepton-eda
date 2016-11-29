@@ -84,7 +84,7 @@
 (define (eagle output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((nets (gnetlist:get-all-unique-nets "dummy")))
+      (let ((nets (get-all-unique-nets)))
         ;; initialize the net-name aliasing
         (gnetlist:build-net-aliases eagle:map-net-names nets)
 

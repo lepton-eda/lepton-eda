@@ -7,13 +7,6 @@ ADD 'U200' DIP14@smd-ipc (1 1);
 VALUE 'U200' '7404';
 ADD 'U300' DIP14@smd-ipc (1 1);
 VALUE 'U300' '7404';
-SIGNAL 'UNNAMED_NET1'
-   'U300' '2'
-;
-SIGNAL 'NETATTRIB'
-   'U100' '5'
-   'U200' '2'
-;
 SIGNAL 'GND'
    'U100' '7'
    'U200' '7'
@@ -24,9 +17,16 @@ SIGNAL 'VCC'
    'U200' '14'
    'U300' '14'
 ;
+SIGNAL 'NETATTRIB'
+   'U100' '5'
+   'U200' '2'
+;
 SIGNAL 'ONE'
    'F1' '1'
    'U100' '3'
    'U200' '1'
    'U300' '1'
+;
+SIGNAL 'UNNAMED_NET1'
+   'U300' '2'
 ;
