@@ -478,7 +478,7 @@
     (lambda ()
 
       ;; initialize the net-name aliasing
-      (gnetlist:build-net-aliases switcap:map-net-names all-unique-nets)
+      (gnetlist:build-net-aliases switcap:map-net-names (get-all-unique-nets))
 
       ;; initialize the refdes aliasing
       (gnetlist:build-refdes-aliases switcap:map-refdes packages)
