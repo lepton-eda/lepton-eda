@@ -47,11 +47,9 @@
 
 ;; Translate netnames
 ;; For the nonce, this just turns "_" into "-"
-;;
-(define (calay:translate string-to-translate)
-  (let ((pos (string-index string-to-translate #\_)))
-    (if pos (calay:translate (string-append (substring string-to-translate 0
-    pos) "-" (substring string-to-translate (+ 1 pos)))) string-to-translate)))
+(define (calay:translate s)
+  (string-join (string-split s #\_) "-"))
+
 
 (define (net->string netname)
   (let ((connections (get-all-connections netname)))
