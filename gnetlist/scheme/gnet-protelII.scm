@@ -239,7 +239,7 @@ LIBRARYFIELD8\r
 ;; Write the net part of the gEDA format
 ;;
 (define (protelII:nets)
-  (protelII:write-net (gnetlist:get-all-unique-nets "dummy")))
+  (protelII:write-net (get-all-unique-nets)))
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
