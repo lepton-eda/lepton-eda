@@ -83,5 +83,5 @@
 
       (maxascii:components packages)
 
-      (maxascii:write-net (gnetlist:get-all-unique-nets "dummy"))
+      (maxascii:write-net (get-all-unique-nets))
       (display "\n*END\n"))))
