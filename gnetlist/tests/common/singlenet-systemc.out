@@ -16,10 +16,10 @@ SC_MODULE (not found)
 /* Port directions begin here */
 
 /* Wires from the design */
-sc_signal<0> SING_N_2;
 sc_signal<0> GND;
-sc_signal<0> Vcc;
 sc_signal<0> SING_N;
+sc_signal<0> SING_N_2;
+sc_signal<0> Vcc;
 
 
 /* Package instantiations */

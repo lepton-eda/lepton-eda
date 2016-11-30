@@ -16,15 +16,15 @@ SC_MODULE (not found)
 /* Port directions begin here */
 
 /* Wires from the design */
-sc_signal<0> minusin_slot4_pin13_b;
-sc_signal<0> plusin_slot4_pin12_a;
-sc_signal<0> minusin_slot3_pin_b;
-sc_signal<0> plusin_slot3_pin10_a;
-sc_signal<0> minusin_slot2_pin6_b;
-sc_signal<0> plusin_slot2_pin5_a;
-sc_signal<0> samenet_output_c;
 sc_signal<0> minusin_slot1_pin_b;
+sc_signal<0> minusin_slot2_pin6_b;
+sc_signal<0> minusin_slot3_pin_b;
+sc_signal<0> minusin_slot4_pin13_b;
 sc_signal<0> plusin_slot1_pin3_a;
+sc_signal<0> plusin_slot2_pin5_a;
+sc_signal<0> plusin_slot3_pin10_a;
+sc_signal<0> plusin_slot4_pin12_a;
+sc_signal<0> samenet_output_c;
 
 
 /* Package instantiations */

@@ -38,18 +38,18 @@ SC_MODULE (not found)
 /* Port directions begin here */
 
 /* Wires from the design */
-sc_signal<0> unnamed_net2;
-sc_signal<0> Vbase2;
-sc_signal<0> Vem2;
-sc_signal<0> Vout;
-sc_signal<0> VColl2;
 sc_signal<0> GND;
-sc_signal<0> Vcc;
-sc_signal<0> Vin;
-sc_signal<0> unnamed_net1;
+sc_signal<0> VColl2;
 sc_signal<0> Vbase1;
-sc_signal<0> Vem1;
+sc_signal<0> Vbase2;
+sc_signal<0> Vcc;
 sc_signal<0> Vcoll1;
+sc_signal<0> Vem1;
+sc_signal<0> Vem2;
+sc_signal<0> Vin;
+sc_signal<0> Vout;
+sc_signal<0> unnamed_net1;
+sc_signal<0> unnamed_net2;
 
 
 /* Package instantiations */

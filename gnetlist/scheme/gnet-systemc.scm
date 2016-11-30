@@ -347,7 +347,7 @@
                          (append the-nets
                                  (list parsed))))))
 
-           all-unique-nets)
+           (get-all-unique-nets))
           the-nets))
   systemc:get-nets)
 

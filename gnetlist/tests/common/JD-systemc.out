@@ -26,12 +26,12 @@ SC_MODULE (not found)
 /* Port directions begin here */
 
 /* Wires from the design */
-sc_signal<0> Vdd1;
 sc_signal<0> GND;
 sc_signal<0> LVH;
+sc_signal<0> Vdd1;
 sc_signal<0> i;
-sc_signal<0> p;
 sc_signal<0> m;
+sc_signal<0> p;
 
 
 /* Package instantiations */

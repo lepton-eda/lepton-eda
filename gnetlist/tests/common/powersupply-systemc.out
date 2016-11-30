@@ -27,17 +27,17 @@ SC_MODULE (not found)
 /* Port directions begin here */
 
 /* Wires from the design */
-sc_signal<0> ten;
-sc_signal<0> eleven;
 sc_signal<0> GND;
-sc_signal<0> one;
+sc_signal<0> eight;
+sc_signal<0> eleven;
 sc_signal<0> five;
+sc_signal<0> nine;
+sc_signal<0> one;
+sc_signal<0> seven;
+sc_signal<0> six;
+sc_signal<0> ten;
 sc_signal<0> three;
 sc_signal<0> two;
-sc_signal<0> six;
-sc_signal<0> seven;
-sc_signal<0> nine;
-sc_signal<0> eight;
 
 
 /* Package instantiations */

@@ -23,13 +23,13 @@ SC_MODULE (not found)
 /* Port directions begin here */
 
 /* Wires from the design */
-sc_signal<0> unnamed_net6;
-sc_signal<0> unnamed_net5;
-sc_signal<0> unnamed_net4;
-sc_signal<0> unnamed_net3;
-sc_signal<0> unnamed_net2;
-sc_signal<0> unnamed_net1;
 sc_signal<0> GND;
+sc_signal<0> unnamed_net1;
+sc_signal<0> unnamed_net2;
+sc_signal<0> unnamed_net3;
+sc_signal<0> unnamed_net4;
+sc_signal<0> unnamed_net5;
+sc_signal<0> unnamed_net6;
 
 
 /* Package instantiations */
