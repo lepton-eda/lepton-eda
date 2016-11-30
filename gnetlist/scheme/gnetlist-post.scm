@@ -48,11 +48,6 @@
 ;;; Only unique packages
 (define packages (get-packages netlist))
 
-;; return a list of all unique the nets in the design
-(define all-unique-nets
-  (gnetlist:get-all-unique-nets "placeholder"))
-
-
 (define (sort-remove-duplicates ls sort-func)
   (let ((ls (sort ls sort-func)))
     (fold-right
@@ -114,6 +109,12 @@ NETNAME."
 (define (get-all-unique-nets)
   "Returns a list of unique nets in design."
   (sort-remove-duplicates (get-all-nets) refdes<?))
+
+
+;; return a list of all unique the nets in the design
+(define all-unique-nets
+  (get-all-unique-nets))
+
 
 ;; return a list of all the nets in the design
 ;; Might return duplicates
