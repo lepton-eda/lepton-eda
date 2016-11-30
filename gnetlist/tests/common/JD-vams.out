@@ -2,12 +2,12 @@
 -- Secondary unit
 
 ARCHITECTURE default_architecture OF default_entity IS
-	unknown Vdd1 	:  unknown;
 	unknown GND 	:  unknown;
 	unknown LVH 	:  unknown;
+	unknown Vdd1 	:  unknown;
 	unknown i 	:  unknown;
-	unknown p 	:  unknown;
 	unknown m 	:  unknown;
+	unknown p 	:  unknown;
 BEGIN
 -- Architecture statement part
  

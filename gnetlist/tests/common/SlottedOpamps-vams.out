@@ -2,15 +2,15 @@
 -- Secondary unit
 
 ARCHITECTURE default_architecture OF default_entity IS
-	unknown minusin_slot4_pin13_b 	:  unknown;
-	unknown plusin_slot4_pin12_a 	:  unknown;
-	unknown minusin_slot3_pin_b 	:  unknown;
-	unknown plusin_slot3_pin10_a 	:  unknown;
-	unknown minusin_slot2_pin6_b 	:  unknown;
-	unknown plusin_slot2_pin5_a 	:  unknown;
-	unknown samenet_output_c 	:  unknown;
 	unknown minusin_slot1_pin_b 	:  unknown;
+	unknown minusin_slot2_pin6_b 	:  unknown;
+	unknown minusin_slot3_pin_b 	:  unknown;
+	unknown minusin_slot4_pin13_b 	:  unknown;
 	unknown plusin_slot1_pin3_a 	:  unknown;
+	unknown plusin_slot2_pin5_a 	:  unknown;
+	unknown plusin_slot3_pin10_a 	:  unknown;
+	unknown plusin_slot4_pin12_a 	:  unknown;
+	unknown samenet_output_c 	:  unknown;
 BEGIN
 -- Architecture statement part
  

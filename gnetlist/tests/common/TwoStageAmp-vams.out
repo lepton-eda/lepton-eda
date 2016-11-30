@@ -2,18 +2,18 @@
 -- Secondary unit
 
 ARCHITECTURE default_architecture OF default_entity IS
-	unknown unnamed_net2 	:  unknown;
-	unknown Vbase2 	:  unknown;
-	unknown Vem2 	:  unknown;
-	unknown Vout 	:  unknown;
-	unknown VColl2 	:  unknown;
 	unknown GND 	:  unknown;
-	unknown Vcc 	:  unknown;
-	unknown Vin 	:  unknown;
-	unknown unnamed_net1 	:  unknown;
+	unknown VColl2 	:  unknown;
 	unknown Vbase1 	:  unknown;
-	unknown Vem1 	:  unknown;
+	unknown Vbase2 	:  unknown;
+	unknown Vcc 	:  unknown;
 	unknown Vcoll1 	:  unknown;
+	unknown Vem1 	:  unknown;
+	unknown Vem2 	:  unknown;
+	unknown Vin 	:  unknown;
+	unknown Vout 	:  unknown;
+	unknown unnamed_net1 	:  unknown;
+	unknown unnamed_net2 	:  unknown;
 BEGIN
 -- Architecture statement part
  

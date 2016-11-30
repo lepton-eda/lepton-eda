@@ -2,10 +2,10 @@
 -- Secondary unit
 
 ARCHITECTURE default_architecture OF default_entity IS
-	unknown SING_N_2 	:  unknown;
 	unknown GND 	:  unknown;
-	unknown Vcc 	:  unknown;
 	unknown SING_N 	:  unknown;
+	unknown SING_N_2 	:  unknown;
+	unknown Vcc 	:  unknown;
 BEGIN
 -- Architecture statement part
  

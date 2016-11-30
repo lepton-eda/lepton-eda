@@ -2,11 +2,11 @@
 -- Secondary unit
 
 ARCHITECTURE default_architecture OF default_entity IS
-	unknown unnamed_net1 	:  unknown;
-	unknown netattrib 	:  unknown;
 	unknown GND 	:  unknown;
 	unknown Vcc 	:  unknown;
+	unknown netattrib 	:  unknown;
 	unknown one 	:  unknown;
+	unknown unnamed_net1 	:  unknown;
 BEGIN
 -- Architecture statement part
  

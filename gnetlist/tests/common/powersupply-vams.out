@@ -2,17 +2,17 @@
 -- Secondary unit
 
 ARCHITECTURE default_architecture OF default_entity IS
-	unknown ten 	:  unknown;
-	unknown eleven 	:  unknown;
 	unknown GND 	:  unknown;
-	unknown one 	:  unknown;
+	unknown eight 	:  unknown;
+	unknown eleven 	:  unknown;
 	unknown five 	:  unknown;
+	unknown nine 	:  unknown;
+	unknown one 	:  unknown;
+	unknown seven 	:  unknown;
+	unknown six 	:  unknown;
+	unknown ten 	:  unknown;
 	unknown three 	:  unknown;
 	unknown two 	:  unknown;
-	unknown six 	:  unknown;
-	unknown seven 	:  unknown;
-	unknown nine 	:  unknown;
-	unknown eight 	:  unknown;
 BEGIN
 -- Architecture statement part
  

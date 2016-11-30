@@ -809,7 +809,7 @@ ARCHITECTURE ~A OF ~A IS
 ;; directly connected to a port.
 
 (define (vams:all-necessary-nets ports)
-  (vams:only-different-nets all-unique-nets
+  (vams:only-different-nets (get-all-unique-nets)
                             (vams:all-packages-nets ports)))
 
 
