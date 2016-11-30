@@ -37,17 +37,17 @@ ARCHITECTURE netlist OF not found IS
     COMPONENT LM317
     END COMPONENT ;
 
-    SIGNAL ten : Std_Logic;
-    SIGNAL eleven : Std_Logic;
     SIGNAL GND : Std_Logic;
-    SIGNAL one : Std_Logic;
+    SIGNAL eight : Std_Logic;
+    SIGNAL eleven : Std_Logic;
     SIGNAL five : Std_Logic;
+    SIGNAL nine : Std_Logic;
+    SIGNAL one : Std_Logic;
+    SIGNAL seven : Std_Logic;
+    SIGNAL six : Std_Logic;
+    SIGNAL ten : Std_Logic;
     SIGNAL three : Std_Logic;
     SIGNAL two : Std_Logic;
-    SIGNAL six : Std_Logic;
-    SIGNAL seven : Std_Logic;
-    SIGNAL nine : Std_Logic;
-    SIGNAL eight : Std_Logic;
 BEGIN
 -- Architecture statement part
     C1 : POLARIZED_CAPACITOR

@@ -31,13 +31,13 @@ ARCHITECTURE netlist OF not found IS
     COMPONENT cascade-transformer
     END COMPONENT ;
 
-    SIGNAL unnamed_net6 : Std_Logic;
-    SIGNAL unnamed_net5 : Std_Logic;
-    SIGNAL unnamed_net4 : Std_Logic;
-    SIGNAL unnamed_net3 : Std_Logic;
-    SIGNAL unnamed_net2 : Std_Logic;
-    SIGNAL unnamed_net1 : Std_Logic;
     SIGNAL GND : Std_Logic;
+    SIGNAL unnamed_net1 : Std_Logic;
+    SIGNAL unnamed_net2 : Std_Logic;
+    SIGNAL unnamed_net3 : Std_Logic;
+    SIGNAL unnamed_net4 : Std_Logic;
+    SIGNAL unnamed_net5 : Std_Logic;
+    SIGNAL unnamed_net6 : Std_Logic;
 BEGIN
 -- Architecture statement part
     AMP1 : cascade-amp

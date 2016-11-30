@@ -13,15 +13,15 @@ ARCHITECTURE netlist OF not found IS
     COMPONENT LM324
     END COMPONENT ;
 
-    SIGNAL minusin_slot4_pin13_b : Std_Logic;
-    SIGNAL plusin_slot4_pin12_a : Std_Logic;
-    SIGNAL minusin_slot3_pin_b : Std_Logic;
-    SIGNAL plusin_slot3_pin10_a : Std_Logic;
-    SIGNAL minusin_slot2_pin6_b : Std_Logic;
-    SIGNAL plusin_slot2_pin5_a : Std_Logic;
-    SIGNAL samenet_output_c : Std_Logic;
     SIGNAL minusin_slot1_pin_b : Std_Logic;
+    SIGNAL minusin_slot2_pin6_b : Std_Logic;
+    SIGNAL minusin_slot3_pin_b : Std_Logic;
+    SIGNAL minusin_slot4_pin13_b : Std_Logic;
     SIGNAL plusin_slot1_pin3_a : Std_Logic;
+    SIGNAL plusin_slot2_pin5_a : Std_Logic;
+    SIGNAL plusin_slot3_pin10_a : Std_Logic;
+    SIGNAL plusin_slot4_pin12_a : Std_Logic;
+    SIGNAL samenet_output_c : Std_Logic;
 BEGIN
 -- Architecture statement part
     U1 : LM324

@@ -31,12 +31,12 @@ ARCHITECTURE netlist OF not found IS
     COMPONENT LVD
     END COMPONENT ;
 
-    SIGNAL Vdd1 : Std_Logic;
     SIGNAL GND : Std_Logic;
     SIGNAL LVH : Std_Logic;
+    SIGNAL Vdd1 : Std_Logic;
     SIGNAL i : Std_Logic;
-    SIGNAL p : Std_Logic;
     SIGNAL m : Std_Logic;
+    SIGNAL p : Std_Logic;
 BEGIN
 -- Architecture statement part
     A1 : model

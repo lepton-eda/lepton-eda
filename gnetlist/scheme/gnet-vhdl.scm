@@ -371,7 +371,7 @@ ENTITY ~A IS
 (define (vhdl:write-signal-declarations)
   (define (write-signal signal)
     (format #t "    SIGNAL ~A : Std_Logic;\n" signal))
-  (for-each write-signal all-unique-nets))
+  (for-each write-signal (get-all-unique-nets)))
 
 ;;; Architecture Declarative Part
 ;;;

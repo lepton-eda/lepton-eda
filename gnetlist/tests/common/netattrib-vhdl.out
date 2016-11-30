@@ -19,11 +19,11 @@ ARCHITECTURE netlist OF not found IS
     COMPONENT 7404
     END COMPONENT ;
 
-    SIGNAL unnamed_net1 : Std_Logic;
-    SIGNAL netattrib : Std_Logic;
     SIGNAL GND : Std_Logic;
     SIGNAL Vcc : Std_Logic;
+    SIGNAL netattrib : Std_Logic;
     SIGNAL one : Std_Logic;
+    SIGNAL unnamed_net1 : Std_Logic;
 BEGIN
 -- Architecture statement part
     F1 : FUSE

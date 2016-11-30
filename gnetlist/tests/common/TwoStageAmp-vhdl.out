@@ -34,18 +34,18 @@ ARCHITECTURE netlist OF not found IS
     COMPONENT vsin
     END COMPONENT ;
 
-    SIGNAL unnamed_net2 : Std_Logic;
-    SIGNAL Vbase2 : Std_Logic;
-    SIGNAL Vem2 : Std_Logic;
-    SIGNAL Vout : Std_Logic;
-    SIGNAL VColl2 : Std_Logic;
     SIGNAL GND : Std_Logic;
-    SIGNAL Vcc : Std_Logic;
-    SIGNAL Vin : Std_Logic;
-    SIGNAL unnamed_net1 : Std_Logic;
+    SIGNAL VColl2 : Std_Logic;
     SIGNAL Vbase1 : Std_Logic;
-    SIGNAL Vem1 : Std_Logic;
+    SIGNAL Vbase2 : Std_Logic;
+    SIGNAL Vcc : Std_Logic;
     SIGNAL Vcoll1 : Std_Logic;
+    SIGNAL Vem1 : Std_Logic;
+    SIGNAL Vem2 : Std_Logic;
+    SIGNAL Vin : Std_Logic;
+    SIGNAL Vout : Std_Logic;
+    SIGNAL unnamed_net1 : Std_Logic;
+    SIGNAL unnamed_net2 : Std_Logic;
 BEGIN
 -- Architecture statement part
     A1 : model

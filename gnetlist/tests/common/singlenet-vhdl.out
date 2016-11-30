@@ -13,10 +13,10 @@ ARCHITECTURE netlist OF not found IS
     COMPONENT 7400
     END COMPONENT ;
 
-    SIGNAL SING_N_2 : Std_Logic;
     SIGNAL GND : Std_Logic;
-    SIGNAL Vcc : Std_Logic;
     SIGNAL SING_N : Std_Logic;
+    SIGNAL SING_N_2 : Std_Logic;
+    SIGNAL Vcc : Std_Logic;
 BEGIN
 -- Architecture statement part
     U100 : 7400
