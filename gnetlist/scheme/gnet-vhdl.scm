@@ -369,19 +369,9 @@ ENTITY ~A IS
 ;;;    The subtype indication is hardwired to Std_Logic.
 
 (define (vhdl:write-signal-declarations)
-  (begin
-    (for-each
-     (lambda (signal)
-       (begin
-         (display "    SIGNAL ")
-         (display signal)
-         (display " : Std_Logic;")
-         (newline)
-       )
-     )
-     all-unique-nets)
-  )
-)
+  (define (write-signal signal)
+    (format #t "    SIGNAL ~A : Std_Logic;\n" signal))
+  (for-each write-signal all-unique-nets))
 
 ;;; Architecture Declarative Part
 ;;;
