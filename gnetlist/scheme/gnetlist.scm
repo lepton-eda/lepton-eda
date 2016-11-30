@@ -224,30 +224,6 @@ REFDES. As a result, slots may be repeated in the returned list."
          ((string=? item (car ls)) #t)
          (#t (contains? (cdr ls) item)))))
 
-;; ETTUS
-;; Usage: (number-nets all-unique-nets 1)
-;; Returns a list of pairs of form (netname . number)
-(define (number-nets nets number)
-  (define (number-nets-impl in i out)
-    (if (null? in)
-        (reverse! out) ; Return value
-        (let ((netname (car in)))
-          (if (string=? "GND" netname)
-              (number-nets-impl (cdr in) i (cons (cons netname 0) out))
-              (number-nets-impl (cdr in) (1+ i) (cons (cons netname i) out))))))
-  (number-nets-impl nets number '()))
-
-;; ETTUS
-;; Usage: (get-net-number netname numberlist)
-;; numberlist should be from (number-nets) above
-;; Returns the number corresponding to the net
-(define get-net-number
-   (lambda (netname numberlist)
-      (if (not (null? numberlist))
-         (if (string=? netname (car (car numberlist)))
-            (cdr (car numberlist))
-            (get-net-number netname (cdr numberlist))))))
-
 ;;
 ;; Useful output functions contributed by Andrew Bardsley
 ;;
