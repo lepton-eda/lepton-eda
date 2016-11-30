@@ -25,7 +25,7 @@
 (define (number-nets nets number)
   (define (number-nets-impl in i out)
     (if (null? in)
-        (reverse! out) ; Return value
+        out ; Return value
         (let ((netname (car in)))
           (if (string=? "GND" netname)
               (number-nets-impl (cdr in) i (cons (cons netname 0) out))
