@@ -15,10 +15,10 @@ module \not found  (
 
 
 /* Wires from the design */
-wire SING_N_2 ;
 wire GND ;
-wire Vcc ;
 wire SING_N ;
+wire SING_N_2 ;
+wire Vcc ;
 
 /* continuous assignments */
 

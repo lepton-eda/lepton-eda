@@ -15,15 +15,15 @@ module \not found  (
 
 
 /* Wires from the design */
-wire minusin_slot4_pin13_b ;
-wire plusin_slot4_pin12_a ;
-wire minusin_slot3_pin_b ;
-wire plusin_slot3_pin10_a ;
-wire minusin_slot2_pin6_b ;
-wire plusin_slot2_pin5_a ;
-wire samenet_output_c ;
 wire minusin_slot1_pin_b ;
+wire minusin_slot2_pin6_b ;
+wire minusin_slot3_pin_b ;
+wire minusin_slot4_pin13_b ;
 wire plusin_slot1_pin3_a ;
+wire plusin_slot2_pin5_a ;
+wire plusin_slot3_pin10_a ;
+wire plusin_slot4_pin12_a ;
+wire samenet_output_c ;
 
 /* continuous assignments */
 

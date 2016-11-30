@@ -15,17 +15,17 @@ module \not found  (
 
 
 /* Wires from the design */
-wire ten ;
-wire eleven ;
 wire GND ;
-wire one ;
+wire eight ;
+wire eleven ;
 wire five ;
+wire nine ;
+wire one ;
+wire seven ;
+wire six ;
+wire ten ;
 wire three ;
 wire two ;
-wire six ;
-wire seven ;
-wire nine ;
-wire eight ;
 
 /* continuous assignments */
 

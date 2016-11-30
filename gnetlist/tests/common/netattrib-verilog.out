@@ -15,11 +15,11 @@ module \not found  (
 
 
 /* Wires from the design */
-wire unnamed_net1 ;
-wire netattrib ;
 wire GND ;
 wire Vcc ;
+wire netattrib ;
 wire one ;
+wire unnamed_net1 ;
 
 /* continuous assignments */
 

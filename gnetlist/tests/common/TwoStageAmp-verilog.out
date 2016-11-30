@@ -15,18 +15,18 @@ module \not found  (
 
 
 /* Wires from the design */
-wire unnamed_net2 ;
-wire Vbase2 ;
-wire Vem2 ;
-wire Vout ;
-wire VColl2 ;
 wire GND ;
-wire Vcc ;
-wire Vin ;
-wire unnamed_net1 ;
+wire VColl2 ;
 wire Vbase1 ;
-wire Vem1 ;
+wire Vbase2 ;
+wire Vcc ;
 wire Vcoll1 ;
+wire Vem1 ;
+wire Vem2 ;
+wire Vin ;
+wire Vout ;
+wire unnamed_net1 ;
+wire unnamed_net2 ;
 
 /* continuous assignments */
 

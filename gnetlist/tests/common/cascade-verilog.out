@@ -15,13 +15,13 @@ module \not found  (
 
 
 /* Wires from the design */
-wire unnamed_net6 ;
-wire unnamed_net5 ;
-wire unnamed_net4 ;
-wire unnamed_net3 ;
-wire unnamed_net2 ;
-wire unnamed_net1 ;
 wire GND ;
+wire unnamed_net1 ;
+wire unnamed_net2 ;
+wire unnamed_net3 ;
+wire unnamed_net4 ;
+wire unnamed_net5 ;
+wire unnamed_net6 ;
 
 /* continuous assignments */
 
