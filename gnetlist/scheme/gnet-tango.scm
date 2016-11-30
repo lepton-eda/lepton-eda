@@ -91,7 +91,7 @@
 ;; Top level function to write out nets associated with a particular component
 ;;
 (define (tango:nets)
-  (tango:write-net (gnetlist:get-all-unique-nets "dummy")))
+  (tango:write-net (get-all-unique-nets)))
 
 ;;; Highest level function
 ;;; Write tango netlist format
