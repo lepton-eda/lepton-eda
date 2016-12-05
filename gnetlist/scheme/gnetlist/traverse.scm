@@ -4,6 +4,7 @@
   #:use-module (gnetlist core traverse)
 
   #:use-module (ice-9 match)
+  #:use-module (geda attrib)
   #:use-module (gnetlist package)
   #:use-module (gnetlist package-pin)
   #:use-module (gnetlist pin-net)
@@ -45,13 +46,56 @@
   (map list->pin ls))
 
 (define (list->packages ls)
+  (define iattribs '())
   (define attribs '())
   (define (list->package ls)
     (match ls
       ((id refdes tag composite object pins)
-       (make-package id refdes tag composite object attribs (list->pins pins)))
+       (make-package id refdes tag composite object iattribs attribs (list->pins pins)))
       (_ #f)))
   (map list->package ls))
 
+
+;;; Makes attribute list of OBJECT so the attached attribs have
+;;; precedence over inherited once.
+(define (make-attrib-list get-attribs object)
+  (define (add-attrib ls attrib)
+    (let* ((name (string->symbol (attrib-name attrib)))
+           (prev-value (assq-ref ls name))
+           (new-value (attrib-value attrib)))
+      (if prev-value
+          (assq-set! ls name (cons new-value prev-value))
+          (acons name (list new-value) ls))))
+
+  (let loop ((in (get-attribs object))
+             (out '()))
+    (if (null? in)
+        out
+        (loop (cdr in)
+              (add-attrib out (car in))))))
+
+
+;;; Sets "attribs" field of each package in NETLIST according to
+;;; its object data. Returns the modified NETLIST.
+(define (netlist-collect-attribs netlist)
+  (define (parse-attrib* attrib)
+    (let ((name-value (parse-attrib attrib)))
+      (cons (string->symbol (car name-value))
+            (cdr name-value))))
+
+  (for-each
+   (lambda (package)
+     (let ((object (package-object package)))
+       (and object
+            (set-package-iattribs! package
+                                   (make-attrib-list inherited-attribs object))
+            (set-package-attribs! package
+                                  (make-attrib-list object-attribs object))
+            package)))
+   netlist)
+
+  netlist)
+
+
 (define (traverse)
-  (list->packages (%traverse)))
+  (netlist-collect-attribs (list->packages (%traverse))))
