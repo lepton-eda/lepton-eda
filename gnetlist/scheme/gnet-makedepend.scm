@@ -94,17 +94,17 @@
 (define (makedepend:split-filename makedepend-scheme name)
   (let ((match (string-match makedepend-scheme name)))
     (if match
-      (let* ((base (match:substring match 1))
-             (page (match:substring match 2))
-             (ext  (match:substring match 3)))
-        (list base page ext))
-      (begin
-        (display "ERROR: Schematic file name must take the form: BASE-PAGENUM.EXT\n"
-                 (current-error-port))
-        (primitive-exit 1)))
-  )
-)
+        ;; Numbered schematic files.
+        (let ((base (match:substring match 1))
+              (page (match:substring match 2))
+              (ext  (match:substring match 3)))
+          (list base page ext))
 
+        ;; Otherwise only one file.
+        (let ((base (string-take name (string-rindex name #\.)))
+              (page "1")
+              (ext (string-drop name (1+ (string-rindex name #\.)))))
+          (list base page ext)))))
 
 
 ;;
