@@ -104,6 +104,8 @@ echo "${GNETLIST} -g ${backend} -v -o verbose.net ${args} ${schematic}"
                                  -v -o verbose.net ${args} "${schematic}")
 rc3=$?
 
+wait
+
 # OK, now check results of run.
 status=99
 
