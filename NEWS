@@ -78,6 +78,11 @@ Notable changes in gEDA/gaf 1.9.3
 * Netlist output of several gnetlist backends is sorted by package
   names.
 
+* New Scheme procedures for working with source library have been
+  added to the `(geda library)` module: source-library-contents
+  and set-source-library-contents!.  Please see the "geda-scheme"
+  info manual for more details.
+
 
 Notable changes in gEDA/gaf 1.9.2
 =================================
