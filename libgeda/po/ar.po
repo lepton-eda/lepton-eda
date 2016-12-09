@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2016-09-13 13:40+0300\n"
+"POT-Creation-Date: 2016-12-09 10:36+0300\n"
 "PO-Revision-Date: 2012-01-31 12:11+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -246,22 +246,12 @@ msgstr ""
 msgid "Invalid path [%s] passed to component-library\n"
 msgstr "لم يعثر على المكون [%s] في المكتبة المكونات\n"
 
-#: libgeda/src/g_rc.c:620
-#, c-format
-msgid "Invalid path [%s] passed to source-library\n"
-msgstr ""
-
-#: libgeda/src/g_rc.c:667 libgeda/src/g_rc.c:676
-#, c-format
-msgid "Invalid path [%s] passed to source-library-search\n"
-msgstr ""
-
-#: libgeda/src/g_rc.c:876
+#: libgeda/src/g_rc.c:749
 #, c-format
 msgid "Invalid path [%s] passed to bitmap-directory\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:1009
+#: libgeda/src/g_rc.c:867
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
@@ -269,7 +259,7 @@ msgstr ""
 "تحذير: تم تغيير استعمال سلسلة نصية من أجل 'always-promote-attributes'.بدلا "
 "من ذلك استعمل قائمة سلاسل نصية\n"
 
-#: libgeda/src/g_rc.c:1031
+#: libgeda/src/g_rc.c:889
 msgid "always-promote-attribute: list element is not a string"
 msgstr ""
 
@@ -774,19 +764,19 @@ msgstr "لم يعثر على المكون [%s] في المكتبة المكون�
 msgid "More than one component found with name [%s]\n"
 msgstr "أكثر من مكون واحد عثر عليه باسم [%s]\n"
 
-#: libgeda/src/s_hierarchy.c:75 libgeda/src/s_hierarchy.c:233
+#: libgeda/src/s_hierarchy.c:78 libgeda/src/s_hierarchy.c:240
 msgid "Schematic not found in source library."
 msgstr ""
 
-#: libgeda/src/s_hierarchy.c:95
+#: libgeda/src/s_hierarchy.c:100
 msgid "Hierarchy contains a circular dependency."
 msgstr ""
 
-#: libgeda/src/s_hierarchy.c:195
+#: libgeda/src/s_hierarchy.c:200
 msgid "There are no schematics above the current one!\n"
 msgstr "لا توجد مخططات فوق المخطط الحالي!\n"
 
-#: libgeda/src/s_hierarchy.c:333
+#: libgeda/src/s_hierarchy.c:341
 #, fuzzy, c-format
 msgid "Failed to descend hierarchy into '%s': %s\n"
 msgstr "فشل في فتح الدليل [%s]: %s\n"
@@ -984,6 +974,20 @@ msgstr ""
 #: libgeda/scheme/geda/attrib.scm:59
 #, scheme-format
 msgid "Object ~A is not part of a page"
+msgstr ""
+
+#: libgeda/scheme/geda/library.scm:107
+#, scheme-format
+msgid "Invalid path ~S or source not readable.\n"
+msgstr ""
+
+#: libgeda/scheme/geda/library.scm:108
+msgid "Source library path must be a string.\n"
+msgstr ""
+
+#: libgeda/scheme/geda/library.scm:167
+#, scheme-format
+msgid "File ~S is not readable.\n"
 msgstr ""
 
 #~ msgid "o_save_objects: object %p has unknown type '%c'\n"

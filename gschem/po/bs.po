@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2016-09-13 13:41+0300\n"
+"POT-Creation-Date: 2016-12-08 11:55+0300\n"
 "PO-Revision-Date: 2012-01-27 14:18+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -130,54 +130,54 @@ msgstr ""
 msgid "Found invalid gschem window smob ~S"
 msgstr ""
 
-#: gschem/src/gschem.c:158
+#: gschem/src/gschem.c:157
 #, c-format
 msgid "gEDA/gschem version %s%s.%s\n"
 msgstr "gEDA/gschem verzija %s%s.%s\n"
 
-#: gschem/src/gschem.c:161
+#: gschem/src/gschem.c:160
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
 msgstr ""
 
-#: gschem/src/gschem.c:163
+#: gschem/src/gschem.c:162
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 
-#: gschem/src/gschem.c:165
+#: gschem/src/gschem.c:164
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
 "\n"
 msgstr ""
 
-#: gschem/src/gschem.c:168
+#: gschem/src/gschem.c:167
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr ""
 
-#: gschem/src/gschem.c:172
+#: gschem/src/gschem.c:171
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr ""
 
-#: gschem/src/gschem.c:202
+#: gschem/src/gschem.c:201
 #, c-format
 msgid "Couldn't find init scm file [%s]\n"
 msgstr ""
 
-#: gschem/src/gschem.c:207
+#: gschem/src/gschem.c:206
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr ""
 
-#: gschem/src/gschem.c:211
+#: gschem/src/gschem.c:210
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr ""
 
-#: gschem/src/gschem.c:275
+#: gschem/src/gschem.c:274
 #, c-format
 msgid ""
 "ERROR: Failed to load or evaluate startup script.\n"

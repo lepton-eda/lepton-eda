@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2016-09-13 13:41+0300\n"
+"POT-Creation-Date: 2016-12-08 11:55+0300\n"
 "PO-Revision-Date: 2012-03-23 03:04+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -148,12 +148,12 @@ msgstr "No se puede abrir la URI ~S: ~A"
 msgid "Found invalid gschem window smob ~S"
 msgstr "Se encontró `smob' de ventana de gschem inválido ~S"
 
-#: gschem/src/gschem.c:158
+#: gschem/src/gschem.c:157
 #, c-format
 msgid "gEDA/gschem version %s%s.%s\n"
 msgstr "Versión de gEDA/gschem %s%s.%s\n"
 
-#: gschem/src/gschem.c:161
+#: gschem/src/gschem.c:160
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
@@ -161,12 +161,12 @@ msgstr ""
 "gEDA/gschem no incluye NINGUNA GARANTÍA; véase el fichero COPYING para más "
 "detalles.\n"
 
-#: gschem/src/gschem.c:163
+#: gschem/src/gschem.c:162
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr "Esto es software libre, y puede redistribuirlo bajo ciertas\n"
 
-#: gschem/src/gschem.c:165
+#: gschem/src/gschem.c:164
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
 "\n"
@@ -174,32 +174,32 @@ msgstr ""
 "condiciones; por favor vea el fichero COPYING para más detalles.\n"
 "\n"
 
-#: gschem/src/gschem.c:168
+#: gschem/src/gschem.c:167
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr "Ésta es la adaptación MINGW32.\n"
 
-#: gschem/src/gschem.c:172
+#: gschem/src/gschem.c:171
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr "Entorno actual de locale: %s\n"
 
-#: gschem/src/gschem.c:202
+#: gschem/src/gschem.c:201
 #, c-format
 msgid "Couldn't find init scm file [%s]\n"
 msgstr "No se ha podido encontrar el fichero de inicialización scm [%s]\n"
 
-#: gschem/src/gschem.c:207
+#: gschem/src/gschem.c:206
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "Leído fichero de inicialización scm [%s]\n"
 
-#: gschem/src/gschem.c:211
+#: gschem/src/gschem.c:210
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Fallo al leer fichero de inicialización scm [%s]\n"
 
-#: gschem/src/gschem.c:275
+#: gschem/src/gschem.c:274
 #, fuzzy, c-format
 msgid ""
 "ERROR: Failed to load or evaluate startup script.\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2016-09-13 13:40+0300\n"
+"POT-Creation-Date: 2016-12-09 10:36+0300\n"
 "PO-Revision-Date: 2012-02-20 00:09+0000\n"
 "Last-Translator: Carlos Nieves <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -261,22 +261,12 @@ msgstr "ERROR: El log %s puede contener más información.\n"
 msgid "Invalid path [%s] passed to component-library\n"
 msgstr "No se ha encontrado el componente [%s] en la librería de componentes\n"
 
-#: libgeda/src/g_rc.c:620
-#, c-format
-msgid "Invalid path [%s] passed to source-library\n"
-msgstr ""
-
-#: libgeda/src/g_rc.c:667 libgeda/src/g_rc.c:676
-#, c-format
-msgid "Invalid path [%s] passed to source-library-search\n"
-msgstr ""
-
-#: libgeda/src/g_rc.c:876
+#: libgeda/src/g_rc.c:749
 #, c-format
 msgid "Invalid path [%s] passed to bitmap-directory\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:1009
+#: libgeda/src/g_rc.c:867
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
@@ -284,7 +274,7 @@ msgstr ""
 "ADVERTENCIA: el uso de la cadena 'always-promote-attributes' está obsoleto. "
 "Se recomienda utilizar una lista de cadenas en su lugar\n"
 
-#: libgeda/src/g_rc.c:1031
+#: libgeda/src/g_rc.c:889
 msgid "always-promote-attribute: list element is not a string"
 msgstr ""
 
@@ -820,19 +810,19 @@ msgstr "No se ha encontrado el componente [%s] en la librería de componentes\n"
 msgid "More than one component found with name [%s]\n"
 msgstr "Se ha encontrado más de un componente con el nombre [%s]\n"
 
-#: libgeda/src/s_hierarchy.c:75 libgeda/src/s_hierarchy.c:233
+#: libgeda/src/s_hierarchy.c:78 libgeda/src/s_hierarchy.c:240
 msgid "Schematic not found in source library."
 msgstr ""
 
-#: libgeda/src/s_hierarchy.c:95
+#: libgeda/src/s_hierarchy.c:100
 msgid "Hierarchy contains a circular dependency."
 msgstr ""
 
-#: libgeda/src/s_hierarchy.c:195
+#: libgeda/src/s_hierarchy.c:200
 msgid "There are no schematics above the current one!\n"
 msgstr "¡No hay más esquemas en un nivel de jerarquía superior al actual!\n"
 
-#: libgeda/src/s_hierarchy.c:333
+#: libgeda/src/s_hierarchy.c:341
 #, fuzzy, c-format
 msgid "Failed to descend hierarchy into '%s': %s\n"
 msgstr "Error al abrir la carpeta [%s]: %s\n"
@@ -1047,6 +1037,20 @@ msgstr ""
 #, scheme-format
 msgid "Object ~A is not part of a page"
 msgstr "El objeto ~A no es parte de una página"
+
+#: libgeda/scheme/geda/library.scm:107
+#, scheme-format
+msgid "Invalid path ~S or source not readable.\n"
+msgstr ""
+
+#: libgeda/scheme/geda/library.scm:108
+msgid "Source library path must be a string.\n"
+msgstr ""
+
+#: libgeda/scheme/geda/library.scm:167
+#, fuzzy, scheme-format
+msgid "File ~S is not readable.\n"
+msgstr "Fichero %s es de solo lectura"
 
 #~ msgid "o_save_objects: object %p has unknown type '%c'\n"
 #~ msgstr "o_save_objects: el objeto %p tiene un tipo '%c' desconocido\n"

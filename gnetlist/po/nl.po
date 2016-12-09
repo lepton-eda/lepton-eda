@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gnetlist\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2016-11-10 10:17+0300\n"
+"POT-Creation-Date: 2016-12-08 15:34+0300\n"
 "PO-Revision-Date: 2014-08-31 20:38+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -18,17 +18,12 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
-#: gnetlist/src/g_netlist.c:400
-#, c-format
-msgid "Invalid refdes ('%s') and pin ('%s') passed to get-nets\n"
-msgstr "Ongeldige refdes ('%s') en pen ('%s') overgedragen aan get-nets\n"
-
-#: gnetlist/src/gnetlist.c:93
+#: gnetlist/src/gnetlist.c:91
 #, c-format
 msgid "Can't open directory %s: %s\n"
 msgstr "Kan bestandenmap %s: %s niet openen\n"
 
-#: gnetlist/src/gnetlist.c:125
+#: gnetlist/src/gnetlist.c:123
 #, c-format
 msgid ""
 "List of available backends: \n"
@@ -37,7 +32,7 @@ msgstr ""
 "Lijst van beschikbare backends:\n"
 "\n"
 
-#: gnetlist/src/gnetlist.c:173
+#: gnetlist/src/gnetlist.c:201
 #, c-format
 msgid ""
 "gEDA/gnetlist version %s%s.%s\n"
@@ -55,7 +50,7 @@ msgstr ""
 "condities; zie alstublieft het COPYING bestand voor meer details.\n"
 "\n"
 
-#: gnetlist/src/gnetlist.c:180
+#: gnetlist/src/gnetlist.c:208
 #, c-format
 msgid ""
 "This is the MINGW32 port.\n"
@@ -64,17 +59,17 @@ msgstr ""
 "Dit is de MINGW32 versie.\n"
 "\n"
 
-#: gnetlist/src/gnetlist.c:224 gnetlist/src/gnetlist.c:225
+#: gnetlist/src/gnetlist.c:258 gnetlist/src/gnetlist.c:259
 #, c-format
 msgid "Loading schematic [%s]\n"
 msgstr "Laden van schema [%s]\n"
 
-#: gnetlist/src/gnetlist.c:232
+#: gnetlist/src/gnetlist.c:266
 #, c-format
 msgid "ERROR: Failed to load '%s': %s\n"
 msgstr "FOUT: Faalde bij het laden van '%s': %s\n"
 
-#: gnetlist/src/gnetlist.c:257
+#: gnetlist/src/gnetlist.c:291
 #, c-format
 msgid ""
 "ERROR: No schematics files specified for processing.\n"
@@ -85,7 +80,7 @@ msgstr ""
 "\n"
 "Doe `%s --help' voor meer informatie.\n"
 
-#: gnetlist/src/gnetlist.c:280
+#: gnetlist/src/gnetlist.c:314
 #, c-format
 msgid ""
 "ERROR: Could not find backend `%s' in load path.\n"
@@ -96,7 +91,7 @@ msgstr ""
 "\n"
 "Doe `%s --list-backends' voor een volledige lijst van beschikbare backends.\n"
 
-#: gnetlist/src/gnetlist.c:319
+#: gnetlist/src/gnetlist.c:341
 #, c-format
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr "U gaf geen backend om uit voeren noch interactieve modus!\n"
@@ -366,3 +361,6 @@ msgstr ""
 #, c-format
 msgid "Found a possible net/pin infinite connection\n"
 msgstr "Vond een mogelijk oneindige net/pen verbinding\n"
+
+#~ msgid "Invalid refdes ('%s') and pin ('%s') passed to get-nets\n"
+#~ msgstr "Ongeldige refdes ('%s') en pen ('%s') overgedragen aan get-nets\n"

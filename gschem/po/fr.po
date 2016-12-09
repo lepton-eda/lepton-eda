@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2016-09-13 13:41+0300\n"
+"POT-Creation-Date: 2016-12-08 11:55+0300\n"
 "PO-Revision-Date: 2012-10-28 15:46+0000\n"
 "Last-Translator: Penegal <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -134,25 +134,25 @@ msgstr "Impossible de lancer l'URI ~S: ~A"
 msgid "Found invalid gschem window smob ~S"
 msgstr ""
 
-#: gschem/src/gschem.c:158
+#: gschem/src/gschem.c:157
 #, c-format
 msgid "gEDA/gschem version %s%s.%s\n"
 msgstr "gEDA/gschem version %s%s.%s\n"
 
-#: gschem/src/gschem.c:161
+#: gschem/src/gschem.c:160
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
 msgstr "gEDA/gschem n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE.\n"
 
-#: gschem/src/gschem.c:163
+#: gschem/src/gschem.c:162
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Ceci est un logiciel libre et vous êtes invité à le redistribuer en "
 "respectant\n"
 
-#: gschem/src/gschem.c:165
+#: gschem/src/gschem.c:164
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
 "\n"
@@ -161,32 +161,32 @@ msgstr ""
 "COPYING.\n"
 "\n"
 
-#: gschem/src/gschem.c:168
+#: gschem/src/gschem.c:167
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr "Ceci est le portage sous MINGW32\n"
 
-#: gschem/src/gschem.c:172
+#: gschem/src/gschem.c:171
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr "Locale en cours : %s\n"
 
-#: gschem/src/gschem.c:202
+#: gschem/src/gschem.c:201
 #, c-format
 msgid "Couldn't find init scm file [%s]\n"
 msgstr "Impossible de trouver le fichier scm d'init [%s]\n"
 
-#: gschem/src/gschem.c:207
+#: gschem/src/gschem.c:206
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "Lecture du fichier scm de démarrage [%s]\n"
 
-#: gschem/src/gschem.c:211
+#: gschem/src/gschem.c:210
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Échec de la lecture du fichier scm de démarrage [%s]\n"
 
-#: gschem/src/gschem.c:275
+#: gschem/src/gschem.c:274
 #, fuzzy, c-format
 msgid ""
 "ERROR: Failed to load or evaluate startup script.\n"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gnetlist\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2016-11-10 10:17+0300\n"
+"POT-Creation-Date: 2016-12-08 15:34+0300\n"
 "PO-Revision-Date: 2014-05-20 08:55+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA Developers\n"
@@ -18,17 +18,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gnetlist/src/g_netlist.c:400
-#, c-format
-msgid "Invalid refdes ('%s') and pin ('%s') passed to get-nets\n"
-msgstr "get-nets: недопустимое позиционное обозначение («%s») и вывод («%s»)\n"
-
-#: gnetlist/src/gnetlist.c:93
+#: gnetlist/src/gnetlist.c:91
 #, c-format
 msgid "Can't open directory %s: %s\n"
 msgstr "Не удалось открыть каталог %s: %s\n"
 
-#: gnetlist/src/gnetlist.c:125
+#: gnetlist/src/gnetlist.c:123
 #, c-format
 msgid ""
 "List of available backends: \n"
@@ -37,7 +32,7 @@ msgstr ""
 "Список доступных драйверов: \n"
 "\n"
 
-#: gnetlist/src/gnetlist.c:173
+#: gnetlist/src/gnetlist.c:201
 #, c-format
 msgid ""
 "gEDA/gnetlist version %s%s.%s\n"
@@ -55,7 +50,7 @@ msgstr ""
 "условиях. Подробности см. в файле COPYING.\n"
 "\n"
 
-#: gnetlist/src/gnetlist.c:180
+#: gnetlist/src/gnetlist.c:208
 #, c-format
 msgid ""
 "This is the MINGW32 port.\n"
@@ -64,17 +59,17 @@ msgstr ""
 "Это версия для MINGW32.\n"
 "\n"
 
-#: gnetlist/src/gnetlist.c:224 gnetlist/src/gnetlist.c:225
+#: gnetlist/src/gnetlist.c:258 gnetlist/src/gnetlist.c:259
 #, c-format
 msgid "Loading schematic [%s]\n"
 msgstr "Загрузка схемы «%s»\n"
 
-#: gnetlist/src/gnetlist.c:232
+#: gnetlist/src/gnetlist.c:266
 #, c-format
 msgid "ERROR: Failed to load '%s': %s\n"
 msgstr "ОШИБКА: Не удалось загрузить «%s»: %s\n"
 
-#: gnetlist/src/gnetlist.c:257
+#: gnetlist/src/gnetlist.c:291
 #, c-format
 msgid ""
 "ERROR: No schematics files specified for processing.\n"
@@ -85,7 +80,7 @@ msgstr ""
 "\n"
 "Подробности см. в выводе команды «%s --help».\n"
 
-#: gnetlist/src/gnetlist.c:280
+#: gnetlist/src/gnetlist.c:314
 #, c-format
 msgid ""
 "ERROR: Could not find backend `%s' in load path.\n"
@@ -97,7 +92,7 @@ msgstr ""
 "Список всех доступных драйверов можно узнать по команде «%s --list-"
 "backends».\n"
 
-#: gnetlist/src/gnetlist.c:319
+#: gnetlist/src/gnetlist.c:341
 #, c-format
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
@@ -369,3 +364,7 @@ msgstr ""
 msgid "Found a possible net/pin infinite connection\n"
 msgstr ""
 "Обнаружено возможно бесконечное число подключений для вывода/соединения\n"
+
+#~ msgid "Invalid refdes ('%s') and pin ('%s') passed to get-nets\n"
+#~ msgstr ""
+#~ "get-nets: недопустимое позиционное обозначение («%s») и вывод («%s»)\n"
