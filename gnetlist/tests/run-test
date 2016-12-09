@@ -147,12 +147,21 @@ else
 
     if ! diff "${out}.tmp1" "${out}.tmp2" >/dev/null; then
         echo "FAILED: Wrong plain output. See diff ${ref} ${out}"
+        echo "--------------------------------8<--------------------------------"
+        diff ${ref} ${out}
+        echo "-------------------------------->8--------------------------------"
         status=1
     elif ! diff "${out}.tmp1" "${out}.tmp3" >/dev/null; then
         echo "FAILED: Wrong stdout output. See diff ${ref} ${std}"
+        echo "--------------------------------8<--------------------------------"
+        diff ${ref} ${std}
+        echo "-------------------------------->8--------------------------------"
         status=1
     elif ! diff "${out}.tmp1" "${out}.tmp4" >/dev/null; then
         echo "FAILED: Wrong verbose output. See diff ${ref} ${vrb}"
+        echo "--------------------------------8<--------------------------------"
+        diff ${ref} ${vrb}
+        echo "-------------------------------->8--------------------------------"
         status=1
     else
         echo "PASS"
