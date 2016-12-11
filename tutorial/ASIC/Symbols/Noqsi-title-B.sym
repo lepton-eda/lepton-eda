@@ -1,0 +1,41 @@
+v 20130925 2
+B 0 0 17000 11000 15 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 14400 1500 5 10 0 0 0 0 1
+graphical=1
+L 12900 600 12900 0 15 0 0 0 -1 -1
+B 9400 0 7600 1400 15 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+L 9400 700 17000 700 15 0 0 0 -1 -1
+T 10000 500 9 10 1 1 0 0 1
+date=$Date: 2009-01-11 18:02:03 $
+T 13900 500 9 10 1 1 0 0 1
+rev=$Revision: 1.1 $
+T 15400 200 9 10 1 1 0 0 1
+auth=$Author: jpd $
+T 10200 800 9 8 1 1 0 0 1
+fname=$Source: /cvs/MIT/TESS/AE/minisys/components/symbols/Noqsi-title-B.sym,v $
+T 13200 1200 9 14 1 1 0 4 1
+title=TITLE
+T 9500 800 15 8 1 0 0 0 1
+FILE:
+T 13000 500 15 8 1 0 0 0 1
+REVISION:
+T 13000 200 15 8 1 0 0 0 1
+DRAWN BY: 
+T 9500 200 15 8 1 0 0 0 1
+PAGE
+T 11200 200 15 8 1 0 0 0 1
+OF
+T 9500 1200 15 8 1 0 0 0 1
+TITLE
+T 9500 500 15 8 1 0 0 0 1
+DATE
+B 9400 9600 7600 1400 15 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 10200 10400 9 30 1 0 0 0 1
+Noqsi Aerospace, Ltd.
+T 10600 10100 9 10 1 0 0 0 1
+2822 South Nova Road, Pine, Colorado, USA 80470
+T 11300 9500 9 10 1 0 0 0 2
++1-303-816-2756    jpd@noqsi.com
+
+T 0 11036 9 6 1 0 0 0 1
+This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. To view a copy of the license, visit https://creativecommons.org/licenses/by-sa/4.0/legalcode

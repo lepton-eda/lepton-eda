@@ -1,0 +1,19 @@
+This sample project demonstrates ASIC development using gEDA with openIP.
+
+The demo assumes you have installed gnet-spice-noqsi.scm. See INSTALL in the gnet-spice-noqsi directory. You must also have ngspice installed. Typing "make" should  create netlists, run ngspice, and display a plot of the behavior of a pulse height discriminator.
+
+Some details:
+
+This project handles hierarchy in SPICE rather than gnetlist. Thus, there is a
+gnetlistrc file containing the line '(hierarchy-traversal "disabled")'. This project uses the style of the older spice-sdb back end for gnetlist. Indeed, it works if you change the line:
+
+GNET=gnetlist -L ../.. -g spice-noqsi
+
+to:
+
+GNET=gnetlist -g spice-sdb
+
+References:
+
+http://research.kek.jp/people/ikeda/openIP/
+http://www.gedasymbols.org/user/john_doty/

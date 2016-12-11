@@ -1,0 +1,64 @@
+v 20070216 1
+T 500 700 8 10 1 1 0 0 1
+refdes=X?
+T 1100 1400 8 10 0 1 0 0 1
+device=NORP
+T 1100 1200 8 10 0 0 0 0 1
+model-name=NORP
+T 1100 1000 8 10 0 0 0 0 1
+numslots=0
+T 1100 800 8 10 0 1 0 0 1
+description=NOR gate
+T 1100 600 8 10 0 1 0 0 1
+documentation=http://research.kek.jp/people/ikeda/openIP
+T 1100 1600 8 10 0 0 0 0 1
+symversion=1.0
+T 2000 1400 8 10 0 1 0 0 1
+author=jpd@noqsi.com
+T 2100 1000 8 10 0 0 0 0 1
+footprint=none
+L 325 0 700 0 3 0 0 0 -1 -1
+L 325 600 700 600 3 0 0 0 -1 -1
+A 700 400 400 270 76 3 0 0 0 -1 -1
+A 700 200 400 14 76 3 0 0 0 -1 -1
+P 400 500 100 500 1 0 1
+{
+T 300 550 5 8 0 1 0 6 1
+pinnumber=1
+T 300 450 5 8 0 1 0 8 1
+pinseq=1
+T 450 500 5 8 0 1 0 0 1
+pinlabel=A
+T 450 500 5 8 0 1 0 2 1
+pintype=in
+}
+P 400 100 100 100 1 0 1
+{
+T 300 150 5 8 0 1 0 6 1
+pinnumber=2
+T 300 50 5 8 0 1 0 8 1
+pinseq=2
+T 450 100 5 8 0 1 0 0 1
+pinlabel=B
+T 450 100 5 8 0 1 0 2 1
+pintype=in
+}
+V 1138 300 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+P 1400 300 1188 300 1 0 0
+{
+T 1200 350 5 8 0 1 0 0 1
+pinnumber=3
+T 1200 250 5 8 0 1 0 2 1
+pinseq=3
+T 1050 300 5 8 0 1 0 6 1
+pinlabel=Y
+T 1050 300 5 8 0 1 0 8 1
+pintype=out
+}
+A 50 300 400 312 96 3 0 0 0 -1 -1
+T 500 300 9 10 1 0 0 1 1
+NORP
+T 0 0 8 10 0 0 0 0 1
+dist-license=GPL
+T 0 0 8 10 0 0 0 0 1
+use-license=unlimited
