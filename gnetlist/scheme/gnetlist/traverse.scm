@@ -4,6 +4,7 @@
   #:use-module (gnetlist core traverse)
 
   #:use-module (ice-9 match)
+  #:use-module (srfi srfi-1)
   #:use-module (geda attrib)
   #:use-module (gnetlist package)
   #:use-module (gnetlist package-pin)
@@ -23,6 +24,8 @@
   (define pinnumber cdr)
   (define (list->net ls)
     (match ls
+      ((-1 . rest)
+       #f)
      ((id priority name connection)
       (let ((conn-pair (if connection
                            (split-string-by-char connection #\space)
@@ -33,27 +36,31 @@
                       (package conn-pair)
                       (pinnumber conn-pair))))
      (_ #f)))
-  (map list->net ls))
+  (filter-map list->net ls))
 
 (define (list->pins ls)
   (define attribs '())
   (define object #f)
   (define (list->pin ls)
     (match ls
+      ((-1 . rest)
+       #f)
       ((id type number name label nets)
        (make-package-pin id object type number name label attribs (list->nets nets)))
       (_ #f)))
-  (map list->pin ls))
+  (filter-map list->pin ls))
 
 (define (list->packages ls)
   (define iattribs '())
   (define attribs '())
   (define (list->package ls)
     (match ls
+      ((-1 . rest)
+       #f)
       ((id refdes tag composite object pins)
        (make-package id refdes tag composite object iattribs attribs (list->pins pins)))
       (_ #f)))
-  (map list->package ls))
+  (filter-map list->package ls))
 
 
 ;;; Makes attribute list of OBJECT so the attached attribs have
