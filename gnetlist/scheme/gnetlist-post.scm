@@ -25,13 +25,63 @@
              (gnetlist package-pin)
              (gnetlist pin-net)
              (gnetlist attrib compare)
-             (ice-9 match))
+             (ice-9 match)
+             (geda page)
+             (geda object)
+             (sxml transform))
+
+;;; Toplevel schematic is just a list of pages given on the
+;;; command line.
+(define toplevel-schematic (active-pages))
+
 
 (define gnetlist:cwd (getcwd))
 (define netlist (traverse))
 ;;; Change back to the directory where we started.  This is done
 ;;; because (traverse) can change the current working directory.
 (chdir gnetlist:cwd)
+
+
+(define (page->sxml page)
+  (define composites
+    (filter-map (lambda (p) (and (package-composite? p) p)) netlist))
+
+  (define (source-page source)
+    (let loop ((pages (active-pages)))
+      (and (not (null? pages))
+           (if (string=? source (basename (page-filename (car pages))))
+               (page->sxml (car pages))
+               (loop (cdr pages))))))
+
+  (define (composite->sxml p)
+    (and (string=? (basename (page-filename (object-page (package-object p))))
+                   (basename (page-filename page)))
+         (let* ((sources-value (or (assq-ref (package-attribs p) 'source)
+                                   (assq-ref (package-iattribs p) 'source)))
+                (sources (and sources-value
+                              (append-map (lambda (s) (string-split s #\,))
+                                          sources-value))))
+           (if sources
+               `(package ,p ,@(map source-page sources))
+               `(package ,p)))))
+
+  `(page ,page ,@(filter-map composite->sxml composites)))
+
+(define (schematic->sxml schematic)
+  `(*TOP* ,@(map page->sxml schematic)))
+
+(define (schematic-sxml-tree->dependency-tree tree)
+  (define (simplify-dependencies x)
+    (delete-duplicates (apply append x)))
+
+  (pre-post-order
+   tree
+   `((*TOP* . ,(lambda (x . t) `(*TOP* . ,t)))
+     (page . ,(lambda (x pg . deps) `(,(basename (page-filename pg)) .
+                                 ,(simplify-dependencies deps))))
+     (package . ,(lambda (x pkg . deps) deps))
+     (*text* . ,(lambda (x t) t))
+     (*default* . ,(lambda (x . t) t)))))
 
 (define non-unique-packages
   (sort (filter-map package-refdes netlist) refdes<?))
