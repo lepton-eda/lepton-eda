@@ -293,7 +293,7 @@ void main_prog(void *closure, int argc, char *argv[])
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist-post.scm"));
 
     if (interactive_mode) {
-        scm_c_eval_string ("(set-repl-prompt! \"gnetlist> \")");
+        scm_c_eval_string ("(set-repl-prompt! \"scheme@(gnetlist)> \")");
         scm_shell (0, NULL);
     } else if (guile_proc) {
         /* check size here hack */
