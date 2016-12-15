@@ -101,9 +101,11 @@
           (list base page ext))
 
         ;; Otherwise only one file.
-        (let ((base (string-take name (string-rindex name #\.)))
+        (let ((base (string-take name (or (string-rindex name #\.)
+                                          (string-length name))))
               (page "1")
-              (ext (string-drop name (1+ (string-rindex name #\.)))))
+              (ext (string-drop name (1+ (or (string-rindex name #\.)
+                                             (1- (string-length name)))))))
           (list base page ext)))))
 
 
