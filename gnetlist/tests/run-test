@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ref="$1"
-tmp="`echo "$1" | sed -e 's:.*/tests/::' -e 's:\\.out$::'`"
+tmp="`echo "$1" | sed -e 's:.*/tests/::' -e 's:\\.out$::' -e 's:\\./::'`"
 stem="`echo "${tmp}" | sed -e 's:-spice-.*:@@@:' -e 's:\\(-[^-@]*\\|@@@\\)$::'`"
 backend="`echo "${tmp}" | sed -e "s:^${stem}-::"`"
 
@@ -12,6 +12,10 @@ export GEDADATA
 export GEDADATARC
 
 schematic="${abs_srcdir}/${stem}.sch"
+# Multi-page schematic
+if test "X${stem}" = "Xhierarchy3" ; then
+    schematic="${abs_srcdir}/${stem}-*.sch"
+fi
 
 rundir="run.$$"
 
@@ -87,21 +91,21 @@ echo "${GNETLIST} -g ${backend} ${args} ${schematic}"
 (cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
                                  -L "${abs_top_builddir}/libgeda/scheme" \
                                  -g "${backend}" \
-                                 ${args} "${schematic}")
+                                 ${args} ${schematic})
 rc1=$?
 
 echo "${GNETLIST} -g ${backend} -o - ${args} ${schematic} > stdout.net"
 (cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
                                  -L "${abs_top_builddir}/libgeda/scheme" \
                                  -g "${backend}" \
-                                 -o - ${args} "${schematic}" > stdout.net)
+                                 -o - ${args} ${schematic} > stdout.net)
 rc2=$?
 
 echo "${GNETLIST} -g ${backend} -v -o verbose.net ${args} ${schematic}"
 (cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
                                  -L "${abs_top_builddir}/libgeda/scheme" \
                                  -g "${backend}" \
-                                 -v -o verbose.net ${args} "${schematic}")
+                                 -v -o verbose.net ${args} ${schematic})
 rc3=$?
 
 wait

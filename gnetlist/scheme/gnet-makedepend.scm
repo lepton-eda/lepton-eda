@@ -1,6 +1,7 @@
 ;;; gEDA - GPL Electronic Design Automation
 ;;; gnetlist - gEDA Netlist
 ;;; Copyright (C) 2011 Dan White <dan@whiteaudio.com>
+;;; Copyright (C) 2016 gEDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -79,7 +80,9 @@
 
 
 (use-modules (ice-9 regex)
-             (srfi srfi-1))
+             (srfi srfi-1)
+             (sxml match)
+             (gnetlist package))
 
 
 ; Split a filename into 3 parts:
@@ -89,74 +92,124 @@
 ;
 ; base_nam3-#.ext -> [[:alnum:]_]+-[:digit:]+.ext
 (define makedepend-scheme
-  "([[:alnum:]_]+)-([[:digit:]]+).([[:alpha:]]+)$")
+  "([[:alnum:]_-]+)-([[:digit:]]+).([[:alpha:]]+)$")
 
-(define (makedepend:split-filename makedepend-scheme name)
+(define (makedepend:basename makedepend-scheme name)
   (let ((match (string-match makedepend-scheme name)))
     (if match
         ;; Numbered schematic files.
-        (let ((base (match:substring match 1))
-              (page (match:substring match 2))
-              (ext  (match:substring match 3)))
-          (list base page ext))
+        (match:substring match 1)
 
         ;; Otherwise only one file.
-        (let ((base (string-take name (or (string-rindex name #\.)
-                                          (string-length name))))
-              (page "1")
-              (ext (string-drop name (1+ (or (string-rindex name #\.)
-                                             (1- (string-length name)))))))
-          (list base page ext)))))
+        (let ((dot-position (string-rindex name #\.)))
+          (if dot-position
+              (string-take name dot-position)
+              name)))))
 
 
-;;
-;; Returns a list of all values found for the given attribute name
-;; over all packages in the input files.
-;;
-(define (makedepend:get-all-attr-values attribute packages)
-  ;split individual values (gschem wants a single comma-sep list for source=)
-  (append-map (lambda (str) (string-split str #\,))
-    ;ignore non-existent values
-    (delete #f
-      ;collect values from all packages into a list
-      (append-map
-        ;get all values for a given refdes
-        (lambda (x) (gnetlist:get-all-package-attributes x attribute))
-        packages)))
-)
+;;; Makes a list of dependencies for toplevel pages.
+(define (schematic-sxml->dependency-list tree)
+  (define (page-name p)
+    (and (page? p)
+         (basename (page-filename p))))
+
+  (define (sxml-page-name page)
+    (sxml-match
+     page
+     ((page (@ (page-name ,name)) ,deps ...) name)))
+
+  (define (sxml-page-prerequisites page)
+    (sxml-match page ((page (@ (prerequisites ,pr)) ,deps ...) pr)))
+
+  ;; Package prerequisites are the names of its subcircuit pages
+  ;; defined in its source= attribs and the subcircuit names the
+  ;; pages depend on, i.e. their prerequisites. Here we append all
+  ;; that info and remove duplicates.
+  (define (package-prerequisites pages)
+    (delete-duplicates
+     (append (map sxml-page-name pages)
+             (append-map sxml-page-prerequisites pages))))
+
+  ;; Form circuit name simply by first page. See the
+  ;; makedepend:basename function above for how it works.
+  (define (circuit-name pages)
+    (and (not (null? pages))
+         (string-append (makedepend:basename makedepend-scheme
+                                             (sxml-page-name (first pages)))
+                        ".cir")))
+
+  (define (sxml-package-name package)
+    (sxml-match
+     package
+     ((package (@ (package-name ,name)) ,deps ...) name)))
+
+  ;; SXML package-name attribute is #f if package is not composite
+  ;; and has no file= attribute attached to it, so we filter such
+  ;; packages out.
+  (define (page-prerequisites packages)
+    (filter-map sxml-package-name packages))
+
+  (define (sxml-package-rules package)
+    (sxml-match
+     package
+     ((package (@ (rules ,r)) ,deps ...) r)))
+
+  (define (page-rules packages)
+    (delete-duplicates
+     (append-map sxml-package-rules packages)))
+
+  (define (sxml-page-rules page)
+    (sxml-match
+     page
+     ((page (@ (rules ,r)) ,deps ...) r)))
+
+  (define (package-rules name pages)
+    (if name
+        (delete-duplicates
+         `((,name ,(package-prerequisites pages)) . ,(append-map sxml-page-rules pages)))
+        ;; Circuit name is #f when it has no dependencies, so we
+        ;; don't produce any rules here.
+        '()))
+
+  (define (get-first-file-attrib package)
+    (and (package? package) (package-attribute package 'file)))
+
+  ;; Add the last rule for the toplevel fake package. This will
+  ;; produce a line of the form: "all: package.cir".
+  (define (make-toplevel-rule package)
+    `(("all" (,(sxml-package-name package))) ,@(sxml-package-rules package)))
+
+  (pre-post-order
+   tree
+   `((*TOP* . ,(lambda (x . t)
+                 (let ((package (car t)))
+                   (make-toplevel-rule package))))
+     (page . ,(lambda (x pg . deps)
+                `(page (@ (page-name ,(page-name pg))
+                          (prerequisites ,(page-prerequisites deps))
+                          (rules ,(page-rules deps))))))
+     (package . ,(lambda (x pk . deps)
+                   (let ((cirname (circuit-name deps)))
+                     `(package (@ (package-name ,(or cirname
+                                                     (get-first-file-attrib pk)))
+                                  (rules ,(package-rules cirname deps)))))))
+     (*text* . ,(lambda (x t) t))
+     (*default* . ,(lambda (x . t) t)))))
 
 
-
-(define (makedepend:output-make-command input-files sources files)
-  (let* (;lazy version, use first filename only for naming scheme
-         (scheme-split (makedepend:split-filename makedepend-scheme (car input-files)))
-         (base (first scheme-split))
-         (page (second scheme-split))
-         (ext  (third scheme-split))
-        )
-
-    ;schematic deps
-    (format #t "~a: ~a\n"
-            (string-join input-files " ")
-            (string-join sources " "))
-
-    ;netlist deps
-    (format #t "~a.cir: ~a ~a\n"
-            base
-            (string-join input-files " ")
-            (string-join files " "))
-  )
-)
-
-
+(define (format-dependency-list ls)
+  (for-each (lambda (x) (format #t
+                           "~A: ~A\n"
+                           (car x)
+                           (string-join (cadr x))))
+            ls))
 
 (define (makedepend output-filename)
   (set-current-output-port (gnetlist:output-port output-filename))
-  (let ((source-attrs (makedepend:get-all-attr-values "source" packages))
-        (file-attrs (makedepend:get-all-attr-values "file" packages))
-        (input-files (gnetlist:get-input-files)))
-    (makedepend:output-make-command input-files source-attrs file-attrs))
+  (let ((dep-list (schematic-sxml->dependency-list
+                   (schematic->sxml toplevel-schematic))))
+    (format-dependency-list dep-list))
   (close-output-port (current-output-port))
-)
+  )
 
 ;; vim:shiftwidth=2

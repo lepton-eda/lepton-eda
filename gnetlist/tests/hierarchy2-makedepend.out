@@ -1,0 +1,3 @@
+all: hierarchy2.cir
+hierarchy2.cir: hierarchy2.sch under.cir
+under.cir: under.sch

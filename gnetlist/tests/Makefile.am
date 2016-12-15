@@ -28,6 +28,16 @@ input_files = \
 	hierarchy2-sources/under.sch \
 	hierarchy2-symbols/under.sym \
 	hierarchy2.sch \
+	hierarchy3-sources/h3-bottom-1.sch \
+	hierarchy3-sources/h3-bottom-2.sch \
+	hierarchy3-sources/h3-bottom-3.sch \
+	hierarchy3-sources/h3-middle.sch \
+	hierarchy3-sources/h3-rock.sch \
+	hierarchy3-symbols/h3-bottom.sym \
+	hierarchy3-symbols/h3-middle.sym \
+	hierarchy3-symbols/h3-rock.sym \
+	hierarchy3-1.sch \
+	hierarchy3-2.sch \
 	stack-torture.sch \
 	drc2/connected-noconnects.sch \
 	drc2/duplicated-refdes.sch \
@@ -70,7 +80,11 @@ XFAIL_TESTS = \
 
 TESTS = stack_1-geda.out \
 	hierarchy-geda.out \
+	hierarchy-makedepend.out \
 	hierarchy2-geda.out \
+	hierarchy2-makedepend.out \
+	hierarchy3-geda.out \
+	hierarchy3-makedepend.out \
 	stack-torture-geda.out \
 	drc2/connected-noconnects-drc2.out \
 	drc2/duplicated-refdes-drc2.out \

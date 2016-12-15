@@ -41,11 +41,23 @@
 ;;; because (traverse) can change the current working directory.
 (chdir gnetlist:cwd)
 
+;;; Returns the list of attached attributes of PACKAGE with given
+;;; NAME which must be a symbol (not string). If no attached
+;;; attributes found, returns the list of inherited attributes
+;;; with given NAME. If neither attached nor inherited attributes
+;;; have been found, returns #f.
+(define (package-attributes package name)
+  (or (assq-ref (package-attribs package) name)
+      (assq-ref (package-iattribs package) name)))
+
+;;; Returns first attached attribute of PACKAGE with given NAME
+;;; which must be a symbol (not string). If no attached attribute
+;;; found, returns first inherited attribute with NAME. If neither
+;;; attached nor inherited attribute found, returns #f.
+(define (package-attribute package name)
+  (and=> (package-attributes package name) car))
 
 (define (page->sxml page)
-  (define composites
-    (filter-map (lambda (p) (and (package-composite? p) p)) netlist))
-
   (define (source-page source)
     (let loop ((pages (active-pages)))
       (and (not (null? pages))
@@ -53,35 +65,32 @@
                (page->sxml (car pages))
                (loop (cdr pages))))))
 
+  ;; Given a list of strings, some of which may contain commas,
+  ;; splits comma separated strings and returns the new combined
+  ;; list
+  (define (comma-separated->list ls)
+    (append-map (lambda (s) (string-split s #\,)) ls))
+
   (define (composite->sxml p)
+    (let ((sources (and=> (package-attributes p 'source)
+                          comma-separated->list)))
+      (if sources
+          `(package ,p ,@(map source-page sources))
+          `(package ,p))))
+
+  (define (non-composite->sxml p)
+    `(package ,p))
+
+  (define (component->sxml p)
     (and (string=? (basename (page-filename (object-page (package-object p))))
                    (basename (page-filename page)))
-         (let* ((sources-value (or (assq-ref (package-attribs p) 'source)
-                                   (assq-ref (package-iattribs p) 'source)))
-                (sources (and sources-value
-                              (append-map (lambda (s) (string-split s #\,))
-                                          sources-value))))
-           (if sources
-               `(package ,p ,@(map source-page sources))
-               `(package ,p)))))
+         ((if (package-composite? p) composite->sxml non-composite->sxml) p)))
 
-  `(page ,page ,@(filter-map composite->sxml composites)))
+  `(page ,page ,@(filter-map component->sxml netlist)))
 
 (define (schematic->sxml schematic)
-  `(*TOP* ,@(map page->sxml schematic)))
-
-(define (schematic-sxml-tree->dependency-tree tree)
-  (define (simplify-dependencies x)
-    (delete-duplicates (apply append x)))
-
-  (pre-post-order
-   tree
-   `((*TOP* . ,(lambda (x . t) `(*TOP* . ,t)))
-     (page . ,(lambda (x pg . deps) `(,(basename (page-filename pg)) .
-                                 ,(simplify-dependencies deps))))
-     (package . ,(lambda (x pkg . deps) deps))
-     (*text* . ,(lambda (x t) t))
-     (*default* . ,(lambda (x . t) t)))))
+  `(*TOP* (package "TOPLEVEL"
+                   ,@(map page->sxml schematic))))
 
 (define non-unique-packages
   (sort (filter-map package-refdes netlist) refdes<?))
