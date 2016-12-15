@@ -54,7 +54,6 @@ static struct gsubr_t gnetlist_funcs[] = {
   { "gnetlist-version",             1, 0, 0, g_rc_gnetlist_version },
 
   /* netlist functions */
-  { "gnetlist:get-all-package-attributes", 2, 0, 0, g_get_all_package_attributes },
   { "gnetlist:get-toplevel-attribute", 1, 0, 0, g_get_toplevel_attribute },
   /* { "gnetlist:set-netlist-mode", 1, 0, 0, g_set_netlist_mode }, no longer needed */
   { "gnetlist:get-renamed-nets",    1, 0, 0, g_get_renamed_nets },

@@ -98,6 +98,23 @@ code should use `gnetlist:get-backend-arguments' directly."
 
 ;; Support functions
 
+;;; Returns the list of attached attributes of PACKAGE with given
+;;; NAME which must be a symbol (not string). If no attached
+;;; attributes found, returns the list of inherited attributes
+;;; with given NAME. If neither attached nor inherited attributes
+;;; have been found, returns #f.
+(define (package-attributes package name)
+  (or (assq-ref (package-attribs package) name)
+      (assq-ref (package-iattribs package) name)))
+
+;;; Returns first attached attribute of PACKAGE with given NAME
+;;; which must be a symbol (not string). If no attached attribute
+;;; found, returns first inherited attribute with NAME. If neither
+;;; attached nor inherited attribute found, returns #f.
+(define (package-attribute package name)
+  (and=> (package-attributes package name) car))
+
+
 ;;; Default resolver: Returns the first valid (non-#F) value from
 ;;; VALUES, or #F, if there is no valid attribute value. If any
 ;;; other valid value in the list is different, yields a warning
@@ -115,19 +132,47 @@ values: ~A
 " refdes name values))
            value))))
 
+
+(define (get-all-package-attributes package-name attribute-name)
+  "Get values of attribute named ATTRIBUTE-NAME from packages with
+given PACKAGE-NAME.
+
+This function returns the values of a specific attribute type
+attached to the symbol instances with the given refdes.
+
+Every first attribute value found is added to the return list. #F
+is added if the instance has no such attribute.
+
+Note: The order of the values in the return list is the order of
+symbol instances within gnetlist (the first element is the value
+associated with the first symbol instance)."
+  (define sname (string->symbol attribute-name))
+
+  (define (found-package? package)
+    (let ((name (package-refdes package)))
+      (and name
+           (string=? name package-name)
+           package)))
+
+  (map
+   (lambda (package)
+     (package-attribute package sname))
+   (filter-map found-package? (schematic-netlist toplevel-schematic))))
+
+
 (define (gnetlist:get-package-attribute refdes name)
   "Return the value associated with attribute NAME on package
 identified by REFDES.
 
 It actually computes a single value from the full list of values
-produced by 'gnetlist:get-all-package-attributes' as that list is
+produced by 'get-all-package-attributes' as that list is
 passed through 'unique-attribute'.
 
 The default behavior is to return the value associated with the
 first symbol instance for REFDES having the attribute NAME. If
 some of the instances of REFDES have different value for NAME, it
 prints a warning."
-  (let* ((values (gnetlist:get-all-package-attributes refdes name))
+  (let* ((values (get-all-package-attributes refdes name))
          (value  (unique-attribute refdes name values)))
     (or value "unknown")))
 
@@ -149,7 +194,7 @@ REFDES. As a result, slots may be repeated in the returned list."
                 #f))
           ;; no slot attribute, assume slot number is 1
           1))
-    (gnetlist:get-all-package-attributes refdes "slot"))
+    (get-all-package-attributes refdes "slot"))
    <))
 
 (define (gnetlist:get-unique-slots refdes)

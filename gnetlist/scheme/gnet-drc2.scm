@@ -362,7 +362,7 @@
   (define (check-slots-of-package refdes)
     (let* ((numslots-string (gnetlist:get-package-attribute refdes "numslots"))
            (numslots (string->number numslots-string))
-           (slot-string (let ((slots (gnetlist:get-all-package-attributes refdes "slot")))
+           (slot-string (let ((slots (get-all-package-attributes refdes "slot")))
                           (if (or (null? slots) (not (car slots)))
                               "unknown" (car slots))))
            (slot (string->number slot-string)))
