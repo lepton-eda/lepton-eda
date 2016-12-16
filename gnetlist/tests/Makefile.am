@@ -75,6 +75,7 @@ input_files = \
 	common/singlenet.sch
 
 XFAIL_TESTS = \
+	missing-source-geda.out \
 	common/SlottedOpamps-futurenet2.out \
 	common/SlottedOpamps-switcap.out
 
@@ -86,6 +87,7 @@ TESTS = stack_1-geda.out \
 	hierarchy3-geda.out \
 	hierarchy3-makedepend.out \
 	stack-torture-geda.out \
+	missing-source-geda.out \
 	drc2/connected-noconnects-drc2.out \
 	drc2/duplicated-refdes-drc2.out \
 	drc2/duplicated_slot-drc2.out \
