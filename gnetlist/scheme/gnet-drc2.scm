@@ -239,8 +239,7 @@
 
 (define-undefined action-unused-slots 'warning)
 
-(if (or (not (char? action-unused-slots))
-        (not (or (eq? action-unused-slots 'warning)
+(if (or (not (or (eq? action-unused-slots 'warning)
                  (eq? action-unused-slots 'correct)
                  (eq? action-unused-slots 'error))))
     (begin
