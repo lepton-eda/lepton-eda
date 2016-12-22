@@ -305,3 +305,22 @@ REFDES. As a result, slots may be repeated in the returned list."
 (define (message output-string)
   (display output-string message-port)
   )
+
+(define (load-backend filename post-backend-list)
+  ;; Search for backend scm file in load path
+  (and filename
+       (let ((backend-path (%search-load-path (format #f
+                                                      "gnet-~A.scm"
+                                                      filename))))
+         (if backend-path
+             ;; Load backend code.
+             (primitive-load backend-path)
+             ;; If it couldn't be found, fail.
+             (error (format #f "Could not find backend `~A' in load path.
+
+Run `~A --list-backends' for a full list of available backends.
+"
+                            filename
+                            (car (program-arguments)))))
+         ;; Evaluate second set of Scheme expressions.
+         (primitive-eval post-backend-list))))
