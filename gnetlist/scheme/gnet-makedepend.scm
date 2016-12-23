@@ -82,6 +82,7 @@
 (use-modules (ice-9 regex)
              (srfi srfi-1)
              (sxml match)
+             (gnetlist schematic)
              (gnetlist package))
 
 
@@ -208,7 +209,7 @@
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
       (let ((dep-list (schematic-sxml->dependency-list
-                       (schematic->sxml toplevel-schematic))))
+                       (schematic-tree toplevel-schematic))))
         (format-dependency-list dep-list)))))
 
 ;; vim:shiftwidth=2

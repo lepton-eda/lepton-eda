@@ -21,79 +21,21 @@
 
 (use-modules (srfi srfi-1)
              (gnetlist traverse)
+             (gnetlist schematic)
              (gnetlist package)
              (gnetlist package-pin)
              (gnetlist pin-net)
              (gnetlist attrib compare)
              (ice-9 match)
              (geda page)
-             (geda object)
              (sxml transform))
 
-;;; Toplevel schematic is just a list of pages given on the
-;;; command line.
-(define toplevel-schematic (active-pages))
-
-
-(define gnetlist:cwd (getcwd))
-(define netlist (traverse))
-;;; Change back to the directory where we started.  This is done
-;;; because (traverse) can change the current working directory.
-(chdir gnetlist:cwd)
-
-;;; Returns the list of attached attributes of PACKAGE with given
-;;; NAME which must be a symbol (not string). If no attached
-;;; attributes found, returns the list of inherited attributes
-;;; with given NAME. If neither attached nor inherited attributes
-;;; have been found, returns #f.
-(define (package-attributes package name)
-  (or (assq-ref (package-attribs package) name)
-      (assq-ref (package-iattribs package) name)))
-
-;;; Returns first attached attribute of PACKAGE with given NAME
-;;; which must be a symbol (not string). If no attached attribute
-;;; found, returns first inherited attribute with NAME. If neither
-;;; attached nor inherited attribute found, returns #f.
-(define (package-attribute package name)
-  (and=> (package-attributes package name) car))
-
-(define (page->sxml page)
-  (define (source-page source)
-    (let loop ((pages (active-pages)))
-      (and (not (null? pages))
-           (if (string=? source (basename (page-filename (car pages))))
-               (page->sxml (car pages))
-               (loop (cdr pages))))))
-
-  ;; Given a list of strings, some of which may contain commas,
-  ;; splits comma separated strings and returns the new combined
-  ;; list
-  (define (comma-separated->list ls)
-    (append-map (lambda (s) (string-split s #\,)) ls))
-
-  (define (composite->sxml p)
-    (let ((sources (and=> (package-attributes p 'source)
-                          comma-separated->list)))
-      (if sources
-          `(package ,p ,@(map source-page sources))
-          `(package ,p))))
-
-  (define (non-composite->sxml p)
-    `(package ,p))
-
-  (define (component->sxml p)
-    (and (string=? (basename (page-filename (object-page (package-object p))))
-                   (basename (page-filename page)))
-         ((if (package-composite? p) composite->sxml non-composite->sxml) p)))
-
-  `(page ,page ,@(filter-map component->sxml netlist)))
-
-(define (schematic->sxml schematic)
-  `(*TOP* (package "TOPLEVEL"
-                   ,@(map page->sxml schematic))))
+(define toplevel-schematic (make-toplevel-schematic (active-pages)))
 
 (define non-unique-packages
-  (sort (filter-map package-refdes netlist) refdes<?))
+  (sort (filter-map package-refdes
+                    (schematic-netlist toplevel-schematic))
+        refdes<?))
 
 (define (get-packages netlist)
   "Returns a sorted list of unique packages in NETLIST."
@@ -105,7 +47,7 @@
   (sort (hash-map->list get-value ht) refdes<?))
 
 ;;; Only unique packages
-(define packages (get-packages netlist))
+(define packages (get-packages (schematic-netlist toplevel-schematic)))
 
 (define (sort-remove-duplicates ls sort-func)
   (let ((ls (sort ls sort-func)))
@@ -149,7 +91,8 @@ NETNAME."
        (append-map get-found-pin-connections (package-pins package)))
      netlist))
 
-  (sort-remove-duplicates (get-netlist-connections netlist) pair<?))
+  (sort-remove-duplicates (get-netlist-connections (schematic-netlist toplevel-schematic))
+                          pair<?))
 
 
 (define (get-all-nets)
@@ -162,7 +105,7 @@ NETNAME."
   (append-map
    (lambda (package)
      (filter-map connected? (package-pins package)))
-   netlist))
+   (schematic-netlist toplevel-schematic)))
 
 
 (define (get-all-unique-nets)
@@ -204,7 +147,8 @@ PACKAGE."
 
   ;; Currently, netlist can contain many `packages' with the same
   ;; name, so we have to deal with this.
-  (let ((result-list (append-map get-pin-netname-list netlist)))
+  (let ((result-list (append-map get-pin-netname-list
+                                 (schematic-netlist toplevel-schematic))))
     (sort-remove-duplicates result-list pair<?)))
 
 
@@ -219,7 +163,7 @@ PACKAGE."
       (if (found? (package-refdes package))
           (filter-map package-pin-number (package-pins package))
           '()))
-    netlist)
+    (schematic-netlist toplevel-schematic))
    refdes<?))
 
 
@@ -269,7 +213,7 @@ PACKAGE."
            '()))
      netlist))
 
-  (let ((found (lookup-through-netlist netlist)))
+  (let ((found (lookup-through-netlist (schematic-netlist toplevel-schematic))))
     (match found
       (() '("ERROR_INVALID_PIN"))
       (((netname . rest) ...)

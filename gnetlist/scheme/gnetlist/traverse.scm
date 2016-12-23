@@ -105,4 +105,10 @@
 
 
 (define (traverse)
-  (netlist-collect-attribs (list->packages (%traverse))))
+  (let ((cwd (getcwd))
+        (netlist (netlist-collect-attribs (list->packages (%traverse)))))
+    ;; Change back to the directory where we started.  This is
+    ;; done because (%traverse) can change the current working
+    ;; directory.
+    (chdir cwd)
+    netlist))
