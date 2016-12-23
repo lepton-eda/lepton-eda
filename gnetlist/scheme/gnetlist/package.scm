@@ -1,7 +1,6 @@
 (define-module (gnetlist package)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
-  #:use-module (gnetlist traverse)
   #:export (make-package package?
             package-id set-package-id!
             package-refdes set-package-refdes!
@@ -10,7 +9,9 @@
             package-object set-package-object!
             package-iattribs set-package-iattribs!
             package-attribs set-package-attribs!
-            package-pins set-package-pins!))
+            package-pins set-package-pins!
+            package-attributes
+            package-attribute))
 
 (define-record-type <package>
   (make-package id refdes tag composite object iattribs attribs pins)
@@ -27,3 +28,21 @@
 (set-record-type-printer!
  <package>
  (lambda (record port) (format port "#<geda-package ~A>" (package-id record))))
+
+
+(define (package-attributes package name)
+  "Returns the list of attached attributes called NAME for
+PACKAGE. NAME must be a Scheme symbol (not string). If no attached
+attributes found, returns the list of inherited attributes with
+the same name. If neither attached nor inherited attributes have
+been found, returns #f."
+  (or (assq-ref (package-attribs package) name)
+      (assq-ref (package-iattribs package) name)))
+
+
+(define (package-attribute package name)
+  "Returns first attached attribute of PACKAGE called NAME. NAME
+must be a Scheme symbol (not string). If no attached attribute
+found, returns first inherited attribute with NAME. If neither
+attached nor inherited attribute found, returns #f."
+  (and=> (package-attributes package name) car))
