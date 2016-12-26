@@ -32,18 +32,13 @@
 
 (define toplevel-schematic (make-toplevel-schematic (active-pages)))
 
-(define non-unique-packages
-  (sort (filter-map package-refdes
-                    (schematic-netlist toplevel-schematic))
-        refdes<?))
-
 (define (get-packages netlist)
   "Returns a sorted list of unique packages in NETLIST."
   ;; Uniqueness of packages is guaranteed by the hashtable.
   (define ht (make-hash-table (length netlist)))
   (define (get-value key value) value)
   (for-each (lambda (s) (hashq-set! ht (string->symbol s) s))
-            non-unique-packages)
+            (schematic-non-unique-packages toplevel-schematic))
   (sort (hash-map->list get-value ht) refdes<?))
 
 ;;; Only unique packages
