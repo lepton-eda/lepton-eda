@@ -1,5 +1,6 @@
 (define-module (gnetlist package-pin)
   #:use-module (srfi srfi-9)
+  #:use-module (srfi srfi-9 gnu)
   #:export (make-package-pin package-pin?
             package-pin-id set-package-pin-id!
             package-pin-object set-package-pin-object!
@@ -22,3 +23,6 @@
   (attribs package-pin-attribs set-package-pin-attribs!)
   (nets package-pin-nets set-package-pin-nets!))
 
+(set-record-type-printer!
+ <package-pin>
+ (lambda (record port) (format port "#<geda-package-pin ~A>" (package-pin-id record))))
