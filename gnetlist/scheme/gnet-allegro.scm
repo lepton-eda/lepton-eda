@@ -130,7 +130,8 @@
   (map net->string netnames))
 
 (define (allegro output-filename)
-  (let ((packages (schematic-packages toplevel-schematic)))
+  (let ((packages (schematic-packages toplevel-schematic))
+        (nets (schematic-nets toplevel-schematic)))
     (with-output-to-port (gnetlist:output-port output-filename)
       (lambda ()
         (display "(Allegro netlister by M. Ettus)\n")
@@ -138,6 +139,6 @@
         (allegro:components packages)
         (display "$NETS\n")
         (for-each display
-                  (nets->allegro-netlist (get-all-unique-nets)))
+                  (nets->allegro-netlist nets))
         (display "$END\n")))
     (allegro:write-device-files packages '() (gnetlist:stdout? output-filename))))

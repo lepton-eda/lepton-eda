@@ -239,8 +239,8 @@ LIBRARYFIELD8\r
 ;;
 ;; Write the net part of the gEDA format
 ;;
-(define (protelII:nets)
-  (protelII:write-net (get-all-unique-nets)))
+(define (protelII:nets nets)
+  (protelII:write-net nets))
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
@@ -250,7 +250,7 @@ LIBRARYFIELD8\r
     (lambda ()
       (protelII:write-top-header)
       (protelII:components (schematic-packages toplevel-schematic))
-      (protelII:nets))))
+      (protelII:nets (schematic-nets toplevel-schematic)))))
 
 ;;
 ;; gEDA's native test netlist format specific functions ends

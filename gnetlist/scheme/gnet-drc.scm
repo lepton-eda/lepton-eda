@@ -74,7 +74,7 @@
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
       (drc:device-rules drc:attriblist (schematic-packages toplevel-schematic))
-      (drc:net-rules (get-all-unique-nets)))))
+      (drc:net-rules (schematic-nets toplevel-schematic)))))
 
 ;;
 ;; DRC backend written by Matt Ettus ends here

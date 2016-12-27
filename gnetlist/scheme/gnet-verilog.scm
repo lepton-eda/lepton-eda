@@ -312,7 +312,7 @@
 (define verilog:get-nets '())
 
 
-(define (verilog:get-nets-once!)
+(define (verilog:get-nets-once! nets)
   (define the-nets '())
   (set! verilog:get-nets
         (begin
@@ -393,7 +393,7 @@
                          (append the-nets
                                  (list parsed))))))
 
-           (get-all-unique-nets))
+           nets)
           the-nets))
   verilog:get-nets)
 
@@ -559,8 +559,9 @@
 (define (verilog output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((packages (schematic-packages toplevel-schematic)))
-        (verilog:get-nets-once!)
+      (let ((nets (schematic-nets toplevel-schematic))
+            (packages (schematic-packages toplevel-schematic)))
+        (verilog:get-nets-once! nets)
         (verilog:write-top-header packages)
         (verilog:write-wires)
         (verilog:write-continuous-assigns packages)

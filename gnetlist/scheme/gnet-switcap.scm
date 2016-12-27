@@ -477,10 +477,11 @@
 (define (switcap output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((packages (schematic-packages toplevel-schematic)))
+      (let ((nets (schematic-nets toplevel-schematic))
+            (packages (schematic-packages toplevel-schematic)))
 
         ;; initialize the net-name aliasing
-        (gnetlist:build-net-aliases switcap:map-net-names (get-all-unique-nets))
+        (gnetlist:build-net-aliases switcap:map-net-names nets)
 
         ;; initialize the refdes aliasing
         (gnetlist:build-refdes-aliases switcap:map-refdes packages)

@@ -3,8 +3,10 @@
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
   #:use-module (gnetlist attrib compare)
+  #:use-module (gnetlist sort)
   #:use-module (gnetlist traverse)
   #:use-module (gnetlist package)
+  #:use-module (gnetlist package-pin)
   #:use-module (geda page)
   #:use-module (geda object)
   #:export (make-schematic schematic?
@@ -15,17 +17,19 @@
             schematic-non-unique set-schematic-non-unique
             schematic-non-unique-packages set-schematic-non-unique-packages!
             schematic-packages set-schematic-packages!
+            schematic-nets set-schematic-nets!
             make-toplevel-schematic))
 
 (define-record-type <schematic>
-  (make-schematic id toplevel-pages tree netlist non-unique-packages packages)
+  (make-schematic id toplevel-pages tree netlist non-unique-packages packages nets)
   schematic?
   (id schematic-id set-schematic-id!)
   (toplevel-pages schematic-toplevel-pages set-schematic-toplevel-pages!)
   (tree schematic-tree set-schematic-tree!)
   (netlist schematic-netlist set-schematic-netlist!)
   (non-unique-packages schematic-non-unique-packages set-schematic-non-unique-packages!)
-  (packages schematic-packages set-schematic-packages!))
+  (packages schematic-packages set-schematic-packages!)
+  (nets schematic-nets set-schematic-nets!))
 
 (set-record-type-printer!
  <schematic>
@@ -93,6 +97,24 @@
   (sort (hash-map->list get-value ht) refdes<?))
 
 
+;;; Returns a sorted list of unique nets in NETLIST.
+(define (get-nets netlist)
+  (define (connected? pin)
+    (let ((netname (package-pin-name pin)))
+      (and (string? netname)
+           (not (string-prefix? "unconnected_pin" netname))
+           netname)))
+
+  (define (get-all-nets netlist)
+    (append-map
+     (lambda (package)
+       (filter-map connected? (package-pins package)))
+     netlist))
+
+  (sort-remove-duplicates (get-all-nets netlist)
+                          refdes<?))
+
+
 (define (make-toplevel-schematic toplevel-pages)
   "Creates a new schematic record based on TOPLEVEL-PAGES which
 must be a list of pages."
@@ -100,5 +122,6 @@ must be a list of pages."
          (netlist (traverse))
          (tree (schematic->sxml netlist toplevel-pages))
          (nu-packages (non-unique-packages netlist))
-         (packages (get-packages nu-packages)))
-    (make-schematic id toplevel-pages tree netlist nu-packages packages)))
+         (packages (get-packages nu-packages))
+         (nets (get-nets netlist)))
+    (make-schematic id toplevel-pages tree netlist nu-packages packages nets)))

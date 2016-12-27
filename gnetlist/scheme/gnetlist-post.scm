@@ -70,35 +70,6 @@ NETNAME."
                           pair<?))
 
 
-(define (get-all-nets)
-  (define (connected? pin)
-    (let ((netname (package-pin-name pin)))
-      (and (string? netname)
-           (not (string-prefix? "unconnected_pin" netname))
-           netname)))
-
-  (append-map
-   (lambda (package)
-     (filter-map connected? (package-pins package)))
-   (schematic-netlist toplevel-schematic)))
-
-
-(define (get-all-unique-nets)
-  "Returns a list of unique nets in design."
-  (sort-remove-duplicates (get-all-nets) refdes<?))
-
-
-;; return a list of all unique the nets in the design
-(define all-unique-nets
-  (get-all-unique-nets))
-
-
-;; return a list of all the nets in the design
-;; Might return duplicates
-(define all-nets
-  (get-all-nets))
-
-
 (define (get-pins-nets package)
   "Returns a list of pairs (pin-name . net-name) where net-name is
 the name of the net connected to the pin pin-name for specified
@@ -209,8 +180,8 @@ PACKAGE."
 ;; These will become hash tables which provide the mapping
 ;; from gEDA net name to netlist net name and from netlist
 ;; net name to gEDA net name.
-(define gnetlist:net-hash-forward (make-hash-table  (length all-nets)))
-(define gnetlist:net-hash-reverse (make-hash-table  (length all-nets)))
+(define gnetlist:net-hash-forward (make-hash-table 512))
+(define gnetlist:net-hash-reverse (make-hash-table 512))
 
 ;; These will become hash tables which provide the mapping
 ;; from gEDA refdes to netlist refdes and from netlist

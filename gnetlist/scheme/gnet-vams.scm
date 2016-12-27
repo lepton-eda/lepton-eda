@@ -432,12 +432,13 @@ END ENTITY ~A;
 ;;; the architecture should wrote to.
 
 (define (vams:write-secondary-unit architecture entity package-list)
-  (let ((ports (vams:all-ports-in-list package-list)))
+  (let ((ports (vams:all-ports-in-list package-list))
+        (nets (schematic-nets toplevel-schematic)))
     (format #t "-- Secondary unit
 
 ARCHITECTURE ~A OF ~A IS
 " architecture entity)
-    (vams:write-architecture-declarative-part ports)
+    (vams:write-architecture-declarative-part ports nets)
     (display "BEGIN\n")
     (vams:write-architecture-statement-part package-list ports)
     (format #t "END ARCHITECTURE ~A;\n" architecture)))
@@ -446,12 +447,12 @@ ARCHITECTURE ~A OF ~A IS
 ;;;
 ;;; at this time, it only calls the signal declarations
 
-(define (vams:write-architecture-declarative-part ports)
+(define (vams:write-architecture-declarative-part ports nets)
   ;; Due to my taste will the component declarations go first
   ;; XXX - Broken until someday
   ;; (vams:write-component-declarations packages)
   ;; Then comes the signal declatations
-  (vams:write-signal-declarations ports))
+  (vams:write-signal-declarations ports nets))
 
 
 ;;; Signal Declaration
@@ -475,7 +476,7 @@ ARCHITECTURE ~A OF ~A IS
 ;;; it's something more complex, because it's checking all signals
 ;;; for consistence. it only needs the output-port as parameter.
 
-(define (vams:write-signal-declarations ports)
+(define (vams:write-signal-declarations ports nets)
   (for-each
    (lambda (net)
      (let*((connlist (get-all-connections net))
@@ -488,7 +489,7 @@ ARCHITECTURE ~A OF ~A IS
                     (port_mode (vams:net-consistence 'port_mode connlist))))
            (format #t "\t~A ~A \t:  ~A;\n" port_object net port_type)
            (format #t "-- error in subnet : ~A\n"))))
-   (vams:all-necessary-nets ports)))
+   (vams:all-necessary-nets ports nets)))
 
 
 ;;; Architecture Statement Part
@@ -809,8 +810,8 @@ ARCHITECTURE ~A OF ~A IS
 ;; returns all nets in the schematic, which not
 ;; directly connected to a port.
 
-(define (vams:all-necessary-nets ports)
-  (vams:only-different-nets (get-all-unique-nets)
+(define (vams:all-necessary-nets ports nets)
+  (vams:only-different-nets nets
                             (vams:all-packages-nets ports)))
 
 

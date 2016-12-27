@@ -61,8 +61,8 @@
 ;;
 ;; Write the net part of the gEDA format
 ;;
-(define (bae:nets)
-  (for-each bae:write-net (get-all-unique-nets)))
+(define (bae:nets nets)
+  (for-each bae:write-net nets))
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
@@ -75,5 +75,5 @@
       (display "PARTS\n")
       (bae:components (schematic-packages toplevel-schematic))
       (display "CONNECT\n")
-      (bae:nets)
+      (bae:nets (schematic-nets toplevel-schematic))
       (display "END.\n"))))

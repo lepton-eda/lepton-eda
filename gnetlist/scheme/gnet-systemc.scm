@@ -268,7 +268,7 @@
 
 (define systemc:get-nets '())
 
-(define (systemc:get-nets-once!)
+(define (systemc:get-nets-once! nets)
   (define the-nets '())
   (set! systemc:get-nets
         (begin
@@ -348,7 +348,7 @@
                          (append the-nets
                                  (list parsed))))))
 
-           (get-all-unique-nets))
+           nets)
           the-nets))
   systemc:get-nets)
 
@@ -501,8 +501,9 @@
 (define (systemc output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((packages (schematic-packages toplevel-schematic)))
-        (systemc:get-nets-once!)
+      (let ((nets (schematic-nets toplevel-schematic))
+            (packages (schematic-packages toplevel-schematic)))
+        (systemc:get-nets-once! nets)
         (systemc:write-top-header packages)
         (systemc:write-wires)
         (systemc:write-continuous-assigns packages)

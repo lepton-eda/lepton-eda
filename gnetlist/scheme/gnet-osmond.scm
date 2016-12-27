@@ -24,7 +24,7 @@
 (define (osmond output-filename)
         (set-current-output-port (gnetlist:output-port output-filename))
         (for-each osmond:part (schematic-packages toplevel-schematic))
-        (for-each osmond:signal (get-all-unique-nets)))
+        (for-each osmond:signal (schematic-nets toplevel-schematic)))
 
 
 ; The first section of the file consists of a list of packages,

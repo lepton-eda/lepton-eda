@@ -20,6 +20,7 @@
 
 ;;  Calay format (modified from Ales's gnet-PCB.scm by jpd)
 ;;  Netname translation cleaned up at Dan McMahill'suggestion -jpd
+(use-modules (gnetlist schematic))
 
 (define (connections->string connections)
   (define package car)
@@ -63,6 +64,6 @@
 (define (calay output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((nets (get-all-unique-nets)))
+      (let ((nets (schematic-nets toplevel-schematic)))
         (gnetlist:build-net-aliases calay:translate nets)
         (for-each display (nets->calay-netlist nets))))))

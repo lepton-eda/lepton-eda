@@ -748,7 +748,7 @@
 (define (drc2 output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((nets (get-all-unique-nets))
+      (let ((nets (schematic-nets toplevel-schematic))
             (non-unique-packages (schematic-non-unique-packages toplevel-schematic))
             (packages (schematic-packages toplevel-schematic)))
 

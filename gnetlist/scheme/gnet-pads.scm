@@ -101,7 +101,7 @@
 (define (pads output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((nets (get-all-unique-nets))
+      (let ((nets (schematic-nets toplevel-schematic))
             (packages (schematic-packages toplevel-schematic)))
         ;; initialize the net-name aliasing
         (gnetlist:build-net-aliases pads:map-net-names nets)

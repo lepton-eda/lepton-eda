@@ -85,5 +85,5 @@
 
       (maxascii:components (schematic-packages toplevel-schematic))
 
-      (maxascii:write-net (get-all-unique-nets))
+      (maxascii:write-net (schematic-nets toplevel-schematic))
       (display "\n*END\n"))))

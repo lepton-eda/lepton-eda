@@ -108,7 +108,7 @@
 (define (gossip output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((nets (get-all-unique-nets))
+      (let ((nets (schematic-nets toplevel-schematic))
             (packages (schematic-packages toplevel-schematic)))
         (gossip:write-top-header)
         (gossip:get-libraries packages '())

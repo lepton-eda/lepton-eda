@@ -20,6 +20,8 @@
 
 ;;  PCB format
 
+(use-modules (gnetlist schematic))
+
 (define (connection->string connection)
   (define refdes car)
   (define pin-number cdr)
@@ -40,7 +42,7 @@
 
 (define (PCB:display-netlist)
   (for-each display
-            (nets->PCB-netlist (get-all-unique-nets))))
+            (nets->PCB-netlist (schematic-nets toplevel-schematic))))
 
 (define (PCB output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)

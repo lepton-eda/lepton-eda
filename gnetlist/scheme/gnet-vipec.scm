@@ -177,7 +177,7 @@
 (define (vipec output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((netnumbers (number-nets (get-all-unique-nets) 1))
+      (let ((netnumbers (number-nets (schematic-nets toplevel-schematic) 1))
             (packages (schematic-packages toplevel-schematic)))
        (vipec:header)
        (display "CKT\n")

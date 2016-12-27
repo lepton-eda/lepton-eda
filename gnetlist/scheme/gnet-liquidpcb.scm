@@ -22,6 +22,8 @@
 ;; liquid pcb gnetlist backend
 ;;
 
+(use-modules (gnetlist schematic))
+
 ;;
 ;; Write the individual net connections
 ;;
@@ -55,7 +57,7 @@
       (display "<LiquidPCB>\n")
       (display "\t<netlist name=\"Main netlist\">\n")
       (for-each display
-                (nets->liquidpcb-netlist (get-all-unique-nets)))
+                (nets->liquidpcb-netlist (schematic-nets toplevel-schematic)))
       (display "\t</netlist>\n")
       (display "</LiquidPCB>\n"))))
 

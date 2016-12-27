@@ -91,8 +91,8 @@
 ;;
 ;; Top level function to write out nets associated with a particular component
 ;;
-(define (tango:nets)
-  (tango:write-net (get-all-unique-nets)))
+(define (tango:nets nets)
+  (tango:write-net nets))
 
 ;;; Highest level function
 ;;; Write tango netlist format
@@ -100,9 +100,10 @@
 (define (tango output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((packages (schematic-packages toplevel-schematic)))
+      (let ((nets (schematic-nets toplevel-schematic))
+            (packages (schematic-packages toplevel-schematic)))
         (tango:components packages)
-        (tango:nets)))))
+        (tango:nets nets)))))
 
 ;;
 ;; TANGO netlist backend written by Nuno Sucena ends here

@@ -214,7 +214,7 @@
 
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((all-nets (get-all-unique-nets))
+      (let ((all-nets (schematic-nets toplevel-schematic))
             (packages (schematic-packages toplevel-schematic)))
 
         ;; initialize the net-name aliasing
