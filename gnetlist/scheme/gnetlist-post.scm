@@ -26,21 +26,13 @@
              (gnetlist package-pin)
              (gnetlist pin-net)
              (gnetlist attrib compare)
+             (gnetlist sort)
              (ice-9 match)
              (geda page)
              (sxml transform))
 
 (define toplevel-schematic (make-toplevel-schematic (active-pages)))
 
-(define (sort-remove-duplicates ls sort-func)
-  (let ((ls (sort ls sort-func)))
-    (fold-right
-     (lambda (elem ret)
-       (if (equal? elem (first ret))
-           ret
-           (cons elem ret)))
-     (last-pair ls)
-     ls)))
 
 ;;; Helper function for sorting connections.
 (define (pair<? a b)

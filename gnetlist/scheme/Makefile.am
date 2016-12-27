@@ -25,6 +25,7 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
 	   gnet-makedepend.scm \
 	   gnetlist/backend-getopt.scm gnetlist/partlist.scm \
 	   gnetlist/partlist/common.scm gnetlist/attrib/compare.scm \
+	   gnetlist/sort.scm \
 	   gnetlist/package.scm gnetlist/package-pin.scm gnetlist/pin-net.scm \
 	   gnetlist/traverse.scm gnetlist/schematic.scm
 
