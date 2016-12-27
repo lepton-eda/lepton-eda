@@ -262,16 +262,14 @@ void main_prog(void *closure, int argc, char *argv[])
     s_page_print_all(pr_current);
 #endif
 
+    SCM backend_name = guile_proc ? scm_from_utf8_string (guile_proc) : SCM_BOOL_F;
+
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
 
-    SCM backend_name = guile_proc ? scm_from_utf8_string (guile_proc) : SCM_BOOL_F;
-      scm_call_2 (scm_variable_ref (scm_c_lookup ("load-backend")),
-                  backend_name,
-                  post_backend_list);
-
-    /* Run post-traverse code. */
-    scm_primitive_load_path (scm_from_utf8_string ("gnetlist-post.scm"));
+    scm_call_2 (scm_variable_ref (scm_c_lookup ("load-backend")),
+                backend_name,
+                post_backend_list);
 
     if (interactive_mode) {
         scm_c_eval_string ("(set-repl-prompt! \"scheme@(gnetlist)> \")");

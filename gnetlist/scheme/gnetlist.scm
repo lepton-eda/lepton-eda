@@ -18,9 +18,19 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(use-modules (srfi srfi-1))
-(use-modules (geda library))
-(use-modules (geda deprecated))
+(use-modules (srfi srfi-1)
+             (ice-9 match)
+             (sxml transform)
+             (geda library)
+             (geda page)
+             (geda deprecated)
+             (gnetlist traverse)
+             (gnetlist schematic)
+             (gnetlist package)
+             (gnetlist package-pin)
+             (gnetlist pin-net)
+             (gnetlist attrib compare)
+             (gnetlist sort))
 
 ;;----------------------------------------------------------------------
 ;; The below functions added by SDB in Sept 2003 to support command-line flag
@@ -287,6 +297,22 @@ REFDES. As a result, slots may be repeated in the returned list."
    ((attrib-first-value object "uref") => handle-uref)
    (else #f)))
 
+
+;; Custom get-uref function to append ".${SLOT}" where a component
+;; has a "slot=${SLOT}" attribute attached.
+;;
+;; NOTE: Original test for appending the ".<SLOT>" was this:
+;;   (let ((numslots (gnetlist:get-package-attribute package "numslots"))
+;;        (slot-count (length (gnetlist:get-unique-slots package)))
+;;     (if (or (string=? numslots "unknown") (string=? numslots "0"))
+;;
+(define (get-spice-refdes object)
+  (let ((real-refdes (gnetlist:get-uref object)))
+    (if (null? (get-attrib-value-by-attrib-name object "slot"))
+        real-refdes
+        (string-append real-refdes "."
+                       (car (get-attrib-value-by-attrib-name object "slot"))))))
+
 ;; define the default handler for get-uref
 (define get-uref gnetlist:get-uref)
 
@@ -306,12 +332,18 @@ REFDES. As a result, slots may be repeated in the returned list."
   (display output-string message-port)
   )
 
+(define netlist-mode 'geda)
+(define toplevel-schematic #f)
+
 (define (load-backend filename post-backend-list)
   ;; Search for backend scm file in load path
   (and filename
        (let ((backend-path (%search-load-path (format #f
                                                       "gnet-~A.scm"
                                                       filename))))
+         (and (string-prefix? "spice" filename)
+              (set! netlist-mode 'spice)
+              (set! get-uref get-spice-refdes))
          (if backend-path
              ;; Load backend code.
              (primitive-load backend-path)
@@ -323,4 +355,273 @@ Run `~A --list-backends' for a full list of available backends.
                             filename
                             (car (program-arguments)))))
          ;; Evaluate second set of Scheme expressions.
-         (primitive-eval post-backend-list))))
+         (primitive-eval post-backend-list))
+       (set! toplevel-schematic (make-toplevel-schematic (active-pages)))))
+
+
+;;; Helper function for sorting connections.
+(define (pair<? a b)
+  (or (refdes<? (car a) (car b))
+      (and (string=? (car a) (car b))
+           (refdes<? (cdr a) (cdr b)))))
+
+
+
+(define (get-all-connections netname)
+  "Returns all connections in the form of ((refdes pin) ...) for
+NETNAME."
+  (define (found? x)
+    (and x
+         (string=? x netname)))
+
+  (define (get-found-pin-connections pin)
+    (if (found? (package-pin-name pin))
+        (filter-map
+         (lambda (net) (let ((package (pin-net-connection-package net))
+                        (pinnumber (pin-net-connection-pinnumber net)))
+                    (and package
+                         pinnumber
+                         (cons package pinnumber))))
+         (package-pin-nets pin))
+        '()))
+
+  (define (get-netlist-connections netlist)
+    (append-map
+     (lambda (package)
+       (append-map get-found-pin-connections (package-pins package)))
+     netlist))
+
+  (sort-remove-duplicates (get-netlist-connections (schematic-netlist toplevel-schematic))
+                          pair<?))
+
+
+(define (get-pins-nets package)
+  "Returns a list of pairs (pin-name . net-name) where net-name is
+the name of the net connected to the pin pin-name for specified
+PACKAGE."
+
+  (define (found? x)
+    (and x
+         (string=? x package)))
+
+  (define (get-pin-netname-pair pin)
+    (let ((pin-number (package-pin-number pin))
+          (pin-name (package-pin-name pin)))
+      (and pin-number
+           pin-name
+           (cons pin-number pin-name))))
+
+  (define (get-pin-netname-list package)
+     (if (found? (package-refdes package))
+         (filter-map get-pin-netname-pair (package-pins package))
+         '()))
+
+  ;; Currently, netlist can contain many `packages' with the same
+  ;; name, so we have to deal with this.
+  (let ((result-list (append-map get-pin-netname-list
+                                 (schematic-netlist toplevel-schematic))))
+    (sort-remove-duplicates result-list pair<?)))
+
+
+(define (get-pins refdes)
+  (define (found? x)
+    (and x
+         (string=? x refdes)))
+
+  (sort-remove-duplicates
+   (append-map
+    (lambda (package)
+      (if (found? (package-refdes package))
+          (filter-map package-pin-number (package-pins package))
+          '()))
+    (schematic-netlist toplevel-schematic))
+   refdes<?))
+
+
+;;; This procedure is buggy in the same way as gnetlist:get-nets.
+;;; It should first search for netname, and then get all
+;;; package-pin pairs by that netname.
+(define (get-nets package pin-number)
+  (define (net-connections nets)
+    (filter-map
+     (lambda (net)
+       (let ((package (pin-net-connection-package net))
+             (pinnumber (pin-net-connection-pinnumber net)))
+         (and package
+              pinnumber
+              (cons package pinnumber))))
+     nets))
+
+  (define (lookup-through-nets nets package pin-number)
+    (let ((connections (net-connections nets)))
+      (and (not (null? connections))
+           (member (cons package pin-number) connections)
+           connections)))
+
+  (define (found-pin-number? x)
+    (and x
+         (string=? x pin-number)))
+
+  (define (lookup-through-pins pins)
+    (filter-map
+     (lambda (pin)
+       (and (found-pin-number? (package-pin-number pin))
+            (cons (package-pin-name pin)
+                  (lookup-through-nets (package-pin-nets pin)
+                                       package
+                                       pin-number))))
+     pins))
+
+  (define (found-package? x)
+    (and x
+         (string=? x package)))
+
+  (define (lookup-through-netlist netlist)
+    (append-map
+     (lambda (package)
+       (if (found-package? (package-refdes package))
+           (lookup-through-pins (package-pins package))
+           '()))
+     netlist))
+
+  (let ((found (lookup-through-netlist (schematic-netlist toplevel-schematic))))
+    (match found
+      (() '("ERROR_INVALID_PIN"))
+      (((netname . rest) ...)
+       (cons (car netname) (append-map identity (filter-map identity rest))))
+      (_ '("ERROR_INVALID_PIN")))))
+
+
+(define (package-pin-netname package pinnumber)
+  (or (assoc-ref (get-pins-nets package) pinnumber)
+      "ERROR_INVALID_PIN"))
+
+;;
+;; Functions for dealing with naming requirements for different
+;; output netlist formats which may be more restrictive than
+;; gEDA's internals.
+;;
+
+;; These will become hash tables which provide the mapping
+;; from gEDA net name to netlist net name and from netlist
+;; net name to gEDA net name.
+(define gnetlist:net-hash-forward (make-hash-table 512))
+(define gnetlist:net-hash-reverse (make-hash-table 512))
+
+;; These will become hash tables which provide the mapping
+;; from gEDA refdes to netlist refdes and from netlist
+;; refdes to gEDA refdes.
+(define gnetlist:refdes-hash-forward (make-hash-table 512))
+(define gnetlist:refdes-hash-reverse (make-hash-table 512))
+
+;; build the hash tables with the net name mappings and
+;; while doing so, check for any shorts which are created
+;; by modifying the netnames.  If a short occurs, error out
+;; with a descriptive message.
+;;
+;; This function should be called as one of the first steps
+;; in a netlister which needs to alias nets.
+(define gnetlist:build-net-aliases
+  (lambda (mapfn nets)
+    (if (not (null? nets))
+        (begin
+          (let ( (net (car nets))
+                 (alias (mapfn (car nets)))
+                 )
+
+            (if (hash-ref gnetlist:net-hash-reverse alias)
+                (begin
+                  (message "***** ERROR *****\n")
+                  (message "There is a net name collision!\n")
+                  (message "The net called \"")
+                  (message net)
+                  (message "\" will be remapped\nto \"")
+                  (message alias)
+                  (message "\" which is already used\n")
+                  (message "by the net called \"")
+                  (message (hash-ref gnetlist:net-hash-reverse alias))
+                  (message "\".\n")
+                  (message "This may be caused by netname attributes colliding with other netnames\n")
+                  (message "due to truncation of the name, case insensitivity, or\n")
+                  (message "other limitations imposed by this netlist format.\n")
+                  (error)
+                  )
+                )
+            (hash-create-handle! gnetlist:net-hash-forward net   alias)
+            (hash-create-handle! gnetlist:net-hash-reverse alias net  )
+            (gnetlist:build-net-aliases mapfn (cdr nets))
+            )
+          )
+        )
+    )
+  )
+
+;; build the hash tables with the refdes mappings and
+;; while doing so, check for any name clashes which are created
+;; by modifying the refdes's.  If a name clash occurs, error out
+;; with a descriptive message.
+;;
+;; This function should be called as one of the first steps
+;; in a netlister which needs to alias refdes's.
+(define gnetlist:build-refdes-aliases
+  (lambda (mapfn refdeses)
+    (if (not (null? refdeses))
+        (begin
+          (let ( (refdes (car refdeses))
+                 (alias (mapfn (car refdeses)))
+                 )
+
+            (if (hash-ref gnetlist:refdes-hash-reverse alias)
+                (begin
+                  (message "***** ERROR *****\n")
+                  (message "There is a refdes name collision!\n")
+                  (message "The refdes \"")
+                  (message refdes)
+                  (message "\" will be mapped\nto \"")
+                  (message alias)
+                  (message "\" which is already used\n")
+                  (message "by \"")
+                  (message (hash-ref gnetlist:refdes-hash-reverse alias))
+                  (message "\".\n")
+                  (message "This may be caused by refdes attributes colliding with others\n")
+                  (message "due to truncation of the refdes, case insensitivity, or\n")
+                  (message "other limitations imposed by this netlist format.\n")
+                  (error)
+                  )
+                )
+            (hash-create-handle! gnetlist:refdes-hash-forward refdes alias)
+            (hash-create-handle! gnetlist:refdes-hash-reverse alias  refdes  )
+            (gnetlist:build-refdes-aliases mapfn (cdr refdeses))
+            )
+          )
+        )
+    )
+  )
+
+;; convert a gEDA netname into an output netlist net name
+(define gnetlist:alias-net
+  (lambda (net)
+    (hash-ref gnetlist:net-hash-forward net)
+    )
+  )
+
+;; convert a gEDA refdes into an output netlist refdes
+(define gnetlist:alias-refdes
+  (lambda (refdes)
+    (hash-ref gnetlist:refdes-hash-forward refdes)
+    )
+  )
+
+;; convert an output netlist net name into a gEDA netname
+(define gnetlist:unalias-net
+  (lambda (net)
+    (hash-ref gnetlist:net-hash-reverse net)
+    )
+  )
+
+;; convert an output netlist refdes into a gEDA refdes
+(define gnetlist:unalias-refdes
+  (lambda (refdes)
+    (hash-ref gnetlist:refdes-hash-reverse refdes)
+    )
+  )

@@ -12,7 +12,7 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
 	   gnet-geda.scm spice-common.scm \
 	   gnet-spice.scm gnet-tango.scm gnet-verilog.scm \
 	   gnet-vhdl.scm gnet-vipec.scm \
-           gnet-pads.scm gnetlist.scm gnetlist-post.scm \
+           gnet-pads.scm gnetlist.scm \
            gnet-bae.scm gnet-protelII.scm \
            gnet-bom2.scm gnet-gossip.scm gnet-drc.scm gnet-vams.scm \
 	   gnet-partslist1.scm \
