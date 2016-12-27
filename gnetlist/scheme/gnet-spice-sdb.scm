@@ -968,24 +968,3 @@ the name is changed to canonical."
         (if subckt?
             (spice-sdb:write-subcircuit-footer subckt?)
             (spice-sdb:write-bottom-footer))))))
-
-
-;; Custom get-uref function to append ".${SLOT}" where a component
-;; has a "slot=${SLOT}" attribute attached.
-;;
-;; NOTE: Original test for appending the ".<SLOT>" was this:
-;;   (let ((numslots (gnetlist:get-package-attribute package "numslots"))
-;;        (slot-count (length (gnetlist:get-unique-slots package)))
-;;     (if (or (string=? numslots "unknown") (string=? numslots "0"))
-;;
-(define get-uref
-  (lambda (object)
-    (let ((real_uref (gnetlist:get-uref object)))
-      (if (null? (get-attrib-value-by-attrib-name object "slot"))
-        real_uref
-        (string-append real_uref "."
-          (car (get-attrib-value-by-attrib-name object "slot")))
-      )
-    )
-  )
-)

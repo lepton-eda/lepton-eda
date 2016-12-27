@@ -27,6 +27,27 @@
              (gnetlist schematic))
 
 
+;; Custom get-uref function to append ".${SLOT}" where a component
+;; has a "slot=${SLOT}" attribute attached.
+;;
+;; NOTE: Original test for appending the ".<SLOT>" was this:
+;;   (let ((numslots (gnetlist:get-package-attribute package "numslots"))
+;;        (slot-count (length (gnetlist:get-unique-slots package)))
+;;     (if (or (string=? numslots "unknown") (string=? numslots "0"))
+;;
+(define get-uref
+  (lambda (object)
+    (let ((real_uref (gnetlist:get-uref object)))
+      (if (null? (get-attrib-value-by-attrib-name object "slot"))
+        real_uref
+        (string-append real_uref "."
+          (car (get-attrib-value-by-attrib-name object "slot")))
+      )
+    )
+  )
+)
+
+
 ;;---------------------------------------------------------------------
 ;; write netnames connected to pin-a and pin-b
 ;;   (currently used by the controlled sources (e, g, f and h)
