@@ -20,6 +20,7 @@
 
 ;; PADS netlist format
 
+(use-modules (gnetlist schematic))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid pads net name.
@@ -100,7 +101,8 @@
 (define (pads output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((nets (get-all-unique-nets)))
+      (let ((nets (get-all-unique-nets))
+            (packages (schematic-packages toplevel-schematic)))
         ;; initialize the net-name aliasing
         (gnetlist:build-net-aliases pads:map-net-names nets)
 

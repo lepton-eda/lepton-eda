@@ -21,6 +21,7 @@
 ;; See the Mathematica notebook gEDA.nb (obtainable at www.noqsi.com)
 ;; for usage.
 
+(use-modules (gnetlist schematic))
 
 (define (netname-connections->pin-voltages netname)
   (define package car)
@@ -104,7 +105,8 @@
 (define (mathematica output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((nets (get-all-unique-nets)))
+      (let ((nets (get-all-unique-nets))
+            (packages (schematic-packages toplevel-schematic)))
         (display (netnames->pin-voltages nets))
         (display "nodeEquations={\n")
         (display (netnames->current-string nets))

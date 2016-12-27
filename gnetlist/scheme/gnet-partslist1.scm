@@ -15,12 +15,14 @@
 ; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 (use-modules (gnetlist partlist)
-             (gnetlist partlist common))
+             (gnetlist partlist common)
+             (gnetlist schematic))
 
 (define (partslist1 output-filename)
   (display
    (partlist->string
-    (make-partlist '(refdes device value footprint))
+    (make-partlist (schematic-packages toplevel-schematic)
+                   '(refdes device value footprint))
     #:sort-order '(refdes device value footprint)
     #:output-order '(refdes device value footprint #{}#)
     #:header ".START\n.."

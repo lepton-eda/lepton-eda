@@ -24,7 +24,8 @@
 ;; S. Gieltjes as a starting point.
 
 ;; The following is needed to make guile 1.8.x happy.
-(use-modules (ice-9 rdelim))
+(use-modules (ice-9 rdelim)
+             (gnetlist schematic))
 
 ;; ----------------------------------------------------------------------------
 ;; Utility functions used by this netlister
@@ -476,24 +477,25 @@
 (define (switcap output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
+      (let ((packages (schematic-packages toplevel-schematic)))
 
-      ;; initialize the net-name aliasing
-      (gnetlist:build-net-aliases switcap:map-net-names (get-all-unique-nets))
+        ;; initialize the net-name aliasing
+        (gnetlist:build-net-aliases switcap:map-net-names (get-all-unique-nets))
 
-      ;; initialize the refdes aliasing
-      (gnetlist:build-refdes-aliases switcap:map-refdes packages)
+        ;; initialize the refdes aliasing
+        (gnetlist:build-refdes-aliases switcap:map-refdes packages)
 
-      (switcap:write-top-header)
-      (switcap:write-title-block packages)
-      (display "TIMING;\n")
-      (switcap:write-timing-block packages)
-      (display "END;\n\n")
-      (display "CIRCUIT;\n")
-      (switcap:write-netlist packages)
-      (display "END;\n\n")
-      (switcap:write-analysis-block packages)
-      (display "\n\n/* End of SWITCAP netlist */\n")
-      (display "END;\n"))))
+        (switcap:write-top-header)
+        (switcap:write-title-block packages)
+        (display "TIMING;\n")
+        (switcap:write-timing-block packages)
+        (display "END;\n\n")
+        (display "CIRCUIT;\n")
+        (switcap:write-netlist packages)
+        (display "END;\n\n")
+        (switcap:write-analysis-block packages)
+        (display "\n\n/* End of SWITCAP netlist */\n")
+        (display "END;\n")))))
 
 
 ;; --------------------------------------------------------------------------

@@ -114,7 +114,7 @@
 (define (spice output-filename)
   (set-current-output-port (gnetlist:output-port output-filename))
   (spice:write-top-header)
-  (spice:write-netlist packages)
+  (spice:write-netlist (schematic-packages toplevel-schematic))
   (spice:write-bottom-footer)
   (close-output-port (current-output-port)))
 

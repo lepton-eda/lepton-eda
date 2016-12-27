@@ -22,7 +22,8 @@
 
 ;; EAGLE netlist format
 
-(use-modules (srfi srfi-1))
+(use-modules (srfi srfi-1)
+             (gnetlist schematic))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid eagle net name.
@@ -84,7 +85,8 @@
 (define (eagle output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((nets (get-all-unique-nets)))
+      (let ((nets (get-all-unique-nets))
+            (packages (schematic-packages toplevel-schematic)))
         ;; initialize the net-name aliasing
         (gnetlist:build-net-aliases eagle:map-net-names nets)
 

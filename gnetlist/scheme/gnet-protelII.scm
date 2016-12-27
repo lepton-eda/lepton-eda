@@ -18,7 +18,8 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(use-modules (ice-9 optargs))
+(use-modules (ice-9 optargs)
+             (gnetlist schematic))
 
 ;; --------------------------------------------------------------------------
 ;;
@@ -248,7 +249,7 @@ LIBRARYFIELD8\r
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
       (protelII:write-top-header)
-      (protelII:components packages)
+      (protelII:components (schematic-packages toplevel-schematic))
       (protelII:nets))))
 
 ;;

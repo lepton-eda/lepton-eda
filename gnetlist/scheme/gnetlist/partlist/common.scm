@@ -20,15 +20,14 @@
   #:use-module (gnetlist partlist)
   #:export (make-partlist))
 
-(define (make-partlist attrib-list)
-  "Transforms the gnetlist variable \"packages\" into part list
-based on ATTRIB-LIST. Each part in the part list has the form
+(define (make-partlist packages attrib-list)
+  "Transforms PACKAGES into part list based on ATTRIB-LIST. Each
+part in the part list has the form:
   (package . attrib-alist)
-and each member of attrib-alist has the form
+and each member of attrib-alist has the form:
   (name . value)
 where \"name\" is an attrib name converted to a symbol and \"value\"
 is the value of the corresponding attribute which must be a string."
-  (define packages (@@ (guile-user) packages))
   (define get-package-attribute
     (@@ (guile-user) gnetlist:get-package-attribute))
 

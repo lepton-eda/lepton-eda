@@ -16,12 +16,14 @@
 
 (use-modules (gnetlist partlist)
              (gnetlist partlist common)
-             (gnetlist attrib compare))
+             (gnetlist attrib compare)
+             (gnetlist schematic))
 
 (define (partslist2 output-filename)
   (display
    (partlist->string
-    (make-partlist '(device value footprint refdes))
+    (make-partlist (schematic-packages toplevel-schematic)
+                   '(device value footprint refdes))
     #:sort-order `((device . ,string-ci<?)
                    (value . ,value<?)
                    (footprint . ,string-ci<?)

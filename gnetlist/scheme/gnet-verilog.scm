@@ -27,7 +27,8 @@
 
 ;; some useful regexes for working with net-names
 ;;
-(use-modules (ice-9 regex))
+(use-modules (ice-9 regex)
+             (gnetlist schematic))
 
 (define id-regexp "[a-zA-Z_][a-zA-Z0-9_$]*")
 (define numeric  "[0-9]+")
@@ -558,12 +559,13 @@
 (define (verilog output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (verilog:get-nets-once!)
-      (verilog:write-top-header packages)
-      (verilog:write-wires)
-      (verilog:write-continuous-assigns packages)
-      (verilog:components packages)
-      (verilog:write-bottom-footer))))
+      (let ((packages (schematic-packages toplevel-schematic)))
+        (verilog:get-nets-once!)
+        (verilog:write-top-header packages)
+        (verilog:write-wires)
+        (verilog:write-continuous-assigns packages)
+        (verilog:components packages)
+        (verilog:write-bottom-footer)))))
 ;;
 ;; Verilog netlist backend written by Mike Jarabek ends here
 ;;

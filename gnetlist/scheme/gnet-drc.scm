@@ -29,7 +29,8 @@
 ;; Net rules:  List of predicates of one variable, net name
 ;; Pin Rules:  List of predicates of 2 variables, uref and pin number
 
-(use-modules (srfi srfi-26))
+(use-modules (srfi srfi-26)
+             (gnetlist schematic))
 
 (define drc:parseconfig
   (lambda (port)
@@ -72,7 +73,7 @@
 (define (drc output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (drc:device-rules drc:attriblist packages)
+      (drc:device-rules drc:attriblist (schematic-packages toplevel-schematic))
       (drc:net-rules (get-all-unique-nets)))))
 
 ;;

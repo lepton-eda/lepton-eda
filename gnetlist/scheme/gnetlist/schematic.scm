@@ -12,17 +12,20 @@
             schematic-toplevel-pages set-schematic-toplevel-pages!
             schematic-tree set-schematic-tree!
             schematic-netlist set-schematic-netlist!
+            schematic-non-unique set-schematic-non-unique
             schematic-non-unique-packages set-schematic-non-unique-packages!
+            schematic-packages set-schematic-packages!
             make-toplevel-schematic))
 
 (define-record-type <schematic>
-  (make-schematic id toplevel-pages tree netlist non-unique-packages)
+  (make-schematic id toplevel-pages tree netlist non-unique-packages packages)
   schematic?
   (id schematic-id set-schematic-id!)
   (toplevel-pages schematic-toplevel-pages set-schematic-toplevel-pages!)
   (tree schematic-tree set-schematic-tree!)
   (netlist schematic-netlist set-schematic-netlist!)
-  (non-unique-packages schematic-non-unique-packages set-schematic-non-unique-packages!))
+  (non-unique-packages schematic-non-unique-packages set-schematic-non-unique-packages!)
+  (packages schematic-packages set-schematic-packages!))
 
 (set-record-type-printer!
  <schematic>
@@ -80,6 +83,15 @@
 (define (non-unique-packages netlist)
   (sort (filter-map package-refdes netlist) refdes<?))
 
+;;; Returns a sorted list of unique packages in NETLIST.
+(define (get-packages non-unique-packages)
+  ;; Uniqueness of packages is guaranteed by the hashtable.
+  (define ht (make-hash-table (length non-unique-packages)))
+  (define (get-value key value) value)
+  (for-each (lambda (s) (hashq-set! ht (string->symbol s) s))
+            non-unique-packages)
+  (sort (hash-map->list get-value ht) refdes<?))
+
 
 (define (make-toplevel-schematic toplevel-pages)
   "Creates a new schematic record based on TOPLEVEL-PAGES which
@@ -87,5 +99,6 @@ must be a list of pages."
   (let* ((id (next-schematic-id))
          (netlist (traverse))
          (tree (schematic->sxml netlist toplevel-pages))
-         (nu-packages (non-unique-packages netlist)))
-    (make-schematic id toplevel-pages tree netlist nu-packages)))
+         (nu-packages (non-unique-packages netlist))
+         (packages (get-packages nu-packages)))
+    (make-schematic id toplevel-pages tree netlist nu-packages packages)))

@@ -749,7 +749,8 @@
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
       (let ((nets (get-all-unique-nets))
-            (non-unique-packages (schematic-non-unique-packages toplevel-schematic)))
+            (non-unique-packages (schematic-non-unique-packages toplevel-schematic))
+            (packages (schematic-packages toplevel-schematic)))
 
         ;; Perform DRC-matrix sanity checks.
         ;; See if all elements of the matrix are valid.

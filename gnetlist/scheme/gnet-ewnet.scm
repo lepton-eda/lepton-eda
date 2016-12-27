@@ -29,6 +29,7 @@
 ;;; as to the right way to create these.  Full documentation would
 ;;; help considerably!
 
+(use-modules (gnetlist schematic))
 
 ;; Function:  ewnet:map-net-names
 ;;
@@ -273,7 +274,8 @@
 
     (with-output-to-port (gnetlist:output-port output-filename)
       (lambda ()
-        (let ((all-nets (get-all-unique-nets)))
+        (let ((all-nets (get-all-unique-nets))
+              (packages (schematic-packages toplevel-schematic)))
 
           ;; initialize the net-name aliasing
           (gnetlist:build-net-aliases ewnet:map-net-names all-nets)

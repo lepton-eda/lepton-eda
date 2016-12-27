@@ -18,7 +18,8 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(use-modules (ice-9 match))
+(use-modules (ice-9 match)
+             (gnetlist schematic))
 
 ;; Locate and print out the global defaults if the element exists
 (define cascade:write-defaults-top
@@ -119,7 +120,8 @@
                              "\"... ") )
      (set-current-output-port (gnetlist:output-port output-filename))
 
-      (let ((first_block #f))
+     (let ((first_block #f)
+           (packages (schematic-packages toplevel-schematic)))
 
         ;; write the header
         (display "# Cascade (http://rfcascade.sourceforge.net)\n")

@@ -19,9 +19,11 @@
 
 ; Export a design to Osmond PCB
 
+(use-modules (gnetlist schematic))
+
 (define (osmond output-filename)
         (set-current-output-port (gnetlist:output-port output-filename))
-        (for-each osmond:part packages)
+        (for-each osmond:part (schematic-packages toplevel-schematic))
         (for-each osmond:signal (get-all-unique-nets)))
 
 

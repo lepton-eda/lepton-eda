@@ -32,18 +32,6 @@
 
 (define toplevel-schematic (make-toplevel-schematic (active-pages)))
 
-(define (get-packages netlist)
-  "Returns a sorted list of unique packages in NETLIST."
-  ;; Uniqueness of packages is guaranteed by the hashtable.
-  (define ht (make-hash-table (length netlist)))
-  (define (get-value key value) value)
-  (for-each (lambda (s) (hashq-set! ht (string->symbol s) s))
-            (schematic-non-unique-packages toplevel-schematic))
-  (sort (hash-map->list get-value ht) refdes<?))
-
-;;; Only unique packages
-(define packages (get-packages (schematic-netlist toplevel-schematic)))
-
 (define (sort-remove-duplicates ls sort-func)
   (let ((ls (sort ls sort-func)))
     (fold-right
@@ -235,8 +223,8 @@ PACKAGE."
 ;; These will become hash tables which provide the mapping
 ;; from gEDA refdes to netlist refdes and from netlist
 ;; refdes to gEDA refdes.
-(define gnetlist:refdes-hash-forward (make-hash-table  (length packages)))
-(define gnetlist:refdes-hash-reverse (make-hash-table  (length packages)))
+(define gnetlist:refdes-hash-forward (make-hash-table 512))
+(define gnetlist:refdes-hash-reverse (make-hash-table 512))
 
 ;; build the hash tables with the net name mappings and
 ;; while doing so, check for any shorts which are created

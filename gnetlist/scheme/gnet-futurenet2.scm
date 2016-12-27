@@ -57,6 +57,7 @@
 ;;;    has something to do with sheet number in a multipage schematic.
 ;;;
 
+(use-modules (gnetlist schematic))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid FutureNet2 net name.
@@ -213,7 +214,8 @@
 
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((all-nets (get-all-unique-nets)))
+      (let ((all-nets (get-all-unique-nets))
+            (packages (schematic-packages toplevel-schematic)))
 
         ;; initialize the net-name aliasing
         (gnetlist:build-net-aliases futurenet2:map-net-names all-nets)

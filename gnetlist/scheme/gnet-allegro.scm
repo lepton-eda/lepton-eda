@@ -20,7 +20,7 @@
 
 
 ;; Allegro netlist format
-(use-modules (gnetlist attrib compare))
+(use-modules (gnetlist schematic))
 
 (define allegro:write-device-files
    (lambda (packages done stdout)
@@ -130,7 +130,7 @@
   (map net->string netnames))
 
 (define (allegro output-filename)
-  (let ((packages (sort packages refdes<?)))
+  (let ((packages (schematic-packages toplevel-schematic)))
     (with-output-to-port (gnetlist:output-port output-filename)
       (lambda ()
         (display "(Allegro netlister by M. Ettus)\n")

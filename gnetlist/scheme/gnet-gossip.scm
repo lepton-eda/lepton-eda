@@ -24,6 +24,8 @@
 ;;  For more info see http://gossip.sourceforge.net
 ;;
 
+(use-modules (gnetlist schematic))
+
 (define (gossip:write-top-header)
   (display ";; Gossip Netlist Created by gNetlist
 
@@ -106,7 +108,8 @@
 (define (gossip output-filename)
   (with-output-to-port (gnetlist:output-port output-filename)
     (lambda ()
-      (let ((nets (get-all-unique-nets)))
+      (let ((nets (get-all-unique-nets))
+            (packages (schematic-packages toplevel-schematic)))
         (gossip:write-top-header)
         (gossip:get-libraries packages '())
         (gossip:write-block-header)
