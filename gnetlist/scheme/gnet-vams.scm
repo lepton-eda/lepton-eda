@@ -40,6 +40,17 @@
 ;;;   and starts the major subroutines.
 
 (define (vams output-filename)
+  (define (architecture-name output-filename entity)
+    (string-append
+     (dirname output-filename)
+     "/"
+     (string-downcase entity)
+     "_arc"
+     (substring output-filename
+                (string-rindex output-filename #\. 0
+                               (string-length output-filename))
+                (string-length output-filename))))
+
   (let* (
          ;; generate correctly architecture name
          (architecture (vams:change-all-whitespaces-to-underlines
@@ -79,15 +90,7 @@
              ;; (<entity>_arc.<output-file-extension>)
              (if (not (gnetlist:stdout? output-filename))
                  (set! output-filename
-                   (string-append
-                    (dirname output-filename)
-                    "/"
-                    (string-downcase entity)
-                    "_arc"
-                    (substring output-filename
-                               (string-rindex output-filename #\. 0
-                                              (string-length output-filename))
-                               (string-length output-filename)))))
+                       (architecture-name output-filename entity)))
 
              (set-current-output-port (gnetlist:output-port output-filename))
              (message (format #f
