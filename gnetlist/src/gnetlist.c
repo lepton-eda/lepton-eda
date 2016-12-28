@@ -263,27 +263,17 @@ void main_prog(void *closure, int argc, char *argv[])
 #endif
 
     SCM backend_name = guile_proc ? scm_from_utf8_string (guile_proc) : SCM_BOOL_F;
+    SCM interactive = scm_from_bool (interactive_mode);
+    SCM output_name = output_filename ? scm_from_utf8_string (output_filename) : SCM_BOOL_F;
 
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
 
-    scm_call_2 (scm_variable_ref (scm_c_lookup ("load-backend")),
+    scm_call_4 (scm_variable_ref (scm_c_lookup ("load-backend")),
+                interactive,
                 backend_name,
+                output_name,
                 post_backend_list);
-
-    if (interactive_mode) {
-        scm_c_eval_string ("(set-repl-prompt! \"scheme@(gnetlist)> \")");
-        scm_shell (0, NULL);
-    } else if (guile_proc) {
-        /* check size here hack */
-        str = g_strdup_printf ("(%s \"%s\")", guile_proc, output_filename);
-        scm_c_eval_string (str);
-        g_free (str);
-        /* gh_eval_str_with_stack_saving_handler (input_str); */
-    } else {
-        fprintf(stderr,
-                _("You gave neither backend to execute nor interactive mode!\n"));
-    }
 
     gnetlist_quit();
 

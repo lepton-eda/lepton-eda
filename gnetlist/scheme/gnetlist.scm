@@ -18,7 +18,9 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(use-modules (srfi srfi-1)
+(use-modules (system repl repl)
+             (system repl common)
+             (srfi srfi-1)
              (ice-9 match)
              (sxml transform)
              (geda library)
@@ -334,29 +336,57 @@ REFDES. As a result, slots may be repeated in the returned list."
 
 (define netlist-mode 'geda)
 (define toplevel-schematic #f)
+(define (gnetlist-repl)
+  (let ((repl (make-repl (current-language) #f)))
+    (repl-eval repl
+               '(begin
+                  (display "Welcome to Gnetlist REPL!\n"
+                           (current-error-port))
+                  (resolve-module '(ice-9 readline))
+                  ;; After resolving that module the variable
+                  ;; *features* should contain 'readline.
+                  (if (provided? 'readline)
+                      (begin
+                        ;; It is not loaded automatically from
+                        ;; this module, so let's force its
+                        ;; loading.
+                        (use-modules (ice-9 readline))
+                        (activate-readline))
+                      (display "Could not load module (ice-9 readline).\n"
+                               (current-error-port)))))
+    (run-repl repl)))
 
-(define (load-backend filename post-backend-list)
+
+(define (load-backend interactive filename output-filename post-backend-list)
   ;; Search for backend scm file in load path
-  (and filename
-       (let ((backend-path (%search-load-path (format #f
+  (let ((backend-path (and filename
+                           (%search-load-path (format #f
                                                       "gnet-~A.scm"
-                                                      filename))))
-         (and (string-prefix? "spice" filename)
-              (set! netlist-mode 'spice)
-              (set! get-uref get-spice-refdes))
-         (if backend-path
-             ;; Load backend code.
-             (primitive-load backend-path)
-             ;; If it couldn't be found, fail.
-             (error (format #f "Could not find backend `~A' in load path.
+                                                      filename)))))
+    (when filename
+      (and (string-prefix? "spice" filename)
+           (set! netlist-mode 'spice)
+           (set! get-uref get-spice-refdes))
+      (if backend-path
+          ;; Load backend code.
+          (primitive-load backend-path)
+          ;; If it couldn't be found, fail.
+          (error (format #f "Could not find backend `~A' in load path.
 
 Run `~A --list-backends' for a full list of available backends.
 "
-                            filename
-                            (car (program-arguments)))))
-         ;; Evaluate second set of Scheme expressions.
-         (primitive-eval post-backend-list))
-       (set! toplevel-schematic (make-toplevel-schematic (active-pages)))))
+                         filename
+                         (car (program-arguments))))))
+    ;; Evaluate second set of Scheme expressions.
+    (primitive-eval post-backend-list)
+    (set! toplevel-schematic (make-toplevel-schematic (active-pages)))
+    (if interactive
+        (gnetlist-repl)
+        (if filename
+            (let ((backend-proc (primitive-eval (string->symbol filename))))
+              (backend-proc output-filename))
+            (format (current-error-port)
+                    "You gave neither backend to execute nor interactive mode!\n")))))
 
 
 ;;; Helper function for sorting connections.
