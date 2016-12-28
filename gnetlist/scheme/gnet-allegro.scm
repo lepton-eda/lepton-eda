@@ -31,12 +31,9 @@
                (begin
                   (if stdout
                     (allegro:output-netlist (car packages))
-                    (begin
-                      (set-current-output-port
-                        (open-output-file
-                          (allegro:check-and-get-filename device (car packages))))
-                      (allegro:output-netlist (car packages))
-                      (close-output-port (current-output-port))))
+                    (with-output-to-file (allegro:check-and-get-filename device (car packages))
+                      (lambda ()
+                        (allegro:output-netlist (car packages)))))
                   (allegro:write-device-files (cdr packages) (cons device done) stdout)))))))
 
 (define allegro:check-and-get-filename
