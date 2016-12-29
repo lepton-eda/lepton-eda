@@ -148,7 +148,7 @@ else
     # Hack to help with allegro backend
     # Device files are ignored as yet
     if test "X${backend}" = "Xallegro" ; then
-        sed '/gnetlist -g/d' "${std}" | sed '/^\$END$/ q' > "${out}.tmp3"
+        sed '/^\$END$/ q' "${std}" > "${out}.tmp3"
     fi
 
     if ! diff "${out}.tmp1" "${out}.tmp2" >/dev/null; then
