@@ -489,7 +489,7 @@ ARCHITECTURE ~A OF ~A IS
                 (if (equal? port_object "quantity")
                     (port_mode (vams:net-consistence 'port_mode connlist))))
            (format #t "\t~A ~A \t:  ~A;\n" port_object net port_type)
-           (format #t "-- error in subnet : ~A\n"))))
+           (format #t "-- error in subnet : ~A\n" net))))
    (vams:all-necessary-nets ports nets)))
 
 
