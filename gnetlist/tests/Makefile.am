@@ -82,10 +82,19 @@ XFAIL_TESTS = \
 TESTS = stack_1-geda.out \
 	hierarchy-geda.out \
 	hierarchy-makedepend.out \
+	hierarchy-vams.out \
+	hierarchy-vams-entity.out \
+	hierarchy-vams-device.out \
 	hierarchy2-geda.out \
 	hierarchy2-makedepend.out \
+	hierarchy2-vams.out \
+	hierarchy2-vams-entity.out \
+	hierarchy2-vams-device.out \
 	hierarchy3-geda.out \
 	hierarchy3-makedepend.out \
+	hierarchy3-vams.out \
+	hierarchy3-vams-entity.out \
+	hierarchy3-vams-device.out \
 	stack-torture-geda.out \
 	missing-source-geda.out \
 	drc2/connected-noconnects-drc2.out \
@@ -144,6 +153,8 @@ TESTS = stack_1-geda.out \
 	common/JD-systemc.out \
 	common/JD-tango.out \
 	common/JD-vams.out \
+	common/JD-vams-entity.out \
+	common/JD-vams-device.out \
 	common/JD-verilog.out \
 	common/JD-vhdl.out \
 	common/JD-vipec.out \
@@ -178,6 +189,8 @@ TESTS = stack_1-geda.out \
 	common/SlottedOpamps-systemc.out \
 	common/SlottedOpamps-tango.out \
 	common/SlottedOpamps-vams.out \
+	common/SlottedOpamps-vams-entity.out \
+	common/SlottedOpamps-vams-device.out \
 	common/SlottedOpamps-verilog.out \
 	common/SlottedOpamps-vhdl.out \
 	common/SlottedOpamps-vipec.out \
@@ -214,6 +227,8 @@ TESTS = stack_1-geda.out \
 	common/TwoStageAmp-systemc.out \
 	common/TwoStageAmp-tango.out \
 	common/TwoStageAmp-vams.out \
+	common/TwoStageAmp-vams-entity.out \
+	common/TwoStageAmp-vams-device.out \
 	common/TwoStageAmp-verilog.out \
 	common/TwoStageAmp-vhdl.out \
 	common/TwoStageAmp-vipec.out \
@@ -249,6 +264,8 @@ TESTS = stack_1-geda.out \
 	common/cascade-systemc.out \
 	common/cascade-tango.out \
 	common/cascade-vams.out \
+	common/cascade-vams-entity.out \
+	common/cascade-vams-device.out \
 	common/cascade-verilog.out \
 	common/cascade-vhdl.out \
 	common/cascade-vipec.out \
@@ -283,6 +300,8 @@ TESTS = stack_1-geda.out \
 	common/multiequal-systemc.out \
 	common/multiequal-tango.out \
 	common/multiequal-vams.out \
+	common/multiequal-vams-entity.out \
+	common/multiequal-vams-device.out \
 	common/multiequal-verilog.out \
 	common/multiequal-vhdl.out \
 	common/multiequal-vipec.out \
@@ -317,6 +336,8 @@ TESTS = stack_1-geda.out \
 	common/netattrib-systemc.out \
 	common/netattrib-tango.out \
 	common/netattrib-vams.out \
+	common/netattrib-vams-entity.out \
+	common/netattrib-vams-device.out \
 	common/netattrib-verilog.out \
 	common/netattrib-vhdl.out \
 	common/netattrib-vipec.out \
@@ -351,6 +372,8 @@ TESTS = stack_1-geda.out \
 	common/powersupply-systemc.out \
 	common/powersupply-tango.out \
 	common/powersupply-vams.out \
+	common/powersupply-vams-entity.out \
+	common/powersupply-vams-device.out \
 	common/powersupply-verilog.out \
 	common/powersupply-vhdl.out \
 	common/powersupply-vipec.out \
@@ -385,6 +408,8 @@ TESTS = stack_1-geda.out \
 	common/singlenet-systemc.out \
 	common/singlenet-tango.out \
 	common/singlenet-vams.out \
+	common/singlenet-vams-entity.out \
+	common/singlenet-vams-device.out \
 	common/singlenet-verilog.out \
 	common/singlenet-vhdl.out \
 	common/singlenet-vipec.out

@@ -2,7 +2,7 @@
 
 ref="$1"
 tmp="`echo "$1" | sed -e 's:.*/tests/::' -e 's:\\.out$::' -e 's:\\./::'`"
-stem="`echo "${tmp}" | sed -e 's:-spice-.*:@@@:' -e 's:\\(-[^-@]*\\|@@@\\)$::'`"
+stem="`echo "${tmp}" | sed -e 's:-spice-.*:@@@:' -e 's:-vams-.*:@@@:' -e 's:\\(-[^-@]*\\|@@@\\)$::'`"
 backend="`echo "${tmp}" | sed -e "s:^${stem}-::"`"
 
 GNETLIST="${abs_top_builddir}/gnetlist/src/gnetlist"
@@ -62,6 +62,8 @@ if test -d "${srcdir}/${stem}-sources" ; then
 EOF
 fi
 
+cmd="\"()\""
+
 args=
 case "${backend}" in
 spice-sdb-nomunge)
@@ -84,26 +86,39 @@ spice-sdb-sort-nomunge)
     backend=spice-sdb
     args="-O sort_mode -O nomunge_mode"
     ;;
+vams-entity)
+    backend=vams
+    vamsmode=entity
+    cmd="(define generate-mode 2)"
+    ;;
+vams-device)
+    backend=vams
+    vamsmode=device
+    cmd="(define generate-mode 2) (define top-attribs '(refdes=U1 device=7404 footprint=DIP14))"
+    ;;
 esac
 
 # run gnetlist
-echo "${GNETLIST} -g ${backend} ${args} ${schematic}"
+echo "${GNETLIST} -c ${cmd} -g ${backend} ${args} ${schematic}"
 (cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
                                  -L "${abs_top_builddir}/libgeda/scheme" \
+                                 -c "${cmd}" \
                                  -g "${backend}" \
                                  ${args} ${schematic})
 rc1=$?
 
-echo "${GNETLIST} -g ${backend} -o - ${args} ${schematic} > stdout.net"
+echo "${GNETLIST} -c ${cmd} -g ${backend} -o - ${args} ${schematic} > stdout.net"
 (cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
                                  -L "${abs_top_builddir}/libgeda/scheme" \
+                                 -c "${cmd}" \
                                  -g "${backend}" \
                                  -o - ${args} ${schematic} > stdout.net)
 rc2=$?
 
-echo "${GNETLIST} -g ${backend} -v -o verbose.net ${args} ${schematic}"
+echo "${GNETLIST} -c ${cmd} -g ${backend} -v -o verbose.net ${args} ${schematic}"
 (cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
                                  -L "${abs_top_builddir}/libgeda/scheme" \
+                                 -c "${cmd}" \
                                  -g "${backend}" \
                                  -v -o verbose.net ${args} ${schematic})
 rc3=$?
@@ -118,11 +133,30 @@ std="${rundir}/stdout.net"
 vrb="${rundir}/verbose.net"
 
 # Hack to help with vams backend
-if [ -f "${rundir}/default_entity_arc.net" ]; then
-    mv "${rundir}/default_entity_arc.net" "${out}"
-    # vams intentionally outputs data into several files, so checking it with
-    # the option '-o verbose.net' is nonsense
-    cp "${out}" "${vrb}"
+if test "X${backend}" = "Xvams" ; then
+    case "${vamsmode}" in
+        entity) vhdl="default_entity.vhdl";;
+        device)
+            case "${stem}" in
+                hierarchy) vhdl="7404.vhdl";;
+                hierarchy3) vhdl="7404.vhdl";;
+                common/SlottedOpamps) vhdl="lm324.vhdl";;
+                common/powersupply) vhdl="diode-bridge.vhdl";;
+                *) vhdl="unknown.vhdl";;
+            esac
+            ;;
+        *) vhdl="default_entity_arc.net";;
+    esac
+
+    if [ -f "${rundir}/${vhdl}" ]; then
+        mv "${rundir}/${vhdl}" "${out}"
+        # vams intentionally outputs data into several files, so checking it with
+        # the option '-o verbose.net' is nonsense
+        cp "${out}" "${vrb}"
+    else
+        echo "FAILED: vams: Output file ${rundir}/${vhdl} not found."
+        status=1
+    fi
 fi
 
 if test "X${REGEN}" = "X1" ; then
