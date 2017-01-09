@@ -206,10 +206,8 @@
             ls))
 
 (define (makedepend output-filename)
-  (with-output-to-port (gnetlist:output-port output-filename)
-    (lambda ()
-      (let ((dep-list (schematic-sxml->dependency-list
-                       (schematic-tree toplevel-schematic))))
-        (format-dependency-list dep-list)))))
+  (let ((dep-list (schematic-sxml->dependency-list
+                   (schematic-tree toplevel-schematic))))
+    (format-dependency-list dep-list)))
 
 ;; vim:shiftwidth=2

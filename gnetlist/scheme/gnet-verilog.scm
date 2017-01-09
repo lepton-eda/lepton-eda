@@ -557,16 +557,14 @@
 ;;; Write Structural verilog representation of the schematic
 ;;;
 (define (verilog output-filename)
-  (with-output-to-port (gnetlist:output-port output-filename)
-    (lambda ()
-      (let ((nets (schematic-nets toplevel-schematic))
-            (packages (schematic-packages toplevel-schematic)))
-        (verilog:get-nets-once! nets)
-        (verilog:write-top-header packages)
-        (verilog:write-wires)
-        (verilog:write-continuous-assigns packages)
-        (verilog:components packages)
-        (verilog:write-bottom-footer)))))
+  (let ((nets (schematic-nets toplevel-schematic))
+        (packages (schematic-packages toplevel-schematic)))
+    (verilog:get-nets-once! nets)
+    (verilog:write-top-header packages)
+    (verilog:write-wires)
+    (verilog:write-continuous-assigns packages)
+    (verilog:components packages)
+    (verilog:write-bottom-footer)))
 ;;
 ;; Verilog netlist backend written by Mike Jarabek ends here
 ;;

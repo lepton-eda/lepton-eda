@@ -318,15 +318,6 @@ REFDES. As a result, slots may be repeated in the returned list."
 ;; define the default handler for get-uref
 (define get-uref gnetlist:get-uref)
 
-(define (gnetlist:stdout? output-filename)
-  (string=? output-filename "-"))
-
-;; If the output file name is "-", use stdout instead
-(define (gnetlist:output-port output-filename)
-  (if (gnetlist:stdout? output-filename)
-    (current-output-port)
-    (open-output-file output-filename)))
-
 ;; Where to output messages for the user
 (define message-port (current-error-port))
 ;; Procedure to output messages to message-port
@@ -357,12 +348,15 @@ REFDES. As a result, slots may be repeated in the returned list."
     (run-repl repl)))
 
 
-(define (load-backend interactive filename output-filename post-backend-list)
+(define (load-backend interactive filename output-type post-backend-list)
+
   ;; Search for backend scm file in load path
   (let ((backend-path (and filename
                            (%search-load-path (format #f
                                                       "gnet-~A.scm"
-                                                      filename)))))
+                                                      filename))))
+        (output-filename (and (not (string=? output-type "-"))
+                              output-type)))
     (when filename
       (and (string-prefix? "spice" filename)
            (set! netlist-mode 'spice)
@@ -384,7 +378,12 @@ Run `~A --list-backends' for a full list of available backends.
         (gnetlist-repl)
         (if filename
             (let ((backend-proc (primitive-eval (string->symbol filename))))
-              (backend-proc output-filename))
+              (if output-filename
+                  ;; output-filename is defined, output to it.
+                  (with-output-to-file output-filename
+                    (lambda () (backend-proc output-filename)))
+                  ;; output-filename is #f, output to stdout.
+                  (backend-proc output-filename)))
             (format (current-error-port)
                     "You gave neither backend to execute nor interactive mode!\n")))))
 

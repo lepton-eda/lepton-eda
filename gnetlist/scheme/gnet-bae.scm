@@ -68,12 +68,9 @@
 ;;; Write my special testing netlist format
 ;;;
 (define (bae output-filename)
-  (with-output-to-port
-      (gnetlist:output-port output-filename)
-    (lambda ()
-      (display "LAYOUT board;\n")
-      (display "PARTS\n")
-      (bae:components (schematic-packages toplevel-schematic))
-      (display "CONNECT\n")
-      (bae:nets (schematic-nets toplevel-schematic))
-      (display "END.\n"))))
+  (display "LAYOUT board;\n")
+  (display "PARTS\n")
+  (bae:components (schematic-packages toplevel-schematic))
+  (display "CONNECT\n")
+  (bae:nets (schematic-nets toplevel-schematic))
+  (display "END.\n"))

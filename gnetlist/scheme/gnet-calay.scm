@@ -62,8 +62,6 @@
   (map net->string nets))
 
 (define (calay output-filename)
-  (with-output-to-port (gnetlist:output-port output-filename)
-    (lambda ()
-      (let ((nets (schematic-nets toplevel-schematic)))
-        (gnetlist:build-net-aliases calay:translate nets)
-        (for-each display (nets->calay-netlist nets))))))
+  (let ((nets (schematic-nets toplevel-schematic)))
+    (gnetlist:build-net-aliases calay:translate nets)
+    (for-each display (nets->calay-netlist nets))))

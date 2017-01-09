@@ -272,34 +272,32 @@
     (message "windows based layout tools\n")
     (message "---------------------------------\n\n")
 
-    (with-output-to-port (gnetlist:output-port output-filename)
-      (lambda ()
-        (let ((all-nets (schematic-nets toplevel-schematic))
-              (packages (schematic-packages toplevel-schematic)))
+    (let ((all-nets (schematic-nets toplevel-schematic))
+          (packages (schematic-packages toplevel-schematic)))
 
-          ;; initialize the net-name aliasing
-          (gnetlist:build-net-aliases ewnet:map-net-names all-nets)
+      ;; initialize the net-name aliasing
+      (gnetlist:build-net-aliases ewnet:map-net-names all-nets)
 
-          ;; initialize the refdes aliasing
-          (gnetlist:build-refdes-aliases ewnet:map-refdes packages)
+      ;; initialize the refdes aliasing
+      (gnetlist:build-refdes-aliases ewnet:map-refdes packages)
 
-          ;; write the header
-          (ewnet:write-header)
+      ;; write the header
+      (ewnet:write-header)
 
-          ;; write the nets
-          (display "(nets\n")
-          (ewnet:write-net all-nets)
-          (display ")\n")
+      ;; write the nets
+      (display "(nets\n")
+      (ewnet:write-net all-nets)
+      (display ")\n")
 
-          ;; write the components
-          (display "(components\n")
-          (ewnet:components packages)
-          (display ")\n")
+      ;; write the components
+      (display "(components\n")
+      (ewnet:components packages)
+      (display ")\n")
 
-          ;; write the board layers
-          (display "(layers\n")
-          (ewnet:layers)
-          (display ")\n")
+      ;; write the board layers
+      (display "(layers\n")
+      (ewnet:layers)
+      (display ")\n")
 
-          ;; close netlist
-          )))))
+      ;; close netlist
+      )))

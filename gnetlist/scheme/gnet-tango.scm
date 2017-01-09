@@ -98,12 +98,10 @@
 ;;; Write tango netlist format
 ;;;
 (define (tango output-filename)
-  (with-output-to-port (gnetlist:output-port output-filename)
-    (lambda ()
-      (let ((nets (schematic-nets toplevel-schematic))
-            (packages (schematic-packages toplevel-schematic)))
-        (tango:components packages)
-        (tango:nets nets)))))
+  (let ((nets (schematic-nets toplevel-schematic))
+        (packages (schematic-packages toplevel-schematic)))
+    (tango:components packages)
+    (tango:nets nets)))
 
 ;;
 ;; TANGO netlist backend written by Nuno Sucena ends here

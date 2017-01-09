@@ -124,18 +124,16 @@ END header
 ;;; Write my special testing netlist format
 ;;;
 (define (geda output-filename)
-  (with-output-to-port (gnetlist:output-port output-filename)
-    (lambda ()
-      (geda:write-top-header)
-      (geda:start-components)
-      (geda:components (schematic-packages toplevel-schematic))
-      (geda:end-components)
-      (geda:start-renamed-nets)
-      (geda:renamed-nets (gnetlist:get-renamed-nets "dummy"))
-      (geda:end-renamed-nets)
-      (geda:start-nets)
-      (geda:nets (schematic-nets toplevel-schematic))
-      (geda:end-nets))))
+  (geda:write-top-header)
+  (geda:start-components)
+  (geda:components (schematic-packages toplevel-schematic))
+  (geda:end-components)
+  (geda:start-renamed-nets)
+  (geda:renamed-nets (gnetlist:get-renamed-nets "dummy"))
+  (geda:end-renamed-nets)
+  (geda:start-nets)
+  (geda:nets (schematic-nets toplevel-schematic))
+  (geda:end-nets))
 
 ;;
 ;; gEDA's native test netlist format specific functions ends

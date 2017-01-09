@@ -83,18 +83,16 @@
 
 
 (define (eagle output-filename)
-  (with-output-to-port (gnetlist:output-port output-filename)
-    (lambda ()
-      (let ((nets (schematic-nets toplevel-schematic))
-            (packages (schematic-packages toplevel-schematic)))
-        ;; initialize the net-name aliasing
-        (gnetlist:build-net-aliases eagle:map-net-names nets)
+  (let ((nets (schematic-nets toplevel-schematic))
+        (packages (schematic-packages toplevel-schematic)))
+    ;; initialize the net-name aliasing
+    (gnetlist:build-net-aliases eagle:map-net-names nets)
 
-        ;; print out the header
-        (display "   ;\n")
+    ;; print out the header
+    (display "   ;\n")
 
-        ;; print out the parts
-        (eagle:components packages)
+    ;; print out the parts
+    (eagle:components packages)
 
-        ;; print out the net information
-        (eagle:write-net nets)))))
+    ;; print out the net information
+    (eagle:write-net nets)))

@@ -40,10 +40,7 @@
 (define (nets->PCB-netlist nets)
   (map net->string nets))
 
-(define (PCB:display-netlist)
-  (for-each display
-            (nets->PCB-netlist (schematic-nets toplevel-schematic))))
 
 (define (PCB output-filename)
-  (with-output-to-port (gnetlist:output-port output-filename)
-    PCB:display-netlist))
+  (for-each display
+            (nets->PCB-netlist (schematic-nets toplevel-schematic))))

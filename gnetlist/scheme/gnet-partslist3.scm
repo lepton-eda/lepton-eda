@@ -35,5 +35,4 @@
     #:prepend-names? #t
     #:remove '((device . "include"))
     #:group-separator " "
-    )
-   (gnetlist:output-port output-filename)))
+    )))

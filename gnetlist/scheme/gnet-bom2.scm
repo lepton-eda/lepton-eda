@@ -57,16 +57,13 @@ filename)
                      (gnetlist:get-backend-arguments)
                      '((attrib_file (value #t)) (attribs (value #t)))))
            (attriblist (bom2:parseconfig (bom2:open-input-file options) options)))
-      (set-current-output-port (gnetlist:output-port output-filename))
       (and attriblist
            (begin
              (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) #\:)
              (newline)
              (bom2:printbom (bom2:components (schematic-packages toplevel-schematic)
                                              attriblist)
-                            0)
-             ))
-      (close-output-port (current-output-port)))))
+                            0))))))
 
 (define bom2:printbom
   (lambda (bomlist count)

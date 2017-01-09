@@ -246,11 +246,9 @@ LIBRARYFIELD8\r
 ;;; Write my special testing netlist format
 ;;;
 (define (protelII output-filename)
-  (with-output-to-port (gnetlist:output-port output-filename)
-    (lambda ()
-      (protelII:write-top-header)
-      (protelII:components (schematic-packages toplevel-schematic))
-      (protelII:nets (schematic-nets toplevel-schematic)))))
+  (protelII:write-top-header)
+  (protelII:components (schematic-packages toplevel-schematic))
+  (protelII:nets (schematic-nets toplevel-schematic)))
 
 ;;
 ;; gEDA's native test netlist format specific functions ends

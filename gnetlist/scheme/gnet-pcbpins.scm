@@ -94,13 +94,8 @@
 
 ;; The top level netlister for pcbpins
 (define (pcbpins output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
-
   ;; write the header
   (display "# Pin name action command file\n")
 
   ;; write the components
-  (pcbpins:components (schematic-packages toplevel-schematic) 1)
-
-  ;; close netlist
-  (close-output-port (current-output-port)))
+  (pcbpins:components (schematic-packages toplevel-schematic) 1))

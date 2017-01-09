@@ -254,7 +254,6 @@
           )))))
 
 (define (gsch2pcb output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
   (gsch2pcb:write-top-header)
 
   (format (current-error-port)

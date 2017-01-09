@@ -60,11 +60,9 @@
 
 
 (define (redac output-filename)
-  (with-output-to-port (gnetlist:output-port output-filename)
-    (lambda ()
-      (display ".PCB\r\n")
-      (display ".REM CREATED BY gEDA GNETLIST\r\n")
-      (display ".CON\r\n")
-      (display ".COD 2\r\n\r\n")
-      (redac:write-net (schematic-nets toplevel-schematic))
-      (display ".EOD\r\n"))))
+  (display ".PCB\r\n")
+  (display ".REM CREATED BY gEDA GNETLIST\r\n")
+  (display ".CON\r\n")
+  (display ".COD 2\r\n\r\n")
+  (redac:write-net (schematic-nets toplevel-schematic))
+  (display ".EOD\r\n"))

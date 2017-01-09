@@ -52,14 +52,12 @@
 ;; Highest level function
 ;;
 (define (liquidpcb output-filename)
-  (with-output-to-port (gnetlist:output-port output-filename)
-    (lambda ()
-      (display "<LiquidPCB>\n")
-      (display "\t<netlist name=\"Main netlist\">\n")
-      (for-each display
-                (nets->liquidpcb-netlist (schematic-nets toplevel-schematic)))
-      (display "\t</netlist>\n")
-      (display "</LiquidPCB>\n"))))
+  (display "<LiquidPCB>\n")
+  (display "\t<netlist name=\"Main netlist\">\n")
+  (for-each display
+            (nets->liquidpcb-netlist (schematic-nets toplevel-schematic)))
+  (display "\t</netlist>\n")
+  (display "</LiquidPCB>\n"))
 
 ;;
 ;; liquid PCB netlist backend ends

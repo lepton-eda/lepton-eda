@@ -127,11 +127,9 @@ An error will be displayed, if no attribute name source is found."
           (backend-option-ref options 'attrib_file "attribs"))
          (option-attribs (backend-option-ref options 'attribs))
          (attriblist (bom:parseconfig option-filename option-attribs)))
-    (with-output-to-port (gnetlist:output-port output-filename)
-      (lambda ()
-        (bom:printlist (cons "refdes" attriblist))
-        (bom:components (schematic-packages toplevel-schematic)
-                        attriblist)))))
+    (bom:printlist (cons "refdes" attriblist))
+    (bom:components (schematic-packages toplevel-schematic)
+                    attriblist)))
 
 ;;
 ;; Bill of Material backend written by Matt Ettus ends here

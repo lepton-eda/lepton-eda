@@ -212,30 +212,25 @@
   (message "Ranger2 or other windows based layout tools\n")
   (message "---------------------------------\n\n")
 
-  (with-output-to-port (gnetlist:output-port output-filename)
-    (lambda ()
-      (let ((all-nets (schematic-nets toplevel-schematic))
-            (packages (schematic-packages toplevel-schematic)))
+  (let ((all-nets (schematic-nets toplevel-schematic))
+        (packages (schematic-packages toplevel-schematic)))
 
-        ;; initialize the net-name aliasing
-        (gnetlist:build-net-aliases futurenet2:map-net-names all-nets)
+    ;; initialize the net-name aliasing
+    (gnetlist:build-net-aliases futurenet2:map-net-names all-nets)
 
-        ;; initialize the refdes aliasing
-        (gnetlist:build-refdes-aliases futurenet2:map-refdes packages)
+    ;; initialize the refdes aliasing
+    (gnetlist:build-refdes-aliases futurenet2:map-refdes packages)
 
-        ;; write the header
-        (display "PINLIST,2\n")
-        (display "(DRAWING,GEDA.PIN,1-1\n")
+    ;; write the header
+    (display "PINLIST,2\n")
+    (display "(DRAWING,GEDA.PIN,1-1\n")
 
-        ;; write the components
-        (futurenet2:components packages 1)
-        (display ")\n")
+    ;; write the components
+    (futurenet2:components packages 1)
+    (display ")\n")
 
-        ;; write the nets
-        (futurenet2:write-net all-nets)
+    ;; write the nets
+    (futurenet2:write-net all-nets)
 
-        ;; terminating ")"
-        (display ")\n")
-
-        ;; close netlist
-        ))))
+    ;; terminating ")"
+    (display ")\n")))

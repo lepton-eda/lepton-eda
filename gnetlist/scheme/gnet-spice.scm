@@ -112,11 +112,9 @@
 ;; Spice netlist generation
 ;;
 (define (spice output-filename)
-  (set-current-output-port (gnetlist:output-port output-filename))
   (spice:write-top-header)
   (spice:write-netlist (schematic-packages toplevel-schematic))
-  (spice:write-bottom-footer)
-  (close-output-port (current-output-port)))
+  (spice:write-bottom-footer))
 
 
 ;; SPICE netlist backend written by S. Gieltjes ends here

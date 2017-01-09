@@ -79,11 +79,9 @@
    netnames))
 
 (define (maxascii output-filename)
-  (with-output-to-port (gnetlist:output-port output-filename)
-    (lambda ()
-      (display "*OrCAD\n*START\n")
+  (display "*OrCAD\n*START\n")
 
-      (maxascii:components (schematic-packages toplevel-schematic))
+  (maxascii:components (schematic-packages toplevel-schematic))
 
-      (maxascii:write-net (schematic-nets toplevel-schematic))
-      (display "\n*END\n"))))
+  (maxascii:write-net (schematic-nets toplevel-schematic))
+  (display "\n*END\n"))

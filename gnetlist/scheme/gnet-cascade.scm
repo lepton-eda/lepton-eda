@@ -111,14 +111,18 @@
 ;; The top level netlister for cascade
 (define cascade
    (lambda (output-filename)
-     (message "\n---------------------------------\n")
-     (message "gEDA/gnetlist Cascade Backend\n")
+     (message
+      (format #f
+              "
+---------------------------------
+gEDA/gnetlist Cascade Backend
+---------------------------------
 
-     (message "---------------------------------\n\n")
-
-     (message (string-append "Writing to output file \"" output-filename
-                             "\"... ") )
-     (set-current-output-port (gnetlist:output-port output-filename))
+Writing to ~S...
+"
+              (if output-filename
+                  (string-append "output file " output-filename)
+                  "stdout")))
 
      (let ((first_block #f)
            (packages (schematic-packages toplevel-schematic)))
@@ -146,10 +150,6 @@
         ;; write the footer
         (newline)
         (display "# End of netlist created by gEDA/gnetlist\n\n")
-
-        ;; close netlist
-    (close-output-port (current-output-port))
-
         )
 
       (message "done\n")

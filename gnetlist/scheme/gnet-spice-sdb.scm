@@ -946,25 +946,22 @@ the name is changed to canonical."
 
   ;; First find out if this is a .SUBCKT lower level,
   ;; or if it is a regular schematic.
-  (with-output-to-port
-      (gnetlist:output-port output-filename)
-    (lambda ()
-      (let* ((packages (schematic-packages toplevel-schematic))
-             (subckt? (spice-sdb:get-schematic-type packages)))
+  (let* ((packages (schematic-packages toplevel-schematic))
+         (subckt? (spice-sdb:get-schematic-type packages)))
 
-        (if subckt?
-            ;; now write out .SUBCKT header and .SUBCKT line
-            (spice-sdb:write-subcircuit-header subckt? packages)
-            ;; Otherwise it's a regular schematic.  Write out command
-            ;; line followed by comments in file header.
-            (spice-sdb:write-top-header))
+    (if subckt?
+        ;; now write out .SUBCKT header and .SUBCKT line
+        (spice-sdb:write-subcircuit-header subckt? packages)
+        ;; Otherwise it's a regular schematic.  Write out command
+        ;; line followed by comments in file header.
+        (spice-sdb:write-top-header))
 
-        ;; Create file-info-list and write actual netlist.
-        (spice-sdb:write-netlist (spice-sdb:create-file-info-list packages)
-                                 packages)
+    ;; Create file-info-list and write actual netlist.
+    (spice-sdb:write-netlist (spice-sdb:create-file-info-list packages)
+                             packages)
 
-        ;;  Now write out .END(S) of netlist, depending upon whether this schematic is a
-        ;;  "normal schematic" or a .SUBCKT.
-        (if subckt?
-            (spice-sdb:write-subcircuit-footer subckt?)
-            (spice-sdb:write-bottom-footer))))))
+    ;;  Now write out .END(S) of netlist, depending upon whether this schematic is a
+    ;;  "normal schematic" or a .SUBCKT.
+    (if subckt?
+        (spice-sdb:write-subcircuit-footer subckt?)
+        (spice-sdb:write-bottom-footer))))

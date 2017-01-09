@@ -746,74 +746,72 @@
 ;;; Highest level function
 ;;; Write my special testing netlist format
 (define (drc2 output-filename)
-  (with-output-to-port (gnetlist:output-port output-filename)
-    (lambda ()
-      (let ((nets (schematic-nets toplevel-schematic))
-            (non-unique-packages (schematic-non-unique-packages toplevel-schematic))
-            (packages (schematic-packages toplevel-schematic)))
+  (let ((nets (schematic-nets toplevel-schematic))
+        (non-unique-packages (schematic-non-unique-packages toplevel-schematic))
+        (packages (schematic-packages toplevel-schematic)))
 
-        ;; Perform DRC-matrix sanity checks.
-        ;; See if all elements of the matrix are valid.
-        (when (not (drc2:drc-matrix-elements-are-correct?))
-          (display "INTERNAL ERROR: DRC matrix elements are NOT all valid.\n\n")
-          (error "INTERNAL ERROR. DRC matrix elements are NOT all valid."))
+    ;; Perform DRC-matrix sanity checks.
+    ;; See if all elements of the matrix are valid.
+    (when (not (drc2:drc-matrix-elements-are-correct?))
+      (display "INTERNAL ERROR: DRC matrix elements are NOT all valid.\n\n")
+      (error "INTERNAL ERROR. DRC matrix elements are NOT all valid."))
 
-        ;; Check non-numbered symbols
-        (not-defined? 'dont-check-non-numbered-parts
-                      => (drc2:check-non-numbered-items packages))
+    ;; Check non-numbered symbols
+    (not-defined? 'dont-check-non-numbered-parts
+                  => (drc2:check-non-numbered-items packages))
 
-        ;; Check for duplicated references
-        (not-defined? 'dont-check-duplicated-references
-                      => (drc2:check-duplicated-references
-                          packages
-                          non-unique-packages))
+    ;; Check for duplicated references
+    (not-defined? 'dont-check-duplicated-references
+                  => (drc2:check-duplicated-references
+                      packages
+                      non-unique-packages))
 
-        ;; Check for NoConnection nets with more than one pin connected.
-        (not-defined? 'dont-check-connected-noconnects
-                      => (drc2:check-connected-noconnects nets))
+    ;; Check for NoConnection nets with more than one pin connected.
+    (not-defined? 'dont-check-connected-noconnects
+                  => (drc2:check-connected-noconnects nets))
 
-        ;; Check nets with only one connection
-        (not-defined? 'dont-check-one-connection-nets
-                      => (drc2:check-single-nets nets))
+    ;; Check nets with only one connection
+    (not-defined? 'dont-check-one-connection-nets
+                  => (drc2:check-single-nets nets))
 
-        ;; Check "unknown" pintypes
-        (not-defined? 'dont-report-unknown-pintypes
-                      => (drc2:report-unknown-pintypes nets))
+    ;; Check "unknown" pintypes
+    (not-defined? 'dont-report-unknown-pintypes
+                  => (drc2:report-unknown-pintypes nets))
 
-        ;; Check pintypes of the pins connected to every net
-        (not-defined? 'dont-check-pintypes-of-nets
-                      => (drc2:check-pintypes-of-nets nets))
+    ;; Check pintypes of the pins connected to every net
+    (not-defined? 'dont-check-pintypes-of-nets
+                  => (drc2:check-pintypes-of-nets nets))
 
-        ;; Check unconnected pins
-        (not-defined? 'dont-check-unconnected-pins
-                      => (drc2:check-unconnected-pins packages))
+    ;; Check unconnected pins
+    (not-defined? 'dont-check-unconnected-pins
+                  => (drc2:check-unconnected-pins packages))
 
-        ;; Check slots
-        (not-defined? 'dont-check-slots
-                      => (drc2:check-slots packages))
+    ;; Check slots
+    (not-defined? 'dont-check-slots
+                  => (drc2:check-slots packages))
 
-        ;; Check for duplicated slots
-        (not-defined? 'dont-check-duplicated-slots
-                      => (drc2:check-duplicated-slots packages))
+    ;; Check for duplicated slots
+    (not-defined? 'dont-check-duplicated-slots
+                  => (drc2:check-duplicated-slots packages))
 
-        ;; Check for unused slots
-        (not-defined? 'dont-check-unused-slots
-                      => (drc2:check-unused-slots packages))
+    ;; Check for unused slots
+    (not-defined? 'dont-check-unused-slots
+                  => (drc2:check-unused-slots packages))
 
-        ;; Display total number of warnings
-        (if (> warnings_number 0)
-            (format #t "Found ~A warnings.\n" warnings_number)
-            (display "No warnings found.\n"))
+    ;; Display total number of warnings
+    (if (> warnings_number 0)
+        (format #t "Found ~A warnings.\n" warnings_number)
+        (display "No warnings found.\n"))
 
-        ;; Display total number of errors
-        (if (> errors_number 0)
-            (format #t "Found ~A errors.\n" errors_number)
-            (display "No errors found.\n")))))
+    ;; Display total number of errors
+    (if (> errors_number 0)
+        (format #t "Found ~A errors.\n" errors_number)
+        (display "No errors found.\n")))
 
   ;; Make gnetlist return an error if there are DRC errors.
   ;; If there are only warnings and it's in quiet mode, then
   ;; do not return an error.
-  (if (and (not (string=? "-" output-filename)) (> errors_number 0))
+  (if (and output-filename (> errors_number 0))
       (message "DRC errors found. See output file.\n")
       (and (> warnings_number 0)
            (not (calling-flag? "ignore-warnings-in-return-value"

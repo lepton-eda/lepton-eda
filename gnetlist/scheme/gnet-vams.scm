@@ -95,15 +95,15 @@
            (let ((thunk (lambda () (vams:write-secondary-unit architecture
                                                          entity
                                                          (schematic-packages toplevel-schematic)))))
-             (if (gnetlist:stdout? output-filename)
-                 (thunk)
+             (if output-filename
                  ;; generate output-filename, like
                  ;; (<entity>_arc.<output-file-extension>)
                  (let ((filename (architecture-name output-filename entity)))
                    (message (format #f
                                     "\ngenerating architecture of current schematic in ~A\n"
                                     filename))
-                   (with-output-to-file filename thunk)))))
+                   (with-output-to-file filename thunk))
+                 (thunk))))
 
           ((= generate-mode 2)
            (let* ((top-attribs-refdes (vams:get-uref top-attribs))
@@ -114,8 +114,7 @@
                   (thunk (lambda () (vams:write-primary-unit refdes
                                                         port-list
                                                         generic-list))))
-             (if (gnetlist:stdout? output-filename)
-                 (thunk)
+             (if output-filename
                  ;; generate output-filename
                  ;; (<device of selected component>.vhdl), else
                  ;; <entity>.vhdl
@@ -123,7 +122,8 @@
                    (message (format #f
                                     "\n\ngenerating entity of current schematic in ~A\n"
                                     filename))
-                   (with-output-to-file filename thunk))))))))
+                   (with-output-to-file filename thunk))
+                 (thunk)))))))
 
 
 ;;;                  TOP LEVEL FUNCTION

@@ -29,5 +29,4 @@
     #:footer "\n.END\n"
     #:prepend-names? #t
     #:remove '((device . "include"))
-    )
-   (gnetlist:output-port output-filename)))
+    )))
