@@ -63,7 +63,6 @@ CPINLIST *s_cpinlist_add(CPINLIST * ptr)
 
     /* setup node information */
     new_node->object_ptr = NULL;
-    new_node->type = PIN_TYPE_NET;
     new_node->pin_number = NULL;
     new_node->pin_label = NULL;
     new_node->net_name = NULL;
@@ -159,7 +158,6 @@ static SCM
 scm_from_pin (CPINLIST *pin)
 {
   return scm_list_n (pin->object_ptr ? edascm_from_object (pin->object_ptr) : SCM_BOOL_F,
-                     scm_from_int (pin->type),
                      pin->pin_number ? scm_from_utf8_string (pin->pin_number) : SCM_BOOL_F,
                      pin->net_name ? scm_from_utf8_string (pin->net_name) : SCM_BOOL_F,
                      pin->pin_label ? scm_from_utf8_string (pin->pin_label) : SCM_BOOL_F,

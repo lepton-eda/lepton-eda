@@ -51,11 +51,11 @@
     (match ls
       ((#f . rest)
        #f)
-      ((object type number name label nets)
+      ((object number name label nets)
        (let ((attribs (make-pin-attrib-list object)))
          (make-package-pin (object-id object)
                            object
-                           type
+                           'net-pin
                            number
                            name
                            label

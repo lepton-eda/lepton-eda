@@ -158,7 +158,7 @@ s_netlist_post_process (NETLIST *head)
               s_net_name (head,
                           pl_current->nets,
                           nl_current->hierarchy_tag,
-                          pl_current->type);
+                          PIN_TYPE_NET);
 
             /* put this name also in the first
                node of the nets linked list */

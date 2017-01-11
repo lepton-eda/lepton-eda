@@ -295,7 +295,6 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
     /* add cpin node */
     cpins = s_cpinlist_add(cpins);
     cpins->object_ptr = o_current;
-    cpins->type = o_current->pin_type;
 
     cpins->pin_number =
       o_attrib_search_object_attribs_by_name (o_current, "pinnumber", 0);
@@ -310,7 +309,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 
     /* This avoids us adding an unnamed net for an unconnected pin */
     if (o_current->conn_list != NULL) {
-      s_traverse_net (nets, TRUE, o_current, hierarchy_tag, cpins->type);
+      s_traverse_net (nets, TRUE, o_current, hierarchy_tag, PIN_TYPE_NET);
       s_traverse_clear_all_visited (s_page_objects (pr_current->page_current));
     }
 
