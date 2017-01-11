@@ -43,10 +43,10 @@
   (define attribs '())
   (define (list->pin ls)
     (match ls
-      ((-1 . rest)
+      ((#f . rest)
        #f)
-      ((id object type number name label nets)
-       (make-package-pin id object type number name label attribs (list->nets nets)))
+      ((object type number name label nets)
+       (make-package-pin (object-id object) object type number name label attribs (list->nets nets)))
       (_ #f)))
   (filter-map list->pin ls))
 

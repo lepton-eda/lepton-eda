@@ -281,7 +281,6 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
   GList *iter;
 
   cpinlist_head = cpins = s_cpinlist_add(NULL);
-  cpins->plid = -1;
 
   for (iter = component->complex->prim_objs;
        iter != NULL;
@@ -295,7 +294,6 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 
     /* add cpin node */
     cpins = s_cpinlist_add(cpins);
-    cpins->plid = o_current->sid;
     cpins->object_ptr = o_current;
     cpins->type = o_current->pin_type;
 

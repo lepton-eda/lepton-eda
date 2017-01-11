@@ -201,17 +201,14 @@ s_hierarchy_post_process (NETLIST * head)
 
 		while (pl_current != NULL) {
 
-		    if (pl_current->plid != -1) {
 			verbose_print("p");
-		    }
 
-		    if (pl_current->pin_label == NULL
-			&& pl_current->plid != -1) {
+		    if (pl_current->pin_label == NULL) {
 			fprintf(stderr,
 				_("Found a pin [%s] on component [%s] which does not have a label!\n"),
 				nl_current->component_uref,
 				pl_current->pin_number);
-		    } else if (pl_current->plid != -1) {
+		    } else {
 
 #if DEBUG
 			printf("# L: %s %s\n", pl_current->pin_number,

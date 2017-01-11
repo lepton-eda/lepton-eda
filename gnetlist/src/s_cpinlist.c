@@ -62,7 +62,6 @@ CPINLIST *s_cpinlist_add(CPINLIST * ptr)
     new_node = (CPINLIST *) g_malloc(sizeof(CPINLIST));
 
     /* setup node information */
-    new_node->plid = 0;
     new_node->object_ptr = NULL;
     new_node->type = PIN_TYPE_NET;
     new_node->pin_number = NULL;
@@ -95,7 +94,6 @@ void s_cpinlist_print(CPINLIST * ptr)
 
     while (pl_current != NULL) {
 
-	if (pl_current->plid != -1) {
 	     if (pl_current->pin_number) {
 	        printf("	pin %s", pl_current->pin_number);
 	     } else {
@@ -121,7 +119,6 @@ void s_cpinlist_print(CPINLIST * ptr)
 	    if (pl_current->nets) {
 		s_net_print(pl_current->nets);
 	    }
-	}
 
 	pl_current = pl_current->next;
     }
@@ -139,7 +136,7 @@ CPINLIST *s_cpinlist_search_pin(CPINLIST * ptr, char *pin_number)
 
     while (pl_current != NULL) {
 
-	if (pl_current->plid != -1 && (pl_current->pin_number != NULL)) {
+	if (pl_current->pin_number != NULL) {
 
 	    if (strcmp(pl_current->pin_number, pin_number) == 0) {
 
@@ -161,8 +158,7 @@ CPINLIST *s_cpinlist_search_pin(CPINLIST * ptr, char *pin_number)
 static SCM
 scm_from_pin (CPINLIST *pin)
 {
-  return scm_list_n (scm_from_int (pin->plid),
-                     pin->object_ptr ? edascm_from_object (pin->object_ptr) : SCM_BOOL_F,
+  return scm_list_n (pin->object_ptr ? edascm_from_object (pin->object_ptr) : SCM_BOOL_F,
                      scm_from_int (pin->type),
                      pin->pin_number ? scm_from_utf8_string (pin->pin_number) : SCM_BOOL_F,
                      pin->net_name ? scm_from_utf8_string (pin->net_name) : SCM_BOOL_F,

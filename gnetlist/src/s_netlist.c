@@ -143,11 +143,9 @@ s_netlist_post_process (NETLIST *head)
 	    pl_current = nl_current->cpins;
 	    while (pl_current != NULL) {
 
-        if (pl_current->plid != -1) {
-          verbose_print("p");
-        }
+        verbose_print("p");
 
-        if (pl_current->plid != -1 && pl_current->nets) {
+        if (pl_current->nets) {
 
           g_free(pl_current->net_name);
 
@@ -226,11 +224,9 @@ s_netlist_name_named_nets (NETLIST *named_netlist, NETLIST *unnamed_netlist)
       pl_current = nl_current->cpins;
       while (pl_current != NULL) {
 
-	if (pl_current->plid != -1) {
-	  verbose_print("p");
-	}
+        verbose_print("p");
 
-	if (pl_current->plid != -1 && pl_current->nets) {
+	if (pl_current->nets) {
 	  verbose_print("n");
 	  net_name = NULL;
 	  n_current = pl_current->nets;

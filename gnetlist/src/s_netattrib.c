@@ -170,7 +170,6 @@ s_netattrib_create_pins (OBJECT *o_current,
 		new_cpin->pin_number = g_strdup (current_pin);
 		new_cpin->net_name = NULL;
 
-		new_cpin->plid = o_current->sid;
 		new_cpin->object_ptr = o_current;
 
 		new_cpin->nets = s_net_add(NULL);

@@ -105,7 +105,6 @@ struct st_netlist {
 
 /* for every pin on a component */
 struct st_cpinlist {
-  int plid;
   int type;                             /* PIN_TYPE_NET or PIN_TYPE_BUS */
 
   OBJECT *object_ptr;
