@@ -296,6 +296,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
     /* add cpin node */
     cpins = s_cpinlist_add(cpins);
     cpins->plid = o_current->sid;
+    cpins->object_ptr = o_current;
     cpins->type = o_current->pin_type;
 
     cpins->pin_number =

@@ -108,6 +108,8 @@ struct st_cpinlist {
   int plid;
   int type;                             /* PIN_TYPE_NET or PIN_TYPE_BUS */
 
+  OBJECT *object_ptr;
+
   char *pin_number;
   char *net_name;			/* this is resolved at very end */
   char *pin_label;
