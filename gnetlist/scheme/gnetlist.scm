@@ -699,3 +699,63 @@ PACKAGE."
     (hash-ref gnetlist:refdes-hash-reverse refdes)
     )
   )
+
+
+(define (gnetlist:get-attribute-by-pin-attrib refdes
+                                              pin-attrib-name
+                                              pin-attrib-value
+                                              name
+                                              func)
+  (define (found-refdes? x)
+    (and x
+         (string=? x refdes)))
+
+  (define (find-pin-by-attrib pins name value)
+    (and (not (null? pins))
+         (let* ((pin (car pins))
+                (attrib (assq-ref (package-pin-attribs pin)
+                                  name)))
+           (if (and attrib
+                    (string=? attrib value))
+               pin
+               (find-pin-by-attrib (cdr pins) name value)))))
+
+  (let loop ((netlist (schematic-netlist toplevel-schematic)))
+    (if (null? netlist)
+        "unknown"
+        (or (and (found-refdes? (package-refdes (car netlist)))
+                 (let ((pin (find-pin-by-attrib (package-pins (car netlist))
+                                                (string->symbol pin-attrib-name)
+                                                pin-attrib-value)))
+                   (if pin
+                       (assq-ref (package-pin-attribs pin)
+                                 (string->symbol name))
+                       (and func (func (package-pins (car netlist))
+                                       name
+                                       pin-attrib-value)))))
+            (loop (cdr netlist))))))
+
+
+;;; Supplies pintype 'pwr' for artificial pins having pinnumber.
+(define (cheat-pintype pins name value)
+  (define (in-pin-list? pin-list pin-number-to-search)
+    (and (not (null? pin-list))
+         (let ((pin (car pin-list)))
+           (or (and (package-pin-number pin)
+                    (string=? (package-pin-number pin) pin-number-to-search))
+               (in-pin-list? (cdr pin-list) pin-number-to-search)))))
+
+  (and (string=? name "pintype")
+       (in-pin-list? pins value)
+       "pwr"))
+
+;; takes a uref and pinseq number and returns wanted_attribute associated
+;; with that pinseq pin and component
+(define (gnetlist:get-attribute-by-pinseq refdes pinseq-value name)
+  (gnetlist:get-attribute-by-pin-attrib refdes "pinseq" pinseq-value name #f))
+
+
+;; this takes a pin number and returns the appropriate attribute on that pin
+;; scm_pin is the value associated with the pinnumber= attribute and uref
+(define (gnetlist:get-attribute-by-pinnumber refdes pinnumber-value name)
+  (gnetlist:get-attribute-by-pin-attrib refdes "pinnumber" pinnumber-value name cheat-pintype))

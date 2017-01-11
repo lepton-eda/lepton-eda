@@ -40,13 +40,27 @@
   (filter-map list->net ls))
 
 (define (list->pins ls)
-  (define attribs '())
+  (define (make-pin-attrib-list object)
+    (define (add-attrib attrib)
+      (cons (string->symbol (attrib-name attrib))
+            (attrib-value attrib)))
+
+    (map add-attrib (object-attribs object)))
+
   (define (list->pin ls)
     (match ls
       ((#f . rest)
        #f)
       ((object type number name label nets)
-       (make-package-pin (object-id object) object type number name label attribs (list->nets nets)))
+       (let ((attribs (make-pin-attrib-list object)))
+         (make-package-pin (object-id object)
+                           object
+                           type
+                           number
+                           name
+                           label
+                           attribs
+                           (list->nets nets))))
       (_ #f)))
   (filter-map list->pin ls))
 
