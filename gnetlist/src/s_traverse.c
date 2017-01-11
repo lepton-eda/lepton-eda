@@ -82,10 +82,8 @@ static void
 s_traverse_init (void)
 {
     netlist_head = s_netlist_add(NULL);
-    netlist_head->nlid = -1;	/* head node */
 
     graphical_netlist_head = s_netlist_add(NULL);
-    graphical_netlist_head->nlid = -1;	/* head node */
 
     if (verbose_mode) {
 	printf
@@ -207,7 +205,6 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
       }
       g_free (temp);
       netlist = s_netlist_add(netlist);
-      netlist->nlid = o_current->sid;
 
       scm_uref = g_scm_c_get_uref (o_current);
 

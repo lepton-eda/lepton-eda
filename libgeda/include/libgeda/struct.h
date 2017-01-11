@@ -89,8 +89,6 @@ typedef gboolean(*LoadBackupQueryFunc)(void *, GString *);
 /* for every component in the object database */
 struct st_netlist {
 
-  int nlid;
-
   char *component_uref;
 
   OBJECT *object_ptr;

@@ -6,6 +6,7 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (geda attrib)
+  #:use-module (geda object)
   #:use-module (gnetlist package)
   #:use-module (gnetlist package-pin)
   #:use-module (gnetlist pin-net)
@@ -71,10 +72,10 @@
 
   (define (list->package ls)
     (match ls
-      ((-1 . rest)
+      ((refdes tag composite #f pins)
        #f)
-      ((id refdes tag composite object pins)
-       (make-package id
+      ((refdes tag composite object pins)
+       (make-package (object-id object)
                      refdes
                      tag
                      composite

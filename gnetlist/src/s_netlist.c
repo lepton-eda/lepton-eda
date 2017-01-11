@@ -61,7 +61,6 @@ NETLIST *s_netlist_add(NETLIST * ptr)
     new_node = (NETLIST *) g_malloc(sizeof(NETLIST));
 
     /* setup node information */
-    new_node->nlid = 0;
     new_node->cpins = NULL;
     new_node->component_uref = NULL;
     new_node->object_ptr = NULL;
@@ -93,8 +92,6 @@ void s_netlist_print(NETLIST * ptr)
 
     while (nl_current != NULL) {
 
-	if (nl_current->nlid != -1) {
-
 	    if (nl_current->component_uref) {
 		printf("component %s \n", nl_current->component_uref);
 	    } else {
@@ -110,7 +107,6 @@ void s_netlist_print(NETLIST * ptr)
 	    }
 
 	    printf("\n");
-	}
 
 	nl_current = nl_current->next;
     }
@@ -296,8 +292,7 @@ s_netlist_netname_of_netid (NETLIST *netlist_head, int net_id)
 static SCM
 scm_from_netlist (NETLIST *netlist)
 {
-  return scm_list_n (scm_from_int (netlist->nlid),
-                     netlist->component_uref ? scm_from_utf8_string (netlist->component_uref) : SCM_BOOL_F,
+  return scm_list_n (netlist->component_uref ? scm_from_utf8_string (netlist->component_uref) : SCM_BOOL_F,
                      netlist->hierarchy_tag ? scm_from_utf8_string (netlist->hierarchy_tag) : SCM_BOOL_F,
                      scm_from_bool (netlist->composite_component),
                      netlist->object_ptr ? edascm_from_object (netlist->object_ptr) : SCM_BOOL_F,
