@@ -797,16 +797,21 @@ Run `~A --help' for more information.
                (set! get-uref get-spice-refdes))
           (if backend-path
               ;; Load backend code.
-              (primitive-load backend-path)
-              ;; If it couldn't be found, fail.
+              (begin
+                ;; Evaluate the first set of Scheme expressions.
+                (for-each primitive-load (gnetlist-option-ref 'pre-load))
+                ;; Load backend
+                (primitive-load backend-path)
+                ;; Evaluate second set of Scheme expressions.
+                (for-each primitive-load (gnetlist-option-ref 'post-load)))
+
+              ;; If the backend couldn't be found, fail.
               (error (format #f "Could not find backend `~A' in load path.
 
 Run `~A --list-backends' for a full list of available backends.
 "
                              backend
                              (car (program-arguments))))))
-        ;; Evaluate second set of Scheme expressions.
-        (for-each primitive-load (gnetlist-option-ref 'post-load))
         (set! toplevel-schematic (make-toplevel-schematic (map file->page files)))
         (if (gnetlist-option-ref 'interactive)
             (gnetlist-repl)

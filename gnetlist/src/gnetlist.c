@@ -190,10 +190,6 @@ void main_prog(void *closure, int argc, char *argv[])
       exit (0);
     }
 
-    /* Evaluate the first set of Scheme expressions before we load any
-     * schematic files */
-    scm_eval (pre_backend_list, scm_current_module ());
-
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
 
