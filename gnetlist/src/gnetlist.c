@@ -136,7 +136,6 @@ void main_prog(void *closure, int argc, char *argv[])
     int i;
     int argv_index;
     char *cwd;
-    gchar *str;
     gchar *filename;
 
     TOPLEVEL *pr_current;
