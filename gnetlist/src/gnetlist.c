@@ -258,13 +258,10 @@ void main_prog(void *closure, int argc, char *argv[])
     s_page_print_all(pr_current);
 #endif
 
-    SCM backend_name = guile_proc ? scm_from_utf8_string (guile_proc) : SCM_BOOL_F;
-
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
 
-    scm_call_1 (scm_variable_ref (scm_c_lookup ("load-backend")),
-                backend_name);
+    scm_call_0 (scm_variable_ref (scm_c_lookup ("load-backend")));
 
     gnetlist_quit();
 

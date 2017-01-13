@@ -381,21 +381,23 @@ REFDES. As a result, slots may be repeated in the returned list."
     (run-repl repl)))
 
 
-(define (load-backend filename)
+(define (load-backend)
   (define (get-output-filename)
     ;; Name is file name or "-" which means stdout.
     (let ((name (gnetlist-option-ref 'output)))
       (and (not (string=? name "-"))
            name)))
 
+  (define backend (gnetlist-option-ref 'backend))
+
   ;; Search for backend scm file in load path
-  (let ((backend-path (and filename
+  (let ((backend-path (and backend
                            (%search-load-path (format #f
                                                       "gnet-~A.scm"
-                                                      filename))))
+                                                      backend))))
         (output-filename (get-output-filename)))
-    (when filename
-      (and (string-prefix? "spice" filename)
+    (when backend
+      (and (string-prefix? "spice" backend)
            (set! netlist-mode 'spice)
            (set! get-uref get-spice-refdes))
       (if backend-path
@@ -406,15 +408,15 @@ REFDES. As a result, slots may be repeated in the returned list."
 
 Run `~A --list-backends' for a full list of available backends.
 "
-                         filename
+                         backend
                          (car (program-arguments))))))
     ;; Evaluate second set of Scheme expressions.
     (for-each primitive-load (gnetlist-option-ref 'post-load))
     (set! toplevel-schematic (make-toplevel-schematic (active-pages)))
     (if (gnetlist-option-ref 'interactive)
         (gnetlist-repl)
-        (if filename
-            (let ((backend-proc (primitive-eval (string->symbol filename))))
+        (if backend
+            (let ((backend-proc (primitive-eval (string->symbol backend))))
               (if output-filename
                   ;; output-filename is defined, output to it.
                   (with-output-to-file output-filename
