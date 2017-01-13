@@ -381,7 +381,7 @@ REFDES. As a result, slots may be repeated in the returned list."
     (run-repl repl)))
 
 
-(define (load-backend filename post-backend-list)
+(define (load-backend filename)
   (define (get-output-filename)
     ;; Name is file name or "-" which means stdout.
     (let ((name (gnetlist-option-ref 'output)))
@@ -409,7 +409,7 @@ Run `~A --list-backends' for a full list of available backends.
                          filename
                          (car (program-arguments))))))
     ;; Evaluate second set of Scheme expressions.
-    (primitive-eval post-backend-list)
+    (for-each primitive-load (gnetlist-option-ref 'post-load))
     (set! toplevel-schematic (make-toplevel-schematic (active-pages)))
     (if (gnetlist-option-ref 'interactive)
         (gnetlist-repl)

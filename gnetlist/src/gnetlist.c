@@ -264,9 +264,8 @@ void main_prog(void *closure, int argc, char *argv[])
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
 
-    scm_call_2 (scm_variable_ref (scm_c_lookup ("load-backend")),
-                backend_name,
-                post_backend_list);
+    scm_call_1 (scm_variable_ref (scm_c_lookup ("load-backend")),
+                backend_name);
 
     gnetlist_quit();
 
