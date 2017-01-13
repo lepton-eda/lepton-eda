@@ -247,13 +247,6 @@ void main_prog(void *closure, int argc, char *argv[])
     }
     /* free(cwd); - Defered; see below */
 
-    if (argv[argv_index] == NULL) {
-        fprintf (stderr, _(
-            "ERROR: No schematics files specified for processing.\n"
-            "\nRun `%s --help' for more information.\n"), argv[0]);
-        exit (1);
-    }
-
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
 
