@@ -3,7 +3,6 @@ void g_set_project_current(TOPLEVEL *pr_current);
 SCM g_scm_c_get_uref (OBJECT *object);
 SCM g_get_verbosity ();
 SCM g_get_backend_arguments ();
-SCM g_graphical_objs_in_net_with_attrib_get_attrib(SCM scm_netname, SCM scm_has_attribute, SCM scm_wanted_attribute);
 /* g_rc.c */
 SCM g_rc_gnetlist_version(SCM version);
 /* g_register.c */
@@ -65,8 +64,6 @@ NETLIST *s_netlist_return_tail(NETLIST *head);
 NETLIST *s_netlist_add(NETLIST *ptr);
 void s_netlist_print(NETLIST *ptr);
 void s_netlist_post_process (NETLIST *head);
-void s_netlist_name_named_nets (NETLIST *named_netlist, NETLIST *unnamed_netlist);
-char *s_netlist_netname_of_netid (NETLIST *netlist_head, int net_id);
 SCM scm_from_netlist_list (NETLIST *netlist_list);
 /* s_rename.c */
 void s_rename_init(void);

@@ -759,3 +759,49 @@ PACKAGE."
 ;; scm_pin is the value associated with the pinnumber= attribute and uref
 (define (gnetlist:get-attribute-by-pinnumber refdes pinnumber-value name)
   (gnetlist:get-attribute-by-pin-attrib refdes "pinnumber" pinnumber-value name cheat-pintype))
+
+;; given a net name, an attribute, and a wanted attribute, return all
+;; the given attribute of all the graphical objects connected to that
+;; net name
+(define (gnetlist:graphical-objs-in-net-with-attrib-get-attrib netname in-attrib out-attrib-name)
+  (define (found? x)
+    (and x
+         (string=? x netname)))
+
+  (define (has-netname? pin)
+    (let ((name (package-pin-name pin)))
+      (and name
+           (string=? name netname))))
+
+  (define (have-netname? pins)
+    (and (not (null? pins))
+         (or (has-netname? (car pins))
+             (have-netname? (cdr pins)))))
+
+  (define (parse-attrib-string s)
+    (let ((position (string-index s #\=)))
+      (and position
+           (let ((name (string-take s position))
+                 (value (string-drop s (1+ position))))
+             (and (not (string=? value ""))
+                  (not (string-suffix? " " name))
+                  (not (string-prefix? " " value))
+                  (cons name value))))))
+
+  (define (have-attrib? attribs attrib)
+    (let* ((name-value (parse-attrib-string attrib))
+           (name (string->symbol (car name-value)))
+           (value (cdr name-value)))
+      (member value
+              (assq-ref attribs name))))
+
+  (let ((out-attrib (string->symbol out-attrib-name)))
+    (and netname
+        (append-map
+         (lambda (package)
+           (if (and (have-netname? (package-pins package))
+                    (package-graphical? package)
+                    (have-attrib? (package-attribs package) in-attrib))
+               (assq-ref (package-attribs package) out-attrib)
+               '()))
+         (schematic-netlist toplevel-schematic)))))

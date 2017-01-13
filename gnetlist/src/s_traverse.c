@@ -83,8 +83,6 @@ s_traverse_init (void)
 {
     netlist_head = s_netlist_add(NULL);
 
-    graphical_netlist_head = s_netlist_add(NULL);
-
     if (verbose_mode) {
 	printf
 	    ("\n\n------------------------------------------------------\n");
@@ -138,9 +136,6 @@ SCM_DEFINE (traverse, "%traverse", 0, 0, 0,
   /* now that all the sheets have been read, go through and do the */
   /* post processing work */
   s_netlist_post_process (netlist_head);
-
-  /* Now match the graphical netlist with the net names already assigned */
-  s_netlist_name_named_nets (netlist_head, graphical_netlist_head);
 
   if (verbose_mode) {
     printf("\nInternal netlist representation:\n\n");
@@ -198,7 +193,6 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
         /* traverse graphical elements, but adding them to the
 	   graphical netlist */
 
-	netlist = s_netlist_return_tail(graphical_netlist_head);
 	is_graphical = TRUE;
 
 

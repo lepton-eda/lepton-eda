@@ -11,7 +11,8 @@
             package-attribs set-package-attribs!
             package-pins set-package-pins!
             package-attributes
-            package-attribute))
+            package-attribute
+            package-graphical?))
 
 (define-record-type <package>
   (make-package id refdes tag composite object iattribs attribs pins)
@@ -46,3 +47,9 @@ must be a Scheme symbol (not string). If no attached attribute
 found, returns first inherited attribute with NAME. If neither
 attached nor inherited attribute found, returns #f."
   (and=> (package-attributes package name) car))
+
+(define (package-graphical? package)
+  "Returns #t if PACKAGE is graphical, that is, it has attribute
+\"graphical=1\", otherwise returns #f."
+  (and=> (package-attribute package 'graphical)
+         (lambda (x) (string=? x "1"))))

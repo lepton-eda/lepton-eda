@@ -56,9 +56,6 @@ static struct gsubr_t gnetlist_funcs[] = {
   /* netlist functions */
   { "gnetlist:get-renamed-nets",    1, 0, 0, g_get_renamed_nets },
 
-  { "gnetlist:graphical-objs-in-net-with-attrib-get-attrib",
-    3, 0, 0, g_graphical_objs_in_net_with_attrib_get_attrib },
-
   /* SDB -- 9.1.2003 */
   { "gnetlist:get-backend-arguments", 0, 0, 0, g_get_backend_arguments },
   { "gnetlist:get-verbosity", 0, 0, 0, g_get_verbosity },
