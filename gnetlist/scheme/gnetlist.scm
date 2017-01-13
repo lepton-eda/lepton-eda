@@ -381,52 +381,6 @@ REFDES. As a result, slots may be repeated in the returned list."
     (run-repl repl)))
 
 
-(define (load-backend)
-  (define (get-output-filename)
-    ;; Name is file name or "-" which means stdout.
-    (let ((name (gnetlist-option-ref 'output)))
-      (and (not (string=? name "-"))
-           name)))
-
-  (define backend (gnetlist-option-ref 'backend))
-
-  ;; Search for backend scm file in load path
-  (let ((backend-path (and backend
-                           (%search-load-path (format #f
-                                                      "gnet-~A.scm"
-                                                      backend))))
-        (output-filename (get-output-filename)))
-    (when backend
-      (and (string-prefix? "spice" backend)
-           (set! netlist-mode 'spice)
-           (set! get-uref get-spice-refdes))
-      (if backend-path
-          ;; Load backend code.
-          (primitive-load backend-path)
-          ;; If it couldn't be found, fail.
-          (error (format #f "Could not find backend `~A' in load path.
-
-Run `~A --list-backends' for a full list of available backends.
-"
-                         backend
-                         (car (program-arguments))))))
-    ;; Evaluate second set of Scheme expressions.
-    (for-each primitive-load (gnetlist-option-ref 'post-load))
-    (set! toplevel-schematic (make-toplevel-schematic (active-pages)))
-    (if (gnetlist-option-ref 'interactive)
-        (gnetlist-repl)
-        (if backend
-            (let ((backend-proc (primitive-eval (string->symbol backend))))
-              (if output-filename
-                  ;; output-filename is defined, output to it.
-                  (with-output-to-file output-filename
-                    (lambda () (backend-proc output-filename)))
-                  ;; output-filename is #f, output to stdout.
-                  (backend-proc output-filename)))
-            (format (current-error-port)
-                    "You gave neither backend to execute nor interactive mode!\n")))))
-
-
 ;;; Helper function for sorting connections.
 (define (pair<? a b)
   (or (refdes<? (car a) (car b))
@@ -799,3 +753,50 @@ PACKAGE."
                (assq-ref (package-attribs package) out-attrib)
                '()))
          (schematic-netlist toplevel-schematic)))))
+
+(define (get-output-filename)
+  ;; Name is file name or "-" which means stdout.
+  (let ((name (gnetlist-option-ref 'output)))
+    (and (not (string=? name "-"))
+         name)))
+
+
+;;; Main program
+;;;
+;;; Search for backend scm file in load path
+(let* ((backend (gnetlist-option-ref 'backend))
+       (backend-path (and backend
+                          (%search-load-path (format #f
+                                                     "gnet-~A.scm"
+                                                     backend))))
+       (output-filename (get-output-filename)))
+  (when backend
+    (and (string-prefix? "spice" backend)
+         (set! netlist-mode 'spice)
+         (set! get-uref get-spice-refdes))
+    (if backend-path
+        ;; Load backend code.
+        (primitive-load backend-path)
+        ;; If it couldn't be found, fail.
+        (error (format #f "Could not find backend `~A' in load path.
+
+Run `~A --list-backends' for a full list of available backends.
+"
+                       backend
+                       (car (program-arguments))))))
+  ;; Evaluate second set of Scheme expressions.
+  (for-each primitive-load (gnetlist-option-ref 'post-load))
+  (set! toplevel-schematic (make-toplevel-schematic (active-pages)))
+  (if (gnetlist-option-ref 'interactive)
+      (gnetlist-repl)
+      (if backend
+          (let ((backend-proc (primitive-eval (string->symbol backend))))
+            (if output-filename
+                ;; output-filename is defined, output to it.
+                (with-output-to-file output-filename
+                  (lambda () (backend-proc output-filename)))
+                ;; output-filename is #f, output to stdout.
+                (backend-proc output-filename)))
+          (format (current-error-port)
+                  "You gave neither backend to execute nor interactive mode!\n")))
+  (quit))
