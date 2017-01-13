@@ -81,6 +81,8 @@ s_traverse_clear_all_visited (const GList *obj_list)
 static void
 s_traverse_init (void)
 {
+  s_rename_init();
+
     netlist_head = s_netlist_add(NULL);
 
     if (verbose_mode) {

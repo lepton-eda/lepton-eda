@@ -185,8 +185,6 @@ void main_prog(void *closure, int argc, char *argv[])
     i_vars_init_gnetlist_defaults ();
     i_vars_set (pr_current);
 
-    s_rename_init();
-
     if(list_backends) {
       gnetlist_backends(pr_current);
       exit (0);
