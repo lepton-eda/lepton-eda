@@ -22,10 +22,14 @@
              (system repl common)
              (srfi srfi-1)
              (ice-9 match)
+             ((ice-9 rdelim)
+              #:select (read-string)
+              #:prefix rdelim:)
              (sxml transform)
              (geda library)
              (geda page)
              (geda deprecated)
+             (geda log)
              (gnetlist traverse)
              (gnetlist schematic)
              (gnetlist package)
@@ -760,6 +764,15 @@ PACKAGE."
     (and (not (string=? name "-"))
          name)))
 
+(define quiet-mode (gnetlist-option-ref 'quiet))
+
+;;; Reads file NAME and outputs a page named NAME
+(define (file->page name)
+  (with-input-from-file name
+    (lambda ()
+      (when (not quiet-mode)
+        (log! 'message "Loading schematic ~S\n" name))
+      (string->page name (rdelim:read-string)))))
 
 ;;; Main program
 ;;;
@@ -777,6 +790,7 @@ Run `~A --help' for more information.
                                                            "gnet-~A.scm"
                                                            backend))))
              (output-filename (get-output-filename)))
+
         (when backend
           (and (string-prefix? "spice" backend)
                (set! netlist-mode 'spice)
@@ -793,7 +807,7 @@ Run `~A --list-backends' for a full list of available backends.
                              (car (program-arguments))))))
         ;; Evaluate second set of Scheme expressions.
         (for-each primitive-load (gnetlist-option-ref 'post-load))
-        (set! toplevel-schematic (make-toplevel-schematic (active-pages)))
+        (set! toplevel-schematic (make-toplevel-schematic (map file->page files)))
         (if (gnetlist-option-ref 'interactive)
             (gnetlist-repl)
             (if backend

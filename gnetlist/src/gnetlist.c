@@ -51,8 +51,6 @@ void gnetlist_quit(void)
 
     /* Free GSList *backend_params */
     g_slist_free (backend_params);
-
-    g_slist_free (input_files);
 }
 
 
@@ -133,15 +131,9 @@ gnetlist_backends (TOPLEVEL *pr_current)
 
 void main_prog(void *closure, int argc, char *argv[])
 {
-    int i;
-    int argv_index;
-    char *cwd;
-    gchar *filename;
-
     TOPLEVEL *pr_current;
 
-    argv_index = parse_commandline(argc, argv);
-    cwd = g_get_current_dir();
+    parse_commandline(argc, argv);
 
     scm_set_program_arguments (argc, argv, NULL);
 
@@ -203,49 +195,6 @@ void main_prog(void *closure, int argc, char *argv[])
     /* Evaluate the first set of Scheme expressions before we load any
      * schematic files */
     scm_eval (pre_backend_list, scm_current_module ());
-
-    i = argv_index;
-    while (argv[i] != NULL) {
-      GError *err = NULL;
-
-      if (g_path_is_absolute(argv[i])) {
-        /* Path is already absolute so no need to do any concat of cwd */
-        filename = g_strdup (argv[i]);
-      } else {
-        filename = g_build_filename (cwd, argv[i], NULL);
-      }
-
-      if (!quiet_mode) {
-        s_log_message (_("Loading schematic [%s]\n"), filename);
-        fprintf (stderr, _("Loading schematic [%s]\n"), filename);
-      }
-
-      s_page_goto (pr_current, s_page_new (pr_current, filename));
-
-      if (!f_open (pr_current, pr_current->page_current, filename, &err)) {
-        g_warning ("%s\n", err->message);
-        fprintf (stderr, _("ERROR: Failed to load '%s': %s\n"),
-                 filename, err->message);
-        g_error_free (err);
-	exit(2);
-      }
-
-      /* collect input filenames for backend use */
-      input_files = g_slist_append(input_files, argv[i]);
-
-      i++;
-      g_free (filename);
-    }
-
-    /* Change back to the directory where we started.  This is done */
-    /* since gnetlist is a command line utility and will deposit its output */
-    /* in the current directory.  Having the output go to a different */
-    /* directory will confuse the user (confused me, at first). */
-    if (chdir (cwd)) {
-      /* Error occured with chdir */
-#warning FIME: What do we do?
-    }
-    /* free(cwd); - Defered; see below */
 
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));

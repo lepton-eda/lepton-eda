@@ -17,7 +17,6 @@ void i_vars_set(TOPLEVEL *pr_current);
 void i_vars_init_gnetlist_defaults (void);
 /* parsecmd.c */
 void usage(char *cmd);
-GSList *create_input_files_list(int argi, int argc, char *argv[]);
 int parse_commandline(int argc, char *argv[]);
 /* s_cpinlist.c */
 CPINLIST *s_cpinlist_return_tail(CPINLIST *head);
