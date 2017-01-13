@@ -18,6 +18,7 @@ mostlyclean-local:
 
 input_files = \
 	stack_1.sch \
+	postload/test-postload.scm \
 	hierarchy-sources/bottom.sch \
 	hierarchy-sources/middle.sch \
 	hierarchy-sources/rock.sch \
@@ -80,6 +81,7 @@ XFAIL_TESTS = \
 	common/SlottedOpamps-switcap.out
 
 TESTS = stack_1-geda.out \
+	hierarchy-postload.out \
 	hierarchy-geda.out \
 	hierarchy-makedepend.out \
 	hierarchy-vams.out \
