@@ -32,7 +32,8 @@
              (gnetlist package-pin)
              (gnetlist pin-net)
              (gnetlist attrib compare)
-             (gnetlist sort))
+             (gnetlist sort)
+             (gnetlist option))
 
 ;;----------------------------------------------------------------------
 ;; The below functions added by SDB in Sept 2003 to support command-line flag
@@ -380,15 +381,19 @@ REFDES. As a result, slots may be repeated in the returned list."
     (run-repl repl)))
 
 
-(define (load-backend interactive filename output-type post-backend-list)
+(define (load-backend filename post-backend-list)
+  (define (get-output-filename)
+    ;; Name is file name or "-" which means stdout.
+    (let ((name (gnetlist-option-ref 'output)))
+      (and (not (string=? name "-"))
+           name)))
 
   ;; Search for backend scm file in load path
   (let ((backend-path (and filename
                            (%search-load-path (format #f
                                                       "gnet-~A.scm"
                                                       filename))))
-        (output-filename (and (not (string=? output-type "-"))
-                              output-type)))
+        (output-filename (get-output-filename)))
     (when filename
       (and (string-prefix? "spice" filename)
            (set! netlist-mode 'spice)
@@ -406,7 +411,7 @@ Run `~A --list-backends' for a full list of available backends.
     ;; Evaluate second set of Scheme expressions.
     (primitive-eval post-backend-list)
     (set! toplevel-schematic (make-toplevel-schematic (active-pages)))
-    (if interactive
+    (if (gnetlist-option-ref 'interactive)
         (gnetlist-repl)
         (if filename
             (let ((backend-proc (primitive-eval (string->symbol filename))))

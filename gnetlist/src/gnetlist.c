@@ -141,9 +141,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
     TOPLEVEL *pr_current;
 
-    /* set default output filename */
-    output_filename = g_strdup("output.net");
-
     argv_index = parse_commandline(argc, argv);
     cwd = g_get_current_dir();
 
@@ -263,16 +260,12 @@ void main_prog(void *closure, int argc, char *argv[])
 #endif
 
     SCM backend_name = guile_proc ? scm_from_utf8_string (guile_proc) : SCM_BOOL_F;
-    SCM interactive = scm_from_bool (interactive_mode);
-    SCM output_name = output_filename ? scm_from_utf8_string (output_filename) : SCM_BOOL_F;
 
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
 
-    scm_call_4 (scm_variable_ref (scm_c_lookup ("load-backend")),
-                interactive,
+    scm_call_2 (scm_variable_ref (scm_c_lookup ("load-backend")),
                 backend_name,
-                output_name,
                 post_backend_list);
 
     gnetlist_quit();
