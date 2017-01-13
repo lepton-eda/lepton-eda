@@ -240,17 +240,15 @@
             (while (read-line model-file))) ;; Found *comment.  Iterate.
 
            ((string-prefix? "." file-line)
-            (begin
-              (debug-spew "In get-file-type, first-char = .\n") ;; DEBUG stuff
-              (cond
+            (cond
 
-               ((string-prefix-ci? ".subckt" file-line) ;; found .subckt as first line.
-                ".SUBCKT" )
+             ((string-prefix-ci? ".subckt" file-line) ;; found .subckt as first line.
+              ".SUBCKT" )
 
-               ((string-prefix-ci? ".model" file-line) ;; found .model as first line.
-                ".MODEL"  )
+             ((string-prefix-ci? ".model" file-line) ;; found .model as first line.
+              ".MODEL"  )
 
-               (else #f)))) ;; first . spice card is neither .model nor .subckt
+             (else #f))) ;; first . spice card is neither .model nor .subckt
 
            (else
             (while (read-line model-file))))))

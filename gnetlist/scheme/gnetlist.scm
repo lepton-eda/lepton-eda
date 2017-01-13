@@ -39,19 +39,6 @@
 ;; processing.
 ;;----------------------------------------------------------------------
 
-;;---------------------------------------------------------------
-;;  debug-spew
-;;  Wrapper which spews debug messages if -v flag is set, otherwise
-;;  does nothing.
-;;  Calling form:  (debug-spew "verbose debug text")
-;;--------------------------------------------------------------
-(define debug-spew
-  (lambda (debug-string)
-    (if (= 1 (gnetlist:get-verbosity))
-        (message debug-string)
-)))
-
-
 (define (unknown? value)
   (string-ci=? value "unknown"))
 

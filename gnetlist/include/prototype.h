@@ -1,7 +1,6 @@
 /* g_netlist.c */
 void g_set_project_current(TOPLEVEL *pr_current);
 SCM g_scm_c_get_uref (OBJECT *object);
-SCM g_get_verbosity ();
 SCM g_get_backend_arguments ();
 /* g_rc.c */
 SCM g_rc_gnetlist_version(SCM version);
