@@ -108,7 +108,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
     /* immediately setup user params */
     i_vars_init_gnetlist_defaults ();
-    i_vars_set (pr_current);
 
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));

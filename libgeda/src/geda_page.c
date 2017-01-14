@@ -127,8 +127,6 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
     g_free (pwd);
   }
 
-  g_assert (toplevel->init_bottom != 0);
-
   page->up = -2;
   page->page_control = 0;
 

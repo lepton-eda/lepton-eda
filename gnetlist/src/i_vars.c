@@ -20,30 +20,7 @@
 
 #include <config.h>
 
-#include <stdio.h>
-
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
 #include <libgeda/libgeda.h>
-
-#include "../include/prototype.h"
-
-#define DEFAULT_BITMAP_DIRECTORY   "non-existant"
-
-#define INIT_STR(w, name, str) {                            \
-    g_free((w)->name);                                      \
-    (w)->name = g_strdup (((default_ ## name) != NULL) ?    \
-                          (default_ ## name) : (str));      \
-}
-
-
-void i_vars_set(TOPLEVEL * pr_current)
-{
-  i_vars_libgeda_set(pr_current);
-}
-
 
 /*! \brief Setup gnetlist default configuration.
  * \par Function Description
