@@ -135,6 +135,8 @@ SCM_DEFINE (traverse, "%traverse", 0, 0, 0,
     }
   }
 
+  s_rename_destroy_all();
+
   /* now that all the sheets have been read, go through and do the */
   /* post processing work */
   s_netlist_post_process (netlist_head);

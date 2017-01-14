@@ -47,7 +47,6 @@
 void gnetlist_quit(void)
 {
     s_clib_free();
-    s_rename_destroy_all();
 
     /* Free GSList *backend_params */
     g_slist_free (backend_params);
