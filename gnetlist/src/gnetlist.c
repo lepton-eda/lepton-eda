@@ -54,81 +54,6 @@ void gnetlist_quit(void)
 }
 
 
-/* \brief Print a list of available backends.
- * \par Function Description
- * Prints a list of available gnetlist backends by searching for files
- * in each of the directories in the current Guile %load-path.  A file
- * is considered to be a gnetlist backend if its basename begins with
- * "gnet-" and ends with ".scm".
- *
- * \param pr_current  Current #TOPLEVEL structure.
- */
-void
-gnetlist_backends (TOPLEVEL *pr_current)
-{
-  SCM s_load_path;
-  GList *backend_names = NULL, *iter = NULL;
-
-  /* Look up the current Guile %load-path */
-  s_load_path = scm_variable_ref (scm_c_lookup ("%load-path"));
-
-  for ( ; s_load_path != SCM_EOL; s_load_path = scm_cdr (s_load_path)) {
-    SCM s_dir_name = scm_car (s_load_path);
-    char *dir_name;
-    DIR *dptr;
-    struct dirent *dentry;
-
-    /* Get directory name from Scheme */
-    g_assert (scm_is_true (scm_list_p (s_load_path))); /* Sanity check */
-    g_assert (scm_is_string (scm_car (s_load_path))); /* Sanity check */
-    dir_name = scm_to_utf8_string (s_dir_name);
-
-    /* Open directory */
-    dptr = opendir (dir_name);
-    if (dptr == NULL) {
-      g_warning (_("Can't open directory %s: %s\n"),
-                 dir_name, strerror (errno));
-      continue;
-    }
-    free (dir_name);
-
-    while (1) {
-      char *name;
-
-      dentry = readdir (dptr);
-      if (dentry == NULL) break;
-
-      /* Check that filename has the right format to be a gnetlist
-       * backend */
-      if (!(g_str_has_prefix (dentry->d_name, "gnet-")
-            && g_str_has_suffix (dentry->d_name, ".scm")))
-        continue;
-
-      /* Copy filename and remove prefix & suffix.  Add to list of
-       * backend names. */
-      name = g_strdup (dentry->d_name + 5);
-      name[strlen(name)-4] = '\0';
-      backend_names = g_list_prepend (backend_names, name);
-    }
-
-    /* Close directory */
-    closedir (dptr);
-  }
-
-  /* Sort the list of backends */
-  backend_names = g_list_sort (backend_names, (GCompareFunc) strcmp);
-
-  printf (_("List of available backends: \n\n"));
-
-  for (iter = backend_names; iter != NULL; iter = g_list_next (iter)) {
-    printf ("%s\n", (char *) iter->data);
-  }
-  printf ("\n");
-
-  scm_remember_upto_here_1 (s_load_path);
-}
-
-
 void main_prog(void *closure, int argc, char *argv[])
 {
     TOPLEVEL *pr_current;
@@ -184,11 +109,6 @@ void main_prog(void *closure, int argc, char *argv[])
     /* immediately setup user params */
     i_vars_init_gnetlist_defaults ();
     i_vars_set (pr_current);
-
-    if(list_backends) {
-      gnetlist_backends(pr_current);
-      exit (0);
-    }
 
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));

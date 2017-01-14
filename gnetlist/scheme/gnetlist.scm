@@ -21,10 +21,13 @@
 (use-modules (system repl repl)
              (system repl common)
              (srfi srfi-1)
+             (srfi srfi-26)
              (ice-9 match)
              ((ice-9 rdelim)
               #:select (read-string)
               #:prefix rdelim:)
+             (ice-9 ftw)
+             (ice-9 i18n)
              (sxml transform)
              (geda library)
              (geda page)
@@ -774,55 +777,88 @@ PACKAGE."
         (log! 'message "Loading schematic ~S\n" name))
       (string->page name (rdelim:read-string)))))
 
+;;; Prints a list of available backends.
+(define (gnetlist-backends)
+  "Prints a list of available gnetlist backends by searching for
+files in each of the directories in the current Guile %load-path.
+A file is considered to be a gnetlist backend if its basename
+begins with \"gnet-\" and ends with \".scm\"."
+  (define backend-prefix "gnet-")
+  (define backend-suffix ".scm")
+  (define prefix-length (string-length backend-prefix))
+  (define suffix-length (string-length backend-suffix))
+
+  (define (backend? filename)
+    (and (string-prefix? backend-prefix filename)
+         (string-suffix? backend-suffix filename)))
+
+  (define (backend-name filename)
+    (string-drop-right (string-drop filename prefix-length) suffix-length))
+
+  (define (path-backends path)
+    (or (scandir path backend?)
+        (begin
+          (log! 'warning "Can't open directory ~S.\n" path)
+          '())))
+
+  (let ((backend-files (append-map path-backends %load-path)))
+    (display "List of available backends: \n\n")
+    (display (string-join
+              (sort (map backend-name backend-files) string-locale<?)
+              "\n"
+              'suffix))))
+
 ;;; Main program
 ;;;
-(let ((files (gnetlist-option-ref '())))
-  (if (null? files)
-      (error (format #f
-                     "No schematics files specified for processing.
+(if (gnetlist-option-ref 'list-backends)
+    (gnetlist-backends)
+    (let ((files (gnetlist-option-ref '())))
+      (if (null? files)
+          (error (format #f
+                         "No schematics files specified for processing.
 Run `~A --help' for more information.
 "
-                     (car (program-arguments))))
-      (let* ((backend (gnetlist-option-ref 'backend))
-             ;; Search for backend scm file in load path
-             (backend-path (and backend
-                                (%search-load-path (format #f
-                                                           "gnet-~A.scm"
-                                                           backend))))
-             (output-filename (get-output-filename)))
+                         (car (program-arguments))))
+          (let* ((backend (gnetlist-option-ref 'backend))
+                 ;; Search for backend scm file in load path
+                 (backend-path (and backend
+                                    (%search-load-path (format #f
+                                                               "gnet-~A.scm"
+                                                               backend))))
+                 (output-filename (get-output-filename)))
 
-        (when backend
-          (and (string-prefix? "spice" backend)
-               (set! netlist-mode 'spice)
-               (set! get-uref get-spice-refdes))
-          (if backend-path
-              ;; Load backend code.
-              (begin
-                ;; Evaluate the first set of Scheme expressions.
-                (for-each primitive-load (gnetlist-option-ref 'pre-load))
-                ;; Load backend
-                (primitive-load backend-path)
-                ;; Evaluate second set of Scheme expressions.
-                (for-each primitive-load (gnetlist-option-ref 'post-load)))
+            (when backend
+              (and (string-prefix? "spice" backend)
+                   (set! netlist-mode 'spice)
+                   (set! get-uref get-spice-refdes))
+              (if backend-path
+                  ;; Load backend code.
+                  (begin
+                    ;; Evaluate the first set of Scheme expressions.
+                    (for-each primitive-load (gnetlist-option-ref 'pre-load))
+                    ;; Load backend
+                    (primitive-load backend-path)
+                    ;; Evaluate second set of Scheme expressions.
+                    (for-each primitive-load (gnetlist-option-ref 'post-load)))
 
-              ;; If the backend couldn't be found, fail.
-              (error (format #f "Could not find backend `~A' in load path.
+                  ;; If the backend couldn't be found, fail.
+                  (error (format #f "Could not find backend `~A' in load path.
 
 Run `~A --list-backends' for a full list of available backends.
 "
-                             backend
-                             (car (program-arguments))))))
-        (set! toplevel-schematic (make-toplevel-schematic (map file->page files)))
-        (if (gnetlist-option-ref 'interactive)
-            (gnetlist-repl)
-            (if backend
-                (let ((backend-proc (primitive-eval (string->symbol backend))))
-                  (if output-filename
-                      ;; output-filename is defined, output to it.
-                      (with-output-to-file output-filename
-                        (lambda () (backend-proc output-filename)))
-                      ;; output-filename is #f, output to stdout.
-                      (backend-proc output-filename)))
-                (format (current-error-port)
-                        "You gave neither backend to execute nor interactive mode!\n")))
-        (quit))))
+                                 backend
+                                 (car (program-arguments))))))
+            (set! toplevel-schematic (make-toplevel-schematic (map file->page files)))
+            (if (gnetlist-option-ref 'interactive)
+                (gnetlist-repl)
+                (if backend
+                    (let ((backend-proc (primitive-eval (string->symbol backend))))
+                      (if output-filename
+                          ;; output-filename is defined, output to it.
+                          (with-output-to-file output-filename
+                            (lambda () (backend-proc output-filename)))
+                          ;; output-filename is #f, output to stdout.
+                          (backend-proc output-filename)))
+                    (format (current-error-port)
+                            "You gave neither backend to execute nor interactive mode!\n")))
+            (quit)))))
