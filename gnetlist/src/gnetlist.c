@@ -57,6 +57,10 @@ void main_prog(void *closure, int argc, char *argv[])
 {
     TOPLEVEL *pr_current;
 
+#if defined(__MINGW32__) && defined(DEBUG)
+    fprintf(stderr, _("This is the MINGW32 port.\n\n"));
+#endif
+
     parse_commandline(argc, argv);
 
     scm_set_program_arguments (argc, argv, NULL);
@@ -73,10 +77,6 @@ void main_prog(void *closure, int argc, char *argv[])
         "This is free software, and you are welcome to redistribute it under certain\n"
         "conditions; please see the COPYING file for more details.\n\n"),
         PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
-
-#if defined(__MINGW32__) && defined(DEBUG)
-    fprintf(stderr, _("This is the MINGW32 port.\n\n"));
-#endif
 
     /* register guile (scheme) functions */
     g_register_funcs();
