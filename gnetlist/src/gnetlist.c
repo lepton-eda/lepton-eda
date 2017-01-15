@@ -67,6 +67,9 @@ void main_prog(void *closure, int argc, char *argv[])
 
     libgeda_init();
 
+    /* immediately setup user params */
+    i_vars_init_gnetlist_defaults ();
+
     /* create log file right away */
     /* even if logging is enabled */
     s_log_init ("gnetlist");
@@ -93,9 +96,6 @@ void main_prog(void *closure, int argc, char *argv[])
     scm_c_use_module ("geda library");
 
     g_rc_parse (pr_current, argv[0], "gnetlistrc", rc_filename);
-
-    /* immediately setup user params */
-    i_vars_init_gnetlist_defaults ();
 
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
