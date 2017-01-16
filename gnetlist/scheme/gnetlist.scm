@@ -819,7 +819,7 @@ Run `~A --help' for more information.
                          (car (program-arguments))))
           (let* ((backend (gnetlist-option-ref 'backend))
                  ;; this is a kludge to make sure that spice mode gets set
-                 (netlist-mode (if (string-prefix? "spice" backend)
+                 (netlist-mode (if (and backend (string-prefix? "spice" backend))
                                    'spice
                                    'geda))
 
