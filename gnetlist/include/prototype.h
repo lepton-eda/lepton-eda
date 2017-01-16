@@ -46,7 +46,7 @@ void s_net_print(NET *ptr);
 char *s_net_return_connected_string (OBJECT *object, char *hierarchy_tag);
 int s_net_find(NET *net_head, NET *node);
 char *s_net_name_search (NET *net_head);
-char *s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type);
+char *s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type, SCM netlist_mode);
 SCM scm_from_net_list (NET *net_list);
 /* s_netattrib.c */
 gchar *s_netattrib_pinnum_get_connected_string (const gchar *pinnum) G_GNUC_WARN_UNUSED_RESULT;
@@ -61,7 +61,7 @@ char *s_netattrib_return_netname (OBJECT *o_current, char *pinnumber, char *hier
 NETLIST *s_netlist_return_tail(NETLIST *head);
 NETLIST *s_netlist_add(NETLIST *ptr);
 void s_netlist_print(NETLIST *ptr);
-void s_netlist_post_process (NETLIST *head);
+void s_netlist_post_process (NETLIST *head, SCM netlist_mode);
 SCM scm_from_netlist_list (NETLIST *netlist_list);
 /* s_rename.c */
 void s_rename_init(void);

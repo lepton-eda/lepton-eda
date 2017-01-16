@@ -128,12 +128,12 @@
   (filter-map toplevel-attrib? (append-map page-contents toplevel-pages)))
 
 
-(define (make-toplevel-schematic toplevel-pages)
+(define (make-toplevel-schematic toplevel-pages netlist-mode)
   "Creates a new schematic record based on TOPLEVEL-PAGES which
 must be a list of pages."
   (let* ((id (next-schematic-id))
          (toplevel-attribs (get-toplevel-attributes toplevel-pages))
-         (netlist (traverse))
+         (netlist (traverse netlist-mode))
          (tree (schematic->sxml netlist toplevel-pages))
          (nu-packages (non-unique-packages netlist))
          (packages (get-packages nu-packages))

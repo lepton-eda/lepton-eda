@@ -100,9 +100,9 @@
   (filter-map list->package ls))
 
 
-(define (traverse)
+(define (traverse netlist-mode)
   (let ((cwd (getcwd))
-        (netlist (list->packages (%traverse))))
+        (netlist (list->packages (%traverse netlist-mode))))
     ;; Change back to the directory where we started.  This is
     ;; done because (%traverse) can change the current working
     ;; directory.

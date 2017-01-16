@@ -61,17 +61,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
     scm_set_program_arguments (argc, argv, NULL);
 
-    /* this is a kludge to make sure that spice mode gets set */
-    /*  Hacked by SDB to allow spice netlisters of arbitrary name
-     *        as long as they begin with "spice".  For example, this spice
-     *  netlister is valid: "spice-sdb".
-     */
-    if (guile_proc) {
-        if (strncmp(guile_proc, "spice", 5) == 0) {
-            netlist_mode = SPICE;
-        }
-    }
-
     libgeda_init();
 
     /* create log file right away */

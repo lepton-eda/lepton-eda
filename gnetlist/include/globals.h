@@ -31,7 +31,6 @@ extern int list_backends;
 extern int verbose_mode;
 extern int interactive_mode;
 extern int quiet_mode;
-extern int netlist_mode;
 extern char *output_filename;
 extern SCM pre_rc_list;       /* before rc loaded */
 extern SCM pre_backend_list;  /* before backend loaded */

@@ -114,7 +114,7 @@ void s_netlist_print(NETLIST * ptr)
 }
 
 void
-s_netlist_post_process (NETLIST *head)
+s_netlist_post_process (NETLIST *head, SCM netlist_mode)
 {
   NETLIST *nl_current;
   CPINLIST *pl_current;
@@ -155,7 +155,8 @@ s_netlist_post_process (NETLIST *head)
             s_net_name (head,
                         pl_current->nets,
                         nl_current->hierarchy_tag,
-                        PIN_TYPE_NET);
+                        PIN_TYPE_NET,
+                        netlist_mode);
 
           /* put this name also in the first
              node of the nets linked list */

@@ -317,7 +317,7 @@ s_net_name_search (NET * net_head)
 }
 
 char*
-s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type)
+s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type, SCM netlist_mode)
 {
     char *string = NULL;
     NET *n_start;
@@ -408,7 +408,7 @@ s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type)
     /* have we exceeded the number of unnamed nets? */
     if (*unnamed_counter < MAX_UNNAMED_NETS) {
 
-        if (netlist_mode == SPICE) {
+      if (scm_is_true (scm_equal_p (netlist_mode, scm_from_utf8_symbol ("spice")))) {
           string = g_strdup_printf("%d", (*unnamed_counter)++);
         } else {
           temp = g_strdup_printf ("%s%d", unnamed_string, (*unnamed_counter)++);

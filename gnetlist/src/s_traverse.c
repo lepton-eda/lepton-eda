@@ -111,8 +111,8 @@ s_traverse_init (void)
                                     g_direct_equal);
 }
 
-SCM_DEFINE (traverse, "%traverse", 0, 0, 0,
-            (), "Traverse hierarchy.")
+SCM_DEFINE (traverse, "%traverse", 1, 0, 0,
+            (SCM netlist_mode), "Traverse hierarchy.")
 {
   TOPLEVEL *pr_current;
   GList *iter;
@@ -139,7 +139,7 @@ SCM_DEFINE (traverse, "%traverse", 0, 0, 0,
 
   /* now that all the sheets have been read, go through and do the */
   /* post processing work */
-  s_netlist_post_process (netlist_head);
+  s_netlist_post_process (netlist_head, netlist_mode);
 
   if (verbose_mode) {
     printf("\nInternal netlist representation:\n\n");

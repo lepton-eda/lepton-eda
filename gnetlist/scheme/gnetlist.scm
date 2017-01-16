@@ -33,7 +33,6 @@
              (geda page)
              (geda deprecated)
              (geda log)
-             (gnetlist traverse)
              (gnetlist schematic)
              (gnetlist package)
              (gnetlist package-pin)
@@ -365,7 +364,6 @@ REFDES. As a result, slots may be repeated in the returned list."
   (display output-string message-port)
   )
 
-(define netlist-mode 'geda)
 (define toplevel-schematic #f)
 (define (gnetlist-repl)
   (let ((repl (make-repl (current-language) #f)))
@@ -820,6 +818,11 @@ Run `~A --help' for more information.
 "
                          (car (program-arguments))))
           (let* ((backend (gnetlist-option-ref 'backend))
+                 ;; this is a kludge to make sure that spice mode gets set
+                 (netlist-mode (if (string-prefix? "spice" backend)
+                                   'spice
+                                   'geda))
+
                  ;; Search for backend scm file in load path
                  (backend-path (and backend
                                     (%search-load-path (format #f
@@ -828,8 +831,7 @@ Run `~A --help' for more information.
                  (output-filename (get-output-filename)))
 
             (when backend
-              (and (string-prefix? "spice" backend)
-                   (set! netlist-mode 'spice)
+              (and (eq? netlist-mode 'spice)
                    (set! get-uref get-spice-refdes))
               (if backend-path
                   ;; Load backend code.
@@ -848,7 +850,8 @@ Run `~A --list-backends' for a full list of available backends.
 "
                                  backend
                                  (car (program-arguments))))))
-            (set! toplevel-schematic (make-toplevel-schematic (map file->page files)))
+            (set! toplevel-schematic (make-toplevel-schematic (map file->page files)
+                                                              netlist-mode))
             (if (gnetlist-option-ref 'interactive)
                 (gnetlist-repl)
                 (if backend
