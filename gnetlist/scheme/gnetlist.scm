@@ -39,7 +39,8 @@
              (gnetlist pin-net)
              (gnetlist attrib compare)
              (gnetlist sort)
-             (gnetlist option))
+             (gnetlist option)
+             (gnetlist verbose))
 
 ;;----------------------------------------------------------------------
 ;; The below functions added by SDB in Sept 2003 to support command-line flag
@@ -852,6 +853,7 @@ Run `~A --list-backends' for a full list of available backends.
                                  (car (program-arguments))))))
             (set! toplevel-schematic (make-toplevel-schematic (map file->page files)
                                                               netlist-mode))
+            (verbose-print-netlist (schematic-netlist toplevel-schematic))
             (if (gnetlist-option-ref 'interactive)
                 (gnetlist-repl)
                 (if backend

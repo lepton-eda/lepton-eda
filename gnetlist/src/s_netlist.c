@@ -80,38 +80,6 @@ NETLIST *s_netlist_add(NETLIST * ptr)
     }
 }
 
-void s_netlist_print(NETLIST * ptr)
-{
-    NETLIST *nl_current = NULL;
-
-    nl_current = ptr;
-
-    if (nl_current == NULL) {
-	return;
-    }
-
-    while (nl_current != NULL) {
-
-	    if (nl_current->component_uref) {
-		printf("component %s \n", nl_current->component_uref);
-	    } else {
-		printf("component SPECIAL \n");
-	    }
-
-	    if (nl_current->hierarchy_tag) {
-		printf("Hierarchy tag: %s\n", nl_current->hierarchy_tag);
-	    }
-
-	    if (nl_current->cpins) {
-		s_cpinlist_print(nl_current->cpins);
-	    }
-
-	    printf("\n");
-
-	nl_current = nl_current->next;
-    }
-    printf("\n");
-}
 
 void
 s_netlist_post_process (NETLIST *head, SCM netlist_mode)

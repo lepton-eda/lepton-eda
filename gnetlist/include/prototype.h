@@ -21,7 +21,6 @@ int parse_commandline(int argc, char *argv[]);
 /* s_cpinlist.c */
 CPINLIST *s_cpinlist_return_tail(CPINLIST *head);
 CPINLIST *s_cpinlist_add(CPINLIST *ptr);
-void s_cpinlist_print(CPINLIST *ptr);
 CPINLIST *s_cpinlist_search_pin(CPINLIST *ptr, char *pin_number);
 SCM scm_from_pin_list (CPINLIST *pin_list);
 /* s_hierarchy.c */
@@ -42,7 +41,6 @@ void verbose_done(void);
 void verbose_reset_index(void);
 /* s_net.c */
 NET *s_net_add(NET *ptr);
-void s_net_print(NET *ptr);
 char *s_net_return_connected_string (OBJECT *object, char *hierarchy_tag);
 int s_net_find(NET *net_head, NET *node);
 char *s_net_name_search (NET *net_head);
@@ -60,7 +58,6 @@ char *s_netattrib_return_netname (OBJECT *o_current, char *pinnumber, char *hier
 /* s_netlist.c */
 NETLIST *s_netlist_return_tail(NETLIST *head);
 NETLIST *s_netlist_add(NETLIST *ptr);
-void s_netlist_print(NETLIST *ptr);
 void s_netlist_post_process (NETLIST *head, SCM netlist_mode);
 SCM scm_from_netlist_list (NETLIST *netlist_list);
 /* s_rename.c */

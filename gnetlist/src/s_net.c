@@ -71,35 +71,6 @@ NET *s_net_add(NET * ptr)
     }
 }
 
-void s_net_print(NET * ptr)
-{
-    NET *n_current = NULL;
-
-    n_current = ptr;
-
-    if (n_current == NULL) {
-	return;
-    }
-
-    while (n_current != NULL) {
-
-	if (n_current->nid != -1) {
-
-#if DEBUG
-	    if (n_current->net_name) {
-		printf("	%s [%d]\n", n_current->net_name, n_current->nid);
-	    }
-#endif
-
-	    if (n_current->connected_to) {
-		printf("		%s [%d]\n", n_current->connected_to, n_current->nid);
-	    }
-	}
-
-	n_current = n_current->next;
-    }
-}
-
 
 /* object being a pin */
 char*

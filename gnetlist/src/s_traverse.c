@@ -141,11 +141,6 @@ SCM_DEFINE (traverse, "%traverse", 1, 0, 0,
   /* post processing work */
   s_netlist_post_process (netlist_head, netlist_mode);
 
-  if (verbose_mode) {
-    printf("\nInternal netlist representation:\n\n");
-    s_netlist_print(netlist_head);
-  }
-
   return scm_from_netlist_list (netlist_head);
 }
 
@@ -312,7 +307,6 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
     }
 
     cpins->nets = nets_head;
-    /* s_net_print(nets); */
   }
 
 

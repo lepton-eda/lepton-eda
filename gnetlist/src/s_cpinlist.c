@@ -81,47 +81,6 @@ CPINLIST *s_cpinlist_add(CPINLIST * ptr)
     }
 }
 
-void s_cpinlist_print(CPINLIST * ptr)
-{
-    CPINLIST *pl_current = NULL;
-
-    pl_current = ptr;
-
-    if (pl_current == NULL) {
-	return;
-    }
-
-    while (pl_current != NULL) {
-
-	     if (pl_current->pin_number) {
-	        printf("	pin %s", pl_current->pin_number);
-	     } else {
-	        printf("	pin ?");
-	     }
-
-	    if (pl_current->pin_label) {
-		printf(" (%s)", pl_current->pin_label);
-	    } else {
-		printf(" ()");
-	    }
-
-	    if (pl_current->net_name) {
-		printf(" %s", pl_current->net_name);
-	    } else {
-		printf(" Null net name");
-	    }
-
-
-	    printf("\n");
-
-
-	    if (pl_current->nets) {
-		s_net_print(pl_current->nets);
-	    }
-
-	pl_current = pl_current->next;
-    }
-}
 
 CPINLIST *s_cpinlist_search_pin(CPINLIST * ptr, char *pin_number)
 {
