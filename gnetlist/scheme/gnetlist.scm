@@ -524,6 +524,43 @@ PACKAGE."
   (or (assoc-ref (get-pins-nets package) pinnumber)
       "ERROR_INVALID_PIN"))
 
+;;; Backward compatibility variables and procedures
+(define packages #f)
+(define all-unique-nets #f)
+(define all-nets #f)
+(define all-pins #f)
+
+(define (gnetlist:get-toplevel-attribute attrib)
+  (or (assq-ref (schematic-toplevel-attribs toplevel-schematic)
+                (string->symbol attrib))
+      "not found"))
+
+(define gnetlist:get-pins get-pins)
+(define gnetlist:get-all-package-attributes get-all-package-attributes)
+(define gnetlist:get-nets get-nets)
+(define gnetlist:get-pins-nets get-pins-nets)
+(define (gnetlist:get-verbosity)
+  (if (gnetlist-option-ref 'verbose)
+      1
+      (if (gnetlist-option-ref 'quiet)
+          -1
+          0)))
+(define (gnetlist:get-input-files)
+  (gnetlist-option-ref '()))
+(define (gnetlist:get-command-line)
+  (string-join (command-line) " "))
+(define (gnetlist:get-packages level)
+  (schematic-packages toplevel-schematic))
+(define (gnetlist:get-non-unique-packages level)
+  (schematic-non-unique-packages toplevel-schematic))
+(define (gnetlist:get-all-unique-nets level)
+  (schematic-nets toplevel-schematic))
+(define (gnetlist:get-all-nets level)
+  (schematic-non-unique-nets toplevel-schematic))
+(define (gnetlist:get-all-connections netname)
+  (map (lambda (pair) (list (car pair) (cdr pair)))
+       (get-all-connections netname)))
+
 ;;
 ;; Functions for dealing with naming requirements for different
 ;; output netlist formats which may be more restrictive than
@@ -853,6 +890,12 @@ Run `~A --list-backends' for a full list of available backends.
                                  (car (program-arguments))))))
             (set! toplevel-schematic (make-toplevel-schematic (map file->page files)
                                                               netlist-mode))
+            ;; Backward compatibility variables. Don't use them in your code!!!
+            (set! packages (schematic-packages toplevel-schematic))
+            (set! all-unique-nets (schematic-nets toplevel-schematic))
+            (set! all-nets (schematic-non-unique-nets toplevel-schematic))
+            (set! all-pins (map gnetlist:get-pins packages))
+
             (verbose-print-netlist (schematic-netlist toplevel-schematic))
             (if (gnetlist-option-ref 'interactive)
                 (gnetlist-repl)

@@ -16,15 +16,15 @@
             schematic-toplevel-attribs set-schematic-toplevel-attribs!
             schematic-tree set-schematic-tree!
             schematic-netlist set-schematic-netlist!
-            schematic-non-unique set-schematic-non-unique
             schematic-non-unique-packages set-schematic-non-unique-packages!
             schematic-packages set-schematic-packages!
+            schematic-non-unique-nets set-schematic-non-unique-nets!
             schematic-nets set-schematic-nets!
             make-toplevel-schematic
             schematic-toplevel-attrib))
 
 (define-record-type <schematic>
-  (make-schematic id toplevel-pages toplevel-attribs tree netlist non-unique-packages packages nets)
+  (make-schematic id toplevel-pages toplevel-attribs tree netlist non-unique-packages packages non-unique-nets nets)
   schematic?
   (id schematic-id set-schematic-id!)
   (toplevel-pages schematic-toplevel-pages set-schematic-toplevel-pages!)
@@ -33,6 +33,7 @@
   (netlist schematic-netlist set-schematic-netlist!)
   (non-unique-packages schematic-non-unique-packages set-schematic-non-unique-packages!)
   (packages schematic-packages set-schematic-packages!)
+  (non-unique-nets schematic-non-unique-nets set-schematic-non-unique-nets!)
   (nets schematic-nets set-schematic-nets!))
 
 (set-record-type-printer!
@@ -101,20 +102,21 @@
   (sort (hash-map->list get-value ht) refdes<?))
 
 
-;;; Returns a sorted list of unique nets in NETLIST.
-(define (get-nets netlist)
+;;; Returns a list of all pin nets in NETLIST.
+(define (get-all-nets netlist)
   (define (connected? pin)
     (let ((netname (package-pin-name pin)))
       (and (string? netname)
            (not (string-prefix? "unconnected_pin" netname))
            netname)))
 
-  (define (get-all-nets netlist)
-    (append-map
-     (lambda (package)
-       (filter-map connected? (package-pins package)))
-     netlist))
+  (append-map
+   (lambda (package)
+     (filter-map connected? (package-pins package)))
+   netlist))
 
+;;; Returns a sorted list of unique nets in NETLIST.
+(define (get-nets netlist)
   (sort-remove-duplicates (get-all-nets netlist)
                           refdes<?))
 
@@ -137,8 +139,9 @@ must be a list of pages."
          (tree (schematic->sxml netlist toplevel-pages))
          (nu-packages (non-unique-packages netlist))
          (packages (get-packages nu-packages))
+         (nu-nets (get-all-nets netlist))
          (nets (get-nets netlist)))
-    (make-schematic id toplevel-pages toplevel-attribs tree netlist nu-packages packages nets)))
+    (make-schematic id toplevel-pages toplevel-attribs tree netlist nu-packages packages nu-nets nets)))
 
 (define (schematic-toplevel-attrib schematic attrib-name)
   "Returns value of toplevel attribute ATTRIB-NAME for SCHEMATIC."
