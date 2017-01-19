@@ -8,7 +8,6 @@ BUILT_SOURCES = \
 # don't forget all *.h files */
 gnetlist_SOURCES = \
 	g_netlist.c \
-	g_rc.c \
 	g_register.c \
 	globals.c \
 	gnetlist.c \

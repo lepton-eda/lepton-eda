@@ -252,13 +252,11 @@ AC_CONFIG_FILES([Makefile
                  gnetlist/examples/vams/vhdl/basic-vhdl/Makefile
                  gnetlist/examples/vams/vhdl/new-vhdl/Makefile
                  gnetlist/examples/switcap/Makefile
-                 gnetlist/lib/Makefile
                  gnetlist/utils/Makefile
                  gnetlist/scripts/Makefile
                  gnetlist/scripts/annotate.sh
                  gnetlist/scripts/bom_xref.sh
                  gnetlist/scripts/bompp.sh
-                 gnetlist/lib/system-gnetlistrc
 
                  utils/Makefile
                  utils/docs/Makefile

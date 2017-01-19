@@ -160,6 +160,7 @@ release.  Please use configuration files instead.
 ;; ===================================================================
 ;; Deprecated gnetlist configuration functions
 ;; ===================================================================
+(define-rc-dead-config gnetlist-version)
 
 (define-rc-deprecated-config
   unnamed-netname "gnetlist" "default-net-name"

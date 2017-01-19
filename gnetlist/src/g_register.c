@@ -50,9 +50,6 @@ static struct gsubr_t gnetlist_funcs[] = {
   { "quit",                         0, 0, 0, g_quit },
   { "exit",                         0, 0, 0, g_quit },
 
-  /* gnetlistrc functions */
-  { "gnetlist-version",             1, 0, 0, g_rc_gnetlist_version },
-
   /* netlist functions */
   { "gnetlist:get-renamed-nets",    1, 0, 0, g_get_renamed_nets },
 

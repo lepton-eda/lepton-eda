@@ -2,7 +2,6 @@
 gnetlist/src/globals.c
 gnetlist/src/g_netlist.c
 gnetlist/src/gnetlist.c
-gnetlist/src/g_rc.c
 gnetlist/src/g_register.c
 gnetlist/src/i_vars.c
 gnetlist/src/parsecmd.c
