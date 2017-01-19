@@ -380,7 +380,7 @@ void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new)
 
   s_toplevel_set_page_current (toplevel, p_new);
 
-  dirname = g_dirname (p_new->page_filename);
+  dirname = g_path_get_dirname (p_new->page_filename);
   if (chdir (dirname)) {
     /* An error occured with chdir */
 #warning FIXME: What do we do?

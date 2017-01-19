@@ -220,7 +220,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
 
   /* Before we open the page, let's load the corresponding gafrc. */
   /* First cd into file's directory. */
-  file_directory = g_dirname (full_filename);
+  file_directory = g_path_get_dirname (full_filename);
 
   if (file_directory) { 
     if (chdir (file_directory)) {
