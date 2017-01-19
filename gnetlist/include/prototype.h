@@ -1,5 +1,4 @@
 /* g_netlist.c */
-void g_set_project_current(TOPLEVEL *pr_current);
 SCM g_scm_c_get_uref (OBJECT *object);
 /* g_register.c */
 void g_register_funcs(void);
@@ -10,7 +9,6 @@ void gnetlist_quit(void);
 void main_prog(void *closure, int argc, char *argv[]);
 int main(int argc, char *argv[]);
 /* i_vars.c */
-void i_vars_set(TOPLEVEL *pr_current);
 void i_vars_init_gnetlist_defaults (void);
 /* parsecmd.c */
 void usage(char *cmd);
