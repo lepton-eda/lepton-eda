@@ -43,7 +43,7 @@ DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(gaf_CPPFLAGS) $(AM_CFLAGS) $(gaf_CFLAGS)
 .c.x:
-	CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
+	$(AM_V_GEN) CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
 .1.in.1:
 	d=`$(GUILE) -c '(setlocale LC_ALL "C") \

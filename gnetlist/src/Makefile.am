@@ -38,7 +38,7 @@ SUFFIXES = .x
 snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(gnetlist_CPPFLAGS) $(AM_CFLAGS) $(gnetlist_CFLAGS)
 .c.x:
-	CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
+	$(AM_V_GEN) CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~ $(BUILT_SOURCES)
