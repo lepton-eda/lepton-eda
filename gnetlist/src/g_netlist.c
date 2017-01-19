@@ -43,25 +43,6 @@ SCM g_scm_c_get_uref (OBJECT *object)
   return g_scm_eval_protected (exp, SCM_UNDEFINED);
 }
 
-/*! \brief Obtain a list of `-O' backend arguments.
- * \par Function Description
- * Returns a list of arguments passed to the gnetlist backend via the
- * `-O' gnetlist command-line option.
- */
-SCM
-g_get_backend_arguments()
-{
-  SCM result = SCM_EOL;
-  GSList *iter;
-
-  for (iter = backend_params; iter != NULL; iter = g_slist_next (iter)) {
-    result = scm_cons (scm_from_locale_string ((char *) iter->data),
-                       result);
-  }
-
-  return scm_reverse_x (result, SCM_UNDEFINED);
-}
-
 
 /*
  * This function is in s_rename.c:  SCM g_get_renamed_nets(SCM scm_level)

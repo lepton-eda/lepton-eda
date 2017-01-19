@@ -52,9 +52,6 @@ static struct gsubr_t gnetlist_funcs[] = {
 
   /* netlist functions */
   { "gnetlist:get-renamed-nets",    1, 0, 0, g_get_renamed_nets },
-
-  /* SDB -- 9.1.2003 */
-  { "gnetlist:get-backend-arguments", 0, 0, 0, g_get_backend_arguments },
   { NULL,                           0, 0, 0, NULL } };
 
 

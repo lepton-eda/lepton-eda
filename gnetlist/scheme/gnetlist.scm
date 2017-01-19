@@ -560,6 +560,8 @@ PACKAGE."
 (define (gnetlist:get-all-connections netname)
   (map (lambda (pair) (list (car pair) (cdr pair)))
        (get-all-connections netname)))
+(define (gnetlist:get-backend-arguments)
+  (gnetlist-option-ref 'backend-option))
 
 ;;
 ;; Functions for dealing with naming requirements for different
