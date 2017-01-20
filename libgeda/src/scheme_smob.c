@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library - Scheme API
- * Copyright (C) 2010-2013 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2013, 2016 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,6 +52,13 @@
  * -# If they have been removed from a #PAGE by Scheme code, but not
  *    yet re-added to a #PAGE.
  *
+ * The cost of allocating a Scheme value is quite high.  While a C
+ * structure is not garbage-collectable, its Scheme value is protected
+ * from the Guile garbage collector and cached.  As soon as the C
+ * structure becomes "owned" by Guile and eligible for garbage
+ * collection, it is dropped from the cache to allow it to be cleaned
+ * up as normal.
+ *
  * \sa weakref.c
  *
  * This file also provides support for a variety of GObject-based gEDA
@@ -65,6 +72,127 @@
 
 scm_t_bits geda_smob_tag;
 
+/*! Cache for non-garbage-collectable Scheme values. */
+static GHashTable *smob_cache = NULL;
+
+/*! \brief Cache entry for Scheme values.
+ *
+ * While a #SmobCacheEntry is live, the Scheme value it contains is
+ * protected from garbage collection.
+ */
+typedef struct _SmobCacheEntry SmobCacheEntry;
+
+struct _SmobCacheEntry
+{
+  SCM smob;
+};
+
+/*! \brief Allocate a cache entry for Scheme values.
+ * \par Function Description
+ * Allocate and return a new cache entry for the Scheme value \a smob,
+ * which is protected from garbage collection until the cache entry is
+ * destroyed with smob_cache_entry_destroy().
+ *
+ * \param smob Scheme value to be cached.
+ * \return a newly allocated cache entry structure.
+ */
+static SmobCacheEntry *
+smob_cache_entry_new (SCM smob)
+{
+  SmobCacheEntry *entry = g_slice_new (SmobCacheEntry);
+  entry->smob = scm_gc_protect_object (smob);
+  return entry;
+}
+
+/*! \brief Destroy a cache entry for Scheme values.
+ * \par Function Description
+ * Destroy \a entry, removing garbage collection protection from the
+ * Scheme value it contains.
+ *
+ * \param entry The cache entry structure to be destroyed.
+ */
+static void
+smob_cache_entry_destroy (SmobCacheEntry *entry)
+{
+  scm_gc_unprotect_object (entry->smob);
+  g_slice_free (SmobCacheEntry, entry);
+}
+
+/*! \brief Initialise the Scheme value cache
+ *
+ * Should only be called by edascm_init_smob().
+ */
+static void
+smob_cache_init (void)
+{
+  smob_cache = g_hash_table_new_full (NULL, NULL, NULL,
+                   (GDestroyNotify) smob_cache_entry_destroy);
+}
+
+/*! \brief Add a Scheme value to the cache
+ * \par Function Description
+ * Cache a Scheme value \a smob for the C value \a target.  The \a
+ * smob will be protected from garbage collection until it is removed
+ * with smob_cache_remove(), or until smob_cache_add() is called again
+ * for the same \a target.
+ *
+ * \param target The C value that the Scheme value belongs to
+ * \param smob The Scheme value to cache
+ */
+static void
+smob_cache_add (void *target, SCM smob)
+{
+  g_hash_table_insert (smob_cache, target,
+                       smob_cache_entry_new (smob));
+}
+
+/*! \brief Remove a Scheme value from the cache
+ * \par Function Description
+ * Remove and unprotect the Scheme value corresponding to \a target
+ * from the cache.
+ *
+ * \warning This must be called whenever the \a target becomes owned
+ * by Scheme, or it may be leaked.
+ *
+ * \param target The C value for which to uncache Scheme values.
+ */
+static void
+smob_cache_remove (void *target)
+{
+  g_hash_table_remove (smob_cache, target);
+}
+
+/*! \brief Fetch a Scheme value from the cache
+ * \par Function Description
+ * Lookup \a target in the Scheme value cache, and if it is present,
+ * return the corresponding Scheme value.  If \a target is not in the
+ * cache, return #SCM_BOOL_F.
+ *
+ * \param target C value for which to fetch a cached Scheme value.
+ * \return The cached Scheme value for \a target, or #SCM_BOOL_F.
+ */
+static SCM
+smob_cache_lookup (void *target)
+{
+  SmobCacheEntry *entry = g_hash_table_lookup (smob_cache, target);
+  return entry ? entry->smob : SCM_BOOL_F;
+}
+
+/*! \brief Check whether a Scheme value is cached
+ * \par Function Description
+ * Lookup \a target in the Scheme value, and return #TRUE iff it has a
+ * Scheme value associated with it.
+ *
+ * \param target C value to check for in the Scheme value cache.
+ * \return #TRUE if \a target has a cached Scheme value.
+ */
+G_GNUC_UNUSED static gboolean
+smob_cache_contains (void *target)
+{
+  gboolean result = g_hash_table_contains (smob_cache, target);
+  return result;
+}
+
 /*! \brief Weak reference notify function for gEDA smobs.
  * \par Function Description
  * Clears a gEDA smob's pointer when the target object is destroyed.
@@ -73,6 +201,7 @@ static void
 smob_weakref_notify (void *target, void *smob) {
   SCM s = (SCM) smob;
   SCM_SET_SMOB_DATA (s, NULL);
+  smob_cache_remove (target);
 }
 
 /*! \brief Weak reference notify function for double-length gEDA smobs.
@@ -87,6 +216,7 @@ smob_weakref2_notify (void *target, void *smob) {
   SCM s = (SCM) smob;
   SCM_SET_SMOB_DATA (s, NULL);
   SCM_SET_SMOB_DATA_2 (s, NULL);
+  smob_cache_remove (target);
 }
 
 /*! \brief Free a gEDA smob.
@@ -104,6 +234,9 @@ smob_free (SCM smob)
   if (!EDASCM_SMOB_VALIDP(smob)) return 0;
 
   data = (void *) SCM_SMOB_DATA (smob);
+
+  /* If the smob is being finalized, it must not be in the cache! */
+  g_warn_if_fail (!smob_cache_contains (data));
 
   /* Otherwise, clear the weak reference */
   switch (EDASCM_SMOB_TYPE (smob)) {
@@ -246,13 +379,19 @@ smob_equalp (SCM obj1, SCM obj2)
 SCM
 edascm_from_toplevel (TOPLEVEL *toplevel)
 {
-  SCM smob;
+  SCM smob = smob_cache_lookup (toplevel);
+
+  if (EDASCM_TOPLEVELP (smob)) {
+    return smob;
+  }
 
   SCM_NEWSMOB (smob, geda_smob_tag, toplevel);
   SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_TOPLEVEL);
 
   /* Set weak reference */
   s_toplevel_weak_ref (toplevel, smob_weakref_notify, smob);
+
+  smob_cache_add (toplevel, smob);
 
   return smob;
 }
@@ -268,13 +407,19 @@ edascm_from_toplevel (TOPLEVEL *toplevel)
 SCM
 edascm_from_page (PAGE *page)
 {
-  SCM smob;
+  SCM smob = smob_cache_lookup (page);
+
+  if (EDASCM_PAGEP (smob)) {
+    return smob;
+  }
 
   SCM_NEWSMOB (smob, geda_smob_tag, page);
   SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_PAGE);
 
   /* Set weak reference */
   s_page_weak_ref (page, smob_weakref_notify, smob);
+
+  smob_cache_add (page, smob);
 
   return smob;
 }
@@ -325,7 +470,12 @@ edascm_to_page (SCM smob)
 SCM
 edascm_from_object (OBJECT *object)
 {
-  SCM smob;
+  SCM smob = smob_cache_lookup (object);
+
+  if (EDASCM_OBJECTP (smob)) {
+    return smob;
+  }
+
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
   SCM_NEWSMOB2 (smob, geda_smob_tag, object, toplevel);
@@ -333,6 +483,8 @@ edascm_from_object (OBJECT *object)
 
   /* Set weak references */
   s_object_weak_ref (object, smob_weakref2_notify, smob);
+
+  smob_cache_add (object, smob);
 
   return smob;
 }
@@ -368,7 +520,12 @@ edascm_to_object (SCM smob)
 SCM
 edascm_from_config (EdaConfig *cfg)
 {
-  SCM smob;
+  SCM smob = smob_cache_lookup (cfg);
+
+  if (EDASCM_CONFIGP (smob)) {
+    return smob;
+  }
+
   SCM_NEWSMOB (smob, geda_smob_tag, g_object_ref (cfg));
   SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_CONFIG);
   return smob;
@@ -428,6 +585,16 @@ void
 edascm_c_set_gc (SCM smob, int gc)
 {
   EDASCM_ASSERT_SMOB_VALID (smob);
+  int current = EDASCM_SMOB_GCP (smob);
+
+  /* Ensure that when smob becomes garbage-collectible, it's removed
+   * from the Scheme value cache, and that when it stops being
+   * garbage-collectible it's cached for re-use. */
+  if (gc && !current)
+    smob_cache_remove ((void *) SCM_SMOB_DATA (smob));
+  if (!gc && current)
+    smob_cache_add ((void *) SCM_SMOB_DATA (smob), smob);
+
   EDASCM_SMOB_SET_GC (smob, gc);
 }
 
@@ -563,6 +730,9 @@ init_module_geda_core_smob ()
 void
 edascm_init_smob ()
 {
+  /* Initialize smob cache */
+  smob_cache_init ();
+
   /* Register gEDA smob type */
   geda_smob_tag = scm_make_smob_type ("geda", 0);
   scm_set_smob_free (geda_smob_tag, smob_free);
