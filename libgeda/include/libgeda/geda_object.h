@@ -85,8 +85,6 @@ struct st_object
   OBJECT *attached_to;  /* when object is an attribute */
   OBJECT *copied_to;    /* used when copying attributes */
 
-  SCM smob;
-
   GList *weak_refs; /* Weak references */
 };
 

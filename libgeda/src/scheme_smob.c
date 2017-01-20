@@ -116,7 +116,6 @@ smob_free (SCM smob)
   case GEDA_SMOB_OBJECT:
     /* See edascm_from_object() for an explanation of why OBJECT
      * smobs store a TOPLEVEL in the second data word */
-    ((OBJECT *)data)->smob = SCM_BOOL_F;
     s_object_weak_unref ((OBJECT *) data, smob_weakref2_notify, smob);
     break;
   case GEDA_SMOB_CONFIG:
@@ -327,24 +326,15 @@ SCM
 edascm_from_object (OBJECT *object)
 {
   SCM smob;
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
-  if (scm_is_true (object->smob)) {
+  SCM_NEWSMOB2 (smob, geda_smob_tag, object, toplevel);
+  SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_OBJECT);
 
-    return object->smob;
+  /* Set weak references */
+  s_object_weak_ref (object, smob_weakref2_notify, smob);
 
-  } else {
-
-    TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-
-    SCM_NEWSMOB2 (smob, geda_smob_tag, object, toplevel);
-    SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_OBJECT);
-
-    /* Set weak references */
-    s_object_weak_ref (object, smob_weakref2_notify, smob);
-    object->smob = smob;
-
-    return smob;
-  }
+  return smob;
 }
 
 /*! \brief Get a schematic object from a smob.
