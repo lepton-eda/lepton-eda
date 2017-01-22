@@ -105,6 +105,7 @@ release.  Please use configuration files instead.
 ;; ===================================================================
 
 (define-rc-dead-config postscript-prolog)
+(define-rc-dead-config world-size)
 
 ;; ===================================================================
 ;; Deprecated gschem configuration functions

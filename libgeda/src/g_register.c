@@ -50,8 +50,6 @@ static struct gsubr_t libgeda_funcs[] = {
   { "component-library-command", 3, 0, 0, g_rc_component_library_command },
   { "component-library-funcs",  3, 0, 0, g_rc_component_library_funcs },
   
-  { "world-size",               3, 0, 0, g_rc_world_size },
-  
   { "reset-component-library",  0, 0, 0, g_rc_reset_component_library },
   
   { "scheme-directory",         1, 0, 0, g_rc_scheme_directory },

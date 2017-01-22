@@ -646,48 +646,6 @@ g_rc_rc_config()
   return edascm_from_config (cfg);
 }
 
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
- *  \param [in] width   
- *  \param [in] height  
- *  \param [in] border  
- *  \return SCM_BOOL_T always.
- */
-SCM g_rc_world_size(SCM width, SCM height, SCM border)
-#define FUNC_NAME "world-size"
-{
-  int i_width, i_height, i_border;
-  int init_right, init_bottom;
-
-  SCM_ASSERT (SCM_NIMP (width) && SCM_REALP (width), width,
-              SCM_ARG1, FUNC_NAME);
-  SCM_ASSERT (SCM_NIMP (height) && SCM_REALP (height), height,
-              SCM_ARG2, FUNC_NAME);
-  SCM_ASSERT (SCM_NIMP (border) && SCM_REALP (border), border,
-              SCM_ARG3, FUNC_NAME);
-  
-  /* yes this is legit, we are casing the resulting double to an int */
-  i_width  = (int) (scm_to_double (width)  * MILS_PER_INCH);
-  i_height = (int) (scm_to_double (height) * MILS_PER_INCH);
-  i_border = (int) (scm_to_double (border) * MILS_PER_INCH);
-
-  PAPERSIZEtoWORLD(i_width, i_height, i_border,
-                   &init_right, &init_bottom);
-
-#if DEBUG
-  printf("%d %d\n", i_width, i_height);
-  printf("%d %d\n", init_right, init_bottom);
-#endif
-
-  default_init_right  = init_right;
-  default_init_bottom = init_bottom;
-
-  return SCM_BOOL_T;
-}
-#undef FUNC_NAME
-
 /*! \brief Add a directory to the Guile load path.
  * \par Function Description
  * Prepends \a s_path to the Guile system '%load-path', after

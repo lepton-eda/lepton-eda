@@ -382,19 +382,6 @@
 ;(window-size 950 712)  ; Good size for 1152x864
 ;(window-size 1100 825) ; Good size for 1280x1024
 
-; world-size width height border
-;
-; Specifies the size of the world and a border (in world space units)
-; Be sure all inputs are reals (floats/doubles) and don't try to reverse
-; the values: to get a portrait mode.  Code to support that needs to be added
-; The code that implements this automatically transforms the dimensions into
-; the proper aspect ratio.  All units are in inches.
-; This is not the paper size.  That is specified elsewhere.  End users should
-; not change this at all.
-;
-(world-size 120.0 90.0 1.0)
-;(world-size 60.0 45.0 1.0)
-
 ; image-color string
 ;
 ; Controls if image (png) is color (enabled) or black/white (disabled)

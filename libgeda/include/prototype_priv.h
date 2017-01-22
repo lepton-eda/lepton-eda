@@ -4,7 +4,6 @@ int vstbl_get_val(const vstbl_entry *table, int index);
 SCM g_rc_component_library(SCM path, SCM name);
 SCM g_rc_component_library_command (SCM listcmd, SCM getcmd, SCM name);
 SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name);
-SCM g_rc_world_size(SCM width, SCM height, SCM border);
 SCM g_rc_reset_component_library(void);
 SCM g_rc_bitmap_directory(SCM path);
 SCM g_rc_scheme_directory(SCM path);
