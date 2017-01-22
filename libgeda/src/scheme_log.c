@@ -95,7 +95,7 @@ SCM_DEFINE (log_x, "%log!", 3, 0, 0,
 	scm_dynwind_free(message);
 	GLogLevelFlags level = decode_level(level_s);
 
-	g_log(domain, level, message);
+	g_log(domain, level, "%s", message);
 
 	scm_dynwind_end();
 
