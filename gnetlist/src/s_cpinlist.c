@@ -33,6 +33,7 @@
 #endif
 
 #include <libgeda/libgeda.h>
+#include <libgeda/libgedaguile.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
