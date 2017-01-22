@@ -40,9 +40,6 @@ void i_vars_libgeda_freenames();
 /* libgeda.c */
 void libgeda_init(void);
 
-/* m_basic.c */
-void PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom);
-
 /* m_hatch.c */
 void m_hatch_box(GedaBox *box, gint angle, gint pitch, GArray *lines);
 void m_hatch_circle(GedaCircle *circle, gint angle, gint pitch, GArray *lines);

@@ -76,7 +76,6 @@ libgeda_la_SOURCES = \
 	g_register.c \
 	i_vars.c \
 	libgeda.c \
-	m_basic.c \
 	m_hatch.c \
 	m_polygon.c \
 	o_attrib.c \
