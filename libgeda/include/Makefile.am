@@ -61,7 +61,6 @@ noinst_HEADERS = \
 	i_vars_priv.h \
 	libgeda_priv.h \
 	prototype_priv.h \
-	struct_priv.h \
 	libgedaguile_priv.h
 
 MOSTLYCLEANFILES = *.log core FILE *~
