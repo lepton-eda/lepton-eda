@@ -486,14 +486,6 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
  *  It returns NULL and sets the \a error (if not NULL) if it failed
  *  to build the pathname or the pathname does not exists.
  *
- *  \note
- *  The code for this function is derived from the realpath() of
- *  the GNU C Library (Copyright (C) 1996-2002, 2004, 2005, 2006 Free
- *  Software Foundation, Inc. / LGPL 2.1 or later).
- *
- *  The part for the resolution of symbolic links has been discarded
- *  and it has been adapted for glib and for use on Windows.
- *
  *  \param [in]     name  A character string containing the pathname
  *                        to resolve.
  *  \param [in,out] error Return location for a GError, or NULL.
@@ -502,130 +494,17 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
  */
 gchar *f_normalize_filename (const gchar *name, GError **error)
 {
-#if defined (_WIN32)
-    char buf[MAX_PATH];
-#else
-    GString *rpath;
-    const char *start, *end;
-#endif
+  GFile *file = g_file_new_for_path (name);
 
-  if (name == NULL) {
-    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_INVAL,
-                 "%s", g_strerror (EINVAL));
-    return NULL;
-  }
-
-  if (*name == '\0') {
+  if (!g_file_query_exists (file, NULL)) {
     g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_NOENT,
                  "%s", g_strerror (ENOENT));
     return NULL;
   }
 
-#if defined (_WIN32)
-  /* Windows method (modified) from libiberty's lrealpath.c, GPL V2+
-   *
-   * We assume we don't have symlinks and just canonicalize to a
-   * Windows absolute path.  GetFullPathName converts ../ and ./ in
-   * relative paths to absolute paths, filling in current drive if
-   * one is not given or using the current directory of a specified
-   * drive (eg, "E:foo"). It also converts all forward slashes to
-   * back slashes.
-   */
-  DWORD len = GetFullPathName (name, MAX_PATH, buf, NULL);
-  gchar *result;
-
-  if (len == 0 || len > MAX_PATH - 1) {
-    result = g_strdup (name);
-  } else {
-    /* The file system is case-preserving but case-insensitive,
-     * canonicalize to lowercase, using the codepage associated
-     * with the process locale.  */
-    CharLowerBuff (buf, len);
-    result = g_strdup (buf);
-  }
-
-  /* Test that the file actually exists, and fail if it doesn't.  We
-   * do this to be consistent with the behaviour on POSIX
-   * platforms. */
-  if (!g_file_test (result, G_FILE_TEST_EXISTS)) {
-    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_NOENT,
-                 "%s", g_strerror (ENOENT));
-    g_free (result);
-    return NULL;
-  }
-  return result;
-
-#else
-#define ROOT_MARKER_LEN 1
-
-  rpath = g_string_sized_new (strlen (name));
-
-  /* if relative path, prepend current dir */
-  if (!g_path_is_absolute (name)) {
-    gchar *cwd = g_get_current_dir ();
-    g_string_append (rpath, cwd);
-    g_free (cwd);
-    if (!G_IS_DIR_SEPARATOR (rpath->str[rpath->len - 1])) {
-      g_string_append_c (rpath, G_DIR_SEPARATOR);
-    }
-  } else {
-    g_string_append_len (rpath, name, ROOT_MARKER_LEN);
-    /* move to first path separator */
-    name += ROOT_MARKER_LEN - 1;
-  }
-
-  for (start = end = name; *start != '\0'; start = end) {
-    /* skip sequence of multiple path-separators */
-    while (G_IS_DIR_SEPARATOR (*start)) {
-      ++start;
-    }
-
-    /* find end of path component */
-    for (end = start; *end != '\0' && !G_IS_DIR_SEPARATOR (*end); ++end);
-
-    if (end - start == 0) {
-      break;
-    } else if (end - start == 1 && start[0] == '.') {
-      /* nothing */;
-    } else if (end - start == 2 && start[0] == '.' && start[1] == '.') {
-      /* back up to previous component, ignore if at root already.  */
-      if (rpath->len > ROOT_MARKER_LEN) {
-        while (!G_IS_DIR_SEPARATOR (rpath->str[(--rpath->len) - 1]));
-        g_string_set_size (rpath, rpath->len);
-      }
-    } else {
-      /* path component, copy to new path */
-      if (!G_IS_DIR_SEPARATOR (rpath->str[rpath->len - 1])) {
-        g_string_append_c (rpath, G_DIR_SEPARATOR);
-      }
-
-      g_string_append_len (rpath, start, end - start);
-
-      if (!g_file_test (rpath->str, G_FILE_TEST_EXISTS)) {
-        g_set_error (error,G_FILE_ERROR, G_FILE_ERROR_NOENT,
-                     "%s", g_strerror (ENOENT));
-        goto error;
-      } else if (!g_file_test (rpath->str, G_FILE_TEST_IS_DIR) &&
-                 *end != '\0') {
-        g_set_error (error,G_FILE_ERROR, G_FILE_ERROR_NOTDIR,
-                     "%s", g_strerror (ENOTDIR));
-        goto error;
-      }
-    }
-  }
-
-  if (G_IS_DIR_SEPARATOR (rpath->str[rpath->len - 1]) &&
-      rpath->len > ROOT_MARKER_LEN) {
-    g_string_set_size (rpath, rpath->len - 1);
-  }
-
-  return g_string_free (rpath, FALSE);
-
-error:
-  g_string_free (rpath, TRUE);
-  return NULL;
-#undef ROOT_MARKER_LEN
-#endif
+  gchar *normalized = g_file_get_path (file);
+  g_object_unref (file);
+  return normalized;
 }
 
 /*! \brief Follow symlinks until a real file is found

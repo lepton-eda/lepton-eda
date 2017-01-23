@@ -65,7 +65,6 @@
 
 /* Private libgeda headers */
 #include "defines_priv.h"
-#include "struct_priv.h"
 #include "prototype_priv.h"
 #include "i_vars_priv.h"
 

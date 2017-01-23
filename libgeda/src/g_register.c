@@ -83,6 +83,18 @@ void g_register_libgeda_funcs (void)
   
 }
 
+/*! \brief Enable scheme loading from a shared data directory
+ * \par Function Description
+ * Helper function for g_register_libgeda_dirs().
+ */
+static void
+g_register_scheme_data_dir (const gchar *data_dir)
+{
+  gchar *scheme_dir = g_build_filename (data_dir, "scheme", NULL);
+  g_rc_scheme_directory (scm_from_locale_string (scheme_dir));
+  g_free (scheme_dir);
+}
+
 /*! \brief Register some libgeda directories with Scheme.
  * \par Function Description
  * Ensures that the gEDA Scheme directories are added to the Guile
@@ -91,10 +103,9 @@ void g_register_libgeda_funcs (void)
 void
 g_register_libgeda_dirs (void)
 {
-	const gchar * const *dirs = eda_get_system_data_dirs();
-	for (gint i = 0; dirs[i]; ++i) {
-		gchar *scheme_dir = g_build_filename (dirs[i], "scheme", NULL);
-		g_rc_scheme_directory (scm_from_locale_string (scheme_dir));
-		g_free (scheme_dir);
-	}
+  const gchar * const *sys_dirs = eda_get_system_data_dirs();
+  for (gint i = 0; sys_dirs[i]; ++i) {
+    g_register_scheme_data_dir (sys_dirs[i]);
+  }
+  g_register_scheme_data_dir (eda_get_user_data_dir());
 }
