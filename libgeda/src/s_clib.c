@@ -725,13 +725,13 @@ static void refresh_scm (CLibSource *source)
 
   symlist = scm_call_0 (source->list_fn);
 
-  if (SCM_NCONSP (symlist) && (symlist != SCM_EOL)) {
+  if (scm_is_false (scm_list_p (symlist))) {
     s_log_message (_("Failed to scan library [%s]: Scheme function returned non-list\n"),
 		   source->name);
     return;
   }
 
-  while (symlist != SCM_EOL) {
+  while (!scm_is_null (symlist)) {
     symname = SCM_CAR (symlist);
     if (!scm_is_string (symname)) {
       s_log_message (_("Non-string symbol name while scanning library [%s]\n"),

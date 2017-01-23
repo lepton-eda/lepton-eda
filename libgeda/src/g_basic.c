@@ -95,7 +95,7 @@ SCM g_scm_eval_protected (SCM exp, SCM module_or_state)
   SCM body_data;
   SCM result;
 
-  if (module_or_state == SCM_UNDEFINED) {
+  if (scm_is_eq (module_or_state, SCM_UNDEFINED)) {
     body_data = scm_list_2 (exp, scm_interaction_environment ());
   } else {
     body_data = scm_list_2 (exp, module_or_state);

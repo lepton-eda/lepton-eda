@@ -122,7 +122,7 @@ edascm_hook_proxy_finalize (GObject *object)
   EdascmHookProxy *proxy = EDASCM_HOOK_PROXY (object);
 
   edascm_hook_proxy_disconnect (proxy);
-  if (proxy->priv->closure != SCM_UNDEFINED) {
+  if (edascm_is_defined (proxy->priv->closure)) {
     scm_gc_unprotect_object (proxy->priv->closure);
   }
 
@@ -142,7 +142,7 @@ edascm_hook_proxy_set_property (GObject *object, guint property_id,
 
   case PROP_HOOK:
     hook = edascm_value_get_scm (value);
-    if (hook == SCM_UNDEFINED) {
+    if (!edascm_is_defined (hook)) {
       edascm_hook_proxy_disconnect (proxy);
     } else {
       edascm_hook_proxy_connect (proxy, hook);
@@ -182,7 +182,7 @@ edascm_hook_proxy_connect (EdascmHookProxy *proxy, SCM hook)
   g_return_if_fail (SCM_HOOKP (hook));
   g_return_if_fail (scm_is_true (scm_procedure_p (proxy->priv->closure)));
 
-  if (proxy->priv->hook != SCM_UNDEFINED)
+  if (edascm_is_defined (proxy->priv->hook))
     edascm_hook_proxy_disconnect (proxy);
 
   proxy->priv->hook = hook;
@@ -198,7 +198,7 @@ edascm_hook_proxy_disconnect (EdascmHookProxy *proxy)
   g_return_if_fail (EDASCM_IS_HOOK_PROXY (proxy));
   g_return_if_fail (scm_is_true (scm_procedure_p (proxy->priv->closure)));
 
-  if (proxy->priv->hook == SCM_UNDEFINED) return;
+  if (!edascm_is_defined (proxy->priv->hook)) return;
 
   /* \bug What if scm_remove_hook_x() fails? */
   scm_remove_hook_x (proxy->priv->hook, proxy->priv->closure);

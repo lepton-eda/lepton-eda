@@ -99,6 +99,11 @@ void edascm_init_deprecated ();
 
 /* ---------------------------------------- */
 
+/*! Test whether a Scheme value has a defined value */
+#define edascm_is_defined(x) (!scm_is_eq((x), SCM_UNDEFINED))
+
+/* ---------------------------------------- */
+
 /* Macros and constants for working with the geda smob type. These are
  * for the convenience of the other C functions used by the Scheme
  * API. */

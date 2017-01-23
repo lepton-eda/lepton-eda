@@ -105,7 +105,7 @@ edascm_to_object_glist (SCM objs, const char *subr)
   scm_dynwind_begin (0);
   scm_dynwind_unwind_handler ((void (*)(void *))g_list_free, result, 0);
 
-  for (lst = objs; lst != SCM_EOL; lst = SCM_CDR (lst)) {
+  for (lst = objs; !scm_is_null (lst); lst = SCM_CDR (lst)) {
     SCM smob = SCM_CAR (lst);
     result = g_list_prepend (result, (gpointer) edascm_to_object (smob));
   }
@@ -445,20 +445,20 @@ SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
 
   width = scm_to_int (width_s);
 
-  if      (cap_s == none_sym)   { cap = END_NONE;   }
-  else if (cap_s == square_sym) { cap = END_SQUARE; }
-  else if (cap_s == round_sym)  { cap = END_ROUND;  }
+  if      (scm_is_eq (cap_s, none_sym))   { cap = END_NONE;   }
+  else if (scm_is_eq (cap_s, square_sym)) { cap = END_SQUARE; }
+  else if (scm_is_eq (cap_s, round_sym))  { cap = END_ROUND;  }
   else {
     scm_misc_error (s_set_object_stroke_x,
                     _("Invalid stroke cap style ~A."),
                     scm_list_1 (cap_s));
   }
 
-  if      (dash_s == solid_sym)   { type = TYPE_SOLID;   }
-  else if (dash_s == dotted_sym)  { type = TYPE_DOTTED;  }
-  else if (dash_s == dashed_sym)  { type = TYPE_DASHED;  }
-  else if (dash_s == center_sym)  { type = TYPE_CENTER;  }
-  else if (dash_s == phantom_sym) { type = TYPE_PHANTOM; }
+  if      (scm_is_eq (dash_s, solid_sym))   { type = TYPE_SOLID;   }
+  else if (scm_is_eq (dash_s, dotted_sym))  { type = TYPE_DOTTED;  }
+  else if (scm_is_eq (dash_s, dashed_sym))  { type = TYPE_DASHED;  }
+  else if (scm_is_eq (dash_s, center_sym))  { type = TYPE_CENTER;  }
+  else if (scm_is_eq (dash_s, phantom_sym)) { type = TYPE_PHANTOM; }
   else {
     scm_misc_error (s_set_object_stroke_x,
                     _("Invalid stroke dash style ~A."),
@@ -469,7 +469,7 @@ SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
   case TYPE_DASHED:
   case TYPE_CENTER:
   case TYPE_PHANTOM:
-    if (length_s == SCM_UNDEFINED) {
+    if (!edascm_is_defined (length_s)) {
       scm_misc_error (s_set_object_stroke_x,
                       _("Missing dash length parameter for dash style ~A."),
                       scm_list_1 (length_s));
@@ -479,7 +479,7 @@ SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
     length = scm_to_int (length_s);
     /* This case intentionally falls through */
   case TYPE_DOTTED:
-    if (space_s == SCM_UNDEFINED) {
+    if (!edascm_is_defined (space_s)) {
       scm_misc_error (s_set_object_stroke_x,
                       _("Missing dot/dash space parameter for dash style ~A."),
                       scm_list_1 (space_s));
@@ -586,10 +586,10 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
   OBJECT *obj = edascm_to_object (obj_s);
   int type, width = -1, angle1 = -1, space1 = -1, angle2 = -1, space2 = -1;
 
-  if      (type_s == hollow_sym)   { type = FILLING_HOLLOW;   }
-  else if (type_s == solid_sym) { type = FILLING_FILL; }
-  else if (type_s == hatch_sym)  { type = FILLING_HATCH;  }
-  else if (type_s == mesh_sym)  { type = FILLING_MESH;  }
+  if      (scm_is_eq (type_s, hollow_sym)) { type = FILLING_HOLLOW;   }
+  else if (scm_is_eq (type_s, solid_sym))  { type = FILLING_FILL; }
+  else if (scm_is_eq (type_s, hatch_sym))  { type = FILLING_HATCH;  }
+  else if (scm_is_eq (type_s, mesh_sym))   { type = FILLING_MESH;  }
   else {
     scm_misc_error (s_set_object_fill_x,
                     _("Invalid fill style ~A."),
@@ -598,7 +598,7 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
 
   switch (type) {
   case FILLING_MESH:
-    if (space2_s == SCM_UNDEFINED) {
+    if (!edascm_is_defined (space2_s)) {
       scm_misc_error (s_set_object_fill_x,
                       _("Missing second space parameter for fill style ~A."),
                       scm_list_1 (space2_s));
@@ -607,7 +607,7 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
                 SCM_ARG6, s_set_object_fill_x);
     space2 = scm_to_int (space2_s);
 
-    if (angle2_s == SCM_UNDEFINED) {
+    if (!edascm_is_defined (angle2_s)) {
       scm_misc_error (s_set_object_fill_x,
                       _("Missing second angle parameter for fill style ~A."),
                       scm_list_1 (angle2_s));
@@ -617,7 +617,7 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
     angle2 = scm_to_int (angle2_s);
     /* This case intentionally falls through */
   case FILLING_HATCH:
-    if (width_s == SCM_UNDEFINED) {
+    if (!edascm_is_defined (width_s)) {
       scm_misc_error (s_set_object_fill_x,
                       _("Missing stroke width parameter for fill style ~A."),
                       scm_list_1 (width_s));
@@ -626,7 +626,7 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
                 SCM_ARG3, s_set_object_fill_x);
     width = scm_to_int (width_s);
 
-    if (space1_s == SCM_UNDEFINED) {
+    if (!edascm_is_defined (space1_s)) {
       scm_misc_error (s_set_object_fill_x,
                       _("Missing space parameter for fill style ~A."),
                       scm_list_1 (space1_s));
@@ -635,7 +635,7 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
                 SCM_ARG4, s_set_object_fill_x);
     space1 = scm_to_int (space1_s);
 
-    if (angle1_s == SCM_UNDEFINED) {
+    if (!edascm_is_defined(angle1_s)) {
       scm_misc_error (s_set_object_fill_x,
                       _("Missing angle parameter for fill style ~A."),
                       scm_list_1 (angle1_s));
@@ -939,9 +939,9 @@ SCM_DEFINE (make_pin, "%make-pin", 1, 0, 0,
               type_s, SCM_ARG1, s_make_pin);
 
   int type;
-  if (type_s == net_sym) {
+  if (scm_is_eq (type_s, net_sym)) {
     type = PIN_TYPE_NET;
-  } else if (type_s == bus_sym) {
+  } else if (scm_is_eq (type_s, bus_sym)) {
     type = PIN_TYPE_BUS;
   } else {
     scm_misc_error (s_make_pin,
@@ -1389,15 +1389,15 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
 
   /* Alignment. Sadly we can't switch on pointers. :-( */
   int align;
-  if      (align_s == lower_left_sym)    { align = LOWER_LEFT;    }
-  else if (align_s == middle_left_sym)   { align = MIDDLE_LEFT;   }
-  else if (align_s == upper_left_sym)    { align = UPPER_LEFT;    }
-  else if (align_s == lower_center_sym)  { align = LOWER_MIDDLE;  }
-  else if (align_s == middle_center_sym) { align = MIDDLE_MIDDLE; }
-  else if (align_s == upper_center_sym)  { align = UPPER_MIDDLE;  }
-  else if (align_s == lower_right_sym)   { align = LOWER_RIGHT;   }
-  else if (align_s == middle_right_sym)  { align = MIDDLE_RIGHT;  }
-  else if (align_s == upper_right_sym)   { align = UPPER_RIGHT;   }
+  if      (scm_is_eq (align_s, lower_left_sym))    { align = LOWER_LEFT;    }
+  else if (scm_is_eq (align_s, middle_left_sym))   { align = MIDDLE_LEFT;   }
+  else if (scm_is_eq (align_s, upper_left_sym))    { align = UPPER_LEFT;    }
+  else if (scm_is_eq (align_s, lower_center_sym))  { align = LOWER_MIDDLE;  }
+  else if (scm_is_eq (align_s, middle_center_sym)) { align = MIDDLE_MIDDLE; }
+  else if (scm_is_eq (align_s, upper_center_sym))  { align = UPPER_MIDDLE;  }
+  else if (scm_is_eq (align_s, lower_right_sym))   { align = LOWER_RIGHT;   }
+  else if (scm_is_eq (align_s, middle_right_sym))  { align = MIDDLE_RIGHT;  }
+  else if (scm_is_eq (align_s, upper_right_sym))   { align = UPPER_RIGHT;   }
   else {
     scm_misc_error (s_set_text_x,
                     _("Invalid text alignment ~A."),
@@ -1430,9 +1430,9 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
 
   /* Name/value visibility */
   int show;
-  if      (show_s == name_sym)  { show = SHOW_NAME;       }
-  else if (show_s == value_sym) { show = SHOW_VALUE;      }
-  else if (show_s == both_sym)  { show = SHOW_NAME_VALUE; }
+  if      (scm_is_eq (show_s, name_sym))  { show = SHOW_NAME;       }
+  else if (scm_is_eq (show_s, value_sym)) { show = SHOW_VALUE;      }
+  else if (scm_is_eq (show_s, both_sym))  { show = SHOW_NAME_VALUE; }
   else {
     scm_misc_error (s_set_text_x,
                     _("Invalid text name/value visibility ~A."),
@@ -1830,10 +1830,10 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   PATH_SECTION section = {0, 0, 0, 0, 0, 0, 0};
 
   /* Check & extract path element type. */
-  if      (type_s == closepath_sym) { section.code = PATH_END;     }
-  else if (type_s == moveto_sym)    { section.code = PATH_MOVETO;  }
-  else if (type_s == lineto_sym)    { section.code = PATH_LINETO;  }
-  else if (type_s == curveto_sym)   { section.code = PATH_CURVETO; }
+  if      (scm_is_eq (type_s, closepath_sym)) { section.code = PATH_END;     }
+  else if (scm_is_eq (type_s, moveto_sym))    { section.code = PATH_MOVETO;  }
+  else if (scm_is_eq (type_s, lineto_sym))    { section.code = PATH_LINETO;  }
+  else if (scm_is_eq (type_s, curveto_sym))   { section.code = PATH_CURVETO; }
   else {
     scm_misc_error (s_path_insert_x,
                     _("Invalid path element type ~A."),

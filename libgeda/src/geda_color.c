@@ -202,7 +202,7 @@ s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name)
   SCM curr = lst;
   SCM wrong_type_arg_sym = scm_from_utf8_symbol ("wrong-type-arg");
   SCM proc_name = scm_from_utf8_string (scheme_proc_name);
-  while (curr != SCM_EOL) {
+  while (!scm_is_null (curr)) {
     int i;
     char *rgba;
     SCM s;

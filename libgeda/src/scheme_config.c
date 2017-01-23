@@ -1019,7 +1019,7 @@ static void
 edascm_config_event_dispatcher (EdaConfig *cfg, const char *group,
                                 const char *key, void *user_data)
 {
-  SCM proc_s = (SCM) user_data;
+  SCM proc_s = SCM_PACK ((scm_t_bits) user_data);
   SCM expr = scm_list_4 (proc_s,
                          edascm_from_config (cfg),
                          scm_from_utf8_string (group),
@@ -1069,7 +1069,7 @@ SCM_DEFINE (add_config_event_x, "%add-config-event!", 2, 0, 0,
                            0,
                            NULL,
                            edascm_config_event_dispatcher,
-                           (gpointer) proc_s);
+                           (gpointer) SCM_UNPACK (proc_s));
   if (handler_id) {
     return cfg_s;
   }
@@ -1077,7 +1077,7 @@ SCM_DEFINE (add_config_event_x, "%add-config-event!", 2, 0, 0,
   /* Protect proc_s against garbage collection */
   g_signal_connect (cfg, "config-changed",
                     G_CALLBACK (edascm_config_event_dispatcher),
-                    (gpointer) scm_gc_protect_object (proc_s));
+                    (gpointer) SCM_UNPACK (scm_gc_protect_object (proc_s)));
   return cfg_s;
 }
 
@@ -1112,7 +1112,7 @@ SCM_DEFINE (remove_config_event_x, "%remove-config-event!", 2, 0, 0,
                                           0,
                                           NULL,
                                           edascm_config_event_dispatcher,
-                                          (gpointer) proc_s);
+                                          (gpointer) SCM_UNPACK (proc_s));
   g_warn_if_fail (found < 2);
   if (found) {
     scm_gc_unprotect_object (proc_s);
