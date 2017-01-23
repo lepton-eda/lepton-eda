@@ -103,9 +103,9 @@ SCM_DEFINE (add_attrib_x, "%add-attrib!", 5, 0, 0,
 
   /* Name/value visibility */
   int show;
-  if      (show_s == name_sym)  { show = SHOW_NAME;       }
-  else if (show_s == value_sym) { show = SHOW_VALUE;      }
-  else if (show_s == both_sym)  { show = SHOW_NAME_VALUE; }
+  if      (scm_is_eq (show_s, name_sym))  { show = SHOW_NAME;       }
+  else if (scm_is_eq (show_s, value_sym)) { show = SHOW_VALUE;      }
+  else if (scm_is_eq (show_s, both_sym))  { show = SHOW_NAME_VALUE; }
   else {
     scm_misc_error (s_add_attrib_x,
                     _("Invalid text name/value visibility ~A."),

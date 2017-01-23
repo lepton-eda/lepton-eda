@@ -130,7 +130,7 @@ gschem_hotkey_store_rebuild (GschemHotkeyStore *store)
   g_assert (GSCHEM_IS_HOTKEY_STORE (store));
 
   /* First run the Scheme function to dump the global keymap */
-  if (s_expr == SCM_UNDEFINED) {
+  if (scm_is_eq (s_expr, SCM_UNDEFINED)) {
     s_expr = scm_permanent_object (scm_list_1 (scm_from_utf8_symbol (HELPER_FUNC_NAME)));
   }
   s_lst = g_scm_eval_protected (s_expr, SCM_UNDEFINED);
@@ -195,7 +195,7 @@ gschem_hotkey_store_action_property_handler (GschemHotkeyStore *store,
    * args should be a list of the form (action key value).  We only
    * want to rebuild the store if the change is to a label or to an
    * icon. */
-  if (label_sym == SCM_UNDEFINED) {
+  if (scm_is_eq (label_sym, SCM_UNDEFINED)) {
     label_sym = scm_permanent_object (scm_from_utf8_symbol ("label"));
     icon_sym = scm_permanent_object (scm_from_utf8_symbol ("icon"));
   }
@@ -221,7 +221,7 @@ gschem_hotkey_store_bind_keys_handler (GschemHotkeyStore *store,
 
   g_assert (GSCHEM_IS_HOTKEY_STORE (store));
 
-  if (global_keymap_sym == SCM_UNDEFINED) {
+  if (scm_is_eq (global_keymap_sym, SCM_UNDEFINED)) {
     global_keymap_sym =
       scm_permanent_object (scm_from_utf8_symbol ("%global-keymap"));
   }

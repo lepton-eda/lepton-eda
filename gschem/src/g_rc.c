@@ -98,7 +98,7 @@ SCM g_rc_gschem_version(SCM scm_version)
 		      g_utf8_casefold (PACKAGE_DATE_VERSION,-1)) != 0) {
     sourcefile = NULL;
     rc_filename = g_rc_rc_filename ();
-    if (rc_filename == SCM_BOOL_F) {
+    if (scm_is_false (rc_filename)) {
       rc_filename = scm_from_utf8_string ("unknown");
     }
     sourcefile = scm_to_utf8_string (rc_filename);
@@ -1180,7 +1180,7 @@ extern GedaColorMap display_outline_colors;
 
 SCM g_rc_display_color_map (SCM scm_map)
 {
-  if (scm_map == SCM_UNDEFINED) {
+  if (scm_is_eq (scm_map, SCM_UNDEFINED)) {
     return s_color_map_to_scm (display_colors);
   }
 
@@ -1193,7 +1193,7 @@ SCM g_rc_display_color_map (SCM scm_map)
 
 SCM g_rc_display_outline_color_map (SCM scm_map)
 {
-  if (scm_map == SCM_UNDEFINED) {
+  if (scm_is_eq (scm_map, SCM_UNDEFINED)) {
     return s_color_map_to_scm (display_outline_colors);
   }
 
