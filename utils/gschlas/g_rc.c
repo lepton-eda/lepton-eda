@@ -62,7 +62,7 @@ SCM g_rc_gschlas_version(SCM scm_version)
     if (g_ascii_strcasecmp (version, PACKAGE_DATE_VERSION) != 0) {
       sourcefile = NULL;
       rc_filename = g_rc_rc_filename ();
-      if (rc_filename == SCM_BOOL_F) {
+      if (scm_is_false (rc_filename)) {
         rc_filename = scm_from_utf8_string ("unknown");
       }
       sourcefile = scm_to_utf8_string (rc_filename);
