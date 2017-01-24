@@ -80,6 +80,20 @@ refdes-attribute-order=false
 EOF
     backend=geda
     ;;
+config_mangle_refdes_attribute_false)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-refdes-attribute=false
+EOF
+    backend=geda
+    ;;
+config_mangle_refdes_attribute_true)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-refdes-attribute=true
+EOF
+    backend=geda
+    ;;
 spice-sdb-nomunge)
     backend=spice-sdb
     args="-O nomunge_mode"
