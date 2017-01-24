@@ -33,6 +33,7 @@
              (geda page)
              (geda deprecated)
              (geda log)
+             (geda config)
              (gnetlist schematic)
              (gnetlist package)
              (gnetlist package-pin)
@@ -41,6 +42,55 @@
              (gnetlist sort)
              (gnetlist option)
              (gnetlist verbose))
+
+(define config (path-config-context ""))
+(define is-hierarchy?
+  (config-boolean config "gnetlist.hierarchy" "traverse-hierarchy"))
+;;; APPEND is #f, PREPEND is #t
+(define reverse-refdes-order?
+  (config-boolean config "gnetlist.hierarchy" "refdes-attribute-order"))
+(define refdes-separator
+  (config-string config "gnetlist.hierarchy" "refdes-attribute-separator"))
+(define mangle-refdes?
+  (config-boolean config "gnetlist.hierarchy" "mangle-refdes-attribute"))
+(define reverse-net-order?
+  (config-boolean config "gnetlist.hierarchy" "net-attribute-order"))
+(define mangle-net?
+   (config-boolean config "gnetlist.hierarchy" "mangle-net-attribute"))
+(define net-separator
+   (config-string config "gnetlist.hierarchy" "net-attribute-separator"))
+(define reverse-netname-order?
+  (config-boolean config "gnetlist.hierarchy" "netname-attribute-order"))
+(define mangle-netname?
+  (config-boolean config "gnetlist.hierarchy" "mangle-netname-attribute"))
+(define netname-separator
+  (config-string config "gnetlist.hierarchy" "netname-attribute-separator"))
+(define netname-attrib-priority?
+  (string=? (config-string config "gnetlist" "net-naming-priority")
+            "netname-attribute"))
+(define default-net-name
+  (config-string config "gnetlist" "default-net-name"))
+(define default-bus-name
+  (config-string config "gnetlist" "default-bus-name"))
+
+(define (verbose-print-settings)
+  (when (gnetlist-option-ref 'verbose)
+    (display "Gnetlist settings:\n\n")
+    (for-each
+     (lambda (x) (format #t "~A: ~S\n" x (module-ref (current-module) x)))
+     '(is-hierarchy?
+       reverse-refdes-order?
+       refdes-separator
+       mangle-refdes?
+       reverse-net-order?
+       mangle-net?
+       net-separator
+       reverse-netname-order?
+       mangle-netname?
+       netname-separator
+       netname-attrib-priority?
+       default-net-name
+       default-bus-name))))
 
 ;;----------------------------------------------------------------------
 ;; The below functions added by SDB in Sept 2003 to support command-line flag
@@ -898,6 +948,7 @@ Run `~A --list-backends' for a full list of available backends.
             (set! all-nets (schematic-non-unique-nets toplevel-schematic))
             (set! all-pins (map gnetlist:get-pins packages))
 
+            (verbose-print-settings)
             (verbose-print-netlist (schematic-netlist toplevel-schematic))
             (if (gnetlist-option-ref 'interactive)
                 (gnetlist-repl)
