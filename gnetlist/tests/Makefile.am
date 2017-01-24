@@ -82,6 +82,8 @@ XFAIL_TESTS = \
 
 TESTS = stack_1-geda.out \
 	hierarchy-postload.out \
+	hierarchy-config_refdes_attribute_order_true.out \
+	hierarchy-config_refdes_attribute_order_false.out \
 	hierarchy-geda.out \
 	hierarchy-makedepend.out \
 	hierarchy-vams.out \

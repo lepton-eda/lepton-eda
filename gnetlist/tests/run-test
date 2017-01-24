@@ -66,6 +66,20 @@ cmd="\"()\""
 
 args=
 case "${backend}" in
+config_refdes_attribute_order_true)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+refdes-attribute-order=true
+EOF
+    backend=geda
+    ;;
+config_refdes_attribute_order_false)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+refdes-attribute-order=false
+EOF
+    backend=geda
+    ;;
 spice-sdb-nomunge)
     backend=spice-sdb
     args="-O nomunge_mode"
