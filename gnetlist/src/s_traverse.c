@@ -150,17 +150,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
   char *temp;
   SCM scm_uref;
   char *temp_uref;
-  gboolean is_hierarchy = TRUE;
   const GList *iter;
-  GError *err = NULL;
-  EdaConfig *cfg;
-
-  cfg = eda_config_get_context_for_file (NULL);
-  is_hierarchy = eda_config_get_boolean (cfg, "gnetlist", "traverse-hierarchy", &err);
-  if (err != NULL) {
-    is_hierarchy = TRUE;
-    g_clear_error (&err);
-  }
 
   if (verbose_mode) {
     printf("- Starting internal netlist creation\n");

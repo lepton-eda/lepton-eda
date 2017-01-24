@@ -365,30 +365,6 @@ char*
 s_hierarchy_create_uref (char *basename, char *hierarchy_tag)
 {
   char *return_value = NULL;
-  GError *err = NULL;
-  EdaConfig *cfg;
-  gboolean refdes_order = APPEND;
-  gchar *refdes_separator = NULL;
-
-  cfg = eda_config_get_context_for_file (NULL);
-
-  refdes_order = eda_config_get_boolean (cfg,
-                                         "gnetlist.hierarchy",
-                                         "refdes-attribute-order",
-                                         &err);
-  if (err != NULL) {
-    refdes_order = APPEND;
-    g_clear_error (&err);
-  }
-
-  refdes_separator = eda_config_get_string (cfg,
-                                            "gnetlist.hierarchy",
-                                            "refdes-attribute-separator",
-                                            &err);
-  if (err != NULL) {
-    refdes_separator = g_strdup ("/");
-    g_clear_error (&err);
-  }
 
   if (hierarchy_tag) {
     if (basename) {
@@ -430,41 +406,6 @@ char*
 s_hierarchy_create_netname (char *basename, char *hierarchy_tag)
 {
   char *return_value = NULL;
-  GError *err = NULL;
-  EdaConfig *cfg;
-  gboolean netname_order = APPEND;
-  gboolean mangle_netname = TRUE;
-  gchar *netname_separator = NULL;
-
-  cfg = eda_config_get_context_for_file (NULL);
-
-  netname_order = eda_config_get_boolean (cfg,
-                                          "gnetlist.hierarchy",
-                                          "netname-attribute-order",
-                                          &err);
-  if (err != NULL) {
-    netname_order = APPEND;
-    g_clear_error (&err);
-  }
-
-  mangle_netname = eda_config_get_boolean (cfg,
-                                           "gnetlist.hierarchy",
-                                           "mangle-netname-attribute",
-                                           &err);
-  if (err != NULL) {
-    mangle_netname = TRUE;
-    g_clear_error (&err);
-  }
-
-  netname_separator = eda_config_get_string (cfg,
-                                             "gnetlist.hierarchy",
-                                             "netname-attribute-separator",
-                                             &err);
-  if (err != NULL) {
-    netname_separator = g_strdup ("/");
-    g_clear_error (&err);
-  }
-
 
   if (mangle_netname == FALSE) {
     if (basename) {
@@ -513,40 +454,6 @@ char*
 s_hierarchy_create_netattrib (char *basename, char *hierarchy_tag)
 {
   char *return_value = NULL;
-  GError *err = NULL;
-  EdaConfig *cfg;
-  gboolean net_order = APPEND;
-  gboolean mangle_net = TRUE;
-  gchar *net_separator = NULL;
-
-  cfg = eda_config_get_context_for_file (NULL);
-
-  net_order = eda_config_get_boolean (cfg,
-                                      "gnetlist.hierarchy",
-                                      "net-attribute-order",
-                                      &err);
-  if (err != NULL) {
-    net_order = APPEND;
-    g_clear_error (&err);
-  }
-
-  mangle_net = eda_config_get_boolean (cfg,
-                                       "gnetlist.hierarchy",
-                                       "mangle-net-attribute",
-                                       &err);
-  if (err != NULL) {
-    mangle_net = TRUE;
-    g_clear_error (&err);
-  }
-
-  net_separator = eda_config_get_string (cfg,
-                                         "gnetlist.hierarchy",
-                                         "net-attribute-separator",
-                                         &err);
-  if (err != NULL) {
-    net_separator = g_strdup ("/");
-    g_clear_error (&err);
-  }
 
   if (!mangle_net) {
     if (basename) {
@@ -642,21 +549,6 @@ s_hierarchy_return_baseuref (char *uref)
     char *return_value = NULL;
     char *start_of_base = NULL;
     char *end_of_base = NULL;
-
-  GError *err = NULL;
-  EdaConfig *cfg;
-  gboolean refdes_order = APPEND;
-
-  cfg = eda_config_get_context_for_file (NULL);
-
-  refdes_order = eda_config_get_boolean (cfg,
-                                         "gnetlist.hierarchy",
-                                         "refdes-attribute-order",
-                                         &err);
-  if (err != NULL) {
-    refdes_order = APPEND;
-    g_clear_error (&err);
-  }
 
     /* use hierarchy separator */
 

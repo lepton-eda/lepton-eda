@@ -87,17 +87,6 @@ s_netlist_post_process (NETLIST *head, SCM netlist_mode)
 {
   NETLIST *nl_current;
   CPINLIST *pl_current;
-  GError *err = NULL;
-  EdaConfig *cfg;
-  gboolean mangle_refdes = TRUE;
-
-  cfg = eda_config_get_context_for_file (NULL);
-
-  mangle_refdes = eda_config_get_boolean (cfg, "gnetlist", "mangle-refdes-attribute", &err);
-  if (err != NULL) {
-    mangle_refdes = TRUE;
-    g_clear_error (&err);
-  }
 
   if (verbose_mode) {
     printf("\n- Staring post processing\n");
