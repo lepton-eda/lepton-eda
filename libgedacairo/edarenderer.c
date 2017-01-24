@@ -1168,6 +1168,7 @@ eda_renderer_draw_grips_impl (EdaRenderer *renderer, int type, int n_grips, ...)
                             0, 360);
       break;
     default:
+      va_end (coordinates);
       g_return_if_reached ();
     }
 
