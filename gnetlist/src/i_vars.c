@@ -64,11 +64,11 @@ i_vars_init_gnetlist_defaults(void)
 
   /* By default, sub-schematic attributes 'netname' are appended to the parent
      schematic's ones to build hierarchical netnames. */
-  eda_config_set_boolean (cfg, "gnetlist.hierarchy", "hierarchy-netname-order", APPEND);
+  eda_config_set_boolean (cfg, "gnetlist.hierarchy", "netname-attribute-order", APPEND);
 
   /* This is the default separator which is used to built hierarchical
      attributes 'netname' for nets in sub-schematics. */
-  eda_config_set_string (cfg, "gnetlist.hierarchy", "hierarchy-netname-separator", "/");
+  eda_config_set_string (cfg, "gnetlist.hierarchy", "netname-attribute-separator", "/");
 
   /* By default, sub-schematic attributes 'net' are built
      accounting for the parent schematic's ones. */
