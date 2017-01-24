@@ -87,8 +87,8 @@ SCM_DEFINE (log_x, "%log!", 3, 0, 0,
 
 	scm_dynwind_begin(0);
 	gchar *domain = NULL;
-	if (domain) {
-		scm_to_utf8_string(domain_s);
+	if (scm_is_string (domain_s)) {
+		domain = scm_to_utf8_string(domain_s);
 		scm_dynwind_free(domain);
 	}
 	gchar *message = scm_to_utf8_string(message_s);
