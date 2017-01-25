@@ -137,6 +137,37 @@
   netlist)
 
 
+(define (hierarchy-disable-refdes netlist disabled-refdes)
+  (define (disable-refdes refdes)
+    (and refdes
+         (not (string=? refdes disabled-refdes))
+         refdes))
+
+  (define (disable-net-connected-to net)
+    (set-pin-net-connection-package! net
+                                     (disable-refdes (pin-net-connection-package net))))
+
+  (define (disable-nets-connected-to pin)
+    (for-each disable-net-connected-to (package-pin-nets pin)))
+
+  (map
+   (lambda (package)
+     (set-package-refdes! package
+                          (disable-refdes (package-refdes package)))
+     (for-each disable-nets-connected-to (package-pins package))
+     package)
+    netlist))
+
+(define (hierarchy-remove-all-composite netlist)
+  (fold
+   (lambda (package prev-netlist)
+     (if (and (package-composite? package)
+              (package-refdes package))
+         (hierarchy-disable-refdes prev-netlist (package-refdes package))
+         prev-netlist))
+   netlist
+   netlist))
+
 (define (traverse netlist-mode)
   (let ((cwd (getcwd))
         (netlist (list->packages (%traverse netlist-mode))))
@@ -144,6 +175,7 @@
     ;; done because (%traverse) can change the current working
     ;; directory.
     (chdir cwd)
-    (if (gnetlist-config-ref 'mangle-refdes)
-        netlist
-        (remove-refdes-mangling netlist))))
+    (hierarchy-remove-all-composite
+     ((if (gnetlist-config-ref 'mangle-refdes)
+          identity
+          remove-refdes-mangling) netlist))))

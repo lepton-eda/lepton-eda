@@ -243,7 +243,6 @@ s_hierarchy_post_process (NETLIST * head)
     }
 
     s_rename_all (head);
-    s_hierarchy_remove_compsite_all(head);
 }
 
 int
@@ -342,23 +341,6 @@ void s_hierarchy_remove_urefconn(NETLIST * head, char *uref_disable)
 	}
 	nl_current = nl_current->next;
     }
-}
-
-void s_hierarchy_remove_compsite_all(NETLIST * head)
-{
-    NETLIST *nl_current;
-
-    nl_current = head;
-    while (nl_current != NULL) {
-	if (nl_current->composite_component) {
-	    if (nl_current->component_uref != NULL) {
-		s_hierarchy_remove_urefconn(head,
-					    nl_current->component_uref);
-	    }
-	}
-	nl_current = nl_current->next;
-    }
-
 }
 
 char*
