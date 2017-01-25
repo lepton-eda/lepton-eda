@@ -180,7 +180,9 @@ count_pages (GtkTreeModel *model)
   GtkTreeIter iter;
   gint n_pages;
 
-  gtk_tree_model_get_iter_first (model, &iter);
+  if (!gtk_tree_model_get_iter_first (model, &iter)) {
+    return 0;
+  }
   for (n_pages = 1;
        gtk_tree_model_iter_next (model, &iter);
        n_pages++);
