@@ -292,6 +292,10 @@ s_rename_all (NETLIST *netlist_head)
 {
     RENAME * temp;
 
+    if (verbose_mode) {
+      printf("- Renaming nets:\n");
+    }
+
 #if DEBUG
     s_rename_print();
 #endif
@@ -304,6 +308,7 @@ s_rename_all (NETLIST *netlist_head)
             s_rename_all_lowlevel(netlist_head, temp->src, temp->dest);
 	}
     }
+    verbose_done();
 }
 
 

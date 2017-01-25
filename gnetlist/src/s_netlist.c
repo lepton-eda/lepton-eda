@@ -133,13 +133,9 @@ s_netlist_post_process (NETLIST *head, SCM netlist_mode)
   }
 
   verbose_done();
-  if (verbose_mode) {
-    printf("- Renaming nets:\n");
-  }
 
   s_rename_all (head);
 
-  verbose_done();
   if (verbose_mode) {
     printf("- Resolving hierarchy:\n");
   }
