@@ -69,7 +69,6 @@ gboolean net_order = APPEND;
 gboolean mangle_net = TRUE;
 gchar *net_separator = NULL;
 gint net_naming_priority = NETATTRIB_ATTRIBUTE;
-gboolean mangle_refdes = TRUE;
 gboolean is_hierarchy = TRUE;
 gchar *default_net_name = NULL;
 gchar *default_bus_name = NULL;

@@ -27,8 +27,6 @@ void s_hierarchy_remove_compsite_all(NETLIST *head);
 char *s_hierarchy_create_uref (char *basename, char *hierarchy_tag);
 char *s_hierarchy_create_netname (char *basename, char *hierarchy_tag);
 char *s_hierarchy_create_netattrib (char *basename, char *hierarchy_tag);
-void s_hierarchy_remove_uref_mangling (NETLIST *head);
-char *s_hierarchy_return_baseuref (char *uref);
 int s_hierarchy_graphical_search(OBJECT* o_current, int count);
 /* s_misc.c */
 void verbose_print(char *string);

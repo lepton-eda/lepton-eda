@@ -7,9 +7,11 @@
   #:use-module (srfi srfi-1)
   #:use-module (geda attrib)
   #:use-module (geda object)
+  #:use-module (gnetlist config)
   #:use-module (gnetlist package)
   #:use-module (gnetlist package-pin)
   #:use-module (gnetlist pin-net)
+  #:use-module (gnetlist verbose)
   #:export (traverse))
 
 ;;; Temporary function to deal with gnetlist's net->connected_to
@@ -100,6 +102,41 @@
   (filter-map list->package ls))
 
 
+(define (remove-refdes-mangling netlist)
+  ;; Separator is yet always '/'
+  (define (base-refdes refdes legend)
+    (and refdes
+         (verbose-print legend)
+         (if (gnetlist-config-ref 'reverse-refdes-order)
+             (let ((pos (string-index refdes #\/)))
+               (if pos
+                   (string-take refdes pos)
+                   refdes))
+             (let ((pos (string-rindex refdes #\/)))
+               (if pos
+                   (string-drop refdes (1+ pos))
+                   refdes)))))
+
+  (define (fix-net-connections net)
+    (set-pin-net-connection-package! net
+                                     (base-refdes (pin-net-connection-package net)
+                                                  "U")))
+
+  (define (fix-pin-connections pin)
+    (for-each fix-net-connections (package-pin-nets pin)))
+
+  (define (fix-package package)
+    (set-package-refdes! package
+                         (base-refdes (package-refdes package) "u"))
+    (for-each fix-pin-connections (package-pins package))
+    package)
+
+  (verbose-print "- Removing refdes mangling:\n")
+  (for-each fix-package netlist)
+  (verbose-done)
+  netlist)
+
+
 (define (traverse netlist-mode)
   (let ((cwd (getcwd))
         (netlist (list->packages (%traverse netlist-mode))))
@@ -107,4 +144,6 @@
     ;; done because (%traverse) can change the current working
     ;; directory.
     (chdir cwd)
-    netlist))
+    (if (gnetlist-config-ref 'mangle-refdes)
+        netlist
+        (remove-refdes-mangling netlist))))

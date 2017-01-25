@@ -144,12 +144,6 @@ static void init_config_settings (void)
     g_clear_error (&err);
   }
 
-  mangle_refdes = eda_config_get_boolean (cfg, "gnetlist.hierarchy", "mangle-refdes-attribute", &err);
-  if (err != NULL) {
-    mangle_refdes = TRUE;
-    g_clear_error (&err);
-  }
-
   is_hierarchy = eda_config_get_boolean (cfg, "gnetlist", "traverse-hierarchy", &err);
   if (err != NULL) {
     is_hierarchy = TRUE;

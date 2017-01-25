@@ -146,15 +146,6 @@ s_netlist_post_process (NETLIST *head, SCM netlist_mode)
   s_hierarchy_post_process (head);
 
   verbose_done();
-
-  if (!mangle_refdes) {
-    if (verbose_mode) {
-      printf("- Removing refdes mangling:\n");
-    }
-    s_hierarchy_remove_uref_mangling (head);
-  }
-
-  verbose_done();
 }
 
 

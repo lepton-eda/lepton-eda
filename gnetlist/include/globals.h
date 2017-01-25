@@ -52,7 +52,6 @@ extern gboolean net_order;
 extern gboolean mangle_net;
 extern gchar *net_separator;
 extern gint net_naming_priority;
-extern gboolean mangle_refdes;
 extern gboolean is_hierarchy;
 extern gchar *default_net_name;
 extern gchar *default_bus_name;
