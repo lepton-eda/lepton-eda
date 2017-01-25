@@ -85,7 +85,8 @@ TESTS = stack_1-geda.out \
 	hierarchy-config_refdes_attribute_order_true.out \
 	hierarchy-config_refdes_attribute_order_false.out \
 	hierarchy-config_mangle_refdes_attribute_true.out \
-	hierarchy-config_mangle_refdes_attribute_false.out \
+	hierarchy-config_mangle_refdes_attribute_false_1.out \
+	hierarchy-config_mangle_refdes_attribute_false_2.out \
 	hierarchy-geda.out \
 	hierarchy-makedepend.out \
 	hierarchy-vams.out \

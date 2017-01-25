@@ -80,10 +80,19 @@ refdes-attribute-order=false
 EOF
     backend=geda
     ;;
-config_mangle_refdes_attribute_false)
+config_mangle_refdes_attribute_false_1)
     cat >> "${rundir}/geda.conf" << EOF
 [gnetlist.hierarchy]
 mangle-refdes-attribute=false
+refdes-attribute-order=false
+EOF
+    backend=geda
+    ;;
+config_mangle_refdes_attribute_false_2)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-refdes-attribute=false
+refdes-attribute-order=true
 EOF
     backend=geda
     ;;
