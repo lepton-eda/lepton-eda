@@ -239,7 +239,8 @@ static void
 process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err) {
   char *long_message;
   char *short_message;
-  SCM s_port, s_subr, s_message, s_message_args, s_rest, s_location;
+  SCM s_port, s_subr, s_message, s_message_args, s_rest;
+  SCM s_location = SCM_BOOL_F;
 
   /* Split s_args up */
   s_rest = s_args;
@@ -261,7 +262,6 @@ process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err) {
     scm_puts ("\n", s_port);
   }
 
-  s_location = SCM_BOOL_F;
 #ifdef HAVE_SCM_DISPLAY_ERROR_STACK
   s_location = s_stack;
 #endif /* HAVE_SCM_DISPLAY_ERROR_STACK */
