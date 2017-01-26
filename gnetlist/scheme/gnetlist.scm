@@ -598,23 +598,18 @@ PACKAGE."
                  )
 
             (if (hash-ref gnetlist:net-hash-reverse alias)
-                (begin
-                  (message "***** ERROR *****\n")
-                  (message "There is a net name collision!\n")
-                  (message "The net called \"")
-                  (message net)
-                  (message "\" will be remapped\nto \"")
-                  (message alias)
-                  (message "\" which is already used\n")
-                  (message "by the net called \"")
-                  (message (hash-ref gnetlist:net-hash-reverse alias))
-                  (message "\".\n")
-                  (message "This may be caused by netname attributes colliding with other netnames\n")
-                  (message "due to truncation of the name, case insensitivity, or\n")
-                  (message "other limitations imposed by this netlist format.\n")
-                  (error)
-                  )
-                )
+                (error (format #f
+                               "There is a net name collision!
+The net called \"~A\" will be remapped
+to \"~A\" which is already used
+by the net called \"~A\".
+This may be caused by netname attributes colliding with other netnames
+due to truncation of the name, case insensitivity, or
+other limitations imposed by this netlist format.
+"
+                               net
+                               alias
+                               (hash-ref gnetlist:net-hash-reverse alias))))
             (hash-create-handle! gnetlist:net-hash-forward net   alias)
             (hash-create-handle! gnetlist:net-hash-reverse alias net  )
             (gnetlist:build-net-aliases mapfn (cdr nets))
@@ -640,23 +635,18 @@ PACKAGE."
                  )
 
             (if (hash-ref gnetlist:refdes-hash-reverse alias)
-                (begin
-                  (message "***** ERROR *****\n")
-                  (message "There is a refdes name collision!\n")
-                  (message "The refdes \"")
-                  (message refdes)
-                  (message "\" will be mapped\nto \"")
-                  (message alias)
-                  (message "\" which is already used\n")
-                  (message "by \"")
-                  (message (hash-ref gnetlist:refdes-hash-reverse alias))
-                  (message "\".\n")
-                  (message "This may be caused by refdes attributes colliding with others\n")
-                  (message "due to truncation of the refdes, case insensitivity, or\n")
-                  (message "other limitations imposed by this netlist format.\n")
-                  (error)
-                  )
-                )
+                (error
+                 (format #f
+                         "There is a refdes name collision!
+The refdes \"~A\" will be mapped\nto \"~A\" which is already used
+by \"~A\".
+This may be caused by refdes attributes colliding with others
+due to truncation of the refdes, case insensitivity, or
+other limitations imposed by this netlist format.
+"
+                         refdes
+                         alias
+                         (hash-ref gnetlist:refdes-hash-reverse alias))))
             (hash-create-handle! gnetlist:refdes-hash-forward refdes alias)
             (hash-create-handle! gnetlist:refdes-hash-reverse alias  refdes  )
             (gnetlist:build-refdes-aliases mapfn (cdr refdeses))
