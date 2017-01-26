@@ -33,6 +33,7 @@
              (geda page)
              (geda deprecated)
              (geda log)
+             (gnetlist core gettext)
              (gnetlist config)
              (gnetlist schematic)
              (gnetlist package)
@@ -121,11 +122,11 @@ code should use `gnetlist:get-backend-arguments' directly."
     (and (not (null? values))
          (let ((value (car values)))
            (or (every (lambda (x) (equal? x value)) values)
-               (format (current-error-port) "\
+               (format (current-error-port) (_ "\
 Possible attribute conflict for refdes: ~A
 name: ~A
 values: ~A
-" refdes name values))
+") refdes name values))
            value))))
 
 
@@ -186,7 +187,7 @@ REFDES. As a result, slots may be repeated in the returned list."
               ;; conversion failed, invalid slot, ignore value
               (begin
                 (format (current-error-port)
-                        "Uref ~a: Bad slot number: ~a.\n" refdes slot)
+                        (_ "Uref ~a: Bad slot number: ~a.\n") refdes slot)
                 #f))
           ;; no slot attribute, assume slot number is 1
           1))
@@ -296,7 +297,7 @@ REFDES. As a result, slots may be repeated in the returned list."
       string-to-wrap ; Last snippet of string
       (let ((pos (string-rindex string-to-wrap #\space 0 wrap-length)))
 	(cond ((not pos)
-	       (display "Couldn't wrap string  at requested position\n")
+               (display (_ "Couldn't wrap string  at requested position\n"))
 	       " Wrap error!")
 	      (else
 	       (string-append
@@ -327,10 +328,10 @@ REFDES. As a result, slots may be repeated in the returned list."
   ; Handler if we find uref=
   (define (handle-uref value)
     (simple-format (current-output-port)
-                   "WARNING: Found uref=~A" value)
+                   (_ "WARNING: Found uref=~A") value)
     (newline)
     (simple-format (current-output-port)
-                   "uref= is deprecated, please use refdes=~A" value)
+                   (_ "uref= is deprecated, please use refdes=~A") value)
     (newline)
     value)
 
@@ -371,7 +372,7 @@ REFDES. As a result, slots may be repeated in the returned list."
   (let ((repl (make-repl (current-language) #f)))
     (repl-eval repl
                '(begin
-                  (display "Welcome to Gnetlist REPL!\n"
+                  (display (_ "Welcome to Gnetlist REPL!\n")
                            (current-error-port))
                   (resolve-module '(ice-9 readline))
                   ;; After resolving that module the variable
@@ -383,7 +384,7 @@ REFDES. As a result, slots may be repeated in the returned list."
                         ;; loading.
                         (use-modules (ice-9 readline))
                         (activate-readline))
-                      (display "Could not load module (ice-9 readline).\n"
+                      (display (_ "Could not load module (ice-9 readline).\n")
                                (current-error-port)))))
     (run-repl repl)))
 
@@ -599,14 +600,14 @@ PACKAGE."
 
             (if (hash-ref gnetlist:net-hash-reverse alias)
                 (error (format #f
-                               "There is a net name collision!
+                               (_ "There is a net name collision!
 The net called \"~A\" will be remapped
 to \"~A\" which is already used
 by the net called \"~A\".
 This may be caused by netname attributes colliding with other netnames
 due to truncation of the name, case insensitivity, or
 other limitations imposed by this netlist format.
-"
+")
                                net
                                alias
                                (hash-ref gnetlist:net-hash-reverse alias))))
@@ -637,13 +638,13 @@ other limitations imposed by this netlist format.
             (if (hash-ref gnetlist:refdes-hash-reverse alias)
                 (error
                  (format #f
-                         "There is a refdes name collision!
+                         (_ "There is a refdes name collision!
 The refdes \"~A\" will be mapped\nto \"~A\" which is already used
 by \"~A\".
 This may be caused by refdes attributes colliding with others
 due to truncation of the refdes, case insensitivity, or
 other limitations imposed by this netlist format.
-"
+")
                          refdes
                          alias
                          (hash-ref gnetlist:refdes-hash-reverse alias))))
@@ -803,7 +804,7 @@ other limitations imposed by this netlist format.
   (with-input-from-file name
     (lambda ()
       (when (not quiet-mode)
-        (log! 'message "Loading schematic ~S\n" name))
+        (log! 'message (_ "Loading schematic ~S\n") name))
       (string->page name (rdelim:read-string)))))
 
 ;;; Prints a list of available backends.
@@ -827,11 +828,11 @@ begins with \"gnet-\" and ends with \".scm\"."
   (define (path-backends path)
     (or (scandir path backend?)
         (begin
-          (log! 'warning "Can't open directory ~S.\n" path)
+          (log! 'warning (_ "Can't open directory ~S.\n") path)
           '())))
 
   (let ((backend-files (append-map path-backends %load-path)))
-    (display "List of available backends: \n\n")
+    (display (_ "List of available backends: \n\n"))
     (display (string-join
               (sort (map backend-name backend-files) string-locale<?)
               "\n"
@@ -844,9 +845,9 @@ begins with \"gnet-\" and ends with \".scm\"."
     (let ((files (gnetlist-option-ref '())))
       (if (null? files)
           (error (format #f
-                         "No schematics files specified for processing.
+                         (_ "No schematics files specified for processing.
 Run `~A --help' for more information.
-"
+")
                          (car (program-arguments))))
           (let* ((backend (gnetlist-option-ref 'backend))
                  ;; this is a kludge to make sure that spice mode gets set
@@ -875,10 +876,10 @@ Run `~A --help' for more information.
                     (for-each primitive-load (gnetlist-option-ref 'post-load)))
 
                   ;; If the backend couldn't be found, fail.
-                  (error (format #f "Could not find backend `~A' in load path.
+                  (error (format #f (_ "Could not find backend `~A' in load path.
 
 Run `~A --list-backends' for a full list of available backends.
-"
+")
                                  backend
                                  (car (program-arguments))))))
             (set! toplevel-schematic (make-toplevel-schematic (map file->page files)
@@ -903,5 +904,5 @@ Run `~A --list-backends' for a full list of available backends.
                           ;; output-filename is #f, output to stdout.
                           (backend-proc output-filename)))
                     (format (current-error-port)
-                            "You gave neither backend to execute nor interactive mode!\n")))
+                            (_ "You gave neither backend to execute nor interactive mode!\n"))))
             (quit)))))
