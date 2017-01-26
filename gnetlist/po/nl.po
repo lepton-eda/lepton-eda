@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gnetlist\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2016-12-08 15:34+0300\n"
+"POT-Creation-Date: 2017-01-26 16:40+0300\n"
 "PO-Revision-Date: 2014-08-31 20:38+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -18,21 +18,16 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
-#: gnetlist/src/gnetlist.c:91
-#, c-format
-msgid "Can't open directory %s: %s\n"
-msgstr "Kan bestandenmap %s: %s niet openen\n"
-
-#: gnetlist/src/gnetlist.c:123
+#: gnetlist/src/gnetlist.c:171
 #, c-format
 msgid ""
-"List of available backends: \n"
+"This is the MINGW32 port.\n"
 "\n"
 msgstr ""
-"Lijst van beschikbare backends:\n"
+"Dit is de MINGW32 versie.\n"
 "\n"
 
-#: gnetlist/src/gnetlist.c:201
+#: gnetlist/src/gnetlist.c:188
 #, c-format
 msgid ""
 "gEDA/gnetlist version %s%s.%s\n"
@@ -49,65 +44,6 @@ msgstr ""
 "bepaalde \n"
 "condities; zie alstublieft het COPYING bestand voor meer details.\n"
 "\n"
-
-#: gnetlist/src/gnetlist.c:208
-#, c-format
-msgid ""
-"This is the MINGW32 port.\n"
-"\n"
-msgstr ""
-"Dit is de MINGW32 versie.\n"
-"\n"
-
-#: gnetlist/src/gnetlist.c:258 gnetlist/src/gnetlist.c:259
-#, c-format
-msgid "Loading schematic [%s]\n"
-msgstr "Laden van schema [%s]\n"
-
-#: gnetlist/src/gnetlist.c:266
-#, c-format
-msgid "ERROR: Failed to load '%s': %s\n"
-msgstr "FOUT: Faalde bij het laden van '%s': %s\n"
-
-#: gnetlist/src/gnetlist.c:291
-#, c-format
-msgid ""
-"ERROR: No schematics files specified for processing.\n"
-"\n"
-"Run `%s --help' for more information.\n"
-msgstr ""
-"FOUT: Geen schema bestanden gespecificeerd voor verwerking.\n"
-"\n"
-"Doe `%s --help' voor meer informatie.\n"
-
-#: gnetlist/src/gnetlist.c:314
-#, c-format
-msgid ""
-"ERROR: Could not find backend `%s' in load path.\n"
-"\n"
-"Run `%s --list-backends' for a full list of available backends.\n"
-msgstr ""
-"FOUT: Kan backend `%s' niet vinden in het laadpad.\n"
-"\n"
-"Doe `%s --list-backends' voor een volledige lijst van beschikbare backends.\n"
-
-#: gnetlist/src/gnetlist.c:341
-#, c-format
-msgid "You gave neither backend to execute nor interactive mode!\n"
-msgstr "U gaf geen backend om uit voeren noch interactieve modus!\n"
-
-#: gnetlist/src/g_rc.c:54
-#, c-format
-msgid ""
-"You are running gEDA/gaf version [%s%s.%s],\n"
-"but you have a version [%s] gnetlistrc file:\n"
-"[%s]\n"
-"Please be sure that you have the latest rc file.\n"
-msgstr ""
-"U heeft gEDA/gaf versie [%s%s.%s],\n"
-"maar U heeft een versie [%s] gnetlistrc bestand:\n"
-"[%s]\n"
-"Wees alstublieft zeker dat U het laatste rc bestand heeft.\n"
 
 #: gnetlist/src/parsecmd.c:67
 #, c-format
@@ -237,12 +173,12 @@ msgstr "Faalde bij het laden van subcircuit '%s': %s\n"
 msgid "ERROR: Failed to load subcircuit '%s': %s\n"
 msgstr "FOUT: Faalde om subcircuit '%s': %s te laden\n"
 
-#: gnetlist/src/s_hierarchy.c:211
+#: gnetlist/src/s_hierarchy.c:210
 #, c-format
 msgid "Found a pin [%s] on component [%s] which does not have a label!\n"
 msgstr "Vond een pen [%s] op component [%s] welke geen label heeft!\n"
 
-#: gnetlist/src/s_hierarchy.c:235
+#: gnetlist/src/s_hierarchy.c:234
 #, c-format
 msgid "Missing I/O symbol with refdes [%s] inside schematic for symbol [%s]\n"
 msgstr ""
@@ -286,22 +222,22 @@ msgstr ""
 "Kreeg een ongeldig= attrib [net=%s]\n"
 "Ontbrekend : in net= attrib\n"
 
-#: gnetlist/src/s_net.c:149
+#: gnetlist/src/s_net.c:120
 #, c-format
 msgid "Missing Attributes (refdes and pin number)\n"
 msgstr "Ontbrekende Attributen (refdes en pennummer)\n"
 
-#: gnetlist/src/s_net.c:256 gnetlist/src/s_net.c:293
+#: gnetlist/src/s_net.c:209 gnetlist/src/s_net.c:246
 #, c-format
 msgid "Found duplicate net name, renaming [%s] to [%s]\n"
 msgstr "Vond een duplicaat net naam, hernoem [%s] naar [%s]\n"
 
-#: gnetlist/src/s_net.c:404
+#: gnetlist/src/s_net.c:354
 #, c-format
 msgid "s_net_name: incorrect connectivity type %i\n"
 msgstr "s_net_name: incorrect verbinding type %i\n"
 
-#: gnetlist/src/s_net.c:424
+#: gnetlist/src/s_net.c:374
 #, c-format
 msgid "Increase number of unnamed nets (s_net.c)\n"
 msgstr "Verhoog aantal naamloze netten (s_net.c)\n"
@@ -329,7 +265,7 @@ msgstr ""
 "Deze waarschuwing is in orde als je meervoudige niveaus van hiërarchie "
 "hebt!\n"
 
-#: gnetlist/src/s_traverse.c:185
+#: gnetlist/src/s_traverse.c:165
 #, c-format
 msgid ""
 "WARNING: Found a placeholder/missing component, are you missing a symbol "
@@ -338,7 +274,7 @@ msgstr ""
 "WAARSCHUWING: Vond een plaatshouder/ontbrekend component, mist U een symbool "
 "bestand? [%s]\n"
 
-#: gnetlist/src/s_traverse.c:244
+#: gnetlist/src/s_traverse.c:222
 #, c-format
 msgid ""
 "Could not find refdes on component and could not find any special "
@@ -346,21 +282,139 @@ msgid ""
 msgstr ""
 "Kon geen refdes vinden op component en kon geen speciaal attributen vinden!\n"
 
-#: gnetlist/src/s_traverse.c:337
+#: gnetlist/src/s_traverse.c:312
 msgid "Non-connectable object being queried for connection type\n"
 msgstr "Niet-verbindbaar object naar verbindingtype gevraagd\n"
 
-#: gnetlist/src/s_traverse.c:373
+#: gnetlist/src/s_traverse.c:348
 #, c-format
 msgid "WARNING: Found label=%s. label= is deprecated, please use netname=\n"
 msgstr ""
 "WAARSCHUWING: vond label=%s. label= is vervallen, gebruik alstublieft "
 "netname=\n"
 
-#: gnetlist/src/s_traverse.c:423
+#: gnetlist/src/s_traverse.c:398
 #, c-format
 msgid "Found a possible net/pin infinite connection\n"
 msgstr "Vond een mogelijk oneindige net/pen verbinding\n"
+
+#: gnetlist/scheme/gnetlist.scm:125
+#, scheme-format
+msgid ""
+"Possible attribute conflict for refdes: ~A\n"
+"name: ~A\n"
+"values: ~A\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:190
+#, scheme-format
+msgid "Uref ~a: Bad slot number: ~a.\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:300
+msgid "Couldn't wrap string  at requested position\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:331
+#, scheme-format
+msgid "WARNING: Found uref=~A"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:334
+#, fuzzy, scheme-format
+msgid "uref= is deprecated, please use refdes=~A"
+msgstr ""
+"WAARSCHUWING: vond label=%s. label= is vervallen, gebruik alstublieft "
+"netname=\n"
+
+#: gnetlist/scheme/gnetlist.scm:375
+msgid "Welcome to Gnetlist REPL!\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:387
+msgid "Could not load module (ice-9 readline).\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:603
+#, scheme-format
+msgid ""
+"There is a net name collision!\n"
+"The net called \"~A\" will be remapped\n"
+"to \"~A\" which is already used\n"
+"by the net called \"~A\".\n"
+"This may be caused by netname attributes colliding with other netnames\n"
+"due to truncation of the name, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:641
+#, scheme-format
+msgid ""
+"There is a refdes name collision!\n"
+"The refdes \"~A\" will be mapped\n"
+"to \"~A\" which is already used\n"
+"by \"~A\".\n"
+"This may be caused by refdes attributes colliding with others\n"
+"due to truncation of the refdes, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:807
+#, scheme-format
+msgid "Loading schematic ~S\n"
+msgstr "Laden van schema ~S\n"
+
+#: gnetlist/scheme/gnetlist.scm:831
+#, scheme-format
+msgid "Can't open directory ~S.\n"
+msgstr "Kan bestandenmap ~S niet openen\n"
+
+#: gnetlist/scheme/gnetlist.scm:835
+msgid ""
+"List of available backends: \n"
+"\n"
+msgstr ""
+"Lijst van beschikbare backends:\n"
+"\n"
+
+#: gnetlist/scheme/gnetlist.scm:848
+#, scheme-format
+msgid ""
+"No schematics files specified for processing.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+"Geen schema bestanden gespecificeerd voor verwerking.\n"
+"\n"
+"Doe `~A --help' voor meer informatie.\n"
+
+#: gnetlist/scheme/gnetlist.scm:879
+#, scheme-format
+msgid ""
+"Could not find backend `~A' in load path.\n"
+"\n"
+"Run `~A --list-backends' for a full list of available backends.\n"
+msgstr ""
+"Kan backend `~A' niet vinden in het laadpad.\n"
+"\n"
+"Doe `~A --list-backends' voor een volledige lijst van beschikbare backends.\n"
+
+#: gnetlist/scheme/gnetlist.scm:907
+msgid "You gave neither backend to execute nor interactive mode!\n"
+msgstr "U gaf geen backend om uit voeren noch interactieve modus!\n"
+
+#~ msgid "ERROR: Failed to load '%s': %s\n"
+#~ msgstr "FOUT: Faalde bij het laden van '%s': %s\n"
+
+#~ msgid ""
+#~ "You are running gEDA/gaf version [%s%s.%s],\n"
+#~ "but you have a version [%s] gnetlistrc file:\n"
+#~ "[%s]\n"
+#~ "Please be sure that you have the latest rc file.\n"
+#~ msgstr ""
+#~ "U heeft gEDA/gaf versie [%s%s.%s],\n"
+#~ "maar U heeft een versie [%s] gnetlistrc bestand:\n"
+#~ "[%s]\n"
+#~ "Wees alstublieft zeker dat U het laatste rc bestand heeft.\n"
 
 #~ msgid "Invalid refdes ('%s') and pin ('%s') passed to get-nets\n"
 #~ msgstr "Ongeldige refdes ('%s') en pen ('%s') overgedragen aan get-nets\n"
