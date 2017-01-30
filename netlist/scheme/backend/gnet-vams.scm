@@ -606,13 +606,14 @@ ARCHITECTURE ~A OF ~A IS
 ;; requires the output-port and a uref
 
 (define (vams:write-generic-map uref)
+  (define non-generics '(refdes
+                         source
+                         architecture))
 
   (define (permitted-attrib->pair attrib)
     (let ((value (gnetlist:get-package-attribute uref attrib)))
-      (and (not (or (string=? attrib "refdes")
-                    (string=? attrib "source")
-                    (string=? attrib "architecture")
-                    (string=? "unknown" value)))
+      (and (not (or (memq (string->symbol attrib) non-generics)
+                    (unknown? value)))
            (cons attrib value))))
 
   (define (write-attribute attrib-value)
