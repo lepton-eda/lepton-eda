@@ -608,7 +608,8 @@ ARCHITECTURE ~A OF ~A IS
 (define (vams:write-generic-map uref)
   (define non-generics '(refdes
                          source
-                         architecture))
+                         architecture
+                         net))
 
   (define (permitted-attrib->pair attrib)
     (let ((value (gnetlist:get-package-attribute uref attrib)))

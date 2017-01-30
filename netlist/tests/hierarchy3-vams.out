@@ -34,16 +34,12 @@ BEGIN
 			14 => Vcc);
 
   Utop/Umiddle/Urock/Qrock : ENTITY PNP_TRANSISTOR
-	GENERIC MAP (
-			net => BUGA:D)
 	PORT MAP (	B => U1_2_to_B,
 			C => Utop/Umiddle/Urock/-12V,
 			D => Utop/Umiddle/Urock/BUGA,
 			E => U2_1_to_E);
 
   Uunder/Umiddle/Urock/Qrock : ENTITY PNP_TRANSISTOR
-	GENERIC MAP (
-			net => BUGA:D)
 	PORT MAP (	B => U1_2_to_B,
 			C => Uunder/Umiddle/Urock/-12V,
 			D => Uunder/Umiddle/Urock/BUGA,
