@@ -2,7 +2,7 @@
  * libgeda - gEDA's library
  * Copyright (C) 1998, 1999, 2000 Kazu Hirata / Ales Hvezda
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2017 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,10 +51,15 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->bitmap_directory   = NULL;
 
-  toplevel->init_left = 0;
-  toplevel->init_top  = 0;
-  toplevel->init_right  = 0;
-  toplevel->init_bottom = 0;
+  /* These values are the default extents of the schematic drawing area.
+   *
+   * The negative values allow symbols, residing at the origin, to be
+   * edited without translation to other coordinates.
+   */
+  toplevel->init_left = -60500;
+  toplevel->init_top  = -45375;
+  toplevel->init_right  = 121000;
+  toplevel->init_bottom = 90750;
 
   toplevel->pages = geda_list_new();
   toplevel->page_current = NULL;

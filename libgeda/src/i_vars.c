@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2017 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,16 +36,6 @@
 #define DEFAULT_BITMAP_DIRECTORY "../lib/bitmaps"
 #define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
 
-/* These values are the default extents of the schematic drawing area.
- *
- * The negative values allow symbols, residing at the origin, to be edited
- * without translation to other coordinates.
- */
-int   default_init_left = -60500;
-int   default_init_right = 121000;
-int   default_init_top = -45375;
-int   default_init_bottom = 90750;
-
 char *default_bitmap_directory = NULL;
 char *default_bus_ripper_symname = NULL;
 GList *default_always_promote_attributes = NULL;
@@ -66,11 +56,6 @@ int   default_make_backup_files = TRUE;
 void i_vars_libgeda_set(TOPLEVEL *toplevel)
 {
   GList *iter;
-
-  toplevel->init_left    = default_init_left;
-  toplevel->init_right   = default_init_right;
-  toplevel->init_top     = default_init_top;
-  toplevel->init_bottom  = default_init_bottom;
 
   toplevel->attribute_promotion = default_attribute_promotion;
   toplevel->promote_invisible = default_promote_invisible;
