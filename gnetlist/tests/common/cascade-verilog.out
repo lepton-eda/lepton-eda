@@ -26,39 +26,39 @@ wire unnamed_net6 ;
 /* continuous assignments */
 
 /* Package instantiations */
-\cascade-amp  AMP1 ( 
+\cascade-amp  AMP1 (
     .\1  ( unnamed_net1 ),
     .\2  ( unnamed_net2 )
     );
 
-\cascade-amp  AMP2 ( 
+\cascade-amp  AMP2 (
     .\1  ( unnamed_net6 )
     );
 
-\cascade-defaults  DEF1 ( 
+\cascade-defaults  DEF1 (
     .\1  ( unnamed_net2 ),
     .\2  ( unnamed_net3 )
     );
 
-\cascade-defaults-top  DEFAULTS ( 
+\cascade-defaults-top  DEFAULTS (
     .\1  ( GND )
     );
 
-\cascade-filter  FL1 ( 
+\cascade-filter  FL1 (
     .\1  ( unnamed_net3 ),
     .\2  ( unnamed_net4 )
     );
 
-\cascade-mixer  MX1 ( 
+\cascade-mixer  MX1 (
     .\1  ( unnamed_net4 ),
     .\2  ( unnamed_net5 )
     );
 
-\cascade-source  SOURCE ( 
+\cascade-source  SOURCE (
     .\1  ( unnamed_net1 )
     );
 
-\cascade-transformer  T1 ( 
+\cascade-transformer  T1 (
     .\1  ( unnamed_net5 ),
     .\2  ( unnamed_net6 )
     );

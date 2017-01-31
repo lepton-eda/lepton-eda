@@ -24,25 +24,25 @@ wire unnamed_net1 ;
 /* continuous assignments */
 
 /* Package instantiations */
-FUSE F1 ( 
+FUSE F1 (
     .\1  ( one )
     );
 
-\7400  U100 ( 
+\7400  U100 (
     .\3  ( one ),
     .\5  ( netattrib ),
     .\7  ( GND ),
     .\14  ( Vcc )
     );
 
-\7404  U200 ( 
+\7404  U200 (
     .\1  ( one ),
     .\2  ( netattrib ),
     .\7  ( GND ),
     .\14  ( Vcc )
     );
 
-\7404  U300 ( 
+\7404  U300 (
     .\1  ( one ),
     .\2  ( unnamed_net1 ),
     .\7  ( GND ),

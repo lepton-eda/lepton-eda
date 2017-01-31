@@ -23,7 +23,7 @@ wire Vcc ;
 /* continuous assignments */
 
 /* Package instantiations */
-\7400  U100 ( 
+\7400  U100 (
     .\1  ( SING_N_2 ),
     .\3  ( SING_N_2 ),
     .\4  ( SING_N ),

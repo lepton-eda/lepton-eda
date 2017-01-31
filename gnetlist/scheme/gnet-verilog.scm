@@ -485,7 +485,7 @@
                                           (list "IOPAD" "IPAD" "OPAD"
                                                 "HIGH" "LOW"))))
                           (format #t
-                                  "~A ~A ( ~A    );\n\n"
+                                  "~A ~A (~A    );\n\n"
                                   (escape-identifier (get-device package))
                                   (escape-identifier package)
                                   ;; if this module wants positional pins,

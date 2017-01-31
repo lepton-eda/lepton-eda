@@ -30,68 +30,68 @@ wire two ;
 /* continuous assignments */
 
 /* Package instantiations */
-POLARIZED_CAPACITOR C1 ( 
+POLARIZED_CAPACITOR C1 (
     .\1  ( eight ),
     .\2  ( nine )
     );
 
-POLARIZED_CAPACITOR C2 ( 
+POLARIZED_CAPACITOR C2 (
     .\1  ( eight ),
     .\2  ( nine )
     );
 
-POLARIZED_CAPACITOR C3 ( 
+POLARIZED_CAPACITOR C3 (
     .\1  ( ten ),
     .\2  ( nine )
     );
 
-POLARIZED_CAPACITOR C4 ( 
+POLARIZED_CAPACITOR C4 (
     .\1  ( eleven ),
     .\2  ( nine )
     );
 
-MAINS_CONNECTOR CONN1 ( 
+MAINS_CONNECTOR CONN1 (
     .\1  ( one ),
     .\2  ( five ),
     .\3  ( GND )
     );
 
-FUSE F1 ( 
+FUSE F1 (
     .\1  ( two ),
     .\2  ( three )
     );
 
-VARIABLE_RESISTOR R1 ( 
+VARIABLE_RESISTOR R1 (
     .\1  ( nine ),
     .\2  ( ten ),
     .\3  ( nine )
     );
 
-RESISTOR R2 ( 
+RESISTOR R2 (
     .\1  ( ten ),
     .\2  ( eleven )
     );
 
-SPST S1 ( 
+SPST S1 (
     .\1  ( one ),
     .\2  ( two )
     );
 
-transformer T1 ( 
+transformer T1 (
     .\1  ( three ),
     .\2  ( five ),
     .\3  ( six ),
     .\4  ( seven )
     );
 
-\DIODE-BRIDGE  U1 ( 
+\DIODE-BRIDGE  U1 (
     .\1  ( eight ),
     .\2  ( nine ),
     .\3  ( seven ),
     .\4  ( six )
     );
 
-LM317 U2 ( 
+LM317 U2 (
     .\1  ( ten ),
     .\2  ( eleven ),
     .\3  ( eight )

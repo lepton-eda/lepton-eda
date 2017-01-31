@@ -21,14 +21,14 @@ wire unnamed_net1 ;
 /* continuous assignments */
 
 /* Package instantiations */
-options A1 (     );
+options A1 (    );
 
-RESISTOR R1 ( 
+RESISTOR R1 (
     .\1  ( GND ),
     .\2  ( unnamed_net1 )
     );
 
-VOLTAGE_SOURCE V1 ( 
+VOLTAGE_SOURCE V1 (
     .\1  ( unnamed_net1 ),
     .\2  ( GND )
     );

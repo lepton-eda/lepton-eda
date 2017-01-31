@@ -31,110 +31,110 @@ wire unnamed_net2 ;
 /* continuous assignments */
 
 /* Package instantiations */
-model A1 (     );
+model A1 (    );
 
-include A2 (     );
+include A2 (    );
 
-directive A3 (     );
+directive A3 (    );
 
-CAPACITOR C1 ( 
+CAPACITOR C1 (
     .\1  ( unnamed_net1 ),
     .\2  ( Vbase1 )
     );
 
-CAPACITOR C2 ( 
+CAPACITOR C2 (
     .\1  ( unnamed_net2 ),
     .\2  ( Vbase2 )
     );
 
-CAPACITOR CE1 ( 
+CAPACITOR CE1 (
     .\1  ( GND ),
     .\2  ( Vem1 )
     );
 
-CAPACITOR CE2 ( 
+CAPACITOR CE2 (
     .\1  ( GND ),
     .\2  ( Vem2 )
     );
 
-CAPACITOR Cout ( 
+CAPACITOR Cout (
     .\1  ( VColl2 ),
     .\2  ( Vout )
     );
 
-NPN_TRANSISTOR Q1 ( 
+NPN_TRANSISTOR Q1 (
     .\1  ( Vem1 ),
     .\2  ( Vbase1 ),
     .\3  ( Vcoll1 )
     );
 
-NPN_TRANSISTOR Q2 ( 
+NPN_TRANSISTOR Q2 (
     .\1  ( Vem2 ),
     .\2  ( Vbase2 ),
     .\3  ( VColl2 )
     );
 
-RESISTOR R1 ( 
+RESISTOR R1 (
     .\1  ( Vbase1 ),
     .\2  ( Vcc )
     );
 
-RESISTOR R2 ( 
+RESISTOR R2 (
     .\1  ( GND ),
     .\2  ( Vbase1 )
     );
 
-RESISTOR R3 ( 
+RESISTOR R3 (
     .\1  ( Vbase2 ),
     .\2  ( Vcc )
     );
 
-RESISTOR R4 ( 
+RESISTOR R4 (
     .\1  ( GND ),
     .\2  ( Vbase2 )
     );
 
-RESISTOR R5 ( 
+RESISTOR R5 (
     .\1  ( Vin ),
     .\2  ( unnamed_net1 )
     );
 
-RESISTOR R8 ( 
+RESISTOR R8 (
     .\1  ( Vcoll1 ),
     .\2  ( unnamed_net2 )
     );
 
-RESISTOR RC1 ( 
+RESISTOR RC1 (
     .\1  ( Vcoll1 ),
     .\2  ( Vcc )
     );
 
-RESISTOR RC2 ( 
+RESISTOR RC2 (
     .\1  ( VColl2 ),
     .\2  ( Vcc )
     );
 
-RESISTOR RE1 ( 
+RESISTOR RE1 (
     .\1  ( GND ),
     .\2  ( Vem1 )
     );
 
-RESISTOR RE2 ( 
+RESISTOR RE2 (
     .\1  ( GND ),
     .\2  ( Vem2 )
     );
 
-RESISTOR RL ( 
+RESISTOR RL (
     .\1  ( GND ),
     .\2  ( Vout )
     );
 
-VOLTAGE_SOURCE VCC ( 
+VOLTAGE_SOURCE VCC (
     .\1  ( Vcc ),
     .\2  ( GND )
     );
 
-vsin Vinput ( 
+vsin Vinput (
     .\1  ( Vin ),
     .\2  ( GND )
     );

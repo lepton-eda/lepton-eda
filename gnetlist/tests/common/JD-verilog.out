@@ -25,56 +25,56 @@ wire p ;
 /* continuous assignments */
 
 /* Package instantiations */
-model A1 (     );
+model A1 (    );
 
-CAPACITOR Cm ( 
+CAPACITOR Cm (
     .\1  ( m ),
     .\2  ( GND )
     );
 
-CAPACITOR Cp ( 
+CAPACITOR Cp (
     .\1  ( p ),
     .\2  ( GND )
     );
 
-PMOS_TRANSISTOR M1 ( 
+PMOS_TRANSISTOR M1 (
     .B ( Vdd1 ),
     .D ( LVH ),
     .G ( LVH ),
     .S ( Vdd1 )
     );
 
-RESISTOR Rb ( 
+RESISTOR Rb (
     .\1  ( GND ),
     .\2  ( LVH )
     );
 
-RESISTOR Rlm ( 
+RESISTOR Rlm (
     .\1  ( m ),
     .\2  ( GND )
     );
 
-RESISTOR Rlp ( 
+RESISTOR Rlp (
     .\1  ( p ),
     .\2  ( Vdd1 )
     );
 
-RESISTOR Rt ( 
+RESISTOR Rt (
     .\1  ( p ),
     .\2  ( m )
     );
 
-vpulse V1 ( 
+vpulse V1 (
     .\1  ( i ),
     .\2  ( GND )
     );
 
-VOLTAGE_SOURCE Vdd ( 
+VOLTAGE_SOURCE Vdd (
     .\1  ( Vdd1 ),
     .\2  ( GND )
     );
 
-LVD X1 ( 
+LVD X1 (
     .\1  ( i ),
     .\2  ( GND ),
     .\3  ( LVH ),

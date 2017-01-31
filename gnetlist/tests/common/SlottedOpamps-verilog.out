@@ -28,7 +28,7 @@ wire samenet_output_c ;
 /* continuous assignments */
 
 /* Package instantiations */
-LM324 U1 ( 
+LM324 U1 (
     .\1  ( samenet_output_c ),
     .\2  ( minusin_slot1_pin_b ),
     .\3  ( plusin_slot1_pin3_a ),
