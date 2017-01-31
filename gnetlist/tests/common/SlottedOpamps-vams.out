@@ -13,7 +13,7 @@ ARCHITECTURE default_architecture OF default_entity IS
 	unknown samenet_output_c 	:  unknown;
 BEGIN
 -- Architecture statement part
- 
+
   U1 : ENTITY LM324
 	GENERIC MAP (
 			slot => 1, 

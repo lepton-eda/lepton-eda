@@ -11,7 +11,7 @@ ARCHITECTURE default_architecture OF default_entity IS
 	unknown unnamed_net6 	:  unknown;
 BEGIN
 -- Architecture statement part
- 
+
   AMP1 : ENTITY cascade-amp
 	GENERIC MAP (
 			IIP3 => -2, 
@@ -21,7 +21,7 @@ BEGIN
 			device => cascade-amp)
 	PORT MAP (	1 => unnamed_net1,
 			2 => unnamed_net2);
- 
+
   AMP2 : ENTITY cascade-amp
 	GENERIC MAP (
 			IIP3 => 12, 
@@ -31,7 +31,7 @@ BEGIN
 			device => cascade-amp)
 	PORT MAP (	1 => unnamed_net6,
 			2 => OPEN);
- 
+
   DEF1 : ENTITY cascade-defaults
 	GENERIC MAP (
 			footprint => none, 
@@ -41,7 +41,7 @@ BEGIN
 			device => cascade-defaults)
 	PORT MAP (	1 => unnamed_net2,
 			2 => unnamed_net3);
- 
+
   DEFAULTS : ENTITY cascade-defaults-top
 	GENERIC MAP (
 			RHO => 0, 
@@ -49,7 +49,7 @@ BEGIN
 			RIN => 50, 
 			device => cascade-defaults-top)
 	PORT MAP (	1 => GND);
- 
+
   FL1 : ENTITY cascade-filter
 	GENERIC MAP (
 			NF => 5.5, 
@@ -58,7 +58,7 @@ BEGIN
 			footprint => none)
 	PORT MAP (	1 => unnamed_net3,
 			2 => unnamed_net4);
- 
+
   MX1 : ENTITY cascade-mixer
 	GENERIC MAP (
 			IIP3 => 5, 
@@ -68,7 +68,7 @@ BEGIN
 			footprint => none)
 	PORT MAP (	1 => unnamed_net4,
 			2 => unnamed_net5);
- 
+
   SOURCE : ENTITY cascade-source
 	GENERIC MAP (
 			BW => 1, 
@@ -77,7 +77,7 @@ BEGIN
 			footprint => none, 
 			device => cascade-source)
 	PORT MAP (	1 => unnamed_net1);
- 
+
   T1 : ENTITY cascade-transformer
 	GENERIC MAP (
 			ROUT => 50, 

@@ -10,7 +10,7 @@ ARCHITECTURE default_architecture OF default_entity IS
 	unknown two 	:  unknown;
 BEGIN
 -- Architecture statement part
- 
+
   U100/Uunder : ENTITY 7400
 	GENERIC MAP (
 			footprint => DIP14, 
@@ -20,7 +20,7 @@ BEGIN
 			3 => one,
 			7 => U100/GND,
 			14 => U100/Vcc);
- 
+
   U102/Uunder : ENTITY 7400
 	GENERIC MAP (
 			footprint => DIP14, 

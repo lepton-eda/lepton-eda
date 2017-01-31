@@ -563,7 +563,7 @@ ARCHITECTURE ~A OF ~A IS
                 (if (not (memv (string->symbol device)
                                (map string->symbol
                                     (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
-                    (format #t " \n  ~A : ENTITY ~A~A\n~A~A;\n"
+                    (format #t "\n  ~A : ENTITY ~A~A\n~A~A;\n"
 			    package	; writes instance-label
 			    (get-device package) ; writes entity
                                         ; name, which should

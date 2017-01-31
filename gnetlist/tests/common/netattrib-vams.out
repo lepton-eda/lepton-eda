@@ -9,11 +9,11 @@ ARCHITECTURE default_architecture OF default_entity IS
 	unknown unnamed_net1 	:  unknown;
 BEGIN
 -- Architecture statement part
- 
+
   F1 : ENTITY FUSE
 	PORT MAP (	1 => one,
 			2 => OPEN);
- 
+
   U100 : ENTITY 7400
 	GENERIC MAP (
 			net => netattrib:5)
@@ -23,13 +23,13 @@ BEGIN
 			5 => netattrib,
 			7 => GND,
 			14 => Vcc);
- 
+
   U200 : ENTITY 7404
 	PORT MAP (	1 => one,
 			2 => netattrib,
 			7 => GND,
 			14 => Vcc);
- 
+
   U300 : ENTITY 7404
 	PORT MAP (	1 => one,
 			2 => unnamed_net1,
