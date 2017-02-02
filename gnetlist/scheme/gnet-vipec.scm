@@ -18,6 +18,9 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
+;;; ViPEC netlist format
+;;; http://vipec.sourceforge.net/
+
 (use-modules (gnetlist schematic))
 
 ;; ETTUS
