@@ -143,11 +143,6 @@
       (systemc:write-port-directions port-list)
       (newline))))
 
-;;
-;; Footer for file
-;;
-(define (systemc:write-bottom-footer)
-  (display "  }\n};\n\n"))
 
 ;;
 ;; Take a netname and parse it into a structure that describes the net:
@@ -397,71 +392,71 @@
 ;;    );
 ;;
 
-(define c_p #f)
-
 (define (systemc:components module-name packages)
   (define attrib-names (map (cut format #f "attr~A" <>) (iota 32 1)))
 
-  (set! c_p #f)
-  (display "/* Package instantiations */\n")
+  (define (package->package-attribs package)
+    (let ((attrib-values (filter-map known?
+                                     (map (cut gnetlist:get-package-attribute
+                                               package
+                                               <>)
+                                          attrib-names))))
+      (format #f "    ~A(\"~A~A\")"
+              package package (string-join attrib-values "\",\""))))
 
-  (for-each (lambda (package)                ; loop on packages
-              (let ((device (get-device package)))
-                (if (not (memq (string->symbol device) ; ignore specials
-                               port-symbols))
-                    (format #t "~A ~A;\n" device package))))
-            packages)
+  (define (package->device-package package device)
+    (format #f "~A ~A;\n" device package))
 
-  (format #t "\nSC_CTOR(~A):\n" module-name)
+  ;; Output a module connections for the package given to us with named ports.
+  (define (package->connections package)
+    (define pinnumber car)
+    (define netname cdr)
+    (let ((pin-net-list (get-pins-nets package)))
+      (and (not (null? pin-net-list))
+           (string-join
+            (filter-map
+             (lambda (pin-net)
+               (and (not (string-prefix-ci? "unconnected_pin" (netname pin-net)))
+                    ;; if this module wants positional pins,
+                    ;; then output that format, otherwise
+                    ;; output normal named declaration
+                    (let ((positional? (string=? (gnetlist:get-package-attribute package
+                                                                                 "VERILOG_PORTS")
+                                                 "POSITIONAL")))
+                      (format #f
+                              "    ~A~A;\n"
+                              package
+                              (pin-net->string pin-net positional?)))))
+             pin-net-list)
+            ""))))
 
-  (for-each (lambda (package)                ; loop on packages
-              (let ((device (get-device package)))
-                (if (not (memq (string->symbol device) ; ignore specials
-                               port-symbols))
-                    (let ((attrib-values (filter-map known?
-                                                     (map (cut gnetlist:get-package-attribute
-                                                               package
-                                                               <>)
-                                                          attrib-names))))
-                      (begin
-                       (if c_p (display ",\n") (set! c_p #t))
-                       (format #t "    ~A(\"~A~A\")"
-                               package package (string-join attrib-values "\",\"")))))))
-            packages)
-  (display "\n  {")
-
-  (for-each
-   (lambda (package)                         ; loop on packages
-     (let ((device (get-device package)))
-       (if (not (memq (string->symbol device) ; ignore specials
+  (define (get-package-strings package)
+    (let ((device (gnetlist:get-package-attribute package "device")))
+      (and (not (memq (string->symbol device)
                       port-symbols))
-           ;; if this module wants positional pins,
-           ;; then output that format, otherwise
-           ;; output normal named declaration
-           (systemc:display-connections package
-                                        (string=? (gnetlist:get-package-attribute package
-                                                                                  "VERILOG_PORTS")
-                                                  "POSITIONAL")))))
-   packages))
+           `(,(package->device-package package device)
+             ,(package->package-attribs package)
+             ,(package->connections package)))))
 
-;;
-;; output a module connection for the package given to us with named ports
-;;
-(define (systemc:display-connections package positional)
-  (define pinnumber car)
-  (define netname cdr)
-  (let ((pin-net-list (get-pins-nets package)))
-    (if (not (null? pin-net-list))
-        (begin
-          (newline)
-          (for-each
-           (lambda (pin-net)
-             (and (not (string-prefix-ci? "unconnected_pin" (netname pin-net)))
-                  (format #t
-                          "    ~A~A;\n"
-                          package
-                          (pin-net->string pin-net positional))))
-                    pin-net-list)))))
+  (let ((package-data (filter-map get-package-strings packages)))
+    (match package-data
+      (((device-package attribs connections) ...)
+       (format #t
+               "/* Package instantiations */
+~A
+SC_CTOR(~A):
+~A
+  {
+~A  }
+};
+
+"
+               (string-join device-package "")
+               module-name
+               (string-join attribs ",\n")
+               (string-join (filter identity connections) "\n")))
+      (_ #f))))
+
 
 ;;
 ;; Display the individual net connections
@@ -505,5 +500,4 @@
     (systemc:write-top-header module-name packages)
     (systemc:write-wires)
     (systemc:write-continuous-assigns packages)
-    (systemc:components module-name packages)
-    (systemc:write-bottom-footer)))
+    (systemc:components module-name packages)))
