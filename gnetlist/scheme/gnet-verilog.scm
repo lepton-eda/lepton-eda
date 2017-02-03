@@ -28,7 +28,8 @@
 ;; some useful regexes for working with net-names
 ;;
 (use-modules (ice-9 regex)
-             (gnetlist schematic))
+             (gnetlist schematic)
+             (gnetlist port))
 
 (define id-regexp "[a-zA-Z_][a-zA-Z0-9_$]*")
 (define numeric  "[0-9]+")
@@ -480,10 +481,7 @@
       (for-each (lambda (package)         ; loop on packages
                   (begin
                     (let ((device (get-device package)))
-                      (if (not (memv (string->symbol device) ; ignore specials
-                                     (map string->symbol
-                                          (list "IOPAD" "IPAD" "OPAD"
-                                                "HIGH" "LOW"))))
+                      (if (not (schematic-port-device-string? device))
                           (format #t
                                   "~A ~A (~A    );\n\n"
                                   (escape-identifier (get-device package))

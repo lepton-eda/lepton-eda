@@ -27,7 +27,8 @@
 
 (use-modules (srfi srfi-1)
              (srfi srfi-26)
-             (gnetlist schematic))
+             (gnetlist schematic)
+             (gnetlist port))
 
 ;;; ===================================================================================
 ;;;                  TOP LEVEL FUNCTION
@@ -560,9 +561,7 @@ ARCHITECTURE ~A OF ~A IS
                      (gnetlist:get-package-attribute
                       package
                       "architecture")))
-                (if (not (memv (string->symbol device)
-                               (map string->symbol
-                                    (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
+                (if (not (schematic-port-device-string? device))
                     (format #t "\n  ~A : ENTITY ~A~A\n~A~A;\n"
 			    package	; writes instance-label
 			    (get-device package) ; writes entity

@@ -27,7 +27,8 @@
 (use-modules (ice-9 regex)
              (srfi srfi-1)
              (srfi srfi-26)
-             (gnetlist schematic))
+             (gnetlist schematic)
+             (gnetlist port))
 
 (define id-regexp "[a-zA-Z_][a-zA-Z0-9_$]*")
 (define numeric  "[0-9]+")
@@ -58,8 +59,6 @@
 (define simple-id-reg (make-regexp
                        ( string-append "^(" id-regexp ")$" )))
 
-
-(define port-symbols '(IOPAD IPAD OPAD HIGH LOW))
 
 ;;; Returns a list of first pin netnames for those packages in
 ;;; PACKAGE-LIST that have an attribute named ATTRIBUTE which
@@ -100,8 +99,7 @@
   (for-each
    (lambda (package)                         ; loop on packages
      (let ((device (get-device package)))
-       (if (not (memq (string->symbol device) ; ignore specials
-                      port-symbols))
+       (if (not (schematic-port-device-string? device))
            (format #t "#include \"~A.h\"\n" device))))
    packages)
   (format #t "\nSC_MODULE (~A)\n{\n" module-name))
@@ -432,8 +430,7 @@
 
   (define (get-package-strings package)
     (let ((device (gnetlist:get-package-attribute package "device")))
-      (and (not (memq (string->symbol device)
-                      port-symbols))
+      (and (not (schematic-port-device-string? device))
            `(,(package->device-package package device)
              ,(package->package-attribs package)
              ,(package->connections package)))))

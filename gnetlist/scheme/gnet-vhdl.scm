@@ -37,7 +37,8 @@
 ;;;
 
 (use-modules (srfi srfi-1)
-             (gnetlist schematic))
+             (gnetlist schematic)
+             (gnetlist port))
 
 (define (vhdl:get-top-port-list packages)
   ;; construct list
@@ -286,8 +287,7 @@ ENTITY ~A IS
   (for-each
    (lambda (device)
      ;; Hmm... I just grabbed this if stuff... do I need it?
-     (if (not (memv (string->symbol device) ; ignore specials
-                    (map string->symbol (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
+     (if (not (schematic-port-device-string? device))
          (begin
            (display "    COMPONENT ")
            (display device)
@@ -511,10 +511,7 @@ ENTITY ~A IS
     (for-each (lambda (package)
       (begin
         (let ((device (get-device package)))
-          (if (not (memv (string->symbol device)
-                         (map string->symbol
-                                (list "IOPAD" "IPAD" "OPAD"
-                                 "HIGH" "LOW"))))
+          (if (not (schematic-port-device-string? device))
             (begin
               (display "    ")
               ; label
