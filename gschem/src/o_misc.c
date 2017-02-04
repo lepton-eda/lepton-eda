@@ -76,7 +76,7 @@ void o_edit(GschemToplevel *w_current, GList *list)
     break;
     case(OBJ_TEXT):
       str = geda_text_object_get_string (o_current);
-      if (o_attrib_get_name_value (o_current, NULL, NULL) &&
+      if (o_attrib_is_attrib (o_current) &&
         /* attribute editor only accept 1-line values for attribute */
         o_text_num_lines (str) == 1) {
         attrib_edit_dialog(w_current,o_current, FROM_MENU);

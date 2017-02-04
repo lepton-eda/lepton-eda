@@ -2473,8 +2473,7 @@ lone_attributes_to_model_rows (Multiattrib *multiattrib)
     MODEL_ROW *m_row;
 
     /* Consider a selected text object might be an attribute */
-    if (object->type != OBJ_TEXT ||
-        !o_attrib_get_name_value (object, NULL, NULL))
+    if (object->type != OBJ_TEXT || !o_attrib_is_attrib (object))
       continue;
 
     /* We have an OBJ_TEXT which libgeda can parse as an attribute */
