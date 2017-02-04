@@ -480,28 +480,19 @@ GList *o_attrib_find_floating_attribs (const GList *list)
  */
 OBJECT *o_attrib_find_attrib_by_name (const GList *list, char *name, int count)
 {
-  OBJECT *a_current;
-  const GList *iter;
-  char *found_name;
-  int internal_counter = 0;
+  g_return_val_if_fail (name, NULL);
 
-  for (iter = list; iter != NULL; iter = g_list_next (iter)) {
-    a_current = iter->data;
+  const gchar *needle = g_intern_string (name);
+  int num_found = 0;
 
-    g_return_val_if_fail (a_current->type == OBJ_TEXT, NULL);
+  for (const GList *iter = list; iter; iter = g_list_next (iter)) {
+    OBJECT *attrib = iter->data;
+    g_return_val_if_fail (attrib->type == OBJ_TEXT, NULL);
 
-    if (!o_attrib_get_name_value (a_current, &found_name, NULL))
-      continue;
-
-    if (strcmp (name, found_name) == 0) {
-      if (internal_counter == count) {
-        g_free (found_name);
-        return a_current;
-      }
-      internal_counter++;
+    if ((needle == o_attrib_get_name (attrib)) &&
+        (num_found++ == count)) {
+      return attrib;
     }
-
-    g_free (found_name);
   }
 
   return NULL;
