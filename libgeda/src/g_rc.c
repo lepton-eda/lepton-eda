@@ -812,48 +812,48 @@ SCM g_rc_keep_invisible(SCM mode)
  */
 SCM g_rc_always_promote_attributes(SCM attrlist)
 {
-  GList *list=NULL;
-  int length, i;
-  gchar *attr;
-  gchar **attr2;
+  if (default_always_promote_attributes) {
+    g_ptr_array_unref (default_always_promote_attributes);
+    NULL;
+  }
 
-  g_list_foreach(default_always_promote_attributes, (GFunc)g_free, NULL);
-  g_list_free(default_always_promote_attributes);
+  GPtrArray *promote = g_ptr_array_new ();
+
+  scm_dynwind_begin (0);
+  scm_dynwind_unwind_handler ((void (*)(void *))g_ptr_array_unref, promote, 0);
 
   if (scm_is_string (attrlist)) {
-    char *temp;
     s_log_message(_("WARNING: using a string for 'always-promote-attributes'"
-		    " is deprecated. Use a list of strings instead\n"));
+        " is deprecated. Use a list of strings instead\n"));
 
     /* convert the space separated strings into a GList */
-    temp = scm_to_utf8_string (attrlist);
-    attr2 = g_strsplit(temp," ", 0);
-    free (temp);
+    char *attr_string = scm_to_utf8_string (attrlist);
+    gchar **split_names = g_strsplit(attr_string," ", 0);
+    free (attr_string);
 
-    for (i=0; attr2[i] != NULL; i++) {
-      if (strlen(attr2[i]) > 0) {
-	list = g_list_prepend(list, g_strdup(attr2[i]));
-      }
+    for (gchar **iter = split_names; iter; ++iter) {
+      if ((*iter)[0]) /* Only accept non-empty strings */
+        g_ptr_array_add (promote, (gpointer) g_intern_string (*iter));
     }
-    g_strfreev(attr2);
+
+    g_strfreev(split_names);
+
   } else {
     SCM_ASSERT(scm_is_true (scm_list_p (attrlist)), attrlist, SCM_ARG1,
                "always-promote-attributes");
-    length = scm_ilength(attrlist);
-    /* convert the scm list into a GList */
-    for (i=0; i < length; i++) {
-      char *temp;
-      SCM_ASSERT(scm_is_string(scm_list_ref(attrlist, scm_from_int(i))), 
-		 scm_list_ref(attrlist, scm_from_int(i)), SCM_ARG1, 
-		 _("always-promote-attribute: list element is not a string"));
-      temp = scm_to_utf8_string (scm_list_ref (attrlist, scm_from_int (i)));
-      attr = g_strdup(temp);
-      free (temp);
-      list = g_list_prepend(list, attr);
+    for (SCM iter = attrlist; !scm_is_null(iter); iter = scm_cdr(iter)) {
+      SCM_ASSERT (scm_is_string (scm_car (iter)), scm_car (iter),
+                  SCM_ARG1, "always-promote-attributes");
+      char *attr = scm_to_utf8_string (scm_car (iter));
+      if (attr[0]) /* Only accept non-empty strings */
+        g_ptr_array_add (promote, (gpointer) g_intern_string (attr));
+      free (attr);
     }
   }
 
-  default_always_promote_attributes = g_list_reverse(list);
+  scm_dynwind_end();
+
+  default_always_promote_attributes = promote;
 
   return SCM_BOOL_T;
 }

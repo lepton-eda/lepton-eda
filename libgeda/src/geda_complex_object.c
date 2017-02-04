@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2017 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,24 +151,22 @@ geda_complex_object_get_position (const GedaObject *object, gint *x, gint *y)
  */
 static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
 {
-  char *name = NULL;
-  int promotableAttribute = FALSE;
+  g_return_val_if_fail (toplevel, FALSE);
+  g_return_val_if_fail (object, FALSE);
+
+  const gchar *name = o_attrib_get_name (object);
+  if (!name) return FALSE;
 
   /* always promote symversion= attribute, even if it is invisible */
-  if (strncmp(object->text->string, "symversion=", 11) == 0)
+  if (strncmp(o_attrib_get_name(object), "symversion", 10) == 0)
     return TRUE;
 
   /* check list against attributes which can be promoted */
   if (toplevel->always_promote_attributes != NULL) {
-    if (o_attrib_get_name_value (object, &name, NULL)) {
-      if (g_list_find_custom(toplevel->always_promote_attributes,
-			     name, (GCompareFunc) strcmp) != NULL) {
-        /* Name of the attribute was in the always promote attributes list */
-        promotableAttribute = TRUE;
-      }
-
-      g_free(name);
-      if (promotableAttribute)
+    for (guint i = 0; i < toplevel->always_promote_attributes->len; ++i) {
+      gconstpointer promote =
+        g_ptr_array_index(toplevel->always_promote_attributes, i);
+      if (name == promote)
         return TRUE;
     }
   }

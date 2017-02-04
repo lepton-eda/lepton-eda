@@ -38,7 +38,7 @@
 
 char *default_bitmap_directory = NULL;
 char *default_bus_ripper_symname = NULL;
-GList *default_always_promote_attributes = NULL;
+GPtrArray *default_always_promote_attributes = NULL;
 
 int   default_attribute_promotion = TRUE;
 int   default_promote_invisible = FALSE;
@@ -55,7 +55,6 @@ int   default_make_backup_files = TRUE;
  */
 void i_vars_libgeda_set(TOPLEVEL *toplevel)
 {
-  GList *iter;
 
   toplevel->attribute_promotion = default_attribute_promotion;
   toplevel->promote_invisible = default_promote_invisible;
@@ -64,12 +63,14 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
   toplevel->make_backup_files = default_make_backup_files;
 
   /* copy the always_promote_attributes list from the default */
-  g_list_foreach(toplevel->always_promote_attributes, (GFunc) g_free, NULL);
-  g_list_free(toplevel->always_promote_attributes);
-  toplevel->always_promote_attributes = g_list_copy(default_always_promote_attributes);
-  for (iter = toplevel->always_promote_attributes; iter != NULL;
-       iter = g_list_next(iter))
-    iter->data = g_strdup(iter->data);
+  if (toplevel->always_promote_attributes) {
+    g_ptr_array_unref (toplevel->always_promote_attributes);
+    toplevel->always_promote_attributes = NULL;
+  }
+  if (default_always_promote_attributes) {
+    toplevel->always_promote_attributes =
+      g_ptr_array_ref (default_always_promote_attributes);
+  }
 
   /* you cannot free the default* strings here since new windows */
   /* need them */
@@ -88,7 +89,6 @@ void i_vars_libgeda_freenames()
   g_free(default_bitmap_directory);
   g_free(default_bus_ripper_symname);
 
-  g_list_foreach(default_always_promote_attributes, (GFunc) g_free, NULL);
-  g_list_free(default_always_promote_attributes);
+  g_ptr_array_unref (default_always_promote_attributes);
   default_always_promote_attributes = NULL;
 }

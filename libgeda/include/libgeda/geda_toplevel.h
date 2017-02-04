@@ -75,7 +75,7 @@ struct st_toplevel
   int force_boundingbox;
 
   /* List of attributes to always promote */
-  GList *always_promote_attributes;
+  GPtrArray *always_promote_attributes;
 
   /* Callback function for calculating text bounds */
   RenderedBoundsFunc rendered_text_bounds_func;

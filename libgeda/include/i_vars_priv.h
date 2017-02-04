@@ -5,7 +5,7 @@ extern int default_init_bottom;
 extern char *default_bitmap_directory;
 extern char *default_bus_ripper_symname;
 
-extern GList *default_always_promote_attributes;
+extern GPtrArray *default_always_promote_attributes;
 
 extern int default_attribute_promotion;
 extern int default_promote_invisible;
