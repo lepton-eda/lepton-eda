@@ -454,9 +454,8 @@ GList *o_attrib_find_floating_attribs (const GList *list)
     /* Skip non text objects, attached attributes and text which doesn't
      * constitute a valid attributes (e.g. general text placed on the page)
      */
-    if (o_current->type == OBJ_TEXT &&
-        o_current->attached_to == NULL &&
-        o_attrib_get_name_value (o_current, NULL, NULL)) {
+    if (o_attrib_is_attrib (o_current) &&
+        o_current->attached_to == NULL) {
 
       floating_attributes = g_list_prepend (floating_attributes, o_current);
     }
@@ -658,7 +657,7 @@ GList * o_attrib_return_attribs (OBJECT *object)
       continue;
 
     /* Don't add invalid attributes to the list */
-    if (!o_attrib_get_name_value (a_current, NULL, NULL))
+    if (!o_attrib_is_attrib (a_current))
       continue;
 
     attribs = g_list_prepend (attribs, a_current);
