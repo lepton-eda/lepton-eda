@@ -180,7 +180,7 @@ OBJECT*
 o_get_parent (TOPLEVEL *toplevel, OBJECT *object);
 
 gboolean
-o_is_visible (TOPLEVEL *toplevel, OBJECT *object);
+o_is_visible (const TOPLEVEL *toplevel, const OBJECT *object);
 
 void
 o_set_color(TOPLEVEL *toplevel, OBJECT *object, int color);

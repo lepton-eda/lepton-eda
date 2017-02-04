@@ -404,7 +404,9 @@ o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **v
  *  \return TRUE on success, FALSE otherwise.
  */
 gboolean
-o_attrib_get_name_value (OBJECT *attrib, gchar **name_ptr, gchar **value_ptr)
+o_attrib_get_name_value (const OBJECT *attrib,
+                         gchar **name_ptr,
+                         gchar **value_ptr)
 {
   g_return_val_if_fail (attrib->type == OBJ_TEXT, FALSE);
 
@@ -678,7 +680,7 @@ GList * o_attrib_return_attribs (OBJECT *object)
  *  \param [in] attrib       OBJECT who's status to query.
  *  \return TRUE if the given attribute is inside a symbol
  */
-int o_attrib_is_inherited (OBJECT *attrib)
+int o_attrib_is_inherited (const OBJECT *attrib)
 {
   return (attrib->attached_to == NULL &&
           attrib->parent != NULL);

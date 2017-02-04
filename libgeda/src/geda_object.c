@@ -1042,7 +1042,7 @@ o_emit_change_notify (TOPLEVEL *toplevel, OBJECT *object)
  *  \return TRUE when VISIBLE, FALSE otherwise
  */
 gboolean
-o_is_visible (TOPLEVEL *toplevel, OBJECT *object)
+o_is_visible (const TOPLEVEL *toplevel, const OBJECT *object)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   return object->visibility == VISIBLE;
