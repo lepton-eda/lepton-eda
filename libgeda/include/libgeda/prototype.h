@@ -67,6 +67,7 @@ char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int
 char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int counter);
 GList *o_attrib_return_attribs(OBJECT *object);
 int o_attrib_is_inherited(const OBJECT *attrib);
+gboolean o_attrib_is_attrib (const OBJECT *attrib);
 
 /* o_embed.c */
 void o_embed(TOPLEVEL *toplevel, OBJECT *o_current);

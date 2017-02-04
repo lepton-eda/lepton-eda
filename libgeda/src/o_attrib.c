@@ -693,3 +693,15 @@ int o_attrib_is_inherited (const OBJECT *attrib)
   return (attrib->attached_to == NULL &&
           attrib->parent != NULL);
 }
+
+/*! \brief Query whether an object is an attribute
+ * \par Function Description
+ * Return #TRUE if \a obj is a text attribute, and #FALSE otherwise.
+ */
+gboolean
+o_attrib_is_attrib (const OBJECT *obj)
+{
+  return (obj &&
+          (obj->type == OBJ_TEXT) &&
+          o_attrib_get_name (obj));
+}
