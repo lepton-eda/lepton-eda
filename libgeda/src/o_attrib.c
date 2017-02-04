@@ -415,6 +415,22 @@ o_attrib_get_name_value (const OBJECT *attrib,
                                          name_ptr, value_ptr);
 }
 
+/*! \brief Get the name from an attribute
+ * \par Function Description
+ * Get an interned string for the attribute name of the attribute text
+ * object \a attrib.  If \a attrib is an invalid attribute, returns
+ * NULL.
+ *
+ * \param attrib   An attribute #OBJECT
+ * \return The interned attribute name, or NULL.
+ */
+const gchar *
+o_attrib_get_name (const OBJECT *attrib)
+{
+  g_return_val_if_fail (attrib, 0);
+  g_return_val_if_fail (attrib->type == OBJ_TEXT, 0);
+  return attrib->text->name;
+}
 
 /*! \brief Find all floating attributes in the given object list.
  *  \par Function Description

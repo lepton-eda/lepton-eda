@@ -372,11 +372,15 @@ update_disp_string (OBJECT *object)
         }
         break;
     }
+
+    text->name = g_intern_string (name);
+
     /* free the strings allocated by o_attrib_get_name_value */
     g_free(name);
     g_free(value);
   } else {
     text->disp_string = g_strdup (text->string);
+    text->name = NULL;
   }
 }
 
@@ -429,6 +433,7 @@ geda_text_object_new (TOPLEVEL *toplevel,
   text->x = x;
   text->y = y;
   text->angle = angle;
+  text->name = NULL;
 
   new_node->text = text;
 
