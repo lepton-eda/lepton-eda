@@ -108,7 +108,8 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
 
   /* is the object already part of the list ? */
   if (g_list_find (object->attribs, attrib)) {
-    g_warning (_("Attribute [%s] already attached\n"), attrib->text->string);
+    g_warning (_("Attribute [%s] already attached\n"),
+               geda_text_object_get_string (attrib));
     return;
   }
 
@@ -190,7 +191,7 @@ void o_attrib_print(GList *attributes)
     a_current = a_iter->data;
     printf("Attribute points to: %s\n", a_current->name);
     if (a_current->text) {
-      printf("\tText is: %s\n", a_current->text->string);
+      printf("\tText is: %s\n", geda_text_object_get_string (a_current));
     }
 
     a_iter = g_list_next (a_iter);
@@ -410,7 +411,7 @@ o_attrib_get_name_value (const OBJECT *attrib,
 {
   g_return_val_if_fail (attrib->type == OBJ_TEXT, FALSE);
 
-  return o_attrib_string_get_name_value (attrib->text->string,
+  return o_attrib_string_get_name_value (geda_text_object_get_string (attrib),
                                          name_ptr, value_ptr);
 }
 

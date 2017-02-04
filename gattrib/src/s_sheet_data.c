@@ -204,7 +204,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
 	  a_current = a_iter->data;
 	  if (a_current->type == OBJ_TEXT
 	      && a_current->text != NULL) {  /* found an attribute */
-	    attrib_text = g_strdup(a_current->text->string);
+	    attrib_text = g_strdup(geda_text_object_get_string (a_current));
 	    attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
 
 	      /* Don't include "refdes" or "slot" because they form the row name */
@@ -416,7 +416,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
 		pin_attrib = a_iter->data;
 		if (pin_attrib->type == OBJ_TEXT
 		    && pin_attrib->text != NULL) {  /* found an attribute */
-		  attrib_text = g_strdup(pin_attrib->text->string);
+		  attrib_text = g_strdup(geda_text_object_get_string (pin_attrib));
 		  attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
 		  attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
 		  if ( (strcmp(attrib_name, "pinnumber") != 0) 

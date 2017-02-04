@@ -207,7 +207,7 @@ s_check_symbol_structure (const GList *obj_list, SYMCHECK *s_current)
     OBJECT *o_current = iter->data;
 
     if (o_current->type == OBJ_TEXT) {
-      tokens = g_strsplit(o_current->text->string,"=", 2);
+      tokens = g_strsplit(geda_text_object_get_string (o_current),"=", 2);
       if (tokens[0] != NULL && tokens[1] != NULL) {
 	if (s_check_list_has_item(forbidden_attributes, tokens[0])) {
 	  message = g_strdup_printf (_("Found forbidden %s= attribute: [%s=%s]\n"),
@@ -252,7 +252,7 @@ s_check_symbol_structure (const GList *obj_list, SYMCHECK *s_current)
         if (o_current->show_name_value != SHOW_NAME_VALUE) {
           message = g_strdup_printf (_("Found a simple text object with only SHOW_NAME"
                                      " or SHOW_VALUE set [%s]\n"),
-                                     o_current->text->string);
+                                     geda_text_object_get_string (o_current));
           s_current->warning_messages =
             g_list_append(s_current->warning_messages, message);
           s_current->warning_count++;
@@ -270,7 +270,8 @@ s_check_text (const GList *obj_list, SYMCHECK *s_current)
   OBJECT *o_current;
   gboolean overbar_started, escape, leave_parser;
   char *message;
-  char *text_string, *ptr;
+  const char *text_string;
+  const char *ptr;
   gunichar current_char;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next(iter)) {
@@ -280,7 +281,7 @@ s_check_text (const GList *obj_list, SYMCHECK *s_current)
       continue;
 
     overbar_started = escape = leave_parser = FALSE;
-    text_string = o_current->text->string;
+    text_string = geda_text_object_get_string (o_current);
 
     for (ptr = text_string;
          ptr != NULL && !leave_parser;
@@ -1061,7 +1062,7 @@ void
 s_check_oldpin (const GList *obj_list, SYMCHECK *s_current)
 {
   const GList *iter;
-  char *ptr;
+  const char *ptr;
   int found_old = FALSE;
   int number_counter = 0;
   char *message;
@@ -1071,10 +1072,10 @@ s_check_oldpin (const GList *obj_list, SYMCHECK *s_current)
 
     if (o_current->type == OBJ_TEXT)
     {
-      if (strstr(o_current->text->string, "pin"))
+      if (strstr(geda_text_object_get_string (o_current), "pin"))
       {
         /* skip over "pin" */
-        ptr = o_current->text->string + 3;
+        ptr = geda_text_object_get_string (o_current) + 3;
 
         found_old = FALSE;
         number_counter = 0;
@@ -1114,7 +1115,7 @@ s_check_oldpin (const GList *obj_list, SYMCHECK *s_current)
         {
           message = g_strdup_printf (
             _("Found old pin#=# attribute: %s\n"),
-            o_current->text->string);
+            geda_text_object_get_string (o_current));
           s_current->error_messages = g_list_append(s_current->error_messages,
                                                     message);
 
@@ -1133,7 +1134,7 @@ void
 s_check_oldslot (const GList *obj_list, SYMCHECK *s_current)
 {
   const GList *iter;
-  char *ptr;
+  const char *ptr;
   int found_old = FALSE;
   int number_counter = 0;
   char *message;
@@ -1143,10 +1144,10 @@ s_check_oldslot (const GList *obj_list, SYMCHECK *s_current)
 
     if (o_current->type == OBJ_TEXT)
     {
-      if (strstr(o_current->text->string, "slot"))
+      if (strstr(geda_text_object_get_string (o_current), "slot"))
       {
         /* skip over "slot" */
-        ptr = o_current->text->string + 4;
+        ptr = geda_text_object_get_string (o_current) + 4;
 
         found_old = FALSE;
         number_counter = 0;
@@ -1186,7 +1187,7 @@ s_check_oldslot (const GList *obj_list, SYMCHECK *s_current)
         {
           message = g_strdup_printf (
             _("Found old slot#=# attribute: %s\n"),
-            o_current->text->string);
+            geda_text_object_get_string (o_current));
           s_current->error_messages = g_list_append(s_current->error_messages,
                                                     message);
           s_current->found_oldslot_attrib += found_old;
@@ -1322,19 +1323,19 @@ s_check_missing_attributes (const GList *obj_list, SYMCHECK *s_current)
 
     if (o_current->type == OBJ_TEXT)
     {
-      if (strstr(o_current->text->string, "footprint=")) {
+      if (strstr(geda_text_object_get_string (o_current), "footprint=")) {
         message = g_strdup_printf (
           _("Found %s attribute\n"),
-          o_current->text->string);
+          geda_text_object_get_string (o_current));
         s_current->info_messages = g_list_append(s_current->info_messages,
                                                message);
         s_current->found_footprint++;
       }
 
-      if (strstr(o_current->text->string, "refdes=")) {
+      if (strstr(geda_text_object_get_string (o_current), "refdes=")) {
         message = g_strdup_printf (
           _("Found %s attribute\n"),
-          o_current->text->string);
+          geda_text_object_get_string (o_current));
         s_current->info_messages = g_list_append(s_current->info_messages,
                                                message);
         s_current->found_refdes++;

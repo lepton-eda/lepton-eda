@@ -321,7 +321,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
           if (a_current->type == OBJ_TEXT
               && a_current->text != NULL) {  /* found an attribute */
             /* may need to check more thoroughly here. . . . */
-            attrib_text = g_strdup(a_current->text->string);
+            attrib_text = g_strdup(geda_text_object_get_string (a_current));
             attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
             attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
             old_visibility = o_is_visible (pr_current, a_current)
@@ -533,7 +533,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
 	      pin_attrib = a_iter->data;
 	      if (pin_attrib->type == OBJ_TEXT
 		  && pin_attrib->text != NULL) {  /* found an attribute */
-		attrib_text = g_strdup(pin_attrib->text->string);
+          attrib_text = g_strdup(geda_text_object_get_string (pin_attrib));
 		attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
 		attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
  
