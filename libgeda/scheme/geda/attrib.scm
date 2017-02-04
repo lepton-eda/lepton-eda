@@ -28,16 +28,13 @@
   #:use-module (geda page))
 
 (define-public parse-attrib %parse-attrib)
+(define-public attrib-name %attrib-name)
 (define-public object-attribs %object-attribs)
 (define-public attrib-attachment %attrib-attachment)
 (define-public promotable-attribs %promotable-attribs)
 
 (define-public (attribute? a)
-  (false-if-exception (and (parse-attrib a) #t)))
-
-(define-public (attrib-name a)
-  (let ((v (parse-attrib a)))
-    (if v (car v) v)))
+  (false-if-exception (and (attrib-name a) #t)))
 
 (define-public (attrib-value a)
   (let ((v (parse-attrib a)))
