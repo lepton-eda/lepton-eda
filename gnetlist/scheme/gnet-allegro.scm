@@ -26,7 +26,7 @@
    (lambda (packages done stdout)
       (if (not (null? packages))
          (let ((device (get-device (car packages))))
-            (if (contains? done device)
+            (if (member device done)
                (allegro:write-device-files (cdr packages) done stdout)
                (begin
                   (if stdout

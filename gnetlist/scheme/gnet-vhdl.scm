@@ -338,7 +338,7 @@ ENTITY ~A IS
 (define vhdl:get-unique-devices
   (lambda (device-list)
       (cond ((null? device-list) '())
-            ((not (contains? (cdr device-list) (car device-list)))
+            ((not (member (car device-list) (cdr device-list)))
              (cons (car device-list) (vhdl:get-unique-devices (cdr device-list))))
             (else (vhdl:get-unique-devices (cdr device-list)))
       )

@@ -270,17 +270,6 @@ REFDES. As a result, slots may be repeated in the returned list."
                                 list))
          list)))
 
-;; ETTUS
-;; contains?
-;; Usage (contains? list item)
-;; True if the list contains the item, according to string=?
-(define contains?
-   (lambda (ls item)
-      (cond
-         ((null? ls) #f)
-         ((string=? item (car ls)) #t)
-         (#t (contains? (cdr ls) item)))))
-
 ;;
 ;; Useful output functions contributed by Andrew Bardsley
 ;;

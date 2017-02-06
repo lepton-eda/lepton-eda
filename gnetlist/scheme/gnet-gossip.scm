@@ -40,7 +40,7 @@
         (if (string=? "unknown" lib)
             (message (format #f "Component ~A does not have a library attribute\n"
                              (car components))))
-        (if (contains? done lib)
+        (if (member lib done)
             (gossip:get-libraries (cdr components) done)
             (begin
               (format #t "(use-library ~A *)\n" lib)
