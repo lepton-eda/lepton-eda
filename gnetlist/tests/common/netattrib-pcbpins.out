@@ -23,3 +23,10 @@ ChangePinName(U300, 1, A)
 ChangePinName(U300, 2, Y)
 ChangePinName(U300, unknown, unknown)
 ChangePinName(U300, unknown, unknown)
+
+# Start of element U400
+ChangePinName(U400, 1, A)
+ChangePinName(U400, 2, B)
+ChangePinName(U400, 3, Y)
+ChangePinName(U400, unknown, unknown)
+ChangePinName(U400, unknown, unknown)

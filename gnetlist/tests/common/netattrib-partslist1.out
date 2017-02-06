@@ -4,4 +4,5 @@ F1	FUSE	unknown	unknown	1
 U100	7400	unknown	DIP14	1
 U200	7404	unknown	DIP14	1
 U300	7404	unknown	DIP14	1
+U400	7400	unknown	DIP14	1
 .END

@@ -1,14 +1,19 @@
 <LiquidPCB>
 	<netlist name="Main netlist">
+		<net name="DGND">
+			<netnode component="U400" pin=2 />
+		</net>
 		<net name="GND">
 			<netnode component="U100" pin=7 />
 			<netnode component="U200" pin=7 />
 			<netnode component="U300" pin=7 />
+			<netnode component="U400" pin=7 />
 		</net>
 		<net name="Vcc">
 			<netnode component="U100" pin=14 />
 			<netnode component="U200" pin=14 />
 			<netnode component="U300" pin=14 />
+			<netnode component="U400" pin=14 />
 		</net>
 		<net name="netattrib">
 			<netnode component="U100" pin=5 />

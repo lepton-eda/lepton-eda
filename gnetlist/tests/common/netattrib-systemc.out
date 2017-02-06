@@ -12,6 +12,7 @@
 #include "7400.h"
 #include "7404.h"
 #include "7404.h"
+#include "7400.h"
 
 SC_MODULE (not found)
 {
@@ -19,6 +20,7 @@ SC_MODULE (not found)
 /* Port directions begin here */
 
 /* Wires from the design */
+sc_signal<0> DGND;
 sc_signal<0> GND;
 sc_signal<0> Vcc;
 sc_signal<0> netattrib;
@@ -31,12 +33,14 @@ FUSE F1;
 7400 U100;
 7404 U200;
 7404 U300;
+7400 U400;
 
 SC_CTOR(not found):
     F1("F1"),
     U100("U100"),
     U200("U200"),
-    U300("U300")
+    U300("U300"),
+    U400("U400")
   {
     F1.1(one);
 
@@ -54,6 +58,10 @@ SC_CTOR(not found):
     U300.2(unnamed_net1);
     U300.7(GND);
     U300.14(Vcc);
+
+    U400.2(DGND);
+    U400.7(GND);
+    U400.14(Vcc);
   }
 };
 

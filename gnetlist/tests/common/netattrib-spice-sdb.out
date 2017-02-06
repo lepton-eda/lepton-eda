@@ -10,4 +10,5 @@ F1 one unconnected_pin-3 <No valid value attribute found>
 U100 unconnected_pin-2 unconnected_pin-1 one unknown
 U200 one netattrib unknown
 U300 one 1 unknown
+U400 unconnected_pin-5 DGND unconnected_pin-4 unknown
 .end

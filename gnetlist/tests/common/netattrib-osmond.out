@@ -2,10 +2,13 @@ Part unknown { Name F1 }
 Part DIP14 { Name U100 }
 Part DIP14 { Name U200 }
 Part DIP14 { Name U300 }
+Part DIP14 { Name U400 }
+Signal "DGND"
+  { U400-2 }
 Signal "GND"
-  { U100-7 U200-7 U300-7 }
+  { U100-7 U200-7 U300-7 U400-7 }
 Signal "Vcc"
-  { U100-14 U200-14 U300-14 }
+  { U100-14 U200-14 U300-14 U400-14 }
 Signal "netattrib"
   { U100-5 U200-2 }
 Signal "one"

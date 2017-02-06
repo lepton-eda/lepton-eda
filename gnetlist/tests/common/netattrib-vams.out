@@ -2,6 +2,7 @@
 -- Secondary unit
 
 ARCHITECTURE default_architecture OF default_entity IS
+	unknown DGND 	:  unknown;
 	unknown GND 	:  unknown;
 	unknown Vcc 	:  unknown;
 	unknown netattrib 	:  unknown;
@@ -33,6 +34,13 @@ BEGIN
   U300 : ENTITY 7404
 	PORT MAP (	1 => one,
 			2 => unnamed_net1,
+			7 => GND,
+			14 => Vcc);
+
+  U400 : ENTITY 7400
+	PORT MAP (	1 => OPEN,
+			2 => DGND,
+			3 => OPEN,
 			7 => GND,
 			14 => Vcc);
 END ARCHITECTURE default_architecture;

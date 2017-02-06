@@ -15,6 +15,7 @@ module \not found  (
 
 
 /* Wires from the design */
+wire DGND ;
 wire GND ;
 wire Vcc ;
 wire netattrib ;
@@ -45,6 +46,12 @@ FUSE F1 (
 \7404  U300 (
     .\1  ( one ),
     .\2  ( unnamed_net1 ),
+    .\7  ( GND ),
+    .\14  ( Vcc )
+    );
+
+\7400  U400 (
+    .\2  ( DGND ),
     .\7  ( GND ),
     .\14  ( Vcc )
     );

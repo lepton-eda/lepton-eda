@@ -7,15 +7,22 @@ ADD 'U200' DIP14@smd-ipc (1 1);
 VALUE 'U200' '7404';
 ADD 'U300' DIP14@smd-ipc (1 1);
 VALUE 'U300' '7404';
+ADD 'U400' DIP14@smd-ipc (1 1);
+VALUE 'U400' '7400';
+SIGNAL 'DGND'
+   'U400' '2'
+;
 SIGNAL 'GND'
    'U100' '7'
    'U200' '7'
    'U300' '7'
+   'U400' '7'
 ;
 SIGNAL 'VCC'
    'U100' '14'
    'U200' '14'
    'U300' '14'
+   'U400' '14'
 ;
 SIGNAL 'NETATTRIB'
    'U100' '5'

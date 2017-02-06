@@ -13,12 +13,13 @@ ARCHITECTURE netlist OF not found IS
     COMPONENT FUSE
     END COMPONENT ;
 
-    COMPONENT 7400
-    END COMPONENT ;
-
     COMPONENT 7404
     END COMPONENT ;
 
+    COMPONENT 7400
+    END COMPONENT ;
+
+    SIGNAL DGND : Std_Logic;
     SIGNAL GND : Std_Logic;
     SIGNAL Vcc : Std_Logic;
     SIGNAL netattrib : Std_Logic;
@@ -51,6 +52,14 @@ BEGIN
     PORT MAP (
         1 => one,
         2 => unnamed_net1,
+        7 => GND,
+        14 => Vcc);
+
+    U400 : 7400
+    PORT MAP (
+        1 => OPEN,
+        2 => DGND,
+        3 => OPEN,
         7 => GND,
         14 => Vcc);
 
