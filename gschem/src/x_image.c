@@ -161,7 +161,7 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   char* image_type_descr = NULL;
   char *image_type = NULL;
-  char *old_image_filename = NULL;
+  const char *old_image_filename = NULL;
   char *file_basename = NULL;
   char *file_name = NULL ;
   char *new_image_filename = NULL;
@@ -178,7 +178,7 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
   /* Get the previous file name. If none, revert to the page filename */
   old_image_filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(file_chooser));
   if (!old_image_filename) {
-    old_image_filename = toplevel->page_current->page_filename;
+    old_image_filename = s_page_get_filename (toplevel->page_current);
   }
 
   /* Get the file name, without extension */

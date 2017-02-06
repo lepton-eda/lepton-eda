@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2017 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,11 @@ struct st_page
   OBJECT *object_lastplace; /* the last found item */
   GList *connectible_list;  /* connectible page objects */
 
-  char *page_filename;
+  /* The page filename. You must access this field only via the
+   * accessor functions s_page_set_filename() and
+   * s_page_get_filename() */
+  char *_filename;
+
   int CHANGED;			/* changed flag */
 
   /* Undo/Redo Stacks and pointers */
@@ -129,3 +133,7 @@ s_page_objects_in_region (TOPLEVEL *toplevel, PAGE *page, int min_x, int min_y, 
 
 GList*
 s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page, BOX *rects, int n_rects);
+
+const gchar *s_page_get_filename (const PAGE *page);
+
+void s_page_set_filename (PAGE *page, const char *filename);

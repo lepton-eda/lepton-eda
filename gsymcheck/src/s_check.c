@@ -74,7 +74,7 @@ s_check_symbol (TOPLEVEL *pr_current, PAGE *p_current, const GList *obj_list)
   s_symcheck = s_symstruct_init();
   
   if (!quiet_mode) {
-    s_log_message(_("Checking: %s\n"), p_current->page_filename);
+    s_log_message(_("Checking: %s\n"), s_page_get_filename (p_current));
   }
   
   /* overal symbol structure test */

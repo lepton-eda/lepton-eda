@@ -941,7 +941,7 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
   } else {
     if (!quiet_mode)
       s_log_message (_("New file [%s]\n"),
-                     toplevel->page_current->page_filename);
+                     s_page_get_filename (toplevel->page_current));
 
     g_run_hook_page (w_current, "%new-page-hook", toplevel->page_current);
   }
@@ -1036,9 +1036,8 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
   } else {
     /* successful save of page to file, update page... */
     /* change page name if necessary and prepare log message */
-    if (g_ascii_strcasecmp (page->page_filename, filename) != 0) {
-      g_free (page->page_filename);
-      page->page_filename = g_strdup (filename);
+    if (g_ascii_strcasecmp (s_page_get_filename (page), filename) != 0) {
+      s_page_set_filename (page, filename);
 
       log_msg = _("Saved as [%s]\n");
     } else {
@@ -1116,7 +1115,7 @@ x_window_close_page (GschemToplevel *w_current, PAGE *page)
 
   s_log_message (page->CHANGED ?
                  _("Discarding page [%s]\n") : _("Closing [%s]\n"),
-                 page->page_filename);
+                 s_page_get_filename (page));
   /* remove page from toplevel list of page and free */
   s_page_delete (toplevel, page);
   gschem_toplevel_page_changed (w_current);

@@ -64,7 +64,7 @@ int s_toplevel_read_page(TOPLEVEL *toplevel, char *filename)
   GError *err = NULL;
     
   /* Set the new filename */
-  toplevel->page_current->page_filename = g_strdup(filename);
+  s_page_set_filename (toplevel->page_current, filename);
   
   /* read in and fill out toplevel using f_open and its callees */
   file_return_code = f_open (toplevel, toplevel->page_current, filename, &err);

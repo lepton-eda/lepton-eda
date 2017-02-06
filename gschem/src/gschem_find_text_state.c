@@ -248,7 +248,7 @@ assign_store (GschemFindTextState *state, GSList *objects)
 
     gtk_list_store_append (state->store, &tree_iter);
 
-    basename = g_path_get_basename (object->page->page_filename);
+    basename = g_path_get_basename (s_page_get_filename (object->page));
 
     gtk_list_store_set (state->store,
                         &tree_iter,

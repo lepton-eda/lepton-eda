@@ -101,7 +101,7 @@ main_prog(void *closure, int argc, char *argv[])
 
     if (!f_open (pr_current,
                  pr_current->page_current,
-                 pr_current->page_current->page_filename,
+                 s_page_get_filename (pr_current->page_current),
                  &err)) {
       /* Not being able to load a file is apparently a fatal error */
       logging_dest = STDOUT_TTY;

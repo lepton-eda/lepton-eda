@@ -476,7 +476,7 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
   o_attrlist = o_attrib_find_floating_attribs (
                               s_page_objects (preview_toplevel->page_current));
 
-  cfg = eda_config_get_context_for_path (preview_toplevel->page_current->page_filename);
+  cfg = eda_config_get_context_for_path (s_page_get_filename (preview_toplevel->page_current));
   filter_list = eda_config_get_string_list (cfg, "gschem.library",
                                             "component-attributes", &n, NULL);
 
@@ -852,7 +852,7 @@ create_lib_tree_model (Compselect *compselect)
   GtkTreeStore *store;
   GList *srchead, *srclist;
   PAGE *page = GSCHEM_DIALOG(compselect)->w_current->toplevel->page_current;
-  EdaConfig *cfg = eda_config_get_context_for_path (page->page_filename);
+  EdaConfig *cfg = eda_config_get_context_for_path (s_page_get_filename (page));
   gboolean sort = eda_config_get_boolean (cfg, "gschem.library", "sort", NULL);
 
   store = (GtkTreeStore*)gtk_tree_store_new (3, G_TYPE_POINTER,

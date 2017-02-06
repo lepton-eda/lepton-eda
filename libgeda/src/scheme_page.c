@@ -133,7 +133,7 @@ SCM_DEFINE (page_filename, "%page-filename", 1, 0, 0,
 
 
   page = edascm_to_page (page_s);
-  return scm_from_utf8_string (page->page_filename);
+  return scm_from_utf8_string (s_page_get_filename(page));
 }
 
 /*! \brief Change the filename associated with a page.
@@ -157,10 +157,7 @@ SCM_DEFINE (set_page_filename_x, "%set-page-filename!", 2, 0, 0,
 
   PAGE *page = edascm_to_page (page_s);
   char *new_fn = scm_to_utf8_string (filename_s);
-  if (page->page_filename != NULL) {
-    g_free (page->page_filename);
-  }
-  page->page_filename = g_strdup (new_fn);
+  s_page_set_filename (page, new_fn);
   free (new_fn);
 
   return page_s;
@@ -430,7 +427,7 @@ SCM_DEFINE (string_to_page, "%string->page", 2, 0, 0,
   GError * err = NULL;
   char *str = scm_to_utf8_stringn (str_s, &len);
   GList *objects = o_read_buffer (toplevel, NULL, str, len,
-                                  page->page_filename, &err);
+                                  s_page_get_filename(page), &err);
   free (str);
 
   if (err) {

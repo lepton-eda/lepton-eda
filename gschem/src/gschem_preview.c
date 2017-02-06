@@ -74,14 +74,14 @@ gschem_preview_new ()
 
 /*! \brief get the filename for the current page
  */
-static char*
+static const char*
 preview_get_filename (GschemPreview *preview)
 {
   PAGE *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview));
 
   g_return_val_if_fail (page != NULL, "");
 
-  return page->page_filename;
+  return s_page_get_filename (page);
 }
 
 

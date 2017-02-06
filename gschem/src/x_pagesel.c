@@ -99,7 +99,8 @@ void x_pagesel_update (GschemToplevel *w_current)
     return;
   }
 
-  i_set_filename (w_current, page->page_filename, page->CHANGED ? "* " : "");
+  i_set_filename (w_current, s_page_get_filename (page),
+                  page->CHANGED ? "* " : "");
 }
 
 /*! \brief Callback for page manager response.
@@ -511,7 +512,7 @@ static void add_page (GtkTreeModel *model, GtkTreeIter *parent,
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,
                       COLUMN_PAGE, page,
-                      COLUMN_NAME, page->page_filename,
+                      COLUMN_NAME, s_page_get_filename (page),
                       COLUMN_CHANGED, page->CHANGED,
                       -1);
 

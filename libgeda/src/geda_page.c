@@ -109,6 +109,9 @@ pre_object_removed (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
  */
 PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
 {
+  g_return_val_if_fail (toplevel, NULL);
+  g_return_val_if_fail (filename, NULL);
+
   PAGE *page;
 
   /* Now create a blank page */
@@ -119,13 +122,7 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   page->CHANGED = 0;
 
   /* big assumption here that page_filename isn't null */
-  if (g_path_is_absolute (filename)) {
-    page->page_filename = g_strdup (filename);
-  } else {
-    gchar *pwd = g_get_current_dir ();
-    page->page_filename = g_build_filename (pwd, filename, NULL);
-    g_free (pwd);
-  }
+  s_page_set_filename (page, filename);
 
   page->up = -2;
   page->page_control = 0;
@@ -194,11 +191,11 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   }
 
   /* Get the real filename and file permissions */
-  real_filename = follow_symlinks (page->page_filename, NULL);
+  real_filename = follow_symlinks (s_page_get_filename(page), NULL);
 
   if (real_filename == NULL) {
     s_log_message (_("s_page_delete: Can't get the real filename of %s."),
-                   page->page_filename);
+                   s_page_get_filename (page));
   }
   else {
     backup_filename = f_get_autosave_filename (real_filename);
@@ -242,7 +239,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 
   /* ouch, deal with parents going away and the children still around */
   page->up = -2;
-  g_free (page->page_filename);
+  g_free (page->_filename);
 
   geda_list_remove( toplevel->pages, page );
 
@@ -380,7 +377,7 @@ void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new)
 
   s_toplevel_set_page_current (toplevel, p_new);
 
-  dirname = g_path_get_dirname (p_new->page_filename);
+  dirname = g_path_get_dirname (s_page_get_filename(p_new));
   if (chdir (dirname)) {
     /* An error occured with chdir */
 #warning FIXME: What do we do?
@@ -411,7 +408,7 @@ PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename)
     page = (PAGE *)iter->data;
     /* FIXME this may not be correct on platforms with
      * case-insensitive filesystems. */
-    if ( strcmp( page->page_filename, filename ) == 0 )
+    if ( strcmp( s_page_get_filename (page), filename ) == 0 )
       return page;
   }
   return NULL;
@@ -460,7 +457,7 @@ void s_page_print_all (TOPLEVEL *toplevel)
         iter = g_list_next( iter ) ) {
 
     page = (PAGE *)iter->data;
-    printf ("FILENAME: %s\n", page->page_filename);
+    printf ("FILENAME: %s\n", s_page_get_filename (page));
     geda_object_list_print (page->_object_list);
   }
 }
@@ -485,15 +482,15 @@ gint s_page_save_all (TOPLEVEL *toplevel)
     p_current = (PAGE *)iter->data;
 
     if (f_save (toplevel, p_current,
-                p_current->page_filename, NULL)) {
+                s_page_get_filename (p_current), NULL)) {
       s_log_message (_("Saved [%s]\n"),
-                     p_current->page_filename);
+                     s_page_get_filename (p_current));
       /* reset the CHANGED flag of p_current */
       p_current->CHANGED = 0;
 
     } else {
       s_log_message (_("Could NOT save [%s]\n"),
-                     p_current->page_filename);
+                     s_page_get_filename (p_current));
       /* increase the error counter */
       status++;
     }
@@ -795,4 +792,47 @@ GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page,
 
   list = g_list_reverse (list);
   return list;
+}
+
+/*! \brief Get the file path associated with a page
+ * \par Function Description
+ * Retrieve the filename associated with \a page.  The returned string
+ * remains owned by \a page and must not be modified or freed.
+ *
+ * \param page  A #PAGE pointer
+ * \return the full path to the underlying file of the \a page
+ */
+const gchar *
+s_page_get_filename (const PAGE *page)
+{
+  g_return_val_if_fail (page, "");
+  g_return_val_if_fail (page->_filename, "");
+
+  return page->_filename;
+}
+
+/*! \brief Set the file path associated with a page
+ * \par Function Description
+ * Set the path and filename associated with \a page.  If \a filename
+ * is relative, it will be made absolute relative the current working
+ * directory.
+ *
+ * \param page      The #PAGE for which to set the filename
+ * \param filename  The new file path for \a page
+ */
+void
+s_page_set_filename (PAGE *page,
+                     const char *filename)
+{
+  g_return_if_fail (page);
+  g_return_if_fail (filename);
+
+  GFile *file = g_file_new_for_path (filename);
+  gchar *absolute = g_file_get_path (file);
+  g_object_unref (file);
+
+  g_return_if_fail (absolute);
+
+  g_free (page->_filename);
+  page->_filename = absolute;
 }

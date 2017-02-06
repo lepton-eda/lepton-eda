@@ -111,14 +111,14 @@ s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
 
       found = s_page_new (toplevel, string);
 
-      f_open (toplevel, found, found->page_filename, NULL);
+      f_open (toplevel, found, s_page_get_filename (found), NULL);
     }
     break;
 
   case HIERARCHY_FORCE_LOAD:
     {
       found = s_page_new (toplevel, string);
-      f_open (toplevel, found, found->page_filename, NULL);
+      f_open (toplevel, found, s_page_get_filename (found), NULL);
     }
     break;
 
@@ -170,7 +170,7 @@ s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol,
 
   s_page_goto (toplevel, page);
 
-  f_open(toplevel, page, page->page_filename, NULL);
+  f_open(toplevel, page, s_page_get_filename (page), NULL);
 
   page->up = parent->pid;
   page_control_counter++;
@@ -248,7 +248,7 @@ s_hierarchy_load_subpage (PAGE *page, const char *filename, GError **error)
       int success;
 
       subpage = s_page_new (page->toplevel, string);
-      success = f_open (page->toplevel, subpage, subpage->page_filename, error);
+      success = f_open (page->toplevel, subpage, s_page_get_filename (subpage), error);
 
       if (success) {
         subpage->page_control = ++page_control_counter;
@@ -371,7 +371,7 @@ gint
 s_hierarchy_print_page (PAGE *p_current, void * data)
 {
   printf("pagefilename: %s pageid: %d\n",
-         p_current->page_filename, p_current->pid);
+         s_page_get_filename (p_current), p_current->pid);
   return 0;
 }
 

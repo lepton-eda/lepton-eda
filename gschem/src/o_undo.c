@@ -377,7 +377,7 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
   }
 
   /* save filename */
-  save_filename = g_strdup (page->page_filename);
+  save_filename = g_strdup (s_page_get_filename (page));
 
   /* save structure so it's not nuked */
   save_bottom = page->undo_bottom;
@@ -448,8 +448,8 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
   do_logging = save_logging;
 
   /* set filename right */
-  g_free(page->page_filename);
-  page->page_filename = save_filename;
+  s_page_set_filename (page, save_filename);
+  g_free(save_filename);
 
   /* final redraw */
   x_pagesel_update (w_current);

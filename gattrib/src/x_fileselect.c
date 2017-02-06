@@ -303,9 +303,8 @@ x_fileselect_save (void)
         f_save (pr_current, pr_current->page_current, filename, NULL)) {
       s_log_message (_("Saved As [%s]\n"), filename);
 
-      /* replace page filename with new one, do not free filename */
-      g_free (pr_current->page_current->page_filename);
-      pr_current->page_current->page_filename = filename;
+      /* replace page filename with new one */
+      s_page_set_filename (pr_current->page_current, filename);
 
       /* reset the changed flag of current page*/
       pr_current->page_current->CHANGED = 0;
@@ -313,11 +312,10 @@ x_fileselect_save (void)
     } else {
       /* report error in log and status bar */
       s_log_message (_("Could NOT save [%s]\n"),
-                     pr_current->page_current->page_filename);
-
-      g_free (filename);
+                     s_page_get_filename (pr_current->page_current));
 
     }
+    g_free (filename);
   }
   gtk_widget_destroy (dialog);
 

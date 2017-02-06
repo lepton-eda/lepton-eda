@@ -215,8 +215,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   }
 
   /* write full, absolute filename into page->page_filename */
-  g_free(page->page_filename);
-  page->page_filename = g_strdup(full_filename);
+  s_page_set_filename (page, full_filename);
 
   /* Before we open the page, let's load the corresponding gafrc. */
   /* First cd into file's directory. */
