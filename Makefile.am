@@ -43,7 +43,7 @@ version.h: stamp-git $(top_builddir)/configure $(srcdir)/version.h.in
 	      < $(srcdir)/version.h.in > version.h.new; \
 	if diff version.h version.h.new > /dev/null 2>&1; then \
 	  echo "version.h is unchanged"; \
-	  rm version.h.new; \
+	  rm -f version.h.new; \
 	else \
 	  echo "Recreating version.h"; \
 	  mv version.h.new version.h; \
