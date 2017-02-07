@@ -523,18 +523,34 @@ ENTITY ~A IS
 ;;; Since I like to have the urefs as port names in the top
 ;;; level entity, I have to assign them to the correspinding nets as well
 
-(define vhdl:write-signal-assignment-statements
-  (lambda (packages)
-    (begin
-      (for-each (lambda (port-ass) (vhdl:write-in-signal-assignment port-ass))
-        (vhdl:get-top-level-ports packages "IPAD"))
-      (for-each (lambda (port-ass) (vhdl:write-out-signal-assignment port-ass))
-        (vhdl:get-top-level-ports packages "OPAD"))
-      (for-each (lambda (port-ass) (vhdl:write-inout-signal-assignment port-ass))
-        (vhdl:get-top-level-ports packages "IOPAD"))
-    )
-  )
-)
+(define (vhdl:write-signal-assignment-statements packages)
+  (define package car)
+  (define first-pin-netname cdr)
+
+  (define (write-in port-assignment)
+    (format #t
+            "~A <= ~A;\n"
+            (first-pin-netname port-assignment)
+            (package port-assignment)))
+
+  (define (write-out port-assignment)
+    (format #t
+            "~A <= ~A;\n"
+            (package port-assignment)
+            (first-pin-netname port-assignment)))
+
+  (define (write-inout port-assignment)
+    (write-in-signal port-assignment)
+    (write-out-signal port-assignment))
+
+  (let ((ins (vhdl:get-top-level-ports packages "IPAD"))
+        (outs (vhdl:get-top-level-ports packages "OPAD"))
+        (inouts (vhdl:get-top-level-ports packages "IOPAD")))
+    (for-each write-in ins)
+    (for-each write-out outs)
+    (for-each write-inout inouts)))
+
+
 ;;; THHE
 ;;; get a list of the top-level ports (the urefs of the I/O-PADs)
 
@@ -549,43 +565,6 @@ ENTITY ~A IS
      (and (string=? (get-device package) pad-type)
           (cons package (first-pin-netname package))))
    package-list))
-
-;;;THHE
-(define vhdl:write-in-signal-assignment
-  (lambda (port-assignment)
-    (begin
-      (display (cdr port-assignment))
-      (display " <= ")
-      (display (car port-assignment))
-      (display ";")
-      (newline)
-    )
-  )
-)
-
-;;;THHE
-(define vhdl:write-out-signal-assignment
-  (lambda (port-assignment)
-    (begin
-      (display (car port-assignment))
-      (display " <= ")
-      (display (cdr port-assignment))
-      (display ";")
-      (newline)
-    )
-  )
-)
-
-
-;;;THHE
-(define vhdl:write-inout-signal-assignment
-  (lambda (port-assignment)
-    (begin
-      (vhdl:write-in-signal-assignment port-assignment)
-      (vhdl:write-out-signal-assignment port-assignment)
-    )
-  )
-)
 
 ;;; Port map aspect
 ;;;
