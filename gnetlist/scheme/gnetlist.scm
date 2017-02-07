@@ -224,62 +224,6 @@ REFDES. As a result, slots may be repeated in the returned list."
                device)))))
 
 
-;; this is really crude, but I'm tired... :)
-(define display-nl
-   (lambda (list)
-      (display list)
-      (newline)))
-
-
-;; ah.. wonder what use this is...
-(define display-pin
-   (lambda (pin-list)
-      (for-each display-nl pin-list)))
-
-
-;; another misc function
-(define print-packages
-   (lambda (plist)
-      (for-each display-nl plist)))
-
-;; ETTUS
-;; find-device
-;; Usage:  (find-device packages devicename)
-;; Returns the first package which matches the devicename
-(define find-device
-   (lambda (components devicename)
-      (if (not (null? components))
-         (if (string=? devicename (get-device (car components)))
-            (car components)
-            (find-device (cdr components) devicename)))))
-
-
-;; ETTUS
-;; find-devices
-;; Usage:  (find-devices packages devicename '())
-;; Returns a list of packages which match the device name
-(define find-devices
-   (lambda (components devicename list)
-      (if (not (null? components))
-         (if (string=? devicename (get-device (car components)))
-            (find-devices (cdr components)
-                                devicename
-                                (cons (car components) list))
-            (find-devices (cdr components)
-                                devicename
-                                list))
-         list)))
-
-;;
-;; Useful output functions contributed by Andrew Bardsley
-;;
-(define (print-to-port port . l)
-    (for-each (lambda (elem) (display elem port)) l))
-
-(define (print . l)
-    (apply print-to-port (cons (current-output-port) l)))
-
-;;
 ;; Wrap a string into lines no longer than wrap-length
 ;; wrap-char is put on the end-of-the-wrapped-line, before the return
 ;; (from Stefan Petersen)

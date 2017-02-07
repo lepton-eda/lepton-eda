@@ -284,6 +284,13 @@ ENTITY ~A IS
 ;;;    be in line with good VHDL-93 practice and keep compilers happy.
 
 (define (vhdl:write-component-declarations device-list packages)
+  ;; Returns the first package which matches the devicename
+  (define (find-device components devicename)
+    (if (not (null? components))
+        (if (string=? devicename (get-device (car components)))
+            (car components)
+            (find-device (cdr components) devicename))))
+
   (for-each
    (lambda (device)
      ;; Hmm... I just grabbed this if stuff... do I need it?
