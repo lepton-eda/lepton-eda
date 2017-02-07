@@ -5,9 +5,10 @@
 
 (use-library unknown *)
 (define-block (not found (
-(signals (DGND GND Vcc netattrib one unnamed_net1))
+(signals (3.3V 5V DGND DIGITAL_GND Vcc XGND netattrib one out3 out8 sig9 signal1 signal4 signal6 signal9 signal12x unnamed_net1 unnamed_net2))
    (F1)
    (U100)
    (U200)
    (U300)
    (U400)
+   (U500)

@@ -19,12 +19,24 @@ ARCHITECTURE netlist OF not found IS
     COMPONENT FUSE
     END COMPONENT ;
 
+    SIGNAL 3.3V : Std_Logic;
+    SIGNAL 5V : Std_Logic;
     SIGNAL DGND : Std_Logic;
-    SIGNAL GND : Std_Logic;
+    SIGNAL DIGITAL_GND : Std_Logic;
     SIGNAL Vcc : Std_Logic;
+    SIGNAL XGND : Std_Logic;
     SIGNAL netattrib : Std_Logic;
     SIGNAL one : Std_Logic;
+    SIGNAL out3 : Std_Logic;
+    SIGNAL out8 : Std_Logic;
+    SIGNAL sig9 : Std_Logic;
+    SIGNAL signal1 : Std_Logic;
+    SIGNAL signal4 : Std_Logic;
+    SIGNAL signal6 : Std_Logic;
+    SIGNAL signal9 : Std_Logic;
+    SIGNAL signal12x : Std_Logic;
     SIGNAL unnamed_net1 : Std_Logic;
+    SIGNAL unnamed_net2 : Std_Logic;
 BEGIN
 -- Architecture statement part
     F1 : FUSE
@@ -38,30 +50,52 @@ BEGIN
         2 => OPEN,
         3 => one,
         5 => netattrib,
-        7 => GND,
+        7 => sig9,
         14 => Vcc);
 
     U200 : 7404
     PORT MAP (
         1 => one,
         2 => netattrib,
-        7 => GND,
+        7 => XGND,
         14 => Vcc);
 
     U300 : 7404
     PORT MAP (
         1 => one,
         2 => unnamed_net1,
-        7 => GND,
+        7 => sig9,
         14 => Vcc);
 
     U400 : 7400
     PORT MAP (
-        1 => OPEN,
+        1 => signal1,
         2 => DGND,
-        3 => OPEN,
-        7 => GND,
+        3 => out3,
+        4 => signal4,
+        5 => out3,
+        6 => signal6,
+        7 => sig9,
+        8 => out8,
+        9 => signal9,
+        10 => signal4,
+        12 => signal12x,
         14 => Vcc);
+
+    U500 : 7400
+    PORT MAP (
+        1 => signal1,
+        2 => OPEN,
+        3 => unnamed_net2,
+        4 => unnamed_net2,
+        5 => unnamed_net2,
+        6 => OPEN,
+        7 => sig9,
+        8 => OPEN,
+        9 => sig9,
+        10 => DIGITAL_GND,
+        14 => 3.3V,
+        14 => 5V);
 
 -- Signal assignment part
 END netlist;
