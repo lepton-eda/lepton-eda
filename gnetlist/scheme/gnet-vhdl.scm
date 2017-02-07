@@ -331,28 +331,6 @@ ENTITY ~A IS
   )
 )
 
-;;; THHE
-;;; build a list of all unique devices in in the list
-;;;
-
-(define vhdl:get-unique-devices
-  (lambda (device-list)
-      (cond ((null? device-list) '())
-            ((not (member (car device-list) (cdr device-list)))
-             (cons (car device-list) (vhdl:get-unique-devices (cdr device-list))))
-            (else (vhdl:get-unique-devices (cdr device-list)))
-      )
-  )
-)
-
-;;; THHE
-;;; build a list of  all unique devices in the schematic
-;;;
-
-(define (unique-devices packages)
-  (vhdl:get-unique-devices (map get-device packages)))
-
-
 ;;; Signal Declaration
 ;;;
 ;;; According to IEEE 1076-1993 4.3.1.2:
@@ -432,9 +410,14 @@ ENTITY ~A IS
 (define (vhdl:write-architecture-declarative-part packages nets)
   (begin
     ; Due to my taste will the component declarations go first
-    ; XXX - Broken until someday
-    ; THHE fixed today ;-)
-    (vhdl:write-component-declarations (unique-devices packages) packages)
+    (vhdl:write-component-declarations
+     ;; Build a list of  all unique devices in the schematic
+     (sort-remove-duplicates
+      (map (lambda (package)
+             (gnetlist:get-package-attribute package "device"))
+           packages)
+      refdes<?)
+     packages)
     ; Then comes the signal declatations
     (vhdl:write-signal-declarations nets)
   )

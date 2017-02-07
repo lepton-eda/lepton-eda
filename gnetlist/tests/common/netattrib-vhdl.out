@@ -10,13 +10,13 @@ END not found;
 
 -- Secondary unit
 ARCHITECTURE netlist OF not found IS
-    COMPONENT FUSE
+    COMPONENT 7400
     END COMPONENT ;
 
     COMPONENT 7404
     END COMPONENT ;
 
-    COMPONENT 7400
+    COMPONENT FUSE
     END COMPONENT ;
 
     SIGNAL DGND : Std_Logic;
