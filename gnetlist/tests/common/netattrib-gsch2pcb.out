@@ -15,6 +15,7 @@ PKG_DIP14(DIP14,U100,unknown)
 PKG_DIP14(DIP14,U200,unknown)
 PKG_DIP14(DIP14,U300,unknown)
 PKG_DIP14(DIP14,U400,unknown)
+PKG_DIP14(DIP14,U500,unknown)
 Layer(1 "top")
 (
 )

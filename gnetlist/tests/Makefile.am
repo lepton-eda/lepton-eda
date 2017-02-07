@@ -71,12 +71,15 @@ input_files = \
 	common/TwoStageAmp.sch \
 	common/cascade.sch \
 	common/multiequal.sch \
+	common/netattrib-symbols/7400-custom.sym \
+	common/netattrib-symbols/gnd-custom.sym \
 	common/netattrib.sch \
 	common/powersupply.sch \
 	common/singlenet.sch
 
 XFAIL_TESTS = \
 	missing-source-geda.out \
+	common/netattrib-switcap.out \
 	common/SlottedOpamps-futurenet2.out \
 	common/SlottedOpamps-switcap.out
 
@@ -326,6 +329,7 @@ TESTS = stack_1-geda.out \
 	common/multiequal-verilog.out \
 	common/multiequal-vhdl.out \
 	common/multiequal-vipec.out \
+	common/netattrib-config_net_naming_priority_net.out \
 	common/netattrib-PCB.out \
 	common/netattrib-allegro.out \
 	common/netattrib-bae.out \
@@ -353,7 +357,6 @@ TESTS = stack_1-geda.out \
 	common/netattrib-redac.out \
 	common/netattrib-spice-sdb.out \
 	common/netattrib-spice.out \
-	common/netattrib-switcap.out \
 	common/netattrib-systemc.out \
 	common/netattrib-tango.out \
 	common/netattrib-vams.out \
