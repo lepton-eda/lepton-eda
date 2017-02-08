@@ -385,6 +385,11 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
     return NULL;
   }
 
+  /* If there's no window yet, defer geometry calculation until
+   * later. */
+  if (!GDK_IS_DRAWABLE (GTK_WIDGET (view)->window))
+    return NULL;
+
   geometry = geometry_cache_lookup (view, page);
 
   /* \todo The following line is deprecated in GDK 2.24 */
