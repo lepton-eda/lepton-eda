@@ -46,8 +46,6 @@ struct _GschemPageView
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
 
-  GHashTable *geometry_table;
-
   gboolean configured;
 
   gboolean doing_pan;  /* mouse pan status flag */
@@ -56,6 +54,8 @@ struct _GschemPageView
   int throttle;
 
   PAGE *page;
+  /*< private >*/
+  GHashTable *_geometry_cache;
 };
 
 

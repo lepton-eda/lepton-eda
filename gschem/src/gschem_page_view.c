@@ -86,9 +86,6 @@ static void
 hadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
 
 static void
-remove_page_weak_reference (PAGE *page, gpointer geometry, GschemPageView *view);
-
-static void
 page_deleted (PAGE *page, GschemPageView *view);
 
 static void
@@ -100,7 +97,15 @@ set_scroll_adjustments (GschemPageView *view, GtkAdjustment *hadjustment, GtkAdj
 static void
 vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
 
+static void geometry_cache_create (GschemPageView *view);
 
+static GschemPageGeometry *geometry_cache_lookup (const GschemPageView *view, const PAGE *page);
+
+static void geometry_cache_insert (GschemPageView *view, PAGE *page, GschemPageGeometry *geometry);
+
+static void geometry_cache_dispose (GschemPageView *view);
+
+static void geometry_cache_finalize (GschemPageView *view);
 
 static GObjectClass *gschem_page_view_parent_class = NULL;
 
@@ -162,14 +167,7 @@ dispose (GObject *object)
   gschem_page_view_set_hadjustment (view, NULL);
   gschem_page_view_set_vadjustment (view, NULL);
 
-  g_hash_table_foreach (view->geometry_table, (GHFunc)remove_page_weak_reference, view);
-  g_hash_table_remove_all (view->geometry_table);
-
-  /* We aren't bothering about invoking
-   *   gschem_page_view_set_page (view, NULL)
-   * directly here since the current page itself must use its weak
-   * reference to call cleanup closure (page_deleted) for this
-   * view */
+  geometry_cache_dispose (view);
 
   /* lastly, chain up to the parent dispose */
 
@@ -215,9 +213,8 @@ finalize (GObject *object)
   GschemPageView *view = GSCHEM_PAGE_VIEW (object);
 
   g_return_if_fail (view != NULL);
-  g_return_if_fail (view->geometry_table != NULL);
 
-  g_hash_table_destroy (view->geometry_table);
+  geometry_cache_finalize (view);
 
   /* lastly, chain up to the parent finalize */
 
@@ -386,7 +383,7 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
     return NULL;
   }
 
-  geometry = g_hash_table_lookup (view->geometry_table, page);
+  geometry = geometry_cache_lookup (view, page);
 
   /* \todo The following line is deprecated in GDK 2.24 */
   gdk_drawable_get_size (GTK_WIDGET (view)->window, &screen_width, &screen_height);
@@ -403,7 +400,7 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
                                                      view->page->toplevel->init_right,
                                                      view->page->toplevel->init_bottom);
 
-    g_hash_table_insert (view->geometry_table, page, geometry);
+    geometry_cache_insert (view, page, geometry);
 
     gschem_page_geometry_zoom_extents (geometry,
                                        view->page->toplevel,
@@ -617,10 +614,7 @@ gschem_page_view_init (GschemPageView *view)
   view->hadjustment = NULL;
   view->vadjustment = NULL;
 
-  view->geometry_table = g_hash_table_new_full (g_direct_hash,
-                                                g_direct_equal,
-                                                NULL,
-                                                (GDestroyNotify) gschem_page_geometry_free);
+  geometry_cache_create (view);
 
   view->page = NULL;
   view->configured = FALSE;
@@ -914,7 +908,6 @@ void
 gschem_page_view_set_page (GschemPageView *view, PAGE *page)
 {
   g_return_if_fail (view != NULL);
-  g_return_if_fail (view->geometry_table != NULL);
 
   if (page != view->page) {
 
@@ -1190,29 +1183,11 @@ gschem_page_view_WORLDabs(GschemPageView *page_view, int val)
  *
  */
 static void
-remove_page_weak_reference (PAGE *page, gpointer geometry, GschemPageView *view)
-{
-  typedef void (*NotifyFunction) (void*,void*);
-
-  g_return_if_fail (page != NULL);
-  g_return_if_fail (view != NULL);
-
-  s_page_weak_unref (page, (NotifyFunction) page_deleted, view);
-}
-
-
-
-/*! \brief
- *
- */
-static void
 page_deleted (PAGE *page, GschemPageView *view)
 {
   g_return_if_fail (page != NULL);
   g_return_if_fail (view != NULL);
-  g_return_if_fail (view->geometry_table != NULL);
 
-  g_hash_table_remove (view->geometry_table, page);
   gschem_page_view_set_page (view, NULL);
 }
 
@@ -1398,4 +1373,83 @@ gschem_page_view_redraw (GschemPageView *view, GdkEventExpose *event, GschemTopl
                    geometry,
                    &(event->area));
   }
+}
+
+static void
+geometry_cache_page_weak_ref_notify (gpointer target,
+                                     gpointer user_data)
+{
+  g_return_if_fail (target);
+  g_return_if_fail (user_data);
+  GschemPageView *view = GSCHEM_PAGE_VIEW (user_data);
+  if (!view->_geometry_cache)
+    return;
+  g_hash_table_remove (view->_geometry_cache, target);
+}
+
+static void
+geometry_cache_create (GschemPageView *view)
+{
+  g_return_if_fail (view && !view->_geometry_cache);
+
+  view->_geometry_cache =
+    g_hash_table_new_full (NULL, /* hash_func */
+                           NULL, /* equal_func */
+                           NULL, /* key_destroy_func */
+                           (GDestroyNotify) gschem_page_geometry_free);
+}
+
+static GschemPageGeometry *
+geometry_cache_lookup (const GschemPageView *view,
+                       const PAGE *page)
+{
+  g_return_val_if_fail (view && view->_geometry_cache, NULL);
+  g_return_val_if_fail (page, NULL);
+
+  return g_hash_table_lookup (view->_geometry_cache, page);
+}
+
+static void
+geometry_cache_insert (GschemPageView *view,
+                       PAGE *page,
+                       GschemPageGeometry *geometry)
+{
+  g_return_if_fail (view && view->_geometry_cache);
+  g_return_if_fail (page);
+  g_return_if_fail (geometry);
+  g_return_if_fail (!g_hash_table_contains (view->_geometry_cache, page));
+
+  s_page_weak_ref (page, geometry_cache_page_weak_ref_notify, view);
+  g_hash_table_insert (view->_geometry_cache, page, geometry);
+}
+
+static gboolean
+geometry_cache_dispose_func (gpointer key,
+                             gpointer value,
+                             gpointer user_data)
+{
+  s_page_weak_unref (key, geometry_cache_page_weak_ref_notify, user_data);
+  gschem_page_geometry_free (value);
+  return TRUE;
+}
+
+static void
+geometry_cache_dispose (GschemPageView *view)
+{
+  g_return_if_fail (view && view->_geometry_cache);
+  g_hash_table_foreach_steal (view->_geometry_cache,
+                              geometry_cache_dispose_func,
+                              view);
+}
+
+static void
+geometry_cache_finalize (GschemPageView *view)
+{
+  g_return_if_fail (view);
+  if (!view->_geometry_cache)
+    return;
+
+  geometry_cache_dispose (view);
+  g_hash_table_destroy (view->_geometry_cache);
+  view->_geometry_cache = NULL;
 }
