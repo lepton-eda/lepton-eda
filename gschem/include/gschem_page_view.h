@@ -53,8 +53,9 @@ struct _GschemPageView
   int pan_y;
   int throttle;
 
-  PAGE *page;
   /*< private >*/
+  PAGE *_page;
+
   GHashTable *_geometry_cache;
 };
 

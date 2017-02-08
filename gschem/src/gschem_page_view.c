@@ -86,9 +86,6 @@ static void
 hadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
 
 static void
-page_deleted (PAGE *page, GschemPageView *view);
-
-static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
 static void
@@ -163,6 +160,11 @@ dispose (GObject *object)
   g_return_if_fail (object != NULL);
   view = GSCHEM_PAGE_VIEW (object);
   g_return_if_fail (view != NULL);
+
+  if (view->_page) {
+    s_page_remove_weak_ptr (view->_page, &view->_page);
+    view->_page = NULL;
+  }
 
   gschem_page_view_set_hadjustment (view, NULL);
   gschem_page_view_set_vadjustment (view, NULL);
@@ -358,7 +360,7 @@ gschem_page_view_get_page (GschemPageView *view)
 {
   g_return_val_if_fail (view != NULL, NULL);
 
-  return view->page;
+  return view->_page;
 }
 
 
@@ -391,19 +393,19 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
   if (geometry == NULL) {
     geometry = gschem_page_geometry_new_with_values (screen_width,
                                                      screen_height,
-                                                     view->page->toplevel->init_left,
-                                                     view->page->toplevel->init_top,
-                                                     view->page->toplevel->init_right,
-                                                     view->page->toplevel->init_bottom,
-                                                     view->page->toplevel->init_left,
-                                                     view->page->toplevel->init_top,
-                                                     view->page->toplevel->init_right,
-                                                     view->page->toplevel->init_bottom);
+                                                     page->toplevel->init_left,
+                                                     page->toplevel->init_top,
+                                                     page->toplevel->init_right,
+                                                     page->toplevel->init_bottom,
+                                                     page->toplevel->init_left,
+                                                     page->toplevel->init_top,
+                                                     page->toplevel->init_right,
+                                                     page->toplevel->init_bottom);
 
     geometry_cache_insert (view, page, geometry);
 
     gschem_page_geometry_zoom_extents (geometry,
-                                       view->page->toplevel,
+                                       page->toplevel,
                                        s_page_objects (page));
   }
   else {
@@ -616,7 +618,7 @@ gschem_page_view_init (GschemPageView *view)
 
   geometry_cache_create (view);
 
-  view->page = NULL;
+  view->_page = NULL;
   view->configured = FALSE;
 
   view->doing_pan = FALSE;
@@ -661,10 +663,6 @@ gschem_page_view_new_with_page (PAGE *page)
   GschemPageView *view = GSCHEM_PAGE_VIEW (g_object_new (GSCHEM_TYPE_PAGE_VIEW,
                                                          "page", page,
                                                          NULL));
-  if (page) {
-    s_page_weak_ref (page, (NotifyFunction) page_deleted, view);
-  }
-
   return view;
 }
 
@@ -909,12 +907,16 @@ gschem_page_view_set_page (GschemPageView *view, PAGE *page)
 {
   g_return_if_fail (view != NULL);
 
-  if (page != view->page) {
+  if (page != view->_page) {
 
-    view->page = page;
+    if (view->_page) {
+      s_page_remove_weak_ptr (view->_page, &view->_page);
+      view->_page = NULL;
+    }
 
     if (page) {
-      s_page_weak_ref (page, (NotifyFunction) page_deleted, view);
+      view->_page = page;
+      s_page_add_weak_ptr (view->_page, &view->_page);
 
       g_return_if_fail (page->toplevel != NULL);
       s_page_goto (page->toplevel, page);
@@ -1175,20 +1177,6 @@ gschem_page_view_WORLDabs(GschemPageView *page_view, int val)
 #endif
 
   return(j);
-}
-
-
-
-/*! \brief
- *
- */
-static void
-page_deleted (PAGE *page, GschemPageView *view)
-{
-  g_return_if_fail (page != NULL);
-  g_return_if_fail (view != NULL);
-
-  gschem_page_view_set_page (view, NULL);
 }
 
 
