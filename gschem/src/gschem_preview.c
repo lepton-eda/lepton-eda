@@ -357,7 +357,10 @@ preview_init (GschemPreview *preview)
   preview->active   = FALSE;
   preview->filename = NULL;
   preview->buffer   = NULL;
-  GSCHEM_PAGE_VIEW (preview)->page = s_page_new (preview->preview_w_current->toplevel, "preview");
+
+  gschem_page_view_set_page (GSCHEM_PAGE_VIEW (preview),
+                             s_page_new (preview->preview_w_current->toplevel,
+                                         "preview"));
 
   gtk_widget_set_events (GTK_WIDGET (preview),
                          GDK_EXPOSURE_MASK |
