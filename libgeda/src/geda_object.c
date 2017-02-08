@@ -311,7 +311,7 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 
     o_attrib_detach_all (toplevel, o_current);
 
-    s_weakref_notify (o_current, o_current->weak_refs);
+    o_current->weak_refs = s_weakref_notify (o_current, o_current->weak_refs);
 
     g_free(o_current);	/* assuming it is not null */
 

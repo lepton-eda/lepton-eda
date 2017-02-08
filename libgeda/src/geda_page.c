@@ -243,7 +243,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 
   geda_list_remove( toplevel->pages, page );
 
-  s_weakref_notify (page, page->weak_refs);
+  page->weak_refs = s_weakref_notify (page, page->weak_refs);
 
   g_free (page);
 

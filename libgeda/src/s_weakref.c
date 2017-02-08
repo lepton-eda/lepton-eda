@@ -43,8 +43,9 @@ struct WeakRef
  *
  * \param [in] dead_ptr       Pointer to structure being destroyed.
  * \param [in,out] weak_refs  List of registered weak references.
+ * \return new head of \a weak_refs list.
  */
-void
+GList *
 s_weakref_notify (void *dead_ptr, GList *weak_refs)
 {
   GList *iter;
@@ -57,6 +58,7 @@ s_weakref_notify (void *dead_ptr, GList *weak_refs)
     g_free (entry);
   }
   g_list_free (weak_refs);
+  return NULL;
 }
 
 /*! \brief Add a weak reference watcher to a weak ref list.

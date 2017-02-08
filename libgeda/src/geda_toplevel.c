@@ -138,7 +138,7 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
   }
   g_list_free (toplevel->change_notify_funcs);
 
-  s_weakref_notify (toplevel, toplevel->weak_refs);
+  toplevel->weak_refs = s_weakref_notify (toplevel, toplevel->weak_refs);
 
   g_free (toplevel);
 

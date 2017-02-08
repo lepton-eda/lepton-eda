@@ -57,7 +57,7 @@ gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gbool
 gchar* s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp);
 
 /* s_weakref.c */
-void s_weakref_notify (void *dead_ptr, GList *weak_refs);
+GList *s_weakref_notify (void *dead_ptr, GList *weak_refs);
 GList *s_weakref_add (GList *weak_refs, void (*notify_func)(void *, void *), void *user_data);
 GList *s_weakref_remove (GList *weak_refs, void (*notify_func)(void *, void *), void *user_data);
 GList *s_weakref_add_ptr (GList *weak_refs, void **weak_pointer_loc);
