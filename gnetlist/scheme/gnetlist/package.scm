@@ -1,4 +1,5 @@
 (define-module (gnetlist package)
+  #:use-module (ice-9 match)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
   #:export (make-package package?
@@ -12,7 +13,8 @@
             package-pins set-package-pins!
             package-attributes
             package-attribute
-            package-graphical?))
+            package-graphical?
+            set-package-printer!))
 
 (define-record-type <package>
   (make-package id refdes tag composite object iattribs attribs pins)
@@ -26,9 +28,44 @@
   (attribs package-attribs set-package-attribs!)
   (pins package-pins set-package-pins!))
 
+;;; Sets default printer for <package>
 (set-record-type-printer!
  <package>
  (lambda (record port) (format port "#<geda-package ~A>" (package-id record))))
+
+(define (set-package-printer! format-string . args)
+  "Adjust pretty-printing of <package> records.
+FORMAT-STRING must be in the form required by the procedure
+`format'. The following ARGS may be used:
+  'id
+  'refdes
+  'tag
+  'composite
+  'object
+  'iattribs
+  'attribs
+  'pins
+Any other unrecognized argument will lead to yielding '?' in the
+corresponding place.
+Example usage:
+  (set-package-printer! \"<package-~A (~A)>\" 'id 'refdes)"
+  (set-record-type-printer!
+   <package>
+   (lambda (record port)
+     (apply format port format-string
+            (map
+             (lambda (arg)
+               (match arg
+                 ('id (package-id record))
+                 ('refdes (package-refdes record))
+                 ('tag (package-tag record))
+                 ('composite (package-composite? record))
+                 ('object (package-object record))
+                 ('iattribs (package-iattribs record))
+                 ('attribs (package-attribs record))
+                 ('pins (package-pins record))
+                 (_ #\?)))
+             args)))))
 
 
 (define (package-attributes package name)
