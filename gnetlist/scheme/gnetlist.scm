@@ -719,9 +719,9 @@ other limitations imposed by this netlist format.
   (define (have-attrib? attribs attrib)
     (let* ((name-value (parse-attrib-string attrib))
            (name (string->symbol (car name-value)))
-           (value (cdr name-value)))
-      (member value
-              (assq-ref attribs name))))
+           (value (cdr name-value))
+           (attrib-values (assq-ref attribs name)))
+      (and attrib-values (member value attrib-values))))
 
   (let ((out-attrib (string->symbol out-attrib-name)))
     (and netname
