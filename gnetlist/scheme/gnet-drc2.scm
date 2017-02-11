@@ -141,6 +141,7 @@
 
 (use-modules (srfi srfi-1)
              (srfi srfi-26)
+             (geda object)
              (gnetlist schematic))
 
 (or (defined? 'define-syntax)
@@ -294,14 +295,18 @@
 ; SYMBOLS checking functions
 ;
 
-;;
-;; Check for symbols not numbered.
-;;
-;; example of packages: (U100 U101 U102)
+;;; Check for not numbered symbols.
 (define (drc2:check-non-numbered-items packages)
   (define (non-numbered? package)
-    (and (string-index package #\?)
-         (drc2:error "Reference not numbered: ~A" package)))
+    (let ((refdes (package-refdes package)))
+      (and refdes
+           (string-index refdes #\?)
+           (let ((object (package-object package)))
+             (drc2:error "Not numbered refdes: ~A (~A at ~A on page ~S)."
+                         refdes
+                         (component-basename object)
+                         (component-position object)
+                         (basename (page-filename (object-page object))))))))
 
   (display "Checking non-numbered parts...\n")
   (for-each non-numbered? packages)
@@ -748,7 +753,8 @@
 (define (drc2 output-filename)
   (let ((nets (schematic-nets toplevel-schematic))
         (non-unique-packages (schematic-non-unique-packages toplevel-schematic))
-        (packages (schematic-packages toplevel-schematic)))
+        (packages (schematic-packages toplevel-schematic))
+        (netlist (schematic-netlist toplevel-schematic)))
 
     ;; Perform DRC-matrix sanity checks.
     ;; See if all elements of the matrix are valid.
@@ -758,7 +764,7 @@
 
     ;; Check non-numbered symbols
     (not-defined? 'dont-check-non-numbered-parts
-                  => (drc2:check-non-numbered-items packages))
+                  => (drc2:check-non-numbered-items netlist))
 
     ;; Check for duplicated references
     (not-defined? 'dont-check-duplicated-references

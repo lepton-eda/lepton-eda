@@ -1,5 +1,5 @@
 Checking non-numbered parts...
-ERROR: Reference not numbered: R?
+ERROR: Not numbered refdes: R? (resistor-2.sym at (49200 . 45300) on page "refdes-not-numbered.sch").
 
 Checking duplicated references...
 
