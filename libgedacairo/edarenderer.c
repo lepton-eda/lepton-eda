@@ -27,7 +27,7 @@
 #include <pango/pangocairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include <libgeda/libgeda.h>
+#include <liblepton/liblepton.h>
 
 #include "edarenderer.h"
 

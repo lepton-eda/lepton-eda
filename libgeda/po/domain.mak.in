@@ -1,3 +1,0 @@
-#                                                       -*-GNUmakefile-*-
-# This is a workaround for buggy logic in the gettext m4 files.
-DOMAIN = @LIBGEDA_GETTEXT_DOMAIN@

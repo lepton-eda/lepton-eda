@@ -22,7 +22,7 @@
 #include <cairo.h>
 #include <math.h>
 
-#include <libgeda/libgeda.h>
+#include <liblepton/liblepton.h>
 #include "edacairo.h"
 
 /* We don't use gettext */

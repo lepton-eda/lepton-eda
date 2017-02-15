@@ -37,8 +37,8 @@
 #endif
 
 
-#include <libgeda/libgeda.h>
-#include <libgeda/libgedaguile.h>
+#include <liblepton/liblepton.h>
+#include <liblepton/libgedaguile.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"

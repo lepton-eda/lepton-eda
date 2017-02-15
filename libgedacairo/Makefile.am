@@ -19,7 +19,7 @@ EXTRA_DIST = README ChangeLog
 
 AM_CPPFLAGS = \
 	-DLOCALEDIR=\"$(localedir)\" -DG_LOG_DOMAIN=\"libgedacairo\" \
-	-I$(top_srcdir)/libgeda/include -I$(top_srcdir)
+	-I$(top_srcdir)/liblepton/include -I$(top_srcdir)
 AM_CFLAGS = \
 	$(GCC_CFLAGS) $(MINGW_CFLAGS) $(GUILE_CFLAGS) $(GLIB_CFLAGS) \
 	$(GDK_CFLAGS) $(CAIRO_CFLAGS) $(PANGO_CFLAGS) $(GDK_PIXBUF_CFLAGS)

@@ -2,8 +2,8 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <libguile.h>
-#include <libgeda/libgeda.h>
-#include <libgeda/libgedaguile.h>
+#include <liblepton/liblepton.h>
+#include <liblepton/libgedaguile.h>
 #include <libgedacairo/libgedacairo.h>
 
 /* forward declaration, until everyone stops referencing it */

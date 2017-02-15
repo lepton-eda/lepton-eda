@@ -20,7 +20,7 @@
 #ifndef __LIBGEDACAIRO_H__
 #define __LIBGEDACAIRO_H__
 
-#include <libgeda/libgeda.h>
+#include <liblepton/liblepton.h>
 #include <cairo.h>
 #include <pango/pangocairo.h>
 

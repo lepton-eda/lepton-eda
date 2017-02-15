@@ -20,7 +20,7 @@
 
 #include <config.h>
 
-#include <libgeda/libgeda.h>
+#include <liblepton/liblepton.h>
 
 /*! \brief Setup gnetlist default configuration.
  * \par Function Description

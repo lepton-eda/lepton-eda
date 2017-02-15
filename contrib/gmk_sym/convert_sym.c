@@ -44,7 +44,7 @@
 #include <math.h>
 
 #include <config.h>
-#include <libgeda/libgeda.h>
+#include <liblepton/liblepton.h>
 
 /*
  * make it so we can use __attribute__((unused)) on gcc without

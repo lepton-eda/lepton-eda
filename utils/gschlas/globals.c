@@ -28,7 +28,7 @@
 
 #include <stdio.h>
 
-#include <libgeda/libgeda.h>
+#include <liblepton/liblepton.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"

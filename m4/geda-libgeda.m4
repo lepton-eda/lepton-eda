@@ -19,21 +19,21 @@ dnl along with this program; if not, write to the Free Software
 dnl Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 # Work out the gettext domain that libgeda should use
-AC_DEFUN([AX_LIBGEDA],
+AC_DEFUN([AX_LIBLEPTON],
 [
   AC_PREREQ([2.60])dnl
 
   # First argument is the shared library version to use.
   AC_MSG_CHECKING([libgeda shared library version])
   AC_MSG_RESULT($1)
-  AC_SUBST([LIBGEDA_SHLIB_VERSION], $1)
+  AC_SUBST([LIBLEPTON_SHLIB_VERSION], $1)
 
   # Work out the gettext domain to use
   AC_MSG_CHECKING([libgeda gettext domain])
-  so_major=`echo $LIBGEDA_SHLIB_VERSION | sed -e "s/:.*//"`
-  LIBGEDA_GETTEXT_DOMAIN="libgeda$so_major"
-  AC_MSG_RESULT([$LIBGEDA_GETTEXT_DOMAIN])
-  AC_SUBST([LIBGEDA_GETTEXT_DOMAIN])
-  AC_DEFINE_UNQUOTED([LIBGEDA_GETTEXT_DOMAIN], ["$LIBGEDA_GETTEXT_DOMAIN"],
+  so_major=`echo $LIBLEPTON_SHLIB_VERSION | sed -e "s/:.*//"`
+  LIBLEPTON_GETTEXT_DOMAIN="libgeda$so_major"
+  AC_MSG_RESULT([$LIBLEPTON_GETTEXT_DOMAIN])
+  AC_SUBST([LIBLEPTON_GETTEXT_DOMAIN])
+  AC_DEFINE_UNQUOTED([LIBLEPTON_GETTEXT_DOMAIN], ["$LIBLEPTON_GETTEXT_DOMAIN"],
     "Name of libgeda's gettext domain.")
 ])

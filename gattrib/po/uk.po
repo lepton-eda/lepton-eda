@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
-"Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2016-12-08 11:55+0300\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2017-02-15 15:36+0300\n"
 "PO-Revision-Date: 2012-01-27 14:17+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -112,21 +112,21 @@ msgstr ""
 msgid " DONE\n"
 msgstr ""
 
-#: gattrib/src/s_object.c:218
+#: gattrib/src/s_object.c:217
 #, c-format
 msgid ""
 "In s_object_replace_attrib_in_object, we have failed to find the attrib %s "
 "on the component.  Exiting . . .\n"
 msgstr ""
 
-#: gattrib/src/s_object.c:277
+#: gattrib/src/s_object.c:276
 #, c-format
 msgid ""
 "In s_object_remove_attrib_in_object, we have failed to find the attrib %s on "
 "the component.  Exiting . . .\n"
 msgstr ""
 
-#: gattrib/src/s_object.c:330
+#: gattrib/src/s_object.c:329
 #, c-format
 msgid ""
 "In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex "
@@ -380,7 +380,7 @@ msgstr ""
 msgid "Saved As [%s]\n"
 msgstr ""
 
-#: gattrib/src/x_fileselect.c:315
+#: gattrib/src/x_fileselect.c:314
 #, c-format
 msgid "Could NOT save [%s]\n"
 msgstr ""

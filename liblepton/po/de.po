@@ -1,0 +1,1212 @@
+# translation of de.po to deutsch
+# German translation for libgeda
+# Copyright (C) 2008 Werner Hoch
+# This file is distributed under the same license as the libgeda package.
+#
+# Werner Hoch <werner.ho@gmx.de>, 2008, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: geda\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2017-02-15 15:35+0300\n"
+"PO-Revision-Date: 2010-01-31 13:00+0000\n"
+"Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
+"Language-Team: gEDA developers <geda-dev@seul.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: liblepton/data/liblepton.xml.in:3
+msgid "gEDA circuit schematic"
+msgstr "gEDA Schaltplan"
+
+#: liblepton/data/liblepton.xml.in:4
+msgid "gEDA schematic symbol"
+msgstr "gEDA Schaltplansymbol"
+
+#: liblepton/data/liblepton.xml.in:5
+msgid "gEDA gsch2pcb project"
+msgstr "gEDA gsch2pcb Projekt"
+
+#: liblepton/data/x-geda-gsch2pcb-project.desktop.in:3
+msgid "gEDA Gsch2pcb Project"
+msgstr "gEDA Gsch2pcb Projekt"
+
+#: liblepton/data/x-geda-schematic.desktop.in:3
+msgid "gEDA Circuit Schematic"
+msgstr "gEDA Schaltplan"
+
+#: liblepton/data/x-geda-symbol.desktop.in:3
+msgid "gEDA Schematic Symbol"
+msgstr "gEDA Schaltplansymbol"
+
+#: liblepton/src/a_basic.c:57 liblepton/src/f_basic.c:371
+#, c-format
+msgid "File %s is read-only"
+msgstr ""
+
+#: liblepton/src/a_basic.c:114
+msgid "Schematic data was not valid UTF-8"
+msgstr ""
+
+#: liblepton/src/a_basic.c:246
+#, fuzzy, c-format
+msgid ""
+"Read unexpected attach symbol start marker in [%s] :\n"
+">>\n"
+"%s<<\n"
+msgstr ""
+"Fehlerhafte Startmarkierung bei eingebetteten Symbol gefunden [%s]:\n"
+">>\n"
+"%s<<\n"
+
+#: liblepton/src/a_basic.c:263
+#, c-format
+msgid ""
+"Read unexpected embedded symbol start marker in [%s] :\n"
+">>\n"
+"%s<<\n"
+msgstr ""
+"Fehlerhafte Startmarkierung bei eingebetteten Symbol gefunden [%s]:\n"
+">>\n"
+"%s<<\n"
+
+#: liblepton/src/a_basic.c:294
+#, c-format
+msgid ""
+"Read unexpected embedded symbol end marker in [%s] :\n"
+">>\n"
+"%s<<\n"
+msgstr ""
+"Fehlerhafte Endmarkierung bei eingebetteten Symbol gefunden [%s]:\n"
+">>\n"
+"%s<<\n"
+
+#: liblepton/src/a_basic.c:329
+#, c-format
+msgid ""
+"Read an old format sym/sch file!\n"
+"Please run g[sym|sch]update on:\n"
+"[%s]\n"
+msgstr ""
+"Die eingelesene sch/sym Datei hat ein altes Dateiformat!\n"
+"Bitte aktualisiere die Datei mit g[sym|sch]update:\n"
+"[%s]\n"
+
+#: liblepton/src/a_basic.c:335
+#, c-format
+msgid ""
+"Read garbage in [%s] :\n"
+">>\n"
+"%s<<\n"
+msgstr ""
+"Fehlerhafte Daten in [%s]:\n"
+">>\n"
+"%s<<\n"
+
+#: liblepton/src/f_basic.c:119 liblepton/src/f_basic.c:132
+#, c-format
+msgid "Failed to stat [%s]: %s"
+msgstr "Konnte Dateiinformation nicht ermitteln [%s]: %s"
+
+#: liblepton/src/f_basic.c:211
+#, c-format
+msgid "Cannot find file %s: %s"
+msgstr "Konnte Datei nicht finden %s: %s"
+
+#: liblepton/src/f_basic.c:257
+#, c-format
+msgid ""
+"\n"
+"WARNING: Found an autosave backup file:\n"
+"  %s.\n"
+"\n"
+msgstr ""
+"\n"
+"ACHTUNG: Es wurde eine automatisch gesicherte Backupdatei gefunden:\n"
+"  %s.\n"
+"\n"
+
+#: liblepton/src/f_basic.c:259
+msgid "I could not guess if it is newer, so you have to do it manually.\n"
+msgstr ""
+"Konnte nicht feststellen ob die Backupdatei neuer ist oder nicht. Dies muss "
+"nun manuell durchgeführt werden.\n"
+
+#: liblepton/src/f_basic.c:261
+msgid ""
+"The backup copy is newer than the schematic, so it seems you should load it "
+"instead of the original file.\n"
+msgstr ""
+"Die Backupdatei ist neuer als die des Schaltplanes. Es sollte eventuell das "
+"Backup anstatt der originalen Datei geladen werden.\n"
+
+#: liblepton/src/f_basic.c:263
+msgid ""
+"Gschem usually makes backup copies automatically, and this situation happens "
+"when it crashed or it was forced to exit abruptly.\n"
+msgstr ""
+"Gschem erstellt automatisch Backupdateien. Stürzt gschem ab oder wird es "
+"absichtlich getötet, so ergibt sich diese Situation.\n"
+
+#: liblepton/src/f_basic.c:266
+msgid ""
+"\n"
+"Run gschem and correct the situation.\n"
+"\n"
+msgstr ""
+"\n"
+"Starte gschem und korrigiere diesen Zustand.\n"
+"\n"
+
+#: liblepton/src/f_basic.c:361
+#, fuzzy, c-format
+msgid "Can't get the real filename of %s: %s"
+msgstr "Konnte den wahren Dateinamen von %s nicht ermitteln."
+
+#: liblepton/src/f_basic.c:392
+#, c-format
+msgid "Could NOT set previous backup file [%s] read-write\n"
+msgstr ""
+"Konnte die Rechte der alten Backupdatei [%s] nicht auf lesen+schreiben "
+"setzen\n"
+
+#: liblepton/src/f_basic.c:398
+#, c-format
+msgid "Can't save backup file: %s."
+msgstr "Konnte Backupdatei nicht speichern: %s."
+
+#: liblepton/src/f_basic.c:408
+#, c-format
+msgid "Could NOT set backup file [%s] readonly\n"
+msgstr "Konnte die Rechte der Backupdatei [%s] nicht auf nurlesend setzen\n"
+
+#: liblepton/src/f_basic.c:457
+#, fuzzy, c-format
+msgid "Failed to restore permissions on '%s': %s\n"
+msgstr "Fehler beim Öffnen eines Verzeichnisses [%s]: %s\n"
+
+#: liblepton/src/f_basic.c:462
+#, fuzzy, c-format
+msgid "Failed to restore ownership on '%s': %s\n"
+msgstr "Fehler beim Öffnen eines Verzeichnisses [%s]: %s\n"
+
+#: liblepton/src/f_basic.c:472
+#, fuzzy, c-format
+msgid "Could NOT save file: %s"
+msgstr "ACHTUNG: Konnte Datei nicht speichern [%s]\n"
+
+#: liblepton/src/f_basic.c:598
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#: liblepton/src/g_basic.c:260
+msgid ""
+"\n"
+"Backtrace:\n"
+msgstr ""
+
+#: liblepton/src/g_rc.c:99
+#, c-format
+msgid "Invalid mode [%s] passed to %s\n"
+msgstr ""
+
+#: liblepton/src/g_rc.c:139
+#, fuzzy
+msgid "RC file already loaded"
+msgstr "Konfigurationsdatei [%s] wurde bereits gelesen.\n"
+
+#: liblepton/src/g_rc.c:183
+#, fuzzy, c-format
+msgid "Failed to load config from '%s': %s\n"
+msgstr "Das Bild konnte nicht aus der Datei [%s] geladen werden: %s\n"
+
+#: liblepton/src/g_rc.c:207
+#, fuzzy, c-format
+msgid "Loaded RC file [%s]\n"
+msgstr "Lese vorgegebene %s Datei [%%s]\n"
+
+#: liblepton/src/g_rc.c:211
+#, fuzzy, c-format
+msgid "Failed to load RC file [%s]: "
+msgstr "Das Bild konnte nicht aus der Datei [%s] geladen werden: %s\n"
+
+#: liblepton/src/g_rc.c:341
+msgid "ERROR: An unknown error occurred while parsing configuration files."
+msgstr ""
+
+#: liblepton/src/g_rc.c:353 liblepton/src/g_rc.c:354
+#, c-format
+msgid "ERROR: %s\n"
+msgstr ""
+
+#: liblepton/src/g_rc.c:360
+#, c-format
+msgid "ERROR: The %s log may contain more information.\n"
+msgstr ""
+
+#: liblepton/src/g_rc.c:481
+#, fuzzy, c-format
+msgid "Invalid path [%s] passed to component-library\n"
+msgstr ""
+"Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
+
+#: liblepton/src/g_rc.c:707
+#, c-format
+msgid "Invalid path [%s] passed to bitmap-directory\n"
+msgstr ""
+
+#: liblepton/src/g_rc.c:826
+msgid ""
+"WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
+"list of strings instead\n"
+msgstr ""
+"ACHTUNG: Die Verwendung eines Strings als Variablenwert von 'always-promote-"
+"attributes' ist veraltet. Es sollte statdessen eine Liste von Strings "
+"verwendet werden.\n"
+
+#: liblepton/src/geda_page.c:197
+#, c-format
+msgid "s_page_delete: Can't get the real filename of %s."
+msgstr ""
+"s_page_delete: Kann den tatsächlichen Dateinamen von [%s] nicht ermitteln."
+
+#: liblepton/src/geda_page.c:208
+#, c-format
+msgid "s_page_delete: Unable to delete backup file %s."
+msgstr "s_page_delete: Kann die Backupdatei [%s] nicht löschen."
+
+#: liblepton/src/geda_page.c:486
+#, c-format
+msgid "Saved [%s]\n"
+msgstr "Gespeichert [%s]\n"
+
+#: liblepton/src/geda_page.c:492
+#, c-format
+msgid "Could NOT save [%s]\n"
+msgstr "ACHTUNG: Konnte Datei nicht speichern [%s]\n"
+
+#: liblepton/src/geda_arc_object.c:408 liblepton/src/geda_arc_object.c:421
+msgid "Failed to parse arc object"
+msgstr ""
+
+#: liblepton/src/geda_arc_object.c:428
+#, c-format
+msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
+msgstr "Kreisbogen mit Radius 0 entdeckt [%c %d, %d, %d, %d, %d, %d ]\n"
+
+#: liblepton/src/geda_arc_object.c:434 liblepton/src/geda_box_object.c:327
+#: liblepton/src/geda_bus_object.c:363 liblepton/src/geda_circle_object.c:386
+#: liblepton/src/geda_line_object.c:426 liblepton/src/geda_net_object.c:307
+#: liblepton/src/geda_path_object.c:214 liblepton/src/geda_pin_object.c:369
+#: liblepton/src/geda_text_object.c:553
+#, c-format
+msgid "Found an invalid color [ %s ]\n"
+msgstr "Fehlerhafte Farbangabe entdeckt [%s]\n"
+
+#: liblepton/src/geda_arc_object.c:435 liblepton/src/geda_box_object.c:328
+#: liblepton/src/geda_bus_object.c:364 liblepton/src/geda_circle_object.c:387
+#: liblepton/src/geda_line_object.c:427 liblepton/src/geda_net_object.c:308
+#: liblepton/src/geda_path_object.c:215 liblepton/src/geda_pin_object.c:370
+#: liblepton/src/geda_text_object.c:555
+msgid "Setting color to default color\n"
+msgstr "Verwende die Default Farbe\n"
+
+#: liblepton/src/o_attrib.c:111
+#, c-format
+msgid "Attribute [%s] already attached\n"
+msgstr ""
+
+#: liblepton/src/o_attrib.c:117
+msgid "Attempt to attach non text item as an attribute!\n"
+msgstr "Es wurde versucht eine Attribut anzubringen, welches kein Text ist!\n"
+
+#: liblepton/src/o_attrib.c:122
+#, c-format
+msgid "Attempt to attach attribute [%s] to more than one object\n"
+msgstr ""
+"Es wurde versucht ein Attribute [%s] an mehr als ein Objekt anzubringen\n"
+
+#: liblepton/src/o_attrib.c:325
+#, fuzzy
+msgid "Tried to attach a non-text item as an attribute"
+msgstr "Es wurde versucht eine Attribut anzubringen, welches kein Text ist!\n"
+
+#: liblepton/src/o_attrib.c:332
+msgid "Unexpected end-of-file in attribute list"
+msgstr ""
+
+#: liblepton/src/geda_box_object.c:287 liblepton/src/geda_box_object.c:316
+msgid "Failed to parse box object"
+msgstr ""
+
+#: liblepton/src/geda_box_object.c:322
+#, c-format
+msgid "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
+msgstr "Rechteck mit der Kantenlänge 0 entdeckt [ %c %d %d %d %d %d ]\n"
+
+#: liblepton/src/geda_bus_object.c:345 liblepton/src/geda_bus_object.c:352
+msgid "Failed to parse bus object"
+msgstr ""
+
+#: liblepton/src/geda_bus_object.c:358
+#, c-format
+msgid "Found a zero length bus [ %c %d %d %d %d %d ]\n"
+msgstr "Bus mit der Länge 0 entdeckt [ %c %d %d %d %d %d ]\n"
+
+#: liblepton/src/geda_bus_object.c:369
+#, c-format
+msgid "Found an invalid bus ripper direction [ %s ]\n"
+msgstr "Fehlerhafte Richtungsangabe [%s] bei einem Busanschluss entdeckt\n"
+
+#: liblepton/src/geda_bus_object.c:370
+msgid "Resetting direction to neutral (no direction)\n"
+msgstr "Setze die Richtung auf neutral (keine Richtung)\n"
+
+#: liblepton/src/geda_circle_object.c:343
+#: liblepton/src/geda_circle_object.c:372
+msgid "Failed to parse circle object"
+msgstr ""
+
+#: liblepton/src/geda_circle_object.c:379
+#, fuzzy, c-format
+msgid "Found a zero or negative radius circle [ %c %d %d %d %d ]\n"
+msgstr "Kreis mit dem Radius 0 entdeckt [ %c %d %d %d %d ]\n"
+
+#: liblepton/src/geda_circle_object.c:381
+#, fuzzy
+msgid "Setting radius to 0\n"
+msgstr "Setze die Winkelangabe auf 0\n"
+
+#: liblepton/src/geda_color.c:217
+msgid "Color map entry must be a two-element list"
+msgstr "Der Eintrag in der Farbtabelle muss eine zweielementige Liste sein"
+
+#: liblepton/src/geda_color.c:225
+msgid "Index in color map entry must be an integer"
+msgstr "Der Indexeintrag in der Farbtabelle muss ein Integerwert sein"
+
+#: liblepton/src/geda_color.c:251
+msgid "Value in color map entry must be #f or a string"
+msgstr "Der Wert in der Farbtabelle muss '#f' oder ein String sein."
+
+#: liblepton/src/geda_complex_object.c:367
+#, c-format
+msgid ""
+"Component not found:\n"
+" %s"
+msgstr ""
+"Bauteil wurde nicht gefunden:\n"
+" %s"
+
+#: liblepton/src/geda_complex_object.c:579
+msgid "Failed to parse complex object"
+msgstr ""
+
+#: liblepton/src/geda_complex_object.c:592
+#, c-format
+msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
+msgstr ""
+"Bauteil mit fehlerhafter Rotationsangabe entdeckt [ %c %d %d %d %d %d %s ]\n"
+
+#: liblepton/src/geda_complex_object.c:593
+#: liblepton/src/geda_picture_object.c:104
+msgid "Setting angle to 0\n"
+msgstr "Setze die Winkelangabe auf 0\n"
+
+#: liblepton/src/geda_complex_object.c:605
+#, c-format
+msgid ""
+"Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
+msgstr ""
+"Bauteil mit fehlerhafter Spiegelungsangabe entdeckt [ %c %d %d %d %d %d "
+"%s ]\n"
+
+#: liblepton/src/geda_complex_object.c:606
+#, fuzzy
+msgid "Setting mirror to 0\n"
+msgstr "Setze die Spiegelung auf 0\n"
+
+#: liblepton/src/geda_complex_object.c:929
+#, c-format
+msgid ""
+"WARNING: Symbol version parse error on refdes %s:\n"
+"\tCould not parse symbol file symversion=%s\n"
+msgstr ""
+"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz "
+"'%s':\n"
+"\tKonnte das Attribut symversion=%s nicht zerlegen\n"
+
+#: liblepton/src/geda_complex_object.c:933
+#, c-format
+msgid ""
+"WARNING: Symbol version parse error on refdes %s:\n"
+"\tCould not parse symbol file symversion=\n"
+msgstr ""
+"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz "
+"'%s':\n"
+"\tKonnte das Attribut symversion= nicht zerlegen\n"
+
+#: liblepton/src/geda_complex_object.c:949
+#, c-format
+msgid ""
+"WARNING: Symbol version parse error on refdes %s:\n"
+"\tCould not parse attached symversion=%s\n"
+msgstr ""
+"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz "
+"'%s':\n"
+"\tKonnte das angehängte Attribut symversion=%s nicht zerlegen\n"
+
+#: liblepton/src/geda_complex_object.c:974
+#, c-format
+msgid ""
+"WARNING: Symbol version oddity on refdes %s:\n"
+"\tsymversion=%s attached to instantiated symbol, but no symversion= inside "
+"symbol file\n"
+msgstr ""
+"ACHTUNG: Seltsame Konstellation der Version des Symbols mit der Referenz "
+"'%s':\n"
+"\tsymversion=%s existiert bei dem Symbol im Schaltplan, fehlt aber innerhalb "
+"der Schaltsymbol-Datei\n"
+
+#: liblepton/src/geda_complex_object.c:988
+#, c-format
+msgid ""
+"WARNING: Symbol version mismatch on refdes %s (%s):\n"
+"\tSymbol in library is newer than instantiated symbol\n"
+msgstr ""
+"Achtung: Die Version des Symbols mit der Referenz %s stimmt nicht überein "
+"(%s):\n"
+"\tDas Symbol in der Bibliothek ist neuer als das Symbol im Schaltplan\n"
+
+#: liblepton/src/geda_complex_object.c:1016
+#, c-format
+msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
+msgstr ""
+"\tGROSSE VERSIONSÄNDERUNG (Symboldatei %.3f, Symbol im Schaltplan %.3f, "
+"%s)!\n"
+
+#: liblepton/src/geda_complex_object.c:1034
+#, c-format
+msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
+msgstr ""
+"\tKleine Versionsänderung (Symboldatei %.3f, Symbol im Schaltplan %.3f)!\n"
+
+#: liblepton/src/geda_complex_object.c:1045
+#, c-format
+msgid ""
+"WARNING: Symbol version oddity on refdes %s:\n"
+"\tInstantiated symbol is newer than symbol in library\n"
+msgstr ""
+"ACHTUNG: Seltsame Versionskonstellation bei dem Symbol mit der Referenz %s:\n"
+"\tDie Symbolversion im Schaltplan ist aktueller als in der Symbolbibliothek\n"
+
+#: liblepton/src/o_embed.c:54
+#, c-format
+msgid "Component [%s] has been embedded\n"
+msgstr "Bauteil [%s] wurde eingebettet\n"
+
+#: liblepton/src/o_embed.c:98
+#, c-format
+msgid ""
+"Could not find component [%s], while trying to unembed. Component is still "
+"embedded\n"
+msgstr ""
+"Konnte Symbol [%s] nicht finden um es auszubetten. Das Bauteil bleibt "
+"eingebettet\n"
+
+#: liblepton/src/o_embed.c:106
+#, c-format
+msgid "Component [%s] has been successfully unembedded\n"
+msgstr "Das Bauteil [%s] wurde erfolgreich ausgebettet\n"
+
+#: liblepton/src/geda_line_object.c:391 liblepton/src/geda_line_object.c:409
+msgid "Failed to parse line object"
+msgstr ""
+
+#: liblepton/src/geda_line_object.c:421
+#, c-format
+msgid "Found a zero length line [ %c %d %d %d %d %d ]\n"
+msgstr "Linie mit der Länge 0 entdeckt [ %c %d %d %d %d %d ]\n"
+
+#: liblepton/src/geda_net_object.c:297
+msgid "Failed to parse net object"
+msgstr ""
+
+#: liblepton/src/geda_net_object.c:302
+#, c-format
+msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
+msgstr "Netz mit der Länge 0 entdeckt [ %c %d %d %d %d %d ]\n"
+
+#: liblepton/src/geda_path_object.c:206
+msgid "Failed to parse path object"
+msgstr ""
+
+#: liblepton/src/geda_path_object.c:232
+msgid "Unexpected end-of-file when reading path"
+msgstr ""
+
+#: liblepton/src/geda_picture_object.c:71
+msgid "Failed to parse picture definition"
+msgstr ""
+
+#: liblepton/src/geda_picture_object.c:76
+#, c-format
+msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
+msgstr "Bild mit der Seitenlänge 0 entdeckt [ %c %d %d %d %d ]\n"
+
+#: liblepton/src/geda_picture_object.c:81
+#, fuzzy, c-format
+msgid "Found a picture with a wrong 'mirrored' parameter: %d.\n"
+msgstr "Bild mit fehlerhaften Spiegelungsparametern entdeckt: %c.\n"
+
+#: liblepton/src/geda_picture_object.c:83
+msgid "Setting mirrored to 0\n"
+msgstr "Setze die Spiegelung auf 0\n"
+
+#: liblepton/src/geda_picture_object.c:88
+#, fuzzy, c-format
+msgid "Found a picture with a wrong 'embedded' parameter: %d.\n"
+msgstr "Bild mit fehlerhaften Einbettungsparametern entdeckt. %c.\n"
+
+#: liblepton/src/geda_picture_object.c:90
+msgid "Setting embedded to 0\n"
+msgstr "Setze die Einbettung auf 0\n"
+
+#: liblepton/src/geda_picture_object.c:103
+#, c-format
+msgid "Found an unsupported picture angle [ %d ]\n"
+msgstr "Bild mit fehlerhafter Winkelangabe entdeckt [%d]\n"
+
+#: liblepton/src/geda_picture_object.c:115
+msgid "Found an image with no filename."
+msgstr ""
+
+#: liblepton/src/geda_picture_object.c:146
+#, c-format
+msgid "Failed to load image from embedded data [%s]: %s\n"
+msgstr "Fehler beim Laden der Daten eines eingebetteten Bildes [%s]: %s\n"
+
+#: liblepton/src/geda_picture_object.c:147
+msgid "Base64 decoding failed."
+msgstr "Base64 Dekodierung fehlgeschlagen."
+
+#: liblepton/src/geda_picture_object.c:148
+msgid "Falling back to file loading. Picture unembedded.\n"
+msgstr "Lade das Bild aus der Datei. Das Bild ist ausgebettet.\n"
+
+#: liblepton/src/geda_picture_object.c:207
+msgid "ERROR: o_picture_save: unable to encode the picture.\n"
+msgstr "FEHLER: o_picture_save: Kann das Bild nicht kodieren.\n"
+
+#: liblepton/src/geda_picture_object.c:307
+#, fuzzy, c-format
+msgid "Failed to load buffer image [%s]: %s\n"
+msgstr "Fehler beim Laden eines Symbols aus der Datei [%s]: %s\n"
+
+#: liblepton/src/geda_picture_object.c:320
+#, fuzzy, c-format
+msgid "Failed to load image from [%s]: %s\n"
+msgstr "Das Bild konnte nicht aus der Datei [%s] geladen werden: %s\n"
+
+#: liblepton/src/geda_picture_object.c:414
+#, c-format
+msgid "Picture %p has invalid angle %i\n"
+msgstr ""
+
+#: liblepton/src/geda_picture_object.c:771
+#, fuzzy, c-format
+msgid "Picture [%s] has no image data.\n"
+msgstr "Das Bild [%s] wurde eingebettet\n"
+
+#: liblepton/src/geda_picture_object.c:772
+#, fuzzy
+msgid "Falling back to file loading. Picture is still unembedded.\n"
+msgstr "Lade das Bild aus der Datei. Das Bild ist ausgebettet.\n"
+
+#: liblepton/src/geda_picture_object.c:780
+#, c-format
+msgid "Picture [%s] has been embedded\n"
+msgstr "Das Bild [%s] wurde eingebettet\n"
+
+#: liblepton/src/geda_picture_object.c:804
+#, c-format
+msgid "Failed to load image from file [%s]: %s\n"
+msgstr "Das Bild konnte nicht aus der Datei [%s] geladen werden: %s\n"
+
+#: liblepton/src/geda_picture_object.c:806
+#, fuzzy
+msgid "Picture is still embedded.\n"
+msgstr "Das Bild [%s] wurde eingebettet\n"
+
+#: liblepton/src/geda_picture_object.c:814
+#, c-format
+msgid "Picture [%s] has been unembedded\n"
+msgstr "Das Bild [%s] wurde ausgebettet\n"
+
+#: liblepton/src/geda_picture_object.c:1051
+#, fuzzy, c-format
+msgid "Failed to load fallback image %s: %s.\n"
+msgstr "Das Bild konnte nicht aus der Datei [%s] geladen werden: %s\n"
+
+#: liblepton/src/geda_pin_object.c:346 liblepton/src/geda_pin_object.c:354
+msgid "Failed to parse pin object"
+msgstr ""
+
+#: liblepton/src/geda_pin_object.c:360
+#, fuzzy
+msgid ""
+"Found a pin which did not have the whichend field set.\n"
+"Verify and correct manually.\n"
+msgstr ""
+"Pin ohne Markierung (whichend) der aktiven Seite entdeckt.\n"
+"Kontrolliere die Markierung und korrigiere ggf. manuell.\n"
+
+#: liblepton/src/geda_pin_object.c:363
+#, c-format
+msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
+msgstr ""
+"Pin mit fehlerafter Markierung (whichend) der aktiven Seite entdeckt. "
+"Verwende 0: %d\n"
+
+#: liblepton/src/geda_text_object.c:493 liblepton/src/geda_text_object.c:503
+#: liblepton/src/geda_text_object.c:513
+msgid "Failed to parse text object"
+msgstr ""
+
+#: liblepton/src/geda_text_object.c:520
+#, fuzzy, c-format
+msgid "Found an invalid text size [ %s ]\n"
+msgstr "Fehlerhafte Farbangabe entdeckt [%s]\n"
+
+#: liblepton/src/geda_text_object.c:522
+#, fuzzy, c-format
+msgid "Setting text size to %d\n"
+msgstr "Setze die Spiegelung auf 0\n"
+
+#: liblepton/src/geda_text_object.c:526
+#, fuzzy, c-format
+msgid "Found an unsupported text angle [ %s ]\n"
+msgstr "Bild mit fehlerhafter Winkelangabe entdeckt [%d]\n"
+
+#: liblepton/src/geda_text_object.c:528
+#, fuzzy, c-format
+msgid "Setting angle to %d\n"
+msgstr "Setze die Winkelangabe auf 0\n"
+
+#: liblepton/src/geda_text_object.c:545
+#, fuzzy, c-format
+msgid "Found an unsupported text alignment [ %s ]\n"
+msgstr "Bild mit fehlerhafter Winkelangabe entdeckt [%d]\n"
+
+#: liblepton/src/geda_text_object.c:548
+msgid "Setting alignment to LOWER_LEFT\n"
+msgstr "Verwende die Ausrichtung 'Links Unten'\n"
+
+#: liblepton/src/geda_text_object.c:568
+#, c-format
+msgid "Unexpected end-of-file after %d lines"
+msgstr ""
+
+#: liblepton/src/s_clib.c:460
+#, c-format
+msgid "Library command failed [%s]: %s\n"
+msgstr "Bibliotheksbefehl fehlgeschlagen [%s]: %s\n"
+
+#: liblepton/src/s_clib.c:465
+#, c-format
+msgid "Library command failed [%s]: Uncaught signal %i.\n"
+msgstr "Bibliotheksbefehl fehlgeschlagen [%s]: Nicht abgefangenes Signal %i.\n"
+
+#: liblepton/src/s_clib.c:469
+#, c-format
+msgid "Library command failed [%s]\n"
+msgstr "Bibliotheksbefehl fehlgeschlagen [%s]\n"
+
+#: liblepton/src/s_clib.c:470
+#, c-format
+msgid ""
+"Error output was:\n"
+"%s\n"
+msgstr ""
+"Die Fehlermeldung lautete:\n"
+"%s\n"
+
+#: liblepton/src/s_clib.c:556
+#, c-format
+msgid "Library name [%s] already in use.  Using [%s].\n"
+msgstr "Bibliotheksname [%s] wird bereits verwendet. Verwende [%s].\n"
+
+#: liblepton/src/s_clib.c:593
+#, c-format
+msgid "Failed to open directory [%s]: %s\n"
+msgstr "Fehler beim Öffnen eines Verzeichnisses [%s]: %s\n"
+
+#: liblepton/src/s_clib.c:729
+#, c-format
+msgid "Failed to scan library [%s]: Scheme function returned non-list\n"
+msgstr ""
+"Fehler beim Einlesen der Bibliothek [%s]: Die Scheme-Funktion hat 'non-list' "
+"zurückgegeben\n"
+
+#: liblepton/src/s_clib.c:737
+#, c-format
+msgid "Non-string symbol name while scanning library [%s]\n"
+msgstr ""
+"Beim Einlesen der Bibliothek [%s] wurde der Symbolname 'non-string' "
+"zurückgegeben\n"
+
+#: liblepton/src/s_clib.c:893 liblepton/src/s_clib.c:940
+msgid "Cannot add library: name not specified\n"
+msgstr "Kann die Bibliothek nicht hinzufügen. Der Name fehlt\n"
+
+#: liblepton/src/s_clib.c:900
+#, c-format
+msgid ""
+"Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
+msgstr ""
+"Kann die Bibliothek [%s] nicht hinzufügen: Beide Befehle ('list' und 'get') "
+"müssen angegeben werden.\n"
+
+#: liblepton/src/s_clib.c:948
+#, c-format
+msgid "Cannot add Scheme-library [%s]: callbacks must be closures\n"
+msgstr ""
+"Die Scheme-Bibliothek kann nicht hinzugefügt werden [%s]: Die aufgerufenen "
+"Prozeduren müssen abgeschlossen sein (closures)\n"
+
+#: liblepton/src/s_clib.c:1075
+#, c-format
+msgid "Failed to load symbol from file [%s]: %s\n"
+msgstr "Fehler beim Laden eines Symbols aus der Datei [%s]: %s\n"
+
+#: liblepton/src/s_clib.c:1135
+#, c-format
+msgid "Failed to load symbol data [%s] from source [%s]\n"
+msgstr "Fehler beim Laden der Symboldaten [%s] aus der Quelle [%s]\n"
+
+#: liblepton/src/s_clib.c:1377
+#, c-format
+msgid "Component [%s] was not found in the component library\n"
+msgstr ""
+"Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
+
+#: liblepton/src/s_clib.c:1383
+#, c-format
+msgid "More than one component found with name [%s]\n"
+msgstr "Mehr als ein Bauteil mit dem Namen [%s] gefunden\n"
+
+#: liblepton/src/s_hierarchy.c:78 liblepton/src/s_hierarchy.c:240
+msgid "Schematic not found in source library."
+msgstr ""
+
+#: liblepton/src/s_hierarchy.c:100
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+#: liblepton/src/s_hierarchy.c:200
+msgid "There are no schematics above the current one!\n"
+msgstr "Über diesem Schaltplan gibt es keinen weiteren!\n"
+
+#: liblepton/src/s_hierarchy.c:341
+#, fuzzy, c-format
+msgid "Failed to descend hierarchy into '%s': %s\n"
+msgstr "Fehler beim Öffnen eines Verzeichnisses [%s]: %s\n"
+
+#: liblepton/src/s_slot.c:158
+msgid "Did not find slotdef=#:#,#,#... attribute\n"
+msgstr "Es wurde kein slotdef=#:#,#,#... Attribut gefunden\n"
+
+#: liblepton/src/s_slot.c:164
+msgid "Improper slotdef syntax: missing \":\".\n"
+msgstr "Fehlerhafte slotdef syntax: \":\" fehlt.\n"
+
+#: liblepton/src/s_slot.c:179
+msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
+msgstr "Kein korrektes Attribut slotdef=#:#,#,#... gefunden\n"
+
+#: liblepton/src/s_slot.c:209
+msgid "component missing pinseq= attribute\n"
+msgstr "pinseq= Attribut fehlt.\n"
+
+#: liblepton/src/edaconfig.c:647 liblepton/src/edaconfig.c:733
+msgid "Undefined configuration filename"
+msgstr ""
+
+#: liblepton/src/edaconfig.c:1058 liblepton/src/edaconfig.c:1122
+#, c-format
+msgid "Configuration does not have group '%s'"
+msgstr ""
+
+#: liblepton/src/edaconfig.c:1136
+#, c-format
+msgid "Configuration does not have key '%s'"
+msgstr ""
+
+#: liblepton/src/scheme_attrib.c:66 liblepton/src/scheme_attrib.c:100
+msgid "~A is not a valid attribute: invalid string '~A'."
+msgstr ""
+
+#: liblepton/src/scheme_attrib.c:204
+msgid "Objects ~A and ~A are not part of the same page and/or complex object"
+msgstr ""
+
+#: liblepton/src/scheme_attrib.c:211 liblepton/src/scheme_attrib.c:216
+msgid "Object ~A is already attached as an attribute"
+msgstr ""
+
+#: liblepton/src/scheme_attrib.c:265
+msgid "Object ~A is attribute of wrong object"
+msgstr ""
+
+#: liblepton/src/scheme_complex.c:148
+msgid "Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"
+msgstr ""
+
+#: liblepton/src/scheme_complex.c:263 liblepton/src/scheme_page.c:246
+msgid "Object ~A is already attached to something"
+msgstr ""
+
+#: liblepton/src/scheme_complex.c:325
+msgid "Object ~A is attached to a different complex"
+msgstr ""
+
+#: liblepton/src/scheme_complex.c:332
+msgid "Object ~A is attached to a page"
+msgstr ""
+
+#: liblepton/src/scheme_complex.c:339 liblepton/src/scheme_page.c:298
+#, fuzzy
+msgid "Object ~A is attached as an attribute"
+msgstr "Es wurde versucht eine Attribut anzubringen, welches kein Text ist!\n"
+
+#: liblepton/src/scheme_complex.c:346 liblepton/src/scheme_page.c:305
+msgid "Object ~A has attributes"
+msgstr ""
+
+#: liblepton/src/scheme_object.c:232
+msgid "Object ~A has bad type '~A'"
+msgstr ""
+
+#: liblepton/src/scheme_object.c:376
+msgid "Object ~A has invalid stroke cap style ~A"
+msgstr ""
+
+#: liblepton/src/scheme_object.c:389
+msgid "Object ~A has invalid stroke dash style ~A"
+msgstr ""
+
+#: liblepton/src/scheme_object.c:453
+msgid "Invalid stroke cap style ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:464
+msgid "Invalid stroke dash style ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:474
+msgid "Missing dash length parameter for dash style ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:484
+msgid "Missing dot/dash space parameter for dash style ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:546
+msgid "Object ~A has invalid fill style ~A"
+msgstr ""
+
+#: liblepton/src/scheme_object.c:595
+msgid "Invalid fill style ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:603
+msgid "Missing second space parameter for fill style ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:612
+msgid "Missing second angle parameter for fill style ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:622
+msgid "Missing stroke width parameter for fill style ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:631
+msgid "Missing space parameter for fill style ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:640
+msgid "Missing angle parameter for fill style ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:948
+msgid "Invalid pin type ~A, must be 'net or 'bus"
+msgstr ""
+
+#: liblepton/src/scheme_object.c:997
+msgid "Object ~A has invalid pin type."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:1403
+msgid "Invalid text alignment ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:1419
+msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
+msgstr ""
+
+#: liblepton/src/scheme_object.c:1438
+msgid "Invalid text name/value visibility ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:1512
+msgid "Text object ~A has invalid text alignment ~A"
+msgstr ""
+
+#: liblepton/src/scheme_object.c:1521
+msgid "Text object ~A has invalid visibility ~A"
+msgstr ""
+
+#: liblepton/src/scheme_object.c:1531
+msgid "Text object ~A has invalid text attribute visibility ~A"
+msgstr ""
+
+#: liblepton/src/scheme_object.c:1572
+msgid "Object ~A is not included in a page."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:1725
+msgid "Path object ~A has invalid element type ~A at index ~A"
+msgstr ""
+
+#: liblepton/src/scheme_object.c:1839
+msgid "Invalid path element type ~A."
+msgstr ""
+
+#: liblepton/src/scheme_object.c:2011
+msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
+msgstr ""
+
+#: liblepton/src/scheme_page.c:291
+msgid "Object ~A is attached to a complex or different page"
+msgstr ""
+
+#: liblepton/src/scheme_page.c:438
+msgid "Parse error: ~s"
+msgstr ""
+
+#: liblepton/src/edascmhookproxy.c:81
+msgid "Scheme hook"
+msgstr ""
+
+#: liblepton/src/edascmhookproxy.c:82
+msgid "The Scheme-level hook to proxy"
+msgstr ""
+
+#: liblepton/scheme/geda/attrib.scm:56
+#, scheme-format
+msgid "Object ~A is not part of a page"
+msgstr ""
+
+#: liblepton/scheme/geda/library.scm:108
+#, scheme-format
+msgid "Invalid path ~S or source not readable.\n"
+msgstr ""
+
+#: liblepton/scheme/geda/library.scm:109
+msgid "Source library path must be a string.\n"
+msgstr ""
+
+#: liblepton/scheme/geda/library.scm:168
+#, scheme-format
+msgid "File ~S is not readable.\n"
+msgstr ""
+
+#~ msgid "o_save_objects: object %p has unknown type '%c'\n"
+#~ msgstr "o_save_objects: Das Objekt %p hat eine unbekannte Typangabe '%c'\n"
+
+#~ msgid "Null radius circles are not allowed\n"
+#~ msgstr "Kreise mit dem Radius 0 sind nicht erlaubt\n"
+
+#~ msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Textstring mit der Zeichengröße 0 entdeckt [ %c %d %d %d %d %d %d %d "
+#~ "%d ]\n"
+
+#~ msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Text mit nicht unterstützer Winkelangabe entdeckt [ %c %d %d %d %d %d %d "
+#~ "%d %d ]\n"
+
+#~ msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
+#~ msgstr ""
+#~ "Text mit nicht unterstützer Ausrichtung entdeckt [ %c %d %d %d %d %d %d "
+#~ "%d %d ]\n"
+
+#~ msgid "Invalid space specified, setting to 100\n"
+#~ msgstr "Fehlerhafte Abstandsangabe, verwende 100\n"
+
+#~ msgid "Invalid length specified, setting to 100\n"
+#~ msgstr "Fehlerhafte Längenangabe, verwende 100\n"
+
+#~ msgid "Unable to get time of day in f_print_header()\n"
+#~ msgstr "f_print_header(): Konnte die aktuelle Zeit nicht ermitteln\n"
+
+#~ msgid ""
+#~ "Unable to open the prolog file `%s' for reading in f_print_header()\n"
+#~ msgstr "f_print_header(): Konnte die Prologdatei '%s' nicht öffnen.\n"
+
+#~ msgid "Error during reading of the prolog file `%s' in f_print_header()\n"
+#~ msgstr "f_print_header(): Fehler beim Lesen der Prologdatei '%s'\n"
+
+#~ msgid ""
+#~ "Error during writing of the output postscript file in f_print_header()\n"
+#~ msgstr "f_print_header(): Fehler beim Schreiben der Postscript-Datei.\n"
+
+#~ msgid "Giving up on printing\n"
+#~ msgstr "Gebe das Ausdrucken auf\n"
+
+#~ msgid "Could not open [%s] for printing\n"
+#~ msgstr "Konnte die Datei [%s] nicht zum Drucken öffnen\n"
+
+#~ msgid "Could not execute command [%s] for printing\n"
+#~ msgstr "Konnte den Befehl [%s] zum Drucken nicht ausführen\n"
+
+#~ msgid "Too many UTF-8 characters, cannot print\n"
+#~ msgstr "Zu viele UTF-8 Zeichen. Es kann nicht gedruckt werden\n"
+
+#, fuzzy
+#~ msgid "Parsed config from [%s]\n"
+#~ msgstr "Lese User-Konfigurationsdatei [%%s]\n"
+
+#, fuzzy
+#~ msgid "Unable to parse config from [%s]: %s"
+#~ msgstr "Das Bild konnte nicht aus der Datei [%s] geladen werden: %s\n"
+
+#~ msgid "Color index out of range"
+#~ msgstr "Farbindex außerhalb des gültigen Wertebereichs"
+
+#~ msgid ""
+#~ "hierarchy loop detected while visiting page:\n"
+#~ "  \"%s\"\n"
+#~ msgstr ""
+#~ "Zirkuläre Abhängigkeiten in der Hierarchie entdeckt. Schaltplan:\n"
+#~ "  \"%s\"\n"
+
+#~ msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
+#~ msgstr ""
+#~ "ERROR: s_hierarchy_traverse: Schaltplan [%s] wurde nicht gefunden.\n"
+
+#~ msgid "Found [%s]\n"
+#~ msgstr "[%s] gefunden\n"
+
+#~ msgid "Could not find [%s] in any SourceLibrary\n"
+#~ msgstr "Konnte [%s] in keiner Bibliothekenquelle finden\n"
+
+#~ msgid "Error reading picture definition line: %s.\n"
+#~ msgstr "Fehler beim Lesen der Bildinformation. Zeile: %s.\n"
+
+#~ msgid "Loading warning picture.\n"
+#~ msgstr "Lade das Warnbild.\n"
+
+#~ msgid "Error loading picture from file: %s.\n"
+#~ msgstr "Fehler beim Laden des Bildes aus der Datei %s.\n"
+
+#~ msgid "Found a zero length pin: [ %s ]\n"
+#~ msgstr "Pin mit der Länge 0 entdeckt: [ %s ]\n"
+
+#~ msgid "%s:%i:%i: %s\n"
+#~ msgstr "%s:%i:%i: %s\n"
+
+#~ msgid "Unknown file: %s\n"
+#~ msgstr "Unbekannte Datei: %s\n"
+
+#~ msgid "Evaluation failed: %s\n"
+#~ msgstr "Ausführung gescheitert: %s\n"
+
+#~ msgid "Enable debugging for more detailed information\n"
+#~ msgstr "Aktiviere die Debugausgabe für genaure Informationen\n"
+
+#~ msgid "Could not find [%s] for interpretation\n"
+#~ msgstr "Konnte [%s] für die Auswertung nicht finden\n"
+
+#~ msgid "Read system config file [%%s]\n"
+#~ msgstr "Lese die Systemkonfigurationsdatei [%%s]\n"
+
+#~ msgid "Did not find required system config file [%%s]\n"
+#~ msgstr ""
+#~ "Konnte die erforderliche Systemkonfigurationsdatei nicht finden [%%s]\n"
+
+#~ msgid "Did not find optional user config file [%%s]\n"
+#~ msgstr "Die optionale User-Konfigurationsdatei [%%s] wurde nicht gefunden\n"
+
+#~ msgid "Read local config file [%%s]\n"
+#~ msgstr "Lese die lokale Konfigurationsdatei [%%s]\n"
+
+#~ msgid "Did not find optional local config file [%%s]\n"
+#~ msgstr ""
+#~ "Die optionale lokale Konfigurationsdatei [%%s] wurde nicht gefunden\n"
+
+#~ msgid "Did not find specified %s file [%%s]\n"
+#~ msgstr "Konnte die angegebene %s-Datei [%%s] nicht finden\n"
+
+#~ msgid "Could not find any %s file!\n"
+#~ msgstr "Konnte keine %s-Dateien finden!\n"
+
+#~ msgid "o_save: Could not open [%s]\n"
+#~ msgstr "o_save: Konnte Datei [%s] nicht öffnen\n"
+
+#~ msgid "Could not find character '%s' definition.\n"
+#~ msgstr "Konnte die Definition des Zeichens '%s' nicht finden.\n"
+
+#~ msgid "Failed to validate utf-8 character in font definition: \"%s\".\n"
+#~ msgstr ""
+#~ "UTF-8 Zeichen konnte in der Zeichensatzdefinition nicht ermittelt werden: "
+#~ "\"%s\".\n"
+
+#~ msgid "Could not load question font char -- check font-directory keyword\n"
+#~ msgstr ""
+#~ "Konnte das angefragte Zeichen nicht laden -- kontrolliere die Einstellung "
+#~ "'font-directory'\n"
+
+#~ msgid "Read ~/.gEDA/%s file [%%s]\n"
+#~ msgstr "Lese die ~/.gEDA/%s Datei [%%s]\n"
+
+#~ msgid "Did not find optional ~/.gEDA/%s file [%%s]\n"
+#~ msgstr "Konnte die optionale ~/.gEDA/%s-Datei [%%s] nicht finden\n"
+
+#~ msgid "Could not read symbolic link information for %s"
+#~ msgstr "Konnte die Information des symbolischen Links [%s] nicht lesen"
+
+#~ msgid "The file has too many symbolic links."
+#~ msgstr "Die Datei hat zu viele symbolische Links."
+
+#~ msgid "Found an improper attribute: _%s_\n"
+#~ msgstr "Fehlerhaftes Attribut entdeckt: [%s]\n"
+
+#~ msgid "Cannot find any schematics above the current one!\n"
+#~ msgstr "Es wurde kein Schaltplan über dem aktuellen gefunden!\n"
+
+#~ msgid "Maybe toplevel schematic page was closed/discarded?\n"
+#~ msgstr "Eventuell wurde der übergeordnete Schaltplan geschlossen?\n"
+
+#~ msgid "Can't get the real filename of %s.\n"
+#~ msgstr "Konnte den wahren Dateinamen von %s nicht ermitteln.\n"
+
+#~ msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f)!\n"
+#~ msgstr ""
+#~ "\tGROSSE VERSIONSÄNDERUNG (Symboldatei %.3f, Symbol im Schaltplan %.3f)!\n"
+
+#~ msgid "Component [%s] was not found in any component library\n"
+#~ msgstr ""
+#~ "Das Bauteil [%s] konnte in keiner Bauteilbibliothek gefunden werden\n"
+
+#~ msgid "s_page_delete: Can't get the real filename of %s.\n"
+#~ msgstr ""
+#~ "s_page_delete: Kann den tatsächlichen Dateinamen von [%s] nicht "
+#~ "ermitteln.\n"

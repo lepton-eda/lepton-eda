@@ -118,7 +118,7 @@ gschem_SOURCES = \
 	x_stroke.c \
 	x_window.c
 
-gschem_CPPFLAGS = -I$(top_srcdir)/libgeda/include  -I$(srcdir)/../include \
+gschem_CPPFLAGS = -I$(top_srcdir)/liblepton/include  -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
 gschem_CFLAGS = $(GCC_CFLAGS) $(LIBSTROKE_CFLAGS) \
 	$(MINGW_CFLAGS) \
@@ -127,7 +127,7 @@ gschem_LDFLAGS = $(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
 	$(GTHREAD_LIBS) $(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
 gschem_LDADD = \
 	$(top_builddir)/libgedacairo/libgedacairo.la \
-	$(top_builddir)/libgeda/src/libgeda.la
+	$(top_builddir)/liblepton/src/liblepton.la
 
 
 # This is used to generate boilerplate for defining Scheme functions

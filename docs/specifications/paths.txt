@@ -20,7 +20,7 @@
       3.3  Per-user data path
       3.4  Per-user configuration path
     4  Related changes
-      4.1  libgeda APIs
+      4.1  liblepton APIs
       4.2  Scheme APIs
       4.3  gschem
       4.4  gattrib
@@ -29,7 +29,7 @@
 Introduction
 ============
 
-This document describes a new API and approach for libgeda for
+This document describes a new API and approach for liblepton for
 locating gEDA's resource files, configuration files, and other
 run-time resources.  In particular, the new API is designed to:
 
@@ -181,10 +181,10 @@ Per-user data is stored in a single directory.
 Related changes
 ===============
 
-libgeda APIs
-------------
+liblepton APIs
+--------------
 
-* During libgeda initialisation, the `scheme` subdirectory of each of
+* During liblepton initialisation, the `scheme` subdirectory of each of
   the `eda_get_system_data_paths()` should be added to the Guile load
   path.
 

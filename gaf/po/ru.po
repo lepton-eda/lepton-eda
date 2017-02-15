@@ -5,12 +5,12 @@
 #
 # This file is distributed under the same license as the gEDA gaf package.
 #
-# Переводчикам: см. примечания в libgeda/po/ru.po
+# Переводчикам: см. примечания в liblepton/po/ru.po
 msgid ""
 msgstr ""
 "Project-Id-Version: gaf_ru\n"
-"Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2016-09-13 13:40+0300\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2017-02-15 15:35+0300\n"
 "PO-Revision-Date: 2014-03-08 20:49+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"

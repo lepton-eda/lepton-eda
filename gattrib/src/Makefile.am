@@ -30,14 +30,14 @@ gattrib_SOURCES = \
 		gattrib.c 
 
 
-gattrib_CPPFLAGS = -I$(top_srcdir)/libgeda/include \
+gattrib_CPPFLAGS = -I$(top_srcdir)/liblepton/include \
 	-I$(srcdir)/../include -I$(top_srcdir) -I$(includedir)
 gattrib_CFLAGS = $(GCC_CFLAGS) $(GLIB_CFLAGS) \
 	$(MINGW_CFLAGS) \
 	$(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS)
 gattrib_LDFLAGS = $(GLIB_LIBS) $(GTK_LIBS) $(GTHREAD_LIBS) \
 	$(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
-gattrib_LDADD = $(top_builddir)/libgeda/src/libgeda.la
+gattrib_LDADD = $(top_builddir)/liblepton/src/liblepton.la
 
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@

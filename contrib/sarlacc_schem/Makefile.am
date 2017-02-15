@@ -5,10 +5,10 @@ noinst_PROGRAMS = sarlacc_schem
 sarlacc_schem_SOURCES = sarlacc_schem.c
 sarlacc_schem_CFLAGS = $(GLIB_CFLAGS) $(GUILE_CFLAGS) $(GDK_PIXBUF_CFLAGS)
 sarlacc_schem_LDFLAGS = $(GLIB_LIBS) $(GUILE_LIBS) $(GDK_PIXBUF_LIBS)
-sarlacc_schem_LDADD = $(top_builddir)/libgeda/src/libgeda.la
+sarlacc_schem_LDADD = $(top_builddir)/liblepton/src/liblepton.la
 
 AM_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS)
-AM_CPPFLAGS = -I$(top_srcdir)/libgeda/include
+AM_CPPFLAGS = -I$(top_srcdir)/liblepton/include
 
 dist_noinst_MANS = sarlacc_schem.1
 

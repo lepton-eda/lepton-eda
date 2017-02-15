@@ -29,8 +29,8 @@
 /* Gettext translation */
 #include "gettext.h"
 
-#include <libgeda/libgeda.h>
-#include <libgeda/libgedaguile.h>
+#include <liblepton/liblepton.h>
+#include <liblepton/libgedaguile.h>
 
 #define shell_short_options "s:c:L:l:h"
 

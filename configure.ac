@@ -8,10 +8,10 @@ dnl directory.
 # Set up configuration system
 #####################################################################
 
-AC_INIT([gEDA/gaf], [1.9.2], [https://bugs.launchpad.net/geda], [geda-gaf])
+AC_INIT([lepton EDA], [1.9.2], [https://github.com/lepton-eda/lepton-eda/issues], [lepton-eda])
 AC_PREREQ([2.60])
 
-AC_CONFIG_SRCDIR([libgeda/src/libgeda.c])
+AC_CONFIG_SRCDIR([liblepton/src/liblepton.c])
 AC_CONFIG_AUX_DIR([build-tools])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADER([config.h])
@@ -177,8 +177,8 @@ AX_OPTION_GATTRIB
 AX_DATA_DIRS
 # Where should PCB footprints be searched for?
 AX_PCB_DIRS
-# Set up libgeda with the correct ld version number
-AX_LIBGEDA([45:0:0])
+# Set up liblepton with the correct ld version number
+AX_LIBLEPTON([1:0:0])
 # Set up libgedacairo with the correct ld version number
 AX_LIBGEDACAIRO([1:1:0])
 
@@ -188,18 +188,18 @@ AX_LIBGEDACAIRO([1:1:0])
 
 AC_CONFIG_FILES([Makefile
 
-                 libgeda/Makefile
-                 libgeda/libgeda.pc
-                 libgeda/po/domain.mak
-                 libgeda/po/Makefile.in
-                 libgeda/data/Makefile
-                 libgeda/docs/Makefile
-                 libgeda/docs/images/Makefile
-                 libgeda/include/Makefile
-                 libgeda/lib/Makefile
-                 libgeda/scheme/Makefile
-                 libgeda/src/Makefile
-                 libgeda/tests/Makefile
+                 liblepton/Makefile
+                 liblepton/liblepton.pc
+                 liblepton/po/domain.mak
+                 liblepton/po/Makefile.in
+                 liblepton/data/Makefile
+                 liblepton/docs/Makefile
+                 liblepton/docs/images/Makefile
+                 liblepton/include/Makefile
+                 liblepton/lib/Makefile
+                 liblepton/scheme/Makefile
+                 liblepton/src/Makefile
+                 liblepton/tests/Makefile
 
                  libgedacairo/Makefile
                  libgedacairo/libgedacairo.pc

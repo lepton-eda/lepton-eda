@@ -12,12 +12,12 @@ gschlas_SOURCES = \
 	parsecmd.c \
 	s_util.c
 
-gschlas_CPPFLAGS = -I$(top_srcdir)/libgeda/include -I$(srcdir)/../include \
+gschlas_CPPFLAGS = -I$(top_srcdir)/liblepton/include -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
 gschlas_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS) $(GLIB_CFLAGS) \
 	$(GUILE_CFLAGS) $(GDK_PIXBUF_CFLAGS)
 gschlas_LDFLAGS = $(GLIB_LIBS) $(GUILE_LIBS) $(GDK_PIXBUF_LIBS)
-gschlas_LDADD = $(top_builddir)/libgeda/src/libgeda.la
+gschlas_LDADD = $(top_builddir)/liblepton/src/liblepton.la
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~

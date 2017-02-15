@@ -41,7 +41,7 @@
  * Included here in order to grab sheet_head->CHANGED, which is set
  * when the user puts a new value in a cell.
  *------------------------------------------------------------------*/
-#include <libgeda/libgeda.h>       /* geda library fcns  */
+#include <liblepton/liblepton.h>
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"

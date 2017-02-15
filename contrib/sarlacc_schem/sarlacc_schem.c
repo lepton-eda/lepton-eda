@@ -36,7 +36,7 @@
 #include <getopt.h>
 #endif
 
-#include <libgeda/libgeda.h>
+#include <liblepton/liblepton.h>
 
 /*
  *  command line options
