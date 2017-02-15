@@ -13,12 +13,17 @@ env:
 
 # Before setting up the source tree, install necessary development
 # headers
-before_install: >
-  sudo apt-get update && 
-  sudo apt-get install -y \
-    libgtk2.0-dev autopoint libgettextpo-dev libstroke0-dev \
-    guile-2.0-dev flex bison groff \
-    texinfo texlive-base texlive-generic-recommended texlive-latex-base
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y libgtk2.0-dev autopoint libgettextpo-dev
+    libstroke0-dev guile-2.0-dev flex bison groff texinfo texlive-base
+    texlive-generic-recommended texlive-latex-base
+
+  # FIXME[2017-02-15] This is required because Ubuntu Trusty only has
+  # Guile-2.0.9, which doesn't include SRFI-64
+  - sudo mkdir -p /usr/share/guile/2.0/srfi/srfi-64
+  - sudo curl http://git.savannah.gnu.org/cgit/guile.git/plain/module/srfi/srfi-64.scm -o /usr/share/guile/2.0/srfi/srfi-64.scm 
+  - sudo curl http://git.savannah.gnu.org/cgit/guile.git/plain/module/srfi/srfi-64/testing.scm -o /usr/share/guile/2.0/srfi/srfi-64/testing.scm
 
 # Set up the source tree by running autotools
 install: ./autogen.sh && ./configure --disable-update-xdg-database CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=0'
