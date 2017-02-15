@@ -21,7 +21,7 @@ before_install: >
     texinfo texlive-base texlive-generic-recommended texlive-latex-base
 
 # Set up the source tree by running autotools
-install: ./autogen.sh && ./configure --disable-update-xdg-database
+install: ./autogen.sh && ./configure --disable-update-xdg-database CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=0'
 
 # Compile gEDA and run its tests
 script: >
