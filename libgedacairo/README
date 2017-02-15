@@ -20,7 +20,7 @@ The library is based on Peter Clifton's preexisting gschem rendering
 code.
 
 Please submit bug reports and patches to
-<http://bugs.launchpad.net/geda>, using the `libgedacairo' tag.
+<https://github.com/lepton-eda/lepton-eda/issues>, using the `libgedacairo' tag.
 
 Using libgedacairo in your programs
 -----------------------------------
