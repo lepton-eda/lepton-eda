@@ -84,7 +84,7 @@ void usage(char *cmd)
 "  -V, --version   Show version information.\n"
 "  --              Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs at <https://bugs.launchpad.net/geda>\n"
+"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
 "gEDA/gaf homepage: <http://www.geda-project.org/>\n"),
           cmd);
   exit (0);

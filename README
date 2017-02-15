@@ -247,12 +247,10 @@ There are several ways to get help with installing and using gEDA:
    `geda-user' mailing list.
    <http://wiki.geda-project.org/geda:mailinglists>
 
- - Alternatively, you can add your question to the gEDA Answers page
-   on Launchpad. <https://answers.launchpad.net/geda>
-
  - If you have discovered a bug, have a feature request, or have
-   written a patch to gEDA, please create an item on the gEDA Bugs
-   page on Launchpad. <http://bugs.launchpad.net/geda>
+   written a patch to lepton-eda, please create an item on the
+   lepton-eda bug tracker page:
+   <https://github.com/lepton-eda/lepton-eda/issues>
 
 License
 =======

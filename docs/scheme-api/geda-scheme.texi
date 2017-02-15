@@ -98,8 +98,8 @@ embedded Scheme.  For more information about Guile, please visit
 @section Getting Additional Help
 @cindex Reporting bugs
 
-If you think you have found a bug, please file a bug report in
-Launchpad: @uref{http://bugs.launchpad.net/geda}. Please add the tag
+If you think you have found a bug, please file a bug report:
+@uref{https://github.com/lepton-eda/lepton-eda/issues}. Please add the tag
 @samp{scheme-api}.  It will help us to fix your bug quickly if you can
 describe in detail how to reproduce the bug.
 
@@ -115,8 +115,8 @@ website: @uref{http://www.geda-project.org/}.
 
 If you find a typographical error in this manual, or if you have
 thought of a way to make this manual better, we would love to hear
-from you! Please submit a report in Launchpad:
-@uref{http://bugs.launchpad.net/geda}, with the tag @samp{scheme-api}.
+from you! Please submit a bug report:
+@uref{https://github.com/lepton-eda/lepton-eda/issues}, with the tag @samp{scheme-api}.
 
 @node Schematic Document Model
 @chapter The Schematic Document Model
@@ -2513,7 +2513,7 @@ properties can be specified for the action by providing pairs of
 
 @example
 (define-action (&report-bug #:label ``Report Bug'' #:icon ``web-browser'')
-  (show-uri ``http://bugs.launchpad.net/geda/+reportbug''))
+  (show-uri ``https://github.com/lepton-eda/lepton-eda/issues/new''))
 @end example
 
 Since 1.10.
