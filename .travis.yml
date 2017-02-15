@@ -26,7 +26,7 @@ install: ./autogen.sh && ./configure --disable-update-xdg-database CFLAGS='-DSCM
 # Compile gEDA and run its tests
 script: >
   if test "${COVERITY_SCAN_BRANCH}" != "1"; then
-    make -kj4 distcheck
+    make -sj4 distcheck
   fi
 
 addons:
