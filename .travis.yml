@@ -26,7 +26,20 @@ before_install:
   - sudo curl http://git.savannah.gnu.org/cgit/guile.git/plain/module/srfi/srfi-64/testing.scm -o /usr/share/guile/2.0/srfi/srfi-64/testing.scm
 
 # Set up the source tree by running autotools
-install: ./autogen.sh && ./configure --disable-update-xdg-database CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=0'
+#
+# The SCM_DEBUG_TYPING_STRICTNESS macro determines how C code that
+# uses Guile Scheme values is compiled.  We set it to 0 for Coverity
+# Scan builds, because with a non-zero value libguile's macros
+# generate code that Coverity correctly identifies as undefined
+# behaviour in C.
+install:
+  - ./autogen.sh
+  - >
+      if test "${COVERITY_SCAN_BRANCH}" = "1"; then
+        ./configure --disable-update-xdg-database
+      else
+        ./configure --disable-update-xdg-database CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=2'
+      fi
 
 # Compile gEDA and run its tests
 script: >
