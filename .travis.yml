@@ -36,12 +36,17 @@ script: >
 
 addons:
   # In order to trigger static analysis with Coverity Scan, push to
-  # the coverity_scan branch.  You should only usually scan the tip of
-  # "master-ng".
+  # the "coverity_scan" branch.  You should only usually scan the tip of
+  # "master".
   coverity_scan:
     project:
+      # FIXME[Issue #43] Figure out how to rename the Coverity Scan
+      # project from this historical name
       name: peter-b/geda-gaf
       description: Build submitted via Travis CI
+
+    # FIXME[Issue #44] Replace this e-mail address once there's a
+    # mailing list or e-mail alias set up for Lepton developers
     notification_email: peter@peter-b.co.uk
     build_command: make all
     branch_pattern: coverity_scan
