@@ -3,10 +3,8 @@
 ## Conduct
 
 * We are committed to providing a friendly, safe and welcoming
-  environment for all, regardless of level of experience, gender,
-  gender identity and expression, sexual orientation, disability,
-  personal appearance, body size, race, ethnicity, age, religion,
-  nationality, or other similar characteristic.
+  environment for all, regardless of level of experience or other
+  personal characteristics[<sup>1</sup>](#footnote1).
 
 * Please be kind and courteous.  There's no need to be mean or rude.
 
@@ -34,6 +32,11 @@
 
 * Likewise any spamming, trolling, flaming, baiting or other
   attention-stealing behaviour is not welcome.
+
+<a anchor="footnote1"><sup>1</sup></a> For example, personal
+characteristics might include sex & sexual orientation or gender,
+gender identity & expression, disability, personal appearance, body
+size, race, ethnicity, age, religion or nationality.
 
 ## Moderation
 
