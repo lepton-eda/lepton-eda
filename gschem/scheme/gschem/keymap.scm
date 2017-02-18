@@ -21,6 +21,7 @@
   #:use-module (gschem core keymap)
   #:use-module (gschem core gettext)
   #:use-module (gschem hook)
+  #:use-module (ice-9 control)
   #:use-module (ice-9 optargs)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9))
@@ -44,11 +45,10 @@
 (define-public (keys? obj)
   (and (vector? obj)
        (> (vector-length obj) 0)
-       (call/cc
-        (lambda (return)
-          (array-for-each
-           (lambda (x) (or (key? x) (return #f)))
-           obj)))))
+       (let/ec return
+        (array-for-each
+         (lambda (x) (or (key? x) (return #f)))
+         obj))))
 
 (define-public (keys->string keys)
   (string-join (map key->string (vector->list keys)) " "))
@@ -193,10 +193,9 @@
         (else #f)))
         km))
 
-  (call/cc
-   (lambda (return)
-     (lookup-binding-recursive keymap '() return)
-     #f)))  ;; Return #f if no binding found.
+  (let/ec return
+    (lookup-binding-recursive keymap '() return)
+    #f))  ;; Return #f if no binding found.
 
 ;; -------------------- Bind keys hook --------------------
 
