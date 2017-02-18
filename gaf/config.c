@@ -60,7 +60,7 @@ config_usage (void)
 "store for the current directory). If no GROUP and KEY were provided,\n"
 "outputs the filename of the selected configuration store.\n"
 "\n"
-"Please report bugs to %s.\n"),
+"Please report bugs to %1$s.\n"),
           PACKAGE_BUGREPORT);
   exit (0);
 }
@@ -155,7 +155,9 @@ cmd_config_impl (void *data, int argc, char **argv)
 
     if (!eda_config_load (parent, &err)) {
       if (!g_error_matches (err, G_IO_ERROR, G_IO_ERROR_NOT_FOUND)) {
-        fprintf (stderr, _("WARNING: Could not load '%s': %s.\n"),
+        /* TRANSLATORS: The first string is the filename, the second is
+         * the detailed error message */
+        fprintf (stderr, _("WARNING: Could not load '%1$s': %2$s.\n"),
                  eda_config_get_filename (parent),
                  err->message);
       }
@@ -179,7 +181,7 @@ cmd_config_impl (void *data, int argc, char **argv)
     GError *err = NULL;
     gchar *value = eda_config_get_string (cfg, group, key, &err);
     if (value == NULL) {
-      fprintf (stderr, _("ERROR: %s.\n"), err->message);
+      fprintf (stderr, _("ERROR: %1$s.\n"), err->message);
       exit (1);
     }
     printf ("%s\n", value);
@@ -193,7 +195,7 @@ cmd_config_impl (void *data, int argc, char **argv)
     const gchar *value = argv[optind++];
     eda_config_set_string (cfg, group, key, value);
     if (!eda_config_save (cfg, &err)) {
-      fprintf (stderr, _("ERROR: %s.\n"), err->message);
+      fprintf (stderr, _("ERROR: %1$s.\n"), err->message);
       exit (1);
     }
     exit (0);

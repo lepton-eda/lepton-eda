@@ -181,7 +181,7 @@ gschem_dialog_misc_response_non_modal (GtkDialog *dialog, gint response, gpointe
        break;
 
     default:
-      printf("gtk_dialog_misc_response_non_modal(): strange signal %d\n", response);
+      printf("gtk_dialog_misc_response_non_modal(): strange signal %1$d\n", response);
   }
 
   gtk_widget_destroy (GTK_WIDGET (dialog));

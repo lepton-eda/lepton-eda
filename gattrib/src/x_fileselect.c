@@ -131,13 +131,13 @@ x_fileselect_load_files (GSList *filenames)
     gchar *string = (gchar*)filename->data;
     
     if (!quiet_mode) {
-      s_log_message(_("Loading file [%s]\n"), string);
+      s_log_message(_("Loading file [%1$s]\n"), string);
     }
 
     s_page_goto (pr_current, s_page_new (pr_current, string));
 
     if(s_toplevel_read_page(pr_current, string) == 0) {
-       fprintf(stderr, _("Couldn't load schematic [%s]\n"), string);
+       fprintf(stderr, _("Couldn't load schematic [%1$s]\n"), string);
        return FALSE;
     }
 
@@ -301,7 +301,7 @@ x_fileselect_save (void)
     /* try saving current page of toplevel to file filename */
     if (filename != NULL &&
         f_save (pr_current, pr_current->page_current, filename, NULL)) {
-      s_log_message (_("Saved As [%s]\n"), filename);
+      s_log_message (_("Saved As [%1$s]\n"), filename);
 
       /* replace page filename with new one */
       s_page_set_filename (pr_current->page_current, filename);
@@ -311,7 +311,7 @@ x_fileselect_save (void)
 
     } else {
       /* report error in log and status bar */
-      s_log_message (_("Could NOT save [%s]\n"),
+      s_log_message (_("Could NOT save [%1$s]\n"),
                      s_page_get_filename (pr_current->page_current));
 
     }

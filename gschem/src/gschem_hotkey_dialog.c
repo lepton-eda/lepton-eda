@@ -52,7 +52,7 @@ void x_dialog_hotkeys_response(GtkWidget *w, gint response,
     /* void */
     break;
   default:
-    printf("x_dialog_hotkeys_response(): strange signal %d\n", response);
+    printf("x_dialog_hotkeys_response(): strange signal %1$d\n", response);
   }
   /* clean up */
   gtk_widget_destroy(w_current->hkwindow);

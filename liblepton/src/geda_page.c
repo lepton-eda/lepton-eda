@@ -62,7 +62,7 @@ object_added (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
   /* Set up object parent pointer */
 #ifndef NDEBUG
   if (object->page != NULL) {
-    g_critical ("Object %p already has parent page %p!", object, object->page);
+    g_critical ("Object %1$p already has parent page %2$p!", object, object->page);
   }
 #endif
   object->page = page;
@@ -85,7 +85,7 @@ pre_object_removed (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
   /* Clear object parent pointer */
 #ifndef NDEBUG
   if (object->page == NULL) {
-    g_critical ("Object %p has NULL parent page!", object);
+    g_critical ("Object %1$p has NULL parent page!", object);
   }
 #endif
   object->page = NULL;
@@ -194,7 +194,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   real_filename = follow_symlinks (s_page_get_filename(page), NULL);
 
   if (real_filename == NULL) {
-    s_log_message (_("s_page_delete: Can't get the real filename of %s."),
+    s_log_message (_("s_page_delete: Can't get the real filename of %1$s."),
                    s_page_get_filename (page));
   }
   else {
@@ -205,7 +205,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 	 (!g_file_test(backup_filename, G_FILE_TEST_IS_DIR)) )
     {
       if (unlink(backup_filename) != 0) {
-	s_log_message(_("s_page_delete: Unable to delete backup file %s."),
+	s_log_message(_("s_page_delete: Unable to delete backup file %1$s."),
                       backup_filename);
       }
     }
@@ -228,7 +228,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   if (g_list_length (page->connectible_list) != 0) {
     fprintf (stderr,
             "OOPS! page->connectible_list had something in it when it was freed!\n");
-    fprintf (stderr, "Length: %d\n", g_list_length (page->connectible_list));
+    fprintf (stderr, "Length: %1$d\n", g_list_length (page->connectible_list));
   }
 
   g_list_free (page->connectible_list);
@@ -457,7 +457,7 @@ void s_page_print_all (TOPLEVEL *toplevel)
         iter = g_list_next( iter ) ) {
 
     page = (PAGE *)iter->data;
-    printf ("FILENAME: %s\n", s_page_get_filename (page));
+    printf ("FILENAME: %1$s\n", s_page_get_filename (page));
     geda_object_list_print (page->_object_list);
   }
 }
@@ -483,13 +483,13 @@ gint s_page_save_all (TOPLEVEL *toplevel)
 
     if (f_save (toplevel, p_current,
                 s_page_get_filename (p_current), NULL)) {
-      s_log_message (_("Saved [%s]\n"),
+      s_log_message (_("Saved [%1$s]\n"),
                      s_page_get_filename (p_current));
       /* reset the CHANGED flag of p_current */
       p_current->CHANGED = 0;
 
     } else {
-      s_log_message (_("Could NOT save [%s]\n"),
+      s_log_message (_("Could NOT save [%1$s]\n"),
                      s_page_get_filename (p_current));
       /* increase the error counter */
       status++;

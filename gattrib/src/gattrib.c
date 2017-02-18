@@ -149,7 +149,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
   s_log_init ("gattrib");
 
   s_log_message
-    (_("gEDA/gattrib version %s%s.%s\ngEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\nThis is free software, and you are welcome to redistribute it under certain\nconditions; please see the COPYING file for more details.\n\n"),
+    (_("gEDA/gattrib version %1$s%2$s.%3$s\ngEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\nThis is free software, and you are welcome to redistribute it under certain\nconditions; please see the COPYING file for more details.\n\n"),
      PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
      PACKAGE_DATE_VERSION);
 
@@ -185,7 +185,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
         if (filename != NULL) {
             file_list = g_slist_append(file_list, filename);
         } else {
-            fprintf(stderr, _("Couldn't find file [%s]\n"), argv[argv_index]);
+            fprintf(stderr, _("Couldn't find file [%1$s]\n"), argv[argv_index]);
             exit(1);
         }
         argv_index++;

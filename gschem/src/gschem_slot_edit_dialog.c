@@ -68,7 +68,7 @@ void slot_edit_dialog_response(GtkWidget *widget, gint response, GschemToplevel 
     }
     break;
   default:
-    printf("slot_edit_dialog_response(): strange signal %d\n",response);
+    printf("slot_edit_dialog_response(): strange signal %1$d\n",response);
   }
   i_set_state(w_current, SELECT);
   gtk_widget_destroy(w_current->sewindow);

@@ -422,7 +422,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   s_clib_symbol_invalidate_data (clib);
 
   if (clib == NULL) {
-    s_log_message (_("Could not find symbol [%s] in library. Update failed.\n"),
+    s_log_message (_("Could not find symbol [%1$s] in library. Update failed.\n"),
                    o_current->complex_basename);
     return NULL;
   }
@@ -538,7 +538,7 @@ void o_autosave_backups(GschemToplevel *w_current)
       real_filename = follow_symlinks (s_page_get_filename (p_current), NULL);
 
       if (real_filename == NULL) {
-        s_log_message (_("o_autosave_backups: Can't get the real filename of %s."), s_page_get_filename (p_current));
+        s_log_message (_("o_autosave_backups: Can't get the real filename of %1$s."), s_page_get_filename (p_current));
       } else {
         /* Get the directory in which the real filename lives */
         dirname = g_path_get_dirname (real_filename);
@@ -582,7 +582,7 @@ void o_autosave_backups(GschemToplevel *w_current)
           saved_umask = umask(0);
           if (chmod(backup_filename, (S_IWRITE|S_IWGRP|S_IWOTH) &
                     ((~saved_umask) & 0777)) != 0) {
-            s_log_message (_("Could NOT set previous backup file [%s] read-write\n"),
+            s_log_message (_("Could NOT set previous backup file [%1$s] read-write\n"),
                            backup_filename);
           }
           umask(saved_umask);
@@ -602,12 +602,12 @@ void o_autosave_backups(GschemToplevel *w_current)
           mask = (~mask)&0777;
           mask &= ((~saved_umask) & 0777);
           if (chmod(backup_filename,mask) != 0) {
-            s_log_message (_("Could NOT set backup file [%s] readonly\n"),
+            s_log_message (_("Could NOT set backup file [%1$s] readonly\n"),
                            backup_filename);
           }
           umask(saved_umask);
         } else {
-          s_log_message (_("Could NOT save backup file [%s]\n"),
+          s_log_message (_("Could NOT save backup file [%1$s]\n"),
                          backup_filename);
         }
         g_free (backup_filename);

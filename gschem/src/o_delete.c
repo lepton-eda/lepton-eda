@@ -77,7 +77,7 @@ void o_delete_selected (GschemToplevel *w_current)
     GtkWidget *dialog = gtk_message_dialog_new (NULL,
         GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
         GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
-        ngettext ("Delete locked object?", "Delete %u locked objects?",
+        ngettext ("Delete locked object?", "Delete %1$u locked objects?",
           locked_num), locked_num);
     gtk_dialog_add_buttons (GTK_DIALOG (dialog),
         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

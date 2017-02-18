@@ -287,7 +287,7 @@ x_fileselect_save (GschemToplevel *w_current)
                                  GTK_DIALOG_DESTROY_WITH_PARENT),
                                 GTK_MESSAGE_QUESTION,
                                 GTK_BUTTONS_YES_NO,
-                                _("The selected file `%s' already exists.\n\n"
+                                _("The selected file `%1$s' already exists.\n\n"
                                   "Would you like to overwrite it?"),
                                 filename);
       gtk_window_set_title (GTK_WINDOW (checkdialog), _("Overwrite file?"));

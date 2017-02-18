@@ -740,7 +740,7 @@ gschem_page_view_pan_mouse (GschemPageView *view, int diff_x, int diff_y)
   g_return_if_fail (geometry != NULL);
 
 #if DEBUG
-  printf("gschem_page_view_pan_mouse(): diff_x=%d, diff_y=%d\n", diff_x, diff_y);
+  printf("gschem_page_view_pan_mouse(): diff_x=%1$d, diff_y=%2$d\n", diff_x, diff_y);
 #endif
 
   page_cx = (gschem_page_geometry_get_viewport_left (geometry) + gschem_page_geometry_get_viewport_right (geometry)) / 2.0;
@@ -750,7 +750,7 @@ gschem_page_view_pan_mouse (GschemPageView *view, int diff_x, int diff_y)
   world_cy = page_cy + gschem_page_view_WORLDabs (view, diff_y);
 
 #if DEBUG
-  printf("  world_cx=%f, world_cy=%f\n", world_cx, world_cy);
+  printf("  world_cx=%1$f, world_cy=%2$f\n", world_cx, world_cy);
 #endif
 
   gschem_page_view_pan_general (view, world_cx, world_cy, 1);
@@ -1094,8 +1094,8 @@ gschem_page_view_update_hadjustment (GschemPageView *view)
                                geometry->viewport_left);
 
 #if DEBUG
-    printf("H %f %f\n", view->hadjustment->lower, view->hadjustment->upper);
-    printf("Hp %f\n", view->hadjustment->page_size);
+    printf("H %1$f %2$f\n", view->hadjustment->lower, view->hadjustment->upper);
+    printf("Hp %1$f\n", view->hadjustment->page_size);
 #endif
 
     gtk_adjustment_changed(view->hadjustment);
@@ -1139,8 +1139,8 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
                              geometry->world_bottom - geometry->viewport_bottom);
 
 #if DEBUG
-    printf("V %f %f\n", view->vadjustment->lower, view->vadjustment->upper);
-    printf("Vp %f\n", view->vadjustment->page_size);
+    printf("V %1$f %2$f\n", view->vadjustment->lower, view->vadjustment->upper);
+    printf("Vp %1$f\n", view->vadjustment->page_size);
 #endif
 
     gtk_adjustment_changed(view->vadjustment);

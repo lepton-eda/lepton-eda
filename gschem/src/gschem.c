@@ -154,7 +154,7 @@ void main_prog(void *closure, int argc, char *argv[])
   s_log_init ("gschem");
 
   s_log_message(
-                _("gEDA/gschem version %s%s.%s\n"), PREPEND_VERSION_STRING,
+                _("gEDA/gschem version %1$s%2$s.%3$s\n"), PREPEND_VERSION_STRING,
                 PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
   s_log_message(
                 _("gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"));
@@ -168,7 +168,7 @@ void main_prog(void *closure, int argc, char *argv[])
 #endif
 
 #if DEBUG
-  fprintf(stderr, _("Current locale settings: %s\n"), setlocale(LC_ALL, NULL));
+  fprintf(stderr, _("Current locale settings: %1$s\n"), setlocale(LC_ALL, NULL));
 #endif
 
   /* init global buffers */
@@ -199,16 +199,16 @@ void main_prog(void *closure, int argc, char *argv[])
    * we can take advantage of that.  */
   scm_tmp = scm_sys_search_load_path (scm_from_utf8_string ("gschem.scm"));
   if (scm_is_false (scm_tmp)) {
-    s_log_message (_("Couldn't find init scm file [%s]\n"), "gschem.scm");
+    s_log_message (_("Couldn't find init scm file [%1$s]\n"), "gschem.scm");
   }
   input_str = scm_to_utf8_string (scm_tmp);
   toplevel = s_toplevel_new ();
   if (g_read_file(toplevel, input_str, NULL)) {
-    s_log_message(_("Read init scm file [%s]\n"), input_str);
+    s_log_message(_("Read init scm file [%1$s]\n"), input_str);
   } else {
     /*! \todo These two messages are the same. Should be
      * integrated. */
-    s_log_message(_("Failed to read init scm file [%s]\n"),
+    s_log_message(_("Failed to read init scm file [%1$s]\n"),
                   input_str);
   }
   free (input_str); /* M'allocated by scm_to_utf8_string() */

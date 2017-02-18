@@ -95,7 +95,7 @@ s_symstruct_print(SYMCHECK *s_current)
       msg = (char *) list->data;     
       /* printf("found info: %s\n", msg); */
       if (msg) { 
-        s_log_message(_("Info: %s"), msg);
+        s_log_message(_("Info: %1$s"), msg);
         g_free(msg);
       }
 
@@ -110,7 +110,7 @@ s_symstruct_print(SYMCHECK *s_current)
      
       /* printf("found warning: %s\n", msg); */
       if (msg) { 
-        s_log_message(_("Warning: %s"), msg);
+        s_log_message(_("Warning: %1$s"), msg);
         g_free(msg);
       }
 
@@ -125,7 +125,7 @@ s_symstruct_print(SYMCHECK *s_current)
      
       /* printf("found error: %s\n", msg); */
       if (msg && verbose_mode) { 
-        s_log_message(_("ERROR: %s"), msg);
+        s_log_message(_("ERROR: %1$s"), msg);
         g_free(msg);
       }
 

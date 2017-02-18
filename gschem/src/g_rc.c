@@ -104,11 +104,11 @@ SCM g_rc_gschem_version(SCM scm_version)
     sourcefile = scm_to_utf8_string (rc_filename);
     scm_dynwind_free (sourcefile);
     fprintf(stderr,
-            _("You are running gEDA/gaf version [%s%s.%s],\n"),
+            _("You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"),
             PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
             PACKAGE_DATE_VERSION);
     fprintf(stderr,
-            _("but you have a version [%s] gschemrc file:\n[%s]\n"),
+            _("but you have a version [%1$s] gschemrc file:\n[%2$s]\n"),
             version, sourcefile);
     fprintf(stderr,
             _("Please be sure that you have the latest rc file.\n"));
@@ -237,7 +237,7 @@ SCM g_rc_text_size(SCM size)
   val = scm_to_int (size);
   if (val == 0) {
     fprintf(stderr,
-            _("Invalid size [%d] passed to text-size\n"),
+            _("Invalid size [%1$d] passed to text-size\n"),
             val);
     val = 10; /* absolute default */
   }
@@ -280,7 +280,7 @@ SCM g_rc_snap_size(SCM size)
 
   val = scm_to_int (size);
   if (val == 0) {
-    fprintf(stderr, _("Invalid size [%d] passed to snap-size\n"),
+    fprintf(stderr, _("Invalid size [%1$d] passed to snap-size\n"),
             val);
     val = 100; /* absolute default */
   }
@@ -616,7 +616,7 @@ SCM g_rc_undo_levels(SCM levels)
   val = scm_to_int (levels);
 
   if (val == 0) {
-    fprintf(stderr, _("Invalid num levels [%d] passed to undo-levels\n"),
+    fprintf(stderr, _("Invalid num levels [%1$d] passed to undo-levels\n"),
             val);
     val = 10; /* absolute default */
   }
@@ -827,7 +827,7 @@ SCM g_rc_bus_ripper_size(SCM size)
   val = scm_to_int (size);
 
   if (val == 0) {
-    fprintf(stderr, _("Invalid size [%d] passed to bus-ripper-size\n"),
+    fprintf(stderr, _("Invalid size [%1$d] passed to bus-ripper-size\n"),
             val);
     val = 200; /* absolute default */
   }
@@ -927,7 +927,7 @@ SCM g_rc_dots_grid_dot_size (SCM dotsize)
   val = scm_to_int (dotsize);
 
   if (val <= 0) {
-    fprintf(stderr, _("Invalid dot size [%d] passed to dots-grid-dot-size\n"),
+    fprintf(stderr, _("Invalid dot size [%1$d] passed to dots-grid-dot-size\n"),
             val);
     val = 1; /* absolute default */
   }
@@ -968,7 +968,7 @@ SCM g_rc_dots_grid_fixed_threshold (SCM spacing)
   val = scm_to_int (spacing);
 
   if (val <= 0) {
-    fprintf(stderr, _("Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"),
+    fprintf(stderr, _("Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"),
             val);
     val = 10; /* absolute default */
   }
@@ -994,7 +994,7 @@ SCM g_rc_mesh_grid_display_threshold (SCM spacing)
   val = scm_to_int (spacing);
 
   if (val <= 0) {
-    fprintf (stderr, _("Invalid pixel spacing [%d] passed to "
+    fprintf (stderr, _("Invalid pixel spacing [%1$d] passed to "
                        "mesh-grid-display-threshold\n"), val);
     val = 3; /* absolute default */
   }
@@ -1019,7 +1019,7 @@ SCM g_rc_add_attribute_offset(SCM offset)
   val = scm_to_int (offset);
 
   if (val < 0) {
-    fprintf(stderr, _("Invalid offset [%d] passed to add-attribute-offset\n"),
+    fprintf(stderr, _("Invalid offset [%1$d] passed to add-attribute-offset\n"),
             val);
     val = 50; /* absolute default */
   }
@@ -1043,7 +1043,7 @@ SCM g_rc_auto_save_interval(SCM seconds)
   val = scm_to_int (seconds);
 
   if (val < 0) {
-    fprintf(stderr, _("Invalid number of seconds [%d] passed to auto-save-interval\n"),
+    fprintf(stderr, _("Invalid number of seconds [%1$d] passed to auto-save-interval\n"),
             val);
     val = 120; /* absolute default */
   }
@@ -1067,7 +1067,7 @@ SCM g_rc_mousepan_gain(SCM gain)
   val = scm_to_int (gain);
 
   if (val <= 0) {
-    fprintf(stderr, _("Invalid gain [%d] passed to mousepan-gain\n"),
+    fprintf(stderr, _("Invalid gain [%1$d] passed to mousepan-gain\n"),
             val);
     val = 5; /* absolute default */
   }
@@ -1090,7 +1090,7 @@ SCM g_rc_keyboardpan_gain(SCM gain)
   val = scm_to_int (gain);
 
   if (val <= 0) {
-    fprintf(stderr, _("Invalid gain [%d] passed to keyboardpan-gain\n"),
+    fprintf(stderr, _("Invalid gain [%1$d] passed to keyboardpan-gain\n"),
             val);
     val = 20; /* absolute default */
   }
@@ -1114,7 +1114,7 @@ SCM g_rc_select_slack_pixels(SCM pixels)
   val = scm_to_int (pixels);
 
   if (val <= 0) {
-    fprintf(stderr, _("Invalid number of pixels [%d] passed to select-slack-pixels\n"),
+    fprintf(stderr, _("Invalid number of pixels [%1$d] passed to select-slack-pixels\n"),
             val);
     val = 4; /* absolute default */
   }
@@ -1140,7 +1140,7 @@ SCM g_rc_zoom_gain(SCM gain)
   /* Allow -ve numbers in case the user wishes to reverse zoom direction,
    * but don't allow zero gain as this would disable the zoom action */
   if (val == 0) {
-    fprintf(stderr, _("Invalid gain [%d] passed to zoom-gain\n"), val);
+    fprintf(stderr, _("Invalid gain [%1$d] passed to zoom-gain\n"), val);
     val = 20; /* absolute default */
   }
 
@@ -1165,7 +1165,7 @@ SCM g_rc_scrollpan_steps(SCM steps)
   /* Allow -ve numbers in case the user wishes to reverse scroll direction,
    * but don't allow zero steps as this would cause a division by zero error */
   if (val == 0) {
-    fprintf(stderr, _("Invalid number of steps [%d] scrollpan-steps\n"), val);
+    fprintf(stderr, _("Invalid number of steps [%1$d] scrollpan-steps\n"), val);
     val = 8; /* absolute default */
   }
 

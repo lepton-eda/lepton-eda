@@ -108,7 +108,7 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
 
   /* is the object already part of the list ? */
   if (g_list_find (object->attribs, attrib)) {
-    g_warning (_("Attribute [%s] already attached\n"),
+    g_warning (_("Attribute [%1$s] already attached\n"),
                geda_text_object_get_string (attrib));
     return;
   }
@@ -119,7 +119,7 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
   }
 
   if (attrib->attached_to != NULL) {
-    g_warning (_("Attempt to attach attribute [%s] to more than one object\n"),
+    g_warning (_("Attempt to attach attribute [%1$s] to more than one object\n"),
                 attrib->text->string);
     return;
   }
@@ -189,9 +189,9 @@ void o_attrib_print(GList *attributes)
 
   while (a_iter != NULL) {
     a_current = a_iter->data;
-    printf("Attribute points to: %s\n", a_current->name);
+    printf("Attribute points to: %1$s\n", a_current->name);
     if (a_current->text) {
-      printf("\tText is: %s\n", geda_text_object_get_string (a_current));
+      printf("\tText is: %1$s\n", geda_text_object_get_string (a_current));
     }
 
     a_iter = g_list_next (a_iter);

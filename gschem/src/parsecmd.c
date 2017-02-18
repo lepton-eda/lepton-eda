@@ -74,7 +74,7 @@ static void
 usage(char *cmd)
 {
   printf(_(
-"Usage: %s [OPTION ...] [--] [FILE ...]\n"
+"Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
 "\n"
 "Interactively edit gEDA schematics or symbols.  If one or more FILEs\n"
 "are specified, open them for editing; otherwise, create a new, empty\n"
@@ -108,7 +108,7 @@ static void
 version ()
 {
   printf(_(
-"gEDA %s (g%.7s)\n"
+"gEDA %1$s (g%2$.7s)\n"
 "Copyright (C) 1998-2012 gEDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"

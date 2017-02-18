@@ -214,7 +214,7 @@ void s_object_replace_attrib_in_object(TOPLEVEL *toplevel,
   /* if we get here, it's because we have failed to find the attrib on the component.
    * This is an error condition. */
   fprintf(stderr,
-	 _("In s_object_replace_attrib_in_object, we have failed to find the attrib %s on the component.  Exiting . . .\n"),
+	 _("In s_object_replace_attrib_in_object, we have failed to find the attrib %1$s on the component.  Exiting . . .\n"),
 	 new_attrib_name);
   exit(-1);
 }
@@ -254,7 +254,7 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
 	/* We've found the attrib.  Delete it and then return. */
 
 #ifdef DEBUG
-	printf("In s_object_remove_attrib_in_object, removing attrib with name = %s\n", old_attrib_name);
+	printf("In s_object_remove_attrib_in_object, removing attrib with name = %1$s\n", old_attrib_name);
 #endif
 
 	attribute_object = a_current;
@@ -273,7 +273,7 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
   /* if we get here, it's because we have failed to find the attrib on the component.
    * This is an error condition. */
   fprintf(stderr,
-	 _("In s_object_remove_attrib_in_object, we have failed to find the attrib %s on the component.  Exiting . . .\n"),
+	 _("In s_object_remove_attrib_in_object, we have failed to find the attrib %1$s on the component.  Exiting . . .\n"),
 	 new_attrib_name);
   exit(-1);
 }

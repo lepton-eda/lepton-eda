@@ -206,7 +206,7 @@ s_net_name_search (NET * net_head)
 			if (!s_rename_search
 			    (name, n_current->net_name, TRUE)) {
 			    fprintf(stderr,
-				    _("Found duplicate net name, renaming [%s] to [%s]\n"),
+				    _("Found duplicate net name, renaming [%1$s] to [%2$s]\n"),
 				    name, n_current->net_name);
 			    s_rename_add(name, n_current->net_name);
 			    name = n_current->net_name;
@@ -243,7 +243,7 @@ s_net_name_search (NET * net_head)
 			if (!s_rename_search
 			    (name, n_current->net_name, TRUE)) {
 			    fprintf(stderr,
-				    _("Found duplicate net name, renaming [%s] to [%s]\n"),
+				    _("Found duplicate net name, renaming [%1$s] to [%2$s]\n"),
 				    name, n_current->net_name);
 
 			    s_rename_add(name, n_current->net_name);
@@ -351,7 +351,7 @@ s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type,
         unnamed_string = default_bus_name;
         break;
       default:
-        g_critical (_("s_net_name: incorrect connectivity type %i\n"), type);
+        g_critical (_("s_net_name: incorrect connectivity type %1$i\n"), type);
         return NULL;
     }
 

@@ -438,7 +438,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
            *  completely? In any case, failing gracefully is better
            *  than killing the program, which is what this used to
            *  do... */
-          g_critical (_("o_save_objects: object %p has unknown type '%c'\n"),
+          g_critical (_("o_save_objects: object %1$p has unknown type '%2$c'\n"),
                       o_current, o_current->type);
           /* Dump string built so far */
           g_string_free (acc, TRUE);

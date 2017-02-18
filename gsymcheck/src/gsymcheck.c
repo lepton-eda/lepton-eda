@@ -109,7 +109,7 @@ main_prog(void *closure, int argc, char *argv[])
       g_error_free (err);
       exit(2);
     } else {
-      g_message (_("Loaded file [%s]\n"), filename);
+      g_message (_("Loaded file [%1$s]\n"), filename);
     }
     i++;
     g_free (filename);

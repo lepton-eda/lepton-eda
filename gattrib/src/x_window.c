@@ -296,7 +296,7 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar)
   gtk_ui_manager_add_ui_from_file(ui, menu_file, &error);
   if(error != NULL) {
     /* An error occured, terminate */
-    fprintf(stderr, _("Error loading %s:\n%s\n"), menu_file, error->message);
+    fprintf(stderr, _("Error loading %1$s:\n%2$s\n"), menu_file, error->message);
     exit(1);
   }
 

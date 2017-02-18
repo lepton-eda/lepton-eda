@@ -77,7 +77,7 @@ usage (void)
 "  config         Edit gEDA configuration\n"
 "  export         Export gEDA files in various image formats.\n"
 "\n"
-"Please report bugs to %s.\n"),
+"Please report bugs to %1$s.\n"),
 PACKAGE_BUGREPORT);
   exit (0);
 }
@@ -86,7 +86,7 @@ PACKAGE_BUGREPORT);
 static void
 version (void)
 {
-  printf(_("gEDA/gaf %s (g%.7s)\n"
+  printf(_("gEDA/gaf %1$s (g%2$.7s)\n"
 "Copyright (C) 1998-2012 gEDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
@@ -164,7 +164,7 @@ main (int argc, char **argv)
   }
   if (cmd_func == NULL) {
     fprintf (stderr,
-             _("ERROR: Unrecognised command `%s'.\n"
+             _("ERROR: Unrecognised command `%1$s'.\n"
                "\n"
                "Run `gaf --help' for more information.\n"),
              cmd);

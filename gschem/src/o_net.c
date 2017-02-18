@@ -1066,7 +1066,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
                               o_complex_promote_attribs (page->toplevel, new_obj));
           s_page_append (page->toplevel, page, new_obj);
         } else {
-          s_log_message(_("Bus ripper symbol [%s] was not found in any component library\n"),
+          s_log_message(_("Bus ripper symbol [%1$s] was not found in any component library\n"),
                         page->toplevel->bus_ripper_symname);
         }
       }

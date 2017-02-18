@@ -356,7 +356,7 @@ update_disp_string (OBJECT *object)
         if (name[0] != '\0') {
           text->disp_string = g_strdup (name);
         } else {
-          g_critical ("Got an improper attribute: %s\n",
+          g_critical ("Got an improper attribute: %1$s\n",
                       text->string);
           text->disp_string = g_strdup ("invalid");
         }
@@ -366,7 +366,7 @@ update_disp_string (OBJECT *object)
         if (value[0] != '\0') {
           text->disp_string = g_strdup(value);
         } else {
-          g_critical ("Got an improper attribute: %s\n",
+          g_critical ("Got an improper attribute: %1$s\n",
                       text->string);
           text->disp_string = g_strdup ("invalid");
         }
@@ -517,15 +517,15 @@ o_text_read (TOPLEVEL *toplevel,
   }
 
   if (size < MINIMUM_TEXT_SIZE) {
-    s_log_message (_("Found an invalid text size [ %s ]\n"), first_line);
+    s_log_message (_("Found an invalid text size [ %1$s ]\n"), first_line);
     size = DEFAULT_TEXT_SIZE;
-    s_log_message (_("Setting text size to %d\n"), size);
+    s_log_message (_("Setting text size to %1$d\n"), size);
   }
 
   if (!geda_angle_is_ortho (angle)) {
-    s_log_message (_("Found an unsupported text angle [ %s ]\n"), first_line);
+    s_log_message (_("Found an unsupported text angle [ %1$s ]\n"), first_line);
     angle = geda_angle_make_ortho (angle);
-    s_log_message (_("Setting angle to %d\n"), angle);
+    s_log_message (_("Setting angle to %1$d\n"), angle);
   }
 
   switch(alignment) {
@@ -542,7 +542,7 @@ o_text_read (TOPLEVEL *toplevel,
     break;
 
     default:
-      s_log_message (_("Found an unsupported text alignment [ %s ]\n"),
+      s_log_message (_("Found an unsupported text alignment [ %1$s ]\n"),
                      first_line);
       alignment = LOWER_LEFT;
       s_log_message(_("Setting alignment to LOWER_LEFT\n"));
@@ -550,7 +550,7 @@ o_text_read (TOPLEVEL *toplevel,
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    s_log_message(_("Found an invalid color [ %s ]\n"), first_line);
+    s_log_message(_("Found an invalid color [ %1$s ]\n"), first_line);
     color = DEFAULT_COLOR;
     s_log_message(_("Setting color to default color\n"));
   }
@@ -565,7 +565,7 @@ o_text_read (TOPLEVEL *toplevel,
 
     if (line == NULL) {
       g_string_free (textstr, TRUE);
-      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Unexpected end-of-file after %d lines"), i);
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Unexpected end-of-file after %1$d lines"), i);
       return NULL;
     }
 
@@ -583,7 +583,7 @@ o_text_read (TOPLEVEL *toplevel,
                             "UTF-8", "ISO_8859-15",
                             NULL, NULL, NULL);
     if (tmp == NULL) {
-      fprintf (stderr, "Failed to convert text string to UTF-8: %s.\n",
+      fprintf (stderr, "Failed to convert text string to UTF-8: %1$s.\n",
                string);
     } else {
       /* successfully converted string, now use tmp as string */

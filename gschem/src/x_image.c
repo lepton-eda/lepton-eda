@@ -273,7 +273,7 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
     pixbuf = x_image_get_pixbuf(w_current, width, height);
     if (pixbuf != NULL) {
       if (!gdk_pixbuf_save(pixbuf, filename, filetype, &gerror, NULL)) {
-        s_log_message(_("x_image_lowlevel: Unable to write %s file %s.\n"),
+        s_log_message(_("x_image_lowlevel: Unable to write %1$s file %2$s.\n"),
             filetype, filename);
         s_log_message("%s", gerror->message);
 
@@ -283,7 +283,7 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
             | GTK_DIALOG_DESTROY_WITH_PARENT,
             GTK_MESSAGE_ERROR,
             GTK_BUTTONS_OK,
-            _("There was the following error when saving image with type %s to filename:\n%s\n\n%s.\n"),
+            _("There was the following error when saving image with type %1$s to filename:\n%2$s\n\n%3$s.\n"),
             filetype, filename, gerror->message
             );
 
@@ -302,9 +302,9 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
       }
       else {
         if (toplevel->image_color == TRUE) {
-          s_log_message(_("Wrote color image to [%s] [%d x %d]\n"), filename, width, height);
+          s_log_message(_("Wrote color image to [%1$s] [%2$d x %3$d]\n"), filename, width, height);
         } else {
-          s_log_message(_("Wrote black and white image to [%s] [%d x %d]\n"), filename, width, height);
+          s_log_message(_("Wrote black and white image to [%1$s] [%2$d x %3$d]\n"), filename, width, height);
         }
       }
       g_free(filetype);

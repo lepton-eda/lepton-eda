@@ -338,7 +338,7 @@ s_hierarchy_traversepages (TOPLEVEL *toplevel, PAGE *p_current, gint flags)
       /* call the recursive function */
       s_hierarchy_traversepages (toplevel, child_page, flags | HIERARCHY_INNERLOOP);
     } else {
-      s_log_message (_("Failed to descend hierarchy into '%s': %s\n"),
+      s_log_message (_("Failed to descend hierarchy into '%1$s': %2$s\n"),
                      filename, err->message);
       g_error_free (err);
     }

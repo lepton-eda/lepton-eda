@@ -82,7 +82,7 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 	/* loop over all filenames */
 	while (current_filename != NULL) {
 
-	    s_log_message(_("Going to traverse source [%s]\n"),
+	    s_log_message(_("Going to traverse source [%1$s]\n"),
 			  current_filename);
 
 	    /* guts here */
@@ -101,9 +101,9 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
                                                   &err);
 
 	    if (child_page == NULL) {
-              g_warning (_("Failed to load subcircuit '%s': %s\n"),
+              g_warning (_("Failed to load subcircuit '%1$s': %s\n"),
                          current_filename, err->message);
-              fprintf(stderr, _("ERROR: Failed to load subcircuit '%s': %s\n"),
+              fprintf(stderr, _("ERROR: Failed to load subcircuit '%1$s': %s\n"),
                       current_filename, err->message);
               g_error_free (err);
               exit (2);
@@ -203,7 +203,7 @@ s_hierarchy_post_process (NETLIST * head)
 
 		    if (pl_current->pin_label == NULL) {
 			fprintf(stderr,
-				_("Found a pin [%s] on component [%s] which does not have a label!\n"),
+				_("Found a pin [%1$s] on component [%2$s] which does not have a label!\n"),
 				nl_current->component_uref,
 				pl_current->pin_number);
 		    } else {
@@ -227,7 +227,7 @@ s_hierarchy_post_process (NETLIST * head)
                                            source_net_name);
 			if (!did_work) {
 			    fprintf(stderr,
-				    _("Missing I/O symbol with refdes [%s] inside schematic for symbol [%s]\n"),
+				    _("Missing I/O symbol with refdes [%1$s] inside schematic for symbol [%2$s]\n"),
 				    pl_current->pin_label,
 				    nl_current->component_uref);
 
@@ -256,7 +256,7 @@ s_hierarchy_setup_rename (NETLIST *head, char *uref, char *label, char *new_name
     wanted_uref = s_hierarchy_create_uref (label, uref);
 
 #if DEBUG
-    printf("label: %s, uref: %s, wanted_uref: %s\n", label, uref,
+    printf("label: %1$s, uref: %2$s, wanted_uref: %3$s\n", label, uref,
 	   wanted_uref);
 #endif
 
