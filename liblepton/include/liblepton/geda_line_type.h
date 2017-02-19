@@ -20,9 +20,6 @@
 /*! \file geda_line_type.h
  */
 
-typedef enum _GedaLineType GedaLineType;
-typedef enum _GedaLineType OBJECT_TYPE;
-
 /*! \brief The line type of objects such as arcs, boxes, circles, and lines
  *
  *  The numeric values of this enumeration are used inside files and must be
@@ -37,3 +34,6 @@ enum _GedaLineType
   TYPE_PHANTOM,
   TYPE_ERASE
 };
+
+typedef enum _GedaLineType GedaLineType;
+typedef enum _GedaLineType OBJECT_TYPE;

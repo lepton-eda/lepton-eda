@@ -22,9 +22,6 @@
  *  \brief line end style for an open line of an object
  */
 
-typedef enum _GedaLineCapType GedaLineCapType;
-typedef enum _GedaLineCapType OBJECT_END;
-
 enum _GedaLineCapType
 {
   END_NONE,
@@ -32,3 +29,6 @@ enum _GedaLineCapType
   END_ROUND,
   END_VOID
 };
+
+typedef enum _GedaLineCapType GedaLineCapType;
+typedef enum _GedaLineCapType OBJECT_END;
