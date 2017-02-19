@@ -517,15 +517,15 @@ o_text_read (TOPLEVEL *toplevel,
   }
 
   if (size < MINIMUM_TEXT_SIZE) {
-    s_log_message (_("Found an invalid text size [ %1$s ]\n"), first_line);
+    s_log_message (_("Found an invalid text size [ %1$s ]"), first_line);
     size = DEFAULT_TEXT_SIZE;
-    s_log_message (_("Setting text size to %1$d\n"), size);
+    s_log_message (_("Setting text size to %1$d."), size);
   }
 
   if (!geda_angle_is_ortho (angle)) {
-    s_log_message (_("Found an unsupported text angle [ %1$s ]\n"), first_line);
+    s_log_message (_("Found an unsupported text angle [ %1$s ]"), first_line);
     angle = geda_angle_make_ortho (angle);
-    s_log_message (_("Setting angle to %1$d\n"), angle);
+    s_log_message (_("Setting angle to %1$d."), angle);
   }
 
   switch(alignment) {
@@ -542,17 +542,17 @@ o_text_read (TOPLEVEL *toplevel,
     break;
 
     default:
-      s_log_message (_("Found an unsupported text alignment [ %1$s ]\n"),
+      s_log_message (_("Found an unsupported text alignment [ %1$s ]"),
                      first_line);
       alignment = LOWER_LEFT;
-      s_log_message(_("Setting alignment to LOWER_LEFT\n"));
+      s_log_message(_("Setting alignment to LOWER_LEFT."));
       break;
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    s_log_message(_("Found an invalid color [ %1$s ]\n"), first_line);
+    s_log_message(_("Found an invalid color [ %1$s ]"), first_line);
     color = DEFAULT_COLOR;
-    s_log_message(_("Setting color to default color\n"));
+    s_log_message(_("Setting color to default color."));
   }
 
   g_assert(num_lines && num_lines > 0);

@@ -197,7 +197,7 @@ s_hierarchy_find_up_page (GedaPageList *page_list, PAGE *current_page)
 {
   g_return_val_if_fail (current_page != NULL, NULL);
   if (current_page->up < 0) {
-    s_log_message(_("There are no schematics above the current one!\n"));
+    s_log_message(_("There are no schematics above the current one!"));
     return NULL;
   }
 
@@ -338,7 +338,7 @@ s_hierarchy_traversepages (TOPLEVEL *toplevel, PAGE *p_current, gint flags)
       /* call the recursive function */
       s_hierarchy_traversepages (toplevel, child_page, flags | HIERARCHY_INNERLOOP);
     } else {
-      s_log_message (_("Failed to descend hierarchy into '%1$s': %2$s\n"),
+      s_log_message (_("Failed to descend hierarchy into '%1$s': %2$s"),
                      filename, err->message);
       g_error_free (err);
     }

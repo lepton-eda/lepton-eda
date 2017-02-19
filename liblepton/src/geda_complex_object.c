@@ -590,9 +590,9 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
 
     default:
       s_log_message(_("Found a component with an invalid rotation "
-                      "[ %1$c %2$d %3$d %4$d %5$d %6$d %7$s ]\n"),
+                      "[ %1$c %2$d %3$d %4$d %5$d %6$d %7$s ]"),
                     type, x1, y1, selectable, angle, mirror, basename);
-      s_log_message (_("Setting angle to 0\n"));
+      s_log_message (_("Setting angle to 0."));
       angle = 0;
   }
 
@@ -605,9 +605,9 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
 
     default:
       s_log_message(_("Found a component with an invalid mirror flag "
-                      "[ %1$c %2$d %3$d %4$d %5$d %6$d %7$s ]\n"),
+                      "[ %1$c %2$d %3$d %4$d %5$d %6$d %7$s ]"),
                     type, x1, y1, selectable, angle, mirror, basename);
-      s_log_message (_("Setting mirror to 0\n"));
+      s_log_message (_("Setting mirror to 0."));
       mirror = 0;
   }
   if (strncmp(basename, "EMBEDDED", 8) == 0) {
@@ -931,11 +931,11 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
       if (inside)
       {
         s_log_message(_("WARNING: Symbol version parse error on refdes %1$s:\n"
-                        "\tCould not parse symbol file symversion=%2$s\n"),
+                        "\tCould not parse symbol file symversion=%2$s"),
                       refdes, inside);
       } else {
         s_log_message(_("WARNING: Symbol version parse error on refdes %1$s:\n"
-                        "\tCould not parse symbol file symversion=\n"),
+                        "\tCould not parse symbol file symversion="),
                       refdes);
       }
       goto done;
@@ -951,7 +951,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
     if (outside_value == 0 && outside == err_check)
     {
       s_log_message(_("WARNING: Symbol version parse error on refdes %1$s:\n"
-                      "\tCould not parse attached symversion=%2$s\n"),
+                      "\tCould not parse attached symversion=%2$s"),
                     refdes, outside);
       goto done;
     }
@@ -977,7 +977,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   {
     s_log_message(_("WARNING: Symbol version oddity on refdes %1$s:\n"
                     "\tsymversion=%2$s attached to instantiated symbol, "
-                    "but no symversion= inside symbol file\n"),
+                    "but no symversion= inside symbol file."),
                   refdes, outside);
     goto done;
   }
@@ -991,7 +991,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
 
     s_log_message(_("WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
                     "\tSymbol in library is newer than "
-                    "instantiated symbol\n"),
+                    "instantiated symbol."),
                   refdes, object->complex_basename);
 
     /* break up the version values into major.minor numbers */
@@ -1018,7 +1018,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
     {
       char* refdes_copy;
       s_log_message(_("\tMAJOR VERSION CHANGE (file %1$.3f, "
-                      "instantiated %2$.3f, %3$s)!\n"),
+                      "instantiated %2$.3f, %3$s)!"),
                     inside_value, outside_value, refdes);
 
       /* add the refdes to the major_changed_refdes GList */
@@ -1036,7 +1036,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
     if (inside_minor > outside_minor)
     {
       s_log_message(_("\tMinor version change (file %1$.3f, "
-                      "instantiated %2$.3f)\n"),
+                      "instantiated %2$.3f)"),
                     inside_value, outside_value);
     }
 
@@ -1048,7 +1048,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   {
     s_log_message(_("WARNING: Symbol version oddity on refdes %1$s:\n"
                     "\tInstantiated symbol is newer than "
-                    "symbol in library\n"),
+                    "symbol in library."),
                   refdes);
     goto done;
   }

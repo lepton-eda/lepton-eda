@@ -358,16 +358,16 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
 
   if (whichend == -1) {
     s_log_message (_("Found a pin which did not have the whichend field set.\n"
-                     "Verify and correct manually.\n"));
+                     "Verify and correct manually."));
   } else if (whichend < -1 || whichend > 1) {
-    s_log_message (_("Found an invalid whichend on a pin (reseting to zero): %d\n"),
+    s_log_message (_("Found an invalid whichend on a pin (reseting to zero): %d"),
                    whichend);
     whichend = 0;
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    s_log_message (_("Found an invalid color [ %1$s ]\n"), buf);
-    s_log_message (_("Setting color to default color\n"));
+    s_log_message (_("Found an invalid color [ %1$s ]"), buf);
+    s_log_message (_("Setting color to default color."));
     color = DEFAULT_COLOR;
   }
 

@@ -211,8 +211,8 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
    * Checks if the required color is valid.
    */
   if (color < 0 || color > MAX_COLORS) {
-    s_log_message (_("Found an invalid color [ %1$s ]\n"), first_line);
-    s_log_message (_("Setting color to default color\n"));
+    s_log_message (_("Found an invalid color [ %1$s ]"), first_line);
+    s_log_message (_("Setting color to default color."));
     color = DEFAULT_COLOR;
   }
 
