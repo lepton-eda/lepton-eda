@@ -149,7 +149,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
   s_log_init ("gattrib");
 
   s_log_message
-    (_("gEDA/gattrib version %1$s%2$s.%3$s\ngEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\nThis is free software, and you are welcome to redistribute it under certain\nconditions; please see the COPYING file for more details.\n\n"),
+    (_("gEDA/gattrib version %1$s%2$s.%3$s\ngEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\nThis is free software, and you are welcome to redistribute it under certain\nconditions; please see the COPYING file for more details.\n"),
      PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
      PACKAGE_DATE_VERSION);
 
