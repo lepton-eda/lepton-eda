@@ -187,7 +187,7 @@ void main_prog(void *closure, int argc, char *argv[])
         "gEDA/gnetlist version %s%s.%s\n"
         "gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"
         "This is free software, and you are welcome to redistribute it under certain\n"
-        "conditions; please see the COPYING file for more details.\n\n"),
+        "conditions; please see the COPYING file for more details.\n"),
         PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
 
     /* register guile (scheme) functions */
