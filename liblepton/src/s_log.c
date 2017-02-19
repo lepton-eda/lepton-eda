@@ -250,14 +250,17 @@ static void s_log_handler (const gchar *log_domain,
 			   const gchar *message,
 			   gpointer user_data)
 {
-  int status;
-
   if (do_logging == FALSE) {
     return;
   }
   g_return_if_fail (logfile_fd != -1);
-  
-  status = write (logfile_fd, message, strlen (message));
+
+  size_t len = strlen (message);
+  int status = 0;
+  if (status >= 0)
+    status = write (logfile_fd, message, len);
+  if (status >= 0)
+    status = write (logfile_fd, "\n", 1);
   if (status == -1) {
     fprintf(stderr, "Could not write message to log file\n");
   }
