@@ -169,6 +169,8 @@ AX_OPTION_XDG_DB
 AX_OPTION_STROKE
 # gattrib
 AX_OPTION_GATTRIB
+# geda-gaf compatibility symlinks
+AX_OPTION_COMPAT_SYMLINKS
 
 #####################################################################
 # Tool-specific setup
