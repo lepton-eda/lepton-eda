@@ -27,6 +27,8 @@
 #include <libguile.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+G_BEGIN_DECLS
+
 #include <liblepton/defines.h>
 
 #include <liblepton/geda_color.h>
@@ -76,6 +78,9 @@
 #include <liblepton/o_types.h>
 #include <liblepton/funcs.h>
 #include <liblepton/prototype.h>
+
+G_END_DECLS
+
 #include <liblepton/edaconfig.h>
 #include <liblepton/edaerrors.h>
 #include <liblepton/edapaths.h>
