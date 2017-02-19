@@ -918,7 +918,7 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
   if (filename != NULL) {
     GError *err = NULL;
     if (!quiet_mode)
-      s_log_message (_("Loading schematic [%1$s]\n"), fn);
+      s_log_message (_("Loading schematic [%1$s]"), fn);
 
     if (!f_open (toplevel, page, (gchar *) fn, &err)) {
       GtkWidget *dialog;
@@ -940,7 +940,7 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
     }
   } else {
     if (!quiet_mode)
-      s_log_message (_("New file [%s]\n"),
+      s_log_message (_("New file [%s]"),
                      s_page_get_filename (toplevel->page_current));
 
     g_run_hook_page (w_current, "%new-page-hook", toplevel->page_current);
@@ -1114,7 +1114,7 @@ x_window_close_page (GschemToplevel *w_current, PAGE *page)
   }
 
   s_log_message (page->CHANGED ?
-                 _("Discarding page [%1$s]\n") : _("Closing [%1$s]\n"),
+                 _("Discarding page [%1$s]") : _("Closing [%1$s]"),
                  s_page_get_filename (page));
   /* remove page from toplevel list of page and free */
   s_page_delete (toplevel, page);

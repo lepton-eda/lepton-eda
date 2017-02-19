@@ -205,7 +205,7 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(file_chooser),
         new_image_filename);
   } else {
-    s_log_message("x_image_update_dialog_filename: No parent file chooser found!.\n");
+    s_log_message("x_image_update_dialog_filename: No parent file chooser found!.");
   }
 
   g_free(file_name);
@@ -273,7 +273,7 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
     pixbuf = x_image_get_pixbuf(w_current, width, height);
     if (pixbuf != NULL) {
       if (!gdk_pixbuf_save(pixbuf, filename, filetype, &gerror, NULL)) {
-        s_log_message(_("x_image_lowlevel: Unable to write %1$s file %2$s.\n"),
+        s_log_message(_("x_image_lowlevel: Unable to write %1$s file %2$s."),
             filetype, filename);
         s_log_message("%s", gerror->message);
 
@@ -302,9 +302,9 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
       }
       else {
         if (toplevel->image_color == TRUE) {
-          s_log_message(_("Wrote color image to [%1$s] [%2$d x %3$d]\n"), filename, width, height);
+          s_log_message(_("Wrote color image to [%1$s] [%2$d x %3$d]"), filename, width, height);
         } else {
-          s_log_message(_("Wrote black and white image to [%1$s] [%2$d x %3$d]\n"), filename, width, height);
+          s_log_message(_("Wrote black and white image to [%1$s] [%2$d x %3$d]"), filename, width, height);
         }
       }
       g_free(filetype);
@@ -312,7 +312,7 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
         g_object_unref(pixbuf);
     }
     else {
-      s_log_message(_("x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"));
+      s_log_message(_("x_image_lowlevel: Unable to get pixbuf from gschem's window."));
     }
   }
 

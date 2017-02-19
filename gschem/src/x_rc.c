@@ -37,7 +37,7 @@ x_rc_parse_gschem_error (GError **err)
   if (*err == NULL) {
     /* Log message */
     s_log_message (_("ERROR: An unknown error occurred while parsing "
-                     "configuration files.\n"));
+                     "configuration files."));
 
     /* Dialog message */
     msg2 =
@@ -53,7 +53,7 @@ x_rc_parse_gschem_error (GError **err)
     }
 
     /* Log message */
-    s_log_message (_("ERROR: %1$s\n"), (*err)->message);
+    s_log_message (_("ERROR: %1$s"), (*err)->message);
 
     /* Dialog message */
     msg2 = g_strdup_printf (_("%1$s\n\n"

@@ -292,7 +292,7 @@ x_fileselect_save (GschemToplevel *w_current)
                                 filename);
       gtk_window_set_title (GTK_WINDOW (checkdialog), _("Overwrite file?"));
       if (gtk_dialog_run (GTK_DIALOG (checkdialog)) != GTK_RESPONSE_YES) {
-        s_log_message (_("Save cancelled on user request\n"));
+        s_log_message (_("Save cancelled on user request"));
         g_free (filename);
         filename = NULL;
       }

@@ -161,7 +161,7 @@ void main_prog(void *closure, int argc, char *argv[])
   s_log_message(
                 _("This is free software, and you are welcome to redistribute it under certain\n"));
   s_log_message(
-                _("conditions; please see the COPYING file for more details.\n\n"));
+                _("conditions; please see the COPYING file for more details.\n"));
 
 #if defined(__MINGW32__) && defined(DEBUG)
   fprintf(stderr, _("This is the MINGW32 port.\n"));
@@ -199,16 +199,16 @@ void main_prog(void *closure, int argc, char *argv[])
    * we can take advantage of that.  */
   scm_tmp = scm_sys_search_load_path (scm_from_utf8_string ("gschem.scm"));
   if (scm_is_false (scm_tmp)) {
-    s_log_message (_("Couldn't find init scm file [%1$s]\n"), "gschem.scm");
+    s_log_message (_("Couldn't find init scm file [%1$s]"), "gschem.scm");
   }
   input_str = scm_to_utf8_string (scm_tmp);
   toplevel = s_toplevel_new ();
   if (g_read_file(toplevel, input_str, NULL)) {
-    s_log_message(_("Read init scm file [%1$s]\n"), input_str);
+    s_log_message(_("Read init scm file [%1$s]"), input_str);
   } else {
     /*! \todo These two messages are the same. Should be
      * integrated. */
-    s_log_message(_("Failed to read init scm file [%1$s]\n"),
+    s_log_message(_("Failed to read init scm file [%1$s]"),
                   input_str);
   }
   free (input_str); /* M'allocated by scm_to_utf8_string() */

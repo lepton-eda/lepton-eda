@@ -59,7 +59,7 @@ void setup_script_selector (GschemToplevel *w_current)
     filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w_current->sowindow));
 
     if (!(g_file_test(filename, G_FILE_TEST_IS_DIR))) {
-      s_log_message(_("Executing guile script [%1$s]\n"), filename);
+      s_log_message(_("Executing guile script [%1$s]"), filename);
       g_read_file(w_current->toplevel, filename, NULL);
     }
     g_free (filename);
