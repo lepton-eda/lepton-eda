@@ -71,7 +71,7 @@ DEFINE_I_CALLBACK(file_new)
   g_return_if_fail (page != NULL);
 
   x_window_set_current_page (w_current, page);
-  s_log_message (_("New page created [%1$s]\n"), s_page_get_filename (page));
+  s_log_message (_("New page created [%1$s]"), s_page_get_filename (page));
 }
 
 /*! \todo Finish function documentation!!!
@@ -105,7 +105,7 @@ DEFINE_I_CALLBACK(file_new_window)
 
   x_window_set_current_page (w_current, page);
 
-  s_log_message (_("New Window created [%1$s]\n"), s_page_get_filename (page));
+  s_log_message (_("New Window created [%1$s]"), s_page_get_filename (page));
 }
 
 /*! \todo Finish function documentation!!!
@@ -284,7 +284,7 @@ DEFINE_I_CALLBACK(file_close)
 
   g_return_if_fail (w_current != NULL);
 
-  s_log_message(_("Closing Window\n"));
+  s_log_message(_("Closing Window"));
   x_window_close(w_current);
 }
 
@@ -804,19 +804,19 @@ DEFINE_I_CALLBACK(edit_translate)
   snap_mode = gschem_options_get_snap_mode (w_current->options);
 
   if (snap_mode == SNAP_OFF) {
-    s_log_message(_("WARNING: Do not translate with snap off!\n"));
+    s_log_message(_("WARNING: Do not translate with snap off!"));
     s_log_message(_("WARNING: Turning snap on and continuing "
-                  "with translate.\n"));
+                  "with translate."));
     gschem_options_set_snap_mode (w_current->options, SNAP_GRID);
     i_show_state(w_current, NULL); /* update status on screen */
   }
 
   if (gschem_options_get_snap_size (w_current->options) != 100) {
     s_log_message(_("WARNING: Snap grid size is "
-                  "not equal to 100!\n"));
+                  "not equal to 100!"));
     s_log_message(_("WARNING: If you are translating a symbol "
                   "to the origin, the snap grid size should be "
-                  "set to 100\n"));
+                  "set to 100"));
   }
 
   gtk_widget_show (w_current->translate_widget);
@@ -2119,7 +2119,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
     /* loop over all filenames */
     while(current_filename != NULL) {
       GError *err = NULL;
-      s_log_message(_("Searching for source [%1$s]\n"), current_filename);
+      s_log_message(_("Searching for source [%1$s]"), current_filename);
       child = s_hierarchy_down_schematic_single(gschem_toplevel_get_toplevel (w_current),
                                                 current_filename,
                                                 parent,
@@ -2152,7 +2152,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
                              "The gschem log may contain more information."),
                            current_filename, msg);
 
-        s_log_message(_("Failed to descend into '%1$s': %2$s\n"),
+        s_log_message(_("Failed to descend into '%1$s': %2$s"),
                       current_filename, msg);
 
         GtkWidget *dialog =
@@ -2228,14 +2228,14 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
   if (object != NULL) {
     /* only allow going into symbols */
     if (object->type == OBJ_COMPLEX) {
-      s_log_message(_("Searching for symbol [%1$s]\n"),
+      s_log_message(_("Searching for symbol [%1$s]"),
 		    object->complex_basename);
       sym = s_clib_get_symbol_by_name (object->complex_basename);
       if (sym == NULL)
 	return;
       if (s_clib_symbol_get_filename(sym) == NULL) {
 	s_log_message(_("Symbol is not a real file."
-			" Symbol cannot be loaded.\n"));
+			" Symbol cannot be loaded."));
 	return;
       }
       s_hierarchy_down_symbol(gschem_toplevel_get_toplevel (w_current), sym,
@@ -2272,7 +2272,7 @@ DEFINE_I_CALLBACK(hierarchy_up)
 
   up_page = s_hierarchy_find_up_page (gschem_toplevel_get_toplevel (w_current)->pages, page);
   if (up_page == NULL) {
-    s_log_message(_("Cannot find any schematics above the current one!\n"));
+    s_log_message(_("Cannot find any schematics above the current one!"));
   } else {
     if (page->CHANGED && !x_dialog_close_changed_page (w_current, page))
       return;
@@ -2626,10 +2626,10 @@ DEFINE_I_CALLBACK(options_afeedback)
 
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
     w_current->actionfeedback_mode = OUTLINE;
-    s_log_message(_("Action feedback mode set to OUTLINE\n"));
+    s_log_message(_("Action feedback mode set to OUTLINE"));
   } else {
     w_current->actionfeedback_mode = BOUNDINGBOX;
-    s_log_message(_("Action feedback mode set to BOUNDINGBOX\n"));
+    s_log_message(_("Action feedback mode set to BOUNDINGBOX"));
   }
   if (w_current->inside_action &&
       gschem_toplevel_get_toplevel (w_current)->page_current->place_list != NULL)
@@ -2653,10 +2653,10 @@ DEFINE_I_CALLBACK(options_grid)
   grid_mode = gschem_options_get_grid_mode (w_current->options);
 
   switch (grid_mode) {
-    case GRID_MODE_NONE: s_log_message (_("Grid OFF\n"));           break;
-    case GRID_MODE_DOTS: s_log_message (_("Dot grid selected\n"));  break;
-    case GRID_MODE_MESH: s_log_message (_("Mesh grid selected\n")); break;
-    default:             s_log_message (_("Invalid grid mode\n"));
+    case GRID_MODE_NONE: s_log_message (_("Grid OFF"));           break;
+    case GRID_MODE_DOTS: s_log_message (_("Dot grid selected"));  break;
+    case GRID_MODE_MESH: s_log_message (_("Mesh grid selected")); break;
+    default:             s_log_message (_("Invalid grid mode"));
   }
 }
 
@@ -2678,13 +2678,13 @@ DEFINE_I_CALLBACK(options_snap)
 
   switch (snap_mode) {
   case SNAP_OFF:
-    s_log_message(_("Snap OFF (CAUTION!)\n"));
+    s_log_message(_("Snap OFF (CAUTION!)"));
     break;
   case SNAP_GRID:
-    s_log_message(_("Snap ON\n"));
+    s_log_message(_("Snap ON"));
     break;
   case SNAP_RESNAP:
-    s_log_message(_("Snap back to the grid (CAUTION!)\n"));
+    s_log_message(_("Snap back to the grid (CAUTION!)"));
     break;
   default:
     g_critical("options_snap: toplevel->snap out of range: %1$d\n",
@@ -2713,9 +2713,9 @@ DEFINE_I_CALLBACK(options_rubberband)
   gschem_options_cycle_net_rubber_band_mode (w_current->options);
 
   if (gschem_options_get_net_rubber_band_mode (w_current->options)) {
-    s_log_message(_("Rubber band ON\n"));
+    s_log_message(_("Rubber band ON"));
   } else {
-    s_log_message(_("Rubber band OFF \n"));
+    s_log_message(_("Rubber band OFF"));
   }
 }
 
@@ -2734,10 +2734,10 @@ DEFINE_I_CALLBACK(options_magneticnet)
   gschem_options_cycle_magnetic_net_mode (w_current->options);
 
   if (gschem_options_get_magnetic_net_mode (w_current->options)) {
-    s_log_message(_("magnetic net mode: ON\n"));
+    s_log_message(_("magnetic net mode: ON"));
   }
   else {
-    s_log_message(_("magnetic net mode: OFF\n"));
+    s_log_message(_("magnetic net mode: OFF"));
   }
 
   i_show_state(w_current, NULL);
