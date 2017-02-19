@@ -62,7 +62,7 @@
 /*------------------------------------------------------------------
  * Gattrib specific includes
  *------------------------------------------------------------------*/
-#include <libgeda/libgeda.h>       /* geda library fcns  */
+#include <liblepton/liblepton.h>
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
@@ -115,7 +115,7 @@ void s_visibility_set_invisible() {
 			      LEAVE_NAME_VALUE_ALONE);
 	/* Now set cell in gtksheet to desired color */
 	/* Color names are defined 
-	 * in libgeda/include/colors.h */
+	 * in liblepton/include/colors.h */
 	x_gtksheet_set_cell_text_color(sheet, i, j, GREY); 
 
       }
@@ -182,7 +182,7 @@ void s_visibility_set_name_only() {
       for (j=col_start; j<=col_end; j++) {
 	s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_NAME);
 	/* Color names are defined 
-	 * in libgeda/include/colors.h */
+	 * in liblepton/include/colors.h */
 	x_gtksheet_set_cell_text_color(sheet, i, j, RED); 
 
       }
@@ -243,7 +243,7 @@ void s_visibility_set_value_only() {
       for (j=col_start; j<=col_end; j++) {
 	s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_VALUE);
 	/* Color names are defined 
-	 * in libgeda/include/colors.h */
+	 * in liblepton/include/colors.h */
 	x_gtksheet_set_cell_text_color(sheet, i, j, BLACK); 
 
       }
@@ -305,7 +305,7 @@ void s_visibility_set_name_and_value() {
       for (j=col_start; j<=col_end; j++) {
 	s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_NAME_VALUE);
 	/* Color names are defined 
-	 * in libgeda/include/colors.h */
+	 * in liblepton/include/colors.h */
 	x_gtksheet_set_cell_text_color(sheet, i, j, BLUE); 
 
       }

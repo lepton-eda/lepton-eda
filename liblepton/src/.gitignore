@@ -1,0 +1,9 @@
+*.lo
+.deps
+.libs
+Makefile
+Makefile.in
+liblepton.la
+*.o
+*.x
+*~

@@ -23,7 +23,7 @@
 
 #include <stdio.h>
 
-#include <libgeda/libgeda.h>
+#include <liblepton/liblepton.h>
 
 void s_log_update (const gchar *log_domain, GLogLevelFlags log_level,
                    const gchar *buf)

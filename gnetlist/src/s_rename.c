@@ -38,7 +38,7 @@
 #include <assert.h>
 #endif
 
-#include <libgeda/libgeda.h>
+#include <liblepton/liblepton.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"

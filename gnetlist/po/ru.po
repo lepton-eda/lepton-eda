@@ -4,12 +4,12 @@
 #
 # This file is distributed under the same license as the gEDA gnetlist package.
 #
-# Переводчикам: см. примечания в libgeda/po/ru.po
+# Переводчикам: см. примечания в liblepton/po/ru.po
 msgid ""
 msgstr ""
 "Project-Id-Version: geda gnetlist\n"
-"Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2017-01-26 16:40+0300\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2017-02-15 15:36+0300\n"
 "PO-Revision-Date: 2014-05-20 08:55+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA Developers\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gnetlist/src/gnetlist.c:171
+#: gnetlist/src/gnetlist.c:170
 #, c-format
 msgid ""
 "This is the MINGW32 port.\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Это версия для MINGW32.\n"
 "\n"
 
-#: gnetlist/src/gnetlist.c:188
+#: gnetlist/src/gnetlist.c:187
 #, c-format
 msgid ""
 "gEDA/gnetlist version %s%s.%s\n"
@@ -46,7 +46,7 @@ msgstr ""
 "\n"
 
 #: gnetlist/src/parsecmd.c:67
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Usage: %s [OPTION ...] [-g BACKEND] [--] FILE ...\n"
 "\n"
@@ -68,7 +68,7 @@ msgid ""
 "  -V, --version   Show version information.\n"
 "  --              Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs at <https://bugs.launchpad.net/geda>\n"
+"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
 "gEDA/gaf homepage: <http://www.geda-project.org/>\n"
 msgstr ""
 "Использование: %s [КЛЮЧ ...] [-g ДРАЙВЕР] [--] ФАЙЛ ...\n"
@@ -173,12 +173,12 @@ msgstr "Не удалось загрузить подсхему «%s»: %s\n"
 msgid "ERROR: Failed to load subcircuit '%s': %s\n"
 msgstr "ОШИБКА: Не удалось загрузить подсхему «%s»: %s\n"
 
-#: gnetlist/src/s_hierarchy.c:210
+#: gnetlist/src/s_hierarchy.c:206
 #, c-format
 msgid "Found a pin [%s] on component [%s] which does not have a label!\n"
 msgstr "Найден вывод «%s» компонента «%s» без атрибута «pinlabel»!\n"
 
-#: gnetlist/src/s_hierarchy.c:234
+#: gnetlist/src/s_hierarchy.c:230
 #, c-format
 msgid "Missing I/O symbol with refdes [%s] inside schematic for symbol [%s]\n"
 msgstr ""
@@ -243,28 +243,6 @@ msgstr "s_net_name: неверный тип соединения «%i»\n"
 msgid "Increase number of unnamed nets (s_net.c)\n"
 msgstr "Увеличьте количество безымянных соединений (в s_net.c)\n"
 
-#: gnetlist/src/s_rename.c:66
-#, c-format
-msgid "ERROR: Overwriting a valid rename list.\n"
-msgstr "ОШИБКА: Перезапись действующего списка переименований.\n"
-
-#: gnetlist/src/s_rename.c:146
-#, c-format
-msgid ""
-"WARNING: Trying to rename something twice:\n"
-"\t%s and %s\n"
-"are both a src and dest name\n"
-msgstr ""
-"ПРЕДУПРЕЖДЕНИЕ: Попытка двойного переименования:\n"
-"\t%s и %s\n"
-"оба являются именами источника и назначения\n"
-
-#: gnetlist/src/s_rename.c:147
-#, c-format
-msgid "This warning is okay if you have multiple levels of hierarchy!\n"
-msgstr ""
-"Это предупреждение несущественно, если имеется несколько уровней иерархии!\n"
-
 #: gnetlist/src/s_traverse.c:165
 #, c-format
 msgid ""
@@ -300,7 +278,7 @@ msgid "Found a possible net/pin infinite connection\n"
 msgstr ""
 "Обнаружено возможно бесконечное число подключений для вывода/соединения\n"
 
-#: gnetlist/scheme/gnetlist.scm:125
+#: gnetlist/scheme/gnetlist.scm:127
 #, scheme-format
 msgid ""
 "Possible attribute conflict for refdes: ~A\n"
@@ -308,36 +286,36 @@ msgid ""
 "values: ~A\n"
 msgstr ""
 
-#: gnetlist/scheme/gnetlist.scm:190
+#: gnetlist/scheme/gnetlist.scm:192
 #, scheme-format
 msgid "Uref ~a: Bad slot number: ~a.\n"
 msgstr ""
 
-#: gnetlist/scheme/gnetlist.scm:300
+#: gnetlist/scheme/gnetlist.scm:235
 msgid "Couldn't wrap string  at requested position\n"
 msgstr ""
 
-#: gnetlist/scheme/gnetlist.scm:331
+#: gnetlist/scheme/gnetlist.scm:266
 #, scheme-format
 msgid "WARNING: Found uref=~A"
 msgstr ""
 
-#: gnetlist/scheme/gnetlist.scm:334
+#: gnetlist/scheme/gnetlist.scm:269
 #, fuzzy, scheme-format
 msgid "uref= is deprecated, please use refdes=~A"
 msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: Найден атрибут «label=%s». Использовать «label» не "
 "рекомендуется, вместо него следует использовать «netname».\n"
 
-#: gnetlist/scheme/gnetlist.scm:375
+#: gnetlist/scheme/gnetlist.scm:310
 msgid "Welcome to Gnetlist REPL!\n"
 msgstr ""
 
-#: gnetlist/scheme/gnetlist.scm:387
+#: gnetlist/scheme/gnetlist.scm:322
 msgid "Could not load module (ice-9 readline).\n"
 msgstr ""
 
-#: gnetlist/scheme/gnetlist.scm:603
+#: gnetlist/scheme/gnetlist.scm:546
 #, scheme-format
 msgid ""
 "There is a net name collision!\n"
@@ -349,7 +327,7 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: gnetlist/scheme/gnetlist.scm:641
+#: gnetlist/scheme/gnetlist.scm:584
 #, scheme-format
 msgid ""
 "There is a refdes name collision!\n"
@@ -361,17 +339,17 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: gnetlist/scheme/gnetlist.scm:807
+#: gnetlist/scheme/gnetlist.scm:750
 #, scheme-format
 msgid "Loading schematic ~S\n"
 msgstr "Загрузка схемы ~S\n"
 
-#: gnetlist/scheme/gnetlist.scm:831
+#: gnetlist/scheme/gnetlist.scm:774
 #, scheme-format
 msgid "Can't open directory ~S.\n"
 msgstr "Не удалось открыть каталог ~S.\n"
 
-#: gnetlist/scheme/gnetlist.scm:835
+#: gnetlist/scheme/gnetlist.scm:778
 msgid ""
 "List of available backends: \n"
 "\n"
@@ -379,7 +357,7 @@ msgstr ""
 "Список доступных драйверов: \n"
 "\n"
 
-#: gnetlist/scheme/gnetlist.scm:848
+#: gnetlist/scheme/gnetlist.scm:791
 #, scheme-format
 msgid ""
 "No schematics files specified for processing.\n"
@@ -389,7 +367,7 @@ msgstr ""
 "\n"
 "Подробности см. в выводе команды «~A --help».\n"
 
-#: gnetlist/scheme/gnetlist.scm:879
+#: gnetlist/scheme/gnetlist.scm:822
 #, scheme-format
 msgid ""
 "Could not find backend `~A' in load path.\n"
@@ -401,9 +379,29 @@ msgstr ""
 "Список всех доступных драйверов можно узнать по команде «~A --list-"
 "backends».\n"
 
-#: gnetlist/scheme/gnetlist.scm:907
+#: gnetlist/scheme/gnetlist.scm:850
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
+
+#: gnetlist/scheme/gnetlist/rename.scm:48
+#, fuzzy, scheme-format
+msgid ""
+"WARNING: Trying to rename something twice:\n"
+"\t~A and ~A\n"
+"are both a src and dest name\n"
+"This warning is okay if you have multiple levels of hierarchy!\n"
+msgstr ""
+"ПРЕДУПРЕЖДЕНИЕ: Попытка двойного переименования:\n"
+"\t%s и %s\n"
+"оба являются именами источника и назначения\n"
+
+#~ msgid "ERROR: Overwriting a valid rename list.\n"
+#~ msgstr "ОШИБКА: Перезапись действующего списка переименований.\n"
+
+#~ msgid "This warning is okay if you have multiple levels of hierarchy!\n"
+#~ msgstr ""
+#~ "Это предупреждение несущественно, если имеется несколько уровней "
+#~ "иерархии!\n"
 
 #~ msgid "ERROR: Failed to load '%s': %s\n"
 #~ msgstr "ОШИБКА: Не удалось загрузить «%s»: %s\n"

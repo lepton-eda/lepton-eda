@@ -41,8 +41,8 @@
 Introduction
 ============
 
-This document outlines the API provided by libgeda for configuration
-of both libgeda and applications based on it.  The API is designed for
+This document outlines the API provided by liblepton for configuration
+of both liblepton and applications based on it.  The API is designed for
 not only saving and loading static configuration data to and from
 permanent storage, but also to allow on-line event-driven updates to
 the configuration state.  The API is designed to be equally usable
@@ -324,7 +324,7 @@ NULL or ``#f``, sets ``cfg`` as having no parent context.
 .. note:: Normally, application code should avoid using this function;
           keeping to the default configuration inheritance structure
           is recommended in order to ensure consistent behaviour of
-          all libgeda applications.
+          all liblepton applications.
 
 Context trust
 -------------

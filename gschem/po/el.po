@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
-"Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2016-12-08 11:55+0300\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2017-02-15 15:35+0300\n"
 "PO-Revision-Date: 2012-09-01 20:41+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -128,7 +128,7 @@ msgstr "Το αντικείμενο ~A δεν περιλαμβάνεται άμ�
 msgid "Could not launch URI ~S: ~A"
 msgstr "Αδυναμία εκτέλεσης URI ~S: ~A"
 
-#: gschem/src/g_window.c:136
+#: gschem/src/g_window.c:137
 msgid "Found invalid gschem window smob ~S"
 msgstr ""
 
@@ -170,22 +170,22 @@ msgstr ""
 msgid "Current locale settings: %s\n"
 msgstr "Τρέχουσες ρυθμίσεις τοπικότητας: %s\n"
 
-#: gschem/src/gschem.c:201
+#: gschem/src/gschem.c:202
 #, c-format
 msgid "Couldn't find init scm file [%s]\n"
 msgstr ""
 
-#: gschem/src/gschem.c:206
+#: gschem/src/gschem.c:207
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr ""
 
-#: gschem/src/gschem.c:210
+#: gschem/src/gschem.c:211
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr ""
 
-#: gschem/src/gschem.c:274
+#: gschem/src/gschem.c:275
 #, fuzzy, c-format
 msgid ""
 "ERROR: Failed to load or evaluate startup script.\n"
@@ -286,21 +286,21 @@ msgstr "ΚΑΝΕΝΑ"
 msgid "Grid(%s, %s)"
 msgstr ""
 
-#: gschem/src/gschem_close_confirmation_dialog.c:346
-#: gschem/src/x_compselect.c:1230 gschem/src/x_multiattrib.c:2065
+#: gschem/src/gschem_close_confirmation_dialog.c:348
+#: gschem/src/x_compselect.c:1231 gschem/src/x_multiattrib.c:2065
 msgid "Name"
 msgstr "Όνομα"
 
-#: gschem/src/gschem_close_confirmation_dialog.c:368
+#: gschem/src/gschem_close_confirmation_dialog.c:370
 msgid "S_elect the schematics you want to save:"
 msgstr "_Επιλέξετε τα σχεδιαγράμματα που θέλετε να αποθηκεύσετε:"
 
-#: gschem/src/gschem_close_confirmation_dialog.c:463
+#: gschem/src/gschem_close_confirmation_dialog.c:465
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Αποθήκευση αλλαγών στο σχεδιάγραμμα \"%s\" πριν το κλείσιμο;"
 
-#: gschem/src/gschem_close_confirmation_dialog.c:469
+#: gschem/src/gschem_close_confirmation_dialog.c:471
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
@@ -308,11 +308,11 @@ msgstr ""
 "Υπάρχουν %d σχεδιαγράμματα χωρίς αποθηκευμένες αλλαγές. Να αποθηκευτούν οι "
 "αλλαγές πριν το κλείσιμο;"
 
-#: gschem/src/gschem_close_confirmation_dialog.c:498
+#: gschem/src/gschem_close_confirmation_dialog.c:500
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "Αν δεν αποθηκεύσετε, όλες οι αλλαγές θα χαθούν μόνιμα."
 
-#: gschem/src/gschem_close_confirmation_dialog.c:518
+#: gschem/src/gschem_close_confirmation_dialog.c:520
 #, fuzzy
 msgid "Close _without saving"
 msgstr "_Κλείσιμο χωρίς αποθήκευση"
@@ -329,7 +329,7 @@ msgstr "Οθόνη"
 msgid "World"
 msgstr ""
 
-#: gschem/src/gschem_find_text_state.c:739 gschem/src/x_pagesel.c:426
+#: gschem/src/gschem_find_text_state.c:739 gschem/src/x_pagesel.c:427
 msgid "Filename"
 msgstr "Όνομα αρχείου"
 
@@ -588,7 +588,7 @@ msgid "Translate"
 msgstr "Μετάφραση"
 
 #: gschem/src/i_basic.c:65 gschem/src/x_window.c:725
-#: gschem/lib/system-gschemrc.scm:1155 gschem/scheme/gschem/builtins.scm:95
+#: gschem/lib/system-gschemrc.scm:1142 gschem/scheme/gschem/builtins.scm:95
 msgid "Select Mode"
 msgstr "Λειτουργία Επιλογής"
 
@@ -638,12 +638,12 @@ msgstr "Λειτουργία κύκλου"
 msgid "Component Mode"
 msgstr "Λειτουργία στοιχείων"
 
-#: gschem/src/i_basic.c:83 gschem/lib/system-gschemrc.scm:1158
+#: gschem/src/i_basic.c:83 gschem/lib/system-gschemrc.scm:1145
 #: gschem/scheme/gschem/builtins.scm:110
 msgid "Copy Mode"
 msgstr "Λειτουργία αντιγραφής"
 
-#: gschem/src/i_basic.c:84 gschem/lib/system-gschemrc.scm:1159
+#: gschem/src/i_basic.c:84 gschem/lib/system-gschemrc.scm:1146
 #: gschem/scheme/gschem/builtins.scm:113
 msgid "Multiple Copy Mode"
 msgstr "Λειτουργία πολλαπλής αντιγραφής"
@@ -652,12 +652,12 @@ msgstr "Λειτουργία πολλαπλής αντιγραφής"
 msgid "Line Mode"
 msgstr "Λειτουργία γραμμής"
 
-#: gschem/src/i_basic.c:86 gschem/lib/system-gschemrc.scm:1162
+#: gschem/src/i_basic.c:86 gschem/lib/system-gschemrc.scm:1149
 #: gschem/scheme/gschem/builtins.scm:119
 msgid "Mirror Mode"
 msgstr "Λειτουργία καθρεπτισμού"
 
-#: gschem/src/i_basic.c:87 gschem/lib/system-gschemrc.scm:1160
+#: gschem/src/i_basic.c:87 gschem/lib/system-gschemrc.scm:1147
 #: gschem/scheme/gschem/builtins.scm:107
 msgid "Move Mode"
 msgstr "Λειτουργία μετακίνησης"
@@ -796,11 +796,11 @@ msgid "Mirror"
 msgstr "Καθρεπτισμός"
 
 #: gschem/src/i_callbacks.c:765 gschem/src/x_colorcb.c:113
-#: gschem/lib/system-gschemrc.scm:1172 gschem/scheme/gschem/builtins.scm:146
+#: gschem/lib/system-gschemrc.scm:1159 gschem/scheme/gschem/builtins.scm:146
 msgid "Lock"
 msgstr "Κλείδωμα"
 
-#: gschem/src/i_callbacks.c:783 gschem/lib/system-gschemrc.scm:1173
+#: gschem/src/i_callbacks.c:783 gschem/lib/system-gschemrc.scm:1160
 #: gschem/scheme/gschem/builtins.scm:149
 msgid "Unlock"
 msgstr "Ξεκλείδωμα"
@@ -1207,7 +1207,7 @@ msgid ""
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs at <https://bugs.launchpad.net/geda>\n"
+"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
 "gEDA/gaf homepage: <http://www.geda-project.org/>\n"
 msgstr ""
 
@@ -1284,8 +1284,8 @@ msgstr "<b>Επιλογές σύνδεσης</b>"
 msgid "All"
 msgstr "Όλα"
 
-#: gschem/src/x_attribedit.c:454 gschem/src/x_compselect.c:985
-#: gschem/src/x_compselect.c:1099
+#: gschem/src/x_attribedit.c:454 gschem/src/x_compselect.c:986
+#: gschem/src/x_compselect.c:1100
 msgid "Components"
 msgstr "Στοιχεία"
 
@@ -1500,43 +1500,43 @@ msgstr ""
 msgid "Unknown"
 msgstr "'Αγνωστο"
 
-#: gschem/src/x_compselect.c:1127
+#: gschem/src/x_compselect.c:1128
 msgid "Filter:"
 msgstr "Φίλτρο:"
 
-#: gschem/src/x_compselect.c:1239 gschem/src/x_multiattrib.c:2089
+#: gschem/src/x_compselect.c:1240 gschem/src/x_multiattrib.c:2089
 msgid "Value"
 msgstr "Τιμή"
 
-#: gschem/src/x_compselect.c:1278
+#: gschem/src/x_compselect.c:1279
 msgid "Default behavior - reference component"
 msgstr "Προκαθορισμένη συμπεριφορά - στοιχείο αναφοράς"
 
-#: gschem/src/x_compselect.c:1281
+#: gschem/src/x_compselect.c:1282
 msgid "Embed component in schematic"
 msgstr "Ενσωμάτωση στοιχείου στο σχεδιάγραμμα"
 
-#: gschem/src/x_compselect.c:1284
+#: gschem/src/x_compselect.c:1285
 msgid "Include component as individual objects"
 msgstr "Συμπερίληψη του στοιχείου ως ξεχωριστά αντικείμενα"
 
-#: gschem/src/x_compselect.c:1441
+#: gschem/src/x_compselect.c:1442
 msgid "Select Component..."
 msgstr "Επιλογή στοιχείου..."
 
-#: gschem/src/x_compselect.c:1464
+#: gschem/src/x_compselect.c:1465
 msgid "In Use"
 msgstr "Σε χρήση"
 
-#: gschem/src/x_compselect.c:1468
+#: gschem/src/x_compselect.c:1469
 msgid "Libraries"
 msgstr "Βιβλιοθήκες"
 
-#: gschem/src/x_compselect.c:1477 gschem/src/x_fileselect.c:120
+#: gschem/src/x_compselect.c:1478 gschem/src/x_fileselect.c:120
 msgid "Preview"
 msgstr "Προεπισκόπηση"
 
-#: gschem/src/x_compselect.c:1503
+#: gschem/src/x_compselect.c:1504
 msgid "Attributes"
 msgstr "Γνωρίσματα"
 
@@ -1602,7 +1602,7 @@ msgstr "Άνοιγμα..."
 msgid "Save as..."
 msgstr "Αποθήκευση ως..."
 
-#: gschem/src/x_fileselect.c:291
+#: gschem/src/x_fileselect.c:290
 #, c-format
 msgid ""
 "The selected file `%s' already exists.\n"
@@ -1613,15 +1613,15 @@ msgstr ""
 "\n"
 "Θέλετε να το αντικαταστήσετε;"
 
-#: gschem/src/x_fileselect.c:294
+#: gschem/src/x_fileselect.c:293
 msgid "Overwrite file?"
 msgstr "Αντικατάσταση αρχείου;"
 
-#: gschem/src/x_fileselect.c:296
+#: gschem/src/x_fileselect.c:295
 msgid "Save cancelled on user request\n"
 msgstr "Αποθήκευση ακυρώθηκε με αίτημα του χρήστη\n"
 
-#: gschem/src/x_fileselect.c:333
+#: gschem/src/x_fileselect.c:332
 msgid ""
 "\n"
 "If you load the original file, the backup file will be overwritten in the "
@@ -1760,7 +1760,7 @@ msgstr ""
 msgid "Select"
 msgstr "Επιλογή"
 
-#: gschem/src/x_menus.c:48 gschem/lib/system-gschemrc.scm:1164
+#: gschem/src/x_menus.c:48 gschem/lib/system-gschemrc.scm:1151
 #: gschem/scheme/gschem/builtins.scm:122
 msgid "Edit..."
 msgstr "Επεξεργασία..."
@@ -1799,7 +1799,7 @@ msgstr "Το λειτουργικό σύστημα είναι εκτός ορί�
 msgid "%s failed to launch URI"
 msgstr "%s απέτυχε να εκτελέσει το URI"
 
-#: gschem/src/x_multiattrib.c:796 gschem/src/x_multiattrib.c:2671
+#: gschem/src/x_multiattrib.c:796 gschem/src/x_multiattrib.c:2670
 msgid "<various>"
 msgstr ""
 
@@ -1829,7 +1829,7 @@ msgstr "Αντίγραφο"
 msgid "Copy to all"
 msgstr "Αντιγραφή σε 1"
 
-#: gschem/src/x_multiattrib.c:1983 gschem/src/x_multiattrib.c:2580
+#: gschem/src/x_multiattrib.c:1983 gschem/src/x_multiattrib.c:2579
 msgid "Edit Attributes"
 msgstr "Επεξεργασία γνωρισμάτων"
 
@@ -1853,35 +1853,35 @@ msgstr "Εμφάνιση κληρονομημένων γνωρισμάτων"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
-#: gschem/src/x_multiattrib.c:2585
+#: gschem/src/x_multiattrib.c:2584
 #, c-format
 msgid "%i symbol (%s)"
 msgid_plural "%i symbols (%s)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: gschem/src/x_multiattrib.c:2591
+#: gschem/src/x_multiattrib.c:2590
 #, fuzzy, c-format
 msgid "%i pin"
 msgid_plural "%i pins"
 msgstr[0] "Ακροδέκτης δικτύου"
 msgstr[1] "Ακροδέκτης δικτύου"
 
-#: gschem/src/x_multiattrib.c:2597
+#: gschem/src/x_multiattrib.c:2596
 #, c-format
 msgid "%i net"
 msgid_plural "%i nets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: gschem/src/x_multiattrib.c:2603
+#: gschem/src/x_multiattrib.c:2602
 #, c-format
 msgid "%i bus"
 msgid_plural "%i buses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: gschem/src/x_multiattrib.c:2609
+#: gschem/src/x_multiattrib.c:2608
 #, fuzzy, c-format
 msgid "%i attribute"
 msgid_plural "%i attributes"
@@ -1892,31 +1892,31 @@ msgstr[1] "Γνώρισμα"
 msgid "Text Entry..."
 msgstr "Εισαγωγή κειμένου..."
 
-#: gschem/src/x_pagesel.c:248
+#: gschem/src/x_pagesel.c:249
 msgid "New Page"
 msgstr "Νέα σελίδα"
 
-#: gschem/src/x_pagesel.c:249
+#: gschem/src/x_pagesel.c:250
 msgid "Open Page..."
 msgstr "Άνοιγμα σελίδας..."
 
-#: gschem/src/x_pagesel.c:251
+#: gschem/src/x_pagesel.c:252
 msgid "Save Page"
 msgstr "Αποθήκευση σελίδας"
 
-#: gschem/src/x_pagesel.c:252 gschem/scheme/gschem/builtins.scm:245
+#: gschem/src/x_pagesel.c:253 gschem/scheme/gschem/builtins.scm:245
 msgid "Close Page"
 msgstr "Κλείσιμο σελίδας"
 
-#: gschem/src/x_pagesel.c:370 gschem/scheme/gschem/builtins.scm:236
+#: gschem/src/x_pagesel.c:371 gschem/scheme/gschem/builtins.scm:236
 msgid "Page Manager"
 msgstr "Διαχειριστής σελίδων"
 
-#: gschem/src/x_pagesel.c:442
+#: gschem/src/x_pagesel.c:443
 msgid "Changed"
 msgstr "Τροποποιήθηκε"
 
-#: gschem/src/x_pagesel.c:462
+#: gschem/src/x_pagesel.c:463
 msgid "Right click on the filename for more options..."
 msgstr "Δεξί κλικ στο όνομα αρχείου για περισσότερες επιλογές..."
 
@@ -1963,7 +1963,7 @@ msgstr ""
 msgid "Cannot load gschem configuration."
 msgstr "Δεν είναι δυνατό το φόρτωμα των ρυθμίσεων του gschem."
 
-#: gschem/src/x_script.c:43 gschem/lib/system-gschemrc.scm:1136
+#: gschem/src/x_script.c:43 gschem/lib/system-gschemrc.scm:1123
 msgid "Execute Script..."
 msgstr "Εκτέλεση σεναρίου..."
 
@@ -2072,7 +2072,7 @@ msgstr "_Επιλογές"
 msgid "Find Text"
 msgstr "Εύρεση κειμένου"
 
-#: gschem/src/x_window.c:708 gschem/lib/system-gschemrc.scm:1206
+#: gschem/src/x_window.c:708 gschem/lib/system-gschemrc.scm:1193
 #: gschem/scheme/gschem/builtins.scm:185
 msgid "Status"
 msgstr "Κατάσταση"
@@ -2089,12 +2089,12 @@ msgstr ""
 msgid "Pick"
 msgstr ""
 
-#: gschem/src/x_window.c:920
+#: gschem/src/x_window.c:921
 #, c-format
 msgid "Loading schematic [%s]\n"
 msgstr "Φόρτωμα σχεδιαγράμματος [%s]\n"
 
-#: gschem/src/x_window.c:931
+#: gschem/src/x_window.c:932
 #, c-format
 msgid ""
 "<b>An error occurred while loading the requested file.</b>\n"
@@ -2106,25 +2106,25 @@ msgstr ""
 "Το φόρτωμα από '%s' απέτυχε: %s. Η καταγραφή του gschem μπορεί να περιέχει "
 "περισσότερες πληροφορίες."
 
-#: gschem/src/x_window.c:933
+#: gschem/src/x_window.c:934
 msgid "Failed to load file"
 msgstr "Αποτυχία φορτώματος αρχείου"
 
-#: gschem/src/x_window.c:942
+#: gschem/src/x_window.c:943
 #, c-format
 msgid "New file [%s]\n"
 msgstr "Νέο αρχείο [%s]\n"
 
-#: gschem/src/x_window.c:1020
+#: gschem/src/x_window.c:1021
 #, c-format
 msgid "Could NOT save page [%s]\n"
 msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση της σελίδας [%s]\n"
 
-#: gschem/src/x_window.c:1021
+#: gschem/src/x_window.c:1022
 msgid "Error while trying to save"
 msgstr "Σφάλμα κατά την προσπάθεια αποθήκευσης"
 
-#: gschem/src/x_window.c:1031
+#: gschem/src/x_window.c:1032
 msgid "Failed to save file"
 msgstr "Αποτυχία αποθήκευσης αρχείου"
 
@@ -2162,473 +2162,473 @@ msgstr ""
 "Δημιουργείστε και επεξεργαστείτε ηλεκτρικά σχεδιαγράμματα και σύμβολα με το "
 "gschem"
 
-#: gschem/lib/system-gschemrc.scm:1123
+#: gschem/lib/system-gschemrc.scm:1110
 msgid "_New"
 msgstr "_Νέο"
 
-#: gschem/lib/system-gschemrc.scm:1124
+#: gschem/lib/system-gschemrc.scm:1111
 msgid "_Open..."
 msgstr "_Άνοιγμα..."
 
-#: gschem/lib/system-gschemrc.scm:1126
+#: gschem/lib/system-gschemrc.scm:1113
 msgid "Open Recen_t"
 msgstr "Άνοιγμα _προσφάτου"
 
-#: gschem/lib/system-gschemrc.scm:1128
+#: gschem/lib/system-gschemrc.scm:1115
 msgid "_Save"
 msgstr "_Αποθήκευση"
 
-#: gschem/lib/system-gschemrc.scm:1129
+#: gschem/lib/system-gschemrc.scm:1116
 msgid "Save _As..."
 msgstr "Αποθήκευση _ως..."
 
-#: gschem/lib/system-gschemrc.scm:1130 gschem/scheme/gschem/builtins.scm:62
+#: gschem/lib/system-gschemrc.scm:1117 gschem/scheme/gschem/builtins.scm:62
 msgid "Save All"
 msgstr "Αποθήκευση όλων"
 
-#: gschem/lib/system-gschemrc.scm:1131 gschem/lib/system-gschemrc.scm:1228
+#: gschem/lib/system-gschemrc.scm:1118 gschem/lib/system-gschemrc.scm:1215
 msgid "_Revert"
 msgstr "_Επαναφορά"
 
-#: gschem/lib/system-gschemrc.scm:1133
+#: gschem/lib/system-gschemrc.scm:1120
 msgid "_Print..."
 msgstr "Ε_κτύπωση..."
 
-#: gschem/lib/system-gschemrc.scm:1134
+#: gschem/lib/system-gschemrc.scm:1121
 msgid "Write _image..."
 msgstr "Ε_γγραφή εικόνας..."
 
-#: gschem/lib/system-gschemrc.scm:1137
+#: gschem/lib/system-gschemrc.scm:1124
 msgid "REPL..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1139 gschem/scheme/gschem/builtins.scm:74
+#: gschem/lib/system-gschemrc.scm:1126 gschem/scheme/gschem/builtins.scm:74
 msgid "New Window"
 msgstr "Νέο παράθυρο"
 
-#: gschem/lib/system-gschemrc.scm:1140
+#: gschem/lib/system-gschemrc.scm:1127
 msgid "_Close Window"
 msgstr "_Κλείσιμο παραθύρου"
 
-#: gschem/lib/system-gschemrc.scm:1141
+#: gschem/lib/system-gschemrc.scm:1128
 msgid "_Quit"
 msgstr "Έ_ξοδος"
 
-#: gschem/lib/system-gschemrc.scm:1147
+#: gschem/lib/system-gschemrc.scm:1134
 msgid "_Undo"
 msgstr "_Αναίρεση"
 
-#: gschem/lib/system-gschemrc.scm:1148
+#: gschem/lib/system-gschemrc.scm:1135
 msgid "_Redo"
 msgstr "Ε_παναφορά"
 
-#: gschem/lib/system-gschemrc.scm:1150
+#: gschem/lib/system-gschemrc.scm:1137
 msgid "Cu_t"
 msgstr "Α_ποκοπή"
 
-#: gschem/lib/system-gschemrc.scm:1151
+#: gschem/lib/system-gschemrc.scm:1138
 msgid "_Copy"
 msgstr "Α_ντιγραφή"
 
-#: gschem/lib/system-gschemrc.scm:1152
+#: gschem/lib/system-gschemrc.scm:1139
 msgid "_Paste"
 msgstr "Ε_πικόλληση"
 
-#: gschem/lib/system-gschemrc.scm:1153
+#: gschem/lib/system-gschemrc.scm:1140
 msgid "_Delete"
 msgstr "_Διαγραφή"
 
-#: gschem/lib/system-gschemrc.scm:1156 gschem/scheme/gschem/builtins.scm:98
+#: gschem/lib/system-gschemrc.scm:1143 gschem/scheme/gschem/builtins.scm:98
 msgid "Select All"
 msgstr "Επιλογή όλων"
 
-#: gschem/lib/system-gschemrc.scm:1157 gschem/scheme/gschem/builtins.scm:101
+#: gschem/lib/system-gschemrc.scm:1144 gschem/scheme/gschem/builtins.scm:101
 msgid "Deselect"
 msgstr "Αποεπιλογή"
 
-#: gschem/lib/system-gschemrc.scm:1161
+#: gschem/lib/system-gschemrc.scm:1148
 msgid "Rotate 90 Mode"
 msgstr "Λειτουργία περιστροφής 90"
 
-#: gschem/lib/system-gschemrc.scm:1165
+#: gschem/lib/system-gschemrc.scm:1152
 msgid "Edit Text..."
 msgstr "Επεξεργασία κειμένου..."
 
-#: gschem/lib/system-gschemrc.scm:1166
+#: gschem/lib/system-gschemrc.scm:1153
 msgid "Slot..."
 msgstr "Υποδοχή..."
 
-#: gschem/lib/system-gschemrc.scm:1167
+#: gschem/lib/system-gschemrc.scm:1154
 msgid "Color..."
 msgstr "Χρώμα..."
 
-#: gschem/lib/system-gschemrc.scm:1168
+#: gschem/lib/system-gschemrc.scm:1155
 msgid "Line Width & Type..."
 msgstr "Πλάτος & τύπος γραμμής..."
 
-#: gschem/lib/system-gschemrc.scm:1169
+#: gschem/lib/system-gschemrc.scm:1156
 msgid "Fill Type..."
 msgstr "Τύπος γεμίσματος..."
 
-#: gschem/lib/system-gschemrc.scm:1170
+#: gschem/lib/system-gschemrc.scm:1157
 #, fuzzy
 msgid "Pin Type..."
 msgstr "Τύπος γεμίσματος..."
 
-#: gschem/lib/system-gschemrc.scm:1171
+#: gschem/lib/system-gschemrc.scm:1158
 msgid "Symbol Translate..."
 msgstr "Μετάφραση συμβόλου..."
 
-#: gschem/lib/system-gschemrc.scm:1175 gschem/scheme/gschem/builtins.scm:152
+#: gschem/lib/system-gschemrc.scm:1162 gschem/scheme/gschem/builtins.scm:152
 msgid "Invoke Macro"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1176 gschem/scheme/gschem/builtins.scm:155
+#: gschem/lib/system-gschemrc.scm:1163 gschem/scheme/gschem/builtins.scm:155
 msgid "Embed Component/Picture"
 msgstr "Ενσωμάτωση στοιχείου/εικόνας"
 
-#: gschem/lib/system-gschemrc.scm:1177 gschem/scheme/gschem/builtins.scm:158
+#: gschem/lib/system-gschemrc.scm:1164 gschem/scheme/gschem/builtins.scm:158
 msgid "Unembed Component/Picture"
 msgstr "Αποενσωμάτωση στοιχείου/εικόνας"
 
-#: gschem/lib/system-gschemrc.scm:1178 gschem/scheme/gschem/builtins.scm:161
+#: gschem/lib/system-gschemrc.scm:1165 gschem/scheme/gschem/builtins.scm:161
 msgid "Update Component"
 msgstr "Ενημέρωση στοιχείου"
 
-#: gschem/lib/system-gschemrc.scm:1179
+#: gschem/lib/system-gschemrc.scm:1166
 msgid "Show/Hide Inv Text"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1185
+#: gschem/lib/system-gschemrc.scm:1172
 msgid "Copy into 1"
 msgstr "Αντιγραφή σε 1"
 
-#: gschem/lib/system-gschemrc.scm:1186
+#: gschem/lib/system-gschemrc.scm:1173
 msgid "Copy into 2"
 msgstr "Αντιγραφή σε 2"
 
-#: gschem/lib/system-gschemrc.scm:1187
+#: gschem/lib/system-gschemrc.scm:1174
 msgid "Copy into 3"
 msgstr "Αντιγραφή σε 3"
 
-#: gschem/lib/system-gschemrc.scm:1188
+#: gschem/lib/system-gschemrc.scm:1175
 msgid "Copy into 4"
 msgstr "Αντιγραφή σε 4"
 
-#: gschem/lib/system-gschemrc.scm:1189
+#: gschem/lib/system-gschemrc.scm:1176
 msgid "Copy into 5"
 msgstr "Αντιγραφή σε 5"
 
-#: gschem/lib/system-gschemrc.scm:1190
+#: gschem/lib/system-gschemrc.scm:1177
 msgid "Cut into 1"
 msgstr "Αποκοπή σε 1"
 
-#: gschem/lib/system-gschemrc.scm:1191
+#: gschem/lib/system-gschemrc.scm:1178
 msgid "Cut into 2"
 msgstr "Αποκοπή σε 2"
 
-#: gschem/lib/system-gschemrc.scm:1192
+#: gschem/lib/system-gschemrc.scm:1179
 msgid "Cut into 3"
 msgstr "Αποκοπή σε 3"
 
-#: gschem/lib/system-gschemrc.scm:1193
+#: gschem/lib/system-gschemrc.scm:1180
 msgid "Cut into 4"
 msgstr "Αποκοπή σε 4"
 
-#: gschem/lib/system-gschemrc.scm:1194
+#: gschem/lib/system-gschemrc.scm:1181
 msgid "Cut into 5"
 msgstr "Αποκοπή σε 5"
 
-#: gschem/lib/system-gschemrc.scm:1195
+#: gschem/lib/system-gschemrc.scm:1182
 msgid "Paste from 1"
 msgstr "Επικόλληση από 1"
 
-#: gschem/lib/system-gschemrc.scm:1196
+#: gschem/lib/system-gschemrc.scm:1183
 msgid "Paste from 2"
 msgstr "Επικόλληση από 2"
 
-#: gschem/lib/system-gschemrc.scm:1197
+#: gschem/lib/system-gschemrc.scm:1184
 msgid "Paste from 3"
 msgstr "Επικόλληση από 3"
 
-#: gschem/lib/system-gschemrc.scm:1198
+#: gschem/lib/system-gschemrc.scm:1185
 msgid "Paste from 4"
 msgstr "Επικόλληση από 4"
 
-#: gschem/lib/system-gschemrc.scm:1199
+#: gschem/lib/system-gschemrc.scm:1186
 msgid "Paste from 5"
 msgstr "Επικόλληση από 5"
 
-#: gschem/lib/system-gschemrc.scm:1205 gschem/scheme/gschem/builtins.scm:182
+#: gschem/lib/system-gschemrc.scm:1192 gschem/scheme/gschem/builtins.scm:182
 msgid "Sidebar"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1208
+#: gschem/lib/system-gschemrc.scm:1195
 msgid "_Redraw"
 msgstr "_Επανασχεδίαση"
 
-#: gschem/lib/system-gschemrc.scm:1209
+#: gschem/lib/system-gschemrc.scm:1196
 msgid "_Pan"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1210
+#: gschem/lib/system-gschemrc.scm:1197
 msgid "Zoom _Box"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1211
+#: gschem/lib/system-gschemrc.scm:1198
 msgid "Zoom _Extents"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1212
+#: gschem/lib/system-gschemrc.scm:1199
 msgid "Zoom _In"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1213
+#: gschem/lib/system-gschemrc.scm:1200
 msgid "Zoom _Out"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1214
+#: gschem/lib/system-gschemrc.scm:1201
 msgid "Zoom _Full"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1216
+#: gschem/lib/system-gschemrc.scm:1203
 msgid "_Dark color scheme"
 msgstr "Σχήμα _σκοτεινών χρωμάτων"
 
-#: gschem/lib/system-gschemrc.scm:1217
+#: gschem/lib/system-gschemrc.scm:1204
 msgid "_Light color scheme"
 msgstr "Σχήμα _φωτεινών χρωμάτων"
 
-#: gschem/lib/system-gschemrc.scm:1218
+#: gschem/lib/system-gschemrc.scm:1205
 msgid "B_W color scheme"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1225
+#: gschem/lib/system-gschemrc.scm:1212
 msgid "_Manager..."
 msgstr "_Διαχειριστής..."
 
-#: gschem/lib/system-gschemrc.scm:1226
+#: gschem/lib/system-gschemrc.scm:1213
 msgid "_Previous"
 msgstr "_Προηγούμενο"
 
-#: gschem/lib/system-gschemrc.scm:1227
+#: gschem/lib/system-gschemrc.scm:1214
 msgid "_Next"
 msgstr "_Επόμενο"
 
-#: gschem/lib/system-gschemrc.scm:1229
+#: gschem/lib/system-gschemrc.scm:1216
 msgid "_Close"
 msgstr "_Κλείσιμο"
 
-#: gschem/lib/system-gschemrc.scm:1235
+#: gschem/lib/system-gschemrc.scm:1222
 msgid "_Component..."
 msgstr "_Στοιχείο..."
 
-#: gschem/lib/system-gschemrc.scm:1236
+#: gschem/lib/system-gschemrc.scm:1223
 msgid "_Net"
 msgstr "_Δίκτυο"
 
-#: gschem/lib/system-gschemrc.scm:1237
+#: gschem/lib/system-gschemrc.scm:1224
 msgid "B_us"
 msgstr "Δ_ίαυλος"
 
-#: gschem/lib/system-gschemrc.scm:1238
+#: gschem/lib/system-gschemrc.scm:1225
 msgid "_Attribute..."
 msgstr "_Γνώρισμα..."
 
-#: gschem/lib/system-gschemrc.scm:1239
+#: gschem/lib/system-gschemrc.scm:1226
 msgid "_Text..."
 msgstr "_Κείμενο..."
 
-#: gschem/lib/system-gschemrc.scm:1241
+#: gschem/lib/system-gschemrc.scm:1228
 msgid "_Line"
 msgstr "_Γραμμή"
 
-#: gschem/lib/system-gschemrc.scm:1242
+#: gschem/lib/system-gschemrc.scm:1229
 msgid "Pat_h"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1243
+#: gschem/lib/system-gschemrc.scm:1230
 msgid "_Box"
 msgstr "_Κουτί"
 
-#: gschem/lib/system-gschemrc.scm:1244
+#: gschem/lib/system-gschemrc.scm:1231
 msgid "C_ircle"
 msgstr "_Κύκλος"
 
-#: gschem/lib/system-gschemrc.scm:1245
+#: gschem/lib/system-gschemrc.scm:1232
 msgid "A_rc"
 msgstr "_Τόξο"
 
-#: gschem/lib/system-gschemrc.scm:1246
+#: gschem/lib/system-gschemrc.scm:1233
 msgid "_Pin"
 msgstr "_Ακροδέκτης"
 
-#: gschem/lib/system-gschemrc.scm:1247
+#: gschem/lib/system-gschemrc.scm:1234
 msgid "Pictu_re..."
 msgstr "_Εικόνα..."
 
-#: gschem/lib/system-gschemrc.scm:1253
+#: gschem/lib/system-gschemrc.scm:1240
 msgid "_Down Schematic"
 msgstr "_Κάτω σχεδιάγραμμα"
 
-#: gschem/lib/system-gschemrc.scm:1254
+#: gschem/lib/system-gschemrc.scm:1241
 msgid "Down _Symbol"
 msgstr "Κάτω _σύμβολο"
 
-#: gschem/lib/system-gschemrc.scm:1255
+#: gschem/lib/system-gschemrc.scm:1242
 msgid "_Up"
 msgstr "_Πάνω"
 
-#: gschem/lib/system-gschemrc.scm:1256
+#: gschem/lib/system-gschemrc.scm:1243
 msgid "D_ocumentation..."
 msgstr "_Τεκμηρίωση..."
 
-#: gschem/lib/system-gschemrc.scm:1262
+#: gschem/lib/system-gschemrc.scm:1249
 msgid "_Attach"
 msgstr "_Σύνδεση"
 
-#: gschem/lib/system-gschemrc.scm:1263
+#: gschem/lib/system-gschemrc.scm:1250
 msgid "_Detach"
 msgstr "_Αποσύνδεση"
 
-#: gschem/lib/system-gschemrc.scm:1264
+#: gschem/lib/system-gschemrc.scm:1251
 msgid "Show _Value"
 msgstr "Εμφάνιση _τιμής"
 
-#: gschem/lib/system-gschemrc.scm:1265
+#: gschem/lib/system-gschemrc.scm:1252
 msgid "Show _Name"
 msgstr "Εμφάνιση _ονόματος"
 
-#: gschem/lib/system-gschemrc.scm:1266
+#: gschem/lib/system-gschemrc.scm:1253
 msgid "Show _Both"
 msgstr "Εμφάνιση _και των δύο"
 
-#: gschem/lib/system-gschemrc.scm:1267
+#: gschem/lib/system-gschemrc.scm:1254
 msgid "_Toggle Visibility"
 msgstr "Εναλλαγή ορατότητας"
 
-#: gschem/lib/system-gschemrc.scm:1268
+#: gschem/lib/system-gschemrc.scm:1255
 msgid "_Find Specific Text..."
 msgstr "_Εύρεση συγκεκριμένου κειμένου..."
 
-#: gschem/lib/system-gschemrc.scm:1269
+#: gschem/lib/system-gschemrc.scm:1256
 msgid "_Hide Specific Text..."
 msgstr "_Απόκρυψη συγκεκριμένου κειμένου..."
 
-#: gschem/lib/system-gschemrc.scm:1270
+#: gschem/lib/system-gschemrc.scm:1257
 msgid "_Show Specific Text..."
 msgstr "_Εμφάνιση συγκεκριμένου κειμένου..."
 
-#: gschem/lib/system-gschemrc.scm:1271
+#: gschem/lib/system-gschemrc.scm:1258
 msgid "A_utonumber Text..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1277
+#: gschem/lib/system-gschemrc.scm:1264
 msgid "_Text Size..."
 msgstr "_Μέγεθος κειμένου..."
 
-#: gschem/lib/system-gschemrc.scm:1278
+#: gschem/lib/system-gschemrc.scm:1265
 msgid "Cycle _grid styles"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1279
+#: gschem/lib/system-gschemrc.scm:1266
 msgid "Toggle _Snap On/Off"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1280
+#: gschem/lib/system-gschemrc.scm:1267
 msgid "Snap Grid S_pacing..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1281
+#: gschem/lib/system-gschemrc.scm:1268
 msgid "Scale _up Grid Spacing"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1282
+#: gschem/lib/system-gschemrc.scm:1269
 msgid "Scale _down Grid Spacing"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1283
+#: gschem/lib/system-gschemrc.scm:1270
 msgid "Toggle _Outline/Box"
 msgstr "Εναλλαγή _περιγράμματος/κουτιού"
 
-#: gschem/lib/system-gschemrc.scm:1284
+#: gschem/lib/system-gschemrc.scm:1271
 msgid "Toggle Net _Rubberband"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1285
+#: gschem/lib/system-gschemrc.scm:1272
 msgid "Toggle _Magnetic Net"
 msgstr "Εναλλαγή _μαγνητικού δικτύου"
 
-#: gschem/lib/system-gschemrc.scm:1286
+#: gschem/lib/system-gschemrc.scm:1273
 msgid "Show _Log Window..."
 msgstr "Εμφάνιση παραθύρου καταγραφής..."
 
-#: gschem/lib/system-gschemrc.scm:1287
+#: gschem/lib/system-gschemrc.scm:1274
 msgid "Show _Coord Window..."
 msgstr "Εμφάνιση παραθύρου συντεταγμένων..."
 
-#: gschem/lib/system-gschemrc.scm:1294
+#: gschem/lib/system-gschemrc.scm:1281
 #, fuzzy
 msgid "gschem User _Guide..."
 msgstr "_Συχνές ερωτήσεις gschem..."
 
-#: gschem/lib/system-gschemrc.scm:1295
+#: gschem/lib/system-gschemrc.scm:1282
 msgid "gschem _FAQ..."
 msgstr "_Συχνές ερωτήσεις gschem..."
 
-#: gschem/lib/system-gschemrc.scm:1296
+#: gschem/lib/system-gschemrc.scm:1283
 msgid "gEDA Docu_mentation..."
 msgstr "_Τεκμηρίωση gEDA..."
 
-#: gschem/lib/system-gschemrc.scm:1297
+#: gschem/lib/system-gschemrc.scm:1284
 msgid "gEDA _Wiki..."
 msgstr "gEDA _Wiki..."
 
-#: gschem/lib/system-gschemrc.scm:1298
+#: gschem/lib/system-gschemrc.scm:1285
 msgid "Component D_ocumentation..."
 msgstr "Τεκμηρίωση _στοιχείων"
 
-#: gschem/lib/system-gschemrc.scm:1300
+#: gschem/lib/system-gschemrc.scm:1287
 msgid "_Hotkeys..."
 msgstr "_Γρήγορα πλήκτρα"
 
-#: gschem/lib/system-gschemrc.scm:1301
+#: gschem/lib/system-gschemrc.scm:1288
 msgid "_About..."
 msgstr "_Σχετικά..."
 
-#: gschem/lib/system-gschemrc.scm:1307
+#: gschem/lib/system-gschemrc.scm:1294
 msgid "_File"
 msgstr "_Αρχείο"
 
-#: gschem/lib/system-gschemrc.scm:1308
+#: gschem/lib/system-gschemrc.scm:1295
 msgid "_Edit"
 msgstr "_Επεξεργασία"
 
-#: gschem/lib/system-gschemrc.scm:1310
+#: gschem/lib/system-gschemrc.scm:1297
 msgid "_View"
 msgstr "_Προβολή"
 
-#: gschem/lib/system-gschemrc.scm:1311
+#: gschem/lib/system-gschemrc.scm:1298
 msgid "_Page"
 msgstr "_Σελίδα"
 
-#: gschem/lib/system-gschemrc.scm:1312
+#: gschem/lib/system-gschemrc.scm:1299
 msgid "_Add"
 msgstr "_Προσθήκη"
 
-#: gschem/lib/system-gschemrc.scm:1313
+#: gschem/lib/system-gschemrc.scm:1300
 msgid "Hie_rarchy"
 msgstr "_Ιεραρχία"
 
-#: gschem/lib/system-gschemrc.scm:1314
+#: gschem/lib/system-gschemrc.scm:1301
 msgid "A_ttributes"
 msgstr "_Γνωρίσματα"
 
-#: gschem/lib/system-gschemrc.scm:1315
+#: gschem/lib/system-gschemrc.scm:1302
 msgid "_Options"
 msgstr "_Επιλογές"
 
-#: gschem/lib/system-gschemrc.scm:1316
+#: gschem/lib/system-gschemrc.scm:1303
 msgid "_Help"
 msgstr "_Βοήθεια"
 

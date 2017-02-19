@@ -29,7 +29,7 @@
 /* Gettext translation */
 #include "gettext.h"
 
-#include <libgeda/libgeda.h>
+#include <liblepton/liblepton.h>
 
 #define config_short_options "hp::su"
 

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
-"Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2016-12-08 11:55+0300\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2017-02-15 15:36+0300\n"
 "PO-Revision-Date: 2014-08-31 20:31+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -156,7 +156,7 @@ msgstr ""
 msgid " DONE\n"
 msgstr " GEDAAN\n"
 
-#: gattrib/src/s_object.c:218
+#: gattrib/src/s_object.c:217
 #, c-format
 msgid ""
 "In s_object_replace_attrib_in_object, we have failed to find the attrib %s "
@@ -165,7 +165,7 @@ msgstr ""
 "In s_object_replace_attrib_in_object, is gefaald om attrib %s te vinden in "
 "de component.  Afsluiten . . .\n"
 
-#: gattrib/src/s_object.c:277
+#: gattrib/src/s_object.c:276
 #, c-format
 msgid ""
 "In s_object_remove_attrib_in_object, we have failed to find the attrib %s on "
@@ -174,7 +174,7 @@ msgstr ""
 "In s_object_remove_attrib_in_object, is gefaald om attrib %s in de component "
 "te vinden.  Afsluiten . . .\n"
 
-#: gattrib/src/s_object.c:330
+#: gattrib/src/s_object.c:329
 #, c-format
 msgid ""
 "In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex "
@@ -478,7 +478,7 @@ msgstr "Opslaan als..."
 msgid "Saved As [%s]\n"
 msgstr "Opgeslagen Als [%s]\n"
 
-#: gattrib/src/x_fileselect.c:315
+#: gattrib/src/x_fileselect.c:314
 #, c-format
 msgid "Could NOT save [%s]\n"
 msgstr "Kan [%s] NIET opslaan\n"

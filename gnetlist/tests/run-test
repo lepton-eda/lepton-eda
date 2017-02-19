@@ -36,8 +36,8 @@ cat > "${rundir}/gafrc" << EOF
 ;; 'make check' during development can work correctly.
 (scheme-directory "${abs_top_srcdir}/gnetlist/scheme")
 (scheme-directory "${abs_top_builddir}/gnetlist/scheme")
-(scheme-directory "${abs_top_srcdir}/libgeda/scheme")
-(scheme-directory "${abs_top_builddir}/libgeda/scheme")
+(scheme-directory "${abs_top_srcdir}/liblepton/scheme")
+(scheme-directory "${abs_top_builddir}/liblepton/scheme")
 
 ;; We want to use the symbols that haven't been installed yet
 (map (lambda (x)
@@ -134,8 +134,8 @@ vams-device)
     cmd="(define generate-mode 2) (define top-attribs '(refdes=U1 device=7404 footprint=DIP14))"
     ;;
 postload)
-    "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
-                                     -L "${abs_top_builddir}/libgeda/scheme" \
+    "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
+                                     -L "${abs_top_builddir}/liblepton/scheme" \
                                      -g "geda" \
                                      -o - \
                                      -m "${abs_srcdir}/postload/test-postload.scm" \
@@ -151,24 +151,24 @@ esac
 
 # run gnetlist
 echo "${GNETLIST} -c ${cmd} -g ${backend} ${args} ${schematic}"
-(cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
-                                 -L "${abs_top_builddir}/libgeda/scheme" \
+(cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
+                                 -L "${abs_top_builddir}/liblepton/scheme" \
                                  -c "${cmd}" \
                                  -g "${backend}" \
                                  ${args} ${schematic})
 rc1=$?
 
 echo "${GNETLIST} -c ${cmd} -g ${backend} -o - ${args} ${schematic} > stdout.net"
-(cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
-                                 -L "${abs_top_builddir}/libgeda/scheme" \
+(cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
+                                 -L "${abs_top_builddir}/liblepton/scheme" \
                                  -c "${cmd}" \
                                  -g "${backend}" \
                                  -o - ${args} ${schematic} > stdout.net)
 rc2=$?
 
 echo "${GNETLIST} -c ${cmd} -g ${backend} -v -o verbose.net ${args} ${schematic}"
-(cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/libgeda/scheme" \
-                                 -L "${abs_top_builddir}/libgeda/scheme" \
+(cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
+                                 -L "${abs_top_builddir}/liblepton/scheme" \
                                  -c "${cmd}" \
                                  -g "${backend}" \
                                  -v -o verbose.net ${args} ${schematic})

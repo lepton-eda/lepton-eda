@@ -14,7 +14,7 @@ gsch2pcb_LDFLAGS = $(GLIB_LIBS)
 
 
 AM_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS)
-AM_CPPFLAGS = -I$(top_srcdir)/libgeda/include -I$(srcdir)/../include \
+AM_CPPFLAGS = -I$(top_srcdir)/liblepton/include -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ olib.c

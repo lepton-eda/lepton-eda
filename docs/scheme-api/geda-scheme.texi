@@ -1758,7 +1758,7 @@ is @samp{#f}, sets @var{cfg} as having no parent context.
 
 @strong{Note}: Normally, application code should avoid using this
 function; keeping to the default configuration inheritance structure
-is recommended in order to ensure consistent behaviour of all libgeda
+is recommended in order to ensure consistent behaviour of all liblepton
 applications.
 
 Since 1.10.

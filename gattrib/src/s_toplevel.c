@@ -39,7 +39,7 @@
 /*------------------------------------------------------------------
  * Gattrib specific includes
  *------------------------------------------------------------------*/
-#include <libgeda/libgeda.h>       /* geda library functions  */
+#include <liblepton/liblepton.h>
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"

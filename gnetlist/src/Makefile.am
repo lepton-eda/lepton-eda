@@ -22,12 +22,12 @@ gnetlist_SOURCES = \
 	s_rename.c \
 	s_traverse.c
 
-gnetlist_CPPFLAGS = -I$(top_srcdir)/libgeda/include -I$(srcdir)/../include \
+gnetlist_CPPFLAGS = -I$(top_srcdir)/liblepton/include -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir) -DBINDIR=\"$(bindir)\"
 gnetlist_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS) $(GLIB_CFLAGS) \
 	$(GUILE_CFLAGS) $(GDK_PIXBUF_CFLAGS)
 gnetlist_LDFLAGS = $(GLIB_LIBS) $(GUILE_LIBS) $(GDK_PIXBUF_LIBS)
-gnetlist_LDADD = $(top_builddir)/libgeda/src/libgeda.la
+gnetlist_LDADD = $(top_builddir)/liblepton/src/liblepton.la
 
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@

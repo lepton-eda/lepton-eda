@@ -14,12 +14,12 @@ gsymcheck_SOURCES = \
 	s_log.c \
 	s_symstruct.c
 
-gsymcheck_CPPFLAGS = -I$(top_srcdir)/libgeda/include -I$(srcdir)/../include \
+gsymcheck_CPPFLAGS = -I$(top_srcdir)/liblepton/include -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
 gsymcheck_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS) $(GLIB_CFLAGS) \
 	$(GUILE_CFLAGS) $(GDK_PIXBUF_CFLAGS)
 gsymcheck_LDFLAGS = $(GLIB_LIBS) $(GUILE_LIBS) $(GDK_PIXBUF_LIBS)
-gsymcheck_LDADD = $(top_builddir)/libgeda/src/libgeda.la
+gsymcheck_LDADD = $(top_builddir)/liblepton/src/liblepton.la
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~
