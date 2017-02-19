@@ -82,7 +82,7 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 	/* loop over all filenames */
 	while (current_filename != NULL) {
 
-	    s_log_message(_("Going to traverse source [%1$s]\n"),
+	    s_log_message(_("Going to traverse source [%1$s]"),
 			  current_filename);
 
 	    /* guts here */
