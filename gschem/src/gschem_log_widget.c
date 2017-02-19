@@ -182,6 +182,7 @@ log_message (GschemLogWidgetClass *klass, const gchar *message, const gchar *sty
   if (g_utf8_validate (message, -1, NULL)) {
     gtk_text_buffer_insert_with_tags_by_name (klass->buffer, &iter, message, -1,
                                               "plain", style, NULL);
+    gtk_text_buffer_insert (klass->buffer, &iter, "\n", -1);
   } else {
     /* If UTF-8 wasn't valid (due to a system locale encoded filename or
      * other string being included by mistake), log a warning, and print
