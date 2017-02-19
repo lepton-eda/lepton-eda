@@ -172,7 +172,7 @@ void o_circle_motion (GschemToplevel *w_current, int w_x, int w_y)
    */
   diff_x = abs(w_current->first_wx - w_x);
   diff_y = abs(w_current->first_wy - w_y);
-  w_current->distance = max(diff_x, diff_y);
+  w_current->distance = MAX(diff_x, diff_y);
 
   /* draw the new temporary circle */
   o_circle_invalidate_rubber (w_current);

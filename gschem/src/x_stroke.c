@@ -165,10 +165,10 @@ x_stroke_translate_and_execute (GschemToplevel *w_current)
 
   for (i = 1; i < stroke_points->len; i++) {
     point = &g_array_index (stroke_points, StrokePoint, i);
-    min_x = min (min_x, point->x);
-    min_y = min (min_y, point->y);
-    max_x = max (max_x, point->x);
-    max_y = max (max_y, point->y);
+    min_x = MIN (min_x, point->x);
+    min_y = MIN (min_y, point->y);
+    max_x = MAX (max_x, point->x);
+    max_y = MAX (max_y, point->y);
   }
 
   o_invalidate_rect (w_current, min_x, min_y, max_x + 1, max_y + 1);

@@ -346,7 +346,7 @@ gschem_page_geometry_new_with_values (int screen_width,
   GschemPageGeometry *geometry = g_new0 (GschemPageGeometry, 1);
 
   gschem_page_geometry_set_values (geometry,
-                                   max (abs ((double)(viewport_right - viewport_left) / screen_width), (abs ((double)(viewport_top - viewport_bottom) / screen_height))),
+                                   MAX (abs ((double)(viewport_right - viewport_left) / screen_width), (abs ((double)(viewport_top - viewport_bottom) / screen_height))),
                                    screen_width,
                                    screen_height,
                                    viewport_left,

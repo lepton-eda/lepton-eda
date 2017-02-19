@@ -218,7 +218,7 @@ void o_arc_motion (GschemToplevel *w_current, int w_x, int w_y, int whichone)
      */
     diff_x = abs(w_current->first_wx - snap_grid (w_current, w_x));
     diff_y = abs(w_current->first_wy - snap_grid (w_current, w_y));
-    w_current->distance = max(diff_x, diff_y);
+    w_current->distance = MAX(diff_x, diff_y);
   }
   else if((whichone == ARC_START_ANGLE) || (whichone == ARC_SWEEP_ANGLE)) {
     /* compute the angle */

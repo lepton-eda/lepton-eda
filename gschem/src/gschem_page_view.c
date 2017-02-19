@@ -415,7 +415,7 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
   }
   else {
     gschem_page_geometry_set_values (geometry,
-                                     max (abs ((double)(gschem_page_geometry_get_viewport_right (geometry) - gschem_page_geometry_get_viewport_left (geometry)) / screen_width), (abs ((double)(gschem_page_geometry_get_viewport_top (geometry) - gschem_page_geometry_get_viewport_bottom (geometry)) / screen_height))),
+                                     MAX (abs ((double)(gschem_page_geometry_get_viewport_right (geometry) - gschem_page_geometry_get_viewport_left (geometry)) / screen_width), (abs ((double)(gschem_page_geometry_get_viewport_top (geometry) - gschem_page_geometry_get_viewport_bottom (geometry)) / screen_height))),
                                      screen_width,
                                      screen_height,
                                      gschem_page_geometry_get_viewport_left (geometry),

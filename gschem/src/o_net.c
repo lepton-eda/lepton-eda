@@ -129,29 +129,29 @@ void o_net_guess_direction(GschemToplevel *w_current,
       y1 = o_current->line->y[0];
       y2 = o_current->line->y[1];
 
-      xmin = min(x1, x2);
-      ymin = min(y1, y2);
-      xmax = max(x1, x2);
-      ymax = max(y1, y2);
+      xmin = MIN(x1, x2);
+      ymin = MIN(y1, y2);
+      xmax = MAX(x1, x2);
+      ymax = MAX(y1, y2);
 
       if (orientation == HORIZONTAL && wy == y1) {
 	if (wx == xmin) {
-	  up = max(up, current_rules[1]);
-	  down = max(down, current_rules[1]);
-	  right = max(right, current_rules[0]);
-	  left = max(left, current_rules[2]);
+	  up = MAX(up, current_rules[1]);
+	  down = MAX(down, current_rules[1]);
+	  right = MAX(right, current_rules[0]);
+	  left = MAX(left, current_rules[2]);
 	}
 	else if (wx == xmax) {
-	  up = max(up, current_rules[1]);
-	  down = max(down, current_rules[1]);
-	  right = max(right, current_rules[2]);
-	  left = max(left, current_rules[0]);
+	  up = MAX(up, current_rules[1]);
+	  down = MAX(down, current_rules[1]);
+	  right = MAX(right, current_rules[2]);
+	  left = MAX(left, current_rules[0]);
 	}
 	else if (xmin < wx && wx < xmax) {
-	  up = max(up, current_rules[1]);
-	  down = max(down, current_rules[1]);
-	  right = max(right, current_rules[0]);
-	  left = max(left, current_rules[0]);
+	  up = MAX(up, current_rules[1]);
+	  down = MAX(down, current_rules[1]);
+	  right = MAX(right, current_rules[0]);
+	  left = MAX(left, current_rules[0]);
 	}
 	else {
 	  continue;
@@ -159,22 +159,22 @@ void o_net_guess_direction(GschemToplevel *w_current,
       }
       if (orientation == VERTICAL && wx == x1) {
 	if (wy == ymin) {
-	  up = max(up, current_rules[0]);
-	  down = max(down, current_rules[2]);
-	  right = max(right, current_rules[1]);
-	  left = max(left, current_rules[1]);
+	  up = MAX(up, current_rules[0]);
+	  down = MAX(down, current_rules[2]);
+	  right = MAX(right, current_rules[1]);
+	  left = MAX(left, current_rules[1]);
 	}
 	else if (wy == ymax) {
-	  up = max(up, current_rules[2]);
-	  down = max(down, current_rules[0]);
-	  right = max(right, current_rules[1]);
-	  left = max(left, current_rules[1]);
+	  up = MAX(up, current_rules[2]);
+	  down = MAX(down, current_rules[0]);
+	  right = MAX(right, current_rules[1]);
+	  left = MAX(left, current_rules[1]);
 	}
 	else if (ymin < wy && wy < ymax) {
-	  up = max(up, current_rules[0]);
-	  down = max(down, current_rules[0]);
-	  right = max(right, current_rules[1]);
-	  left = max(left, current_rules[1]);
+	  up = MAX(up, current_rules[0]);
+	  down = MAX(down, current_rules[0]);
+	  right = MAX(right, current_rules[1]);
+	  left = MAX(left, current_rules[1]);
 	}
 	else {
 	  continue;
@@ -227,8 +227,8 @@ void o_net_find_magnetic(GschemToplevel *w_current,
   min_weight = 0;
 
   /* max distance of all the different reaches */
-  magnetic_reach = max(MAGNETIC_PIN_REACH, MAGNETIC_NET_REACH);
-  magnetic_reach = max(magnetic_reach, MAGNETIC_BUS_REACH);
+  magnetic_reach = MAX(MAGNETIC_PIN_REACH, MAGNETIC_NET_REACH);
+  magnetic_reach = MAX(magnetic_reach, MAGNETIC_BUS_REACH);
 
   object_list = g_list_append (NULL, page->connectible_list);
 
@@ -673,7 +673,7 @@ o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer)
 
   if (magnetic_net_mode) {
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
-      w_magnetic_halfsize = max (4 * size,
+      w_magnetic_halfsize = MAX (4 * size,
                                  gschem_page_view_WORLDabs (page_view, MAGNETIC_HALFSIZE));
       eda_cairo_arc (cr, flags, size,
                      w_current->magnetic_wx, w_current->magnetic_wy,
@@ -721,7 +721,7 @@ void o_net_invalidate_rubber (GschemToplevel *w_current)
 
   if (magnetic_net_mode) {
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
-      magnetic_halfsize = max (4 * size, MAGNETIC_HALFSIZE);
+      magnetic_halfsize = MAX (4 * size, MAGNETIC_HALFSIZE);
 
       o_invalidate_rect (w_current, magnetic_x - magnetic_halfsize,
                                     magnetic_y - magnetic_halfsize,

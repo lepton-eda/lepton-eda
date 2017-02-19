@@ -28,9 +28,9 @@
 #define GET_BOX_HEIGHT(w)			\
 	abs((w)->second_wy - (w)->first_wy)
 #define GET_BOX_LEFT(w)				\
-	min((w)->first_wx, (w)->second_wx)
+	MIN((w)->first_wx, (w)->second_wx)
 #define GET_BOX_TOP(w)				\
-        max((w)->first_wy, (w)->second_wy)
+        MAX((w)->first_wy, (w)->second_wy)
 
 /*! \todo Finish function documentation!!!
  *  \brief

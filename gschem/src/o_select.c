@@ -301,7 +301,7 @@ void o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
 
   /* if we are still close to the button press location,
      then don't enter the selection box mode */
-  dist = gschem_page_view_SCREENabs (page_view, max(diff_x, diff_y));
+  dist = gschem_page_view_SCREENabs (page_view, MAX(diff_x, diff_y));
 
   if (dist >= 10) {
     w_current->second_wx = w_x;
@@ -392,10 +392,10 @@ void o_select_box_search(GschemToplevel *w_current)
   int left, right, top, bottom;
   const GList *iter;
 
-  left = min(w_current->first_wx, w_current->second_wx);
-  right = max(w_current->first_wx, w_current->second_wx);
-  top = min(w_current->first_wy, w_current->second_wy);
-  bottom = max(w_current->first_wy, w_current->second_wy);
+  left = MIN(w_current->first_wx, w_current->second_wx);
+  right = MAX(w_current->first_wx, w_current->second_wx);
+  top = MIN(w_current->first_wy, w_current->second_wy);
+  bottom = MAX(w_current->first_wy, w_current->second_wy);
 
   iter = s_page_objects (toplevel->page_current);
   while (iter != NULL) {
