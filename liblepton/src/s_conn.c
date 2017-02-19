@@ -221,9 +221,9 @@ OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
     case(OBJ_NET):
     case(OBJ_PIN):
     case(OBJ_BUS):
-      min_y = min(o_current->line->y[0], 
+      min_y = MIN(o_current->line->y[0], 
                   o_current->line->y[1]);
-      max_y = max(o_current->line->y[0], 
+      max_y = MAX(o_current->line->y[0], 
                   o_current->line->y[1]);
 
 				/* vertical */
@@ -237,9 +237,9 @@ OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
         return(o_current);
       }
 
-      min_x = min(o_current->line->x[0], 
+      min_x = MIN(o_current->line->x[0], 
                   o_current->line->x[1]);
-      max_x = max(o_current->line->x[0], 
+      max_x = MAX(o_current->line->x[0], 
                   o_current->line->x[1]);
 
 				/* horizontal */

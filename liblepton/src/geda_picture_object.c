@@ -374,11 +374,11 @@ geda_picture_object_get_position (const GedaObject *object, gint *x, gint *y)
   g_return_val_if_fail (object->picture != NULL, FALSE);
 
   if (x != NULL) {
-    *x = min (object->picture->lower_x, object->picture->upper_x);
+    *x = MIN (object->picture->lower_x, object->picture->upper_x);
   }
 
   if (y != NULL) {
-    *y = min (object->picture->lower_y, object->picture->upper_y);
+    *y = MIN (object->picture->lower_y, object->picture->upper_y);
   }
 
   return TRUE;
@@ -593,10 +593,10 @@ void geda_picture_object_rotate (TOPLEVEL *toplevel,
                   &newx2, &newy2);
 
   /* reorder the corners after rotation */
-  object->picture->upper_x = min(newx1,newx2);
-  object->picture->upper_y = max(newy1,newy2);
-  object->picture->lower_x = max(newx1,newx2);
-  object->picture->lower_y = min(newy1,newy2);
+  object->picture->upper_x = MIN(newx1,newx2);
+  object->picture->upper_y = MAX(newy1,newy2);
+  object->picture->lower_x = MAX(newx1,newx2);
+  object->picture->lower_y = MIN(newy1,newy2);
 
   /* translate object back to normal position */
   object->picture->upper_x += world_centerx;
@@ -658,10 +658,10 @@ void geda_picture_object_mirror(TOPLEVEL *toplevel,
   newy2 = object->picture->lower_y;
 
   /* reorder the corners */
-  object->picture->upper_x = min(newx1,newx2);
-  object->picture->upper_y = max(newy1,newy2);
-  object->picture->lower_x = max(newx1,newx2);
-  object->picture->lower_y = min(newy1,newy2);
+  object->picture->upper_x = MIN(newx1,newx2);
+  object->picture->upper_y = MAX(newy1,newy2);
+  object->picture->lower_x = MAX(newx1,newx2);
+  object->picture->lower_y = MIN(newy1,newy2);
 
   /* translate back in position */
   object->picture->upper_x += world_centerx;
@@ -837,16 +837,16 @@ geda_picture_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
 
   g_return_val_if_fail (object->picture != NULL, G_MAXDOUBLE);
 
-  x1 = (double)min (object->picture->upper_x, object->picture->lower_x);
-  y1 = (double)min (object->picture->upper_y, object->picture->lower_y);
-  x2 = (double)max (object->picture->upper_x, object->picture->lower_x);
-  y2 = (double)max (object->picture->upper_y, object->picture->lower_y);
+  x1 = (double)MIN (object->picture->upper_x, object->picture->lower_x);
+  y1 = (double)MIN (object->picture->upper_y, object->picture->lower_y);
+  x2 = (double)MAX (object->picture->upper_x, object->picture->lower_x);
+  y2 = (double)MAX (object->picture->upper_y, object->picture->lower_y);
 
-  dx = min (((double)x) - x1, x2 - ((double)x));
-  dy = min (((double)y) - y1, y2 - ((double)y));
+  dx = MIN (((double)x) - x1, x2 - ((double)x));
+  dy = MIN (((double)y) - y1, y2 - ((double)y));
 
-  dx = min (dx, 0);
-  dy = min (dy, 0);
+  dx = MIN (dx, 0);
+  dy = MIN (dy, 0);
 
   return hypot (dx, dy);
 }

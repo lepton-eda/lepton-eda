@@ -68,10 +68,10 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *head,
 
     if ( geda_object_calculate_visible_bounds( toplevel, o_current, &rleft, &rtop, &rright, &rbottom) ) {
       if ( found ) {
-        *left = min( *left, rleft );
-        *top = min( *top, rtop );
-        *right = max( *right, rright );
-        *bottom = max( *bottom, rbottom );
+        *left = MIN( *left, rleft );
+        *top = MIN( *top, rtop );
+        *right = MAX( *right, rright );
+        *bottom = MAX( *bottom, rbottom );
       } else {
         *left = rleft;
         *top = rtop;
@@ -1096,10 +1096,10 @@ geda_complex_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
         geda_object_calculate_visible_bounds(toplevel, obj,
                                        &left, &top, &right, &bottom)) {
       if (found_line_bounds) {
-        line_bounds.lower_x = min (line_bounds.lower_x, left);
-        line_bounds.lower_y = min (line_bounds.lower_y, top);
-        line_bounds.upper_x = max (line_bounds.upper_x, right);
-        line_bounds.upper_y = max (line_bounds.upper_y, bottom);
+        line_bounds.lower_x = MIN (line_bounds.lower_x, left);
+        line_bounds.lower_y = MIN (line_bounds.lower_y, top);
+        line_bounds.upper_x = MAX (line_bounds.upper_x, right);
+        line_bounds.upper_y = MAX (line_bounds.upper_y, bottom);
       } else {
         line_bounds.lower_x = left;
         line_bounds.lower_y = top;
@@ -1109,7 +1109,7 @@ geda_complex_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
       }
     } else {
       distance = geda_object_shortest_distance_full (toplevel, obj, x, y, TRUE);
-      shortest_distance = min (shortest_distance, distance);
+      shortest_distance = MIN (shortest_distance, distance);
     }
 
     if (shortest_distance == 0.0)
@@ -1118,7 +1118,7 @@ geda_complex_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
 
   if (found_line_bounds) {
     distance = geda_box_shortest_distance (&line_bounds, x, y, TRUE);
-    shortest_distance = min (shortest_distance, distance);
+    shortest_distance = MIN (shortest_distance, distance);
   }
 
   return shortest_distance;

@@ -268,8 +268,8 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
       sPOINT *p1 = &g_array_index(points2, sPOINT, index);
       if ( p0->y != p1->y ) {
         SWEEP_EVENT event;
-        event.y0 = min(p0->y, p1->y);
-        event.status.y1 = max(p0->y, p1->y);
+        event.y0 = MIN(p0->y, p1->y);
+        event.status.y1 = MAX(p0->y, p1->y);
         event.status.m1 = (gdouble)( p1->x - p0->x ) / (gdouble)( p1->y - p0->y );
         event.status.b1 = p0->x - event.status.m1 * p0->y;
         g_array_append_val(events, event);
