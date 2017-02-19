@@ -20,6 +20,8 @@
 #include <liblepton/edascmvaluetypes.h>
 #include <liblepton/edascmhookproxy.h>
 
+G_BEGIN_DECLS
+
 /*!
  * \file libgedaguile.h
  * \ingroup guile_c_iface
@@ -73,3 +75,5 @@ void edascm_c_set_gc (SCM smob, int gc);
 
 /* Create a Scheme closure around a C function. */
 SCM edascm_c_make_closure (SCM (*func)(SCM, gpointer), gpointer user_data);
+
+G_END_DECLS

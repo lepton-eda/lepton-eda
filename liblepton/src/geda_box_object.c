@@ -511,10 +511,10 @@ void geda_box_object_rotate (TOPLEVEL *toplevel,
 		  &newx2, &newy2);
 
   /* reorder the corners after rotation */
-  object->box->upper_x = min(newx1,newx2);
-  object->box->upper_y = max(newy1,newy2);
-  object->box->lower_x = max(newx1,newx2);
-  object->box->lower_y = min(newy1,newy2);
+  object->box->upper_x = MIN(newx1,newx2);
+  object->box->upper_y = MAX(newy1,newy2);
+  object->box->lower_x = MAX(newx1,newx2);
+  object->box->lower_y = MIN(newy1,newy2);
 
   /* translate object back to normal position */
   object->box->upper_x += world_centerx;
@@ -563,10 +563,10 @@ void geda_box_object_mirror (TOPLEVEL *toplevel,
   newy2 = object->box->lower_y;
 
   /* reorder the corners */
-  object->box->upper_x = min(newx1,newx2);
-  object->box->upper_y = max(newy1,newy2);
-  object->box->lower_x = max(newx1,newx2);
-  object->box->lower_y = min(newy1,newy2);
+  object->box->upper_x = MIN(newx1,newx2);
+  object->box->upper_y = MAX(newy1,newy2);
+  object->box->lower_x = MAX(newx1,newx2);
+  object->box->lower_y = MIN(newy1,newy2);
 
   /* translate back in position */
   object->box->upper_x += world_centerx;
@@ -630,11 +630,11 @@ geda_box_object_get_position (const GedaObject *object, gint *x, gint *y)
   g_return_val_if_fail (object->box != NULL, FALSE);
 
   if (x != NULL) {
-    *x = min (object->box->lower_x, object->box->upper_x);
+    *x = MIN (object->box->lower_x, object->box->upper_x);
   }
 
   if (y != NULL) {
-    *y = min (object->box->lower_y, object->box->upper_y);
+    *y = MIN (object->box->lower_y, object->box->upper_y);
   }
 
   return TRUE;

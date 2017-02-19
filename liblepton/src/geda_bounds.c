@@ -117,10 +117,10 @@ geda_bounds_init_with_points (GedaBounds *bounds, gint x0, gint y0, gint x1, gin
 {
   g_return_if_fail (bounds != NULL);
 
-  bounds->min_x = min (x0, x1);
-  bounds->min_y = min (y0, y1);
-  bounds->max_x = max (x0, x1);
-  bounds->max_y = max (y0, y1);
+  bounds->min_x = MIN (x0, x1);
+  bounds->min_y = MIN (y0, y1);
+  bounds->max_x = MAX (x0, x1);
+  bounds->max_y = MAX (y0, y1);
 }
 
 /*! \brief Check if the point lies inside the bounds
@@ -194,10 +194,10 @@ geda_bounds_union (GedaBounds *r, const GedaBounds *a, const GedaBounds *b)
   g_return_if_fail (r != NULL);
 
   if ((a != NULL) && (b != NULL)) {
-    r->min_x = min (a->min_x, b->min_x);
-    r->min_y = min (a->min_y, b->min_y);
-    r->max_x = max (a->max_x, b->max_x);
-    r->max_y = max (a->max_y, b->max_y);
+    r->min_x = MIN (a->min_x, b->min_x);
+    r->min_y = MIN (a->min_y, b->min_y);
+    r->max_x = MAX (a->max_x, b->max_x);
+    r->max_y = MAX (a->max_y, b->max_y);
   }
   else if (a != NULL) {
     *r = *a;

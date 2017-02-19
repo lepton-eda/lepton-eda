@@ -315,10 +315,10 @@ SCM_DEFINE (object_bounds, "%object-bounds", 0, 0, 1,
 
   SCM result = SCM_BOOL_F;
   if (success) {
-    result = scm_cons (scm_cons (scm_from_int (min(left, right)),
-                                 scm_from_int (max(top, bottom))),
-                       scm_cons (scm_from_int (max(left, right)),
-                                 scm_from_int (min(top, bottom))));
+    result = scm_cons (scm_cons (scm_from_int (MIN(left, right)),
+                                 scm_from_int (MAX(top, bottom))),
+                       scm_cons (scm_from_int (MAX(left, right)),
+                                 scm_from_int (MIN(top, bottom))));
   }
 
   scm_remember_upto_here_1 (rst_s);

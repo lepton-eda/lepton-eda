@@ -514,15 +514,15 @@ static void o_net_consolidate_lowlevel (OBJECT *object,
 
   if (orient == HORIZONTAL) {
 
-    temp1 = min(object->line->x[0], del_object->line->x[0]);
-    temp2 = min(object->line->x[1], del_object->line->x[1]);
+    temp1 = MIN(object->line->x[0], del_object->line->x[0]);
+    temp2 = MIN(object->line->x[1], del_object->line->x[1]);
 
-    final1 = min(temp1, temp2);
+    final1 = MIN(temp1, temp2);
 
-    temp1 = max(object->line->x[0], del_object->line->x[0]);
-    temp2 = max(object->line->x[1], del_object->line->x[1]);
+    temp1 = MAX(object->line->x[0], del_object->line->x[0]);
+    temp2 = MAX(object->line->x[1], del_object->line->x[1]);
 
-    final2 = max(temp1, temp2);
+    final2 = MAX(temp1, temp2);
 
     object->line->x[0] = final1;
     object->line->x[1] = final2;
@@ -530,15 +530,15 @@ static void o_net_consolidate_lowlevel (OBJECT *object,
   }
 
   if (orient == VERTICAL) {
-    temp1 = min(object->line->y[0], del_object->line->y[0]);
-    temp2 = min(object->line->y[1], del_object->line->y[1]);
+    temp1 = MIN(object->line->y[0], del_object->line->y[0]);
+    temp2 = MIN(object->line->y[1], del_object->line->y[1]);
 
-    final1 = min(temp1, temp2);
+    final1 = MIN(temp1, temp2);
 
-    temp1 = max(object->line->y[0], del_object->line->y[0]);
-    temp2 = max(object->line->y[1], del_object->line->y[1]);
+    temp1 = MAX(object->line->y[0], del_object->line->y[0]);
+    temp2 = MAX(object->line->y[1], del_object->line->y[1]);
 
-    final2 = max(temp1, temp2);
+    final2 = MAX(temp1, temp2);
 
     object->line->y[0] = final1;
     object->line->y[1] = final2;

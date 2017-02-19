@@ -778,7 +778,7 @@ geda_arc_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
 
     distance_to_end1 = hypot (dx, dy);
 
-    shortest_distance = min (distance_to_end0, distance_to_end1);
+    shortest_distance = MIN (distance_to_end0, distance_to_end1);
   }
 
   return shortest_distance;

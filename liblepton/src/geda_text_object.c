@@ -883,11 +883,11 @@ geda_text_object_shortest_distance (TOPLEVEL *toplevel,
                                       &left, &top, &right, &bottom))
     return G_MAXDOUBLE;
 
-  dx = min (x - left, right - x);
-  dy = min (y - top, bottom - y);
+  dx = MIN (x - left, right - x);
+  dy = MIN (y - top, bottom - y);
 
-  dx = min (dx, 0);
-  dy = min (dy, 0);
+  dx = MIN (dx, 0);
+  dy = MIN (dy, 0);
 
   return hypot (dx, dy);
 }

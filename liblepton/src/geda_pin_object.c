@@ -610,10 +610,10 @@ geda_pin_object_update_whichend (TOPLEVEL *toplevel,
             toplevel, o_current, &rleft, &rtop, &rright, &rbottom);
 
           if ( found ) {
-            left = min( left, rleft );
-            top = min( top, rtop );
-            right = max( right, rright );
-            bottom = max( bottom, rbottom );
+            left = MIN( left, rleft );
+            top = MIN( top, rtop );
+            right = MAX( right, rright );
+            bottom = MAX( bottom, rbottom );
           } else {
             left = rleft;
             top = rtop;

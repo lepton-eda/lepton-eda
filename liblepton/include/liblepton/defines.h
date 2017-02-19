@@ -73,12 +73,6 @@
 #define NOT_FOUND_TEXT_X	100
 #define NOT_FOUND_TEXT_Y	100
 
-#undef max
-#define max(a,b) ((a) > (b) ? (a) : (b))
-
-#undef min
-#define min(a,b) ((a) < (b) ? (a) : (b))
-
 /* for s_clib_getfilename() */
 #define OPEN_DIR	0
 #define READ_DIR	1

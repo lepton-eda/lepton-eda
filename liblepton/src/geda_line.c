@@ -119,8 +119,8 @@ geda_line_shortest_distance (const GedaLine *line, gint x, gint y)
     t = (dx0 + dy0) / (ldx * ldx + ldy * ldy);
 
     /* constrain the parametric value to a point on the line */
-    t = max (t, 0);
-    t = min (t, 1);
+    t = MAX (t, 0);
+    t = MIN (t, 1);
 
     /* calculate closest point on the line */
     cx = t * ldx + lx0;

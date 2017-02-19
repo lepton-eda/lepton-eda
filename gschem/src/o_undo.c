@@ -146,7 +146,7 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
                                 (geometry->viewport_left + geometry->viewport_right) / 2,
                                 (geometry->viewport_top + geometry->viewport_bottom) / 2,
                                 /* scale */
-                                max (((double) abs (geometry->viewport_right - geometry->viewport_left) / geometry->screen_width),
+                                MAX (((double) abs (geometry->viewport_right - geometry->viewport_left) / geometry->screen_width),
                                   ((double) abs (geometry->viewport_top - geometry->viewport_bottom) / geometry->screen_height)),
                                 page->page_control,
                                 page->up);

@@ -29,7 +29,7 @@
 #define GET_PICTURE_HEIGHT(w)						\
   (w)->pixbuf_wh_ratio == 0 ? 0 : abs((w)->second_wx - (w)->first_wx)/(w)->pixbuf_wh_ratio
 #define GET_PICTURE_LEFT(w)			\
-  min((w)->first_wx, (w)->second_wx)
+  MIN((w)->first_wx, (w)->second_wx)
 #define GET_PICTURE_TOP(w)						\
   (w)->first_wy > (w)->second_wy ? (w)->first_wy  :			\
   (w)->first_wy+abs((w)->second_wx - (w)->first_wx)/(w)->pixbuf_wh_ratio

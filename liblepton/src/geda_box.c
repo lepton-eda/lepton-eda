@@ -93,17 +93,17 @@ geda_box_shortest_distance (GedaBox *box, int x, int y, int solid)
 
   g_return_val_if_fail (box != NULL, G_MAXDOUBLE);
 
-  x1 = (double) min (box->upper_x, box->lower_x);
-  y1 = (double) min (box->upper_y, box->lower_y);
-  x2 = (double) max (box->upper_x, box->lower_x);
-  y2 = (double) max (box->upper_y, box->lower_y);
+  x1 = (double) MIN (box->upper_x, box->lower_x);
+  y1 = (double) MIN (box->upper_y, box->lower_y);
+  x2 = (double) MAX (box->upper_x, box->lower_x);
+  y2 = (double) MAX (box->upper_y, box->lower_y);
 
-  dx = min (((double)x) - x1, x2 - ((double)x));
-  dy = min (((double)y) - y1, y2 - ((double)y));
+  dx = MIN (((double)x) - x1, x2 - ((double)x));
+  dy = MIN (((double)y) - y1, y2 - ((double)y));
 
   if (solid) {
-    dx = min (dx, 0);
-    dy = min (dy, 0);
+    dx = MIN (dx, 0);
+    dy = MIN (dy, 0);
   }
 
   if (dx < 0) {
@@ -116,7 +116,7 @@ geda_box_shortest_distance (GedaBox *box, int x, int y, int solid)
     if (dy < 0) {
       shortest_distance = fabs (dy);
     } else {
-      shortest_distance = min (dx, dy);
+      shortest_distance = MIN (dx, dy);
     }
   }
 

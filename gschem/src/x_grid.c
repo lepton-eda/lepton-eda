@@ -101,7 +101,7 @@ draw_dots_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int
   if (incr == -1)
     return;
 
-  int dot_size = min (w_current->dots_grid_dot_size, 5);
+  int dot_size = MIN (w_current->dots_grid_dot_size, 5);
 
   GedaColor *color = x_color_lookup (w_current, DOTS_GRID_COLOR);
   cairo_set_source_rgba (cr,

@@ -103,7 +103,7 @@ geda_circle_shortest_distance (const GedaCircle *circle,
   distance_to_center = hypot (dx, dy);
 
   if (solid) {
-    shortest_distance = max (distance_to_center - circle->radius, 0);
+    shortest_distance = MAX (distance_to_center - circle->radius, 0);
   } else {
     shortest_distance = fabs (distance_to_center - circle->radius);
   }
