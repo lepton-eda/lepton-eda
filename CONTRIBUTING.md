@@ -91,6 +91,9 @@ Some general suggestions:
 
 When writing C code:
 
+- Do not use C++-style comments `// ...`; use C-style `/* ... */`
+  comments instead.
+
 - This set of options to GNU `indent` approximates the gEDA C
   indentation style:
 
