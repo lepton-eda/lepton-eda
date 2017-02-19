@@ -45,7 +45,7 @@ conduct.
 
 1. Remarks that violate the Lepton standards of conduct, including
 hateful, hurtful, oppressive or exclusionary remarks, are not allowed.
-(Cursing is allowed, but never targetting another person, and neveri n
+(Cursing is allowed, but never targetting another person, and never in
 a hateful manner.)
 
 2. Remarks that moderators find inappropriate, whether listed in the
@@ -59,7 +59,7 @@ out of the communication channel to cool off.
 5. If the user comes back and continues to make trouble, they will be
 banned, i.e. excluded indefinitely.
 
-6. Moderators may chooses at their discretion to un-ban the user if it
+6. Moderators may choose at their discretion to un-ban the user if it
 was a first offense and they offer the offended party a genuine
 apology.
 
