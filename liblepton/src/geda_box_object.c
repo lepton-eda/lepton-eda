@@ -320,13 +320,13 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, const char buf[],
 
   if (width == 0 || height == 0) {
     s_log_message (_("Found a zero width/height box "
-                     "[ %1$c %2$d %3$d %4$d %5$d %6$d ]\n"),
+                     "[ %1$c %2$d %3$d %4$d %5$d %6$d ]"),
                    type, x1, y1, width, height, color);
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    s_log_message (_("Found an invalid color [ %1$s ]\n"), buf);
-    s_log_message (_("Setting color to default color\n"));
+    s_log_message (_("Found an invalid color [ %1$s ]"), buf);
+    s_log_message (_("Setting color to default color."));
     color = DEFAULT_COLOR;
   }
 

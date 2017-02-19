@@ -327,7 +327,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
         if (fileformat_ver == 0) {
           s_log_message(_("Read an old format sym/sch file!\n"
-                          "Please run g[sym|sch]update on:\n[%1$s]\n"), name);
+                          "Please run g[sym|sch]update on:\n[%1$s]"), name);
         }
         break;
 
