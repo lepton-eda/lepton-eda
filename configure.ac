@@ -41,6 +41,7 @@ AX_WINDOWS_FLAGS
 #####################################################################
 
 AC_PROG_CC
+AC_PROG_CXX
 AC_PROG_CPP
 m4_ifdef([AM_PROG_AR], [AM_PROG_AR]) dnl Workaround for Automake 1.11
 
