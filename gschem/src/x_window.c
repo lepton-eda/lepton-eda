@@ -918,7 +918,7 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
   if (filename != NULL) {
     GError *err = NULL;
     if (!quiet_mode)
-      s_log_message (_("Loading schematic [%s]\n"), fn);
+      s_log_message (_("Loading schematic [%1$s]\n"), fn);
 
     if (!f_open (toplevel, page, (gchar *) fn, &err)) {
       GtkWidget *dialog;
@@ -929,7 +929,7 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
          GTK_DIALOG_DESTROY_WITH_PARENT,
          GTK_MESSAGE_ERROR,
          GTK_BUTTONS_CLOSE,
-         _("<b>An error occurred while loading the requested file.</b>\n\nLoading from '%s' failed: %s. The gschem log may contain more information."),
+         _("<b>An error occurred while loading the requested file.</b>\n\nLoading from '%1$s' failed: %2$s. The gschem log may contain more information."),
          fn, err->message);
       gtk_window_set_title (GTK_WINDOW (dialog), _("Failed to load file"));
       gtk_dialog_run (GTK_DIALOG (dialog));
@@ -1018,7 +1018,7 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
   ret = (gint)f_save (toplevel, page, filename, &err);
 
   if (ret != 1) {
-    log_msg   = _("Could NOT save page [%s]\n");
+    log_msg   = _("Could NOT save page [%1$s]\n");
     state_msg = _("Error while trying to save");
 
     GtkWidget *dialog;
@@ -1039,9 +1039,9 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
     if (g_ascii_strcasecmp (s_page_get_filename (page), filename) != 0) {
       s_page_set_filename (page, filename);
 
-      log_msg = _("Saved as [%s]\n");
+      log_msg = _("Saved as [%1$s]\n");
     } else {
-      log_msg = _("Saved [%s]\n");
+      log_msg = _("Saved [%1$s]\n");
     }
     state_msg = _("Saved");
 
@@ -1114,7 +1114,7 @@ x_window_close_page (GschemToplevel *w_current, PAGE *page)
   }
 
   s_log_message (page->CHANGED ?
-                 _("Discarding page [%s]\n") : _("Closing [%s]\n"),
+                 _("Discarding page [%1$s]\n") : _("Closing [%1$s]\n"),
                  s_page_get_filename (page));
   /* remove page from toplevel list of page and free */
   s_page_delete (toplevel, page);

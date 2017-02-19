@@ -96,7 +96,7 @@ SCM g_rc_mode_general(SCM scmmode,
   /* no match? */
   if(index == table_size) {
     fprintf(stderr,
-            _("Invalid mode [%s] passed to %s\n"),
+            _("Invalid mode [%1$s] passed to %2$s\n"),
             mode,
             rc_name);
     ret = SCM_BOOL_F;
@@ -180,7 +180,7 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
     eda_config_load (cfg, &tmp_err);
     if (tmp_err != NULL &&
         !g_error_matches (tmp_err, G_IO_ERROR, G_IO_ERROR_NOT_FOUND))
-      g_warning (_("Failed to load config from '%s': %s\n"),
+      g_warning (_("Failed to load config from '%1$s': %2$s\n"),
                  eda_config_get_filename (cfg), tmp_err->message);
     g_clear_error (&tmp_err);
   }
@@ -204,11 +204,11 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
   scm_dynwind_end ();
 
   if (status) {
-    s_log_message (_("Loaded RC file [%s]\n"), name_norm);
+    s_log_message (_("Loaded RC file [%1$s]\n"), name_norm);
   } else {
     /* Copy tmp_err into err, with a prefixed message. */
     g_propagate_prefixed_error (err, tmp_err,
-                                _("Failed to load RC file [%s]: "),
+                                _("Failed to load RC file [%2$s]: "),
                                 name_norm);
     g_free (name_norm);
   }
@@ -339,8 +339,8 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
   if (*err == NULL) {
     const gchar *msgl =
       _("ERROR: An unknown error occurred while parsing configuration files.");
-    s_log_message ("%s\n", msgl);
-    fprintf(stderr, "%s\n", msgl);
+    s_log_message ("%1$s\n", msgl);
+    fprintf(stderr, "%1$s\n", msgl);
 
   } else {
     /* RC files are allowed to be missing or skipped; check for
@@ -350,14 +350,14 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
       return;
     }
 
-    s_log_message (_("ERROR: %s\n"), (*err)->message);
-    fprintf (stderr, _("ERROR: %s\n"), (*err)->message);
+    s_log_message (_("ERROR: %1$s\n"), (*err)->message);
+    fprintf (stderr, _("ERROR: %1$s\n"), (*err)->message);
   }
 
   /* g_path_get_basename() allocates memory, but we don't care
    * because we're about to exit. */
   pbase = g_path_get_basename (pname);
-  fprintf (stderr, _("ERROR: The %s log may contain more information.\n"),
+  fprintf (stderr, _("ERROR: The %1$s log may contain more information.\n"),
            pbase);
   exit (1);
 }
@@ -478,7 +478,7 @@ SCM g_rc_component_library(SCM path, SCM name)
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
     fprintf(stderr,
-            _("Invalid path [%s] passed to component-library\n"),
+            _("Invalid path [%1$s] passed to component-library\n"),
             string);
     scm_dynwind_end();
     return SCM_BOOL_F;
@@ -704,7 +704,7 @@ SCM g_rc_bitmap_directory(SCM path)
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
     fprintf (stderr,
-             _("Invalid path [%s] passed to bitmap-directory\n"),
+             _("Invalid path [%1$s] passed to bitmap-directory\n"),
              string);
     g_free(string);
     return SCM_BOOL_F;

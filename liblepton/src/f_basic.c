@@ -116,7 +116,7 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
   if (auto_err) {
     g_errcode = g_file_error_from_errno (auto_err);
     g_set_error (err, G_FILE_ERROR, g_errcode,
-                 _("Failed to stat [%s]: %s"),
+                 _("Failed to stat [%1$s]: %2$s"),
                  auto_filename, g_strerror (auto_err));
     result = TRUE;
     goto check_autosave_finish;
@@ -129,7 +129,7 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
   if (file_err) {
     g_errcode = g_file_error_from_errno (file_err);
     g_set_error (err, G_FILE_ERROR, g_errcode,
-                 _("Failed to stat [%s]: %s"),
+                 _("Failed to stat [%1$s]: %2$s"),
                  auto_filename, g_strerror (file_err));
     result = TRUE;
     goto check_autosave_finish;
@@ -208,7 +208,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   full_filename = f_normalize_filename (filename, &tmp_err);
   if (full_filename == NULL) {
     g_set_error (err, G_FILE_ERROR, tmp_err->code,
-                 _("Cannot find file %s: %s"),
+                 _("Cannot find file %1$s: %2$s"),
                  filename, tmp_err->message);
     g_error_free(tmp_err);
     return 0;
@@ -254,7 +254,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
     if (tmp_err != NULL) g_warning ("%s\n", tmp_err->message);
     if (active_backup) {
       message = g_string_new ("");
-      g_string_append_printf(message, _("\nWARNING: Found an autosave backup file:\n  %s.\n\n"), backup_filename);
+      g_string_append_printf(message, _("\nWARNING: Found an autosave backup file:\n  %1$s.\n\n"), backup_filename);
       if (tmp_err != NULL) {
         g_string_append(message, _("I could not guess if it is newer, so you have to do it manually.\n"));
       } else {
@@ -358,7 +358,7 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
 
   if (real_filename == NULL) {
     g_set_error (err, tmp_err->domain, tmp_err->code,
-                 _("Can't get the real filename of %s: %s"),
+                 _("Can't get the real filename of %1$s: %2$s"),
                  filename,
                  tmp_err->message);
     return 0;
@@ -368,7 +368,7 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
   if (g_file_test(filename, G_FILE_TEST_EXISTS) && 
       g_access(filename, W_OK) != 0) {
     g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_PERM,
-                 _("File %s is read-only"), filename);
+                 _("File %1$s is read-only"), filename);
     return 0;      
   }
   
@@ -389,13 +389,13 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
       if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) && 
 	   (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
 	if (chmod(backup_filename, S_IREAD|S_IWRITE) != 0) {
-	  s_log_message (_("Could NOT set previous backup file [%s] read-write\n"),
+	  s_log_message (_("Could NOT set previous backup file [%1$s] read-write\n"),
 			 backup_filename);
 	}
       }
 	
       if (rename(real_filename, backup_filename) != 0) {
-	s_log_message (_("Can't save backup file: %s."), backup_filename);
+	s_log_message (_("Can't save backup file: %1$s."), backup_filename);
       }
       else {
 	/* Make the backup file readonly so a 'rm *' command will ask 
@@ -405,7 +405,7 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
 	mask = (~mask)&0777;
 	mask &= ((~saved_umask) & 0777);
 	if (chmod(backup_filename, mask) != 0) {
-	  s_log_message (_("Could NOT set backup file [%s] readonly\n"),
+	  s_log_message (_("Could NOT set backup file [%1$s] readonly\n"),
                          backup_filename);
 	}
 	umask(saved_umask);
@@ -454,12 +454,12 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
        best-effort basis; rather than treating failure as an error, we
        just log a warning. */
     if (chmod (real_filename, st.st_mode)) {
-      g_warning (_("Failed to restore permissions on '%s': %s\n"),
+      g_warning (_("Failed to restore permissions on '%1$s': %2$s\n"),
                  real_filename, g_strerror (errno));
     }
 #ifdef HAVE_CHOWN
     if (chown (real_filename, st.st_uid, st.st_gid)) {
-      g_warning (_("Failed to restore ownership on '%s': %s\n"),
+      g_warning (_("Failed to restore ownership on '%1$s': %2$s\n"),
                  real_filename, g_strerror (errno));
     }
 #endif
@@ -469,7 +469,7 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
   }
   else {
     g_set_error (err, tmp_err->domain, tmp_err->code,
-                 _("Could NOT save file: %s"), tmp_err->message);
+                 _("Could NOT save file: %1$s"), tmp_err->message);
     g_clear_error (&tmp_err);
     g_free (real_filename);
     return 0;

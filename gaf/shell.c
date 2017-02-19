@@ -58,7 +58,7 @@ shell_usage (void)
 "  -l FILE        load Scheme source code from FILE\n"
 "  -h, --help     display usage information and exit\n"
 "\n"
-"Please report bugs to %s.\n"),
+"Please report bugs to %1$s.\n"),
 PACKAGE_BUGREPORT);
   exit (0);
 }

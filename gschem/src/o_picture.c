@@ -164,7 +164,7 @@ void picture_selection_dialog (GschemToplevel *w_current)
 				       GTK_DIALOG_DESTROY_WITH_PARENT,
 				       GTK_MESSAGE_ERROR,
 				       GTK_BUTTONS_CLOSE,
-				       _("Failed to load picture: %s"),
+				       _("Failed to load picture: %1$s"),
 				       error->message);
       /* Wait for any user response */
       gtk_dialog_run (GTK_DIALOG (dialog));

@@ -69,7 +69,7 @@ s_netattrib_check_connected_string (const gchar *str)
   if (s_netattrib_connected_string_get_pinnum (str) == NULL) return;
 
   fprintf (stderr,
-           _("ERROR: `%s' is reserved for internal use."), PIN_NET_PREFIX);
+           _("ERROR: `%1$s' is reserved for internal use."), PIN_NET_PREFIX);
   exit (1); /*! \bug Use appropriate exit code */
 }
 
@@ -147,7 +147,7 @@ s_netattrib_create_pins (OBJECT *o_current,
 
 		if (old_cpin->nets->net_name) {
 		    fprintf(stderr,
-			    _("Found a cpinlist head with a netname! [%s]\n"),
+			    _("Found a cpinlist head with a netname! [%1$s]\n"),
 			    old_cpin->nets->net_name);
 		    g_free(old_cpin->nets->net_name);
 		}
@@ -260,7 +260,7 @@ char *s_netattrib_net_search (OBJECT * o_current, const gchar *wanted_pin)
 
     char_ptr = strchr (value, ':');
     if (char_ptr == NULL) {
-      fprintf (stderr, _("Got an invalid net= attrib [net=%s]\n"
+      fprintf (stderr, _("Got an invalid net= attrib [net=%1$s]\n"
                        "Missing : in net= attrib\n"), value);
       g_free (value);
       return NULL;
@@ -291,7 +291,7 @@ char *s_netattrib_net_search (OBJECT * o_current, const gchar *wanted_pin)
 
     char_ptr = strchr (value, ':');
     if (char_ptr == NULL) {
-      fprintf (stderr, _("Got an invalid net= attrib [net=%s]\n"
+      fprintf (stderr, _("Got an invalid net= attrib [net=%1$s]\n"
                        "Missing : in net= attrib\n"), value);
       g_free (value);
       return NULL;

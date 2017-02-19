@@ -81,7 +81,7 @@ s_expand_env_variables (const gchar *string)
           if (string[i] == '\0') {
             /* problem: no closing '}' to variable */
             fprintf (stderr,
-                     "Found malformed environment variable in '%s'\n",
+                     "Found malformed environment variable in '%1$s'\n",
                      string);
             g_string_append (gstring, "$");
             g_string_append_len (gstring, string + start, i - start + 1);
@@ -97,7 +97,7 @@ s_expand_env_variables (const gchar *string)
             if (i != j) {
               /* illegal character detected in variable name */
               fprintf (stderr,
-                       "Found bad character [%c] in variable name.\n",
+                       "Found bad character [%1$c] in variable name.\n",
                        string[j]);
               g_string_append (gstring, "${");
               g_string_append_len (gstring, string + start, i - start + 1);

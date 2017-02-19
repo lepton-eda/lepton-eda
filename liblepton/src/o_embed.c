@@ -51,7 +51,7 @@ void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
     /* set the embedded flag */
     o_current->complex_embedded = TRUE;
 
-    s_log_message (_("Component [%s] has been embedded\n"),
+    s_log_message (_("Component [%1$s] has been embedded\n"),
                    o_current->complex_basename);
     page_modified = 1;
   }
@@ -95,7 +95,7 @@ void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
 
     if (sym == NULL) {
       /* symbol not found in the symbol library: signal an error */
-      s_log_message (_("Could not find component [%s], while trying to "
+      s_log_message (_("Could not find component [%1$s], while trying to "
                        "unembed. Component is still embedded\n"),
                      o_current->complex_basename);
 
@@ -103,7 +103,7 @@ void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
       /* clear the embedded flag */
       o_current->complex_embedded = FALSE;
 
-      s_log_message (_("Component [%s] has been successfully unembedded\n"),
+      s_log_message (_("Component [%1$s] has been successfully unembedded\n"),
                      o_current->complex_basename);
 
       page_modified = 1;

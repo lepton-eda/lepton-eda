@@ -57,7 +57,7 @@ void
 usage(char *cmd)
 {
   printf(_(
-"Usage: %s [OPTIONS] filename1 ... filenameN\n"
+"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
 "  -h, --help        Print usage\n"
 "  -q, --quiet       Quiet mode\n"
 "  -v, --verbose     Verbose mode (cumulative: errors, warnings, info)\n"

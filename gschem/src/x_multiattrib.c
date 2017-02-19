@@ -2579,33 +2579,44 @@ update_dialog_title (Multiattrib *multiattrib, char *complex_title_name)
   GString *title_string = g_string_new (_("Edit Attributes"));
   int num_title_extras = 0;
 
+  /*
+   * Unusual ordering of substitution parameters in the next
+   * ngettext call is to allow translators to use an explicit word
+   * in the singular case.
+   *
+   * See
+   *
+   *   https://www.gnu.org/software/gettext/manual/html_node/Plural-forms.html
+   *
+   * for more information.
+   */
   if (multiattrib->num_complex_in_list > 0) {
     append_dialog_title_extra (title_string, &num_title_extras,
-                               ngettext ("%i symbol (%s)", "%i symbols (%s)", multiattrib->num_complex_in_list),
-                               multiattrib->num_complex_in_list, complex_title_name);
+                               ngettext ("%2$i symbol (%1$s)", "%2$i symbols (%1$s)", multiattrib->num_complex_in_list),
+                               complex_title_name, multiattrib->num_complex_in_list);
   }
 
   if (multiattrib->num_pins_in_list > 0) {
     append_dialog_title_extra (title_string, &num_title_extras,
-                               ngettext ("%i pin", "%i pins", multiattrib->num_pins_in_list),
+                               ngettext ("%1$i pin", "%1$i pins", multiattrib->num_pins_in_list),
                                multiattrib->num_pins_in_list);
   }
 
   if (multiattrib->num_nets_in_list > 0) {
     append_dialog_title_extra (title_string, &num_title_extras,
-                               ngettext ("%i net", "%i nets", multiattrib->num_nets_in_list),
+                               ngettext ("%1$i net", "%1$i nets", multiattrib->num_nets_in_list),
                                multiattrib->num_nets_in_list);
   }
 
   if (multiattrib->num_buses_in_list > 0) {
     append_dialog_title_extra (title_string, &num_title_extras,
-                               ngettext ("%i bus", "%i buses", multiattrib->num_buses_in_list),
+                               ngettext ("%1$i bus", "%1$i buses", multiattrib->num_buses_in_list),
                                multiattrib->num_buses_in_list);
   }
 
   if (multiattrib->num_lone_attribs_in_list > 0) {
     append_dialog_title_extra (title_string, &num_title_extras,
-                               ngettext ("%i attribute", "%i attributes", multiattrib->num_lone_attribs_in_list),
+                               ngettext ("%1$i attribute", "%1$i attributes", multiattrib->num_lone_attribs_in_list),
                                multiattrib->num_lone_attribs_in_list);
   }
 

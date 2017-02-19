@@ -218,7 +218,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
       break;
 
     default:
-      g_critical ("o_list_copy_to: object %p has bad type '%c'\n",
+      g_critical ("o_list_copy_to: object %1$p has bad type '%2$c'\n",
                   selected, selected->type);
       return NULL;
   }
@@ -630,7 +630,7 @@ geda_object_get_position (const GedaObject *object, gint *x, gint *y)
       case OBJ_PIN:     func = geda_pin_object_get_position;     break;
       case OBJ_ARC:     func = geda_arc_object_get_position;     break;
       default:
-        g_critical ("geda_object_get_position: object %p has bad type '%c'\n",
+        g_critical ("geda_object_get_position: object %1$p has bad type '%2$c'\n",
                     object, object->type);
   }
 
@@ -669,7 +669,7 @@ geda_object_translate (GedaObject *object, gint dx, gint dy)
       case OBJ_PIN:     func = geda_pin_object_translate;     break;
       case OBJ_ARC:     func = geda_arc_object_translate;     break;
       default:
-        g_critical ("geda_object_translate: object %p has bad type '%c'\n",
+        g_critical ("geda_object_translate: object %1$p has bad type '%2$c'\n",
                     object, object->type);
   }
 
@@ -708,7 +708,7 @@ void geda_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_center
       case OBJ_PIN:     func = geda_pin_object_rotate;     break;
       case OBJ_ARC:     func = geda_arc_object_rotate;     break;
       default:
-        g_critical ("geda_object_rotate: object %p has bad type '%c'\n",
+        g_critical ("geda_object_rotate: object %1$p has bad type '%2$c'\n",
                     object, object->type);
   }
 
@@ -746,7 +746,7 @@ void geda_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_center
       case OBJ_PIN:     func = geda_pin_object_mirror;     break;
       case OBJ_ARC:     func = geda_arc_object_mirror;     break;
       default:
-        g_critical ("geda_object_mirror: object %p has bad type '%c'\n",
+        g_critical ("geda_object_mirror: object %1$p has bad type '%2$c'\n",
                     object, object->type);
   }
 
@@ -810,7 +810,7 @@ geda_object_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object,
     case OBJ_PATH:        func = geda_path_object_shortest_distance;     break;
     case OBJ_ARC:         func = geda_arc_object_shortest_distance;      break;
     default:
-      g_critical ("geda_object_shortest_distance: object %p has bad type '%c'\n",
+      g_critical ("geda_object_shortest_distance: object %1$p has bad type '%2$c'\n",
                   object, object->type);
   }
 

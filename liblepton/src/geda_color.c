@@ -233,7 +233,7 @@ s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name)
      * FIXME one day we will have dynamically-expanding colorspace.
      * One day. */
     if ((i < 0) || (i >= MAX_COLORS)) {
-      g_critical ("Color map index out of bounds: %i\n", i);
+      g_critical ("Color map index out of bounds: %1$i\n", i);
       goto color_map_next;
     }
 
@@ -257,7 +257,7 @@ s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name)
 
     /* FIXME should we generate a Guile error if there's a problem here? */
     if (!result) {
-      g_critical ("Invalid color map value: %s\n", rgba);
+      g_critical ("Invalid color map value: %1$s\n", rgba);
     } else {
       map[i] = c;
       map[i].enabled = TRUE;

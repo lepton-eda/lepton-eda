@@ -112,7 +112,7 @@ void s_log_init (const gchar *prefix)
   if (s != 0) {
     /* It's okay to use the logging functions from here, because
      * there's already a default handler. */
-    g_warning ("Could not create log directory %s: %s\n",
+    g_warning ("Could not create log directory %1$s: %2$s\n",
                dir_path, strerror (errno));
     g_free (dir_path);
     g_free (full_prefix);
@@ -156,10 +156,10 @@ void s_log_init (const gchar *prefix)
     /* It's okay to use the logging functions from here, because
      * there's already a default handler. */
     if (errno == EEXIST) {
-      g_warning ("Could not create unique log filename in %s\n",
+      g_warning ("Could not create unique log filename in %1$s\n",
                  dir_path);
     } else {
-      g_warning ("Could not create log file in %s: %s\n",
+      g_warning ("Could not create log file in %1$s: %2$s\n",
                  dir_path, strerror (errno));
     }
   }

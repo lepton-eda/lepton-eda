@@ -328,7 +328,7 @@ void x_menus_sensitivity (GschemToplevel *w_current, const char *buf, int flag)
     gtk_widget_set_sensitive(GTK_WIDGET(item), flag);
     /* free(item); */ /* Why doesn't this need to be freed?  */
   } else {
-    s_log_message(_("Tried to set the sensitivity on non-existent menu item '%s'\n"), buf); 
+    s_log_message(_("Tried to set the sensitivity on non-existent menu item '%1$s'\n"), buf);
   }
  
 }

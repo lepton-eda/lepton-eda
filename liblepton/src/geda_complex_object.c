@@ -364,7 +364,7 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
 
     /* Add some useful text */
     not_found_text =
-      g_strdup_printf (_("Component not found:\n %s"),
+      g_strdup_printf (_("Component not found:\n %1$s"),
            new_node->complex_basename);
     new_prim_obj = geda_text_object_new (toplevel,
                                          DETACHED_ATTRIBUTE_COLOR,
@@ -589,7 +589,9 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
       break;
 
     default:
-      s_log_message(_("Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"), type, x1, y1, selectable, angle, mirror, basename);
+      s_log_message(_("Found a component with an invalid rotation "
+                      "[ %1$c %2$d %3$d %4$d %5$d %6$d %7$s ]\n"),
+                    type, x1, y1, selectable, angle, mirror, basename);
       s_log_message (_("Setting angle to 0\n"));
       angle = 0;
   }
@@ -602,7 +604,9 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
       break;
 
     default:
-      s_log_message(_("Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"), type, x1, y1, selectable, angle, mirror, basename);
+      s_log_message(_("Found a component with an invalid mirror flag "
+                      "[ %1$c %2$d %3$d %4$d %5$d %6$d %7$s ]\n"),
+                    type, x1, y1, selectable, angle, mirror, basename);
       s_log_message (_("Setting mirror to 0\n"));
       mirror = 0;
   }
@@ -926,11 +930,11 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
     {
       if (inside)
       {
-        s_log_message(_("WARNING: Symbol version parse error on refdes %s:\n"
-                        "\tCould not parse symbol file symversion=%s\n"),
+        s_log_message(_("WARNING: Symbol version parse error on refdes %1$s:\n"
+                        "\tCould not parse symbol file symversion=%2$s\n"),
                       refdes, inside);
       } else {
-        s_log_message(_("WARNING: Symbol version parse error on refdes %s:\n"
+        s_log_message(_("WARNING: Symbol version parse error on refdes %1$s:\n"
                         "\tCould not parse symbol file symversion=\n"),
                       refdes);
       }
@@ -946,8 +950,8 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
     outside_value = strtod(outside, &err_check);
     if (outside_value == 0 && outside == err_check)
     {
-      s_log_message(_("WARNING: Symbol version parse error on refdes %s:\n"
-                      "\tCould not parse attached symversion=%s\n"),
+      s_log_message(_("WARNING: Symbol version parse error on refdes %1$s:\n"
+                      "\tCould not parse attached symversion=%2$s\n"),
                     refdes, outside);
       goto done;
     }
@@ -971,8 +975,8 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   /* No symversion inside, but a version is outside, this is a weird case */
   if (!inside_present && outside_present)
   {
-    s_log_message(_("WARNING: Symbol version oddity on refdes %s:\n"
-                    "\tsymversion=%s attached to instantiated symbol, "
+    s_log_message(_("WARNING: Symbol version oddity on refdes %1$s:\n"
+                    "\tsymversion=%2$s attached to instantiated symbol, "
                     "but no symversion= inside symbol file\n"),
                   refdes, outside);
     goto done;
@@ -985,7 +989,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
       ((inside_present && outside_present) && (inside_value > outside_value)))
   {
 
-    s_log_message(_("WARNING: Symbol version mismatch on refdes %s (%s):\n"
+    s_log_message(_("WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
                     "\tSymbol in library is newer than "
                     "instantiated symbol\n"),
                   refdes, object->complex_basename);
@@ -1013,8 +1017,8 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
     if (inside_major > outside_major)
     {
       char* refdes_copy;
-      s_log_message(_("\tMAJOR VERSION CHANGE (file %.3f, "
-                      "instantiated %.3f, %s)!\n"),
+      s_log_message(_("\tMAJOR VERSION CHANGE (file %1$.3f, "
+                      "instantiated %2$.3f, %3$s)!\n"),
                     inside_value, outside_value, refdes);
 
       /* add the refdes to the major_changed_refdes GList */
@@ -1031,8 +1035,8 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
 
     if (inside_minor > outside_minor)
     {
-      s_log_message(_("\tMinor version change (file %.3f, "
-                      "instantiated %.3f)\n"),
+      s_log_message(_("\tMinor version change (file %1$.3f, "
+                      "instantiated %2$.3f)\n"),
                     inside_value, outside_value);
     }
 
@@ -1042,7 +1046,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   /* outside value is greater than inside value, this is weird case */
   if ((inside_present && outside_present) && (outside_value > inside_value))
   {
-    s_log_message(_("WARNING: Symbol version oddity on refdes %s:\n"
+    s_log_message(_("WARNING: Symbol version oddity on refdes %1$s:\n"
                     "\tInstantiated symbol is newer than "
                     "symbol in library\n"),
                   refdes);

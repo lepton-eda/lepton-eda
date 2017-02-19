@@ -366,7 +366,7 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    s_log_message (_("Found an invalid color [ %s ]\n"), buf);
+    s_log_message (_("Found an invalid color [ %1$s ]\n"), buf);
     s_log_message (_("Setting color to default color\n"));
     color = DEFAULT_COLOR;
   }
@@ -719,7 +719,7 @@ geda_pin_object_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type)
   o_emit_pre_change_notify (toplevel, o_current);
   switch (pin_type) {
     default:
-      g_critical ("geda_pin_object_set_type: Got invalid pin type %i\n", pin_type);
+      g_critical ("geda_pin_object_set_type: Got invalid pin type %1$i\n", pin_type);
       /* Fall through */
     case PIN_TYPE_NET:
       o_current->line_width = PIN_WIDTH_NET;

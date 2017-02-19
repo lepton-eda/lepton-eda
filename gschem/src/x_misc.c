@@ -148,7 +148,7 @@ x_show_uri (GschemToplevel *w_current, const gchar *uri,
 
   if (exit_status != 0) {
     g_set_error (error, G_SPAWN_ERROR, G_SPAWN_ERROR_FAILED,
-                 _("%s failed to launch URI"), argv[0]);
+                 _("%1$s failed to launch URI"), argv[0]);
     return FALSE;
   }
 

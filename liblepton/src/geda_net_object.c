@@ -299,12 +299,13 @@ OBJECT *o_net_read (TOPLEVEL *toplevel, const char buf[],
   }
 
   if (x1 == x2 && y1 == y2) {
-    s_log_message (_("Found a zero length net [ %c %d %d %d %d %d ]\n"),
+    s_log_message (_("Found a zero length net "
+                     "[ %1$c %2$d %3$d %4$d %5$d %6$d ]\n"),
                    type, x1, y1, x2, y2, color);
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    s_log_message (_("Found an invalid color [ %s ]\n"), buf);
+    s_log_message (_("Found an invalid color [ %1$s ]\n"), buf);
     s_log_message (_("Setting color to default color\n"));
     color = DEFAULT_COLOR;
   }

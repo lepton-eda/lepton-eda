@@ -54,7 +54,7 @@ int o_save (TOPLEVEL *toplevel, const GList *object_list,
   if (g_file_test(filename, G_FILE_TEST_EXISTS) &&
       g_access(filename, W_OK) != 0) {
     g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_PERM,
-                 _("File %s is read-only"), filename);
+                 _("File %1$s is read-only"), filename);
     return 0;
   }
 
@@ -244,7 +244,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         }
         else {
           g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read unexpected attach "
-                                                                 "symbol start marker in [%s] :\n>>\n%s<<\n"),
+                                                                 "symbol start marker in [%1$s] :\n>>\n%2$s<<\n"),
                        name, line);
           goto error;
         }
@@ -261,7 +261,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
           embedded_level++;
         } else {
           g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read unexpected embedded "
-                                                                 "symbol start marker in [%s] :\n>>\n%s<<\n"),
+                                                                 "symbol start marker in [%1$s] :\n>>\n%2$s<<\n"),
                        name, line);
           goto error;
         }
@@ -327,12 +327,12 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
         if (fileformat_ver == 0) {
           s_log_message(_("Read an old format sym/sch file!\n"
-                          "Please run g[sym|sch]update on:\n[%s]\n"), name);
+                          "Please run g[sym|sch]update on:\n[%1$s]\n"), name);
         }
         break;
 
       default:
-        g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read garbage in [%s] :\n>>\n%s<<\n"), name, line);
+        g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read garbage in [%1$s] :\n>>\n%2$s<<\n"), name, line);
         new_obj = NULL;
         goto error;
     }

@@ -732,7 +732,7 @@ update_grid_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unuse
       }
     }
 
-    label_text = g_strdup_printf (_("Grid(%s, %s)"), snap_text, grid_text);
+    label_text = g_strdup_printf (_("Grid(%1$s, %2$s)"), snap_text, grid_text);
 
     gtk_label_set_text (GTK_LABEL (widget->grid_label), label_text);
 

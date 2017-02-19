@@ -71,7 +71,7 @@ DEFINE_I_CALLBACK(file_new)
   g_return_if_fail (page != NULL);
 
   x_window_set_current_page (w_current, page);
-  s_log_message (_("New page created [%s]\n"), s_page_get_filename (page));
+  s_log_message (_("New page created [%1$s]\n"), s_page_get_filename (page));
 }
 
 /*! \todo Finish function documentation!!!
@@ -105,7 +105,7 @@ DEFINE_I_CALLBACK(file_new_window)
 
   x_window_set_current_page (w_current, page);
 
-  s_log_message (_("New Window created [%s]\n"), s_page_get_filename (page));
+  s_log_message (_("New Window created [%1$s]\n"), s_page_get_filename (page));
 }
 
 /*! \todo Finish function documentation!!!
@@ -2119,7 +2119,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
     /* loop over all filenames */
     while(current_filename != NULL) {
       GError *err = NULL;
-      s_log_message(_("Searching for source [%s]\n"), current_filename);
+      s_log_message(_("Searching for source [%1$s]\n"), current_filename);
       child = s_hierarchy_down_schematic_single(gschem_toplevel_get_toplevel (w_current),
                                                 current_filename,
                                                 parent,
@@ -2148,11 +2148,11 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
       if (child == NULL) {
         const char *msg = (err != NULL) ? err->message : "Unknown error.";
         char *secondary =
-          g_strdup_printf (_("Failed to descend hierarchy into '%s': %s\n\n"
+          g_strdup_printf (_("Failed to descend hierarchy into '%1$s': %2$s\n\n"
                              "The gschem log may contain more information."),
                            current_filename, msg);
 
-        s_log_message(_("Failed to descend into '%s': %s\n"),
+        s_log_message(_("Failed to descend into '%1$s': %2$s\n"),
                       current_filename, msg);
 
         GtkWidget *dialog =
@@ -2228,7 +2228,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
   if (object != NULL) {
     /* only allow going into symbols */
     if (object->type == OBJ_COMPLEX) {
-      s_log_message(_("Searching for symbol [%s]\n"),
+      s_log_message(_("Searching for symbol [%1$s]\n"),
 		    object->complex_basename);
       sym = s_clib_get_symbol_by_name (object->complex_basename);
       if (sym == NULL)
@@ -2687,7 +2687,7 @@ DEFINE_I_CALLBACK(options_snap)
     s_log_message(_("Snap back to the grid (CAUTION!)\n"));
     break;
   default:
-    g_critical("options_snap: toplevel->snap out of range: %d\n",
+    g_critical("options_snap: toplevel->snap out of range: %1$d\n",
                snap_mode);
   }
 

@@ -147,7 +147,7 @@ static struct ExportSettings settings = {
   NULL,
 };
 
-#define bad_arg_msg _("ERROR: Bad argument '%s' to %s option.\n")
+#define bad_arg_msg _("ERROR: Bad argument '%1$s' to %2$s option.\n")
 #define see_help_msg _("\nRun `gaf export --help' for more information.\n")
 
 static void
@@ -188,7 +188,7 @@ cmd_export_impl (void *data, int argc, char **argv)
       out_suffix++; /* Skip '.' */
     } else {
       fprintf (stderr,
-               _("ERROR: Cannot infer output format from filename '%s'.\n"),
+               _("ERROR: Cannot infer output format from filename '%1$s'.\n"),
                settings.outfile);
       exit (1);
     }
@@ -205,12 +205,12 @@ cmd_export_impl (void *data, int argc, char **argv)
   if (exporter == NULL) {
     if (settings.format == NULL) {
       fprintf (stderr,
-               _("ERROR: Cannot find supported format for filename '%s'.\n"),
+               _("ERROR: Cannot find supported format for filename '%1$s'.\n"),
                settings.outfile);
       exit (1);
     } else {
       fprintf (stderr,
-               _("ERROR: Unsupported output format '%s'.\n"),
+               _("ERROR: Unsupported output format '%1$s'.\n"),
                settings.format);
       fprintf (stderr, see_help_msg);
       exit (1);
@@ -234,13 +234,15 @@ cmd_export_impl (void *data, int argc, char **argv)
     page = s_page_new (toplevel, tmp);
     if (!f_open (toplevel, page, tmp, &err)) {
       fprintf (stderr,
-               _("ERROR: Failed to load '%s': %s\n"), tmp,
+               /* TRANSLATORS: The first string is the filename, the second
+                * is the detailed error message */
+               _("ERROR: Failed to load '%1$s': %2$s\n"), tmp,
                err->message);
       exit (1);
     }
     if (g_chdir (original_cwd) != 0) {
       fprintf (stderr,
-               _("ERROR: Failed to change directory to '%s': %s\n"),
+               _("ERROR: Failed to change directory to '%1$s': %2$s\n"),
                original_cwd, g_strerror (errno));
       exit (1);
     }
@@ -928,7 +930,7 @@ export_usage (void)
 "  -F, --font=NAME        set font family for printing text\n"
 "  -h, --help     display usage information and exit\n"
 "\n"
-"Please report bugs to %s.\n"),
+"Please report bugs to %1$s.\n"),
           PACKAGE_BUGREPORT);
   exit (0);
 }

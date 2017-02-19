@@ -362,7 +362,7 @@ x_print_export_pdf (GschemToplevel *w_current,
 
   cr_status = cairo_surface_status (surface);
   if (cr_status != CAIRO_STATUS_SUCCESS) {
-    g_warning (_("Failed to write PDF to '%s': %s\n"),
+    g_warning (_("Failed to write PDF to '%1$s': %2$s\n"),
                filename,
                cairo_status_to_string (cr_status));
     return FALSE;
@@ -416,7 +416,7 @@ x_print (GschemToplevel *w_current)
                               GTK_DIALOG_DESTROY_WITH_PARENT,
                               GTK_MESSAGE_ERROR,
                               GTK_BUTTONS_CLOSE,
-                              _("Error printing file:\n%s"),
+                              _("Error printing file:\n%1$s"),
                               err->message);
     g_signal_connect (error_dialog, "response",
                       G_CALLBACK (gtk_widget_destroy), NULL);

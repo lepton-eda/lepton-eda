@@ -355,18 +355,19 @@ o_bus_read (TOPLEVEL *toplevel,
   }
 
   if (x1 == x2 && y1 == y2) {
-    s_log_message (_("Found a zero length bus [ %c %d %d %d %d %d ]\n"),
+    s_log_message (_("Found a zero length bus "
+                     "[ %1$c %2$d %3$d %4$d %5$d %6$d ]\n"),
                     type, x1, y1, x2, y2, color);
   }
 
   if (color < 0 || color > MAX_COLORS) {
-    s_log_message (_("Found an invalid color [ %s ]\n"), buf);
+    s_log_message (_("Found an invalid color [ %1$s ]\n"), buf);
     s_log_message (_("Setting color to default color\n"));
     color = DEFAULT_COLOR;
   }
 
   if (ripper_dir < -1 || ripper_dir > 1) {
-    s_log_message (_("Found an invalid bus ripper direction [ %s ]\n"), buf);
+    s_log_message (_("Found an invalid bus ripper direction [ %1$s ]\n"), buf);
     s_log_message (_("Resetting direction to neutral (no direction)\n"));
     ripper_dir = 0;
   }

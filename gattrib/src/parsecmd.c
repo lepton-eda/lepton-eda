@@ -77,7 +77,7 @@ void usage(char *cmd)
 "Gattrib:  The gEDA project\'s attribute editor.\n"
 "Presents schematic attributes in easy-to-edit spreadsheet format.\n"
 "\n"
-"Usage: %s [OPTIONS] filename1 ... filenameN\n"
+"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
 "  -q, --quiet            Quiet mode\n"
 "  -v, --verbose          Verbose mode on\n"
 "  -h, --help             This help menu\n"

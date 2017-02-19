@@ -53,10 +53,10 @@ x_rc_parse_gschem_error (GError **err)
     }
 
     /* Log message */
-    s_log_message (_("ERROR: %s\n"), (*err)->message);
+    s_log_message (_("ERROR: %1$s\n"), (*err)->message);
 
     /* Dialog message */
-    msg2 = g_strdup_printf (_("%s\n\n"
+    msg2 = g_strdup_printf (_("%1$s\n\n"
                               "The gschem log may contain more information."),
                             (*err)->message);
   }

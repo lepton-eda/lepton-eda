@@ -424,7 +424,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
 						 (GCompareFunc) freeslot_compare);
 	      if (slot_item != NULL) { /* duplicate slot in used_slots */
 		s_log_message(_("duplicate slot may cause problems: "
-				"[symbolname=%s, number=%d, slot=%d]\n"),
+				"[symbolname=%1$s, number=%2$d, slot=%3$d]\n"),
 				slot->symbolname, slot->number, slot->slotnr);
 		g_free(slot);
 	      }

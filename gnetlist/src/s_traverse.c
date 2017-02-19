@@ -162,7 +162,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
     netlist = s_netlist_return_tail(netlist_head);
 
     if (o_current->type == OBJ_PLACEHOLDER) {
-      printf(_("WARNING: Found a placeholder/missing component, are you missing a symbol file? [%s]\n"), o_current->complex_basename);
+      printf(_("WARNING: Found a placeholder/missing component, are you missing a symbol file? [%1$s]\n"), o_current->complex_basename);
     }
 
     if (o_current->type == OBJ_COMPLEX) {
@@ -345,7 +345,7 @@ s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, in
       /* search for the old label= attribute on nets */
       temp = o_attrib_search_object_attribs_by_name (object, "label", 0);
       if (temp) {
-        printf(_("WARNING: Found label=%s. label= is deprecated, please use netname=\n"), temp);
+        printf(_("WARNING: Found label=%1$s. label= is deprecated, please use netname=\n"), temp);
         new_net->net_name = s_hierarchy_create_netname (temp, hierarchy_tag);
         g_free(temp);
       }
