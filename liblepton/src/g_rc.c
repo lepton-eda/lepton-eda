@@ -208,7 +208,7 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
   } else {
     /* Copy tmp_err into err, with a prefixed message. */
     g_propagate_prefixed_error (err, tmp_err,
-                                _("Failed to load RC file [%2$s]: "),
+                                _("Failed to load RC file [%1$s]: "),
                                 name_norm);
     g_free (name_norm);
   }
