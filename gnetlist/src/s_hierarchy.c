@@ -101,9 +101,9 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
                                                   &err);
 
 	    if (child_page == NULL) {
-              g_warning (_("Failed to load subcircuit '%1$s': %s\n"),
+              g_warning (_("Failed to load subcircuit '%1$s': %2$s\n"),
                          current_filename, err->message);
-              fprintf(stderr, _("ERROR: Failed to load subcircuit '%1$s': %s\n"),
+              fprintf(stderr, _("ERROR: Failed to load subcircuit '%1$s': %2$s\n"),
                       current_filename, err->message);
               g_error_free (err);
               exit (2);
