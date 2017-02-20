@@ -34,6 +34,7 @@ void s_log_update (const gchar *log_domain, GLogLevelFlags log_level,
   switch (logging_dest) {
     case STDOUT_TTY:
       fputs (buf, stdout);
+      fputs ("\n", stdout);
       break;
 
     default:

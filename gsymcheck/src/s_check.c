@@ -126,33 +126,21 @@ s_check_symbol (TOPLEVEL *pr_current, PAGE *p_current, const GList *obj_list)
     s_symstruct_print(s_symcheck);
     
     if (s_symcheck->warning_count > 0) {
-      s_log_message(_("%1$d warnings found "),
+      s_log_message(ngettext(_("%2$d warning found %1$s"),
+                             _("%2$d warnings found %1$s"),
+                             s_symcheck->warning_count),
+                    (verbose_mode < 2) ? _("(use -vv to view details)") : "",
                     s_symcheck->warning_count);
-      if (verbose_mode < 2) {
-        s_log_message(_("(use -vv to view details)\n"));
-      } else {
-        s_log_message("\n");
-      }
     }
   
     if (s_symcheck->error_count == 0) {
-      s_log_message(_("No errors found\n"));
-    } else if (s_symcheck->error_count == 1) {
-      s_log_message(_("1 ERROR found "));
-      if (verbose_mode < 1) {
-        s_log_message(_("(use -v to view details)\n"));
-      } else {
-        s_log_message("\n");
-      }
-
-    } else if (s_symcheck->error_count > 1) {
-      s_log_message(_("%1$d ERRORS found "),
+      s_log_message(_("No errors found"));
+    } else {
+      s_log_message(ngettext(_("%2$d ERROR found %1$s"),
+                             _("%2$d ERRORS found %1$s"),
+                             s_symcheck->error_count),
+                    (verbose_mode < 1) ? _("(use -v to view details)") : "",
                     s_symcheck->error_count);
-      if (verbose_mode < 1) {
-        s_log_message(_("(use -v to view details)\n"));
-      } else {
-        s_log_message("\n");
-      }
     }
   }
 
