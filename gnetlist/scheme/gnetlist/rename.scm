@@ -8,7 +8,7 @@
   #:export (search-rename
             add-rename
             get-rename-list
-            set-rename-list!
+            reset-rename!
             rename-all))
 
 ;;; List of renamings
@@ -34,6 +34,9 @@
         (lambda (ls) (set! rename-ls ls) rename-ls))
   (set! %get-rename-list
         (lambda () rename-ls)))
+
+;;; Reset the list of renamings to empty
+(define (reset-rename!) (set-rename-list! '()))
 
 ;;; Getters for rename pairs
 (define source car)

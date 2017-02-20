@@ -46,8 +46,7 @@
 
 static SCM search_rename_proc;
 static SCM add_rename_proc;
-static SCM get_rename_list_proc;
-static SCM set_rename_list_x_proc;
+static SCM reset_rename_x_proc;
 
 
 void init_rename_procs (void)
@@ -56,15 +55,13 @@ void init_rename_procs (void)
                                              "search-rename");
   add_rename_proc =        scm_c_public_ref ("gnetlist rename",
                                              "add-rename");
-  get_rename_list_proc =   scm_c_public_ref ("gnetlist rename",
-                                             "get-rename-list");
-  set_rename_list_x_proc = scm_c_public_ref ("gnetlist rename",
-                                             "set-rename-list!");
+  reset_rename_x_proc =    scm_c_public_ref ("gnetlist rename",
+                                             "reset-rename!");
 }
 
 void s_rename_init(void)
 {
-  scm_call_1 (set_rename_list_x_proc, SCM_EOL);
+  scm_call_0 (reset_rename_x_proc);
 }
 
 int s_rename_search(char *src, char *dest, int quiet_flag)
