@@ -7,7 +7,7 @@ Copyright (C) 1998-2012 gEDA Developers
 Cairo-based schematic and symbol renderer
 =========================================
 
-The libgedacairo library provides a renderer for schematics and
+The libleptonrenderer library provides a renderer for schematics and
 symbols based on the Cairo vector graphics library and the Pango font
 library.  Data for rendering is loaded using libgeda.
 
@@ -20,32 +20,34 @@ The library is based on Peter Clifton's preexisting gschem rendering
 code.
 
 Please submit bug reports and patches to
-<https://github.com/lepton-eda/lepton-eda/issues>, using the `libgedacairo' tag.
+<https://github.com/lepton-eda/lepton-eda/issues>, using the
+`libleptonrenderer' tag.
 
-Using libgedacairo in your programs
+Using libleptonrenderer in your programs
 -----------------------------------
 
 To use the library in your GNU Autotools-based program, add:
 
   PKG_PROG_PKG_CONFIG
-  PKG_CHECK_MODULES([GEDACAIRO], [libgedacairo], [], [])
+  PKG_CHECK_MODULES([LEPTONRENDERER], [libleptonrenderer], [], [])
 
 to your `configure.ac', and then add:
 
-  AM_CFLAGS = $(GEDACAIRO_CFLAGS
-  AM_LDFLAGS = $(GEDACAIRO_LDFLAGS)
+  AM_CFLAGS = $(LEPTONRENDERER_CFLAGS
+  AM_LDFLAGS = $(LEPTONRENDERER_LDFLAGS)
 
 to your `Makefile.am'.
 
 To compile a very simple program without using a GNU Autotools, you
 could use a command like:
 
-  cc `pkg-config --cflags --libs libgedacairo` -o myprog myprog.c
+  cc `pkg-config --cflags --libs libleptonrenderer` -o myprog myprog.c
 
 Header files
 ------------
 
-The main header file for the library is `libgedacairo/libgedacairo.h'.
+The main header file for the library is
+`libleptonrenderer/libleptonrenderer.h'.
 
 It makes two main groups of API functions and and types available: the
 main EdaRenderer class (based on GObject), and a set of hinted
@@ -58,9 +60,9 @@ An important concept to understand when using an EdaRenderer is the
 distinction between Cairo's "device coordinates" and "user
 coordinates".  (Yes, go and look it up now).
 
-Before calling any libgedacairo drawing functions, you must set up the
-Cairo context's transformation matrix so that user coordinates match
-coordinates on the schematic or symbol page.
+Before calling any libleptonrenderer drawing functions, you must
+set up the Cairo context's transformation matrix so that user
+coordinates match coordinates on the schematic or symbol page.
 
 The EdaRenderer class
 ---------------------
@@ -135,8 +137,8 @@ These four methods all can be overridden from subclasses.
 Lower-level drawing
 -------------------
 
-Sometimes EdaRenderer is not enough!  libgedacairo provides a bunch of
-functions for doing lower-level drawing.
+Sometimes EdaRenderer is not enough!  libleptonrenderer provides a
+bunch of functions for doing lower-level drawing.
 
 Several of these drawing functions take a `flags' argument.  At the
 moment, the only flag that may be applied is `EDA_CAIRO_ENABLE_HINTS'.

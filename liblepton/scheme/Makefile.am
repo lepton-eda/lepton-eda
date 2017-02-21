@@ -65,7 +65,7 @@ geda/core/gettext.scm: $(srcdir)/geda/core/gettext.scm.in Makefile
 	fi
 
 update-gaf-tool:
-	for d in liblepton/src libgedacairo gaf; do \
+	for d in liblepton/src libleptonrenderer gaf; do \
 	  (cd $(top_builddir)/$$d && $(MAKE) $(AM_MAKEFLAGS) all-am); \
 	done
 
