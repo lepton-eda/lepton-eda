@@ -66,10 +66,10 @@ static void
 set_widget (GschemBindingInteger *binding, GtkWidget *widget);
 
 static gboolean
-update_model (GschemBindingInteger *binding);
+update_model (GschemBinding *binding);
 
 static gboolean
-update_widget (GschemBindingInteger *binding);
+update_widget (GschemBinding *binding);
 
 static void
 widget_apply (GtkWidget *widget, GschemBindingInteger *binding);
@@ -205,7 +205,7 @@ model_notify (GObject *object, GParamSpec *pspec, GschemBindingInteger *binding)
   const gchar *param_name = g_intern_string (pspec->name);
 
   if (param_name == binding->model_param) {
-    update_widget (binding);
+    update_widget (GSCHEM_BINDING (binding));
   }
 }
 
@@ -232,7 +232,7 @@ set_model_object (GschemBindingInteger *binding, GObject *object)
                       binding);
   }
 
-  update_widget (binding);
+  update_widget (GSCHEM_BINDING (binding));
 }
 
 
@@ -315,8 +315,9 @@ set_widget (GschemBindingInteger *binding, GtkWidget *widget)
  *  \return TRUE, if successful
  */
 static gboolean
-update_model (GschemBindingInteger *binding)
+update_model (GschemBinding *obj)
 {
+  GschemBindingInteger *binding = GSCHEM_BINDING_INTEGER (obj);
   int number;
   gboolean success = FALSE;
 
@@ -357,8 +358,9 @@ update_model (GschemBindingInteger *binding)
  *  \return TRUE, if successful
  */
 static gboolean
-update_widget (GschemBindingInteger *binding)
+update_widget (GschemBinding *obj)
 {
+  GschemBindingInteger *binding = GSCHEM_BINDING_INTEGER (obj);
   gboolean success = FALSE;
 
   if (binding->model_object != NULL) {
@@ -397,5 +399,5 @@ update_widget (GschemBindingInteger *binding)
 static void
 widget_apply (GtkWidget *widget, GschemBindingInteger *binding)
 {
-  update_model (binding);
+  update_model (GSCHEM_BINDING (binding));
 }
