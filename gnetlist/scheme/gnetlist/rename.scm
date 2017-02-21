@@ -20,24 +20,37 @@
   %rename-list)
 
 ;;; Getter for the list of renamings
-(define (get-rename-list)
+;;
+;; Returns the rename alist sorted by rename destination, then by
+;; rename source.
+(define (%get-rename-list)
   %rename-list)
+
+(define (get-rename-list)
+  (sort (%get-rename-list) rename<?))
 
 (let ((rename-ls '()))
   (set! set-rename-list!
         (lambda (ls) (set! rename-ls ls) rename-ls))
-  (set! get-rename-list
+  (set! %get-rename-list
         (lambda () rename-ls)))
 
 ;;; Getters for rename pairs
 (define source car)
 (define destination cdr)
 
+;;; Comparison function for renames
+(define (rename<? left right)
+  (or
+   (string<? (destination left) (destination right))
+   (and (string=? (destination left) (destination right))
+        (string<? (source left) (source right)))))
+
 ;;; if the src is found, return true
 ;;; if the dest is found, also return true, but warn user
 ;;; If quiet flag is true than don't print anything
 (define (search-rename src dest quiet)
-  (let loop ((ls (get-rename-list)))
+  (let loop ((ls (%get-rename-list)))
     (and (not (null? ls))
          (let* ((rename (car ls))
                 (current-source (source rename)))
@@ -85,8 +98,8 @@ This warning is okay if you have multiple levels of hierarchy!
        dest
        (set-rename-list!
         (if (search-rename src dest #f)
-            (update-rename-list (get-rename-list) src dest)
-            `((,src . ,dest) . ,(get-rename-list))))))
+            (update-rename-list (%get-rename-list) src dest)
+            `((,src . ,dest) . ,(%get-rename-list))))))
 
 
 (define (rename-lowlevel netlist rename)
@@ -111,7 +124,7 @@ This warning is okay if you have multiple levels of hierarchy!
 
 (define (rename-all netlist)
   (verbose-print "- Renaming nets:\n")
-  (let loop ((rename-list (get-rename-list))
+  (let loop ((rename-list (%get-rename-list))
              (netlist netlist))
     (if (null? rename-list)
         (begin
