@@ -380,7 +380,10 @@ void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new)
   dirname = g_path_get_dirname (s_page_get_filename(p_new));
   if (chdir (dirname)) {
     /* An error occured with chdir */
-#warning FIXME: What do we do?
+    /* FIXME[2017-02-21] Libraries should not be changing the
+     * current working directory.  If it is not possible to avoid a
+     * chdir() call, then the error needs to be handled and/or
+     * reported. */
   }
   g_free (dirname);
 

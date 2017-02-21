@@ -224,7 +224,10 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   if (file_directory) { 
     if (chdir (file_directory)) {
       /* Error occurred with chdir */
-#warning FIXME: What do we do?
+      /* FIXME[2017-02-21] Libraries should not be changing the
+       * current working directory.  If it is not possible to avoid a
+       * chdir() call, then the error needs to be handled and/or
+       * reported. */
     }
   }
 
@@ -311,7 +314,10 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   if (flags & F_OPEN_RESTORE_CWD) {
     if (chdir (saved_cwd)) {
       /* Error occurred with chdir */
-#warning FIXME: What do we do?
+      /* FIXME[2017-02-21] Libraries should not be changing the
+       * current working directory.  If it is not possible to avoid a
+       * chdir() call, then the error needs to be handled and/or
+       * reported. */
     }
     g_free(saved_cwd);
   }
