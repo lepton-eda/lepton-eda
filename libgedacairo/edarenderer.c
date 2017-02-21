@@ -135,7 +135,7 @@ static void eda_renderer_draw_picture (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_complex (EdaRenderer *renderer, OBJECT *object);
 
 static void eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_grips_list (EdaRenderer *renderer, GList *objects);
+static void eda_renderer_draw_grips_list (EdaRenderer *renderer, GList *objects) G_GNUC_UNUSED;
 static void eda_renderer_draw_grips_impl (EdaRenderer *renderer, int type, int n_grips, ...);
 static void eda_renderer_draw_arc_grips (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_path_grips (EdaRenderer *renderer, OBJECT *object);
