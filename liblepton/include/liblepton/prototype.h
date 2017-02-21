@@ -76,8 +76,6 @@ SELECTION *o_selection_new( void );
 void o_selection_add(TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected);
 void o_selection_print_all(const SELECTION *selection);
 void o_selection_remove(TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected);
-void o_selection_select(TOPLEVEL *toplevel, OBJECT *object) G_GNUC_DEPRECATED;
-void o_selection_unselect(TOPLEVEL *toplevel, OBJECT *object) G_GNUC_DEPRECATED;
 
 /* s_attrib.c */
 int s_attrib_add_entry(char *new_attrib);
