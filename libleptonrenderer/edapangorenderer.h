@@ -1,5 +1,5 @@
 /* gEDA - GPL Electronic Design Automation
- * libgedacairo - Rendering gEDA schematics with Cairo
+ * libleptonrenderer - Rendering Lepton EDA schematics with Cairo
  * Copyright (C) 2010-2012 gEDA Contributors (see ChangeLog for details)
  *
  * This library is free software; you can redistribute it and/or

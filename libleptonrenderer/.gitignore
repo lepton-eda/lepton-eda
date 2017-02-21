@@ -3,4 +3,4 @@
 *.la
 *.lo
 ChangeLog
-libgedacairo.pc
+libleptonrenderer.pc

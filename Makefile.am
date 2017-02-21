@@ -1,7 +1,7 @@
 if ENABLE_GATTRIB
 GATTRIB_DIR=gattrib
 endif
-SUBDIRS = liblepton libgedacairo gaf gschem ${GATTRIB_DIR} \
+SUBDIRS = liblepton libleptonrenderer gaf gschem ${GATTRIB_DIR} \
 	gsymcheck gnetlist utils symbols docs examples contrib
 
 ACLOCAL_AMFLAGS = -I m4
