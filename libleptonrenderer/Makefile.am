@@ -1,14 +1,14 @@
-lib_LTLIBRARIES = libgedacairo.la
+lib_LTLIBRARIES = libleptonrenderer.la
 
-libgedacairo_la_SOURCES = \
+libleptonrenderer_la_SOURCES = \
 	edacairo.c \
 	edapangorenderer.c \
 	edarenderer.c
 
-libgedacairoincludedir = $(includedir)/libgedacairo
+libleptonrendererincludedir = $(includedir)/libleptonrenderer
 
-libgedacairoinclude_HEADERS = \
-	libgedacairo.h \
+libleptonrendererinclude_HEADERS = \
+	libleptonrenderer.h \
 	edacairo.h \
 	edarenderer.h
 
@@ -18,18 +18,18 @@ noinst_HEADERS = \
 EXTRA_DIST = README ChangeLog
 
 AM_CPPFLAGS = \
-	-DLOCALEDIR=\"$(localedir)\" -DG_LOG_DOMAIN=\"libgedacairo\" \
+	-DLOCALEDIR=\"$(localedir)\" -DG_LOG_DOMAIN=\"libleptonrenderer\" \
 	-I$(top_srcdir)/liblepton/include -I$(top_srcdir)
 AM_CFLAGS = \
 	$(GCC_CFLAGS) $(MINGW_CFLAGS) $(GUILE_CFLAGS) $(GLIB_CFLAGS) \
 	$(GDK_CFLAGS) $(CAIRO_CFLAGS) $(PANGO_CFLAGS) $(GDK_PIXBUF_CFLAGS)
-AM_LDFLAGS = -version-info $(LIBGEDACAIRO_SHLIB_VERSION) \
+AM_LDFLAGS = -version-info $(LIBLEPTONRENDERER_SHLIB_VERSION) \
 	$(WINDOWS_LIBTOOL_FLAGS) $(MINGW_LDFLAGS) $(GUILE_LIBS) \
 	$(GDK_LIBS) $(GLIB_LIBS) $(CAIRO_LIBS) $(PANGO_LIBS) $(GDK_PIXBUF_LIBS)
 LIBTOOL=@LIBTOOL@ --silent
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libgedacairo.pc
+pkgconfig_DATA = libleptonrenderer.pc
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git

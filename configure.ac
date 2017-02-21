@@ -182,8 +182,8 @@ AX_DATA_DIRS
 AX_PCB_DIRS
 # Set up liblepton with the correct ld version number
 AX_LIBLEPTON([1:0:0])
-# Set up libgedacairo with the correct ld version number
-AX_LIBGEDACAIRO([1:1:0])
+# Set up libleptonrenderer with the correct ld version number
+AX_LIBLEPTONRENDERER([1:0:0])
 
 #####################################################################
 # Generate output
@@ -204,8 +204,8 @@ AC_CONFIG_FILES([Makefile
                  liblepton/src/Makefile
                  liblepton/tests/Makefile
 
-                 libgedacairo/Makefile
-                 libgedacairo/libgedacairo.pc
+                 libleptonrenderer/Makefile
+                 libleptonrenderer/libleptonrenderer.pc
 
                  gaf/Makefile
                  gaf/po/Makefile.in

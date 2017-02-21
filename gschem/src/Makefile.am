@@ -126,7 +126,7 @@ gschem_CFLAGS = $(GCC_CFLAGS) $(LIBSTROKE_CFLAGS) \
 gschem_LDFLAGS = $(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
 	$(GTHREAD_LIBS) $(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
 gschem_LDADD = \
-	$(top_builddir)/libgedacairo/libgedacairo.la \
+	$(top_builddir)/libleptonrenderer/libleptonrenderer.la \
 	$(top_builddir)/liblepton/src/liblepton.la
 
 

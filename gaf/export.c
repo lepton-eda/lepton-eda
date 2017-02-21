@@ -33,7 +33,7 @@
 
 #include <liblepton/liblepton.h>
 #include <liblepton/libgedaguile.h>
-#include <libgedacairo/libgedacairo.h>
+#include <libleptonrenderer/libleptonrenderer.h>
 
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
