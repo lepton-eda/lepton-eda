@@ -36,7 +36,7 @@ install:
   - ./autogen.sh
   - >
       if test "${COVERITY_SCAN_BRANCH}" = "1"; then
-        ./configure --disable-update-xdg-database
+        ./configure --disable-update-xdg-database CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=0'
       else
         ./configure --disable-update-xdg-database CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=2'
       fi
