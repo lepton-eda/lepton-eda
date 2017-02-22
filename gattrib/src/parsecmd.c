@@ -72,31 +72,33 @@ extern int optind;
 
 void usage(char *cmd)
 {
-    printf(_(
-"\n"
-"Gattrib:  The gEDA project\'s attribute editor.\n"
-"Presents schematic attributes in easy-to-edit spreadsheet format.\n"
-"\n"
-"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
-"  -q, --quiet            Quiet mode\n"
-"  -v, --verbose          Verbose mode on\n"
-"  -h, --help             This help menu\n"
-"\n"
-"  FAQ:\n"
-"  *  What do the colors of the cell text mean?\n"
-"     The cell colors indicate the visibility of the attribute.\n"
-"     Black = Visible attribute, value displayed only.\n"
-"     Grey  = Invisible attribute.\n"
-"     Red   = Visible attribute, name displayed only.\n"
-"     Blue  = Visible attribute, both name and value displayed.\n"
-"\n"
-"  *  What does the period (\".\") at the end of some component refdeses mean?\n"
-"     The period is placed after the refdeses of slotted components.\n"
-"     If slots are present on the component, then the different slots appear\n"
-"     in different rows with the slot number after the period.  Example:  C101.2.\n"
-"\n"
-"Copyright (C) 2003 -- 2006 Stuart D. Brorson.  E-mail: sdb (AT) cloud9 (DOT) net.\n"
-"\n"), cmd);
+    printf(_("\n"
+             "Gattrib:  The gEDA project\'s attribute editor.\n"
+             "Presents schematic attributes in easy-to-edit spreadsheet format.\n"
+             "\n"
+             "Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
+             "  -q, --quiet            Quiet mode\n"
+             "  -v, --verbose          Verbose mode on\n"
+             "  -h, --help             This help menu\n"
+             "\n"
+             "  FAQ:\n"
+             "  *  What do the colors of the cell text mean?\n"
+             "     The cell colors indicate the visibility of the attribute.\n"
+             "     Black = Visible attribute, value displayed only.\n"
+             "     Grey  = Invisible attribute.\n"
+             "     Red   = Visible attribute, name displayed only.\n"
+             "     Blue  = Visible attribute, both name and value displayed.\n"
+             "\n"
+             "  *  What does the period (\".\") at the end of some component refdeses mean?\n"
+             "     The period is placed after the refdeses of slotted components.\n"
+             "     If slots are present on the component, then the different slots appear\n"
+             "     in different rows with the slot number after the period.  Example:  C101.2.\n"
+             "\n"
+             "Copyright (C) 2003 -- 2006 Stuart D. Brorson.\n"
+             "\n"
+             "Please report bugs to %2$s.\n"),
+             cmd,
+             PACKAGE_BUGREPORT);
     exit(0);
 }
 
