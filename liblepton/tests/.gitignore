@@ -18,6 +18,7 @@ test_bus_object
 test_circle
 test_circle_object
 test_coord
+test_cpp
 test_line
 test_line_object
 test_net_object
