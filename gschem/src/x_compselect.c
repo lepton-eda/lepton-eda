@@ -272,7 +272,7 @@ enum {
 static GObjectClass *compselect_parent_class = NULL;
 
 
-static void compselect_class_init      (CompselectClass *class);
+static void compselect_class_init      (CompselectClass *klass);
 static GObject *compselect_constructor (GType type,
                                         guint n_construct_properties,
                                         GObjectConstructParam *construct_params);

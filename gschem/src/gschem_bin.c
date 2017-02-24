@@ -33,7 +33,7 @@
 
 
 static void
-class_init (GschemBinClass *class);
+class_init (GschemBinClass *klass);
 
 static void
 size_allocate (GtkWidget *widget, GtkAllocation *allocation);

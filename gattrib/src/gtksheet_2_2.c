@@ -546,13 +546,13 @@ static void gtk_sheet_set_cell_attributes	(GtkSheet *sheet,
 static void init_attributes			(GtkSheet *sheet, gint col,  
 						 GtkSheetCellAttr *attributes);
 /* Memory allocation routines */
-static void gtk_sheet_real_range_clear 		(GtkSheet *sheet, 
-						 const GtkSheetRange *range, 
-                            			 gboolean delete);
-static void gtk_sheet_real_cell_clear 		(GtkSheet *sheet, 
-						 gint row,
-						 gint column,
-						 gboolean delete);
+static void gtk_sheet_real_range_clear (GtkSheet *sheet,
+                                        const GtkSheetRange *range,
+                                        gboolean remove);
+static void gtk_sheet_real_cell_clear (GtkSheet *sheet,
+                                       gint row,
+                                       gint column,
+                                       gboolean remove);
 static GtkSheetCell * gtk_sheet_cell_new 	(void);
 static gint AddRow				(GtkSheet *sheet, gint nrows);
 static gint AddColumn				(GtkSheet *sheet, gint ncols);
@@ -3656,7 +3656,7 @@ gtk_sheet_cell_delete (GtkSheet *sheet, gint row, gint column)
 }
 
 static void
-gtk_sheet_real_cell_clear (GtkSheet *sheet, gint row, gint column, gboolean delete)
+gtk_sheet_real_cell_clear (GtkSheet *sheet, gint row, gint column, gboolean remove)
 {
   gchar *text;
 
@@ -3676,7 +3676,7 @@ gtk_sheet_real_cell_clear (GtkSheet *sheet, gint row, gint column, gboolean dele
     sheet_head->CHANGED = 1;
   }  
 
-  if(delete){ 
+  if (remove) {
      if(sheet->data[row][column]->attributes){
          g_free(sheet->data[row][column]->attributes);
          sheet->data[row][column]->attributes = NULL;
@@ -3710,7 +3710,7 @@ gtk_sheet_range_delete (GtkSheet *sheet, const GtkSheetRange *range)
  
 static void
 gtk_sheet_real_range_clear (GtkSheet *sheet, const GtkSheetRange *range, 
-                            gboolean delete)
+                            gboolean remove)
 {
   gint i, j;
   GtkSheetRange clear;
@@ -3730,7 +3730,7 @@ gtk_sheet_real_range_clear (GtkSheet *sheet, const GtkSheetRange *range,
 
   for(i=clear.row0; i<=clear.rowi; i++)
     for(j=clear.col0; j<=clear.coli; j++){
-        gtk_sheet_real_cell_clear(sheet, i, j, delete);
+        gtk_sheet_real_cell_clear(sheet, i, j, remove);
     }
 
   gtk_sheet_range_draw(sheet, NULL);

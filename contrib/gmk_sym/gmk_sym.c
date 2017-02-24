@@ -402,7 +402,7 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
 int make_box(int fldcnt,char *pFields[])
 { int pos_x=300,pos_y=300;
   char name[100],device[100],name_pos[100];
-  char uref[100],class[100];
+  char uref[100],klass[100];
   int pin_width,pin_height,font_size=10;
   int name_size=0;
   int pincount;
@@ -423,9 +423,9 @@ int make_box(int fldcnt,char *pFields[])
   {
   	strcpy(uref,pFields[5]);
   	strcat(uref,"?");
-  	if(uref[0]=='U' || uref[0]=='u')strcpy(class,"IC");
-  	if(uref[0]=='J' || uref[0]=='j')strcpy(class,"IO");
-  	if(uref[0]=='C' || uref[0]=='c')strcpy(class,"IO");
+  	if(uref[0]=='U' || uref[0]=='u')strcpy(klass,"IC");
+  	if(uref[0]=='J' || uref[0]=='j')strcpy(klass,"IO");
+  	if(uref[0]=='C' || uref[0]=='c')strcpy(klass,"IO");
 	/* U is for ICs, J or CONN for IO.  We assume no discretes
          *  with this tool */
 	strcpy(footprint,pFields[6]);
@@ -437,7 +437,7 @@ int make_box(int fldcnt,char *pFields[])
   }
   else
   {
-	strcpy(class,"IC");
+	strcpy(klass,"IC");
 	strcpy(uref,"U?");
   }
 
@@ -448,7 +448,7 @@ int make_box(int fldcnt,char *pFields[])
   printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+700,YELLOW,font_size);
   printf("device=%s\n",device);
   printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+900,YELLOW,font_size);
-  printf("class=%s\n",class);
+  printf("class=%s\n",klass);
   printf("T %d %d %d %d 1 1 0 0\n",pos_x,pos_y+BoxHeight+500,RED,font_size);
   printf("refdes=%s\n",uref);
 

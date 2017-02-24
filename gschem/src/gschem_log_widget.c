@@ -48,7 +48,7 @@ static void
 changed_cb (GtkTextBuffer *buffer, GschemLogWidget *widget);
 
 static void
-class_init (GschemLogWidgetClass *class);
+class_init (GschemLogWidgetClass *klass);
 
 static GtkTextBuffer*
 create_text_buffer();

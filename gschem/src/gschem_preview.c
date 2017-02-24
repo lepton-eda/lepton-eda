@@ -50,7 +50,7 @@ enum {
 static GObjectClass *preview_parent_class = NULL;
 
 
-static void preview_class_init (GschemPreviewClass *class);
+static void preview_class_init (GschemPreviewClass *klass);
 static void preview_init       (GschemPreview *preview);
 static void preview_set_property (GObject *object,
                                   guint property_id,

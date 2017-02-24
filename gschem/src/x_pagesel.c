@@ -141,7 +141,7 @@ enum {
 };
 
 
-static void pagesel_class_init (PageselClass *class);
+static void pagesel_class_init (PageselClass *klass);
 static void pagesel_init       (Pagesel *pagesel);
 
 static void pagesel_popup_menu (Pagesel *pagesel,
