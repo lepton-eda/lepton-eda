@@ -148,7 +148,7 @@ gschem_hotkey_store_rebuild (GschemHotkeyStore *store)
     char *binding, *keys, *icon = NULL;
     GtkTreeIter iter;
 
-    scm_dynwind_begin (0);
+    scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
     binding = scm_to_utf8_string (s_binding);
     scm_dynwind_free (binding);

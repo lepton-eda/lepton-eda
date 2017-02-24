@@ -50,7 +50,7 @@
  *   edascm_c_with_toplevel (toplevel, worker, mydata);
  *
  *   // Set current toplevel using dynamic wind
- *   scm_dynwind_begin (0);
+ *   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
  *   edascm_dynwind_toplevel (toplevel);
  *   worker (mydata);
  *   // ...run Scheme code and/or call Scheme API C functions...

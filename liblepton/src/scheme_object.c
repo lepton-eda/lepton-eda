@@ -102,8 +102,10 @@ edascm_to_object_glist (SCM objs, const char *subr)
 
   SCM_ASSERT (scm_is_true (scm_list_p (objs)), objs, SCM_ARGn, subr);
 
-  scm_dynwind_begin (0);
-  scm_dynwind_unwind_handler ((void (*)(void *))g_list_free, result, 0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+  scm_dynwind_unwind_handler ((void (*)(void *)) g_list_free,
+                              result,
+                              (scm_t_wind_flags) 0);
 
   for (lst = objs; !scm_is_null (lst); lst = SCM_CDR (lst)) {
     SCM smob = SCM_CAR (lst);
@@ -2065,7 +2067,7 @@ SCM_DEFINE (set_picture_data_vector_x, "%set-picture-data/vector!",
   SCM_ASSERT (scm_is_string (filename_s), filename_s, SCM_ARG3,
               s_set_picture_data_vector_x);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
   /* Convert vector to contiguous buffer */
   scm_t_array_handle handle;

@@ -166,7 +166,7 @@ cmd_export_impl (void *data, int argc, char **argv)
   gtk_init_check (&argc, &argv);
   scm_init_guile ();
   libgeda_init ();
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   toplevel = s_toplevel_new ();
   edascm_dynwind_toplevel (toplevel);
 

@@ -104,7 +104,7 @@ get_main_menu(GschemToplevel *w_current)
 
   menu_bar = gtk_menu_bar_new ();
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
   /*! \bug This function may leak memory if there is a non-local exit
    * in Guile code. At some point, unwind handlers need to be added to
@@ -142,7 +142,7 @@ get_main_menu(GschemToplevel *w_current)
                   scm_item_stock, SCM_ARGn, "get_main_menu stock");
 
       raw_menu_item_name = scm_to_utf8_string(scm_item_name);
-      scm_dynwind_begin(0);
+      scm_dynwind_begin ((scm_t_dynwind_flags) 0);
       scm_dynwind_free(raw_menu_item_name);
 
       menu_item_name = (char *) gettext(raw_menu_item_name);

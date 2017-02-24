@@ -194,7 +194,7 @@ void main_prog(void *closure, int argc, char *argv[])
     g_register_funcs();
     s_init_traverse ();
 
-    scm_dynwind_begin (0);
+    scm_dynwind_begin ((scm_t_dynwind_flags) 0);
     pr_current = s_toplevel_new ();
     edascm_dynwind_toplevel (pr_current);
 

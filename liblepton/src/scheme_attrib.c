@@ -54,7 +54,7 @@ SCM_DEFINE (parse_attrib, "%parse-attrib", 1, 0, 0,
 
   OBJECT *text = edascm_to_object (text_s);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   scm_dynwind_unwind_handler (g_free, name, SCM_F_WIND_EXPLICITLY);
   scm_dynwind_unwind_handler (g_free, value, SCM_F_WIND_EXPLICITLY);
 

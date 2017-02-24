@@ -476,7 +476,7 @@ g_keys_reset (GschemToplevel *w_current)
   i_show_state(w_current, NULL);
 
   /* Reset the Scheme keybinding state */
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
   g_scm_eval_protected (s_expr, scm_interaction_environment ());
   scm_dynwind_end ();
@@ -560,7 +560,7 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
   i_show_state(w_current, NULL);
 
   /* Build and evaluate Scheme expression. */
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
   s_expr = scm_list_2 (press_key_sym, s_key);
   s_retval = g_scm_eval_protected (s_expr, scm_interaction_environment ());

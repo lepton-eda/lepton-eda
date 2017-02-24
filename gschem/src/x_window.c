@@ -264,7 +264,7 @@ x_window_invoke_macro (GschemMacroWidget *widget, int response, GschemToplevel *
     SCM interpreter = scm_list_2(scm_from_utf8_symbol("invoke-macro"),
                                  scm_from_utf8_string(macro));
 
-    scm_dynwind_begin (0);
+    scm_dynwind_begin ((scm_t_dynwind_flags) 0);
     g_dynwind_window (w_current);
     g_scm_eval_protected(interpreter, SCM_UNDEFINED);
     scm_dynwind_end ();

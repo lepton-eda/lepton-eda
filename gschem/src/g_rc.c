@@ -90,7 +90,7 @@ SCM g_rc_gschem_version(SCM scm_version)
   SCM_ASSERT (scm_is_string (scm_version), scm_version,
               SCM_ARG1, "gschem-version");
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   version = scm_to_utf8_string (scm_version);
   scm_dynwind_free (version);
 

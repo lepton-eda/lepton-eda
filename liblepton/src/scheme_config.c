@@ -73,7 +73,7 @@ error_from_gerror (const gchar *subr, GError **error)
 
   GError *err = *error;
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   /* Make sure that the GError gets cleaned up when the non-local exit
    * occurs. */
   scm_dynwind_unwind_handler ((void (*)(void *)) g_clear_error, error,
@@ -189,7 +189,7 @@ SCM_DEFINE (path_config_context, "%path-config-context", 1, 0, 0,
   SCM_ASSERT (scm_is_string (path_s), path_s, SCM_ARG1,
               s_path_config_context);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   char *path = scm_to_utf8_string (path_s);
   scm_dynwind_free (path);
   GFile *file = g_file_parse_name (path);
@@ -223,7 +223,7 @@ SCM_DEFINE (config_filename, "%config-filename", 1, 0, 0,
   SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1,
               s_config_filename);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   EdaConfig *cfg = edascm_to_config (cfg_s);
   GFile *file = eda_config_get_file (cfg);
   gchar *path = NULL;
@@ -466,7 +466,7 @@ SCM_DEFINE (config_groups, "%config-groups", 1, 0, 0,
   gchar **groups = eda_config_get_groups (cfg, &len);
   SCM lst_s = SCM_EOL;
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   scm_dynwind_unwind_handler ((void (*)(void *)) g_strfreev,
                               groups, SCM_F_WIND_EXPLICITLY);
 
@@ -544,7 +544,7 @@ SCM_DEFINE (config_keys, "%config-keys", 2, 0, 0,
   free (group);
   if (keys == NULL) error_from_gerror (s_config_keys, &error);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   scm_dynwind_unwind_handler ((void (*)(void *)) g_strfreev,
                               keys, SCM_F_WIND_EXPLICITLY);
 
@@ -580,7 +580,7 @@ SCM_DEFINE (config_source, "%config-source", 3, 0, 0,
 {
   ASSERT_CFG_GROUP_KEY (s_config_source);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   EdaConfig *cfg = edascm_to_config (cfg_s);
   char *group = scm_to_utf8_string (group_s);
   scm_dynwind_free (group);
@@ -615,7 +615,7 @@ SCM_DEFINE (config_string, "%config-string", 3, 0, 0,
 {
   ASSERT_CFG_GROUP_KEY (s_config_string);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   EdaConfig *cfg = edascm_to_config (cfg_s);
   char *group = scm_to_utf8_string (group_s);
   scm_dynwind_free (group);
@@ -653,7 +653,7 @@ SCM_DEFINE (config_boolean, "%config-boolean", 3, 0, 0,
 {
   ASSERT_CFG_GROUP_KEY (s_config_boolean);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   EdaConfig *cfg = edascm_to_config (cfg_s);
   char *group = scm_to_utf8_string (group_s);
   scm_dynwind_free (group);
@@ -688,7 +688,7 @@ SCM_DEFINE (config_int, "%config-int", 3, 0, 0,
 {
   ASSERT_CFG_GROUP_KEY (s_config_int);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   EdaConfig *cfg = edascm_to_config (cfg_s);
   char *group = scm_to_utf8_string (group_s);
   scm_dynwind_free (group);
@@ -723,7 +723,7 @@ SCM_DEFINE (config_real, "%config-real", 3, 0, 0,
 {
   ASSERT_CFG_GROUP_KEY (s_config_real);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   EdaConfig *cfg = edascm_to_config (cfg_s);
   char *group = scm_to_utf8_string (group_s);
   scm_dynwind_free (group);
@@ -758,7 +758,7 @@ SCM_DEFINE (config_string_list, "%config-string-list", 3, 0, 0,
 {
   ASSERT_CFG_GROUP_KEY (s_config_string_list);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   EdaConfig *cfg = edascm_to_config (cfg_s);
   char *group = scm_to_utf8_string (group_s);
   scm_dynwind_free (group);
@@ -801,7 +801,7 @@ SCM_DEFINE (config_boolean_list, "%config-boolean-list", 3, 0, 0,
 {
   ASSERT_CFG_GROUP_KEY (s_config_boolean_list);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   EdaConfig *cfg = edascm_to_config (cfg_s);
   char *group = scm_to_utf8_string (group_s);
   scm_dynwind_free (group);
@@ -844,7 +844,7 @@ SCM_DEFINE (config_int_list, "%config-int-list", 3, 0, 0,
 {
   ASSERT_CFG_GROUP_KEY (s_config_int_list);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   EdaConfig *cfg = edascm_to_config (cfg_s);
   char *group = scm_to_utf8_string (group_s);
   scm_dynwind_free (group);
@@ -887,7 +887,7 @@ SCM_DEFINE (config_real_list, "%config-real-list", 3, 0, 0,
 {
   ASSERT_CFG_GROUP_KEY (s_config_real_list);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   EdaConfig *cfg = edascm_to_config (cfg_s);
   char *group = scm_to_utf8_string (group_s);
   scm_dynwind_free (group);
@@ -931,7 +931,7 @@ SCM_DEFINE (set_config_x, "%set-config!", 4, 0, 0,
 {
   ASSERT_CFG_GROUP_KEY (s_set_config_x);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   EdaConfig *cfg = edascm_to_config (cfg_s);
   char *group = scm_to_utf8_string (group_s);
   scm_dynwind_free (group);

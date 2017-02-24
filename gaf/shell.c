@@ -108,7 +108,7 @@ cmd_shell_impl (void *data, int argc, char **argv)
   }
 
   libgeda_init ();
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   toplevel = s_toplevel_new ();
   edascm_dynwind_toplevel (toplevel);
 

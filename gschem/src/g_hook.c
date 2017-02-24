@@ -68,7 +68,7 @@ g_run_hook_object_list (GschemToplevel *w_current, const char *name,
   SCM lst = SCM_EOL;
   GList *iter;
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
   for (iter = obj_lst; iter != NULL; iter = g_list_next (iter)) {
@@ -97,7 +97,7 @@ g_run_hook_object_list (GschemToplevel *w_current, const char *name,
 void
 g_run_hook_object (GschemToplevel *w_current, const char *name, OBJECT *obj)
 {
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
   SCM expr = scm_list_3 (run_hook_sym,
@@ -120,7 +120,7 @@ g_run_hook_object (GschemToplevel *w_current, const char *name, OBJECT *obj)
 void
 g_run_hook_page (GschemToplevel *w_current, const char *name, PAGE *page)
 {
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
   SCM expr = scm_list_3 (run_hook_sym,
