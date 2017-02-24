@@ -182,7 +182,7 @@ void s_object_replace_attrib_in_object(TOPLEVEL *toplevel,
 
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
-    a_current = a_iter->data;
+    a_current = (OBJECT*) a_iter->data;
     if (a_current->type == OBJ_TEXT
 	&& a_current->text != NULL) {  /* found an attribute */
 
@@ -242,7 +242,7 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
 
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
-    a_current = a_iter->data;
+    a_current = (OBJECT*) a_iter->data;
     if (a_current->type == OBJ_TEXT
 	&& a_current->text != NULL) {  /* found an attribute */
 

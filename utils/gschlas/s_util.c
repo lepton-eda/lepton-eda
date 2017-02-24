@@ -55,7 +55,7 @@ s_util_embed(TOPLEVEL *pr_current, int embed_mode)
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
 
-      OBJECT *o_current = o_iter->data;
+      OBJECT *o_current = (OBJECT*) o_iter->data;
 
       if (o_current->type == OBJ_COMPLEX ||
                 o_current->type == OBJ_PICTURE) {

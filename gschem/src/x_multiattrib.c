@@ -680,7 +680,7 @@ multiattrib_action_delete_attributes (Multiattrib *multiattrib,
   OBJECT *o_attrib;
 
   for (a_iter = attr_list; a_iter != NULL; a_iter = g_list_next (a_iter)) {
-    o_attrib = a_iter->data;
+    o_attrib = (OBJECT*) a_iter->data;
     /* actually deletes the attribute */
     o_delete (w_current, o_attrib);
   }
@@ -714,12 +714,12 @@ multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
   }
 
   for (iter = objects_needing_add; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *object = iter->data;
+    OBJECT *object = (OBJECT*) iter->data;
 
     if (is_multiattrib_object (object)) {
 
       /* Pick the first instance to copy from */
-      OBJECT *attrib_to_copy = attr_list->data;
+      OBJECT *attrib_to_copy = (OBJECT*) attr_list->data;
 
       int visibility = o_is_visible (w_current->toplevel, attrib_to_copy)
           ? VISIBLE : INVISIBLE;
@@ -948,7 +948,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   for (a_iter = geda_list_get_glist (attr_list);
        a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    o_attrib = a_iter->data;
+    o_attrib = (OBJECT*) a_iter->data;
 
     visibility = o_is_visible (w_current->toplevel, o_attrib)
         ? VISIBLE : INVISIBLE;
@@ -2405,7 +2405,7 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, OBJECT *object)
   for (a_iter = object_attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
 
-    OBJECT *a_current = a_iter->data;
+    OBJECT *a_current = (OBJECT*) a_iter->data;
     MODEL_ROW *m_row = g_new0 (MODEL_ROW, 1);
     GList *m_iter;
 
@@ -2469,7 +2469,7 @@ lone_attributes_to_model_rows (Multiattrib *multiattrib)
   for (o_iter = multiattrib->object_list == NULL ? NULL : geda_list_get_glist (multiattrib->object_list);
        o_iter != NULL;
        o_iter = g_list_next (o_iter)) {
-    OBJECT *object = o_iter->data;
+    OBJECT *object = (OBJECT*) o_iter->data;
     MODEL_ROW *m_row;
 
     /* Consider a selected text object might be an attribute */
@@ -2660,7 +2660,7 @@ multiattrib_update (Multiattrib *multiattrib)
   for (o_iter = multiattrib->object_list == NULL ? NULL : geda_list_get_glist (multiattrib->object_list);
        o_iter != NULL;
        o_iter = g_list_next (o_iter)) {
-    OBJECT *object = o_iter->data;
+    OBJECT *object = (OBJECT*) o_iter->data;
 
     GList *object_rows;
     GList *or_iter;

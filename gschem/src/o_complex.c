@@ -105,7 +105,7 @@ void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
           g_list_append (toplevel->page_current->place_list, new_object);
 
       /* Flag the symbol as embedded if necessary */
-      o_current = (g_list_last (toplevel->page_current->place_list))->data;
+      o_current = (OBJECT*) (g_list_last (toplevel->page_current->place_list))->data;
       if (w_current->embed_complex) {
         o_current->complex_embedded = TRUE;
       }
@@ -185,7 +185,7 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
 
   for (iter = s_page_objects (toplevel->page_current);
        iter != NULL; iter = g_list_next (iter)) {
-    o_current = iter->data;
+    o_current = (OBJECT*) iter->data;
     s_conn_remove_object_connections (toplevel, o_current);
   }
 
@@ -200,7 +200,7 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
 
   for (iter = s_page_objects (toplevel->page_current);
        iter != NULL;  iter = g_list_next (iter)) {
-    o_current = iter->data;
+    o_current = (OBJECT*) iter->data;
     s_conn_update_object (toplevel->page_current, o_current);
   }
 

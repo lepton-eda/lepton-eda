@@ -105,7 +105,7 @@ void s_toplevel_verify_design (TOPLEVEL *toplevel)
     for (o_iter = s_page_objects (p_current);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
-      OBJECT *o_current = o_iter->data;
+      OBJECT *o_current = (OBJECT*) o_iter->data;
 
       /* --- look for object, and verify that it has a symbol file attached. ---- */
       if (o_current->type == OBJ_PLACEHOLDER) {
@@ -414,7 +414,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
   for (o_iter = g_list_last (copy_list);
        o_iter != NULL;
        o_iter = g_list_previous (o_iter)) {
-    OBJECT *o_current = o_iter->data;
+    OBJECT *o_current = (OBJECT*) o_iter->data;
 
     /* ------- Object is a component.  Handle component attributes. ------- */
     if (o_current->type == OBJ_COMPLEX) {    /* Note that OBJ_COMPLEX = component + attribs */
@@ -477,7 +477,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
   for (o_iter = g_list_last (copy_list);
        o_iter != NULL;
        o_iter = g_list_previous (o_iter)) {
-    OBJECT *o_current = o_iter->data;
+    OBJECT *o_current = (OBJECT*) o_iter->data;
 
     /* ------- Object is a complex.  Handle pins by looking ------ */
     /* ------- for all pins attached to a component.        ------ */
@@ -497,7 +497,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
         for (prim_iter = o_current->complex->prim_objs;
              prim_iter != NULL;
              prim_iter = g_list_next (prim_iter)) {
-          OBJECT *comp_prim_obj = prim_iter->data;
+          OBJECT *comp_prim_obj = (OBJECT*) prim_iter->data;
 
           if (comp_prim_obj->type == OBJ_PIN) {
             new_pin_attrib_list =
@@ -655,7 +655,7 @@ s_toplevel_update_component_attribs_in_toplevel (
   *  the loop below when updating attributes.  */
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
-    a_current = a_iter->data;
+    a_current = (OBJECT*) a_iter->data;
     if (a_current->type == OBJ_TEXT
 	&& a_current->text != NULL) {  /* found a name=value attribute pair. */
       /* may need to check more thoroughly here. . . . */

@@ -192,7 +192,7 @@ s_check_symbol_structure (const GList *obj_list, SYMCHECK *s_current)
   /* pin# ?, slot# ? */
   
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
     if (o_current->type == OBJ_TEXT) {
       tokens = g_strsplit(geda_text_object_get_string (o_current),"=", 2);
@@ -263,7 +263,7 @@ s_check_text (const GList *obj_list, SYMCHECK *s_current)
   gunichar current_char;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next(iter)) {
-    o_current = iter->data;
+    o_current = (OBJECT*) iter->data;
 
     if (o_current->type != OBJ_TEXT)
       continue;
@@ -408,7 +408,7 @@ s_check_pinseq (const GList *obj_list, SYMCHECK *s_current)
   char *message;
   
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
     
     if (o_current->type == OBJ_PIN)
     {
@@ -601,7 +601,7 @@ s_check_pinnumber (const GList *obj_list, SYMCHECK *s_current)
 
   /* collect all pin numbers */
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
     
     if (o_current->type == OBJ_PIN) {
       s_current->numpins++;
@@ -714,7 +714,7 @@ s_check_pin_ongrid (const GList *obj_list, SYMCHECK *s_current)
   char *message;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
     if (o_current->type == OBJ_PIN) {
       x1 = o_current->line->x[0];
@@ -1056,7 +1056,7 @@ s_check_oldpin (const GList *obj_list, SYMCHECK *s_current)
   char *message;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
     if (o_current->type == OBJ_TEXT)
     {
@@ -1128,7 +1128,7 @@ s_check_oldslot (const GList *obj_list, SYMCHECK *s_current)
   char *message;
   
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
     if (o_current->type == OBJ_TEXT)
     {
@@ -1195,7 +1195,7 @@ s_check_nets_buses (const GList *obj_list, SYMCHECK *s_current)
   char *message;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
     if (o_current->type == OBJ_NET)
     {
@@ -1227,7 +1227,7 @@ s_check_connections (const GList *obj_list, SYMCHECK *s_current)
   char *message;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
     if (o_current->conn_list) {
       message = 
@@ -1301,7 +1301,7 @@ s_check_missing_attributes (const GList *obj_list, SYMCHECK *s_current)
   char *message;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
     if (o_current->type == OBJ_PIN)
     {
@@ -1375,7 +1375,7 @@ void s_check_pintype (const GList *obj_list, SYMCHECK *s_current)
 		      NULL};
   
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
     if (o_current->type == OBJ_PIN) {
 

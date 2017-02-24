@@ -641,7 +641,7 @@ void s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list)
   GList *iter;
   page->_object_list = g_list_concat (page->_object_list, obj_list);
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    object_added (toplevel, page, iter->data);
+    object_added (toplevel, page, (OBJECT*) iter->data);
   }
 }
 
@@ -703,7 +703,7 @@ void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page)
   GList *objects = page->_object_list;
   GList *iter;
   for (iter = objects; iter != NULL; iter = g_list_next (iter)) {
-    pre_object_removed (toplevel, page, iter->data);
+    pre_object_removed (toplevel, page, (OBJECT*) iter->data);
   }
   page->_object_list = NULL;
   geda_object_list_delete (toplevel, objects);
@@ -774,7 +774,7 @@ GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page,
   int i;
 
   for (iter = page->_object_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *object = iter->data;
+    OBJECT *object = (OBJECT*) iter->data;
     int left, top, right, bottom;
     int visible;
 

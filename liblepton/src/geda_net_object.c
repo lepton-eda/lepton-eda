@@ -555,7 +555,7 @@ static void o_net_consolidate_lowlevel (OBJECT *object,
     /* Reassign the attached_to pointer on attributes from the del object */
     a_iter = del_object->attribs;
     while (a_iter != NULL) {
-      a_current = a_iter->data;
+      a_current = (OBJECT*) a_iter->data;
       a_current->attached_to = object;
       a_iter = g_list_next (a_iter);
     }

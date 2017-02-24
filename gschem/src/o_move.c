@@ -636,7 +636,7 @@ void o_move_prep_rubberband(GschemToplevel *w_current)
 
   for (s_current = geda_list_get_glist (page->selection_list);
        s_current != NULL; s_current = g_list_next (s_current)) {
-    object = s_current->data;
+    object = (OBJECT*) s_current->data;
 
     if (object == NULL)
       continue;
@@ -652,7 +652,7 @@ void o_move_prep_rubberband(GschemToplevel *w_current)
       case (OBJ_PLACEHOLDER):
         for (iter = object->complex->prim_objs;
              iter != NULL; iter = g_list_next (iter)) {
-          o_current = iter->data;
+          o_current = (OBJECT*) iter->data;
 
           if (o_current->type == OBJ_PIN) {
             o_move_check_endpoint (w_current, o_current);

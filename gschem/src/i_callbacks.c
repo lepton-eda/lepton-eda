@@ -2321,7 +2321,7 @@ DEFINE_I_CALLBACK(attributes_attach)
   /* skip over first object */
   s_current = g_list_next(s_current);
   while (s_current != NULL) {
-    OBJECT *object = s_current->data;
+    OBJECT *object = (OBJECT*) s_current->data;
     if (object != NULL) {
       o_attrib_attach (gschem_toplevel_get_toplevel (w_current), object, first_object, TRUE);
       attached_objects = g_list_prepend (attached_objects, object);

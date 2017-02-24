@@ -157,7 +157,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
   }
 
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
     netlist = s_netlist_return_tail(netlist_head);
 
@@ -266,7 +266,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
   for (iter = component->complex->prim_objs;
        iter != NULL;
        iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
     /* Ignore objects which aren't net pins */
     if (o_current->type != OBJ_PIN ||

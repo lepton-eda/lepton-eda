@@ -146,7 +146,7 @@ void o_attrib_attach_list (TOPLEVEL *toplevel,
   GList *iter;
 
   for (iter = attr_list; iter != NULL; iter = g_list_next (iter))
-    o_attrib_attach (toplevel, iter->data, object, set_color);
+    o_attrib_attach (toplevel, (OBJECT*) iter->data, object, set_color);
 }
 
 
@@ -164,7 +164,7 @@ void o_attrib_detach_all(TOPLEVEL *toplevel, OBJECT *object)
 
   for (a_iter = object->attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    a_current = a_iter->data;
+    a_current = (OBJECT*) a_iter->data;
 
     a_current->attached_to = NULL;
     o_set_color (toplevel, a_current, DETACHED_ATTRIBUTE_COLOR);
@@ -188,7 +188,7 @@ void o_attrib_print(GList *attributes)
   a_iter = attributes;
 
   while (a_iter != NULL) {
-    a_current = a_iter->data;
+    a_current = (OBJECT*) a_iter->data;
     printf("Attribute points to: %1$s\n", a_current->name);
     if (a_current->text) {
       printf("\tText is: %1$s\n", geda_text_object_get_string (a_current));
@@ -449,7 +449,7 @@ GList *o_attrib_find_floating_attribs (const GList *list)
   OBJECT *o_current;
 
   for (iter = list; iter != NULL; iter = g_list_next (iter)) {
-    o_current = iter->data;
+    o_current = (OBJECT*) iter->data;
 
     /* Skip non text objects, attached attributes and text which doesn't
      * constitute a valid attributes (e.g. general text placed on the page)
@@ -485,7 +485,7 @@ OBJECT *o_attrib_find_attrib_by_name (const GList *list, char *name, int count)
   int num_found = 0;
 
   for (const GList *iter = list; iter; iter = g_list_next (iter)) {
-    OBJECT *attrib = iter->data;
+    OBJECT *attrib = (OBJECT*) iter->data;
     g_return_val_if_fail (attrib->type == OBJ_TEXT, NULL);
 
     if ((needle == o_attrib_get_name (attrib)) &&
@@ -651,7 +651,7 @@ GList * o_attrib_return_attribs (OBJECT *object)
   /* Directly attached attributes */
   for (a_iter = object->attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    a_current = a_iter->data;
+    a_current = (OBJECT*) a_iter->data;
 
     if (a_current->type != OBJ_TEXT)
       continue;

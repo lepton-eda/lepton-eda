@@ -318,7 +318,7 @@ clear_store (GschemFindTextState *state)
                               &value);
 
     if (G_VALUE_HOLDS_POINTER (&value)) {
-      OBJECT *object = g_value_get_pointer (&value);
+      OBJECT *object = (OBJECT*) g_value_get_pointer (&value);
 
       s_object_weak_unref (object, (NotifyFunc) object_weakref_cb, state);
     }
@@ -809,7 +809,7 @@ remove_object (GschemFindTextState *state, OBJECT *object)
                               &value);
 
     if (G_VALUE_HOLDS_POINTER (&value)) {
-      OBJECT *other = g_value_get_pointer (&value);
+      OBJECT *other = (OBJECT*) g_value_get_pointer (&value);
 
       if (object == other) {
         g_value_unset (&value);
@@ -849,7 +849,7 @@ select_cb (GtkTreeSelection *selection, GschemFindTextState *state)
                               &value);
 
     if (G_VALUE_HOLDS_POINTER (&value)) {
-      OBJECT *object = g_value_get_pointer (&value);
+      OBJECT *object = (OBJECT*) g_value_get_pointer (&value);
 
       if (object != NULL) {
         g_signal_emit_by_name (state, "select-object", object);

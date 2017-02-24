@@ -124,7 +124,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
   }
 
   attribptr =
-    g_object_get_data (G_OBJECT (w_current->aewindow), "attrib");
+    (OBJECT*) g_object_get_data (G_OBJECT (w_current->aewindow), "attrib");
   if (!attribptr) {
     OBJECT *new_object = NULL;
 
@@ -188,7 +188,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
             a_iter = object->attribs;
             if (replace) {
               while (a_iter != NULL) {
-                a_current = a_iter->data;
+                a_current = (OBJECT*) a_iter->data;
                 const gchar *str = geda_text_object_get_string (a_current);
                 if (str) {
                   if (!strncmp (str, newtext, strchr (newtext, '=') - newtext)) {

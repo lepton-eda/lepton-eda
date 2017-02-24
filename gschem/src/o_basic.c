@@ -153,7 +153,7 @@ void o_redraw_rect (GschemToplevel *w_current,
 
   /* First pass -- render non-selected objects */
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
     if (!(o_current->dont_redraw || o_current->selected)) {
       eda_renderer_draw (renderer, o_current);
@@ -162,7 +162,7 @@ void o_redraw_rect (GschemToplevel *w_current,
 
   /* Second pass -- render cues */
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
     if (!(o_current->dont_redraw || o_current->selected)) {
       eda_renderer_draw_cues (renderer, o_current);
@@ -178,7 +178,7 @@ void o_redraw_rect (GschemToplevel *w_current,
                   NULL);
     for (iter = geda_list_get_glist (page->selection_list);
          iter != NULL; iter = g_list_next (iter)) {
-      OBJECT *o_current = iter->data;
+      OBJECT *o_current = (OBJECT*) iter->data;
       if (!o_current->dont_redraw) {
         eda_renderer_draw (renderer, o_current);
         eda_renderer_draw_cues (renderer, o_current);

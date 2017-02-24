@@ -484,7 +484,7 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
     /* display all attributes in alphabetical order */
     o_attrlist = g_list_sort (o_attrlist, (GCompareFunc) sort_object_text);
     for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-      o_current = o_iter->data;
+      o_current = (OBJECT*) o_iter->data;
       o_attrib_get_name_value (o_current, &name, &value);
       gtk_list_store_append (model, &iter);
       gtk_list_store_set (model, &iter, 0, name, 1, value, -1);
@@ -495,7 +495,7 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
     /* display only attribute that are in the filter list */
     for (i = 0; i < n; i++) {
       for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-        o_current = o_iter->data;
+        o_current = (OBJECT*) o_iter->data;
         if (o_attrib_get_name_value (o_current, &name, &value)) {
           if (strcmp (name, filter_list[i]) == 0) {
             gtk_list_store_append (model, &iter);

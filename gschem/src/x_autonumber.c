@@ -393,7 +393,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
   for (iter = s_page_objects (w_current->toplevel->page_current);
        iter != NULL;
        iter = g_list_next (iter)) {
-    o_current = iter->data;
+    o_current = (OBJECT*) iter->data;
     if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RESPECT) {
       /* check slot and maybe add it to the lists */
       o_parent = o_current->attached_to;
@@ -689,7 +689,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
       for (iter = s_page_objects (w_current->toplevel->page_current);
            iter != NULL;
            iter = g_list_next (iter)) {
-	o_current = iter->data;
+        o_current = (OBJECT*) iter->data;
 	if (o_current->type == OBJ_TEXT) {
 	  if (autotext->scope_number == SCOPE_HIERARCHY
 	      || autotext->scope_number == SCOPE_PAGE
@@ -760,7 +760,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
       for (iter = s_page_objects (w_current->toplevel->page_current);
            iter != NULL;
            iter = g_list_next (iter)) {
-        o_current = iter->data;
+        o_current = (OBJECT*) iter->data;
 	if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RENUMBER) {
 	  /* put number into the used list */
 	  o_list = g_list_append(o_list, o_current);
@@ -790,7 +790,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 
       /* 3. renumber/reslot the objects */
       for(obj_item=o_list; obj_item != NULL; obj_item=g_list_next(obj_item)) {
-	o_current= obj_item->data;
+        o_current = (OBJECT*) obj_item->data;
       	if(autotext->removenum) {
 	  autonumber_remove_number(autotext, o_current);
 	} else {

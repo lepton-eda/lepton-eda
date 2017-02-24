@@ -174,7 +174,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
    * to the selection, not those within in it.
    */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    o_current = o_iter->data;
+    o_current = (OBJECT*) o_iter->data;
 
     s_conn_remove_object_connections (toplevel, o_current);
   }
@@ -186,7 +186,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
    * to the selection, not those within in it.
    */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    o_current = o_iter->data;
+    o_current = (OBJECT*) o_iter->data;
 
     s_conn_update_object (o_current->page, o_current);
   }
@@ -232,7 +232,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
    * to the selection, not those within in it.
    */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    o_current = o_iter->data;
+    o_current = (OBJECT*) o_iter->data;
 
     s_conn_remove_object_connections (toplevel, o_current);
   }
@@ -244,7 +244,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
    * to the selection, not those within in it.
    */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    o_current = o_iter->data;
+    o_current = (OBJECT*) o_iter->data;
 
     s_conn_update_object (o_current->page, o_current);
   }
@@ -451,7 +451,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
    * all list items with NULL data. This is slightly magic, but
    * works. */
   for (iter = new_attribs; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *attr_new = iter->data;
+    OBJECT *attr_new = (OBJECT*) iter->data;
     gchar *name;
     gchar *value;
 

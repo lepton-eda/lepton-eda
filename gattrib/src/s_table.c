@@ -293,7 +293,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
 
   /* -----  Iterate through all objects found on page  ----- */
   for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    OBJECT *o_current = o_iter->data;
+    OBJECT *o_current = (OBJECT*) o_iter->data;
 
 #ifdef DEBUG
       printf("   ---> In s_table_add_toplevel_comp_items_to_comp_table, examining o_current->name = %s\n", o_current->name);
@@ -317,7 +317,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
          * into cells in the table. */
         a_iter = o_current->attribs;
         while (a_iter != NULL) {
-          a_current = a_iter->data;
+          a_current = (OBJECT*) a_iter->data;
           if (a_current->type == OBJ_TEXT
               && a_current->text != NULL) {  /* found an attribute */
             /* may need to check more thoroughly here. . . . */
@@ -499,7 +499,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
 
   /* -----  Iterate through all objects found on page  ----- */
   for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    OBJECT *o_current = o_iter->data;
+    OBJECT *o_current = (OBJECT*) o_iter->data;
 
 #ifdef DEBUG
       printf("   ---> In s_table_add_toplevel_pin_items_to_pin_table, examining o_current->name = %s\n", o_current->name);
@@ -517,7 +517,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
         for (o_lower_iter = o_current->complex->prim_objs;
              o_lower_iter != NULL;
              o_lower_iter = g_list_next (o_lower_iter)) {
-          OBJECT *o_lower_current = o_lower_iter->data;
+          OBJECT *o_lower_current = (OBJECT*) o_lower_iter->data;
 
 	  if (o_lower_current->type == OBJ_PIN) {
 	    /* -----  Found a pin.  First get its pinnumber.  then get attrib head and loop on attribs.  ----- */
@@ -530,7 +530,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
 
 	    a_iter = o_lower_current->attribs;
 	    while (a_iter != NULL) {
-	      pin_attrib = a_iter->data;
+	      pin_attrib = (OBJECT*) a_iter->data;
 	      if (pin_attrib->type == OBJ_TEXT
 		  && pin_attrib->text != NULL) {  /* found an attribute */
           attrib_text = g_strdup(geda_text_object_get_string (pin_attrib));

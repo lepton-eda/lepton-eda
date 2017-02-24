@@ -137,7 +137,7 @@ edascm_from_object_glist (const GList *objs)
   GList *iter = (GList *) objs;
 
   while (iter != NULL) {
-    lst = scm_cons (edascm_from_object (iter->data), lst);
+    lst = scm_cons (edascm_from_object ((OBJECT*) iter->data), lst);
     iter = g_list_next (iter);
   }
 
