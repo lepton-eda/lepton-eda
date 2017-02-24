@@ -98,7 +98,7 @@ int main(int argc, char **argv)
        */
 
       /* allocate some memory to hold the file */
-      extracted_file = malloc(len);
+      extracted_file = (char*) malloc(len);
 
       fread(extracted_file, len, 1, megafile);
 
