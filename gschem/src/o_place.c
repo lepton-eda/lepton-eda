@@ -109,7 +109,7 @@ void o_place_end (GschemToplevel *w_current,
   /* Attach each item back onto the page's object list. Update object
    * connectivity and add the new objects to the selection list.*/
   for (iter = temp_dest_list; iter != NULL; iter = g_list_next (iter)) {
-    o_current = iter->data;
+    o_current = (OBJECT*) iter->data;
 
     s_page_append (page->toplevel, page, o_current);
 

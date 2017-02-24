@@ -129,7 +129,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
   /* Clean up dangling copied_to pointers */
   src = src_list;
   while(src != NULL) {
-    src_object = src->data;
+    src_object = (OBJECT*) src->data;
     src_object->copied_to = NULL;
     src = g_list_next (src);
   }

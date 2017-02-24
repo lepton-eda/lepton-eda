@@ -148,7 +148,7 @@ s_basic_init_object (OBJECT *new_node, int type, char const *name);
 OBJECT*
 s_basic_new_object (int type, char const *prefix)
 {
-  return s_basic_init_object(g_malloc(sizeof (OBJECT)), type, prefix);
+  return s_basic_init_object ((OBJECT*) g_malloc(sizeof (OBJECT)), type, prefix);
 }
 
 /*! \todo Finish documentation!!!!

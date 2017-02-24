@@ -120,7 +120,7 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
   for (iter = obj_list;
        iter != NULL;
        iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
 
 #ifdef DEBUG
       printf("In s_sheet_data_add_master_comp_list_items, examining o_current->name = %s\n", o_current->name);
@@ -186,7 +186,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
 
   /* -----  Iterate through all objects found on page looking for components (OBJ_COMPLEX) ----- */
   for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    OBJECT *o_current = o_iter->data;
+    OBJECT *o_current = (OBJECT*) o_iter->data;
 
 #ifdef DEBUG
       printf("In s_sheet_data_add_master_comp_attrib_list_items, examining o_current->name = %s\n", o_current->name);
@@ -201,7 +201,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
 	/*------ Iterate through all attribs found on component -----*/
 	a_iter = o_current->attribs; /* This has a side effect.  Why? */
 	while (a_iter != NULL) {
-	  a_current = a_iter->data;
+	  a_current = (OBJECT*) a_iter->data;
 	  if (a_current->type == OBJ_TEXT
 	      && a_current->text != NULL) {  /* found an attribute */
 	    attrib_text = g_strdup(geda_text_object_get_string (a_current));
@@ -299,7 +299,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
   for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    OBJECT *o_current = o_iter->data;
+    OBJECT *o_current = (OBJECT*) o_iter->data;
 
 #ifdef DEBUG
     printf ("In s_sheet_data_add_master_pin_list_items, examining o_current->name = %s\n", o_current->name);
@@ -313,7 +313,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
         for (o_lower_iter = o_current->complex->prim_objs;
              o_lower_iter != NULL;
              o_lower_iter = g_list_next (o_lower_iter)) {
-          OBJECT *o_lower_current = o_lower_iter->data;
+          OBJECT *o_lower_current = (OBJECT*) o_lower_iter->data;
 #if DEBUG
           printf ("In s_sheet_data_add_master_pin_list_items, examining object name %s\n", o_lower_current->name);
 #endif
@@ -391,7 +391,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
   for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    OBJECT *o_current = o_iter->data;
+    OBJECT *o_current = (OBJECT*) o_iter->data;
 
 #ifdef DEBUG
       printf("In s_sheet_data_add_master_pin_attrib_list_items, examining o_current->name = %s\n", o_current->name);
@@ -405,7 +405,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
           for (o_lower_iter = o_current->complex->prim_objs;
                o_lower_iter != NULL;
                o_lower_iter = g_list_next (o_lower_iter)) {
-            OBJECT *o_lower_current = o_lower_iter->data;
+            OBJECT *o_lower_current = (OBJECT*) o_lower_iter->data;
 #if DEBUG
 	    printf("In s_sheet_data_add_master_pin_attrib_list_items, examining component refdes =  %s\n", temp_uref);
 #endif
@@ -413,7 +413,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
 	      /* -----  Found a pin.  Now get attrib head and loop on attribs.  ----- */
 	      a_iter = o_lower_current->attribs;
 	      while (a_iter != NULL) {
-		pin_attrib = a_iter->data;
+		pin_attrib = (OBJECT*) a_iter->data;
 		if (pin_attrib->type == OBJ_TEXT
 		    && pin_attrib->text != NULL) {  /* found an attribute */
 		  attrib_text = g_strdup(geda_text_object_get_string (pin_attrib));

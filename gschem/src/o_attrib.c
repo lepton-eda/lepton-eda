@@ -62,7 +62,7 @@ void o_attrib_add_selected(GschemToplevel *w_current, SELECTION *selection,
 
   for (a_iter = selected->attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    a_current = a_iter->data;
+    a_current = (OBJECT*) a_iter->data;
 
     /* make sure object isn't selected already */
     if (!a_current->selected) {
@@ -105,7 +105,7 @@ void o_attrib_deselect_invisible (GschemToplevel *w_current,
 
   for (a_iter = selected->attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    a_current = a_iter->data;
+    a_current = (OBJECT*) a_iter->data;
 
     if (a_current->selected && !o_is_visible(w_current->toplevel, a_current)) {
       o_selection_remove (w_current->toplevel, selection, a_current);
@@ -139,7 +139,7 @@ void o_attrib_select_invisible (GschemToplevel *w_current,
 
   for (a_iter = selected->attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    a_current = a_iter->data;
+    a_current = (OBJECT*) a_iter->data;
 
     if (!a_current->selected && !o_is_visible(w_current->toplevel, a_current)) {
       o_selection_add (w_current->toplevel, selection, a_current);

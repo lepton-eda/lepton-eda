@@ -230,7 +230,7 @@ GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
   attribs = o_attrib_find_floating_attribs (object->complex->prim_objs);
 
   for (iter = attribs; iter != NULL; iter = g_list_next (iter)) {
-    tmp = iter->data;
+    tmp = (OBJECT*) iter->data;
 
     /* Is it an attribute we want to promote? */
     if (!o_complex_is_eligible_attribute(toplevel, tmp))
@@ -326,7 +326,7 @@ static void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *obj
     return;
 
   for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *a_object = iter->data;
+    OBJECT *a_object = (OBJECT*) iter->data;
     if (toplevel->keep_invisible == TRUE) {   /* Hide promotable attributes */
       o_set_visibility (toplevel, a_object, INVISIBLE);
     } else {                                /* Delete promotable attributes */
@@ -495,7 +495,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
 
   /* set the parent field now */
   for (iter = new_node->complex->prim_objs; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *tmp = iter->data;
+    OBJECT *tmp = (OBJECT*) iter->data;
     tmp->parent = new_node;
   }
 
@@ -863,7 +863,7 @@ OBJECT *o_complex_find_pin_by_attribute (OBJECT *object, char *name, char *wante
 
   for (iter = object->complex->prim_objs; iter != NULL;
        iter = g_list_next (iter)) {
-    o_current = iter->data;
+    o_current = (OBJECT*) iter->data;
 
     if (o_current->type != OBJ_PIN)
       continue;
@@ -1092,7 +1092,7 @@ geda_complex_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
 
   for (iter = object->complex->prim_objs;
        iter != NULL; iter= g_list_next (iter)) {
-    OBJECT *obj = iter->data;
+    OBJECT *obj = (OBJECT*) iter->data;
     int left, top, right, bottom;
 
     /* Collect the bounds of any lines and arcs in the symbol */

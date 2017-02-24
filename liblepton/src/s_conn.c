@@ -197,7 +197,7 @@ s_conn_remove_object_connections (TOPLEVEL *toplevel, OBJECT *to_remove)
     case OBJ_COMPLEX:
     case OBJ_PLACEHOLDER:
       for (iter = to_remove->complex->prim_objs; iter != NULL; iter = g_list_next (iter)) {
-        o_current = iter->data;
+        o_current = (OBJECT*) iter->data;
         s_conn_remove_object_connections (toplevel, o_current);
       }
       break;
@@ -273,7 +273,7 @@ void s_conn_update_glist (PAGE* page, GList *obj_list)
   GList *iter;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    o_current = iter->data;
+    o_current = (OBJECT*) iter->data;
     s_conn_update_object (page, o_current);
   }
 }
@@ -351,7 +351,7 @@ static void s_conn_update_line_object (PAGE* page, OBJECT *object)
   for (object_list = page->connectible_list;
        object_list != NULL;
        object_list = g_list_next (object_list)) {
-    other_object = object_list->data;
+    other_object = (OBJECT*) object_list->data;
 
     if (object == other_object)
       continue;
@@ -591,7 +591,7 @@ static GList *s_conn_return_glist_others (GList *input_list, GList *obj_list)
   return_list = input_list;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    o_current = iter->data;
+    o_current = (OBJECT*) iter->data;
     return_list = s_conn_return_others (return_list, o_current);
   }
 
@@ -691,7 +691,7 @@ void s_conn_add_object (PAGE *page, OBJECT *object)
     for (iter = object->complex->prim_objs;
          iter != NULL;
          iter = g_list_next (iter)) {
-      s_conn_add_object (page, iter->data);
+      s_conn_add_object (page, (OBJECT*) iter->data);
     }
   }
 }
@@ -713,7 +713,7 @@ void s_conn_remove_object(PAGE* page, OBJECT *object)
     for (iter = object->complex->prim_objs;
          iter != NULL;
          iter = g_list_next (iter)) {
-      s_conn_remove_object (page, iter->data);
+      s_conn_remove_object (page, (OBJECT*) iter->data);
     }
   }
 

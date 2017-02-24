@@ -399,7 +399,7 @@ void o_select_box_search(GschemToplevel *w_current)
 
   iter = s_page_objects (toplevel->page_current);
   while (iter != NULL) {
-    o_current = iter->data;
+    o_current = (OBJECT*) iter->data;
     /* only select visible objects */
     if (o_is_visible (toplevel, o_current) || toplevel->show_hidden_text) {
       int cleft, ctop, cright, cbottom;
@@ -472,7 +472,7 @@ void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_net)
     for (iter1 = g_list_last(netstack);
 	 iter1 != NULL;
 	 iter1 = g_list_previous(iter1), count++) {
-      o_current = iter1->data;
+      o_current = (OBJECT*) iter1->data;
       if (o_current->type == OBJ_NET &&
 	  (!o_current->selected || count == 0)) {
 	o_select_object (w_current, o_current, SINGLE, count);
@@ -504,7 +504,7 @@ void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_net)
     for (o_iter = s_page_objects (toplevel->page_current);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
-      o_current = o_iter->data;
+      o_current = (OBJECT*) o_iter->data;
       if (o_current->type == OBJ_TEXT
 	  && o_current->attached_to != NULL) {
 	if (o_current->attached_to->type == OBJ_NET) {

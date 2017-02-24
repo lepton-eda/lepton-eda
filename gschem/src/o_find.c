@@ -153,7 +153,7 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
 
   /* do first search (if we found any objects after the last found object) */
   while (iter != NULL) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
     if (find_single_object (w_current, o_current,
                             w_x, w_y, w_slack, change_selection)) {
       return TRUE;
@@ -164,7 +164,7 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
   /* now search from the beginning up until the object_lastplace */
   for (iter = s_page_objects (toplevel->page_current);
        iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    OBJECT *o_current = (OBJECT*) iter->data;
     if (find_single_object (w_current, o_current,
                             w_x, w_y, w_slack, change_selection)) {
       return TRUE;
@@ -206,7 +206,7 @@ o_find_selected_object (GschemToplevel *w_current, int w_x, int w_y)
 
   for (s_current = geda_list_get_glist (toplevel->page_current->selection_list);
        s_current != NULL; s_current = g_list_next (s_current)) {
-    OBJECT *o_current = s_current->data;
+    OBJECT *o_current = (OBJECT*) s_current->data;
 
     if (is_object_hit (w_current, o_current, w_x, w_y, w_slack))
       return TRUE;

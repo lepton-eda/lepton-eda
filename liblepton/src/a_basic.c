@@ -276,14 +276,14 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
            */
           new_object_list = g_list_reverse (new_object_list);
 
-          new_obj = object_list_save->data;
+          new_obj = (OBJECT*) object_list_save->data;
           new_obj->complex->prim_objs = new_object_list;
           new_object_list = object_list_save;
 
           /* set the parent field now */
           for (iter = new_obj->complex->prim_objs;
                iter != NULL; iter = g_list_next (iter)) {
-            OBJECT *tmp = iter->data;
+            OBJECT *tmp = (OBJECT*) iter->data;
             tmp->parent = new_obj;
           }
 
