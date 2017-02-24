@@ -82,7 +82,7 @@ SCM_DEFINE (make_complex_library, "%make-complex/library", 1, 0, 0,
               s_make_complex_library);
 
   char *basename = scm_to_utf8_string (basename_s);
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   scm_dynwind_unwind_handler (free, basename, SCM_F_WIND_EXPLICITLY);
 
   SCM result = SCM_BOOL_F;

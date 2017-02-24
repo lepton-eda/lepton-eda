@@ -135,7 +135,7 @@ void o_complex_place_changed_run_hook(GschemToplevel *w_current) {
       toplevel->page_current->place_list != NULL) {
     ptr = toplevel->page_current->place_list;
 
-    scm_dynwind_begin (0);
+    scm_dynwind_begin ((scm_t_dynwind_flags) 0);
     g_dynwind_window (w_current);
     while (ptr) {
       SCM expr = scm_list_3 (scm_from_utf8_symbol ("run-hook"),

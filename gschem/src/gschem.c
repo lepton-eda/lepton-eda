@@ -190,7 +190,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
   o_undo_init();
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
   /* Run pre-load Scheme expressions */
   g_scm_eval_protected (s_pre_load_expr, scm_current_module ());

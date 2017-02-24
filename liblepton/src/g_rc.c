@@ -197,7 +197,7 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
   /* Attempt to load the RC file, if it hasn't been loaded already.
    * If g_rc_try_mark_read() succeeds, it stores name_norm in
    * toplevel, so we *don't* free it. */
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   scm_dynwind_fluid (scheme_rc_config_fluid, edascm_from_config (cfg));
   status = (g_rc_try_mark_read (toplevel, name_norm, &tmp_err)
             && g_read_file (toplevel, name_norm, &tmp_err));
@@ -461,7 +461,7 @@ SCM g_rc_component_library(SCM path, SCM name)
   SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "component-library");
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   if (!scm_is_eq (name, SCM_UNDEFINED)) {
     SCM_ASSERT (scm_is_string (name), name,
 		SCM_ARG2, "component-library");
@@ -525,7 +525,7 @@ g_rc_component_library_command (SCM listcmd, SCM getcmd,
   SCM_ASSERT (scm_is_string (name), name, SCM_ARG3, 
               "component-library-command");
 
-  scm_dynwind_begin(0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
   /* take care of any shell variables */
   /*! \bug this may be a security risk! */
@@ -819,8 +819,10 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
 
   GPtrArray *promote = g_ptr_array_new ();
 
-  scm_dynwind_begin (0);
-  scm_dynwind_unwind_handler ((void (*)(void *))g_ptr_array_unref, promote, 0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+  scm_dynwind_unwind_handler ((void (*)(void *)) g_ptr_array_unref,
+                              promote,
+                              (scm_t_wind_flags) 0);
 
   if (scm_is_string (attrlist)) {
     s_log_message(_("WARNING: using a string for 'always-promote-attributes'"

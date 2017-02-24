@@ -50,7 +50,7 @@ g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name)
   g_assert (w_current);
   g_assert (action_name);
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
   /* Get the eval-action procedure */

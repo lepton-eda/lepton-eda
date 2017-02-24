@@ -113,7 +113,7 @@ SCM_DEFINE (add_attrib_x, "%add-attrib!", 5, 0, 0,
   }
 
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
   char *name;
   name = scm_to_utf8_string (name_s);

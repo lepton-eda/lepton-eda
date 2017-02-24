@@ -210,7 +210,7 @@ SCM g_funcs_filesel(SCM scm_msg, SCM scm_templ, SCM scm_flags)
     free(flag);
   }
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   msg = scm_to_utf8_string (scm_msg);
   scm_dynwind_free (msg);
   templ = scm_to_utf8_string (scm_templ);

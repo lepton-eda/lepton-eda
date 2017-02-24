@@ -95,7 +95,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
     gtk_widget_grab_focus (GTK_WIDGET (page_view));
   }
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
 #if DEBUG
@@ -335,7 +335,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
   /* Huge switch statement to evaluate state transitions. Jump to
    * end_button_released label to escape the state evaluation rather
    * than returning from the function directly. */
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
   if (event->button == 1) {
@@ -492,7 +492,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   /* Huge switch statement to evaluate state transitions. Jump to
    * end_motion label to escape the state evaluation rather
    * than returning from the function directly. */
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
   if (w_current->inside_action) {
@@ -663,7 +663,7 @@ x_event_key (GschemPageView *page_view, GdkEventKey *event, GschemToplevel *w_cu
       break;
   }
 
-  scm_dynwind_begin (0);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
   /* Special case to update the object being drawn or placed after
