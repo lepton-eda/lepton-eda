@@ -171,6 +171,8 @@ AX_OPTION_STROKE
 AX_OPTION_GATTRIB
 # geda-gaf compatibility symlinks
 AX_OPTION_COMPAT_SYMLINKS
+# contributed software
+AX_OPTION_CONTRIB
 
 #####################################################################
 # Tool-specific setup
