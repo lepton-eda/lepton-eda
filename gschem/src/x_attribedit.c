@@ -126,7 +126,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
   attribptr =
     g_object_get_data (G_OBJECT (w_current->aewindow), "attrib");
   if (!attribptr) {
-    OBJECT *new = NULL;
+    OBJECT *new_object = NULL;
 
     s_current = geda_list_get_glist( toplevel->page_current->selection_list );
     while (s_current != NULL) {
@@ -210,7 +210,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
       o_undo_savestate_old(w_current, UNDO_ALL);
     } else {
       object = o_select_return_first_object(w_current);
-      new = o_attrib_add_attrib(w_current, newtext, vis, show, object);
+      new_object = o_attrib_add_attrib(w_current, newtext, vis, show, object);
 
       invocation_flag =
         GPOINTER_TO_INT (g_object_get_data (G_OBJECT (w_current->aewindow),
@@ -227,10 +227,10 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
 #endif
       if (invocation_flag == FROM_HOTKEY
 	  && wx != -1 && wy != -1) {
-	o_invalidate (w_current, new);
-	new->text->x = wx;
-	new->text->y = wy;
-	o_text_recreate(toplevel, new);
+	o_invalidate (w_current, new_object);
+	new_object->text->x = wx;
+	new_object->text->y = wy;
+	o_text_recreate(toplevel, new_object);
     gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
 	o_undo_savestate_old(w_current, UNDO_ALL);
       }

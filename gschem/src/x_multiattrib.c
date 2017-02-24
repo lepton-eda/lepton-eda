@@ -514,7 +514,7 @@ enum {
 
 static GObjectClass *multiattrib_parent_class = NULL;
 
-static void multiattrib_class_init (MultiattribClass *class);
+static void multiattrib_class_init (MultiattribClass *klass);
 static void multiattrib_init       (Multiattrib *multiattrib);
 static void multiattrib_set_property (GObject *object,
                                       guint property_id,

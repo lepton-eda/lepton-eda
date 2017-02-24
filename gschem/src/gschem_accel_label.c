@@ -317,10 +317,10 @@ gschem_accel_label_set_accel_string (GschemAccelLabel *accel_label,
 }
 
 static void
-gschem_accel_label_class_init (GschemAccelLabelClass *class)
+gschem_accel_label_class_init (GschemAccelLabelClass *klass)
 {
-  GObjectClass *gobject_class = G_OBJECT_CLASS (class);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (class);
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   gobject_class->finalize = gschem_accel_label_finalize;
   gobject_class->set_property = gschem_accel_label_set_property;
