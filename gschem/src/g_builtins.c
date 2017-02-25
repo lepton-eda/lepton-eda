@@ -169,7 +169,7 @@ init_module_gschem_core_builtins ()
    * definitions. */
   for (i = 0; builtins[i].name != NULL; ++i) {
     struct BuiltinInfo b = builtins[i];
-    scm_c_define_gsubr (b.name, b.req, b.opt, b.rst, b.func);
+    scm_c_define_gsubr (b.name, b.req, b.opt, b.rst, (scm_t_subr) b.func);
     scm_c_export (b.name, NULL);
   }
 }

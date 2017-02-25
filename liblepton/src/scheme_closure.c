@@ -116,5 +116,5 @@ edascm_init_closure ()
   marshal_proc =
     scm_permanent_object (scm_c_make_gsubr ("edascm_closure_marshal",
                                             2, 0, 0,
-                                            edascm_closure_marshal));
+                                            (scm_t_subr) edascm_closure_marshal));
 }

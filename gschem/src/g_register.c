@@ -271,7 +271,7 @@ void g_register_funcs (void)
   struct gsubr_t *tmp = gschem_funcs;
 
   while (tmp->name != NULL) {
-    scm_c_define_gsubr (tmp->name, tmp->req, tmp->opt, tmp->rst, tmp->fnc);
+    scm_c_define_gsubr (tmp->name, tmp->req, tmp->opt, tmp->rst, (scm_t_subr) tmp->fnc);
     tmp++;
   }
 
