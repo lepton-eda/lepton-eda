@@ -57,7 +57,8 @@ void slot_edit_dialog_response(GtkWidget *widget, gint response, GschemToplevel 
     /* void */
     break;
   case GTK_RESPONSE_ACCEPT:
-    textentry = g_object_get_data(G_OBJECT(w_current->sewindow),"textentry");
+    textentry = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->sewindow),
+                                               "textentry"));
     string = (gchar*) gtk_entry_get_text(GTK_ENTRY(textentry));
     len = strlen(string);
     if (len != 0) {
@@ -148,13 +149,15 @@ void slot_edit_dialog (GschemToplevel *w_current, const char *count, const char 
   }
 
   if (count != NULL) {
-    widget[0] = g_object_get_data(G_OBJECT(w_current->sewindow),"countentry");
+    widget[0] = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->sewindow),
+                                               "countentry"));
     gtk_entry_set_text(GTK_ENTRY(widget[0]), count);
   }
 
   /* always set the current text and select the number of the slot */
   if (string != NULL) {
-    widget[1] = g_object_get_data(G_OBJECT(w_current->sewindow),"textentry");
+    widget[1] = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->sewindow),
+                                               "textentry"));
     gtk_entry_set_text(GTK_ENTRY(widget[1]), string);
     gtk_editable_select_region (GTK_EDITABLE(widget[1]), 0, -1);
   }

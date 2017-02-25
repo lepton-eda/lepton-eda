@@ -283,10 +283,10 @@ major_changed_dialog (GschemToplevel* w_current)
 
   /*! \todo this would be much easier using
    * gtk_message_dialog_get_message_area(). */
-  dialog = g_object_new (GTK_TYPE_DIALOG,
-                         /* GtkContainer */
-                         "border-width", 5,
-                         NULL);
+  dialog = GTK_WIDGET (g_object_new (GTK_TYPE_DIALOG,
+                                     /* GtkContainer */
+                                     "border-width", 5,
+                                     NULL));
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
                           GTK_STOCK_OK, GTK_RESPONSE_OK,
                           NULL);
@@ -296,75 +296,75 @@ major_changed_dialog (GschemToplevel* w_current)
                 "spacing", 14,
                 NULL);
   /* This box contains the warning image and the vbox */
-  hbox = g_object_new (GTK_TYPE_HBOX,
-                       /* GtkContainer */
-                       "border-width", 5,
-                       /* GtkBox */
-                       "homogeneous", FALSE,
-                       "spacing", 12,
-                       NULL);
+  hbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBOX,
+                                   /* GtkContainer */
+                                   "border-width", 5,
+                                   /* GtkBox */
+                                   "homogeneous", FALSE,
+                                   "spacing", 12,
+                                   NULL));
   gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
   /* Warning image */
-  image = g_object_new (GTK_TYPE_IMAGE,
-                        /* GtkMisc */
-                        "xalign", 0.5,
-                        "yalign", 0.0,
-                        /* GtkImage */
-                        "stock", GTK_STOCK_DIALOG_WARNING,
-                        "icon-size", GTK_ICON_SIZE_DIALOG,
-                        NULL);
+  image = GTK_WIDGET (g_object_new (GTK_TYPE_IMAGE,
+                                    /* GtkMisc */
+                                    "xalign", 0.5,
+                                    "yalign", 0.0,
+                                    /* GtkImage */
+                                    "stock", GTK_STOCK_DIALOG_WARNING,
+                                    "icon-size", GTK_ICON_SIZE_DIALOG,
+                                    NULL));
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   /* This box contains the labels and list of changed symbols */
-  vbox = g_object_new (GTK_TYPE_VBOX,
-                       /* GtkBox */
-                       "homogeneous", FALSE,
-                       "spacing", 12,
-                       NULL);
+  vbox = GTK_WIDGET (g_object_new (GTK_TYPE_VBOX,
+                                   /* GtkBox */
+                                   "homogeneous", FALSE,
+                                   "spacing", 12,
+                                   NULL));
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   /* Primary label */
   tmp = g_strconcat ("<big><b>",
                      _("Major symbol changes detected."),
                      "</b></big>", NULL);
-  label = g_object_new (GTK_TYPE_LABEL,
-                        /* GtkMisc */
-                        "xalign", 0.0,
-                        "yalign", 0.0,
-                        "selectable", TRUE,
-                        /* GtkLabel */
-                        "wrap", TRUE,
-                        "use-markup", TRUE,
-                        "label", tmp,
-                        NULL);
+  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
+                                    /* GtkMisc */
+                                    "xalign", 0.0,
+                                    "yalign", 0.0,
+                                    "selectable", TRUE,
+                                    /* GtkLabel */
+                                    "wrap", TRUE,
+                                    "use-markup", TRUE,
+                                    "label", tmp,
+                                    NULL));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   g_free (tmp);
   /* Secondary label */
-  label = g_object_new (GTK_TYPE_LABEL,
-                        /* GtkMisc */
-                        "xalign", 0.0,
-                        "yalign", 0.0,
-                        "selectable", TRUE,
-                        /* GtkLabel */
-                        "wrap", TRUE,
-                        "use-markup", TRUE,
-                        "label",
-                        _("Changes have occurred to the symbols shown below.\n\n"
-                          "Be sure to verify each of these symbols."),
-                        NULL);
+  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
+                                    /* GtkMisc */
+                                    "xalign", 0.0,
+                                    "yalign", 0.0,
+                                    "selectable", TRUE,
+                                    /* GtkLabel */
+                                    "wrap", TRUE,
+                                    "use-markup", TRUE,
+                                    "label",
+                                    _("Changes have occurred to the symbols shown below.\n\n"
+                                      "Be sure to verify each of these symbols."),
+                                    NULL));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   /* List of changed symbols */
-  scroll = g_object_new (GTK_TYPE_SCROLLED_WINDOW,
-                         /* GtkScrolledWindow */
-                         "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
-                         "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
-                         "shadow-type",       GTK_SHADOW_IN,
-                         NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), scroll, TRUE, TRUE, 0);
-  tree_view = g_object_new (GTK_TYPE_TREE_VIEW,
-                            /* GtkTreeView */
-                            "enable-search", FALSE,
-                            "headers-visible", FALSE,
-                            "model", list_store,
-                            NULL);
+  scroll = GTK_WIDGET (g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+                                     /* GtkScrolledWindow */
+                                     "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                                     "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                                     "shadow-type",       GTK_SHADOW_IN,
+                                     NULL));
+  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (scroll), TRUE, TRUE, 0);
+  tree_view = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
+                                        /* GtkTreeView */
+                                        "enable-search", FALSE,
+                                        "headers-visible", FALSE,
+                                        "model", list_store,
+                                        NULL));
   gtk_container_add (GTK_CONTAINER (scroll), tree_view);
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Symbol"),

@@ -131,9 +131,9 @@ gschem_options_widget_adjust_focus (GschemOptionsWidget *widget)
 GtkWidget*
 gschem_options_widget_new (GschemToplevel *w_current)
 {
-    return g_object_new (GSCHEM_TYPE_OPTIONS_WIDGET,
-                         "gschem-toplevel",  w_current,
-                         NULL);
+  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_OPTIONS_WIDGET,
+                                   "gschem-toplevel",  w_current,
+                                   NULL));
 }
 
 

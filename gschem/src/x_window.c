@@ -655,14 +655,16 @@ void x_window_create_main(GschemToplevel *w_current)
                     w_current);
 
   /* object properties editor */
-  w_current->object_properties = gschem_object_properties_widget_new (w_current);
+  w_current->object_properties =
+    GTK_WIDGET (gschem_object_properties_widget_new (w_current));
 
   gtk_notebook_append_page (GTK_NOTEBOOK (w_current->right_notebook),
                             GTK_WIDGET (w_current->object_properties),
                             gtk_label_new (_("Object")));
 
   /* text properties editor */
-  w_current->text_properties = gschem_text_properties_widget_new (w_current);
+  w_current->text_properties =
+    GTK_WIDGET (gschem_text_properties_widget_new (w_current));
 
   gtk_notebook_append_page (GTK_NOTEBOOK (w_current->right_notebook),
                             GTK_WIDGET (w_current->text_properties),
