@@ -371,23 +371,24 @@ text_input_dialog (GschemToplevel *w_current)
 {
   if (w_current->tiwindow == NULL) {
     /* dialog not created yet */
-    w_current->tiwindow = g_object_new (TYPE_NEWTEXT,
-                                        /* GtkContainer */
-                                        "border-width",     DIALOG_BORDER_SPACING,
-                                        /* GtkWindow */
-                                        "title",            _("Text Entry..."),
-                                        "default-width",    320,
-                                        "default-height",   350,
-                                        "window-position",  GTK_WIN_POS_MOUSE,
-                                        "allow-grow",       TRUE,
-                                        "allow-shrink",     FALSE,
-                                        "modal",            FALSE,
-                                        /* GtkDialog */
-                                        "has-separator",    TRUE,
-                                        /* GschemDialog */
-                                        "settings-name",    "text-entry",
-                                        "gschem-toplevel",  w_current,
-                                        NULL);
+    w_current->tiwindow =
+      GTK_WIDGET (g_object_new (TYPE_NEWTEXT,
+                                /* GtkContainer */
+                                "border-width",     DIALOG_BORDER_SPACING,
+                                /* GtkWindow */
+                                "title",            _("Text Entry..."),
+                                "default-width",    320,
+                                "default-height",   350,
+                                "window-position",  GTK_WIN_POS_MOUSE,
+                                "allow-grow",       TRUE,
+                                "allow-shrink",     FALSE,
+                                "modal",            FALSE,
+                                /* GtkDialog */
+                                "has-separator",    TRUE,
+                                /* GschemDialog */
+                                "settings-name",    "text-entry",
+                                "gschem-toplevel",  w_current,
+                                NULL));
 
     gtk_window_set_transient_for (GTK_WINDOW (w_current->tiwindow),
                                   GTK_WINDOW (w_current->main_window));

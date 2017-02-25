@@ -270,7 +270,7 @@ set_property (GObject      *object,
       break;
 
     case PROP_WIDGET:
-      set_widget (binding, g_value_get_object (value));
+      set_widget (binding, GTK_WIDGET (g_value_get_object (value)));
       break;
 
     default:

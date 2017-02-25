@@ -439,14 +439,14 @@ close_confirmation_dialog_constructor (GType type,
                                    NULL));
 
   /* warning image */
-  image = g_object_new (GTK_TYPE_IMAGE,
-                        /* GtkMisc */
-                        "xalign",    0.5,
-                        "yalign",    0.0,
-                        /* GtkImage */
-                        "stock",     GTK_STOCK_DIALOG_WARNING,
-                        "icon-size", GTK_ICON_SIZE_DIALOG,
-                        NULL);
+  image = GTK_WIDGET (g_object_new (GTK_TYPE_IMAGE,
+                                    /* GtkMisc */
+                                    "xalign",    0.5,
+                                    "yalign",    0.0,
+                                    /* GtkImage */
+                                    "stock",     GTK_STOCK_DIALOG_WARNING,
+                                    "icon-size", GTK_ICON_SIZE_DIALOG,
+                                    NULL));
   gtk_box_pack_start (GTK_BOX (hbox), image,
                       FALSE, FALSE, 0);
 

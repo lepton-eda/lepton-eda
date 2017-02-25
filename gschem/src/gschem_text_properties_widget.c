@@ -125,9 +125,9 @@ gschem_text_properties_widget_adjust_focus (GschemTextPropertiesWidget *widget)
 GtkWidget*
 gschem_text_properties_widget_new (GschemToplevel *w_current)
 {
-    return g_object_new (GSCHEM_TYPE_TEXT_PROPERTIES_WIDGET,
-                         "gschem-toplevel",  w_current,
-                         NULL);
+  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_TEXT_PROPERTIES_WIDGET,
+                                   "gschem-toplevel", w_current,
+                                   NULL));
 }
 
 

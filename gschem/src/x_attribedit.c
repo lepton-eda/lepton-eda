@@ -84,9 +84,11 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
   name_entry =
     g_object_get_data (G_OBJECT (w_current->aewindow), "attrib_combo_entry");
   visbutton =
-    g_object_get_data (G_OBJECT (w_current->aewindow), "visbutton");
+    GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
+                                   "visbutton"));
   show_options =
-    g_object_get_data (G_OBJECT (w_current->aewindow), "show_options");
+    GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
+                                   "show_options"));
 
   value = gtk_entry_get_text(value_entry);
   label = gtk_entry_get_text(name_entry);
@@ -144,16 +146,20 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
     if (nsel > 1) {
 
       addtoallbutton =
-        g_object_get_data (G_OBJECT (w_current->aewindow), "addtoallbutton");
+        GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
+                                       "addtoallbutton"));
 
       addtocompsbutton =
-        g_object_get_data (G_OBJECT (w_current->aewindow), "addtocompsbutton");
+        GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
+                                       "addtocompsbutton"));
 
       addtonetsbutton =
-        g_object_get_data (G_OBJECT (w_current->aewindow), "addtonetsbutton");
+        GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
+                                       "addtonetsbutton"));
 
       overwritebutton =
-        g_object_get_data (G_OBJECT (w_current->aewindow), "overwritebutton");
+        GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
+                                       "overwritebutton"));
 
       if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(overwritebutton))) {
 	replace = 1;

@@ -56,11 +56,14 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
     /* void */
     break;
   case GTK_RESPONSE_ACCEPT:
-    spinentry = g_object_get_data(G_OBJECT(w_current->aawindow),"radius");
+    spinentry = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
+                                               "radius"));
     radius = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
-    spinentry = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_start");
+    spinentry = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
+                                               "spin_start"));
     start_angle = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
-    spinentry = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_sweep");
+    spinentry = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
+                                               "spin_sweep"));
     sweep_angle = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
     arc_object = (OBJECT*) g_object_get_data(G_OBJECT(w_current->aawindow),"arc_object");
 
@@ -159,9 +162,12 @@ void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
 
   else {  /* dialog already created */
     gtk_window_present (GTK_WINDOW(w_current->aawindow));
-    widget[0] = g_object_get_data(G_OBJECT(w_current->aawindow),"radius");
-    widget[1] = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_start");
-    widget[2] = g_object_get_data(G_OBJECT(w_current->aawindow),"spin_sweep");
+    widget[0] = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
+                                               "radius"));
+    widget[1] = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
+                                               "spin_start"));
+    widget[2] = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
+                                               "spin_sweep"));
   }
 
   if (arc_object == NULL) {

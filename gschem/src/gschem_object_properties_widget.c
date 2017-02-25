@@ -110,11 +110,10 @@ update_pin_type_widget (GschemObjectPropertiesWidget *dialog);
 GtkWidget*
 gschem_object_properties_widget_new (GschemToplevel *w_current)
 {
-  return g_object_new (GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET,
-                       /* GschemObjectProperties */
-                       "gschem-toplevel",  w_current,
-                       NULL);
-
+  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_OBJECT_PROPERTIES_WIDGET,
+                                   /* GschemObjectProperties */
+                                   "gschem-toplevel",  w_current,
+                                   NULL));
 }
 
 
