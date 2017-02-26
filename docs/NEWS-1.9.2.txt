@@ -1,91 +1,15 @@
 ==============================================
- 'gschem and Friends' Electronic Design Suite
+Lepton Electronic Design Suite
 ==============================================
 
 Copyright (C) 1998-2016 gEDA Developers
 
-This file documents important user-visible changes in gEDA/gaf.  For
+This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult the `ChangeLog' file.
-
-Notable changes in gEDA/gaf 1.9.3
-====================================
-
-* The gEDA/gaf source tarball no longer includes libintl.  When
-  building gEDA/gaf with internationalisation support, a GNU
-  gettext-compatible libintl is now required.
-
-* gEDA/gaf core tools will now automatically rotate per-user log
-  files.  250 log files per tool will be retained from the last 24
-  hours, and 50 log files per tool from all time.
-
-* gEDA/gaf tools now search for data and configuration files in the
-  standard XDG directories.  By default, these are:
-
-  - `/usr/local/share/gEDA/` and `/usr/share/gEDA` for system data
-  - `/etc/xdg/gEDA/` for system configuration
-  - `$HOME/.local/share/gEDA/` for per-user data
-  - `$HOME/.config/gEDA/` for per-user configuration.
-
-  However, gEDA/gaf tools will still use `$HOME/.gEDA` for per-user
-  files if that directory exists, they still obey the `$GEDADATA` and
-  `$GEDADATARC` environment variables, and by default the search path
-  includes the installation prefix selected when compiling gEDA/gaf.
-
-* The configure script now supports an `--enable-relocatable` switch.
-  When specified, gEDA/gaf tools do not have the configured prefix
-  compiled into them.
-
-* The configure script now supports a `--disable-deprecated` switch.
-  When specified, various deprecated features and behaviour are
-  disabled, which may break backward-compatibility with some
-  configurations.
-
-* A new Scheme API function, `log!`, has been added to the `(geda
-  log)` module.  It allows Scheme code to emit log messages in the
-  same way that the tools' C code does.
-
-* Gschem multiattrib dialog improvements:
-
-  - Shift+Tab can be used to move focus backward from `value' to
-    `name'.
-
-  - Tooltip to the `value' text entry has been added explaning how
-    to enter newline or tab.
-
-  - Horizontal scrollbar for `value' has been added to prevent
-    resizing of the dialog.
-
-* Gschem undo information now contains center of viewport and
-  current page scale, so if gschem window size changes before
-  undo, page will be zoomed accordingly.
-
-* Faster redrawing of pages in gschem.
-
-* Menu entry to launch Scheme REPL in gschem's background terminal
-  has been added.
-
-* Changed calculation of the size of bus and net junctions.
-
-* `Bom` gnetlist backend has been refactored, all its functions
-  have help now.
-
-* View bounds in gschem window has been changed so symbols can be
-  edited without translation.
-
-* New Scheme module for part list creation has been added for
-  gnetlist.
-
-* Netlist output of several gnetlist backends is sorted by package
-  names.
-
-* New Scheme procedures for working with source library have been
-  added to the `(geda library)` module: source-library-contents
-  and set-source-library-contents!.  Please see the "geda-scheme"
-  info manual for more details.
-
 
 Notable changes in gEDA/gaf 1.9.2
 =================================
+
 * Build system changes:
 
   - Guile 2.0 or newer is now required.
