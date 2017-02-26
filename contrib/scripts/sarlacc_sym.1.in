@@ -1,4 +1,4 @@
-.TH sarlacc_sym 1 "@DATE@" "gEDA Project" @VERSION@
+.TH sarlacc_sym 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
 sarlacc_sym \- convert OrCAD text libraries to gEDA components

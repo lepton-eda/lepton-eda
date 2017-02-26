@@ -1,4 +1,4 @@
-.TH gschem 1 "@DATE@" "gEDA Project" @VERSION@
+.TH gschem 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
 gschem - gEDA/gaf Schematic Capture
 .SH SYNOPSIS

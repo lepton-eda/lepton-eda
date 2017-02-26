@@ -1,4 +1,4 @@
-.TH sarlacc_schem 1 "@DATE@" "gEDA Project" @VERSION@
+.TH sarlacc_schem 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
 sarlacc_schem \- convert OrCAD SDT IV files to gEDA format.

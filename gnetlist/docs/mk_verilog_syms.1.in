@@ -1,4 +1,4 @@
-.TH mk_verilog_syms 1 "@DATE@" "gEDA Project" @VERSION@
+.TH mk_verilog_syms 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
 mk_verilog_syms \- Create gate symbols for the gEDA Verilog netlister
 

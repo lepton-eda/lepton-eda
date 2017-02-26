@@ -1,4 +1,4 @@
-.TH gsymcheck 1 "@DATE@" "gEDA Project" @VERSION@
+.TH gsymcheck 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
 gsymcheck \- gEDA/gaf Symbol Checker
 .SH SYNOPSIS

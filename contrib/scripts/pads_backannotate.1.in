@@ -1,4 +1,4 @@
-.TH pads_backannotate 1 "@DATE@" "gEDA Project" @VERSION@
+.TH pads_backannotate 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
 .B pads_backannotate 

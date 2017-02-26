@@ -1,4 +1,4 @@
-.TH gschlas 1 "@DATE@" "gEDA Project" @VERSION@
+.TH gschlas 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
 gschlas \- gEDA schematic load and save
