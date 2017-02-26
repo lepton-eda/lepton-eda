@@ -1,4 +1,4 @@
-.TH pcb_backannotate 1 "@DATE@" "gEDA Project" @VERSION@
+.TH pcb_backannotate 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
 .B pcb_backannotate

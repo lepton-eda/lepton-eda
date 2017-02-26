@@ -1,4 +1,4 @@
-.TH gaf 1 "@DATE@" "gEDA Project" @VERSION@
+.TH gaf 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
 gaf - gEDA/gaf Command-Line Utility
 .SH "SYNOPSIS"

@@ -1,4 +1,4 @@
-.TH gattrib 1 "@DATE@" "gEDA Project" @VERSION@
+.TH gattrib 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
 gattrib - gEDA/gaf Schematic Attribute Editor
 .SH SYNOPSIS

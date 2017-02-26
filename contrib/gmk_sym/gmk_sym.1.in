@@ -1,4 +1,4 @@
-.TH gmk_sym 1 "@DATE@" "gEDA Project" @VERSION@
+.TH gmk_sym 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
 gmk_sym \- create rectangular symbols for gschem from a text file

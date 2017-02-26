@@ -1,4 +1,4 @@
-.TH garchive 1 "@DATE@" "gEDA Project" @VERSION@
+.TH garchive 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
 garchive \- create and extract gEDA design archives

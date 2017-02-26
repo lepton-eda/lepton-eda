@@ -1,4 +1,4 @@
-.TH tragesym 1 "@DATE@" "gEDA Project" @VERSION@
+.TH tragesym 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
 tragesym \- create gEDA symbols from structured textfiles

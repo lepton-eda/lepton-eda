@@ -1,4 +1,4 @@
-.TH refdes_renum 1 "@DATE@" "gEDA Project" @VERSION@
+.TH refdes_renum 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
 refdes_renum \- gEDA/gaf refdes renumbering utility

@@ -1,4 +1,4 @@
-.TH gnetlist 1 "@DATE@" "gEDA Project" @VERSION@
+.TH gnetlist 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
 gnetlist - gEDA/gaf Netlist Extraction and Generation
 .SH SYNOPSIS

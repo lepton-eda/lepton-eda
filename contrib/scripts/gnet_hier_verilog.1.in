@@ -1,4 +1,4 @@
-.TH gnet_hier_verilog.sh 1 "@DATE@" "gEDA Project" @VERSION@
+.TH gnet_hier_verilog.sh 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
 gnet_hier_verilog.sh \- generate a non-flattened hierarchical Verilog netlist.

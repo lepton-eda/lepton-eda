@@ -1,4 +1,4 @@
-.TH smash_megafile 1 "@DATE@" "gEDA Project" @VERSION@
+.TH smash_megafile 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
 smash_megafile \- break a Viewlogic megafile into a million little pieces

@@ -1,4 +1,4 @@
-.TH gsch2pcb 1 "@DATE@" "gEDA Project" @VERSION@
+.TH gsch2pcb 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
 gsch2pcb - Update PCB layouts from gEDA/gaf schematics
 .SH SYNOPSIS
