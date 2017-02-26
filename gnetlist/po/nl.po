@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gnetlist\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2017-02-15 15:36+0300\n"
+"POT-Creation-Date: 2017-02-26 10:33+0300\n"
 "PO-Revision-Date: 2014-08-31 20:38+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -28,14 +28,13 @@ msgstr ""
 "\n"
 
 #: gnetlist/src/gnetlist.c:187
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "gEDA/gnetlist version %s%s.%s\n"
 "gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
 "This is free software, and you are welcome to redistribute it under certain\n"
 "conditions; please see the COPYING file for more details.\n"
-"\n"
 msgstr ""
 "gEDA/gnetlist versie %s%s.%s\n"
 "gEDA/gnetlist komt met ABSOLUUT GEEN GARANTIE; zie ook COPYING voor meer "
@@ -159,28 +158,29 @@ msgstr ""
 "Doe `%s --help' voor meer informatie.\n"
 
 #: gnetlist/src/s_hierarchy.c:85
-#, c-format
-msgid "Going to traverse source [%s]\n"
+#, fuzzy, c-format
+msgid "Going to traverse source [%1$s]"
 msgstr "Ga de bron doorkruisen [%s]\n"
 
 #: gnetlist/src/s_hierarchy.c:104
-#, c-format
-msgid "Failed to load subcircuit '%s': %s\n"
+#, fuzzy, c-format
+msgid "Failed to load subcircuit '%1$s': %2$s\n"
 msgstr "Faalde bij het laden van subcircuit '%s': %s\n"
 
 #: gnetlist/src/s_hierarchy.c:106
-#, c-format
-msgid "ERROR: Failed to load subcircuit '%s': %s\n"
+#, fuzzy, c-format
+msgid "ERROR: Failed to load subcircuit '%1$s': %2$s\n"
 msgstr "FOUT: Faalde om subcircuit '%s': %s te laden\n"
 
 #: gnetlist/src/s_hierarchy.c:206
-#, c-format
-msgid "Found a pin [%s] on component [%s] which does not have a label!\n"
+#, fuzzy, c-format
+msgid "Found a pin [%1$s] on component [%2$s] which does not have a label!\n"
 msgstr "Vond een pen [%s] op component [%s] welke geen label heeft!\n"
 
 #: gnetlist/src/s_hierarchy.c:230
-#, c-format
-msgid "Missing I/O symbol with refdes [%s] inside schematic for symbol [%s]\n"
+#, fuzzy, c-format
+msgid ""
+"Missing I/O symbol with refdes [%1$s] inside schematic for symbol [%2$s]\n"
 msgstr ""
 "Ontbrekend I/O symbool met refdes [%s] in een schema voor symbool [%s]\n"
 
@@ -199,8 +199,8 @@ msgid " DONE\n"
 msgstr " GEDAAN\n"
 
 #: gnetlist/src/s_netattrib.c:72
-#, c-format
-msgid "ERROR: `%s' is reserved for internal use."
+#, fuzzy, c-format
+msgid "ERROR: `%1$s' is reserved for internal use."
 msgstr "FOUT: `%s' is gereserveerd voor intern gebruik."
 
 #: gnetlist/src/s_netattrib.c:94
@@ -209,14 +209,14 @@ msgid "Found malformed net attribute\n"
 msgstr "Vond een misvormd net attribuut\n"
 
 #: gnetlist/src/s_netattrib.c:150
-#, c-format
-msgid "Found a cpinlist head with a netname! [%s]\n"
+#, fuzzy, c-format
+msgid "Found a cpinlist head with a netname! [%1$s]\n"
 msgstr "Vond een cpinlist kop met een netnaam! [%s]\n"
 
 #: gnetlist/src/s_netattrib.c:263 gnetlist/src/s_netattrib.c:294
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Got an invalid net= attrib [net=%s]\n"
+"Got an invalid net= attrib [net=%1$s]\n"
 "Missing : in net= attrib\n"
 msgstr ""
 "Kreeg een ongeldig= attrib [net=%s]\n"
@@ -228,13 +228,13 @@ msgid "Missing Attributes (refdes and pin number)\n"
 msgstr "Ontbrekende Attributen (refdes en pennummer)\n"
 
 #: gnetlist/src/s_net.c:209 gnetlist/src/s_net.c:246
-#, c-format
-msgid "Found duplicate net name, renaming [%s] to [%s]\n"
+#, fuzzy, c-format
+msgid "Found duplicate net name, renaming [%1$s] to [%2$s]\n"
 msgstr "Vond een duplicaat net naam, hernoem [%s] naar [%s]\n"
 
 #: gnetlist/src/s_net.c:354
-#, c-format
-msgid "s_net_name: incorrect connectivity type %i\n"
+#, fuzzy, c-format
+msgid "s_net_name: incorrect connectivity type %1$i\n"
 msgstr "s_net_name: incorrect verbinding type %i\n"
 
 #: gnetlist/src/s_net.c:374
@@ -243,10 +243,10 @@ msgid "Increase number of unnamed nets (s_net.c)\n"
 msgstr "Verhoog aantal naamloze netten (s_net.c)\n"
 
 #: gnetlist/src/s_traverse.c:165
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "WARNING: Found a placeholder/missing component, are you missing a symbol "
-"file? [%s]\n"
+"file? [%1$s]\n"
 msgstr ""
 "WAARSCHUWING: Vond een plaatshouder/ontbrekend component, mist U een symbool "
 "bestand? [%s]\n"
@@ -264,8 +264,8 @@ msgid "Non-connectable object being queried for connection type\n"
 msgstr "Niet-verbindbaar object naar verbindingtype gevraagd\n"
 
 #: gnetlist/src/s_traverse.c:348
-#, c-format
-msgid "WARNING: Found label=%s. label= is deprecated, please use netname=\n"
+#, fuzzy, c-format
+msgid "WARNING: Found label=%1$s. label= is deprecated, please use netname=\n"
 msgstr ""
 "WAARSCHUWING: vond label=%s. label= is vervallen, gebruik alstublieft "
 "netname=\n"
@@ -379,7 +379,7 @@ msgstr ""
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr "U gaf geen backend om uit voeren noch interactieve modus!\n"
 
-#: gnetlist/scheme/gnetlist/rename.scm:48
+#: gnetlist/scheme/gnetlist/rename.scm:68
 #, fuzzy, scheme-format
 msgid ""
 "WARNING: Trying to rename something twice:\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2017-02-15 15:36+0300\n"
+"POT-Creation-Date: 2017-02-26 10:33+0300\n"
 "PO-Revision-Date: 2012-01-27 14:17+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Persian <fa@li.org>\n"
@@ -28,30 +28,29 @@ msgstr "Manipulate component attributes with gattrib"
 
 #: gattrib/src/f_export.c:82
 #, c-format
-msgid "o_save: Could not open [%s]\n"
+msgid "o_save: Could not open [%1$s]"
 msgstr ""
 
 #: gattrib/src/gattrib.c:152
 #, c-format
 msgid ""
-"gEDA/gattrib version %s%s.%s\n"
+"gEDA/gattrib version %1$s%2$s.%3$s\n"
 "gEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
 "This is free software, and you are welcome to redistribute it under certain\n"
 "conditions; please see the COPYING file for more details.\n"
-"\n"
 msgstr ""
 
-#: gattrib/src/gattrib.c:188
+#: gattrib/src/gattrib.c:191
 #, c-format
-msgid "Couldn't find file [%s]\n"
+msgid "Couldn't find file [%1$s]\n"
 msgstr ""
 
 #: gattrib/src/g_rc.c:70
 #, c-format
 msgid ""
-"You are running gEDA/gaf version [%s%s.%s],\n"
-"but you have a version [%s] gattribrc file.\n"
+"You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"
+"but you have a version [%4$s] gattribrc file.\n"
 "Please be sure that you have the latest rc file.\n"
 msgstr ""
 
@@ -63,14 +62,14 @@ msgstr ""
 msgid "Widget must be a GtkSheet child"
 msgstr ""
 
-#: gattrib/src/parsecmd.c:76
+#: gattrib/src/parsecmd.c:75
 #, c-format
 msgid ""
 "\n"
 "Gattrib:  The gEDA project's attribute editor.\n"
 "Presents schematic attributes in easy-to-edit spreadsheet format.\n"
 "\n"
-"Usage: %s [OPTIONS] filename1 ... filenameN\n"
+"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
 "  -q, --quiet            Quiet mode\n"
 "  -v, --verbose          Verbose mode on\n"
 "  -h, --help             This help menu\n"
@@ -90,14 +89,14 @@ msgid ""
 "     in different rows with the slot number after the period.  Example:  "
 "C101.2.\n"
 "\n"
-"Copyright (C) 2003 -- 2006 Stuart D. Brorson.  E-mail: sdb (AT) cloud9 (DOT) "
-"net.\n"
+"Copyright (C) 2003 -- 2006 Stuart D. Brorson.\n"
 "\n"
+"Please report bugs to %2$s.\n"
 msgstr ""
 
 #: gattrib/src/s_attrib.c:101
 #, c-format
-msgid "WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n"
+msgid "WARNING: Found uref=%1$s, uref= is deprecated, please use refdes=\n"
 msgstr ""
 
 #: gattrib/src/s_misc.c:81
@@ -115,15 +114,15 @@ msgstr ""
 #: gattrib/src/s_object.c:217
 #, c-format
 msgid ""
-"In s_object_replace_attrib_in_object, we have failed to find the attrib %s "
+"In s_object_replace_attrib_in_object, we have failed to find the attrib %1$s "
 "on the component.  Exiting . . .\n"
 msgstr ""
 
 #: gattrib/src/s_object.c:276
 #, c-format
 msgid ""
-"In s_object_remove_attrib_in_object, we have failed to find the attrib %s on "
-"the component.  Exiting . . .\n"
+"In s_object_remove_attrib_in_object, we have failed to find the attrib %1$s "
+"on the component.  Exiting . . .\n"
 msgstr ""
 
 #: gattrib/src/s_object.c:329
@@ -326,7 +325,7 @@ msgid ""
 "\n"
 "This is gattrib -- gEDA's attribute editor\n"
 "\n"
-"Gattrib version: %s%s.%s\n"
+"Gattrib version: %1$s%2$s.%3$s\n"
 "\n"
 "Gattrib is written by: Stuart Brorson (sdb@cloud9.net)\n"
 "with generous helpings of code from gschem, gnetlist, \n"
@@ -359,12 +358,12 @@ msgstr ""
 
 #: gattrib/src/x_fileselect.c:134
 #, c-format
-msgid "Loading file [%s]\n"
+msgid "Loading file [%1$s]"
 msgstr ""
 
 #: gattrib/src/x_fileselect.c:140
 #, c-format
-msgid "Couldn't load schematic [%s]\n"
+msgid "Couldn't load schematic [%1$s]\n"
 msgstr ""
 
 #: gattrib/src/x_fileselect.c:230
@@ -377,12 +376,12 @@ msgstr ""
 
 #: gattrib/src/x_fileselect.c:304
 #, c-format
-msgid "Saved As [%s]\n"
+msgid "Saved As [%1$s]"
 msgstr ""
 
 #: gattrib/src/x_fileselect.c:314
 #, c-format
-msgid "Could NOT save [%s]\n"
+msgid "Could NOT save [%1$s]"
 msgstr ""
 
 #: gattrib/src/x_gtksheet.c:70 gattrib/src/x_gtksheet.c:79
@@ -420,8 +419,8 @@ msgstr "gEDA Attribute Editor"
 #: gattrib/src/x_window.c:299
 #, c-format
 msgid ""
-"Error loading %s:\n"
-"%s\n"
+"Error loading %1$s:\n"
+"%2$s\n"
 msgstr ""
 
 #: gattrib/src/x_window.c:336

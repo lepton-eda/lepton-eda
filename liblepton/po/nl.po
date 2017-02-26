@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2017-02-15 15:35+0300\n"
+"POT-Creation-Date: 2017-02-26 10:32+0300\n"
 "PO-Revision-Date: 2014-08-31 23:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -44,9 +44,9 @@ msgstr "gEDA Schakeling Schema"
 msgid "gEDA Schematic Symbol"
 msgstr "gEDA Schema Symbool"
 
-#: liblepton/src/a_basic.c:57 liblepton/src/f_basic.c:371
-#, c-format
-msgid "File %s is read-only"
+#: liblepton/src/a_basic.c:57 liblepton/src/f_basic.c:377
+#, fuzzy, c-format
+msgid "File %1$s is read-only"
 msgstr "Bestand %s is alleen-lezen"
 
 #: liblepton/src/a_basic.c:114
@@ -54,22 +54,22 @@ msgid "Schematic data was not valid UTF-8"
 msgstr "Schema gegevens waren geen geldige UTF-8"
 
 #: liblepton/src/a_basic.c:246
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Read unexpected attach symbol start marker in [%s] :\n"
+"Read unexpected attach symbol start marker in [%1$s] :\n"
 ">>\n"
-"%s<<\n"
+"%2$s<<\n"
 msgstr ""
 "Lees een onverwacht toegevoegd symbool start merkteken in [%s] :\n"
 ">>\n"
 "%s<<\n"
 
 #: liblepton/src/a_basic.c:263
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Read unexpected embedded symbol start marker in [%s] :\n"
+"Read unexpected embedded symbol start marker in [%1$s] :\n"
 ">>\n"
-"%s<<\n"
+"%2$s<<\n"
 msgstr ""
 "Lees een onverwacht ingesloten symbool start teken in [%s] :\n"
 ">>\n"
@@ -87,43 +87,43 @@ msgstr ""
 "%s<<\n"
 
 #: liblepton/src/a_basic.c:329
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Read an old format sym/sch file!\n"
 "Please run g[sym|sch]update on:\n"
-"[%s]\n"
+"[%1$s]"
 msgstr ""
 "Lees een oud formaat sym/sch bestand!\n"
 "Voer g[sym|sch]update uit op:\n"
 "[%s]\n"
 
 #: liblepton/src/a_basic.c:335
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Read garbage in [%s] :\n"
+"Read garbage in [%1$s] :\n"
 ">>\n"
-"%s<<\n"
+"%2$s<<\n"
 msgstr ""
 "Lees onzin in [%s] :\n"
 ">>\n"
 "%s<<\n"
 
 #: liblepton/src/f_basic.c:119 liblepton/src/f_basic.c:132
-#, c-format
-msgid "Failed to stat [%s]: %s"
+#, fuzzy, c-format
+msgid "Failed to stat [%1$s]: %2$s"
 msgstr "Status niet gelukt [%s]: %s"
 
 #: liblepton/src/f_basic.c:211
-#, c-format
-msgid "Cannot find file %s: %s"
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
 msgstr "Kan bestand %s niet vinden: %s"
 
-#: liblepton/src/f_basic.c:257
-#, c-format
+#: liblepton/src/f_basic.c:260
+#, fuzzy, c-format
 msgid ""
 "\n"
 "WARNING: Found an autosave backup file:\n"
-"  %s.\n"
+"  %1$s.\n"
 "\n"
 msgstr ""
 "\n"
@@ -131,11 +131,11 @@ msgstr ""
 " %s.\n"
 "\n"
 
-#: liblepton/src/f_basic.c:259
+#: liblepton/src/f_basic.c:262
 msgid "I could not guess if it is newer, so you have to do it manually.\n"
 msgstr "Ik kan niet raden of het nieuwer is, je moet het dus handmatig doen.\n"
 
-#: liblepton/src/f_basic.c:261
+#: liblepton/src/f_basic.c:264
 msgid ""
 "The backup copy is newer than the schematic, so it seems you should load it "
 "instead of the original file.\n"
@@ -143,7 +143,7 @@ msgstr ""
 "De reservekopie is nieuwer dan het schema, het lijkt erop dat je deze zou "
 "moeten laden in plaats van het orginele bestand.\n"
 
-#: liblepton/src/f_basic.c:263
+#: liblepton/src/f_basic.c:266
 msgid ""
 "Gschem usually makes backup copies automatically, and this situation happens "
 "when it crashed or it was forced to exit abruptly.\n"
@@ -152,7 +152,7 @@ msgstr ""
 "voor wanneer er een crash is of wanneer er een abrupte gedwongen beeindiging "
 "was.\n"
 
-#: liblepton/src/f_basic.c:266
+#: liblepton/src/f_basic.c:269
 msgid ""
 "\n"
 "Run gschem and correct the situation.\n"
@@ -162,42 +162,42 @@ msgstr ""
 "Voer gschem uit en corrigeer de situatie.\n"
 "\n"
 
-#: liblepton/src/f_basic.c:361
-#, c-format
-msgid "Can't get the real filename of %s: %s"
+#: liblepton/src/f_basic.c:367
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s: %2$s"
 msgstr "Kan de werkelijke bestandsnaam van %s: %s niet krijgen"
 
-#: liblepton/src/f_basic.c:392
-#, c-format
-msgid "Could NOT set previous backup file [%s] read-write\n"
+#: liblepton/src/f_basic.c:398
+#, fuzzy, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write."
 msgstr "Kan vorige reservekopie [%s] NIET op lezen-schrijven instellen\n"
 
-#: liblepton/src/f_basic.c:398
-#, c-format
-msgid "Can't save backup file: %s."
+#: liblepton/src/f_basic.c:404
+#, fuzzy, c-format
+msgid "Can't save backup file: %1$s."
 msgstr "Kan reservekopie niet opslaan: %s."
 
-#: liblepton/src/f_basic.c:408
-#, c-format
-msgid "Could NOT set backup file [%s] readonly\n"
+#: liblepton/src/f_basic.c:414
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly."
 msgstr "Kan reservekopie [%s] NIET op alleen-lezen instellen\n"
 
-#: liblepton/src/f_basic.c:457
-#, c-format
-msgid "Failed to restore permissions on '%s': %s\n"
+#: liblepton/src/f_basic.c:463
+#, fuzzy, c-format
+msgid "Failed to restore permissions on '%1$s': %2$s\n"
 msgstr "Faalde om permissies te herstellen op '%s: %s\n"
 
-#: liblepton/src/f_basic.c:462
-#, c-format
-msgid "Failed to restore ownership on '%s': %s\n"
+#: liblepton/src/f_basic.c:468
+#, fuzzy, c-format
+msgid "Failed to restore ownership on '%1$s': %2$s\n"
 msgstr "Faalde om eigenaarschap te herstellen op '%s: %s\n"
 
-#: liblepton/src/f_basic.c:472
-#, c-format
-msgid "Could NOT save file: %s"
+#: liblepton/src/f_basic.c:478
+#, fuzzy, c-format
+msgid "Could NOT save file: %1$s"
 msgstr "Kan bestand: %s NIET opslaan"
 
-#: liblepton/src/f_basic.c:598
+#: liblepton/src/f_basic.c:604
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -211,8 +211,8 @@ msgstr ""
 "Traceren:\n"
 
 #: liblepton/src/g_rc.c:99
-#, c-format
-msgid "Invalid mode [%s] passed to %s\n"
+#, fuzzy, c-format
+msgid "Invalid mode [%1$s] passed to %2$s\n"
 msgstr "Ongeldige modus [%s] overgedragen aan %s\n"
 
 # We hebben deze al ingelezen.
@@ -221,18 +221,18 @@ msgid "RC file already loaded"
 msgstr "RC bestand is reeds geladen"
 
 #: liblepton/src/g_rc.c:183
-#, c-format
-msgid "Failed to load config from '%s': %s\n"
+#, fuzzy, c-format
+msgid "Failed to load config from '%1$s': %2$s\n"
 msgstr "Laden van config uit [%s] faalde: %s\n"
 
 #: liblepton/src/g_rc.c:207
-#, c-format
-msgid "Loaded RC file [%s]\n"
+#, fuzzy, c-format
+msgid "Loaded RC file [%1$s]"
 msgstr "RC bestand geladen [%s]\n"
 
 #: liblepton/src/g_rc.c:211
-#, c-format
-msgid "Failed to load RC file [%s]: "
+#, fuzzy, c-format
+msgid "Failed to load RC file [%1$s]: "
 msgstr "Laden van RC bestand faalde [%s]: "
 
 #: liblepton/src/g_rc.c:341
@@ -241,52 +241,58 @@ msgstr ""
 "FOUT: Een onbekende fout trad op tijdens het doorlopen van configuratie "
 "bestanden."
 
-#: liblepton/src/g_rc.c:353 liblepton/src/g_rc.c:354
-#, c-format
-msgid "ERROR: %s\n"
+#: liblepton/src/g_rc.c:353
+#, fuzzy, c-format
+msgid "ERROR: %1$s"
+msgstr "FOUT: %s\n"
+
+#: liblepton/src/g_rc.c:354
+#, fuzzy, c-format
+msgid "ERROR: %1$s\n"
 msgstr "FOUT: %s\n"
 
 #: liblepton/src/g_rc.c:360
-#, c-format
-msgid "ERROR: The %s log may contain more information.\n"
+#, fuzzy, c-format
+msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr "FOUT: De %s log kan meer informatie bevatten.\n"
 
 #: liblepton/src/g_rc.c:481
-#, c-format
-msgid "Invalid path [%s] passed to component-library\n"
+#, fuzzy, c-format
+msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr "Ongeldig pad [%s] overgedragen aan component-library\n"
 
 #: liblepton/src/g_rc.c:707
-#, c-format
-msgid "Invalid path [%s] passed to bitmap-directory\n"
+#, fuzzy, c-format
+msgid "Invalid path [%1$s] passed to bitmap-directory\n"
 msgstr "Ongeldig pad [%s] overgedragen aan bitmap-directory\n"
 
 #: liblepton/src/g_rc.c:826
+#, fuzzy
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
-"list of strings instead\n"
+"list of strings instead."
 msgstr ""
 "WAARSCHUWING: gebruik van een string voor 'always-promote-attributes' is "
 "vervallen, gebruik hiervoor in de plaats een lijst van strings\n"
 
 #: liblepton/src/geda_page.c:197
-#, c-format
-msgid "s_page_delete: Can't get the real filename of %s."
+#, fuzzy, c-format
+msgid "s_page_delete: Can't get the real filename of %1$s."
 msgstr "s_page_delete: Kan de echte bestandsnaam van %s niet krijgen."
 
 #: liblepton/src/geda_page.c:208
-#, c-format
-msgid "s_page_delete: Unable to delete backup file %s."
+#, fuzzy, c-format
+msgid "s_page_delete: Unable to delete backup file %1$s."
 msgstr "s_page_delete: Niet mogelijk om reservekopie %s te verwijderen."
 
-#: liblepton/src/geda_page.c:486
-#, c-format
-msgid "Saved [%s]\n"
+#: liblepton/src/geda_page.c:489
+#, fuzzy, c-format
+msgid "Saved [%1$s]"
 msgstr "[%s] opgeslagen\n"
 
-#: liblepton/src/geda_page.c:492
-#, c-format
-msgid "Could NOT save [%s]\n"
+#: liblepton/src/geda_page.c:495
+#, fuzzy, c-format
+msgid "Could NOT save [%1$s]"
 msgstr "Kan [%s] NIET opslaan\n"
 
 #: liblepton/src/geda_arc_object.c:408 liblepton/src/geda_arc_object.c:421
@@ -294,30 +300,31 @@ msgid "Failed to parse arc object"
 msgstr "Faalde bij het ontleden van een boog object"
 
 #: liblepton/src/geda_arc_object.c:428
-#, c-format
-msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
+#, fuzzy, c-format
+msgid "Found a zero radius arc [ %1$c %2$d, %3$d, %4$d, %5$d, %6$d, %7$d ]"
 msgstr "Boog met een straal van nul gevonden [ %c %d, %d, %d, %d, %d, %d ]\n"
-
-#: liblepton/src/geda_arc_object.c:434 liblepton/src/geda_box_object.c:327
-#: liblepton/src/geda_bus_object.c:363 liblepton/src/geda_circle_object.c:386
-#: liblepton/src/geda_line_object.c:426 liblepton/src/geda_net_object.c:307
-#: liblepton/src/geda_path_object.c:214 liblepton/src/geda_pin_object.c:369
-#: liblepton/src/geda_text_object.c:553
-#, c-format
-msgid "Found an invalid color [ %s ]\n"
-msgstr "Ongeldige kleur [ %s ] gevonden\n"
 
 #: liblepton/src/geda_arc_object.c:435 liblepton/src/geda_box_object.c:328
 #: liblepton/src/geda_bus_object.c:364 liblepton/src/geda_circle_object.c:387
 #: liblepton/src/geda_line_object.c:427 liblepton/src/geda_net_object.c:308
+#: liblepton/src/geda_path_object.c:214 liblepton/src/geda_pin_object.c:369
+#: liblepton/src/geda_text_object.c:553
+#, fuzzy, c-format
+msgid "Found an invalid color [ %1$s ]"
+msgstr "Ongeldige kleur [ %s ] gevonden\n"
+
+#: liblepton/src/geda_arc_object.c:436 liblepton/src/geda_box_object.c:329
+#: liblepton/src/geda_bus_object.c:365 liblepton/src/geda_circle_object.c:388
+#: liblepton/src/geda_line_object.c:428 liblepton/src/geda_net_object.c:309
 #: liblepton/src/geda_path_object.c:215 liblepton/src/geda_pin_object.c:370
 #: liblepton/src/geda_text_object.c:555
-msgid "Setting color to default color\n"
+#, fuzzy
+msgid "Setting color to default color."
 msgstr "Stel de kleur in op standaard kleur\n"
 
 #: liblepton/src/o_attrib.c:111
-#, c-format
-msgid "Attribute [%s] already attached\n"
+#, fuzzy, c-format
+msgid "Attribute [%1$s] already attached\n"
 msgstr "Attribuut [%s] is al bevestigd\n"
 
 #: liblepton/src/o_attrib.c:117
@@ -325,8 +332,8 @@ msgid "Attempt to attach non text item as an attribute!\n"
 msgstr "Probeerde een niet text item toe te voegen als een attribuut!\n"
 
 #: liblepton/src/o_attrib.c:122
-#, c-format
-msgid "Attempt to attach attribute [%s] to more than one object\n"
+#, fuzzy, c-format
+msgid "Attempt to attach attribute [%1$s] to more than one object\n"
 msgstr "Probeerde attribuut [%s] aan meer dan een object toe te voegen\n"
 
 #: liblepton/src/o_attrib.c:325
@@ -342,8 +349,8 @@ msgid "Failed to parse box object"
 msgstr "Faalde bij het ontleden van een rechthoek object"
 
 #: liblepton/src/geda_box_object.c:322
-#, c-format
-msgid "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
+#, fuzzy, c-format
+msgid "Found a zero width/height box [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
 msgstr ""
 "Rechthoek met een breedte/hoogte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
@@ -352,17 +359,18 @@ msgid "Failed to parse bus object"
 msgstr "Faalde bij het ontleden van een bus object"
 
 #: liblepton/src/geda_bus_object.c:358
-#, c-format
-msgid "Found a zero length bus [ %c %d %d %d %d %d ]\n"
+#, fuzzy, c-format
+msgid "Found a zero length bus [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
 msgstr "Bus met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
-#: liblepton/src/geda_bus_object.c:369
-#, c-format
-msgid "Found an invalid bus ripper direction [ %s ]\n"
+#: liblepton/src/geda_bus_object.c:370
+#, fuzzy, c-format
+msgid "Found an invalid bus ripper direction [ %1$s ]"
 msgstr "Ongeldige bus ripper richting gevonden [ %s ]\n"
 
-#: liblepton/src/geda_bus_object.c:370
-msgid "Resetting direction to neutral (no direction)\n"
+#: liblepton/src/geda_bus_object.c:371
+#, fuzzy
+msgid "Resetting direction to neutral (no direction)."
 msgstr "Neutrale richting ingesteld (geen richting)\n"
 
 #: liblepton/src/geda_circle_object.c:343
@@ -371,12 +379,13 @@ msgid "Failed to parse circle object"
 msgstr "Faalde bij het ontleden van een cirkel object"
 
 #: liblepton/src/geda_circle_object.c:379
-#, c-format
-msgid "Found a zero or negative radius circle [ %c %d %d %d %d ]\n"
+#, fuzzy, c-format
+msgid "Found a zero or negative radius circle [ %1$c %2$d %3$d %4$d %5$d ]"
 msgstr "Een cirkel met een radius van nul gevonden [ %c %d %d %d %d ]\n"
 
-#: liblepton/src/geda_circle_object.c:381
-msgid "Setting radius to 0\n"
+#: liblepton/src/geda_circle_object.c:382
+#, fuzzy
+msgid "Setting radius to 0."
 msgstr "Radius op 0 ingesteld\n"
 
 #: liblepton/src/geda_color.c:217
@@ -392,10 +401,10 @@ msgid "Value in color map entry must be #f or a string"
 msgstr "Waarde in kleuren map invoer moet een #f of een string zijn"
 
 #: liblepton/src/geda_complex_object.c:367
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Component not found:\n"
-" %s"
+" %1$s"
 msgstr ""
 "Komponent niet gevonden:\n"
 " %s"
@@ -405,111 +414,116 @@ msgid "Failed to parse complex object"
 msgstr "Faalde bij het ontleden van een complex object"
 
 #: liblepton/src/geda_complex_object.c:592
-#, c-format
-msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
+#, fuzzy, c-format
+msgid ""
+"Found a component with an invalid rotation [ %1$c %2$d %3$d %4$d %5$d %6$d "
+"%7$s ]"
 msgstr ""
 "Een komponent met een ongeldige rotatie gevonden [ %c %d %d %d %d %d %s ]\n"
 
-#: liblepton/src/geda_complex_object.c:593
-#: liblepton/src/geda_picture_object.c:104
-msgid "Setting angle to 0\n"
+#: liblepton/src/geda_complex_object.c:595
+#: liblepton/src/geda_picture_object.c:105
+#, fuzzy
+msgid "Setting angle to 0."
 msgstr "Hoek op 0 ingesteld\n"
 
-#: liblepton/src/geda_complex_object.c:605
-#, c-format
+#: liblepton/src/geda_complex_object.c:607
+#, fuzzy, c-format
 msgid ""
-"Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
+"Found a component with an invalid mirror flag [ %1$c %2$d %3$d %4$d %5$d "
+"%6$d %7$s ]"
 msgstr ""
 "Een komponent met een ongeldige spiegel vlag gevonden [ %c %d %d %d %d %d "
 "%s ]\n"
 
-#: liblepton/src/geda_complex_object.c:606
-msgid "Setting mirror to 0\n"
+#: liblepton/src/geda_complex_object.c:610
+#, fuzzy
+msgid "Setting mirror to 0."
 msgstr "Spiegelen op 0 ingesteld\n"
 
-#: liblepton/src/geda_complex_object.c:929
-#, c-format
+#: liblepton/src/geda_complex_object.c:933
+#, fuzzy, c-format
 msgid ""
-"WARNING: Symbol version parse error on refdes %s:\n"
-"\tCould not parse symbol file symversion=%s\n"
+"WARNING: Symbol version parse error on refdes %1$s:\n"
+"\tCould not parse symbol file symversion=%2$s"
 msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=%s\n"
 
-#: liblepton/src/geda_complex_object.c:933
-#, c-format
+#: liblepton/src/geda_complex_object.c:937
+#, fuzzy, c-format
 msgid ""
-"WARNING: Symbol version parse error on refdes %s:\n"
-"\tCould not parse symbol file symversion=\n"
+"WARNING: Symbol version parse error on refdes %1$s:\n"
+"\tCould not parse symbol file symversion="
 msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=\n"
 
-#: liblepton/src/geda_complex_object.c:949
-#, c-format
+#: liblepton/src/geda_complex_object.c:953
+#, fuzzy, c-format
 msgid ""
-"WARNING: Symbol version parse error on refdes %s:\n"
-"\tCould not parse attached symversion=%s\n"
+"WARNING: Symbol version parse error on refdes %1$s:\n"
+"\tCould not parse attached symversion=%2$s"
 msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan bijgevoegd symboolbestand niet doorzoeken symversion=%s\n"
 
-#: liblepton/src/geda_complex_object.c:974
-#, c-format
+#: liblepton/src/geda_complex_object.c:978
+#, fuzzy, c-format
 msgid ""
-"WARNING: Symbol version oddity on refdes %s:\n"
-"\tsymversion=%s attached to instantiated symbol, but no symversion= inside "
-"symbol file\n"
+"WARNING: Symbol version oddity on refdes %1$s:\n"
+"\tsymversion=%2$s attached to instantiated symbol, but no symversion= inside "
+"symbol file."
 msgstr ""
 "WAARSCHUWING: Symbool versie afwijking bij refdes %s:\n"
 "\tsymversion=%s bijgevoegd aan bedoelde symbool, maar geen symversion= in "
 "het symbool bestand\n"
 
-#: liblepton/src/geda_complex_object.c:988
-#, c-format
+#: liblepton/src/geda_complex_object.c:992
+#, fuzzy, c-format
 msgid ""
-"WARNING: Symbol version mismatch on refdes %s (%s):\n"
-"\tSymbol in library is newer than instantiated symbol\n"
+"WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
+"\tSymbol in library is newer than instantiated symbol."
 msgstr ""
 "WAARSCHUWING: Symbool versie fout bij refdes %s (%s):\n"
 "\tSymbool in bibliotheek is nieuwer dan bedoelde symbool\n"
 
-#: liblepton/src/geda_complex_object.c:1016
-#, c-format
-msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
+#: liblepton/src/geda_complex_object.c:1020
+#, fuzzy, c-format
+msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
 msgstr "\tGROTE VERSIE VERANDERING (bestand %.3f, bedoeld %.3f, %s)!\n"
 
-#: liblepton/src/geda_complex_object.c:1034
-#, c-format
-msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
+#: liblepton/src/geda_complex_object.c:1038
+#, fuzzy, c-format
+msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
 msgstr "\tKleine versie verandering (bestand %.3f, bedoeld %.3f)!\n"
 
-#: liblepton/src/geda_complex_object.c:1045
-#, c-format
+#: liblepton/src/geda_complex_object.c:1049
+#, fuzzy, c-format
 msgid ""
-"WARNING: Symbol version oddity on refdes %s:\n"
-"\tInstantiated symbol is newer than symbol in library\n"
+"WARNING: Symbol version oddity on refdes %1$s:\n"
+"\tInstantiated symbol is newer than symbol in library."
 msgstr ""
 "WAARSCHUWING: Symbool versie afwijking bij refdes %s:\n"
 "\tbedoeld symbool is nieuwer dan het symbool in de bibliotheek\n"
 
 #: liblepton/src/o_embed.c:54
-#, c-format
-msgid "Component [%s] has been embedded\n"
+#, fuzzy, c-format
+msgid "Component [%1$s] has been embedded."
 msgstr "Komponent [%s] is ingevoegd\n"
 
 #: liblepton/src/o_embed.c:98
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Could not find component [%s], while trying to unembed. Component is still "
-"embedded\n"
+"Could not find component [%1$s], while trying to unembed. Component is still "
+"embedded."
 msgstr ""
 "Kan komponent [%s] niet vinden, tijdens het uitvoegen. Komponent is nog "
 "steeds ingevoegd\n"
 
 #: liblepton/src/o_embed.c:106
-#, c-format
-msgid "Component [%s] has been successfully unembedded\n"
+#, fuzzy, c-format
+msgid "Component [%1$s] has been successfully unembedded."
 msgstr "Komponent [%s] is succesvol uitgevoegd\n"
 
 #: liblepton/src/geda_line_object.c:391 liblepton/src/geda_line_object.c:409
@@ -517,8 +531,8 @@ msgid "Failed to parse line object"
 msgstr "Faalde bij het ontleden van een lijn object"
 
 #: liblepton/src/geda_line_object.c:421
-#, c-format
-msgid "Found a zero length line [ %c %d %d %d %d %d ]\n"
+#, fuzzy, c-format
+msgid "Found a zero length line [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
 msgstr "Lijn met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
 #: liblepton/src/geda_net_object.c:297
@@ -526,8 +540,8 @@ msgid "Failed to parse net object"
 msgstr "Faalde bij het ontleden van een net object"
 
 #: liblepton/src/geda_net_object.c:302
-#, c-format
-msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
+#, fuzzy, c-format
+msgid "Found a zero length net [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
 msgstr "Net met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
 #: liblepton/src/geda_path_object.c:206
@@ -543,102 +557,108 @@ msgid "Failed to parse picture definition"
 msgstr "Faalde bij het ontleden van een afbeelding definitie"
 
 #: liblepton/src/geda_picture_object.c:76
-#, c-format
-msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
+#, fuzzy, c-format
+msgid "Found a zero width/height picture [ %1$c %2$d %3$d %4$d %5$d ]"
 msgstr ""
 "Afbeelding met een breedte/hoogte van nul gevonden [ %c %d %d %d %d ]\n"
 
-#: liblepton/src/geda_picture_object.c:81
-#, c-format
-msgid "Found a picture with a wrong 'mirrored' parameter: %d.\n"
+#: liblepton/src/geda_picture_object.c:82
+#, fuzzy, c-format
+msgid "Found a picture with a wrong 'mirrored' parameter: %1$d."
 msgstr "Afbeelding met een verkeerde 'gespiegelde' parameter gevonden: %d.\n"
 
-#: liblepton/src/geda_picture_object.c:83
-msgid "Setting mirrored to 0\n"
+#: liblepton/src/geda_picture_object.c:84
+#, fuzzy
+msgid "Setting mirrored to 0."
 msgstr "Spiegelen op 0 ingesteld\n"
 
-#: liblepton/src/geda_picture_object.c:88
-#, c-format
-msgid "Found a picture with a wrong 'embedded' parameter: %d.\n"
+#: liblepton/src/geda_picture_object.c:89
+#, fuzzy, c-format
+msgid "Found a picture with a wrong 'embedded' parameter: %1$d."
 msgstr "Afbeelding met een verkeerd 'ingevoegde' waarde gevonden: %d.\n"
 
-#: liblepton/src/geda_picture_object.c:90
-msgid "Setting embedded to 0\n"
+#: liblepton/src/geda_picture_object.c:91
+#, fuzzy
+msgid "Setting embedded to 0."
 msgstr "Invoegen op 0 ingesteld\n"
 
-#: liblepton/src/geda_picture_object.c:103
-#, c-format
-msgid "Found an unsupported picture angle [ %d ]\n"
+#: liblepton/src/geda_picture_object.c:104
+#, fuzzy, c-format
+msgid "Found an unsupported picture angle [ %1$d ]"
 msgstr "Niet ondersteunde afbeelding hoek [ %d ] gevonden\n"
 
-#: liblepton/src/geda_picture_object.c:115
+#: liblepton/src/geda_picture_object.c:116
 msgid "Found an image with no filename."
 msgstr "Vond een afbeelding zonder bestandsnaam."
 
-#: liblepton/src/geda_picture_object.c:146
-#, c-format
-msgid "Failed to load image from embedded data [%s]: %s\n"
+#: liblepton/src/geda_picture_object.c:147
+#, fuzzy, c-format
+msgid "Failed to load image from embedded data [%1$s]: %2$s"
 msgstr "Laden van afbeelding uit ingesloten data faalde [%s]: %s\n"
 
-#: liblepton/src/geda_picture_object.c:147
+#: liblepton/src/geda_picture_object.c:148
 msgid "Base64 decoding failed."
 msgstr "Base64 decodering faalde."
 
-#: liblepton/src/geda_picture_object.c:148
-msgid "Falling back to file loading. Picture unembedded.\n"
+#: liblepton/src/geda_picture_object.c:149
+#, fuzzy
+msgid "Falling back to file loading. Picture unembedded."
 msgstr "Val terug op het laden van bestand. Afbeelding uitgevoegd.\n"
 
-#: liblepton/src/geda_picture_object.c:207
-msgid "ERROR: o_picture_save: unable to encode the picture.\n"
+#: liblepton/src/geda_picture_object.c:208
+#, fuzzy
+msgid "ERROR: o_picture_save: unable to encode the picture."
 msgstr "FOUT: o_picture_save: kan de afbeelding niet coderen.\n"
 
-#: liblepton/src/geda_picture_object.c:307
-#, c-format
-msgid "Failed to load buffer image [%s]: %s\n"
+#: liblepton/src/geda_picture_object.c:308
+#, fuzzy, c-format
+msgid "Failed to load buffer image [%1$s]: %2$s"
 msgstr "Laden van afbeelding [%s] uit buffer faalde: %s\n"
 
-#: liblepton/src/geda_picture_object.c:320
-#, c-format
-msgid "Failed to load image from [%s]: %s\n"
+#: liblepton/src/geda_picture_object.c:321
+#, fuzzy, c-format
+msgid "Failed to load image from [%1$s]: %2$s"
 msgstr "Laden van afbeelding uit [%s] faalde: %s\n"
 
-#: liblepton/src/geda_picture_object.c:414
-#, c-format
-msgid "Picture %p has invalid angle %i\n"
+#: liblepton/src/geda_picture_object.c:415
+#, fuzzy, c-format
+msgid "Picture %1$p has invalid angle %2$i\n"
 msgstr "Afbeelding %p heeft een ongeldige hoek %i\n"
 
-#: liblepton/src/geda_picture_object.c:771
-#, c-format
-msgid "Picture [%s] has no image data.\n"
+#: liblepton/src/geda_picture_object.c:772
+#, fuzzy, c-format
+msgid "Picture [%1$s] has no image data."
 msgstr "Afbeelding [%s] heeft geen beeldinformatie.\n"
 
-#: liblepton/src/geda_picture_object.c:772
-msgid "Falling back to file loading. Picture is still unembedded.\n"
+#: liblepton/src/geda_picture_object.c:773
+#, fuzzy
+msgid "Falling back to file loading. Picture is still unembedded."
 msgstr ""
 "Val terug op het laden van bestand. Afbeelding is nog steeds uitgevoegd.\n"
 
-#: liblepton/src/geda_picture_object.c:780
-#, c-format
-msgid "Picture [%s] has been embedded\n"
+#: liblepton/src/geda_picture_object.c:781
+#, fuzzy, c-format
+msgid "Picture [%1$s] has been embedded."
 msgstr "Afbeelding [%s] is ingevoegd\n"
 
-#: liblepton/src/geda_picture_object.c:804
-#, c-format
-msgid "Failed to load image from file [%s]: %s\n"
+#: liblepton/src/geda_picture_object.c:805
+#, fuzzy, c-format
+msgid "Failed to load image from file [%1$s]: %2$s"
 msgstr "Laden van afbeelding uit bestand faalde [%s]: %s\n"
 
-#: liblepton/src/geda_picture_object.c:806
-msgid "Picture is still embedded.\n"
+#: liblepton/src/geda_picture_object.c:807
+#, fuzzy
+msgid "Picture is still embedded."
 msgstr "Afbeelding is nog steeds ingevoegd.\n"
 
-#: liblepton/src/geda_picture_object.c:814
-#, c-format
-msgid "Picture [%s] has been unembedded\n"
+#: liblepton/src/geda_picture_object.c:815
+#, fuzzy, c-format
+msgid "Picture [%1$s] has been unembedded."
 msgstr "Afbeelding [%s] is uitgevoegd\n"
 
-#: liblepton/src/geda_picture_object.c:1051
-#, c-format
-msgid "Failed to load fallback image %s: %s.\n"
+#: liblepton/src/geda_picture_object.c:1052
+#, fuzzy, c-format
+msgid "Failed to load fallback image %1$s: %2$s.\n"
 msgstr "Laden van afbeelding uit bestand %s faalde: %s.\n"
 
 #: liblepton/src/geda_pin_object.c:346 liblepton/src/geda_pin_object.c:354
@@ -646,16 +666,17 @@ msgid "Failed to parse pin object"
 msgstr "Faalde bij het ontleden van een pin object"
 
 #: liblepton/src/geda_pin_object.c:360
+#, fuzzy
 msgid ""
 "Found a pin which did not have the whichend field set.\n"
-"Verify and correct manually.\n"
+"Verify and correct manually."
 msgstr ""
 "Pen gevonden die geen whichone veld ingesteld heeft.\n"
 "Verifieer en corrigeer handmatig.\n"
 
 #: liblepton/src/geda_pin_object.c:363
-#, c-format
-msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
+#, fuzzy, c-format
+msgid "Found an invalid whichend on a pin (reseting to zero): %d"
 msgstr "Pen met een ongeldige whichend gevonden (instellen op nul): %d\n"
 
 #: liblepton/src/geda_text_object.c:493 liblepton/src/geda_text_object.c:503
@@ -665,123 +686,125 @@ msgstr "Faalde bij het ontleden van een tekst object"
 
 #: liblepton/src/geda_text_object.c:520
 #, fuzzy, c-format
-msgid "Found an invalid text size [ %s ]\n"
+msgid "Found an invalid text size [ %1$s ]"
 msgstr "Ongeldige kleur [ %s ] gevonden\n"
 
 #: liblepton/src/geda_text_object.c:522
 #, fuzzy, c-format
-msgid "Setting text size to %d\n"
+msgid "Setting text size to %1$d."
 msgstr "Spiegelen op 0 ingesteld\n"
 
 #: liblepton/src/geda_text_object.c:526
 #, fuzzy, c-format
-msgid "Found an unsupported text angle [ %s ]\n"
+msgid "Found an unsupported text angle [ %1$s ]"
 msgstr "Niet ondersteunde afbeelding hoek [ %d ] gevonden\n"
 
 #: liblepton/src/geda_text_object.c:528
 #, fuzzy, c-format
-msgid "Setting angle to %d\n"
+msgid "Setting angle to %1$d."
 msgstr "Hoek op 0 ingesteld\n"
 
 #: liblepton/src/geda_text_object.c:545
 #, fuzzy, c-format
-msgid "Found an unsupported text alignment [ %s ]\n"
+msgid "Found an unsupported text alignment [ %1$s ]"
 msgstr "Niet ondersteunde afbeelding hoek [ %d ] gevonden\n"
 
 #: liblepton/src/geda_text_object.c:548
-msgid "Setting alignment to LOWER_LEFT\n"
+#, fuzzy
+msgid "Setting alignment to LOWER_LEFT."
 msgstr "Uitlijning op LINKS_ONDER ingesteld\n"
 
 #: liblepton/src/geda_text_object.c:568
-#, c-format
-msgid "Unexpected end-of-file after %d lines"
+#, fuzzy, c-format
+msgid "Unexpected end-of-file after %1$d lines"
 msgstr "Onverwacht einde-bestand na %d lijnen"
 
 #: liblepton/src/s_clib.c:460
-#, c-format
-msgid "Library command failed [%s]: %s\n"
+#, fuzzy, c-format
+msgid "Library command failed [%1$s]: %2$s"
 msgstr "Bibliotheek opdracht faalde [%s]: %s\n"
 
 #: liblepton/src/s_clib.c:465
-#, c-format
-msgid "Library command failed [%s]: Uncaught signal %i.\n"
+#, fuzzy, c-format
+msgid "Library command failed [%1$s]: Uncaught signal %2$i."
 msgstr "Bibliotheek opdracht faalde [%s]: Niet opgevangen signaal %i.\n"
 
 #: liblepton/src/s_clib.c:469
-#, c-format
-msgid "Library command failed [%s]\n"
+#, fuzzy, c-format
+msgid "Library command failed [%1$s]"
 msgstr "Bibliotheek opdracht faalde [%s]\n"
 
 #: liblepton/src/s_clib.c:470
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Error output was:\n"
-"%s\n"
+"%1$s"
 msgstr ""
 "Fout uitvoer was:\n"
 "%s\n"
 
 #: liblepton/src/s_clib.c:556
-#, c-format
-msgid "Library name [%s] already in use.  Using [%s].\n"
+#, fuzzy, c-format
+msgid "Library name [%1$s] already in use.  Using [%2$s]."
 msgstr "Bibliotheeknaam [%s] is al in gebruik.  Gebruik nu [%s].\n"
 
 #: liblepton/src/s_clib.c:593
-#, c-format
-msgid "Failed to open directory [%s]: %s\n"
+#, fuzzy, c-format
+msgid "Failed to open directory [%1$s]: %2$s"
 msgstr "Openen van directory faalde [%s]: %s\n"
 
 #: liblepton/src/s_clib.c:729
-#, c-format
-msgid "Failed to scan library [%s]: Scheme function returned non-list\n"
+#, fuzzy, c-format
+msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
 msgstr ""
 "Doorzoeken van bibliotheek [%s] faalde: Scheme functie retourneerde non-"
 "list\n"
 
 #: liblepton/src/s_clib.c:737
-#, c-format
-msgid "Non-string symbol name while scanning library [%s]\n"
+#, fuzzy, c-format
+msgid "Non-string symbol name while scanning library [%1$s]"
 msgstr ""
 "Niet string symboolnaam tijdens het doorzoeken van de bibliotheek [%s]\n"
 
 #: liblepton/src/s_clib.c:893 liblepton/src/s_clib.c:940
-msgid "Cannot add library: name not specified\n"
+#, fuzzy
+msgid "Cannot add library: name not specified."
 msgstr "Kan bibliotheek niet toevoegen: naam niet gespecificeerd\n"
 
 #: liblepton/src/s_clib.c:900
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
+"Cannot add library [%1$s]: both 'list' and 'get' commands must be specified."
 msgstr ""
 "Kan bibliotheek niet toevoegen [%s]: zowel 'list' en 'get' opdrachten moeten "
 "gespecificeerd zijn.\n"
 
 #: liblepton/src/s_clib.c:948
-#, c-format
-msgid "Cannot add Scheme-library [%s]: callbacks must be closures\n"
+#, fuzzy, c-format
+msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
 msgstr ""
 "Kan scheme bibliotheek niet toevoegen [%s]: callbacks moeten afsluitingen "
 "zijn\n"
 
 #: liblepton/src/s_clib.c:1075
-#, c-format
-msgid "Failed to load symbol from file [%s]: %s\n"
+#, fuzzy, c-format
+msgid "Failed to load symbol from file [%1$s]: %2$s"
 msgstr "Laden van symbool uit bestand faalde [%s]: %s\n"
 
 #: liblepton/src/s_clib.c:1135
-#, c-format
-msgid "Failed to load symbol data [%s] from source [%s]\n"
+#, fuzzy, c-format
+msgid "Failed to load symbol data [%1$s] from source [%2$s]"
 msgstr "Laden van symbool gegevens [%s] uit bron [%s] faalde\n"
 
 #: liblepton/src/s_clib.c:1377
-#, c-format
-msgid "Component [%s] was not found in the component library\n"
+#, fuzzy, c-format
+msgid "Component [%1$s] was not found in the component library."
 msgstr "Komponent [%s] is niet in de komponenten bibliotheek gevonden\n"
 
 # Meer dan een symbool
 #: liblepton/src/s_clib.c:1383
-#, c-format
-msgid "More than one component found with name [%s]\n"
+#, fuzzy, c-format
+msgid "More than one component found with name [%1$s]."
 msgstr "Meer dan een komponent gevonden met de naam [%s]\n"
 
 #: liblepton/src/s_hierarchy.c:78 liblepton/src/s_hierarchy.c:240
@@ -793,28 +816,33 @@ msgid "Hierarchy contains a circular dependency."
 msgstr "Hierarchie bevat een rondgaande afhankelijkheid."
 
 #: liblepton/src/s_hierarchy.c:200
-msgid "There are no schematics above the current one!\n"
+#, fuzzy
+msgid "There are no schematics above the current one!"
 msgstr "Er zijn geen schema's boven de huidige!\n"
 
 #: liblepton/src/s_hierarchy.c:341
-#, c-format
-msgid "Failed to descend hierarchy into '%s': %s\n"
+#, fuzzy, c-format
+msgid "Failed to descend hierarchy into '%1$s': %2$s"
 msgstr "Faalde om af te dalen in hierarchie '%s: %s\n"
 
 #: liblepton/src/s_slot.c:158
-msgid "Did not find slotdef=#:#,#,#... attribute\n"
+#, fuzzy
+msgid "Did not find slotdef=#:#,#,#... attribute."
 msgstr "Geen slotdef=#:#,#,#... attribuut gevonden\n"
 
 #: liblepton/src/s_slot.c:164
-msgid "Improper slotdef syntax: missing \":\".\n"
+#, fuzzy
+msgid "Improper slotdef syntax: missing \":\"."
 msgstr "Goed slotdef syntax: ontbreekt \":\".\n"
 
 #: liblepton/src/s_slot.c:179
-msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
+#, fuzzy
+msgid "Did not find proper slotdef=#:#,#,#... attribute."
 msgstr "Geen goed slotdef=#:#,#,#... attribuut gevonden\n"
 
 #: liblepton/src/s_slot.c:209
-msgid "component missing pinseq= attribute\n"
+#, fuzzy
+msgid "component missing pinseq= attribute."
 msgstr "component mist een pinseq- attribuut\n"
 
 #: liblepton/src/edaconfig.c:647 liblepton/src/edaconfig.c:733
