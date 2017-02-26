@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gnetlist\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2017-02-15 15:36+0300\n"
+"POT-Creation-Date: 2017-02-26 10:33+0300\n"
 "PO-Revision-Date: 2014-05-20 08:55+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA Developers\n"
@@ -28,14 +28,13 @@ msgstr ""
 "\n"
 
 #: gnetlist/src/gnetlist.c:187
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "gEDA/gnetlist version %s%s.%s\n"
 "gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
 "This is free software, and you are welcome to redistribute it under certain\n"
 "conditions; please see the COPYING file for more details.\n"
-"\n"
 msgstr ""
 "gEDA/gnetlist версии %s%s.%s\n"
 "gEDA/gnetlist поставляется БЕЗ КАКИХ БЫ ТО НИ БЫЛО ГАРАНТИЙ; подробности см. "
@@ -159,28 +158,29 @@ msgstr ""
 "Подробности см. в выводе команды «%s --help».\n"
 
 #: gnetlist/src/s_hierarchy.c:85
-#, c-format
-msgid "Going to traverse source [%s]\n"
+#, fuzzy, c-format
+msgid "Going to traverse source [%1$s]"
 msgstr "Переход к обработке источника данных «%s»\n"
 
 #: gnetlist/src/s_hierarchy.c:104
-#, c-format
-msgid "Failed to load subcircuit '%s': %s\n"
+#, fuzzy, c-format
+msgid "Failed to load subcircuit '%1$s': %2$s\n"
 msgstr "Не удалось загрузить подсхему «%s»: %s\n"
 
 #: gnetlist/src/s_hierarchy.c:106
-#, c-format
-msgid "ERROR: Failed to load subcircuit '%s': %s\n"
+#, fuzzy, c-format
+msgid "ERROR: Failed to load subcircuit '%1$s': %2$s\n"
 msgstr "ОШИБКА: Не удалось загрузить подсхему «%s»: %s\n"
 
 #: gnetlist/src/s_hierarchy.c:206
-#, c-format
-msgid "Found a pin [%s] on component [%s] which does not have a label!\n"
+#, fuzzy, c-format
+msgid "Found a pin [%1$s] on component [%2$s] which does not have a label!\n"
 msgstr "Найден вывод «%s» компонента «%s» без атрибута «pinlabel»!\n"
 
 #: gnetlist/src/s_hierarchy.c:230
-#, c-format
-msgid "Missing I/O symbol with refdes [%s] inside schematic for symbol [%s]\n"
+#, fuzzy, c-format
+msgid ""
+"Missing I/O symbol with refdes [%1$s] inside schematic for symbol [%2$s]\n"
 msgstr ""
 "Отсутствует символ ввода-вывода с позиционным обозначением «%s» в схеме для "
 "символа «%s»\n"
@@ -200,8 +200,8 @@ msgid " DONE\n"
 msgstr " ЗАВЕРШЕНО\n"
 
 #: gnetlist/src/s_netattrib.c:72
-#, c-format
-msgid "ERROR: `%s' is reserved for internal use."
+#, fuzzy, c-format
+msgid "ERROR: `%1$s' is reserved for internal use."
 msgstr "ОШИБКА: префикс «%s» зарезервирован для внутреннего использования."
 
 #: gnetlist/src/s_netattrib.c:94
@@ -210,14 +210,14 @@ msgid "Found malformed net attribute\n"
 msgstr "Обнаружен атрибут соединения в недопустимом формате\n"
 
 #: gnetlist/src/s_netattrib.c:150
-#, c-format
-msgid "Found a cpinlist head with a netname! [%s]\n"
+#, fuzzy, c-format
+msgid "Found a cpinlist head with a netname! [%1$s]\n"
 msgstr "Найдено начало списка выводов компонента с именем соединения! «%s»\n"
 
 #: gnetlist/src/s_netattrib.c:263 gnetlist/src/s_netattrib.c:294
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Got an invalid net= attrib [net=%s]\n"
+"Got an invalid net= attrib [net=%1$s]\n"
 "Missing : in net= attrib\n"
 msgstr ""
 "Недопустимый атрибут «net» («net=%s»)\n"
@@ -229,13 +229,13 @@ msgid "Missing Attributes (refdes and pin number)\n"
 msgstr "Отсутствуют атрибуты «refdes» и «pinnumber»\n"
 
 #: gnetlist/src/s_net.c:209 gnetlist/src/s_net.c:246
-#, c-format
-msgid "Found duplicate net name, renaming [%s] to [%s]\n"
+#, fuzzy, c-format
+msgid "Found duplicate net name, renaming [%1$s] to [%2$s]\n"
 msgstr "Обнаружено ещё одно имя для соединения «%s», переименование в «%s»\n"
 
 #: gnetlist/src/s_net.c:354
-#, c-format
-msgid "s_net_name: incorrect connectivity type %i\n"
+#, fuzzy, c-format
+msgid "s_net_name: incorrect connectivity type %1$i\n"
 msgstr "s_net_name: неверный тип соединения «%i»\n"
 
 #: gnetlist/src/s_net.c:374
@@ -244,10 +244,10 @@ msgid "Increase number of unnamed nets (s_net.c)\n"
 msgstr "Увеличьте количество безымянных соединений (в s_net.c)\n"
 
 #: gnetlist/src/s_traverse.c:165
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "WARNING: Found a placeholder/missing component, are you missing a symbol "
-"file? [%s]\n"
+"file? [%1$s]\n"
 msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: Найден временный/отсутствующий компонент, может быть нет "
 "файла символа для «%s»?\n"
@@ -266,8 +266,8 @@ msgid "Non-connectable object being queried for connection type\n"
 msgstr "Запрос типа соединения для неприсоединяемого объекта.\n"
 
 #: gnetlist/src/s_traverse.c:348
-#, c-format
-msgid "WARNING: Found label=%s. label= is deprecated, please use netname=\n"
+#, fuzzy, c-format
+msgid "WARNING: Found label=%1$s. label= is deprecated, please use netname=\n"
 msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: Найден атрибут «label=%s». Использовать «label» не "
 "рекомендуется, вместо него следует использовать «netname».\n"
@@ -383,7 +383,7 @@ msgstr ""
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
 
-#: gnetlist/scheme/gnetlist/rename.scm:48
+#: gnetlist/scheme/gnetlist/rename.scm:68
 #, fuzzy, scheme-format
 msgid ""
 "WARNING: Trying to rename something twice:\n"
