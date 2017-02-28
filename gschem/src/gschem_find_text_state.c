@@ -449,8 +449,8 @@ find_objects_using_regex (GSList *pages, const char *text, GError **error)
   g_return_val_if_fail (text != NULL, NULL);
 
   regex = g_regex_new (text,
-                       0,
-                       0,
+                       (GRegexCompileFlags) 0,
+                       (GRegexMatchFlags) 0,
                        &ierror);
 
   if (ierror != NULL) {
@@ -497,7 +497,7 @@ find_objects_using_regex (GSList *pages, const char *text, GError **error)
         continue;
       }
 
-      if (g_regex_match (regex, str, 0, NULL)) {
+      if (g_regex_match (regex, str, (GRegexMatchFlags) 0, NULL)) {
         object_list = g_slist_prepend (object_list, object);
       }
     }
