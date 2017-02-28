@@ -409,10 +409,10 @@ static GtkWidget* gschem_dialog_new_empty (const gchar     *title,
 {
   GschemDialog *dialog;
 
-  dialog = g_object_new (GSCHEM_TYPE_DIALOG,
-                         "settings-name", settings_name,
-                         "gschem-toplevel", w_current,
-                         NULL);
+  dialog = GSCHEM_DIALOG (g_object_new (GSCHEM_TYPE_DIALOG,
+                                        "settings-name", settings_name,
+                                        "gschem-toplevel", w_current,
+                                        NULL));
 
   if (title)
     gtk_window_set_title (GTK_WINDOW (dialog), title);
