@@ -263,7 +263,16 @@ static void newtext_init(NewText *dialog)
 
   label = gtk_label_new (_("Color:"));
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
-  gtk_table_attach(GTK_TABLE(table), label, 0,1,0,1, GTK_FILL,0,0,0);
+  gtk_table_attach (GTK_TABLE(table),
+                    label,
+                    0,
+                    1,
+                    0,
+                    1,
+                    GTK_FILL,
+                    (GtkAttachOptions) 0,
+                    0,
+                    0);
 
   dialog->colorcb = x_colorcb_new ();
   x_colorcb_set_index(dialog->colorcb, TEXT_COLOR);
@@ -271,7 +280,16 @@ static void newtext_init(NewText *dialog)
 
   label = gtk_label_new (_("Size:"));
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
-  gtk_table_attach(GTK_TABLE(table), label, 0,1,1,2, GTK_FILL,0,0,0);
+  gtk_table_attach (GTK_TABLE(table),
+                    label,
+                    0,
+                    1,
+                    1,
+                    2,
+                    GTK_FILL,
+                    (GtkAttachOptions) 0,
+                    0,
+                    0);
 
   dialog->textsizecb = gschem_integer_combo_box_new();
   gschem_integer_combo_box_set_value(dialog->textsizecb, 12);
@@ -279,7 +297,16 @@ static void newtext_init(NewText *dialog)
 
   label = gtk_label_new (_("Alignment:"));
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
-  gtk_table_attach(GTK_TABLE(table), label, 0,1,2,3, GTK_FILL,0,0,0);
+  gtk_table_attach (GTK_TABLE(table),
+                    label,
+                    0,
+                    1,
+                    2,
+                    3,
+                    GTK_FILL,
+                    (GtkAttachOptions) 0,
+                    0,
+                    0);
 
   dialog->aligncb = gschem_alignment_combo_new ();
   gschem_alignment_combo_set_align(dialog->aligncb, LOWER_LEFT);
@@ -287,7 +314,16 @@ static void newtext_init(NewText *dialog)
 
   label = gtk_label_new (_("Rotation:"));
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
-  gtk_table_attach(GTK_TABLE(table), label, 0,1,3,4, GTK_FILL,0,0,0);
+  gtk_table_attach (GTK_TABLE(table),
+                    label,
+                    0,
+                    1,
+                    3,
+                    4,
+                    GTK_FILL,
+                    (GtkAttachOptions) 0,
+                    0,
+                    0);
 
   dialog->rotatecb = gschem_rotation_combo_new ();
   gschem_rotation_combo_set_angle(dialog->rotatecb, 0);

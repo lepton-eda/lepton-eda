@@ -81,7 +81,7 @@ gschem_dialog_misc_create_property_table (GtkWidget *label[], GtkWidget *widget[
                       index,             /* top_attach    */
                       index+1,           /* bottom_attach */
                       GTK_FILL,          /* xoptions      */
-                      0,                 /* yoptions      */
+                      (GtkAttachOptions) 0, /* yoptions      */
                       0,                 /* xpadding      */
                       0);                /* ypadding      */
 
