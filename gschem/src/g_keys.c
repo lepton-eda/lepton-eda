@@ -444,7 +444,7 @@ SCM_SYMBOL (prefix_sym, "prefix");
  */
 static gboolean clear_keyaccel_string(gpointer data)
 {
-  GschemToplevel *w_current = data;
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   /* If the window context has disappeared, do nothing. */
   if (g_list_find(global_window_list, w_current) == NULL) {

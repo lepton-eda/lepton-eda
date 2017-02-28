@@ -66,7 +66,7 @@ clip_get (GtkClipboard *cb, GtkSelectionData *selection_data,
 static void
 clip_clear (GtkClipboard *cb, gpointer user_data_or_owner)
 {
-  GschemToplevel *w_current = user_data_or_owner;
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data_or_owner);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* Free the objects in the clipboard buffer */

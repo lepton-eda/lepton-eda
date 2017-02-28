@@ -363,7 +363,7 @@ void i_update_toolbar(GschemToplevel *w_current)
  */
 static void clipboard_usable_cb (int usable, void *userdata)
 {
-  GschemToplevel *w_current = userdata;
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (userdata);
   x_menus_sensitivity (w_current, "_Edit/_Paste", usable);
 }
 
