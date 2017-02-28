@@ -278,7 +278,7 @@ g_make_key (guint keyval, GdkModifierType modifiers)
   if (g_key_is_valid (keyval, modifiers)) {
     GschemKey *k = g_new0 (GschemKey, 1);
     k->keyval = keyval;
-    k->modifiers = modifiers & GDK_MODIFIER_MASK;
+    k->modifiers = (GdkModifierType) (modifiers & GDK_MODIFIER_MASK);
     SCM_NEWSMOB (result, g_key_smob_tag, k);
   }
   return result;
@@ -511,8 +511,12 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
   /* Figure out what modifiers went into determining the key symbol */
   gdk_keymap_translate_keyboard_state (keymap,
                                        event->hardware_keycode,
-                                       event->state, event->group,
-                                       NULL, NULL, NULL, &consumed_modifiers);
+                                       (GdkModifierType) event->state,
+                                       event->group,
+                                       NULL,
+                                       NULL,
+                                       NULL,
+                                       &consumed_modifiers);
 
   key = event->keyval;
   gdk_keyval_convert_case (event->keyval, &lower, &upper);
@@ -532,15 +536,15 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
   key = lower;
 
   /* Validate the key -- there are some keystrokes we mask out. */
-  if (!g_key_is_valid (key, mods)) {
+  if (!g_key_is_valid (key, (GdkModifierType) mods)) {
     return FALSE;
   }
 
   /* Create Scheme key value */
-  s_key = g_make_key (key, mods);
+  s_key = g_make_key (key, (GdkModifierType) mods);
 
   /* Update key hint string for status bar. */
-  gchar *keystr = gtk_accelerator_get_label (key, mods);
+  gchar *keystr = gtk_accelerator_get_label (key, (GdkModifierType) mods);
 
   /* If no current hint string, or the hint string is going to be
    * cleared anyway, use key string directly */
