@@ -283,7 +283,7 @@ void freeslot_print(GList *list) {
 
   printf("freeslot_print(): symname, number, slot\n");
   for (item = list; item != NULL; item = g_list_next(item)) {
-    fs = item ->data;
+    fs = (AUTONUMBER_SLOT*) item ->data;
     printf("  %s, %d, %d\n",fs->symbolname, fs->number, fs->slotnr);
   }
 }
@@ -440,7 +440,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
 		  /* insert all slots to the list, except of the current one */
 		  for (i=1; i <= numslots; i++) {
 		    if (i != slotnr) {
-		      slot = g_memdup(slot, sizeof(AUTONUMBER_SLOT));
+		      slot = (AUTONUMBER_SLOT*) g_memdup (slot, sizeof (AUTONUMBER_SLOT));
 		      slot->slotnr = i;
 		      autotext->free_slots = g_list_insert_sorted(autotext->free_slots,
 								  slot,
@@ -501,7 +501,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
     g_free(freeslot);
     /* Yes! -> remove from database, apply it */
     if (freeslot_item != NULL) {
-      freeslot = freeslot_item->data;
+      freeslot = (AUTONUMBER_SLOT*) freeslot_item->data;
       *number = freeslot->number;
       *slot = freeslot->slotnr;
       g_free(freeslot);
