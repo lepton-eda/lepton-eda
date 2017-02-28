@@ -1933,7 +1933,7 @@ multiattrib_class_init (MultiattribClass *klass)
   gobject_class->get_property = multiattrib_get_property;
   gobject_class->finalize     = multiattrib_finalize;
 
-  multiattrib_parent_class = g_type_class_peek_parent (klass);
+  multiattrib_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
   g_object_class_install_property (
     gobject_class, PROP_OBJECT_LIST,

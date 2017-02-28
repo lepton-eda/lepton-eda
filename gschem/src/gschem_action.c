@@ -158,7 +158,7 @@ static void gschem_action_class_init (GschemActionClass *klass)
   gobject_class->set_property  = gschem_action_set_property;
   gobject_class->get_property  = gschem_action_get_property;
 
-  gschem_action_parent_class = g_type_class_peek_parent (klass);
+  gschem_action_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
   g_object_class_install_property (
     gobject_class, PROP_MULTIKEY_ACCEL,
