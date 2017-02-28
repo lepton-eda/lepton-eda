@@ -2208,9 +2208,15 @@ multiattrib_init (Multiattrib *multiattrib)
   multiattrib_init_attrib_names (GTK_COMBO (combo));
   multiattrib->combo_name = GTK_COMBO (combo);
   gtk_table_attach (GTK_TABLE (table), label,
-                    0, 1, 0, 1, 0, 0, 0, 0);
+                    0, 1, 0, 1,
+                    (GtkAttachOptions) 0,
+                    (GtkAttachOptions) 0,
+                    0, 0);
   gtk_table_attach (GTK_TABLE (table), combo,
-                    1, 2, 0, 1, GTK_EXPAND | GTK_FILL, 0, 6, 3);
+                    1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) 0,
+                    6, 3);
 
   /*   - the value entry: a GtkEntry */
   label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
@@ -2260,9 +2266,15 @@ multiattrib_init (Multiattrib *multiattrib)
   gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
   multiattrib->textview_value = GTK_TEXT_VIEW (textview);
   gtk_table_attach (GTK_TABLE (table), label,
-                    0, 1, 1, 2, 0, 0, 0, 0);
+                    0, 1, 1, 2,
+                    (GtkAttachOptions) 0,
+                    (GtkAttachOptions) 0,
+                    0, 0);
   gtk_table_attach (GTK_TABLE (table), scrolled_win,
-                    1, 2, 1, 2, GTK_EXPAND | GTK_FILL, 0, 6, 3);
+                    1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) 0,
+                    6, 3);
 
   /*   - the visible status */
   button = GTK_WIDGET (g_object_new (GTK_TYPE_CHECK_BUTTON,
@@ -2272,7 +2284,10 @@ multiattrib_init (Multiattrib *multiattrib)
                                      NULL));
   multiattrib->button_visible = GTK_CHECK_BUTTON (button);
   gtk_table_attach (GTK_TABLE (table), button,
-                    0, 1, 2, 3, GTK_FILL, 0, 3, 0);
+                    0, 1, 2, 3,
+                    GTK_FILL,
+                    (GtkAttachOptions) 0,
+                    3, 0);
 
   /*   - the visibility type */
   optionm = GTK_WIDGET (g_object_new (GTK_TYPE_OPTION_MENU,
@@ -2280,7 +2295,10 @@ multiattrib_init (Multiattrib *multiattrib)
   multiattrib_init_visible_types (GTK_OPTION_MENU (optionm));
   multiattrib->optionmenu_shownv = GTK_OPTION_MENU (optionm);
   gtk_table_attach (GTK_TABLE (table), optionm,
-                    1, 2, 2, 3, GTK_EXPAND | GTK_FILL, 0, 6, 3);
+                    1, 2, 2, 3,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) 0,
+                    6, 3);
   gtk_widget_show_all (table);
 
   /* create the add button */
@@ -2290,7 +2308,10 @@ multiattrib_init (Multiattrib *multiattrib)
                     G_CALLBACK (multiattrib_callback_button_add),
                     multiattrib);
   gtk_table_attach (GTK_TABLE (table), button,
-                    2, 3, 0, 3, 0, 0, 6, 3);
+                    2, 3, 0, 3,
+                    (GtkAttachOptions) 0,
+                    (GtkAttachOptions) 0,
+                    6, 3);
 
   /* add the table to the frame */
   gtk_container_add (GTK_CONTAINER (multiattrib->add_frame), table);
