@@ -41,8 +41,8 @@ static PATH *path_copy_modify (PATH *path, int dx, int dy,
   int i;
   int grip_no = 0;
 
-  new_path = g_malloc (sizeof (PATH));
-  new_path->sections = g_malloc (path->num_sections * sizeof (PATH_SECTION));
+  new_path = (PATH*) g_malloc (sizeof (PATH));
+  new_path->sections = (PATH_SECTION*) g_malloc (path->num_sections * sizeof (PATH_SECTION));
   new_path->num_sections = path->num_sections;
   new_path->num_sections_max = path->num_sections;
 
