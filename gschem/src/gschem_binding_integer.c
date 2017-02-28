@@ -114,10 +114,10 @@ gschem_binding_integer_get_type()
 GschemBinding*
 gschem_binding_integer_new (const gchar *param_name, GtkWidget *widget)
 {
-  return g_object_new (GSCHEM_TYPE_BINDING_INTEGER,
-                       "model-param", param_name,
-                       "widget",      widget,
-                       NULL);
+  return GSCHEM_BINDING (g_object_new (GSCHEM_TYPE_BINDING_INTEGER,
+                                       "model-param", param_name,
+                                       "widget",      widget,
+                                       NULL));
 }
 
 
