@@ -2772,10 +2772,10 @@ gtk_sheet_realize (GtkWidget * widget)
     g_object_unref (sheet->xor_gc);
   }
   sheet->xor_gc = gdk_gc_new_with_values (widget->window,
-					  &values,
-					  GDK_GC_FOREGROUND |
-					  GDK_GC_FUNCTION |
-					  GDK_GC_SUBWINDOW);
+                                          &values,
+                                          (GdkGCValuesMask) (GDK_GC_FOREGROUND |
+                                                             GDK_GC_FUNCTION |
+                                                             GDK_GC_SUBWINDOW));
 
   if(sheet->sheet_entry->parent){
           g_object_ref(sheet->sheet_entry);
