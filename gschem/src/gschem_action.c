@@ -198,11 +198,11 @@ GschemAction *gschem_action_new (const gchar *name,
 {
   g_return_val_if_fail (name != NULL, NULL);
 
-  return g_object_new (GSCHEM_TYPE_ACTION,
-                       "name", name,
-                       "label", label,
-                       "tooltip", tooltip,
-                       "stock-id", stock_id,
-                       "multikey-accel", multikey_accel,
-                       NULL);
+  return GSCHEM_ACTION (g_object_new (GSCHEM_TYPE_ACTION,
+                                      "name", name,
+                                      "label", label,
+                                      "tooltip", tooltip,
+                                      "stock-id", stock_id,
+                                      "multikey-accel", multikey_accel,
+                                      NULL));
 }
