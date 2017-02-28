@@ -181,12 +181,12 @@ x_print_draw_page (TOPLEVEL *toplevel, PAGE *page,
   }
 
   /* Thirdly, create and initialise a renderer */
-  renderer = g_object_new (EDA_TYPE_RENDERER,
-                           "cairo-context", cr,
-                           "pango-context", pc,
-                           "color-map", color_map,
-                           "render-flags", is_raster ? EDA_RENDERER_FLAG_HINTING : 0,
-                           NULL);
+  renderer = EDA_RENDERER (g_object_new (EDA_TYPE_RENDERER,
+                                         "cairo-context", cr,
+                                         "pango-context", pc,
+                                         "color-map", color_map,
+                                         "render-flags", is_raster ? EDA_RENDERER_FLAG_HINTING : 0,
+                                         NULL));
 
   /* Finally, actually do drawing */
   cairo_save (cr);

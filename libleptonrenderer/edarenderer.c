@@ -1564,10 +1564,10 @@ eda_renderer_get_text_user_bounds (EdaRenderer *renderer,
 EdaRenderer *
 eda_renderer_new (cairo_t *cr, PangoContext *pc)
 {
-  return g_object_new (EDA_TYPE_RENDERER,
-                       "cairo-context", cr,
-                       "pango-context", pc,
-                       NULL);
+  return EDA_RENDERER (g_object_new (EDA_TYPE_RENDERER,
+                                     "cairo-context", cr,
+                                     "pango-context", pc,
+                                     NULL));
 }
 
 void
