@@ -270,7 +270,7 @@ preview_class_init (GschemPreviewClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
-  preview_parent_class = g_type_class_peek_parent (klass);
+  preview_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
   gobject_class->set_property = preview_set_property;
   gobject_class->get_property = preview_get_property;

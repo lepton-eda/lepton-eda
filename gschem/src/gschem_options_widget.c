@@ -429,7 +429,7 @@ dispose (GObject *object)
 
   klass = GSCHEM_OPTIONS_WIDGET_GET_CLASS (object);
   g_return_if_fail (klass != NULL);
-  parent_class = g_type_class_peek_parent (klass);
+  parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
   g_return_if_fail (parent_class != NULL);
   parent_class->dispose (object);
 }

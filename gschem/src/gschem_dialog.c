@@ -293,7 +293,7 @@ static void gschem_dialog_class_init (GschemDialogClass *klass)
   gobject_class->set_property  = gschem_dialog_set_property;
   gobject_class->get_property  = gschem_dialog_get_property;
 
-  gschem_dialog_parent_class = g_type_class_peek_parent (klass);
+  gschem_dialog_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
   gschem_dialog_signals[ GEOMETRY_SAVE ] =
     g_signal_new ("geometry-save",

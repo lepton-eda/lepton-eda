@@ -88,7 +88,7 @@ static void geda_list_class_init( gpointer g_class, gpointer g_class_data )
 {
   GedaListClass *klass = GEDA_LIST_CLASS( g_class );
   GObjectClass *gobject_class = G_OBJECT_CLASS( klass );
-  geda_list_parent_class = g_type_class_peek_parent( klass );
+  geda_list_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
   gobject_class->finalize = geda_list_finalize;
 

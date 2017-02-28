@@ -1393,7 +1393,7 @@ compselect_class_init (CompselectClass *klass)
   gobject_class->set_property = compselect_set_property;
   gobject_class->get_property = compselect_get_property;
 
-  compselect_parent_class = g_type_class_peek_parent (klass);
+  compselect_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
   g_object_class_install_property (
     gobject_class, PROP_SYMBOL,
