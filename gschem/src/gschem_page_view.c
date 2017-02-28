@@ -1406,7 +1406,7 @@ geometry_cache_lookup (const GschemPageView *view,
   g_return_val_if_fail (view && view->_geometry_cache, NULL);
   g_return_val_if_fail (page, NULL);
 
-  return g_hash_table_lookup (view->_geometry_cache, page);
+  return (GschemPageGeometry*) g_hash_table_lookup (view->_geometry_cache, page);
 }
 
 static void
@@ -1429,7 +1429,7 @@ geometry_cache_dispose_func (gpointer key,
                              gpointer user_data)
 {
   s_page_weak_unref ((PAGE*) key, geometry_cache_page_weak_ref_notify, user_data);
-  gschem_page_geometry_free (value);
+  gschem_page_geometry_free ((GschemPageGeometry*) value);
   return TRUE;
 }
 
