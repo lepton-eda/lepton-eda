@@ -131,7 +131,7 @@ gschem_options_cycle_snap_mode (GschemOptions *options)
   g_return_if_fail (options != NULL);
 
   /* toggle to the next snap state */
-  next_snap_mode = (options->snap_mode + 1) % SNAP_STATE_COUNT;
+  next_snap_mode = (SNAP_STATE) ((options->snap_mode + 1) % SNAP_STATE_COUNT);
 
   gschem_options_set_snap_mode (options, next_snap_mode);
 }
@@ -529,7 +529,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_SNAP_MODE:
-      gschem_options_set_snap_mode (options, g_value_get_int (value));
+      gschem_options_set_snap_mode (options, (SNAP_STATE) g_value_get_int (value));
       break;
 
     case PROP_SNAP_SIZE:
