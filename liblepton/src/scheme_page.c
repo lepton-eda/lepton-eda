@@ -47,7 +47,7 @@ SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
   GList *page_list = geda_list_get_glist (toplevel->pages);
 
   while (page_list != NULL) {
-    lst = scm_cons (edascm_from_page (page_list->data), lst);
+    lst = scm_cons (edascm_from_page ((PAGE*) page_list->data), lst);
     page_list = g_list_next (page_list);
   }
 

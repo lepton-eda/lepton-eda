@@ -100,7 +100,7 @@ void s_toplevel_verify_design (TOPLEVEL *toplevel)
   for (p_iter = geda_list_get_glist (toplevel->pages);
        p_iter != NULL;
        p_iter = g_list_next (p_iter)) {
-    PAGE *p_current = p_iter->data;
+    PAGE *p_current = (PAGE*) p_iter->data;
 
     for (o_iter = s_page_objects (p_current);
          o_iter != NULL;
