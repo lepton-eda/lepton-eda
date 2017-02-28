@@ -335,7 +335,8 @@ GType pagesel_get_type()
 		
     pagesel_type = g_type_register_static (GSCHEM_TYPE_DIALOG,
                                            "Pagesel",
-                                           &pagesel_info, 0);
+                                           &pagesel_info,
+                                           (GTypeFlags) 0);
   }
   
   return pagesel_type;

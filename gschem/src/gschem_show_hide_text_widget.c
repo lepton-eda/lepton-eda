@@ -252,7 +252,7 @@ gschem_show_hide_text_widget_get_type ()
     type = g_type_register_static (GTK_TYPE_INFO_BAR,
                                    "GschemShowHideTextWidget",
                                    &info,
-                                   0);
+                                   (GTypeFlags) 0);
   }
 
   return type;

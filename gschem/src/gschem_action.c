@@ -198,7 +198,8 @@ GType gschem_action_get_type ()
 
     gschem_action_type = g_type_register_static (GTK_TYPE_ACTION,
                                                  "GschemAction",
-                                                 &gschem_action_info, 0);
+                                                 &gschem_action_info,
+                                                 (GTypeFlags) 0);
   }
 
   return gschem_action_type;

@@ -207,7 +207,7 @@ edascm_scm_get_type (void)
                                         g_intern_static_string ("SCM"), /* type_name */
                                         &info,  /* info */
                                         &finfo, /* finfo */
-                                        0);    /* type_flags */
+                                        (GTypeFlags) 0); /* type_flags */
 
     g_once_init_leave (&edascm_scm_type, type);
   }

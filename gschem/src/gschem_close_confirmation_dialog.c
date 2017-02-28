@@ -118,7 +118,8 @@ close_confirmation_dialog_get_type ()
     close_confirmation_dialog_type =
       g_type_register_static (GTK_TYPE_DIALOG,
                               "CloseConfirmationDialog",
-                              &close_confirmation_dialog_info, 0);
+                              &close_confirmation_dialog_info,
+                              (GTypeFlags) 0);
   }
 
   return close_confirmation_dialog_type;

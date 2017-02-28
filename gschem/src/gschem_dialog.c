@@ -369,7 +369,8 @@ GType gschem_dialog_get_type ()
 
     gschem_dialog_type = g_type_register_static (GTK_TYPE_DIALOG,
                                                  "GschemDialog",
-                                                 &gschem_dialog_info, 0);
+                                                 &gschem_dialog_info,
+                                                 (GTypeFlags) 0);
   }
 
   return gschem_dialog_type;

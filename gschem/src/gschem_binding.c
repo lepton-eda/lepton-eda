@@ -93,7 +93,7 @@ gschem_binding_get_type()
     type = g_type_register_static (G_TYPE_OBJECT,
                                    "GschemBinding",
                                    &info,
-                                   0);
+                                   (GTypeFlags) 0);
   }
 
   return type;

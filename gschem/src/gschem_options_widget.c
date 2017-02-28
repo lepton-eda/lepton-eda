@@ -151,7 +151,7 @@ gschem_options_widget_get_type ()
     type = g_type_register_static (GSCHEM_TYPE_BIN,
                                    "GschemOptionsWidget",
                                    &info,
-                                   0);
+                                   (GTypeFlags) 0);
   }
 
   return type;

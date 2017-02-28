@@ -103,7 +103,10 @@ gschem_main_window_get_type ()
       (GInstanceInitFunc) gschem_main_window_init,
     };
 
-    type = g_type_register_static (GTK_TYPE_WINDOW, "GschemMainWindow", &info, 0);
+    type = g_type_register_static (GTK_TYPE_WINDOW,
+                                   "GschemMainWindow",
+                                   &info,
+                                   (GTypeFlags) 0);
   }
 
   return type;

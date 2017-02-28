@@ -264,7 +264,8 @@ celltextview_get_type ()
 
     celltextview_type = g_type_register_static (GTK_TYPE_TEXT_VIEW,
                                                 "CellTextView",
-                                                &celltextview_info, 0);
+                                                &celltextview_info,
+                                                (GTypeFlags) 0);
     g_type_add_interface_static (celltextview_type,
                                  GTK_TYPE_CELL_EDITABLE,
                                  &cell_editable_info);
@@ -472,7 +473,8 @@ cellrenderermultilinetext_get_type ()
     cellrenderermultilinetext_type = g_type_register_static (
       GTK_TYPE_CELL_RENDERER_TEXT,
       "CellRendererMultiLineText",
-      &cellrenderermultilinetext_info, 0);
+      &cellrenderermultilinetext_info,
+      (GTypeFlags) 0);
   }
 
   return cellrenderermultilinetext_type;
@@ -1791,7 +1793,8 @@ multiattrib_get_type ()
 
     multiattrib_type = g_type_register_static (GSCHEM_TYPE_DIALOG,
                                                "Multiattrib",
-                                               &multiattrib_info, 0);
+                                               &multiattrib_info,
+                                               (GTypeFlags) 0);
   }
 
   return multiattrib_type;

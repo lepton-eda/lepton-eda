@@ -414,7 +414,10 @@ gschem_bottom_widget_get_type ()
       (GInstanceInitFunc) gschem_bottom_widget_init,
     };
 
-    type = g_type_register_static (GTK_TYPE_HBOX, "GschemBottomWidget", &info, 0);
+    type = g_type_register_static (GTK_TYPE_HBOX,
+                                   "GschemBottomWidget",
+                                   &info,
+                                   (GTypeFlags) 0);
   }
 
   return type;
