@@ -1887,8 +1887,8 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
 
   /* Make sure there's enough space for the new element */
   if (path->num_sections == path->num_sections_max) {
-    path->sections = g_realloc (path->sections,
-                                (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
+    path->sections = (PATH_SECTION*) g_realloc (path->sections,
+                                                (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
   }
 
   /* Move path contents to make a gap in the right place. */

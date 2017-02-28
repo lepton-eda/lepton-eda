@@ -113,7 +113,8 @@ void s_path_moveto (GedaPath *path, double x, double y)
   num_sections = path->num_sections++;
 
   if (num_sections == path->num_sections_max)
-    path->sections = g_realloc (path->sections, (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
+    path->sections = (PATH_SECTION*) g_realloc (path->sections,
+                                                (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
   sections = path->sections;
   sections[num_sections].code = PATH_MOVETO_OPEN;
   sections[num_sections].x3 = x;
@@ -131,7 +132,8 @@ void s_path_lineto (GedaPath *path, double x, double y)
   num_sections = path->num_sections++;
 
   if (num_sections == path->num_sections_max)
-    path->sections = g_realloc (path->sections, (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
+    path->sections = (PATH_SECTION*) g_realloc (path->sections,
+                                                (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
   sections = path->sections;
   sections[num_sections].code = PATH_LINETO;
   sections[num_sections].x3 = x;
@@ -150,7 +152,8 @@ void s_path_curveto (GedaPath *path, double x1, double y1,
   num_sections = path->num_sections++;
 
   if (num_sections == path->num_sections_max)
-    path->sections = g_realloc (path->sections, (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
+    path->sections = (PATH_SECTION*) g_realloc (path->sections,
+                                                (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
   sections = path->sections;
   sections[num_sections].code = PATH_CURVETO;
   sections[num_sections].x1 = x1;
@@ -171,7 +174,8 @@ void s_path_art_finish (GedaPath * path)
   num_sections = path->num_sections++;
 
   if (num_sections == path->num_sections_max)
-    path->sections = g_realloc (path->sections, (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
+    path->sections = (PATH_SECTION*) g_realloc (path->sections,
+                                                (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
   path->sections[num_sections].code = PATH_END;
 }
 
