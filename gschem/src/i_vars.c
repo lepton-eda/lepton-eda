@@ -161,7 +161,7 @@ void i_vars_set(GschemToplevel *w_current)
 
   toplevel->force_boundingbox  = default_force_boundingbox;
 
-  gschem_options_set_grid_mode (w_current->options, default_grid_mode);
+  gschem_options_set_grid_mode (w_current->options, (GRID_MODE) default_grid_mode);
   w_current->dots_grid_dot_size          = default_dots_grid_dot_size;
   w_current->dots_grid_mode              = default_dots_grid_mode;
   w_current->dots_grid_fixed_threshold   = default_dots_grid_fixed_threshold;
