@@ -200,7 +200,7 @@ edascm_scm_get_type (void)
     };
 
     static const GTypeFundamentalInfo finfo = {
-      0, /* type_flags */
+      (GTypeFundamentalFlags) 0, /* type_flags */
     };
 
     type = g_type_register_fundamental (g_type_fundamental_next (),
