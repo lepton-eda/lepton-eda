@@ -61,7 +61,7 @@
 STRING_LIST *s_string_list_new() {
   STRING_LIST *local_string_list;
   
-  local_string_list = g_malloc(sizeof(STRING_LIST));
+  local_string_list = (STRING_LIST*) g_malloc (sizeof (STRING_LIST));
   local_string_list->data = NULL;
   local_string_list->next = NULL;
   local_string_list->prev = NULL;
