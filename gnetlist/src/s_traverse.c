@@ -357,7 +357,7 @@ s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, in
 
   if (object->type == OBJ_PIN) {
 
-    verbose_print (starting ? "p" : "P");
+    starting ? verbose_print ("p") : verbose_print ("P");
 
     new_net->connected_to =
       s_net_return_connected_string (object, hierarchy_tag);
