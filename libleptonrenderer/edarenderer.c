@@ -567,16 +567,16 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, OBJECT *object)
   /* Horrible horrible hacks! */
   switch (object->type) {
   case OBJ_BOX:
-    hatch_func = (void *) m_hatch_box;
-    hatch_data = (void (*)(void *, gint, gint, GArray *)) object->box;
+    hatch_func = (void (*)(void *, gint, gint, GArray *)) m_hatch_box;
+    hatch_data = (void *) object->box;
     break;
   case OBJ_CIRCLE:
-    hatch_func = (void *) m_hatch_circle;
-    hatch_data = (void (*)(void *, gint, gint, GArray *)) object->circle;
+    hatch_func = (void (*)(void *, gint, gint, GArray *)) m_hatch_circle;
+    hatch_data = (void *) object->circle;
     break;
   case OBJ_PATH:
-    hatch_func = (void *) m_hatch_path;
-    hatch_data = (void (*)(void *, gint, gint, GArray *)) object->path;
+    hatch_func = (void (*)(void *, gint, gint, GArray *)) m_hatch_path;
+    hatch_data = (void *) object->path;
     break;
   default:
     g_return_val_if_reached (FALSE);
