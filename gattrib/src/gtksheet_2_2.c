@@ -4900,10 +4900,12 @@ gtk_sheet_button_press (GtkWidget * widget,
           gtk_sheet_column_size_request(sheet, sheet->drag_cell.col, &req);
 	  GTK_SHEET_SET_FLAGS (sheet, GTK_SHEET_IN_XDRAG);
 	  gdk_pointer_grab (sheet->column_title_window, FALSE,
-			    GDK_POINTER_MOTION_HINT_MASK |
-			    GDK_BUTTON1_MOTION_MASK |
-			    GDK_BUTTON_RELEASE_MASK,
-			    NULL, NULL, event->time);
+                            (GdkEventMask) (GDK_POINTER_MOTION_HINT_MASK |
+                                            GDK_BUTTON1_MOTION_MASK |
+                                            GDK_BUTTON_RELEASE_MASK),
+                            NULL,
+                            NULL,
+                            event->time);
 
 	  draw_xor_vline (sheet);
 	  return TRUE;
@@ -4919,10 +4921,12 @@ gtk_sheet_button_press (GtkWidget * widget,
           gtk_sheet_row_size_request(sheet, sheet->drag_cell.row, &req);
 	  GTK_SHEET_SET_FLAGS (sheet, GTK_SHEET_IN_YDRAG);
 	  gdk_pointer_grab (sheet->row_title_window, FALSE,
-			    GDK_POINTER_MOTION_HINT_MASK |
-			    GDK_BUTTON1_MOTION_MASK |
-			    GDK_BUTTON_RELEASE_MASK,
-			    NULL, NULL, event->time);
+                            (GdkEventMask) (GDK_POINTER_MOTION_HINT_MASK |
+                                            GDK_BUTTON1_MOTION_MASK |
+                                            GDK_BUTTON_RELEASE_MASK),
+                            NULL,
+                            NULL,
+                            event->time);
 
 	  draw_xor_hline (sheet);
 	  return TRUE;
@@ -4933,11 +4937,14 @@ gtk_sheet_button_press (GtkWidget * widget,
     if(event->window == sheet->sheet_window){
      gtk_widget_get_pointer (widget, &x, &y);
      gtk_sheet_get_pixel_info (sheet, x, y, &row, &column);
-     gdk_pointer_grab (sheet->sheet_window, FALSE,
-		       GDK_POINTER_MOTION_HINT_MASK |
-		       GDK_BUTTON1_MOTION_MASK |
-		       GDK_BUTTON_RELEASE_MASK,
-		       NULL, NULL, event->time);
+     gdk_pointer_grab (sheet->sheet_window,
+                       FALSE,
+                       (GdkEventMask) (GDK_POINTER_MOTION_HINT_MASK |
+                                       GDK_BUTTON1_MOTION_MASK |
+                                       GDK_BUTTON_RELEASE_MASK),
+                       NULL,
+                       NULL,
+                       event->time);
      gtk_grab_add(GTK_WIDGET(sheet));
      sheet->timer = g_timeout_add (TIMEOUT_SCROLL, (GSourceFunc) gtk_sheet_scroll, sheet);
      GTK_WIDGET_UNSET_FLAGS(sheet->sheet_entry, GTK_HAS_FOCUS);
