@@ -120,7 +120,7 @@ static void
 query_usable_targets_cb (GtkClipboard *clip, GdkAtom *targets, gint ntargets,
                          gpointer data)
 {
-  struct query_usable *cbinfo = data;
+  struct query_usable *cbinfo = (struct query_usable*) data;
   int i;
   int is_usable = FALSE;
 
