@@ -62,6 +62,8 @@ enum
   GTK_SHEET_REDRAW_PENDING  = 1 << 8,
 };
 
+G_DEFINE_TYPE (GtkSheet, gtk_sheet, GTK_TYPE_CONTAINER)
+
 #define GTK_SHEET_FLAGS(sheet)             (GTK_SHEET (sheet)->flags)
 #define GTK_SHEET_SET_FLAGS(sheet,flag)    (GTK_SHEET_FLAGS (sheet) |= (flag))
 #define GTK_SHEET_UNSET_FLAGS(sheet,flag)  (GTK_SHEET_FLAGS (sheet) &= ~(flag))
@@ -366,7 +368,6 @@ static inline gint POSSIBLE_RESIZE(GtkSheet *sheet, gint x, gint y,
 }
 
 static void gtk_sheet_class_init 		(GtkSheetClass * klass);
-static void gtk_sheet_init 			(GtkSheet * sheet);
 static void gtk_sheet_destroy 			(GtkObject * object);
 static void gtk_sheet_finalize 			(GObject * object);
 static void gtk_sheet_style_set 		(GtkWidget *widget,
@@ -664,38 +665,8 @@ enum {
       LAST_SIGNAL
 };
 
-static GtkContainerClass *parent_class = NULL;
 static guint sheet_signals[LAST_SIGNAL] = {0};
 
-
-GType
-gtk_sheet_get_type ()
-{
-  static GType sheet_type = 0;
-                                                                                
-  if (!sheet_type)
-    {
-      static const GTypeInfo sheet_info =
-      {
-        sizeof (GtkSheetClass),
-        NULL,
-        NULL,
-        (GClassInitFunc) gtk_sheet_class_init,
-        NULL,        
-        NULL,       
-        sizeof (GtkSheet),
-        0,         
-        (GInstanceInitFunc) gtk_sheet_init,
-        NULL,
-      };
-      sheet_type =
-        g_type_register_static (GTK_TYPE_CONTAINER,
-                                "GtkSheet",
-                                &sheet_info,
-                                (GTypeFlags) 0);
-    }
-  return sheet_type;
-}
 
 static GtkSheetRange*
 gtk_sheet_range_copy (const GtkSheetRange *range)
@@ -743,8 +714,6 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   object_class = (GtkObjectClass *) klass;
   widget_class = (GtkWidgetClass *) klass;
   container_class = (GtkContainerClass *) klass;
-
-  parent_class = g_type_class_peek_parent (klass);
 
   sheet_signals[SELECT_ROW] =
     g_signal_new ("select_row",                       /* signal_name  */
@@ -2574,8 +2543,8 @@ gtk_sheet_finalize (GObject * object)
       sheet->name = NULL;
   }
 
-  if (G_OBJECT_CLASS (parent_class)->finalize)
-    (*G_OBJECT_CLASS (parent_class)->finalize) (object);
+  if (G_OBJECT_CLASS (gtk_sheet_parent_class)->finalize)
+    (*G_OBJECT_CLASS (gtk_sheet_parent_class)->finalize) (object);
 }
 
 static void
@@ -2634,8 +2603,8 @@ gtk_sheet_destroy (GtkObject * object)
   }  
   sheet->children = NULL;
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    (*GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+  if (GTK_OBJECT_CLASS (gtk_sheet_parent_class)->destroy)
+    (*GTK_OBJECT_CLASS (gtk_sheet_parent_class)->destroy) (object);
 }
 
 static void
@@ -2645,8 +2614,8 @@ gtk_sheet_style_set (GtkWidget *widget,
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_SHEET (widget));
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    (*GTK_WIDGET_CLASS (parent_class)->style_set) (widget, previous_style);
+  if (GTK_WIDGET_CLASS (gtk_sheet_parent_class)->style_set)
+    (*GTK_WIDGET_CLASS (gtk_sheet_parent_class)->style_set) (widget, previous_style);
 
   if(GTK_WIDGET_REALIZED(widget))
      {
@@ -2890,8 +2859,8 @@ gtk_sheet_unrealize (GtkWidget * widget)
   sheet->fg_gc = NULL;
   sheet->bg_gc = NULL;
 
-  if (GTK_WIDGET_CLASS (parent_class)->unrealize)
-    (* GTK_WIDGET_CLASS (parent_class)->unrealize) (widget);
+  if (GTK_WIDGET_CLASS (gtk_sheet_parent_class)->unrealize)
+    (* GTK_WIDGET_CLASS (gtk_sheet_parent_class)->unrealize) (widget);
 }
 
 static void
@@ -4861,7 +4830,7 @@ gtk_sheet_expose (GtkWidget * widget,
   if(sheet->state != GTK_SHEET_NORMAL && GTK_SHEET_IN_SELECTION(sheet))
      gtk_widget_grab_focus(GTK_WIDGET(sheet));
 
-  (* GTK_WIDGET_CLASS (parent_class)->expose_event) (widget, event);
+  (* GTK_WIDGET_CLASS (gtk_sheet_parent_class)->expose_event) (widget, event);
 
 #ifdef DEBUG
   printf("<--- Leaving gtk_sheet_expose\n");
