@@ -91,13 +91,13 @@ static void create_type_menu(GtkComboBox *combo)
 
   ptr = formats;
   while (ptr) {
-    if (gdk_pixbuf_format_is_writable (ptr->data)) {
+    if (gdk_pixbuf_format_is_writable ((GdkPixbufFormat*) ptr->data)) {
       /* Get the format description and add it to the menu */
-      buf = g_strdup (gdk_pixbuf_format_get_description(ptr->data));
+      buf = g_strdup (gdk_pixbuf_format_get_description ((GdkPixbufFormat*) ptr->data));
       gtk_combo_box_append_text (GTK_COMBO_BOX (combo), buf);
 
       /* Compare the name with "png" and store the index */
-      buf = g_strdup (gdk_pixbuf_format_get_name(ptr->data));
+      buf = g_strdup (gdk_pixbuf_format_get_name ((GdkPixbufFormat*) ptr->data));
       if (strcasecmp(buf, X_IMAGE_DEFAULT_TYPE) == 0) {
         default_index = i;
       }
@@ -135,10 +135,10 @@ x_image_get_type_from_description (const char *description)
   ptr = gdk_pixbuf_get_formats ();
 
   while (ptr != NULL) {
-    gchar *ptr_descr = gdk_pixbuf_format_get_description (ptr->data);
+    gchar *ptr_descr = gdk_pixbuf_format_get_description ((GdkPixbufFormat*) ptr->data);
 
     if (ptr_descr && (strcasecmp (ptr_descr, description) == 0)) {
-      return gdk_pixbuf_format_get_name (ptr->data);
+      return gdk_pixbuf_format_get_name ((GdkPixbufFormat*) ptr->data);
     }
 
     ptr = g_slist_next (ptr);
