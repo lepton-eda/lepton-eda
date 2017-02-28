@@ -334,6 +334,6 @@ g_init_window ()
 
   /* Define the (gschem core window) module */
   scm_c_define_module ("gschem core window",
-                       init_module_gschem_core_window,
+                       (void (*)(void*)) init_module_gschem_core_window,
                        NULL);
 }

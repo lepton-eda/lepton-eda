@@ -332,6 +332,6 @@ edascm_init_attrib ()
 {
   /* Define the (geda core attrib) module */
   scm_c_define_module ("geda core attrib",
-                       init_module_geda_core_attrib,
+                       (void (*)(void*)) init_module_geda_core_attrib,
                        NULL);
 }

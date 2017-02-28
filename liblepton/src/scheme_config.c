@@ -1175,6 +1175,6 @@ edascm_init_config ()
 {
   /* Define the (geda core object) module */
   scm_c_define_module ("geda core config",
-                       init_module_geda_core_config,
+                       (void (*)(void*)) init_module_geda_core_config,
                        NULL);
 }

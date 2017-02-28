@@ -187,6 +187,6 @@ g_init_builtins ()
 {
   /* Define the (gschem core builtins) module */
   scm_c_define_module ("gschem core builtins",
-                       init_module_gschem_core_builtins,
+                       (void (*)(void*)) init_module_gschem_core_builtins,
                        NULL);
 }

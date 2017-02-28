@@ -135,6 +135,6 @@ edascm_init_log ()
 {
 	/* Define the (geda core log) module */
 	scm_c_define_module ("geda core log",
-	                     init_module_geda_core_log,
+	                     (void (*)(void*)) init_module_geda_core_log,
 	                     NULL);
 }

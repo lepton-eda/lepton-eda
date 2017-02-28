@@ -763,6 +763,6 @@ edascm_init_smob ()
 
   /* Define the (geda core smob) module */
   scm_c_define_module ("geda core smob",
-                       init_module_geda_core_smob,
+                       (void (*)(void*)) init_module_geda_core_smob,
                        NULL);
 }

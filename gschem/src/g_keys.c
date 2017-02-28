@@ -615,7 +615,7 @@ g_init_keys ()
   scm_set_smob_free (g_key_smob_tag, g_key_free);
 
   scm_c_define_module ("gschem core keymap",
-                       init_module_gschem_core_keymap,
+                       (void (*)(void*)) init_module_gschem_core_keymap,
                        NULL);
 }
 

@@ -161,6 +161,6 @@ g_init_attrib ()
 {
   /* Define the (gschem core attrib) module */
   scm_c_define_module ("gschem core attrib",
-                       init_module_gschem_core_attrib,
+                       (void (*)(void*)) init_module_gschem_core_attrib,
                        NULL);
 }
