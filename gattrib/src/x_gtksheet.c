@@ -358,7 +358,7 @@ void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
   /*   g_free(cmap); */
   
   /* XXXXX  Attempt to set cell color */
-  range = g_malloc(sizeof(GtkSheetRange));
+  range = g_new (GtkSheetRange, 1);
   range->row0 = row;
   range->rowi = row;
   range->col0 = col;
