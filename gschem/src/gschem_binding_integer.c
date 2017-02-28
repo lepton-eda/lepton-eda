@@ -262,7 +262,7 @@ set_property (GObject      *object,
 
   switch (param_id) {
     case PROP_MODEL_OBJECT:
-      set_model_object (binding, g_value_get_object (value));
+      set_model_object (binding, G_OBJECT (g_value_get_object (value)));
       break;
 
     case PROP_MODEL_PARAM:
