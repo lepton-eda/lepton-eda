@@ -123,7 +123,7 @@ void o_redraw_rect (GschemToplevel *w_current,
                          MAX_COLORS);
 
   /* Set up renderer */
-  renderer = g_object_ref (w_current->renderer);
+  renderer = EDA_RENDERER (g_object_ref (w_current->renderer));
   g_object_set (G_OBJECT (renderer),
                 "cairo-context", cr,
                 "grip-size", ((double) grip_half_size * geometry->to_world_x_constant),

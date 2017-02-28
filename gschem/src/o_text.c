@@ -66,7 +66,7 @@ o_text_get_rendered_bounds (void *user_data,
    * bounds are zoom-level-dependent. */
   if (toplevel->show_hidden_text)
     render_flags |= EDA_RENDERER_FLAG_TEXT_HIDDEN;
-  renderer = g_object_ref (w_current->renderer);
+  renderer = EDA_RENDERER (g_object_ref (w_current->renderer));
   g_object_set (G_OBJECT (renderer),
                 "cairo-context", cr,
                 "render-flags", render_flags,
