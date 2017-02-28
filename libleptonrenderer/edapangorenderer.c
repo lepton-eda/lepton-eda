@@ -111,11 +111,11 @@ eda_pango_renderer_class_init (EdaPangoRendererClass *klass)
                                    g_param_spec_pointer ("cairo-context",
                                                          _("Cairo context"),
                                                          _("The Cairo context for rendering"),
-                                                         G_PARAM_READWRITE
-                                                         | G_PARAM_CONSTRUCT_ONLY
-                                                         | G_PARAM_STATIC_NAME
-                                                         | G_PARAM_STATIC_NICK
-                                                         | G_PARAM_STATIC_BLURB));
+                                                         (GParamFlags) (G_PARAM_READWRITE
+                                                                        | G_PARAM_CONSTRUCT_ONLY
+                                                                        | G_PARAM_STATIC_NAME
+                                                                        | G_PARAM_STATIC_NICK
+                                                                        | G_PARAM_STATIC_BLURB)));
 }
 
 static void

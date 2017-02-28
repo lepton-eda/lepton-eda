@@ -202,7 +202,8 @@ gschem_macro_widget_class_init (GschemMacroWidgetClass *klass)
                                                         "Label Text",
                                                         "Label Text",
                                                         _("Macro:"),
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_MACRO_STRING,
@@ -210,7 +211,8 @@ gschem_macro_widget_class_init (GschemMacroWidgetClass *klass)
                                                         "Macro String",
                                                         "Macro String",
                                                         "",
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 }
 
 

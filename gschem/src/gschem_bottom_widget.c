@@ -190,7 +190,8 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
                                                      0,
                                                      (GRID_MODE_COUNT - 1),
                                                      GRID_MODE_NONE,
-                                                     G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_GRID_SIZE,
@@ -200,7 +201,8 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      0,
-                                                     G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_LEFT_BUTTON_TEXT,
@@ -208,7 +210,8 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
                                                         "Left Button Text",
                                                         "Left Button Text",
                                                         "none",
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_MIDDLE_BUTTON_TEXT,
@@ -216,7 +219,8 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
                                                         "Middle Button Text",
                                                         "Middle Button Text",
                                                         "none",
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_RIGHT_BUTTON_TEXT,
@@ -224,7 +228,8 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
                                                         "Right Button Text",
                                                         "Right Button Text",
                                                         "none",
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_SNAP_MODE,
@@ -234,7 +239,8 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      0,
-                                                     G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_SNAP_SIZE,
@@ -244,7 +250,8 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      0,
-                                                     G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_STATUS_TEXT,
@@ -252,7 +259,8 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
                                                         "Status Text",
                                                         "Status Text",
                                                         "none",
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_STATUS_TEXT_COLOR,
@@ -260,7 +268,8 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
                                                          "Status State",
                                                          "Status State",
                                                          FALSE,
-                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                         (GParamFlags) (G_PARAM_READWRITE
+                                                                        | G_PARAM_CONSTRUCT)));
 }
 
 

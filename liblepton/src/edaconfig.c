@@ -96,7 +96,8 @@ eda_config_class_init (EdaConfigClass *klass)
                                "Configuration file",
                                "Set underlying file for EdaConfig",
                                G_TYPE_FILE,
-                               G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
+                               (GParamFlags) (G_PARAM_CONSTRUCT_ONLY
+                                              | G_PARAM_READWRITE));
   g_object_class_install_property (gobject_class,
                                    PROP_CONFIG_FILE,
                                    pspec);
@@ -105,7 +106,8 @@ eda_config_class_init (EdaConfigClass *klass)
                                "Configuration context parent",
                                "Set parent configuration context for EdaConfig",
                                EDA_TYPE_CONFIG,
-                               G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
+                               (GParamFlags) (G_PARAM_CONSTRUCT
+                                              | G_PARAM_READWRITE));
   g_object_class_install_property (gobject_class,
                                    PROP_CONFIG_PARENT,
                                    pspec);
@@ -114,7 +116,8 @@ eda_config_class_init (EdaConfigClass *klass)
                                 "Whether context is trusted",
                                 "Set whether configuration context is trusted config source.",
                                 FALSE /* default value */,
-                                G_PARAM_CONSTRUCT | G_PARAM_READWRITE);
+                                (GParamFlags) (G_PARAM_CONSTRUCT
+                                               | G_PARAM_READWRITE));
   g_object_class_install_property (gobject_class,
                                    PROP_CONFIG_TRUSTED,
                                    pspec);

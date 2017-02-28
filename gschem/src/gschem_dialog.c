@@ -329,13 +329,15 @@ static void gschem_dialog_class_init (GschemDialogClass *klass)
                          "",
                          "",
                          NULL,
-                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
+                         (GParamFlags) (G_PARAM_CONSTRUCT_ONLY
+                                        | G_PARAM_READWRITE)));
   g_object_class_install_property (
     gobject_class, PROP_GSCHEM_TOPLEVEL,
     g_param_spec_pointer ("gschem-toplevel",
                           "",
                           "",
-                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
+                          (GParamFlags) (G_PARAM_CONSTRUCT_ONLY
+                                         | G_PARAM_READWRITE)));
 }
 
 

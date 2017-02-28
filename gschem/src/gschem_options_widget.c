@@ -228,7 +228,8 @@ class_init (GschemOptionsWidgetClass *klass)
                                    g_param_spec_pointer ("gschem-toplevel",
                                                          "",
                                                          "",
-                                                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
+                                                         (GParamFlags) (G_PARAM_CONSTRUCT_ONLY
+                                                                        | G_PARAM_READWRITE)));
 }
 
 
