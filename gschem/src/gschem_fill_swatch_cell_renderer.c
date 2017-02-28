@@ -343,7 +343,7 @@ set_property (GObject      *object,
       break;
 
     case PROP_FILL_TYPE:
-      swatch->fill_type =  g_value_get_int (value);
+      swatch->fill_type =  (OBJECT_FILLING) g_value_get_int (value);
       break;
 
     default:

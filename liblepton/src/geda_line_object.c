@@ -443,8 +443,12 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, const char buf[],
                                   y2);
 
   /* set its line options */
-  o_set_line_options (toplevel, new_obj,
-                      line_end, line_type, line_width, line_length,
+  o_set_line_options (toplevel,
+                      new_obj,
+                      (OBJECT_END) line_end,
+                      (OBJECT_TYPE) line_type,
+                      line_width,
+                      line_length,
                       line_space);
   /* filling is irrelevant for line, just set to default */
   o_set_fill_options (toplevel, new_obj,

@@ -351,12 +351,17 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, const char buf[],
   /* create a new box */
   new_obj = geda_box_object_new (toplevel, type, color, d_x1, d_y1, d_x2, d_y2);
   /* set its line options */
-  o_set_line_options (toplevel, new_obj,
-                      box_end, box_type, box_width,
-                      box_length, box_space);
+  o_set_line_options (toplevel,
+                      new_obj,
+                      (OBJECT_END) box_end,
+                      (OBJECT_TYPE) box_type,
+                      box_width,
+                      box_length,
+                      box_space);
   /* set its fill options */
   o_set_fill_options (toplevel, new_obj,
-                      box_filling, fill_width,
+                      (OBJECT_FILLING) box_filling,
+                      fill_width,
                       pitch1, angle1, pitch2, angle2);
 
   return new_obj;

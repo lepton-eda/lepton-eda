@@ -490,7 +490,13 @@ SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
     /* This case intentionally falls through */
   }
 
-  o_set_line_options (toplevel, obj, cap, type, width, length, space);
+  o_set_line_options (toplevel,
+                      obj,
+                      (OBJECT_END) cap,
+                      (OBJECT_TYPE) type,
+                      width,
+                      length,
+                      space);
   o_page_changed (toplevel, obj);
 
   return obj_s;
@@ -646,8 +652,14 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
     /* This case intentionally falls through */
   }
 
-  o_set_fill_options (toplevel, obj, type, width,
-                      space1, angle1, space2, angle2);
+  o_set_fill_options (toplevel,
+                      obj,
+                      (OBJECT_FILLING) type,
+                      width,
+                      space1,
+                      angle1,
+                      space2,
+                      angle2);
   o_page_changed (toplevel, obj);
 
   return obj_s;

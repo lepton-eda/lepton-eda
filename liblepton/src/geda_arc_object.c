@@ -446,8 +446,12 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
                                  start_angle,
                                  sweep_angle);
 
-  o_set_line_options(toplevel, new_obj,
-                     arc_end, arc_type, arc_width, arc_length,
+  o_set_line_options(toplevel,
+                     new_obj,
+                     (OBJECT_END) arc_end,
+                     (OBJECT_TYPE) arc_type,
+                     arc_width,
+                     arc_length,
                      arc_space);
   o_set_fill_options(toplevel, new_obj,
                      FILLING_HOLLOW, -1, -1, -1,
