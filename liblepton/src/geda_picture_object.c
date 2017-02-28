@@ -718,7 +718,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
   /* create the object */
   new_node = s_basic_new_object(object->type, "picture");
 
-  picture = g_malloc(sizeof(PICTURE));
+  picture = (PICTURE*) g_malloc (sizeof(PICTURE));
   new_node->picture = picture;
 
   new_node->color = geda_object_get_color (object);
