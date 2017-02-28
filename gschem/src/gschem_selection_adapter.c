@@ -1265,7 +1265,7 @@ gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int fil
     if (success) {
       o_set_fill_options (adapter->toplevel,
                           object,
-                          fill_type,
+                          (OBJECT_FILLING) fill_type,
                           temp_width,
                           temp_pitch1,
                           temp_angle1,
@@ -1391,7 +1391,7 @@ gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int lin
       o_set_line_options (adapter->toplevel,
                           object,
                           temp_cap_style,
-                          line_type,
+                          (OBJECT_TYPE) line_type,
                           temp_line_width,
                           temp_dash_length,
                           temp_dash_space);
@@ -1624,7 +1624,7 @@ gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap
     if (success) {
       o_set_line_options (adapter->toplevel,
                           object,
-                          cap_style,
+                          (OBJECT_END) cap_style,
                           temp_line_type,
                           temp_line_width,
                           temp_dash_length,

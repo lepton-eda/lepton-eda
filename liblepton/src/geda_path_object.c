@@ -245,11 +245,22 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
   g_free (string);
 
   /* set its line options */
-  o_set_line_options (toplevel, new_obj,
-                      line_end, line_type, line_width, line_length, line_space);
+  o_set_line_options (toplevel,
+                      new_obj,
+                      (OBJECT_END) line_end,
+                      (OBJECT_TYPE) line_type,
+                      line_width,
+                      line_length,
+                      line_space);
   /* set its fill options */
-  o_set_fill_options (toplevel, new_obj,
-                      fill_type, fill_width, pitch1, angle1, pitch2, angle2);
+  o_set_fill_options (toplevel,
+                      new_obj,
+                      (OBJECT_FILLING) fill_type,
+                      fill_width,
+                      pitch1,
+                      angle1,
+                      pitch2,
+                      angle2);
 
   return new_obj;
 }

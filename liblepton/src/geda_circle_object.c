@@ -398,11 +398,21 @@ o_circle_read (TOPLEVEL *toplevel,
    */
   new_obj = geda_circle_object_new (toplevel, color, x1, y1, radius);
 
-  o_set_line_options(toplevel, new_obj,
-		     circle_end, circle_type, circle_width,
-		     circle_length, circle_space);
-  o_set_fill_options(toplevel, new_obj,
-		     circle_fill, fill_width, pitch1, angle1, pitch2, angle2);
+  o_set_line_options(toplevel,
+                     new_obj,
+                     (OBJECT_END) circle_end,
+                     (OBJECT_TYPE) circle_type,
+                     circle_width,
+                     circle_length,
+                     circle_space);
+  o_set_fill_options(toplevel,
+                     new_obj,
+                     (OBJECT_FILLING) circle_fill,
+                     fill_width,
+                     pitch1,
+                     angle1,
+                     pitch2,
+                     angle2);
 
   return new_obj;
 }
