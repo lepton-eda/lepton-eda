@@ -1063,8 +1063,9 @@ SCM_DEFINE (add_config_event_x, "%add-config-event!", 2, 0, 0,
   guint signal_id = g_signal_lookup ("config-changed", EDA_TYPE_CONFIG);
   gulong handler_id =
     g_signal_handler_find (cfg,
-                           G_SIGNAL_MATCH_FUNC | G_SIGNAL_MATCH_DATA
-                           | G_SIGNAL_MATCH_ID,
+                           (GSignalMatchType) (G_SIGNAL_MATCH_FUNC
+                                               | G_SIGNAL_MATCH_DATA
+                                               | G_SIGNAL_MATCH_ID),
                            signal_id,
                            0,
                            NULL,
@@ -1105,9 +1106,9 @@ SCM_DEFINE (remove_config_event_x, "%remove-config-event!", 2, 0, 0,
   guint signal_id = g_signal_lookup ("config-changed", EDA_TYPE_CONFIG);
   guint found =
     g_signal_handlers_disconnect_matched (cfg,
-                                          G_SIGNAL_MATCH_FUNC
-                                          | G_SIGNAL_MATCH_DATA
-                                          | G_SIGNAL_MATCH_ID,
+                                          (GSignalMatchType) (G_SIGNAL_MATCH_FUNC
+                                                              | G_SIGNAL_MATCH_DATA
+                                                              | G_SIGNAL_MATCH_ID),
                                           signal_id,
                                           0,
                                           NULL,
