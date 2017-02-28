@@ -771,7 +771,7 @@ update_snap_mode_model (GschemOptionsWidget *widget, GtkWidget *button)
 
     for (index = 0; index < SNAP_STATE_COUNT; index++) {
       if (widget->snap_radio[index] == button) {
-        gschem_options_set_snap_mode (widget->options, index);
+        gschem_options_set_snap_mode (widget->options, (SNAP_STATE) index);
         break;
       }
     }
