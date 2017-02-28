@@ -219,8 +219,8 @@ void x_dialog_unsaved_data()
   str = g_strconcat (str, "\n\n", tmp, NULL);
 
   dialog = gtk_message_dialog_new (GTK_WINDOW (window),
-                                   GTK_DIALOG_MODAL |
-                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                   (GtkDialogFlags) (GTK_DIALOG_MODAL |
+                                                     GTK_DIALOG_DESTROY_WITH_PARENT),
                                      GTK_MESSAGE_WARNING,
                                    GTK_BUTTONS_NONE, NULL);
   gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog), str);

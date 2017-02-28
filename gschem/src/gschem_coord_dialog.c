@@ -86,7 +86,7 @@ void coord_dialog (GschemToplevel *w_current, int x, int y)
   if (!w_current->cowindow) {
     w_current->cowindow = gschem_dialog_new_with_buttons(_("Coords"),
                                                          GTK_WINDOW(w_current->main_window),
-                                                         0, /* Not modal GTK_DIALOG_MODAL */
+                                                         (GtkDialogFlags) 0, /* Not modal GTK_DIALOG_MODAL */
                                                          "coord", w_current,
                                                          GTK_STOCK_CLOSE,
                                                          GTK_RESPONSE_REJECT,

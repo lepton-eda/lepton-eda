@@ -84,8 +84,8 @@ void generic_msg_dialog (const char *msg)
   GtkWidget *dialog;
 
   dialog = gtk_message_dialog_new (NULL,
-                                   GTK_DIALOG_MODAL |
-                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                   (GtkDialogFlags) (GTK_DIALOG_MODAL |
+                                                     GTK_DIALOG_DESTROY_WITH_PARENT),
                                    GTK_MESSAGE_INFO,
                                    GTK_BUTTONS_OK,
                                    "%s", msg);
@@ -110,8 +110,8 @@ int generic_confirm_dialog (const char *msg)
   gint r;
 
   dialog = gtk_message_dialog_new (NULL,
-                                   GTK_DIALOG_MODAL |
-                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                   (GtkDialogFlags) (GTK_DIALOG_MODAL |
+                                                     GTK_DIALOG_DESTROY_WITH_PARENT),
                                    GTK_MESSAGE_INFO,
                                    GTK_BUTTONS_OK_CANCEL,
                                    "%s", msg);

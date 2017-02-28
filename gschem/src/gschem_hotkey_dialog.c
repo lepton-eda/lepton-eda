@@ -129,7 +129,7 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
   if (!w_current->hkwindow) {
     w_current->hkwindow = gschem_dialog_new_with_buttons(_("Hotkeys"),
                                                          GTK_WINDOW(w_current->main_window),
-                                                         0, /* not modal */
+                                                         (GtkDialogFlags) 0, /* not modal */
                                                          "hotkeys", w_current,
                                                          GTK_STOCK_CLOSE,
                                                          GTK_RESPONSE_REJECT,
