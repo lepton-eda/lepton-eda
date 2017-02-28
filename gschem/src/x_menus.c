@@ -179,12 +179,12 @@ get_main_menu(GschemToplevel *w_current)
             menu_item_stock = scm_to_utf8_string (scm_item_stock);
 
           action_name = scm_to_utf8_string (scm_symbol_to_string (scm_item_func));
-          action = g_object_new (GSCHEM_TYPE_ACTION,
-                                 "name", action_name,
-                                 "label", menu_item_name,
-                                 "tooltip", menu_item_name,
-                                 "multikey-accel", menu_item_keys,
-                                 NULL);
+          action = GSCHEM_ACTION (g_object_new (GSCHEM_TYPE_ACTION,
+                                                "name", action_name,
+                                                "label", menu_item_name,
+                                                "tooltip", menu_item_name,
+                                                "multikey-accel", menu_item_keys,
+                                                NULL));
 
           /* If stock name corresponds to a GTK stock item, then use
            * it.  Otherwise, look it up in the icon theme. */
@@ -258,11 +258,11 @@ get_main_popup (GschemToplevel *w_current)
     }
 
     /* Don't bother showing keybindings in the popup menu */
-    action = g_object_new (GSCHEM_TYPE_ACTION,
-                           "name", e.action,
-                           "label", gettext (e.name),
-                           "tooltip", gettext (e.name),
-                           NULL);
+    action = GSCHEM_ACTION (g_object_new (GSCHEM_TYPE_ACTION,
+                                          "name", e.action,
+                                          "label", gettext (e.name),
+                                          "tooltip", gettext (e.name),
+                                          NULL));
     /* If there's a matching stock item, use it. Otherwise lookup the
        name in the icon theme. */
     if (e.stock_id != NULL && gtk_stock_lookup (e.stock_id, &stock_info)) {
