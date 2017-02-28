@@ -1298,7 +1298,7 @@ gtk_sheet_set_selection_mode(GtkSheet *sheet, gint mode)
   if(GTK_WIDGET_REALIZED(sheet))
    gtk_sheet_real_unselect_range(sheet, NULL);
 
-  sheet->selection_mode = mode;
+  sheet->selection_mode = (GtkSelectionMode) mode;
 }
 
 void
