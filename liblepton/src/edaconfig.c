@@ -125,7 +125,9 @@ eda_config_class_init (EdaConfigClass *klass)
   /* Create signals */
   g_signal_new ("config-changed", /* signal name */
                 G_TYPE_FROM_CLASS (gobject_class), /* type */
-                G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE | G_SIGNAL_NO_HOOKS, /* flags */
+                (GSignalFlags) (G_SIGNAL_RUN_FIRST
+                                | G_SIGNAL_NO_RECURSE
+                                | G_SIGNAL_NO_HOOKS), /* flags */
                 G_STRUCT_OFFSET(EdaConfigClass, config_changed), /* class offset */
                 NULL, /* accumulator */
                 NULL, /* accumulator data */

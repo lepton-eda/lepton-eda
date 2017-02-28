@@ -95,7 +95,7 @@ static void geda_list_class_init( gpointer g_class, gpointer g_class_data )
   geda_list_signals[ CHANGED ] =
     g_signal_new ("changed",
                   G_OBJECT_CLASS_TYPE( gobject_class ),
-                  0     /*signal_flags */,
+                  (GSignalFlags) 0     /*signal_flags */,
                   0     /*class_offset */,
                   NULL, /* accumulator */
                   NULL, /* accu_data */
