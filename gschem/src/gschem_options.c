@@ -251,7 +251,7 @@ gschem_options_get_type ()
 GschemOptions*
 gschem_options_new ()
 {
-  return g_object_new (GSCHEM_TYPE_OPTIONS, NULL);
+  return GSCHEM_OPTIONS (g_object_new (GSCHEM_TYPE_OPTIONS, NULL));
 }
 
 
