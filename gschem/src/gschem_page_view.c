@@ -1023,7 +1023,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_PAGE:
-      gschem_page_view_set_page (view, g_value_get_pointer (value));
+      gschem_page_view_set_page (view, (PAGE*) g_value_get_pointer (value));
       break;
 
     case PROP_VADJUSTMENT:
@@ -1421,7 +1421,7 @@ geometry_cache_dispose_func (gpointer key,
                              gpointer value,
                              gpointer user_data)
 {
-  s_page_weak_unref (key, geometry_cache_page_weak_ref_notify, user_data);
+  s_page_weak_unref ((PAGE*) key, geometry_cache_page_weak_ref_notify, user_data);
   gschem_page_geometry_free (value);
   return TRUE;
 }

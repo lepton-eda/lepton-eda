@@ -47,7 +47,7 @@ s_util_embed(TOPLEVEL *pr_current, int embed_mode)
   for (p_iter = geda_list_get_glist (pr_current->pages);
        p_iter != NULL;
        p_iter = g_list_next (p_iter)) {
-    PAGE *p_current = p_iter->data;
+    PAGE *p_current = (PAGE*) p_iter->data;
 
     /* Cast removes const qualifier from return value of
      * s_page_objects() */
