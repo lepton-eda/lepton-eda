@@ -283,14 +283,16 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
                                                         "Horizontal adjustment",
                                                         "Horizontal adjustment",
                                                         GTK_TYPE_ADJUSTMENT,
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_PAGE,
                                    g_param_spec_pointer ("page",
                                                          "Page",
                                                          "Page",
-                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                         (GParamFlags) (G_PARAM_READWRITE
+                                                                        | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_PAGE_GEOMETRY,
@@ -298,7 +300,8 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
                                                        "Page Geometry",
                                                        "Page Geometry",
                                                        GSCHEM_TYPE_PAGE_GEOMETRY,
-                                                       G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+                                                       (GParamFlags) (G_PARAM_READABLE
+                                                                      | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_VADJUSTMENT,
@@ -306,7 +309,8 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
                                                         "Vertical adjustment",
                                                         "Vertical adjustment",
                                                         GTK_TYPE_ADJUSTMENT,
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 
   GTK_WIDGET_CLASS (klass)->set_scroll_adjustments_signal = g_signal_new (
     "set-scroll-adjustments",

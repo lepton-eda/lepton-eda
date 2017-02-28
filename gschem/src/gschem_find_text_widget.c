@@ -245,7 +245,8 @@ gschem_find_text_widget_class_init (GschemFindTextWidgetClass *klass)
                                                          "Descend",
                                                          "Descend",
                                                          FALSE,
-                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                         (GParamFlags) (G_PARAM_READWRITE
+                                                                        | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_FIND_TYPE,
@@ -255,7 +256,8 @@ gschem_find_text_widget_class_init (GschemFindTextWidgetClass *klass)
                                                      0,
                                                      2,
                                                      FIND_TYPE_SUBSTRING,
-                                                     G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_FIND_TEXT_STRING,
@@ -263,7 +265,8 @@ gschem_find_text_widget_class_init (GschemFindTextWidgetClass *klass)
                                                         "Find Text String",
                                                         "Find Text String",
                                                         "",
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 }
 
 

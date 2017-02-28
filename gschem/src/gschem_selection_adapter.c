@@ -1957,7 +1957,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_DASH_LENGTH,
@@ -1967,7 +1968,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_DASH_SPACE,
@@ -1977,7 +1979,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_FILL_ANGLE1,
@@ -1987,7 +1990,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_FILL_ANGLE2,
@@ -1997,7 +2001,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_FILL_PITCH1,
@@ -2007,7 +2012,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_FILL_PITCH2,
@@ -2017,7 +2023,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_FILL_TYPE,
@@ -2027,7 +2034,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_FILL_WIDTH,
@@ -2037,7 +2045,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_LINE_TYPE,
@@ -2047,7 +2056,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
@@ -2058,7 +2068,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_OBJECT_COLOR,
@@ -2068,7 +2079,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_PIN_TYPE,
@@ -2078,7 +2090,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_TEXT_ALIGNMENT,
@@ -2088,7 +2101,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_TEXT_COLOR,
@@ -2098,7 +2112,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_TEXT_ROTATION,
@@ -2108,7 +2123,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_TEXT_SIZE,
@@ -2118,7 +2134,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                      G_MININT,
                                                      G_MAXINT,
                                                      NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_TEXT_STRING,
@@ -2126,7 +2143,8 @@ class_init (GschemSelectionAdapterClass *klass)
                                                         "Text String",
                                                         "Text String",
                                                         NULL,
-                                                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_STATIC_STRINGS)));
 
   /* This signal indicates changes to the selection that requires the undo
    * manager save the state.

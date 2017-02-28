@@ -140,13 +140,15 @@ close_confirmation_dialog_class_init (CloseConfirmationDialogClass *klass)
     g_param_spec_pointer ("unsaved-page",
                           "",
                           "",
-                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE));
+                          (GParamFlags) (G_PARAM_CONSTRUCT_ONLY
+                                         | G_PARAM_WRITABLE)));
   g_object_class_install_property (
     gobject_class, PROP_UNSAVED_PAGES,
     g_param_spec_pointer ("unsaved-pages",
                           "",
                           "",
-                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE));
+                          (GParamFlags) (G_PARAM_CONSTRUCT_ONLY
+                                         | G_PARAM_WRITABLE)));
   g_object_class_install_property (
     gobject_class, PROP_SELECTED_PAGES,
     g_param_spec_pointer ("selected-pages",

@@ -147,7 +147,8 @@ gschem_show_hide_text_widget_class_init (GschemShowHideTextWidgetClass *klass)
                                                         "Button Text",
                                                         "Button Text",
                                                         _("Hide"),
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_LABEL_TEXT,
@@ -155,7 +156,8 @@ gschem_show_hide_text_widget_class_init (GschemShowHideTextWidgetClass *klass)
                                                         "Label Text",
                                                         "Label Text",
                                                         _("Hide text starting with:"),
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_TEXT_STRING,
@@ -163,7 +165,8 @@ gschem_show_hide_text_widget_class_init (GschemShowHideTextWidgetClass *klass)
                                                         "Text String",
                                                         "Text String",
                                                         "",
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 }
 
 

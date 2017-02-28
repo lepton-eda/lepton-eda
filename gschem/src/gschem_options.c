@@ -410,7 +410,9 @@ class_init (GschemOptionsClass *klass)
                                                      0,
                                                      (GRID_MODE_COUNT - 1),
                                                      DEFAULT_GRID_MODE,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS
+                                                                    | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_MAGNETIC_NET_MODE,
@@ -418,7 +420,9 @@ class_init (GschemOptionsClass *klass)
                                                          "Magnetic Net Mode",
                                                          "magnetic Net Mode",
                                                          DEFAULT_MAGNETIC_NET_MODE,
-                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT));
+                                                         (GParamFlags) (G_PARAM_READWRITE
+                                                                        | G_PARAM_STATIC_STRINGS
+                                                                        | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_NET_RUBBER_BAND_MODE,
@@ -426,7 +430,9 @@ class_init (GschemOptionsClass *klass)
                                                          "Net Rubber Band Mode",
                                                          "Net Rubber Band Mode",
                                                          DEFAULT_NET_RUBBER_BAND_MODE,
-                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT));
+                                                         (GParamFlags) (G_PARAM_READWRITE
+                                                                        | G_PARAM_STATIC_STRINGS
+                                                                        | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_SNAP_MODE,
@@ -436,7 +442,9 @@ class_init (GschemOptionsClass *klass)
                                                      0,
                                                      SNAP_STATE_COUNT - 1,
                                                      SNAP_GRID,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS
+                                                                    | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_SNAP_SIZE,
@@ -446,7 +454,9 @@ class_init (GschemOptionsClass *klass)
                                                      MINIMUM_SNAP_SIZE,
                                                      MAXIMUM_SNAP_SIZE,
                                                      DEFAULT_SNAP_SIZE,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_STATIC_STRINGS
+                                                                    | G_PARAM_CONSTRUCT)));
 }
 
 

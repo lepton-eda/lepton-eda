@@ -208,8 +208,10 @@ eda_renderer_class_init (EdaRendererClass *klass)
   klass->user_bounds = eda_renderer_default_get_user_bounds;
 
   /* Install properties */
-  param_flags = (G_PARAM_READWRITE | G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK |
-                 G_PARAM_STATIC_BLURB);
+  param_flags = (GParamFlags) (G_PARAM_READWRITE
+                               | G_PARAM_STATIC_NAME
+                               | G_PARAM_STATIC_NICK
+                               | G_PARAM_STATIC_BLURB);
 
   g_object_class_install_property (gobject_class, PROP_CAIRO_CONTEXT,
                                    g_param_spec_pointer ("cairo-context",

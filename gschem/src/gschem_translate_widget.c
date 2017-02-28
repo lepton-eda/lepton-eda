@@ -237,7 +237,8 @@ class_init (GschemTranslateWidgetClass *klass)
                                                         "Label Text",
                                                         "Label Text",
                                                         _("Coordinate:"),
-                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                        (GParamFlags) (G_PARAM_READWRITE
+                                                                       | G_PARAM_CONSTRUCT)));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_VALUE,
@@ -247,7 +248,8 @@ class_init (GschemTranslateWidgetClass *klass)
                                                      0,
                                                      G_MAXINT,
                                                      0,
-                                                     G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+                                                     (GParamFlags) (G_PARAM_READWRITE
+                                                                    | G_PARAM_CONSTRUCT)));
 }
 
 

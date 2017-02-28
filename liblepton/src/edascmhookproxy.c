@@ -73,8 +73,10 @@ edascm_hook_proxy_class_init (EdascmHookProxyClass *klass)
   klass->run = edascm_hook_proxy_default_run_handler;
 
   /* Install properties */
-  param_flags = (G_PARAM_READWRITE | G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK |
-                 G_PARAM_STATIC_BLURB);
+  param_flags = (GParamFlags) (G_PARAM_READWRITE
+                               | G_PARAM_STATIC_NAME
+                               | G_PARAM_STATIC_NICK
+                               | G_PARAM_STATIC_BLURB);
 
   g_object_class_install_property (gobject_class, PROP_HOOK,
                                    edascm_param_spec_scm ("hook",
