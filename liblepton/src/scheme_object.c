@@ -1827,7 +1827,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   PATH *path = obj->path;
-  PATH_SECTION section = {0, 0, 0, 0, 0, 0, 0};
+  PATH_SECTION section = {(PATH_CODE) 0, 0, 0, 0, 0, 0, 0};
 
   /* Check & extract path element type. */
   if      (scm_is_eq (type_s, closepath_sym)) { section.code = PATH_END;     }
