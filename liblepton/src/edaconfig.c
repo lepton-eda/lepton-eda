@@ -669,8 +669,8 @@ eda_config_load (EdaConfig *cfg, GError **error)
   GError *tmp_err = NULL;
   if (len != 0) { /* Don't load zero-length keyfiles */
     status = g_key_file_load_from_data (newkeyfile, buf, len,
-                                        (G_KEY_FILE_KEEP_COMMENTS
-                                         | G_KEY_FILE_KEEP_TRANSLATIONS),
+                                        (GKeyFileFlags) (G_KEY_FILE_KEEP_COMMENTS
+                                                         | G_KEY_FILE_KEEP_TRANSLATIONS),
                                         &tmp_err);
   } else {
     status = TRUE;
