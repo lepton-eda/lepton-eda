@@ -2813,7 +2813,7 @@ gtk_sheet_realize (GtkWidget * widget)
   children = sheet->children;
   while(children)
     {
-      child = children->data;
+      child = (GtkSheetChild*) children->data;
       children = g_list_next(children);
  
       gtk_sheet_realize_child(sheet, child);
@@ -2947,7 +2947,7 @@ gtk_sheet_map (GtkWidget * widget)
       children = sheet->children;
       while (children)
       {
-        child = children->data;
+        child = (GtkSheetChild*) children->data;
         children = g_list_next(children);
 
         if (gtk_widget_get_visible (child->widget) &&
@@ -2992,7 +2992,7 @@ gtk_sheet_unmap (GtkWidget * widget)
       children = sheet->children;
       while (children)
         {
-          child = children->data;
+          child = (GtkSheetChild*) children->data;
           children = g_list_next(children);
 
           if (gtk_widget_get_visible (child->widget) &&
@@ -5923,7 +5923,7 @@ gtk_sheet_size_request (GtkWidget * widget,
   children = sheet->children;
   while (children)
   {
-    child = children->data;
+    child = (GtkSheetChild*) children->data;
     children = g_list_next(children);
 
     gtk_widget_size_request(child->widget, &child_requisition);
@@ -8419,7 +8419,7 @@ gtk_sheet_move_child(GtkSheet *sheet, GtkWidget *widget, gint x, gint y)
   children = sheet->children;
   while(children)
     {
-       child = children->data;
+      child = (GtkSheetChild*) children->data;
 
        if(child->widget == widget){
          child->x = x;
@@ -8544,7 +8544,7 @@ gtk_sheet_forall (GtkContainer *container,
   children = sheet->children;
   while (children)
     {
-      child = children->data;
+      child = (GtkSheetChild*) children->data;
       children = g_list_next(children);
 
       (* callback) (child->widget, callback_data);
