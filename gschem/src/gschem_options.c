@@ -76,7 +76,7 @@ gschem_options_cycle_grid_mode (GschemOptions *options)
 
   g_return_if_fail (options != NULL);
 
-  next_grid_mode = (options->grid_mode + 1) % GRID_MODE_COUNT;
+  next_grid_mode = (GRID_MODE) ((options->grid_mode + 1) % GRID_MODE_COUNT);
 
   gschem_options_set_grid_mode (options, next_grid_mode);
 }
@@ -148,7 +148,7 @@ gschem_options_get_grid_mode (GschemOptions *options)
 {
   g_return_val_if_fail (options != NULL, GRID_MODE_MESH);
 
-  return options->grid_mode;
+  return (GRID_MODE) options->grid_mode;
 }
 
 
@@ -517,7 +517,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
   switch (param_id) {
     case PROP_GRID_MODE:
-      gschem_options_set_grid_mode (options, g_value_get_int (value));
+      gschem_options_set_grid_mode (options, (GRID_MODE) g_value_get_int (value));
       break;
 
     case PROP_MAGNETIC_NET_MODE:

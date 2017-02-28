@@ -619,7 +619,7 @@ update_grid_mode_model (GschemOptionsWidget *widget, GtkWidget *button)
 
     for (index = 0; index < GRID_MODE_COUNT; index++) {
       if (widget->grid_radio[index] == button) {
-        gschem_options_set_grid_mode (widget->options, index);
+        gschem_options_set_grid_mode (widget->options, (GRID_MODE) index);
         break;
       }
     }
