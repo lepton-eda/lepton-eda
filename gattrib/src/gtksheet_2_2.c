@@ -2343,13 +2343,21 @@ gtk_sheet_draw_flashing_range(GtkSheet *sheet, GtkSheetRange range)
   }
   if(height>clip_area.height) height=clip_area.height+10;
 
-  gdk_gc_set_line_attributes(sheet->xor_gc, 1, 1, 0 ,0 );
+  gdk_gc_set_line_attributes (sheet->xor_gc,
+                              1,
+                              (GdkLineStyle) 1,
+                              (GdkCapStyle) 0,
+                              (GdkJoinStyle) 0);
 
   gdk_draw_rectangle(sheet->sheet_window, sheet->xor_gc, FALSE, 
                      x, y,
                      width, height);
 
-  gdk_gc_set_line_attributes (sheet->xor_gc, 1, 0, 0, 0);
+  gdk_gc_set_line_attributes (sheet->xor_gc,
+                              1,
+                              (GdkLineStyle) 0,
+                              (GdkCapStyle) 0,
+                              (GdkJoinStyle) 0);
 
   gdk_gc_set_clip_rectangle(sheet->xor_gc, NULL);
 
@@ -3034,7 +3042,11 @@ gtk_sheet_cell_draw_default (GtkSheet *sheet, gint row, gint col)
 	              area.width,
                       area.height);
 
-  gdk_gc_set_line_attributes (sheet->fg_gc, 1, 0, 0, 0);
+  gdk_gc_set_line_attributes (sheet->fg_gc,
+                              1,
+                              (GdkLineStyle) 0,
+                              (GdkCapStyle) 0,
+                              (GdkJoinStyle) 0);
 
   if(sheet->show_grid){
     gdk_gc_set_foreground (sheet->bg_gc, &sheet->grid_color);
@@ -7515,7 +7527,7 @@ guint width, gint line_style)
       gtk_sheet_get_attributes(sheet, i, j, &attributes);
       attributes.border.mask = mask;
       attributes.border.width = width;
-      attributes.border.line_style=line_style;
+      attributes.border.line_style = (GdkLineStyle) line_style;
       attributes.border.cap_style=GDK_CAP_NOT_LAST;
       attributes.border.join_style=GDK_JOIN_MITER;
       gtk_sheet_set_cell_attributes(sheet, i, j, attributes);      
