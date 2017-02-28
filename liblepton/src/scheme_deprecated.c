@@ -89,6 +89,6 @@ edascm_init_deprecated ()
 {
   /* Define the (geda core page) module */
   scm_c_define_module ("geda core deprecated",
-                       init_module_geda_core_deprecated,
+                       (void (*)(void*)) init_module_geda_core_deprecated,
                        NULL);
 }

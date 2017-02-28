@@ -474,6 +474,6 @@ edascm_init_page ()
 {
   /* Define the (geda core page) module */
   scm_c_define_module ("geda core page",
-                       init_module_geda_core_page,
+                       (void (*)(void*)) init_module_geda_core_page,
                        NULL);
 }

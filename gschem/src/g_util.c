@@ -88,6 +88,6 @@ g_init_util ()
 {
   /* Define the (gschem core util) module */
   scm_c_define_module ("gschem core util",
-                       init_module_gschem_core_util,
+                       (void (*)(void*)) init_module_gschem_core_util,
                        NULL);
 }

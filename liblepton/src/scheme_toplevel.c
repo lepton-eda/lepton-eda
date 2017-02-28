@@ -136,6 +136,6 @@ edascm_init_toplevel ()
 
   /* Define the (geda core toplevel) module */
   scm_c_define_module ("geda core toplevel",
-                       init_module_geda_core_toplevel,
+                       (void (*)(void*)) init_module_geda_core_toplevel,
                        NULL);
 }

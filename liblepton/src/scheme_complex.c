@@ -399,6 +399,6 @@ edascm_init_complex ()
 {
   /* Define the (geda core object) module */
   scm_c_define_module ("geda core complex",
-                       init_module_geda_core_complex,
+                       (void (*)(void*)) init_module_geda_core_complex,
                        NULL);
 }

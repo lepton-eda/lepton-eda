@@ -181,6 +181,6 @@ g_init_select ()
 {
   /* Define the (gschem core selection) module */
   scm_c_define_module ("gschem core selection",
-                       init_module_gschem_core_select,
+                       (void (*)(void*)) init_module_gschem_core_select,
                        NULL);
 }

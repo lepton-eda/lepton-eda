@@ -193,6 +193,6 @@ g_init_hook ()
 {
   /* Define the (gschem core hook) module */
   scm_c_define_module ("gschem core hook",
-                       init_module_gschem_core_hook,
+                       (void (*)(void*)) init_module_gschem_core_hook,
                        NULL);
 }

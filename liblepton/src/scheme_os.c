@@ -183,6 +183,6 @@ edascm_init_os ()
 {
   /* Define the (geda core os) module */
   scm_c_define_module ("geda core os",
-                       init_module_geda_core_os,
+                       (void (*)(void*)) init_module_geda_core_os,
                        NULL);
 }

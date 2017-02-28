@@ -440,6 +440,6 @@ s_init_traverse ()
 {
   /* Define the (gsymcheck core check) module */
   scm_c_define_module ("gnetlist core traverse",
-                       init_module_gnetlist_core_traverse,
+                       (void (*)(void*)) init_module_gnetlist_core_traverse,
                        NULL);
 }
