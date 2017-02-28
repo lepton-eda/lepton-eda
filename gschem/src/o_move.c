@@ -64,7 +64,7 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
        * during screen updates. */
       for (s_iter = w_current->stretch_list;
            s_iter != NULL; s_iter = g_list_next (s_iter)) {
-        STRETCH *stretch = s_iter->data;
+        STRETCH *stretch = (STRETCH*) s_iter->data;
         stretch->object->dont_redraw = TRUE;
         o_invalidate (w_current, stretch->object);
       }
@@ -179,7 +179,7 @@ void o_move_end(GschemToplevel *w_current)
    * We set this above, in o_move_start(). */
   for (s_iter = w_current->stretch_list;
        s_iter != NULL; s_iter = g_list_next (s_iter)) {
-    STRETCH *stretch = s_iter->data;
+    STRETCH *stretch = (STRETCH*) s_iter->data;
     stretch->object->dont_redraw = FALSE;
   }
 
@@ -266,7 +266,7 @@ void o_move_cancel (GschemToplevel *w_current)
    * We set this above, in o_move_start(). */
   for (s_iter = w_current->stretch_list;
        s_iter != NULL; s_iter = g_list_next (s_iter)) {
-    STRETCH *stretch = s_iter->data;
+    STRETCH *stretch = (STRETCH*) s_iter->data;
     stretch->object->dont_redraw = FALSE;
   }
   g_list_free(page->place_list);
@@ -418,7 +418,7 @@ void o_move_invalidate_rubber (GschemToplevel *w_current, int drawing)
 
     for (s_iter = w_current->stretch_list;
          s_iter != NULL; s_iter = g_list_next (s_iter)) {
-      STRETCH *s_current = s_iter->data;
+      STRETCH *s_current = (STRETCH*) s_iter->data;
       OBJECT *object = s_current->object;
 
       switch (object->type) {
@@ -472,7 +472,7 @@ o_move_draw_rubber (GschemToplevel *w_current,
 
   for (s_iter = w_current->stretch_list;
        s_iter != NULL; s_iter = g_list_next (s_iter)) {
-    STRETCH *s_current = s_iter->data;
+    STRETCH *s_current = (STRETCH*) s_iter->data;
     OBJECT *object = s_current->object;
     int whichone = s_current->whichone;
 
@@ -703,7 +703,7 @@ void o_move_end_rubberband (GschemToplevel *w_current,
 
   for (s_iter = w_current->stretch_list;
        s_iter != NULL; s_iter = s_iter_next) {
-    STRETCH *s_current = s_iter->data;
+    STRETCH *s_current = (STRETCH*) s_iter->data;
     OBJECT *object = s_current->object;
     int whichone = s_current->whichone;
 
