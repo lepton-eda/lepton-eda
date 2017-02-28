@@ -2650,7 +2650,9 @@ gtk_sheet_style_set (GtkWidget *widget,
 
   if(GTK_WIDGET_REALIZED(widget))
      {
-       gtk_style_set_background (widget->style, widget->window, widget->state);
+       gtk_style_set_background (widget->style,
+                                 widget->window,
+                                 (GtkStateType) widget->state);
      }
 
 }
@@ -3820,10 +3822,10 @@ gtk_sheet_cell_get_state (GtkSheet *sheet, gint row, gint col)
  gint state;
  GtkSheetRange *range;
 
- g_return_val_if_fail (sheet != NULL, 0);
- g_return_val_if_fail (GTK_IS_SHEET (sheet), 0);
- if(col > sheet->maxcol || row > sheet->maxrow) return 0;
- if(col < 0 || row < 0) return 0;
+ g_return_val_if_fail (sheet != NULL, (GtkStateType) 0);
+ g_return_val_if_fail (GTK_IS_SHEET (sheet), (GtkStateType) 0);
+ if(col > sheet->maxcol || row > sheet->maxrow) return (GtkStateType) 0;
+ if(col < 0 || row < 0) return (GtkStateType) 0;
 
  state = sheet->state;
  range = &sheet->range;
@@ -6499,20 +6501,26 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
 
                switch(button->justification){
                  case GTK_JUSTIFY_LEFT:
-                   gtk_paint_string (GTK_WIDGET(sheet)->style, window, state,
+                   gtk_paint_string (GTK_WIDGET(sheet)->style,
+                                     window,
+                                     (GtkStateType) state,
                                      &allocation, GTK_WIDGET(sheet), "label",
                                      x + CELLOFFSET, y,
                                      line);
                    break;
                  case GTK_JUSTIFY_RIGHT:
-                   gtk_paint_string (GTK_WIDGET(sheet)->style, window, state,
+                   gtk_paint_string (GTK_WIDGET(sheet)->style,
+                                     window,
+                                     (GtkStateType) state,
                                      &allocation, GTK_WIDGET(sheet), "label",
                                      x + width - text_width - CELLOFFSET, y,
                                      line);
                    break;
                  case GTK_JUSTIFY_CENTER:
                  default:
-                   gtk_paint_string (GTK_WIDGET(sheet)->style, window, state,
+                   gtk_paint_string (GTK_WIDGET(sheet)->style,
+                                     window,
+                                     (GtkStateType) state,
                                      &allocation, GTK_WIDGET(sheet), "label",
                                      x + (width - text_width) /2, y,
                                      line);
@@ -6533,20 +6541,26 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
 
            switch(button->justification){
              case GTK_JUSTIFY_LEFT:
-               gtk_paint_string (GTK_WIDGET(sheet)->style, window, state,
+               gtk_paint_string (GTK_WIDGET(sheet)->style,
+                                 window,
+                                 (GtkStateType) state,
                                  &allocation, GTK_WIDGET(sheet), "label",
                                  x + CELLOFFSET, y,
                                  label);
                break;
              case GTK_JUSTIFY_RIGHT:
-               gtk_paint_string (GTK_WIDGET(sheet)->style, window, state,
+               gtk_paint_string (GTK_WIDGET(sheet)->style,
+                                 window,
+                                 (GtkStateType) state,
                                  &allocation, GTK_WIDGET(sheet), "label",
                                  x + width - text_width - CELLOFFSET, y,
                                  label);
                break;
              case GTK_JUSTIFY_CENTER:
              default:
-               gtk_paint_string (GTK_WIDGET(sheet)->style, window, state,
+               gtk_paint_string (GTK_WIDGET(sheet)->style,
+                                 window,
+                                 (GtkStateType) state,
                                  &allocation, GTK_WIDGET(sheet), "label",
                                  x + (width - text_width) /2, y,
                                  label);
