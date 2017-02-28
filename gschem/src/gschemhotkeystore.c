@@ -237,5 +237,5 @@ gschem_hotkey_store_bind_keys_handler (GschemHotkeyStore *store,
 GschemHotkeyStore *
 gschem_hotkey_store_new (void)
 {
-  return g_object_new (GSCHEM_TYPE_HOTKEY_STORE, NULL);
+  return GSCHEM_HOTKEY_STORE (g_object_new (GSCHEM_TYPE_HOTKEY_STORE, NULL));
 }
