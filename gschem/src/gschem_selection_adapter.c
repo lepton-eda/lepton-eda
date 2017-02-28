@@ -2155,7 +2155,7 @@ class_init (GschemSelectionAdapterClass *klass)
 
   g_signal_new ("handle-undo",                    /* signal_name  */
                 G_OBJECT_CLASS_TYPE (klass),      /* itype        */
-                0,                                /* signal_flags */
+                (GSignalFlags) 0,                 /* signal_flags */
                 0,                                /* class_offset */
                 NULL,                             /* accumulator  */
                 NULL,                             /* accu_data    */

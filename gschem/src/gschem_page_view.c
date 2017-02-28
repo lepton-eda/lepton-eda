@@ -315,7 +315,7 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
   GTK_WIDGET_CLASS (klass)->set_scroll_adjustments_signal = g_signal_new (
     "set-scroll-adjustments",
     G_OBJECT_CLASS_TYPE (klass),
-    G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+    (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
     0,
     NULL,
     NULL,
@@ -328,7 +328,7 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
   g_signal_new (
     "update-grid-info",
     G_OBJECT_CLASS_TYPE (klass),
-    G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+    (GSignalFlags) (G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION),
     0,
     NULL,
     NULL,

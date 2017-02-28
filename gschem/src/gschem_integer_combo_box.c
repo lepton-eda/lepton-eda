@@ -121,7 +121,7 @@ gschem_integer_combo_box_class_init (GschemIntegerComboBoxClass *klass)
 
   g_signal_new ("apply",                          /* signal_name  */
                 G_OBJECT_CLASS_TYPE (klass),      /* itype        */
-                0,                                /* signal_flags */
+                (GSignalFlags) 0,                 /* signal_flags */
                 0,                                /* class_offset */
                 NULL,                             /* accumulator  */
                 NULL,                             /* accu_data    */
