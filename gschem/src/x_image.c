@@ -279,13 +279,14 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
 
         /* Warn the user */
         dialog = gtk_message_dialog_new (GTK_WINDOW(w_current->main_window),
-            GTK_DIALOG_MODAL
-            | GTK_DIALOG_DESTROY_WITH_PARENT,
-            GTK_MESSAGE_ERROR,
-            GTK_BUTTONS_OK,
-            _("There was the following error when saving image with type %1$s to filename:\n%2$s\n\n%3$s.\n"),
-            filetype, filename, gerror->message
-            );
+                                         (GtkDialogFlags) (GTK_DIALOG_MODAL
+                                                           | GTK_DIALOG_DESTROY_WITH_PARENT),
+                                         GTK_MESSAGE_ERROR,
+                                         GTK_BUTTONS_OK,
+                                         _("There was the following error when saving image with type %1$s to filename:\n%2$s\n\n%3$s.\n"),
+                                         filetype,
+                                         filename,
+                                         gerror->message);
 
         gtk_dialog_run (GTK_DIALOG (dialog));
         gtk_widget_destroy (dialog);

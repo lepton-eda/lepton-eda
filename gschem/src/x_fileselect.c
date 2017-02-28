@@ -283,8 +283,8 @@ x_fileselect_save (GschemToplevel *w_current)
     if ((filename != NULL) && g_file_test (filename, G_FILE_TEST_EXISTS)) {
       GtkWidget *checkdialog =
         gtk_message_dialog_new (GTK_WINDOW(dialog),
-                                (GTK_DIALOG_MODAL |
-                                 GTK_DIALOG_DESTROY_WITH_PARENT),
+                                (GtkDialogFlags) (GTK_DIALOG_MODAL |
+                                                  GTK_DIALOG_DESTROY_WITH_PARENT),
                                 GTK_MESSAGE_QUESTION,
                                 GTK_BUTTONS_YES_NO,
                                 _("The selected file `%1$s' already exists.\n\n"

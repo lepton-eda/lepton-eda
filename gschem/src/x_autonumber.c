@@ -1202,7 +1202,7 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
 
   autonumber_text = gschem_dialog_new_with_buttons(_("Autonumber text"),
                                                    GTK_WINDOW(w_current->main_window),
-                                                   0, /* not modal */
+                                                   (GtkDialogFlags) 0, /* not modal */
                                                    "autonumber", w_current,
                                                    GTK_STOCK_CLOSE,
                                                    GTK_RESPONSE_REJECT,
