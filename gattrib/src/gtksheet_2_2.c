@@ -3184,7 +3184,7 @@ gtk_sheet_cell_draw_label (GtkSheet *sheet, gint row, gint col)
 
   pango_layout_get_pixel_extents (layout, NULL, &rect);
 
-  line = pango_layout_get_lines (layout)->data;
+  line = (PangoLayoutLine*) pango_layout_get_lines (layout)->data;
   pango_layout_line_get_extents (line, NULL, &logical_rect);
 
   metrics = pango_context_get_metrics(context,
