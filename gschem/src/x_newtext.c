@@ -348,7 +348,10 @@ GType newtext_get_type()
       (GInstanceInitFunc) newtext_init,
     };
 
-    type = g_type_register_static (GSCHEM_TYPE_DIALOG, "NewText", &info, 0);
+    type = g_type_register_static (GSCHEM_TYPE_DIALOG,
+                                   "NewText",
+                                   &info,
+                                   (GTypeFlags) 0);
   }
 
   return type;

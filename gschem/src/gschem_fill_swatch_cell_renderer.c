@@ -104,7 +104,7 @@ gschem_fill_swatch_cell_renderer_get_type ()
     type = g_type_register_static (GTK_TYPE_CELL_RENDERER_TEXT,
                                    "GschemFillSwatchCellRenderer",
                                    &info,
-                                   0);
+                                   (GTypeFlags) 0);
   }
 
   return type;

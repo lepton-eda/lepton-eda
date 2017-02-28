@@ -453,7 +453,10 @@ gschem_page_view_get_type ()
       (GInstanceInitFunc) gschem_page_view_init,
     };
 
-    type = g_type_register_static (GTK_TYPE_DRAWING_AREA, "GschemPageView", &info, 0);
+    type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
+                                   "GschemPageView",
+                                   &info,
+                                   (GTypeFlags) 0);
   }
 
   return type;

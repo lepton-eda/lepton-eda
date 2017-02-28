@@ -65,7 +65,7 @@ gschem_bin_get_type ()
     type = g_type_register_static (GTK_TYPE_BIN,
                                    "GschemBin",
                                    &info,
-                                   0);
+                                   (GTypeFlags) 0);
   }
 
   return type;

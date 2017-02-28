@@ -132,7 +132,7 @@ gschem_translate_widget_get_type ()
     type = g_type_register_static (GTK_TYPE_INFO_BAR,
                                    "GschemTranslateWidget",
                                    &info,
-                                   0);
+                                   (GTypeFlags) 0);
   }
 
   return type;

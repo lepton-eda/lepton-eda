@@ -258,7 +258,8 @@ gschem_preview_get_type ()
 
     preview_type = g_type_register_static (GSCHEM_TYPE_PAGE_VIEW,
                                            "GschemPreview",
-                                           &preview_info, 0);
+                                           &preview_info,
+                                           (GTypeFlags) 0);
   }
 
   return preview_type;

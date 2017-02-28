@@ -1309,7 +1309,8 @@ compselect_get_type ()
 
     compselect_type = g_type_register_static (GSCHEM_TYPE_DIALOG,
                                               "Compselect",
-                                              &compselect_info, 0);
+                                              &compselect_info,
+                                              (GTypeFlags) 0);
   }
 
   return compselect_type;

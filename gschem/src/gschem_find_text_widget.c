@@ -361,7 +361,10 @@ gschem_find_text_widget_get_type ()
       (GInstanceInitFunc) gschem_find_text_widget_init,
     };
 
-    type = g_type_register_static (GTK_TYPE_INFO_BAR, "GschemFindTextWidget", &info, 0);
+    type = g_type_register_static (GTK_TYPE_INFO_BAR,
+                                   "GschemFindTextWidget",
+                                   &info,
+                                   (GTypeFlags) 0);
   }
 
   return type;

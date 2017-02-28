@@ -156,7 +156,10 @@ gschem_integer_combo_box_get_type()
     };
 
 #if GTK_CHECK_VERSION (2, 24, 0)
-    type = g_type_register_static (GTK_TYPE_COMBO_BOX, "GschemIntegerComboBox", &info, 0);
+    type = g_type_register_static (GTK_TYPE_COMBO_BOX,
+                                   "GschemIntegerComboBox",
+                                   &info,
+                                   (GTypeFlags) 0);
 #else
     type = g_type_register_static (GTK_TYPE_COMBO_BOX_ENTRY, "GschemIntegerComboBox", &info, 0);
 #endif

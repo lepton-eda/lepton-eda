@@ -99,7 +99,7 @@ gschem_binding_integer_get_type()
     type = g_type_register_static (GSCHEM_TYPE_BINDING,
                                    "GschemBindingInteger",
                                    &info,
-                                   0);
+                                   (GTypeFlags) 0);
   }
 
   return type;

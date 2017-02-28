@@ -233,7 +233,10 @@ gschem_options_get_type ()
       (GInstanceInitFunc) instance_init,
     };
 
-    type = g_type_register_static (G_TYPE_OBJECT, "GschemOptions", &info, 0);
+    type = g_type_register_static (G_TYPE_OBJECT,
+                                   "GschemOptions",
+                                   &info,
+                                   (GTypeFlags) 0);
   }
 
   return type;

@@ -282,7 +282,10 @@ gschem_macro_widget_get_type ()
       (GInstanceInitFunc) gschem_macro_widget_init,
     };
 
-    type = g_type_register_static (GTK_TYPE_INFO_BAR, "GschemMacroWidget", &info, 0);
+    type = g_type_register_static (GTK_TYPE_INFO_BAR,
+                                   "GschemMacroWidget",
+                                   &info,
+                                   (GTypeFlags)  0);
   }
 
   return type;

@@ -146,7 +146,7 @@ gschem_text_properties_widget_get_type ()
     type = g_type_register_static (GSCHEM_TYPE_BIN,
                                    "GschemTextPropertiesWidget",
                                    &info,
-                                   0);
+                                   (GTypeFlags) 0);
   }
 
   return type;

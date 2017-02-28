@@ -127,7 +127,10 @@ gschem_object_properties_widget_get_type()
       (GInstanceInitFunc) instance_init,
     };
 
-    type = g_type_register_static (GSCHEM_TYPE_BIN, "GschemObjectPropertiesWidget", &info, 0);
+    type = g_type_register_static (GSCHEM_TYPE_BIN,
+                                   "GschemObjectPropertiesWidget",
+                                   &info,
+                                   (GTypeFlags) 0);
   }
 
   return type;

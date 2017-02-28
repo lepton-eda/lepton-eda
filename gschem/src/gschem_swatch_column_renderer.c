@@ -300,7 +300,10 @@ gschem_swatch_column_renderer_get_type()
       (GInstanceInitFunc) swatchcr_init,
     };
 
-    type = g_type_register_static (GTK_TYPE_CELL_RENDERER_TEXT, "GschemSwatchColumnRenderer", &info, 0);
+    type = g_type_register_static (GTK_TYPE_CELL_RENDERER_TEXT,
+                                   "GschemSwatchColumnRenderer",
+                                   &info,
+                                   (GTypeFlags) 0);
   }
 
   return type;

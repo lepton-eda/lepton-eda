@@ -689,8 +689,10 @@ gtk_sheet_get_type ()
         NULL,
       };
       sheet_type =
-        g_type_register_static (GTK_TYPE_CONTAINER, "GtkSheet",
-                                &sheet_info, 0);
+        g_type_register_static (GTK_TYPE_CONTAINER,
+                                "GtkSheet",
+                                &sheet_info,
+                                (GTypeFlags) 0);
     }
   return sheet_type;
 }

@@ -130,7 +130,10 @@ GType geda_list_get_type(void)
       0,                            /* n_preallocs */
       geda_list_instance_init       /* instance_init */
     };
-    type = g_type_register_static (G_TYPE_OBJECT, "GedaList", &info, 0);
+    type = g_type_register_static (G_TYPE_OBJECT,
+                                   "GedaList",
+                                   &info,
+                                   (GTypeFlags) 0);
   }
   return type;
 }
