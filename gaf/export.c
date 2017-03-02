@@ -440,9 +440,21 @@ export_layout_page (PAGE *page, cairo_rectangle_t *extents, cairo_matrix_t *mtx)
 
   /* Finally, create and set a cairo transformation matrix that
    * centres the drawing into the drawable area. */
-  cairo_matrix_init (mtx, s, 0, 0, -s,
-                     - wx_min * s + drawable.x + slack[0],
-                     (wy_min + w_height) * s + drawable.y + slack[1]);
+
+  /* Create an initial matrix */
+  cairo_matrix_init_identity (mtx);
+
+  /* To understand how the following transformations work, read
+   * them from bottom to top. */
+  /* Align the matrix accounting for margins and 'slack' space. */
+  cairo_matrix_translate (mtx, drawable.x + slack[0], drawable.y + slack[1]);
+  /* Reverse the Y axis since the drawable origin is top-left
+   * while the schematic origin is bottom-left, and scale the
+   * matrix using the optimum scale factor found above. */
+  cairo_matrix_scale (mtx, s, -s);
+  /* Translate matrix to the drawable origin (its left-top
+     point) */
+  cairo_matrix_translate (mtx, -wx_min, -(wy_min + w_height));
 }
 
 /* Actually draws a page.  If page is NULL, uses the first open page. */
