@@ -50,8 +50,10 @@ export_text_rendered_bounds (void *user_data,
                              gint *right,
                              gint *bottom);
 
-static void export_layout_page (PAGE *page, cairo_rectangle_t *extents,
-                                cairo_matrix_t *mtx);
+static void export_layout_page (PAGE *page,
+                                cairo_rectangle_t *extents,
+                                cairo_matrix_t *mtx,
+                                gboolean postscript);
 static void export_draw_page (PAGE *page);
 
 static void export_png (void);
@@ -336,7 +338,10 @@ export_cairo_check_error (cairo_status_t status)
  * Takes into account all of the margin/orientation/paper settings,
  * and the size of the drawing itself. */
 static void
-export_layout_page (PAGE *page, cairo_rectangle_t *extents, cairo_matrix_t *mtx)
+export_layout_page (PAGE *page,
+                    cairo_rectangle_t *extents,
+                    cairo_matrix_t *mtx,
+                    gboolean postscript)
 {
   cairo_rectangle_t drawable;
   int wx_min, wy_min, wx_max, wy_max, w_width, w_height;
@@ -446,6 +451,15 @@ export_layout_page (PAGE *page, cairo_rectangle_t *extents, cairo_matrix_t *mtx)
 
   /* To understand how the following transformations work, read
    * them from bottom to top. */
+
+  /* Turn page 90 degrees CCW. This is needed only for plain PS
+   * output in landscape orientation. See comments in
+   * export_postscript() for more information. */
+  if (postscript && (extents->width > extents->height)) {
+    cairo_matrix_translate (mtx, 0, extents->width);
+    cairo_matrix_rotate (mtx, -M_PI/2);
+  }
+
   /* Align the matrix accounting for margins and 'slack' space. */
   cairo_matrix_translate (mtx, drawable.x + slack[0], drawable.y + slack[1]);
   /* Reverse the Y axis since the drawable origin is top-left
@@ -508,7 +522,7 @@ export_png (void)
                 NULL);
 
   /* Calculate page layout */
-  export_layout_page (NULL, &extents, &mtx);
+  export_layout_page (NULL, &extents, &mtx, FALSE);
   cairo_destroy (cr);
 
   /* Create a rendering surface of the correct size.  'extents' is
@@ -557,8 +571,30 @@ export_postscript (gboolean is_eps)
        iter = g_list_next (iter)) {
     PAGE *page = (PAGE *) iter->data;
 
-    export_layout_page (page, &extents, &mtx);
-    cairo_ps_surface_set_size (surface, extents.width, extents.height);
+    export_layout_page (page, &extents, &mtx, !is_eps);
+
+    /* Postscript output must always go in Portrait orientation to
+     * pleasure printers, so we apply appropriate transformations
+     * to extents here, and add DSC comments to notify Postscript
+     * viewers of how to properly orient on-screen pages.  Please
+     * see the following document for more information:
+     * https://www.cairographics.org/documentation/using_the_postscript_surface/
+     */
+    if (!is_eps) {
+      if (extents.width > extents.height) {
+        /* Exchange width and height of the output extents. */
+        cairo_ps_surface_set_size (surface, extents.height, extents.width);
+        cairo_ps_surface_dsc_begin_page_setup (surface);
+        cairo_ps_surface_dsc_comment (surface, "%%PageOrientation: Landscape");
+      } else {
+        cairo_ps_surface_set_size (surface, extents.width, extents.height);
+        cairo_ps_surface_dsc_begin_page_setup (surface);
+        cairo_ps_surface_dsc_comment (surface, "%%PageOrientation: Portrait");
+      }
+    } else {
+      cairo_ps_surface_set_size (surface, extents.width, extents.height);
+    }
+
     cairo_set_matrix (cr, &mtx);
     export_draw_page (page);
     cairo_show_page (cr);
@@ -599,7 +635,7 @@ export_pdf (void)
        iter = g_list_next (iter)) {
     PAGE *page = (PAGE *) iter->data;
 
-    export_layout_page (page, &extents, &mtx);
+    export_layout_page (page, &extents, &mtx, FALSE);
     cairo_pdf_surface_set_size (surface, extents.width, extents.height);
     cairo_set_matrix (cr, &mtx);
     export_draw_page (page);
@@ -625,7 +661,7 @@ export_svg ()
   surface = cairo_svg_surface_create (settings.outfile, 0, 0);
   cr = cairo_create (surface);
   g_object_set (renderer, "cairo-context", cr, NULL);
-  export_layout_page (NULL, &extents, &mtx);
+  export_layout_page (NULL, &extents, &mtx, FALSE);
   cairo_destroy (cr);
 
   /* Now create a new surface with the known extents. */
