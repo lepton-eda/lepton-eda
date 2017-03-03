@@ -43,7 +43,8 @@ SCM_SYMBOL(debug_sym, "debug");
 static GLogLevelFlags
 decode_level (SCM level_s)
 {
-	if (scm_is_eq (level_s, error_sym))    return (G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL);
+  if (scm_is_eq (level_s, error_sym))    return (GLogLevelFlags) (G_LOG_LEVEL_ERROR
+                                                                  | G_LOG_FLAG_FATAL);
 	if (scm_is_eq (level_s, critical_sym)) return G_LOG_LEVEL_CRITICAL;
 	if (scm_is_eq (level_s, warning_sym))  return G_LOG_LEVEL_WARNING;
 	if (scm_is_eq (level_s, message_sym))  return G_LOG_LEVEL_MESSAGE;

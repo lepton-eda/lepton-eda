@@ -148,7 +148,7 @@ void s_log_init (const gchar *prefix)
 
     /* install the log handler */
     log_handler_id = g_log_set_handler (NULL,
-                                        CATCH_LOG_LEVELS,
+                                        (GLogLevelFlags) CATCH_LOG_LEVELS,
                                         s_log_handler,
                                         NULL);
 
