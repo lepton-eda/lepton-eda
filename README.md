@@ -112,7 +112,7 @@ The following tools and libraries are optional:
   building the gEDA developer API documentation, not for the regular
   user documentation.  <http://www.stack.nl/~dimitri/doxygen/>
 
-- 'Inkscape' or 'ImageMagic' for svg to png or pdf conversion
+- 'Inkscape' or 'ImageMagick' for svg to png or pdf conversion
   This is required for building the gEDA developer API documentation,
   not for the regular user documentation.
   <http://inkscape.org/>
@@ -198,7 +198,7 @@ To generate the configure script, run:
 
     ./autogen.sh
 
-You can then procede to configure and build gEDA as described above.
+You can then proceed to configure and build gEDA as described above.
 For more information on working with the gEDA git repository, see
 <http://wiki.geda-project.org/geda:scm>.
 
