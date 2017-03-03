@@ -44,8 +44,7 @@ enum
 };
 
 
-static void
-class_init (GschemOptionsWidgetClass *klass);
+G_DEFINE_TYPE (GschemOptionsWidget, gschem_options_widget, GSCHEM_TYPE_BIN);
 
 GtkWidget*
 create_grid_mode_widget (GschemOptionsWidget *widget);
@@ -64,9 +63,6 @@ dispose (GObject *object);
 
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
-
-static void
-instance_init (GschemOptionsWidget *widget);
 
 static void
 notify_gschem_toplevel (GschemOptionsWidget *widget);
@@ -128,37 +124,6 @@ gschem_options_widget_adjust_focus (GschemOptionsWidget *widget)
 
 
 
-/*! \brief Get/register options widget type.
- */
-GType
-gschem_options_widget_get_type ()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemOptionsWidgetClass),
-      NULL,                                       /* base_init */
-      NULL,                                       /* base_finalize */
-      (GClassInitFunc) class_init,
-      NULL,                                       /* class_finalize */
-      NULL,                                       /* class_data */
-      sizeof(GschemOptionsWidget),
-      0,                                          /* n_preallocs */
-      (GInstanceInitFunc) instance_init,
-    };
-
-    type = g_type_register_static (GSCHEM_TYPE_BIN,
-                                   "GschemOptionsWidget",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
-}
-
-
-
 /*! \brief Create a new options widget
  *
  *  \param [in] w_current The GschemToplevel structure
@@ -208,7 +173,7 @@ snap_size_dialog (GschemToplevel *w_current)
  *  \param [in] klass
  */
 static void
-class_init (GschemOptionsWidgetClass *klass)
+gschem_options_widget_class_init (GschemOptionsWidgetClass *klass)
 {
   GObjectClass *object_class;
 
@@ -458,7 +423,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \param [in,out] widget The text property widget
  */
 static void
-instance_init (GschemOptionsWidget *widget)
+gschem_options_widget_init (GschemOptionsWidget *widget)
 {
   GtkWidget *vbox;
 

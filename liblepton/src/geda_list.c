@@ -38,7 +38,8 @@ enum {
 };
 
 static guint geda_list_signals[ LAST_SIGNAL ] = { 0 };
-static GObjectClass *geda_list_parent_class = NULL;
+
+G_DEFINE_TYPE (GedaList, geda_list, G_TYPE_OBJECT);
 
 
 /*! \brief GType instance initialiser for GedaList
@@ -46,15 +47,11 @@ static GObjectClass *geda_list_parent_class = NULL;
  *  \par Function Description
  *  GType instance initialiser for GedaList.
  *
- *  \param [in]  instance       The GedaList we are initialising.
- *  \param [in]  g_class        The class of the type the instance is created for.
+ *  \param [in]  list       The GedaList we are initialising.
  */
-static void geda_list_instance_init( GTypeInstance *instance, gpointer g_class )
+static void
+geda_list_init (GedaList *list)
 {
-  GedaList *list = (GedaList *)instance;
-
-  /* Strictly un-necessary, as the memory is zero'd after allocation */
-  list->glist = NULL;
 }
 
 
@@ -81,14 +78,12 @@ static void geda_list_finalize( GObject *object )
  *  GType class initialiser for GedaList. We override our parents
  *  virtual class methods as needed and register our GObject signals.
  *
- *  \param [in]  g_class       The GedaList we are initialising
- *  \param [in]  g_class_data  (unused)
+ *  \param [in]  klass       The GedaList we are initialising
  */
-static void geda_list_class_init( gpointer g_class, gpointer g_class_data )
+static void
+geda_list_class_init (GedaListClass *klass)
 {
-  GedaListClass *klass = GEDA_LIST_CLASS( g_class );
   GObjectClass *gobject_class = G_OBJECT_CLASS( klass );
-  geda_list_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
   gobject_class->finalize = geda_list_finalize;
 
@@ -103,39 +98,6 @@ static void geda_list_class_init( gpointer g_class, gpointer g_class_data )
                   G_TYPE_NONE,
                   0     /* n_params */
                  );
-}
-
-
-/*! \brief Function to retrieve GedaList's GType identifier.
- *
- *  \par Function Description
- *  Function to retrieve GedaList's GType identifier.
- *  Upon first call, this registers the GedaList in the GType system.
- *  Subsequently it returns the saved value from its first execution.
- *
- *  \return the GType identifier associated with GedaList.
- */
-GType geda_list_get_type(void)
-{
-  static GType type = 0;
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof (GedaListClass),
-      NULL,                         /* base_init */
-      NULL,                         /* base_finalize */
-      geda_list_class_init,         /* class_init */
-      NULL,                         /* class_finalize */
-      NULL,                         /* class_data */
-      sizeof (GedaList),
-      0,                            /* n_preallocs */
-      geda_list_instance_init       /* instance_init */
-    };
-    type = g_type_register_static (G_TYPE_OBJECT,
-                                   "GedaList",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-  return type;
 }
 
 

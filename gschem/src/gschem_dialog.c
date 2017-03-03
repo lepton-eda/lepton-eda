@@ -79,7 +79,18 @@ enum {
 };
 
 static guint gschem_dialog_signals[ LAST_SIGNAL ] = { 0 };
-static GObjectClass *gschem_dialog_parent_class = NULL;
+G_DEFINE_TYPE (GschemDialog, gschem_dialog, GTK_TYPE_DIALOG);
+
+/*! \private
+ *  \brief Initialize GschemDialog instance
+ *
+ *  \param [in,out]  dialog  The GschemDialog instance
+ */
+static void
+gschem_dialog_init (GschemDialog *dialog)
+{
+}
+
 
 /*! \brief GschemDialog "geometry_save" class method handler
  *
@@ -293,8 +304,6 @@ static void gschem_dialog_class_init (GschemDialogClass *klass)
   gobject_class->set_property  = gschem_dialog_set_property;
   gobject_class->get_property  = gschem_dialog_get_property;
 
-  gschem_dialog_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
-
   gschem_dialog_signals[ GEOMETRY_SAVE ] =
     g_signal_new ("geometry-save",
                   G_OBJECT_CLASS_TYPE( gobject_class ),
@@ -338,42 +347,6 @@ static void gschem_dialog_class_init (GschemDialogClass *klass)
                           "",
                           (GParamFlags) (G_PARAM_CONSTRUCT_ONLY
                                          | G_PARAM_READWRITE)));
-}
-
-
-/*! \brief Function to retrieve GschemDialog's GType identifier.
- *
- *  \par Function Description
- *  Function to retrieve GschemDialog's GType identifier.
- *  Upon first call, this registers the GschemDialog in the GType system.
- *  Subsequently it returns the saved value from its first execution.
- *
- *  \return the GType identifier associated with GschemDialog.
- */
-GType gschem_dialog_get_type ()
-{
-  static GType gschem_dialog_type = 0;
-
-  if (!gschem_dialog_type) {
-    static const GTypeInfo gschem_dialog_info = {
-      sizeof(GschemDialogClass),
-      NULL, /* base_init */
-      NULL, /* base_finalize */
-      (GClassInitFunc) gschem_dialog_class_init,
-      NULL, /* class_finalize */
-      NULL, /* class_data */
-      sizeof(GschemDialog),
-      0,    /* n_preallocs */
-      NULL, /* instance_init */
-    };
-
-    gschem_dialog_type = g_type_register_static (GTK_TYPE_DIALOG,
-                                                 "GschemDialog",
-                                                 &gschem_dialog_info,
-                                                 (GTypeFlags) 0);
-  }
-
-  return gschem_dialog_type;
 }
 
 

@@ -43,8 +43,7 @@ enum
   PROP_GSCHEM_TOPLEVEL
 };
 
-static void
-class_init (GschemObjectPropertiesWidgetClass *klass);
+G_DEFINE_TYPE (GschemObjectPropertiesWidget, gschem_object_properties_widget, GSCHEM_TYPE_BIN);
 
 static GtkWidget*
 create_fill_property_widget (GschemObjectPropertiesWidget *dialog);
@@ -63,9 +62,6 @@ dispose (GObject *object);
 
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
-
-static void
-instance_init (GschemObjectPropertiesWidget *dialog);
 
 static void
 notify_gschem_toplevel (GschemObjectPropertiesWidget *dialog);
@@ -105,37 +101,6 @@ update_pin_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog);
 
 static void
 update_pin_type_widget (GschemObjectPropertiesWidget *dialog);
-
-
-/*! \brief Get/register GschemObjectPropertiesWidget type.
- */
-GType
-gschem_object_properties_widget_get_type()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemObjectPropertiesWidgetClass),
-      NULL,                                   /* base_init */
-      NULL,                                   /* base_finalize */
-      (GClassInitFunc) class_init,
-      NULL,                                   /* class_finalize */
-      NULL,                                   /* class_data */
-      sizeof(GschemObjectPropertiesWidget),
-      0,                                      /* n_preallocs */
-      (GInstanceInitFunc) instance_init,
-    };
-
-    type = g_type_register_static (GSCHEM_TYPE_BIN,
-                                   "GschemObjectPropertiesWidget",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
-}
-
 
 
 /*! \brief Create a new <to be named> dialog
@@ -227,7 +192,7 @@ x_dialog_edit_pin_type (GschemToplevel *w_current, const GList *obj_list)
  *  \param [in] klass
  */
 static void
-class_init (GschemObjectPropertiesWidgetClass *klass)
+gschem_object_properties_widget_class_init (GschemObjectPropertiesWidgetClass *klass)
 {
   GObjectClass *object_class;
 
@@ -518,7 +483,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \param [in,out] dialog The edit text dialog
  */
 static void
-instance_init (GschemObjectPropertiesWidget *dialog)
+gschem_object_properties_widget_init (GschemObjectPropertiesWidget *dialog)
 {
   GtkWidget *scrolled;
   GtkWidget *vbox;
