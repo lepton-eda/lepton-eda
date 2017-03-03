@@ -43,9 +43,7 @@ enum
   PROP_GSCHEM_TOPLEVEL
 };
 
-
-static void
-class_init (GschemTextPropertiesWidgetClass *klass);
+G_DEFINE_TYPE (GschemTextPropertiesWidget, gschem_text_properties_widget, GSCHEM_TYPE_BIN);
 
 static GtkWidget*
 create_text_content_section (GschemTextPropertiesWidget *widget);
@@ -58,9 +56,6 @@ dispose (GObject *object);
 
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
-
-static void
-instance_init (GschemTextPropertiesWidget *widget);
 
 static void
 notify_gschem_toplevel (GschemTextPropertiesWidget *widget);
@@ -123,37 +118,6 @@ gschem_text_properties_widget_adjust_focus (GschemTextPropertiesWidget *widget)
 
 
 
-/*! \brief Get/register text properties widget type.
- */
-GType
-gschem_text_properties_widget_get_type ()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemTextPropertiesWidgetClass),
-      NULL,                                       /* base_init */
-      NULL,                                       /* base_finalize */
-      (GClassInitFunc) class_init,
-      NULL,                                       /* class_finalize */
-      NULL,                                       /* class_data */
-      sizeof(GschemTextPropertiesWidget),
-      0,                                          /* n_preallocs */
-      (GInstanceInitFunc) instance_init,
-    };
-
-    type = g_type_register_static (GSCHEM_TYPE_BIN,
-                                   "GschemTextPropertiesWidget",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
-}
-
-
-
 /*! \brief Create a new text properties widget
  *
  *  \param [in] w_current The GschemToplevel structure
@@ -208,7 +172,7 @@ text_edit_dialog (GschemToplevel *w_current)
  *  \param [in] klass
  */
 static void
-class_init (GschemTextPropertiesWidgetClass *klass)
+gschem_text_properties_widget_class_init (GschemTextPropertiesWidgetClass *klass)
 {
   GObjectClass *object_class;
 
@@ -413,7 +377,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \param [in,out] widget The text property widget
  */
 static void
-instance_init (GschemTextPropertiesWidget *widget)
+gschem_text_properties_widget_init (GschemTextPropertiesWidget *widget)
 {
   GtkWidget *scrolled;
   GtkWidget *vbox;

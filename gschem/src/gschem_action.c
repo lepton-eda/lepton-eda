@@ -27,9 +27,17 @@ enum {
   PROP_MULTIKEY_ACCEL = 1,
 };
 
+G_DEFINE_TYPE (GschemAction, gschem_action, GTK_TYPE_ACTION);
 
-static GObjectClass *gschem_action_parent_class = NULL;
-
+/*! \private
+ *  \brief Initialize GschemAction instance
+ *
+ *  \param [in,out]  action  The GschemAction instance
+ */
+static void
+gschem_action_init (GschemAction *action)
+{
+}
 
 /*! \brief GObject finalise handler
  *
@@ -158,8 +166,6 @@ static void gschem_action_class_init (GschemActionClass *klass)
   gobject_class->set_property  = gschem_action_set_property;
   gobject_class->get_property  = gschem_action_get_property;
 
-  gschem_action_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
-
   g_object_class_install_property (
     gobject_class, PROP_MULTIKEY_ACCEL,
     g_param_spec_string ("multikey-accel",
@@ -167,42 +173,6 @@ static void gschem_action_class_init (GschemActionClass *klass)
                          "",
                          NULL,
                          G_PARAM_READWRITE));
-}
-
-
-/*! \brief Function to retrieve GschemAction's GType identifier.
- *
- *  \par Function Description
- *  Function to retrieve GschemAction's GType identifier.
- *  Upon first call, this registers the GschemAction in the GType system.
- *  Subsequently it returns the saved value from its first execution.
- *
- *  \return the GType identifier associated with GschemAction.
- */
-GType gschem_action_get_type ()
-{
-  static GType gschem_action_type = 0;
-
-  if (!gschem_action_type) {
-    static const GTypeInfo gschem_action_info = {
-      sizeof(GschemActionClass),
-      NULL, /* base_init */
-      NULL, /* base_finalize */
-      (GClassInitFunc) gschem_action_class_init,
-      NULL, /* class_finalize */
-      NULL, /* class_data */
-      sizeof(GschemAction),
-      0,    /* n_preallocs */
-      NULL, /* instance_init */
-    };
-
-    gschem_action_type = g_type_register_static (GTK_TYPE_ACTION,
-                                                 "GschemAction",
-                                                 &gschem_action_info,
-                                                 (GTypeFlags) 0);
-  }
-
-  return gschem_action_type;
 }
 
 

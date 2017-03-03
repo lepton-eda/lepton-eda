@@ -47,11 +47,8 @@ enum {
   PROP_ACTIVE
 };
 
-static GObjectClass *preview_parent_class = NULL;
+G_DEFINE_TYPE (GschemPreview, gschem_preview, GSCHEM_TYPE_PAGE_VIEW);
 
-
-static void preview_class_init (GschemPreviewClass *klass);
-static void preview_init       (GschemPreview *preview);
 static void preview_set_property (GObject *object,
                                   guint property_id,
                                   const GValue *value,
@@ -238,39 +235,11 @@ preview_update (GschemPreview *preview)
   gschem_page_view_zoom_extents (preview_view, NULL);
 }
 
-GType
-gschem_preview_get_type ()
-{
-  static GType preview_type = 0;
-
-  if (!preview_type) {
-    static const GTypeInfo preview_info = {
-      sizeof(GschemPreviewClass),
-      NULL, /* base_init */
-      NULL, /* base_finalize */
-      (GClassInitFunc) preview_class_init,
-      NULL, /* class_finalize */
-      NULL, /* class_data */
-      sizeof(GschemPreview),
-      0,    /* n_preallocs */
-      (GInstanceInitFunc) preview_init,
-    };
-
-    preview_type = g_type_register_static (GSCHEM_TYPE_PAGE_VIEW,
-                                           "GschemPreview",
-                                           &preview_info,
-                                           (GTypeFlags) 0);
-  }
-
-  return preview_type;
-}
 
 static void
-preview_class_init (GschemPreviewClass *klass)
+gschem_preview_class_init (GschemPreviewClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-
-  preview_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
 
   gobject_class->set_property = preview_set_property;
   gobject_class->get_property = preview_get_property;
@@ -314,7 +283,7 @@ preview_event_scroll (GtkWidget *widget,
 }
 
 static void
-preview_init (GschemPreview *preview)
+gschem_preview_init (GschemPreview *preview)
 {
   struct event_reg_t {
     gchar *detailed_signal;
@@ -454,5 +423,5 @@ preview_dispose (GObject *self)
     preview->preview_w_current = NULL;
   }
 
-  G_OBJECT_CLASS (preview_parent_class)->dispose (self);
+  G_OBJECT_CLASS (gschem_preview_parent_class)->dispose (self);
 }
