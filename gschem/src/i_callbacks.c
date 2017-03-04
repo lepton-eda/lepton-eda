@@ -481,7 +481,7 @@ DEFINE_I_CALLBACK(edit_copy)
 
   g_return_if_fail (w_current != NULL);
 
-  i_update_middle_button(w_current, i_callback_edit_copy, _("Copy"));
+  i_update_middle_button (w_current, i_callback_edit_copy, _("Copy"));
 
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);
