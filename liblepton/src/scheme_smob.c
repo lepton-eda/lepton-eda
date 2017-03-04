@@ -731,7 +731,7 @@ SCM_DEFINE (config_p, "%config?", 1, 0, 0,
  * be accessed using (use-modules (geda core smob)).
  */
 static void
-init_module_geda_core_smob ()
+init_module_geda_core_smob (void *unused)
 {
   /* Register the functions. */
   #include "scheme_smob.x"

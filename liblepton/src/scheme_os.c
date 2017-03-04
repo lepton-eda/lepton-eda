@@ -160,7 +160,7 @@ SCM_DEFINE (user_config_dir, "%user-config-dir", 0, 0, 0, (),
  * be accessed using (use-modules (geda core os)).
  */
 static void
-init_module_geda_core_os ()
+init_module_geda_core_os (void *unused)
 {
   /* Register the functions and symbols */
   #include "scheme_os.x"

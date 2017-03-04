@@ -53,7 +53,7 @@ SCM_DEFINE (get_line_width, "%get-line-width", 1, 0, 0,
  * be accessed using (use-modules (geda core deprecated)).
  */
 static void
-init_module_geda_core_deprecated ()
+init_module_geda_core_deprecated (void *unused)
 {
   /* Register the functions */
   #include "scheme_deprecated.x"

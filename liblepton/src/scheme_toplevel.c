@@ -113,7 +113,7 @@ edascm_c_with_toplevel (TOPLEVEL *toplevel, SCM (*func)(void *),
  * can be accessed using (use-modules (geda core toplevel)).
  */
 static void
-init_module_geda_core_toplevel ()
+init_module_geda_core_toplevel (void *unused)
 {
   /* Register the functions */
   #include "scheme_toplevel.x"

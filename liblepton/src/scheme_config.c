@@ -1127,7 +1127,7 @@ SCM_DEFINE (remove_config_event_x, "%remove-config-event!", 2, 0, 0,
  * be accessed using (use-modules (geda core config)).
  */
 static void
-init_module_geda_core_config ()
+init_module_geda_core_config (void *unused)
 {
   /* Register the functions and symbols */
   #include "scheme_config.x"

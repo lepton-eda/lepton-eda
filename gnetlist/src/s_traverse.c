@@ -424,7 +424,7 @@ s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, in
 
 
 static void
-init_module_gnetlist_core_traverse ()
+init_module_gnetlist_core_traverse (void *unused)
 {
   /* Register the functions */
   #include "s_traverse.x"

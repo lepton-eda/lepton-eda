@@ -450,7 +450,7 @@ SCM_DEFINE (string_to_page, "%string->page", 2, 0, 0,
  * be accessed using (use-modules (geda core page)).
  */
 static void
-init_module_geda_core_page ()
+init_module_geda_core_page (void *unused)
 {
   /* Register the functions */
   #include "scheme_page.x"
