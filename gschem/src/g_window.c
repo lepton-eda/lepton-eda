@@ -294,7 +294,7 @@ SCM_DEFINE (snap_point, "%snap-point", 2, 0, 0,
  * can be accessed using (use-modules (gschem core window)).
  */
 static void
-init_module_gschem_core_window ()
+init_module_gschem_core_window (void *unused)
 {
   /* Register the functions */
   #include "g_window.x"

@@ -154,7 +154,7 @@ g_hook_new_proxy_by_name (const char *name)
  * please see ../scheme/gschem/hook.scm.
  */
 static void
-init_module_gschem_core_hook ()
+init_module_gschem_core_hook (void *unused)
 {
 
 #include "g_hook.x"

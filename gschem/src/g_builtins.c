@@ -161,7 +161,7 @@ static struct BuiltinInfo builtins[] = {
  * be accessed using (use-modules (gschem core builtins)).
  */
 static void
-init_module_gschem_core_builtins ()
+init_module_gschem_core_builtins (void *unused)
 {
   int i;
 

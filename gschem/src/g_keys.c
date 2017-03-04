@@ -590,7 +590,7 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
  * can be accessed using (use-modules (gschem core keymap)).
  */
 static void
-init_module_gschem_core_keymap ()
+init_module_gschem_core_keymap (void *unused)
 {
   /* Register the functions */
   #include "g_keys.x"

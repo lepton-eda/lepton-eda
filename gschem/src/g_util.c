@@ -66,7 +66,7 @@ SCM_DEFINE (show_uri, "%show-uri", 1, 0, 0, (SCM uri_s),
  * be accessed using (use-modules (gschem core util)).
  */
 static void
-init_module_gschem_core_util ()
+init_module_gschem_core_util (void *unused)
 {
   /* Register the functions */
   #include "g_util.x"

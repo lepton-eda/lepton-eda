@@ -309,7 +309,7 @@ SCM_DEFINE (promotable_attribs, "%promotable-attribs", 1, 0, 0,
  * be accessed using (use-modules (geda core attrib)).
  */
 static void
-init_module_geda_core_attrib ()
+init_module_geda_core_attrib (void *unused)
 {
   /* Register the functions */
   #include "scheme_attrib.x"

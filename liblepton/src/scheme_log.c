@@ -113,7 +113,7 @@ SCM_DEFINE (log_x, "%log!", 3, 0, 0,
  * be accessed using (use-modules (geda core log)).
  */
 static void
-init_module_geda_core_log ()
+init_module_geda_core_log (void *unused)
 {
 	/* Register the functions and symbols */
 	#include "scheme_log.x"

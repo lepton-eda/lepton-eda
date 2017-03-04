@@ -377,7 +377,7 @@ SCM_DEFINE (complex_remove_x, "%complex-remove!", 2, 0, 0,
  * be accessed using (use-modules (geda core complex)).
  */
 static void
-init_module_geda_core_complex ()
+init_module_geda_core_complex (void *unused)
 {
   /* Register the functions and symbols */
   #include "scheme_complex.x"

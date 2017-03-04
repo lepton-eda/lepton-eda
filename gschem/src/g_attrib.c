@@ -140,7 +140,7 @@ SCM_DEFINE (add_attrib_x, "%add-attrib!", 5, 0, 0,
  * be accessed using (use-modules (gschem core attrib)).
  */
 static void
-init_module_gschem_core_attrib ()
+init_module_gschem_core_attrib (void *unused)
 {
   /* Register the functions and symbols */
   #include "g_attrib.x"
