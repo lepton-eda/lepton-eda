@@ -28,21 +28,23 @@ before_install:
 # Set up the source tree by running autotools
 #
 # The SCM_DEBUG_TYPING_STRICTNESS macro determines how C code that
-# uses Guile Scheme values is compiled.  We set it to 0 for Coverity
-# Scan builds, because with a non-zero value libguile's macros
-# generate code that Coverity correctly identifies as undefined
-# behaviour in C.
+# uses Guile Scheme values is compiled.  For CI builds, set it to 2
+# (maximum strictness) to catch any possible problems, even though
+# it'll result in low performance.
+#
+# We have to set SCM_DEBUG_TYPING_STRICTNESS to 0 for Coverity Scan
+# builds, because with a non-zero value libguile's macros generate
+# code that Coverity correctly identifies as undefined behaviour in C.
+# However, we can't detect whether this is a Coverity build during the
+# "install" step because the $COVERITY_SCAN_BRANCH variable isn't set
+# until _after_ the Coverity static analysis step runs.
 install:
   - ./autogen.sh
-  - >
-      if test "${COVERITY_SCAN_BRANCH}" = "1"; then
-        ./configure --disable-update-xdg-database CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=0'
-      else
-        ./configure --disable-update-xdg-database CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=2'
-      fi
+  - ./configure --disable-update-xdg-database CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=2'
 
-# Compile gEDA and run its tests
-script: >
+# Compile gEDA and run its tests.  Skip this if this is a Coverity
+# analysis build.
+script: |
   if test "${COVERITY_SCAN_BRANCH}" != "1"; then
     make -sj4 distcheck
   fi
@@ -53,13 +55,11 @@ addons:
   # "master".
   coverity_scan:
     project:
-      # FIXME[Issue #43] Figure out how to rename the Coverity Scan
-      # project from this historical name
-      name: peter-b/geda-gaf
+      name: lepton-eda/lepton-eda
       description: Build submitted via Travis CI
 
     # FIXME[Issue #44] Replace this e-mail address once there's a
     # mailing list or e-mail alias set up for Lepton developers
     notification_email: peter@peter-b.co.uk
-    build_command: make all
+    build_command: make CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=0' V=1 all
     branch_pattern: coverity_scan
