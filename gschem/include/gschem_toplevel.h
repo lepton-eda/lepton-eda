@@ -150,7 +150,9 @@ struct st_gschem_toplevel {
   int SHIFTKEY;                         /* shift key pressed? */
   int ALTKEY;                           /* alt key pressed? */
   int buffer_number;                    /* current paste buffer in use */
-  void (*last_callback)();              /* Last i_call* cmd executed */
+
+  i_callback_func last_callback;        /* Last i_call* cmd executed */
+
   GList *clipboard_buffer;              /* buffer for system clipboard integration */
 
   /* ------------------ */

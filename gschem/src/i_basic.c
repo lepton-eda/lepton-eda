@@ -237,7 +237,7 @@ void i_set_state_msg(GschemToplevel *w_current, enum x_states newstate,
  *
  */
 void i_update_middle_button (GschemToplevel *w_current,
-                             void (*func_ptr)(),
+                             i_callback_func func_ptr,
                              const char *string)
 {
   g_return_if_fail (w_current != NULL);
