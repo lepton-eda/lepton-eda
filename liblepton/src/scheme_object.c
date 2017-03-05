@@ -2237,7 +2237,7 @@ SCM_DEFINE (mirror_object_x, "%mirror-object!", 2, 0, 0,
  * be accessed using (use-modules (geda core object)).
  */
 static void
-init_module_geda_core_object ()
+init_module_geda_core_object (void *unused)
 {
   /* Register the functions and symbols */
   #include "scheme_object.x"
@@ -2276,6 +2276,6 @@ edascm_init_object ()
 {
   /* Define the (geda core object) module */
   scm_c_define_module ("geda core object",
-                       init_module_geda_core_object,
+                       (void (*) (void*)) init_module_geda_core_object,
                        NULL);
 }
