@@ -354,7 +354,7 @@ eda_renderer_set_property (GObject *object, guint property_id,
     g_hash_table_remove_all (renderer->priv->metrics_cache);
     break;
   case PROP_COLOR_MAP:
-    renderer->priv->color_map = g_value_get_pointer (value);
+    renderer->priv->color_map = (GArray*) g_value_get_pointer (value);
     break;
   case PROP_OVERRIDE_COLOR:
     renderer->priv->override_color = g_value_get_int (value);
