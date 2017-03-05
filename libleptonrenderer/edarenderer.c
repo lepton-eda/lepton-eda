@@ -857,7 +857,7 @@ eda_renderer_get_font_descent (EdaRenderer *renderer,
   /* Lookup the font size in the metrics cache, and get the metrics
    * from there if available. Otherwise, calculate the metrics and
    * cache them. */
-  metrics = g_hash_table_lookup (renderer->priv->metrics_cache, &size);
+  metrics = (PangoFontMetrics*) g_hash_table_lookup (renderer->priv->metrics_cache, &size);
   if (metrics == NULL) {
     metrics = pango_context_get_metrics (renderer->priv->pc, desc, NULL);
     key = g_new (int, 1);
