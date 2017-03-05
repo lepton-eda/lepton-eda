@@ -340,7 +340,7 @@ eda_pango_attr_overbar_compare (const PangoAttribute *attr1,
 PangoAttrClass *
 eda_pango_attr_overbar_get_class ()
 {
-  static PangoAttrClass klass = { 0,
+  static PangoAttrClass klass = { (PangoAttrType) 0,
                                   eda_pango_attr_overbar_copy,
                                   (void (*)(PangoAttribute *)) g_free,
                                   eda_pango_attr_overbar_compare };
