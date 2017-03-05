@@ -303,7 +303,9 @@ eda_pango_renderer_prepare_run (PangoRenderer *renderer,
 PangoRenderer *
 eda_pango_renderer_new (cairo_t *cr)
 {
-  return g_object_new (EDA_TYPE_PANGO_RENDERER, "cairo-context", cr, NULL);
+  return PANGO_RENDERER (g_object_new (EDA_TYPE_PANGO_RENDERER,
+                                       "cairo-context", cr,
+                                       NULL));
 }
 
 void
