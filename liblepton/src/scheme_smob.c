@@ -190,7 +190,7 @@ smob_cache_remove (void *target)
 static SCM
 smob_cache_lookup (void *target)
 {
-  SmobCacheEntry *entry = g_hash_table_lookup (smob_cache, target);
+  SmobCacheEntry *entry = (SmobCacheEntry*) g_hash_table_lookup (smob_cache, target);
   return entry ? entry->smob : SCM_BOOL_F;
 }
 
