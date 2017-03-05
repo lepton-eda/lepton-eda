@@ -442,7 +442,7 @@ eda_renderer_update_contexts (EdaRenderer *renderer, cairo_t *new_cr,
       renderer->priv->pl = NULL;
     }
 
-    renderer->priv->pc = g_object_ref (G_OBJECT (new_pc));
+    renderer->priv->pc = PANGO_CONTEXT (g_object_ref (G_OBJECT (new_pc)));
     renderer->priv->pc_from_cr = 0;
   }
 
