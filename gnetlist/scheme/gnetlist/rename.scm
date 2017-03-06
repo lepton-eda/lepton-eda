@@ -57,10 +57,11 @@
 (define-public (add-rename from to)
   (and from to (update-rename from to)))
 
-;;; if the src is found, return true
-;;; if the dest is found, also return true, but warn user
-;;; If quiet flag is true than don't print anything
 (define (search-rename from to quiet)
+  "Searches rename source FROM and rename destination TO in the
+internal netlist rename list. Returns #t if either FROM or TO is
+found. In the latter case, if QUIET is not #f warns the user that
+the net in question has been renamed several times."
   ;; FIXME[2017-02-20] This warning message is very unhelpful
   (define (warn)
     (when (not quiet)
