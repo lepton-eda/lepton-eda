@@ -1,6 +1,7 @@
-;; gEDA - GPL Electronic Design Automation
+;; Lepton EDA
 ;; gschem - gEDA Schematic Capture - Scheme API
 ;; Copyright (C) 2015 gEDA Contributors
+;; Copyright (C) 2017 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -18,9 +19,8 @@
 ;;
 
 (define-module (gschem repl)
-
-  #:use-module (system repl repl)
+  #:use-module (geda repl)
   #:use-module (ice-9 threads))
 
 (define-public (start-repl-in-background-terminal)
-  (make-thread (start-repl)))
+  (begin-thread (lepton-repl)))

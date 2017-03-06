@@ -1,6 +1,7 @@
-;; gEDA - GPL Electronic Design Automation
+;; Lepton EDA
 ;; gschem - gEDA Schematic Capture - Scheme API
 ;; Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2017 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -19,6 +20,7 @@
 
 (define-module (gschem builtins)
   #:use-module (geda object)
+  #:use-module (geda repl)
   #:use-module (gschem core gettext)
   #:use-module (gschem core builtins)
   #:use-module (gschem action)
@@ -78,6 +80,7 @@
   (%file-close-window))
 
 (define-action-public (&file-quit #:label (_ "Quit") #:icon "gtk-quit")
+  (lepton-repl-save-history)
   (%file-quit))
 
 (define-action-public (&file-repl #:label (_ "Terminal REPL") #:icon "gtk-execute")
