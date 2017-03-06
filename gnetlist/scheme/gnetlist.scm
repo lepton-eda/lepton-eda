@@ -18,9 +18,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(use-modules (system repl repl)
-             (system repl common)
-             (srfi srfi-1)
+(use-modules (srfi srfi-1)
              (srfi srfi-26)
              (ice-9 match)
              ((ice-9 rdelim)
@@ -33,6 +31,7 @@
              (geda page)
              (geda deprecated)
              (geda log)
+             (geda repl)
              (gnetlist core gettext)
              (gnetlist config)
              (gnetlist schematic)
@@ -303,25 +302,6 @@ REFDES. As a result, slots may be repeated in the returned list."
   )
 
 (define toplevel-schematic #f)
-(define (gnetlist-repl)
-  (let ((repl (make-repl (current-language) #f)))
-    (repl-eval repl
-               '(begin
-                  (display (_ "Welcome to Gnetlist REPL!\n")
-                           (current-error-port))
-                  (resolve-module '(ice-9 readline))
-                  ;; After resolving that module the variable
-                  ;; *features* should contain 'readline.
-                  (if (provided? 'readline)
-                      (begin
-                        ;; It is not loaded automatically from
-                        ;; this module, so let's force its
-                        ;; loading.
-                        (use-modules (ice-9 readline))
-                        (activate-readline))
-                      (display (_ "Could not load module (ice-9 readline).\n")
-                               (current-error-port)))))
-    (run-repl repl)))
 
 
 ;;; Helper function for sorting connections.
@@ -837,7 +817,7 @@ Run `~A --list-backends' for a full list of available backends.
               (print-gnetlist-config))
             (verbose-print-netlist (schematic-netlist toplevel-schematic))
             (if (gnetlist-option-ref 'interactive)
-                (gnetlist-repl)
+                (lepton-repl)
                 (if backend
                     (let ((backend-proc (primitive-eval (string->symbol backend))))
                       (if output-filename
