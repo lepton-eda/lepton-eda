@@ -70,8 +70,8 @@
 are both a src and dest name
 This warning is okay if you have multiple levels of hierarchy!
 ")
-                  dest
-                  dest)))
+                  to
+                  to)))
 
   (cond
    ((renamed? from) #t)
