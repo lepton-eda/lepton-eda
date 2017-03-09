@@ -284,7 +284,7 @@ void s_clib_init ()
  */
 static void free_symbol (gpointer data, gpointer user_data)
 {
-  CLibSymbol *symbol = data;
+  CLibSymbol *symbol = (CLibSymbol*) data;
   if (symbol != NULL) {
     if (symbol->source != NULL) {
       symbol->source = NULL;
@@ -397,8 +397,8 @@ static gint compare_source_name (gconstpointer a, gconstpointer b)
  */
 static gint compare_symbol_name (gconstpointer a, gconstpointer b)
 {
-  const CLibSymbol *sym1 = a;
-  const CLibSymbol *sym2 = b;
+  const CLibSymbol *sym1 = (CLibSymbol*) a;
+  const CLibSymbol *sym2 = (CLibSymbol*) b;
 
   g_return_val_if_fail ((sym1 != NULL), 0);
   g_return_val_if_fail ((sym2 != NULL), 0);
