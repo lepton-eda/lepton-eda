@@ -315,7 +315,7 @@ static void free_symbol_cache_entry (gpointer data)
  */
 static void free_source (gpointer data, gpointer user_data)
 {
-  CLibSource *source = data;
+  CLibSource *source = (CLibSource*) data;
   if (source != NULL) {
     if (source->name != NULL) {
       g_free (source->name);
@@ -372,8 +372,8 @@ void s_clib_free ()
  */
 static gint compare_source_name (gconstpointer a, gconstpointer b)
 {
-  const CLibSource *src1 = a;
-  const CLibSource *src2 = b;
+  const CLibSource *src1 = (CLibSource*) a;
+  const CLibSource *src2 = (CLibSource*) b;
 
   g_return_val_if_fail ((src1 != NULL), 0);
   g_return_val_if_fail ((src2 != NULL), 0);
