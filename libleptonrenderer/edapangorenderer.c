@@ -393,7 +393,7 @@ eda_pango_parse_overbars (const gchar *overbar_text, int length,
   if (length == -1) {
     length = strlen (overbar_text);
   }
-  *text = g_malloc0 (length + 1);
+  *text = (gchar*) g_malloc0 (length + 1);
   out_ptr = *text;
 
   for (in_ptr = overbar_text;

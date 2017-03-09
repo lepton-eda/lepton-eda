@@ -74,7 +74,7 @@ TextBuffer *s_textbuffer_new (const gchar *data, const gint size)
   result->size = realsize;
 
   result->linesize = TEXT_BUFFER_LINE_SIZE;
-  result->line = g_malloc(result->linesize);
+  result->line = (gchar*) g_malloc(result->linesize);
 
   return result;
 }
@@ -144,7 +144,7 @@ s_textbuffer_next (TextBuffer *tb, const gssize count)
     len = dest - tb->line + 2;
     if (len >= tb->linesize) {
       tb->linesize += TEXT_BUFFER_LINE_SIZE;
-      tb->line = g_realloc(tb->line, tb->linesize);
+      tb->line = (gchar*) g_realloc (tb->line, tb->linesize);
     }
 
     eol = FALSE;
