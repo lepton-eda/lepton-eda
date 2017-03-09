@@ -78,7 +78,7 @@ GList *
 s_weakref_add (GList *weak_refs, void (*notify_func)(void *, void *),
                void *user_data)
 {
-  struct WeakRef *entry = g_malloc0 (sizeof (struct WeakRef));
+  struct WeakRef *entry = (struct WeakRef *) g_malloc0 (sizeof (struct WeakRef));
   entry->notify_func = notify_func;
   entry->user_data = user_data;
   return g_list_prepend (weak_refs, entry);
@@ -102,7 +102,7 @@ s_weakref_remove (GList *weak_refs, void (*notify_func)(void *, void *),
   GList *iter;
   struct WeakRef *entry;
   for (iter = weak_refs; iter != NULL; iter = g_list_next (iter)) {
-    entry = iter->data;
+    entry = (struct WeakRef *) iter->data;
     if ((entry != NULL) &&
         (entry->notify_func == notify_func) &&
         (entry->user_data == user_data)) {
