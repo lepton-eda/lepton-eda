@@ -109,7 +109,7 @@ geda_list_class_init (GedaListClass *klass)
  *  \return pointer to the new GedaList object.
  */
 GedaList *geda_list_new( void ) {
-  return g_object_new( GEDA_TYPE_LIST, NULL );
+  return GEDA_LIST (g_object_new (GEDA_TYPE_LIST, NULL));
 }
 
 
