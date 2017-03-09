@@ -282,7 +282,7 @@ cclosure_marshal_VOID__SCM (GClosure *closure,
 EdascmHookProxy *
 edascm_hook_proxy_new_with_hook (SCM hook_s)
 {
-  return g_object_new (EDASCM_TYPE_HOOK_PROXY,
-                       "hook", hook_s,
-                       NULL);
+  return EDASCM_HOOK_PROXY (g_object_new (EDASCM_TYPE_HOOK_PROXY,
+                                          "hook", hook_s,
+                                          NULL));
 }
