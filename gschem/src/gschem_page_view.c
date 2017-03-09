@@ -1026,7 +1026,8 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
   switch (param_id) {
     case PROP_HADJUSTMENT:
-      gschem_page_view_set_hadjustment (view, g_value_get_object (value));
+      gschem_page_view_set_hadjustment (view,
+                                        GTK_ADJUSTMENT (g_value_get_object (value)));
       break;
 
     case PROP_PAGE:
@@ -1034,7 +1035,8 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_VADJUSTMENT:
-      gschem_page_view_set_vadjustment (view, g_value_get_object (value));
+      gschem_page_view_set_vadjustment (view,
+                                        GTK_ADJUSTMENT (g_value_get_object (value)));
       break;
 
     default:
