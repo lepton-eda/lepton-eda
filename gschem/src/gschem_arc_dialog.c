@@ -39,7 +39,7 @@
 
 /*! \brief response function for the arc angle dialog
  *  \par Function Description
- *  The response function of th arc angle dialog takes the content of
+ *  The response function of the arc angle dialog takes the content of
  *  the dialog and applies it on the current arc.
  *  If the dialog is closed or canceled the function destroys the dialog.
  */
