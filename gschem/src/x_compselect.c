@@ -758,21 +758,21 @@ static void populate_component_store(GtkTreeStore *store, GList **srclist,
   } else {
     /* directory added by component-library-search */
     g_assert(strncmp(name, prefix, strlen(prefix)) == 0);
-    char *p = strchr(name + strlen(prefix) + 1, '/');
+    char *p = (char*) strchr(name + strlen(prefix) + 1, '/');
 
     if (p != NULL) {
       /* There is a parent directory that was skipped
          because it doesn't contain symbols. */
       source = NULL;
       size_t prefix_len = strlen(prefix);
-      text = malloc(p - name - prefix_len + 1);
+      text = (char*) malloc (p - name - prefix_len + 1);
       if (text == NULL) {
         fprintf(stderr, "Not enough memory\n");
         return;
       }
       memcpy(text, name + prefix_len, p - name - prefix_len);
       text[p - name - prefix_len] = '\0';
-      new_prefix = malloc(p - name + 2);
+      new_prefix = (char*) malloc (p - name + 2);
       if (new_prefix == NULL) {
         fprintf(stderr, "Not enough memory\n");
         free(text);
@@ -784,14 +784,14 @@ static void populate_component_store(GtkTreeStore *store, GList **srclist,
     } else {
       size_t prefix_len = strlen(prefix);
       size_t name_len = strlen(name);
-      text = malloc(name_len - prefix_len + 1);
+      text = (char*) malloc (name_len - prefix_len + 1);
       if (text == NULL) {
         fprintf(stderr, "Not enough memory\n");
         return;
       }
       memcpy(text, name + prefix_len, name_len - prefix_len);
       text[name_len - prefix_len] = '\0';
-      new_prefix = malloc(name_len + 2);
+      new_prefix = (char*) malloc (name_len + 2);
       if (new_prefix == NULL) {
         fprintf(stderr, "Not enough memory\n");
         free(text);
