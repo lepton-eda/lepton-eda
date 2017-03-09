@@ -428,7 +428,7 @@ x_print (GschemToplevel *w_current)
     if (settings != NULL) {
       g_object_unref (settings);
     }
-    settings = g_object_ref (gtk_print_operation_get_print_settings (print));
+    settings = GTK_PRINT_SETTINGS (g_object_ref (gtk_print_operation_get_print_settings (print)));
   }
 
   /* Clean up */
