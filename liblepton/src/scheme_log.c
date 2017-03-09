@@ -45,13 +45,13 @@ decode_level (SCM level_s)
 {
   if (scm_is_eq (level_s, error_sym))    return (GLogLevelFlags) (G_LOG_LEVEL_ERROR
                                                                   | G_LOG_FLAG_FATAL);
-	if (scm_is_eq (level_s, critical_sym)) return G_LOG_LEVEL_CRITICAL;
-	if (scm_is_eq (level_s, warning_sym))  return G_LOG_LEVEL_WARNING;
-	if (scm_is_eq (level_s, message_sym))  return G_LOG_LEVEL_MESSAGE;
-	if (scm_is_eq (level_s, info_sym))     return G_LOG_LEVEL_INFO;
-	if (scm_is_eq (level_s, debug_sym))    return G_LOG_LEVEL_DEBUG;
+  if (scm_is_eq (level_s, critical_sym)) return G_LOG_LEVEL_CRITICAL;
+  if (scm_is_eq (level_s, warning_sym))  return G_LOG_LEVEL_WARNING;
+  if (scm_is_eq (level_s, message_sym))  return G_LOG_LEVEL_MESSAGE;
+  if (scm_is_eq (level_s, info_sym))     return G_LOG_LEVEL_INFO;
+  if (scm_is_eq (level_s, debug_sym))    return G_LOG_LEVEL_DEBUG;
 
-	g_return_val_if_reached(G_LOG_LEVEL_MESSAGE);
+  g_return_val_if_reached(G_LOG_LEVEL_MESSAGE);
 }
 
 /* ================================================================
@@ -79,28 +79,28 @@ SCM_DEFINE (log_x, "%log!", 3, 0, 0,
             (SCM domain_s, SCM level_s, SCM message_s),
             "Emit a log message.")
 {
-	SCM_ASSERT (scm_is_false(domain_s) || scm_is_string(domain_s), domain_s,
-	            SCM_ARG1, s_log_x);
-	SCM_ASSERT (scm_is_symbol(level_s), level_s,
-	            SCM_ARG2, s_log_x);
-	SCM_ASSERT (scm_is_string(message_s), message_s,
-	            SCM_ARG3, s_log_x);
+  SCM_ASSERT (scm_is_false(domain_s) || scm_is_string(domain_s), domain_s,
+              SCM_ARG1, s_log_x);
+  SCM_ASSERT (scm_is_symbol(level_s), level_s,
+              SCM_ARG2, s_log_x);
+  SCM_ASSERT (scm_is_string(message_s), message_s,
+              SCM_ARG3, s_log_x);
 
-	scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-	gchar *domain = NULL;
-	if (scm_is_string (domain_s)) {
-		domain = scm_to_utf8_string(domain_s);
-		scm_dynwind_free(domain);
-	}
-	gchar *message = scm_to_utf8_string(message_s);
-	scm_dynwind_free(message);
-	GLogLevelFlags level = decode_level(level_s);
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+  gchar *domain = NULL;
+  if (scm_is_string (domain_s)) {
+    domain = scm_to_utf8_string(domain_s);
+    scm_dynwind_free(domain);
+  }
+  gchar *message = scm_to_utf8_string(message_s);
+  scm_dynwind_free(message);
+  GLogLevelFlags level = decode_level(level_s);
 
-	g_log(domain, level, "%s", message);
+  g_log(domain, level, "%s", message);
 
-	scm_dynwind_end();
+  scm_dynwind_end();
 
-	return SCM_UNSPECIFIED;
+  return SCM_UNSPECIFIED;
 }
 
 /* ================================================================
@@ -116,12 +116,12 @@ SCM_DEFINE (log_x, "%log!", 3, 0, 0,
 static void
 init_module_geda_core_log (void *unused)
 {
-	/* Register the functions and symbols */
-	#include "scheme_log.x"
+  /* Register the functions and symbols */
+  #include "scheme_log.x"
 
-	/* Add them to the module's public definitions */
-	scm_c_export (s_log_x,
-	              NULL);
+  /* Add them to the module's public definitions */
+  scm_c_export (s_log_x,
+                NULL);
 }
 
 /*!
@@ -134,8 +134,8 @@ init_module_geda_core_log (void *unused)
 void
 edascm_init_log ()
 {
-	/* Define the (geda core log) module */
-	scm_c_define_module ("geda core log",
-	                     (void (*)(void*)) init_module_geda_core_log,
-	                     NULL);
+  /* Define the (geda core log) module */
+  scm_c_define_module ("geda core log",
+                       (void (*)(void*)) init_module_geda_core_log,
+                       NULL);
 }
