@@ -6329,12 +6329,12 @@ gtk_sheet_get_entry(GtkSheet *sheet)
 
  while(children){
       if(GTK_IS_TABLE(parent)) {
-                 table_child = children->data;
+        table_child = (GtkTableChild*) children->data;
                  entry = table_child->widget;
       }
       if(GTK_IS_BOX(parent)){
-                 box_child = children->data; 
                  entry = box_child->widget;
+        box_child = (GtkBoxChild*) children->data;
       }
 
       if(GTK_IS_ENTRY(entry))  
