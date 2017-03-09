@@ -96,7 +96,7 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
   gchar *auto_filename;
   gint file_err = 0;
   gint auto_err = 0;
-  GFileError g_errcode = 0;
+  GFileError g_errcode = (GFileError) 0;
   struct stat file_stat, auto_stat;
 
   auto_filename = f_get_autosave_filename (filename);
