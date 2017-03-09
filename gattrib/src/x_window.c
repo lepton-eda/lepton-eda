@@ -115,7 +115,7 @@ x_window_init()
   /* This basically sets up the overhead for the sheets, as I understand
    * it.  The memory for the actual sheet cells is allocated later,
    * when gtk_sheet_new is invoked, I think.  */
-  sheets = g_malloc0(NUM_SHEETS * sizeof(GtkWidget *));
+  sheets = g_new0 (GtkSheet*, NUM_SHEETS);
 }
 
 
