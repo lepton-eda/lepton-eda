@@ -574,9 +574,9 @@ insert_element (FILE * f_out, gchar * element_file,
     for (s = buf; *s == ' ' || *s == '\t'; ++s);
     if ((el = pcb_element_line_parse (s)) != NULL) {
       simple_translate (el);
-      fmt = el->quoted_flags ?
-        "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
-        "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n";
+      fmt = (gchar*) (el->quoted_flags ?
+                      "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
+                      "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
 
       fprintf (f_out, fmt,
                el->res_char, el->flags, footprint, refdes, value,
@@ -945,9 +945,9 @@ update_element_descriptions (gchar * pcb_file, gchar * bak)
     if ((el = pcb_element_line_parse (s)) != NULL
         && (el_exists = pcb_element_exists (el, FALSE)) != NULL
         && el_exists->changed_description) {
-      fmt = el->quoted_flags ?
-        "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
-        "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n";
+      fmt = (gchar*) (el->quoted_flags ?
+                      "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
+                      "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
       fprintf (f_out, fmt,
                el->res_char,
                el->flags, el_exists->changed_description,
@@ -1026,9 +1026,9 @@ prune_elements (gchar * pcb_file, gchar * bak)
       continue;
     }
     if (el_exists && el_exists->changed_value) {
-      fmt = el->quoted_flags ?
-        "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
-        "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n";
+      fmt = (gchar*) (el->quoted_flags ?
+                      "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
+                      "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n");
       fprintf (f_out, fmt,
                el->res_char, el->flags, el->description, el->refdes,
                el_exists->changed_value, el->x, el->y, el->tail);
