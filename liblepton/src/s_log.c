@@ -42,7 +42,7 @@
 #include <time.h>
 
 /*! Default setting for log update callback function. */
-void (*x_log_update_func)() = NULL;
+void (*x_log_update_func)(const gchar*, GLogLevelFlags, const gchar*) = NULL;
 
 /*! Default setting for log enable. */
 int do_logging = TRUE;
