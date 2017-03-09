@@ -317,11 +317,11 @@ GParamSpec *edascm_param_spec_scm (const gchar *name,
 {
   EdascmParamSpecSCM *sspec;
 
-  sspec = g_param_spec_internal (EDASCM_TYPE_PARAM_SCM,
-                                 name,
-                                 nick,
-                                 blurb,
-                                 flags);
+  sspec = EDASCM_PARAM_SPEC_SCM (g_param_spec_internal (EDASCM_TYPE_PARAM_SCM,
+                                                        name,
+                                                        nick,
+                                                        blurb,
+                                                        flags));
 
   return G_PARAM_SPEC (sspec);
 }
