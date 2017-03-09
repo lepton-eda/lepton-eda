@@ -2353,7 +2353,7 @@ multiattrib_set_property (GObject *object,
   switch(property_id) {
       case PROP_OBJECT_LIST:
         disconnect_object_list (multiattrib);
-        connect_object_list (multiattrib, g_value_get_pointer (value));
+        connect_object_list (multiattrib, GEDA_LIST (g_value_get_pointer (value)));
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
