@@ -219,7 +219,7 @@ s_toplevel_add_weak_ptr (TOPLEVEL *toplevel,
 {
   g_return_if_fail (toplevel != NULL);
   toplevel->weak_refs = s_weakref_add_ptr (toplevel->weak_refs,
-                                           weak_pointer_loc);
+                                           (void**) weak_pointer_loc);
 }
 
 /*! \brief Remove a weak pointer from an TOPLEVEL.
@@ -237,5 +237,5 @@ s_toplevel_remove_weak_ptr (TOPLEVEL *toplevel,
 {
   g_return_if_fail (toplevel != NULL);
   toplevel->weak_refs = s_weakref_remove_ptr (toplevel->weak_refs,
-                                              weak_pointer_loc);
+                                              (void**) weak_pointer_loc);
 }

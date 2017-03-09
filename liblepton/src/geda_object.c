@@ -376,7 +376,8 @@ s_object_add_weak_ptr (OBJECT *object,
                        void *weak_pointer_loc)
 {
   g_return_if_fail (object != NULL);
-  object->weak_refs = s_weakref_add_ptr (object->weak_refs, weak_pointer_loc);
+  object->weak_refs = s_weakref_add_ptr (object->weak_refs,
+                                         (void**) weak_pointer_loc);
 }
 
 /*! \brief Remove a weak pointer from an OBJECT.
@@ -394,7 +395,7 @@ s_object_remove_weak_ptr (OBJECT *object,
 {
   g_return_if_fail (object != NULL);
   object->weak_refs = s_weakref_remove_ptr (object->weak_refs,
-                                            weak_pointer_loc);
+                                            (void**) weak_pointer_loc);
 }
 
 /*! \brief Set an #OBJECT's line options.

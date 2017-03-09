@@ -343,7 +343,8 @@ s_page_add_weak_ptr (PAGE *page,
                      void *weak_pointer_loc)
 {
   g_return_if_fail (page != NULL);
-  page->weak_refs = s_weakref_add_ptr (page->weak_refs, weak_pointer_loc);
+  page->weak_refs = s_weakref_add_ptr (page->weak_refs,
+                                       (void**) weak_pointer_loc);
 }
 
 /*! \brief Remove a weak pointer from an PAGE.
@@ -361,7 +362,7 @@ s_page_remove_weak_ptr (PAGE *page,
 {
   g_return_if_fail (page != NULL);
   page->weak_refs = s_weakref_remove_ptr (page->weak_refs,
-                                          weak_pointer_loc);
+                                          (void**) weak_pointer_loc);
 }
 
 /*! \brief changes the current page in toplevel
