@@ -33,11 +33,19 @@
 #	define GEDARCDIR GEDADATADIR
 #endif
 
+#ifdef __cplusplus
+static gchar const DATA_ENV[] = "GEDADATA";
+static gchar const CONFIG_ENV[] = "GEDADATARC";
+static gchar const DATA_XDG_SUBDIR[] = "gEDA";
+static gchar const DATA_GUESS_FILE[] = "scheme/geda.scm";
+static gchar const USER_DOTDIR[] = ".gEDA";
+#else
 static const gchar const DATA_ENV[] = "GEDADATA";
 static const gchar const CONFIG_ENV[] = "GEDADATARC";
 static const gchar const DATA_XDG_SUBDIR[] = "gEDA";
 static const gchar const DATA_GUESS_FILE[] = "scheme/geda.scm";
 static const gchar const USER_DOTDIR[] = ".gEDA";
+#endif
 
 /* ================================================================
  * Private initialisation functions
