@@ -721,7 +721,7 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   o_new->complex_basename = g_strdup(o_current->complex_basename);
   o_new->complex_embedded = o_current->complex_embedded;
 
-  o_new->complex = g_malloc0(sizeof(COMPLEX));
+  o_new->complex = (COMPLEX*) g_malloc0 (sizeof (COMPLEX));
   o_new->complex->x = o_current->complex->x;
   o_new->complex->y = o_current->complex->y;
   o_new->complex->angle = o_current->complex->angle;
