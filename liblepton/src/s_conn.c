@@ -180,7 +180,7 @@ s_conn_remove_object_connections (TOPLEVEL *toplevel, OBJECT *to_remove)
       for (c_iter = to_remove->conn_list;
            c_iter != NULL;
            c_iter = g_list_next (c_iter)) {
-        conn = c_iter->data;
+        conn = (CONN *) c_iter->data;
 
         /* keep calling this till it returns false (all refs removed) */
         /* there is NO body to this while loop */
@@ -626,7 +626,7 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object)
     case OBJ_BUS:
       for (c_iter = object->conn_list;
            c_iter != NULL; c_iter = g_list_next (c_iter)) {
-        CONN *conn = c_iter->data;
+        CONN *conn = (CONN *) c_iter->data;
 
         if (conn->other_object && conn->other_object != object) {
           return_list = g_list_append(return_list, conn->other_object);
