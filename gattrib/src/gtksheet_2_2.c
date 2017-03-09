@@ -6499,7 +6499,7 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
            while(words && *words != '\0'){
              if(*words != '\n'){
                 len=strlen(line);
-                line=g_realloc(line, len+2);
+                line = (gchar*) g_realloc (line, len+2);
                 line[len]=*words;
                 line[len+1]='\0';
              }
