@@ -80,9 +80,11 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
   gint wx, wy;
 
   value_entry =
-    g_object_get_data (G_OBJECT (w_current->aewindow), "value_entry");
+    GTK_ENTRY (g_object_get_data (G_OBJECT (w_current->aewindow),
+                                  "value_entry"));
   name_entry =
-    g_object_get_data (G_OBJECT (w_current->aewindow), "attrib_combo_entry");
+    GTK_ENTRY (g_object_get_data (G_OBJECT (w_current->aewindow),
+                                  "attrib_combo_entry"));
   visbutton =
     GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aewindow),
                                    "visbutton"));
