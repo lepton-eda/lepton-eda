@@ -2453,7 +2453,7 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, OBJECT *object)
     for (m_iter = model_rows;
          m_iter != NULL;
          m_iter = g_list_next (m_iter)) {
-      MODEL_ROW *m_compare = m_iter->data;
+      MODEL_ROW *m_compare = (MODEL_ROW*) m_iter->data;
       if (strcmp (m_compare->name, m_row->name) == 0 &&
           m_compare->inherited == m_row->inherited) {
         m_row->nth_with_name = m_row->nth_with_name + 1;
@@ -2553,7 +2553,7 @@ multiattrib_populate_liststore (Multiattrib *multiattrib,
        m_iter != NULL;
        m_iter = g_list_next (m_iter)) {
 
-    MODEL_ROW *model_row = m_iter->data;
+    MODEL_ROW *model_row = (MODEL_ROW*) m_iter->data;
 
     model_row->present_in_all =
       (g_list_length (geda_list_get_glist (model_row->attribute_gedalist))
@@ -2721,7 +2721,7 @@ multiattrib_update (Multiattrib *multiattrib)
          or_iter != NULL;
          or_iter = g_list_next (or_iter)) {
 
-      MODEL_ROW *object_row = or_iter->data;
+      MODEL_ROW *object_row = (MODEL_ROW*) or_iter->data;
       MODEL_ROW *model_row;
       GList *mr_iter;
       gboolean found = FALSE;
@@ -2734,7 +2734,7 @@ multiattrib_update (Multiattrib *multiattrib)
       for (mr_iter = model_rows;
            mr_iter != NULL && found == FALSE;
            mr_iter = g_list_next (mr_iter)) {
-        model_row = mr_iter->data;
+        model_row = (MODEL_ROW*) mr_iter->data;
         if (strcmp (model_row->name, object_row->name) == 0 &&
             model_row->nth_with_name == object_row->nth_with_name &&
             model_row->inherited == object_row->inherited)
