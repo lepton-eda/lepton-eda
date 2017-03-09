@@ -914,7 +914,7 @@ GList *autonumber_history_add(GList *history, gchar *text)
 
   cur=history;
   while(cur!=NULL) {
-    if(!strcmp(text, cur->data)) {
+    if (!strcmp (text, (const char*) cur->data)) {
       history=g_list_remove_link(history, cur);
 
       g_free(cur->data);
