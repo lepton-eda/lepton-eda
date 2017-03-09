@@ -569,7 +569,7 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
   int x1, y1;
   int angle;
 
-  char *basename = g_malloc (1 + strlen (buf));
+  char *basename = (char*) g_malloc (1 + strlen (buf));
 
   int selectable;
   int mirror;
