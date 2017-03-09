@@ -119,7 +119,7 @@ gschem_fill_swatch_cell_renderer_get_type ()
 GtkCellRenderer*
 gschem_fill_swatch_cell_renderer_new ()
 {
-  return g_object_new (GSCHEM_TYPE_FILL_SWATCH_CELL_RENDERER, NULL);
+  return GTK_CELL_RENDERER (g_object_new (GSCHEM_TYPE_FILL_SWATCH_CELL_RENDERER, NULL));
 }
 
 
