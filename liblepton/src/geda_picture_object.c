@@ -889,7 +889,7 @@ o_picture_get_pixbuf (TOPLEVEL *toplevel, OBJECT *object)
   g_return_val_if_fail (object->picture != NULL, NULL);
 
   if (object->picture->pixbuf != NULL) {
-    return g_object_ref (object->picture->pixbuf);
+    return GDK_PIXBUF (g_object_ref (object->picture->pixbuf));
   } else {
     return NULL;
   }
@@ -1060,5 +1060,5 @@ o_picture_get_fallback_pixbuf (TOPLEVEL *toplevel)
   if (failed) return NULL;
 
   g_assert (GDK_IS_PIXBUF (pixbuf));
-  return g_object_ref (pixbuf);
+  return GDK_PIXBUF (g_object_ref (pixbuf));
 }
