@@ -265,7 +265,7 @@ set_property (GObject      *object,
 
   switch (param_id) {
     case PROP_COLOR:
-      set_color (swatch, g_value_get_boxed (value));
+      set_color (swatch, (const GdkColor*) g_value_get_boxed (value));
       break;
 
     case PROP_ENABLED:
