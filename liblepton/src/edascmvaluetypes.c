@@ -143,7 +143,7 @@ value_lcopy_scm (const GValue *value,
                  guint collect_flags)
 {
   SCM val = SCM_PACK (value->data[0].v_long);
-  glong *long_p = collect_values[0].v_pointer;
+  glong *long_p = (glong*) collect_values[0].v_pointer;
 
   if (!long_p)
     return g_strdup_printf ("value location for `%s' passed as NULL",
