@@ -390,11 +390,11 @@ x_print (GschemToplevel *w_current)
   int num_pages = 1;
 
   /* Create the print operation and set it up */
-  print = g_object_new (GTK_TYPE_PRINT_OPERATION,
-                        "n-pages", num_pages,
-                        "use-full-page", FALSE,
-                        "unit", GTK_UNIT_POINTS,
-                        NULL);
+  print = GTK_PRINT_OPERATION (g_object_new (GTK_TYPE_PRINT_OPERATION,
+                                             "n-pages", num_pages,
+                                             "use-full-page", FALSE,
+                                             "unit", GTK_UNIT_POINTS,
+                                             NULL));
 
   if (settings != NULL) {
     gtk_print_operation_set_print_settings (print, settings);
