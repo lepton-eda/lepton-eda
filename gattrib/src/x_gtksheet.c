@@ -324,7 +324,7 @@ void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
 
   /* First get the system color map and allocate the color */
   cmap = gdk_colormap_get_system ();
-  color = g_malloc(sizeof(GdkColor));
+  color = g_new (GdkColor, 1);
   switch(color_name) {
   case RED:
     color->red = 0xffff;
