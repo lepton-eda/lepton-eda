@@ -55,7 +55,7 @@ edascm_closure_marshal (SCM args, SCM smob) {
   EDASCM_ASSERT_SMOB_VALID (smob);
 
   SCM (*func)(SCM, gpointer) = (SCM (*)(SCM, gpointer)) SCM_SMOB_DATA (smob);
-  gpointer *user_data = (gpointer) SCM_SMOB_DATA_2 (smob);
+  gpointer *user_data = (gpointer*) SCM_SMOB_DATA_2 (smob);
 
   return func (args, user_data);
 }
