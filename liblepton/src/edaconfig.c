@@ -214,7 +214,7 @@ eda_config_set_property (GObject *object, guint property_id,
   case PROP_CONFIG_PARENT:
     /* Check if new parent is a child context of config (loops are not
      * permitted). */
-    parent = g_value_get_object (value);
+    parent = EDA_CONFIG (g_value_get_object (value));
     if (parent != NULL) {
       g_return_if_fail (EDA_IS_CONFIG (parent));
       g_return_if_fail (!eda_config_is_descendent (parent, config));
@@ -231,7 +231,7 @@ eda_config_set_property (GObject *object, guint property_id,
       priv->parent_handler_id = 0;
     }
     if (parent != NULL) {
-      config->priv->parent = g_object_ref (parent);
+      config->priv->parent = EDA_CONFIG (g_object_ref (parent));
       /* Connect signal handler to new parent. */
       priv->parent_handler_id =
         g_signal_connect_object (parent,
@@ -296,9 +296,9 @@ eda_config_get_default_context ()
   static gsize initialized = 0;
   static EdaConfig *config = NULL;
   if (g_once_init_enter (&initialized)) {
-    config = g_object_new (EDA_TYPE_CONFIG,
-                           "trusted", TRUE,
-                           NULL);
+    config = EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
+                                       "trusted", TRUE,
+                                       NULL));
     config->priv->loaded = TRUE;
     g_once_init_leave (&initialized, 1);
   }
@@ -361,11 +361,11 @@ eda_config_get_system_context ()
 		g_return_val_if_fail(found_file, NULL);
 
 		EdaConfig *config =
-			g_object_new (EDA_TYPE_CONFIG,
-			              "file", found_file,
-			              "parent", eda_config_get_default_context (),
-			              "trusted", TRUE,
-			              NULL);
+			EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
+                                "file", found_file,
+                                "parent", eda_config_get_default_context (),
+                                "trusted", TRUE,
+                                NULL));
 		g_object_unref (found_file);
 
 		g_once_init_leave (&system_config, config);
@@ -396,11 +396,11 @@ eda_config_get_user_context ()
                                  USER_CONFIG_NAME, NULL);
     file = g_file_new_for_path (filename);
 
-    config = g_object_new (EDA_TYPE_CONFIG,
-                           "file", file,
-                           "parent", eda_config_get_system_context (),
-                           "trusted", TRUE,
-                           NULL);
+    config = EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
+                                       "file", file,
+                                       "parent", eda_config_get_system_context (),
+                                       "trusted", TRUE,
+                                       NULL));
 
     g_free (filename);
     g_object_unref (file);
@@ -532,13 +532,13 @@ eda_config_get_context_for_file (GFile *path)
   /* If there's already a context available for this file, return
    * that. Otherwise, create a new context and record it in the global
    * state. */
-  config = g_hash_table_lookup (local_contexts, file);
+  config = EDA_CONFIG (g_hash_table_lookup (local_contexts, file));
   if (config == NULL) {
-    config = g_object_new (EDA_TYPE_CONFIG,
-                           "file", file,
-                           "parent", eda_config_get_user_context (),
-                           "trusted", FALSE,
-                           NULL);
+    config = EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
+                                       "file", file,
+                                       "parent", eda_config_get_user_context (),
+                                       "trusted", FALSE,
+                                       NULL));
     g_hash_table_insert (local_contexts, g_object_ref (file), config);
   }
 
