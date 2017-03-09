@@ -99,7 +99,7 @@ get_main_menu(GschemToplevel *w_current)
   SCM scm_keys;
   char *menu_name;
   char *action_name;
-  char **raw_menu_name = g_malloc (sizeof(char *));
+  char **raw_menu_name = (char**) g_malloc (sizeof (char *));
   char *menu_item_name;
   char *raw_menu_item_name;
   char *menu_item_stock;
