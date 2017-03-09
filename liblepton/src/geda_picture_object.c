@@ -311,7 +311,7 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
 
       /* Force the data into the object anyway, so as to prevent data
        * loss of embedded images. */
-      picture->file_content = g_memdup (file_content, file_length);
+      picture->file_content = (gchar*) g_memdup (file_content, file_length);
       picture->file_length = file_length;
     }
   }
@@ -731,8 +731,8 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
   picture->lower_y = object->picture->lower_y;
 
   if (object->picture->file_content != NULL) {
-    picture->file_content = g_memdup (object->picture->file_content,
-                                      object->picture->file_length);
+    picture->file_content = (gchar*) g_memdup (object->picture->file_content,
+                                               object->picture->file_length);
   } else {
     picture->file_content = NULL;
   }
@@ -965,8 +965,8 @@ o_picture_set_from_buffer (TOPLEVEL *toplevel, OBJECT *object,
   g_free (object->picture->filename);
   object->picture->filename = tmp;
 
-  gchar *buf = g_realloc (object->picture->file_content,
-                          len);
+  gchar *buf = (gchar*) g_realloc (object->picture->file_content,
+                                   len);
   /* It's possible that these buffers might overlap, because the
    * library user hates us. */
   memmove (buf, data, len);
