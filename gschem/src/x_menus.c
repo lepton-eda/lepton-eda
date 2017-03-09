@@ -29,7 +29,11 @@
 #include <glib/gstdio.h>
 
 struct PopupEntry {
+  #ifdef __cplusplus
+  const gchar *name, *action, *stock_id;
+  #else
   const gchar const *name, *action, *stock_id;
+  #endif
 };
 
 static struct PopupEntry popup_items[] = {
