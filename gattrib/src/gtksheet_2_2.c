@@ -4898,8 +4898,8 @@ gtk_sheet_button_press (GtkWidget * widget,
         if(POSSIBLE_XDRAG(sheet, sheet->x_drag, &sheet->drag_cell.col)){
           guint req;
           gtk_sheet_column_size_request(sheet, sheet->drag_cell.col, &req);
-	  GTK_SHEET_SET_FLAGS (sheet, GTK_SHEET_IN_XDRAG);
-	  gdk_pointer_grab (sheet->column_title_window, FALSE,
+          GTK_SHEET_SET_FLAGS (sheet, GTK_SHEET_IN_XDRAG);
+          gdk_pointer_grab (sheet->column_title_window, FALSE,
                             (GdkEventMask) (GDK_POINTER_MOTION_HINT_MASK |
                                             GDK_BUTTON1_MOTION_MASK |
                                             GDK_BUTTON_RELEASE_MASK),
@@ -4919,8 +4919,8 @@ gtk_sheet_button_press (GtkWidget * widget,
         if(POSSIBLE_YDRAG(sheet, sheet->y_drag, &sheet->drag_cell.row)){
           guint req;
           gtk_sheet_row_size_request(sheet, sheet->drag_cell.row, &req);
-	  GTK_SHEET_SET_FLAGS (sheet, GTK_SHEET_IN_YDRAG);
-	  gdk_pointer_grab (sheet->row_title_window, FALSE,
+          GTK_SHEET_SET_FLAGS (sheet, GTK_SHEET_IN_YDRAG);
+          gdk_pointer_grab (sheet->row_title_window, FALSE,
                             (GdkEventMask) (GDK_POINTER_MOTION_HINT_MASK |
                                             GDK_BUTTON1_MOTION_MASK |
                                             GDK_BUTTON_RELEASE_MASK),
