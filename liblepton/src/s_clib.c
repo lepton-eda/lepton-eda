@@ -303,7 +303,7 @@ static void free_symbol (gpointer data, gpointer user_data)
  */
 static void free_symbol_cache_entry (gpointer data)
 {
-  CacheEntry *entry = data;
+  CacheEntry *entry = (CacheEntry*) data;
   g_return_if_fail (entry != NULL);
   g_free (entry->data);
   g_free (entry);
@@ -417,8 +417,8 @@ static void cache_find_oldest (gpointer key,
                                gpointer value,
                                gpointer user_data)
 {
-  CacheEntry *current = value;
-  CacheEntry **oldest = user_data;
+  CacheEntry *current = (CacheEntry*) value;
+  CacheEntry **oldest = (CacheEntry**) user_data;
 
   if (current->accessed < (*oldest)->accessed) {
     *oldest = current;
@@ -1171,7 +1171,7 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
   symptr = (gpointer) symbol;
 
   /* First, try the cache. */
-  cached = g_hash_table_lookup (clib_symbol_cache, symptr);
+  cached = (CacheEntry*) g_hash_table_lookup (clib_symbol_cache, symptr);
   if (cached != NULL) {
     cached->accessed = time(NULL);
     return g_strdup(cached->data);
