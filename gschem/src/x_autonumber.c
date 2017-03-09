@@ -650,7 +650,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   autotext->free_slots = NULL;
   autotext->used_slots = NULL;
 
-  scope_text = g_list_first(autotext->scope_text)->data;
+  scope_text = (gchar*) g_list_first(autotext->scope_text)->data;
 
   /* Step1: get all pages of the hierarchy */
   pages = s_hierarchy_traversepages (w_current->toplevel,
@@ -729,7 +729,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 
   /* Step3: iterate over the search items in the list */
   for (text_item=searchtext_list; text_item !=NULL; text_item=g_list_next(text_item)) {
-    autotext->current_searchtext = text_item->data;
+    autotext->current_searchtext = (gchar*) text_item->data;
     /* printf("autonumber_text_autonumber: searchtext %s\n", autotext->current_searchtext); */
     /* decide whether to renumber page by page or get a global used-list */
     if (autotext->scope_skip == SCOPE_HIERARCHY) {  /* whole hierarchy database */
@@ -1020,11 +1020,11 @@ void autonumber_set_state(AUTONUMBER_TEXT *autotext)
   gtk_list_store_clear(GTK_LIST_STORE(model));
 
   for (el= autotext->scope_text; el != NULL; el=g_list_next(el)) {
-    gtk_combo_box_append_text(GTK_COMBO_BOX(widget), el->data);
+    gtk_combo_box_append_text(GTK_COMBO_BOX(widget), (const gchar*) el->data);
   }
 
   widget = gtk_bin_get_child(GTK_BIN(widget));
-  gtk_entry_set_text(GTK_ENTRY(widget), g_list_first(autotext->scope_text)->data);
+  gtk_entry_set_text(GTK_ENTRY(widget), (const gchar*) g_list_first(autotext->scope_text)->data);
 
   widget = lookup_widget(autotext->dialog, "scope_skip");
   gtk_combo_box_set_active(GTK_COMBO_BOX(widget),
