@@ -1397,7 +1397,7 @@ static void
 multiattrib_callback_popup_promote (GtkMenuItem *menuitem,
                                     gpointer user_data)
 {
-  Multiattrib *multiattrib = user_data;
+  Multiattrib *multiattrib = MULTIATTRIB (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
   GedaList *attr_list;
@@ -1459,7 +1459,7 @@ static void
 multiattrib_callback_popup_copy_to_all (GtkMenuItem *menuitem,
                                         gpointer user_data)
 {
-  Multiattrib *multiattrib = user_data;
+  Multiattrib *multiattrib = MULTIATTRIB (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
   GedaList *attr_list;
@@ -1950,7 +1950,7 @@ static void
 multiattrib_show_inherited_toggled (GtkToggleButton *button,
                                     gpointer user_data)
 {
-  Multiattrib *multiattrib = user_data;
+  Multiattrib *multiattrib = MULTIATTRIB (user_data);
 
   /* update the treeview contents */
   multiattrib_update (multiattrib);
