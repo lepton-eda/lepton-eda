@@ -215,7 +215,7 @@ set_model_object (GschemBindingInteger *binding, GObject *object)
 {
   if (binding->model_object != NULL) {
     g_signal_handlers_disconnect_by_func (binding->model_object,
-                                          G_CALLBACK (model_notify),
+                                          (gpointer) model_notify,
                                           binding);
 
     g_object_unref (binding->model_object);
@@ -327,7 +327,7 @@ update_model (GschemBinding *obj)
     GValue value = G_VALUE_INIT;
 
     g_signal_handlers_block_by_func(G_OBJECT (binding->model_object),
-                                    G_CALLBACK (model_notify),
+                                    (gpointer) model_notify,
                                     binding);
 
     g_value_init (&value, G_TYPE_INT);
@@ -340,7 +340,7 @@ update_model (GschemBinding *obj)
     g_value_unset (&value);
 
     g_signal_handlers_unblock_by_func(G_OBJECT (binding->model_object),
-                                      G_CALLBACK (model_notify),
+                                      (gpointer) model_notify,
                                       binding);
 
     success = TRUE;
@@ -377,13 +377,13 @@ update_widget (GschemBinding *obj)
     g_value_unset (&value);
 
     g_signal_handlers_block_by_func(G_OBJECT (binding->widget),
-                                    G_CALLBACK (widget_apply),
+                                    (gpointer) widget_apply,
                                     binding);
 
     gschem_integer_combo_box_set_value (binding->widget, number);
 
     g_signal_handlers_unblock_by_func(G_OBJECT (binding->widget),
-                                      G_CALLBACK (widget_apply),
+                                      (gpointer) widget_apply,
                                       binding);
 
     gtk_widget_set_sensitive (binding->widget, (number != -1));

@@ -481,19 +481,19 @@ set_selection_adapter (GschemTextPropertiesWidget *widget, GschemSelectionAdapte
 
   if (widget->adapter != NULL) {
     g_signal_handlers_disconnect_by_func (widget->adapter,
-                                          G_CALLBACK (update_text_content_widget),
+                                          (gpointer) update_text_content_widget,
                                           widget);
 
     g_signal_handlers_disconnect_by_func (widget->adapter,
-                                          G_CALLBACK (update_text_rotation_widget),
+                                          (gpointer) update_text_rotation_widget,
                                           widget);
 
     g_signal_handlers_disconnect_by_func (widget->adapter,
-                                          G_CALLBACK (update_text_color_widget),
+                                          (gpointer) update_text_color_widget,
                                           widget);
 
     g_signal_handlers_disconnect_by_func (widget->adapter,
-                                          G_CALLBACK (update_text_alignment_widget),
+                                          (gpointer) update_text_alignment_widget,
                                           widget);
 
     g_object_unref (widget->adapter);
@@ -574,13 +574,13 @@ update_text_alignment_widget (GschemTextPropertiesWidget *widget)
     int alignment = gschem_selection_adapter_get_text_alignment (widget->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (widget->aligncb),
-                                     G_CALLBACK (update_text_alignment_model),
+                                     (gpointer) update_text_alignment_model,
                                      widget);
 
     gschem_alignment_combo_set_align (widget->aligncb, alignment);
 
     g_signal_handlers_unblock_by_func (G_OBJECT (widget->aligncb),
-                                       G_CALLBACK (update_text_alignment_model),
+                                       (gpointer) update_text_alignment_model,
                                        widget);
 
     gtk_widget_set_sensitive (GTK_WIDGET (widget->aligncb), (alignment != NO_SELECTION));
@@ -626,13 +626,13 @@ update_text_color_widget (GschemTextPropertiesWidget *widget)
     int color = gschem_selection_adapter_get_text_color (widget->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (widget->colorcb),
-                                     G_CALLBACK (update_text_color_model),
+                                     (gpointer) update_text_color_model,
                                      widget);
 
     x_colorcb_set_index(widget->colorcb, color);
 
     g_signal_handlers_unblock_by_func (G_OBJECT (widget->colorcb),
-                                       G_CALLBACK (update_text_color_model),
+                                       (gpointer) update_text_color_model,
                                        widget);
 
     gtk_widget_set_sensitive (GTK_WIDGET (widget->colorcb), (color != NO_SELECTION));
@@ -686,7 +686,7 @@ update_text_content_widget (GschemTextPropertiesWidget *widget)
     const char *string = gschem_selection_adapter_get_text_string (widget->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (widget->text_view),
-                                     G_CALLBACK (update_text_content_model),
+                                     (gpointer) update_text_content_model,
                                      widget);
 
     if (string != NULL) {
@@ -701,7 +701,7 @@ update_text_content_widget (GschemTextPropertiesWidget *widget)
     }
 
     g_signal_handlers_unblock_by_func (G_OBJECT (widget->text_view),
-                                       G_CALLBACK (update_text_content_model),
+                                       (gpointer) update_text_content_model,
                                        widget);
 
     gtk_widget_set_sensitive (GTK_WIDGET (widget->text_view), (string != NULL));
@@ -748,13 +748,13 @@ update_text_rotation_widget (GschemTextPropertiesWidget *widget)
     int angle = gschem_selection_adapter_get_text_rotation (widget->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (widget->rotatecb),
-                                     G_CALLBACK (update_text_rotation_model),
+                                     (gpointer) update_text_rotation_model,
                                      widget);
 
     gschem_rotation_combo_set_angle (widget->rotatecb, angle);
 
     g_signal_handlers_unblock_by_func (G_OBJECT (widget->rotatecb),
-                                       G_CALLBACK (update_text_rotation_model),
+                                       (gpointer) update_text_rotation_model,
                                        widget);
 
     gtk_widget_set_sensitive (GTK_WIDGET (widget->rotatecb), (angle != NO_SELECTION));

@@ -343,7 +343,7 @@ remove_widget (GschemIntegerComboBox *combo, GtkWidget *widget, gpointer unused)
   g_return_if_fail (widget != NULL);
 
   g_signal_handlers_disconnect_by_func(G_OBJECT (widget),
-                                       G_CALLBACK (focus_out_event),
+                                       (gpointer) focus_out_event,
                                        combo);
 }
 

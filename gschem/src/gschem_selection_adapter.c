@@ -1714,7 +1714,7 @@ gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter, SELECTI
 
    if (adapter->selection != NULL) {
     g_signal_handlers_disconnect_by_func (adapter->selection,
-                                          G_CALLBACK (selection_changed),
+                                          (gpointer) selection_changed,
                                           adapter);
 
     g_object_unref (adapter->selection);

@@ -902,7 +902,7 @@ compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
   /* Block handling selection updated for duration of model changes */
   selection = gtk_tree_view_get_selection (compselect->libtreeview);
   g_signal_handlers_block_by_func (selection,
-                                   compselect_callback_tree_selection_changed,
+                                   (gpointer) compselect_callback_tree_selection_changed,
                                    compselect);
 
   /* Update the view model with signals blocked */
@@ -918,7 +918,7 @@ compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
 
   /* Unblock & fire handler for libtreeview selection */
   g_signal_handlers_unblock_by_func (selection,
-                                     compselect_callback_tree_selection_changed,
+                                     (gpointer) compselect_callback_tree_selection_changed,
                                      compselect);
 }
 

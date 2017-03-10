@@ -491,23 +491,23 @@ set_options (GschemOptionsWidget *widget, GschemOptions *options)
 {
   if (widget->options != NULL) {
     g_signal_handlers_disconnect_by_func (widget->options,
-                                          G_CALLBACK (update_snap_size_widget),
+                                          (gpointer) update_snap_size_widget,
                                           widget);
 
     g_signal_handlers_disconnect_by_func (widget->options,
-                                          G_CALLBACK (update_snap_mode_widget),
+                                          (gpointer) update_snap_mode_widget,
                                           widget);
 
     g_signal_handlers_disconnect_by_func (widget->options,
-                                          G_CALLBACK (update_net_rubber_band_mode_widget),
+                                          (gpointer) update_net_rubber_band_mode_widget,
                                           widget);
 
     g_signal_handlers_disconnect_by_func (widget->options,
-                                          G_CALLBACK (update_magnetic_net_mode_widget),
+                                          (gpointer) update_magnetic_net_mode_widget,
                                           widget);
 
     g_signal_handlers_disconnect_by_func (widget->options,
-                                          G_CALLBACK (update_grid_mode_widget),
+                                          (gpointer) update_grid_mode_widget,
                                           widget);
 
     g_object_unref (widget->options);
@@ -612,7 +612,7 @@ update_grid_mode_widget (GschemOptionsWidget *widget)
 
     for (index=0; index<GRID_MODE_COUNT; index++) {
       g_signal_handlers_block_by_func (G_OBJECT (widget->grid_radio[index]),
-                                       G_CALLBACK (update_grid_mode_model),
+                                       (gpointer) update_grid_mode_model,
                                        widget);
     }
 
@@ -623,7 +623,7 @@ update_grid_mode_widget (GschemOptionsWidget *widget)
 
     for (index=0; index<GRID_MODE_COUNT; index++) {
       g_signal_handlers_unblock_by_func (G_OBJECT (widget->grid_radio[index]),
-                                         G_CALLBACK (update_grid_mode_model),
+                                         (gpointer) update_grid_mode_model,
                                          widget);
     }
   }
@@ -764,7 +764,7 @@ update_snap_mode_widget (GschemOptionsWidget *widget)
 
     for (index=0; index<SNAP_STATE_COUNT; index++) {
       g_signal_handlers_block_by_func (G_OBJECT (widget->snap_radio[index]),
-                                       G_CALLBACK (update_snap_mode_model),
+                                       (gpointer) update_snap_mode_model,
                                        widget);
     }
 
@@ -775,7 +775,7 @@ update_snap_mode_widget (GschemOptionsWidget *widget)
 
     for (index=0; index<SNAP_STATE_COUNT; index++) {
       g_signal_handlers_unblock_by_func (G_OBJECT (widget->snap_radio[index]),
-                                         G_CALLBACK (update_snap_mode_model),
+                                         (gpointer) update_snap_mode_model,
                                          widget);
     }
   }
