@@ -206,7 +206,7 @@ eda_config_set_property (GObject *object, guint property_id,
     g_free (priv->filename);
     priv->filename = NULL;
 
-    priv->file = (GFile*) g_value_dup_object (value);
+    priv->file = G_FILE (g_value_dup_object (value));
     if (priv->file != NULL)
       priv->filename = g_file_get_path (priv->file);
     break;
@@ -339,11 +339,11 @@ eda_config_get_system_context ()
 			/* Keep track of the the first path's config filename in case we
 			 * need to fall back to it */
 			if (!first_file) {
-				first_file = (GFile*) g_object_ref(tmp_file);
+				first_file = G_FILE (g_object_ref (tmp_file));
 			}
 
 			if (g_file_query_exists(tmp_file, NULL)) {
-				found_file = (GFile*) g_object_ref(tmp_file);
+				found_file = G_FILE (g_object_ref (tmp_file));
 			}
 			g_object_unref(tmp_file);
 		}
@@ -352,7 +352,7 @@ eda_config_get_system_context ()
 		 * system config directory. */
 		if (!found_file) {
 			g_return_val_if_fail(first_file, NULL);
-			found_file = (GFile*) g_object_ref(first_file);
+			found_file = G_FILE (g_object_ref (first_file));
 		} else {
 			g_object_unref(first_file);
 		}
@@ -420,7 +420,7 @@ eda_config_get_user_context ()
 static GFile *
 find_project_root (GFile *path)
 {
-  GFile *dir = (GFile*) g_object_ref (path);
+  GFile *dir = G_FILE (g_object_ref (path));
   GFile *base_dir;
   GFile *result = NULL;
 
@@ -441,18 +441,18 @@ find_project_root (GFile *path)
     /* Something odd is going on -- even the root directory is
      * apparently missing! So just give up. */
     if (next_dir == NULL) {
-      return (GFile*) g_object_ref (path);
+      return G_FILE (g_object_ref (path));
     }
     dir = next_dir;
   }
 
   /* Iterate upward from dir, looking for a geda.conf file. */
-  base_dir = (GFile*) g_object_ref (dir);
+  base_dir = G_FILE (g_object_ref (dir));
   while (result == NULL && dir != NULL) {
     GFile *cfg_file = g_file_get_child (dir, LOCAL_CONFIG_NAME);
     GFile *next_dir;
     if (g_file_query_exists (cfg_file, NULL)) {
-      result = (GFile*) g_object_ref (dir);
+      result = G_FILE (g_object_ref (dir));
     }
     g_object_unref (cfg_file);
     next_dir = g_file_get_parent (dir);
@@ -463,7 +463,7 @@ find_project_root (GFile *path)
   /* If a config file wasn't found, just return the directory part of
    * the original path passed in. */
   if (result == NULL) {
-    result = (GFile*) g_object_ref (base_dir);
+    result = G_FILE (g_object_ref (base_dir));
   }
 
   if (dir != NULL) {
