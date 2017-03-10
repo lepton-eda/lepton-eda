@@ -1069,7 +1069,7 @@ SCM_DEFINE (add_config_event_x, "%add-config-event!", 2, 0, 0,
                            signal_id,
                            0,
                            NULL,
-                           edascm_config_event_dispatcher,
+                           (gpointer) edascm_config_event_dispatcher,
                            (gpointer) SCM_UNPACK (proc_s));
   if (handler_id) {
     return cfg_s;
@@ -1112,7 +1112,7 @@ SCM_DEFINE (remove_config_event_x, "%remove-config-event!", 2, 0, 0,
                                           signal_id,
                                           0,
                                           NULL,
-                                          edascm_config_event_dispatcher,
+                                          (gpointer) edascm_config_event_dispatcher,
                                           (gpointer) SCM_UNPACK (proc_s));
   g_warn_if_fail (found < 2);
   if (found) {
