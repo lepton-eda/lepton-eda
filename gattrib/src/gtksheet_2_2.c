@@ -1173,7 +1173,7 @@ gtk_sheet_change_entry(GtkSheet *sheet, GtkType entry_type)
     {
       gtk_sheet_show_active_cell(sheet); 
       g_signal_connect (gtk_sheet_get_entry (sheet), "changed",
-                        (GCallback) gtk_sheet_entry_changed, sheet);
+                        G_CALLBACK (gtk_sheet_entry_changed), sheet);
     }
  
 }
@@ -2442,9 +2442,9 @@ gtk_sheet_set_vadjustment (GtkSheet      *sheet,
       g_object_ref_sink (sheet->vadjustment);
 
       g_signal_connect (sheet->vadjustment, "changed",
-                        (GCallback) vadjustment_changed, sheet);
+                        G_CALLBACK (vadjustment_changed), sheet);
       g_signal_connect (sheet->vadjustment, "value_changed",
-                        (GCallback) vadjustment_value_changed, sheet);
+                        G_CALLBACK (vadjustment_value_changed), sheet);
     }
 
   if (!sheet->vadjustment || !old_adjustment)
@@ -2486,9 +2486,9 @@ gtk_sheet_set_hadjustment (GtkSheet      *sheet,
       g_object_ref_sink (sheet->hadjustment);
 
       g_signal_connect (sheet->hadjustment, "changed",
-                        (GCallback) hadjustment_changed, sheet);
+                        G_CALLBACK (hadjustment_changed), sheet);
       g_signal_connect (sheet->hadjustment, "value_changed",
-                        (GCallback) hadjustment_value_changed, sheet);
+                        G_CALLBACK (hadjustment_value_changed), sheet);
     }
 
   if (!sheet->hadjustment || !old_adjustment)
@@ -2795,7 +2795,7 @@ create_global_button(GtkSheet *sheet)
    sheet->button = gtk_button_new_with_label(" ");
 
    g_signal_connect (sheet->button, "pressed",
-                     (GCallback) global_button_clicked, sheet);
+                     G_CALLBACK (global_button_clicked), sheet);
 }
 
 static void
@@ -3990,7 +3990,7 @@ gtk_sheet_deactivate_cell(GtkSheet *sheet)
  if(!veto) return FALSE;
 
  g_signal_handlers_disconnect_by_func (gtk_sheet_get_entry (sheet),
-                                       (GCallback) gtk_sheet_entry_changed,
+                                       (gpointer) gtk_sheet_entry_changed,
                                        sheet);
 
  gtk_sheet_hide_active_cell(sheet);
@@ -4100,7 +4100,7 @@ gtk_sheet_activate_cell(GtkSheet *sheet, gint row, gint col)
  gtk_sheet_show_active_cell(sheet);
 
  g_signal_connect (gtk_sheet_get_entry (sheet), "changed",
-                   (GCallback) gtk_sheet_entry_changed, sheet);
+                   G_CALLBACK (gtk_sheet_entry_changed), sheet);
 
  _gtkextra_signal_emit(GTK_OBJECT(sheet),sheet_signals[ACTIVATE], row, col, &veto);
 
@@ -6267,7 +6267,7 @@ create_sheet_entry(GtkSheet *sheet)
    }
 
  g_signal_connect_swapped (entry, "key_press_event",
-                           (GCallback) gtk_sheet_key_press, sheet);
+                           G_CALLBACK (gtk_sheet_key_press), sheet);
 
  gtk_widget_show (sheet->sheet_entry); 
 }
