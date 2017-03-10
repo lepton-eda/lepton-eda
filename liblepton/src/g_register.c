@@ -43,27 +43,27 @@ struct gsubr_t {
 
 /*! \brief */
 static struct gsubr_t libgeda_funcs[] = {
-  { "eval-protected",           1, 1, 0, g_scm_eval_protected },
-  { "eval-string-protected",    1, 0, 0, g_scm_eval_string_protected },
+  { "eval-protected",            1, 1, 0, (SCM (*) ()) g_scm_eval_protected },
+  { "eval-string-protected",     1, 0, 0, (SCM (*) ()) g_scm_eval_string_protected },
 
-  { "component-library",        1, 1, 0, g_rc_component_library },
-  { "component-library-command", 3, 0, 0, g_rc_component_library_command },
-  { "component-library-funcs",  3, 0, 0, g_rc_component_library_funcs },
+  { "component-library",         1, 1, 0, (SCM (*) ()) g_rc_component_library },
+  { "component-library-command", 3, 0, 0, (SCM (*) ()) g_rc_component_library_command },
+  { "component-library-funcs",   3, 0, 0, (SCM (*) ()) g_rc_component_library_funcs },
   
-  { "reset-component-library",  0, 0, 0, g_rc_reset_component_library },
+  { "reset-component-library",   0, 0, 0, (SCM (*) ()) g_rc_reset_component_library },
   
-  { "scheme-directory",         1, 0, 0, g_rc_scheme_directory },
-  { "bitmap-directory",         1, 0, 0, g_rc_bitmap_directory },
-  { "bus-ripper-symname",       1, 0, 0, g_rc_bus_ripper_symname },
-  { "attribute-promotion",       1, 0, 0, g_rc_attribute_promotion },
-  { "promote-invisible",         1, 0, 0, g_rc_promote_invisible },
-  { "keep-invisible",            1, 0, 0, g_rc_keep_invisible },
-  { "always-promote-attributes",1, 0, 0, g_rc_always_promote_attributes },
-  { "make-backup-files",        1, 0, 0, g_rc_make_backup_files },
-  { "print-color-map", 0, 1, 0, g_rc_print_color_map },
-  { "rc-filename",              0, 0, 0, g_rc_rc_filename },
-  { "rc-config",                0, 0, 0, g_rc_rc_config },
-  { NULL,                       0, 0, 0, NULL } };
+  { "scheme-directory",          1, 0, 0, (SCM (*) ()) g_rc_scheme_directory },
+  { "bitmap-directory",          1, 0, 0, (SCM (*) ()) g_rc_bitmap_directory },
+  { "bus-ripper-symname",        1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_symname },
+  { "attribute-promotion",       1, 0, 0, (SCM (*) ()) g_rc_attribute_promotion },
+  { "promote-invisible",         1, 0, 0, (SCM (*) ()) g_rc_promote_invisible },
+  { "keep-invisible",            1, 0, 0, (SCM (*) ()) g_rc_keep_invisible },
+  { "always-promote-attributes", 1, 0, 0, (SCM (*) ()) g_rc_always_promote_attributes },
+  { "make-backup-files",         1, 0, 0, (SCM (*) ()) g_rc_make_backup_files },
+  { "print-color-map",           0, 1, 0, (SCM (*) ()) g_rc_print_color_map },
+  { "rc-filename",               0, 0, 0, (SCM (*) ()) g_rc_rc_filename },
+  { "rc-config",                 0, 0, 0, (SCM (*) ()) g_rc_rc_config },
+  { NULL,                        0, 0, 0, NULL } };
 
 /*! \brief Register all libgeda functions with scheme.
  *  \par Function Description
