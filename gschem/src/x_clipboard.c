@@ -98,7 +98,9 @@ void
 x_clipboard_finish (GschemToplevel *w_current)
 {
   GtkClipboard *cb = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
-  g_signal_handlers_disconnect_by_func (cb, clip_handle_owner_change, w_current);
+  g_signal_handlers_disconnect_by_func (cb,
+                                        (gpointer) clip_handle_owner_change,
+                                        w_current);
   if (w_current->clipboard_buffer)
     gtk_clipboard_store (cb);
 }

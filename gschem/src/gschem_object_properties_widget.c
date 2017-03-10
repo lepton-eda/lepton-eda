@@ -605,23 +605,23 @@ set_selection_adapter (GschemObjectPropertiesWidget *dialog, GschemSelectionAdap
 
   if (dialog->adapter != NULL) {
     g_signal_handlers_disconnect_by_func (dialog->adapter,
-                                          G_CALLBACK (update_pin_type_widget),
+                                          (gpointer) update_pin_type_widget,
                                           dialog);
 
     g_signal_handlers_disconnect_by_func (dialog->adapter,
-                                          G_CALLBACK (update_object_color_widget),
+                                          (gpointer) update_object_color_widget,
                                           dialog);
 
     g_signal_handlers_disconnect_by_func (dialog->adapter,
-                                          G_CALLBACK (update_line_type_widget),
+                                          (gpointer) update_line_type_widget,
                                           dialog);
 
     g_signal_handlers_disconnect_by_func (dialog->adapter,
-                                          G_CALLBACK (update_fill_type_widget),
+                                          (gpointer) update_fill_type_widget,
                                           dialog);
 
     g_signal_handlers_disconnect_by_func (dialog->adapter,
-                                          G_CALLBACK (update_cap_style_widget),
+                                          (gpointer) update_cap_style_widget,
                                           dialog);
 
     g_object_unref (dialog->adapter);
@@ -721,13 +721,13 @@ update_cap_style_widget (GschemObjectPropertiesWidget *dialog)
     OBJECT_END end = (OBJECT_END) gschem_selection_adapter_get_cap_style (dialog->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (dialog->line_end),
-                                     G_CALLBACK (update_cap_style_model),
+                                     (gpointer) update_cap_style_model,
                                      dialog);
 
     x_linecapcb_set_index (dialog->line_end, end);
 
     g_signal_handlers_unblock_by_func (G_OBJECT (dialog->line_end),
-                                       G_CALLBACK (update_cap_style_model),
+                                       (gpointer) update_cap_style_model,
                                        dialog);
 
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_end), (end != NO_SELECTION));
@@ -787,13 +787,13 @@ update_fill_type_widget (GschemObjectPropertiesWidget *dialog)
     int index = gschem_selection_adapter_get_fill_type (dialog->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (dialog->fstylecb),
-                                     G_CALLBACK (update_fill_type_model),
+                                     (gpointer) update_fill_type_model,
                                      dialog);
 
     x_fstylecb_set_index (dialog->fstylecb, index);
 
     g_signal_handlers_unblock_by_func (G_OBJECT (dialog->fstylecb),
-                                       G_CALLBACK (update_fill_type_model),
+                                       (gpointer) update_fill_type_model,
                                        dialog);
 
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->fstylecb), (index != NO_SELECTION));
@@ -852,13 +852,13 @@ update_line_type_widget (GschemObjectPropertiesWidget *dialog)
     OBJECT_TYPE type = (OBJECT_TYPE) gschem_selection_adapter_get_line_type (dialog->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (dialog->line_type),
-                                     G_CALLBACK (update_line_type_model),
+                                     (gpointer) update_line_type_model,
                                      dialog);
 
     x_linetypecb_set_index (dialog->line_type, type);
 
     g_signal_handlers_unblock_by_func (G_OBJECT (dialog->line_type),
-                                       G_CALLBACK (update_line_type_model),
+                                       (gpointer) update_line_type_model,
                                        dialog);
 
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_type), (type != NO_SELECTION));
@@ -917,13 +917,13 @@ update_object_color_widget (GschemObjectPropertiesWidget *dialog)
     int color = gschem_selection_adapter_get_object_color (dialog->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (dialog->colorcb),
-                                     G_CALLBACK (update_object_color_model),
+                                     (gpointer) update_object_color_model,
                                      dialog);
 
     x_colorcb_set_index (dialog->colorcb, color);
 
     g_signal_handlers_unblock_by_func (G_OBJECT (dialog->colorcb),
-                                       G_CALLBACK (update_object_color_model),
+                                       (gpointer) update_object_color_model,
                                        dialog);
 
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->colorcb), (color != NO_SELECTION));
@@ -981,13 +981,13 @@ update_pin_type_widget (GschemObjectPropertiesWidget *dialog)
     int type = gschem_selection_adapter_get_pin_type (dialog->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (dialog->pin_type),
-                                     G_CALLBACK (update_pin_type_model),
+                                     (gpointer) update_pin_type_model,
                                      dialog);
 
     gschem_pin_type_combo_set_index (dialog->pin_type, type);
 
     g_signal_handlers_unblock_by_func (G_OBJECT (dialog->pin_type),
-                                       G_CALLBACK (update_pin_type_model),
+                                       (gpointer) update_pin_type_model,
                                        dialog);
 
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->pin_type), (type != NO_SELECTION));

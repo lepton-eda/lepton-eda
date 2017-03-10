@@ -100,14 +100,14 @@ x_dialog_hotkeys_cell_stock_id_notify (GObject *gobject,
   /* Fix up the cell renderer, making sure that this function doesn't
    * get called recursively. */
   g_signal_handlers_block_by_func (gobject,
-                                   x_dialog_hotkeys_cell_stock_id_notify,
+                                   (gpointer) x_dialog_hotkeys_cell_stock_id_notify,
                                    NULL);
   g_object_set (gobject,
                 "icon-name", new_icon_name,
                 "stock-id", new_stock_id,
                 NULL);
   g_signal_handlers_unblock_by_func (gobject,
-                                     x_dialog_hotkeys_cell_stock_id_notify,
+                                     (gpointer) x_dialog_hotkeys_cell_stock_id_notify,
                                      NULL);
 
   g_free (stock_id);
