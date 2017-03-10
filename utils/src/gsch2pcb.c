@@ -240,7 +240,7 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
     gnetlist = "gnetlist";
 
   if (!verbose)
-    verboseList = g_list_append (verboseList, "-q");
+    verboseList = g_list_append (verboseList, (gpointer) "-q");
 
   if (!build_and_run_command ("%s %l -g pcbpins -o %s %l %l",
 			      gnetlist,
@@ -260,7 +260,7 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
   create_m4_override_file ();
 
   if (m4_override_file) {
-    args1 = g_list_append (args1, "-m");
+    args1 = g_list_append (args1, (gpointer) "-m");
     args1 = g_list_append (args1, m4_override_file);
   }
 
@@ -1422,7 +1422,7 @@ main (gint argc, gchar ** argv)
 
   /* Defaults for the search path if not configured in the project file */
   if (g_file_test ("packages", G_FILE_TEST_IS_DIR))
-    element_directory_list = g_list_append (element_directory_list, "packages");
+    element_directory_list = g_list_append (element_directory_list, (gpointer) "packages");
 
 #define PCB_PATH_DELIMETER ":"
   if (verbose)
