@@ -54,7 +54,7 @@ static void cclosure_marshal_VOID__SCM (GClosure *closure,
                                         gpointer invocation_hint,
                                         gpointer marshal_data);
 
-G_DEFINE_TYPE (EdascmHookProxy, edascm_hook_proxy, G_TYPE_OBJECT);
+G_DEFINE_TYPE (EdascmHookProxy, edascm_hook_proxy, G_TYPE_OBJECT)
 
 /*! Initialise EdascmHookProxy class. */
 static void

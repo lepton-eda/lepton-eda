@@ -39,7 +39,7 @@ enum {
 
 static guint geda_list_signals[ LAST_SIGNAL ] = { 0 };
 
-G_DEFINE_TYPE (GedaList, geda_list, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GedaList, geda_list, G_TYPE_OBJECT)
 
 
 /*! \brief GType instance initialiser for GedaList
