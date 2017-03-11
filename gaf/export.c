@@ -85,8 +85,8 @@ enum ExportFormatFlags {
 };
 
 struct ExportFormat {
-  gchar *name; /* UTF-8 */
-  gchar *alias; /* UTF-8 */
+  const gchar *name; /* UTF-8 */
+  const gchar *alias; /* UTF-8 */
   gint flags;
   void (*func)(void);
 };
@@ -986,7 +986,7 @@ export_usage (void)
 /* Helper function for checking that a command-line option value can
  * be successfully converted to UTF-8. */
 static inline gchar *
-export_command_line__utf8_check (gchar *str, gchar *arg)
+export_command_line__utf8_check (gchar *str, const gchar *arg)
 {
   GError *err = NULL;
   gchar *result;
