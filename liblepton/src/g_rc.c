@@ -814,7 +814,6 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
 {
   if (default_always_promote_attributes) {
     g_ptr_array_unref (default_always_promote_attributes);
-    NULL;
   }
 
   GPtrArray *promote = g_ptr_array_new ();
