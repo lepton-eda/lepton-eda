@@ -270,8 +270,8 @@ cmd_export_impl (void *data, int argc, char **argv)
   if (!settings.color) {
     /* Create a black and white color map.  All non-background colors
      * are black. */
-    GedaColor white = {~0, ~0, ~0, ~0, TRUE};
-    GedaColor black = {0, 0, 0, ~0, TRUE};
+    GedaColor white = {255, 255, 255, 255, TRUE};
+    GedaColor black = {0, 0, 0, 255, TRUE};
     for (i = 0; i < MAX_COLORS; i++) {
       GedaColor *c = &g_array_index (render_color_map, GedaColor, i);
       if (!c->enabled) continue;
