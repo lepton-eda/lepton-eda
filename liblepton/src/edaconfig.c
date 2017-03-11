@@ -72,7 +72,7 @@ static void parent_config_changed_handler (EdaConfig *parent, const gchar *group
 static void propagate_key_file_error (GError *src, GError **dest);
 
 /*! Magic helpful GObject macro */
-G_DEFINE_TYPE (EdaConfig, eda_config, G_TYPE_OBJECT);
+G_DEFINE_TYPE (EdaConfig, eda_config, G_TYPE_OBJECT)
 
 /*! Initialise EdaConfig class. */
 static void
