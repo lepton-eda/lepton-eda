@@ -47,7 +47,7 @@ static struct option long_options[] =
   };
 
 struct internal_command {
-  char *name;
+  const char *name;
   int (*func)(int, char **);
 };
 
