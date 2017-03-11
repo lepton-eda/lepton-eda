@@ -34,7 +34,7 @@
 
 /*! \brief */
 struct gsubr_t {
-  char* name;
+  const char* name;
   int req;
   int opt;
   int rst;

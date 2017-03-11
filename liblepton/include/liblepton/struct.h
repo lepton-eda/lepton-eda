@@ -136,7 +136,7 @@ struct st_net {
 /* used by the rc loading mechanisms */
 typedef struct {
   int   m_val;
-  char *m_str;
+  const char *m_str;
 } vstbl_entry;
 
 /* Used by g_rc_parse_handler() */
