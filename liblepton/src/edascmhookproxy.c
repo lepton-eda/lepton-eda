@@ -23,7 +23,7 @@
 #include "libgedaguile_priv.h"
 
 enum {
-  PROP_HOOK = 1,
+  PROP_HOOK = 1
 };
 
 /*! \private \memberof EdascmHookProxy

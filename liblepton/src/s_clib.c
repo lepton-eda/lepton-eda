@@ -163,7 +163,7 @@ enum CLibSourceType {
   /*! Command source */
   CLIB_CMD,
   /*! Guile function source */
-  CLIB_SCM,
+  CLIB_SCM
 };
 
 /*! Stores data about a particular component source */

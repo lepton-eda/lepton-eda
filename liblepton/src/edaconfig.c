@@ -28,7 +28,7 @@ enum _EdaConfigPropertyId {
   PROP_0,
   PROP_CONFIG_FILE,
   PROP_CONFIG_PARENT,
-  PROP_CONFIG_TRUSTED,
+  PROP_CONFIG_TRUSTED
 };
 
 /*! \private \memberof EdaConfig
