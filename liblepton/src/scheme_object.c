@@ -2075,7 +2075,7 @@ SCM_DEFINE (set_picture_data_vector_x, "%set-picture-data/vector!",
   ssize_t inc;
   const scm_t_int8 *elt = scm_s8vector_elements (vec_s, &handle, &len, &inc);
   gchar *buf = (gchar*) g_malloc (len);
-  int i;
+  guint i;
 
   scm_dynwind_unwind_handler (g_free, buf, SCM_F_WIND_EXPLICITLY);
 

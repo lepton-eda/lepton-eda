@@ -112,7 +112,7 @@ geda_transform_line (GedaTransform *transform, GedaLine *line)
 void
 geda_transform_lines (GedaTransform *transform, GArray *lines)
 {
-  gint index;
+  guint index;
 
   g_return_if_fail(transform!=NULL);
   g_return_if_fail(lines!=NULL);
@@ -154,7 +154,7 @@ geda_transform_point (GedaTransform *transform, gint *x, gint *y)
 void
 geda_transform_points (GedaTransform *transform, GArray *points)
 {
-  gint index;
+  guint index;
 
   g_return_if_fail(transform!=NULL);
   g_return_if_fail(points!=NULL);

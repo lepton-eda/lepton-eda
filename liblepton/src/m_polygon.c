@@ -115,7 +115,7 @@ gboolean m_polygon_interior_point (GArray *points, int x, int y)
   int count = 0;
 
   if (points->len > 0) {
-    int i;
+    guint i;
     sPOINT p1 = g_array_index (points, sPOINT, points->len - 1);
 
     for (i=0; i < points->len; i++) {
@@ -157,7 +157,7 @@ double m_polygon_shortest_distance (GArray *points, int x, int y, gboolean close
   gdouble shortest = G_MAXDOUBLE;
 
   if (points->len > 0) {
-    int i = 0;
+    guint i = 0;
     sPOINT point;
 
     if (closed) {
