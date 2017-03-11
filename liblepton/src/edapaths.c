@@ -154,7 +154,7 @@ copy_search_list(const gchar **output,
 			 * N.b. we could use g_strv_contains() here, but it's only
 			 * available in quite recent versions of GLib.*/
 			gboolean found = FALSE;
-			for (gint i = 0; !found && i < copied; ++i) {
+			for (guint i = 0; !found && i < copied; ++i) {
 				found = (0 == strcmp(install_dir, output[i]));
 			}
 
