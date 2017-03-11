@@ -30,7 +30,7 @@ typedef enum {
   EDA_ERROR_NOLIB,    /* A requested library resource was missing. */
   EDA_ERROR_LOOP,     /* The data model contains a circular dependency. */
   EDA_ERROR_UNKNOWN_ENCODING, /* Schematic data was not UTF-8-encoded. */
-  EDA_ERROR_NUM_ERRORS,
+  EDA_ERROR_NUM_ERRORS
 } EdaError;
 
 GQuark eda_error_quark (void);

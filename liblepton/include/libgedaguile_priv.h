@@ -119,7 +119,7 @@ enum geda_smob_flags {
   GEDA_SMOB_CONFIG = 3,
   GEDA_SMOB_CLOSURE = 4,
   GEDA_SMOB_TYPE_MASK = 0xf,
-  GEDA_SMOB_GC_FLAG = 0x100,
+  GEDA_SMOB_GC_FLAG = 0x100
 };
 
 /*! Retrieve the type flags for a gEDA smob. */
