@@ -540,7 +540,7 @@ eda_renderer_is_drawable_color (EdaRenderer *renderer, int color,
   }
   /* If color index out of color map bounds, don't draw */
   g_return_val_if_fail ((map != NULL), FALSE);
-  g_return_val_if_fail ((color >= 0) || (color < map->len), FALSE);
+  g_return_val_if_fail ((color >= 0) || (color < (int) map->len), FALSE);
 
   /* Otherwise, return enabled flag of object's color */
   return (&g_array_index (map, GedaColor, color))->enabled;
@@ -564,7 +564,7 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, OBJECT *object)
   void (*hatch_func)(void *, gint, gint, GArray *);
   void *hatch_data;
   GArray *fill_lines;
-  int i;
+  guint i;
 
   /* Horrible horrible hacks! */
   switch (object->type) {
