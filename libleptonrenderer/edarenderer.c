@@ -53,7 +53,7 @@ enum {
   FLAG_TEXT_ORIGIN = EDA_RENDERER_FLAG_TEXT_ORIGIN,
 
   GRIP_SQUARE,
-  GRIP_CIRCLE,
+  GRIP_CIRCLE
 };
 
 struct _EdaRendererPrivate
@@ -165,7 +165,7 @@ eda_renderer_get_text_user_bounds (EdaRenderer *renderer,
                                    double *right,
                                    double *bottom);
 
-G_DEFINE_TYPE (EdaRenderer, eda_renderer, G_TYPE_OBJECT);
+G_DEFINE_TYPE (EdaRenderer, eda_renderer, G_TYPE_OBJECT)
 
 GType
 eda_renderer_flags_get_type ()

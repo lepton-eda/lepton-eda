@@ -23,7 +23,7 @@
 G_BEGIN_DECLS
 
 enum _EdaCairoFlags {
-  EDA_CAIRO_ENABLE_HINTS = 1,
+  EDA_CAIRO_ENABLE_HINTS = 1
 };
 
 typedef enum _EdaCairoFlags EdaCairoFlags;

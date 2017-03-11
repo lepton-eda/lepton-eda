@@ -67,7 +67,7 @@ enum _EdaRendererFlags
   /* Should text outlines be drawn instead of glyphs? */
   EDA_RENDERER_FLAG_TEXT_OUTLINE = 1 << 3,
   /* Should text origin markers be drawn? */
-  EDA_RENDERER_FLAG_TEXT_ORIGIN = 1 << 4,
+  EDA_RENDERER_FLAG_TEXT_ORIGIN = 1 << 4
 };
 
 typedef enum _EdaRendererFlags EdaRendererFlags;

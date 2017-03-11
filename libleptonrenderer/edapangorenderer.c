@@ -36,7 +36,7 @@
 #define MAGIC_OVERBAR_POS_CONSTANT 0.8
 
 enum {
-  PROP_CAIRO_CONTEXT = 1,
+  PROP_CAIRO_CONTEXT = 1
 };
 
 struct _EdaPangoRendererPrivate
@@ -73,7 +73,7 @@ static void eda_pango_renderer_end (PangoRenderer *renderer);
 static void eda_pango_renderer_prepare_run (PangoRenderer *renderer,
                                             PangoLayoutRun *run);
 
-G_DEFINE_TYPE (EdaPangoRenderer, eda_pango_renderer, PANGO_TYPE_RENDERER);
+G_DEFINE_TYPE (EdaPangoRenderer, eda_pango_renderer, PANGO_TYPE_RENDERER)
 
 /* ---------------------------------------- */
 
