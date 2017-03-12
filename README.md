@@ -1,7 +1,8 @@
-Lepton Electronic Design Suite
-==============================
+Lepton Electronic Design Automation
+===================================
 
-Copyright (C) 1998-2016 gEDA Developers, 2016-2017 Lepton Developers.
+Copyright (C) 1998-2017 gEDA Developers.
+Copyright (C) 2017 Lepton Developers.
 
 Introduction
 ============
@@ -148,7 +149,7 @@ Installation from a source archive
 
 First extract the archive to a sensible place:
 
-    tar -xzvf lepton-<version>.tar.gz && cd lepton-<version>
+    tar -xzvf lepton-eda-<version>.tar.gz && cd lepton-eda-<version>
 
 Run the configuration script.  You'll probably want to specify a
 custom directory to install gEDA to, for example:
@@ -264,6 +265,7 @@ The programs and associated files are:
 
   Copyright (C) 1998-2017 by Ales Hvezda and the respective original
   authors.
+  Copyright (C) 2017 Lepton Developers.
 
 See the `AUTHORS` file for a more extensive list of contributors to
 Lepton EDA and gEDA.
