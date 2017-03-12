@@ -214,7 +214,7 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
 
       ac_width = gschem_accel_label_get_accel_width (accel_label);
 
-      if (widget->allocation.width >= widget->requisition.width + ac_width)
+      if (widget->allocation.width >= widget->requisition.width + (gint) ac_width)
         {
           PangoLayout *label_layout;
           PangoLayout *accel_layout;

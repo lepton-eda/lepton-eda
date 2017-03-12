@@ -152,7 +152,7 @@ x_stroke_translate_and_execute (GschemToplevel *w_current)
   gchar sequence[STROKE_MAX_SEQUENCE];
   StrokePoint *point;
   int min_x, min_y, max_x, max_y;
-  gint i;
+  guint i;
 
   g_assert (stroke_points != NULL);
 
