@@ -274,7 +274,7 @@ render (GtkCellRenderer      *cell,
 
     if (geda_fill_type_draw_first_hatch (swatch->fill_type)) {
       BOX box;
-      int index;
+      guint index;
       GArray *lines = g_array_new (FALSE, FALSE, sizeof (GedaLine));
       cairo_path_t *save_path = cairo_copy_path (cr);
 

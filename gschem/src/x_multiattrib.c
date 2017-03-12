@@ -2556,7 +2556,7 @@ multiattrib_populate_liststore (Multiattrib *multiattrib,
     MODEL_ROW *model_row = (MODEL_ROW*) m_iter->data;
 
     model_row->present_in_all =
-      (g_list_length (geda_list_get_glist (model_row->attribute_gedalist))
+      ((int) g_list_length (geda_list_get_glist (model_row->attribute_gedalist))
        == multiattrib->total_num_in_list);
 
     gtk_list_store_append (liststore, &tree_iter);

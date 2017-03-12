@@ -449,7 +449,7 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
   OBJECT *o_current;
   EdaConfig *cfg;
   gchar **filter_list;
-  gint i;
+  guint i;
   gsize n;
 
   model = (GtkListStore*) gtk_tree_view_get_model (compselect->attrtreeview);
