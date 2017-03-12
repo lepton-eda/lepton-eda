@@ -1,7 +1,8 @@
-'gschem and Friends' Electronic Design Suite
-============================================
+Lepton Electronic Design Automation
+===================================
 
-Copyright (C) 1998-2015 gEDA Developers
+Copyright (C) 1998-2017 gEDA Developers.
+Copyright (C) 2017 Lepton Developers.
 
 Introduction
 ============
@@ -22,16 +23,18 @@ hardware or open source hardware. The suite is mainly being developed
 on the GNU/Linux platform with some development effort going into
 making sure the tools run on other platforms as well.
 
-The gEDA/gaf suite (this package) provides schematic capture,
-netlisting, bill of materials generation, and many other features.
+The Lepton EDA suite (this package) provides schematic capture,
+netlisting, bill of materials generation, and many other features. It
+was forked from the
+[gEDA/gaf suite](http://wiki.geda-project.org/geda:gaf) in late 2016.
 
-Tools in the gEDA suite
-=======================
+Tools in the Lepton EDA suite
+=============================
 
-The major components of the gEDA suite are:
+The major components of the Lepton suite are:
 
-- `libgeda`
-  - A library of functions for manipulating gEDA schematics and symbols.
+- `liblepton`
+  - A library of functions for manipulating Lepton schematics and symbols.
 
 - `gschem`
   - A schematic editor.
@@ -146,15 +149,15 @@ Installation from a source archive
 
 First extract the archive to a sensible place:
 
-    tar -xzvf gEDA-gaf-<version>.tar.gz && cd gEDA-gaf-<version>
+    tar -xzvf lepton-eda-<version>.tar.gz && cd lepton-eda-<version>
 
 Run the configuration script.  You'll probably want to specify a
 custom directory to install gEDA to, for example:
 
 
-    ./configure --prefix=$HOME/geda
+    ./configure --prefix=$HOME/lepton
 
-You can then compile gEDA:
+You can then compile Lepton:
 
     make
 
@@ -163,13 +166,13 @@ you may need to run this as root):
 
     make install
 
-For more information on installing gEDA, see the `INSTALL` document.
+For more information on installing Lepton, see the `INSTALL` document.
 
 Installation from the git repository
 ------------------------------------
 
-gEDA uses the `git` version control system.  If you wish to try out
-the very latest version of gEDA, you will need to install some extra
+Lepton uses the `git` version control system.  If you wish to try out
+the very latest version of Lepton, you will need to install some extra
 tools *in addition to* the ones listed above:
 
 - The `git` version control tool, version 1.6 or newer.
@@ -192,20 +195,18 @@ tools *in addition to* the ones listed above:
 Once you have these installed, you need to clone the gEDA git
 repository:
 
-    git clone git://git.geda-project.org/geda-gaf.git
+    git clone https://github.com/lepton-eda/lepton-eda.git
 
 To generate the configure script, run:
 
     ./autogen.sh
 
-You can then proceed to configure and build gEDA as described above.
-For more information on working with the gEDA git repository, see
-<http://wiki.geda-project.org/geda:scm>.
+You can then proceed to configure and build Lepton as described above.
 
-Building gEDA developer API documentation
-=========================================
+Building Lepton developer API documentation
+===========================================
 
-Several of the gEDA libraries and applications have doxygen API
+Several of the Lepton libraries and applications have doxygen API
 documentation available.  To generate the API documentation from the
 source code, install doxygen (see [Dependencies](#Dependencies) above.
 Next, add `--enable-doxygen` to your `configure` command line, i.e.:
@@ -230,7 +231,8 @@ e.g.:
 Getting help
 ============
 
-There are several ways to get help with installing and using gEDA:
+There are several ways to get help with installing and using Lepton
+and the rest of the gEDA tools:
 
 - The gEDA website <http://www.geda-project.org> has more extensive
   information on the gEDA tools, and links to some successful
@@ -248,21 +250,22 @@ There are several ways to get help with installing and using gEDA:
   <http://wiki.geda-project.org/geda:mailinglists>
 
 - If you have discovered a bug, have a feature request, or have
-  written a patch to lepton-eda, please create an item on the
-  lepton-eda bug tracker page:
+  written a patch to Lepton, please create an item on the lepton-eda
+  bug tracker page:
   <https://github.com/lepton-eda/lepton-eda/issues>
 
 License
 =======
 
-gEDA/gaf (this package) is freely distributable under the GNU Public
+Lepton EDA (this package) is freely distributable under the GNU Public
 License (GPL) version 2.0 or (at your option) any later version.  See
 the `COPYING` file for the full text of the license.
 
 The programs and associated files are:
 
-  Copyright (C) 1998-2013 by Ales Hvezda and the respective original
+  Copyright (C) 1998-2017 by Ales Hvezda and the respective original
   authors.
+  Copyright (C) 2017 Lepton Developers.
 
 See the `AUTHORS` file for a more extensive list of contributors to
-gEDA.
+Lepton EDA and gEDA.
