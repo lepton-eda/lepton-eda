@@ -7137,8 +7137,9 @@ gtk_sheet_insert_rows(GtkSheet *sheet, guint row, guint nrows)
    {
      child = (GtkSheetChild *)children->data;
 
-     if(child->attached_to_cell)
-       if (child->row >= (gint) row) child->row += nrows;
+     if (child->attached_to_cell && (child->row >= (gint) row)) {
+       child->row += nrows;
+     }
 
      children = g_list_next(children);
    }
@@ -7174,8 +7175,9 @@ gtk_sheet_insert_columns(GtkSheet *sheet, guint col, guint ncols)
    {
      child = (GtkSheetChild *)children->data;
 
-     if(child->attached_to_cell)
-       if (child->col >= (gint) col) child->col += ncols;
+     if (child->attached_to_cell && (child->col >= (gint) col)) {
+       child->col += ncols;
+     }
 
      children = g_list_next(children);
    }
@@ -7229,7 +7231,9 @@ gtk_sheet_delete_rows(GtkSheet *sheet, guint row, guint nrows)
    {
      child = (GtkSheetChild *)children->data;
 
-     if (child->attached_to_cell && child->row > (gint) row) child->row -= nrows;
+     if (child->attached_to_cell && (child->row > (gint) row)) {
+       child->row -= nrows;
+     }
      children = g_list_next(children);
    }
 
