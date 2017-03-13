@@ -447,7 +447,7 @@ void s_string_list_sort_master_comp_attrib_list() {
   for (p=local_list; p; p=p->next) {
     int i;
     p->pos = DEFAULT_ATTRIB_POS;
-    for (i=0; i<NUM_CERTAINS; i++)
+    for (i=0; i < (gint) NUM_CERTAINS; i++)
       if (p->data != NULL) {
         if (strcmp (certain_attribs[i].attrib, p->data) == 0)
   	{
