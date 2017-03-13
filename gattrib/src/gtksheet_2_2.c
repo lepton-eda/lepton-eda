@@ -4219,8 +4219,7 @@ gtk_sheet_make_backing_pixmap (GtkSheet *sheet, guint width, guint height)
   else
     {
       /* reallocate if sizes don't match */
-      gdk_window_get_size (sheet->pixmap,
-			   &pixmap_width, &pixmap_height);
+      gdk_pixmap_get_size (sheet->pixmap, &pixmap_width, &pixmap_height);
       if ((pixmap_width != (gint) width) || (pixmap_height != (gint) height))
 	{
           g_object_unref (sheet->pixmap);
