@@ -850,7 +850,9 @@ void geda_complex_object_mirror (TOPLEVEL *toplevel,
  *  \param [in] wanted_value  the attribute value to search for.
  *  \return The pin OBJECT with the given attribute, NULL otherwise.
  */
-OBJECT *o_complex_find_pin_by_attribute (OBJECT *object, char *name, char *wanted_value)
+OBJECT *o_complex_find_pin_by_attribute (OBJECT *object,
+                                         const char *name,
+                                         char *wanted_value)
 {
   GList *iter;
   OBJECT *o_current;

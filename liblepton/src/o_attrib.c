@@ -477,7 +477,9 @@ GList *o_attrib_find_floating_attribs (const GList *list)
  *  \param [in] count    Which occurance to return.
  *  \return The n'th attribute object in the given list with the given name.
  */
-OBJECT *o_attrib_find_attrib_by_name (const GList *list, char *name, int count)
+OBJECT *o_attrib_find_attrib_by_name (const GList *list,
+                                      const char *name,
+                                      int count)
 {
   g_return_val_if_fail (name, NULL);
 
@@ -510,7 +512,9 @@ OBJECT *o_attrib_find_attrib_by_name (const GList *list, char *name, int count)
  *  \param [in] counter  Which occurance to return.
  *  \return Character string with attribute value, NULL otherwise.
  */
-static char *o_attrib_search_attrib_list_by_name (const GList *list, char *name, int counter)
+static char *o_attrib_search_attrib_list_by_name (const GList *list,
+                                                  const char *name,
+                                                  int counter)
 {
   OBJECT *attrib;
   char *value = NULL;
@@ -539,7 +543,9 @@ static char *o_attrib_search_attrib_list_by_name (const GList *list, char *name,
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_floating_attribs_by_name (const GList *list, char *name, int counter)
+char *o_attrib_search_floating_attribs_by_name (const GList *list,
+                                                const char *name,
+                                                int counter)
 {
   char *result;
   GList *attributes;
@@ -567,7 +573,9 @@ char *o_attrib_search_floating_attribs_by_name (const GList *list, char *name, i
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_attached_attribs_by_name (OBJECT *object, char *name, int counter)
+char *o_attrib_search_attached_attribs_by_name (OBJECT *object,
+                                                const char *name,
+                                                int counter)
 {
   return o_attrib_search_attrib_list_by_name (object->attribs, name, counter);
 }
@@ -588,7 +596,9 @@ char *o_attrib_search_attached_attribs_by_name (OBJECT *object, char *name, int 
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int counter)
+char *o_attrib_search_inherited_attribs_by_name (OBJECT *object,
+                                                 const char *name,
+                                                 int counter)
 {
   g_return_val_if_fail (object->type == OBJ_COMPLEX ||
                         object->type == OBJ_PLACEHOLDER, NULL);
