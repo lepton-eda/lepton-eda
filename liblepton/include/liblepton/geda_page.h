@@ -20,6 +20,8 @@
 /*! \file geda_page.h
  */
 
+G_BEGIN_DECLS
+
 struct st_page
 {
   TOPLEVEL* toplevel;
@@ -137,3 +139,5 @@ s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page, BOX *rects, int n_rec
 const gchar *s_page_get_filename (const PAGE *page);
 
 void s_page_set_filename (PAGE *page, const char *filename);
+
+G_END_DECLS

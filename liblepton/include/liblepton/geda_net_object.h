@@ -22,6 +22,8 @@
  *  \brief Functions operating on net drawing objects
  */
 
+G_BEGIN_DECLS
+
 /* for geda_net_object_orientation */
 #define NEITHER    0
 #define HORIZONTAL 1
@@ -113,3 +115,5 @@ o_net_read (TOPLEVEL *toplevel,
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err);
+
+G_END_DECLS

@@ -22,6 +22,8 @@
  *  \brief Functions operating on text drawing objects
  */
 
+G_BEGIN_DECLS
+
 #define DEFAULT_TEXT_SIZE 10
 #define MINIMUM_TEXT_SIZE 1
 
@@ -134,3 +136,5 @@ o_text_read (TOPLEVEL *toplevel,
              unsigned int release_ver,
              unsigned int fileformat_ver,
              GError **err);
+
+G_END_DECLS

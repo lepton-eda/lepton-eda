@@ -20,6 +20,8 @@
 /*! \file geda_undo.h
  */
 
+G_BEGIN_DECLS
+
 struct st_undo
 {
   /* one of these is used, depending on if you are doing in-memory */
@@ -78,3 +80,5 @@ s_undo_init (PAGE *p_current);
 
 void
 s_undo_free_all (TOPLEVEL *toplevel, PAGE *p_current);
+
+G_END_DECLS

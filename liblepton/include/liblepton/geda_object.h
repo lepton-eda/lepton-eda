@@ -20,6 +20,8 @@
 /*! \file geda_object.h
  */
 
+G_BEGIN_DECLS
+
 struct st_object
 {
   int type;				/* Basic information */
@@ -234,3 +236,5 @@ s_object_add_weak_ptr (OBJECT *object, void *weak_pointer_loc);
 
 void
 s_object_remove_weak_ptr (OBJECT *object, void *weak_pointer_loc);
+
+G_END_DECLS

@@ -22,5 +22,9 @@
  *  \brief Functions for working with coordinates
  */
 
+G_BEGIN_DECLS
+
 gint
 geda_coord_snap (gint coord, gint grid);
+
+G_END_DECLS

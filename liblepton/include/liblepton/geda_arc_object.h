@@ -22,6 +22,8 @@
  *  \brief Functions operating on arc drawing objects
  */
 
+G_BEGIN_DECLS
+
 #define ARC_CENTER      0
 #define ARC_RADIUS      1
 #define ARC_START_ANGLE 2
@@ -123,3 +125,5 @@ o_arc_read (TOPLEVEL *toplevel,
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err);
+
+G_END_DECLS

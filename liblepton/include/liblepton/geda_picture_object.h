@@ -22,6 +22,8 @@
  *  \brief Functions operating on picture drawing objects
  */
 
+G_BEGIN_DECLS
+
 #define PICTURE_UPPER_LEFT  0
 #define PICTURE_LOWER_RIGHT 1
 #define PICTURE_UPPER_RIGHT 2
@@ -98,3 +100,5 @@ o_picture_embed(TOPLEVEL *toplevel, OBJECT *object);
 
 void
 o_picture_unembed(TOPLEVEL *toplevel, OBJECT *object);
+
+G_END_DECLS

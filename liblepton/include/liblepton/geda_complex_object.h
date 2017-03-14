@@ -22,6 +22,8 @@
  *  \brief Functions operating on complex objects
  */
 
+G_BEGIN_DECLS
+
 int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *o_list,
 			     int *left, int *top,
 			     int *right, int *bottom);
@@ -78,4 +80,4 @@ geda_complex_object_get_position (const GedaObject *object, gint *x, gint *y);
 GList*
 o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach);
 
-
+G_END_DECLS

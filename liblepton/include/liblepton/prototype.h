@@ -1,3 +1,5 @@
+G_BEGIN_DECLS
+
 /* a_basic.c */
 int o_save (TOPLEVEL *toplevel, const GList *object_list, const char *filename, GError **err);
 GList *o_read_buffer(TOPLEVEL *toplevel, GList *object_list, char *buffer, const int size, const char *name, GError **err);
@@ -152,3 +154,5 @@ TextBuffer *s_textbuffer_new (const gchar *data, const gint size);
 TextBuffer *s_textbuffer_free (TextBuffer *tb);
 const gchar *s_textbuffer_next (TextBuffer *tb, const gssize count);
 const gchar *s_textbuffer_next_line (TextBuffer *tb);
+
+G_END_DECLS

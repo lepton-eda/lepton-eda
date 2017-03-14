@@ -22,6 +22,8 @@
  *  \brief Functions operating on box drawing objects
  */
 
+G_BEGIN_DECLS
+
 #define BOX_UPPER_LEFT  0
 #define BOX_LOWER_RIGHT 1
 #define BOX_UPPER_RIGHT 2
@@ -98,3 +100,5 @@ o_box_read (TOPLEVEL *toplevel,
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err);
+
+G_END_DECLS
