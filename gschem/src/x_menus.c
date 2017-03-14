@@ -375,7 +375,9 @@ recent_chooser_item_activated (GtkRecentChooser *chooser, GschemToplevel *w_curr
 
   uri = gtk_recent_chooser_get_current_uri (chooser);
   filename = g_filename_from_uri(uri, NULL, NULL);
-  gtk_recent_manager_add_item(recent_manager, uri);
+  if (w_current->recent_manager != NULL) {
+    gtk_recent_manager_add_item (w_current->recent_manager, uri);
+  }
   page = x_window_open_page(w_current, (char *)filename);
   x_window_set_current_page(w_current, page);
 
@@ -393,9 +395,11 @@ void x_menu_attach_recent_files_submenu(GschemToplevel *w_current)
   GtkWidget* menuitem_to_append_to = NULL;
   GtkRecentFilter *recent_filter;
   GtkWidget *menuitem_file_recent_items;
-  recent_manager = gtk_recent_manager_get_default();
 
-  menuitem_file_recent_items = gtk_recent_chooser_menu_new_for_manager(recent_manager);
+  w_current->recent_manager = gtk_recent_manager_get_default ();
+
+  menuitem_file_recent_items =
+    gtk_recent_chooser_menu_new_for_manager (w_current->recent_manager);
 
   /* Show only schematic- and symbol-files (*.sch and *.sym) in list */
   recent_filter = gtk_recent_filter_new();

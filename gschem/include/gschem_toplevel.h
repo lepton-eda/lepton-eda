@@ -100,6 +100,11 @@ struct st_gschem_toplevel {
   /* ----------------------------------------- */
   GschemSelectionAdapter *selection_adapter;
 
+  /* --------------------------------- */
+  /* Manager for "Open Recent..." menu */
+  /* --------------------------------- */
+  GtkRecentManager *recent_manager;
+
   /* ----------------- */
   /* Picture placement */
   /* ----------------- */

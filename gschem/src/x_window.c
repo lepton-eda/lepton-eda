@@ -938,7 +938,10 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
       gtk_widget_destroy (dialog);
       g_error_free (err);
     } else {
-      gtk_recent_manager_add_item (recent_manager, g_filename_to_uri(fn, NULL, NULL));
+      if (w_current->recent_manager != NULL) {
+        gtk_recent_manager_add_item (w_current->recent_manager,
+                                     g_filename_to_uri(fn, NULL, NULL));
+      }
     }
   } else {
     if (!quiet_mode)
@@ -1051,7 +1054,10 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
     page->CHANGED = 0;
 
     /* add to recent file list */
-    gtk_recent_manager_add_item (recent_manager, g_filename_to_uri(filename, NULL, NULL));
+    if (w_current->recent_manager != NULL) {
+      gtk_recent_manager_add_item (w_current->recent_manager,
+                                   g_filename_to_uri (filename, NULL, NULL));
+    }
 
     /* i_set_filename (w_current, page->page_filename); */
     x_pagesel_update (w_current);
