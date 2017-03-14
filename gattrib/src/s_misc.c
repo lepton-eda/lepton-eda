@@ -55,7 +55,7 @@ static int char_index = 0;
  * Identical to that defined in gnetlist/src/s_misc.c
  * \param string String to be printed
  */
-void verbose_print(char *string)
+void verbose_print (const char *string)
 {
     if (verbose_mode) {
 	printf("%s", string);

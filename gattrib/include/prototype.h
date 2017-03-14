@@ -140,7 +140,7 @@ void s_object_delete_text_object_in_object(TOPLEVEL *toplevel, OBJECT *test_obje
 int s_object_has_sym_file(OBJECT *object);
 
 /* ------------- s_misc.c ------------- */
-void verbose_print(char *string);
+void verbose_print (const char *string);
 void verbose_done(void);
 void verbose_reset_index(void);
 char *s_misc_remaining_string(char *string, char delimiter, int count);
