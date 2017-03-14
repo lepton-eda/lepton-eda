@@ -21,6 +21,8 @@
 /*! \file geda_toplevel.h
  */
 
+G_BEGIN_DECLS
+
 struct st_toplevel
 {
   /* have to decided on component list stuff */
@@ -111,3 +113,5 @@ s_toplevel_weak_ref (TOPLEVEL *toplevel, void (*notify_func)(void *, void *), vo
 
 void
 s_toplevel_weak_unref (TOPLEVEL *toplevel, void (*notify_func)(void *, void *), void *user_data);
+
+G_END_DECLS

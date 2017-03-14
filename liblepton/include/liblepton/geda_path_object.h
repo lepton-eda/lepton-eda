@@ -22,6 +22,8 @@
  *  \brief Functions operating on path drawing objects
  */
 
+G_BEGIN_DECLS
+
 OBJECT*
 geda_path_object_new (TOPLEVEL *toplevel, char type, int color, const char *path_string);
 
@@ -59,3 +61,5 @@ geda_path_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, i
 
 gboolean
 geda_path_object_get_position (const GedaObject *object, gint *x, gint *y);
+
+G_END_DECLS

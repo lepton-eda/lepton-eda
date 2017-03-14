@@ -22,6 +22,8 @@
  *  \brief Functions operating on line objects
  */
 
+G_BEGIN_DECLS
+
 #define LINE_END1 0
 #define LINE_END2 1
 
@@ -114,3 +116,5 @@ o_line_read (TOPLEVEL *toplevel,
              unsigned int release_ver,
              unsigned int fileformat_ver,
              GError **err);
+
+G_END_DECLS

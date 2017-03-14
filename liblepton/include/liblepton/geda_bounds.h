@@ -20,6 +20,8 @@
 /*! \file geda_bounds.h
  */
 
+G_BEGIN_DECLS
+
 typedef struct _GedaBounds GedaBounds;
 
 struct _GedaBounds
@@ -56,3 +58,5 @@ geda_bounds_union (GedaBounds *r, const GedaBounds *a, const GedaBounds *b);
 
 int
 inside_region (int xmin, int ymin, int xmax, int ymax, int x, int y);
+
+G_END_DECLS

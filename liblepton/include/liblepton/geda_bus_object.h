@@ -22,6 +22,8 @@
  *  \brief Functions operating on bus objects
  */
 
+G_BEGIN_DECLS
+
 /* construction, destruction */
 
 GedaObject*
@@ -111,3 +113,5 @@ o_bus_read (TOPLEVEL *toplevel,
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err);
+
+G_END_DECLS

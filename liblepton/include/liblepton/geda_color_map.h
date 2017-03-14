@@ -26,6 +26,8 @@
 #ifndef _COLORS_H_INCL
 #define _COLORS_H_INCL
 
+G_BEGIN_DECLS
+
 #define BACKGROUND_COLOR                0
 #define PIN_COLOR                       1
 #define NET_ENDPOINT_COLOR              2
@@ -74,5 +76,7 @@ s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name);
 
 SCM
 s_color_map_to_scm (const GedaColor *map);
+
+G_END_DECLS
 
 #endif

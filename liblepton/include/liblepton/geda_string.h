@@ -20,6 +20,8 @@
 /*! \file geda_string.h
  */
 
+G_BEGIN_DECLS
+
 int
 o_text_num_lines(const char *string);
 
@@ -31,3 +33,5 @@ geda_string_get_first_line (gchar *string);
 
 char*
 u_basic_breakup_string (char *string, char delimiter, int count);
+
+G_END_DECLS

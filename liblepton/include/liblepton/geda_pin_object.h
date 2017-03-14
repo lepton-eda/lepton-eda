@@ -22,6 +22,8 @@
  *  \brief Functions operating on pin drawing objects
  */
 
+G_BEGIN_DECLS
+
 /* construction, destruction */
 
 OBJECT*
@@ -114,3 +116,5 @@ o_pin_read (TOPLEVEL *toplevel,
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err);
+
+G_END_DECLS

@@ -22,6 +22,8 @@
  *  \brief Functions operating on circle drawing objects
  */
 
+G_BEGIN_DECLS
+
 #define CIRCLE_CENTER 0
 #define CIRCLE_RADIUS 1
 
@@ -104,3 +106,5 @@ o_circle_read (TOPLEVEL *toplevel,
                unsigned int release_ver,
                unsigned int fileformat_ver,
                GError **err);
+
+G_END_DECLS

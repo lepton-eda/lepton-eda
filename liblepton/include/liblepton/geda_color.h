@@ -20,6 +20,8 @@
 /*! \file geda_color.h
  */
 
+G_BEGIN_DECLS
+
 typedef struct st_color GedaColor;
 //typedef struct st_color COLOR;
 
@@ -46,3 +48,5 @@ s_color_rgba_decode (const gchar *rgba, guchar *r, guchar *g, guchar *b, guchar 
 
 gchar*
 s_color_rgba_encode (guint8 r, guint8 g, guint8 b, guint8 a);
+
+G_END_DECLS

@@ -20,6 +20,8 @@
 /*! \file geda_fill_type.h
  */
 
+G_BEGIN_DECLS
+
 /*! \brief The fill type of objects like box, circle, and path
  *
  *  The numeric values of this enumeration are used inside files and must be
@@ -42,3 +44,5 @@ geda_fill_type_draw_first_hatch (int fill_type);
 
 gboolean
 geda_fill_type_draw_second_hatch (int fill_type);
+
+G_END_DECLS
