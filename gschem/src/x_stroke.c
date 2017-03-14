@@ -22,7 +22,12 @@
 #include "gschem.h"
 
 #ifdef HAVE_LIBSTROKE
+
+/* libstroke seems to not have C++ support declarations so we add
+   them explicitly here */
+G_BEGIN_DECLS
 #include <stroke.h>
+G_END_DECLS
 
 /*
  * <B>stroke_points</B> is an array of points for the stroke
