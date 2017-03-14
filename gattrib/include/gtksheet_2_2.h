@@ -23,11 +23,7 @@
 #ifndef __GTK_SHEET_H__
 #define __GTK_SHEET_H__
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
+G_BEGIN_DECLS
 
 typedef enum
 {
@@ -861,11 +857,6 @@ gtk_sheet_button_attach			(GtkSheet *sheet,
 					 gint row, gint col);
                        
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
-
+G_END_DECLS
 
 #endif /* __GTK_SHEET_H__ */
-
-
