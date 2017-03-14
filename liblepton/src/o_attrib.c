@@ -612,7 +612,9 @@ char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int counter)
+char *o_attrib_search_object_attribs_by_name (OBJECT *object,
+                                              const char *name,
+                                              int counter)
 {
   char *result;
   GList *attributes;

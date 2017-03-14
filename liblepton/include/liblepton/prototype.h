@@ -62,7 +62,7 @@ GList *o_attrib_find_floating_attribs (const GList *list);
 char *o_attrib_search_floating_attribs_by_name (const GList *list, char *name, int counter);
 char *o_attrib_search_attached_attribs_by_name (OBJECT *object, char *name, int counter);
 char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int counter);
-char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int counter);
+char *o_attrib_search_object_attribs_by_name (OBJECT *object, const char *name, int counter);
 GList *o_attrib_return_attribs(OBJECT *object);
 int o_attrib_is_inherited(const OBJECT *attrib);
 gboolean o_attrib_is_attrib (const OBJECT *attrib);
