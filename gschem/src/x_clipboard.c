@@ -179,7 +179,7 @@ gboolean
 x_clipboard_set (GschemToplevel *w_current, const GList *object_list)
 {
   GtkClipboard *cb = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
-  GtkTargetEntry target = { MIME_TYPE_SCHEMATIC, 0,
+  GtkTargetEntry target = { (gchar*) MIME_TYPE_SCHEMATIC, 0,
                             CLIP_TYPE_SCHEMATIC };
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean result;

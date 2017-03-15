@@ -286,7 +286,7 @@ static void
 gschem_preview_init (GschemPreview *preview)
 {
   struct event_reg_t {
-    gchar *detailed_signal;
+    const gchar *detailed_signal;
     GCallback c_handler;
   } drawing_area_events[] = {
     { "realize",              G_CALLBACK (preview_callback_realize)       },

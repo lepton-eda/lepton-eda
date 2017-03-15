@@ -171,7 +171,7 @@ get_main_menu(GschemToplevel *w_current)
           scm_keys = g_scm_eval_protected (s_expr, scm_interaction_environment ());
 
           if (scm_is_false (scm_keys)) {
-            menu_item_keys = "";
+            menu_item_keys = (char*) "";
           } else {
             menu_item_keys = scm_to_utf8_string (scm_keys);
             scm_dynwind_free(menu_item_keys);
