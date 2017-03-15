@@ -118,7 +118,7 @@ void
 x_log_message (const gchar *log_domain, GLogLevelFlags log_level, const gchar *message)
 {
   GschemLogWidgetClass *klass = GSCHEM_LOG_WIDGET_CLASS (g_type_class_peek_static (GSCHEM_TYPE_LOG_WIDGET));
-  gchar *style;
+  const gchar *style;
 
   if (log_level & (G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_ERROR)) {
     style = "critical";

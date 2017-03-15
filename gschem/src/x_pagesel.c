@@ -242,7 +242,7 @@ static void pagesel_popup_menu (Pagesel *pagesel,
   GtkTreePath *path;
   GtkWidget *menu;
   struct menuitem_t {
-    gchar *label;
+    const gchar *label;
     GCallback callback;
   };
   struct menuitem_t menuitems[] = {

@@ -858,16 +858,26 @@ void autonumber_sortorder_create(GschemToplevel *w_current, GtkWidget *sort_orde
   gchar *path;
   GError *error=NULL;
 
-  gchar *filenames[] = {"gschem-diagonal.png",
-			"gschem-top2bottom.png", "gschem-bottom2top.png",
-			"gschem-left2right.png", "gschem-right2left.png",
-			"gschem-fileorder.png",
-			NULL};
-  gchar *names[] = {N_("Diagonal"),
-		    N_("Top to bottom"), N_("Bottom to top"),
-		    N_("Left to right"), N_("Right to left"),
-		    N_("File order"),
-		    NULL};
+  const gchar *filenames[] =
+    {
+      "gschem-diagonal.png",
+      "gschem-top2bottom.png",
+      "gschem-bottom2top.png",
+      "gschem-left2right.png",
+      "gschem-right2left.png",
+      "gschem-fileorder.png",
+      NULL
+    };
+  const gchar *names[] =
+    {
+      N_("Diagonal"),
+      N_("Top to bottom"),
+      N_("Bottom to top"),
+      N_("Left to right"),
+      N_("Right to left"),
+      N_("File order"),
+      NULL
+    };
   gint i;
 
   store = gtk_list_store_new(2, G_TYPE_STRING, GDK_TYPE_PIXBUF);
@@ -952,7 +962,7 @@ AUTONUMBER_TEXT *autonumber_init_state()
   AUTONUMBER_TEXT *autotext;
 
   /* Default contents of the combo box history */
-  gchar *default_text[] = {
+  const gchar *default_text[] = {
     "refdes=*",
     "refdes=C?",
     "refdes=D?",
@@ -975,7 +985,7 @@ AUTONUMBER_TEXT *autonumber_init_state()
   if(autotext==NULL) return NULL;
 
   autotext->scope_text = NULL;
-  t=default_text;
+  t = (gchar**) default_text;
   while(*t!=NULL) {
     autotext->scope_text=g_list_append(autotext->scope_text,
 				       g_strdup(*t));

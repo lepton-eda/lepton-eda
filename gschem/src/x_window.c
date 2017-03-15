@@ -92,7 +92,7 @@ void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
 void x_window_setup_draw_events(GschemToplevel *w_current)
 {
   struct event_reg_t {
-    gchar *detailed_signal;
+    const gchar *detailed_signal;
     GCallback c_handler;
   };
 

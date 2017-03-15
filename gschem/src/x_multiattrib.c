@@ -1643,7 +1643,7 @@ multiattrib_popup_menu (Multiattrib *multiattrib, GdkEventButton *event)
   GtkTreePath *path;
   GtkWidget *menu;
   struct menuitem_t {
-    gchar *label;
+    const gchar *label;
     GCallback callback;
   };
 
