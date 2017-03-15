@@ -323,7 +323,8 @@ void autonumber_clear_database (AUTONUMBER_TEXT *autotext)
  */
 gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number)
 {
-  gint i, len, isnumbered=1;
+  gint i, isnumbered=1;
+  size_t len;
   const gchar *str = NULL;
 
   len = strlen(autotext->current_searchtext);
@@ -639,7 +640,8 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   gchar *searchtext;
   gchar *scope_text;
   gchar *new_searchtext;
-  gint i, number, slot;
+  gint number, slot;
+  size_t i;
   GList *o_list = NULL;
   const GList *iter;
 
