@@ -79,7 +79,7 @@ compselect_get_view (Compselect *compselect)
     case 1: return VIEW_CLIB;   /* Component library page */
     default:
       g_critical ("compselect_get_view: Unknown tab position\n");
-      return (enum compselect_view) 0;
+      return VIEW_CLIB;
   }
 }
 
