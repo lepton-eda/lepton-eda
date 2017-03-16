@@ -28,7 +28,7 @@
 
 #include "gschem.h"
 
-#define GETOPT_OPTIONS "c:hL:o:pqr:s:vV"
+#define GETOPT_OPTIONS "c:hL:o:pq:s:vV"
 
 extern char *optarg;
 extern int optind;
@@ -44,7 +44,6 @@ struct option long_options[] =
     {"version", 0, 0, 'V'},
     {"quiet", 0, 0, 'q'},
     {"verbose", 0, 0, 'v'},
-    {"config-file", 0, 0, 'r'},
     {"output", 0, 0, 'o'},
     {0, 0, 0, 0}
   };
@@ -81,7 +80,6 @@ usage(char *cmd)
 "Options:\n"
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
-"  -r, --config-file=FILE   Additional configuration file to load.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
 "  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
@@ -148,10 +146,6 @@ parse_commandline(int argc, char *argv[])
 
       case 'q':
         quiet_mode = TRUE;
-        break;
-
-      case 'r':
-        rc_filename = g_strdup (optarg);
         break;
 
       case 's':

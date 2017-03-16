@@ -28,7 +28,6 @@
 /* window list */
 GList *global_window_list = NULL;
 
-char *rc_filename     = NULL;
 char *output_filename = NULL;
 
 /* colors */

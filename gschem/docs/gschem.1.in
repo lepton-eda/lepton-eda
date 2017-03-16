@@ -29,14 +29,6 @@ Quiet mode. Turn off all warnings/notes/messages.
 \fB-v\fR, \fB--verbose\fR
 Verbose mode.  Output all diagnostic information.
 .TP 8
-\fB-r\fR, \fB--config-file\fR=\fIFILE\fR
-Specify an additional configuration file.  Normally \fBgschem\fR
-searches for the system configuration file, then
-`$HOME/.gEDA/gschemrc', and finally for a `gschemrc' file in the
-current working directory.  This option allows the user to specify an
-additional rc file which is read after all the other rc files have
-been are read.
-.TP 8
 \fB-L\fR \fIDIRECTORY\fR
 Prepend \fIDIRECTORY\fR to the list of directories to be searched for
 Scheme files.
