@@ -41,11 +41,8 @@
 
 #define OPTIONS "c:g:hil:L:m:o:O:qvV"
 
-#ifndef OPTARG_IN_UNISTD
 extern char *optarg;
 extern int optind;
-#endif
-
 
 /* Added by SDB 3.3.2006.  */
 #ifdef HAVE_GETOPT_LONG

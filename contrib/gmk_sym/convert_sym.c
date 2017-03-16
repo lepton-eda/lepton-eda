@@ -64,10 +64,8 @@
 static char vcid[] ATTRIBUTE_UNUSED = "$Id$";
 #endif /* lint */
 
-#ifndef OPTARG_IN_UNISTD
 extern char *optarg;
 extern int optind;
-#endif
 
 /* local defines */
 #define MAX_TEXTLEN      1024

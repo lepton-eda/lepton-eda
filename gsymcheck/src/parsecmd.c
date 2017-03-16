@@ -35,10 +35,8 @@
 
 #define OPTIONS "qvh"
 
-#ifndef OPTARG_IN_UNISTD
 extern char *optarg;
 extern int optind;
-#endif
 
 #ifdef HAVE_GETOPT_H
 #include <getopt.h>
