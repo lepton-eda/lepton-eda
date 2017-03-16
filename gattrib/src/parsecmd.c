@@ -46,10 +46,8 @@
  *  "v" for verbose and "h" for help.
  */
 #define OPTIONS "qvh"
-#ifndef OPTARG_IN_UNISTD
 extern char *optarg;
 extern int optind;
-#endif
 #endif   /* Checking for getopt_long  */
 
 
