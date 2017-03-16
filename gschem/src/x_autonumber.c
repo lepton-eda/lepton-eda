@@ -978,18 +978,18 @@ AUTONUMBER_TEXT *autonumber_init_state()
     "netname=D?",
     NULL
   };
-  gchar **t;
+  const gchar **t;
 
   autotext = g_new(AUTONUMBER_TEXT, 1);
 
   if(autotext==NULL) return NULL;
 
   autotext->scope_text = NULL;
-  t = (gchar**) default_text;
-  while(*t!=NULL) {
-    autotext->scope_text=g_list_append(autotext->scope_text,
-				       g_strdup(*t));
-    t++;
+  t = default_text;
+  while (*t != NULL) {
+    /* t is both an array address and the address of its first
+       element, it post-increments after we get its value. */
+    autotext->scope_text=g_list_append (autotext->scope_text, g_strdup (*t++));
   }
 
   autotext->scope_skip = SCOPE_PAGE;
