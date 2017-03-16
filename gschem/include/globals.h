@@ -30,7 +30,6 @@ extern GList *global_window_list;
 extern GdkColor white;
 extern GdkColor black;
 
-extern char *rc_filename;
 extern char *output_filename;
 
 
