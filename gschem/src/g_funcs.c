@@ -100,7 +100,7 @@ SCM g_funcs_image (SCM filename_s)
                     filename,
                     w_current->image_width,
                     w_current->image_height,
-                    g_strdup("png"));
+                    "png");
 
   scm_dynwind_end ();
 
