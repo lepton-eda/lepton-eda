@@ -111,7 +111,6 @@ GtkWidget *notebook;
 
 GtkSheet **sheets;             /* These are the spreadsheet widgets themselves */
 
-GtkWidget **scrolled_windows;
 GtkWidget *entry;
 GtkWidget *label;
 
