@@ -34,10 +34,15 @@
 
 #include "gschem.h"
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Export current page to PDF.
+ * \par Function Description
+ * Exports current page to PDF format and saves it to a file which
+ * name is set either to the value of the option \a -o or, if it
+ * was not used, to \a filename_s.
  *
+ * \param filename_s File to save the document to if option \a -o
+ * is not used.
+ * \return SCM_BOOL_T if export was successful, otherwise SCM_BOOL_F.
  */
 SCM g_funcs_pdf (SCM filename_s)
 {
@@ -64,10 +69,15 @@ SCM g_funcs_pdf (SCM filename_s)
   return (status ? SCM_BOOL_T : SCM_BOOL_F);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Export current page to an image format.
+ * \par Function Description
+ * Exports current page to PDF format and saves it to a file which
+ * name is set either to the value of the option \a -o or, if it
+ * was not used, to \a filename_s. The image format is defined by
+ * extension of the file name.
  *
+ * \param filename_s  File to save the document to.
+ * \return SCM_BOOL_T.
  */
 SCM g_funcs_image (SCM filename_s)
 {
