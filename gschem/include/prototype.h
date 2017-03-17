@@ -665,7 +665,7 @@ void x_grid_draw_region(GschemToplevel *w_current, cairo_t *cr, int x, int y, in
 int x_grid_query_drawn_spacing(GschemToplevel *w_current);
 /* x_image.c */
 void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
-		      int desired_width, int desired_height, char *filetype);
+                      int desired_width, int desired_height, const char *filetype);
 void x_image_setup(GschemToplevel *w_current);
 GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current, int width, int height);
 /* x_integerls.c */

@@ -122,29 +122,31 @@ static void create_type_menu(GtkComboBox *combo)
  *  \param description The gdk-pixbuf image type description.
  *  \return The gdk-pixbuf type, or extension, of the image.
  *  \note This function is only used in this file.
+ *  \note The caller must g_free the result of this function.
  */
-static char *
+static gchar*
 x_image_get_type_from_description (const char *description)
 {
   GSList *ptr;
+  gchar *image_type = NULL;
 
   if (strcmp (description, "Portable Document Format") == 0) {
-    return (char*) "pdf";
-  }
+    image_type = g_strdup ("pdf");
+  } else {
+    ptr = gdk_pixbuf_get_formats ();
 
-  ptr = gdk_pixbuf_get_formats ();
+    while (ptr != NULL) {
+      gchar *ptr_descr = gdk_pixbuf_format_get_description ((GdkPixbufFormat*) ptr->data);
 
-  while (ptr != NULL) {
-    gchar *ptr_descr = gdk_pixbuf_format_get_description ((GdkPixbufFormat*) ptr->data);
+      if (ptr_descr && (strcasecmp (ptr_descr, description) == 0)) {
+        image_type = gdk_pixbuf_format_get_name ((GdkPixbufFormat*) ptr->data);
+      }
 
-    if (ptr_descr && (strcasecmp (ptr_descr, description) == 0)) {
-      return gdk_pixbuf_format_get_name ((GdkPixbufFormat*) ptr->data);
+      ptr = g_slist_next (ptr);
     }
-
-    ptr = g_slist_next (ptr);
   }
 
-  return NULL;
+  return image_type;
 }
 
 /*! \brief Update the filename of a file dialog, when the image type has changed.
@@ -160,7 +162,7 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
     GschemToplevel *w_current) {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   char* image_type_descr = NULL;
-  char *image_type = NULL;
+  gchar *image_type = NULL;
   const char *old_image_filename = NULL;
   char *file_basename = NULL;
   char *file_name = NULL ;
@@ -200,6 +202,8 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
         image_type);
   }
 
+  g_free (image_type);
+
   /* Set the new filename */
   if (file_chooser) {
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(file_chooser),
@@ -225,7 +229,7 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
  *
  */
 void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
-    int width, int height, char *filetype)
+                       int width, int height, const char *filetype)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int save_page_left, save_page_right, save_page_top, save_page_bottom;
@@ -308,7 +312,7 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
           s_log_message(_("Wrote black and white image to [%1$s] [%2$d x %3$d]"), filename, width, height);
         }
       }
-      g_free(filetype);
+
       if (pixbuf != NULL)
         g_object_unref(pixbuf);
     }
@@ -344,9 +348,8 @@ void x_image_setup (GschemToplevel *w_current)
   GtkWidget *label2;
   GtkWidget *type_combo;
   char *image_type_descr;
-  gchar *filename;
+  gchar *filename, *image_type;
   char *image_size;
-  char *image_type;
   int width, height;
 
   hbox = gtk_hbox_new(FALSE, 0);
@@ -443,6 +446,7 @@ void x_image_setup (GschemToplevel *w_current)
     x_image_lowlevel(w_current, filename, width, height, image_type);
 
     g_free (filename);
+    g_free (image_type);
   }
 
   gtk_widget_destroy (dialog);
