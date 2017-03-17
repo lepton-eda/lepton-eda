@@ -30,8 +30,8 @@ extern GList *global_window_list;
 extern GdkColor white;
 extern GdkColor black;
 
-extern char *output_filename;
-
+/* File name for export */
+extern SCM output_filename_s;
 
 extern int do_logging;
 extern int logging_dest;

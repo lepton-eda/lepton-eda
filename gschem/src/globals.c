@@ -28,8 +28,6 @@
 /* window list */
 GList *global_window_list = NULL;
 
-char *output_filename = NULL;
-
 /* colors */
 GdkColor white;
 GdkColor black;

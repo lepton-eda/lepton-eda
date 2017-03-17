@@ -39,23 +39,28 @@
  *  \par Function Description
  *
  */
-SCM g_funcs_pdf (SCM scm_filename)
+SCM g_funcs_pdf (SCM filename_s)
 {
+  SCM real_filename_s;
   char *filename;
   gboolean status;
   GschemToplevel *w_current = g_current_window ();
 
-  SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
+  SCM_ASSERT (scm_is_string (filename_s), filename_s,
               SCM_ARG1, "gschem-pdf");
 
-  if (output_filename) {
-    status = x_print_export_pdf (w_current, output_filename);
-  } else  {
-    filename = scm_to_utf8_string(scm_filename);
-    status = x_print_export_pdf (w_current, filename);
-    free(filename);
-  }
-  
+  real_filename_s =
+    scm_is_true (output_filename_s) ? output_filename_s : filename_s;
+
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+
+  filename = scm_to_utf8_string (real_filename_s);
+  scm_dynwind_free (filename);
+
+  status = x_print_export_pdf (w_current, filename);
+
+  scm_dynwind_end ();
+
   return (status ? SCM_BOOL_T : SCM_BOOL_F);
 }
 
@@ -64,29 +69,31 @@ SCM g_funcs_pdf (SCM scm_filename)
  *  \par Function Description
  *
  */
-SCM g_funcs_image(SCM scm_filename)
+SCM g_funcs_image (SCM filename_s)
 {
+  SCM real_filename_s;
   char *filename;
-
-  SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
-              SCM_ARG1, "gschem-image");
-
   GschemToplevel *w_current = g_current_window ();
 
-  if (output_filename) {
-    x_image_lowlevel (w_current, output_filename,
-                      w_current->image_width,
-                      w_current->image_height,
-		      g_strdup("png"));
-  } else  {
-    filename = scm_to_utf8_string (scm_filename);
-    x_image_lowlevel (w_current, filename,
-                      w_current->image_width,
-                      w_current->image_height,
-		      g_strdup("png"));
-    free(filename);
-  }
-  
+  SCM_ASSERT (scm_is_string (filename_s), filename_s,
+              SCM_ARG1, "gschem-image");
+
+  real_filename_s =
+    scm_is_true (output_filename_s) ? output_filename_s : filename_s;
+
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+
+  filename = scm_to_utf8_string (real_filename_s);
+  scm_dynwind_free (filename);
+
+  x_image_lowlevel (w_current,
+                    filename,
+                    w_current->image_width,
+                    w_current->image_height,
+                    g_strdup("png"));
+
+  scm_dynwind_end ();
+
   return SCM_BOOL_T;
 }
 
