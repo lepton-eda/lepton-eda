@@ -344,7 +344,7 @@ void x_image_setup (GschemToplevel *w_current)
   GtkWidget *label2;
   GtkWidget *type_combo;
   char *image_type_descr;
-  char *filename;
+  gchar *filename;
   char *image_size;
   char *image_type;
   int width, height;
@@ -441,6 +441,8 @@ void x_image_setup (GschemToplevel *w_current)
     filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 
     x_image_lowlevel(w_current, filename, width, height, image_type);
+
+    g_free (filename);
   }
 
   gtk_widget_destroy (dialog);
