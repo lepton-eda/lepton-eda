@@ -49,6 +49,9 @@ struct option long_options[] =
   };
 #endif
 
+/*! Contains an output filename for Scheme export functions */
+SCM output_filename_s = SCM_BOOL_F;
+
 /*! Contains a Scheme expression arising from command-line arguments.
  *  This is evaluated after initialising gschem, but before loading
  *  any rc files. */
@@ -169,7 +172,7 @@ parse_commandline(int argc, char *argv[])
         break;
 
       case 'o':
-        output_filename = g_strdup (optarg);
+        output_filename_s = scm_from_locale_string (optarg);
         break;
 
       case 'p':
