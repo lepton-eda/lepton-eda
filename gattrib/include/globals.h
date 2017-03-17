@@ -113,10 +113,6 @@ GtkSheet **sheets;             /* These are the spreadsheet widgets themselves *
 
 GtkWidget **scrolled_windows;
 GtkWidget *entry;
-GtkWidget *location;
-GtkWidget *left_button;
-GtkWidget *center_button;
-GtkWidget *right_button;
 GtkWidget *label;
 
 /* command line switch settings */
