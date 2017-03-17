@@ -54,7 +54,7 @@ SCM g_funcs_pdf (SCM filename_s)
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
-  filename = scm_to_utf8_string (real_filename_s);
+  filename = scm_to_locale_string (real_filename_s);
   scm_dynwind_free (filename);
 
   status = x_print_export_pdf (w_current, filename);
@@ -83,7 +83,7 @@ SCM g_funcs_image (SCM filename_s)
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
-  filename = scm_to_utf8_string (real_filename_s);
+  filename = scm_to_locale_string (real_filename_s);
   scm_dynwind_free (filename);
 
   x_image_lowlevel (w_current,
