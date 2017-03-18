@@ -55,6 +55,14 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
+TOPLEVEL *pr_current;
+SHEET_DATA *sheet_head;
+GtkWidget *window;
+GtkWidget *notebook;
+GtkSheet **sheets;
+GtkWidget *entry;
+GtkWidget *label;
+
 /*------------------------------------------------------------------*/
 /*! \brief GTK callback to quit the program.
  *

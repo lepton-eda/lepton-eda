@@ -88,7 +88,7 @@
  * structs.h
  */
 /*------------------------------------------------------------------*/
-TOPLEVEL *pr_current;
+extern TOPLEVEL *pr_current;
 
 /*------------------------------------------------------------------*/
 /*!
@@ -97,8 +97,7 @@ TOPLEVEL *pr_current;
  * callbacks.  It is defined in structs.h
  */
 /*------------------------------------------------------------------*/
-SHEET_DATA *sheet_head;
-
+extern SHEET_DATA *sheet_head;
 /*------------------------------------------------------------------
  * GTKsheet includes: stuff for dealing with windows.
  *------------------------------------------------------------------*/
@@ -106,13 +105,13 @@ SHEET_DATA *sheet_head;
 #define DEFAULT_SPACE 8
 #define NUM_SHEETS 3            /* Components, Nets, and Pins */
 
-GtkWidget *window;              /* Main window */
-GtkWidget *notebook;
+extern GtkWidget *window;              /* Main window */
+extern GtkWidget *notebook;
 
-GtkSheet **sheets;             /* These are the spreadsheet widgets themselves */
+extern GtkSheet **sheets;             /* These are the spreadsheet widgets themselves */
 
-GtkWidget *entry;
-GtkWidget *label;
+extern GtkWidget *entry;
+extern GtkWidget *label;
 
 /* command line switch settings */
 extern int verbose_mode;
