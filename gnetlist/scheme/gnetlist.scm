@@ -708,11 +708,10 @@ other limitations imposed by this netlist format.
         (append-map
          (lambda (package)
            (if (and (have-netname? (package-pins package))
-                    (package-graphical? package)
                     (have-attrib? (package-attribs package) in-attrib))
                (assq-ref (package-attribs package) out-attrib)
                '()))
-         (schematic-netlist toplevel-schematic)))))
+         (schematic-graphicals toplevel-schematic)))))
 
 (define (get-output-filename)
   ;; Name is file name or "-" which means stdout.
