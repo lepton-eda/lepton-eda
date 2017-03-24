@@ -83,7 +83,7 @@ g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name)
  *
  * See also the (gschem action) Scheme module.
  *
- * \param w_current    Current gschem toplevel structure.
+ * \param snap         "Snap" returned coords to the grid.
  * \param x            Location to store x coordinate.
  * \param y            Location to store y coordinate.
  *
