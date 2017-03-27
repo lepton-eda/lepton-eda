@@ -55,9 +55,9 @@ The major components of the Lepton suite are:
 - `gsymcheck`
   - A utility for checking for common errors in schematic symbol files.
 
-- `gaf`
-  - A utility for interactive and batch mode working with gEDA Scheme
-    API, exporting schematics into various formats, and
+- `lepton-cli`
+  - A utility for interactive and batch mode working with Lepton
+    EDA Scheme API, exporting schematics into various formats, and
     configuring all the programs of the suite.
 
 Installation
