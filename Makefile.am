@@ -4,7 +4,7 @@ endif
 if ENABLE_CONTRIB
 CONTRIB_DIR=contrib
 endif
-SUBDIRS = liblepton libleptonrenderer gaf gschem ${GATTRIB_DIR} \
+SUBDIRS = liblepton libleptonrenderer cli gschem ${GATTRIB_DIR} \
 	gsymcheck gnetlist utils symbols docs examples ${CONTRIB_DIR}
 
 ACLOCAL_AMFLAGS = -I m4

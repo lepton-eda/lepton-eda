@@ -7,14 +7,14 @@ nobase_dist_scmdata_DATA = \
 	geda/library.scm geda/repl.scm
 nobase_scmdata_DATA = geda/core/gettext.scm
 
-check-am: update-gaf-tool
+check-am: update-cli-tool
 
 # Unit test support.  The unit tests are run using the geda-batch
 # program, with config loading disabled (-q) so that user config
 # already on the system can't interfere with the test process.
-GAF_SHELL = $(top_builddir)/gaf/gaf --no-rcfiles shell
+CLI_SHELL = $(top_builddir)/cli/gaf --no-rcfiles shell
 TEST_EXTENSIONS = .scm
-SCM_LOG_COMPILER = $(GAF_SHELL)
+SCM_LOG_COMPILER = $(CLI_SHELL)
 AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir) \
 	-c '(use-modules (unit-test)) (load (list-ref (command-line) 1)) (exit (if (tests-passed?) 0 1))'
 
@@ -64,12 +64,12 @@ geda/core/gettext.scm: $(srcdir)/geda/core/gettext.scm.in Makefile
 	  echo "Recreating $@"; mv $@.new $@; \
 	fi
 
-update-gaf-tool:
-	for d in liblepton/src libleptonrenderer gaf; do \
+update-cli-tool:
+	for d in liblepton/src libleptonrenderer cli; do \
 	  (cd $(top_builddir)/$$d && $(MAKE) $(AM_MAKEFLAGS) all-am); \
 	done
 
-.PHONY: update-gaf-tool
+.PHONY: update-cli-tool
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~ geda/core/gettext.scm
