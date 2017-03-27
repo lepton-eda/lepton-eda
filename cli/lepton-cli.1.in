@@ -1,27 +1,27 @@
-.TH gaf 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-cli 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
-gaf - gEDA/gaf Command-Line Utility
+lepton-cli - Lepton EDA Command-Line Utility
 .SH "SYNOPSIS"
-.B gaf
+.B lepton-cli
 [\fIOPTION\fR ...] \fICOMMAND\fR [\fIARGS\fR ...]
 .SH "DESCRIPTION"
 .PP
-.B gaf
+.B lepton-cli
 is part of the gEDA (GPL Electronic Design Automation) toolset.  It
 provides a number of small command-line utilities for working with
 schematic and symbol files, and is designed to be used for batch
 processing of designs created using the schematic editor
 \fBgschem\fR(1).  It currently has three built-in \fICOMMAND\fRs:
 
-.B gaf export
+.B lepton-cli export
 is used to create SVG, PDF, PNG, PS and EPS files from schematic and
 symbol files, for printing or embedding in other documents.
 
-.B gaf config
+.B lepton-cli config
 allows reading and writing settings in gEDA project, user and system
 configuration stores.
 
-.B gaf shell
+.B lepton-cli shell
 provides a Scheme REPL for command-line batch processing of schematic
 data.
 
@@ -34,13 +34,13 @@ Prevent `gafrc' Scheme initialisation files from being loaded.
 Print a help message.
 .TP 8
 \fB-V\fR, \fB--version\fR
-Print \fBgaf\fR version information.
+Print \fBlepton-cli\fR version information.
 
 .SH "EXPORTING IMAGE FILES"
-.B gaf export
+.B lepton-cli export
 [\fIOPTION\fR ...] \fB-o\fR \fIOUTPUT\fR [\fI--\fR] \fIFILE\fR ...
 
-.B gaf export
+.B lepton-cli export
 can export schematic and symbol files in a variety of image formats
 for printing or further processing.  It currently supports single-page
 PNG, SVG and EPS output, and multi-page PS and PDF output.  It accepts
@@ -52,8 +52,8 @@ Output generated image data to \fIFILE\fR.
 .TP 8
 \fB-f\fR, \fB--format\fR=(\fBpng\fR | \fBpdf\fR | \fBsvg\fR | \fBps\fR | \fBeps\fR)
 Specify an output format.  Usually, this option is not required,
-because \fBgaf export\fR will infer the correct format from the file
-extension of the output file.
+because \fBlepton-cli export\fR will infer the correct format from
+the file extension of the output file.
 .TP 8
 \fB-p\fR, \fB--paper\fR=\fINAME\fR
 Size the output for a particular paper size.  The \fINAME\fR should be
@@ -120,11 +120,11 @@ arguments to avoid them to be interpreted by your shell.
 
 
 .SH "ACCESSING CONFIGURATION"
-.B gaf config
+.B lepton-cli config
 [\fIOPTION\fR] [\fIGROUP\fR \fIKEY\fR [\fIVALUE\fR]]
 
-.B gaf config
-is a basic utility for inspecting and modifying gEDA/gaf configuration
+.B lepton-cli config
+is a basic utility for inspecting and modifying Lepton EDA configuration
 stores.
 
 .PP
@@ -151,10 +151,10 @@ Select the system configuration store.  Depending on user permissions,
 the system configuration store may be read-only.
 
 .SH "SCHEME PROCESSING"
-.B gaf shell
+.B lepton-cli shell
 [\fIOPTION ...\fR]
 
-.B gaf shell
+.B lepton-cli shell
 provides a Scheme Read-Eval-Print Loop (REPL) for automating
 processing of schematic and symbol files.  It is designed to be used
 with the gEDA Scheme API.
