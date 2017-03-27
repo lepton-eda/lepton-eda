@@ -209,8 +209,8 @@ AC_CONFIG_FILES([Makefile
                  libleptonrenderer/Makefile
                  libleptonrenderer/libleptonrenderer.pc
 
-                 gaf/Makefile
-                 gaf/po/Makefile.in
+                 cli/Makefile
+                 cli/po/Makefile.in
 
                  gschem/Makefile
                  gschem/po/Makefile.in
