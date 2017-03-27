@@ -2481,6 +2481,67 @@ superior keymap.
 Since 1.10.
 @end defvar
 
+@defvar switch-action-mode-hook
+Called when GUI switches to a new action mode. The argument is the new
+mode.
+
+The action mode may be one of the following symbols:
+
+@itemize
+@item
+@samp{select-mode}
+@item
+@samp{grips-mode}
+@item
+@samp{arc-mode}
+@item
+@samp{box-mode}
+@item
+@samp{bus-mode}
+@item
+@samp{circle-mode}
+@item
+@samp{line-mode}
+@item
+@samp{net-mode}
+@item
+@samp{path-mode}
+@item
+@samp{picture-mode}
+@item
+@samp{pin-mode}
+@item
+@samp{component-mode}
+@item
+@samp{copy-mode}
+@item
+@samp{multiple-copy-mode}
+@item
+@samp{move-mode}
+@item
+@samp{paste-mode}
+@item
+@samp{text-mode}
+@item
+@samp{box-select-mode}
+@item
+@samp{zoom-box-mode}
+@item
+@samp{pan-mode}
+@item
+@samp{mirror-mode}
+@item
+@samp{rotate-mode}
+@end itemize
+
+@example
+(add-hook! switch-action-mode-hook
+           (lambda (mode) (display mode) (newline)))
+@end example
+
+Since 1.10.
+@end defvar
+
 @node Actions
 @section Actions
 @cindex Actions
