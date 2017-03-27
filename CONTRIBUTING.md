@@ -42,15 +42,15 @@ template, but it's okay not to follow it exactly:
 
     I am running this version of Lepton:
 
-    <put the output of running `gaf --version` here>
+    <put the output of running `lepton-cli --version` here>
 
     Here is the related log output:
     ...
 
-The most important things to include are: 1) what you did, 2) what you
-expected, and 3) what happened instead.  Please include the output of
-`gaf --version`, which includes important information about exactly
-what version of Lepton you are using.
+The most important things to include are: 1) what you did, 2) what
+you expected, and 3) what happened instead.  Please include the
+output of `lepton-cli --version`, which includes important
+information about exactly what version of Lepton you are using.
 
 Sometimes, there are log messages that are related to the problem;
 including them in your report is very helpful!
