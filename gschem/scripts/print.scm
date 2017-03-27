@@ -23,7 +23,8 @@
 outputs PDF rather than PostScript, which is probably not what you
 want.
 
-Please use `gaf export' instead.  See `man gaf' for details.
+Please use `lepton-cli export' instead.  See `man lepton-cli' for
+details.
 
 ")
 
