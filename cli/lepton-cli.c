@@ -65,7 +65,7 @@ usage (void)
 {
   printf (_("Usage: lepton-cli [OPTION...] COMMAND [ARGS ...]\n"
 "\n"
-"gEDA/gaf command-line utility.\n"
+"Lepton EDA command-line utility.\n"
 "\n"
 "General options:\n"
 "  --no-rcfiles   inhibit loading of 'gafrc' files\n"
@@ -86,8 +86,9 @@ PACKAGE_BUGREPORT);
 static void
 version (void)
 {
-  printf(_("gEDA/gaf %1$s (g%2$.7s)\n"
-"Copyright (C) 1998-2012 gEDA developers\n"
+  printf(_("Lepton EDA %1$s (g%2$.7s)\n"
+"Copyright (C) 1998-2017 gEDA developers\n"
+"Copyright (C) 2017 Lepton EDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the gEDA distribution.\n"
