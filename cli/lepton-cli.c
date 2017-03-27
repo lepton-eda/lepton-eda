@@ -109,9 +109,9 @@ main (int argc, char **argv)
   /* Set up gettext */
 #if ENABLE_NLS
   setlocale (LC_ALL, "");
-  bindtextdomain ("geda-gaf", LOCALEDIR);
-  textdomain ("geda-gaf");
-  bind_textdomain_codeset ("geda-gaf", "UTF-8");
+  bindtextdomain ("lepton-cli", LOCALEDIR);
+  textdomain ("lepton-cli");
+  bind_textdomain_codeset ("lepton-cli", "UTF-8");
 #endif
 
   while (-1 != (c = getopt_long (argc, argv, short_options,

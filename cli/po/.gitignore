@@ -7,7 +7,7 @@ POTFILES
 *.sed
 *.header
 *.sin
-geda-gaf.pot
+lepton-cli.pot
 Rules-quot
 Makevars.template
 stamp-po
