@@ -3,6 +3,6 @@
 .deps
 .libs
 lepton-cli
-gaf.1
-gaf.html
+lepton-cli.1
+lepton-cli.html
 ChangeLog

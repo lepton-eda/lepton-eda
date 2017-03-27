@@ -2,7 +2,7 @@ SUBDIRS = po
 
 bin_PROGRAMS = lepton-cli
 
-EXTRA_DIST = $(html_man_files) gaf.1.in ChangeLog
+EXTRA_DIST = $(html_man_files) lepton-cli.1.in ChangeLog
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git
@@ -54,8 +54,8 @@ snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" -e"s:[@]YEAR@:$$y:" < $< > $@
 
 # Rules for converting man->html
-dist_man_MANS = gaf.1
-html_man_files = gaf.html
+dist_man_MANS = lepton-cli.1
+html_man_files = lepton-cli.html
 
 docsmandir=$(docdir)/man
 docsman_DATA=$(html_man_files)
