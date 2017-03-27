@@ -27,7 +27,7 @@ dnl             cd $(DESTDIR)$(bindir) && \
 dnl             ln -s lepton-cli$(EXEEXT) gaf$(EXEEXT)
 dnl     uninstall-hook:
 dnl             rm -f $(DESTDIR)$(bindir)/gaf$(EXEEXT)
-dnl     endif !INSTALL_COMPAT_SYMLINKS
+dnl     endif INSTALL_COMPAT_SYMLINKS
 
 # Check whether to install compatibility symlinks for gEDA/gaf programs
 AC_DEFUN([AX_OPTION_COMPAT_SYMLINKS],[dnl
