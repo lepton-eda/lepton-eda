@@ -43,7 +43,7 @@ static struct option shell_long_options[] =
 static void
 shell_usage (void)
 {
-  printf (_("Usage: gaf shell [OPTION ...]\n"
+  printf (_("Usage: lepton-cli shell [OPTION ...]\n"
 "\n"
 "Shell for interactive processing of gEDA data using Scheme.\n"
 "\n"
@@ -99,7 +99,7 @@ cmd_shell_impl (void *data, int argc, char **argv)
       break;
     case '?':
       /* getopt_long already printed an error message */
-      fprintf (stderr, _("\nRun `gaf shell --help' for more information.\n"));
+      fprintf (stderr, _("\nRun `lepton-cli shell --help' for more information.\n"));
       exit (1);
       break;
     default:
@@ -129,7 +129,7 @@ cmd_shell_impl (void *data, int argc, char **argv)
 
   /* Now load rc files, if necessary */
   if (getenv ("GAF_INHIBIT_RCFILES") == NULL) {
-    g_rc_parse (toplevel, "gaf shell", NULL, NULL);
+    g_rc_parse (toplevel, "lepton-cli shell", NULL, NULL);
   }
   i_vars_libgeda_set (toplevel); /* Ugh */
 

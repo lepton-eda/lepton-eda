@@ -150,7 +150,7 @@ static struct ExportSettings settings = {
 };
 
 #define bad_arg_msg _("ERROR: Bad argument '%1$s' to %2$s option.\n")
-#define see_help_msg _("\nRun `gaf export --help' for more information.\n")
+#define see_help_msg _("\nRun `lepton-cli export --help' for more information.\n")
 
 static void
 cmd_export_impl (void *data, int argc, char **argv)
@@ -172,7 +172,7 @@ cmd_export_impl (void *data, int argc, char **argv)
 
   /* Now load rc files, if necessary */
   if (getenv ("GAF_INHIBIT_RCFILES") == NULL) {
-    g_rc_parse (toplevel, "gaf export", NULL, NULL);
+    g_rc_parse (toplevel, "lepton-cli export", NULL, NULL);
   }
   i_vars_libgeda_set (toplevel); /* Ugh */
 
@@ -958,7 +958,7 @@ static struct option export_long_options[] = {
 static void
 export_usage (void)
 {
-  printf (_("Usage: gaf export [OPTION ...] -o OUTPUT [--] FILE ...\n"
+  printf (_("Usage: lepton-cli export [OPTION ...] -o OUTPUT [--] FILE ...\n"
 "\n"
 "Export gEDA files in various image formats.\n"
 "\n"
@@ -1152,7 +1152,7 @@ export_command_line (int argc, char * const *argv)
   }
 }
 
-/* Main function for `gaf export' */
+/* Main function for `lepton-cli export' */
 int
 cmd_export (int argc, char **argv)
 {

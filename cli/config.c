@@ -44,7 +44,7 @@ static struct option config_long_options[] =
 static void
 config_usage (void)
 {
-  printf (_("Usage: gaf config [OPTION] [GROUP KEY [VALUE]]\n"
+  printf (_("Usage: lepton-cli config [OPTION] [GROUP KEY [VALUE]]\n"
 "\n"
 "View and modify gEDA configuration.\n"
 "\n"
@@ -65,7 +65,7 @@ config_usage (void)
   exit (0);
 }
 
-#define see_help_msg _("\nRun `gaf config --help' for more information.\n")
+#define see_help_msg _("\nRun `lepton-cli config --help' for more information.\n")
 #define multi_store_msg _("ERROR: You may only specify a single configuration store.\n")
 
 static void
@@ -204,7 +204,7 @@ cmd_config_impl (void *data, int argc, char **argv)
   g_assert_not_reached ();
 }
 
-/* Main function for `gaf config' */
+/* Main function for `lepton-cli config' */
 int
 cmd_config (int argc, char **argv)
 {

@@ -21,7 +21,8 @@
 (format (current-error-port)
 "WARNING: Exporting images with 'image.scm' is deprecated.
 
-Please use `gaf export' instead.  See `man gaf' for details.
+Please use `lepton-cli export' instead.  See `man lepton-cli' for
+details.
 
 ")
 

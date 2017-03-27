@@ -63,7 +63,7 @@ static struct internal_command commands[] =
 static void
 usage (void)
 {
-  printf (_("Usage: gaf [OPTION...] COMMAND [ARGS ...]\n"
+  printf (_("Usage: lepton-cli [OPTION...] COMMAND [ARGS ...]\n"
 "\n"
 "gEDA/gaf command-line utility.\n"
 "\n"
@@ -72,7 +72,7 @@ usage (void)
 "  -h, --help     display usage information and exit\n"
 "  -V, --version  display version information and exit\n"
 "\n"
-"Commonly-used commands (type `gaf <cmd> --help' for usage):\n"
+"Commonly-used commands (type `lepton-cli <cmd> --help' for usage):\n"
 "  shell          Scheme REPL for interactive gEDA data processing\n"
 "  config         Edit gEDA configuration\n"
 "  export         Export gEDA files in various image formats.\n"
@@ -134,7 +134,7 @@ main (int argc, char **argv)
 
     case '?':
       /* getopt_long already printed an error message */
-      fprintf (stderr, _("\nRun `gaf --help' for more information.\n"));
+      fprintf (stderr, _("\nRun `lepton-cli --help' for more information.\n"));
       exit (1);
       break;
 
@@ -148,7 +148,7 @@ main (int argc, char **argv)
     fprintf (stderr,
              _("ERROR: You must specify a command to run.\n"
                "\n"
-               "Run `gaf --help' for more information.\n"));
+               "Run `lepton-cli --help' for more information.\n"));
     exit (1);
   }
 
@@ -166,7 +166,7 @@ main (int argc, char **argv)
     fprintf (stderr,
              _("ERROR: Unrecognised command `%1$s'.\n"
                "\n"
-               "Run `gaf --help' for more information.\n"),
+               "Run `lepton-cli --help' for more information.\n"),
              cmd);
     exit (1);
   }
