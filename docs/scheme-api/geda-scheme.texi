@@ -2638,7 +2638,7 @@ The special symbol @samp{repeat-last-command} is interpreted as a
 request to repeat the last action evaluated via @code{eval-action!}.
 
 @strong{Note}: If you have an action object @code{&action}, then the
-following to calls are equivalent and interchangeable:
+following two calls are equivalent and interchangeable:
 
 @example
 (eval-action! &action)
