@@ -12,7 +12,7 @@ check-am: update-cli-tool
 # Unit test support.  The unit tests are run using the geda-batch
 # program, with config loading disabled (-q) so that user config
 # already on the system can't interfere with the test process.
-CLI_SHELL = $(top_builddir)/cli/gaf --no-rcfiles shell
+CLI_SHELL = $(top_builddir)/cli/lepton-cli --no-rcfiles shell
 TEST_EXTENSIONS = .scm
 SCM_LOG_COMPILER = $(CLI_SHELL)
 AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir) \
