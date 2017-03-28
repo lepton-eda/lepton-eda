@@ -64,7 +64,7 @@ main_prog(void *closure, int argc, char *argv[])
   /* create log file right away */
   /* even if logging is enabled */
   x_log_update_func = s_log_update;
-  s_log_init ("gsymcheck");
+  s_log_init ("symcheck");
 
   logging_dest=STDOUT_TTY;
 
