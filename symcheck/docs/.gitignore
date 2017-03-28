@@ -2,6 +2,6 @@ Makefile
 Makefile.in
 html
 latex
-gsymcheck.1
-gsymcheck.html
+lepton-symcheck.1
+lepton-symcheck.html
 *~

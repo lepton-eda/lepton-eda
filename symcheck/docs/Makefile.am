@@ -1,9 +1,9 @@
 
 EXTRA_DIST = $(html_man_files) gsymcheck.dox logo.png \
 	     gsymcheck-main.txt what-is-geda.html what-is-gsymcheck.html \
-	gsymcheck.1.in
+	lepton-symcheck.1.in
 
-dist_man_MANS = gsymcheck.1
+dist_man_MANS = lepton-symcheck.1
 
 .1.in.1:
 	d=`$(GUILE) -c '(setlocale LC_ALL "C") \
@@ -14,7 +14,7 @@ dist_man_MANS = gsymcheck.1
 	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" -e"s:[@]YEAR@:$$y:" < $< > $@
 
 # Rules for converting man->html
-html_man_files = gsymcheck.html
+html_man_files = lepton-symcheck.html
 SUFFIXES = .1.in .1 .html
 
 docsmandir=$(docdir)/man
@@ -42,7 +42,7 @@ endif
 
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ gsymcheck.html
+CLEANFILES = *.log *~ lepton-symcheck.html
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log *~ Makefile.in $(html_man_files)
 
