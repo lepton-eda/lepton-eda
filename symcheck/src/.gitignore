@@ -2,7 +2,7 @@ Makefile
 Makefile.in
 .deps
 .libs
-gsymcheck
-gsymcheck.exe
+lepton-symcheck
+lepton-symcheck.exe
 *.o
 *~
