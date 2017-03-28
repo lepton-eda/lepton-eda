@@ -24,7 +24,7 @@ ref="${SRCDIR}/${symbasename}.output"
 new="${rundir}/new_${symbasename}.output"
 tmpfile=${rundir}/tmp$$
 
-${BUILDDIR}/../src/gsymcheck -vv ${in} 1> ${tmpfile} 2> ${rundir}/allerrors.output
+${BUILDDIR}/../src/lepton-symcheck -vv ${in} 1> ${tmpfile} 2> ${rundir}/allerrors.output
 
 cat ${tmpfile} | \
 	grep -v "gEDA/gsymcheck version" | \
