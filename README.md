@@ -52,7 +52,7 @@ The major components of the Lepton suite are:
   - A command-line utility for streamlining the workflow where 'PCB'
     <http://pcb.geda-project.org/> and `gschem` are used together.
 
-- `gsymcheck`
+- `lepton-symcheck`
   - A utility for checking for common errors in schematic symbol files.
 
 - `lepton-cli`
