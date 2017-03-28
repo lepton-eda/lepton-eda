@@ -156,7 +156,7 @@ footprint=none
 T 400 5200 5 10 0 0 0 0 1
 documentation=none
 T 400 5400 5 10 0 0 0 0 1
-description=pintype check for gsymcheck
+description=pintype check for lepton-symcheck
 T 400 5600 5 10 0 0 0 0 1
 numslots=0
 P 3100 2900 2800 2900 1 0 0
