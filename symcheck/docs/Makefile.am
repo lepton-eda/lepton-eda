@@ -1,5 +1,5 @@
 
-EXTRA_DIST = $(html_man_files) gsymcheck.dox logo.png \
+EXTRA_DIST = $(html_man_files) lepton-symcheck.dox logo.png \
 	     gsymcheck-main.txt what-is-geda.html what-is-gsymcheck.html \
 	lepton-symcheck.1.in
 
@@ -30,10 +30,10 @@ else
 	@! :
 endif
 
-doxygen: gsymcheck.dox
-	@echo 'Creating doxygen documentation for gsymcheck...'
+doxygen: lepton-symcheck.dox
+	@echo 'Creating doxygen documentation for lepton-symcheck...'
 if ENABLE_DOXYGEN
-	$(DOXYGEN) gsymcheck.dox
+	$(DOXYGEN) lepton-symcheck.dox
 else
 	@echo 'configure was not run with the --enable-doxygen switch.'
 	@echo 'The documentation cannot be built from the sources.'
