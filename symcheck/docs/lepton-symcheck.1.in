@@ -1,19 +1,19 @@
-.TH gsymcheck 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-symcheck 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
-gsymcheck \- gEDA/gaf Symbol Checker
+lepton-symcheck \- Lepton EDA Symbol Checker
 .SH SYNOPSIS
-.B gsymcheck
+.B lepton-symcheck
 .RB [ \-h ]
-.RB [ \-v ] 
-.RB [ \-q ] 
-.I symbol1 
+.RB [ \-v ]
+.RB [ \-q ]
+.I symbol1
 .RI [... symbolN ]
 .SH DESCRIPTION
 .PP
-.B gsymcheck
-is a symbol checker for gEDA/gaf.
-Here is a list of checks that 
-.B gsymcheck
+.B lepton-symcheck
+is a symbol checker for Lepton EDA.
+Here is a list of checks that
+.B lepton-symcheck
 performs:
 
 .IP \[bu] 2 
@@ -39,7 +39,7 @@ Checks for any other connections within a symbol
 Checks to make sure the number of pins is the correct number
 
 .SH OPTIONS
-.B gsymcheck
+.B lepton-symcheck
 accepts the following options:
 .TP 8
 .BR \-q ", " \-\-quiet
@@ -56,7 +56,7 @@ Verbose mode 2.  This mode will show all error, warning, and info messages (opti
 .TP 8
 .BR -h ", " \-\-help
 Usage summary / 
-.B gsymcheck 
+.B lepton-symcheck 
 help
 .TP 8
 .IR symbol1 " [..." symbolN ]
@@ -67,30 +67,30 @@ It is important that the schematic(s) follow all the options (i.e. last).
 
 .SH EXAMPLES 
 Here are some examples on how to run 
-.BR gsymcheck :  
+.BR lepton-symcheck :  
 
 To get usage information just run:
 
-	 gsymcheck
+	 lepton-symcheck
 
 To actually check a symbol with just error counts, run:
 
-	gsymcheck symbolfilename.sym
+	lepton-symcheck symbolfilename.sym
 
 To get the actuall error messages, run:
 
-	gsymcheck \-v symbolfilename.sym
+	lepton-symcheck \-v symbolfilename.sym
 
 To see all the error messages and warnings, run:
 
-	gsymcheck \-vv symbolfilename.sym
+	lepton-symcheck \-vv symbolfilename.sym
 
 To see all the error messages, warnings, and parse info, run:
 
-	gsymcheck \-vvv symbolfilename.sym
+	lepton-symcheck \-vvv symbolfilename.sym
 
 .SH "ENVIRONMENT"
-.B gsymcheck
+.B lepton-symcheck
 respects the following environment variable:
 .PP
 .TP 8
@@ -109,7 +109,9 @@ Ales Hvezda and many others
 .SH COPYRIGHT
 Copyright \(co 1999-2008 Ales Hvezda
 .nf
-Copyright \(co 1999-@YEAR@ gEDA Contributors.
+Copyright \(co 1999-2017 gEDA Contributors.
+.nf
+Copyright \(co @YEAR@ Lepton EDA Contributors.
 This document can be freely redistributed according to the terms of the 
 GNU General Public License version 2.0
 
