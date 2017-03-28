@@ -27,10 +27,6 @@ tmpfile=${rundir}/tmp$$
 ${BUILDDIR}/../src/lepton-symcheck -vv ${in} 1> ${tmpfile} 2> ${rundir}/allerrors.output
 
 cat ${tmpfile} | \
-	grep -v "gEDA/gsymcheck version" | \
-	grep -v "ABSOLUTELY NO WARRANTY" | \
-	grep -v "This is free software" | \
-	grep -v "the COPYING file" | \
 	grep -v "Checking: " | \
 	grep -v '^$' > ${new}
 rm -f ${tmpfile}
