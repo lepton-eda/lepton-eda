@@ -1,5 +1,5 @@
-/* gEDA - GPL Electronic Design Automation
- * gsymcheck - gEDA Symbol Checker
+/* Lepton EDA
+ * lepton-symcheck - Lepton Symbol Checker
  * Copyright (C) 1998-2010 Ales Hvezda
  *
  * You should have received a copy of the GNU Library General Public
