@@ -30,7 +30,7 @@ Adds a footprint=XXX attribute to the symbol if none exists.
 .PP
 The idea here is to fix common cut-and-paste issues and fix up
 the symbol so that it will pass
-.BR gsymcheck (1)
+.BR lepton-symcheck (1)
 with no errors or
 warnings.
 
@@ -55,7 +55,7 @@ Mike Skerritt <mike@acornpacket.com>.
 
 .SH SEE ALSO
 .BR gschem (1),
-.BR gsymcheck (1)
+.BR lepton-symcheck (1)
 
 .SH COPYRIGHT
 .nf

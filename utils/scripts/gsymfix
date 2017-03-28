@@ -198,8 +198,8 @@ sub usage {
   print "\t- Adds a device=XXX attribute to the symbol if none exists\n";
   print "\t- Adds a footprint=XXX attribute to the symbol if none exists\n";
   print "    The idea here is to fix common cut and paste issues and fix up\n";
-  print "    the symbol so that it will pass gsymcheck with no errors or\n";
-  print "    warnings.\n";
+  print "    the symbol so that it will pass lepton-symcheck with no errors\n";
+  print "    or warnings.\n";
   print "\n";
   print "    $pname accepts the following options:\n";
   print "\n";
