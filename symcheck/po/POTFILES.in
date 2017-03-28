@@ -1,0 +1,11 @@
+# List of translatable files
+
+symcheck/src/globals.c
+symcheck/src/g_rc.c
+symcheck/src/g_register.c
+symcheck/src/gsymcheck.c
+symcheck/src/i_vars.c
+symcheck/src/parsecmd.c
+symcheck/src/s_check.c
+symcheck/src/s_log.c
+symcheck/src/s_symstruct.c
