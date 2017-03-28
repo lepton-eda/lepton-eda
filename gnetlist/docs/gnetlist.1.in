@@ -254,4 +254,4 @@ This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
 .SH SEE ALSO
-\fBgschem\fR(1), \fBgsymcheck\fR(1), \fBpcb\fR(1), \fBgnucap\fR(1)
+\fBgschem\fR(1), \fBlepton-symcheck\fR(1), \fBpcb\fR(1), \fBgnucap\fR(1)

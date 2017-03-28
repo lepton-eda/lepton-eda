@@ -89,7 +89,7 @@ This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
 .SH SEE ALSO
-\fBgnetlist\fR(1), \fBgsymcheck\fR(1)
+\fBgnetlist\fR(1), \fBlepton-symcheck\fR(1)
 .PP
 The full documentation for
 .B gschem
