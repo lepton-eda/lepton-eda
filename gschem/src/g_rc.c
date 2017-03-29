@@ -235,11 +235,11 @@ SCM g_rc_text_size(SCM size)
   SCM_ASSERT (scm_is_integer (size), size, SCM_ARG1, "text-size");
 
   val = scm_to_int (size);
-  if (val == 0) {
+  if (val < MINIMUM_TEXT_SIZE) {
     fprintf(stderr,
             _("Invalid size [%1$d] passed to text-size\n"),
             val);
-    val = 10; /* absolute default */
+    val = DEFAULT_TEXT_SIZE; /* absolute default */
   }
 
   default_text_size = val;
