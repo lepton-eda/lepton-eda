@@ -75,7 +75,8 @@ dialog_response_apply (NewText *dialog)
   int align = LOWER_LEFT;
   int color = TEXT_COLOR;
   int rotate = 0;
-  int size = 12;
+  GschemToplevel *w_current = GSCHEM_DIALOG (dialog)->w_current;
+  int size = w_current ? w_current->text_size : default_text_size;
   gchar *string = NULL;
   gchar *tmp = NULL;
   GtkTextBuffer *textbuffer;
