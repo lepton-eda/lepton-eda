@@ -336,6 +336,7 @@ g_init_window ()
 
   /* Create fluid */
   scheme_window_fluid = scm_permanent_object (scm_make_fluid ());
+  scm_c_define ("%lepton-window", scheme_window_fluid);
 
   /* Define the (schematic core window) module */
   scm_c_define_module ("schematic core window",
