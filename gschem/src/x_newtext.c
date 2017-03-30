@@ -293,9 +293,8 @@ static void newtext_init(NewText *dialog)
 
   dialog->textsizecb = gschem_integer_combo_box_new();
 
-  GschemToplevel *w_current = g_current_window ();
   gschem_integer_combo_box_set_value (dialog->textsizecb,
-    w_current ? w_current->text_size : default_text_size);
+                                      g_current_window()->text_size);
 
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->textsizecb, 1,2,1,2);
 
