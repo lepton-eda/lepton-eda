@@ -29,15 +29,17 @@ ${BUILDDIR}/../src/lepton-symcheck -vv ${in} 1> ${tmpfile} 2> ${rundir}/allerror
 cat ${tmpfile} | \
 	grep -v "Checking: " | \
 	grep -v '^$' > ${new}
-rm -f ${tmpfile}
 
 diff "${ref}" "${new}"
 status=$?
 
-rm -rf $rundir
-
+# Don't remove temporaries if something went wrong.
+# Just exit with non-zero code.
 if test $status -ne 0; then
 	exit 2
 fi
+
+rm -f ${tmpfile}
+rm -rf $rundir
 
 exit 0
