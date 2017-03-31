@@ -112,6 +112,10 @@ get_color_name (int index)
     case STROKE_COLOR:             return _("Stroke");
     case LOCK_COLOR:               return _("Lock");
     case OUTPUT_BACKGROUND_COLOR:  return _("Output background");
+    case FREESTYLE1_COLOR:         return _("Freestyle 1");
+    case FREESTYLE2_COLOR:         return _("Freestyle 2");
+    case FREESTYLE3_COLOR:         return _("Freestyle 3");
+    case FREESTYLE4_COLOR:         return _("Freestyle 4");
     case JUNCTION_COLOR:           return _("Net junction");
     case MESH_GRID_MAJOR_COLOR:    return _("Mesh grid major");
     case MESH_GRID_MINOR_COLOR:    return _("Mesh grid minor");
