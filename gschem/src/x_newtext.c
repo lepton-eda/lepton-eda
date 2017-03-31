@@ -300,9 +300,6 @@ static void newtext_init(NewText *dialog)
 
   dialog->textsizecb = gschem_integer_combo_box_new();
 
-  gschem_integer_combo_box_set_value (dialog->textsizecb,
-                                      g_current_window()->text_size);
-
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->textsizecb, 1,2,1,2);
 
   label = gtk_label_new (_("Alignment:"));
@@ -441,6 +438,9 @@ text_input_dialog (GschemToplevel *w_current)
 
     gschem_integer_combo_box_set_model (NEWTEXT (w_current->tiwindow)->textsizecb,
                            gschem_toplevel_get_text_size_list_store (w_current));
+
+    gschem_integer_combo_box_set_value (NEWTEXT (w_current->tiwindow)->textsizecb,
+                                        w_current->text_size);
 
     gtk_widget_show_all (w_current->tiwindow);
   }

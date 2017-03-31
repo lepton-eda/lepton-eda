@@ -1915,14 +1915,7 @@ DEFINE_I_CALLBACK(add_text)
  */
 void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  g_dynwind_window (w_current);
-
-  i_callback_add_text (w_current, 0, widget);
-
-  scm_dynwind_end ();
+  i_callback_add_text (data, 0, widget);
 }
 
 /*! \todo Finish function documentation!!!
