@@ -72,11 +72,17 @@ struct _NewText {
 static void
 dialog_response_apply (NewText *dialog)
 {
+  g_return_if_fail (dialog != NULL);
+
+  GschemToplevel *w_current = NULL;
+  g_object_get (GSCHEM_DIALOG (dialog), "gschem-toplevel", &w_current, NULL);
+  g_return_if_fail (w_current != NULL);
+
+  int size = w_current->text_size;
+
   int align = LOWER_LEFT;
   int color = TEXT_COLOR;
   int rotate = 0;
-  GschemToplevel *w_current = GSCHEM_DIALOG (dialog)->w_current;
-  int size = w_current ? w_current->text_size : default_text_size;
   gchar *string = NULL;
   gchar *tmp = NULL;
   GtkTextBuffer *textbuffer;
