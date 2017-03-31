@@ -72,10 +72,17 @@ struct _NewText {
 static void
 dialog_response_apply (NewText *dialog)
 {
+  g_return_if_fail (dialog != NULL);
+
+  GschemToplevel *w_current = NULL;
+  g_object_get (GSCHEM_DIALOG (dialog), "gschem-toplevel", &w_current, NULL);
+  g_return_if_fail (w_current != NULL);
+
+  int size = w_current->text_size;
+
   int align = LOWER_LEFT;
   int color = TEXT_COLOR;
   int rotate = 0;
-  int size = 12;
   gchar *string = NULL;
   gchar *tmp = NULL;
   GtkTextBuffer *textbuffer;
@@ -292,7 +299,7 @@ static void newtext_init(NewText *dialog)
                     0);
 
   dialog->textsizecb = gschem_integer_combo_box_new();
-  gschem_integer_combo_box_set_value(dialog->textsizecb, 12);
+
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->textsizecb, 1,2,1,2);
 
   label = gtk_label_new (_("Alignment:"));
@@ -431,6 +438,9 @@ text_input_dialog (GschemToplevel *w_current)
 
     gschem_integer_combo_box_set_model (NEWTEXT (w_current->tiwindow)->textsizecb,
                            gschem_toplevel_get_text_size_list_store (w_current));
+
+    gschem_integer_combo_box_set_value (NEWTEXT (w_current->tiwindow)->textsizecb,
+                                        w_current->text_size);
 
     gtk_widget_show_all (w_current->tiwindow);
   }
