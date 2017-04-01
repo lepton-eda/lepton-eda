@@ -26,6 +26,68 @@
 
 #define GSCHEM_THEME_ICON_NAME "geda-gschem"
 
+
+
+static void
+create_menubar (GschemToplevel *w_current, GtkWidget *main_box);
+
+
+static void
+create_toolbar_button (GschemToplevel *w_current,
+                       GtkWidget *toolbar,
+                       const gchar *pixmap_name,
+                       const gchar *label,
+                       const gchar *tooltip,
+                       GCallback callback,
+                       gint pos);
+
+static GtkWidget*
+create_toolbar_radio_button (GSList** group,
+                             GschemToplevel *w_current,
+                             GtkWidget *toolbar,
+                             const gchar *pixmap_name,
+                             const gchar *label,
+                             const gchar *tooltip,
+                             GCallback callback,
+                             gint pos);
+
+static void
+create_toolbar_separator (GtkWidget *toolbar, gint pos);
+
+static void
+create_toolbar (GschemToplevel *w_current, GtkWidget *main_box);
+
+
+static void
+create_find_text_widget (GschemToplevel *w_current, GtkWidget *work_box);
+
+static void
+create_hide_text_widget (GschemToplevel *w_current, GtkWidget *work_box);
+
+static void
+create_show_text_widget (GschemToplevel *w_current, GtkWidget *work_box);
+
+static void
+create_macro_widget (GschemToplevel *w_current, GtkWidget *work_box);
+
+static void
+create_translate_widget (GschemToplevel *w_current, GtkWidget *work_box);
+
+static void
+create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box);
+
+static void
+setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled);
+
+
+static GtkWidget*
+create_notebook_right (GschemToplevel *w_current);
+
+static GtkWidget*
+create_notebook_bottom (GschemToplevel *w_current);
+
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -307,6 +369,7 @@ x_window_translate_response (GschemTranslateWidget *widget, gint response, Gsche
 }
 
 
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -314,21 +377,11 @@ x_window_translate_response (GschemTranslateWidget *widget, gint response, Gsche
  */
 void x_window_create_main(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-
-  GtkPolicyType policy;
-  GtkWidget *main_box=NULL;
-  GtkWidget *menubar=NULL;
-  GtkWidget *toolbar=NULL;
-  GtkWidget *handlebox=NULL;
-  GtkWidget *scrolled;
-  GtkAdjustment *hadjustment;
-  GtkAdjustment *vadjustment;
-  char *right_button_text;
-  GtkWidget *hpaned;
-  GtkWidget *vpaned;
-  GtkWidget *work_box;
-  GtkToolButton *button = NULL;
+  GtkWidget *main_box = NULL;
+  GtkWidget *hpaned = NULL;
+  GtkWidget *vpaned = NULL;
+  GtkWidget *work_box = NULL;
+  GtkWidget *scrolled = NULL;
 
   w_current->main_window = GTK_WIDGET (gschem_main_window_new ());
 
@@ -354,385 +407,110 @@ void x_window_create_main(GschemToplevel *w_current)
                     G_CALLBACK (i_callback_close_wm),
                     w_current);
 
-  /* Containers first */
-  main_box = gtk_vbox_new(FALSE, 1);
+
+  /*
+  *  top level container:
+  */
+  main_box = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (main_box), 0);
-  gtk_container_add(GTK_CONTAINER(w_current->main_window), main_box);
+  gtk_container_add (GTK_CONTAINER (w_current->main_window), main_box);
 
-  menubar = get_main_menu (w_current);
-  if (w_current->handleboxes) {
-  	handlebox = gtk_handle_box_new ();
-  	gtk_box_pack_start(GTK_BOX(main_box), handlebox, FALSE, FALSE, 0);
-  	gtk_container_add (GTK_CONTAINER (handlebox), menubar);
-  } else {
-  	gtk_box_pack_start(GTK_BOX(main_box), menubar, FALSE, FALSE, 0);
-  }
 
-  w_current->menubar = menubar;
+  /*
+  *  main menu:
+  */
+  create_menubar (w_current, main_box);
+
+
   gtk_widget_realize (w_current->main_window);
 
-  if (w_current->handleboxes && w_current->toolbars) {
-  	handlebox = gtk_handle_box_new ();
-  	gtk_box_pack_start (GTK_BOX (main_box), handlebox, FALSE, FALSE, 0);
-  }
 
-  if (w_current->toolbars) {
-    toolbar = gtk_toolbar_new();
-    gtk_orientable_set_orientation (GTK_ORIENTABLE (toolbar),
-                                    GTK_ORIENTATION_HORIZONTAL);
-    gtk_toolbar_set_style (GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
+  /*
+  *  toolbar:
+  */
+  create_toolbar (w_current, main_box);
 
-    if (w_current->handleboxes) {
-      gtk_container_add (GTK_CONTAINER (handlebox), toolbar);
-    } else {
-      gtk_box_pack_start(GTK_BOX(main_box), toolbar, FALSE, FALSE, 0);
-    }
 
-    button =
-      (GtkToolButton*) gtk_tool_button_new (x_window_stock_pixmap ("new", w_current),
-                                            _("New"));
-    gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("New file"));
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), 0);
-    g_signal_connect (button,
-                      "clicked",
-                      G_CALLBACK (i_callback_toolbar_file_new),
-                      w_current);
+  /*
+  *  popup menu:
+  */
+  w_current->popup_menu = (GtkWidget*) get_main_popup (w_current);
 
-    button =
-      (GtkToolButton*) gtk_tool_button_new (x_window_stock_pixmap ("open", w_current),
-                                            _("Open"));
-    gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Open file"));
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), 1);
-    g_signal_connect (button,
-                      "clicked",
-                      G_CALLBACK (i_callback_toolbar_file_open),
-                      w_current);
 
-    button =
-      (GtkToolButton*) gtk_tool_button_new (x_window_stock_pixmap ("save", w_current),
-                                            _("Save"));
-    gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Save file"));
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), 2);
-    g_signal_connect (button,
-                      "clicked",
-                      G_CALLBACK (i_callback_toolbar_file_save),
-                      w_current);
-
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                        GTK_TOOL_ITEM (gtk_separator_tool_item_new ()), 3);
-
-    button =
-      (GtkToolButton*) gtk_tool_button_new (x_window_stock_pixmap ("undo", w_current),
-                                            _("Undo"));
-    gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Undo last operation"));
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), 4);
-    g_signal_connect (button,
-                      "clicked",
-                      G_CALLBACK (i_callback_toolbar_edit_undo),
-                      w_current);
-
-    button =
-      (GtkToolButton*) gtk_tool_button_new (x_window_stock_pixmap ("redo", w_current),
-                                            _("Redo"));
-    gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Redo last undo"));
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), 5);
-    g_signal_connect (button,
-                      "clicked",
-                      G_CALLBACK (i_callback_toolbar_edit_redo),
-                      w_current);
-
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                        GTK_TOOL_ITEM (gtk_separator_tool_item_new ()), 6);
-
-    /* not part of any radio button group */
-    button =
-      (GtkToolButton*) gtk_tool_button_new (x_window_stock_pixmap ("insert-symbol", w_current),
-                                            _("Component"));
-    gtk_widget_set_tooltip_text (GTK_WIDGET (button),
-                                 _("Add component...\n"
-                                   "Select library and component from list, move the mouse into main window, click to place\n"
-                                   "Right mouse button to cancel"));
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), 7);
-    g_signal_connect (button,
-                      "clicked",
-                      G_CALLBACK (i_callback_toolbar_add_component),
-                      w_current);
-
-    /* init radio tool buttons, add first of them */
-    w_current->toolbar_net = GTK_WIDGET (gtk_radio_tool_button_new (NULL));
-    gtk_tool_button_set_label (GTK_TOOL_BUTTON (w_current->toolbar_net),
-                               _("Nets"));
-    gtk_widget_set_tooltip_text (GTK_WIDGET (w_current->toolbar_net),
-                                 _("Add nets mode\n"
-                                   "Right mouse button to cancel"));
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (w_current->toolbar_net), 8);
-    gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (w_current->toolbar_net),
-                                     x_window_stock_pixmap ("insert-net", w_current));
-    g_signal_connect (w_current->toolbar_net,
-                      "toggled",
-                      G_CALLBACK (i_callback_toolbar_add_net),
-                      w_current);
-
-    /* add a radio tool button */
-    w_current->toolbar_bus = GTK_WIDGET (gtk_radio_tool_button_new (
-      gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (w_current->toolbar_net))));
-
-    gtk_tool_button_set_label (GTK_TOOL_BUTTON (w_current->toolbar_bus),
-                               _("Bus"));
-    gtk_widget_set_tooltip_text (GTK_WIDGET (w_current->toolbar_bus),
-                                 _("Add buses mode\n"
-                                   "Right mouse button to cancel"));
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (w_current->toolbar_bus), 9);
-    gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (w_current->toolbar_bus),
-                                     x_window_stock_pixmap ("insert-bus", w_current));
-    g_signal_connect (w_current->toolbar_bus,
-                      "toggled",
-                      G_CALLBACK (i_callback_toolbar_add_bus),
-                      w_current);
-
-    /* not part of any radio button group */
-    button =
-      (GtkToolButton*) gtk_tool_button_new (x_window_stock_pixmap ("insert-text", w_current),
-                                            _("Text"));
-    gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Add Text..."));
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), 10);
-    g_signal_connect (button,
-                      "clicked",
-                      G_CALLBACK (i_callback_toolbar_add_text),
-                      w_current);
-
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                        GTK_TOOL_ITEM (gtk_separator_tool_item_new ()), 11);
-
-    /* add a radio tool button */
-    w_current->toolbar_select = GTK_WIDGET (gtk_radio_tool_button_new (
-      gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (w_current->toolbar_bus))));
-
-    gtk_tool_button_set_label (GTK_TOOL_BUTTON (w_current->toolbar_select),
-                               _("Select"));
-    gtk_widget_set_tooltip_text (GTK_WIDGET (w_current->toolbar_select),
-                                 _("Select mode"));
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (w_current->toolbar_select), 12);
-    gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (w_current->toolbar_select),
-                                     x_window_stock_pixmap ("select", w_current));
-    g_signal_connect (w_current->toolbar_select,
-                      "toggled",
-                      G_CALLBACK (i_callback_toolbar_edit_select),
-                      w_current);
-
-    gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                        GTK_TOOL_ITEM (gtk_separator_tool_item_new ()), 13);
-
-    /* activate 'select' button at start-up */
-    gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select), TRUE);
-  }
-
-  vpaned = gtk_vpaned_new ();
-  gtk_container_add(GTK_CONTAINER(main_box), vpaned);
-
-  hpaned = gtk_hpaned_new ();
-  gtk_paned_pack1 (GTK_PANED (vpaned),
-                   hpaned,
-                   TRUE,
-                   TRUE);
-
+  /*
+  *  container for scrolled window and bottom infowidgets:
+  */
   work_box = gtk_vbox_new (FALSE, 0);
-  gtk_paned_pack1 (GTK_PANED (hpaned),
-                   work_box,
-                   TRUE,
-                   TRUE);
-
-  w_current->right_notebook = gtk_notebook_new ();
-  gtk_paned_pack2 (GTK_PANED (hpaned),
-                   w_current->right_notebook,
-                   FALSE,
-                   TRUE);
-
-  gtk_container_set_border_width (GTK_CONTAINER (w_current->right_notebook),
-                                  DIALOG_BORDER_SPACING);
-
-  /*  Try to create popup menu (appears in right mouse button  */
-  w_current->popup_menu = (GtkWidget *) get_main_popup(w_current);
 
 
-  /* Setup a GtkScrolledWindow for the drawing area */
-  hadjustment = GTK_ADJUSTMENT (gtk_adjustment_new (0.0,
-                                                    toplevel->init_left,
-                                                    toplevel->init_right,
-                                                    100.0,
-                                                    100.0,
-                                                    10.0));
-
-  vadjustment = GTK_ADJUSTMENT (gtk_adjustment_new (toplevel->init_bottom,
-                                                    0.0,
-                                                    toplevel->init_bottom - toplevel->init_top,
-                                                    100.0,
-                                                    100.0,
-                                                    10.0));
-
-  scrolled = gtk_scrolled_window_new (hadjustment, vadjustment);
+  /*
+  *  scrolled window:
+  */
+  scrolled = gtk_scrolled_window_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (work_box), scrolled);
-  x_window_create_drawing(scrolled, w_current);
-  x_window_setup_draw_events(w_current);
 
-  policy = (w_current->scrollbars_flag) ? GTK_POLICY_ALWAYS : GTK_POLICY_NEVER;
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), policy, policy);
+  /* create gschem page view: */
+  x_window_create_drawing (scrolled, w_current);
 
-  /* find text box */
-  w_current->find_text_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_FIND_TEXT_WIDGET, NULL));
+  /* setup callbacks for draw events: */
+  x_window_setup_draw_events (w_current);
 
-  gtk_box_pack_start (GTK_BOX (work_box),
-                      w_current->find_text_widget,
-                      FALSE,
-                      FALSE,
-                      0);
-
-  g_signal_connect (w_current->find_text_widget,
-                    "response",
-                    G_CALLBACK (&x_window_find_text),
-                    w_current);
-
-  /* hide text box */
-  w_current->hide_text_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET,
-                                                          "button-text", _("Hide"),
-                                                          "label-text",  _("Hide text starting with:"),
-                                                          NULL));
-
-  gtk_box_pack_start (GTK_BOX (work_box),
-                      w_current->hide_text_widget,
-                      FALSE,
-                      FALSE,
-                      0);
-
-  g_signal_connect (w_current->hide_text_widget,
-                    "response",
-                    G_CALLBACK (&x_window_hide_text),
-                    w_current);
-
-  /* show text box */
-  w_current->show_text_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET,
-                                                          "button-text", _("Show"),
-                                                          "label-text",  _("Show text starting with:"),
-                                                          NULL));
-
-  gtk_box_pack_start (GTK_BOX (work_box),
-                      w_current->show_text_widget,
-                      FALSE,
-                      FALSE,
-                      0);
-
-  g_signal_connect (w_current->show_text_widget,
-                    "response",
-                    G_CALLBACK (&x_window_show_text),
-                    w_current);
-
-  /* macro box */
-  w_current->macro_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_MACRO_WIDGET, NULL));
-
-  gtk_box_pack_start (GTK_BOX (work_box),
-                      w_current->macro_widget,
-                      FALSE,
-                      FALSE,
-                      0);
-
-  g_signal_connect (w_current->macro_widget,
-                    "response",
-                    G_CALLBACK (&x_window_invoke_macro),
-                    w_current);
-
-  /* translate widget */
-  w_current->translate_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_TRANSLATE_WIDGET, NULL));
-
-  gtk_box_pack_start (GTK_BOX (work_box),
-                      w_current->translate_widget,
-                      FALSE,
-                      FALSE,
-                      0);
-
-  g_signal_connect (w_current->translate_widget,
-                    "response",
-                    G_CALLBACK (&x_window_translate_response),
-                    w_current);
-
-  /* object properties editor */
-  w_current->object_properties =
-    GTK_WIDGET (gschem_object_properties_widget_new (w_current));
-
-  gtk_notebook_append_page (GTK_NOTEBOOK (w_current->right_notebook),
-                            GTK_WIDGET (w_current->object_properties),
-                            gtk_label_new (_("Object")));
-
-  /* text properties editor */
-  w_current->text_properties =
-    GTK_WIDGET (gschem_text_properties_widget_new (w_current));
-
-  gtk_notebook_append_page (GTK_NOTEBOOK (w_current->right_notebook),
-                            GTK_WIDGET (w_current->text_properties),
-                            gtk_label_new (_("Text")));
-
-  /* options editor */
-  w_current->options_widget = gschem_options_widget_new (w_current);
-
-  gtk_notebook_append_page (GTK_NOTEBOOK (w_current->right_notebook),
-                            GTK_WIDGET (w_current->options_widget),
-                            gtk_label_new (_("Options")));
-
-  /* status notebook */
-  w_current->bottom_notebook = gtk_notebook_new ();
-  gtk_paned_pack2 (GTK_PANED (vpaned),
-                   w_current->bottom_notebook,
-                   FALSE,
-                   TRUE);
-
-  gtk_container_set_border_width (GTK_CONTAINER (w_current->bottom_notebook),
-                                  DIALOG_BORDER_SPACING);
-
-  w_current->find_text_state = gschem_find_text_state_new ();
-
-  gtk_notebook_append_page (GTK_NOTEBOOK (w_current->bottom_notebook),
-                            GTK_WIDGET (w_current->find_text_state),
-                            gtk_label_new (_("Find Text")));
-
-  gtk_widget_set_size_request (GTK_WIDGET (w_current->find_text_state),
-                               default_width,
-                               default_height / 4);
-
-  g_signal_connect (w_current->find_text_state,
-                    "select-object",
-                    G_CALLBACK (&x_window_select_text),
-                    w_current);
+  setup_scrolling (w_current, scrolled);
 
 
-  w_current->log_widget = gschem_log_widget_new ();
+  /*
+  *  hidden infowidgets:
+  */
+  create_find_text_widget (w_current, work_box);
+  create_hide_text_widget (w_current, work_box);
+  create_show_text_widget (w_current, work_box);
+  create_macro_widget (w_current, work_box);
+  create_translate_widget (w_current, work_box);
 
-  gtk_notebook_append_page (GTK_NOTEBOOK (w_current->bottom_notebook),
-                            GTK_WIDGET (w_current->log_widget),
-                            gtk_label_new (_("Status")));
 
-  /* bottom box */
-  if (default_third_button == POPUP_ENABLED) {
-    right_button_text = _("Menu/Cancel");
-  } else {
-    right_button_text = _("Pan/Cancel");
-  }
+  /*
+  *  windows layout:
+  */
+  vpaned = gtk_vpaned_new ();
+  hpaned = gtk_hpaned_new ();
 
-  w_current->bottom_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_BOTTOM_WIDGET,
-      "grid-mode",          gschem_options_get_grid_mode (w_current->options),
-      "grid-size",          gschem_options_get_snap_size (w_current->options), /* x_grid_query_drawn_spacing (w_current), -- occurs before the page is set */
-      "left-button-text",   _("Pick"),
-      "middle-button-text", _("none"),
-      "right-button-text",  right_button_text,
-      "snap-mode",          gschem_options_get_snap_mode (w_current->options),
-      "snap-size",          gschem_options_get_snap_size (w_current->options),
-      "status-text",        _("Select Mode"),
-      NULL));
+  w_current->right_notebook = create_notebook_right (w_current);
+  w_current->bottom_notebook = create_notebook_bottom (w_current);
 
-  i_update_middle_button (w_current, NULL, NULL);
 
-  gtk_box_pack_start (GTK_BOX (main_box), w_current->bottom_widget, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (main_box), vpaned);
 
+
+  gtk_paned_pack1 (GTK_PANED (vpaned), hpaned,
+                   TRUE, TRUE);
+
+  gtk_paned_pack2 (GTK_PANED (vpaned), w_current->bottom_notebook,
+                   FALSE, TRUE);
+
+
+  gtk_paned_pack1 (GTK_PANED (hpaned), work_box,
+                   TRUE, TRUE);
+
+  gtk_paned_pack2 (GTK_PANED (hpaned), w_current->right_notebook,
+                   FALSE, TRUE);
+
+
+  /*
+  *  status bar aka 'bottom widget':
+  */
+  create_bottom_widget (w_current, main_box);
+
+
+  /* show all widgets: */
   gtk_widget_show_all (w_current->main_window);
-}
+
+
+  /* focus page view: */
+  gtk_widget_grab_focus (w_current->drawing_area);
+
+} /* x_window_create_main() */
+
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -1207,4 +985,426 @@ GschemToplevel* x_window_new (TOPLEVEL *toplevel)
   x_window_setup (w_current);
 
   return w_current;
+}
+
+
+
+static void
+create_menubar (GschemToplevel *w_current, GtkWidget *main_box)
+{
+  GtkWidget *menubar = get_main_menu (w_current);
+
+  if (w_current->handleboxes)
+  {
+    GtkWidget *handlebox = gtk_handle_box_new ();
+    gtk_box_pack_start (GTK_BOX (main_box), handlebox, FALSE, FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (handlebox), menubar);
+  }
+  else
+  {
+    gtk_box_pack_start (GTK_BOX (main_box), menubar, FALSE, FALSE, 0);
+  }
+
+  w_current->menubar = menubar;
+}
+
+
+
+static void
+create_toolbar_button (GschemToplevel *w_current,
+                       GtkWidget *toolbar,
+                       const gchar *pixmap_name,
+                       const gchar *label,
+                       const gchar *tooltip,
+                       GCallback callback,
+                       gint pos)
+{
+  GtkWidget *pixmap = x_window_stock_pixmap (pixmap_name, w_current);
+
+  GtkToolButton *button = (GtkToolButton*) gtk_tool_button_new (pixmap, label);
+
+  gtk_widget_set_tooltip_text (GTK_WIDGET (button), tooltip);
+
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), pos);
+
+  g_signal_connect (button, "clicked", callback, w_current);
+}
+
+
+
+static GtkWidget*
+create_toolbar_radio_button (GSList** group,
+                             GschemToplevel *w_current,
+                             GtkWidget *toolbar,
+                             const gchar *pixmap_name,
+                             const gchar *label,
+                             const gchar *tooltip,
+                             GCallback callback,
+                             gint pos)
+{
+  GtkWidget *button = GTK_WIDGET (gtk_radio_tool_button_new (*group));
+
+  gtk_tool_button_set_label (GTK_TOOL_BUTTON (button), label);
+  gtk_widget_set_tooltip_text (GTK_WIDGET (button), tooltip);
+
+  GtkWidget *pixmap = x_window_stock_pixmap (pixmap_name, w_current);
+  gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (button), pixmap);
+
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), pos);
+
+  g_signal_connect (button, "toggled", callback, w_current);
+
+  *group = gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (button));
+
+  return button;
+}
+
+
+
+static void
+create_toolbar_separator (GtkWidget *toolbar, gint pos)
+{
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                      GTK_TOOL_ITEM (gtk_separator_tool_item_new ()),
+                      pos);
+}
+
+
+
+static void
+create_toolbar( GschemToplevel *w_current, GtkWidget *main_box )
+{
+  if (w_current->toolbars == 0)
+  {
+    return;
+  }
+
+  GtkWidget *toolbar = gtk_toolbar_new ();
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (toolbar),
+                                  GTK_ORIENTATION_HORIZONTAL);
+  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
+
+  if (w_current->handleboxes)
+  {
+    GtkWidget *handlebox = gtk_handle_box_new ();
+    gtk_box_pack_start (GTK_BOX (main_box), handlebox, FALSE, FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (handlebox), toolbar);
+  }
+  else
+  {
+    gtk_box_pack_start (GTK_BOX (main_box), toolbar, FALSE, FALSE, 0);
+  }
+
+
+
+  create_toolbar_button (w_current, toolbar,
+                         "new", _("New"), _("New file"),
+                         G_CALLBACK (&i_callback_toolbar_file_new), 0);
+
+  create_toolbar_button (w_current, toolbar,
+                         "open", _("Open"), _("Open file"),
+                         G_CALLBACK (&i_callback_toolbar_file_open), 1);
+
+  create_toolbar_button (w_current, toolbar,
+                         "save", _("Save"), _("Save file"),
+                         G_CALLBACK (&i_callback_toolbar_file_save), 2);
+
+  create_toolbar_separator (toolbar, 3);
+
+  create_toolbar_button (w_current, toolbar,
+                         "undo", _("Undo"), _("Undo last operation"),
+                         G_CALLBACK (&i_callback_toolbar_edit_undo), 4);
+
+  create_toolbar_button (w_current, toolbar,
+                         "redo", _("Redo"), _("Redo last undo"),
+                         G_CALLBACK (&i_callback_toolbar_edit_redo), 5);
+
+  create_toolbar_separator (toolbar, 6);
+
+  const gchar *text = _("Add component...\n"
+                        "Select library and component from list, move the mouse into main window, click to place\n"
+                        "Right mouse button to cancel");
+
+  create_toolbar_button (w_current, toolbar,
+                         "insert-symbol", _("Component"), text,
+                         G_CALLBACK (&i_callback_toolbar_add_component), 7);
+
+
+  GSList *radio_group = NULL;
+
+  text = _("Add nets mode\n"
+           "Right mouse button to cancel");
+
+  w_current->toolbar_net =
+    create_toolbar_radio_button (&radio_group, w_current, toolbar,
+                                 "insert-net", _("Nets"), text,
+                                 G_CALLBACK (&i_callback_toolbar_add_net), 8);
+
+  text = _("Add buses mode\n"
+           "Right mouse button to cancel");
+
+  w_current->toolbar_bus =
+    create_toolbar_radio_button (&radio_group, w_current, toolbar,
+                                 "insert-bus", _("Bus"), text,
+                                 G_CALLBACK (&i_callback_toolbar_add_bus), 9);
+
+  create_toolbar_button (w_current, toolbar,
+                         "insert-text", _("Text"), _("Add Text..."),
+                         G_CALLBACK (&i_callback_toolbar_add_text), 10);
+
+  create_toolbar_separator (toolbar, 11);
+
+  w_current->toolbar_select =
+    create_toolbar_radio_button (&radio_group, w_current, toolbar,
+                                 "select", _("Select"), _("Select mode"),
+                                 G_CALLBACK (&i_callback_toolbar_edit_select), 12);
+
+  create_toolbar_separator (toolbar, 13);
+
+
+  /* activate 'select' button at start-up */
+  gtk_toggle_tool_button_set_active(
+    GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select), TRUE);
+
+} /* create_toolbar() */
+
+
+
+static void
+create_find_text_widget (GschemToplevel *w_current, GtkWidget *work_box)
+{
+  gpointer obj = g_object_new (GSCHEM_TYPE_FIND_TEXT_WIDGET, NULL);
+
+  w_current->find_text_widget = GTK_WIDGET (obj);
+
+  gtk_box_pack_start (GTK_BOX (work_box),
+                      w_current->find_text_widget,
+                      FALSE, FALSE, 0);
+
+  g_signal_connect (w_current->find_text_widget, "response",
+                    G_CALLBACK (&x_window_find_text), w_current);
+}
+
+
+
+static void
+create_hide_text_widget (GschemToplevel *w_current, GtkWidget *work_box)
+{
+  gpointer obj = g_object_new (GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET,
+                               "button-text", _("Hide"),
+                               "label-text", _("Hide text starting with:"),
+                               NULL);
+
+  w_current->hide_text_widget = GTK_WIDGET (obj);
+
+  gtk_box_pack_start (GTK_BOX (work_box),
+                      w_current->hide_text_widget,
+                      FALSE, FALSE, 0);
+
+  g_signal_connect (w_current->hide_text_widget, "response",
+                    G_CALLBACK (&x_window_hide_text), w_current);
+}
+
+
+
+static void
+create_show_text_widget (GschemToplevel *w_current, GtkWidget *work_box)
+{
+  gpointer obj = g_object_new (GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET,
+                               "button-text", _("Show"),
+                               "label-text", _("Show text starting with:"),
+                               NULL);
+
+  w_current->show_text_widget = GTK_WIDGET (obj);
+
+  gtk_box_pack_start (GTK_BOX (work_box),
+                      w_current->show_text_widget,
+                      FALSE, FALSE, 0);
+
+  g_signal_connect (w_current->show_text_widget, "response",
+                    G_CALLBACK (&x_window_show_text), w_current);
+}
+
+
+
+static void
+create_macro_widget (GschemToplevel *w_current, GtkWidget *work_box)
+{
+  gpointer obj = g_object_new (GSCHEM_TYPE_MACRO_WIDGET, NULL);
+
+  w_current->macro_widget = GTK_WIDGET (obj);
+
+  gtk_box_pack_start (GTK_BOX (work_box),
+                      w_current->macro_widget,
+                      FALSE, FALSE, 0);
+
+  g_signal_connect (w_current->macro_widget, "response",
+                    G_CALLBACK (&x_window_invoke_macro), w_current);
+}
+
+
+
+static void
+create_translate_widget (GschemToplevel *w_current, GtkWidget *work_box)
+{
+  gpointer obj = g_object_new (GSCHEM_TYPE_TRANSLATE_WIDGET, NULL);
+
+  w_current->translate_widget = GTK_WIDGET (obj);
+
+  gtk_box_pack_start( GTK_BOX (work_box),
+                      w_current->translate_widget,
+                      FALSE, FALSE, 0 );
+
+  g_signal_connect (w_current->translate_widget, "response",
+                    G_CALLBACK (&x_window_translate_response), w_current);
+}
+
+
+
+static void
+create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
+{
+  char *right_button_text = NULL;
+
+  if (default_third_button == POPUP_ENABLED)
+  {
+    right_button_text = _("Menu/Cancel");
+  }
+  else
+  {
+    right_button_text = _("Pan/Cancel");
+  }
+
+  gpointer obj = g_object_new (GSCHEM_TYPE_BOTTOM_WIDGET,
+                               "grid-mode",
+                               gschem_options_get_grid_mode (w_current->options),
+                               "grid-size",
+                               gschem_options_get_snap_size (w_current->options),
+                               /* x_grid_query_drawn_spacing (w_current), -- occurs before the page is set */
+                               "left-button-text",
+                               _("Pick"),
+                               "middle-button-text",
+                               _("none"),
+                               "right-button-text",
+                               right_button_text,
+                               "snap-mode",
+                               gschem_options_get_snap_mode (w_current->options),
+                               "snap-size",
+                               gschem_options_get_snap_size (w_current->options),
+                               "status-text",
+                               _("Select Mode"),
+                               NULL);
+
+  w_current->bottom_widget = GTK_WIDGET (obj);
+
+  i_update_middle_button (w_current, NULL, NULL);
+
+  gtk_box_pack_start (GTK_BOX (main_box),
+                      w_current->bottom_widget,
+                      FALSE, FALSE, 0);
+
+} /* create_bottom_widget */
+
+
+
+static void
+setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled)
+{
+  GedaToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+
+  GtkAdjustment *hadjustment = GTK_ADJUSTMENT(
+    gtk_adjustment_new (0.0,
+                        toplevel->init_left,
+                        toplevel->init_right,
+                        100.0,
+                        100.0,
+                        10.0));
+
+  GtkAdjustment *vadjustment = GTK_ADJUSTMENT(
+    gtk_adjustment_new (toplevel->init_bottom,
+                        0.0,
+                        toplevel->init_bottom - toplevel->init_top,
+                        100.0,
+                        100.0,
+                        10.0));
+
+  gtk_scrolled_window_set_hadjustment (GTK_SCROLLED_WINDOW (scrolled), hadjustment);
+  gtk_scrolled_window_set_vadjustment (GTK_SCROLLED_WINDOW (scrolled), vadjustment);
+
+  GtkPolicyType policy = w_current->scrollbars_flag ?
+                         GTK_POLICY_ALWAYS :
+                         GTK_POLICY_NEVER;
+
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+                                  policy, policy);
+}
+
+
+
+static GtkWidget*
+create_notebook_right (GschemToplevel* w_current)
+{
+  GtkWidget *notebook = gtk_notebook_new ();
+
+  w_current->object_properties =
+      gschem_object_properties_widget_new (w_current);
+
+  w_current->text_properties =
+      gschem_text_properties_widget_new (w_current);
+
+  w_current->options_widget =
+      gschem_options_widget_new (w_current);
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                            GTK_WIDGET (w_current->object_properties),
+                            gtk_label_new(_("Object")));
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                            GTK_WIDGET (w_current->text_properties),
+                            gtk_label_new(_("Text")));
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                            GTK_WIDGET (w_current->options_widget),
+                            gtk_label_new(_("Options")));
+
+
+
+  gtk_container_set_border_width (GTK_CONTAINER (notebook),
+                                  DIALOG_BORDER_SPACING);
+
+  return notebook;
+}
+
+
+
+static GtkWidget*
+create_notebook_bottom (GschemToplevel* w_current)
+{
+  GtkWidget *notebook = gtk_notebook_new ();
+
+  w_current->find_text_state =
+      gschem_find_text_state_new ();
+
+  w_current->log_widget =
+      gschem_log_widget_new ();
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                            GTK_WIDGET (w_current->find_text_state),
+                            gtk_label_new(_("Find Text")));
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                            GTK_WIDGET (w_current->log_widget),
+                            gtk_label_new(_("Status")));
+
+  g_signal_connect (w_current->find_text_state, "select-object",
+                    G_CALLBACK (&x_window_select_text), w_current);
+
+  gtk_widget_set_size_request (GTK_WIDGET (w_current->find_text_state),
+                               default_width, default_height / 4);
+
+  gtk_container_set_border_width (GTK_CONTAINER (notebook),
+                                  DIALOG_BORDER_SPACING);
+
+  return notebook;
 }
