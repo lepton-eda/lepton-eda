@@ -46,9 +46,6 @@ s_symstruct_init(void)
   s_symcheck->error_messages = NULL;
 
   s_symcheck->graphical_symbol=FALSE;
-  s_symcheck->missing_device_attrib=FALSE;
-  s_symcheck->device_attribute_incorrect=FALSE;
-  s_symcheck->device_attribute=NULL;
 
   s_symcheck->found_footprint=FALSE;
   s_symcheck->found_refdes=FALSE;
@@ -118,9 +115,6 @@ void
 s_symstruct_free(SYMCHECK *s_current)
 {
   if (s_current) {
-
-    g_free(s_current->device_attribute);
-
     g_free(s_current);
   }
 }

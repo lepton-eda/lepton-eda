@@ -362,12 +362,9 @@ s_check_device (const GList *obj_list, SYMCHECK *s_current)
     message = g_strdup (_("Missing device= attribute\n"));
     s_current->error_messages = g_list_append(s_current->error_messages,
 		                              message);
-    s_current->missing_device_attrib=TRUE;
     s_current->error_count++;
   } else {
     /* found device= attribute */
-    s_current->missing_device_attrib=FALSE;
-    s_current->device_attribute = g_strdup (temp);
     message = g_strdup_printf (_("Found device=%1$s\n"), temp);
     s_current->info_messages = g_list_append(s_current->info_messages,
 		                             message);
@@ -375,12 +372,10 @@ s_check_device (const GList *obj_list, SYMCHECK *s_current)
 
   /* check for device = none for graphical symbols */
   if (temp && s_current->graphical_symbol && (strcmp(temp, "none") == 0)) {
-    s_current->device_attribute_incorrect=FALSE;
     message = g_strdup (_("Found graphical symbol, device=none\n"));
     s_current->info_messages = g_list_append(s_current->info_messages,
                                              message);
   } else if (s_current->graphical_symbol) {
-    s_current->device_attribute_incorrect=TRUE;
     message = g_strdup (_("Found graphical symbol, device= should be set to none\n"));
     s_current->warning_messages = g_list_append(s_current->warning_messages,
                                                 message);
