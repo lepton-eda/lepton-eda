@@ -16,11 +16,6 @@ struct st_symcheck {
   char *device_attribute;
   int device_attribute_incorrect;
 
-  /* pinseq= check */
-  int missing_pinseq_attrib;
-  int multiple_pinseq_attrib;
-  int duplicate_pinseq_attrib;
-
   /* multiple pinnumber= check */
   int missing_pinnumber_attrib;
   int multiple_pinnumber_attrib;
