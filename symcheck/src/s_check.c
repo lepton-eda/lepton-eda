@@ -396,8 +396,6 @@ s_check_pinseq (const GList *obj_list, SYMCHECK *s_current)
 {
   char *string;
   int found_first=FALSE;
-  int missing_pinseq_attrib_sum=0;
-  int multiple_pinseq_attrib_sum=0;
   int counter=0;
 
   GList *found_numbers = NULL;
@@ -412,8 +410,6 @@ s_check_pinseq (const GList *obj_list, SYMCHECK *s_current)
     
     if (o_current->type == OBJ_PIN)
     {
-      missing_pinseq_attrib_sum = 0;
-      multiple_pinseq_attrib_sum = 0;
       found_first = FALSE;
       counter = 0;
       
@@ -424,7 +420,6 @@ s_check_pinseq (const GList *obj_list, SYMCHECK *s_current)
         message = g_strdup (_("Missing pinseq= attribute\n"));
         s_current->error_messages = g_list_append(s_current->error_messages,
                                                   message);
-        missing_pinseq_attrib_sum++;
         s_current->error_count++;
       }
 
@@ -450,7 +445,6 @@ s_check_pinseq (const GList *obj_list, SYMCHECK *s_current)
             string);
           s_current->error_messages = g_list_append(s_current->error_messages,
 	 	    			            message);
-          multiple_pinseq_attrib_sum++;
           s_current->error_count++;
         }
 
@@ -468,9 +462,6 @@ s_check_pinseq (const GList *obj_list, SYMCHECK *s_current)
         string = o_attrib_search_object_attribs_by_name (o_current, "pinseq",
                                                          counter);
       }
-
-      s_current->missing_pinseq_attrib += missing_pinseq_attrib_sum;
-      s_current->multiple_pinseq_attrib += multiple_pinseq_attrib_sum;
     }
 
   }
@@ -501,7 +492,6 @@ s_check_pinseq (const GList *obj_list, SYMCHECK *s_current)
       s_current->error_messages = g_list_append(s_current->error_messages,
                                                 message);
       s_current->error_count++;
-      s_current->duplicate_pinseq_attrib++;
     }
     
     ptr1 = g_list_next(ptr1);
