@@ -21,10 +21,6 @@ struct st_symcheck {
   int multiple_pinnumber_attrib;
   int duplicate_pinnumber_attrib;
 
-  /* slotting checks */ 
-  int missing_numslots_attrib;
-  int slotting_errors;
-
   /* old pin#=# and slot#=# checks */
   int found_oldpin_attrib;
   int found_oldslot_attrib;
