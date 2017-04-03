@@ -46,13 +46,4 @@ struct st_symcheck {
 
   /* total warning counter */
   int warning_count;
-
-  /* pintype= check */
-  int missing_pintype_attrib;
-  int multiple_pintype_attrib;
-  int duplicate_pintype_attrib;
-
-  
 };
-
-
