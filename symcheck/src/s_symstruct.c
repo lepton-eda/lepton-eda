@@ -50,10 +50,6 @@ s_symstruct_init(void)
   s_symcheck->device_attribute_incorrect=FALSE;
   s_symcheck->device_attribute=NULL;
 
-  s_symcheck->missing_pinnumber_attrib=FALSE;
-  s_symcheck->multiple_pinnumber_attrib=FALSE;
-  s_symcheck->duplicate_pinnumber_attrib=FALSE;
-
   s_symcheck->found_oldpin_attrib=FALSE;
   s_symcheck->found_oldslot_attrib=FALSE;
   s_symcheck->found_net=FALSE;
