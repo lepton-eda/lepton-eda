@@ -20,11 +20,6 @@ struct st_symcheck {
   int found_oldpin_attrib;
   int found_oldslot_attrib;
 
-  /* net, bus, connection checks */
-  int found_net;
-  int found_bus;
-  int found_connection;
-
   /* obsolete attribute checks */
   /* int found_label; */
   /* int found_uref; */
