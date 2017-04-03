@@ -54,8 +54,6 @@ s_symstruct_init(void)
   s_symcheck->multiple_pinnumber_attrib=FALSE;
   s_symcheck->duplicate_pinnumber_attrib=FALSE;
 
-  s_symcheck->missing_numslots_attrib=FALSE;
-  s_symcheck->slotting_errors=FALSE;
   s_symcheck->found_oldpin_attrib=FALSE;
   s_symcheck->found_oldslot_attrib=FALSE;
   s_symcheck->found_net=FALSE;

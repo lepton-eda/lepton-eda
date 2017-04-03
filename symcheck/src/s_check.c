@@ -812,7 +812,6 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
                                                 message);
 
       s_current->error_count++;
-      s_current->slotting_errors++;
     }
     
     message = g_strdup_printf (_("Found slotdef=%1$s attribute\n"), slotdef);
@@ -828,7 +827,6 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
       s_current->error_messages = g_list_append(s_current->error_messages,
                                                 message);
       s_current->error_count++;
-      s_current->slotting_errors++;
       error_parsing = TRUE;
       continue;
     }
@@ -855,7 +853,6 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
 		      			        message);
 
       s_current->error_count++;
-      s_current->slotting_errors++;
     }
 
     /* skip over the : */
@@ -867,7 +864,6 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
       s_current->error_messages = g_list_append(s_current->error_messages,
                                                 message);
       s_current->error_count++;
-      s_current->slotting_errors++;
       error_parsing = TRUE;
       continue;
     }
@@ -879,7 +875,6 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
       s_current->error_messages = g_list_append(s_current->error_messages,
                                                 message);
       s_current->error_count++;
-      s_current->slotting_errors++;
       error_parsing = TRUE;
       continue;
     }
@@ -891,7 +886,6 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
       s_current->error_messages = g_list_append(s_current->error_messages,
                                                 message);
       s_current->error_count++;
-      s_current->slotting_errors++;
       error_parsing = TRUE;
       continue;
     }
@@ -903,7 +897,6 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
         s_current->error_messages = g_list_append(s_current->error_messages,
 	    			                  message);
         s_current->error_count++;
-        s_current->slotting_errors++;
       } else {
 	pinlist[slot-1] = g_strdup_printf(",%s,", pins);
       }
@@ -925,7 +918,6 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
         s_current->error_messages = g_list_append(s_current->error_messages,
 	    			                  message);
         s_current->error_count++;
-        s_current->slotting_errors++;
         break;
       }
 
@@ -936,7 +928,6 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
         s_current->error_messages = g_list_append(s_current->error_messages,
 	    			                  message);
         s_current->error_count++;
-        s_current->slotting_errors++;
         g_free(temp);
         temp = NULL;
         break;
@@ -970,7 +961,6 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
     s_current->error_messages = g_list_append(s_current->error_messages,
 			                      message);
     s_current->error_count++;
-    s_current->slotting_errors++;
   } else {
 
     /* Validate that pinslist does not contain a null entry.  If any entry */
@@ -988,8 +978,7 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
       s_current->error_messages = g_list_append(s_current->error_messages,
                                                 message);
       s_current->error_count++;
-      s_current->slotting_errors++;
-    } else { 
+    } else {
       /* Now compare each pin with the rest */
       s_current->numslotpins = 0;
       for (i = 0; i < s_current->numslots; i++) {
