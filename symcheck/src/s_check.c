@@ -1171,7 +1171,6 @@ s_check_nets_buses (const GList *obj_list, SYMCHECK *s_current)
         g_strdup (_("Found a net inside a symbol\n"));
       s_current->error_messages = g_list_append(s_current->error_messages,
                                                 message);
-      s_current->found_net++;
       s_current->error_count++;
     }
 
@@ -1181,7 +1180,6 @@ s_check_nets_buses (const GList *obj_list, SYMCHECK *s_current)
         g_strdup (_("Found a bus inside a symbol\n"));
       s_current->error_messages = g_list_append(s_current->error_messages,
                                                 message);
-      s_current->found_bus++;
       s_current->error_count++;
     }
 
@@ -1202,7 +1200,6 @@ s_check_connections (const GList *obj_list, SYMCHECK *s_current)
         g_strdup (_("Found a connection inside a symbol\n"));
       s_current->error_messages = g_list_append(s_current->error_messages,
                                                 message);
-      s_current->found_connection++;
       s_current->error_count++;
     }
   }
