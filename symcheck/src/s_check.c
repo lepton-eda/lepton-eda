@@ -512,8 +512,6 @@ void
 s_check_pinnumber (const GList *obj_list, SYMCHECK *s_current)
 {
   char *string;
-  int missing_pinnumber_attrib_sum=0;
-  int multiple_pinnumber_attrib_sum=0;
   int counter=0;
   int i;
 
@@ -596,10 +594,7 @@ s_check_pinnumber (const GList *obj_list, SYMCHECK *s_current)
     if (o_current->type == OBJ_PIN) {
       s_current->numpins++;
       
-      missing_pinnumber_attrib_sum = 0;
-      multiple_pinnumber_attrib_sum = 0;
-      
-      for (counter = 0; 
+      for (counter = 0;
 	   (string = o_attrib_search_object_attribs_by_name (o_current, "pinnumber",
 	                                                     counter)) != NULL;
 	   counter++) {
@@ -616,7 +611,6 @@ s_check_pinnumber (const GList *obj_list, SYMCHECK *s_current)
 				     " on one pin\n"), string);
           s_current->error_messages = g_list_append(s_current->error_messages,
 	 	    			            message);
-          multiple_pinnumber_attrib_sum++;
           s_current->error_count++;
 	  g_free(string); 
         }
@@ -626,12 +620,8 @@ s_check_pinnumber (const GList *obj_list, SYMCHECK *s_current)
         message = g_strdup (_("Missing pinnumber= attribute\n"));
         s_current->error_messages = g_list_append(s_current->error_messages,
                                                   message);
-        missing_pinnumber_attrib_sum++;
         s_current->error_count++;
       }
-
-      s_current->missing_pinnumber_attrib += missing_pinnumber_attrib_sum;
-      s_current->multiple_pinnumber_attrib += multiple_pinnumber_attrib_sum;
     }
   }
 
@@ -646,7 +636,6 @@ s_check_pinnumber (const GList *obj_list, SYMCHECK *s_current)
       s_current->error_messages = g_list_append(s_current->error_messages,
 						message);
       s_current->error_count++;
-      s_current->duplicate_pinnumber_attrib++;
     }
     if (strcmp((gchar*) cur->data, "0") == 0) {
       message = g_strdup (_("Found pinnumber=0 attribute\n"));
