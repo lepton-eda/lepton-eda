@@ -16,18 +16,6 @@ struct st_symcheck {
   char *device_attribute;
   int device_attribute_incorrect;
 
-  /* old pin#=# and slot#=# checks */
-  int found_oldpin_attrib;
-  int found_oldslot_attrib;
-
-  /* obsolete attribute checks */
-  /* int found_label; */
-  /* int found_uref; */
-
-  /* forbidden attributes */
-  /* int found_name; */
-  /* int found_type; */
-
   /* misc attributes */
   int found_footprint;
   int found_refdes;

@@ -1075,7 +1075,6 @@ s_check_oldpin (const GList *obj_list, SYMCHECK *s_current)
           s_current->error_messages = g_list_append(s_current->error_messages,
                                                     message);
 
-          s_current->found_oldpin_attrib += found_old;
           s_current->error_count++;
 
         }
@@ -1146,9 +1145,7 @@ s_check_oldslot (const GList *obj_list, SYMCHECK *s_current)
             geda_text_object_get_string (o_current));
           s_current->error_messages = g_list_append(s_current->error_messages,
                                                     message);
-          s_current->found_oldslot_attrib += found_old;
           s_current->error_count++;
-
         }
       }
     }
