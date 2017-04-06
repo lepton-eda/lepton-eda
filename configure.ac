@@ -124,7 +124,7 @@ AC_CHECK_HEADERS([errno.h fcntl.h])
 # FIXME On a system without locale.h, the user may have just disabled NLS
 # to be able to build.  But are there known systems with working NLS but
 # without a locale.h?  We do need to include locale.h on some systems
-# to be able to build gschem/src/gschem.c
+# to be able to build schematic/src/gschem.c
 AC_CHECK_HEADERS([locale.h])
 
 # Check for lrint in math library.
@@ -212,18 +212,18 @@ AC_CONFIG_FILES([Makefile
                  cli/Makefile
                  cli/po/Makefile.in
 
-                 gschem/Makefile
-                 gschem/po/Makefile.in
-                 gschem/docs/Makefile
-                 gschem/include/Makefile
-                 gschem/scripts/Makefile
-                 gschem/src/Makefile
-                 gschem/examples/Makefile
-                 gschem/lib/Makefile
-                 gschem/data/Makefile
-                 gschem/bitmap/Makefile
-                 gschem/tests/Makefile
-                 gschem/scheme/Makefile
+                 schematic/Makefile
+                 schematic/po/Makefile.in
+                 schematic/docs/Makefile
+                 schematic/include/Makefile
+                 schematic/scripts/Makefile
+                 schematic/src/Makefile
+                 schematic/examples/Makefile
+                 schematic/lib/Makefile
+                 schematic/data/Makefile
+                 schematic/bitmap/Makefile
+                 schematic/tests/Makefile
+                 schematic/scheme/Makefile
 
                  gattrib/Makefile
                  gattrib/po/Makefile.in
