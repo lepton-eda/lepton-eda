@@ -1,4 +1,4 @@
-bin_PROGRAMS = gschem
+bin_PROGRAMS = lepton-schematic
 
 BUILT_SOURCES = \
 	g_action.x \
@@ -9,7 +9,7 @@ BUILT_SOURCES = \
 	g_window.x \
 	g_select.x
 
-gschem_SOURCES = \
+lepton_schematic_SOURCES = \
 	a_zoom.c \
 	g_action.c \
 	g_attrib.c \
@@ -23,7 +23,7 @@ gschem_SOURCES = \
 	g_util.c \
 	g_window.c \
 	globals.c \
-	gschem.c \
+	lepton-schematic.c \
 	gschemhotkeystore.c \
 	gschem_about_dialog.c \
 	gschem_accel_label.c \
@@ -118,14 +118,14 @@ gschem_SOURCES = \
 	x_stroke.c \
 	x_window.c
 
-gschem_CPPFLAGS = -I$(top_srcdir)/liblepton/include  -I$(srcdir)/../include \
+lepton_schematic_CPPFLAGS = -I$(top_srcdir)/liblepton/include  -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
-gschem_CFLAGS = $(GCC_CFLAGS) $(LIBSTROKE_CFLAGS) \
+lepton_schematic_CFLAGS = $(GCC_CFLAGS) $(LIBSTROKE_CFLAGS) \
 	$(MINGW_CFLAGS) \
 	$(GLIB_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS)
-gschem_LDFLAGS = $(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
+lepton_schematic_LDFLAGS = $(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
 	$(GTHREAD_LIBS) $(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
-gschem_LDADD = \
+lepton_schematic_LDADD = \
 	$(top_builddir)/libleptonrenderer/libleptonrenderer.la \
 	$(top_builddir)/liblepton/src/liblepton.la
 
@@ -134,7 +134,7 @@ gschem_LDADD = \
 # in C.
 SUFFIXES = .x
 snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(gschem_CPPFLAGS) $(AM_CFLAGS) $(gschem_CFLAGS)
+	$(lepton_schematic_CPPFLAGS) $(AM_CFLAGS) $(lepton_schematic_CFLAGS)
 .c.x:
 	$(AM_V_GEN) CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
