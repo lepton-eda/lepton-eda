@@ -35,6 +35,20 @@ static int prog_pid=0;
 
 static char* tmp_path = NULL;
 
+
+/*! \var undo_modify_viewport
+ *  \par Description
+ * Sets if undo/redo operations are allowed to change pan and zoom
+ * when "undo-panzoom" option (in gschemrc) is set to "disabled".
+ * Configuration setting:
+ * group: gschem.undo
+ * key:   modify-viewport
+ * type:  boolean
+ * default value: false
+ */
+static gboolean undo_modify_viewport = FALSE;
+
+
 /* this is additional number of levels (or history) at which point the */
 /* undo stack will be trimmed, it's used a safety to prevent running out */
 /* of entries to free */
@@ -57,6 +71,35 @@ void o_undo_init(void)
   printf("%s\n", tmp_path);
 #endif
 }
+
+
+
+/*! \brief Load configuration for undo/redo system.
+ */
+void o_undo_load_config()
+{
+  gchar* cwd = g_get_current_dir();
+
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+
+  g_free (cwd);
+  g_return_if_fail (cfg != NULL);
+
+  GError* err = NULL;
+  gboolean val = eda_config_get_boolean (cfg,
+                                         "gschem.undo",
+                                         "modify-viewport",
+                                         &err);
+  if (err == NULL)
+  {
+    undo_modify_viewport = val;
+  }
+
+  g_clear_error (&err);
+
+}
+
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -434,14 +477,17 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
 
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
 
-  if (u_current->scale != 0) {
-    gschem_page_geometry_set_viewport (geometry,
-                                       u_current->x,
-                                       u_current->y,
-                                       u_current->scale);
-    gschem_page_view_invalidate_all (view);
-  } else {
-    gschem_page_view_zoom_extents (view, u_current->object_list);
+  if (w_current->undo_panzoom || undo_modify_viewport)
+  {
+    if (u_current->scale != 0) {
+      gschem_page_geometry_set_viewport (geometry,
+                                         u_current->x,
+                                         u_current->y,
+                                         u_current->scale);
+      gschem_page_view_invalidate_all (view);
+    } else {
+      gschem_page_view_zoom_extents (view, u_current->object_list);
+    }
   }
 
   /* restore logging */

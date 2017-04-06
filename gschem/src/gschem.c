@@ -222,6 +222,8 @@ void main_prog(void *closure, int argc, char *argv[])
   g_rc_parse_gtkrc();
   x_rc_parse_gschem (toplevel, NULL);
 
+  o_undo_load_config();
+
   /* Set default icon theme and make sure we can find our own icons */
   x_window_set_default_icon();
   x_window_init_icons ();
