@@ -9,7 +9,7 @@ schematic/src/g_select.c
 schematic/src/g_util.c
 schematic/src/g_window.c
 schematic/src/globals.c
-schematic/src/gschem.c
+schematic/src/lepton-schematic.c
 schematic/src/gschemhotkeystore.c
 schematic/src/gschem_about_dialog.c
 schematic/src/gschem_accel_label.c
