@@ -1,5 +1,5 @@
-;; Lepton EDA
-;; gschem - gEDA Schematic Capture - Scheme API
+;; Lepton EDA Schematic Capture
+;; Scheme API
 ;; Copyright (C) 2015 gEDA Contributors
 ;; Copyright (C) 2017 Lepton EDA Contributors
 ;;

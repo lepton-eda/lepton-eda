@@ -1,5 +1,5 @@
-;; gEDA - GPL Electronic Design Automation
-;; libgeda - gEDA's library - Scheme API
+;; Lepton EDA Schematic Capture
+;; Scheme API
 ;; Copyright (C) 2011-2014 Peter Brett <peter@peter-b.co.uk>
 ;;
 ;; This program is free software; you can redistribute it and/or modify

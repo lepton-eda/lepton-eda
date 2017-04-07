@@ -1,5 +1,4 @@
-;;; gEDA - GPL Electronic Design Automation
-;;; gschem - gEDA Schematic Capture
+;;; Lepton EDA Schematic Capture
 ;;; Copyright (C) 2013-2014 Patrick Bernaud <patrickb@chez.com>
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify

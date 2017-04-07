@@ -1,5 +1,4 @@
-/* gEDA - GPL Electronic Design Automation
- * gschem - gEDA Schematic Capture
+/* Lepton EDA Schematic Capture
  * Copyright (C) 2008-2010 gEDA Contributors (see ChangeLog for details)
  * Copyright (C) 2000 Red Hat, Inc.
  *

@@ -1,4 +1,4 @@
-/* gEDA - GPL Electronic Design Automation
+/* Lepton EDA Schematic Capture
  * libgeda - gEDA's library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
