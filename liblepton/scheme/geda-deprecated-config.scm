@@ -1,5 +1,5 @@
-;; gEDA - GPL Electronic Design Automation
-;; gschem - gEDA Schematic Capture - Scheme API
+;; Lepton EDA
+;; lepton-schematic - Lepton EDA Schematic Capture - Scheme API
 ;; Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
 ;;
 ;; This program is free software; you can redistribute it and/or modify

@@ -1,6 +1,5 @@
 /* -*- geda-c -*-
- * gEDA - GPL Electronic Design Automation
- * gschem - gEDA Schematic Capture
+ * Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
