@@ -36,7 +36,7 @@ The major components of the Lepton suite are:
 - `liblepton`
   - A library of functions for manipulating Lepton schematics and symbols.
 
-- `gschem`
+- `lepton-schematic`
   - A schematic editor.
 
 - `gattrib`
@@ -49,8 +49,9 @@ The major components of the Lepton suite are:
     materials and DRC reports for your schematics.
 
 - `gsch2pcb`
-  - A command-line utility for streamlining the workflow where 'PCB'
-    <http://pcb.geda-project.org/> and `gschem` are used together.
+  - A command-line utility for streamlining the workflow where
+    'PCB' <http://pcb.geda-project.org/> and `lepton-schematic`
+    are used together.
 
 - `lepton-symcheck`
   - A utility for checking for common errors in schematic symbol files.
@@ -108,7 +109,7 @@ The following tools and libraries are **highly recommended**:
 The following tools and libraries are optional:
 
 - `libstroke`, a stroke and gesture recognition library.  If this is
-  available, gschem will support mouse gesture recognition.
+  available, `lepton-schematic` will support mouse gesture recognition.
   <http://www.etla.net/libstroke/>
 
 - The `doxygen` API documentation tool.  This is required for
