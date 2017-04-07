@@ -54,7 +54,7 @@ be rewritten using the gEDA scheme API.  This would take advantage of the existi
 parsers for the schematic files.
 
 .SH SEE ALSO
-gnetlist(1), gschem(1), pcb(1)
+gnetlist(1), lepton-schematic(1), pcb(1)
 
 
 

@@ -54,7 +54,7 @@ Shows the version of this program.
 Mike Skerritt <mike@acornpacket.com>.
 
 .SH SEE ALSO
-.BR gschem (1),
+.BR lepton-schematic (1),
 .BR lepton-symcheck (1)
 
 .SH COPYRIGHT
