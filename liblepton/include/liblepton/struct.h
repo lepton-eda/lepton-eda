@@ -27,7 +27,7 @@
 typedef struct _GedaList SELECTION;
 typedef struct _GedaList GedaPageList;
 
-/* gschem structures (gschem) */
+/* lepton-schematic structures */
 typedef struct st_conn CONN;
 
 /* netlist structures (gnetlist) */

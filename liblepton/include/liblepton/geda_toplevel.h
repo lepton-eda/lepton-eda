@@ -42,7 +42,8 @@ struct st_toplevel
   PAGE *page_current;
   GedaPageList *pages;
 
-  /* show_hidden_text is used to control which text is hidden in gschem */
+  /* show_hidden_text is used to control which text is hidden in
+     lepton-schematic */
   int show_hidden_text;
 
   GList* major_changed_refdes;          /* A list of all refdes's that have */

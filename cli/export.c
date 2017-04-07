@@ -107,7 +107,7 @@ struct ExportSettings {
   enum ExportOrientation layout;
 
   GtkPaperSize *paper;
-  gdouble scale; /* Output scale; defaults to 1 mil per 1 gschem point*/
+  gdouble scale; /* Output scale; defaults to 1 mil per 1 lepton-schematic point*/
   gdouble size[2]; /* Points */
   gdouble margins[4]; /* Points. Top, right, bottom, left. */
   gdouble align[2]; /* 0.0 < align < 1.0 for halign and valign */
@@ -847,7 +847,8 @@ export_parse_size (const gchar *size)
 }
 
 /* Parse the --scale option. The value should be a distance
- * corresponding to 100 points in gschem (1 default grid spacing). */
+ * corresponding to 100 points in lepton-schematic (1 default grid
+ * spacing). */
 static gboolean
 export_parse_scale (const gchar *scale)
 {

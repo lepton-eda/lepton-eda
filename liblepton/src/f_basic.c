@@ -301,7 +301,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
     /* If it's not the backup file */
     page->CHANGED=0; /* added 4/7/98 */
   } else {
-    /* We are loading the backup file, so gschem should ask
+    /* We are loading the backup file, so lepton should ask
        the user if save it or not when closing the page. */
     page->CHANGED=1;
   }

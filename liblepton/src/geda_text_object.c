@@ -52,15 +52,17 @@
 
 #include "libgeda_priv.h"
 
-/*! \brief Scale factor between legacy gschem font units and postscript points.
+/*! \brief Scale factor between legacy lepton-schematic font units
+ *  and postscript points.
  *
  *  \par Description
- *  gschem fonts are nominally specified in points, however there is a
+ *  lepton-schematic fonts are nominally specified in points, however there is a
  *  difference in how the specified font size corresponds to the metrics of
  *  the font when compared to typical typographic usage.
  *
- *  The following factor was empirically determined to approximately match the
- *  cap-height between the legacy gschem font, and fonts rendered using pango.
+ *  The following factor was empirically determined to
+ *  approximately match the cap-height between the legacy
+ *  lepton-schematic font, and fonts rendered using pango.
  */
 #define GEDA_FONT_FACTOR 1.3
 

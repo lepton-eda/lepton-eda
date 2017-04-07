@@ -1017,8 +1017,8 @@ const gchar *s_clib_symbol_get_name (const CLibSymbol *symbol)
  *  needed.
  *
  *  \todo This is hack until there is a way to edit documents in
- *  gschem which do not have a file in the filesystem associated with
- *  them.
+ *  lepton-schematic which do not have a file in the filesystem
+ *  associated with them.
  *
  *  \deprecated This function is a temporary workaround.
  *
