@@ -55,7 +55,7 @@ G_BEGIN_DECLS
 
 #define DEFAULT_COLOR                   GRAPHIC_COLOR
 
-/* for color mechanism used in gschem */
+/* for color mechanism used in lepton-schematic */
 #define MAX_COLORS 25
 typedef GedaColor GedaColorMap[MAX_COLORS];
 

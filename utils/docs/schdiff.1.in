@@ -15,7 +15,7 @@ The
 .B schdiff
 program will use 
 .B ImageMagick(1)
-to display a graphical diff of two gschem schematic files.  It's most useful
+to display a graphical diff of two schematic files.  It's most useful
 when combined with a revision control system so it can compare two revisions of
 the same file, review changes, etc.  However, it is limited in that it can only
 compare two files at a time; it cannot diff entire directories nor can it diff

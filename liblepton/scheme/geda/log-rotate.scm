@@ -78,9 +78,9 @@
 ;; modification time.
 (define (log-files-by-tool)
 
-  ;; Use with fold-files to build a hashtable where each key is a tool
-  ;; name (e.g. "gschem") and each value is a list of log files for
-  ;; that tool.
+  ;; Use with fold-files to build a hashtable where each key is a
+  ;; tool name (e.g. "lepton-schematic") and each value is a list
+  ;; of log files for that tool.
   (define (build-log-hash-table path stat table)
     (let ((tool (logpath->toolname path))
           (info (list path (stat:mtime stat))))

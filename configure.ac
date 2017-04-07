@@ -124,7 +124,7 @@ AC_CHECK_HEADERS([errno.h fcntl.h])
 # FIXME On a system without locale.h, the user may have just disabled NLS
 # to be able to build.  But are there known systems with working NLS but
 # without a locale.h?  We do need to include locale.h on some systems
-# to be able to build schematic/src/gschem.c
+# to be able to build schematic/src/lepton-schematic.c
 AC_CHECK_HEADERS([locale.h])
 
 # Check for lrint in math library.
