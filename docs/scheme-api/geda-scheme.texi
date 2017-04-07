@@ -47,7 +47,7 @@ must provide the URL for the original version.
 
 * Schematic Document Model::
 * Core API Reference::
-* gschem API Reference::
+* lepton-schematic API Reference::
 
 * Concept Index::
 * Function Index::
@@ -82,12 +82,13 @@ The @dfn{gEDA Scheme API}, documented in this manual, is a set of
 Scheme functions which can be used to enhance gEDA applications by
 adding new functionality or modify existing behaviour.
 
-gEDA has always used a Scheme interpreter for interpreting
-configuration files, managing keybindings in gschem, and implementing
-netlist exporter backends in gnetlist.  However, for a long time the
-utility of embedding a Scheme interpreter was diminished by the lack
-of a low-level API for inspecting and modifying schematic documents.
-The Scheme types and functions documented here were added to gEDA to
+Lepton EDA (formerly gEDA) has always used a Scheme interpreter for
+interpreting configuration files, managing keybindings in
+lepton-schemactic (formerly gschem), and implementing netlist exporter
+backends in gnetlist.  However, for a long time the utility of
+embedding a Scheme interpreter was diminished by the lack of a
+low-level API for inspecting and modifying schematic documents.  The
+Scheme types and functions documented here were added to gEDA to
 address that need.
 
 gEDA uses the @emph{Guile} Scheme implementation (otherwise known as
@@ -121,13 +122,14 @@ from you! Please submit a bug report:
 @node Schematic Document Model
 @chapter The Schematic Document Model
 
-When using gEDA to design an electronic circuit, users use the
-schematic editor, gschem, to choose and place @emph{schematic symbols}
-on a @emph{schematic page}, and connect the @emph{pins} of the symbols
-together by drawing @emph{nets}.  The user may add various
-@emph{attributes} to symbols, nets or pins to modify how the circuit
-diagrams should be interpreted.  The resulting schematics are then
-processed with the gnetlist tool to generate a @emph{netlist}.
+When using Lepton EDA to design an electronic circuit, users use the
+schematic editor, lepton-schematic, to choose and place
+@emph{schematic symbols} on a @emph{schematic page}, and connect the
+@emph{pins} of the symbols together by drawing @emph{nets}.  The user
+may add various @emph{attributes} to symbols, nets or pins to modify
+how the circuit diagrams should be interpreted.  The resulting
+schematics are then processed with the gnetlist tool to generate a
+@emph{netlist}.
 
 This chapter describes the different data types used by the Scheme API
 to represent gEDA documents (both schematics and symbols), and how
@@ -149,10 +151,10 @@ they relate to each other.
 
 Schematics and symbols are presented as different types of document to
 the user, with different file extensions, icons and mime-types.
-However, when they are loaded into a gEDA application such as gschem
-for editing, they are internally represented in exactly the same way,
-by the @code{page} type.  The @code{page} is the top-level gEDA document
-data type.
+However, when they are loaded into a Lepton application such as
+lepton-schematic for editing, they are internally represented in
+exactly the same way, by the @code{page} type.  The @code{page} is the
+top-level Lepton document data type.
 
 Internally, the main difference between a @code{page} for a schematic
 and a @code{page} for a symbol is the types of schematic element they
@@ -218,8 +220,9 @@ following sections.
 @cindex Embedded component
 
 When a symbol is instantiated in a schematic (e.g. by the user
-selecting it from the gschem component library and placing it on the
-page), a compound @code{object} known as a @dfn{component} is created.
+selecting it from the lepton-schematic component library and placing
+it on the page), a compound @code{object} known as a @dfn{component}
+is created.
 
 Like a @code{page}, a component contains some number of @code{object}
 elements.  When a component is created from a symbol, the contents of
@@ -300,8 +303,8 @@ as @samp{VCC} or @samp{GND}.
 not linked to another @code{object}.  These attributes affect the
 schematic or symbol that they're part of as a whole.  For example, a
 floating @samp{documentation=@var{url}} attribute in a symbol tells
-gschem's @strong{Help → Component Documentation} command how to find
-the component's data sheet.
+lepton-schematic's @strong{Help → Component Documentation} command how
+to find the component's data sheet.
 
 @node Coordinate system
 @section Coordinate system
@@ -311,10 +314,10 @@ as `world' coordinates) with coordinates increasing upwards and to the
 right (i.e. a conventional right-handed Cartesian coordinate
 system).
 
-Although all coordinates may be positive or negative, gschem only
-displays objects with positive coordinates (i.e. in the upper right
-quadrant of the coordinate system).  It is therefore recommended to
-use only positive coordinates.
+Although all coordinates may be positive or negative, lepton-schematic
+only displays objects with positive coordinates (i.e. in the upper
+right quadrant of the coordinate system).  It is therefore recommended
+to use only positive coordinates.
 
 In the Scheme API, the coordinate of a point is expressed in the format:
 
@@ -1173,7 +1176,7 @@ different ways relative to its anchor position, and can be displayed
 in different font sizes.
 
 Any text can be set to be visible or invisible on printed output (and
-gschem provides ways to preview invisible text).  When a text
+lepton-schematic provides ways to preview invisible text).  When a text
 @code{object} is an attribute (i.e. its string is in a
 @samp{@var{name}=@var{value}} format) then the visibility settings are
 more fine-grained: the text can be set to display just the attribute
@@ -1381,7 +1384,7 @@ Creates and returns a new, empty component @code{object} with the
 given @var{basename}.  @var{position}, @var{angle} and @var{mirror}
 specify the symbol transformation.  If @var{locked} is true, the
 component will be protected against accidental selection by the user
-(this is used in gschem e.g. for titleblocks).
+(this is used in lepton-schematic e.g. for titleblocks).
 
 No attempt is made to load a symbol matching @var{basename} from
 component libraries, and the returned component is flagged as
@@ -2146,12 +2149,13 @@ the form @samp{$@{VAR@}}.
 
 @end defun
 
-@node gschem API Reference
-@chapter gschem API Reference
+@node lepton-schematic API Reference
+@chapter lepton-schematic API Reference
 
 The Scheme modules and functions described in this chapter are
-available in the gschem schematic editor application.  They are more
-focused on enabling and responding to user editing operations.
+available in the Lepton schematic editor application lepton-schematic.
+They are more focused on enabling and responding to user editing
+operations.
 
 @menu
 * Windows and views::
@@ -2159,7 +2163,7 @@ focused on enabling and responding to user editing operations.
 * Selections::
 * Hooks::
 * Actions::
-* Miscellanous gschem functions::
+* Miscellanous lepton-schematic functions::
 @end menu
 
 @node Windows and views
@@ -2196,7 +2200,7 @@ the @code{(gschem keymap)} module.
 
 @subsection Key combinations
 
-gschem treats key combinations as first-class objects.  A key
+lepton-schematic treats key combinations as first-class objects.  A key
 combination consists of a non-modifier key press with some number of
 modifiers applied.  For example, the key combination @kbd{Ctrl+Shift+A}
 (which calls @strong{Edit→Deselect} by default) is typed by
@@ -2223,8 +2227,9 @@ Converts @var{key} to a string, using a format suitable for passing to
 @defun key->display-string key
 Converts @var{key} to a string, using a format suitable for
 display. This should be used when the key combination needs to be
-displayed to the user e.g. in the gschem menus or status area.  The
-returned string is translated according to the user's current locale.
+displayed to the user e.g. in the lepton-schematic menus or status
+area.  The returned string is translated according to the user's
+current locale.
 
 @example
 (key->display-string (string->key ``<Control>bracketright''))
@@ -2234,10 +2239,11 @@ returned string is translated according to the user's current locale.
 
 @subsection Key sequences
 
-Most gschem functionality is bound not to single key combinations but to
-sequences of them.  For example, @strong{File→New} is bound to @kbd{F N}
-by default (i.e. press @key{F} followed by @key{N}).  Key sequences are
-simply vectors of key bindings.  For example:
+Most lepton-schematic functionality is bound not to single key
+combinations but to sequences of them.  For example, @strong{File→New}
+is bound to @kbd{F N} by default (i.e. press @key{F} followed by
+@key{N}).  Key sequences are simply vectors of key bindings.  For
+example:
 
 @example
 (string->keys ``F N'')
@@ -2345,9 +2351,9 @@ Recursively searches @var{keymap} for the key sequence bound to
 To use the functions described in this section, you will need to load
 the @code{(gschem selection)} module.
 
-Each @code{page} in gschem has a @dfn{selection} associated with it,
-which is some subset of the @code{page}s contents.  Most actions in
-gschem operate on the currently selected objects.
+Each @code{page} in lepton-schematic has a @dfn{selection} associated
+with it, which is some subset of the @code{page}s contents.  Most
+actions in lepton-schematic operate on the currently selected objects.
 
 @defun page-selection page
 Returns the current selection for @var{page}, as a list of
@@ -2388,7 +2394,7 @@ nothing.  Returns @var{object}.
 To use the hooks described in this section, you will need to load the
 @code{(gschem hook)} module.
 
-gschem defines a number of hooks that allow functions to be
+lepton-schematic defines a number of hooks that allow functions to be
 automatically run whenever a number of built-in actions are invoked by
 the user.
 
@@ -2554,16 +2560,16 @@ the @code{(gschem action)} module.
 @cindex Action properties
 
 Usually, it is sufficient to use normal Scheme functions when
-extending gschem.  However, when integrating an extension function
-with the gschem GUI (e.g. via keybindings), it is often useful to
-couple a Scheme function with metadata such as the label and icon to
-show in menus, etc.
+extending lepton-schematic.  However, when integrating an extension
+function with the lepton-schematic GUI (e.g. via keybindings), it is
+often useful to couple a Scheme function with metadata such as the
+label and icon to show in menus, etc.
 
-You can do this by creating a gschem action.  Actions can be called
-just like a normal Scheme function, but get executed via the gschem
-action dispatcher @code{eval-action!} rather than being invoked
-directly.  Normally, actions have names begining with an @samp{&}
-symbol.
+You can do this by creating a lepton-schematic action.  Actions can be
+called just like a normal Scheme function, but get executed via the
+lepton-schematic action dispatcher @code{eval-action!} rather than
+being invoked directly.  Normally, actions have names begining with an
+@samp{&} symbol.
 
 @defmac define-action (name [keyword value ...]) body
 Create a new action, bound to the given @var{name} in the current
@@ -2589,8 +2595,8 @@ Since 1.10.
 @end defun
 
 @defun action? obj
-Returns @samp{#t} iff @var{obj} is a gschem action, and @samp{#f}
-otherwise.
+Returns @samp{#t} iff @var{obj} is a lepton-schematic action, and
+@samp{#f} otherwise.
 
 Since 1.10.
 @end defun
@@ -2615,10 +2621,10 @@ Since 1.10.
 @cindex Evaluating actions
 @cindex Action evaluation
 
-All of gschem's built-in actions are callable just like normal Scheme
-functions.  However, it's sometimes useful to explicitly evaluate an
-action in the same way that the gschem GUI (menus, toolbars or
-keybindings) would do so.
+All of lepton-schematic's built-in actions are callable just like
+normal Scheme functions.  However, it's sometimes useful to explicitly
+evaluate an action in the same way that the lepton-schematic GUI
+(menus, toolbars or keybindings) would do so.
 
 @defun eval-action! action
 Invoke @var{action}, returning @samp{#t} on success and raising an
@@ -2629,7 +2635,7 @@ error on failure.  There are a number of possible types for
 @item
 A thunk.
 @item
-A gschem action.
+A lepton-schematic action.
 @item
 A symbol naming an action or a thunk in the current module.
 @end itemize
@@ -2651,9 +2657,9 @@ Since 1.10.
 @subsection Action positions
 @cindex Action positions
 
-Often in gschem actions it may be useful not to use the actual current
-mouse pointer position but to use the mouse pointer position that was
-current when the action was invoked.
+Often in lepton-schematic actions it may be useful not to use the
+actual current mouse pointer position but to use the mouse pointer
+position that was current when the action was invoked.
 
 @defun eval-action-at-point! action [point]
 Evaluate @var{action} at a particular point on the schematic plane.
@@ -2677,10 +2683,10 @@ view area to invoke the action, rather than on a menu or toolbar
 button.  At the moment this means that an action position is only set
 when a command is invoked by hotkey.
 
-@node Miscellanous gschem functions
-@section Miscellaneous gschem functions
+@node Miscellanous lepton-schematic functions
+@section Miscellaneous lepton-schematic functions
 
-@subsection gschem Attribute Helpers
+@subsection lepton-schematic Attribute Helpers
 
 To use the functions described in this section, you will need to load
 the @code{(gschem attrib)} module.
@@ -2704,8 +2710,8 @@ of the following symbols:
 @end itemize
 
 This function exists to provide a way for actions defined in Scheme to
-use the same attribute placement heuristics as gschem's built-in
-@strong{Add Attribute} action.
+use the same attribute placement heuristics as lepton-schematic's
+built-in @strong{Add Attribute} action.
 
 @xref{Text}, @ref{Attributes} and @ref{Windows and views}.
 @end defun
