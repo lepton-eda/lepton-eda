@@ -1,5 +1,5 @@
 EXTRA_DIST = $(html_man_files) gschem-main.txt what-is-geda.html \
-	what-is-gschem.html logo.png gschem.dox gschem.1.in
+	what-is-gschem.html logo.png gschem.dox lepton-schematic.1.in
 
 all:
 	@echo 'Type: make doxygen to create doxygen documentation for gschem'
@@ -15,7 +15,7 @@ else
 	@echo 'The documentation cannot be built from the sources.'
 endif
 
-dist_man_MANS = gschem.1
+dist_man_MANS = lepton-schematic.1
 
 .1.in.1:
 	d=`$(GUILE) -c '(setlocale LC_ALL "C") \
@@ -26,7 +26,7 @@ dist_man_MANS = gschem.1
 	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" -e"s:[@]YEAR@:$$y:" < $< > $@
 
 # Rules for converting man->html
-html_man_files = gschem.html
+html_man_files = lepton-schematic.html
 SUFFIXES = .1.in .1 .html
 
 docsmandir=$(docdir)/man

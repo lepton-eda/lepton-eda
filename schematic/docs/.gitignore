@@ -3,5 +3,5 @@ Makefile.in
 latex
 html
 *~
-gschem.1
-gschem.html
+lepton-schematic.1
+lepton-schematic.html
