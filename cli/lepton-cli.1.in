@@ -7,11 +7,12 @@ lepton-cli - Lepton EDA Command-Line Utility
 .SH "DESCRIPTION"
 .PP
 .B lepton-cli
-is part of the gEDA (GPL Electronic Design Automation) toolset.  It
-provides a number of small command-line utilities for working with
-schematic and symbol files, and is designed to be used for batch
-processing of designs created using the schematic editor
-\fBgschem\fR(1).  It currently has three built-in \fICOMMAND\fRs:
+is part of the gEDA (GPL Electronic Design Automation) toolset.
+It provides a number of small command-line utilities for working
+with schematic and symbol files, and is designed to be used for
+batch processing of designs created using the schematic editor
+\fBlepton-schematic\fR(1).  It currently has three built-in
+\fICOMMAND\fRs:
 
 .B lepton-cli export
 is used to create SVG, PDF, PNG, PS and EPS files from schematic and
@@ -69,11 +70,11 @@ used.
 Size the output with specific dimensions.  If the size is `auto',
 select the size that best fits the drawing.
 .TP 8
-\fB-k\fR, \fB--scale\fR=\fIFACTOR\fR
-Set the output scale \fIFACTOR\fR. This is a distance identical with 100
-points (1 default grid spacing) in \fBgschem\fR(1) coordinate space. It is used
-to size the output when neither \fB--paper\fR nor \fB--size\fR are
-given, and defaults to 100 mil.
+\fB-k\fR, \fB--scale\fR=\fIFACTOR\fR Set the output scale
+\fIFACTOR\fR. This is a distance identical with 100 points (1
+default grid spacing) in \fBlepton-schematic\fR(1) coordinate
+space. It is used to size the output when neither \fB--paper\fR
+nor \fB--size\fR are given, and defaults to 100 mil.
 .TP 8
 \fB-m\fR, \fB--margins\fR=(\fBauto\fR | \fITOP\fR[:\fILEFT\fR[:\fIBOTTOM\fR[:\fIRIGHT\fR]]])
 Set the widths of the margins to be used.  If `auto' margins are
@@ -202,7 +203,7 @@ This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
 .SH SEE ALSO
-\fBgschem\fR(1).
+\fBlepton-schematic\fR(1).
 
 For more information on the Scheme API, see the \fBgeda-scheme\fR
 Texinfo manual.  If the \fBinfo\fR program is properly installed at

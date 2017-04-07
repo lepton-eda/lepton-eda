@@ -77,4 +77,4 @@ Alan Somers
 
 .SH SEE ALSO
 
-.B composite(1), display(1), git(1), gschem(1), hg(1), svn(1)
+.B composite(1), display(1), git(1), lepton-schematic(1), hg(1), svn(1)
