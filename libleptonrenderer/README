@@ -1,8 +1,9 @@
-==============================================
- 'gschem and Friends' Electronic Design Suite
-==============================================
+====================================
+ Lepton Electronic Design Automation
+====================================
 
-Copyright (C) 1998-2012 gEDA Developers
+Copyright (C) 1998-2017 gEDA Developers
+Copyright (C) 2017 Lepton EDA Developers
 
 Cairo-based schematic and symbol renderer
 =========================================
