@@ -568,7 +568,6 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
 void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string, int visibility, int show);
 /* o_undo.c */
 void o_undo_init(void);
-void o_undo_load_config();
 void o_undo_savestate(GschemToplevel *w_current, PAGE *page, int flag);
 void o_undo_savestate_old(GschemToplevel *w_current, int flag);
 char *o_undo_find_prev_filename(UNDO *start);

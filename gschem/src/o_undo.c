@@ -36,19 +36,6 @@ static int prog_pid=0;
 static char* tmp_path = NULL;
 
 
-/*! \var undo_modify_viewport
- *  \par Description
- * Sets if undo/redo operations are allowed to change pan and zoom
- * when "undo-panzoom" option (in gschemrc) is set to "disabled".
- * Configuration setting:
- * group: gschem.undo
- * key:   modify-viewport
- * type:  boolean
- * default value: false
- */
-static gboolean undo_modify_viewport = FALSE;
-
-
 /* this is additional number of levels (or history) at which point the */
 /* undo stack will be trimmed, it's used a safety to prevent running out */
 /* of entries to free */
@@ -74,16 +61,38 @@ void o_undo_init(void)
 
 
 
-/*! \brief Load configuration for undo/redo system.
+/*! \brief Return the value of "modify-viewport" configuration key.
+ *
+ * \par Function Description
+ *
+ * This function reads the value of "modify-viewport" configuration
+ * setting in "gschem.undo" group, which determines
+ * if undo/redo operations are allowed to change pan and zoom (i.e. viewport)
+ * when "undo-panzoom" option (in gschemrc) is set to "disabled".
+ *
+ * Configuration setting description:
+ * key:   modify-viewport
+ * group: gschem.undo
+ * type:  boolean
+ * default value: false
+ *
+ * \return TRUE if undo/redo can modify viewport, FALSE otherwise.
  */
-void o_undo_load_config()
+
+static gboolean
+o_undo_modify_viewport()
 {
+  gboolean result = FALSE; /* option's default value */
   gchar* cwd = g_get_current_dir();
 
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
 
   g_free (cwd);
-  g_return_if_fail (cfg != NULL);
+
+  if (cfg == NULL)
+  {
+    return result;
+  }
 
   GError* err = NULL;
   gboolean val = eda_config_get_boolean (cfg,
@@ -92,11 +101,12 @@ void o_undo_load_config()
                                          &err);
   if (err == NULL)
   {
-    undo_modify_viewport = val;
+    result = val;
   }
 
   g_clear_error (&err);
 
+  return result;
 }
 
 
@@ -459,7 +469,11 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
 
   if (w_current->undo_type == UNDO_DISK && u_current->filename) {
 
-    f_open(toplevel, page, u_current->filename, NULL);
+    /*
+     * F_OPEN_RESTORE_CWD: go back from tmp directory,
+     * so that local config files can be read:
+    */
+    f_open_flags (toplevel, page, u_current->filename, F_OPEN_RESTORE_CWD, NULL);
 
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
 
@@ -477,7 +491,7 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
 
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
 
-  if (w_current->undo_panzoom || undo_modify_viewport)
+  if (w_current->undo_panzoom || o_undo_modify_viewport())
   {
     if (u_current->scale != 0) {
       gschem_page_geometry_set_viewport (geometry,
