@@ -1,8 +1,8 @@
 .deps
 Makefile
 Makefile.in
-gschem
-gschem.exe
+lepton-schematic
+lepton-schematic.exe
 *.o
 *.x
 *~
