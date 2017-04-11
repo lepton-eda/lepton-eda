@@ -79,7 +79,7 @@ desktopdir=$(xdgdatadir)/applications
 desktop_in_files = geda-gschem.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
-DOMAIN=geda-gschem
+DOMAIN=lepton-schematic
 
 @DESKTOP_I18N_LANGS_RULE@
 @DESKTOP_I18N_DESKTOP_RULE@
