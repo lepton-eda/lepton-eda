@@ -263,10 +263,10 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
       } else {
         g_string_append(message, _("The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n"));
       }
-      g_string_append (message, _("Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n"));
+      g_string_append (message, _("lepton-schematic usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n"));
       if (toplevel->load_newer_backup_func == NULL) {
         g_warning ("%s", message->str);
-        g_warning (_("\nRun gschem and correct the situation.\n\n"));
+        g_warning (_("\nRun lepton-schematic and correct the situation.\n\n"));
       } else {
         /* Ask the user if load the backup or the original file */
         if (toplevel->load_newer_backup_func
