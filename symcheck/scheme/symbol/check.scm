@@ -5,6 +5,7 @@
 
   #:use-module (srfi srfi-26)
   #:use-module (symbol gettext)
+  #:use-module (symbol blame)
   #:use-module (geda page)
   #:use-module (geda log))
 
@@ -118,27 +119,37 @@
       (when (not quiet)
         ;; done, now print out the messages
         (check-symbol-output-results)
-
-        (when (not (zero? warning-count))
-          (log! 'message (N_ "~A warning found"
-                             "~A warnings found"
-                             warning-count)
-                warning-count)
-          (when (< verbose 2)
-            (log! 'message (_ "(use -vv to view details)"))))
-
-        (if (zero? error-count)
-            (log! 'message (_ "No errors found"))
-            (begin
-              (log! 'message (N_ "~A ERROR found"
-                                 "~A ERRORS found"
-                                 error-count)
-                    error-count)
-              (when (< verbose 1)
-                (log! 'message (_ "(use -v to view details)"))))))
+        (apply report-statistics (map +
+                                      `(0 ,warning-count ,error-count 0)
+                                      (report-blames (page-contents page)))))
 
 
     ; return code
     (if (not (zero? error-count))
         2
         (if (not (zero? warning-count)) 1 0)))))
+
+(define (report-statistics info-count
+                           warning-count
+                           error-count
+                           unrecognized-count)
+
+  (let ((verbose (%check-get-verbose-mode)))
+
+    (unless (zero? warning-count)
+      (log! 'message (N_ "~A warning found"
+                         "~A warnings found"
+                         warning-count)
+            warning-count)
+      (when (< verbose 2)
+        (log! 'message (_ "(use -vv to view details)"))))
+
+    (if (zero? error-count)
+        (log! 'message (_ "No errors found"))
+        (begin
+          (log! 'message (N_ "~A ERROR found"
+                             "~A ERRORS found"
+                             error-count)
+                error-count)
+          (when (< verbose 1)
+            (log! 'message (_ "(use -v to view details)")))))))

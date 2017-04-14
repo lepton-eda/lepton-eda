@@ -2,6 +2,7 @@
 
 scmdatadir = $(GEDADATADIR)/scheme
 nobase_dist_scmdata_DATA = \
+	symbol/blame.scm \
 	symbol/check.scm \
 	symbol/gettext.scm
 
