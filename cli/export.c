@@ -946,7 +946,7 @@ static struct option export_long_options[] = {
   {"format", 1, NULL, 'f'},
   {"font", 1, NULL, 'F'},
   {"help", 0, NULL, 'h'},
-  {"layout", 0, NULL, 'l'},
+  {"layout", 1, NULL, 'l'},
   {"margins", 1, NULL, 'm'},
   {"output", 1, NULL, 'o'},
   {"paper", 1, NULL, 'p'},
