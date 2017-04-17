@@ -1,7 +1,9 @@
 ## -*- Makefile -*-
 
 scmdatadir = $(GEDADATADIR)/scheme
-nobase_dist_scmdata_DATA = symbol/check.scm
+nobase_dist_scmdata_DATA = \
+	symbol/check.scm \
+	symbol/gettext.scm
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
