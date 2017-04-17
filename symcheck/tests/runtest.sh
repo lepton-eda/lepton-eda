@@ -23,9 +23,10 @@ ref="${abs_srcdir}/${symbasename}.output"
 new="${rundir}/new_${symbasename}.output"
 tmpfile=${rundir}/tmp$$
 
+# ERRORLOG is a variable exported in Makefile
 cd ${rundir} &&
     GUILE_LOAD_PATH="${abs_top_srcdir}/liblepton/scheme:${abs_top_builddir}/liblepton/scheme" \
-                   ${SYMCHECK} -vv ${in} 1> ${tmpfile} 2> ${rundir}/allerrors.output
+                   ${SYMCHECK} -vv ${in} 1> ${tmpfile} 2>> ${ERRORLOG}
 
 cat ${tmpfile} | \
 	grep -v "Checking: " | \
