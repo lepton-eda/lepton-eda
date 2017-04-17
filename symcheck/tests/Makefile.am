@@ -48,6 +48,8 @@ tests:
 	abs_top_srcdir='$(abs_top_srcdir)'; export abs_top_srcdir; \
 	fail=0 ; \
 	pass=0 ; \
+	ERRORLOG=${abs_builddir}/error.log; export ERRORLOG; \
+	[ -e $$ERRORLOG ] && rm $$ERRORLOG; \
 	for file in $(abs_srcdir)/*.sym; do \
 	  base=`basename $$file`; \
 	  GEDADATARC=$(builddir)/../lib \
