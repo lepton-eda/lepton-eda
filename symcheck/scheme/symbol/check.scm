@@ -4,13 +4,9 @@
   #:use-module (symbol core check)
 
   #:use-module (srfi srfi-26)
+  #:use-module (symbol gettext)
   #:use-module (geda page)
   #:use-module (geda log))
-
-(define %symcheck-gettext-domain "lepton-symcheck")
-(define (_ msg) (gettext msg %symcheck-gettext-domain))
-(define (N_ msgid msgid-plural n)
-  (ngettext msgid msgid-plural n %symcheck-gettext-domain))
 
 (define-public (check-all-symbols)
   (apply + (map check-symbol (active-pages))))
