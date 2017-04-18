@@ -4,6 +4,8 @@ scmdatadir = $(GEDADATADIR)/scheme
 nobase_dist_scmdata_DATA = \
 	symbol/blame.scm \
 	symbol/check.scm \
+	symbol/check/attrib.scm \
+	symbol/check/text.scm \
 	symbol/gettext.scm
 
 MOSTLYCLEANFILES = *.log *~

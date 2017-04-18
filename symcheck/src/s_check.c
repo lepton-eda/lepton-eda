@@ -66,81 +66,6 @@ s_check_list_has_item(char **list , char *item)
   return FALSE;
 }
 
-SCM_DEFINE (check_symbol_attribs, "%check-symbol-attribs", 1, 0, 0,
-            (SCM page_s), "Check symbol attributes")
-{
-  const GList *iter;
-
-  gchar *message;
-  gchar **tokens;
-
-  PAGE* p_current = edascm_to_page (page_s);
-  const GList *obj_list = s_page_objects (p_current);
-
-  char *valid_pin_attributes[] = {"pinlabel", "pintype",
-				  "pinseq", "pinnumber",
-				  NULL};
-  char *valid_attributes[] = {"device", "graphical", "description",
-			      "author", "comment", "numslots",
-			      "slotdef", "footprint", "documentation",
-			      "refdes", "slot", "net", "value",
-			      "symversion", "dist-license", "use-license",
-			      NULL};
-  char *obsolete_attributes[] = {"uref", "label", "email", 
-				 NULL};
-  char *forbidden_attributes[] = {"type", "name", 
-				  NULL};
-  /* pin# ?, slot# ? */
-  
-  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
-
-    if (o_current->type == OBJ_TEXT) {
-      tokens = g_strsplit(geda_text_object_get_string (o_current),"=", 2);
-      if (tokens[0] != NULL && tokens[1] != NULL) {
-        if (s_check_list_has_item(forbidden_attributes, tokens[0])) {
-          message = g_strdup_printf (_("Found forbidden %1$s= attribute: [%2$s=%3$s]\n"),
-                                     tokens[0], tokens[0], tokens[1]);
-          error_messages = g_list_append (error_messages, message);
-        }
-        else if (s_check_list_has_item(obsolete_attributes, tokens[0])) {
-          message = g_strdup_printf (_("Found obsolete %1$s= attribute: [%2$s=%3$s]\n"),
-                                     tokens[0], tokens[0], tokens[1]);
-          warning_messages = g_list_append (warning_messages, message);
-        }
-        else if (s_check_list_has_item(valid_pin_attributes, tokens[0])) {
-          if (o_current->attached_to == NULL
-              || o_current->attached_to->type != OBJ_PIN) {
-            message = g_strdup_printf (_("Found misplaced pin attribute:"
-                                       " [%1$s=%2$s]\n"), tokens[0], tokens[1]);
-            error_messages = g_list_append (error_messages, message);
-          }
-        }
-        else if (!s_check_list_has_item(valid_attributes, tokens[0])) {
-          message = g_strdup_printf (_("Found unknown %1$s= attribute: [%2$s=%3$s]\n"),
-                                     tokens[0], tokens[0], tokens[1]);
-          warning_messages = g_list_append (warning_messages, message);
-        }
-        else if (o_current->attached_to != NULL) {
-          message = g_strdup_printf (_("Found wrongly attached attribute: "
-                                       "[%1$s=%2$s]\n"),
-                                     tokens[0], tokens[1]);
-          error_messages = g_list_append (error_messages, message);
-        }
-      } else { /* object is not an attribute */
-        if (o_current->show_name_value != SHOW_NAME_VALUE) {
-          message = g_strdup_printf (_("Found a simple text object with only SHOW_NAME"
-                                     " or SHOW_VALUE set [%1$s]\n"),
-                                     geda_text_object_get_string (o_current));
-          warning_messages = g_list_append (warning_messages, message);
-        }
-      }
-      g_strfreev(tokens);
-    }
-  }
-
-  return SCM_BOOL_T;
-}
 
 SCM_DEFINE (symbol_check_glist_append, "%symbol-check-glist-append", 2, 0, 0,
             (SCM type_s, SCM message_s), "Check symbol text primitives")
@@ -1322,8 +1247,7 @@ init_module_symbol_core_check ()
 
   /* Register the functions and add them to the module's public
    * definitions. */
-  scm_c_export (s_check_symbol_attribs,
-                s_check_symbol_text,
+  scm_c_export (s_check_symbol_text,
                 s_check_symbol_graphical,
                 s_check_symbol_device,
                 s_check_symbol_missing_attribute,

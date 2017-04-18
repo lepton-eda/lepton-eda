@@ -7,7 +7,11 @@
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
   #:use-module (geda page)
-  #:use-module (geda log))
+  #:use-module (geda log)
+  #:use-module (geda object)
+  #:use-module (geda attrib)
+  #:use-module (symbol check attrib)
+  #:use-module (symbol check text))
 
 (define-public (check-all-symbols)
   (apply + (map check-symbol (active-pages))))
@@ -41,7 +45,17 @@
 
 (define-public check-symbol-text %check-symbol-text)
 
-(define-public check-symbol-attribs %check-symbol-attribs)
+(define symbol-check-glist-append %symbol-check-glist-append)
+
+
+;;; Check symbol attributes
+(define-public (check-symbol-attribs page)
+  (for-each
+   (lambda (object)
+     (check-text-visibility object)
+     (check-attribute object))
+   (page-contents page)))
+
 
 (define check-info-messages %check-info-messages)
 (define check-warning-messages %check-warning-messages)
