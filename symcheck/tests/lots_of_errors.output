@@ -18,5 +18,5 @@ ERROR: Not enough pins in slotdef=2:4,5
 ERROR: Slot 8 is larger then the maximum number (5) of slots
 ERROR: Invalid slotdef=a attributes, not continuing
 ERROR: Malformed slotdef= (the format is #:#,#,#,...)
-12 warnings found 
-8 ERRORS found 
+12 warnings found
+8 ERRORS found
