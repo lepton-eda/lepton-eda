@@ -10,5 +10,5 @@ ERROR: Missing pinnumber= attribute
 ERROR: Found old pin#=# attribute: pin3=3
 ERROR: Found old pin#=# attribute: pin2=2
 ERROR: Found old pin#=# attribute: pin1=1
-3 warnings found 
-9 ERRORS found 
+3 warnings found
+9 ERRORS found

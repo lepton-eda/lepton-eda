@@ -24,5 +24,5 @@ ERROR: Found old pin#=# attribute: pin1=1
 ERROR: Found old slot#=# attribute: slot1=1,2,3
 ERROR: Found old slot#=# attribute: slot2=4,5,6
 ERROR: Found old slot#=# attribute: slot4=12,13,11
-12 warnings found 
-14 ERRORS found 
+12 warnings found
+14 ERRORS found

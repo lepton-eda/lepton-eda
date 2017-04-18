@@ -120,22 +120,22 @@
         (check-symbol-output-results)
 
         (when (not (zero? warning-count))
-          (log! 'message (N_ "~A warning found "
-                             "~A warnings found "
+          (log! 'message (N_ "~A warning found"
+                             "~A warnings found"
                              warning-count)
                 warning-count)
           (when (< verbose 2)
-            (log! 'message (_ "(use -vv to view details)\n"))))
+            (log! 'message (_ "(use -vv to view details)"))))
 
         (if (zero? error-count)
-            (log! 'message (_ "No errors found\n"))
+            (log! 'message (_ "No errors found"))
             (begin
-              (log! 'message (N_ "~A ERROR found "
-                                 "~A ERRORS found "
+              (log! 'message (N_ "~A ERROR found"
+                                 "~A ERRORS found"
                                  error-count)
                     error-count)
               (when (< verbose 1)
-                (log! 'message (_ "(use -v to view details)\n"))))))
+                (log! 'message (_ "(use -v to view details)"))))))
 
 
     ; return code

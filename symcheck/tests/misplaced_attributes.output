@@ -9,5 +9,5 @@ ERROR: Found misplaced pin attribute: [pinlabel=not attached]
 ERROR: Found misplaced pin attribute: [pinseq=3]
 ERROR: Found misplaced pin attribute: [pinnumber=3]
 ERROR: Found misplaced pin attribute: [pintype=io]
-2 warnings found 
-9 ERRORS found 
+2 warnings found
+9 ERRORS found

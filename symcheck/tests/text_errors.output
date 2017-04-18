@@ -11,5 +11,5 @@ Warning: Found text with a trailing '': consider to escape it with '\\' [pinlabe
 Warning: Missing footprint= attribute
 Warning: Missing refdes= attribute
 ERROR: Missing device= attribute
-12 warnings found 
-1 ERROR found 
+12 warnings found
+1 ERROR found
