@@ -75,8 +75,6 @@ main_prog(void *closure, int argc, char *argv[])
 
   logging_dest=-1; /* don't output to the screen for now */
   
-  /* register guile (scheme) functions */
-  g_register_funcs();
   s_init_check ();
   check_all_symbols = scm_c_public_lookup ("symbol check",
                                            "check-all-symbols");

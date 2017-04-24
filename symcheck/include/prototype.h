@@ -1,6 +1,3 @@
-/* g_register.c */
-void g_register_funcs(void);
-SCM g_quit(void);
 /* lepton-symcheck.c */
 void gsymcheck_quit(void);
 void main_prog(void *closure, int argc, char *argv[]);
