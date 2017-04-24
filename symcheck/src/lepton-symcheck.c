@@ -84,8 +84,6 @@ main_prog(void *closure, int argc, char *argv[])
   pr_current = s_toplevel_new ();
   edascm_dynwind_toplevel (pr_current);
 
-  g_rc_parse (pr_current, argv[0], "gsymcheckrc", rc_filename);
-
   i_vars_set(pr_current);
   
   i = argv_index;

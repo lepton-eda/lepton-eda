@@ -28,8 +28,6 @@
 #include "../include/prototype.h"
 
 
-char *rc_filename = NULL; 
-
 int logfile_fd=-1;
 int logging_dest=STDOUT_TTY;
 
