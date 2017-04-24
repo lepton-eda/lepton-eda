@@ -33,5 +33,4 @@ int logging_dest=STDOUT_TTY;
 
 /* command line arguments */
 int verbose_mode=FALSE;
-int interactive_mode=FALSE;
 int quiet_mode=FALSE;
