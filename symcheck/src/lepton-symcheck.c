@@ -43,7 +43,6 @@ main_prog(void *closure, int argc, char *argv[])
 {
   int i;
   int argv_index;
-  int exit_status;
   char *cwd;
 
   TOPLEVEL *pr_current;
@@ -123,13 +122,8 @@ main_prog(void *closure, int argc, char *argv[])
 #if DEBUG 
   s_page_print_all(pr_current);
 #endif
-  
-  exit_status = scm_to_int (scm_call_0 (scm_variable_ref (check_all_symbols)));
 
-  s_page_delete_list(pr_current);
-  s_clib_free();
-
-  exit(exit_status);
+  scm_call_0 (scm_variable_ref (check_all_symbols));
 
   scm_dynwind_end ();
 }
