@@ -27,10 +27,6 @@
 
 #include "../include/prototype.h"
 
-
-int logfile_fd=-1;
-int logging_dest=STDOUT_TTY;
-
 /* command line arguments */
 int verbose_mode=FALSE;
 int quiet_mode=FALSE;

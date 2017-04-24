@@ -147,40 +147,4 @@
     (check-symbol-connections page)
 
     ;; now report the info/warnings/errors to the user
-    (when (not quiet)
-      ;; done, now print out the messages
-      (apply report-statistics
-             (report-blames `(,page . ,(page-contents page)))))
-
-    ))
-
-(define (report-statistics info-count
-                           warning-count
-                           error-count
-                           unrecognized-count)
-
-  (let ((verbose (%check-get-verbose-mode)))
-
-    (unless (zero? warning-count)
-      (log! 'message (N_ "~A warning found"
-                         "~A warnings found"
-                         warning-count)
-            warning-count)
-      (when (< verbose 2)
-        (log! 'message (_ "(use -vv to view details)"))))
-
-    (if (zero? error-count)
-        (log! 'message (_ "No errors found"))
-        (begin
-          (log! 'message (N_ "~A ERROR found"
-                             "~A ERRORS found"
-                             error-count)
-                error-count)
-          (when (< verbose 1)
-            (log! 'message (_ "(use -v to view details)")))))
-
-    (primitive-exit
-     ;; return code
-     (if (zero? error-count)
-         (if (zero? warning-count) 0 1)
-         2))))
+    (primitive-exit (report-blame-statistics `(,page . ,(page-contents page))))))

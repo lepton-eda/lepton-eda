@@ -5,7 +5,6 @@ symcheck/src/lepton-symcheck.c
 symcheck/src/i_vars.c
 symcheck/src/parsecmd.c
 symcheck/src/s_check.c
-symcheck/src/s_log.c
 symcheck/scheme/symbol/blame.scm
 symcheck/scheme/symbol/check.scm
 symcheck/scheme/symbol/check/alignment.scm

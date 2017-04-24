@@ -8,5 +8,3 @@ void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
 /* s_check.c */
 void s_init_check (void);
-/* s_log.c */
-void s_log_update (const gchar *log_domain, GLogLevelFlags log_level, const gchar *buf);

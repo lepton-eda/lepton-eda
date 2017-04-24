@@ -11,8 +11,7 @@ lepton_symcheck_SOURCES = \
 	lepton-symcheck.c \
 	i_vars.c \
 	parsecmd.c \
-	s_check.c \
-	s_log.c
+	s_check.c
 
 lepton_symcheck_CPPFLAGS = -I$(top_srcdir)/liblepton/include -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)

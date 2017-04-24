@@ -9,7 +9,7 @@
 
   #:export (object-blames
             blame-object
-            report-blames))
+            report-blame-statistics))
 
 ;;; Object property for storing blaming info.
 (define object-blames (make-object-property))
@@ -22,6 +22,24 @@ OBJECT. SEVERITY may be one of 'info, 'warning, or 'error."
           `((,severity . ,message) . ,(if blames blames '())))))
 
 (define verbose (%check-get-verbose-mode))
+(define quiet (%check-get-quiet-mode))
+
+(define %check-log-destination 'stdout)
+
+;;; Logs MESSAGE formatted using FORMAT-ARGS and log LEVEL. The
+;;; output goes to the destination defined in variable
+;;; %check-log-destination which currently may be 'stdout or 'log.
+(define (check-log! level message . format-args)
+  (define (stdout-log! level message . format-args)
+    (unless quiet
+      (apply format #t message format-args)
+      (newline)))
+
+  (let ((log-func (case %check-log-destination
+                    ((stdout) stdout-log!)
+                    ((log) log!)
+                    (else stdout-log!))))
+    (apply log-func level message format-args)))
 
 (define (report-blame object)
   "Reports errors (blames) collected for OBJECT."
@@ -29,18 +47,18 @@ OBJECT. SEVERITY may be one of 'info, 'warning, or 'error."
     (match blame
       (('info . msg)
        (when (> verbose 2)
-         (log! 'message (format #f (_ "Info: ~A") msg)))
+         (check-log! 'message (format #f (_ "Info: ~A") msg)))
        '(1 0 0 0))
       (('warning . msg)
        (when (> verbose 1)
-         (log! 'message (format #f (_ "Warning: ~A") msg)))
+         (check-log! 'message (format #f (_ "Warning: ~A") msg)))
        '(0 1 0 0))
       (('error . msg)
        (when (> verbose 0)
-         (log! 'message (format #f (_ "ERROR: ~A") msg)))
+         (check-log! 'message (format #f (_ "ERROR: ~A") msg)))
        '(0 0 1 0))
       (_
-       (log! 'message (format #f (_ "Unrecognized info: ~A\n") blame))
+       (check-log! 'message (format #f (_ "Unrecognized info: ~A\n") blame))
        '(0 0 0 1))))
 
   (map report (or (object-blames object) '())))
@@ -55,3 +73,37 @@ list of the form:
        ,(apply + warning)
        ,(apply + error)
        ,(apply + unrecognized)))))
+
+(define (report-blame-statistics objects)
+  "Reports blame statistics for given list of OBJECTS."
+  (define (report-statistics info-count
+                             warning-count
+                             error-count
+                             unrecognized-count)
+
+    (let ((verbose (%check-get-verbose-mode)))
+
+      (unless (zero? warning-count)
+        (check-log! 'message (N_ "~A warning found"
+                                   "~A warnings found"
+                                   warning-count)
+                      warning-count)
+        (when (< verbose 2)
+          (check-log! 'message (_ "(use -vv to view details)"))))
+
+      (if (zero? error-count)
+          (check-log! 'message (_ "No errors found"))
+          (begin
+            (check-log! 'message (N_ "~A ERROR found"
+                                       "~A ERRORS found"
+                                       error-count)
+                          error-count)
+            (when (< verbose 1)
+              (check-log! 'message (_ "(use -v to view details)")))))
+
+      ;; return code
+      (if (zero? error-count)
+          (if (zero? warning-count) 0 1)
+          2)))
+
+  (apply report-statistics (report-blames objects)))
