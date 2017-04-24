@@ -18,10 +18,6 @@
  * MA 02111-1301 USA.
  */
 
-extern int logfile_fd;
-extern int do_logging;
-extern int logging_dest;
-
 /* gnetlist specific stuff */
 extern int verbose_mode;
 extern int quiet_mode;

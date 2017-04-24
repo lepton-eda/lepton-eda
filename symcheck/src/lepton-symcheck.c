@@ -53,19 +53,10 @@ main_prog(void *closure, int argc, char *argv[])
 
   libgeda_init();
 
-  /* create log file right away */
-  /* even if logging is enabled */
-  x_log_update_func = s_log_update;
-  s_log_init ("symcheck");
-
-  logging_dest=STDOUT_TTY;
-
 #if defined(__MINGW32__) && defined(DEBUG)
   fprintf(stderr, "This is the MINGW32 port.\n");
 #endif  
 
-  logging_dest=-1; /* don't output to the screen for now */
-  
   s_init_check ();
   check_all_symbols = scm_c_public_lookup ("symbol check",
                                            "check-all-symbols");
@@ -99,7 +90,6 @@ main_prog(void *closure, int argc, char *argv[])
                  s_page_get_filename (pr_current->page_current),
                  &err)) {
       /* Not being able to load a file is apparently a fatal error */
-      logging_dest = STDOUT_TTY;
       g_warning ("%s\n", err->message);
       g_error_free (err);
       exit(2);
@@ -117,9 +107,7 @@ main_prog(void *closure, int argc, char *argv[])
 
   g_free(cwd);
 
-  logging_dest=STDOUT_TTY;
-
-#if DEBUG 
+#if DEBUG
   s_page_print_all(pr_current);
 #endif
 
