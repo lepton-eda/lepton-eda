@@ -18,8 +18,6 @@
  * MA 02111-1301 USA.
  */
 
-extern char *rc_filename; 
-
 extern int logfile_fd;
 extern int do_logging;
 extern int logging_dest;
