@@ -1,5 +1,4 @@
 /* lepton-symcheck.c */
-void gsymcheck_quit(void);
 void main_prog(void *closure, int argc, char *argv[]);
 int main(int argc, char *argv[]);
 /* i_vars.c */
