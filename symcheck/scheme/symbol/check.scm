@@ -179,7 +179,8 @@
           (when (< verbose 1)
             (log! 'message (_ "(use -v to view details)")))))
 
-    ;; return code
-    (if (zero? error-count)
-        (if (zero? warning-count) 0 1)
-        2)))
+    (primitive-exit
+     ;; return code
+     (if (zero? error-count)
+         (if (zero? warning-count) 0 1)
+         2))))
