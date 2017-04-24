@@ -39,14 +39,6 @@
 #include "../include/gettext.h"
 
 void
-gsymcheck_quit(void)
-{
-  
-  s_clib_free();
-
-}
-
-void 
 main_prog(void *closure, int argc, char *argv[])
 {
   int i;
@@ -135,7 +127,7 @@ main_prog(void *closure, int argc, char *argv[])
   exit_status = scm_to_int (scm_call_0 (scm_variable_ref (check_all_symbols)));
 
   s_page_delete_list(pr_current);
-  gsymcheck_quit();
+  s_clib_free();
 
   exit(exit_status);
 
