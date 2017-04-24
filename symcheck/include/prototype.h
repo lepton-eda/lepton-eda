@@ -1,5 +1,3 @@
-/* g_rc.c */
-SCM g_rc_gsymcheck_version(SCM version);
 /* g_register.c */
 void g_register_funcs(void);
 SCM g_quit(void);

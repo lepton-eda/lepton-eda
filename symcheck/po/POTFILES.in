@@ -1,7 +1,6 @@
 # List of translatable files
 
 symcheck/src/globals.c
-symcheck/src/g_rc.c
 symcheck/src/g_register.c
 symcheck/src/lepton-symcheck.c
 symcheck/src/i_vars.c
