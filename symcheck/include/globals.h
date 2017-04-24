@@ -24,7 +24,4 @@ extern int logging_dest;
 
 /* gnetlist specific stuff */
 extern int verbose_mode;
-extern int interactive_mode;
 extern int quiet_mode;
-
-
