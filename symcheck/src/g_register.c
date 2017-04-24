@@ -43,10 +43,6 @@ g_register_funcs(void)
   /* general functions */
   scm_c_define_gsubr ("quit", 0, 0, 0, (scm_t_subr) g_quit);
   scm_c_define_gsubr ("exit", 0, 0, 0, (scm_t_subr) g_quit);
-
-  /* gsymcheckrc functions */
-  scm_c_define_gsubr ("gsymcheck-version", 1, 0, 0, (scm_t_subr) g_rc_gsymcheck_version);
-
 }
 
 SCM

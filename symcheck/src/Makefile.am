@@ -7,7 +7,6 @@ BUILT_SOURCES = \
 
 # don't forget all *.h files */
 lepton_symcheck_SOURCES = \
-	g_rc.c \
 	g_register.c \
 	globals.c \
 	lepton-symcheck.c \
