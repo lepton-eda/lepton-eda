@@ -136,8 +136,6 @@ main_prog(void *closure, int argc, char *argv[])
   s_page_print_all(pr_current);
 #endif
   
-  if (!quiet_mode) s_log_message("\n");
-
   exit_status = scm_to_int (scm_call_0 (scm_variable_ref (check_all_symbols)));
 
   s_page_delete_list(pr_current);
