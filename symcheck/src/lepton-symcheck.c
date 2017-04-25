@@ -35,7 +35,6 @@
 #include <liblepton/libgedaguile.h>
 
 #include "../include/prototype.h"
-#include "../include/gettext.h"
 
 void
 main_prog(void *closure, int argc, char *argv[])
