@@ -1,10 +1,7 @@
 # List of translatable files
 
-symcheck/src/globals.c
 symcheck/src/lepton-symcheck.c
 symcheck/src/i_vars.c
-symcheck/src/parsecmd.c
-symcheck/src/s_check.c
 symcheck/scheme/symbol/blame.scm
 symcheck/scheme/symbol/check.scm
 symcheck/scheme/symbol/check/alignment.scm

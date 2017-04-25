@@ -1,7 +1,4 @@
 (define-module (symbol blame)
-  ;; Get symcheck options
-  #:use-module (symbol core check)
-
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 match)
   #:use-module (symbol gettext)
@@ -82,29 +79,27 @@ list of the form:
                              error-count
                              unrecognized-count)
 
-    (let ((verbose (%check-get-verbose-mode)))
+    (unless (zero? warning-count)
+      (check-log! 'message (N_ "~A warning found"
+                               "~A warnings found"
+                               warning-count)
+                  warning-count)
+      (when (< verbose 2)
+        (check-log! 'message (_ "(use -vv to view details)"))))
 
-      (unless (zero? warning-count)
-        (check-log! 'message (N_ "~A warning found"
-                                   "~A warnings found"
-                                   warning-count)
-                      warning-count)
-        (when (< verbose 2)
-          (check-log! 'message (_ "(use -vv to view details)"))))
+    (if (zero? error-count)
+        (check-log! 'message (_ "No errors found"))
+        (begin
+          (check-log! 'message (N_ "~A ERROR found"
+                                   "~A ERRORS found"
+                                   error-count)
+                      error-count)
+          (when (< verbose 1)
+            (check-log! 'message (_ "(use -v to view details)")))))
 
-      (if (zero? error-count)
-          (check-log! 'message (_ "No errors found"))
-          (begin
-            (check-log! 'message (N_ "~A ERROR found"
-                                       "~A ERRORS found"
-                                       error-count)
-                          error-count)
-            (when (< verbose 1)
-              (check-log! 'message (_ "(use -v to view details)")))))
-
-      ;; return code
-      (if (zero? error-count)
-          (if (zero? warning-count) 0 1)
-          2)))
+    ;; return code
+    (if (zero? error-count)
+        (if (zero? warning-count) 0 1)
+        2))
 
   (apply report-statistics (report-blames objects)))
