@@ -45,10 +45,6 @@ main_prog(void *closure, int argc, char *argv[])
   
   libgeda_init();
 
-#if defined(__MINGW32__) && defined(DEBUG)
-  fprintf(stderr, "This is the MINGW32 port.\n");
-#endif  
-
   check_all_symbols = scm_c_public_lookup ("symbol check",
                                            "check-all-symbols");
 
@@ -56,10 +52,6 @@ main_prog(void *closure, int argc, char *argv[])
 
   pr_current = s_toplevel_new ();
   edascm_dynwind_toplevel (pr_current);
-
-#if DEBUG
-  s_page_print_all(pr_current);
-#endif
 
   scm_call_0 (scm_variable_ref (check_all_symbols));
 
