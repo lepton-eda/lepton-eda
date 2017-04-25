@@ -767,7 +767,7 @@ begins with \"gnet-\" and ends with \".scm\"."
     (let ((files (gnetlist-option-ref '())))
       (if (null? files)
           (error (format #f
-                         (_ "No schematics files specified for processing.
+                         (_ "No schematic files specified for processing.
 Run `~A --help' for more information.
 ")
                          (car (program-arguments))))
