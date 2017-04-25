@@ -41,19 +41,15 @@ void
 main_prog(void *closure, int argc, char *argv[])
 {
   TOPLEVEL *pr_current;
-  SCM check_all_symbols;
-  
-  libgeda_init();
 
-  check_all_symbols = scm_c_public_lookup ("symbol check",
-                                           "check-all-symbols");
+  libgeda_init();
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
   pr_current = s_toplevel_new ();
   edascm_dynwind_toplevel (pr_current);
 
-  scm_call_0 (scm_variable_ref (check_all_symbols));
+  scm_call_0 (scm_c_public_ref ("symbol check", "check-all-symbols"));
 
   scm_dynwind_end ();
 }
