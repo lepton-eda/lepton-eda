@@ -2,16 +2,10 @@
 
 bin_PROGRAMS = lepton-symcheck
 
-BUILT_SOURCES = \
-	s_check.x
-
 # don't forget all *.h files */
 lepton_symcheck_SOURCES = \
-	globals.c \
 	lepton-symcheck.c \
-	i_vars.c \
-	parsecmd.c \
-	s_check.c
+	i_vars.c
 
 lepton_symcheck_CPPFLAGS = -I$(top_srcdir)/liblepton/include -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
@@ -31,15 +25,7 @@ uninstall-hook:
 	rm -f $(DESTDIR)$(bindir)/$(COMPAT_NAME)
 endif INSTALL_COMPAT_SYMLINKS
 
-# This is used to generate boilerplate for defining Scheme functions
-# in C.
-SUFFIXES = .x
-snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(lepton_symcheck_CPPFLAGS) $(AM_CFLAGS) $(lepton_symcheck_CFLAGS)
-.c.x:
-	CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
-
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
-CLEANFILES = *.log *.ps core FILE *~ $(BUILT_SOURCES)
+CLEANFILES = *.log *.ps core FILE *~
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in

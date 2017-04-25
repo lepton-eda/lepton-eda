@@ -1,8 +1,7 @@
 (define-module (symbol check)
-
-  ; Import C procedures and variables
-  #:use-module (symbol core check)
-
+  #:use-module ((ice-9 rdelim)
+                #:select (read-string)
+                #:prefix rdelim:)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (symbol gettext)
@@ -19,10 +18,9 @@
   #:use-module (symbol check pin-attrib)
   #:use-module (symbol check slot)
   #:use-module (symbol check text)
-  #:use-module (ice-9 regex))
+  #:use-module (ice-9 regex)
 
-(define-public (check-all-symbols)
-  (apply + (map check-symbol (active-pages))))
+  #:export (check-all-symbols))
 
 ;;; Check all pintype attributes for all symbol pins.
 (define-public (check-symbol-pintype page)
@@ -104,6 +102,17 @@
      (check-attribute object))
    (page-contents page)))
 
+(define (usage)
+  (format #t
+          (_ "Usage: ~A [OPTIONS] FILENAME ...
+  -h, --help        Print usage
+  -q, --quiet       Quiet mode
+  -v, --verbose     Verbose mode (cumulative: errors, warnings, info)
+                    Use this to get the actual symbol error messages
+FILENAME ... are the symbols to check.
+")
+          (car (program-arguments)))
+  (primitive-exit 0))
 
 (define-public (check-symbol page)
 
@@ -148,4 +157,27 @@
     (check-symbol-connections page)
 
     ;; now report the info/warnings/errors to the user
-    (primitive-exit (report-blame-statistics `(,page . ,(page-contents page))))))
+    (report-blame-statistics `(,page . ,(page-contents page)))))
+
+;;; Reads file NAME and outputs a page named NAME
+(define (file->page name)
+  (with-input-from-file name
+    (lambda ()
+      (unless (symcheck-option-ref 'quiet)
+        (log! 'message (_ "Loading schematic ~S") name))
+      (string->page name (rdelim:read-string)))))
+
+
+(define (check-all-symbols)
+  (let ((files (symcheck-option-ref '()))
+        (help (symcheck-option-ref 'help)))
+    (if help
+        (usage)
+        (if (null? files)
+            (error (format #f
+                           (_ "No schematic files specified for processing.
+Run `~A --help' for more information.
+")
+                           (car (program-arguments))))
+            (let ((pages (map file->page files)))
+              (primitive-exit (apply + (map check-symbol pages))))))))

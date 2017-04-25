@@ -34,30 +34,21 @@
 #include <liblepton/liblepton.h>
 #include <liblepton/libgedaguile.h>
 
-#include "../include/globals.h"
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
 void
 main_prog(void *closure, int argc, char *argv[])
 {
-  int i;
-  int argv_index;
-  char *cwd;
-
   TOPLEVEL *pr_current;
   SCM check_all_symbols;
   
-  argv_index = parse_commandline(argc, argv);
-  cwd = g_get_current_dir();
-
   libgeda_init();
 
 #if defined(__MINGW32__) && defined(DEBUG)
   fprintf(stderr, "This is the MINGW32 port.\n");
 #endif  
 
-  s_init_check ();
   check_all_symbols = scm_c_public_lookup ("symbol check",
                                            "check-all-symbols");
 
@@ -67,46 +58,6 @@ main_prog(void *closure, int argc, char *argv[])
   edascm_dynwind_toplevel (pr_current);
 
   i_vars_set(pr_current);
-  
-  i = argv_index;
-  while (argv[i] != NULL) {
-
-    gchar *filename;
-    GError *err = NULL;
-
-    if (g_path_is_absolute(argv[i]))
-    {
-      /* Path is already absolute so no need to do any concat of cwd */
-      filename = g_strdup (argv[i]);
-    } else {
-      filename = g_build_filename (cwd, argv[i], NULL);
-    }
-
-    s_page_goto (pr_current,
-                 s_page_new (pr_current, filename));
-
-    if (!f_open (pr_current,
-                 pr_current->page_current,
-                 s_page_get_filename (pr_current->page_current),
-                 &err)) {
-      /* Not being able to load a file is apparently a fatal error */
-      g_warning ("%s\n", err->message);
-      g_error_free (err);
-      exit(2);
-    } else {
-      g_message (_("Loaded file [%1$s]\n"), filename);
-    }
-    i++;
-    g_free (filename);
-  }
-
-  if (argv[argv_index] == NULL) {
-    fprintf(stderr, _("\nERROR! You must specify at least one filename\n\n"));
-    usage(argv[0]);
-  }
-
-  g_free(cwd);
-
 #if DEBUG
   s_page_print_all(pr_current);
 #endif

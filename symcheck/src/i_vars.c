@@ -28,7 +28,6 @@
 
 #include <liblepton/liblepton.h>
 
-#include "../include/globals.h"
 #include "../include/prototype.h"
 
 void i_vars_set(TOPLEVEL * pr_current)
