@@ -3,9 +3,7 @@
 bin_PROGRAMS = lepton-symcheck
 
 # don't forget all *.h files */
-lepton_symcheck_SOURCES = \
-	lepton-symcheck.c \
-	i_vars.c
+lepton_symcheck_SOURCES = lepton-symcheck.c
 
 lepton_symcheck_CPPFLAGS = -I$(top_srcdir)/liblepton/include -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
