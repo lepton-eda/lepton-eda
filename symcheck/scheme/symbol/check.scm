@@ -6,6 +6,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (symbol gettext)
+  #:use-module (symcheck option)
   #:use-module (symbol blame)
   #:use-module (geda page)
   #:use-module (geda log)
@@ -106,8 +107,8 @@
 
 (define-public (check-symbol page)
 
-  (let ((quiet (%check-get-quiet-mode))
-        (verbose (%check-get-verbose-mode)))
+  (let ((quiet (symcheck-option-ref 'quiet))
+        (verbose (symcheck-option-ref-length 'verbose)))
 
     (when (not quiet)
       (log! 'message (_ "Checking: ~A\n") (page-filename page)))
