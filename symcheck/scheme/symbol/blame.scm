@@ -5,6 +5,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 match)
   #:use-module (symbol gettext)
+  #:use-module (symcheck option)
   #:use-module (geda log)
 
   #:export (object-blames
@@ -21,8 +22,8 @@ OBJECT. SEVERITY may be one of 'info, 'warning, or 'error."
     (set! (object-blames object)
           `((,severity . ,message) . ,(if blames blames '())))))
 
-(define verbose (%check-get-verbose-mode))
-(define quiet (%check-get-quiet-mode))
+(define verbose (symcheck-option-ref-length 'verbose))
+(define quiet (symcheck-option-ref 'quiet))
 
 (define %check-log-destination 'stdout)
 
