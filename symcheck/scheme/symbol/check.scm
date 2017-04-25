@@ -11,6 +11,7 @@
   #:use-module (geda log)
   #:use-module (geda object)
   #:use-module (geda attrib)
+  #:use-module (geda repl)
   #:use-module (symbol check alignment)
   #:use-module (symbol check attrib)
   #:use-module (symbol check connection)
@@ -170,7 +171,8 @@ FILENAME ... are the symbols to check.
 
 (define (check-all-symbols)
   (let ((files (symcheck-option-ref '()))
-        (help (symcheck-option-ref 'help)))
+        (help (symcheck-option-ref 'help))
+        (interactive (symcheck-option-ref 'interactive)))
     (if help
         (usage)
         (if (null? files)
@@ -180,4 +182,6 @@ Run `~A --help' for more information.
 ")
                            (car (program-arguments))))
             (let ((pages (map file->page files)))
-              (primitive-exit (apply + (map check-symbol pages))))))))
+              (if interactive
+                  (lepton-repl)
+                  (primitive-exit (apply + (map check-symbol pages)))))))))
