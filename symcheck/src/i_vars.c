@@ -30,7 +30,6 @@
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
-#include "../include/papersizes.h"
 
 void i_vars_set(TOPLEVEL * pr_current)
 { 
