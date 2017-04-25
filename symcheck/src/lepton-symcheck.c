@@ -57,7 +57,6 @@ main_prog(void *closure, int argc, char *argv[])
   pr_current = s_toplevel_new ();
   edascm_dynwind_toplevel (pr_current);
 
-  i_vars_set(pr_current);
 #if DEBUG
   s_page_print_all(pr_current);
 #endif
