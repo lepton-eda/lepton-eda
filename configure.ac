@@ -237,7 +237,6 @@ AC_CONFIG_FILES([Makefile
 
                  symcheck/docs/Makefile
                  symcheck/po/Makefile.in
-                 symcheck/src/Makefile
                  symcheck/tests/Makefile
                  symcheck/Makefile
                  symcheck/scheme/Makefile

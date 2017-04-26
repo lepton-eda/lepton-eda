@@ -1,5 +1,25 @@
 ## -*- Makefile -*-
 
+bin_SCRIPTS = lepton-symcheck
+EXTRA_DIST = lepton-symcheck.in
+
+do_subst = sed -e 's,[@]libdir[@],$(libdir),g'
+
+lepton-symcheck: lepton-symcheck.in Makefile
+	$(do_subst) < $< > $@
+	chmod +x $@
+
+if INSTALL_COMPAT_SYMLINKS
+NAME = lepton-symcheck$(EXEEXT)
+COMPAT_NAME = gsymcheck$(EXEEXT)
+install-exec-hook:
+	cd $(DESTDIR)$(bindir) && \
+	if [ -h $(COMPAT_NAME) ]; then rm -f $(COMPAT_NAME); fi && \
+	ln -s $(NAME) $(COMPAT_NAME)
+uninstall-hook:
+	rm -f $(DESTDIR)$(bindir)/$(COMPAT_NAME)
+endif INSTALL_COMPAT_SYMLINKS
+
 scmdatadir = $(GEDADATADIR)/scheme
 nobase_dist_scmdata_DATA = \
 	symbol/blame.scm \
@@ -16,6 +36,6 @@ nobase_dist_scmdata_DATA = \
 	symcheck/option.scm
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~
+CLEANFILES = *.log *~ $(bin_SCRIPTS)
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log *~ Makefile.in
