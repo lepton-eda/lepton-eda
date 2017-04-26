@@ -30,6 +30,19 @@
 SCM scheme_toplevel_fluid = SCM_UNDEFINED;
 
 /*!
+ * \brief Creates new toplevel.
+ * \par Function Description
+ * Creates and returns new toplevel variable.
+ */
+SCM_DEFINE (edascm_make_toplevel, "%make-toplevel", 0, 0, 0,
+            (),
+            "Make new TOPLEVEL.")
+{
+  return edascm_from_toplevel (s_toplevel_new ());
+}
+
+
+/*!
  * \brief Set the #TOPLEVEL fluid in the current dynamic context.
  * \ingroup guile_c_iface
  * \par Function Description
@@ -119,7 +132,10 @@ init_module_geda_core_toplevel (void *unused)
   #include "scheme_toplevel.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_edascm_with_toplevel, s_edascm_current_toplevel, NULL);
+  scm_c_export (s_edascm_make_toplevel,
+                s_edascm_with_toplevel,
+                s_edascm_current_toplevel,
+                NULL);
 }
 
 /*!

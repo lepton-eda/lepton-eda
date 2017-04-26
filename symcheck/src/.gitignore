@@ -1,9 +1,3 @@
 Makefile
 Makefile.in
-.deps
-.libs
-lepton-symcheck
-lepton-symcheck.exe
-*.o
-*.x
 *~

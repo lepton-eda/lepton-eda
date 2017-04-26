@@ -1,6 +1,5 @@
 # List of translatable files
 
-symcheck/src/lepton-symcheck.c
 symcheck/scheme/symbol/blame.scm
 symcheck/scheme/symbol/check.scm
 symcheck/scheme/symbol/check/alignment.scm

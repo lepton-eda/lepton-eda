@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+exec guile-2.0 -s "$0" "$@"
+!#
+(define liblepton
+  (dynamic-link (or (getenv "LIBLEPTON") "@libdir@/liblepton")))
+(dynamic-call "libgeda_init" liblepton)
+
+(use-modules (geda core toplevel)
+             (symbol check))
+
+(%with-toplevel (%make-toplevel) check-all-symbols)
