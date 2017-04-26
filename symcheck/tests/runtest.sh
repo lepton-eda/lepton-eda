@@ -2,7 +2,7 @@
 
 INPUT=$1
 rundir=${abs_builddir}/run
-SYMCHECK=${abs_top_builddir}/symcheck/src/lepton-symcheck
+SYMCHECK=${abs_top_builddir}/symcheck/scheme/lepton-symcheck
 # Hack to enable `make distcheck'
 GEDADATA="${abs_top_srcdir}/symcheck"
 export GEDADATA

@@ -1,5 +1,5 @@
 
-SUBDIRS = po src docs tests scheme
+SUBDIRS = po docs tests scheme
 
 EXTRA_DIST = ChangeLog ChangeLog-1.0
 
