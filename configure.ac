@@ -236,8 +236,6 @@ AC_CONFIG_FILES([Makefile
                  gattrib/data/Makefile
 
                  symcheck/docs/Makefile
-                 symcheck/include/Makefile
-                 symcheck/lib/Makefile
                  symcheck/po/Makefile.in
                  symcheck/src/Makefile
                  symcheck/tests/Makefile
