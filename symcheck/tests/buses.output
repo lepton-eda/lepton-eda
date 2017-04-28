@@ -1,2 +1,2 @@
-ERROR: Found a bus inside a symbol
+ERROR: Object forbidden inside symbols: bus
 1 ERROR found

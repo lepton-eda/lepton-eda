@@ -1,2 +1,2 @@
-ERROR: Found a net inside a symbol
+ERROR: Object forbidden inside symbols: net
 1 ERROR found

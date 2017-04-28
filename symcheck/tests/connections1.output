@@ -1,4 +1,4 @@
-ERROR: Found a connection inside a symbol
-ERROR: Found a net inside a symbol
-ERROR: Found a connection inside a symbol
+ERROR: Object with forbidden connections: pin
+ERROR: Object with forbidden connections: net
+ERROR: Object forbidden inside symbols: net
 3 ERRORS found
