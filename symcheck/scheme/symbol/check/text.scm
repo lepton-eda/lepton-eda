@@ -8,7 +8,8 @@
   #:use-module (symbol blame)
 
   #:export (check-text-visibility
-            check-text-string))
+            check-text-string
+            check-text))
 
 (define (check-text-visibility object)
   "Checks if text OBJECT being non-attribute has inappropriate
@@ -63,6 +64,14 @@ visibility mode."
                             ((unbalanced-escape)
                              (format #f (_ "Found text with a '\\' in it: consider to escape it with '\\\\' [~A]\n") s)))))
           (check-text-string-errors s)))))
+
+
+(define (check-text object)
+  "Checks text OBJECT."
+  (check-text-string object)
+  (unless (attribute? object)
+    (check-text-visibility object)))
+
 
 ;;; Incorrect UTF-8 encoded strings are blocked in
 ;;; o_read_buffer(), so there is no need to check them here (at
