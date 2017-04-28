@@ -1,0 +1,6 @@
+Warning: Missing footprint= attribute
+Warning: Missing refdes= attribute
+ERROR: Missing device= attribute
+ERROR: Zero radius circle at (300 . 300)
+2 warnings found
+2 ERRORS found
