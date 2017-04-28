@@ -19,6 +19,7 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
 	     zero_arc.sym \
 	     zero_boxes.sym \
 	     zero_circle.sym \
+	     zero_line.sym \
 	     zero_picture.sym \
 	     runtest.sh \
 	     buses.output connections1.output connections2.output \
@@ -44,6 +45,7 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
 	     zero_arc.output \
 	     zero_boxes.output \
 	     zero_circle.output \
+	     zero_line.output \
 	     zero_picture.output \
 	     pintypes.output misplaced_attributes.output text_errors.output
 

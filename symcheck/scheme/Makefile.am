@@ -31,6 +31,7 @@ nobase_dist_scmdata_DATA = \
 	symbol/check/circle.scm \
 	symbol/check/connection.scm \
 	symbol/check/duplicate.scm \
+	symbol/check/line.scm \
 	symbol/check/obsolete.scm \
 	symbol/check/picture.scm \
 	symbol/check/pin-attrib.scm \
