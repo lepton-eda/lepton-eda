@@ -4,6 +4,7 @@
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
   #:use-module (symbol check alignment)
+  #:use-module (symbol check box)
   #:use-module (symbol check text)
   #:use-module (symbol check connection)
 
@@ -34,7 +35,7 @@ OBJECT if it needs other checks. Otherwise returns #f."
   ;; #f means no other check is needed.
   (case (object-type object)
     ((arc) #f)
-    ((box) #f)
+    ((box) (check-box object) #f)
     ((net bus) (check-connections object) (check-net/bus object) #f)
     ((circle) #f)
     ((complex) #f)

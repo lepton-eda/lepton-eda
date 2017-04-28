@@ -26,6 +26,7 @@ nobase_dist_scmdata_DATA = \
 	symbol/check.scm \
 	symbol/check/alignment.scm \
 	symbol/check/attrib.scm \
+	symbol/check/box.scm \
 	symbol/check/connection.scm \
 	symbol/check/duplicate.scm \
 	symbol/check/obsolete.scm \
