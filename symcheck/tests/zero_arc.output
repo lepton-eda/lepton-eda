@@ -1,0 +1,8 @@
+Warning: Missing footprint= attribute
+Warning: Missing refdes= attribute
+ERROR: Missing device= attribute
+ERROR: Zero radius arc at (0 . 0)
+ERROR: Zero angle arc at (500 . 0)
+ERROR: Zero angle arc at (1000 . 0)
+2 warnings found
+4 ERRORS found

@@ -25,6 +25,7 @@ nobase_dist_scmdata_DATA = \
 	symbol/blame.scm \
 	symbol/check.scm \
 	symbol/check/alignment.scm \
+	symbol/check/arc.scm \
 	symbol/check/attrib.scm \
 	symbol/check/box.scm \
 	symbol/check/circle.scm \

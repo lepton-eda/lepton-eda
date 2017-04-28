@@ -3,6 +3,7 @@
 symcheck/scheme/symbol/blame.scm
 symcheck/scheme/symbol/check.scm
 symcheck/scheme/symbol/check/alignment.scm
+symcheck/scheme/symbol/check/arc.scm
 symcheck/scheme/symbol/check/attrib.scm
 symcheck/scheme/symbol/check/box.scm
 symcheck/scheme/symbol/check/circle.scm

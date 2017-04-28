@@ -16,6 +16,7 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
              zero_pinseq.sym zero_slotnum.sym zero_slots.sym \
 	     duplicate_net.sym pin_offgrid.sym pintypes.sym \
 	     misplaced_attributes.sym text_errors.sym \
+	     zero_arc.sym \
 	     zero_boxes.sym \
 	     zero_circle.sym \
 	     zero_picture.sym \
@@ -40,6 +41,7 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
 	     oldslot.output old_symbol.output typeinside.output \
 	     urefinside.output zero_pinnumber.output zero_pinseq.output \
 	     zero_slotnum.output zero_slots.output pin_offgrid.output \
+	     zero_arc.output \
 	     zero_boxes.output \
 	     zero_circle.output \
 	     zero_picture.output \
