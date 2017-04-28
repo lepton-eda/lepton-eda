@@ -7,6 +7,7 @@ symcheck/scheme/symbol/check/attrib.scm
 symcheck/scheme/symbol/check/connection.scm
 symcheck/scheme/symbol/check/obsolete.scm
 symcheck/scheme/symbol/check/pin-attrib.scm
+symcheck/scheme/symbol/check/primitive.scm
 symcheck/scheme/symbol/check/slot.scm
 symcheck/scheme/symbol/check/text.scm
 symcheck/scheme/symcheck/option.scm

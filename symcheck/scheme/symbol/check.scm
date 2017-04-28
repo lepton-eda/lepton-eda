@@ -14,11 +14,10 @@
   #:use-module (geda repl)
   #:use-module (symbol check alignment)
   #:use-module (symbol check attrib)
-  #:use-module (symbol check connection)
   #:use-module (symbol check obsolete)
   #:use-module (symbol check pin-attrib)
+  #:use-module (symbol check primitive)
   #:use-module (symbol check slot)
-  #:use-module (symbol check text)
   #:use-module (ice-9 regex)
 
   #:export (check-all-symbols))
@@ -37,14 +36,6 @@
 
   (check-required-attribs page "refdes" objects)
   (check-required-attribs page "footprint" objects))
-
-;;; Check symbol for connections completely disallowed within it.
-(define (check-symbol-connections objects)
-  (for-each check-connections objects))
-
-;;; Check symbol for nets or buses completely disallowed within it.
-(define (check-symbol-nets-buses objects)
-  (for-each check-net/bus objects))
 
 ;;; Check for old pin#=# and slot#=# attributes.
 (define (check-symbol-obsolete-attribs objects)
@@ -90,17 +81,9 @@
 (define (check-symbol-is-graphical? objects)
   (not (null? (filter graphical-attrib? objects))))
 
-(define (check-symbol-text objects)
-  (for-each (lambda (object) (check-text-string object))
-            objects))
-
 ;;; Check symbol attributes
 (define (check-symbol-attribs objects)
-  (for-each
-   (lambda (object)
-     (check-text-visibility object)
-     (check-attribute object))
-   objects))
+  (for-each check-attribute objects))
 
 (define (usage)
   (format #t
@@ -123,11 +106,10 @@ FILENAME ... are the symbols to check.
     (when (not quiet)
       (log! 'message (_ "Checking: ~A\n") (page-filename page)))
 
+    (for-each check-primitive objects)
+
     ; overall symbol structure test
     (check-symbol-attribs objects)
-
-    ; test all text elements
-    (check-symbol-text objects)
 
     ; check for device attribute
     (check-symbol-device (check-symbol-is-graphical? objects)
@@ -154,12 +136,6 @@ FILENAME ... are the symbols to check.
 
     ; check for old pin#=# and slot#=# attributes
     (check-symbol-obsolete-attribs objects)
-
-    ; check  nets or buses within the symbol (completely disallowed)
-    (check-symbol-nets-buses objects)
-
-    ; check for connections with in a symbol (completely disallowed)
-    (check-symbol-connections objects)
 
     ;; now report the info/warnings/errors to the user
     (report-blame-statistics `(,page . ,objects))))
