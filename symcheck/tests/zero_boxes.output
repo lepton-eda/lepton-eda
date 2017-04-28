@@ -1,0 +1,8 @@
+Warning: Missing footprint= attribute
+Warning: Missing refdes= attribute
+ERROR: Missing device= attribute
+ERROR: Zero sized box at (0 . 0)
+ERROR: Zero sized box at (0 . 0)
+ERROR: Zero sized box at (0 . 100)
+2 warnings found
+4 ERRORS found
