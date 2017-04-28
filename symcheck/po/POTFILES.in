@@ -8,6 +8,7 @@ symcheck/scheme/symbol/check/attrib.scm
 symcheck/scheme/symbol/check/box.scm
 symcheck/scheme/symbol/check/circle.scm
 symcheck/scheme/symbol/check/connection.scm
+symcheck/scheme/symbol/check/line.scm
 symcheck/scheme/symbol/check/obsolete.scm
 symcheck/scheme/symbol/check/picture.scm
 symcheck/scheme/symbol/check/pin-attrib.scm
