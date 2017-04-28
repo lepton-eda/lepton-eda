@@ -1,5 +1,7 @@
 
-EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
+EXTRA_DIST = buses.sym \
+	     component.sym \
+	     connections1.sym connections2.sym connections3.sym \
 	     correct.sym duplicate_pinnumber.sym duplicate_pinseq.sym \
 	     graphical_correct.sym graphical_incorrect.sym \
 	     invalid_slotdef1.sym invalid_slotdef2.sym invalid_slotdef3.sym \
@@ -23,7 +25,9 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
 	     zero_path.sym \
 	     zero_picture.sym \
 	     runtest.sh \
-	     buses.output connections1.output connections2.output \
+	     buses.output \
+	     component.output \
+	     connections1.output connections2.output \
 	     connections3.output correct.output duplicate_net.output \
 	     duplicate_pinnumber.output duplicate_pinseq.output \
 	     graphical_correct.output graphical_incorrect.output \

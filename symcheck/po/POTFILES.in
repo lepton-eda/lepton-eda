@@ -6,9 +6,13 @@ symcheck/scheme/symbol/check/alignment.scm
 symcheck/scheme/symbol/check/arc.scm
 symcheck/scheme/symbol/check/attrib.scm
 symcheck/scheme/symbol/check/box.scm
+symcheck/scheme/symbol/check/bus.scm
 symcheck/scheme/symbol/check/circle.scm
+symcheck/scheme/symbol/check/component.scm
 symcheck/scheme/symbol/check/connection.scm
+symcheck/scheme/symbol/check/forbidden.scm
 symcheck/scheme/symbol/check/line.scm
+symcheck/scheme/symbol/check/net.scm
 symcheck/scheme/symbol/check/obsolete.scm
 symcheck/scheme/symbol/check/path.scm
 symcheck/scheme/symbol/check/picture.scm

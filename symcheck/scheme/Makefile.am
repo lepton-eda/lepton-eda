@@ -28,10 +28,14 @@ nobase_dist_scmdata_DATA = \
 	symbol/check/arc.scm \
 	symbol/check/attrib.scm \
 	symbol/check/box.scm \
+	symbol/check/bus.scm \
 	symbol/check/circle.scm \
+	symbol/check/component.scm \
 	symbol/check/connection.scm \
 	symbol/check/duplicate.scm \
+	symbol/check/forbidden.scm \
 	symbol/check/line.scm \
+	symbol/check/net.scm \
 	symbol/check/obsolete.scm \
 	symbol/check/path.scm \
 	symbol/check/picture.scm \
