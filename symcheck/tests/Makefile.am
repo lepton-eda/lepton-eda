@@ -17,6 +17,7 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
 	     duplicate_net.sym pin_offgrid.sym pintypes.sym \
 	     misplaced_attributes.sym text_errors.sym \
 	     zero_boxes.sym \
+	     zero_picture.sym \
 	     runtest.sh \
 	     buses.output connections1.output connections2.output \
 	     connections3.output correct.output duplicate_net.output \
@@ -39,6 +40,7 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
 	     urefinside.output zero_pinnumber.output zero_pinseq.output \
 	     zero_slotnum.output zero_slots.output pin_offgrid.output \
 	     zero_boxes.output \
+	     zero_picture.output \
 	     pintypes.output misplaced_attributes.output text_errors.output
 
 check_SCRIPTS = tests

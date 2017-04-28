@@ -5,6 +5,7 @@
   #:use-module (symbol blame)
   #:use-module (symbol check alignment)
   #:use-module (symbol check box)
+  #:use-module (symbol check picture)
   #:use-module (symbol check text)
   #:use-module (symbol check connection)
 
@@ -41,7 +42,7 @@ OBJECT if it needs other checks. Otherwise returns #f."
     ((complex) #f)
     ((line) #f)
     ((path) #f)
-    ((picture) #f)
+    ((picture) (check-picture object) #f)
     ((pin)
      (check-connections object)
      (check-pin-alignment object)
