@@ -822,9 +822,9 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
     if (g_ascii_strcasecmp (s_page_get_filename (page), filename) != 0) {
       s_page_set_filename (page, filename);
 
-      log_msg = _("Saved as [%1$s]\n");
+      log_msg = _("Saved as [%1$s]");
     } else {
-      log_msg = _("Saved [%1$s]\n");
+      log_msg = _("Saved [%1$s]");
     }
     state_msg = _("Saved");
 
