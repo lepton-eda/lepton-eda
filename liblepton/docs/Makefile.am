@@ -1,7 +1,7 @@
 SUBDIRS = images
 
 EXTRA_DIST = 		libgeda-main.txt what-is-geda.html \
-			what-is-libgeda.html logo.png libgeda.dox
+			what-is-libgeda.html logo.png liblepton.dox
 
 SUFFIXES = 		.html .tex .pdf
 
