@@ -1,13 +1,13 @@
 EXTRA_DIST = $(html_man_files) gschem-main.txt what-is-geda.html \
-	what-is-gschem.html logo.png gschem.dox lepton-schematic.1.in
+	what-is-gschem.html logo.png schematic.dox lepton-schematic.1.in
 
 all:
 	@echo 'Type: make doxygen to create doxygen documentation for gschem'
 
-doxygen: gschem.dox
+doxygen: schematic.dox
 	@echo 'Creating doxygen documentation for gschem...'
 if ENABLE_DOXYGEN
-	$(DOXYGEN) gschem.dox
+	$(DOXYGEN) schematic.dox
 	-cd latex && $(MAKE)
 	-cd ..
 else
