@@ -1,5 +1,5 @@
 EXTRA_DIST = $(html_man_files) schematic-main.txt what-is-geda.html \
-	what-is-gschem.html logo.png schematic.dox lepton-schematic.1.in
+	what-is-lepton-schematic.html logo.png schematic.dox lepton-schematic.1.in
 
 all:
 	@echo 'Type: make doxygen to create doxygen documentation for gschem'
