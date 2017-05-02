@@ -3,5 +3,5 @@
 \section geda-intro Lepton EDA Introduction
     \htmlinclude what-is-geda.html
 \section gschem-intro gSchem Introduction
-    \htmlinclude what-is-gschem.html
+    \htmlinclude what-is-lepton-schematic.html
 */
