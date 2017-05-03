@@ -1,11 +1,11 @@
 (define-module (symbol check attrib)
-  #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (geda page)
   #:use-module (geda object)
   #:use-module (geda attrib)
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
+  #:use-module (symbol check duplicate)
 
   #:export (graphical-attrib?
             check-attribute
@@ -128,7 +128,8 @@ device= value which should be 'none' for graphical symbols."
 
 
 ;;; Sorts attrib list LS and transforms it into a list where
-;;; duplicated attributes are gathered together into sublists.
+;;; attributes with duplicated values are gathered together into
+;;; sublists.
 (define (attrib-duplicates ls)
   (define (attrib-value<? a b)
     (string<? (attrib-value a) (attrib-value b)))
@@ -136,20 +137,7 @@ device= value which should be 'none' for graphical symbols."
   (define (attrib-value=? a b)
     (string=? (attrib-value a) (attrib-value b)))
 
-  (fold-right
-   (lambda (elem ret)
-     (match ret
-       (((x . xrest) . rest)
-        (if (attrib-value=? elem x)
-            `((,elem . (,x . ,xrest)) . ,rest)
-            `(,elem . ,ret)))
-       ((x . rest)
-        (if (attrib-value=? elem x)
-            `((,elem ,x) . ,rest)
-            `(,elem . ,ret)))
-       (_ `(,elem . ,ret))))
-   '()
-   (sort ls attrib-value<?)))
+  (list->duplicate-list ls attrib-value<? attrib-value=?))
 
 
 (define (check-attrib-duplicates ls)
