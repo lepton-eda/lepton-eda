@@ -1,5 +1,5 @@
 (define-module (symbol check text)
-  ;; See a note about UTF below.
+  ;; See a note about UTF-8 below.
   ;; #:use-module (rnrs bytevectors)
   ;; #:use-module (rnrs io ports)
   #:use-module (geda object)
