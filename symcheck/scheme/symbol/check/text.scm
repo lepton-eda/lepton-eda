@@ -20,7 +20,7 @@ visibility mode."
        (blame-object object
                      'warning
                      (format #f
-                             (_ "Found a simple text object with only SHOW_NAME or SHOW_VALUE set [~A]\n")
+                             (_ "Simple text object with only SHOW_NAME or SHOW_VALUE set: ~A")
                              (text-string object)))))
 
 
@@ -59,11 +59,11 @@ visibility mode."
                           'warning
                           (case error-type
                             ((trailing-backslash)
-                             (format #f (_ "Found text with a trailing '\\': consider to escape it with '\\\\' [~A]\n") s))
+                             (format #f (_ "Text with a trailing '\\', consider to escape it with '\\\\': ~A") s))
                             ((unbalanced-overbar)
-                             (format #f (_ "Found text with unbalanced overbar markers '\\_' in it' [~A]\n") s))
+                             (format #f (_ "Text with unbalanced overbar markers '\\_' in it': ~A") s))
                             ((unbalanced-escape)
-                             (format #f (_ "Found text with a '\\' in it: consider to escape it with '\\\\' [~A]\n") s)))))
+                             (format #f (_ "Text with a '\\' in it, consider to escape it with '\\\\': ~A") s)))))
           (check-text-string-errors s)))))
 
 
