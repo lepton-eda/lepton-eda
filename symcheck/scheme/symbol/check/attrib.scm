@@ -57,7 +57,7 @@ device= value which should be 'none' for graphical symbols."
                                 (format #f (_ "Conflicting attribute: ~A.\n") 'device)))
                 device-list)))
 
-(define (check-required-attribs page attr-name)
+(define (check-required-attribs page attr-name objects)
   "Checks required toplevel attributes ATTR-NAME on PAGE."
   (define (filter-attrib object)
     (and (attribute? object)
@@ -67,7 +67,7 @@ device= value which should be 'none' for graphical symbols."
                        (format #f (_ "Found ~A=~A\n") attr-name (text-string object)))
          object))
 
-  (let ((attrib-list (filter filter-attrib (page-contents page))))
+  (let ((attrib-list (filter filter-attrib objects)))
     (if (null? attrib-list)
         (blame-object page
                       'warning
