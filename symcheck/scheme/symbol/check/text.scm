@@ -49,7 +49,8 @@ visibility mode."
 
 
 (define (check-text-string object)
-  "Checks string of text OBJECT."
+  "Checks text OBJECT strings:
+  * Checks if they have escape or overbar sequence errors."
   (and (text? object)
        (let ((s (text-string object)))
          (for-each
