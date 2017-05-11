@@ -2,6 +2,7 @@
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
                 #:prefix rdelim:)
+  #:use-module (ice-9 receive)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (symbol gettext)
@@ -31,10 +32,7 @@
     (lambda (object)
       (check-pin-required-attribs object "pinlabel")
       (check-pin-required-attribs object "pintype"))
-    objects)
-
-  (check-required-attribs page "refdes" objects)
-  (check-required-attribs page "footprint" objects))
+    objects))
 
 ;;; Check for old pin#=# and slot#=# attributes.
 (define (check-symbol-obsolete-attribs objects)
@@ -73,10 +71,6 @@
 (define (check-symbol-is-graphical? objects)
   (not (null? (filter graphical-attrib? objects))))
 
-;;; Check symbol attributes
-(define (check-symbol-attribs objects)
-  (for-each check-attribute objects))
-
 (define (usage)
   (format #t
           (_ "Usage: ~A [OPTIONS] FILENAME ...
@@ -98,15 +92,22 @@ FILENAME ... are the symbols to check.
     (when (not quiet)
       (log! 'message (_ "Checking: ~A\n") (page-filename page)))
 
-    (for-each check-primitive objects)
+    (let ((rest (filter check-primitive objects)))
+      (receive (pins attribs)
+          (partition pin? rest)
 
-    ; overall symbol structure test
-    (check-symbol-attribs objects)
+        ;; Check symbol attributes; common checks.
+        (for-each check-attribute attribs)
 
-    ; check for device attribute
-    (check-symbol-device (check-symbol-is-graphical? objects)
-                         page
-                         objects)
+        (receive (floating-attribs attached-attribs)
+            (partition floating-attrib? attribs)
+
+          (check-symbol-device (check-symbol-is-graphical? floating-attribs)
+                               page
+                               floating-attribs)
+          (check-required-attribs page "refdes" objects)
+          (check-required-attribs page "footprint" objects))))
+
 
     ; check for missing attributes
     (check-symbol-required-attributes page objects)
