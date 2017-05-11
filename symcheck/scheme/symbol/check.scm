@@ -12,7 +12,6 @@
   #:use-module (geda object)
   #:use-module (geda attrib)
   #:use-module (geda repl)
-  #:use-module (symbol check alignment)
   #:use-module (symbol check attrib)
   #:use-module (symbol check obsolete)
   #:use-module (symbol check pin-attrib)
@@ -44,13 +43,6 @@
 ;;; Check symbol slotting attributes.
 (define (check-symbol-slots numpins page objects)
   (check-slots page numpins objects))
-
-
-;;; Check for whether all symbol pins are on grid
-(define (check-symbol-pins-on-grid objects)
-  (for-each check-pin-alignment
-            (filter pin? objects)))
-
 
 ;;; Check symbol pinnumber attribute
 (define (check-symbol-pinnumber page objects)
@@ -124,9 +116,6 @@ FILENAME ... are the symbols to check.
 
     ; check for pinseq attribute (and multiples) on all pins
     (check-symbol-pinseq objects)
-
-    ; check for whether all pins are on grid
-    (check-symbol-pins-on-grid objects)
 
     ; check for pinnumber attribute (and multiples) on all pins
     ; check for slotdef attribute on all pins (if numslots exists)
