@@ -1,11 +1,11 @@
-Warning: Missing footprint= attribute
-Warning: Missing refdes= attribute
-ERROR: Missing device= attribute
+Warning: Missing required attribute: device
+Warning: Missing required attribute: footprint
+Warning: Missing required attribute: refdes
 ERROR: Zero sized picture at (0 . 0)
 ERROR: Picture file "x.png" does not exist or is not readable.
 ERROR: Zero sized picture at (0 . 100)
 ERROR: Picture file "y.png" does not exist or is not readable.
 ERROR: Zero sized picture at (0 . 0)
 ERROR: Picture file "z.png" does not exist or is not readable.
-2 warnings found
-7 ERRORS found
+3 warnings found
+6 ERRORS found

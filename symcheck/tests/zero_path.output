@@ -1,9 +1,9 @@
-Warning: Missing footprint= attribute
-Warning: Missing refdes= attribute
-ERROR: Missing device= attribute
+Warning: Missing required attribute: device
+Warning: Missing required attribute: footprint
+Warning: Missing required attribute: refdes
 ERROR: Zero length path element: (curveto (0 . 200) (0 . 200) (0 . 200))
 ERROR: Zero length path element: (lineto (0 . 200))
 ERROR: Zero length path element: (curveto (0 . 200) (0 . 200) (0 . 200))
 ERROR: Zero length path element: (lineto (0 . 100))
-2 warnings found
-5 ERRORS found
+3 warnings found
+4 ERRORS found
