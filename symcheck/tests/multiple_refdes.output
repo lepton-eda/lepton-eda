@@ -1,2 +1,3 @@
-ERROR: Multiple refdes= attributes found
-1 ERROR found
+ERROR: Duplicate floating attribute: refdes
+ERROR: Duplicate floating attribute: refdes
+2 ERRORS found
