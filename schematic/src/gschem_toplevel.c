@@ -167,10 +167,20 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->toolbar_net    = NULL;
   w_current->toolbar_bus    = NULL;
 
-  w_current->bottom_notebook = NULL;
 
+  /* docks: */
+  w_current->bottom_notebook = NULL;
+  w_current->right_notebook  = NULL;
+
+  /* bottom dock: widgets: */
   w_current->find_text_state = NULL;
   w_current->log_widget      = NULL;
+
+  /* right dock: widgets: */
+  w_current->object_properties = NULL;
+  w_current->text_properties   = NULL;
+  w_current->options_widget    = NULL;
+
 
   w_current->keyaccel_string = NULL;
   w_current->keyaccel_string_source_id = FALSE;
