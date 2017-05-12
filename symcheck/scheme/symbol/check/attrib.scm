@@ -16,23 +16,23 @@
             check-attrib-duplicates))
 
 (define (floating-attrib? object)
-  "Returns #t if attribute OBJECT is floating."
-  (not (attrib-attachment object)))
+  "Returns #t if OBJECT is attribute and is floating, otherwise
+returns #f."
+  (and (attribute? object)
+       (not (attrib-attachment object))))
 
 (define (filter-floating-attribs name object-list)
   "Filters OBJECT-LIST to contain only attributes named NAME which
 must be a symbol."
   (define (floating-attrib-with-name object)
-    (and (attribute? object)
-         (floating-attrib? object)
+    (and (floating-attrib? object)
          (eq? (string->symbol (attrib-name object)) name)))
 
   (filter floating-attrib-with-name object-list))
 
 (define (graphical-attrib? object)
   "Checks if object is attribute 'graphical=1'."
-  (and (attribute? object)
-       (not (attrib-attachment object)) ; floating
+  (and (floating-attrib? object)
        (string=? (attrib-name object) "graphical")
        (string=? (attrib-value object) "1")))
 
@@ -109,7 +109,7 @@ device= value which should be 'none' for graphical symbols."
 
        ;; Valid pin attributes.
        ((pinlabel pintype pinseq pinnumber)
-        (if (or (not (attrib-attachment object))
+        (if (or (floating-attrib? object)
                 (not (pin? (attrib-attachment object))))
             (blame-object object
                           'error
@@ -124,13 +124,13 @@ device= value which should be 'none' for graphical symbols."
                 documentation refdes slot net
                 value symversion dist-license use-license)
         ;; Check if they are floating (not attached to anything).
-        (if (attrib-attachment object)
-            (blame-object object
-                          'error
-                          (format #f
-                                  (_ "Found wrongly attached attribute: [~A=~A]\n")
-                                  aname
-                                  avalue))))
+        (unless (floating-attrib? object)
+          (blame-object object
+                        'error
+                        (format #f
+                                (_ "Found wrongly attached attribute: [~A=~A]\n")
+                                aname
+                                avalue))))
 
        ;; All other attributes are unknown.
        (else (blame-object object
