@@ -63,20 +63,17 @@
 ;;; a special check required by some netlister backends.
 (define (check-symbol-device is-graphical page objects)
   (let ((device-list (filter-floating-attribs 'device objects)))
-    (if (null? device-list)
-        (blame-object page
-                      'error
-                      (format #f (_ "Missing ~A= attribute") 'device))
-        (when is-graphical
-          ;; Check for "device=none" for graphical symbols.
-          (let ((device (car device-list)))
-            (if (string=? (attrib-value device) "none")
-                (blame-object device
-                              'info
-                              (format #f (_ "Found graphical symbol, device=none")))
-                (blame-object device
-                              'warning
-                              (format #f (_"Found graphical symbol, device= should be set to none")))))))))
+    (unless (null? device-list)
+      (when is-graphical
+        ;; Check for "device=none" for graphical symbols.
+        (let ((device (car device-list)))
+          (if (string=? (attrib-value device) "none")
+              (blame-object device
+                            'info
+                            (format #f (_ "Found graphical symbol, device=none")))
+              (blame-object device
+                            'warning
+                            (format #f (_"Found graphical symbol, device= should be set to none")))))))))
 
 
 ;;; Check if symbol is graphical.
@@ -117,10 +114,8 @@ FILENAME ... are the symbols to check.
           (check-symbol-device (check-symbol-is-graphical? floating-attribs)
                                page
                                floating-attribs)
-          (check-required-attribs page "refdes" objects)
-          (check-required-attribs page "footprint" objects)
           ;; Create preliminary symbol structure.
-          (attribs->symbol-attribs floating-attribs))))
+          (attribs->symbol-attribs page floating-attribs))))
 
 
     ; check for missing attributes

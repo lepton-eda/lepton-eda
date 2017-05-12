@@ -1,6 +1,6 @@
-Warning: Missing footprint= attribute
-Warning: Missing refdes= attribute
-ERROR: Missing device= attribute
+Warning: Missing required attribute: device
+Warning: Missing required attribute: footprint
+Warning: Missing required attribute: refdes
 Warning: Text with unbalanced overbar markers '\_' in it': pinlabel=\_Reset
 Warning: Text with a '\' in it, consider to escape it with '\\': pinlabel=a\b
 Warning: Text with a trailing '\', consider to escape it with '\\': pinlabel=ab\c\d\
@@ -11,5 +11,5 @@ Warning: Found unknown value_invisible= attribute: [value_invisible=value_invisi
 Warning: Found unknown name_invisible= attribute: [name_invisible=name_invisible]
 Warning: Simple text object with only SHOW_NAME or SHOW_VALUE set: text with value_invisible
 Warning: Simple text object with only SHOW_NAME or SHOW_VALUE set: text with name_invisible
-12 warnings found
-1 ERROR found
+13 warnings found
+No errors found

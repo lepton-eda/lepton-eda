@@ -1,2 +1,3 @@
-ERROR: Missing device= attribute
-1 ERROR found
+Warning: Missing required attribute: device
+1 warning found
+No errors found

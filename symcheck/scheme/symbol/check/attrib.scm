@@ -12,9 +12,10 @@
             filter-floating-attribs
             graphical-attrib?
             check-attribute
-            check-required-attribs
             check-attrib-duplicates
             attribs->symbol-attribs))
+
+(define required-attribs '(refdes footprint device))
 
 (define (floating-attrib? object)
   "Returns #t if OBJECT is attribute and is floating, otherwise
@@ -40,22 +41,6 @@ must be a symbol."
        (string=? (attrib-name object) "graphical")
        (valid-graphical? object)))
 
-
-(define (check-required-attribs page attr-name objects)
-  "Checks required toplevel attributes ATTR-NAME on PAGE."
-  (define (filter-attrib object)
-    (and (attribute? object)
-         (string=? (attrib-name object) attr-name)
-         (blame-object object
-                       'info
-                       (format #f (_ "Found ~A=~A\n") attr-name (text-string object)))
-         object))
-
-  (let ((attrib-list (filter filter-attrib objects)))
-    (if (null? attrib-list)
-        (blame-object page
-                      'warning
-                      (format #f (_ "Missing ~A= attribute\n") attr-name)))))
 
 (define (check-attribute object)
   "Checks attribute OBJECT."
@@ -182,7 +167,20 @@ must be a symbol."
    '()
    objects))
 
-(define (attribs->symbol-attribs floating-attribs)
+(define (check-missing-attribs page alist)
+  (define (blame-missing name)
+    (unless (assq-ref alist name)
+      (blame-object page
+                    'warning
+                    (format #f
+                            (_ "Missing required attribute: ~A")
+                            name))))
+
+  (for-each blame-missing required-attribs))
+
+(define (attribs->symbol-attribs page floating-attribs)
   "Forms symbol attribute list from objects in the list
 FLOATING-ATTRIBS."
-  (map check-attrib (attribs->attrib-alist floating-attribs)))
+  (let ((attrib-alist (attribs->attrib-alist floating-attribs)))
+    (check-missing-attribs page attrib-alist)
+    (map check-attrib attrib-alist)))
