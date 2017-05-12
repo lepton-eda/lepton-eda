@@ -1,3 +1,3 @@
-Warning: Found graphical symbol, device= should be set to none
+Warning: Graphical symbols should have device=none
 1 warning found
 No errors found

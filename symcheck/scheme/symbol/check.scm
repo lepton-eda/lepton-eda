@@ -58,28 +58,6 @@
 (define (check-symbol-pinseq objects)
   (check-attrib-duplicates (filter-map check-pin-pinseq objects)))
 
-;;; Checks device= attribute. If schematic symbol is graphical,
-;;; also checks for device= value which should be 'none'.  This is
-;;; a special check required by some netlister backends.
-(define (check-symbol-device is-graphical page objects)
-  (let ((device-list (filter-floating-attribs 'device objects)))
-    (unless (null? device-list)
-      (when is-graphical
-        ;; Check for "device=none" for graphical symbols.
-        (let ((device (car device-list)))
-          (if (string=? (attrib-value device) "none")
-              (blame-object device
-                            'info
-                            (format #f (_ "Found graphical symbol, device=none")))
-              (blame-object device
-                            'warning
-                            (format #f (_"Found graphical symbol, device= should be set to none")))))))))
-
-
-;;; Check if symbol is graphical.
-(define (check-symbol-is-graphical? objects)
-  (not (null? (filter graphical-attrib? objects))))
-
 (define (usage)
   (format #t
           (_ "Usage: ~A [OPTIONS] FILENAME ...
@@ -111,9 +89,6 @@ FILENAME ... are the symbols to check.
         (receive (floating-attribs attached-attribs)
             (partition floating-attrib? attribs)
 
-          (check-symbol-device (check-symbol-is-graphical? floating-attribs)
-                               page
-                               floating-attribs)
           ;; Create preliminary symbol structure.
           (attribs->symbol-attribs page floating-attribs))))
 
