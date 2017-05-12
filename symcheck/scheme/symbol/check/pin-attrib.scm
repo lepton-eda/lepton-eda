@@ -4,6 +4,7 @@
   #:use-module (geda attrib)
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
+  #:use-module (symbol check attrib)
 
   #:export (check-pin-pintype
             check-pin-pinseq
@@ -112,8 +113,7 @@ symbol."
 ;;; Collect all net= pin numbers.
 (define (net-numbers objects)
   (define (net-attrib? object)
-    (and (attribute? object)
-         (not (attrib-attachment object)) ; floating
+    (and (floating-attrib? object)
          (string=? (attrib-name object) "net")))
 
   (define (get-net-attributes ls)
