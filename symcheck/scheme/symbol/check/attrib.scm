@@ -12,7 +12,6 @@
             filter-floating-attribs
             graphical-attrib?
             check-attribute
-            check-device-attribs
             check-required-attribs
             check-attrib-duplicates
             attribs->symbol-attribs))
@@ -41,26 +40,6 @@ must be a symbol."
        (string=? (attrib-name object) "graphical")
        (valid-graphical? object)))
 
-(define (check-device-attribs is-graphical? device-list)
-  "Checks device= attributes in DEVICE-LIST. If the list contains
-more than one attribute, adds error on that. If schematic symbol
-is graphical, that is, IS-GRAPHICAL? is #t, also checks for
-device= value which should be 'none' for graphical symbols."
-  (if (null? (cdr device-list))
-      (let* ((device (car device-list))
-             (value (attrib-value device)))
-        (blame-object device 'info (format #f (_ "Found ~A=~A\n") 'device value))
-        (when is-graphical?
-          ;; Check for "device=none" for graphical symbols.
-          (if (string=? value "none")
-              (blame-object device 'info
-                            (format #f
-                                    (_ "Found graphical symbol, ~A=~A\n")
-                                    'device
-                                    value))
-              (blame-object device 'warning
-                            (format #f
-                                    (_"Found graphical symbol, device= should be set to none\n"))))))))
 
 (define (check-required-attribs page attr-name objects)
   "Checks required toplevel attributes ATTR-NAME on PAGE."
