@@ -1,0 +1,5 @@
+Warning: Graphical symbols should have device=none
+ERROR: Duplicate floating attribute: graphical
+ERROR: Duplicate floating attribute: graphical
+1 warning found
+2 ERRORS found

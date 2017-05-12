@@ -10,7 +10,6 @@
 
   #:export (floating-attrib?
             filter-floating-attribs
-            graphical-attrib?
             check-attribute
             check-attrib-duplicates
             attribs->symbol-attribs))
@@ -32,15 +31,32 @@ must be a symbol."
 
   (filter floating-attrib-with-name object-list))
 
-(define (valid-graphical? object)
-  (string=? (attrib-value object) "1"))
+;;; Returns #t if OBJECT is correct graphical= attribute,
+;;; otherwise returns #f and blames it.
+(define (check-special/graphical object)
+  (let ((value (attrib-value object)))
+    (or (string=? value "1")
+        (and (blame-object object
+                           'warning
+                           (format #f
+                                   (_ "Set 'graphical=1' if you want the symbol to be graphical, current value: ~A")
+                                   value))
+             #f))))
 
-(define (graphical-attrib? object)
-  "Checks if object is attribute 'graphical=1'."
-  (and (floating-attrib? object)
-       (string=? (attrib-name object) "graphical")
-       (valid-graphical? object)))
 
+;;; Checks device= attribute. If schematic symbol is graphical,
+;;; also checks for device= value which should be 'none'.  This is
+;;; a special check required by some netlister backends
+;;; (e.g. spice-sdb).
+(define (check-special/device is-graphical device-list)
+  (and is-graphical
+       device-list
+       (let ((device (car device-list)))
+         (unless (string=? (attrib-value device) "none")
+           ;; Check for "device=none" for graphical symbols.
+           (blame-object device
+                         'warning
+                         (format #f (_"Graphical symbols should have device=none")))))))
 
 (define (check-attribute object)
   "Checks attribute OBJECT."
@@ -146,7 +162,7 @@ must be a symbol."
 (define (check-attrib entry)
   (match entry
     (('graphical . objects)
-     `(graphical ,(valid-graphical? (check-floating-attrib-duplicates objects))))
+     `(graphical . ,(check-special/graphical (check-floating-attrib-duplicates objects))))
     (('slotdef . objects)
      `(slotdef . ,objects))
     (('net . objects)
@@ -183,4 +199,7 @@ must be a symbol."
 FLOATING-ATTRIBS."
   (let ((attrib-alist (attribs->attrib-alist floating-attribs)))
     (check-missing-attribs page attrib-alist)
-    (map check-attrib attrib-alist)))
+    (let ((output-alist (map check-attrib attrib-alist)))
+      (check-special/device (assq-ref output-alist 'graphical)
+                            (assq-ref attrib-alist 'device))
+      output-alist)))
