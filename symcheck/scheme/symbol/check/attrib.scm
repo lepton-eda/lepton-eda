@@ -1,4 +1,5 @@
 (define-module (symbol check attrib)
+  #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (geda page)
   #:use-module (geda object)
@@ -13,7 +14,8 @@
             check-attribute
             check-device-attribs
             check-required-attribs
-            check-attrib-duplicates))
+            check-attrib-duplicates
+            attribs->symbol-attribs))
 
 (define (floating-attrib? object)
   "Returns #t if OBJECT is attribute and is floating, otherwise
@@ -30,11 +32,14 @@ must be a symbol."
 
   (filter floating-attrib-with-name object-list))
 
+(define (valid-graphical? object)
+  (string=? (attrib-value object) "1"))
+
 (define (graphical-attrib? object)
   "Checks if object is attribute 'graphical=1'."
   (and (floating-attrib? object)
        (string=? (attrib-name object) "graphical")
-       (string=? (attrib-value object) "1")))
+       (valid-graphical? object)))
 
 (define (check-device-attribs is-graphical? device-list)
   "Checks device= attributes in DEVICE-LIST. If the list contains
@@ -55,12 +60,7 @@ device= value which should be 'none' for graphical symbols."
                                     value))
               (blame-object device 'warning
                             (format #f
-                                    (_"Found graphical symbol, device= should be set to none\n"))))))
-      (for-each (lambda (object)
-                  (blame-object object
-                                'error
-                                (format #f (_ "Conflicting attribute: ~A.\n") 'device)))
-                device-list)))
+                                    (_"Found graphical symbol, device= should be set to none\n"))))))))
 
 (define (check-required-attribs page attr-name objects)
   "Checks required toplevel attributes ATTR-NAME on PAGE."
@@ -76,11 +76,7 @@ device= value which should be 'none' for graphical symbols."
     (if (null? attrib-list)
         (blame-object page
                       'warning
-                      (format #f (_ "Missing ~A= attribute\n") attr-name))
-        (unless (null? (cdr attrib-list))
-          (blame-object page
-                        'error
-                        (format #f (_ "Multiple ~A= attributes found\n") attr-name))))))
+                      (format #f (_ "Missing ~A= attribute\n") attr-name)))))
 
 (define (check-attribute object)
   "Checks attribute OBJECT."
@@ -169,3 +165,45 @@ device= value which should be 'none' for graphical symbols."
       (for-each blame-duplicate ls)))
 
   (for-each blame-if-list (attrib-duplicates ls)))
+
+
+(define (check-floating-attrib-duplicates ls)
+  "Checks for duplicated attributes in object list LS."
+  (define (blame-duplicate object)
+    (blame-object object
+                  'error
+                  (format #f
+                          (_ "Duplicate floating attribute: ~A")
+                          (attrib-name object))))
+  (unless (null? (cdr ls))
+    (for-each blame-duplicate ls))
+  (car ls))
+
+(define (check-attrib entry)
+  (match entry
+    (('graphical . objects)
+     `(graphical ,(valid-graphical? (check-floating-attrib-duplicates objects))))
+    (('slotdef . objects)
+     `(slotdef . ,objects))
+    (('net . objects)
+     `(net . ,objects))
+    ((name . objects)
+     `(,name . ,(check-floating-attrib-duplicates objects)))
+    (_ (error "Invalid attribute list."))))
+
+(define (attribs->attrib-alist objects)
+  (fold
+   (lambda (object alist)
+     (let* ((name (string->symbol (attrib-name object)))
+            (same (assq-ref alist name)))
+       (if same
+           (assq-set! alist name (cons object same))
+           (assq-set! alist name (list object)))))
+   ;; Initial empty alist.
+   '()
+   objects))
+
+(define (attribs->symbol-attribs floating-attribs)
+  "Forms symbol attribute list from objects in the list
+FLOATING-ATTRIBS."
+  (map check-attrib (attribs->attrib-alist floating-attribs)))

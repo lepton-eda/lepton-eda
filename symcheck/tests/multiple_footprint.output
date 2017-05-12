@@ -1,2 +1,4 @@
-ERROR: Multiple footprint= attributes found
-1 ERROR found
+ERROR: Duplicate floating attribute: footprint
+ERROR: Duplicate floating attribute: footprint
+ERROR: Duplicate floating attribute: footprint
+3 ERRORS found

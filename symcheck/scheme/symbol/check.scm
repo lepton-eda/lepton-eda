@@ -106,7 +106,9 @@ FILENAME ... are the symbols to check.
                                page
                                floating-attribs)
           (check-required-attribs page "refdes" objects)
-          (check-required-attribs page "footprint" objects))))
+          (check-required-attribs page "footprint" objects)
+          ;; Create preliminary symbol structure.
+          (attribs->symbol-attribs floating-attribs))))
 
 
     ; check for missing attributes
