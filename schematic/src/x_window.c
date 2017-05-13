@@ -249,21 +249,13 @@ x_window_find_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
         gschem_find_text_widget_get_find_type (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
         gschem_find_text_widget_get_find_text_string (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
         gschem_find_text_widget_get_descend (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)));
-    if (count > 0) {
-      /* switch the notebook page to the find results */
-      int page = gtk_notebook_page_num (GTK_NOTEBOOK (w_current->bottom_notebook),
-                                        GTK_WIDGET (w_current->find_text_state));
 
-      if (page >= 0) {
-        int current = gtk_notebook_get_current_page (GTK_NOTEBOOK (w_current->bottom_notebook));
-
-        if (page != current) {
-          gtk_notebook_set_current_page (GTK_NOTEBOOK (w_current->bottom_notebook), page);
-        }
-      }
-      gtk_widget_set_visible (GTK_WIDGET (w_current->bottom_notebook), TRUE);
+    if (count > 0)
+    {
+      x_widgets_show_find_text_state (w_current);
       close = TRUE;
-    };
+    }
+
     break;
 
   case GTK_RESPONSE_CANCEL:
