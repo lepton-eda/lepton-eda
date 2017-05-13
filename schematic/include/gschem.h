@@ -52,5 +52,7 @@ typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 #include "gschem_text_properties_widget.h"
 #include "gschem_translate_widget.h"
 
+#include <x_widgets.h>
+
 /* Gettext translation */
 #include "gettext.h"
