@@ -124,7 +124,7 @@ SCM_DEFINE (current_window, "%current-window", 0, 0, 0,
  * \brief Get the value of the #GschemToplevel fluid.
  * \par Function Description
  * Return the value of the #GschemToplevel fluid in the current dynamic
- * context.
+ * context. Never returns NULL.
  */
 GschemToplevel *
 g_current_window ()
