@@ -39,23 +39,18 @@
 
 
 
+static void
+x_widgets_show_in_dock (GtkWidget* wbook, GtkWidget* widget);
+
+
+
+
 void x_widgets_show_options (GschemToplevel* w_current)
 {
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->right_notebook != NULL);
-  g_return_if_fail (w_current->options_widget != NULL);
 
-  GtkNotebook* nbook = GTK_NOTEBOOK (w_current->right_notebook);
-  GtkWidget* widget = GTK_WIDGET (w_current->options_widget);
-
-  int page = gtk_notebook_page_num (nbook, widget);
-  if (page >= 0)
-  {
-    gtk_notebook_set_current_page (nbook, page);
-    gtk_widget_set_visible (GTK_WIDGET (nbook), TRUE);
-  }
-
-  /* gschem_options_widget_adjust_focus (GSCHEM_OPTIONS_WIDGET (widget)); */
+  x_widgets_show_in_dock (w_current->right_notebook,
+                          w_current->options_widget);
 }
 
 
@@ -63,21 +58,12 @@ void x_widgets_show_options (GschemToplevel* w_current)
 void x_widgets_show_text_properties (GschemToplevel* w_current)
 {
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->right_notebook != NULL);
-  g_return_if_fail (w_current->text_properties != NULL);
 
-  GtkNotebook* nbook = GTK_NOTEBOOK (w_current->right_notebook);
-  GtkWidget* widget = GTK_WIDGET (w_current->text_properties);
-
-  int page = gtk_notebook_page_num (nbook, widget);
-  if (page >= 0)
-  {
-    gtk_notebook_set_current_page (nbook, page);
-    gtk_widget_set_visible (GTK_WIDGET (nbook), TRUE);
-  }
+  x_widgets_show_in_dock (w_current->right_notebook,
+                          w_current->text_properties);
 
   gschem_text_properties_widget_adjust_focus(
-    GSCHEM_TEXT_PROPERTIES_WIDGET (widget));
+    GSCHEM_TEXT_PROPERTIES_WIDGET (w_current->text_properties));
 }
 
 
@@ -85,18 +71,9 @@ void x_widgets_show_text_properties (GschemToplevel* w_current)
 void x_widgets_show_object_properties (GschemToplevel* w_current)
 {
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->right_notebook != NULL);
-  g_return_if_fail (w_current->object_properties != NULL);
 
-  GtkNotebook* nbook = GTK_NOTEBOOK (w_current->right_notebook);
-  GtkWidget* widget = GTK_WIDGET (w_current->object_properties);
-
-  int page = gtk_notebook_page_num (nbook, widget);
-  if (page >= 0)
-  {
-    gtk_notebook_set_current_page (nbook, page);
-    gtk_widget_set_visible (GTK_WIDGET (nbook), TRUE);
-  }
+  x_widgets_show_in_dock (w_current->right_notebook,
+                          w_current->object_properties);
 }
 
 
@@ -104,18 +81,9 @@ void x_widgets_show_object_properties (GschemToplevel* w_current)
 void x_widgets_show_log (GschemToplevel* w_current)
 {
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->bottom_notebook != NULL);
-  g_return_if_fail (w_current->log_widget != NULL);
 
-  GtkNotebook* nbook = GTK_NOTEBOOK (w_current->bottom_notebook);
-  GtkWidget* widget = GTK_WIDGET (w_current->log_widget);
-
-  int page = gtk_notebook_page_num (nbook, widget);
-  if (page >= 0)
-  {
-    gtk_notebook_set_current_page (nbook, page);
-    gtk_widget_set_visible (GTK_WIDGET (nbook), TRUE);
-  }
+  x_widgets_show_in_dock (w_current->bottom_notebook,
+                          GTK_WIDGET (w_current->log_widget));
 }
 
 
@@ -123,11 +91,21 @@ void x_widgets_show_log (GschemToplevel* w_current)
 void x_widgets_show_find_text_state (GschemToplevel* w_current)
 {
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->bottom_notebook != NULL);
-  g_return_if_fail (w_current->find_text_state != NULL);
 
-  GtkNotebook* nbook = GTK_NOTEBOOK (w_current->bottom_notebook);
-  GtkWidget* widget = GTK_WIDGET (w_current->find_text_state);
+  x_widgets_show_in_dock (w_current->bottom_notebook,
+                          GTK_WIDGET (w_current->find_text_state));
+}
+
+
+
+
+static void
+x_widgets_show_in_dock (GtkWidget* wbook, GtkWidget* widget)
+{
+  g_return_if_fail (wbook != NULL);
+  g_return_if_fail (widget != NULL);
+
+  GtkNotebook* nbook = GTK_NOTEBOOK (wbook);
 
   int page = gtk_notebook_page_num (nbook, widget);
   if (page >= 0)
