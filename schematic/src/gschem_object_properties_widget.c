@@ -127,24 +127,7 @@ gschem_object_properties_widget_new (GschemToplevel *w_current)
 void
 line_type_dialog (GschemToplevel *w_current)
 {
-  int page;
-
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->right_notebook != NULL);
-  g_return_if_fail (w_current->object_properties != NULL);
-
-  page = gtk_notebook_page_num (GTK_NOTEBOOK (w_current->right_notebook),
-                                GTK_WIDGET (w_current->object_properties));
-
-  if (page >= 0) {
-    int current = gtk_notebook_get_current_page (GTK_NOTEBOOK (w_current->right_notebook));
-
-    if (page != current) {
-      gtk_notebook_set_current_page (GTK_NOTEBOOK (w_current->right_notebook), page);
-    }
-
-    gtk_widget_set_visible (GTK_WIDGET (w_current->right_notebook), TRUE);
-  }
+  x_widgets_show_object_properties (w_current);
 }
 
 
@@ -157,24 +140,7 @@ line_type_dialog (GschemToplevel *w_current)
 void
 x_dialog_edit_pin_type (GschemToplevel *w_current, const GList *obj_list)
 {
-  int page;
-
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->right_notebook != NULL);
-  g_return_if_fail (w_current->object_properties != NULL);
-
-  page = gtk_notebook_page_num (GTK_NOTEBOOK (w_current->right_notebook),
-                                GTK_WIDGET (w_current->object_properties));
-
-  if (page >= 0) {
-    int current = gtk_notebook_get_current_page (GTK_NOTEBOOK (w_current->right_notebook));
-
-    if (page != current) {
-      gtk_notebook_set_current_page (GTK_NOTEBOOK (w_current->right_notebook), page);
-    }
-
-    gtk_widget_set_visible (GTK_WIDGET (w_current->right_notebook), TRUE);
-  }
+  x_widgets_show_object_properties (w_current);
 }
 
 

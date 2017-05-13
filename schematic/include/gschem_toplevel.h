@@ -51,8 +51,8 @@ struct st_gschem_toplevel {
   GtkWidget *bottom_notebook;
 
   /* Widgets inside notebook at bottom of window */
-  GschemFindTextState *find_text_state;
-  GschemLogWidget     *log_widget;
+  GtkWidget *find_text_state;
+  GtkWidget *log_widget;
 
   GtkWidget *right_notebook;
 
