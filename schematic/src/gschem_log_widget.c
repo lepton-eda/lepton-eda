@@ -100,10 +100,10 @@ gschem_log_widget_get_type ()
  *
  *  \return a new status log widget
  */
-GschemLogWidget*
+GtkWidget*
 gschem_log_widget_new ()
 {
-  return GSCHEM_LOG_WIDGET (g_object_new (GSCHEM_TYPE_LOG_WIDGET, NULL));
+  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_LOG_WIDGET, NULL));
 }
 
 

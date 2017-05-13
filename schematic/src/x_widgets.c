@@ -1,8 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
+/* Lepton EDA Schematic Capture
  * gschem - gEDA Schematic Capture
- * Copyright (C) 1998-2016 Ales Hvezda
- * Copyright (C) 2016 gEDA Contributors (see ChangeLog for details)
- * Copyright (C) 2016-2017 dmn
+ * Copyright (C) 1998-2010 Ales Hvezda
+ * Copyright (C) 2017 dmn <graahnul.grom@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +23,7 @@
  *
  * \brief Widgets management
  *
- * There are 5 of them:
+ * Now there are 5 of them:
  * - in right dock:
  *   - obj props
  *   - txt props
@@ -83,7 +82,7 @@ void x_widgets_show_log (GschemToplevel* w_current)
   g_return_if_fail (w_current != NULL);
 
   x_widgets_show_in_dock (w_current->bottom_notebook,
-                          GTK_WIDGET (w_current->log_widget));
+                          w_current->log_widget);
 }
 
 
@@ -93,7 +92,7 @@ void x_widgets_show_find_text_state (GschemToplevel* w_current)
   g_return_if_fail (w_current != NULL);
 
   x_widgets_show_in_dock (w_current->bottom_notebook,
-                          GTK_WIDGET (w_current->find_text_state));
+                          w_current->find_text_state);
 }
 
 
@@ -111,6 +110,6 @@ x_widgets_show_in_dock (GtkWidget* wbook, GtkWidget* widget)
   if (page >= 0)
   {
     gtk_notebook_set_current_page (nbook, page);
-    gtk_widget_set_visible (GTK_WIDGET (nbook), TRUE);
+    gtk_widget_set_visible (wbook, TRUE);
   }
 }

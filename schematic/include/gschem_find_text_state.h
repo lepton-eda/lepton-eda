@@ -59,5 +59,5 @@ gschem_find_text_state_find (GschemFindTextState *state, GList *pages, int type,
 GType
 gschem_find_text_state_get_type ();
 
-GschemFindTextState*
+GtkWidget*
 gschem_find_text_state_new ();
