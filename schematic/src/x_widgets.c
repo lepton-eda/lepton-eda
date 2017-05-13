@@ -55,7 +55,19 @@ void x_widgets_show_text_properties (GschemToplevel* w_current)
 
 void x_widgets_show_object_properties (GschemToplevel* w_current)
 {
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->right_notebook != NULL);
+  g_return_if_fail (w_current->object_properties != NULL);
 
+  GtkNotebook* nbook = GTK_NOTEBOOK (w_current->right_notebook);
+  GtkWidget* widget = GTK_WIDGET (w_current->object_properties);
+
+  int page = gtk_notebook_page_num (nbook, widget);
+  if (page >= 0)
+  {
+    gtk_notebook_set_current_page (nbook, page);
+    gtk_widget_set_visible (nbook, TRUE);
+  }
 }
 
 
