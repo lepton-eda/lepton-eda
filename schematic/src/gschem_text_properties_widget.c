@@ -141,26 +141,7 @@ gschem_text_properties_widget_new (GschemToplevel *w_current)
 void
 text_edit_dialog (GschemToplevel *w_current)
 {
-  int page;
-
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->right_notebook != NULL);
-  g_return_if_fail (w_current->object_properties != NULL);
-
-  page = gtk_notebook_page_num (GTK_NOTEBOOK (w_current->right_notebook),
-                                GTK_WIDGET (w_current->text_properties));
-
-  if (page >= 0) {
-    int current = gtk_notebook_get_current_page (GTK_NOTEBOOK (w_current->right_notebook));
-
-    if (page != current) {
-      gtk_notebook_set_current_page (GTK_NOTEBOOK (w_current->right_notebook), page);
-    }
-
-    gtk_widget_set_visible (GTK_WIDGET (w_current->right_notebook), TRUE);
-  }
-
-  gschem_text_properties_widget_adjust_focus(GSCHEM_TEXT_PROPERTIES_WIDGET(w_current->text_properties));
+  x_widgets_show_text_properties (w_current);
 }
 
 
