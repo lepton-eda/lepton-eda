@@ -2055,7 +2055,7 @@ The @var{level} should be one of the symbols @code{error},
 @code{critical}, @code{warning}, @code{message}, @code{info} or
 @code{debug}.
 
-Note: if @var{level} is set to @code{'error}, main program will terminate.
+Note: if @var{level} is set to @code{error}, main program will terminate.
 
 Generally, if the @var{level} is not @code{debug}, then the message
 should be localised.
