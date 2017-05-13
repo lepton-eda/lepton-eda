@@ -41,7 +41,21 @@
 
 void x_widgets_show_options (GschemToplevel* w_current)
 {
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->right_notebook != NULL);
+  g_return_if_fail (w_current->options_widget != NULL);
 
+  GtkNotebook* nbook = GTK_NOTEBOOK (w_current->right_notebook);
+  GtkWidget* widget = GTK_WIDGET (w_current->options_widget);
+
+  int page = gtk_notebook_page_num (nbook, widget);
+  if (page >= 0)
+  {
+    gtk_notebook_set_current_page (nbook, page);
+    gtk_widget_set_visible (GTK_WIDGET (nbook), TRUE);
+  }
+
+  /* gschem_options_widget_adjust_focus (GSCHEM_OPTIONS_WIDGET (widget)); */
 }
 
 
