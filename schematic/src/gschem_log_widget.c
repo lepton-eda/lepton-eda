@@ -139,22 +139,7 @@ x_log_message (const gchar *log_domain, GLogLevelFlags log_level, const gchar *m
 void
 x_log_open (GschemToplevel *w_current)
 {
-  int page;
-
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->bottom_notebook != NULL);
-  g_return_if_fail (w_current->log_widget != NULL);
-
-  page = gtk_notebook_page_num (GTK_NOTEBOOK (w_current->bottom_notebook),
-                                GTK_WIDGET (w_current->log_widget));
-
-  if (page >= 0) {
-    int current = gtk_notebook_get_current_page (GTK_NOTEBOOK (w_current->bottom_notebook));
-
-    if (page != current) {
-      gtk_notebook_set_current_page (GTK_NOTEBOOK (w_current->bottom_notebook), page);
-    }
-  }
+  x_widgets_show_log (w_current);
 }
 
 

@@ -66,7 +66,7 @@ void x_widgets_show_object_properties (GschemToplevel* w_current)
   if (page >= 0)
   {
     gtk_notebook_set_current_page (nbook, page);
-    gtk_widget_set_visible (nbook, TRUE);
+    gtk_widget_set_visible (GTK_WIDGET (nbook), TRUE);
   }
 }
 
@@ -74,7 +74,19 @@ void x_widgets_show_object_properties (GschemToplevel* w_current)
 
 void x_widgets_show_log (GschemToplevel* w_current)
 {
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->bottom_notebook != NULL);
+  g_return_if_fail (w_current->log_widget != NULL);
 
+  GtkNotebook* nbook = GTK_NOTEBOOK (w_current->bottom_notebook);
+  GtkWidget* widget = GTK_WIDGET (w_current->log_widget);
+
+  int page = gtk_notebook_page_num (nbook, widget);
+  if (page >= 0)
+  {
+    gtk_notebook_set_current_page (nbook, page);
+    gtk_widget_set_visible (GTK_WIDGET (nbook), TRUE);
+  }
 }
 
 
