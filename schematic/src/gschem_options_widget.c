@@ -142,26 +142,7 @@ gschem_options_widget_new (GschemToplevel *w_current)
 void
 snap_size_dialog (GschemToplevel *w_current)
 {
-  int page;
-
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->right_notebook != NULL);
-  g_return_if_fail (w_current->options_widget != NULL);
-
-  page = gtk_notebook_page_num (GTK_NOTEBOOK (w_current->right_notebook),
-                                GTK_WIDGET (w_current->options_widget));
-
-  if (page >= 0) {
-    int current = gtk_notebook_get_current_page (GTK_NOTEBOOK (w_current->right_notebook));
-
-    if (page != current) {
-      gtk_notebook_set_current_page (GTK_NOTEBOOK (w_current->right_notebook), page);
-    }
-
-    gtk_widget_set_visible (GTK_WIDGET (w_current->right_notebook), TRUE);
-  }
-
-  //gschem_options_widget_adjust_focus (GSCHEM_OPTIONS_WIDGET (w_current->options_widget));
+  x_widgets_show_options (w_current);
 }
 
 

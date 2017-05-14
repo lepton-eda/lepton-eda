@@ -48,5 +48,5 @@ struct _GschemLogWidget {
 GType
 gschem_log_widget_get_type (void);
 
-GschemLogWidget*
+GtkWidget*
 gschem_log_widget_new ();
