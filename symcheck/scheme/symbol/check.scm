@@ -22,25 +22,9 @@
 
   #:export (check-all-symbols))
 
-;;; Check all pintype attributes for all symbol pins.
-(define (check-symbol-pintype objects)
-  (for-each check-pin-pintype objects))
-
-;;; Check symbol required attributes.
-(define (check-symbol-required-attributes page objects)
-  (for-each
-    (lambda (object)
-      (check-pin-required-attribs object "pinlabel")
-      (check-pin-required-attribs object "pintype"))
-    objects))
-
 ;;; Check for old pin#=# and slot#=# attributes.
 (define (check-symbol-obsolete-attribs objects)
   (for-each check-obsolete-attrib objects))
-
-;;; Check symbol slotting attributes.
-(define (check-symbol-slots numpins page objects)
-  (check-slots page numpins objects))
 
 ;;; Check symbol pinnumber attribute
 (define (check-symbol-pinnumber page objects)
@@ -50,13 +34,7 @@
 
     (check-duplicate-net-pinnumbers page nets)
     (check-attrib-duplicates pinnumbers)
-    (check-duplicate-net-pinnumber-numbers page pinnumber-values nets)
-    ;; Return pins.
-    (filter pin? objects)))
-
-;;; Check symbol pinseq attribute
-(define (check-symbol-pinseq objects)
-  (check-attrib-duplicates (filter-map check-pin-pinseq objects)))
+    (check-duplicate-net-pinnumber-numbers page pinnumber-values nets)))
 
 (define (usage)
   (format #t
@@ -90,23 +68,22 @@ FILENAME ... are the symbols to check.
             (partition floating-attrib? attribs)
 
           ;; Create preliminary symbol structure.
-          (attribs->symbol-attribs page floating-attribs))))
+          (attribs->symbol-attribs page floating-attribs)
 
+          (for-each (lambda (pin)
+                      ;; Check for missing pin attributes.
+                      (check-pin-required-attribs pin "pinlabel")
+                      (check-pin-required-attribs pin "pintype")
+                      ;; Check all pintype attributes for all symbol pins.
+                      (check-pin-pintype pin))
+                    pins)
 
-    ; check for missing attributes
-    (check-symbol-required-attributes page objects)
-
-    ; check for pintype attribute (and multiples) on all pins
-    (check-symbol-pintype objects)
-
-    ; check for pinseq attribute (and multiples) on all pins
-    (check-symbol-pinseq objects)
-
-    ; check for pinnumber attribute (and multiples) on all pins
-    ; check for slotdef attribute on all pins (if numslots exists)
-    (check-symbol-slots (check-symbol-pinnumber page objects)
-                        page
-                        objects)
+          ;; Check pinseq attributes.
+          (check-attrib-duplicates (filter-map check-pin-pinseq pins))
+          ;; Check for pinnumber attribute (and multiples) on all pins.
+          (check-symbol-pinnumber page objects)
+          ;; Check symbol slotting attributes.
+          (check-slots page pins objects))))
 
     ; check for old pin#=# and slot#=# attributes
     (check-symbol-obsolete-attribs objects)
