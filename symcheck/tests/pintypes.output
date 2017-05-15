@@ -1,6 +1,6 @@
-ERROR: Invalid pintype=i attribute
-ERROR: Invalid pintype=iox attribute
-ERROR: Invalid pintype=abc attribute
+ERROR: Invalid pin attribute value: pintype=i
+ERROR: Invalid pin attribute value: pintype=iox
+ERROR: Invalid pin attribute value: pintype=abc
 ERROR: Duplicate pin attribute on one pin: pintype
 ERROR: Duplicate pin attribute on one pin: pintype
 ERROR: Duplicate pin attribute on one pin: pintype

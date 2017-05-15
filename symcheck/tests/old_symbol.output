@@ -20,12 +20,12 @@ Warning: Missing pin attribute: pintype
 ERROR: Missing pin attribute: pinseq
 Warning: Found unknown pin2= attribute: [pin2=2]
 ERROR: Obsolete pin#=# attribute: pin2=2
-ERROR: Invalid pintype=123just a type attribute
 Warning: Missing pin attribute: pinlabel
 ERROR: Missing pin attribute: pinnumber
 ERROR: Missing pin attribute: pinseq
 Warning: Found unknown pin1= attribute: [pin1=1]
 ERROR: Obsolete pin#=# attribute: pin1=1
+ERROR: Invalid pin attribute value: pintype=123just a type
 Warning: Found obsolete uref= attribute: [uref=U?]
 12 warnings found
 17 ERRORS found
