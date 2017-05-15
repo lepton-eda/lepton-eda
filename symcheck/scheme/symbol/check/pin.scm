@@ -32,6 +32,17 @@
   (label symbol-pin-label set-symbol-pin-label!)
   (attribs symbol-pin-attribs set-symbol-pin-attribs!))
 
+(define %valid-pintype-values
+  '(in out io oc oe pas tp tri clk pwr))
+
+(define (valid-pintype? value)
+  (and value
+       (memq (string->symbol value)
+             %valid-pintype-values)))
+
+(define (invalid-pintype? value)
+  (not (valid-pintype? value)))
+
 (define (check-pin-attrib-duplicates ls)
   "Checks for duplicated attributes in object list LS."
   (define (blame-duplicate object)
@@ -59,9 +70,17 @@
                         (_ "Prohibited zero value pin attribute: ~A=0")
                         name)))
 
+(define-syntax-rule (blame-invalid-pintype object value)
+  (blame-object object
+                'error
+                (format #f
+                        (_ "Invalid pin attribute value: pintype=~A")
+                        value)))
+
 (define (check-pin-attrib-value object name value)
   (match `(,name . ,value)
     (((or 'pinseq 'pinnumber) . "0") (blame-zero-value object name) #f)
+    (('pintype . (? invalid-pintype? v)) (blame-invalid-pintype object v) #f)
     (_ value)))
 
 (define-syntax-rule (blame-missing-or-wrong pin severity name attrib-alist)

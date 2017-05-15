@@ -6,8 +6,7 @@
   #:use-module (symbol blame)
   #:use-module (symbol check attrib)
 
-  #:export (check-pin-pintype
-            check-pin-pinseq
+  #:export (check-pin-pinseq
             check-pin-pinnumber
             pin-attrib?
             pin-attribs
@@ -22,29 +21,6 @@ returns #f."
   (and (attribute? object)
        (and=> (attrib-attachment object) pin?)))
 
-(define %valid-pintype-values
-  '(in out io oc oe pas tp tri clk pwr))
-
-(define (check-pin-pintype object)
-  "Checks attributes 'pintype' of pin OBJECT."
-  (define (found-attrib name value)
-    (format #f (_ "Found ~A=~A attribute\n") name value))
-
-  (define (invalid-attrib name value)
-    (format #f (_ "Invalid ~A=~A attribute\n") name value))
-
-  (and (pin? object)
-       (for-each (lambda (attrib)
-                   (when (string=? "pintype" (attrib-name attrib))
-                     (let ((value (attrib-value attrib)))
-                       (blame-object object
-                                     'info
-                                     (found-attrib 'pintype value))
-                       (unless (memq (string->symbol value) %valid-pintype-values)
-                         (blame-object object
-                                       'error
-                                       (invalid-attrib 'pintype value))))))
-                 (object-attribs object))))
 
 (define (pin-attribs pin name)
   "Returns all attributes of PIN with given NAME which must be a

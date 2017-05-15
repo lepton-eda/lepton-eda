@@ -65,11 +65,6 @@ FILENAME ... are the symbols to check.
           ;; Create preliminary symbol structure.
           (attribs->symbol-attribs page floating-attribs)
 
-          (for-each (lambda (pin)
-                      ;; Check all pintype attributes for all symbol pins.
-                      (check-pin-pintype pin))
-                    pins)
-
           ;; Check pinseq attributes.
           (check-attrib-duplicates (filter-map check-pin-pinseq pins))
           ;; Check for pinnumber attribute (and multiples) on all pins.
