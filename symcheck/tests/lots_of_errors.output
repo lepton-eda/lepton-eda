@@ -10,16 +10,16 @@ ERROR: Not enough pins in slotdef=2:4,5 (must be 3)
 ERROR: Duplicate pin number 5 in slotdef=2:4,5 and other slotdef
 ERROR: Slot number 8 (slotdef=8:9,10,8) is greater than the maximum slot number (5)
 ERROR: Invalid slotdef=a attribute (the format is #:#,#,#,...)
-ERROR: Missing pinnumber= attribute
-Warning: Missing pintype= attribute
-Warning: Missing pinlabel= attribute
+Warning: Missing pin attribute: pinlabel
+ERROR: Missing pin attribute: pinnumber
+Warning: Missing pin attribute: pintype
 Warning: Found unknown pinnumbe= attribute: [pinnumbe=3]
-ERROR: Missing pinseq= attribute
-Warning: Missing pintype= attribute
-Warning: Missing pinlabel= attribute
+Warning: Missing pin attribute: pinlabel
+Warning: Missing pin attribute: pintype
+ERROR: Missing pin attribute: pinseq
 Warning: Found unknown pineq= attribute: [pineq=2]
-Warning: Missing pintype= attribute
-Warning: Missing pinlabel= attribute
+Warning: Missing pin attribute: pinlabel
+Warning: Missing pin attribute: pintype
 Warning: Found obsolete uref= attribute: [uref=U?]
 13 warnings found
 10 ERRORS found

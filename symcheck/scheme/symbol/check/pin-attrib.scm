@@ -9,7 +9,6 @@
   #:export (check-pin-pintype
             check-pin-pinseq
             check-pin-pinnumber
-            check-pin-required-attribs
             pin-attrib?
             pin-attribs
             net-numbers
@@ -65,57 +64,16 @@ symbol."
        (let ((attrib-list (pin-attribs object attr-name)))
 
          (if (null? attrib-list)
-             (begin
-               (blame-object object
-                             'error
-                             (format #f (_ "Missing ~A= attribute\n") attr-name))
-               #f)
-             (if (null? (cdr attrib-list))
-                 (let ((attrib (car attrib-list)))
-                   (if (check-attrib-value attrib)
-                       attrib
-                       (begin (blame-object attrib
-                                            'error
-                                            (format #f
-                                                    (_ "Found ~A=~A attribute\n")
-                                                    (attrib-name attrib)
-                                                    (attrib-value attrib)))
-                              #f)))
-                 (begin
-                   (blame-object object
-                                 'error
-                                 (format #f
-                                         (_ "Found multiple ~A= attributes on one pin\n")
-                                         attr-name))
-                   #f))))))
+             #f
+             (let ((attrib (car attrib-list)))
+               (and (check-attrib-value attrib)
+                    attrib))))))
 
 (define (check-pin-pinseq pin)
   (check-pin-attrib pin 'pinseq))
 
 (define (check-pin-pinnumber pin)
   (check-pin-attrib pin 'pinnumber))
-
-(define (check-pin-required-attribs object attr-name)
-  "Checks pin required attributes ATTR-NAME of pin OBJECT."
-  (define (filter-attrib object)
-    (and (string=? (attrib-name object) attr-name)
-         object))
-
-  (and (pin? object)
-       (let ((attrib-list (filter filter-attrib (object-attribs object))))
-         (if (null? attrib-list)
-             (blame-object object
-                              'warning
-                              (format #f (_ "Missing ~A= attribute\n") attr-name))
-             (unless (null? (cdr attrib-list))
-               (blame-object object
-                             'error (format #f
-                                            (_"Found multiple ~A=~A attributes on one pin\n")
-                                            attr-name
-                                            (attrib-value (car
-                                                           ;; reverse attributes for backward
-                                                           ;; compatibility
-                                                           (reverse attrib-list))))))))))
 
 ;;; Collect all net= pin numbers.
 (define (net-numbers objects)

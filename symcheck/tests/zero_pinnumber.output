@@ -1,2 +1,2 @@
-ERROR: Found pinnumber=0 attribute
+ERROR: Prohibited zero value pin attribute: pinnumber=0
 1 ERROR found

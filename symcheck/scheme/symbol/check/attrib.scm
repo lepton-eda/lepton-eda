@@ -13,6 +13,7 @@
             filter-floating-attribs
             check-attribute
             check-attrib-duplicates
+            attribs->attrib-alist
             attribs->symbol-attribs))
 
 (define required-attribs '(refdes footprint device))

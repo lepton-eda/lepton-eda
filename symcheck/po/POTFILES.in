@@ -16,6 +16,7 @@ symcheck/scheme/symbol/check/net.scm
 symcheck/scheme/symbol/check/obsolete.scm
 symcheck/scheme/symbol/check/path.scm
 symcheck/scheme/symbol/check/picture.scm
+symcheck/scheme/symbol/check/pin.scm
 symcheck/scheme/symbol/check/pin-attrib.scm
 symcheck/scheme/symbol/check/primitive.scm
 symcheck/scheme/symbol/check/slot.scm

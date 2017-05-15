@@ -1,2 +1,2 @@
-ERROR: Found pinseq=0 attribute
+ERROR: Prohibited zero value pin attribute: pinseq=0
 1 ERROR found

@@ -1,2 +1,3 @@
-ERROR: Found multiple pinlabel=extra attributes on one pin
-1 ERROR found
+ERROR: Duplicate pin attribute on one pin: pinlabel
+ERROR: Duplicate pin attribute on one pin: pinlabel
+2 ERRORS found

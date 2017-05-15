@@ -39,6 +39,7 @@ nobase_dist_scmdata_DATA = \
 	symbol/check/obsolete.scm \
 	symbol/check/path.scm \
 	symbol/check/picture.scm \
+	symbol/check/pin.scm \
 	symbol/check/pin-attrib.scm \
 	symbol/check/primitive.scm \
 	symbol/check/slot.scm \

@@ -1,2 +1,3 @@
-ERROR: Found multiple pintype=out attributes on one pin
-1 ERROR found
+ERROR: Duplicate pin attribute on one pin: pintype
+ERROR: Duplicate pin attribute on one pin: pintype
+2 ERRORS found
