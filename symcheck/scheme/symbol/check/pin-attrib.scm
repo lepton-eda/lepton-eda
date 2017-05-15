@@ -10,11 +10,18 @@
             check-pin-pinseq
             check-pin-pinnumber
             check-pin-required-attribs
+            pin-attrib?
             pin-attribs
             net-numbers
             check-duplicate-net-pinnumbers
             check-duplicate-net-pinnumber-numbers
             check-old-pin))
+
+(define (pin-attrib? object)
+  "Returns #t if OBJECT is a pin attribute, otherwise
+returns #f."
+  (and (attribute? object)
+       (and=> (attrib-attachment object) pin?)))
 
 (define %valid-pintype-values
   '(in out io oc oe pas tp tri clk pwr))
