@@ -3,10 +3,10 @@ ERROR: Not enough pins in slotdef=2:4,5,6 (must be 4)
 ERROR: Not enough pins in slotdef=3:9,10,8 (must be 4)
 ERROR: Not enough pins in slotdef=4:12,13,11 (must be 4)
 ERROR: Object with forbidden connections: pin
-ERROR: Missing pinnumber= attribute
-ERROR: Missing pinseq= attribute
-Warning: Missing pintype= attribute
-Warning: Missing pinlabel= attribute
+Warning: Missing pin attribute: pinlabel
+ERROR: Missing pin attribute: pinnumber
+Warning: Missing pin attribute: pintype
+ERROR: Missing pin attribute: pinseq
 ERROR: Object with forbidden connections: pin
 2 warnings found
 8 ERRORS found

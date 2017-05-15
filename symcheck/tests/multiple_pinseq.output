@@ -1,2 +1,3 @@
-ERROR: Found multiple pinseq= attributes on one pin
-1 ERROR found
+ERROR: Duplicate pin attribute on one pin: pinseq
+ERROR: Duplicate pin attribute on one pin: pinseq
+2 ERRORS found

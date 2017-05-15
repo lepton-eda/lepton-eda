@@ -1,6 +1,8 @@
 ERROR: Invalid pintype=i attribute
 ERROR: Invalid pintype=iox attribute
 ERROR: Invalid pintype=abc attribute
-ERROR: Found multiple pintype=pas attributes on one pin
-ERROR: Found multiple pintype=out attributes on one pin
-5 ERRORS found
+ERROR: Duplicate pin attribute on one pin: pintype
+ERROR: Duplicate pin attribute on one pin: pintype
+ERROR: Duplicate pin attribute on one pin: pintype
+ERROR: Duplicate pin attribute on one pin: pintype
+7 ERRORS found

@@ -14,7 +14,6 @@
   #:use-module (geda attrib)
   #:use-module (geda repl)
   #:use-module (symbol check attrib)
-  #:use-module (symbol check obsolete)
   #:use-module (symbol check pin-attrib)
   #:use-module (symbol check primitive)
   #:use-module (symbol check slot)
@@ -67,9 +66,6 @@ FILENAME ... are the symbols to check.
           (attribs->symbol-attribs page floating-attribs)
 
           (for-each (lambda (pin)
-                      ;; Check for missing pin attributes.
-                      (check-pin-required-attribs pin "pinlabel")
-                      (check-pin-required-attribs pin "pintype")
                       ;; Check all pintype attributes for all symbol pins.
                       (check-pin-pintype pin))
                     pins)
@@ -79,9 +75,7 @@ FILENAME ... are the symbols to check.
           ;; Check for pinnumber attribute (and multiples) on all pins.
           (check-symbol-pinnumber page objects)
           ;; Check symbol slotting attributes.
-          (check-slots page pins objects)
-          ;; Check for old pin attributes.
-          (for-each check-obsolete-pin-attrib attached-attribs))))
+          (check-slots page pins objects))))
 
     ;; now report the info/warnings/errors to the user
     (report-blame-statistics `(,page . ,objects))))
