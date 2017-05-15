@@ -22,10 +22,6 @@
 
   #:export (check-all-symbols))
 
-;;; Check for old pin#=# and slot#=# attributes.
-(define (check-symbol-obsolete-attribs objects)
-  (for-each check-obsolete-attrib objects))
-
 ;;; Check symbol pinnumber attribute
 (define (check-symbol-pinnumber page objects)
   (let* ((nets (sort (net-numbers objects) string<?))
@@ -83,10 +79,9 @@ FILENAME ... are the symbols to check.
           ;; Check for pinnumber attribute (and multiples) on all pins.
           (check-symbol-pinnumber page objects)
           ;; Check symbol slotting attributes.
-          (check-slots page pins objects))))
-
-    ; check for old pin#=# and slot#=# attributes
-    (check-symbol-obsolete-attribs objects)
+          (check-slots page pins objects)
+          ;; Check for old pin attributes.
+          (for-each check-obsolete-pin-attrib attached-attribs))))
 
     ;; now report the info/warnings/errors to the user
     (report-blame-statistics `(,page . ,objects))))

@@ -7,6 +7,7 @@
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
   #:use-module (symbol check duplicate)
+  #:use-module (symbol check obsolete)
 
   #:export (floating-attrib?
             filter-floating-attribs
@@ -168,7 +169,8 @@ must be a symbol."
     (('net . objects)
      `(net . ,objects))
     ((name . objects)
-     `(,name . ,(check-floating-attrib-duplicates objects)))
+     `(,name . ,(check-obsolete-floating-attrib
+                 (check-floating-attrib-duplicates objects))))
     (_ (error "Invalid attribute list."))))
 
 (define (attribs->attrib-alist objects)
