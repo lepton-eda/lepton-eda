@@ -8,9 +8,7 @@
   #:use-module (symbol check duplicate)
   #:use-module (symbol check pin)
 
-  #:export (check-pin-pinnumber
-            pin-attrib?
-            pin-attribs
+  #:export (pin-attrib?
             net-numbers
             check-duplicate-net-pinnumbers
             check-duplicate-net-pinnumber-numbers
@@ -23,33 +21,6 @@
 returns #f."
   (and (attribute? object)
        (and=> (attrib-attachment object) pin?)))
-
-
-(define (pin-attribs pin name)
-  "Returns all attributes of PIN with given NAME which must be a
-symbol."
-  (and (pin? pin)
-       (filter (lambda (obj)
-                 (eq? (string->symbol (attrib-name obj)) name))
-               (object-attribs pin))))
-
-(define (check-attrib-value attrib)
-  (not (string=? (attrib-value attrib) "0")))
-
-
-;;; Returns OBJECT's attribute pinseq= if it is valid, otherwise returns #f.
-(define (check-pin-attrib object attr-name)
-  (and (pin? object)
-       (let ((attrib-list (pin-attribs object attr-name)))
-
-         (if (null? attrib-list)
-             #f
-             (let ((attrib (car attrib-list)))
-               (and (check-attrib-value attrib)
-                    attrib))))))
-
-(define (check-pin-pinnumber pin)
-  (check-pin-attrib pin 'pinnumber))
 
 ;;; Collect all net= pin numbers.
 (define (net-numbers objects)
