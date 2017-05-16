@@ -7,7 +7,7 @@
 
   #:export (object-blames
             blame-object
-            report-blame-statistics))
+            blame-statistics))
 
 ;;; Object property for storing blaming info.
 (define object-blames (make-object-property))
@@ -72,7 +72,7 @@ list of the form:
        ,(apply + error)
        ,(apply + unrecognized)))))
 
-(define (report-blame-statistics objects)
+(define (blame-statistics objects)
   "Reports blame statistics for given list of OBJECTS."
   (define (report-statistics info-count
                              warning-count
