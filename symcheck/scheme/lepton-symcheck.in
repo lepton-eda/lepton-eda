@@ -9,6 +9,6 @@ exec guile-2.0 -s "$0" "$@"
 ;;; extension. Let's make it quiet here.
 (define with-toplevel (@@ (geda core toplevel) %with-toplevel))
 (define make-toplevel (@@ (geda core toplevel) %make-toplevel))
-(define check-all (@@ (symbol check) check-all-symbols))
+(define check-all (@@ (symcheck check) check-all-symbols))
 
 (with-toplevel (make-toplevel) check-all)
