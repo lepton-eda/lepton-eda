@@ -2,8 +2,8 @@
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 match)
   #:use-module (symbol gettext)
+  #:use-module (symbol check log)
   #:use-module (symcheck option)
-  #:use-module (geda log)
 
   #:export (object-blames
             blame-object
@@ -19,44 +19,29 @@ OBJECT. SEVERITY may be one of 'info, 'warning, or 'error."
     (set! (object-blames object)
           `((,severity . ,message) . ,(if blames blames '())))))
 
-(define verbose (symcheck-option-ref-length 'verbose))
 (define quiet (symcheck-option-ref 'quiet))
-
-(define %check-log-destination 'stdout)
-
-;;; Logs MESSAGE formatted using FORMAT-ARGS and log LEVEL. The
-;;; output goes to the destination defined in variable
-;;; %check-log-destination which currently may be 'stdout or 'log.
-(define (check-log! level message . format-args)
-  (define (stdout-log! level message . format-args)
-    (unless quiet
-      (apply format #t message format-args)
-      (newline)))
-
-  (let ((log-func (case %check-log-destination
-                    ((stdout) stdout-log!)
-                    ((log) log!)
-                    (else stdout-log!))))
-    (apply log-func level message format-args)))
+(define verbose (if quiet -1 (symcheck-option-ref-length 'verbose)))
 
 (define (report-blame object)
   "Reports errors (blames) collected for OBJECT."
+  (define (output-to-log?)
+    (eq? (current-check-log-destination) 'log))
   (define (report blame)
     (match blame
       (('info . msg)
-       (when (> verbose 2)
-         (check-log! 'message (format #f (_ "Info: ~A") msg)))
+       (when (or (> verbose 2) (output-to-log?))
+         (check-log! 'info (format #f (_ "Info: ~A") msg)))
        '(1 0 0 0))
       (('warning . msg)
-       (when (> verbose 1)
-         (check-log! 'message (format #f (_ "Warning: ~A") msg)))
+       (when (or (> verbose 1) (output-to-log?))
+         (check-log! 'warning (format #f (_ "Warning: ~A") msg)))
        '(0 1 0 0))
       (('error . msg)
-       (when (> verbose 0)
-         (check-log! 'message (format #f (_ "ERROR: ~A") msg)))
+       (when (or (> verbose 0) (output-to-log?))
+         (check-log! 'critical (format #f (_ "ERROR: ~A") msg)))
        '(0 0 1 0))
       (_
-       (check-log! 'message (format #f (_ "Unrecognized info: ~A\n") blame))
+       (check-log! 'error (format #f (_ "Unrecognized info: ~A\n") blame))
        '(0 0 0 1))))
 
   (map report (or (object-blames object) '())))
@@ -79,23 +64,24 @@ list of the form:
                              error-count
                              unrecognized-count)
 
-    (unless (zero? warning-count)
-      (check-log! 'message (N_ "~A warning found"
-                               "~A warnings found"
-                               warning-count)
-                  warning-count)
-      (when (< verbose 2)
-        (check-log! 'message (_ "(use -vv to view details)"))))
+    (unless quiet
+      (unless (zero? warning-count)
+        (check-log! 'message (N_ "~A warning found"
+                                 "~A warnings found"
+                                 warning-count)
+                    warning-count)
+        (when (< verbose 2)
+          (check-log! 'message (_ "(use -vv to view details)"))))
 
-    (if (zero? error-count)
-        (check-log! 'message (_ "No errors found"))
-        (begin
-          (check-log! 'message (N_ "~A ERROR found"
-                                   "~A ERRORS found"
-                                   error-count)
-                      error-count)
-          (when (< verbose 1)
-            (check-log! 'message (_ "(use -v to view details)")))))
+      (if (zero? error-count)
+          (check-log! 'message (_ "No errors found"))
+          (begin
+            (check-log! 'message (N_ "~A ERROR found"
+                                     "~A ERRORS found"
+                                     error-count)
+                        error-count)
+            (when (< verbose 1)
+              (check-log! 'message (_ "(use -v to view details)"))))))
 
     ;; return code
     (if (zero? error-count)

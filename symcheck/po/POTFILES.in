@@ -12,6 +12,7 @@ symcheck/scheme/symbol/check/component.scm
 symcheck/scheme/symbol/check/connection.scm
 symcheck/scheme/symbol/check/forbidden.scm
 symcheck/scheme/symbol/check/line.scm
+symcheck/scheme/symbol/check/log.scm
 symcheck/scheme/symbol/check/net.scm
 symcheck/scheme/symbol/check/obsolete.scm
 symcheck/scheme/symbol/check/path.scm

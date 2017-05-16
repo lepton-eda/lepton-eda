@@ -14,6 +14,7 @@
   #:use-module (geda attrib)
   #:use-module (geda repl)
   #:use-module (symbol check attrib)
+  #:use-module (symbol check log)
   #:use-module (symbol check pin)
   #:use-module (symbol check pin-attrib)
   #:use-module (symbol check primitive)
@@ -41,7 +42,7 @@ FILENAME ... are the symbols to check.
         (objects (page-contents page)))
 
     (when (not quiet)
-      (log! 'message (_ "Checking: ~A\n") (page-filename page)))
+      (check-log! 'message (_ "Checking: ~A\n") (page-filename page)))
 
     (let ((rest (filter-map check-primitive objects)))
       (receive (pins attribs)
@@ -90,6 +91,9 @@ FILENAME ... are the symbols to check.
   (define (report-symbol-statistics page)
     (check-symbol page)
     (blame-statistics `(,page . ,(page-contents page))))
+
+  ;; Symcheck logs to stdout by default.
+  (set-check-log-destination! 'stdout)
 
   (let ((files (symcheck-option-ref '()))
         (help (symcheck-option-ref 'help))

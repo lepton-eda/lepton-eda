@@ -35,6 +35,7 @@ nobase_dist_scmdata_DATA = \
 	symbol/check/duplicate.scm \
 	symbol/check/forbidden.scm \
 	symbol/check/line.scm \
+	symbol/check/log.scm \
 	symbol/check/net.scm \
 	symbol/check/obsolete.scm \
 	symbol/check/path.scm \
