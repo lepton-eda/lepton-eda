@@ -22,15 +22,6 @@
 
   #:export (check-all-symbols))
 
-;;; Check symbol pinnumber attribute
-(define (check-symbol-pinnumber page objects)
-  (let* ((nets (sort (net-numbers objects) string<?))
-         (pinnumbers (filter-map check-pin-pinnumber objects))
-         (pinnumber-values (sort (map attrib-value pinnumbers) string<?)))
-
-    (check-duplicate-net-pinnumbers page nets)
-    (check-duplicate-net-pinnumber-numbers page pinnumber-values nets)))
-
 (define (usage)
   (format #t
           (_ "Usage: ~A [OPTIONS] FILENAME ...
@@ -68,7 +59,15 @@ FILENAME ... are the symbols to check.
           ;; Check pinseq attributes.
           (check-duplicates/pinseq pins)
           (check-duplicates/pinnumber pins)
-          (check-symbol-pinnumber page objects)
+
+          ;; Check symbol pinnumber attribute
+          (let* ((nets (sort (net-numbers objects) string<?))
+                 (pinnumbers (filter-map check-pin-pinnumber objects))
+                 (pinnumber-values (sort (map attrib-value pinnumbers) string<?)))
+
+            (check-duplicate-net-pinnumbers page nets)
+            (check-duplicate-net-pinnumber-numbers page pinnumber-values nets))
+
           ;; Check symbol slotting attributes.
           (check-slots page pins objects))))
 
