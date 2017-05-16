@@ -44,6 +44,9 @@ FILENAME ... are the symbols to check.
     (when (not quiet)
       (check-log! 'message (_ "Checking: ~A\n") (page-filename page)))
 
+    ;; First reset all blaming info collected previously.
+    (for-each acquit-object `(,page . ,(page-contents page)))
+
     (let ((rest (filter-map check-primitive objects)))
       (receive (pins attribs)
           (partition symbol-pin? rest)
