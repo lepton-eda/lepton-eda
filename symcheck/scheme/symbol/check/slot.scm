@@ -46,34 +46,17 @@
     (and (integer? num)
          num)))
 
-;;; Returns numslots= value if the list is valid, else #f.
-(define (get-valid-numslots page numslots-list)
-  (match numslots-list
-    (()
-     (blame-info page (_ "Missing numslots attribute"))
-     #f)
-    ((x y z ...)
-     (blame-error page (_ "Too many numslots attribs")))
-    ((numslots)
-     (blame-info numslots (_ "Found numslots=~A attribute") (attrib-value numslots))
-     numslots)))
-
-
-(define (check-numslots page object-list)
-  (let* ((numslots-list (filter-floating-attribs 'numslots
-                                                 object-list))
-         (object (get-valid-numslots page numslots-list))
-         (value (and object (attrib-value object)))
-         (num (and value (string->integer value))))
+(define (check-numslots page numslots)
+  (let* ((value (and=> numslots attrib-value))
+         (num (and=> value string->integer)))
     (and num
          (cond
           ((negative? num)
-           (blame-error object
-                        (_ "Negative ~A=~A")
-                        'numslots
+           (blame-error numslots
+                        (_ "Negative attribute: numslots=~A")
                         num))
           ((zero? num)
-           (blame-info object (_ "numslots set to ~A, symbol does not have slots") num)
+           (blame-info numslots (_ "numslots set to 0, symbol does not have slots"))
            #f)
           ((positive? num) num)))))
 
@@ -130,15 +113,19 @@
                                               object))))
         (blame-invalid-slotdef object))))
 
+;;; Helper procedures.
+(define (slot-number<? a b)
+  (< (slot-number a) (slot-number b)))
 
-(define (make-slot-list numslots objects)
-  (define (slot-number<? a b)
-    (< (slot-number a) (slot-number b)))
+(define (slot-number=? a b)
+  (= (slot-number a) (slot-number b)))
 
-  (let ((slotdef-list (filter-floating-attribs 'slotdef objects)))
-    (sort (filter-map (cut check-slotdef numslots <>)
-                      slotdef-list)
-          slot-number<?)))
+(define (make-slot-list numslots slotdef-list)
+  (if slotdef-list
+      (sort (filter-map (cut check-slotdef numslots <>)
+                        slotdef-list)
+            slot-number<?)
+      '()))
 
 
 (define (check-slot-pin-duplicates slot)
@@ -229,13 +216,6 @@
 
 (define (check-slot-number-duplicates slot-list)
   "Checks for duplicated slot numbers in SLOT-LIST."
-
-  (define (slot-number<? a b)
-    (< (slot-number a) (slot-number b)))
-
-  (define (slot-number=? a b)
-    (= (slot-number a) (slot-number b)))
-
   (define (blame-duplicate-slot-number slot)
     (let ((object (slot-object slot)))
       (blame-error object
@@ -256,7 +236,7 @@
                              slot-number=?)))
 
 
-(define (check-slots page pins objects)
+(define (check-slots page pins numslots-ls slotdef-ls)
   (define (count-all-slot-pins page ls)
     (blame-info page
                 (_ "Found ~A distinct pins in slots")
@@ -265,11 +245,12 @@
                                               string=?))))
 
   ;; Look for numslots to see if this symbol has slotting info.
-  (let ((numslots (check-numslots page objects)))
+  (let ((numslots (check-numslots page numslots-ls)))
     ;; If there's no numslots= attribute, don't check slotting at all.
     (and numslots
-         (let ((slot-list (make-slot-list numslots objects)))
+         (let ((slot-list (make-slot-list numslots slotdef-ls)))
            (check-slot-numbers page numslots slot-list)
            (check-slot-list-pins (check-slot-number-duplicates slot-list))
            (check-slotdef-pin-number (length pins) slot-list)
-           (count-all-slot-pins page slot-list)))))
+           (count-all-slot-pins page slot-list)
+           slot-list))))
