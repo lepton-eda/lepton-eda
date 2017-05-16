@@ -69,10 +69,7 @@ FILENAME ... are the symbols to check.
             (check-duplicate-net-pinnumber-numbers page pinnumber-values nets))
 
           ;; Check symbol slotting attributes.
-          (check-slots page pins objects))))
-
-    ;; now report the info/warnings/errors to the user
-    (report-blame-statistics `(,page . ,objects))))
+          (check-slots page pins objects))))))
 
 ;;; Reads file NAME and outputs a page named NAME
 (define (file->page name)
@@ -84,6 +81,10 @@ FILENAME ... are the symbols to check.
 
 
 (define (check-all-symbols)
+  (define (report-symbol-statistics page)
+    (check-symbol page)
+    (report-blame-statistics `(,page . ,(page-contents page))))
+
   (let ((files (symcheck-option-ref '()))
         (help (symcheck-option-ref 'help))
         (interactive (symcheck-option-ref 'interactive)))
@@ -98,4 +99,6 @@ Run `~A --help' for more information.
             (let ((pages (map file->page files)))
               (if interactive
                   (lepton-repl)
-                  (primitive-exit (apply + (map check-symbol pages)))))))))
+
+                  ;; now report the info/warnings/errors to the user
+                  (primitive-exit (apply + (map report-symbol-statistics pages)))))))))
