@@ -61,9 +61,8 @@ FILENAME ... are the symbols to check.
           (check-duplicates/pinnumber pins)
 
           ;; Check symbol pinnumber attribute
-          (let* ((nets (sort (net-numbers objects) string<?))
-                 (pinnumbers (filter-map check-pin-pinnumber objects))
-                 (pinnumber-values (sort (map attrib-value pinnumbers) string<?)))
+          (let ((nets (sort (net-numbers objects) string<?))
+                (pinnumber-values (sort (filter-map symbol-pin-number pins) string<?)))
 
             (check-duplicate-net-pinnumbers page nets)
             (check-duplicate-net-pinnumber-numbers page pinnumber-values nets))
