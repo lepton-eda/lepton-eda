@@ -54,21 +54,24 @@ FILENAME ... are the symbols to check.
             (partition floating-attrib? attribs)
 
           ;; Create preliminary symbol structure.
-          (attribs->symbol-attribs page floating-attribs)
+          (let ((symbol-attribs (attribs->symbol-attribs page floating-attribs)))
 
-          ;; Check pinseq attributes.
-          (check-duplicates/pinseq pins)
-          (check-duplicates/pinnumber pins)
+            ;; Check pinseq attributes.
+            (check-duplicates/pinseq pins)
+            (check-duplicates/pinnumber pins)
 
-          ;; Check symbol pinnumber attribute
-          (let ((nets (sort (net-numbers objects) string<?))
-                (pinnumber-values (sort (filter-map symbol-pin-number pins) string<?)))
+            ;; Check symbol pinnumber attribute
+            (let ((nets (sort (net-numbers objects) string<?))
+                  (pinnumber-values (sort (filter-map symbol-pin-number pins) string<?)))
 
-            (check-duplicate-net-pinnumbers page nets)
-            (check-duplicate-net-pinnumber-numbers page pinnumber-values nets))
+              (check-duplicate-net-pinnumbers page nets)
+              (check-duplicate-net-pinnumber-numbers page pinnumber-values nets))
 
-          ;; Check symbol slotting attributes.
-          (check-slots page pins objects))))))
+            ;; Check symbol slotting attributes.
+            (check-slots page
+                         pins
+                         (assq-ref symbol-attribs 'numslots)
+                         (assq-ref symbol-attribs 'slotdef))))))))
 
 ;;; Reads file NAME and outputs a page named NAME
 (define (file->page name)

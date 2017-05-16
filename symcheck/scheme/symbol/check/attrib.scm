@@ -10,7 +10,6 @@
   #:use-module (symbol check obsolete)
 
   #:export (floating-attrib?
-            filter-floating-attribs
             check-attribute
             attribs->attrib-alist
             attribs->symbol-attribs))
@@ -22,15 +21,6 @@
 returns #f."
   (and (attribute? object)
        (not (attrib-attachment object))))
-
-(define (filter-floating-attribs name object-list)
-  "Filters OBJECT-LIST to contain only attributes named NAME which
-must be a symbol."
-  (define (floating-attrib-with-name object)
-    (and (floating-attrib? object)
-         (eq? (string->symbol (attrib-name object)) name)))
-
-  (filter floating-attrib-with-name object-list))
 
 ;;; Returns #t if OBJECT is correct graphical= attribute,
 ;;; otherwise returns #f and blames it.
