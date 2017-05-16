@@ -12,7 +12,6 @@
   #:export (floating-attrib?
             filter-floating-attribs
             check-attribute
-            check-attrib-duplicates
             attribs->attrib-alist
             attribs->symbol-attribs))
 
@@ -118,36 +117,6 @@ must be a symbol."
                                    aname
                                    aname
                                    avalue)))))))
-
-
-;;; Sorts attrib list LS and transforms it into a list where
-;;; attributes with duplicated values are gathered together into
-;;; sublists.
-(define (attrib-duplicates ls)
-  (define (attrib-value<? a b)
-    (string<? (attrib-value a) (attrib-value b)))
-
-  (define (attrib-value=? a b)
-    (string=? (attrib-value a) (attrib-value b)))
-
-  (list->duplicate-list ls attrib-value<? attrib-value=?))
-
-
-(define (check-attrib-duplicates ls)
-  "Checks for duplicated attributes in LS."
-  (define (blame-duplicate object)
-    (blame-object object
-                  'error
-                  (format #f
-                          (_ "Found duplicate ~A=~A attribute in the symbol\n")
-                          (attrib-name object)
-                          (attrib-value object))))
-  (define (blame-if-list ls)
-    (when (list? ls)
-      (for-each blame-duplicate ls)))
-
-  (for-each blame-if-list (attrib-duplicates ls)))
-
 
 (define (check-floating-attrib-duplicates ls)
   "Checks for duplicated attributes in object list LS."
