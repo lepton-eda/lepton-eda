@@ -7,6 +7,7 @@
 
   #:export (object-blames
             blame-object
+            acquit-object
             blame-statistics))
 
 ;;; Object property for storing blaming info.
@@ -18,6 +19,10 @@ OBJECT. SEVERITY may be one of 'info, 'warning, or 'error."
   (let ((blames (object-blames object)))
     (set! (object-blames object)
           `((,severity . ,message) . ,(if blames blames '())))))
+
+(define (acquit-object object)
+  "Remove any blaming info for schematic OBJECT."
+  (set! (object-blames object) '()))
 
 (define quiet (symcheck-option-ref 'quiet))
 (define verbose (if quiet -1 (symcheck-option-ref-length 'verbose)))
