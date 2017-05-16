@@ -68,10 +68,14 @@ FILENAME ... are the symbols to check.
               (check-duplicate-net-pinnumber-numbers page pinnumber-values nets))
 
             ;; Check symbol slotting attributes.
-            (check-slots page
-                         pins
-                         (assq-ref symbol-attribs 'numslots)
-                         (assq-ref symbol-attribs 'slotdef))))))))
+            (let ((slotting-info
+                   (check-slots page
+                                pins
+                                (assq-ref symbol-attribs 'numslots)
+                                (assq-ref symbol-attribs 'slotdef))))
+
+              `(lepton-symbol (@ ,@symbol-attribs (slotting-info ,@slotting-info))
+                              ,@pins))))))))
 
 ;;; Reads file NAME and outputs a page named NAME
 (define (file->page name)
