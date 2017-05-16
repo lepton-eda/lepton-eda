@@ -89,7 +89,7 @@ FILENAME ... are the symbols to check.
 (define (check-all-symbols)
   (define (report-symbol-statistics page)
     (check-symbol page)
-    (report-blame-statistics `(,page . ,(page-contents page))))
+    (blame-statistics `(,page . ,(page-contents page))))
 
   (let ((files (symcheck-option-ref '()))
         (help (symcheck-option-ref 'help))
