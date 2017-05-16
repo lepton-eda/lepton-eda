@@ -116,7 +116,8 @@ lepton_schematic_SOURCES = \
 	x_rc.c \
 	x_script.c \
 	x_stroke.c \
-	x_window.c
+	x_window.c \
+	x_widgets.c
 
 lepton_schematic_CPPFLAGS = -I$(top_srcdir)/liblepton/include  -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
