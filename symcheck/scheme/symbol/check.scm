@@ -36,13 +36,7 @@ FILENAME ... are the symbols to check.
   (primitive-exit 0))
 
 (define-public (check-symbol page)
-
-  (let ((quiet (symcheck-option-ref 'quiet))
-        (verbose (symcheck-option-ref-length 'verbose))
-        (objects (page-contents page)))
-
-    (when (not quiet)
-      (check-log! 'message (_ "Checking: ~A\n") (page-filename page)))
+  (let ((objects (page-contents page)))
 
     ;; First reset all blaming info collected previously.
     (for-each acquit-object `(,page . ,(page-contents page)))
@@ -92,6 +86,8 @@ FILENAME ... are the symbols to check.
 
 (define (check-all-symbols)
   (define (report-symbol-statistics page)
+    (unless (symcheck-option-ref 'quiet)
+      (check-log! 'message (_ "Checking: ~A\n") (page-filename page)))
     (check-symbol page)
     (blame-statistics `(,page . ,(page-contents page))))
 
