@@ -22,4 +22,5 @@ symcheck/scheme/symbol/check/pin-attrib.scm
 symcheck/scheme/symbol/check/primitive.scm
 symcheck/scheme/symbol/check/slot.scm
 symcheck/scheme/symbol/check/text.scm
+symcheck/scheme/symcheck/check.scm
 symcheck/scheme/symcheck/option.scm

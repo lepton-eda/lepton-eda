@@ -46,6 +46,7 @@ nobase_dist_scmdata_DATA = \
 	symbol/check/slot.scm \
 	symbol/check/text.scm \
 	symbol/gettext.scm \
+	symcheck/check.scm \
 	symcheck/option.scm
 
 MOSTLYCLEANFILES = *.log *~
