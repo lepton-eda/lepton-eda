@@ -182,11 +182,11 @@ gschem_find_text_state_get_type ()
  *
  *  \return the new find text state widget
  */
-GschemFindTextState*
+GtkWidget*
 gschem_find_text_state_new ()
 {
-  return GSCHEM_FIND_TEXT_STATE (g_object_new (GSCHEM_TYPE_FIND_TEXT_STATE,
-                                               NULL));
+  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_FIND_TEXT_STATE,
+                                   NULL));
 }
 
 
