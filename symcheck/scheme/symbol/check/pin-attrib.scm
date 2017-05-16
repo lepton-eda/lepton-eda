@@ -5,15 +5,18 @@
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
   #:use-module (symbol check attrib)
+  #:use-module (symbol check duplicate)
+  #:use-module (symbol check pin)
 
-  #:export (check-pin-pinseq
-            check-pin-pinnumber
+  #:export (check-pin-pinnumber
             pin-attrib?
             pin-attribs
             net-numbers
             check-duplicate-net-pinnumbers
             check-duplicate-net-pinnumber-numbers
-            check-old-pin))
+            check-pin-attrib-duplicates
+            check-duplicates/pinseq
+            check-duplicates/pinnumber))
 
 (define (pin-attrib? object)
   "Returns #t if OBJECT is a pin attribute, otherwise
@@ -44,9 +47,6 @@ symbol."
              (let ((attrib (car attrib-list)))
                (and (check-attrib-value attrib)
                     attrib))))))
-
-(define (check-pin-pinseq pin)
-  (check-pin-attrib pin 'pinseq))
 
 (define (check-pin-pinnumber pin)
   (check-pin-attrib pin 'pinnumber))
@@ -125,3 +125,48 @@ for PAGE if some numbers match."
              (if (string>? pin net)
                  (check-duplicate-net-pinnumber-numbers page pins (cdr nets))
                  (check-duplicate-net-pinnumber-numbers page (cdr pins) nets))))))
+
+
+(define (pinseq<? a b)
+  (string<? (symbol-pin-seq a) (symbol-pin-seq b)))
+
+(define (pinseq=? a b)
+  (string=? (symbol-pin-seq a) (symbol-pin-seq b)))
+
+(define (pinnumber<? a b)
+  (string<? (symbol-pin-number a) (symbol-pin-number b)))
+
+(define (pinnumber=? a b)
+  (string=? (symbol-pin-number a) (symbol-pin-number b)))
+
+(define (check-pin-attrib-duplicates name getter less-func equal-func symbol-pins)
+  "Checks for duplicated attributes in LS."
+  (define (blame-duplicate symbol-pin)
+    (blame-object (symbol-pin-object symbol-pin)
+                  'error
+                  (format #f
+                          (_ "Duplicate pin attribute in the symbol: ~A=~A")
+                          name
+                          (getter symbol-pin))))
+  (define (blame-if-list ls)
+    (when (list? ls)
+      (for-each blame-duplicate ls)))
+
+  (for-each blame-if-list
+            (list->duplicate-list (filter getter symbol-pins)
+                                  less-func
+                                  equal-func)))
+
+(define (check-duplicates/pinseq symbol-pins)
+  (check-pin-attrib-duplicates 'pinseq
+                               symbol-pin-seq
+                               pinseq<?
+                               pinseq=?
+                               symbol-pins))
+
+(define (check-duplicates/pinnumber symbol-pins)
+  (check-pin-attrib-duplicates 'pinnumber
+                               symbol-pin-number
+                               pinnumber<?
+                               pinnumber=?
+                               symbol-pins))

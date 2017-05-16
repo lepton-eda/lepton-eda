@@ -52,7 +52,7 @@ OBJECT if it needs other checks. Otherwise returns #f."
     ((line) (check-line object) #f)
     ((path) (check-path object) #f)
     ((picture) (check-picture object) #f)
-    ((pin) (check-pin object) object)
+    ((pin) (check-pin object))
     ((text)
      (check-text object)
      (and (attribute? object) object))

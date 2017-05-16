@@ -14,6 +14,7 @@
   #:use-module (geda attrib)
   #:use-module (geda repl)
   #:use-module (symbol check attrib)
+  #:use-module (symbol check pin)
   #:use-module (symbol check pin-attrib)
   #:use-module (symbol check primitive)
   #:use-module (symbol check slot)
@@ -28,7 +29,6 @@
          (pinnumber-values (sort (map attrib-value pinnumbers) string<?)))
 
     (check-duplicate-net-pinnumbers page nets)
-    (check-attrib-duplicates pinnumbers)
     (check-duplicate-net-pinnumber-numbers page pinnumber-values nets)))
 
 (define (usage)
@@ -52,9 +52,9 @@ FILENAME ... are the symbols to check.
     (when (not quiet)
       (log! 'message (_ "Checking: ~A\n") (page-filename page)))
 
-    (let ((rest (filter check-primitive objects)))
+    (let ((rest (filter-map check-primitive objects)))
       (receive (pins attribs)
-          (partition pin? rest)
+          (partition symbol-pin? rest)
 
         ;; Check symbol attributes; common checks.
         (for-each check-attribute attribs)
@@ -66,8 +66,8 @@ FILENAME ... are the symbols to check.
           (attribs->symbol-attribs page floating-attribs)
 
           ;; Check pinseq attributes.
-          (check-attrib-duplicates (filter-map check-pin-pinseq pins))
-          ;; Check for pinnumber attribute (and multiples) on all pins.
+          (check-duplicates/pinseq pins)
+          (check-duplicates/pinnumber pins)
           (check-symbol-pinnumber page objects)
           ;; Check symbol slotting attributes.
           (check-slots page pins objects))))
