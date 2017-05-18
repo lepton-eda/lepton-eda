@@ -309,7 +309,7 @@ SCM_DEFINE (config_save_x, "%config-save!", 1, 0, 0,
   EdaConfig *cfg = edascm_to_config (cfg_s);
   GError *error = NULL;
   if (!eda_config_save (cfg, &error)) {
-    error_from_gerror (s_config_load_x, &error);
+    error_from_gerror (s_config_save_x, &error);
   }
   return cfg_s;
 }
