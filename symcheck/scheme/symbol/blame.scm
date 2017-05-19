@@ -1,6 +1,7 @@
 (define-module (symbol blame)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 match)
+  #:use-module (geda page)
   #:use-module (symbol gettext)
   #:use-module (symbol check log)
   #:use-module (symcheck option)

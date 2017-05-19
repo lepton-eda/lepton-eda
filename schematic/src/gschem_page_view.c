@@ -1288,14 +1288,13 @@ gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
   gschem_page_view_invalidate_all (view);
 }
 
-
-/*! \brief Zoom in on a single text object
+/*! \brief Zoom in on a single object
  *
  *  \param [in] view      This GschemPageView
- *  \param [in] object    The text object
+ *  \param [in] object    The object
  */
 void
-gschem_page_view_zoom_text (GschemPageView *view, OBJECT *object)
+gschem_page_view_zoom_object (GschemPageView *view, OBJECT *object)
 {
   int success;
   int x[2];
@@ -1310,7 +1309,6 @@ gschem_page_view_zoom_text (GschemPageView *view, OBJECT *object)
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->page != NULL);
   g_return_if_fail (object->page->toplevel != NULL);
-  g_return_if_fail (object->text != NULL);
 
   success = geda_object_calculate_visible_bounds (object->page->toplevel,
                                                   object,
@@ -1326,7 +1324,8 @@ gschem_page_view_zoom_text (GschemPageView *view, OBJECT *object)
     /* this number configurable */
     viewport_center_x = (x[1] + x[0]) / 2;
     viewport_center_y = (y[1] + y[0]) / 2;
-    k = ((y[1] - y[0]) / 50);
+    /* .5 is scale to show really small objects like zero-sized pins */
+    k = ((y[1] - y[0]) / 50 || (x[1] - x[0]) / 50 || .5);
     viewport_height = geometry->screen_height * k;
     viewport_width  = geometry->screen_width  * k;
 

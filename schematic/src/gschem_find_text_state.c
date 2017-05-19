@@ -49,7 +49,7 @@ typedef void (*NotifyFunc)(void*, void*);
 
 
 static void
-assign_store (GschemFindTextState *state, GSList *objects);
+assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text);
 
 static void
 class_init (GschemFindTextStateClass *klass);
@@ -71,6 +71,9 @@ find_objects_using_regex (GSList *pages, const char *text, GError **error);
 
 static GSList*
 find_objects_using_substring (GSList *pages, const char *text);
+
+static GSList*
+find_objects_using_check (GSList *pages);
 
 static GSList*
 get_pages (GList *pages, gboolean descend);
@@ -118,6 +121,7 @@ gschem_find_text_state_find (GschemFindTextState *state, GList *pages, int type,
   int count;
   GSList *objects = NULL;
   GSList *all_pages;
+  gboolean filter_text = TRUE;
 
   all_pages = get_pages (pages, descend);
 
@@ -134,13 +138,18 @@ gschem_find_text_state_find (GschemFindTextState *state, GList *pages, int type,
       objects = find_objects_using_regex (all_pages, text, NULL);
       break;
 
+    case FIND_TYPE_CHECK:
+      filter_text = FALSE;
+      objects = find_objects_using_check (all_pages);
+      break;
+
     default:
       break;
   }
 
   g_slist_free (all_pages);
 
-  assign_store (state, objects);
+  assign_store (state, objects, filter_text);
   count = g_slist_length (objects);
   g_slist_free (objects);
 
@@ -202,7 +211,7 @@ gschem_find_text_state_new ()
  *  \param [in] objects the list of objects to put in the store
  */
 static void
-assign_store (GschemFindTextState *state, GSList *objects)
+assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text)
 {
   GSList *object_iter;
 
@@ -231,12 +240,18 @@ assign_store (GschemFindTextState *state, GSList *objects)
       continue;
     }
 
-    if (object->type != OBJ_TEXT) {
+    if (filter_text && (object->type != OBJ_TEXT)) {
       g_warning ("expecting a text object");
       continue;
     }
 
-    str = geda_text_object_get_string (object);
+    if (filter_text) {
+      str = geda_text_object_get_string (object);
+    } else {
+      str = scm_to_utf8_string (scm_call_1 (scm_c_public_ref ("gschem symbol check",
+                                                              "object-blaming-info"),
+                                            edascm_from_object (object)));
+    }
 
     if (str == NULL) {
       g_warning ("NULL string encountered");
@@ -568,6 +583,57 @@ find_objects_using_substring (GSList *pages, const char *text)
   }
 
   return g_slist_reverse (object_list);
+}
+
+
+
+static GSList*
+scm_to_gslist (SCM list_s)
+{
+  SCM object_s;
+  GSList *objects = NULL;
+
+  SCM_ASSERT (scm_is_true (scm_list_p (list_s)), list_s, 1, "scm_to_gslist");
+
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+  scm_dynwind_unwind_handler ((void (*)(void *)) g_slist_free,
+                              objects,
+                              (scm_t_wind_flags) 0);
+
+  while (!scm_is_null (list_s)) {
+    object_s = SCM_CAR (list_s);
+    objects = g_slist_prepend (objects,
+                               (gpointer) edascm_to_object (object_s));
+    list_s = SCM_CDR (list_s);
+  }
+
+  scm_remember_upto_here_1 (list_s);
+
+  scm_dynwind_end ();
+
+  return g_slist_reverse (objects);
+}
+
+
+
+/*! \brief Find all blamed objects after symbol check
+ *
+ *  \param pages
+ *  \param text
+ *  \param error
+ *  \return a list of objects that are blamed
+ */
+static GSList*
+find_objects_using_check (GSList *pages)
+{
+  PAGE *page = (PAGE*) pages->data;
+  TOPLEVEL *toplevel = page->toplevel;
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+  edascm_dynwind_toplevel (toplevel);
+  GSList *objects = scm_to_gslist (scm_call_0 (scm_c_public_ref ("gschem symbol check",
+                                                                 "check-symbol")));
+  scm_dynwind_end ();
+  return objects;
 }
 
 
