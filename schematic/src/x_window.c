@@ -336,7 +336,7 @@ x_window_invoke_macro (GschemMacroWidget *widget, int response, GschemToplevel *
 }
 
 static void
-x_window_select_text (GschemFindTextState *state, OBJECT *object, GschemToplevel *w_current)
+x_window_select_object (GschemFindTextState *state, OBJECT *object, GschemToplevel *w_current)
 {
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);
@@ -351,7 +351,7 @@ x_window_select_text (GschemFindTextState *state, OBJECT *object, GschemToplevel
     gschem_page_view_set_page (view, object->page);
   }
 
-  gschem_page_view_zoom_text (view, object);
+  gschem_page_view_zoom_object (view, object);
 }
 
 static void
@@ -1397,7 +1397,7 @@ create_notebook_bottom (GschemToplevel* w_current)
                             gtk_label_new(_("Status")));
 
   g_signal_connect (w_current->find_text_state, "select-object",
-                    G_CALLBACK (&x_window_select_text), w_current);
+                    G_CALLBACK (&x_window_select_object), w_current);
 
   gtk_widget_set_size_request (GTK_WIDGET (w_current->find_text_state),
                                default_width, default_height / 4);

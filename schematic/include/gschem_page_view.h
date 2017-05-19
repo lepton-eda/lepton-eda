@@ -136,4 +136,4 @@ void
 gschem_page_view_zoom_extents (GschemPageView *view, const GList *list);
 
 void
-gschem_page_view_zoom_text (GschemPageView *view, OBJECT *object);
+gschem_page_view_zoom_object (GschemPageView *view, OBJECT *object);

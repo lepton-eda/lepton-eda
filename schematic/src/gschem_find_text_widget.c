@@ -67,6 +67,9 @@ static void
 click_cancel (GtkWidget *button, GschemFindTextWidget *widget);
 
 static void
+changed_type (GtkWidget *entry, GschemFindTextWidget *widget);
+
+static void
 click_find (GtkWidget *entry, GschemFindTextWidget *widget);
 
 static GtkListStore*
@@ -126,6 +129,24 @@ click_cancel (GtkWidget *button, GschemFindTextWidget *widget)
 
 
 
+/* Callback for when the user changes combo box active item
+ */
+static void
+changed_type (GtkWidget *entry, GschemFindTextWidget *widget)
+{
+  g_return_if_fail (widget != NULL);
+
+  if (gschem_find_text_widget_get_find_type (widget) == FIND_TYPE_CHECK) {
+    gtk_widget_set_sensitive (widget->find_button, TRUE);
+    gtk_widget_set_visible (widget->entry, FALSE);
+    gtk_widget_set_visible (widget->descend_button, FALSE);
+  } else {
+    gtk_widget_set_sensitive (widget->find_button, FALSE);
+    gtk_widget_set_visible (widget->entry, TRUE);
+    gtk_widget_set_visible (widget->descend_button, TRUE);
+  }
+}
+
 /* Callback for when the user clicks the find button
  */
 static void
@@ -133,7 +154,8 @@ click_find (GtkWidget *entry, GschemFindTextWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
-  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0) {
+  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0 ||
+      gschem_find_text_widget_get_find_type (widget) == FIND_TYPE_CHECK) {
     gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_OK);
   }
 }
@@ -427,6 +449,11 @@ gschem_find_text_widget_init (GschemFindTextWidget *widget)
                     G_CALLBACK (activate_entry),
                     widget);
 
+  g_signal_connect (G_OBJECT (widget->combo),
+                    "changed",
+                    G_CALLBACK (changed_type),
+                    widget);
+
   g_signal_connect (G_OBJECT (cancel_button),
                     "clicked",
                     G_CALLBACK (click_cancel),
@@ -546,6 +573,12 @@ create_find_type_store ()
     -1
     );
 
+  gtk_list_store_append (store, &iter);
+  gtk_list_store_set (store, &iter,
+    COLUMN_NAME,      _("Check symbol:"),
+    COLUMN_INDEX,     FIND_TYPE_CHECK,
+    -1
+    );
   return store;
 }
 
