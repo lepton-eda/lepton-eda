@@ -24,7 +24,7 @@
   #:use-module (geda page)
   #:use-module (geda repl)
   #:use-module (symcheck option)
-  #:use-module (symbol blame)
+  #:use-module (symcheck report)
   #:use-module (symbol check)
   #:use-module (symbol check log)
   #:use-module (symbol gettext)
@@ -58,7 +58,7 @@ FILENAME ... are the symbols to check.
     (unless (symcheck-option-ref 'quiet)
       (check-log! 'message (_ "Checking: ~A\n") (page-filename page)))
     (check-symbol page)
-    (blame-statistics `(,page . ,(page-contents page))))
+    (check-report `(,page . ,(page-contents page))))
 
   ;; Symcheck logs to stdout by default.
   (set-check-log-destination! 'stdout)

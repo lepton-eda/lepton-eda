@@ -47,7 +47,8 @@ nobase_dist_scmdata_DATA = \
 	symbol/check/text.scm \
 	symbol/gettext.scm \
 	symcheck/check.scm \
-	symcheck/option.scm
+	symcheck/option.scm \
+	symcheck/report.scm
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~ $(bin_SCRIPTS)
