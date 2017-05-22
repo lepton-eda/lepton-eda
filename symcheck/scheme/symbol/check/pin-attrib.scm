@@ -27,9 +27,6 @@
   #:use-module (symbol check pin)
 
   #:export (pin-attrib?
-            net-numbers
-            check-duplicate-net-pinnumbers
-            check-duplicate-net-pinnumber-numbers
             check-pin-attrib-duplicates
             check-duplicates/pinseq
             check-duplicates/pinnumber))
@@ -39,73 +36,6 @@
 returns #f."
   (and (attribute? object)
        (and=> (attrib-attachment object) pin?)))
-
-;;; Collect all net= pin numbers.
-(define (net-numbers objects)
-  (define (add-net-pin-attribute net-attrib)
-    (let ((net (attrib-value net-attrib)))
-      (let ((net-tokens (string-split net #\:)))
-        ;; length of net tokens has to be 2
-        (if (not (= 2 (length net-tokens)))
-            (begin (blame-object net-attrib
-                                 'error
-                                 (format #f
-                                         (_ "Bad ~A= attribute [~A]\n")
-                                         'net
-                                         net))
-                   '())
-            (let ((pin-tokens (string-split (cadr net-tokens) #\,)))
-              (for-each
-               (lambda (pin)
-                 (blame-object net-attrib
-                               'info
-                               (format #f
-                                       (_ "Found pin number ~A=~A in net attribute\n")
-                                       'pinnumber
-                                       pin)))
-               pin-tokens)
-              pin-tokens)))))
-
-  (append-map add-net-pin-attribute objects))
-
-
-(define (check-duplicate-net-pinnumbers page ls)
-  "Checks list of pin numbers LS (typically obtained from net=
-attributes) for duplicates and reports errors for PAGE."
-  (and (not (null? ls))
-       (not (null? (cdr ls)))
-       (if (string=? (car ls) (cadr ls))
-           (blame-object page
-                         'error
-                         (format #f
-                                 (_ "Found duplicate pin in net= attributes [~A]\n")
-                                 (car ls))))
-       (if (string=? (car ls) "0")
-           (blame-object page
-                         'error
-                         (format #f
-                                 (_ "Found pinnumber ~A=~A in net= attribute\n")
-                                 'pinnumber
-                                 0)))
-       (check-duplicate-net-pinnumbers page (cdr ls))))
-
-(define (check-duplicate-net-pinnumber-numbers page pins nets)
-  "Compares sorted pin number lists PINS and NETS taken
-accordingly from pinnumber= and net= attributes and reports errors
-for PAGE if some numbers match."
-  (and (not (null? pins))
-       (not (null? nets))
-       (let ((pin (car pins))
-             (net (car nets)))
-         (if (string=? pin net)
-             (and (blame-object page
-                                'warning
-                                (format #f (_ "Found the same number in a pinnumber attribute and in a net attribute [~A]\n") pin))
-                  (check-duplicate-net-pinnumber-numbers page (cdr pins) (cdr nets)))
-             (if (string>? pin net)
-                 (check-duplicate-net-pinnumber-numbers page pins (cdr nets))
-                 (check-duplicate-net-pinnumber-numbers page (cdr pins) nets))))))
-
 
 (define (pinseq<? a b)
   (string<? (symbol-pin-seq a) (symbol-pin-seq b)))
@@ -121,6 +51,9 @@ for PAGE if some numbers match."
 
 (define (check-pin-attrib-duplicates name getter less-func equal-func symbol-pins)
   "Checks for duplicated attributes in LS."
+
+  (define (reset-pin-seq symbol-pin)
+    (set-symbol-pin-seq! symbol-pin #f))
   (define (blame-duplicate symbol-pin)
     (blame-object (symbol-pin-object symbol-pin)
                   'error
@@ -130,7 +63,11 @@ for PAGE if some numbers match."
                           (getter symbol-pin))))
   (define (blame-if-list ls)
     (when (list? ls)
-      (for-each blame-duplicate ls)))
+      (for-each blame-duplicate ls)
+      ;; Reset duplicate pinseq values to avoid slotting
+      ;; checks for them.
+      (when (eq? name 'pinseq)
+        (for-each reset-pin-seq (cdr ls)))))
 
   (for-each blame-if-list
             (list->duplicate-list (filter getter symbol-pins)

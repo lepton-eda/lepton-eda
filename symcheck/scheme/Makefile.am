@@ -33,10 +33,12 @@ nobase_dist_scmdata_DATA = \
 	symbol/check/component.scm \
 	symbol/check/connection.scm \
 	symbol/check/duplicate.scm \
+	symbol/check/entity-pin.scm \
 	symbol/check/forbidden.scm \
 	symbol/check/line.scm \
 	symbol/check/log.scm \
 	symbol/check/net.scm \
+	symbol/check/net-attrib.scm \
 	symbol/check/obsolete.scm \
 	symbol/check/path.scm \
 	symbol/check/picture.scm \

@@ -1,5 +1,5 @@
-ERROR: Duplicate pin number 0 in slotdef=1:1,0,3 and other slotdef
+ERROR: Duplicate pin number 0: slotdef=1:1,0,3
 ERROR: Zero pin number in slotdef=1:1,0,3
-ERROR: Duplicate pin number 0 in slotdef=4:12,13,0 and other slotdef
+ERROR: Duplicate pin number 0: slotdef=4:12,13,0
 ERROR: Zero pin number in slotdef=4:12,13,0
 4 ERRORS found

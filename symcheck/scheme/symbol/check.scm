@@ -19,15 +19,60 @@
 (define-module (symbol check)
   #:use-module (ice-9 receive)
   #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
+  #:use-module (sxml match)
   #:use-module (geda page)
   #:use-module (symbol blame)
   #:use-module (symbol check attrib)
+  #:use-module (symbol check entity-pin)
+  #:use-module (symbol check net-attrib)
   #:use-module (symbol check pin)
   #:use-module (symbol check pin-attrib)
   #:use-module (symbol check primitive)
   #:use-module (symbol check slot)
 
   #:export (check-symbol))
+
+(define (symbol-pins->entity-pins pins slotting-info)
+  (define (make-slot-pins slot)
+    (map (cut symbol-pin->entity-pin <> slot) pins))
+
+  (check-duplicates/slot (append-map make-slot-pins
+                                     (or slotting-info '(#f)))))
+
+(define (assign-nets! entity-pin-list net-map-list)
+  (define pinnumber=? string=?)
+
+  (define (make-virtual-entity-pin net-map)
+    (make-entity-pin
+     #f                                ; object
+     #f                                ; slot
+     #f                                ; pin-seq
+     'pwr                              ; pin-type
+     (net-map-pinnumber net-map)       ; pin-number
+     #f                                ; pin-label
+     (net-map-netname net-map)         ; net-name
+     ;; attribs
+     #f))
+
+  (define (check-pin-and-assign-net! net-map ls)
+    (and (not (null? ls))
+         (let ((pin (car ls)))
+           (if (pinnumber=? (net-map-pinnumber net-map)
+                            (entity-pin-number pin))
+               (set-entity-pin-netname! pin (net-map-netname net-map))
+               (check-pin-and-assign-net! net-map (cdr ls))))))
+
+  (let loop ((nmls net-map-list)
+             (epls entity-pin-list))
+    (if (null? nmls)
+        epls
+        (loop (cdr nmls)
+              (if (check-pin-and-assign-net! (car nmls) epls)
+                  epls
+                  (cons (make-virtual-entity-pin (car nmls))
+                        epls))))))
+
 
 (define (check-symbol page)
   (let ((objects (page-contents page)))
@@ -45,29 +90,16 @@
         (receive (floating-attribs attached-attribs)
             (partition floating-attrib? attribs)
 
+          (check-duplicates/pinseq pins)
+          (check-duplicates/pinnumber pins)
           ;; Create preliminary symbol structure.
-          (let ((symbol-attribs (attribs->symbol-attribs page floating-attribs)))
-
-            ;; Check pinseq attributes.
-            (check-duplicates/pinseq pins)
-            (check-duplicates/pinnumber pins)
-
-            ;; Check symbol slotting attributes.
-            (let ((slotting-info
-                   (check-slots page
-                                pins
-                                (assq-ref symbol-attribs 'numslots)
-                                (assq-ref symbol-attribs 'slotdef)))
-                  (net-attribs (or (assq-ref symbol-attribs 'net) '())))
-
-              ;; Check symbol pinnumber attribute
-              (let ((nets (sort (net-numbers net-attribs) string<?))
-                    (pinnumber-values (sort (filter-map symbol-pin-number pins) string<?)))
-
-                (check-duplicate-net-pinnumbers page nets)
-                (check-duplicate-net-pinnumber-numbers page pinnumber-values nets))
-
-              `(lepton-symbol (@ ,@symbol-attribs
-                                 (slotting-info ,slotting-info)
-                                 (net-attribs ,net-attribs))
-                              ,@pins))))))))
+          (let* ((symbol-attribs (attribs->symbol-attribs page floating-attribs))
+                 (slotting-info
+                  ;; Check symbol slotting attributes.
+                  (check-slots page
+                               pins
+                               (assq-ref symbol-attribs 'numslots)
+                               (assq-ref symbol-attribs 'slotdef)))
+                 (net-mapping (make-net-maps (or (assq-ref symbol-attribs 'net) '()))))
+            (assign-nets! (symbol-pins->entity-pins pins slotting-info)
+                          net-mapping)))))))
