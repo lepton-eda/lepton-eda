@@ -19,6 +19,7 @@
 (define-module (symbol check pin)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-9)
+  #:use-module (srfi srfi-9 gnu)
   #:use-module (geda object)
   #:use-module (geda attrib)
   #:use-module (symbol gettext)
@@ -37,7 +38,8 @@
                    symbol-pin-label set-symbol-pin-label!
                    symbol-pin-attribs set-symbol-pin-attribs!)
 
-  #:export (check-pin))
+  #:export (check-pin
+            set-symbol-pin-printer!))
 
 
 (define-record-type <symbol-pin>
@@ -49,6 +51,41 @@
   (number symbol-pin-number set-symbol-pin-number!)
   (label symbol-pin-label set-symbol-pin-label!)
   (attribs symbol-pin-attribs set-symbol-pin-attribs!))
+
+;;; Sets default printer for <symbol-pin>
+(set-record-type-printer!
+ <symbol-pin>
+ (lambda (record port) (format port "#<lepton-symbol-pin ~A>" (symbol-pin-seq record))))
+
+(define (set-symbol-pin-printer! format-string . args)
+  "Adjust pretty-printing of <symbol-pin> records.
+FORMAT-STRING must be in the form required by the procedure
+`format'. The following ARGS may be used:
+  'object
+  'seq
+  'type
+  'number
+  'label
+  'attribs
+Any other unrecognized argument will lead to yielding '?' in the
+corresponding place.
+Example usage:
+  (set-symbol-pin-printer! \"<symbol-pin-~A (~A)>\" 'number 'seq)"
+  (set-record-type-printer!
+   <symbol-pin>
+   (lambda (record port)
+     (apply format port format-string
+            (map
+             (lambda (arg)
+               (match arg
+                 ('object (symbol-pin-object record))
+                 ('seq (symbol-pin-seq record))
+                 ('type (symbol-pin-type record))
+                 ('number (symbol-pin-number record))
+                 ('label (symbol-pin-label record))
+                 ('attribs (symbol-pin-attribs record))
+                 (_ #\?)))
+             args)))))
 
 (define %valid-pintype-values
   '(in out io oc oe pas tp tri clk pwr))
