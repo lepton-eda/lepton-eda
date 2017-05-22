@@ -5,9 +5,7 @@ Warning: Missing required attribute: footprint
 Warning: Missing required attribute: refdes
 Warning: Unknown attribute: device_missing=7400
 ERROR: Too many pins in slotdef=1:1,2,3,5,6 (must be 3)
-ERROR: Duplicate pin number 5 in slotdef=1:1,2,3,5,6 and other slotdef
 ERROR: Not enough pins in slotdef=2:4,5 (must be 3)
-ERROR: Duplicate pin number 5 in slotdef=2:4,5 and other slotdef
 ERROR: Slot number 8 (slotdef=8:9,10,8) is greater than the maximum slot number (5)
 ERROR: Invalid slotdef=a attribute (the format is #:#,#,#,...)
 Warning: Missing pin attribute: pinlabel
@@ -22,4 +20,4 @@ Warning: Missing pin attribute: pinlabel
 Warning: Missing pin attribute: pintype
 Warning: Obsolete attribute: uref=U?
 13 warnings found
-10 ERRORS found
+8 ERRORS found

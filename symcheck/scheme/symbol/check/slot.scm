@@ -182,47 +182,6 @@ Example usage:
       '()))
 
 
-(define (check-slot-pin-duplicates slot)
-  "Checks for duplicated pin numbers in SLOT."
-  (define (blame-if-list ls)
-    (when (list? ls)
-      (let ((object (slot-object slot))
-            (pin (car ls)))
-        (blame-error object
-                     (_ "Duplicate pin number ~A in slotdef=~A")
-                     pin
-                     (attrib-value object)))))
-
-  (for-each blame-if-list
-            (list->duplicate-list (slot-pins slot)
-                                  string<?
-                                  string=?)))
-
-
-(define (check-slot-pin-in-slot pin slot other-slot)
-  (define (blame-slot-list-pin-duplicate slot)
-    (let ((object (slot-object slot)))
-      (blame-error object
-                   (_ "Duplicate pin number ~A in slotdef=~A and other slotdef")
-                   pin
-                   (attrib-value object))))
-
-  (when (member pin (slot-pins other-slot))
-    (blame-slot-list-pin-duplicate slot)
-    (blame-slot-list-pin-duplicate other-slot)))
-
-
-(define (check-slot-list-pins ls)
-  (unless (null? ls)
-    (let ((slot (car ls)))
-      (check-slot-pin-duplicates slot)
-      (for-each (lambda (other-slot)
-                  (for-each (lambda (pin) (check-slot-pin-in-slot pin slot other-slot))
-                            (slot-pins slot)))
-                (cdr ls))
-      (check-slot-list-pins (cdr ls)))))
-
-
 (define (check-slot-numbers page numslots slot-list)
   (define (slot-number-in-list? slot ls)
     (and (memq (slot-number slot) ls)
@@ -258,14 +217,17 @@ Example usage:
         (blame-error object
                      (_ "Not enough pins in slotdef=~A (must be ~A)")
                      (attrib-value object)
-                     numpins))
+                     numpins)
+        #f)
        ((> real-pin-number numpins)
         (blame-error object
                      (_ "Too many pins in slotdef=~A (must be ~A)")
                      (attrib-value object)
-                     numpins)))))
+                     numpins)
+        #f)
+       (else slot))))
 
-  (for-each check-pin-number slot-list))
+  (filter-map check-pin-number slot-list))
 
 
 (define (check-slot-number-duplicates slot-list)
@@ -273,9 +235,9 @@ Example usage:
   (define (blame-duplicate-slot-number slot)
     (let ((object (slot-object slot)))
       (blame-error object
-                   (_ "Duplicate slot number ~A in slotdef=~A")
+                   (_ "Duplicate slot number ~A: ~A")
                    (slot-number slot)
-                   (attrib-value object))))
+                   (text-string object))))
 
   (define (blame-if-list ls)
     (if (list? ls)
@@ -304,7 +266,6 @@ Example usage:
     (and numslots
          (let ((slot-list (make-slot-list numslots slotdef-ls)))
            (check-slot-numbers page numslots slot-list)
-           (check-slot-list-pins (check-slot-number-duplicates slot-list))
-           (check-slotdef-pin-number (length pins) slot-list)
            (count-all-slot-pins page slot-list)
-           slot-list))))
+           (check-slotdef-pin-number (length pins)
+                                     (check-slot-number-duplicates slot-list))))))

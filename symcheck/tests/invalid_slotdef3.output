@@ -1,4 +1,4 @@
-ERROR: Duplicate pin number 3 in slotdef=1:1,2,3 and other slotdef
-ERROR: Duplicate pin number 3 in slotdef=2:3,4,5 and other slotdef
+ERROR: Duplicate pin number 3: slotdef=1:1,2,3
+ERROR: Duplicate pin number 3: slotdef=2:3,4,5
 ERROR: Not enough pins in slotdef=4:12,13 (must be 3)
 3 ERRORS found
