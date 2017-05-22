@@ -20,6 +20,7 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
+  #:use-module (srfi srfi-9 gnu)
   #:use-module (srfi srfi-26)
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
@@ -28,7 +29,13 @@
   #:use-module (geda attrib)
   #:use-module (geda object)
 
-  #:export (check-slots))
+  #:export-syntax (make-slot slot?
+                   slot-object set-slot-object!
+                   slot-number set-slot-number!
+                   slot-pins set-slot-pins!)
+
+  #:export (check-slots
+            set-slot-printer!))
 
 (define-record-type <slot>
   (make-slot object number pins)
@@ -36,6 +43,35 @@
   (object slot-object set-slot-object!)
   (number slot-number set-slot-number!)
   (pins slot-pins set-slot-pins!))
+
+;;; Sets default printer for <slot>
+(set-record-type-printer!
+ <slot>
+ (lambda (record port) (format port "#<lepton-slot ~A>" (slot-number record))))
+
+(define (set-slot-printer! format-string . args)
+  "Adjust pretty-printing of <slot> records.
+FORMAT-STRING must be in the form required by the procedure
+`format'. The following ARGS may be used:
+  'object
+  'number
+  'pins
+Any other unrecognized argument will lead to yielding '?' in the
+corresponding place.
+Example usage:
+  (set-slot-printer! \"<slot-~A ~A>\" 'number 'pins)"
+  (set-record-type-printer!
+   <slot>
+   (lambda (record port)
+     (apply format port format-string
+            (map
+             (lambda (arg)
+               (match arg
+                 ('object (slot-object record))
+                 ('number (slot-number record))
+                 ('slot-pins (slot-pins record))
+                 (_ #\?)))
+             args)))))
 
 (define-syntax blame-error
   (syntax-rules ()
