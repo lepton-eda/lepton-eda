@@ -42,16 +42,8 @@ returns #f."
 
 ;;; Collect all net= pin numbers.
 (define (net-numbers objects)
-  (define (net-attrib? object)
-    (and (floating-attrib? object)
-         (string=? (attrib-name object) "net")))
-
-  (define (get-net-attributes ls)
-    (filter net-attrib? ls))
-
   (define (add-net-pin-attribute net-attrib)
     (let ((net (attrib-value net-attrib)))
-      (blame-object net-attrib 'info (format #f (_ "Found [~A=~A]\n") 'net net))
       (let ((net-tokens (string-split net #\:)))
         ;; length of net tokens has to be 2
         (if (not (= 2 (length net-tokens)))
@@ -74,8 +66,7 @@ returns #f."
                pin-tokens)
               pin-tokens)))))
 
-  (append-map add-net-pin-attribute
-              (get-net-attributes objects)))
+  (append-map add-net-pin-attribute objects))
 
 
 (define (check-duplicate-net-pinnumbers page ls)

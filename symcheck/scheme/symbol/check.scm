@@ -52,19 +52,22 @@
             (check-duplicates/pinseq pins)
             (check-duplicates/pinnumber pins)
 
-            ;; Check symbol pinnumber attribute
-            (let ((nets (sort (net-numbers objects) string<?))
-                  (pinnumber-values (sort (filter-map symbol-pin-number pins) string<?)))
-
-              (check-duplicate-net-pinnumbers page nets)
-              (check-duplicate-net-pinnumber-numbers page pinnumber-values nets))
-
             ;; Check symbol slotting attributes.
             (let ((slotting-info
                    (check-slots page
                                 pins
                                 (assq-ref symbol-attribs 'numslots)
-                                (assq-ref symbol-attribs 'slotdef))))
+                                (assq-ref symbol-attribs 'slotdef)))
+                  (net-attribs (or (assq-ref symbol-attribs 'net) '())))
 
-              `(lepton-symbol (@ ,@symbol-attribs (slotting-info ,@slotting-info))
+              ;; Check symbol pinnumber attribute
+              (let ((nets (sort (net-numbers net-attribs) string<?))
+                    (pinnumber-values (sort (filter-map symbol-pin-number pins) string<?)))
+
+                (check-duplicate-net-pinnumbers page nets)
+                (check-duplicate-net-pinnumber-numbers page pinnumber-values nets))
+
+              `(lepton-symbol (@ ,@symbol-attribs
+                                 (slotting-info ,slotting-info)
+                                 (net-attribs ,net-attribs))
                               ,@pins))))))))
