@@ -3,7 +3,7 @@ ERROR: Missing slotdef=4:... (there should be 5 slotdef= attributes)
 Warning: Missing required attribute: device
 Warning: Missing required attribute: footprint
 Warning: Missing required attribute: refdes
-Warning: Found unknown device_missing= attribute: [device_missing=7400]
+Warning: Unknown attribute: device_missing=7400
 ERROR: Too many pins in slotdef=1:1,2,3,5,6 (must be 3)
 ERROR: Duplicate pin number 5 in slotdef=1:1,2,3,5,6 and other slotdef
 ERROR: Not enough pins in slotdef=2:4,5 (must be 3)
@@ -13,13 +13,13 @@ ERROR: Invalid slotdef=a attribute (the format is #:#,#,#,...)
 Warning: Missing pin attribute: pinlabel
 ERROR: Missing pin attribute: pinnumber
 Warning: Missing pin attribute: pintype
-Warning: Found unknown pinnumbe= attribute: [pinnumbe=3]
+Warning: Unknown attribute: pinnumbe=3
 Warning: Missing pin attribute: pinlabel
 Warning: Missing pin attribute: pintype
 ERROR: Missing pin attribute: pinseq
-Warning: Found unknown pineq= attribute: [pineq=2]
+Warning: Unknown attribute: pineq=2
 Warning: Missing pin attribute: pinlabel
 Warning: Missing pin attribute: pintype
-Warning: Found obsolete uref= attribute: [uref=U?]
+Warning: Obsolete attribute: uref=U?
 13 warnings found
 10 ERRORS found

@@ -3,29 +3,29 @@ ERROR: Missing slotdef=2:... (there should be 4 slotdef= attributes)
 ERROR: Missing slotdef=1:... (there should be 4 slotdef= attributes)
 Warning: Missing required attribute: refdes
 ERROR: Obsolete slot#=# attribute: slot1=1,2,3
-Warning: Found unknown slot1= attribute: [slot1=1,2,3]
+Warning: Unknown attribute: slot1=1,2,3
 ERROR: Obsolete slot#=# attribute: slot2=4,5,6
-Warning: Found unknown slot2= attribute: [slot2=4,5,6]
+Warning: Unknown attribute: slot2=4,5,6
 ERROR: Obsolete slot#=# attribute: slot3=9,10,8
-Warning: Found unknown slot3= attribute: [slot3=9,10,8]
+Warning: Unknown attribute: slot3=9,10,8
 ERROR: Obsolete slot#=# attribute: slot4=12,13,11
-Warning: Found unknown slot4= attribute: [slot4=12,13,11]
+Warning: Unknown attribute: slot4=12,13,11
 ERROR: Missing pin attribute: pinnumber
 Warning: Missing pin attribute: pintype
 ERROR: Missing pin attribute: pinseq
-Warning: Found unknown pin3= attribute: [pin3=3]
+Warning: Unknown attribute: pin3=3
 ERROR: Obsolete pin#=# attribute: pin3=3
 ERROR: Missing pin attribute: pinnumber
 Warning: Missing pin attribute: pintype
 ERROR: Missing pin attribute: pinseq
-Warning: Found unknown pin2= attribute: [pin2=2]
+Warning: Unknown attribute: pin2=2
 ERROR: Obsolete pin#=# attribute: pin2=2
 Warning: Missing pin attribute: pinlabel
 ERROR: Missing pin attribute: pinnumber
 ERROR: Missing pin attribute: pinseq
-Warning: Found unknown pin1= attribute: [pin1=1]
+Warning: Unknown attribute: pin1=1
 ERROR: Obsolete pin#=# attribute: pin1=1
 ERROR: Invalid pin attribute value: pintype=123just a type
-Warning: Found obsolete uref= attribute: [uref=U?]
+Warning: Obsolete attribute: uref=U?
 12 warnings found
 17 ERRORS found

@@ -3,12 +3,12 @@ ERROR: Missing slotdef=3:... (there should be 4 slotdef= attributes)
 ERROR: Missing slotdef=2:... (there should be 4 slotdef= attributes)
 ERROR: Missing slotdef=1:... (there should be 4 slotdef= attributes)
 ERROR: Obsolete slot#=# attribute: slot1=1,2,3
-Warning: Found unknown slot1= attribute: [slot1=1,2,3]
+Warning: Unknown attribute: slot1=1,2,3
 ERROR: Obsolete slot#=# attribute: slot2=4,5,6
-Warning: Found unknown slot2= attribute: [slot2=4,5,6]
+Warning: Unknown attribute: slot2=4,5,6
 ERROR: Obsolete slot#=# attribute: slot3=9,10,8
-Warning: Found unknown slot3= attribute: [slot3=9,10,8]
+Warning: Unknown attribute: slot3=9,10,8
 ERROR: Obsolete slot#=# attribute: slot4=12,13,11
-Warning: Found unknown slot4= attribute: [slot4=12,13,11]
+Warning: Unknown attribute: slot4=12,13,11
 4 warnings found
 8 ERRORS found

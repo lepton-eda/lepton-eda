@@ -1,14 +1,14 @@
 Warning: Missing required attribute: footprint
-ERROR: Found wrongly attached attribute: [footprint=2]
-Warning: Found obsolete label= attribute: [label=2]
-ERROR: Found forbidden type= attribute: [type=out]
-Warning: Found unknown xxxxx= attribute: [xxxxx=out]
-ERROR: Found misplaced pin attribute: [pintype=io]
-ERROR: Found misplaced pin attribute: [pinlabel=attached to box]
-ERROR: Found wrongly attached attribute: [comment=attached to circle]
-ERROR: Found misplaced pin attribute: [pinlabel=not attached]
-ERROR: Found misplaced pin attribute: [pinseq=3]
-ERROR: Found misplaced pin attribute: [pinnumber=3]
-ERROR: Found misplaced pin attribute: [pintype=io]
+ERROR: Wrongly attached attribute: footprint=2
+Warning: Obsolete attribute: label=2
+ERROR: Forbidden attribute: type=out
+Warning: Unknown attribute: xxxxx=out
+ERROR: Misplaced pin attribute: pintype=io
+ERROR: Misplaced pin attribute: pinlabel=attached to box
+ERROR: Wrongly attached attribute: comment=attached to circle
+ERROR: Misplaced pin attribute: pinlabel=not attached
+ERROR: Misplaced pin attribute: pinseq=3
+ERROR: Misplaced pin attribute: pinnumber=3
+ERROR: Misplaced pin attribute: pintype=io
 3 warnings found
 9 ERRORS found
