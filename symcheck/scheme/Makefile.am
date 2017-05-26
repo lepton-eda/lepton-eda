@@ -6,7 +6,7 @@ EXTRA_DIST = lepton-symcheck.in
 do_subst = sed -e 's,[@]libdir[@],$(libdir),g'
 
 lepton-symcheck: lepton-symcheck.in Makefile
-	$(do_subst) < $@.in > $@
+	$(do_subst) < $(srcdir)/$@.in > $@
 	chmod +x $@
 
 if INSTALL_COMPAT_SYMLINKS
