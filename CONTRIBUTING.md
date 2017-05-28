@@ -119,3 +119,9 @@ When writing Scheme code:
 - Code that uses `format` to format strings is usually a lot clearer
   than a `string-append`, `display` and `newline`.  You can always use
   the [Guile `(ice-9 format)` library](http://www.gnu.org/software/guile/manual/html_node/Writing.html#index-simple_002dformat-2052).
+
+When writing Makefile code:
+
+- Do not use `$<` ("implied source") variable in explicit rules.
+  In implementations of `make` other than GNU, it may be defined only
+  in implicit (i.e. suffix-transformation) rules.
