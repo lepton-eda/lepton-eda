@@ -21,6 +21,13 @@
 (begin-test 'expand-env-variables
 	    (and
 	     ; Bad expression samples
+
+	     ; FreeBSD: setenv() has no effect on existing env vars,
+	     ;   unless putenv() is called first:
+	     ;
+	     (putenv "USER")
+	     (putenv "HOME")
+
 	     (setenv "USER" "myuser")
 	     (setenv "HOME" "myhome")	     
 	     (assert-equal "/a/${USER myhome }/b/c"
