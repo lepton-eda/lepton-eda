@@ -961,7 +961,7 @@ SCM_DEFINE (set_config_x, "%set-config!", 4, 0, 0,
     int i = 0;
 
     if (scm_is_string (first_s)) {
-      gchar **value = g_new0 (gchar *, len);
+      gchar **value = g_new0 (gchar *, len + 1);
       scm_dynwind_unwind_handler ((void (*)(void *)) g_strfreev, value,
                                   SCM_F_WIND_EXPLICITLY);
       for (curr_s = value_s; !scm_is_null (curr_s); curr_s = scm_cdr (curr_s)) {
@@ -969,6 +969,10 @@ SCM_DEFINE (set_config_x, "%set-config!", 4, 0, 0,
         value [i++] = g_strdup (tmp);
         free (tmp);
       }
+
+      /* NULL-terminate the list of strings to be passed to g_strfreev(): */
+      value [i] = NULL;
+
       eda_config_set_string_list (cfg, group, key,
                                   (const gchar * const *) value, len);
 
