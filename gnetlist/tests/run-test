@@ -2,7 +2,7 @@
 
 ref="$1"
 tmp="`echo "$1" | sed -e 's:.*/tests/::' -e 's:\\.out$::' -e 's:\\./::'`"
-stem="`echo "${tmp}" | sed -e 's:-spice-.*:@@@:' -e 's:-vams-.*:@@@:' -e 's:\\(-[^-@]*\\|@@@\\)$::'`"
+stem="`echo "${tmp}" | sed -E -e 's:-spice-.*:@@@:' -e 's:-vams-.*:@@@:' -e 's:(-[^-@]*|@@@)$::'`"
 backend="`echo "${tmp}" | sed -e "s:^${stem}-::"`"
 
 GNETLIST="${abs_top_builddir}/gnetlist/src/gnetlist"
