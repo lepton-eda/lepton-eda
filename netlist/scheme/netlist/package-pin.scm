@@ -30,10 +30,11 @@
             package-pin-label set-package-pin-label!
             package-pin-attribs set-package-pin-attribs!
             package-pin-nets set-package-pin-nets!
+            package-pin-connection set-package-pin-connection!
             set-package-pin-printer!))
 
 (define-record-type <package-pin>
-  (make-package-pin id object type number name label attribs nets)
+  (make-package-pin id object type number name label attribs nets connection)
   package-pin?
   (id package-pin-id set-package-pin-id!)
   (object package-pin-object set-package-pin-object!)
@@ -42,7 +43,8 @@
   (name package-pin-name set-package-pin-name!)
   (label package-pin-label set-package-pin-label!)
   (attribs package-pin-attribs set-package-pin-attribs!)
-  (nets package-pin-nets set-package-pin-nets!))
+  (nets package-pin-nets set-package-pin-nets!)
+  (connection package-pin-connection set-package-pin-connection!))
 
 ;;; Sets default printer for <package-pin>
 (set-record-type-printer!
@@ -61,6 +63,7 @@ FORMAT-STRING must be in the form required by the procedure
   'label
   'attribs
   'nets
+  'connection
 Any other unrecognized argument will lead to yielding '?' in the
 corresponding place.
 Example usage:
@@ -80,5 +83,6 @@ Example usage:
                  ('label (package-pin-label record))
                  ('attribs (package-pin-attribs record))
                  ('nets (package-pin-nets record))
+                 ('connection (package-pin-connection record))
                  (_ #\?)))
              args)))))
