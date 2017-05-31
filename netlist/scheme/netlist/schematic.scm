@@ -27,6 +27,7 @@
   #:use-module (netlist traverse)
   #:use-module (netlist package)
   #:use-module (netlist schematic-component)
+  #:use-module (netlist schematic-connection)
   #:use-module (netlist package-pin)
   #:use-module (geda page)
   #:use-module (geda attrib)
@@ -41,7 +42,8 @@
                    schematic-graphicals set-schematic-graphicals!
                    schematic-non-unique-nets set-schematic-non-unique-nets!
                    schematic-nets set-schematic-nets!
-                   schematic-nc-nets set-schematic-nc-nets!)
+                   schematic-nc-nets set-schematic-nc-nets!
+                   schematic-connections set-schematic-connections!)
 
   #:export (make-toplevel-schematic
             schematic-toplevel-attrib
@@ -58,7 +60,8 @@
                   graphicals
                   non-unique-nets
                   nets
-                  nc-nets)
+                  nc-nets
+                  connections)
   schematic?
   (id schematic-id set-schematic-id!)
   (toplevel-pages schematic-toplevel-pages set-schematic-toplevel-pages!)
@@ -69,7 +72,8 @@
   (graphicals schematic-graphicals set-schematic-graphicals!)
   (non-unique-nets schematic-non-unique-nets set-schematic-non-unique-nets!)
   (nets schematic-nets set-schematic-nets!)
-  (nc-nets schematic-nc-nets set-schematic-nc-nets!))
+  (nc-nets schematic-nc-nets set-schematic-nc-nets!)
+  (connections schematic-connections set-schematic-connections!))
 
 (set-record-type-printer!
  <schematic>
@@ -181,6 +185,10 @@
   (any wanted-package-pin-netname=? packages))
 
 
+(define (make-schematic-connections pages)
+  (append-map make-page-schematic-connections pages))
+
+
 (define (make-toplevel-schematic toplevel-pages netlist-mode)
   "Creates a new schematic record based on TOPLEVEL-PAGES which
 must be a list of pages."
@@ -193,6 +201,7 @@ must be a list of pages."
          (full-netlist (traverse toplevel-pages netlist-mode))
          (netlist (filter plain-package? full-netlist))
          (packages (make-package-list netlist))
+         (connections (make-schematic-connections toplevel-pages))
          (graphicals (filter schematic-component-graphical? full-netlist))
          (tree (schematic->sxml netlist toplevel-pages))
          (nu-nets (get-all-nets netlist))
@@ -213,6 +222,7 @@ must be a list of pages."
                       nu-nets
                       nets
                       nc-nets
+                      connections
                       ))))
 
 (define (schematic-toplevel-attrib schematic attrib-name)

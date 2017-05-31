@@ -22,6 +22,7 @@
   ; Import C procedures and variables
   #:use-module (netlist core gettext)
 
+  #:use-module ((ice-9 match))
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
                 #:prefix rdelim:)
@@ -36,9 +37,10 @@
   #:use-module (netlist hierarchy)
   #:use-module (netlist rename)
   #:use-module (netlist net)
-  #:use-module (netlist schematic-component)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
+  #:use-module (netlist schematic-component)
+  #:use-module (netlist schematic-connection)
   #:use-module (netlist verbose)
   #:use-module (symbol check net-attrib)
 
@@ -169,7 +171,15 @@
          (or (hash-ref %netnames (pin-net-id (car nets)))
              (search-in-hash-table (cdr nets)))))
 
-(define (object-pins object tag netlist-mode)
+(define (get-package-pin-connection pin-object connections)
+  (let loop ((groups connections))
+    (and (not (null? groups))
+         (let ((group (car groups)))
+           (or (and (member pin-object (schematic-connection-objects group)) group)
+               (loop (cdr groups)))))))
+
+
+(define (object-pins object tag netlist-mode connections)
   (define (make-pin-attrib-list object)
     (define (add-attrib attrib)
       (cons (string->symbol (attrib-name attrib))
@@ -212,7 +222,8 @@
                              netname
                              (assq-ref attribs 'pinlabel)
                              attribs
-                             nets))))
+                             nets
+                             (get-package-pin-connection object connections)))))
 
   (filter-map object->package-pin (component-contents object)))
 
@@ -283,14 +294,30 @@
            (object #f)
            (attribs '())
            (nets (list (make-pin-net id net-priority netname refdes pinnumber))))
-      (make-package-pin id object 'net pinnumber netname label attribs nets)))
+      (make-package-pin id object 'net pinnumber netname label attribs nets #f)))
+
+  (define (add-net-power-pin-override pin net-map tag)
+    (define (power-pin? pin)
+      (string=? "pwr" (assq-ref (package-pin-attribs pin) 'pintype)))
+
+    (let ((connection (package-pin-connection pin))
+          (name (create-netattrib (net-map-netname net-map) tag)))
+      (when (power-pin? pin)
+        (set-schematic-connection-override-name!
+         connection
+         (match (schematic-connection-override-name connection)
+           ((? list? x) `(,name . ,x))
+           (#f name)
+           (x `(,name ,x)))))))
 
   (append pin-list
           (filter-map
            (lambda (net-map)
              (let ((pin (pinnumber->pin (net-map-pinnumber net-map) pin-list)))
                (if pin
-                   (update-pin pin net-map id refdes tag)
+                   (begin
+                     (add-net-power-pin-override pin net-map tag)
+                     (update-pin pin net-map id refdes tag))
                    (make-net-map-pin net-map id refdes tag))))
            net-maps)))
 
@@ -357,7 +384,8 @@
                    refdes
                    netlist-mode))
 
-  (define (traverse-object object)
+
+  (define (traverse-object object connections)
     (let* ((id (object-id object))
            (inherited-attribs (make-attrib-list inherited-attribs object))
            (attached-attribs (make-attrib-list object-attribs object))
@@ -384,7 +412,7 @@
                                  id
                                  refdes
                                  hierarchy-tag
-                                 (object-pins object hierarchy-tag netlist-mode))))
+                                 (object-pins object hierarchy-tag netlist-mode connections))))
       (set-schematic-component-refdes! package refdes)
       (set-schematic-component-composite! package composite?)
       (set-schematic-component-pins! package pins)
@@ -394,8 +422,10 @@
                 (append-map (cut source-netlist <> refdes) sources)
                 '()))))
 
-  (append-map traverse-object
-              (filter component? (page-contents page))))
+  (let* ((objects (page-contents page))
+         (components (filter component? objects))
+         (connections (make-page-schematic-connections page)))
+    (append-map (cut traverse-object <> connections) components)))
 
 (define (traverse-pages pages netlist-mode)
   (append-map (cut traverse-page <> #f netlist-mode) pages))
