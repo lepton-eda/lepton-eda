@@ -395,7 +395,7 @@ found, shows a dialog with an error message."
        (and component (show-component-documentation component))))
 
    (lambda (key subr msg args . rest)
-     (gschem-msg (string-append
+     ((@@ (guile-user) gschem-msg) (string-append
                   (_ "Could not show documentation for selected component:\n\n")
                   (apply format #f msg args))))))
 
