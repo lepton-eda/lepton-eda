@@ -19,7 +19,8 @@
 (define-module (gnetlist net)
   #:use-module (gnetlist config)
   #:export (create-netattrib
-            create-netname))
+            create-netname
+            netattrib-netname))
 
 (define (create-netattrib basename hierarchy-tag)
   (define mangle? (gnetlist-config-ref 'mangle-net))
@@ -42,3 +43,12 @@
           (string-append basename (or separator "") hierarchy-tag)
           (string-append hierarchy-tag (or separator "") basename))
       basename))
+
+(define (netattrib-netname s)
+  (and s
+       (let ((colon-position (string-index s #\:)))
+         (if colon-position
+             (string-take s colon-position)
+             (begin
+               (log! 'critical (_ "Invalid attribute (missing ':'): net=~A" s))
+               #f)))))
