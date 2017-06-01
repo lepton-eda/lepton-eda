@@ -323,6 +323,7 @@ s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, in
   GList *cl_current;
   char *temp = NULL;
   const gchar *netattrib_pinnum = NULL;
+  SCM net_name_s = SCM_BOOL_F;
 
   visit (object);
 
@@ -339,14 +340,24 @@ s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, in
       temp = o_attrib_search_object_attribs_by_name (object, "netname", 0);
 
     if (temp) {
-      new_net->net_name = s_hierarchy_create_netname (temp, hierarchy_tag);
+      net_name_s =
+        scm_call_2 (scm_c_public_ref ("gnetlist net",
+                                      "create-netname"),
+                    temp ? scm_from_utf8_string (temp) : SCM_BOOL_F,
+                    hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F);
+      new_net->net_name = scm_is_true (net_name_s) ? scm_to_utf8_string (net_name_s) : NULL;
       g_free(temp);
     } else if (object->type == OBJ_NET) {
       /* search for the old label= attribute on nets */
       temp = o_attrib_search_object_attribs_by_name (object, "label", 0);
       if (temp) {
         printf(_("WARNING: Found label=%1$s. label= is deprecated, please use netname=\n"), temp);
-        new_net->net_name = s_hierarchy_create_netname (temp, hierarchy_tag);
+        net_name_s =
+          scm_call_2 (scm_c_public_ref ("gnetlist net",
+                                        "create-netname"),
+                      temp ? scm_from_utf8_string (temp) : SCM_BOOL_F,
+                      hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F);
+        new_net->net_name = scm_is_true (net_name_s) ? scm_to_utf8_string (net_name_s) : NULL;
         g_free(temp);
       }
     }

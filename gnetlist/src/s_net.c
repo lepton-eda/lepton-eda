@@ -363,7 +363,12 @@ s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type,
         } else {
           temp = g_strdup_printf ("%s%d", unnamed_string, (*unnamed_counter)++);
           if (hierarchy_tag) {
-            string = s_hierarchy_create_netname (temp, hierarchy_tag);
+            SCM net_name_s =
+              scm_call_2 (scm_c_public_ref ("gnetlist net",
+                                            "create-netname"),
+                          temp ? scm_from_utf8_string (temp) : SCM_BOOL_F,
+                          hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F);
+            string = scm_is_true (net_name_s) ? scm_to_utf8_string (net_name_s) : NULL;
             g_free (temp);
           } else {
             string = temp;

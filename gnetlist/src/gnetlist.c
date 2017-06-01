@@ -79,33 +79,6 @@ static void init_config_settings (void)
     refdes_separator = g_strdup ("/");
     g_clear_error (&err);
   }
-  netname_order = eda_config_get_boolean (cfg,
-                                          "gnetlist.hierarchy",
-                                          "netname-attribute-order",
-                                          &err);
-  if (err != NULL) {
-    netname_order = APPEND;
-    g_clear_error (&err);
-  }
-
-  mangle_netname = eda_config_get_boolean (cfg,
-                                           "gnetlist.hierarchy",
-                                           "mangle-netname-attribute",
-                                           &err);
-  if (err != NULL) {
-    mangle_netname = TRUE;
-    g_clear_error (&err);
-  }
-
-  netname_separator = eda_config_get_string (cfg,
-                                             "gnetlist.hierarchy",
-                                             "netname-attribute-separator",
-                                             &err);
-  if (err != NULL) {
-    netname_separator = g_strdup ("/");
-    g_clear_error (&err);
-  }
-
 
   refdes_order = eda_config_get_boolean (cfg,
                                          "gnetlist.hierarchy",
