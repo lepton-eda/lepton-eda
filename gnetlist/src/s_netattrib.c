@@ -152,9 +152,11 @@ s_netattrib_create_pins (OBJECT *o_current,
 		    g_free(old_cpin->nets->net_name);
 		}
 
-
-		old_cpin->nets->net_name =
-      s_hierarchy_create_netattrib (net_name, hierarchy_tag);
+    SCM net_name_s = scm_call_2 (scm_c_public_ref ("gnetlist net",
+                                                   "create-netattrib"),
+                                 net_name ? scm_from_utf8_string (net_name) : SCM_BOOL_F,
+                                 hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F);
+		old_cpin->nets->net_name = scm_is_true (net_name_s) ? scm_to_utf8_string (net_name_s) : NULL;
 		old_cpin->nets->net_name_has_priority = TRUE;
 		connected_to = g_strdup_printf("%s %s",
                                    netlist->component_uref,
@@ -174,8 +176,12 @@ s_netattrib_create_pins (OBJECT *o_current,
 
 		new_cpin->nets = s_net_add(NULL);
 		new_cpin->nets->net_name_has_priority = TRUE;
-		new_cpin->nets->net_name =
-      s_hierarchy_create_netattrib (net_name, hierarchy_tag);
+    SCM net_name_s =
+      (scm_call_2 (scm_c_public_ref ("gnetlist net",
+                                     "create-netattrib"),
+                   net_name ? scm_from_utf8_string (net_name) : SCM_BOOL_F,
+                   hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F));
+		new_cpin->nets->net_name = scm_is_true (net_name_s) ? scm_to_utf8_string (net_name_s) : NULL;
 
 		connected_to = g_strdup_printf("%s %s",
                                    netlist->component_uref,
@@ -329,7 +335,12 @@ s_netattrib_return_netname (OBJECT * o_current, char *pinnumber, char *hierarchy
     temp_netname = s_netattrib_net_search(o_current->parent,
                                           current_pin);
 
-    netname = s_hierarchy_create_netattrib (temp_netname, hierarchy_tag);
+    SCM net_name_s =
+      (scm_call_2 (scm_c_public_ref ("gnetlist net",
+                                     "create-netattrib"),
+                   temp_netname ? scm_from_utf8_string (temp_netname) : SCM_BOOL_F,
+                   hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F));
+    netname = scm_is_true (net_name_s) ? scm_to_utf8_string (net_name_s) : NULL;
 
 #if DEBUG
     printf("netname: %s\n", netname);
