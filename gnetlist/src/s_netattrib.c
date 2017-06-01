@@ -73,33 +73,6 @@ s_netattrib_check_connected_string (const gchar *str)
   exit (1); /*! \bug Use appropriate exit code */
 }
 
-/* things to do here : */
-/* write the net alias function */
-
-/* be sure to g_free returned string */
-char *s_netattrib_extract_netname(char *value)
-{
-    char *return_value = NULL;
-    int i = 0;
-
-    /* a bit larger than needed ... */
-    return_value = g_strdup (value);
-
-    while (value[i] != ':' && value[i] != '\0') {
-	return_value[i] = value[i];
-	i++;
-    }
-
-    if (value[i] != ':') {
-	fprintf(stderr, _("Found malformed net attribute\n"));
-	return (g_strdup ("unknown"));
-    }
-
-    return_value[i] = '\0';
-
-    return (return_value);
-
-}
 
 /* if this function creates a cpinlist list, it will not have a head node */
 void
@@ -119,15 +92,17 @@ s_netattrib_create_pins (OBJECT *o_current,
     char *current_pin = NULL;
 
 
-    char_ptr = strchr(value, ':');
+    SCM net_name_s = scm_call_1 (scm_c_public_ref ("gnetlist net",
+                                                   "netattrib-netname"),
+                                 value ? scm_from_utf8_string (value) : SCM_BOOL_F);
 
-    if (char_ptr == NULL) {
-	return;
+    if (scm_is_true (net_name_s)) {
+      net_name = scm_to_utf8_string (net_name_s);
+    } else {
+      return;
     }
 
-
-    net_name = s_netattrib_extract_netname(value);
-
+    char_ptr = strchr(value, ':');
     /* skip over first : */
     start_of_pinlist = char_ptr + 1;
     current_pin = strtok(start_of_pinlist, DELIMITERS);
@@ -264,16 +239,18 @@ char *s_netattrib_net_search (OBJECT * o_current, const gchar *wanted_pin)
 
     counter++;
 
-    char_ptr = strchr (value, ':');
-    if (char_ptr == NULL) {
-      fprintf (stderr, _("Got an invalid net= attrib [net=%1$s]\n"
-                       "Missing : in net= attrib\n"), value);
+    SCM net_name_s = scm_call_1 (scm_c_public_ref ("gnetlist net",
+                                                   "netattrib-netname"),
+                                 value ? scm_from_utf8_string (value) : SCM_BOOL_F);
+
+    if (scm_is_true (net_name_s)) {
+      net_name = scm_to_utf8_string (net_name_s);
+    } else {
       g_free (value);
       return NULL;
     }
 
-    net_name = s_netattrib_extract_netname (value);
-
+    char_ptr = strchr (value, ':');
     start_of_pinlist = char_ptr + 1;
     current_pin = strtok (start_of_pinlist, DELIMITERS);
     while (current_pin && !return_value) {
@@ -295,16 +272,18 @@ char *s_netattrib_net_search (OBJECT * o_current, const gchar *wanted_pin)
 
     counter++;
 
-    char_ptr = strchr (value, ':');
-    if (char_ptr == NULL) {
-      fprintf (stderr, _("Got an invalid net= attrib [net=%1$s]\n"
-                       "Missing : in net= attrib\n"), value);
+    SCM net_name_s = scm_call_1 (scm_c_public_ref ("gnetlist net",
+                                                   "netattrib-netname"),
+                                 value ? scm_from_utf8_string (value) : SCM_BOOL_F);
+
+    if (scm_is_true (net_name_s)) {
+      net_name = scm_to_utf8_string (net_name_s);
+    } else {
       g_free (value);
       return NULL;
     }
 
-    net_name = s_netattrib_extract_netname (value);
-
+    char_ptr = strchr (value, ':');
     start_of_pinlist = char_ptr + 1;
     current_pin = strtok (start_of_pinlist, DELIMITERS);
     while (current_pin) {
