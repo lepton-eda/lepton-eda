@@ -103,6 +103,53 @@ mangle-refdes-attribute=true
 EOF
     backend=geda
     ;;
+config_net_attribute_order_true)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+net-attribute-order=true
+EOF
+    backend=geda
+    ;;
+config_net_attribute_order_false)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+net-attribute-order=false
+EOF
+    backend=geda
+    ;;
+config_mangle_net_attribute_false_1)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-net-attribute=false
+net-attribute-order=false
+EOF
+    backend=geda
+    ;;
+config_mangle_net_attribute_false_2)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-net-attribute=false
+net-attribute-order=true
+EOF
+    backend=geda
+    ;;
+# Default net-attribute-separator.
+config_net_attribute_separator_1)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-net-attribute=true
+net-attribute-separator=:
+EOF
+    backend=geda
+    ;;
+config_net_attribute_separator_2)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-net-attribute=false
+net-attribute-separator=:
+EOF
+    backend=geda
+    ;;
 spice-sdb-nomunge)
     backend=spice-sdb
     args="-O nomunge_mode"
