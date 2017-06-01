@@ -21,7 +21,8 @@
   #:export (create-netattrib
             create-netname
             netattrib-netname
-            netattrib-pinnum-get-connected-string))
+            netattrib-pinnum-get-connected-string
+            netattrib-connected-string-get-pinnum))
 
 (define (create-netattrib basename hierarchy-tag)
   (define mangle? (gnetlist-config-ref 'mangle-net))
@@ -58,3 +59,7 @@
 
 (define (netattrib-pinnum-get-connected-string pinnum)
   (string-append %pin-net-prefix pinnum))
+
+(define (netattrib-connected-string-get-pinnum s)
+  (and (string-prefix? %pin-net-prefix s)
+       (string-drop s (string-length %pin-net-prefix))))

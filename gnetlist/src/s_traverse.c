@@ -322,7 +322,6 @@ s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, in
   CONN *c_current;
   GList *cl_current;
   char *temp = NULL;
-  const gchar *netattrib_pinnum = NULL;
   SCM net_name_s = SCM_BOOL_F;
 
   visit (object);
@@ -380,8 +379,11 @@ s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, in
     }
 
     /* net= new */
-    netattrib_pinnum = s_netattrib_connected_string_get_pinnum (nets->connected_to);
-    if (netattrib_pinnum != NULL && type == PIN_TYPE_NET) {
+    SCM netattrib_pinnum_s =
+      scm_call_1 (scm_c_public_ref ("gnetlist net",
+                                    "netattrib-connected-string-get-pinnum"),
+                  nets->connected_to ? scm_from_utf8_string (nets->connected_to) : SCM_BOOL_F);
+    if (scm_is_true (netattrib_pinnum_s) && type == PIN_TYPE_NET) {
 
 #if DEBUG
       printf("going to find netname %s \n", nets->connected_to);
