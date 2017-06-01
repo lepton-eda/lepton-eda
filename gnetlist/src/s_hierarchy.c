@@ -428,54 +428,6 @@ s_hierarchy_create_netname (char *basename, char *hierarchy_tag)
   return (return_value);
 }
 
-char*
-s_hierarchy_create_netattrib (char *basename, char *hierarchy_tag)
-{
-  char *return_value = NULL;
-
-  if (!mangle_net) {
-    if (basename) {
-	    return (g_strdup (basename));
-    } else {
-	    return (NULL);
-    }
-  }
-
-  if (hierarchy_tag) {
-    if (basename) {
-	    if (net_separator) {
-        switch (net_order) {
-        case (APPEND):
-          return_value = g_strconcat (hierarchy_tag, net_separator, basename, NULL);
-          break;
-        case (PREPEND):
-          return_value = g_strconcat (basename, net_separator, hierarchy_tag, NULL);
-          break;
-        }
-	    } else {
-        switch (net_order) {
-        case (APPEND):
-          return_value = g_strconcat (hierarchy_tag, basename, NULL);
-          break;
-        case (PREPEND):
-          return_value = g_strconcat (basename, hierarchy_tag, NULL);
-          break;
-        }
-	    }
-    } else {
-	    return_value = NULL;
-    }
-  } else {
-    if (basename) {
-	    return_value = g_strdup (basename);
-    } else {
-	    return_value = NULL;
-    }
-  }
-
-  return (return_value);
-}
-
 
 int s_hierarchy_graphical_search (OBJECT* o_current, int count)
 {

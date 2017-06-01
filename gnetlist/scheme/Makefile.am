@@ -29,6 +29,7 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
 	   gnetlist/package.scm gnetlist/package-pin.scm gnetlist/pin-net.scm \
 	   gnetlist/traverse.scm gnetlist/schematic.scm gnetlist/config.scm \
 	   gnetlist/core/gettext.scm gnetlist/rename.scm gnetlist/port.scm \
+	   gnetlist/net.scm \
 	   gnetlist/repl.scm
 
 TESTS = unit-tests/test-gnetlist-partlist.scm \

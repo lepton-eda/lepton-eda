@@ -107,33 +107,6 @@ static void init_config_settings (void)
   }
 
 
-  net_order = eda_config_get_boolean (cfg,
-                                      "gnetlist.hierarchy",
-                                      "net-attribute-order",
-                                      &err);
-  if (err != NULL) {
-    net_order = APPEND;
-    g_clear_error (&err);
-  }
-
-  mangle_net = eda_config_get_boolean (cfg,
-                                       "gnetlist.hierarchy",
-                                       "mangle-net-attribute",
-                                       &err);
-  if (err != NULL) {
-    mangle_net = TRUE;
-    g_clear_error (&err);
-  }
-
-  net_separator = eda_config_get_string (cfg,
-                                         "gnetlist.hierarchy",
-                                         "net-attribute-separator",
-                                         &err);
-  if (err != NULL) {
-    net_separator = g_strdup ("/");
-    g_clear_error (&err);
-  }
-
   refdes_order = eda_config_get_boolean (cfg,
                                          "gnetlist.hierarchy",
                                          "refdes-attribute-order",
