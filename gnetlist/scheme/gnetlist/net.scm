@@ -18,12 +18,24 @@
 
 (define-module (gnetlist net)
   #:use-module (gnetlist config)
-  #:export (create-netattrib))
+  #:export (create-netattrib
+            create-netname))
 
 (define (create-netattrib basename hierarchy-tag)
   (define mangle? (gnetlist-config-ref 'mangle-net))
   (define reverse-order?  (gnetlist-config-ref 'reverse-net-order))
   (define separator (gnetlist-config-ref 'net-separator))
+
+  (if (and hierarchy-tag mangle? basename)
+      (if reverse-order?
+          (string-append basename (or separator "") hierarchy-tag)
+          (string-append hierarchy-tag (or separator "") basename))
+      basename))
+
+(define (create-netname basename hierarchy-tag)
+  (define mangle? (gnetlist-config-ref 'mangle-netname))
+  (define reverse-order?  (gnetlist-config-ref 'reverse-netname-order))
+  (define separator (gnetlist-config-ref 'netname-separator))
 
   (if (and hierarchy-tag mangle? basename)
       (if reverse-order?

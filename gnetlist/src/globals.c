@@ -62,9 +62,6 @@ GSList *backend_params = NULL;
 /* Config settings */
 gboolean refdes_order = APPEND;
 gchar *refdes_separator = NULL;
-gboolean netname_order = APPEND;
-gboolean mangle_netname = TRUE;
-gchar *netname_separator = NULL;
 gint net_naming_priority = NETATTRIB_ATTRIBUTE;
 gboolean is_hierarchy = TRUE;
 gchar *default_net_name = NULL;
