@@ -93,6 +93,12 @@ TESTS = stack_1-geda.out \
 	hierarchy-config_mangle_net_attribute_false_2.out \
 	hierarchy-config_net_attribute_separator_1.out \
 	hierarchy-config_net_attribute_separator_2.out \
+	hierarchy-config_netname_attribute_order_true.out \
+	hierarchy-config_netname_attribute_order_false.out \
+	hierarchy-config_mangle_netname_attribute_false_1.out \
+	hierarchy-config_mangle_netname_attribute_false_2.out \
+	hierarchy-config_netname_attribute_separator_1.out \
+	hierarchy-config_netname_attribute_separator_2.out \
 	hierarchy-geda.out \
 	hierarchy-makedepend.out \
 	hierarchy-vams.out \

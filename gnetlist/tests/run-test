@@ -150,6 +150,53 @@ net-attribute-separator=:
 EOF
     backend=geda
     ;;
+config_netname_attribute_order_true)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+netname-attribute-order=true
+EOF
+    backend=geda
+    ;;
+config_netname_attribute_order_false)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+netname-attribute-order=false
+EOF
+    backend=geda
+    ;;
+config_mangle_netname_attribute_false_1)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-netname-attribute=false
+netname-attribute-order=false
+EOF
+    backend=geda
+    ;;
+config_mangle_netname_attribute_false_2)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-netname-attribute=false
+netname-attribute-order=true
+EOF
+    backend=geda
+    ;;
+# Default netname-attribute-separator.
+config_netname_attribute_separator_1)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-netname-attribute=true
+netname-attribute-separator=:
+EOF
+    backend=geda
+    ;;
+config_netname_attribute_separator_2)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-netname-attribute=false
+netname-attribute-separator=:
+EOF
+    backend=geda
+    ;;
 spice-sdb-nomunge)
     backend=spice-sdb
     args="-O nomunge_mode"
