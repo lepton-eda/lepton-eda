@@ -44,22 +44,15 @@
 /* used by the extract functions below */
 #define DELIMITERS ",; "
 
-const gchar *
-s_netattrib_connected_string_get_pinnum (const gchar *str)
-{
-  int prefix_len = (sizeof PIN_NET_PREFIX) - 1;
-
-  if (strncmp (str, PIN_NET_PREFIX, prefix_len) != 0) {
-    return NULL;
-  }
-
-  return str + prefix_len;
-}
 
 void
 s_netattrib_check_connected_string (const gchar *str)
 {
-  if (s_netattrib_connected_string_get_pinnum (str) == NULL) return;
+  SCM pinnum_s =
+    scm_call_1 (scm_c_public_ref ("gnetlist net",
+                                  "netattrib-connected-string-get-pinnum"),
+                str ? scm_from_utf8_string (str) : SCM_BOOL_F);
+  if (scm_is_false (pinnum_s)) return;
 
   fprintf (stderr,
            _("ERROR: `%1$s' is reserved for internal use."), PIN_NET_PREFIX);
@@ -296,16 +289,20 @@ char *s_netattrib_net_search (OBJECT * o_current, const gchar *wanted_pin)
 char*
 s_netattrib_return_netname (OBJECT * o_current, char *pinnumber, char *hierarchy_tag)
 {
-    const gchar *current_pin;
+    SCM current_pin_s;
     char *netname;
     char *temp_netname;
 
-    current_pin = s_netattrib_connected_string_get_pinnum (pinnumber);
-    if (current_pin == NULL) return NULL;
+    current_pin_s =
+      scm_call_1 (scm_c_public_ref ("gnetlist net",
+                                    "netattrib-connected-string-get-pinnum"),
+                  scm_from_utf8_string (pinnumber));
+
+    if (scm_is_false (current_pin_s)) return NULL;
 
     /* use hierarchy tag here to make this net uniq */
-    temp_netname = s_netattrib_net_search(o_current->parent,
-                                          current_pin);
+    temp_netname = s_netattrib_net_search (o_current->parent,
+                                           scm_to_utf8_string (current_pin_s));
 
     SCM net_name_s =
       (scm_call_2 (scm_c_public_ref ("gnetlist net",
