@@ -38,26 +38,8 @@
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
-/* Used by the connected string functions */
-#define PIN_NET_PREFIX "__netattrib_power_pin "
-
 /* used by the extract functions below */
 #define DELIMITERS ",; "
-
-
-void
-s_netattrib_check_connected_string (const gchar *str)
-{
-  SCM pinnum_s =
-    scm_call_1 (scm_c_public_ref ("gnetlist net",
-                                  "netattrib-connected-string-get-pinnum"),
-                str ? scm_from_utf8_string (str) : SCM_BOOL_F);
-  if (scm_is_false (pinnum_s)) return;
-
-  fprintf (stderr,
-           _("ERROR: `%1$s' is reserved for internal use."), PIN_NET_PREFIX);
-  exit (1); /*! \bug Use appropriate exit code */
-}
 
 
 /* if this function creates a cpinlist list, it will not have a head node */

@@ -102,9 +102,10 @@ s_net_return_connected_string (OBJECT *object, char *hierarchy_tag)
     uref = s_hierarchy_create_uref (temp_uref, hierarchy_tag);
 
     if (uref && pinnum) {
-	string = g_strdup_printf("%s %s", uref, pinnum);
-        s_netattrib_check_connected_string (string);
-
+      string = g_strdup_printf("%s %s", uref, pinnum);
+      scm_call_1 (scm_c_public_ref ("gnetlist net",
+                                    "netattrib-check-connected-string"),
+                  scm_from_utf8_string (string));
     } else {
 	if (pinnum) {
     string =
