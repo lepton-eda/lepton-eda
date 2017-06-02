@@ -197,6 +197,20 @@ netname-attribute-separator=:
 EOF
     backend=geda
     ;;
+config_net_naming_priority_net)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist]
+net-naming-priority=net-attribute
+EOF
+    backend=geda
+    ;;
+config_net_naming_priority_netname)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist]
+net-naming-priority=netname-attribute
+EOF
+    backend=geda
+    ;;
 spice-sdb-nomunge)
     backend=spice-sdb
     args="-O nomunge_mode"

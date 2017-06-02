@@ -20,6 +20,7 @@ middleA -> U1_2_to_B
 rockA -> U1_2_to_B
 unnamed_net2 -> U1_2_to_B
 unnamed_net4 -> U1_2_to_B
+U2_1_to_E-net -> U2_1_to_E
 middleB -> U2_1_to_E
 rockB -> U2_1_to_E
 unnamed_net1 -> U2_1_to_E
