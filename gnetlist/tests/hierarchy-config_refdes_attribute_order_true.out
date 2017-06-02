@@ -22,6 +22,7 @@ Urock/Umiddle/Utop/unnamed_net2 -> U1_2_to_B
 Urock/Umiddle/Uunder/unnamed_net4 -> U1_2_to_B
 Utop/middleA -> U1_2_to_B
 Uunder/middleA -> U1_2_to_B
+U2_1_to_E-net -> U2_1_to_E
 Umiddle/Utop/rockB -> U2_1_to_E
 Umiddle/Uunder/rockB -> U2_1_to_E
 Urock/Umiddle/Utop/unnamed_net1 -> U2_1_to_E

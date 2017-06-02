@@ -21,6 +21,8 @@ BEGIN
 			14 => Vcc);
 
   U2 : ENTITY 7404
+	GENERIC MAP (
+			net => U2_1_to_E-net:1)
 	PORT MAP (	1 => U2_1_to_E,
 			2 => same_for_all,
 			7 => GND,
