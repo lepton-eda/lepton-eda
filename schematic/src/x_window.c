@@ -327,7 +327,7 @@ x_window_invoke_macro (GschemMacroWidget *widget, int response, GschemToplevel *
   gtk_widget_hide (GTK_WIDGET (widget));
 }
 
-static void
+void
 x_window_select_object (GschemFindTextState *state, OBJECT *object, GschemToplevel *w_current)
 {
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
@@ -460,6 +460,13 @@ void x_window_create_main(GschemToplevel *w_current)
 
 
   /*
+  *  widgets:
+  */
+  x_widgets_init();
+  x_widgets_create (w_current);
+
+
+  /*
   *  windows layout:
   */
   vpaned = gtk_vpaned_new ();
@@ -494,6 +501,13 @@ void x_window_create_main(GschemToplevel *w_current)
 
   /* show all widgets: */
   gtk_widget_show_all (w_current->main_window);
+
+
+  if ( !x_widgets_use_docks() )
+  {
+    gtk_widget_set_visible (GTK_WIDGET (w_current->right_notebook),  FALSE);
+    gtk_widget_set_visible (GTK_WIDGET (w_current->bottom_notebook), FALSE);
+  }
 
 
   /* focus page view: */
@@ -1338,31 +1352,25 @@ create_notebook_right (GschemToplevel* w_current)
 {
   GtkWidget *notebook = gtk_notebook_new ();
 
-  w_current->object_properties =
-      gschem_object_properties_widget_new (w_current);
+  if ( x_widgets_use_docks() )
+  {
+    gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                              GTK_WIDGET (w_current->object_properties),
+                              gtk_label_new(_("Object")));
 
-  w_current->text_properties =
-      gschem_text_properties_widget_new (w_current);
+    gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                              GTK_WIDGET (w_current->text_properties),
+                              gtk_label_new(_("Text")));
 
-  w_current->options_widget =
-      gschem_options_widget_new (w_current);
-
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            GTK_WIDGET (w_current->object_properties),
-                            gtk_label_new(_("Object")));
-
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            GTK_WIDGET (w_current->text_properties),
-                            gtk_label_new(_("Text")));
-
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            GTK_WIDGET (w_current->options_widget),
-                            gtk_label_new(_("Options")));
+    gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                              GTK_WIDGET (w_current->options_widget),
+                              gtk_label_new(_("Options")));
 
 
 
-  gtk_container_set_border_width (GTK_CONTAINER (notebook),
-                                  DIALOG_BORDER_SPACING);
+    gtk_container_set_border_width (GTK_CONTAINER (notebook),
+                                    DIALOG_BORDER_SPACING);
+  }
 
   return notebook;
 }
@@ -1374,28 +1382,20 @@ create_notebook_bottom (GschemToplevel* w_current)
 {
   GtkWidget *notebook = gtk_notebook_new ();
 
-  w_current->find_text_state =
-      gschem_find_text_state_new ();
+  if ( x_widgets_use_docks() )
+  {
+    gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                              GTK_WIDGET (w_current->find_text_state),
+                              gtk_label_new(_("Find Text")));
 
-  w_current->log_widget =
-      gschem_log_widget_new ();
+    gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                              GTK_WIDGET (w_current->log_widget),
+                              gtk_label_new(_("Status")));
 
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            GTK_WIDGET (w_current->find_text_state),
-                            gtk_label_new(_("Find Text")));
 
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            GTK_WIDGET (w_current->log_widget),
-                            gtk_label_new(_("Status")));
-
-  g_signal_connect (w_current->find_text_state, "select-object",
-                    G_CALLBACK (&x_window_select_object), w_current);
-
-  gtk_widget_set_size_request (GTK_WIDGET (w_current->find_text_state),
-                               default_width, default_height / 4);
-
-  gtk_container_set_border_width (GTK_CONTAINER (notebook),
-                                  DIALOG_BORDER_SPACING);
+    gtk_container_set_border_width (GTK_CONTAINER (notebook),
+                                    DIALOG_BORDER_SPACING);
+  }
 
   return notebook;
 }

@@ -735,8 +735,12 @@ void x_window_close_page (GschemToplevel *w_current, PAGE *page);
 void x_window_set_default_icon (void);
 void x_window_init_icons (void);
 GschemToplevel* x_window_new (TOPLEVEL *toplevel);
+void x_window_select_object (GschemFindTextState *state, OBJECT *object, GschemToplevel *w_current);
 
 /* x_widgets.c */
+gboolean x_widgets_use_docks();
+void x_widgets_init();
+void x_widgets_create (GschemToplevel* w_current);
 void x_widgets_show_options (GschemToplevel* w_current);
 void x_widgets_show_text_properties (GschemToplevel* w_current);
 void x_widgets_show_object_properties (GschemToplevel* w_current);
