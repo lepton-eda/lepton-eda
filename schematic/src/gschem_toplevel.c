@@ -182,6 +182,14 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->options_widget    = NULL;
 
 
+  /* dialogs for widgets */
+  w_current->options_widget_dialog    = NULL;
+  w_current->text_properties_dialog   = NULL;
+  w_current->object_properties_dialog = NULL;
+  w_current->log_widget_dialog        = NULL;
+  w_current->find_text_state_dialog   = NULL;
+
+
   w_current->keyaccel_string = NULL;
   w_current->keyaccel_string_source_id = FALSE;
 

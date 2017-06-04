@@ -62,6 +62,14 @@ struct st_gschem_toplevel {
   GtkWidget *text_properties;
 
 
+  /* dialogs for widgets */
+  GtkWidget *options_widget_dialog;
+  GtkWidget *text_properties_dialog;
+  GtkWidget *object_properties_dialog;
+  GtkWidget *log_widget_dialog;
+  GtkWidget *find_text_state_dialog;
+
+
   gchar *keyaccel_string;               /* visual feedback when pressing
                                            keyboard accelerators */
   gboolean keyaccel_string_source_id;   /* event source ID used by above */
