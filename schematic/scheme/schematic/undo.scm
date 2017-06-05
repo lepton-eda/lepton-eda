@@ -17,17 +17,23 @@
 ;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 ;;
 
-( define-module ( schematic undo ) )
+( define-module  ( schematic undo )
 
-( export undo-save-state )
+    ; see schematic/src/scheme_undo.c:
+    ;
+    #:use-module ( schematic core undo )
+
+    ; public:
+    ;
+    #:export     ( undo-save-state )
+
+) ; define-module
 
 
 
-; see schematic/src/scheme_undo.c:
 ;
-( use-modules ( schematic core undo ) )
-
-
+; wrappers for functions defined in scheme_undo.c:
+;
 
 ( define undo-save-state %undo-save-state )
 
