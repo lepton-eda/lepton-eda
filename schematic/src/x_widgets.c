@@ -1,6 +1,4 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2016 gEDA Contributors (see ChangeLog for details)
  * Copyright (C) 2017 dmn <graahnul.grom@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -68,17 +66,17 @@ gboolean x_widgets_use_docks()
  * Initialize widgets management.
  * Call this before any other functions from this file.
  * This function reads the value of "use-docks" configuration
- * setting in "gschem.gui" group, which determines
+ * setting in "schematic.gui" group, which determines
  * if widgets will be shown in docks (if true) or as
- * a dialog boxes (if false).
+ * dialog boxes (if false).
  *
  * Configuration setting description:
  * key:   use-docks
- * group: gschem.gui
+ * group: schematic.gui
  * type:  boolean
  * default value: true
  *
- * \return TRUE if use-docks options is set to true, FALSE otherwise.
+ * \return TRUE if use-docks option is set to true, FALSE otherwise.
  */
 void x_widgets_init()
 {
@@ -92,7 +90,7 @@ void x_widgets_init()
   {
     GError* err = NULL;
     gboolean val = eda_config_get_boolean (cfg,
-                                           "gschem.gui",
+                                           "schematic.gui",
                                            "use-docks",
                                            &err);
     if (err == NULL)
@@ -291,7 +289,7 @@ x_widgets_show_in_dialog (GschemToplevel* w_current,
   GtkWidget* dlg = gschem_dialog_new_with_buttons(
     title,
     GTK_WINDOW (w_current->main_window),
-    0,
+    (GtkDialogFlags) 0,
     ini_group,
     w_current,
     GTK_STOCK_CLOSE, GTK_RESPONSE_NONE,
