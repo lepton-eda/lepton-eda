@@ -24,7 +24,8 @@ nobase_dist_scmdata_DATA = \
 	gschem/util.scm \
 	gschem/action.scm \
 	gschem/builtins.scm \
-	gschem/symbol/check.scm
+	gschem/symbol/check.scm \
+	schematic/undo.scm
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
