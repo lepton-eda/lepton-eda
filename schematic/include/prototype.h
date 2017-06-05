@@ -217,6 +217,10 @@ void g_register_funcs(void);
 void g_init_select ();
 /* g_util.c */
 void g_init_util ();
+
+/* scheme_undo.c */
+void scheme_init_undo();
+
 /* g_window.c */
 GschemToplevel *g_current_window ();
 void g_dynwind_window (GschemToplevel *w_current);

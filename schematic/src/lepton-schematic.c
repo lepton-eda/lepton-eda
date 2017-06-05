@@ -182,6 +182,9 @@ void main_prog(void *closure, int argc, char *argv[])
   g_init_builtins ();
   g_init_util ();
 
+  scheme_init_undo();
+
+
   /* initialise color map (need to do this before reading rc files */
   x_color_init ();
 

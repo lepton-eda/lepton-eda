@@ -7,7 +7,8 @@ BUILT_SOURCES = \
 	g_keys.x \
 	g_util.x \
 	g_window.x \
-	g_select.x
+	g_select.x \
+	scheme_undo.x
 
 lepton_schematic_SOURCES = \
 	a_zoom.c \
@@ -117,7 +118,8 @@ lepton_schematic_SOURCES = \
 	x_script.c \
 	x_stroke.c \
 	x_window.c \
-	x_widgets.c
+	x_widgets.c \
+	scheme_undo.c
 
 lepton_schematic_CPPFLAGS = -I$(top_srcdir)/liblepton/include  -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
