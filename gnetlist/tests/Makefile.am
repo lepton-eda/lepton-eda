@@ -330,6 +330,7 @@ TESTS = stack_1-geda.out \
 	common/multiequal-vhdl.out \
 	common/multiequal-vipec.out \
 	common/netattrib-config_net_naming_priority_net.out \
+	common/netattrib-config_net_naming_priority_netname.out \
 	common/netattrib-PCB.out \
 	common/netattrib-allegro.out \
 	common/netattrib-bae.out \
@@ -341,7 +342,6 @@ TESTS = stack_1-geda.out \
 	common/netattrib-eagle.out \
 	common/netattrib-ewnet.out \
 	common/netattrib-futurenet2.out \
-	common/netattrib-geda.out \
 	common/netattrib-gossip.out \
 	common/netattrib-gsch2pcb.out \
 	common/netattrib-liquidpcb.out \
