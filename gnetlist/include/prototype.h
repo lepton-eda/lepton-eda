@@ -14,9 +14,7 @@ void i_vars_init_gnetlist_defaults (void);
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
 /* s_cpinlist.c */
-CPINLIST *s_cpinlist_return_tail(CPINLIST *head);
 CPINLIST *s_cpinlist_add(CPINLIST *ptr);
-CPINLIST *s_cpinlist_search_pin(CPINLIST *ptr, char *pin_number);
 SCM scm_from_pin_list (CPINLIST *pin_list);
 /* s_hierarchy.c */
 void s_hierarchy_traverse(TOPLEVEL *pr_current, OBJECT *o_current, NETLIST *netlist);
@@ -36,9 +34,6 @@ int s_net_find(NET *net_head, NET *node);
 char *s_net_name_search (NET *net_head);
 char *s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type, SCM netlist_mode);
 SCM scm_from_net_list (NET *net_list);
-/* s_netattrib.c */
-void s_netattrib_create_pins (OBJECT *o_current, NETLIST *netlist, char *value, char *hierarchy_tag);
-void s_netattrib_handle (OBJECT *o_current, NETLIST *netlist, char *hierarchy_tag);
 /* s_netlist.c */
 NETLIST *s_netlist_return_tail(NETLIST *head);
 NETLIST *s_netlist_add(NETLIST *ptr);

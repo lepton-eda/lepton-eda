@@ -22,9 +22,6 @@ one; F1.1,
  U100.3,
  U200.1,
  U300.1
-out3; U400.3,
- U400.5
-out8; U400.8
 sig9; U100.7,
  U300.7,
  U400.7,
@@ -32,15 +29,16 @@ sig9; U100.7,
  U500.9
 signal1; U400.1,
  U500.1
+signal3; U400.3,
+ U400.5
 signal4; U400.4,
  U400.10
 signal6; U400.6,
  U400.9
-signal9; U400.6,
- U400.9
-signal12x; U400.12
+signal8; U400.8
+signal12; U400.12
 unnamed_net1; U300.2
-unnamed_net2; U500.3,
+unnamed_net4; U500.3,
  U500.4,
  U500.5
 $END

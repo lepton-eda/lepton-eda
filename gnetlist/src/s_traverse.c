@@ -238,10 +238,6 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
 	s_traverse_component(pr_current, o_current,
 			     hierarchy_tag);
 
-      /* here is where you deal with the */
-      /* net attribute */
-      s_netattrib_handle (o_current, netlist, hierarchy_tag);
-
       /* now you need to traverse any underlying schematics */
       if (is_hierarchy) {
 	s_hierarchy_traverse(pr_current, o_current, netlist);

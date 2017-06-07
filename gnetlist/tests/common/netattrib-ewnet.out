@@ -121,34 +121,6 @@
 		(settings_locked "0")
 		(net_group "")
 	)
-	( net "out3"
-		(trackwidth "-1.00000000e+000")
-		(trackwidth_max "-1.00000000e+000")
-		(trackwidth_min "-1.00000000e+000")
-		(tracklength_max "-1.00000000e+000")
-		(tracklength_min "-1.00000000e+000")
-		(clearance_to_trace "-1.00000000e+000")
-		(clearance_to_pad "-1.00000000e+000")
-		(clearance_to_via "-1.00000000e+000")
-		(clearance_to_copper "-1.00000000e+000")
-		(routing_layer "")
-		(settings_locked "0")
-		(net_group "")
-	)
-	( net "out8"
-		(trackwidth "-1.00000000e+000")
-		(trackwidth_max "-1.00000000e+000")
-		(trackwidth_min "-1.00000000e+000")
-		(tracklength_max "-1.00000000e+000")
-		(tracklength_min "-1.00000000e+000")
-		(clearance_to_trace "-1.00000000e+000")
-		(clearance_to_pad "-1.00000000e+000")
-		(clearance_to_via "-1.00000000e+000")
-		(clearance_to_copper "-1.00000000e+000")
-		(routing_layer "")
-		(settings_locked "0")
-		(net_group "")
-	)
 	( net "sig9"
 		(trackwidth "-1.00000000e+000")
 		(trackwidth_max "-1.00000000e+000")
@@ -164,6 +136,20 @@
 		(net_group "")
 	)
 	( net "signal1"
+		(trackwidth "-1.00000000e+000")
+		(trackwidth_max "-1.00000000e+000")
+		(trackwidth_min "-1.00000000e+000")
+		(tracklength_max "-1.00000000e+000")
+		(tracklength_min "-1.00000000e+000")
+		(clearance_to_trace "-1.00000000e+000")
+		(clearance_to_pad "-1.00000000e+000")
+		(clearance_to_via "-1.00000000e+000")
+		(clearance_to_copper "-1.00000000e+000")
+		(routing_layer "")
+		(settings_locked "0")
+		(net_group "")
+	)
+	( net "signal3"
 		(trackwidth "-1.00000000e+000")
 		(trackwidth_max "-1.00000000e+000")
 		(trackwidth_min "-1.00000000e+000")
@@ -205,7 +191,7 @@
 		(settings_locked "0")
 		(net_group "")
 	)
-	( net "signal9"
+	( net "signal8"
 		(trackwidth "-1.00000000e+000")
 		(trackwidth_max "-1.00000000e+000")
 		(trackwidth_min "-1.00000000e+000")
@@ -219,7 +205,7 @@
 		(settings_locked "0")
 		(net_group "")
 	)
-	( net "signal12x"
+	( net "signal12"
 		(trackwidth "-1.00000000e+000")
 		(trackwidth_max "-1.00000000e+000")
 		(trackwidth_min "-1.00000000e+000")
@@ -247,7 +233,7 @@
 		(settings_locked "0")
 		(net_group "")
 	)
-	( net "unnamed_net2"
+	( net "unnamed_net4"
 		(trackwidth "-1.00000000e+000")
 		(trackwidth_max "-1.00000000e+000")
 		(trackwidth_min "-1.00000000e+000")
@@ -462,7 +448,7 @@
 			(gate "")
 		)
 		(pin "3"
-			(net "out3")
+			(net "signal3")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -478,7 +464,7 @@
 			(gate "")
 		)
 		(pin "5"
-			(net "out3")
+			(net "signal3")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -502,7 +488,7 @@
 			(gate "")
 		)
 		(pin "8"
-			(net "out8")
+			(net "signal8")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -510,7 +496,7 @@
 			(gate "")
 		)
 		(pin "9"
-			(net "signal9")
+			(net "signal6")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -526,7 +512,7 @@
 			(gate "")
 		)
 		(pin "unknown"
-			(net "signal12x")
+			(net "signal12")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -569,7 +555,7 @@
 			(gate "")
 		)
 		(pin "3"
-			(net "unnamed_net2")
+			(net "unnamed_net4")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -577,7 +563,7 @@
 			(gate "")
 		)
 		(pin "4"
-			(net "unnamed_net2")
+			(net "unnamed_net4")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -585,7 +571,7 @@
 			(gate "")
 		)
 		(pin "5"
-			(net "unnamed_net2")
+			(net "unnamed_net4")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")

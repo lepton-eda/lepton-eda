@@ -27,16 +27,15 @@ ARCHITECTURE netlist OF not found IS
     SIGNAL XGND : Std_Logic;
     SIGNAL netattrib : Std_Logic;
     SIGNAL one : Std_Logic;
-    SIGNAL out3 : Std_Logic;
-    SIGNAL out8 : Std_Logic;
     SIGNAL sig9 : Std_Logic;
     SIGNAL signal1 : Std_Logic;
+    SIGNAL signal3 : Std_Logic;
     SIGNAL signal4 : Std_Logic;
     SIGNAL signal6 : Std_Logic;
-    SIGNAL signal9 : Std_Logic;
-    SIGNAL signal12x : Std_Logic;
+    SIGNAL signal8 : Std_Logic;
+    SIGNAL signal12 : Std_Logic;
     SIGNAL unnamed_net1 : Std_Logic;
-    SIGNAL unnamed_net2 : Std_Logic;
+    SIGNAL unnamed_net4 : Std_Logic;
 BEGIN
 -- Architecture statement part
     F1 : FUSE
@@ -71,24 +70,24 @@ BEGIN
     PORT MAP (
         1 => signal1,
         2 => DGND,
-        3 => out3,
+        3 => signal3,
         4 => signal4,
-        5 => out3,
+        5 => signal3,
         6 => signal6,
         7 => sig9,
-        8 => out8,
-        9 => signal9,
+        8 => signal8,
+        9 => signal6,
         10 => signal4,
-        12 => signal12x,
+        12 => signal12,
         14 => Vcc);
 
     U500 : 7400
     PORT MAP (
         1 => signal1,
         2 => OPEN,
-        3 => unnamed_net2,
-        4 => unnamed_net2,
-        5 => unnamed_net2,
+        3 => unnamed_net4,
+        4 => unnamed_net4,
+        5 => unnamed_net4,
         6 => OPEN,
         7 => sig9,
         8 => OPEN,

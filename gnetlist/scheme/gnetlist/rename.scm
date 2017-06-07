@@ -6,7 +6,9 @@
   #:use-module (gnetlist package-pin)
 
   #:export (search-rename
+            search-net-rename
             add-rename
+            add-net-rename
             get-rename-list
             reset-rename!
             rename-all
@@ -24,20 +26,23 @@
   (for-each rename-in-package netlist)
   netlist)
 
-(define %renames (make-hash-table))
+;;; Hash tables for renamings by netname= and net= attributes.
+(define %netname-renames (make-hash-table))
+(define %net-renames (make-hash-table))
 
-(define (renamed? from)
-  (hash-table-ref/default %renames from #f))
+(define (renamed? rename-table from)
+  (hash-table-ref/default rename-table from #f))
 
-(define (set-rename! from to)
-  (hash-table-set! %renames from to))
+(define (set-rename! rename-table from to)
+  (hash-table-set! rename-table from to))
 
 (define-public (reset-rename!)
-  (set! %renames (make-hash-table)))
+  (set! %netname-renames (make-hash-table))
+  (set! %net-renames (make-hash-table)))
 
-(define (update-rename from to)
-  (let ((from-rename (renamed? from))
-        (to-rename   (renamed? to)))
+(define (update-rename rename-table from to)
+  (let ((from-rename (renamed? rename-table from))
+        (to-rename   (renamed? rename-table to)))
     (cond
      ;; Forward rename already exists
      ((and from-rename (equal? to from-rename)) #t)
@@ -46,18 +51,24 @@
      ;; we found a -> b, while adding c -> a.
      ;; hence we would have c -> a -> b, so add c -> b.
      ;; avoid renaming if b is same as c!
-     (to-rename (set-rename! from to-rename))
+     (to-rename (set-rename! rename-table from to-rename))
      ;; we found a -> b, while adding a -> c.
      ;; hence b <==> c, so add c -> b.
      ;; avoid renaming if b is same as c!
-     (from-rename (set-rename! to from-rename))
+     (from-rename (set-rename! rename-table to from-rename))
      ;; No pre-existing renames
-     (else (set-rename! from to)))))
+     (else (set-rename! rename-table from to)))))
 
-(define-public (add-rename from to)
-  (and from to (not (string=? from to)) (update-rename from to)))
+(define (%add-rename rename-table from to)
+  (and from to (not (string=? from to)) (update-rename rename-table from to)))
 
-(define (search-rename from to quiet)
+(define (add-rename from to)
+  (%add-rename %netname-renames from to))
+
+(define (add-net-rename from to)
+  (%add-rename %net-renames from to))
+
+(define (%search-rename rename-table from to quiet)
   "Searches rename source FROM and rename destination TO in the
 internal netlist rename list. Returns #t if either FROM or TO is
 found. In the latter case, if QUIET is not #f warns the user that
@@ -75,25 +86,37 @@ This warning is okay if you have multiple levels of hierarchy!
                   to)))
 
   (cond
-   ((renamed? from) #t)
-   ((renamed? to) (begin (warn) #t))
+   ((renamed? rename-table from) #t)
+   ((renamed? rename-table to) (begin (warn) #t))
    (else #f)))
 
-(define-public (rename-all netlist)
+(define (search-rename from to quiet)
+  (%search-rename %netname-renames from to quiet))
+
+(define (search-net-rename from to quiet)
+  (%search-rename %net-renames from to quiet))
+
+(define (rename-all netlist)
   (verbose-print "- Renaming nets:\n")
-  (hash-table-walk %renames
-    (lambda (from to)
-      (verbose-print "R")
-      (rename-lowlevel netlist from to)))
+  (hash-table-walk %netname-renames
+                   (lambda (from to)
+                     (verbose-print "R")
+                     (rename-lowlevel netlist from to)))
+  (hash-table-walk %net-renames
+                   (lambda (from to)
+                     (verbose-print "R")
+                     (rename-lowlevel netlist from to)))
   (verbose-done)
   netlist)
 
 ;; Return the alist of renames.  Sort it so that it's in a canonical
 ;; order no matter what the internal implementation of the hash table
 ;; is.
-(define-public (get-rename-list)
-  (sort! (hash-table->alist %renames)
-         (lambda (left right)
-           (or (string<? (cdr left) (cdr right))
-               (and (string= (cdr left) (cdr right))
-                    (string<? (car left) (car right)))))))
+(define (get-rename-list)
+  (define (pair<? a b)
+    (or (string<? (cdr a) (cdr b))
+        (and (string= (cdr a) (cdr b))
+             (string<? (car a) (car b)))))
+
+  (append (sort! (hash-table->alist %netname-renames) pair<?)
+          (sort! (hash-table->alist %net-renames) pair<?)))

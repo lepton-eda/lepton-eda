@@ -23,14 +23,16 @@
   #:use-module (geda object)
   #:use-module (gnetlist config)
   #:use-module (gnetlist core gettext)
+  #:use-module (symbol check net-attrib)
+  #:use-module (symbol check duplicate)
 
   #:export (create-netattrib
             create-netname
-            netattrib-netname
             netattrib-pinnum-get-connected-string
             netattrib-connected-string-get-pinnum
             netattrib-check-connected-string
-            netattrib-return-netname))
+            netattrib-return-netname
+            check-net-maps))
 
 (define (create-netattrib basename hierarchy-tag)
   (define mangle? (gnetlist-config-ref 'mangle-net))
@@ -123,3 +125,46 @@
                      (object-component object)
                      (netattrib-connected-string-get-pinnum pinnumber))
                     hierarchy-tag))
+
+;;; Checks for duplicate pinnumbers in NET-MAPS.
+(define (check-duplicates/net-maps-override net-maps)
+  (define (net-map=? a b)
+    (string=? (net-map-pinnumber a) (net-map-pinnumber b)))
+
+  (define (net-map<? a b)
+    (or (string<? (net-map-pinnumber a) (net-map-pinnumber b))
+        (and (net-map=? a b)
+             (string<? (net-map-pinnumber a) (net-map-pinnumber b)))))
+
+  (define (blame-duplicate a b)
+    (log! 'message
+          (_ "Attached net ~A:~A overrides inherited net ~A:~A")
+          (net-map-netname a)
+          (net-map-pinnumber a)
+          (net-map-netname b)
+          (net-map-pinnumber b)))
+
+  ;; Here lists may contain no more than two objects, one from
+  ;; attached net-map and one from inherited one, since the
+  ;; net-maps already contain unique elements. Attached net-maps
+  ;; must go first to make this work properly. See
+  ;; check-net-maps() below, which ensures this.
+  (define (blame-if-list ls)
+    (if (list? ls)
+        (begin (blame-duplicate (first ls) (second ls))
+               (car ls))
+        ls))
+
+  (map blame-if-list
+       (list->duplicate-list net-maps net-map<? net-map=?)))
+
+(define (check-net-maps object)
+  "Makes net-maps for inherited and attached net= attributes of
+OBJECT, checks them for duplicates and transforms into one net-map
+list with unique elements."
+  (define (net-attrib? attrib)
+    (string=? "net" (attrib-name attrib)))
+
+  (let ((attached-net-maps (make-net-maps (filter net-attrib? (object-attribs object))))
+        (inherited-net-maps (make-net-maps (filter net-attrib? (inherited-attribs object)))))
+    (check-duplicates/net-maps-override (append attached-net-maps inherited-net-maps))))

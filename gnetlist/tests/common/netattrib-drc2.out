@@ -10,8 +10,8 @@ ERROR: Net '5V' is connected to only one pin: U500:14.
 ERROR: Net 'DGND' is connected to only one pin: U400:2.
 ERROR: Net 'DIGITAL_GND' is connected to only one pin: U500:10.
 ERROR: Net 'XGND' is connected to only one pin: U200:7.
-ERROR: Net 'out8' is connected to only one pin: U400:8.
-ERROR: Net 'signal12x' is connected to only one pin: U400:12.
+ERROR: Net 'signal8' is connected to only one pin: U400:8.
+ERROR: Net 'signal12' is connected to only one pin: U400:12.
 ERROR: Net 'unnamed_net1' is connected to only one pin: U300:2.
 
 Checking pins without the 'pintype' attribute...

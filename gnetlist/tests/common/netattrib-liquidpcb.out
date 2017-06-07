@@ -31,13 +31,6 @@
 			<netnode component="U200" pin=1 />
 			<netnode component="U300" pin=1 />
 		</net>
-		<net name="out3">
-			<netnode component="U400" pin=3 />
-			<netnode component="U400" pin=5 />
-		</net>
-		<net name="out8">
-			<netnode component="U400" pin=8 />
-		</net>
 		<net name="sig9">
 			<netnode component="U100" pin=7 />
 			<netnode component="U300" pin=7 />
@@ -49,6 +42,10 @@
 			<netnode component="U400" pin=1 />
 			<netnode component="U500" pin=1 />
 		</net>
+		<net name="signal3">
+			<netnode component="U400" pin=3 />
+			<netnode component="U400" pin=5 />
+		</net>
 		<net name="signal4">
 			<netnode component="U400" pin=4 />
 			<netnode component="U400" pin=10 />
@@ -57,17 +54,16 @@
 			<netnode component="U400" pin=6 />
 			<netnode component="U400" pin=9 />
 		</net>
-		<net name="signal9">
-			<netnode component="U400" pin=6 />
-			<netnode component="U400" pin=9 />
+		<net name="signal8">
+			<netnode component="U400" pin=8 />
 		</net>
-		<net name="signal12x">
+		<net name="signal12">
 			<netnode component="U400" pin=12 />
 		</net>
 		<net name="unnamed_net1">
 			<netnode component="U300" pin=2 />
 		</net>
-		<net name="unnamed_net2">
+		<net name="unnamed_net4">
 			<netnode component="U500" pin=3 />
 			<netnode component="U500" pin=4 />
 			<netnode component="U500" pin=5 />
