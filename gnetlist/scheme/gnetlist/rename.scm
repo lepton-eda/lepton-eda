@@ -55,7 +55,7 @@
      (else (set-rename! from to)))))
 
 (define-public (add-rename from to)
-  (and from to (update-rename from to)))
+  (and from to (not (string=? from to)) (update-rename from to)))
 
 (define (search-rename from to quiet)
   "Searches rename source FROM and rename destination TO in the
