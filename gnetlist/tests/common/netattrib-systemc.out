@@ -31,16 +31,15 @@ sc_signal<0> Vcc;
 sc_signal<0> XGND;
 sc_signal<0> netattrib;
 sc_signal<0> one;
-sc_signal<0> out3;
-sc_signal<0> out8;
 sc_signal<0> sig9;
 sc_signal<0> signal1;
+sc_signal<0> signal3;
 sc_signal<0> signal4;
 sc_signal<0> signal6;
-sc_signal<0> signal9;
-sc_signal<0> signal12x;
+sc_signal<0> signal8;
+sc_signal<0> signal12;
 sc_signal<0> unnamed_net1;
-sc_signal<0> unnamed_net2;
+sc_signal<0> unnamed_net4;
 
 
 /* Package instantiations */
@@ -78,21 +77,21 @@ SC_CTOR(not found):
 
     U400.1(signal1);
     U400.2(DGND);
-    U400.3(out3);
+    U400.3(signal3);
     U400.4(signal4);
-    U400.5(out3);
+    U400.5(signal3);
     U400.6(signal6);
     U400.7(sig9);
-    U400.8(out8);
-    U400.9(signal9);
+    U400.8(signal8);
+    U400.9(signal6);
     U400.10(signal4);
-    U400.12(signal12x);
+    U400.12(signal12);
     U400.14(Vcc);
 
     U500.1(signal1);
-    U500.3(unnamed_net2);
-    U500.4(unnamed_net2);
-    U500.5(unnamed_net2);
+    U500.3(unnamed_net4);
+    U500.4(unnamed_net4);
+    U500.5(unnamed_net4);
     U500.7(sig9);
     U500.9(sig9);
     U500.10(DIGITAL_GND);

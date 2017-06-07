@@ -9,6 +9,6 @@ Net 5V has only 1 connected pin
 Net DGND has only 1 connected pin
 Net DIGITAL_GND has only 1 connected pin
 Net XGND has only 1 connected pin
-Net out8 has only 1 connected pin
-Net signal12x has only 1 connected pin
+Net signal8 has only 1 connected pin
+Net signal12 has only 1 connected pin
 Net unnamed_net1 has only 1 connected pin

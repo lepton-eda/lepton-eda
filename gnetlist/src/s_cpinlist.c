@@ -38,22 +38,6 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-/* hack rename this to be s_return_tail */
-/* update object_tail or any list of that matter */
-CPINLIST *s_cpinlist_return_tail(CPINLIST * head)
-{
-    CPINLIST *pl_current = NULL;
-    CPINLIST *ret_struct = NULL;
-
-    pl_current = head;
-    while (pl_current != NULL) {	/* goto end of list */
-	ret_struct = pl_current;
-	pl_current = pl_current->next;
-    }
-
-    return (ret_struct);
-}
-
 
 /* returns new node */
 CPINLIST *s_cpinlist_add(CPINLIST * ptr)
@@ -82,37 +66,6 @@ CPINLIST *s_cpinlist_add(CPINLIST * ptr)
     }
 }
 
-
-CPINLIST *s_cpinlist_search_pin(CPINLIST * ptr, char *pin_number)
-{
-    CPINLIST *pl_current = NULL;
-
-    pl_current = ptr;
-
-    if (pl_current == NULL) {
-	return (NULL);
-    }
-
-    while (pl_current != NULL) {
-
-	if (pl_current->pin_number != NULL) {
-
-	    if (strcmp(pl_current->pin_number, pin_number) == 0) {
-
-#if DEBUG
-		printf("equal: %s %s\n",
-		       pl_current->pin_number, pin_number);
-#endif
-
-		return (pl_current);
-	    }
-	}
-
-	pl_current = pl_current->next;
-    }
-
-    return (NULL);
-}
 
 static SCM
 scm_from_pin (CPINLIST *pin)

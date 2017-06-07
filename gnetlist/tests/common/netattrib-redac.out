@@ -19,24 +19,22 @@ U200 7
 U100 5 U200 2
 .REM one
 F1 1 U100 3 U200 1 U300 1
-.REM out3
-U400 3 U400 5
-.REM out8
-U400 8
 .REM sig9
 U100 7 U300 7 U400 7 U500 7 U500 9
 .REM signal1
 U400 1 U500 1
+.REM signal3
+U400 3 U400 5
 .REM signal4
 U400 4 U400 10
 .REM signal6
 U400 6 U400 9
-.REM signal9
-U400 6 U400 9
-.REM signal12x
+.REM signal8
+U400 8
+.REM signal12
 U400 12
 .REM unnamed_net1
 U300 2
-.REM unnamed_net2
+.REM unnamed_net4
 U500 3 U500 4 U500 5
 .EOD

@@ -243,11 +243,13 @@ vams-device)
     ;;
 postload)
     "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
-                                     -L "${abs_top_builddir}/liblepton/scheme" \
-                                     -g "geda" \
-                                     -o - \
-                                     -m "${abs_srcdir}/postload/test-postload.scm" \
-                                     ${schematic}
+                  -L "${abs_top_builddir}/liblepton/scheme" \
+                  -L "${abs_top_srcdir}/symcheck/scheme" \
+                  -L "${abs_top_builddir}/symcheck/scheme" \
+                  -g "geda" \
+                  -o - \
+                  -m "${abs_srcdir}/postload/test-postload.scm" \
+                  ${schematic}
     if test $? -ne 100 ; then
         echo "FAILED: Post backend load check failed."
         exit 1
@@ -261,6 +263,8 @@ esac
 echo "${GNETLIST} -c ${cmd} -g ${backend} ${args} ${schematic}"
 (cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
                                  -L "${abs_top_builddir}/liblepton/scheme" \
+                                 -L "${abs_top_srcdir}/symcheck/scheme" \
+                                 -L "${abs_top_builddir}/symcheck/scheme" \
                                  -c "${cmd}" \
                                  -g "${backend}" \
                                  ${args} ${schematic})
@@ -269,6 +273,8 @@ rc1=$?
 echo "${GNETLIST} -c ${cmd} -g ${backend} -o - ${args} ${schematic} > stdout.net"
 (cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
                                  -L "${abs_top_builddir}/liblepton/scheme" \
+                                 -L "${abs_top_srcdir}/symcheck/scheme" \
+                                 -L "${abs_top_builddir}/symcheck/scheme" \
                                  -c "${cmd}" \
                                  -g "${backend}" \
                                  -o - ${args} ${schematic} > stdout.net)
@@ -277,6 +283,8 @@ rc2=$?
 echo "${GNETLIST} -c ${cmd} -g ${backend} -v -o verbose.net ${args} ${schematic}"
 (cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
                                  -L "${abs_top_builddir}/liblepton/scheme" \
+                                 -L "${abs_top_srcdir}/symcheck/scheme" \
+                                 -L "${abs_top_builddir}/symcheck/scheme" \
                                  -c "${cmd}" \
                                  -g "${backend}" \
                                  -v -o verbose.net ${args} ${schematic})

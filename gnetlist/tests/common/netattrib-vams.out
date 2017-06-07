@@ -10,16 +10,15 @@ ARCHITECTURE default_architecture OF default_entity IS
 	unknown XGND 	:  unknown;
 	unknown netattrib 	:  unknown;
 	unknown one 	:  unknown;
-	unknown out3 	:  unknown;
-	unknown out8 	:  unknown;
 	unknown sig9 	:  unknown;
 	unknown signal1 	:  unknown;
+	unknown signal3 	:  unknown;
 	unknown signal4 	:  unknown;
 	unknown signal6 	:  unknown;
-	unknown signal9 	:  unknown;
-	unknown signal12x 	:  unknown;
+	unknown signal8 	:  unknown;
+	unknown signal12 	:  unknown;
 	unknown unnamed_net1 	:  unknown;
-	unknown unnamed_net2 	:  unknown;
+	unknown unnamed_net4 	:  unknown;
 BEGIN
 -- Architecture statement part
 
@@ -57,15 +56,15 @@ BEGIN
 			net => signal3:3)
 	PORT MAP (	1 => signal1,
 			2 => DGND,
-			3 => out3,
+			3 => signal3,
 			4 => signal4,
-			5 => out3,
+			5 => signal3,
 			6 => signal6,
 			7 => sig9,
-			8 => out8,
-			9 => signal9,
+			8 => signal8,
+			9 => signal6,
 			10 => signal4,
-			12 => signal12x,
+			12 => signal12,
 			14 => Vcc);
 
   U500 : ENTITY 7400
@@ -74,9 +73,9 @@ BEGIN
 			net => 3.3V:14)
 	PORT MAP (	1 => signal1,
 			2 => OPEN,
-			3 => unnamed_net2,
-			4 => unnamed_net2,
-			5 => unnamed_net2,
+			3 => unnamed_net4,
+			4 => unnamed_net4,
+			5 => unnamed_net4,
 			6 => OPEN,
 			7 => sig9,
 			8 => OPEN,

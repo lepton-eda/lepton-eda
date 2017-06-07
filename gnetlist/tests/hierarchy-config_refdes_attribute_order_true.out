@@ -22,13 +22,13 @@ Urock/Umiddle/Utop/unnamed_net2 -> U1_2_to_B
 Urock/Umiddle/Uunder/unnamed_net4 -> U1_2_to_B
 Utop/middleA -> U1_2_to_B
 Uunder/middleA -> U1_2_to_B
-U2_1_to_E-net -> U2_1_to_E
 Umiddle/Utop/rockB -> U2_1_to_E
 Umiddle/Uunder/rockB -> U2_1_to_E
 Urock/Umiddle/Utop/unnamed_net1 -> U2_1_to_E
 Urock/Umiddle/Uunder/unnamed_net3 -> U2_1_to_E
 Utop/middleB -> U2_1_to_E
 Uunder/middleB -> U2_1_to_E
+U2_1_to_E -> U2_1_to_E-net
 
 END renamed-nets
 
@@ -36,7 +36,7 @@ START nets
 
 GND : U1 7, U2 7
 U1_2_to_B : Qrock/Urock/Umiddle/Utop B, Qrock/Urock/Umiddle/Uunder B, U1 2
-U2_1_to_E : Qrock/Urock/Umiddle/Utop E, Qrock/Urock/Umiddle/Uunder E, U2 1
+U2_1_to_E-net : Qrock/Urock/Umiddle/Utop E, Qrock/Urock/Umiddle/Uunder E, U2 1
 Urock/Umiddle/Utop/-12V : Qrock/Urock/Umiddle/Utop C
 Urock/Umiddle/Utop/BUGA : Qrock/Urock/Umiddle/Utop D
 Urock/Umiddle/Uunder/-12V : Qrock/Urock/Umiddle/Uunder C
