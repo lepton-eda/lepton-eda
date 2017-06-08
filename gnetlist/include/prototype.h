@@ -28,7 +28,6 @@ void verbose_done(void);
 void verbose_reset_index(void);
 /* s_net.c */
 NET *s_net_add(NET *ptr);
-char *s_net_return_connected_string (OBJECT *object, char *hierarchy_tag);
 int s_net_find(NET *net_head, NET *node);
 char *s_net_name_search (NET *net_head);
 char *s_net_name (NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type, SCM netlist_mode);

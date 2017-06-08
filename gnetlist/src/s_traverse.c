@@ -356,9 +356,12 @@ s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, in
   if (object->type == OBJ_PIN) {
 
     starting ? verbose_print ("p") : verbose_print ("P");
-
-    new_net->connected_to =
-      s_net_return_connected_string (object, hierarchy_tag);
+    SCM connected_to_s =
+      scm_call_2 (scm_c_public_ref ("gnetlist net",
+                                    "net-return-connected-string"),
+                  edascm_from_object (object),
+                  hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F);
+    new_net->connected_to = scm_is_true (connected_to_s) ? scm_to_utf8_string (connected_to_s) : NULL;
 
     temp = o_attrib_search_object_attribs_by_name (object, "pinlabel", 0);
 
