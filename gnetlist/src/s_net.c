@@ -80,7 +80,6 @@ s_net_return_connected_string (OBJECT *object, char *hierarchy_tag)
     char *pinnum = NULL;
     char *uref = NULL;
     SCM scm_uref;
-    char *temp_uref = NULL;
     char *string;
     char *misc;
 
@@ -94,12 +93,12 @@ s_net_return_connected_string (OBJECT *object, char *hierarchy_tag)
 
     scm_uref = g_scm_c_get_uref(o_current->parent);
 
-    if (scm_is_string( scm_uref )) {
-      temp_uref = scm_to_utf8_string (scm_uref);
-    }
-
     /* apply the hierarchy name to the uref */
-    uref = s_hierarchy_create_uref (temp_uref, hierarchy_tag);
+    SCM uref_s = scm_call_2 (scm_c_public_ref ("gnetlist hierarchy",
+                                               "hierarchy-create-refdes"),
+                             scm_uref,
+                             hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F);
+    uref = scm_is_true (uref_s) ? scm_to_utf8_string (uref_s) : NULL;
 
     if (uref && pinnum) {
       string = g_strdup_printf("%s %s", uref, pinnum);
@@ -114,7 +113,12 @@ s_net_return_connected_string (OBJECT *object, char *hierarchy_tag)
                                       (scm_from_utf8_string (pinnum))));
 	} else {
 	    if (hierarchy_tag) {
-		misc = s_hierarchy_create_uref("U?", hierarchy_tag);
+        SCM uref_s = scm_call_2 (scm_c_public_ref ("gnetlist hierarchy",
+                                                   "hierarchy-create-refdes"),
+                                 scm_from_utf8_string ("U?"),
+                                 hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F);
+        misc = scm_is_true (uref_s) ? scm_to_utf8_string (uref_s) : NULL;
+
 		string = g_strdup_printf("%s ?", misc);
 		g_free(misc);
 	    } else {
@@ -128,8 +132,6 @@ s_net_return_connected_string (OBJECT *object, char *hierarchy_tag)
     g_free(pinnum);
 
     g_free(uref);
-
-    g_free(temp_uref);
 
     return (string);
 }

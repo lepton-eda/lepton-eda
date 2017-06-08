@@ -62,33 +62,6 @@ static void init_config_settings (void)
 
   cfg = eda_config_get_context_for_file (NULL);
 
-  refdes_order = eda_config_get_boolean (cfg,
-                                         "gnetlist.hierarchy",
-                                         "refdes-attribute-order",
-                                         &err);
-  if (err != NULL) {
-    refdes_order = APPEND;
-    g_clear_error (&err);
-  }
-
-  refdes_separator = eda_config_get_string (cfg,
-                                            "gnetlist.hierarchy",
-                                            "refdes-attribute-separator",
-                                            &err);
-  if (err != NULL) {
-    refdes_separator = g_strdup ("/");
-    g_clear_error (&err);
-  }
-
-  refdes_order = eda_config_get_boolean (cfg,
-                                         "gnetlist.hierarchy",
-                                         "refdes-attribute-order",
-                                         &err);
-  if (err != NULL) {
-    refdes_order = APPEND;
-    g_clear_error (&err);
-  }
-
   is_hierarchy = eda_config_get_boolean (cfg, "gnetlist", "traverse-hierarchy", &err);
   if (err != NULL) {
     is_hierarchy = TRUE;

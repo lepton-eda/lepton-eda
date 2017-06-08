@@ -149,7 +149,6 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
   NETLIST *netlist;
   char *temp;
   SCM scm_uref;
-  char *temp_uref;
   const GList *iter;
 
   if (verbose_mode) {
@@ -189,18 +188,11 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
 
       scm_uref = g_scm_c_get_uref (o_current);
 
-      if (scm_is_string( scm_uref )) {
-        temp_uref = scm_to_utf8_string (scm_uref);
-        netlist->component_uref =
-          s_hierarchy_create_uref (temp_uref, hierarchy_tag);
-        g_free(temp_uref);
-      } else {
-        if (hierarchy_tag) {
-          netlist->component_uref = g_strdup (hierarchy_tag);
-        } else {
-          netlist->component_uref = NULL;
-        }
-      }
+      SCM uref_s = scm_call_2 (scm_c_public_ref ("gnetlist hierarchy",
+                                                 "hierarchy-create-refdes"),
+                               scm_uref,
+                               hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F);
+      netlist->component_uref = scm_is_true (uref_s) ? scm_to_utf8_string (uref_s) : NULL;
 
       if (hierarchy_tag) {
 	netlist->hierarchy_tag = g_strdup (hierarchy_tag);

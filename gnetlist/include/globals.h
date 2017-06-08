@@ -43,8 +43,6 @@ enum NetNamingPriority {
   NETATTRIB_ATTRIBUTE,
 };
 
-extern gboolean refdes_order;
-extern gchar *refdes_separator;
 extern gint net_naming_priority;
 extern gboolean is_hierarchy;
 extern gchar *default_net_name;

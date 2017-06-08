@@ -21,7 +21,6 @@ void s_hierarchy_traverse(TOPLEVEL *pr_current, OBJECT *o_current, NETLIST *netl
 void s_hierarchy_post_process (NETLIST *head);
 int s_hierarchy_setup_rename (NETLIST *head, char *uref, char *label, char *new_name);
 void s_hierarchy_remove_urefconn(NETLIST *head, char *uref_disable);
-char *s_hierarchy_create_uref (char *basename, char *hierarchy_tag);
 int s_hierarchy_graphical_search(OBJECT* o_current, int count);
 /* s_misc.c */
 void verbose_print(char *string);
