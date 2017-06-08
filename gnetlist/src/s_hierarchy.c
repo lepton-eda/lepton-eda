@@ -253,7 +253,12 @@ s_hierarchy_setup_rename (NETLIST *head, char *uref, char *label, char *new_name
     /* same as the #if 0'ed out line */
     /* search for the uref which has the name: label/uref (or whatever the */
     /* hierarchy tag/separator order is) */
-    wanted_uref = s_hierarchy_create_uref (label, uref);
+    SCM wanted_uref_s =
+      scm_call_2 (scm_c_public_ref ("gnetlist hierarchy",
+                                    "hierarchy-create-refdes"),
+                  label ? scm_from_utf8_string (label) : SCM_BOOL_F,
+                  uref ? scm_from_utf8_string (uref) : SCM_BOOL_F);
+    wanted_uref = scm_is_true (wanted_uref_s) ? scm_to_utf8_string (wanted_uref_s) : NULL;
 
 #if DEBUG
     printf("label: %1$s, uref: %2$s, wanted_uref: %3$s\n", label, uref,
@@ -337,47 +342,6 @@ void s_hierarchy_remove_urefconn(NETLIST * head, char *uref_disable)
 	}
 	nl_current = nl_current->next;
     }
-}
-
-char*
-s_hierarchy_create_uref (char *basename, char *hierarchy_tag)
-{
-  char *return_value = NULL;
-
-  if (hierarchy_tag) {
-    if (basename) {
-      if (refdes_separator) {
-        switch (refdes_order) {
-        case (APPEND):
-          return_value = g_strconcat (hierarchy_tag, refdes_separator, basename, NULL);
-          break;
-        case (PREPEND):
-          return_value = g_strconcat (basename, refdes_separator, hierarchy_tag, NULL);
-          break;
-        }
-	    } else {
-        switch (refdes_order) {
-        case (APPEND):
-          return_value = g_strconcat (hierarchy_tag, basename, NULL);
-          break;
-        case (PREPEND):
-          return_value =
-            g_strconcat (basename, hierarchy_tag, NULL);
-          break;
-        }
-	    }
-    } else {
-	    return_value = NULL;
-    }
-  } else {
-    if (basename) {
-	    return_value = g_strdup (basename);
-    } else {
-	    return_value = NULL;
-    }
-  }
-
-  return (return_value);
 }
 
 
