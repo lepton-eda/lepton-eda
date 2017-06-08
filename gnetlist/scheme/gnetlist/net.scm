@@ -23,16 +23,16 @@
   #:use-module (geda object)
   #:use-module (gnetlist config)
   #:use-module (gnetlist core gettext)
+  #:use-module (gnetlist hierarchy)
   #:use-module (symbol check net-attrib)
   #:use-module (symbol check duplicate)
 
   #:export (create-netattrib
             create-netname
-            netattrib-pinnum-get-connected-string
             netattrib-connected-string-get-pinnum
-            netattrib-check-connected-string
             netattrib-return-netname
-            check-net-maps))
+            check-net-maps
+            net-return-connected-string))
 
 (define (create-netattrib basename hierarchy-tag)
   (define mangle? (gnetlist-config-ref 'mangle-net))
@@ -79,10 +79,11 @@
        (string-drop s (string-length %pin-net-prefix))))
 
 (define (netattrib-check-connected-string s)
-  (when (netattrib-connected-string-get-pinnum s)
-    (log! 'error
-          (_ "Name ~S is reserved for internal use.")
-          %pin-net-prefix)))
+  (if (string-prefix? %pin-net-prefix s)
+      (log! 'error
+            (_ "Name ~S is reserved for internal use.")
+            %pin-net-prefix)
+      s))
 
 (define %delimiters (string->char-set ",; "))
 
@@ -168,3 +169,38 @@ list with unique elements."
   (let ((attached-net-maps (make-net-maps (filter net-attrib? (object-attribs object))))
         (inherited-net-maps (make-net-maps (filter net-attrib? (inherited-attribs object)))))
     (check-duplicates/net-maps-override (append attached-net-maps inherited-net-maps))))
+
+(define (net-return-connected-string object hierarchy-tag)
+  (define (attrib-values-by-name object name)
+    (filter-map (lambda (attrib)
+                  (and (string=? (attrib-name attrib) name)
+                       (attrib-value attrib)))
+                (object-attribs object)))
+
+  (define (get-first ls)
+    (and (not (null? ls)) (car ls)))
+
+  (define (first-pinnumber object)
+    (get-first (attrib-values-by-name object "pinnumber")))
+
+  (define (first-refdes object)
+    (get-first (attrib-values-by-name object "refdes")))
+
+  (define (blame-and-make-connected-to refdes)
+    (if refdes
+        (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
+        (log! 'critical (_ "Missing attributes refdes= and pinnumber=")))
+    (string-append (hierarchy-create-refdes (or refdes "U?") hierarchy-tag)
+                   " ?"))
+
+  (let ((pinnum (first-pinnumber object))
+        ;; apply the hierarchy name to the refdes
+        (refdes (hierarchy-create-refdes (first-refdes (object-component object))
+                                         hierarchy-tag)))
+    (if (and refdes pinnum)
+        (netattrib-check-connected-string (string-append refdes " " pinnum))
+        (if pinnum
+            ;; No refdes found.
+            (netattrib-pinnum-get-connected-string pinnum)
+            ;; No pinnumber, use ?, but probably refdes exists.
+            (blame-and-make-connected-to refdes)))))
