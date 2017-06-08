@@ -253,28 +253,12 @@ REFDES. As a result, slots may be repeated in the returned list."
 ; (run-test "one two three four five six seven eight nine ten" 10)
 ; (run-test "one two three four five six seven eight nine ten" 20)
 
-;; determine the uref to use for a particular OBJECT
+;;; Determines refdes= for a particular OBJECT.
+;;; Returns first value of first attrib found with given name, or #f.
 (define (gnetlist:get-uref object)
-  ; Returns first value of first attrib found with given name, or #f.
-  (define (attrib-first-value object name)
-    (let ((attrib-lst (get-attrib-value-by-attrib-name object name)))
-      (if (null? attrib-lst) #f (car attrib-lst))))
-  ; Handler if we find uref=
-  (define (handle-uref value)
-    (simple-format (current-output-port)
-                   (_ "WARNING: Found uref=~A") value)
-    (newline)
-    (simple-format (current-output-port)
-                   (_ "uref= is deprecated, please use refdes=~A") value)
-    (newline)
-    value)
-
-  ; Actually find attribute: check refdes, then uref, then return #f.
-  (cond
-   ((attrib-first-value object "refdes") => (lambda (x) x))
-   ((attrib-first-value object "uref") => handle-uref)
-   (else #f)))
-
+  (let ((attrib-lst (get-attrib-value-by-attrib-name object "refdes")))
+    (and (not (null? attrib-lst))
+         (car attrib-lst))))
 
 ;; Custom get-uref function to append ".${SLOT}" where a component
 ;; has a "slot=${SLOT}" attribute attached.
