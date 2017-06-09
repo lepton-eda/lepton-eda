@@ -225,25 +225,24 @@
 
 
 (define (hierarchy-disable-refdes netlist disabled-refdes)
-  (define (disable-refdes refdes)
-    (and refdes
-         (not (string=? refdes disabled-refdes))
-         refdes))
+  (define (disabled? refdes)
+    (string=? refdes disabled-refdes))
 
   (define (disable-net-connected-to net)
-    (set-pin-net-connection-package! net
-                                     (disable-refdes (pin-net-connection-package net))))
+    (when (and=> (pin-net-connection-package net) disabled?)
+      (set-pin-net-connection-package! net #f)))
 
   (define (disable-nets-connected-to pin)
     (for-each disable-net-connected-to (package-pin-nets pin)))
 
-  (map
-   (lambda (package)
-     (set-package-refdes! package
-                          (disable-refdes (package-refdes package)))
-     (for-each disable-nets-connected-to (package-pins package))
-     package)
-    netlist))
+  (define (disable-package-refdes package)
+    (when (and=> (package-refdes package) disabled?)
+      (set-package-refdes! package #f))
+    (for-each disable-nets-connected-to (package-pins package)))
+
+  (for-each disable-package-refdes netlist)
+  ;; Return the modified netlist.
+  netlist)
 
 (define (hierarchy-remove-all-composite netlist)
   (fold
