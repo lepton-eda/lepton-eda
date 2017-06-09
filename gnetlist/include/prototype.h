@@ -18,9 +18,6 @@ CPINLIST *s_cpinlist_add(CPINLIST *ptr);
 SCM scm_from_pin_list (CPINLIST *pin_list);
 /* s_hierarchy.c */
 void s_hierarchy_traverse(TOPLEVEL *pr_current, OBJECT *o_current, NETLIST *netlist);
-void s_hierarchy_post_process (NETLIST *head);
-int s_hierarchy_setup_rename (NETLIST *head, char *uref, char *label, char *new_name);
-void s_hierarchy_remove_urefconn(NETLIST *head, char *uref_disable);
 int s_hierarchy_graphical_search(OBJECT* o_current, int count);
 /* s_misc.c */
 void verbose_print(char *string);

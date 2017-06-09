@@ -133,13 +133,6 @@ s_netlist_post_process (NETLIST *head, SCM netlist_mode)
   }
 
   verbose_done();
-
-  if (verbose_mode) {
-    printf("- Resolving hierarchy:\n");
-  }
-  s_hierarchy_post_process (head);
-
-  verbose_done();
 }
 
 

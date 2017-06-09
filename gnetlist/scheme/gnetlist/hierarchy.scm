@@ -18,13 +18,18 @@
 
 (define-module (gnetlist hierarchy)
   #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
+  #:use-module (geda log)
   #:use-module (gnetlist config)
+  #:use-module (gnetlist core gettext)
+  #:use-module (gnetlist rename)
   #:use-module (gnetlist package)
   #:use-module (gnetlist package-pin)
   #:use-module (gnetlist pin-net)
+  #:use-module (gnetlist verbose)
 
   #:export (hierarchy-create-refdes
-            hierarchy-remove-all-composite))
+            hierarchy-post-process))
 
 (define (hierarchy-create-refdes basename hierarchy-tag)
   (let ((reverse-refdes-order? (gnetlist-config-ref 'reverse-refdes-order))
@@ -67,3 +72,140 @@
          prev-netlist))
    netlist
    netlist))
+
+
+(define (hierarchy-setup-rename netlist refdes label nets)
+  (define (rename-and-remove-connection package hierarchy-refdes)
+    (and (package-refdes package)
+         (string=? (package-refdes package)
+                   hierarchy-refdes)
+         (not (null? (package-pins package)))
+         ;; Well, we assume a port has only one pin.
+         (let ((pin (car (package-pins package))))
+           ;; Skip overhead of special I/O symbol.
+           (add-rename (package-pin-name pin)
+                       ;; Get source net name, all nets are named already.
+                       (search-net-name nets))
+           (hierarchy-disable-refdes netlist (package-refdes package))
+           ;; Return package with no refdes.
+           package)))
+  ;; Search for hierarchical refdes created from LABEL and REFDES
+  (let ((hierarchy-refdes (hierarchy-create-refdes label refdes)))
+    ;; Not empty filtered list means that we have found and disabled it.
+    (not (null? (filter-map (cut rename-and-remove-connection
+                                 <>
+                                 hierarchy-refdes)
+                            netlist)))))
+
+
+(define (search-net-name nets)
+  (define (log/add-rename from to)
+    (unless (search-rename from to #t)
+      (log! 'critical
+            (_ "Found duplicate net name, renaming ~A to ~A")
+            from
+            to)
+      (add-rename from to)
+      ;; Return new name.
+      to))
+
+  (define (simple-add-rename from to)
+    (add-rename from to)
+    ;; Return new name.
+    to)
+
+  (define (get-new-netname net prev-name)
+    (let ((current-name (pin-net-name net))
+          (has-priority? (pin-net-priority net)))
+      (if (and prev-name current-name)
+          ;; Both names defined.
+          (if (string=? prev-name current-name)
+              ;; No doubts I know which one to return ;-)
+              prev-name
+              ;; Otherwise the decision depends on config priority
+              ;; settings.
+              (if has-priority?
+                  (if (gnetlist-config-ref 'netname-attribute-priority)
+                      ;; netname= has priority over net=.
+                      ;; Rename the current net to the previously
+                      ;; found name (label= name) and return the
+                      ;; latter.
+                      (simple-add-rename current-name prev-name)
+                      ;; net= has priority over netname=.
+                      ;; Since the net has net= priority set, use
+                      ;; its name instead of the name found
+                      ;; previously.
+                      (simple-add-rename prev-name current-name))
+                  ;; Do the rename anyways (this might cause problems).
+                  ;; Rename net which has the same label=.
+                  (log/add-rename prev-name current-name)))
+          ;; One or both undefined: return either defined or #f.
+          (or prev-name current-name))))
+
+  (fold get-new-netname #f nets))
+
+
+(define (remove-refdes-mangling netlist)
+  ;; Separator is yet always '/'
+  (define (base-refdes refdes legend)
+    (and refdes
+         (verbose-print legend)
+         (if (gnetlist-config-ref 'reverse-refdes-order)
+             (let ((pos (string-index refdes #\/)))
+               (if pos
+                   (string-take refdes pos)
+                   refdes))
+             (let ((pos (string-rindex refdes #\/)))
+               (if pos
+                   (string-drop refdes (1+ pos))
+                   refdes)))))
+
+  (define (fix-net-connections net)
+    (set-pin-net-connection-package! net
+                                     (base-refdes (pin-net-connection-package net)
+                                                  "U")))
+
+  (define (fix-pin-connections pin)
+    (for-each fix-net-connections (package-pin-nets pin)))
+
+  (define (fix-package package)
+    (set-package-refdes! package
+                         (base-refdes (package-refdes package) "u"))
+    (for-each fix-pin-connections (package-pins package))
+    package)
+
+  (verbose-print "- Removing refdes mangling:\n")
+  (for-each fix-package netlist)
+  (verbose-done)
+  netlist)
+
+
+(define (hierarchy-post-process netlist)
+  (define (fix-pin pin refdes)
+    (verbose-print "p")
+    (let ((label (package-pin-label pin))
+          (pinnumber (package-pin-number pin))
+          (nets (package-pin-nets pin)))
+     (if label
+         (unless (hierarchy-setup-rename netlist refdes label nets)
+           (log! 'critical
+                 (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
+                 refdes
+                 label))
+         (log! 'critical
+               (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
+               pinnumber
+               refdes))))
+
+  (define (fix-composite-package package)
+    (when (package-composite? package)
+      (for-each (cut fix-pin <> (package-refdes package)) (package-pins package))))
+
+  (verbose-print "- Resolving hierarchy:")
+  (for-each fix-composite-package netlist)
+  (verbose-done)
+
+  (hierarchy-remove-all-composite
+   ((if (gnetlist-config-ref 'mangle-refdes)
+        identity
+        remove-refdes-mangling) netlist)))
