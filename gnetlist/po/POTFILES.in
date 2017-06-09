@@ -14,5 +14,6 @@ gnetlist/src/s_rename.c
 gnetlist/src/s_traverse.c
 
 gnetlist/scheme/gnetlist.scm
+gnetlist/scheme/gnetlist/hierarchy.scm
 gnetlist/scheme/gnetlist/net.scm
 gnetlist/scheme/gnetlist/rename.scm
