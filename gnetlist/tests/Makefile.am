@@ -39,6 +39,9 @@ input_files = \
 	hierarchy3-symbols/h3-rock.sym \
 	hierarchy3-1.sch \
 	hierarchy3-2.sch \
+	hierarchy4-sources/h4-bottom.sch \
+	hierarchy4-symbols/h4-bottom.sym \
+	hierarchy4.sch \
 	stack-torture.sch \
 	drc2/connected-noconnects.sch \
 	drc2/duplicated-refdes.sch \
@@ -119,6 +122,8 @@ TESTS = stack_1-geda.out \
 	hierarchy3-vams.out \
 	hierarchy3-vams-entity.out \
 	hierarchy3-vams-device.out \
+	hierarchy4-geda.out \
+	hierarchy4-drc2.out \
 	stack-torture-geda.out \
 	missing-source-geda.out \
 	drc2/connected-noconnects-drc2.out \
