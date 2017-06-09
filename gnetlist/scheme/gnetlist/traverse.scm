@@ -10,6 +10,7 @@
   #:use-module (geda object)
   #:use-module (geda log)
   #:use-module (gnetlist config)
+  #:use-module (gnetlist hierarchy)
   #:use-module (gnetlist rename)
   #:use-module (gnetlist net)
   #:use-module (gnetlist package)
@@ -223,36 +224,6 @@
   (verbose-done)
   netlist)
 
-
-(define (hierarchy-disable-refdes netlist disabled-refdes)
-  (define (disabled? refdes)
-    (string=? refdes disabled-refdes))
-
-  (define (disable-net-connected-to net)
-    (when (and=> (pin-net-connection-package net) disabled?)
-      (set-pin-net-connection-package! net #f)))
-
-  (define (disable-nets-connected-to pin)
-    (for-each disable-net-connected-to (package-pin-nets pin)))
-
-  (define (disable-package-refdes package)
-    (when (and=> (package-refdes package) disabled?)
-      (set-package-refdes! package #f))
-    (for-each disable-nets-connected-to (package-pins package)))
-
-  (for-each disable-package-refdes netlist)
-  ;; Return the modified netlist.
-  netlist)
-
-(define (hierarchy-remove-all-composite netlist)
-  (fold
-   (lambda (package prev-netlist)
-     (if (and (package-composite? package)
-              (package-refdes package))
-         (hierarchy-disable-refdes prev-netlist (package-refdes package))
-         prev-netlist))
-   netlist
-   netlist))
 
 (define (traverse netlist-mode)
   (let ((cwd (getcwd))
