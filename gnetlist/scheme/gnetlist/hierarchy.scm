@@ -29,7 +29,8 @@
   #:use-module (gnetlist verbose)
 
   #:export (hierarchy-create-refdes
-            hierarchy-post-process))
+            hierarchy-post-process
+            search-net-name))
 
 (define (hierarchy-create-refdes basename hierarchy-tag)
   (let ((reverse-refdes-order? (gnetlist-config-ref 'reverse-refdes-order))
@@ -104,10 +105,10 @@
       (log! 'critical
             (_ "Found duplicate net name, renaming ~A to ~A")
             from
-            to)
-      (add-rename from to)
-      ;; Return new name.
-      to))
+            to))
+    (add-rename from to)
+    ;; Return new name.
+    to)
 
   (define (simple-add-rename from to)
     (add-rename from to)

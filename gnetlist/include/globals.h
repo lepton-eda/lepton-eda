@@ -37,13 +37,4 @@ extern SCM pre_backend_list;  /* before backend loaded */
 extern SCM post_backend_list; /* after backend loaded, before execute */
 extern GSList *backend_params;  /* Parameters passed to the backend from the command line */
 
-/* Config settings */
-enum NetNamingPriority {
-  NETNAME_ATTRIBUTE,
-  NETATTRIB_ATTRIBUTE,
-};
-
-extern gint net_naming_priority;
 extern gboolean is_hierarchy;
-extern gchar *default_net_name;
-extern gchar *default_bus_name;

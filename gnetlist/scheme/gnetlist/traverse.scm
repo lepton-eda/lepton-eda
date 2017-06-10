@@ -47,7 +47,40 @@
      (_ #f)))
   (filter-map list->net ls))
 
-(define (list->pins ls)
+
+
+(define %unnamed-net-counter 0)
+(define (increment-unnamed-net-counter)
+  (set! %unnamed-net-counter (1+ %unnamed-net-counter))
+  %unnamed-net-counter)
+
+
+(define (create-unnamed-netname tag netlist-mode)
+  (define (hierarchical-default-name s)
+    (create-netname (string-append (gnetlist-config-ref 'default-net-name) s)
+                    tag))
+  ((if (eq? netlist-mode 'spice) identity hierarchical-default-name)
+   (number->string (increment-unnamed-net-counter))))
+
+
+(define %unnamed-pin-counter 0)
+(define (increment-unnamed-pin-counter)
+  (set! %unnamed-pin-counter (1+ %unnamed-pin-counter))
+  %unnamed-pin-counter)
+
+
+(define (create-unconnected-netname)
+  (string-append "unconnected_pin-"
+                 (number->string (increment-unnamed-pin-counter))))
+
+(define %netnames (make-hash-table))
+
+(define (search-in-hash-table nets)
+    (and (not (null? nets))
+         (or (hash-ref %netnames (pin-net-id (car nets)))
+             (search-in-hash-table (cdr nets)))))
+
+(define (list->pins ls tag netlist-mode)
   (define (make-pin-attrib-list object)
     (define (add-attrib attrib)
       (cons (string->symbol (attrib-name attrib))
@@ -55,20 +88,43 @@
 
     (map add-attrib (object-attribs object)))
 
+  (define (make-special-netname nets)
+    (if (null? nets)
+        (create-unconnected-netname)
+        (create-unnamed-netname tag netlist-mode)))
+
   (define (list->pin ls)
     (match ls
       ((#f . rest)
        #f)
       ((object number name label nets)
-       (let ((attribs (make-pin-attrib-list object)))
+       (let* ((attribs (make-pin-attrib-list object))
+              (nets (list->nets nets))
+              (netname (or name
+                           ;; If there is no netname, probably
+                           ;; some of nets has been already named.
+                           (search-net-name nets)
+                           ;; Didn't find a name.  Go looking for
+                           ;; another net which might have already
+                           ;; been named, i.e. we don't want to
+                           ;; create a new unnamed net if the net
+                           ;; has already been named before.
+                           (search-in-hash-table nets)
+                           ;; Last resort. We have not found a
+                           ;; name. Make a new one.
+                           (make-special-netname nets))))
+         (and netname
+              (for-each
+               (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
+               nets))
          (make-package-pin (object-id object)
                            object
                            'net-pin
                            number
-                           name
+                           netname
                            label
                            attribs
-                           (list->nets nets))))
+                           nets)))
       (_ #f)))
   (filter-map list->pin ls))
 
@@ -150,7 +206,7 @@
                    (make-net-map-pin net-map id refdes tag))))
            net-maps)))
 
-(define (list->packages ls)
+(define (list->packages ls netlist-mode)
   ;; Makes attribute list of OBJECT using getter GET-ATTRIBS.
   (define (make-attrib-list get-attribs object)
     (define (add-attrib ls attrib)
@@ -184,14 +240,15 @@
                                      (object-id object)
                                      refdes
                                      tag
-                                     (list->pins pins))))
+                                     (list->pins pins tag netlist-mode))))
       (_ #f)))
   (filter-map list->package ls))
 
 
 (define (traverse netlist-mode)
   (let ((cwd (getcwd))
-        (netlist (list->packages (%traverse netlist-mode))))
+        (netlist (list->packages (%traverse netlist-mode)
+                                 netlist-mode)))
     ;; Change back to the directory where we started.  This is
     ;; done because (%traverse) can change the current working
     ;; directory.

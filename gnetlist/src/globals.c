@@ -60,8 +60,4 @@ SCM post_backend_list = SCM_EOL;
 GSList *backend_params = NULL;
 
 /* Config settings */
-gint net_naming_priority = NETATTRIB_ATTRIBUTE;
 gboolean is_hierarchy = TRUE;
-gchar *default_net_name = NULL;
-gchar *default_bus_name = NULL;
-
