@@ -50,15 +50,12 @@ void gnetlist_quit(void)
 
     /* Free GSList *backend_params */
     g_slist_free (backend_params);
-    g_free (default_net_name);
-    g_free (default_bus_name);
 }
 
 static void init_config_settings (void)
 {
   GError *err = NULL;
   EdaConfig *cfg;
-  gchar *str;
 
   cfg = eda_config_get_context_for_file (NULL);
 
@@ -67,17 +64,6 @@ static void init_config_settings (void)
     is_hierarchy = TRUE;
     g_clear_error (&err);
   }
-
-  str = eda_config_get_string (cfg, "gnetlist", "net-naming-priority", NULL);
-  if (g_strcmp0 (str, "netname-attribute") == 0) {
-    net_naming_priority = NETNAME_ATTRIBUTE;
-  } else {
-    net_naming_priority = NETATTRIB_ATTRIBUTE;
-  }
-  g_free (str);
-
-  default_net_name = eda_config_get_string (cfg, "gnetlist", "default-net-name", NULL);
-  default_bus_name = eda_config_get_string (cfg, "gnetlist", "default-bus-name", NULL);
 }
 
 

@@ -82,60 +82,6 @@ NETLIST *s_netlist_add(NETLIST * ptr)
 }
 
 
-void
-s_netlist_post_process (NETLIST *head, SCM netlist_mode)
-{
-  NETLIST *nl_current;
-  CPINLIST *pl_current;
-
-  if (verbose_mode) {
-    printf("\n- Staring post processing\n");
-    printf("- Naming nets:\n");
-  }
-
-  /* this pass gives all nets a name, whether specified or creates a */
-  /* name */
-  nl_current = head;
-  while (nl_current != NULL) {
-    if (nl_current->cpins) {
-	    pl_current = nl_current->cpins;
-	    while (pl_current != NULL) {
-
-        verbose_print("p");
-
-        if (pl_current->nets) {
-
-          g_free(pl_current->net_name);
-
-          verbose_print("n");
-
-          pl_current->net_name =
-            s_net_name (head,
-                        pl_current->nets,
-                        nl_current->hierarchy_tag,
-                        PIN_TYPE_NET,
-                        netlist_mode);
-
-          /* put this name also in the first
-             node of the nets linked list */
-          if (pl_current->net_name && pl_current->nets) {
-            if (pl_current->nets->next) {
-              pl_current->nets->next->net_name =
-                g_strdup (pl_current->net_name);
-            }
-          }
-        }
-
-        pl_current = pl_current->next;
-	    }
-    }
-    nl_current = nl_current->next;
-  }
-
-  verbose_done();
-}
-
-
 static SCM
 scm_from_netlist (NETLIST *netlist)
 {

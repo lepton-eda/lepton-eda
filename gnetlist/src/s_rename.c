@@ -44,17 +44,11 @@
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
-static SCM search_rename_proc;
-static SCM add_rename_proc;
 static SCM reset_rename_x_proc;
 
 
 void init_rename_procs (void)
 {
-  search_rename_proc =     scm_c_public_ref ("gnetlist rename",
-                                             "search-rename");
-  add_rename_proc =        scm_c_public_ref ("gnetlist rename",
-                                             "add-rename");
   reset_rename_x_proc =    scm_c_public_ref ("gnetlist rename",
                                              "reset-rename!");
 }
@@ -62,20 +56,4 @@ void init_rename_procs (void)
 void s_rename_init(void)
 {
   scm_call_0 (reset_rename_x_proc);
-}
-
-int s_rename_search(char *src, char *dest, int quiet_flag)
-{
-  return scm_is_true (scm_call_3 (search_rename_proc,
-                                  src ? scm_from_utf8_string (src) : SCM_BOOL_F,
-                                  dest ? scm_from_utf8_string (dest) : SCM_BOOL_F,
-                                  SCM_BOOL_T));
-}
-
-
-void s_rename_add(char *src, char *dest)
-{
-  scm_call_2 (add_rename_proc,
-              src ? scm_from_utf8_string (src) : SCM_BOOL_F,
-              dest ? scm_from_utf8_string (dest) : SCM_BOOL_F);
 }
