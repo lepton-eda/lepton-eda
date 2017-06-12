@@ -33,7 +33,6 @@ typedef struct st_conn CONN;
 /* netlist structures (gnetlist) */
 typedef struct st_netlist NETLIST;
 typedef struct st_cpinlist CPINLIST;
-typedef struct st_net NET;
 
 /* Managed text buffers */
 typedef struct _TextBuffer TextBuffer;
@@ -110,26 +109,10 @@ struct st_cpinlist {
   char *pin_number;
   char *net_name;			/* this is resolved at very end */
   char *pin_label;
-
-  NET *nets;
+  char *hierarchy_tag;
 
   CPINLIST *prev;
   CPINLIST *next;
-};
-
-/* the net run connected to a pin */
-struct st_net {
-
-  int nid;
-
-  int net_name_has_priority;
-  char *net_name;
-  char *pin_label;
-
-  char *connected_to; /* new to replace above */
-
-  NET *prev;
-  NET *next;
 };
 
 

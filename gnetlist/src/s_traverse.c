@@ -33,50 +33,6 @@
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
-/*! Tracks which OBJECTs have been visited so far, and how many times.
- *
- * The keys of the table are the OBJECT pointers, and the visit count
- * is stored directly in the value pointers.
- */
-static GHashTable *visit_table = NULL;
-
-/*! Trivial function used when clearing #visit_table. */
-static gboolean
-returns_true (gpointer key, gpointer value, gpointer user_data)
-{
-  return TRUE;
-}
-
-/*! Retrieve the current visit count for a particular OBJECT. */
-static inline gint
-is_visited(OBJECT *obj)
-{
-  gpointer val;
-  gpointer orig_key;
-  gboolean exist = g_hash_table_lookup_extended (visit_table,
-                                                 obj,
-                                                 &orig_key,
-                                                 &val);
-  return exist ? GPOINTER_TO_INT(val) : 0;
-}
-
-/*! Increment the current visit count for a particular OBJECT. */
-static inline gint
-visit(OBJECT *obj)
-{
-  gpointer val = GINT_TO_POINTER(is_visited (obj) + 1);
-  g_hash_table_replace (visit_table, obj, val);
-  return GPOINTER_TO_INT (val);
-}
-
-/*! Reset all visit counts. Simply clears the hashtable completely. */
-static inline void
-s_traverse_clear_all_visited (const GList *obj_list)
-{
-  g_hash_table_foreach_remove (visit_table,
-                               (GHRFunc) returns_true,
-                               NULL);
-}
 
 static void
 s_traverse_init (void)
@@ -102,11 +58,6 @@ s_traverse_init (void)
 	    ("------------------------------------------------------\n\n");
 
     }
-
-    /* Initialise the hashtable which contains the visit
-       count. N.b. no free functions are required. */
-    visit_table = g_hash_table_new (g_direct_hash,
-                                    g_direct_equal);
 }
 
 SCM_DEFINE (traverse, "%traverse", 1, 0, 0,
@@ -239,8 +190,6 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 {
   CPINLIST *cpinlist_head = NULL;
   CPINLIST *cpins = NULL;
-  NET *nets_head = NULL;
-  NET *nets = NULL;
   GList *iter;
 
   cpinlist_head = cpins = s_cpinlist_add(NULL);
@@ -265,152 +214,10 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
     cpins->pin_label =
       o_attrib_search_object_attribs_by_name (o_current, "pinlabel", 0);
 
-    /* head nets node */
-    /* is this really need */
-    nets_head = nets = s_net_add(NULL);
-    nets->nid = -1;
-
-    /* This avoids us adding an unnamed net for an unconnected pin */
-    if (o_current->conn_list != NULL) {
-      s_traverse_net (nets, TRUE, o_current, hierarchy_tag, PIN_TYPE_NET);
-      s_traverse_clear_all_visited (s_page_objects (pr_current->page_current));
-    }
-
-    cpins->nets = nets_head;
+    cpins->hierarchy_tag = g_strdup (hierarchy_tag);
   }
-
 
   return (cpinlist_head);
-}
-
-
-static int connection_type (OBJECT *object)
-{
-  switch (object->type) {
-    case OBJ_PIN:  return object->pin_type;
-    case OBJ_NET:  return PIN_TYPE_NET;
-    case OBJ_BUS:  return PIN_TYPE_BUS;
-    default:
-      g_critical (_("Non-connectable object being queried for connection type\n"));
-      return PIN_TYPE_NET;
-  }
-}
-
-
-NET*
-s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, int type)
-{
-  NET *new_net;
-  CONN *c_current;
-  GList *cl_current;
-  char *temp = NULL;
-  SCM net_name_s = SCM_BOOL_F;
-
-  visit (object);
-
-  if (connection_type (object) != type)
-    return nets;
-
-  new_net = nets = s_net_add(nets);
-  new_net->nid = object->sid;
-
-  /* pins are not allowed to have the netname attribute attached to them */
-  if (object->type != OBJ_PIN) {
-    /* Ignore netname attributes on buses */
-    if (object->type == OBJ_NET)
-      temp = o_attrib_search_object_attribs_by_name (object, "netname", 0);
-
-    if (temp) {
-      net_name_s =
-        scm_call_2 (scm_c_public_ref ("gnetlist net",
-                                      "create-netname"),
-                    temp ? scm_from_utf8_string (temp) : SCM_BOOL_F,
-                    hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F);
-      new_net->net_name = scm_is_true (net_name_s) ? scm_to_utf8_string (net_name_s) : NULL;
-      g_free(temp);
-    }
-  }
-#if DEBUG
-  printf("inside traverse: %s\n", object->name);
-#endif
-
-  if (object->type == OBJ_PIN) {
-
-    starting ? verbose_print ("p") : verbose_print ("P");
-    SCM connected_to_s =
-      scm_call_2 (scm_c_public_ref ("gnetlist net",
-                                    "net-return-connected-string"),
-                  edascm_from_object (object),
-                  hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F);
-    new_net->connected_to = scm_is_true (connected_to_s) ? scm_to_utf8_string (connected_to_s) : NULL;
-
-    temp = o_attrib_search_object_attribs_by_name (object, "pinlabel", 0);
-
-    if (temp) {
-      new_net->pin_label = temp;
-    }
-
-    /* net= new */
-    SCM netattrib_pinnum_s =
-      scm_call_1 (scm_c_public_ref ("gnetlist net",
-                                    "netattrib-connected-string-get-pinnum"),
-                  nets->connected_to ? scm_from_utf8_string (nets->connected_to) : SCM_BOOL_F);
-    if (scm_is_true (netattrib_pinnum_s) && type == PIN_TYPE_NET) {
-
-#if DEBUG
-      printf("going to find netname %s \n", nets->connected_to);
-#endif
-      SCM netattrib_s =
-        scm_call_3 (scm_c_public_ref ("gnetlist net",
-                                      "netattrib-return-netname"),
-                    edascm_from_object (object),
-                    nets->connected_to ? scm_from_utf8_string (nets->connected_to) : SCM_BOOL_F,
-                    hierarchy_tag ? scm_from_utf8_string (hierarchy_tag) : SCM_BOOL_F);
-
-      nets->net_name = scm_is_true (netattrib_s) ? scm_to_utf8_string (netattrib_s) : NULL;
-      nets->net_name_has_priority = TRUE;
-      g_free(nets->connected_to);
-      nets->connected_to = NULL;
-    }
-#if DEBUG
-    printf("traverse connected_to: %s\n", new_net->connected_to);
-#endif
-
-    /* Terminate if we hit a pin which isn't the one we started with */
-    if (!starting)
-      return nets;
-  }
-
-  /*printf("Found net %s\n", object->name); */
-  verbose_print("n");
-
-  /* this is not perfect yet and won't detect a loop... */
-  if (is_visited(object) > 100) {
-    fprintf(stderr, _("Found a possible net/pin infinite connection\n"));
-    exit(-1);
-  }
-
-  cl_current = object->conn_list;
-  while (cl_current != NULL) {
-
-    c_current = (CONN *) cl_current->data;
-
-    if (c_current->other_object != NULL) {
-
-      if (!is_visited(c_current->other_object) &&
-          c_current->other_object != object) {
-        nets = s_traverse_net (nets,
-                               FALSE,
-                               c_current->other_object,
-                               hierarchy_tag,
-                               type);
-      }
-
-    }
-    cl_current = g_list_next(cl_current);
-  }
-
-  return (nets);
 }
 
 

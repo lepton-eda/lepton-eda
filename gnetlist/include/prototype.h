@@ -23,9 +23,6 @@ int s_hierarchy_graphical_search(OBJECT* o_current, int count);
 void verbose_print(char *string);
 void verbose_done(void);
 void verbose_reset_index(void);
-/* s_net.c */
-NET *s_net_add(NET *ptr);
-SCM scm_from_net_list (NET *net_list);
 /* s_netlist.c */
 NETLIST *s_netlist_return_tail(NETLIST *head);
 NETLIST *s_netlist_add(NETLIST *ptr);
@@ -33,5 +30,4 @@ SCM scm_from_netlist_list (NETLIST *netlist_list);
 /* s_traverse.c */
 void s_traverse_sheet(TOPLEVEL *pr_current, const GList *obj_list, char *hierarchy_tag);
 CPINLIST *s_traverse_component(TOPLEVEL *pr_current, OBJECT *component, char *hierarchy_tag);
-NET *s_traverse_net (NET *nets, int starting, OBJECT *object, char *hierarchy_tag, int type);
 void s_init_traverse (void);

@@ -16,9 +16,74 @@
   #:use-module (gnetlist package)
   #:use-module (gnetlist package-pin)
   #:use-module (gnetlist pin-net)
+  #:use-module (gnetlist verbose)
   #:use-module (symbol check net-attrib)
 
   #:export (traverse))
+
+
+;;; Tracks which objects have been visited so far, and how many
+;;; times.
+(define %visits '())
+;;; Increment the current visit count for a particular OBJECT.
+(define (visit! object)
+  (set! %visits (cons object %visits)))
+;;; Retrieve the current visit count for a particular OBJECT.
+(define (visited? object)
+  (member object %visits))
+;;; Reset all visit counts. Simply clears the %visits completely.
+(define (clear-visits!)
+  (set! %visits '()))
+
+(define (traverse-net current-nets starting object hierarchy-tag)
+  ;; We don't support other object types apart from net-pins and nets yet.
+  (define (connection-type object)
+    (or (net-pin? object)
+        (net? object)
+        (and (log! 'critical
+                   (_ "Traverse nets: object type ~A is not supported.")
+                   (object-type object))
+             #f)))
+
+  (define (make-new-net object tag)
+    (verbose-print (if (pin? object)
+                       (if starting "p" "P")
+                       "n"))
+    (if (pin? object)
+        (let* ((connected-string (net-return-connected-string object tag))
+               (pinnum (netattrib-connected-string-get-pinnum connected-string)))
+          `(,(object-id object)
+            ,(not (not pinnum))
+            ,(and pinnum
+                  (netattrib-return-netname object
+                                            connected-string
+                                            tag))
+            ,(and (not pinnum)
+                  connected-string)))
+        `(,(object-id object)
+          #f
+          ,(create-net-netname object tag)
+          #f)))
+
+  (when starting
+    (clear-visits!))
+
+  (visit! object)
+  (if (connection-type object)
+      (let ((nets (cons (make-new-net object hierarchy-tag) current-nets)))
+        (if (or (not (pin? object))
+                starting)
+            (let loop ((connections (object-connections object))
+                       (nets nets))
+              (if (null? connections)
+                  nets
+                  (loop (cdr connections)
+                        (let ((conn (car connections)))
+                          (if (visited? conn)
+                              nets
+                              (traverse-net nets #f conn hierarchy-tag))))))
+            nets))
+      current-nets))
 
 ;;; Temporary function to deal with gnetlist's net->connected_to
 ;;; entries.
@@ -28,7 +93,7 @@
          (cons (string-take s space-pos)
                (string-drop s (1+ space-pos))))))
 
-(define (list->nets ls)
+(define (list->nets object hierarchy-tag)
   (define package car)
   (define pinnumber cdr)
   (define (list->net ls)
@@ -45,8 +110,11 @@
                       (package conn-pair)
                       (pinnumber conn-pair))))
      (_ #f)))
-  (filter-map list->net ls))
+  (let ((ls (if (null? (object-connections object))
+                '()
+                (reverse (traverse-net '() #t object hierarchy-tag)))))
 
+    (filter-map list->net ls)))
 
 
 (define %unnamed-net-counter 0)
@@ -97,9 +165,9 @@
     (match ls
       ((#f . rest)
        #f)
-      ((object number name label nets)
+      ((object number name label tag)
        (let* ((attribs (make-pin-attrib-list object))
-              (nets (list->nets nets))
+              (nets (list->nets object tag))
               (netname (or name
                            ;; If there is no netname, probably
                            ;; some of nets has been already named.
@@ -243,7 +311,6 @@
                                      (list->pins pins tag netlist-mode))))
       (_ #f)))
   (filter-map list->package ls))
-
 
 (define (traverse netlist-mode)
   (reset-rename!)
