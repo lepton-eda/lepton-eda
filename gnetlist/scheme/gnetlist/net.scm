@@ -56,6 +56,16 @@
           (string-append hierarchy-tag (or separator "") basename))
       basename))
 
+(define (attrib-value-by-name object name)
+  (define (has-appropriate-name? attrib)
+    (string=? (attrib-name attrib) name))
+
+  (define (first* ls)
+    (and (not (null? ls)) (car ls)))
+
+  (first* (map attrib-value
+               (filter has-appropriate-name? (object-attribs object)))))
+
 (define (blame-missing-colon net-attrib-value)
   (log! 'critical
         (_ "Invalid attribute (missing ':'): net=~A")
@@ -171,21 +181,6 @@ list with unique elements."
     (check-duplicates/net-maps-override (append attached-net-maps inherited-net-maps))))
 
 (define (net-return-connected-string object hierarchy-tag)
-  (define (attrib-values-by-name object name)
-    (filter-map (lambda (attrib)
-                  (and (string=? (attrib-name attrib) name)
-                       (attrib-value attrib)))
-                (object-attribs object)))
-
-  (define (get-first ls)
-    (and (not (null? ls)) (car ls)))
-
-  (define (first-pinnumber object)
-    (get-first (attrib-values-by-name object "pinnumber")))
-
-  (define (first-refdes object)
-    (get-first (attrib-values-by-name object "refdes")))
-
   (define (blame-and-make-connected-to refdes)
     (if refdes
         (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
@@ -193,9 +188,10 @@ list with unique elements."
     (string-append (hierarchy-create-refdes (or refdes "U?") hierarchy-tag)
                    " ?"))
 
-  (let ((pinnum (first-pinnumber object))
+  (let ((pinnum (attrib-value-by-name object "pinnumber"))
         ;; apply the hierarchy name to the refdes
-        (refdes (hierarchy-create-refdes (first-refdes (object-component object))
+        (refdes (hierarchy-create-refdes (attrib-value-by-name (object-component object)
+                                                               "refdes")
                                          hierarchy-tag)))
     (if (and refdes pinnum)
         (netattrib-check-connected-string (string-append refdes " " pinnum))
