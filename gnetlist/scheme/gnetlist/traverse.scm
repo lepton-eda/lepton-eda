@@ -246,6 +246,7 @@
 
 
 (define (traverse netlist-mode)
+  (reset-rename!)
   (let ((cwd (getcwd))
         (netlist (list->packages (%traverse netlist-mode)
                                  netlist-mode)))
