@@ -18,7 +18,6 @@ gnetlist_SOURCES = \
 	s_misc.c \
 	s_net.c \
 	s_netlist.c \
-	s_rename.c \
 	s_traverse.c
 
 gnetlist_CPPFLAGS = -I$(top_srcdir)/liblepton/include -I$(srcdir)/../include \

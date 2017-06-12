@@ -30,9 +30,6 @@ SCM scm_from_net_list (NET *net_list);
 NETLIST *s_netlist_return_tail(NETLIST *head);
 NETLIST *s_netlist_add(NETLIST *ptr);
 SCM scm_from_netlist_list (NETLIST *netlist_list);
-/* s_rename.c */
-void init_rename_procs (void);
-void s_rename_init(void);
 /* s_traverse.c */
 void s_traverse_sheet(TOPLEVEL *pr_current, const GList *obj_list, char *hierarchy_tag);
 CPINLIST *s_traverse_component(TOPLEVEL *pr_current, OBJECT *component, char *hierarchy_tag);

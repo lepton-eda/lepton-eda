@@ -114,7 +114,6 @@ void main_prog(void *closure, int argc, char *argv[])
     scm_c_use_module ("gnetlist rename");
 
     init_config_settings ();
-    init_rename_procs ();
 
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
