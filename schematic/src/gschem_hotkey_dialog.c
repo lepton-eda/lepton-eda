@@ -112,6 +112,77 @@ x_dialog_hotkeys_cell_stock_id_notify (GObject *gobject,
   g_free (stock_id);
 }
 
+
+
+static gboolean
+filter (GtkTreeModel* model, GtkTreeIter* it, gpointer data)
+{
+  GtkEntry* ent = (GtkEntry*) data;
+  const gchar* txt = gtk_entry_get_text (ent);
+
+  if (g_strcmp0 (txt, "") == 0)
+  {
+    return TRUE;
+  }
+
+  gchar* cmd = NULL;
+  gchar* key = NULL;
+  gtk_tree_model_get (model, it, GSCHEM_HOTKEY_STORE_COLUMN_LABEL, &cmd, -1);
+  gtk_tree_model_get (model, it, GSCHEM_HOTKEY_STORE_COLUMN_KEYS,  &key, -1);
+
+  /* case-insensitive strings for comparison: */
+  gchar* cmd_ci = g_utf8_casefold (cmd, strlen (cmd));
+  gchar* key_ci = g_utf8_casefold (key, strlen (key));
+  gchar* txt_ci = g_utf8_casefold (txt, strlen (txt));
+
+  /* search for [txt_ci] substring: */
+  gboolean found_cmd = strstr (cmd_ci, txt_ci) != NULL;
+  gboolean found_key = strstr (key_ci, txt_ci) != NULL;
+
+  g_free (cmd_ci);
+  g_free (key_ci);
+  g_free (txt_ci);
+
+  g_free (cmd);
+  g_free (key);
+
+  return found_cmd || found_key;
+}
+
+
+
+static void
+entry_changed (GtkEditable* editable, gpointer data)
+{
+  GtkTreeView* tree = GTK_TREE_VIEW (data);
+  GtkTreeModel* model = gtk_tree_view_get_model (tree);
+
+  gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (model));
+}
+
+
+
+static void
+filter_setup (GtkTreeView* tree, GtkTreeModel* model, GtkEntry* entry)
+{
+  GtkTreeModel* filter_model = gtk_tree_model_filter_new (model, NULL);
+
+  gtk_tree_model_filter_set_visible_func(
+    GTK_TREE_MODEL_FILTER (filter_model),
+    &filter,
+    entry,
+    NULL);
+
+  gtk_tree_view_set_model (tree, filter_model);
+
+  g_signal_connect (entry,
+                    "changed",
+                    G_CALLBACK (&entry_changed),
+                    tree);
+}
+
+
+
 /*! \brief Creates the hotkeys dialog
  *  \par Function Description
  *  This function creates the hotkey dialog and puts the list of hotkeys
@@ -149,6 +220,10 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
 
     vbox = GTK_DIALOG(w_current->hkwindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
+
+    /* filter text entry field: */
+    GtkWidget* entry = gtk_entry_new();
+    gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, TRUE, 0);
 
     scrolled_win = gtk_scrolled_window_new (NULL, NULL);
     gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 0);
@@ -191,6 +266,9 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
                                                        GSCHEM_HOTKEY_STORE_COLUMN_KEYS,
                                                        NULL);
     gtk_tree_view_append_column (GTK_TREE_VIEW(treeview), column);
+
+    /* setup tree filtering: */
+    filter_setup (GTK_TREE_VIEW (treeview), store, GTK_ENTRY (entry));
 
     /* show all recursively */
     gtk_widget_show_all(w_current->hkwindow);
