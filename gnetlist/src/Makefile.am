@@ -16,7 +16,6 @@ gnetlist_SOURCES = \
 	s_cpinlist.c \
 	s_hierarchy.c \
 	s_misc.c \
-	s_net.c \
 	s_netlist.c \
 	s_traverse.c
 

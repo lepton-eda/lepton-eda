@@ -51,7 +51,7 @@ CPINLIST *s_cpinlist_add(CPINLIST * ptr)
     new_node->pin_number = NULL;
     new_node->pin_label = NULL;
     new_node->net_name = NULL;
-    new_node->nets = NULL;
+    new_node->hierarchy_tag = NULL;
 
     /* Setup link list stuff */
     new_node->next = NULL;
@@ -74,7 +74,7 @@ scm_from_pin (CPINLIST *pin)
                      pin->pin_number ? scm_from_utf8_string (pin->pin_number) : SCM_BOOL_F,
                      pin->net_name ? scm_from_utf8_string (pin->net_name) : SCM_BOOL_F,
                      pin->pin_label ? scm_from_utf8_string (pin->pin_label) : SCM_BOOL_F,
-                     scm_from_net_list (pin->nets),
+                     pin->hierarchy_tag ? scm_from_utf8_string (pin->hierarchy_tag) : SCM_BOOL_F,
                      SCM_UNDEFINED);
 }
 
