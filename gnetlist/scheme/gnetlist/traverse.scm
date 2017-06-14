@@ -35,7 +35,8 @@
 (define (clear-visits!)
   (set! %visits '()))
 
-(define (traverse-net current-nets starting object hierarchy-tag)
+
+(define (traverse-net current-nets starting object tag)
   ;; We don't support other object types apart from net-pins and nets yet.
   (define (connection-type object)
     (or (net-pin? object)
@@ -45,25 +46,55 @@
                    (object-type object))
              #f)))
 
-  (define (make-new-net object tag)
+  (define (check-create-refdes refdes pinnumber)
+    (if pinnumber
+        refdes
+        ;; No pinnumber, broken pin, use "?", but probably refdes exists.
+        (if refdes
+            (begin
+              (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
+              refdes)
+            (begin
+              (log! 'critical (_ "Missing attributes refdes= and pinnumber="))
+              "U?"))))
+
+  (define (make-new-net object)
     (verbose-print (if (pin? object)
                        (if starting "p" "P")
                        "n"))
     (if (pin? object)
-        (let* ((conn-pair (net-return-connected-string object tag))
-               (pinnum (and (eq? 'net-power (car conn-pair))
-                            (cdr conn-pair))))
-          `(,(object-id object)
-            ,(not (not pinnum))
-            ,(and pinnum
-                  ;; use hierarchy tag here to make this net unique
-                  (create-netattrib (netattrib-search-net (object-component object)
-                                                          pinnum)
-                                    hierarchy-tag))
-            ,(and (not pinnum) conn-pair)))
-        `(,(object-id object)
+        (let* ((pinnumber (attrib-value-by-name object "pinnumber"))
+               (refdes (attrib-value-by-name (object-component object) "refdes"))
+               ;; If refdes= of pin component exists, or there is
+               ;; no refdes but pinnumber= exists (which means the
+               ;; pin exists too), we consider the pin to be
+               ;; normal (in the latter case, the symbol is
+               ;; special, like "gnd-1.sym"). Otherwise we believe
+               ;; the pin was created from net= attribute.
+               (net-attrib-net? (not (or refdes (not pinnumber)))))
+          (if net-attrib-net?
+              (make-pin-net
+                (object-id object)
+                #t
+                ;; Use hierarchy tag here to make this net unique.
+                (create-netattrib (netattrib-search-net (object-component object)
+                                                         pinnumber)
+                                   tag)
+                #f
+                #f)
+              (make-pin-net
+               (object-id object)
+                #f
+                #f
+                (hierarchy-create-refdes (check-create-refdes refdes
+                                                               pinnumber)
+                                          tag)
+                (if refdes pinnumber (or pinnumber "?")))))
+        (make-pin-net
+         (object-id object)
           #f
-          ,(create-net-netname object tag)
+          (create-net-netname object tag)
+          #f
           #f)))
 
   (when starting
@@ -71,7 +102,7 @@
 
   (visit! object)
   (if (connection-type object)
-      (let ((nets (cons (make-new-net object hierarchy-tag) current-nets)))
+      (let ((nets (cons (make-new-net object) current-nets)))
         (if (or (not (pin? object))
                 starting)
             (let loop ((connections (object-connections object))
@@ -82,31 +113,9 @@
                         (let ((conn (car connections)))
                           (if (visited? conn)
                               nets
-                              (traverse-net nets #f conn hierarchy-tag))))))
+                              (traverse-net nets #f conn tag))))))
             nets))
       current-nets))
-
-
-(define (list->nets object hierarchy-tag)
-  (define package car)
-  (define pinnumber cdr)
-  (define (list->net ls)
-    (match ls
-      ((-1 . rest)
-       #f)
-     ((id priority name connection)
-      (let ((conn-pair (or connection '(#f . #f))))
-        (make-pin-net id
-                      priority
-                      name
-                      (package conn-pair)
-                      (pinnumber conn-pair))))
-     (_ #f)))
-  (let ((ls (if (null? (object-connections object))
-                '()
-                (reverse (traverse-net '() #t object hierarchy-tag)))))
-
-    (filter-map list->net ls)))
 
 
 (define %unnamed-net-counter 0)
@@ -159,7 +168,9 @@
        #f)
       ((object number name label tag)
        (let* ((attribs (make-pin-attrib-list object))
-              (nets (list->nets object tag))
+              (nets (if (null? (object-connections object))
+                        '()
+                        (reverse (traverse-net '() #t object tag))))
               (netname (or name
                            ;; If there is no netname, probably
                            ;; some of nets has been already named.

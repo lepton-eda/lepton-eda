@@ -32,7 +32,7 @@
             create-net-netname
             netattrib-search-net
             check-net-maps
-            net-return-connected-string))
+            attrib-value-by-name))
 
 (define (create-netattrib basename hierarchy-tag)
   (define mangle? (gnetlist-config-ref 'mangle-net))
@@ -162,24 +162,3 @@ list with unique elements."
   (let ((attached-net-maps (make-net-maps (filter net-attrib? (object-attribs object))))
         (inherited-net-maps (make-net-maps (filter net-attrib? (inherited-attribs object)))))
     (check-duplicates/net-maps-override (append attached-net-maps inherited-net-maps))))
-
-(define (net-return-connected-string object hierarchy-tag)
-  (define (blame-and-make-connected-to refdes)
-    (if refdes
-        (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
-        (log! 'critical (_ "Missing attributes refdes= and pinnumber=")))
-    (cons (hierarchy-create-refdes (or refdes "U?") hierarchy-tag)
-          "?"))
-
-  (let ((pinnum (attrib-value-by-name object "pinnumber"))
-        ;; apply the hierarchy name to the refdes
-        (refdes (hierarchy-create-refdes (attrib-value-by-name (object-component object)
-                                                               "refdes")
-                                         hierarchy-tag)))
-    (if (and refdes pinnum)
-        (cons refdes pinnum)
-        (if pinnum
-            ;; No refdes found.
-            (cons 'net-power pinnum)
-            ;; No pinnumber, use ?, but probably refdes exists.
-            (blame-and-make-connected-to refdes)))))
