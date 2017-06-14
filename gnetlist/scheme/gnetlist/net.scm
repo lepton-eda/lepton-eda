@@ -30,8 +30,7 @@
   #:export (create-netattrib
             create-netname
             create-net-netname
-            netattrib-connected-string-get-pinnum
-            netattrib-return-netname
+            netattrib-search-net
             check-net-maps
             net-return-connected-string))
 
@@ -86,22 +85,6 @@
              (string-take s colon-position)
              (blame-missing-colon s)))))
 
-(define %pin-net-prefix "__netattrib_power_pin ")
-
-(define (netattrib-pinnum-get-connected-string pinnum)
-  (string-append %pin-net-prefix pinnum))
-
-(define (netattrib-connected-string-get-pinnum s)
-  (and (string-prefix? %pin-net-prefix s)
-       (string-drop s (string-length %pin-net-prefix))))
-
-(define (netattrib-check-connected-string s)
-  (if (string-prefix? %pin-net-prefix s)
-      (log! 'error
-            (_ "Name ~S is reserved for internal use.")
-            %pin-net-prefix)
-      s))
-
 (define %delimiters (string->char-set ",; "))
 
 (define (netattrib-search-net object wanted-pin)
@@ -136,13 +119,6 @@
               ;; now look outside the component
               (search-in-values (net-values (object-attribs object)))
               inherited))))
-
-(define (netattrib-return-netname object pinnumber hierarchy-tag)
-  ;; use hierarchy tag here to make this net unique
-  (create-netattrib (netattrib-search-net
-                     (object-component object)
-                     (netattrib-connected-string-get-pinnum pinnumber))
-                    hierarchy-tag))
 
 ;;; Checks for duplicate pinnumbers in NET-MAPS.
 (define (check-duplicates/net-maps-override net-maps)
@@ -192,8 +168,8 @@ list with unique elements."
     (if refdes
         (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
         (log! 'critical (_ "Missing attributes refdes= and pinnumber=")))
-    (string-append (hierarchy-create-refdes (or refdes "U?") hierarchy-tag)
-                   " ?"))
+    (cons (hierarchy-create-refdes (or refdes "U?") hierarchy-tag)
+          "?"))
 
   (let ((pinnum (attrib-value-by-name object "pinnumber"))
         ;; apply the hierarchy name to the refdes
@@ -201,9 +177,9 @@ list with unique elements."
                                                                "refdes")
                                          hierarchy-tag)))
     (if (and refdes pinnum)
-        (netattrib-check-connected-string (string-append refdes " " pinnum))
+        (cons refdes pinnum)
         (if pinnum
             ;; No refdes found.
-            (netattrib-pinnum-get-connected-string pinnum)
+            (cons 'net-power pinnum)
             ;; No pinnumber, use ?, but probably refdes exists.
             (blame-and-make-connected-to refdes)))))
