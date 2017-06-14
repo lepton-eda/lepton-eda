@@ -50,16 +50,17 @@
                        (if starting "p" "P")
                        "n"))
     (if (pin? object)
-        (let* ((connected-string (net-return-connected-string object tag))
-               (pinnum (netattrib-connected-string-get-pinnum connected-string)))
+        (let* ((conn-pair (net-return-connected-string object tag))
+               (pinnum (and (eq? 'net-power (car conn-pair))
+                            (cdr conn-pair))))
           `(,(object-id object)
             ,(not (not pinnum))
             ,(and pinnum
-                  (netattrib-return-netname object
-                                            connected-string
-                                            tag))
-            ,(and (not pinnum)
-                  connected-string)))
+                  ;; use hierarchy tag here to make this net unique
+                  (create-netattrib (netattrib-search-net (object-component object)
+                                                          pinnum)
+                                    hierarchy-tag))
+            ,(and (not pinnum) conn-pair)))
         `(,(object-id object)
           #f
           ,(create-net-netname object tag)
@@ -85,13 +86,6 @@
             nets))
       current-nets))
 
-;;; Temporary function to deal with gnetlist's net->connected_to
-;;; entries.
-(define (split-string-by-char s ch)
-  (let ((space-pos (string-index s ch)))
-    (and space-pos
-         (cons (string-take s space-pos)
-               (string-drop s (1+ space-pos))))))
 
 (define (list->nets object hierarchy-tag)
   (define package car)
@@ -101,9 +95,7 @@
       ((-1 . rest)
        #f)
      ((id priority name connection)
-      (let ((conn-pair (if connection
-                           (split-string-by-char connection #\space)
-                           '(#f . #f))))
+      (let ((conn-pair (or connection '(#f . #f))))
         (make-pin-net id
                       priority
                       name
