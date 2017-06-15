@@ -32,7 +32,6 @@ typedef struct st_conn CONN;
 
 /* netlist structures (gnetlist) */
 typedef struct st_netlist NETLIST;
-typedef struct st_cpinlist CPINLIST;
 
 /* Managed text buffers */
 typedef struct _TextBuffer TextBuffer;
@@ -92,27 +91,11 @@ struct st_netlist {
 
   OBJECT *object_ptr;
 
-  CPINLIST *cpins;
-
   char *hierarchy_tag;
   int composite_component;
 
   NETLIST *prev;
   NETLIST *next;
-};
-
-
-/* for every pin on a component */
-struct st_cpinlist {
-  OBJECT *object_ptr;
-
-  char *pin_number;
-  char *net_name;			/* this is resolved at very end */
-  char *pin_label;
-  char *hierarchy_tag;
-
-  CPINLIST *prev;
-  CPINLIST *next;
 };
 
 

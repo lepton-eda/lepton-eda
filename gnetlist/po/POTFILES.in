@@ -5,7 +5,6 @@ gnetlist/src/gnetlist.c
 gnetlist/src/g_register.c
 gnetlist/src/i_vars.c
 gnetlist/src/parsecmd.c
-gnetlist/src/s_cpinlist.c
 gnetlist/src/s_hierarchy.c
 gnetlist/src/s_misc.c
 gnetlist/src/s_netlist.c

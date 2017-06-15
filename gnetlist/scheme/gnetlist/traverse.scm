@@ -149,7 +149,7 @@
          (or (hash-ref %netnames (pin-net-id (car nets)))
              (search-in-hash-table (cdr nets)))))
 
-(define (list->pins ls tag netlist-mode)
+(define (object-pins object tag netlist-mode)
   (define (make-pin-attrib-list object)
     (define (add-attrib attrib)
       (cons (string->symbol (attrib-name attrib))
@@ -162,42 +162,39 @@
         (create-unconnected-netname)
         (create-unnamed-netname tag netlist-mode)))
 
-  (define (list->pin ls)
-    (match ls
-      ((#f . rest)
-       #f)
-      ((object number name label tag)
-       (let* ((attribs (make-pin-attrib-list object))
-              (nets (if (null? (object-connections object))
-                        '()
-                        (reverse (traverse-net '() #t object tag))))
-              (netname (or name
-                           ;; If there is no netname, probably
-                           ;; some of nets has been already named.
-                           (search-net-name nets)
-                           ;; Didn't find a name.  Go looking for
-                           ;; another net which might have already
-                           ;; been named, i.e. we don't want to
-                           ;; create a new unnamed net if the net
-                           ;; has already been named before.
-                           (search-in-hash-table nets)
-                           ;; Last resort. We have not found a
-                           ;; name. Make a new one.
-                           (make-special-netname nets))))
-         (and netname
-              (for-each
-               (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
-               nets))
-         (make-package-pin (object-id object)
-                           object
-                           'net-pin
-                           number
-                           netname
-                           label
-                           attribs
-                           nets)))
-      (_ #f)))
-  (filter-map list->pin ls))
+  (define (object->package-pin object)
+    (and (net-pin? object)
+         (let* ((attribs (make-pin-attrib-list object))
+                (nets (if (null? (object-connections object))
+                          '()
+                          (reverse (traverse-net '() #t object tag))))
+                (netname (or
+                          ;; If there is no netname, probably
+                          ;; some of nets has been already named.
+                          (search-net-name nets)
+                          ;; Didn't find a name.  Go looking for
+                          ;; another net which might have already
+                          ;; been named, i.e. we don't want to
+                          ;; create a new unnamed net if the net
+                          ;; has already been named before.
+                          (search-in-hash-table nets)
+                          ;; Last resort. We have not found a
+                          ;; name. Make a new one.
+                          (make-special-netname nets))))
+           (and netname
+                (for-each
+                 (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
+                 nets))
+           (make-package-pin (object-id object)
+                             object
+                             'net-pin
+                             (assq-ref attribs 'pinnumber)
+                             netname
+                             (assq-ref attribs 'pinlabel)
+                             attribs
+                             nets))))
+
+  (filter-map object->package-pin (component-contents object)))
 
 
 ;;; Searches for pinnumers in NET-MAPS and, if found, updates
@@ -297,9 +294,9 @@
 
   (define (list->package ls)
     (match ls
-      ((refdes tag composite #f pins)
+      ((refdes tag composite #f)
        #f)
-      ((refdes tag composite object pins)
+      ((refdes tag composite object)
        (make-package (object-id object)
                      refdes
                      tag
@@ -311,7 +308,7 @@
                                      (object-id object)
                                      refdes
                                      tag
-                                     (list->pins pins tag netlist-mode))))
+                                     (object-pins object tag netlist-mode))))
       (_ #f)))
   (filter-map list->package ls))
 

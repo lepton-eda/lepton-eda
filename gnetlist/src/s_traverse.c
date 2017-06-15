@@ -145,10 +145,6 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
 
       }
 
-      netlist->cpins =
-	s_traverse_component(pr_current, o_current,
-			     hierarchy_tag);
-
       /* now you need to traverse any underlying schematics */
       if (is_hierarchy) {
 	s_hierarchy_traverse(pr_current, o_current, netlist);
@@ -157,41 +153,6 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
   }
 
   verbose_done();
-}
-
-CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
-			       char *hierarchy_tag)
-{
-  CPINLIST *cpinlist_head = NULL;
-  CPINLIST *cpins = NULL;
-  GList *iter;
-
-  cpinlist_head = cpins = s_cpinlist_add(NULL);
-
-  for (iter = component->complex->prim_objs;
-       iter != NULL;
-       iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
-
-    /* Ignore objects which aren't net pins */
-    if (o_current->type != OBJ_PIN ||
-        o_current->pin_type != PIN_TYPE_NET)
-      continue;
-
-    /* add cpin node */
-    cpins = s_cpinlist_add(cpins);
-    cpins->object_ptr = o_current;
-
-    cpins->pin_number =
-      o_attrib_search_object_attribs_by_name (o_current, "pinnumber", 0);
-
-    cpins->pin_label =
-      o_attrib_search_object_attribs_by_name (o_current, "pinlabel", 0);
-
-    cpins->hierarchy_tag = g_strdup (hierarchy_tag);
-  }
-
-  return (cpinlist_head);
 }
 
 
