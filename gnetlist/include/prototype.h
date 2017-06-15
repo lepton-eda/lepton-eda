@@ -13,9 +13,6 @@ void i_vars_init_gnetlist_defaults (void);
 /* parsecmd.c */
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
-/* s_cpinlist.c */
-CPINLIST *s_cpinlist_add(CPINLIST *ptr);
-SCM scm_from_pin_list (CPINLIST *pin_list);
 /* s_hierarchy.c */
 void s_hierarchy_traverse(TOPLEVEL *pr_current, OBJECT *o_current, NETLIST *netlist);
 int s_hierarchy_graphical_search(OBJECT* o_current, int count);
@@ -29,5 +26,4 @@ NETLIST *s_netlist_add(NETLIST *ptr);
 SCM scm_from_netlist_list (NETLIST *netlist_list);
 /* s_traverse.c */
 void s_traverse_sheet(TOPLEVEL *pr_current, const GList *obj_list, char *hierarchy_tag);
-CPINLIST *s_traverse_component(TOPLEVEL *pr_current, OBJECT *component, char *hierarchy_tag);
 void s_init_traverse (void);

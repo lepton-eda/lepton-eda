@@ -13,7 +13,6 @@ gnetlist_SOURCES = \
 	gnetlist.c \
 	i_vars.c \
 	parsecmd.c \
-	s_cpinlist.c \
 	s_hierarchy.c \
 	s_misc.c \
 	s_netlist.c \

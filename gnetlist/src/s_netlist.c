@@ -62,7 +62,6 @@ NETLIST *s_netlist_add(NETLIST * ptr)
     new_node = (NETLIST *) g_malloc(sizeof(NETLIST));
 
     /* setup node information */
-    new_node->cpins = NULL;
     new_node->component_uref = NULL;
     new_node->object_ptr = NULL;
     new_node->hierarchy_tag = NULL;
@@ -89,7 +88,6 @@ scm_from_netlist (NETLIST *netlist)
                      netlist->hierarchy_tag ? scm_from_utf8_string (netlist->hierarchy_tag) : SCM_BOOL_F,
                      scm_from_bool (netlist->composite_component),
                      netlist->object_ptr ? edascm_from_object (netlist->object_ptr) : SCM_BOOL_F,
-                     scm_from_pin_list (netlist->cpins),
                      SCM_UNDEFINED);
 }
 
