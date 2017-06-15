@@ -34,32 +34,6 @@
 #include "../include/gettext.h"
 
 
-static void
-s_traverse_init (void)
-{
-    netlist_head = s_netlist_add(NULL);
-
-    if (verbose_mode) {
-	printf
-	    ("\n\n------------------------------------------------------\n");
-	printf("Verbose mode legend\n\n");
-	printf("n : Found net\n");
-	printf("C : Found component (staring to traverse component)\n");
-	printf
-	    ("p : Found pin (starting to traverse pin / or examining pin)\n");
-	printf("P : Found end pin connection (end of this net)\n");
-	printf("R : Starting to rename a net\n");
-	printf("v : Found source attribute, traversing down\n");
-	printf("^ : Finished underlying source, going back up\n");
-	printf("u : Found a refdes which needs to be demangle\n");
-	printf
-	    ("U : Found a connected_to refdes which needs to be demangle\n");
-	printf
-	    ("------------------------------------------------------\n\n");
-
-    }
-}
-
 SCM_DEFINE (traverse, "%traverse", 1, 0, 0,
             (SCM netlist_mode), "Traverse hierarchy.")
 {
@@ -67,7 +41,7 @@ SCM_DEFINE (traverse, "%traverse", 1, 0, 0,
   GList *iter;
   PAGE *p_current;
 
-  s_traverse_init ();
+  netlist_head = s_netlist_add(NULL);
 
   pr_current = edascm_c_current_toplevel ();
 

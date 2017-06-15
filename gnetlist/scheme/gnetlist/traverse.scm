@@ -315,7 +315,29 @@
       (_ #f)))
   (filter-map list->package ls))
 
+(define (traverse-init)
+  "Prints verbose mode legend."
+  (verbose-print "
+
+------------------------------------------------------
+Verbose mode legend
+
+n : Found net
+C : Found component (staring to traverse component)
+p : Found pin (starting to traverse pin / or examining pin)
+P : Found end pin connection (end of this net)
+R : Starting to rename a net
+v : Found source attribute, traversing down
+^ : Finished underlying source, going back up
+u : Found a refdes which needs to be demangle
+U : Found a connected_to refdes which needs to be demangle
+------------------------------------------------------
+
+"))
+
+
 (define (traverse netlist-mode)
+  (traverse-init)
   (reset-rename!)
   (let ((cwd (getcwd))
         (netlist (list->packages (%traverse netlist-mode)
