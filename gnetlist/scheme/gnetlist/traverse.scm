@@ -1,14 +1,19 @@
 (define-module (gnetlist traverse)
 
   ; Import C procedures and variables
-  #:use-module (gnetlist core traverse)
   #:use-module (gnetlist core gettext)
 
   #:use-module (ice-9 match)
+  #:use-module ((ice-9 rdelim)
+                #:select (read-string)
+                #:prefix rdelim:)
   #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
   #:use-module (geda attrib)
   #:use-module (geda object)
+  #:use-module (geda library)
   #:use-module (geda log)
+  #:use-module (geda page)
   #:use-module (gnetlist config)
   #:use-module (gnetlist hierarchy)
   #:use-module (gnetlist rename)
@@ -274,43 +279,6 @@
                    (make-net-map-pin net-map id refdes tag))))
            net-maps)))
 
-(define (list->packages ls netlist-mode)
-  ;; Makes attribute list of OBJECT using getter GET-ATTRIBS.
-  (define (make-attrib-list get-attribs object)
-    (define (add-attrib ls attrib)
-      (let* ((name (string->symbol (attrib-name attrib)))
-             (prev-value (assq-ref ls name))
-             (new-value (attrib-value attrib)))
-        (if prev-value
-            (assq-set! ls name (cons new-value prev-value))
-            (acons name (list new-value) ls))))
-
-    (let loop ((in (get-attribs object))
-               (out '()))
-      (if (null? in)
-          out
-          (loop (cdr in)
-                (add-attrib out (car in))))))
-
-  (define (list->package ls)
-    (match ls
-      ((refdes tag composite #f)
-       #f)
-      ((refdes tag composite object)
-       (make-package (object-id object)
-                     refdes
-                     tag
-                     composite
-                     object
-                     (make-attrib-list inherited-attribs object)
-                     (make-attrib-list object-attribs object)
-                     (net-maps->pins (check-net-maps object)
-                                     (object-id object)
-                                     refdes
-                                     tag
-                                     (object-pins object tag netlist-mode))))
-      (_ #f)))
-  (filter-map list->package ls))
 
 (define (traverse-init)
   "Prints verbose mode legend."
@@ -333,14 +301,121 @@ U : Found a connected_to refdes which needs to be demangle
 "))
 
 
-(define (traverse netlist-mode)
+(define (get-sources inherited-attribs attached-attribs)
+  (define (non-null* ls)
+    (and (not (null? ls)) ls))
+
+  (define (comma-separated->list ls)
+    (append-map (lambda (s) (string-split s #\,)) ls))
+
+  (let ((sources
+         (or
+          (non-null* (assq-ref attached-attribs 'source))
+          (non-null* (assq-ref inherited-attribs 'source)))))
+    (and=> sources comma-separated->list)))
+
+
+;;; Reads file NAME and outputs a page named NAME
+(define (file->page name)
+  (with-input-from-file name
+    (lambda () (string->page name (rdelim:read-string)))))
+
+(define (hierarchy-down-schematic name)
+  (let ((filename (get-source-library-file name)))
+    (if filename
+        (file->page filename)
+        (log! 'error (_ "Failed to load subcircuit ~S.") name))))
+
+(define (traverse-page page hierarchy-tag netlist-mode)
+  ;; Makes attribute list of OBJECT using getter GET-ATTRIBS.
+  (define (make-attrib-list get-attribs object)
+    (define (add-attrib ls attrib)
+      (let* ((name (string->symbol (attrib-name attrib)))
+             (prev-value (assq-ref ls name))
+             (new-value (attrib-value attrib)))
+        (if prev-value
+            (assq-set! ls name (cons new-value prev-value))
+            (acons name (list new-value) ls))))
+
+    (let loop ((in (get-attribs object))
+               (out '()))
+      (if (null? in)
+          out
+          (loop (cdr in)
+                (add-attrib out (car in))))))
+
+  (define (refdes-by-net net-maps graphical)
+    ;; If there is net=, it's a power or some other special symbol.
+    (and (null? net-maps)
+         ;; Do not bother traversing the hierarchy if the symbol has an
+         ;; graphical attribute attached to it.
+         (not graphical)
+         (log! 'critical
+               (_ "Could not find refdes on component and could not find any special attributes!"))
+         "U?"))
+
+  (define (source-netlist filename refdes)
+    (log! 'message (_ "Going to traverse source ~S") filename)
+    (verbose-print "v\n")
+    (let ((page-netlist (traverse-page (hierarchy-down-schematic filename)
+                                       refdes
+                                       netlist-mode)))
+      (verbose-print "^\n")
+      page-netlist))
+
+  (define (traverse-object object)
+    (let* ((id (object-id object))
+           (inherited-attribs (make-attrib-list inherited-attribs object))
+           (attached-attribs (make-attrib-list object-attribs object))
+           (net-maps (check-net-maps object))
+           (package (make-package id
+                                  #f   ; get refdes later
+                                  hierarchy-tag
+                                  #f   ; get composite later
+                                  object
+                                  inherited-attribs
+                                  attached-attribs
+                                  '())) ; get pins later
+           (graphical (package-graphical? package))
+           (refdes (or (hierarchy-create-refdes ((@@ (guile-user) get-uref) object)
+                                                hierarchy-tag)
+                       (refdes-by-net net-maps graphical)))
+           (sources (get-sources inherited-attribs attached-attribs))
+           (composite? (and (not graphical)
+                            (gnetlist-config-ref 'traverse-hierarchy)
+                            sources
+                            (not (null? sources))))
+           (pins (net-maps->pins net-maps
+                                 id
+                                 refdes
+                                 hierarchy-tag
+                                 (object-pins object hierarchy-tag netlist-mode))))
+      (verbose-print " C")
+      (set-package-refdes! package refdes)
+      (set-package-composite! package composite?)
+      (set-package-pins! package pins)
+      (cons package
+            (if composite?
+                ;; Traverse underlying schematics.
+                (append-map (cut source-netlist <> refdes) sources)
+                '()))))
+
+  (verbose-print "- Starting internal netlist creation\n")
+  (let ((netlist (append-map traverse-object
+                             (filter component? (page-contents page)))))
+    (verbose-done)
+    netlist))
+
+(define (traverse-pages pages netlist-mode)
+  (append-map (cut traverse-page <> #f netlist-mode) pages))
+
+(define (traverse toplevel-pages netlist-mode)
   (traverse-init)
   (reset-rename!)
   (let ((cwd (getcwd))
-        (netlist (list->packages (%traverse netlist-mode)
-                                 netlist-mode)))
+        (netlist (traverse-pages toplevel-pages netlist-mode)))
     ;; Change back to the directory where we started.  This is
-    ;; done because (%traverse) can change the current working
+    ;; done because (traverse-pages) can change the current working
     ;; directory.
     (chdir cwd)
     (rename-all (hierarchy-post-process netlist))))

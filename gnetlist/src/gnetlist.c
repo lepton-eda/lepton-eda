@@ -52,20 +52,6 @@ void gnetlist_quit(void)
     g_slist_free (backend_params);
 }
 
-static void init_config_settings (void)
-{
-  GError *err = NULL;
-  EdaConfig *cfg;
-
-  cfg = eda_config_get_context_for_file (NULL);
-
-  is_hierarchy = eda_config_get_boolean (cfg, "gnetlist", "traverse-hierarchy", &err);
-  if (err != NULL) {
-    is_hierarchy = TRUE;
-    g_clear_error (&err);
-  }
-}
-
 
 void main_prog(void *closure, int argc, char *argv[])
 {
@@ -95,10 +81,6 @@ void main_prog(void *closure, int argc, char *argv[])
         "conditions; please see the COPYING file for more details.\n"),
         PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
 
-    /* register guile (scheme) functions */
-    g_register_funcs();
-    s_init_traverse ();
-
     scm_dynwind_begin ((scm_t_dynwind_flags) 0);
     pr_current = s_toplevel_new ();
     edascm_dynwind_toplevel (pr_current);
@@ -112,8 +94,6 @@ void main_prog(void *closure, int argc, char *argv[])
     g_rc_parse (pr_current, argv[0], "gnetlistrc", rc_filename);
 
     scm_c_use_module ("gnetlist rename");
-
-    init_config_settings ();
 
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));

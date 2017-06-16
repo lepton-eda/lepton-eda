@@ -32,9 +32,6 @@ char *rc_filename = NULL;
 int logfile_fd=-1;
 int logging_dest=LOG_WINDOW;
 
-/* netlist specific variables */
-NETLIST *netlist_head=NULL;
-
 char *guile_proc=NULL;
 
 
@@ -58,6 +55,3 @@ SCM post_backend_list = SCM_EOL;
 
 /* Parameters passed to the backend from the command line */
 GSList *backend_params = NULL;
-
-/* Config settings */
-gboolean is_hierarchy = TRUE;
