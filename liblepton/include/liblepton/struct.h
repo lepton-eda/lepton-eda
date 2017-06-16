@@ -30,9 +30,6 @@ typedef struct _GedaList GedaPageList;
 /* lepton-schematic structures */
 typedef struct st_conn CONN;
 
-/* netlist structures (gnetlist) */
-typedef struct st_netlist NETLIST;
-
 /* Managed text buffers */
 typedef struct _TextBuffer TextBuffer;
 
@@ -81,23 +78,6 @@ typedef int(*ChangeNotifyFunc)(void *, OBJECT *);
 
 /*! \brief Type of callback function for querying loading of backups */
 typedef gboolean(*LoadBackupQueryFunc)(void *, GString *);
-
-/* structures below are for gnetlist */
-
-/* for every component in the object database */
-struct st_netlist {
-
-  char *component_uref;
-
-  OBJECT *object_ptr;
-
-  char *hierarchy_tag;
-  int composite_component;
-
-  NETLIST *prev;
-  NETLIST *next;
-};
-
 
 /* used by the rc loading mechanisms */
 typedef struct {

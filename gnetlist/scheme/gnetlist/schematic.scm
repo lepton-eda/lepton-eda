@@ -146,7 +146,7 @@
 must be a list of pages."
   (let* ((id (next-schematic-id))
          (toplevel-attribs (get-toplevel-attributes toplevel-pages))
-         (full-netlist (traverse netlist-mode))
+         (full-netlist (traverse toplevel-pages netlist-mode))
          (netlist (filter-map
                    (lambda (x) (and (not (package-graphical? x)) x))
                    full-netlist))

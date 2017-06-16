@@ -23,9 +23,6 @@ extern int logfile_fd;
 extern int do_logging;
 extern int logging_dest;
 
-/* gnetlist specific stuff */
-extern NETLIST *netlist_head;
-
 extern char *guile_proc;
 extern int list_backends;
 extern int verbose_mode;
@@ -36,5 +33,3 @@ extern SCM pre_rc_list;       /* before rc loaded */
 extern SCM pre_backend_list;  /* before backend loaded */
 extern SCM post_backend_list; /* after backend loaded, before execute */
 extern GSList *backend_params;  /* Parameters passed to the backend from the command line */
-
-extern gboolean is_hierarchy;
