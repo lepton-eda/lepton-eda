@@ -64,9 +64,6 @@
               "U?"))))
 
   (define (make-new-net object)
-    (verbose-print (if (pin? object)
-                       (if starting "p" "P")
-                       "n"))
     (if (pin? object)
         (let* ((pinnumber (attrib-value-by-name object "pinnumber"))
                (refdes (attrib-value-by-name (object-component object) "refdes"))
@@ -280,27 +277,6 @@
            net-maps)))
 
 
-(define (traverse-init)
-  "Prints verbose mode legend."
-  (verbose-print "
-
-------------------------------------------------------
-Verbose mode legend
-
-n : Found net
-C : Found component (staring to traverse component)
-p : Found pin (starting to traverse pin / or examining pin)
-P : Found end pin connection (end of this net)
-R : Starting to rename a net
-v : Found source attribute, traversing down
-^ : Finished underlying source, going back up
-u : Found a refdes which needs to be demangle
-U : Found a connected_to refdes which needs to be demangle
-------------------------------------------------------
-
-"))
-
-
 (define (get-sources inherited-attribs attached-attribs)
   (define (non-null* ls)
     (and (not (null? ls)) ls))
@@ -356,12 +332,9 @@ U : Found a connected_to refdes which needs to be demangle
 
   (define (source-netlist filename refdes)
     (log! 'message (_ "Going to traverse source ~S") filename)
-    (verbose-print "v\n")
-    (let ((page-netlist (traverse-page (hierarchy-down-schematic filename)
-                                       refdes
-                                       netlist-mode)))
-      (verbose-print "^\n")
-      page-netlist))
+    (traverse-page (hierarchy-down-schematic filename)
+                   refdes
+                   netlist-mode))
 
   (define (traverse-object object)
     (let* ((id (object-id object))
@@ -390,7 +363,6 @@ U : Found a connected_to refdes which needs to be demangle
                                  refdes
                                  hierarchy-tag
                                  (object-pins object hierarchy-tag netlist-mode))))
-      (verbose-print " C")
       (set-package-refdes! package refdes)
       (set-package-composite! package composite?)
       (set-package-pins! package pins)
@@ -400,17 +372,13 @@ U : Found a connected_to refdes which needs to be demangle
                 (append-map (cut source-netlist <> refdes) sources)
                 '()))))
 
-  (verbose-print "- Starting internal netlist creation\n")
-  (let ((netlist (append-map traverse-object
-                             (filter component? (page-contents page)))))
-    (verbose-done)
-    netlist))
+  (append-map traverse-object
+              (filter component? (page-contents page))))
 
 (define (traverse-pages pages netlist-mode)
   (append-map (cut traverse-page <> #f netlist-mode) pages))
 
 (define (traverse toplevel-pages netlist-mode)
-  (traverse-init)
   (reset-rename!)
   (let ((cwd (getcwd))
         (netlist (traverse-pages toplevel-pages netlist-mode)))

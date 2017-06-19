@@ -150,7 +150,6 @@
   ;; Separator is yet always '/'
   (define (base-refdes refdes legend)
     (and refdes
-         (verbose-print legend)
          (if (gnetlist-config-ref 'reverse-refdes-order)
              (let ((pos (string-index refdes #\/)))
                (if pos
@@ -175,15 +174,12 @@
     (for-each fix-pin-connections (package-pins package))
     package)
 
-  (verbose-print "- Removing refdes mangling:\n")
   (for-each fix-package netlist)
-  (verbose-done)
   netlist)
 
 
 (define (hierarchy-post-process netlist)
   (define (fix-pin pin refdes)
-    (verbose-print "p")
     (let ((label (package-pin-label pin))
           (pinnumber (package-pin-number pin))
           (nets (package-pin-nets pin)))
@@ -202,9 +198,7 @@
     (when (package-composite? package)
       (for-each (cut fix-pin <> (package-refdes package)) (package-pins package))))
 
-  (verbose-print "- Resolving hierarchy:")
   (for-each fix-composite-package netlist)
-  (verbose-done)
 
   (hierarchy-remove-all-composite
    ((if (gnetlist-config-ref 'mangle-refdes)
