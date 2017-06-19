@@ -58,35 +58,6 @@ struct option long_options[] =
 
 
 
-void usage(char *cmd)
-{
-  printf (_(
-"Usage: %s [OPTION ...] [-g BACKEND] [--] FILE ...\n"
-"\n"
-"Generate a netlist from one or more gEDA schematic FILEs.\n"
-"\n"
-"General options:\n"
-"  -q              Quiet mode.\n"
-"  -v, --verbose   Verbose mode.\n"
-"  -o FILE         Filename for netlist data output.\n"
-"  -L DIR          Add DIR to Scheme search path.\n"
-"  -g BACKEND      Specify netlist backend to use.\n"
-"  -O STRING       Pass an option string to backend.\n"
-"  -l FILE         Load Scheme file before loading backend.\n"
-"  -m FILE         Load Scheme file after loading backend.\n"
-"  -c EXPR         Evaluate Scheme expression at startup.\n"
-"  -i              Enter interactive Scheme REPL after loading.\n"
-"  --list-backends Print a list of available netlist backends.\n"
-"  -h, --help      Help; this message.\n"
-"  -V, --version   Show version information.\n"
-"  --              Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"gEDA/gaf homepage: <http://www.geda-project.org/>\n"),
-          cmd);
-  exit (0);
-}
-
 /*! \brief Print version info and exit.
  * \par Function Description
  * Print gEDA version, and copyright/warranty notices, and exit with
@@ -205,7 +176,6 @@ parse_commandline (int argc, char *argv[])
       break;
 
     case 'h':
-      usage(argv[0]);
       break;
 
     case 'V':

@@ -744,6 +744,35 @@ begins with \"gnet-\" and ends with \".scm\"."
               "\n"
               'suffix))))
 
+(define (usage)
+  (format #t (_
+    "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...
+
+Generate a netlist from one or more gEDA schematic FILEs.
+
+General options:
+  -q              Quiet mode.
+  -v, --verbose   Verbose mode.
+  -o FILE         Filename for netlist data output.
+  -L DIR          Add DIR to Scheme search path.
+  -g BACKEND      Specify netlist backend to use.
+  -O STRING       Pass an option string to backend.
+  -l FILE         Load Scheme file before loading backend.
+  -m FILE         Load Scheme file after loading backend.
+  -c EXPR         Evaluate Scheme expression at startup.
+  -i              Enter interactive Scheme REPL after loading.
+  --list-backends Print a list of available netlist backends.
+  -h, --help      Help; this message.
+  -V, --version   Show version information.
+  --              Treat all remaining arguments as filenames.
+
+Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>
+Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
+")
+          (car (program-arguments)))
+  (primitive-exit 0))
+
+
 (define (set-toplevel-schematic! files netlist-mode)
   (and (eq? netlist-mode 'spice)
        (set! get-uref get-spice-refdes))
@@ -759,6 +788,9 @@ begins with \"gnet-\" and ends with \".scm\"."
 
 ;;; Main program
 ;;;
+(when (gnetlist-option-ref 'help)
+  (usage))
+
 (if (gnetlist-option-ref 'list-backends)
     (gnetlist-backends)
     (let ((files (gnetlist-option-ref '())))
