@@ -63,6 +63,7 @@ static struct gsubr_t libgeda_funcs[] = {
   { "print-color-map",           0, 1, 0, (SCM (*) ()) g_rc_print_color_map },
   { "rc-filename",               0, 0, 0, (SCM (*) ()) g_rc_rc_filename },
   { "rc-config",                 0, 0, 0, (SCM (*) ()) g_rc_rc_config },
+  { "parse-rc",                  2, 0, 0, (SCM (*) ()) g_rc_parse_rc },
   { NULL,                        0, 0, 0, NULL } };
 
 /*! \brief Register all libgeda functions with scheme.
