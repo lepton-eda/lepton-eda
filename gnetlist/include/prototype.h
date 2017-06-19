@@ -5,5 +5,4 @@ int main(int argc, char *argv[]);
 /* i_vars.c */
 void i_vars_init_gnetlist_defaults (void);
 /* parsecmd.c */
-void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
