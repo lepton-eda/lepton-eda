@@ -27,8 +27,6 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-char *rc_filename = NULL;
-
 int logfile_fd=-1;
 int logging_dest=LOG_WINDOW;
 

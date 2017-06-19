@@ -791,6 +791,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 (when (gnetlist-option-ref 'help)
   (usage))
 
+((@@ (guile-user) parse-rc) "gnetlist" "gnetlistrc")
 (if (gnetlist-option-ref 'list-backends)
     (gnetlist-backends)
     (let ((files (gnetlist-option-ref '())))
