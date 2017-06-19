@@ -32,6 +32,7 @@ void g_rc_parse(TOPLEVEL *toplevel, const gchar* pname, const gchar* rcname, con
 void g_rc_parse_handler (TOPLEVEL *toplevel, const gchar *rcname, const gchar *rcfile, ConfigParseErrorFunc handler, void *user_data);
 SCM g_rc_rc_filename();
 SCM g_rc_rc_config ();
+SCM g_rc_parse_rc (SCM pname_s, SCM rcname_s);
 
 /* i_vars.c */
 void i_vars_libgeda_set(TOPLEVEL *toplevel);
