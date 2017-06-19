@@ -4,27 +4,9 @@
   #:use-module (gnetlist package-pin)
   #:use-module (gnetlist pin-net)
 
-  #:export (verbose-print
-            verbose-done
-            verbose-print-netlist))
+  #:export (verbose-print-netlist))
 
 (define verbose-mode (gnetlist-option-ref 'verbose))
-
-(define %char-counter 0)
-
-(define (verbose-print s)
-  (when verbose-mode
-    (display s)
-    (set! %char-counter
-          (if (string-suffix? "\n" s)
-              0
-              (+ %char-counter (string-length s))))
-    (if (>= %char-counter 78)
-        (verbose-print "\n"))))
-
-(define (verbose-done)
-  (verbose-print "\nDONE\n"))
-
 
 (define (verbose-print-netlist netlist)
   (define (print-net net)

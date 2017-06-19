@@ -97,16 +97,12 @@ This warning is okay if you have multiple levels of hierarchy!
   (%search-rename %net-renames from to quiet))
 
 (define (rename-all netlist)
-  (verbose-print "- Renaming nets:\n")
   (hash-table-walk %netname-renames
                    (lambda (from to)
-                     (verbose-print "R")
                      (rename-lowlevel netlist from to)))
   (hash-table-walk %net-renames
                    (lambda (from to)
-                     (verbose-print "R")
                      (rename-lowlevel netlist from to)))
-  (verbose-done)
   netlist)
 
 ;; Return the alist of renames.  Sort it so that it's in a canonical
