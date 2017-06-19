@@ -89,8 +89,6 @@ void main_prog(void *closure, int argc, char *argv[])
      * are loaded. */
     scm_eval (pre_rc_list, scm_current_module ());
 
-    scm_c_use_module ("geda library");
-
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
 
