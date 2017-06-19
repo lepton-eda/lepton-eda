@@ -18,6 +18,14 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
+(use-modules (gnetlist option))
+
+;;; Evaluate Scheme expressions that need to be run before rc
+;;; files are loaded.
+(set! %load-path
+      (append (reverse (gnetlist-option-ref 'load-path))
+              %load-path))
+
 (use-modules (srfi srfi-1)
              (srfi srfi-26)
              (ice-9 match)
@@ -40,7 +48,6 @@
              (gnetlist pin-net)
              (gnetlist attrib compare)
              (gnetlist sort)
-             (gnetlist option)
              (gnetlist verbose)
              ((gnetlist rename) #:select (get-rename-list)))
 

@@ -33,9 +33,6 @@ char *guile_proc=NULL;
 /* command line arguments */
 int list_backends=FALSE;
 
-/* scheme expression to evaluate before loading of rc files */
-SCM pre_rc_list = SCM_EOL;
-
 /* scheme expression to evaluate before loading of the backend */
 SCM pre_backend_list = SCM_EOL;
 

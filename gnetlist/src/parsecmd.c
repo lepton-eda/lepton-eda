@@ -123,16 +123,6 @@ parse_commandline (int argc, char *argv[])
       break;
 
     case 'L':
-      /* Argument is a directory to add to the Scheme load path.
-       * Add the necessary expression to be evaluated before rc file
-       * loading. */
-      pre_rc_list =
-        scm_cons (scm_list_3 (sym_set_x,
-                              sym_load_path,
-                              scm_list_3 (sym_cons,
-                                          scm_from_locale_string (optarg),
-                                          sym_load_path)),
-                  pre_rc_list);
       break;
 
     case 'g':
@@ -200,9 +190,6 @@ parse_commandline (int argc, char *argv[])
   }
 
   /* Make sure Scheme expressions can be passed straight to eval */
-  pre_rc_list = scm_cons (sym_begin,
-                          scm_reverse_x (pre_rc_list, SCM_UNDEFINED));
-  scm_gc_protect_object (pre_rc_list);
   pre_backend_list = scm_cons (sym_begin,
                                scm_reverse_x (pre_backend_list, SCM_UNDEFINED));
   scm_gc_protect_object (pre_backend_list);
