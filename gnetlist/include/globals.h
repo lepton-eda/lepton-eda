@@ -17,10 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-extern int logfile_fd;
-extern int do_logging;
-extern int logging_dest;
-
 extern char *guile_proc;
 extern int list_backends;
 extern SCM pre_rc_list;       /* before rc loaded */

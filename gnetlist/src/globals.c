@@ -27,9 +27,6 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-int logfile_fd=-1;
-int logging_dest=LOG_WINDOW;
-
 char *guile_proc=NULL;
 
 
