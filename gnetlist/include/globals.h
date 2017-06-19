@@ -25,10 +25,6 @@ extern int logging_dest;
 
 extern char *guile_proc;
 extern int list_backends;
-extern int verbose_mode;
-extern int interactive_mode;
-extern int quiet_mode;
-extern char *output_filename;
 extern SCM pre_rc_list;       /* before rc loaded */
 extern SCM pre_backend_list;  /* before backend loaded */
 extern SCM post_backend_list; /* after backend loaded, before execute */

@@ -37,11 +37,6 @@ char *guile_proc=NULL;
 
 /* command line arguments */
 int list_backends=FALSE;
-int verbose_mode=FALSE;
-int interactive_mode=FALSE;
-int quiet_mode=FALSE;
-
-char *output_filename=NULL;
 
 /* scheme expression to evaluate before loading of rc files */
 SCM pre_rc_list = SCM_EOL;
