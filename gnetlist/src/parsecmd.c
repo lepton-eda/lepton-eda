@@ -114,15 +114,12 @@ parse_commandline (int argc, char *argv[])
       break;
 
     case 'v':
-      verbose_mode = TRUE;
       break;
 
     case 'i':
-      interactive_mode = TRUE;
       break;
 
     case 'q':
-      quiet_mode = TRUE;
       break;
 
     case 'L':
@@ -159,8 +156,6 @@ parse_commandline (int argc, char *argv[])
       break;
 
     case 'o':
-      g_free(output_filename);
-      output_filename = g_strdup(optarg);
       break;
 
     case 'O':
@@ -202,10 +197,6 @@ parse_commandline (int argc, char *argv[])
     default:
       g_assert_not_reached ();
     }
-  }
-
-  if (quiet_mode) {
-    verbose_mode = FALSE;
   }
 
   /* Make sure Scheme expressions can be passed straight to eval */
