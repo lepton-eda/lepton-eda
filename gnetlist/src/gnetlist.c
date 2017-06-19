@@ -85,10 +85,6 @@ void main_prog(void *closure, int argc, char *argv[])
     pr_current = s_toplevel_new ();
     edascm_dynwind_toplevel (pr_current);
 
-    /* Evaluate Scheme expressions that need to be run before rc files
-     * are loaded. */
-    scm_eval (pre_rc_list, scm_current_module ());
-
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
 
