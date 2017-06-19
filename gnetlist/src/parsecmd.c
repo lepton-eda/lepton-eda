@@ -44,20 +44,6 @@
 extern char *optarg;
 extern int optind;
 
-/* Added by SDB 3.3.2006.  */
-#ifdef HAVE_GETOPT_LONG
-struct option long_options[] =
-  {
-    {"help", 0, 0, 'h'},
-    {"list-backends", 0, &list_backends, TRUE},
-    {"verbose", 0, 0, 'v'},
-    {"version", 0, 0, 'V'},
-    {0, 0, 0, 0}
-  };
-#endif
-
-
-
 /*! \brief Print version info and exit.
  * \par Function Description
  * Print gEDA version, and copyright/warranty notices, and exit with
@@ -93,19 +79,8 @@ int
 parse_commandline (int argc, char *argv[])
 {
   int ch;
-  SCM sym_begin = scm_from_utf8_symbol ("begin");
-  SCM sym_cons = scm_from_utf8_symbol ("cons");
-  SCM sym_load = scm_from_utf8_symbol ("load");
-  SCM sym_set_x = scm_from_utf8_symbol ("set!");
-  SCM sym_load_path = scm_from_utf8_symbol ("%load-path");
 
-#ifdef HAVE_GETOPT_LONG
-  /* int option_index = 0; */
-
-  while ((ch = getopt_long(argc, argv, OPTIONS, long_options, NULL /* &option_index */)) != -1) {
-#else
   while ((ch = getopt(argc, argv, OPTIONS)) != -1) {
-#endif
     switch (ch) {
 
     case 0:
@@ -126,30 +101,18 @@ parse_commandline (int argc, char *argv[])
       break;
 
     case 'g':
-      guile_proc = g_strdup(optarg);
       break;
 
     case 'l':
-      /* Argument is filename of a Scheme script to be run before
-       * loading gnetlist backend. */
-      pre_backend_list =
-        scm_cons (scm_list_2 (sym_load, scm_from_locale_string (optarg)),
-                  pre_backend_list);
       break;
 
     case 'm':
-      /* Argument is filename of a Scheme script to be run after
-       * loading gnetlist backend. */
-      post_backend_list =
-        scm_cons (scm_list_2 (sym_load, scm_from_locale_string (optarg)),
-                  post_backend_list);
       break;
 
     case 'o':
       break;
 
     case 'O':
-      backend_params = g_slist_append(backend_params, optarg);
       break;
 
     case 'c':
@@ -188,14 +151,6 @@ parse_commandline (int argc, char *argv[])
       g_assert_not_reached ();
     }
   }
-
-  /* Make sure Scheme expressions can be passed straight to eval */
-  pre_backend_list = scm_cons (sym_begin,
-                               scm_reverse_x (pre_backend_list, SCM_UNDEFINED));
-  scm_gc_protect_object (pre_backend_list);
-  post_backend_list = scm_cons (sym_begin,
-                                scm_reverse_x (post_backend_list, SCM_UNDEFINED));
-  scm_gc_protect_object (post_backend_list);
 
   return (optind);
 }
