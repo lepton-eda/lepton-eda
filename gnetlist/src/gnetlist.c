@@ -93,8 +93,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
     g_rc_parse (pr_current, argv[0], "gnetlistrc", rc_filename);
 
-    scm_c_use_module ("gnetlist rename");
-
     /* Load basic gnetlist functions */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
 
