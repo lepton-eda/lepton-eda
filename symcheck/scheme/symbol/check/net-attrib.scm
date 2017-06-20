@@ -139,9 +139,14 @@
   (string=? (entity-pin-number a) (entity-pin-number b)))
 
 (define (check-duplicates/slot entity-pins)
-  "Checks for duplicate entity pinnumbers."
+  "Checks for duplicate entity pinnumbers in ENTITY-PINS."
   (define (blame-duplicate entity-pin)
-    (let ((source-object (slot-object (entity-pin-source entity-pin))))
+    ;; 'source' is either <slot> or pinnumber attribute object for
+    ;; not slotted symbols.
+    (let* ((source (entity-pin-source entity-pin))
+           (source-object (if (slot? source)
+                              (slot-object source)
+                              source)))
       (blame-object source-object
                     'error
                     (format #f
