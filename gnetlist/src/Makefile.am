@@ -6,7 +6,6 @@ bin_PROGRAMS = gnetlist
 gnetlist_SOURCES = \
 	globals.c \
 	gnetlist.c \
-	i_vars.c \
 	parsecmd.c
 
 gnetlist_CPPFLAGS = -I$(top_srcdir)/liblepton/include -I$(srcdir)/../include \
