@@ -69,6 +69,23 @@ conditions; please see the COPYING file for more details.
          date-version))
   (_ #f))
 
+;;; Print version info and exit.
+;;; Print gEDA version, and copyright/warranty notices, and exit with
+;;; exit status 0.
+(define (version)
+  (match (lepton-version)
+    ((prepend dotted date commit)
+     (format #t (_ "Lepton EDA ~A (g~A)
+Copyright (C) 1998-2016 gEDA developers
+Copyright (C) 2017 Lepton EDA developers
+This is free software, and you are welcome to redistribute it under
+certain conditions. For details, see the file `COPYING', which is
+included in the Lepton EDA distribution.
+There is NO WARRANTY, to the extent permitted by law.
+")
+             dotted (string-take commit 7))))
+  (primitive-exit 0))
+
 ;;----------------------------------------------------------------------
 ;; The below functions added by SDB in Sept 2003 to support command-line flag
 ;; processing.
@@ -814,6 +831,9 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 ;;;
 (when (gnetlist-option-ref 'help)
   (usage))
+
+(when (gnetlist-option-ref 'version)
+  (version))
 
 ((@@ (guile-user) parse-rc) "gnetlist" "gnetlistrc")
 (if (gnetlist-option-ref 'list-backends)

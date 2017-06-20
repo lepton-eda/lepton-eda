@@ -19,7 +19,6 @@
  */
 
 #include <config.h>
-#include <version.h>
 
 #include <stdio.h>
 #ifdef HAVE_STRING_H
@@ -44,24 +43,6 @@
 extern char *optarg;
 extern int optind;
 
-/*! \brief Print version info and exit.
- * \par Function Description
- * Print gEDA version, and copyright/warranty notices, and exit with
- * exit status 0.
- */
-static void
-version ()
-{
-  printf(_(
-"gEDA %s (g%.7s)\n"
-"Copyright (C) 1998-2012 gEDA developers\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the gEDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"),
-         PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
-  exit (0);
-}
 
 /* from guile (libguile/gh_init.c) */
 static SCM
@@ -127,7 +108,6 @@ parse_commandline (int argc, char *argv[])
       break;
 
     case 'V':
-      version();
       break;
 
     case '?':
