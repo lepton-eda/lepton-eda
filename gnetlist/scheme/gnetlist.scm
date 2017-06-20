@@ -827,8 +827,22 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (set! all-pins (map gnetlist:get-pins packages))
   toplevel-schematic)
 
+
+(define (catch-handler tag . args)
+  (format (current-error-port)
+          (_ "\nJust got an error '~A':\n        ~A\n\n")
+          tag
+          args)
+  #f)
+
 ;;; Main program
 ;;;
+(let ((code-to-eval (gnetlist-option-ref 'eval-code)))
+  (when code-to-eval
+    (catch #t
+      (lambda () (apply eval-string code-to-eval))
+      catch-handler)))
+
 (when (gnetlist-option-ref 'help)
   (usage))
 
