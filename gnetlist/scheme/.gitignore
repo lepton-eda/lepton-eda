@@ -1,5 +1,6 @@
 Makefile
 Makefile.in
+lepton-netlist
 gnet-gsch2pcb.scm
 *.log
 *.trs
