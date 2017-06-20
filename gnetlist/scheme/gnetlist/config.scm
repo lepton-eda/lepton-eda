@@ -26,6 +26,59 @@
 
 (define %gnetlist-config #f)
 
+;;; Init default values
+(let ((cfg (default-config-context)))
+
+  ;; This is the default name used for nets for which the user has set
+  ;; no explicit name via the netname= or net= attributes.
+  (set-config! cfg "gnetlist" "default-net-name" "unnamed_net")
+
+  ;; This is the default name used for buses for which the user has set
+  ;; no explicit name via the netname= or net= attributes.
+  (set-config! cfg "gnetlist" "default-bus-name" "unnamed_bus")
+
+  ;; By default, net= attributes beat netname= attributes.
+  (set-config! cfg "gnetlist" "net-naming-priority" "net-attribute")
+
+  ;; By default, hierarchy processing is enabled.
+  (set-config! cfg "gnetlist.hierarchy" "traverse-hierarchy" #t)
+
+  ;; By default, sub-schematic attributes 'refdes' are built
+  ;; accounting for the parent schematic's ones.
+  (set-config! cfg "gnetlist.hierarchy" "mangle-refdes-attribute" #t)
+
+  ;; By default, sub-schematic attributes 'refdese' are appended to the parent
+  ;; schematic's ones to build hierarchical attributes 'refdes'.
+  (set-config! cfg "gnetlist.hierarchy" "refdes-attribute-order" #f)
+
+  ;; This is the default separator which is used to built hierarchical
+  ;; refdeses of any component in sub-schematics.
+  (set-config! cfg "gnetlist.hierarchy" "refdes-attribute-separator" "/")
+
+  ;; By default, sub-schematic attributes 'netname' are built
+  ;; accounting for the parent schematic's ones.
+  (set-config! cfg "gnetlist.hierarchy" "mangle-netname-attribute" #t)
+
+  ;; By default, sub-schematic attributes 'netname' are appended to the parent
+  ;; schematic's ones to build hierarchical netnames.
+  (set-config! cfg "gnetlist.hierarchy" "netname-attribute-order" #f)
+
+  ;; This is the default separator which is used to built hierarchical
+  ;; attributes 'netname' for nets in sub-schematics.
+  (set-config! cfg "gnetlist.hierarchy" "netname-attribute-separator" "/")
+
+  ;; By default, sub-schematic attributes 'net' are built
+  ;; accounting for the parent schematic's ones.
+  (set-config! cfg "gnetlist.hierarchy" "mangle-net-attribute" #t)
+
+  ;; By default, sub-schematic attributes 'net' are appended to the parent
+  ;; schematic's ones to build hierarchical netnames.
+  (set-config! cfg "gnetlist.hierarchy" "net-attribute-order" #f)
+
+  ;; This is the default separator which is used to built hierarchical
+  ;; attributes 'net' for nets in sub-schematics.
+  (set-config! cfg "gnetlist.hierarchy" "net-attribute-separator" "/"))
+
 (define %gnetlist-config-table
   `((traverse-hierarchy    ,config-boolean "gnetlist.hierarchy" "traverse-hierarchy")
     (reverse-refdes-order  ,config-boolean "gnetlist.hierarchy" "refdes-attribute-order")

@@ -62,9 +62,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
     libgeda_init();
 
-    /* immediately setup user params */
-    i_vars_init_gnetlist_defaults ();
-
     /* create log file right away */
     /* even if logging is enabled */
     s_log_init ("gnetlist");

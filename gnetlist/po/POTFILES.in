@@ -1,7 +1,6 @@
 # List of translatable files
 gnetlist/src/globals.c
 gnetlist/src/gnetlist.c
-gnetlist/src/i_vars.c
 gnetlist/src/parsecmd.c
 
 gnetlist/scheme/gnetlist.scm
