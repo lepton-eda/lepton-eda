@@ -60,8 +60,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
     parse_commandline(argc, argv);
 
-    scm_set_program_arguments (argc, argv, NULL);
-
     libgeda_init();
 
     /* immediately setup user params */
