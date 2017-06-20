@@ -52,6 +52,9 @@
              (gnetlist verbose)
              ((gnetlist rename) #:select (get-rename-list)))
 
+;;; Create log file right away even if logging is enabled.
+(init-log "gnetlist")
+
 (match (lepton-version)
   ((prepend-string dotted-version date-version git-commit)
    (log! 'message
