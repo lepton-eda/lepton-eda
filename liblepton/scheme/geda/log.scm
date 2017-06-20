@@ -50,3 +50,5 @@ A newline character is automatically appended to the message.
 (define-public (log! level message . format-args)
   (let ((formatted (apply format #f message format-args)))
     (%log! #f level (string-append formatted))))
+
+(define-public init-log %init-log)
