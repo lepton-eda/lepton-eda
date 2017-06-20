@@ -62,10 +62,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
     libgeda_init();
 
-    /* create log file right away */
-    /* even if logging is enabled */
-    s_log_init ("gnetlist");
-
     scm_dynwind_begin ((scm_t_dynwind_flags) 0);
     pr_current = s_toplevel_new ();
     edascm_dynwind_toplevel (pr_current);
