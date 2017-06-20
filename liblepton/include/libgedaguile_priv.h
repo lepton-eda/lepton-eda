@@ -95,6 +95,7 @@ void edascm_init_os ();
 void edascm_init_config ();
 void edascm_init_closure (void);
 void edascm_init_log (void);
+void edascm_init_version ();
 void edascm_init_deprecated ();
 
 /* ---------------------------------------- */
