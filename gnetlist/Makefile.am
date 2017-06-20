@@ -1,5 +1,5 @@
 
-SUBDIRS = po src include utils scheme examples scripts tests docs
+SUBDIRS = po utils scheme examples scripts tests docs
 
 EXTRA_DIST = BUGS ChangeLog ChangeLog-1.0
 

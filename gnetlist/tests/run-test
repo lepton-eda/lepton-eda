@@ -5,7 +5,10 @@ tmp="`echo "$1" | sed -e 's:.*/tests/::' -e 's:\\.out$::' -e 's:\\./::'`"
 stem="`echo "${tmp}" | sed -E -e 's:-spice-.*:@@@:' -e 's:-vams-.*:@@@:' -e 's:(-[^-@]*|@@@)$::'`"
 backend="`echo "${tmp}" | sed -e "s:^${stem}-::"`"
 
-GNETLIST="${abs_top_builddir}/gnetlist/src/gnetlist"
+LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton"
+export LIBLEPTON
+
+GNETLIST="${abs_top_builddir}/gnetlist/scheme/lepton-netlist"
 GEDADATA="${abs_top_srcdir}/gnetlist" # HACKHACKHACK
 GEDADATARC="${abs_top_builddir}/gnetlist/lib"
 export GEDADATA
@@ -341,10 +344,10 @@ elif test ${rc3} -ne 0 ; then
     echo "FAILED:  gnetlist -g ${backend} -v returned ${rc3}"
     status=1
 else
-    sed '/gnetlist -g/d; /gnetlist -L/d' "${ref}" > "${out}.tmp1"
-    sed '/gnetlist -g/d; /gnetlist -L/d' "${out}" > "${out}.tmp2"
-    sed '/gnetlist -g/d; /gnetlist -L/d' "${std}" > "${out}.tmp3"
-    sed '/gnetlist -g/d; /gnetlist -L/d' "${vrb}" > "${out}.tmp4"
+    sed '/lepton-netlist -g/d; /lepton-netlist -L/d' "${ref}" > "${out}.tmp1"
+    sed '/lepton-netlist -g/d; /lepton-netlist -L/d' "${out}" > "${out}.tmp2"
+    sed '/lepton-netlist -g/d; /lepton-netlist -L/d' "${std}" > "${out}.tmp3"
+    sed '/lepton-netlist -g/d; /lepton-netlist -L/d' "${vrb}" > "${out}.tmp4"
 
     # Hack to help with allegro backend
     # Device files are ignored as yet

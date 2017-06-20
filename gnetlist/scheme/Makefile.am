@@ -1,5 +1,12 @@
 ## $Id$
 ##
+bin_SCRIPTS = lepton-netlist
+
+do_subst = sed -e 's,[@]libdir[@],$(libdir),g'
+
+lepton-netlist: lepton-netlist.in Makefile
+	$(do_subst) < $(srcdir)/$@.in > $@
+	chmod +x $@
 
 M4=		@M4@
 PCBM4DIR=	@PCBM4DIR@
@@ -45,7 +52,7 @@ AM_TESTS_ENVIRONMENT = GUILE_AUTO_COMPILE=0
 
 dist_noinst_DATA = unit-test.scm $(TESTS)
 
-EXTRA_DIST = $(DIST_SCM) $(SCM_SRCS)
+EXTRA_DIST = $(DIST_SCM) $(SCM_SRCS) lepton-netlist.in
 
 SCM_SRCS=	gnet-gsch2pcb.scm.in
 
@@ -74,6 +81,6 @@ clean-local:
 	fi
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ gnet-gsch2pcb.scm
+CLEANFILES = *.log *~ gnet-gsch2pcb.scm $(bin_SCRIPTS)
 DISTCLEANFILES = *.log core FILE *~ gnet-gsch2pcb.scm
 MAINTAINERCLEANFILES = *.log *~ Makefile.in gnet-gsch2pcb.scm
