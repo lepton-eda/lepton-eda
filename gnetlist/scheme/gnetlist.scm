@@ -40,6 +40,7 @@
              (geda deprecated)
              (geda log)
              (geda repl)
+             (lepton version)
              (gnetlist core gettext)
              (gnetlist config)
              (gnetlist schematic)
@@ -51,6 +52,19 @@
              (gnetlist verbose)
              ((gnetlist rename) #:select (get-rename-list)))
 
+(match (lepton-version)
+  ((prepend-string dotted-version date-version git-commit)
+   (log! 'message
+         (_
+          "gEDA/gnetlist version ~A~A.~A
+gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.
+This is free software, and you are welcome to redistribute it under certain
+conditions; please see the COPYING file for more details.
+")
+         prepend-string
+         dotted-version
+         date-version))
+  (_ #f))
 
 ;;----------------------------------------------------------------------
 ;; The below functions added by SDB in Sept 2003 to support command-line flag

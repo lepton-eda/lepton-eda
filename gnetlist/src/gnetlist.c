@@ -71,13 +71,6 @@ void main_prog(void *closure, int argc, char *argv[])
     /* even if logging is enabled */
     s_log_init ("gnetlist");
 
-    s_log_message(_(
-        "gEDA/gnetlist version %s%s.%s\n"
-        "gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"
-        "This is free software, and you are welcome to redistribute it under certain\n"
-        "conditions; please see the COPYING file for more details.\n"),
-        PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
-
     scm_dynwind_begin ((scm_t_dynwind_flags) 0);
     pr_current = s_toplevel_new ();
     edascm_dynwind_toplevel (pr_current);
