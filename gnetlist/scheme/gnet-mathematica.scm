@@ -21,7 +21,8 @@
 ;; See the Mathematica notebook gEDA.nb (obtainable at www.noqsi.com)
 ;; for usage.
 
-(use-modules (gnetlist schematic))
+(use-modules (srfi srfi-1)
+             (gnetlist schematic))
 
 (define (netname-connections->pin-voltages netname)
   (define package car)

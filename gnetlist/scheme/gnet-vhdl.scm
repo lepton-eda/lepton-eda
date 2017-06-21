@@ -37,8 +37,10 @@
 ;;;
 
 (use-modules (srfi srfi-1)
+             (gnetlist attrib compare)
              (gnetlist schematic)
-             (gnetlist port))
+             (gnetlist port)
+             (gnetlist sort))
 
 (define (vhdl:get-top-port-list packages)
   ;; construct list

@@ -18,39 +18,63 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(use-modules (gnetlist option))
+(define-module (gnetlist)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
+  #:use-module (ice-9 match)
+  #:use-module ((ice-9 rdelim) #:select (read-string) #:prefix rdelim:)
+  #:use-module (ice-9 ftw)
+  #:use-module (ice-9 i18n)
+  #:use-module (gnetlist option)
+  #:use-module (gnetlist package)
+  #:use-module (gnetlist sort)
+  #:use-module (gnetlist attrib compare)
+  #:use-module (geda library)
+  #:use-module (geda page)
+  #:use-module (geda deprecated)
+  #:use-module (geda log)
+  #:use-module (geda repl)
+  #:use-module (lepton version)
+  #:use-module (gnetlist core gettext)
+  #:use-module (gnetlist config)
+  #:use-module (gnetlist schematic)
+  #:use-module (gnetlist package-pin)
+  #:use-module (gnetlist pin-net)
+  #:use-module (gnetlist verbose)
+  #:use-module ((gnetlist rename) #:select (get-rename-list))
 
-;;; Evaluate Scheme expressions that need to be run before rc
-;;; files are loaded.
-(set! %load-path
-      (append (reverse (gnetlist-option-ref 'load-path))
-              %load-path))
+  #:export (main
+            toplevel-schematic
+            calling-flag?
+            get-device
+            get-all-connections
+            get-all-package-attributes
+            get-component-text
+            get-nets
+            get-pins
+            get-pins-nets
+            message
+            package-pin-netname
+            gnetlist:alias-net
+            gnetlist:alias-refdes
+            gnetlist:build-net-aliases
+            gnetlist:build-refdes-aliases
+            gnetlist:get-all-package-attributes
+            gnetlist:get-attribute-by-pinnumber
+            gnetlist:get-attribute-by-pinseq
+            gnetlist:get-backend-arguments
+            gnetlist:get-calling-flags
+            gnetlist:get-renamed-nets
+            gnetlist:get-slots
+            gnetlist:get-package-attribute
+            gnetlist:get-unique-slots
+            gnetlist:graphical-objs-in-net-with-attrib-get-attrib
+            gnetlist:wrap
+            known?
+            unknown?
+            pair<?)
 
-(use-modules (srfi srfi-1)
-             (srfi srfi-26)
-             (ice-9 match)
-             ((ice-9 rdelim)
-              #:select (read-string)
-              #:prefix rdelim:)
-             (ice-9 ftw)
-             (ice-9 i18n)
-             (sxml transform)
-             (geda library)
-             (geda page)
-             (geda deprecated)
-             (geda log)
-             (geda repl)
-             (lepton version)
-             (gnetlist core gettext)
-             (gnetlist config)
-             (gnetlist schematic)
-             (gnetlist package)
-             (gnetlist package-pin)
-             (gnetlist pin-net)
-             (gnetlist attrib compare)
-             (gnetlist sort)
-             (gnetlist verbose)
-             ((gnetlist rename) #:select (get-rename-list)))
+  #:re-export (source-library))
 
 ;;; Create log file right away even if logging is enabled.
 (init-log "gnetlist")
@@ -837,74 +861,75 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
 ;;; Main program
 ;;;
-(let ((code-to-eval (gnetlist-option-ref 'eval-code)))
-  (when code-to-eval
-    (catch #t
-      (lambda () (apply eval-string code-to-eval))
-      catch-handler)))
+(define (main)
+  (let ((code-to-eval (gnetlist-option-ref 'eval-code)))
+    (when (not (null? code-to-eval))
+      (catch #t
+        (lambda () (apply eval-string code-to-eval))
+        catch-handler)))
 
-(when (gnetlist-option-ref 'help)
-  (usage))
+  (when (gnetlist-option-ref 'help)
+    (usage))
 
-(when (gnetlist-option-ref 'version)
-  (version))
+  (when (gnetlist-option-ref 'version)
+    (version))
 
-((@@ (guile-user) parse-rc) "gnetlist" "gnetlistrc")
-(if (gnetlist-option-ref 'list-backends)
-    (gnetlist-backends)
-    (let ((files (gnetlist-option-ref '())))
-      (if (null? files)
-          (error (format #f
-                         (_ "No schematic files specified for processing.
+  ((@@ (guile-user) parse-rc) "gnetlist" "gnetlistrc")
+  (if (gnetlist-option-ref 'list-backends)
+      (gnetlist-backends)
+      (let ((files (gnetlist-option-ref '())))
+        (if (null? files)
+            (error (format #f
+                           (_ "No schematic files specified for processing.
 Run `~A --help' for more information.
 ")
-                         (car (program-arguments))))
-          (let* ((backend (gnetlist-option-ref 'backend))
-                 ;; this is a kludge to make sure that spice mode gets set
-                 (netlist-mode (if (and backend (string-prefix? "spice" backend))
-                                   'spice
-                                   'geda))
+                           (car (program-arguments))))
+            (let* ((backend (gnetlist-option-ref 'backend))
+                   ;; this is a kludge to make sure that spice mode gets set
+                   (netlist-mode (if (and backend (string-prefix? "spice" backend))
+                                     'spice
+                                     'geda))
 
-                 ;; Search for backend scm file in load path
-                 (backend-path (and backend
-                                    (%search-load-path (format #f
-                                                               "gnet-~A.scm"
-                                                               backend))))
-                 (output-filename (get-output-filename)))
+                   ;; Search for backend scm file in load path
+                   (backend-path (and backend
+                                      (%search-load-path (format #f
+                                                                 "gnet-~A.scm"
+                                                                 backend))))
+                   (output-filename (get-output-filename)))
 
-            (if backend
-                (if backend-path
-                  ;; Load backend code.
-                  (begin
-                    ;; Evaluate the first set of Scheme expressions.
-                    (for-each primitive-load (gnetlist-option-ref 'pre-load))
-                    ;; Load backend
-                    (primitive-load backend-path)
-                    ;; Evaluate second set of Scheme expressions.
-                    (for-each primitive-load (gnetlist-option-ref 'post-load))
+              (if backend
+                  (if backend-path
+                      ;; Load backend code.
+                      (begin
+                        ;; Evaluate the first set of Scheme expressions.
+                        (for-each primitive-load (gnetlist-option-ref 'pre-load))
+                        ;; Load backend
+                        (primitive-load backend-path)
+                        ;; Evaluate second set of Scheme expressions.
+                        (for-each primitive-load (gnetlist-option-ref 'post-load))
 
-                    (when (gnetlist-option-ref 'verbose)
-                      (print-gnetlist-config))
+                        (when (gnetlist-option-ref 'verbose)
+                          (print-gnetlist-config))
 
-                    (let ((schematic (set-toplevel-schematic! files netlist-mode)))
-                      (verbose-print-netlist (schematic-netlist schematic))
-                      (if (gnetlist-option-ref 'interactive)
-                          (lepton-repl)
-                          (let ((backend-proc (primitive-eval (string->symbol backend))))
-                            (if output-filename
-                                ;; output-filename is defined, output to it.
-                                (with-output-to-file output-filename
-                                  (lambda () (backend-proc output-filename)))
-                                ;; output-filename is #f, output to stdout.
-                                (backend-proc output-filename))))))
+                        (let ((schematic (set-toplevel-schematic! files netlist-mode)))
+                          (verbose-print-netlist (schematic-netlist schematic))
+                          (if (gnetlist-option-ref 'interactive)
+                              (lepton-repl)
+                              (let ((backend-proc (primitive-eval (string->symbol backend))))
+                                (if output-filename
+                                    ;; output-filename is defined, output to it.
+                                    (with-output-to-file output-filename
+                                      (lambda () (backend-proc output-filename)))
+                                    ;; output-filename is #f, output to stdout.
+                                    (backend-proc output-filename))))))
 
-                  ;; If the backend couldn't be found, fail.
-                  (error (format #f (_ "Could not find backend `~A' in load path.
+                      ;; If the backend couldn't be found, fail.
+                      (error (format #f (_ "Could not find backend `~A' in load path.
 
 Run `~A --list-backends' for a full list of available backends.
 ")
-                                 backend
-                                 (car (program-arguments)))))
-                ;; No backend given on the command line.
-                (format (current-error-port)
-                        (_ "You gave neither backend to execute nor interactive mode!\n")))))))
+                                     backend
+                                     (car (program-arguments)))))
+                  ;; No backend given on the command line.
+                  (format (current-error-port)
+                          (_ "You gave neither backend to execute nor interactive mode!\n"))))))))

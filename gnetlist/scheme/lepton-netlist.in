@@ -28,5 +28,13 @@ exec guile -s "$0" "$@"
 (define with-toplevel (@@ (geda core toplevel) %with-toplevel))
 (define make-toplevel (@@ (geda core toplevel) %make-toplevel))
 
+(use-modules (gnetlist option))
+
+;;; Evaluate Scheme expressions that need to be run before rc
+;;; files are loaded.
+(for-each (lambda (dir) (add-to-load-path dir))
+          (reverse (gnetlist-option-ref 'load-path)))
+
+(use-modules (gnetlist))
 (with-toplevel (make-toplevel)
-               (lambda () (load "gnetlist.scm")))
+               (lambda () (main)))

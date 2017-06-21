@@ -19,6 +19,7 @@
 ;;; MA 02111-1301 USA.
 
 (use-modules (ice-9 match)
+             (srfi srfi-1)
              (gnetlist schematic))
 
 ;; Locate and print out the global defaults if the element exists

@@ -27,6 +27,7 @@
 
 (use-modules (srfi srfi-1)
              (srfi srfi-26)
+             (gnetlist package)
              (gnetlist schematic)
              (gnetlist port))
 

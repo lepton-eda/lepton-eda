@@ -3,7 +3,6 @@
   ; Import C procedures and variables
   #:use-module (gnetlist core gettext)
 
-  #:use-module (ice-9 match)
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
                 #:prefix rdelim:)
@@ -350,7 +349,7 @@
                                   attached-attribs
                                   '())) ; get pins later
            (graphical (package-graphical? package))
-           (refdes (or (hierarchy-create-refdes ((@@ (guile-user) get-uref) object)
+           (refdes (or (hierarchy-create-refdes ((@@ (gnetlist) get-uref) object)
                                                 hierarchy-tag)
                        (refdes-by-net net-maps graphical)))
            (sources (get-sources inherited-attribs attached-attribs))
