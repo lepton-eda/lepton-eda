@@ -262,33 +262,23 @@ postload)
     ;;
 esac
 
+export GUILE_LOAD_PATH="${abs_top_srcdir}/liblepton/scheme:${abs_top_builddir}/liblepton/scheme:${abs_top_srcdir}/symcheck/scheme:${abs_top_builddir}/symcheck/scheme:$GUILE_LOAD_PATH"
+
 # run gnetlist
 echo "${GNETLIST} -c ${cmd} -g ${backend} ${args} ${schematic}"
-(cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
-                                 -L "${abs_top_builddir}/liblepton/scheme" \
-                                 -L "${abs_top_srcdir}/symcheck/scheme" \
-                                 -L "${abs_top_builddir}/symcheck/scheme" \
-                                 -c "${cmd}" \
+(cd "${rundir}" && "${GNETLIST}" -c "${cmd}" \
                                  -g "${backend}" \
                                  ${args} ${schematic})
 rc1=$?
 
 echo "${GNETLIST} -c ${cmd} -g ${backend} -o - ${args} ${schematic} > stdout.net"
-(cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
-                                 -L "${abs_top_builddir}/liblepton/scheme" \
-                                 -L "${abs_top_srcdir}/symcheck/scheme" \
-                                 -L "${abs_top_builddir}/symcheck/scheme" \
-                                 -c "${cmd}" \
+(cd "${rundir}" && "${GNETLIST}" -c "${cmd}" \
                                  -g "${backend}" \
                                  -o - ${args} ${schematic} > stdout.net)
 rc2=$?
 
 echo "${GNETLIST} -c ${cmd} -g ${backend} -v -o verbose.net ${args} ${schematic}"
-(cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
-                                 -L "${abs_top_builddir}/liblepton/scheme" \
-                                 -L "${abs_top_srcdir}/symcheck/scheme" \
-                                 -L "${abs_top_builddir}/symcheck/scheme" \
-                                 -c "${cmd}" \
+(cd "${rundir}" && "${GNETLIST}" -c "${cmd}" \
                                  -g "${backend}" \
                                  -v -o verbose.net ${args} ${schematic})
 rc3=$?
@@ -344,10 +334,10 @@ elif test ${rc3} -ne 0 ; then
     echo "FAILED:  gnetlist -g ${backend} -v returned ${rc3}"
     status=1
 else
-    sed '/lepton-netlist -g/d; /lepton-netlist -L/d' "${ref}" > "${out}.tmp1"
-    sed '/lepton-netlist -g/d; /lepton-netlist -L/d' "${out}" > "${out}.tmp2"
-    sed '/lepton-netlist -g/d; /lepton-netlist -L/d' "${std}" > "${out}.tmp3"
-    sed '/lepton-netlist -g/d; /lepton-netlist -L/d' "${vrb}" > "${out}.tmp4"
+    sed '/lepton-netlist -[gcL]/d' "${ref}" > "${out}.tmp1"
+    sed '/lepton-netlist -[gcL]/d' "${out}" > "${out}.tmp2"
+    sed '/lepton-netlist -[gcL]/d' "${std}" > "${out}.tmp3"
+    sed '/lepton-netlist -[gcL]/d' "${vrb}" > "${out}.tmp4"
 
     # Hack to help with allegro backend
     # Device files are ignored as yet
