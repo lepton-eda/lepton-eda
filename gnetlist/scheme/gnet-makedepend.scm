@@ -81,7 +81,9 @@
 
 (use-modules (ice-9 regex)
              (srfi srfi-1)
+             (sxml transform)
              (sxml match)
+             (geda page)
              (gnetlist schematic)
              (gnetlist package))
 

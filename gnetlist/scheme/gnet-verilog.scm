@@ -28,6 +28,7 @@
 ;; some useful regexes for working with net-names
 ;;
 (use-modules (ice-9 regex)
+             (srfi srfi-1)
              (gnetlist schematic)
              (gnetlist port))
 
