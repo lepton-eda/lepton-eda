@@ -744,6 +744,19 @@ begins with \"gnet-\" and ends with \".scm\"."
               "\n"
               'suffix))))
 
+(define (set-toplevel-schematic! files netlist-mode)
+  (and (eq? netlist-mode 'spice)
+       (set! get-uref get-spice-refdes))
+  (set! toplevel-schematic
+        (make-toplevel-schematic (map file->page files)
+                                 netlist-mode))
+  ;; Backward compatibility variables. Don't use them in your code!!!
+  (set! packages (schematic-packages toplevel-schematic))
+  (set! all-unique-nets (schematic-nets toplevel-schematic))
+  (set! all-nets (schematic-non-unique-nets toplevel-schematic))
+  (set! all-pins (map gnetlist:get-pins packages))
+  toplevel-schematic)
+
 ;;; Main program
 ;;;
 (if (gnetlist-option-ref 'list-backends)
@@ -768,10 +781,8 @@ Run `~A --help' for more information.
                                                                backend))))
                  (output-filename (get-output-filename)))
 
-            (when backend
-              (and (eq? netlist-mode 'spice)
-                   (set! get-uref get-spice-refdes))
-              (if backend-path
+            (if backend
+                (if backend-path
                   ;; Load backend code.
                   (begin
                     ;; Evaluate the first set of Scheme expressions.
@@ -779,7 +790,22 @@ Run `~A --help' for more information.
                     ;; Load backend
                     (primitive-load backend-path)
                     ;; Evaluate second set of Scheme expressions.
-                    (for-each primitive-load (gnetlist-option-ref 'post-load)))
+                    (for-each primitive-load (gnetlist-option-ref 'post-load))
+
+                    (when (gnetlist-option-ref 'verbose)
+                      (print-gnetlist-config))
+
+                    (let ((schematic (set-toplevel-schematic! files netlist-mode)))
+                      (verbose-print-netlist (schematic-netlist schematic))
+                      (if (gnetlist-option-ref 'interactive)
+                          (lepton-repl)
+                          (let ((backend-proc (primitive-eval (string->symbol backend))))
+                            (if output-filename
+                                ;; output-filename is defined, output to it.
+                                (with-output-to-file output-filename
+                                  (lambda () (backend-proc output-filename)))
+                                ;; output-filename is #f, output to stdout.
+                                (backend-proc output-filename))))))
 
                   ;; If the backend couldn't be found, fail.
                   (error (format #f (_ "Could not find backend `~A' in load path.
@@ -787,28 +813,7 @@ Run `~A --help' for more information.
 Run `~A --list-backends' for a full list of available backends.
 ")
                                  backend
-                                 (car (program-arguments))))))
-            (set! toplevel-schematic (make-toplevel-schematic (map file->page files)
-                                                              netlist-mode))
-            ;; Backward compatibility variables. Don't use them in your code!!!
-            (set! packages (schematic-packages toplevel-schematic))
-            (set! all-unique-nets (schematic-nets toplevel-schematic))
-            (set! all-nets (schematic-non-unique-nets toplevel-schematic))
-            (set! all-pins (map gnetlist:get-pins packages))
-
-            (when (gnetlist-option-ref 'verbose)
-              (print-gnetlist-config))
-            (verbose-print-netlist (schematic-netlist toplevel-schematic))
-            (if (gnetlist-option-ref 'interactive)
-                (lepton-repl)
-                (if backend
-                    (let ((backend-proc (primitive-eval (string->symbol backend))))
-                      (if output-filename
-                          ;; output-filename is defined, output to it.
-                          (with-output-to-file output-filename
-                            (lambda () (backend-proc output-filename)))
-                          ;; output-filename is #f, output to stdout.
-                          (backend-proc output-filename)))
-                    (format (current-error-port)
-                            (_ "You gave neither backend to execute nor interactive mode!\n"))))
-            (quit)))))
+                                 (car (program-arguments)))))
+                ;; No backend given on the command line.
+                (format (current-error-port)
+                        (_ "You gave neither backend to execute nor interactive mode!\n")))))))
