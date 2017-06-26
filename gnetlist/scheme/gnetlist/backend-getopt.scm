@@ -1,5 +1,4 @@
-;; gEDA - GPL Electronic Design Automation
-;; gnetlist - gEDA Schematic Capture - Scheme API
+;; Lepton EDA Netlister
 ;; Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
 ;;
 ;; This program is free software; you can redistribute it and/or modify
