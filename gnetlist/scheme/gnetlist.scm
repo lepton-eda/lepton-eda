@@ -805,7 +805,7 @@ begins with \"gnet-\" and ends with \".scm\"."
   (let ((backend-files (append-map path-backends %load-path)))
     (display (_ "List of available backends: \n\n"))
     (display (string-join
-              (sort (map backend-name backend-files) string-locale<?)
+              (sort! (map backend-name backend-files) string-locale<?)
               "\n"
               'suffix))))
 
