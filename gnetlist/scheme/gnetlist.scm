@@ -859,6 +859,15 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
           args)
   #f)
 
+(define (run-backend backend output-filename)
+  (let ((backend-proc (primitive-eval (string->symbol backend))))
+    (if output-filename
+        ;; output-filename is defined, output to it.
+        (with-output-to-file output-filename
+          (lambda () (backend-proc output-filename)))
+        ;; output-filename is #f, output to stdout.
+        (backend-proc output-filename))))
+
 ;;; Main program
 ;;;
 (define (main)
@@ -895,41 +904,34 @@ Run `~A --help' for more information.
                                       (%search-load-path (format #f
                                                                  "gnet-~A.scm"
                                                                  backend))))
-                   (output-filename (get-output-filename)))
+                   (output-filename (get-output-filename))
+                   (interactive-mode? (gnetlist-option-ref 'interactive))
+                   (verbose-mode? (gnetlist-option-ref 'verbose)))
 
-              (if backend
-                  (if backend-path
-                      ;; Load backend code.
-                      (begin
-                        ;; Evaluate the first set of Scheme expressions.
-                        (for-each primitive-load (gnetlist-option-ref 'pre-load))
-                        ;; Load backend
-                        (primitive-load backend-path)
-                        ;; Evaluate second set of Scheme expressions.
-                        (for-each primitive-load (gnetlist-option-ref 'post-load))
+              ;; Evaluate the first set of Scheme expressions.
+              (for-each primitive-load (gnetlist-option-ref 'pre-load))
+              ;; Load backend.
+              (when backend-path (primitive-load backend-path))
+              ;; Evaluate second set of Scheme expressions.
+              (for-each primitive-load (gnetlist-option-ref 'post-load))
 
-                        (when (gnetlist-option-ref 'verbose)
-                          (print-gnetlist-config))
+              (when verbose-mode? (print-gnetlist-config))
 
-                        (let ((schematic (set-toplevel-schematic! files netlist-mode)))
-                          (verbose-print-netlist (schematic-netlist schematic))
-                          (if (gnetlist-option-ref 'interactive)
-                              (lepton-repl)
-                              (let ((backend-proc (primitive-eval (string->symbol backend))))
-                                (if output-filename
-                                    ;; output-filename is defined, output to it.
-                                    (with-output-to-file output-filename
-                                      (lambda () (backend-proc output-filename)))
-                                    ;; output-filename is #f, output to stdout.
-                                    (backend-proc output-filename))))))
-
-                      ;; If the backend couldn't be found, fail.
-                      (error (format #f (_ "Could not find backend `~A' in load path.
+              (if (or backend interactive-mode?)
+                  ;; Load backend code.
+                  (let ((schematic (set-toplevel-schematic! files netlist-mode)))
+                    (verbose-print-netlist (schematic-netlist schematic))
+                    (if interactive-mode?
+                        (lepton-repl)
+                        (if backend-path
+                            (run-backend backend output-filename)
+                            ;; If the backend couldn't be found, fail.
+                            (error (format #f (_ "Could not find backend `~A' in load path.
 
 Run `~A --list-backends' for a full list of available backends.
 ")
-                                     backend
-                                     (car (program-arguments)))))
+                                           backend
+                                           (car (program-arguments)))))))
                   ;; No backend given on the command line.
                   (format (current-error-port)
                           (_ "You gave neither backend to execute nor interactive mode!\n"))))))))
