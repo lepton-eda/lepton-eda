@@ -1,3 +1,4 @@
+;;; Lepton EDA netlister
 ; Copyright (C) 2016 gEDA Contributors
 ;
 ; This program is free software; you can redistribute it and/or modify

@@ -1,5 +1,4 @@
-;;; Lepton EDA
-;;; gnetlist - Lepton EDA netlister
+;;; Lepton EDA netlister
 ;;; Copyright (C) 2017 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify

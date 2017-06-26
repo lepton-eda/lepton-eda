@@ -1,6 +1,6 @@
-;;; gEDA - GPL Electronic Design Automation
-;;; gnetlist - gEDA Netlist
+;;; Lepton EDA Netlister
 ;;; Copyright (C) 2016-2017 gEDA Contributors
+;;; Copyright (C) 2017 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
