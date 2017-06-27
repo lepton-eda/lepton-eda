@@ -338,14 +338,17 @@
           (loop (cdr in)
                 (add-attrib out (car in))))))
 
-  (define (refdes-by-net net-maps graphical)
+  (define (refdes-by-net object net-maps graphical)
     ;; If there is net=, it's a power or some other special symbol.
     (and (null? net-maps)
          ;; Do not bother traversing the hierarchy if the symbol has an
          ;; graphical attribute attached to it.
          (not graphical)
          (log! 'critical
-               (_ "Could not find refdes on component and could not find any special attributes!"))
+               (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
+               (component-basename object)
+               (component-position object)
+               (page-filename (object-page object)))
          "U?"))
 
   (define (source-netlist filename refdes)
@@ -370,7 +373,7 @@
            (graphical (package-graphical? package))
            (refdes (or (hierarchy-create-refdes ((@@ (gnetlist) get-uref) object)
                                                 hierarchy-tag)
-                       (refdes-by-net net-maps graphical)))
+                       (refdes-by-net object net-maps graphical)))
            (sources (get-sources inherited-attribs attached-attribs))
            (composite? (and (not graphical)
                             (gnetlist-config-ref 'traverse-hierarchy)
