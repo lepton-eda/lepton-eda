@@ -352,6 +352,12 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
      * deleted by gattrib when RC files were messed up.  */
     new_node->type = OBJ_PLACEHOLDER;
 
+    /* Some programs (e.g. netlister) don't need to render
+     * anything, so we just return here. */
+    if (!toplevel->rendered_text_bounds_func) {
+      return;
+    }
+
     /* Mark the origin of the missing component */
     new_prim_obj = geda_line_object_new (toplevel,
                                         DETACHED_ATTRIBUTE_COLOR,
