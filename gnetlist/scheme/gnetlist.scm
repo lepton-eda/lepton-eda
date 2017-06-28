@@ -770,6 +770,19 @@ other limitations imposed by this netlist format.
 
 (define quiet-mode (gnetlist-option-ref 'quiet))
 
+;;; List of processed rc directories.
+(define %rc-dirs (make-hash-table))
+
+;;; Backward compatibility stuff.
+;;; Process "gafrc" file in SCHEMATIC-NAME's directory.
+(define (process-gafrc schematic-name)
+  (let ((cwd (getcwd)))
+    (unless (hash-ref %rc-dirs cwd)
+      (chdir (dirname schematic-name))
+      ((@@ (guile-user) parse-rc) "gnetlist" "gafrc")
+      (hash-set! %rc-dirs cwd cwd)
+      (chdir cwd))))
+
 ;;; Reads file NAME and outputs a page named NAME
 (define (file->page name)
   (with-input-from-file name
@@ -841,6 +854,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 (define (set-toplevel-schematic! files netlist-mode)
   (and (eq? netlist-mode 'spice)
        (set! get-uref get-spice-refdes))
+  (for-each process-gafrc files)
   (set! toplevel-schematic
         (make-toplevel-schematic (map file->page files)
                                  netlist-mode))
