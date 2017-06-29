@@ -352,6 +352,18 @@
         (log! 'error (_ "Failed to load subcircuit ~S.") name))))
 
 (define (traverse-page page hierarchy-tag netlist-mode)
+  ;; Get refdes= of OBJECT depending on NETLIST-MODE.
+  (define (get-refdes attribs netlist-mode)
+    (let ((refdes (and=> (assq-ref attribs 'refdes) car)))
+      (case netlist-mode
+        ((spice)
+         (let ((slot (and=> (assq-ref attribs 'slot) car)))
+           (if slot
+               (string-append refdes "." slot)
+               refdes)))
+        ((geda) refdes)
+        (else (error (_ "Netlist mode ~S is not supported.") netlist-mode)))))
+
   ;; Makes attribute list of OBJECT using getter GET-ATTRIBS.
   (define (make-attrib-list get-attribs object)
     (define (add-attrib ls attrib)
@@ -397,7 +409,7 @@
                                               '())) ; get pins later
            (graphical (or (schematic-component-graphical? package)
                           (schematic-component-nc? package)))
-           (refdes  (hierarchy-create-refdes (or ((@@ (netlist) get-uref) object)
+           (refdes  (hierarchy-create-refdes (or (get-refdes attached-attribs netlist-mode)
                                                  (refdes-by-net object net-maps graphical))
                                              hierarchy-tag))
            (sources (get-sources graphical
