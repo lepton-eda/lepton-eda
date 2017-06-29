@@ -26,7 +26,8 @@
 (use-modules (srfi srfi-1)
              (geda object)
              (netlist schematic)
-             (netlist package))
+             (netlist package)
+             (netlist schematic-component))
 
 ;;
 ;; Top level header
@@ -62,14 +63,13 @@ END header
             (object-bounds object)))
 
   (define (graphical-info package)
-    (or (package-refdes package)
-        (no-refdes-component-info (package-object package))))
+    (or (schematic-component-refdes package)
+        (no-refdes-component-info (schematic-component-object package))))
 
   ;; The graphical should not be a "no-connect" symbol.
-  (define (not-package-nc? p)
-    (not (package-nc? p)))
+  (define not-schematic-component-nc? (negate schematic-component-nc?))
 
-  (let ((graphicals (filter not-package-nc? ls)))
+  (let ((graphicals (filter not-schematic-component-nc? ls)))
     (if (null? graphicals)
         (display "No graphical symbols found\n\n")
         (format #t

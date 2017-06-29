@@ -27,7 +27,7 @@
 
 (use-modules (srfi srfi-1)
              (srfi srfi-26)
-             (netlist package)
+             (netlist schematic-component)
              (netlist schematic)
              (netlist port))
 
@@ -593,9 +593,9 @@ ARCHITECTURE ~A OF ~A IS
     (if (null? netlist)
         '()
         (let ((package (car netlist)))
-          (if (and (package-refdes package)
-                   (string=? (package-refdes package) refdes))
-              (map symbol->string (map car (package-attribs package)))
+          (if (and (schematic-component-refdes package)
+                   (string=? (schematic-component-refdes package) refdes))
+              (map symbol->string (map car (schematic-component-attribs package)))
               (loop (cdr netlist)))))))
 
 

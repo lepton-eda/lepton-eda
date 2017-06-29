@@ -143,7 +143,7 @@
              (srfi srfi-26)
              (geda object)
              (geda page)
-             (netlist package)
+             (netlist schematic-component)
              (netlist schematic))
 
 (or (defined? 'define-syntax)
@@ -300,10 +300,10 @@
 ;;; Check for not numbered symbols.
 (define (drc2:check-non-numbered-items packages)
   (define (non-numbered? package)
-    (let ((refdes (package-refdes package)))
+    (let ((refdes (schematic-component-refdes package)))
       (and refdes
            (string-index refdes #\?)
-           (let ((object (package-object package)))
+           (let ((object (schematic-component-object package)))
              (drc2:error "Not numbered refdes: ~A (~A at ~A on page ~S)."
                          refdes
                          (component-basename object)

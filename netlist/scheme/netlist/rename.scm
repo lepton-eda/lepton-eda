@@ -20,7 +20,7 @@
   #:use-module (srfi srfi-69)
   #:use-module (netlist core gettext)
   #:use-module (netlist verbose)
-  #:use-module (netlist package)
+  #:use-module (netlist schematic-component)
   #:use-module (netlist package-pin)
 
   #:export (search-rename
@@ -39,7 +39,7 @@
         (set-package-pin-name! pin to)))
 
   (define (rename-in-package package)
-    (for-each rename-in-pin (package-pins package)))
+    (for-each rename-in-pin (schematic-component-pins package)))
 
   (for-each rename-in-package netlist)
   netlist)
