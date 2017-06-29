@@ -7,8 +7,8 @@ END header
 
 START components
 
-U? device=OUTPUT
 Utop/A device=INPUT
+Utop/U? device=OUTPUT
 Utop/Ubottom device=7404
 
 END components
