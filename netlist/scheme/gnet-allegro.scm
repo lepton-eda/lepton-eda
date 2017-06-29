@@ -126,10 +126,10 @@
             (connections->string (get-all-connections netname))))
   (map net->string netnames))
 
-(define (allegro output-filename)
+(define (allegro-netlist schematic output-filename)
   (let ((use-stdout? (not output-filename))
-        (packages (schematic-package-names toplevel-schematic))
-        (nets (schematic-nets toplevel-schematic)))
+        (packages (schematic-package-names schematic))
+        (nets (schematic-nets schematic)))
     (display "(Allegro netlister by M. Ettus)\n")
     (display "$PACKAGES\n")
     (allegro:components packages)
@@ -138,3 +138,6 @@
               (nets->allegro-netlist nets))
     (display "$END\n")
     (allegro:write-device-files packages '() use-stdout?)))
+
+(define (allegro output-filename)
+  (allegro-netlist toplevel-schematic output-filename))
