@@ -36,7 +36,7 @@
   #:use-module (netlist hierarchy)
   #:use-module (netlist rename)
   #:use-module (netlist net)
-  #:use-module (netlist package)
+  #:use-module (netlist schematic-component)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
   #:use-module (netlist verbose)
@@ -362,16 +362,16 @@
            (inherited-attribs (make-attrib-list inherited-attribs object))
            (attached-attribs (make-attrib-list object-attribs object))
            (net-maps (check-net-maps object))
-           (package (make-package id
-                                  #f   ; get refdes later
-                                  hierarchy-tag
-                                  #f   ; get composite later
-                                  object
-                                  inherited-attribs
-                                  attached-attribs
-                                  '())) ; get pins later
-           (graphical (or (package-graphical? package)
-                          (package-nc? package)))
+           (package (make-schematic-component id
+                                              #f   ; get refdes later
+                                              hierarchy-tag
+                                              #f   ; get composite later
+                                              object
+                                              inherited-attribs
+                                              attached-attribs
+                                              '())) ; get pins later
+           (graphical (or (schematic-component-graphical? package)
+                          (schematic-component-nc? package)))
            (refdes  (hierarchy-create-refdes (or ((@@ (netlist) get-uref) object)
                                                  (refdes-by-net object net-maps graphical))
                                              hierarchy-tag))
@@ -385,9 +385,9 @@
                                  refdes
                                  hierarchy-tag
                                  (object-pins object hierarchy-tag netlist-mode))))
-      (set-package-refdes! package refdes)
-      (set-package-composite! package composite?)
-      (set-package-pins! package pins)
+      (set-schematic-component-refdes! package refdes)
+      (set-schematic-component-composite! package composite?)
+      (set-schematic-component-pins! package pins)
       (cons package
             (if composite?
                 ;; Traverse underlying schematics.

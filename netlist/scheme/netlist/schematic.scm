@@ -25,7 +25,7 @@
   #:use-module (netlist attrib compare)
   #:use-module (netlist sort)
   #:use-module (netlist traverse)
-  #:use-module (netlist package)
+  #:use-module (netlist schematic-component)
   #:use-module (netlist package-pin)
   #:use-module (geda page)
   #:use-module (geda attrib)
@@ -99,7 +99,7 @@
       (append-map (lambda (s) (string-split s #\,)) ls))
 
     (define (composite->sxml p)
-      (let ((sources (and=> (package-attributes p 'source)
+      (let ((sources (and=> (schematic-component-attributes p 'source)
                             comma-separated->list)))
         (if sources
             `(package ,p ,@(map source-page sources))
@@ -109,9 +109,9 @@
       `(package ,p))
 
     (define (component->sxml p)
-      (and (string=? (basename (page-filename (object-page (package-object p))))
+      (and (string=? (basename (page-filename (object-page (schematic-component-object p))))
                      (basename (page-filename page)))
-           ((if (package-composite? p) composite->sxml non-composite->sxml) p)))
+           ((if (schematic-component-composite? p) composite->sxml non-composite->sxml) p)))
 
     `(page ,page ,@(filter-map component->sxml netlist)))
 
@@ -122,7 +122,7 @@
 ;;; Gets non unique set of package refdeses.
 ;;; Backward compatibility procedure for legacy backends.
 (define (schematic-non-unique-package-names netlist)
-  (sort (filter-map package-refdes netlist) refdes<?))
+  (sort (filter-map schematic-component-refdes netlist) refdes<?))
 
 ;;; Returns a sorted list of unique packages in NETLIST.
 ;;; Backward compatibility procedure for legacy backends.
@@ -147,7 +147,7 @@
 
   (append-map
    (lambda (package)
-     (filter-map connected? (package-pins package)))
+     (filter-map connected? (schematic-component-pins package)))
    netlist))
 
 ;;; Returns a sorted list of unique nets in NETLIST.
@@ -173,7 +173,7 @@
     (string=? (package-pin-name pin) netname))
 
   (define (wanted-package-pin-netname=? package)
-    (any pin-netname-matches? (package-pins package)))
+    (any pin-netname-matches? (schematic-component-pins package)))
 
   (any wanted-package-pin-netname=? packages))
 
@@ -182,14 +182,14 @@
   "Creates a new schematic record based on TOPLEVEL-PAGES which
 must be a list of pages."
   (define (plain-package? x)
-    (and (not (package-graphical? x))
-         (not (package-nc? x))))
+    (and (not (schematic-component-graphical? x))
+         (not (schematic-component-nc? x))))
 
   (let* ((id (next-schematic-id))
          (toplevel-attribs (get-toplevel-attributes toplevel-pages))
          (full-netlist (traverse toplevel-pages netlist-mode))
          (netlist (filter plain-package? full-netlist))
-         (graphicals (filter package-graphical? full-netlist))
+         (graphicals (filter schematic-component-graphical? full-netlist))
          (tree (schematic->sxml netlist toplevel-pages))
          (nu-nets (get-all-nets netlist))
          (unique-nets (get-nets netlist)))
@@ -197,7 +197,7 @@ must be a list of pages."
     ;; and plain nets.
     (receive (nc-nets nets)
         (partition (lambda (x)
-                     (nc-net? x (filter package-nc? full-netlist)))
+                     (nc-net? x (filter schematic-component-nc? full-netlist)))
                    unique-nets)
       (make-schematic id
                       toplevel-pages

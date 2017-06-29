@@ -85,7 +85,7 @@
              (sxml match)
              (geda page)
              (netlist schematic)
-             (netlist package))
+             (netlist schematic-component))
 
 
 ; Split a filename into 3 parts:
@@ -175,7 +175,8 @@
         '()))
 
   (define (get-first-file-attrib package)
-    (and (package? package) (package-attribute package 'file)))
+    (and (schematic-component? package)
+         (schematic-component-attribute package 'file)))
 
   ;; Add the last rule for the toplevel fake package. This will
   ;; produce a line of the form: "all: package.cir".

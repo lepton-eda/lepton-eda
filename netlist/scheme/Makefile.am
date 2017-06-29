@@ -58,6 +58,7 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
 	   netlist/port.scm \
 	   netlist/rename.scm \
 	   netlist/repl.scm \
+	   netlist/schematic-component.scm \
 	   netlist/schematic.scm \
 	   netlist/sort.scm \
 	   netlist/traverse.scm \

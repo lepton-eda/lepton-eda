@@ -26,7 +26,7 @@
   #:use-module (ice-9 ftw)
   #:use-module (ice-9 i18n)
   #:use-module (netlist option)
-  #:use-module (netlist package)
+  #:use-module (netlist schematic-component)
   #:use-module (netlist sort)
   #:use-module (netlist attrib compare)
   #:use-module (geda library)
@@ -160,23 +160,6 @@ code should use `gnetlist:get-backend-arguments' directly."
 
 ;; Support functions
 
-;;; Returns the list of attached attributes of PACKAGE with given
-;;; NAME which must be a symbol (not string). If no attached
-;;; attributes found, returns the list of inherited attributes
-;;; with given NAME. If neither attached nor inherited attributes
-;;; have been found, returns #f.
-(define (package-attributes package name)
-  (or (assq-ref (package-attribs package) name)
-      (assq-ref (package-iattribs package) name)))
-
-;;; Returns first attached attribute of PACKAGE with given NAME
-;;; which must be a symbol (not string). If no attached attribute
-;;; found, returns first inherited attribute with NAME. If neither
-;;; attached nor inherited attribute found, returns #f.
-(define (package-attribute package name)
-  (and=> (package-attributes package name) car))
-
-
 ;;; Default resolver: Returns the first valid (non-#F) value from
 ;;; VALUES, or #F, if there is no valid attribute value. If any
 ;;; other valid value in the list is different, yields a warning
@@ -211,14 +194,14 @@ associated with the first symbol instance)."
   (define sname (string->symbol attribute-name))
 
   (define (found-package? package)
-    (let ((name (package-refdes package)))
+    (let ((name (schematic-component-refdes package)))
       (and name
            (string=? name package-name)
            package)))
 
   (map
    (lambda (package)
-     (package-attribute package sname))
+     (schematic-component-attribute package sname))
    (filter-map found-package? (schematic-netlist toplevel-schematic))))
 
 
@@ -371,7 +354,7 @@ NETNAME."
     (schematic-netlist toplevel-schematic))
 
   (define non-graphical-refdeses
-    (filter-map package-refdes netlist))
+    (filter-map schematic-component-refdes netlist))
 
   (define (non-graphical? refdes)
     (member refdes non-graphical-refdeses))
@@ -391,7 +374,7 @@ NETNAME."
   (define (get-netlist-connections netlist)
     (append-map
      (lambda (package)
-       (append-map get-found-pin-connections (package-pins package)))
+       (append-map get-found-pin-connections (schematic-component-pins package)))
      netlist))
 
   (sort-remove-duplicates (get-netlist-connections netlist)
@@ -415,8 +398,8 @@ PACKAGE."
            (cons pin-number pin-name))))
 
   (define (get-pin-netname-list package)
-     (if (found? (package-refdes package))
-         (filter-map get-pin-netname-pair (package-pins package))
+     (if (found? (schematic-component-refdes package))
+         (filter-map get-pin-netname-pair (schematic-component-pins package))
          '()))
 
   ;; Currently, netlist can contain many `packages' with the same
@@ -434,8 +417,8 @@ PACKAGE."
   (sort-remove-duplicates
    (append-map
     (lambda (package)
-      (if (found? (package-refdes package))
-          (filter-map package-pin-number (package-pins package))
+      (if (found? (schematic-component-refdes package))
+          (filter-map package-pin-number (schematic-component-pins package))
           '()))
     (schematic-netlist toplevel-schematic))
    refdes<?))
@@ -482,8 +465,8 @@ PACKAGE."
   (define (lookup-through-netlist netlist)
     (append-map
      (lambda (package)
-       (if (found-package? (package-refdes package))
-           (lookup-through-pins (package-pins package))
+       (if (found-package? (schematic-component-refdes package))
+           (lookup-through-pins (schematic-component-pins package))
            '()))
      netlist))
 
@@ -688,14 +671,14 @@ other limitations imposed by this netlist format.
   (let loop ((netlist (schematic-netlist toplevel-schematic)))
     (if (null? netlist)
         "unknown"
-        (or (and (found-refdes? (package-refdes (car netlist)))
-                 (let ((pin (find-pin-by-attrib (package-pins (car netlist))
+        (or (and (found-refdes? (schematic-component-refdes (car netlist)))
+                 (let ((pin (find-pin-by-attrib (schematic-component-pins (car netlist))
                                                 (string->symbol pin-attrib-name)
                                                 pin-attrib-value)))
                    (if pin
                        (assq-ref (package-pin-attribs pin)
                                  (string->symbol name))
-                       (and func (func (package-pins (car netlist))
+                       (and func (func (schematic-component-pins (car netlist))
                                        name
                                        pin-attrib-value)))))
             (loop (cdr netlist))))))
@@ -764,9 +747,9 @@ other limitations imposed by this netlist format.
     (and netname
         (append-map
          (lambda (package)
-           (if (and (have-netname? (package-pins package))
-                    (have-attrib? (package-attribs package) in-attrib))
-               (assq-ref (package-attribs package) out-attrib)
+           (if (and (have-netname? (schematic-component-pins package))
+                    (have-attrib? (schematic-component-attribs package) in-attrib))
+               (assq-ref (schematic-component-attribs package) out-attrib)
                '()))
          (schematic-graphicals toplevel-schematic)))))
 

@@ -23,7 +23,7 @@
   #:use-module (netlist config)
   #:use-module (netlist core gettext)
   #:use-module (netlist rename)
-  #:use-module (netlist package)
+  #:use-module (netlist schematic-component)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
   #:use-module (netlist verbose)
@@ -55,9 +55,9 @@
     (for-each disable-net-connected-to (package-pin-nets pin)))
 
   (define (disable-package-refdes package)
-    (when (and=> (package-refdes package) disabled?)
-      (set-package-refdes! package #f))
-    (for-each disable-nets-connected-to (package-pins package)))
+    (when (and=> (schematic-component-refdes package) disabled?)
+      (set-schematic-component-refdes! package #f))
+    (for-each disable-nets-connected-to (schematic-component-pins package)))
 
   (for-each disable-package-refdes netlist)
   ;; Return the modified netlist.
@@ -67,9 +67,9 @@
 (define (hierarchy-remove-all-composite netlist)
   (fold
    (lambda (package prev-netlist)
-     (if (and (package-composite? package)
-              (package-refdes package))
-         (hierarchy-disable-refdes prev-netlist (package-refdes package))
+     (if (and (schematic-component-composite? package)
+              (schematic-component-refdes package))
+         (hierarchy-disable-refdes prev-netlist (schematic-component-refdes package))
          prev-netlist))
    netlist
    netlist))
@@ -77,17 +77,17 @@
 
 (define (hierarchy-setup-rename netlist refdes label nets)
   (define (rename-and-remove-connection package hierarchy-refdes)
-    (and (package-refdes package)
-         (string=? (package-refdes package)
+    (and (schematic-component-refdes package)
+         (string=? (schematic-component-refdes package)
                    hierarchy-refdes)
-         (not (null? (package-pins package)))
+         (not (null? (schematic-component-pins package)))
          ;; Well, we assume a port has only one pin.
-         (let ((pin (car (package-pins package))))
+         (let ((pin (car (schematic-component-pins package))))
            ;; Skip overhead of special I/O symbol.
            (add-rename (package-pin-name pin)
                        ;; Get source net name, all nets are named already.
                        (search-net-name nets))
-           (hierarchy-disable-refdes netlist (package-refdes package))
+           (hierarchy-disable-refdes netlist (schematic-component-refdes package))
            ;; Return package with no refdes.
            package)))
   ;; Search for hierarchical refdes created from LABEL and REFDES
@@ -169,9 +169,9 @@
     (for-each fix-net-connections (package-pin-nets pin)))
 
   (define (fix-package package)
-    (set-package-refdes! package
-                         (base-refdes (package-refdes package) "u"))
-    (for-each fix-pin-connections (package-pins package))
+    (set-schematic-component-refdes! package
+                         (base-refdes (schematic-component-refdes package) "u"))
+    (for-each fix-pin-connections (schematic-component-pins package))
     package)
 
   (for-each fix-package netlist)
@@ -195,8 +195,9 @@
                refdes))))
 
   (define (fix-composite-package package)
-    (when (package-composite? package)
-      (for-each (cut fix-pin <> (package-refdes package)) (package-pins package))))
+    (when (schematic-component-composite? package)
+      (for-each (cut fix-pin <> (schematic-component-refdes package))
+                (schematic-component-pins package))))
 
   (for-each fix-composite-package netlist)
 

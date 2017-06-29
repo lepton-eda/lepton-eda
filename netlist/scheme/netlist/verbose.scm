@@ -18,7 +18,7 @@
 
 (define-module (netlist verbose)
   #:use-module (netlist option)
-  #:use-module (netlist package)
+  #:use-module (netlist schematic-component)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
 
@@ -48,14 +48,14 @@
   (define (print-pin-list pin-list)
     (map print-pin-info pin-list))
 
-  (define (print-package-info package)
+  (define (print-schematic-component-info package)
     (format #f "component ~S\n~
                 Hierarchy tag: ~S\n~
                 ~A\n"
-            (or (package-refdes package) "SPECIAL")
-            (or (package-tag package) "")
-            (print-pin-list (package-pins package))))
+            (or (schematic-component-refdes package) "SPECIAL")
+            (or (schematic-component-tag package) "")
+            (print-pin-list (schematic-component-pins package))))
 
    (format #t "\nInternal netlist representation:\n\n~
                ~A\n"
-           (string-join (map print-package-info netlist) "")))
+           (string-join (map print-schematic-component-info netlist) "")))
