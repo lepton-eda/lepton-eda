@@ -1,5 +1,5 @@
 Checking non-numbered parts...
-ERROR: Not numbered refdes: U? (out-1.sym at (8700 . 4400) on page "h4-bottom.sch").
+ERROR: Not numbered refdes: Utop/U? (out-1.sym at (8700 . 4400) on page "h4-bottom.sch").
 
 Checking duplicated references...
 
