@@ -118,7 +118,7 @@ PINCOUNT ~A
             (connections->string (get-connections netname schematic))))
   (map net->string netnames))
 
-(define (allegro-netlist schematic output-filename)
+(define* (allegro* schematic #:key output-filename)
   (let ((use-stdout? (not output-filename))
         (packages (schematic-packages schematic))
         (nets (schematic-nets schematic)))
@@ -131,5 +131,5 @@ PINCOUNT ~A
     (display "$END\n")
     (allegro:write-device-files packages '() use-stdout?)))
 
-(define (allegro output-filename)
-  (allegro-netlist (toplevel-schematic) output-filename))
+(define (allegro filename)
+  (allegro* (toplevel-schematic) #:output-filename filename))
