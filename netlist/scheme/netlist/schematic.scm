@@ -25,18 +25,19 @@
   #:use-module (netlist attrib compare)
   #:use-module (netlist sort)
   #:use-module (netlist traverse)
+  #:use-module (netlist package)
   #:use-module (netlist schematic-component)
   #:use-module (netlist package-pin)
   #:use-module (geda page)
   #:use-module (geda attrib)
   #:use-module (geda object)
-
   #:export-syntax (make-schematic schematic?
                    schematic-id set-schematic-id!
                    schematic-toplevel-pages set-schematic-toplevel-pages!
                    schematic-toplevel-attribs set-schematic-toplevel-attribs!
                    schematic-tree set-schematic-tree!
                    schematic-netlist set-schematic-netlist!
+                   schematic-packages set-schematic-packages!
                    schematic-graphicals set-schematic-graphicals!
                    schematic-non-unique-nets set-schematic-non-unique-nets!
                    schematic-nets set-schematic-nets!
@@ -53,6 +54,7 @@
                   toplevel-attribs
                   tree
                   netlist
+                  packages
                   graphicals
                   non-unique-nets
                   nets
@@ -63,6 +65,7 @@
   (toplevel-attribs schematic-toplevel-attribs set-schematic-toplevel-attribs!)
   (tree schematic-tree set-schematic-tree!)
   (netlist schematic-netlist set-schematic-netlist!)
+  (packages schematic-packages set-schematic-packages!)
   (graphicals schematic-graphicals set-schematic-graphicals!)
   (non-unique-nets schematic-non-unique-nets set-schematic-non-unique-nets!)
   (nets schematic-nets set-schematic-nets!)
@@ -189,6 +192,7 @@ must be a list of pages."
          (toplevel-attribs (get-toplevel-attributes toplevel-pages))
          (full-netlist (traverse toplevel-pages netlist-mode))
          (netlist (filter plain-package? full-netlist))
+         (packages (make-package-list netlist))
          (graphicals (filter schematic-component-graphical? full-netlist))
          (tree (schematic->sxml netlist toplevel-pages))
          (nu-nets (get-all-nets netlist))
@@ -204,6 +208,7 @@ must be a list of pages."
                       toplevel-attribs
                       tree
                       netlist
+                      packages
                       graphicals
                       nu-nets
                       nets
