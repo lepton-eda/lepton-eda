@@ -36,7 +36,7 @@
                    schematic-toplevel-pages set-schematic-toplevel-pages!
                    schematic-toplevel-attribs set-schematic-toplevel-attribs!
                    schematic-tree set-schematic-tree!
-                   schematic-netlist set-schematic-netlist!
+                   schematic-components set-schematic-components!
                    schematic-packages set-schematic-packages!
                    schematic-graphicals set-schematic-graphicals!
                    schematic-non-unique-nets set-schematic-non-unique-nets!
@@ -53,7 +53,7 @@
                   toplevel-pages
                   toplevel-attribs
                   tree
-                  netlist
+                  components
                   packages
                   graphicals
                   non-unique-nets
@@ -64,7 +64,7 @@
   (toplevel-pages schematic-toplevel-pages set-schematic-toplevel-pages!)
   (toplevel-attribs schematic-toplevel-attribs set-schematic-toplevel-attribs!)
   (tree schematic-tree set-schematic-tree!)
-  (netlist schematic-netlist set-schematic-netlist!)
+  (components schematic-components set-schematic-components!)
   (packages schematic-packages set-schematic-packages!)
   (graphicals schematic-graphicals set-schematic-graphicals!)
   (non-unique-nets schematic-non-unique-nets set-schematic-non-unique-nets!)
@@ -130,7 +130,7 @@
 ;;; Returns a sorted list of unique packages in NETLIST.
 ;;; Backward compatibility procedure for legacy backends.
 (define (schematic-package-names schematic)
-  (define netlist (schematic-netlist schematic))
+  (define netlist (schematic-components schematic))
   ;; Uniqueness of packages is guaranteed by the hashtable.
   (define non-unique-packages (schematic-non-unique-package-names netlist))
   (define ht (make-hash-table (length non-unique-packages)))

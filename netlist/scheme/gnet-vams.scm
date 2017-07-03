@@ -589,7 +589,7 @@ ARCHITECTURE ~A OF ~A IS
 
 
 (define-public (vams-get-package-attributes refdes)
-  (let loop ((netlist (schematic-netlist toplevel-schematic)))
+  (let loop ((netlist (schematic-components toplevel-schematic)))
     (if (null? netlist)
         '()
         (let ((package (car netlist)))
