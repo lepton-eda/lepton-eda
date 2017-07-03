@@ -202,7 +202,8 @@ associated with the first symbol instance)."
   (map
    (lambda (package)
      (schematic-component-attribute package sname))
-   (filter-map found-package? (schematic-netlist toplevel-schematic))))
+   (filter-map found-package?
+               (schematic-components toplevel-schematic))))
 
 
 (define (gnetlist:get-package-attribute refdes name)
@@ -350,8 +351,7 @@ NETNAME."
     (and x
          (string=? x netname)))
 
-  (define netlist
-    (schematic-netlist toplevel-schematic))
+  (define netlist (schematic-components toplevel-schematic))
 
   (define non-graphical-refdeses
     (filter-map schematic-component-refdes netlist))
@@ -405,7 +405,7 @@ PACKAGE."
   ;; Currently, netlist can contain many `packages' with the same
   ;; name, so we have to deal with this.
   (let ((result-list (append-map get-pin-netname-list
-                                 (schematic-netlist toplevel-schematic))))
+                                 (schematic-components toplevel-schematic))))
     (sort-remove-duplicates result-list pair<?)))
 
 
@@ -420,7 +420,7 @@ PACKAGE."
       (if (found? (schematic-component-refdes package))
           (filter-map package-pin-number (schematic-component-pins package))
           '()))
-    (schematic-netlist toplevel-schematic))
+    (schematic-components toplevel-schematic))
    refdes<?))
 
 
@@ -470,7 +470,7 @@ PACKAGE."
            '()))
      netlist))
 
-  (let ((found (lookup-through-netlist (schematic-netlist toplevel-schematic))))
+  (let ((found (lookup-through-netlist (schematic-components toplevel-schematic))))
     (match found
       (() '("ERROR_INVALID_PIN"))
       (((netname . rest) ...)
@@ -668,7 +668,7 @@ other limitations imposed by this netlist format.
                pin
                (find-pin-by-attrib (cdr pins) name value)))))
 
-  (let loop ((netlist (schematic-netlist toplevel-schematic)))
+  (let loop ((netlist (schematic-components toplevel-schematic)))
     (if (null? netlist)
         "unknown"
         (or (and (found-refdes? (schematic-component-refdes (car netlist)))
@@ -1021,7 +1021,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ; Verbose mode (-v): print internal netlist representation:
   ;
   ( when opt-verbose
-    ( verbose-print-netlist (schematic-netlist schematic) )
+    ( verbose-print-netlist (schematic-components schematic) )
   )
 
 
