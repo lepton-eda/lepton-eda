@@ -111,11 +111,11 @@ PINCOUNT ~A
     (format #f " ~A.~A" (package connection) (pinnumber connection)))
   (string-join (map connection->string connections) ",\n"))
 
-(define (nets->allegro-netlist netnames)
+(define (nets->allegro-netlist netnames schematic)
   (define (net->string netname)
     (format #f "~A;~A\n"
             netname
-            (connections->string (get-all-connections netname))))
+            (connections->string (get-connections netname schematic))))
   (map net->string netnames))
 
 (define (allegro-netlist schematic output-filename)
@@ -127,7 +127,7 @@ PINCOUNT ~A
     (allegro:components packages)
     (display "$NETS\n")
     (for-each display
-              (nets->allegro-netlist nets))
+              (nets->allegro-netlist nets schematic))
     (display "$END\n")
     (allegro:write-device-files packages '() use-stdout?)))
 
