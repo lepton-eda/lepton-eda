@@ -22,20 +22,22 @@
 ;; Allegro netlist format
 (use-modules (netlist schematic)
              (netlist error)
-             (netlist schematic toplevel))
+             (netlist schematic toplevel)
+             (netlist package))
 
 (define (allegro:write-device-files packages done stdout)
-  (if (not (null? packages))
-      (let ((device (get-device (car packages))))
-        (if (member device done)
-            (allegro:write-device-files (cdr packages) done stdout)
-            (begin
-              (if stdout
-                  (allegro:output-netlist (car packages))
-                  (with-output-to-file (allegro:check-and-get-filename device (car packages))
-                    (lambda ()
-                      (allegro:output-netlist (car packages)))))
-              (allegro:write-device-files (cdr packages) (cons device done) stdout))))))
+  (unless (null? packages)
+    (let* ((package (car packages))
+           (device (package-attribute package 'device)))
+      (if (member device done)
+          (allegro:write-device-files (cdr packages) done stdout)
+          (begin
+            (if stdout
+                (allegro:output-netlist package)
+                (with-output-to-file (allegro:check-and-get-filename device package)
+                  (lambda ()
+                    (allegro:output-netlist package))))
+            (allegro:write-device-files (cdr packages) (cons device done) stdout))))))
 
 (define (allegro:check-and-get-filename device package)
   (let ((filename (string-downcase! (string-append "devfiles/" (string-append device ".txt")))))
@@ -71,8 +73,8 @@
     filename))
 
 (define (allegro:output-netlist package)
-  (let* ((altfoot (gnetlist:get-package-attribute package "alt_foot"))
-         (package-prop (if (known? altfoot)
+  (let* ((altfoot (package-attribute package 'alt_foot))
+         (package-prop (if altfoot
                            (format #f
                                    "PACKAGEPROP   ALT_SYMBOLS\n'(~A)'\n"
                                    altfoot)
@@ -84,27 +86,23 @@ CLASS ~A
 PINCOUNT ~A
 ~AEND
 "
-            (gnetlist:get-package-attribute package "footprint")
-            (gnetlist:get-package-attribute package "class")
-            (gnetlist:get-package-attribute package "pins")
+            (package-attribute package 'footprint)
+            (package-attribute package 'class)
+            (package-attribute package 'pins)
             package-prop)))
 
 (define (allegro:components packages)
-  (if (not (null? packages))
-      (begin
-        (let ((footprint (gnetlist:get-package-attribute (car packages)
-                                                         "footprint"))
-              (package (car packages)))
-          (if (not (string=? footprint "unknown"))
-              (display footprint))
-          (display "! ")
-          (display (gnetlist:get-package-attribute package "device"))
-          (display "! ")
-          (display (get-component-text package))
-          (display "; " )
-          (display package)
-          (newline))
-        (allegro:components (cdr packages)))))
+  (unless (null? packages)
+    (let ((package (car packages)))
+      (format #t "~A! ~A! ~A; ~A\n"
+              (or (package-attribute package 'footprint) "")
+              (package-attribute package 'device)
+              (or (package-attribute package 'value)
+                  (package-attribute package 'label)
+                  (package-attribute package 'device))
+              (package-refdes package)))
+    (allegro:components (cdr packages))))
+
 
 (define (connections->string connections)
   (define package car)
@@ -122,8 +120,8 @@ PINCOUNT ~A
 
 (define (allegro-netlist schematic output-filename)
   (let ((use-stdout? (not output-filename))
-        (packages (schematic-package-names (toplevel-schematic)))
-        (nets (schematic-nets (toplevel-schematic))))
+        (packages (schematic-packages schematic))
+        (nets (schematic-nets schematic)))
     (display "(Allegro netlister by M. Ettus)\n")
     (display "$PACKAGES\n")
     (allegro:components packages)
@@ -134,4 +132,4 @@ PINCOUNT ~A
     (allegro:write-device-files packages '() use-stdout?)))
 
 (define (allegro output-filename)
-  (allegro-netlist toplevel-schematic output-filename))
+  (allegro-netlist (toplevel-schematic) output-filename))
