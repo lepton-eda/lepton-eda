@@ -19,33 +19,39 @@
 
 (define-module (netlist package)
   #:use-module (ice-9 match)
+  #:use-module (ice-9 receive)
+  #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
+  #:use-module (geda log)
+  #:use-module (netlist core gettext)
+  #:use-module (netlist schematic-component)
+  #:use-module (symbol check duplicate)
+
   #:export-syntax (make-package package?
                    package-id set-package-id!
                    package-refdes set-package-refdes!
                    package-tag set-package-tag!
                    package-composite? set-package-composite!
-                   package-object set-package-object!
-                   package-iattribs set-package-iattribs!
                    package-attribs set-package-attribs!
+                   package-components set-package-components!
                    package-pins set-package-pins!)
 
   #:export (package-attributes
             package-attribute
             package-attribute-string=?
-            set-package-printer!))
+            set-package-printer!
+            make-package-list))
 
 (define-record-type <package>
-  (make-package id refdes tag composite object iattribs attribs pins)
+  (make-package id refdes tag composite attribs components pins)
   package?
   (id package-id set-package-id!)
   (refdes package-refdes set-package-refdes!)
   (tag package-tag set-package-tag!)
   (composite package-composite? set-package-composite!)
-  (object package-object set-package-object!)
-  (iattribs package-iattribs set-package-iattribs!)
   (attribs package-attribs set-package-attribs!)
+  (components package-components set-package-components!)
   (pins package-pins set-package-pins!))
 
 ;;; Sets default printer for <package>
@@ -61,9 +67,8 @@ FORMAT-STRING must be in the form required by the procedure
   'refdes
   'tag
   'composite
-  'object
-  'iattribs
   'attribs
+  'components
   'pins
 Any other unrecognized argument will lead to yielding '?' in the
 corresponding place.
@@ -80,9 +85,8 @@ Example usage:
                  ('refdes (package-refdes record))
                  ('tag (package-tag record))
                  ('composite (package-composite? record))
-                 ('object (package-object record))
-                 ('iattribs (package-iattribs record))
                  ('attribs (package-attribs record))
+                 ('components (package-components record))
                  ('pins (package-pins record))
                  (_ #\?)))
              args)))))
@@ -94,8 +98,7 @@ PACKAGE. NAME must be a Scheme symbol (not string). If no attached
 attributes found, returns the list of inherited attributes with
 the same name. If neither attached nor inherited attributes have
 been found, returns #f."
-  (or (assq-ref (package-attribs package) name)
-      (assq-ref (package-iattribs package) name)))
+  (assq-ref (package-attribs package) name))
 
 
 (define (package-attribute package name)
@@ -112,3 +115,116 @@ otherwise returns #f. NAME must be a symbol, while VALUE should be
 a string."
   (and=> (package-attribute package name)
          (lambda (x) (string=? x value))))
+
+
+(define (make-package-list schematic-component-list)
+  "Transforms SCHEMATIC-COMPONENT-LIST into package list."
+  (define (schematic-component-refdes<? a b)
+    (string<? (schematic-component-refdes a)
+              (schematic-component-refdes b)))
+
+  (define (schematic-component-refdes=? a b)
+    (string=? (schematic-component-refdes a)
+              (schematic-component-refdes b)))
+
+  (define (blame-conflicting-attribs refdes attrib-type name value other-value)
+    (log! 'warning
+          (_ "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n")
+          attrib-type
+          refdes
+          name
+          value
+          name
+          other-value))
+
+  (define (check-attribs attrib-type ls)
+    (let loop ((attribs (if (eq? attrib-type 'inherited)
+                            (append-map schematic-component-iattribs ls)
+                            (append-map schematic-component-attribs ls)))
+               (result '()))
+      (if (null? attribs)
+          result
+          (let* ((attrib (car attribs))
+                 (name (car attrib))
+                 (value (cdr attrib)))
+            (loop (cdr attribs)
+                  (if (or (eq? name 'slot)
+                          (eq? name 'slotdef)
+                          (eq? name 'net))
+                      result
+                      (let ((other-value (assq-ref result name)))
+                        (if other-value
+                            (begin
+                              (unless (equal? value other-value)
+                                (blame-conflicting-attribs (schematic-component-refdes (car ls))
+                                                           attrib-type
+                                                           name
+                                                           value
+                                                           other-value))
+                              result)
+                            (cons attrib result)))))))))
+
+  (define (check-override-attribs inherited attached)
+    (let loop ((rest inherited)
+               (result attached))
+      (if (null? rest)
+          result
+          (loop (cdr rest)
+                (let ((attrib (car rest)))
+                  (if (assq-ref result (car attrib))
+                      result
+                      (cons attrib result)))))))
+
+  (define (get-attribs ls)
+    (let ((attrib-defaults (check-attribs 'inherited ls))
+          (attrib-overrides (check-attribs 'attached ls)))
+      (check-override-attribs attrib-defaults attrib-overrides)))
+
+  (define (merge-component-pins ls)
+    (append-map schematic-component-pins ls))
+
+  (define (schematic-components->package ls-or-component)
+    (let* ((components (if (list? ls-or-component)
+                           ls-or-component
+                           (list ls-or-component)))
+           (id (schematic-component-id (car components)))
+           (refdes (schematic-component-refdes (car components)))
+           (tag (schematic-component-tag (car components)))
+           (composite (any schematic-component-composite? components))
+           (attribs (get-attribs components))
+           (pins (merge-component-pins components)))
+      (make-package id refdes tag composite attribs components pins)))
+
+  ;; The first inherited "refdes=" attrib value is considered to
+  ;; be the default refdes of COMPONENT.
+  (define (schematic-component-default-refdes component)
+    (and=> (assq-ref (schematic-component-iattribs component)
+                     'refdes)
+           car))
+
+  ;; COMPONENT refdes is considered to be default if either there
+  ;; is no attached refdes, or there is an attached refdes having
+  ;; the suffix "?" and being the same as inherited one.
+  (define (is-schematic-component-refdes-default? component)
+    (let ((refdes (schematic-component-refdes component))
+          (inherited-refdes (schematic-component-default-refdes component)))
+      (and inherited-refdes
+           (or (not refdes)
+               (and refdes
+                    (string-suffix? "?" refdes)
+                    (string= refdes inherited-refdes))))))
+
+  ;; Check if COMPONENT's refdes is not #f.
+  (define (is-schematic-component-refdes-valid? component)
+    (schematic-component-refdes component))
+
+  (let ((components (filter is-schematic-component-refdes-valid?
+                            schematic-component-list)))
+    (receive (default-named-components named-components)
+        (partition is-schematic-component-refdes-default? components)
+      (map schematic-components->package
+           (append
+            (list->duplicate-list named-components
+                                  schematic-component-refdes<?
+                                  schematic-component-refdes=?)
+            default-named-components)))))
