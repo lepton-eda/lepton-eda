@@ -50,6 +50,7 @@
             main
             calling-flag?
             get-device
+            get-connections
             get-all-connections
             get-all-package-attributes
             get-component-text
@@ -347,14 +348,14 @@ REFDES. As a result, slots may be repeated in the returned list."
 
 
 
-(define (get-all-connections netname)
+(define (get-connections netname schematic)
   "Returns all connections in the form of ((refdes pin) ...) for
-NETNAME."
+NETNAME in SCHEMATIC."
   (define (found? x)
     (and x
          (string=? x netname)))
 
-  (define netlist (schematic-components (toplevel-schematic)))
+  (define netlist (schematic-components schematic))
 
   (define non-graphical-refdeses
     (filter-map schematic-component-refdes netlist))
@@ -382,6 +383,11 @@ NETNAME."
 
   (sort-remove-duplicates (get-netlist-connections netlist)
                           pair<?))
+
+(define (get-all-connections netname)
+  "Returns all connections in the form of ((refdes pin) ...) for
+NETNAME."
+  (get-connections netname (toplevel-schematic)))
 
 
 (define (get-pins-nets package)
