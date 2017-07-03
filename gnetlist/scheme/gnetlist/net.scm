@@ -126,9 +126,7 @@
     (string=? (net-map-pinnumber a) (net-map-pinnumber b)))
 
   (define (net-map<? a b)
-    (or (string<? (net-map-pinnumber a) (net-map-pinnumber b))
-        (and (net-map=? a b)
-             (string<? (net-map-pinnumber a) (net-map-pinnumber b)))))
+    (string<? (net-map-pinnumber a) (net-map-pinnumber b)))
 
   (define (blame-duplicate a b)
     (log! 'message
