@@ -44,7 +44,8 @@
   #:use-module (netlist verbose)
   #:use-module ((netlist rename) #:select (get-rename-list))
 
-  #:export (main
+  #:export (lepton-netlist-version
+            main
             toplevel-schematic
             calling-flag?
             get-device
@@ -77,34 +78,29 @@
 
   #:re-export (source-library))
 
-(match (lepton-version)
-  ((prepend-string dotted-version date-version git-commit)
-   (log! 'message
-         (_
-          "Lepton EDA/lepton-netlist version ~A~A.~A git: ~A
-")
-         prepend-string
-         dotted-version
-         date-version
-         (string-take git-commit 7)))
-  (_ #f))
 
-;;; Print version info and exit.
-;;; Print gEDA version, and copyright/warranty notices, and exit with
-;;; exit status 0.
-(define (version)
-  (match (lepton-version)
-    ((prepend dotted date commit)
-     (format #t (_ "Lepton EDA ~A (git: ~A)
-Copyright (C) 1998-2016 gEDA developers
+(define* (lepton-netlist-version #:optional output-to-log? exit?)
+  "Print lepton-netlist version, and copyright/warranty
+notices. If OUTPUT-TO-LOG? is requested, just output the version
+to log file, omitting copyright. Otherwise, output the full info
+to current standard output port and exit with exit status 0."
+
+  (define version-msg "Lepton EDA/lepton-netlist ~A~A.~A (git: ~A)\n")
+
+  (define copyright-msg (_ "Copyright (C) 1998-2016 gEDA developers
 Copyright (C) 2017-2018 Lepton EDA Contributors
 This is free software, and you are welcome to redistribute it under
 certain conditions. For details, see the file `COPYING', which is
 included in the Lepton EDA distribution.
-There is NO WARRANTY, to the extent permitted by law.
-")
-             dotted (string-take commit 7))))
-  (primitive-exit 0))
+There is NO WARRANTY, to the extent permitted by law.\n"))
+
+  (match (lepton-version)
+    ((prepend dotted date commit)
+     (if output-to-log?
+         (log! 'message version-msg prepend dotted date (string-take commit 7))
+         (begin
+           (format #t version-msg prepend dotted date (string-take commit 7))
+           (format #t copyright-msg))))))
 
 
 ;;----------------------------------------------------------------------
@@ -901,7 +897,8 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     (usage))
 
   (when (gnetlist-option-ref 'version)
-    (version))
+    (lepton-netlist-version)
+    (primitive-exit 0))
 
   ((@@ (guile-user) parse-rc) "lepton-netlist" "gnetlistrc")
   (if (gnetlist-option-ref 'list-backends)

@@ -36,9 +36,13 @@ exec @GUILE@ -s "$0" "$@"
 
 ;;; Using of primitive-eval() here avoids Scheme errors when this
 ;;; program is compiled by Guile. See comments above.
-(primitive-eval '(use-modules (netlist)))
+(primitive-eval '(use-modules (geda log)
+                              (netlist)))
+
 (with-toplevel (make-toplevel)
   (lambda ()
-    ;; Init log domain once.
-    ((@@ (geda log) init-log) "netlist")
+    ;; Init log domain and create log file right away even if
+    ;; logging is enabled.
+    (init-log "netlist")
+    (lepton-netlist-version 'log)
     (main)))
