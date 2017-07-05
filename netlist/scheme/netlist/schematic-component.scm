@@ -25,7 +25,7 @@
                    schematic-component-id set-schematic-component-id!
                    schematic-component-refdes set-schematic-component-refdes!
                    schematic-component-tag set-schematic-component-tag!
-                   schematic-component-composite? set-schematic-component-composite!
+                   schematic-component-sources set-schematic-component-sources!
                    schematic-component-object set-schematic-component-object!
                    schematic-component-iattribs set-schematic-component-iattribs!
                    schematic-component-attribs set-schematic-component-attribs!
@@ -38,12 +38,12 @@
             set-schematic-component-printer!))
 
 (define-record-type <schematic-component>
-  (make-schematic-component id refdes tag composite object iattribs attribs pins)
+  (make-schematic-component id refdes tag sources object iattribs attribs pins)
   schematic-component?
   (id schematic-component-id set-schematic-component-id!)
   (refdes schematic-component-refdes set-schematic-component-refdes!)
   (tag schematic-component-tag set-schematic-component-tag!)
-  (composite schematic-component-composite? set-schematic-component-composite!)
+  (sources schematic-component-sources set-schematic-component-sources!)
   (object schematic-component-object set-schematic-component-object!)
   (iattribs schematic-component-iattribs set-schematic-component-iattribs!)
   (attribs schematic-component-attribs set-schematic-component-attribs!)
@@ -61,7 +61,7 @@ FORMAT-STRING must be in the form required by the procedure
   'id
   'refdes
   'tag
-  'composite
+  'sources
   'object
   'iattribs
   'attribs
@@ -80,7 +80,7 @@ Example usage:
                  ('id (schematic-component-id record))
                  ('refdes (schematic-component-refdes record))
                  ('tag (schematic-component-tag record))
-                 ('composite (schematic-component-composite? record))
+                 ('sources (schematic-component-sources record))
                  ('object (schematic-component-object record))
                  ('iattribs (schematic-component-iattribs record))
                  ('attribs (schematic-component-attribs record))

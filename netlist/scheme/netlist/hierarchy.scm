@@ -67,7 +67,7 @@
 (define (hierarchy-remove-all-composite netlist)
   (fold
    (lambda (package prev-netlist)
-     (if (and (schematic-component-composite? package)
+     (if (and (schematic-component-sources package)
               (schematic-component-refdes package))
          (hierarchy-disable-refdes prev-netlist (schematic-component-refdes package))
          prev-netlist))
@@ -195,7 +195,7 @@
                refdes))))
 
   (define (fix-composite-package package)
-    (when (schematic-component-composite? package)
+    (when (schematic-component-sources package)
       (for-each (cut fix-pin <> (schematic-component-refdes package))
                 (schematic-component-pins package))))
 
