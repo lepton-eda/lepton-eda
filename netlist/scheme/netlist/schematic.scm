@@ -99,15 +99,8 @@
                  (page->sxml (car pages))
                  (loop (cdr pages))))))
 
-    ;; Given a list of strings, some of which may contain commas,
-    ;; splits comma separated strings and returns the new combined
-    ;; list
-    (define (comma-separated->list ls)
-      (append-map (lambda (s) (string-split s #\,)) ls))
-
     (define (composite->sxml p)
-      (let ((sources (and=> (schematic-component-attributes p 'source)
-                            comma-separated->list)))
+      (let ((sources (schematic-component-sources p)))
         (if sources
             `(package ,p ,@(map source-page sources))
             `(package ,p))))
@@ -118,7 +111,7 @@
     (define (component->sxml p)
       (and (string=? (basename (page-filename (object-page (schematic-component-object p))))
                      (basename (page-filename page)))
-           ((if (schematic-component-composite? p) composite->sxml non-composite->sxml) p)))
+           ((if (schematic-component-sources p) composite->sxml non-composite->sxml) p)))
 
     `(page ,page ,@(filter-map component->sxml netlist)))
 

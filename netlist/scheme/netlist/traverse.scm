@@ -322,18 +322,22 @@
            net-maps)))
 
 
-(define (get-sources inherited-attribs attached-attribs)
+(define (get-sources graphical? inherited-attribs attached-attribs)
   (define (non-null* ls)
     (and (not (null? ls)) ls))
 
+  ;; Given a list of strings, some of which may contain commas,
+  ;; splits comma separated strings and returns the new combined
+  ;; list
   (define (comma-separated->list ls)
     (append-map (lambda (s) (string-split s #\,)) ls))
 
-  (let ((sources
-         (or
-          (non-null* (assq-ref attached-attribs 'source))
-          (non-null* (assq-ref inherited-attribs 'source)))))
-    (and=> sources comma-separated->list)))
+  (and (not graphical?)
+       (gnetlist-config-ref 'traverse-hierarchy)
+       (let ((sources
+              (or (non-null* (assq-ref attached-attribs 'source))
+                  (non-null* (assq-ref inherited-attribs 'source)))))
+         (and=> sources comma-separated->list))))
 
 
 ;;; Reads file NAME and outputs a page named NAME
@@ -378,13 +382,6 @@
                (page-filename (object-page object)))
          "U?"))
 
-  (define (source-netlist filename refdes)
-    (log! 'message (_ "Going to traverse source ~S") filename)
-    (traverse-page (hierarchy-down-schematic filename)
-                   refdes
-                   netlist-mode))
-
-
   (define (traverse-object object connections)
     (let* ((id (object-id object))
            (inherited-attribs (make-attrib-list inherited-attribs object))
@@ -393,7 +390,7 @@
            (package (make-schematic-component id
                                               #f   ; get refdes later
                                               hierarchy-tag
-                                              #f   ; get composite later
+                                              #f   ; get sources later
                                               object
                                               inherited-attribs
                                               attached-attribs
@@ -403,34 +400,43 @@
            (refdes  (hierarchy-create-refdes (or ((@@ (netlist) get-uref) object)
                                                  (refdes-by-net object net-maps graphical))
                                              hierarchy-tag))
-           (sources (get-sources inherited-attribs attached-attribs))
-           (composite? (and (not graphical)
-                            (gnetlist-config-ref 'traverse-hierarchy)
-                            sources
-                            (not (null? sources))))
+           (sources (get-sources graphical
+                                 inherited-attribs
+                                 attached-attribs))
            (pins (net-maps->pins net-maps
                                  id
                                  refdes
                                  hierarchy-tag
                                  (object-pins object hierarchy-tag netlist-mode connections))))
       (set-schematic-component-refdes! package refdes)
-      (set-schematic-component-composite! package composite?)
+      (set-schematic-component-sources! package sources)
       (set-schematic-component-pins! package pins)
-      (cons package
-            (if composite?
-                ;; Traverse underlying schematics.
-                (append-map (cut source-netlist <> refdes) sources)
-                '()))))
+      package))
+
+  (when hierarchy-tag
+    (log! 'message (_ "Going to traverse source ~S") (page-filename page)))
 
   (let* ((objects (page-contents page))
          (components (filter component? objects))
-         (connections (make-page-schematic-connections page)))
-    (append-map (cut traverse-object <> connections) components)))
+         (connections (make-page-schematic-connections page))
+         (schematic-components (map (cut traverse-object <> connections) components)))
+    schematic-components))
 
-(define (traverse-pages pages netlist-mode)
-  (append-map (cut traverse-page <> #f netlist-mode) pages))
+(define (traverse-pages pages hierarchy-tag netlist-mode)
+  (let* ((schematic-components (append-map (cut traverse-page <> hierarchy-tag netlist-mode) pages))
+         (composites (filter schematic-component-sources schematic-components))
+         ;; Traverse underlying schematics.
+         (underlying-components
+          (append-map (lambda (component)
+                        (let ((hierarchy-tag (schematic-component-refdes component))
+                              (source-pages (map hierarchy-down-schematic
+                                                 (schematic-component-sources component))))
+                          (traverse-pages source-pages hierarchy-tag netlist-mode)))
+                      composites)))
+    (append schematic-components underlying-components)))
 
 (define (traverse toplevel-pages netlist-mode)
   (reset-rename!)
   (rename-all (hierarchy-post-process (traverse-pages toplevel-pages
+                                                      #f ; toplevel hierarchy tag
                                                       netlist-mode))))

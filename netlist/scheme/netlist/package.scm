@@ -32,7 +32,7 @@
                    package-id set-package-id!
                    package-refdes set-package-refdes!
                    package-tag set-package-tag!
-                   package-composite? set-package-composite!
+                   package-sources set-package-sources
                    package-attribs set-package-attribs!
                    package-components set-package-components!
                    package-pins set-package-pins!)
@@ -44,12 +44,12 @@
             make-package-list))
 
 (define-record-type <package>
-  (make-package id refdes tag composite attribs components pins)
+  (make-package id refdes tag sources attribs components pins)
   package?
   (id package-id set-package-id!)
   (refdes package-refdes set-package-refdes!)
   (tag package-tag set-package-tag!)
-  (composite package-composite? set-package-composite!)
+  (sources package-sources set-package-sources)
   (attribs package-attribs set-package-attribs!)
   (components package-components set-package-components!)
   (pins package-pins set-package-pins!))
@@ -66,7 +66,7 @@ FORMAT-STRING must be in the form required by the procedure
   'id
   'refdes
   'tag
-  'composite
+  'sources
   'attribs
   'components
   'pins
@@ -84,7 +84,7 @@ Example usage:
                  ('id (package-id record))
                  ('refdes (package-refdes record))
                  ('tag (package-tag record))
-                 ('composite (package-composite? record))
+                 ('sources (package-sources record))
                  ('attribs (package-attribs record))
                  ('components (package-components record))
                  ('pins (package-pins record))
@@ -190,7 +190,7 @@ a string."
            (id (schematic-component-id (car components)))
            (refdes (schematic-component-refdes (car components)))
            (tag (schematic-component-tag (car components)))
-           (composite (any schematic-component-composite? components))
+           (composite (any schematic-component-sources components))
            (attribs (get-attribs components))
            (pins (merge-component-pins components)))
       (make-package id refdes tag composite attribs components pins)))
