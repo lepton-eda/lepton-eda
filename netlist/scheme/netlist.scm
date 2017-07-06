@@ -46,6 +46,7 @@
 
   #:export (lepton-netlist-version
             main
+            set-toplevel-schematic!
             toplevel-schematic
             calling-flag?
             get-device
@@ -903,8 +904,10 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ((@@ (guile-user) parse-rc) "lepton-netlist" "gnetlistrc")
   (if (gnetlist-option-ref 'list-backends)
       (gnetlist-backends)
-      (let ((files (gnetlist-option-ref '())))
-        (if (null? files)
+      (let ((files (gnetlist-option-ref '()))
+            (interactive-mode? (gnetlist-option-ref 'interactive))
+            (verbose-mode? (gnetlist-option-ref 'verbose)))
+        (if (and (null? files) (not interactive-mode?))
             (netlist-error 1
                            (_ "No schematic files specified for processing.
 Run `~A --help' for more information.
@@ -921,9 +924,7 @@ Run `~A --help' for more information.
                                       (%search-load-path (format #f
                                                                  "gnet-~A.scm"
                                                                  backend))))
-                   (output-filename (get-output-filename))
-                   (interactive-mode? (gnetlist-option-ref 'interactive))
-                   (verbose-mode? (gnetlist-option-ref 'verbose)))
+                   (output-filename (get-output-filename)))
 
               ;; Evaluate the first set of Scheme expressions.
               (for-each primitive-load (gnetlist-option-ref 'pre-load))
