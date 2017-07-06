@@ -38,10 +38,10 @@ END renamed-nets
 
 START nets
 
--12V/Utop/Umiddle/Urock : Utop/Umiddle/Urock/Qrock C
--12V/Uunder/Umiddle/Urock : Uunder/Umiddle/Urock/Qrock C
-BUGA/Utop/Umiddle/Urock : Utop/Umiddle/Urock/Qrock D
-BUGA/Uunder/Umiddle/Urock : Uunder/Umiddle/Urock/Qrock D
+-12V/Urock/Umiddle/Utop : Utop/Umiddle/Urock/Qrock C
+-12V/Urock/Umiddle/Uunder : Uunder/Umiddle/Urock/Qrock C
+BUGA/Urock/Umiddle/Utop : Utop/Umiddle/Urock/Qrock D
+BUGA/Urock/Umiddle/Uunder : Uunder/Umiddle/Urock/Qrock D
 GND : U1 7, U2 7
 U1_2_to_B : U1 2, Utop/Umiddle/Urock/Qrock B, Uunder/Umiddle/Urock/Qrock B
 U2_1_to_E-net : U2 1, Utop/Umiddle/Urock/Qrock E, Uunder/Umiddle/Urock/Qrock E

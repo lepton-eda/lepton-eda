@@ -17,6 +17,7 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (netlist hierarchy)
+  #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (geda log)
@@ -33,19 +34,14 @@
             search-net-name))
 
 (define (hierarchy-create-refdes basename hierarchy-tag)
-  (let ((reverse-refdes-order? (gnetlist-config-ref 'reverse-refdes-order))
-        (refdes-separator (gnetlist-config-ref 'refdes-separator)))
-    (if hierarchy-tag
-        (and basename
-             (if reverse-refdes-order?
-                 (string-append basename refdes-separator hierarchy-tag)
-                 (string-append hierarchy-tag refdes-separator basename)))
-        basename)))
-
+  (match hierarchy-tag
+    (#f basename)
+    ((? list? tag) `(,basename . ,tag))
+    (tag `(,basename ,tag))))
 
 (define (hierarchy-disable-refdes netlist disabled-refdes)
   (define (disabled? refdes)
-    (string=? refdes disabled-refdes))
+    (equal? refdes disabled-refdes))
 
   (define (disable-net-connected-to net)
     (when (and=> (pin-net-connection-package net) disabled?)
@@ -78,7 +74,7 @@
 (define (hierarchy-setup-rename netlist refdes label nets)
   (define (rename-and-remove-connection package hierarchy-refdes)
     (and (schematic-component-refdes package)
-         (string=? (schematic-component-refdes package)
+         (equal? (schematic-component-refdes package)
                    hierarchy-refdes)
          (not (null? (schematic-component-pins package)))
          ;; Well, we assume a port has only one pin.
@@ -147,30 +143,21 @@
 
 
 (define (remove-refdes-mangling netlist)
-  ;; Separator is yet always '/'
-  (define (base-refdes refdes legend)
-    (and refdes
-         (if (gnetlist-config-ref 'reverse-refdes-order)
-             (let ((pos (string-index refdes #\/)))
-               (if pos
-                   (string-take refdes pos)
-                   refdes))
-             (let ((pos (string-rindex refdes #\/)))
-               (if pos
-                   (string-drop refdes (1+ pos))
-                   refdes)))))
+  (define (base-refdes refdes)
+    (match refdes
+      ((? list? refdes) (car refdes))
+      (refdes refdes)))
 
   (define (fix-net-connections net)
     (set-pin-net-connection-package! net
-                                     (base-refdes (pin-net-connection-package net)
-                                                  "U")))
+                                     (base-refdes (pin-net-connection-package net))))
 
   (define (fix-pin-connections pin)
     (for-each fix-net-connections (package-pin-nets pin)))
 
   (define (fix-package package)
     (set-schematic-component-refdes! package
-                         (base-refdes (schematic-component-refdes package) "u"))
+                         (base-refdes (schematic-component-refdes package)))
     (for-each fix-pin-connections (schematic-component-pins package))
     package)
 
