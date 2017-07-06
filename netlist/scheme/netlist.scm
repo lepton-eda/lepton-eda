@@ -342,9 +342,13 @@ REFDES. As a result, slots may be repeated in the returned list."
 
 ;;; Helper function for sorting connections.
 (define (pair<? a b)
-  (or (refdes<? (car a) (car b))
-      (and (string=? (car a) (car b))
-           (refdes<? (cdr a) (cdr b)))))
+  (let ((refdes-a (schematic-component-refdes->string (car a)))
+        (refdes-b (schematic-component-refdes->string (car b)))
+        (pin-a (cdr a))
+        (pin-b (cdr b)))
+    (or (refdes<? refdes-a refdes-b)
+        (and (string=? refdes-a refdes-b)
+             (refdes<? pin-a pin-b)))))
 
 
 
@@ -360,18 +364,20 @@ NETNAME in SCHEMATIC."
   (define non-graphical-refdeses
     (filter-map schematic-component-refdes netlist))
 
-  (define (non-graphical? refdes)
-    (member refdes non-graphical-refdeses))
+  (define (refdes->string refdes)
+    (let ((refdes (schematic-component-refdes->string refdes)))
+      (and (member refdes non-graphical-refdeses)
+           refdes)))
 
   (define (get-found-pin-connections pin)
     (if (found? (package-pin-name pin))
         (filter-map
-         (lambda (net) (let ((package (pin-net-connection-package net))
-                        (pinnumber (pin-net-connection-pinnumber net)))
-                    (and package
-                         (non-graphical? package)
-                         pinnumber
-                         (cons package pinnumber))))
+         (lambda (net)
+           (let ((refdes (refdes->string (pin-net-connection-package net)))
+                 (pinnumber (pin-net-connection-pinnumber net)))
+             (and refdes
+                  pinnumber
+                  (cons refdes pinnumber))))
          (package-pin-nets pin))
         '()))
 

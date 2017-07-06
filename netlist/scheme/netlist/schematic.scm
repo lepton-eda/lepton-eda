@@ -18,11 +18,13 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (netlist schematic)
+  #:use-module (ice-9 match)
   #:use-module (ice-9 receive)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
   #:use-module (netlist attrib compare)
+  #:use-module (netlist config)
   #:use-module (netlist sort)
   #:use-module (netlist traverse)
   #:use-module (netlist package)
@@ -48,7 +50,8 @@
   #:export (make-toplevel-schematic
             schematic-toplevel-attrib
             schematic-non-unique-package-names
-            schematic-package-names))
+            schematic-package-names
+            schematic-component-refdes->string))
 
 (define-record-type <schematic>
   (make-schematic id
@@ -176,6 +179,29 @@
 (define (make-schematic-connections pages)
   (append-map make-page-schematic-connections pages))
 
+(define (schematic-component-refdes->string refdes)
+  (define reverse-refdes-order?
+    (gnetlist-config-ref 'reverse-refdes-order))
+
+  (define refdes-separator
+    (gnetlist-config-ref 'refdes-separator))
+
+  (match refdes
+    ;; Return #f for graphical, hierarchical, etc. symbols.
+    ((#f a ...) #f)
+    ((? list? refdes)
+     (string-join
+      ;; Refdes list is already reversed, so we have to reverse
+      ;; it again if we do not need the reverse order.
+      (if reverse-refdes-order? refdes (reverse refdes))
+      refdes-separator))
+    (refdes refdes)))
+
+(define (compat-refdes schematic-component)
+  (set-schematic-component-refdes! schematic-component
+                                   (schematic-component-refdes->string
+                                    (schematic-component-refdes schematic-component)))
+  schematic-component)
 
 (define (make-toplevel-schematic files netlist-mode)
   "Creates a new schematic record based on TOPLEVEL-PAGES which
@@ -187,7 +213,8 @@ must be a list of pages."
   (let* ((id (next-schematic-id))
          (toplevel-pages (map file->page files))
          (toplevel-attribs (get-toplevel-attributes toplevel-pages))
-         (full-netlist (traverse toplevel-pages netlist-mode))
+         (toplevel-netlist (traverse toplevel-pages netlist-mode))
+         (full-netlist (map compat-refdes toplevel-netlist))
          (netlist (filter plain-package? full-netlist))
          (packages (make-package-list netlist))
          (connections (make-schematic-connections toplevel-pages))
