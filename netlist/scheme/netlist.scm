@@ -759,8 +759,6 @@ other limitations imposed by this netlist format.
     (and (not (string=? name "-"))
          name)))
 
-(define quiet-mode (gnetlist-option-ref 'quiet))
-
 ;;; List of processed rc directories.
 (define %rc-dirs (make-hash-table))
 
@@ -774,13 +772,6 @@ other limitations imposed by this netlist format.
       (hash-set! %rc-dirs cwd cwd)
       (chdir cwd))))
 
-;;; Reads file NAME and outputs a page named NAME
-(define (file->page name)
-  (with-input-from-file name
-    (lambda ()
-      (when (not quiet-mode)
-        (log! 'message (_ "Loading schematic ~S\n") name))
-      (string->page name (rdelim:read-string)))))
 
 ;;; Prints a list of available backends.
 (define (gnetlist-backends)
@@ -847,8 +838,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
        (set! get-uref get-spice-refdes))
   (for-each process-gafrc files)
   (set! toplevel-schematic
-        (make-toplevel-schematic (map file->page files)
-                                 netlist-mode))
+        (make-toplevel-schematic files netlist-mode))
   ;; Backward compatibility variables. Don't use them in your code!!!
   (set! packages (schematic-package-names toplevel-schematic))
   (set! all-unique-nets (schematic-nets toplevel-schematic))

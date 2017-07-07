@@ -182,7 +182,7 @@
   (append-map make-page-schematic-connections pages))
 
 
-(define (make-toplevel-schematic toplevel-pages netlist-mode)
+(define (make-toplevel-schematic files netlist-mode)
   "Creates a new schematic record based on TOPLEVEL-PAGES which
 must be a list of pages."
   (define (plain-package? x)
@@ -190,6 +190,7 @@ must be a list of pages."
          (not (schematic-component-nc? x))))
 
   (let* ((id (next-schematic-id))
+         (toplevel-pages (map file->page files))
          (toplevel-attribs (get-toplevel-attributes toplevel-pages))
          (full-netlist (traverse toplevel-pages netlist-mode))
          (netlist (filter plain-package? full-netlist))
