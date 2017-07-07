@@ -2,7 +2,10 @@
 EXTRA_DIST = buses.sym \
 	     component.sym \
 	     connections1.sym connections2.sym connections3.sym \
-	     correct.sym duplicate_pinnumber.sym duplicate_pinseq.sym \
+	     correct.sym \
+	     duplicate_pinnumber.sym \
+	     duplicate_pinnumber_no_slots.sym \
+	     duplicate_pinseq.sym \
 	     graphical_correct.sym \
 	     graphical_incorrect.sym \
 	     graphical_incorrect1.sym \
@@ -32,7 +35,9 @@ EXTRA_DIST = buses.sym \
 	     component.output \
 	     connections1.output connections2.output \
 	     connections3.output correct.output duplicate_net.output \
-	     duplicate_pinnumber.output duplicate_pinseq.output \
+	     duplicate_pinnumber.output \
+	     duplicate_pinnumber_no_slots.output \
+	     duplicate_pinseq.output \
 	     graphical_correct.output \
 	     graphical_incorrect.output \
 	     graphical_incorrect1.output \
