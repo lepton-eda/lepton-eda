@@ -87,10 +87,10 @@ tests:
 	  GEDADATARC=$(builddir)/../lib \
 	  $(SHELL) $(srcdir)/runtest.sh $$file; \
           if [ $$? -ne 0 ]; then \
-	     echo "$$base FAILED!"; \
+	     echo "FAIL: $$base"; \
              fail=`expr $$fail + 1`; \
 	   else \
-	     echo "$$base passed."; \
+	     echo "PASS: $$base"; \
              pass=`expr $$pass + 1`; \
 	   fi; \
 	done ; \
