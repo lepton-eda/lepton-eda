@@ -77,9 +77,6 @@
 
   #:re-export (source-library))
 
-;;; Create log file right away even if logging is enabled.
-(init-log "netlist")
-
 (match (lepton-version)
   ((prepend-string dotted-version date-version git-commit)
    (log! 'message

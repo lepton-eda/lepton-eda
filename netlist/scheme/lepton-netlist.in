@@ -37,4 +37,8 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Using of primitive-eval() here avoids Scheme errors when this
 ;;; program is compiled by Guile. See comments above.
 (primitive-eval '(use-modules (netlist)))
-(with-toplevel (make-toplevel) main)
+(with-toplevel (make-toplevel)
+  (lambda ()
+    ;; Init log domain once.
+    ((@@ (geda log) init-log) "netlist")
+    (main)))
