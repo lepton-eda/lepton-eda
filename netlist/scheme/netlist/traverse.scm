@@ -37,6 +37,7 @@
   #:use-module (netlist hierarchy)
   #:use-module (netlist rename)
   #:use-module (netlist net)
+  #:use-module (netlist option)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
   #:use-module (netlist schematic-component)
@@ -44,7 +45,8 @@
   #:use-module (netlist verbose)
   #:use-module (symbol check net-attrib)
 
-  #:export (traverse))
+  #:export (traverse
+            file->page))
 
 
 ;;; Tracks which objects have been visited so far, and how many
@@ -339,11 +341,16 @@
                   (non-null* (assq-ref inherited-attribs 'source)))))
          (and=> sources comma-separated->list))))
 
+(define quiet-mode (gnetlist-option-ref 'quiet))
 
 ;;; Reads file NAME and outputs a page named NAME
 (define (file->page name)
   (with-input-from-file name
-    (lambda () (string->page name (rdelim:read-string)))))
+    (lambda ()
+      (when (not quiet-mode)
+        (log! 'message (_ "Loading schematic ~S\n") name))
+      (string->page name (rdelim:read-string)))))
+
 
 (define (hierarchy-down-schematic name)
   (let ((filename (get-source-library-file name)))
