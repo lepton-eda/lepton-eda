@@ -21,16 +21,17 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
-  #:export (make-package package?
-            package-id set-package-id!
-            package-refdes set-package-refdes!
-            package-tag set-package-tag!
-            package-composite? set-package-composite!
-            package-object set-package-object!
-            package-iattribs set-package-iattribs!
-            package-attribs set-package-attribs!
-            package-pins set-package-pins!
-            package-attributes
+  #:export-syntax (make-package package?
+                   package-id set-package-id!
+                   package-refdes set-package-refdes!
+                   package-tag set-package-tag!
+                   package-composite? set-package-composite!
+                   package-object set-package-object!
+                   package-iattribs set-package-iattribs!
+                   package-attribs set-package-attribs!
+                   package-pins set-package-pins!)
+
+  #:export (package-attributes
             package-attribute
             package-attribute-string=?
             package-graphical?
