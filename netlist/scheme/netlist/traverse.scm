@@ -441,17 +441,24 @@
          (schematic-components (map (cut traverse-object <> connections) components)))
     schematic-components))
 
+;;; Traverses pages obtained from files defined in the 'source='
+;;; attributes of COMPONENT with respect to HIERARCHY-TAG and
+;;; NETLIST-MODE.
+(define (traverse-component-sources component hierarchy-tag netlist-mode)
+  (let ((hierarchy-tag (schematic-component-refdes component))
+        (source-pages (map hierarchy-down-schematic
+                           (schematic-component-sources component))))
+    (traverse-pages source-pages hierarchy-tag netlist-mode)))
+
 (define (traverse-pages pages hierarchy-tag netlist-mode)
   (let* ((schematic-components (append-map (cut traverse-page <> hierarchy-tag netlist-mode) pages))
          (composites (filter schematic-component-sources schematic-components))
          ;; Traverse underlying schematics.
-         (underlying-components
-          (append-map (lambda (component)
-                        (let ((hierarchy-tag (schematic-component-refdes component))
-                              (source-pages (map hierarchy-down-schematic
-                                                 (schematic-component-sources component))))
-                          (traverse-pages source-pages hierarchy-tag netlist-mode)))
-                      composites)))
+         (underlying-components (append-map (cut traverse-component-sources
+                                                 <>
+                                                 hierarchy-tag
+                                                 netlist-mode)
+                                            composites)))
     (append schematic-components underlying-components)))
 
 (define (traverse toplevel-pages netlist-mode)
