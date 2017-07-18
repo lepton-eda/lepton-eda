@@ -87,6 +87,8 @@ Example usage:
                   (apply append (list object) connected)))))
       result)))
 
+;;; Transforms list of objects LS into the list of lists of
+;;; interconnected objects.
 (define (group-connections ls)
   (fold reconnect-groups '() ls))
 
