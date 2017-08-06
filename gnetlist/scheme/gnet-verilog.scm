@@ -109,7 +109,7 @@
           ; do pins, but take care of last comma
           (if (not (null? the-pins))
               (begin
-                (format #t "       " (verilog:netname (car the-pins)))
+                (format #t "       ~A" (verilog:netname (car the-pins)))
                 (if (not (null? (cdr the-pins)))
                     (for-each (lambda (pin)   ; loop over outputs
                                 (format #t " ,\n       ~A" (verilog:netname pin)))
