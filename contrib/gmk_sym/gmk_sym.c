@@ -28,6 +28,9 @@
 /* 2002/08/14 Check for multiple instances of the same pin number and quit */
 /*            when this happens, give Fatal error messsage. (Chris Ellec)  */
 /* 2002/12/30 Change to new file format (Chris Ellec), version 20021103  */
+/* 2017/07/11 Added ability to create dot&clock together                 */
+/*              by using (both) directive. This will create a negative   */
+/*              edge trigger symbol. Drforbin. drforbin6@gmail.com       */
 /*-----------------------------------------------------------------------*/
 /* This program is free software; you can redistribute it and/or modify  */
 /* it under the terms of the GNU General Public License as published by  */
@@ -121,7 +124,7 @@ PRE,1,dot,B,1
 #define LINE_SHAPE  0
 #define DOT_SHAPE   1
 #define CLOCK_SHAPE 2
-
+#define BOTH	    3
 #define PINTYPE_IN  "IN"
 #define PINTYPE_OUT "OUT"
 #define PINTYPE_IO  "IO"
@@ -308,7 +311,24 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
                                  pos_x-pin_len*xdir,pos_y-pin_len*ydir,
 				 WHITE);
      printf("{\n");
-     }
+     } else if (shape == BOTH) {
+    /* clock shape */
+    printf("L %d %d %d %d %d 0 0 0 -1 -1\n",pos_x-100*ydir,pos_y-100*xdir,
+           pos_x+100*xdir,pos_y+100*ydir,GREEN);
+    printf("L %d %d %d %d %d 0 0 0 -1 -1\n",pos_x+100*ydir,pos_y+100*xdir,
+           pos_x+100*xdir,pos_y+100*ydir,GREEN);
+
+
+    /* dot shape */
+    printf("V %d %d 50 %d 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n",
+           pos_x-50*xdir,pos_y-50*ydir,CYAN);
+    printf("P %d %d %d %d %d 0 1\n",pos_x-100*xdir,pos_y-100*ydir,
+           pos_x-pin_len*xdir,pos_y-pin_len*ydir,
+           WHITE);
+    printf("{\n");
+
+  }
+
    x = pos_x;
    y = pos_y;
 
@@ -544,17 +564,19 @@ int make_pin(int fldcnt,char *pFields[]) {
      shape = DOT_SHAPE;
   if (!strcasecmp(pFields[2],"clock"))   /* get shape */
      shape = CLOCK_SHAPE;
+  if (!strcasecmp(pFields[2],"both"))   /* get shape */
+     shape = BOTH;
   if (!strcasecmp(pFields[3],"L")) side = L_SIDE;
   else
-	if (!strcasecmp(pFields[3],"R")) side = R_SIDE;
-	else      
-	  if (!strcasecmp(pFields[3],"B")) side = B_SIDE;
-	  else    
-		if (!strcasecmp(pFields[3],"T")) side = T_SIDE;
-		else {
-		   fprintf (stderr,"\nError, %s not a valid position, should be l,t,b or r.\n",pFields[3]);
-		   return -1;
-		}
+    if (!strcasecmp(pFields[3],"R")) side = R_SIDE;
+    else
+      if (!strcasecmp(pFields[3],"B")) side = B_SIDE;
+      else
+        if (!strcasecmp(pFields[3],"T")) side = T_SIDE;
+        else {
+          fprintf (stderr,"\nError, %s not a valid position, should be l,t,b or r.\n",pFields[3]);
+          return -1;
+        }
 		  
   pin_pos = atoi(pFields[4]);
 
