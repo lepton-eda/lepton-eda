@@ -1,0 +1,6 @@
+Test circuit for T-type Flip flop.
+Symbol in sym directory.
+Use verilog backend for generation of netlist.
+Models are in model directory.
+Simulation tested via Icarus Verilog compiler (iverilog).
+

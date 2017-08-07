@@ -258,6 +258,9 @@ AC_CONFIG_FILES([Makefile
                  gnetlist/scripts/annotate.sh
                  gnetlist/scripts/bom_xref.sh
                  gnetlist/scripts/bompp.sh
+                 gnetlist/examples/verilog/Makefile
+                 gnetlist/examples/verilog/T_FF_example/Makefile
+                 gnetlist/examples/verilog/T_FF_example/verilog_modules/Makefile
 
                  utils/Makefile
                  utils/docs/Makefile
