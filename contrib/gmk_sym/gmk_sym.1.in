@@ -56,7 +56,7 @@ All other valid lines describes the symbol's pins:
 .IP \(bu
 2nd value: pin number
 .IP \(bu
-3rd value: pin shape, choice of: line, clock, dot&line
+3rd value: pin shape, choice of: line, clock, dot or both for both dot&clock.
 .IP \(bu
 4th value: side of box to attach the pin,choice of: R, L, T, B
 .IP \(bu
