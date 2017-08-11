@@ -1,0 +1,8 @@
+Contact drforbin6@gmail.com
+
+readme for changes to gmk_sym.
+
+The regular gmk_sym has inverter (dot) and clock(edge triggered) exclusive.
+Added the abilty to create interved edge triggered (negedge triggered).
+This is done with type 'both'.
+Please see example symbol description file.
