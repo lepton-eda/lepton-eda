@@ -96,25 +96,13 @@
 ;;
 ;;       PORTNAME , <newline>
 ;;
-(define verilog:write-module-declaration
-  (lambda (module-name port-list)
-    (begin
-      (format #t
-              "module ~A (\n"
-              (escape-identifier module-name))
-      (let ((the-pins ( append (car port-list)     ; build up list of pins
-                               (cadr  port-list)
-                               (caddr port-list))))
-        (begin
-          ; do pins, but take care of last comma
-          (if (not (null? the-pins))
-              (begin
-                (format #t "       " (verilog:netname (car the-pins)))
-                (if (not (null? (cdr the-pins)))
-                    (for-each (lambda (pin)   ; loop over outputs
-                                (format #t " ,\n       ~A" (verilog:netname pin)))
-                              (cdr the-pins) ))))
-          (display "\n      );\n"))))))
+(define (verilog:write-module-declaration module-name port-list)
+  ;; build up list of pins
+  (let ((the-pins (apply append port-list)))
+    (format #t
+            "module ~A (\n~A\n      );\n"
+            (escape-identifier module-name)
+            (string-join (map verilog:netname the-pins) " ,\n"))))
 
 ;;
 ;; output the module direction section
