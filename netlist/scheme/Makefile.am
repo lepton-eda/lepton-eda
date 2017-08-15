@@ -86,6 +86,7 @@ DIST_SCM = \
 	netlist/deprecated.scm \
 	netlist/error.scm \
 	netlist/hierarchy.scm \
+	netlist/mode.scm \
 	netlist/net.scm \
 	netlist/option.scm \
 	netlist/package-pin.scm \

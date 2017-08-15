@@ -41,6 +41,7 @@
   #:use-module (netlist config)
   #:use-module (netlist deprecated)
   #:use-module (netlist error)
+  #:use-module (netlist mode)
   #:use-module (netlist schematic)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
@@ -829,11 +830,11 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
 ;;; Set lepton-netlist toplevel schematic based on schematic FILES
 ;;; and NETLIST-MODE which must be either "'geda", or "'spice".
-(define (set-ln-toplevel-schematic! files netlist-mode)
-  (and (eq? netlist-mode 'spice)
+(define (set-ln-toplevel-schematic! files)
+  (and (eq? (netlist-mode) 'spice)
        (set! get-uref get-spice-refdes))
   (for-each process-gafrc files)
-  (set-toplevel-schematic! (make-toplevel-schematic files netlist-mode)))
+  (set-toplevel-schematic! (make-toplevel-schematic files (netlist-mode))))
 
 
 (define (catch-handler tag . args)
@@ -871,7 +872,6 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ( opt-list-backends (netlist-option-ref 'list-backends) ) ; --list-backends
   ( opt-pre-load      (netlist-option-ref 'pre-load) )      ; -l
   ( opt-post-load     (netlist-option-ref 'post-load) )     ; -m
-  ( netlist-mode      'geda )
   ( backend-path      #f )
   ( schematic         #f )
   ( backend-proc-name #f )
@@ -924,9 +924,11 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
   ; This is a kludge to make sure that spice mode gets set:
   ;
-  ( when ( and opt-backend (string-prefix? "spice" opt-backend) )
-    ( set! netlist-mode 'spice )
-  )
+  (set-netlist-mode!
+   (if (and opt-backend
+            (string-prefix? "spice" opt-backend))
+       'spice
+       'geda))
 
   ; Evaluate Scheme expression at startup (-c EXPR):
   ;
@@ -1030,7 +1032,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
   ; This sets [toplevel-schematic] global variable:
   ;
-  ( set! schematic (set-ln-toplevel-schematic! files netlist-mode) )
+  (set! schematic (set-ln-toplevel-schematic! files))
 
   ; Verbose mode (-v): print internal netlist representation:
   ;
