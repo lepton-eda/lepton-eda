@@ -10,54 +10,54 @@
 module RIPPLE_COUNT (
        reset ,
        clock ,
-       q3 ,
-       q2 ,
+       q0 ,
        q1 ,
-       q0
+       q2 ,
+       q3
       );
 
 /* Port directions begin here */
 input reset ;
 input clock ;
-output q3 ;
-output q2 ;
-output q1 ;
 output q0 ;
+output q1 ;
+output q2 ;
+output q3 ;
 
 
 /* Wires from the design */
-wire reset ;
-wire q3 ;
-wire q2 ;
-wire q1 ;
-wire q0 ;
 wire clock ;
+wire q0 ;
+wire q1 ;
+wire q2 ;
+wire q3 ;
+wire reset ;
 
 /* continuous assignments */
 
 /* Package instantiations */
-T_FF U1 ( 
+T_FF U1 (
     .clock_ ( clock ),
-    .reset_ ( reset ),
-    .q_ ( q0 )
+    .q_ ( q0 ),
+    .reset_ ( reset )
     );
 
-T_FF U2 ( 
+T_FF U2 (
     .clock_ ( q0 ),
-    .reset_ ( reset ),
-    .q_ ( q1 )
+    .q_ ( q1 ),
+    .reset_ ( reset )
     );
 
-T_FF U3 ( 
+T_FF U3 (
     .clock_ ( q1 ),
-    .reset_ ( reset ),
-    .q_ ( q2 )
+    .q_ ( q2 ),
+    .reset_ ( reset )
     );
 
-T_FF U4 ( 
+T_FF U4 (
     .clock_ ( q2 ),
-    .reset_ ( reset ),
-    .q_ ( q3 )
+    .q_ ( q3 ),
+    .reset_ ( reset )
     );
 
 endmodule
