@@ -4,7 +4,7 @@ noinst_PROGRAMS = gmk_sym convert_sym
 
 dist_noinst_MANS = convert_sym.1 gmk_sym.1
 
-EXTRA_DIST = convert_sym.1.in convert_sym.1 gmk_sym.1.in gmk_sym.1
+EXTRA_DIST = convert_sym.1.in convert_sym.1 gmk_sym.1.in gmk_sym.1 README
 
 gmk_sym_SOURCES = gmk_sym.c char_width.c
 convert_sym_SOURCES = convert_sym.c char_width.c
