@@ -1,4 +1,4 @@
-//dummy moudle for test bench
+//dummy module for test bench
 
 
 module dummy;

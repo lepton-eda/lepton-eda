@@ -98,11 +98,13 @@
 ;;
 (define (verilog:write-module-declaration module-name port-list)
   ;; build up list of pins
-  (let ((the-pins (apply append port-list)))
+  (let ((netnames (map verilog:netname (apply append port-list))))
     (format #t
-            "module ~A (\n~A\n      );\n"
+            "module ~A (\n~A~A\n      );\n"
             (escape-identifier module-name)
-            (string-join (map verilog:netname the-pins) " ,\n"))))
+            ;; Indentation.
+            (if (null? netnames) "" "       ")
+            (string-join netnames " ,\n       "))))
 
 ;;
 ;; output the module direction section

@@ -4,7 +4,7 @@ sch_files = \
 	sch/verilog_rip_test.sch
 
 sym_files = \
-	sym/D_FF.sym 
+	sym/D_FF.sym
 
 SUBDIRS = verilog_modules
 

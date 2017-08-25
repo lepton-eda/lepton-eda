@@ -7,7 +7,7 @@ output clk;
 output reset;
 reg clk, reset;
 
-initial 
+initial
    clk = 1'b0;
 
 always
