@@ -121,7 +121,7 @@ netname=HLP
 C 41500 50100 1 0 0 spice-directive-1.sym
 {
 T 41600 50500 5 10 1 1 0 0 1
-refdes=A?
+refdes=Ag
 T 41600 50200 5 10 0 1 0 0 1
 file=unknown
 T 41600 50200 5 10 1 1 0 0 1
