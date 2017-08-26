@@ -1,4 +1,4 @@
-GNET=gnetlist -g spice-noqsi
+GNET=gnetlist -L ../../.. -g spice-noqsi
 SPICE=ngspice
 
 IMPORTS=DISCRI.sch Comparator.sch
