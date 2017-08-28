@@ -29,6 +29,10 @@
 
 (define (spice-noqsi filename)
     (set-current-output-port(open-output-file filename))
+    ;; packages is deprecated in lepton, but we use it a lot above.
+    ;; Here, we add value by sorting the values for better netlist stability.
+    (set! packages
+      (sort(gnetlist:get-packages "placeholder") string>))
     (write-header)
     (for-each reserve-refdes packages)
     (for-each collect-file packages)
@@ -571,7 +575,3 @@ X3? #10 #9 #11 #4 #8 model-name@
 X4? #12 #13 #11 #4 #14 model-name@")
 (spice-device "model" "* refdes@")
 
-;; packages is deprecated in lepton, but we use it a lot above,
-;; so define it here to be sure
-(define packages
-  (gnetlist:get-packages "placeholder"))

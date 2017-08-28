@@ -1,4 +1,7 @@
-GNET=gnetlist -g spice-noqsi
+GNET=gnetlist -L ../../.. -g spice-noqsi
+#
+# Alternate for using the spice-sdb back end instead
+# GNET=gnetlist -g spice-sdb
 SPICE=ngspice
 
 IMPORTS=DISCRI.sch Comparator.sch
