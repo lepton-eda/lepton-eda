@@ -1,14 +1,14 @@
 ## Process this file with automake to produce Makefile.in
 
 sch_files = \
-	sch/frg_bandpass.sch
+	sch/frg_band_pass.sch
 
 sym_files = 
 	
 
 SUBDIRS = 
 
-EXTRA_DIST = README   \
+EXTRA_DIST = README gafrc \
 	$(sch_files) $(sym_files)
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
