@@ -1,0 +1,4 @@
+Another simulation used on frg-7700 repair.
+This simulates one of the PLL's using a varactor.
+Do analysis tran .5u 100u. You should see a nice around 68MHz osc.
+Try changing varactor Volts and see the freq change.
