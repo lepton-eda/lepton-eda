@@ -50,7 +50,7 @@ Get the directory where gEDA documentation is stored."
      (lambda (dir)
        (let ((docdir
               (string-join (list (guess-prefix dir)
-                                 "share" "doc" "geda-gaf")
+                                 "share" "doc" "lepton-eda")
                            file-name-separator-string)))
          (and (false-if-exception
                (eq? 'directory (stat:type (stat docdir))))
@@ -69,7 +69,7 @@ Get the directory where gEDA documentation is stored."
 Get the directory where per-user gEDA documentation is stored."
 
   (string-join (list (user-data-dir)
-                     "doc" "geda-gaf")
+                     "doc" "lepton-eda")
                file-name-separator-string))
 
 ;; Munge a wiki page name so that it can be used in a filename
