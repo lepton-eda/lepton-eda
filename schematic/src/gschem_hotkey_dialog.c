@@ -221,9 +221,23 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
     vbox = GTK_DIALOG(w_current->hkwindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
-    /* filter text entry field: */
+
+    /*
+    *  filter text entry, label and tooltip:
+    */
     GtkWidget* entry = gtk_entry_new();
-    gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, TRUE, 0);
+    const gchar* txt = _("Start typing action name or keystroke to filter the list.\n"
+                         "Type hotkeys as they are displayed in \"Keystroke(s)\" column.");
+    gtk_widget_set_tooltip_text (entry, txt);
+
+    GtkWidget* label = gtk_label_new_with_mnemonic (_("_Filter:"));
+    gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
+
+    GtkWidget* hbox = gtk_hbox_new (FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 5);
+    gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE,  TRUE,  5);
+    gtk_box_pack_start (GTK_BOX (vbox), hbox,  FALSE, TRUE,  0);
+
 
     scrolled_win = gtk_scrolled_window_new (NULL, NULL);
     gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 0);
