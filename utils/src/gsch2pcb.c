@@ -237,7 +237,7 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
   if (gnetlist == NULL)
     gnetlist = g_getenv ("GNETLIST");
   if (gnetlist == NULL)
-    gnetlist = "gnetlist";
+    gnetlist = "lepton-netlist";
 
   if (!verbose)
     verboseList = g_list_append (verboseList, (gpointer) "-q");
