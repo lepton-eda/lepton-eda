@@ -235,7 +235,7 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
    * are installed at once.
    */
   if (gnetlist == NULL)
-    gnetlist = g_getenv ("GNETLIST");
+    gnetlist = g_getenv ("NETLISTER");
   if (gnetlist == NULL)
     gnetlist = "lepton-netlist";
 
