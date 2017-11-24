@@ -59,6 +59,26 @@ ElementMap;
 static GList *pcb_element_list,
   *element_directory_list, *extra_gnetlist_list, *extra_gnetlist_arg_list;
 
+
+/* --backend-cmd:
+*  backend that generates .cmd file:
+*/
+static gchar*       backend_mkfile_cmd         = NULL;
+static const gchar* backend_mkfile_cmd_default = "pcbpins";
+
+/* --backend-net:
+*  backend that generates .net file:
+*/
+static gchar*       backend_mkfile_net         = NULL;
+static const gchar* backend_mkfile_net_default = "PCB";
+
+/* --backend-pcb:
+ * backend that generates .pcb, .pcb.new files:
+*/
+static gchar*       backend_mkfile_pcb         = NULL;
+static const gchar* backend_mkfile_pcb_default = "gsch2pcb";
+
+
 static gchar *sch_basename;
 
 static GList *schematics;
@@ -242,17 +262,19 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
   if (!verbose)
     verboseList = g_list_append (verboseList, (gpointer) "-q");
 
-  if (!build_and_run_command ("%s %l -g pcbpins -o %s %l %l",
+  if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
 			      gnetlist,
 			      verboseList,
+			      backend_mkfile_cmd ? backend_mkfile_cmd : backend_mkfile_cmd_default,
 			      pins_file,
 			      extra_gnetlist_arg_list,
 			      largs))
     return FALSE;
 
-  if (!build_and_run_command ("%s %l -g PCB -o %s %l %l",
+  if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
 			      gnetlist,
 			      verboseList,
+			      backend_mkfile_net ? backend_mkfile_net : backend_mkfile_net_default,
 			      net_file,
 			      extra_gnetlist_arg_list,
 			      largs))
@@ -266,9 +288,10 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
 
   mtime = (stat (pcb_file, &st) == 0) ? st.st_mtime : 0;
 
-  if (!build_and_run_command ("%s %l -g gsch2pcb -o %s %l %l %l",
+  if (!build_and_run_command ("%s %l -g %s -o %s %l %l %l",
 			      gnetlist,
 			      verboseList,
+			      backend_mkfile_pcb ? backend_mkfile_pcb : backend_mkfile_pcb_default,
 			      pcb_file,
 			      args1,
 			      extra_gnetlist_arg_list,
@@ -1190,6 +1213,25 @@ parse_config (gchar * config, gchar * arg)
     extra_gnetlist_list = g_list_append (extra_gnetlist_list, g_strdup (arg));
   else if (!strcmp (config, "empty-footprint"))
     empty_footprint_name = g_strdup (arg);
+
+  else
+  if (strcmp (config, "backend-cmd") == 0)
+  {
+    backend_mkfile_cmd = g_strdup (arg);
+  }
+
+  else
+  if (strcmp (config, "backend-net") == 0)
+  {
+    backend_mkfile_net = g_strdup (arg);
+  }
+
+  else
+  if (strcmp (config, "backend-pcb") == 0)
+  {
+    backend_mkfile_pcb = g_strdup (arg);
+  }
+
   else
     return -1;
 
@@ -1571,6 +1613,10 @@ main (gint argc, gchar ** argv)
   g_free (pins_file_name);
   g_free (pcb_file_name);
   g_free (bak_file_name);
+
+  g_free (backend_mkfile_cmd);
+  g_free (backend_mkfile_net);
+  g_free (backend_mkfile_pcb);
 
   return 0;
 }
