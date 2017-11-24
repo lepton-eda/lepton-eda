@@ -1339,6 +1339,10 @@ static gchar *usage_string0 =
   "                         instead of the default:\n";
 
 static gchar *usage_string1 =
+  "   --backend-cmd backend Backend that generates pins file (.cmd)\n"
+  "   --backend-net backend Backend that generates netlist file (.net)\n"
+  "   --backend-pcb backend Backend that generates board files (.pcb, .pcb.new)\n"
+  "\n"
   "   --gnetlist backend    A convenience run of extra gnetlist -g commands.\n"
   "                         Example:  gnetlist partslist3\n"
   "                         Creates:  myproject.partslist3\n"
@@ -1354,7 +1358,7 @@ static gchar *usage_string1 =
   "   -v, --verbose         Use -v -v for additional file element debugging.\n"
   "   -V, --version\n\n"
   "environment variables:\n"
-  "   GNETLIST              If set, this specifies the name of the gnetlist program\n"
+  "   NETLISTER             If set, this specifies the name of the gnetlist program\n"
   "                         to execute.\n"
   "\n"
   "Additional Resources:\n"
