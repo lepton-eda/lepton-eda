@@ -15,13 +15,14 @@ on the command line, \fBgsch2pcb\fR can use a \fIPROJECT\fR file
 instead.
 
 .PP
-\fBgsch2pcb\fR first runs \fBgnetlist\fR(1) with the `PCB' backend to
-create a `<name>.net' file containing a \fBpcb\fR(1) formatted netlist for
-the design.
+\fBgsch2pcb\fR first runs \fBgnetlist\fR(1) with the `PCB' backend (or
+backend specified by --backend-net) to create a `<name>.net' file
+containing a \fBpcb\fR(1) formatted netlist for the design.
 
 .PP
 The second step is to run \fBgnetlist\fR(1) again with the `gsch2pcb'
-backend to find any \fBM4\fR(1) elements required by the schematics.
+backend (or backend specified by --backend-pcb) to find any \fBM4\fR(1)
+elements required by the schematics.
 Any missing elements are found by searching a set of file element
 directories.  If no `<name>.pcb' file exists for the design yet, it is
 created with the required elements; otherwise, any new elements
@@ -35,9 +36,9 @@ elements are removed from the `<name>.pcb' file, with a backup in a
 
 .PP
 Finally, \fBgnetlist\fR(1) is run a third time with the `pcbpins'
-backend to create a `<name>.cmd' file.  This can be loaded into
-\fBpcb\fR(1) to rename all pin names in the PCB layout to match the
-schematic.
+backend (or backend specified by --backend-cmd) to create a
+`<name>.cmd' file.  This can be loaded into \fBpcb\fR(1) to rename
+all pin names in the PCB layout to match the schematic.
 
 .SH OPTIONS
 .TP 8
@@ -82,6 +83,18 @@ generated `.pcb' file before running \fBpcb\fR(1).
 Preserve elements in PCB files which are not found in the schematics.
 Since elements with an empty element name (schematic "refdes") are
 never deleted, this option is rarely useful.
+.TP 8
+\fB--backend-cmd\fR \fIBACKEND\fR
+Use \fIBACKEND\fR to generate `<name>.cmd' file instead of
+the default one (`pcbpins').
+.TP 8
+\fB--backend-net\fR \fIBACKEND\fR
+Use \fIBACKEND\fR to generate `<name>.net' file instead of
+the default one (`PCB').
+.TP 8
+\fB--backend-pcb\fR \fIBACKEND\fR
+Use \fIBACKEND\fR to generate `<name>.pcb' file instead of
+the default one (`gsch2pcb').
 .TP 8
 \fB--gnetlist\fR \fIBACKEND\fR
 In addition to the default backends, run \fBgnetlist\fR(1) with `\-g
