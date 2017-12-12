@@ -65,13 +65,13 @@ void o_undo_init(void)
  * \par Function Description
  *
  * This function reads the value of "modify-viewport" configuration
- * setting in "gschem.undo" group, which determines
+ * setting in "schematic.undo" group, which determines
  * if undo/redo operations are allowed to change pan and zoom (i.e. viewport)
  * when "undo-panzoom" option (in gschemrc) is set to "disabled".
  *
  * Configuration setting description:
  * key:   modify-viewport
- * group: gschem.undo
+ * group: schematic.undo
  * type:  boolean
  * default value: false
  *
@@ -95,7 +95,7 @@ o_undo_modify_viewport()
 
   GError* err = NULL;
   gboolean val = eda_config_get_boolean (cfg,
-                                         "gschem.undo",
+                                         "schematic.undo",
                                          "modify-viewport",
                                          &err);
   if (err == NULL)
