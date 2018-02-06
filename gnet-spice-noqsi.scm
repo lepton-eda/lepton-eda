@@ -16,7 +16,7 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-
+ (use-modules (srfi srfi-1))
 
 ;; Essentially, this back end works by collecting lists of output "cards"
 ;; and then generating output.
@@ -29,11 +29,8 @@
 
 (define (spice-noqsi filename)
     (set-current-output-port(open-output-file filename))
-    ;; packages is deprecated in lepton, but we use it a lot above.
-    ;; Here, we add value by sorting the values for better netlist stability.
-    (set! packages
-      (sort(gnetlist:get-packages "placeholder") string>))
     (write-header)
+    (set! packages (get-packages))
     (for-each reserve-refdes packages)
     (for-each collect-file packages)
     (for-each collect-model packages)
@@ -51,7 +48,41 @@
         (format (current-error-port) "~A errors.\n" error-count)
         (primitive-exit 1))))
 
+;; Lepton compatibility
 
+(define packages #f)	;; legacy gnetlist will redefine
+
+;; Lepton needs this module
+(or (defined? 'gnetlist:get-packages) (use-modules (gnetlist schematic)))
+
+;; If packages got defined, use it
+;; If not, try the Lepton way
+(define (get-packages) 
+    (if packages
+        (sort packages string<)			;; sort 'cause Lepton does
+	(schematic-packages toplevel-schematic)))
+
+(define gnetlist:get-toplevel-attribute
+    (if(defined? 'gnetlist:get-toplevel-attribute)
+        gnetlist:get-toplevel-attribute
+	(lambda (attr) 
+	    (or
+	        (schematic-toplevel-attrib 
+	            toplevel-schematic
+                    (string->symbol attr))
+                "not found"))))
+
+(define gnetlist:get-pins
+    (if (defined? 'gnetlist:get-pins)
+        gnetlist:get-pins
+        get-pins))
+	
+	
+(define gnetlist:get-nets
+    (if (defined? 'gnetlist:get-nets)
+        gnetlist:get-nets
+        get-nets))
+	
 ;; Write a header. Critical because SPICE may treat the first line
 ;; as a comment, even if it's not!
 

@@ -1,4 +1,4 @@
-GNET=gnetlist -L ../.. -g spice-noqsi
+GNET=gnetlist -L ../../.. -g spice-noqsi
 SPICE=ngspice
 
 %.cir : %.sch
