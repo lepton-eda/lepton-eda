@@ -138,23 +138,66 @@ void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
   gtk_widget_show (w_current->drawing_area);
 }
 
+
+
 /*! \brief Set up callbacks for window events that affect drawing.
  *  \par Function Description
  *
- * Installs GTK+ callback handlers for signals that are emitted by
- * the drawing area, and some for the main window that affect the drawing
- * area.
+ * Installs GTK+ callback handlers for the main window
+ * that affect the drawing area.
  *
- * \param [in] w_current The toplevel environment.
+ * \param [in] w_current   The toplevel environment.
+ * \param [in] main_window The main window.
  */
-void x_window_setup_draw_events(GschemToplevel *w_current)
+void x_window_setup_draw_events_main_wnd (GschemToplevel* w_current,
+                                          GtkWidget* main_window)
 {
-  struct event_reg_t {
-    const gchar *detailed_signal;
-    GCallback c_handler;
+  struct event_reg_t
+  {
+    const gchar* detailed_signal;
+    GCallback    c_handler;
   };
 
-  struct event_reg_t drawing_area_events[] = {
+  struct event_reg_t main_window_events[] =
+  {
+    { "enter_notify_event", G_CALLBACK(x_event_enter) },
+    { NULL,                 NULL                      }
+  };
+
+  struct event_reg_t* tmp = NULL;
+
+  for (tmp = main_window_events; tmp->detailed_signal != NULL; tmp++)
+  {
+    g_signal_connect (main_window,
+                      tmp->detailed_signal,
+                      tmp->c_handler,
+                      w_current);
+  }
+
+} /* x_window_setup_draw_events_main_wnd() */
+
+
+
+/*! \brief Set up callbacks for the drawing area.
+ *  \par Function Description
+ *
+ * Installs GTK+ callback handlers for signals that are emitted by
+ * the drawing area
+ *
+ * \param [in] w_current    The toplevel environment.
+ * \param [in] drawing_area The drawing area (page view).
+ */
+void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
+                                              GschemPageView* drawing_area)
+{
+  struct event_reg_t
+  {
+    const gchar* detailed_signal;
+    GCallback    c_handler;
+  };
+
+  struct event_reg_t drawing_area_events[] =
+  {
     { "expose_event",         G_CALLBACK(x_event_expose)                       },
     { "expose_event",         G_CALLBACK(x_event_raise_dialog_boxes)           },
     { "button_press_event",   G_CALLBACK(x_event_button_pressed)               },
@@ -166,14 +209,19 @@ void x_window_setup_draw_events(GschemToplevel *w_current)
     { "scroll_event",         G_CALLBACK(x_event_scroll)                       },
     { "update-grid-info",     G_CALLBACK(i_update_grid_info_callback)          },
     { "notify::page",         G_CALLBACK(gschem_toplevel_notify_page_callback) },
-    { NULL,                   NULL                                             } };
-  struct event_reg_t main_window_events[] = {
-    { "enter_notify_event",   G_CALLBACK(x_event_enter)              },
-    { NULL,                   NULL                                   } };
-  struct event_reg_t *tmp;
+    { NULL,                   NULL                                             }
+  };
+
 
   /* is the configure event type missing here? hack */
-  gtk_widget_set_events (w_current->drawing_area,
+
+
+  /* gtk_widget_set_events() can be called on unrealized widgets only.
+  *  Since with tabbed GUI (see x_tabs.c) we need to setup events
+  *  for already created page view widgets, use
+  *  gtk_widget_add_events() instead.
+  */
+  gtk_widget_add_events (GTK_WIDGET (drawing_area),
                          GDK_EXPOSURE_MASK |
                          GDK_POINTER_MOTION_MASK |
                          GDK_BUTTON_PRESS_MASK   |
@@ -181,20 +229,18 @@ void x_window_setup_draw_events(GschemToplevel *w_current)
                          GDK_KEY_PRESS_MASK |
                          GDK_BUTTON_RELEASE_MASK);
 
-  for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++) {
-    g_signal_connect (w_current->drawing_area,
+  struct event_reg_t* tmp = NULL;
+
+  for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++)
+  {
+    g_signal_connect (drawing_area,
                       tmp->detailed_signal,
                       tmp->c_handler,
                       w_current);
   }
 
-  for (tmp = main_window_events; tmp->detailed_signal != NULL; tmp++) {
-    g_signal_connect (w_current->main_window,
-                      tmp->detailed_signal,
-                      tmp->c_handler,
-                      w_current);
-  }
-}
+} /* x_window_setup_draw_events_drawing_area() */
+
 
 
 /*! \brief Creates a new GtkImage displaying a GTK stock icon if available.
@@ -442,13 +488,16 @@ void x_window_create_main(GschemToplevel *w_current)
   scrolled = gtk_scrolled_window_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (work_box), scrolled);
 
-  /* create gschem page view: */
+  /* create page view: */
   x_window_create_drawing (scrolled, w_current);
-
-  /* setup callbacks for draw events: */
-  x_window_setup_draw_events (w_current);
-
   x_window_setup_scrolling (w_current, scrolled);
+
+  /* setup callbacks for draw events - page view: */
+  GschemPageView* pview = GSCHEM_PAGE_VIEW (w_current->drawing_area);
+  x_window_setup_draw_events_drawing_area (w_current, pview);
+
+  /* setup callbacks for draw events - main window: */
+  x_window_setup_draw_events_main_wnd (w_current, w_current->main_window);
 
 
   /*
