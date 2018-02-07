@@ -907,6 +907,13 @@ gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustme
 
 /*! \brief Set the page for this view
  *
+ *  \note
+ *  Be careful when calling this function when tabbed GUI
+ *  is enabled (see x_tabs.c) to not disrupt 1:1 relationship
+ *  between page and page view objects which that code tries to maintain.
+ *  Most likely you want to
+ *  call x_window_set_current_page() or x_window_open_page() instead.
+ *
  *  The toplevel property must be set and the page must belong to that
  *  toplevel.
  *

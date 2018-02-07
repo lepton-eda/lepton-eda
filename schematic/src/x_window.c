@@ -339,8 +339,13 @@ x_window_select_object (GschemFindTextState *state, OBJECT *object, GschemToplev
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->page != NULL);
 
-  if (page != object->page) {
-    gschem_page_view_set_page (view, object->page);
+  if (page != object->page)
+  {
+    /* open object's page: */
+    x_window_set_current_page (w_current, object->page);
+
+    /* tabbed GUI: current page view may be different here: */
+    view = gschem_toplevel_get_current_page_view (w_current);
   }
 
   gschem_page_view_zoom_object (view, object);
