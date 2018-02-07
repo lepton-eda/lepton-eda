@@ -1530,6 +1530,21 @@ DEFINE_I_CALLBACK(page_revert)
   if (response != GTK_RESPONSE_YES )
     return;
 
+  GList* pages = geda_list_get_glist (w_current->toplevel->pages);
+  PAGE* page_dummy = NULL;
+  if (g_list_length (pages) == 1)
+  {
+    /*
+     * If there's only one opened page,
+     * create a dummy page (to be closed afterwards)
+     * to prevent x_window_close_page()
+     * from creating a stray blank page:
+    */
+    page_dummy = x_window_open_page(w_current, NULL);
+    x_window_set_current_page (w_current, page_dummy);
+    x_window_set_current_page (w_current, page_current);
+  }
+
   /* save this for later */
   filename = g_strdup (s_page_get_filename (page_current));
   page_control = page_current->page_control;
@@ -1542,6 +1557,7 @@ DEFINE_I_CALLBACK(page_revert)
   s_clib_refresh();
 
   page = x_window_open_page (w_current, filename);
+  g_free (filename);
   g_return_if_fail (page != NULL);
 
   /* make sure we maintain the hierarchy info */
@@ -1549,6 +1565,16 @@ DEFINE_I_CALLBACK(page_revert)
   page->up = up;
 
   x_window_set_current_page (w_current, page);
+
+  /*
+   * close dummy page:
+  */
+  if (page_dummy != NULL)
+  {
+    x_window_set_current_page (w_current, page_dummy);
+    x_window_close_page (w_current, page_dummy);
+    x_window_set_current_page (w_current, page);
+  }
 }
 
 /*! \todo Finish function documentation!!!
