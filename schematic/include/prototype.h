@@ -758,3 +758,18 @@ void x_widgets_show_text_properties (GschemToplevel* w_current);
 void x_widgets_show_object_properties (GschemToplevel* w_current);
 void x_widgets_show_log (GschemToplevel* w_current);
 void x_widgets_show_find_text_state (GschemToplevel* w_current);
+
+/* x_tabs.c */
+gboolean x_tabs_enabled();
+void x_tabs_init();
+void x_tabs_create (GschemToplevel* w_current, GtkWidget* work_box);
+PAGE* x_tabs_page_open (GschemToplevel* w_current, const gchar* filename);
+void x_tabs_page_set_cur (GschemToplevel* w_current, PAGE* page);
+void x_tabs_page_close (GschemToplevel* w_current, PAGE* page);
+void x_tabs_next (GschemToplevel* w_current);
+void x_tabs_prev (GschemToplevel* w_current);
+void x_tabs_hdr_update (GschemToplevel* w_current, PAGE* page);
+#ifdef DEBUG
+void x_tabs_dbg_infos_dump (GschemToplevel* w_current);
+void x_tabs_dbg_pages_dump (GschemToplevel* w_current);
+#endif
