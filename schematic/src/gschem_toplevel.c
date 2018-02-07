@@ -168,6 +168,13 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->toolbar_bus    = NULL;
 
 
+  /* tabbed GUI: notebook: */
+  w_current->xtabs_nbook = NULL;
+
+  /* tabbed GUI: data structures: */
+  w_current->xtabs_info_list = NULL;
+
+
   /* docks: */
   w_current->bottom_notebook = NULL;
   w_current->right_notebook  = NULL;
