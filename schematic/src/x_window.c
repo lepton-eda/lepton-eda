@@ -75,9 +75,6 @@ create_translate_widget (GschemToplevel *w_current, GtkWidget *work_box);
 static void
 create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box);
 
-static void
-setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled);
-
 
 static GtkWidget*
 create_notebook_right (GschemToplevel *w_current);
@@ -451,7 +448,7 @@ void x_window_create_main(GschemToplevel *w_current)
   /* setup callbacks for draw events: */
   x_window_setup_draw_events (w_current);
 
-  setup_scrolling (w_current, scrolled);
+  x_window_setup_scrolling (w_current, scrolled);
 
 
   /*
@@ -1318,8 +1315,12 @@ create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
 
 
 
-static void
-setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled)
+/*! \brief Setup scrolling parameters
+ *
+ *  \param [in] scrolled  Scrolled widget - a parent of page view widget
+ */
+void
+x_window_setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled)
 {
   GedaToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
@@ -1348,7 +1349,8 @@ setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled)
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   policy, policy);
-}
+
+} /* x_window_setup_scrolling() */
 
 
 
