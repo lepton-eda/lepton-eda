@@ -689,6 +689,8 @@ void x_window_close_all(GschemToplevel *w_current)
   g_list_free (list_copy);
 }
 
+
+
 /*! \brief Opens a new page from a file.
  *  \par Function Description
  *  This function opens the file whose name is <B>filename</B> in a
@@ -713,7 +715,7 @@ void x_window_close_all(GschemToplevel *w_current)
  *  does not conflict with a file on disk.
  */
 PAGE*
-x_window_open_page (GschemToplevel *w_current, const gchar *filename)
+x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename)
 {
   PAGE *page;
   gchar *fn;
@@ -790,7 +792,10 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
   g_free (fn);
 
   return page;
-}
+
+} /* x_window_open_page_impl() */
+
+
 
 /*! \brief Changes the current page.
  *  \par Function Description
@@ -806,7 +811,7 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
  *  \param [in] page      The page to become current page.
  */
 void
-x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
+x_window_set_current_page_impl (GschemToplevel *w_current, PAGE *page)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
@@ -822,7 +827,10 @@ x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
 
   x_pagesel_update (w_current);
   x_multiattrib_update (w_current);
-}
+
+} /* x_window_set_current_page_impl() */
+
+
 
 /*! \brief Saves a page to a file.
  *  \par Function Description
@@ -905,6 +913,8 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
   return ret;
 }
 
+
+
 /*! \brief Closes a page.
  *  \par Function Description
  *  This function closes the page <B>page</B> of toplevel
@@ -918,7 +928,7 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
  *  \return               Pointer to a new current PAGE object.
  */
 PAGE*
-x_window_close_page (GschemToplevel *w_current, PAGE *page)
+x_window_close_page_impl (GschemToplevel *w_current, PAGE *page)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   PAGE *new_current = NULL;
@@ -976,7 +986,9 @@ x_window_close_page (GschemToplevel *w_current, PAGE *page)
   }
 
   return new_current;
-}
+
+} /* x_window_close_page_impl() */
+
 
 
 /*! \brief Setup default icon for GTK windows
@@ -1457,4 +1469,40 @@ create_notebook_bottom (GschemToplevel* w_current)
   }
 
   return notebook;
+}
+
+
+
+/*! \brief Opens a new page from a file or a blank one if \a filename is NULL.
+ *
+ *  \see x_window_open_page_impl()
+ */
+PAGE*
+x_window_open_page (GschemToplevel* w_current, const gchar* filename)
+{
+  return x_window_open_page_impl (w_current, filename);
+}
+
+
+
+/*! \brief Changes the current page.
+ *
+ *  \see x_window_set_current_page_impl()
+ */
+void
+x_window_set_current_page (GschemToplevel* w_current, PAGE* page)
+{
+    x_window_set_current_page_impl (w_current, page);
+}
+
+
+
+/*! \brief Closes a page.
+ *
+ *  \see x_window_close_page_impl()
+ */
+void
+x_window_close_page (GschemToplevel* w_current, PAGE* page)
+{
+  x_window_close_page_impl (w_current, page);
 }

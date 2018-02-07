@@ -725,6 +725,7 @@ void x_stroke_init (void);
 void x_stroke_free (void);
 void x_stroke_record (GschemToplevel *w_current, gint x, gint y);
 gint x_stroke_translate_and_execute (GschemToplevel *w_current);
+
 /* x_window.c */
 void x_window_setup (GschemToplevel *w_current);
 void x_window_create_drawing(GtkWidget *drawbox, GschemToplevel *w_current);
@@ -736,9 +737,12 @@ void x_window_create_main(GschemToplevel *w_current);
 void x_window_close(GschemToplevel *w_current);
 void x_window_close_all(GschemToplevel *w_current);
 PAGE *x_window_open_page (GschemToplevel *w_current, const gchar *filename);
+PAGE *x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename);
 void x_window_set_current_page (GschemToplevel *w_current, PAGE *page);
+void x_window_set_current_page_impl (GschemToplevel *w_current, PAGE *page);
 gint x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename);
-PAGE* x_window_close_page (GschemToplevel *w_current, PAGE *page);
+void x_window_close_page (GschemToplevel *w_current, PAGE *page);
+PAGE* x_window_close_page_impl (GschemToplevel *w_current, PAGE *page);
 void x_window_set_default_icon (void);
 void x_window_init_icons (void);
 GschemToplevel* x_window_new (TOPLEVEL *toplevel);
