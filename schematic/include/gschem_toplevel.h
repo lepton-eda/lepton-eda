@@ -31,7 +31,7 @@ struct st_gschem_toplevel {
   /* ------------------- */
   GtkWidget *main_window;
 
-  GtkWidget *drawing_area;
+  GtkWidget *drawing_area; /* page view */
   GtkWidget *menubar;
   GtkWidget *popup_menu;
 
@@ -47,6 +47,14 @@ struct st_gschem_toplevel {
   GtkWidget *toolbar_select;
   GtkWidget *toolbar_net;
   GtkWidget *toolbar_bus;
+
+
+  /* tabbed GUI: notebook: */
+  GtkNotebook* xtabs_nbook;
+
+  /* tabbed GUI: data structures: */
+  GList* xtabs_info_list;
+
 
   GtkWidget *bottom_notebook;
 
