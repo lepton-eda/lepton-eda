@@ -578,6 +578,18 @@ x_event_configure (GschemPageView    *page_view,
 
   page_view->previous_allocation = current_allocation;
 
+
+  /* tabbed GUI: mark page_view as configured, zoom and return,
+   * so that new pages are zoomed correctly
+  */
+  if (x_tabs_enabled())
+  {
+    gschem_page_view_zoom_extents (page_view, NULL);
+    page_view->configured = TRUE;
+    return FALSE;
+  }
+
+
   /* re-pan each page of the TOPLEVEL */
   for ( iter = geda_list_get_glist (p_current->toplevel->pages);
         iter != NULL;

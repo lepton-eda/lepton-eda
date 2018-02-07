@@ -229,6 +229,9 @@ void main_prog(void *closure, int argc, char *argv[])
   /* At end, complete set up of window. */
   x_color_allocate();
 
+  /* Initialize tabbed GUI: */
+  x_tabs_init();
+
   /* Allocate w_current */
   w_current = x_window_new (toplevel);
 
@@ -253,17 +256,25 @@ void main_prog(void *closure, int argc, char *argv[])
      * /path/to/foo/../bar/baz.sch.  Bad filenames will be normalized in
      * f_open (called by x_window_open_page). This works for Linux and MINGW32.
      */
+
     x_window_open_page(w_current, filename);
+
     g_free (filename);
   }
 
   g_free(cwd);
 
-  /* Update the window to show the current page */
-  x_window_set_current_page (w_current,
-    (w_current->toplevel->page_current == NULL) ?
-      x_window_open_page (w_current, NULL) :
-      w_current->toplevel->page_current);
+
+  /* Update the window to show the current page:
+  */
+  PAGE* page = w_current->toplevel->page_current;
+
+  if (page == NULL)
+  {
+    page = x_window_open_page (w_current, NULL);
+  }
+
+  x_window_set_current_page (w_current, page);
 
 
 #if DEBUG

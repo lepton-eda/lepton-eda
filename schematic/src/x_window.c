@@ -477,24 +477,31 @@ void x_window_create_main(GschemToplevel *w_current)
 
 
   /*
-  *  container for scrolled window and bottom infowidgets:
+  *  container for scrolled window and bottom infowidgets;
+  *  when tabbed GUI is enabled, it will contain the notebook:
   */
   work_box = gtk_vbox_new (FALSE, 0);
 
 
-  /*
-  *  scrolled window:
-  */
-  scrolled = gtk_scrolled_window_new (NULL, NULL);
-  gtk_container_add (GTK_CONTAINER (work_box), scrolled);
+  if (x_tabs_enabled())
+  {
+    x_tabs_create (w_current, work_box);
+  }
+  else
+  {
+    /* scrolled window (parent of page view): */
+    scrolled = gtk_scrolled_window_new (NULL, NULL);
+    gtk_container_add (GTK_CONTAINER (work_box), scrolled);
 
-  /* create page view: */
-  x_window_create_drawing (scrolled, w_current);
-  x_window_setup_scrolling (w_current, scrolled);
+    /* create page view: */
+    x_window_create_drawing (scrolled, w_current);
+    x_window_setup_scrolling (w_current, scrolled);
 
-  /* setup callbacks for draw events - page view: */
-  GschemPageView* pview = GSCHEM_PAGE_VIEW (w_current->drawing_area);
-  x_window_setup_draw_events_drawing_area (w_current, pview);
+    /* setup callbacks for draw events - page view: */
+    GschemPageView* pview = GSCHEM_PAGE_VIEW (w_current->drawing_area);
+    x_window_setup_draw_events_drawing_area (w_current, pview);
+  }
+
 
   /* setup callbacks for draw events - main window: */
   x_window_setup_draw_events_main_wnd (w_current, w_current->main_window);
@@ -692,6 +699,7 @@ void x_window_close_all(GschemToplevel *w_current)
 
 
 /*! \brief Opens a new page from a file.
+ *  \private
  *  \par Function Description
  *  This function opens the file whose name is <B>filename</B> in a
  *  new PAGE of <B>toplevel</B>.
@@ -798,6 +806,7 @@ x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename)
 
 
 /*! \brief Changes the current page.
+ *  \private
  *  \par Function Description
  *  This function displays the specified page <B>page</B> in the
  *  window attached to <B>toplevel</B>.
@@ -916,12 +925,15 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
 
 
 /*! \brief Closes a page.
+ *  \private
  *  \par Function Description
  *  This function closes the page <B>page</B> of toplevel
  *  <B>toplevel</B>.
  *
- *  If necessary, the current page of <B>toplevel</B> is changed to
- *  the next valid page or to a new untitled page.
+ *  The current page of <B>toplevel</B> is changed to
+ *  the next valid page.
+ *  If necessary, a new untitled page is created
+ *  (unless tabbed GUI is enabled: return NULL in that case).
  *
  *  \param [in] w_current The toplevel environment.
  *  \param [in] page      The page to close.
@@ -974,15 +986,21 @@ x_window_close_page_impl (GschemToplevel *w_current, PAGE *page)
   gschem_toplevel_page_changed (w_current);
 
   /* Switch to a different page if we just removed the current */
-  if (toplevel->page_current == NULL) {
+  if (toplevel->page_current == NULL)
+  {
 
     /* Create a new page if there wasn't another to switch to */
-    if (new_current == NULL) {
-      new_current = x_window_open_page (w_current, NULL);
+    if (new_current == NULL && !x_tabs_enabled())
+    {
+      new_current = x_window_open_page_impl (w_current, NULL);
     }
 
     /* change to new_current and update display */
-    x_window_set_current_page (w_current, new_current);
+    if (!x_tabs_enabled())
+    {
+      x_window_set_current_page_impl (w_current, new_current);
+    }
+
   }
 
   return new_current;
@@ -1476,11 +1494,19 @@ create_notebook_bottom (GschemToplevel* w_current)
 /*! \brief Opens a new page from a file or a blank one if \a filename is NULL.
  *
  *  \see x_window_open_page_impl()
+ *  \see x_tabs_page_open()
  */
 PAGE*
 x_window_open_page (GschemToplevel* w_current, const gchar* filename)
 {
-  return x_window_open_page_impl (w_current, filename);
+  if (x_tabs_enabled())
+  {
+    return x_tabs_page_open (w_current, filename);
+  }
+  else
+  {
+    return x_window_open_page_impl (w_current, filename);
+  }
 }
 
 
@@ -1488,11 +1514,19 @@ x_window_open_page (GschemToplevel* w_current, const gchar* filename)
 /*! \brief Changes the current page.
  *
  *  \see x_window_set_current_page_impl()
+ *  \see x_tabs_page_set_cur()
  */
 void
 x_window_set_current_page (GschemToplevel* w_current, PAGE* page)
 {
+  if (x_tabs_enabled())
+  {
+    x_tabs_page_set_cur (w_current, page);
+  }
+  else
+  {
     x_window_set_current_page_impl (w_current, page);
+  }
 }
 
 
@@ -1500,9 +1534,17 @@ x_window_set_current_page (GschemToplevel* w_current, PAGE* page)
 /*! \brief Closes a page.
  *
  *  \see x_window_close_page_impl()
+ *  \see x_tabs_page_close()
  */
 void
 x_window_close_page (GschemToplevel* w_current, PAGE* page)
 {
-  x_window_close_page_impl (w_current, page);
+  if (x_tabs_enabled())
+  {
+    x_tabs_page_close (w_current, page);
+  }
+  else
+  {
+    x_window_close_page_impl (w_current, page);
+  }
 }

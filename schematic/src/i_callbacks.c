@@ -1575,6 +1575,14 @@ DEFINE_I_CALLBACK(page_revert)
     x_window_close_page (w_current, page_dummy);
     x_window_set_current_page (w_current, page);
   }
+
+  if (x_tabs_enabled())
+  {
+    /* page hier info was changed after the page is opened;
+     * update tab's header (e.g. show/hide "hier up" button):
+    */
+    x_tabs_hdr_update (w_current, page);
+  }
 }
 
 /*! \todo Finish function documentation!!!
@@ -2195,6 +2203,13 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
         /* this only signifies that we tried */
         loaded_flag = TRUE;
         page_control = child->page_control;
+
+        /* tabbed GUI: create a tab for every subpage loaded: */
+        if (x_tabs_enabled())
+        {
+          x_window_set_current_page (w_current, child);
+        }
+
       }
 
       g_free(current_filename);
