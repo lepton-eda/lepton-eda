@@ -113,6 +113,8 @@ static struct BuiltinInfo builtins[] = {
   { "%page-next",                    0, 0, 0, (SCM (*) ()) g_keys_page_next },
   { "%page-prev",                    0, 0, 0, (SCM (*) ()) g_keys_page_prev },
   { "%page-close",                   0, 0, 0, (SCM (*) ()) g_keys_page_close },
+  { "%page-next-tab",                0, 0, 0, (SCM (*) ()) g_keys_page_next_tab },
+  { "%page-prev-tab",                0, 0, 0, (SCM (*) ()) g_keys_page_prev_tab },
   { "%page-revert",                  0, 0, 0, (SCM (*) ()) g_keys_page_revert },
   { "%page-print",                   0, 0, 0, (SCM (*) ()) g_keys_page_print },
   { "%add-component",                0, 0, 0, (SCM (*) ()) g_keys_add_component },

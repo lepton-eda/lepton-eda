@@ -1491,6 +1491,26 @@ DEFINE_I_CALLBACK(page_close)
   x_window_close_page (w_current, page);
 }
 
+
+
+DEFINE_I_CALLBACK(page_next_tab)
+{
+  GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
+
+  x_tabs_next (w_current);
+}
+
+
+
+DEFINE_I_CALLBACK(page_prev_tab)
+{
+  GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
+
+  x_tabs_prev (w_current);
+}
+
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

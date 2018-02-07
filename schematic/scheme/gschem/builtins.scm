@@ -248,6 +248,12 @@
 (define-action-public (&page-close #:label (_ "Close Page") #:icon "gtk-close")
   (%page-close))
 
+(define-action-public (&page-next-tab #:label (_ "Next Tab") #:icon "gtk-go-forward")
+  (%page-next-tab))
+
+(define-action-public (&page-prev-tab #:label (_ "Previous Tab") #:icon "gtk-go-back")
+  (%page-prev-tab))
+
 (define-action-public (&page-print #:label (_ "Print Page") #:icon "gtk-print")
   (%page-print))
 
