@@ -915,16 +915,17 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
  *
  *  \param [in] w_current The toplevel environment.
  *  \param [in] page      The page to close.
+ *  \return               Pointer to a new current PAGE object.
  */
-void
+PAGE*
 x_window_close_page (GschemToplevel *w_current, PAGE *page)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   PAGE *new_current = NULL;
   GList *iter;
 
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (page     != NULL);
+  g_return_val_if_fail (toplevel != NULL, NULL);
+  g_return_val_if_fail (page     != NULL, NULL);
 
   g_assert (page->pid != -1);
 
@@ -973,6 +974,8 @@ x_window_close_page (GschemToplevel *w_current, PAGE *page)
     /* change to new_current and update display */
     x_window_set_current_page (w_current, new_current);
   }
+
+  return new_current;
 }
 
 
