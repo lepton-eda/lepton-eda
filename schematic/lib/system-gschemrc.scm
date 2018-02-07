@@ -1213,7 +1213,12 @@
            (,(N_ "_Previous")         &page-prev              "gtk-go-back")
            (,(N_ "_Next")             &page-next              "gtk-go-forward")
            (,(N_ "_Revert")           &page-revert            "gtk-revert-to-saved")
-           (,(N_ "_Close")            &page-close             "gtk-close")))
+           (,(N_ "_Close")            &page-close             "gtk-close")
+           ("SEPARATOR"               #f                      #f)
+           (,(N_ "Next Tab")          &page-next-tab          "gtk-go-forward")
+           (,(N_ "Previous Tab")      &page-prev-tab          "gtk-go-back")
+        )
+)
 
 (define add-menu-items
 ;;
