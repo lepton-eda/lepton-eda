@@ -1239,6 +1239,12 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
     printf( "    x_tabs_page_open(): #2: [!pview] [!page] \n\n" );
 #endif
 
+    /* cancel all actions;
+     * this prevents assertion triggering in o_place_invalidate_rubber()
+     * if File->New is invoked while component selection mode is active:
+    */
+    x_tabs_cancel_all (w_current);
+
     TabInfo* nfo_new = x_tabs_page_new (w_current, NULL);
 
     nfo_new->page_ = x_window_open_page_impl (w_current, filename);
@@ -1279,6 +1285,7 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
   }
 
   g_return_val_if_fail (FALSE && "end of func", NULL);
+  return NULL;
 
 } /* x_tabs_page_open() */
 
