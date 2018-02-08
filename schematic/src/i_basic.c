@@ -529,7 +529,7 @@ void i_set_filename(GschemToplevel *w_current, const gchar *string, const gchar 
 
   filename = g_path_get_basename(string);
 
-  print_string = g_strdup_printf("%s%s - gschem", changed, filename);
+  print_string = g_strdup_printf("%s%s - lepton-schematic", changed, filename);
 
   gtk_window_set_title(GTK_WINDOW(w_current->main_window),
 		       print_string);
