@@ -229,8 +229,8 @@ static void newtext_init(NewText *dialog)
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-                                          GTK_RESPONSE_ACCEPT,
-                                          GTK_RESPONSE_REJECT,
+                                          GTK_RESPONSE_APPLY,
+                                          GTK_RESPONSE_CLOSE,
                                           -1);
 
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_NONE);
