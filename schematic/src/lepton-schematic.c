@@ -152,11 +152,11 @@ void main_prog(void *closure, int argc, char *argv[])
   /* create log file right away even if logging is enabled */
   s_log_init ("gschem");
 
-  s_log_message (_("gEDA/gschem version %1$s%2$s.%3$s"),
+  s_log_message (_("Lepton EDA/lepton-schematic version %1$s%2$s.%3$s"),
                  PREPEND_VERSION_STRING,
                  PACKAGE_DOTTED_VERSION,
                  PACKAGE_DATE_VERSION);
-  s_log_message (_("gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details."));
+  s_log_message (_("Lepton EDA comes with ABSOLUTELY NO WARRANTY; see COPYING for more details."));
   s_log_message (_("This is free software, and you are welcome to redistribute it under certain"));
   s_log_message (_("conditions; please see the COPYING file for more details."));
 
