@@ -65,23 +65,48 @@ void about_dialog (GschemToplevel *w_current)
     g_error_free (error);
   }
 
-  gtk_show_about_dialog (
-      GTK_WINDOW (w_current->main_window),
-      "version",        version_string,
-      "logo",           logo,
-      "title",          _("About gschem"),
-      "comments",       _("gEDA: GPL Electronic Design Automation"),
-      "copyright",
-      /* TRANSLATORS: "ChangeLog" is a literal filename; please don't translate it. */
-      _("Copyright © 1998-2012 Ales Hvezda"
-        " <ahvezda@geda.seul.org>\n"
-        "Copyright © 1998-2012 gEDA Contributors"
-        " (see ChangeLog for details)"),
-      "website",        "http://geda-project.org/",
-      NULL);
+
+  GtkWidget* dlg = gtk_about_dialog_new();
+  GtkAboutDialog* adlg = GTK_ABOUT_DIALOG (dlg);
+
+  gtk_about_dialog_set_version (adlg, version_string);
+  gtk_about_dialog_set_logo (adlg, logo);
+  gtk_about_dialog_set_comments (adlg, _("Lepton Electronic Design Automation"));
+
+  gtk_about_dialog_set_copyright (adlg,
+    _("Copyright © 1998-2018 by Ales Hvezda and the respective original authors.\n"
+      "Copyright © 2017-2018 Lepton Developers.\n"
+      "See AUTHORS and ChangeLog files for details."));
+
+  gtk_about_dialog_set_license (adlg,
+    "Lepton EDA is freely distributable under the\n"
+    "GNU Public License (GPL) version 2.0 or (at your option) any later version.\n"
+    "See the COPYING file for the full text of the license.");
+
+
+  GtkWidget* ca = gtk_dialog_get_content_area (GTK_DIALOG (dlg));
+
+  GtkWidget* website1 = gtk_label_new (NULL);
+  GtkWidget* website2 = gtk_label_new (NULL);
+  gtk_label_set_selectable (GTK_LABEL (website1), TRUE);
+  gtk_label_set_selectable (GTK_LABEL (website2), TRUE);
+
+  gtk_label_set_markup (GTK_LABEL (website1),
+    "<a href='http://github.com/lepton-eda/lepton-eda'>github.com/lepton-eda/lepton-eda</a>" );
+  gtk_label_set_markup (GTK_LABEL (website2),
+    "<a href='http://geda-project.org'>geda-project.org</a>" );
+
+  gtk_box_pack_start (GTK_BOX (ca), website1, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (ca), website2, FALSE, FALSE, 0);
+
+
+  gtk_widget_show_all (dlg);
+  gtk_dialog_run (GTK_DIALOG (dlg));
+  gtk_widget_destroy (dlg);
 
   g_free (version_string);
   g_object_unref (logo);
 }
 
 /***************** End of help/about dialog box *********************/
+
