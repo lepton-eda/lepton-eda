@@ -291,6 +291,11 @@ instance_init (GschemLogWidget *widget)
   scrolled = gtk_scrolled_window_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (widget), scrolled);
 
+  /* show scrollbars only when needed: */
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+
   widget->viewer = GTK_TEXT_VIEW (g_object_new (GTK_TYPE_TEXT_VIEW,
                                                 /* GtkTextView */
                                                 "buffer",   klass->buffer,
