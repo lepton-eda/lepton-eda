@@ -150,7 +150,7 @@ void main_prog(void *closure, int argc, char *argv[])
   libgeda_init();
 
   /* create log file right away even if logging is enabled */
-  s_log_init ("gschem");
+  s_log_init ("schematic");
 
   s_log_message (_("Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"),
                  PREPEND_VERSION_STRING,
