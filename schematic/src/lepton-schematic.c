@@ -157,9 +157,6 @@ void main_prog(void *closure, int argc, char *argv[])
                  PACKAGE_DOTTED_VERSION,
                  PACKAGE_DATE_VERSION,
                  PACKAGE_GIT_COMMIT);
-  s_log_message (_("Lepton EDA comes with ABSOLUTELY NO WARRANTY; see COPYING for more details."));
-  s_log_message (_("This is free software, and you are welcome to redistribute it under certain"));
-  s_log_message (_("conditions; please see the COPYING file for more details."));
 
 #if defined(__MINGW32__) && defined(DEBUG)
   fprintf(stderr, _("This is the MINGW32 port.\n"));
