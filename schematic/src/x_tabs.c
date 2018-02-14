@@ -438,7 +438,7 @@ x_tabs_info_add (GschemToplevel* w_current,
                  GschemPageView* pview,
                  GtkWidget*      wtab)
 {
-  TabInfo* nfo = g_malloc (sizeof (TabInfo));
+  TabInfo* nfo = (TabInfo*) g_malloc (sizeof (TabInfo));
 
   nfo->ndx_   = ndx;
 
@@ -519,7 +519,7 @@ x_tabs_info_find_by_page (GList* nfos, PAGE* page)
   GList* ptr = g_list_find_custom (nfos,
                                    (gconstpointer) page,
                                    &x_tabs_info_cmp_page);
-  return ptr ? ptr->data : NULL;
+  return ptr ? (TabInfo*) ptr->data : NULL;
 }
 
 
@@ -530,7 +530,7 @@ x_tabs_info_find_by_pview (GList* nfos, GschemPageView* pview)
   GList* ptr = g_list_find_custom (nfos,
                                    (gconstpointer) pview,
                                    &x_tabs_info_cmp_pview);
-  return ptr ? ptr->data : NULL;
+  return ptr ? (TabInfo*) ptr->data : NULL;
 }
 
 
@@ -541,7 +541,7 @@ x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab)
   GList* ptr = g_list_find_custom (nfos,
                                    (gconstpointer) wtab,
                                    &x_tabs_info_cmp_wtab);
-  return ptr ? ptr->data : NULL;
+  return ptr ? (TabInfo*) ptr->data : NULL;
 }
 
 
