@@ -543,7 +543,7 @@ void o_autosave_backups(GschemToplevel *w_current)
         dirname = g_path_get_dirname (real_filename);
         only_filename = g_path_get_basename(real_filename);
 
-        backup_filename = g_strdup_printf("%s%c"AUTOSAVE_BACKUP_FILENAME_STRING,
+        backup_filename = g_strdup_printf("%s%c" AUTOSAVE_BACKUP_FILENAME_STRING,
                                           dirname, G_DIR_SEPARATOR, only_filename);
 
         /* If there is not an existing file with that name, compute the
