@@ -55,7 +55,7 @@ static GtkListStore* color_list_store = NULL;
 
 
 static GtkListStore* create_color_list_store();
-static char* get_color_name(int index);
+static const char* get_color_name(int index);
 
 
 
@@ -90,7 +90,7 @@ create_color_list_store ()
 
 /*! \brief Given the color index, obtain a human readable name
  */
-static char*
+static const char*
 get_color_name (int index)
 {
   switch(index) {
