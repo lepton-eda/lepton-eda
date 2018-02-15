@@ -100,6 +100,11 @@ void x_pagesel_update (GschemToplevel *w_current)
 
   i_set_filename (w_current, s_page_get_filename (page),
                   page->CHANGED ? "* " : "");
+
+  if (x_tabs_enabled())
+  {
+    x_tabs_hdr_update (w_current, page);
+  }
 }
 
 /*! \brief Callback for page manager response.
