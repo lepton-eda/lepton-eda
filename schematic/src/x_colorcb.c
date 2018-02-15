@@ -88,6 +88,41 @@ create_color_list_store ()
 
 
 
+/*! \brief Update colors in color selection combo box.
+ *
+ *  \par Function Description
+ *  Call this function after the color scheme is changed.
+ */
+void
+x_colorcb_update_colors()
+{
+  GtkListStore* store = color_list_store;
+  if (store == NULL)
+    return;
+
+  GtkTreeModel* model = GTK_TREE_MODEL (store);
+  GtkTreeIter iter;
+
+  gboolean res = gtk_tree_model_get_iter_first (model, &iter);
+
+  while (res)
+  {
+    int color_index = -1;
+    gtk_tree_model_get (model, &iter, COLUMN_INDEX, &color_index, -1);
+
+    if (x_color_display_enabled (color_index))
+    {
+      GdkColor* color = x_get_color (color_index);
+      gtk_list_store_set (store, &iter, COLUMN_COLOR, color, -1);
+    }
+
+    res = gtk_tree_model_iter_next (model, &iter);
+  }
+
+} /* x_colorcb_update_colors() */
+
+
+
 /*! \brief Given the color index, obtain a human readable name
  */
 static const char*

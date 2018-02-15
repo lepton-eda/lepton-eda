@@ -608,10 +608,13 @@ void x_color_allocate (void);
 GdkColor *x_get_color(int color);
 GedaColor *x_color_lookup(GschemToplevel *toplevel, int color);
 gboolean x_color_display_enabled (int index);
+
 /* x_colorcb.c */
 GtkWidget* x_colorcb_new ();
 int x_colorcb_get_index (GtkWidget *widget);
 void x_colorcb_set_index (GtkWidget *widget, int color_index);
+void x_colorcb_update_colors();
+
 /* x_dialog.c */
 int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);
 void select_all_text_in_textview(GtkTextView *textview);
