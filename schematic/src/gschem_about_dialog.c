@@ -48,7 +48,7 @@ void about_dialog (GschemToplevel *w_current)
   GdkPixbuf *logo;
   GError *error = NULL;
 
-  version_string = g_strdup_printf (_("%s (g%.7s)"),
+  version_string = g_strdup_printf (_("%s (git: %.7s)"),
                                     PACKAGE_DOTTED_VERSION,
                                     PACKAGE_GIT_COMMIT);
 
@@ -73,8 +73,13 @@ void about_dialog (GschemToplevel *w_current)
   gtk_about_dialog_set_logo (adlg, logo);
   gtk_about_dialog_set_comments (adlg, _("Lepton Electronic Design Automation"));
 
+  /*
+   * TRANSLATORS: "ChangeLog", AUTHORS and COPYING
+   * are a literal filenames; please don't translate them.
+  */
+
   gtk_about_dialog_set_copyright (adlg,
-    _("Copyright © 1998-2018 by Ales Hvezda and the respective original authors.\n"
+    _("Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
       "Copyright © 2017-2018 Lepton Developers.\n"
       "See AUTHORS and ChangeLog files for details."));
 
