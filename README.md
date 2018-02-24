@@ -81,7 +81,7 @@ In order to compile gEDA from the distributed source archives, you
 - Guile ("GNU's Ubiquitous Intelligent Language for Extensions"),
   version 2.0.0 or later.  <http://www.gnu.org/software/guile/>
 
-- GTK+ (the Gimp Toolkit), version 2.18.0 or later.
+- GTK+ (the Gimp Toolkit), version 2.24.0 or later.
   <http://www.gtk.org/>
 
 - GNU `gettext`, version 0.18 or newer.

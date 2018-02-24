@@ -75,21 +75,21 @@ PKG_PROG_PKG_CONFIG
 
 AX_CHECK_GUILE([2.0.0])
 
-PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.20.0], ,
-  AC_MSG_ERROR([GLib 2.20.0 or later is required.]))
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.25.0], ,
+  AC_MSG_ERROR([GLib 2.25.0 or later is required.]))
 AC_DEFINE([G_DISABLE_DEPRECATED], [1], [Disable deprecated GLib features])
 
-PKG_CHECK_MODULES(GIO, [gio-2.0 >= 2.20.0], ,
-  AC_MSG_ERROR([GIO 2.20.0 or later is required.]))
+PKG_CHECK_MODULES(GIO, [gio-2.0 >= 2.25.0], ,
+  AC_MSG_ERROR([GIO 2.25.0 or later is required.]))
 
-PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.18.0], ,
-  AC_MSG_ERROR([GTK+ 2.18.0 or later is required.]))
+PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.24.0], ,
+  AC_MSG_ERROR([GTK+ 2.24.0 or later is required.]))
 
-PKG_CHECK_MODULES(GDK, [gdk-2.0 >= 2.18.0], ,
-  AC_MSG_ERROR([GDK 2.18.0 or later is required.]))
+PKG_CHECK_MODULES(GDK, [gdk-2.0 >= 2.24.0], ,
+  AC_MSG_ERROR([GDK 2.24.0 or later is required.]))
 
-PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 2.18.0], ,
-  AC_MSG_ERROR([GDK_PIXBUF 2.18.0 or later is required.]))
+PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 2.21.0], ,
+  AC_MSG_ERROR([GDK_PIXBUF 2.21.0 or later is required.]))
 
 AX_CHECK_CAIRO
 
