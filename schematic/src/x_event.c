@@ -579,12 +579,20 @@ x_event_configure (GschemPageView    *page_view,
   page_view->previous_allocation = current_allocation;
 
 
-  /* tabbed GUI: mark page_view as configured, zoom and return,
-   * so that new pages are zoomed correctly
+  /* tabbed GUI: zoom/pan, mark page_view as configured and return:
+   * there is only one page per page view.
   */
   if (x_tabs_enabled())
   {
-    gschem_page_view_zoom_extents (page_view, NULL);
+    if (page_view->configured)
+    {
+      gschem_page_view_pan_mouse (page_view, 0, 0);
+    }
+    else
+    {
+      gschem_page_view_zoom_extents (page_view, NULL);
+    }
+
     page_view->configured = TRUE;
     return FALSE;
   }
