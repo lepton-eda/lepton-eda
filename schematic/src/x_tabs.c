@@ -1357,6 +1357,10 @@ x_tabs_page_set_cur (GschemToplevel* w_current, PAGE* page)
       */
       while (gtk_events_pending())
         gtk_main_iteration();
+
+      /* new page view is created for existing page => zoom it:
+      */
+      gschem_page_view_zoom_extents (x_tabs_tl_pview_cur (w_current), NULL);
   }
 
 } /* x_tabs_page_set_cur() */

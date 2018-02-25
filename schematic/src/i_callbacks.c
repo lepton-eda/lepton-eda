@@ -2127,6 +2127,8 @@ DEFINE_I_CALLBACK(add_pin)
   }
 }
 
+
+
 /*! \section hierarchy-menu Hierarchy Menu Callback Functions */
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -2187,8 +2189,11 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
                                                 &err);
       gschem_toplevel_page_changed (w_current);
 
-      /* s_hierarchy_down_schematic_single() will not zoom the loaded page */
-      if (child != NULL) {
+      /* s_hierarchy_down_schematic_single() will not zoom the loaded page.
+       * Tabbed GUI: zoom will be set in x_tabs_page_set_cur().
+      */
+      if (child != NULL && !x_tabs_enabled())
+      {
         s_page_goto (gschem_toplevel_get_toplevel (w_current), child);
         gschem_toplevel_page_changed (w_current);
         gschem_page_view_zoom_extents (gschem_toplevel_get_current_page_view (w_current),
@@ -2275,7 +2280,10 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
   if (loaded_flag && (save_first_page != NULL)) {
     x_window_set_current_page (w_current, save_first_page);
   }
-}
+
+} /* i_callback_hierarchy_down_schematic() */
+
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -2284,38 +2292,48 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
  */
 DEFINE_I_CALLBACK(hierarchy_down_symbol)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  OBJECT *object;
-  const CLibSymbol *sym;
-
+  GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
 
-  object = o_select_return_first_object(w_current);
-  if (object != NULL) {
-    /* only allow going into symbols */
-    if (object->type == OBJ_COMPLEX) {
-      s_log_message(_("Searching for symbol [%1$s]"),
-		    object->complex_basename);
-      sym = s_clib_get_symbol_by_name (object->complex_basename);
-      if (sym == NULL)
-	return;
-      if (s_clib_symbol_get_filename(sym) == NULL) {
-	s_log_message(_("Symbol is not a real file."
-			" Symbol cannot be loaded."));
-	return;
-      }
-      s_hierarchy_down_symbol(gschem_toplevel_get_toplevel (w_current), sym,
-			      gschem_toplevel_get_toplevel (w_current)->page_current);
-      gschem_toplevel_page_changed (w_current);
+  OBJECT* object = o_select_return_first_object (w_current);
 
-      x_window_set_current_page(w_current, gschem_toplevel_get_toplevel (w_current)->page_current);
-      /* s_hierarchy_down_symbol() will not zoom the loaded page */
-      gschem_page_view_zoom_extents (gschem_toplevel_get_current_page_view (w_current),
-                                     NULL);
-      o_undo_savestate_old(w_current, UNDO_ALL);
-    }
+  /* only allow going into symbols */
+  if (object == NULL || object->type != OBJ_COMPLEX)
+    return;
+
+  s_log_message (_("Searching for symbol [%1$s]"), object->complex_basename);
+
+  const CLibSymbol* sym = s_clib_get_symbol_by_name (object->complex_basename);
+  if (sym == NULL)
+    return;
+
+  if (s_clib_symbol_get_filename (sym) == NULL)
+  {
+    s_log_message (_("Symbol is not a real file. Symbol cannot be loaded."));
+	  return;
   }
-}
+
+  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+
+  s_hierarchy_down_symbol (toplevel, sym, toplevel->page_current);
+  gschem_toplevel_page_changed (w_current);
+
+  x_window_set_current_page (w_current, toplevel->page_current);
+
+  /* s_hierarchy_down_symbol() will not zoom the loaded page.
+   * Tabbed GUI: zoom is set in x_tabs_page_set_cur().
+  */
+  if (!x_tabs_enabled())
+  {
+    GschemPageView* pview = gschem_toplevel_get_current_page_view (w_current);
+    gschem_page_view_zoom_extents (pview, NULL);
+  }
+
+  o_undo_savestate_old (w_current, UNDO_ALL);
+
+} /* i_callback_hierarchy_down_symbol() */
+
+
 
 /*! \brief Go to the upper hierarchy level page
  *  \par Function Description
