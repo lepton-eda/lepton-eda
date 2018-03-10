@@ -206,7 +206,7 @@ i_vars_init_gschem_defaults()
   /// the form "untitled_N.sch", where N is a number.  Please make
   /// sure that the translation contains characters suitable for use
   /// in a filename.
-  eda_config_set_string (cfg, "gschem", "default-filename", _("untitled"));
+  eda_config_set_string (cfg, "schematic", "default-filename", _("untitled"));
 }
 
 /*! \brief Save user config on exit.
