@@ -201,12 +201,24 @@ i_vars_init_gschem_defaults()
 
   /* This is the prefix of the default filename used for newly created
    * schematics and symbols. */
-  /// TRANSLATORS: this string is used to generate a filename for
-  /// newly-created files.  It will be used to create a filename of
-  /// the form "untitled_N.sch", where N is a number.  Please make
-  /// sure that the translation contains characters suitable for use
-  /// in a filename.
+  /*
+   * TRANSLATORS: this string is used to generate a filename for
+   * newly-created files.  It will be used to create a filename of
+   * the form "untitled_N.sch", where N is a number.  Please make
+   * sure that the translation contains characters suitable for use
+   * in a filename.
+  */
   eda_config_set_string (cfg, "schematic", "default-filename", _("untitled"));
+
+  eda_config_set_boolean (cfg, "schematic.gui", "use-docks", TRUE);
+  eda_config_set_boolean (cfg, "schematic.gui", "use-tabs",  FALSE);
+
+  eda_config_set_boolean (cfg, "schematic.tabs", "show-close-button", TRUE);
+  eda_config_set_boolean (cfg, "schematic.tabs", "show-up-button",    TRUE);
+
+  eda_config_set_boolean (cfg, "schematic.undo", "modify-viewport", FALSE);
+
+  eda_config_set_string (cfg, "schematic.log-window", "font", "");
 }
 
 /*! \brief Save user config on exit.
