@@ -189,6 +189,7 @@ void i_vars_freenames()
 }
 
 
+
 /*! \brief Setup gschem default configuration.
  * \par Function Description
  * Populate the default configuration context with compiled-in
@@ -219,7 +220,18 @@ i_vars_init_gschem_defaults()
   eda_config_set_boolean (cfg, "schematic.undo", "modify-viewport", FALSE);
 
   eda_config_set_string (cfg, "schematic.log-window", "font", "");
-}
+
+  const gchar* const attributes[] = { "*" };
+  eda_config_set_string_list (cfg, "schematic.library", "component-attributes", attributes, 1);
+  eda_config_set_boolean     (cfg, "schematic.library", "sort",                 FALSE);
+
+  eda_config_set_string  (cfg, "schematic.printing", "layout",     "auto");
+  eda_config_set_boolean (cfg, "schematic.printing", "monochrome", FALSE);
+  eda_config_set_string  (cfg, "schematic.printing", "paper",      "");
+
+} /* i_vars_init_gschem_defaults() */
+
+
 
 /*! \brief Save user config on exit.
  * \par Function Description
