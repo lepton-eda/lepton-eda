@@ -108,7 +108,7 @@ release.  Please use configuration files instead.
 (define-rc-dead-config world-size)
 
 ;; ===================================================================
-;; Deprecated gschem configuration functions
+;; Deprecated lepton-schematic configuration functions
 ;; ===================================================================
 
 (define-rc-dead-config output-capstyle)
@@ -122,15 +122,15 @@ release.  Please use configuration files instead.
 (define-rc-dead-config setpagedevice-pagesize)
 
 (define-rc-deprecated-config
- print-paper "gschem.printing" "paper"
+ print-paper "schematic.printing" "paper"
  rc-deprecated-string-transformer)
 
 (define-rc-deprecated-config
- print-orientation "gschem.printing" "layout"
+ print-orientation "schematic.printing" "layout"
  rc-deprecated-string-transformer)
 
 (define-rc-deprecated-config
- print-color "gschem.printing" "monochrome"
+ print-color "schematic.printing" "monochrome"
  (lambda (x) (not (rc-deprecated-string-boolean-transformer x))))
 
 (define-rc-dead-config net-style)
@@ -145,17 +145,17 @@ release.  Please use configuration files instead.
 (define-rc-dead-config text-feedback)
 
 (define-rc-deprecated-config
- untitled-name "gschem" "default-filename"
+ untitled-name "schematic" "default-filename"
  rc-deprecated-string-transformer)
 
 (define-rc-dead-config scrollbar-update)
 
 (define-rc-deprecated-config
- sort-component-library "gschem.library" "sort"
+ sort-component-library "schematic.library" "sort"
  rc-deprecated-string-boolean-transformer)
 
 (define-rc-deprecated-config
- component-dialog-attributes "gschem.library" "component-attributes"
+ component-dialog-attributes "schematic.library" "component-attributes"
  (lambda (x) x))
 
 ;; ===================================================================

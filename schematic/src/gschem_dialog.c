@@ -152,7 +152,7 @@ static void show_handler (GtkWidget *widget)
   GschemDialog *dialog = GSCHEM_DIALOG( widget );
 
   if (dialog->settings_name != NULL) {
-    group_name = g_strdup_printf ("gschem.dialog-geometry.%s",
+    group_name = g_strdup_printf ("schematic.dialog-geometry.%s",
                                   dialog->settings_name);
 
     g_assert (cfg != NULL);
@@ -186,7 +186,7 @@ static void unmap_handler (GtkWidget *widget)
   GschemDialog *dialog = GSCHEM_DIALOG (widget);
 
   if (dialog->settings_name != NULL) {
-    group_name = g_strdup_printf ("gschem.dialog-geometry.%s",
+    group_name = g_strdup_printf ("schematic.dialog-geometry.%s",
                                   dialog->settings_name);
 
     g_assert (cfg != NULL);

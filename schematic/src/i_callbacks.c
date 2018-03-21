@@ -181,7 +181,7 @@ DEFINE_I_CALLBACK(file_save)
   /*! \bug This is a dreadful way of figuring out whether a page is
    *  newly-created or not. */
   cfg = eda_config_get_context_for_path (s_page_get_filename (page));
-  untitled_name = eda_config_get_string (cfg, "gschem", "default-filename", NULL);
+  untitled_name = eda_config_get_string (cfg, "schematic", "default-filename", NULL);
   if (strstr(s_page_get_filename (page), untitled_name)) {
     x_fileselect_save (w_current);
   } else {

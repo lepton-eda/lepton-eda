@@ -711,7 +711,7 @@ void x_window_close_all(GschemToplevel *w_current)
  *
  *  If the filename passed is NULL, this function creates an empty,
  *  untitled page.  The name of the untitled page is build from
- *  configuration data ('untitled-name') and a counter for uniqueness.
+ *  configuration data ('default-filename') and a counter for uniqueness.
  *
  *  The opened page becomes the current page of <B>toplevel</B>.
  *
@@ -737,7 +737,7 @@ x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename)
     EdaConfig *cfg;
     cwd = g_get_current_dir ();
     cfg = eda_config_get_context_for_path (cwd);
-    untitled_name = eda_config_get_string (cfg, "gschem", "default-filename", NULL);
+    untitled_name = eda_config_get_string (cfg, "schematic", "default-filename", NULL);
     tmp = g_strdup_printf ("%s_%d.sch",
                            untitled_name,
                            ++w_current->num_untitled);

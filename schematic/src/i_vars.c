@@ -189,6 +189,7 @@ void i_vars_freenames()
 }
 
 
+
 /*! \brief Setup gschem default configuration.
  * \par Function Description
  * Populate the default configuration context with compiled-in
@@ -201,13 +202,36 @@ i_vars_init_gschem_defaults()
 
   /* This is the prefix of the default filename used for newly created
    * schematics and symbols. */
-  /// TRANSLATORS: this string is used to generate a filename for
-  /// newly-created files.  It will be used to create a filename of
-  /// the form "untitled_N.sch", where N is a number.  Please make
-  /// sure that the translation contains characters suitable for use
-  /// in a filename.
-  eda_config_set_string (cfg, "gschem", "default-filename", _("untitled"));
-}
+  /*
+   * TRANSLATORS: this string is used to generate a filename for
+   * newly-created files.  It will be used to create a filename of
+   * the form "untitled_N.sch", where N is a number.  Please make
+   * sure that the translation contains characters suitable for use
+   * in a filename.
+  */
+  eda_config_set_string (cfg, "schematic", "default-filename", _("untitled"));
+
+  eda_config_set_boolean (cfg, "schematic.gui", "use-docks", TRUE);
+  eda_config_set_boolean (cfg, "schematic.gui", "use-tabs",  FALSE);
+
+  eda_config_set_boolean (cfg, "schematic.tabs", "show-close-button", TRUE);
+  eda_config_set_boolean (cfg, "schematic.tabs", "show-up-button",    TRUE);
+
+  eda_config_set_boolean (cfg, "schematic.undo", "modify-viewport", FALSE);
+
+  eda_config_set_string (cfg, "schematic.log-window", "font", "");
+
+  const gchar* const attributes[] = { "*" };
+  eda_config_set_string_list (cfg, "schematic.library", "component-attributes", attributes, 1);
+  eda_config_set_boolean     (cfg, "schematic.library", "sort",                 FALSE);
+
+  eda_config_set_string  (cfg, "schematic.printing", "layout",     "auto");
+  eda_config_set_boolean (cfg, "schematic.printing", "monochrome", FALSE);
+  eda_config_set_string  (cfg, "schematic.printing", "paper",      "");
+
+} /* i_vars_init_gschem_defaults() */
+
+
 
 /*! \brief Save user config on exit.
  * \par Function Description
