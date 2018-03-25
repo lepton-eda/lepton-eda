@@ -4,6 +4,209 @@ Recent Changes in Lepton EDA
 This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult the `ChangeLog` file.
 
+Notable changes in Lepton EDA 1.9.4
+-----------------------------------
+
+### Breaking changes:
+
+- `gaf` has been renamed to `lepton-cli`, `gschem` has been
+  renamed to `lepton-schematic`, `gnetlist` has been renamed to
+  `lepton-netlist`, `gsch2pcb` has been renamed to
+  `lepton-sch2pcb`, `gsymcheck` has been renamed to
+  `lepton-symcheck`.
+
+- By default, backward compatibility symlinks are created for all
+  the renamed tools. A new configure option,
+  `--disable-compat-symlinks`, can be used to disable their
+  creation.
+
+### General changes:
+
+- `lepton-eda` can now be compiled in C++ mode basically by using
+  `./configure CC=g++ && make CC=g++`.
+
+- The same readline history file ".lepton_history" residing in the
+  user configuration directory is used for `lepton-schematic`,
+  `lepton-netlist`, and `lepton-symcheck`.
+
+- A new section about 'Makefile' creation has been added to
+  CONTRIBUTING.md to facilitate non-gnu-make builds.
+
+- Fixed non-working Scheme API procedure `reset-source-library`.
+
+### Changes in `lepton-cli`:
+
+- Fixed Postscript output in landscape orientation.
+
+- Fixed `--layout` option processing for export.
+
+### Changes in `lepton-netlist`:
+
+- All `lepton-netlist` (previously known as `gnetlist`)
+  functionality has been reimplemented in Scheme.
+
+- Fixed processing of the `graphical` attribute.
+
+- Fixed a regression in the `verilog` backend.
+
+- A new example and
+  [a wiki page for it](https://github.com/lepton-eda/lepton-eda/wiki/Verilog-example)
+  have been added for the `verilog` backend.
+
+### Changes in `lepton-schematic`:
+
+- Tabbed GUI support has been added to `lepton-schematic`: each
+  schematic page can be now displayed in its own tab.  By default,
+  it is disabled and can be turned on by setting
+  `schematic.gui::use-tabs` configuration key to `true`.  Two
+  other configuration keys related to tabbed GUI are
+  `schematic.tabs::show-close-button` and
+  `schematic.tabs::show-up-button`. They determine whether to show
+  "close" and "hierarchy up" buttons on each tab, respectively.
+
+- Non-working options "-r" and "--config-file" have been removed.
+
+- A new hook, `switch-action-mode-hook`, has been added, which can
+  be used to yield user subroutines on mode switch. Please check
+  `info geda-scheme` for details.
+
+- 'Text Entry...' dialog now respects the `text-size` option
+  value.
+
+- Freestyle colors have now appropriate names in GUI.
+
+- A new configuration key `modify-viewport` in `schematic.undo`
+  group has been added. It allows to change panning and zooming on
+  undo/redo operations if `undo-panzoom` is set to "disabled" in
+  `gschemrc` configuration file.  The default value is "false".
+
+- Fixed naming of exported files in non-UTF-8 locales.
+
+- Warnings about missing standard menu items no longer clutter the
+  log window when they are commented out in `system-gschemrc`.
+
+- A new widget to check symbols using `lepton-symcheck`
+  functionality has been added.  Use 'Attributes → Find Specific
+  Text...' or <kbd>T</kbd>, <kbd>Shift</kbd>+<kbd>F</kbd>, choose
+  'Check Symbol:' on the combo-box at left, and press the button
+  'Find'. A message dialog with info about wrong floating
+  attributes will appear.  Closing it with the 'OK' button will
+  lead to opening a window with info on objects having errors or
+  warnings if such objects exist. If you select any of them, the
+  canvas will be panned and zoomed to have it centered on the
+  page.
+
+- Support for showing widgets as dialogs has been added. Now the
+  users may decide, what type of GUI they prefer to use, dialog
+  boxes (as it was before 1.9.2) or docking widgets.  The type of
+  GUI is controlled by the `use-docks` configuration key in the
+  `schematic.gui` group. By default it's `true`: use docking
+  widgets. If it's `false` then the widgets will be shown as
+  dialog boxes.
+
+- A new module, `(schematic undo)` has been added, which contains
+  a new procedure, `undo-save-state`.  It saves current state onto
+  the undo stack.  Now it's possible to support undo/redo
+  operations while modifying a schematic by scripts written in
+  Scheme.
+
+- Filtering support has been added to hotkeys dialog.  The user
+  can quickly search by a desired keystroke or an action name in
+  the `Filter:` entry.  When searching for hotkeys, the user has
+  to enter space between letters.
+
+- A regression in the multiattrib dialog box, resulted in the
+  wrong height of the value textview, has been fixed.
+
+- A new `font` configuration key in the `schematic.log-window`
+  group is now used to select the font used in the log window.
+
+- Scrollbars in the log window are now not shown if the text fits
+  in the window.
+
+- Automatic scrolling is now used in text properties and object
+  properties widgets.
+
+- Color selection combo box keeps updated in line with the current
+  color scheme.
+
+### Changes in `lepton-symcheck`:
+
+- `lepton-symcheck` (previously known as `gsymcheck`)
+  functionality has been fully reimplemented in Scheme.
+
+- Fixed wrong evaluation of amount of failed checks.
+
+- No Scheme rc files are parsed for the utility any more.  Useless
+  rc procedures `gsymcheck-version`, `quit` and `exit` have been
+  removed.
+
+- A new option, `--interactive`, has been added, which allows
+  working with the tool functions in an interactive REPL.
+
+- Error messages about various objects have been improved.
+
+- A module for checking zero sized box primitives has been added.
+
+- Modules for checking for forbidden objects inside symbols (nets,
+  buses, components) have been added.
+
+- Improved checking for duplicated floating attributes.
+
+- An incorrect warning message about a trailing backslash in text
+  objects has been fixed.
+
+- Improved checking for the `pinseq` attribute multiplicity.
+
+- Checking for slots has been improved. New functions for checking
+  for the `numslots` attribute and for duplicate pin numbers in
+  the `slotdef` attributes have been added.
+
+- Improved special checks for `device` and `graphical` attributes.
+
+- Output messages about required floating attributes (`refdes`,
+  `device`, and `footprint`) have been unified and have now
+  severity `'warning` for all of them.
+
+- Two modules have been added: `(symbol check entity-pin)` and
+  `(symbol check net-attrib)`. `slot`/`net`/`pinnumber` duplicate
+  checks have been refactored.  The modules implement slot mapping
+  and net mapping of symbol pins, as well as checks for duplicates
+  in `slotdef` and `net` attributes.  Checks for duplicates in
+  wrongly formed slots are avoided. Other checks have been
+  improved in order to make the user be able to select any blamed
+  attribute in lepton-schematic GUI.  Misleading warnings about
+  matching pinnumber in `net` and `pinnumber` attributes are
+  avoided as well.
+
+### Changes in `lepton-sch2pcb`:
+
+- Environment variable `GNETLIST` is no longer used in
+  `lepton-sch2pcb` to custom netlister executable name.  It has
+  been replaced with `NETLISTER`.
+
+- New options, `--backend-cmd`, `--backend-net`, and
+  `--backend-pcb` can be used to customize backend names. Default
+  backend names are *pcbpins*, *PCB*, and *gsch2pcb*, respectively.
+
+### Changes in `gmk_sym`:
+
+- Using of both dot and clock in generated symbols for the
+  `verilog` backend is now allowed. The user should use a new
+  directive *BOTH* to make this work.
+
+### Changes when building from source:
+
+- Lepton now requires GTK+ 2.24.0, Glib 2.25.0, Gio 2.25.0,
+  Gdk-pixbuf 2.21.0 or later versions for build.
+
+### Changes related to building under Cygwin:
+
+- An error in Cygwin port for Windows has been fixed.  Information
+  on how to build `lepton-eda` under Cygwin can be found
+  [in the lepton-eda wiki](https://github.com/lepton-eda/lepton-eda/wiki/Lepton-EDA-and-Cygwin).
+
+
 Notable changes in Lepton EDA 1.9.3
 -----------------------------------
 
