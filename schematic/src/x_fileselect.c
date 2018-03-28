@@ -266,8 +266,11 @@ x_fileselect_save (GschemToplevel *w_current)
     /* force save in current working dir */
     gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), cwd);
     g_free (cwd);
-    gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog),
-                                       "untitled.sch");
+    /* set page file's basename as the current filename: */
+    const gchar* fname = s_page_get_filename (toplevel->page_current);
+    gchar* bname = g_path_get_basename (fname);
+    gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), bname);
+    g_free (bname);
   }
 
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
