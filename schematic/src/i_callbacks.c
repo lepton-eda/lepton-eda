@@ -154,6 +154,8 @@ DEFINE_I_CALLBACK(file_script)
   setup_script_selector(w_current);
 }
 
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -178,17 +180,36 @@ DEFINE_I_CALLBACK(file_save)
     return;
   }
 
-  /*! \bug This is a dreadful way of figuring out whether a page is
-   *  newly-created or not. */
-  cfg = eda_config_get_context_for_path (s_page_get_filename (page));
+  const gchar* fname = s_page_get_filename (page);
+
+  cfg = eda_config_get_context_for_path (fname);
+  g_return_if_fail (cfg != NULL);
+
   untitled_name = eda_config_get_string (cfg, "gschem", "default-filename", NULL);
-  if (strstr(s_page_get_filename (page), untitled_name)) {
-    x_fileselect_save (w_current);
-  } else {
-    x_window_save_page (w_current, page, s_page_get_filename (page));
-  }
+  g_return_if_fail (untitled_name != NULL);
+
+  gboolean file_exists = g_file_test (fname, G_FILE_TEST_EXISTS);
+  gboolean named_like_untitled = strstr (fname, untitled_name) != NULL;
   g_free (untitled_name);
-}
+
+  /*
+   * consider page as "untitled" if it is named like untitled
+   * and associated file does not exist:
+  */
+  if (named_like_untitled && !file_exists)
+  {
+    /* open "save as..." dialog: */
+    x_fileselect_save (w_current);
+  }
+  else
+  {
+    /* save page: */
+    x_window_save_page (w_current, page, fname);
+  }
+
+} /* i_callback_file_save() */
+
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
