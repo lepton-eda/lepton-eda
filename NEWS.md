@@ -61,6 +61,12 @@ Notable changes in Lepton EDA 1.9.4
   existing files if they have already been saved under default
   name.
 
+- Some duplicated log messages and superfluous newlines are no
+  longer displayed in the log window.
+
+- Orphaned pages visible only in Scheme are no longer created
+  after 'Page → Revert'.
+
 - Tabbed GUI support has been added to `lepton-schematic`: each
   schematic page can be now displayed in its own tab.  By default,
   it is disabled and can be turned on by setting
