@@ -109,7 +109,7 @@ Notable changes in Lepton EDA 1.9.4
   page.
 
 - Support for showing widgets as dialogs has been added. Now the
-  users may decide, what type of GUI they prefer to use, dialog
+  users may decide, what type of GUI they prefer to use: dialog
   boxes (as it was before 1.9.2) or docking widgets.  The type of
   GUI is controlled by the `use-docks` configuration key in the
   `schematic.gui` group. By default it's `true`: use docking
@@ -133,8 +133,8 @@ Notable changes in Lepton EDA 1.9.4
 - A new `font` configuration key in the `schematic.log-window`
   group is now used to select the font used in the log window.
 
-- Scrollbars in the log window are now not shown if the text fits
-  in the window.
+- Scrollbars in the log window are no longer shown if the text
+  fits in the window.
 
 - Automatic scrolling is now used in text properties and object
   properties widgets.
