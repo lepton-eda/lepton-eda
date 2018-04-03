@@ -156,40 +156,39 @@ Notable changes in Lepton EDA 1.9.4
 - A new option, `--interactive`, has been added, which allows
   working with the tool functions in an interactive REPL.
 
-- Error messages about various objects have been improved.
+- Improvements and new checks in the utility:
 
-- A module for checking zero sized box primitives has been added.
+  - Improved error messages about various objects.
 
-- Modules for checking for forbidden objects inside symbols (nets,
-  buses, components) have been added.
+  - Added checks for zero sized primitives.
 
-- Improved checking for duplicated floating attributes.
+  - Added checks for forbidden objects inside symbols (nets,
+    buses, components).
 
-- An incorrect warning message about a trailing backslash in text
-  objects has been fixed.
+  - Improved checks for duplicated floating attributes.
 
-- Improved checking for the `pinseq` attribute multiplicity.
+  - An incorrect warning message about a trailing backslash in
+    text objects has been fixed.
 
-- Checking for slots has been improved. New functions for checking
-  for the `numslots` attribute and for duplicate pin numbers in
-  the `slotdef` attributes have been added.
+  - Improved checks for the `pinseq` attribute multiplicity.
 
-- Improved special checks for `device` and `graphical` attributes.
+  - Improved special checks for `device` and `graphical`
+    attributes.
 
-- Output messages about required floating attributes (`refdes`,
-  `device`, and `footprint`) have been unified and have now
-  severity `'warning` for all of them.
+  - Output messages about required floating attributes (`refdes`,
+    `device`, and `footprint`) have been unified and have now
+    severity `'warning` for all of them.
 
-- Two modules have been added: `(symbol check entity-pin)` and
-  `(symbol check net-attrib)`. `slot`/`net`/`pinnumber` duplicate
-  checks have been refactored.  The modules implement slot mapping
-  and net mapping of symbol pins, as well as checks for duplicates
-  in `slotdef` and `net` attributes.  Checks for duplicates in
-  wrongly formed slots are avoided. Other checks have been
-  improved in order to make the user be able to select any blamed
-  attribute in lepton-schematic GUI.  Misleading warnings about
-  matching pinnumber in `net` and `pinnumber` attributes are
-  avoided as well.
+  - Improved checks for symbol slotting: added checks for the
+   `numslots` attribute and for duplicate pin numbers in the
+   `slotdef` attributes.  Checks for duplicates in wrongly formed
+   slots are avoided.
+
+  - Refactored checks for duplicates in `slotdef`, `net`, and
+    `pinnumber`.
+
+  - Misleading warnings about matching pin number in `net` and
+    `pinnumber` attributes are removed.
 
 ### Changes in `lepton-sch2pcb`:
 
