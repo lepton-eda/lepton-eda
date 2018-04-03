@@ -55,6 +55,12 @@ Notable changes in Lepton EDA 1.9.4
 
 ### Changes in `lepton-schematic`:
 
+- File save dialog now displays proper names for new files.
+
+- File save dialog is no longer opened after 'File → Save' for
+  existing files if they have already been saved under default
+  name.
+
 - Tabbed GUI support has been added to `lepton-schematic`: each
   schematic page can be now displayed in its own tab.  By default,
   it is disabled and can be turned on by setting
