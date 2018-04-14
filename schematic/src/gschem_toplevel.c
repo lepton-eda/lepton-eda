@@ -188,6 +188,9 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->text_properties   = NULL;
   w_current->options_widget    = NULL;
 
+  /* color scheme editor widget: */
+  w_current->color_edit_widget = NULL;
+
 
   /* dialogs for widgets */
   w_current->options_widget_dialog    = NULL;
@@ -195,6 +198,7 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->object_properties_dialog = NULL;
   w_current->log_widget_dialog        = NULL;
   w_current->find_text_state_dialog   = NULL;
+  w_current->color_edit_dialog        = NULL;
 
 
   w_current->keyaccel_string = NULL;

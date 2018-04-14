@@ -770,6 +770,7 @@ void x_widgets_show_text_properties (GschemToplevel* w_current);
 void x_widgets_show_object_properties (GschemToplevel* w_current);
 void x_widgets_show_log (GschemToplevel* w_current);
 void x_widgets_show_find_text_state (GschemToplevel* w_current);
+void x_widgets_show_color_edit (GschemToplevel* w_current);
 
 /* x_tabs.c */
 gboolean x_tabs_enabled();
@@ -785,3 +786,7 @@ void x_tabs_hdr_update (GschemToplevel* w_current, PAGE* page);
 void x_tabs_dbg_infos_dump (GschemToplevel* w_current);
 void x_tabs_dbg_pages_dump (GschemToplevel* w_current);
 #endif
+
+/* color_edit_widget.c */
+void color_edit_widget_update (GschemToplevel* w_current);
+

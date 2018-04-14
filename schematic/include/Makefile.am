@@ -38,7 +38,8 @@ noinst_HEADERS = \
 	gschem_swatch_column_renderer.h \
 	gschem_text_properties_widget.h \
 	gschem_translate_widget.h \
-	gschem_toplevel.h
+	gschem_toplevel.h \
+    color_edit_widget.h
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
