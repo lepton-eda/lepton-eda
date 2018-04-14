@@ -113,13 +113,26 @@ x_colorcb_update_colors()
     if (x_color_display_enabled (color_index))
     {
       GdkColor* color = x_get_color (color_index);
-      gtk_list_store_set (store, &iter, COLUMN_COLOR, color, -1);
+      x_colorcb_set_color (&iter, color);
     }
 
     res = gtk_tree_model_iter_next (model, &iter);
   }
 
 } /* x_colorcb_update_colors() */
+
+
+
+/*! \brief Set color for combo box entry
+ *
+ *  \param  iter  Iterator pointing to combo box entry to be modified
+ *  \param  color A pointer to GdkColor struture
+ */
+void
+x_colorcb_set_color (GtkTreeIter* iter, GdkColor* color)
+{
+  gtk_list_store_set (color_list_store, iter, COLUMN_COLOR, color, -1);
+}
 
 
 
