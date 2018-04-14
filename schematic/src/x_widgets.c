@@ -132,7 +132,10 @@ void x_widgets_create (GschemToplevel* w_current)
     gtk_widget_set_size_request (GTK_WIDGET (w_current->find_text_state),
                                  default_width, default_height / 4);
   }
-}
+
+  w_current->color_edit_widget = color_edit_widget_new (w_current);
+
+} /* x_widgets_create() */
 
 
 
@@ -240,6 +243,19 @@ void x_widgets_show_find_text_state (GschemToplevel* w_current)
                               _("Find Text"),
                               "findtext");
   }
+}
+
+
+
+void x_widgets_show_color_edit (GschemToplevel* w_current)
+{
+  g_return_if_fail (w_current != NULL);
+
+  x_widgets_show_in_dialog (w_current,
+                            GTK_WIDGET (w_current->color_edit_widget),
+                            &w_current->color_edit_dialog,
+                            _("Color Scheme Editor"),
+                            "colored");
 }
 
 
