@@ -1410,6 +1410,15 @@ DEFINE_I_CALLBACK (view_bw_colors)
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
 
+/*! \brief Show color scheme editor widget
+ */
+DEFINE_I_CALLBACK (view_color_edit)
+{
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+
+  x_widgets_show_color_edit (w_current);
+}
+
 /*! \section page-menu Page Menu Callback Functions */
 /*! \todo Finish function documentation!!!
  *  \brief
