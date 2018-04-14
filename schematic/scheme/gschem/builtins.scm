@@ -230,6 +230,9 @@
 (define-action-public (&view-bw-colors #:label (_ "Monochrome Color Scheme"))
   (%view-bw-colors))
 
+(define-action-public (&view-color-edit #:label (_ "Show Color Scheme Editor"))
+ (%view-color-edit))
+
 ;; -------------------------------------------------------------------
 ;;;; Page-related actions
 
