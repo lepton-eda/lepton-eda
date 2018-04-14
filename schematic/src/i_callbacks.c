@@ -1368,6 +1368,7 @@ DEFINE_I_CALLBACK (view_dark_colors)
   x_color_allocate ();
 
   x_colorcb_update_colors();
+  color_edit_widget_update (w_current);
 
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
@@ -1387,6 +1388,7 @@ DEFINE_I_CALLBACK (view_light_colors)
   x_color_allocate ();
 
   x_colorcb_update_colors();
+  color_edit_widget_update (w_current);
 
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
@@ -1406,6 +1408,7 @@ DEFINE_I_CALLBACK (view_bw_colors)
   x_color_allocate ();
 
   x_colorcb_update_colors();
+  color_edit_widget_update (w_current);
 
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
