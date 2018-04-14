@@ -612,6 +612,10 @@ void x_color_allocate (void);
 GdkColor *x_get_color(int color);
 GedaColor *x_color_lookup(GschemToplevel *toplevel, int color);
 gboolean x_color_display_enabled (int index);
+void x_color_set_display (int color_index, GdkColor* color);
+void x_color_set_outline (int color_index, GdkColor* color);
+GString* x_color_map2str_display();
+GString* x_color_map2str_outline();
 
 /* x_colorcb.c */
 GtkWidget* x_colorcb_new ();
