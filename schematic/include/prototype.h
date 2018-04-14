@@ -618,6 +618,7 @@ GtkWidget* x_colorcb_new ();
 int x_colorcb_get_index (GtkWidget *widget);
 void x_colorcb_set_index (GtkWidget *widget, int color_index);
 void x_colorcb_update_colors();
+void x_colorcb_set_color (GtkTreeIter* iter, GdkColor* color);
 
 /* x_dialog.c */
 int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);
