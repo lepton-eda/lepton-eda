@@ -347,7 +347,6 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
   printf("===  In s_object_attrib_add_attrib_in_object, about to attach new text attrib with properties:\n");
   printf("     color = %d\n", color);
   printf("     text_string = %s \n", text_string);
-  printf("     text_size = %d \n", toplevel->text_size);
   printf("     visibility = %d \n", visibility);
   printf("     show_name_value = %d \n", show_name_value);
 #endif
