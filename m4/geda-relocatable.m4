@@ -24,7 +24,7 @@ AC_DEFUN([AX_OPTION_RELOCATABLE],dnl
 
   AC_MSG_CHECKING([whether to do a relocatable build])
   AC_ARG_ENABLE([relocatable],
-    [AS_HELP_STRING([--enable-relocatable], [build relocatable binaries])],
+    [AS_HELP_STRING([--enable-relocatable], [build relocatable binaries (not supported on BSD systems)])],
     [], [enable_relocatable="no"])
 
   if test "X$enable_relocatable" = "Xyes"; then
