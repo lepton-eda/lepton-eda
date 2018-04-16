@@ -599,10 +599,6 @@ void x_window_close(GschemToplevel *w_current)
 
   x_clipboard_finish (w_current);
 
-#if DEBUG
-  o_conn_print_hash(w_current->page_current->conn_table);
-#endif
-
   w_current->dont_invalidate = TRUE;
 
   /* close all the dialog boxes */
