@@ -1,26 +1,26 @@
-.TH gsch2pcb 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-sch2pcb 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
-gsch2pcb - Update PCB layouts from gEDA/gaf schematics
+lepton-sch2pcb - Update PCB layouts from Lepton EDA schematics
 .SH SYNOPSIS
-\fBgsch2pcb\fR [\fIOPTION\fR ...] {\fIPROJECT\fR | \fIFILE\fR ...}
+\fBlepton-sch2pcb\fR [\fIOPTION\fR ...] {\fIPROJECT\fR | \fIFILE\fR ...}
 .SH DESCRIPTION
 .PP
-\fBgsch2pcb\fR is a frontend to \fBgnetlist\fR(1) which aids in
+\fBlepton-sch2pcb\fR is a frontend to \fBlepton-netlist\fR(1) which aids in
 creating and updating \fBpcb\fR(1) printed circuit board layouts based
-on a set of electronic schematics created with \fBgschem\fR(1).
+on a set of electronic schematics created with \fBlepton-schematic\fR(1).
 
 .PP
-Instead of specifying all options and input gEDA schematic \fIFILE\fRs
-on the command line, \fBgsch2pcb\fR can use a \fIPROJECT\fR file
+Instead of specifying all options and input schematic \fIFILE\fRs
+on the command line, \fBlepton-sch2pcb\fR can use a \fIPROJECT\fR file
 instead.
 
 .PP
-\fBgsch2pcb\fR first runs \fBgnetlist\fR(1) with the `PCB' backend (or
+\fBlepton-sch2pcb\fR first runs \fBlepton-netlist\fR(1) with the `PCB' backend (or
 backend specified by --backend-net) to create a `<name>.net' file
 containing a \fBpcb\fR(1) formatted netlist for the design.
 
 .PP
-The second step is to run \fBgnetlist\fR(1) again with the `gsch2pcb'
+The second step is to run \fBlepton-netlist\fR(1) again with the `gsch2pcb'
 backend (or backend specified by --backend-pcb) to find any \fBM4\fR(1)
 elements required by the schematics.
 Any missing elements are found by searching a set of file element
@@ -35,7 +35,7 @@ elements are removed from the `<name>.pcb' file, with a backup in a
 `<name>.pcb.bak' file.
 
 .PP
-Finally, \fBgnetlist\fR(1) is run a third time with the `pcbpins'
+Finally, \fBlepton-netlist\fR(1) is run a third time with the `pcbpins'
 backend (or backend specified by --backend-cmd) to create a
 `<name>.cmd' file.  This can be loaded into \fBpcb\fR(1) to rename
 all pin names in the PCB layout to match the schematic.
@@ -66,7 +66,7 @@ Use the \fBM4\fR(1) file \fIFILE\fR in addition to the default M4
 files `./pcb.inc' and `~/.pcb/pcb.inc'.
 .TP 8
 \fB--m4-pcbdir\fR \fIDIRECTORY\fR
-Set \fIDIRECTORY\fR as the directory where \fBgsch2pcb\fR should look
+Set \fIDIRECTORY\fR as the directory where \fBlepton-sch2pcb\fR should look
 for \fBM4\fR(1) files installed by \fBpcb\fR(1).
 .TP 8
 \fB-r\fR, \fB--remove-unfound\fR
@@ -97,14 +97,14 @@ Use \fIBACKEND\fR to generate `<name>.pcb' file instead of
 the default one (`gsch2pcb').
 .TP 8
 \fB--gnetlist\fR \fIBACKEND\fR
-In addition to the default backends, run \fBgnetlist\fR(1) with `\-g
+In addition to the default backends, run \fBlepton-netlist\fR(1) with `\-g
 \fIBACKEND\fR', with output to `<name>.\fIBACKEND\fR'.
 .TP 8
 \fB--gnetlist-arg\fR \fIARG\fR
-Pass \fIARG\fR as an additional argument to \fBgnetlist\fR(1).
+Pass \fIARG\fR as an additional argument to \fBlepton-netlist\fR(1).
 .TP 8
 \fB--empty-footprint\fR \fINAME\fR
-If \fINAME\fR is not `none', \fBgsch2pcb\fR will not add elements for
+If \fINAME\fR is not `none', \fBlepton-sch2pcb\fR will not add elements for
 components with that name to the PCB file.  Note that if the omitted
 components have net connections, they will still appear in the netlist
 and \fBpcb\fR(1) will warn that they are missing.
@@ -115,7 +115,7 @@ If a schematic component's `footprint' attribute is not equal to the
 `Description' instead of replacing the element.
 .TP 8
 \fB-q\fR, \fB--quiet\fR
-Don't output information on steps to take after running \fBgsch2pcb\fR.
+Don't output information on steps to take after running \fBlepton-sch2pcb\fR.
 .TP 8
 \fB-v\fR, \fB--verbose\fR
 Output extra debugging information.  This option can be specified
@@ -125,11 +125,11 @@ twice (`\-v \-v') to obtain additional debugging for file elements.
 Print a help message.
 .TP 8
 \fB-V\fR, \fB--version\fR
-Print \fBgsch2pcb\fR version information.
+Print \fBlepton-sch2pcb\fR version information.
 
 .SH PROJECT FILES
 .PP
-A \fBgsch2pcb\fR project file is a file (not ending in `.sch')
+A \fBlepton-sch2pcb\fR project file is a file (not ending in `.sch')
 containing a list of schematics to process and some options.  Any
 long-form command line option can appear in the project file with the
 leading `\-\-' removed, with the exception of `\-\-gnetlist-arg',
@@ -145,21 +145,22 @@ An example project file might look like:
 
 .SH ENVIRONMENT
 .TP 8
-.B GNETLIST
-specifies the \fBgnetlist\fR(1) program to run.  The default is
-`gnetlist'.
+.B NETLISTER
+specifies the \fBnetlister\fR(1) program to run.  The default is
+`lepton-netlist'.
 
 .SH AUTHORS
 See the `AUTHORS' file included with this program.
 
 .SH COPYRIGHT
 .nf
-Copyright \(co 1999-@YEAR@ gEDA Contributors.  License GPLv2+: GNU GPL
-version 2 or later.  Please see the `COPYING' file included with this
-program for full details.
+Copyright \(co 1998-2017 by Ales Hvezda and the respective original authors.
+Copyright \(co 2017-2018 Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
 .PP
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
 .SH SEE ALSO
-\fBgschem\fR(1), \fBgnetlist\fR(1), \fBpcb\fR(1)
+\fBlepton-schematic\fR(1), \fBlepton-netlist\fR(1), \fBpcb\fR(1)
