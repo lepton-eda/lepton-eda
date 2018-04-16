@@ -165,7 +165,7 @@ Please check `info geda-scheme` for full details.
 
 - The configure script now supports an `--enable-relocatable` switch.
   When specified, Lepton tools do not have the configured prefix
-  compiled into them.
+  compiled into them. This option is not supported on BSD systems.
 
 - The configure script now supports a `--disable-deprecated` switch.
   When specified, various deprecated features and behaviour are
