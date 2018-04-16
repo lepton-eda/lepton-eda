@@ -1,28 +1,28 @@
-.TH gnetlist 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-netlist 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
-gnetlist - gEDA/gaf Netlist Extraction and Generation
+lepton-netlist - Lepton EDA Netlist Extraction and Generation
 .SH SYNOPSIS
-.B gnetlist
+.B lepton-netlist
 [\fIOPTION\fR ...] [\fB-g\fR \fIBACKEND\fR] [\fI--\fR] \fIFILE\fR ...
 
 .SH DESCRIPTION
 .PP
 
-\fBgnetlist\fR is a netlist extraction and generation tool, and is
-part of the gEDA (GPL Electronic Design Automation) toolset.  It takes
+\fBlepton-netlist\fR is a netlist extraction and generation tool, and is
+part of the Lepton EDA (Electronic Design Automation) toolset.  It takes
 one or electronic schematics as input, and outputs a netlist.  A
 netlist is a machine-interpretable description of the way that
 components in an electronic circuit are connected together, and is
 commonly used as the input to a PCB layout program such as
 \fBpcb\fR(1) or to a simulator such as \fBgnucap\fR(1).
 
-A normal \fBgnetlist\fR run is carried out in two steps.  First, the
-\fBgnetlist\fR frontend loads the specified human-readable schematic
+A normal \fBlepton-netlist\fR run is carried out in two steps.  First, the
+\fBlepton-netlist\fR frontend loads the specified human-readable schematic
 \fIFILE\fRs, and compiles them to an in-memory netlist description.
 Next, a `backend' is used to export the connection and component data
 to one of many supported netlist formats.
 
-\fBgnetlist\fR is extensible, using the Scheme programming language.
+\fBlepton-netlist\fR is extensible, using the Scheme programming language.
 
 .SH GENERAL OPTIONS
 .TP 8
@@ -60,7 +60,7 @@ Specify a Scheme file to be loaded between loading the backend and
 executing it.  This option can be specified multiple times.
 .TP 8
 \fB-c\fR \fIEXPR\fR
-Specify a Scheme expression to be executed during \fBgnetlist\fR
+Specify a Scheme expression to be executed during \fBlepton-netlist\fR
 startup.  This option can be specified multiple times.
 .TP 8
 \fB-i\fR
@@ -72,7 +72,7 @@ Scheme read-eval-print loop.
 Print a help message.
 .TP 8
 \fB-V\fR, \fB--version\fR
-Print \fBgnetlist\fR version information.
+Print \fBlepton-netlist\fR version information.
 .TP 8
 \fB--\fR
 Treat all remaining arguments as schematic filenames.  Use this if you
@@ -80,7 +80,7 @@ have a schematic filename which begins with `-'.
 
 .SH BACKENDS
 .PP
-Currently, \fBgnetlist\fR includes the following backends:
+Currently, \fBlepton-netlist\fR includes the following backends:
 
 .TP 8
 \fBallegro\fR
@@ -183,22 +183,22 @@ ViPEC Network Analyser netlist format.
 .PP
 These examples assume that you have a `stack_1.sch' in the current directory.
 .PP
-\fBgnetlist\fR requires that at least one schematic to be specified on the
+\fBlepton-netlist\fR requires that at least one schematic to be specified on the
 command line:
 
 .nf
-	./gnetlist stack_1.sch
+	./lepton-netlist stack_1.sch
 .ad b
 
 .PP
-This is not very useful since it does not direct \fBgnetlist\fR to do
+This is not very useful since it does not direct \fBlepton-netlist\fR to do
 anything.
 .PP
-Specify a backend name with `\-g' to get \fBgnetlist\fR to output a
+Specify a backend name with `\-g' to get \fBlepton-netlist\fR to output a
 netlist:
 
 .nf
-	./gnetlist \-g geda stack_1.sch
+	./lepton-netlist \-g geda stack_1.sch
 .ad b
 
 .PP
@@ -209,7 +209,7 @@ in the current working directory.
 You can specify the output filename by using the `\-o' option:
 
 .nf
-	./gnetlist \-g geda stack_1.sch \-o /tmp/stack.netlist
+	./lepton-netlist \-g geda stack_1.sch \-o /tmp/stack.netlist
 .ad b
 
 .PP
@@ -225,11 +225,11 @@ To obtain a Scheme prompt to run Scheme expressions directly, you can
 use the `\-i' option.
 
 .nf
-	./gnetlist \-i stack_1.sch
+	./lepton-netlist \-i stack_1.sch
 .ad b
 
 .PP
-\fBgnetlist\fR will load `stack_1.sh', and then enter an interactive
+\fBlepton-netlist\fR will load `stack_1.sh', and then enter an interactive
 Scheme read-eval-print loop.
 
 .SH ENVIRONMENT
@@ -246,12 +246,13 @@ See the `AUTHORS' file included with this program.
 
 .SH COPYRIGHT
 .nf
-Copyright \(co 1999-@YEAR@ gEDA Contributors.  License GPLv2+: GNU GPL
-version 2 or later.  Please see the `COPYING' file included with this
-program for full details.
+Copyright \(co 1998-2017 by Ales Hvezda and the respective original authors.
+Copyright \(co 2017-2018 Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
 .PP
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
 .SH SEE ALSO
-\fBgschem\fR(1), \fBlepton-symcheck\fR(1), \fBpcb\fR(1), \fBgnucap\fR(1)
+\fBlepton-schematic\fR(1), \fBlepton-symcheck\fR(1), \fBpcb\fR(1), \fBgnucap\fR(1)
