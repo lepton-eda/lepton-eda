@@ -112,17 +112,19 @@ specifies where the various required scheme and rc files are located
 not need to be set by the end user unless they are moving the executables
 to a new install ${prefix}.
 
-.SH "AUTHOR"
-Ales Hvezda and many others
+.SH AUTHORS
+See the `AUTHORS' file included with this program.
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 1998-2017 by Ales Hvezda and the respective original authors.
+Copyright \(co 2017-2018 Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
 
 .SH SEE ALSO
-.BR gschem (1),
-.BR gnetlist (1)
-.SH COPYRIGHT
-Copyright \(co 1999-2008 Ales Hvezda
-.nf
-Copyright \(co 1999-2017 gEDA Contributors.
-.nf
-Copyright \(co @YEAR@ Lepton EDA Contributors.
-This document can be freely redistributed according to the terms of the
-GNU General Public License version 2.0
+.BR lepton-schematic (1),
+.BR lepton-netlist (1)
