@@ -424,7 +424,7 @@ void x_window_create_main(GschemToplevel *w_current)
 
   w_current->main_window = GTK_WIDGET (gschem_main_window_new ());
 
-  gtk_widget_set_name (w_current->main_window, "gschem");
+  gtk_widget_set_name (w_current->main_window, "lepton-schematic");
   gtk_window_set_policy (GTK_WINDOW (w_current->main_window), TRUE, TRUE, TRUE);
 
   /* We want the widgets to flow around the drawing area, so we don't
