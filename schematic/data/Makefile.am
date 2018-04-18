@@ -57,7 +57,7 @@ icons = \
 # that launch gEDA look nice.
 themedir=$(xdgdatadir)/icons/$(theme)
 
-app_icon = geda-gschem
+app_icon = lepton-schematic
 
 app_icon_files = \
 	$(app_icon:%=%-48.png) \
@@ -76,7 +76,7 @@ theme_icons = \
 xdgdatadir=@XDGDATADIR@
 
 desktopdir=$(xdgdatadir)/applications
-desktop_in_files = geda-gschem.desktop.in
+desktop_in_files = lepton-schematic.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 DOMAIN=lepton-schematic
