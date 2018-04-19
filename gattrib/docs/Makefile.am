@@ -1,13 +1,13 @@
-EXTRA_DIST = gattrib.dox what-is-gattrib.html what-is-geda.html \
-	     gattrib-main.txt logo.png lepton-attrib.1.in
+EXTRA_DIST = lepton-attrib.dox what-is-lepton-attrib.html what-is-geda.html \
+	     attrib-main.txt logo.png lepton-attrib.1.in
 
 all:
-	@echo 'Type: make doxygen  to create doxygen documentation for gattrib'
+	@echo 'Type: make doxygen  to create doxygen documentation for lepton-attrib'
 
-doxygen: gattrib.dox
-	@echo 'Creating doxygen documentation for gattrib...'
+doxygen: lepton-attrib.dox
+	@echo 'Creating doxygen documentation for lepton-attrib...'
 if ENABLE_DOXYGEN
-	$(DOXYGEN) gattrib.dox
+	$(DOXYGEN) lepton-attrib.dox
 else
 	@echo 'configure was not run with the --enable-doxygen switch.'
 	@echo 'The documentation cannot be built from the sources.'
