@@ -154,15 +154,12 @@ void gattrib_main(void *closure, int argc, char *argv[])
 
   /* ----------  create log file right away ---------- */
   /* ----------  even if logging is enabled ---------- */
-  s_log_init ("gattrib");
+  s_log_init ("attrib");
 
   s_log_message
-    (_("gEDA/gattrib version %1$s%2$s.%3$s\n"
-       "gEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"
-       "This is free software, and you are welcome to redistribute it under certain\n"
-       "conditions; please see the COPYING file for more details.\n"),
+    (_("Lepton EDA/lepton-attrib version %1$s%2$s.%3$s git: %4$.7s"),
      PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
-     PACKAGE_DATE_VERSION);
+     PACKAGE_DATE_VERSION, PACKAGE_GIT_COMMIT);
 
   /* ------  register guile (scheme) functions.  Necessary to parse RC file.  ------ */
   g_register_funcs();
