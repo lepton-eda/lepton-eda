@@ -9,7 +9,7 @@ POTFILES
 *.sin
 Rules-quot
 Makevars.template
-geda-gattrib.pot
+lepton-attrib.pot
 stamp-po
 stamp-it
 stamp-i18n

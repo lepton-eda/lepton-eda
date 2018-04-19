@@ -233,9 +233,9 @@ int main(int argc, char *argv[])
 #if ENABLE_NLS
   setlocale(LC_ALL, "");
   setlocale(LC_NUMERIC, "C");
-  bindtextdomain("geda-gattrib", LOCALEDIR);
-  textdomain("geda-gattrib");
-  bind_textdomain_codeset("geda-gattrib", "UTF-8");
+  bindtextdomain("lepton-attrib", LOCALEDIR);
+  textdomain("lepton-attrib");
+  bind_textdomain_codeset("lepton-attrib", "UTF-8");
 #endif
 
   /* Initialize the Guile Scheme interpreter. This function does not
