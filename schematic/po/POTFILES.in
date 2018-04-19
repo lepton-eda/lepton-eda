@@ -99,7 +99,7 @@ schematic/src/x_script.c
 schematic/src/x_stroke.c
 schematic/src/x_window.c
 
-schematic/data/geda-gschem.desktop.in
+schematic/data/lepton-schematic.desktop.in
 
 schematic/lib/system-gschemrc.scm
 
