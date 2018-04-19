@@ -3,5 +3,5 @@ Makefile.in
 html
 latex
 *~
-gattrib.1
-gattrib.html
+lepton-attrib.1
+lepton-attrib.html

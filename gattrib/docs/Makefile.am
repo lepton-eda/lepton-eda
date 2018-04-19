@@ -1,7 +1,7 @@
 EXTRA_DIST = gattrib.dox what-is-gattrib.html what-is-geda.html \
-	     gattrib-main.txt logo.png gattrib.1.in
+	     gattrib-main.txt logo.png lepton-attrib.1.in
 
-all: 
+all:
 	@echo 'Type: make doxygen  to create doxygen documentation for gattrib'
 
 doxygen: gattrib.dox
@@ -13,7 +13,7 @@ else
 	@echo 'The documentation cannot be built from the sources.'
 endif
 
-dist_man_MANS = gattrib.1
+dist_man_MANS = lepton-attrib.1
 
 .1.in.1:
 	d=`$(GUILE) -c '(setlocale LC_ALL "C") \
@@ -24,7 +24,7 @@ dist_man_MANS = gattrib.1
 	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" -e"s:[@]YEAR@:$$y:" < $< > $@
 
 # Rules for converting man->html
-html_man_files = gattrib.html
+html_man_files = lepton-attrib.html
 SUFFIXES = .1.in .1 .html
 
 docsmandir=$(docdir)/man
