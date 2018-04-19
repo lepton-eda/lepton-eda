@@ -91,7 +91,7 @@ x_window_init()
   /*  window is a global declared in globals.h.  */
   window = gtk_window_new(GTK_WINDOW_TOPLEVEL);  
 
-  gtk_window_set_title( GTK_WINDOW(window), _("gattrib -- gEDA attribute editor")); 
+  gtk_window_set_title( GTK_WINDOW(window), _("lepton-attrib - Lepton EDA attribute editor")); 
   
   g_signal_connect(window, "delete_event",
                    G_CALLBACK (gattrib_really_quit), 0);
@@ -338,7 +338,7 @@ x_window_add_items()
   }
 
   if (sheet_head->comp_attrib_count == 0) {
-    error_string = _("No configurable component attributes found in entire design!\nPlease attach at least some attributes before running gattrib.");
+    error_string = _("No configurable component attributes found in entire design!\nPlease attach at least some attributes before running lepton-attrib.");
     x_dialog_fatal_error(error_string, 2);
   }
 
