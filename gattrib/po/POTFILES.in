@@ -1,4 +1,4 @@
-gattrib/data/geda-gattrib.desktop.in
+gattrib/data/lepton-attrib.desktop.in
 gattrib/src/f_export.c
 gattrib/src/lepton_attrib.c
 gattrib/src/globals.c
