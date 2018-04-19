@@ -1,16 +1,16 @@
-.TH gattrib 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-attrib 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
-gattrib - gEDA/gaf Schematic Attribute Editor
+lepton-attrib - Lepton EDA Schematic Attribute Editor
 .SH SYNOPSIS
-.B gattrib
+.B lepton-attrib
 [\fIOPTION\fR ...] [\fIFILE\fR ...]
 .SH DESCRIPTION
 .PP
-\fBgattrib\fR is a spreadsheet-like tool for bulk editing of
-attributes in gEDA schematics, usually created in \fBgschem\fR(1).
+\fBlepton-attrib\fR is a spreadsheet-like tool for bulk editing of
+attributes in Lepton EDA schematics, usually created in \fBlepton-schematic\fR(1).
 .PP
 If no \fIFILE\fRs to open are specified on the command line,
-\fBgattrib\fR will display a file selector dialog on startup.
+\fBlepton-attrib\fR will display a file selector dialog on startup.
 
 .SH OPTIONS
 .TP 8
@@ -37,12 +37,13 @@ See the `AUTHORS' file included with this program.
 
 .SH COPYRIGHT
 .nf
-Copyright \(co 1999-@YEAR@ gEDA Contributors.  License GPLv2+: GNU GPL
-version 2 or later.  Please see the `COPYING' file included with this
-program for full details.
+Copyright \(co 1998-2017 by Ales Hvezda and the respective original authors.
+Copyright \(co 2017-2018 Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
 .PP
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
 .SH SEE ALSO
-\fBgschem\fR(1)
+\fBlepton-schematic\fR(1)
