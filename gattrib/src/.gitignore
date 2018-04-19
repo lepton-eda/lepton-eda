@@ -1,7 +1,7 @@
 .deps
 Makefile
 Makefile.in
-gattrib
-gattrib.exe
+lepton-attrib
+lepton-attrib.exe
 *.o
 *~

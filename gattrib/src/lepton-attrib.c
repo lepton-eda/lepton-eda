@@ -18,7 +18,7 @@
  */
 
 /*!
- * \file gattrib.c
+ * \file lepton-attrib.c
  */
 
 
