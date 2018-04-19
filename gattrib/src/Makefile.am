@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 ## This Makefile.am created for gattrib by SDB 12.13.2003
 
-bin_PROGRAMS = gattrib
+bin_PROGRAMS = lepton-attrib
 
 ## don't forget all *.h files */
-gattrib_SOURCES = \
+lepton_attrib_SOURCES = \
 		gtksheet_2_2.c \
 		gtkextra-marshal.c \
 		globals.c \
@@ -27,22 +27,22 @@ gattrib_SOURCES = \
 		s_attrib.c \
 		s_toplevel.c \
 		s_visibility.c \
-		gattrib.c 
+		lepton-attrib.c
 
 
-gattrib_CPPFLAGS = -I$(top_srcdir)/liblepton/include \
+lepton_attrib_CPPFLAGS = -I$(top_srcdir)/liblepton/include \
 	-I$(srcdir)/../include -I$(top_srcdir) -I$(includedir)
-gattrib_CFLAGS = $(GCC_CFLAGS) $(GLIB_CFLAGS) \
+lepton_attrib_CFLAGS = $(GCC_CFLAGS) $(GLIB_CFLAGS) \
 	$(MINGW_CFLAGS) \
 	$(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS)
-gattrib_LDFLAGS = $(GLIB_LIBS) $(GTK_LIBS) $(GTHREAD_LIBS) \
+lepton_attrib_LDFLAGS = $(GLIB_LIBS) $(GTK_LIBS) $(GTHREAD_LIBS) \
 	$(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
-gattrib_LDADD = $(top_builddir)/liblepton/src/liblepton.la
+lepton_attrib_LDADD = $(top_builddir)/liblepton/src/liblepton.la
 
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
-MOSTLYCLEANFILES = *.log *.ps core FILE *~ #*# 
+MOSTLYCLEANFILES = *.log *.ps core FILE *~ #*#
 CLEANFILES = *.log *.ps core FILE *~ #*#
 DISTCLEANFILES = *.log core FILE *~ #*#
 MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in #*#
