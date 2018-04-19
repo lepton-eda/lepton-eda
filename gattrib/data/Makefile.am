@@ -2,7 +2,7 @@ theme=hicolor
 xdgdatadir=$(XDGDATADIR)
 themedir=$(xdgdatadir)/icons/$(theme)
 
-app_icon = geda-gattrib
+app_icon = lepton-attrib
 
 app_icon_files = \
 	$(app_icon:%=%-48.png) \
@@ -17,7 +17,7 @@ theme_icons = \
 
 
 desktopdir=$(xdgdatadir)/applications
-desktop_in_files = geda-gattrib.desktop.in
+desktop_in_files = lepton-attrib.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 DOMAIN=geda-gattrib
