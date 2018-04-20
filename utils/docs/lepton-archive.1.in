@@ -1,10 +1,10 @@
-.TH garchive 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-archive 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
-garchive \- create and extract gEDA design archives
+lepton-archive \- create and extract Lepton EDA design archives
 
 .SH SYNOPSIS
-.B garchive 
+.B lepton-archive 
 .RI [ options ] 
 .RB [ \-o
 .IR output_file ] 
@@ -12,8 +12,8 @@ garchive \- create and extract gEDA design archives
 \&...
 
 .SH DESCRIPTION
-.B garchive
-creates and extracts gEDA designs from an archive. The two modes of
+.B lepton-archive
+creates and extracts Lepton EDA designs from an archive. The two modes of
 operation are "archive mode" (archive creation) and "extract mode".
 In archive mode it creates a project archive from a bunch of project
 files, and in extract mode it extracts the files from the archive and
@@ -48,16 +48,16 @@ Print usage information.
 To create an archive named MyArchive.tar.gz (the files to store listed in
 garchiverc):
 .IP
-garchive \-o MyArchive.tar.gz
+lepton-archive \-o MyArchive.tar.gz
 .PP
 Verbosely create an archive (archives files listed on cmd line
 as well as those listed in garchiverc):
 .IP
-garchive \-v \-o MyArchive.tar.gz README Schematic1.sch Schematic2.sch Schematic3.sch
+lepton-archive \-v \-o MyArchive.tar.gz README Schematic1.sch Schematic2.sch Schematic3.sch
 .PP
 Extract an archive:
 .IP
-garchive \-e ProjectArchive.tar.gz
+lepton-archive \-e ProjectArchive.tar.gz
 
 .SH AUTHOR
 Stuart Brorson <sdb@cloud9.net>
@@ -67,9 +67,10 @@ Stuart Brorson <sdb@cloud9.net>
 
 .SH COPYRIGHT
 .nf
-Copyright \(co 1999-@YEAR@ gEDA Contributors.  License GPLv2+: GNU GPL
-version 2 or later.  Please see the `COPYING' file included with this
-program for full details.
+Copyright \(co 1998-2017 by Ales Hvezda and the respective original authors.
+Copyright \(co 2017-2018 Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
 .PP
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.

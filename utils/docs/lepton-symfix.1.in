@@ -1,16 +1,16 @@
-.TH gsymfix 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-symfix 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
-gsymfix \- automatically fix common issues with gEDA symbols
+lepton-symfix \- automatically fix common issues with Lepton EDA symbols
 
 .SH SYNOPSIS
-.B gsymfix [
+.B lepton-symfix [
 .I options
 .B ]
 .I symbol_file
 .SH DESCRIPTION
-.B gsymfix
-reads a gEDA symbol file and does the following:
+.B lepton-symfix
+reads a Lepton EDA symbol file and does the following:
 .IP \(bu
 prints a warning if there is no pinnumber attribute on a pin;
 .IP \(bu
@@ -35,7 +35,7 @@ with no errors or
 warnings.
 
 .SH OPTIONS
-.B gsymfix
+.B lepton-symfix
 accepts the following options:
 .TP
 .BR -h ", " \-\-help
@@ -59,9 +59,10 @@ Mike Skerritt <mike@acornpacket.com>.
 
 .SH COPYRIGHT
 .nf
-Copyright \(co 1999-@YEAR@ gEDA Contributors.  License GPLv2+: GNU GPL
-version 2 or later.  Please see the `COPYING' file included with this
-program for full details.
+Copyright \(co 1998-2017 by Ales Hvezda and the respective original authors.
+Copyright \(co 2017-2018 Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
 .PP
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.

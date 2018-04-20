@@ -1,13 +1,13 @@
-tragesym is a small python script that creates gschem symbols out of 
+lepton-tragesym is a small python script that creates lepton-schematic symbols out of 
 structured textfiles.
 
-tragesym can:
+lepton-tragesym can:
     * create pins and arrange their elements 
 	(clocksign, dot, type, pinnumber, label)
     * sort pins alphabetical and numerical
     * swap words of pinlabels if wished
     * draw negation lines on the labels 
-       	(since version 0.0.9, gschem will do that)
+       	(since version 0.0.9, lepton-schematic will do that)
     * rotate pinlabels if wished
     * do some syntax check to the input file
 
@@ -19,15 +19,15 @@ For possible footprint names take a look into the ~geda directory
 of the PCB program.
 
 usage is:
-  tragesym <sourcefile> <symbolfile>
+  lepton-tragesym <sourcefile> <symbolfile>
 
 After you have translated the sourcefile to the symbolfile you have to
-rearrange some pins with gschem, translate the symbol to the origin
+rearrange some pins with lepton-schematic, translate the symbol to the origin
 and save it in an appropriate symbol directory.  Make the attributes
 visible while doing that (edit->show hidden text) and hide the text
 again before saving.
 
-tragesym requires python (versions greater 1.5 should work).
+lepton-tragesym requires python (versions greater 1.5 should work).
 
 Comment an questions are welcome. 
 Send it to Werner Hoch (werner.ho@gmx.de)

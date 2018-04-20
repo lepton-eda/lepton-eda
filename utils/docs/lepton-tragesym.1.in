@@ -1,17 +1,17 @@
-.TH tragesym 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-tragesym 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
-tragesym \- create gEDA symbols from structured textfiles
+lepton-tragesym \- create Lepton EDA symbols from structured textfiles
 
 .SH SYNOPSIS
-.B tragesym
+.B lepton-tragesym
 .I sourcefile symbolfile
 
 .SH DESCRIPTION
-.B tragesym
-creates gschem symbols from structured textfiles.
+.B lepton-tragesym
+creates lepton-schematic symbols from structured textfiles.
 .PP
-.B tragesym
+.B lepton-tragesym
 can:
 .IP \(bu
 create pins and arrange their elements (clocksign, dot, type, pinnumber,
@@ -21,30 +21,31 @@ sort pins alphabetical and numerical;
 .IP \(bu
 swap words of pinlabels if wished;
 .IP \(bu
-draw negation lines on the labels (since version 0.0.9, gschem will do that);
+draw negation lines on the labels (since version 0.0.9, lepton-schematic will do that);
 .IP \(bu
 rotate pinlabels if wished;
 .IP \(bu
 do some syntax check to the input file.
 .PP
-.B tragesym
+.B lepton-tragesym
 requires python.
 .SH TUTORIAL
 There is a tutorial on the use of
-.B tragesym
+.B lepton-tragesym
 at:
 .IP
 http://wiki.geda-project.org/geda:tragesym_tutorial
 .SH AUTHOR
 Werner Hoch <werner.ho@gmx.de>
 .SH SEE ALSO
-.BR gschem (1),
+.BR lepton-schematic (1),
 .BR pcb (1)
 .SH COPYRIGHT
 .nf
-Copyright \(co 1999-@YEAR@ gEDA Contributors.  License GPLv2+: GNU GPL
-version 2 or later.  Please see the `COPYING' file included with this
-program for full details.
+Copyright \(co 1998-2017 by Ales Hvezda and the respective original authors.
+Copyright \(co 2017-2018 Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
 .PP
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
