@@ -1,5 +1,5 @@
-This  is  grenum,  an advanced refdes renumber utility for gEDA's
-gschem.
+This  is  lepton-renum,  an advanced refdes renumber utility for
+Lepton EDA's lepton-schematic.
 
 
 INTRODUCTION
@@ -9,8 +9,8 @@ file.
 
 GOALS
 
-There  is  another  script  called  refdes_renum comes with geda-
-utyls, but it does not care about slotted elements.  grenum  will
+There is another script called lepton-refdes_renum comes with Lepton
+EDA, but it does not care about slotted elements. lepton-renum will
 not  renumber all refdeses, only, if a "?" is found in the refdes
 definition. After the first run, you have to edit the  refdes  of
 multi  slotted  elements, but after it, they won't be renumbered.
@@ -19,7 +19,7 @@ useful,  if  you  want  to have e.g. IC3a, IC3b components on the
 schematic. Unfortunately, the next layer, the gsch2pcb  does  not
 ignore this, and will create a new component (am I right?).
 
-As  it was mentioned grenum does not renumber refdeses which were
+As it was mentioned lepton-renum does not renumber refdeses which were
 already renumbered. However, it detects gaps between  the  refdes
 numbers.  For  example, if you have IC3 and IC6, it'll start num-
 bering new components from IC1 to IC2, and IC4-IC5 and after IC7.
@@ -36,14 +36,14 @@ edit the Makefile in the src directory.
 
 To untar the package, issue the command
 
-$ tar -jxvf grenum.tar.bz2
+$ tar -jxvf lepton-renum.tar.bz2
 
 Note that you need bunzip2 and the tar utility.
 
-To compile the code cd to the grenum directory and make the  exe-
+To compile the code cd to the lepton-renum directory and make the exe-
 cutable
 
-$ cd grenum $ make
+$ cd lepton-renum $ make
 
 To install the compiled executable (as root) issue
 
@@ -51,9 +51,9 @@ To install the compiled executable (as root) issue
 
 USAGE
 
-To renumber your gschem file issue
+To renumber your lepton-schematic file issue
 
-$ grenum yourfile.sch
+$ lepton-renum yourfile.sch
 
 for  more  information,  see the manpage, and read the documenta-
 tion, which you can't since I had no time  write  it.  But  it'll

@@ -1,9 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_PROGRAMS = lepton-sch2pcb grenum
+bin_PROGRAMS = lepton-sch2pcb lepton-renum
 
 # don't forget all *.h files */
-grenum_SOURCES = grenum.c grenum.h
+lepton_renum_SOURCES = lepton-renum.c lepton-renum.h
 
 lepton_sch2pcb_SOURCES = lepton-sch2pcb.c
 lepton_sch2pcb_CPPFLAGS = \

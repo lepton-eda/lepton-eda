@@ -3,8 +3,8 @@ Makefile.in
 .libs
 Makefile
 lepton-sch2pcb
-grenum
+lepton-renum
 *.o
 *~
-grenum.exe
+lepton-renum.exe
 lepton-sch2pcb.exe

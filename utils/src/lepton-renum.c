@@ -1,5 +1,5 @@
 /* $Id$ */
-/*	This is grenum, an advanced refdes renumber utility for gEDA's gschem.
+/*	This is lepton-renum, an advanced refdes renumber utility for Lepton EDA's lepton-schematic.
  *
  *	Copyright (C) 2005-2010  Levente Kovacs
  *
@@ -46,7 +46,7 @@
 
 #include <errno.h>
 
-#include "grenum.h"
+#include "lepton-renum.h"
 /*#define DEBUG*/
 
 int main(int argc, char *argv[])
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 		}
 	if(optind==argc)
 		{
-		printf("grenum: no input file\n");
+		printf("lepton-renum: no input file\n");
 		printhelp();
 		return NO_INPUT_FILE;
 		}
@@ -115,17 +115,17 @@ int main(int argc, char *argv[])
 		strcpy(&infilename[0],argv[optind]);	/*Copy the filename to the buffer*/
 		if((infile=fopen(infilename, "r")) == NULL)	/*Open file, use r+ for read and write*/
 			{
-			perror("grenum: unable to open input file");
+			perror("lepton-renum: unable to open input file");
 			return FILE_OP_ERROR;
 			}
 		strcpy(&outfilename[0],&infilename[0]);
 		if((outfile=fopen(strcat(&outfilename[0],".tmp"),"wb"))==NULL)
 			{
-			perror("grenum: could not create tmp file");
+			perror("lepton-renum: could not create tmp file");
 			fclose(infile);	/*Close the file*/
 			return FILE_OP_ERROR;
 			}
-		printf("grenum: processing file %s\n",&infilename[0]);
+		printf("lepton-renum: processing file %s\n",&infilename[0]);
 		while((ret=get_refdes_from_file(infile, &refdes, buff))!=END_OF_FILE) /*Read one line.*/
 			{	/*Process starts here*/
 #ifdef DEBUG
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 				case NOT_REFDES_LINE:
 				if(fputs(buff,outfile)==-1)
 					{
-					perror("grenum: could not write to tmp file");
+					perror("lepton-renum: could not write to tmp file");
 					fclose(infile);	/*Close the files*/
 					fclose(outfile);
 					return FILE_OP_ERROR;
@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
 					refdes_db[refdes.prefixes].value=refdes.value;	/*Renumber... Finally :-)*/
 					break;
 					case MAX_PREFIX_COUNT:	/*Out of memory*/
-					printf("grenum: out of memory. Too much refdes prefixes.\n");
+					printf("lepton-renum: out of memory. Too much refdes prefixes.\n");
 					fclose(infile);	/*Close the files*/
 					fclose(outfile);
 					return OUT_OF_MEMORY;
@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
 					refdes_db[refdes.prefixes+1].prefix[0]='\0';
 					break;
 					case MAX_PREFIX_COUNT:
-					printf("grenum: out of memory. Too much refdes prefixes.\n");
+					printf("lepton-renum: out of memory. Too much refdes prefixes.\n");
 					fclose(infile);	/*Close the files*/
 					fclose(outfile);
 					return OUT_OF_MEMORY;
@@ -206,14 +206,14 @@ int main(int argc, char *argv[])
 				sprintf(buff, "refdes=%s%d\n", &refdes.prefix[0], refdes.value);
 				break;
 				case REFDES_ERROR:	/*e.g. awdf#$%WSf82f8 :-) No "=" signal in the refdes string.*/
-					printf("grenum: parse error\n");
+					printf("lepton-renum: parse error\n");
 					fclose(infile);	/*Close the files*/
 					fclose(outfile);
 					return PARSE_ERROR;
 				}
 			if(fputs(buff,outfile)==-1)	/*Finally, write the refdes line to the output file*/
 				{
-				perror("grenum: could not write to tmp file");
+				perror("lepton-renum: could not write to tmp file");
 				fclose(infile);	/*Close the files*/
 				fclose(outfile);
 				return FILE_OP_ERROR;
@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
 		outfile=fopen(strcat(&buff[0],".save"),"wb");
 		if(outfile==NULL)
 			{
-			perror("grenum: ould not create backup file");
+			perror("lepton-renum: ould not create backup file");
 			fclose(infile);	/*Close the file*/
 			return FILE_OP_ERROR;
 			}
@@ -235,7 +235,7 @@ int main(int argc, char *argv[])
 			{
 			if(fputs(&buff[0],outfile)==-1)
 				{
-				perror("grenum: could not write to backup file");
+				perror("lepton-renum: could not write to backup file");
 				fclose(infile);	/*Close the files*/
 				fclose(outfile);
 				return FILE_OP_ERROR;
@@ -245,7 +245,7 @@ int main(int argc, char *argv[])
 		fclose(outfile);
 		rename(outfilename, infilename);	/*Move the tmpfile to the original*/
 		}
-	printf("grenum: file(s) successfully processed\n");
+	printf("lepton-renum: file(s) successfully processed\n");
 	return OK; /*Everything is okay*/
 	}
 
@@ -382,7 +382,7 @@ void printhelp()
 #endif
 
 	printver();
-	printf("Usage: grenum [%s] [%s] [%s] file1.sch file2.sch ...\n\n",
+	printf("Usage: lepton-renum [%s] [%s] [%s] file1.sch file2.sch ...\n\n",
 		v_opt, h_opt, p_opt);
 	printf("\t%s\tprints version info\n\t%s\tprints this help\n\t%s\tsets pagejump mode on\n",
 		v_opt, h_opt, p_opt);
@@ -392,8 +392,8 @@ void printhelp()
 
 void printver()
 	{
-	printf("This is grenum, an advanced refdes renumber utility for gEDA's gschem.\n");
-	printf("Version %s.  gEDA/gaf version %s.%s\n",GRVERSION, 
+	printf("This is lepton-renum, an advanced refdes renumber utility for Lepton EDA's lepton-schematic.\n");
+	printf("Version %s.  Lepton EDA version %s.%s\n",GRVERSION,
                PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
 	printf("Compiled on %s at %s\n",COMP_DATE,COMP_TIME);
 	}

@@ -1,11 +1,11 @@
-.TH grenum 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-renum 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
-.B grenum
+.B lepton-renum
 \- An advanced refdes renumber utility
 
 .SH SYNOPSIS
-.B grenum
+.B lepton-renum
 [\-v\||\|\-\-version \-h\||\|\-\-help \-p\||\|\-\-pagejump]
 .I infile1.sch infile2.sch
 \|.\|.\|.
@@ -14,7 +14,7 @@
 .SH DESCRIPTION
 
 The
-.B grenum
+.B lepton-renum
 program will renumber the refdes definitions read from
 .I infile\|.
 
@@ -32,7 +32,7 @@ prints version information
 prints help message
 
 .SH RETURN VALUE
-.B grenum
+.B lepton-renum
 will return
 .B 0
 if all files processed successfully,
