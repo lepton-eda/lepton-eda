@@ -4,7 +4,7 @@ html
 latex
 *~
 *.1
-grenum.html
+lepton-renum.html
 lepton-sch2pcb.html
 gxyrs.html
 pcb_backannotate.html
