@@ -2,7 +2,7 @@
 
 my $version = "0.8";
 
-# This script reads a geda symbol and does the following:
+# This script reads a Lepton EDA symbol and does the following:
 # (...see the usage routine below...)
 
 # for parsing input options
@@ -188,7 +188,7 @@ sub usage {
   print "\nUsage:\n\n";
   print "    $pname [option] symbol_file\n";
   print "\n";
-  print "    $pname reads a geda symbol file and does the following:\n";
+  print "    $pname reads a Lepton EDA symbol file and does the following:\n";
   print "\t- Prints a warning if there is no pinnumber attribute on a pin\n";
   print "\t- Renumbers pinseq attributes on all pins, starting with 1\n";
   print "\t- Adds a pinseq attribute to a pin if none exists\n";

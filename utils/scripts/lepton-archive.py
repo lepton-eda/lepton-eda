@@ -19,7 +19,7 @@
 #-------------------------------------------------------------------
 
 """
-This program is used to create a gEDA design archive.  It operates in two 
+This program is used to create a Lepton EDA design archive.  It operates in two 
 modes: archive mode and extract mode.  In archive mode it creates a
 project archive from a bunch of project files, and in extract mode it 
 extracts the files from the archive and places them in the local dir.
@@ -47,7 +47,7 @@ Information about program invocation is held in the Usage string below.
 6.  It opens a directory called /tmp/garchive-symbols.  For each symbol 
     file in the symbol file list, it gets the file from $(GEDADATADIR)/sym
     and sticks it into ./garchive-symbols.
-7.  It takes the local gschemrc, and munges it so that gschem will find 
+7.  It takes the local gschemrc, and munges it so that lepton-schematic will find 
     all symbols in ./garchive-symbols.
 8.  It then creates a tar archive of the following:
     *  All files listed in garchiverc and/or the command line.
@@ -99,8 +99,8 @@ import sys, copy, string, getopt, re, os, commands
 #  This is the help string.
 Usage =\
 """
-garchive -- the gEDA archiving utility.  Used to create as well as extract
-gEDA designs from an archive.  The two modes of operation are "archive mode"
+lepton-archive -- the Lepton EDA archiving utility.  Used to create as well as extract
+Lepton EDA designs from an archive.  The two modes of operation are "archive mode"
 (archive creation) and "extract mode".  Archive mode is the default.
 
 Command line switches:
@@ -120,14 +120,14 @@ Command line switches:
 
 Example usage:
    Create an archive named MyArchive.tar.gz (files to store listed in garchiverc):
-   garchive -o MyArchive.tar.gz
+   lepton-archive -o MyArchive.tar.gz
 
    Verbosely create an archive (archives files listed on cmd line
    as well as those listed in garchiverc):
-   garchive -v -o MyArchive.tar.gz README Schematic1.sch Schematic2.sch Schematic3.sch
+   lepton-archive -v -o MyArchive.tar.gz README Schematic1.sch Schematic2.sch Schematic3.sch
 
    Extract an archive:
-   garchive -e ProjectArchive.tar.gz
+   lepton-archive -e ProjectArchive.tar.gz
 
 Copyright (C) 2003 by SDB.  Released under the GPL.
 """
@@ -212,7 +212,7 @@ class CmdLineArgs:
     RcFileName (archive only) = name of garchiverc to use (instead of garchiverc)
     VerboseMode = "quiet", "verbose"
     FilesToArchiveList (archive only)
-    UserDir = Directory holding files to archive.  (Directory where garchive was invoked.)
+    UserDir = Directory holding files to archive.  (Directory where lepton-archive was invoked.)
     ScratchDir = "/tmp" by default
     FileArchiveDir = "gschem-files"  by default
     GedaDataDir = directory holding GEDA data & files such as "system-gafrc"
@@ -847,8 +847,8 @@ def Extract(Args):
         # Change name of file so it can be gunziped.
         if not CheckFilename(FileName):
             print( """
-Error -- the file suffix is not \".tar.gz\"; garchive can't do extraction.
-If this archive was created using garchive, you can rename it using
+Error -- the file suffix is not \".tar.gz\"; lepton-archive can't do extraction.
+If this archive was created using lepton-archive, you can rename it using
 .tar.gz as suffix and try again.  Otherwise, just gunzip and tar -xvf
 the file manually.
             """)
