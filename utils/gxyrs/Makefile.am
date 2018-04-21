@@ -2,16 +2,16 @@
 ##
 ## Process this file with automake to produce Makefile.in
 
-bin_SCRIPTS = gxyrs
-	      
+bin_SCRIPTS = lepton-xyrs
+
 rcdatadir = @GEDADATADIR@/perl/lib
-rcdata_DATA = gxyrs.pm
+rcdata_DATA = xyrs.pm
 
 EXTRA_DIST = \
-	gxyrs.pl \
-	gxyrs.pm
+	lepton-xyrs.pl \
+	xyrs.pm
 
-all: gxyrs
+all: lepton-xyrs
 
 distclean-local:
 	-rm -rf autom4te.cache
@@ -21,12 +21,12 @@ maintainer-clean-local:
 
 ##  This hardcodes the path to the
 ##  system libraries into geda_filter prior to installation.
-gxyrs: $(srcdir)/gxyrs.pl
-	sed -e "s#GEDADATADIR#$(GEDADATADIR)#" $(srcdir)/gxyrs.pl | sed -e "s#GEDARCDIR#$(GEDARCDIR)#" > tmp$@
+lepton-xyrs: $(srcdir)/lepton-xyrs.pl
+	sed -e "s#GEDADATADIR#$(GEDADATADIR)#" $(srcdir)/lepton-xyrs.pl | sed -e "s#GEDARCDIR#$(GEDARCDIR)#" > tmp$@
 	chmod a+x tmp$@
 	mv -f tmp$@ $@
 
 MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
 CLEANFILES = *.log *.ps core FILE tmp  *~
-DISTCLEANFILES = *.log core FILE tmp *~ gxyrs
-MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in gxyrs
+DISTCLEANFILES = *.log core FILE tmp *~ lepton-xyrs
+MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in lepton-xyrs
