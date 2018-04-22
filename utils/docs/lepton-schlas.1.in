@@ -1,30 +1,30 @@
-.TH gschlas 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-schlas 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
-gschlas \- gEDA schematic load and save
+lepton-schlas \- Lepton EDA schematic load and save
 
 .SH SYNOPSIS
-.B gschlas
+.B lepton-schlas
 .RB [ \-e | \-u "] [" \-q | \-v ]
 .I file
 [
 .I file ...
 ]
 .PP
-.B gschlas -h
+.B lepton-schlas -h
 
 .SH DESCRIPTION
-.B gschlas
+.B lepton-schlas
 can embed the in-use schematic symbols and pictures into a schematic
 or set of schematics.
 It allows, for instance, putting a schematic on a website or in an email 
 without the recipient needing to download lots of custom symbols for the 
 design.
 .PP
-.B gschlas
+.B lepton-schlas
 can also unembed symbol references from a schematic, but note that the
 symbols revert to library references; if the symbol doesn't exist in
-the current gEDA project's library path, a broken schematic results.
+the current Lepton EDA project's library path, a broken schematic results.
 
 .SH OPTIONS
 .TP
@@ -51,9 +51,10 @@ Ales Hvezda
 
 .SH COPYRIGHT
 .nf
-Copyright \(co 1999-@YEAR@ gEDA Contributors.  License GPLv2+: GNU GPL
-version 2 or later.  Please see the `COPYING' file included with this
-program for full details.
+Copyright \(co 1998-2017 by Ales Hvezda and the respective original authors.
+Copyright \(co 2017-2018 Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
 .PP
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.

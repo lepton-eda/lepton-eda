@@ -1,6 +1,6 @@
 dist_man_MANS = lepton-sch2pcb.1 lepton-renum.1 gxyrs.1 \
 	lepton-pcb_backannotate.1 lepton-refdes_renum.1 lepton-schdiff.1 lepton-tragesym.1 \
-	lepton-archive.1 gschlas.1 \
+	lepton-archive.1 lepton-schlas.1 \
 	lepton-symfix.1
 
 EXTRA_DIST = README.lepton-sch2pcb README.lepton-tragesym README.lepton-renum \
@@ -9,7 +9,7 @@ EXTRA_DIST = README.lepton-sch2pcb README.lepton-tragesym README.lepton-renum \
 	lepton-sch2pcb.1.in lepton-renum.1.in gxyrs.1.in \
 	lepton-pcb_backannotate.1.in lepton-refdes_renum.1.in \
 	lepton-schdiff.1.in lepton-tragesym.1.in \
-	lepton-archive.1.in gschlas.1.in \
+	lepton-archive.1.in lepton-schlas.1.in \
 	lepton-symfix.1.in
 
 docsreadmedir = $(docdir)/readmes

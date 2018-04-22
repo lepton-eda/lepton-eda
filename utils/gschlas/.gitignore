@@ -1,7 +1,7 @@
 Makefile
 Makefile.in
 .deps
-gschlas
-gschlas.exe
+lepton-schlas
+lepton-schlas.exe
 *.o
 *~

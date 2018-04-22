@@ -1,5 +1,5 @@
-/* gEDA - GPL Electronic Design Automation
- * gschlas - gEDA Load and Save
+/* Lepton EDA - Lepton Electronic Design Automation
+ * lepton-schlas - Lepton EDA Load and Save
  * Copyright (C) 2002-2010 Ales Hvezda
  * Copyright (C) 2002-2010 gEDA Contributors (see ChangeLog for details)
  *
@@ -45,13 +45,13 @@ gschlas_quit(void)
 
 }
 
-/*! \brief The "real" main for gschlas.
+/*! \brief The "real" main for lepton-schlas.
  *
- * This is the main program body for gschlas. A pointer to this
+ * This is the main program body for lepton-schlas. A pointer to this
  * function is passed to scm_boot_guile() at startup.
  *
  * This function:
- * - initialises libgeda;
+ * - initialises liblepton;
  * - parses the command line;
  * - starts logging;
  * - registers the Scheme functions with Guile;
@@ -77,16 +77,16 @@ main_prog(void *closure, int argc, char *argv[])
 
   /* create log file right away */
   /* even if logging is enabled */
-  s_log_init ("gschlas");
+  s_log_init ("schlas");
 
 #if defined(__MINGW32__) && defined(DEBUG)
   fprintf(stderr, "This is the MINGW32 port.\n");
 #endif
 
   s_log_message
-    ("gEDA/gschlas version %s%s.%s\ngEDA/gschlas comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\nThis is free software, and you are welcome to redistribute it under certain\nconditions; please see the COPYING file for more details.\n\n",
+    ("Lepton EDA/lepton-schlas version %s%s.%s git: %.7s",
      PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
-     PACKAGE_DATE_VERSION);
+     PACKAGE_DATE_VERSION, PACKAGE_GIT_COMMIT);
 
   /* register guile (scheme) functions */
   g_register_funcs();
@@ -154,7 +154,7 @@ main_prog(void *closure, int argc, char *argv[])
   exit(0);
 }
 
-/*! \brief Entry point to gschlas
+/*! \brief Entry point to lepton-schlas
  *
  * This is just a wrapper which invokes the guile stuff, and
  * points to the real main program main_prog().
