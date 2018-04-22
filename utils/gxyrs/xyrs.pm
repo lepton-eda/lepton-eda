@@ -3,7 +3,7 @@
 # Copyright (C) 2008 other contributors
 #                        (see ChangeLog or SCM history for details)
  
-# This file is part of gxyrs.
+# This file is part of lepton-xyrs.
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -23,7 +23,7 @@
 use strict;
 use warnings;
 
-package gxyrs;
+package xyrs;
 
 BEGIN {
 	use Exporter   ();

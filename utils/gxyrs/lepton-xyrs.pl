@@ -4,7 +4,7 @@
 # Copyright (C) 2008 other contributors
 #                        (see ChangeLog or SCM history for details)
  
-# This file is part of gxyrs.
+# This file is part of lepton-xyrs.
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -24,10 +24,10 @@
 use strict;
 use warnings;
 
-use lib 'GEDADATADIR/perl/lib'; # Where gxyrs package is located
+use lib 'GEDADATADIR/perl/lib'; # Where xyrs package is located
 
-use gxyrs;
-use gxyrs qw($CASE_INSENSITIVE);
+use xyrs;
+use xyrs qw($CASE_INSENSITIVE);
 
 # for parsing input options
 use Getopt::Long;
@@ -235,7 +235,7 @@ sub stdin () {
 #---------------------------------
 sub usage {
     print "Usage:\n";
-    print "  gxyrs [--tabulate] <input_file> --adjust <adjust_file> --output <outputfile> \n";
+    print "  lepton-xyrs [--tabulate] <input_file> --adjust <adjust_file> --output <outputfile> \n";
     exit(0);
 }
 

@@ -5,7 +5,7 @@
 # Copyright (C) 2008 other contributors
 #                        (see ChangeLog or SCM history for details)
  
-# This file is part of gxyrs.
+# This file is part of lepton-xyrs.
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -27,7 +27,7 @@ regen=no
 usage() {
 cat << EOF
 
-$0 -- Testsuite program for gxyrs
+$0 -- Testsuite program for lepton-xyrs
 
 Usage
 
@@ -114,16 +114,16 @@ if test ! -f $TESTLIST ; then
     exit 1
 fi
 
-GXYRS_SCRIPT=${top_builddir}/gxyrs/gxyrs
+GXYRS_SCRIPT=${top_builddir}/gxyrs/lepton-xyrs
 if test ! -f $GXYRS_SCRIPT ; then
-    echo "ERROR: ($0)  gxyrs script $GXYRS_SCRIPT does not exist"
+    echo "ERROR: ($0)  lepton-xyrs script $GXYRS_SCRIPT does not exist"
     exit 1
 fi
 
-# Check if gxyrs.pm module exists
-eval "${PERL} -I${gxyrs_srcdir} -Mgxyrs -e 1"
+# Check if xyrs.pm module exists
+eval "${PERL} -I${gxyrs_srcdir} -Mxyrs -e 1"
 if test $? -ne 0; then
-    echo "ERROR: ($0)  gxyrs module gxyrs.pm does not exist"
+    echo "ERROR: ($0)  lepton-xyrs module xyrs.pm does not exist"
     exit 1
 fi
 
@@ -145,10 +145,10 @@ cat << EOF
 Starting tests in $here
 srcdir:     $srcdir
 top_srcdir: $top_srcdir
-gxyrs srcdir: $gxyrs_srcdir
+lepton-xyrs srcdir: $gxyrs_srcdir
 INPUT_DIR:  ${INPUT_DIR}
 GOLDEN_DIR: ${GOLDEN_DIR}
-script to test: ${top_srcdir}/gxyrs/gxyrs
+script to test: ${top_srcdir}/gxyrs/lepton-xyrs
 all_tests:
 
 ${all_tests}
@@ -188,7 +188,7 @@ for t in $all_tests ; do
 	done
     fi
     
-    # run gxyrs
+    # run lepton-xyrs
     #
     
     if test "X$adjust_file" = "X" -o "X$adjust_file" = "X " ; then
@@ -201,7 +201,7 @@ for t in $all_tests ; do
     eval $command
     rc=$?
     if test $rc -ne $code ; then
-	echo "FAILED:  gxyrs returned $rc which did not match the expected $code"
+	echo "FAILED:  lepton-xyrs returned $rc which did not match the expected $code"
 	fail=`expr $fail + 1`
 	continue
     fi
