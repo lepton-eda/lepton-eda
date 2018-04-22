@@ -2,7 +2,7 @@ Lepton Electronic Design Automation
 ===================================
 
 Copyright (C) 1998-2017 gEDA Developers.
-Copyright (C) 2017 Lepton Developers.
+Copyright (C) 2017-2018 Lepton Developers.
 
 Introduction
 ============
@@ -39,16 +39,16 @@ The major components of the Lepton suite are:
 - `lepton-schematic`
   - A schematic editor.
 
-- `gattrib`
+- `lepton-attrib`
   - A spreadsheet-like program for bulk editing of component attributes.
 
-- `gnetlist`
+- `lepton-netlist`
   - A highly-flexible, hierarchy-aware utility which parses schematics
     to generate a number of outputs, including netlists for a wide
     variety of PCB layout tools.  It can also generate bills of
     materials and DRC reports for your schematics.
 
-- `gsch2pcb`
+- `lepton-sch2pcb`
   - A command-line utility for streamlining the workflow where
     'PCB' <http://pcb.geda-project.org/> and `lepton-schematic`
     are used together.
