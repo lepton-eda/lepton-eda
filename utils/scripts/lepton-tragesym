@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # coding: iso8859-1
 ############################################################################
 #    lepton-tragesym  - create Lepton EDA symbols out of structured textfiles
