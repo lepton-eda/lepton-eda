@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/env perl
 #
 # Copyright (C) 2008 Carlos Nieves Onega
 # Copyright (C) 2008 other contributors
