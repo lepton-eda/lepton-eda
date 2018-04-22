@@ -1,18 +1,18 @@
-.TH schdiff 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-schdiff 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
-.B schdiff
+.B lepton-schdiff
 \- Graphical diff tool for schematics
 
 .SH SYNOPSIS
-.B schdiff
+.B lepton-schdiff
 .I infile1.sch infile2.sch
 
 
 .SH DESCRIPTION
 
 The
-.B schdiff
+.B lepton-schdiff
 program will use 
 .B ImageMagick(1)
 to display a graphical diff of two schematic files.  It's most useful
@@ -29,12 +29,12 @@ Use the
 command exactly as you would use
 .B diff
 , but supply the
-.B \-x schdiff
+.B \-x lepton-schdiff
 option.
 
 .B mercurial:
 Use the 
-.B schdiff
+.B lepton-schdiff
 command exactly as you would use
 .B diff
 , but add the following lines to your .hgrc:
@@ -43,21 +43,21 @@ command exactly as you would use
   [extensions]
   hgext.extdiff =
   [extdiff]
-  cmd.schdiff = schdiff
+  cmd.schdiff = lepton-schdiff
 .RE
 
 .B subversion:
 Use the
 .B diff
 command like normal, but supply the
-.B --diff-cmd schdiff
+.B --diff-cmd lepton-schdiff
 option.
 
 .SH EXAMPLES
 
 .TP
 Use git to view the changes to a file between two revisions
-git difftool \-x schdiff 182110f690c51eb53ea1799fd022e87322d742e3 039e012397f2638d1577dd7c80fb862a5503dbfd cpu.sch
+git difftool \-x lepton-schdiff 182110f690c51eb53ea1799fd022e87322d742e3 039e012397f2638d1577dd7c80fb862a5503dbfd cpu.sch
 
 .TP
 Use mercurial to see all the changes since a specific revision
@@ -65,11 +65,11 @@ hg schdiff \-r 8442880f9835 cpld.sch
 
 .TP
 Use subversion to review a specific revision
-svn diff \-\-diff-cmd schdiff \-c 49 power.sch
+svn diff \-\-diff-cmd lepton-schdiff \-c 49 power.sch
 
 .SH BUGS
 
-If you find one, please report it at https://bugs.launchpad.net/geda
+If you find one, please report it at https://github.com/lepton-eda/lepton-eda/issues
 
 .SH AUTHOR
 

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # coding: iso8859-1
 ############################################################################
-#    tragesym  - create gEDA symbols out of structured textfiles
+#    lepton-tragesym  - create Lepton EDA symbols out of structured textfiles
 #    begin      : 2001-10-20
 #    copyright  : (C) 2001,2002,2003,2004,2006,2007, 2008 by Werner Hoch
 #    email      : werner.ho@gmx.de
@@ -20,7 +20,7 @@
 # - swap words of the pinlabels
 # - negation lines if label is in "_","\" is for escape
 # - rotate top and bottom pinlabels if wished
-# - if the symbol's width specified is 0, then tragesym calculates the
+# - if the symbol's width specified is 0, then lepton-tragesym calculates the
 #   symbol width based on the greater number of pins at the top or at the
 #   bottom of the symbol
 
@@ -126,7 +126,7 @@ class Pin:
 
 def usage():
     '''Print a usage message.'''
-    print "tragesym version " + VERSION
+    print "lepton-tragesym version " + VERSION
     print "(C) 2001,2002,2003,2004,2006,2007 by Werner Hoch <werner.ho@gmx.de>"
     print "Usage is: ", sys.argv[0] ,"<infile> <outfile>"
 

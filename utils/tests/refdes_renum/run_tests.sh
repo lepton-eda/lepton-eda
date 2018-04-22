@@ -5,7 +5,7 @@
 
 # Copyright (C) 2007-2008 Dan McMahill
  
-# This file is part of refdes_renum.
+# This file is part of lepton-refdes_renum.
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -27,7 +27,7 @@ regen=no
 usage() {
 cat << EOF
 
-$0 -- Testsuite program for refdes_renum
+$0 -- Testsuite program for lepton-refdes_renum
 
 Usage
 
@@ -44,7 +44,7 @@ Options
 
 Description
 
-$0 reads a file, tests.list,  describing tests to run on refdes_renum.
+$0 reads a file, tests.list,  describing tests to run on lepton-refdes_renum.
 If no specific test is specified on the $0 command line, then all 
 tests are run.
 
@@ -143,7 +143,7 @@ for t in $all_tests ; do
     t=`echo $t | sed 's;^\*;;g'`
 
     # figure out what files we need to copy for this test and what
-    # arguments to feed refdes_renum
+    # arguments to feed lepton-refdes_renum
     files=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $2}'`
     args=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $3}'`
     code=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $4}'`
@@ -167,14 +167,14 @@ for t in $all_tests ; do
 	done
     fi
     
-    # run refdes_renum
+    # run lepton-refdes_renum
     #
     
-    echo "${PERL} -w ${top_srcdir}/scripts/refdes_renum $args $files"
-    cd ${rundir} && ${PERL} -w ${top_srcdir}/scripts/refdes_renum $args $files 
+    echo "${PERL} -w ${top_srcdir}/scripts/lepton-refdes_renum $args $files"
+    cd ${rundir} && ${PERL} -w ${top_srcdir}/scripts/lepton-refdes_renum $args $files 
     rc=$?
     if test $rc -ne $code ; then
-	echo "FAILED:  refdes_renum returned $rc which did not match the expected $code"
+	echo "FAILED:  lepton-refdes_renum returned $rc which did not match the expected $code"
 	fail=`expr $fail + 1`
 	continue
     fi

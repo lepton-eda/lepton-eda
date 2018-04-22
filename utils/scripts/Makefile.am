@@ -2,24 +2,24 @@
 ##
 ## Process this file with automake to produce Makefile.in
 
-bin_SCRIPTS = refdes_renum \
-	      tragesym pcb_backannotate garchive gsymfix \
-	      schdiff
+bin_SCRIPTS = lepton-refdes_renum \
+	      lepton-tragesym lepton-pcb_backannotate lepton-archive lepton-symfix \
+	      lepton-schdiff
 
 noinst_SCRIPTS = gschupdate gsymupdate
 
-EXTRA_DIST = gschupdate gsymupdate refdes_renum gsymfix \
-	     tragesym pcb_backannotate garchive.py \
-	     schdiff
+EXTRA_DIST = gschupdate gsymupdate lepton-refdes_renum lepton-symfix \
+	     lepton-tragesym lepton-pcb_backannotate lepton-archive.py \
+	     lepton-schdiff
 
-##  SDB's stuff to enable garchive.  This hardcodes the path to the
-##  system libraries into garchive prior to installation.
-garchive: $(srcdir)/garchive.py
-	sed -e "s#GEDADATADIR#$(GEDADATADIR)#" $(srcdir)/garchive.py > tmp$@
+##  SDB's stuff to enable lepton-archive.  This hardcodes the path to the
+##  system libraries into lepton-archive prior to installation.
+lepton-archive: $(srcdir)/lepton-archive.py
+	sed -e "s#GEDADATADIR#$(GEDADATADIR)#" $(srcdir)/lepton-archive.py > tmp$@
 	chmod a+x tmp$@
 	mv -f tmp$@ $@
 
 MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
 CLEANFILES = *.log *.ps core FILE tmp  *~
-DISTCLEANFILES = *.log core FILE tmp *~ garchive sw2asc
-MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in garchive
+DISTCLEANFILES = *.log core FILE tmp *~ lepton-archive sw2asc
+MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in lepton-archive

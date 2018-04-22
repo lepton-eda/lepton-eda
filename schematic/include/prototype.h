@@ -109,6 +109,7 @@ SCM g_keys_view_pan_down(SCM rest);
 SCM g_keys_view_dark_colors(SCM rest);
 SCM g_keys_view_light_colors(SCM rest);
 SCM g_keys_view_bw_colors(SCM rest);
+SCM g_keys_view_color_edit(SCM rest);
 SCM g_keys_page_manager(SCM rest);
 SCM g_keys_page_next(SCM rest);
 SCM g_keys_page_prev(SCM rest);
@@ -311,6 +312,7 @@ void i_callback_view_pan_down(gpointer data, guint callback_action, GtkWidget *w
 void i_callback_view_dark_colors(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_light_colors(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_bw_colors(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_view_color_edit(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_manager(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_next(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_prev(gpointer data, guint callback_action, GtkWidget *widget);
@@ -612,12 +614,17 @@ void x_color_allocate (void);
 GdkColor *x_get_color(int color);
 GedaColor *x_color_lookup(GschemToplevel *toplevel, int color);
 gboolean x_color_display_enabled (int index);
+void x_color_set_display (int color_index, GdkColor* color);
+void x_color_set_outline (int color_index, GdkColor* color);
+GString* x_color_map2str_display();
+GString* x_color_map2str_outline();
 
 /* x_colorcb.c */
 GtkWidget* x_colorcb_new ();
 int x_colorcb_get_index (GtkWidget *widget);
 void x_colorcb_set_index (GtkWidget *widget, int color_index);
 void x_colorcb_update_colors();
+void x_colorcb_set_color (GtkTreeIter* iter, GdkColor* color);
 
 /* x_dialog.c */
 int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);
@@ -765,6 +772,7 @@ void x_widgets_show_text_properties (GschemToplevel* w_current);
 void x_widgets_show_object_properties (GschemToplevel* w_current);
 void x_widgets_show_log (GschemToplevel* w_current);
 void x_widgets_show_find_text_state (GschemToplevel* w_current);
+void x_widgets_show_color_edit (GschemToplevel* w_current);
 
 /* x_tabs.c */
 gboolean x_tabs_enabled();
@@ -780,3 +788,7 @@ void x_tabs_hdr_update (GschemToplevel* w_current, PAGE* page);
 void x_tabs_dbg_infos_dump (GschemToplevel* w_current);
 void x_tabs_dbg_pages_dump (GschemToplevel* w_current);
 #endif
+
+/* color_edit_widget.c */
+void color_edit_widget_update (GschemToplevel* w_current);
+

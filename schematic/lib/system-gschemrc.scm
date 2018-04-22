@@ -1203,6 +1203,8 @@
            (,(N_ "_Dark color scheme")  &view-dark-colors       #f)
            (,(N_ "_Light color scheme") &view-light-colors      #f)
            (,(N_ "B_W color scheme")    &view-bw-colors         #f)
+           ("SEPARATOR"                 #f                      #f)
+           (,(N_ "Color scheme editor...") &view-color-edit     #f)
          ))
 
 (define page-menu-items

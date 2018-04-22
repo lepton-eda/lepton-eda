@@ -18,12 +18,12 @@
 # MA 02111-1301 USA.
 
 
-# This script is used to renumber devices in a gschem (part of gEDA)
-# schematic.  This program works on single as well as multi-sheet 
+# This script is used to renumber devices in a lepton-schematic (part of Lepton EDA)
+# schematic.  This program works on single as well as multi-sheet
 # schematics.
 #
 # Usage:
-#    renum.pl file1.sch [file2.sch [file3.sch ...]]
+#    lepton-refdes_renum file1.sch [file2.sch [file3.sch ...]]
 #
 
 # for parsing input options
@@ -313,7 +313,7 @@ sub usage {
   print "\t$pname --help | -h\n";
   print "\t$pname --version\n";
   print "\n";
-  print "$pname reads a gschem schematic file or files and renumbers all reference\n";
+  print "$pname reads a lepton-schematic schematic file or files and renumbers all reference\n";
   print "designators.  The reference designators are numbered starting with 1 and the\n";
   print "old schematic file is replaced by the modified schematic file.\n";
   print "\n";
@@ -330,7 +330,7 @@ sub usage {
   print "                with 201, etc  Specifying a value gives the step between pages.\n";
   print "                For example --pgskip 10 will start with 11, 21, 31, etc.\n";
   print "\n";
-  print "    --gentle    This flag tells refdes_renum to leave any refdeses\n";
+  print "    --gentle    This flag tells lepton-refdes_renum to leave any refdeses\n";
   print "                alone if they already have numbers.  Use this option to number\n";
   print "                new components in a schematic which has already been numbered.\n";
   print "                Note that --gentle is set by default!\n";
