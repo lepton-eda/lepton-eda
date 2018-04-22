@@ -55,6 +55,11 @@ Notable changes in Lepton EDA 1.9.4
 
 ### Changes in `lepton-schematic`:
 
+- A new widget for changing color scheme has been added. The user
+  can now open 'View → Color scheme editor...', choose the colors
+  she wants, and save the resulting color scheme under appropriate
+  file name.
+
 - File save dialog now displays proper names for new files.
 
 - File save dialog is no longer opened after 'File → Save' for
