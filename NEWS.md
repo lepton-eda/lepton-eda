@@ -216,6 +216,9 @@ Notable changes in Lepton EDA 1.9.4
 - Lepton now requires GTK+ 2.24.0, Glib 2.25.0, Gio 2.25.0,
   Gdk-pixbuf 2.21.0 or later versions for build.
 
+- Fixed option `--enable-contrib` of the *configure* script.
+
+
 ### Changes related to building under Cygwin:
 
 - An error in Cygwin port for Windows has been fixed.  Information
