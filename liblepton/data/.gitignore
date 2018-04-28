@@ -1,4 +1,4 @@
 liblepton.xml
-x-geda-gsch2pcb-project.desktop
-x-geda-schematic.desktop
-x-geda-symbol.desktop
+x-lepton-sch2pcb-project.desktop
+x-lepton-schematic.desktop
+x-lepton-symbol.desktop

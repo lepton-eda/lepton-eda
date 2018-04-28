@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+_Comment=Lepton EDA sch2pcb Project
+MimeType=application/x-lepton-sch2pcb-project
+Type=MimeType
+Icon=application-x-lepton-sch2pcb-project
+Patterns=*.sch2pcb;*.prj;
+X-KDE-IsAlso=text/plain

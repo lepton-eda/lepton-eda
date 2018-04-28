@@ -14,10 +14,9 @@
    inkscape:version="0.45.1"
    sodipodi:version="0.32"
    id="svg249"
-   height="128"
-   width="128"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   version="1.0">
+   height="48.000000px"
+   width="48.000000px"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs3">
     <radialGradient
@@ -136,16 +135,16 @@
        cy="35.736916"
        fx="33.966679"
        fy="35.736916"
-       r="86.70845" />
+       r="86.708450" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient269"
        id="radialGradient2259"
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(0.968273,0,0,1.032767,3.353553,0.646447)"
-       cx="8.824419"
+       cx="8.8244190"
        cy="3.7561285"
-       fx="8.824419"
+       fx="8.8244190"
        fy="3.7561285"
        r="37.751713" />
     <radialGradient
@@ -169,7 +168,7 @@
        cy="12.98915"
        fx="37.030354"
        fy="12.98915"
-       r="4.2929163" />
+       r="4.2929165" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient259"
@@ -180,7 +179,7 @@
        cy="14.9373"
        fx="30.653816"
        fy="14.9373"
-       r="86.70845" />
+       r="86.708450" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient269"
@@ -320,16 +319,16 @@
        cy="35.736916"
        fx="33.966679"
        fy="35.736916"
-       r="86.70845" />
+       r="86.708450" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient269"
        id="radialGradient2419"
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(1.1377199,0,0,0.80732,-0.2968403,8.1670973)"
-       cx="8.824419"
+       cx="8.8244190"
        cy="3.7561285"
-       fx="8.824419"
+       fx="8.8244190"
        fy="3.7561285"
        r="37.751713" />
     <radialGradient
@@ -353,7 +352,7 @@
        cy="12.98915"
        fx="37.030354"
        fy="12.98915"
-       r="4.2929163" />
+       r="4.2929165" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient259"
@@ -364,7 +363,7 @@
        cy="14.9373"
        fx="30.653816"
        fy="14.9373"
-       r="86.70845" />
+       r="86.708450" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient269"
@@ -418,16 +417,16 @@
        cy="35.736916"
        fx="33.966679"
        fy="35.736916"
-       r="86.70845" />
+       r="86.708450" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient269"
        id="radialGradient4835"
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(1.0978868,0.2984143,-0.2117532,0.7790547,4.8532924,-2.5055461)"
-       cx="8.824419"
+       cx="8.8244190"
        cy="3.7561285"
-       fx="8.824419"
+       fx="8.8244190"
        fy="3.7561285"
        r="37.751713" />
     <radialGradient
@@ -471,16 +470,16 @@
        cy="35.736916"
        fx="33.966679"
        fy="35.736916"
-       r="86.70845" />
+       r="86.708450" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient269"
        id="radialGradient4991"
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(1.1377199,0,0,0.80732,-0.2968403,8.1670973)"
-       cx="8.824419"
+       cx="8.8244190"
        cy="3.7561285"
-       fx="8.824419"
+       fx="8.8244190"
        fy="3.7561285"
        r="37.751713" />
     <radialGradient
@@ -504,7 +503,7 @@
        cy="12.98915"
        fx="37.030354"
        fy="12.98915"
-       r="4.2929163" />
+       r="4.2929165" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient259"
@@ -515,7 +514,7 @@
        cy="14.9373"
        fx="30.653816"
        fy="14.9373"
-       r="86.70845" />
+       r="86.708450" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient269"
@@ -578,16 +577,16 @@
        cy="35.736916"
        fx="33.966679"
        fy="35.736916"
-       r="86.70845" />
+       r="86.708450" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient269"
        id="radialGradient5054"
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(1.1377199,0,0,0.80732,-0.2968403,8.1670973)"
-       cx="8.824419"
+       cx="8.8244190"
        cy="3.7561285"
-       fx="8.824419"
+       fx="8.8244190"
        fy="3.7561285"
        r="37.751713" />
     <radialGradient
@@ -611,7 +610,7 @@
        cy="12.98915"
        fx="37.030354"
        fy="12.98915"
-       r="4.2929163" />
+       r="4.2929165" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient259"
@@ -622,7 +621,7 @@
        cy="14.9373"
        fx="30.653816"
        fy="14.9373"
-       r="86.70845" />
+       r="86.708450" />
     <radialGradient
        inkscape:collect="always"
        xlink:href="#linearGradient269"
@@ -653,10 +652,10 @@
      inkscape:document-units="px"
      inkscape:grid-bbox="true"
      showgrid="true"
-     inkscape:current-layer="layer5"
-     inkscape:cy="73.546252"
-     inkscape:cx="132.50825"
-     inkscape:zoom="1.9999999"
+     inkscape:current-layer="g3686"
+     inkscape:cy="18.901304"
+     inkscape:cx="35.074128"
+     inkscape:zoom="11.313708"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="0.99215686"
@@ -666,9 +665,7 @@
      inkscape:showpageshadow="false"
      gridtolerance="0.4"
      showguides="true"
-     inkscape:guide-bbox="true"
-     width="128px"
-     height="128px">
+     inkscape:guide-bbox="true">
     <sodipodi:guide
        orientation="vertical"
        position="62.78125"
@@ -682,7 +679,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>gEDA gsch2pcb project</dc:title>
+        <dc:title>Lepton EDA sch2pcb project</dc:title>
         <dc:subject>
           <rdf:Bag />
         </dc:subject>
@@ -728,8 +725,7 @@
      inkscape:label="Text"
      style="display:inline">
     <g
-       id="g3686"
-       transform="scale(2.6667,2.6667)">
+       id="g3686">
       <g
          id="g5066">
         <g
@@ -756,7 +752,7 @@
       <g
          transform="matrix(0.62458,0.7809608,-0.7809608,0.62458,41.847735,-33.057354)"
          id="g5518"
-         style="fill:#4e9a06;fill-opacity:1;display:inline"
+         style="display:inline;fill:#4e9a06;fill-opacity:1"
          inkscape:export-xdpi="90"
          inkscape:export-ydpi="90">
         <path
@@ -765,11 +761,11 @@
            id="path5520"
            sodipodi:nodetypes="czccccccc" />
         <g
-           style="fill:#4e9a06;fill-opacity:1;display:inline"
+           style="display:inline;fill:#4e9a06;fill-opacity:1"
            id="g5522"
            transform="matrix(0,1,-1,0,58.388892,10.492188)">
           <g
-             style="fill:#4e9a06;fill-opacity:1;stroke:#cc0000"
+             style="fill:#4e9a06;stroke:#cc0000;fill-opacity:1"
              id="g5524">
             <path
                style="opacity:1;color:#000000;fill:#4e9a06;fill-opacity:1;fill-rule:nonzero;stroke:#5fc500;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:block;overflow:visible"
@@ -804,7 +800,7 @@
            sodipodi:nodetypes="cccsc"
            id="path5572"
            d="M 32.154264,30.024723 L 32.190019,40.942375 C 31.69368,41.560423 30.985938,42.532341 28.963783,42.520277 C 18.942846,42.459995 18.880263,28.391365 28.885659,28.447527 C 30.980279,28.459285 31.622856,29.48354 32.154264,30.024723 z "
-           style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#eeeeec;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+           style="fill:none;fill-rule:evenodd;stroke:#eeeeec;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;display:inline;fill-opacity:1" />
         <path
            transform="matrix(0.499134,0,0,0.5656853,7.4918418,42.047098)"
            d="M 45.873551 -17.760931 A 3.0052037 2.6516504 0 1 1  39.863143,-17.760931 A 3.0052037 2.6516504 0 1 1  45.873551 -17.760931 z"
@@ -849,7 +845,7 @@
            sodipodi:nodetypes="cccc"
            id="path5599"
            d="M 51.028641,29.628061 L 41.433086,29.568352 L 41.433086,34.473904 L 51.11703,34.583866"
-           style="fill:#4e9a06;fill-opacity:1;fill-rule:evenodd;stroke:#eeeeec;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+           style="fill:#4e9a06;fill-rule:evenodd;stroke:#eeeeec;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1" />
       </g>
       <g
          transform="translate(-3.1874987,2)"

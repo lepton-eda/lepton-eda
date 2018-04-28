@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+_Comment=Lepton EDA Schematic Symbol
+MimeType=application/x-lepton-symbol
+Type=MimeType
+Icon=application-x-lepton-symbol
+Patterns=*.sym
+X-KDE-IsAlso=text/plain
