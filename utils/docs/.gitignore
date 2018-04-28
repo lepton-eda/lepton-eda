@@ -7,10 +7,10 @@ latex
 lepton-renum.html
 lepton-sch2pcb.html
 lepton-xyrs.html
-pcb_backannotate.html
-refdes_renum.html
-schdiff.html
-tragesym.html
-garchive.html
+lepton-pcb_backannotate.html
+lepton-refdes_renum.html
+lepton-schdiff.html
+lepton-tragesym.html
+lepton-archive.html
 lepton-schlas.html
-gsymfix.html
+lepton-symfix.html
