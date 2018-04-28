@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+_Comment=Lepton EDA Circuit Schematic
+MimeType=application/x-lepton-schematic
+Type=MimeType
+Icon=application-x-lepton-schematic
+Patterns=*.sch
+X-KDE-IsAlso=text/plain

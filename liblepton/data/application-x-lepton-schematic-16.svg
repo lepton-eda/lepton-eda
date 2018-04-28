@@ -359,7 +359,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>gEDA circuit schematic</dc:title>
+        <dc:title>Lepton EDA circuit schematic</dc:title>
         <dc:subject>
           <rdf:Bag />
         </dc:subject>

@@ -1,7 +1,7 @@
 liblepton/data/liblepton.xml.in
-liblepton/data/x-geda-gsch2pcb-project.desktop.in
-liblepton/data/x-geda-schematic.desktop.in
-liblepton/data/x-geda-symbol.desktop.in
+liblepton/data/x-lepton-sch2pcb-project.desktop.in
+liblepton/data/x-lepton-schematic.desktop.in
+liblepton/data/x-lepton-symbol.desktop.in
 
 liblepton/src/a_basic.c
 liblepton/src/f_basic.c
