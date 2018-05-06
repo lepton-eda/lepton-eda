@@ -851,19 +851,127 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (primitive-exit 0))
 
 
-(define (set-toplevel-schematic! files netlist-mode)
+
+; private:
+; function: nets-delete-not-connected()
+;
+; Delete nets if they have "no connect" symbol attached.
+; lepton-eda issue #172
+;
+; [netnames]: list of net names
+; {return}:   updated list of net names
+;
+( define ( nets-delete-not-connected netnames )
+( let
+  (
+  ( ncobjs   #f ) ; list of "no connect" objects
+  ( verbose  #f )
+  ( result  '() ) ; empty list
+  )
+
+  ; if verbose output is requested, format() messages
+  ; will go to the current output port ("#t"):
+  ;
+  ( if ( = (gnetlist:get-verbosity) 1 )
+    ( set! verbose #t )
+  )
+
+  ( for-each          ; walk through [netnames] list:
+  ( lambda( netname )
+
+    ( format verbose "nets-delete-not-connected(): netname: [~a]~%" netname )
+
+    ( set! ncobjs
+      ( gnetlist:graphical-objs-in-net-with-attrib-get-attrib
+          netname
+          "device=DRC_Directive"
+          "value"
+      )
+    ) ; => list of "value" attributes
+
+    ( format verbose "nets-delete-not-connected(): ncobjs: ~a~%" ncobjs )
+
+    ( if ( member "NoConnection" ncobjs )
+      ; if:
+      ( format verbose "nets-delete-not-connected(): deleting net: [~a]~%" netname )
+      ; else:
+      ( set! result ( cons netname result ) ) ; add netname to result list
+    )
+
+  ) ; lambda()
+  netnames
+  ) ; for-each
+
+  ; return:
+  ( reverse result ) ; reverse() to preserve [netnames] list order
+
+) ; let
+) ; nets-delete-not-connected()
+
+
+
+( define ( set-toplevel-schematic! files netlist-mode )
+( let
+  (
+  ( nets    #f )
+  ( verbose #f )
+  ( backend #f )
+  )
+
   (and (eq? netlist-mode 'spice)
        (set! get-uref get-spice-refdes))
   (for-each process-gafrc files)
   (set! toplevel-schematic
         (make-toplevel-schematic (map file->page files)
                                  netlist-mode))
+
+
+  ; if verbose output is requested, format() messages
+  ; will go to the current output port ("#t"):
+  ;
+  ( if ( = (gnetlist:get-verbosity) 1 )
+    ( set! verbose #t )
+  )
+
+  ; toplevel-schematic is a variable of type <schematic>,
+  ; which is a struct ("record") defined in (gnetlist schematic) module
+  ;
+  ; nets = toplevel-schematic.nets:
+  ;
+  ( set! nets ( schematic-nets toplevel-schematic ) )
+  ;             ^----- "accessor" function for <schematic>::nets field
+
+  ( format verbose "set-toplevel-schematic!(): nets BEFORE: ~a~%" nets )
+
+  ; do not delete "no connect" nets for drc2 backend:
+  ;
+  ( set! backend ( gnetlist-option-ref 'backend ) )
+  ( format verbose "set-toplevel-schematic!(): backend: [~a]~%" backend )
+
+  ( if ( not ( string=? backend "drc2" ) )
+    ( set! nets ( nets-delete-not-connected nets ) )
+  )
+
+  ; toplevel-schematic.nets = nets:
+  ;
+  ( set-schematic-nets! toplevel-schematic nets )
+  ; ^----- "modifier" function for <schematic>::nets field
+
+  ( format verbose "set-toplevel-schematic!(): nets AFTER : ~a~%" nets )
+
+
   ;; Backward compatibility variables. Don't use them in your code!!!
   (set! packages (schematic-packages toplevel-schematic))
   (set! all-unique-nets (schematic-nets toplevel-schematic))
   (set! all-nets (schematic-non-unique-nets toplevel-schematic))
   (set! all-pins (map gnetlist:get-pins packages))
-  toplevel-schematic)
+
+  ; return:
+  toplevel-schematic
+
+) ; let
+) ; set-toplevel-schematic!()
+
 
 
 (define (catch-handler tag . args)
