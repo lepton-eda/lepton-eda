@@ -502,24 +502,44 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
 
   widget->left_button_label = gtk_label_new (NULL);
   gtk_misc_set_padding (GTK_MISC (widget->left_button_label), LABEL_XPAD, LABEL_YPAD);
-  gtk_box_pack_start (GTK_BOX (widget), widget->left_button_label, FALSE, FALSE, 0);
-
-  separator = gtk_vseparator_new ();
-  gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
   widget->middle_button_label = gtk_label_new (NULL);
   gtk_misc_set_padding (GTK_MISC (widget->middle_button_label), LABEL_XPAD, LABEL_YPAD);
-  gtk_box_pack_start (GTK_BOX (widget), widget->middle_button_label, FALSE, FALSE, 0);
-
-  separator = gtk_vseparator_new ();
-  gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
   widget->right_button_label = gtk_label_new (NULL);
   gtk_misc_set_padding (GTK_MISC (widget->right_button_label), LABEL_XPAD, LABEL_YPAD);
-  gtk_box_pack_start (GTK_BOX (widget), widget->right_button_label, FALSE, FALSE, 0);
 
-  separator = gtk_vseparator_new ();
-  gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
+
+  /* show mouse buttons indicators by default: */
+  gboolean show_mouse_indicators = TRUE;
+
+  gchar* cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  if (cfg != NULL)
+  {
+    GError* err = NULL;
+    gboolean val = eda_config_get_boolean (cfg,
+                                           "schematic.status-bar",
+                                           "show-mouse-buttons",
+                                           &err);
+    if (err == NULL)
+      show_mouse_indicators = val;
+
+    g_clear_error (&err);
+  }
+
+  if (show_mouse_indicators)
+  {
+    gtk_box_pack_start (GTK_BOX (widget), widget->left_button_label, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), widget->middle_button_label, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), widget->right_button_label, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+  }
+
 
   widget->grid_label = gtk_label_new (NULL);
   gtk_misc_set_padding (GTK_MISC (widget->grid_label), LABEL_XPAD, LABEL_YPAD);
