@@ -1350,7 +1350,7 @@ create_translate_widget (GschemToplevel *w_current, GtkWidget *work_box)
 static void
 create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
 {
-  char *right_button_text = NULL;
+  const char *right_button_text = NULL;
 
   if (default_third_button == POPUP_ENABLED)
   {
@@ -1379,6 +1379,10 @@ create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
                                gschem_options_get_snap_size (w_current->options),
                                "status-text",
                                _("Select Mode"),
+                               "net-rubber-band-mode",
+                               gschem_options_get_net_rubber_band_mode (w_current->options),
+                               "magnetic-net-mode",
+                               gschem_options_get_magnetic_net_mode (w_current->options),
                                NULL);
 
   w_current->bottom_widget = GTK_WIDGET (obj);
