@@ -501,12 +501,15 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   g_return_if_fail (widget != NULL);
 
   widget->left_button_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->left_button_label, _("Left mouse button"));
   gtk_misc_set_padding (GTK_MISC (widget->left_button_label), LABEL_XPAD, LABEL_YPAD);
 
   widget->middle_button_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->middle_button_label, _("Middle mouse button"));
   gtk_misc_set_padding (GTK_MISC (widget->middle_button_label), LABEL_XPAD, LABEL_YPAD);
 
   widget->right_button_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->right_button_label, _("Right mouse button"));
   gtk_misc_set_padding (GTK_MISC (widget->right_button_label), LABEL_XPAD, LABEL_YPAD);
 
 
@@ -542,6 +545,7 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
 
 
   widget->grid_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->grid_label, _("(Snap size, Grid size)"));
   gtk_misc_set_padding (GTK_MISC (widget->grid_label), LABEL_XPAD, LABEL_YPAD);
   gtk_box_pack_start (GTK_BOX (widget), widget->grid_label, FALSE, FALSE, 0);
 
@@ -549,6 +553,7 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
   widget->rubber_band_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->rubber_band_label, _("Net rubber band mode"));
   gtk_misc_set_padding (GTK_MISC (widget->rubber_band_label), LABEL_XPAD, LABEL_YPAD);
   gtk_box_pack_start (GTK_BOX (widget), widget->rubber_band_label, FALSE, FALSE, 0);
 
@@ -556,10 +561,12 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
   widget->magnetic_net_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->magnetic_net_label, _("Magnetic net mode"));
   gtk_misc_set_padding (GTK_MISC (widget->magnetic_net_label), LABEL_XPAD, LABEL_YPAD);
   gtk_box_pack_start (GTK_BOX (widget), widget->magnetic_net_label, FALSE, FALSE, 0);
 
   widget->status_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->status_label, _("Current action mode"));
   gtk_misc_set_padding (GTK_MISC (widget->status_label), LABEL_XPAD, LABEL_YPAD);
   gtk_box_pack_end (GTK_BOX (widget), widget->status_label, FALSE, FALSE, 0);
 
