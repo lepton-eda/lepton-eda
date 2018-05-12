@@ -575,3 +575,22 @@ i_update_grid_info_callback (GschemPageView *view, GschemToplevel *w_current)
 {
   i_update_grid_info (w_current);
 }
+
+
+
+/*! \brief Update the status bar: rubber band, magnetic net modes
+ *
+ *  \param [in] w_current GschemToplevel structure
+ */
+void
+i_update_net_options_status (GschemToplevel* w_current)
+{
+  gschem_bottom_widget_set_rubber_band_mode(
+    GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+    gschem_options_get_net_rubber_band_mode (w_current->options));
+
+  gschem_bottom_widget_set_magnetic_net_mode(
+    GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+    gschem_options_get_magnetic_net_mode (w_current->options));
+}
+

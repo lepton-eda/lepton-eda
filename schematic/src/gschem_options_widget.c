@@ -629,6 +629,11 @@ update_magnetic_net_mode_model (GschemOptionsWidget *widget)
 
   gschem_options_set_magnetic_net_mode (w_current->options,
                                         gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget->magnetic_net_widget)));
+
+  if (w_current->bottom_widget != NULL)
+  {
+    i_update_net_options_status (w_current);
+  }
 }
 
 
@@ -674,6 +679,11 @@ update_net_rubber_band_mode_model (GschemOptionsWidget *widget)
 
   gschem_options_set_net_rubber_band_mode (w_current->options,
                                            gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget->net_rubber_band_widget)));
+
+  if (w_current->bottom_widget != NULL)
+  {
+    i_update_net_options_status (w_current);
+  }
 }
 
 
