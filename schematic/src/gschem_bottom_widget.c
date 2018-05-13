@@ -513,8 +513,10 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   gtk_misc_set_padding (GTK_MISC (widget->right_button_label), LABEL_XPAD, LABEL_YPAD);
 
 
-  /* show mouse buttons indicators by default: */
-  gboolean show_mouse_indicators = TRUE;
+  /* default values for configuration settings: */
+  gboolean show_mouse_indicators       = TRUE;
+  gboolean show_rubber_band_indicator  = FALSE;
+  gboolean show_magnetic_net_indicator = FALSE;
 
   gchar* cwd = g_get_current_dir();
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
@@ -522,16 +524,37 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
 
   if (cfg != NULL)
   {
-    GError* err = NULL;
-    gboolean val = eda_config_get_boolean (cfg,
-                                           "schematic.status-bar",
-                                           "show-mouse-buttons",
-                                           &err);
+    GError*  err = NULL;
+    gboolean val = FALSE;
+
+    /* mouse indicators: */
+    val = eda_config_get_boolean (cfg,
+                                  "schematic.status-bar",
+                                  "show-mouse-buttons",
+                                  &err);
     if (err == NULL)
       show_mouse_indicators = val;
+    g_clear_error (&err);
 
+    /* net rubber band indicator: */
+    val = eda_config_get_boolean (cfg,
+                                  "schematic.status-bar",
+                                  "show-rubber-band",
+                                  &err);
+    if (err == NULL)
+      show_rubber_band_indicator = val;
+    g_clear_error (&err);
+
+    /* magnetic net indicator: */
+    val = eda_config_get_boolean (cfg,
+                                  "schematic.status-bar",
+                                  "show-magnetic-net",
+                                  &err);
+    if (err == NULL)
+      show_magnetic_net_indicator = val;
     g_clear_error (&err);
   }
+
 
   if (show_mouse_indicators)
   {
@@ -555,7 +578,10 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   widget->rubber_band_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->rubber_band_label, _("Net rubber band mode"));
   gtk_misc_set_padding (GTK_MISC (widget->rubber_band_label), LABEL_XPAD, LABEL_YPAD);
-  gtk_box_pack_start (GTK_BOX (widget), widget->rubber_band_label, FALSE, FALSE, 0);
+  if (show_rubber_band_indicator)
+  {
+    gtk_box_pack_start (GTK_BOX (widget), widget->rubber_band_label, FALSE, FALSE, 0);
+  }
 
   separator = gtk_vseparator_new ();
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
@@ -563,7 +589,10 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   widget->magnetic_net_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->magnetic_net_label, _("Magnetic net mode"));
   gtk_misc_set_padding (GTK_MISC (widget->magnetic_net_label), LABEL_XPAD, LABEL_YPAD);
-  gtk_box_pack_start (GTK_BOX (widget), widget->magnetic_net_label, FALSE, FALSE, 0);
+  if (show_magnetic_net_indicator)
+  {
+    gtk_box_pack_start (GTK_BOX (widget), widget->magnetic_net_label, FALSE, FALSE, 0);
+  }
 
   widget->status_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->status_label, _("Current action mode"));
