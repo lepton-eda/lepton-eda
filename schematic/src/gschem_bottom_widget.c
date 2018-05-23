@@ -517,6 +517,8 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   gboolean show_mouse_indicators       = TRUE;
   gboolean show_rubber_band_indicator  = FALSE;
   gboolean show_magnetic_net_indicator = FALSE;
+  gdk_color_parse ("black", &widget->status_inactive_color);
+  gdk_color_parse ("green", &widget->status_active_color);
 
   gchar* cwd = g_get_current_dir();
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
@@ -552,6 +554,18 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
                                   &err);
     if (err == NULL)
       show_magnetic_net_indicator = val;
+    g_clear_error (&err);
+
+    /* status line active color: */
+    gchar* color = eda_config_get_string (cfg,
+                                          "schematic.status-bar",
+                                          "status-active-color",
+                                          &err);
+    if (color != NULL)
+    {
+      gdk_color_parse (color, &widget->status_active_color);
+      g_free (color);
+    }
     g_clear_error (&err);
   }
 
@@ -767,15 +781,15 @@ gschem_bottom_widget_set_status_text_color (GschemBottomWidget *widget, gboolean
 {
   g_return_if_fail (widget != NULL);
 
-  GdkColor color;
+  const GdkColor* color = NULL;
 
   if (active) {
-    gdk_color_parse ("green", &color);
+    color = &widget->status_active_color;
   } else {
-    gdk_color_parse ("black", &color);
+    color = &widget->status_inactive_color;
   }
 
-  gtk_widget_modify_fg (GTK_WIDGET (widget->status_label), GTK_STATE_NORMAL, &color);
+  gtk_widget_modify_fg (GTK_WIDGET (widget->status_label), GTK_STATE_NORMAL, color);
 }
 
 

@@ -53,6 +53,8 @@ struct _GschemBottomWidget
   GtkWidget *rubber_band_label;
   gboolean  magnetic_net_mode;
   GtkWidget *magnetic_net_label;
+  GdkColor  status_inactive_color;
+  GdkColor  status_active_color;
 };
 
 
