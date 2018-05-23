@@ -519,6 +519,7 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   gboolean show_magnetic_net_indicator = FALSE;
   gdk_color_parse ("black", &widget->status_inactive_color);
   gdk_color_parse ("green", &widget->status_active_color);
+  widget->status_bold_font = FALSE;
 
   gchar* cwd = g_get_current_dir();
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
@@ -566,6 +567,15 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
       gdk_color_parse (color, &widget->status_active_color);
       g_free (color);
     }
+    g_clear_error (&err);
+
+    /* status line bold font: */
+    val = eda_config_get_boolean (cfg,
+                                  "schematic.status-bar",
+                                  "status-bold-font",
+                                  &err);
+    if (err == NULL)
+      widget->status_bold_font = val;
     g_clear_error (&err);
   }
 
@@ -803,7 +813,10 @@ gschem_bottom_widget_set_status_text (GschemBottomWidget *widget, const char *te
 {
   g_return_if_fail (widget != NULL);
 
-  gtk_label_set_text (GTK_LABEL (widget->status_label), text);
+  gchar* str = g_strdup_printf (widget->status_bold_font ? "<b>%s</b>" : "%s",
+                                text);
+  gtk_label_set_markup (GTK_LABEL (widget->status_label), str);
+  g_free (str);
 
   g_object_notify (G_OBJECT (widget), "status-text");
 }
