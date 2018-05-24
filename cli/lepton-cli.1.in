@@ -68,7 +68,8 @@ used.
 .TP 8
 \fB-s\fR, \fB--size\fR=(\fBauto\fR | \fIWIDTH\fR:\fIHEIGHT\fR)
 Size the output with specific dimensions.  If the size is `auto',
-select the size that best fits the drawing.
+select the size that best fits the drawing. Values can be separated
+either by colon, semicolon or white space.
 .TP 8
 \fB-k\fR, \fB--scale\fR=\fIFACTOR\fR Set the output scale
 \fIFACTOR\fR. This is a distance identical with 100 points (1
@@ -83,13 +84,15 @@ widths can be provided.  If one is provided, it will be used on all
 four sides.  If two are provided, the first will be used for the
 top/bottom and the second for the left/right.  If three are provided,
 the first will be used for the top, the second for left/right, and the
-third for the bottom.
+third for the bottom. Values can be separated either by colon, semicolon
+or white space.
 .TP 8
 \fB-a\fR, \fB--align\fR=(\fBauto\fR | \fIHALIGN\fR:\fIVALIGN\fR)
 Set how the drawing is aligned within the page.  \fIHALIGN\fR controls
 the horizontal alignment, and \fIVALIGN\fR the vertical.  Each
 alignment value should be in the range 0.0 to 1.0.  The `auto'
 alignment is equivalent to a value of `0.5:0.5', i.e. centered.
+Values can be separated either by colon, semicolon or white space.
 .TP 8
 \fB-d\fR, \fB--dpi\fR=\fIDPI\fR
 Set the number of pixels per inch used when generating PNG output.
