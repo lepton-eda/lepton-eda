@@ -6,5 +6,5 @@ _Comment=Create and edit electrical schematics and symbols with lepton-schematic
 Type=Application
 Exec=lepton-schematic %F
 Icon=lepton-schematic
-MimeType=application/x-geda-schematic;application/x-geda-symbol;
+MimeType=application/x-lepton-schematic;application/x-lepton-symbol;
 Categories=Engineering;Electronics;
