@@ -6,5 +6,5 @@ _Comment=Manipulate component attributes with lepton-attrib
 Type=Application
 Exec=lepton-attrib %F
 Icon=lepton-attrib
-#MimeType=application/x-geda-schematic;application/x-geda-symbol;
+#MimeType=application/x-lepton-schematic;application/x-lepton-symbol;
 Categories=Engineering;Electronics;
