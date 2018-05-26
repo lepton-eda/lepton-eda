@@ -29,7 +29,7 @@ AC_DEFUN([AX_DATA_DIRS],
   # FIXME at some point this should become "$datarootdir/geda-gaf" to
   # match the tarball name.
   AC_MSG_CHECKING([where to install gEDA shared data])
-  GEDADATADIR="$datarootdir/gEDA"
+  GEDADATADIR="$datarootdir/lepton-eda"
   AC_MSG_RESULT([$GEDADATADIR])
 
   # Check where to install rc files.
@@ -42,7 +42,7 @@ AC_DEFUN([AX_DATA_DIRS],
       [install system config in specific DIR]),
     [ if test "X$with_rcdir" != "Xno"; then
         if test "X$with_rcdir" = "Xyes"; then
-          GEDARCDIR="$sysconfdir/gEDA"
+          GEDARCDIR="$sysconfdir/lepton-eda"
         else
           GEDARCDIR="$with_rcdir"
         fi

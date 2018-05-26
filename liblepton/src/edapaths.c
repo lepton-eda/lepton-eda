@@ -36,13 +36,13 @@
 #ifdef __cplusplus
 static const gchar DATA_ENV[] = "GEDADATA";
 static const gchar CONFIG_ENV[] = "GEDADATARC";
-static const gchar DATA_XDG_SUBDIR[] = "gEDA";
+static const gchar DATA_XDG_SUBDIR[] = "lepton-eda";
 static const gchar DATA_GUESS_FILE[] = "scheme/geda.scm";
 static const gchar USER_DOTDIR[] = ".gEDA";
 #else
 static const gchar const DATA_ENV[] = "GEDADATA";
 static const gchar const CONFIG_ENV[] = "GEDADATARC";
-static const gchar const DATA_XDG_SUBDIR[] = "gEDA";
+static const gchar const DATA_XDG_SUBDIR[] = "lepton-eda";
 static const gchar const DATA_GUESS_FILE[] = "scheme/geda.scm";
 static const gchar const USER_DOTDIR[] = ".gEDA";
 #endif
@@ -75,7 +75,7 @@ guess_install_data_dir(void)
 		if (g_file_test("/proc/self/exe", G_FILE_TEST_IS_SYMLINK)) {
 			gchar *bin = canonicalize_file_name("/proc/self/exe");
 			gchar *prefix = dirname(dirname(bin));
-			tmp_dir = g_build_filename(prefix, "share/gEDA", NULL);
+			tmp_dir = g_build_filename(prefix, "share/lepton-eda", NULL);
 			free(bin);
 		}
 #endif
