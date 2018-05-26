@@ -1,1 +1,1 @@
-info_TEXINFOS = geda-scheme.texi
+info_TEXINFOS = lepton-scheme.texi

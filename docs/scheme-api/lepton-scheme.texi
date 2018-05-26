@@ -1,18 +1,19 @@
 \input texinfo                              @c -*-texinfo-*-
-@setfilename geda-scheme.info
+@setfilename lepton-scheme.info
 @include version.texi
 @documentencoding utf-8
 @dircategory The Algorithmic Language Scheme
 @direntry
-* gEDA Scheme: (geda-scheme).  gEDA extensibility with Guile Scheme.
+* Lepton EDA Scheme: (lepton-scheme).  Lepton EDA extensibility with Guile Scheme.
 @end direntry
-@settitle gEDA Scheme Reference Manual @value{VERSION}
+@settitle Lepton EDA Scheme Reference Manual @value{VERSION}
 
 @copying
-This manual is for gEDA/gaf, version @value{VERSION}.
+This manual is for Lepton EDA, version @value{VERSION}.
 
 Copyright @copyright{} 2011-2013 Peter TB Brett
-Copyright @copyright{} 2011-2016 gEDA developers
+Copyright @copyright{} 2011-2017 gEDA developers
+Copyright @copyright{} 2017-2018 Lepton developers
 
 The text of and illustrations in this document are licensed under a
 Creative Commons Attribution–Share Alike 3.0 Unported license
@@ -25,7 +26,7 @@ must provide the URL for the original version.
 @end copying
 
 @titlepage
-@title gEDA Scheme Reference Manual
+@title Lepton EDA Scheme Reference Manual
 @author Peter TB Brett
 
 @page
@@ -38,7 +39,7 @@ must provide the URL for the original version.
 
 @ifnottex
 @node Top
-@top gEDA Scheme Reference Manual
+@top Lepton EDA Scheme Reference Manual
 @insertcopying
 @end ifnottex
 
