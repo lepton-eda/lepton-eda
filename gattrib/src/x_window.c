@@ -55,7 +55,7 @@
 /*------------------------------------------------------------------
  * Gattrib specific defines
  *------------------------------------------------------------------*/
-#define GATTRIB_THEME_ICON_NAME "geda-gattrib"
+#define GATTRIB_THEME_ICON_NAME "lepton-attrib"
 
 static void
 x_window_create_menu(GtkWindow *window, GtkWidget **menubar);
