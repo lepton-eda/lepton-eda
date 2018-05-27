@@ -23,7 +23,7 @@
 
 #include "gschem.h"
 
-#define GSCHEM_THEME_ICON_NAME "geda-gschem"
+#define GSCHEM_THEME_ICON_NAME "lepton-schematic"
 
 
 
