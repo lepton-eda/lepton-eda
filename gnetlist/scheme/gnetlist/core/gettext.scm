@@ -24,5 +24,5 @@
 
 (define-module (gnetlist core gettext))
 
-(define %gnetlist-gettext-domain "geda-gnetlist")
+(define %gnetlist-gettext-domain "lepton-netlist")
 (define-public (_ msg) (gettext msg %gnetlist-gettext-domain))
