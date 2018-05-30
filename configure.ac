@@ -225,15 +225,15 @@ AC_CONFIG_FILES([Makefile
                  schematic/tests/Makefile
                  schematic/scheme/Makefile
 
-                 gattrib/Makefile
-                 gattrib/po/Makefile.in
-                 gattrib/design/Makefile
-                 gattrib/docs/Makefile
-                 gattrib/include/Makefile
-                 gattrib/lib/Makefile
-                 gattrib/lib/system-gattribrc
-                 gattrib/src/Makefile
-                 gattrib/data/Makefile
+                 attrib/Makefile
+                 attrib/po/Makefile.in
+                 attrib/design/Makefile
+                 attrib/docs/Makefile
+                 attrib/include/Makefile
+                 attrib/lib/Makefile
+                 attrib/lib/system-gattribrc
+                 attrib/src/Makefile
+                 attrib/data/Makefile
 
                  symcheck/docs/Makefile
                  symcheck/po/Makefile.in

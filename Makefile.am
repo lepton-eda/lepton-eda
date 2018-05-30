@@ -1,5 +1,5 @@
 if ENABLE_GATTRIB
-GATTRIB_DIR=gattrib
+GATTRIB_DIR=attrib
 endif
 if ENABLE_CONTRIB
 CONTRIB_DIR=contrib
@@ -63,7 +63,7 @@ endif HAVE_GIT_REPO
 
 doxygen:
 if ENABLE_DOXYGEN
-	@for subdir in gattrib/docs schematic/docs netlist/docs \
+	@for subdir in attrib/docs schematic/docs netlist/docs \
 	  liblepton/docs symcheck/docs utils/docs ; do \
 	  (cd $$subdir; $(MAKE) doxygen) || exit 1; \
         done
