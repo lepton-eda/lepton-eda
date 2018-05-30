@@ -8,9 +8,9 @@ backend="`echo "${tmp}" | sed -e "s:^${stem}-::"`"
 LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton"
 export LIBLEPTON
 
-GNETLIST="${abs_top_builddir}/gnetlist/scheme/lepton-netlist"
-GEDADATA="${abs_top_srcdir}/gnetlist" # HACKHACKHACK
-GEDADATARC="${abs_top_builddir}/gnetlist/lib"
+GNETLIST="${abs_top_builddir}/netlist/scheme/lepton-netlist"
+GEDADATA="${abs_top_srcdir}/netlist" # HACKHACKHACK
+GEDADATARC="${abs_top_builddir}/netlist/lib"
 export GEDADATA
 export GEDADATARC
 
@@ -37,8 +37,8 @@ fi
 cat > "${rundir}/gafrc" << EOF
 ;; We want to point at the scheme code that hasn't been installed yet so that
 ;; 'make check' during development can work correctly.
-(scheme-directory "${abs_top_srcdir}/gnetlist/scheme")
-(scheme-directory "${abs_top_builddir}/gnetlist/scheme")
+(scheme-directory "${abs_top_srcdir}/netlist/scheme")
+(scheme-directory "${abs_top_builddir}/netlist/scheme")
 (scheme-directory "${abs_top_srcdir}/liblepton/scheme")
 (scheme-directory "${abs_top_builddir}/liblepton/scheme")
 
