@@ -241,26 +241,26 @@ AC_CONFIG_FILES([Makefile
                  symcheck/Makefile
                  symcheck/scheme/Makefile
 
-                 gnetlist/Makefile
-                 gnetlist/po/Makefile.in
-                 gnetlist/scheme/Makefile
-                 gnetlist/examples/Makefile
-                 gnetlist/tests/Makefile
-                 gnetlist/docs/Makefile
-                 gnetlist/docs/vams/Makefile
-                 gnetlist/examples/vams/Makefile
-                 gnetlist/examples/vams/vhdl/Makefile
-                 gnetlist/examples/vams/vhdl/basic-vhdl/Makefile
-                 gnetlist/examples/vams/vhdl/new-vhdl/Makefile
-                 gnetlist/examples/switcap/Makefile
-                 gnetlist/utils/Makefile
-                 gnetlist/scripts/Makefile
-                 gnetlist/scripts/annotate.sh
-                 gnetlist/scripts/bom_xref.sh
-                 gnetlist/scripts/bompp.sh
-                 gnetlist/examples/verilog/Makefile
-                 gnetlist/examples/verilog/T_FF_example/Makefile
-                 gnetlist/examples/verilog/T_FF_example/verilog_modules/Makefile
+                 netlist/Makefile
+                 netlist/po/Makefile.in
+                 netlist/scheme/Makefile
+                 netlist/examples/Makefile
+                 netlist/tests/Makefile
+                 netlist/docs/Makefile
+                 netlist/docs/vams/Makefile
+                 netlist/examples/vams/Makefile
+                 netlist/examples/vams/vhdl/Makefile
+                 netlist/examples/vams/vhdl/basic-vhdl/Makefile
+                 netlist/examples/vams/vhdl/new-vhdl/Makefile
+                 netlist/examples/switcap/Makefile
+                 netlist/utils/Makefile
+                 netlist/scripts/Makefile
+                 netlist/scripts/annotate.sh
+                 netlist/scripts/bom_xref.sh
+                 netlist/scripts/bompp.sh
+                 netlist/examples/verilog/Makefile
+                 netlist/examples/verilog/T_FF_example/Makefile
+                 netlist/examples/verilog/T_FF_example/verilog_modules/Makefile
 
                  utils/Makefile
                  utils/docs/Makefile
