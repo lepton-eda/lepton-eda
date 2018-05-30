@@ -5,7 +5,7 @@ if ENABLE_CONTRIB
 CONTRIB_DIR=contrib
 endif
 SUBDIRS = liblepton libleptonrenderer cli schematic ${GATTRIB_DIR} \
-	symcheck gnetlist utils symbols docs examples ${CONTRIB_DIR}
+	symcheck netlist utils symbols docs examples ${CONTRIB_DIR}
 
 ACLOCAL_AMFLAGS = -I m4
 
@@ -63,7 +63,7 @@ endif HAVE_GIT_REPO
 
 doxygen:
 if ENABLE_DOXYGEN
-	@for subdir in gattrib/docs schematic/docs gnetlist/docs \
+	@for subdir in gattrib/docs schematic/docs netlist/docs \
 	  liblepton/docs symcheck/docs utils/docs ; do \
 	  (cd $$subdir; $(MAKE) doxygen) || exit 1; \
         done
