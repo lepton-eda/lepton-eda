@@ -21,7 +21,7 @@ Notable changes in Lepton EDA 1.9.4
   `lepton-archive`, `gsymfix` has been renamed to `lepton-symfix`,
   `schdiff` has been renamed to `lepton-schdiff`, `gschlas` has
   been renamed to `lepton-schlas`, `gxyrs` has been renamed to
-  `lepton-xyrs`.
+  `lepton-xyrs`, `gattrib` has been renamed to `lepton-attrib`.
 
 - By default, backward compatibility symlinks are created for all
   the renamed tools. A new configure option,
