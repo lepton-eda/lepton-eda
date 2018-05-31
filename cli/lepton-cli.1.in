@@ -205,13 +205,13 @@ There is NO WARRANTY, to the extent permitted by law.
 .SH SEE ALSO
 \fBlepton-schematic\fR(1).
 
-For more information on the Scheme API, see the \fBgeda-scheme\fR
+For more information on the Scheme API, see the \fBlepton-scheme\fR
 Texinfo manual.  If the \fBinfo\fR program is properly installed at
 your site, the command
 
 .IP
 .B
-info geda-scheme
+info lepton-scheme
 
 .PP
 should give you access to the complete manual.
