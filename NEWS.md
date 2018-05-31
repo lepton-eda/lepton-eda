@@ -13,7 +13,13 @@ Notable changes in Lepton EDA 1.9.4
   renamed to `lepton-schematic`, `gnetlist` has been renamed to
   `lepton-netlist`, `gsch2pcb` has been renamed to
   `lepton-sch2pcb`, `gsymcheck` has been renamed to
-  `lepton-symcheck`, `grenum` has been renamed to `lepton-renum`.
+  `lepton-symcheck`, `grenum` has been renamed to `lepton-renum`,
+  `refdes-renum` has been renamed to `lepton-refdes_renum`,
+  `tragesym` has been renamed to `lepton-tragesym`,
+  `pcb_backannotate` has been renamed to
+  `lepton-pcb_backannotate`, `garchive` has been renamed to
+  `lepton-archive`, `gsymfix` has been renamed to `lepton-symfix`,
+  `schdiff` has been renamed to `lepton-schdiff`.
 
 - By default, backward compatibility symlinks are created for all
   the renamed tools. A new configure option,
