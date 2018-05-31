@@ -160,6 +160,29 @@ Notable changes in Lepton EDA 1.9.4
 - Color selection combo box keeps updated in line with the current
   color scheme.
 
+- Several new statusbar settings can now be used to adjust the
+  statusbar appearance. The user can change one of the settings in
+  the `schematic.status-bar` configuration group in order to get
+  her favorite view:
+
+  - Rubberband and magnetic net mode indicators can be now turned
+    on by setting `show-rubber-band` and/or `show-magnetic-net`
+    configuration keys to `true`, accordingly.
+
+  - Indication of mouse button assignment can be switched off by
+    setting `show-mouse-buttons` configuration key to `false`.
+
+  - The user can now affect the font style used for the active
+    action text with two new keys: `status-active-color` and
+    `status-bold-font`.
+
+   Please see
+   [the Configuration Settings HowTo](https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings)
+   for more information on the above settings.
+
+- All status bar elements have now tooltip descriptions.
+
+
 ### Changes in `lepton-symcheck`:
 
 - `lepton-symcheck` (previously known as `gsymcheck`)
