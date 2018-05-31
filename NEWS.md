@@ -20,7 +20,8 @@ Notable changes in Lepton EDA 1.9.4
   `lepton-pcb_backannotate`, `garchive` has been renamed to
   `lepton-archive`, `gsymfix` has been renamed to `lepton-symfix`,
   `schdiff` has been renamed to `lepton-schdiff`, `gschlas` has
-  been renamed to `lepton-schlas`.
+  been renamed to `lepton-schlas`, `gxyrs` has been renamed to
+  `lepton-xyrs`.
 
 - By default, backward compatibility symlinks are created for all
   the renamed tools. A new configure option,
