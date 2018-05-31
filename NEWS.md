@@ -45,6 +45,8 @@ Notable changes in Lepton EDA 1.9.4
 - A new section about 'Makefile' creation has been added to
   CONTRIBUTING.md to facilitate non-gnu-make builds.
 
+- Fixed `--disable-deprecated` configure option.
+
 - Fixed non-working Scheme API procedure `reset-source-library`.
 
 ### Changes in `lepton-cli`:
