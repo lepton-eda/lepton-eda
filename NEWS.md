@@ -13,7 +13,7 @@ Notable changes in Lepton EDA 1.9.4
   renamed to `lepton-schematic`, `gnetlist` has been renamed to
   `lepton-netlist`, `gsch2pcb` has been renamed to
   `lepton-sch2pcb`, `gsymcheck` has been renamed to
-  `lepton-symcheck`.
+  `lepton-symcheck`, `grenum` has been renamed to `lepton-renum`.
 
 - By default, backward compatibility symlinks are created for all
   the renamed tools. A new configure option,
