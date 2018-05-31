@@ -29,6 +29,9 @@ Notable changes in Lepton EDA 1.9.4
   `--disable-compat-symlinks`, can be used to disable their
   creation.
 
+- The users have now use `info lepton-scheme` to open texinfo
+  manual on Lepton EDA Scheme API instead of `info geda-scheme`.
+
 ### General changes:
 
 - Compatibility with various non-Linux systems has been improved
@@ -100,7 +103,7 @@ Notable changes in Lepton EDA 1.9.4
 
 - A new hook, `switch-action-mode-hook`, has been added, which can
   be used to yield user subroutines on mode switch. Please check
-  `info geda-scheme` for details.
+  `info lepton-scheme` for details.
 
 - 'Text Entry...' dialog now respects the `text-size` option
   value.
