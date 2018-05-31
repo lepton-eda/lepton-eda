@@ -31,6 +31,10 @@ Notable changes in Lepton EDA 1.9.4
 
 ### General changes:
 
+- Compatibility with various non-Linux systems has been improved
+  by avoiding of hardcoding paths for such interpreters as Perl,
+  Python, or bash.
+
 - `lepton-eda` can now be compiled in C++ mode basically by using
   `./configure CC=g++ && make CC=g++`.
 
