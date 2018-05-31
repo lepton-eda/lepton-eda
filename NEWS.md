@@ -23,10 +23,11 @@ Notable changes in Lepton EDA 1.9.4
   been renamed to `lepton-schlas`, `gxyrs` has been renamed to
   `lepton-xyrs`, `gattrib` has been renamed to `lepton-attrib`.
 
-- By default, backward compatibility symlinks are created for
+- By default, backward compatibility symlinks are not created for
   major renamed tools, namely, `gaf`, `gattrib`, `gnetlist`,
-  `gsch2pcb`, `gschem`, and `gsymcheck`.  A new configure option,
-  `--disable-compat-symlinks`, can be used to disable their
+  `gsch2pcb`, `gschem`, and `gsymcheck`, though the user can
+  change that.  A new configure option,
+  `--enable-compat-symlinks`, can be used to enable their
   creation.
 
 - The users have now use `info lepton-scheme` to open texinfo
