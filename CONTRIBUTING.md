@@ -109,7 +109,7 @@ When writing Scheme code:
 - Predicate functions, i.e. functions that test something, should have
   names ending in `?`, e.g. `object?`; destructive functions, that
   modify one of their arguments or global state, should have names
-  ending in `!`, e.g. `config-set!`.
+  ending in `!`, e.g. `set-config!`.
 
 - When defining a function please use the
   ["implicit `define`" form](http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-8.html#%_sec_5.2):

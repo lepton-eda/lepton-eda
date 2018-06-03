@@ -1962,7 +1962,7 @@ Retrieve configuration value as a list of inexact real numbers.
 Since 1.10.
 @end defun
 
-@defun config-set! cfg group key value
+@defun set-config! cfg group key value
 Set the configuration parameter identified by the given @var{group}
 and @var{key} in the configuration context @var{cfg}.  The type of
 value to set is inferred from @var{value}.

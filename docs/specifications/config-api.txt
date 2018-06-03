@@ -594,7 +594,7 @@ Scheme functions::
 
   set-config! cfg group key value
 
-The ``config-set!`` function infers the necessary type from the type
+The ``set-config!`` function infers the necessary type from the type
 of its ``value`` argument.
 
 Configuration Events
