@@ -54,6 +54,8 @@ struct _EdaConfigPrivate
 #define USER_CONFIG_NAME "geda-user.conf"
 /*! Filename for gEDA local configuration files */
 #define LOCAL_CONFIG_NAME "geda.conf"
+/*! Filename for gEDA configuration files in cache dir*/
+#define CACHE_CONFIG_NAME "gui.conf"
 
 static void eda_config_dispose (GObject *object);
 static void eda_config_finalize (GObject *object);
@@ -274,6 +276,45 @@ eda_config_get_property (GObject *object, guint property_id,
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     break;
   }
+}
+
+/*! \public \memberof EdaConfig
+ * \brief Return the cache configuration context.
+ *
+ * This context is used for application-specific configuration,
+ * and is loaded from the cache directory: $XDG_CACHE_HOME,
+ * usually $HOME/.cache/lepton-eda
+ * It has no parent context.
+ *
+ * \return the cache #EdaConfig configuration context.
+ */
+EdaConfig*
+eda_config_get_cache_context()
+{
+  static gsize initialized = 0;
+  static EdaConfig* config = NULL;
+
+  if (g_once_init_enter (&initialized))
+  {
+    gchar* filename = NULL;
+    GFile* file;
+
+    filename = g_build_filename (eda_get_user_cache_dir(),
+                                 CACHE_CONFIG_NAME, NULL);
+
+    file = g_file_new_for_path (filename);
+
+    config = EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
+                                       "file",    file,
+                                       "trusted", TRUE,
+                                       NULL));
+
+    g_free (filename);
+    g_object_unref (file);
+
+    g_once_init_leave (&initialized, 1);
+  }
+  return config;
 }
 
 /*! \public \memberof EdaConfig
