@@ -384,6 +384,22 @@ eda_get_user_config_dir(void)
 	return user_config_dir;
 }
 
+const gchar*
+eda_get_user_cache_dir()
+{
+  static gchar* user_cache_dir = NULL;
+
+  if (g_once_init_enter (&user_cache_dir))
+  {
+    gchar* dir = g_build_filename (g_get_user_cache_dir(),
+                                   DATA_XDG_SUBDIR, NULL);
+
+    g_once_init_leave (&user_cache_dir, dir);
+  }
+
+  return user_cache_dir;
+}
+
 /* ================================================================
  * Module initialisation
  * ================================================================ */
@@ -403,6 +419,7 @@ eda_paths_init(void)
 	eda_get_system_config_dirs();
 	eda_get_user_data_dir();
 	eda_get_user_config_dir();
+	eda_get_user_cache_dir();
 
 	eda_paths_init_env();
 }

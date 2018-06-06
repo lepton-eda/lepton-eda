@@ -96,6 +96,7 @@ GType eda_config_get_type (void) G_GNUC_CONST;
 EdaConfig *eda_config_get_context_for_file (GFile *path) G_GNUC_WARN_UNUSED_RESULT;
 EdaConfig *eda_config_get_context_for_path (const gchar *path) G_GNUC_WARN_UNUSED_RESULT;
 
+EdaConfig *eda_config_get_cache_context (void);
 EdaConfig *eda_config_get_default_context (void);
 EdaConfig *eda_config_get_system_context (void);
 EdaConfig *eda_config_get_user_context (void);
