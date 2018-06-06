@@ -451,6 +451,9 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
   do { if (err == NULL) break;  handler (&err, user_data);        \
        g_clear_error (&err); } while (0)
 
+  /* Load cache configuration: */
+  g_rc_load_cache_config (toplevel, &err); HANDLER_DISPATCH;
+
   /* Load RC files in order. */
   /* First gafrc files. */
   g_rc_parse_system (toplevel, NULL, &err); HANDLER_DISPATCH;
@@ -920,3 +923,36 @@ SCM g_rc_print_color_map (SCM scm_map)
   s_color_map_from_scm (print_colors, scm_map, "print-color-map");
   return SCM_BOOL_T;
 }
+
+
+
+/*! \brief Load cache configuration data.
+ *
+ * \param toplevel  The current #TOPLEVEL structure.
+ * \param err       Return location for errors, or NULL.
+ * \return TRUE on success, FALSE on failure.
+ */
+gboolean
+g_rc_load_cache_config (TOPLEVEL* toplevel, GError** err)
+{
+  g_return_val_if_fail (toplevel != NULL, FALSE);
+
+  EdaConfig* cfg = eda_config_get_cache_context();
+
+  gboolean status = FALSE;
+  if (cfg != NULL)
+  {
+    GError* tmp_err = NULL;
+    status = eda_config_load (cfg, &tmp_err);
+
+    /* It's OK if file is not found (e.g. on first program run): */
+    if (g_error_matches (tmp_err, G_IO_ERROR, G_IO_ERROR_NOT_FOUND))
+    {
+      g_clear_error (&tmp_err);
+      status = TRUE;
+    }
+  }
+
+  return status;
+}
+
