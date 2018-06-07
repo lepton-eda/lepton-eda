@@ -214,7 +214,12 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* Set up default configuration */
   i_vars_init_gschem_defaults ();
+
+  /* Set up atexit handlers */
+  gschem_atexit (i_vars_atexit_save_cache_config, NULL);
+  /* Do no save user config:
   gschem_atexit (i_vars_atexit_save_user_config, NULL);
+  */
 
   /* Now read in RC files. */
   g_rc_parse_gtkrc();
