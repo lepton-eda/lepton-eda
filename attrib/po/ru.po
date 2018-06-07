@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gattrib\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2017-02-26 10:33+0300\n"
+"POT-Creation-Date: 2018-06-06 12:31+0300\n"
 "PO-Revision-Date: 2014-03-08 20:49+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -20,41 +20,32 @@ msgstr ""
 "X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: gattrib/data/geda-gattrib.desktop.in:3
-msgid "gEDA Attribute Editor"
+#: attrib/data/lepton-attrib.desktop.in.h:3
+#, fuzzy
+msgid "Lepton EDA Attribute Editor"
 msgstr "Редактор атрибутов gEDA"
 
-#: gattrib/data/geda-gattrib.desktop.in:4
-msgid "Manipulate component attributes with gattrib"
+#: attrib/data/lepton-attrib.desktop.in.h:4
+#, fuzzy
+msgid "Manipulate component attributes with lepton-attrib"
 msgstr "Управление атрибутами компонента с помощью gattrib"
 
-#: gattrib/src/f_export.c:82
+#: attrib/src/f_export.c:82
 #, fuzzy, c-format
 msgid "o_save: Could not open [%1$s]"
 msgstr "o_save: Не удалось открыть «%s»\n"
 
-#: gattrib/src/gattrib.c:152
-#, fuzzy, c-format
-msgid ""
-"gEDA/gattrib version %1$s%2$s.%3$s\n"
-"gEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
-"details.\n"
-"This is free software, and you are welcome to redistribute it under certain\n"
-"conditions; please see the COPYING file for more details.\n"
+#: attrib/src/lepton-attrib.c:160
+#, c-format
+msgid "Lepton EDA/lepton-attrib version %1$s%2$s.%3$s git: %4$.7s"
 msgstr ""
-"gEDA/gattrib version версии %s%s.%s\n"
-"gEDA/gattrib поставляется БЕЗ КАКИХ БЫ ТО НИ БЫЛО ГАРАНТИЙ; подробности см. "
-"в файле COPYING.\n"
-"Это свободное программное обеспечение, и его можно распространять при "
-"определённых\n"
-"\n"
 
-#: gattrib/src/gattrib.c:191
+#: attrib/src/lepton-attrib.c:196
 #, fuzzy, c-format
 msgid "Couldn't find file [%1$s]\n"
 msgstr "Не удалось найти файл «%s»\n"
 
-#: gattrib/src/g_rc.c:70
+#: attrib/src/g_rc.c:70
 #, fuzzy, c-format
 msgid ""
 "You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"
@@ -65,17 +56,17 @@ msgstr ""
 "но версия файла gattribrc: %s/\n"
 "Удостоверьтесь, что у вас последняя версия файла настроек.\n"
 
-#: gattrib/src/gtksheet_2_2.c:6251
+#: attrib/src/gtksheet_2_2.c:6242
 msgid "Entry type must be GtkEntry subclass, using default"
 msgstr ""
 "Тип записи должен быть подклассом GtkEntry, используется значение по "
 "умолчанию"
 
-#: gattrib/src/gtksheet_2_2.c:8408
+#: attrib/src/gtksheet_2_2.c:8420
 msgid "Widget must be a GtkSheet child"
 msgstr "Виджет должен быть дочерним для GtkSheet"
 
-#: gattrib/src/parsecmd.c:75
+#: attrib/src/parsecmd.c:73
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -135,14 +126,14 @@ msgstr ""
 "net.\n"
 "\n"
 
-#: gattrib/src/s_attrib.c:101
+#: attrib/src/s_attrib.c:101
 #, fuzzy, c-format
 msgid "WARNING: Found uref=%1$s, uref= is deprecated, please use refdes=\n"
 msgstr ""
 "ВНИМАНИЕ: Обнаружен не рекомендуемый к использованию атрибут «uref=%s», "
 "используйте вместо него «refdes».\n"
 
-#: gattrib/src/s_misc.c:81
+#: attrib/src/s_misc.c:81
 #, c-format
 msgid ""
 "\n"
@@ -151,12 +142,12 @@ msgstr ""
 "\n"
 "ЗАВЕРШЕНО\n"
 
-#: gattrib/src/s_misc.c:83
+#: attrib/src/s_misc.c:83
 #, c-format
 msgid " DONE\n"
 msgstr " ЗАВЕРШЕНО\n"
 
-#: gattrib/src/s_object.c:217
+#: attrib/src/s_object.c:217
 #, fuzzy, c-format
 msgid ""
 "In s_object_replace_attrib_in_object, we have failed to find the attrib %1$s "
@@ -165,7 +156,7 @@ msgstr ""
 "s_object_replace_attrib_in_object: не удалось найти атрибут «%s» для "
 "компонента. Выход . . .\n"
 
-#: gattrib/src/s_object.c:276
+#: attrib/src/s_object.c:276
 #, fuzzy, c-format
 msgid ""
 "In s_object_remove_attrib_in_object, we have failed to find the attrib %1$s "
@@ -174,7 +165,7 @@ msgstr ""
 "s_object_remove_attrib_in_object: не удалось найти атрибут «%s» для "
 "компонента. Выход . . .\n"
 
-#: gattrib/src/s_object.c:329
+#: attrib/src/s_object.c:329
 #, c-format
 msgid ""
 "In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex "
@@ -183,22 +174,22 @@ msgstr ""
 "s_object_attrib_add_attrib_in_object: попытка добавить атрибут к объекту, не "
 "являющимся ни составным, ни соединением!\n"
 
-#: gattrib/src/s_sheet_data.c:116
+#: attrib/src/s_sheet_data.c:116
 #, c-format
 msgid "- Starting master comp list creation.\n"
 msgstr "- Приступаем к созданию основного списка компонентов.\n"
 
-#: gattrib/src/s_sheet_data.c:184
+#: attrib/src/s_sheet_data.c:184
 #, c-format
 msgid "- Starting master comp attrib list creation.\n"
 msgstr "- Приступаем к созданию основного списка атрибутов компонентов.\n"
 
-#: gattrib/src/s_sheet_data.c:297
+#: attrib/src/s_sheet_data.c:297
 #, c-format
 msgid "- Starting master pin list creation.\n"
 msgstr "- Приступаем к созданию основного списка выводов.\n"
 
-#: gattrib/src/s_sheet_data.c:331
+#: attrib/src/s_sheet_data.c:331
 #, c-format
 msgid ""
 "In s_sheet_data_add_master_pin_list_items, found component pin with no "
@@ -207,41 +198,41 @@ msgstr ""
 "s_sheet_data_add_master_pin_list_items: обнаружен вывод компонента без "
 "атрибута pinnumber.\n"
 
-#: gattrib/src/s_sheet_data.c:389
+#: attrib/src/s_sheet_data.c:389
 #, c-format
 msgid "- Starting master pin attrib list creation.\n"
 msgstr "- Приступаем к созданию основного списка атрибутов выводов.\n"
 
-#: gattrib/src/s_string_list.c:123
+#: attrib/src/s_string_list.c:123
 #, c-format
 msgid "In s_string_list_add_item, tried to add to a NULL list.\n"
 msgstr ""
 "s_string_list_add_item: попытка добавления к списку со значением NULL.\n"
 
-#: gattrib/src/s_string_list.c:188
+#: attrib/src/s_string_list.c:188
 #, c-format
 msgid "In s_string_list_delete_item, tried to remove item from empty list\n"
 msgstr ""
 "s_string_list_delete_item: попытка удаления элемента из пустого списка\n"
 
-#: gattrib/src/s_string_list.c:252
+#: attrib/src/s_string_list.c:252
 #, c-format
 msgid "In s_string_list_delete_item, couldn't delete item %s\n"
 msgstr "s_string_list_delete_item: не удалось удалить элемент %s\n"
 
-#: gattrib/src/s_table.c:242
+#: attrib/src/s_table.c:242
 #, c-format
 msgid ""
 "In s_table_create_attrib_pair, we didn't find the row name in the row list!\n"
 msgstr ""
 "s_table_create_attrib_pair: не удалось найти имя строки в списке строк!\n"
 
-#: gattrib/src/s_table.c:285
+#: attrib/src/s_table.c:285
 #, c-format
 msgid "- Starting internal component TABLE creation\n"
 msgstr "- Приступаем к созданию внутренней таблицы компонентов\n"
 
-#: gattrib/src/s_table.c:344
+#: attrib/src/s_table.c:344
 #, c-format
 msgid ""
 "In s_table_add_toplevel_comp_items_to_comp_table, we didn't find either row "
@@ -250,12 +241,12 @@ msgstr ""
 "s_table_add_toplevel_comp_items_to_comp_table: не удалось найти либо строку, "
 "либо столбец в соответствующем списке!\n"
 
-#: gattrib/src/s_table.c:493
+#: attrib/src/s_table.c:493
 #, c-format
 msgid "- Starting internal pin TABLE creation\n"
 msgstr "- Приступаем к созданию внутренней таблицы выводов\n"
 
-#: gattrib/src/s_table.c:553
+#: attrib/src/s_table.c:553
 #, c-format
 msgid ""
 "In s_table_add_toplevel_pin_items_to_pin_table, we didn't find either row or "
@@ -264,16 +255,16 @@ msgstr ""
 "s_table_add_toplevel_pin_items_to_pin_table: не удалось найти либо строку, "
 "либо столбец в соответствующем списке!\n"
 
-#: gattrib/src/s_toplevel.c:185
+#: attrib/src/s_toplevel.c:185
 msgid "_cancel"
 msgstr ""
 
-#: gattrib/src/s_toplevel.c:318
+#: attrib/src/s_toplevel.c:318
 #, c-format
 msgid "In s_toplevel_delete_attrib_col, can't get attrib name\n"
 msgstr "s_toplevel_delete_attrib_col: не удалось получить имя атрибута\n"
 
-#: gattrib/src/s_toplevel.c:554
+#: attrib/src/s_toplevel.c:554
 #, c-format
 msgid ""
 "In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes in "
@@ -282,13 +273,13 @@ msgstr ""
 "s_toplevel_get_component_attribs_in_sheet: не найдено значение «refdes» в "
 "основном списке!\n"
 
-#: gattrib/src/s_toplevel.c:582
+#: attrib/src/s_toplevel.c:582
 #, c-format
 msgid ""
 "In s_toplevel_get_component_attribs_in_sheet, count != i!  Exiting . . . .\n"
 msgstr "s_toplevel_get_component_attribs_in_sheet: count != i!  Выход . . .\n"
 
-#: gattrib/src/s_toplevel.c:891
+#: attrib/src/s_toplevel.c:891
 #, c-format
 msgid ""
 "In s_toplevel_get_pin_attribs_in_sheet, either refdes or pinnumber of object "
@@ -297,7 +288,7 @@ msgstr ""
 "s_toplevel_get_pin_attribs_in_sheet: отсутствует атрибут «refdes» или "
 "«pinnumber» у объекта!\n"
 
-#: gattrib/src/s_toplevel.c:900
+#: attrib/src/s_toplevel.c:900
 #, c-format
 msgid ""
 "In s_toplevel_get_pin_attribs_in_sheet, we didn't find the refdes:pin in the "
@@ -306,36 +297,37 @@ msgstr ""
 "s_toplevel_get_pin_attribs_in_sheet: не удалось найти нужную строку "
 "«refdes»:«pinnumber» в основном списке!\n"
 
-#: gattrib/src/s_toplevel.c:928
+#: attrib/src/s_toplevel.c:928
 #, c-format
 msgid "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"
 msgstr "s_toplevel_get_pin_attribs_in_sheet: count != i!  Выход . . .\n"
 
-#: gattrib/src/x_dialog.c:74
+#: attrib/src/x_dialog.c:74
 msgid "Add new attribute"
 msgstr "Добавление нового атрибута"
 
-#: gattrib/src/x_dialog.c:83
+#: attrib/src/x_dialog.c:83
 msgid "Enter new attribute name"
 msgstr "Введите новое имя атрибута"
 
-#: gattrib/src/x_dialog.c:147
+#: attrib/src/x_dialog.c:147
 msgid "Are you sure you want to delete this attribute?"
 msgstr "Вы уверены, что хотите удалить этот атрибут?"
 
-#: gattrib/src/x_dialog.c:149
+#: attrib/src/x_dialog.c:149
 msgid "Delete attribute"
 msgstr "Удаление атрибута"
 
-#: gattrib/src/x_dialog.c:174
+#: attrib/src/x_dialog.c:174
+#, fuzzy
 msgid ""
 "One or more components have been found with missing symbol files!\n"
 "\n"
-"This probably happened because gattrib couldn't find your component "
+"This probably happened because lepton-attrib couldn't find your component "
 "libraries, perhaps because your gafrc or gattribrc files are misconfigured.\n"
 "\n"
-"Choose \"Quit\" to leave gattrib and fix the problem, or\n"
-"\"Forward\" to continue working with gattrib.\n"
+"Choose \"Quit\" to leave lepton-attrib and fix the problem, or\n"
+"\"Forward\" to continue working with lepton-attrib.\n"
 msgstr ""
 "Отсутствуют файлы символов одного или нескольких компонентов!\n"
 "\n"
@@ -346,40 +338,40 @@ msgstr ""
 "Выберите «Выход» для выхода из gattrib и устранения проблемы или \n"
 "«Вперёд» для продолжения работы с gattrib.\n"
 
-#: gattrib/src/x_dialog.c:187
+#: attrib/src/x_dialog.c:187
 msgid "Missing symbol file found for component!"
 msgstr "Не найден символ компонента!"
 
-#: gattrib/src/x_dialog.c:215
+#: attrib/src/x_dialog.c:215
 msgid "Save the changes before closing?"
 msgstr "Сохранить изменения перед закрытием?"
 
-#: gattrib/src/x_dialog.c:216
+#: attrib/src/x_dialog.c:216
 msgid "<big><b>"
 msgstr "<big><b>"
 
-#: gattrib/src/x_dialog.c:216
+#: attrib/src/x_dialog.c:216
 msgid "</b></big>"
 msgstr "</b></big>"
 
-#: gattrib/src/x_dialog.c:218
+#: attrib/src/x_dialog.c:218
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "Если их не сохранить, все изменения будут безвозвратно утрачены."
 
-#: gattrib/src/x_dialog.c:228
+#: attrib/src/x_dialog.c:228
 msgid "Close without saving"
 msgstr "Закрыть без сохранения"
 
-#: gattrib/src/x_dialog.c:275
+#: attrib/src/x_dialog.c:275
 #, fuzzy
 msgid ""
 "Sorry -- you have chosen a feature which has not been\n"
 "implemented yet.\n"
 "\n"
-"Gattrib is an open-source program which\n"
+"lepton-attrib is an open-source program which\n"
 "I work on as a hobby.  It is still a work in progress.\n"
 "If you wish to contribute (perhaps by implementing this\n"
-"feature), please do so!  Please send patches to gattrib\n"
+"feature), please do so!  Please send patches to lepton-attrib\n"
 "to Stuart Brorson: sdb@cloud9.net.\n"
 "\n"
 "Otherwise, just hang tight -- I'll implement this feature soon!\n"
@@ -394,24 +386,24 @@ msgstr ""
 "\n"
 "Иначе просто ждите — я скоро напишу эту функцию!\n"
 
-#: gattrib/src/x_dialog.c:283
+#: attrib/src/x_dialog.c:283
 msgid "Unimplemented feature!"
 msgstr "Отсутствующая функциональность!"
 
-#: gattrib/src/x_dialog.c:310
+#: attrib/src/x_dialog.c:310
 msgid "Fatal error"
 msgstr "Фатальная ошибка"
 
-#: gattrib/src/x_dialog.c:325
+#: attrib/src/x_dialog.c:325
 #, fuzzy, c-format
 msgid ""
-"gEDA : GPL Electronic Design Automation\n"
+"Lepton Electronic Design Automation\n"
 "\n"
-"This is gattrib -- gEDA's attribute editor\n"
+"lepton-attrib - Lepton EDA attribute editor\n"
 "\n"
-"Gattrib version: %1$s%2$s.%3$s\n"
+"lepton-attrib version: %1$s%2$s.%3$s\n"
 "\n"
-"Gattrib is written by: Stuart Brorson (sdb@cloud9.net)\n"
+"lepton-attrib is written by: Stuart Brorson (sdb@cloud9.net)\n"
 "with generous helpings of code from gschem, gnetlist, \n"
 "and gtkextra, as well as support from the gEDA community."
 msgstr ""
@@ -425,92 +417,93 @@ msgstr ""
 "с использованием изрядных кусков кода из gschem, gnetlist, \n"
 "и gtkextra, а также при поддержке сообщества gEDA."
 
-#: gattrib/src/x_dialog.c:336
+#: attrib/src/x_dialog.c:336
 msgid "About..."
 msgstr "О программе..."
 
-#: gattrib/src/x_dialog.c:352
+#: attrib/src/x_dialog.c:352
 msgid "Export CSV"
 msgstr "Экспорт CSV"
 
-#: gattrib/src/x_fileselect.c:87
+#: attrib/src/x_fileselect.c:87
 msgid "Schematics"
 msgstr "Схемы"
 
-#: gattrib/src/x_fileselect.c:92
+#: attrib/src/x_fileselect.c:92
 msgid "Symbols"
 msgstr "Символы"
 
-#: gattrib/src/x_fileselect.c:97
+#: attrib/src/x_fileselect.c:97
 msgid "Schematics and symbols"
 msgstr "Схемы и символы"
 
-#: gattrib/src/x_fileselect.c:103
+#: attrib/src/x_fileselect.c:103
 msgid "All files"
 msgstr "Все файлы"
 
-#: gattrib/src/x_fileselect.c:134
+#: attrib/src/x_fileselect.c:134
 #, fuzzy, c-format
 msgid "Loading file [%1$s]"
 msgstr "Загрузка файла «%s»\n"
 
-#: gattrib/src/x_fileselect.c:140
+#: attrib/src/x_fileselect.c:140
 #, fuzzy, c-format
 msgid "Couldn't load schematic [%1$s]\n"
 msgstr "Не удалось загрузить схему «%s»\n"
 
-#: gattrib/src/x_fileselect.c:230
+#: attrib/src/x_fileselect.c:230
 msgid "Open..."
 msgstr "Открыть..."
 
-#: gattrib/src/x_fileselect.c:275
+#: attrib/src/x_fileselect.c:275
 msgid "Save as..."
 msgstr "Сохранить как..."
 
-#: gattrib/src/x_fileselect.c:304
+#: attrib/src/x_fileselect.c:304
 #, fuzzy, c-format
 msgid "Saved As [%1$s]"
 msgstr "Файл сохранён как «%s»\n"
 
-#: gattrib/src/x_fileselect.c:314
+#: attrib/src/x_fileselect.c:314
 #, fuzzy, c-format
 msgid "Could NOT save [%1$s]"
 msgstr "Не удалось сохранить «%s»\n"
 
-#: gattrib/src/x_gtksheet.c:70 gattrib/src/x_gtksheet.c:79
+#: attrib/src/x_gtksheet.c:70 attrib/src/x_gtksheet.c:79
 msgid "Components"
 msgstr "Компоненты"
 
-#: gattrib/src/x_gtksheet.c:71 gattrib/src/x_gtksheet.c:88
-#: gattrib/src/x_gtksheet.c:91
+#: attrib/src/x_gtksheet.c:71 attrib/src/x_gtksheet.c:88
+#: attrib/src/x_gtksheet.c:91
 msgid "Nets"
 msgstr "Соединения"
 
-#: gattrib/src/x_gtksheet.c:72 gattrib/src/x_gtksheet.c:104
-#: gattrib/src/x_gtksheet.c:107
+#: attrib/src/x_gtksheet.c:72 attrib/src/x_gtksheet.c:104
+#: attrib/src/x_gtksheet.c:107
 msgid "Pins"
 msgstr "Выводы"
 
-#: gattrib/src/x_gtksheet.c:81
+#: attrib/src/x_gtksheet.c:81
 msgid ""
 "No components found in design.  Please check your schematic and try again!\n"
 msgstr ""
 "Не обнаружено компонентов в проекте. Проверьте свою схему и попробуйте "
 "снова!\n"
 
-#: gattrib/src/x_gtksheet.c:92 gattrib/src/x_gtksheet.c:94
+#: attrib/src/x_gtksheet.c:92 attrib/src/x_gtksheet.c:94
 msgid "TBD"
 msgstr "не реализовано"
 
-#: gattrib/src/x_gtksheet.c:355
+#: attrib/src/x_gtksheet.c:355
 msgid "couldn't allocate color"
 msgstr "Не удалось выделить цвет"
 
-#: gattrib/src/x_window.c:94
-msgid "gattrib -- gEDA attribute editor"
+#: attrib/src/x_window.c:94
+#, fuzzy
+msgid "lepton-attrib - Lepton EDA attribute editor"
 msgstr "gattrib — редактор атрибутов gEDA"
 
-#: gattrib/src/x_window.c:299
+#: attrib/src/x_window.c:299
 #, fuzzy, c-format
 msgid ""
 "Error loading %1$s:\n"
@@ -519,7 +512,7 @@ msgstr ""
 "Ошибка загрузки %s:\n"
 "%s\n"
 
-#: gattrib/src/x_window.c:336
+#: attrib/src/x_window.c:336
 msgid ""
 "No components found in entire design!\n"
 "Do you have refdeses on your components?"
@@ -527,22 +520,39 @@ msgstr ""
 "Во всём проекте не обнаружено ни одного компонента!\n"
 "Вы не забыли добавить для своих компонентов позиционные обозначения?"
 
-#: gattrib/src/x_window.c:341
+#: attrib/src/x_window.c:341
+#, fuzzy
 msgid ""
 "No configurable component attributes found in entire design!\n"
-"Please attach at least some attributes before running gattrib."
+"Please attach at least some attributes before running lepton-attrib."
 msgstr ""
 "Во всём проекте не обнаружено ни одного атрибута компонента, который можно "
 "отредактировать!\n"
 "Прикрепите хотя бы несколько атрибутов, прежде чем запускать gattrib."
 
-#: gattrib/src/x_window.c:346
+#: attrib/src/x_window.c:346
 msgid ""
 "No pins found on any components!\n"
 "Please check your design."
 msgstr ""
 "Не найдено выводов ни у одного компонента!\n"
 "Проверьте свой проект."
+
+#, fuzzy
+#~ msgid ""
+#~ "gEDA/gattrib version %1$s%2$s.%3$s\n"
+#~ "gEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
+#~ "details.\n"
+#~ "This is free software, and you are welcome to redistribute it under "
+#~ "certain\n"
+#~ "conditions; please see the COPYING file for more details.\n"
+#~ msgstr ""
+#~ "gEDA/gattrib version версии %s%s.%s\n"
+#~ "gEDA/gattrib поставляется БЕЗ КАКИХ БЫ ТО НИ БЫЛО ГАРАНТИЙ; подробности "
+#~ "см. в файле COPYING.\n"
+#~ "Это свободное программное обеспечение, и его можно распространять при "
+#~ "определённых\n"
+#~ "\n"
 
 #~ msgid "Increase number of rename_pair sets in s_net.c\n"
 #~ msgstr "Следует увеличить количество наборов rename_pair в s_net.c\n"
