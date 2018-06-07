@@ -148,7 +148,7 @@ static void geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar* group
 static void show_handler (GtkWidget *widget)
 {
   gchar *group_name;
-  EdaConfig *cfg = eda_config_get_user_context ();
+  EdaConfig *cfg = eda_config_get_cache_context ();
   GschemDialog *dialog = GSCHEM_DIALOG( widget );
 
   if (dialog->settings_name != NULL) {
@@ -182,7 +182,7 @@ static void show_handler (GtkWidget *widget)
 static void unmap_handler (GtkWidget *widget)
 {
   gchar *group_name;
-  EdaConfig *cfg = eda_config_get_user_context ();
+  EdaConfig *cfg = eda_config_get_cache_context ();
   GschemDialog *dialog = GSCHEM_DIALOG (widget);
 
   if (dialog->settings_name != NULL) {
