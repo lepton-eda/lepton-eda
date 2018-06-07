@@ -747,7 +747,7 @@ renderer_load_font (EdaRenderer* renderer)
     GError* err = NULL;
     gchar* font = eda_config_get_string (cfg,
                                          "schematic.gui",
-                                         "font-name",
+                                         "font",
                                           &err);
 
     if (font != NULL && strlen(font) > 0)
