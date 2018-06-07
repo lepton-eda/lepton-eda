@@ -26,6 +26,9 @@ handle_undo (GschemToplevel *w_current);
 static void
 notify_options (GschemToplevel *w_current);
 
+static void
+renderer_load_font (EdaRenderer* renderer);
+
 
 /* A list of common values for the dash length drop down menu
  */
@@ -253,6 +256,8 @@ GschemToplevel *gschem_toplevel_new ()
   /* Drawing state */
   /* ------------- */
   w_current->renderer = EDA_RENDERER (g_object_new (EDA_TYPE_RENDERER, NULL));
+  renderer_load_font (w_current->renderer);
+
   w_current->first_wx = -1;
   w_current->first_wy = -1;
   w_current->second_wx = -1;
@@ -723,3 +728,35 @@ notify_options (GschemToplevel *w_current)
     gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
   }
 }
+
+
+
+/*! \brief Read configuration, set the font to render schematics
+ *
+ *  \param renderer A pointer to EdaRenderer to set font for
+ */
+static void
+renderer_load_font (EdaRenderer* renderer)
+{
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  if (cfg != NULL)
+  {
+    GError* err = NULL;
+    gchar* font = eda_config_get_string (cfg,
+                                         "schematic.gui",
+                                         "font-name",
+                                          &err);
+
+    if (font != NULL && strlen(font) > 0)
+    {
+      g_object_set (renderer, "font-name", font, NULL);
+      g_free (font);
+    }
+
+    g_clear_error (&err);
+  }
+}
+
