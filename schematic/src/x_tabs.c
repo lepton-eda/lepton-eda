@@ -789,6 +789,12 @@ x_tabs_hdr_create (TabInfo* nfo)
   g_free (bname);
 
 
+  /* tab's tooltip:
+  */
+  /* display full path of the schematic file: */
+  gtk_widget_set_tooltip_text (box_hdr, fname);
+
+
   /* make tab btns smaller => smaller tabs:
   */
   gtk_rc_parse_string
