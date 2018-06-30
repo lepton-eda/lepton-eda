@@ -53,6 +53,7 @@ typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 #include "gschem_translate_widget.h"
 
 #include "color_edit_widget.h"
+#include "font_select_widget.h"
 
 /* Gettext translation */
 #include "gettext.h"

@@ -121,7 +121,8 @@ lepton_schematic_SOURCES = \
 	x_widgets.c \
 	scheme_undo.c \
 	x_tabs.c \
-	color_edit_widget.c
+	color_edit_widget.c \
+	font_select_widget.c
 
 lepton_schematic_CPPFLAGS = -I$(top_srcdir)/liblepton/include  -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
