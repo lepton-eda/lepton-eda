@@ -775,6 +775,7 @@ void x_widgets_show_object_properties (GschemToplevel* w_current);
 void x_widgets_show_log (GschemToplevel* w_current);
 void x_widgets_show_find_text_state (GschemToplevel* w_current);
 void x_widgets_show_color_edit (GschemToplevel* w_current);
+void x_widgets_show_font_select (GschemToplevel* w_current);
 
 /* x_tabs.c */
 gboolean x_tabs_enabled();

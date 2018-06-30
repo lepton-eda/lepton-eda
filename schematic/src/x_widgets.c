@@ -135,6 +135,8 @@ void x_widgets_create (GschemToplevel* w_current)
 
   w_current->color_edit_widget = color_edit_widget_new (w_current);
 
+  w_current->font_select_widget = font_select_widget_new (w_current);
+
 } /* x_widgets_create() */
 
 
@@ -256,6 +258,19 @@ void x_widgets_show_color_edit (GschemToplevel* w_current)
                             &w_current->color_edit_dialog,
                             _("Color Scheme Editor"),
                             "colored");
+}
+
+
+
+void x_widgets_show_font_select (GschemToplevel* w_current)
+{
+  g_return_if_fail (w_current != NULL);
+
+  x_widgets_show_in_dialog (w_current,
+                            GTK_WIDGET (w_current->font_select_widget),
+                            &w_current->font_select_dialog,
+                            _("Select Schematic Font"),
+                            "fontsel");
 }
 
 

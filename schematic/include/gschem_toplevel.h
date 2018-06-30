@@ -72,6 +72,8 @@ struct st_gschem_toplevel {
   /* color scheme editor widget: */
   GtkWidget *color_edit_widget;
 
+  /* font selection widget: */
+  GtkWidget *font_select_widget;
 
   /* dialogs for widgets */
   GtkWidget *options_widget_dialog;
@@ -80,6 +82,7 @@ struct st_gschem_toplevel {
   GtkWidget *log_widget_dialog;
   GtkWidget *find_text_state_dialog;
   GtkWidget *color_edit_dialog;
+  GtkWidget *font_select_dialog;
 
 
   gchar *keyaccel_string;               /* visual feedback when pressing
