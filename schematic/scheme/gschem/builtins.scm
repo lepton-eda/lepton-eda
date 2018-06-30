@@ -383,6 +383,9 @@
 (define-action-public (&options-show-coord-window #:label (_ "Show Coordinate Window"))
   (%options-show-coord-window))
 
+(define-action-public (&options-select-font #:label (_ "Select Schematic Font"))
+  (%options-select-font))
+
 ;; -------------------------------------------------------------------
 ;;;; Documentation-related actions
 
