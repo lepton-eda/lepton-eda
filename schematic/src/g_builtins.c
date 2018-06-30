@@ -150,6 +150,7 @@ static struct BuiltinInfo builtins[] = {
   { "%options-magneticnet",          0, 0, 0, (SCM (*) ()) g_keys_options_magneticnet },
   { "%options-show-log-window",      0, 0, 0, (SCM (*) ()) g_keys_options_show_log_window },
   { "%options-show-coord-window",    0, 0, 0, (SCM (*) ()) g_keys_options_show_coord_window },
+  { "%options-select-font",          0, 0, 0, (SCM (*) ()) g_keys_options_select_font },
   { "%help-about",                   0, 0, 0, (SCM (*) ()) g_keys_help_about },
   { "%help-hotkeys",                 0, 0, 0, (SCM (*) ()) g_keys_help_hotkeys },
   { "%cancel",                       0, 0, 0, (SCM (*) ()) g_keys_cancel },

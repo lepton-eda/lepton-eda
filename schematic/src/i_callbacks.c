@@ -1419,6 +1419,8 @@ DEFINE_I_CALLBACK (view_color_edit)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
+  g_return_if_fail (w_current != NULL);
+
   x_widgets_show_color_edit (w_current);
 }
 
@@ -2981,6 +2983,15 @@ DEFINE_I_CALLBACK(options_show_coord_window)
 
   g_return_if_fail (w_current != NULL);
   coord_dialog (w_current, 0, 0);
+}
+
+DEFINE_I_CALLBACK(options_select_font)
+{
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+
+  g_return_if_fail (w_current != NULL);
+
+  x_widgets_show_font_select (w_current);
 }
 
 /* these is a special wrapper function which cannot use the above */

@@ -151,6 +151,7 @@ SCM g_keys_options_rubberband(SCM rest);
 SCM g_keys_options_magneticnet(SCM rest);
 SCM g_keys_options_show_log_window(SCM rest);
 SCM g_keys_options_show_coord_window(SCM rest);
+SCM g_keys_options_select_font(SCM rest);
 SCM g_keys_help_about(SCM rest);
 SCM g_keys_help_hotkeys(SCM rest);
 SCM g_keys_cancel(SCM rest);
@@ -380,6 +381,7 @@ void i_callback_cancel(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_help_about(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_help_hotkeys(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_show_coord_window(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_options_select_font(gpointer data, guint callback_action, GtkWidget *widget);
 gboolean i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
 /* i_vars.c */
 void i_vars_set(GschemToplevel *w_current);
