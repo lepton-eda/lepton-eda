@@ -1268,7 +1268,8 @@
 ;;
 ;;          menu item name      menu action             menu stock icon
 ;;
-        `( (,(N_ "_Text Size...")            &options-text-size)
+        `( (,(N_ "_Font...")                 &options-select-font)
+           (,(N_ "Text Size...")             &options-text-size)
            (,(N_ "Cycle _grid styles")       &options-grid)
            (,(N_ "Toggle _Snap On/Off")      &options-snap)
            (,(N_ "Snap Grid S_pacing...")    &options-snap-size)
