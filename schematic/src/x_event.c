@@ -255,6 +255,17 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       break;
     }
 
+
+    if (!w_current->inside_action)
+    {
+      if (w_current->middle_button == POPUP_ENABLED)
+      {
+        i_update_menus(w_current);  /* update menus before popup  */
+        do_popup(w_current, event);
+      }
+    }
+
+
   } else if (event->button == 3) {
     if (!w_current->inside_action) {
       if (w_current->third_button == POPUP_ENABLED) {
