@@ -95,6 +95,7 @@ SCM g_keys_buffer_paste4(SCM rest);
 SCM g_keys_buffer_paste5(SCM rest);
 SCM g_keys_view_sidebar(SCM rest);
 SCM g_keys_view_status(SCM rest);
+SCM g_keys_view_find_text_state(SCM rest);
 SCM g_keys_view_redraw(SCM rest);
 SCM g_keys_view_zoom_full(SCM rest);
 SCM g_keys_view_zoom_extents(SCM rest);
@@ -300,6 +301,7 @@ void i_callback_edit_linetype(gpointer data, guint callback_action, GtkWidget *w
 void i_callback_edit_filltype(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_sidebar(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_status(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_view_find_text_state(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_redraw(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_full(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_extents(gpointer data, guint callback_action, GtkWidget *widget);

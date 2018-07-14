@@ -188,6 +188,9 @@
 (define-action-public (&view-status #:label (_ "Status"))
   (%view-status))
 
+(define-action-public (&view-find-text-state #:label (_ "Find Text State"))
+  (%view-find-text-state))
+
 (define-action-public (&view-redraw #:label (_ "Redraw") #:icon "gtk-refresh")
   (%view-redraw))
 

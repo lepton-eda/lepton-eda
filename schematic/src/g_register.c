@@ -185,6 +185,7 @@ static struct gsubr_t gschem_funcs[] = {
 
   { "view-sidebar",                 0, 0, 0, (SCM (*) ()) g_keys_view_sidebar },
   { "view-status",                  0, 0, 0, (SCM (*) ()) g_keys_view_status },
+  { "view-find-text-state",         0, 0, 0, (SCM (*) ()) g_keys_view_find_text_state },
   { "view-redraw",                  0, 0, 0, (SCM (*) ()) g_keys_view_redraw },
   { "view-zoom-full",               0, 0, 0, (SCM (*) ()) g_keys_view_zoom_full },
   { "view-zoom-extents",            0, 0, 0, (SCM (*) ()) g_keys_view_zoom_extents },
