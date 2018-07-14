@@ -1192,6 +1192,8 @@
         `( (,(N_ "Sidebar")             &view-sidebar           #f)
            (,(N_ "Status")              &view-status            #f)
            ("SEPARATOR"                 #f                      #f)
+           (,(N_ "Find Text State")     &view-find-text-state   #f)
+           ("SEPARATOR"                 #f                      #f)
            (,(N_ "_Redraw")             &view-redraw            "gtk-refresh")
            (,(N_ "_Pan")                &view-pan               #f)
            (,(N_ "Zoom _Box")           &view-zoom-box          #f)
