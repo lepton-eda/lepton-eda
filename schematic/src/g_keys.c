@@ -128,6 +128,7 @@ DEFINE_G_KEYS(buffer_paste5)
 
 DEFINE_G_KEYS(view_sidebar)
 DEFINE_G_KEYS(view_status)
+DEFINE_G_KEYS(view_find_text_state)
 
 /* repeat middle shortcut doesn't make sense on redraw, just hit right
  * button */

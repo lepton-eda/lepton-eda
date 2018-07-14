@@ -1128,6 +1128,18 @@ DEFINE_I_CALLBACK(view_status)
   gtk_widget_set_visible (GTK_WIDGET (w_current->bottom_notebook), !visible);
 }
 
+/*! \brief Show the find text state window
+ */
+DEFINE_I_CALLBACK(view_find_text_state)
+{
+  gboolean visible;
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+
+  g_return_if_fail (w_current != NULL);
+
+  x_widgets_show_find_text_state (w_current);
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
