@@ -18,4 +18,6 @@ graphical=1
 T 100 1100 8 10 0 0 0 0 1
 documentation=nc.pdf
 T 100 1300 8 10 0 0 0 0 1
-symversion=1.0
+symversion=1.1
+T 100 1500 8 10 0 0 0 0 1
+symbol=nc
