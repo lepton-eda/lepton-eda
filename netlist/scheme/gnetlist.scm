@@ -851,6 +851,102 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (primitive-exit 0))
 
 
+
+; private:
+; function: is-net-with-noconnect-symbol-attached()
+;
+; Check whether net is connected to a "no connect" symbol.
+;
+; [netname]: net name to check
+; {return}:  #t if "no connect" symbol is attached to [netname] net, #f otherwise
+;
+( define ( is-net-with-noconnect-symbol-attached netname )
+( let
+  (
+  ( pin-netname #f )
+  ( found       #f )
+  )
+
+  ( for-each ; walk through graphical packages:
+  ( lambda( pkg )
+
+    ( for-each ; walk through package pins:
+    ( lambda( pin )
+
+      ; net name attached to the pin:
+      ;
+      ( set! pin-netname ( package-pin-name pin ) )
+
+      ( if ( string=? pin-netname netname )
+
+        ( for-each ; walk through package attributes:
+        ( lambda( attr-val )
+
+          ; if "symbol" attribute's value == "nc",
+          ; this is a "no connect" package (i.e. schematic symbol):
+          ;
+          ( if ( string=? attr-val "nc" )
+            ( set! found #t )
+          )
+
+        )
+        ( package-attributes pkg 'symbol ) ; search for attribute named "symbol"
+        ) ; for-each - attrs
+
+      ) ; if pin-netname == netname
+
+    )
+    ( package-pins pkg )
+    ) ; for-each - pins
+
+  )
+  ( schematic-graphicals toplevel-schematic )
+  ) ; for-each - pkgs
+
+  ; return:
+  found
+
+) ; let
+) ; is-net-with-noconnect-symbol-attached()
+
+
+
+; private:
+; function: nets-delete-not-connected()
+;
+; Delete nets if they have "no connect" symbol (misc/nc-*) attached.
+;
+; [netnames]: list of net names
+; {return}:   updated list of net names
+;
+( define ( nets-delete-not-conected netnames )
+( let
+  (
+  ( result '() ) ; empty list
+  )
+
+  ( for-each
+  ( lambda( netname )
+
+    ; check whether a "no connect" symbol is attached to the net and if so,
+    ; do not include current netname in the result:
+    ;
+    ( if ( not ( is-net-with-noconnect-symbol-attached netname ) )
+      ( set! result ( cons netname result ) ) ; add netname to the result list
+    )
+
+  )
+  netnames
+  ) ; for-each
+
+  ; return:
+  ( reverse result ) ; reverse() to preserve [netnames] list order
+
+) ; let
+) ; nets-delete-not-conected()
+
+
+
 (define (set-toplevel-schematic! files netlist-mode)
   (and (eq? netlist-mode 'spice)
        (set! get-uref get-spice-refdes))
