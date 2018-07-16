@@ -40,6 +40,7 @@
             schematic-packages set-schematic-packages!
             schematic-non-unique-nets set-schematic-non-unique-nets!
             schematic-nets set-schematic-nets!
+            schematic-nets-unfiltered set-schematic-nets-unfiltered!
             make-toplevel-schematic
             schematic-toplevel-attrib))
 
@@ -53,7 +54,8 @@
                   non-unique-packages
                   packages
                   non-unique-nets
-                  nets)
+                  nets
+                  nets-unfiltered)
   schematic?
   (id schematic-id set-schematic-id!)
   (toplevel-pages schematic-toplevel-pages set-schematic-toplevel-pages!)
@@ -64,7 +66,8 @@
   (non-unique-packages schematic-non-unique-packages set-schematic-non-unique-packages!)
   (packages schematic-packages set-schematic-packages!)
   (non-unique-nets schematic-non-unique-nets set-schematic-non-unique-nets!)
-  (nets schematic-nets set-schematic-nets!))
+  (nets schematic-nets set-schematic-nets!)
+  (nets-unfiltered schematic-nets-unfiltered set-schematic-nets-unfiltered!))
 
 (set-record-type-printer!
  <schematic>
@@ -186,7 +189,8 @@ must be a list of pages."
                     nu-packages
                     packages
                     nu-nets
-                    nets)))
+                    nets
+                    '() )))
 
 (define (schematic-toplevel-attrib schematic attrib-name)
   "Returns value of toplevel attribute ATTRIB-NAME for SCHEMATIC."
