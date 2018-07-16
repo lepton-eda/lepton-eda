@@ -948,6 +948,12 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
 
 (define (set-toplevel-schematic! files netlist-mode)
+(let
+  (
+  (nets-unfiltered #f) ; all nets
+  (nets-filtered   #f) ; all nets except those with "no connect" symbol attached
+  )
+
   (and (eq? netlist-mode 'spice)
        (set! get-uref get-spice-refdes))
   (for-each process-gafrc files)
@@ -959,7 +965,24 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (set! all-unique-nets (schematic-nets toplevel-schematic))
   (set! all-nets (schematic-non-unique-nets toplevel-schematic))
   (set! all-pins (map gnetlist:get-pins packages))
-  toplevel-schematic)
+
+  (set! nets-unfiltered (schematic-nets toplevel-schematic))
+
+  ; filter out nets with "no connect" symbol attached:
+  ;
+  (set! nets-filtered (nets-delete-not-conected nets-unfiltered))
+
+  ; update appropriate fields in the <schematic> record:
+  ;
+  (set-schematic-nets-unfiltered! toplevel-schematic nets-unfiltered)
+  (set-schematic-nets!            toplevel-schematic nets-filtered)
+
+  ; return:
+  toplevel-schematic
+
+) ; let
+) ; set-toplevel-schematic!()
+
 
 
 (define (catch-handler tag . args)
