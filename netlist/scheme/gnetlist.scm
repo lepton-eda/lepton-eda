@@ -853,14 +853,14 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
 
 ; private:
-; function: is-net-with-noconnect-symbol-attached()
+; function: net-with-noconnect-symbol-attached?()
 ;
 ; Check whether net is connected to a "no connect" symbol.
 ;
 ; [netname]: net name to check
 ; {return}:  #t if "no connect" symbol is attached to [netname] net, #f otherwise
 ;
-( define ( is-net-with-noconnect-symbol-attached netname )
+( define ( net-with-noconnect-symbol-attached? netname )
 ( let
   (
   ( pin-netname #f )
@@ -907,19 +907,19 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   found
 
 ) ; let
-) ; is-net-with-noconnect-symbol-attached()
+) ; net-with-noconnect-symbol-attached?()
 
 
 
 ; private:
-; function: nets-delete-not-connected()
+; function: nets-filter-out-not-connected!()
 ;
 ; Delete nets if they have "no connect" symbol (misc/nc-*) attached.
 ;
 ; [netnames]: list of net names
 ; {return}:   updated list of net names
 ;
-( define ( nets-delete-not-conected netnames )
+( define ( nets-filter-out-not-connected! netnames )
 ( let
   (
   ( result '() ) ; empty list
@@ -931,7 +931,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     ; check whether a "no connect" symbol is attached to the net and if so,
     ; do not include current netname in the result:
     ;
-    ( if ( not ( is-net-with-noconnect-symbol-attached netname ) )
+    ( if ( not ( net-with-noconnect-symbol-attached? netname ) )
       ( set! result ( cons netname result ) ) ; add netname to the result list
     )
 
@@ -943,7 +943,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ( reverse result ) ; reverse() to preserve [netnames] list order
 
 ) ; let
-) ; nets-delete-not-conected()
+) ; nets-filter-out-not-connected!()
 
 
 
@@ -970,7 +970,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
   ; filter out nets with "no connect" symbol attached:
   ;
-  (set! nets-filtered (nets-delete-not-conected nets-unfiltered))
+  (set! nets-filtered (nets-filter-out-not-connected! nets-unfiltered))
 
   ; update appropriate fields in the <schematic> record:
   ;
