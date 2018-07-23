@@ -86,6 +86,15 @@ do
 done
 
 
+# temporary fix 'make check' for new versions of perl
+# (it fails because since perl 5.26 "." is no longer in @INC).
+# TODO: find a proper way to not rely upon "."
+# presence in @INC (in future versions of perl
+# PERL_USE_UNSAFE_INC may be removed).
+#
+export PERL_USE_UNSAFE_INC=1
+
+
 # make sure we have the right paths when running this from inside the
 # source tree and also from outside the source tree.
 here=`pwd`
