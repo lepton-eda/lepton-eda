@@ -74,6 +74,18 @@ Notable changes in Lepton EDA 1.9.4
 
 ### Changes in `lepton-schematic`:
 
+- view-find-text-state action is added ('View → Find Text State'). It
+helps with the tabbed GUI where all widgets are not always visible.
+
+- "Freestyle" colors gain default values. Now there is no need to
+share the color schemes if one use that colors in their schematics.
+
+- A new widget that allows the users to change the schematic font has
+been added ('Options → Font...'). The user can click the "Apply" button
+to preview the chosen font and then cick the "Save..." button to save
+the settings either to the local or user configuraion file. It
+changes `font` key in `schematic.gui` group mentioned bolow.
+
 - A new configuration key `font` in `schematic.gui` group has been
   added. The user can now choose the font for schematic text.
 
