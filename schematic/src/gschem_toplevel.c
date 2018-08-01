@@ -599,8 +599,29 @@ gschem_toplevel_get_text_size_list_store (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
-  if (w_current->text_size_list_store == NULL) {
-    w_current->text_size_list_store = x_integerls_new_with_values (routine_text_size, ROUTINE_TEXT_SIZE_COUNT);
+  if (w_current->text_size_list_store == NULL)
+  {
+    gchar* cwd = g_get_current_dir();
+    EdaConfig* ctx = eda_config_get_context_for_path (cwd);
+    g_free (cwd);
+
+    gsize len = 0;
+    gchar** vals = eda_config_get_string_list (ctx,
+                                               "schematic.gui",
+                                               "text-sizes",
+                                               &len,
+                                               NULL);
+
+    if (vals != NULL && len > 0)
+    {
+      w_current->text_size_list_store = x_integerls_new_with_values ((const gchar**) vals, len);
+      g_strfreev (vals);
+
+    }
+    else
+    {
+      w_current->text_size_list_store = x_integerls_new_with_values (routine_text_size, ROUTINE_TEXT_SIZE_COUNT);
+    }
   }
 
   return w_current->text_size_list_store;
