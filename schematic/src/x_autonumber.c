@@ -1203,7 +1203,6 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   GtkWidget *table3;
   GtkWidget *label12;
   GtkWidget *label13;
-  GtkObject *opt_startnum_adj;
   GtkWidget *opt_startnum;
   GtkWidget *sort_order;
   GtkWidget *opt_removenum;
@@ -1343,8 +1342,19 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label13), 0, 0.5);
 
-  opt_startnum_adj = gtk_adjustment_new (1, 0, 10000, 1, 10, 10);
-  opt_startnum = gtk_spin_button_new (GTK_ADJUSTMENT (opt_startnum_adj), 1, 0);
+
+  /* this sets the page size to 10 (step * 10).
+   * if different page size is required,
+   * use gtk_spin_button_set_increments()
+  */
+  opt_startnum = gtk_spin_button_new_with_range (0,     /* min */
+                                                 10000, /* max */
+                                                 1);    /* step */
+
+  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (opt_startnum), 0);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (opt_startnum), 1);
+
+
   gtk_entry_set_activates_default(GTK_ENTRY(opt_startnum), TRUE);
   gtk_widget_show (opt_startnum);
   gtk_table_attach (GTK_TABLE (table3), opt_startnum, 1, 2, 0, 1,
