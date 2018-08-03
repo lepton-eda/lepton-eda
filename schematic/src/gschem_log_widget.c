@@ -58,6 +58,9 @@ instance_init (GschemLogWidget *log);
 static void
 log_message (GschemLogWidgetClass *klass, const gchar *message, const gchar *style);
 
+static void
+scroll_to_bottom (GtkTextBuffer* buffer, GschemLogWidget* widget);
+
 
 /*!
  *  \brief Get the Log class type
@@ -190,14 +193,11 @@ log_message (GschemLogWidgetClass *klass, const gchar *message, const gchar *sty
 static void
 changed_cb (GtkTextBuffer *buffer, GschemLogWidget *widget)
 {
-  GtkTextIter iter;
-
   g_return_if_fail (buffer != NULL);
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->viewer != NULL);
 
-  gtk_text_buffer_get_end_iter (buffer, &iter);
-  gtk_text_view_scroll_to_iter (widget->viewer, &iter, 0.0, TRUE, 0.0, 1.0);
+  scroll_to_bottom (buffer, widget);
 }
 
 
@@ -280,7 +280,6 @@ create_text_buffer()
 static void
 instance_init (GschemLogWidget *widget)
 {
-  GtkTextIter iter;
   GschemLogWidgetClass *klass = GSCHEM_LOG_WIDGET_GET_CLASS (widget);
   GtkWidget *scrolled;
 
@@ -351,6 +350,45 @@ instance_init (GschemLogWidget *widget)
                     G_CALLBACK (&changed_cb),
                     widget);
 
-  gtk_text_buffer_get_end_iter (klass->buffer, &iter);
-  gtk_text_view_scroll_to_iter (widget->viewer, &iter, 0.0, TRUE, 0.0, 1.0);
+  scroll_to_bottom (klass->buffer, widget);
 }
+
+
+
+/*! \brief scroll to the bottom of the log window
+ *
+ *  \param [in] buffer  The text buffer
+ *  \param [in] widget  The log widget
+ */
+static void
+scroll_to_bottom (GtkTextBuffer* buffer, GschemLogWidget* widget)
+{
+  g_return_if_fail (buffer != NULL);
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (widget->viewer != NULL);
+
+  /* gtk_text_view_scroll_to_iter()
+   * relies upon the results of computations
+   * performed in an idle handler.
+   * Give that handler an opportunity to run -
+   * process pending events before the call, - so that
+   * the view will be scrolled correctly (to the bottom).
+   *
+   * \note using gtk_text_view_scroll_to_mark() instead
+   * of gtk_text_view_scroll_to_iter() (as suggested in the
+   * documentation of gtk_text_view_scroll_to_iter() doesn't help.
+  */
+  while (gtk_events_pending())
+    gtk_main_iteration();
+
+  GtkTextIter iter;
+  gtk_text_buffer_get_end_iter (buffer, &iter);
+
+  gtk_text_view_scroll_to_iter (widget->viewer,
+                                &iter,
+                                0.0,  /* within_margin */
+                                TRUE, /* use_align */
+                                0.0,  /* xalign: 0 => left */
+                                1.0); /* yalign: 1 => bottom */
+}
+
