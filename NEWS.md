@@ -74,8 +74,9 @@ Notable changes in Lepton EDA 1.9.4
 
 ### Changes in `lepton-schematic`:
 
-- view-find-text-state action is added ('View → Find Text State'). It
-helps with the tabbed GUI where all widgets are not always visible.
+- view-find-text-state action has been added ('View → Find Text State'). It
+helps when docking windows GUI is turned off (in that case all widgets
+are not always visible).
 
 - "Freestyle" colors gain default values. Now there is no need to
 share the color schemes if one use that colors in their schematics.
