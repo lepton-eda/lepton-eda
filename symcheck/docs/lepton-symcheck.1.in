@@ -108,7 +108,7 @@ respects the following environment variable:
 .TP 8
 .B GEDADATA
 specifies where the various required scheme and rc files are located
-(the default is ${prefix}/share/gEDA).  This environment variables does
+(the default is ${prefix}/share/lepton-eda).  This environment variable does
 not need to be set by the end user unless they are moving the executables
 to a new install ${prefix}.
 

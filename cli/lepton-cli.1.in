@@ -185,7 +185,7 @@ and pass all the remaining arguments as the value of `(command-line)'.
 .TP 8
 .B GEDADATA
 specifies the search directory for Scheme and rc files.  The default
-is `${prefix}/share/gEDA'.
+is `${prefix}/share/lepton-eda'.
 .TP 8
 .B GEDADATARC
 specifies the search directory for rc files.  The default is `$GEDADATA'.
