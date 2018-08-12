@@ -8,7 +8,7 @@ dnl directory.
 # Set up configuration system
 #####################################################################
 
-AC_INIT([lepton EDA], [1.9.3], [https://github.com/lepton-eda/lepton-eda/issues], [lepton-eda])
+AC_INIT([lepton EDA], [1.9.4], [https://github.com/lepton-eda/lepton-eda/issues], [lepton-eda])
 AC_PREREQ([2.60])
 
 AC_CONFIG_SRCDIR([liblepton/src/liblepton.c])
@@ -25,7 +25,7 @@ AC_GNU_SOURCE # FIXME for some reason this is needed?
 # Do version number magic
 #####################################################################
 
-AX_GIT_VERSION([20170226])
+AX_GIT_VERSION([20180812])
 
 # This is used for keeping the ChangeLog files up-to-date
 AC_SUBST([CHANGELOG_BASE], [1.0-20070526])
