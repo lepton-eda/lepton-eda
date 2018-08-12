@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-05-26 14:43+0300\n"
+"POT-Creation-Date: 2018-08-12 12:28+0300\n"
 "PO-Revision-Date: 2010-02-06 22:09+0000\n"
 "Last-Translator: Jarosław Ogrodnik <nobodythere@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -18,32 +18,32 @@ msgstr ""
 "X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: liblepton/data/liblepton.xml.in.h:3
+#: liblepton/data/liblepton.xml.in:3
 #, fuzzy
 msgid "Lepton EDA circuit schematic"
 msgstr "schemat obwodu gEDA"
 
-#: liblepton/data/liblepton.xml.in.h:4
+#: liblepton/data/liblepton.xml.in:4
 #, fuzzy
 msgid "Lepton EDA schematic symbol"
 msgstr "element schematu gEDA"
 
-#: liblepton/data/liblepton.xml.in.h:5
+#: liblepton/data/liblepton.xml.in:5
 #, fuzzy
 msgid "Lepton EDA sch2pcb project"
 msgstr "projekt gsch2pcb gEDA"
 
-#: liblepton/data/x-lepton-sch2pcb-project.desktop.in.h:3
+#: liblepton/data/x-lepton-sch2pcb-project.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA sch2pcb Project"
 msgstr "Projekt Gsch2pcb gEDA"
 
-#: liblepton/data/x-lepton-schematic.desktop.in.h:3
+#: liblepton/data/x-lepton-schematic.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA Circuit Schematic"
 msgstr "Schemat Obwodu gEDA"
 
-#: liblepton/data/x-lepton-symbol.desktop.in.h:3
+#: liblepton/data/x-lepton-symbol.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA Schematic Symbol"
 msgstr "Element Schematu gEDA"
@@ -259,17 +259,17 @@ msgstr ""
 msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr ""
 
-#: liblepton/src/g_rc.c:509
+#: liblepton/src/g_rc.c:512
 #, fuzzy, c-format
 msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr "Nie odnaleziono komponentu [%s] w bibliotece komponentów\n"
 
-#: liblepton/src/g_rc.c:735
+#: liblepton/src/g_rc.c:738
 #, fuzzy, c-format
 msgid "Invalid path [%1$s] passed to bitmap-directory\n"
 msgstr "Nie odnaleziono komponentu [%s] w bibliotece komponentów\n"
 
-#: liblepton/src/g_rc.c:855
+#: liblepton/src/g_rc.c:858
 #, fuzzy
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
@@ -844,16 +844,16 @@ msgstr "Nie odnaleziono atrybutu slotdef=#:#,#,#...\n"
 msgid "component missing pinseq= attribute."
 msgstr "komponent nie ma atrybutu pinseq=\n"
 
-#: liblepton/src/edaconfig.c:652 liblepton/src/edaconfig.c:738
+#: liblepton/src/edaconfig.c:693 liblepton/src/edaconfig.c:779
 msgid "Undefined configuration filename"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1063 liblepton/src/edaconfig.c:1127
+#: liblepton/src/edaconfig.c:1104 liblepton/src/edaconfig.c:1168
 #, c-format
 msgid "Configuration does not have group '%s'"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1141
+#: liblepton/src/edaconfig.c:1182
 #, c-format
 msgid "Configuration does not have key '%s'"
 msgstr ""

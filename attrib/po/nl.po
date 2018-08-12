@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-06-06 12:31+0300\n"
+"POT-Creation-Date: 2018-08-12 12:33+0300\n"
 "PO-Revision-Date: 2014-08-31 20:31+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -20,12 +20,12 @@ msgstr ""
 "X-Poedit-Country: NETHERLANDS\n"
 "X-Poedit-Language: Dutch\n"
 
-#: attrib/data/lepton-attrib.desktop.in.h:3
+#: attrib/data/lepton-attrib.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA Attribute Editor"
 msgstr "gEDA Attribuut Editor"
 
-#: attrib/data/lepton-attrib.desktop.in.h:4
+#: attrib/data/lepton-attrib.desktop.in:4
 #, fuzzy
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr "Manipuleer componenten attributen met gattrib"

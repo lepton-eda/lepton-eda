@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-06-06 12:31+0300\n"
+"POT-Creation-Date: 2018-08-12 12:33+0300\n"
 "PO-Revision-Date: 2012-09-01 18:26+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -18,12 +18,12 @@ msgstr ""
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
 
-#: attrib/data/lepton-attrib.desktop.in.h:3
+#: attrib/data/lepton-attrib.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA Attribute Editor"
 msgstr "Επεξεργαστής γνωρισμάτων gEDA"
 
-#: attrib/data/lepton-attrib.desktop.in.h:4
+#: attrib/data/lepton-attrib.desktop.in:4
 #, fuzzy
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr "Έλεγχος των γνωρισμάτων των στοιχείων με το gattrib"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-06-06 12:31+0300\n"
+"POT-Creation-Date: 2018-08-12 12:33+0300\n"
 "PO-Revision-Date: 2012-01-27 14:17+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -18,12 +18,12 @@ msgstr ""
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
 
-#: attrib/data/lepton-attrib.desktop.in.h:3
+#: attrib/data/lepton-attrib.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA Attribute Editor"
 msgstr "gEDA Attribute Editor"
 
-#: attrib/data/lepton-attrib.desktop.in.h:4
+#: attrib/data/lepton-attrib.desktop.in:4
 #, fuzzy
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr "Керувати властивостями компонентів за допомогою gattrib"

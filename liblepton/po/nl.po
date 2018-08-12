@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-05-26 14:43+0300\n"
+"POT-Creation-Date: 2018-08-12 12:28+0300\n"
 "PO-Revision-Date: 2014-08-31 23:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -20,32 +20,32 @@ msgstr ""
 "X-Poedit-Country: NETHERLANDS\n"
 "X-Poedit-Language: Dutch\n"
 
-#: liblepton/data/liblepton.xml.in.h:3
+#: liblepton/data/liblepton.xml.in:3
 #, fuzzy
 msgid "Lepton EDA circuit schematic"
 msgstr "gEDA schakeling schema"
 
-#: liblepton/data/liblepton.xml.in.h:4
+#: liblepton/data/liblepton.xml.in:4
 #, fuzzy
 msgid "Lepton EDA schematic symbol"
 msgstr "gEDA schema symbool"
 
-#: liblepton/data/liblepton.xml.in.h:5
+#: liblepton/data/liblepton.xml.in:5
 #, fuzzy
 msgid "Lepton EDA sch2pcb project"
 msgstr "gEDA gsch2pcb project"
 
-#: liblepton/data/x-lepton-sch2pcb-project.desktop.in.h:3
+#: liblepton/data/x-lepton-sch2pcb-project.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA sch2pcb Project"
 msgstr "gEDA Gsch2pcb Project"
 
-#: liblepton/data/x-lepton-schematic.desktop.in.h:3
+#: liblepton/data/x-lepton-schematic.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA Circuit Schematic"
 msgstr "gEDA Schakeling Schema"
 
-#: liblepton/data/x-lepton-symbol.desktop.in.h:3
+#: liblepton/data/x-lepton-symbol.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA Schematic Symbol"
 msgstr "gEDA Schema Symbool"
@@ -264,17 +264,17 @@ msgstr "FOUT: %s\n"
 msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr "FOUT: De %s log kan meer informatie bevatten.\n"
 
-#: liblepton/src/g_rc.c:509
+#: liblepton/src/g_rc.c:512
 #, fuzzy, c-format
 msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr "Ongeldig pad [%s] overgedragen aan component-library\n"
 
-#: liblepton/src/g_rc.c:735
+#: liblepton/src/g_rc.c:738
 #, fuzzy, c-format
 msgid "Invalid path [%1$s] passed to bitmap-directory\n"
 msgstr "Ongeldig pad [%s] overgedragen aan bitmap-directory\n"
 
-#: liblepton/src/g_rc.c:855
+#: liblepton/src/g_rc.c:858
 #, fuzzy
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
@@ -853,16 +853,16 @@ msgstr "Geen goed slotdef=#:#,#,#... attribuut gevonden\n"
 msgid "component missing pinseq= attribute."
 msgstr "component mist een pinseq- attribuut\n"
 
-#: liblepton/src/edaconfig.c:652 liblepton/src/edaconfig.c:738
+#: liblepton/src/edaconfig.c:693 liblepton/src/edaconfig.c:779
 msgid "Undefined configuration filename"
 msgstr "Ongedefinieerde configuratie bestandsnaam"
 
-#: liblepton/src/edaconfig.c:1063 liblepton/src/edaconfig.c:1127
+#: liblepton/src/edaconfig.c:1104 liblepton/src/edaconfig.c:1168
 #, c-format
 msgid "Configuration does not have group '%s'"
 msgstr "Configuratie heeft geen groep '%s'"
 
-#: liblepton/src/edaconfig.c:1141
+#: liblepton/src/edaconfig.c:1182
 #, c-format
 msgid "Configuration does not have key '%s'"
 msgstr "Configuratie heeft geen toets '%s'"

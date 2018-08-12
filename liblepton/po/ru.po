@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-05-26 14:43+0300\n"
+"POT-Creation-Date: 2018-08-12 12:28+0300\n"
 "PO-Revision-Date: 2014-06-06 16:40+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
@@ -35,32 +35,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: liblepton/data/liblepton.xml.in.h:3
+#: liblepton/data/liblepton.xml.in:3
 #, fuzzy
 msgid "Lepton EDA circuit schematic"
 msgstr "Принципиальная схема gEDA"
 
-#: liblepton/data/liblepton.xml.in.h:4
+#: liblepton/data/liblepton.xml.in:4
 #, fuzzy
 msgid "Lepton EDA schematic symbol"
 msgstr "Символ схемы gEDA"
 
-#: liblepton/data/liblepton.xml.in.h:5
+#: liblepton/data/liblepton.xml.in:5
 #, fuzzy
 msgid "Lepton EDA sch2pcb project"
 msgstr "Проект gsch2pcb gEDA"
 
-#: liblepton/data/x-lepton-sch2pcb-project.desktop.in.h:3
+#: liblepton/data/x-lepton-sch2pcb-project.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA sch2pcb Project"
 msgstr "Проект gsch2pcb gEDA"
 
-#: liblepton/data/x-lepton-schematic.desktop.in.h:3
+#: liblepton/data/x-lepton-schematic.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA Circuit Schematic"
 msgstr "Принципиальная схема gEDA"
 
-#: liblepton/data/x-lepton-symbol.desktop.in.h:3
+#: liblepton/data/x-lepton-symbol.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA Schematic Symbol"
 msgstr "Символ схемы gEDA"
@@ -281,17 +281,17 @@ msgstr "ОШИБКА: %s\n"
 msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr "ОШИБКА: в файле журнала %s может быть больше информации\n"
 
-#: liblepton/src/g_rc.c:509
+#: liblepton/src/g_rc.c:512
 #, fuzzy, c-format
 msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr "component-library: недопустимый путь «%s»\n"
 
-#: liblepton/src/g_rc.c:735
+#: liblepton/src/g_rc.c:738
 #, fuzzy, c-format
 msgid "Invalid path [%1$s] passed to bitmap-directory\n"
 msgstr "bitmap-directory: недопустимый путь «%s»\n"
 
-#: liblepton/src/g_rc.c:855
+#: liblepton/src/g_rc.c:858
 #, fuzzy
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
@@ -880,16 +880,16 @@ msgstr "Не удалось найти атрибут «slotdef=#:#,#,#...» в 
 msgid "component missing pinseq= attribute."
 msgstr "Отсутствует атрибут «pinseq» у вывода компонента\n"
 
-#: liblepton/src/edaconfig.c:652 liblepton/src/edaconfig.c:738
+#: liblepton/src/edaconfig.c:693 liblepton/src/edaconfig.c:779
 msgid "Undefined configuration filename"
 msgstr "Не определено имя файла настроек"
 
-#: liblepton/src/edaconfig.c:1063 liblepton/src/edaconfig.c:1127
+#: liblepton/src/edaconfig.c:1104 liblepton/src/edaconfig.c:1168
 #, c-format
 msgid "Configuration does not have group '%s'"
 msgstr "В настройках не обнаружено группы «%s»"
 
-#: liblepton/src/edaconfig.c:1141
+#: liblepton/src/edaconfig.c:1182
 #, c-format
 msgid "Configuration does not have key '%s'"
 msgstr "В настройках не обнаружено ключа «%s»"

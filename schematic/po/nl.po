@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-05-26 14:43+0300\n"
+"POT-Creation-Date: 2018-08-12 12:30+0300\n"
 "PO-Revision-Date: 2014-08-31 22:35+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -167,7 +167,7 @@ msgstr "Lees init scm bestand [%s]\n"
 msgid "Failed to read init scm file [%1$s]"
 msgstr "Fout bij het lezen van het init scm bestand [%s]\n"
 
-#: schematic/src/lepton-schematic.c:284
+#: schematic/src/lepton-schematic.c:289
 #, c-format
 msgid ""
 "ERROR: Failed to load or evaluate startup script.\n"
@@ -345,7 +345,7 @@ msgstr "Wereld"
 msgid "Filename"
 msgstr "Bestandsnaam"
 
-#: schematic/src/gschem_find_text_state.c:821 schematic/src/i_callbacks.c:1995
+#: schematic/src/gschem_find_text_state.c:821 schematic/src/i_callbacks.c:2009
 #: schematic/src/x_colorcb.c:154 schematic/src/x_window.c:1238
 #: schematic/src/x_window.c:1452
 msgid "Text"
@@ -721,7 +721,7 @@ msgid "Modify Mode"
 msgstr "Kopieer Mode"
 
 #: schematic/src/i_basic.c:92 schematic/src/x_menus.c:47
-#: schematic/scheme/gschem/builtins.scm:209
+#: schematic/scheme/gschem/builtins.scm:212
 msgid "Zoom Box"
 msgstr "Vergroot Venster"
 
@@ -754,8 +754,8 @@ msgstr "Herhaal/"
 msgid "Repeat/none"
 msgstr "Herhaal/geen"
 
-#: schematic/src/i_basic.c:323 schematic/src/i_callbacks.c:1280
-#: schematic/scheme/gschem/builtins.scm:194
+#: schematic/src/i_basic.c:323 schematic/src/i_callbacks.c:1292
+#: schematic/scheme/gschem/builtins.scm:197
 msgid "Pan"
 msgstr "Schuif"
 
@@ -884,98 +884,98 @@ msgstr "Vernieuw"
 msgid "ShowHidden"
 msgstr "ZichtbaarVerborgen"
 
-#: schematic/src/i_callbacks.c:1578
+#: schematic/src/i_callbacks.c:1592
 msgid "Really revert page?"
 msgstr "Echt Terughalen pagina?"
 
-#: schematic/src/i_callbacks.c:1672
+#: schematic/src/i_callbacks.c:1686
 msgid "Copy to clipboard"
 msgstr "Kopieer naar klembord"
 
-#: schematic/src/i_callbacks.c:1689
+#: schematic/src/i_callbacks.c:1703
 msgid "Cut to clipboard"
 msgstr "Knip naar klembord"
 
-#: schematic/src/i_callbacks.c:1711
+#: schematic/src/i_callbacks.c:1725
 msgid "Paste from clipboard"
 msgstr "Plak van klembord"
 
-#: schematic/src/i_callbacks.c:1719
+#: schematic/src/i_callbacks.c:1733
 msgid "Empty clipboard"
 msgstr "Leeg het klembord"
 
 #. TRANSLATORS: The number is the number of the buffer that the
 #. * selection is being copied to.
-#: schematic/src/i_callbacks.c:1744
+#: schematic/src/i_callbacks.c:1758
 #, c-format
 msgid "Copy %i"
 msgstr "Kopieer %i"
 
 #. TRANSLATORS: The number is the number of the buffer that the
 #. * selection is being cut to.
-#: schematic/src/i_callbacks.c:1771
+#: schematic/src/i_callbacks.c:1785
 #, c-format
 msgid "Cut %i"
 msgstr "Knip %i"
 
 #. TRANSLATORS: The number is the number of the buffer that is being
 #. * pasted to the schematic.
-#: schematic/src/i_callbacks.c:1801
+#: schematic/src/i_callbacks.c:1815
 #, c-format
 msgid "Paste %i"
 msgstr "Plak %i"
 
-#: schematic/src/i_callbacks.c:1810
+#: schematic/src/i_callbacks.c:1824
 msgid "Empty buffer"
 msgstr "Maak buffer leeg"
 
-#: schematic/src/i_callbacks.c:1858 schematic/src/x_window.c:1215
+#: schematic/src/i_callbacks.c:1872 schematic/src/x_window.c:1215
 msgid "Component"
 msgstr "Component"
 
-#: schematic/src/i_callbacks.c:1890 schematic/src/x_colorcb.c:150
+#: schematic/src/i_callbacks.c:1904 schematic/src/x_colorcb.c:150
 msgid "Attribute"
 msgstr "Attribuut"
 
-#: schematic/src/i_callbacks.c:1910 schematic/src/x_colorcb.c:149
+#: schematic/src/i_callbacks.c:1924 schematic/src/x_colorcb.c:149
 msgid "Net"
 msgstr "Draad"
 
-#: schematic/src/i_callbacks.c:1953 schematic/src/x_colorcb.c:155
+#: schematic/src/i_callbacks.c:1967 schematic/src/x_colorcb.c:155
 #: schematic/src/x_window.c:1234
 msgid "Bus"
 msgstr "Bus"
 
-#: schematic/src/i_callbacks.c:2029
+#: schematic/src/i_callbacks.c:2043
 msgid "Line"
 msgstr "Lijn"
 
-#: schematic/src/i_callbacks.c:2046
+#: schematic/src/i_callbacks.c:2060
 msgid "Path"
 msgstr "Pad"
 
-#: schematic/src/i_callbacks.c:2068
+#: schematic/src/i_callbacks.c:2082
 msgid "Box"
 msgstr "Rechthoek"
 
-#: schematic/src/i_callbacks.c:2110
+#: schematic/src/i_callbacks.c:2124
 msgid "Circle"
 msgstr "Cirkel"
 
-#: schematic/src/i_callbacks.c:2133
+#: schematic/src/i_callbacks.c:2147
 msgid "Arc"
 msgstr "Boog"
 
-#: schematic/src/i_callbacks.c:2156 schematic/src/x_colorcb.c:146
+#: schematic/src/i_callbacks.c:2170 schematic/src/x_colorcb.c:146
 msgid "Pin"
 msgstr "Pen"
 
-#: schematic/src/i_callbacks.c:2216
+#: schematic/src/i_callbacks.c:2230
 #, fuzzy, c-format
 msgid "Searching for source [%1$s]"
 msgstr "Zoek naar bron [%s]\n"
 
-#: schematic/src/i_callbacks.c:2248
+#: schematic/src/i_callbacks.c:2262
 #, fuzzy, c-format
 msgid ""
 "Failed to descend hierarchy into '%1$s': %2$s\n"
@@ -986,120 +986,120 @@ msgstr ""
 "\n"
 "Het gschem log kan meer informatie bevatten."
 
-#: schematic/src/i_callbacks.c:2252
+#: schematic/src/i_callbacks.c:2266
 #, fuzzy, c-format
 msgid "Failed to descend into '%1$s': %2$s"
 msgstr "Faalde bij het afdalen in '%s': %s\n"
 
-#: schematic/src/i_callbacks.c:2259
+#: schematic/src/i_callbacks.c:2273
 msgid "Failed to descend hierarchy."
 msgstr "Faalde om af te dalen in hierarchie"
 
-#: schematic/src/i_callbacks.c:2337
+#: schematic/src/i_callbacks.c:2351
 #, fuzzy, c-format
 msgid "Searching for symbol [%1$s]"
 msgstr "Zoek naar symbool [%s]\n"
 
-#: schematic/src/i_callbacks.c:2345
+#: schematic/src/i_callbacks.c:2359
 #, fuzzy
 msgid "Symbol is not a real file. Symbol cannot be loaded."
 msgstr "Symbool is geen werkelijk bestand. Symbool kan niet geladen worden.\n"
 
-#: schematic/src/i_callbacks.c:2392
+#: schematic/src/i_callbacks.c:2406
 #, fuzzy
 msgid "Cannot find any schematics above the current one!"
 msgstr "Kan geen schema's vinden boven het huidige schema!\n"
 
-#: schematic/src/i_callbacks.c:2425
+#: schematic/src/i_callbacks.c:2439
 msgid "Attach"
 msgstr "Vastmaken"
 
-#: schematic/src/i_callbacks.c:2481
+#: schematic/src/i_callbacks.c:2495
 msgid "Detach"
 msgstr "Losmaken"
 
-#: schematic/src/i_callbacks.c:2525
+#: schematic/src/i_callbacks.c:2539
 msgid "ShowN"
 msgstr "ToonN"
 
-#: schematic/src/i_callbacks.c:2562
+#: schematic/src/i_callbacks.c:2576
 msgid "ShowV"
 msgstr "ToonW"
 
-#: schematic/src/i_callbacks.c:2599
+#: schematic/src/i_callbacks.c:2613
 msgid "ShowB"
 msgstr "ToonB"
 
-#: schematic/src/i_callbacks.c:2637
+#: schematic/src/i_callbacks.c:2651
 msgid "VisToggle"
 msgstr "SchakelZichtbaarheid"
 
-#: schematic/src/i_callbacks.c:2668
+#: schematic/src/i_callbacks.c:2682
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Sorry, maar dit is een niet werkende menu optie\n"
 
-#: schematic/src/i_callbacks.c:2746
+#: schematic/src/i_callbacks.c:2760
 #, fuzzy
 msgid "Action feedback mode set to OUTLINE"
 msgstr "Aktie terugkoppel mode is ingesteld op OUTLINE\n"
 
-#: schematic/src/i_callbacks.c:2749
+#: schematic/src/i_callbacks.c:2763
 #, fuzzy
 msgid "Action feedback mode set to BOUNDINGBOX"
 msgstr "Aktie terugkoppel mode is ingesteld op BOUNDINGBOX.\n"
 
-#: schematic/src/i_callbacks.c:2773
+#: schematic/src/i_callbacks.c:2787
 #, fuzzy
 msgid "Grid OFF"
 msgstr "Raster UIT\n"
 
-#: schematic/src/i_callbacks.c:2774
+#: schematic/src/i_callbacks.c:2788
 #, fuzzy
 msgid "Dot grid selected"
 msgstr "Punt raster geselecteerd\n"
 
-#: schematic/src/i_callbacks.c:2775
+#: schematic/src/i_callbacks.c:2789
 #, fuzzy
 msgid "Mesh grid selected"
 msgstr "Maas raster geselecteerd\n"
 
-#: schematic/src/i_callbacks.c:2776
+#: schematic/src/i_callbacks.c:2790
 #, fuzzy
 msgid "Invalid grid mode"
 msgstr "Ongeldige raster modus\n"
 
-#: schematic/src/i_callbacks.c:2798
+#: schematic/src/i_callbacks.c:2812
 #, fuzzy
 msgid "Snap OFF (CAUTION!)"
 msgstr "Snap UIT (PAS OP!)\n"
 
-#: schematic/src/i_callbacks.c:2801
+#: schematic/src/i_callbacks.c:2815
 #, fuzzy
 msgid "Snap ON"
 msgstr "Snap AAN\n"
 
-#: schematic/src/i_callbacks.c:2804
+#: schematic/src/i_callbacks.c:2818
 #, fuzzy
 msgid "Snap back to the grid (CAUTION!)"
 msgstr "Snap terug op raster (PAS OP!)\n"
 
-#: schematic/src/i_callbacks.c:2833
+#: schematic/src/i_callbacks.c:2847
 #, fuzzy
 msgid "Rubber band ON"
 msgstr "Elastiek band AAN\n"
 
-#: schematic/src/i_callbacks.c:2835
+#: schematic/src/i_callbacks.c:2849
 #, fuzzy
 msgid "Rubber band OFF"
 msgstr "Elastiek band UIT \n"
 
-#: schematic/src/i_callbacks.c:2854
+#: schematic/src/i_callbacks.c:2868
 #, fuzzy
 msgid "magnetic net mode: ON"
 msgstr "magnetische draad mode: AAN\n"
 
-#: schematic/src/i_callbacks.c:2857
+#: schematic/src/i_callbacks.c:2871
 #, fuzzy
 msgid "magnetic net mode: OFF"
 msgstr "magnetische draad mode: UIT\n"
@@ -1357,7 +1357,7 @@ msgid "Show Name Only"
 msgstr "Toon Alleen Naam"
 
 #: schematic/src/x_attribedit.c:431 schematic/src/x_multiattrib.c:1619
-#: schematic/scheme/gschem/builtins.scm:329
+#: schematic/scheme/gschem/builtins.scm:332
 msgid "Show Name & Value"
 msgstr "Toon Naam & Waarde"
 
@@ -1832,36 +1832,36 @@ msgstr "Hart"
 msgid "Phantom"
 msgstr "Begrenzing"
 
-#: schematic/src/x_menus.c:39 schematic/scheme/gschem/builtins.scm:272
+#: schematic/src/x_menus.c:39 schematic/scheme/gschem/builtins.scm:275
 msgid "Add Net"
 msgstr "Voeg Draad Toe"
 
 #: schematic/src/x_menus.c:40 schematic/src/x_multiattrib.c:2186
-#: schematic/scheme/gschem/builtins.scm:269
+#: schematic/scheme/gschem/builtins.scm:272
 msgid "Add Attribute"
 msgstr "Plaats Attribuut"
 
-#: schematic/src/x_menus.c:41 schematic/scheme/gschem/builtins.scm:266
+#: schematic/src/x_menus.c:41 schematic/scheme/gschem/builtins.scm:269
 msgid "Add Component"
 msgstr "Voeg Component Toe"
 
-#: schematic/src/x_menus.c:42 schematic/scheme/gschem/builtins.scm:275
+#: schematic/src/x_menus.c:42 schematic/scheme/gschem/builtins.scm:278
 msgid "Add Bus"
 msgstr "Voeg Bus Toe"
 
-#: schematic/src/x_menus.c:43 schematic/scheme/gschem/builtins.scm:278
+#: schematic/src/x_menus.c:43 schematic/scheme/gschem/builtins.scm:281
 msgid "Add Text"
 msgstr "Voeg Tekst Toe"
 
-#: schematic/src/x_menus.c:45 schematic/scheme/gschem/builtins.scm:215
+#: schematic/src/x_menus.c:45 schematic/scheme/gschem/builtins.scm:218
 msgid "Zoom In"
 msgstr "Vergroot"
 
-#: schematic/src/x_menus.c:46 schematic/scheme/gschem/builtins.scm:218
+#: schematic/src/x_menus.c:46 schematic/scheme/gschem/builtins.scm:221
 msgid "Zoom Out"
 msgstr "Verklein"
 
-#: schematic/src/x_menus.c:48 schematic/scheme/gschem/builtins.scm:212
+#: schematic/src/x_menus.c:48 schematic/scheme/gschem/builtins.scm:215
 msgid "Zoom Extents"
 msgstr "Toon Alles"
 
@@ -1878,11 +1878,11 @@ msgstr "Bewerk..."
 msgid "Edit Pin Type..."
 msgstr "Bewerk Pen Type..."
 
-#: schematic/src/x_menus.c:57 schematic/scheme/gschem/builtins.scm:305
+#: schematic/src/x_menus.c:57 schematic/scheme/gschem/builtins.scm:308
 msgid "Down Schematic"
 msgstr "Naar Schema"
 
-#: schematic/src/x_menus.c:58 schematic/scheme/gschem/builtins.scm:308
+#: schematic/src/x_menus.c:58 schematic/scheme/gschem/builtins.scm:311
 msgid "Down Symbol"
 msgstr "Naar Symbool"
 
@@ -2015,11 +2015,11 @@ msgstr "Open Pagina..."
 msgid "Save Page"
 msgstr "Opslaan Pagina"
 
-#: schematic/src/x_pagesel.c:257 schematic/scheme/gschem/builtins.scm:251
+#: schematic/src/x_pagesel.c:257 schematic/scheme/gschem/builtins.scm:254
 msgid "Close Page"
 msgstr "Sluit Pagina"
 
-#: schematic/src/x_pagesel.c:376 schematic/scheme/gschem/builtins.scm:242
+#: schematic/src/x_pagesel.c:376 schematic/scheme/gschem/builtins.scm:245
 msgid "Page Manager"
 msgstr "Pagina Manager"
 
@@ -2276,12 +2276,12 @@ msgstr "Vind tekst"
 msgid "Status"
 msgstr "Status"
 
-#: schematic/data/lepton-schematic.desktop.in.h:3
+#: schematic/data/lepton-schematic.desktop.in:3
 #, fuzzy
 msgid "Lepton EDA Schematic Editor"
 msgstr "gEDA schema bewerking"
 
-#: schematic/data/lepton-schematic.desktop.in.h:4
+#: schematic/data/lepton-schematic.desktop.in:4
 #, fuzzy
 msgid "Create and edit electrical schematics and symbols with lepton-schematic"
 msgstr "Creer en bewerk elektrische schema's en symbolen met gschem"
@@ -2312,7 +2312,7 @@ msgid "Save All"
 msgstr "Alles Opslaan"
 
 #: schematic/lib/system-gschemrc.scm:1118
-#: schematic/lib/system-gschemrc.scm:1217
+#: schematic/lib/system-gschemrc.scm:1219
 msgid "_Revert"
 msgstr "Te_rughalen"
 
@@ -2497,286 +2497,298 @@ msgid "Sidebar"
 msgstr ""
 
 #: schematic/lib/system-gschemrc.scm:1195
+#: schematic/scheme/gschem/builtins.scm:191
+#, fuzzy
+msgid "Find Text State"
+msgstr "Vind tekst"
+
+#: schematic/lib/system-gschemrc.scm:1197
 msgid "_Redraw"
 msgstr "He_rtekenen"
 
-#: schematic/lib/system-gschemrc.scm:1196
+#: schematic/lib/system-gschemrc.scm:1198
 msgid "_Pan"
 msgstr "_Schuif"
 
-#: schematic/lib/system-gschemrc.scm:1197
+#: schematic/lib/system-gschemrc.scm:1199
 msgid "Zoom _Box"
 msgstr "_Vergroot Venster"
 
-#: schematic/lib/system-gschemrc.scm:1198
+#: schematic/lib/system-gschemrc.scm:1200
 msgid "Zoom _Extents"
 msgstr "Toon All_es"
 
-#: schematic/lib/system-gschemrc.scm:1199
+#: schematic/lib/system-gschemrc.scm:1201
 msgid "Zoom _In"
 msgstr "Ver_groot"
 
-#: schematic/lib/system-gschemrc.scm:1200
+#: schematic/lib/system-gschemrc.scm:1202
 msgid "Zoom _Out"
 msgstr "Ver_klein"
 
-#: schematic/lib/system-gschemrc.scm:1201
+#: schematic/lib/system-gschemrc.scm:1203
 msgid "Zoom _Full"
 msgstr "Toon _Maximaal"
 
-#: schematic/lib/system-gschemrc.scm:1203
+#: schematic/lib/system-gschemrc.scm:1205
 msgid "_Dark color scheme"
 msgstr "_Donker kleuren schema"
 
-#: schematic/lib/system-gschemrc.scm:1204
+#: schematic/lib/system-gschemrc.scm:1206
 msgid "_Light color scheme"
 msgstr "_Licht kleuren schema"
 
-#: schematic/lib/system-gschemrc.scm:1205
+#: schematic/lib/system-gschemrc.scm:1207
 msgid "B_W color scheme"
 msgstr "Z_W kleuren schema"
 
-#: schematic/lib/system-gschemrc.scm:1207
+#: schematic/lib/system-gschemrc.scm:1209
 msgid "Color scheme editor..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1214
+#: schematic/lib/system-gschemrc.scm:1216
 msgid "_Manager..."
 msgstr "_Manager..."
 
-#: schematic/lib/system-gschemrc.scm:1215
+#: schematic/lib/system-gschemrc.scm:1217
 msgid "_Previous"
 msgstr "_Vorige"
 
-#: schematic/lib/system-gschemrc.scm:1216
+#: schematic/lib/system-gschemrc.scm:1218
 msgid "_Next"
 msgstr "Volge_nde"
 
-#: schematic/lib/system-gschemrc.scm:1218
+#: schematic/lib/system-gschemrc.scm:1220
 msgid "_Close"
 msgstr "S_luit"
 
-#: schematic/lib/system-gschemrc.scm:1220
-#: schematic/scheme/gschem/builtins.scm:254
+#: schematic/lib/system-gschemrc.scm:1222
+#: schematic/scheme/gschem/builtins.scm:257
 #, fuzzy
 msgid "Next Tab"
 msgstr "Volgende Pagina"
 
-#: schematic/lib/system-gschemrc.scm:1221
-#: schematic/scheme/gschem/builtins.scm:257
+#: schematic/lib/system-gschemrc.scm:1223
+#: schematic/scheme/gschem/builtins.scm:260
 #, fuzzy
 msgid "Previous Tab"
 msgstr "Vorige Pagina"
 
-#: schematic/lib/system-gschemrc.scm:1229
+#: schematic/lib/system-gschemrc.scm:1231
 msgid "_Component..."
 msgstr "_Component..."
 
-#: schematic/lib/system-gschemrc.scm:1230
+#: schematic/lib/system-gschemrc.scm:1232
 msgid "_Net"
 msgstr "_Draad"
 
-#: schematic/lib/system-gschemrc.scm:1231
+#: schematic/lib/system-gschemrc.scm:1233
 msgid "B_us"
 msgstr "B_us"
 
-#: schematic/lib/system-gschemrc.scm:1232
+#: schematic/lib/system-gschemrc.scm:1234
 msgid "_Attribute..."
 msgstr "_Attribuut..."
 
-#: schematic/lib/system-gschemrc.scm:1233
+#: schematic/lib/system-gschemrc.scm:1235
 msgid "_Text..."
 msgstr "_Tekst..."
 
-#: schematic/lib/system-gschemrc.scm:1235
+#: schematic/lib/system-gschemrc.scm:1237
 msgid "_Line"
 msgstr "_Lijn"
 
-#: schematic/lib/system-gschemrc.scm:1236
+#: schematic/lib/system-gschemrc.scm:1238
 msgid "Pat_h"
 msgstr "Pat_h"
 
-#: schematic/lib/system-gschemrc.scm:1237
+#: schematic/lib/system-gschemrc.scm:1239
 msgid "_Box"
 msgstr "_Rechthoek"
 
-#: schematic/lib/system-gschemrc.scm:1238
+#: schematic/lib/system-gschemrc.scm:1240
 msgid "C_ircle"
 msgstr "C_irkel"
 
-#: schematic/lib/system-gschemrc.scm:1239
+#: schematic/lib/system-gschemrc.scm:1241
 msgid "A_rc"
 msgstr "_Boog"
 
-#: schematic/lib/system-gschemrc.scm:1240
+#: schematic/lib/system-gschemrc.scm:1242
 msgid "_Pin"
 msgstr "_Pen"
 
-#: schematic/lib/system-gschemrc.scm:1241
+#: schematic/lib/system-gschemrc.scm:1243
 msgid "Pictu_re..."
 msgstr "A_fbeelding..."
 
-#: schematic/lib/system-gschemrc.scm:1247
+#: schematic/lib/system-gschemrc.scm:1249
 msgid "_Down Schematic"
 msgstr "_Naar Schema"
 
-#: schematic/lib/system-gschemrc.scm:1248
+#: schematic/lib/system-gschemrc.scm:1250
 msgid "Down _Symbol"
 msgstr "Naar _Symbool"
 
-#: schematic/lib/system-gschemrc.scm:1249
+#: schematic/lib/system-gschemrc.scm:1251
 msgid "_Up"
 msgstr "O_mhoog"
 
-#: schematic/lib/system-gschemrc.scm:1250
+#: schematic/lib/system-gschemrc.scm:1252
 msgid "D_ocumentation..."
 msgstr "D_ocumentatie..."
 
-#: schematic/lib/system-gschemrc.scm:1256
+#: schematic/lib/system-gschemrc.scm:1258
 msgid "_Attach"
 msgstr "V_astmaken"
 
-#: schematic/lib/system-gschemrc.scm:1257
+#: schematic/lib/system-gschemrc.scm:1259
 msgid "_Detach"
 msgstr "_Losmaken"
 
-#: schematic/lib/system-gschemrc.scm:1258
+#: schematic/lib/system-gschemrc.scm:1260
 msgid "Show _Value"
 msgstr "Toon _Waarde"
 
-#: schematic/lib/system-gschemrc.scm:1259
+#: schematic/lib/system-gschemrc.scm:1261
 msgid "Show _Name"
 msgstr "Toon _Naam"
 
-#: schematic/lib/system-gschemrc.scm:1260
+#: schematic/lib/system-gschemrc.scm:1262
 msgid "Show _Both"
 msgstr "Toon _Beide"
 
-#: schematic/lib/system-gschemrc.scm:1261
+#: schematic/lib/system-gschemrc.scm:1263
 msgid "_Toggle Visibility"
 msgstr "Schakel Zich_tbaarheid"
 
-#: schematic/lib/system-gschemrc.scm:1262
+#: schematic/lib/system-gschemrc.scm:1264
 msgid "_Find Specific Text..."
 msgstr "Vind Speci_fieke Tekst..."
 
-#: schematic/lib/system-gschemrc.scm:1263
+#: schematic/lib/system-gschemrc.scm:1265
 msgid "_Hide Specific Text..."
 msgstr "Verberg Specifieke Tekst..."
 
-#: schematic/lib/system-gschemrc.scm:1264
+#: schematic/lib/system-gschemrc.scm:1266
 msgid "_Show Specific Text..."
 msgstr "Toon _Specifieke Tekst..."
 
-#: schematic/lib/system-gschemrc.scm:1265
+#: schematic/lib/system-gschemrc.scm:1267
 msgid "A_utonumber Text..."
 msgstr "A_utomatisch Tekst Nummeren..."
 
-#: schematic/lib/system-gschemrc.scm:1271
-msgid "_Text Size..."
+#: schematic/lib/system-gschemrc.scm:1273
+#, fuzzy
+msgid "_Font..."
+msgstr "Af_drukken..."
+
+#: schematic/lib/system-gschemrc.scm:1274
+#, fuzzy
+msgid "Text Size..."
 msgstr "_Tekst Hoogte..."
 
-#: schematic/lib/system-gschemrc.scm:1272
+#: schematic/lib/system-gschemrc.scm:1275
 msgid "Cycle _grid styles"
 msgstr "Schakel r_aster stijlen"
 
-#: schematic/lib/system-gschemrc.scm:1273
+#: schematic/lib/system-gschemrc.scm:1276
 msgid "Toggle _Snap On/Off"
 msgstr "Schakel _Snap Aan/Uit"
 
-#: schematic/lib/system-gschemrc.scm:1274
+#: schematic/lib/system-gschemrc.scm:1277
 msgid "Snap Grid S_pacing..."
 msgstr "Sna_p Raster Afstand..."
 
-#: schematic/lib/system-gschemrc.scm:1275
+#: schematic/lib/system-gschemrc.scm:1278
 msgid "Scale _up Grid Spacing"
 msgstr "Omhoog schalen Raster A_fstand"
 
-#: schematic/lib/system-gschemrc.scm:1276
+#: schematic/lib/system-gschemrc.scm:1279
 msgid "Scale _down Grid Spacing"
 msgstr "Omlaag schalen Snap Raster Afstan_d"
 
-#: schematic/lib/system-gschemrc.scm:1277
+#: schematic/lib/system-gschemrc.scm:1280
 msgid "Toggle _Outline/Box"
 msgstr "Schakel C_ontour/Rechthoek"
 
-#: schematic/lib/system-gschemrc.scm:1278
+#: schematic/lib/system-gschemrc.scm:1281
 msgid "Toggle Net _Rubberband"
 msgstr "Schakel D_raad Elastiekband"
 
-#: schematic/lib/system-gschemrc.scm:1279
+#: schematic/lib/system-gschemrc.scm:1282
 msgid "Toggle _Magnetic Net"
 msgstr "Schakel _Magnetische Draad Mode"
 
-#: schematic/lib/system-gschemrc.scm:1280
+#: schematic/lib/system-gschemrc.scm:1283
 msgid "Show _Log Window..."
 msgstr "Toon _Logboek venster..."
 
-#: schematic/lib/system-gschemrc.scm:1281
+#: schematic/lib/system-gschemrc.scm:1284
 msgid "Show _Coord Window..."
 msgstr "Toon _Coordinaten venster..."
 
-#: schematic/lib/system-gschemrc.scm:1288
+#: schematic/lib/system-gschemrc.scm:1291
 msgid "gschem User _Guide..."
 msgstr "gschem Gebruikers _Gids..."
 
-#: schematic/lib/system-gschemrc.scm:1289
+#: schematic/lib/system-gschemrc.scm:1292
 msgid "gschem _FAQ..."
 msgstr "gschem _FAQ..."
 
-#: schematic/lib/system-gschemrc.scm:1290
+#: schematic/lib/system-gschemrc.scm:1293
 msgid "gEDA Docu_mentation..."
 msgstr "gEDA Docu_mentatie..."
 
-#: schematic/lib/system-gschemrc.scm:1291
+#: schematic/lib/system-gschemrc.scm:1294
 msgid "gEDA _Wiki..."
 msgstr "gEDA _Wiki..."
 
-#: schematic/lib/system-gschemrc.scm:1292
+#: schematic/lib/system-gschemrc.scm:1295
 msgid "Component D_ocumentation..."
 msgstr "Component D_ocumentatie..."
 
-#: schematic/lib/system-gschemrc.scm:1294
+#: schematic/lib/system-gschemrc.scm:1297
 msgid "_Hotkeys..."
 msgstr "_Sneltoets..."
 
-#: schematic/lib/system-gschemrc.scm:1295
+#: schematic/lib/system-gschemrc.scm:1298
 msgid "_About..."
 msgstr "Om_trent..."
 
-#: schematic/lib/system-gschemrc.scm:1301
+#: schematic/lib/system-gschemrc.scm:1304
 msgid "_File"
 msgstr "_Bestand"
 
-#: schematic/lib/system-gschemrc.scm:1302
+#: schematic/lib/system-gschemrc.scm:1305
 msgid "_Edit"
 msgstr "B_ewerk"
 
-#: schematic/lib/system-gschemrc.scm:1304
+#: schematic/lib/system-gschemrc.scm:1307
 msgid "_View"
 msgstr "_Toon"
 
-#: schematic/lib/system-gschemrc.scm:1305
+#: schematic/lib/system-gschemrc.scm:1308
 msgid "_Page"
 msgstr "_Pagina"
 
-#: schematic/lib/system-gschemrc.scm:1306
+#: schematic/lib/system-gschemrc.scm:1309
 msgid "_Add"
 msgstr "Toe_voegen"
 
-#: schematic/lib/system-gschemrc.scm:1307
+#: schematic/lib/system-gschemrc.scm:1310
 msgid "Hie_rarchy"
 msgstr "Hie_rarchie"
 
-#: schematic/lib/system-gschemrc.scm:1308
+#: schematic/lib/system-gschemrc.scm:1311
 msgid "A_ttributes"
 msgstr "_Attributen"
 
-#: schematic/lib/system-gschemrc.scm:1309
+#: schematic/lib/system-gschemrc.scm:1312
 msgid "_Options"
 msgstr "_Opties"
 
-#: schematic/lib/system-gschemrc.scm:1310
+#: schematic/lib/system-gschemrc.scm:1313
 msgid "_Help"
 msgstr "_Help"
 
@@ -2865,188 +2877,193 @@ msgstr "Knip"
 msgid "Paste"
 msgstr "Plak"
 
-#: schematic/scheme/gschem/builtins.scm:191
+#: schematic/scheme/gschem/builtins.scm:194
 msgid "Redraw"
 msgstr "Hertekenen"
 
-#: schematic/scheme/gschem/builtins.scm:197
+#: schematic/scheme/gschem/builtins.scm:200
 msgid "Pan Left"
 msgstr "Verschuif Links"
 
-#: schematic/scheme/gschem/builtins.scm:200
+#: schematic/scheme/gschem/builtins.scm:203
 msgid "Pan Right"
 msgstr "Verschuif Rechts"
 
-#: schematic/scheme/gschem/builtins.scm:203
+#: schematic/scheme/gschem/builtins.scm:206
 msgid "Pan Up"
 msgstr "Verschuif Omhoog"
 
-#: schematic/scheme/gschem/builtins.scm:206
+#: schematic/scheme/gschem/builtins.scm:209
 msgid "Pan Down"
 msgstr "Verschuif Omlaag"
 
-#: schematic/scheme/gschem/builtins.scm:221
+#: schematic/scheme/gschem/builtins.scm:224
 msgid "Zoom Full"
 msgstr "Toon Volledig"
 
-#: schematic/scheme/gschem/builtins.scm:224
+#: schematic/scheme/gschem/builtins.scm:227
 msgid "Dark Color Scheme"
 msgstr "Donker Kleuren Schema"
 
-#: schematic/scheme/gschem/builtins.scm:227
+#: schematic/scheme/gschem/builtins.scm:230
 msgid "Light Color Scheme"
 msgstr "Licht Kleuren Schema"
 
-#: schematic/scheme/gschem/builtins.scm:230
+#: schematic/scheme/gschem/builtins.scm:233
 msgid "Monochrome Color Scheme"
 msgstr "Monochroom Kleuren Schema"
 
-#: schematic/scheme/gschem/builtins.scm:233
+#: schematic/scheme/gschem/builtins.scm:236
 #, fuzzy
 msgid "Show Color Scheme Editor"
 msgstr "Licht Kleuren Schema"
 
-#: schematic/scheme/gschem/builtins.scm:239
+#: schematic/scheme/gschem/builtins.scm:242
 msgid "Revert Changes"
 msgstr "Terughalen Wijzigingen"
 
-#: schematic/scheme/gschem/builtins.scm:245
+#: schematic/scheme/gschem/builtins.scm:248
 msgid "Previous Page"
 msgstr "Vorige Pagina"
 
-#: schematic/scheme/gschem/builtins.scm:248
+#: schematic/scheme/gschem/builtins.scm:251
 msgid "Next Page"
 msgstr "Volgende Pagina"
 
-#: schematic/scheme/gschem/builtins.scm:260
+#: schematic/scheme/gschem/builtins.scm:263
 msgid "Print Page"
 msgstr "Druk Pagina Af"
 
-#: schematic/scheme/gschem/builtins.scm:281
+#: schematic/scheme/gschem/builtins.scm:284
 msgid "Add Line"
 msgstr "Voeg Lijn Toe"
 
-#: schematic/scheme/gschem/builtins.scm:284
+#: schematic/scheme/gschem/builtins.scm:287
 msgid "Add Path"
 msgstr "Voeg Pad Toe"
 
-#: schematic/scheme/gschem/builtins.scm:287
+#: schematic/scheme/gschem/builtins.scm:290
 msgid "Add Box"
 msgstr "Voeg Rechthoek Toe"
 
-#: schematic/scheme/gschem/builtins.scm:290
+#: schematic/scheme/gschem/builtins.scm:293
 msgid "Add Circle"
 msgstr "Voeg Cirkel Toe"
 
-#: schematic/scheme/gschem/builtins.scm:293
+#: schematic/scheme/gschem/builtins.scm:296
 msgid "Add Arc"
 msgstr "Voeg Boog Toe"
 
-#: schematic/scheme/gschem/builtins.scm:296
+#: schematic/scheme/gschem/builtins.scm:299
 msgid "Add Pin"
 msgstr "Voeg Pen Toe"
 
-#: schematic/scheme/gschem/builtins.scm:299
+#: schematic/scheme/gschem/builtins.scm:302
 msgid "Add Picture"
 msgstr "Voeg Afbeelding Toe"
 
-#: schematic/scheme/gschem/builtins.scm:311
+#: schematic/scheme/gschem/builtins.scm:314
 msgid "Up Hierarchy"
 msgstr "Hierarchie Omhoog"
 
-#: schematic/scheme/gschem/builtins.scm:317
+#: schematic/scheme/gschem/builtins.scm:320
 msgid "Attach Attributes"
 msgstr "Bevestig Attributen"
 
-#: schematic/scheme/gschem/builtins.scm:320
+#: schematic/scheme/gschem/builtins.scm:323
 msgid "Detach Attributes"
 msgstr "Maak Attributen Los"
 
-#: schematic/scheme/gschem/builtins.scm:323
+#: schematic/scheme/gschem/builtins.scm:326
 msgid "Show Attribute Value"
 msgstr "Toon Attribuut Waarde"
 
-#: schematic/scheme/gschem/builtins.scm:326
+#: schematic/scheme/gschem/builtins.scm:329
 msgid "Show Attribute Name"
 msgstr "Toon Attribuut Naam"
 
-#: schematic/scheme/gschem/builtins.scm:332
+#: schematic/scheme/gschem/builtins.scm:335
 msgid "Toggle Text Visibility"
 msgstr "Schakel Tekst Zichtbaarheid"
 
-#: schematic/scheme/gschem/builtins.scm:335
+#: schematic/scheme/gschem/builtins.scm:338
 msgid "Find Specific Text"
 msgstr "Vind Specifieke Tekst"
 
-#: schematic/scheme/gschem/builtins.scm:338
+#: schematic/scheme/gschem/builtins.scm:341
 msgid "Hide Specific Text"
 msgstr "Verberg Specifieke Tekst"
 
-#: schematic/scheme/gschem/builtins.scm:341
+#: schematic/scheme/gschem/builtins.scm:344
 msgid "Show Specific Text"
 msgstr "Toon Specifieke Tekst"
 
-#: schematic/scheme/gschem/builtins.scm:344
+#: schematic/scheme/gschem/builtins.scm:347
 msgid "Autonumber Text"
 msgstr "Automatisch Tekst Nummeren"
 
-#: schematic/scheme/gschem/builtins.scm:350
+#: schematic/scheme/gschem/builtins.scm:353
 msgid "Show Hotkeys"
 msgstr "Toon Sneltoets"
 
-#: schematic/scheme/gschem/builtins.scm:353
+#: schematic/scheme/gschem/builtins.scm:356
 msgid "Set Default Text Size"
 msgstr "Stel Standaard Tekst Hoogte In"
 
-#: schematic/scheme/gschem/builtins.scm:356
+#: schematic/scheme/gschem/builtins.scm:359
 msgid "Switch Grid Style"
 msgstr "Schakel Raster Stijl"
 
-#: schematic/scheme/gschem/builtins.scm:359
+#: schematic/scheme/gschem/builtins.scm:362
 msgid "Switch Snap Mode"
 msgstr "Schakel Snap Modus"
 
-#: schematic/scheme/gschem/builtins.scm:362
+#: schematic/scheme/gschem/builtins.scm:365
 msgid "Set Grid Spacing"
 msgstr "Ste Raster Afstand In"
 
-#: schematic/scheme/gschem/builtins.scm:365
+#: schematic/scheme/gschem/builtins.scm:368
 msgid "Increase Grid Spacing"
 msgstr "Verhoog Raster Afstand"
 
-#: schematic/scheme/gschem/builtins.scm:368
+#: schematic/scheme/gschem/builtins.scm:371
 msgid "Decrease Grid Spacing"
 msgstr "Verlaag schalen Raster Afstand"
 
-#: schematic/scheme/gschem/builtins.scm:371
+#: schematic/scheme/gschem/builtins.scm:374
 msgid "Toggle Outline Drawing"
 msgstr "Schakel Omtrek Tekening"
 
-#: schematic/scheme/gschem/builtins.scm:374
+#: schematic/scheme/gschem/builtins.scm:377
 msgid "Toggle Net Rubber Band"
 msgstr "Schakel Draad Elastiekband"
 
-#: schematic/scheme/gschem/builtins.scm:377
+#: schematic/scheme/gschem/builtins.scm:380
 msgid "Toggle Magnetic Nets"
 msgstr "Schakel Magnetische Draden"
 
-#: schematic/scheme/gschem/builtins.scm:380
+#: schematic/scheme/gschem/builtins.scm:383
 msgid "Show Log Window"
 msgstr "Toon Logboek Venster"
 
-#: schematic/scheme/gschem/builtins.scm:383
+#: schematic/scheme/gschem/builtins.scm:386
 msgid "Show Coordinate Window"
 msgstr "Toon Coordinaten Venster"
 
-#: schematic/scheme/gschem/builtins.scm:390
+#: schematic/scheme/gschem/builtins.scm:389
+#, fuzzy
+msgid "Select Schematic Font"
+msgstr "S_electeer de schema's die je op wil slaan:"
+
+#: schematic/scheme/gschem/builtins.scm:396
 msgid "Component Documentation"
 msgstr "Component Documentatie"
 
-#: schematic/scheme/gschem/builtins.scm:392
+#: schematic/scheme/gschem/builtins.scm:398
 msgid "View documentation for selected component"
 msgstr "Toon documentatie voor geselecteerde component"
 
-#: schematic/scheme/gschem/builtins.scm:408
+#: schematic/scheme/gschem/builtins.scm:414
 msgid ""
 "Could not show documentation for selected component:\n"
 "\n"
@@ -3054,40 +3071,40 @@ msgstr ""
 "Kan geen documentatie tonen voor de geselecteerde component:\n"
 "\n"
 
-#: schematic/scheme/gschem/builtins.scm:413
+#: schematic/scheme/gschem/builtins.scm:419
 msgid "gEDA Manuals"
 msgstr "gEDA Handleidingen"
 
-#: schematic/scheme/gschem/builtins.scm:414
+#: schematic/scheme/gschem/builtins.scm:420
 #, fuzzy
 msgid "View the front page of the gEDA documentation in a browser."
 msgstr "Toon de voorpagina van de gEDA documentatie in een browser."
 
-#: schematic/scheme/gschem/builtins.scm:419
+#: schematic/scheme/gschem/builtins.scm:425
 msgid "gschem User Guide"
 msgstr "gschem Gebruikers Gids"
 
-#: schematic/scheme/gschem/builtins.scm:420
+#: schematic/scheme/gschem/builtins.scm:426
 msgid "View the gschem User Guide in a browser."
 msgstr "Toon de gschem Gebruikers Gids in een browser."
 
-#: schematic/scheme/gschem/builtins.scm:425
+#: schematic/scheme/gschem/builtins.scm:431
 msgid "gschem FAQ"
 msgstr "gschem FAQ"
 
-#: schematic/scheme/gschem/builtins.scm:426
+#: schematic/scheme/gschem/builtins.scm:432
 msgid "Frequently Asked Questions about using gschem."
 msgstr "Veel Gestelde Vragen over het gebruik van gschem."
 
-#: schematic/scheme/gschem/builtins.scm:431
+#: schematic/scheme/gschem/builtins.scm:437
 msgid "gEDA wiki"
 msgstr "gEDA wiki"
 
-#: schematic/scheme/gschem/builtins.scm:432
+#: schematic/scheme/gschem/builtins.scm:438
 msgid "View the front page of the gEDA wiki in a browser."
 msgstr "Toon de voorpagina van de gEDA wiki in een browser."
 
-#: schematic/scheme/gschem/builtins.scm:436
+#: schematic/scheme/gschem/builtins.scm:442
 msgid "About gschem"
 msgstr "Over gschem"
 

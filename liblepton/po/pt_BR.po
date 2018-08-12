@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-05-26 14:43+0300\n"
+"POT-Creation-Date: 2018-08-12 12:28+0300\n"
 "PO-Revision-Date: 2012-01-27 14:15+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
@@ -18,27 +18,27 @@ msgstr ""
 "X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
 "X-Generator: Launchpad (build 16265)\n"
 
-#: liblepton/data/liblepton.xml.in.h:3
+#: liblepton/data/liblepton.xml.in:3
 msgid "Lepton EDA circuit schematic"
 msgstr ""
 
-#: liblepton/data/liblepton.xml.in.h:4
+#: liblepton/data/liblepton.xml.in:4
 msgid "Lepton EDA schematic symbol"
 msgstr ""
 
-#: liblepton/data/liblepton.xml.in.h:5
+#: liblepton/data/liblepton.xml.in:5
 msgid "Lepton EDA sch2pcb project"
 msgstr ""
 
-#: liblepton/data/x-lepton-sch2pcb-project.desktop.in.h:3
+#: liblepton/data/x-lepton-sch2pcb-project.desktop.in:3
 msgid "Lepton EDA sch2pcb Project"
 msgstr ""
 
-#: liblepton/data/x-lepton-schematic.desktop.in.h:3
+#: liblepton/data/x-lepton-schematic.desktop.in:3
 msgid "Lepton EDA Circuit Schematic"
 msgstr ""
 
-#: liblepton/data/x-lepton-symbol.desktop.in.h:3
+#: liblepton/data/x-lepton-symbol.desktop.in:3
 msgid "Lepton EDA Schematic Symbol"
 msgstr ""
 
@@ -222,17 +222,17 @@ msgstr ""
 msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr ""
 
-#: liblepton/src/g_rc.c:509
+#: liblepton/src/g_rc.c:512
 #, c-format
 msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr ""
 
-#: liblepton/src/g_rc.c:735
+#: liblepton/src/g_rc.c:738
 #, c-format
 msgid "Invalid path [%1$s] passed to bitmap-directory\n"
 msgstr ""
 
-#: liblepton/src/g_rc.c:855
+#: liblepton/src/g_rc.c:858
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead."
@@ -754,16 +754,16 @@ msgstr ""
 msgid "component missing pinseq= attribute."
 msgstr ""
 
-#: liblepton/src/edaconfig.c:652 liblepton/src/edaconfig.c:738
+#: liblepton/src/edaconfig.c:693 liblepton/src/edaconfig.c:779
 msgid "Undefined configuration filename"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1063 liblepton/src/edaconfig.c:1127
+#: liblepton/src/edaconfig.c:1104 liblepton/src/edaconfig.c:1168
 #, c-format
 msgid "Configuration does not have group '%s'"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1141
+#: liblepton/src/edaconfig.c:1182
 #, c-format
 msgid "Configuration does not have key '%s'"
 msgstr ""
