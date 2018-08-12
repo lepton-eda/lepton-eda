@@ -59,7 +59,7 @@ the manual pin and gate swapping that is required.  The other features of the EC
 file are not supported yet.
 
 .SH SEE ALSO
-gnetlist(1), gschem(1)
+lepton-netlist(1), lepton-schematic(1)
 
 Also refer to "Forward/Backward Annotation Between gEDA/gaf and PADS PowerPCB" which
 may be found at http://wiki.geda-project.org/geda:fbabgapp

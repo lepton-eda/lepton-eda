@@ -70,7 +70,7 @@ pas, tp, tri, clk, pwr
 Jerry O'Keefe <jerryok@pacbell.net>
 
 .SH SEE ALSO
-.BR gschem (1)
+.BR lepton-schematic (1)
 
 .SH COPYRIGHT
 .nf

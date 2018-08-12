@@ -31,7 +31,7 @@ Print out the version.
 Matthew Ettus <matt@ettus.com>
 
 .SH SEE ALSO
-.BR gschem (1),
+.BR lepton-schematic (1),
 .BR sarlacc_schem (1)
 
 .SH COPYRIGHT
