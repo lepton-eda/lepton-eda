@@ -3,7 +3,7 @@
 bin_SCRIPTS = lepton-symcheck
 EXTRA_DIST = lepton-symcheck.in
 
-do_subst = sed -e 's,[@]libdir[@],$(libdir),g'
+do_subst = sed -e 's,[@]libdir[@],$(libdir),g' -e 's,[@]GUILE[@],$(GUILE),g'
 
 lepton-symcheck: lepton-symcheck.in Makefile
 	$(do_subst) < $(srcdir)/$@.in > $@
