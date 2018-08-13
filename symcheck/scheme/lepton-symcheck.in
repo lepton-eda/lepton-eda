@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-exec guile -s "$0" "$@"
+exec @GUILE@ -s "$0" "$@"
 !#
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
