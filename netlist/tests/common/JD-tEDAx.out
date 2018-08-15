@@ -1,0 +1,81 @@
+tEDAx v1
+begin netlist v1 netlist
+
+	footprint A1 UNKNOWN
+	device A1 model
+	value A1 
+
+	footprint Cm UNKNOWN
+	device Cm CAPACITOR
+	value Cm 20p
+
+	footprint Cp UNKNOWN
+	device Cp CAPACITOR
+	value Cp 20p
+
+	footprint M1 UNKNOWN
+	device M1 PMOS_TRANSISTOR
+	value M1 
+
+	footprint Rb UNKNOWN
+	device Rb RESISTOR
+	value Rb 5.6k
+
+	footprint Rlm UNKNOWN
+	device Rlm RESISTOR
+	value Rlm 500k
+
+	footprint Rlp UNKNOWN
+	device Rlp RESISTOR
+	value Rlp 1meg
+
+	footprint Rt UNKNOWN
+	device Rt RESISTOR
+	value Rt 1k
+
+	footprint V1 none
+	device V1 vpulse
+	value V1 pulse 3.3 0 1u 10p 10p 1.25u 2.5u
+
+	footprint Vdd none
+	device Vdd VOLTAGE_SOURCE
+	value Vdd DC 3.3V
+
+	footprint X1 UNKNOWN
+	device X1 LVD
+	value X1 
+
+	conn GND Cm 2
+	conn GND Cp 2
+	conn GND Rb 1
+	conn GND Rlm 2
+	conn GND V1 2
+	conn GND Vdd 2
+	conn GND X1 2
+	conn GND X1 7
+
+	conn LVH M1 D
+	conn LVH M1 G
+	conn LVH Rb 2
+	conn LVH X1 3
+
+	conn Vdd1 M1 B
+	conn Vdd1 M1 S
+	conn Vdd1 Rlp 2
+	conn Vdd1 Vdd 1
+	conn Vdd1 X1 6
+
+	conn i V1 1
+	conn i X1 1
+
+	conn m Cm 1
+	conn m Rlm 1
+	conn m Rt 2
+	conn m X1 4
+
+	conn p Cp 1
+	conn p Rlp 1
+	conn p Rt 1
+	conn p X1 5
+
+end netlist
