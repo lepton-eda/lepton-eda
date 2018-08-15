@@ -145,6 +145,13 @@ packages:
 If you're having problems, make sure that you have all of the
 necessary `dev` or `devel` packages installed.
 
+> "I have installed two versions of guile, but `./configure`
+> uses a wrong one!"
+
+Specify right `guile` binary on the `configure` stage, e.g.:
+
+    ./configure GUILE=/usr/bin/guile-2.0
+
 Installation from a source archive
 ----------------------------------
 
