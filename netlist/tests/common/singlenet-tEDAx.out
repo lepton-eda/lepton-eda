@@ -1,0 +1,22 @@
+tEDAx v1
+begin netlist v1 netlist
+
+	footprint U100 DIP14
+	device U100 7400
+	value U100 
+
+	conn GND U100 7
+
+	conn SING_N U100 4
+	conn SING_N U100 5
+	conn SING_N U100 6
+	conn SING_N U100 8
+	conn SING_N U100 9
+	conn SING_N U100 10
+
+	conn SING_N_2 U100 1
+	conn SING_N_2 U100 3
+
+	conn Vcc U100 14
+
+end netlist

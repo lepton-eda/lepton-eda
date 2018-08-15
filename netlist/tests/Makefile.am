@@ -181,6 +181,7 @@ TESTS = stack_1-geda.out \
 	common/JD-switcap.out \
 	common/JD-systemc.out \
 	common/JD-tango.out \
+	common/JD-tEDAx.out \
 	common/JD-vams.out \
 	common/JD-vams-entity.out \
 	common/JD-vams-device.out \
@@ -217,6 +218,7 @@ TESTS = stack_1-geda.out \
 	common/SlottedOpamps-switcap.out \
 	common/SlottedOpamps-systemc.out \
 	common/SlottedOpamps-tango.out \
+	common/SlottedOpamps-tEDAx.out \
 	common/SlottedOpamps-vams.out \
 	common/SlottedOpamps-vams-entity.out \
 	common/SlottedOpamps-vams-device.out \
@@ -255,6 +257,7 @@ TESTS = stack_1-geda.out \
 	common/TwoStageAmp-switcap.out \
 	common/TwoStageAmp-systemc.out \
 	common/TwoStageAmp-tango.out \
+	common/TwoStageAmp-tEDAx.out \
 	common/TwoStageAmp-vams.out \
 	common/TwoStageAmp-vams-entity.out \
 	common/TwoStageAmp-vams-device.out \
@@ -292,6 +295,7 @@ TESTS = stack_1-geda.out \
 	common/cascade-switcap.out \
 	common/cascade-systemc.out \
 	common/cascade-tango.out \
+	common/cascade-tEDAx.out \
 	common/cascade-vams.out \
 	common/cascade-vams-entity.out \
 	common/cascade-vams-device.out \
@@ -328,6 +332,7 @@ TESTS = stack_1-geda.out \
 	common/multiequal-switcap.out \
 	common/multiequal-systemc.out \
 	common/multiequal-tango.out \
+	common/multiequal-tEDAx.out \
 	common/multiequal-vams.out \
 	common/multiequal-vams-entity.out \
 	common/multiequal-vams-device.out \
@@ -364,6 +369,7 @@ TESTS = stack_1-geda.out \
 	common/netattrib-spice.out \
 	common/netattrib-systemc.out \
 	common/netattrib-tango.out \
+	common/netattrib-tEDAx.out \
 	common/netattrib-vams.out \
 	common/netattrib-vams-entity.out \
 	common/netattrib-vams-device.out \
@@ -400,6 +406,7 @@ TESTS = stack_1-geda.out \
 	common/powersupply-switcap.out \
 	common/powersupply-systemc.out \
 	common/powersupply-tango.out \
+	common/powersupply-tEDAx.out \
 	common/powersupply-vams.out \
 	common/powersupply-vams-entity.out \
 	common/powersupply-vams-device.out \
@@ -436,6 +443,7 @@ TESTS = stack_1-geda.out \
 	common/singlenet-switcap.out \
 	common/singlenet-systemc.out \
 	common/singlenet-tango.out \
+	common/singlenet-tEDAx.out \
 	common/singlenet-vams.out \
 	common/singlenet-vams-entity.out \
 	common/singlenet-vams-device.out \
