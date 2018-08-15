@@ -40,7 +40,7 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
 	   gnet-redac.scm gnet-systemc.scm gnet-eagle.scm \
 	   gnet-pcbpins.scm gnet-calay.scm gnet-osmond.scm \
 	   gnet-mathematica.scm gnet-liquidpcb.scm \
-	   gnet-makedepend.scm \
+	   gnet-makedepend.scm gnet-tEDAx.scm \
 	   gnetlist/backend-getopt.scm gnetlist/partlist.scm \
 	   gnetlist/partlist/common.scm gnetlist/attrib/compare.scm \
 	   gnetlist/option.scm gnetlist/sort.scm gnetlist/verbose.scm \
