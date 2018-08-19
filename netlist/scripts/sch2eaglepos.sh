@@ -17,7 +17,7 @@ top of the script to obtain usable positions.
 By Braddock Gaskill (braddock@braddock.com), August 2004
 
 EOF
-    exit -1
+    exit 255
 fi
 XOFFSET=40000
 YOFFSET=33000
@@ -44,11 +44,11 @@ tmpf=${tmpdir}/tmpf
 grep -B1 refdes= "$FNAME" |sed 's/=/ /' | cut -d" " -f2,3 |grep -v '^--' >${tmpf}
 
 
-while read; do
+while read REPLY; do
     # the directory on the client to backup
     X=`echo $REPLY | cut -d' ' -f1`
     Y=`echo $REPLY | cut -d' ' -f2`
-    read;
+    read REPLY;
     PART="$REPLY"
     X=`echo "scale=5; ($X - $XOFFSET) / $XSCALE" |bc`
     Y=`echo "scale=5; ($Y - $YOFFSET) / $YSCALE" |bc`
