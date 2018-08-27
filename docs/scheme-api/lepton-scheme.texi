@@ -1668,7 +1668,7 @@ with the context returned by @code{path-config-context} is located in
 the directory specified by @var{path}.
 @end defun
 
-@defun default_config_context
+@defun default-config-context
 The default context is not associated with any physical path or
 on-disk configuration file, and has no parent context.  It contains
 the default configuration used when no configuration file can be
