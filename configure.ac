@@ -50,7 +50,7 @@ AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 
 AM_PROG_CC_C_O
-AX_GCC_FLAGS([-Wall -Werror=maybe-uninitialized -std=gnu99])
+AX_GCC_FLAGS([-Wall -Werror=uninitialized -std=c99])
 
 AC_PROG_MKDIR_P
 AM_PROG_LEX
