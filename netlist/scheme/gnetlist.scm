@@ -368,12 +368,22 @@ NETNAME."
     (and x
          (string=? x netname)))
 
+  (define netlist
+    (schematic-netlist toplevel-schematic))
+
+  (define non-graphical-refdeses
+    (filter-map package-refdes netlist))
+
+  (define (non-graphical? refdes)
+    (member refdes non-graphical-refdeses))
+
   (define (get-found-pin-connections pin)
     (if (found? (package-pin-name pin))
         (filter-map
          (lambda (net) (let ((package (pin-net-connection-package net))
                         (pinnumber (pin-net-connection-pinnumber net)))
                     (and package
+                         (non-graphical? package)
                          pinnumber
                          (cons package pinnumber))))
          (package-pin-nets pin))
@@ -385,7 +395,7 @@ NETNAME."
        (append-map get-found-pin-connections (package-pins package)))
      netlist))
 
-  (sort-remove-duplicates (get-netlist-connections (schematic-netlist toplevel-schematic))
+  (sort-remove-duplicates (get-netlist-connections netlist)
                           pair<?))
 
 
