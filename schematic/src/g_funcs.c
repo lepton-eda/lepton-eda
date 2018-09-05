@@ -186,7 +186,7 @@ SCM g_funcs_filesel(SCM scm_msg, SCM scm_templ, SCM scm_flags)
 {
   int c_flags;
   char *r, *msg, *templ;
-  SCM v;
+  SCM v = SCM_BOOL_F;
 
   SCM_ASSERT (scm_is_string (scm_msg), scm_msg,
 	      SCM_ARG1, "gschem-filesel");
@@ -235,7 +235,10 @@ SCM g_funcs_filesel(SCM scm_msg, SCM scm_templ, SCM scm_flags)
   r = generic_filesel_dialog (msg, templ, c_flags);
   scm_dynwind_unwind_handler (g_free, r, SCM_F_WIND_EXPLICITLY);
 
-  v = scm_from_utf8_string (r);
+  if (r != NULL)
+  {
+    v = scm_from_utf8_string (r);
+  }
 
   scm_dynwind_end();
   return v;
