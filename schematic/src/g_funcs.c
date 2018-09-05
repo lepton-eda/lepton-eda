@@ -165,7 +165,7 @@ SCM g_funcs_confirm(SCM scm_msg)
   char *msg;
 
   SCM_ASSERT (scm_is_string (scm_msg), scm_msg,
-	      SCM_ARG1, "gschem-msg");
+	      SCM_ARG1, "gschem-confirm");
   
   msg = scm_to_utf8_string (scm_msg);
   r = generic_confirm_dialog (msg);
