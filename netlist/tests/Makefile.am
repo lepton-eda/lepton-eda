@@ -73,6 +73,7 @@ input_files = \
 	common/TwoStageAmp-symbols/transistor.sym \
 	common/TwoStageAmp.sch \
 	common/cascade.sch \
+	common/graphical.sch \
 	common/multiequal.sch \
 	common/netattrib-symbols/7400-custom.sym \
 	common/netattrib-symbols/gnd-custom.sym \
@@ -302,6 +303,43 @@ TESTS = stack_1-geda.out \
 	common/cascade-verilog.out \
 	common/cascade-vhdl.out \
 	common/cascade-vipec.out \
+	common/graphical-PCB.out \
+	common/graphical-allegro.out \
+	common/graphical-bae.out \
+	common/graphical-bom.out \
+	common/graphical-bom2.out \
+	common/graphical-calay.out \
+	common/graphical-drc.out \
+	common/graphical-drc2.out \
+	common/graphical-eagle.out \
+	common/graphical-ewnet.out \
+	common/graphical-futurenet2.out \
+	common/graphical-geda.out \
+	common/graphical-gossip.out \
+	common/graphical-gsch2pcb.out \
+	common/graphical-liquidpcb.out \
+	common/graphical-mathematica.out \
+	common/graphical-maxascii.out \
+	common/graphical-osmond.out \
+	common/graphical-pads.out \
+	common/graphical-partslist1.out \
+	common/graphical-partslist2.out \
+	common/graphical-partslist3.out \
+	common/graphical-pcbpins.out \
+	common/graphical-protelII.out \
+	common/graphical-redac.out \
+	common/graphical-spice-sdb.out \
+	common/graphical-spice.out \
+	common/graphical-switcap.out \
+	common/graphical-systemc.out \
+	common/graphical-tango.out \
+	common/graphical-tEDAx.out \
+	common/graphical-vams.out \
+	common/graphical-vams-entity.out \
+	common/graphical-vams-device.out \
+	common/graphical-verilog.out \
+	common/graphical-vhdl.out \
+	common/graphical-vipec.out \
 	common/multiequal-PCB.out \
 	common/multiequal-allegro.out \
 	common/multiequal-bae.out \
