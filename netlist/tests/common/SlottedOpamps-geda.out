@@ -5,6 +5,12 @@ Created specifically for testing of gnetlist
 
 END header
 
+START graphical symbols
+
+Component without refdes: title-B.sym at ((40000 . 51000) 57000 . 40000)
+
+END graphical symbols
+
 START components
 
 U1 device=LM324

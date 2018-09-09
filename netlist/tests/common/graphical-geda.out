@@ -5,6 +5,12 @@ Created specifically for testing of gnetlist
 
 END header
 
+START graphical symbols
+
+C1
+
+END graphical symbols
+
 START components
 
 R1 device=RESISTOR

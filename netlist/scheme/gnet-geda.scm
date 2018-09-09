@@ -24,7 +24,9 @@
 ;;
 
 (use-modules (srfi srfi-1)
-             (gnetlist schematic))
+             (geda object)
+             (gnetlist schematic)
+             (gnetlist package))
 
 ;;
 ;; Top level header
@@ -49,6 +51,30 @@ END header
    ls)
   ;; footer for components section
   (display "\nEND components\n\n"))
+
+
+;;; Graphical packages writing
+(define (geda:graphicals ls)
+  (define (no-refdes-component-info object)
+    (format #f
+            "Component without refdes: ~A at ~A"
+            (component-basename object)
+            (object-bounds object)))
+
+  (define (graphical-info package)
+    (or (package-refdes package)
+        (no-refdes-component-info (package-object package))))
+
+  (if (null? ls)
+      (display "No graphical symbols found\n\n")
+      (format #t
+              "START graphical symbols
+
+~A
+END graphical symbols
+
+"
+              (string-join (map graphical-info ls) "\n" 'suffix))))
 
 
 ;;; Renamed nets writing
@@ -102,6 +128,7 @@ END header
 ;;;
 (define (geda output-filename)
   (geda:write-top-header)
+  (geda:graphicals (schematic-graphicals toplevel-schematic))
   (geda:components (schematic-packages toplevel-schematic))
   (geda:renamed-nets (gnetlist:get-renamed-nets "dummy"))
   (geda:nets (schematic-nets toplevel-schematic)))
