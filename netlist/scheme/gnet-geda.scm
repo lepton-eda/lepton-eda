@@ -40,18 +40,6 @@ END header
 "))
 
 ;;
-;; header for components section
-;;
-(define (geda:start-components)
-  (display "START components\n\n"))
-
-;;
-;; footer for components section
-;;
-(define (geda:end-components)
-  (display "\nEND components\n\n"))
-
-;;
 ;; header for renamed section
 ;;
 (define (geda:start-renamed-nets)
@@ -75,14 +63,16 @@ END header
 (define (geda:end-nets)
   (display "\nEND nets\n\n"))
 
-;;
-;; Top level component writing
-;;
+;;; Top level component writing
 (define (geda:components ls)
+  ;; header for components section
+  (display "START components\n\n")
   (for-each
    (lambda (package)
      (format #t "~A device=~A\n" package (get-device package)))
-   ls))
+   ls)
+  ;; footer for components section
+  (display "\nEND components\n\n"))
 
 ;;
 ;; renamed nets writing
@@ -125,9 +115,7 @@ END header
 ;;;
 (define (geda output-filename)
   (geda:write-top-header)
-  (geda:start-components)
   (geda:components (schematic-packages toplevel-schematic))
-  (geda:end-components)
   (geda:start-renamed-nets)
   (geda:renamed-nets (gnetlist:get-renamed-nets "dummy"))
   (geda:end-renamed-nets)
