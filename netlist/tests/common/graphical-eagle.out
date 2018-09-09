@@ -1,0 +1,19 @@
+   ;
+ADD 'R1' ACY300.fp@smd-ipc (1 1);
+VALUE 'R1' 'RESISTOR';
+ADD 'R2' ACY300.fp@smd-ipc (1 1);
+VALUE 'R2' 'RESISTOR';
+ADD 'R3' ACY300.fp@smd-ipc (1 1);
+VALUE 'R3' 'RESISTOR';
+SIGNAL 'GND'
+   'R1' '1'
+   'R3' '2'
+;
+SIGNAL 'NETX'
+   'R1' '2'
+   'R2' '1'
+;
+SIGNAL 'NETY'
+   'R2' '2'
+   'R3' '1'
+;

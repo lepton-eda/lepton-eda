@@ -1,0 +1,13 @@
+LIBRARY ieee,disciplines;
+USE ieee.math_real.all;
+USE ieee.math_real.all;
+USE work.electrical_system.all;
+USE work.all;
+#t
+-- Entity declaration --
+
+ENTITY default_entity IS
+#<unspecified>
+#<unspecified>
+END ENTITY default_entity;
+
