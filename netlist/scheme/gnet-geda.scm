@@ -39,30 +39,6 @@ END header
 
 "))
 
-;;
-;; header for renamed section
-;;
-(define (geda:start-renamed-nets)
-  (display "START renamed-nets\n\n"))
-
-;;
-;; footer for renamed section
-;;
-(define (geda:end-renamed-nets)
-  (display "\nEND renamed-nets\n\n"))
-
-;;
-;; header for nets section
-;;
-(define (geda:start-nets)
-  (display "START nets\n\n"))
-
-;;
-;; footer for net section
-;;
-(define (geda:end-nets)
-  (display "\nEND nets\n\n"))
-
 ;;; Top level component writing
 (define (geda:components ls)
   ;; header for components section
@@ -74,14 +50,18 @@ END header
   ;; footer for components section
   (display "\nEND components\n\n"))
 
-;;
-;; renamed nets writing
-;;
+
+;;; Renamed nets writing
 (define (geda:renamed-nets ls)
+  ;; header for renamed section
+  (display "START renamed-nets\n\n")
   (for-each
    (lambda (renamed-pair)
      (format #t "~A -> ~A\n" (first renamed-pair) (second renamed-pair)))
-   ls))
+   ls)
+  ;; footer for renamed section
+  (display "\nEND renamed-nets\n\n"))
+
 
 ;;; Returns formatted list of CONNECTIONS as a string.
 (define (connections->string connections)
@@ -104,11 +84,13 @@ END header
              (connections->string (get-all-connections netname))))
    netnames))
 
-;;
-;; Write the net part of the gEDA format
-;;
+;;; Write the net part of the gEDA format
 (define (geda:nets nets)
-  (geda:write-net nets))
+  ;; header for nets section
+  (display "START nets\n\n")
+  (geda:write-net nets)
+  ;; footer for net section
+  (display "\nEND nets\n\n"))
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
@@ -116,12 +98,8 @@ END header
 (define (geda output-filename)
   (geda:write-top-header)
   (geda:components (schematic-packages toplevel-schematic))
-  (geda:start-renamed-nets)
   (geda:renamed-nets (gnetlist:get-renamed-nets "dummy"))
-  (geda:end-renamed-nets)
-  (geda:start-nets)
-  (geda:nets (schematic-nets toplevel-schematic))
-  (geda:end-nets))
+  (geda:nets (schematic-nets toplevel-schematic)))
 
 ;;
 ;; gEDA's native test netlist format specific functions ends
