@@ -5,6 +5,14 @@ Created specifically for testing of gnetlist
 
 END header
 
+START graphical symbols
+
+Component without refdes: title-C.sym at ((17100 . 33500) 39100 . 16500)
+Component without refdes: decon-1.sym at ((21600 . 19400) 21750 . 19300)
+Component without refdes: decon-1.sym at ((21700 . 24300) 21850 . 24200)
+
+END graphical symbols
+
 START components
 
 U109 device=AM9128

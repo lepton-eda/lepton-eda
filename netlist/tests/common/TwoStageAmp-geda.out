@@ -5,6 +5,12 @@ Created specifically for testing of gnetlist
 
 END header
 
+START graphical symbols
+
+Component without refdes: title-B.sym at ((26000 . 57000) 43000 . 46000)
+
+END graphical symbols
+
 START components
 
 A1 device=model

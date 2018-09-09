@@ -5,6 +5,12 @@ Created specifically for testing of gnetlist
 
 END header
 
+START graphical symbols
+
+D2
+
+END graphical symbols
+
 START components
 
 D1 device=DIODE

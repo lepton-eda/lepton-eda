@@ -5,6 +5,8 @@ Created specifically for testing of gnetlist
 
 END header
 
+No graphical symbols found
+
 START components
 
 A1 device=options

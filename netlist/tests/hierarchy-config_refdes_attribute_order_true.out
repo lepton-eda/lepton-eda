@@ -5,6 +5,8 @@ Created specifically for testing of gnetlist
 
 END header
 
+No graphical symbols found
+
 START components
 
 Qrock/Urock/Umiddle/Utop device=PNP_TRANSISTOR

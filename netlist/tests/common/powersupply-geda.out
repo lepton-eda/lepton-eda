@@ -5,6 +5,12 @@ Created specifically for testing of gnetlist
 
 END header
 
+START graphical symbols
+
+Component without refdes: title-C.sym at ((51800 . 66900) 73800 . 49900)
+
+END graphical symbols
+
 START components
 
 C1 device=POLARIZED_CAPACITOR
