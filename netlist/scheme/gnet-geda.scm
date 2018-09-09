@@ -53,11 +53,16 @@ END header
 
 ;;; Renamed nets writing
 (define (geda:renamed-nets ls)
+  (define source first)
+  (define destination second)
   ;; header for renamed section
   (display "START renamed-nets\n\n")
   (for-each
    (lambda (renamed-pair)
-     (format #t "~A -> ~A\n" (first renamed-pair) (second renamed-pair)))
+     (format #t
+             "~A -> ~A\n"
+             (source renamed-pair)
+             (destination renamed-pair)))
    ls)
   ;; footer for renamed section
   (display "\nEND renamed-nets\n\n"))
