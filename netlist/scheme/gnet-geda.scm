@@ -132,7 +132,7 @@ END header
   (geda:renamed-nets (gnetlist:get-renamed-nets "dummy"))
   (geda:end-renamed-nets)
   (geda:start-nets)
-  (geda:nets (schematic-nets toplevel-schematic))
+  (geda:nets (schematic-nets-unfiltered toplevel-schematic))
   (geda:end-nets))
 
 ;;

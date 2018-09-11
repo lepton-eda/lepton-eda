@@ -753,7 +753,7 @@
 ;;; Highest level function
 ;;; Write my special testing netlist format
 (define (drc2 output-filename)
-  (let ((nets (schematic-nets toplevel-schematic))
+  (let ((nets (schematic-nets-unfiltered toplevel-schematic))
         (non-unique-packages (schematic-non-unique-packages toplevel-schematic))
         (packages (schematic-packages toplevel-schematic))
         (netlist (schematic-netlist toplevel-schematic)))

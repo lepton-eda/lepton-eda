@@ -861,7 +861,109 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (primitive-exit 0))
 
 
+
+; private:
+; function: net-with-noconnect-symbol-attached?()
+;
+; Check whether net is connected to a "no connect" symbol.
+;
+; [netname]: net name to check
+; {return}:  #t if "no connect" symbol is attached to [netname] net, #f otherwise
+;
+( define ( net-with-noconnect-symbol-attached? netname )
+( let
+  (
+  ( pin-netname #f )
+  ( found       #f )
+  )
+
+  ( for-each ; walk through graphical packages:
+  ( lambda( pkg )
+
+    ( for-each ; walk through package pins:
+    ( lambda( pin )
+
+      ; net name attached to the pin:
+      ;
+      ( set! pin-netname ( package-pin-name pin ) )
+
+      ( if ( string=? pin-netname netname )
+
+        ( for-each ; walk through package attributes:
+        ( lambda( attr-val )
+
+          ; if "symbol" attribute's value == "nc",
+          ; this is a "no connect" package (i.e. schematic symbol):
+          ;
+          ( if ( string=? attr-val "nc" )
+            ( set! found #t )
+          )
+
+        )
+        ( package-attributes pkg 'symbol ) ; search for attribute named "symbol"
+        ) ; for-each - attrs
+
+      ) ; if pin-netname == netname
+
+    )
+    ( package-pins pkg )
+    ) ; for-each - pins
+
+  )
+  ( schematic-graphicals toplevel-schematic )
+  ) ; for-each - pkgs
+
+  ; return:
+  found
+
+) ; let
+) ; net-with-noconnect-symbol-attached?()
+
+
+
+; private:
+; function: nets-filter-out-not-connected!()
+;
+; Delete nets if they have "no connect" symbol (misc/nc-*) attached.
+;
+; [netnames]: list of net names
+; {return}:   updated list of net names
+;
+( define ( nets-filter-out-not-connected! netnames )
+( let
+  (
+  ( result '() ) ; empty list
+  )
+
+  ( for-each
+  ( lambda( netname )
+
+    ; check whether a "no connect" symbol is attached to the net and if so,
+    ; do not include current netname in the result:
+    ;
+    ( if ( not ( net-with-noconnect-symbol-attached? netname ) )
+      ( set! result ( cons netname result ) ) ; add netname to the result list
+    )
+
+  )
+  netnames
+  ) ; for-each
+
+  ; return:
+  ( reverse result ) ; reverse() to preserve [netnames] list order
+
+) ; let
+) ; nets-filter-out-not-connected!()
+
+
+
 (define (set-toplevel-schematic! files netlist-mode)
+(let
+  (
+  (nets-unfiltered #f) ; all nets
+  (nets-filtered   #f) ; all nets except those with "no connect" symbol attached
+  )
+
   (and (eq? netlist-mode 'spice)
        (set! get-uref get-spice-refdes))
   (for-each process-gafrc files)
@@ -873,7 +975,24 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (set! all-unique-nets (schematic-nets toplevel-schematic))
   (set! all-nets (schematic-non-unique-nets toplevel-schematic))
   (set! all-pins (map gnetlist:get-pins packages))
-  toplevel-schematic)
+
+  (set! nets-unfiltered (schematic-nets toplevel-schematic))
+
+  ; filter out nets with "no connect" symbol attached:
+  ;
+  (set! nets-filtered (nets-filter-out-not-connected! nets-unfiltered))
+
+  ; update appropriate fields in the <schematic> record:
+  ;
+  (set-schematic-nets-unfiltered! toplevel-schematic nets-unfiltered)
+  (set-schematic-nets!            toplevel-schematic nets-filtered)
+
+  ; return:
+  toplevel-schematic
+
+) ; let
+) ; set-toplevel-schematic!()
+
 
 
 (define (catch-handler tag . args)
