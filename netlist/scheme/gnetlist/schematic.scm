@@ -18,6 +18,7 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (gnetlist schematic)
+  #:use-module (ice-9 receive)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
@@ -40,6 +41,7 @@
             schematic-packages set-schematic-packages!
             schematic-non-unique-nets set-schematic-non-unique-nets!
             schematic-nets set-schematic-nets!
+            schematic-nc-nets set-schematic-nc-nets!
             make-toplevel-schematic
             schematic-toplevel-attrib))
 
@@ -53,7 +55,8 @@
                   non-unique-packages
                   packages
                   non-unique-nets
-                  nets)
+                  nets
+                  nc-nets)
   schematic?
   (id schematic-id set-schematic-id!)
   (toplevel-pages schematic-toplevel-pages set-schematic-toplevel-pages!)
@@ -64,7 +67,8 @@
   (non-unique-packages schematic-non-unique-packages set-schematic-non-unique-packages!)
   (packages schematic-packages set-schematic-packages!)
   (non-unique-nets schematic-non-unique-nets set-schematic-non-unique-nets!)
-  (nets schematic-nets set-schematic-nets!))
+  (nets schematic-nets set-schematic-nets!)
+  (nc-nets schematic-nc-nets set-schematic-nc-nets!))
 
 (set-record-type-printer!
  <schematic>
@@ -160,6 +164,19 @@
   (filter-map toplevel-attrib? (append-map page-contents toplevel-pages)))
 
 
+;;; Returns #t if NETNAME is a "no-connect" net, that is, one of
+;;; its connected symbols is one of PACKAGES and a "no-connect"
+;;; symbol. Otherwise returns #f.
+(define (nc-net? netname packages)
+  (define (pin-netname-matches? pin)
+    (string=? (package-pin-name pin) netname))
+
+  (define (wanted-package-pin-netname=? package)
+    (any pin-netname-matches? (package-pins package)))
+
+  (any wanted-package-pin-netname=? packages))
+
+
 (define (make-toplevel-schematic toplevel-pages netlist-mode)
   "Creates a new schematic record based on TOPLEVEL-PAGES which
 must be a list of pages."
@@ -167,7 +184,9 @@ must be a list of pages."
          (toplevel-attribs (get-toplevel-attributes toplevel-pages))
          (full-netlist (traverse toplevel-pages netlist-mode))
          (netlist (filter-map
-                   (lambda (x) (and (not (package-graphical? x)) x))
+                   (lambda (x) (and (not (package-graphical? x))
+                               (not (package-nc? x))
+                               x))
                    full-netlist))
          (graphicals (filter-map
                       (lambda (x) (and (package-graphical? x) x))
@@ -176,17 +195,25 @@ must be a list of pages."
          (nu-packages (non-unique-packages netlist))
          (packages (get-packages nu-packages))
          (nu-nets (get-all-nets netlist))
-         (nets (get-nets netlist)))
-    (make-schematic id
-                    toplevel-pages
-                    toplevel-attribs
-                    tree
-                    netlist
-                    graphicals
-                    nu-packages
-                    packages
-                    nu-nets
-                    nets)))
+         (unique-nets (get-nets netlist)))
+    ;; Partition all unique net names into 'no-connection' nets
+    ;; and plain nets.
+    (receive (nc-nets nets)
+        (partition (lambda (x)
+                     (nc-net? x (filter package-nc? full-netlist)))
+                   unique-nets)
+      (make-schematic id
+                      toplevel-pages
+                      toplevel-attribs
+                      tree
+                      netlist
+                      graphicals
+                      nu-packages
+                      packages
+                      nu-nets
+                      nets
+                      nc-nets
+                      ))))
 
 (define (schematic-toplevel-attrib schematic attrib-name)
   "Returns value of toplevel attribute ATTRIB-NAME for SCHEMATIC."
