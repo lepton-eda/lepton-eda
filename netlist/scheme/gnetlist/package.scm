@@ -32,7 +32,9 @@
             package-pins set-package-pins!
             package-attributes
             package-attribute
+            package-attribute-string=?
             package-graphical?
+            package-nc?
             set-package-printer!))
 
 (define-record-type <package>
@@ -104,8 +106,26 @@ found, returns first inherited attribute with NAME. If neither
 attached nor inherited attribute found, returns #f."
   (and=> (package-attributes package name) car))
 
+
+(define (package-attribute-string=? package name value)
+  "Returns #t if PACKAGE has attribute NAME equal to VALUE,
+otherwise returns #f. NAME must be a symbol, while VALUE should be
+a string."
+  (and=> (package-attribute package name)
+         (lambda (x) (string=? x value))))
+
+
 (define (package-graphical? package)
   "Returns #t if PACKAGE is graphical, that is, it has attribute
 \"graphical=1\", otherwise returns #f."
-  (and=> (package-attribute package 'graphical)
-         (lambda (x) (string=? x "1"))))
+  (package-attribute-string=? package 'graphical "1"))
+
+
+(define (package-nc? package)
+  "Returns #t if PACKAGE is 'no-connect' package, that is, it has
+attribute \"symbol=nc\". Otherwise returns #f."
+  (or (package-attribute-string=? package 'symbol "nc")
+      ;; Obsolete "no-connect" package definition.
+      (and (package-graphical? package)
+           (package-attribute-string=? package 'device "DRC_Directive")
+           (package-attribute-string=? package 'value "NoConnection"))))
