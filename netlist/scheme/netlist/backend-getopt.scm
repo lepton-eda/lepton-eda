@@ -1,5 +1,6 @@
-;; Lepton EDA Netlister
-;; Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
+;;; Lepton EDA netlister
+;;; Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
+;;; Copyright (C) 2018 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

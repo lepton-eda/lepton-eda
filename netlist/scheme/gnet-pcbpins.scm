@@ -1,7 +1,8 @@
-;;; gEDA - GPL Electronic Design Automation
-;;; gnetlist - gEDA Netlist
+;;; Lepton EDA netlister
 ;;; Backend for propagating pin names from gschem to footprints in pcb
 ;;; Copyright (C) 2005-2010 Dan McMahill
+;;; Copyright (C) 2005-2017 gEDA Contributors
+;;; Copyright (C) 2018 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by

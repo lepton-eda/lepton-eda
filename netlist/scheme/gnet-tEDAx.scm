@@ -1,5 +1,7 @@
+;;; Lepton EDA netlister
 ;;; tEDAx plug-in for lepton-netlist
 ;;; Copyright (C) 2018 Bdale Garbee
+;;; Copyright (C) 2018 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by

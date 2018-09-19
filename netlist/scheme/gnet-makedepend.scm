@@ -1,7 +1,7 @@
-;;; gEDA - GPL Electronic Design Automation
-;;; gnetlist - gEDA Netlist
-;;; Copyright (C) 2011 Dan White <dan@whiteaudio.com>
-;;; Copyright (C) 2016 gEDA Contributors
+;;; Lepton EDA netlister
+;;; Copyright (C) 2011-2012 Dan White <dan@whiteaudio.com>
+;;; Copyright (C) 2016-2017 gEDA Contributors
+;;; Copyright (C) 2017-2018 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by

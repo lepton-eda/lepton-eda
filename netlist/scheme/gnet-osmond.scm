@@ -1,6 +1,8 @@
-;;; gEDA - GPL Electronic Design Automation
-;;; gnetlist back end for Osmond PCB Design
+;;; Lepton EDA netlister
+;;; lepton-netlist back end for Osmond PCB Design
 ;;; Copyright (C) 2007-2010 John P. Doty
+;;; Copyright (C) 2007-2016 gEDA Contributors
+;;; Copyright (C) 2018 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
