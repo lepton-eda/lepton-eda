@@ -23,13 +23,13 @@
 ;;; of part attributes.
 
 
-(define-module (gnetlist partlist)
+(define-module (netlist partlist)
   #:use-module (ice-9 optargs)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
-  #:use-module (gnetlist partlist common)
-  #:use-module (gnetlist attrib compare)
+  #:use-module (netlist partlist common)
+  #:use-module (netlist attrib compare)
   #:export (partlist->string))
 
 

@@ -23,7 +23,7 @@
 ;; EAGLE netlist format
 
 (use-modules (srfi srfi-1)
-             (gnetlist schematic))
+             (netlist schematic))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid eagle net name.

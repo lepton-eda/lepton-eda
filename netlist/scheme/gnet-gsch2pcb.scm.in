@@ -27,7 +27,7 @@
 (use-modules (ice-9 popen)
              (ice-9 syncase)
              (ice-9 rdelim)
-             (gnetlist schematic))
+             (netlist schematic))
 
 ;;
 ;;

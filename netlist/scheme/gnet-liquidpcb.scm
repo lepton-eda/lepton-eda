@@ -22,7 +22,7 @@
 ;; liquid pcb gnetlist backend
 ;;
 
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 
 ;;
 ;; Write the individual net connections

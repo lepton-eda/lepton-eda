@@ -32,8 +32,8 @@
 ;;; This software is released under the terms of the GNU GPL
 
 (use-modules (ice-9 rdelim)
-             (gnetlist backend-getopt)
-             (gnetlist schematic))
+             (netlist backend-getopt)
+             (netlist schematic))
 
 
 (define (bom:error filename)

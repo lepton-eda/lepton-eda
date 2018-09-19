@@ -25,7 +25,7 @@
 
 ;; The following is needed to make guile 1.8.x happy.
 (use-modules (ice-9 rdelim)
-             (gnetlist schematic))
+             (netlist schematic))
 
 ;; ----------------------------------------------------------------------------
 ;; Utility functions used by this netlister

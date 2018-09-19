@@ -16,11 +16,11 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(define-module (gnetlist verbose)
-  #:use-module (gnetlist option)
-  #:use-module (gnetlist package)
-  #:use-module (gnetlist package-pin)
-  #:use-module (gnetlist pin-net)
+(define-module (netlist verbose)
+  #:use-module (netlist option)
+  #:use-module (netlist package)
+  #:use-module (netlist package-pin)
+  #:use-module (netlist pin-net)
 
   #:export (verbose-print-netlist))
 

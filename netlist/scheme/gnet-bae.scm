@@ -30,7 +30,7 @@
 ;; END.
 ;;
 
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 ;;
 ;; Top level component writing
 ;;

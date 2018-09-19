@@ -20,7 +20,7 @@
 
 ;; MAXASCII netlist format
 
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 
 (define maxascii:components
    (lambda (packages)

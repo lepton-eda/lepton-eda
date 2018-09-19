@@ -30,7 +30,7 @@
 ;; Pin Rules:  List of predicates of 2 variables, uref and pin number
 
 (use-modules (srfi srfi-26)
-             (gnetlist schematic))
+             (netlist schematic))
 
 (define drc:parseconfig
   (lambda (port)

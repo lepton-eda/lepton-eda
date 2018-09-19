@@ -29,7 +29,7 @@
 ;;; as to the right way to create these.  Full documentation would
 ;;; help considerably!
 
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 
 ;; Function:  ewnet:map-net-names
 ;;

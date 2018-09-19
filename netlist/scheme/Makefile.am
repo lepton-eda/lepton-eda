@@ -30,7 +30,7 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
 	   gnet-geda.scm spice-common.scm \
 	   gnet-spice.scm gnet-tango.scm gnet-verilog.scm \
 	   gnet-vhdl.scm gnet-vipec.scm \
-           gnet-pads.scm gnetlist.scm \
+           gnet-pads.scm \
            gnet-bae.scm gnet-protelII.scm \
            gnet-bom2.scm gnet-gossip.scm gnet-drc.scm gnet-vams.scm \
 	   gnet-partslist1.scm \
@@ -41,22 +41,33 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
 	   gnet-pcbpins.scm gnet-calay.scm gnet-osmond.scm \
 	   gnet-mathematica.scm gnet-liquidpcb.scm \
 	   gnet-makedepend.scm gnet-tEDAx.scm \
-	   gnetlist/backend-getopt.scm gnetlist/partlist.scm \
-	   gnetlist/partlist/common.scm gnetlist/attrib/compare.scm \
-	   gnetlist/option.scm gnetlist/sort.scm gnetlist/verbose.scm \
-	   gnetlist/package.scm gnetlist/package-pin.scm gnetlist/pin-net.scm \
-	   gnetlist/traverse.scm gnetlist/schematic.scm gnetlist/config.scm \
-	   gnetlist/core/gettext.scm gnetlist/rename.scm gnetlist/port.scm \
-	   gnetlist/hierarchy.scm \
-	   gnetlist/net.scm \
-	   gnetlist/repl.scm
+	   netlist.scm \
+	   netlist/attrib/compare.scm \
+	   netlist/backend-getopt.scm \
+	   netlist/config.scm \
+	   netlist/core/gettext.scm \
+	   netlist/hierarchy.scm \
+	   netlist/net.scm \
+	   netlist/option.scm \
+	   netlist/package-pin.scm \
+	   netlist/package.scm \
+	   netlist/partlist.scm \
+	   netlist/partlist/common.scm \
+	   netlist/pin-net.scm \
+	   netlist/port.scm \
+	   netlist/rename.scm \
+	   netlist/repl.scm \
+	   netlist/schematic.scm \
+	   netlist/sort.scm \
+	   netlist/traverse.scm \
+	   netlist/verbose.scm
 
-TESTS = unit-tests/test-gnetlist-partlist.scm \
-	unit-tests/test-gnetlist-attrib.scm
+TESTS = unit-tests/test-netlist-partlist.scm \
+	unit-tests/test-netlist-attrib.scm
 TEST_EXTENSIONS = .scm
 # $(srcdir) and $(builddir) are added here and not in
 # AM_SCM_LOG_FLAGS below because guile must know where to find
-# gnetlist modules before it runs tests
+# netlist modules before it runs tests
 SCM_LOG_DRIVER = $(GUILE) -L $(srcdir) -L $(builddir) --no-auto-compile -e main -s unit-test.scm
 AM_SCM_LOG_FLAGS = --
 AM_TESTS_ENVIRONMENT = GUILE_AUTO_COMPILE=0

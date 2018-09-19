@@ -16,9 +16,9 @@
 ; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 
-(define-module (gnetlist partlist common)
+(define-module (netlist partlist common)
   #:use-module (srfi srfi-26)
-  #:use-module (gnetlist partlist)
+  #:use-module (netlist partlist)
   #:export (make-partlist))
 
 (define (make-partlist packages attrib-list)

@@ -24,7 +24,7 @@
 ;;
 
 (use-modules (srfi srfi-1)
-             (gnetlist schematic))
+             (netlist schematic))
 
 ;;
 ;; Given a uref, returns the device attribute value (for tango-netlist)

@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: netlist/scheme/gnetlist.scm:86
+#: netlist/scheme/netlist.scm:86
 #, fuzzy, scheme-format
 msgid ""
 "gEDA/gnetlist version ~A~A.~A\n"
@@ -35,7 +35,7 @@ msgstr ""
 "условиях. Подробности см. в файле COPYING.\n"
 "\n"
 
-#: netlist/scheme/gnetlist.scm:102
+#: netlist/scheme/netlist.scm:102
 #, fuzzy, scheme-format
 msgid ""
 "Lepton EDA ~A (g~A)\n"
@@ -53,7 +53,7 @@ msgstr ""
 "Нет НИКАКИХ ГАРАНТИЙ в рамках, допустимых имеющимся\n"
 "законодательством.\n"
 
-#: netlist/scheme/gnetlist.scm:191
+#: netlist/scheme/netlist.scm:191
 #, scheme-format
 msgid ""
 "Possible attribute conflict for refdes: ~A\n"
@@ -61,16 +61,16 @@ msgid ""
 "values: ~A\n"
 msgstr ""
 
-#: netlist/scheme/gnetlist.scm:256
+#: netlist/scheme/netlist.scm:256
 #, scheme-format
 msgid "Uref ~a: Bad slot number: ~a.\n"
 msgstr ""
 
-#: netlist/scheme/gnetlist.scm:299
+#: netlist/scheme/netlist.scm:299
 msgid "Couldn't wrap string  at requested position\n"
 msgstr ""
 
-#: netlist/scheme/gnetlist.scm:575
+#: netlist/scheme/netlist.scm:575
 #, scheme-format
 msgid ""
 "There is a net name collision!\n"
@@ -82,7 +82,7 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: netlist/scheme/gnetlist.scm:613
+#: netlist/scheme/netlist.scm:613
 #, scheme-format
 msgid ""
 "There is a refdes name collision!\n"
@@ -94,17 +94,17 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: netlist/scheme/gnetlist.scm:791
+#: netlist/scheme/netlist.scm:791
 #, scheme-format
 msgid "Loading schematic ~S\n"
 msgstr "Загрузка схемы ~S\n"
 
-#: netlist/scheme/gnetlist.scm:815
+#: netlist/scheme/netlist.scm:815
 #, scheme-format
 msgid "Can't open directory ~S.\n"
 msgstr "Не удалось открыть каталог ~S.\n"
 
-#: netlist/scheme/gnetlist.scm:819
+#: netlist/scheme/netlist.scm:819
 msgid ""
 "List of available backends: \n"
 "\n"
@@ -112,7 +112,7 @@ msgstr ""
 "Список доступных драйверов: \n"
 "\n"
 
-#: netlist/scheme/gnetlist.scm:827
+#: netlist/scheme/netlist.scm:827
 #, fuzzy, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
@@ -161,7 +161,7 @@ msgstr ""
 "Отчёты об ошибках отправляйте по адресу <https://bugs.launchpad.net/geda>\n"
 "Домашняя страница gEDA/gaf: <http://www.geda-project.org/>\n"
 
-#: netlist/scheme/gnetlist.scm:871
+#: netlist/scheme/netlist.scm:871
 #, fuzzy, scheme-format
 msgid ""
 "\n"
@@ -173,7 +173,7 @@ msgstr ""
 "Обнаружена ошибка; имя тега\n"
 "        "
 
-#: netlist/scheme/gnetlist.scm:906
+#: netlist/scheme/netlist.scm:906
 #, fuzzy, scheme-format
 msgid ""
 "No schematic files specified for processing.\n"
@@ -183,7 +183,7 @@ msgstr ""
 "\n"
 "Подробности см. в выводе команды «~A --help».\n"
 
-#: netlist/scheme/gnetlist.scm:943
+#: netlist/scheme/netlist.scm:943
 #, scheme-format
 msgid ""
 "Could not find backend `~A' in load path.\n"
@@ -195,7 +195,7 @@ msgstr ""
 "Список всех доступных драйверов можно узнать по команде «~A --list-"
 "backends».\n"
 
-#: netlist/scheme/gnetlist.scm:951
+#: netlist/scheme/netlist.scm:951
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
 

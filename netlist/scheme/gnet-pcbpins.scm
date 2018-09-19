@@ -20,7 +20,7 @@
 
 
 (use-modules (ice-9 regex)
-             (gnetlist schematic))
+             (netlist schematic))
 
 ;; A comma or close parenthesis will cause problems with the pcb
 ;; action script, so if one of the arguments to ChangePinName contains

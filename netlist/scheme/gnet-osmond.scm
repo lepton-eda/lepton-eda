@@ -19,7 +19,7 @@
 
 ; Export a design to Osmond PCB
 
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 
 (define (osmond output-filename)
         (for-each osmond:part (schematic-packages toplevel-schematic))

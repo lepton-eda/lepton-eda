@@ -57,7 +57,7 @@
 ;;;    has something to do with sheet number in a multipage schematic.
 ;;;
 
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid FutureNet2 net name.

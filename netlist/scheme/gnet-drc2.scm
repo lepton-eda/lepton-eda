@@ -143,8 +143,8 @@
              (srfi srfi-26)
              (geda object)
              (geda page)
-             (gnetlist package)
-             (gnetlist schematic))
+             (netlist package)
+             (netlist schematic))
 
 (or (defined? 'define-syntax)
     (use-modules (ice-9 syncase)))

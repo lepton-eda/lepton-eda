@@ -22,7 +22,7 @@
 ;;
 ;; This module is for internal use only.
 
-(define-module (gnetlist core gettext))
+(define-module (netlist core gettext))
 
 (define %gnetlist-gettext-domain "lepton-netlist")
 (define-public (_ msg) (gettext msg %gnetlist-gettext-domain))

@@ -22,7 +22,7 @@
 
 (use-modules (srfi srfi-1)
              (ice-9 receive)
-             (gnetlist schematic))
+             (netlist schematic))
 
 ;;; Transforms LS into list of groups where each group is a list
 ;;; containig NUM elements.

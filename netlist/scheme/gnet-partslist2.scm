@@ -14,10 +14,10 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-(use-modules (gnetlist partlist)
-             (gnetlist partlist common)
-             (gnetlist attrib compare)
-             (gnetlist schematic))
+(use-modules (netlist partlist)
+             (netlist partlist common)
+             (netlist attrib compare)
+             (netlist schematic))
 
 (define (partslist2 output-filename)
   (display

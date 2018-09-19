@@ -20,7 +20,7 @@
 
 ;;  Calay format (modified from Ales's gnet-PCB.scm by jpd)
 ;;  Netname translation cleaned up at Dan McMahill'suggestion -jpd
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 
 (define (connections->string connections)
   (define package car)

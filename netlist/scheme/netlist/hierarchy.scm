@@ -16,17 +16,17 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(define-module (gnetlist hierarchy)
+(define-module (netlist hierarchy)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (geda log)
-  #:use-module (gnetlist config)
-  #:use-module (gnetlist core gettext)
-  #:use-module (gnetlist rename)
-  #:use-module (gnetlist package)
-  #:use-module (gnetlist package-pin)
-  #:use-module (gnetlist pin-net)
-  #:use-module (gnetlist verbose)
+  #:use-module (netlist config)
+  #:use-module (netlist core gettext)
+  #:use-module (netlist rename)
+  #:use-module (netlist package)
+  #:use-module (netlist package-pin)
+  #:use-module (netlist pin-net)
+  #:use-module (netlist verbose)
 
   #:export (hierarchy-create-refdes
             hierarchy-post-process

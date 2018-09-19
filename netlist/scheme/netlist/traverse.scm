@@ -17,10 +17,10 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(define-module (gnetlist traverse)
+(define-module (netlist traverse)
 
   ; Import C procedures and variables
-  #:use-module (gnetlist core gettext)
+  #:use-module (netlist core gettext)
 
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
@@ -32,14 +32,14 @@
   #:use-module (geda library)
   #:use-module (geda log)
   #:use-module (geda page)
-  #:use-module (gnetlist config)
-  #:use-module (gnetlist hierarchy)
-  #:use-module (gnetlist rename)
-  #:use-module (gnetlist net)
-  #:use-module (gnetlist package)
-  #:use-module (gnetlist package-pin)
-  #:use-module (gnetlist pin-net)
-  #:use-module (gnetlist verbose)
+  #:use-module (netlist config)
+  #:use-module (netlist hierarchy)
+  #:use-module (netlist rename)
+  #:use-module (netlist net)
+  #:use-module (netlist package)
+  #:use-module (netlist package-pin)
+  #:use-module (netlist pin-net)
+  #:use-module (netlist verbose)
   #:use-module (symbol check net-attrib)
 
   #:export (traverse))
@@ -372,7 +372,7 @@
                                   '())) ; get pins later
            (graphical (or (package-graphical? package)
                           (package-nc? package)))
-           (refdes  (hierarchy-create-refdes (or ((@@ (gnetlist) get-uref) object)
+           (refdes  (hierarchy-create-refdes (or ((@@ (netlist) get-uref) object)
                                                  (refdes-by-net object net-maps graphical))
                                              hierarchy-tag))
            (sources (get-sources inherited-attribs attached-attribs))

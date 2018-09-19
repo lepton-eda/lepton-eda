@@ -16,7 +16,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(define-module (gnetlist option)
+(define-module (netlist option)
   #:use-module (ice-9 getopt-long)
   #:use-module ((srfi srfi-1) #:select (filter-map))
   #:export (%default-gnetlist-options

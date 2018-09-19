@@ -22,7 +22,7 @@
 ;; for usage.
 
 (use-modules (srfi srfi-1)
-             (gnetlist schematic))
+             (netlist schematic))
 
 (define (netname-connections->pin-voltages netname)
   (define package car)

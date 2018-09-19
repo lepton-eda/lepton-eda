@@ -16,14 +16,14 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(define-module (gnetlist net)
+(define-module (netlist net)
   #:use-module (srfi srfi-1)
   #:use-module (geda attrib)
   #:use-module (geda log)
   #:use-module (geda object)
-  #:use-module (gnetlist config)
-  #:use-module (gnetlist core gettext)
-  #:use-module (gnetlist hierarchy)
+  #:use-module (netlist config)
+  #:use-module (netlist core gettext)
+  #:use-module (netlist hierarchy)
   #:use-module (symbol check net-attrib)
   #:use-module (symbol check duplicate)
 

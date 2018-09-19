@@ -24,7 +24,7 @@
 ;;  For more info see http://gossip.sourceforge.net
 ;;
 
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 
 (define (gossip:write-top-header)
   (display ";; Gossip Netlist Created by gNetlist

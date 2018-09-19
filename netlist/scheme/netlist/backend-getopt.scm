@@ -26,7 +26,7 @@
 ;;   `backend-option-ref', which is used to look-up an option in the
 ;;   structure returned by `backend-getopt'.
 
-(define-module (gnetlist backend-getopt)
+(define-module (netlist backend-getopt)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 optargs)
   #:use-module (ice-9 receive)

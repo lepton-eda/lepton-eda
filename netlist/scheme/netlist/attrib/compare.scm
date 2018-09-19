@@ -16,10 +16,10 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(define-module (gnetlist attrib compare)
+(define-module (netlist attrib compare)
   #:use-module (ice-9 regex)
   #:use-module (srfi srfi-1)
-  #:use-module (gnetlist attrib compare)
+  #:use-module (netlist attrib compare)
   #:export (refdes<?
             value<?))
 

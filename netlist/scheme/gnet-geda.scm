@@ -26,8 +26,8 @@
 
 (use-modules (srfi srfi-1)
              (geda object)
-             (gnetlist schematic)
-             (gnetlist package))
+             (netlist schematic)
+             (netlist package))
 
 ;;
 ;; Top level header

@@ -20,7 +20,7 @@
 
 ;;  PCB format
 
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 
 (define (connection->string connection)
   (define refdes car)

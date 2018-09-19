@@ -17,16 +17,16 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(define-module (gnetlist schematic)
+(define-module (netlist schematic)
   #:use-module (ice-9 receive)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
-  #:use-module (gnetlist attrib compare)
-  #:use-module (gnetlist sort)
-  #:use-module (gnetlist traverse)
-  #:use-module (gnetlist package)
-  #:use-module (gnetlist package-pin)
+  #:use-module (netlist attrib compare)
+  #:use-module (netlist sort)
+  #:use-module (netlist traverse)
+  #:use-module (netlist package)
+  #:use-module (netlist package-pin)
   #:use-module (geda page)
   #:use-module (geda attrib)
   #:use-module (geda object)

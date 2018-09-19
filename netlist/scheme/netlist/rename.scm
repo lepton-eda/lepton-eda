@@ -16,12 +16,12 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(define-module (gnetlist rename)
+(define-module (netlist rename)
   #:use-module (srfi srfi-69)
-  #:use-module (gnetlist core gettext)
-  #:use-module (gnetlist verbose)
-  #:use-module (gnetlist package)
-  #:use-module (gnetlist package-pin)
+  #:use-module (netlist core gettext)
+  #:use-module (netlist verbose)
+  #:use-module (netlist package)
+  #:use-module (netlist package-pin)
 
   #:export (search-rename
             search-net-rename

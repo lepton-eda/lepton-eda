@@ -20,7 +20,7 @@
 
 
 ;; Allegro netlist format
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 
 (define allegro:write-device-files
    (lambda (packages done stdout)

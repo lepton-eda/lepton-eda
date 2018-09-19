@@ -20,7 +20,7 @@
 
 ;; PADS netlist format
 
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid pads net name.

@@ -119,7 +119,7 @@
 (use-modules (ice-9 rdelim)
              (ice-9 match)
              (srfi srfi-1)
-             (gnetlist attrib compare))
+             (netlist attrib compare))
 
 ;; Common functions for the `spice' and `spice-sdb' backends
 (load-from-path "spice-common.scm")

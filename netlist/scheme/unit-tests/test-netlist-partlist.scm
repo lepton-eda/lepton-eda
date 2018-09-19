@@ -1,6 +1,6 @@
 (use-modules (srfi srfi-64)
-             (gnetlist partlist)
-             (gnetlist attrib compare))
+             (netlist partlist)
+             (netlist attrib compare))
 
 (define (refdes>? a b)
   (not (or (equal? a b) (refdes<? a b))))

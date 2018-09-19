@@ -20,7 +20,7 @@
 
 (use-modules (ice-9 match)
              (srfi srfi-1)
-             (gnetlist schematic))
+             (netlist schematic))
 
 ;; Locate and print out the global defaults if the element exists
 (define cascade:write-defaults-top

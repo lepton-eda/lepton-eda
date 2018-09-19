@@ -28,8 +28,8 @@
              (ice-9 match)
              (srfi srfi-1)
              (srfi srfi-26)
-             (gnetlist schematic)
-             (gnetlist port))
+             (netlist schematic)
+             (netlist port))
 
 (define id-regexp "[a-zA-Z_][a-zA-Z0-9_$]*")
 (define numeric  "[0-9]+")

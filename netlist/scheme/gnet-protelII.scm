@@ -19,7 +19,7 @@
 ;;; MA 02111-1301 USA.
 
 (use-modules (ice-9 optargs)
-             (gnetlist schematic))
+             (netlist schematic))
 
 ;; --------------------------------------------------------------------------
 ;;

@@ -84,8 +84,8 @@
              (sxml transform)
              (sxml match)
              (geda page)
-             (gnetlist schematic)
-             (gnetlist package))
+             (netlist schematic)
+             (netlist package))
 
 
 ; Split a filename into 3 parts:

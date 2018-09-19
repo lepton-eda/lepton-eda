@@ -20,7 +20,7 @@
 ;; The tEDAx format is documented at http://repo.hu/projects/tedax/
 ;; --------------------------------------------------------------------------
 
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 
 ;;
 ;; return device attribute

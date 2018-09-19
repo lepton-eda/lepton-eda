@@ -21,7 +21,7 @@
 ;;; ViPEC netlist format
 ;;; http://vipec.sourceforge.net/
 
-(use-modules (gnetlist schematic))
+(use-modules (netlist schematic))
 
 ;; ETTUS
 ;; Usage: (number-nets all-unique-nets 1)

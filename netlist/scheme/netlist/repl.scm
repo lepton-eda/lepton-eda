@@ -16,7 +16,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(define-module (gnetlist repl)
+(define-module (netlist repl)
   #:use-module (geda repl)
 
   #:export (gnetlist-repl))

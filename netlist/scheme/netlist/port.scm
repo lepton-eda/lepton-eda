@@ -16,7 +16,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(define-module (gnetlist port)
+(define-module (netlist port)
   #:export (schematic-port-device-string?))
 
 (define %port-types '(IOPAD IPAD OPAD HIGH LOW))
