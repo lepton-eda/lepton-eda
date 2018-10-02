@@ -27,6 +27,8 @@
 
 #include <glib/gstdio.h>
 
+#define DEFAULT_MAX_RECENT_FILES 10
+
 struct PopupEntry {
   #ifdef __cplusplus
   const gchar *name, *action, *stock_id;
@@ -360,7 +362,6 @@ void x_menus_popup_sensitivity (GschemToplevel *w_current, const char *buf, int 
   }
 }
 
-#define MAX_RECENT_FILES 10
 /*! \brief Callback for recent-chooser.
  *
  * Will be called if element of recent-file-list is activated
@@ -411,7 +412,7 @@ void x_menu_attach_recent_files_submenu(GschemToplevel *w_current)
   gtk_recent_chooser_set_show_tips(GTK_RECENT_CHOOSER(menuitem_file_recent_items), TRUE);
   gtk_recent_chooser_set_sort_type(GTK_RECENT_CHOOSER(menuitem_file_recent_items),
                                    GTK_RECENT_SORT_MRU);
-  gtk_recent_chooser_set_limit(GTK_RECENT_CHOOSER(menuitem_file_recent_items), MAX_RECENT_FILES);
+  gtk_recent_chooser_set_limit(GTK_RECENT_CHOOSER(menuitem_file_recent_items), DEFAULT_MAX_RECENT_FILES);
   gtk_recent_chooser_set_local_only(GTK_RECENT_CHOOSER(menuitem_file_recent_items), FALSE);
   gtk_recent_chooser_menu_set_show_numbers(GTK_RECENT_CHOOSER_MENU(menuitem_file_recent_items), TRUE);
   g_signal_connect(GTK_OBJECT(menuitem_file_recent_items), "item-activated",
