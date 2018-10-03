@@ -776,7 +776,8 @@
 
     ;; Check for NoConnection nets with more than one pin connected.
     (not-defined? 'dont-check-connected-noconnects
-                  => (drc2:check-connected-noconnects nets))
+                  => (drc2:check-connected-noconnects (append nets
+                                                              (schematic-nc-nets toplevel-schematic))))
 
     ;; Check nets with only one connection
     (not-defined? 'dont-check-one-connection-nets
