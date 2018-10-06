@@ -27,7 +27,7 @@
 
 #include "gschem.h"
 
-#define GETOPT_OPTIONS "c:hL:o:pq:s:vV"
+#define GETOPT_OPTIONS "c:hL:o:pqs:vV"
 
 extern char *optarg;
 extern int optind;
