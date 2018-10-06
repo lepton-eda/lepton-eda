@@ -17,3 +17,5 @@ T 400 900 8 10 0 0 0 0 1
 graphical=1
 T 400 1100 8 10 0 0 0 0 1
 documentation=nc.pdf
+T 400 1300 8 10 0 0 0 0 1
+symversion=1.0

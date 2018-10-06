@@ -17,3 +17,5 @@ T 0 800 8 10 0 0 0 0 1
 device=DRC_Directive
 T 0 1000 8 10 0 0 0 0 1
 graphical=1
+T -100 1200 8 10 0 0 0 0 1
+symversion=1.0
