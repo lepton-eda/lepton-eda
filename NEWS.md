@@ -4,6 +4,33 @@ Recent Changes in Lepton EDA
 This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult the `ChangeLog` file.
 
+
+Notable changes since Lepton EDA 1.9.5
+--------------------------------------
+
+### Changes in `lepton-schematic`:
+
+- A new configuration key `text-sizes` in `schematic.gui` group
+has been added. It can be set to a semicolon-separated list of
+text size values. That values will appear in 'add text' and
+'edit text' dialogs instead of the default built-ins.
+
+- The middle mouse button can now be used to display the popup
+menu. Set `(middle-button "popup")` in `gschemrc` configuration
+file.
+
+- The maximum number of recent files to show in `File → Open Recent`
+menu can now be configured using `max-recent-files` key in
+`schematic.gui` group.
+
+- Processing of `-q` (`--quiet`) command line option has been fixed.
+
+### Changes in `lepton-netlist`:
+
+- `lepton-netlist --list-backends` standard output now contains just
+the list of backend names, making it more script-friendly.
+
+
 Notable changes in Lepton EDA 1.9.5
 -----------------------------------
 
