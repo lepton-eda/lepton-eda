@@ -55,8 +55,6 @@ fi
 LEFTFILE=$1
 RIGHTFILE=$2
 
-GEDASCHEMEDIR=share/gEDA/scheme
-SCHEMEFILE=`dirname $0`/../${GEDASCHEMEDIR}/lepton-schdiff-image.scm
 LEFTPNG=`mktemp /tmp/lepton-schdiff-old.XXXXXXXXXX`
 RIGHTPNG=`mktemp /tmp/lepton-schdiff-new.XXXXXXXXXX`
 DIFFPNG=`mktemp /tmp/lepton-schdiff-diff.XXXXXXXXXX`
