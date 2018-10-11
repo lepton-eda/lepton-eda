@@ -1,6 +1,7 @@
 #! /bin/sh
 
 VIEWER="display"
+DEFAULT_FONT="Arial"
 
 usage ()
 {
@@ -72,8 +73,14 @@ LEFTPNG=`mktemp /tmp/lepton-schdiff-old.XXXXXXXXXX`
 RIGHTPNG=`mktemp /tmp/lepton-schdiff-new.XXXXXXXXXX`
 DIFFPNG=`mktemp /tmp/lepton-schdiff-diff.XXXXXXXXXX`
 
-lepton-cli export -f png -s 1344px:1008px --no-color -o $RIGHTPNG $RIGHTFILE && \
-lepton-cli export -f png -s 1344px:1008px --no-color -o $LEFTPNG  $LEFTFILE  && \
+font="`lepton-cli config schematic.gui font`"
+if [ -z "${font}" ]
+then
+  font=$DEFAULT_FONT
+fi
+
+lepton-cli export -f png -s 1344px:1008px --no-color -F "${font}" -o $RIGHTPNG $RIGHTFILE && \
+lepton-cli export -f png -s 1344px:1008px --no-color -F "${font}" -o $LEFTPNG  $LEFTFILE  && \
 composite -stereo 0 $LEFTPNG $RIGHTPNG $DIFFPNG && \
 $VIEWER $DIFFPNG
 
