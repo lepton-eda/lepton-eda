@@ -6,7 +6,7 @@
 
 .SH SYNOPSIS
 .B lepton-schdiff
-.I infile1.sch infile2.sch
+.I [-d VIEWER] infile1.sch infile2.sch
 
 
 .SH DESCRIPTION
@@ -19,8 +19,9 @@ to display a graphical diff of two schematic files.  It's most useful
 when combined with a revision control system so it can compare two revisions of
 the same file, review changes, etc.  However, it is limited in that it can only
 compare two files at a time; it cannot diff entire directories nor can it diff
-an entire revision (unless that revision affected only one file).  It can
-easily be configured to work with most revision control systems.  Here are
+an entire revision (unless that revision affected only one file).
+\fIVIEWER\fR, if specified, will be used to display the result (it's 'display' by default).
+It can easily be configured to work with most revision control systems.  Here are
 instructions for three:
 
 .B git:
