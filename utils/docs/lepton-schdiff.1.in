@@ -54,6 +54,14 @@ command like normal, but supply the
 .B --diff-cmd lepton-schdiff
 option.
 
+.B Note:
+To make lepton-schdiff work properly, all page contents
+should be enclosed in some form of bounding box (e.g.
+a title block), otherwise the symbols in exported
+images could have different relative positions and/or
+sizes, resulting in a difference image that is rather
+hard to comprehend.
+
 .SH EXAMPLES
 
 .TP
