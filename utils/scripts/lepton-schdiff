@@ -57,9 +57,9 @@ RIGHTFILE=$2
 
 GEDASCHEMEDIR=share/gEDA/scheme
 SCHEMEFILE=`dirname $0`/../${GEDASCHEMEDIR}/lepton-schdiff-image.scm
-LEFTPNG=`mktemp /tmp/lepton-schdiff.XXXXXXXXXX`
-RIGHTPNG=`mktemp /tmp/lepton-schdiff.XXXXXXXXXX`
-DIFFPNG=`mktemp /tmp/lepton-schdiff.XXXXXXXXXX`
+LEFTPNG=`mktemp /tmp/lepton-schdiff-old.XXXXXXXXXX`
+RIGHTPNG=`mktemp /tmp/lepton-schdiff-new.XXXXXXXXXX`
+DIFFPNG=`mktemp /tmp/lepton-schdiff-diff.XXXXXXXXXX`
 
 lepton-schematic -p -o $LEFTPNG -q -c '(image-size 1344 1008) (image-color "disabled") (gschem-use-rc-values) (gschem-image "dummyfilename") (gschem-exit)' $LEFTFILE && \
 lepton-schematic -p -o $RIGHTPNG -q -c '(image-size 1344 1008) (image-color "disabled") (gschem-use-rc-values) (gschem-image "dummyfilename") (gschem-exit)' $RIGHTFILE && \
