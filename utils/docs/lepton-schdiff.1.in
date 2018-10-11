@@ -20,8 +20,14 @@ when combined with a revision control system so it can compare two revisions of
 the same file, review changes, etc.  However, it is limited in that it can only
 compare two files at a time; it cannot diff entire directories nor can it diff
 an entire revision (unless that revision affected only one file).
-\fIVIEWER\fR, if specified, will be used to display the result (it's 'display' by default).
-It can easily be configured to work with most revision control systems.  Here are
+
+\fIVIEWER\fR command, if specified, will be used to display the result.
+By default, it's
+.B display
+program from the ImageMagick package.
+
+.B lepton-schdiff
+can easily be configured to work with most revision control systems.  Here are
 instructions for three:
 
 .B git:
