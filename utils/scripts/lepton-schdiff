@@ -59,10 +59,15 @@ LEFTPNG=`mktemp /tmp/lepton-schdiff-old.XXXXXXXXXX`
 RIGHTPNG=`mktemp /tmp/lepton-schdiff-new.XXXXXXXXXX`
 DIFFPNG=`mktemp /tmp/lepton-schdiff-diff.XXXXXXXXXX`
 
-lepton-schematic -p -o $LEFTPNG -q -c '(image-size 1344 1008) (image-color "disabled") (gschem-use-rc-values) (gschem-image "dummyfilename") (gschem-exit)' $LEFTFILE && \
-lepton-schematic -p -o $RIGHTPNG -q -c '(image-size 1344 1008) (image-color "disabled") (gschem-use-rc-values) (gschem-image "dummyfilename") (gschem-exit)' $RIGHTFILE && \
+# lepton-schematic -p -o $LEFTPNG -q -c '(image-size 1344 1008) (image-color "disabled") (gschem-use-rc-values) (gschem-image "dummyfilename") (gschem-exit)' $LEFTFILE && \
+# lepton-schematic -p -o $RIGHTPNG -q -c '(image-size 1344 1008) (image-color "disabled") (gschem-use-rc-values) (gschem-image "dummyfilename") (gschem-exit)' $RIGHTFILE && \
+
+lepton-cli export -f png -s 1344px:1008px --no-color -o $RIGHTPNG $RIGHTFILE && \
+lepton-cli export -f png -s 1344px:1008px --no-color -o $LEFTPNG  $LEFTFILE  && \
 composite -stereo 0 $LEFTPNG $RIGHTPNG $DIFFPNG && \
 display $DIFFPNG
+
 rm $LEFTPNG
 rm $RIGHTPNG
 rm $DIFFPNG
+
