@@ -9,7 +9,7 @@ usage ()
 Usage: lepton-schdiff [-d VIEWER] old new
 
 View a graphical diff of Lepton EDA schematics using lepton-schematic and ImageMagick.
-Is specified, use VIEWER program ('display' by default) to show the result.
+If specified, use VIEWER program ('display' by default) to show the result.
 
 Usage with git:
   git difftool -x lepton-schdiff ...
