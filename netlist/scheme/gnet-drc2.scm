@@ -452,27 +452,20 @@
 ;  NETs checking functions
 ;
 
-;;
-;; Check for NoConnection nets with more than one pin connected.
-;;
-;; Example of all-nets: (net1 net2 net3 net4)
-(define (drc2:check-connected-noconnects all-nets)
+;;; Check for "no-connect" nets with more than one pin connected.
+;;; Example of nets: (net1 net2 net3 net4)
+(define (drc2:check-connected-noconnects nc-nets)
   (display "Checking NoConnection nets for connections...\n")
   (for-each
    (lambda (netname)
-     (let ((directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
-                       netname
-                       "device=DRC_Directive"
-                       "value"))
-          (connections (get-all-connections netname)))
+     (let ((connections (get-all-connections netname)))
        ;; Only check nets with a NoConnection directive
        (and
-        (member "NoConnection" directives)
         (>  (length connections) 1)
         (drc2:error "Net '~A' has connections, but has the NoConnection DRC directive: ~A."
                     netname
                     (pins-of-type->string 'all connections)))))
-   all-nets)
+   nc-nets)
   (newline))
 
 ;;
@@ -776,8 +769,7 @@
 
     ;; Check for NoConnection nets with more than one pin connected.
     (not-defined? 'dont-check-connected-noconnects
-                  => (drc2:check-connected-noconnects (append nets
-                                                              (schematic-nc-nets toplevel-schematic))))
+                  => (drc2:check-connected-noconnects (schematic-nc-nets toplevel-schematic)))
 
     ;; Check nets with only one connection
     (not-defined? 'dont-check-one-connection-nets
