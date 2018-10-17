@@ -370,7 +370,8 @@
                                   inherited-attribs
                                   attached-attribs
                                   '())) ; get pins later
-           (graphical (package-graphical? package))
+           (graphical (or (package-graphical? package)
+                          (package-nc? package)))
            (refdes  (hierarchy-create-refdes (or ((@@ (gnetlist) get-uref) object)
                                                  (refdes-by-net object net-maps graphical))
                                              hierarchy-tag))
