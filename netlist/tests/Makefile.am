@@ -44,6 +44,8 @@ input_files = \
 	hierarchy4.sch \
 	stack-torture.sch \
 	drc2/connected-noconnects.sch \
+	drc2/connected-noconnects-symbols/nc-2.sym \
+	drc2/connected-noconnects-symbols/nc-top-1-old.sym \
 	drc2/duplicated-refdes.sch \
 	drc2/duplicated_slot.sch \
 	drc2/gnd-with-nc-directive.sch \
