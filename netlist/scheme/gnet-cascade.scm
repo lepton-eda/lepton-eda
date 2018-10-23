@@ -116,9 +116,9 @@
      (message
       (format #f
               "
----------------------------------
-gEDA/gnetlist Cascade Backend
----------------------------------
+----------------------------------------
+Lepton EDA netlister Cascade Backend
+----------------------------------------
 
 Writing to ~S...
 "
@@ -131,7 +131,7 @@ Writing to ~S...
 
         ;; write the header
         (display "# Cascade (http://rfcascade.sourceforge.net)\n")
-        (display "# Created with gEDA/gnetlist\n\n")
+        (display "# Created with Lepton EDA netlister\n\n")
 
         ;; Write out an initial "defaults" line if it exists
         (cascade:write-defaults-top packages)
@@ -154,7 +154,7 @@ Writing to ~S...
 
         ;; write the footer
         (newline)
-        (display "# End of netlist created by gEDA/gnetlist\n\n")
+        (display "# End of netlist created by Lepton EDA netlister\n\n")
         )
 
       (message "done\n")

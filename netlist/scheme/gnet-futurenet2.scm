@@ -204,14 +204,14 @@
 
 ;; The top level netlister for futurenet2
 (define (futurenet2 output-filename)
-  (message "\n---------------------------------\n")
-  (message "gEDA/gnetlist FutureNet2 Backend\n")
+  (message "\n-------------------------------------------\n")
+  (message "Lepton EDA netlister FutureNet2 backend\n")
   (message "This backend is EXPERIMENTAL\n")
   (message "Use at your own risk!\n\n")
   (message "You may need to run the output netlist\n")
   (message "through unix2dos before importing to\n")
   (message "Ranger2 or other windows based layout tools\n")
-  (message "---------------------------------\n\n")
+  (message "-------------------------------------------\n\n")
 
   (let ((all-nets (schematic-nets toplevel-schematic))
         (packages (schematic-packages toplevel-schematic)))

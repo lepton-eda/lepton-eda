@@ -61,7 +61,7 @@
 
 (define (redac output-filename)
   (display ".PCB\r\n")
-  (display ".REM CREATED BY gEDA GNETLIST\r\n")
+  (display ".REM CREATED BY Lepton EDA netlister\r\n")
   (display ".CON\r\n")
   (display ".COD 2\r\n\r\n")
   (redac:write-net (schematic-nets toplevel-schematic))

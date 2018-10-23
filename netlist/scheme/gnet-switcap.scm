@@ -402,9 +402,9 @@
 ;;
 (define switcap:write-top-header
   (lambda ()
-    (display "/* Switcap netlist produced by gnetlist (part of gEDA)     */\n")
-    (display "/* See http://www.geda-project.org/ for more information.  */\n")
-    (display "/* Switcap backend written by Dan McMahill                 */\n")
+    (display "/* Switcap netlist produced by lepton-netlist (part of Lepton EDA) */\n")
+    (display "/* See http://www.geda-project.org/ for more information.          */\n")
+    (display "/* Switcap backend written by Dan McMahill                         */\n")
     (display "\n\n")
     )
   )

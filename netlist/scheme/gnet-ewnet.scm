@@ -264,14 +264,14 @@
 ;; The top level netlister for ewnet
 (define ewnet
   (lambda (output-filename)
-    (message "\n---------------------------------\n")
-    (message "gEDA/gnetlist ewnet Backend\n")
+    (message "\n--------------------------------------\n")
+    (message "Lepton EDA netlister ewnet backend\n")
     (message "This backend is EXPERIMENTAL\n")
     (message "Use at your own risk!\n\n")
     (message "You may need to run the output netlist\n")
     (message "through unix2dos before importing to\n")
     (message "windows based layout tools\n")
-    (message "---------------------------------\n\n")
+    (message "--------------------------------------\n\n")
 
     (let ((all-nets (schematic-nets toplevel-schematic))
           (packages (schematic-packages toplevel-schematic)))

@@ -97,7 +97,7 @@
 ;; Spice netlist header
 ;;
 (define (spice:write-top-header)
-  (display "* Spice netlister for gnetlist\n"))
+  (display "* SPICE Lepton EDA netlister backend\n"))
 
 
 ;;
