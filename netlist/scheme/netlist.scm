@@ -581,7 +581,7 @@ PACKAGE."
                  )
 
             (if (hash-ref gnetlist:net-hash-reverse alias)
-                (error (format #f
+                (begin (format (current-error-port)
                                (_ "There is a net name collision!
 The net called \"~A\" will be remapped
 to \"~A\" which is already used
@@ -592,7 +592,7 @@ other limitations imposed by this netlist format.
 ")
                                net
                                alias
-                               (hash-ref gnetlist:net-hash-reverse alias))))
+                               (hash-ref gnetlist:net-hash-reverse alias)) (primitive-exit 1) ))
             (hash-create-handle! gnetlist:net-hash-forward net   alias)
             (hash-create-handle! gnetlist:net-hash-reverse alias net  )
             (gnetlist:build-net-aliases mapfn (cdr nets))
@@ -618,8 +618,8 @@ other limitations imposed by this netlist format.
                  )
 
             (if (hash-ref gnetlist:refdes-hash-reverse alias)
-                (error
-                 (format #f
+                (begin
+                 (format (current-error-port)
                          (_ "There is a refdes name collision!
 The refdes \"~A\" will be mapped\nto \"~A\" which is already used
 by \"~A\".
@@ -629,7 +629,7 @@ other limitations imposed by this netlist format.
 ")
                          refdes
                          alias
-                         (hash-ref gnetlist:refdes-hash-reverse alias))))
+                         (hash-ref gnetlist:refdes-hash-reverse alias)) (primitive-exit 1) ))
             (hash-create-handle! gnetlist:refdes-hash-forward refdes alias)
             (hash-create-handle! gnetlist:refdes-hash-reverse alias  refdes  )
             (gnetlist:build-refdes-aliases mapfn (cdr refdeses))
@@ -911,11 +911,11 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
       (gnetlist-backends)
       (let ((files (gnetlist-option-ref '())))
         (if (null? files)
-            (error (format #f
+            (begin (format (current-error-port)
                            (_ "No schematic files specified for processing.
 Run `~A --help' for more information.
 ")
-                           (car (program-arguments))))
+                           (car (program-arguments))) (primitive-exit 1) )
             (let* ((backend (gnetlist-option-ref 'backend))
                    ;; this is a kludge to make sure that spice mode gets set
                    (netlist-mode (if (and backend (string-prefix? "spice" backend))
@@ -949,12 +949,12 @@ Run `~A --help' for more information.
                         (if backend-path
                             (run-backend backend output-filename)
                             ;; If the backend couldn't be found, fail.
-                            (error (format #f (_ "Could not find backend `~A' in load path.
+                            (begin (format (current-error-port) (_ "Could not find backend `~A' in load path.
 
 Run `~A --list-backends' for a full list of available backends.
 ")
                                            backend
-                                           (car (program-arguments)))))))
+                                           (car (program-arguments))) (primitive-exit 1) ))))
                   ;; No backend given on the command line.
                   (format (current-error-port)
                           (_ "You gave neither backend to execute nor interactive mode!\n"))))))))
