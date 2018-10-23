@@ -28,6 +28,8 @@ U2 device=LM317
 
 END components
 
+No "no-connect" nets found
+
 START renamed-nets
 
 four -> GND

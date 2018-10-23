@@ -16,6 +16,8 @@ Uunder/Umiddle/Urock/Qrock device=PNP_TRANSISTOR
 
 END components
 
+No "no-connect" nets found
+
 START renamed-nets
 
 Utop/Umiddle/Urock/unnamed_net2 -> U1_2_to_B

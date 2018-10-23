@@ -39,6 +39,8 @@ Vinput device=vsin
 
 END components
 
+No "no-connect" nets found
+
 START renamed-nets
 
 

@@ -22,6 +22,8 @@ U212 device=74191
 
 END components
 
+No "no-connect" nets found
+
 START renamed-nets
 
 

@@ -128,6 +128,7 @@ TESTS = stack_1-geda.out \
 	stack-torture-geda.out \
 	missing-source-geda.out \
 	drc2/connected-noconnects-drc2.out \
+	drc2/connected-noconnects-geda.out \
 	drc2/duplicated-refdes-drc2.out \
 	drc2/duplicated_slot-drc2.out \
 	drc2/gnd-with-nc-directive-drc2.out \

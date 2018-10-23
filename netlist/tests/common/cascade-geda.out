@@ -24,6 +24,8 @@ T1 device=cascade-transformer
 
 END components
 
+No "no-connect" nets found
+
 START renamed-nets
 
 

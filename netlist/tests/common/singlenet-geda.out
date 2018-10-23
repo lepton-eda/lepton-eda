@@ -13,6 +13,8 @@ U100 device=7400
 
 END components
 
+No "no-connect" nets found
+
 START renamed-nets
 
 

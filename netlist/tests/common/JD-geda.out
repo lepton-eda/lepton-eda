@@ -27,6 +27,8 @@ X1 device=LVD
 
 END components
 
+No "no-connect" nets found
+
 START renamed-nets
 
 

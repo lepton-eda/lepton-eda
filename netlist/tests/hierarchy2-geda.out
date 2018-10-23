@@ -22,6 +22,8 @@ U102/Uunder device=7400
 
 END components
 
+No "no-connect" nets found
+
 START renamed-nets
 
 U100/unnamed_net1 -> one

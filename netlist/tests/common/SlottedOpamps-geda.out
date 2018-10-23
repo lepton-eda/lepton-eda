@@ -17,6 +17,8 @@ U1 device=LM324
 
 END components
 
+No "no-connect" nets found
+
 START renamed-nets
 
 

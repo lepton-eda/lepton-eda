@@ -16,6 +16,8 @@ U2 device=7404
 
 END components
 
+No "no-connect" nets found
+
 START renamed-nets
 
 Umiddle/Utop/rockA -> U1_2_to_B

@@ -130,6 +130,20 @@ END graphical symbols
   ;; footer for net section
   (display "\nEND nets\n\n"))
 
+;;; Write "no-connect" nets
+(define (no-connect-nets ls)
+  (if (null? ls)
+      (display "No \"no-connect\" nets found\n\n")
+      (format #t
+              "START \"no-connect\" nets
+
+~A
+END \"no-connect\" nets
+
+"
+              (string-join ls "\n" 'suffix))))
+
+
 ;;; Highest level function
 ;;; Write my special testing netlist format
 ;;;
@@ -137,6 +151,7 @@ END graphical symbols
   (geda:write-top-header)
   (geda:graphicals (schematic-graphicals toplevel-schematic))
   (geda:components (schematic-packages toplevel-schematic))
+  (no-connect-nets (schematic-nc-nets toplevel-schematic))
   (geda:renamed-nets (gnetlist:get-renamed-nets "dummy"))
   (geda:nets (schematic-nets toplevel-schematic)))
 
