@@ -65,16 +65,23 @@ END header
     (or (package-refdes package)
         (no-refdes-component-info (package-object package))))
 
-  (if (null? ls)
-      (display "No graphical symbols found\n\n")
-      (format #t
-              "START graphical symbols
+  ;; The graphical should not be a "no-connect" symbol.
+  (define (not-package-nc? p)
+    (not (package-nc? p)))
+
+  (let ((graphicals (filter not-package-nc? ls)))
+    (if (null? graphicals)
+        (display "No graphical symbols found\n\n")
+        (format #t
+                "START graphical symbols
 
 ~A
 END graphical symbols
 
 "
-              (string-join (map graphical-info ls) "\n" 'suffix))))
+                (string-join (map graphical-info graphicals)
+                             "\n"
+                             'suffix)))))
 
 
 ;;; Renamed nets writing
