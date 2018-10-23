@@ -83,11 +83,12 @@
   ((prepend-string dotted-version date-version git-commit)
    (log! 'message
          (_
-          "Lepton EDA/lepton-netlist version ~A~A.~A
+          "Lepton EDA/lepton-netlist version ~A~A.~A git: ~A
 ")
          prepend-string
          dotted-version
-         date-version))
+         date-version
+         (string-take git-commit 7)))
   (_ #f))
 
 ;;; Print version info and exit.
@@ -96,7 +97,7 @@
 (define (version)
   (match (lepton-version)
     ((prepend dotted date commit)
-     (format #t (_ "Lepton EDA ~A (g~A)
+     (format #t (_ "Lepton EDA ~A (git: ~A)
 Copyright (C) 1998-2016 gEDA developers
 Copyright (C) 2017-2018 Lepton EDA Contributors
 This is free software, and you are welcome to redistribute it under
