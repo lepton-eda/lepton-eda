@@ -847,6 +847,7 @@ General options:
   -c EXPR         Evaluate Scheme expression at startup.
   -i              Enter interactive Scheme REPL after loading.
   --list-backends Print a list of available netlist backends.
+  -w              Do not display warning about missing configuration files.
   -h, --help      Help; this message.
   -V, --version   Show version information.
   --              Treat all remaining arguments as filenames.

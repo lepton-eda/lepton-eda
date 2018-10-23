@@ -36,6 +36,7 @@
     (post-load . ())
     (eval-code . ())
     (interactive . #f)
+    (no-warn-cfg . #f)
     (help . #f)
     (version . #f)))
 
@@ -61,6 +62,7 @@
                  (eval-code (single-char #\c) (value #t))
                  (interactive (single-char #\i))
                  (help (single-char #\h))
+                 (no-warn-cfg (single-char #\w))
                  (version (single-char #\V)))))
 
 ;;; This function extends option-ref so that for keys which may

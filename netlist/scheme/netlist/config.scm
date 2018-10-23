@@ -21,6 +21,7 @@
   #:use-module (geda log)
   #:use-module (geda config)
   #:use-module (ice-9 match)
+  #:use-module (netlist option)
   #:export (gnetlist-config-ref
             print-gnetlist-config))
 
@@ -101,11 +102,18 @@
 ;; FIXME[2017-02-01] This should error if the load fails due to
 ;; anything other than "file not found"
 (define (try-load-config cfg)
+(let*
+    (
+    (nowarn (gnetlist-option-ref 'no-warn-cfg))
+    (level (if nowarn 'info 'warning))
+    )
+
     (catch 'system-error
            (lambda () (config-load! cfg))
            (lambda (key subr message args rest)
-             (log! 'warning "Failed to load config from ~S: ~?"
-                   (config-filename cfg) message args))))
+             (log! level "Failed to load config from ~S: ~?"
+                   (config-filename cfg) message args)))
+))
 
 (define (reload-config config . args)
   (define (process info)
