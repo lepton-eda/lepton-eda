@@ -68,6 +68,9 @@ After the schematic files have been loaded and compiled, and after all
 Scheme files have been loaded, but before running the backend, enter a
 Scheme read-eval-print loop.
 .TP 8
+\fB-w\fR
+Do not display warning about missing configuration files.
+.TP 8
 \fB-h\fR, \fB--help\fR
 Print a help message.
 .TP 8
