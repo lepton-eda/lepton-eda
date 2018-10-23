@@ -83,10 +83,7 @@
   ((prepend-string dotted-version date-version git-commit)
    (log! 'message
          (_
-          "gEDA/gnetlist version ~A~A.~A
-gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.
-This is free software, and you are welcome to redistribute it under certain
-conditions; please see the COPYING file for more details.
+          "Lepton EDA/lepton-netlist version ~A~A.~A
 ")
          prepend-string
          dotted-version
@@ -835,7 +832,7 @@ begins with \"gnet-\" and ends with \".scm\"."
   (format #t (_
     "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...
 
-Generate a netlist from one or more gEDA schematic FILEs.
+Generate a netlist from one or more Lepton EDA schematic FILEs.
 
 General options:
   -q              Quiet mode.
