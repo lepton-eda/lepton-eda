@@ -1,5 +1,5 @@
 # Cascade (http://rfcascade.sourceforge.net)
-# Created with gEDA/gnetlist
+# Created with Lepton EDA netlister
 
 # Initial global defaults
 defaults RIN=50 ROUT=50 RHO=0 
@@ -15,5 +15,5 @@ MX1 G=12 NF=15 IIP3=5
 T1 G=0 NF=0 RIN=50 ROUT=50
 AMP2 G=10 NF=12 IIP3=12
 
-# End of netlist created by gEDA/gnetlist
+# End of netlist created by Lepton EDA netlister
 

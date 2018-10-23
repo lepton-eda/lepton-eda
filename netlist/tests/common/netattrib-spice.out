@@ -1,4 +1,4 @@
-* Spice netlister for gnetlist
+* SPICE Lepton EDA netlister backend
 F1 one unconnected_pin-3 <No valid value attribute found>
 U100 unconnected_pin-2 unconnected_pin-1 one ERROR_INVALID_PIN ERROR_INVALID_PIN ERROR_INVALID_PIN <No valid value attribute found>
 U200 one netattrib ERROR_INVALID_PIN ERROR_INVALID_PIN <No valid value attribute found>

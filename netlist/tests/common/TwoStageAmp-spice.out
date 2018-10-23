@@ -1,4 +1,4 @@
-* Spice netlister for gnetlist
+* SPICE Lepton EDA netlister backend
 A1 <No valid value attribute found>
 A2 <No valid value attribute found>
 A3 .options TEMP=25

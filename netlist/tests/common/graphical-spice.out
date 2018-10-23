@@ -1,4 +1,4 @@
-* Spice netlister for gnetlist
+* SPICE Lepton EDA netlister backend
 R1 0 netx <No valid value attribute found>
 R2 netx nety <No valid value attribute found>
 R3 nety 0 <No valid value attribute found>
