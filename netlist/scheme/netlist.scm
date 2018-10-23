@@ -789,7 +789,7 @@ other limitations imposed by this netlist format.
   (let ((cwd (getcwd)))
     (unless (hash-ref %rc-dirs cwd)
       (chdir (dirname schematic-name))
-      ((@@ (guile-user) parse-rc) "gnetlist" "gafrc")
+      ((@@ (guile-user) parse-rc) "lepton-netlist" "gafrc")
       (hash-set! %rc-dirs cwd cwd)
       (chdir cwd))))
 
@@ -906,7 +906,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (when (gnetlist-option-ref 'version)
     (version))
 
-  ((@@ (guile-user) parse-rc) "gnetlist" "gnetlistrc")
+  ((@@ (guile-user) parse-rc) "lepton-netlist" "gnetlistrc")
   (if (gnetlist-option-ref 'list-backends)
       (gnetlist-backends)
       (let ((files (gnetlist-option-ref '())))
