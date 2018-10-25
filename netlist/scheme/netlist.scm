@@ -963,5 +963,5 @@ Run `~A --list-backends' for a full list of available backends.
                                            backend
                                            (car (program-arguments))))))
                   ;; No backend given on the command line.
-                  (format (current-error-port)
-                          (_ "You gave neither backend to execute nor interactive mode!\n"))))))))
+                  (netlist-error 1
+                                 (_ "You gave neither backend to execute nor interactive mode!\n"))))))))
