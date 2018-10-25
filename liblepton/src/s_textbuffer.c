@@ -29,6 +29,15 @@
 
 #include "libgeda_priv.h"
 
+
+/*!
+ * When loading sch/sym files, print each line of the
+ * file while parsing it. 1 => enabled.
+ */
+int verbose_loading = 0;
+
+
+
 struct _TextBuffer
 {
   const gchar *buffer;
