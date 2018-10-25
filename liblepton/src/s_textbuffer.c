@@ -47,6 +47,9 @@ struct _TextBuffer
   gsize linesize;
 
   gsize offset;
+
+  gsize linenum; /*!< incremented each time s_textbuffer_next_line() is called */
+
 };
 
 #define TEXT_BUFFER_LINE_SIZE 1024
@@ -84,6 +87,8 @@ TextBuffer *s_textbuffer_new (const gchar *data, const gint size)
 
   result->linesize = TEXT_BUFFER_LINE_SIZE;
   result->line = (gchar*) g_malloc(result->linesize);
+
+  result->linenum = 0;
 
   return result;
 }
@@ -197,5 +202,14 @@ s_textbuffer_next (TextBuffer *tb, const gssize count)
 const gchar *
 s_textbuffer_next_line (TextBuffer *tb)
 {
-  return s_textbuffer_next (tb, -1);
+  g_return_val_if_fail (tb != NULL, 0);
+
+  const gchar* line = s_textbuffer_next (tb, -1);
+
+  if (line != NULL)
+  {
+    ++tb->linenum;
+  }
+
+  return line;
 }
