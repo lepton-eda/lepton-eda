@@ -141,12 +141,9 @@ Writing to ~S...
         ;; exit out.
         (display "# Source definition\n")
         (set! first_block (cascade:write-source packages))
-        (if (null? first_block)
-        (begin
+        (when (null? first_block)
           (format (current-error-port) "You must include a source element in your schematic!~%")
-          (primitive-exit 1)
-        )
-        )
+          (primitive-exit 1))
 
         ;; write the components
         (display "\n# Cascaded system\n")
