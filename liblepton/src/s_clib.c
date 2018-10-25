@@ -666,7 +666,7 @@ static void refresh_command (CLibSource *source)
   if (cmdout == NULL) return;
 
   /* Use a TextBuffer to help reading out the lines of the output */
-  tb = s_textbuffer_new (cmdout, -1);
+  tb = s_textbuffer_new (cmdout, -1, "s_clib.c::refresh_command()");
 
   while (1) {
     line = s_textbuffer_next_line (tb);

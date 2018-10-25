@@ -152,7 +152,7 @@ char *s_slot_search_slot(OBJECT *object, OBJECT **return_found);
 void s_slot_update_object(TOPLEVEL *toplevel, OBJECT *object);
 
 /* s_textbuffer.c */
-TextBuffer *s_textbuffer_new (const gchar *data, const gint size);
+TextBuffer *s_textbuffer_new (const gchar *data, const gint size, const gchar* name);
 TextBuffer *s_textbuffer_free (TextBuffer *tb);
 const gchar *s_textbuffer_next (TextBuffer *tb, const gssize count);
 const gchar *s_textbuffer_next_line (TextBuffer *tb);
