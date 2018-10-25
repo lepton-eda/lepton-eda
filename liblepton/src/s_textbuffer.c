@@ -65,9 +65,10 @@ struct _TextBuffer
  *
  *  \param data The address of the buffer to be managed.
  *  \param size The length of the buffer.
+ *  \param name Buffer name to display in verbose output
  *  \retval Pointer to a new TextBuffer struct.
  */
-TextBuffer *s_textbuffer_new (const gchar *data, const gint size)
+TextBuffer *s_textbuffer_new (const gchar *data, const gint size, const gchar* name)
 {
   TextBuffer *result;
   gsize realsize;

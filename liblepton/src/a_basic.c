@@ -115,7 +115,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
     return NULL;
   }
 
-  tb = s_textbuffer_new (buffer, size);
+  tb = s_textbuffer_new (buffer, size, name);
 
   while (1) {
 
