@@ -91,6 +91,13 @@ TextBuffer *s_textbuffer_new (const gchar *data, const gint size, const gchar* n
 
   result->linenum = 0;
 
+  if (verbose_loading)
+  {
+    fprintf (stderr, "\n");
+    fprintf (stderr, "vvvvvvvvvvvvvvvvvvvv s_textbuffer_new(): [%s]\n", name);
+    fprintf (stderr, "\n");
+  }
+
   return result;
 }
 
@@ -112,6 +119,14 @@ TextBuffer *s_textbuffer_free (TextBuffer *tb)
   g_free (tb->line);
   tb->line = NULL;
   g_free (tb);
+
+  if (verbose_loading)
+  {
+    fprintf (stderr, "\n");
+    fprintf (stderr, "^^^^^^^^^^^^^^^^^^^^ s_textbuffer_free()\n");
+    fprintf (stderr, "\n");
+  }
+
   return NULL;
 }
 
@@ -210,6 +225,11 @@ s_textbuffer_next_line (TextBuffer *tb)
   if (line != NULL)
   {
     ++tb->linenum;
+
+    if (verbose_loading)
+    {
+      fprintf (stderr, "%-4lu: %s", tb->linenum, line);
+    }
   }
 
   return line;
