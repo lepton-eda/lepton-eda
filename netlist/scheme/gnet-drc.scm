@@ -30,6 +30,7 @@
 ;; Pin Rules:  List of predicates of 2 variables, uref and pin number
 
 (use-modules (srfi srfi-26)
+             (netlist error)
              (netlist schematic))
 
 (define drc:parseconfig
@@ -44,8 +45,7 @@
      (if (file-exists? filename)
        (drc:parseconfig
          (open-input-file filename))
-       ((message (string-append "ERROR: Attribute file '" filename "' not found.\n"))
-        (primitive-exit 1))))
+       (netlist-error 1 "ERROR: Attribute file ~S not found.\n" filename)))
    "attribs"))
 
 

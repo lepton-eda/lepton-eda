@@ -26,6 +26,7 @@
 
 ;; The following is needed to make guile 1.8.x happy.
 (use-modules (ice-9 rdelim)
+             (netlist error)
              (netlist schematic))
 
 ;; ----------------------------------------------------------------------------
@@ -376,9 +377,7 @@
       (display "\" */\n")
       (if (file-exists? fname)
         (switcap:cat-file (open-input-file fname))
-        ((display (string-append "ERROR: Analysis file '" fname "' not found.\n"))
-         (primitive-exit 1))
-        ))))
+        (netlist-error 1 "ERROR: Analysis file ~S not found.\n" fname)))))
 
 (define switcap:cat-file
   (lambda (ip op)

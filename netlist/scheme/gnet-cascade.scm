@@ -21,6 +21,7 @@
 
 (use-modules (ice-9 match)
              (srfi srfi-1)
+             (netlist error)
              (netlist schematic))
 
 ;; Locate and print out the global defaults if the element exists
@@ -142,8 +143,7 @@ Writing to ~S...
         (display "# Source definition\n")
         (set! first_block (cascade:write-source packages))
         (when (null? first_block)
-          (format (current-error-port) "You must include a source element in your schematic!~%")
-          (primitive-exit 1))
+          (netlist-error 1 "You must include a source element in your schematic!~%"))
 
         ;; write the components
         (display "\n# Cascaded system\n")

@@ -119,7 +119,8 @@
 (use-modules (ice-9 rdelim)
              (ice-9 match)
              (srfi srfi-1)
-             (netlist attrib compare))
+             (netlist attrib compare)
+             (netlist error))
 
 ;; Common functions for the `spice' and `spice-sdb' backends
 (load-from-path "spice-common.scm")
@@ -185,9 +186,7 @@
               model-filename
               (with-input-from-file model-filename read-string)
               model-filename)
-      (begin
-        (message (format #t "ERROR: File ~S not found.\n" model-filename))
-        (primitive-exit 1))))
+      (netlist-error 1 "ERROR: File ~S not found.\n" model-filename)))
 
 ;;; Determines the schematic type, ie. a normal schematic or a
 ;;; .SUBCKT lower level by searching for a "spice-subcircuit-LL"
@@ -252,9 +251,7 @@
 
            (else
             (while (read-line model-file))))))
-      (begin
-        (message (string-append "ERROR: File '" model-filename "' not found.\n"))
-        (primitive-exit 1))))
+      (netlist-error 1 "ERROR: File ~S not found.\n" model-filename)))
 
 
 ;;; Writes PREFIX if the first char of PACKAGE doesn't match it,

@@ -33,6 +33,7 @@
 
 (use-modules (ice-9 rdelim)
              (netlist backend-getopt)
+             (netlist error)
              (netlist schematic)
              (srfi srfi-26))
 
@@ -42,15 +43,14 @@
       (if (file-exists? filename)
           (open-input-file filename)
           (if (backend-option-ref options 'attribs) #f
-              (begin
-                (format (current-error-port)
-"ERROR: Attribute file '~A' not found. You must do one of the following:
+              (netlist-error
+               1
+               "ERROR: Attribute file '~A' not found. You must do one of the following:
          - Create an 'attribs' file
          - Specify an attribute file using -Oattrib_file=<filename>
          - Specify which attributes to include using -Oattribs=attrib1,attrib2,... (no spaces)
 "
-filename)
-                (primitive-exit 1)))))))
+               filename))))))
 
 (define bom2
   (lambda (output-filename)
