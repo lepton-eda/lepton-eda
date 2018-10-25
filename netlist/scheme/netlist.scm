@@ -37,6 +37,7 @@
   #:use-module (lepton version)
   #:use-module (netlist core gettext)
   #:use-module (netlist config)
+  #:use-module (netlist error)
   #:use-module (netlist schematic)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
@@ -108,13 +109,6 @@ There is NO WARRANTY, to the extent permitted by law.
              dotted (string-take commit 7))))
   (primitive-exit 0))
 
-(define (netlist-error exit-code . args)
-  "Formats output to the 'current-error-port' using ARGS and exits
-with EXIT-CODE. ARGS are the same as for 'format' procedure
-excluding the first one (port)."
-  (unless (null? args)
-    (apply format (current-error-port) args))
-  (primitive-exit exit-code))
 
 ;;----------------------------------------------------------------------
 ;; The below functions added by SDB in Sept 2003 to support command-line flag
