@@ -578,9 +578,9 @@ PACKAGE."
                  (alias (mapfn (car nets)))
                  )
 
-            (if (hash-ref gnetlist:net-hash-reverse alias)
-                (begin (format (current-error-port)
-                               (_ "There is a net name collision!
+            (when (hash-ref gnetlist:net-hash-reverse alias)
+              (format (current-error-port)
+                      (_ "There is a net name collision!
 The net called \"~A\" will be remapped
 to \"~A\" which is already used
 by the net called \"~A\".
@@ -588,9 +588,10 @@ This may be caused by netname attributes colliding with other netnames
 due to truncation of the name, case insensitivity, or
 other limitations imposed by this netlist format.
 ")
-                               net
-                               alias
-                               (hash-ref gnetlist:net-hash-reverse alias)) (primitive-exit 1) ))
+                      net
+                      alias
+                      (hash-ref gnetlist:net-hash-reverse alias))
+              (primitive-exit 1))
             (hash-create-handle! gnetlist:net-hash-forward net   alias)
             (hash-create-handle! gnetlist:net-hash-reverse alias net  )
             (gnetlist:build-net-aliases mapfn (cdr nets))
@@ -615,19 +616,19 @@ other limitations imposed by this netlist format.
                  (alias (mapfn (car refdeses)))
                  )
 
-            (if (hash-ref gnetlist:refdes-hash-reverse alias)
-                (begin
-                 (format (current-error-port)
-                         (_ "There is a refdes name collision!
+            (when (hash-ref gnetlist:refdes-hash-reverse alias)
+              (format (current-error-port)
+                      (_ "There is a refdes name collision!
 The refdes \"~A\" will be mapped\nto \"~A\" which is already used
 by \"~A\".
 This may be caused by refdes attributes colliding with others
 due to truncation of the refdes, case insensitivity, or
 other limitations imposed by this netlist format.
 ")
-                         refdes
-                         alias
-                         (hash-ref gnetlist:refdes-hash-reverse alias)) (primitive-exit 1) ))
+                      refdes
+                      alias
+                      (hash-ref gnetlist:refdes-hash-reverse alias))
+              (primitive-exit 1))
             (hash-create-handle! gnetlist:refdes-hash-forward refdes alias)
             (hash-create-handle! gnetlist:refdes-hash-reverse alias  refdes  )
             (gnetlist:build-refdes-aliases mapfn (cdr refdeses))
