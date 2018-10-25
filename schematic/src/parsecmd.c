@@ -145,6 +145,7 @@ parse_commandline(int argc, char *argv[])
     switch (ch) {
       case 'v':
         verbose_mode = TRUE;
+        verbose_loading = TRUE; /* defined in liblepton: globals.h s_textbuffer.c */
         break;
 
       case 'q':
