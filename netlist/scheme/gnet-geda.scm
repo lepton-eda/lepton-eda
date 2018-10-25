@@ -34,8 +34,8 @@
 (define (geda:write-top-header)
   (format #t "START header
 
-Lepton EDA netlist format
-Created specifically for testing of lepton-netlist
+gEDA's netlist format
+(Initially created for testing of gnetlist)
 
 END header
 
