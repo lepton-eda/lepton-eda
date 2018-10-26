@@ -771,7 +771,15 @@ x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename)
          GTK_DIALOG_DESTROY_WITH_PARENT,
          GTK_MESSAGE_ERROR,
          GTK_BUTTONS_CLOSE,
-         _("<b>An error occurred while loading the requested file.</b>\n\nLoading from '%1$s' failed: %2$s. The gschem log may contain more information."),
+         _("<b>An error occurred while loading the requested file.</b>"
+           "\n\n"
+           "Loading from '%1$s' failed. Error message:"
+           "\n\n"
+           "%2$s."
+           "\n\n"
+           "The lepton-schematic log may contain more information.\n"
+           "You may also launch lepton-schematic with --verbose command"
+           " line switch and monitor program's output in terminal window."),
          fn, err->message);
       gtk_window_set_title (GTK_WINDOW (dialog), _("Failed to load file"));
       gtk_dialog_run (GTK_DIALOG (dialog));
