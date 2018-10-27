@@ -474,20 +474,13 @@
 ;; Example of all-nets: (net1 net2 net3 net4)
 (define (drc2:check-single-nets nets)
   (define (check-net netname)
-    (let ((directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
+    (let ((connections (get-all-connections netname)))
+      (and (= (length connections) 0)
+           (drc2:error "Net '~A' has no connections." netname))
+      (and (= (length connections) 1)
+           (drc2:error "Net '~A' is connected to only one pin: ~A."
                        netname
-                       "device=DRC_Directive"
-                       "value"))
-          (connections (get-all-connections netname)))
-      ;; If one of the directives is NoConnection,
-      ;; then it shouldn't be checked.
-      (when (not (member "NoConnection" directives))
-        (and (= (length connections) 0)
-             (drc2:error "Net '~A' has no connections." netname))
-        (and (= (length connections) 1)
-             (drc2:error "Net '~A' is connected to only one pin: ~A."
-                         netname
-                         (pins-of-type->string 'all connections))))))
+                       (pins-of-type->string 'all connections)))))
 
   (display "Checking nets with only one connection...\n")
   (for-each check-net nets)
@@ -668,7 +661,6 @@
                                               netname))
       (and (not (defined? 'dont-check-not-driven-nets))
            (not (member "DontCheckIfDriven" directives))
-           (not (member "NoConnection" directives))
            (not (drc2:check-if-net-is-driven pintype-count 0))
            (drc2:error "Net ~A is not driven." netname))))
   (display "Checking type of pins connected to a net...\n")
