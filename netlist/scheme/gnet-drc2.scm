@@ -747,6 +747,7 @@
 ;;; Write my special testing netlist format
 (define (drc2 output-filename)
   (let ((nets (schematic-nets toplevel-schematic))
+        (nc-nets (schematic-nc-nets toplevel-schematic))
         (non-unique-packages (schematic-non-unique-packages toplevel-schematic))
         (packages (schematic-packages toplevel-schematic))
         (netlist (schematic-netlist toplevel-schematic)))
@@ -769,7 +770,7 @@
 
     ;; Check for NoConnection nets with more than one pin connected.
     (not-defined? 'dont-check-connected-noconnects
-                  => (drc2:check-connected-noconnects (schematic-nc-nets toplevel-schematic)))
+                  => (drc2:check-connected-noconnects nc-nets))
 
     ;; Check nets with only one connection
     (not-defined? 'dont-check-one-connection-nets
