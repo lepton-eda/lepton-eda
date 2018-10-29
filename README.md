@@ -14,7 +14,7 @@ design, schematic capture, simulation, prototyping, and
 production. Currently, the gEDA project offers a mature suite of free
 software applications for electronics design, including schematic
 capture, attribute management, bill of materials (BOM) generation,
-netlisting into over 20 netlist formats, analog and digital
+netlisting into over 30 netlist formats, analog and digital
 simulation, and printed circuit board (PCB) layout.
 
 The gEDA project was started because of the lack of free EDA tools for
@@ -242,6 +242,12 @@ Getting help
 There are several ways to get help with installing and using Lepton
 and the rest of the gEDA tools:
 
+- Chat with Lepton developers and users at
+  [gitter.im](https://gitter.im/Lepton-EDA/Lobby).
+  You can sign in there using your Twitter, GitHub or GitLab account
+  (no registration is required to read the messages posted there).
+  This is probably the fastest way to get in touch with us.
+
 - The gEDA website <http://www.geda-project.org> has more extensive
   information on the gEDA tools, and links to some successful
   projects which use gEDA.
@@ -254,8 +260,10 @@ and the rest of the gEDA tools:
 - If the resources above didn't help you resolve your problem, or you
   are having a *design* problem that you want to get help with,
   consider subscribing to and posting your question to the
-  `geda-user` mailing list.
-  <http://wiki.geda-project.org/geda:mailinglists>
+  `geda-user` mailing list
+  (<http://wiki.geda-project.org/geda:mailinglists>).
+  You can also [browse](http://www.delorie.com/archives/browse.cgi?p=geda-user)
+  and [search](http://www.delorie.com/archives) the mailing list archives.
 
 - If you have discovered a bug, have a feature request, or have
   written a patch to Lepton, please create an item on the lepton-eda
