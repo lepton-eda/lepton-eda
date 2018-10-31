@@ -134,18 +134,6 @@
 (define-action-public (&edit-object-properties #:label (_ "Edit Object Properties") #:icon "gtk-properties")
   (%edit-object-properties))
 
-(define-action-public (&edit-color #:label (_ "Edit Color") #:icon "gtk-select-color")
-  (%edit-color))
-
-(define-action-public (&edit-linetype #:label (_ "Edit Line Width & Type"))
-  (%edit-linetype))
-
-(define-action-public (&edit-filltype #:label (_ "Edit Fill Type"))
-  (%edit-filltype))
-
-(define-action-public (&edit-pin-type #:label (_ "Edit Pin Type"))
-  (%edit-pin-type))
-
 (define-action-public (&edit-translate #:label (_ "Translate Symbol"))
   (%edit-translate))
 

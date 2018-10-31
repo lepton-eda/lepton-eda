@@ -608,24 +608,6 @@ DEFINE_I_CALLBACK(edit_edit)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_pin_type)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button (w_current, i_callback_edit_pin_type, _("Edit pin type"));
-
-  x_dialog_edit_pin_type (w_current,
-                          geda_list_get_glist (gschem_toplevel_get_toplevel (w_current)->
-                                                 page_current->selection_list));
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 DEFINE_I_CALLBACK(edit_text)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
@@ -667,24 +649,6 @@ DEFINE_I_CALLBACK(edit_object_properties)
   g_return_if_fail (w_current != NULL);
 
   x_widgets_show_object_properties (w_current);
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(edit_color)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button(w_current, i_callback_edit_color, _("Color"));
-
-  /* dialogs have been merged */
-  line_type_dialog(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1082,36 +1046,6 @@ DEFINE_I_CALLBACK(edit_autonumber_text)
     return;
 
   autonumber_text_dialog(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(edit_linetype)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  /* dialogs have been merged */
-  line_type_dialog(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(edit_filltype)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  /* dialogs have been merged */
-  line_type_dialog(w_current);
 }
 
 /*! \section view-menu View Menu Callback Functions */
