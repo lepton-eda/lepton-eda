@@ -144,6 +144,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "edit-rotate-90",               0, 0, 0, (SCM (*) ()) g_keys_edit_rotate_90 },
   { "edit-mirror",                  0, 0, 0, (SCM (*) ()) g_keys_edit_mirror },
   { "edit-slot",                    0, 0, 0, (SCM (*) ()) g_keys_edit_slot },
+  { "edit-object-properties",       0, 0, 0, (SCM (*) ()) g_keys_edit_object_properties },
   { "edit-color",                   0, 0, 0, (SCM (*) ()) g_keys_edit_color },
   { "edit-edit",                    0, 0, 0, (SCM (*) ()) g_keys_edit_edit },
   { "edit-text",                    0, 0, 0, (SCM (*) ()) g_keys_edit_text },

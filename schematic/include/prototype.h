@@ -57,6 +57,7 @@ SCM g_keys_edit_delete(SCM rest);
 SCM g_keys_edit_rotate_90(SCM rest);
 SCM g_keys_edit_mirror(SCM rest);
 SCM g_keys_edit_slot(SCM rest);
+SCM g_keys_edit_object_properties(SCM rest);
 SCM g_keys_edit_color(SCM rest);
 SCM g_keys_edit_edit(SCM rest);
 SCM g_keys_edit_pin_type(SCM rest);
@@ -282,6 +283,7 @@ void i_callback_edit_edit(gpointer data, guint callback_action, GtkWidget *widge
 void i_callback_edit_pin_type(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_text(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_slot(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_object_properties(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_color(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_rotate_90(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_mirror(gpointer data, guint callback_action, GtkWidget *widget);

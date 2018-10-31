@@ -131,6 +131,9 @@
 (define-action-public (&edit-slot #:label (_ "Choose Slot"))
   (%edit-slot))
 
+(define-action-public (&edit-object-properties #:label (_ "Edit Object Properties") #:icon "gtk-properties")
+  (%edit-object-properties))
+
 (define-action-public (&edit-color #:label (_ "Edit Color") #:icon "gtk-select-color")
   (%edit-color))
 

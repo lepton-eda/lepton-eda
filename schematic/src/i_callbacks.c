@@ -657,6 +657,19 @@ DEFINE_I_CALLBACK(edit_slot)
   }
 }
 
+/*! \brief Show "object properties" widget
+ *
+ */
+DEFINE_I_CALLBACK(edit_object_properties)
+{
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+
+  g_return_if_fail (w_current != NULL);
+
+  x_widgets_show_object_properties (w_current);
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -1132,7 +1145,6 @@ DEFINE_I_CALLBACK(view_status)
  */
 DEFINE_I_CALLBACK(view_find_text_state)
 {
-  gboolean visible;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
