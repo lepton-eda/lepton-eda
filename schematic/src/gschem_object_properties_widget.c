@@ -117,34 +117,6 @@ gschem_object_properties_widget_new (GschemToplevel *w_current)
 
 
 
-/*! \brief Open the dialog box to edit fill properties
- *
- *  \par Function Description
- *  This function creates or raises the modal text entry dialog
- *
- *  \param [in] w_current The gschem toplevel
- */
-void
-line_type_dialog (GschemToplevel *w_current)
-{
-  x_widgets_show_object_properties (w_current);
-}
-
-
-
-/*! \brief Open the dialog box to edit pin type
- *
- *  \param [in] w_current The gschem toplevel
- *  \param [in] obj_list unused
- */
-void
-x_dialog_edit_pin_type (GschemToplevel *w_current, const GList *obj_list)
-{
-  x_widgets_show_object_properties (w_current);
-}
-
-
-
 /*! \private
  *  \brief Initialize GschemObjectPropertiesWidget class
  *
