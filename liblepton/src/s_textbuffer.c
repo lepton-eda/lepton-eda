@@ -201,6 +201,7 @@ s_textbuffer_next (TextBuffer *tb, const gssize count)
 
   return tb->line;
 }
+
 /*! \brief Fetch the next line from a text buffer
  *
  *  \par Function description
@@ -234,3 +235,19 @@ s_textbuffer_next_line (TextBuffer *tb)
 
   return line;
 }
+
+
+
+/*! \brief Get current line number of a text buffer
+ *
+ *  \param  tb TextBuffer.
+ *  \retval    Current line number.
+ */
+gsize
+s_textbuffer_linenum (TextBuffer* tb)
+{
+  g_return_val_if_fail (tb != NULL, 0);
+
+  return tb->linenum;
+}
+
