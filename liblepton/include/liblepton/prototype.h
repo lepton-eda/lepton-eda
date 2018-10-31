@@ -156,5 +156,6 @@ TextBuffer *s_textbuffer_new (const gchar *data, const gint size, const gchar* n
 TextBuffer *s_textbuffer_free (TextBuffer *tb);
 const gchar *s_textbuffer_next (TextBuffer *tb, const gssize count);
 const gchar *s_textbuffer_next_line (TextBuffer *tb);
+gsize s_textbuffer_linenum (TextBuffer* tb);
 
 G_END_DECLS
