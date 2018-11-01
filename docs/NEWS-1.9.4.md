@@ -463,4 +463,4 @@ Please check `info geda-scheme` for full details.
 ----------------------------------------------------------------
 
 Please see [NEWS-1.9.2.txt](NEWS-1.9.2.txt) for info on
-pre-1.9.3 changes.
+pre-1.9.3 changes (before *Lepton EDA* has forked from *geda-gaf*).
