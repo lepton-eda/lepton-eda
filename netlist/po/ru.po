@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gnetlist\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-08-12 12:34+0300\n"
+"POT-Creation-Date: 2018-11-01 21:43+0300\n"
 "PO-Revision-Date: 2014-05-20 08:55+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA Developers\n"
@@ -18,29 +18,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: netlist/scheme/netlist.scm:86
-#, fuzzy, scheme-format
-msgid ""
-"gEDA/gnetlist version ~A~A.~A\n"
-"gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
-"details.\n"
-"This is free software, and you are welcome to redistribute it under certain\n"
-"conditions; please see the COPYING file for more details.\n"
+#: netlist/scheme/netlist.scm:87
+#, scheme-format
+msgid "Lepton EDA/lepton-netlist version ~A~A.~A git: ~A\n"
 msgstr ""
-"gEDA/gnetlist версии %s%s.%s\n"
-"gEDA/gnetlist поставляется БЕЗ КАКИХ БЫ ТО НИ БЫЛО ГАРАНТИЙ; подробности см. "
-"в файле COPYING.\n"
-"Это свободное программное обеспечение, и его можно распространять при "
-"определённых\n"
-"условиях. Подробности см. в файле COPYING.\n"
-"\n"
 
-#: netlist/scheme/netlist.scm:102
+#: netlist/scheme/netlist.scm:101
 #, fuzzy, scheme-format
 msgid ""
-"Lepton EDA ~A (g~A)\n"
+"Lepton EDA ~A (git: ~A)\n"
 "Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017 Lepton EDA developers\n"
+"Copyright (C) 2017-2018 Lepton EDA Contributors\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the Lepton EDA distribution.\n"
@@ -70,7 +58,7 @@ msgstr ""
 msgid "Couldn't wrap string  at requested position\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:575
+#: netlist/scheme/netlist.scm:585
 #, scheme-format
 msgid ""
 "There is a net name collision!\n"
@@ -82,7 +70,7 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:613
+#: netlist/scheme/netlist.scm:622
 #, scheme-format
 msgid ""
 "There is a refdes name collision!\n"
@@ -94,30 +82,22 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:791
+#: netlist/scheme/netlist.scm:800
 #, scheme-format
 msgid "Loading schematic ~S\n"
 msgstr "Загрузка схемы ~S\n"
 
-#: netlist/scheme/netlist.scm:815
+#: netlist/scheme/netlist.scm:824
 #, scheme-format
 msgid "Can't open directory ~S.\n"
 msgstr "Не удалось открыть каталог ~S.\n"
 
-#: netlist/scheme/netlist.scm:819
-msgid ""
-"List of available backends: \n"
-"\n"
-msgstr ""
-"Список доступных драйверов: \n"
-"\n"
-
-#: netlist/scheme/netlist.scm:827
+#: netlist/scheme/netlist.scm:835
 #, fuzzy, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
 "\n"
-"Generate a netlist from one or more gEDA schematic FILEs.\n"
+"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
 "\n"
 "General options:\n"
 "  -q              Quiet mode.\n"
@@ -131,6 +111,7 @@ msgid ""
 "  -c EXPR         Evaluate Scheme expression at startup.\n"
 "  -i              Enter interactive Scheme REPL after loading.\n"
 "  --list-backends Print a list of available netlist backends.\n"
+"  -w              Do not display warning about missing configuration files.\n"
 "  -h, --help      Help; this message.\n"
 "  -V, --version   Show version information.\n"
 "  --              Treat all remaining arguments as filenames.\n"
@@ -161,7 +142,7 @@ msgstr ""
 "Отчёты об ошибках отправляйте по адресу <https://bugs.launchpad.net/geda>\n"
 "Домашняя страница gEDA/gaf: <http://www.geda-project.org/>\n"
 
-#: netlist/scheme/netlist.scm:871
+#: netlist/scheme/netlist.scm:880
 #, fuzzy, scheme-format
 msgid ""
 "\n"
@@ -173,7 +154,7 @@ msgstr ""
 "Обнаружена ошибка; имя тега\n"
 "        "
 
-#: netlist/scheme/netlist.scm:906
+#: netlist/scheme/netlist.scm:915
 #, fuzzy, scheme-format
 msgid ""
 "No schematic files specified for processing.\n"
@@ -183,7 +164,7 @@ msgstr ""
 "\n"
 "Подробности см. в выводе команды «~A --help».\n"
 
-#: netlist/scheme/netlist.scm:943
+#: netlist/scheme/netlist.scm:953
 #, scheme-format
 msgid ""
 "Could not find backend `~A' in load path.\n"
@@ -195,36 +176,36 @@ msgstr ""
 "Список всех доступных драйверов можно узнать по команде «~A --list-"
 "backends».\n"
 
-#: netlist/scheme/netlist.scm:951
+#: netlist/scheme/netlist.scm:961
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
 
-#: netlist/scheme/gnetlist/hierarchy.scm:106
+#: netlist/scheme/netlist/hierarchy.scm:106
 #, fuzzy, scheme-format
 msgid "Found duplicate net name, renaming ~A to ~A"
 msgstr "Обнаружено ещё одно имя для соединения «%s», переименование в «%s»\n"
 
-#: netlist/scheme/gnetlist/hierarchy.scm:189
+#: netlist/scheme/netlist/hierarchy.scm:189
 #, scheme-format
 msgid "Source schematic of the component ~S has no port with \"refdes=~A\"."
 msgstr ""
 
-#: netlist/scheme/gnetlist/hierarchy.scm:193
+#: netlist/scheme/netlist/hierarchy.scm:193
 #, scheme-format
 msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
 msgstr ""
 
-#: netlist/scheme/gnetlist/net.scm:77
+#: netlist/scheme/netlist/net.scm:77
 #, scheme-format
 msgid "Invalid attribute (missing ':'): net=~A"
 msgstr ""
 
-#: netlist/scheme/gnetlist/net.scm:133
+#: netlist/scheme/netlist/net.scm:133
 #, scheme-format
 msgid "Attached net ~A:~A overrides inherited net ~A:~A"
 msgstr ""
 
-#: netlist/scheme/gnetlist/rename.scm:98
+#: netlist/scheme/netlist/rename.scm:98
 #, fuzzy, scheme-format
 msgid ""
 "WARNING: Trying to rename something twice:\n"
@@ -235,6 +216,30 @@ msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: Попытка двойного переименования:\n"
 "\t%s и %s\n"
 "оба являются именами источника и назначения\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "gEDA/gnetlist version ~A~A.~A\n"
+#~ "gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
+#~ "details.\n"
+#~ "This is free software, and you are welcome to redistribute it under "
+#~ "certain\n"
+#~ "conditions; please see the COPYING file for more details.\n"
+#~ msgstr ""
+#~ "gEDA/gnetlist версии %s%s.%s\n"
+#~ "gEDA/gnetlist поставляется БЕЗ КАКИХ БЫ ТО НИ БЫЛО ГАРАНТИЙ; подробности "
+#~ "см. в файле COPYING.\n"
+#~ "Это свободное программное обеспечение, и его можно распространять при "
+#~ "определённых\n"
+#~ "условиях. Подробности см. в файле COPYING.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "List of available backends: \n"
+#~ "\n"
+#~ msgstr ""
+#~ "Список доступных драйверов: \n"
+#~ "\n"
 
 #~ msgid ""
 #~ "This is the MINGW32 port.\n"

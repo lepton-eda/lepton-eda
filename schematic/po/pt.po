@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-08-12 12:30+0300\n"
+"POT-Creation-Date: 2018-11-01 21:44+0300\n"
 "PO-Revision-Date: 2012-01-27 14:23+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -31,93 +31,93 @@ msgstr ""
 msgid "Invalid text name/value visibility ~A."
 msgstr ""
 
-#: schematic/src/g_rc.c:106
+#: schematic/src/g_rc.c:107
 #, fuzzy, c-format
 msgid "You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"
 msgstr "gEDA/gschem versão %s%s.%s\n"
 
-#: schematic/src/g_rc.c:110
+#: schematic/src/g_rc.c:111
 #, c-format
 msgid ""
 "but you have a version [%1$s] gschemrc file:\n"
 "[%2$s]\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:113
+#: schematic/src/g_rc.c:114
 #, c-format
 msgid "Please be sure that you have the latest rc file.\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:239
+#: schematic/src/g_rc.c:240
 #, fuzzy, c-format
 msgid "Invalid size [%1$d] passed to text-size\n"
 msgstr "Tamanho inválido [%d] passado a tamanho de texto\n"
 
-#: schematic/src/g_rc.c:282
+#: schematic/src/g_rc.c:283
 #, fuzzy, c-format
 msgid "Invalid size [%1$d] passed to snap-size\n"
 msgstr "Tamanho inválido [%d] passado a função snap-size\n"
 
-#: schematic/src/g_rc.c:618
+#: schematic/src/g_rc.c:620
 #, fuzzy, c-format
 msgid "Invalid num levels [%1$d] passed to undo-levels\n"
 msgstr "Numero de níveis inválidos [%d] passados a função undo-levels\n"
 
-#: schematic/src/g_rc.c:829
+#: schematic/src/g_rc.c:831
 #, fuzzy, c-format
 msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
 msgstr "Tamanho inválido [%d] passado a função bus-ripper-size\n"
 
-#: schematic/src/g_rc.c:929
+#: schematic/src/g_rc.c:931
 #, fuzzy, c-format
 msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
 msgstr "Tamanho de ponto inválido [%d] passado a função dots-grid-dot-size\n"
 
-#: schematic/src/g_rc.c:970
+#: schematic/src/g_rc.c:972
 #, fuzzy, c-format
 msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
 msgstr ""
 "Espaçamento de pixel inválido [%d] passado a função dots-grid-fixed-"
 "threshold\n"
 
-#: schematic/src/g_rc.c:996
+#: schematic/src/g_rc.c:998
 #, fuzzy, c-format
 msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
 msgstr ""
 "Espaçamento de pixel inválido [%d] passado a função mesh-grid-display-"
 "threshold\n"
 
-#: schematic/src/g_rc.c:1021
+#: schematic/src/g_rc.c:1023
 #, fuzzy, c-format
 msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
 msgstr "Deslocamento inválido [%d] passado a função add-attribute-offset\n"
 
-#: schematic/src/g_rc.c:1045
+#: schematic/src/g_rc.c:1047
 #, fuzzy, c-format
 msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
 msgstr "Numero de segundos inválido [%d] passado a função auto-save-interval\n"
 
-#: schematic/src/g_rc.c:1069
+#: schematic/src/g_rc.c:1071
 #, fuzzy, c-format
 msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
 msgstr "Ganho inválido [%d] passado a função mousepan-gain\n"
 
-#: schematic/src/g_rc.c:1092
+#: schematic/src/g_rc.c:1094
 #, fuzzy, c-format
 msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
 msgstr "Ganho inválido [%d] passado a função keyboardpan-gain\n"
 
-#: schematic/src/g_rc.c:1116
+#: schematic/src/g_rc.c:1118
 #, fuzzy, c-format
 msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
 msgstr "Número de pixeis inválido [%d] passado a função select-slack-pixels\n"
 
-#: schematic/src/g_rc.c:1142
+#: schematic/src/g_rc.c:1144
 #, fuzzy, c-format
 msgid "Invalid gain [%1$d] passed to zoom-gain\n"
 msgstr "Ganho inválido [%d] passado a função zoom-gain\n"
 
-#: schematic/src/g_rc.c:1167
+#: schematic/src/g_rc.c:1169
 #, fuzzy, c-format
 msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
 msgstr "Numero de passos inválido [%d] passado a função scrollpan-steps\n"
@@ -394,7 +394,7 @@ msgstr "Acção"
 msgid "Keystroke(s)"
 msgstr "Premir de tecla(s)"
 
-#: schematic/src/gschem_log_widget.c:175
+#: schematic/src/gschem_log_widget.c:178
 msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
 msgstr "** UTF-8 inválido na mensagem de registo. Veja stderr ou gschem.log.\n"
 
@@ -713,7 +713,7 @@ msgstr "Modo de Rotação"
 msgid "Modify Mode"
 msgstr "Modo de Cópia"
 
-#: schematic/src/i_basic.c:92 schematic/src/x_menus.c:47
+#: schematic/src/i_basic.c:92 schematic/src/x_menus.c:50
 #: schematic/scheme/gschem/builtins.scm:212
 msgid "Zoom Box"
 msgstr "Zona de Ampliação"
@@ -775,7 +775,7 @@ msgstr "Tudo Gravado"
 msgid "Closing Window"
 msgstr "A Fechar janela\n"
 
-#: schematic/src/i_callbacks.c:504 schematic/src/x_menus.c:53
+#: schematic/src/i_callbacks.c:504 schematic/src/x_menus.c:56
 #: schematic/scheme/gschem/builtins.scm:176
 msgid "Copy"
 msgstr "Copiar"
@@ -789,11 +789,11 @@ msgstr "Seleccione objectos primeiro"
 msgid "Multiple Copy"
 msgstr "Cópia Múltipla"
 
-#: schematic/src/i_callbacks.c:554 schematic/src/x_menus.c:54
+#: schematic/src/i_callbacks.c:554 schematic/src/x_menus.c:57
 msgid "Move"
 msgstr "Mover"
 
-#: schematic/src/i_callbacks.c:578 schematic/src/x_menus.c:55
+#: schematic/src/i_callbacks.c:578 schematic/src/x_menus.c:58
 #: schematic/src/x_multiattrib.c:1655 schematic/scheme/gschem/builtins.scm:107
 msgid "Delete"
 msgstr "Eliminar"
@@ -1118,46 +1118,46 @@ msgid_plural "Delete %1$u locked objects?"
 msgstr[0] "Objectos seleccionados"
 msgstr[1] "Objectos seleccionados"
 
-#: schematic/src/o_misc.c:54
+#: schematic/src/o_misc.c:55
 #, c-format
 msgid "Got an unexpected NULL in o_edit\n"
 msgstr "Foi obtido um NULL inesperado em o_edit\n"
 
-#: schematic/src/o_misc.c:314
+#: schematic/src/o_misc.c:315
 #, fuzzy
 msgid "Hidden text is now visible"
 msgstr "Texto escondido é agora visível\n"
 
-#: schematic/src/o_misc.c:316
+#: schematic/src/o_misc.c:317
 #, fuzzy
 msgid "Hidden text is now invisible"
 msgstr "Texto escondido é agora invisível\n"
 
-#: schematic/src/o_misc.c:424
+#: schematic/src/o_misc.c:425
 #, fuzzy, c-format
 msgid "Could not find symbol [%1$s] in library. Update failed."
 msgstr ""
 "Não foi possível encontrar símbolo [%s] na biblioteca. Actualização falhou.\n"
 
-#: schematic/src/o_misc.c:540
+#: schematic/src/o_misc.c:541
 #, fuzzy, c-format
 msgid "o_autosave_backups: Can't get the real filename of %1$s."
 msgstr "o_autosave_backups: Não foi possível obter o verdadeiro nome de %s."
 
-#: schematic/src/o_misc.c:584
+#: schematic/src/o_misc.c:585
 #, fuzzy, c-format
 msgid "Could NOT set previous backup file [%1$s] read-write"
 msgstr ""
 "NÃO foi possível definir o ficheiro de salvaguarda anterior [%s] como "
 "leitura e escrita\n"
 
-#: schematic/src/o_misc.c:604
+#: schematic/src/o_misc.c:605
 #, fuzzy, c-format
 msgid "Could NOT set backup file [%1$s] readonly"
 msgstr ""
 "Não foi possível definir o ficheiro de salvaguarda [%s] apenas como leitura\n"
 
-#: schematic/src/o_misc.c:609
+#: schematic/src/o_misc.c:610
 #, fuzzy, c-format
 msgid "Could NOT save backup file [%1$s]"
 msgstr "Não foi possível guardar ficheiro de salvaguarda [%s]\n"
@@ -1247,7 +1247,7 @@ msgstr "Novo numero de elemento fora de alcance\n"
 msgid "Undo/Redo disabled in rc file"
 msgstr "Desfazer/Refazer não activo no ficheiro rc\n"
 
-#: schematic/src/parsecmd.c:76
+#: schematic/src/parsecmd.c:77
 #, c-format
 msgid ""
 "Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
@@ -1272,7 +1272,7 @@ msgid ""
 "gEDA/gaf homepage: <http://www.geda-project.org/>\n"
 msgstr ""
 
-#: schematic/src/parsecmd.c:109
+#: schematic/src/parsecmd.c:110
 #, c-format
 msgid ""
 "Lepton EDA %1$s (git: %2$.7s)\n"
@@ -1353,7 +1353,7 @@ msgstr "Ligações"
 msgid "Replace existing attributes"
 msgstr "Substituir atributos existentes"
 
-#: schematic/src/x_autonumber.c:411
+#: schematic/src/x_autonumber.c:412
 #, fuzzy
 msgid ""
 "slotted object without slot attribute may cause problems when autonumbering "
@@ -1362,7 +1362,7 @@ msgstr ""
 "Objecto elementar atribuição de elemento pode causar problemas durante auto-"
 "numeração de elementos\n"
 
-#: schematic/src/x_autonumber.c:426
+#: schematic/src/x_autonumber.c:427
 #, fuzzy, c-format
 msgid ""
 "duplicate slot may cause problems: [symbolname=%1$s, number=%2$d, slot=%3$d]"
@@ -1370,37 +1370,37 @@ msgstr ""
 "Duplicação de elementos pode causar problemas: [symbolname=%s, number=%d, "
 "slot=%d]\n"
 
-#: schematic/src/x_autonumber.c:674
+#: schematic/src/x_autonumber.c:675
 #, fuzzy
 msgid "No searchstring given in autonumber text."
 msgstr "Nenhuma frase de procura dada no texto de auto-numeração.\n"
 
-#: schematic/src/x_autonumber.c:727
+#: schematic/src/x_autonumber.c:728
 #, fuzzy
 msgid "No '*' or '?' given at the end of the autonumber text."
 msgstr "Sem '*' ou '?' dado no fim do texto de auto-numeração.\n"
 
-#: schematic/src/x_autonumber.c:872
+#: schematic/src/x_autonumber.c:873
 msgid "Diagonal"
 msgstr "Diagonal"
 
-#: schematic/src/x_autonumber.c:873
+#: schematic/src/x_autonumber.c:874
 msgid "Top to bottom"
 msgstr "De cima para baixo"
 
-#: schematic/src/x_autonumber.c:874
+#: schematic/src/x_autonumber.c:875
 msgid "Bottom to top"
 msgstr "De baixo para cima"
 
-#: schematic/src/x_autonumber.c:875
+#: schematic/src/x_autonumber.c:876
 msgid "Left to right"
 msgstr "Da esquerda para a direita"
 
-#: schematic/src/x_autonumber.c:876
+#: schematic/src/x_autonumber.c:877
 msgid "Right to left"
 msgstr "Da direita para a esquerda"
 
-#: schematic/src/x_autonumber.c:877
+#: schematic/src/x_autonumber.c:878
 msgid "File order"
 msgstr "Ordem de ficheiro"
 
@@ -1452,11 +1452,11 @@ msgstr "Numero inicial:"
 msgid "Sort order:"
 msgstr "Ordenação:"
 
-#: schematic/src/x_autonumber.c:1360
+#: schematic/src/x_autonumber.c:1371
 msgid "Remove numbers"
 msgstr "Retirar números"
 
-#: schematic/src/x_autonumber.c:1364
+#: schematic/src/x_autonumber.c:1375
 msgid "Automatic slotting"
 msgstr "Atribuição automática"
 
@@ -1796,81 +1796,81 @@ msgstr "Centrado"
 msgid "Phantom"
 msgstr "Fantasma"
 
-#: schematic/src/x_menus.c:39 schematic/scheme/gschem/builtins.scm:275
+#: schematic/src/x_menus.c:42 schematic/scheme/gschem/builtins.scm:275
 #, fuzzy
 msgid "Add Net"
 msgstr "/Adicionar Ligação"
 
-#: schematic/src/x_menus.c:40 schematic/src/x_multiattrib.c:2186
+#: schematic/src/x_menus.c:43 schematic/src/x_multiattrib.c:2186
 #: schematic/scheme/gschem/builtins.scm:272
 msgid "Add Attribute"
 msgstr "Adicionar Atributo"
 
-#: schematic/src/x_menus.c:41 schematic/scheme/gschem/builtins.scm:269
+#: schematic/src/x_menus.c:44 schematic/scheme/gschem/builtins.scm:269
 #, fuzzy
 msgid "Add Component"
 msgstr "/Adicionar Componente..."
 
-#: schematic/src/x_menus.c:42 schematic/scheme/gschem/builtins.scm:278
+#: schematic/src/x_menus.c:45 schematic/scheme/gschem/builtins.scm:278
 #, fuzzy
 msgid "Add Bus"
 msgstr "/Adicionar Barramento"
 
-#: schematic/src/x_menus.c:43 schematic/scheme/gschem/builtins.scm:281
+#: schematic/src/x_menus.c:46 schematic/scheme/gschem/builtins.scm:281
 #, fuzzy
 msgid "Add Text"
 msgstr "/Adicionar Texto"
 
-#: schematic/src/x_menus.c:45 schematic/scheme/gschem/builtins.scm:218
+#: schematic/src/x_menus.c:48 schematic/scheme/gschem/builtins.scm:218
 #, fuzzy
 msgid "Zoom In"
 msgstr "/Ampliar"
 
-#: schematic/src/x_menus.c:46 schematic/scheme/gschem/builtins.scm:221
+#: schematic/src/x_menus.c:49 schematic/scheme/gschem/builtins.scm:221
 #, fuzzy
 msgid "Zoom Out"
 msgstr "/Diminuir"
 
-#: schematic/src/x_menus.c:48 schematic/scheme/gschem/builtins.scm:215
+#: schematic/src/x_menus.c:51 schematic/scheme/gschem/builtins.scm:215
 #, fuzzy
 msgid "Zoom Extents"
 msgstr "/Mostrar Tudo"
 
-#: schematic/src/x_menus.c:50 schematic/src/x_window.c:1245
+#: schematic/src/x_menus.c:53 schematic/src/x_window.c:1245
 msgid "Select"
 msgstr "Seleccionar"
 
-#: schematic/src/x_menus.c:51 schematic/lib/system-gschemrc.scm:1151
+#: schematic/src/x_menus.c:54 schematic/lib/system-gschemrc.scm:1151
 #: schematic/scheme/gschem/builtins.scm:125
 msgid "Edit..."
 msgstr "Editar..."
 
-#: schematic/src/x_menus.c:52
+#: schematic/src/x_menus.c:55
 #, fuzzy
 msgid "Edit Pin Type..."
 msgstr "/Editar tipo de pino..."
 
-#: schematic/src/x_menus.c:57 schematic/scheme/gschem/builtins.scm:308
+#: schematic/src/x_menus.c:60 schematic/scheme/gschem/builtins.scm:308
 #, fuzzy
 msgid "Down Schematic"
 msgstr "/Baixar Esquema"
 
-#: schematic/src/x_menus.c:58 schematic/scheme/gschem/builtins.scm:311
+#: schematic/src/x_menus.c:61 schematic/scheme/gschem/builtins.scm:311
 #, fuzzy
 msgid "Down Symbol"
 msgstr "/Baixar Símbolo"
 
-#: schematic/src/x_menus.c:59
+#: schematic/src/x_menus.c:62
 #, fuzzy
 msgid "Up"
 msgstr "/Acima"
 
-#: schematic/src/x_menus.c:334
+#: schematic/src/x_menus.c:337
 #, fuzzy, c-format
 msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
 msgstr "Tentou-se definir a sensibilidade num menu_item não existente '%s'\n"
 
-#: schematic/src/x_menus.c:358
+#: schematic/src/x_menus.c:361
 #, c-format
 msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
 msgstr "Tentou-se definir a sensibilidade num menu_item não existente '%s'\n"
