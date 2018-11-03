@@ -81,7 +81,9 @@ input_files = \
 	common/netattrib-symbols/gnd-custom.sym \
 	common/netattrib.sch \
 	common/powersupply.sch \
-	common/singlenet.sch
+	common/singlenet.sch \
+	verilog_rip_test.sch \
+	verilog_rip_test-symbols/D_FF.sym
 
 XFAIL_TESTS = \
 	missing-source-geda.out \
@@ -490,4 +492,5 @@ TESTS = stack_1-geda.out \
 	common/singlenet-vams-device.out \
 	common/singlenet-verilog.out \
 	common/singlenet-vhdl.out \
-	common/singlenet-vipec.out
+	common/singlenet-vipec.out \
+	verilog_rip_test-verilog.out
