@@ -433,6 +433,15 @@ found, shows a dialog with an error message."
 (define-action-public (&help-about #:label (_ "About gschem") #:icon "gtk-about")
   (%help-about))
 
+
+
+; Backward compatibility:
+;
+(define &edit-color    &edit-object-properties) (export &edit-color)
+(define &edit-linetype &edit-object-properties) (export &edit-linetype)
+(define &edit-filltype &edit-object-properties) (export &edit-filltype)
+(define &edit-pin-type &edit-object-properties) (export &edit-pin-type)
+
 ;; Local Variables:
 ;; eval: (put 'define-action-public 'scheme-indent-function 1)
 ;; End:
