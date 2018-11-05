@@ -20,7 +20,8 @@
 
 
 ;; Allegro netlist format
-(use-modules (netlist schematic))
+(use-modules (netlist schematic)
+             (netlist error))
 
 (define (allegro:write-device-files packages done stdout)
   (if (not (null? packages))
@@ -46,25 +47,25 @@
               (mkdir "devfiles")
               ;; If we don't have write access to the current directory,
               ;; end with an error message.
-              (error (string-append
-                      "the device files are expected to be in the 'devfiles' directory.\n"
-                      "       However, can't create it!.\n"
-                      "       Check write permissions of the current directory.\n")))
+              (netlist-error 1
+                             "The device files are expected to be in the 'devfiles' directory.
+       However, can't create it!.
+       Check write permissions of the current directory.\n"))
           ;; If 'devfiles' exist, check if it is a directory.
           (if (not (eq? (stat:type (stat "devfiles")) 'directory))
               ;; 'devfiles' exists, but it is not a directory.
               ;; End with an error message.
-              (error (string-append
-                      "the device files are expected to be in the 'devfiles' directory.\n"
-                      "       However, 'devfiles' exists and it is not a directory!.\n"))))
+              (netlist-error 1
+                             "The device files are expected to be in the 'devfiles' directory.
+       However, 'devfiles' exists and it is not a directory!.\n")))
       ;; 'devfiles' should exist now. Check if we have write access.
       (if (not (access? "devfiles" W_OK))
           ;; We don't have write access to 'devfiles'.
           ;; End with an error message
-          (error (string-append
-                  "the device files are expected to be in the 'devfiles' directory.\n"
-                  "       However, can't access it for writing!.\n"
-                  "       Check write permissions of the 'devfiles' directory.\n"))))
+          (netlist-error 1
+                         "The device files are expected to be in the 'devfiles' directory.
+       However, can't access it for writing!.
+       Check write permissions of the 'devfiles' directory.\n")))
 
     filename))
 
