@@ -402,10 +402,5 @@
 
 (define (traverse toplevel-pages netlist-mode)
   (reset-rename!)
-  (let ((cwd (getcwd))
-        (netlist (traverse-pages toplevel-pages netlist-mode)))
-    ;; Change back to the directory where we started.  This is
-    ;; done because (traverse-pages) can change the current working
-    ;; directory.
-    (chdir cwd)
-    (rename-all (hierarchy-post-process netlist))))
+  (rename-all (hierarchy-post-process (traverse-pages toplevel-pages
+                                                      netlist-mode))))
