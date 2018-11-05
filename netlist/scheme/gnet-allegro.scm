@@ -38,35 +38,35 @@
 
 (define (allegro:check-and-get-filename device package)
   (let ((filename (string-downcase! (string-append "devfiles/" (string-append device ".txt")))))
-    (begin
-      ;; Check if the 'devfiles' directory exist.
-      (if (not (access? "devfiles" F_OK))
-          (if (access? "." W_OK)
-              ;; If the 'devfiles' directory doesn't exist, and
-              ;; we have write access to the current directory, then create it.
-              (mkdir "devfiles")
-              ;; If we don't have write access to the current directory,
-              ;; end with an error message.
-              (netlist-error 1
-                             "The device files are expected to be in the 'devfiles' directory.
+    ;; Check if the 'devfiles' directory exist.
+    (if (not (access? "devfiles" F_OK))
+        (if (access? "." W_OK)
+            ;; If the 'devfiles' directory doesn't exist, and
+            ;; we have write access to the current directory, then create it.
+            (mkdir "devfiles")
+            ;; If we don't have write access to the current directory,
+            ;; end with an error message.
+            (netlist-error 1
+                           "The device files are expected to be in the 'devfiles' directory.
        However, can't create it!.
        Check write permissions of the current directory.\n"))
-          ;; If 'devfiles' exist, check if it is a directory.
-          (if (not (eq? (stat:type (stat "devfiles")) 'directory))
-              ;; 'devfiles' exists, but it is not a directory.
-              ;; End with an error message.
-              (netlist-error 1
-                             "The device files are expected to be in the 'devfiles' directory.
-       However, 'devfiles' exists and it is not a directory!.\n")))
-      ;; 'devfiles' should exist now. Check if we have write access.
-      (if (not (access? "devfiles" W_OK))
-          ;; We don't have write access to 'devfiles'.
-          ;; End with an error message
+        ;; If 'devfiles' exist, check if it is a directory.
+        (unless (eq? (stat:type (stat "devfiles")) 'directory)
+          ;; 'devfiles' exists, but it is not a directory.
+          ;; End with an error message.
           (netlist-error 1
                          "The device files are expected to be in the 'devfiles' directory.
+       However, 'devfiles' exists and it is not a directory!.\n")))
+    ;; 'devfiles' should exist now. Check if we have write access.
+    (unless (access? "devfiles" W_OK)
+      ;; We don't have write access to 'devfiles'.
+      ;; End with an error message
+      (netlist-error 1
+                     "The device files are expected to be in the 'devfiles' directory.
        However, can't access it for writing!.
-       Check write permissions of the 'devfiles' directory.\n")))
+       Check write permissions of the 'devfiles' directory.\n"))
 
+    ;; Return value.
     filename))
 
 (define (allegro:output-netlist package)
