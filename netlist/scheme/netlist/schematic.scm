@@ -30,19 +30,21 @@
   #:use-module (geda page)
   #:use-module (geda attrib)
   #:use-module (geda object)
-  #:export (make-schematic schematic?
-            schematic-id set-schematic-id!
-            schematic-toplevel-pages set-schematic-toplevel-pages!
-            schematic-toplevel-attribs set-schematic-toplevel-attribs!
-            schematic-tree set-schematic-tree!
-            schematic-netlist set-schematic-netlist!
-            schematic-graphicals set-schematic-graphicals!
-            schematic-non-unique-packages set-schematic-non-unique-packages!
-            schematic-package-names set-schematic-package-names!
-            schematic-non-unique-nets set-schematic-non-unique-nets!
-            schematic-nets set-schematic-nets!
-            schematic-nc-nets set-schematic-nc-nets!
-            make-toplevel-schematic
+
+  #:export-syntax (make-schematic schematic?
+                   schematic-id set-schematic-id!
+                   schematic-toplevel-pages set-schematic-toplevel-pages!
+                   schematic-toplevel-attribs set-schematic-toplevel-attribs!
+                   schematic-tree set-schematic-tree!
+                   schematic-netlist set-schematic-netlist!
+                   schematic-graphicals set-schematic-graphicals!
+                   schematic-non-unique-packages set-schematic-non-unique-packages!
+                   schematic-package-names set-schematic-package-names!
+                   schematic-non-unique-nets set-schematic-non-unique-nets!
+                   schematic-nets set-schematic-nets!
+                   schematic-nc-nets set-schematic-nc-nets!)
+
+  #:export (make-toplevel-schematic
             schematic-toplevel-attrib))
 
 (define-record-type <schematic>
