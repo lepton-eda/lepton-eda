@@ -38,14 +38,14 @@
                    schematic-tree set-schematic-tree!
                    schematic-netlist set-schematic-netlist!
                    schematic-graphicals set-schematic-graphicals!
-                   schematic-non-unique-packages set-schematic-non-unique-packages!
                    schematic-package-names set-schematic-package-names!
                    schematic-non-unique-nets set-schematic-non-unique-nets!
                    schematic-nets set-schematic-nets!
                    schematic-nc-nets set-schematic-nc-nets!)
 
   #:export (make-toplevel-schematic
-            schematic-toplevel-attrib))
+            schematic-toplevel-attrib
+            schematic-non-unique-package-names))
 
 (define-record-type <schematic>
   (make-schematic id
@@ -54,7 +54,6 @@
                   tree
                   netlist
                   graphicals
-                  non-unique-packages
                   package-names
                   non-unique-nets
                   nets
@@ -66,7 +65,6 @@
   (tree schematic-tree set-schematic-tree!)
   (netlist schematic-netlist set-schematic-netlist!)
   (graphicals schematic-graphicals set-schematic-graphicals!)
-  (non-unique-packages schematic-non-unique-packages set-schematic-non-unique-packages!)
   (package-names schematic-package-names set-schematic-package-names!)
   (non-unique-nets schematic-non-unique-nets set-schematic-non-unique-nets!)
   (nets schematic-nets set-schematic-nets!)
@@ -125,7 +123,7 @@
 
 ;;; Gets non unique set of package refdeses.
 ;;; Backward compatibility procedure for old backends.
-(define (non-unique-packages netlist)
+(define (schematic-non-unique-package-names netlist)
   (sort (filter-map package-refdes netlist) refdes<?))
 
 ;;; Returns a sorted list of unique packages in NETLIST.
@@ -194,8 +192,7 @@ must be a list of pages."
                       (lambda (x) (and (package-graphical? x) x))
                       full-netlist))
          (tree (schematic->sxml netlist toplevel-pages))
-         (nu-packages (non-unique-packages netlist))
-         (packages (get-packages nu-packages))
+         (packages (get-packages (schematic-non-unique-package-names netlist)))
          (nu-nets (get-all-nets netlist))
          (unique-nets (get-nets netlist)))
     ;; Partition all unique net names into 'no-connection' nets
@@ -210,7 +207,6 @@ must be a list of pages."
                       tree
                       netlist
                       graphicals
-                      nu-packages
                       packages
                       nu-nets
                       nets

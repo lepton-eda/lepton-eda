@@ -740,7 +740,8 @@
 (define (drc2 output-filename)
   (let ((nets (schematic-nets toplevel-schematic))
         (nc-nets (schematic-nc-nets toplevel-schematic))
-        (non-unique-packages (schematic-non-unique-packages toplevel-schematic))
+        (non-unique-packages (schematic-non-unique-package-names
+                              (schematic-netlist toplevel-schematic)))
         (packages (schematic-package-names toplevel-schematic))
         (netlist (schematic-netlist toplevel-schematic)))
 

@@ -522,7 +522,7 @@ PACKAGE."
 (define (gnetlist:get-packages level)
   (schematic-package-names toplevel-schematic))
 (define (gnetlist:get-non-unique-packages level)
-  (schematic-non-unique-packages toplevel-schematic))
+  (schematic-non-unique-package-names toplevel-schematic))
 (define (gnetlist:get-all-unique-nets level)
   (schematic-nets toplevel-schematic))
 (define (gnetlist:get-all-nets level)
