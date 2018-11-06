@@ -106,7 +106,7 @@
 
 (define (gossip output-filename)
   (let ((nets (schematic-nets toplevel-schematic))
-        (packages (schematic-packages toplevel-schematic))
+        (packages (schematic-package-names toplevel-schematic))
         (blockname (or (schematic-toplevel-attrib toplevel-schematic 'blockname)
                        "not found")))
     (gossip:write-top-header)

@@ -274,7 +274,7 @@
     (message "--------------------------------------\n\n")
 
     (let ((all-nets (schematic-nets toplevel-schematic))
-          (packages (schematic-packages toplevel-schematic)))
+          (packages (schematic-package-names toplevel-schematic)))
 
       ;; initialize the net-name aliasing
       (gnetlist:build-net-aliases ewnet:map-net-names all-nets)

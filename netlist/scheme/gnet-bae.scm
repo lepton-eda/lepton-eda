@@ -70,7 +70,7 @@
 (define (bae output-filename)
   (display "LAYOUT board;\n")
   (display "PARTS\n")
-  (bae:components (schematic-packages toplevel-schematic))
+  (bae:components (schematic-package-names toplevel-schematic))
   (display "CONNECT\n")
   (bae:nets (schematic-nets toplevel-schematic))
   (display "END.\n"))

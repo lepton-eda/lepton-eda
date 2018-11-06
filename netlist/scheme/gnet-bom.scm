@@ -128,7 +128,7 @@ An error will be displayed, if no attribute name source is found."
          (option-attribs (backend-option-ref options 'attribs))
          (attriblist (bom:parseconfig option-filename option-attribs)))
     (bom:printlist (cons "refdes" attriblist))
-    (bom:components (schematic-packages toplevel-schematic)
+    (bom:components (schematic-package-names toplevel-schematic)
                     attriblist)))
 
 ;;

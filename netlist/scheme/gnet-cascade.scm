@@ -128,7 +128,7 @@ Writing to ~S...
                   "stdout")))
 
      (let ((first_block #f)
-           (packages (schematic-packages toplevel-schematic)))
+           (packages (schematic-package-names toplevel-schematic)))
 
         ;; write the header
         (display "# Cascade (http://rfcascade.sourceforge.net)\n")

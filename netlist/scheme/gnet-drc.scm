@@ -71,7 +71,7 @@
 
 
 (define (drc output-filename)
-  (drc:device-rules drc:attriblist (schematic-packages toplevel-schematic))
+  (drc:device-rules drc:attriblist (schematic-package-names toplevel-schematic))
   (drc:net-rules (schematic-nets toplevel-schematic)))
 
 ;;

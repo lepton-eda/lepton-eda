@@ -179,7 +179,7 @@
 
 (define (vipec output-filename)
   (let ((netnumbers (number-nets (schematic-nets toplevel-schematic) 1))
-        (packages (schematic-packages toplevel-schematic)))
+        (packages (schematic-package-names toplevel-schematic)))
     (vipec:header)
     (display "CKT\n")
     (vipec:component-writing packages netnumbers)

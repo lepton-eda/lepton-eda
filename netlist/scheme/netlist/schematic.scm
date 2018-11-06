@@ -38,7 +38,7 @@
             schematic-netlist set-schematic-netlist!
             schematic-graphicals set-schematic-graphicals!
             schematic-non-unique-packages set-schematic-non-unique-packages!
-            schematic-packages set-schematic-packages!
+            schematic-package-names set-schematic-package-names!
             schematic-non-unique-nets set-schematic-non-unique-nets!
             schematic-nets set-schematic-nets!
             schematic-nc-nets set-schematic-nc-nets!
@@ -53,7 +53,7 @@
                   netlist
                   graphicals
                   non-unique-packages
-                  packages
+                  package-names
                   non-unique-nets
                   nets
                   nc-nets)
@@ -65,7 +65,7 @@
   (netlist schematic-netlist set-schematic-netlist!)
   (graphicals schematic-graphicals set-schematic-graphicals!)
   (non-unique-packages schematic-non-unique-packages set-schematic-non-unique-packages!)
-  (packages schematic-packages set-schematic-packages!)
+  (package-names schematic-package-names set-schematic-package-names!)
   (non-unique-nets schematic-non-unique-nets set-schematic-non-unique-nets!)
   (nets schematic-nets set-schematic-nets!)
   (nc-nets schematic-nc-nets set-schematic-nc-nets!))

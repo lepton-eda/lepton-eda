@@ -91,7 +91,7 @@
     (cond ((= generate-mode 1)
            (let ((thunk (lambda () (vams:write-secondary-unit architecture
                                                          entity
-                                                         (schematic-packages toplevel-schematic)))))
+                                                         (schematic-package-names toplevel-schematic)))))
              (if output-filename
                  ;; generate output-filename, like
                  ;; (<entity>_arc.<output-file-extension>)

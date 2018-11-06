@@ -23,7 +23,7 @@
 (define (partslist1 output-filename)
   (display
    (partlist->string
-    (make-partlist (schematic-packages toplevel-schematic)
+    (make-partlist (schematic-package-names toplevel-schematic)
                    '(refdes device value footprint))
     #:sort-order '(refdes device value footprint)
     #:output-order '(refdes device value footprint #{}#)

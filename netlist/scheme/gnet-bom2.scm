@@ -62,7 +62,7 @@
            (begin
              (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) #\:)
              (newline)
-             (bom2:printbom (bom2:components (schematic-packages toplevel-schematic)
+             (bom2:printbom (bom2:components (schematic-package-names toplevel-schematic)
                                              attriblist)
                             0))))))
 

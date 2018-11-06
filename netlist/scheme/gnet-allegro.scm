@@ -128,7 +128,7 @@
 
 (define (allegro output-filename)
   (let ((use-stdout? (not output-filename))
-        (packages (schematic-packages toplevel-schematic))
+        (packages (schematic-package-names toplevel-schematic))
         (nets (schematic-nets toplevel-schematic)))
     (display "(Allegro netlister by M. Ettus)\n")
     (display "$PACKAGES\n")

@@ -941,7 +941,7 @@ the name is changed to canonical."
 
   ;; First find out if this is a .SUBCKT lower level,
   ;; or if it is a regular schematic.
-  (let* ((packages (schematic-packages toplevel-schematic))
+  (let* ((packages (schematic-package-names toplevel-schematic))
          (subckt? (spice-sdb:get-schematic-type packages)))
 
     (if subckt?

@@ -99,4 +99,4 @@
   (display "# Pin name action command file\n")
 
   ;; write the components
-  (pcbpins:components (schematic-packages toplevel-schematic) 1))
+  (pcbpins:components (schematic-package-names toplevel-schematic) 1))

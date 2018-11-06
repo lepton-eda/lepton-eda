@@ -150,7 +150,7 @@ END \"no-connect\" nets
 (define (geda output-filename)
   (geda:write-top-header)
   (geda:graphicals (schematic-graphicals toplevel-schematic))
-  (geda:components (schematic-packages toplevel-schematic))
+  (geda:components (schematic-package-names toplevel-schematic))
   (no-connect-nets (schematic-nc-nets toplevel-schematic))
   (geda:renamed-nets (gnetlist:get-renamed-nets "dummy"))
   (geda:nets (schematic-nets toplevel-schematic)))

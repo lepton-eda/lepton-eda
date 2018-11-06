@@ -106,7 +106,7 @@
 
 (define (mathematica output-filename)
   (let ((nets (schematic-nets toplevel-schematic))
-        (packages (schematic-packages toplevel-schematic)))
+        (packages (schematic-package-names toplevel-schematic)))
     (display (netnames->pin-voltages nets))
     (display "nodeEquations={\n")
     (display (netnames->current-string nets))

@@ -520,7 +520,7 @@ PACKAGE."
 (define (gnetlist:get-command-line)
   (string-join (command-line) " "))
 (define (gnetlist:get-packages level)
-  (schematic-packages toplevel-schematic))
+  (schematic-package-names toplevel-schematic))
 (define (gnetlist:get-non-unique-packages level)
   (schematic-non-unique-packages toplevel-schematic))
 (define (gnetlist:get-all-unique-nets level)
@@ -862,7 +862,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
         (make-toplevel-schematic (map file->page files)
                                  netlist-mode))
   ;; Backward compatibility variables. Don't use them in your code!!!
-  (set! packages (schematic-packages toplevel-schematic))
+  (set! packages (schematic-package-names toplevel-schematic))
   (set! all-unique-nets (schematic-nets toplevel-schematic))
   (set! all-nets (schematic-non-unique-nets toplevel-schematic))
   (set! all-pins (map gnetlist:get-pins packages))

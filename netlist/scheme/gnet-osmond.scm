@@ -24,7 +24,7 @@
 (use-modules (netlist schematic))
 
 (define (osmond output-filename)
-        (for-each osmond:part (schematic-packages toplevel-schematic))
+        (for-each osmond:part (schematic-package-names toplevel-schematic))
         (for-each osmond:signal (schematic-nets toplevel-schematic)))
 
 

@@ -81,7 +81,7 @@
 (define (maxascii output-filename)
   (display "*OrCAD\n*START\n")
 
-  (maxascii:components (schematic-packages toplevel-schematic))
+  (maxascii:components (schematic-package-names toplevel-schematic))
 
   (maxascii:write-net (schematic-nets toplevel-schematic))
   (display "\n*END\n"))

@@ -247,7 +247,7 @@ LIBRARYFIELD8\r
 ;;;
 (define (protelII output-filename)
   (protelII:write-top-header)
-  (protelII:components (schematic-packages toplevel-schematic))
+  (protelII:components (schematic-package-names toplevel-schematic))
   (protelII:nets (schematic-nets toplevel-schematic)))
 
 ;;

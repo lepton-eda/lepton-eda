@@ -717,7 +717,7 @@ use IEEE.Std_Logic_1164.all;
 ;;;
 (define (vhdl output-filename)
   (let ((nets (schematic-nets toplevel-schematic))
-        (packages (schematic-packages toplevel-schematic))
+        (packages (schematic-package-names toplevel-schematic))
         ;; top level block name for the module
         (module-name (or (schematic-toplevel-attrib toplevel-schematic
                                                     'module_name)

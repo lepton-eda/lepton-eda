@@ -741,7 +741,7 @@
   (let ((nets (schematic-nets toplevel-schematic))
         (nc-nets (schematic-nc-nets toplevel-schematic))
         (non-unique-packages (schematic-non-unique-packages toplevel-schematic))
-        (packages (schematic-packages toplevel-schematic))
+        (packages (schematic-package-names toplevel-schematic))
         (netlist (schematic-netlist toplevel-schematic)))
 
     ;; Perform DRC-matrix sanity checks.
