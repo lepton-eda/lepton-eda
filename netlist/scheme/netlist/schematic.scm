@@ -38,14 +38,14 @@
                    schematic-tree set-schematic-tree!
                    schematic-netlist set-schematic-netlist!
                    schematic-graphicals set-schematic-graphicals!
-                   schematic-package-names set-schematic-package-names!
                    schematic-non-unique-nets set-schematic-non-unique-nets!
                    schematic-nets set-schematic-nets!
                    schematic-nc-nets set-schematic-nc-nets!)
 
   #:export (make-toplevel-schematic
             schematic-toplevel-attrib
-            schematic-non-unique-package-names))
+            schematic-non-unique-package-names
+            schematic-package-names))
 
 (define-record-type <schematic>
   (make-schematic id
@@ -54,7 +54,6 @@
                   tree
                   netlist
                   graphicals
-                  package-names
                   non-unique-nets
                   nets
                   nc-nets)
@@ -65,7 +64,6 @@
   (tree schematic-tree set-schematic-tree!)
   (netlist schematic-netlist set-schematic-netlist!)
   (graphicals schematic-graphicals set-schematic-graphicals!)
-  (package-names schematic-package-names set-schematic-package-names!)
   (non-unique-nets schematic-non-unique-nets set-schematic-non-unique-nets!)
   (nets schematic-nets set-schematic-nets!)
   (nc-nets schematic-nc-nets set-schematic-nc-nets!))
@@ -122,13 +120,16 @@
                    ,@(map page->sxml toplevel-pages))))
 
 ;;; Gets non unique set of package refdeses.
-;;; Backward compatibility procedure for old backends.
+;;; Backward compatibility procedure for legacy backends.
 (define (schematic-non-unique-package-names netlist)
   (sort (filter-map package-refdes netlist) refdes<?))
 
 ;;; Returns a sorted list of unique packages in NETLIST.
-(define (get-packages non-unique-packages)
+;;; Backward compatibility procedure for legacy backends.
+(define (schematic-package-names schematic)
+  (define netlist (schematic-netlist schematic))
   ;; Uniqueness of packages is guaranteed by the hashtable.
+  (define non-unique-packages (schematic-non-unique-package-names netlist))
   (define ht (make-hash-table (length non-unique-packages)))
   (define (get-value key value) value)
   (for-each (lambda (s) (hashq-set! ht (string->symbol s) s))
@@ -192,7 +193,6 @@ must be a list of pages."
                       (lambda (x) (and (package-graphical? x) x))
                       full-netlist))
          (tree (schematic->sxml netlist toplevel-pages))
-         (packages (get-packages (schematic-non-unique-package-names netlist)))
          (nu-nets (get-all-nets netlist))
          (unique-nets (get-nets netlist)))
     ;; Partition all unique net names into 'no-connection' nets
@@ -207,7 +207,6 @@ must be a list of pages."
                       tree
                       netlist
                       graphicals
-                      packages
                       nu-nets
                       nets
                       nc-nets
