@@ -75,7 +75,12 @@
             gnetlist:wrap
             known?
             unknown?
-            pair<?)
+            pair<?
+            ;; Legacy variables
+            packages
+            all-unique-nets
+            all-nets
+            all-pins)
 
   #:re-export (source-library))
 
