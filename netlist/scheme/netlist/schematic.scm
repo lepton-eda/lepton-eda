@@ -181,17 +181,15 @@
 (define (make-toplevel-schematic toplevel-pages netlist-mode)
   "Creates a new schematic record based on TOPLEVEL-PAGES which
 must be a list of pages."
+  (define (plain-package? x)
+    (and (not (package-graphical? x))
+         (not (package-nc? x))))
+
   (let* ((id (next-schematic-id))
          (toplevel-attribs (get-toplevel-attributes toplevel-pages))
          (full-netlist (traverse toplevel-pages netlist-mode))
-         (netlist (filter-map
-                   (lambda (x) (and (not (package-graphical? x))
-                               (not (package-nc? x))
-                               x))
-                   full-netlist))
-         (graphicals (filter-map
-                      (lambda (x) (and (package-graphical? x) x))
-                      full-netlist))
+         (netlist (filter plain-package? full-netlist))
+         (graphicals (filter package-graphical? full-netlist))
          (tree (schematic->sxml netlist toplevel-pages))
          (nu-nets (get-all-nets netlist))
          (unique-nets (get-nets netlist)))
