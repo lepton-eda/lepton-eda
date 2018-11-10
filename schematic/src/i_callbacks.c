@@ -2206,7 +2206,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
         const char *msg = (err != NULL) ? err->message : "Unknown error.";
         char *secondary =
           g_strdup_printf (_("Failed to descend hierarchy into '%1$s': %2$s\n\n"
-                             "The gschem log may contain more information."),
+                             "The lepton-schematic log may contain more information."),
                            current_filename, msg);
 
         s_log_message(_("Failed to descend into '%1$s': %2$s"),

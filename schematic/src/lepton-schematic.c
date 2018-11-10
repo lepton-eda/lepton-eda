@@ -287,7 +287,7 @@ void main_prog(void *closure, int argc, char *argv[])
   /* Run post-load expressions */
   if (scm_is_false (g_scm_eval_protected (s_post_load_expr, scm_current_module ()))) {
     fprintf (stderr, _("ERROR: Failed to load or evaluate startup script.\n\n"
-                       "The gschem log may contain more information.\n"));
+                       "The lepton-schematic log may contain more information.\n"));
     exit (1);
   }
 
