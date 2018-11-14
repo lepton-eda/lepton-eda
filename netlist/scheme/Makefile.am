@@ -46,6 +46,7 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
 	   netlist/backend-getopt.scm \
 	   netlist/config.scm \
 	   netlist/core/gettext.scm \
+	   netlist/deprecated.scm \
 	   netlist/error.scm \
 	   netlist/hierarchy.scm \
 	   netlist/net.scm \
@@ -61,6 +62,7 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
 	   netlist/schematic-component.scm \
 	   netlist/schematic-connection.scm \
 	   netlist/schematic.scm \
+	   netlist/schematic/toplevel.scm \
 	   netlist/sort.scm \
 	   netlist/traverse.scm \
 	   netlist/verbose.scm

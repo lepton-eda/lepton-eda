@@ -22,7 +22,8 @@
 ;; The tEDAx format is documented at http://repo.hu/projects/tedax/
 ;; --------------------------------------------------------------------------
 
-(use-modules (netlist schematic))
+(use-modules (netlist schematic)
+             (netlist schematic toplevel))
 
 ;;
 ;; return device attribute
@@ -101,8 +102,8 @@
 ;;; emit netlist in tEDAx interchange format
 ;;;
 (define (tEDAx output-filename)
-  (let ((nets (schematic-nets toplevel-schematic))
-        (packages (schematic-package-names toplevel-schematic)))
+  (let ((nets (schematic-nets (toplevel-schematic)))
+        (packages (schematic-package-names (toplevel-schematic))))
     (tEDAx:header)
     (tEDAx:components packages)
     (tEDAx:nets nets)

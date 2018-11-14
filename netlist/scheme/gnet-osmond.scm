@@ -21,11 +21,12 @@
 
 ; Export a design to Osmond PCB
 
-(use-modules (netlist schematic))
+(use-modules (netlist schematic)
+             (netlist schematic toplevel))
 
 (define (osmond output-filename)
-        (for-each osmond:part (schematic-package-names toplevel-schematic))
-        (for-each osmond:signal (schematic-nets toplevel-schematic)))
+  (for-each osmond:part (schematic-package-names (toplevel-schematic)))
+  (for-each osmond:signal (schematic-nets (toplevel-schematic))))
 
 
 ; The first section of the file consists of a list of packages,

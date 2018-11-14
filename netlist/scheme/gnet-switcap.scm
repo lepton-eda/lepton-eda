@@ -27,7 +27,8 @@
 ;; The following is needed to make guile 1.8.x happy.
 (use-modules (ice-9 rdelim)
              (netlist error)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 ;; ----------------------------------------------------------------------------
 ;; Utility functions used by this netlister
@@ -475,8 +476,8 @@
 ;; Switcap netlist generation -- top level
 ;; ----------------------------------------------------------------------------
 (define (switcap output-filename)
-  (let ((nets (schematic-nets toplevel-schematic))
-        (packages (schematic-package-names toplevel-schematic)))
+  (let ((nets (schematic-nets (toplevel-schematic)))
+        (packages (schematic-package-names (toplevel-schematic))))
 
     ;; initialize the net-name aliasing
     (gnetlist:build-net-aliases switcap:map-net-names nets)

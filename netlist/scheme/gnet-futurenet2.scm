@@ -58,7 +58,8 @@
 ;;;    has something to do with sheet number in a multipage schematic.
 ;;;
 
-(use-modules (netlist schematic))
+(use-modules (netlist schematic)
+             (netlist schematic toplevel))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid FutureNet2 net name.
@@ -213,8 +214,8 @@
   (message "Ranger2 or other windows based layout tools\n")
   (message "-------------------------------------------\n\n")
 
-  (let ((all-nets (schematic-nets toplevel-schematic))
-        (packages (schematic-package-names toplevel-schematic)))
+  (let ((all-nets (schematic-nets (toplevel-schematic)))
+        (packages (schematic-package-names (toplevel-schematic))))
 
     ;; initialize the net-name aliasing
     (gnetlist:build-net-aliases futurenet2:map-net-names all-nets)

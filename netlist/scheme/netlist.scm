@@ -37,24 +37,23 @@
   #:use-module (lepton version)
   #:use-module (netlist core gettext)
   #:use-module (netlist config)
+  #:use-module (netlist deprecated)
   #:use-module (netlist error)
   #:use-module (netlist schematic)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
+  #:use-module (netlist schematic toplevel)
   #:use-module (netlist verbose)
   #:use-module ((netlist rename) #:select (get-rename-list))
 
   #:export (lepton-netlist-version
             main
-            set-toplevel-schematic!
-            toplevel-schematic
             calling-flag?
             get-device
             get-all-connections
             get-all-package-attributes
             get-component-text
             get-nets
-            get-pins
             get-pins-nets
             message
             package-pin-netname
@@ -75,14 +74,20 @@
             gnetlist:wrap
             known?
             unknown?
-            pair<?
-            ;; Legacy variables
-            packages
-            all-unique-nets
-            all-nets
-            all-pins)
+            pair<?)
 
-  #:re-export (source-library))
+  #:re-export (;; (geda library)
+               source-library
+               ;; (netlist deprecated)
+               ;; deprecated procedures
+               get-pins
+               gnetlist:get-pins
+               ;; deprecated variables
+               non-unique-packages
+               packages
+               all-unique-nets
+               all-nets
+               all-pins))
 
 
 (define* (lepton-netlist-version #:optional output-to-log? exit?)
@@ -203,7 +208,7 @@ associated with the first symbol instance)."
    (lambda (package)
      (schematic-component-attribute package sname))
    (filter-map found-package?
-               (schematic-components toplevel-schematic))))
+               (schematic-components (toplevel-schematic)))))
 
 
 (define (gnetlist:get-package-attribute refdes name)
@@ -333,8 +338,6 @@ REFDES. As a result, slots may be repeated in the returned list."
   (display output-string message-port)
   )
 
-(define toplevel-schematic #f)
-
 
 ;;; Helper function for sorting connections.
 (define (pair<? a b)
@@ -351,7 +354,7 @@ NETNAME."
     (and x
          (string=? x netname)))
 
-  (define netlist (schematic-components toplevel-schematic))
+  (define netlist (schematic-components (toplevel-schematic)))
 
   (define non-graphical-refdeses
     (filter-map schematic-component-refdes netlist))
@@ -405,23 +408,8 @@ PACKAGE."
   ;; Currently, netlist can contain many `packages' with the same
   ;; name, so we have to deal with this.
   (let ((result-list (append-map get-pin-netname-list
-                                 (schematic-components toplevel-schematic))))
+                                 (schematic-components (toplevel-schematic)))))
     (sort-remove-duplicates result-list pair<?)))
-
-
-(define (get-pins refdes)
-  (define (found? x)
-    (and x
-         (string=? x refdes)))
-
-  (sort-remove-duplicates
-   (append-map
-    (lambda (package)
-      (if (found? (schematic-component-refdes package))
-          (filter-map package-pin-number (schematic-component-pins package))
-          '()))
-    (schematic-components toplevel-schematic))
-   refdes<?))
 
 
 ;;; This procedure is buggy in the same way as gnetlist:get-nets.
@@ -470,7 +458,7 @@ PACKAGE."
            '()))
      netlist))
 
-  (let ((found (lookup-through-netlist (schematic-components toplevel-schematic))))
+  (let ((found (lookup-through-netlist (schematic-components (toplevel-schematic)))))
     (match found
       (() '("ERROR_INVALID_PIN"))
       (((netname . rest) ...)
@@ -482,18 +470,12 @@ PACKAGE."
   (or (assoc-ref (get-pins-nets package) pinnumber)
       "ERROR_INVALID_PIN"))
 
-;;; Backward compatibility variables and procedures
-(define packages #f)
-(define all-unique-nets #f)
-(define all-nets #f)
-(define all-pins #f)
 
 (define (gnetlist:get-toplevel-attribute attrib)
-  (or (assq-ref (schematic-toplevel-attribs toplevel-schematic)
+  (or (assq-ref (schematic-toplevel-attribs (toplevel-schematic))
                 (string->symbol attrib))
       "not found"))
 
-(define gnetlist:get-pins get-pins)
 (define gnetlist:get-all-package-attributes get-all-package-attributes)
 (define gnetlist:get-nets get-nets)
 (define gnetlist:get-pins-nets get-pins-nets)
@@ -508,13 +490,13 @@ PACKAGE."
 (define (gnetlist:get-command-line)
   (string-join (command-line) " "))
 (define (gnetlist:get-packages level)
-  (schematic-package-names toplevel-schematic))
+  (schematic-package-names (toplevel-schematic)))
 (define (gnetlist:get-non-unique-packages level)
-  (schematic-non-unique-package-names toplevel-schematic))
+  (schematic-non-unique-package-names (toplevel-schematic)))
 (define (gnetlist:get-all-unique-nets level)
-  (schematic-nets toplevel-schematic))
+  (schematic-nets (toplevel-schematic)))
 (define (gnetlist:get-all-nets level)
-  (schematic-non-unique-nets toplevel-schematic))
+  (schematic-non-unique-nets (toplevel-schematic)))
 (define (gnetlist:get-all-connections netname)
   (map (lambda (pair) (list (car pair) (cdr pair)))
        (get-all-connections netname)))
@@ -668,7 +650,7 @@ other limitations imposed by this netlist format.
                pin
                (find-pin-by-attrib (cdr pins) name value)))))
 
-  (let loop ((netlist (schematic-components toplevel-schematic)))
+  (let loop ((netlist (schematic-components (toplevel-schematic))))
     (if (null? netlist)
         "unknown"
         (or (and (found-refdes? (schematic-component-refdes (car netlist)))
@@ -751,7 +733,7 @@ other limitations imposed by this netlist format.
                     (have-attrib? (schematic-component-attribs package) in-attrib))
                (assq-ref (schematic-component-attribs package) out-attrib)
                '()))
-         (schematic-graphicals toplevel-schematic)))))
+         (schematic-graphicals (toplevel-schematic))))))
 
 (define (get-output-filename)
   ;; Name is file name or "-" which means stdout.
@@ -833,18 +815,13 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (primitive-exit 0))
 
 
-(define (set-toplevel-schematic! files netlist-mode)
+;;; Set lepton-netlist toplevel schematic based on schematic FILES
+;;; and NETLIST-MODE which must be either "'geda", or "'spice".
+(define (set-ln-toplevel-schematic! files netlist-mode)
   (and (eq? netlist-mode 'spice)
        (set! get-uref get-spice-refdes))
   (for-each process-gafrc files)
-  (set! toplevel-schematic
-        (make-toplevel-schematic files netlist-mode))
-  ;; Backward compatibility variables. Don't use them in your code!!!
-  (set! packages (schematic-package-names toplevel-schematic))
-  (set! all-unique-nets (schematic-nets toplevel-schematic))
-  (set! all-nets (schematic-non-unique-nets toplevel-schematic))
-  (set! all-pins (map gnetlist:get-pins packages))
-  toplevel-schematic)
+  (set-toplevel-schematic! (make-toplevel-schematic files netlist-mode)))
 
 
 (define (catch-handler tag . args)
@@ -1006,7 +983,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
   ; This sets [toplevel-schematic] global variable:
   ;
-  ( set! schematic (set-toplevel-schematic! files netlist-mode) )
+  ( set! schematic (set-ln-toplevel-schematic! files netlist-mode) )
 
   ; Verbose mode (-v): print internal netlist representation:
   ;

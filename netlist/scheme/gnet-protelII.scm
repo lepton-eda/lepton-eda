@@ -19,7 +19,8 @@
 ;;; MA 02111-1301 USA.
 
 (use-modules (ice-9 optargs)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 ;; --------------------------------------------------------------------------
 ;;
@@ -247,8 +248,8 @@ LIBRARYFIELD8\r
 ;;;
 (define (protelII output-filename)
   (protelII:write-top-header)
-  (protelII:components (schematic-package-names toplevel-schematic))
-  (protelII:nets (schematic-nets toplevel-schematic)))
+  (protelII:components (schematic-package-names (toplevel-schematic)))
+  (protelII:nets (schematic-nets (toplevel-schematic))))
 
 ;;
 ;; gEDA's native test netlist format specific functions ends

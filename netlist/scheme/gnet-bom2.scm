@@ -35,7 +35,8 @@
              (netlist backend-getopt)
              (netlist error)
              (netlist schematic)
-             (srfi srfi-26))
+             (srfi srfi-26)
+             (netlist schematic toplevel))
 
 (define bom2:open-input-file
   (lambda (options)
@@ -62,7 +63,7 @@
            (begin
              (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) #\:)
              (newline)
-             (bom2:printbom (bom2:components (schematic-package-names toplevel-schematic)
+             (bom2:printbom (bom2:components (schematic-package-names (toplevel-schematic))
                                              attriblist)
                             0))))))
 

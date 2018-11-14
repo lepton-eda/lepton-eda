@@ -31,7 +31,8 @@
 
 (use-modules (srfi srfi-26)
              (netlist error)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 (define drc:parseconfig
   (lambda (port)
@@ -71,8 +72,8 @@
 
 
 (define (drc output-filename)
-  (drc:device-rules drc:attriblist (schematic-package-names toplevel-schematic))
-  (drc:net-rules (schematic-nets toplevel-schematic)))
+  (drc:device-rules drc:attriblist (schematic-package-names (toplevel-schematic)))
+  (drc:net-rules (schematic-nets (toplevel-schematic))))
 
 ;;
 ;; DRC backend written by Matt Ettus ends here

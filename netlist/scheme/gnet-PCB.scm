@@ -20,7 +20,8 @@
 
 ;;  PCB format
 
-(use-modules (netlist schematic))
+(use-modules (netlist schematic)
+             (netlist schematic toplevel))
 
 (define (connection->string connection)
   (define refdes car)
@@ -43,4 +44,4 @@
 
 (define (PCB output-filename)
   (for-each display
-            (nets->PCB-netlist (schematic-nets toplevel-schematic))))
+            (nets->PCB-netlist (schematic-nets (toplevel-schematic)))))

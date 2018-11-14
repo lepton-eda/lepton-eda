@@ -120,7 +120,8 @@
              (ice-9 match)
              (srfi srfi-1)
              (netlist attrib compare)
-             (netlist error))
+             (netlist error)
+             (netlist schematic toplevel))
 
 ;; Common functions for the `spice' and `spice-sdb' backends
 (load-from-path "spice-common.scm")
@@ -941,7 +942,7 @@ the name is changed to canonical."
 
   ;; First find out if this is a .SUBCKT lower level,
   ;; or if it is a regular schematic.
-  (let* ((packages (schematic-package-names toplevel-schematic))
+  (let* ((packages (schematic-package-names (toplevel-schematic)))
          (subckt? (spice-sdb:get-schematic-type packages)))
 
     (if subckt?

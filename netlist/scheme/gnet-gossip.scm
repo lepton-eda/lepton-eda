@@ -24,7 +24,8 @@
 ;;  For more info see http://gossip.sourceforge.net
 ;;
 
-(use-modules (netlist schematic))
+(use-modules (netlist schematic)
+             (netlist schematic toplevel))
 
 (define (gossip:write-top-header)
   (display ";; Gossip Netlist Created by gNetlist
@@ -105,9 +106,9 @@
   (format #t "(define-block (~A (\n" blockname))
 
 (define (gossip output-filename)
-  (let ((nets (schematic-nets toplevel-schematic))
-        (packages (schematic-package-names toplevel-schematic))
-        (blockname (or (schematic-toplevel-attrib toplevel-schematic 'blockname)
+  (let ((nets (schematic-nets (toplevel-schematic)))
+        (packages (schematic-package-names (toplevel-schematic)))
+        (blockname (or (schematic-toplevel-attrib (toplevel-schematic) 'blockname)
                        "not found")))
     (gossip:write-top-header)
     (gossip:get-libraries packages '())

@@ -21,7 +21,8 @@
 ;;; ViPEC netlist format
 ;;; http://vipec.sourceforge.net/
 
-(use-modules (netlist schematic))
+(use-modules (netlist schematic)
+             (netlist schematic toplevel))
 
 ;; ETTUS
 ;; Usage: (number-nets all-unique-nets 1)
@@ -178,8 +179,8 @@
             (vipec:analysis-block (cdr packages))))))
 
 (define (vipec output-filename)
-  (let ((netnumbers (number-nets (schematic-nets toplevel-schematic) 1))
-        (packages (schematic-package-names toplevel-schematic)))
+  (let ((netnumbers (number-nets (schematic-nets (toplevel-schematic)) 1))
+        (packages (schematic-package-names (toplevel-schematic))))
     (vipec:header)
     (display "CKT\n")
     (vipec:component-writing packages netnumbers)

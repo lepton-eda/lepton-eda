@@ -20,7 +20,8 @@
 
 ;; MAXASCII netlist format
 
-(use-modules (netlist schematic))
+(use-modules (netlist schematic)
+             (netlist schematic toplevel))
 
 (define maxascii:components
    (lambda (packages)
@@ -81,7 +82,7 @@
 (define (maxascii output-filename)
   (display "*OrCAD\n*START\n")
 
-  (maxascii:components (schematic-package-names toplevel-schematic))
+  (maxascii:components (schematic-package-names (toplevel-schematic)))
 
-  (maxascii:write-net (schematic-nets toplevel-schematic))
+  (maxascii:write-net (schematic-nets (toplevel-schematic)))
   (display "\n*END\n"))

@@ -21,7 +21,8 @@
 
 
 (use-modules (ice-9 regex)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 ;; A comma or close parenthesis will cause problems with the pcb
 ;; action script, so if one of the arguments to ChangePinName contains
@@ -99,4 +100,4 @@
   (display "# Pin name action command file\n")
 
   ;; write the components
-  (pcbpins:components (schematic-package-names toplevel-schematic) 1))
+  (pcbpins:components (schematic-package-names (toplevel-schematic)) 1))

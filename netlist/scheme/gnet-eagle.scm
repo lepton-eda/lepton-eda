@@ -23,7 +23,8 @@
 ;; EAGLE netlist format
 
 (use-modules (srfi srfi-1)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid eagle net name.
@@ -83,8 +84,8 @@
 
 
 (define (eagle output-filename)
-  (let ((nets (schematic-nets toplevel-schematic))
-        (packages (schematic-package-names toplevel-schematic)))
+  (let ((nets (schematic-nets (toplevel-schematic)))
+        (packages (schematic-package-names (toplevel-schematic))))
     ;; initialize the net-name aliasing
     (gnetlist:build-net-aliases eagle:map-net-names nets)
 

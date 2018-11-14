@@ -27,7 +27,8 @@
              (geda object)
              (netlist schematic)
              (netlist package)
-             (netlist schematic-component))
+             (netlist schematic-component)
+             (netlist schematic toplevel))
 
 ;;
 ;; Top level header
@@ -149,11 +150,11 @@ END \"no-connect\" nets
 ;;;
 (define (geda output-filename)
   (geda:write-top-header)
-  (geda:graphicals (schematic-graphicals toplevel-schematic))
-  (geda:components (schematic-package-names toplevel-schematic))
-  (no-connect-nets (schematic-nc-nets toplevel-schematic))
+  (geda:graphicals (schematic-graphicals (toplevel-schematic)))
+  (geda:components (schematic-package-names (toplevel-schematic)))
+  (no-connect-nets (schematic-nc-nets (toplevel-schematic)))
   (geda:renamed-nets (gnetlist:get-renamed-nets "dummy"))
-  (geda:nets (schematic-nets toplevel-schematic)))
+  (geda:nets (schematic-nets (toplevel-schematic))))
 
 ;;
 ;; gEDA's native test netlist format specific functions ends

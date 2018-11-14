@@ -18,12 +18,13 @@
 
 (use-modules (netlist partlist)
              (netlist partlist common)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 (define (partslist1 output-filename)
   (display
    (partlist->string
-    (make-partlist (schematic-package-names toplevel-schematic)
+    (make-partlist (schematic-package-names (toplevel-schematic))
                    '(refdes device value footprint))
     #:sort-order '(refdes device value footprint)
     #:output-order '(refdes device value footprint #{}#)

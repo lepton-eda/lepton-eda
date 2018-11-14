@@ -20,7 +20,8 @@
 
 ;; PADS netlist format
 
-(use-modules (netlist schematic))
+(use-modules (netlist schematic)
+             (netlist schematic toplevel))
 
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid pads net name.
@@ -99,8 +100,8 @@
         (pads:write-net (cdr netnames)))))
 
 (define (pads output-filename)
-  (let ((nets (schematic-nets toplevel-schematic))
-        (packages (schematic-package-names toplevel-schematic)))
+  (let ((nets (schematic-nets (toplevel-schematic)))
+        (packages (schematic-package-names (toplevel-schematic))))
     ;; initialize the net-name aliasing
     (gnetlist:build-net-aliases pads:map-net-names nets)
 

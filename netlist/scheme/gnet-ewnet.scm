@@ -30,7 +30,8 @@
 ;;; as to the right way to create these.  Full documentation would
 ;;; help considerably!
 
-(use-modules (netlist schematic))
+(use-modules (netlist schematic)
+             (netlist schematic toplevel))
 
 ;; Function:  ewnet:map-net-names
 ;;
@@ -273,8 +274,8 @@
     (message "windows based layout tools\n")
     (message "--------------------------------------\n\n")
 
-    (let ((all-nets (schematic-nets toplevel-schematic))
-          (packages (schematic-package-names toplevel-schematic)))
+    (let ((all-nets (schematic-nets (toplevel-schematic)))
+          (packages (schematic-package-names (toplevel-schematic))))
 
       ;; initialize the net-name aliasing
       (gnetlist:build-net-aliases ewnet:map-net-names all-nets)

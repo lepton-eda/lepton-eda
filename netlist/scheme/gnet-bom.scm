@@ -34,7 +34,8 @@
 (use-modules (ice-9 rdelim)
              (netlist backend-getopt)
              (netlist error)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 
 (define (bom:error filename)
@@ -128,7 +129,7 @@ An error will be displayed, if no attribute name source is found."
          (option-attribs (backend-option-ref options 'attribs))
          (attriblist (bom:parseconfig option-filename option-attribs)))
     (bom:printlist (cons "refdes" attriblist))
-    (bom:components (schematic-package-names toplevel-schematic)
+    (bom:components (schematic-package-names (toplevel-schematic))
                     attriblist)))
 
 ;;
