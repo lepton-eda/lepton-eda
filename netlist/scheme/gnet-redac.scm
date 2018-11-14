@@ -22,7 +22,8 @@
 
 (use-modules (srfi srfi-1)
              (ice-9 receive)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 ;;; Transforms LS into list of groups where each group is a list
 ;;; containig NUM elements.
@@ -64,5 +65,5 @@
   (display ".REM CREATED BY Lepton EDA netlister\r\n")
   (display ".CON\r\n")
   (display ".COD 2\r\n\r\n")
-  (redac:write-net (schematic-nets toplevel-schematic))
+  (redac:write-net (schematic-nets (toplevel-schematic)))
   (display ".EOD\r\n"))

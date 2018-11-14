@@ -24,7 +24,8 @@
 ;; --------------------------------------------------------------------------
 
 (use-modules (srfi srfi-1)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 ;;---------------------------------------------------------------------
 ;; write netnames connected to pin-a and pin-b

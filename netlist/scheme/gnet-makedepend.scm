@@ -85,7 +85,8 @@
              (sxml match)
              (geda page)
              (netlist schematic)
-             (netlist schematic-component))
+             (netlist schematic-component)
+             (netlist schematic toplevel))
 
 
 ; Split a filename into 3 parts:
@@ -210,7 +211,7 @@
 
 (define (makedepend output-filename)
   (let ((dep-list (schematic-sxml->dependency-list
-                   (schematic-tree toplevel-schematic))))
+                   (schematic-tree (toplevel-schematic)))))
     (format-dependency-list dep-list)))
 
 ;; vim:shiftwidth=2

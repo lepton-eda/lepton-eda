@@ -23,7 +23,8 @@
 ;; for usage.
 
 (use-modules (srfi srfi-1)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 (define (netname-connections->pin-voltages netname)
   (define package car)
@@ -105,8 +106,8 @@
 
 
 (define (mathematica output-filename)
-  (let ((nets (schematic-nets toplevel-schematic))
-        (packages (schematic-package-names toplevel-schematic)))
+  (let ((nets (schematic-nets (toplevel-schematic)))
+        (packages (schematic-package-names (toplevel-schematic))))
     (display (netnames->pin-voltages nets))
     (display "nodeEquations={\n")
     (display (netnames->current-string nets))

@@ -112,7 +112,7 @@
 ;;
 (define (spice output-filename)
   (spice:write-top-header)
-  (spice:write-netlist (schematic-package-names toplevel-schematic))
+  (spice:write-netlist (schematic-package-names (toplevel-schematic)))
   (spice:write-bottom-footer))
 
 

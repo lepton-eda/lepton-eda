@@ -22,7 +22,8 @@
 (use-modules (ice-9 match)
              (srfi srfi-1)
              (netlist error)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 ;; Locate and print out the global defaults if the element exists
 (define cascade:write-defaults-top
@@ -128,7 +129,7 @@ Writing to ~S...
                   "stdout")))
 
      (let ((first_block #f)
-           (packages (schematic-package-names toplevel-schematic)))
+           (packages (schematic-package-names (toplevel-schematic))))
 
         ;; write the header
         (display "# Cascade (http://rfcascade.sourceforge.net)\n")

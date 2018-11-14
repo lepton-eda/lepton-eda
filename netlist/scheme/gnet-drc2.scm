@@ -144,7 +144,8 @@
              (geda object)
              (geda page)
              (netlist schematic-component)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 (or (defined? 'define-syntax)
     (use-modules (ice-9 syncase)))
@@ -738,12 +739,12 @@
 ;;; Highest level function
 ;;; Write my special testing netlist format
 (define (drc2 output-filename)
-  (let ((nets (schematic-nets toplevel-schematic))
-        (nc-nets (schematic-nc-nets toplevel-schematic))
+  (let ((nets (schematic-nets (toplevel-schematic)))
+        (nc-nets (schematic-nc-nets (toplevel-schematic)))
         (non-unique-packages (schematic-non-unique-package-names
-                              (schematic-components toplevel-schematic)))
-        (packages (schematic-package-names toplevel-schematic))
-        (netlist (schematic-components toplevel-schematic)))
+                              (schematic-components (toplevel-schematic))))
+        (packages (schematic-package-names (toplevel-schematic)))
+        (netlist (schematic-components (toplevel-schematic))))
 
     ;; Perform DRC-matrix sanity checks.
     ;; See if all elements of the matrix are valid.

@@ -21,7 +21,8 @@
 
 ;; Allegro netlist format
 (use-modules (netlist schematic)
-             (netlist error))
+             (netlist error)
+             (netlist schematic toplevel))
 
 (define (allegro:write-device-files packages done stdout)
   (if (not (null? packages))
@@ -121,8 +122,8 @@ PINCOUNT ~A
 
 (define (allegro-netlist schematic output-filename)
   (let ((use-stdout? (not output-filename))
-        (packages (schematic-package-names schematic))
-        (nets (schematic-nets schematic)))
+        (packages (schematic-package-names (toplevel-schematic)))
+        (nets (schematic-nets (toplevel-schematic))))
     (display "(Allegro netlister by M. Ettus)\n")
     (display "$PACKAGES\n")
     (allegro:components packages)

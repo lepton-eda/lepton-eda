@@ -29,8 +29,9 @@
 ;;
 (use-modules (ice-9 regex)
              (srfi srfi-1)
+             (netlist port)
              (netlist schematic)
-             (netlist port))
+             (netlist schematic toplevel))
 
 (define id-regexp "[a-zA-Z_][a-zA-Z0-9_$]*")
 (define numeric  "[0-9]+")
@@ -540,10 +541,10 @@
 ;;; Write Structural verilog representation of the schematic
 ;;;
 (define (verilog output-filename)
-  (let ((nets (schematic-nets toplevel-schematic))
-        (packages (schematic-package-names toplevel-schematic))
+  (let ((nets (schematic-nets (toplevel-schematic)))
+        (packages (schematic-package-names (toplevel-schematic)))
         ;; top level block name for the module
-        (module-name (or (schematic-toplevel-attrib toplevel-schematic
+        (module-name (or (schematic-toplevel-attrib (toplevel-schematic)
                                                     'module_name)
                          "not found")))
     (verilog:get-nets-once! nets)

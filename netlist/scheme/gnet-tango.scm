@@ -24,7 +24,8 @@
 ;;
 
 (use-modules (srfi srfi-1)
-             (netlist schematic))
+             (netlist schematic)
+             (netlist schematic toplevel))
 
 ;;
 ;; Given a uref, returns the device attribute value (for tango-netlist)
@@ -98,8 +99,8 @@
 ;;; Write tango netlist format
 ;;;
 (define (tango output-filename)
-  (let ((nets (schematic-nets toplevel-schematic))
-        (packages (schematic-package-names toplevel-schematic)))
+  (let ((nets (schematic-nets (toplevel-schematic)))
+        (packages (schematic-package-names (toplevel-schematic))))
     (tango:components packages)
     (tango:nets nets)))
 
