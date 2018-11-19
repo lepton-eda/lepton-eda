@@ -183,10 +183,6 @@ DEFINE_G_KEYS(script_console)
 
 /* repeat last command doesn't make sense on options either??? (does
  * it?) */
-DEFINE_G_KEYS(options_text_size)
-
-/* repeat last command doesn't make sense on options either??? (does
- * it?) */
 DEFINE_G_KEYS(options_afeedback)
 DEFINE_G_KEYS(options_grid)
 DEFINE_G_KEYS(options_snap)

@@ -1000,7 +1000,6 @@
 (global-set-key "M" '&edit-move)
 (global-set-key "N" '&add-net)
 
-(global-set-key "O T" '&options-text-size)
 (global-set-key "O A" '&options-action-feedback)
 (global-set-key "O G" '&options-grid)
 (global-set-key "O S" '&options-snap)
@@ -1265,7 +1264,6 @@
 ;;          menu item name      menu action             menu stock icon
 ;;
         `( (,(N_ "_Font...")                 &options-select-font)
-           (,(N_ "Text Size...")             &options-text-size)
            (,(N_ "Cycle _grid styles")       &options-grid)
            (,(N_ "Toggle _Snap On/Off")      &options-snap)
            (,(N_ "Snap Grid S_pacing...")    &options-snap-size)

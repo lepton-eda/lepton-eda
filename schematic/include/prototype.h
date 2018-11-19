@@ -363,7 +363,6 @@ void i_callback_attributes_show_value(gpointer data, guint callback_action, GtkW
 void i_callback_attributes_show_both(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_attributes_visibility_toggle(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_script_console(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_options_text_size(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_snap_size(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_scale_up_snap_size(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_scale_down_snap_size(gpointer data, guint callback_action, GtkWidget *widget);

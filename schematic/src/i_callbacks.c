@@ -2628,24 +2628,6 @@ DEFINE_I_CALLBACK(script_console)
   printf(_("Sorry but this is a non-functioning menu option\n"));
 }
 
-/*! \section layers-menu Layers Menu Callback Functions */
-
-/*! \section options-menu Options Menu Callback Functions */
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  repeat last command doesn't make sense on options either??? (does it?)
- */
-DEFINE_I_CALLBACK(options_text_size)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-  text_edit_dialog (w_current);
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
