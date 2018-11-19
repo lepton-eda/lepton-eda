@@ -1112,14 +1112,14 @@
            (,(N_ "_Save")             &file-save              "gtk-save")
            (,(N_ "Save _As...")       &file-save-as           "gtk-save-as")
            (,(N_ "Save All")          &file-save-all          "gtk-save")
-           (,(N_ "_Revert")           &page-revert            "gtk-revert-to-saved")
-           ("SEPARATOR"               #f                      #f                      #f)
+           ("SEPARATOR"               #f                      #f)
            (,(N_ "_Print...")         &file-print             "gtk-print")
-           (,(N_ "Write _image...")   &file-image             #f)
-           ("SEPARATOR"               #f                      #f                      #f)
+           (,(N_ "Write _Image...")   &file-image             #f)
+           ("SEPARATOR"               #f                      #f)
+           (,(N_ "Invoke Macro...")   &edit-invoke-macro      "gtk-execute")
            (,(N_ "Execute Script...") &file-script            "gtk-execute")
            (,(N_ "REPL...")           &file-repl              "gtk-execute")
-           ("SEPARATOR"               #f                      #f                      #f)
+           ("SEPARATOR"               #f                      #f)
            (,(N_ "New Window")        &file-new-window        "window-new")
            (,(N_ "_Close Window")     &file-close-window      "gtk-close")
            (,(N_ "_Quit")             &file-quit              "gtk-quit")))
@@ -1149,15 +1149,14 @@
            (,(N_ "Edit...")            &edit-edit             #f)
            (,(N_ "Edit Text...")       &edit-text             "gtk-edit")
            (,(N_ "Slot...")            &edit-slot             #f)
-           (,(N_ "Symbol Translate...")  &edit-translate      #f)
+           ("SEPARATOR"                #f                     #f)
            (,(N_ "Lock")               &edit-lock             #f)
            (,(N_ "Unlock")             &edit-unlock           #f)
            ("SEPARATOR"                #f                     #f)
-           (,(N_ "Invoke Macro")         &edit-invoke-macro   #f)
            (,(N_ "Embed Component/Picture")    &edit-embed    #f)
            (,(N_ "Unembed Component/Picture")  &edit-unembed  #f)
            (,(N_ "Update Component")   &edit-update           "gtk-refresh")
-           (,(N_ "Show/Hide Inv Text") &edit-show-hidden      #f)))
+           (,(N_ "Symbol Translate...")  &edit-translate      #f)))
 
 (define buffer-menu-items
 ;;
@@ -1183,8 +1182,8 @@
 ;;
 ;;          menu item name        menu action             menu stock icon
 ;;
-        `( (,(N_ "Sidebar")             &view-sidebar           #f)
-           (,(N_ "Status")              &view-status            #f)
+        `( (,(N_ "Right Dock")          &view-sidebar           #f)
+           (,(N_ "Bottom Dock")         &view-status            #f)
            ("SEPARATOR"                 #f                      #f)
            (,(N_ "Find Text State")     &view-find-text-state   #f)
            ("SEPARATOR"                 #f                      #f)
@@ -1196,11 +1195,11 @@
            (,(N_ "Zoom _Out")           &view-zoom-out          "gtk-zoom-out")
            (,(N_ "Zoom _Full")          &view-zoom-full         #f)
            ("SEPARATOR"                 #f                      #f)
-           (,(N_ "_Dark color scheme")  &view-dark-colors       #f)
-           (,(N_ "_Light color scheme") &view-light-colors      #f)
-           (,(N_ "B_W color scheme")    &view-bw-colors         #f)
+           (,(N_ "_Dark Color Scheme")  &view-dark-colors       #f)
+           (,(N_ "_Light Color Scheme") &view-light-colors      #f)
+           (,(N_ "B_W Color Scheme")    &view-bw-colors         #f)
            ("SEPARATOR"                 #f                      #f)
-           (,(N_ "Color scheme editor...") &view-color-edit     #f)
+           (,(N_ "Color Scheme Editor...") &view-color-edit     #f)
          ))
 
 (define page-menu-items
@@ -1208,10 +1207,12 @@
 ;;          menu item name      menu action             menu stock icon
 ;;
         `( (,(N_ "_Manager...")       &page-manager           #f)
+           ("SEPARATOR"               #f                      #f)
            (,(N_ "_Previous")         &page-prev              "gtk-go-back")
            (,(N_ "_Next")             &page-next              "gtk-go-forward")
-           (,(N_ "_Revert")           &page-revert            "gtk-revert-to-saved")
            (,(N_ "_Close")            &page-close             "gtk-close")
+           ("SEPARATOR"               #f                      #f)
+           (,(N_ "_Revert...")        &page-revert            "gtk-revert-to-saved")
            ("SEPARATOR"               #f                      #f)
            (,(N_ "Next Tab")          &page-next-tab          "gtk-go-forward")
            (,(N_ "Previous Tab")      &page-prev-tab          "gtk-go-back")
@@ -1223,27 +1224,30 @@
 ;;          menu item name      menu action             menu stock icon
 ;;
         `( (,(N_ "_Component...")     &add-component   "insert-symbol")
+           ("SEPARATOR"              #f                #f)
            (,(N_ "_Net")              &add-net         "insert-net")
            (,(N_ "B_us")              &add-bus         "insert-bus")
+           ("SEPARATOR"              #f                #f)
            (,(N_ "_Attribute...")     &add-attribute   "insert-attribute")
            (,(N_ "_Text...")          &add-text        "insert-text")
-           ("SEPARATOR"              #f)
+           ("SEPARATOR"              #f                #f)
            (,(N_ "_Line")             &add-line        "insert-line")
            (,(N_ "Pat_h")             &add-path        "insert-path")
            (,(N_ "_Box")              &add-box         "insert-box")
            (,(N_ "C_ircle")           &add-circle      "insert-circle")
            (,(N_ "A_rc")              &add-arc         "insert-arc")
            (,(N_ "_Pin")              &add-pin         "insert-pin")
+           ("SEPARATOR"              #f                #f)
            (,(N_ "Pictu_re...")       &add-picture     "insert-image")))
 
 (define hierarchy-menu-items
 ;;
 ;;          menu item name      menu action               menu stock icon
 ;;
-        `( (,(N_ "_Down Schematic")   &hierarchy-down-schematic "gtk-go-down")
-           (,(N_ "Down _Symbol")      &hierarchy-down-symbol    "gtk-goto-bottom")
-           (,(N_ "_Up")               &hierarchy-up             "gtk-go-up")
-           (,(N_ "D_ocumentation...") &hierarchy-documentation  "symbol-datasheet")))
+        `( (,(N_ "_Up")               &hierarchy-up             "gtk-go-up")
+           ("SEPARATOR"              #f                #f)
+           (,(N_ "_Down Schematic")   &hierarchy-down-schematic "gtk-go-down")
+           (,(N_ "Down _Symbol")      &hierarchy-down-symbol    "gtk-goto-bottom")))
 
 (define attributes-menu-items
 ;;
@@ -1251,45 +1255,53 @@
 ;;
         `( (,(N_ "_Attach")           &attributes-attach      "attribute-attach")
            (,(N_ "_Detach")           &attributes-detach      "attribute-detach")
+           ("SEPARATOR" #f #f)
            (,(N_ "Show _Value")       &attributes-show-value  "attribute-show-value")
            (,(N_ "Show _Name")        &attributes-show-name   "attribute-show-name")
            (,(N_ "Show _Both")        &attributes-show-both   "attribute-show-both")
            (,(N_ "_Toggle Visibility")  &attributes-visibility-toggle   #f)
-           (,(N_ "_Find Specific Text...")  &edit-find-text   "gtk-find")
-           (,(N_ "_Hide Specific Text...")  &edit-hide-text   #f)
-           (,(N_ "_Show Specific Text...")  &edit-show-text   #f)
-           (,(N_ "A_utonumber Text...")     &edit-autonumber  #f)))
+           ("SEPARATOR" #f #f)
+           (,(N_ "_Show Specific Text...") &edit-show-text   #f)
+           (,(N_ "_Hide Specific Text...") &edit-hide-text   #f)
+           (,(N_ "Show/Hide Hidden Text")  &edit-show-hidden #f)
+           ("SEPARATOR" #f #f)
+           (,(N_ "_Find Text/Check Symbol...") &edit-find-text   "gtk-find")
+           (,(N_ "A_utonumber Text...")        &edit-autonumber  #f)))
 
 (define options-menu-items
 ;;
 ;;          menu item name      menu action             menu stock icon
 ;;
-        `( (,(N_ "_Font...")                 &options-select-font)
-           (,(N_ "Text Size...")             &options-text-size)
-           (,(N_ "Cycle _grid styles")       &options-grid)
-           (,(N_ "Toggle _Snap On/Off")      &options-snap)
-           (,(N_ "Snap Grid S_pacing...")    &options-snap-size)
-           (,(N_ "Scale _up Grid Spacing")   &options-scale-up-snap-size)
-           (,(N_ "Scale _down Grid Spacing") &options-scale-down-snap-size)
-           (,(N_ "Toggle _Outline/Box")      &options-action-feedback)
-           (,(N_ "Toggle Net _Rubberband")   &options-rubberband)
-           (,(N_ "Toggle _Magnetic Net")     &options-magneticnet)
-           (,(N_ "Show _Log Window...")      &options-show-log-window)
-           (,(N_ "Show _Coord Window...")    &options-show-coord-window)))
+        `( (,(N_ "_Options...") &options-snap-size)
+           (,(N_ "_Font...")    &options-select-font)
+           ("SEPARATOR" #f #f)
+           (,(N_ "Grid +")      &options-scale-up-snap-size)
+           (,(N_ "Grid -")      &options-scale-down-snap-size)
+           ("SEPARATOR" #f #f)
+           (,(N_ "Grid Style: Cycle Dots/Mesh/Off")  &options-grid)
+           (,(N_ "Grid Snap: Cycle Grid/Resnap/Off") &options-snap)
+           ("SEPARATOR" #f #f)
+           (,(N_ "Feedback Mode: Outline/Box") &options-action-feedback)
+           (,(N_ "Net: Rubberband On/Off")     &options-rubberband)
+           (,(N_ "Net: Magnetic On/Off")       &options-magneticnet)
+           ("SEPARATOR" #f #f)
+           (,(N_ "_Coord Window") &options-show-coord-window)
+           (,(N_ "_Log Window")   &options-show-log-window)))
 
 (define help-menu-items
 ;;
 ;;          menu item name                menu action               menu stock icon
 ;;
         `(
-           (,(N_ "gschem User _Guide...")  &help-guide                "gtk-help")
-           (,(N_ "gschem _FAQ...")         &help-faq                  "help-faq")
-           (,(N_ "gEDA Docu_mentation...") &help-manual               "help-browser")
-           (,(N_ "gEDA _Wiki...")          &help-wiki                 "web-browser")
-           (,(N_ "Component D_ocumentation...") &hierarchy-documentation   "symbol-datasheet")
-           ("SEPARATOR"                   #f                        #f)
+           (,(N_ "User _Guide")  &help-guide                "gtk-help")
+           (,(N_ "_FAQ")         &help-faq                  "help-faq")
+           (,(N_ "Docu_mentation") &help-manual               "help-browser")
+           (,(N_ "_Wiki")          &help-wiki                 "web-browser")
+           ("SEPARATOR"                   #f                          #f)
+           (,(N_ "Find Component D_ocumentation") &hierarchy-documentation "symbol-datasheet")
+           ("SEPARATOR"                   #f                          #f)
            (,(N_ "_Hotkeys...")            &help-hotkeys              "preferences-desktop-keyboard-shortcuts")
-           (,(N_ "_About...")              &help-about                "gtk-about")))
+           (,(N_ "_About")              &help-about                "gtk-about")))
 
 ;
 ; Now actually add the menus.  The order here defines the order in which
