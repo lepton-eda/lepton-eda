@@ -890,72 +890,136 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
         ;; output-filename is #f, output to stdout.
         (backend-proc output-filename))))
 
+
+
 ;;; Main program
 ;;;
-(define (main)
-  (let ((code-to-eval (gnetlist-option-ref 'eval-code)))
-    (when (not (null? code-to-eval))
-      (catch #t
-        (lambda () (apply eval-string code-to-eval))
-        catch-handler)))
+( define ( main )
+( let
+  (
+  ( output-filename   (get-output-filename) )
+  ( files             (gnetlist-option-ref '()) )          ; schematics
+  ( backend           (gnetlist-option-ref 'backend) )     ; -g
+  ( interactive-mode? (gnetlist-option-ref 'interactive) ) ; -i
+  ( verbose-mode?     (gnetlist-option-ref 'verbose) )     ; -v
+  ( code-to-eval      (gnetlist-option-ref 'eval-code) )   ; -c
+  ( netlist-mode      'geda )
+  ( backend-path      #f )
+  ( schematic         #f )
+  )
 
-  (when (gnetlist-option-ref 'help)
-    (usage))
+  ; local functions:
 
-  (when (gnetlist-option-ref 'version)
-    (lepton-netlist-version)
-    (primitive-exit 0))
+  ( define ( error-no-backend )
+    (netlist-error 1 (_ "You gave neither backend to execute nor interactive mode!\n"))
+  )
 
-  ((@@ (guile-user) parse-rc) "lepton-netlist" "gnetlistrc")
-  (if (gnetlist-option-ref 'list-backends)
-      (gnetlist-backends)
-      (let ((files (gnetlist-option-ref '()))
-            (interactive-mode? (gnetlist-option-ref 'interactive))
-            (verbose-mode? (gnetlist-option-ref 'verbose)))
-        (if (and (null? files) (not interactive-mode?))
-            (netlist-error 1
-                           (_ "No schematic files specified for processing.
-Run `~A --help' for more information.
-")
-                           (car (program-arguments)))
-            (let* ((backend (gnetlist-option-ref 'backend))
-                   ;; this is a kludge to make sure that spice mode gets set
-                   (netlist-mode (if (and backend (string-prefix? "spice" backend))
-                                     'spice
-                                     'geda))
+  ( define ( error-no-sch )
+    (netlist-error 1 (_ "No schematic files specified for processing.\n~
+                         Run `~A --help' for more information.\n")
+                     (car (program-arguments)))
+  )
 
-                   ;; Search for backend scm file in load path
-                   (backend-path (and backend
-                                      (%search-load-path (format #f
-                                                                 "gnet-~A.scm"
-                                                                 backend))))
-                   (output-filename (get-output-filename)))
+  ( define ( error-backend-not-found backend )
+    (netlist-error 1 (_ "Could not find backend `~A' in load path.\n~
+                         Run `~A --list-backends' for a full list of available backends.\n")
+                     backend (car (program-arguments)))
+  )
 
-              ;; Evaluate the first set of Scheme expressions.
-              (for-each primitive-load (gnetlist-option-ref 'pre-load))
-              ;; Load backend.
-              (when backend-path (primitive-load backend-path))
-              ;; Evaluate second set of Scheme expressions.
-              (for-each primitive-load (gnetlist-option-ref 'post-load))
 
-              (when verbose-mode? (print-gnetlist-config))
+  ; This is a kludge to make sure that spice mode gets set:
+  ;
+  ( when ( and backend (string-prefix? "spice" backend) )
+    ( set! netlist-mode 'spice )
+  )
 
-              (if (or backend interactive-mode?)
-                  ;; Load backend code.
-                  (let ((schematic (set-toplevel-schematic! files netlist-mode)))
-                    (verbose-print-netlist (schematic-netlist schematic))
-                    (if interactive-mode?
-                        (lepton-repl)
-                        (if backend-path
-                            (run-backend backend output-filename)
-                            ;; If the backend couldn't be found, fail.
-                            (netlist-error 1
-                                           (_ "Could not find backend `~A' in load path.
+  ; Evaluate Scheme expression at startup (-c EXPR):
+  ;
+  ( when ( not (null? code-to-eval) )
+    ( catch #t
+      ( lambda()
+        ( apply eval-string code-to-eval )
+      )
+      catch-handler
+    )
+  )
 
-Run `~A --list-backends' for a full list of available backends.
-")
-                                           backend
-                                           (car (program-arguments))))))
-                  ;; No backend given on the command line.
-                  (netlist-error 1
-                                 (_ "You gave neither backend to execute nor interactive mode!\n"))))))))
+  ( when ( gnetlist-option-ref 'help )          ; --help (-h)
+    ( usage )
+  )
+
+  ( when ( gnetlist-option-ref 'version )       ; --version (-V)
+    ( version )
+  )
+
+  ( when ( gnetlist-option-ref 'list-backends ) ; --list-backends
+    ( gnetlist-backends )
+    ( primitive-exit 0 )
+  )
+
+  ; Parse configuration:
+  ;
+  ( (@@ (guile-user) parse-rc) "lepton-netlist" "gnetlistrc" )
+
+  ; Check input schematics:
+  ;
+  ( when ( and (null? files) (not interactive-mode?) )
+    ( error-no-sch )
+  )
+
+
+  ; Load Scheme FILE before loading backend (-l FILE):
+  ;
+  ( for-each primitive-load (gnetlist-option-ref 'pre-load) )
+
+  ; Load backend:
+  ;
+  ( when backend
+    ( set! backend-path ( %search-load-path (format #f "gnet-~A.scm" backend) ) )
+  )
+
+  ( when backend-path
+    ( primitive-load backend-path )
+  )
+
+  ; Load Scheme FILE after loading backend (-m FILE):
+  ;
+  ( for-each primitive-load (gnetlist-option-ref 'post-load) )
+
+
+  ; Verbose mode (-v): print configuration:
+  ;
+  ( when verbose-mode?
+    ( print-gnetlist-config )
+  )
+
+  ; Neither backend (-g), nor interactive mode (-i) specified:
+  ;
+  ( when ( not (or backend interactive-mode?) )
+    ( error-no-backend )
+  )
+
+  ; This sets [toplevel-schematic] global variable:
+  ;
+  ( set! schematic (set-toplevel-schematic! files netlist-mode) )
+
+  ; Verbose mode (-v): print internal netlist representation:
+  ;
+  ( when verbose-mode?
+    ( verbose-print-netlist (schematic-netlist schematic) )
+  )
+
+
+  ; Do actual work:
+  ;
+  ( if interactive-mode?
+    ( lepton-repl )   ; if
+    ( if backend-path ; else
+      ( run-backend backend output-filename ) ; if
+      ( error-backend-not-found backend )     ; else
+    )
+  )
+
+) ; let
+) ; main()
+
