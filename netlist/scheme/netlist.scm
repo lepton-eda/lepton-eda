@@ -940,7 +940,10 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
       ( lambda()
         ( apply eval-string code-to-eval )
       )
-      catch-handler
+      ( lambda( tag . args )
+        ( catch-handler tag args )
+        ( netlist-error 1 (_ "Failed to evaluate Scheme expression at startup.\n") )
+      )
     )
   )
 
