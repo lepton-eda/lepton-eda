@@ -24,15 +24,12 @@
 
   #:export (verbose-print-netlist))
 
-(define verbose-mode (gnetlist-option-ref 'verbose))
-
 (define (verbose-print-netlist netlist)
   (define (print-net net)
     (let ((package (pin-net-connection-package net))
           (pinnumber (pin-net-connection-pinnumber net)))
       (if (and package pinnumber)
-          (format #f "\t\t~A ~A [~A]
-"
+          (format #f "\t\t~A ~A [~A]\n"
                   package
                   pinnumber
                   (pin-net-id net))
@@ -52,18 +49,13 @@
     (map print-pin-info pin-list))
 
   (define (print-package-info package)
-    (format #f "component ~S
-Hierarchy tag: ~S
-~A
-"
+    (format #f "component ~S\n~
+                Hierarchy tag: ~S\n~
+                ~A\n"
             (or (package-refdes package) "SPECIAL")
             (or (package-tag package) "")
             (print-pin-list (package-pins package))))
 
-  (when verbose-mode
-   (format #t "
-Internal netlist representation:
-
-~A
-"
-           (string-join (map print-package-info netlist) ""))))
+   (format #t "\nInternal netlist representation:\n\n~
+               ~A\n"
+           (string-join (map print-package-info netlist) "")))
