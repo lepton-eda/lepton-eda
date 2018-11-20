@@ -973,7 +973,15 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
   ; Load Scheme FILE before loading backend (-l FILE):
   ;
-  ( for-each primitive-load (gnetlist-option-ref 'pre-load) )
+  ( catch #t
+    ( lambda()
+      ( for-each primitive-load (gnetlist-option-ref 'pre-load) )
+    )
+    ( lambda( tag . args )
+      ( catch-handler tag args )
+      ( netlist-error 1 (_ "Failed to load Scheme file before loading backend.\n") )
+    )
+  )
 
   ; Load backend:
   ;
@@ -982,13 +990,28 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   )
 
   ( when backend-path
-    ( primitive-load backend-path )
+    ( catch #t
+      ( lambda()
+        ( primitive-load backend-path )
+      )
+      ( lambda( tag . args )
+        ( catch-handler tag args )
+        ( netlist-error 1 (_ "Failed to load backend file.\n") )
+      )
+    )
   )
 
   ; Load Scheme FILE after loading backend (-m FILE):
   ;
-  ( for-each primitive-load (gnetlist-option-ref 'post-load) )
-
+  ( catch #t
+    ( lambda()
+      ( for-each primitive-load (gnetlist-option-ref 'post-load) )
+    )
+    ( lambda( tag . args )
+      ( catch-handler tag args )
+      ( netlist-error 1 (_ "Failed to load Scheme file after loading backend.\n") )
+    )
+  )
 
   ; Verbose mode (-v): print configuration:
   ;
