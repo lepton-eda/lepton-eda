@@ -966,6 +966,7 @@
 (global-set-key "E <Shift>B" '&edit-unembed)
 (global-set-key "E U" '&edit-update)
 (global-set-key "E N" '&edit-show-hidden)
+(global-set-key "T I" '&edit-show-hidden)
 
 (global-set-key "F W" '&file-new-window)
 (global-set-key "F N" '&file-new)
@@ -993,7 +994,7 @@
 (global-set-key "<Shift>H D" '&hierarchy-down-schematic)
 (global-set-key "<Shift>H S" '&hierarchy-down-symbol)
 (global-set-key "<Shift>H U" '&hierarchy-up)
-(global-set-key "<Shift>H O" '&hierarchy-documentation)
+(global-set-key "H O" '&hierarchy-documentation)
 
 (global-set-key "I" '&add-component)
 (global-set-key "L" '&add-line)
@@ -1005,9 +1006,10 @@
 (global-set-key "O S" '&options-snap)
 (global-set-key "O R" '&options-rubberband)
 (global-set-key "O M" '&options-magneticnet)
-(global-set-key "O <Shift>S" '&options-snap-size)
+(global-set-key "O O" '&options-snap-size)
 (global-set-key "O L" '&options-show-log-window)
 (global-set-key "O C" '&options-show-coord-window)
+(global-set-key "O F" '&options-select-font)
 
 (global-set-key "P M" '&page-manager)
 (global-set-key "P N" '&page-next)
@@ -1027,7 +1029,7 @@
 (global-set-key "T V" '&attributes-show-value)
 (global-set-key "T B" '&attributes-show-both)
 (global-set-key "T T" '&attributes-visibility-toggle)
-(global-set-key "T <Shift>F" '&edit-find-text)
+(global-set-key "T F" '&edit-find-text)
 (global-set-key "T H" '&edit-hide-text)
 (global-set-key "T <Shift>H" '&edit-show-text)
 (global-set-key "T U" '&edit-autonumber)
@@ -1181,10 +1183,10 @@
 ;;
 ;;          menu item name        menu action             menu stock icon
 ;;
-        `( (,(N_ "Right Dock")          &view-sidebar           #f)
+        `( (,(N_ "Side Dock")           &view-sidebar           #f)
            (,(N_ "Bottom Dock")         &view-status            #f)
            ("SEPARATOR"                 #f                      #f)
-           (,(N_ "Find Text State")     &view-find-text-state   #f)
+           (,(N_ "Find Text Results")   &view-find-text-state   #f)
            ("SEPARATOR"                 #f                      #f)
            (,(N_ "_Redraw")             &view-redraw            "gtk-refresh")
            (,(N_ "_Pan")                &view-pan               #f)
@@ -1260,8 +1262,8 @@
            (,(N_ "Show _Both")        &attributes-show-both   "attribute-show-both")
            (,(N_ "_Toggle Visibility")  &attributes-visibility-toggle   #f)
            ("SEPARATOR" #f #f)
-           (,(N_ "_Show Specific Text...") &edit-show-text   #f)
            (,(N_ "_Hide Specific Text...") &edit-hide-text   #f)
+           (,(N_ "_Show Specific Text...") &edit-show-text   #f)
            (,(N_ "Show/Hide Hidden Text")  &edit-show-hidden #f)
            ("SEPARATOR" #f #f)
            (,(N_ "_Find Text/Check Symbol...") &edit-find-text   "gtk-find")
