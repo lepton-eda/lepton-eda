@@ -1000,7 +1000,6 @@
 (global-set-key "M" '&edit-move)
 (global-set-key "N" '&add-net)
 
-(global-set-key "O T" '&options-text-size)
 (global-set-key "O A" '&options-action-feedback)
 (global-set-key "O G" '&options-grid)
 (global-set-key "O S" '&options-snap)
@@ -1287,7 +1286,7 @@
            ("SEPARATOR" #f #f)
            (,(N_ "_Coord Window") &options-show-coord-window)
            (,(N_ "_Log Window")   &options-show-log-window)))
-
+======
 (define help-menu-items
 ;;
 ;;          menu item name                menu action               menu stock icon

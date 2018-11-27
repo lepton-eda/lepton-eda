@@ -344,9 +344,6 @@
 (define-action-public (&help-hotkeys #:label (_ "Show Hotkeys") #:icon "preferences-desktop-keyboard-shortcuts")
   (%help-hotkeys))
 
-(define-action-public (&options-text-size #:label (_ "Set Default Text Size"))
-  (%options-text-size))
-
 (define-action-public (&options-grid #:label (_ "Switch Grid Style"))
   (%options-grid))
 
