@@ -898,11 +898,16 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 ( let
   (
   ( output-filename   (get-output-filename) )
-  ( files             (gnetlist-option-ref '()) )          ; schematics
-  ( backend           (gnetlist-option-ref 'backend) )     ; -g
-  ( interactive-mode? (gnetlist-option-ref 'interactive) ) ; -i
-  ( verbose-mode?     (gnetlist-option-ref 'verbose) )     ; -v
-  ( code-to-eval      (gnetlist-option-ref 'eval-code) )   ; -c
+  ( files             (gnetlist-option-ref '()) )            ; schematics
+  ( opt-backend       (gnetlist-option-ref 'backend) )       ; -g
+  ( opt-interactive   (gnetlist-option-ref 'interactive) )   ; -i
+  ( opt-verbose       (gnetlist-option-ref 'verbose) )       ; --verbose (-v)
+  ( opt-code-to-eval  (gnetlist-option-ref 'eval-code) )     ; -c
+  ( opt-help          (gnetlist-option-ref 'help) )          ; --help (-h)
+  ( opt-version       (gnetlist-option-ref 'version) )       ; --version (-V)
+  ( opt-list-backends (gnetlist-option-ref 'list-backends) ) ; --list-backends
+  ( opt-pre-load      (gnetlist-option-ref 'pre-load) )      ; -l
+  ( opt-post-load     (gnetlist-option-ref 'post-load) )     ; -m
   ( netlist-mode      'geda )
   ( backend-path      #f )
   ( schematic         #f )
@@ -929,16 +934,16 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
   ; This is a kludge to make sure that spice mode gets set:
   ;
-  ( when ( and backend (string-prefix? "spice" backend) )
+  ( when ( and opt-backend (string-prefix? "spice" opt-backend) )
     ( set! netlist-mode 'spice )
   )
 
   ; Evaluate Scheme expression at startup (-c EXPR):
   ;
-  ( when ( not (null? code-to-eval) )
+  ( unless ( null? opt-code-to-eval )
     ( catch #t
       ( lambda()
-        ( apply eval-string code-to-eval )
+        ( apply eval-string opt-code-to-eval )
       )
       ( lambda( tag . args )
         ( catch-handler tag args )
@@ -947,16 +952,16 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     )
   )
 
-  ( when ( gnetlist-option-ref 'help )          ; --help (-h)
+  ( when opt-help
     ( usage )
   )
 
-  ( when ( gnetlist-option-ref 'version )       ; --version (-V)
+  ( when opt-version
     ( lepton-netlist-version )
     ( primitive-exit 0 )
   )
 
-  ( when ( gnetlist-option-ref 'list-backends ) ; --list-backends
+  ( when opt-list-backends
     ( gnetlist-backends )
     ( primitive-exit 0 )
   )
@@ -967,7 +972,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
   ; Check input schematics:
   ;
-  ( when ( and (null? files) (not interactive-mode?) )
+  ( when ( and (null? files) (not opt-interactive) )
     ( error-no-sch )
   )
 
@@ -976,7 +981,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ;
   ( catch #t
     ( lambda()
-      ( for-each primitive-load (gnetlist-option-ref 'pre-load) )
+      ( for-each primitive-load opt-pre-load )
     )
     ( lambda( tag . args )
       ( catch-handler tag args )
@@ -986,8 +991,8 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
   ; Load backend:
   ;
-  ( when backend
-    ( set! backend-path ( %search-load-path (format #f "gnet-~A.scm" backend) ) )
+  ( when opt-backend
+    ( set! backend-path ( %search-load-path (format #f "gnet-~A.scm" opt-backend) ) )
   )
 
   ( when backend-path
@@ -1006,7 +1011,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ;
   ( catch #t
     ( lambda()
-      ( for-each primitive-load (gnetlist-option-ref 'post-load) )
+      ( for-each primitive-load opt-post-load )
     )
     ( lambda( tag . args )
       ( catch-handler tag args )
@@ -1016,13 +1021,13 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
   ; Verbose mode (-v): print configuration:
   ;
-  ( when verbose-mode?
+  ( when opt-verbose
     ( print-gnetlist-config )
   )
 
   ; Neither backend (-g), nor interactive mode (-i) specified:
   ;
-  ( when ( not (or backend interactive-mode?) )
+  ( unless ( or opt-backend opt-interactive )
     ( error-no-backend )
   )
 
@@ -1032,18 +1037,18 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
   ; Verbose mode (-v): print internal netlist representation:
   ;
-  ( when verbose-mode?
+  ( when opt-verbose
     ( verbose-print-netlist (schematic-netlist schematic) )
   )
 
 
   ; Do actual work:
   ;
-  ( if interactive-mode?
+  ( if opt-interactive
     ( lepton-repl )   ; if
     ( if backend-path ; else
-      ( run-backend backend output-filename ) ; if
-      ( error-backend-not-found backend )     ; else
+      ( run-backend opt-backend output-filename ) ; if
+      ( error-backend-not-found opt-backend )     ; else
     )
   )
 
