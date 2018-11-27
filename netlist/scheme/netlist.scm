@@ -952,7 +952,8 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   )
 
   ( when ( gnetlist-option-ref 'version )       ; --version (-V)
-    ( version )
+    ( lepton-netlist-version )
+    ( primitive-exit 0 )
   )
 
   ( when ( gnetlist-option-ref 'list-backends ) ; --list-backends
