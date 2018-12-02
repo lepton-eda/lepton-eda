@@ -58,7 +58,7 @@ static struct PopupEntry popup_items[] = {
   { N_("Delete"), "edit-delete", "gtk-delete" },
   { "SEPARATOR", NULL, NULL },
   { N_("Down Schematic"), "hierarchy-down-schematic", "gtk-go-down" },
-  { N_("Down Symbol"), "hierarchy-down-symbol", "gtk-go-bottom" },
+  { N_("Down Symbol"), "hierarchy-down-symbol", "gtk-goto-bottom" },
   { N_("Up"), "hierarchy-up", "gtk-go-up" },
 
   { NULL, NULL, NULL }, /* Guard */
