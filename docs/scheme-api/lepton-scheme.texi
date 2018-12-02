@@ -2728,13 +2728,14 @@ the @code{(gschem util)} module.
 Open @var{uri} in the registered default application associated for
 that type of file or protocol.  URI should be fully-qualified URI;
 which URIs can be handled by @code{show-uri} will depend on the system
-configuration.
+configuration.  Raises @code{misc-error} on failure.
 @end defun
 
 @defun show-file filename
 Displays a file in the registered default application for files of
 that type. @var{filename} should be the absolute path and filename of
-a local file.
+a local file.  Convenience function which calls
+@code{(show-uri "file://@var{filename}")}
 @end defun
 
 @node Concept Index
