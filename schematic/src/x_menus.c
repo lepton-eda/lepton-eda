@@ -52,7 +52,7 @@ static struct PopupEntry popup_items[] = {
   { "SEPARATOR", NULL, NULL },
   { N_("Select"), "edit-select", "select" },
   { N_("Edit..."), "edit-edit", NULL },
-  { N_("Edit Pin Type..."), "edit-pin-type", NULL },
+  { N_("Object Properties..."), "edit-object-properties", NULL },
   { N_("Copy"), "edit-copy", "clone" },
   { N_("Move"), "edit-move", NULL },
   { N_("Delete"), "edit-delete", "gtk-delete" },
