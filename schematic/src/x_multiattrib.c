@@ -2584,7 +2584,7 @@ multiattrib_populate_liststore (Multiattrib *multiattrib,
 static void
 append_dialog_title_extra (GString *title_string,
                            int *num_title_extras,
-                           char *text,
+                           const char *text,
                            ...)
 {
   va_list args;
@@ -2596,7 +2596,7 @@ append_dialog_title_extra (GString *title_string,
 }
 
 static void
-update_dialog_title (Multiattrib *multiattrib, char *complex_title_name)
+update_dialog_title (Multiattrib *multiattrib, const char *complex_title_name)
 {
   GString *title_string = g_string_new (_("Edit Attributes"));
   int num_title_extras = 0;
@@ -2666,7 +2666,7 @@ multiattrib_update (Multiattrib *multiattrib)
   gboolean list_sensitive;
   gboolean add_sensitive;
   GList *model_rows = NULL;
-  char *complex_title_name = NULL;
+  const char *complex_title_name = NULL;
 
   show_inherited =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (multiattrib->show_inherited));
