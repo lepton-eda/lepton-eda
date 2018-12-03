@@ -267,7 +267,7 @@ static void newtext_init(NewText *dialog)
   gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
 
-  label = gtk_label_new (_("Color:"));
+  label = gtk_label_new_with_mnemonic (_("Colo_r:"));
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
   gtk_table_attach (GTK_TABLE(table),
                     label,
@@ -282,9 +282,12 @@ static void newtext_init(NewText *dialog)
 
   dialog->colorcb = x_colorcb_new ();
   x_colorcb_set_index(dialog->colorcb, TEXT_COLOR);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->colorcb);
+
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->colorcb, 1,2,0,1);
 
-  label = gtk_label_new (_("Size:"));
+  label = gtk_label_new_with_mnemonic (_("_Size:"));
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
   gtk_table_attach (GTK_TABLE(table),
                     label,
@@ -299,9 +302,11 @@ static void newtext_init(NewText *dialog)
 
   dialog->textsizecb = gschem_integer_combo_box_new();
 
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->textsizecb);
+
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->textsizecb, 1,2,1,2);
 
-  label = gtk_label_new (_("Alignment:"));
+  label = gtk_label_new_with_mnemonic (_("Ali_gnment:"));
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
   gtk_table_attach (GTK_TABLE(table),
                     label,
@@ -316,9 +321,12 @@ static void newtext_init(NewText *dialog)
 
   dialog->aligncb = gschem_alignment_combo_new ();
   gschem_alignment_combo_set_align(dialog->aligncb, LOWER_LEFT);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->aligncb);
+
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->aligncb, 1,2,2,3);
 
-  label = gtk_label_new (_("Rotation:"));
+  label = gtk_label_new_with_mnemonic (_("Ro_tation:"));
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
   gtk_table_attach (GTK_TABLE(table),
                     label,
@@ -333,6 +341,9 @@ static void newtext_init(NewText *dialog)
 
   dialog->rotatecb = gschem_rotation_combo_new ();
   gschem_rotation_combo_set_angle(dialog->rotatecb, 0);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->rotatecb);
+
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->rotatecb, 1,2,3,4);
 
 
