@@ -1164,6 +1164,9 @@ create_lib_treeview (Compselect *compselect)
   gtk_container_add (GTK_CONTAINER (button),
                      gtk_image_new_from_stock (GTK_STOCK_CLEAR,
                                                GTK_ICON_SIZE_SMALL_TOOLBAR));
+
+  gtk_widget_set_tooltip_text (button, _("Reset filter"));
+
   g_signal_connect (button,
                     "clicked",
                     G_CALLBACK (compselect_callback_filter_button_clicked),
@@ -1171,6 +1174,7 @@ create_lib_treeview (Compselect *compselect)
   /* add the clear button to the filter area */
   gtk_box_pack_start (GTK_BOX (hbox), button,
                       FALSE, FALSE, 0);
+
   /* set clear button of compselect */
   compselect->button_clear = GTK_BUTTON (button);
 
@@ -1184,6 +1188,8 @@ create_lib_treeview (Compselect *compselect)
   gtk_container_add (GTK_CONTAINER (button),
                      gtk_image_new_from_stock (GTK_STOCK_REFRESH,
                                             GTK_ICON_SIZE_SMALL_TOOLBAR));
+  gtk_widget_set_tooltip_text (button, _("Reload all libraries"));
+
   /* add the refresh button to the filter area */
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   g_signal_connect (button,
