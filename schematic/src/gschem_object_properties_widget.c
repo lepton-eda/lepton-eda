@@ -169,12 +169,12 @@ create_fill_property_widget (GschemObjectPropertiesWidget *dialog)
   GtkWidget *table;
   GtkWidget *widget[6];
 
-  label[0] = gschem_dialog_misc_create_property_label (_("Fill Type:"));
-  label[1] = gschem_dialog_misc_create_property_label (_("Line Width:"));
-  label[2] = gschem_dialog_misc_create_property_label (_("Angle 1:"));
-  label[3] = gschem_dialog_misc_create_property_label (_("Pitch 1:"));
-  label[4] = gschem_dialog_misc_create_property_label (_("Angle 2:"));
-  label[5] = gschem_dialog_misc_create_property_label (_("Pitch 2:"));
+  label[0] = gschem_dialog_misc_create_property_label (_("_Fill Type:"));
+  label[1] = gschem_dialog_misc_create_property_label (_("Lin_e Width:"));
+  label[2] = gschem_dialog_misc_create_property_label (_("Angle _1:"));
+  label[3] = gschem_dialog_misc_create_property_label (_("P_itch 1:"));
+  label[4] = gschem_dialog_misc_create_property_label (_("Angle _2:"));
+  label[5] = gschem_dialog_misc_create_property_label (_("Pitc_h 2:"));
 
   widget[0] = dialog->fstylecb = x_fstylecb_new ();
   widget[1] = dialog->widthe = gschem_integer_combo_box_new ();
@@ -252,7 +252,7 @@ create_general_property_widget (GschemObjectPropertiesWidget *dialog)
   GtkWidget *table;
   GtkWidget *widget[1];
 
-  label[0] = gschem_dialog_misc_create_property_label (_("Color:"));
+  label[0] = gschem_dialog_misc_create_property_label (_("Colo_r:"));
 
   widget[0] = dialog->colorcb = x_colorcb_new ();
 
@@ -281,11 +281,11 @@ create_line_property_widget (GschemObjectPropertiesWidget *dialog)
   GtkWidget *table;
   GtkWidget *widget[5];
 
-  label[0] = gschem_dialog_misc_create_property_label (_("Type:"));
-  label[1] = gschem_dialog_misc_create_property_label (_("Width:"));
-  label[2] = gschem_dialog_misc_create_property_label (_("Dash Length:"));
-  label[3] = gschem_dialog_misc_create_property_label (_("Dash Space:"));
-  label[4] = gschem_dialog_misc_create_property_label (_("Cap style:"));
+  label[0] = gschem_dialog_misc_create_property_label (_("_Type:"));
+  label[1] = gschem_dialog_misc_create_property_label (_("_Width:"));
+  label[2] = gschem_dialog_misc_create_property_label (_("Dash _Length:"));
+  label[3] = gschem_dialog_misc_create_property_label (_("Dash _Space:"));
+  label[4] = gschem_dialog_misc_create_property_label (_("C_ap style:"));
 
   widget[0] = dialog->line_type = x_linetypecb_new ();
   widget[1] = dialog->width_entry = gschem_integer_combo_box_new ();
@@ -348,7 +348,7 @@ create_pin_property_widget (GschemObjectPropertiesWidget *dialog)
   GtkWidget *table;
   GtkWidget *widget[1];
 
-  label[0] = gschem_dialog_misc_create_property_label (_("Pin Type:"));
+  label[0] = gschem_dialog_misc_create_property_label (_("_Pin Type:"));
 
   widget[0] = dialog->pin_type = gschem_pin_type_combo_new ();
 
