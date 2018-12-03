@@ -49,14 +49,14 @@ Get the directory where gEDA documentation is stored."
 
      (lambda (dir)
        (let ((docdir
-              (string-join (list (guess-prefix dir)
+              (string-join (list dir
                                  "share" "doc" "lepton-eda")
                            file-name-separator-string)))
          (and (false-if-exception
                (eq? 'directory (stat:type (stat docdir))))
               docdir)))
 
-     (sys-data-dirs)))
+     (filter-map guess-prefix (sys-data-dirs))))
 
   (or (guess-docdir)
       (if (platform? 'win32-native)
