@@ -1120,12 +1120,9 @@ create_lib_treeview (Compselect *compselect)
                                           NULL));
 
   /* create the entry label */
-  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
-                                    /* GtkMisc */
-                                    "xalign", 0.0,
-                                    /* GtkLabel */
-                                    "label",  _("Filter:"),
-                                    NULL));
+  label = gtk_label_new_with_mnemonic (_("_Filter:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+
   /* add the search label to the filter area */
   gtk_box_pack_start (GTK_BOX (hbox), label,
                       FALSE, FALSE, 0);
@@ -1139,6 +1136,8 @@ create_lib_treeview (Compselect *compselect)
                     "changed",
                     G_CALLBACK (compselect_callback_filter_entry_changed),
                     compselect);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
 
   /* now that that we have an entry, set the filter func of model */
   gtk_tree_model_filter_set_visible_func ((GtkTreeModelFilter*)model,
@@ -1462,11 +1461,11 @@ compselect_constructor (GType type,
 
   inuseview = create_inuse_treeview (compselect);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), inuseview,
-                            gtk_label_new (_("In Use")));
+                            gtk_label_new_with_mnemonic (_("In Us_e")));
 
   libview = create_lib_treeview (compselect);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), libview,
-                            gtk_label_new (_("Libraries")));
+                            gtk_label_new_with_mnemonic (_("Lib_raries")));
 
   /* include the vertical box in horizontal box */
   gtk_paned_pack1 (GTK_PANED (hpaned), notebook, TRUE, FALSE);
