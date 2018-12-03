@@ -2166,7 +2166,7 @@ multiattrib_init (Multiattrib *multiattrib)
   gtk_box_pack_start (GTK_BOX (attrib_vbox), scrolled_win, TRUE, TRUE, 0);
 
   /* create the show inherited button */
-  show_inherited = gtk_check_button_new_with_label (_("Show inherited attributes"));
+  show_inherited = gtk_check_button_new_with_mnemonic (_("Sho_w inherited attributes"));
   multiattrib->show_inherited = show_inherited;
   gtk_box_pack_start (GTK_BOX (attrib_vbox), show_inherited, FALSE, FALSE, 0);
 
@@ -2193,19 +2193,19 @@ multiattrib_init (Multiattrib *multiattrib)
                                     NULL));
 
   /*   - the name entry: a GtkComboBoxEntry */
-  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
-                                    /* GtkMisc */
-                                    "xalign", 0.0,
-                                    "yalign", 0.5,
-                                    /* GtkLabel */
-                                    "label",  _("Name:"),
-                                    NULL));
+  label = gtk_label_new_with_mnemonic (_("_Name:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+
   combo = GTK_WIDGET (g_object_new (GTK_TYPE_COMBO,
                                     /* GtkCombo */
                                     "value-in-list", FALSE,
                                     NULL));
   multiattrib_init_attrib_names (GTK_COMBO (combo));
   multiattrib->combo_name = GTK_COMBO (combo);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label),
+                                 multiattrib->combo_name->entry);
+
   gtk_table_attach (GTK_TABLE (table), label,
                     0, 1, 0, 1,
                     (GtkAttachOptions) 0,
@@ -2218,13 +2218,9 @@ multiattrib_init (Multiattrib *multiattrib)
                     6, 3);
 
   /*   - the value entry: a GtkEntry */
-  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
-                                    /* GtkMisc */
-                                    "xalign", 0.0,
-                                    "yalign", 0.5,
-                                    /* GtkLabel */
-                                    "label",  _("Value:"),
-                                    NULL));
+  label = gtk_label_new_with_mnemonic (_("_Value:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+
   scrolled_win = GTK_WIDGET (
                              g_object_new (GTK_TYPE_SCROLLED_WINDOW,
                                            /* GtkScrolledWindow */
@@ -2250,6 +2246,9 @@ multiattrib_init (Multiattrib *multiattrib)
                     "grab-focus",
                     G_CALLBACK (multiattrib_callback_value_grab_focus),
                     multiattrib);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), textview);
+
   /* Save the GTK_STATE_NORMAL color so we can work around GtkTextView's
    * stubborn refusal to draw with GTK_STATE_INSENSITIVE later on */
   style = gtk_widget_get_style (textview);
@@ -2278,11 +2277,9 @@ multiattrib_init (Multiattrib *multiattrib)
                     6, 3);
 
   /*   - the visible status */
-  button = GTK_WIDGET (g_object_new (GTK_TYPE_CHECK_BUTTON,
-                                     /* GtkButton */
-                                     "label", _("Visible"),
-                                     "active", TRUE,
-                                     NULL));
+  button = gtk_check_button_new_with_mnemonic (_("Vi_sible"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+
   multiattrib->button_visible = GTK_CHECK_BUTTON (button);
   gtk_table_attach (GTK_TABLE (table), button,
                     0, 1, 2, 3,
