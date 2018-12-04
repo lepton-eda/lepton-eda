@@ -80,13 +80,13 @@ static void
 notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemMacroWidget *widget);
 
 static void
-history_add (GschemMacroWidget* widget);
+history_add (GtkListStore* store, const gchar* line);
 
 static void
-history_save (GschemMacroWidget* widget);
+history_save (GtkListStore* store);
 
 static void
-history_load (GschemMacroWidget* widget);
+history_load (GtkListStore* store);
 
 
 
@@ -105,8 +105,9 @@ activate_entry (GtkWidget *entry, GschemMacroWidget *widget)
   {
     gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_OK);
 
-    history_add (widget);
-    history_save (widget);
+    history_add  (widget->store,
+                  gtk_entry_get_text (GTK_ENTRY (widget->entry)));
+    history_save (widget->store);
   }
   else
   {
@@ -137,8 +138,9 @@ click_evaluate (GtkWidget *entry, GschemMacroWidget *widget)
   {
     gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_OK);
 
-    history_add (widget);
-    history_save (widget);
+    history_add  (widget->store,
+                  gtk_entry_get_text (GTK_ENTRY (widget->entry)));
+    history_save (widget->store);
   }
 }
 
@@ -353,7 +355,7 @@ gschem_macro_widget_init (GschemMacroWidget *widget)
 
   /* load command history:
   */
-  history_load (widget);
+  history_load (widget->store);
 
 
   button_box = gtk_hbutton_box_new ();
@@ -465,28 +467,25 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
 
 
-/*! \brief Add current command to the history
+/*! \brief Add a string to history
+ *
+ *  \param store GtkListStore history container
+ *  \param line  string to be added to history
  */
 static void
-history_add (GschemMacroWidget* widget)
+history_add (GtkListStore* store, const gchar* line)
 {
-  g_return_if_fail (widget != NULL);
+  g_return_if_fail (store != NULL);
+  g_return_if_fail (line != NULL);
 
-  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) <= 0)
-  {
-    return;
-  }
-
-  /* get current command:
-  */
-  const gchar* current = gtk_entry_get_text (GTK_ENTRY (widget->entry));
+  const gint column = 0;
 
   /* determine the most recent entry in history:
   */
   GtkTreeIter iter;
   gchar* last = NULL;
 
-  GtkTreeModel* mod = gtk_combo_box_get_model (GTK_COMBO_BOX (widget->combo));
+  GtkTreeModel* mod = GTK_TREE_MODEL (store);
 
   if (gtk_tree_model_get_iter_first (mod, &iter))
   {
@@ -495,12 +494,12 @@ history_add (GschemMacroWidget* widget)
 
   /* do not save duplicated consequent commands:
   */
-  if (last == NULL || g_strcmp0 (last, current) != 0)
+  if (last == NULL || g_strcmp0 (last, line) != 0)
   {
     /* add current command to the list store:
     */
-    gtk_list_store_prepend (widget->store, &iter);
-    gtk_list_store_set (widget->store, &iter, 0, current, -1);
+    gtk_list_store_prepend (store, &iter);
+    gtk_list_store_set (store, &iter, column, line, -1);
   }
 
   g_free (last);
@@ -509,14 +508,16 @@ history_add (GschemMacroWidget* widget)
 
 
 
-/*! \brief Save macro widget command history
+/*! \brief Save history to configuration
+ *
+ *  \param store GtkListStore history container
  */
 static void
-history_save (GschemMacroWidget* widget)
+history_save (GtkListStore* store)
 {
-  g_return_if_fail (widget != NULL);
+  g_return_if_fail (store != NULL);
 
-  GtkTreeModel* mod = gtk_combo_box_get_model (GTK_COMBO_BOX (widget->combo));
+  GtkTreeModel* mod = GTK_TREE_MODEL (store);
   GtkTreeIter iter;
 
   if (!gtk_tree_model_get_iter_first (mod, &iter))
@@ -566,12 +567,16 @@ history_save (GschemMacroWidget* widget)
 
 
 
-/*! \brief Load macro widget command history
+/*! \brief Load history from configuration
+ *
+ *  \param store GtkListStore history container
  */
 static void
-history_load (GschemMacroWidget* widget)
+history_load (GtkListStore* store)
 {
-  g_return_if_fail (widget != NULL);
+  g_return_if_fail (store != NULL);
+
+  const gint column = 0;
 
   /* get config context:
   */
@@ -594,8 +599,8 @@ history_load (GschemMacroWidget* widget)
     */
     for (gint i = 0; i < len; ++i)
     {
-      gtk_list_store_append (widget->store, &iter);
-      gtk_list_store_set (widget->store, &iter, 0, lines[i], -1);
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter, column, lines[i], -1);
     }
 
     g_strfreev (lines);
