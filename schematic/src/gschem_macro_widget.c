@@ -79,6 +79,15 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 static void
 notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemMacroWidget *widget);
 
+static void
+history_add (GschemMacroWidget* widget);
+
+static void
+history_save (GschemMacroWidget* widget);
+
+static void
+history_load (GschemMacroWidget* widget);
+
 
 
 static GObjectClass *gschem_macro_widget_parent_class = NULL;
@@ -92,10 +101,15 @@ activate_entry (GtkWidget *entry, GschemMacroWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
-  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0) {
+  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0)
+  {
     gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_OK);
+
+    history_add (widget);
+    history_save (widget);
   }
-  else {
+  else
+  {
     gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_CANCEL);
   }
 }
@@ -119,8 +133,12 @@ click_evaluate (GtkWidget *entry, GschemMacroWidget *widget)
 {
   g_return_if_fail (widget != NULL);
 
-  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0) {
+  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0)
+  {
     gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_OK);
+
+    history_add (widget);
+    history_save (widget);
   }
 }
 
@@ -333,6 +351,11 @@ gschem_macro_widget_init (GschemMacroWidget *widget)
   widget->entry = gtk_bin_get_child (GTK_BIN (widget->combo));
 
 
+  /* load command history:
+  */
+  history_load (widget);
+
+
   button_box = gtk_hbutton_box_new ();
   gtk_widget_set_visible (button_box, TRUE);
   gtk_box_pack_start (GTK_BOX (content), button_box, FALSE, FALSE, 0);
@@ -439,3 +462,144 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
   }
 }
+
+
+
+/*! \brief Add current command to the history
+ */
+static void
+history_add (GschemMacroWidget* widget)
+{
+  g_return_if_fail (widget != NULL);
+
+  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) <= 0)
+  {
+    return;
+  }
+
+  /* get current command:
+  */
+  const gchar* current = gtk_entry_get_text (GTK_ENTRY (widget->entry));
+
+  /* determine the most recent entry in history:
+  */
+  GtkTreeIter iter;
+  gchar* last = NULL;
+
+  GtkTreeModel* mod = gtk_combo_box_get_model (GTK_COMBO_BOX (widget->combo));
+
+  if (gtk_tree_model_get_iter_first (mod, &iter))
+  {
+    gtk_tree_model_get (mod, &iter, 0, &last, -1);
+  }
+
+  /* do not save duplicated consequent commands:
+  */
+  if (last == NULL || g_strcmp0 (last, current) != 0)
+  {
+    /* add current command to the list store:
+    */
+    gtk_list_store_prepend (widget->store, &iter);
+    gtk_list_store_set (widget->store, &iter, 0, current, -1);
+  }
+
+  g_free (last);
+
+} /* history_add() */
+
+
+
+/*! \brief Save macro widget command history
+ */
+static void
+history_save (GschemMacroWidget* widget)
+{
+  g_return_if_fail (widget != NULL);
+
+  GtkTreeModel* mod = gtk_combo_box_get_model (GTK_COMBO_BOX (widget->combo));
+  GtkTreeIter iter;
+
+  if (!gtk_tree_model_get_iter_first (mod, &iter))
+  {
+    /* the history is empty */
+    return;
+  }
+
+
+  /* allocate an array:
+  */
+  gint count = gtk_tree_model_iter_n_children (mod, NULL);
+
+  gchar** lines = g_malloc0_n (count + 1, sizeof(gchar*));
+  lines[ count ] = NULL;
+
+  /* add elements from the list store to [lines] array:
+  */
+  gint i = 0;
+
+  do
+  {
+    gtk_tree_model_get (mod, &iter, 0, &lines[ i++ ], -1);
+  }
+  while (gtk_tree_model_iter_next (mod, &iter));
+
+
+  /* get config context:
+  */
+  EdaConfig* ctx = eda_config_get_cache_context();
+
+  /* write configuration:
+  */
+  eda_config_set_string_list(ctx,
+                             "schematic.macro-widget",
+                             "history",
+                             (const gchar**) lines,
+                             count);
+  eda_config_save (ctx, NULL);
+
+
+  /* free() array and its elements:
+  */
+  g_strfreev (lines);
+
+} /* history_save() */
+
+
+
+/*! \brief Load macro widget command history
+ */
+static void
+history_load (GschemMacroWidget* widget)
+{
+  g_return_if_fail (widget != NULL);
+
+  /* get config context:
+  */
+  EdaConfig* ctx = eda_config_get_cache_context();
+
+  /* read configuration:
+  */
+  gsize len = 0;
+  gchar** lines = eda_config_get_string_list (ctx,
+                                             "schematic.macro-widget",
+                                             "history",
+                                             &len,
+                                             NULL);
+
+  if (lines != NULL && len > 0)
+  {
+    GtkTreeIter iter;
+
+    /* populate the list store:
+    */
+    for (gint i = 0; i < len; ++i)
+    {
+      gtk_list_store_append (widget->store, &iter);
+      gtk_list_store_set (widget->store, &iter, 0, lines[i], -1);
+    }
+
+    g_strfreev (lines);
+  }
+
+} /* history_load() */
+
