@@ -312,9 +312,26 @@ gschem_macro_widget_init (GschemMacroWidget *widget)
   gtk_widget_set_visible (widget->label, TRUE);
   gtk_box_pack_start (GTK_BOX (content), widget->label, FALSE, FALSE, 0);
 
-  widget->entry = gtk_entry_new ();
-  gtk_widget_set_visible (widget->entry, TRUE);
-  gtk_box_pack_start (GTK_BOX (content), widget->entry, TRUE, TRUE, 0);
+
+  /* command history list store:
+  */
+  widget->store = gtk_list_store_new (1, G_TYPE_STRING);
+  GtkTreeModel* model = GTK_TREE_MODEL (widget->store);
+
+
+  /* command entry combo box:
+  */
+  widget->combo = gtk_combo_box_new_with_model_and_entry (model);
+
+  gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (widget->combo), 0);
+  gtk_box_pack_start (GTK_BOX (content), widget->combo, TRUE, TRUE, 0);
+  gtk_widget_set_visible (widget->combo, TRUE);
+
+
+  /* GtkEntry inside the combo box:
+  */
+  widget->entry = gtk_bin_get_child (GTK_BIN (widget->combo));
+
 
   button_box = gtk_hbutton_box_new ();
   gtk_widget_set_visible (button_box, TRUE);

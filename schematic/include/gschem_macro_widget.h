@@ -40,6 +40,9 @@ struct _GschemMacroWidget
 {
   GtkInfoBar parent;
 
+  GtkListStore* store;
+
+  GtkWidget *combo;
   GtkWidget *entry;
   GtkWidget *evaluate_button;
   GtkWidget *label;
