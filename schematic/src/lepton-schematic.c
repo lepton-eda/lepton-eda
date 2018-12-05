@@ -293,8 +293,9 @@ void main_prog(void *closure, int argc, char *argv[])
   }
 
   /* open up log window on startup */
-  if (w_current->log_window == MAP_ON_STARTUP) {
-    x_log_open (w_current);
+  if (w_current->log_window == MAP_ON_STARTUP)
+  {
+    x_widgets_show_log (w_current);
   }
 
   /* if there were any symbols which had major changes, put up an error */

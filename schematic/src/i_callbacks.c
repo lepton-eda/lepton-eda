@@ -2829,7 +2829,7 @@ DEFINE_I_CALLBACK(options_show_log_window)
 
   g_return_if_fail (w_current != NULL);
 
-  x_log_open (w_current);
+  x_widgets_show_log (w_current);
 }
 
 
