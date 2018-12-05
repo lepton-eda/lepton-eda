@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,6 +61,15 @@ log_message (GschemLogWidgetClass *klass, const gchar *message, const gchar *sty
 
 static void
 scroll_to_bottom (GtkTextBuffer* buffer, GschemLogWidget* widget);
+
+static void
+log_window_clear (GtkMenuItem* item, gpointer data);
+
+static void
+populate_popup_menu (GtkTextView* txtview,
+                     GtkMenu*     menu,
+                     gpointer     data);
+
 
 
 /*!
@@ -273,6 +283,7 @@ create_text_buffer()
 }
 
 
+
 /*! \brief initialize instance
  *
  *  \param [in] widget an instance of the widget
@@ -345,13 +356,21 @@ instance_init (GschemLogWidget *widget)
 
   gtk_container_add (GTK_CONTAINER (scrolled), GTK_WIDGET (widget->viewer));
 
+
   g_signal_connect (klass->buffer,
                     "changed",
                     G_CALLBACK (&changed_cb),
                     widget);
 
+  g_signal_connect (widget->viewer,
+                    "populate-popup",
+                    G_CALLBACK (&populate_popup_menu),
+                    NULL);
+
+
   scroll_to_bottom (klass->buffer, widget);
-}
+
+} /* instance_init() */
 
 
 
@@ -390,5 +409,70 @@ scroll_to_bottom (GtkTextBuffer* buffer, GschemLogWidget* widget)
                                 TRUE, /* use_align */
                                 0.0,  /* xalign: 0 => left */
                                 1.0); /* yalign: 1 => bottom */
-}
+
+} /* scroll_to_bottom() */
+
+
+
+/*! \brief "activate" signal handler for "clear log window" menu item
+ *
+ *  \par Function Description
+ *  Deletes content of the log text view
+ *
+ *  \param item     menu item
+ *  \param data     user data (log text view widget)
+ */
+static void
+log_window_clear (GtkMenuItem* item, gpointer data)
+{
+  GtkTextView* txtview = (GtkTextView*) data;
+  g_return_if_fail (txtview != NULL);
+
+  GtkTextBuffer* buffer = gtk_text_view_get_buffer (txtview);
+  g_return_if_fail (buffer != NULL);
+
+  GtkTextIter start;
+  gtk_text_buffer_get_start_iter (buffer, &start);
+
+  GtkTextIter end;
+  gtk_text_buffer_get_end_iter (buffer, &end);
+
+  gtk_text_buffer_delete (buffer, &start, &end);
+
+} /* log_window_clear() */
+
+
+
+/*! \brief "populate-popup" signal handler for the log text view
+ *
+ *  \par Function Description
+ *  Extends popup menu for the log text view
+ *
+ *  \param txtview  log text view widget
+ *  \param menu     context menu to be extended
+ *  \param data     user data (not used)
+ */
+static void
+populate_popup_menu (GtkTextView* txtview,
+                     GtkMenu*     menu,
+                     gpointer     data)
+{
+  /* Add separator:
+  */
+  GtkWidget* separ = gtk_separator_menu_item_new();
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), separ);
+  gtk_widget_show (separ);
+
+  /* Add "Clear Log Window" menu item:
+  */
+  GtkWidget* item = gtk_menu_item_new_with_mnemonic (_("Clear Log _Window"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_show (item);
+
+  g_signal_connect (G_OBJECT (item),
+                    "activate",
+                    G_CALLBACK (&log_window_clear),
+                    txtview);
+
+} /* populate_popup_menu() */
 
