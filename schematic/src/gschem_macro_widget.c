@@ -366,6 +366,14 @@ gschem_macro_widget_init (GschemMacroWidget *widget)
   history_load (widget->store);
 
 
+  /* enable text completion in the command entry:
+  */
+  GtkEntryCompletion* comp = gtk_entry_completion_new();
+  gtk_entry_completion_set_model (comp, GTK_TREE_MODEL (widget->store));
+  gtk_entry_completion_set_text_column (comp, 0);
+  gtk_entry_set_completion (GTK_ENTRY(widget->entry), comp);
+
+
   button_box = gtk_hbutton_box_new ();
   gtk_widget_set_visible (button_box, TRUE);
   gtk_box_pack_start (GTK_BOX (content), button_box, FALSE, FALSE, 0);
