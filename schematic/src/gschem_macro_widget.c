@@ -88,6 +88,9 @@ history_save (GtkListStore* store);
 static void
 history_load (GtkListStore* store);
 
+static void
+command_entry_set_font (GtkWidget* entry);
+
 
 
 static GObjectClass *gschem_macro_widget_parent_class = NULL;
@@ -353,6 +356,11 @@ gschem_macro_widget_init (GschemMacroWidget *widget)
   widget->entry = gtk_bin_get_child (GTK_BIN (widget->combo));
 
 
+  /* set font for the command entry:
+  */
+  command_entry_set_font (widget->entry);
+
+
   /* load command history:
   */
   history_load (widget->store);
@@ -607,4 +615,51 @@ history_load (GtkListStore* store)
   }
 
 } /* history_load() */
+
+
+
+/*! \brief Set font for the command entry widget
+ *
+ *  \par Function Description
+ *  Read custom font configuration from the "font" key
+ *  in the "schematic.macro-widget" group. If the key
+ *  exists and contains some font name (e.g. "Monospace 12"),
+ *  set macro widget text entry's font to that value.
+ *
+ *
+ *  \param entry  GtkEntry widget inside macro command combo box
+ */
+static void
+command_entry_set_font (GtkWidget* entry)
+{
+  g_return_if_fail (entry != NULL);
+
+  gchar* cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  if (cfg == NULL)
+  {
+    return;
+  }
+
+  GError* err = NULL;
+  gchar* font = eda_config_get_string (cfg,
+                                       "schematic.macro-widget",
+                                       "font",
+                                       &err);
+
+  if (err == NULL)
+  {
+    PangoFontDescription* fdesc = pango_font_description_from_string (font);
+
+    gtk_widget_modify_font (entry, fdesc);
+
+    pango_font_description_free (fdesc);
+    g_free (font);
+  }
+
+  g_clear_error (&err);
+
+} /* combobox_init_font() */
 
