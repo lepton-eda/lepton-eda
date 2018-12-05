@@ -144,17 +144,6 @@ x_log_message (const gchar *log_domain, GLogLevelFlags log_level, const gchar *m
 }
 
 
-/*!
- *  \brief Open the Log window
- *
- *  Selects the notebook tab that contains the status log widget
- */
-void
-x_log_open (GschemToplevel *w_current)
-{
-  x_widgets_show_log (w_current);
-}
-
 
 /*!
  *  \brief Add a message to the log window

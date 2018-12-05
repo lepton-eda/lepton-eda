@@ -687,7 +687,6 @@ GtkListStore* x_integerls_new_with_values (const char *value[], int count);
 void x_integerls_add_value (GtkListStore *store, const char *value);
 int x_integerls_get_value_column ();
 /* gschem_log_widget.c */
-void x_log_open (GschemToplevel *w_current);
 void x_log_message (const gchar *log_domain,
                     GLogLevelFlags log_level,
                     const gchar *message);
