@@ -22,6 +22,10 @@
  * \brief A widget for entering macros
  */
 
+#define MACRO_WIDGET_HISTORY_MAX 7
+
+
+
 #define GSCHEM_TYPE_MACRO_WIDGET           (gschem_macro_widget_get_type())
 #define GSCHEM_MACRO_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_MACRO_WIDGET, GschemMacroWidget))
 #define GSCHEM_MACRO_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_MACRO_WIDGET, GschemMacroWidgetClass))

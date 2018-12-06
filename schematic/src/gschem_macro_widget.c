@@ -89,6 +89,9 @@ static void
 history_load (GtkListStore* store);
 
 static void
+history_truncate (GtkListStore* store);
+
+static void
 command_entry_set_font (GtkWidget* entry);
 
 
@@ -110,6 +113,7 @@ activate_entry (GtkWidget *entry, GschemMacroWidget *widget)
 
     history_add  (widget->store,
                   gtk_entry_get_text (GTK_ENTRY (widget->entry)));
+    history_truncate (widget->store);
     history_save (widget->store);
   }
   else
@@ -143,6 +147,7 @@ click_evaluate (GtkWidget *entry, GschemMacroWidget *widget)
 
     history_add  (widget->store,
                   gtk_entry_get_text (GTK_ENTRY (widget->entry)));
+    history_truncate (widget->store);
     history_save (widget->store);
   }
 }
@@ -364,6 +369,7 @@ gschem_macro_widget_init (GschemMacroWidget *widget)
   /* load command history:
   */
   history_load (widget->store);
+  history_truncate (widget->store);
 
 
   /* enable text completion in the command entry:
@@ -371,7 +377,7 @@ gschem_macro_widget_init (GschemMacroWidget *widget)
   GtkEntryCompletion* comp = gtk_entry_completion_new();
   gtk_entry_completion_set_model (comp, GTK_TREE_MODEL (widget->store));
   gtk_entry_completion_set_text_column (comp, 0);
-  gtk_entry_set_completion (GTK_ENTRY(widget->entry), comp);
+  gtk_entry_set_completion (GTK_ENTRY (widget->entry), comp);
 
 
   button_box = gtk_hbutton_box_new ();
@@ -524,6 +530,71 @@ history_add (GtkListStore* store, const gchar* line)
 
 
 
+/*! \brief Truncate the history list
+ *
+ *  \par Function Description
+ *  Read max history size configuration from the "history-max"
+ *  key in the "schematic.macro-widget" group (USER context).
+ *  If that key is absent, maximum history size will be set
+ *  to MACRO_WIDGET_HISTORY_MAX.
+ *  Truncate history to be <= maximum size.
+ *
+ *  \param store GtkListStore history container
+ */
+static void
+history_truncate (GtkListStore* store)
+{
+  g_return_if_fail (store != NULL);
+
+  /* default history size:
+  */
+  gint count_max = MACRO_WIDGET_HISTORY_MAX;
+
+  /* get USER config context:
+  */
+  EdaConfig* cfg = eda_config_get_user_context();
+
+  /* schematic.macro-widget::history-max key
+   * can be changed at run-time.
+   * try to reload config:
+  */
+  GError* error = NULL;
+  eda_config_load (cfg, &error);
+  g_clear_error (&error);
+
+  /* read configuration:
+  */
+  gint val = eda_config_get_int (cfg,
+                                 "schematic.macro-widget",
+                                 "history-max",
+                                 &error);
+
+  if (error == NULL && val > 0)
+  {
+    count_max = val;
+  }
+
+  g_clear_error (&error);
+
+
+  GtkTreeModel* mod = GTK_TREE_MODEL (store);
+  gint count = gtk_tree_model_iter_n_children (mod, NULL);
+
+  /* remove excessive items from the history store:
+  */
+  GtkTreeIter iter;
+  for (gint i = count; i > count_max; --i)
+  {
+    if (gtk_tree_model_iter_nth_child (mod, &iter, NULL, i - 1))
+    {
+      gtk_list_store_remove (store, &iter);
+    }
+  }
+
+} /* history_truncate() */
+
+
+
 /*! \brief Save history to configuration
  *
  *  \param store GtkListStore history container
@@ -669,5 +740,5 @@ command_entry_set_font (GtkWidget* entry)
 
   g_clear_error (&err);
 
-} /* combobox_init_font() */
+} /* command_entry_set_font() */
 
