@@ -1549,6 +1549,8 @@ DEFINE_I_CALLBACK(page_revert)
      msg,
      filename);
 
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_NO);
+
   gtk_window_set_title (GTK_WINDOW (dialog), _("Revert"));
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
