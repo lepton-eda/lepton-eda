@@ -426,7 +426,27 @@ log_window_clear (GtkMenuItem* item, gpointer data)
   GtkTextIter end;
   gtk_text_buffer_get_end_iter (buffer, &end);
 
-  gtk_text_buffer_delete (buffer, &start, &end);
+
+  GtkWidget* dlg = gtk_message_dialog_new (NULL,
+                                           (GtkDialogFlags) 0,
+                                           GTK_MESSAGE_QUESTION,
+                                           GTK_BUTTONS_OK_CANCEL,
+                                           _("Clear log window?"));
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_CANCEL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+
+  if (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK)
+  {
+    gtk_text_buffer_delete (buffer, &start, &end);
+  }
+
+  gtk_widget_destroy (dlg);
 
 } /* log_window_clear() */
 
