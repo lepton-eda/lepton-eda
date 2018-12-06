@@ -1530,12 +1530,26 @@ DEFINE_I_CALLBACK(page_revert)
   g_return_if_fail (w_current != NULL);
 
   page_current = gschem_toplevel_get_toplevel (w_current)->page_current;
+  filename = g_strdup (s_page_get_filename (page_current));
 
-  dialog = gtk_message_dialog_new ((GtkWindow*) w_current->main_window,
-                                   GTK_DIALOG_DESTROY_WITH_PARENT,
-                                   GTK_MESSAGE_QUESTION,
-                                   GTK_BUTTONS_YES_NO,
-                                   _("Really revert page?"));
+  const gchar* msg =
+    _("<b>Revert page:</b>"
+      "\n"
+      "%s\n"
+      "\n"
+      "Are you sure you want to revert this page?\n"
+      "All unsaved changes in current schematic will be\n"
+      "discarded and page file will be reloaded from disk.");
+
+  dialog = gtk_message_dialog_new_with_markup
+    ((GtkWindow*) w_current->main_window,
+     GTK_DIALOG_DESTROY_WITH_PARENT,
+     GTK_MESSAGE_WARNING,
+     GTK_BUTTONS_YES_NO,
+     msg,
+     filename);
+
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Revert"));
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
@@ -1564,8 +1578,6 @@ DEFINE_I_CALLBACK(page_revert)
     x_window_set_current_page (w_current, page_current);
   }
 
-  /* save this for later */
-  filename = g_strdup (s_page_get_filename (page_current));
   page_control = page_current->page_control;
   up = page_current->up;
 
