@@ -296,3 +296,54 @@
     (assert-equal a (remove-config-event! a handler))
     (set-config! a "foo" "bar" #t)
     (assert-equal 2 call-count)))
+
+
+
+; Unit test for config-remove-key! function:
+;
+( begin-config-test 'config-remove-key
+( let*
+  (
+  ( cfg   (path-config-context *testdir*) )
+  ( group #f )
+  ( key   #f )
+  ( handler
+    ( lambda( c g k ) ; config, group, key
+      ( set! group g )
+      ( set! key   k )
+    )
+  )
+  )
+
+  ; load configuration file from *testdir* directory:
+  ;
+  ( config-load! cfg )
+
+  ; add group::key, set it to "value":
+  ;
+  ( set-config! cfg "group" "key" "value" )
+
+  ; setup config event handler for cfg:
+  ;
+  ( add-config-event! cfg handler )
+
+  ; remove group::key:
+  ;
+  ( assert-true (config-remove-key! cfg "group" "key") )
+
+  ; check if event handler was called:
+  ;
+  ( assert-equal group "group" )
+  ( assert-equal key   "key"   )
+
+  ; check if group::key still exists:
+  ;
+  ( assert-false (config-has-key? cfg "group" "key") )
+
+  ; exception should be thrown if group::key is not found:
+  ;
+  ( assert-thrown 'config-error (config-remove-key! cfg "group" "key") )
+
+) ; let
+) ; config-remove-key()
+
