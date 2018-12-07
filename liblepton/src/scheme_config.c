@@ -1,6 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library - Scheme API
+/* Lepton EDA
+ * liblepton - Lepton's library - Scheme API
  * Copyright (C) 2011-2012 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1125,6 +1126,55 @@ SCM_DEFINE (remove_config_event_x, "%remove-config-event!", 2, 0, 0,
   return cfg_s;
 }
 
+
+
+/*! \brief Remove a configuration parameter.
+ *
+ * \par Function Description
+ * Remove the configuration parameter specified by \a group_s
+ * and \a key_s in the configuration context \a cfg_s.
+ *
+ * \see eda_config_remove_key().
+ *
+ * \note Scheme API: Implements the \%config-remove-key!
+ * procedure in the (geda core config) module.
+ *
+ * \param cfg_s    #EdaConfig smob of configuration context.
+ * \param group_s  Group name as a string.
+ * \param key_s    Key name as a string.
+ *
+ * \return         Boolean value indicating success or failure.
+ */
+SCM_DEFINE (config_remove_key, "%config-remove-key!", 3, 0, 0,
+            (SCM  cfg_s, SCM group_s, SCM key_s),
+            "Remove a configuration key.")
+{
+  ASSERT_CFG_GROUP_KEY (s_config_remove_key);
+
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+
+  EdaConfig* cfg = edascm_to_config (cfg_s);
+
+  char* group = scm_to_utf8_string (group_s);
+  scm_dynwind_free (group);
+
+  char* key = scm_to_utf8_string (key_s);
+  scm_dynwind_free (key);
+
+  GError* error = NULL;
+  gboolean result = eda_config_remove_key (cfg, group, key, &error);
+
+  if (!result)
+  {
+    error_from_gerror (s_config_remove_key, &error);
+  }
+
+  scm_dynwind_end ();
+  return result ? SCM_BOOL_T : SCM_BOOL_F;
+}
+
+
+
 /*!
  * \brief Create the (geda core config) Scheme module.
  * \par Function Description
@@ -1166,6 +1216,7 @@ init_module_geda_core_config (void *unused)
                 s_set_config_x,
                 s_add_config_event_x,
                 s_remove_config_event_x,
+                s_config_remove_key,
                 NULL);
 }
 
