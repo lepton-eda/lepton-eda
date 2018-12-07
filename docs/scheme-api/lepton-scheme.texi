@@ -1870,6 +1870,12 @@ in the specified @var{group}.
 Since 1.10.
 @end defun
 
+@defun config-remove-key! cfg group key
+Removes the configuration parameter identified by the given @var{group}
+and @var{key} in the configuration context @var{cfg}.
+
+@end defun
+
 @subsubsection Configuration inheritance
 
 If a configuration context does not directly specify a value for a
