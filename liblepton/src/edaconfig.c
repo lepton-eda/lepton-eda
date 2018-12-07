@@ -1,7 +1,8 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's Library
- * Copyright (C) 2011-2012 gEDA Contributors (see ChangeLog for details)
+/* Lepton EDA
+ * liblepton - Lepton's library
+ * Copyright (C) 2011-2012 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1145,7 +1146,7 @@ eda_config_has_key (EdaConfig *cfg, const gchar *group,
  * Returns the configuration context (either \a cfg or one of its
  * parent contexts) in which the configuration parameter with the
  * given \a group and \a key has a value specified.  If the group or
- * key cannot be found, returns FALSE and sets \a error.
+ * key cannot be found, returns NULL and sets \a error.
  *
  * \see eda_config_is_inherited().
  *
@@ -1659,6 +1660,39 @@ eda_config_set_double_list (EdaConfig *cfg, const char *group,
                               list, length);
   g_signal_emit_by_name (cfg, "config-changed", group, key);
 }
+
+
+
+/*! \public \memberof EdaConfig
+ * \brief Remove a configuration parameter.
+ *
+ * Remove the configuration parameter specified by \a group
+ * and \a key in the configuration context \a cfg.
+ *
+ * \param cfg    Configuration context.
+ * \param group  Configuration group name.
+ * \param key    Configuration key name.
+ * \param error  Return location for error information.
+ *
+ * \return       TRUE on success, FALSE otherwise.
+ */
+gboolean
+eda_config_remove_key (EdaConfig *cfg, const char *group,
+                       const char *key, GError **error)
+{
+  GError* tmp_err = NULL;
+  gboolean result =
+    g_key_file_remove_key (cfg->priv->keyfile, group, key, &tmp_err);
+
+  propagate_key_file_error (tmp_err, error);
+
+  if (result)
+    g_signal_emit_by_name (cfg, "config-changed", group, key);
+
+  return result;
+}
+
+
 
 /*! \brief Callback marshal function for config-changed signals.
  * \par Function Description
