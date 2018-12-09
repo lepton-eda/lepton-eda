@@ -386,7 +386,7 @@ x_print (GschemToplevel *w_current)
   GtkPrintOperation *print;
   GtkPrintOperationResult res;
   GError *err = NULL;
-  int num_pages = 1;
+  const int num_pages = 1;
 
   /* Create the print operation and set it up */
   print = GTK_PRINT_OPERATION (g_object_new (GTK_TYPE_PRINT_OPERATION,
@@ -395,15 +395,46 @@ x_print (GschemToplevel *w_current)
                                              "unit", GTK_UNIT_POINTS,
                                              NULL));
 
-  if (settings != NULL) {
-    gtk_print_operation_set_print_settings (print, settings);
-  }
   setup = x_print_default_page_setup (w_current->toplevel,
                                       w_current->toplevel->page_current);
   gtk_print_operation_set_default_page_setup (print, setup);
 
   g_signal_connect (print, "draw_page", G_CALLBACK (draw_page__print_operation),
                     w_current);
+
+
+  /* create print settings:
+  */
+  if (settings == NULL)
+  {
+    settings = gtk_print_settings_new();
+  }
+
+
+#ifdef DEBUG
+  const gchar* uri_prev = gtk_print_settings_get (settings, "output-uri");
+  printf (" >> uri_prev = [%s]\n", uri_prev);
+#endif
+
+
+  /* derive output file name from the file name of the current page:
+  */
+  PAGE* page = w_current->toplevel->page_current;
+  if (page != NULL)
+  {
+    const gchar* path = s_page_get_filename (page);
+    gchar* uri = g_strdup_printf ("file://%s.pdf", path);
+
+    gtk_print_settings_set (settings, "output-uri", uri);
+
+    g_free (uri);
+  }
+
+
+  /* set print operation settings:
+  */
+  gtk_print_operation_set_print_settings (print, settings);
+
 
   res = gtk_print_operation_run (print, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
                                  GTK_WINDOW (w_current->main_window), &err);
