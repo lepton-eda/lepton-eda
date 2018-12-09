@@ -4,9 +4,104 @@ Recent Changes in Lepton EDA
 This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
+Notable changes in Lepton EDA 1.9.7
+-----------------------------------
+
+### Changes in `lepton-schematic`:
+
+- A new action, `edit-object-properties`, has been added. It is a
+  replacement for four legacy actions which opened the same
+  dialog: `edit-color`, `edit-linetype`, `edit-filltype`,
+  `edit-pin-type`. The action is now bound to the shortcut
+  <kbd>E</kbd>-<kbd>O</kbd>.
+
+- Fixed icon name for "Down Symbol" entry in pop-up menu.
+
+- Improved diagnostics of input file errors:
+
+  - If `--verbose` (`-v`) command line option is passed to
+    `lepton-schematic`, it prints input files line by line as they
+    are parsed in the terminal, which facilitates debugging of
+    broken schematics.
+
+  - "Failed to load file" dialog error message has been
+    improved. It now reports line number in the schematic file
+    where parsing was stopped due to an error.
+
+- Several changes in the `lepton-schematic` menu make it more
+  organized and easier to navigate through:
+  - A new shortcut, <kbd>O</kbd>-<kbd>F</kbd>, for 'Options →
+    Font', has been added.
+  - A new shortcut, <kbd>T</kbd>-<kbd>I</kbd>, for 'Attributes →
+    Show/Hide Hidden Text', has been added while retaining the
+    legacy one, <kbd>E</kbd>-<kbd>N</kbd>.
+  - Shortcut for 'Help → Find Component Documentation' has been
+    changed to <kbd>H</kbd>-<kbd>O</kbd>.
+  - Shortcut for 'Options → Options' has been changed to
+    <kbd>O</kbd>-<kbd>O</kbd>.
+  - Shortcut for 'Attributes → Find Text' has been changed to
+    <kbd>T</kbd>-<kbd>F</kbd>.
+  - Obsolete 'Edit Pin Type' entry in pop-up menu has been
+    replaced with 'Object Properties'.
+
+- Some issues with using of 'Help' menus have been fixed:
+  - Fixed doc searching bug in `lepton-schematic`'s module
+    `gschemdoc` which failed due to wrong guessing on the
+    installed documentation paths.
+  - Fixed blocking of `lepton-schematic` GUI on using 'Help' menu
+    entries on systems where documentation viewer may not return
+    control until the web browser is closed.
+
+### Changes in `lepton-netlist`:
+
+- A new test schematic for the `verilog` backend has been
+  added. It allows checking changes in verilog module
+  declarations.
+
+- Log initialisation has been moved from the `(netlist)` module to
+  the `lepton-netlist` executable file to prevent repetition
+  of the initialisation on every loading of the module and using
+  the wrong log domain when the module is loaded, e.g., in
+  `lepton-schematic` GUI.
+
+- Output of `lepton-netlist` version has been unified and placed
+  into one procedure, `lepton-netlist-version`.  Version is now
+  output once per run, and the procedure can be used interactively
+  in `lepton-netlist` REPL.
+
+- `lepton-netlist` interactive mode can now be used without
+  specifying any file name on command line; the user can now load,
+  traverse, and introspect arbitrary schematics data in its REPL.
+
+- Some backward compatibility variables have been provided to
+  ensure compatibility with legacy geda backends.
+
+- `schematic-packages` and `schematic-non-unique-packages` fields
+  have been removed from the `<schematic>` record since they are
+  derivatives from its other structures. Two substitution
+  procedures retrieving those data, `schematic-package-names` and
+  `schematic-non-unique-package-names`, have been provided to
+  provide the same functionality.
+
+- New procedure `netlist-error` is now used instead of `error` in
+  many backends for reporting errors. This simplifies error output
+  by avoiding improper output of the program execution stack where
+  it is not necessary.
+
+- The program now catches errors in loaded code (specified by
+  options `-g`, `-l`, `-m`, `-c`) and exits with appropriate error
+  message.
+
+
+### Changes in `liblepton`:
+
+- The library has now facilities to load schematics in a verbose
+  manner, which is now used in `lepton-schematic` (see above) for
+  debugging.
+
 
 Notable changes in Lepton EDA 1.9.6
---------------------------------------
+-----------------------------------
 ### Breaking changes:
 - All `(gnetlist module-name)` Scheme modules have been renamed to
  `(netlist module-name)`.
