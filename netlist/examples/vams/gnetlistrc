@@ -2,7 +2,11 @@
 
 ;; AVH, this is probably needed, since this didn't exist when the vams backend
 ;; was originally written
-(hierarchy-traversal "disabled")
+;;
+;; Replaced by [gnetlist.hierarchy]::traverse-hierarchy=false in geda.conf:
+;;
+;; (hierarchy-traversal "disabled")
+
 
 ;; AVH not really needed
 ;; (load (string-append examples-path "/../../scheme/gnet-vams.scm"))

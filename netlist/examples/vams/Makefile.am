@@ -19,7 +19,7 @@ sym_files = \
 
 SUBDIRS = vhdl
 
-EXTRA_DIST = README commonrc gnetlistrc gschemrc generate_netlist.scm \
+EXTRA_DIST = README commonrc gnetlistrc gschemrc geda.conf generate_netlist.scm \
 	$(sch_files) $(sym_files)
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
