@@ -1,5 +1,5 @@
 (load "./commonrc")
-(load "../../../gschem/scheme/generate_netlist.scm")
+(load "generate_netlist.scm")
 
 (attribute-promotion "enabled")
 (promote-invisible "enabled")
