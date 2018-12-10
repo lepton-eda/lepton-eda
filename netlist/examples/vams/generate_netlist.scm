@@ -4,7 +4,7 @@
 
 ;;; This file contents two functions to the hot-keys
 ;;; g-n and g-e, which stand for (g)enerate (n)etlist and - (e)ntity.
-;;; 
+;;;
 
 ;; The generate-mode will be gave to the gnetlist environment, with help
 ;; of the -c parameter of gEDA gnetlist.
@@ -15,7 +15,7 @@
 ;;   1 - generate netlist of current schematic
 ;;   2 - generate entity of selected component, or of toplevel, when non selected
 ;;
-;; get-selected-filename: - returns the whole filename of 
+;; get-selected-filename: - returns the whole filename of
 ;;                          the current-gschem-schematic
 ;;
 ;; get-selected-component-attributes: - returns all toplevel attributes
@@ -31,18 +31,18 @@
     (let* ((command "")
 	   (source-file (page-filename (active-page)))
 	   (source-file-length (string-length source-file))
-	   
+
 	   ;;generate a sensible output-filename (<old-path>/<old-basefilename>.vhdl)
 	   (target-file (string-append
-			 (substring source-file 
-				    (+ (string-rindex source-file #\/ 0 
+			 (substring source-file
+				    (+ (string-rindex source-file #\/ 0
 						      (string-length source-file)) 1)
 				    (- (string-length source-file) 4))
 			 ".vhdl")))
 
       ;;generating the complex gnetlist command
       (display (getcwd))
-      (set! command "gnetlist -c '(chdir \"..\") (display (getcwd)) (newline)'")
+      (set! command "lepton-netlist -w -c '(chdir \"..\") (display (getcwd)) (newline)'")
       (set! command (string-append command " -o " vhdl-path "/" target-file))
       (set! command (string-append command " -g vams " source-file))
       (display "\ngenerating netlist from current schematic\n")
@@ -50,15 +50,14 @@
       (newline)
       (system command))))
 
-;; Makes the same like generate-netlist, but its activate a 
+;; Makes the same like generate-netlist, but its activate a
 ;; generating-entity-call.
 
 (define generate-entity
  (lambda ()
    (let* ((command "")
-	  (guile-comm  "")
 	  (top-attribs (get-selected-component-attributes))
-	  
+
 	  ;; search the right schematic-file for gnetlist call
 	  ;; Is necessary, when the selected component contents a
 	  ;; underlying schematic (hierachical schematic)
@@ -67,26 +66,34 @@
 	  ;; generates the target-file, like <source-filebasename>.vhdl
 	  (target-file (string-append
 			(substring source-file
-				   (if (string-rindex source-file #\/ 0 
+				   (if (string-rindex source-file #\/ 0
 						     (string-length source-file))
-				       (+ (string-rindex source-file #\/ 0 
+				       (+ (string-rindex source-file #\/ 0
 						     (string-length source-file)) 1)
 				       0)
 				   (- (string-length source-file) 4))
 			".vhdl")))
 
 
-     ;; put the whole gnetlist command together
-     (set! guile-comm 
-	   (string-append guile-comm "\"(define top-attribs " "'" 
-			  (list2string top-attribs) ") (define generate-mode '2)\"")) 
-     (set! command (string-append "gnetlist -c '(chdir \"..\")' -c " guile-comm
-				  " -o " vhdl-path "/" target-file
-				  " -g vams " (get-selected-filename)))
-     (display command)
+     (system*
+       "lepton-netlist"
+       "-w"
+       "-c"
+       (format #f "(chdir \"..\")~
+                   (define top-attribs '~a)~
+                   (define generate-mode '2)"
+                   (list2string top-attribs))
+       "-o"
+       (format #f "~a/~a"
+                  vhdl-path
+                  target-file)
+       "-g"
+       "vams"
+       (get-selected-filename)
+     )
+
      (newline)
-     (system command)
-     
+
      ;; not important
      ;;(set! command (string-append "dtpad " vhdl-path "/" target-file " &"))
      ;;(if (null? top-attribs)
@@ -97,7 +104,7 @@
 
 ;; HELP FUNCTIONS
 
-;; generates a string from a list. 
+;; generates a string from a list.
 (define (list2string ls)
   (string-append "(" (string-join ls " ") ")"))
 
@@ -109,7 +116,7 @@
     (if (not (null? top-attribs))
 	(if (string-prefix? "source=" (car top-attribs))
 	    (begin
-	      (append (substring (car top-attribs) 7 
+	      (append (substring (car top-attribs) 7
 				 (string-length (car top-attribs)))))
 	    (which-source-file (cdr top-attribs)))
 	(append (get-selected-filename)))))
