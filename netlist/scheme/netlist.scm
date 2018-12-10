@@ -932,6 +932,10 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   )
 
 
+  ; Parse configuration:
+  ;
+  ( (@@ (guile-user) parse-rc) "lepton-netlist" "gnetlistrc" )
+
   ; This is a kludge to make sure that spice mode gets set:
   ;
   ( when ( and opt-backend (string-prefix? "spice" opt-backend) )
@@ -965,10 +969,6 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     ( gnetlist-backends )
     ( primitive-exit 0 )
   )
-
-  ; Parse configuration:
-  ;
-  ( (@@ (guile-user) parse-rc) "lepton-netlist" "gnetlistrc" )
 
   ; Check input schematics:
   ;
