@@ -4,7 +4,6 @@ scmdatadir = $(GEDADATADIR)/scheme
 nobase_dist_scmdata_DATA = \
 	auto-refdes.scm \
 	auto-uref.scm \
-	generate_netlist.scm \
 	gschem.scm \
 	list-keys.scm \
 	print-NB-attribs.scm \
