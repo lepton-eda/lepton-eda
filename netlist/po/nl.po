@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gnetlist\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-11-01 21:43+0300\n"
+"POT-Creation-Date: 2018-12-11 21:41+0300\n"
 "PO-Revision-Date: 2014-08-31 20:38+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -18,15 +18,9 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
-#: netlist/scheme/netlist.scm:87
-#, scheme-format
-msgid "Lepton EDA/lepton-netlist version ~A~A.~A git: ~A\n"
-msgstr ""
-
-#: netlist/scheme/netlist.scm:101
-#, fuzzy, scheme-format
+#: netlist/scheme/netlist.scm:96
+#, fuzzy
 msgid ""
-"Lepton EDA ~A (git: ~A)\n"
 "Copyright (C) 1998-2016 gEDA developers\n"
 "Copyright (C) 2017-2018 Lepton EDA Contributors\n"
 "This is free software, and you are welcome to redistribute it under\n"
@@ -41,7 +35,7 @@ msgstr ""
 "bijgesloten in de gEDA distributie.\n"
 "Er is GEEN GARANTIE, voor zover toegestaan door de wet.\n"
 
-#: netlist/scheme/netlist.scm:191
+#: netlist/scheme/netlist.scm:190
 #, scheme-format
 msgid ""
 "Possible attribute conflict for refdes: ~A\n"
@@ -49,16 +43,16 @@ msgid ""
 "values: ~A\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:256
+#: netlist/scheme/netlist.scm:255
 #, scheme-format
 msgid "Uref ~a: Bad slot number: ~a.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:299
+#: netlist/scheme/netlist.scm:298
 msgid "Couldn't wrap string  at requested position\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:585
+#: netlist/scheme/netlist.scm:584
 #, scheme-format
 msgid ""
 "There is a net name collision!\n"
@@ -70,7 +64,7 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:622
+#: netlist/scheme/netlist.scm:621
 #, scheme-format
 msgid ""
 "There is a refdes name collision!\n"
@@ -82,17 +76,17 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:800
+#: netlist/scheme/netlist.scm:799
 #, scheme-format
 msgid "Loading schematic ~S\n"
 msgstr "Laden van schema ~S\n"
 
-#: netlist/scheme/netlist.scm:824
+#: netlist/scheme/netlist.scm:823
 #, scheme-format
 msgid "Can't open directory ~S.\n"
 msgstr "Kan bestandenmap ~S niet openen\n"
 
-#: netlist/scheme/netlist.scm:835
+#: netlist/scheme/netlist.scm:834
 #, fuzzy, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
@@ -142,7 +136,7 @@ msgstr ""
 "Rapporteer gebreken op <https://bugs.launchpad.net/geda>\n"
 "gEDA/gaf huispagina: <http://www.geda-project.org/>\n"
 
-#: netlist/scheme/netlist.scm:880
+#: netlist/scheme/netlist.scm:879
 #, fuzzy, scheme-format
 msgid ""
 "\n"
@@ -154,30 +148,48 @@ msgstr ""
 "Kreeg net een fout; tag is\n"
 "        "
 
-#: netlist/scheme/netlist.scm:915
+#: netlist/scheme/netlist.scm:919
+msgid "You gave neither backend to execute nor interactive mode!\n"
+msgstr "U gaf geen backend om uit voeren noch interactieve modus!\n"
+
+#: netlist/scheme/netlist.scm:923
 #, fuzzy, scheme-format
 msgid ""
 "No schematic files specified for processing.\n"
-"Run `~A --help' for more information.\n"
+"~\n"
+"                         Run `~A --help' for more information.\n"
 msgstr ""
 "Geen schema bestanden gespecificeerd voor verwerking.\n"
 "\n"
 "Doe `~A --help' voor meer informatie.\n"
 
-#: netlist/scheme/netlist.scm:953
-#, scheme-format
+#: netlist/scheme/netlist.scm:929
+#, fuzzy, scheme-format
 msgid ""
 "Could not find backend `~A' in load path.\n"
-"\n"
-"Run `~A --list-backends' for a full list of available backends.\n"
+"~\n"
+"                         Run `~A --list-backends' for a full list of "
+"available backends.\n"
 msgstr ""
 "Kan backend `~A' niet vinden in het laadpad.\n"
 "\n"
 "Doe `~A --list-backends' voor een volledige lijst van beschikbare backends.\n"
 
-#: netlist/scheme/netlist.scm:961
-msgid "You gave neither backend to execute nor interactive mode!\n"
-msgstr "U gaf geen backend om uit voeren noch interactieve modus!\n"
+#: netlist/scheme/netlist.scm:954
+msgid "Failed to evaluate Scheme expression at startup.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:988
+msgid "Failed to load Scheme file before loading backend.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:1005
+msgid "Failed to load backend file.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:1018
+msgid "Failed to load Scheme file after loading backend.\n"
+msgstr ""
 
 #: netlist/scheme/netlist/hierarchy.scm:106
 #, fuzzy, scheme-format
