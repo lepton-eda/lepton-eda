@@ -127,14 +127,9 @@
 ;;; Returns a sorted list of unique packages in NETLIST.
 ;;; Backward compatibility procedure for legacy backends.
 (define (schematic-package-names schematic)
-  (define netlist (schematic-components schematic))
-  ;; Uniqueness of packages is guaranteed by the hashtable.
-  (define non-unique-packages (schematic-non-unique-package-names netlist))
-  (define ht (make-hash-table (length non-unique-packages)))
-  (define (get-value key value) value)
-  (for-each (lambda (s) (hashq-set! ht (string->symbol s) s))
-            non-unique-packages)
-  (sort (hash-map->list get-value ht) refdes<?))
+  (sort (map package-refdes
+             (schematic-packages schematic))
+        refdes<?))
 
 
 ;;; Returns a list of all pin nets in NETLIST.
