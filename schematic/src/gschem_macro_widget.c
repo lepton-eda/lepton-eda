@@ -533,10 +533,10 @@ history_add (GtkListStore* store, const gchar* line)
 /*! \brief Truncate the history list
  *
  *  \par Function Description
- *  Read max history size configuration from the "history-max"
+ *  Read max history size configuration from the "history-length"
  *  key in the "schematic.macro-widget" group (USER context).
  *  If that key is absent, maximum history size will be set
- *  to MACRO_WIDGET_HISTORY_MAX.
+ *  to MACRO_WIDGET_HISTORY_MAX (\see gschem_macro_widget.h).
  *  Truncate history to be <= maximum size.
  *
  *  \param store GtkListStore history container
@@ -554,7 +554,7 @@ history_truncate (GtkListStore* store)
   */
   EdaConfig* cfg = eda_config_get_user_context();
 
-  /* schematic.macro-widget::history-max key
+  /* schematic.macro-widget::history-length key
    * can be changed at run-time.
    * try to reload config:
   */
@@ -566,7 +566,7 @@ history_truncate (GtkListStore* store)
   */
   gint val = eda_config_get_int (cfg,
                                  "schematic.macro-widget",
-                                 "history-max",
+                                 "history-length",
                                  &error);
 
   if (error == NULL && val > 0)

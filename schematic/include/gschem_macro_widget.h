@@ -22,7 +22,10 @@
  * \brief A widget for entering macros
  */
 
-#define MACRO_WIDGET_HISTORY_MAX 7
+/* Maximum number of items to keep in the
+ * macro widget command history by default:
+ */
+#define MACRO_WIDGET_HISTORY_MAX 10
 
 
 
