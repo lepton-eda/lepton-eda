@@ -1876,6 +1876,12 @@ and @var{key} in the configuration context @var{cfg}.
 
 @end defun
 
+@defun config-remove-group! cfg group
+Removes the configuration group identified by @var{group}
+and all its parameters in the configuration context @var{cfg}.
+
+@end defun
+
 @subsubsection Configuration inheritance
 
 If a configuration context does not directly specify a value for a
@@ -2001,6 +2007,9 @@ handler cfg group key
 @var{cfg} is always the configuration context that received the event,
 and the @var{group} and @var{key} identify the configuration parameter
 that changed.
+When a configuration group is deleted, @var{group} argument is set to
+the name of the deleted group and @var{key} argument is set to an empty
+string.
 
 @defun add-config-event! cfg handler
 Registers @var{handler} to be called when configuration changes in the
