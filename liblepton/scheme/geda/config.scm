@@ -71,4 +71,5 @@
 (define-public remove-config-event! %remove-config-event!)
 
 (define-public config-remove-key! %config-remove-key!)
+(define-public config-remove-group! %config-remove-group!)
 
