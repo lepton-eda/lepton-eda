@@ -1694,6 +1694,36 @@ eda_config_remove_key (EdaConfig *cfg, const char *group,
 
 
 
+/*! \public \memberof EdaConfig
+ * \brief Remove a configuration group and all its parameters.
+ *
+ * Remove the configuration group specified by \a group
+ * and all its parameters in the configuration context \a cfg.
+ *
+ * \param cfg    Configuration context.
+ * \param group  Configuration group name.
+ * \param error  Return location for error information.
+ *
+ * \return       TRUE on success, FALSE otherwise.
+ */
+gboolean
+eda_config_remove_group (EdaConfig *cfg, const char *group,
+                         GError **error)
+{
+  GError* tmp_err = NULL;
+  gboolean result =
+    g_key_file_remove_group (cfg->priv->keyfile, group, &tmp_err);
+
+  propagate_key_file_error (tmp_err, error);
+
+  if (result)
+    g_signal_emit_by_name (cfg, "config-changed", group, "");
+
+  return result;
+}
+
+
+
 /*! \brief Callback marshal function for config-changed signals.
  * \par Function Description
  * Based heavily on g_cclosure_marshal_VOID__STRING() from GObject.

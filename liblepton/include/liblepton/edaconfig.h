@@ -147,6 +147,7 @@ void eda_config_set_int_list (EdaConfig *cfg, const char *group, const char *key
 void eda_config_set_double_list (EdaConfig *cfg, const char *group, const char *key, gdouble list[], gsize length);
 
 gboolean eda_config_remove_key (EdaConfig *cfg, const char *group, const char *key, GError **error);
+gboolean eda_config_remove_group (EdaConfig *cfg, const char *group, GError **error);
 
 G_END_DECLS
 
