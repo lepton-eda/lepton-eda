@@ -3,7 +3,8 @@
 ; Init file for gschem
 ;
 
-(use-modules (gschem deprecated))
+(use-modules (gschem deprecated)
+             (schematic netlist))
 
 ;  ;'s are comments
 ;  keywords are case sensitive (guile feature)
@@ -1289,6 +1290,13 @@
            (,(N_ "_Coord Window") &options-show-coord-window)
            (,(N_ "_Log Window")   &options-show-log-window)))
 
+(define netlist-menu-items
+  ;; Format of list items is:
+  ;; name action icon
+  `(
+    (,(N_ "_1 allegro") &netlist-allegro #f))
+  )
+
 (define help-menu-items
 ;;
 ;;          menu item name                menu action               menu stock icon
@@ -1317,6 +1325,7 @@
 (add-menu (N_ "Hie_rarchy") hierarchy-menu-items)
 (add-menu (N_ "A_ttributes") attributes-menu-items)
 (add-menu (N_ "_Options") options-menu-items)
+(add-menu (N_ "_Netlist") netlist-menu-items)
 (add-menu (N_ "_Help") help-menu-items)
 
 ;
