@@ -345,5 +345,55 @@
   ( assert-thrown 'config-error (config-remove-key! cfg "group" "key") )
 
 ) ; let
-) ; config-remove-key()
+) ; 'config-remove-key()
+
+
+
+; Unit test for config-remove-group! function:
+;
+( begin-config-test 'config-remove-group
+( let*
+  (
+  ( cfg   (path-config-context *testdir*) )
+  ( group #f )
+  ( key   #f )
+  ( handler
+    ( lambda( c g k ) ; config, group, key
+      ( set! group g )
+      ( set! key   k )
+    )
+  )
+  )
+
+  ; load configuration file from *testdir* directory:
+  ;
+  ( config-load! cfg )
+
+  ; add group::key, set it to "value":
+  ;
+  ( set-config! cfg "group" "key" "value" )
+
+  ; setup config event handler for cfg:
+  ;
+  ( add-config-event! cfg handler )
+
+  ; remove group::key:
+  ;
+  ( assert-true (config-remove-group! cfg "group" ) )
+
+  ; check if event handler was called:
+  ;
+  ( assert-equal group "group" )
+  ( assert-equal key   ""      )
+
+  ; check if group still exists:
+  ;
+  ( assert-false (config-has-group? cfg "group" ) )
+
+  ; exception should be thrown if group is not found:
+  ;
+  ( assert-thrown 'config-error (config-remove-group! cfg "group") )
+
+) ; let
+) ; 'config-remove-group()
 
