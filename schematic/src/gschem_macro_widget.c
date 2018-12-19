@@ -618,7 +618,7 @@ history_save (GtkListStore* store)
   */
   gint count = gtk_tree_model_iter_n_children (mod, NULL);
 
-  gchar** lines = g_malloc0_n (count + 1, sizeof(gchar*));
+  gchar** lines = (gchar**) g_malloc0_n (count + 1, sizeof(gchar*));
   lines[ count ] = NULL;
 
   /* add elements from the list store to [lines] array:
@@ -684,7 +684,7 @@ history_load (GtkListStore* store)
 
     /* populate the list store:
     */
-    for (gint i = 0; i < len; ++i)
+    for (gsize i = 0; i < len; ++i)
     {
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter, column, lines[i], -1);
