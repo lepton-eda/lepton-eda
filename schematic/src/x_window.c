@@ -777,6 +777,9 @@ x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename)
   }
 
 
+  /* Run hook: */
+  g_run_hook_page (w_current, "%open-page-hook", page);
+
   /* Add page file name to the recent file list: */
   recent_manager_add (w_current, filename);
 

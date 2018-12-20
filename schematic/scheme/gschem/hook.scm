@@ -46,6 +46,8 @@
 
 (define-public new-page-hook %new-page-hook)
 
+(define-public open-page-hook %open-page-hook)
+
 (define-public action-property-hook %action-property-hook)
 
 (define-public bind-keys-hook %bind-keys-hook)
