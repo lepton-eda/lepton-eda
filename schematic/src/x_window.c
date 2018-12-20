@@ -84,6 +84,22 @@ static GtkWidget*
 create_notebook_bottom (GschemToplevel *w_current);
 
 
+static void
+open_page_error_dialog (GschemToplevel* w_current,
+                        const gchar*    filename,
+                        GError*         err);
+
+static void
+recent_manager_add (GschemToplevel* w_current,
+                    const gchar*    filename);
+
+static gchar*
+untitled_filename (GschemToplevel* w_current);
+
+static PAGE*
+x_window_new_page (GschemToplevel* w_current);
+
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -722,87 +738,50 @@ void x_window_close_all(GschemToplevel *w_current)
 PAGE*
 x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename)
 {
-  PAGE *page;
-  gchar *fn;
-
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, NULL);
 
-  /* Generate untitled filename if none was specified */
-  if (filename == NULL) {
-    gchar *cwd, *tmp, *untitled_name;
-    EdaConfig *cfg;
-    cwd = g_get_current_dir ();
-    cfg = eda_config_get_context_for_path (cwd);
-    untitled_name = eda_config_get_string (cfg, "gschem", "default-filename", NULL);
-    tmp = g_strdup_printf ("%s_%d.sch",
-                           untitled_name,
-                           ++w_current->num_untitled);
-    fn = g_build_filename (cwd, tmp, NULL);
-    g_free (untitled_name);
-    g_free(cwd);
-    g_free(tmp);
-  } else {
-    fn = g_strdup (filename);
-  }
+  /* New blank page requested: */
+  if (filename == NULL)
+    return x_window_new_page (w_current);
 
-  /* Return existing page if it is already loaded */
-  page = s_page_search (toplevel, fn);
-  if ( page != NULL ) {
-    g_free(fn);
+
+  /* Return existing page if it is already loaded: */
+  PAGE* page = s_page_search (toplevel, filename);
+  if (page != NULL)
     return page;
-  }
 
-  page = s_page_new (toplevel, fn);
-  s_page_goto (toplevel, page);
+
+  /* Create a new page: */
+  page = s_page_new (toplevel, filename);
+
+  /* Switch to a new page: */
+  s_page_goto (toplevel, page); /* NOTE: sets toplevel->page_current */
   gschem_toplevel_page_changed (w_current);
 
-  /* Load from file if necessary, otherwise just print a message */
-  if (filename != NULL) {
-    GError *err = NULL;
-    if (!quiet_mode)
-      s_log_message (_("Loading schematic [%1$s]"), fn);
+  if (!quiet_mode)
+    s_log_message (_("Loading schematic [%1$s]"), filename);
 
-    if (!f_open (toplevel, page, (gchar *) fn, &err)) {
-      GtkWidget *dialog;
 
-      g_warning ("%s\n", err->message);
-      dialog = gtk_message_dialog_new_with_markup
-        (GTK_WINDOW (w_current->main_window),
-         GTK_DIALOG_DESTROY_WITH_PARENT,
-         GTK_MESSAGE_ERROR,
-         GTK_BUTTONS_CLOSE,
-         _("<b>An error occurred while loading the requested file.</b>"
-           "\n\n"
-           "Loading from '%1$s' failed. Error message:"
-           "\n\n"
-           "%2$s."
-           "\n\n"
-           "The lepton-schematic log may contain more information.\n"
-           "You may also launch lepton-schematic with --verbose command"
-           " line switch and monitor program's output in terminal window."),
-         fn, err->message);
-      gtk_window_set_title (GTK_WINDOW (dialog), _("Failed to load file"));
-      gtk_dialog_run (GTK_DIALOG (dialog));
-      gtk_widget_destroy (dialog);
-      g_error_free (err);
-    } else {
-      if (w_current->recent_manager != NULL) {
-        gtk_recent_manager_add_item (w_current->recent_manager,
-                                     g_filename_to_uri(fn, NULL, NULL));
-      }
-    }
-  } else {
-    if (!quiet_mode)
-      s_log_message (_("New file [%s]"),
-                     s_page_get_filename (toplevel->page_current));
+  /* Try to load [filename]: */
+  GError* err = NULL;
+  if (!f_open (toplevel, page, filename, &err))
+  {
+    g_warning ("%s\n", err->message);
+    open_page_error_dialog (w_current, filename, err);
+    g_clear_error (&err);
 
-    g_run_hook_page (w_current, "%new-page-hook", toplevel->page_current);
+    /* Loading failed: delete page and open a blank one: */
+    s_page_delete (toplevel, page);
+    return x_window_new_page (w_current);
   }
 
-  o_undo_savestate (w_current, toplevel->page_current, UNDO_ALL);
 
-  g_free (fn);
+  /* Add page file name to the recent file list: */
+  recent_manager_add (w_current, filename);
+
+  /* Save current state of the page: */
+  o_undo_savestate (w_current, page, UNDO_ALL);
 
   return page;
 
@@ -910,10 +889,7 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
     page->CHANGED = 0;
 
     /* add to recent file list */
-    if (w_current->recent_manager != NULL) {
-      gtk_recent_manager_add_item (w_current->recent_manager,
-                                   g_filename_to_uri (filename, NULL, NULL));
-    }
+    recent_manager_add (w_current, filename);
 
     /* i_set_filename (w_current, page->page_filename); */
     x_pagesel_update (w_current);
@@ -1557,3 +1533,155 @@ x_window_close_page (GschemToplevel* w_current, PAGE* page)
     x_window_close_page_impl (w_current, page);
   }
 }
+
+
+
+/*! \brief Create new blank page.
+ *
+ * \todo Do further refactoring: this function should be used
+ *       instead of x_window_open_page() when a new page is reqested.
+ *
+ *  \param w_current The toplevel environment.
+ */
+static PAGE*
+x_window_new_page (GschemToplevel* w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_val_if_fail (toplevel != NULL, NULL);
+
+  /* New page file name: */
+  gchar* filename = untitled_filename (w_current);
+
+  /* Create a new page: */
+  PAGE* page = s_page_new (toplevel, filename);
+
+  /* Switch to a new page: */
+  s_page_goto (toplevel, page);
+  gschem_toplevel_page_changed (w_current);
+
+  if (!quiet_mode)
+    s_log_message (_("New file [%s]"), filename);
+
+  g_free (filename);
+
+  /* Run hook: */
+  g_run_hook_page (w_current, "%new-page-hook", page);
+
+  /* Save current state of the page: */
+  o_undo_savestate (w_current, page, UNDO_ALL);
+
+  return page;
+
+} /* x_window_new_page() */
+
+
+
+/*! \brief Show "Failed to load file" dialog.
+ *
+ *  \param w_current The toplevel environment.
+ *  \param filename  File path that failed to load.
+ *  \param err       Associated GError.
+ */
+static void
+open_page_error_dialog (GschemToplevel* w_current,
+                        const gchar*    filename,
+                        GError*         err)
+{
+  g_return_if_fail (w_current != NULL);
+
+  const gchar* msg =
+    _("<b>An error occurred while loading the requested file.</b>"
+      "\n\n"
+      "Loading from '%1$s' failed. Error message:"
+      "\n\n"
+      "%2$s."
+      "\n\n"
+      "The lepton-schematic log may contain more information.\n"
+      "You may also launch lepton-schematic with --verbose command"
+      " line switch and monitor program's output in terminal window.");
+
+  GtkWidget* dialog = gtk_message_dialog_new_with_markup
+    (GTK_WINDOW (w_current->main_window),
+    GTK_DIALOG_DESTROY_WITH_PARENT,
+    GTK_MESSAGE_ERROR,
+    GTK_BUTTONS_CLOSE,
+    msg,
+    filename,
+    err != NULL ? err->message : "");
+
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Failed to load file"));
+
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
+
+} /* open_page_error_dialog() */
+
+
+
+/*! \brief Add \a filename to the recent files list.
+ *
+ * \todo gtk_recent_manager_add_item() also used in x_menus.c.
+ *       Consider making this function public.
+ *
+ *  \param w_current The toplevel environment.
+ *  \param filename  File name to add.
+ */
+static void
+recent_manager_add (GschemToplevel* w_current,
+                    const gchar*    filename)
+{
+  g_return_if_fail (w_current != NULL);
+
+  GtkRecentManager* manager = w_current->recent_manager;
+  if (manager != NULL)
+  {
+    gchar* uri = g_filename_to_uri (filename, NULL, NULL);
+    gtk_recent_manager_add_item (manager, uri);
+    g_free (uri);
+  }
+
+} /* recent_manager_add() */
+
+
+
+/*! \brief Get untitled file name.
+ *  \par Function Description
+ *
+ * Determine "untitled" schematic file name (used for new pages)
+ * and build full path from this name and current working directory.
+ *
+ *  \param w_current The toplevel environment.
+ *  \return          Newly-allocated untitled file path.
+ */
+static gchar*
+untitled_filename (GschemToplevel* w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  /* Determine default file name for a new page: */
+  gchar* cwd = g_get_current_dir ();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+
+  gchar* name = eda_config_get_string (cfg,
+                                       "gschem",
+                                       "default-filename",
+                                       NULL);
+
+  /* Build file name: */
+  gchar* tmp = g_strdup_printf ("%s_%d.sch",
+                                name ? name : "untitled",
+                                ++w_current->num_untitled);
+  g_free (name);
+
+  /* Build full path for file name: */
+  gchar* filename = g_build_filename (cwd, tmp, NULL);
+
+  g_free (cwd);
+  g_free (tmp);
+
+  return filename;
+
+} /* untitled_filename() */
+
