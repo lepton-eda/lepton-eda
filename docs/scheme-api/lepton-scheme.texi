@@ -2478,6 +2478,10 @@ a list of objects that were deselected.
 Called when a new page is created. The argument is the new page.
 @end defvar
 
+@defvar open-page-hook
+Called when an existing page is loaded. The argument is the loaded page.
+@end defvar
+
 @defvar action-property-hook
 Called when an action property is set.  The arguments are the action,
 the property key and the property value. @xref{Actions}.
