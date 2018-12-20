@@ -229,7 +229,7 @@ s_textbuffer_next_line (TextBuffer *tb)
 
     if (verbose_loading)
     {
-      fprintf (stderr, "%-4lu: %s", tb->linenum, line);
+      fprintf (stderr, "%-4lu: %s", (unsigned long) tb->linenum, line);
     }
   }
 
