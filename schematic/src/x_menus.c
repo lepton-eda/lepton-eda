@@ -30,12 +30,11 @@
 
 #define DEFAULT_MAX_RECENT_FILES 10
 
-struct PopupEntry {
-  #ifdef __cplusplus
-  const gchar *name, *action, *stock_id;
-  #else
-  const gchar const *name, *action, *stock_id;
-  #endif
+struct PopupEntry
+{
+  const gchar* name;
+  const gchar* action;
+  const gchar* stock_id;
 };
 
 static struct PopupEntry popup_items[] = {
