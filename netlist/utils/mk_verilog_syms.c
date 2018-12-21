@@ -57,7 +57,7 @@ int AndBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour);
 int OrBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour);
 int XorBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour);
 int Pin(FILE *fp, int x1, int y1, int x2, int y2, int bubble);
-int PinAttribute(FILE *fp, int x, int y, unsigned int n, char *value);
+int PinAttribute(FILE *fp, int x, int y, unsigned int n, const char *value);
 int WidenBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour);
 
 /* globals */
@@ -66,7 +66,7 @@ unsigned int PinLength  = 300;
 
 struct Table
 {
-  char         *name;     /* base name of part */
+  const char         *name;     /* base name of part */
   unsigned int suffix;    /* suffix for part, 1 for normal, 2 for deMorgan.. */
   int (*body)(FILE *, int, int, unsigned int, unsigned int);  /* body style */
   int          inputBubbles;  /* where to draw bubbles */
@@ -92,7 +92,7 @@ unsigned int nGenerate = sizeof(generate)/sizeof(struct Table);
 int
 main(int argc, char **argv)
 {
-  int i,j;
+  unsigned int i,j;
   int rc;
   char name[127];
 
@@ -468,7 +468,7 @@ Pin(FILE *fp, int x1, int y1, int x2, int y2, int bubble)
 }
 
 int
-PinAttribute(FILE *fp, int x, int y, unsigned int n, char *value)
+PinAttribute(FILE *fp, int x, int y, unsigned int n, const char *value)
 {
   if(fp == NULL)
     {
