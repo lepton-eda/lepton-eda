@@ -83,7 +83,8 @@ static gchar *sch_basename;
 
 static GList *schematics;
 
-static gchar *m4_pcbdir, *default_m4_pcbdir, *m4_files, *m4_override_file;
+static const gchar* m4_override_file;
+static gchar *m4_pcbdir, *default_m4_pcbdir, *m4_files;
 
 static gboolean use_m4 = TRUE;
 
@@ -283,7 +284,7 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
 
   if (m4_override_file) {
     args1 = g_list_append (args1, (gpointer) "-m");
-    args1 = g_list_append (args1, m4_override_file);
+    args1 = g_list_append (args1, (gpointer) m4_override_file);
   }
 
   mtime = (stat (pcb_file, &st) == 0) ? st.st_mtime : 0;
@@ -1078,7 +1079,7 @@ prune_elements (gchar * pcb_file, gchar * bak)
 }
 
 static void
-add_m4_file (gchar * arg)
+add_m4_file (const gchar * arg)
 {
   gchar *s;
 
@@ -1239,7 +1240,7 @@ parse_config (gchar * config, gchar * arg)
 }
 
 static void
-load_project (gchar * path)
+load_project (const gchar * path)
 {
   FILE *f;
   gchar *s, buf[1024], config[32], arg[768];
@@ -1280,7 +1281,7 @@ load_extra_project_files (void)
   done = TRUE;
 }
 
-static gchar *usage_string0 =
+static const gchar *usage_string0 =
   "usage: gsch2pcb [options] {project | foo.sch [foo1.sch ...]}\n"
   "\n"
   "Generate a PCB layout file from a set of gschem schematics.\n"
@@ -1338,7 +1339,7 @@ static gchar *usage_string0 =
   "       --m4-pcbdir D       Use D as the PCB m4 files install directory\n"
   "                           instead of the default:\n";
 
-static gchar *usage_string1 =
+static const gchar *usage_string1 =
   "   --backend-cmd backend   Backend that generates pins file (.cmd)\n"
   "   --backend-net backend   Backend that generates netlist file (.net)\n"
   "   --backend-pcb backend   Backend that generates board files (.pcb, .pcb.new)\n"
