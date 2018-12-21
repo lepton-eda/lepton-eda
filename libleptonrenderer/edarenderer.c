@@ -79,10 +79,21 @@ static inline gboolean
 EDA_RENDERER_CHECK_FLAG (EdaRenderer *r, int f) {
   return r->priv->flags & f;
 }
+
+
+
+/* EDA_RENDERER_SET_FLAG() function is currently unused.
+ * Comment it out to suppress compiler warnings.
+
 static inline void
 EDA_RENDERER_SET_FLAG (EdaRenderer *r, int f, gboolean e) {
   if (e) { r->priv->flags |= f; } else { r->priv->flags &= ~f; }
 }
+
+*/
+
+
+
 static inline unsigned int
 EDA_RENDERER_CAIRO_FLAGS (EdaRenderer *r) {
   return EDA_RENDERER_CHECK_FLAG (r, FLAG_HINTING) ? EDA_CAIRO_ENABLE_HINTS : 0;
