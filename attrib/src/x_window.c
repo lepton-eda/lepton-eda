@@ -328,7 +328,8 @@ x_window_add_items()
 {
   gint i, j;
   gint num_rows, num_cols;
-  gchar *text, *error_string;
+  gchar *text;
+  const gchar *error_string;
   gint visibility, show_name_value;
   
   /* Do these sanity check to prevent later segfaults */

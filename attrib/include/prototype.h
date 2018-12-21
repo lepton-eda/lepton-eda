@@ -163,7 +163,7 @@ void x_dialog_delattrib();
 void x_dialog_missing_sym();
 void x_dialog_unsaved_data();
 void x_dialog_unimplemented_feature();
-void x_dialog_fatal_error(gchar *string, gint return_code);
+void x_dialog_fatal_error(const gchar *string, gint return_code);
 void x_dialog_about_dialog();
 void x_dialog_export_file();
 

@@ -67,9 +67,9 @@ void
 x_gtksheet_init()
 {
   gint i;
-  gchar *folder[]= {_("Components"),
-                   _("Nets"),
-                   _("Pins")};
+  const gchar *folder[]= {_("Components"),
+                          _("Nets"),
+                          _("Pins")};
   GtkWidget **scrolled_windows = NULL;
 
   /* ---  Create three new sheets.   were malloc'ed in x_window_init  --- */

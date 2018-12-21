@@ -106,6 +106,12 @@ static inline guint DEFAULT_ROW_HEIGHT(GtkWidget *widget)
     return PANGO_PIXELS(val)+2*CELLOFFSET;
   }
 }
+
+
+
+/* DEFAULT_FONT_ASCENT() function is currently unused.
+ * Comment it out to suppress compiler warnings.
+
 static inline guint DEFAULT_FONT_ASCENT(GtkWidget *widget) 
 { 
   if(!widget->style->font_desc) return 12;
@@ -119,6 +125,11 @@ static inline guint DEFAULT_FONT_ASCENT(GtkWidget *widget)
     return PANGO_PIXELS(val);
   }
 }
+
+*/
+
+
+
 static inline guint STRING_WIDTH(GtkWidget *widget,
                                  PangoFontDescription *font, const gchar *text)
 {
@@ -3409,7 +3420,7 @@ gtk_sheet_range_draw(GtkSheet *sheet, const GtkSheetRange *range)
         sheet->data[i] && sheet->data[i][j])
                   gtk_sheet_cell_draw_label (sheet, i, j); 
 
-  gtk_sheet_draw_backing_pixmap(sheet, drawing_range);
+ gtk_sheet_draw_backing_pixmap(sheet, drawing_range);
 
   if(sheet->state != GTK_SHEET_NORMAL && gtk_sheet_range_isvisible(sheet, sheet->range))
        gtk_sheet_range_draw_selection(sheet, drawing_range);
@@ -5248,10 +5259,25 @@ gtk_sheet_button_release (GtkWidget * widget,
                                      sheet->active_cell.col);
   }
 
-  if(GTK_SHEET_IN_SELECTION)
+
+
+  /* \note In original code this "if" expression looks like:
+   *
+   *  if(GTK_SHEET_IN_SELECTION)
+   *
+   * and generates a compiler warning. "GTK_SHEET_IN_SELECTION" name
+   * is used as both macro name and a name of enum member (a bad idea).
+   * In this context using of enum value instead of a macro is most
+   * probably an error (maybe just a typo):
+  */
+  if(GTK_SHEET_IN_SELECTION(sheet))
          gdk_pointer_ungrab (event->time);
+
+
+
   if(sheet->timer)
          g_source_remove (sheet->timer);
+
   gtk_grab_remove(GTK_WIDGET(sheet));
 
   GTK_SHEET_UNSET_FLAGS(sheet, GTK_SHEET_IN_SELECTION);
