@@ -863,7 +863,7 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
     gchar **split_names = g_strsplit(attr_string," ", 0);
     free (attr_string);
 
-    for (gchar **iter = split_names; iter; ++iter) {
+    for (gchar **iter = split_names; *iter; ++iter) {
       if ((*iter)[0]) /* Only accept non-empty strings */
         g_ptr_array_add (promote, (gpointer) g_intern_string (*iter));
     }
