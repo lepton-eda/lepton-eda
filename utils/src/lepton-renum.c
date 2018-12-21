@@ -342,7 +342,7 @@ int parse_refdes(struct refdes_ *refdes, char *ref_str)
 	printf("Prefix=%s\n",&buff[0]);
 #endif
 	strcpy(&refdes->prefix[0],&buff[0]);	/*Copy to refdes structure*/
-	for(i=0,cp;(*cp != '\n' && *cp>='0' && *cp<='9');++cp,++i)
+	for(i=0;(*cp != '\n' && *cp>='0' && *cp<='9');++cp,++i)
 		buff[i]=*cp;	/*Fill the buffer from char to char*/
 	buff[i]='\0';	/*Terminate with NULL to be a string*/
 #ifdef DEBUG
