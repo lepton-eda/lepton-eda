@@ -51,8 +51,12 @@ typedef enum
 static void
 color_edit_widget_create (ColorEditWidget* widget);
 
+/* \todo Currently unused; see todo in commented out function implementation
+ *
 static void
 mk_opacity_box (GtkWidget* vbox);
+ *
+ */
 
 static void
 color_sel_update (ColorEditWidget* widget);
@@ -490,11 +494,13 @@ dlg_confirm_overwrite (GtkWidget* parent, const gchar* fname)
 
 
 
-/*! \brief: Create GUI for transparenct control
- *  \note   Currently unused
+/*! \brief Create GUI for transparency control
+ *  \note  Currently unused
+ *  \todo  Implement transparency for outline color map
  *
  *  \param vbox Parent widget
- */
+ *
+
 static void
 mk_opacity_box (GtkWidget* vbox)
 {
@@ -512,8 +518,9 @@ mk_opacity_box (GtkWidget* vbox)
   gtk_box_pack_start (GTK_BOX (hbox2), label, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox2), scale, TRUE, TRUE, 0);
 
-  /* separator: */
   gtk_box_pack_start (GTK_BOX (vbox), gtk_hseparator_new(), FALSE, FALSE, 5);
 
-} /* mk_opacity_box() */
+}
+
+*/
 

@@ -129,7 +129,7 @@ x_show_uri (GschemToplevel *w_current, const gchar *uri,
 
   g_assert (uri);
 
-  argv[0] = SHOW_URI_COMMAND;
+  argv[0] = (gchar *) SHOW_URI_COMMAND;
   argv[1] = (gchar *) uri;
   argv[2] = NULL; /* Null-terminated */
 
