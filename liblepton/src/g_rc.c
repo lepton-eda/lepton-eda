@@ -834,56 +834,6 @@ SCM g_rc_keep_invisible(SCM mode)
 		   2);
 }
 
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
- *  \param [in] attrlist
- *  \return SCM_BOOL_T always.
- */
-SCM g_rc_always_promote_attributes(SCM attrlist)
-{
-  SCM_ASSERT(scm_is_true (scm_list_p (attrlist)), attrlist, SCM_ARG1,
-             "always-promote-attributes");
-
-  if (default_always_promote_attributes) {
-    g_ptr_array_unref (default_always_promote_attributes);
-  }
-
-  GPtrArray *promote = g_ptr_array_new ();
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  scm_dynwind_unwind_handler ((void (*)(void *)) g_ptr_array_unref,
-                              promote,
-                              (scm_t_wind_flags) 0);
-
-  for (SCM iter = attrlist; !scm_is_null(iter); iter = scm_cdr(iter))
-  {
-    SCM car = scm_car (iter);
-
-    if (scm_is_string (car))
-    {
-      char* attr = scm_to_utf8_string (car);
-
-      /* Only accept non-empty strings:
-      */
-      if (strlen (attr) > 0)
-      {
-        g_ptr_array_add (promote, (gpointer) g_intern_string (attr));
-      }
-
-      free (attr);
-    }
-
-  }
-
-  scm_dynwind_end();
-
-  default_always_promote_attributes = promote;
-
-  return SCM_BOOL_T;
-}
-
 /*! \brief Enable the creation of backup files when saving
  *  \par Function Description
  *  If enabled then a backup file, of the form 'example.sch~', is created when

@@ -162,14 +162,9 @@ static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
     return TRUE;
 
   /* check list against attributes which can be promoted */
-  if (toplevel->always_promote_attributes != NULL) {
-    for (guint i = 0; i < toplevel->always_promote_attributes->len; ++i) {
-      gconstpointer promote =
-        g_ptr_array_index(toplevel->always_promote_attributes, i);
-      if (name == promote)
-        return TRUE;
-    }
-  }
+  if scm_is_true (scm_call_1 (scm_c_public_ref ("lepton rc", "promotable-attribute?"),
+                              scm_from_utf8_string (name)))
+    return TRUE;
 
   /* object is invisible and we do not want to promote invisible text */
   if ((!o_is_visible (toplevel, object)) &&

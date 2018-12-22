@@ -84,8 +84,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->force_boundingbox = FALSE;
 
-  toplevel->always_promote_attributes = NULL;
-
   toplevel->rendered_text_bounds_func = NULL;
   toplevel->rendered_text_bounds_data = NULL;
 

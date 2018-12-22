@@ -1,5 +1,9 @@
 ; -*-Scheme-*-
-(use-modules (geda os) (ice-9 optargs) (ice-9 ftw) (geda library))
+(use-modules (ice-9 optargs)
+             (ice-9 ftw)
+             (geda os)
+             (geda library)
+             (lepton rc))
 
 (define path-sep file-name-separator-string)
 

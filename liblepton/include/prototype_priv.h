@@ -12,7 +12,6 @@ SCM g_rc_map_font_character_to_file(SCM character_param, SCM file_param);
 SCM g_rc_attribute_promotion(SCM mode);
 SCM g_rc_promote_invisible(SCM mode);
 SCM g_rc_keep_invisible(SCM mode);
-SCM g_rc_always_promote_attributes(SCM scmsymname);
 SCM g_rc_make_backup_files(SCM mode);
 SCM g_rc_print_color_map (SCM scm_map);
 

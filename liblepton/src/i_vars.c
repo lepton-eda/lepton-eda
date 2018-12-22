@@ -38,7 +38,6 @@
 
 char *default_bitmap_directory = NULL;
 char *default_bus_ripper_symname = NULL;
-GPtrArray *default_always_promote_attributes = NULL;
 
 int   default_attribute_promotion = TRUE;
 int   default_promote_invisible = FALSE;
@@ -62,16 +61,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
 
   toplevel->make_backup_files = default_make_backup_files;
 
-  /* copy the always_promote_attributes list from the default */
-  if (toplevel->always_promote_attributes) {
-    g_ptr_array_unref (toplevel->always_promote_attributes);
-    toplevel->always_promote_attributes = NULL;
-  }
-  if (default_always_promote_attributes) {
-    toplevel->always_promote_attributes =
-      g_ptr_array_ref (default_always_promote_attributes);
-  }
-
   /* you cannot free the default* strings here since new windows */
   /* need them */
   INIT_STR(toplevel, bitmap_directory, DEFAULT_BITMAP_DIRECTORY);
@@ -88,7 +77,4 @@ void i_vars_libgeda_freenames()
 {
   g_free(default_bitmap_directory);
   g_free(default_bus_ripper_symname);
-
-  g_ptr_array_unref (default_always_promote_attributes);
-  default_always_promote_attributes = NULL;
 }

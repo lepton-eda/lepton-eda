@@ -5,6 +5,7 @@ nobase_dist_scmdata_DATA = \
 	geda/object.scm geda/page.scm geda/attrib.scm geda/deprecated.scm \
 	geda/os.scm geda/config.scm geda/log-rotate.scm geda/log.scm \
 	geda/library.scm geda/repl.scm \
+	lepton/rc.scm \
 	lepton/version.scm
 nobase_scmdata_DATA = geda/core/gettext.scm
 
