@@ -139,39 +139,6 @@ geda_complex_object_get_position (const GedaObject *object, gint *x, gint *y)
   return TRUE;
 }
 
-/*! \brief check whether an object is a attributes
- *  \par Function Description
- *  This function checks if an object should be promoted.
- *  An attribute object is promotable if it's promoted by default, or the user
- *  has configered it to promote an attribute.
- *
- *  \param [in] toplevel  The TOPLEVEL object
- *  \param [in] object    The attribute object to check
- *  \return TRUE if the object is a eligible attribute, FALSE otherwise
- */
-static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
-{
-  g_return_val_if_fail (toplevel, FALSE);
-  g_return_val_if_fail (object, FALSE);
-
-  const gchar *name = o_attrib_get_name (object);
-  if (!name) return FALSE;
-
-  /* check list against attributes which can be promoted */
-  if scm_is_true (scm_call_1 (scm_c_public_ref ("lepton rc", "promotable-attribute?"),
-                              scm_from_utf8_string (name)))
-    return TRUE;
-
-  /* object is invisible and we do not want to promote invisible text */
-  if ((!o_is_visible (toplevel, object)) &&
-      scm_is_false (scm_call_0 (scm_c_public_ref ("lepton rc",
-                                                  "promote-invisible-attribs?"))))
-    return FALSE; /* attribute not eligible for promotion */
-
-  /* yup, attribute can be promoted */
-  return TRUE;
-}
-
 /*! \brief get the embedded state of an complex object
  *  \par Function Description
  *  Checks and returns the status of the complex object.
@@ -225,7 +192,8 @@ GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
     tmp = (OBJECT*) iter->data;
 
     /* Is it an attribute we want to promote? */
-    if (!o_complex_is_eligible_attribute(toplevel, tmp))
+    if scm_is_false (scm_call_1 (scm_c_public_ref ("lepton rc", "eligible-attribute?"),
+                                 edascm_from_object (tmp)))
       continue;
 
     if (detach) {

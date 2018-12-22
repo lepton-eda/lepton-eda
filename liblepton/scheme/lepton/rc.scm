@@ -21,10 +21,13 @@
 
 (define-module (lepton rc)
   #:use-module (ice-9 match)
+  #:use-module (geda attrib)
   #:use-module (geda core gettext)
+  #:use-module (geda object)
   #:use-module (geda log)
 
   #:export (always-promote-attributes
+            eligible-attribute?
             promotable-attribute?
             promote-invisible
             promote-invisible-attribs?))
@@ -84,3 +87,13 @@ otherwise returns #f."
 (define (promotable-attribute? attrib)
   "Returns #t if ATTRIB is promotable, otherwise returns #f."
   (not (not (member attrib %attribs-to-promote))))
+
+(define (eligible-attribute? object)
+  "Returns #t if OBJECT is eligible attribute for promotion,
+otherwise returns #f."
+  (and (attribute? object)
+       (promotable-attribute? (attrib-name object))
+       ;; Return #f if object is invisible and we do not want to
+       ;; promote invisible text.
+       (or (text-visible? object)
+           (promote-invisible-attribs?))))
