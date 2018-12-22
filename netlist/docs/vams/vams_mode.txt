@@ -334,8 +334,8 @@ CONTENT:
 	- set in .gEDA/gschemrc or wherever you want, but place it
 	  right.
 
-	   	(attribute-promotion "enable")
-		(promote-invisible "enable")
+	   	(attribute-promotion "enabled")
+		(promote-invisible "enabled")
 		(enforce-hierarchy "disabled")
 
 		(attribute-name "port_object")
