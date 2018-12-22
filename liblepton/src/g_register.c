@@ -56,7 +56,6 @@ static struct gsubr_t libgeda_funcs[] = {
   { "bitmap-directory",          1, 0, 0, (SCM (*) ()) g_rc_bitmap_directory },
   { "bus-ripper-symname",        1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_symname },
   { "attribute-promotion",       1, 0, 0, (SCM (*) ()) g_rc_attribute_promotion },
-  { "promote-invisible",         1, 0, 0, (SCM (*) ()) g_rc_promote_invisible },
   { "keep-invisible",            1, 0, 0, (SCM (*) ()) g_rc_keep_invisible },
   { "make-backup-files",         1, 0, 0, (SCM (*) ()) g_rc_make_backup_files },
   { "print-color-map",           0, 1, 0, (SCM (*) ()) g_rc_print_color_map },

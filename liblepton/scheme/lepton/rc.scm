@@ -25,7 +25,30 @@
   #:use-module (geda log)
 
   #:export (always-promote-attributes
-            promotable-attribute?))
+            promotable-attribute?
+            promote-invisible
+            promote-invisible-attribs?))
+
+;;; Controls if invisible attribs are promoted.
+(define %promote-invisible? #f)
+
+(define (set-promote-invisible! allow?)
+  (set! %promote-invisible? allow?)
+  %promote-invisible?)
+
+(define (promote-invisible allow?)
+  "Checks ALLOW? and determines if invisible attribs should be
+promoted. Returns #t if ALLOW? is equal to \"enabled\" or #t,
+otherwise returns #f."
+  (set-promote-invisible!
+   (match allow?
+     ((or "enabled" #t) #t)
+     (_ #f))))
+
+(define (promote-invisible-attribs?)
+  "Returns #t if promotion of invisible attribs is enabled,
+otherwise returns #f."
+  %promote-invisible?)
 
 ;;; List of attributes to always promote.
 (define %attribs-to-promote '("symversion"))

@@ -40,7 +40,6 @@ char *default_bitmap_directory = NULL;
 char *default_bus_ripper_symname = NULL;
 
 int   default_attribute_promotion = TRUE;
-int   default_promote_invisible = FALSE;
 int   default_keep_invisible = TRUE;
 
 int   default_make_backup_files = TRUE;
@@ -56,7 +55,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
 {
 
   toplevel->attribute_promotion = default_attribute_promotion;
-  toplevel->promote_invisible = default_promote_invisible;
   toplevel->keep_invisible = default_keep_invisible;
 
   toplevel->make_backup_files = default_make_backup_files;

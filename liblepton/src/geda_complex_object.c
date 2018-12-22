@@ -164,7 +164,8 @@ static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
 
   /* object is invisible and we do not want to promote invisible text */
   if ((!o_is_visible (toplevel, object)) &&
-      (toplevel->promote_invisible == FALSE))
+      scm_is_false (scm_call_0 (scm_c_public_ref ("lepton rc",
+                                                  "promote-invisible-attribs?"))))
     return FALSE; /* attribute not eligible for promotion */
 
   /* yup, attribute can be promoted */

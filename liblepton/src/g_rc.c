@@ -805,23 +805,6 @@ SCM g_rc_attribute_promotion(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_promote_invisible(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("promote-invisible",
-		   default_promote_invisible,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_keep_invisible(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

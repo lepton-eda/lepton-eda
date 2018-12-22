@@ -62,9 +62,6 @@ struct st_toplevel
   /*controls if attribute promotion happens */
   int attribute_promotion;
 
-  /* controls if invisible attribs are promoted */
-  int promote_invisible;
-
   /* controls if invisible attribs are kept and not deleted */
   int keep_invisible;
 
