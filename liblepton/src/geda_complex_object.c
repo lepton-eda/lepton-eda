@@ -157,10 +157,6 @@ static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
   const gchar *name = o_attrib_get_name (object);
   if (!name) return FALSE;
 
-  /* always promote symversion= attribute, even if it is invisible */
-  if (strncmp(o_attrib_get_name(object), "symversion", 10) == 0)
-    return TRUE;
-
   /* check list against attributes which can be promoted */
   if scm_is_true (scm_call_1 (scm_c_public_ref ("lepton rc", "promotable-attribute?"),
                               scm_from_utf8_string (name)))

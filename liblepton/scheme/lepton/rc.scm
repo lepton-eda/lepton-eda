@@ -28,11 +28,12 @@
             promotable-attribute?))
 
 ;;; List of attributes to always promote.
-(define %attribs-to-promote '())
+(define %attribs-to-promote '("symversion"))
 
 ;;; Redefine the list of attribs to promote. Returns the new list.
 (define (set-attribs-to-promote! ls)
-  (set! %attribs-to-promote ls)
+  ;; Always promote "symversion" attribute, even if it is invisible.
+  (set! %attribs-to-promote (delete-duplicates (append ls "symversion")))
   %attribs-to-promote)
 
 ;;; Checks the list of ATTRIBS that will be promoted on symbol
