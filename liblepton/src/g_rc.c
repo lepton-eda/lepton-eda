@@ -843,6 +843,9 @@ SCM g_rc_keep_invisible(SCM mode)
  */
 SCM g_rc_always_promote_attributes(SCM attrlist)
 {
+  SCM_ASSERT(scm_is_true (scm_list_p (attrlist)), attrlist, SCM_ARG1,
+             "always-promote-attributes");
+
   if (default_always_promote_attributes) {
     g_ptr_array_unref (default_always_promote_attributes);
   }
@@ -854,33 +857,24 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
                               promote,
                               (scm_t_wind_flags) 0);
 
-  if (scm_is_string (attrlist)) {
-    s_log_message(_("WARNING: using a string for 'always-promote-attributes'"
-        " is deprecated. Use a list of strings instead."));
+  for (SCM iter = attrlist; !scm_is_null(iter); iter = scm_cdr(iter))
+  {
+    SCM car = scm_car (iter);
 
-    /* convert the space separated strings into a GList */
-    char *attr_string = scm_to_utf8_string (attrlist);
-    gchar **split_names = g_strsplit(attr_string," ", 0);
-    free (attr_string);
+    if (scm_is_string (car))
+    {
+      char* attr = scm_to_utf8_string (car);
 
-    for (gchar **iter = split_names; *iter; ++iter) {
-      if ((*iter)[0]) /* Only accept non-empty strings */
-        g_ptr_array_add (promote, (gpointer) g_intern_string (*iter));
-    }
-
-    g_strfreev(split_names);
-
-  } else {
-    SCM_ASSERT(scm_is_true (scm_list_p (attrlist)), attrlist, SCM_ARG1,
-               "always-promote-attributes");
-    for (SCM iter = attrlist; !scm_is_null(iter); iter = scm_cdr(iter)) {
-      SCM_ASSERT (scm_is_string (scm_car (iter)), scm_car (iter),
-                  SCM_ARG1, "always-promote-attributes");
-      char *attr = scm_to_utf8_string (scm_car (iter));
-      if (attr[0]) /* Only accept non-empty strings */
+      /* Only accept non-empty strings:
+      */
+      if (strlen (attr) > 0)
+      {
         g_ptr_array_add (promote, (gpointer) g_intern_string (attr));
+      }
+
       free (attr);
     }
+
   }
 
   scm_dynwind_end();
