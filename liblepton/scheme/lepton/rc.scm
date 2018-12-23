@@ -37,7 +37,7 @@
   #:export (always-promote-attributes
             attribute-promotion
             eligible-attribute?
-            promotable-attribute?
+            promotable-attrib-name?
             promote-attributes?
             promote-invisible
             promote-invisible-attribs?))
@@ -64,13 +64,13 @@ otherwise returns #f."
   %promote-invisible?)
 
 ;;; List of attributes to always promote.
-(define %attribs-to-promote '("symversion"))
+(define %promotable-attrib-names '("symversion"))
 
 ;;; Redefine the list of attribs to promote. Returns the new list.
-(define (set-attribs-to-promote! ls)
+(define (set-promotable-attrib-names! ls)
   ;; Always promote "symversion" attribute, even if it is invisible.
-  (set! %attribs-to-promote (delete-duplicates (append ls "symversion")))
-  %attribs-to-promote)
+  (set! %promotable-attrib-names (delete-duplicates (append ls "symversion")))
+  %promotable-attrib-names)
 
 ;;; Checks the list of ATTRIBS that will be promoted on symbol
 ;;; insertion. Returns #f if ATTRIBS is neither a space separated
@@ -88,21 +88,22 @@ otherwise returns #f."
            (_ "WARNING: 'always-promote-attributes' must be a list of strings."))
      #f)))
 
-(define (always-promote-attributes attribs)
-  "Checks and sets the list of ATTRIBS to promote for new symbols
-in schematic. Returns the list if ATTRIBS is a valid list,
+(define (always-promote-attributes names)
+  "Checks and sets the list of attrib NAMES to promote for new
+symbols in schematic. Returns the list if NAMES is a valid list,
 otherwise returns #f."
-  (and=> (check-attribs-to-promote attribs) set-attribs-to-promote!))
+  (and=> (check-attribs-to-promote names)
+         set-promotable-attrib-names!))
 
-(define (promotable-attribute? attrib)
-  "Returns #t if ATTRIB is promotable, otherwise returns #f."
-  (not (not (member attrib %attribs-to-promote))))
+(define (promotable-attrib-name? name)
+  "Returns #t if attrib NAME is promotable, otherwise returns #f."
+  (not (not (member name %promotable-attrib-names))))
 
 (define (eligible-attribute? object)
   "Returns #t if OBJECT is eligible attribute for promotion,
 otherwise returns #f."
   (and (attribute? object)
-       (promotable-attribute? (attrib-name object))
+       (promotable-attrib-name? (attrib-name object))
        ;; Return #f if object is invisible and we do not want to
        ;; promote invisible text.
        (or (text-visible? object)
