@@ -36,8 +36,8 @@
 
   #:export (always-promote-attributes
             attribute-promotion
-            eligible-attribute?
             promotable-attrib-name?
+            promotable-attribute?
             promote-attributes?
             promote-invisible
             promote-invisible-attribs?))
@@ -99,7 +99,7 @@ otherwise returns #f."
   "Returns #t if attrib NAME is promotable, otherwise returns #f."
   (not (not (member name %promotable-attrib-names))))
 
-(define (eligible-attribute? object)
+(define (promotable-attribute? object)
   "Returns #t if OBJECT is eligible attribute for promotion,
 otherwise returns #f."
   (and (attribute? object)

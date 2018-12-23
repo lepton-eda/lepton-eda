@@ -194,7 +194,7 @@ GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
     tmp = (OBJECT*) iter->data;
 
     /* Is it an attribute we want to promote? */
-    if scm_is_false (scm_call_1 (scm_c_public_ref ("lepton rc", "eligible-attribute?"),
+    if scm_is_false (scm_call_1 (scm_c_public_ref ("lepton rc", "promotable-attribute?"),
                                  edascm_from_object (tmp)))
       continue;
 
