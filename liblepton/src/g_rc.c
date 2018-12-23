@@ -788,23 +788,6 @@ SCM g_rc_reset_component_library(void)
  *  \par Function Description
  *
  */
-SCM g_rc_attribute_promotion(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("attribute-promotion",
-		   default_attribute_promotion,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_keep_invisible(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

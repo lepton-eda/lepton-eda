@@ -183,7 +183,9 @@ GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
   GList *iter;
   OBJECT *tmp;
 
-  if (!toplevel->attribute_promotion) /* controlled through rc file */
+  /* controlled through rc file */
+  if scm_is_false (scm_call_0 (scm_c_public_ref ("lepton rc",
+                                                 "promote-attributes?")))
     return NULL;
 
   attribs = o_attrib_find_floating_attribs (object->complex->prim_objs);

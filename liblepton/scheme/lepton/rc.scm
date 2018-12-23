@@ -27,8 +27,10 @@
   #:use-module (geda log)
 
   #:export (always-promote-attributes
+            attribute-promotion
             eligible-attribute?
             promotable-attribute?
+            promote-attributes?
             promote-invisible
             promote-invisible-attribs?))
 
@@ -97,3 +99,24 @@ otherwise returns #f."
        ;; promote invisible text.
        (or (text-visible? object)
            (promote-invisible-attribs?))))
+
+;;; Controls if attribute promotion happens.
+(define %promote-attributes? #t)
+
+(define (set-attribute-promotion! allow?)
+  (set! %promote-attributes? allow?)
+  %promote-attributes?)
+
+(define (attribute-promotion allow?)
+  "Checks ALLOW? and determines if attribute promotion should be
+enabled. Returns #t if ALLOW? is equal to \"enabled\" or #t,
+otherwise returns #f."
+  (set-attribute-promotion!
+   (match allow?
+     ((or "enabled" #t) #t)
+     (_ #f))))
+
+(define (promote-attributes?)
+  "Returns #t if promotion of attribs is enabled, otherwise
+returns #f."
+  %promote-attributes?)

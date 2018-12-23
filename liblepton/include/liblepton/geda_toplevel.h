@@ -59,9 +59,6 @@ struct st_toplevel
   /* controls if the net consolidation code is used */
   int net_consolidate;
 
-  /*controls if attribute promotion happens */
-  int attribute_promotion;
-
   /* controls if invisible attribs are kept and not deleted */
   int keep_invisible;
 
