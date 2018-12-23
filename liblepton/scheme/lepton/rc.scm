@@ -51,12 +51,9 @@
 
 (define (promote-invisible allow?)
   "Checks ALLOW? and determines if invisible attribs should be
-promoted. Returns #t if ALLOW? is equal to \"enabled\" or #t,
-otherwise returns #f."
-  (set-promote-invisible!
-   (match allow?
-     ((or "enabled" #t) #t)
-     (_ #f))))
+promoted. Returns #t if ALLOW? is equal to \"enabled\", otherwise
+returns #f."
+  (set-promote-invisible! (string= allow? "enabled")))
 
 (define (promote-invisible-attribs?)
   "Returns #t if promotion of invisible attribs is enabled,
@@ -118,12 +115,9 @@ otherwise returns #f."
 
 (define (attribute-promotion allow?)
   "Checks ALLOW? and determines if attribute promotion should be
-enabled. Returns #t if ALLOW? is equal to \"enabled\" or #t,
-otherwise returns #f."
-  (set-attribute-promotion!
-   (match allow?
-     ((or "enabled" #t) #t)
-     (_ #f))))
+enabled. Returns #t if ALLOW? is equal to \"enabled\", otherwise
+returns #f."
+  (set-attribute-promotion! (string= allow? "enabled")))
 
 (define (promote-attributes?)
   "Returns #t if promotion of attribs is enabled, otherwise
