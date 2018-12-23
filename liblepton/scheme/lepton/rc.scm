@@ -19,6 +19,14 @@
 
 ;;; Lepton rc files processing procedures.
 
+;;; FIXME: Eventually, the following legacy rc procedures should
+;;; go to geda-deprecated-config.scm:
+;;;
+;;;     always-promote-attributes
+;;;
+;;; Please see netlist/config.scm for an example of how to define
+;;; new substitution configuration key-groups for them.
+
 (define-module (lepton rc)
   #:use-module (ice-9 match)
   #:use-module (geda attrib)
