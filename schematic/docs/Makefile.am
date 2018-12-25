@@ -8,8 +8,6 @@ doxygen: schematic.dox
 	@echo 'Creating doxygen documentation for gschem...'
 if ENABLE_DOXYGEN
 	$(DOXYGEN) schematic.dox
-	-cd latex && $(MAKE)
-	-cd ..
 else
 	@echo 'configure was not run with the --enable-doxygen switch.'
 	@echo 'The documentation cannot be built from the sources.'

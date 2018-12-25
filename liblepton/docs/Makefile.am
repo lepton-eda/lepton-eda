@@ -13,7 +13,6 @@ doxygen: liblepton.dox
 if ENABLE_DOXYGEN
 	-(cd images && $(MAKE) images)
 	$(DOXYGEN) liblepton.dox
-	-(cd latex && $(MAKE))
 else
 	@echo 'configure was not run with the --enable-doxygen switch.'
 	@echo 'The documentation cannot be built from the sources.'
