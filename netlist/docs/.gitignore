@@ -1,7 +1,5 @@
 Makefile
 Makefile.in
-html
-latex
 lepton-netlist.1
 lepton-netlist.html
 mk_verilog_syms.1
