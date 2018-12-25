@@ -537,6 +537,16 @@ intersects the net, then @code{(object-connections <net>)} will return
 a list containing the pin @code{object}, and @emph{not} the component.
 @end defun
 
+@defun object-locked? object
+Returns true (@samp{#t}) if @var{object} is locked (i.e. non-selectable).
+@end defun
+
+@defun set-object-locked! object state
+Sets the locked (i.e. non-selectable) flag for @var{object}.
+If @var{state} is @samp{#f}, clears the locked flag; if @var{state}
+is @samp{#t}, sets it. Returns @var{object}.
+@end defun
+
 @menu
 * Object sub-types::
 * Object transformations::
