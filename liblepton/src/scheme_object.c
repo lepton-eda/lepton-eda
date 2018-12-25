@@ -1,6 +1,8 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library - Scheme API
+/* Lepton EDA
+ * liblepton - Lepton's library - Scheme API
  * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2011-2016 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -718,6 +720,80 @@ SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
 
   return obj_s;
 }
+
+
+
+/*! \brief Check whether an object is locked.
+ *
+ * \par Function Description
+ * Check the state of an object's selectable flag: if it's true, the
+ * object is considered to be unlocked, otherwise it is locked.
+ *
+ * \note Scheme API: Implements the %object-locked? procedure in the
+ * (geda core object) module.
+ *
+ * \param obj_s  #OBJECT smob to inspect.
+ *
+ * \return       Boolean value indicating whether \a obj_s is locked.
+ */
+SCM_DEFINE (object_locked_x, "%object-locked?", 1, 0, 0,
+            (SCM obj_s), "Check whether an object is locked.")
+{
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
+              SCM_ARG1, s_object_locked_x);
+
+  OBJECT* obj = edascm_to_object (obj_s);
+
+  return obj->selectable ? SCM_BOOL_F : SCM_BOOL_T;
+
+} /* object_locked_x() */
+
+
+
+/*! \brief Lock or unlock an object.
+ *
+ * \par Function Description
+ * Set object's selectable flag: locked objects cannot be selected.
+ *
+ * \note Scheme API: Implements the %set-object-locked! procedure in
+ * the (geda core object) module.
+ *
+ * \param obj_s     #OBJECT smob to modify.
+ * \param locked_s  boolean: whether the object should be locked.
+ *
+ * \return          the object (\a obj_s).
+ */
+SCM_DEFINE (set_object_locked_x, "%set-object-locked!", 2, 0, 0,
+            (SCM obj_s, SCM locked_s), "Lock or unlock an object.")
+{
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
+              SCM_ARG1, s_set_object_locked_x);
+  SCM_ASSERT (scm_is_bool (locked_s), locked_s,
+              SCM_ARG2, s_set_object_locked_x);
+
+  OBJECT* obj = edascm_to_object (obj_s);
+
+  int locked = locked_s == SCM_BOOL_T;
+
+  /* do not allow locked objects to be selected:
+  */
+  int selectable = !locked;
+
+  if (obj->selectable != selectable)
+  {
+    obj->selectable = selectable;
+
+    /* mark the page as changed:
+    */
+    TOPLEVEL* toplevel = edascm_c_current_toplevel();
+    o_page_changed (toplevel, obj);
+  }
+
+  return obj_s;
+
+} /* set_object_locked_x() */
+
+
 
 /*! \brief Create a new line.
  * \par Function Description
@@ -2262,6 +2338,7 @@ init_module_geda_core_object (void *unused)
                 s_set_picture_data_vector_x,
                 s_translate_object_x, s_rotate_object_x,
                 s_mirror_object_x,
+                s_object_locked_x, s_set_object_locked_x,
                 NULL);
 }
 
