@@ -21,5 +21,5 @@ lepton-archive: $(srcdir)/lepton-archive.py
 
 MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
 CLEANFILES = *.log *.ps core FILE tmp  *~
-DISTCLEANFILES = *.log core FILE tmp *~ lepton-archive sw2asc
+DISTCLEANFILES = *.log core FILE tmp *~ lepton-archive
 MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in lepton-archive

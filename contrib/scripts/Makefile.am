@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 noinst_SCRIPTS = gnet_hier_verilog.sh sarlacc_sym pads_backannotate \
-	sw2asc
+	 bompp.sh.in bom_xref.sh.in sch2eaglepos.sh sw2asc
 
 dist_noinst_MANS = gnet_hier_verilog.1 pads_backannotate.1 \
 	sarlacc_sym.1 sw2asc.1
@@ -22,5 +22,5 @@ SUFFIXES = .1.in .1
 
 MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
 CLEANFILES = *.log *.ps core FILE tmp  *~
-DISTCLEANFILES = *.log core FILE tmp *~
-MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in sw2asc *.1
+DISTCLEANFILES = *.log core FILE tmp *~ bompp.sh bom_xref.sh sw2asc
+MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in *.1 bompp.sh bom_xref.sh sw2asc

@@ -254,9 +254,6 @@ AC_CONFIG_FILES([Makefile
                  netlist/examples/vams/vhdl/new-vhdl/Makefile
                  netlist/examples/switcap/Makefile
                  netlist/utils/Makefile
-                 netlist/scripts/Makefile
-                 netlist/scripts/bom_xref.sh
-                 netlist/scripts/bompp.sh
                  netlist/examples/verilog/Makefile
                  netlist/examples/verilog/T_FF_example/Makefile
                  netlist/examples/verilog/T_FF_example/verilog_modules/Makefile
@@ -305,6 +302,8 @@ AC_CONFIG_FILES([Makefile
                  contrib/gmk_sym/Makefile
                  contrib/sarlacc_schem/Makefile
                  contrib/scripts/Makefile
+                 contrib/scripts/bom_xref.sh
+                 contrib/scripts/bompp.sh
                  contrib/scripts/sw2asc
 ])
 AC_OUTPUT
