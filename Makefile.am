@@ -64,7 +64,7 @@ endif HAVE_GIT_REPO
 doxygen:
 if ENABLE_DOXYGEN
 	@for subdir in attrib/docs schematic/docs \
-	  liblepton/docs symcheck/docs utils/docs ; do \
+	  liblepton/docs utils/docs ; do \
 	  (cd $$subdir; $(MAKE) doxygen) || exit 1; \
         done
 else
