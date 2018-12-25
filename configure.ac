@@ -255,7 +255,6 @@ AC_CONFIG_FILES([Makefile
                  netlist/examples/switcap/Makefile
                  netlist/utils/Makefile
                  netlist/scripts/Makefile
-                 netlist/scripts/annotate.sh
                  netlist/scripts/bom_xref.sh
                  netlist/scripts/bompp.sh
                  netlist/examples/verilog/Makefile
