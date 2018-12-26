@@ -228,13 +228,6 @@ To compile the documentation (quite a slow process), run:
 The documentation can then be found in:
 
     */docs/html/index.html
-    */docs/latex/refman.pdf
-
-Some modules don't automatically generate the PDF version of the
-documentation.  If you want them you have to build them explicitly,
-e.g.:
-
-    cd gattrib/docs && make refman.pdf
 
 Getting help
 ============
