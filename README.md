@@ -114,7 +114,7 @@ The following tools and libraries are optional:
 
 - The `doxygen` API documentation tool.  This is required for
   building the gEDA developer API documentation, not for the regular
-  user documentation.  <http://www.stack.nl/~dimitri/doxygen/>
+  user documentation.  <http://www.doxygen.nl>
 
 - 'Inkscape' or 'ImageMagick' for svg to png or pdf conversion
   This is required for building the gEDA developer API documentation,
