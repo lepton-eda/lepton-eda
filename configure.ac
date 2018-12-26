@@ -253,7 +253,6 @@ AC_CONFIG_FILES([Makefile
                  netlist/examples/vams/vhdl/basic-vhdl/Makefile
                  netlist/examples/vams/vhdl/new-vhdl/Makefile
                  netlist/examples/switcap/Makefile
-                 netlist/utils/Makefile
                  netlist/examples/verilog/Makefile
                  netlist/examples/verilog/T_FF_example/Makefile
                  netlist/examples/verilog/T_FF_example/verilog_modules/Makefile
