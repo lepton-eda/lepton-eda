@@ -12,8 +12,6 @@ extern int default_embed_complex;
 extern int default_include_complex;
 extern int default_snap_size;
 
-extern int default_init_right;
-extern int default_init_bottom;
 extern int default_scrollbars_flag;
 extern gchar *default_print_paper;
 extern int default_print_orientation;

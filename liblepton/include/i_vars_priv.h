@@ -1,7 +1,3 @@
-
-extern int default_init_right;
-extern int default_init_bottom;
-
 extern char *default_bitmap_directory;
 extern char *default_bus_ripper_symname;
 
