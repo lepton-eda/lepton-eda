@@ -90,7 +90,6 @@ void gschem_quit(void)
 
   s_clib_free();
   s_menu_free();
-  /* o_text_freeallfonts();*/
   s_attrib_free();
 #ifdef HAVE_LIBSTROKE
   x_stroke_free ();

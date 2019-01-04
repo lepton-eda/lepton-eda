@@ -119,12 +119,6 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
   g_free (toplevel->bitmap_directory);
   g_free (toplevel->bus_ripper_symname);
 
-  /* free all fonts */
-  /* if you close a window, then you free the font set... */
-  /* this is probably a bad idea... */
-  /* The font set can ONLY be freed when exiting!!! */
-  /*  o_text_freeallfonts (toplevel); */
-
   /* delete all pages */
   s_page_delete_list (toplevel);
 
