@@ -295,7 +295,7 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
   picture->file_content = NULL;
   picture->file_length = 0;
 
-  picture->ratio = abs ((double) (x1 - x2) / (y1 - y2));
+  picture->ratio = fabs ((double) (x1 - x2) / (y1 - y2));
   picture->filename = g_strdup (filename);
   picture->angle = angle;
   picture->mirrored = mirrored;
