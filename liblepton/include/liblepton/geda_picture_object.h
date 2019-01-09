@@ -40,7 +40,7 @@ geda_picture_object_calculate_bounds (const OBJECT *object,
                                       GedaBounds *bounds);
 
 double
-o_picture_get_ratio (TOPLEVEL *toplevel, OBJECT *object);
+o_picture_get_ratio (OBJECT *object);
 
 void
 o_picture_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
