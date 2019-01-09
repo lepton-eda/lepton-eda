@@ -36,8 +36,7 @@ OBJECT *o_picture_new(TOPLEVEL *toplevel,
                       int embedded) G_GNUC_WARN_UNUSED_RESULT;
 
 void
-geda_picture_object_calculate_bounds (TOPLEVEL *toplevel,
-                                      const OBJECT *object,
+geda_picture_object_calculate_bounds (const OBJECT *object,
                                       GedaBounds *bounds);
 
 double

@@ -336,13 +336,11 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
  *
  *  On failure, this function sets the bounds to empty.
  *
- *  \param [in]  toplevel  Unused
  *  \param [in]  object    Picture OBJECT to read coordinates from.
  *  \param [out] bounds    The bounds of the picture
  */
 void
-geda_picture_object_calculate_bounds (TOPLEVEL *toplevel,
-                                      const OBJECT *object,
+geda_picture_object_calculate_bounds (const OBJECT *object,
                                       GedaBounds *bounds)
 {
   geda_bounds_init (bounds);
