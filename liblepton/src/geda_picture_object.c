@@ -390,12 +390,11 @@ geda_picture_object_get_position (const GedaObject *object, gint *x, gint *y)
  * Returns the width/height ratio of picture \a object, taking the
  * image rotation into account.
  *
- * \param toplevel  The current #TOPLEVEL.
  * \param object    Picture #OBJECT to inspect.
  * \return width/height ratio for \a object.
  */
 double
-o_picture_get_ratio (TOPLEVEL *toplevel, OBJECT *object)
+o_picture_get_ratio (OBJECT *object)
 {
   g_return_val_if_fail (object != NULL, 1);
   g_return_val_if_fail (object->picture != NULL, 1);
@@ -443,7 +442,7 @@ void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
                       int x, int y, int whichone)
 {
   int tmp;
-  double ratio = o_picture_get_ratio (toplevel, object);
+  double ratio = o_picture_get_ratio (object);
 
   o_emit_pre_change_notify (toplevel, object);
 
