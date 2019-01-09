@@ -418,8 +418,19 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
                                        s_page_objects (page));
   }
   else {
+
+    int right = gschem_page_geometry_get_viewport_right (geometry);
+    int left = gschem_page_geometry_get_viewport_left (geometry);
+    double val1 = fabs ((double) (right - left) / screen_width);
+
+    int top = gschem_page_geometry_get_viewport_top (geometry);
+    int bottom = gschem_page_geometry_get_viewport_bottom (geometry);
+    double val2 = fabs ((double) (top - bottom) / screen_height);
+
+    double scale = MAX (val1, val2);
+
     gschem_page_geometry_set_values (geometry,
-                                     MAX (abs ((double)(gschem_page_geometry_get_viewport_right (geometry) - gschem_page_geometry_get_viewport_left (geometry)) / screen_width), (abs ((double)(gschem_page_geometry_get_viewport_top (geometry) - gschem_page_geometry_get_viewport_bottom (geometry)) / screen_height))),
+                                     scale,
                                      screen_width,
                                      screen_height,
                                      gschem_page_geometry_get_viewport_left (geometry),
@@ -1101,10 +1112,10 @@ gschem_page_view_update_hadjustment (GschemPageView *view)
   if (view->hadjustment != NULL && geometry != NULL) {
 
     gtk_adjustment_set_page_increment (view->hadjustment,
-                                       fabs (geometry->viewport_right - geometry->viewport_left) - 100.0);
+                                       abs (geometry->viewport_right - geometry->viewport_left) - 100.0);
 
     gtk_adjustment_set_page_size (view->hadjustment,
-                                  fabs (geometry->viewport_right - geometry->viewport_left));
+                                  abs (geometry->viewport_right - geometry->viewport_left));
 
     gtk_adjustment_set_value (view->hadjustment,
                                geometry->viewport_left);
@@ -1146,10 +1157,10 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
   if (view->vadjustment != NULL && geometry != NULL) {
 
     gtk_adjustment_set_page_increment(view->vadjustment,
-                                      fabs (geometry->viewport_bottom - geometry->viewport_top) - 100.0);
+                                      abs (geometry->viewport_bottom - geometry->viewport_top) - 100.0);
 
     gtk_adjustment_set_page_size (view->vadjustment,
-                                  fabs (geometry->viewport_bottom - geometry->viewport_top));
+                                  abs (geometry->viewport_bottom - geometry->viewport_top));
 
     gtk_adjustment_set_value(view->vadjustment,
                              geometry->world_bottom - geometry->viewport_bottom);
