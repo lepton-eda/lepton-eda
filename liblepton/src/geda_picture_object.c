@@ -1013,7 +1013,6 @@ o_picture_set_from_file (TOPLEVEL *toplevel, OBJECT *object,
  * \par Function Description
  * Returns the filename associated with the picture \a object.
  *
- * \param toplevel The current #TOPLEVEL.
  * \param object   The picture #OBJECT to inspect.
  * \return the filename associated with \a object.
  */
