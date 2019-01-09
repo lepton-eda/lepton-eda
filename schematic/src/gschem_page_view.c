@@ -1319,7 +1319,7 @@ gschem_page_view_zoom_object (GschemPageView *view, OBJECT *object)
   int x[2];
   int y[2];
   int viewport_center_x, viewport_center_y, viewport_width, viewport_height;
-  double k;
+  double scale;
 
   g_return_if_fail (view != NULL);
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
@@ -1343,13 +1343,22 @@ gschem_page_view_zoom_object (GschemPageView *view, OBJECT *object)
     /* this number configurable */
     viewport_center_x = (x[1] + x[0]) / 2;
     viewport_center_y = (y[1] + y[0]) / 2;
-    /* .5 is scale to show really small objects like zero-sized pins */
-    k = ((y[1] - y[0]) / 50 || (x[1] - x[0]) / 50 || .5);
-    viewport_height = geometry->screen_height * k;
-    viewport_width  = geometry->screen_width  * k;
+
+    /* .5 is scale to show really small objects like zero-sized pins:
+    */
+    scale = (y[1] - y[0]) / 50;
+
+    if (scale == 0)
+      scale = (x[1] - x[0]) / 50;
+
+    if (scale == 0)
+      scale = .5;
+
+    viewport_height = geometry->screen_height * scale;
+    viewport_width  = geometry->screen_width  * scale;
 
     gschem_page_geometry_set_values (geometry,
-                                     k,
+                                     scale,
                                      geometry->screen_width,
                                      geometry->screen_height,
                                      viewport_center_x - viewport_width / 2,

@@ -573,7 +573,8 @@ gschem_page_geometry_set_screen_width (GschemPageGeometry *geometry, int screen_
 
 /*! \brief Get page geometry for this view
  *
- *  \param [in] view The view
+ *  \param [in] view   The view
+ *  \param [in] scale  This parameter is currently unused
  *  \return The page for the view
  */
 void
