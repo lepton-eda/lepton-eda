@@ -1046,8 +1046,8 @@ eda_renderer_draw_picture (EdaRenderer *renderer, OBJECT *object)
   cairo_translate (renderer->priv->cr,
                    object->picture->upper_x, object->picture->upper_y);
   cairo_scale (renderer->priv->cr,
-               fabs (object->picture->upper_x - object->picture->lower_x) / orig_width,
-               - fabs (object->picture->upper_y - object->picture->lower_y) / orig_height);
+               abs (object->picture->upper_x - object->picture->lower_x) / orig_width,
+               - abs (object->picture->upper_y - object->picture->lower_y) / orig_height);
 
   /* Evil magic translates picture origin to the right position for a given rotation */
   switch (object->picture->angle) {
