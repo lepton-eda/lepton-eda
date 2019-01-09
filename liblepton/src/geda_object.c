@@ -1157,7 +1157,7 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
         if (o_current->picture == NULL) {
           return 0;
         }
-        geda_picture_object_calculate_bounds (toplevel, o_current, &bounds);
+        geda_picture_object_calculate_bounds (o_current, &bounds);
         break;
 
       case(OBJ_CIRCLE):
