@@ -124,6 +124,10 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
     return;
   }
 
+  /* attribute inherit its selectable status from the object:
+  */
+  attrib->selectable = object->selectable;
+
   o_attrib_add (toplevel, object, attrib);
 
   if (set_color)
