@@ -90,28 +90,53 @@ void o_edit(GschemToplevel *w_current, GList *list)
   /* some sort of redrawing? */
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Lock selected objects
  *
+ *  \par Function Description
+ *  This locks the entire selected list. It does lock components,
+ *  but does NOT change the color of primatives of the components.
+ *
+ *  \note This function cannot be called recursively.
+ *
+ *  \param w_current  The toplevel environment.
  */
-/* This locks the entire selected list.  It does lock components, but does NOT
- * change the color (of primatives of the components) though
- * this cannot be called recursively */
 void o_lock(GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->toplevel != NULL);
   g_return_if_fail (w_current->toplevel->page_current != NULL);
 
-  geda_object_list_set_selectable (
-      geda_list_get_glist (w_current->toplevel->page_current->selection_list),
-      FALSE);
+  PAGE*  page = w_current->toplevel->page_current;
+  GList* objs = geda_list_get_glist (page->selection_list);
+
+  /* lock selected objects:
+  */
+  OBJECT* obj = NULL;
+  for (GList* iter = objs; iter != NULL; iter = g_list_next (iter))
+  {
+    obj = iter->data;
+    geda_object_set_selectable (obj, FALSE);
+
+    /* for objects with attributes, also lock them:
+    */
+    if (obj->attribs != NULL)
+    {
+      geda_object_list_set_selectable (obj->attribs, FALSE);
+    }
+  }
 
   gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
-  if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
+
+  if (!w_current->SHIFTKEY)
+    o_select_unselect_all(w_current);
+
   o_undo_savestate_old(w_current, UNDO_ALL);
   i_update_menus(w_current);
+
+  /* refresh view to properly restore attributes' colors:
+  */
+  GschemPageView* view = gschem_toplevel_get_current_page_view (w_current);
+  gschem_page_view_invalidate_all (view);
 }
 
 /*! \brief Unlock selected objects
