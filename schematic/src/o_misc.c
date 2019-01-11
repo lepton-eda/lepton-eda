@@ -114,27 +114,48 @@ void o_lock(GschemToplevel *w_current)
   i_update_menus(w_current);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Unlock selected objects
  *
+ *  \par Function Description
+ *  Unlock objects currenly selected.
+ *  Locked objects can be selected with a bounding box.
+ *
+ *  \note This function cannot be called recursively.
+ *
+ *  \param w_current  The toplevel environment.
  */
-/* You can unlock something by selecting it with a bounding box... */
-/* this will probably change in the future, but for now it's a
-   something.. :-) */
-/* this cannot be called recursively */
 void o_unlock(GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->toplevel != NULL);
   g_return_if_fail (w_current->toplevel->page_current != NULL);
 
-  geda_object_list_set_selectable (
-      geda_list_get_glist (w_current->toplevel->page_current->selection_list),
-      TRUE);
+  PAGE*  page = w_current->toplevel->page_current;
+  GList* objs = geda_list_get_glist (page->selection_list);
 
-  gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
+  /* unlock selected objects:
+  */
+  OBJECT* obj = NULL;
+  for (GList* iter = objs; iter != NULL; iter = g_list_next (iter))
+  {
+    obj = iter->data;
+    geda_object_set_selectable (obj, TRUE);
+
+    /* for objects with attributes, also unlock them:
+    */
+    if (obj->attribs != NULL)
+    {
+      geda_object_list_set_selectable (obj->attribs, TRUE);
+    }
+  }
+
+  gschem_toplevel_page_content_changed (w_current, page);
   o_undo_savestate_old(w_current, UNDO_ALL);
+
+  /* refresh view to properly restore attributes' colors:
+  */
+  GschemPageView* view = gschem_toplevel_get_current_page_view (w_current);
+  gschem_page_view_invalidate_all (view);
 }
 
 /*! \brief Rotate all objects in list.
