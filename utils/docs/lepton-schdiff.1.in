@@ -72,7 +72,7 @@ hard to comprehend.
 
 .TP
 Use git to view the changes to a file between two revisions
-git difftool \-x lepton-schdiff 182110f690c51eb53ea1799fd022e87322d742e3 039e012397f2638d1577dd7c80fb862a5503dbfd cpu.sch
+git difftool \-x lepton-schdiff 182110f 039e012 cpu.sch
 
 .TP
 Use mercurial to see all the changes since a specific revision
