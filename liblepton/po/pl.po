@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-08-12 12:28+0300\n"
+"POT-Creation-Date: 2019-01-12 00:08+0300\n"
 "PO-Revision-Date: 2010-02-06 22:09+0000\n"
 "Last-Translator: Jarosław Ogrodnik <nobodythere@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -268,15 +268,6 @@ msgstr "Nie odnaleziono komponentu [%s] w bibliotece komponentów\n"
 #, fuzzy, c-format
 msgid "Invalid path [%1$s] passed to bitmap-directory\n"
 msgstr "Nie odnaleziono komponentu [%s] w bibliotece komponentów\n"
-
-#: liblepton/src/g_rc.c:858
-#, fuzzy
-msgid ""
-"WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
-"list of strings instead."
-msgstr ""
-"UWAGA: użycie napisu jako wartości 'always-promote-attributes' jest "
-"niezalecane. Użyj listy napisów\n"
 
 #: liblepton/src/geda_page.c:197
 #, fuzzy, c-format
@@ -844,16 +835,16 @@ msgstr "Nie odnaleziono atrybutu slotdef=#:#,#,#...\n"
 msgid "component missing pinseq= attribute."
 msgstr "komponent nie ma atrybutu pinseq=\n"
 
-#: liblepton/src/edaconfig.c:693 liblepton/src/edaconfig.c:779
+#: liblepton/src/edaconfig.c:694 liblepton/src/edaconfig.c:780
 msgid "Undefined configuration filename"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1104 liblepton/src/edaconfig.c:1168
+#: liblepton/src/edaconfig.c:1105 liblepton/src/edaconfig.c:1169
 #, c-format
 msgid "Configuration does not have group '%s'"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1182
+#: liblepton/src/edaconfig.c:1183
 #, c-format
 msgid "Configuration does not have key '%s'"
 msgstr ""
@@ -1045,6 +1036,14 @@ msgstr ""
 #: liblepton/scheme/geda/repl.scm:53
 msgid "WARNING: Readline library is not supported in your configuration.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: using a string for 'always-promote-attributes' is deprecated. "
+#~ "Use a list of strings instead."
+#~ msgstr ""
+#~ "UWAGA: użycie napisu jako wartości 'always-promote-attributes' jest "
+#~ "niezalecane. Użyj listy napisów\n"
 
 #~ msgid "o_save_objects: object %p has unknown type '%c'\n"
 #~ msgstr "o_save_objects: objekt %p jest nieznanego typu '%c'\n"

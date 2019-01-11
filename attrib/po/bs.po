@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-08-12 12:33+0300\n"
+"POT-Creation-Date: 2019-01-12 00:10+0300\n"
 "PO-Revision-Date: 2012-01-27 14:17+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -51,11 +51,11 @@ msgid ""
 "Please be sure that you have the latest rc file.\n"
 msgstr ""
 
-#: attrib/src/gtksheet_2_2.c:6242
+#: attrib/src/gtksheet_2_2.c:6302
 msgid "Entry type must be GtkEntry subclass, using default"
 msgstr ""
 
-#: attrib/src/gtksheet_2_2.c:8420
+#: attrib/src/gtksheet_2_2.c:8499
 msgid "Widget must be a GtkSheet child"
 msgstr ""
 
@@ -273,27 +273,27 @@ msgstr ""
 msgid "Missing symbol file found for component!"
 msgstr ""
 
-#: attrib/src/x_dialog.c:215
+#: attrib/src/x_dialog.c:214
 msgid "Save the changes before closing?"
 msgstr ""
 
-#: attrib/src/x_dialog.c:216
+#: attrib/src/x_dialog.c:215
 msgid "<big><b>"
 msgstr ""
 
-#: attrib/src/x_dialog.c:216
+#: attrib/src/x_dialog.c:215
 msgid "</b></big>"
 msgstr ""
 
-#: attrib/src/x_dialog.c:218
+#: attrib/src/x_dialog.c:217
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 
-#: attrib/src/x_dialog.c:228
+#: attrib/src/x_dialog.c:227
 msgid "Close without saving"
 msgstr ""
 
-#: attrib/src/x_dialog.c:275
+#: attrib/src/x_dialog.c:274
 msgid ""
 "Sorry -- you have chosen a feature which has not been\n"
 "implemented yet.\n"
@@ -307,15 +307,15 @@ msgid ""
 "Otherwise, just hang tight -- I'll implement this feature soon!\n"
 msgstr ""
 
-#: attrib/src/x_dialog.c:283
+#: attrib/src/x_dialog.c:282
 msgid "Unimplemented feature!"
 msgstr ""
 
-#: attrib/src/x_dialog.c:310
+#: attrib/src/x_dialog.c:309
 msgid "Fatal error"
 msgstr ""
 
-#: attrib/src/x_dialog.c:325
+#: attrib/src/x_dialog.c:324
 #, c-format
 msgid ""
 "Lepton Electronic Design Automation\n"
@@ -329,11 +329,11 @@ msgid ""
 "and gtkextra, as well as support from the gEDA community."
 msgstr ""
 
-#: attrib/src/x_dialog.c:336
+#: attrib/src/x_dialog.c:335
 msgid "About..."
 msgstr ""
 
-#: attrib/src/x_dialog.c:352
+#: attrib/src/x_dialog.c:351
 msgid "Export CSV"
 msgstr ""
 
@@ -420,19 +420,19 @@ msgid ""
 "%2$s\n"
 msgstr ""
 
-#: attrib/src/x_window.c:336
+#: attrib/src/x_window.c:337
 msgid ""
 "No components found in entire design!\n"
 "Do you have refdeses on your components?"
 msgstr ""
 
-#: attrib/src/x_window.c:341
+#: attrib/src/x_window.c:342
 msgid ""
 "No configurable component attributes found in entire design!\n"
 "Please attach at least some attributes before running lepton-attrib."
 msgstr ""
 
-#: attrib/src/x_window.c:346
+#: attrib/src/x_window.c:347
 msgid ""
 "No pins found on any components!\n"
 "Please check your design."

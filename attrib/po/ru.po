@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gattrib\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-08-12 12:33+0300\n"
+"POT-Creation-Date: 2019-01-12 00:10+0300\n"
 "PO-Revision-Date: 2014-03-08 20:49+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -56,13 +56,13 @@ msgstr ""
 "но версия файла gattribrc: %s/\n"
 "Удостоверьтесь, что у вас последняя версия файла настроек.\n"
 
-#: attrib/src/gtksheet_2_2.c:6242
+#: attrib/src/gtksheet_2_2.c:6302
 msgid "Entry type must be GtkEntry subclass, using default"
 msgstr ""
 "Тип записи должен быть подклассом GtkEntry, используется значение по "
 "умолчанию"
 
-#: attrib/src/gtksheet_2_2.c:8420
+#: attrib/src/gtksheet_2_2.c:8499
 msgid "Widget must be a GtkSheet child"
 msgstr "Виджет должен быть дочерним для GtkSheet"
 
@@ -342,27 +342,27 @@ msgstr ""
 msgid "Missing symbol file found for component!"
 msgstr "Не найден символ компонента!"
 
-#: attrib/src/x_dialog.c:215
+#: attrib/src/x_dialog.c:214
 msgid "Save the changes before closing?"
 msgstr "Сохранить изменения перед закрытием?"
 
-#: attrib/src/x_dialog.c:216
+#: attrib/src/x_dialog.c:215
 msgid "<big><b>"
 msgstr "<big><b>"
 
-#: attrib/src/x_dialog.c:216
+#: attrib/src/x_dialog.c:215
 msgid "</b></big>"
 msgstr "</b></big>"
 
-#: attrib/src/x_dialog.c:218
+#: attrib/src/x_dialog.c:217
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "Если их не сохранить, все изменения будут безвозвратно утрачены."
 
-#: attrib/src/x_dialog.c:228
+#: attrib/src/x_dialog.c:227
 msgid "Close without saving"
 msgstr "Закрыть без сохранения"
 
-#: attrib/src/x_dialog.c:275
+#: attrib/src/x_dialog.c:274
 #, fuzzy
 msgid ""
 "Sorry -- you have chosen a feature which has not been\n"
@@ -386,15 +386,15 @@ msgstr ""
 "\n"
 "Иначе просто ждите — я скоро напишу эту функцию!\n"
 
-#: attrib/src/x_dialog.c:283
+#: attrib/src/x_dialog.c:282
 msgid "Unimplemented feature!"
 msgstr "Отсутствующая функциональность!"
 
-#: attrib/src/x_dialog.c:310
+#: attrib/src/x_dialog.c:309
 msgid "Fatal error"
 msgstr "Фатальная ошибка"
 
-#: attrib/src/x_dialog.c:325
+#: attrib/src/x_dialog.c:324
 #, fuzzy, c-format
 msgid ""
 "Lepton Electronic Design Automation\n"
@@ -417,11 +417,11 @@ msgstr ""
 "с использованием изрядных кусков кода из gschem, gnetlist, \n"
 "и gtkextra, а также при поддержке сообщества gEDA."
 
-#: attrib/src/x_dialog.c:336
+#: attrib/src/x_dialog.c:335
 msgid "About..."
 msgstr "О программе..."
 
-#: attrib/src/x_dialog.c:352
+#: attrib/src/x_dialog.c:351
 msgid "Export CSV"
 msgstr "Экспорт CSV"
 
@@ -512,7 +512,7 @@ msgstr ""
 "Ошибка загрузки %s:\n"
 "%s\n"
 
-#: attrib/src/x_window.c:336
+#: attrib/src/x_window.c:337
 msgid ""
 "No components found in entire design!\n"
 "Do you have refdeses on your components?"
@@ -520,7 +520,7 @@ msgstr ""
 "Во всём проекте не обнаружено ни одного компонента!\n"
 "Вы не забыли добавить для своих компонентов позиционные обозначения?"
 
-#: attrib/src/x_window.c:341
+#: attrib/src/x_window.c:342
 #, fuzzy
 msgid ""
 "No configurable component attributes found in entire design!\n"
@@ -530,7 +530,7 @@ msgstr ""
 "отредактировать!\n"
 "Прикрепите хотя бы несколько атрибутов, прежде чем запускать gattrib."
 
-#: attrib/src/x_window.c:346
+#: attrib/src/x_window.c:347
 msgid ""
 "No pins found on any components!\n"
 "Please check your design."

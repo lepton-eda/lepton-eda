@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-08-12 12:28+0300\n"
+"POT-Creation-Date: 2019-01-12 00:08+0300\n"
 "PO-Revision-Date: 2010-01-31 13:00+0000\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -274,16 +274,6 @@ msgstr ""
 msgid "Invalid path [%1$s] passed to bitmap-directory\n"
 msgstr ""
 "Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
-
-#: liblepton/src/g_rc.c:858
-#, fuzzy
-msgid ""
-"WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
-"list of strings instead."
-msgstr ""
-"ACHTUNG: Die Verwendung eines Strings als Variablenwert von 'always-promote-"
-"attributes' ist veraltet. Es sollte statdessen eine Liste von Strings "
-"verwendet werden.\n"
 
 #: liblepton/src/geda_page.c:197
 #, fuzzy, c-format
@@ -866,16 +856,16 @@ msgstr "Kein korrektes Attribut slotdef=#:#,#,#... gefunden\n"
 msgid "component missing pinseq= attribute."
 msgstr "pinseq= Attribut fehlt.\n"
 
-#: liblepton/src/edaconfig.c:693 liblepton/src/edaconfig.c:779
+#: liblepton/src/edaconfig.c:694 liblepton/src/edaconfig.c:780
 msgid "Undefined configuration filename"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1104 liblepton/src/edaconfig.c:1168
+#: liblepton/src/edaconfig.c:1105 liblepton/src/edaconfig.c:1169
 #, c-format
 msgid "Configuration does not have group '%s'"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1182
+#: liblepton/src/edaconfig.c:1183
 #, c-format
 msgid "Configuration does not have key '%s'"
 msgstr ""
@@ -1067,6 +1057,15 @@ msgstr ""
 #: liblepton/scheme/geda/repl.scm:53
 msgid "WARNING: Readline library is not supported in your configuration.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: using a string for 'always-promote-attributes' is deprecated. "
+#~ "Use a list of strings instead."
+#~ msgstr ""
+#~ "ACHTUNG: Die Verwendung eines Strings als Variablenwert von 'always-"
+#~ "promote-attributes' ist veraltet. Es sollte statdessen eine Liste von "
+#~ "Strings verwendet werden.\n"
 
 #~ msgid "o_save_objects: object %p has unknown type '%c'\n"
 #~ msgstr "o_save_objects: Das Objekt %p hat eine unbekannte Typangabe '%c'\n"

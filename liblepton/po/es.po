@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-08-12 12:28+0300\n"
+"POT-Creation-Date: 2019-01-12 00:08+0300\n"
 "PO-Revision-Date: 2012-02-20 00:09+0000\n"
 "Last-Translator: Carlos Nieves <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -278,15 +278,6 @@ msgstr "No se ha encontrado el componente [%s] en la librería de componentes\n"
 #, fuzzy, c-format
 msgid "Invalid path [%1$s] passed to bitmap-directory\n"
 msgstr "No se ha encontrado el componente [%s] en la librería de componentes\n"
-
-#: liblepton/src/g_rc.c:858
-#, fuzzy
-msgid ""
-"WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
-"list of strings instead."
-msgstr ""
-"ADVERTENCIA: el uso de la cadena 'always-promote-attributes' está obsoleto. "
-"Se recomienda utilizar una lista de cadenas en su lugar\n"
 
 #: liblepton/src/geda_page.c:197
 #, fuzzy, c-format
@@ -876,16 +867,16 @@ msgstr "No se ha encontrado un atributo válido slotdef=#:#,#,#...\n"
 msgid "component missing pinseq= attribute."
 msgstr "El componente no tiene el atributo pinseq\n"
 
-#: liblepton/src/edaconfig.c:693 liblepton/src/edaconfig.c:779
+#: liblepton/src/edaconfig.c:694 liblepton/src/edaconfig.c:780
 msgid "Undefined configuration filename"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1104 liblepton/src/edaconfig.c:1168
+#: liblepton/src/edaconfig.c:1105 liblepton/src/edaconfig.c:1169
 #, c-format
 msgid "Configuration does not have group '%s'"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1182
+#: liblepton/src/edaconfig.c:1183
 #, c-format
 msgid "Configuration does not have key '%s'"
 msgstr ""
@@ -1092,6 +1083,14 @@ msgstr ""
 #: liblepton/scheme/geda/repl.scm:53
 msgid "WARNING: Readline library is not supported in your configuration.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: using a string for 'always-promote-attributes' is deprecated. "
+#~ "Use a list of strings instead."
+#~ msgstr ""
+#~ "ADVERTENCIA: el uso de la cadena 'always-promote-attributes' está "
+#~ "obsoleto. Se recomienda utilizar una lista de cadenas en su lugar\n"
 
 #~ msgid "o_save_objects: object %p has unknown type '%c'\n"
 #~ msgstr "o_save_objects: el objeto %p tiene un tipo '%c' desconocido\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-08-12 12:28+0300\n"
+"POT-Creation-Date: 2019-01-12 00:08+0300\n"
 "PO-Revision-Date: 2012-09-01 18:46+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -259,12 +259,6 @@ msgstr "Το στοιχείο [%s] δε βρέθηκε στη βιβλιοθήκ
 #, fuzzy, c-format
 msgid "Invalid path [%1$s] passed to bitmap-directory\n"
 msgstr "Το στοιχείο [%s] δε βρέθηκε στη βιβλιοθήκη στοιχείων\n"
-
-#: liblepton/src/g_rc.c:858
-msgid ""
-"WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
-"list of strings instead."
-msgstr ""
 
 #: liblepton/src/geda_page.c:197
 #, fuzzy, c-format
@@ -810,16 +804,16 @@ msgstr "Δε βρέθηκε κατάλληλο γνώρισμα slotdef=#:#,#,#.
 msgid "component missing pinseq= attribute."
 msgstr "Λείπει το γνώρισμα pinseq= από το στοιχείο\n"
 
-#: liblepton/src/edaconfig.c:693 liblepton/src/edaconfig.c:779
+#: liblepton/src/edaconfig.c:694 liblepton/src/edaconfig.c:780
 msgid "Undefined configuration filename"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1104 liblepton/src/edaconfig.c:1168
+#: liblepton/src/edaconfig.c:1105 liblepton/src/edaconfig.c:1169
 #, c-format
 msgid "Configuration does not have group '%s'"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1182
+#: liblepton/src/edaconfig.c:1183
 #, c-format
 msgid "Configuration does not have key '%s'"
 msgstr ""

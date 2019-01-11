@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gnetlist\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-12-11 21:41+0300\n"
+"POT-Creation-Date: 2019-01-12 00:10+0300\n"
 "PO-Revision-Date: 2014-05-20 08:55+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA Developers\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: netlist/scheme/netlist.scm:96
+#: netlist/scheme/netlist.scm:102
 #, fuzzy
 msgid ""
 "Copyright (C) 1998-2016 gEDA developers\n"
@@ -35,7 +35,7 @@ msgstr ""
 "Нет НИКАКИХ ГАРАНТИЙ в рамках, допустимых имеющимся\n"
 "законодательством.\n"
 
-#: netlist/scheme/netlist.scm:190
+#: netlist/scheme/netlist.scm:179
 #, scheme-format
 msgid ""
 "Possible attribute conflict for refdes: ~A\n"
@@ -43,16 +43,16 @@ msgid ""
 "values: ~A\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:255
+#: netlist/scheme/netlist.scm:245
 #, scheme-format
 msgid "Uref ~a: Bad slot number: ~a.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:298
+#: netlist/scheme/netlist.scm:288
 msgid "Couldn't wrap string  at requested position\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:584
+#: netlist/scheme/netlist.scm:555
 #, scheme-format
 msgid ""
 "There is a net name collision!\n"
@@ -64,7 +64,7 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:621
+#: netlist/scheme/netlist.scm:592
 #, scheme-format
 msgid ""
 "There is a refdes name collision!\n"
@@ -76,17 +76,12 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:799
-#, scheme-format
-msgid "Loading schematic ~S\n"
-msgstr "Загрузка схемы ~S\n"
-
-#: netlist/scheme/netlist.scm:823
+#: netlist/scheme/netlist.scm:785
 #, scheme-format
 msgid "Can't open directory ~S.\n"
 msgstr "Не удалось открыть каталог ~S.\n"
 
-#: netlist/scheme/netlist.scm:834
+#: netlist/scheme/netlist.scm:796
 #, fuzzy, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
@@ -136,7 +131,7 @@ msgstr ""
 "Отчёты об ошибках отправляйте по адресу <https://bugs.launchpad.net/geda>\n"
 "Домашняя страница gEDA/gaf: <http://www.geda-project.org/>\n"
 
-#: netlist/scheme/netlist.scm:879
+#: netlist/scheme/netlist.scm:835
 #, fuzzy, scheme-format
 msgid ""
 "\n"
@@ -148,11 +143,11 @@ msgstr ""
 "Обнаружена ошибка; имя тега\n"
 "        "
 
-#: netlist/scheme/netlist.scm:919
+#: netlist/scheme/netlist.scm:875
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
 
-#: netlist/scheme/netlist.scm:923
+#: netlist/scheme/netlist.scm:879
 #, fuzzy, scheme-format
 msgid ""
 "No schematic files specified for processing.\n"
@@ -163,7 +158,7 @@ msgstr ""
 "\n"
 "Подробности см. в выводе команды «~A --help».\n"
 
-#: netlist/scheme/netlist.scm:929
+#: netlist/scheme/netlist.scm:885
 #, fuzzy, scheme-format
 msgid ""
 "Could not find backend `~A' in load path.\n"
@@ -176,19 +171,19 @@ msgstr ""
 "Список всех доступных драйверов можно узнать по команде «~A --list-"
 "backends».\n"
 
-#: netlist/scheme/netlist.scm:954
+#: netlist/scheme/netlist.scm:910
 msgid "Failed to evaluate Scheme expression at startup.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:988
+#: netlist/scheme/netlist.scm:944
 msgid "Failed to load Scheme file before loading backend.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:1005
+#: netlist/scheme/netlist.scm:961
 msgid "Failed to load backend file.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:1018
+#: netlist/scheme/netlist.scm:974
 msgid "Failed to load Scheme file after loading backend.\n"
 msgstr ""
 
@@ -228,6 +223,9 @@ msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: Попытка двойного переименования:\n"
 "\t%s и %s\n"
 "оба являются именами источника и назначения\n"
+
+#~ msgid "Loading schematic ~S\n"
+#~ msgstr "Загрузка схемы ~S\n"
 
 #, fuzzy
 #~ msgid ""
