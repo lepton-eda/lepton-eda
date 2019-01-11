@@ -237,8 +237,9 @@ do_extract() {
   # filenames -- now we need to remove them from the generated .pot
   # files.
   echo "Fixing up $domain.po"
-  sed -i -e "s/.desktop.in.h/.desktop.in/" -e "s/.xml.in.h/.xml.in/" \
-      $domain.po
+  sed -e "s/.desktop.in.h/.desktop.in/" -e "s/.xml.in.h/.xml.in/" \
+      $domain.po > $domain.po.tmp
+  mv $domain.po.tmp $domain.po
 
   # Clean up private directory
   rm -rf $priv_dir
