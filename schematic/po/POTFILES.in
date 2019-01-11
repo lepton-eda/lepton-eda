@@ -1,4 +1,6 @@
 schematic/src/a_zoom.c
+schematic/src/color_edit_widget.c
+schematic/src/font_select_widget.c
 schematic/src/g_attrib.c
 schematic/src/g_funcs.c
 schematic/src/g_hook.c
@@ -97,6 +99,8 @@ schematic/src/x_print.c
 schematic/src/x_rc.c
 schematic/src/x_script.c
 schematic/src/x_stroke.c
+schematic/src/x_tabs.c
+schematic/src/x_widgets.c
 schematic/src/x_window.c
 
 schematic/data/lepton-schematic.desktop.in
