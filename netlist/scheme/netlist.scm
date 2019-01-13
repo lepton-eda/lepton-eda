@@ -486,13 +486,13 @@ PACKAGE."
 (define gnetlist:get-nets get-nets)
 (define gnetlist:get-pins-nets get-pins-nets)
 (define (gnetlist:get-verbosity)
-  (if (gnetlist-option-ref 'verbose)
+  (if (netlist-option-ref 'verbose)
       1
-      (if (gnetlist-option-ref 'quiet)
+      (if (netlist-option-ref 'quiet)
           -1
           0)))
 (define (gnetlist:get-input-files)
-  (gnetlist-option-ref '()))
+  (netlist-option-ref '()))
 (define (gnetlist:get-command-line)
   (string-join (command-line) " "))
 (define (gnetlist:get-packages level)
@@ -507,7 +507,7 @@ PACKAGE."
   (map (lambda (pair) (list (car pair) (cdr pair)))
        (get-all-connections netname)))
 (define (gnetlist:get-backend-arguments)
-  (gnetlist-option-ref 'backend-option))
+  (netlist-option-ref 'backend-option))
 (define (gnetlist:get-renamed-nets level)
   (map
    (lambda (rename)
@@ -743,7 +743,7 @@ other limitations imposed by this netlist format.
 
 (define (get-output-filename)
   ;; Name is file name or "-" which means stdout.
-  (let ((name (gnetlist-option-ref 'output)))
+  (let ((name (netlist-option-ref 'output)))
     (and (not (string=? name "-"))
          name)))
 
@@ -854,16 +854,16 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 ( let
   (
   ( output-filename   (get-output-filename) )
-  ( files             (gnetlist-option-ref '()) )            ; schematics
-  ( opt-backend       (gnetlist-option-ref 'backend) )       ; -g
-  ( opt-interactive   (gnetlist-option-ref 'interactive) )   ; -i
-  ( opt-verbose       (gnetlist-option-ref 'verbose) )       ; --verbose (-v)
-  ( opt-code-to-eval  (gnetlist-option-ref 'eval-code) )     ; -c
-  ( opt-help          (gnetlist-option-ref 'help) )          ; --help (-h)
-  ( opt-version       (gnetlist-option-ref 'version) )       ; --version (-V)
-  ( opt-list-backends (gnetlist-option-ref 'list-backends) ) ; --list-backends
-  ( opt-pre-load      (gnetlist-option-ref 'pre-load) )      ; -l
-  ( opt-post-load     (gnetlist-option-ref 'post-load) )     ; -m
+  ( files             (netlist-option-ref '()) )            ; schematics
+  ( opt-backend       (netlist-option-ref 'backend) )       ; -g
+  ( opt-interactive   (netlist-option-ref 'interactive) )   ; -i
+  ( opt-verbose       (netlist-option-ref 'verbose) )       ; --verbose (-v)
+  ( opt-code-to-eval  (netlist-option-ref 'eval-code) )     ; -c
+  ( opt-help          (netlist-option-ref 'help) )          ; --help (-h)
+  ( opt-version       (netlist-option-ref 'version) )       ; --version (-V)
+  ( opt-list-backends (netlist-option-ref 'list-backends) ) ; --list-backends
+  ( opt-pre-load      (netlist-option-ref 'pre-load) )      ; -l
+  ( opt-post-load     (netlist-option-ref 'post-load) )     ; -m
   ( netlist-mode      'geda )
   ( backend-path      #f )
   ( schematic         #f )

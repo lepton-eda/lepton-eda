@@ -19,13 +19,13 @@
 (define-module (netlist option)
   #:use-module (ice-9 getopt-long)
   #:use-module ((srfi srfi-1) #:select (filter-map))
-  #:export (%default-gnetlist-options
-            gnetlist-option-ref
+  #:export (%default-netlist-options
+            netlist-option-ref
             set-netlist-option!))
 
 ;;; Empty lists are default values for the keys which may repeat
 ;;; on command line.
-(define %default-gnetlist-options
+(define %default-netlist-options
   '((quiet . #f)
     (verbose . #f)
     (load-path . ())
@@ -45,10 +45,10 @@
 (define %list-keys
   (filter-map
    (lambda (x) (and (eq? (cdr x) '()) (car x)))
-   %default-gnetlist-options))
+   %default-netlist-options))
 
-;;; getopt-long compatible gnetlist options.
-(define %gnetlist-options
+;;; getopt-long compatible lepton-netlist options.
+(define %netlist-options
   (getopt-long (program-arguments)
                ;; option spec
                '((quiet (single-char #\q))
@@ -75,17 +75,17 @@
        options)
       default))
 
-(define (gnetlist-option-ref key)
-  "Returns value of gnetlist option KEY. Use '() to request schematics."
-  (let ((default (assq-ref %default-gnetlist-options key))
+(define (netlist-option-ref key)
+  "Returns value of netlister option KEY. Use '() to request schematics."
+  (let ((default (assq-ref %default-netlist-options key))
         (is-list-key? (memq key %list-keys)))
-    ((if is-list-key? list-option-ref option-ref) %gnetlist-options key default)))
+    ((if is-list-key? list-option-ref option-ref) %netlist-options key default)))
 
 (define (set-netlist-option! key value)
   "Sets lepton-netlist option KEY to VALUE. Returns the new value
 if the key is available, otherwise returns #f."
-  (and (assq key %default-gnetlist-options)
+  (and (assq key %default-netlist-options)
        (begin
-         (set! %gnetlist-options
-               (assq-set! %gnetlist-options key value))
+         (set! %netlist-options
+               (assq-set! %netlist-options key value))
          value)))

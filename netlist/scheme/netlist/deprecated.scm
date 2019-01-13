@@ -22,6 +22,7 @@
 (define-module (netlist deprecated)
   #:use-module (srfi srfi-1)
   #:use-module (netlist attrib compare)
+  #:use-module (netlist option)
   #:use-module (netlist package-pin)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic)
@@ -31,6 +32,7 @@
   #:export (;; deprecated procedures
             get-pins
             gnetlist:get-pins
+            gnetlist-option-ref
             ;; deprecated variables
             non-unique-packages
             packages
@@ -41,6 +43,8 @@
             set-deprecated-schematic-variables!))
 
 ;;; Backward compatibility procedures.
+(define gnetlist-option-ref netlist-option-ref)
+
 (define (get-pins refdes)
   (define (found? x)
     (and x

@@ -341,7 +341,7 @@
                   (non-null* (assq-ref inherited-attribs 'source)))))
          (and=> sources comma-separated->list))))
 
-(define quiet-mode (gnetlist-option-ref 'quiet))
+(define quiet-mode (netlist-option-ref 'quiet))
 
 ;;; Reads file NAME and outputs a page named NAME
 (define (file->page name)

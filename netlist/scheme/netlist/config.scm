@@ -104,7 +104,7 @@
 (define (try-load-config cfg)
 (let*
     (
-    (nowarn (gnetlist-option-ref 'no-warn-cfg))
+    (nowarn (netlist-option-ref 'no-warn-cfg))
     (level (if nowarn 'info 'warning))
     )
 
