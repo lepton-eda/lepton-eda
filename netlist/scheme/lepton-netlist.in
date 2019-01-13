@@ -27,12 +27,12 @@ exec @GUILE@ -s "$0" "$@"
 ;;; extension. Let's make it quiet here.
 (define with-toplevel (@@ (geda core toplevel) %with-toplevel))
 (define make-toplevel (@@ (geda core toplevel) %make-toplevel))
-(define gnetlist-option-ref* (@@ (netlist option) gnetlist-option-ref))
+(define netlist-option-ref* (@@ (netlist option) netlist-option-ref))
 
 ;;; Evaluate Scheme expressions that need to be run before rc
 ;;; files are loaded.
 (for-each (lambda (dir) (add-to-load-path dir))
-          (reverse (gnetlist-option-ref* 'load-path)))
+          (reverse (netlist-option-ref* 'load-path)))
 
 ;;; Using of primitive-eval() here avoids Scheme errors when this
 ;;; program is compiled by Guile. See comments above.
