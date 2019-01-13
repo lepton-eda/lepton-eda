@@ -503,7 +503,11 @@ eda_cairo_path (cairo_t *cr, int flags, double line_width,
   double dummy = 0;
 
   if (flags & EDA_CAIRO_ENABLE_HINTS) {
-    s_line_width = screen_width (cr, line_width);
+    if (line_width == 0) {
+      s_line_width = 1;
+    } else {
+      s_line_width = screen_width (cr, line_width);
+    }
   } else {
     cairo_user_to_device (cr, &line_width, &dummy);
     s_line_width = line_width;
