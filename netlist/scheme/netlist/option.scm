@@ -20,7 +20,8 @@
   #:use-module (ice-9 getopt-long)
   #:use-module ((srfi srfi-1) #:select (filter-map))
   #:export (%default-gnetlist-options
-            gnetlist-option-ref))
+            gnetlist-option-ref
+            set-netlist-option!))
 
 ;;; Empty lists are default values for the keys which may repeat
 ;;; on command line.
@@ -79,3 +80,12 @@
   (let ((default (assq-ref %default-gnetlist-options key))
         (is-list-key? (memq key %list-keys)))
     ((if is-list-key? list-option-ref option-ref) %gnetlist-options key default)))
+
+(define (set-netlist-option! key value)
+  "Sets lepton-netlist option KEY to VALUE. Returns the new value
+if the key is available, otherwise returns #f."
+  (and (assq key %default-gnetlist-options)
+       (begin
+         (set! %gnetlist-options
+               (assq-set! %gnetlist-options key value))
+         value)))
