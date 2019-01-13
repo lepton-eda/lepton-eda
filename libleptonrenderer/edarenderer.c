@@ -103,6 +103,12 @@ EDA_RENDERER_STROKE_WIDTH (EdaRenderer *r, double width) {
   /* For now, the minimum line width possible is half the net width. */
   return fmax (width, NET_WIDTH / 2);
 }
+/* The same as above, but returns 0 if width is 0. Especially
+   added to allow (filled) paths with zero width line. */
+static inline double
+EDA_RENDERER_STROKE_WIDTH0 (EdaRenderer *r, double width) {
+  return (width == 0) ? 0 : EDA_RENDERER_STROKE_WIDTH (r, width);
+}
 
 #define DEFAULT_FONT_NAME "Arial"
 #define GRIP_STROKE_COLOR SELECT_COLOR
@@ -774,7 +780,7 @@ eda_renderer_draw_path (EdaRenderer *renderer, OBJECT *object)
   if (fill_solid) cairo_fill_preserve (renderer->priv->cr);
   eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     object->line_type, object->line_end,
-                    EDA_RENDERER_STROKE_WIDTH (renderer, object->line_width),
+                    EDA_RENDERER_STROKE_WIDTH0 (renderer, object->line_width),
                     object->line_length, object->line_space);
 }
 
