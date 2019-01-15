@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-01-12 00:06+0300\n"
+"POT-Creation-Date: 2019-01-15 15:13+0300\n"
 "PO-Revision-Date: 2012-01-27 14:22+0000\n"
 "Last-Translator: Sasan Jafarnejad <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -652,7 +652,7 @@ msgid "Translate"
 msgstr ""
 
 #: schematic/src/i_basic.c:64 schematic/src/x_window.c:1369
-#: schematic/lib/system-gschemrc.scm:1141
+#: schematic/scheme/conf/schematic/menu.scm:59
 #: schematic/scheme/gschem/builtins.scm:99
 msgid "Select Mode"
 msgstr "Select Mode"
@@ -703,12 +703,12 @@ msgstr ""
 msgid "Component Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:82 schematic/lib/system-gschemrc.scm:1144
+#: schematic/src/i_basic.c:82 schematic/scheme/conf/schematic/menu.scm:62
 #: schematic/scheme/gschem/builtins.scm:114
 msgid "Copy Mode"
 msgstr "Copy Mode"
 
-#: schematic/src/i_basic.c:83 schematic/lib/system-gschemrc.scm:1145
+#: schematic/src/i_basic.c:83 schematic/scheme/conf/schematic/menu.scm:63
 #: schematic/scheme/gschem/builtins.scm:117
 msgid "Multiple Copy Mode"
 msgstr "Multiple Copy Mode"
@@ -717,12 +717,12 @@ msgstr "Multiple Copy Mode"
 msgid "Line Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:85 schematic/lib/system-gschemrc.scm:1148
+#: schematic/src/i_basic.c:85 schematic/scheme/conf/schematic/menu.scm:66
 #: schematic/scheme/gschem/builtins.scm:123
 msgid "Mirror Mode"
 msgstr "Mirror Mode"
 
-#: schematic/src/i_basic.c:86 schematic/lib/system-gschemrc.scm:1146
+#: schematic/src/i_basic.c:86 schematic/scheme/conf/schematic/menu.scm:64
 #: schematic/scheme/gschem/builtins.scm:111
 msgid "Move Mode"
 msgstr "Move Mode"
@@ -855,12 +855,12 @@ msgid "Mirror"
 msgstr ""
 
 #: schematic/src/i_callbacks.c:763 schematic/src/x_colorcb.c:160
-#: schematic/lib/system-gschemrc.scm:1155
+#: schematic/scheme/conf/schematic/menu.scm:73
 #: schematic/scheme/gschem/builtins.scm:141
 msgid "Lock"
 msgstr "Lock"
 
-#: schematic/src/i_callbacks.c:781 schematic/lib/system-gschemrc.scm:1156
+#: schematic/src/i_callbacks.c:781 schematic/scheme/conf/schematic/menu.scm:74
 #: schematic/scheme/gschem/builtins.scm:144
 msgid "Unlock"
 msgstr "Unlock"
@@ -1805,12 +1805,12 @@ msgstr "Zoom Box"
 msgid "Select"
 msgstr ""
 
-#: schematic/src/x_menus.c:53 schematic/lib/system-gschemrc.scm:1151
+#: schematic/src/x_menus.c:53 schematic/scheme/conf/schematic/menu.scm:69
 #: schematic/scheme/gschem/builtins.scm:126
 msgid "Edit..."
 msgstr "Edit..."
 
-#: schematic/src/x_menus.c:54 schematic/lib/system-gschemrc.scm:1150
+#: schematic/src/x_menus.c:54 schematic/scheme/conf/schematic/menu.scm:68
 msgid "Object Properties..."
 msgstr ""
 
@@ -2010,7 +2010,7 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
-#: schematic/src/x_script.c:42 schematic/lib/system-gschemrc.scm:1122
+#: schematic/src/x_script.c:42 schematic/scheme/conf/schematic/menu.scm:40
 msgid "Execute Script..."
 msgstr "Execute Script..."
 
@@ -2218,496 +2218,496 @@ msgstr ""
 msgid "Create and edit electrical schematics and symbols with lepton-schematic"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1109
+#: schematic/scheme/conf/schematic/menu.scm:27
 msgid "_New"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1110
+#: schematic/scheme/conf/schematic/menu.scm:28
 msgid "_Open..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1112
+#: schematic/scheme/conf/schematic/menu.scm:30
 msgid "Open Recen_t"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1114
+#: schematic/scheme/conf/schematic/menu.scm:32
 msgid "_Save"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1115
+#: schematic/scheme/conf/schematic/menu.scm:33
 msgid "Save _As..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1116
+#: schematic/scheme/conf/schematic/menu.scm:34
 #: schematic/scheme/gschem/builtins.scm:65
 msgid "Save All"
 msgstr "Save All"
 
-#: schematic/lib/system-gschemrc.scm:1118
+#: schematic/scheme/conf/schematic/menu.scm:36
 msgid "_Print..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1119
+#: schematic/scheme/conf/schematic/menu.scm:37
 #, fuzzy
 msgid "Write _Image..."
 msgstr "Write image..."
 
-#: schematic/lib/system-gschemrc.scm:1121
+#: schematic/scheme/conf/schematic/menu.scm:39
 msgid "Invoke Macro..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1123
+#: schematic/scheme/conf/schematic/menu.scm:41
 msgid "REPL..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1125
+#: schematic/scheme/conf/schematic/menu.scm:43
 #: schematic/scheme/gschem/builtins.scm:77
 msgid "New Window"
 msgstr "New Window"
 
-#: schematic/lib/system-gschemrc.scm:1126
+#: schematic/scheme/conf/schematic/menu.scm:44
 msgid "_Close Window"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1127
+#: schematic/scheme/conf/schematic/menu.scm:45
 msgid "_Quit"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1133
+#: schematic/scheme/conf/schematic/menu.scm:51
 msgid "_Undo"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1134
+#: schematic/scheme/conf/schematic/menu.scm:52
 msgid "_Redo"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1136
+#: schematic/scheme/conf/schematic/menu.scm:54
 msgid "Cu_t"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1137
+#: schematic/scheme/conf/schematic/menu.scm:55
 msgid "_Copy"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1138
+#: schematic/scheme/conf/schematic/menu.scm:56
 msgid "_Paste"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1139
+#: schematic/scheme/conf/schematic/menu.scm:57
 msgid "_Delete"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1142
+#: schematic/scheme/conf/schematic/menu.scm:60
 #: schematic/scheme/gschem/builtins.scm:102
 msgid "Select All"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1143
+#: schematic/scheme/conf/schematic/menu.scm:61
 #: schematic/scheme/gschem/builtins.scm:105
 msgid "Deselect"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1147
+#: schematic/scheme/conf/schematic/menu.scm:65
 msgid "Rotate 90 Mode"
 msgstr "Rotate 90 Mode"
 
-#: schematic/lib/system-gschemrc.scm:1152
+#: schematic/scheme/conf/schematic/menu.scm:70
 msgid "Edit Text..."
 msgstr "Edit Text..."
 
-#: schematic/lib/system-gschemrc.scm:1153
+#: schematic/scheme/conf/schematic/menu.scm:71
 msgid "Slot..."
 msgstr "Slot..."
 
-#: schematic/lib/system-gschemrc.scm:1158
+#: schematic/scheme/conf/schematic/menu.scm:76
 #: schematic/scheme/gschem/builtins.scm:150
 msgid "Embed Component/Picture"
 msgstr "Embed Component/Picture"
 
-#: schematic/lib/system-gschemrc.scm:1159
+#: schematic/scheme/conf/schematic/menu.scm:77
 #: schematic/scheme/gschem/builtins.scm:153
 msgid "Unembed Component/Picture"
 msgstr "Unembed Component/Picture"
 
-#: schematic/lib/system-gschemrc.scm:1160
+#: schematic/scheme/conf/schematic/menu.scm:78
 #: schematic/scheme/gschem/builtins.scm:156
 msgid "Update Component"
 msgstr "Update Component"
 
-#: schematic/lib/system-gschemrc.scm:1161
+#: schematic/scheme/conf/schematic/menu.scm:79
 msgid "Symbol Translate..."
 msgstr "Symbol Translate..."
 
-#: schematic/lib/system-gschemrc.scm:1167
+#: schematic/scheme/conf/schematic/menu.scm:85
 msgid "Copy into 1"
 msgstr "Copy into 1"
 
-#: schematic/lib/system-gschemrc.scm:1168
+#: schematic/scheme/conf/schematic/menu.scm:86
 msgid "Copy into 2"
 msgstr "Copy into 2"
 
-#: schematic/lib/system-gschemrc.scm:1169
+#: schematic/scheme/conf/schematic/menu.scm:87
 msgid "Copy into 3"
 msgstr "Copy into 3"
 
-#: schematic/lib/system-gschemrc.scm:1170
+#: schematic/scheme/conf/schematic/menu.scm:88
 msgid "Copy into 4"
 msgstr "Copy into 4"
 
-#: schematic/lib/system-gschemrc.scm:1171
+#: schematic/scheme/conf/schematic/menu.scm:89
 msgid "Copy into 5"
 msgstr "Copy into 5"
 
-#: schematic/lib/system-gschemrc.scm:1172
+#: schematic/scheme/conf/schematic/menu.scm:90
 msgid "Cut into 1"
 msgstr "Cut into 1"
 
-#: schematic/lib/system-gschemrc.scm:1173
+#: schematic/scheme/conf/schematic/menu.scm:91
 msgid "Cut into 2"
 msgstr "Cut into 2"
 
-#: schematic/lib/system-gschemrc.scm:1174
+#: schematic/scheme/conf/schematic/menu.scm:92
 msgid "Cut into 3"
 msgstr "Cut into 3"
 
-#: schematic/lib/system-gschemrc.scm:1175
+#: schematic/scheme/conf/schematic/menu.scm:93
 msgid "Cut into 4"
 msgstr "Cut into 4"
 
-#: schematic/lib/system-gschemrc.scm:1176
+#: schematic/scheme/conf/schematic/menu.scm:94
 msgid "Cut into 5"
 msgstr "Cut into 5"
 
-#: schematic/lib/system-gschemrc.scm:1177
+#: schematic/scheme/conf/schematic/menu.scm:95
 msgid "Paste from 1"
 msgstr "Paste from 1"
 
-#: schematic/lib/system-gschemrc.scm:1178
+#: schematic/scheme/conf/schematic/menu.scm:96
 msgid "Paste from 2"
 msgstr "Paste from 2"
 
-#: schematic/lib/system-gschemrc.scm:1179
+#: schematic/scheme/conf/schematic/menu.scm:97
 msgid "Paste from 3"
 msgstr "Paste from 3"
 
-#: schematic/lib/system-gschemrc.scm:1180
+#: schematic/scheme/conf/schematic/menu.scm:98
 msgid "Paste from 4"
 msgstr "Paste from 4"
 
-#: schematic/lib/system-gschemrc.scm:1181
+#: schematic/scheme/conf/schematic/menu.scm:99
 msgid "Paste from 5"
 msgstr "Paste from 5"
 
-#: schematic/lib/system-gschemrc.scm:1187
+#: schematic/scheme/conf/schematic/menu.scm:105
 msgid "Side Dock"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1188
+#: schematic/scheme/conf/schematic/menu.scm:106
 msgid "Bottom Dock"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1190
+#: schematic/scheme/conf/schematic/menu.scm:108
 #, fuzzy
 msgid "Find Text Results"
 msgstr "Edit Text..."
 
-#: schematic/lib/system-gschemrc.scm:1192
+#: schematic/scheme/conf/schematic/menu.scm:110
 msgid "_Redraw"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1193
+#: schematic/scheme/conf/schematic/menu.scm:111
 msgid "_Pan"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1194
+#: schematic/scheme/conf/schematic/menu.scm:112
 msgid "Zoom _Box"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1195
+#: schematic/scheme/conf/schematic/menu.scm:113
 msgid "Zoom _Extents"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1196
+#: schematic/scheme/conf/schematic/menu.scm:114
 msgid "Zoom _In"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1197
+#: schematic/scheme/conf/schematic/menu.scm:115
 msgid "Zoom _Out"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1198
+#: schematic/scheme/conf/schematic/menu.scm:116
 msgid "Zoom _Full"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1200
+#: schematic/scheme/conf/schematic/menu.scm:118
 msgid "_Dark Color Scheme"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1201
+#: schematic/scheme/conf/schematic/menu.scm:119
 msgid "_Light Color Scheme"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1202
+#: schematic/scheme/conf/schematic/menu.scm:120
 msgid "B_W Color Scheme"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1204
+#: schematic/scheme/conf/schematic/menu.scm:122
 msgid "Color Scheme Editor..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1211
+#: schematic/scheme/conf/schematic/menu.scm:129
 msgid "_Manager..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1213
+#: schematic/scheme/conf/schematic/menu.scm:131
 msgid "_Previous"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1214
+#: schematic/scheme/conf/schematic/menu.scm:132
 msgid "_Next"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1215
+#: schematic/scheme/conf/schematic/menu.scm:133
 msgid "_Close"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1217
+#: schematic/scheme/conf/schematic/menu.scm:135
 msgid "_Revert..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1219
+#: schematic/scheme/conf/schematic/menu.scm:137
 #: schematic/scheme/gschem/builtins.scm:249
 #, fuzzy
 msgid "Next Tab"
 msgstr "New Page"
 
-#: schematic/lib/system-gschemrc.scm:1220
+#: schematic/scheme/conf/schematic/menu.scm:138
 #: schematic/scheme/gschem/builtins.scm:252
 #, fuzzy
 msgid "Previous Tab"
 msgstr "Close Page"
 
-#: schematic/lib/system-gschemrc.scm:1228
+#: schematic/scheme/conf/schematic/menu.scm:146
 msgid "_Component..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1230
+#: schematic/scheme/conf/schematic/menu.scm:148
 msgid "_Net"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1231
+#: schematic/scheme/conf/schematic/menu.scm:149
 msgid "B_us"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1233
+#: schematic/scheme/conf/schematic/menu.scm:151
 msgid "_Attribute..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1234
+#: schematic/scheme/conf/schematic/menu.scm:152
 msgid "_Text..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1236
+#: schematic/scheme/conf/schematic/menu.scm:154
 msgid "_Line"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1237
+#: schematic/scheme/conf/schematic/menu.scm:155
 msgid "Pat_h"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1238
+#: schematic/scheme/conf/schematic/menu.scm:156
 msgid "_Box"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1239
+#: schematic/scheme/conf/schematic/menu.scm:157
 msgid "C_ircle"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1240
+#: schematic/scheme/conf/schematic/menu.scm:158
 msgid "A_rc"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1241
+#: schematic/scheme/conf/schematic/menu.scm:159
 msgid "_Pin"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1243
+#: schematic/scheme/conf/schematic/menu.scm:161
 msgid "Pictu_re..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1249
+#: schematic/scheme/conf/schematic/menu.scm:167
 msgid "_Up"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1251
+#: schematic/scheme/conf/schematic/menu.scm:169
 msgid "_Down Schematic"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1252
+#: schematic/scheme/conf/schematic/menu.scm:170
 msgid "Down _Symbol"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1258
+#: schematic/scheme/conf/schematic/menu.scm:176
 msgid "_Attach"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1259
+#: schematic/scheme/conf/schematic/menu.scm:177
 msgid "_Detach"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1261
+#: schematic/scheme/conf/schematic/menu.scm:179
 msgid "Show _Value"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1262
+#: schematic/scheme/conf/schematic/menu.scm:180
 msgid "Show _Name"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1263
+#: schematic/scheme/conf/schematic/menu.scm:181
 msgid "Show _Both"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1264
+#: schematic/scheme/conf/schematic/menu.scm:182
 msgid "_Toggle Visibility"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1266
+#: schematic/scheme/conf/schematic/menu.scm:184
 msgid "_Hide Specific Text..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1267
+#: schematic/scheme/conf/schematic/menu.scm:185
 msgid "_Show Specific Text..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1268
+#: schematic/scheme/conf/schematic/menu.scm:186
 #, fuzzy
 msgid "Show/Hide Hidden Text"
 msgstr "Show/Hide Inv Text"
 
-#: schematic/lib/system-gschemrc.scm:1270
+#: schematic/scheme/conf/schematic/menu.scm:188
 msgid "_Find Text/Check Symbol..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1271
+#: schematic/scheme/conf/schematic/menu.scm:189
 msgid "A_utonumber Text..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1277
+#: schematic/scheme/conf/schematic/menu.scm:195
 msgid "_Options..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1278
+#: schematic/scheme/conf/schematic/menu.scm:196
 #, fuzzy
 msgid "_Font..."
 msgstr "Slot..."
 
-#: schematic/lib/system-gschemrc.scm:1280
+#: schematic/scheme/conf/schematic/menu.scm:198
 msgid "Grid +"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1281
+#: schematic/scheme/conf/schematic/menu.scm:199
 msgid "Grid -"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1283
+#: schematic/scheme/conf/schematic/menu.scm:201
 msgid "Grid Style: Cycle Dots/Mesh/Off"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1284
+#: schematic/scheme/conf/schematic/menu.scm:202
 msgid "Grid Snap: Cycle Grid/Resnap/Off"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1286
+#: schematic/scheme/conf/schematic/menu.scm:204
 msgid "Feedback Mode: Outline/Box"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1287
+#: schematic/scheme/conf/schematic/menu.scm:205
 msgid "Net: Rubberband On/Off"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1288
+#: schematic/scheme/conf/schematic/menu.scm:206
 msgid "Net: Magnetic On/Off"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1290
+#: schematic/scheme/conf/schematic/menu.scm:208
 #, fuzzy
 msgid "_Coord Window"
 msgstr "New Window"
 
-#: schematic/lib/system-gschemrc.scm:1291
+#: schematic/scheme/conf/schematic/menu.scm:209
 #, fuzzy
 msgid "_Log Window"
 msgstr "New Window"
 
-#: schematic/lib/system-gschemrc.scm:1297
+#: schematic/scheme/conf/schematic/menu.scm:215
 msgid "_1 allegro"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1305
+#: schematic/scheme/conf/schematic/menu.scm:223
 msgid "User _Guide"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1306
+#: schematic/scheme/conf/schematic/menu.scm:224
 msgid "_FAQ"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1307
+#: schematic/scheme/conf/schematic/menu.scm:225
 msgid "Docu_mentation"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1308
+#: schematic/scheme/conf/schematic/menu.scm:226
 msgid "_Wiki"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1310
+#: schematic/scheme/conf/schematic/menu.scm:228
 msgid "Find Component D_ocumentation"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1312
+#: schematic/scheme/conf/schematic/menu.scm:230
 msgid "_Hotkeys..."
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1313
+#: schematic/scheme/conf/schematic/menu.scm:231
 msgid "_About"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1319
+#: schematic/scheme/conf/schematic/menu.scm:237
 msgid "_File"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1320
+#: schematic/scheme/conf/schematic/menu.scm:238
 msgid "_Edit"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1322
+#: schematic/scheme/conf/schematic/menu.scm:240
 msgid "_View"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1323
+#: schematic/scheme/conf/schematic/menu.scm:241
 msgid "_Page"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1324
+#: schematic/scheme/conf/schematic/menu.scm:242
 msgid "_Add"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1325
+#: schematic/scheme/conf/schematic/menu.scm:243
 msgid "Hie_rarchy"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1326
+#: schematic/scheme/conf/schematic/menu.scm:244
 msgid "A_ttributes"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1327
+#: schematic/scheme/conf/schematic/menu.scm:245
 msgid "_Options"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1328
+#: schematic/scheme/conf/schematic/menu.scm:246
 msgid "_Netlist"
 msgstr ""
 
-#: schematic/lib/system-gschemrc.scm:1329
+#: schematic/scheme/conf/schematic/menu.scm:247
 msgid "_Help"
 msgstr ""
 

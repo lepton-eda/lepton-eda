@@ -25,7 +25,13 @@ nobase_dist_scmdata_DATA = \
 	gschem/builtins.scm \
 	gschem/symbol/check.scm \
 	schematic/netlist.scm \
-	schematic/undo.scm
+	schematic/undo.scm \
+	conf/schematic/attribs.scm \
+	conf/schematic/deprecated.scm \
+	conf/schematic/keys.scm \
+	conf/schematic/menu.scm \
+	conf/schematic/options.scm \
+	conf/schematic/stroke.scm
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
