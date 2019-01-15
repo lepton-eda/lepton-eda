@@ -105,7 +105,7 @@ schematic/src/x_window.c
 
 schematic/data/lepton-schematic.desktop.in
 
-schematic/lib/system-gschemrc.scm
+schematic/scheme/conf/schematic/menu.scm
 
 schematic/scheme/gschem/action.scm
 schematic/scheme/gschem/builtins.scm
