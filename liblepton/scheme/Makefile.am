@@ -33,7 +33,7 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0110-object-transform.scm \
 	unit-tests/t0111-object-path.scm \
 	unit-tests/t0112-object-picture.scm \
-	unit-tests/t0113-object-locked.scm \
+	unit-tests/t0113-object-selectable.scm \
 	unit-tests/t0200-page.scm \
 	unit-tests/t0201-page-dirty.scm \
 	unit-tests/t0202-page-string.scm \
