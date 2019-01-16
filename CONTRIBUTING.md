@@ -110,6 +110,10 @@ When writing Scheme code:
   names ending in `?`, e.g. `object?`; destructive functions, that
   modify one of their arguments or global state, should have names
   ending in `!`, e.g. `set-config!`.
+  When implementing such a functions in `C`, please follow the naming
+  convention: for Scheme names with `?`, corresponding C functions'
+  names should have `_p` suffix (e.g. `object_p`), for Scheme names with
+  `!` - `_x` suffix (e.g. `set_config_x`).
 
 - When defining a function please use the
   ["implicit `define`" form](http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-8.html#%_sec_5.2):
