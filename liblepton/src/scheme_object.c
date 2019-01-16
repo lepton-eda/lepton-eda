@@ -755,29 +755,25 @@ SCM_DEFINE (object_locked_p, "%object-locked?", 1, 0, 0,
  * \par Function Description
  * Set object's selectable flag: locked objects cannot be selected.
  *
- * \note Scheme API: Implements the %set-object-locked! procedure in
+ * \note Scheme API: Implements the %set-object-selectable! procedure in
  * the (geda core object) module.
  *
- * \param obj_s     #OBJECT smob to modify.
- * \param locked_s  boolean: whether the object should be locked.
+ * \param obj_s         #OBJECT smob to modify.
+ * \param selectable_s  boolean: object's selectable flag.
  *
  * \return          the object (\a obj_s).
  */
-SCM_DEFINE (set_object_locked_x, "%set-object-locked!", 2, 0, 0,
-            (SCM obj_s, SCM locked_s), "Lock or unlock an object.")
+SCM_DEFINE (set_object_selectable_x, "%set-object-selectable!", 2, 0, 0,
+            (SCM obj_s, SCM selectable_s), "Lock or unlock an object.")
 {
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_set_object_locked_x);
-  SCM_ASSERT (scm_is_bool (locked_s), locked_s,
-              SCM_ARG2, s_set_object_locked_x);
+              SCM_ARG1, s_set_object_selectable_x);
+  SCM_ASSERT (scm_is_bool (selectable_s), selectable_s,
+              SCM_ARG2, s_set_object_selectable_x);
 
   OBJECT* obj = edascm_to_object (obj_s);
 
-  int locked = scm_is_true (locked_s);
-
-  /* do not allow locked objects to be selected:
-  */
-  int selectable = !locked;
+  int selectable = scm_is_true (selectable_s);
 
   if (obj->selectable != selectable)
   {
@@ -2338,7 +2334,7 @@ init_module_geda_core_object (void *unused)
                 s_set_picture_data_vector_x,
                 s_translate_object_x, s_rotate_object_x,
                 s_mirror_object_x,
-                s_object_locked_p, s_set_object_locked_x,
+                s_object_locked_p, s_set_object_selectable_x,
                 NULL);
 }
 

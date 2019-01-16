@@ -30,7 +30,7 @@
   ; clear the page modification flag and lock the object:
   ;
   ( set-page-dirty! page #f )
-  ( set! tmp (set-object-locked! obj #t) )
+  ( set! tmp (set-object-selectable! obj #f) )
 
   ; set-object-locked!() should return the object:
   ;
@@ -48,7 +48,7 @@
   ; clear the page modification flag and lock the object again:
   ;
   ( set-page-dirty! page #f )
-  ( set-object-locked! obj #t )
+  ( set-object-selectable! obj #f )
 
   ; ensure the page modification flag is NOT set (obj is not modified):
   ;
@@ -58,7 +58,7 @@
   ; clear the page modification flag and unlock the object:
   ;
   ( set-page-dirty! page #f )
-  ( set! tmp (set-object-locked! obj #f) )
+  ( set! tmp (set-object-selectable! obj #t) )
 
   ; set-object-locked!() should return the object:
   ;
