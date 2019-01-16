@@ -1,4 +1,6 @@
-;; Test Scheme procedures for object-locked? and set-object-locked! functions
+;; Test procedures for Scheme functions:
+;; - object-selectable?
+;; - set-object-selectable!
 
 ( use-modules ( unit-test ) )
 
@@ -22,9 +24,9 @@
   ( page-append! page obj )
 
 
-  ; obj should be initially unlocked:
+  ; obj should be initially unlocked (i.e. selectable):
   ;
-  ( assert-false (object-locked? obj) )
+  ( assert-true (object-selectable? obj) )
 
 
   ; clear the page modification flag and lock the object:
@@ -38,7 +40,7 @@
 
   ; ensure obj is now locked:
   ;
-  ( assert-true (object-locked? obj) )
+  ( assert-false (object-selectable? obj) )
 
   ; ensure the page modification flag is set:
   ;
@@ -66,7 +68,7 @@
 
   ; ensure obj is now unlocked:
   ;
-  ( assert-false (object-locked? obj) )
+  ( assert-true (object-selectable? obj) )
 
   ; ensure the page modification flag is set:
   ;
