@@ -9,7 +9,7 @@
 
 
 
-( begin-test 'object-locked
+( begin-test 'object-selectable
 ( let
   (
   ( page #f )
@@ -78,5 +78,5 @@
   ( close-page! page )
 
 ) ; let
-) ; 'object-locked()
+) ; 'object-selectable()
 
