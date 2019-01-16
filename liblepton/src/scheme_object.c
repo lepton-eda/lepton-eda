@@ -744,7 +744,7 @@ SCM_DEFINE (object_locked_p, "%object-locked?", 1, 0, 0,
 
   OBJECT* obj = edascm_to_object (obj_s);
 
-  return obj->selectable ? SCM_BOOL_F : SCM_BOOL_T;
+  return scm_from_bool (obj->selectable == 0);
 
 } /* object_locked_x() */
 
@@ -773,7 +773,7 @@ SCM_DEFINE (set_object_locked_x, "%set-object-locked!", 2, 0, 0,
 
   OBJECT* obj = edascm_to_object (obj_s);
 
-  int locked = locked_s == SCM_BOOL_T;
+  int locked = scm_is_true (locked_s);
 
   /* do not allow locked objects to be selected:
   */
