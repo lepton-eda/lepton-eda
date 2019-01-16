@@ -469,5 +469,5 @@
    objects)
   objects)
 
-( define-public object-locked?     %object-locked? )
+( define-public object-selectable?     %object-selectable? )
 ( define-public set-object-selectable! %set-object-selectable! )

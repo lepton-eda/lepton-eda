@@ -729,24 +729,24 @@ SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
  * Check the state of an object's selectable flag: if it's true, the
  * object is considered to be unlocked, otherwise it is locked.
  *
- * \note Scheme API: Implements the %object-locked? procedure in the
+ * \note Scheme API: Implements the %object-selectable? procedure in the
  * (geda core object) module.
  *
  * \param obj_s  #OBJECT smob to inspect.
  *
- * \return       Boolean value indicating whether \a obj_s is locked.
+ * \return       Boolean value indicating whether \a obj_s is selectable.
  */
-SCM_DEFINE (object_locked_p, "%object-locked?", 1, 0, 0,
+SCM_DEFINE (object_selectable_p, "%object-selectable?", 1, 0, 0,
             (SCM obj_s), "Check whether an object is locked.")
 {
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_object_locked_p);
+              SCM_ARG1, s_object_selectable_p);
 
   OBJECT* obj = edascm_to_object (obj_s);
 
-  return scm_from_bool (obj->selectable == 0);
+  return scm_from_bool (obj->selectable);
 
-} /* object_locked_x() */
+} /* object_selectable_x() */
 
 
 
@@ -787,7 +787,7 @@ SCM_DEFINE (set_object_selectable_x, "%set-object-selectable!", 2, 0, 0,
 
   return obj_s;
 
-} /* set_object_locked_x() */
+} /* set_object_selectable_x() */
 
 
 
@@ -2334,7 +2334,7 @@ init_module_geda_core_object (void *unused)
                 s_set_picture_data_vector_x,
                 s_translate_object_x, s_rotate_object_x,
                 s_mirror_object_x,
-                s_object_locked_p, s_set_object_selectable_x,
+                s_object_selectable_p, s_set_object_selectable_x,
                 NULL);
 }
 
