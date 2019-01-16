@@ -2,7 +2,7 @@
  * liblepton - Lepton's library - Scheme API
  * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2011-2016 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -736,11 +736,11 @@ SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
  *
  * \return       Boolean value indicating whether \a obj_s is locked.
  */
-SCM_DEFINE (object_locked_x, "%object-locked?", 1, 0, 0,
+SCM_DEFINE (object_locked_p, "%object-locked?", 1, 0, 0,
             (SCM obj_s), "Check whether an object is locked.")
 {
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_object_locked_x);
+              SCM_ARG1, s_object_locked_p);
 
   OBJECT* obj = edascm_to_object (obj_s);
 
@@ -2338,7 +2338,7 @@ init_module_geda_core_object (void *unused)
                 s_set_picture_data_vector_x,
                 s_translate_object_x, s_rotate_object_x,
                 s_mirror_object_x,
-                s_object_locked_x, s_set_object_locked_x,
+                s_object_locked_p, s_set_object_locked_x,
                 NULL);
 }
 
