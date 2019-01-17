@@ -149,6 +149,8 @@ void eda_config_set_double_list (EdaConfig *cfg, const char *group, const char *
 gboolean eda_config_remove_key (EdaConfig *cfg, const char *group, const char *key, GError **error);
 gboolean eda_config_remove_group (EdaConfig *cfg, const char *group, GError **error);
 
+void config_set_legacy_mode(gboolean legacy);
+
 G_END_DECLS
 
 #endif /* !__EDA_CONFIG_H__ */
