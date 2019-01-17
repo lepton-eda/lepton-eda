@@ -49,14 +49,56 @@ struct _EdaConfigPrivate
   gboolean changed;
 };
 
-/*! Filename for gEDA system configuration files */
+
+
+/*! Legacy configuration filenames:
+ */
 #define SYSTEM_CONFIG_NAME "geda-system.conf"
-/*! Filename for gEDA user configuration files */
 #define USER_CONFIG_NAME "geda-user.conf"
-/*! Filename for gEDA local configuration files */
 #define LOCAL_CONFIG_NAME "geda.conf"
-/*! Filename for gEDA configuration files in cache dir*/
 #define CACHE_CONFIG_NAME "gui.conf"
+
+
+
+/*! \brief Get filename for system configuration files
+ */
+static const gchar*
+cfg_filename_system()
+{
+  return SYSTEM_CONFIG_NAME;
+}
+
+
+
+/*! \brief Get filename for user configuration files
+ */
+static const gchar*
+cfg_filename_user()
+{
+  return USER_CONFIG_NAME;
+}
+
+
+
+/*! \brief Get filename for local configuration files
+ */
+static const gchar*
+cfg_filename_local()
+{
+  return LOCAL_CONFIG_NAME;
+}
+
+
+
+/*! \brief Get filename for cache configuration files
+ */
+static const gchar*
+cfg_filename_cache()
+{
+  return CACHE_CONFIG_NAME;
+}
+
+
 
 static void eda_config_dispose (GObject *object);
 static void eda_config_finalize (GObject *object);
@@ -301,7 +343,7 @@ eda_config_get_cache_context()
     GFile* file;
 
     filename = g_build_filename (eda_get_user_cache_dir(),
-                                 CACHE_CONFIG_NAME, NULL);
+                                 cfg_filename_cache(), NULL);
 
     file = g_file_new_for_path (filename);
 
@@ -374,7 +416,7 @@ eda_config_get_system_context ()
 		const gchar * const * dirs = eda_get_system_config_dirs();
 		for (gint i = 0; !found_file && dirs[i]; ++i) {
 			gchar *tmp_filename =
-				g_build_filename(dirs[i], SYSTEM_CONFIG_NAME, NULL);
+				g_build_filename(dirs[i], cfg_filename_system(), NULL);
 			GFile *tmp_file = g_file_new_for_path(tmp_filename);
 			g_free(tmp_filename);
 
@@ -435,7 +477,7 @@ eda_config_get_user_context ()
 
     /* Search for a user configuration file in XDG_CONFIG_HOME */
     filename = g_build_filename (eda_get_user_config_dir(),
-                                 USER_CONFIG_NAME, NULL);
+                                 cfg_filename_user(), NULL);
     file = g_file_new_for_path (filename);
 
     config = EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
@@ -491,7 +533,7 @@ find_project_root (GFile *path)
   /* Iterate upward from dir, looking for a geda.conf file. */
   base_dir = G_FILE (g_object_ref (dir));
   while (result == NULL && dir != NULL) {
-    GFile *cfg_file = g_file_get_child (dir, LOCAL_CONFIG_NAME);
+    GFile *cfg_file = g_file_get_child (dir, cfg_filename_local());
     GFile *next_dir;
     if (g_file_query_exists (cfg_file, NULL)) {
       result = G_FILE (g_object_ref (dir));
@@ -569,7 +611,7 @@ eda_config_get_context_for_file (GFile *path)
   /* Find the project root, and the corresponding configuration
    * filename. */
   root = find_project_root (path);
-  file = g_file_get_child (root, LOCAL_CONFIG_NAME);
+  file = g_file_get_child (root, cfg_filename_local());
 
   /* If there's already a context available for this file, return
    * that. Otherwise, create a new context and record it in the global
