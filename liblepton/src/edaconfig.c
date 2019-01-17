@@ -69,13 +69,19 @@ config_set_legacy_mode(gboolean legacy)
 
 /*! Legacy configuration file names:
  */
-#define SYSTEM_CONFIG_NAME "geda-system.conf"
-#define USER_CONFIG_NAME "geda-user.conf"
-#define LOCAL_CONFIG_NAME "geda.conf"
+#define CONFIG_FILENAME_LEGACY_SYSTEM "geda-system.conf"
+#define CONFIG_FILENAME_LEGACY_USER "geda-user.conf"
+#define CONFIG_FILENAME_LEGACY_LOCAL "geda.conf"
+
+/*! New configuration file names:
+ */
+#define CONFIG_FILENAME_SYSTEM "lepton-system.conf"
+#define CONFIG_FILENAME_USER "lepton-user.conf"
+#define CONFIG_FILENAME_LOCAL "lepton.conf"
 
 /*! Configuration file name for CACHE config context:
  */
-#define CACHE_CONFIG_NAME "gui.conf"
+#define CONFIG_FILENAME_CACHE "gui.conf"
 
 
 
@@ -84,7 +90,10 @@ config_set_legacy_mode(gboolean legacy)
 static const gchar*
 cfg_filename_system()
 {
-  return SYSTEM_CONFIG_NAME;
+  if (config_legacy_mode)
+    return CONFIG_FILENAME_LEGACY_SYSTEM;
+  else
+    return CONFIG_FILENAME_SYSTEM;
 }
 
 
@@ -94,7 +103,10 @@ cfg_filename_system()
 static const gchar*
 cfg_filename_user()
 {
-  return USER_CONFIG_NAME;
+  if (config_legacy_mode)
+    return CONFIG_FILENAME_LEGACY_USER;
+  else
+    return CONFIG_FILENAME_USER;
 }
 
 
@@ -104,7 +116,10 @@ cfg_filename_user()
 static const gchar*
 cfg_filename_local()
 {
-  return LOCAL_CONFIG_NAME;
+  if (config_legacy_mode)
+    return CONFIG_FILENAME_LEGACY_LOCAL;
+  else
+    return CONFIG_FILENAME_LOCAL;
 }
 
 
@@ -114,7 +129,7 @@ cfg_filename_local()
 static const gchar*
 cfg_filename_cache()
 {
-  return CACHE_CONFIG_NAME;
+  return CONFIG_FILENAME_CACHE;
 }
 
 
