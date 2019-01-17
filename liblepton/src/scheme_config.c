@@ -1219,6 +1219,35 @@ SCM_DEFINE (config_remove_group, "%config-remove-group!", 2, 0, 0,
 
 
 
+/*! \brief Sets whether to use legacy configuration file names.
+ *
+ * \par Function Description
+ * This function is added to assist in config migration and
+ * not intended for the end user.
+ * It will be removed.
+ *
+ * \see config_set_legacy_mode().
+ *
+ * \note Scheme API: Implements the \%config-set-legacy-mode!
+ * procedure in the (geda core config) module.
+ *
+ * \param legacy_s  Boolean: set legacy mode or not.
+ *
+ * \return         SCM_BOOL_T.
+ */
+SCM_DEFINE (config_set_legacy_mode_x, "%config-set-legacy-mode!", 1, 0, 0,
+            (SCM  legacy_s),
+            "Sets whether to use legacy configuration file names.")
+{
+  SCM_ASSERT (scm_is_bool (legacy_s), legacy_s, SCM_ARG1, s_config_set_legacy_mode_x);
+
+  config_set_legacy_mode (scm_to_bool (legacy_s));
+
+  return SCM_BOOL_T;
+}
+
+
+
 /*!
  * \brief Create the (geda core config) Scheme module.
  * \par Function Description
@@ -1262,6 +1291,7 @@ init_module_geda_core_config (void *unused)
                 s_remove_config_event_x,
                 s_config_remove_key,
                 s_config_remove_group,
+                s_config_set_legacy_mode_x,
                 NULL);
 }
 
