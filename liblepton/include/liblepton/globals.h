@@ -26,6 +26,8 @@
 #ifndef _GLOBALS_H_INCL
 #define _GLOBALS_H_INCL
 
+extern gboolean config_legacy_mode;
+
 extern int verbose_loading;
 
 extern int do_logging;

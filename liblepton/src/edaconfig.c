@@ -51,11 +51,30 @@ struct _EdaConfigPrivate
 
 
 
-/*! Legacy configuration filenames:
+/*!
+ * Global variable declared in globals.h
+ * Whether to use legacy configuration file names:
+ */
+gboolean config_legacy_mode = TRUE;
+
+/*! \brief Set config_legacy_mode global variable
+ */
+void
+config_set_legacy_mode(gboolean legacy)
+{
+  config_legacy_mode = legacy;
+}
+
+
+
+/*! Legacy configuration file names:
  */
 #define SYSTEM_CONFIG_NAME "geda-system.conf"
 #define USER_CONFIG_NAME "geda-user.conf"
 #define LOCAL_CONFIG_NAME "geda.conf"
+
+/*! Configuration file name for CACHE config context:
+ */
 #define CACHE_CONFIG_NAME "gui.conf"
 
 
