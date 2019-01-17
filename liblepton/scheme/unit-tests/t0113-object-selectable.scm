@@ -34,7 +34,7 @@
   ( set-page-dirty! page #f )
   ( set! tmp (set-object-selectable! obj #f) )
 
-  ; set-object-locked!() should return the object:
+  ; set-object-selectable!() should return the object:
   ;
   ( assert-equal tmp obj )
 
@@ -62,7 +62,7 @@
   ( set-page-dirty! page #f )
   ( set! tmp (set-object-selectable! obj #t) )
 
-  ; set-object-locked!() should return the object:
+  ; set-object-selectable!() should return the object:
   ;
   ( assert-equal tmp obj )
 
