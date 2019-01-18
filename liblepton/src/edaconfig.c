@@ -54,10 +54,12 @@ struct _EdaConfigPrivate
 /*! User configuration context
  */
 static EdaConfig* g_context_user = NULL;
+static EdaConfig* g_context_user_legacy = NULL;
 
 /*! System configuration context
  */
 static EdaConfig* g_context_system = NULL;
+static EdaConfig* g_context_system_legacy = NULL;
 
 
 
@@ -497,21 +499,35 @@ create_config_system()
  *
  * The system context is used for system-wide configuration.  It is
  * located by searching the system configuration path for a
- * "geda-system.conf" configuration file.
+ * "geda-system.conf" or "lepton-system.conf" configuration file.
  *
  * Its parent context is the default context.
+ *
+ * Depending on the \a config_legacy_mode value, this function
+ * will return different contexts for legacy (geda-system.conf file)
+ * and new configurations (lepton-system.conf file).
  *
  * \return the system #EdaConfig configuration context.
  */
 EdaConfig *
 eda_config_get_system_context ()
 {
-  if (g_once_init_enter (&g_context_system))
+  if (config_legacy_mode)
   {
-    g_once_init_leave (&g_context_system, create_config_system());
+    if (g_once_init_enter (&g_context_system_legacy))
+    {
+      g_once_init_leave (&g_context_system_legacy, create_config_system());
+    }
+  }
+  else
+  {
+    if (g_once_init_enter (&g_context_system))
+    {
+      g_once_init_leave (&g_context_system, create_config_system());
+    }
   }
 
-  return g_context_system;
+  return config_legacy_mode ? g_context_system_legacy : g_context_system;
 }
 
 
@@ -548,20 +564,34 @@ create_config_user()
  * \brief Return the user configuration context.
  *
  * The user context is used for user-specific configuration, and is
- * loaded from the user configuration directory.. Its parent context
+ * loaded from the user configuration directory. Its parent context
  * is the system context.
+ *
+ * Depending on the \a config_legacy_mode value, this function
+ * will return different contexts for legacy (geda-user.conf file)
+ * and new configurations (lepton-user.conf file).
  *
  * \return the user #EdaConfig configuration context.
  */
 EdaConfig *
 eda_config_get_user_context ()
 {
-  if (g_once_init_enter (&g_context_user))
+  if (config_legacy_mode)
   {
-    g_once_init_leave (&g_context_user, create_config_user());
+    if (g_once_init_enter (&g_context_user_legacy))
+    {
+      g_once_init_leave (&g_context_user_legacy, create_config_user());
+    }
+  }
+  else
+  {
+    if (g_once_init_enter (&g_context_user))
+    {
+      g_once_init_leave (&g_context_user, create_config_user());
+    }
   }
 
-  return g_context_user;
+  return config_legacy_mode ? g_context_user_legacy : g_context_user;
 }
 
 
