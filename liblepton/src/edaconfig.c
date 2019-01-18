@@ -51,6 +51,12 @@ struct _EdaConfigPrivate
 
 
 
+/* \brief User configuration context.
+ */
+static EdaConfig* g_context_user = NULL;
+
+
+
 /*!
  * Global variable declared in globals.h
  * Whether to use legacy configuration file names:
@@ -491,6 +497,36 @@ eda_config_get_system_context ()
 	return system_config;
 }
 
+
+
+/* \brief Create and return new user configuration context.
+ */
+static EdaConfig*
+create_config_user()
+{
+  EdaConfig *config = NULL;
+  gchar *filename = NULL;
+  GFile *file;
+
+  /* Search for a user configuration file in XDG_CONFIG_HOME */
+  filename = g_build_filename (eda_get_user_config_dir(),
+                               cfg_filename_user(), NULL);
+  file = g_file_new_for_path (filename);
+
+  config = EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
+                                     "file", file,
+                                     "parent", eda_config_get_system_context (),
+                                     "trusted", TRUE,
+                                     NULL));
+
+  g_free (filename);
+  g_object_unref (file);
+
+  return config;
+}
+
+
+
 /*! \public \memberof EdaConfig
  * \brief Return the user configuration context.
  *
@@ -503,29 +539,15 @@ eda_config_get_system_context ()
 EdaConfig *
 eda_config_get_user_context ()
 {
-  static gsize initialized = 0;
-  static EdaConfig *config = NULL;
-  if (g_once_init_enter (&initialized)) {
-    gchar *filename = NULL;
-    GFile *file;
-
-    /* Search for a user configuration file in XDG_CONFIG_HOME */
-    filename = g_build_filename (eda_get_user_config_dir(),
-                                 cfg_filename_user(), NULL);
-    file = g_file_new_for_path (filename);
-
-    config = EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
-                                       "file", file,
-                                       "parent", eda_config_get_system_context (),
-                                       "trusted", TRUE,
-                                       NULL));
-
-    g_free (filename);
-    g_object_unref (file);
-    g_once_init_leave (&initialized, 1);
+  if (g_once_init_enter (&g_context_user))
+  {
+    g_once_init_leave (&g_context_user, create_config_user());
   }
-  return config;
+
+  return g_context_user;
 }
+
+
 
 /*! Recursively searches upwards from \a path, looking for a
  * "geda.conf" file.  If the root directory is reached without finding
