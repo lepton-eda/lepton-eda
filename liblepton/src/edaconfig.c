@@ -51,9 +51,13 @@ struct _EdaConfigPrivate
 
 
 
-/* \brief User configuration context.
+/*! User configuration context
  */
 static EdaConfig* g_context_user = NULL;
+
+/*! System configuration context
+ */
+static EdaConfig* g_context_system = NULL;
 
 
 
@@ -429,6 +433,65 @@ eda_config_get_default_context ()
   return config;
 }
 
+
+
+/*! \brief Create and return new system configuration context.
+ */
+static EdaConfig*
+create_config_system()
+{
+  /* Candidate configuration file in the first system configuration
+   * directory. */
+  GFile *first_file = NULL;
+  /* Actual file to use */
+  GFile *found_file = NULL;
+
+  /* Search for a system configuration file in the system config
+   * search path. */
+  const gchar * const * dirs = eda_get_system_config_dirs();
+  for (gint i = 0; !found_file && dirs[i]; ++i) {
+    gchar *tmp_filename =
+      g_build_filename(dirs[i], cfg_filename_system(), NULL);
+    GFile *tmp_file = g_file_new_for_path(tmp_filename);
+    g_free(tmp_filename);
+
+    /* Keep track of the the first path's config filename in case we
+     * need to fall back to it */
+    if (!first_file) {
+      first_file = G_FILE (g_object_ref (tmp_file));
+    }
+
+    if (g_file_query_exists(tmp_file, NULL)) {
+      found_file = G_FILE (g_object_ref (tmp_file));
+    }
+    g_object_unref(tmp_file);
+  }
+
+  /* No pre-existing file found; fall back to file in the first
+   * system config directory. */
+  if (!found_file) {
+    g_return_val_if_fail(first_file, NULL);
+    found_file = G_FILE (g_object_ref (first_file));
+  } else {
+    g_object_unref(first_file);
+  }
+
+  /* Construct the system configuration context */
+  g_return_val_if_fail(found_file, NULL);
+
+  EdaConfig *config =
+    EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
+                              "file", found_file,
+                              "parent", eda_config_get_default_context (),
+                              "trusted", TRUE,
+                              NULL));
+  g_object_unref (found_file);
+
+  return config;
+}
+
+
+
 /*! \public \memberof EdaConfig
  * \brief Return the system configuration context.
  *
@@ -443,63 +506,17 @@ eda_config_get_default_context ()
 EdaConfig *
 eda_config_get_system_context ()
 {
-	static EdaConfig *system_config = NULL;
-	if (g_once_init_enter (&system_config)) {
-		/* Candidate configuration file in the first system configuration
-		 * directory. */
-		GFile *first_file = NULL;
-		/* Actual file to use */
-		GFile *found_file = NULL;
+  if (g_once_init_enter (&g_context_system))
+  {
+    g_once_init_leave (&g_context_system, create_config_system());
+  }
 
-		/* Search for a system configuration file in the system config
-		 * search path. */
-		const gchar * const * dirs = eda_get_system_config_dirs();
-		for (gint i = 0; !found_file && dirs[i]; ++i) {
-			gchar *tmp_filename =
-				g_build_filename(dirs[i], cfg_filename_system(), NULL);
-			GFile *tmp_file = g_file_new_for_path(tmp_filename);
-			g_free(tmp_filename);
-
-			/* Keep track of the the first path's config filename in case we
-			 * need to fall back to it */
-			if (!first_file) {
-				first_file = G_FILE (g_object_ref (tmp_file));
-			}
-
-			if (g_file_query_exists(tmp_file, NULL)) {
-				found_file = G_FILE (g_object_ref (tmp_file));
-			}
-			g_object_unref(tmp_file);
-		}
-
-		/* No pre-existing file found; fall back to file in the first
-		 * system config directory. */
-		if (!found_file) {
-			g_return_val_if_fail(first_file, NULL);
-			found_file = G_FILE (g_object_ref (first_file));
-		} else {
-			g_object_unref(first_file);
-		}
-
-		/* Construct the system configuration context */
-		g_return_val_if_fail(found_file, NULL);
-
-		EdaConfig *config =
-			EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
-                                "file", found_file,
-                                "parent", eda_config_get_default_context (),
-                                "trusted", TRUE,
-                                NULL));
-		g_object_unref (found_file);
-
-		g_once_init_leave (&system_config, config);
-	}
-	return system_config;
+  return g_context_system;
 }
 
 
 
-/* \brief Create and return new user configuration context.
+/*! \brief Create and return new user configuration context.
  */
 static EdaConfig*
 create_config_user()
