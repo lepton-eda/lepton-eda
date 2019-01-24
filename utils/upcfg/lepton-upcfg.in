@@ -1,0 +1,124 @@
+#!/bin/sh
+exec @GUILE@ "$0" "$@"
+!#
+
+;;
+;; Lepton EDA
+;; lepton-upcfg - gEDA => Lepton EDA configuration upgrade utility
+;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
+;; License: GPLv2+. See the COPYING file
+;;
+
+( load-extension ( or (getenv "LIBLEPTON") "@libdir@/liblepton" )
+                 "libgeda_init" )
+
+; Avoid Scheme compile-time errors using a clever trick
+; from netlist/scheme/lepton-netlist.in (see comments there):
+;
+( primitive-eval '(use-modules (conf upgrade)) )
+( primitive-eval '(use-modules (ice-9 getopt-long)) )
+
+
+
+; command line options:
+;
+( define cmd-line-args-spec
+( list
+  ( list ; --local (-l)
+    'local
+    ( list 'single-char #\l )
+    ( list 'value        #f )
+  )
+  ( list ; --user (-u)
+    'user
+    ( list 'single-char #\u )
+    ( list 'value        #f )
+  )
+  ( list ; --system (-s)
+    'system
+    ( list 'single-char #\s )
+    ( list 'value        #f )
+  )
+  ( list ; --overwrite (-x)
+    'overwrite
+    ( list 'single-char #\x )
+    ( list 'value        #f )
+  )
+)
+) ; cmd-line-args-spec
+
+
+
+; program entry point:
+;
+( define ( main )
+( let
+  (
+  ( cmd-line-args '() )
+  ( args-len       0  )
+  ( what           #f )
+  ( overwrite      #f )
+  ( fname          #f )
+  )
+
+  ( set! cmd-line-args
+    ( getopt-long (program-arguments) cmd-line-args-spec )
+  )
+
+  ( set! args-len (length cmd-line-args) )
+  ( when ( or (< args-len 2) (> args-len 3) )
+    ( usage 1 )
+  )
+
+  ( if (option-ref cmd-line-args 'local #f)
+    ( set! what 'local )
+  )
+  ( if (option-ref cmd-line-args 'user #f)
+    ( set! what 'user )
+  )
+  ( if (option-ref cmd-line-args 'system #f)
+    ( set! what 'system )
+  )
+
+  ( unless what
+    ( usage 1 )
+  )
+
+  ( set! overwrite (option-ref cmd-line-args 'overwrite #f) )
+
+
+  ( catch #t
+    ( lambda()
+      ( format #t "ii: converting [~a] configuration...~%~%" what )
+      ( set! fname
+        ( convert what #:report-absent-keys #f #:overwrite overwrite )
+      )
+    )
+    ( lambda( ex . args )
+      ( format #t "xx: convert() failed: ['~a]~%  ~a~%" ex args )
+    )
+  )
+
+) ; let
+) ; main()
+
+
+
+( define ( usage exit-code )
+    ( format #t
+      "Usage: lepton-upcfg ~
+       -l | -u | -s [-x]~%"
+    )
+    ( primitive-exit exit-code )
+)
+
+
+
+; top-level code:
+;
+( main )
+
+
+
+; vim: ft=scheme tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
