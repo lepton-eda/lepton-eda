@@ -14,7 +14,8 @@ nobase_dist_scmdata_DATA = \
 	geda/log.scm \
 	geda/library.scm \
 	geda/repl.scm \
-	lepton/version.scm
+	lepton/version.scm \
+	conf/keys.scm
 nobase_scmdata_DATA = geda/core/gettext.scm
 
 check-am: update-cli-tool
