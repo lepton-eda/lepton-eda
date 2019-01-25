@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,40 +22,117 @@
 #include "gschem.h"
 
 
+
+/*! Open/Save dialog file filters
+ */
+static GtkFileFilter* filter_sch      = NULL;
+static GtkFileFilter* filter_sym      = NULL;
+static GtkFileFilter* filter_sch_sym  = NULL;
+static GtkFileFilter* filter_all      = NULL;
+
+/*! Remember the last used filters
+ */
+static GtkFileFilter* filter_last_opendlg = NULL;
+static GtkFileFilter* filter_last_savedlg = NULL;
+
+
+
 /*! \brief Creates filter for file chooser.
  *  \par Function Description
  *  This function adds file filters to <B>filechooser</B>.
+ *  It also restores the last chosen filters (separate for
+ *  Open and Save dialogs).
  *
  *  \param [in] filechooser The file chooser to add filter to.
  */
 static void
 x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
 {
-  GtkFileFilter *filter;
+  /* create filters:
+  */
+  if (filter_sch == NULL)
+  {
+    filter_sch = gtk_file_filter_new();
 
-  /* file filter for schematic files (*.sch) */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Schematics"));
-  gtk_file_filter_add_pattern (filter, "*.sch");
-  gtk_file_chooser_add_filter (filechooser, filter);
-  /* file filter for symbol files (*.sym) */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Symbols"));
-  gtk_file_filter_add_pattern (filter, "*.sym");
-  gtk_file_chooser_add_filter (filechooser, filter);
-  /* file filter for both symbol and schematic files (*.sym+*.sch) */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Schematics and symbols"));
-  gtk_file_filter_add_pattern (filter, "*.sym");
-  gtk_file_filter_add_pattern (filter, "*.sch");
-  gtk_file_chooser_add_filter (filechooser, filter);
-  /* file filter that match any file */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All files"));
-  gtk_file_filter_add_pattern (filter, "*");
-  gtk_file_chooser_add_filter (filechooser, filter);
+    gtk_file_filter_set_name (filter_sch, _("Schematics"));
+    gtk_file_filter_add_pattern (filter_sch, "*.sch");
 
-}
+    /* NOTE: GtkFileChooser object takes ownership of the filter:
+    */
+    g_object_ref (G_OBJECT (filter_sch));
+  }
+
+  if (filter_sym == NULL)
+  {
+    filter_sym = gtk_file_filter_new();
+
+    gtk_file_filter_set_name (filter_sym, _("Symbols"));
+    gtk_file_filter_add_pattern (filter_sym, "*.sym");
+
+    g_object_ref (G_OBJECT (filter_sym));
+  }
+
+  if (filter_sch_sym == NULL)
+  {
+    filter_sch_sym = gtk_file_filter_new();
+
+    gtk_file_filter_set_name (filter_sch_sym, _("Schematics and symbols"));
+    gtk_file_filter_add_pattern (filter_sch_sym, "*.sym");
+    gtk_file_filter_add_pattern (filter_sch_sym, "*.sch");
+
+    g_object_ref (G_OBJECT (filter_sch_sym));
+  }
+
+  if (filter_all == NULL)
+  {
+    filter_all = gtk_file_filter_new();
+
+    gtk_file_filter_set_name (filter_all, _("All files"));
+    gtk_file_filter_add_pattern (filter_all, "*");
+
+    g_object_ref (G_OBJECT (filter_all));
+  }
+
+  /* add filters to [filechooser]:
+  */
+  gtk_file_chooser_add_filter (filechooser, filter_sch);
+  gtk_file_chooser_add_filter (filechooser, filter_sym);
+  gtk_file_chooser_add_filter (filechooser, filter_sch_sym);
+  gtk_file_chooser_add_filter (filechooser, filter_all);
+
+  /* use *.sch filter by default:
+  */
+  if (filter_last_opendlg == NULL)
+  {
+    filter_last_opendlg = filter_sch;
+  }
+
+  if (filter_last_savedlg == NULL)
+  {
+    filter_last_savedlg = filter_sch;
+  }
+
+  /* restore last used filters:
+  */
+  GtkFileChooserAction type = gtk_file_chooser_get_action (filechooser);
+
+  if (type == GTK_FILE_CHOOSER_ACTION_OPEN)
+  {
+    gtk_file_chooser_set_filter (filechooser, filter_last_opendlg);
+  }
+  else
+  if (type == GTK_FILE_CHOOSER_ACTION_SAVE)
+  {
+    gtk_file_chooser_set_filter (filechooser, filter_last_savedlg);
+  }
+  else
+  {
+    g_assert (FALSE && "Trying to set filter for unsupported dialog type");
+  }
+
+} /* x_fileselect_setup_filechooser_filters() */
+
+
 
 /*! \brief Updates the preview when the selection changes.
  *  \par Function Description
@@ -192,6 +270,10 @@ x_fileselect_open(GschemToplevel *w_current)
   g_free (cwd);
   gtk_widget_show (dialog);
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT) {
+
+    /* remember current filter: */
+    filter_last_opendlg = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
+
     GSList *tmp, *filenames =
       gtk_file_chooser_get_filenames (GTK_FILE_CHOOSER (dialog));
 
@@ -277,6 +359,10 @@ x_fileselect_save (GschemToplevel *w_current)
 				  GTK_RESPONSE_ACCEPT);
   gtk_widget_show (dialog);
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT) {
+
+    /* remember current filter: */
+    filter_last_savedlg = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
+
     gchar *filename =
       gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
