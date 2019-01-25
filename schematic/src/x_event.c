@@ -254,18 +254,13 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       case(MID_MOUSEPAN_ENABLED):
       gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       break;
-    }
 
-
-    if (!w_current->inside_action)
-    {
-      if (w_current->middle_button == POPUP_ENABLED)
-      {
-        i_update_menus(w_current);  /* update menus before popup  */
+      case (POPUP_ENABLED):
+        i_update_menus(w_current);
         do_popup(w_current, event);
-      }
-    }
+        break;
 
+    } /* switch w_current->middle_button */
 
   } else if (event->button == 3) {
     if (!w_current->inside_action) {
