@@ -95,15 +95,13 @@ typedef enum
 #define DECORATED		0
 #define TRANSIENT		1
 
-/* for third-mouse */
-#define POPUP_ENABLED		0
-#define MOUSEPAN_ENABLED	1
-
-/* for middle-mouse */
+/* mouse buttons actions */
 #define STROKE			0
 #define REPEAT			1
 #define ACTION			2
 #define MID_MOUSEPAN_ENABLED	3
+#define POPUP_ENABLED   4
+#define MOUSEPAN_ENABLED  5
 
 /* for scroll-wheel */
 #define SCROLL_WHEEL_CLASSIC 0
