@@ -457,7 +457,7 @@ void i_update_menus(GschemToplevel *w_current)
     x_menus_sensitivity(w_current, "_Edit/Update Component", TRUE);
     x_menus_sensitivity(w_current, "Hie_rarchy/_Down Schematic", TRUE);
     x_menus_sensitivity(w_current, "Hie_rarchy/Down _Symbol", TRUE);
-    x_menus_sensitivity(w_current, "Hie_rarchy/D_ocumentation...", TRUE);
+    x_menus_sensitivity(w_current, "_Help/Find Component D_ocumentation", TRUE);
     x_menus_sensitivity(w_current, "A_ttributes/_Attach", TRUE);
     x_menus_sensitivity(w_current, "A_ttributes/_Detach", TRUE);
     x_menus_sensitivity(w_current, "A_ttributes/Show _Value", have_text_selected);
@@ -490,7 +490,7 @@ void i_update_menus(GschemToplevel *w_current)
     x_menus_sensitivity(w_current, "_Edit/Update Component", FALSE);
     x_menus_sensitivity(w_current, "Hie_rarchy/_Down Schematic", FALSE);
     x_menus_sensitivity(w_current, "Hie_rarchy/Down _Symbol", FALSE);
-    x_menus_sensitivity(w_current, "Hie_rarchy/D_ocumentation...", FALSE);
+    x_menus_sensitivity(w_current, "_Help/Find Component D_ocumentation", FALSE);
     x_menus_sensitivity(w_current, "A_ttributes/_Attach", FALSE);
     x_menus_sensitivity(w_current, "A_ttributes/_Detach", FALSE);
     x_menus_sensitivity(w_current, "A_ttributes/Show _Value", FALSE);
