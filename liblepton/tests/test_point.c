@@ -32,7 +32,7 @@ check_rotate ()
     if (d0 > 100.0) {
       gdouble a0 = atan2 (y0, x0);
       gdouble a1 = atan2 (y1, x1);
-      gint normalized = geda_angle_normalize (angle);
+      /* gint normalized = geda_angle_normalize (angle); */
 
       gdouble dd = 180.0 * (a1 - a0) / G_PI;
       while (dd < 0) {
@@ -76,7 +76,7 @@ check_rotate_90 ()
     if (d0 > 100.0) {
       gdouble a0 = atan2 (y0, x0);
       gdouble a1 = atan2 (y1, x1);
-      gint normalized = geda_angle_normalize (angle);
+      /* gint normalized = geda_angle_normalize (angle); */
 
       gdouble dd = 180.0 * (a1 - a0) / G_PI;
       while (dd < 0) {
