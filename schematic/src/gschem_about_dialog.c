@@ -81,7 +81,7 @@ void about_dialog (GschemToplevel *w_current)
 
   gtk_about_dialog_set_copyright (adlg,
     _("Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-      "Copyright © 2017-2018 Lepton Developers.\n"
+      "Copyright © 2017-2019 Lepton Developers.\n"
       "See AUTHORS and ChangeLog files for details."));
 
   gtk_about_dialog_set_license (adlg,

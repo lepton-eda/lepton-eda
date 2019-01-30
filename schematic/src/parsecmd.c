@@ -109,7 +109,7 @@ version ()
   printf(_(
 "Lepton EDA %1$s (git: %2$.7s)\n"
 "Copyright (C) 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright (C) 2017-2018 Lepton Developers.\n"
+"Copyright (C) 2017-2019 Lepton Developers.\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the Lepton EDA distribution.\n"
