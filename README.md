@@ -2,7 +2,7 @@ Lepton Electronic Design Automation
 ===================================
 
 Copyright (C) 1998-2017 gEDA Developers.
-Copyright (C) 2017-2018 Lepton Developers.
+Copyright (C) 2017-2019 Lepton Developers.
 
 Introduction
 ============
@@ -274,7 +274,7 @@ The programs and associated files are:
 
   Copyright (C) 1998-2017 by Ales Hvezda and the respective original
   authors.
-  Copyright (C) 2017-2018 Lepton Developers.
+  Copyright (C) 2017-2019 Lepton Developers.
 
 See the `AUTHORS` file for a more extensive list of contributors to
 Lepton EDA and gEDA.
