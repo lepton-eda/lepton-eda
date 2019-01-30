@@ -351,9 +351,11 @@
 ;
 ; Controls if the middle mouse button draws strokes, repeats the last
 ; command, does an action (move and copy (holding down the ALT key)
-; are supported) on a single objects, or if it does the mouse panning.
+; are supported) on a single objects, performs the popup,
+; or if it does the mouse panning.
 ;
 (middle-button "mousepan")
+;(middle-button "popup")
 ;(middle-button "action")
 ;(middle-button "stroke")
 ;(middle-button "repeat")
