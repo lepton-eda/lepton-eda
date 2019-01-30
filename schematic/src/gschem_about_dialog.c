@@ -91,16 +91,23 @@ void about_dialog (GschemToplevel *w_current)
 
   GtkWidget* website1 = gtk_label_new (NULL);
   GtkWidget* website2 = gtk_label_new (NULL);
+  GtkWidget* website3 = gtk_label_new (NULL);
   gtk_label_set_selectable (GTK_LABEL (website1), TRUE);
   gtk_label_set_selectable (GTK_LABEL (website2), TRUE);
+  gtk_label_set_selectable (GTK_LABEL (website3), TRUE);
 
   gtk_label_set_markup (GTK_LABEL (website1),
     "<a href='http://github.com/lepton-eda/lepton-eda'>github.com/lepton-eda/lepton-eda</a>" );
   gtk_label_set_markup (GTK_LABEL (website2),
     "<a href='http://geda-project.org'>geda-project.org</a>" );
+  gtk_label_set_markup (GTK_LABEL (website3),
+    "\n"
+    "Have a question? Chat with us at "
+    "<a href='https://gitter.im/Lepton-EDA/Lobby'>gitter.im</a>!" );
 
   gtk_box_pack_start (GTK_BOX (ca), website1, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (ca), website2, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (ca), website3, FALSE, FALSE, 0);
 
 
   gtk_widget_show_all (dlg);
