@@ -91,11 +91,11 @@ exec @GUILE@ "$0" "$@"
     ( lambda()
       ( format #t "ii: converting [~a] configuration...~%~%" what )
       ( set! fname
-        ( convert what #:report-absent-keys #f #:overwrite overwrite )
+        ( config-upgrade what #:report-absent-keys #f #:overwrite overwrite )
       )
     )
     ( lambda( ex . args )
-      ( format #t "xx: convert() failed: ['~a]~%  ~a~%" ex args )
+      ( format #t "xx: config-upgrade() failed: ['~a]~%  ~a~%" ex args )
     )
   )
 
