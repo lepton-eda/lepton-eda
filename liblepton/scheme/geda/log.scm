@@ -18,6 +18,7 @@
 ;;
 
 (define-module (geda log)
+  #:use-module (ice-9 format)
   #:use-module (geda core log))
 
 ;; ================================================================
