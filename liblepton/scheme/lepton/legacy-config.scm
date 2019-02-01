@@ -16,6 +16,102 @@
 
 
 
+; get configuration context
+;
+; [what]: symbol: 'local, 'user or 'system
+; {ret}:  requested configuration context or #f on failure
+;
+( define ( get-cfg-ctx what )
+  ; return:
+  ( cond
+    (  ( eq? what 'local  )  ( path-config-context (getcwd) )  )
+    (  ( eq? what 'user   )  ( user-config-context )           )
+    (  ( eq? what 'system )  ( system-config-context )         )
+    (  else #f  )
+  )
+)
+
+
+
+; read legacy configuration
+;
+; [cfg]:                 configuration context to read from
+; [keys]:                cfg keys list as defined in (conf keys) module
+; [report-absent-keys]:  report absent keys
+; {ret}:                 list of entries: ( grp-new key-new val )
+;
+( define* ( read-old cfg keys #:key (report-absent-keys #f) )
+( let
+  (
+  ( val  #f )
+  ( res '() )
+  )
+
+  ( define ( add-to-res g k v ) ; group, key, value
+    ( set! res ( cons (list g k v) res ) )
+  )
+
+  ( for-each
+  ( lambda( entry )
+
+    ( match entry
+    (
+
+      ( pfn unused grp-old key-old grp-new key-new ) ; get 6 values from [entry]
+
+      ( catch #t
+        ( lambda()
+          ( set! val ( pfn cfg grp-old key-old ) ) ; pfn() throws
+          ( format #t "ii: read   [~a]::~a ~65,4t = [~a]~%" grp-old key-old val )
+          ( add-to-res grp-new key-new val )
+        )
+        ( lambda( ex . args )
+          ( if report-absent-keys
+            ( format #t "ww: !read  [~a]::~a~%" grp-old key-old )
+          )
+        )
+      ) ; catch()
+
+    )
+    ) ; match()
+
+  )
+  keys
+  )
+
+  ; return:
+  res
+
+) ; let
+) ; read-old()
+
+
+
+; write new configuration
+;
+; [cfg]: configuration context to write to
+; [res]: list returned by read-old()
+;
+( define ( write-new cfg res )
+
+  ( for-each
+  ( lambda( entry )
+
+    ( match entry
+    (
+      ( grp-new key-new val )                 ; get 3 values from [entry]
+      ( set-config! cfg grp-new key-new val ) ; use that values
+    )
+    )
+
+  )
+  res
+  )
+
+) ; write-new()
+
+
+
 ; public:
 ;
 ; config-upgrade(): upgrade legacy gEDA configuration
@@ -117,102 +213,6 @@
 
 ) ; let
 ) ; config-upgrade()
-
-
-
-; get configuration context
-;
-; [what]: symbol: 'local, 'user or 'system
-; {ret}:  requested configuration context or #f on failure
-;
-( define ( get-cfg-ctx what )
-  ; return:
-  ( cond
-    (  ( eq? what 'local  )  ( path-config-context (getcwd) )  )
-    (  ( eq? what 'user   )  ( user-config-context )           )
-    (  ( eq? what 'system )  ( system-config-context )         )
-    (  else #f  )
-  )
-)
-
-
-
-; read legacy configuration
-;
-; [cfg]:                 configuration context to read from
-; [keys]:                cfg keys list as defined in (conf keys) module
-; [report-absent-keys]:  report absent keys
-; {ret}:                 list of entries: ( grp-new key-new val )
-;
-( define* ( read-old cfg keys #:key (report-absent-keys #f) )
-( let
-  (
-  ( val  #f )
-  ( res '() )
-  )
-
-  ( define ( add-to-res g k v ) ; group, key, value
-    ( set! res ( cons (list g k v) res ) )
-  )
-
-  ( for-each
-  ( lambda( entry )
-
-    ( match entry
-    (
-
-      ( pfn unused grp-old key-old grp-new key-new ) ; get 6 values from [entry]
-
-      ( catch #t
-        ( lambda()
-          ( set! val ( pfn cfg grp-old key-old ) ) ; pfn() throws
-          ( format #t "ii: read   [~a]::~a ~65,4t = [~a]~%" grp-old key-old val )
-          ( add-to-res grp-new key-new val )
-        )
-        ( lambda( ex . args )
-          ( if report-absent-keys
-            ( format #t "ww: !read  [~a]::~a~%" grp-old key-old )
-          )
-        )
-      ) ; catch()
-
-    )
-    ) ; match()
-
-  )
-  keys
-  )
-
-  ; return:
-  res
-
-) ; let
-) ; read-old()
-
-
-
-; write new configuration
-;
-; [cfg]: configuration context to write to
-; [res]: list returned by read-old()
-;
-( define ( write-new cfg res )
-
-  ( for-each
-  ( lambda( entry )
-
-    ( match entry
-    (
-      ( grp-new key-new val )                 ; get 3 values from [entry]
-      ( set-config! cfg grp-new key-new val ) ; use that values
-    )
-    )
-
-  )
-  res
-  )
-
-) ; write-new()
 
 
 
