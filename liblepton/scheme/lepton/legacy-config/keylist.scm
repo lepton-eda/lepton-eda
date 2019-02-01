@@ -11,17 +11,6 @@
 
 
 
-; public:
-;
-; get configuration keys list
-;
-( define ( config-keylist )
-  ; return:
-  keys-list
-)
-
-
-
 ; functions to retrieve configuration values:
 ;
 ( define pfn-get-bool     config-boolean     )
@@ -258,6 +247,17 @@
 
 ) ; list()
 ) ; keys-list
+
+
+
+; public:
+;
+; get configuration keys list
+;
+( define ( config-keylist )
+  ; return:
+  keys-list
+)
 
 
 
