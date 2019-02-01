@@ -4,11 +4,11 @@
 ;; License: GPLv2+. See the COPYING file
 ;;
 
-( define-module ( conf upgrade )
+( define-module ( lepton legacy-config )
 
   #:use-module  ( ice-9 format )
   #:use-module  ( geda  config )
-  #:use-module  ( conf  keys   )
+  #:use-module  ( lepton legacy-config keylist )
 
   #:export      ( convert )
 )
@@ -23,8 +23,8 @@
 ; directory), geda-user.conf or geda-system.conf file,
 ; convert it (using new names) and produce the corresponding
 ; lepton*.conf configuration file.
-; We get conversion information (list of keys, old and new names)
-; from the [keys-list] defined in the (conf keys) module.
+; We get conversion information (list of keys, old and new names) from
+; the [keys-list] defined in the (lepton legacy-config keylist) module.
 ;
 ; [what]:                'local, 'user or 'system - config to convert
 ; [report-absent-keys]:  print messages about missing keys in old cfg file

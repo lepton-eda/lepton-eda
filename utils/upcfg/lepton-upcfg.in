@@ -15,7 +15,7 @@ exec @GUILE@ "$0" "$@"
 ; Avoid Scheme compile-time errors using a clever trick
 ; from netlist/scheme/lepton-netlist.in (see comments there):
 ;
-( primitive-eval '(use-modules (conf upgrade)) )
+( primitive-eval '(use-modules (lepton legacy-config)) )
 ( primitive-eval '(use-modules (ice-9 getopt-long)) )
 
 

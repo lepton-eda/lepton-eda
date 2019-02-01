@@ -4,7 +4,7 @@
 ;; License: GPLv2+. See the COPYING file
 ;;
 
-( define-module ( conf keys )
+( define-module ( lepton legacy-config keylist )
   #:use-module  ( geda config )
   #:export      ( conf-keys-list )
 )
