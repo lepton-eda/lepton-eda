@@ -7,6 +7,7 @@
 ( define-module ( lepton legacy-config )
 
   #:use-module  ( ice-9 format )
+  #:use-module  ( ice-9 match  )
   #:use-module  ( geda  config )
   #:use-module  ( lepton legacy-config keylist )
 
@@ -146,21 +147,8 @@
 ( define* ( read-old cfg keys #:key (report-absent-keys #f) )
 ( let
   (
-  ( grp-old  #f )
-  ( key-old  #f )
-  ( grp-new  #f )
-  ( key-new  #f )
-  ( pfn      #f )
-  ( val      #f )
-  ( res     '() )
-  )
-
-  ( define ( parse-entry e )
-    ( set! pfn     (list-ref e 0) )
-    ( set! grp-old (list-ref e 2) )
-    ( set! key-old (list-ref e 3) )
-    ( set! grp-new (list-ref e 4) )
-    ( set! key-new (list-ref e 5) )
+  ( val  #f )
+  ( res '() )
   )
 
   ( define ( add-to-res g k v ) ; group, key, value
@@ -170,20 +158,26 @@
   ( for-each
   ( lambda( entry )
 
-    ( parse-entry entry )
+    ( match entry
+    (
 
-    ( catch #t
-      ( lambda()
-        ( set! val ( pfn cfg grp-old key-old ) ) ; pfn() throws
-        ( format #t "ii: read   [~a]::~a ~65,4t = [~a]~%" grp-old key-old val )
-        ( add-to-res grp-new key-new val )
-      )
-      ( lambda( ex . args )
-        ( if report-absent-keys
-          ( format #t "ww: !read  [~a]::~a~%" grp-old key-old )
+      ( pfn unused grp-old key-old grp-new key-new ) ; get 6 values from [entry]
+
+      ( catch #t
+        ( lambda()
+          ( set! val ( pfn cfg grp-old key-old ) ) ; pfn() throws
+          ( format #t "ii: read   [~a]::~a ~65,4t = [~a]~%" grp-old key-old val )
+          ( add-to-res grp-new key-new val )
         )
-      )
+        ( lambda( ex . args )
+          ( if report-absent-keys
+            ( format #t "ww: !read  [~a]::~a~%" grp-old key-old )
+          )
+        )
+      ) ; catch()
+
     )
+    ) ; match()
 
   )
   keys
@@ -203,28 +197,21 @@
 ; [res]: list returned by read-old()
 ;
 ( define ( write-new cfg res )
-( let
-  (
-  ( grp-new #f )
-  ( key-new #f )
-  ( val     #f )
-  )
-
-  ( define ( parse-entry e )
-    ( set! grp-new (list-ref e 0) )
-    ( set! key-new (list-ref e 1) )
-    ( set! val     (list-ref e 2) )
-  )
 
   ( for-each
   ( lambda( entry )
-    ( parse-entry entry )
-    ( set-config! cfg grp-new key-new val ) ; TODO: throws?
+
+    ( match entry
+    (
+      ( grp-new key-new val )                 ; get 3 values from [entry]
+      ( set-config! cfg grp-new key-new val ) ; use that values
+    )
+    )
+
   )
   res
   )
 
-) ; let
 ) ; write-new()
 
 
