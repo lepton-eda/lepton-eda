@@ -10,21 +10,21 @@
   #:use-module  ( geda  config )
   #:use-module  ( lepton legacy-config keylist )
 
-  #:export      ( convert )
+  #:export      ( config-upgrade )
 )
 
 
 
 ; public:
 ;
-; convert(): upgrade gEDA configuration
+; config-upgrade(): upgrade legacy gEDA configuration
 ;
 ; Read legacy gEDA configuration from geda.conf (in current
 ; directory), geda-user.conf or geda-system.conf file,
 ; convert it (using new names) and produce the corresponding
 ; lepton*.conf configuration file.
 ; We get conversion information (list of keys, old and new names) from
-; the [keys-list] defined in the (lepton legacy-config keylist) module.
+; the list structure defined in the (lepton legacy-config keylist) module.
 ;
 ; [what]:                'local, 'user or 'system - config to convert
 ; [report-absent-keys]:  print messages about missing keys in old cfg file
@@ -39,7 +39,7 @@
 ; - 'outfile:  output config file already exists
 ; - 'save:     cannot write output config file
 ;
-( define* ( convert what #:key (report-absent-keys #f) (overwrite #f) )
+( define* ( config-upgrade what #:key (report-absent-keys #f) (overwrite #f) )
 ( let
   (
   ( cfg    #f )
@@ -70,7 +70,7 @@
   ( catch #t
     ( lambda()
       ( config-load! cfg )
-      ( set! keys (conf-keys-list) )
+      ( set! keys (config-keylist) )
       ( set! data
         ( read-old cfg keys #:report-absent-keys report-absent-keys )
       )
@@ -115,7 +115,7 @@
   fname
 
 ) ; let
-) ; convert()
+) ; config-upgrade()
 
 
 

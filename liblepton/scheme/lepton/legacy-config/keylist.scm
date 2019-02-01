@@ -6,7 +6,7 @@
 
 ( define-module ( lepton legacy-config keylist )
   #:use-module  ( geda config )
-  #:export      ( conf-keys-list )
+  #:export      ( config-keylist )
 )
 
 
@@ -15,7 +15,7 @@
 ;
 ; get configuration keys list
 ;
-( define ( conf-keys-list )
+( define ( config-keylist )
   ; return:
   keys-list
 )
