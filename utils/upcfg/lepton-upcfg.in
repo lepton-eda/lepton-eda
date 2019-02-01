@@ -49,6 +49,16 @@ exec @GUILE@ "$0" "$@"
 
 
 
+( define ( usage exit-code )
+    ( format #t
+      "Usage: lepton-upcfg ~
+       -l | -u | -s [-x]~%"
+    )
+    ( primitive-exit exit-code )
+)
+
+
+
 ; program entry point:
 ;
 ( define ( main )
@@ -101,16 +111,6 @@ exec @GUILE@ "$0" "$@"
 
 ) ; let
 ) ; main()
-
-
-
-( define ( usage exit-code )
-    ( format #t
-      "Usage: lepton-upcfg ~
-       -l | -u | -s [-x]~%"
-    )
-    ( primitive-exit exit-code )
-)
 
 
 
