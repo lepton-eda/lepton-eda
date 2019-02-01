@@ -18,6 +18,7 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (netlist config)
+  #:use-module (ice-9 format)
   #:use-module (geda log)
   #:use-module (geda config)
   #:use-module (ice-9 match)
