@@ -26,10 +26,12 @@
 ;;  6/17/2003
 
 (use-modules (ice-9 popen)
-             (ice-9 syncase)
              (ice-9 rdelim)
              (netlist schematic)
              (netlist schematic toplevel))
+
+(or (defined? 'define-syntax)
+  (use-modules (ice-9 syncase)))
 
 ;;
 ;;
@@ -182,8 +184,15 @@
   (let* ((c2p (pipe))  ; child to parent
          (p2c (pipe))) ; parent to child
 
+    ; TODO: make setvbuf( port, mode ) work with both Guile 2.0 and 2.2
+    ;       (Guile 2.2 generates warning)
+    ;
+    ; Guile 2.0: [mode] is an integer (either _IONBF, _IOLBF or _IOFBF)
+    ; Guile 2.2: [mode] is a  symbol  (either 'none,  'line  or 'block)
+    ;
     (setvbuf (cdr c2p) _IONBF)
     (setvbuf (cdr p2c) _IONBF)
+
     (let ((pid (primitive-fork)))
       (if (= pid 0)
         (begin
