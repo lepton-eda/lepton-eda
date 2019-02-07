@@ -23,9 +23,6 @@
   #:use-module (netlist core gettext)
 
   #:use-module ((ice-9 match))
-  #:use-module ((ice-9 rdelim)
-                #:select (read-string)
-                #:prefix rdelim:)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (geda attrib)
@@ -39,14 +36,14 @@
   #:use-module (netlist net)
   #:use-module (netlist option)
   #:use-module (netlist package-pin)
+  #:use-module (netlist page)
   #:use-module (netlist pin-net)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
   #:use-module (netlist verbose)
   #:use-module (symbol check net-attrib)
 
-  #:export (traverse
-            file->page))
+  #:export (traverse))
 
 
 ;;; Tracks which objects have been visited so far, and how many
@@ -341,21 +338,10 @@
                   (non-null* (assq-ref inherited-attribs 'source)))))
          (and=> sources comma-separated->list))))
 
-(define quiet-mode (netlist-option-ref 'quiet))
-
-;;; Reads file NAME and outputs a page named NAME
-(define (file->page name)
-  (with-input-from-file name
-    (lambda ()
-      (when (not quiet-mode)
-        (log! 'message (_ "Loading schematic ~S\n") name))
-      (string->page name (rdelim:read-string)))))
-
-
 (define (hierarchy-down-schematic name)
   (let ((filename (get-source-library-file name)))
     (if filename
-        (file->page filename)
+        (filename->page filename 'new-page)
         (log! 'error (_ "Failed to load subcircuit ~S.") name))))
 
 (define (traverse-page page hierarchy-tag netlist-mode)

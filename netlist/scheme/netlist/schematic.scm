@@ -25,6 +25,7 @@
   #:use-module (srfi srfi-9 gnu)
   #:use-module (netlist attrib compare)
   #:use-module (netlist config)
+  #:use-module (netlist page)
   #:use-module (netlist sort)
   #:use-module (netlist traverse)
   #:use-module (netlist package)
@@ -211,7 +212,7 @@ must be a list of pages."
          (not (schematic-component-nc? x))))
 
   (let* ((id (next-schematic-id))
-         (toplevel-pages (map file->page files))
+         (toplevel-pages (map filename->page files))
          (toplevel-attribs (get-toplevel-attributes toplevel-pages))
          (toplevel-netlist (traverse toplevel-pages netlist-mode))
          (full-netlist (map compat-refdes toplevel-netlist))
