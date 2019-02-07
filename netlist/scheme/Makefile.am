@@ -104,6 +104,7 @@ DIST_SCM = \
 	netlist/schematic.scm \
 	netlist/schematic/toplevel.scm \
 	netlist/sort.scm \
+	netlist/subschematic.scm \
 	netlist/traverse.scm \
 	netlist/verbose.scm
 
