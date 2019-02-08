@@ -32,12 +32,14 @@
                    package-pin-attribs set-package-pin-attribs!
                    package-pin-net-map set-package-pin-net-map!
                    package-pin-nets set-package-pin-nets!
+                   package-pin-parent set-package-pin-parent!
                    package-pin-connection set-package-pin-connection!)
 
-  #:export (set-package-pin-printer!))
+  #:export (set-package-pin-printer!
+            set-package-pin-parent-component!))
 
 (define-record-type <package-pin>
-  (make-package-pin id object number name netname label attribs net-map nets connection)
+  (make-package-pin id object number name netname label attribs net-map nets parent connection)
   package-pin?
   ;; This field is used just for the record representation in
   ;; set-record-type-printer! below.
@@ -58,6 +60,8 @@
   (net-map package-pin-net-map set-package-pin-net-map!)
   ;; The list of <pin-net>'s connected to the pin.
   (nets package-pin-nets set-package-pin-nets!)
+  ;; Parent component of the pin.
+  (parent package-pin-parent set-package-pin-parent!)
   ;; <schematic-connection> the pin is connected to.
   (connection package-pin-connection set-package-pin-connection!))
 
@@ -79,6 +83,7 @@ FORMAT-STRING must be in the form required by the procedure
   'attribs
   'net-map
   'nets
+  'parent
   'connection
 Any other unrecognized argument will lead to yielding '?' in the
 corresponding place.
@@ -100,6 +105,10 @@ Example usage:
                  ('attribs (package-pin-attribs record))
                  ('net-map (package-pin-net-map record))
                  ('nets (package-pin-nets record))
+                 ('parent (package-pin-parent record))
                  ('connection (package-pin-connection record))
                  (_ #\?)))
              args)))))
+
+(define (set-package-pin-parent-component! pin component)
+  (delay (set-package-pin-parent! pin component)))

@@ -21,6 +21,7 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
+  #:use-module (netlist package-pin)
   #:export-syntax (make-schematic-component schematic-component?
                    schematic-component-id set-schematic-component-id!
                    schematic-component-refdes set-schematic-component-refdes!
@@ -35,7 +36,8 @@
             schematic-component-attribute
             schematic-component-graphical?
             schematic-component-nc?
-            set-schematic-component-printer!))
+            set-schematic-component-printer!
+            set-schematic-component-pins/parent!))
 
 (define-record-type <schematic-component>
   (make-schematic-component id refdes tag sources object iattribs attribs pins)
@@ -128,3 +130,12 @@ attribute \"symbol=nc\". Otherwise returns #f."
       (and (schematic-component-graphical? package)
            (schematic-component-attribute-string=? package 'device "DRC_Directive")
            (schematic-component-attribute-string=? package 'value "NoConnection"))))
+
+(define (set-schematic-component-pins/parent! component pins)
+  "Sets COMPONENT field [pins] to PINS and, for each pin in PINS,
+sets the component to be its parent component."
+  (define (set-pin-parent! pin)
+    (force (set-package-pin-parent-component! pin component)))
+
+  (for-each set-pin-parent! pins)
+  (set-schematic-component-pins! component pins))

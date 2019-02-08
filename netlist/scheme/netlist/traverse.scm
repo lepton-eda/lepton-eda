@@ -260,6 +260,8 @@
                                ;; No net-map yet.
                                #f
                                nets
+                               ;; Set parent component later.
+                               #f
                                (get-package-pin-connection object connections))))))
 
   (filter-map object->package-pin (component-contents object)))
@@ -289,7 +291,7 @@
            (object #f)
            (attribs '())
            (nets (list (make-pin-net id object net-priority netname refdes pinnumber))))
-      (make-package-pin id object pinnumber netname '() label attribs net-map nets #f)))
+      (make-package-pin id object pinnumber netname '() label attribs net-map nets #f #f)))
 
   (define (make-or-update-net-map-pin net-map)
     (let ((pin (pinnumber->pin (net-map-pinnumber net-map)
@@ -403,7 +405,7 @@
            (pins (append real-pins net-map-pins)))
       (set-schematic-component-refdes! package refdes)
       (set-schematic-component-sources! package sources)
-      (set-schematic-component-pins! package pins)
+      (set-schematic-component-pins/parent! package pins)
       package))
 
   (when hierarchy-tag
