@@ -21,17 +21,19 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
-  #:export (make-package-pin package-pin?
-            package-pin-id set-package-pin-id!
-            package-pin-object set-package-pin-object!
-            package-pin-type set-package-pin-type!
-            package-pin-number set-package-pin-number!
-            package-pin-name set-package-pin-name!
-            package-pin-label set-package-pin-label!
-            package-pin-attribs set-package-pin-attribs!
-            package-pin-nets set-package-pin-nets!
-            package-pin-connection set-package-pin-connection!
-            set-package-pin-printer!))
+
+  #:export-syntax (make-package-pin package-pin?
+                   package-pin-id set-package-pin-id!
+                   package-pin-object set-package-pin-object!
+                   package-pin-type set-package-pin-type!
+                   package-pin-number set-package-pin-number!
+                   package-pin-name set-package-pin-name!
+                   package-pin-label set-package-pin-label!
+                   package-pin-attribs set-package-pin-attribs!
+                   package-pin-nets set-package-pin-nets!
+                   package-pin-connection set-package-pin-connection!)
+
+  #:export (set-package-pin-printer!))
 
 (define-record-type <package-pin>
   (make-package-pin id object type number name label attribs nets connection)
