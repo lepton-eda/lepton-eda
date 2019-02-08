@@ -8,7 +8,6 @@
   #:use-module (geda attrib)
   #:use-module (geda object)
   #:use-module (geda page)
-  #:use-module (netlist package-pin)
 
   #:export-syntax (make-schematic-connection schematic-connection?
                    schematic-connection-id set-schematic-connection-id!
