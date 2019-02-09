@@ -1,5 +1,5 @@
 ;;; Lepton EDA netlister
-;;; Copyright (C) 2017-2018 Lepton EDA Contributors
+;;; Copyright (C) 2017-2019 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -17,10 +17,14 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (netlist option)
-  #:use-module (ice-9 getopt-long)
-  #:use-module ((srfi srfi-1) #:select (filter-map))
+  #:use-module (srfi srfi-1)
+  #:use-module ((ice-9 getopt-long) #:select (option-ref))
+
   #:export (%default-netlist-options
+            %netlist-options
+            init-netlist-options!
             netlist-option-ref
+            netlist-option-ref/toplevel
             set-netlist-option!))
 
 ;;; Empty lists are default values for the keys which may repeat
@@ -47,24 +51,9 @@
    (lambda (x) (and (eq? (cdr x) '()) (car x)))
    %default-netlist-options))
 
-;;; getopt-long compatible lepton-netlist options.
-(define %netlist-options
-  (getopt-long (program-arguments)
-               ;; option spec
-               '((quiet (single-char #\q))
-                 (verbose (single-char #\v))
-                 (load-path (single-char #\L) (value #t))
-                 (backend (single-char #\g) (value #t))
-                 (backend-option (single-char #\O) (value #t))
-                 (list-backends)
-                 (output (single-char #\o) (value #t))
-                 (pre-load (single-char #\l) (value #t))
-                 (post-load (single-char #\m) (value #t))
-                 (eval-code (single-char #\c) (value #t))
-                 (interactive (single-char #\i))
-                 (help (single-char #\h))
-                 (no-warn-cfg (single-char #\w))
-                 (version (single-char #\V)))))
+;;; Checks if KEY must return a list.
+(define (is-list-key? key)
+  (memq key %list-keys))
 
 ;;; This function extends option-ref so that for keys which may
 ;;; repeat on command line, it returns their value as value lists
@@ -75,17 +64,55 @@
        options)
       default))
 
+;;; Custom function to account for list keys.
+(define (netlist-option-ref/toplevel getopt-long-options key default)
+  "Searches for KEY in GETOPT-LONG-OPTIONS and returns its value
+if found, otherwise returns DEFAULT. For option keys that may
+repeat on command line (which is specified in
+%default-netlist-options alist by value '()), returns the value as
+a list containing option arguments for each instance. Thus, the
+procedure extends getopt-long's option-ref procedure in that it
+can return list values. WARNING: the procedure is intended for
+using ONLY in toplevel code."
+  (define ref-func
+    (if (is-list-key? key) list-option-ref option-ref))
+  (ref-func getopt-long-options key default))
+
+;;; Current netlister options.
+;;; First, define them as a mutable copy of default options.
+(define %netlist-options
+  ;; Prepend empty list to get file names, the same way as with
+  ;; option-ref.
+  (cons (list '())
+        (map (lambda (p) (cons (car p) (cdr p)))
+             %default-netlist-options)))
+
 (define (netlist-option-ref key)
   "Returns value of netlister option KEY. Use '() to request schematics."
-  (let ((default (assq-ref %default-netlist-options key))
-        (is-list-key? (memq key %list-keys)))
-    ((if is-list-key? list-option-ref option-ref) %netlist-options key default)))
+  (assq-ref %netlist-options key))
 
 (define (set-netlist-option! key value)
   "Sets lepton-netlist option KEY to VALUE. Returns the new value
 if the key is available, otherwise returns #f."
-  (and (assq key %default-netlist-options)
+  (and (assq key %netlist-options)
        (begin
          (set! %netlist-options
                (assq-set! %netlist-options key value))
          value)))
+
+(define (init-netlist-options! getopt-long-options)
+  "Initializes lepton-netlist options using GETOPT-LONG-OPTIONS,
+so they can be referenced by the netlist-option-ref
+procedure. Returns the resulting netlister option list stored in
+%netlist-options. WARNING: the procedure is intended for using
+ONLY in toplevel code."
+  (define (init-option! key-default-pair)
+    (let ((key (car key-default-pair))
+          (default (cdr key-default-pair)))
+      (set-netlist-option! key
+                           (netlist-option-ref/toplevel getopt-long-options
+                                                        key
+                                                        default))))
+
+  (for-each init-option! %netlist-options)
+  %netlist-options)

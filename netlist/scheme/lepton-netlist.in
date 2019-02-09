@@ -3,7 +3,7 @@ exec @GUILE@ -s "$0" "$@"
 !#
 ;;; Lepton EDA netlister
 ;;; Scheme API
-;;; Copyright (C) 2017-2018 Lepton EDA Contributors
+;;; Copyright (C) 2017-2019 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,27 +19,62 @@ exec @GUILE@ -s "$0" "$@"
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 
+;;; Load and initialize liblepton library.
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
                 "libgeda_init")
 
-;;; At compile time of this program guile won't be aware of these
-;;; modules, since it compiles the code before loading the above
-;;; extension. Let's make it quiet here.
-(define with-toplevel (@@ (geda core toplevel) %with-toplevel))
-(define make-toplevel (@@ (geda core toplevel) %make-toplevel))
-(define netlist-option-ref* (@@ (netlist option) netlist-option-ref))
+;;; Process lepton-netlist options.
+
+(use-modules (ice-9 getopt-long))
+
+;;; Specification.
+(define %option-spec
+  '((quiet (single-char #\q))
+    (verbose (single-char #\v))
+    (load-path (single-char #\L) (value #t))
+    (backend (single-char #\g) (value #t))
+    (backend-option (single-char #\O) (value #t))
+    (list-backends)
+    (output (single-char #\o) (value #t))
+    (pre-load (single-char #\l) (value #t))
+    (post-load (single-char #\m) (value #t))
+    (eval-code (single-char #\c) (value #t))
+    (interactive (single-char #\i))
+    (help (single-char #\h))
+    (no-warn-cfg (single-char #\w))
+    (version (single-char #\V))))
+
+;;; Options.
+(define %options
+  (getopt-long (program-arguments) %option-spec))
+
+;;; Initialize netlister options.
+
+;;; Using of primitive-eval() here avoids Scheme errors when this
+;;; program is compiled by Guile.
+(primitive-eval '(use-modules (netlist option)))
+
+;;; Actual initialization.
+(init-netlist-options! %options)
 
 ;;; Evaluate Scheme expressions that need to be run before rc
 ;;; files are loaded.
-(for-each (lambda (dir) (add-to-load-path dir))
-          (reverse (netlist-option-ref* 'load-path)))
+(for-each
+ (lambda (dir) (add-to-load-path dir))
+ (reverse (netlist-option-ref/toplevel %options 'load-path '())))
+
+
+;;; Run netlister.
 
 ;;; Using of primitive-eval() here avoids Scheme errors when this
-;;; program is compiled by Guile. See comments above.
-(primitive-eval '(use-modules (geda log)
+;;; program is compiled by Guile. The following modules are
+;;; necessary to actually run the code below.
+(primitive-eval '(use-modules (geda core toplevel)
+                              (geda log)
                               (netlist)))
 
-(with-toplevel (make-toplevel)
+;;; Run netlister in new toplevel environment.
+(%with-toplevel (%make-toplevel)
   (lambda ()
     ;; Init log domain and create log file right away even if
     ;; logging is enabled.
