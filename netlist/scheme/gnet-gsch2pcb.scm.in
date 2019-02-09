@@ -184,14 +184,12 @@
   (let* ((c2p (pipe))  ; child to parent
          (p2c (pipe))) ; parent to child
 
-    ; TODO: make setvbuf( port, mode ) work with both Guile 2.0 and 2.2
-    ;       (Guile 2.2 generates warning)
-    ;
+    ; setvbuf( port, mode ) function:
     ; Guile 2.0: [mode] is an integer (either _IONBF, _IOLBF or _IOFBF)
     ; Guile 2.2: [mode] is a  symbol  (either 'none,  'line  or 'block)
     ;
-    (setvbuf (cdr c2p) _IONBF)
-    (setvbuf (cdr p2c) _IONBF)
+    (setvbuf (cdr c2p) (if (string=? (minor-version) "0") _IONBF 'none))
+    (setvbuf (cdr p2c) (if (string=? (minor-version) "0") _IONBF 'none))
 
     (let ((pid (primitive-fork)))
       (if (= pid 0)
