@@ -33,6 +33,11 @@ nobase_dist_scmdata_DATA = \
 	conf/schematic/options.scm \
 	conf/schematic/stroke.scm
 
+gschem/gschemdoc.scm: gschem/gschemdoc.scm.in
+	sed -e 's,[@]docdir[@],$(docdir),g' < $(srcdir)/$@.in > $@
+
+EXTRA_DIST = gschem/gschemdoc.scm.in
+
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
 DISTCLEANFILES = *.log core FILE *~

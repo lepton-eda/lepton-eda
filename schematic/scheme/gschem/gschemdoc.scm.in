@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2011-2014 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2011-2015 gEDA Contributors
-;; Copyright (C) 2017-2018 Lepton EDA Contributors
+;; Copyright (C) 2017-2019 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -27,45 +27,22 @@
   #:use-module (gschem util)
   #:use-module (ice-9 optargs)
   #:use-module (ice-9 regex)
-  #:use-module (srfi srfi-1))
+  #:use-module (srfi srfi-1)
+  #:export (sys-doc-dir)
+  #:export (user-doc-dir)
+  #:export (show-wiki)
+  #:export (show-component-documentation))
 
-;; FIXME this should probably be set via configure
-(define %configured-sys-doc-dir #f)
 
-(define-public (sys-doc-dir)
+(define (sys-doc-dir)
   "sys-doc-dir
 
 Get the directory where gEDA documentation is stored."
 
-  ;; Given a gEDA data directory path, guess the installation prefix.
-  (define (guess-prefix dir)
-    (let ((ofs (string-contains
-                dir (string-append file-name-separator-string "share"))))
-      (and ofs (substring dir 0 ofs))))
+  "@docdir@"
+)
 
-  ;; Guess the gEDA documentation directory, using the gEDA data
-  ;; search path.  Guaranteed to only return paths that correspond to
-  ;; actual directories.
-  (define (guess-docdir)
-    (any
-
-     (lambda (dir)
-       (let ((docdir
-              (string-join (list dir
-                                 "share" "doc" "lepton-eda")
-                           file-name-separator-string)))
-         (and (false-if-exception
-               (eq? 'directory (stat:type (stat docdir))))
-              docdir)))
-
-     (filter-map guess-prefix (sys-data-dirs))))
-
-  (or (guess-docdir)
-      (if (platform? 'win32-native)
-          #f
-          %configured-sys-doc-dir)))
-
-(define-public (user-doc-dir)
+(define (user-doc-dir)
   "user-doc-dir
 
 Get the directory where per-user gEDA documentation is stored."
@@ -84,7 +61,7 @@ Get the directory where per-user gEDA documentation is stored."
        (else c)))
    name))
 
-(define*-public (show-wiki #:optional (page "index"))
+(define* (show-wiki #:optional (page "index"))
   "show-wiki PAGE
 
 Launch a browser to display a page from the offline version of the
@@ -160,7 +137,7 @@ wiki."
         (regexp-substitute #f match 'pre)
         basename)))
 
-(define-public (show-component-documentation obj)
+(define (show-component-documentation obj)
   "show-component-documentation COMPONENT
 
 Find the documentation for COMPONENT, by inspecting (in order) its
