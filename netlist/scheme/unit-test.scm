@@ -166,7 +166,7 @@ Actual error:
                 (load-from-path name))
               (lambda (key . args) 
                 (report (format #f
-                                "ERROR:\n Unexpected exception on loading file ~S:\n~S\n"
+                                "ERROR:\n Unexpected exception on loading file ~S:\n~A\n"
                                 name
                                 (with-output-to-string
                                   (lambda ()
