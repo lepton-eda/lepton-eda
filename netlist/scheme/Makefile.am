@@ -80,7 +80,7 @@ SCM_LOG_DRIVER = $(GUILE) \
 	-L $(abs_top_builddir)/liblepton/scheme \
 	-L $(abs_top_srcdir)/symcheck/scheme \
 	-L $(abs_top_builddir)/symcheck/scheme \
-	--no-auto-compile -e main -s unit-test.scm
+	--no-auto-compile -e main/with-toplevel -s unit-test.scm
 
 AM_SCM_LOG_FLAGS = --
 AM_TESTS_ENVIRONMENT = GUILE_AUTO_COMPILE=0

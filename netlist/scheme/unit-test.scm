@@ -59,6 +59,12 @@
              (ice-9 getopt-long)
              (ice-9 pretty-print))
 
+;;; Initialize liblepton variables and functions.
+(load-extension "../../liblepton/src/liblepton" "libgeda_init")
+(define with-toplevel (@@ (geda core toplevel) %with-toplevel))
+(define make-toplevel (@@ (geda core toplevel) %make-toplevel))
+
+
 (define (report s port)
   (display s port)
   (display s (current-error-port)))
@@ -188,3 +194,9 @@ Actual error:
           (close-port log-port)
           (close-port trs-port))
         (display "Use 'make check' to run tests.\n"))))
+
+;;; Wrapper for the main() function allowing using of liblepton
+;;; variables, procedures, and modules.
+(define (main/with-toplevel args)
+  (with-toplevel (make-toplevel)
+   (lambda () (main args))))
