@@ -73,7 +73,15 @@ TEST_EXTENSIONS = .scm
 # $(srcdir) and $(builddir) are added here and not in
 # AM_SCM_LOG_FLAGS below because guile must know where to find
 # netlist modules before it runs tests
-SCM_LOG_DRIVER = $(GUILE) -L $(srcdir) -L $(builddir) --no-auto-compile -e main -s unit-test.scm
+SCM_LOG_DRIVER = $(GUILE) \
+	-L $(srcdir) \
+	-L $(builddir) \
+	-L $(abs_top_srcdir)/liblepton/scheme \
+	-L $(abs_top_builddir)/liblepton/scheme \
+	-L $(abs_top_srcdir)/symcheck/scheme \
+	-L $(abs_top_builddir)/symcheck/scheme \
+	--no-auto-compile -e main -s unit-test.scm
+
 AM_SCM_LOG_FLAGS = --
 AM_TESTS_ENVIRONMENT = GUILE_AUTO_COMPILE=0
 
