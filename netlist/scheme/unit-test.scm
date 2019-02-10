@@ -168,11 +168,11 @@ Actual error:
                 (report (format #f
                                 "ERROR:\n Unexpected exception on loading file ~S:\n~S\n"
                                 name
-                                (display-backtrace
-                                 captured-stack
-                                 (current-output-port)
-                                 6
-                                 5))
+                                (with-output-to-string
+                                  (lambda ()
+                                    (display-backtrace
+                                     captured-stack
+                                     (current-output-port)))))
                         log-port))
               (lambda (key . args)
                 ;; Capture the stack here:
