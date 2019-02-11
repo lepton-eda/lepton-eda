@@ -903,7 +903,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ( unless ( null? opt-code-to-eval )
     ( catch #t
       ( lambda()
-        ( apply eval-string opt-code-to-eval )
+        (for-each eval-string opt-code-to-eval)
       )
       ( lambda( tag . args )
         ( catch-handler tag args )
