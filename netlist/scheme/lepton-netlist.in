@@ -61,7 +61,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; files are loaded.
 (for-each
  (lambda (dir) (add-to-load-path dir))
- (reverse (netlist-option-ref/toplevel %options 'load-path '())))
+ (netlist-option-ref/toplevel %options 'load-path '()))
 
 
 ;;; Run netlister.
