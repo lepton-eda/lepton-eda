@@ -59,9 +59,9 @@
 ;;; repeat on command line, it returns their value as value lists
 ;;; (e.g. "cmd -x a -x b" produces '("a" "b") for the key 'x).
 (define (list-option-ref options key default)
-  (or (filter-map
-       (lambda (x) (and (eq? (car x) key) (cdr x)))
-       options)
+  (or (reverse (filter-map
+                (lambda (x) (and (eq? (car x) key) (cdr x)))
+                options))
       default))
 
 ;;; Custom function to account for list keys.
