@@ -105,7 +105,8 @@ code. Use set-library-contents! instead."
                                                         file-name-separator-string
                                                         expanded-path)))
             (and
-             (log! 'error (_ "Invalid path ~S or source not readable.\n")) #f)))
+             (log! 'error (_ "Invalid path ~S or source not readable.\n") path)
+             #f)))
       (and (log! 'error (_ "Source library path must be a string.\n")) #f)))
 
 
