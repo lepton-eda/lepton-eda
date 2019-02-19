@@ -1605,7 +1605,7 @@ fact a component @code{object}, does nothing and returns the empty list.
 @section Core source library functions
 
 To use the functions described in this section, you will need to load
-the @code{(geda library)} module.
+the @code{(lepton library)} module.
 
 @defvar %default-source-library
 Default source library used in the tools.

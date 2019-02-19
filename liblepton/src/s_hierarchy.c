@@ -69,7 +69,7 @@ s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
   g_return_val_if_fail ((filename != NULL), NULL);
   g_return_val_if_fail ((parent != NULL), NULL);
 
-  SCM string_s = scm_call_1 (scm_c_public_ref ("geda library",
+  SCM string_s = scm_call_1 (scm_c_public_ref ("lepton library",
                                                "get-source-library-file"),
                              scm_from_utf8_string (filename));
 
@@ -229,7 +229,7 @@ s_hierarchy_load_subpage (PAGE *page, const char *filename, GError **error)
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (page != NULL, NULL);
 
-  SCM string_s = scm_call_1 (scm_c_public_ref ("geda library",
+  SCM string_s = scm_call_1 (scm_c_public_ref ("lepton library",
                                                "get-source-library-file"),
                              scm_from_utf8_string (filename));
 

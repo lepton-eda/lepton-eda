@@ -35,5 +35,5 @@ liblepton/src/scheme_page.c
 liblepton/src/edascmhookproxy.c
 
 liblepton/scheme/geda/attrib.scm
-liblepton/scheme/geda/library.scm
 liblepton/scheme/geda/repl.scm
+liblepton/scheme/lepton/library.scm

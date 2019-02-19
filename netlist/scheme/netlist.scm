@@ -29,11 +29,11 @@
   #:use-module (netlist schematic-component)
   #:use-module (netlist sort)
   #:use-module (netlist attrib compare)
-  #:use-module (geda library)
   #:use-module (geda page)
   #:use-module (geda deprecated)
   #:use-module (geda log)
   #:use-module (geda repl)
+  #:use-module (lepton library)
   #:use-module (lepton version)
   #:use-module (netlist core gettext)
   #:use-module (netlist config)
@@ -77,7 +77,7 @@
             unknown?
             pair<?)
 
-  #:re-export (;; (geda library)
+  #:re-export (;; (lepton library)
                source-library
                ;; (netlist deprecated)
                ;; deprecated procedures

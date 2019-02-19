@@ -21,16 +21,23 @@
 ;; be used in new code.
 
 (define-module (geda deprecated)
+ #:use-module (geda core gettext)
 
  #:use-module (geda page)
  #:use-module (geda object)
  #:use-module (geda attrib)
+ #:use-module (geda log)
 
  ;; Import C procedures
  #:use-module (geda core deprecated)
  #:re-export (OBJ_LINE OBJ_PATH OBJ_BOX OBJ_PICTURE OBJ_CIRCLE OBJ_NET
-              OBJ_BUS OBJ_COMPLEX OBJ_TEXT OBJ_PIN OBJ_ARC)
-)
+                       OBJ_BUS OBJ_COMPLEX OBJ_TEXT OBJ_PIN OBJ_ARC)
+ #:export (deprecated-module-log-warning!))
+
+(define (deprecated-module-log-warning!)
+  (log! 'warning
+        (_ "The module ~S is deprecated.\nPlease don't use it any more.")
+        (module-name (current-module))))
 
 (define-public get-line-width %get-line-width)
 
