@@ -1,0 +1,42 @@
+;; Lepton EDA
+;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
+;; License: GPLv2+. See the COPYING file.
+;;
+;; Precompilation configuration file.
+;; Used by precompile.scm.
+;;
+
+; directory with Scheme files to compile:
+;
+( define ( config-get-scm-dir )
+  ; return:
+  "@schdir@"
+)
+
+
+
+; directory where to place compiled files:
+;
+( define ( config-get-out-dir )
+  ; return:
+  "@outdir@"
+)
+
+
+
+; whether to compile scm directory recursively:
+;
+( define ( config-get-recursive )
+  ; return:
+  #t
+)
+
+
+
+; file name extension of files to compile:
+;
+( define ( config-get-fname-ext )
+  ; return:
+  ".scm"
+)
+

@@ -21,6 +21,14 @@ AC_DEFUN([AX_PRECOMPILE],
                      [precompiled scm files dir])
 
 
+  # create #define LEPTON_SCM_PRECOMPILE_CFG in config.h:
+  #
+  AC_DEFINE_UNQUOTED([LEPTON_SCM_PRECOMPILE_CFG],
+                     ["$DDIR/scheme/schematic/precompile-config.scm"],
+                     [config file for precompile script])
+
+
   AC_SUBST([LEPTON_SCM_PRECOMPILE_DIR], ["$DDIR/ccache"])
+  AC_SUBST([LEPTON_SCM_PRECOMPILE_CFG], ["$DDIR/scheme/schematic/precompile-config.scm"])
 
 ])dnl AX_PRECOMPILE
