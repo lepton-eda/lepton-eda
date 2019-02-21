@@ -1,4 +1,5 @@
 #!/bin/sh
+export GUILE_LOAD_COMPILED_PATH="@ccachedir@:${GUILE_LOAD_COMPILED_PATH}"
 exec @GUILE@ "$0" "$@"
 !#
 
