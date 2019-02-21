@@ -1,7 +1,8 @@
 /* Lepton EDA - Lepton Electronic Design Automation
  * lepton-schlas - Lepton EDA Load and Save
  * Copyright (C) 2002-2010 Ales Hvezda
- * Copyright (C) 2002-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2002-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -161,6 +162,8 @@ main_prog(void *closure, int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  set_guile_compiled_path();
+
   scm_boot_guile (argc, argv, main_prog, NULL);
   return 0;
 }
