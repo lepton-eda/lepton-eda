@@ -2,7 +2,9 @@
 ##
 bin_SCRIPTS = lepton-netlist
 
-do_subst = sed -e 's,[@]libdir[@],$(libdir),g' -e 's,[@]GUILE[@],$(GUILE),g'
+do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
+	-e 's,[@]GUILE[@],$(GUILE),g' \
+	-e 's,[@]ccachedir[@],@LEPTON_SCM_PRECOMPILE_DIR@,g'
 
 lepton-netlist: lepton-netlist.in Makefile
 	$(do_subst) < $(srcdir)/$@.in > $@
