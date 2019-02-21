@@ -57,6 +57,8 @@ precompile_prepare()
 static void
 precompile_run()
 {
+  SCM script = scm_from_utf8_string (LEPTON_SCM_PRECOMPILE_SCRIPT);
+  scm_primitive_load (script);
 }
 
 
@@ -339,6 +341,18 @@ int main (int argc, char *argv[])
 
 
   set_guile_compiled_path();
+
+
+#ifdef DEBUG
+  printf ("\n");
+  printf (" >> lepton-schematic::main(): just before scm_boot_guile():\n");
+  printf ("\n");
+  printf ("    $GUILE_LOAD_COMPILED_PATH:    %s\n", getenv ("GUILE_LOAD_COMPILED_PATH"));
+  printf ("    LEPTON_SCM_PRECOMPILE_DIR:    %s\n", LEPTON_SCM_PRECOMPILE_DIR);
+  printf ("    LEPTON_SCM_PRECOMPILE_SCRIPT: %s\n", LEPTON_SCM_PRECOMPILE_SCRIPT);
+  printf ("    LEPTON_SCM_PRECOMPILE_CFG:    %s\n", LEPTON_SCM_PRECOMPILE_CFG );
+  printf ("\n");
+#endif
 
 
   scm_boot_guile (argc, argv, main_prog, 0);
