@@ -22,7 +22,7 @@ DISTCHECK_CONFIGURE_FLAGS = \
 
 BUILT_SOURCES = version.h
 EXTRA_DIST = autogen.sh version.h version.h.in CODE_OF_CONDUCT.md \
-	CONTRIBUTING.md COPYING COPYING.LGPL NEWS.md
+	CONTRIBUTING.md COPYING COPYING.LGPL NEWS.md README.md
 
 # Generate version.h. This works by looking at any git repository that
 # is present in the source directory (detected at configure time). If
