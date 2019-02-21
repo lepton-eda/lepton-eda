@@ -1,6 +1,8 @@
 /*
  * Lepton EDA command-line utility
  * Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -208,6 +210,8 @@ cmd_config_impl (void *data, int argc, char **argv)
 int
 cmd_config (int argc, char **argv)
 {
+  set_guile_compiled_path();
+
   scm_boot_guile (argc, argv, cmd_config_impl, NULL); /* Doesn't return */
   return 0;
 }
