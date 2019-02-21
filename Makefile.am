@@ -72,5 +72,12 @@ else
 	@echo 'The documentation cannot be built from the sources.'
 endif
 
+
+precompile:
+	LEPTON_SCM_PRECOMPILE=1 \
+	LEPTON_SCM_PRECOMPILE_CFG=@LEPTON_SCM_PRECOMPILE_CFG@ \
+	$(bindir)/lepton-schematic
+
+
 DISTCLEANFILES = stamp-git
 MAINTAINERCLEANFILES=Makefile.in aclocal.m4 config.h.in configure
