@@ -2,7 +2,8 @@
  * libgeda - gEDA's library
  * Copyright (C) 1998, 1999, 2000 Kazu Hirata / Ales Hvezda
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010, 2016 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2010, 2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,4 +63,31 @@ void libgeda_init(void)
   edascm_init ();
 }
 
+
+
+/*! \brief Add Lepton compiled path to Guile compiled paths env var.
+ *  \note  To take effect, must be called before scm_boot_guile().
+ */
+void
+set_guile_compiled_path()
+{
+  char* path = getenv ("GUILE_LOAD_COMPILED_PATH");
+  char buf[ PATH_MAX ] = "";
+
+  if (path != NULL && strlen (path) > 0)
+  {
+    /* preserve already set $GUILE_LOAD_COMPILED_PATH:
+    */
+    snprintf (buf, sizeof (buf),
+              "%s:%s",
+              LEPTON_SCM_PRECOMPILE_DIR, path);
+    path = buf;
+  }
+  else
+  {
+    path = LEPTON_SCM_PRECOMPILE_DIR;
+  }
+
+  setenv ("GUILE_LOAD_COMPILED_PATH", path, 1);
+}
 
