@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,25 +39,6 @@
 
 /***************** Start of help/keymapping dialog box **************/
 
-/*! \brief Response function for the hotkey dialog
- *  \par Function Description
- *  This function destroys the hotkey dialog and does some cleanup.
- */
-void x_dialog_hotkeys_response(GtkWidget *w, gint response,
-                               GschemToplevel *w_current)
-{
-  switch(response) {
-  case GTK_RESPONSE_REJECT:
-  case GTK_RESPONSE_DELETE_EVENT:
-    /* void */
-    break;
-  default:
-    printf("x_dialog_hotkeys_response(): strange signal %1$d\n", response);
-  }
-  /* clean up */
-  gtk_widget_destroy(w_current->hkwindow);
-  w_current->hkwindow = NULL;
-}
 
 /*! \brief Fix up displaying icons in list of hotkeys.
  * In gschem, we use both GTK's stock icons and also our own icons
@@ -202,14 +184,23 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
                                                          (GtkDialogFlags) 0, /* not modal */
                                                          "hotkeys", w_current,
                                                          GTK_STOCK_CLOSE,
-                                                         GTK_RESPONSE_REJECT,
+                                                         GTK_RESPONSE_NONE,
                                                          NULL);
 
     gtk_window_set_position (GTK_WINDOW (w_current->hkwindow), GTK_WIN_POS_NONE);
 
+
+    /* Just hide the dialog.
+     * Do not destroy it every time it's closed:
+    */
     g_signal_connect (G_OBJECT (w_current->hkwindow), "response",
-                      G_CALLBACK (x_dialog_hotkeys_response),
-                      w_current);
+                      G_CALLBACK (&gtk_widget_hide),
+                      NULL);
+
+    g_signal_connect (G_OBJECT (w_current->hkwindow), "delete-event",
+                      G_CALLBACK (&gtk_widget_hide_on_delete),
+                      NULL);
+
 
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->hkwindow),
                                     GTK_RESPONSE_ACCEPT);
