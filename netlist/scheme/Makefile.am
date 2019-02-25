@@ -93,10 +93,13 @@ SCM_SRCS=	gnet-gsch2pcb.scm.in
 
 BUILT_SCM=	gnet-gsch2pcb.scm
 
+SETVBUF_MODE = `$(GUILE) -c '(display (if (string= (minor-version) "0") "_IONBF" (quote (quote none))))'`
+
 gnet-gsch2pcb.scm: $(srcdir)/gnet-gsch2pcb.scm.in
 	sed \
 		-e 's;@m4@;${M4};g' \
 		-e 's;@pcbm4dir@;${PCBM4DIR};g' \
+		-e "s;@mode@;${SETVBUF_MODE};g" \
 		$(srcdir)/gnet-gsch2pcb.scm.in > $@
 
 all-local:
