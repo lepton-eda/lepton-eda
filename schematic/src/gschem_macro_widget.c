@@ -43,7 +43,8 @@ enum
 {
   PROP_0,
   PROP_LABEL_TEXT,
-  PROP_MACRO_STRING
+  PROP_MACRO_STRING,
+  PROP_TOPLEVEL
 };
 
 
@@ -201,6 +202,10 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       g_value_set_string (value, gschem_macro_widget_get_macro_string (widget));
       break;
 
+    case PROP_TOPLEVEL:
+      g_value_set_pointer (value, widget->toplevel);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
   }
@@ -240,6 +245,10 @@ gschem_macro_widget_class_init (GschemMacroWidgetClass *klass)
                                                         "",
                                                         (GParamFlags) (G_PARAM_READWRITE
                                                                        | G_PARAM_CONSTRUCT)));
+
+  GParamFlags flags = (GParamFlags) (G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
+  GParamSpec* spec  = g_param_spec_pointer ("toplevel", "", "", flags);
+  g_object_class_install_property (G_OBJECT_CLASS (klass), PROP_TOPLEVEL, spec);
 }
 
 
@@ -480,6 +489,10 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
     case PROP_MACRO_STRING:
       gschem_macro_widget_set_macro_string (widget, g_value_get_string (value));
+      break;
+
+    case PROP_TOPLEVEL:
+      widget->toplevel = GSCHEM_TOPLEVEL (g_value_get_pointer (value));
       break;
 
     default:
