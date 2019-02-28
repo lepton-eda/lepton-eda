@@ -772,10 +772,11 @@ x_tabs_hdr_create (TabInfo* nfo)
   const gboolean show_btn_up    = x_tabs_show_up_button();
   const gboolean show_btn_close = x_tabs_show_close_button();
 
+
   /* label:
   */
   const gchar* fname = NULL;
-  gchar* bname = NULL;
+  gchar*       bname = NULL;
 
   if (nfo->page_)
     fname = s_page_get_filename (nfo->page_);
@@ -783,10 +784,19 @@ x_tabs_hdr_create (TabInfo* nfo)
   if (fname)
     bname = g_path_get_basename (fname);
 
-  GtkWidget* lab = gtk_label_new (bname);
+  gchar* lab_txt = NULL;
+
+  if (nfo->page_->CHANGED)
+    lab_txt = g_strdup_printf ("* <b>%s</b>", bname);
+  else
+    lab_txt = g_strdup (bname);
+
+  GtkWidget* lab = gtk_label_new (NULL);
+  gtk_label_set_markup (GTK_LABEL (lab), lab_txt);
   gtk_box_pack_start (GTK_BOX (box_lab), lab, TRUE, TRUE, 0);
 
   g_free (bname);
+  g_free (lab_txt);
 
 
   /* tab's tooltip:
