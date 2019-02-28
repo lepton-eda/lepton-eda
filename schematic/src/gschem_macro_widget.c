@@ -42,8 +42,6 @@
 enum
 {
   PROP_0,
-  PROP_LABEL_TEXT,
-  PROP_MACRO_STRING,
   PROP_TOPLEVEL
 };
 
@@ -279,15 +277,8 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
   GschemMacroWidget *widget = GSCHEM_MACRO_WIDGET (object);
 
-  switch (param_id) {
-    case PROP_LABEL_TEXT:
-      g_value_set_string (value, gschem_macro_widget_get_label_text (widget));
-      break;
-
-    case PROP_MACRO_STRING:
-      g_value_set_string (value, gschem_macro_widget_get_macro_string (widget));
-      break;
-
+  switch (param_id)
+  {
     case PROP_TOPLEVEL:
       g_value_set_pointer (value, widget->toplevel);
       break;
@@ -313,24 +304,6 @@ gschem_macro_widget_class_init (GschemMacroWidgetClass *klass)
 
   G_OBJECT_CLASS (klass)->get_property = get_property;
   G_OBJECT_CLASS (klass)->set_property = set_property;
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_LABEL_TEXT,
-                                   g_param_spec_string ("label-text",
-                                                        "Label Text",
-                                                        "Label Text",
-                                                        _("Macro:"),
-                                                        (GParamFlags) (G_PARAM_READWRITE
-                                                                       | G_PARAM_CONSTRUCT)));
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_MACRO_STRING,
-                                   g_param_spec_string ("macro-string",
-                                                        "Macro String",
-                                                        "Macro String",
-                                                        "",
-                                                        (GParamFlags) (G_PARAM_READWRITE
-                                                                       | G_PARAM_CONSTRUCT)));
 
   GParamFlags flags = (GParamFlags) (G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
   GParamSpec* spec  = g_param_spec_pointer ("toplevel", "", "", flags);
@@ -553,15 +526,8 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 {
   GschemMacroWidget *widget = GSCHEM_MACRO_WIDGET (object);
 
-  switch (param_id) {
-    case PROP_LABEL_TEXT:
-      gschem_macro_widget_set_label_text (widget, g_value_get_string (value));
-      break;
-
-    case PROP_MACRO_STRING:
-      gschem_macro_widget_set_macro_string (widget, g_value_get_string (value));
-      break;
-
+  switch (param_id)
+  {
     case PROP_TOPLEVEL:
       widget->toplevel = GSCHEM_TOPLEVEL (g_value_get_pointer (value));
       break;
