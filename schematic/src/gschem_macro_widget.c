@@ -88,6 +88,9 @@ static void
 macro_widget_exec_macro (GschemMacroWidget* widget, const gchar* macro_text);
 
 static void
+macro_widget_create (GschemMacroWidget* widget);
+
+static void
 history_add (GtkListStore* store, const gchar* line);
 
 static void
@@ -343,12 +346,18 @@ gschem_macro_widget_get_type ()
 
 
 
-/*! \brief Initialize GschemMacroWidget instance
- *
- *  \param [in,out] view the GschemMacroWidget
+/*! \brief Initialize gobject instance
  */
 static void
-gschem_macro_widget_init (GschemMacroWidget *widget)
+gschem_macro_widget_init (GschemMacroWidget* widget)
+{
+  macro_widget_create (widget);
+}
+
+
+
+static void
+macro_widget_create (GschemMacroWidget* widget)
 {
   GtkWidget *action = gtk_info_bar_get_action_area (GTK_INFO_BAR (widget));
   GtkWidget *button_box;
@@ -438,7 +447,8 @@ gschem_macro_widget_init (GschemMacroWidget *widget)
                     "notify::text",
                     G_CALLBACK (notify_entry_text),
                     widget);
-}
+
+} /* macro_widget_create() */
 
 
 
