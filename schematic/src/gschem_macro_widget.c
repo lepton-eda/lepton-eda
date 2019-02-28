@@ -101,6 +101,12 @@ command_entry_set_font (GtkWidget* entry);
 
 
 
+/* convenience macro - gobject type implementation:
+*/
+G_DEFINE_TYPE (GschemMacroWidget, gschem_macro_widget, GTK_TYPE_INFO_BAR);
+
+
+
 GtkWidget*
 macro_widget_new (GschemToplevel* toplevel)
 {
@@ -270,37 +276,6 @@ gschem_macro_widget_class_init (GschemMacroWidgetClass *klass)
   GParamFlags flags = (GParamFlags) (G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
   GParamSpec* spec  = g_param_spec_pointer ("toplevel", "", "", flags);
   g_object_class_install_property (G_OBJECT_CLASS (klass), PROP_TOPLEVEL, spec);
-}
-
-
-
-/*! \brief Get/register GschemMacroWidget type.
- */
-GType
-gschem_macro_widget_get_type ()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemMacroWidgetClass),
-      NULL,                                                    /* base_init */
-      NULL,                                                    /* base_finalize */
-      (GClassInitFunc) gschem_macro_widget_class_init,
-      NULL,                                                    /* class_finalize */
-      NULL,                                                    /* class_data */
-      sizeof(GschemMacroWidget),
-      0,                                                       /* n_preallocs */
-      (GInstanceInitFunc) gschem_macro_widget_init,
-    };
-
-    type = g_type_register_static (GTK_TYPE_INFO_BAR,
-                                   "GschemMacroWidget",
-                                   &info,
-                                   (GTypeFlags)  0);
-  }
-
-  return type;
 }
 
 
