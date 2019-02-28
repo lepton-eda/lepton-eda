@@ -92,6 +92,9 @@ PAGE*
 s_page_search (TOPLEVEL *toplevel, const gchar *filename);
 
 PAGE*
+s_page_search_by_basename (TOPLEVEL *toplevel, const gchar *filename);
+
+PAGE*
 s_page_search_by_page_id (GedaPageList *list, int pid);
 
 void
