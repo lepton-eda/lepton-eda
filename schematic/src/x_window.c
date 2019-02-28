@@ -1304,9 +1304,7 @@ create_show_text_widget (GschemToplevel *w_current, GtkWidget *work_box)
 static void
 create_macro_widget (GschemToplevel *w_current, GtkWidget *work_box)
 {
-  gpointer obj = g_object_new (GSCHEM_TYPE_MACRO_WIDGET, NULL);
-
-  w_current->macro_widget = GTK_WIDGET (obj);
+  w_current->macro_widget = macro_widget_new (w_current);
 
   gtk_box_pack_start (GTK_BOX (work_box),
                       w_current->macro_widget,

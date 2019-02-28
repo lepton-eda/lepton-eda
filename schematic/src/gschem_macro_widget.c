@@ -101,6 +101,20 @@ static GObjectClass *gschem_macro_widget_parent_class = NULL;
 
 
 
+GtkWidget*
+macro_widget_new (GschemToplevel* toplevel)
+{
+  g_return_val_if_fail (toplevel != NULL, NULL);
+
+  gpointer obj = g_object_new (GSCHEM_TYPE_MACRO_WIDGET,
+                               "toplevel", toplevel,
+                               NULL);
+
+  return GTK_WIDGET (obj);
+}
+
+
+
 /* Callback for when the user presses enter in the entry widget
  */
 static void
