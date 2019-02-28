@@ -69,8 +69,6 @@ macro_widget_new (GschemToplevel* toplevel);
 void
 macro_widget_show (GtkWidget* widget);
 
-GtkWidget*
-gschem_macro_widget_get_entry (GschemMacroWidget *widget);
 
 const char*
 gschem_macro_widget_get_label_text (GschemMacroWidget *widget);
