@@ -282,21 +282,6 @@ gschem_macro_widget_class_init (GschemMacroWidgetClass *klass)
 
 
 
-/*! \brief Get the entry
- *
- *  \param [in] widget This GschemMacroWidget
- *  \return The entry
- */
-GtkWidget*
-gschem_macro_widget_get_entry (GschemMacroWidget *widget)
-{
-  g_return_val_if_fail (widget != NULL, NULL);
-
-  return widget->entry;
-}
-
-
-
 /*! \brief Get the label text
  *
  *  \param [in] widget This GschemMacroWidget
