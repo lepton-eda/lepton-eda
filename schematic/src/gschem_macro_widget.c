@@ -58,12 +58,6 @@ static void
 click_evaluate (GtkButton* button, gpointer data);
 
 static void
-dispose (GObject *object);
-
-static void
-finalize (GObject *object);
-
-static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
@@ -104,10 +98,6 @@ history_truncate (GtkListStore* store);
 
 static void
 command_entry_set_font (GtkWidget* entry);
-
-
-
-static GObjectClass *gschem_macro_widget_parent_class = NULL;
 
 
 
@@ -242,32 +232,6 @@ click_evaluate (GtkButton* button, gpointer data)
 
 
 
-/*! \brief Dispose of the object
- */
-static void
-dispose (GObject *object)
-{
-  /* lastly, chain up to the parent dispose */
-
-  g_return_if_fail (gschem_macro_widget_parent_class != NULL);
-  gschem_macro_widget_parent_class->dispose (object);
-}
-
-
-
-/*! \brief Finalize object
- */
-static void
-finalize (GObject *object)
-{
-  /* lastly, chain up to the parent finalize */
-
-  g_return_if_fail (gschem_macro_widget_parent_class != NULL);
-  gschem_macro_widget_parent_class->finalize (object);
-}
-
-
-
 /*! \brief Get a property
  *
  *  \param [in]     object
@@ -300,11 +264,6 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 static void
 gschem_macro_widget_class_init (GschemMacroWidgetClass *klass)
 {
-  gschem_macro_widget_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
-
-  G_OBJECT_CLASS (klass)->dispose  = dispose;
-  G_OBJECT_CLASS (klass)->finalize = finalize;
-
   G_OBJECT_CLASS (klass)->get_property = get_property;
   G_OBJECT_CLASS (klass)->set_property = set_property;
 
