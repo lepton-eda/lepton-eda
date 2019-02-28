@@ -312,36 +312,6 @@ gschem_macro_widget_class_init (GschemMacroWidgetClass *klass)
 
 
 
-/*! \brief Get the label text
- *
- *  \param [in] widget This GschemMacroWidget
- *  \return The label text
- */
-const char*
-gschem_macro_widget_get_label_text (GschemMacroWidget *widget)
-{
-  g_return_val_if_fail (widget != NULL, NULL);
-
-  return gtk_label_get_text (GTK_LABEL (widget->label));
-}
-
-
-
-/*! \brief Get the macro string
- *
- *  \param [in] widget This GschemMacroWidget
- *  \return The macro string
- */
-const char*
-gschem_macro_widget_get_macro_string (GschemMacroWidget *widget)
-{
-  g_return_val_if_fail (widget != NULL, NULL);
-
-  return gtk_entry_get_text (GTK_ENTRY (widget->entry));
-}
-
-
-
 /*! \brief Get/register GschemMacroWidget type.
  */
 GType
@@ -468,40 +438,6 @@ gschem_macro_widget_init (GschemMacroWidget *widget)
                     "notify::text",
                     G_CALLBACK (notify_entry_text),
                     widget);
-}
-
-
-
-/*! \brief Set the label text
- *
- *  \param [in,out] view This GschemMacroWidget
- *  \param [in]     text The label text
- */
-void
-gschem_macro_widget_set_label_text (GschemMacroWidget *widget, const char *text)
-{
-  g_return_if_fail (widget != NULL);
-
-  gtk_label_set_text (GTK_LABEL (widget->label), text);
-
-  g_object_notify (G_OBJECT (widget), "label-text");
-}
-
-
-
-/*! \brief Set the macro string
- *
- *  \param [in,out] view This GschemMacroWidget
- *  \param [in]     str  The macro string
- */
-void
-gschem_macro_widget_set_macro_string (GschemMacroWidget *widget, const char *str)
-{
-  g_return_if_fail (widget != NULL);
-
-  gtk_entry_set_text (GTK_ENTRY (widget->entry), str);
-
-  g_object_notify (G_OBJECT (widget), "macro-string");
 }
 
 

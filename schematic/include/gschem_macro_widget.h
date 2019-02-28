@@ -70,20 +70,8 @@ void
 macro_widget_show (GtkWidget* widget);
 
 
-const char*
-gschem_macro_widget_get_label_text (GschemMacroWidget *widget);
-
-const char*
-gschem_macro_widget_get_macro_string (GschemMacroWidget *widget);
-
 GType
-gschem_macro_widget_get_type ();
-
-void
-gschem_macro_widget_set_label_text (GschemMacroWidget *widget, const char *text);
-
-void
-gschem_macro_widget_set_macro_string (GschemMacroWidget *widget, const char *str);
+gschem_macro_widget_get_type();
 
 
 #endif /* LEPTON_MACRO_WIDGET_H_ */
