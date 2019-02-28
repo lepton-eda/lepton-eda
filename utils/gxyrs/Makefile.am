@@ -27,6 +27,6 @@ lepton-xyrs: $(srcdir)/lepton-xyrs.pl
 	mv -f tmp$@ $@
 
 MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
-CLEANFILES = *.log *.ps core FILE tmp  *~
-DISTCLEANFILES = *.log core FILE tmp *~ lepton-xyrs
-MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in lepton-xyrs
+CLEANFILES = lepton-xyrs
+DISTCLEANFILES = *.log core FILE tmp *~
+MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in

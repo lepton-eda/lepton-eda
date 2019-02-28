@@ -42,11 +42,11 @@ endif
 
 
 MOSTLYCLEANFILES = 	*.log *~
-CLEANFILES = 		*.log *~
+CLEANFILES = $(dist_man_MANS) $(html_man_files)
 DISTCLEANFILES = 	*.log core FILE *~ \
 			*.dvi *.info *.info-* *.aux *.fn \
 			*.fns *.cp *.ky *.pg *.toc *.tp *.vrs *.vr 
-MAINTAINERCLEANFILES = *.log *~ Makefile.in $(html_man_files)
+MAINTAINERCLEANFILES = *.log *~ Makefile.in
 
 distclean-local:
 	-rm -rf html latex

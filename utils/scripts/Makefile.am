@@ -20,6 +20,6 @@ lepton-archive: $(srcdir)/lepton-archive.py
 	mv -f tmp$@ $@
 
 MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
-CLEANFILES = *.log *.ps core FILE tmp  *~
-DISTCLEANFILES = *.log core FILE tmp *~ lepton-archive
-MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in lepton-archive
+CLEANFILES = lepton-archive
+DISTCLEANFILES = *.log core FILE tmp *~
+MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in

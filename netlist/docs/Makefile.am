@@ -37,6 +37,6 @@ else
 endif
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~
+CLEANFILES = $(dist_man_MANS) $(html_man_files)
 DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~ Makefile.in $(html_man_files)
+MAINTAINERCLEANFILES = *.log *~
