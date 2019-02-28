@@ -418,6 +418,47 @@ PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename)
   return NULL;
 }
 
+/*! \brief Search for page by its filename's basename.
+ *  \par Function Description
+ *  Searches in \a toplevel's list of pages for a page with
+ *  basename( filename ) equal to \a filename.
+ *
+ *  \param toplevel  The TOPLEVEL object
+ *  \param filename  The filename string to search for
+ *
+ *  \return PAGE pointer to a matching page, NULL otherwise.
+ */
+PAGE *s_page_search_by_basename (TOPLEVEL *toplevel, const gchar *filename)
+{
+  const GList* iter   = NULL;
+  PAGE*        page   = NULL;
+  PAGE*        result = NULL;
+
+  for ( iter = geda_list_get_glist( toplevel->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) )
+  {
+    page = (PAGE*) iter->data;
+
+    const gchar* fname = s_page_get_filename (page);
+    gchar* bname = g_path_get_basename (fname);
+
+    /* FIXME this may not be correct on platforms with
+     * case-insensitive filesystems. */
+
+    if ( strcmp( bname, filename ) == 0 )
+    {
+      result = page;
+      g_free (bname);
+      break;
+    }
+
+    g_free (bname);
+  }
+
+  return result;
+}
+
 /*! \brief Search for a page given its page id in a page list.
  *  \par Function Description
  *  This functions returns the page that have the page id \a pid in
