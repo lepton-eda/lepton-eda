@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2013 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +20,7 @@
 /*!
  * \file gschem_macro_widget.c
  *
- * \brief A widget for entering macros
+ * \brief A widget for entering and executing Guile macros
  */
 
 #include <config.h>
@@ -107,18 +108,16 @@ enum
 
 
 
-/* convenience macro - gobject type implementation:
+/*! \brief Convenience macro - gobject type implementation:
 */
 G_DEFINE_TYPE (GschemMacroWidget, gschem_macro_widget, GTK_TYPE_INFO_BAR);
 
 
 
-/*! \brief Initialize GschemMacroWidget class
- *
- *  \param [in] klass The class for the GschemMacroWidget
+/*! \brief Initialize gobject class
  */
 static void
-gschem_macro_widget_class_init (GschemMacroWidgetClass *klass)
+gschem_macro_widget_class_init (GschemMacroWidgetClass* klass)
 {
   G_OBJECT_CLASS (klass)->get_property = get_property;
   G_OBJECT_CLASS (klass)->set_property = set_property;
@@ -192,7 +191,7 @@ set_property (GObject* object,
  *
  */
 
-/* Callback for when the user presses enter in the entry widget
+/*! \brief Callback for when the user presses enter in the entry widget
  */
 static void
 on_entry_activate (GtkEntry* entry, gpointer data)
@@ -212,7 +211,7 @@ on_entry_activate (GtkEntry* entry, gpointer data)
 
 
 
-/* Callback for when the user clicks the evaluate button
+/*! \brief Callback for when the user clicks the evaluate button
  */
 static void
 on_evaluate_clicked (GtkButton* button, gpointer data)
@@ -226,7 +225,7 @@ on_evaluate_clicked (GtkButton* button, gpointer data)
 
 
 
-/* Callback for when the user clicks the cancel button
+/*! \brief Callback for when the user clicks the cancel button
  */
 static void
 on_cancel_clicked (GtkButton* button, gpointer data)
@@ -345,6 +344,8 @@ macro_widget_exec_macro (GschemMacroWidget* widget, const gchar* macro_text)
 
 
 
+/*! \brief Create the macro widget
+*/
 static void
 macro_widget_create (GschemMacroWidget* widget)
 {
