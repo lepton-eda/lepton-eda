@@ -359,9 +359,9 @@ gschem_macro_widget_init (GschemMacroWidget *widget)
 
   gtk_widget_set_no_show_all (GTK_WIDGET (widget), TRUE);
 
-  widget->label = gtk_label_new (NULL);
-  gtk_widget_set_visible (widget->label, TRUE);
-  gtk_box_pack_start (GTK_BOX (content), widget->label, FALSE, FALSE, 0);
+  GtkWidget* label = gtk_label_new (_("Macro:"));
+  gtk_widget_set_visible (label, TRUE);
+  gtk_box_pack_start (GTK_BOX (content), label, FALSE, FALSE, 0);
 
 
   /* command history list store:

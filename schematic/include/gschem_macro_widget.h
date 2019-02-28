@@ -58,7 +58,6 @@ struct _GschemMacroWidget
   GtkWidget *combo;
   GtkWidget *entry;
   GtkWidget *evaluate_button;
-  GtkWidget *label;
 };
 
 
