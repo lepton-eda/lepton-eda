@@ -1,4 +1,5 @@
-/* $Id$ */
+#ifndef LEPTON_PROTOTYPE_H_
+#define LEPTON_PROTOTYPE_H_
 
 /* a_zoom.c */
 void a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int selected_from);
@@ -787,4 +788,7 @@ void x_tabs_dbg_pages_dump (GschemToplevel* w_current);
 
 /* color_edit_widget.c */
 void color_edit_widget_update (GschemToplevel* w_current);
+
+
+#endif /* LEPTON_PROTOTYPE_H_ */
 
