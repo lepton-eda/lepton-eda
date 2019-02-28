@@ -130,6 +130,15 @@ macro_widget_show (GtkWidget* widget)
 
 
 
+static void
+macro_widget_hide (GschemMacroWidget* widget)
+{
+  gtk_widget_hide (GTK_WIDGET (widget));
+  gtk_widget_grab_focus (widget->toplevel->drawing_area);
+}
+
+
+
 /* Callback for when the user presses enter in the entry widget
  */
 static void
