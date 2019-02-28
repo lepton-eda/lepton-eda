@@ -53,16 +53,16 @@ set_property (GObject* object, guint param_id, const GValue* value, GParamSpec* 
 
 
 static void
-activate_entry (GtkEntry* entry, gpointer data);
+on_entry_activate (GtkEntry* entry, gpointer data);
 
 static void
-click_evaluate (GtkButton* button, gpointer data);
+on_evaluate_clicked (GtkButton* button, gpointer data);
 
 static void
-click_cancel (GtkButton* button, gpointer data);
+on_cancel_clicked (GtkButton* button, gpointer data);
 
 static void
-notify_entry_text (GtkWidget* entry, GParamSpec* pspec, GschemMacroWidget* widget);
+on_entry_notify_text (GtkWidget* entry, GParamSpec* pspec, gpointer data);
 
 
 static void
@@ -195,7 +195,7 @@ set_property (GObject* object,
 /* Callback for when the user presses enter in the entry widget
  */
 static void
-activate_entry (GtkEntry* entry, gpointer data)
+on_entry_activate (GtkEntry* entry, gpointer data)
 {
   GschemMacroWidget* widget = (GschemMacroWidget*) data;
   g_return_if_fail (widget != NULL);
@@ -215,7 +215,7 @@ activate_entry (GtkEntry* entry, gpointer data)
 /* Callback for when the user clicks the evaluate button
  */
 static void
-click_evaluate (GtkButton* button, gpointer data)
+on_evaluate_clicked (GtkButton* button, gpointer data)
 {
   GschemMacroWidget* widget = (GschemMacroWidget*) data;
   g_return_if_fail (widget != NULL);
@@ -229,7 +229,7 @@ click_evaluate (GtkButton* button, gpointer data)
 /* Callback for when the user clicks the cancel button
  */
 static void
-click_cancel (GtkButton* button, gpointer data)
+on_cancel_clicked (GtkButton* button, gpointer data)
 {
   GschemMacroWidget* widget = (GschemMacroWidget*) data;
   g_return_if_fail (widget != NULL);
@@ -239,15 +239,18 @@ click_cancel (GtkButton* button, gpointer data)
 
 
 
-/*! \brief Update the sensitivity of the evaluate button
+/*! \brief GtkEntry's "text" property change notification signal handler
  */
 static void
-notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemMacroWidget *widget)
+on_entry_notify_text (GtkWidget* entry, GParamSpec* pspec, gpointer data)
 {
+  GschemMacroWidget* widget = (GschemMacroWidget*) data;
   g_return_if_fail (widget != NULL);
 
-  gtk_widget_set_sensitive (widget->evaluate_button,
-                            (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0));
+  /* Update the sensitivity of the evaluate button:
+  */
+  guint16 len = gtk_entry_get_text_length (GTK_ENTRY (widget->entry));
+  gtk_widget_set_sensitive (widget->evaluate_button, len > 0);
 }
 
 
@@ -416,22 +419,22 @@ macro_widget_create (GschemMacroWidget* widget)
 
   g_signal_connect (G_OBJECT (widget->entry),
                     "activate",
-                    G_CALLBACK (activate_entry),
+                    G_CALLBACK (&on_entry_activate),
                     widget);
 
   g_signal_connect (G_OBJECT (cancel_button),
                     "clicked",
-                    G_CALLBACK (click_cancel),
+                    G_CALLBACK (&on_cancel_clicked),
                     widget);
 
   g_signal_connect (G_OBJECT (widget->evaluate_button),
                     "clicked",
-                    G_CALLBACK (click_evaluate),
+                    G_CALLBACK (&on_evaluate_clicked),
                     widget);
 
   g_signal_connect (G_OBJECT (widget->entry),
                     "notify::text",
-                    G_CALLBACK (notify_entry_text),
+                    G_CALLBACK (&on_entry_notify_text),
                     widget);
 
 } /* macro_widget_create() */
