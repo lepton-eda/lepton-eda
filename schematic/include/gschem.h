@@ -1,3 +1,6 @@
+#ifndef LEPTON_MAIN_HEADER_H_
+#define LEPTON_MAIN_HEADER_H_
+
 /* System headers which gschem headers rely on */
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -57,3 +60,7 @@ typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 
 /* Gettext translation */
 #include "gettext.h"
+
+
+#endif /* LEPTON_MAIN_HEADER_H_ */
+

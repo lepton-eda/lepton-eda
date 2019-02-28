@@ -1,3 +1,6 @@
+#ifndef LEPTON_MACRO_WIDGET_H_
+#define LEPTON_MACRO_WIDGET_H_
+
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
@@ -74,3 +77,7 @@ gschem_macro_widget_set_label_text (GschemMacroWidget *widget, const char *text)
 
 void
 gschem_macro_widget_set_macro_string (GschemMacroWidget *widget, const char *str);
+
+
+#endif /* LEPTON_MACRO_WIDGET_H_ */
+
