@@ -1652,8 +1652,10 @@ untitled_filename (GschemToplevel* w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
-  /* Determine default file name for a new page: */
-  gchar* cwd = g_get_current_dir ();
+  /* Determine default file name (without a number appended)
+  *  for a new page:
+  */
+  gchar*     cwd = g_get_current_dir ();
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
 
   gchar* name = eda_config_get_string (cfg,
@@ -1661,19 +1663,43 @@ untitled_filename (GschemToplevel* w_current)
                                        "default-filename",
                                        NULL);
 
-  /* Build file name: */
-  gchar* tmp = g_strdup_printf ("%s_%d.sch",
-                                name ? name : "untitled",
-                                untitled_next_index (w_current));
-  g_free (name);
+  gchar* fname = NULL;
+  gchar* fpath = NULL;
 
-  /* Build full path for file name: */
-  gchar* filename = g_build_filename (cwd, tmp, NULL);
+  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+
+  for (;;)
+  {
+    /* Build file name (default name + number appended):
+    */
+    fname = g_strdup_printf ("%s_%d.sch",
+                           name ? name : "untitled",
+                           untitled_next_index (w_current));
+
+    /* Build full path for file name:
+    */
+    fpath = g_build_filename (cwd, fname, NULL);
+
+    /* Avoid reusing names of already opened files:
+    *  Avoid reusing names of existing files in current directory:
+    */
+    if ( s_page_search_by_basename (toplevel, fname) ||
+         g_file_test (fpath, G_FILE_TEST_EXISTS) )
+    {
+      g_free (fname);
+      g_free (fpath);
+    }
+    else
+    {
+      break;
+    }
+  }
 
   g_free (cwd);
-  g_free (tmp);
+  g_free (name);
+  g_free (fname);
 
-  return filename;
+  return fpath;
 
 } /* untitled_filename() */
 
