@@ -39,47 +39,40 @@
 
 
 
-enum
-{
-  PROP_0,
-  PROP_TOPLEVEL
-};
+static void
+gschem_macro_widget_class_init (GschemMacroWidgetClass* klass);
 
+static void
+gschem_macro_widget_init (GschemMacroWidget* widget);
 
+static void
+get_property (GObject* object, guint param_id, GValue* value, GParamSpec* pspec);
+
+static void
+set_property (GObject* object, guint param_id, const GValue* value, GParamSpec* pspec);
 
 
 static void
 activate_entry (GtkEntry* entry, gpointer data);
 
 static void
-click_cancel (GtkButton* button, gpointer data);
-
-static void
 click_evaluate (GtkButton* button, gpointer data);
 
 static void
-get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
+click_cancel (GtkButton* button, gpointer data);
 
 static void
-gschem_macro_widget_class_init (GschemMacroWidgetClass *klass);
+notify_entry_text (GtkWidget* entry, GParamSpec* pspec, GschemMacroWidget* widget);
 
-static void
-gschem_macro_widget_init (GschemMacroWidget *view);
-
-static void
-set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
-
-static void
-notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemMacroWidget *widget);
-
-static void
-macro_widget_hide (GschemMacroWidget* widget);
 
 static void
 exec_macro (GschemToplevel* toplevel, const gchar* macro_text);
 
 static void
 macro_widget_exec_macro (GschemMacroWidget* widget, const gchar* macro_text);
+
+static void
+macro_widget_hide (GschemMacroWidget* widget);
 
 static void
 macro_widget_create (GschemMacroWidget* widget);
@@ -101,11 +94,169 @@ command_entry_set_font (GtkWidget* entry);
 
 
 
+/*
+ * GObject stuff:
+ *
+ */
+
+enum
+{
+  PROP_0,
+  PROP_TOPLEVEL
+};
+
+
+
 /* convenience macro - gobject type implementation:
 */
 G_DEFINE_TYPE (GschemMacroWidget, gschem_macro_widget, GTK_TYPE_INFO_BAR);
 
 
+
+/*! \brief Initialize GschemMacroWidget class
+ *
+ *  \param [in] klass The class for the GschemMacroWidget
+ */
+static void
+gschem_macro_widget_class_init (GschemMacroWidgetClass *klass)
+{
+  G_OBJECT_CLASS (klass)->get_property = get_property;
+  G_OBJECT_CLASS (klass)->set_property = set_property;
+
+  GParamFlags flags = (GParamFlags) (G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
+  GParamSpec* spec  = g_param_spec_pointer ("toplevel", "", "", flags);
+  g_object_class_install_property (G_OBJECT_CLASS (klass), PROP_TOPLEVEL, spec);
+}
+
+
+
+/*! \brief Initialize gobject instance
+ */
+static void
+gschem_macro_widget_init (GschemMacroWidget* widget)
+{
+  macro_widget_create (widget);
+}
+
+
+
+/*! \brief Get a gobject property
+ */
+static void
+get_property (GObject* object,
+              guint param_id,
+              GValue* value,
+              GParamSpec* pspec)
+{
+  GschemMacroWidget* widget = GSCHEM_MACRO_WIDGET (object);
+
+  switch (param_id)
+  {
+    case PROP_TOPLEVEL:
+      g_value_set_pointer (value, widget->toplevel);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
+  }
+}
+
+
+
+/*! \brief Set a gobject property
+ */
+static void
+set_property (GObject* object,
+              guint param_id,
+              const GValue* value,
+              GParamSpec* pspec)
+{
+  GschemMacroWidget* widget = GSCHEM_MACRO_WIDGET (object);
+
+  switch (param_id)
+  {
+    case PROP_TOPLEVEL:
+      widget->toplevel = GSCHEM_TOPLEVEL (g_value_get_pointer (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
+  }
+}
+
+
+
+
+/*
+ * signal handlers:
+ *
+ */
+
+/* Callback for when the user presses enter in the entry widget
+ */
+static void
+activate_entry (GtkEntry* entry, gpointer data)
+{
+  GschemMacroWidget* widget = (GschemMacroWidget*) data;
+  g_return_if_fail (widget != NULL);
+
+  if (gtk_entry_get_text_length (entry) <= 0)
+  {
+    macro_widget_hide (widget);
+    return;
+  }
+
+  const gchar* text = gtk_entry_get_text (entry);
+  macro_widget_exec_macro (widget, text);
+}
+
+
+
+/* Callback for when the user clicks the evaluate button
+ */
+static void
+click_evaluate (GtkButton* button, gpointer data)
+{
+  GschemMacroWidget* widget = (GschemMacroWidget*) data;
+  g_return_if_fail (widget != NULL);
+
+  const gchar* text = gtk_entry_get_text (GTK_ENTRY (widget->entry));
+  macro_widget_exec_macro (widget, text);
+}
+
+
+
+/* Callback for when the user clicks the cancel button
+ */
+static void
+click_cancel (GtkButton* button, gpointer data)
+{
+  GschemMacroWidget* widget = (GschemMacroWidget*) data;
+  g_return_if_fail (widget != NULL);
+
+  macro_widget_hide (widget);
+}
+
+
+
+/*! \brief Update the sensitivity of the evaluate button
+ */
+static void
+notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemMacroWidget *widget)
+{
+  g_return_if_fail (widget != NULL);
+
+  gtk_widget_set_sensitive (widget->evaluate_button,
+                            (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0));
+}
+
+
+
+
+/*
+ * implementation:
+ *
+ */
 
 GtkWidget*
 macro_widget_new (GschemToplevel* toplevel)
@@ -187,105 +338,6 @@ macro_widget_exec_macro (GschemMacroWidget* widget, const gchar* macro_text)
   macro_widget_hide (widget);
 
   exec_macro (widget->toplevel, macro_text);
-}
-
-
-
-/* Callback for when the user presses enter in the entry widget
- */
-static void
-activate_entry (GtkEntry* entry, gpointer data)
-{
-  GschemMacroWidget* widget = (GschemMacroWidget*) data;
-  g_return_if_fail (widget != NULL);
-
-  if (gtk_entry_get_text_length (entry) <= 0)
-  {
-    macro_widget_hide (widget);
-    return;
-  }
-
-  const gchar* text = gtk_entry_get_text (entry);
-  macro_widget_exec_macro (widget, text);
-}
-
-
-
-/* Callback for when the user clicks the cancel button
- */
-static void
-click_cancel (GtkButton* button, gpointer data)
-{
-  GschemMacroWidget* widget = (GschemMacroWidget*) data;
-  g_return_if_fail (widget != NULL);
-
-  macro_widget_hide (widget);
-}
-
-
-
-/* Callback for when the user clicks the evaluate button
- */
-static void
-click_evaluate (GtkButton* button, gpointer data)
-{
-  GschemMacroWidget* widget = (GschemMacroWidget*) data;
-  g_return_if_fail (widget != NULL);
-
-  const gchar* text = gtk_entry_get_text (GTK_ENTRY (widget->entry));
-  macro_widget_exec_macro (widget, text);
-}
-
-
-
-/*! \brief Get a property
- *
- *  \param [in]     object
- *  \param [in]     param_id
- *  \param [in,out] value
- *  \param [in]     pspec
- */
-static void
-get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
-{
-  GschemMacroWidget *widget = GSCHEM_MACRO_WIDGET (object);
-
-  switch (param_id)
-  {
-    case PROP_TOPLEVEL:
-      g_value_set_pointer (value, widget->toplevel);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
-  }
-}
-
-
-
-/*! \brief Initialize GschemMacroWidget class
- *
- *  \param [in] klass The class for the GschemMacroWidget
- */
-static void
-gschem_macro_widget_class_init (GschemMacroWidgetClass *klass)
-{
-  G_OBJECT_CLASS (klass)->get_property = get_property;
-  G_OBJECT_CLASS (klass)->set_property = set_property;
-
-  GParamFlags flags = (GParamFlags) (G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
-  GParamSpec* spec  = g_param_spec_pointer ("toplevel", "", "", flags);
-  g_object_class_install_property (G_OBJECT_CLASS (klass), PROP_TOPLEVEL, spec);
-}
-
-
-
-/*! \brief Initialize gobject instance
- */
-static void
-gschem_macro_widget_init (GschemMacroWidget* widget)
-{
-  macro_widget_create (widget);
 }
 
 
@@ -383,39 +435,6 @@ macro_widget_create (GschemMacroWidget* widget)
                     widget);
 
 } /* macro_widget_create() */
-
-
-
-/*! \brief Update the sensitivity of the evaluate button
- */
-static void
-notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemMacroWidget *widget)
-{
-  g_return_if_fail (widget != NULL);
-
-  gtk_widget_set_sensitive (widget->evaluate_button,
-                            (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0));
-}
-
-
-
-/*! \brief Set a gobject property
- */
-static void
-set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
-{
-  GschemMacroWidget *widget = GSCHEM_MACRO_WIDGET (object);
-
-  switch (param_id)
-  {
-    case PROP_TOPLEVEL:
-      widget->toplevel = GSCHEM_TOPLEVEL (g_value_get_pointer (value));
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
-  }
-}
 
 
 
