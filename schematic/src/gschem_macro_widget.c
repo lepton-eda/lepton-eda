@@ -51,13 +51,13 @@ enum
 
 
 static void
-activate_entry (GtkWidget *entry, GschemMacroWidget *widget);
+activate_entry (GtkEntry* entry, gpointer data);
 
 static void
-click_cancel (GtkWidget *button, GschemMacroWidget *widget);
+click_cancel (GtkButton* button, gpointer data);
 
 static void
-click_evaluate (GtkWidget *entry, GschemMacroWidget *widget);
+click_evaluate (GtkButton* button, gpointer data);
 
 static void
 dispose (GObject *object);
@@ -197,23 +197,19 @@ macro_widget_exec_macro (GschemMacroWidget* widget, const gchar* macro_text)
 /* Callback for when the user presses enter in the entry widget
  */
 static void
-activate_entry (GtkWidget *entry, GschemMacroWidget *widget)
+activate_entry (GtkEntry* entry, gpointer data)
 {
+  GschemMacroWidget* widget = (GschemMacroWidget*) data;
   g_return_if_fail (widget != NULL);
 
-  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0)
+  if (gtk_entry_get_text_length (entry) <= 0)
   {
-    gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_OK);
+    macro_widget_hide (widget);
+    return;
+  }
 
-    history_add  (widget->store,
-                  gtk_entry_get_text (GTK_ENTRY (widget->entry)));
-    history_truncate (widget->store);
-    history_save (widget->store);
-  }
-  else
-  {
-    gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_CANCEL);
-  }
+  const gchar* text = gtk_entry_get_text (entry);
+  macro_widget_exec_macro (widget, text);
 }
 
 
@@ -221,9 +217,12 @@ activate_entry (GtkWidget *entry, GschemMacroWidget *widget)
 /* Callback for when the user clicks the cancel button
  */
 static void
-click_cancel (GtkWidget *button, GschemMacroWidget *widget)
+click_cancel (GtkButton* button, gpointer data)
 {
-  gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_CANCEL);
+  GschemMacroWidget* widget = (GschemMacroWidget*) data;
+  g_return_if_fail (widget != NULL);
+
+  macro_widget_hide (widget);
 }
 
 
@@ -231,19 +230,13 @@ click_cancel (GtkWidget *button, GschemMacroWidget *widget)
 /* Callback for when the user clicks the evaluate button
  */
 static void
-click_evaluate (GtkWidget *entry, GschemMacroWidget *widget)
+click_evaluate (GtkButton* button, gpointer data)
 {
+  GschemMacroWidget* widget = (GschemMacroWidget*) data;
   g_return_if_fail (widget != NULL);
 
-  if (gtk_entry_get_text_length (GTK_ENTRY (widget->entry)) > 0)
-  {
-    gtk_info_bar_response (GTK_INFO_BAR (widget), GTK_RESPONSE_OK);
-
-    history_add  (widget->store,
-                  gtk_entry_get_text (GTK_ENTRY (widget->entry)));
-    history_truncate (widget->store);
-    history_save (widget->store);
-  }
+  const gchar* text = gtk_entry_get_text (GTK_ENTRY (widget->entry));
+  macro_widget_exec_macro (widget, text);
 }
 
 

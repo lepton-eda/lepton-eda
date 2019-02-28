@@ -368,25 +368,6 @@ x_window_show_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
 }
 
 
-static void
-x_window_invoke_macro (GschemMacroWidget *widget, int response, GschemToplevel *w_current)
-{
-  if (response == GTK_RESPONSE_OK) {
-    const char *macro = gschem_macro_widget_get_macro_string (widget);
-
-    SCM interpreter = scm_list_2(scm_from_utf8_symbol("invoke-macro"),
-                                 scm_from_utf8_string(macro));
-
-    scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-    g_dynwind_window (w_current);
-    g_scm_eval_protected(interpreter, SCM_UNDEFINED);
-    scm_dynwind_end ();
-  }
-
-  gtk_widget_grab_focus (w_current->drawing_area);
-  gtk_widget_hide (GTK_WIDGET (widget));
-}
-
 void
 x_window_select_object (GschemFindTextState *state, OBJECT *object, GschemToplevel *w_current)
 {
@@ -1309,9 +1290,6 @@ create_macro_widget (GschemToplevel *w_current, GtkWidget *work_box)
   gtk_box_pack_start (GTK_BOX (work_box),
                       w_current->macro_widget,
                       FALSE, FALSE, 0);
-
-  g_signal_connect (w_current->macro_widget, "response",
-                    G_CALLBACK (&x_window_invoke_macro), w_current);
 }
 
 
