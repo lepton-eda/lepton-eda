@@ -50,7 +50,10 @@ struct _GschemMacroWidget
 {
   GtkInfoBar parent;
 
+  /* command history: */
   GtkListStore* store;
+
+  GschemToplevel* toplevel;
 
   GtkWidget *combo;
   GtkWidget *entry;
