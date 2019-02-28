@@ -93,6 +93,9 @@ static void
 recent_manager_add (GschemToplevel* w_current,
                     const gchar*    filename);
 
+static int
+untitled_next_index (GschemToplevel* w_current);
+
 static gchar*
 untitled_filename (GschemToplevel* w_current);
 
@@ -1625,6 +1628,16 @@ recent_manager_add (GschemToplevel* w_current,
 
 
 
+/*! \brief Get next number to be part of the untitled file name.
+ */
+static int
+untitled_next_index (GschemToplevel* w_current)
+{
+  return ++w_current->num_untitled;
+}
+
+
+
 /*! \brief Get untitled file name.
  *  \par Function Description
  *
@@ -1651,7 +1664,7 @@ untitled_filename (GschemToplevel* w_current)
   /* Build file name: */
   gchar* tmp = g_strdup_printf ("%s_%d.sch",
                                 name ? name : "untitled",
-                                ++w_current->num_untitled);
+                                untitled_next_index (w_current));
   g_free (name);
 
   /* Build full path for file name: */
