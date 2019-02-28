@@ -227,24 +227,33 @@ void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
   i_callback_file_save (data, 0, widget);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  don't use the widget parameter on this function, or do some checking...
- *  since there is a call: widget = NULL, data = 0 (will be w_current)
+/*! \brief Save all opened pages
  */
 DEFINE_I_CALLBACK(file_save_all)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
+  GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
 
-  if (s_page_save_all(gschem_toplevel_get_toplevel (w_current))) {
-     i_set_state_msg(w_current, SELECT, _("Failed to Save All"));
-  } else {
-     i_set_state_msg(w_current, SELECT, _("Saved All"));
+  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  GList*    pages    = geda_list_get_glist (toplevel->pages);
+
+  /* save currently selected page:
+  */
+  PAGE* lastpage = toplevel->page_current;
+
+  for ( ; pages != NULL; pages = g_list_next (pages) )
+  {
+    PAGE* page = (PAGE*) pages->data;
+
+    x_window_set_current_page (w_current, page);
+    i_callback_file_save (data, callback_action, widget);
+  }
+
+  /* restore last selected page:
+  */
+  if (lastpage != toplevel->page_current)
+  {
+    x_window_set_current_page (w_current, lastpage);
   }
 
   x_pagesel_update (w_current);
