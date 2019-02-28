@@ -66,6 +66,9 @@ struct _GschemMacroWidget
 GtkWidget*
 macro_widget_new (GschemToplevel* toplevel);
 
+void
+macro_widget_show (GtkWidget* widget);
+
 GtkWidget*
 gschem_macro_widget_get_entry (GschemMacroWidget *widget);
 

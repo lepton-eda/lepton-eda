@@ -115,6 +115,21 @@ macro_widget_new (GschemToplevel* toplevel)
 
 
 
+void
+macro_widget_show (GtkWidget* widget)
+{
+  g_return_if_fail (widget != NULL);
+
+  GschemMacroWidget* macro_widget = GSCHEM_MACRO_WIDGET (widget);
+
+  g_return_if_fail (macro_widget->entry != NULL);
+
+  gtk_widget_show (widget);
+  gtk_widget_grab_focus (macro_widget->entry);
+}
+
+
+
 /* Callback for when the user presses enter in the entry widget
  */
 static void
