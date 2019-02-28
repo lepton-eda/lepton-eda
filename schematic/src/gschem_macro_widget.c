@@ -81,6 +81,15 @@ static void
 notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemMacroWidget *widget);
 
 static void
+macro_widget_hide (GschemMacroWidget* widget);
+
+static void
+exec_macro (GschemToplevel* toplevel, const gchar* macro_text);
+
+static void
+macro_widget_exec_macro (GschemMacroWidget* widget, const gchar* macro_text);
+
+static void
 history_add (GtkListStore* store, const gchar* line);
 
 static void
@@ -135,6 +144,52 @@ macro_widget_hide (GschemMacroWidget* widget)
 {
   gtk_widget_hide (GTK_WIDGET (widget));
   gtk_widget_grab_focus (widget->toplevel->drawing_area);
+}
+
+
+
+/*! \brief Invoke liblepton code to execute macro [macro_text]
+ * Execution output and result will be logged.
+*/
+static void
+exec_macro (GschemToplevel* toplevel, const gchar* macro_text)
+{
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+  g_dynwind_window (toplevel);
+
+  gchar* cmd = g_strdup_printf(
+    "(use-modules (geda log)) (log! 'message (format #f \"~A\" %s))",
+    macro_text);
+
+  g_scm_c_eval_string_protected (cmd);
+
+  g_free (cmd);
+
+  scm_dynwind_end();
+}
+
+
+
+/*! \brief Execute Guile code passed in [macro_text]
+*/
+static void
+macro_widget_exec_macro (GschemMacroWidget* widget, const gchar* macro_text)
+{
+  if (macro_text == NULL || strlen(macro_text) <= 0)
+  {
+    return;
+  }
+
+  /* save history and hide widget BEFORE executing macro code,
+   * since that code may terminate the program:
+  */
+  history_add (widget->store, macro_text);
+  history_truncate (widget->store);
+  history_save (widget->store);
+
+  macro_widget_hide (widget);
+
+  exec_macro (widget->toplevel, macro_text);
 }
 
 
