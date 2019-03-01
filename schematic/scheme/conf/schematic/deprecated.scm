@@ -157,11 +157,6 @@
    ((@ (geda page) set-page-dirty!) (active-page) #f))
 	   #t)
 
-; Evaluate an expression entered in the magic-colon text box.
-; In 20 years this might dispatch to an interpreter for some other language.
-(define (invoke-macro s-expr)
-  (gschem-log (format #f "~s\n" (eval-string-protected s-expr))))
-
 ;
 ; End of hooks
 ;
