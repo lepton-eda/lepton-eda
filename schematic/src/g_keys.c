@@ -575,7 +575,10 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
     GSource *timer =
       g_main_context_find_source_by_id (NULL,
                                         w_current->keyaccel_string_source_id);
-    g_source_destroy (timer);
+    if (timer != NULL)
+    {
+      g_source_destroy (timer);
+    }
     w_current->keyaccel_string_source_id = 0;
   }
   if (!scm_is_eq (s_retval, prefix_sym)) {
