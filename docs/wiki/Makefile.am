@@ -1,5 +1,13 @@
 wikidir = $(docdir)/wiki
 
+#
+# NOTE: While constructing the list of files to install,
+# we search for symbolic links (-type l) as well as
+# regular files (-type f). This is done to facilitate
+# out-of-source builds using a tree of symbolic links,
+# created, for example, with lndir(1).
+#
+
 # Copy wiki into distribution
 dist-hook:
 	@for dir in $$(cd $(srcdir) && find . -type d -print | sed -e's:^\./::' ); do \
