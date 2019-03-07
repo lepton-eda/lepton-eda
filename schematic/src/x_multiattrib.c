@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -762,11 +762,18 @@ multiattrib_column_set_data_name (GtkTreeViewColumn *tree_column,
                       COLUMN_PRESENT_IN_ALL, &present_in_all,
                       -1);
 
+  /*
+   * Set "editable" property to TRUE even for inherited attributes.
+   * This is done to allow the user to copy cell contents to clipboard.
+   * For inherited attributes no action will be taken on edit:
+   * multiattrib_callback_edited_name() will just return.
+  */
+
   g_object_set (cell,
                 "text", name,
                 "foreground-gdk", inherited ? &dialog->insensitive_text_color :
                                   (!present_in_all ? &dialog->not_present_in_all_text_color : NULL),
-                "editable", !inherited,
+                "editable", TRUE,
                 NULL);
   g_free (name);
 }
@@ -794,11 +801,18 @@ multiattrib_column_set_data_value (GtkTreeViewColumn *tree_column,
                       COLUMN_IDENTICAL_VALUE, &identical_value,
                       -1);
 
+  /*
+   * Set "editable" property to TRUE even for inherited attributes.
+   * This is done to allow the user to copy cell contents to clipboard.
+   * For inherited attributes no action will be taken on edit:
+   * multiattrib_callback_edited_value() will just return.
+  */
+
   g_object_set (cell,
                 "text", identical_value ? value : _("<various>"),
                 "foreground-gdk", inherited ? &dialog->insensitive_text_color :
                                   (!identical_value ? &dialog->not_identical_value_text_color : NULL),
-                "editable", !inherited,
+                "editable", TRUE,
                 NULL);
   g_free (value);
 }
@@ -913,6 +927,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   GschemToplevel *w_current;
   gchar *value, *newtext;
   int visibility;
+  int inherited;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
   w_current = GSCHEM_DIALOG (multiattrib)->w_current;
@@ -920,6 +935,18 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   if (!gtk_tree_model_get_iter_from_string (model, &iter, arg1)) {
     return;
   }
+
+
+  /* Do not allow editing of inherited attributes:
+  */
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_INHERITED, &inherited,
+                      -1);
+  if (inherited)
+  {
+    return;
+  }
+
 
   if (g_ascii_strcasecmp (new_name, "") == 0) {
     GtkWidget *dialog = gtk_message_dialog_new (
@@ -995,6 +1022,7 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   char *old_value;
   char *newtext;
   int visibility;
+  int inherited;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
   w_current = GSCHEM_DIALOG (multiattrib)->w_current;
@@ -1002,6 +1030,18 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   if (!gtk_tree_model_get_iter_from_string (model, &iter, arg1)) {
     return;
   }
+
+
+  /* Do not allow editing of inherited attributes:
+  */
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_INHERITED, &inherited,
+                      -1);
+  if (inherited)
+  {
+    return;
+  }
+
 
   gtk_tree_model_get (model, &iter,
                       COLUMN_NAME, &name,
