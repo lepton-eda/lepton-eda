@@ -873,17 +873,16 @@ void o_set_color (TOPLEVEL *toplevel, OBJECT *object, int color)
  * not currently associated with a PAGE, returns NULL. If \a object is
  * part of a compound object, recurses upward.
  *
- * \param [in] toplevel  The TOPLEVEL structure.
  * \param [in] object    The OBJECT for which to retrieve the parent PAGE.
  * \return The PAGE which owns \a object or NULL.
  *
  * \sa s_page_append_object() s_page_append() s_page_remove()
  */
 PAGE *
-o_get_page (TOPLEVEL *toplevel, OBJECT *object)
+o_get_page (OBJECT *object)
 {
   if (object->parent != NULL) {
-    return o_get_page (toplevel, object->parent);
+    return o_get_page (object->parent);
   }
   return object->page;
 }
@@ -996,6 +995,11 @@ void
 o_emit_pre_change_notify (TOPLEVEL *toplevel, OBJECT *object)
 {
   GList *iter;
+
+  if (toplevel == NULL) {
+    return;
+  }
+
   for (iter = toplevel->change_notify_funcs;
        iter != NULL; iter = g_list_next (iter)) {
 
@@ -1022,6 +1026,11 @@ void
 o_emit_change_notify (TOPLEVEL *toplevel, OBJECT *object)
 {
   GList *iter;
+
+  if (toplevel == NULL) {
+    return;
+  }
+
   for (iter = toplevel->change_notify_funcs;
        iter != NULL; iter = g_list_next (iter)) {
 

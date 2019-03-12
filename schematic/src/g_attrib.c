@@ -84,7 +84,7 @@ SCM_DEFINE (add_attrib_x, "%add-attrib!", 5, 0, 0,
   OBJECT *obj = NULL;
   if (edascm_is_object (target_s)) {
     obj = edascm_to_object (target_s);
-    if (o_get_page (toplevel, obj) != toplevel->page_current) {
+    if (o_get_page (obj) != toplevel->page_current) {
       scm_error (object_state_sym,
                  s_add_attrib_x,
                  _("Object ~A is not included in the current gschem page."),

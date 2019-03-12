@@ -71,7 +71,7 @@ SCM_DEFINE (select_object_x, "%select-object!", 1, 0, 0,
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
-  PAGE *page = o_get_page (toplevel, obj);
+  PAGE *page = o_get_page (obj);
   if ((page == NULL) || (obj->parent != NULL)) {
     scm_error (object_state_sym,
                s_select_object_x,
@@ -108,7 +108,7 @@ SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
-  PAGE *page = o_get_page (toplevel, obj);
+  PAGE *page = o_get_page (obj);
   if ((page == NULL) || (obj->parent != NULL)) {
     scm_error (object_state_sym,
                s_deselect_object_x,
@@ -142,9 +142,8 @@ SCM_DEFINE (object_selected_p, "%object-selected?", 1, 0, 0,
   SCM_ASSERT (edascm_is_object (obj_s), obj_s,
               SCM_ARG1, s_object_selected_p);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
-  PAGE *page = o_get_page (toplevel, obj);
+  PAGE *page = o_get_page (obj);
   if ((page == NULL) || (obj->parent != NULL)) {
     scm_error (object_state_sym,
                s_object_selected_p,

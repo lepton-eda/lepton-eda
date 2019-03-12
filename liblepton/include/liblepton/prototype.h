@@ -74,8 +74,8 @@ int o_attrib_is_inherited(const OBJECT *attrib);
 gboolean o_attrib_is_attrib (const OBJECT *attrib);
 
 /* o_embed.c */
-void o_embed(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current);
+void o_embed (OBJECT *o_current);
+void o_unembed (OBJECT *o_current);
 
 /* o_selection.c */
 SELECTION *o_selection_new( void );

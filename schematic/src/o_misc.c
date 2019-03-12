@@ -461,7 +461,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   g_return_val_if_fail (o_current->type == OBJ_COMPLEX, NULL);
   g_return_val_if_fail (o_current->complex_basename != NULL, NULL);
 
-  page = o_get_page (toplevel, o_current);
+  page = o_get_page (o_current);
 
   /* Force symbol data to be reloaded from source */
   clib = s_clib_get_symbol_by_name (o_current->complex_basename);
@@ -485,7 +485,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
                          clib, o_current->complex_basename,
                          1);
   if (o_complex_is_embedded (o_current)) {
-    o_embed (toplevel, o_new);
+    o_embed (o_new);
   }
 
   new_attribs = o_complex_promote_attribs (toplevel, o_new);

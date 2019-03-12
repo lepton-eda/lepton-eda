@@ -76,7 +76,7 @@ SCM_SYMBOL (closepath_sym , "closepath");
 
 void o_page_changed (TOPLEVEL *t, OBJECT *o)
 {
-  PAGE *p = o_get_page (t, o);
+  PAGE *p = o_get_page (o);
   if (p != NULL) p->CHANGED = TRUE;
 }
 
@@ -863,13 +863,13 @@ SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
 
     if (embed && !embedded)
     {
-      o_embed (toplevel, obj);
+      o_embed (obj);
       o_page_changed (toplevel, obj);
     }
     else
     if (!embed && embedded)
     {
-      o_unembed (toplevel, obj);
+      o_unembed (obj);
       o_page_changed (toplevel, obj);
     }
   }
@@ -979,7 +979,7 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
   /* We may need to update connectivity. */
-  PAGE *page = o_get_page (toplevel, obj);
+  PAGE *page = o_get_page (obj);
   if (page != NULL) {
     s_conn_update_object (page, obj);
   }
@@ -1739,9 +1739,8 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
   SCM_ASSERT (edascm_is_object (obj_s), obj_s,
               SCM_ARG1, s_object_connections);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
-  if (o_get_page (toplevel, obj) == NULL) {
+  if (o_get_page (obj) == NULL) {
     scm_error (edascm_object_state_sym,
                s_object_connections,
                _("Object ~A is not included in a page."),

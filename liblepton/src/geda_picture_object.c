@@ -1234,7 +1234,6 @@ o_picture_set_from_buffer (TOPLEVEL *toplevel, OBJECT *object,
   GInputStream *stream;
   gchar *tmp;
 
-  g_return_val_if_fail (toplevel != NULL, FALSE);
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->picture != NULL, FALSE);
   g_return_val_if_fail (data != NULL, FALSE);

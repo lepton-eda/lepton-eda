@@ -32,16 +32,23 @@
 /*! \brief embed an object into a schematic
  *  \par Function Description
  *  This functions embeds an object \a o_current into a
- *  libgeda. Currently complex objects are just marked to
- *  be embedded later. Picture objects are embedded immediatly.
+ *  liblepton. Currently complex objects are just marked to
+ *  be embedded later. Picture objects are embedded immediately.
  *
- *  \param toplevel  The TOPLEVEL object
  *  \param o_current The OBJECT to embed
  */
-void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
+void
+o_embed (OBJECT *o_current)
 {
-  PAGE *page = o_get_page (toplevel, o_current);
   int page_modified = 0;
+  PAGE *page = NULL;
+  TOPLEVEL *toplevel = NULL;
+
+  page = o_get_page (o_current);
+
+  if (page != NULL) {
+    toplevel = page->toplevel;
+  }
 
   /* check o_current is a complex and is not already embedded */
   if (o_current->type == OBJ_COMPLEX &&
@@ -73,17 +80,24 @@ void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
 /*! \brief unembed an object from a schematic
  *  \par Function Description
  *  This functions unembeds an object \a o_current from a
- *  libgeda structure. Complex objects are just marked to
- *  be not embedded. Picture objects are unembeded immediatly.
+ *  liblepton structure. Complex objects are just marked to
+ *  be not embedded. Picture objects are unembedded immediately.
  *
- *  \param toplevel  The TOPLEVEL object
  *  \param o_current The OBJECT to unembed
  */
-void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
+void
+o_unembed (OBJECT *o_current)
 {
   const CLibSymbol *sym;
-  PAGE *page = o_get_page (toplevel, o_current);
   int page_modified = 0;
+  PAGE *page = NULL;
+  TOPLEVEL *toplevel = NULL;
+
+  page = o_get_page (o_current);
+
+  if (page != NULL) {
+    toplevel = page->toplevel;
+  }
 
   /* check o_current is an embedded complex */
   if (o_current->type == OBJ_COMPLEX &&

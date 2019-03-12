@@ -204,8 +204,7 @@ SCM_DEFINE (object_page, "%object-page", 1, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
               SCM_ARG1, s_object_page);
 
-  PAGE *page = o_get_page (edascm_c_current_toplevel (),
-                           edascm_to_object (obj_s));
+  PAGE *page = o_get_page (edascm_to_object (obj_s));
 
   if (page != NULL) {
     return edascm_from_page (page);
@@ -239,7 +238,7 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
   /* Check that the object isn't already attached to something. */
-  PAGE *curr_page = o_get_page (toplevel, obj);
+  PAGE *curr_page = o_get_page (obj);
   if (((curr_page != NULL) && (curr_page != page))
       || (obj->parent != NULL)) {
     scm_error (edascm_object_state_sym, s_page_append_x,
@@ -284,7 +283,7 @@ SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
   /* Check that the object is not attached to something else. */
-  PAGE *curr_page = o_get_page (toplevel, obj);
+  PAGE *curr_page = o_get_page (obj);
   if ((curr_page != NULL && curr_page != page)
       || (obj->parent != NULL)) {
     scm_error (edascm_object_state_sym, s_page_remove_x,
