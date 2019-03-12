@@ -628,7 +628,7 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
   g_return_val_if_fail ((object->type == OBJ_NET), 0);
 
   /* It's meaningless to do anything here if the object isn't in a page. */
-  page = o_get_page (toplevel, object);
+  page = o_get_page (object);
   g_return_val_if_fail ((page != NULL), 0);
 
   object_orient = geda_net_object_orientation (object);

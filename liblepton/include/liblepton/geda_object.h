@@ -176,7 +176,7 @@ o_get_line_options (OBJECT *object,
                     int *space);
 
 PAGE*
-o_get_page (TOPLEVEL *toplevel, OBJECT *object);
+o_get_page (OBJECT *object);
 
 OBJECT*
 o_get_parent (TOPLEVEL *toplevel, OBJECT *object);

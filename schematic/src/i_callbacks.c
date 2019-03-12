@@ -841,7 +841,7 @@ DEFINE_I_CALLBACK(edit_embed)
       g_assert (o_current != NULL);
       if ( (o_current->type == OBJ_COMPLEX) ||
 	   (o_current->type == OBJ_PICTURE) ) {
-        o_embed (toplevel, o_current);
+        o_embed (o_current);
       }
       s_current = g_list_next(s_current);
     }
@@ -883,7 +883,7 @@ DEFINE_I_CALLBACK(edit_unembed)
       g_assert (o_current != NULL);
       if ( (o_current->type == OBJ_COMPLEX) ||
            (o_current->type == OBJ_PICTURE) ) {
-        o_unembed (toplevel, o_current);
+        o_unembed (o_current);
       }
       s_current = g_list_next(s_current);
     }
