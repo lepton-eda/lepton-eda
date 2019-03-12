@@ -118,7 +118,6 @@ gint gattrib_quit(gint return_code)
  * - initialises libgeda;
  * - parses the command line;
  * - starts logging;
- * - registers the Scheme functions with Guile;
  * - parses the RC files;
  * - initialises the GTK UI;
  * - populates the spreadsheet data structure;
@@ -160,9 +159,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
     (_("Lepton EDA/lepton-attrib version %1$s%2$s.%3$s git: %4$.7s"),
      PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
      PACKAGE_DATE_VERSION, PACKAGE_GIT_COMMIT);
-
-  /* ------  register guile (scheme) functions.  Necessary to parse RC file.  ------ */
-  g_register_funcs();
 
   /* ---------- Start creation of new project: (TOPLEVEL *pr_current) ---------- */
   pr_current = s_toplevel_new();

@@ -11,7 +11,6 @@ lepton_attrib_SOURCES = \
 		listsort.c \
 		parsecmd.c \
 		f_export.c \
-		g_register.c \
 		i_vars.c \
 		i_basic.c \
 		x_window.c \
