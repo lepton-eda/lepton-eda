@@ -74,7 +74,7 @@ SCM_SYMBOL (lineto_sym , "lineto");
 SCM_SYMBOL (curveto_sym , "curveto");
 SCM_SYMBOL (closepath_sym , "closepath");
 
-void o_page_changed (TOPLEVEL *t, OBJECT *o)
+void o_page_changed (OBJECT *o)
 {
   PAGE *p = o_get_page (o);
   if (p != NULL) p->CHANGED = TRUE;
@@ -500,7 +500,7 @@ SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
                       width,
                       length,
                       space);
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return obj_s;
 }
@@ -663,7 +663,7 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
                       angle1,
                       space2,
                       angle2);
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return obj_s;
 }
@@ -715,7 +715,7 @@ SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
   OBJECT *obj = edascm_to_object (obj_s);
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return obj_s;
 }
@@ -780,8 +780,7 @@ SCM_DEFINE (set_object_selectable_x, "%set-object-selectable!", 2, 0, 0,
 
     /* mark the page as changed:
     */
-    TOPLEVEL* toplevel = edascm_c_current_toplevel();
-    o_page_changed (toplevel, obj);
+    o_page_changed (obj);
   }
 
   return obj_s;
@@ -857,20 +856,19 @@ SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
 
   if (embeddable)
   {
-    TOPLEVEL* toplevel = edascm_c_current_toplevel();
     gboolean  embedded = component ? o_complex_is_embedded (obj)
                                    : o_picture_is_embedded (obj);
 
     if (embed && !embedded)
     {
       o_embed (obj);
-      o_page_changed (toplevel, obj);
+      o_page_changed (obj);
     }
     else
     if (!embed && embedded)
     {
       o_unembed (obj);
-      o_page_changed (toplevel, obj);
+      o_page_changed (obj);
     }
   }
 
@@ -984,7 +982,7 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
     s_conn_update_object (page, obj);
   }
 
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return line_s;
 }
@@ -1238,7 +1236,7 @@ SCM_DEFINE (set_box_x, "%set-box!", 6, 0, 0,
                               scm_to_int (x2_s), scm_to_int (y2_s));
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return box_s;
 }
@@ -1336,7 +1334,7 @@ SCM_DEFINE (set_circle_x, "%set-circle!", 5, 0, 0,
   geda_circle_object_modify (toplevel, obj, scm_to_int(r_s), 0, CIRCLE_RADIUS);
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return circle_s;
 }
@@ -1442,7 +1440,7 @@ SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
   geda_arc_object_modify (toplevel, obj, scm_to_int(end_angle_s), 0, ARC_SWEEP_ANGLE);
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return arc_s;
 }
@@ -1637,7 +1635,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   /* Color */
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return text_s;
 }
@@ -1950,7 +1948,7 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
   }
 
   o_emit_change_notify (toplevel, obj);
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return obj_s;
 }
@@ -2065,7 +2063,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   path->sections[idx] = section;
 
   o_emit_change_notify (toplevel, obj);
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return obj_s;
 }
@@ -2262,7 +2260,7 @@ SCM_DEFINE (set_picture_data_vector_x, "%set-picture-data/vector!",
                     scm_list_1 (scm_from_utf8_string (error->message)));
   }
 
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
   scm_dynwind_end ();
   return obj_s;
 }
@@ -2301,7 +2299,7 @@ SCM_DEFINE (translate_object_x, "%translate-object!", 3, 0, 0,
   o_emit_pre_change_notify (toplevel, obj);
   geda_object_translate (obj, dx, dy);
   o_emit_change_notify (toplevel, obj);
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return obj_s;
 }
@@ -2352,7 +2350,7 @@ SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
   o_emit_pre_change_notify (toplevel, obj);
   geda_object_rotate (toplevel, x, y, angle, obj);
   o_emit_change_notify (toplevel, obj);
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return obj_s;
 }
@@ -2385,7 +2383,7 @@ SCM_DEFINE (mirror_object_x, "%mirror-object!", 2, 0, 0,
   o_emit_pre_change_notify (toplevel, obj);
   geda_object_mirror (toplevel, x, 0, obj);
   o_emit_change_notify (toplevel, obj);
-  o_page_changed (toplevel, obj);
+  o_page_changed (obj);
 
   return obj_s;
 }

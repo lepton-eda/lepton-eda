@@ -208,7 +208,7 @@ int edascm_is_object_type (SCM smob, int type);
 
 
 /*! \brief Flag an object's page as having been changed. */
-extern void o_page_changed (TOPLEVEL *t, OBJECT *o);
+extern void o_page_changed (OBJECT *o);
 
 /* ---------------------------------------- */
 
