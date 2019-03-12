@@ -45,17 +45,6 @@ msgstr ""
 msgid "Couldn't find file [%1$s]\n"
 msgstr "Kan bestand [%s] niet vinden\n"
 
-#: attrib/src/g_rc.c:70
-#, fuzzy, c-format
-msgid ""
-"You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"
-"but you have a version [%4$s] gattribrc file.\n"
-"Please be sure that you have the latest rc file.\n"
-msgstr ""
-"U gebruikt gEDA/gaf versie [%s%s.%s],\n"
-"maar U heeft een versie [%s] gattribrc bestand.\n"
-"Wilt U gaarne het laatste rc bestand gebruiken.\n"
-
 #: attrib/src/gtksheet_2_2.c:6302
 msgid "Entry type must be GtkEntry subclass, using default"
 msgstr "Invoer type moet een GtkEntry subklasse zijn, gebruik de standaard"

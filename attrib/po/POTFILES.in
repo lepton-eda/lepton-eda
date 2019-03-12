@@ -2,7 +2,6 @@ attrib/data/lepton-attrib.desktop.in
 attrib/src/f_export.c
 attrib/src/lepton-attrib.c
 attrib/src/globals.c
-attrib/src/g_rc.c
 attrib/src/g_register.c
 attrib/src/gtkextra-marshal.c
 attrib/src/gtksheet_2_2.c
