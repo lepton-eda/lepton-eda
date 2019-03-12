@@ -26,9 +26,6 @@ void g_register_funcs(void);
 SCM g_quit(void);
 
 
-/* ------------- g_rc.c ------------- */
-SCM g_rc_gattrib_version(SCM version);
-
 /* ------------- s_attrib.c ------------- */
 int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name);
 char *s_attrib_get_refdes(OBJECT *object);

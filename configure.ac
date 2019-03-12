@@ -231,7 +231,6 @@ AC_CONFIG_FILES([Makefile
                  attrib/docs/Makefile
                  attrib/include/Makefile
                  attrib/lib/Makefile
-                 attrib/lib/system-gattribrc
                  attrib/src/Makefile
                  attrib/data/Makefile
 

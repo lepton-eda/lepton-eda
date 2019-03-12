@@ -42,14 +42,6 @@ msgstr ""
 msgid "Couldn't find file [%1$s]\n"
 msgstr ""
 
-#: attrib/src/g_rc.c:70
-#, c-format
-msgid ""
-"You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"
-"but you have a version [%4$s] gattribrc file.\n"
-"Please be sure that you have the latest rc file.\n"
-msgstr ""
-
 #: attrib/src/gtksheet_2_2.c:6302
 msgid "Entry type must be GtkEntry subclass, using default"
 msgstr ""
