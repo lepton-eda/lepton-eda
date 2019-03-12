@@ -21,11 +21,6 @@ STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double);
 void f_export_components(gchar *filename);
 
 
-/* ------------- g_register.c ------------- */
-void g_register_funcs(void);
-SCM g_quit(void);
-
-
 /* ------------- s_attrib.c ------------- */
 int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name);
 char *s_attrib_get_refdes(OBJECT *object);
