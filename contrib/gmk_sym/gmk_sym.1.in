@@ -4,7 +4,7 @@
 gmk_sym \- create rectangular symbols for gschem from a text file
 
 .SH SYNOPSIS
-.B gmk_sym [ -d ]
+.B gmk_sym
 .I inputfile.txt
 .B >
 .I outputfile.sym
@@ -17,9 +17,6 @@ is a program to create rectangular symbols for gschem from a file
 composed of comma separated lines.
 
 .SH OPTIONS
-.TP
-\-d
-Turn on debug output
 .TP
 \-h, \-?
 Display usage information

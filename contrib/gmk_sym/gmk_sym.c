@@ -171,20 +171,17 @@ int main(int argc,char **argv)
 {
   FILE *stream;
   char LineBuf[256];
-  int fldcnt,i,c,Debug=0;
+  int fldcnt,i,c;
   char *pFields[MAX_FIELDS];
   int line_nub=0;
 
-  while ((c = getopt(argc, argv, "?hd:")) != EOF)
+  while ((c = getopt(argc, argv, "?h:")) != EOF)
         {
         switch (c)
           {
-          case 'd':
-            Debug = 1;
-            break;
           case '?':
           case 'h':
-            fprintf(stderr,"usage: %s -dh?\n",argv[0]);
+            fprintf(stderr,"usage: %s -h?\n",argv[0]);
             exit(0);
             break;
           }
