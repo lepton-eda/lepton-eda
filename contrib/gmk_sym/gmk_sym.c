@@ -266,7 +266,7 @@ void cross(int pos_x,int pos_y,int color)
 
 /***************************************************/
 /***************************************************/
-void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *type)
+void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, const char *type)
 { int x,y;
   int xdir=0,ydir=0,font_size=8;
 
@@ -539,7 +539,7 @@ int make_pin(int fldcnt,char *pFields[]) {
   char pin_name[40];
   char pin[40];
   int pin_pos;
-  char *type;
+  const char *type;
 
   if (fldcnt < 5) {
     fprintf (stderr,"\nError, not enough parameters on input line:%i instead of 5 !\n",fldcnt);
