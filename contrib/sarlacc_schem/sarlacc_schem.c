@@ -625,7 +625,7 @@ void parse_power (int fd)
 {
     char localbuf[256];
     char textbuf[256];
-    char *symbol;
+    const char *symbol;
     int size;
     int x,y,xtext,ytext;
     int angle;
