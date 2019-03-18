@@ -113,7 +113,7 @@ static int vector_found;
 
 
 /* type of pin */
-static char *pintypestr[] = {
+static const char *pintypestr[] = {
   "???",
   "I/O",
   "IN",
@@ -126,7 +126,7 @@ static char *pintypestr[] = {
 };
 
 
-static char *edapintype[] = {
+static const char *edapintype[] = {
   "???",
   "io",
   "in",
