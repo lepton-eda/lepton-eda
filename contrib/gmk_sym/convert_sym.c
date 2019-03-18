@@ -242,8 +242,8 @@ struct LineStyle linemap[8] =
 
 /* attribute translation table */
 struct Translation {
-  char *origName;       /* name as it appears on a viewlogic schematic */
-  char *newName;        /* name as it should appear in gEDA */
+  const char *origName; /* name as it appears on a viewlogic schematic */
+  const char *newName;  /* name as it should appear in gEDA */
   unsigned int action;  /* what to do with this name */
 };
 
