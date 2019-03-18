@@ -124,10 +124,8 @@ void main_prog(void *closure, int argc, char *argv[])
   char *cwd = NULL;
   GschemToplevel *w_current = NULL;
   TOPLEVEL *toplevel = NULL;
-  char *input_str = NULL;
   int argv_index;
   char *filename;
-  SCM scm_tmp;
 
 #ifdef HAVE_GTHREAD
   /* Gschem isn't threaded, but some of GTK's file chooser
@@ -193,24 +191,8 @@ void main_prog(void *closure, int argc, char *argv[])
   /* Run pre-load Scheme expressions */
   g_scm_eval_protected (s_pre_load_expr, scm_current_module ());
 
-  /* By this point, libgeda should have setup the Guile load path, so
-   * we can take advantage of that.  */
-  scm_tmp = scm_sys_search_load_path (scm_from_utf8_string ("gschem.scm"));
-  if (scm_is_false (scm_tmp)) {
-    s_log_message (_("Couldn't find init scm file [%1$s]"), "gschem.scm");
-  }
-  input_str = scm_to_utf8_string (scm_tmp);
+  /* Initialize toplevel */
   toplevel = s_toplevel_new ();
-  if (g_read_file(toplevel, input_str, NULL)) {
-    s_log_message(_("Read init scm file [%1$s]"), input_str);
-  } else {
-    /*! \todo These two messages are the same. Should be
-     * integrated. */
-    s_log_message(_("Failed to read init scm file [%1$s]"),
-                  input_str);
-  }
-  free (input_str); /* M'allocated by scm_to_utf8_string() */
-  scm_remember_upto_here_1 (scm_tmp);
 
   /* Set up default configuration */
   i_vars_init_gschem_defaults ();

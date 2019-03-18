@@ -3,8 +3,11 @@
 ; Init file for lepton-schematic
 ;
 
-( use-modules ( gschem deprecated ) )
-( use-modules ( schematic netlist ) )
+(use-modules (gschem deprecated)
+             (schematic gui keymap)
+             (schematic gui stroke)
+             (schematic netlist)
+             (gschem builtins))
 
 
 ; gschem-version string

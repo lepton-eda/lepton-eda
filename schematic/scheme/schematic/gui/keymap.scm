@@ -1,6 +1,7 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Copyright (C) 1998-2010 Ales Hvezda
-;;; Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+;;; Copyright (C) 1998-2013 gEDA Contributors
+;;; Copyright (C) 2017-2019 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -17,18 +18,29 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(use-modules (gschem keymap)
-             (gschem action)
-             (gschem builtins)
-             (gschem window)
-             (srfi srfi-1))
+(define-module (schematic gui keymap)
+  #:use-module (srfi srfi-1)
+  #:use-module (gschem keymap)
+  #:use-module (gschem action)
+  #:use-module (gschem builtins)
+  #:use-module (gschem window)
+
+  #:export (%global-keymap
+            current-keymap
+            global-set-key
+            press-key
+            reset-keys
+            find-key
+            %gschem-hotkey-store/dump-global-keymap))
 
 ;; -------------------------------------------------------------------
 ;;;; Global keymaps and key dispatch logic
 
 (define current-keys '())
 
+;;; Default global keymap.
 (define %global-keymap (make-keymap))
+;;; User defined keymap.
 (define current-keymap %global-keymap)
 
 ;; Set a global keybinding
@@ -68,20 +80,6 @@
            (else (reset-keys)))))
 
       (reset-keys)))
-
-
-(define (eval-stroke stroke)
-  (let ((action (assoc stroke strokes)))
-    (cond ((not action)
-;           (display "No such stroke\n")
-;          (display stroke)
-           #f)
-          (else
-;           (display "Scheme found action ")
-;           (display action)
-;           (display "\n")
-           (eval-action! (cdr action))
-           #t))))
 
 ;; Search the global keymap for a particular symbol and return the
 ;; keys which execute this hotkey, as a string suitable for display to
