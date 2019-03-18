@@ -95,19 +95,9 @@ void gschem_quit(void)
   x_stroke_free ();
 #endif /* HAVE_LIBSTROKE */
   o_undo_cleanup();
-  /* s_stroke_free(); no longer needed */
 
   i_vars_freenames();
   i_vars_libgeda_freenames();
-
-  /* x_window_free_head(); can't do this since it causes a
-   * condition in which window_head->... is still being refered
-   * after this */
-
-  /* enable this to get more memory usage from glib */
-  /* You also have to enable something in glib I think */
-  /* g_mem_profile();*/
-
 
   gtk_main_quit();
 }
