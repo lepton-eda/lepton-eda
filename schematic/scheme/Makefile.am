@@ -4,7 +4,6 @@ scmdatadir = $(GEDADATADIR)/scheme
 nobase_dist_scmdata_DATA = \
 	auto-refdes.scm \
 	auto-uref.scm \
-	gschem.scm \
 	list-keys.scm \
 	print-NB-attribs.scm \
 	auto-place-attribs.scm \
@@ -24,6 +23,8 @@ nobase_dist_scmdata_DATA = \
 	gschem/action.scm \
 	gschem/builtins.scm \
 	gschem/symbol/check.scm \
+	schematic/gui/keymap.scm \
+	schematic/gui/stroke.scm \
 	schematic/netlist.scm \
 	schematic/undo.scm \
 	conf/schematic/attribs.scm \
