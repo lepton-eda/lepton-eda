@@ -196,7 +196,7 @@ void parse_titleblock(int fd)
     read_string(data,sizeof(data),localbuf+DATE);
     fprintf(stderr,"%s\n",data);
 
-    switch(localbuf[4] && 0x0F)
+    switch(localbuf[4] & 0x0F)
     {
 	case 0: pagesize = 'A'; ypos = 8*scale+scale/2; break;
 	case 1: pagesize = 'B'; ypos = 11*scale; break;
