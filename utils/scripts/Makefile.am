@@ -15,7 +15,7 @@ EXTRA_DIST = \
 	lepton-refdes_renum \
 	lepton-schdiff \
 	lepton-symfix \
-	lepton-tragesym \
+	lepton-tragesym.in \
 	lepton-upcfg.in
 
 do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
@@ -23,6 +23,10 @@ do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
 	-e 's,[@]ccachedir[@],@LEPTON_SCM_PRECOMPILE_DIR@,g'
 
 lepton-archive: lepton-archive.in
+	$(do_subst) < $(srcdir)/$@.in > $@
+	chmod +x $@
+
+lepton-tragesym: lepton-tragesym.in
 	$(do_subst) < $(srcdir)/$@.in > $@
 	chmod +x $@
 
@@ -34,5 +38,5 @@ lepton-upcfg: lepton-upcfg.in
 	$(do_subst) < $(srcdir)/$@.in > $@
 	chmod +x $@
 
-CLEANFILES = lepton-archive lepton-embed lepton-upcfg
+CLEANFILES = lepton-archive lepton-embed lepton-tragesym lepton-upcfg
 MAINTAINERCLEANFILES = Makefile.in
