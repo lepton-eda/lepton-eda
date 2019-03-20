@@ -1,0 +1,863 @@
+#!/usr/bin/env sh
+exec guile -s "$0" "$@"
+!#
+;;; Copyright (C) 2019 Lepton EDA Contributors
+;;;
+;;; Based on Python script by Stuart Brorson:
+;;; Copyright (C) 2003 Stuart Brorson <sdb@cloud9.net>
+;;;
+;;; This program is free software; you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation; either version 2 of the License, or
+;;; (at your option) any later version.
+;;;
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU General Public License
+;;; along with this program; if not, write to the Free Software
+;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+
+
+;;; This program is used to create a Lepton EDA design archive.
+;;; It operates in two modes: archive mode and extract mode.  In
+;;; archive mode it creates a project archive from a bunch of
+;;; project files, and in extract mode it extracts the files from
+;;; the archive and places them in the local dir.
+
+;;; Detailed description:
+
+;;; Use -h option to get information about program invocation.
+
+;;; Archive mode algorithm:
+;;; - In the project directory (current directory), create archive
+;;;   file list containing 'archiverc', 'gafrc', files listed on
+;;;   command line, and archiverc contents.
+;;; - Make temporary directory with the name of the project.
+;;; - Make cache directory in it.
+;;; - Create schematic file list from the archive file list.
+;;; - Copy all schematics and files from the archive file list
+;;;   into the temporary directory.
+;;; - Copy symbols from all the schematics into the cache
+;;;   directory.
+;;; - Copy all SPICE files found in schematics into the cache
+;;;   directory.
+;;; - Fix gafrc in the temporary directory so lepton-schematic
+;;;   could find all symbols and SPICE files in the archive later.
+;;; - Create tar.gz archive from all the above files and move it
+;;;   to the project directory.
+;;; - Remove the temporary directory.
+
+;;; Extract mode algorithm:
+;;; - Copy archive file into temp directory.
+;;; - Create a list of archive's contents using "tar -t -f
+;;;   archive-name"
+;;; - Extract files into the temp directory
+;;; - Move all extracted files recursively into user's directory.
+;;;   Before each move, make sure that no overwrite of existing
+;;;   files will occur.
+
+
+;;; Load and initialize liblepton library.
+(load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
+                "libgeda_init")
+
+(use-modules (ice-9 ftw)
+             (ice-9 getopt-long)
+             (ice-9 match)
+             (ice-9 popen)
+             (ice-9 rdelim)
+             (ice-9 streams)
+             (ice-9 rdelim)
+             (srfi srfi-1)
+             (srfi srfi-26))
+
+(primitive-eval
+ '(use-modules (geda core toplevel)
+               (geda attrib)
+               (geda log)
+               (geda object)
+               (geda os)
+               (geda page)
+               (lepton file-system)
+               (lepton library component)
+               (netlist page)))
+
+
+;;; Helper functions and data structures.
+
+;;; Default archive name. Use lowercase letters to avoid issues
+;;; with case sensitive filesystems.
+(define default-archive-name "project-archive.tar.gz")
+
+;;; Help string.
+(define usage-info
+  (format #f
+          "lepton-archive -- the Lepton EDA archiving utility.
+Used to create as well as extract Lepton EDA designs from an
+archive.  The two modes of operation are \"archive mode\"
+(archive creation) and \"extract mode\".  Archive mode is the default.
+
+Command line switches:
+  -f <filename>  -- Optional.  Used in archive mode.  Read files to archive from
+                    <filename> instead of archiverc.
+  -v             -- Optional.  Verbose mode.  Used in both archive and extract mode.
+                    Spews lots of info about what the prog is doing.
+  -e             -- Mandatory if you want to extract.  Extract mode.
+                    Open up the archive specified on the command line.
+  -a             -- Optional.  Archive mode.  Archive mode (i.e. create a project
+                    archive) is the default; this flag exists to give people
+                    the warm and fuzzies.
+  -o <outfile>   -- Optional.  Used in archive mode.  Specifies the name of
+                    the output archive file.  The output file extension
+                    should be \".tar.gz\".  If this flag is not specified, the
+                    output file name is ~S.
+
+Example usage:
+   Create an archive named \"MyArchive.tar.gz\" (files to store listed in \"archiverc\"):
+   lepton-archive -o MyArchive.tar.gz
+
+   Verbosely create an archive (archives files listed on command line
+   as well as those listed in \"archiverc\"):
+   lepton-archive -v -o MyArchive.tar.gz README Schematic1.sch Schematic2.sch Schematic3.sch
+
+   Extract an archive:
+   lepton-archive -e ~A
+"
+default-archive-name
+default-archive-name))
+
+(define (debug-format s . args)
+  "Formats and outputs S using ARGS when the verbose mode is set."
+  (when (option-ref %options 'verbose #f)
+    (display "---- ")
+    (apply format (current-error-port) s args)
+    (newline)))
+
+(define (make-absolute-filename dir-name file-name)
+  (if (absolute-file-name? file-name)
+      file-name
+      (string-append dir-name
+                     file-name-separator-string
+                     file-name)))
+
+(define (check-archive-filename filename)
+  "Checks if FILENAME is a valid archive filename."
+  (string-suffix-ci? ".tar.gz" filename))
+
+
+
+(define %option-spec
+  '((help (single-char #\h) (value #f))
+    (filename (single-char #\f) (value #f))
+    (verbose (single-char #\v) (value #f))
+    (extract (single-char #\e) (value #f))
+    (archive (single-char #\a) (value #f))
+    (output (single-char #\o) (value #f))))
+
+
+(define (format-error s . args)
+  (apply format (current-error-port) s args)
+  (primitive-exit 1))
+
+(define option-error format-error)
+
+(define (wrong-option-handler)
+  "Primitive wrong option handler for getopt-long."
+  (format-error "Use \"~A -h\" for help\n" (car (program-arguments))))
+
+;;; Options.
+(define %options
+  (catch #t
+    (lambda ()
+      (getopt-long (program-arguments) %option-spec))
+    (lambda (key . args)
+      (wrong-option-handler))))
+
+;;; Program mode.
+(define help-mode?
+  (and (option-ref %options 'help #f)
+       (display usage-info)
+       (primitive-exit 0)))
+
+(define extract-mode? (option-ref %options 'extract #f))
+
+;; Archive mode is default. Don't check any options, just check
+;; extract mode is not set.
+(define archive-mode?
+  (if (and extract-mode?
+           (option-ref %options 'archive #f))
+      (option-error "Mutually exclusive option --archive and --extract.\n")
+      (not extract-mode?)))
+
+(define gafrc "gafrc")
+
+;;; Check for options invalid in extract mode.
+(define (validate/extract-mode filename)
+  (if extract-mode?
+      (and filename
+           (option-error "Incompatible command line arguments.\n"))
+      filename))
+
+
+;;; File must exist.
+(define (check-existence filename)
+  (if (file-exists? filename)
+      filename
+      (option-error "Resource file ~S doesn't exist.  Exiting.\n" filename)))
+
+(define archiverc
+  (and (not extract-mode?)
+       (check-existence
+        (or (option-ref %options 'filename #f)
+            "archiverc"))))
+
+(define (request-confirmation prompt result)
+  (format #t prompt)
+  (if (char=? (read-char (current-input-port)) #\y)
+      result
+      (primitive-exit 1)))
+
+;;; Output archive name.
+(define output-file-name
+  (let ((filename
+         (or (validate/extract-mode (option-ref %options 'output #f))
+             default-archive-name)))
+    (if (check-archive-filename filename)
+        filename
+        (request-confirmation
+         "Warning: output file suffix is not \".tar.gz\" -- the
+extractor won't know how to deal with your archive.
+Continue? [y/N] "
+         filename))))
+
+
+;;; Directory holding files to archive. It is the current
+;;; directory where the program was invoked.
+(define project-directory (getcwd))
+
+;;; Directory for caching schematic files.
+(define cache-directory "cache")
+
+
+(define command-line-file-list (option-ref %options '() '()))
+
+
+(define* (delete-file* filename #:optional quiet)
+  (catch #t
+    (lambda () (delete-file filename))
+    (lambda (key . args)
+      (unless quiet
+        (format #t "Cannot delete file ~S.\n~S: ~S\n" filename key args))
+      #f)))
+
+(define (copy-file* old-filename new-filename)
+  (catch #t
+    (lambda () (copy-file old-filename new-filename))
+    (lambda (key . args)
+      (format #t "Cannot copy file ~S to ~S.\n~S: ~S\n"
+              old-filename
+              new-filename
+              key
+              args))))
+
+(define (copy-file-to-dir filename directory-name)
+  (copy-file* filename
+              (make-absolute-filename directory-name
+                                      (basename filename))))
+
+(define (rename-file* old-filename new-filename)
+  (catch #t
+    (lambda () (rename-file old-filename new-filename))
+    (lambda (key . args)
+      (format #t "Cannot rename file ~S to ~S.\n~S: ~S\n"
+              old-filename
+              new-filename
+              key
+              args))))
+
+(define (mkdir* path . args)
+  (if (file-exists? path)
+      ;; If file exists, and it is directory, do nothing.
+      ;; Otherwise, ask the user, if she wants to overwrite it.
+      (unless (directory? path)
+        (if (overwrite-file?
+             (format #f "~S already exists and is not directory. Overwrite? [y/N]"
+                     path))
+            (begin
+              (delete-file* path)
+              (apply mkdir path args))
+            (report-preserve-existing-file path)))
+      ;; No file exists, just create the directory.
+      (apply mkdir path args)))
+
+
+(define (rmdir* filename)
+  (catch #t
+    (lambda () (rmdir filename))
+    (lambda (key . args)
+      (format #t "Cannot remove directory ~S.\n~S: ~S\n"
+              filename
+              key
+              args))))
+
+
+(define (overwrite-file? message)
+  (display message)
+  (string= (read-line (current-input-port)) "y"))
+
+
+(define (report-preserve-existing-file file)
+  (format #t "Preserving existing ~S in local directory.\n\n" file)
+  #f)
+
+
+(define (ls->path ls prefix)
+  (define (add-file-name-separator path)
+    (if (file-name-separator?
+         (string-ref path (1- (string-length path))))
+        path
+        (string-append path file-name-separator-string)))
+
+  (string-append (add-file-name-separator prefix)
+                 (string-join (reverse ls)
+                              file-name-separator-string)))
+
+
+(define (move-files-recursively from-path to-path)
+  (define (enter? name stat result)
+    (let* ((ls (cons (basename name) (or result '())))
+           (directory-name (ls->path ls to-path)))
+      (debug-format "Check directory: ~S" directory-name)
+      ;; If file exists, and it is directory, do nothing.
+      ;; Otherwise, ask the user, if she wants to overwrite it.
+      (if (and (file-exists? directory-name)
+               (not (directory? directory-name)))
+          (if (overwrite-file?
+               (format #f "~S already exists and is not directory. Overwrite? [y/N]"
+                       directory-name))
+              (delete-file* directory-name)
+              (report-preserve-existing-file directory-name))
+          ;; No file exists, just create the directory.
+          #t)))
+
+  (define (leaf name stat result)
+    ;; Increment the number of files processed.
+    (let ((new-filename (ls->path (cons (basename name) result)
+                                   to-path)))
+      (debug-format "Move file ~S to ~S" name new-filename)
+      (if (and (file-exists? new-filename)
+               (not (overwrite-file? (format #f "~S already exists.  Overwrite? [y/N]"
+                                             new-filename))))
+          (report-preserve-existing-file new-filename)
+          (rename-file* name new-filename))
+      result))
+
+  ;; Descend to a directory, and make its sibling in another tree.
+  (define (down name stat result)
+    (if result
+        (let* ((ls (cons (basename name) result))
+               (directory-name (ls->path ls to-path)))
+          (debug-format "Make directory: ~S" directory-name)
+          (mkdir* directory-name)
+          ls)
+        '()))
+
+  ;; Ascend from a directory and remove it.
+  (define (up name stat result)
+    (let ((directory-name (if (null? result)
+                              from-path
+                              (ls->path result from-path))))
+      (debug-format "Remove empty directory ~S" directory-name)
+      (rmdir* directory-name)
+      ;; Return value: it is #t when there is nothing to traverse
+      ;; more, or the list reflecting the upper directory.
+      (or (null? result)
+          (cdr result))))
+
+  ;; Likewise for skipped directories.
+  (define (skip name stat result)
+    (debug-format "Directory skipped.\n")
+    result)
+
+  ;; Ignore unreadable files/directories but warn the user.
+  (define (error name stat errno result)
+    (format (current-error-port) "warning: ~a: ~a~%"
+            name (strerror errno))
+    result)
+
+  (file-system-fold enter? leaf down up skip error
+                    #f
+                    from-path))
+
+
+(define (copy-files-recursively from-path to-path)
+  (define (enter? name stat result)
+    (let* ((ls (cons (basename name) (or result '())))
+           (directory-name (ls->path ls to-path)))
+      ;; If file exists, and it is directory, do nothing.
+      ;; Otherwise, ask the user, if she wants to overwrite it.
+      (if (and (file-exists? directory-name)
+               (not (directory? directory-name)))
+          (if (overwrite-file?
+               (format #f "~S already exists and is not directory. Overwrite? [y/N]"
+                       directory-name))
+              (delete-file* directory-name)
+              (report-preserve-existing-file directory-name))
+          ;; No file exists, just create the directory.
+          #t)))
+
+  (define (leaf name stat result)
+    ;; Increment the number of files processed.
+    (let ((new-filename (ls->path (cons (basename name) result)
+                                   to-path)))
+      (debug-format "Copy file ~S to ~S" name new-filename)
+      (if (and (file-exists? new-filename)
+               (not (overwrite-file? (format #f "~S already exists.  Overwrite? [y/N]"
+                                             new-filename))))
+          (report-preserve-existing-file new-filename)
+          (copy-file* name new-filename))
+      result))
+
+  ;; Descend to a directory, and make its sibling in another tree.
+  (define (down name stat result)
+    (let* ((ls (cons (basename name) (or result '())))
+           (directory-name (ls->path ls to-path)))
+      (debug-format "Make directory: ~S" directory-name)
+      (mkdir* directory-name)
+      ls))
+
+  ;; Ascend from a directory and remove it.
+  (define (up name stat result)
+    (or (null? result) (cdr result)))
+
+  ;; Likewise for skipped directories.
+  (define (skip name stat result)
+    (debug-format "Directory skipped.\n")
+    result)
+
+  ;; Ignore unreadable files/directories but warn the user.
+  (define (error name stat errno result)
+    (format (current-error-port) "warning: ~a: ~a~%"
+            name (strerror errno))
+    result)
+
+  (debug-format "Copy recursively ~S => ~S" from-path to-path)
+  (file-system-fold enter? leaf down up skip error
+                    #f
+                    from-path))
+
+
+(define (copy-to-dir filename directory-name)
+  (let ((destination (make-absolute-filename directory-name
+                                             (basename filename))))
+    (if (directory? filename)
+        (copy-files-recursively filename directory-name)
+        (copy-file* filename destination))))
+
+
+(define (create-archive-file-list)
+  "This creates the list of files in the archive.  It starts with
+known files, and then adds the names of the files to archive,
+given either at the command line or in the archiverc file."
+  (define not-string-null? (negate string-null?))
+
+  (define (archiverc-filenames)
+    (with-input-from-file archiverc
+      (lambda ()
+        (let loop ((line (read-line))
+                   (result '()))
+          (if (eof-object? line)
+              (filter not-string-null? result)
+              (loop (read-line)
+                    (cons (string-trim-both line)
+                          result)))))))
+
+  (define (make-empty-file filename)
+    (format #t "Creating ~S in archive." filename)
+    (with-output-to-file filename (lambda () (display "")))
+    filename)
+
+  (define (add-file filename source)
+    (let ((filename (make-absolute-filename project-directory
+                                            (expand-env-variables filename))))
+      (debug-format "Check ~S" filename)
+      (if (file-exists? filename)
+          filename
+          (match source
+            ('command-line
+             (format #t "Filename ~S listed in command line doesn't exist. Ignoring...\n"
+                     filename)
+             #f)
+            ('archiverc
+             (format #t "File ~S listed in ~S doesn't exist. Ignoring...\n"
+                     filename
+                     archiverc)
+             #f)
+            ('rc
+             (format #t "~S doesn't exist.  Create empty version in local dir? [Y/n] "
+                     filename)
+             (let ((input-char (read-char (current-input-port))))
+               (if (char=? input-char #\n)
+                   (format-error "You need ~S to create archive. Aborting.\n" filename)
+                   (make-empty-file filename))))))))
+
+  (define (add-rc-file filename)
+    (add-file filename 'rc))
+
+  (define (add-command-line-file filename)
+    (add-file filename 'command-line))
+
+  (define (add-archiverc-file filename)
+    (add-file filename 'archiverc))
+
+  (delete-duplicates
+   (append
+    (list
+     ;; Add RC files.
+     (add-rc-file gafrc)
+     (add-rc-file archiverc))
+    ;; Get names of all schematics and other files to archive.
+    ;; First get file names from command line.
+    (filter-map add-command-line-file command-line-file-list)
+    ;; Next get file names from file, if specified.
+    (filter-map add-archiverc-file (archiverc-filenames)))))
+
+
+;;; FIXME: it should go recursively through all resources, as
+;;; netlister does.
+(define (create-schematic-file-list filename-list)
+  "Creates the list of schematic files to search.  Right now
+I just run through FILE-LIST and pull out all files ending in .sch.
+Files are saved in list with basename (no path)."
+  (define (readable-schematic? filename)
+    (and (string-suffix? ".sch" filename)
+         (or (file-readable? filename)
+             (format-error "Can't access ~S for reading. Exiting." filename))))
+
+  ;; We need to make sure that this file is not already in the list.
+  (delete-duplicates (filter readable-schematic? filename-list)))
+
+
+(define (create-symbol-file-list schematic-file-list)
+  "Opens each schematic file in SCHEMATIC-FILE-LIST and collects
+component names used."
+    (define (schematic-symbols filename)
+      (map component-basename
+           (filter component?
+                   (page-contents (filename->page filename)))))
+
+    (delete-duplicates (append-map schematic-symbols schematic-file-list)))
+
+;;; FIXME: here must be the list of all resources, namely:
+;;; - bitmaps
+;;; - files listed in source= attributes -- they should go to the
+;;;   schematic file list
+;;; - files listed in file= attributes
+;;; - files listed in model-file= attributes (?)
+(define (create-spice-file-list schematic-file-list)
+    "This function opens each .sch file found and loops through
+it. While looping, it looks for SPICE files (typically lurking in
+lines like \"file=/path/to/spice/models/circuit.cir\". When it
+finds a SPICE file, it sticks it in the spice-file-list. The SPICE
+file names found are returned as absolute paths."
+    (define (page-contents->file-attrib-value-list page)
+      (append-map
+       (lambda (c)
+         (filter-map
+          (lambda (a) (and (string= (attrib-name a) "file") (attrib-value a)))
+          (object-attribs c)))
+       (filter component? (page-contents page))))
+
+    (define (file-attrib-filenames schematic-filename)
+      (let ((schematic (filename->page (make-absolute-filename project-directory
+                                                               (basename schematic-filename)))))
+        (page-contents->file-attrib-value-list schematic)))
+
+    ;;  Open file in user dir.
+    ;;  This needs to be more sophosticated
+    ;; spice-file = os.path.normpath(spice-file)
+    ;; (set! spice-file (os.path.abspath spice-file))
+    ;; (debug-format "Found ~S in schematic ~S." spice-file schematic-filename)
+    (delete-duplicates (append-map file-attrib-filenames schematic-file-list)))
+
+(define (page->file page filename)
+  (with-output-to-file filename
+    (lambda () (display (page->string page)))))
+
+(define (update-schematic-files schematic-file-list temp-dir)
+  "This function opens each .sch file found and loops through it.
+It stuffs each file line found into a list of lines.  While
+looping, it looks for SPICE files (typically lurking in lines like
+\"file=/path/to/spice/models/circuit.cir\" .  When it finds a
+SPICE file, it substitutes the line found with
+\"file=./gschem-files/circuit.cir\".  After running through the
+file, it closes the file, re-opens it as write-only, and outputs
+the changed file."
+  (define (canonicalize-spice-filename spice-filename)
+    (make-absolute-filename cache-directory
+                            (basename spice-filename)))
+
+  (define (update-schematic schematic-filename)
+    ;; Open file in user dir.
+    (let* ((tempdir-filename (make-absolute-filename temp-dir
+                                                     (basename schematic-filename)))
+           (page (filename->page tempdir-filename))
+           (file-attribs
+            (append-map
+             (lambda (c)
+               (filter-map
+                (lambda (a) (and (string= (attrib-name a) "file") a))
+                (object-attribs c)))
+             (filter component? (page-contents page)))))
+      (for-each
+       (lambda (a)
+         (set-attrib-value! a
+                            (canonicalize-spice-filename (attrib-value a))))
+       file-attribs)
+
+      (page->file page tempdir-filename)))
+
+  (for-each update-schematic schematic-file-list))
+
+
+(define (save-symbols symbol-file-list archive-directory)
+  "Copies symbols in SYMBOL-FILE-LIST to ARCHIVE-DIRECTORY."
+  (for-each
+   (lambda (symbol-filename)
+     (debug-format "Save symbol ~S" symbol-filename)
+     (let ((source (absolute-component-name symbol-filename)))
+       (if source
+           (copy-file-to-dir source archive-directory)
+           (format #t "Symbol ~S not found.\n" symbol-filename))))
+   symbol-file-list))
+
+
+(define (save-spice-files spice-file-list archive-directory)
+  "This function loops through all SPICE files in the list, finds
+the corresponding file somewhere in the directory tree, and then
+copies the file into the local archive."
+   (define (copy-spice-file spice-file-name)
+     (debug-format "Save SPICE file ~S"
+                   spice-file-name
+                   archive-directory)
+     (system* "cp"
+              spice-file-name
+              (make-absolute-filename archive-directory
+                                      (basename spice-file-name))))
+
+  (for-each copy-spice-file spice-file-list))
+
+
+(define (update-rc dir)
+  "Updates gafrc by resetting component libraries and adding a new
+symbol cache directory."
+  (let ((port (open (make-absolute-filename dir (basename gafrc))
+                    (logior O_WRONLY O_APPEND))))
+    (format port
+            "\n(reset-component-library)\n(component-library ~S)\n"
+            cache-directory)
+    (close port)))
+
+
+;;; Archiver.
+(define (archive)
+  "Main archiver."
+
+  (define (make-tmp-dir)
+    (let* ((tmp (tmpnam))
+           (name (string-append tmp
+                                file-name-separator-string
+                                (basename project-directory))))
+      (mkdir* tmp #o700)
+      (mkdir* name #o700)
+      name))
+
+  (let* (
+         ;; Temporary directory to put files and create archive in.
+         (tmpdir (make-tmp-dir))
+         ;; Create list of files (and directories) to stick into
+         ;; archive.  Returned paths point to the absolute paths of
+         ;; the files.
+         (archive-file-list (create-archive-file-list))
+         ;; Create list of schematic files to open and search.
+         ;; Returned paths give only the base name (i.e. no path)
+         (schematic-file-list (create-schematic-file-list archive-file-list))
+         ;; Now run through schematic-file-list and create list of
+         ;; symbols.  Symbols are returned with only base file
+         ;; name (i.e. no path).
+         (symbol-file-list (create-symbol-file-list schematic-file-list))
+         ;; Now run through schematic-file-list and create list of
+         ;; pointers to spice files ("file" attributes).
+         ;; spice-files are returned using absolute paths.
+         (spice-file-list (create-spice-file-list schematic-file-list)))
+
+    ;; Copy all files over to temporary directory.
+    (for-each (cut copy-to-dir <> tmpdir) archive-file-list)
+
+    ;; Now run through schematic-file-list and update .sch file by stuffing names
+    ;; of SPICE files into them.  Save the resulting .sch files in the /tmp directory.
+    (update-schematic-files schematic-file-list tmpdir)
+
+    ;; Add cache directory for symbols.  Stick symbol & SPICE
+    ;; files into it.
+    (let ((tmp/cache-directory (make-absolute-filename tmpdir
+                                                       cache-directory)))
+      (debug-format "Cache directory: ~S" tmp/cache-directory)
+      (mkdir* tmp/cache-directory)
+
+      (save-symbols symbol-file-list tmp/cache-directory)
+      (save-spice-files spice-file-list tmp/cache-directory))
+
+    ;; Now create tar file.  We copy remaining files over to /tmp, and then tar them
+    ;; all up using a local, relative file prefix.
+
+    ;; Update copy of gafrc.
+    (update-rc tmpdir)
+
+    (let* ((output-basename (basename output-file-name ".tar.gz"))
+           (output.tar (string-append output-basename ".tar"))
+           (temp/output.tar.gz
+            (make-absolute-filename tmpdir output-file-name))
+           (output.tar.gz
+            (make-absolute-filename project-directory output-file-name)))
+
+      (debug-format "Archive directory: ~S" tmpdir)
+
+      ;; Now cd into the temporary directory.
+      (chdir (dirname tmpdir))
+
+      ;;  Now use this in tar command.
+      (system* "tar"
+               "-c"
+               "-f"
+               output.tar
+               (basename tmpdir))
+      (system* "gzip" output.tar)
+
+      ;; Now try to move completed archive back to user directory.
+      (debug-format "Rename archive to ~S" output.tar.gz)
+      (if (file-exists? output.tar.gz)
+          ;; Directory already exists
+          (begin
+            (format #t "~S already exists. Overwrite? [y/N] " output.tar.gz)
+            (let ((input-char (read-char (current-input-port))))
+              (if (char=? input-char #\y)
+                  ;; Remove old archive
+                  (begin
+                    (delete-file* output.tar.gz)
+                    (rename-file* output-file-name output.tar.gz)
+                    (format #t "Project archive ~S created successfully!\n"
+                            output.tar.gz))
+                  ;; Report place of the new archive.
+                  (format #t "Preserving existing archive in local directory.
+Your new archive lives in ~S\n" temp/output.tar.gz))))
+          ;; Archive is not in user directory yet, no need to force it.
+          (rename-file* output-file-name output.tar.gz)))
+
+    ;; Return to the project directory.
+    (chdir project-directory)
+    ;; Get rid of temporary directory.
+    (debug-format "Remove temporary directory ~S" (dirname tmpdir))
+    ;; Well, I could make a procedure for recursive removing of
+    ;; the directory contents, but it is simpler just to use 'rm'
+    ;; here.
+    (system* "rm" "-r" "-f" (dirname tmpdir))))
+
+
+;;; Extracter.
+(define (extract)
+  "Extracts the archive into the current directory."
+
+  ;; Temporary directory to extract archive in.
+  (define tmpdir
+    (let ((name (tmpnam)))
+      (mkdir* name #o700)
+      name))
+
+  (define string-not-null? (negate string-null?))
+
+  (define (report-non-existing-file filename)
+    (format #t "File ~S doesn't exist. Ignoring.\n" filename))
+
+  (define (get-command-output command)
+    (apply string
+           (stream->list (port->stream (open-input-pipe command)
+                                       read-char))))
+
+  (define (extract-file archive-filename filename)
+    (debug-format "Extracting ~S" filename)
+    (system* "tar" "-f" archive-filename "-x" filename))
+
+  (define (is-simple-file? file)
+    (string=? (basename file) file))
+
+  (define (extract-from-archive filename.tar.gz)
+    (debug-format "Trying to extract archive ~S." filename.tar.gz)
+
+    (unless (copy-file-to-dir filename.tar.gz tmpdir)
+      (format-error "Can't work in the ~S directory.
+Check that you have write permission there.\n"
+                    tmpdir))
+
+    (chdir tmpdir)
+
+    ;; Change name of file so it can be gunziped.
+    (unless (check-archive-filename filename.tar.gz)
+      (format-error  "
+Error -- the file suffix is not \".tar.gz\"; lepton-archive can't do extraction.
+If this archive was created using lepton-archive, you can rename it using
+.tar.gz as suffix and try again.  Otherwise, just gunzip and tar -xvf
+the file manually.\n"))
+
+    ;; Gunzip the file.
+    (system* "gunzip" "-f" filename.tar.gz)
+    (let* (
+           ;; Get rid of the ".gz" suffix.
+           (filename.tar (string-drop-right filename.tar.gz 3))
+           ;; Get list of files in the archive.
+           (return-string (get-command-output (string-append "tar -t -f " filename.tar)))
+           (filename-list (filter string-not-null? (string-split return-string #\newline))))
+
+      ;; Extract all files first.
+      (for-each (cut extract-file filename.tar <>) filename-list)
+
+      ;; Clean up /tmp directory.
+      (delete-file* filename.tar)
+      ;; Don't report errors on deleting tar.gz, since gunzip
+      ;; might delete it before.
+      (delete-file* filename.tar.gz 'quiet)
+
+      ;; Move files to the project directory.
+      (move-files-recursively tmpdir project-directory)
+
+      (chdir project-directory)))
+
+  (define (process-file filename)
+    (if (file-exists? filename)
+        (extract-from-archive filename)
+        (report-non-existing-file filename)))
+
+  (when (null? command-line-file-list)
+    (format-error "Must specify a filename for extraction.\n"))
+
+  (for-each process-file command-line-file-list))
+
+
+;;; Main program.
+(define (main)
+  (if extract-mode?
+      (extract)
+      (archive)))
+
+
+(%with-toplevel (%make-toplevel)
+  (lambda ()
+    ;; Process all gafrc files.
+    ((@@ (guile-user) parse-rc) "lepton-archive" "gafrc" )
+    ;; Init log domain and create log file right away even if
+    ;; logging is enabled.
+    (init-log "lepton-archive")
+    (main)))
