@@ -7,4 +7,4 @@ Type=Application
 Exec=lepton-schematic %F
 Icon=lepton-schematic
 MimeType=application/x-lepton-schematic;application/x-lepton-symbol;
-Categories=Engineering;Electronics;
+Categories=Development;Electronics;Engineering;
