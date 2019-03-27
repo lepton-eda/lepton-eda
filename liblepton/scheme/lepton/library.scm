@@ -33,6 +33,7 @@
   #:use-module (srfi srfi-9)
   #:use-module (ice-9 ftw)
   #:use-module (ice-9 match)
+  #:use-module (lepton file-system)
 
   #:export (%default-source-library
             ;; deprecated
@@ -45,20 +46,6 @@
             ;; temporary
             get-source-library-file))
 
-(define (file-readable? s)
-  (let ((uid (getuid))
-        (gid (getgid))
-        (st (false-if-exception (stat s))))
-    (and st
-         (let* ((perms (stat:perms st))
-                (perms-bit-set? (lambda (mask)
-                                  (not (= 0 (logand mask perms))))))
-           (or (zero? uid)
-               (and (= uid (stat:uid st))
-                    (perms-bit-set? #o400))
-               (and (= gid (stat:gid st))
-                    (perms-bit-set? #o040))
-               (perms-bit-set? #o004))))))
 
 (define-record-type <source-library>
   (make-source-library contents)

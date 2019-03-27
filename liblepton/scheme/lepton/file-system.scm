@@ -22,7 +22,8 @@
 (define-module (lepton file-system)
 
   #:export (regular-file?
-            directory?))
+            directory?
+            file-readable?))
 
 (define (regular-file? path)
   "Returns #t if the given path is a regular file, otherwise #f."
@@ -31,3 +32,20 @@
 (define (directory? path)
   "Returns #t if the given path is a directory file, otherwise #f."
   (eqv? (stat:type (stat path)) 'directory ))
+
+(define (file-readable? filename)
+  "Returns #t if file FILENAME is readable with current user's
+permissions, otherwise returns #f."
+  (let ((uid (getuid))
+        (gid (getgid))
+        (st (false-if-exception (stat filename))))
+    (and st
+         (let* ((perms (stat:perms st))
+                (perms-bit-set? (lambda (mask)
+                                  (not (= 0 (logand mask perms))))))
+           (or (zero? uid)
+               (and (= uid (stat:uid st))
+                    (perms-bit-set? #o400))
+               (and (= gid (stat:gid st))
+                    (perms-bit-set? #o040))
+               (perms-bit-set? #o004))))))
