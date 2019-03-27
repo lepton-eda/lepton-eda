@@ -25,18 +25,6 @@
 	     (append (list (string-append first path-sep (car rest))) 
 		     (cdr rest)))))
 
-
-
-;; Returns #t if the given string ends with the given suffix, otherwise or #f.
-(define has-suffix?
-  (lambda (str suf)
-    (define len-str (string-length str))
-    (define len-suf (string-length suf))
-    (if (>= len-str len-suf)
-      (string=? (substring str (- len-str len-suf) len-str) suf)
-      #f
-    )))
-
 ;; Execute any scheme files found in the given directory.
 (define load-scheme-dir
   (lambda (scheme-dir)
@@ -48,7 +36,7 @@
           ((eof-object? entry))
         (let ((path (build-path scheme-dir entry)))
           (if (and (regular-file? path)
-                   (has-suffix? path ".scm")
+                   (string-suffix? ".scm" path)
                    (access? path R_OK))
             (eval-protected `(primitive-load ,path))
             #f

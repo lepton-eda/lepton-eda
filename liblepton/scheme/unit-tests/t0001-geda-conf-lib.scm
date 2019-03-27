@@ -21,7 +21,3 @@
 (begin-test 'directory?
  (assert-true (directory? "."))
  (assert-true (not (directory? "Makefile"))))
-
-(begin-test 'has-suffix?
- (assert-true (has-suffix? "unit-test.scm" ".scm"))
- (assert-true (not (has-suffix? "Makefile" ".scm"))))
