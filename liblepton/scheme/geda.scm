@@ -21,10 +21,7 @@
                          (last (sys-config-dirs))))
 
 (define (build-path first . rest)
-  (if (null? rest) first
-      (apply build-path 
-	     (append (list (string-append first path-sep (car rest))) 
-		     (cdr rest)))))
+  (string-join (cons first rest) file-name-separator-string))
 
 ;; Execute any scheme files found in the given directory.
 (define load-scheme-dir
