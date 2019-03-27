@@ -2,7 +2,8 @@
 ;; assumptions about the current directory.  Oh well.
 
 (use-modules (unit-test)
-             (lepton file-system))
+             (lepton file-system)
+             (lepton rc))
 
 (load-from-path "geda.scm")
 

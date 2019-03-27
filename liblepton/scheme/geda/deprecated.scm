@@ -21,17 +21,25 @@
 ;; be used in new code.
 
 (define-module (geda deprecated)
+ ;; Import C procedures
  #:use-module (geda core gettext)
+ #:use-module (geda core deprecated)
 
  #:use-module (geda page)
  #:use-module (geda object)
  #:use-module (geda attrib)
  #:use-module (geda log)
+ #:use-module (lepton rc)
 
- ;; Import C procedures
- #:use-module (geda core deprecated)
  #:re-export (OBJ_LINE OBJ_PATH OBJ_BOX OBJ_PICTURE OBJ_CIRCLE OBJ_NET
-                       OBJ_BUS OBJ_COMPLEX OBJ_TEXT OBJ_PIN OBJ_ARC)
+              OBJ_BUS OBJ_COMPLEX OBJ_TEXT OBJ_PIN OBJ_ARC)
+ ;; Re-export procedures and variables from (lepton rc).
+ #:re-export (build-path
+              geda-data-path
+              geda-rc-path
+              load-scheme-dir
+              load-rc-from-sys-config-dirs)
+
  #:export (deprecated-module-log-warning!))
 
 (define (deprecated-module-log-warning!)
