@@ -1,5 +1,6 @@
 ; -*-Scheme-*-
 (use-modules (ice-9 ftw)
+             (srfi srfi-1)
              (geda os)
              (lepton file-system)
              (lepton library))
@@ -15,9 +16,9 @@
 ;; Use the sys-data-dirs and sys-config-dirs functions from the (geda
 ;; os) module instead.
 (define geda-data-path (or (getenv "GEDADATA")
-                           ((@ (srfi srfi-1) last) (sys-data-dirs))))
+                           (last (sys-data-dirs))))
 (define geda-rc-path (or (getenv "GEDADATARC") (getenv "GEDADATA")
-                         ((@ (srfi srfi-1) last) (sys-config-dirs))))
+                         (last (sys-config-dirs))))
 
 (define (build-path first . rest)
   (if (null? rest) first
@@ -48,9 +49,6 @@
 ;; Load an rc file from the system configuration path (rather than the
 ;; regular Scheme load path)
 (define (load-rc-from-sys-config-dirs basename)
-  (define any (@ (srfi srfi-1) any))
-  (define sys-config-dirs (@ (geda os) sys-config-dirs))
-
   (define (dir-has-file? dir ext)
     (let ((path (build-path dir
                             (string-append basename ext))))
