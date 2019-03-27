@@ -49,21 +49,7 @@
 ;; Load an rc file from the system configuration path (rather than the
 ;; regular Scheme load path)
 (define (load-rc-from-sys-config-dirs basename)
-  (define (dir-has-file? dir ext)
-    (let ((path (build-path dir
-                            (string-append basename ext))))
-      (and (file-exists? path)
-           (regular-file? path)
-           path)))
-
-  (define (dir-has-scm? dir)
-    (any (lambda (x) (dir-has-file? dir x))
-          '("" ".scm")))
-
-  (define (find-first-file)
-    (any dir-has-scm? (sys-config-dirs)))
-
-  (let ((rc-file (find-first-file)))
+  (let ((rc-file (search-path (sys-config-dirs) basename '("" ".scm"))))
     ;; Use primitive-load to suppress autocompilation
     (if rc-file (primitive-load rc-file))))
 
