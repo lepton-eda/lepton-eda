@@ -1,7 +1,8 @@
 ;; Test Scheme procedures defined in geda.scm.  Makes blatant
 ;; assumptions about the current directory.  Oh well.
 
-(use-modules (unit-test))
+(use-modules (unit-test)
+             (lepton file-system))
 
 (load-from-path "geda.scm")
 

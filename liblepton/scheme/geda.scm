@@ -1,5 +1,8 @@
 ; -*-Scheme-*-
-(use-modules (geda os) (ice-9 ftw) (lepton library))
+(use-modules (ice-9 ftw)
+             (geda os)
+             (lepton file-system)
+             (lepton library))
 
 (define path-sep file-name-separator-string)
 
@@ -22,17 +25,7 @@
 	     (append (list (string-append first path-sep (car rest))) 
 		     (cdr rest)))))
 
-;; Returns #t if the given path is a regular file, otherwise #f.
-(define regular-file?
-  (lambda (path)
-    (eqv? (stat:type (stat path)) 'regular )
-  ))
 
-;; Returns #t if the given path is a directory file, otherwise #f.
-(define directory?
-  (lambda (path)
-    (eqv? (stat:type (stat path)) 'directory )
-  ))
 
 ;; Returns #t if the given string ends with the given suffix, otherwise or #f.
 (define has-suffix?
