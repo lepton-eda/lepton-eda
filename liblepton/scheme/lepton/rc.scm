@@ -47,8 +47,8 @@
 system file name separator string."
   (string-join (cons first rest) file-name-separator-string))
 
-;; Execute any scheme files found in the given directory.
 (define (load-scheme-dir scheme-dir)
+  "Evaluate any scheme files found in the given directory SCHEME-DIR."
   (if (and (file-exists? scheme-dir)
            (directory? scheme-dir)
            (access? scheme-dir R_OK))
@@ -65,9 +65,9 @@ system file name separator string."
         (closedir dir))
       #f))
 
-;; Load an rc file from the system configuration path (rather than the
-;; regular Scheme load path)
 (define (load-rc-from-sys-config-dirs basename)
+  "Load rc file BASENAME from the system configuration
+path (rather than the regular Scheme load path)."
   (let ((rc-file (search-path (sys-config-dirs) basename '("" ".scm"))))
     ;; Use primitive-load to suppress autocompilation
     (if rc-file (primitive-load rc-file))))
