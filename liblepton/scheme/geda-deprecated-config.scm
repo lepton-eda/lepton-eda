@@ -69,8 +69,8 @@
     (format (current-error-port)
 "WARNING: The RC file function '~A' is deprecated.
 
-RC configuration functions will be removed in an upcoming gEDA
-release.  Please use configuration files instead.
+RC configuration functions will be removed in an upcoming Lepton
+EDA release.  Please use configuration files instead.
 
 " old-id))
   (let ((warned? #f))
