@@ -1,3 +1,8 @@
+(use-modules (ice-9 regex)
+             (geda page)
+             (gschem hook)
+             (gschem window))
+
 ;
 ; Start of color section
 ;
@@ -140,7 +145,7 @@
     (use-modules (ice-9 regex))
     (display "Your Guile installation doesn't provide the regex module.\n"))
 
-(add-hook! (@ (gschem hook) new-page-hook) (lambda (page)
+(add-hook! new-page-hook (lambda (page)
    ; Only place the titleblock if there are no objects in the page
    ; and the page filename ends in ".sym".
    (if (and (null? (get-objects-in-page page))
@@ -154,7 +159,7 @@
        (add-component-at-xy page default-titleblock 40000 40000   0       #f       #f))
 
    ;; After adding titleblock, reset page to mark as unchanged.
-   ((@ (geda page) set-page-dirty!) ((@ (gschem window) active-page)) #f))
+   (set-page-dirty! page #f))
 	   #t)
 
 ;
