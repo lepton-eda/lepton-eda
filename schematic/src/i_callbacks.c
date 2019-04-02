@@ -209,6 +209,8 @@ void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
   i_callback_file_save (data, 0, widget);
 }
 
+
+
 /*! \brief Save all opened pages
  */
 DEFINE_I_CALLBACK(file_save_all)
@@ -234,11 +236,19 @@ DEFINE_I_CALLBACK(file_save_all)
       const gchar* fname = s_page_get_filename (page);
       x_window_save_page (w_current, page, fname);
     }
+
+    if (x_tabs_enabled())
+    {
+      x_tabs_hdr_update (w_current, page);
+    }
   }
 
   x_pagesel_update (w_current);
   i_update_menus(w_current);
-}
+
+} /* i_callback_file_save_all() */
+
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
