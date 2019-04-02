@@ -219,23 +219,21 @@ DEFINE_I_CALLBACK(file_save_all)
   TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
   GList*    pages    = geda_list_get_glist (toplevel->pages);
 
-  /* save currently selected page:
-  */
-  PAGE* lastpage = toplevel->page_current;
-
   for ( ; pages != NULL; pages = g_list_next (pages) )
   {
     PAGE* page = (PAGE*) pages->data;
 
-    x_window_set_current_page (w_current, page);
-    i_callback_file_save (data, callback_action, widget);
-  }
-
-  /* restore last selected page:
-  */
-  if (lastpage != toplevel->page_current)
-  {
-    x_window_set_current_page (w_current, lastpage);
+    if (x_window_untitled_page (page))
+    {
+      /* open "save as..." dialog: */
+      x_fileselect_save (w_current, page);
+    }
+    else
+    {
+      /* save page: */
+      const gchar* fname = s_page_get_filename (page);
+      x_window_save_page (w_current, page, fname);
+    }
   }
 
   x_pagesel_update (w_current);
