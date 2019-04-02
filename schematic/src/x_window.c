@@ -1703,3 +1703,52 @@ untitled_filename (GschemToplevel* w_current)
 
 } /* untitled_filename() */
 
+
+
+/*! \brief Determine if a given \a page is "untitled" one.
+ *  \par Function Description
+ *
+ *"Untitled" pages are newly created pages with the default
+ * file name and not yet saved to disk.
+ * This function check if a \a page meets these conditions.
+ *
+ *  \param  w_current Page to check.
+ *  \return           TRUE if a \a page looks like "untitled" one.
+ */
+gboolean
+x_window_untitled_page (PAGE* page)
+{
+  g_return_val_if_fail (page != NULL, TRUE);
+
+  const gchar* fname = s_page_get_filename (page);
+  gchar* uname = NULL;
+
+  EdaConfig* cfg = eda_config_get_context_for_path (fname);
+  if (cfg != NULL)
+  {
+    uname = eda_config_get_string (cfg,
+                                   "gschem",
+                                   "default-filename",
+                                   NULL);
+  }
+
+  if (uname == NULL)
+  {
+    /* TODO: define _("untitled") string globally somewhere:
+    */
+    uname = g_strdup (_("untitled"));
+  }
+
+  gboolean named_like_untitled = strstr (fname, uname) != NULL;
+  gboolean file_exists = g_file_test (fname, G_FILE_TEST_EXISTS);
+
+  g_free (uname);
+
+  /*
+   * consider page as "untitled" if it is named like untitled
+   * and associated file does not exist:
+  */
+  return named_like_untitled && !file_exists;
+
+} /* untitled_page() */
+
