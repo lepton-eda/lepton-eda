@@ -296,20 +296,24 @@ x_fileselect_open(GschemToplevel *w_current)
 /*! \brief Opens a file chooser for saving the current page.
  *  \par Function Description
  *  This function opens a file chooser dialog and wait for the user to
- *  select a file where the <B>toplevel</B>'s current page will be
- *  saved.
+ *  select a file where the \a page will be saved.
  *
  *  If the user cancels the operation (with the cancel button), the
  *  page is not saved.
  *
- *  The function updates the user interface.
+ *  The function updates the user interface. (Actual UI update
+ *  is performed in x_window_save_page(), which is called by this
+ *  function.
  *
  *  \param [in] w_current The GschemToplevel environment.
+ *  \param [in] page      The page to be saved.
  */
 void
-x_fileselect_save (GschemToplevel *w_current)
+x_fileselect_save (GschemToplevel *w_current, PAGE* page)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (page != NULL);
+
   GtkWidget *dialog;
 
   dialog = gtk_file_chooser_dialog_new (_("Save as..."),
@@ -339,17 +343,17 @@ x_fileselect_save (GschemToplevel *w_current)
   /* add file filters to dialog */
   x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
   /* set the current filename or directory name if new document */
-  if (g_file_test (s_page_get_filename (toplevel->page_current),
+  if (g_file_test (s_page_get_filename (page),
                    G_FILE_TEST_EXISTS)) {
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
-                                   s_page_get_filename (toplevel->page_current));
+                                   s_page_get_filename (page));
   } else {
     gchar *cwd = g_get_current_dir ();
     /* force save in current working dir */
     gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), cwd);
     g_free (cwd);
     /* set page file's basename as the current filename: */
-    const gchar* fname = s_page_get_filename (toplevel->page_current);
+    const gchar* fname = s_page_get_filename (page);
     gchar* bname = g_path_get_basename (fname);
     gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), bname);
     g_free (bname);
@@ -389,7 +393,7 @@ x_fileselect_save (GschemToplevel *w_current)
     /* try saving current page of toplevel to file filename */
     if (filename != NULL) {
       x_window_save_page (w_current,
-                          w_current->toplevel->page_current,
+                          page,
                           filename);
     }
 
