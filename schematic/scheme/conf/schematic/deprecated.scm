@@ -154,7 +154,7 @@
        (add-component-at-xy page default-titleblock 40000 40000   0       #f       #f))
 
    ;; After adding titleblock, reset page to mark as unchanged.
-   ((@ (geda page) set-page-dirty!) (active-page) #f))
+   ((@ (geda page) set-page-dirty!) ((@ (gschem window) active-page)) #f))
 	   #t)
 
 ;
