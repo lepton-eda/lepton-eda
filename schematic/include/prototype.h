@@ -758,6 +758,7 @@ void x_window_init_icons (void);
 GschemToplevel* x_window_new (TOPLEVEL *toplevel);
 void x_window_select_object (GschemFindTextState *state, OBJECT *object, GschemToplevel *w_current);
 void x_window_setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled);
+gboolean x_window_untitled_page (PAGE* page);
 
 /* x_widgets.c */
 gboolean x_widgets_use_docks();
