@@ -1671,9 +1671,10 @@ untitled_filename (GschemToplevel* w_current)
   for (;;)
   {
     /* Build file name (default name + number appended):
+     * TODO: define _("untitled") string globally somewhere:
     */
     fname = g_strdup_printf ("%s_%d.sch",
-                           name ? name : "untitled",
+                           name ? name : _("untitled"),
                            untitled_next_index (w_current));
 
     /* Build full path for file name:
