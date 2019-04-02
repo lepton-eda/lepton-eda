@@ -181,7 +181,7 @@ DEFINE_I_CALLBACK(file_save)
   if (x_window_untitled_page (page))
   {
     /* open "save as..." dialog: */
-    x_fileselect_save (w_current);
+    x_fileselect_save (w_current, page);
   }
   else
   {
@@ -252,7 +252,11 @@ DEFINE_I_CALLBACK(file_save_as)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
-  x_fileselect_save (w_current);
+
+  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  PAGE* page = toplevel->page_current;
+
+  x_fileselect_save (w_current, page);
 }
 
 /*! \todo Finish function documentation!!!
