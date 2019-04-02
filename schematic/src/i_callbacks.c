@@ -169,35 +169,16 @@ DEFINE_I_CALLBACK(file_script)
 DEFINE_I_CALLBACK(file_save)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  PAGE *page;
-  EdaConfig *cfg;
-  gchar *untitled_name;
-
   g_return_if_fail (w_current != NULL);
 
-  page = gschem_toplevel_get_toplevel (w_current)->page_current;
+  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  PAGE* page = toplevel->page_current;
 
   if (page == NULL) {
     return;
   }
 
-  const gchar* fname = s_page_get_filename (page);
-
-  cfg = eda_config_get_context_for_path (fname);
-  g_return_if_fail (cfg != NULL);
-
-  untitled_name = eda_config_get_string (cfg, "gschem", "default-filename", NULL);
-  g_return_if_fail (untitled_name != NULL);
-
-  gboolean file_exists = g_file_test (fname, G_FILE_TEST_EXISTS);
-  gboolean named_like_untitled = strstr (fname, untitled_name) != NULL;
-  g_free (untitled_name);
-
-  /*
-   * consider page as "untitled" if it is named like untitled
-   * and associated file does not exist:
-  */
-  if (named_like_untitled && !file_exists)
+  if (x_window_untitled_page (page))
   {
     /* open "save as..." dialog: */
     x_fileselect_save (w_current);
@@ -205,6 +186,7 @@ DEFINE_I_CALLBACK(file_save)
   else
   {
     /* save page: */
+    const gchar* fname = s_page_get_filename (page);
     x_window_save_page (w_current, page, fname);
   }
 
