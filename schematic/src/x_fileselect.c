@@ -293,6 +293,8 @@ x_fileselect_open(GschemToplevel *w_current)
 
 }
 
+
+
 /*! \brief Opens a file chooser for saving the current page.
  *  \par Function Description
  *  This function opens a file chooser dialog and wait for the user to
@@ -314,25 +316,25 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page)
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
 
-  GtkWidget *dialog;
+  GtkWidget* dialog = gtk_file_chooser_dialog_new(
+    _("Save as..."),
+    GTK_WINDOW(w_current->main_window),
+    GTK_FILE_CHOOSER_ACTION_SAVE,
+    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+    GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
+    NULL);
 
-  dialog = gtk_file_chooser_dialog_new (_("Save as..."),
-                                        GTK_WINDOW(w_current->main_window),
-                                        GTK_FILE_CHOOSER_ACTION_SAVE,
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
-                                        NULL);
-
-  /* Set the alternative button order (ok, cancel, help) for other systems */
+  /* Set the alternative button order (ok, cancel, help) for other systems:
+  */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
 					  GTK_RESPONSE_ACCEPT,
 					  GTK_RESPONSE_CANCEL,
 					  -1);
 
   /* set default response signal. This is usually triggered by the
-     "Return" key */
-  gtk_dialog_set_default_response(GTK_DIALOG(dialog),
-				  GTK_RESPONSE_ACCEPT);
+   * "Return" key:
+  */
+  gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
 
   g_object_set (dialog,
                 /* GtkFileChooser */
@@ -340,39 +342,56 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page)
                 /* only in GTK 2.8 */
                 /* "do-overwrite-confirmation", TRUE, */
                 NULL);
-  /* add file filters to dialog */
+
+  /* add file filters to dialog:
+  */
   x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
-  /* set the current filename or directory name if new document */
-  if (g_file_test (s_page_get_filename (page),
-                   G_FILE_TEST_EXISTS)) {
+
+  /* set the current filename or directory name if new document:
+  */
+  if (g_file_test (s_page_get_filename (page), G_FILE_TEST_EXISTS))
+  {
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
                                    s_page_get_filename (page));
-  } else {
+  }
+  else
+  {
     gchar *cwd = g_get_current_dir ();
-    /* force save in current working dir */
+
+    /* force save in current working dir:
+    */
     gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), cwd);
     g_free (cwd);
-    /* set page file's basename as the current filename: */
+
+    /* set page file's basename as the current filename:
+    */
     const gchar* fname = s_page_get_filename (page);
     gchar* bname = g_path_get_basename (fname);
     gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), bname);
     g_free (bname);
   }
 
-  gtk_dialog_set_default_response(GTK_DIALOG(dialog),
-				  GTK_RESPONSE_ACCEPT);
-  gtk_widget_show (dialog);
-  if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT) {
+  gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
 
-    /* remember current filter: */
+
+  /*
+   * Open "Save As.." dialog:
+  */
+
+  gtk_widget_show (dialog);
+  if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT)
+  {
+    /* remember current filter:
+    */
     filter_last_savedlg = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
 
-    gchar *filename =
-      gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+    gchar *filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
     /* If the file already exists, display a dialog box to check if
-       the user really wants to overwrite it. */
-    if ((filename != NULL) && g_file_test (filename, G_FILE_TEST_EXISTS)) {
+       the user really wants to overwrite it:
+    */
+    if ((filename != NULL) && g_file_test (filename, G_FILE_TEST_EXISTS))
+    {
       GtkWidget *checkdialog =
         gtk_message_dialog_new (GTK_WINDOW(dialog),
                                 (GtkDialogFlags) (GTK_DIALOG_MODAL |
@@ -382,26 +401,36 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page)
                                 _("The selected file `%1$s' already exists.\n\n"
                                   "Would you like to overwrite it?"),
                                 filename);
+
       gtk_window_set_title (GTK_WINDOW (checkdialog), _("Overwrite file?"));
-      if (gtk_dialog_run (GTK_DIALOG (checkdialog)) != GTK_RESPONSE_YES) {
+
+      if (gtk_dialog_run (GTK_DIALOG (checkdialog)) != GTK_RESPONSE_YES)
+      {
         s_log_message (_("Save cancelled on user request"));
         g_free (filename);
         filename = NULL;
       }
+
       gtk_widget_destroy (checkdialog);
     }
-    /* try saving current page of toplevel to file filename */
-    if (filename != NULL) {
-      x_window_save_page (w_current,
-                          page,
-                          filename);
+
+
+    /* try saving the page to file filename:
+    */
+    if (filename != NULL)
+    {
+      x_window_save_page (w_current, page, filename);
     }
 
     g_free (filename);
-  }
+
+  } /* if: accept response */
+
   gtk_widget_destroy (dialog);
 
-}
+} /* x_fileselect_save() */
+
+
 
 /*! \brief Load/Backup selection dialog.
  *  \par Function Description
