@@ -37,7 +37,7 @@
 (define (check-arc-angle object)
   "Checks that arc OBJECT has non-zero angle."
   (and (= 0 (euclidean-remainder
-             (- (arc-end-angle object)
+             (- (arc-sweep-angle object)
                 (arc-start-angle object))
              360))
        (blame-object object
