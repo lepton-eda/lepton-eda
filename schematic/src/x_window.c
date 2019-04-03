@@ -1675,10 +1675,9 @@ untitled_filename (GschemToplevel* w_current, gboolean log_skipped)
   for (;;)
   {
     /* Build file name (default name + number appended):
-     * TODO: define _("untitled") string globally somewhere:
     */
     fname = g_strdup_printf ("%s_%d.sch",
-                             name ? name : _("untitled"),
+                             name ? name : UNTITLED_FILENAME_PREFIX,
                              untitled_next_index (w_current));
 
     /* Build full path for file name:
@@ -1744,9 +1743,7 @@ x_window_untitled_page (PAGE* page)
 
   if (uname == NULL)
   {
-    /* TODO: define _("untitled") string globally somewhere:
-    */
-    uname = g_strdup (_("untitled"));
+    uname = g_strdup (UNTITLED_FILENAME_PREFIX);
   }
 
   gboolean named_like_untitled = strstr (fname, uname) != NULL;
