@@ -301,20 +301,28 @@ x_fileselect_open(GschemToplevel *w_current)
  *  select a file where the \a page will be saved.
  *
  *  If the user cancels the operation (with the cancel button), the
- *  page is not saved.
+ *  page is not saved and FALSE is returned.
  *
  *  The function updates the user interface. (Actual UI update
  *  is performed in x_window_save_page(), which is called by this
- *  function.
+ *  function).
  *
- *  \param [in] w_current The GschemToplevel environment.
- *  \param [in] page      The page to be saved.
+ *  \param  [in]     w_current The GschemToplevel environment.
+ *  \param  [in]     page      The page to be saved.
+ *  \param  [in,out] result    If not NULL, will be filled with save operation result.
+ *  \return                    TRUE if dialog was closed with ACCEPT response.
  */
-void
-x_fileselect_save (GschemToplevel *w_current, PAGE* page)
+gboolean
+x_fileselect_save (GschemToplevel *w_current, PAGE* page, gboolean* result)
 {
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (page != NULL);
+  g_return_val_if_fail (w_current != NULL, FALSE);
+  g_return_val_if_fail (page != NULL, FALSE);
+
+  gboolean ret = FALSE;
+  if (result != NULL)
+  {
+    *result = FALSE;
+  }
 
   GtkWidget* dialog = gtk_file_chooser_dialog_new(
     _("Save as..."),
@@ -371,8 +379,6 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page)
     g_free (bname);
   }
 
-  gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
-
 
   /*
    * Open "Save As.." dialog:
@@ -419,7 +425,14 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page)
     */
     if (filename != NULL)
     {
-      x_window_save_page (w_current, page, filename);
+      ret = TRUE;
+
+      gboolean res = x_window_save_page (w_current, page, filename);
+
+      if (result != NULL)
+      {
+        *result = res;
+      }
     }
 
     g_free (filename);
@@ -427,6 +440,8 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page)
   } /* if: accept response */
 
   gtk_widget_destroy (dialog);
+
+  return ret;
 
 } /* x_fileselect_save() */
 

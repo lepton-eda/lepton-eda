@@ -668,7 +668,7 @@ void x_compselect_open (GschemToplevel *w_current);
 void x_compselect_deselect (GschemToplevel *w_current);
 /* x_fileselect.c */
 void x_fileselect_open(GschemToplevel *w_current);
-void x_fileselect_save(GschemToplevel *w_current, PAGE* page);
+gboolean x_fileselect_save(GschemToplevel *w_current, PAGE* page, gboolean* result);
 int x_fileselect_load_backup(void *user_data, GString *message);
 /* x_fstylecb.c */
 GtkWidget* x_fstylecb_new ();
