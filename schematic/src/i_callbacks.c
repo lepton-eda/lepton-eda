@@ -231,16 +231,18 @@ DEFINE_I_CALLBACK(file_save_all)
     if (x_window_untitled_page (page))
     {
       /* open "save as..." dialog: */
-      x_fileselect_save (w_current, page, &res);
+      if (x_fileselect_save (w_current, page, &res))
+      {
+        result = result && res;
+      }
     }
     else
     {
       /* save page: */
       const gchar* fname = s_page_get_filename (page);
       res = x_window_save_page (w_current, page, fname);
+      result = result && res;
     }
-
-    result = result && res;
 
 
     if (x_tabs_enabled())
