@@ -221,6 +221,9 @@ DEFINE_I_CALLBACK(file_save_all)
   TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
   GList*    pages    = geda_list_get_glist (toplevel->pages);
 
+  gboolean result = TRUE;
+  gboolean res    = FALSE;
+
   for ( ; pages != NULL; pages = g_list_next (pages) )
   {
     PAGE* page = (PAGE*) pages->data;
@@ -228,18 +231,30 @@ DEFINE_I_CALLBACK(file_save_all)
     if (x_window_untitled_page (page))
     {
       /* open "save as..." dialog: */
-      x_fileselect_save (w_current, page, NULL);
+      x_fileselect_save (w_current, page, &res);
     }
     else
     {
       /* save page: */
       const gchar* fname = s_page_get_filename (page);
-      x_window_save_page (w_current, page, fname);
+      res = x_window_save_page (w_current, page, fname);
     }
+
+    result = result && res;
+
 
     if (x_tabs_enabled())
     {
       x_tabs_hdr_update (w_current, page);
+    }
+
+    if (result)
+    {
+      i_set_state_msg(w_current, SELECT, _("Saved All"));
+    }
+    else
+    {
+      i_set_state_msg(w_current, SELECT, _("Failed to Save All"));
     }
   }
 
