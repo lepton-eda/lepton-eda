@@ -112,4 +112,17 @@ typedef enum
 #define MENU			1
 #define HOTKEY			2
 
+/* The prefix of the default filename used for newly created pages
+ *
+ * TRANSLATORS:
+ *
+ * This string is used to generate a filename for newly-created files.
+ * It will be used to create a filename of the form "untitled_N.sch",
+ * where N is a number.
+ * Please make sure that the translation contains characters
+ * suitable for use in a filename.
+ *
+ * */
+#define UNTITLED_FILENAME_PREFIX _("untitled")
+
 #endif /* !_GSCHEM_DEFINES_H_INCL */
