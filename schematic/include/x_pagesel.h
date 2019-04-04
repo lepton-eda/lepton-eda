@@ -39,6 +39,8 @@ struct _Pagesel {
   GschemDialog parent_instance;
 
   GtkTreeView *treeview;
+
+  gboolean show_full_paths;
 };
 
 
