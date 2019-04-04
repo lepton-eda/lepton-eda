@@ -404,7 +404,7 @@ static void pagesel_class_init (PageselClass *klass)
  */
 static void pagesel_init (Pagesel *pagesel)
 {
-  GtkWidget *scrolled_win, *treeview, *label;
+  GtkWidget *scrolled_win, *treeview;
   GtkTreeModel *store;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
@@ -503,15 +503,6 @@ static void pagesel_init (Pagesel *pagesel)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pagesel)->vbox), scrolled_win,
                       TRUE, TRUE, 0);
   gtk_widget_show_all (scrolled_win);
-
-  /* add a label below the scrolled window */
-  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
-                                    /* GtkLabel */
-                                    "label", _("Right click on the filename for more options..."),
-                                    NULL));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pagesel)->vbox), label,
-                      FALSE, TRUE, 5);
-  gtk_widget_show (label);
 
 
   /* By default, show basenames in the pages list:
