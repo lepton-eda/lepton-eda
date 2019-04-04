@@ -514,9 +514,9 @@ static void pagesel_init (Pagesel *pagesel)
   gtk_widget_show (label);
 
 
-  /* By default, show full paths in the pages list:
+  /* By default, show basenames in the pages list:
   */
-  pagesel->show_full_paths = TRUE;
+  pagesel->show_full_paths = FALSE;
 
 
   /* Read config: whether to show full paths in the pages list:
