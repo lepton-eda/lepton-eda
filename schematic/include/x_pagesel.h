@@ -17,6 +17,8 @@
  * MA 02111-1301 USA.
  */
 
+#ifndef LEPTON_PAGESEL_H_
+#define LEPTON_PAGESEL_H_
 
 
 typedef enum {
@@ -48,4 +50,5 @@ struct _Pagesel {
 
 GType pagesel_get_type (void);
 
-void pagesel_update (Pagesel *pagesel);
+#endif /* LEPTON_PAGESEL_H_ */
+

@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +33,9 @@
 static void x_pagesel_callback_response (GtkDialog *dialog,
                                          gint arg1,
                                          gpointer user_data);
+
+static void
+pagesel_update (Pagesel* pagesel);
 
 
 
@@ -573,7 +577,7 @@ static void select_page(GtkTreeView *treeview,
  *  \par Function Description
  *
  */
-void pagesel_update (Pagesel *pagesel)
+static void pagesel_update (Pagesel *pagesel)
 {
   GtkTreeModel *model;
   TOPLEVEL *toplevel;
