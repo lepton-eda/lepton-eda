@@ -551,9 +551,10 @@ static void pagesel_init (Pagesel *pagesel)
  *  \param [in] parent  GtkTreeIter pointer to tree root.
  *  \param [in] pages   GedaPageList of pages for this toplevel.
  *  \param [in] page    The PAGE object to update tree model from.
+ *  \param [in] pagesel The Pagesel object.
  */
 static void add_page (GtkTreeModel *model, GtkTreeIter *parent,
-                      GedaPageList *pages, PAGE *page)
+                      GedaPageList *pages, PAGE *page, Pagesel *pagesel)
 {
   GtkTreeIter iter;
   PAGE *p_current;
@@ -563,12 +564,20 @@ static void add_page (GtkTreeModel *model, GtkTreeIter *parent,
   gtk_tree_store_append (GTK_TREE_STORE (model),
                          &iter,
                          parent);
+
+  const gchar* page_filename = s_page_get_filename (page);
+  gchar* display_filename = pagesel->show_full_paths
+                            ? g_strdup (page_filename)
+                            : g_path_get_basename (page_filename);
+
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,
                       COLUMN_PAGE, page,
-                      COLUMN_NAME, s_page_get_filename (page),
+                      COLUMN_NAME, display_filename,
                       COLUMN_CHANGED, page->CHANGED,
                       -1);
+
+  g_free (display_filename);
 
   /* search a page that has a up field == p_current->pid */
   for ( p_iter = geda_list_get_glist( pages );
@@ -577,7 +586,7 @@ static void add_page (GtkTreeModel *model, GtkTreeIter *parent,
 
     p_current = (PAGE *)p_iter->data;
     if (p_current->up == page->pid) {
-      add_page (model, &iter, pages, p_current);
+      add_page (model, &iter, pages, p_current, pagesel);
     }
   }
 }
@@ -648,7 +657,7 @@ static void pagesel_update (Pagesel *pagesel)
     if (p_current->up < 0 ||
         s_page_search_by_page_id (toplevel->pages,
                                   p_current->up) == NULL) {
-      add_page (model, NULL, toplevel->pages, p_current);
+      add_page (model, NULL, toplevel->pages, p_current, pagesel);
     }
   }
 
