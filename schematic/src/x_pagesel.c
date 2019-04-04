@@ -30,6 +30,10 @@
 #include "gschem.h"
 
 
+G_DEFINE_TYPE (Pagesel, pagesel, GSCHEM_TYPE_DIALOG);
+
+
+
 static void x_pagesel_callback_response (GtkDialog *dialog,
                                          gint arg1,
                                          gpointer user_data);
@@ -148,9 +152,6 @@ enum {
   NUM_COLUMNS
 };
 
-
-static void pagesel_class_init (PageselClass *klass);
-static void pagesel_init       (Pagesel *pagesel);
 
 static void pagesel_popup_menu (Pagesel *pagesel,
                                 GdkEventButton *event);
@@ -319,50 +320,16 @@ static void notify_gschem_toplevel_cb (GObject    *gobject,
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-GType pagesel_get_type()
-{
-  static GType pagesel_type = 0;
-  
-  if (!pagesel_type) {
-    static const GTypeInfo pagesel_info = {
-      sizeof(PageselClass),
-      NULL, /* base_init */
-      NULL, /* base_finalize */
-      (GClassInitFunc) pagesel_class_init,
-      NULL, /* class_finalize */
-      NULL, /* class_data */
-      sizeof(Pagesel),
-      0,    /* n_preallocs */
-      (GInstanceInitFunc) pagesel_init,
-    };
-		
-    pagesel_type = g_type_register_static (GSCHEM_TYPE_DIALOG,
-                                           "Pagesel",
-                                           &pagesel_info,
-                                           (GTypeFlags) 0);
-  }
-  
-  return pagesel_type;
-}
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+/*! \brief gobject class initialization function
  */
 static void pagesel_class_init (PageselClass *klass)
 {
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+
+
+/*! \brief gobject instance initialization function
  */
 static void pagesel_init (Pagesel *pagesel)
 {
