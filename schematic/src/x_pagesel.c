@@ -277,6 +277,21 @@ pagesel_callback_popup_close_page (GtkMenuItem* mitem, gpointer data)
 
 
 
+/*! \brief "Show full paths" checkbox "toggled" signal handler
+ */
+static void
+pagesel_callback_fullpaths_toggled (GtkToggleButton* btn, gpointer data)
+{
+  Pagesel* pagesel = (Pagesel*) data;
+  g_return_if_fail (pagesel != NULL);
+
+  pagesel->show_full_paths = gtk_toggle_button_get_active (btn);
+  pagesel_update (pagesel);
+
+} /* pagesel_callback_fullpath_toggled() */
+
+
+
 /*! \brief Popup context-sensitive menu.
  *  \par Function Description
  *  Pops up a context-sensitive menu.
@@ -484,6 +499,31 @@ static void pagesel_init (Pagesel *pagesel)
                       FALSE, TRUE, 5);
   gtk_widget_show (label);
 
+
+  /* "Show full paths" checkbox:
+  */
+
+  pagesel->show_full_paths = TRUE;
+
+  GtkWidget* hbox = gtk_hbox_new (TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pagesel)->vbox),
+                      hbox, FALSE, TRUE, 0);
+  gtk_widget_show (hbox);
+
+  GtkWidget* chkbox = gtk_check_button_new_with_mnemonic ("_Show full paths");
+  gtk_box_pack_start (GTK_BOX (hbox), chkbox, FALSE, TRUE, 5);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (chkbox),
+                                pagesel->show_full_paths);
+
+  g_signal_connect(G_OBJECT (chkbox),
+                   "toggled",
+                   G_CALLBACK (&pagesel_callback_fullpaths_toggled),
+                   pagesel);
+
+  gtk_widget_show (chkbox);
+
+
   /* now add buttons in the action area */
   gtk_dialog_add_buttons (GTK_DIALOG (pagesel),
                           /*  - update button */
@@ -494,7 +534,9 @@ static void pagesel_init (Pagesel *pagesel)
 
   g_signal_connect( pagesel, "notify::gschem-toplevel",
                     G_CALLBACK( notify_gschem_toplevel_cb ), NULL );
-}
+
+} /* pagesel_init() */
+
 
 
 /*! \brief Update tree model of <B>pagesel</B>'s treeview.
