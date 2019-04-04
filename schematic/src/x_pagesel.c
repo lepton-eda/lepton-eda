@@ -134,7 +134,7 @@ static void x_pagesel_callback_response (GtkDialog *dialog,
         pagesel_update (PAGESEL (dialog));
         break;
       case GTK_RESPONSE_DELETE_EVENT:
-      case PAGESEL_RESPONSE_CLOSE:
+      case GTK_RESPONSE_CLOSE:
         g_assert (GTK_WIDGET (dialog) == w_current->pswindow);
         gtk_widget_destroy (GTK_WIDGET (dialog));
         w_current->pswindow = NULL;
@@ -479,7 +479,7 @@ static void pagesel_init (Pagesel *pagesel)
                           /*  - update button */
                           GTK_STOCK_REFRESH, PAGESEL_RESPONSE_UPDATE,
                           /*  - close button */
-                          GTK_STOCK_CLOSE,   PAGESEL_RESPONSE_CLOSE,
+                          GTK_STOCK_CLOSE,   GTK_RESPONSE_CLOSE,
                           NULL);
 
   g_signal_connect( pagesel, "notify::gschem-toplevel",
