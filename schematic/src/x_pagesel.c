@@ -221,18 +221,50 @@ static gboolean pagesel_callback_popup_menu (GtkWidget *widget,
   return TRUE;
 }
 
-#define DEFINE_POPUP_CALLBACK(name, action)                       \
-static void                                                       \
-pagesel_callback_popup_ ## name (GtkMenuItem *menuitem,           \
-                                 gpointer user_data)              \
-{                                                                 \
-  i_callback_ ## action (GSCHEM_DIALOG (user_data)->w_current, 0, NULL); \
+
+
+/*! \brief Context menu item handler for "New Page".
+ */
+static void
+pagesel_callback_popup_new_page (GtkMenuItem* mitem, gpointer data)
+{
+  GschemToplevel* toplevel = GSCHEM_DIALOG(data)->w_current;
+  i_callback_file_new (toplevel, 0, NULL);
 }
 
-DEFINE_POPUP_CALLBACK (new_page,     file_new)
-DEFINE_POPUP_CALLBACK (open_page,    file_open)
-DEFINE_POPUP_CALLBACK (save_page,    file_save)
-DEFINE_POPUP_CALLBACK (close_page,   page_close)
+
+
+/*! \brief Context menu item handler for "Open Page".
+ */
+static void
+pagesel_callback_popup_open_page (GtkMenuItem* mitem, gpointer data)
+{
+  GschemToplevel* toplevel = GSCHEM_DIALOG(data)->w_current;
+  i_callback_file_open (toplevel, 0, NULL);
+}
+
+
+
+/*! \brief Context menu item handler for "Save Page".
+ */
+static void
+pagesel_callback_popup_save_page (GtkMenuItem* mitem, gpointer data)
+{
+  GschemToplevel* toplevel = GSCHEM_DIALOG(data)->w_current;
+  i_callback_file_save (toplevel, 0, NULL);
+}
+
+
+
+/*! \brief Context menu item handler for "Close Page".
+ */
+static void
+pagesel_callback_popup_close_page (GtkMenuItem* mitem, gpointer data)
+{
+  GschemToplevel* toplevel = GSCHEM_DIALOG(data)->w_current;
+  i_callback_page_close (toplevel, 0, NULL);
+}
+
 
 
 /*! \brief Popup context-sensitive menu.
