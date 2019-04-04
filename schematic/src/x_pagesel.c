@@ -52,7 +52,10 @@ pagesel_update (Pagesel* pagesel);
  */
 void x_pagesel_open (GschemToplevel *w_current)
 {
-  if (w_current->pswindow == NULL) {
+  g_return_if_fail (w_current != NULL);
+
+  if (w_current->pswindow == NULL)
+  {
     w_current->pswindow = GTK_WIDGET (g_object_new (TYPE_PAGESEL,
                                                     /* GschemDialog */
                                                     "settings-name", "pagesel",
@@ -64,8 +67,16 @@ void x_pagesel_open (GschemToplevel *w_current)
                       G_CALLBACK (x_pagesel_callback_response),
                       w_current);
 
+    g_signal_connect (w_current->pswindow,
+                      "delete-event",
+                      G_CALLBACK (&gtk_widget_hide_on_delete),
+                      NULL);
+
     gtk_widget_show (w_current->pswindow);
-  } else {
+  }
+  else
+  {
+    gtk_widget_show (w_current->pswindow);
     gdk_window_raise (w_current->pswindow->window);
   }
 
@@ -129,15 +140,15 @@ static void x_pagesel_callback_response (GtkDialog *dialog,
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data);
 
-  switch (arg1) {
+  switch (arg1)
+  {
       case PAGESEL_RESPONSE_UPDATE:
         pagesel_update (PAGESEL (dialog));
         break;
       case GTK_RESPONSE_DELETE_EVENT:
       case GTK_RESPONSE_CLOSE:
         g_assert (GTK_WIDGET (dialog) == w_current->pswindow);
-        gtk_widget_destroy (GTK_WIDGET (dialog));
-        w_current->pswindow = NULL;
+        gtk_widget_hide (GTK_WIDGET (dialog));
         break;
       default:
         g_assert_not_reached ();
