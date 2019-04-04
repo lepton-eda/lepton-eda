@@ -472,7 +472,7 @@ static void pagesel_init (Pagesel *pagesel)
     g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
                   /* GtkTreeViewColumn */
                   "title", _("Filename"),
-                  "min-width", 400,
+                  "min-width", 200,
                   "resizable", TRUE,
                   NULL));
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
