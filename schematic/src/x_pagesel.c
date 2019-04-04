@@ -438,7 +438,7 @@ static void pagesel_init (Pagesel *pagesel)
                   "border-width",      5,
                   /* GtkScrolledWindow */
                   "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
-                  "vscrollbar-policy", GTK_POLICY_ALWAYS,
+                  "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
                   "shadow-type",       GTK_SHADOW_ETCHED_IN,
                   NULL));
   /* create the treeview */
