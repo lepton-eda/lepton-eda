@@ -26,12 +26,19 @@ G_DEFINE_TYPE (Pagesel, pagesel, GSCHEM_TYPE_DIALOG);
 
 
 
+typedef enum
+{
+  PAGESEL_RESPONSE_UPDATE = 1
+
+} PageselResponseType;
+
+
+
 static void x_pagesel_callback_response (GtkDialog *dialog,
                                          gint arg1,
                                          gpointer user_data);
 
-static void
-pagesel_update (Pagesel* pagesel);
+static void pagesel_update (Pagesel* pagesel);
 
 
 
