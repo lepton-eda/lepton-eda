@@ -288,6 +288,20 @@ pagesel_callback_fullpaths_toggled (GtkToggleButton* btn, gpointer data)
   pagesel->show_full_paths = gtk_toggle_button_get_active (btn);
   pagesel_update (pagesel);
 
+  /* Save config: whether to show full paths in the pages list:
+  */
+  EdaConfig* cfg = eda_config_get_cache_context();
+  if (cfg != NULL)
+  {
+    eda_config_set_boolean (cfg,
+                           "schematic.page-manager",
+                           "show-full-paths",
+                           pagesel->show_full_paths);
+    GError* err = NULL;
+    eda_config_save (cfg, &err);
+    g_clear_error (&err);
+  }
+
 } /* pagesel_callback_fullpath_toggled() */
 
 
@@ -500,10 +514,32 @@ static void pagesel_init (Pagesel *pagesel)
   gtk_widget_show (label);
 
 
+  /* By default, show full paths in the pages list:
+  */
+  pagesel->show_full_paths = TRUE;
+
+
+  /* Read config: whether to show full paths in the pages list:
+  */
+  EdaConfig* cfg = eda_config_get_cache_context();
+  if (cfg != NULL)
+  {
+    GError* err = NULL;
+    gboolean val = eda_config_get_boolean (cfg,
+                                           "schematic.page-manager",
+                                           "show-full-paths",
+                                           &err);
+    if (err == NULL)
+    {
+      pagesel->show_full_paths = val;
+    }
+
+    g_clear_error (&err);
+  }
+
+
   /* "Show full paths" checkbox:
   */
-
-  pagesel->show_full_paths = TRUE;
 
   GtkWidget* hbox = gtk_hbox_new (TRUE, 0);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pagesel)->vbox),
