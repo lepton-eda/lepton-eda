@@ -16,7 +16,7 @@ lepton_schlas_CPPFLAGS = -I$(top_srcdir)/liblepton/include -I$(srcdir)/../includ
 	-I$(top_srcdir) -I$(includedir)
 lepton_schlas_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS) $(GLIB_CFLAGS) \
 	$(GUILE_CFLAGS) $(GDK_PIXBUF_CFLAGS)
-lepton_schlas_LDFLAGS = $(GLIB_LIBS) $(GUILE_LIBS) $(GDK_PIXBUF_LIBS)
+lepton_schlas_LDFLAGS = $(GLIB_LIBS) $(GUILE_LIBS) $(GDK_PIXBUF_LIBS) $(GIO_LIBS)
 lepton_schlas_LDADD = $(top_builddir)/liblepton/src/liblepton.la
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
