@@ -105,7 +105,7 @@ top_srcdir=${top_srcdir:-$here/../..}
 top_srcdir=`cd $top_srcdir && pwd`
 top_builddir=${top_builddir:-$here/../..}
 top_builddir=`cd $top_builddir && pwd`
-gxyrs_srcdir=`cd $top_srcdir/gxyrs && pwd`
+gxyrs_srcdir=`cd $top_srcdir/xyrs && pwd`
 
 # the perl program
 PERL=${PERL:-perl}
@@ -123,7 +123,7 @@ if test ! -f $TESTLIST ; then
     exit 1
 fi
 
-GXYRS_SCRIPT=${top_builddir}/gxyrs/lepton-xyrs
+GXYRS_SCRIPT=${top_builddir}/xyrs/lepton-xyrs
 if test ! -f $GXYRS_SCRIPT ; then
     echo "ERROR: ($0)  lepton-xyrs script $GXYRS_SCRIPT does not exist"
     exit 1
@@ -157,7 +157,7 @@ top_srcdir: $top_srcdir
 lepton-xyrs srcdir: $gxyrs_srcdir
 INPUT_DIR:  ${INPUT_DIR}
 GOLDEN_DIR: ${GOLDEN_DIR}
-script to test: ${top_srcdir}/gxyrs/lepton-xyrs
+script to test: ${top_srcdir}/xyrs/lepton-xyrs
 all_tests:
 
 ${all_tests}
