@@ -263,7 +263,7 @@ AC_CONFIG_FILES([Makefile
                  utils/examples/gsch2pcb/Makefile
                  utils/examples/tragesym/Makefile
                  utils/gschlas/Makefile
-                 utils/gxyrs/Makefile
+                 utils/xyrs/Makefile
                  utils/include/Makefile
                  utils/lib/Makefile
                  utils/lib/system-gschlasrc
