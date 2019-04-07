@@ -13,9 +13,14 @@
 
 ( define ( dbg-out )
   ; return:
+  ( current-error-port )
+)
+
+
+
+( define ( std-out )
+  ; return:
   ( current-output-port )
-  ; ( current-error-port )
-  ; ( %make-void-port "w" )
 )
 
 
@@ -62,9 +67,11 @@
   ;
   ( catch #t
   ( lambda()
-    ( format (dbg-out) "  compiling: ~a~%" ifile )
+    ( format (dbg-out) "compiling:~%" )
+    ( format (dbg-out) "~a~%" ifile )
     ( set! res ( compile-file ifile #:output-file ofile ) )
-    ( format (dbg-out) "  compiled:  ~a~%" res )
+    ( format (dbg-out) "compiled:~%" )
+    ( format (std-out) "~a~%" res )
     ( set! ret #t )
   )
   ( lambda( ex . args )

@@ -74,7 +74,7 @@ endif
 
 
 precompile:
-	LEPTON_SCM_PRECOMPILE=1 \
+	@LEPTON_SCM_PRECOMPILE=1 \
 	LEPTON_SCM_PRECOMPILE_CFG=@LEPTON_SCM_PRECOMPILE_CFG@ \
 	$(bindir)/lepton-schematic
 
