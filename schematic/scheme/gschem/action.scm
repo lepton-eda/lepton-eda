@@ -24,8 +24,6 @@
   #:use-module (ice-9 optargs)
   #:export-syntax (define-action))
 
-(or (defined? 'define-syntax)
-    (use-modules (ice-9 syncase)))
 
 (define last-action (make-fluid))
 (define current-action-position (make-fluid))

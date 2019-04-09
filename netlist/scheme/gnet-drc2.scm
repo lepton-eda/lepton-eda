@@ -147,8 +147,6 @@
              (netlist schematic)
              (netlist schematic toplevel))
 
-(or (defined? 'define-syntax)
-    (use-modules (ice-9 syncase)))
 
 (define-syntax define-undefined
   (syntax-rules ()

@@ -31,8 +31,6 @@
   #:use-module (gschem window)
   #:use-module (srfi srfi-1))
 
-(or (defined? 'define-syntax)
-    (use-modules (ice-9 syncase)))
 
 (define-syntax define-action-public
   (syntax-rules ()
