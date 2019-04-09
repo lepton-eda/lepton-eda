@@ -140,21 +140,12 @@
 ;
 (define default-titleblock "title-B.sym")
 
-; Load the regular expressions module
-(if (provided? 'regex)
-    (use-modules (ice-9 regex))
-    (display "Your Guile installation doesn't provide the regex module.\n"))
-
 (add-hook! new-page-hook (lambda (page)
    ; Only place the titleblock if there are no objects in the page
    ; and the page filename ends in ".sym".
    (if (and (null? (get-objects-in-page page))
-	    ; If the guile installation doesn't provide the regex module,
-	    ; don't care about the page filename.
-	    (if (provided? 'regex)
-		(not (string-match ".*\\.[sS][yY][mM]"
-				   (get-page-filename page)))
-		#t))
+	    (not (string-match ".*\\.[sS][yY][mM]"
+                               (get-page-filename page))))
 ;      Syntax             Symbol name        X   Y    angle selectable mirrored
        (add-component-at-xy page default-titleblock 40000 40000   0       #f       #f))
 
