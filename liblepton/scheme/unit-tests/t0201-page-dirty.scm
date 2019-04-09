@@ -4,8 +4,6 @@
 (use-modules (geda page))
 (use-modules (geda object))
 (use-modules (geda attrib))
-(or (defined? 'define-syntax)
-    (use-modules (ice-9 syncase)))
 
 ;; Utility macro to avoid boilerplate
 (define-syntax assert-dirties

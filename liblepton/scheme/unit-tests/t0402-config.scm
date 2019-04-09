@@ -5,8 +5,6 @@
              (geda config)
              (srfi srfi-1))
 
-(or (defined? 'define-syntax)
-    (use-modules (ice-9 syncase)))
 
 (define *testdir*      (string-append (getcwd)   file-name-separator-string "t0402-tmp"))
 (define *testdirconf*  (string-append *testdir*  file-name-separator-string "geda.conf"))

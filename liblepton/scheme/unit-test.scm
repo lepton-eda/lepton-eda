@@ -54,9 +54,6 @@
                    begin-test
                    assert-thrown))
 
-(or (defined? 'define-syntax)
-    (use-modules (ice-9 syncase)))
-
 (define *failed-tests* '())
 (define *passed-tests* '())
 (define *skipped-tests* '())
