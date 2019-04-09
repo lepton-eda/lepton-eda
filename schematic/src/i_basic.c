@@ -395,6 +395,10 @@ static void clipboard_usable_cb (int usable, void *userdata)
   x_menus_sensitivity (w_current, "_Edit/_Paste", usable);
 }
 
+
+
+/*! \brief Return TRUE if at least 1 text object is selected
+ */
 static gboolean
 selected_at_least_one_text_object(GschemToplevel *w_current)
 {
@@ -412,6 +416,31 @@ selected_at_least_one_text_object(GschemToplevel *w_current)
 }
 
 
+
+/*! \brief Return TRUE if at least 1 component object is selected
+ */
+static gboolean
+selected_at_least_one_comp_object(GschemToplevel *w_current)
+{
+  gboolean result = FALSE;
+  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  GList* selected = geda_list_get_glist (toplevel->page_current->selection_list);
+
+  for ( ; selected != NULL; selected = g_list_next (selected) )
+  {
+    OBJECT* obj = (OBJECT*) selected->data;
+    if (obj->complex != NULL)
+    {
+      result = TRUE;
+      break;
+    }
+  }
+
+  return result;
+}
+
+
+
 /*! \brief Update sensitivity of relevant menu items
  *
  *  \par Function Description
@@ -421,7 +450,8 @@ selected_at_least_one_text_object(GschemToplevel *w_current)
  */
 void i_update_menus(GschemToplevel *w_current)
 {
-  gboolean have_text_selected;
+  gboolean have_text_selected = FALSE;
+  gboolean have_comp_selected = FALSE;
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   /*
    * This is very simplistic.  Right now it just disables all menu
@@ -437,6 +467,7 @@ void i_update_menus(GschemToplevel *w_current)
 
   if (o_select_selected (w_current)) {
     have_text_selected = selected_at_least_one_text_object(w_current);
+    have_comp_selected = selected_at_least_one_comp_object(w_current);
 
     /* since one or more things are selected, we set these TRUE */
     /* These strings should NOT be internationalized */
@@ -457,7 +488,8 @@ void i_update_menus(GschemToplevel *w_current)
     x_menus_sensitivity(w_current, "_Edit/Update Component", TRUE);
     x_menus_sensitivity(w_current, "Hie_rarchy/_Down Schematic", TRUE);
     x_menus_sensitivity(w_current, "Hie_rarchy/Down _Symbol", TRUE);
-    x_menus_sensitivity(w_current, "_Help/Find Component D_ocumentation", TRUE);
+    x_menus_sensitivity(w_current, "_Help/Find Component D_ocumentation",
+                        have_comp_selected);
     x_menus_sensitivity(w_current, "A_ttributes/_Attach", TRUE);
     x_menus_sensitivity(w_current, "A_ttributes/_Detach", TRUE);
     x_menus_sensitivity(w_current, "A_ttributes/Show _Value", have_text_selected);
