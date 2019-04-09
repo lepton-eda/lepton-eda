@@ -63,6 +63,15 @@
 
 
 
+; private:
+;
+( define ( doc-show-file fpath )
+  ; return:
+  ( doc-show-uri (format #f "file://~a" fpath) )
+)
+
+
+
 (define (sys-doc-dir)
   "sys-doc-dir
 
@@ -149,7 +158,7 @@ wiki."
            (file-exists? filename)
            filename)))
   (let ((filename (false-if-exception (directory-any dirname test-dir-entry))))
-    (and filename (begin (show-file filename) #t))))
+    (and filename (begin (doc-show-file filename) #t))))
 
 ;; Searches for documentation STRING on the Internet, using
 ;; %pdf-search-template.
