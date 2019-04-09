@@ -395,30 +395,30 @@ found, shows a dialog with an error message."
 
 
 (define-action-public
-    (&help-manual #:label (_ "gEDA Manuals") #:icon "help-browser"
-     #:tooltip (_ "View the front page of the gEDA documentation in a browser."))
+    (&help-manual #:label (_ "Lepton EDA Manuals") #:icon "help-browser"
+     #:tooltip (_ "View the front page of the Lepton EDA documentation in a browser."))
   (show-wiki "geda:documentation"))
 
 
 (define-action-public
-    (&help-guide #:label (_ "gschem User Guide") #:icon "gtk-help"
-                 #:tooltip (_ "View the gschem User Guide in a browser."))
+    (&help-guide #:label (_ "lepton-schematic User Guide") #:icon "gtk-help"
+                 #:tooltip (_ "View the lepton-schematic User Guide in a browser."))
   (show-wiki "geda:gschem_ug"))
 
 
 (define-action-public
-    (&help-faq #:label (_ "gschem FAQ") #:icon "help-faq"
-     #:tooltip (_ "Frequently Asked Questions about using gschem."))
+    (&help-faq #:label (_ "lepton-schematic FAQ") #:icon "help-faq"
+     #:tooltip (_ "Frequently Asked Questions about using lepton-schematic."))
   (show-wiki "geda:faq-gschem"))
 
 
 (define-action-public
-    (&help-wiki #:label (_ "gEDA wiki") #:icon "web-browser"
-     #:tooltip (_ "View the front page of the gEDA wiki in a browser."))
+    (&help-wiki #:label (_ "Lepton EDA wiki") #:icon "web-browser"
+     #:tooltip (_ "View the front page of the Lepton EDA wiki in a browser."))
   (show-wiki))
 
 
-(define-action-public (&help-about #:label (_ "About gschem") #:icon "gtk-about")
+(define-action-public (&help-about #:label (_ "About lepton-schematic") #:icon "gtk-about")
   (%help-about))
 
 
