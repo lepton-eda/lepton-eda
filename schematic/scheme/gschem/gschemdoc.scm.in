@@ -34,6 +34,35 @@
   #:export (show-component-documentation))
 
 
+
+; private:
+;
+; Call (gschem util)::show-uri( url ), catching exceptions.
+; Display message box on error.
+;
+( define ( doc-show-uri url )
+
+  ( catch
+    #t
+    ( lambda()
+      ( show-uri url )
+    )
+    ( lambda ( key subr msg args . rest )
+      ( let*
+      (
+      ( str   (_ "Could not show documentation:") )
+      ( exmsg ( apply format #f msg args ) )
+      ( ermsg ( format #f "~a~%'~a in ~a():~%~%~a" str key subr exmsg ) )
+      )
+        ( (@@ (guile-user) gschem-msg) ermsg )
+      )
+    )
+  ) ; catch()
+
+) ; doc-show-uri()
+
+
+
 (define (sys-doc-dir)
   "sys-doc-dir
 
@@ -69,7 +98,7 @@ gEDA wiki shipped with gEDA/gaf.  The specified PAGE should be a
 string containing the page name as used on the live version of the
 wiki."
 
-  (show-uri
+  (doc-show-uri
    (string-append "file://"
                   (string-join (list (sys-doc-dir) "wiki")
                                file-name-separator-string 'suffix)
@@ -127,7 +156,7 @@ wiki."
 ;;
 ;; FIXME string should be URL-encoded.
 (define (internet-doc-search string)
-  (show-uri (format #f %pdf-search-template string)) #t)
+  (doc-show-uri (format #f %pdf-search-template string)) #t)
 
 ;; Munges a component basename to look more like a device name
 (define (munge-basename basename)
@@ -170,7 +199,7 @@ displayed in the system associated viewer application."
        ;; c) Does the documentation attribute look like a URL?
        (and (any (lambda (prefix) (string-prefix? prefix documentation))
                  '("http://" "ftp://" "file://"))
-            (show-uri documentation))
+            (doc-show-uri documentation))
 
        ;; d) If a documentation attribute was specified at all, search
        ;;    for it with Google.

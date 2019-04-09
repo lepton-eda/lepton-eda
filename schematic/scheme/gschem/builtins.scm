@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2013-2015 gEDA Contributors
-;; Copyright (C) 2017-2018 Lepton EDA Contributors
+;; Copyright (C) 2017-2019 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -388,18 +388,10 @@
 documentation in a browser or PDF viewer. If no documentation can be
 found, shows a dialog with an error message."
 
-  (catch 'misc-error
-
-   (lambda ()
      (let ((component
             (any (lambda (obj) (and (component? obj) obj))
                  (page-selection (active-page)))))
        (and component (show-component-documentation component))))
-
-   (lambda (key subr msg args . rest)
-     ((@@ (guile-user) gschem-msg) (string-append
-                  (_ "Could not show documentation for selected component:\n\n")
-                  (apply format #f msg args))))))
 
 
 (define-action-public
