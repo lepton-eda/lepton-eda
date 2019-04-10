@@ -721,6 +721,14 @@ SCM g_rc_scheme_directory(SCM s_path)
  */
 SCM g_rc_bitmap_directory(SCM path)
 {
+  if (scm_is_eq (path, SCM_UNDEFINED)) {
+    if (default_bitmap_directory != NULL) {
+      return scm_from_utf8_string (default_bitmap_directory);
+    } else {
+      return SCM_BOOL_F;
+    }
+  }
+
   gchar *string;
   char *temp;
 
