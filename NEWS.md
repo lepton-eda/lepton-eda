@@ -16,6 +16,56 @@ Notable changes in Lepton EDA 1.9.8
 - Warnings about deprecated and "dead" RC functions are now more
   verbose, and contain link to Configuration Settings wiki page.
 
+### Changes in `lepton-netlist`:
+
+- A new record, `<schematic-component>`, has been added. It is now
+  the basic record for using in the backends that work with
+  components such as **spice** ones.
+
+- `<schematic>` record now contains a new field, `packages`,
+  containing the list of schematic *packages*, where any element
+  of the list is a `<package>` record.  The `<package>` records
+  now contain sets of components with same refdes. The field
+  *packages* is intended for use in backends working with
+  multi-slot packages, e.g. **PCB**.
+
+- The `schematic-netlist` field of the `<schematic>` record has
+  been renamed to `schematic-components` to more accurately
+  reflect destination of the field.
+
+- Common `<package>` structures for `<schematic-component>`'s with
+  default "refdes" attribute value are no longer
+  created. Component's "refdes" value is considered to be default
+  if the component has no attached "refdes", or its attached
+  "refdes" is the same as the inherited one and has the suffix
+  "?".
+
+- A new module, `(netlist schematic-connection)`, has been added.
+  The module has to provide records and functions for working with
+  schematic connections, that is, directly or indirectly connected
+  groups of nets.
+
+- The `composite` field in the `<schematic-component>` record,
+  inherited from the `<package>` structure, has been renamed to
+  `sources`.  The field can be used to get source file names.
+
+- The obsolete procedure `get-uref()` has been replaced with a
+  local procedure and its using is discouraged.
+
+- A new module, `(netlist schematic toplevel)`, has been added. It
+  contains accessors for `<toplevel-schematic>` record which is
+  now obtained as a set of schematic files given on
+  **lepton-netlist** command line.  The `toplevel-schematic`
+  variable has been replaced with same named procedure.
+
+- Arguments for `make-toplevel-schematic()` are now filenames
+  instead of pages.  This will allow reusing this function to
+  encapsulate subschematics in future.
+
+- A new module, `(netlist deprecated)`, has been added to isolate
+  legacy code that is a subject for deprecation in the next stable
+  release.
+
 ### Changes in `lepton-schematic`:
 
 - The **macro widget** has been improved in several ways:
