@@ -1,5 +1,5 @@
 
-SUBDIRS = src gschlas scripts xyrs lib include examples docs tests upcfg
+SUBDIRS = src schlas scripts xyrs lib include examples docs tests upcfg
 
 EXTRA_DIST = ChangeLog ChangeLog.tragesym-1.0 ChangeLog.gsch2pcb-1.0 \
 	ChangeLog-1.0 AUTHORS
