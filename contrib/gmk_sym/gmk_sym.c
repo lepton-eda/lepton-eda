@@ -162,7 +162,7 @@ int pin_0_x,pin_0_y;
 int BoxHeight,BoxWidth;
 int net_pin=0;
 
-char pin_used[300][5];       /* keep track of pin number used. Assume 300 pins max */
+char pin_used[300][6];       /* keep track of pin number used. Assume 300 pins max */
 int pin_counter=0;
 
 /***************************************************/
@@ -555,7 +555,11 @@ int make_pin(int fldcnt,char *pFields[]) {
           fprintf (stderr,"\nFatal Error, pin %s is used more that once !\n\n",pin);
           return -1;
      }
-  strncpy(pin_used[pin_counter++],pin,5);    /* save the current pin, the first 5 char */
+
+  size_t sz = sizeof( pin_used[ pin_counter ] ) - 1;
+  memcpy( pin_used[ pin_counter ], pin, sz ); /* save the current pin, the first 5 char */
+  pin_used[ pin_counter ][ sz ] ='\0';
+  pin_counter ++ ;
 
   shape = LINE_SHAPE;
   if (!strcasecmp(pFields[2],"dot"))     /* get shape */
