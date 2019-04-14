@@ -62,6 +62,18 @@ precompile_run()
 
   if (scm_precompile_script != NULL)
   {
+    libgeda_init();
+    g_register_funcs();
+    g_init_window();
+    g_init_select();
+    g_init_hook();
+    g_init_action();
+    g_init_attrib();
+    g_init_keys();
+    g_init_builtins();
+    g_init_util();
+    scheme_init_undo();
+
     SCM script = scm_from_utf8_string (scm_precompile_script);
     scm_primitive_load (script);
   }
@@ -165,6 +177,15 @@ void main_prog(void *closure, int argc, char *argv[])
   setlocale(LC_NUMERIC, "C");
 #endif
 
+
+  /* precompilation:
+  */
+  if (precompile_mode())
+  {
+    exit (precompile_run());
+  }
+
+
   gtk_init(&argc, &argv);
 
   argv_index = parse_commandline(argc, argv);
@@ -210,14 +231,6 @@ void main_prog(void *closure, int argc, char *argv[])
   x_color_init ();
 
   o_undo_init();
-
-
-  /* precompilation:
-  */
-  if (precompile_mode())
-  {
-    exit (precompile_run());
-  }
 
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
