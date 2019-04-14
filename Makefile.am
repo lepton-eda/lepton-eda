@@ -75,7 +75,11 @@ endif
 
 precompile:
 	@LEPTON_SCM_PRECOMPILE=1 \
-	LEPTON_SCM_PRECOMPILE_CFG=@LEPTON_SCM_PRECOMPILE_CFG@ \
+	LEPTON_SCM_PRECOMPILE_SCRIPT=$(datadir)/lepton-eda/scheme/schematic/precompile.scm \
+	LEPTON_SCM_PRECOMPILE_SCM_DIR=$(datadir)/lepton-eda/scheme \
+	LEPTON_SCM_PRECOMPILE_OUT_DIR=$(datadir)/lepton-eda/ccache \
+	LEPTON_SCM_PRECOMPILE_RECURSIVE=1 \
+	LEPTON_SCM_PRECOMPILE_FNAME_EXT=.scm \
 	$(bindir)/lepton-schematic
 
 

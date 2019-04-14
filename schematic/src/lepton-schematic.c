@@ -54,11 +54,19 @@ precompile_prepare()
 
 
 
-static void
+static int
 precompile_run()
 {
-  SCM script = scm_from_utf8_string (LEPTON_SCM_PRECOMPILE_SCRIPT);
-  scm_primitive_load (script);
+  char* scm_precompile_script = getenv ("LEPTON_SCM_PRECOMPILE_SCRIPT");
+  g_return_val_if_fail (scm_precompile_script != NULL, 1);
+
+  if (scm_precompile_script != NULL)
+  {
+    SCM script = scm_from_utf8_string (scm_precompile_script);
+    scm_primitive_load (script);
+  }
+
+  return 0;
 }
 
 
@@ -208,8 +216,7 @@ void main_prog(void *closure, int argc, char *argv[])
   */
   if (precompile_mode())
   {
-    precompile_run();
-    exit (0);
+    exit (precompile_run());
   }
 
 
@@ -338,9 +345,10 @@ int main (int argc, char *argv[])
   {
     precompile_prepare();
   }
-
-
-  set_guile_compiled_path();
+  else
+  {
+    set_guile_compiled_path();
+  }
 
 
 #ifdef DEBUG

@@ -28,7 +28,6 @@ nobase_dist_scmdata_DATA = \
 	schematic/netlist.scm \
 	schematic/undo.scm \
 	schematic/precompile.scm \
-	schematic/precompile-config.scm \
 	conf/schematic/attribs.scm \
 	conf/schematic/deprecated.scm \
 	conf/schematic/keys.scm \
@@ -40,12 +39,7 @@ gschem/gschemdoc.scm: gschem/gschemdoc.scm.in
 	$(MKDIR_P) gschem/; \
 	sed -e 's,[@]docdir[@],$(docdir),g' < $(srcdir)/$@.in > $@
 
-schematic/precompile-config.scm: schematic/precompile-config.scm.in
-	sed -e "s,[@]schdir[@],$(datadir)/lepton-eda/scheme," \
-		-e "s,[@]outdir[@],@LEPTON_SCM_PRECOMPILE_DIR@," \
-		< $(srcdir)/$@.in > $@
-
-EXTRA_DIST = gschem/gschemdoc.scm.in schematic/precompile-config.scm.in
+EXTRA_DIST = gschem/gschemdoc.scm.in
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~ gschem/gschemdoc.scm schematic/precompile-config.scm

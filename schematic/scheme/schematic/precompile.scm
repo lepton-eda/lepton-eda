@@ -25,29 +25,6 @@
 
 
 
-; do not hard-code config file path, so that we can
-; compile some other code:
-;
-( define ( config-file-name )
-( let*
-  (
-  ( var "LEPTON_SCM_PRECOMPILE_CFG" )
-  ( val ( getenv var ) )
-  )
-
-  ( unless val
-    ( format (dbg-out) "ee: [~a] environment variable is not set~%" var )
-    ( primitive-exit 1 )
-  )
-
-  ; return:
-  val
-
-) ; let
-) ; config-file-name()
-
-
-
 ; Compile [ifile] to [ofile]
 ;
 ; {ret}: #t on success, #f otherwise
@@ -173,18 +150,58 @@
 
 
 
-( define ( precompile-load-config cfg-fname )
-  ( catch #t
-    ( lambda()
-      ( primitive-load cfg-fname )
-    )
-    ( lambda( ex . args )
-      ( format (dbg-out) "ee: cannot load cfg file [~a]~%" cfg-fname )
-      ( format (dbg-out) "    [~a]: ~a~%" ex args )
-      ( primitive-exit 1 )
-    )
-  ) ; catch
-) ; precompile-load-config()
+( define* ( config-get-env-var name #:key (fail-if-unset #t) (default-val "") )
+( let*
+  (
+  ( value ( getenv name ) )
+  )
+
+  ( when ( and (not value) fail-if-unset )
+    ( format (dbg-out) "ee: [~a] environment variable is not set~%" name )
+    ( primitive-exit 1 )
+  )
+
+  ; return:
+  ( or value default-val )
+
+) ; let
+) ; config-get-env-var()
+
+
+
+( define ( config-get-scm-dir )
+  ; return:
+  ( config-get-env-var "LEPTON_SCM_PRECOMPILE_SCM_DIR" )
+)
+
+
+
+( define ( config-get-out-dir )
+  ; return:
+  ( config-get-env-var "LEPTON_SCM_PRECOMPILE_OUT_DIR" )
+)
+
+
+
+( define ( config-get-recursive )
+  ; return:
+  ( config-get-env-var
+    "LEPTON_SCM_PRECOMPILE_RECURSIVE"
+    #:fail-if-unset #f
+    #:default-val "1"
+  )
+)
+
+
+
+( define ( config-get-fname-ext )
+  ; return:
+  ( config-get-env-var
+    "LEPTON_SCM_PRECOMPILE_FNAME_EXT"
+    #:fail-if-unset #f
+    #:default-val ".scm"
+  )
+)
 
 
 
@@ -194,7 +211,6 @@
                      ( current-filename ) )
   ( format (dbg-out) "~%" )
 
-  ( format (dbg-out) "ii: config file: ~a~%" (config-file-name)   )
   ( format (dbg-out) "ii: scm dir:     ~a~%" (config-get-scm-dir) )
   ( format (dbg-out) "ii: out dir:     ~a~%" (config-get-out-dir) )
 
@@ -231,8 +247,6 @@
 ;
 ; top-level code:
 ;
-
-( precompile-load-config (config-file-name) )
 
 ( dbg-header )
 
