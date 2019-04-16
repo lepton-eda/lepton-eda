@@ -22,6 +22,11 @@
 (define-module (gschem builtins)
   #:use-module (geda object)
   #:use-module (geda repl)
+  #:use-module (geda page)
+  #:use-module (geda attrib)
+  #:use-module (geda log)
+  #:use-module (gschem hook)
+  #:use-module (schematic undo)
   #:use-module (gschem core gettext)
   #:use-module (gschem core builtins)
   #:use-module (gschem action)
@@ -310,8 +315,58 @@
 (define-action-public (&attributes-attach #:label (_ "Attach Attributes") #:icon "attribute-attach")
   (%attributes-attach))
 
-(define-action-public (&attributes-detach #:label (_ "Detach Attributes") #:icon "attribute-detach")
-  (%attributes-detach))
+
+
+( define-action-public
+  (
+    &attributes-detach
+    #:label (_ "Detach Attributes")
+    #:icon "attribute-detach"
+  )
+
+  ( let*
+    (
+    ( page ( active-page ) )
+    ( sel  ( if page (page-selection page) '() ) )
+    )
+
+    ( define ( detachable-attr? obj ) ; predicate
+      ; return:
+      ( and
+        ( attribute?        obj ) ; if it's attribute
+        ( text-visible?     obj ) ; if it's visible
+        ( attrib-attachment obj ) ; and attached to some object
+      )
+    )
+
+    ( define ( detach-attr attr )
+      ( detach-attribs! (attrib-attachment attr) attr )
+      ( log! 'message (_ "Attribute detached: [~a]") (text-string attr) )
+      ( deselect-object! attr )
+    )
+
+
+    ( let
+      (
+      ( attrs (filter detachable-attr? sel) )
+      )
+
+      ( unless (null? attrs)
+        ( for-each detach-attr attrs )
+        ( set-page-dirty! page )
+        ( run-hook detach-attribs-hook attrs )
+        ( undo-save-state )
+      )
+
+      ; return:
+      attrs
+    )
+
+  ) ; let*
+
+) ; &attributes-detach action
+
+
 
 (define-action-public (&attributes-show-value #:label (_ "Show Attribute Value") #:icon "attribute-show-value")
   (%attributes-show-value))

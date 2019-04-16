@@ -2459,52 +2459,7 @@ DEFINE_I_CALLBACK(attributes_attach)
   o_undo_savestate_old(w_current, UNDO_ALL);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(attributes_detach)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  GList *s_current;
-  OBJECT *o_current;
-  GList *detached_attribs = NULL;
 
-  g_return_if_fail (w_current != NULL);
-
-  /* This is a new addition 3/15 to prevent this from executing
-   * inside an action */
-  if (w_current->inside_action) {
-    return;
-  }
-
-  /* same note as above on i_update_middle_button */
-  i_update_middle_button(w_current, i_callback_attributes_detach,
-                         _("Detach"));
-
-  s_current = geda_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list );
-  while (s_current != NULL) {
-    o_current = (OBJECT *) s_current->data;
-    if (o_current) {
-      if (o_current->attribs) {
-        detached_attribs = g_list_concat (g_list_copy (o_current->attribs),
-                                          detached_attribs);
-        o_attrib_detach_all (gschem_toplevel_get_toplevel (w_current), o_current);
-        gschem_toplevel_get_toplevel (w_current)->page_current->CHANGED=1;
-      }
-    }
-    s_current = g_list_next(s_current);
-  }
-
-  if (detached_attribs != NULL) {
-    g_run_hook_object_list (w_current, "%detach-attribs-hook",
-                            detached_attribs);
-    g_list_free (detached_attribs);
-  }
-
-  o_undo_savestate_old(w_current, UNDO_ALL);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
