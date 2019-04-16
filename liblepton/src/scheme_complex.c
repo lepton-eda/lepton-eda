@@ -129,6 +129,8 @@ SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
   SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_complex_x);
   SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_complex_x);
   SCM_ASSERT (scm_is_integer (angle_s), angle_s, SCM_ARG4, s_set_complex_x);
+  SCM_ASSERT (scm_is_bool (mirror_s), mirror_s,  SCM_ARG5, s_set_complex_x);
+  SCM_ASSERT (scm_is_bool (locked_s), locked_s,  SCM_ARG6, s_set_complex_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (complex_s);
