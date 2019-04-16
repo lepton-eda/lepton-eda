@@ -798,6 +798,10 @@ SCM g_rc_reset_component_library(void)
  */
 SCM g_rc_attribute_promotion(SCM mode)
 {
+  if (scm_is_eq (mode, SCM_UNDEFINED)) {
+    return scm_from_bool (default_attribute_promotion);
+  }
+
   static const vstbl_entry mode_table[] = {
     {TRUE , "enabled" },
     {FALSE, "disabled"},
@@ -815,6 +819,10 @@ SCM g_rc_attribute_promotion(SCM mode)
  */
 SCM g_rc_promote_invisible(SCM mode)
 {
+  if (scm_is_eq (mode, SCM_UNDEFINED)) {
+    return scm_from_bool (default_promote_invisible);
+  }
+
   static const vstbl_entry mode_table[] = {
     {TRUE , "enabled" },
     {FALSE, "disabled"},
@@ -832,6 +840,10 @@ SCM g_rc_promote_invisible(SCM mode)
  */
 SCM g_rc_keep_invisible(SCM mode)
 {
+  if (scm_is_eq (mode, SCM_UNDEFINED)) {
+    return scm_from_bool (default_keep_invisible);
+  }
+
   static const vstbl_entry mode_table[] = {
     {TRUE , "enabled" },
     {FALSE, "disabled"},
