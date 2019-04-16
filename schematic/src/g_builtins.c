@@ -134,7 +134,6 @@ static struct BuiltinInfo builtins[] = {
   { "%hierarchy-down-symbol",        0, 0, 0, (SCM (*) ()) g_keys_hierarchy_down_symbol },
   { "%hierarchy-up",                 0, 0, 0, (SCM (*) ()) g_keys_hierarchy_up },
   { "%attributes-attach",            0, 0, 0, (SCM (*) ()) g_keys_attributes_attach },
-  { "%attributes-detach",            0, 0, 0, (SCM (*) ()) g_keys_attributes_detach },
   { "%attributes-show-name",         0, 0, 0, (SCM (*) ()) g_keys_attributes_show_name },
   { "%attributes-show-value",        0, 0, 0, (SCM (*) ()) g_keys_attributes_show_value },
   { "%attributes-show-both",         0, 0, 0, (SCM (*) ()) g_keys_attributes_show_both },
