@@ -1,6 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2017-2019 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -21,6 +22,7 @@
   #:use-module (gschem core gettext)
   #:use-module (gschem window)
   #:use-module (gschem hook)
+  #:use-module (geda log)
   #:use-module (ice-9 optargs)
   #:export-syntax (define-action))
 
@@ -31,14 +33,14 @@
 ;; Define an eval-in-currentmodule procedure
 (define (eval-cm expr) (eval expr (current-module)))
 
-;; Evaluates a gschem action.  A gschem action is expected to be a
+;; Evaluates a lepton-schematic action.  An action is expected to be a
 ;; symbol naming a thunk variable in the current module.
 ;;
 ;; The special-case symbol repeat-last-command causes the last action
 ;; executed to be repeated.
 (define-public (eval-action! action)
   (define (invalid-action-error)
-    (error (_ "~S is not a valid gschem action.") action))
+    (log! 'warning (_ "[~A] is not a valid lepton-schematic action.") action))
 
   (define (eval-action!/recursive a)
 
