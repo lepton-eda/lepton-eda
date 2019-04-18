@@ -26,6 +26,9 @@
 #include "gschem.h"
 
 
+#define PREVIEW_TEXT_SIZE 18
+
+
 /* convenience macro - gobject type implementation:
 */
 G_DEFINE_TYPE (FontSelectWidget, font_select_widget, GSCHEM_TYPE_BIN);
@@ -356,7 +359,15 @@ fontsel_set_font (FontSelectWidget* widget, const gchar* font)
 {
   g_return_if_fail (widget != NULL);
 
-  gtk_font_selection_set_font_name (widget->font_sel_, font);
+  /* Append font size to the [font] name.
+   * If the [font] name string doesn't contain font size,
+   * GtkFontSelection widget will set its "Size" field to 0,
+   * effectively hiding text in the "Preview" box:
+  */
+  gchar* fname = g_strdup_printf ("%s %d", font, PREVIEW_TEXT_SIZE);
+  gtk_font_selection_set_font_name (widget->font_sel_, fname);
+
+  g_free (fname);
 }
 
 
