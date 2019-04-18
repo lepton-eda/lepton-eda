@@ -27,6 +27,7 @@
 
 
 #define PREVIEW_TEXT_SIZE 18
+#define PREVIEW_TEXT "refdes=R1 Q23 U45 footprint=TQFN20_4_EP.fp"
 
 
 /* convenience macro - gobject type implementation:
@@ -368,6 +369,10 @@ fontsel_set_font (FontSelectWidget* widget, const gchar* font)
   gtk_font_selection_set_font_name (widget->font_sel_, fname);
 
   g_free (fname);
+
+  /* Set preview text:
+  */
+  gtk_font_selection_set_preview_text (widget->font_sel_, PREVIEW_TEXT);
 }
 
 
