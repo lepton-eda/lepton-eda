@@ -41,10 +41,17 @@
 (define-public (eval-action! action)
   (define (invalid-action-error)
     (log! 'warning (_ "[~A] is not a valid lepton-schematic action.") action))
+  (define (no-last-action-error)
+    (log! 'message (_ "There is no last action to repeat.")))
 
   (define (eval-action!/recursive a)
 
     (cond
+     ;; The action is #f when the user hits "." (repeat last action)
+     ;; and there is no last action to repeat.
+     ((eq? a #f)
+      (no-last-action-error))
+
      ;; Handle repeat-last-command
      ((equal? 'repeat-last-command a)
       ;; N.b. must call eval-action! rather than
