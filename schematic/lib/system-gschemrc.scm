@@ -7,7 +7,8 @@
              (schematic gui keymap)
              (schematic gui stroke)
              (schematic netlist)
-             (gschem builtins))
+             (gschem builtins)
+             (gschem action))
 
 
 ; gschem-version string
