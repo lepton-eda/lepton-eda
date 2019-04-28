@@ -215,7 +215,8 @@
 
          (set-config! b "foo" "bam" #t)
          (assert-equal '("bar") (config-keys a "foo"))
-         (assert-equal '("bam" "bar") (config-keys b "foo"))
+         (assert-equal (sort '("bam" "bar") string<?)
+                       (sort (config-keys b "foo") string<?))
          (assert-true (config-has-key? b "foo" "bam"))
          (assert-equal #f (config-has-key? a "foo" "bam")))
 
