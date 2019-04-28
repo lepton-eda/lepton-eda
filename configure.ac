@@ -265,8 +265,6 @@ AC_CONFIG_FILES([Makefile
                  utils/schlas/Makefile
                  utils/xyrs/Makefile
                  utils/include/Makefile
-                 utils/lib/Makefile
-                 utils/lib/system-gschlasrc
                  utils/scripts/Makefile
                  utils/src/Makefile
                  utils/tests/Makefile

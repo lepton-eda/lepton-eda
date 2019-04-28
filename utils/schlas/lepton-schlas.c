@@ -54,7 +54,6 @@ gschlas_quit(void)
  * - initialises liblepton;
  * - parses the command line;
  * - starts logging;
- * - registers the Scheme functions with Guile;
  * - parses the RC files;
  *
  * \param closure
@@ -88,11 +87,8 @@ main_prog(void *closure, int argc, char *argv[])
      PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
      PACKAGE_DATE_VERSION, PACKAGE_GIT_COMMIT);
 
-  /* register guile (scheme) functions */
-  g_register_funcs();
-
   pr_current = s_toplevel_new ();
-  g_rc_parse (pr_current, argv[0], "gschlasrc", NULL);
+  g_rc_parse (pr_current, argv[0], NULL, NULL);
   i_vars_set(pr_current);
 
   i = argv_index;

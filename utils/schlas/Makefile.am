@@ -4,8 +4,6 @@ bin_PROGRAMS = lepton-schlas
 
 # don't forget all *.h files */
 lepton_schlas_SOURCES = \
-	g_rc.c \
-	g_register.c \
 	globals.c \
 	lepton-schlas.c \
 	i_vars.c \
