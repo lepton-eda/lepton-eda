@@ -116,7 +116,26 @@ x_window_init()
    * it.  The memory for the actual sheet cells is allocated later,
    * when gtk_sheet_new is invoked, I think.  */
   sheets = g_new0 (GtkSheet*, NUM_SHEETS);
-}
+
+
+  /* Restore main window's geometry:
+  */
+  EdaConfig* cfg = eda_config_get_cache_context();
+
+  gint x = eda_config_get_int (cfg, "attrib.window-geometry", "x", NULL);
+  gint y = eda_config_get_int (cfg, "attrib.window-geometry", "y", NULL);
+
+  gtk_window_move (GTK_WINDOW (window), x, y);
+
+  gint width  = eda_config_get_int (cfg, "attrib.window-geometry", "width",  NULL);
+  gint height = eda_config_get_int (cfg, "attrib.window-geometry", "height", NULL);
+
+  if (width > 0 && height > 0)
+  {
+    gtk_window_resize (GTK_WINDOW (window), width, height);
+  }
+
+} /* x_window_init() */
 
 
 /*------------------------------------------------------------------
