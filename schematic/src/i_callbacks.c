@@ -844,22 +844,27 @@ DEFINE_I_CALLBACK(edit_embed)
   g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_embed, _("Embed"));
+
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     /* yes, embed each selected component */
-    GList *s_current =
-      geda_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list );
+    TOPLEVEL* toplevel  = gschem_toplevel_get_toplevel (w_current);
+    PAGE*     page      = toplevel->page_current;
+    GList*    s_current = geda_list_get_glist (page->selection_list);
 
     while (s_current != NULL) {
       o_current = (OBJECT *) s_current->data;
       g_assert (o_current != NULL);
       if ( (o_current->type == OBJ_COMPLEX) ||
 	   (o_current->type == OBJ_PICTURE) ) {
-        o_embed (gschem_toplevel_get_toplevel (w_current), o_current);
+        o_embed (toplevel, o_current);
       }
       s_current = g_list_next(s_current);
     }
+
     o_undo_savestate_old(w_current, UNDO_ALL);
+    x_pagesel_update (w_current);
+
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);
@@ -886,19 +891,23 @@ DEFINE_I_CALLBACK(edit_unembed)
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     /* yes, unembed each selected component */
-    GList *s_current =
-      geda_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list );
+    TOPLEVEL* toplevel  = gschem_toplevel_get_toplevel (w_current);
+    PAGE*     page      = toplevel->page_current;
+    GList*    s_current = geda_list_get_glist (page->selection_list);
 
     while (s_current != NULL) {
       o_current = (OBJECT *) s_current->data;
       g_assert (o_current != NULL);
       if ( (o_current->type == OBJ_COMPLEX) ||
            (o_current->type == OBJ_PICTURE) ) {
-        o_unembed (gschem_toplevel_get_toplevel (w_current), o_current);
+        o_unembed (toplevel, o_current);
       }
       s_current = g_list_next(s_current);
     }
+
     o_undo_savestate_old(w_current, UNDO_ALL);
+    x_pagesel_update (w_current);
+
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);
