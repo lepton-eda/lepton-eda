@@ -182,7 +182,7 @@ eda_renderer_get_text_user_bounds (EdaRenderer *renderer,
                                    double *right,
                                    double *bottom);
 
-G_DEFINE_TYPE (EdaRenderer, eda_renderer, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (EdaRenderer, eda_renderer, G_TYPE_OBJECT);
 
 GType
 eda_renderer_flags_get_type ()
@@ -208,8 +208,6 @@ eda_renderer_class_init (EdaRendererClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GParamFlags param_flags;
-
-  g_type_class_add_private (gobject_class, sizeof (EdaRendererPrivate));
 
   /* Register functions with base class */
   gobject_class->constructor = eda_renderer_constructor;
