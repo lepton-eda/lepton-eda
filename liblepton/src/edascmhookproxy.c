@@ -54,7 +54,7 @@ static void cclosure_marshal_VOID__SCM (GClosure *closure,
                                         gpointer invocation_hint,
                                         gpointer marshal_data);
 
-G_DEFINE_TYPE (EdascmHookProxy, edascm_hook_proxy, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (EdascmHookProxy, edascm_hook_proxy, G_TYPE_OBJECT);
 
 /*! Initialise EdascmHookProxy class. */
 static void
@@ -62,8 +62,6 @@ edascm_hook_proxy_class_init (EdascmHookProxyClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GParamFlags param_flags;
-
-  g_type_class_add_private (gobject_class, sizeof (EdascmHookProxyPrivate));
 
   /* Register functions with base class */
   gobject_class->finalize = edascm_hook_proxy_finalize;
