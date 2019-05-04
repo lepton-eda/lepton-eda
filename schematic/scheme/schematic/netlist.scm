@@ -20,6 +20,7 @@
 
 (define-module (schematic netlist)
   #:use-module (geda page)
+  #:use-module (geda log)
   #:use-module (netlist)
   #:use-module (netlist schematic)
 
@@ -41,4 +42,5 @@
 ;;; Allegro backend
 (define (&netlist-allegro)
   (with-output-to-file "allegro.out"
-    (lambda () (allegro* (%schematic)))))
+    (lambda () (allegro* (%schematic))))
+  (log! 'message "allegro: the output is written to [allegro.out]"))
