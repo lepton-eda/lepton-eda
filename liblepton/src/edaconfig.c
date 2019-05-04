@@ -163,7 +163,7 @@ static void parent_config_changed_handler (EdaConfig *parent, const gchar *group
 static void propagate_key_file_error (GError *src, GError **dest);
 
 /*! Magic helpful GObject macro */
-G_DEFINE_TYPE (EdaConfig, eda_config, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (EdaConfig, eda_config, G_TYPE_OBJECT);
 
 /*! Initialise EdaConfig class. */
 static void
@@ -171,8 +171,6 @@ eda_config_class_init (EdaConfigClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GParamSpec *pspec;
-
-  g_type_class_add_private (gobject_class, sizeof (EdaConfigPrivate));
 
   /* Register functions with base class */
   gobject_class->dispose = eda_config_dispose;
