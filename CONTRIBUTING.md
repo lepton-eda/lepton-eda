@@ -95,7 +95,8 @@ When writing C code:
   comments instead.
 
 - This set of options to GNU `indent` approximates the gEDA C
-  indentation style:
+  indentation style: (note the `-nut` option, which disables
+  the use of tab characters: please use spaces for code indentation)
 
       -br -blf -bls -cdw -ce -cs -ts2 -sc -nut -bap -pcs -psl -lp l80 -bbo
 
