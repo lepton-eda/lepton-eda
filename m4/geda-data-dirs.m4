@@ -72,6 +72,15 @@ Only libgeda should use this - apps should use eda_get_system_data_dirs()])
   if test "x$GEDARCDIR" = "x"; then
     GEDARCDIR=$GEDADATADIR
   fi
+
+  # create #define LEPTON_SCM_PRECOMPILE_DIR in config.h:
+  #
+  AC_DEFINE_UNQUOTED([LEPTON_SCM_PRECOMPILE_DIR],
+                     ["$GEDADATADIR_expand/ccache"],
+                     [precompiled scm files dir])
+
+  AC_SUBST([LEPTON_SCM_PRECOMPILE_DIR], ["$GEDADATADIR_expand/ccache"])
+
   AC_SUBST([GEDADATADIR])
   AC_SUBST([GEDARCDIR])
 

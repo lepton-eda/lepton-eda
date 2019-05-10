@@ -180,8 +180,6 @@ AX_OPTION_CONTRIB
 
 # Where should data files be installed/searched for?
 AX_DATA_DIRS
-# Support precompilation of Scheme files
-AX_PRECOMPILE
 # Where should PCB footprints be searched for?
 AX_PCB_DIRS
 # Set up liblepton with the correct ld version number
