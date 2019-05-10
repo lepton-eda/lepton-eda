@@ -9,7 +9,6 @@ POTFILES
 *.sin
 Rules-quot
 Makevars.template
-lepton-attrib.pot
 stamp-po
 stamp-it
 stamp-i18n
