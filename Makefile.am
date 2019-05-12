@@ -83,5 +83,9 @@ precompile:
 	$(bindir)/lepton-schematic
 
 
+uninstall-local:
+	rm -fr $(datadir)/lepton-eda/ccache
+
+
 DISTCLEANFILES = stamp-git
 MAINTAINERCLEANFILES=Makefile.in aclocal.m4 config.h.in configure
