@@ -41,7 +41,6 @@
     (post-load . ())
     (eval-code . ())
     (interactive . #f)
-    (no-warn-cfg . #f)
     (help . #f)
     (version . #f)))
 

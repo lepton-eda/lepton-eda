@@ -42,7 +42,6 @@ exec @GUILE@ -s "$0" "$@"
     (eval-code (single-char #\c) (value #t))
     (interactive (single-char #\i))
     (help (single-char #\h))
-    (no-warn-cfg (single-char #\w))
     (version (single-char #\V))))
 
 ;;; Options.
