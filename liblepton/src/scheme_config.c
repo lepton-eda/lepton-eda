@@ -1,7 +1,7 @@
 /* Lepton EDA
  * liblepton - Lepton's library - Scheme API
  * Copyright (C) 2011-2012 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -259,9 +259,17 @@ SCM_DEFINE (config_load_x, "%config-load!", 1, 0, 0,
 
   EdaConfig *cfg = edascm_to_config (cfg_s);
   GError *error = NULL;
-  if (!eda_config_load (cfg, &error)) {
-    error_from_gerror (s_config_load_x, &error);
+
+  if (!eda_config_load (cfg, &error))
+  {
+    /* Missing configuration file is not an error:
+    */
+    if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND))
+    {
+      error_from_gerror (s_config_load_x, &error);
+    }
   }
+
   return cfg_s;
 }
 
