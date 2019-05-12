@@ -103,18 +103,12 @@
 ;; FIXME[2017-02-01] This should error if the load fails due to
 ;; anything other than "file not found"
 (define (try-load-config cfg)
-(let*
-    (
-    (nowarn (netlist-option-ref 'no-warn-cfg))
-    (level (if nowarn 'info 'warning))
-    )
-
     (catch 'system-error
            (lambda () (config-load! cfg))
            (lambda (key subr message args rest)
-             (log! level "Failed to load config from ~S: ~?"
+             (log! 'warning "Failed to load config from ~S: ~?"
                    (config-filename cfg) message args)))
-))
+)
 
 (define (reload-config config . args)
   (define (process info)
