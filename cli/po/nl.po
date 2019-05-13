@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gaf\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-08-12 12:30+0300\n"
+"POT-Creation-Date: 2019-05-13 11:38+0300\n"
 "PO-Revision-Date: 2014-08-31 20:24+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers\n"
@@ -17,7 +17,6 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
-#: cli/lepton-cli.c:66
 #, fuzzy, c-format
 msgid ""
 "Usage: lepton-cli [OPTION...] COMMAND [ARGS ...]\n"
@@ -50,7 +49,6 @@ msgstr ""
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
 
-#: cli/lepton-cli.c:89
 #, fuzzy, c-format
 msgid ""
 "Lepton EDA %1$s (g%2$.7s)\n"
@@ -68,7 +66,6 @@ msgstr ""
 "de gEDA distributie is bijgevoegd.\n"
 "Er is GEEN GARANTIE, voor zover toegelaten door de wet.\n"
 
-#: cli/lepton-cli.c:138
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -77,7 +74,6 @@ msgstr ""
 "\n"
 "Voer `gaf config --help' uit voor meer informatie.\n"
 
-#: cli/lepton-cli.c:150
 #, fuzzy, c-format
 msgid ""
 "ERROR: You must specify a command to run.\n"
@@ -88,7 +84,6 @@ msgstr ""
 "\n"
 "Voer `gaf --help' uit voor meer informatie.\n"
 
-#: cli/lepton-cli.c:168
 #, fuzzy, c-format
 msgid ""
 "ERROR: Unrecognised command `%1$s'.\n"
@@ -99,7 +94,6 @@ msgstr ""
 "\n"
 "Voer `gaf --help' uit voor meer informatie.\n"
 
-#: cli/config.c:47
 #, fuzzy, c-format
 msgid ""
 "Usage: lepton-cli config [OPTION] [GROUP KEY [VALUE]]\n"
@@ -141,7 +135,6 @@ msgstr ""
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
 
-#: cli/config.c:68
 #, fuzzy
 msgid ""
 "\n"
@@ -150,33 +143,27 @@ msgstr ""
 "\n"
 "Voer `gaf config --help' uit voor meer informatie.\n"
 
-#: cli/config.c:69
 msgid "ERROR: You may only specify a single configuration store.\n"
 msgstr "FOUT: U mag alleen een enkele configuratie opslag specificeren.\n"
 
 #. TRANSLATORS: The first string is the filename, the second is
 #. * the detailed error message
-#: cli/config.c:160
 #, fuzzy, c-format
 msgid "WARNING: Could not load '%1$s': %2$s.\n"
 msgstr "WAARSCHUWING: Kan '%s': %s niet laden.\n"
 
-#: cli/config.c:172
 #, c-format
 msgid "ERROR: You must specify both configuration group and key.\n"
 msgstr "FOUT: U moet beide configuratie groep en sleutel specificeren.\n"
 
-#: cli/config.c:184 cli/config.c:198
 #, fuzzy, c-format
 msgid "ERROR: %1$s.\n"
 msgstr "FOUT: %s.\n"
 
-#: cli/export.c:152
 #, fuzzy, c-format
 msgid "ERROR: Bad argument '%1$s' to %2$s option.\n"
 msgstr "FOUT: Slecht argument '%s' voor %s optie.\n"
 
-#: cli/export.c:153
 #, fuzzy
 msgid ""
 "\n"
@@ -185,22 +172,18 @@ msgstr ""
 "\n"
 "Voer `gaf export --help' uit voor meer informatie.\n"
 
-#: cli/export.c:193
 #, fuzzy, c-format
 msgid "ERROR: Cannot infer output format from filename '%1$s'.\n"
 msgstr "FOUT: Kan geen uitvoerformaat afleiden van bestandsnaam '%s'.\n"
 
-#: cli/export.c:210
 #, fuzzy, c-format
 msgid "ERROR: Cannot find supported format for filename '%1$s'.\n"
 msgstr "FOUT: Kan geen ondersteund formaat vinden voor bestandsnaam '%s'.\n"
 
-#: cli/export.c:215
 #, fuzzy, c-format
 msgid "ERROR: Unsupported output format '%1$s'.\n"
 msgstr "FOUT: Niet ondersteund uitvoer formaat '%s'.\n"
 
-#: cli/export.c:227
 #, c-format
 msgid "ERROR: Selected output format does not support multipage output\n"
 msgstr ""
@@ -208,22 +191,18 @@ msgstr ""
 
 #. TRANSLATORS: The first string is the filename, the second
 #. * is the detailed error message
-#: cli/export.c:241
 #, fuzzy, c-format
 msgid "ERROR: Failed to load '%1$s': %2$s\n"
 msgstr "FOUT: Faalde om '%s': %s te laden\n"
 
-#: cli/export.c:247
 #, fuzzy, c-format
 msgid "ERROR: Failed to change directory to '%1$s': %2$s\n"
 msgstr "Faalde om bestandenmap te wijzigen naar '%s': %s\n"
 
-#: cli/export.c:329
 #, c-format
 msgid "ERROR: %s.\n"
 msgstr "FOUT: %s.\n"
 
-#: cli/export.c:962
 #, fuzzy, c-format
 msgid ""
 "Usage: lepton-cli export [OPTION ...] -o OUTPUT [--] FILE ...\n"
@@ -270,17 +249,14 @@ msgstr ""
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
 
-#: cli/export.c:1141
 #, c-format
 msgid "ERROR: You must specify at least one input filename.\n"
 msgstr "FOUT: U moet tenminste een invoer bestandsnaam specificeren.\n"
 
-#: cli/export.c:1150
 #, c-format
 msgid "ERROR: You must specify an output filename.\n"
 msgstr "FOUT: U moet een uitvoer bestandnaam specificeren.\n"
 
-#: cli/shell.c:46
 #, fuzzy, c-format
 msgid ""
 "Usage: lepton-cli shell [OPTION ...]\n"
@@ -318,7 +294,6 @@ msgstr ""
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
 
-#: cli/shell.c:102
 #, fuzzy, c-format
 msgid ""
 "\n"
