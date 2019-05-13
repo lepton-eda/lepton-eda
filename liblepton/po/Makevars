@@ -17,6 +17,10 @@ top_builddir = ../..
 # These options get passed to xgettext.
 XGETTEXT_OPTIONS = --keyword=_ --keyword=N_ --from-code=UTF-8
 
+MSGMERGE_OPTIONS = --no-location
+
+PO_DEPENDS_ON_POT = no
+
 # This is the copyright holder that gets inserted into the header of the
 # $(DOMAIN).pot file.  Set this to the copyright holder of the surrounding
 # package.  (Note that the msgstr strings, extracted from the package's
