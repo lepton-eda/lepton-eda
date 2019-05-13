@@ -7,7 +7,6 @@ POTFILES
 *.sed
 *.header
 *.sin
-liblepton*.pot
 Rules-quot
 Makevars.template
 stamp-po
