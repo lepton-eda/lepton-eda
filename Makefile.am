@@ -87,5 +87,12 @@ uninstall-local:
 	rm -fr $(datadir)/lepton-eda/ccache
 
 
+uninstall-hook:
+	rm -fr $(includedir)/liblepton
+	rm -fr $(includedir)/libleptonrenderer
+	rm -fr $(docdir)
+	rm -fr $(pkgdatadir)
+
+
 DISTCLEANFILES = stamp-git
 MAINTAINERCLEANFILES=Makefile.in aclocal.m4 config.h.in configure
