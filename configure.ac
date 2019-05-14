@@ -230,7 +230,6 @@ AC_CONFIG_FILES([Makefile
                  attrib/design/Makefile
                  attrib/docs/Makefile
                  attrib/include/Makefile
-                 attrib/lib/Makefile
                  attrib/src/Makefile
                  attrib/data/Makefile
 

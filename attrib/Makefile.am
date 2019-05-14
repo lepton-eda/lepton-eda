@@ -1,4 +1,4 @@
-SUBDIRS = po src include lib design docs data
+SUBDIRS = po src include design docs data
 
 EXTRA_DIST = NOTES README ChangeLog ChangeLog-1.0 ToDos
 
