@@ -47,6 +47,11 @@ Notable changes in Lepton EDA 1.9.8
   - `Options`
   - `Arc Params`
 
+### Changes in `lepton-attrib`:
+
+- Separate menu description *XML* file has been removed. Now the
+  menu structure is defined in the source code only.
+
 ### Scheme API changes
 - Three legacy rc procedures, `attribute-promotion`,
   `promote-invisible`, and `keep-invisible`, have been adjusted to
