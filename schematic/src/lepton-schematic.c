@@ -146,7 +146,16 @@ void gschem_quit(void)
   i_vars_freenames();
   i_vars_libgeda_freenames();
 
-  gtk_main_quit();
+  /* Check whether the main loop is running:
+  */
+  if (gtk_main_level() == 0)
+  {
+    exit (0);
+  }
+  else
+  {
+    gtk_main_quit();
+  }
 }
 
 /*! \brief Main Scheme(GUILE) program function.
