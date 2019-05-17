@@ -244,6 +244,10 @@ Notable changes in Lepton EDA 1.9.8
   function (called from the `gafrc` configuration file) when used
   with improper arguments.
 
+- Avoided GTK warnings on output of some message strings to the
+  status bar containing characters which are treated specially by
+  GTK, such as '<' and '>'.
+
 ### Changes in `lepton-attrib`:
 
 - Separate menu description *XML* file has been removed. Now the
