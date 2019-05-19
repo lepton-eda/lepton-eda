@@ -382,7 +382,6 @@ gboolean i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
 void i_vars_set(GschemToplevel *w_current);
 void i_vars_freenames();
 void i_vars_init_gschem_defaults (void);
-void i_vars_atexit_save_user_config (gpointer user_data);
 void i_vars_atexit_save_cache_config (gpointer user_data);
  /* m_basic.c */
 int snap_grid(GschemToplevel *w_current, int input);

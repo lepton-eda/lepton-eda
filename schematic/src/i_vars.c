@@ -201,25 +201,6 @@ i_vars_init_gschem_defaults()
                          UNTITLED_FILENAME_PREFIX);
 }
 
-/*! \brief Save user config on exit.
- * \par Function Description
- * When gschem exits, try to save the user configuration to disk.
- */
-void
-i_vars_atexit_save_user_config (gpointer user_data)
-{
-  EdaConfig *cfg = eda_config_get_user_context ();
-  GError *err = NULL;
-
-  eda_config_save (cfg, &err);
-  if (err != NULL) {
-    g_warning ("Failed to save user configuration to '%1$s': %2$s.",
-               eda_config_get_filename (cfg),
-               err->message);
-    g_clear_error (&err);
-  }
-}
-
 
 
 /*! \brief Save cache config on exit.
