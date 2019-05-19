@@ -167,8 +167,8 @@ AX_OPTION_KDE3_DATA
 AX_OPTION_XDG_DB
 # libstroke support
 AX_OPTION_STROKE
-# gattrib
-AX_OPTION_GATTRIB
+# attrib
+AX_OPTION_ATTRIB
 # geda-gaf compatibility symlinks
 AX_OPTION_COMPAT_SYMLINKS
 # contributed software

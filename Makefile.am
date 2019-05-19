@@ -1,10 +1,10 @@
-if ENABLE_GATTRIB
-GATTRIB_DIR=attrib
+if ENABLE_ATTRIB
+ATTRIB_DIR=attrib
 endif
 if ENABLE_CONTRIB
 CONTRIB_DIR=contrib
 endif
-SUBDIRS = liblepton libleptonrenderer cli schematic ${GATTRIB_DIR} \
+SUBDIRS = liblepton libleptonrenderer cli schematic ${ATTRIB_DIR} \
 	symcheck netlist utils symbols docs examples ${CONTRIB_DIR}
 
 ACLOCAL_AMFLAGS = -I m4
