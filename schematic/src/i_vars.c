@@ -182,7 +182,8 @@ void i_vars_freenames()
 }
 
 
-/*! \brief Setup gschem default configuration.
+
+/*! \brief Setup default configuration.
  * \par Function Description
  * Populate the default configuration context with compiled-in
  * defaults.
@@ -190,15 +191,6 @@ void i_vars_freenames()
 void
 i_vars_init_gschem_defaults()
 {
-  EdaConfig *cfg = eda_config_get_default_context ();
-
-  /* This is the prefix of the default filename used for newly created
-   * schematics and symbols.
-  */
-  eda_config_set_string (cfg,
-                         "gschem",
-                         "default-filename",
-                         UNTITLED_FILENAME_PREFIX);
 }
 
 
