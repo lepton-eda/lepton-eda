@@ -2,7 +2,7 @@ SUBDIRS = \
 	po bitmap data docs examples include lib scheme scripts \
 	src tests
 
-EXTRA_DIST = ChangeLog ChangeLog-1.0 icon-theme-installer
+EXTRA_DIST = ChangeLog ChangeLog-1.0
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git
