@@ -251,7 +251,7 @@ void main_prog(void *closure, int argc, char *argv[])
   toplevel = s_toplevel_new ();
 
   /* Set up default configuration */
-  i_vars_init_gschem_defaults ();
+  i_vars_init_defaults ();
 
   /* Set up atexit handlers */
   gschem_atexit (i_vars_atexit_save_cache_config, NULL);
