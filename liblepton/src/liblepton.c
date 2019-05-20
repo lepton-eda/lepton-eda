@@ -85,7 +85,7 @@ set_guile_compiled_path()
   }
   else
   {
-    path = LEPTON_SCM_PRECOMPILE_DIR;
+    path = (char*) LEPTON_SCM_PRECOMPILE_DIR;
   }
 
   setenv ("GUILE_LOAD_COMPILED_PATH", path, 1);
