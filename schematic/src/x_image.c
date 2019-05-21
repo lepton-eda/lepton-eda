@@ -39,8 +39,18 @@
 
 #define X_IMAGE_DEFAULT_TYPE "PNG"
 
-static const char *x_image_sizes[] = {"320x240", "640x480", "800x600", "1200x768",
-  "1280x960", "1600x1200", "3200x2400", NULL};
+static const char *x_image_sizes[] =
+{
+  "320x240",
+  "640x480",
+  "800x600",
+  "1024x768",
+  "1200x768",
+  "1280x960",
+  "1600x1200",
+  "3200x2400",
+  NULL
+};
 
 /*! \brief Create the options of the image size combobox
  *  \par This function adds the options of the image size to the given combobox.
