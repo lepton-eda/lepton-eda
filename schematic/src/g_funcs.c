@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +62,8 @@ SCM g_funcs_pdf (SCM filename_s)
   filename = scm_to_locale_string (real_filename_s);
   scm_dynwind_free (filename);
 
-  status = x_print_export_pdf (w_current, filename);
+  status = x_print_export_pdf (w_current, filename,
+                               w_current->toplevel->image_color);
 
   scm_dynwind_end ();
 
@@ -100,7 +101,8 @@ SCM g_funcs_image (SCM filename_s)
                     filename,
                     w_current->image_width,
                     w_current->image_height,
-                    "png");
+                    "png",
+                    w_current->toplevel->image_color);
 
   scm_dynwind_end ();
 
