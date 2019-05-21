@@ -364,6 +364,17 @@ void x_image_setup (GschemToplevel *w_current)
 
   hbox = gtk_hbox_new(FALSE, 0);
 
+
+  GtkWidget* vbox = gtk_vbox_new (FALSE, 0);
+  GtkWidget* hbox2 = gtk_hbox_new (FALSE, 0);
+  GtkWidget* label = gtk_label_new(
+    _("NOTE: print-color-map will be used for PDF export"));
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 10);
+  gtk_box_pack_start (GTK_BOX (vbox),  hbox2, FALSE, FALSE, 5);
+  gtk_box_pack_start (GTK_BOX (vbox),  hbox,  FALSE, FALSE, 0);
+  gtk_widget_show_all (vbox);
+
+
   /* Image size selection */
   vbox1 = gtk_vbox_new(TRUE, 0);
   label1 = gtk_label_new (_("Width x Height"));
@@ -439,7 +450,7 @@ void x_image_setup (GschemToplevel *w_current)
   gtk_box_pack_start(GTK_BOX(hbox), vbox2, FALSE, FALSE, 10);
   gtk_box_pack_start(GTK_BOX(hbox), vbox3, FALSE, FALSE, 10);
 
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER(dialog), hbox);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER(dialog), vbox);
 
   g_object_set (dialog,
       /* GtkFileChooser */
