@@ -8,3 +8,6 @@ html-local:
 	$(MKDIR_P) $(builddir)/lepton-scheme.html/
 	cp -fv $(srcdir)/lepton-scheme.css $(builddir)/lepton-scheme.html/
 
+all-local: html
+
+install-data-local: install-html
