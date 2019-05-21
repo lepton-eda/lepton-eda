@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -224,13 +225,13 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
  *  \param width     [in] the image width chosen by the user.
  *  \param height    [in] the image height chosen by the user.
  *  \param filetype  [in] image filetype.
+ *  \param is_color  [in] write image using colors (TRUE) or in grayscale (FALSE).
  *  \return nothing
  *
  */
 void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
-                       int width, int height, const char *filetype)
+                       int width, int height, const char *filetype, gboolean is_color)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int save_page_left, save_page_right, save_page_top, save_page_bottom;
   int page_width, page_height, page_center_left, page_center_top;
   GdkPixbuf *pixbuf;
@@ -271,9 +272,9 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
   o_select_unselect_all( w_current );
 
   if (strcmp(filetype, "pdf") == 0)
-    x_print_export_pdf (w_current, filename);
+    x_print_export_pdf (w_current, filename, is_color);
   else {
-    pixbuf = x_image_get_pixbuf(w_current, width, height);
+    pixbuf = x_image_get_pixbuf(w_current, width, height, is_color);
     if (pixbuf != NULL) {
       if (!gdk_pixbuf_save(pixbuf, filename, filetype, &gerror, NULL)) {
         s_log_message(_("x_image_lowlevel: Unable to write %1$s file %2$s."),
@@ -305,7 +306,7 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
         /* unlink(filename); */
       }
       else {
-        if (toplevel->image_color == TRUE) {
+        if (is_color) {
           s_log_message(_("Wrote color image to [%1$s] [%2$d x %3$d]"), filename, width, height);
         } else {
           s_log_message(_("Wrote black and white image to [%1$s] [%2$d x %3$d]"), filename, width, height);
@@ -465,7 +466,7 @@ void x_image_setup (GschemToplevel *w_current)
     */
     gboolean is_color = gtk_combo_box_get_active (GTK_COMBO_BOX (color_combo)) == 0;
 
-    x_image_lowlevel(w_current, filename, width, height, image_type);
+    x_image_lowlevel(w_current, filename, width, height, image_type, is_color);
 
     g_free (filename);
     g_free (image_type);
@@ -528,7 +529,7 @@ static void x_image_convert_to_greyscale(GdkPixbuf *pixbuf)
  *
  */
 GdkPixbuf
-*x_image_get_pixbuf (GschemToplevel *w_current, int width, int height)
+*x_image_get_pixbuf (GschemToplevel *w_current, int width, int height, gboolean is_color)
 {
   GdkPixbuf *pixbuf;
   GschemPageView *page_view;
@@ -558,11 +559,13 @@ GdkPixbuf
 
   gschem_options_set_grid_mode (new_w_current.options, GRID_MODE_NONE);
 
-  if (toplevel.image_color == FALSE)
-  {
-    /*! \bug Need to handle image color setting properly. See
-     * Launchpad bug 1086530. */
-  }
+  /*! \bug Need to handle image color setting properly.
+   *       See gEDA Launchpad bug 1086530.
+   *
+   * if (toplevel.image_color == FALSE)
+   * {
+   * }
+  */
 
   origin_x = origin_y = 0;
   right = width;
@@ -598,7 +601,7 @@ GdkPixbuf
                                         right-origin_x,
                                         bottom-origin_y);
 
-  if (toplevel.image_color == FALSE)
+  if (!is_color)
   {
     x_image_convert_to_greyscale(pixbuf);
   }

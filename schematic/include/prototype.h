@@ -672,9 +672,9 @@ void x_grid_draw_region(GschemToplevel *w_current, cairo_t *cr, int x, int y, in
 int x_grid_query_drawn_spacing(GschemToplevel *w_current);
 /* x_image.c */
 void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
-                      int desired_width, int desired_height, const char *filetype);
+                      int desired_width, int desired_height, const char *filetype, gboolean is_color);
 void x_image_setup(GschemToplevel *w_current);
-GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current, int width, int height);
+GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current, int width, int height, gboolean is_color);
 /* x_integerls.c */
 GtkListStore* x_integerls_new ();
 GtkListStore* x_integerls_new_with_values (const char *value[], int count);
@@ -713,7 +713,7 @@ void x_pagesel_update (GschemToplevel *w_current);
 /* x_preview.c */
 /* x_print.c */
 gboolean x_print_export_pdf_page (GschemToplevel *w_current, const gchar *filename);
-gboolean x_print_export_pdf (GschemToplevel *w_current, const gchar *filename);
+gboolean x_print_export_pdf (GschemToplevel *w_current, const gchar *filename, gboolean is_color);
 void x_print (GschemToplevel *w_current);
 /* x_rc.c */
 void x_rc_parse_gschem (TOPLEVEL *toplevel, const gchar *rcfile);
