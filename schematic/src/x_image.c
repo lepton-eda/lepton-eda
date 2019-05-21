@@ -382,6 +382,24 @@ void x_image_setup (GschemToplevel *w_current)
   gtk_box_pack_start (GTK_BOX (vbox2), type_combo, TRUE, TRUE, 0);
   create_type_menu (GTK_COMBO_BOX(type_combo));
 
+
+  /* Color/grayscale selection:
+  */
+  GtkWidget* vbox3 = gtk_vbox_new (TRUE, 0);
+  GtkWidget* label3 = gtk_label_new (_("Color mode"));
+  gtk_misc_set_alignment (GTK_MISC (label3), 0, 0);
+  gtk_misc_set_padding (GTK_MISC (label3), 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox3), label3, FALSE, FALSE, 0);
+
+  GtkWidget* color_combo = gtk_combo_box_new_text();
+  gtk_box_pack_start (GTK_BOX (vbox3), color_combo, TRUE, TRUE, 0);
+  gtk_combo_box_append_text (GTK_COMBO_BOX (color_combo), _("Color"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (color_combo), _("Grayscale"));
+  gtk_combo_box_set_active (GTK_COMBO_BOX (color_combo), 0);
+
+  gtk_widget_show_all (vbox3);
+
+
   /* Connect the changed signal to the callback, so the filename
      gets updated every time the image type is changed */
   g_signal_connect (type_combo, "changed",
@@ -408,6 +426,7 @@ void x_image_setup (GschemToplevel *w_current)
   /* Add the extra widgets to the dialog*/
   gtk_box_pack_start(GTK_BOX(hbox), vbox1, FALSE, FALSE, 10);
   gtk_box_pack_start(GTK_BOX(hbox), vbox2, FALSE, FALSE, 10);
+  gtk_box_pack_start(GTK_BOX(hbox), vbox3, FALSE, FALSE, 10);
 
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER(dialog), hbox);
 
@@ -441,6 +460,10 @@ void x_image_setup (GschemToplevel *w_current)
     image_type = x_image_get_type_from_description(image_type_descr);
     sscanf(image_size, "%ix%i", &width, &height);
     filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+
+    /* the first item in the color_combo is "Color", 2nd = "Grayscale":
+    */
+    gboolean is_color = gtk_combo_box_get_active (GTK_COMBO_BOX (color_combo)) == 0;
 
     x_image_lowlevel(w_current, filename, width, height, image_type);
 
