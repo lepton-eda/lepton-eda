@@ -52,6 +52,138 @@ static const char *x_image_sizes[] =
   NULL
 };
 
+
+
+/*! \brief Restore last selected item in \a combo combobox
+ *
+ *  \par Function Description
+ *  Helper function used in settings_restore().
+ */
+static void
+settings_restore_combo (EdaConfig*   cfg,
+                        GtkComboBox* combo,
+                        const gchar* group,
+                        const gchar* key)
+{
+  GtkTreeModel* model = gtk_combo_box_get_model (combo);
+  gint          count = gtk_tree_model_iter_n_children (model, NULL);
+
+  GError* err = NULL;
+  gint index = eda_config_get_int (cfg, group, key, &err);
+
+  if (err == NULL && index >= 0 && index < count)
+  {
+    gtk_combo_box_set_active (combo, index);
+  }
+
+  g_clear_error (&err);
+}
+
+
+
+/*! \brief Restore "Write image" dialog settings
+ *
+ *  \par Function Description
+ *  Load the following settings from the CACHE configuration
+ *  context ("schematic.write-image-dialog" group):
+ *  - selected directory
+ *  - image size
+ *  - image type
+ *  - image color mode
+ *
+ *  \note Call this function after the dialog is fully constructed.
+ *
+*   \param dialog      "Write image" dialog widget
+ *  \param size_combo  Combo box widget with list of image sizes
+ *  \param type_combo  Combo box widget with list of image types
+ *  \param color_combo Combo box widget with list of color modes
+ */
+static void
+settings_restore (GtkFileChooser* dialog,
+                  GtkComboBox*    size_combo,
+                  GtkComboBox*    type_combo,
+                  GtkComboBox*    color_combo)
+{
+  EdaConfig* cfg = eda_config_get_cache_context();
+  GError*    err = NULL;
+
+  gchar* dir = eda_config_get_string (cfg,
+                                      "schematic.write-image-dialog",
+                                      "save-path",
+                                      &err);
+  if (err == NULL && dir != NULL)
+  {
+    gtk_file_chooser_set_current_folder (dialog, dir);
+    g_free (dir);
+  }
+
+  settings_restore_combo (cfg,
+                          size_combo,
+                          "schematic.write-image-dialog",
+                          "image-size");
+  settings_restore_combo (cfg,
+                          type_combo,
+                          "schematic.write-image-dialog",
+                          "image-type");
+  settings_restore_combo (cfg,
+                          color_combo,
+                          "schematic.write-image-dialog",
+                          "image-color");
+}
+
+
+
+/*! \brief Save "Write image" dialog settings
+ *
+ *  \par Function Description
+ *  Save the following settings to the CACHE configuration
+ *  context ("schematic.write-image-dialog" group):
+ *  - selected directory
+ *  - image size
+ *  - image type
+ *  - image color mode
+ *
+*   \param dialog      "Write image" dialog widget
+ *  \param size_combo  Combo box widget with list of image sizes
+ *  \param type_combo  Combo box widget with list of image types
+ *  \param color_combo Combo box widget with list of color modes
+ */
+static void
+settings_save (GtkFileChooser* dialog,
+               GtkComboBox*    size_combo,
+               GtkComboBox*    type_combo,
+               GtkComboBox*    color_combo)
+{
+  EdaConfig* cfg = eda_config_get_cache_context();
+
+  gchar* dir = gtk_file_chooser_get_current_folder (dialog);
+  if (dir != NULL)
+  {
+    eda_config_set_string (cfg,
+                           "schematic.write-image-dialog",
+                           "save-path",
+                           dir);
+    g_free (dir);
+  }
+
+  eda_config_set_int (cfg,
+                      "schematic.write-image-dialog",
+                      "image-size",
+                      gtk_combo_box_get_active (size_combo));
+  eda_config_set_int (cfg,
+                      "schematic.write-image-dialog",
+                      "image-type",
+                      gtk_combo_box_get_active (type_combo));
+  eda_config_set_int (cfg,
+                      "schematic.write-image-dialog",
+                      "image-color",
+                      gtk_combo_box_get_active (color_combo));
+
+  eda_config_save (cfg, NULL);
+}
+
+
+
 /*! \brief Create the options of the image size combobox
  *  \par This function adds the options of the image size to the given combobox.
  *  \param combo [in] the combobox to add the options to.
@@ -81,8 +213,6 @@ static void create_size_menu (GtkComboBox *combo)
 
   /* Set the default menu */
   gtk_combo_box_set_active(GTK_COMBO_BOX (combo), default_index);
-
-  return;
 }
 
 /*! \brief Create the options of the image type combobox
@@ -122,7 +252,6 @@ static void create_type_menu(GtkComboBox *combo)
 
   /* Set the default menu */
   gtk_combo_box_set_active(GTK_COMBO_BOX(combo), default_index);
-  return;
 }
 
 /*! \brief Given a gdk-pixbuf image type description, it returns the type,
@@ -472,6 +601,13 @@ void x_image_setup (GschemToplevel *w_current)
   gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dialog)->vbox),
       DIALOG_V_SPACING);
 
+
+  settings_restore (GTK_FILE_CHOOSER (dialog),
+                    GTK_COMBO_BOX (size_combo),
+                    GTK_COMBO_BOX (type_combo),
+                    GTK_COMBO_BOX (color_combo));
+
+
   gtk_widget_show (dialog);
 
   if (gtk_dialog_run((GTK_DIALOG(dialog))) == GTK_RESPONSE_ACCEPT) {
@@ -491,6 +627,12 @@ void x_image_setup (GschemToplevel *w_current)
 
     g_free (filename);
     g_free (image_type);
+
+
+    settings_save (GTK_FILE_CHOOSER (dialog),
+                   GTK_COMBO_BOX (size_combo),
+                   GTK_COMBO_BOX (type_combo),
+                   GTK_COMBO_BOX (color_combo));
   }
 
   gtk_widget_destroy (dialog);
