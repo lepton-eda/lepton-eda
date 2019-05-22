@@ -17,26 +17,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+
 #include <config.h>
-
-#include <stdio.h>
-#include <unistd.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
-#include <glib.h>
-
 #include "gschem.h"
 
+
+
 #define X_IMAGE_DEFAULT_SIZE "800x600"
-
-#define X_IMAGE_SIZE_MENU_NAME "image_size_menu"
-#define X_IMAGE_TYPE_MENU_NAME "image_type_menu"
-
 #define X_IMAGE_DEFAULT_TYPE "PNG"
 
 static const char *x_image_sizes[] =
