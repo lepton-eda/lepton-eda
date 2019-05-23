@@ -42,10 +42,9 @@ symbol_dirs = \
 	titleblock \
 	transistor \
 	tube \
-	vhdl \
 	xilinx
 
-SUBDIRS = documentation gnetman verilog
+SUBDIRS = documentation gnetman verilog vhdl
 
 gafrcddir = $(GEDADATADIR)/gafrc.d
 dist_gafrcd_DATA = geda-clib.scm
