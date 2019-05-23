@@ -1,7 +1,7 @@
 #! /bin/sh
 
 VIEWER="display"
-DEFAULT_FONT="Arial"
+DEFAULT_FONT="Sans"
 
 usage ()
 {
