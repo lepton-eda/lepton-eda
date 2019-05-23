@@ -68,6 +68,5 @@
 
   ; Other
 
-    ;"verilog"
     ;"vhdl"
     )))
