@@ -400,8 +400,8 @@
 ; Controls if the cursor is warped (or moved) when you zoom in and out.
 ; Some people find this forced cursor movement annoying.
 ;
-(warp-cursor "enabled")
-;(warp-cursor "disabled")
+;(warp-cursor "enabled")
+(warp-cursor "disabled")
 
 
 ; Bus ripper controls
