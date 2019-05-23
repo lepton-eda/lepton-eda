@@ -52,7 +52,7 @@ g_rc_parse_gtkrc(void)
 
 	/* Search for the first gschem-gtkrc file in the system
 	 * configuration path. */
-	const gchar * const * sys_dirs = g_get_system_config_dirs();
+	const gchar * const * sys_dirs = eda_get_system_config_dirs();
 	for (gint i = 0; sys_dirs[i]; ++i) {
 		filename = g_build_filename (sys_dirs[i], "gschem-gtkrc", NULL);
 		if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
