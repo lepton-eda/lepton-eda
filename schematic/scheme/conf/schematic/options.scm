@@ -250,8 +250,8 @@
 ;       later   - NOT opened up when gschem starts
 ;                 (can be opened by Options/Show Log Window)
 ;
-(log-window "startup")
-;(log-window "later")
+;(log-window "startup")
+(log-window "later")
 
 
 ; log-window-type string
