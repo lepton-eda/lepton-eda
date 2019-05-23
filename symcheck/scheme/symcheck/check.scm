@@ -68,15 +68,17 @@ FILENAME ... are the symbols to check.
         (interactive (symcheck-option-ref 'interactive)))
     (if help
         (usage)
-        (if (null? files)
-            (error (format #f
-                           (_ "No schematic files specified for processing.
+        (let ((pages (map file->page files)))
+          (if interactive
+              ;; Interactive mode. Just run the REPL to work with
+              ;; schematic pages.
+              (lepton-repl)
+              ;; Non-interactive mode.
+              (if (null? pages)
+                  (error (format #f
+                                 (_ "No schematic files specified for processing.
 Run `~A --help' for more information.
 ")
-                           (car (program-arguments))))
-            (let ((pages (map file->page files)))
-              (if interactive
-                  (lepton-repl)
-
+                                 (car (program-arguments))))
                   ;; now report the info/warnings/errors to the user
                   (primitive-exit (apply + (map report-symbol-statistics pages)))))))))
