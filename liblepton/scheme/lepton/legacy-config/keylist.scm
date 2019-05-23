@@ -136,7 +136,7 @@
          "export" "dpi"
          "export" "dpi"
   )
-  ( list pfn-get-str "Arial"
+  ( list pfn-get-str "Sans"
          "export" "font"
          "export" "font"
   )
