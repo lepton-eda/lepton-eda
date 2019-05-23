@@ -51,8 +51,8 @@
 ; information is saved for every command, so the display will change to the
 ; viewport before a command is executed.
 ;
-(undo-panzoom "enabled")
-;(undo-panzoom "disabled")
+;(undo-panzoom "enabled")
+(undo-panzoom "disabled")
 
 
 ; autosave interval
