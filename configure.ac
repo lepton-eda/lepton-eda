@@ -277,6 +277,7 @@ AC_CONFIG_FILES([Makefile
 
                  symbols/Makefile
                  symbols/documentation/Makefile
+                 symbols/gnetman/Makefile
 
                  docs/Makefile
                  docs/scheme-api/Makefile

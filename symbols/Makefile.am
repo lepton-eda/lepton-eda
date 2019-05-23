@@ -15,7 +15,6 @@ symbol_dirs = \
 	dec \
 	diode \
 	ecl \
-	gnetman \
 	idt \
 	io \
 	irf \
@@ -47,7 +46,7 @@ symbol_dirs = \
 	vhdl \
 	xilinx
 
-SUBDIRS = documentation
+SUBDIRS = documentation gnetman
 
 gafrcddir = $(GEDADATADIR)/gafrc.d
 dist_gafrcd_DATA = geda-clib.scm

@@ -70,5 +70,4 @@
 
     ;"verilog"
     ;"vhdl"
-    ;"gnetman"
     )))
