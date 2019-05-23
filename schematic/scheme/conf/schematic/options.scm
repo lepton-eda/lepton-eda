@@ -142,8 +142,8 @@
 ; Controls if text is drawn properly or if a simplified version (a line which
 ; represents the text string) is drawn during mouse pan.  Drawing a simple
 ; line speeds up mousepan a lot for big schematics
-(fast-mousepan "enabled")
-;(fast-mousepan "disabled")
+;(fast-mousepan "enabled")
+(fast-mousepan "disabled")
 
 ; mousepan-gain integer
 ;
