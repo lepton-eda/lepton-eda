@@ -110,7 +110,7 @@ EDA_RENDERER_STROKE_WIDTH0 (EdaRenderer *r, double width) {
   return (width == 0) ? 0 : EDA_RENDERER_STROKE_WIDTH (r, width);
 }
 
-#define DEFAULT_FONT_NAME "Arial"
+#define DEFAULT_FONT_NAME "Sans"
 #define GRIP_STROKE_COLOR SELECT_COLOR
 #define GRIP_FILL_COLOR BACKGROUND_COLOR
 #define TEXT_MARKER_SIZE 10
