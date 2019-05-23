@@ -21,7 +21,8 @@ EXTRA_DIST = \
 	gnet_hier_verilog.1.in \
 	pads_backannotate.1.in \
 	sarlacc_sym.1.in \
-	sw2asc.1.in
+	sw2asc.1.in \
+	sch2eaglepos.sh
 
 .1.in.1:
 	d=`$(GUILE) -c '(setlocale LC_ALL "C") \
