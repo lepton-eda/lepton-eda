@@ -26,9 +26,9 @@ PCBM4DIR=	@PCBM4DIR@
 PCBCONFDIR=	@PCBCONFDIR@
 
 scmdatadir = @GEDADATADIR@/scheme
-nobase_scmdata_DATA = $(DIST_SCM) $(BUILT_SCM)
+nobase_scmdata_DATA = $(DIST_SCM) $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(BUILT_SCM)
 
-DIST_SCM = \
+DIST_SCM_BACKENDS = \
 	gnet-allegro.scm \
 	gnet-bae.scm \
 	gnet-bom.scm \
@@ -64,8 +64,12 @@ DIST_SCM = \
 	gnet-vams.scm \
 	gnet-verilog.scm \
 	gnet-vhdl.scm \
-	gnet-vipec.scm \
-	spice-common.scm \
+	gnet-vipec.scm
+
+DIST_SCM_BACKENDS_COMMON = \
+	spice-common.scm
+
+DIST_SCM = \
 	netlist.scm \
 	netlist/attrib/compare.scm \
 	netlist/backend-getopt.scm \
@@ -113,7 +117,7 @@ AM_TESTS_ENVIRONMENT = GUILE_AUTO_COMPILE=0
 
 dist_noinst_DATA = unit-test.scm $(TESTS)
 
-EXTRA_DIST = $(DIST_SCM) $(SCM_SRCS) lepton-netlist.in
+EXTRA_DIST = $(DIST_SCM) $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(SCM_SRCS) lepton-netlist.in
 
 SCM_SRCS=	gnet-gsch2pcb.scm.in
 
