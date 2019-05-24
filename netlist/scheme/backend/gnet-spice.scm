@@ -23,7 +23,7 @@
 ;;
 
 ;; Common functions for the `spice' and `spice-sdb' backends
-(load-from-path "spice-common.scm")
+(load-from-path "common/spice.scm")
 
 
 ;;  write mos transistor
