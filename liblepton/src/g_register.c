@@ -105,6 +105,10 @@ g_register_libgeda_dirs (void)
   const gchar * const *sys_dirs = eda_get_system_data_dirs();
   for (gint i = 0; sys_dirs[i]; ++i) {
     g_register_scheme_data_dir (sys_dirs[i]);
+
+#ifdef DEBUG
+    fprintf (stderr, " >> g_register_libgeda_dirs(): [%s]\n", sys_dirs[i]);
+#endif
   }
   g_register_scheme_data_dir (eda_get_user_data_dir());
 }
