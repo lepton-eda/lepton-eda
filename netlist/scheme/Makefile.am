@@ -119,18 +119,24 @@ dist_noinst_DATA = unit-test.scm $(TESTS)
 
 EXTRA_DIST = $(DIST_SCM) $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(SCM_SRCS) lepton-netlist.in
 
-SCM_SRCS=	gnet-gsch2pcb.scm.in
+SCM_SRCS=	backend/gnet-gsch2pcb.scm.in
 
-BUILT_SCM=	gnet-gsch2pcb.scm
+BUILT_SCM=	backend/gnet-gsch2pcb.scm
 
 SETVBUF_MODE = `$(GUILE) -c '(display (if (string= (minor-version) "0") "_IONBF" (quote (quote none))))'`
 
-gnet-gsch2pcb.scm: $(srcdir)/gnet-gsch2pcb.scm.in
+backend/gnet-gsch2pcb.scm: $(srcdir)/backend/gnet-gsch2pcb.scm.in
+	if test "$(srcdir)" != "@builddir@" ; then \
+		echo "creating directories" ; \
+		$(MKDIR_P) @builddir@/backend ; \
+	else \
+		echo "source directory = build directory" ; \
+	fi
 	sed \
 		-e 's;@m4@;${M4};g' \
 		-e 's;@pcbm4dir@;${PCBM4DIR};g' \
 		-e "s;@mode@;${SETVBUF_MODE};g" \
-		$(srcdir)/gnet-gsch2pcb.scm.in > $@
+		$(srcdir)/backend/gnet-gsch2pcb.scm.in > $@
 
 all-local:
 	if test "$(srcdir)" != "@builddir@" ; then \
@@ -149,6 +155,6 @@ clean-local:
 	fi
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ gnet-gsch2pcb.scm $(bin_SCRIPTS)
-DISTCLEANFILES = *.log core FILE *~ gnet-gsch2pcb.scm
-MAINTAINERCLEANFILES = *.log *~ Makefile.in gnet-gsch2pcb.scm
+CLEANFILES = *.log *~ backend/gnet-gsch2pcb.scm $(bin_SCRIPTS)
+DISTCLEANFILES = *.log core FILE *~ backend/gnet-gsch2pcb.scm
+MAINTAINERCLEANFILES = *.log *~ Makefile.in backend/gnet-gsch2pcb.scm
