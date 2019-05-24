@@ -262,6 +262,19 @@ get_user_dotdir(void)
  * Public accessors
  * ================================================================ */
 
+#ifdef DEBUG
+static void
+dbg_out_dirs (const gchar* const* dirs, const gchar* name)
+{
+  fprintf (stderr, " >> %s:\n", name);
+  for (const gchar* const* pp = dirs; *pp != NULL; ++pp)
+  {
+    fprintf (stderr, "      [%s]\n", *pp);
+  }
+  fprintf (stderr, "\n");
+}
+#endif
+
 /*!
  * \brief Get an ordered list of gEDA data directories
  * \par Function Description
@@ -294,6 +307,16 @@ eda_get_system_data_dirs(void)
 
 		const gchar **dirs =
 			build_search_list(env_names, xdg_dirs, cfg_dirs);
+
+#ifdef DEBUG
+    fprintf (stderr, "\n");
+    dbg_out_dirs (env_names, "eda_get_system_data_dirs()::env_names");
+    dbg_out_dirs (xdg_dirs,  "eda_get_system_data_dirs()::xdg_dirs");
+    dbg_out_dirs (cfg_dirs,  "eda_get_system_data_dirs()::cfg_dirs");
+    fprintf (stderr, "\n");
+    dbg_out_dirs (dirs, "eda_get_system_data_dirs()::dirs (combined)");
+    fprintf (stderr, "\n");
+#endif
 
 		g_once_init_leave(&system_data_dirs, dirs);
 	}
@@ -333,6 +356,16 @@ eda_get_system_config_dirs(void)
 
 		const gchar **dirs =
 			build_search_list(env_names, xdg_dirs, cfg_dirs);
+
+#ifdef DEBUG
+    fprintf (stderr, "\n");
+    dbg_out_dirs (env_names, "eda_get_system_config_dirs()::env_names");
+    dbg_out_dirs (xdg_dirs,  "eda_get_system_config_dirs()::xdg_dirs");
+    dbg_out_dirs (cfg_dirs,  "eda_get_system_config_dirs()::cfg_dirs");
+    fprintf (stderr, "\n");
+    dbg_out_dirs (dirs, "eda_get_system_config_dirs()::dirs (combined)");
+    fprintf (stderr, "\n");
+#endif
 
 		g_once_init_leave(&system_config_dirs, dirs);
 	}
