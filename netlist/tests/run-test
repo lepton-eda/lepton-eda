@@ -39,6 +39,8 @@ cat > "${rundir}/gafrc" << EOF
 ;; 'make check' during development can work correctly.
 (scheme-directory "${abs_top_srcdir}/netlist/scheme")
 (scheme-directory "${abs_top_builddir}/netlist/scheme")
+(scheme-directory "${abs_top_srcdir}/netlist/scheme/backend")
+(scheme-directory "${abs_top_builddir}/netlist/scheme/backend")
 (scheme-directory "${abs_top_srcdir}/liblepton/scheme")
 (scheme-directory "${abs_top_builddir}/liblepton/scheme")
 
