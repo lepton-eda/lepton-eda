@@ -28,47 +28,70 @@ PCBCONFDIR=	@PCBCONFDIR@
 scmdatadir = @GEDADATADIR@/scheme
 nobase_scmdata_DATA = $(DIST_SCM) $(BUILT_SCM)
 
-DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-ewnet.scm \
-	   gnet-geda.scm spice-common.scm \
-	   gnet-spice.scm gnet-tango.scm gnet-verilog.scm \
-	   gnet-vhdl.scm gnet-vipec.scm \
-           gnet-pads.scm \
-           gnet-bae.scm gnet-protelII.scm \
-           gnet-bom2.scm gnet-gossip.scm gnet-drc.scm gnet-vams.scm \
-	   gnet-partslist1.scm \
-	   gnet-partslist2.scm gnet-partslist3.scm gnet-maxascii.scm \
-	   gnet-switcap.scm gnet-spice-sdb.scm gnet-drc2.scm \
-	   gnet-futurenet2.scm gnet-cascade.scm \
-	   gnet-redac.scm gnet-systemc.scm gnet-eagle.scm \
-	   gnet-pcbpins.scm gnet-calay.scm gnet-osmond.scm \
-	   gnet-mathematica.scm gnet-liquidpcb.scm \
-	   gnet-makedepend.scm gnet-tEDAx.scm \
-	   netlist.scm \
-	   netlist/attrib/compare.scm \
-	   netlist/backend-getopt.scm \
-	   netlist/config.scm \
-	   netlist/core/gettext.scm \
-	   netlist/deprecated.scm \
-	   netlist/error.scm \
-	   netlist/hierarchy.scm \
-	   netlist/net.scm \
-	   netlist/option.scm \
-	   netlist/package-pin.scm \
-	   netlist/package.scm \
-	   netlist/page.scm \
-	   netlist/partlist.scm \
-	   netlist/partlist/common.scm \
-	   netlist/pin-net.scm \
-	   netlist/port.scm \
-	   netlist/rename.scm \
-	   netlist/repl.scm \
-	   netlist/schematic-component.scm \
-	   netlist/schematic-connection.scm \
-	   netlist/schematic.scm \
-	   netlist/schematic/toplevel.scm \
-	   netlist/sort.scm \
-	   netlist/traverse.scm \
-	   netlist/verbose.scm
+DIST_SCM = \
+	gnet-allegro.scm \
+	gnet-bae.scm \
+	gnet-bom.scm \
+	gnet-bom2.scm \
+	gnet-calay.scm \
+	gnet-cascade.scm \
+	gnet-drc.scm \
+	gnet-drc2.scm \
+	gnet-eagle.scm \
+	gnet-ewnet.scm \
+	gnet-futurenet2.scm \
+	gnet-geda.scm \
+	gnet-gossip.scm \
+	gnet-liquidpcb.scm \
+	gnet-makedepend.scm \
+	gnet-mathematica.scm \
+	gnet-maxascii.scm \
+	gnet-osmond.scm \
+	gnet-pads.scm \
+	gnet-partslist1.scm \
+	gnet-partslist2.scm \
+	gnet-partslist3.scm \
+	gnet-PCB.scm \
+	gnet-pcbpins.scm \
+	gnet-protelII.scm \
+	gnet-redac.scm \
+	gnet-spice-sdb.scm \
+	gnet-spice.scm \
+	gnet-switcap.scm \
+	gnet-systemc.scm \
+	gnet-tango.scm \
+	gnet-tEDAx.scm \
+	gnet-vams.scm \
+	gnet-verilog.scm \
+	gnet-vhdl.scm \
+	gnet-vipec.scm \
+	spice-common.scm \
+	netlist.scm \
+	netlist/attrib/compare.scm \
+	netlist/backend-getopt.scm \
+	netlist/config.scm \
+	netlist/core/gettext.scm \
+	netlist/deprecated.scm \
+	netlist/error.scm \
+	netlist/hierarchy.scm \
+	netlist/net.scm \
+	netlist/option.scm \
+	netlist/package-pin.scm \
+	netlist/package.scm \
+	netlist/page.scm \
+	netlist/partlist.scm \
+	netlist/partlist/common.scm \
+	netlist/pin-net.scm \
+	netlist/port.scm \
+	netlist/rename.scm \
+	netlist/repl.scm \
+	netlist/schematic-component.scm \
+	netlist/schematic-connection.scm \
+	netlist/schematic.scm \
+	netlist/schematic/toplevel.scm \
+	netlist/sort.scm \
+	netlist/traverse.scm \
+	netlist/verbose.scm
 
 TESTS = unit-tests/test-netlist-partlist.scm \
 	unit-tests/test-netlist-attrib.scm
