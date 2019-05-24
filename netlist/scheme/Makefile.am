@@ -28,6 +28,14 @@ PCBCONFDIR=	@PCBCONFDIR@
 scmdatadir = @GEDADATADIR@/scheme
 nobase_scmdata_DATA = $(DIST_SCM) $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(BUILT_SCM)
 
+
+config-netlist.scm: config-netlist.scm.in
+	sed -e 's,[@]backenddir[@],$(scmdatadir)/backend,g' < $(srcdir)/$@.in > $@
+
+gafrcddir = @GEDADATADIR@/gafrc.d
+gafrcd_DATA = config-netlist.scm
+
+
 DIST_SCM_BACKENDS = \
 	backend/gnet-allegro.scm \
 	backend/gnet-bae.scm \
@@ -117,7 +125,7 @@ AM_TESTS_ENVIRONMENT = GUILE_AUTO_COMPILE=0
 
 dist_noinst_DATA = unit-test.scm $(TESTS)
 
-EXTRA_DIST = $(DIST_SCM) $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(SCM_SRCS) lepton-netlist.in
+EXTRA_DIST = $(DIST_SCM) $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(SCM_SRCS) lepton-netlist.in config-netlist.scm.in
 
 SCM_SRCS=	backend/gnet-gsch2pcb.scm.in
 
@@ -155,6 +163,6 @@ clean-local:
 	fi
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ backend/gnet-gsch2pcb.scm $(bin_SCRIPTS)
-DISTCLEANFILES = *.log core FILE *~ backend/gnet-gsch2pcb.scm
-MAINTAINERCLEANFILES = *.log *~ Makefile.in backend/gnet-gsch2pcb.scm
+CLEANFILES = *.log *~ backend/gnet-gsch2pcb.scm $(bin_SCRIPTS) config-netlist.scm
+DISTCLEANFILES = *.log core FILE *~ backend/gnet-gsch2pcb.scm config-netlist.scm
+MAINTAINERCLEANFILES = *.log *~ Makefile.in backend/gnet-gsch2pcb.scm config-netlist.scm

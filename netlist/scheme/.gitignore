@@ -1,6 +1,7 @@
 Makefile
 Makefile.in
 lepton-netlist
+config-netlist.scm
 *.log
 *.trs
 *~
