@@ -66,6 +66,9 @@ static void
 log_window_clear (GtkMenuItem* item, gpointer data);
 
 static void
+log_window_wrap (GtkCheckMenuItem* item, gpointer data);
+
+static void
 populate_popup_menu (GtkTextView* txtview,
                      GtkMenu*     menu,
                      gpointer     data);
@@ -302,6 +305,11 @@ instance_init (GschemLogWidget *widget)
                                                 NULL));
 
 
+  /* Set text wrapping:
+  */
+  widget->wrap = FALSE;
+
+
   /*
   * Set custom font for the log window
   *
@@ -354,7 +362,7 @@ instance_init (GschemLogWidget *widget)
   g_signal_connect (widget->viewer,
                     "populate-popup",
                     G_CALLBACK (&populate_popup_menu),
-                    NULL);
+                    widget);
 
 
   scroll_to_bottom (klass->buffer, widget);
@@ -452,6 +460,30 @@ log_window_clear (GtkMenuItem* item, gpointer data)
 
 
 
+/*! \brief "toggled" signal handler for "wrap long lines" menu item
+ *
+ *  \par Function Description
+ *  Toggles long lines wrapping in the log text view
+ *
+ *  \param item  menu item
+ *  \param data  user data (GschemLogWidget*)
+ */
+static void
+log_window_wrap (GtkCheckMenuItem* item, gpointer data)
+{
+  GschemLogWidget* widget = (GschemLogWidget*) data;
+  g_return_if_fail (widget != NULL);
+
+  widget->wrap = !widget->wrap;
+
+  gtk_text_view_set_wrap_mode (widget->viewer,
+                               widget->wrap
+                               ? GTK_WRAP_WORD
+                               : GTK_WRAP_NONE);
+}
+
+
+
 /*! \brief "populate-popup" signal handler for the log text view
  *
  *  \par Function Description
@@ -459,26 +491,51 @@ log_window_clear (GtkMenuItem* item, gpointer data)
  *
  *  \param txtview  log text view widget
  *  \param menu     context menu to be extended
- *  \param data     user data (not used)
+ *  \param data     user data (GschemLogWidget*)
  */
 static void
 populate_popup_menu (GtkTextView* txtview,
                      GtkMenu*     menu,
                      gpointer     data)
 {
+  GschemLogWidget* widget = (GschemLogWidget*) data;
+  g_return_if_fail (widget != NULL);
+
+
   /* Add separator:
   */
-  GtkWidget* separ = gtk_separator_menu_item_new();
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), separ);
-  gtk_widget_show (separ);
+  GtkWidget* separ1 = gtk_separator_menu_item_new();
+  gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), separ1);
+  gtk_widget_show (separ1);
+
+  /* Add "Wrap Long Lines" menu item:
+  */
+  GtkWidget* itemWrap = gtk_check_menu_item_new_with_mnemonic (_("_Wrap Long Lines"));
+  gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), itemWrap);
+  gtk_widget_show (itemWrap);
+
+  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (itemWrap),
+                                  widget->wrap);
+
+  g_signal_connect (G_OBJECT (itemWrap),
+                    "toggled",
+                    G_CALLBACK (&log_window_wrap),
+                    widget);
+
+
+  /* Add separator:
+  */
+  GtkWidget* separ2 = gtk_separator_menu_item_new();
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), separ2);
+  gtk_widget_show (separ2);
 
   /* Add "Clear Log Window" menu item:
   */
-  GtkWidget* item = gtk_menu_item_new_with_mnemonic (_("Clear Log _Window"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  gtk_widget_show (item);
+  GtkWidget* itemClear = gtk_menu_item_new_with_mnemonic (_("Clea_r Log Window"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), itemClear);
+  gtk_widget_show (itemClear);
 
-  g_signal_connect (G_OBJECT (item),
+  g_signal_connect (G_OBJECT (itemClear),
                     "activate",
                     G_CALLBACK (&log_window_clear),
                     txtview);
