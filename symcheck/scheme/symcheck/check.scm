@@ -1,6 +1,6 @@
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017 Lepton EDA Contributors
+;;; Copyright (C) 2017-2019 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -60,6 +60,13 @@ FILENAME ... are the symbols to check.
     (check-symbol page)
     (check-report `(,page . ,(page-contents page))))
 
+  (define (error-no-files-specified)
+    (format #t
+            (_ "No schematic files specified for processing.
+Run `~A --help' for more information.\n")
+            (car (program-arguments)))
+    (primitive-exit 1))
+
   ;; Symcheck logs to stdout by default.
   (set-check-log-destination! 'stdout)
 
@@ -75,10 +82,6 @@ FILENAME ... are the symbols to check.
               (lepton-repl)
               ;; Non-interactive mode.
               (if (null? pages)
-                  (error (format #f
-                                 (_ "No schematic files specified for processing.
-Run `~A --help' for more information.
-")
-                                 (car (program-arguments))))
+                  (error-no-files-specified)
                   ;; now report the info/warnings/errors to the user
                   (primitive-exit (apply + (map report-symbol-statistics pages)))))))))
