@@ -42,6 +42,7 @@ struct _GschemLogWidget {
   GschemBin parent_instance;
 
   GtkTextView *viewer;
+  gboolean wrap;
 };
 
 
