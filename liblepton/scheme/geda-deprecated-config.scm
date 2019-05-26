@@ -37,7 +37,12 @@
   ;; FIXME more helpful error message with link to documentation.
   (define (deprecation-warning)
     (format (current-error-port)
-"WARNING: The RC file function '~A' is deprecated and does nothing.
+"
+WARNING: The RC file function '~A' is deprecated
+and does nothing.
+RC configuration functions will be removed in an upcoming Lepton EDA
+release. Please use .conf configuration files instead:
+https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
 
 " old-id))
   (let ((warned? #f))
@@ -64,12 +69,21 @@
   ;; FIXME more helpful error message with link to documentation.
   (define (deprecation-warning)
     (format (current-error-port)
-"WARNING: The RC file function '~A' is deprecated.
+"
+WARNING: The RC file function '~A' is deprecated.
+RC configuration functions will be removed in an upcoming Lepton EDA
+release. Please use .conf configuration files instead:
+https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
 
-RC configuration functions will be removed in an upcoming Lepton
-EDA release.  Please use configuration files instead.
+Put the following lines into the ~A file (in current directory)
+or ~A (in user's configuration directory, typically
+$HOME/.config/lepton-eda/), replacing MYVALUE with the desired
+option's value:
 
-" old-id))
+[~A]
+~A=MYVALUE
+
+" old-id "geda.conf" "geda-user.conf" group key))
   (let ((warned? #f))
     (lambda args
       (or warned?
