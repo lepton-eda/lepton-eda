@@ -37,10 +37,18 @@
 
 ;;; First load allegro backend code in order to use `allegro*'
 ;;; below.
-(primitive-load (%search-load-path "gnet-allegro.scm"))
+(let
+  ((fpath (%search-load-path "gnet-allegro.scm")))
+  (if fpath
+    (primitive-load fpath)
+    (log! 'warning "allegro: cannot load backend file")))
 
 ;;; Allegro backend
 (define (&netlist-allegro)
-  (with-output-to-file "allegro.out"
-    (lambda () (allegro* (%schematic))))
-  (log! 'message "allegro: the output is written to [allegro.out]"))
+  (catch #t
+    (lambda()
+      (with-output-to-file "allegro.out"
+        (lambda () (allegro* (%schematic))))
+      (log! 'message "allegro: the output is written to [allegro.out]"))
+    (lambda(ex . args)
+      (log! 'warning "allegro: error launching backend ('~a):~%  ~a" ex args))))
