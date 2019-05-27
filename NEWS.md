@@ -149,6 +149,10 @@ Notable changes in Lepton EDA 1.9.8
   program.  As of now, the only item in the menu allows exporting
   of `allegro` netlists.
 
+- Fixed segmentation faults in the `always-promote-attributes` rc
+  function (called from the `gafrc` configuration file) when used
+  with improper arguments.
+
 ### Changes in `lepton-attrib`:
 
 - Separate menu description *XML* file has been removed. Now the
