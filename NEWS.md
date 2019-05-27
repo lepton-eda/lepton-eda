@@ -4,6 +4,19 @@ Recent Changes in Lepton EDA
 This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
+Notable changes in Lepton EDA 1.9.8
+-----------------------------------
+
+### Scheme API changes
+- Three legacy rc procedures, `attribute-promotion`,
+  `promote-invisible`, and `keep-invisible`, have been adjusted to
+  return their boolean values if used with no arguments, instead
+  of just `#t`. This allows using the results in Scheme
+  plugins. The procedure `bitmap-directory` now returns its string
+  value if used with no arguments.  If no value has been
+  previously set, it returns `#f`.
+
+
 Notable changes in Lepton EDA 1.9.7
 -----------------------------------
 
