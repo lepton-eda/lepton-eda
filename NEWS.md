@@ -156,6 +156,10 @@ Notable changes in Lepton EDA 1.9.8
   value if used with no arguments.  If no value has been
   previously set, it returns `#f`.
 
+- A new hook, `open-page-hook`, has been added to the `(gschem
+  hook)` module.  It allows to evaluate Scheme code when an
+  existing schematic page is loaded.
+
 
 Notable changes in Lepton EDA 1.9.7
 -----------------------------------
