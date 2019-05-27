@@ -16,6 +16,14 @@ Notable changes in Lepton EDA 1.9.8
 - Warnings about deprecated and "dead" RC functions are now more
   verbose, and contain link to Configuration Settings wiki page.
 
+### Changes when building from source:
+
+- Several C functions in `liblepton`, various Lepton tools,
+  contributed code (`olib`, `sarlacc_schem`, `convert_sym`) as
+  well as PO-files have been fixed to avoid compilation warnings
+  and errors.  Now `lepton-eda` compiles without warnings with
+  gcc/g++ on several platforms.
+
 ### Changes in `liblepton`:
 
 - `liblepton` configuration C and Scheme API has been extended
