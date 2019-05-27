@@ -7,6 +7,19 @@ more information, please consult `git log` history.
 Notable changes in Lepton EDA 1.9.8
 -----------------------------------
 
+### Changes in `lepton-schematic`:
+
+- New accelerator keys have been added to facilitate keyboard
+  navigation in the following dialogs:
+  - `Single Attribute Editor`
+  - `Edit Attributes`
+  - `Select Component`
+  - `Add Text`
+  - `Edit Text`
+  - `Object Properties`
+  - `Options`
+  - `Arc Params`
+
 ### Scheme API changes
 - Three legacy rc procedures, `attribute-promotion`,
   `promote-invisible`, and `keep-invisible`, have been adjusted to
