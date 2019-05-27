@@ -4,6 +4,7 @@ Recent Changes in Lepton EDA
 This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
+
 Notable changes in Lepton EDA 1.9.8
 -----------------------------------
 
@@ -118,6 +119,21 @@ Notable changes in Lepton EDA 1.9.8
   removing is safe.
 
 ### Changes in `lepton-schematic`:
+
+- Several improvements/fixes with regard to locking/unlocking of
+  components and their attributes have been introduced:
+
+  - Previously, when a component was locked, its attributes were
+    also locked, but they changed the locking status after saving
+    and reopening of schematic.  Now, they become locked along
+    with the component they're attached to.
+
+  - Previously, toggling of locking status of a component and its
+    attributes required selecting them all to do it properly.
+    Otherwise, the locking status of not selected attributes would
+    not change.  Now, it is sufficient to select only the
+    component to lock or unlock it together with the attributes,
+    without having to additionally select them.
 
 - Distinct parts of the `system-gschemrc` configuration file are
   moved to separate files under the `conf/schematic/` subdirectory
