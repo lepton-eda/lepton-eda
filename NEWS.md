@@ -13,6 +13,9 @@ Notable changes in Lepton EDA 1.9.8
   All the functions and variables available are still re-exported
   in the former one but its using is discouraged.
 
+- Warnings about deprecated and "dead" RC functions are now more
+  verbose, and contain link to Configuration Settings wiki page.
+
 ### Changes in `lepton-schematic`:
 
 - The **macro widget** has been improved in several ways:
