@@ -9,6 +9,27 @@ Notable changes in Lepton EDA 1.9.8
 
 ### Changes in `lepton-schematic`:
 
+- The **macro widget** has been improved in several ways:
+
+  - A new configuration group, `schematic.macro-widget`, has been
+    added for setting up the properties of the widget.
+
+  - The history of Scheme expressions executed via the `:` prompt
+    is now saved in the configuration file in the *cache*
+    configuration context (usually
+    `$XDG_CACHE_HOME/lepton-eda/gui.conf`). The commands are
+    stored in the `history` key and can be accessed by choosing
+    appropriate items from drop-down list in the macro widget. The
+    history length is set in the `history-length` configuration
+    key in the `schematic.macro-widget` group in the *user*
+    configuration context. The default value is 10.
+
+  - The macro widget now supports auto-completion of text.
+
+  - A new configuration key, `font`, in the
+    `schematic.macro-widget` group in the *user* configuration
+    context can now be used for setting up the font of the widget.
+
 - New accelerator keys have been added to facilitate keyboard
   navigation in the following dialogs:
   - `Single Attribute Editor`
