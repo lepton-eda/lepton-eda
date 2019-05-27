@@ -4,7 +4,6 @@ Recent Changes in Lepton EDA
 This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
-
 Notable changes in Lepton EDA 1.9.8
 -----------------------------------
 
@@ -36,6 +35,8 @@ Notable changes in Lepton EDA 1.9.8
 - **Doxygen** subsystem has been cleaned up to get rid of unused
   files since the tools rewritten in Scheme are not covered by its
   functionality any more.
+
+- Fixed some portability issues in documentation building.
 
 ### Changes in `liblepton`:
 
