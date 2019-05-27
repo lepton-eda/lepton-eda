@@ -7,6 +7,12 @@ more information, please consult `git log` history.
 Notable changes in Lepton EDA 1.9.8
 -----------------------------------
 
+### General changes:
+
+- The module `(geda library)` has been renamed to `(lepton library)`.
+  All the functions and variables available are still re-exported
+  in the former one but its using is discouraged.
+
 ### Changes in `lepton-schematic`:
 
 - The **macro widget** has been improved in several ways:
