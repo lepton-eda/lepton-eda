@@ -403,7 +403,7 @@ close_confirmation_dialog_constructor (GType type,
                 /* GtkDialog */
                 "has-separator",     FALSE,
                 /* GtkWindow */
-                "resizable",         FALSE,
+                "resizable",         TRUE,
                 "skip-taskbar-hint", TRUE,
                 /* GtkContainer */
                 "border-width",      5,
@@ -495,7 +495,7 @@ close_confirmation_dialog_constructor (GType type,
     /* the opportunity to save them before exiting */
     gtk_box_pack_start (GTK_BOX (vbox),
                         close_confirmation_dialog_build_page_list (dialog),
-                        FALSE, FALSE, 0);
+                        TRUE, TRUE, 0);
   }
 
   /* secondary label */
@@ -514,7 +514,7 @@ close_confirmation_dialog_constructor (GType type,
 
 
   gtk_box_pack_start (GTK_BOX (hbox), vbox,
-                      FALSE, FALSE, 0);
+                      TRUE, TRUE, 0);
 
 
   /* add buttons to dialog action area */
@@ -537,7 +537,7 @@ close_confirmation_dialog_constructor (GType type,
   gtk_widget_show_all (hbox);
 
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox,
-                      FALSE, FALSE, 0);
+                      TRUE, TRUE, 0);
 
   return object;
 }
