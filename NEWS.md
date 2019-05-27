@@ -71,6 +71,12 @@ Notable changes in Lepton EDA 1.9.8
   legacy code that is a subject for deprecation in the next stable
   release.
 
+- The following fixes have been made in the VAMS example:
+  - Deprecated gnetlistrc settings have been replaced with new
+    configuration options.
+  - Wrong netlister name has been fixed.
+  - generate_netlist.scm has been moved to the example directory.
+
 ### Changes in `lepton-schematic`:
 
 - The `sys-doc-dir()` function code in the module `(gschem
