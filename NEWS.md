@@ -119,6 +119,18 @@ Notable changes in Lepton EDA 1.9.8
 
 ### Changes in `lepton-schematic`:
 
+- Distinct parts of the `system-gschemrc` configuration file are
+  moved to separate files under the `conf/schematic/` subdirectory
+  to simplify dealing with certain aspects of `lepton-schematic`
+  behaviour and searching for appropriate settings. The new files
+  are loaded from `system-gschemrc`:
+  - `attribs.scm`
+  - `deprecated.scm`
+  - `keys.scm`
+  - `menu.scm`
+  - `options.scm`
+  - `stroke.scm`
+
 - The `sys-doc-dir()` function code in the module `(gschem
   gschemdoc)` module responsible for searching for system
   documentation directories has been known to fail in some
