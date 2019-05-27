@@ -196,6 +196,12 @@ Notable changes in Lepton EDA 1.9.8
   hook)` module.  It allows to evaluate Scheme code when an
   existing schematic page is loaded.
 
+- New Scheme API functions for working with object selectable
+  status have been added to the `(geda object)` module:
+  `object-selectable?` and `set-object-selectable!`.  Together
+  with page hooks they can allow to save locking status of
+  primitive objects without changing the current file format.
+
 
 Notable changes in Lepton EDA 1.9.7
 -----------------------------------
