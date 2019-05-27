@@ -85,6 +85,9 @@ Notable changes in Lepton EDA 1.9.8
   - Wrong netlister name has been fixed.
   - generate_netlist.scm has been moved to the example directory.
 
+- The `allegro` backend has been refactored so obsolete procedures
+  are no longer used in it.
+
 ### Changes in `lepton-schematic`:
 
 - The `sys-doc-dir()` function code in the module `(gschem
@@ -141,6 +144,10 @@ Notable changes in Lepton EDA 1.9.8
   is set to "disabled" in `gschemrc` has been fixed, so now this
   setting prohibits drawing grips of selected objects still
   allowing the user to resize them.
+
+- A new menu allowing exporting of netlists has been added to the
+  program.  As of now, the only item in the menu allows exporting
+  of `allegro` netlists.
 
 ### Changes in `lepton-attrib`:
 
