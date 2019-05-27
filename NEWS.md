@@ -111,6 +111,9 @@ Notable changes in Lepton EDA 1.9.8
   menu item in the context menu.  The user can cancel the action
   in the confirmation dialog.
 
+- Schematic page filename and more verbose information is now
+  displayed in the page revert dialog.
+
 ### Changes in `lepton-attrib`:
 
 - Separate menu description *XML* file has been removed. Now the
