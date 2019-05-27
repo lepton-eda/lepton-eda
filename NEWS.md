@@ -107,6 +107,10 @@ Notable changes in Lepton EDA 1.9.8
   - `Options`
   - `Arc Params`
 
+- The log window can now be cleared by choosing "Clear Log Window"
+  menu item in the context menu.  The user can cancel the action
+  in the confirmation dialog.
+
 ### Changes in `lepton-attrib`:
 
 - Separate menu description *XML* file has been removed. Now the
