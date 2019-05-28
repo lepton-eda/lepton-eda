@@ -552,32 +552,57 @@ void i_update_menus(GschemToplevel *w_current)
  *  Set the main window's title using \a filename.
  *  Prepend an asterisk ("*") to indicate that the page
  *  is modified if \a changed is TRUE.
+ *  Depending on [schematic.gui]::title-show-path configuration
+ *  value, either full path or basename of \a filename is shown
+ *  in the title.
  *
  *  \param [in] w_current GschemToplevel structure
  *  \param [in] filename  The filename
  *  \param [in] changed   Page changed status
  */
-void i_set_filename(GschemToplevel *w_current, const gchar *filename, gboolean changed)
+void i_set_filename (GschemToplevel* w_current,
+                     const gchar* filename,
+                     gboolean changed)
 {
-  gchar *print_string=NULL;
-  gchar *fname=NULL;
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->main_window != NULL);
+  g_return_if_fail (filename);
 
-  if (!w_current->main_window)
-    return;
-  if (filename == NULL)
-    return;
+  gchar* cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
 
-  fname = g_path_get_basename(filename);
+  gboolean show_fullpath = FALSE;
 
-  print_string = g_strdup_printf("%s%s - lepton-schematic",
-                                 changed ? "* " : "",
-                                 fname);
+  if (cfg != NULL)
+  {
+    GError*  err = NULL;
+    gboolean val = eda_config_get_boolean (cfg,
+                                           "schematic.gui",
+                                           "title-show-path",
+                                           &err);
+    if (err == NULL)
+    {
+      show_fullpath = val;
+    }
 
-  gtk_window_set_title(GTK_WINDOW(w_current->main_window),
-		       print_string);
+    g_clear_error (&err);
+  }
 
-  g_free(print_string);
-  g_free(fname);
+
+  gchar* fname = show_fullpath
+                 ? g_strdup (filename)
+                 : g_path_get_basename (filename);
+
+  gchar* title = g_strdup_printf ("%s%s - lepton-schematic",
+                                  changed ? "* " : "",
+                                  fname);
+
+  gtk_window_set_title (GTK_WINDOW (w_current->main_window),
+                        title);
+
+  g_free (title);
+  g_free (fname);
 }
 
 /*! \brief Write the grid settings to the gschem status bar
