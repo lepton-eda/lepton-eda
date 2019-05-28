@@ -324,6 +324,13 @@ void i_update_middle_button (GschemToplevel *w_current,
       w_current->last_callback = NULL;
       break;
 
+    case(POPUP_ENABLED):
+      gschem_bottom_widget_set_middle_button_text (
+          GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+          _("Menu"));
+      w_current->last_callback = NULL;
+      break;
+
     default:
       gschem_bottom_widget_set_middle_button_text (
           GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
