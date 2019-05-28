@@ -507,35 +507,38 @@ void i_update_menus(GschemToplevel *w_current)
 
 }
 
-/*! \brief Set filename as gschem window title
+/*! \brief Set the main window's title
  *
  *  \par Function Description
- *  Set filename as gschem window title using
- *  the gnome HID format style.
+ *  Set the main window's title using \a filename.
+ *  Prepend an asterisk ("*") to indicate that the page
+ *  is modified if \a changed is TRUE.
  *
  *  \param [in] w_current GschemToplevel structure
- *  \param [in] string The filename
- *  \param [in] string 'Page changed' indication in window's title
+ *  \param [in] filename  The filename
+ *  \param [in] changed   Page changed status
  */
-void i_set_filename(GschemToplevel *w_current, const gchar *string, const gchar *changed)
+void i_set_filename(GschemToplevel *w_current, const gchar *filename, gboolean changed)
 {
   gchar *print_string=NULL;
-  gchar *filename=NULL;
+  gchar *fname=NULL;
 
   if (!w_current->main_window)
     return;
-  if (string == NULL)
+  if (filename == NULL)
     return;
 
-  filename = g_path_get_basename(string);
+  fname = g_path_get_basename(filename);
 
-  print_string = g_strdup_printf("%s%s - lepton-schematic", changed, filename);
+  print_string = g_strdup_printf("%s%s - lepton-schematic",
+                                 changed ? "* " : "",
+                                 fname);
 
   gtk_window_set_title(GTK_WINDOW(w_current->main_window),
 		       print_string);
 
   g_free(print_string);
-  g_free(filename);
+  g_free(fname);
 }
 
 /*! \brief Write the grid settings to the gschem status bar
