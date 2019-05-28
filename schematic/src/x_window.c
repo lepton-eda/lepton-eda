@@ -1317,16 +1317,36 @@ create_translate_widget (GschemToplevel *w_current, GtkWidget *work_box)
 static void
 create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
 {
-  const char *right_button_text = NULL;
+  const char* text_right_button_action = NULL;
+  const char* text_right_button_cancel = NULL;
+  char*       text_right_button        = NULL;
 
-  if (default_third_button == POPUP_ENABLED)
+  if (w_current->third_button == POPUP_ENABLED)
   {
-    right_button_text = _("Menu/Cancel");
+    text_right_button_action = _("Menu");
+  }
+  else
+  if (w_current->third_button == MOUSEPAN_ENABLED)
+  {
+    text_right_button_action = _("Pan");
   }
   else
   {
-    right_button_text = _("Pan/Cancel");
+    text_right_button_action = _("none");
   }
+
+  if (w_current->third_button_cancel)
+  {
+    text_right_button_cancel = _("/Cancel");
+  }
+  else
+  {
+    text_right_button_cancel = "";
+  }
+
+  text_right_button = g_strdup_printf ("%s%s",
+                                       text_right_button_action,
+                                       text_right_button_cancel);
 
   gpointer obj = g_object_new (GSCHEM_TYPE_BOTTOM_WIDGET,
                                "grid-mode",
@@ -1339,7 +1359,7 @@ create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
                                "middle-button-text",
                                _("none"),
                                "right-button-text",
-                               right_button_text,
+                               text_right_button,
                                "snap-mode",
                                gschem_options_get_snap_mode (w_current->options),
                                "snap-size",
@@ -1351,6 +1371,8 @@ create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
                                "magnetic-net-mode",
                                gschem_options_get_magnetic_net_mode (w_current->options),
                                NULL);
+
+  g_free (text_right_button);
 
   w_current->bottom_widget = GTK_WIDGET (obj);
 
