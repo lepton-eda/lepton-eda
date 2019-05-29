@@ -172,6 +172,7 @@ option's value:
 
 (define-rc-dead-config add-attribute-offset)
 (define-rc-dead-config logging-destination)
+(define-rc-dead-config log-window-type)
 
 ;; ===================================================================
 ;; Deprecated lepton-netlist configuration functions

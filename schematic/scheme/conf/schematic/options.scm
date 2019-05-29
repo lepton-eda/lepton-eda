@@ -252,21 +252,6 @@
 (log-window "later")
 
 
-; log-window-type string
-;
-; Controls if the log message window is a transient or if it is decorated
-; as a normal window (this is dependant on the window manager doing decoration
-; right)
-;
-; Possible options:
-;       decorated       - log window is a normal decorated window
-;       transient       - log window is a transient dialog box, typically
-;                         not decorated by the window manager
-;
-(log-window-type "decorated")
-;(log-window-type "transient")
-
-
 ; text-size number
 ;
 ; Sets the default text size.
