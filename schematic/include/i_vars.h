@@ -29,7 +29,6 @@ extern int default_net_consolidate;
 extern int default_file_preview;
 extern int default_enforce_hierarchy;
 extern int default_fast_mousepan;
-extern int default_raise_dialog_boxes;
 extern int default_continue_component_place;
 extern int default_undo_levels;
 extern int default_undo_control;

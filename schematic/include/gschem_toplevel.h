@@ -207,7 +207,6 @@ struct st_gschem_toplevel {
   int file_preview;       /* controls if the preview area is enabled or not */
   int enforce_hierarchy;  /* controls how much freedom user has when traversing the hierarchy */
   int fast_mousepan;      /* controls if text is completely drawn during mouse pan */
-  int raise_dialog_boxes; /*controls if expose events raise dialog boxes*/
 
   /* controls if after doing a place the same component can be placed again */
   int continue_component_place;

@@ -330,7 +330,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->file_preview = 0;
   w_current->enforce_hierarchy = 0;
   w_current->fast_mousepan = 0;
-  w_current->raise_dialog_boxes = 0;
   w_current->continue_component_place = 0;
   w_current->undo_levels = 0;
   w_current->undo_control = 0;

@@ -179,7 +179,6 @@ SCM g_rc_net_consolidate(SCM mode);
 SCM g_rc_file_preview(SCM mode);
 SCM g_rc_enforce_hierarchy(SCM mode);
 SCM g_rc_fast_mousepan(SCM mode);
-SCM g_rc_raise_dialog_boxes_on_expose(SCM mode);
 SCM g_rc_continue_component_place(SCM mode);
 SCM g_rc_undo_levels(SCM levels);
 SCM g_rc_undo_control(SCM mode);
@@ -634,7 +633,6 @@ void coord_display_update(GschemToplevel *w_current, int x, int y);
 void coord_dialog(GschemToplevel *w_current, int x, int y);
 char *index2functionstring(int index);
 void x_dialog_hotkeys(GschemToplevel *w_current);
-void x_dialog_raise_all(GschemToplevel *w_current);
 
 void generic_msg_dialog(const char *);
 int generic_confirm_dialog(const char *);
@@ -649,7 +647,6 @@ gboolean x_dialog_close_window (GschemToplevel *w_current);
 int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
 /* x_event.c */
 gint x_event_expose(GschemPageView *widget, GdkEventExpose *event, GschemToplevel *w_current);
-gint x_event_raise_dialog_boxes (GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current);
 gint x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current);
 gint x_event_button_released(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current);
 gint x_event_motion(GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current);
