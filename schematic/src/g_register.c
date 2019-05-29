@@ -101,7 +101,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "dots-grid-mode",               1, 0, 0, (SCM (*) ()) g_rc_dots_grid_mode },
   { "dots-grid-fixed-threshold",    1, 0, 0, (SCM (*) ()) g_rc_dots_grid_fixed_threshold },
   { "mesh-grid-display-threshold",  1, 0, 0, (SCM (*) ()) g_rc_mesh_grid_display_threshold },
-  { "add-attribute-offset",         1, 0, 0, (SCM (*) ()) g_rc_add_attribute_offset },
   { "mousepan-gain",                1, 0, 0, (SCM (*) ()) g_rc_mousepan_gain },
   { "keyboardpan-gain",             1, 0, 0, (SCM (*) ()) g_rc_keyboardpan_gain },
   { "select-slack-pixels",          1, 0, 0, (SCM (*) ()) g_rc_select_slack_pixels },

@@ -77,7 +77,6 @@ int   default_dots_grid_dot_size = 1;
 int   default_dots_grid_mode = DOTS_GRID_VARIABLE_MODE;
 int   default_dots_grid_fixed_threshold = 10;
 int   default_mesh_grid_display_threshold = 3;
-int   default_add_attribute_offset = 50;
 
 int   default_auto_save_interval = 120;
 
@@ -159,8 +158,6 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->dots_grid_mode              = default_dots_grid_mode;
   w_current->dots_grid_fixed_threshold   = default_dots_grid_fixed_threshold;
   w_current->mesh_grid_display_threshold = default_mesh_grid_display_threshold;
-
-  w_current->add_attribute_offset  = default_add_attribute_offset;
 
   w_current->mousepan_gain = default_mousepan_gain;
   w_current->keyboardpan_gain = default_keyboardpan_gain;

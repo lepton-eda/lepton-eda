@@ -349,7 +349,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->dots_grid_dot_size = 1;
   w_current->dots_grid_mode = DOTS_GRID_VARIABLE_MODE;
   w_current->mesh_grid_display_threshold = 3;
-  w_current->add_attribute_offset = 50;
   w_current->mousepan_gain = 5;
   w_current->keyboardpan_gain = 10;
   w_current->select_slack_pixels = 4;

@@ -1010,31 +1010,6 @@ SCM g_rc_mesh_grid_display_threshold (SCM spacing)
  *  \par Function Description
  *
  */
-SCM g_rc_add_attribute_offset(SCM offset)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (offset), offset,
-              SCM_ARG1, "add-attribute-offset");
-
-  val = scm_to_int (offset);
-
-  if (val < 0) {
-    fprintf(stderr, _("Invalid offset [%1$d] passed to add-attribute-offset\n"),
-            val);
-    val = 50; /* absolute default */
-  }
-
-  default_add_attribute_offset = val;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_auto_save_interval(SCM seconds)
 {
   int val;
