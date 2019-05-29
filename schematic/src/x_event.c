@@ -58,27 +58,6 @@ x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_cu
  *
  */
 gint
-x_event_raise_dialog_boxes (GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current)
-{
-  g_return_val_if_fail (w_current != NULL, 0);
-
-  /* raise the dialog boxes if this feature is enabled */
-  if (w_current->raise_dialog_boxes) {
-    x_dialog_raise_all(w_current);
-  }
-
-  return 0;
-}
-
-
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint
 x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current)
 {
   PAGE *page = gschem_page_view_get_page (page_view);

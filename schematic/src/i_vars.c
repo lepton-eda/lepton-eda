@@ -52,7 +52,6 @@ int   default_net_consolidate = TRUE;
 int   default_file_preview = FALSE;
 int   default_enforce_hierarchy = TRUE;
 int   default_fast_mousepan = TRUE;
-int   default_raise_dialog_boxes = FALSE;
 int   default_continue_component_place = TRUE;
 int   default_undo_levels = 20;
 int   default_undo_control = TRUE;
@@ -128,7 +127,6 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->file_preview       = default_file_preview;
   w_current->enforce_hierarchy  = default_enforce_hierarchy;
   w_current->fast_mousepan      = default_fast_mousepan;
-  w_current->raise_dialog_boxes = default_raise_dialog_boxes;
   w_current->continue_component_place = default_continue_component_place;
   w_current->undo_levels = default_undo_levels;
   w_current->undo_control = default_undo_control;

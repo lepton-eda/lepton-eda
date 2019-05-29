@@ -539,23 +539,6 @@ SCM g_rc_fast_mousepan(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_raise_dialog_boxes_on_expose(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("raise-dialog-boxes-on-expose",
-		   default_raise_dialog_boxes,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_continue_component_place(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

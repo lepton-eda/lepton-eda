@@ -219,7 +219,6 @@ void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
   struct event_reg_t drawing_area_events[] =
   {
     { "expose_event",         G_CALLBACK(x_event_expose)                       },
-    { "expose_event",         G_CALLBACK(x_event_raise_dialog_boxes)           },
     { "button_press_event",   G_CALLBACK(x_event_button_pressed)               },
     { "button_release_event", G_CALLBACK(x_event_button_released)              },
     { "motion_notify_event",  G_CALLBACK(x_event_motion)                       },

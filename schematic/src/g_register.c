@@ -75,7 +75,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "file-preview",                 1, 0, 0, (SCM (*) ()) g_rc_file_preview },
   { "enforce-hierarchy",            1, 0, 0, (SCM (*) ()) g_rc_enforce_hierarchy },
   { "fast-mousepan",                1, 0, 0, (SCM (*) ()) g_rc_fast_mousepan },
-  { "raise-dialog-boxes-on-expose", 1, 0, 0, (SCM (*) ()) g_rc_raise_dialog_boxes_on_expose },
   { "continue-component-place",     1, 0, 0, (SCM (*) ()) g_rc_continue_component_place },
   { "undo-levels",                  1, 0, 0, (SCM (*) ()) g_rc_undo_levels },
   { "undo-control",                 1, 0, 0, (SCM (*) ()) g_rc_undo_control },
