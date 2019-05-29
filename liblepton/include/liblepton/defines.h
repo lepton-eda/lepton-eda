@@ -108,11 +108,6 @@
 #define UNDO_ALL		0
 #define UNDO_VIEWPORT_ONLY	1
 
-/* These are for where status information goes */
-#define LOG_WINDOW		0
-#define STDOUT_TTY		1
-#define BOTH_LOGWIN_STDOUT	2
-
 /* list copying flags */
 #define NORMAL_FLAG		0
 #define SELECTION_FLAG		1

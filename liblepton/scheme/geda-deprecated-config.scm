@@ -171,6 +171,7 @@ option's value:
  (lambda (x) x))
 
 (define-rc-dead-config add-attribute-offset)
+(define-rc-dead-config logging-destination)
 
 ;; ===================================================================
 ;; Deprecated lepton-netlist configuration functions

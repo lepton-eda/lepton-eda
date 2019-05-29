@@ -31,8 +31,6 @@ GList *global_window_list = NULL;
 GdkColor white;
 GdkColor black;
 
-int logging_dest = LOG_WINDOW;
-
 /* command line options */
 int quiet_mode = FALSE;
 int verbose_mode = FALSE;

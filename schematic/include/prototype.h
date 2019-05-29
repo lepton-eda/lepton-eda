@@ -166,7 +166,6 @@ SCM g_rc_embed_components(SCM mode);
 SCM g_rc_text_size(SCM size);
 SCM g_rc_text_caps_style(SCM mode);
 SCM g_rc_snap_size(SCM size);
-SCM g_rc_logging_destination(SCM mode);
 SCM g_rc_attribute_name(SCM path);
 SCM g_rc_scrollbars(SCM mode);
 SCM g_rc_image_color(SCM mode);

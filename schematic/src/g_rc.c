@@ -295,24 +295,6 @@ SCM g_rc_snap_size(SCM size)
  *  \par Function Description
  *
  */
-SCM g_rc_logging_destination(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {LOG_WINDOW         , "log_window" },
-    {STDOUT_TTY         , "tty"        },
-    {BOTH_LOGWIN_STDOUT , "both"       }
-  };
-
-  RETURN_G_RC_MODE("logging-destination",
-		   logging_dest,
-		   3);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_attribute_name(SCM scm_path)
 {
   char *path;
