@@ -490,26 +490,6 @@
 ;(force-boundingbox "enabled")
 
 
-; add-attribute-offset integer
-;
-; This has not been implemented/debugged yet.
-; This has not been implemented/debugged yet.
-; This has not been implemented/debugged yet.
-;
-; Controls a offset which is added to the location of text items that are
-; added to an object as an attribute.  This offset is added when the following
-; conditions occur:
-;
-;  1) Add/Attribute... has been invoked via the hotkey
-;  2) It is the "netname" attribute being added
-;  3) It is being attached to a horizontal or vertical net segment
-;  4) The initial mouse position is at or near the actual net (with one
-;     grid unit).
-;
-; If these four conditions are not met, then this offset is not added.
-;(add-attribute-offset 50)
-
-
 ; reset-component-library
 ;
 ; When reset-component-library is executed, then all known component library

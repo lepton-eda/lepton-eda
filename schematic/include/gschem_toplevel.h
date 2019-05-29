@@ -236,10 +236,6 @@ struct st_gschem_toplevel {
   /* Minimum grid line pitch to display. Applies to major and minor lines. */
   int mesh_grid_display_threshold;
 
-  /* sets the offset (in world coordinates) that are added to netname */
-  /* attributes when they are attached to vertical or horizontal nets */
-  int add_attribute_offset;
-
   int mousepan_gain;      /* Controls the gain of the mouse pan */
   int keyboardpan_gain;   /* Controls the gain of the keyboard pan */
   int select_slack_pixels; /* Number of pixels around an object we can still select it with */

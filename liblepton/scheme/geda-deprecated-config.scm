@@ -1,6 +1,7 @@
-;; Lepton EDA
-;; lepton-schematic - Lepton EDA Schematic Capture - Scheme API
+;; Lepton EDA library - Scheme API
 ;; Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2016 gEDA Contributors
+;; Copyright (C) 2017-2019 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -112,14 +113,14 @@ option's value:
   (string=? "enabled" str))
 
 ;; ===================================================================
-;; Deprecated libgeda configuration functions
+;; Deprecated liblepton configuration functions
 ;; ===================================================================
 
 (define-rc-dead-config postscript-prolog)
 (define-rc-dead-config world-size)
 
 ;; ===================================================================
-;; Deprecated gschem configuration functions
+;; Deprecated lepton-schematic configuration functions
 ;; ===================================================================
 
 (define-rc-dead-config output-capstyle)
@@ -169,8 +170,10 @@ option's value:
  component-dialog-attributes "gschem.library" "component-attributes"
  (lambda (x) x))
 
+(define-rc-dead-config add-attribute-offset)
+
 ;; ===================================================================
-;; Deprecated gnetlist configuration functions
+;; Deprecated lepton-netlist configuration functions
 ;; ===================================================================
 (define-rc-dead-config gnetlist-version)
 
