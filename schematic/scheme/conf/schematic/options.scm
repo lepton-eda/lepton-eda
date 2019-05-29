@@ -235,8 +235,6 @@
 ; Determines if the logging mechanism is enabled or disabled
 ;   Possible options: enabled or disabled
 ; Default is enabled.
-; See below for the logging-destination keyword for control over
-; where the messages go.
 ;
 (logging "enabled")
 ;(logging "disabled")
@@ -268,22 +266,6 @@
 (log-window-type "decorated")
 ;(log-window-type "transient")
 
-
-; logging-destination string
-;
-; Specifies where log message go during run time.
-; Possible options are:
-;      log_window      The log window (if it's visible)
-;      tty             The stdout of the terminal where gschem was run from
-;      both            Both of the above locations
-; Message are always written to the log file (unless logging is disabled)
-; by the above keyword
-;
-; Default is log_window
-;
-(logging-destination "log_window")
-;(logging-destination "tty")
-;(logging-destination "both")
 
 ; text-size number
 ;

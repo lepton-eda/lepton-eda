@@ -31,7 +31,6 @@ extern gboolean config_legacy_mode;
 extern int verbose_loading;
 
 extern int do_logging;
-extern int logging_dest;
 
 /* Size of a tab in characters */
 extern int tab_in_chars;

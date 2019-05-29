@@ -31,7 +31,6 @@ int   default_net_selection_mode = 0;
 int   default_actionfeedback_mode = OUTLINE;
 int   default_zoom_with_pan = TRUE;
 int   default_do_logging = TRUE;
-int   default_logging_dest = LOG_WINDOW;
 int   default_embed_complex = FALSE;
 int   default_include_complex = FALSE;
 int   default_snap_size = DEFAULT_SNAP_SIZE;
@@ -103,8 +102,6 @@ void i_vars_set(GschemToplevel *w_current)
   if (do_logging != FALSE) {
     do_logging = default_do_logging;
   }
-
-  logging_dest = default_logging_dest;
 
   w_current->text_size     = default_text_size;
   w_current->text_caps     = default_text_caps;

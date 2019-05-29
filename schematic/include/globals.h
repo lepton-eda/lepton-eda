@@ -33,7 +33,6 @@ extern GdkColor black;
 extern SCM output_filename_s;
 
 extern int do_logging;
-extern int logging_dest;
 
 
 /* command line options */

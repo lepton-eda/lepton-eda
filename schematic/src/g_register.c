@@ -61,7 +61,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "snap-size",                    1, 0, 0, (SCM (*) ()) g_rc_snap_size },
 
   { "text-caps-style",              1, 0, 0, (SCM (*) ()) g_rc_text_caps_style },
-  { "logging-destination",          1, 0, 0, (SCM (*) ()) g_rc_logging_destination },
 
   { "attribute-name",               1, 0, 0, (SCM (*) ()) g_rc_attribute_name },
 
