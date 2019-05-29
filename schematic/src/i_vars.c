@@ -40,7 +40,6 @@ int   default_image_color = FALSE;
 int   default_image_width = 800;
 int   default_image_height = 600;
 int   default_log_window = MAP_ON_STARTUP;
-int   default_log_window_type = DECORATED;
 int   default_third_button = POPUP_ENABLED;
 int   default_third_button_cancel = TRUE;
 #ifdef HAVE_LIBSTROKE
@@ -117,7 +116,6 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->include_complex = default_include_complex;
   gschem_options_set_snap_size (w_current->options, default_snap_size);
   w_current->log_window      = default_log_window;
-  w_current->log_window_type = default_log_window_type;
 
   toplevel->image_color        = default_image_color;
   w_current->image_width        = default_image_width;

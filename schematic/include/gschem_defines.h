@@ -91,10 +91,6 @@ typedef enum
 #define MAP_LATER		0
 #define MAP_ON_STARTUP		1
 
-/* for log-window-type */
-#define DECORATED		0
-#define TRANSIENT		1
-
 /* mouse buttons actions */
 #define STROKE			0
 #define REPEAT			1

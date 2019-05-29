@@ -390,23 +390,6 @@ SCM g_rc_log_window(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_log_window_type(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRANSIENT, "transient" },
-    {DECORATED, "decorated" },
-  };
-
-  RETURN_G_RC_MODE("log-window-type",
-		   default_log_window_type,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_third_button(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
