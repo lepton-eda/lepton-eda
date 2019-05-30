@@ -36,8 +36,11 @@
 static const gchar* const DATA_ENV        = "GEDADATA";
 static const gchar* const CONFIG_ENV      = "GEDADATARC";
 static const gchar* const DATA_XDG_SUBDIR = "lepton-eda";
+
+#if defined(ENABLE_DEPRECATED)
 static const gchar* const DATA_GUESS_FILE = "scheme/geda.scm";
 static const gchar* const USER_DOTDIR     = ".gEDA";
+#endif
 
 /* ================================================================
  * Private initialisation functions
