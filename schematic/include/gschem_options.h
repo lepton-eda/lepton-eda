@@ -39,7 +39,7 @@
  *
  *  Loading a configuration will overwrite this value
  */
-#define DEFAULT_NET_RUBBER_BAND_MODE (FALSE)
+#define DEFAULT_NET_RUBBER_BAND_MODE (TRUE)
 
 
 /*! \brief The initial grid mode
