@@ -25,7 +25,7 @@
 /* Absolute default used when default_... strings are NULL */
 
 int   default_text_size = DEFAULT_TEXT_SIZE;
-int   default_text_caps = LOWER;
+int   default_text_caps = BOTH;
 int   default_net_direction_mode = TRUE;
 int   default_net_selection_mode = 0;
 int   default_actionfeedback_mode = OUTLINE;
@@ -36,22 +36,18 @@ int   default_include_complex = FALSE;
 int   default_snap_size = DEFAULT_SNAP_SIZE;
 
 int   default_scrollbars_flag = TRUE;
-int   default_image_color = FALSE;
+int   default_image_color = TRUE;
 int   default_image_width = 800;
 int   default_image_height = 600;
 int   default_log_window = MAP_ON_STARTUP;
 int   default_third_button = POPUP_ENABLED;
 int   default_third_button_cancel = TRUE;
-#ifdef HAVE_LIBSTROKE
-int   default_middle_button = STROKE;
-#else
-int   default_middle_button = REPEAT;
-#endif
+int   default_middle_button = MOUSEPAN_ENABLED;
 int   default_scroll_wheel = SCROLL_WHEEL_CLASSIC;
 int   default_net_consolidate = TRUE;
-int   default_file_preview = FALSE;
+int   default_file_preview = TRUE;
 int   default_enforce_hierarchy = TRUE;
-int   default_fast_mousepan = TRUE;
+int   default_fast_mousepan = FALSE;
 int   default_continue_component_place = TRUE;
 int   default_undo_levels = 20;
 int   default_undo_control = TRUE;
@@ -60,7 +56,7 @@ int   default_undo_panzoom = FALSE;
 int   default_draw_grips = TRUE;
 int   default_netconn_rubberband = DEFAULT_NET_RUBBER_BAND_MODE;
 int   default_magnetic_net_mode = DEFAULT_MAGNETIC_NET_MODE;
-int   default_warp_cursor = TRUE;
+int   default_warp_cursor = FALSE;
 int   default_toolbars = TRUE;
 int   default_handleboxes = TRUE;
 int   default_setpagedevice_orientation = FALSE;
@@ -80,9 +76,9 @@ int   default_auto_save_interval = 120;
 int   default_width = 800;  /* these variables are used in x_window.c */
 int   default_height = 600;
 
-int default_mousepan_gain = 5;
+int default_mousepan_gain = 1;
 int default_keyboardpan_gain = 20;
-int default_select_slack_pixels = 4;
+int default_select_slack_pixels = 10;
 int default_zoom_gain = 20;
 int default_scrollpan_steps = 8;
 
