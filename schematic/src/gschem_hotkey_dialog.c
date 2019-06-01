@@ -18,16 +18,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*! \todo STILL NEED to clean up line lengths in aa and tr */
-#include <config.h>
-#include <version.h>
-
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
 
 #include "gschem.h"
 
@@ -161,6 +151,21 @@ filter_setup (GtkTreeView* tree, GtkTreeModel* model, GtkEntry* entry)
 
 
 
+/*! \brief "response" signal handler for hotkeys dialog
+ */
+static void
+response (GtkWidget* widget, gint response, gpointer data)
+{
+  GschemToplevel* w_current = (GschemToplevel*) data;
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->hkwindow != NULL);
+
+  gtk_widget_destroy (w_current->hkwindow);
+  w_current->hkwindow = NULL;
+}
+
+
+
 /*! \brief Creates the hotkeys dialog
  *  \par Function Description
  *  This function creates the hotkey dialog and puts the list of hotkeys
@@ -187,26 +192,12 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
     GTK_WINDOW (w_current->main_window),
     (GtkDialogFlags) 0, /* not modal */
     "hotkeys", w_current,
-    GTK_STOCK_CLOSE, GTK_RESPONSE_NONE,
+    GTK_STOCK_CLOSE, GTK_RESPONSE_REJECT,
     NULL);
 
-  gtk_window_set_position (GTK_WINDOW (w_current->hkwindow), GTK_WIN_POS_NONE);
-
-
-  /* Just hide the dialog.
-   * Do not destroy it every time it's closed:
-  */
   g_signal_connect (G_OBJECT (w_current->hkwindow), "response",
-                    G_CALLBACK (&gtk_widget_hide),
-                    NULL);
-
-  g_signal_connect (G_OBJECT (w_current->hkwindow), "delete-event",
-                    G_CALLBACK (&gtk_widget_hide_on_delete),
-                    NULL);
-
-
-  gtk_dialog_set_default_response(GTK_DIALOG(w_current->hkwindow),
-                                  GTK_RESPONSE_ACCEPT);
+                    G_CALLBACK (&response),
+                    w_current);
 
   gtk_container_set_border_width (GTK_CONTAINER (w_current->hkwindow),
                                   DIALOG_BORDER_SPACING);
@@ -282,4 +273,3 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
   gtk_widget_show_all(w_current->hkwindow);
 
 } /* x_dialog_hotkeys() */
-
