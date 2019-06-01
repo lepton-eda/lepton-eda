@@ -183,7 +183,6 @@ SCM g_rc_draw_grips(SCM mode);
 SCM g_rc_netconn_rubberband(SCM mode);
 SCM g_rc_magnetic_net_mode(SCM mode);
 SCM g_rc_add_menu(SCM menu_name, SCM menu_items);
-SCM g_rc_window_size(SCM width, SCM height);
 SCM g_rc_warp_cursor(SCM mode);
 SCM g_rc_toolbars(SCM mode);
 SCM g_rc_handleboxes(SCM mode);

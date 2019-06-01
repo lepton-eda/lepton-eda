@@ -293,18 +293,6 @@
 (enforce-hierarchy "enabled")
 ;(enforce-hierarchy "disabled")
 
-; window-size width height
-;
-; Specifies the size of the drawing area window.  The width and height
-; are specified in pixels and do not include the three menu bars and
-; scrollbars (so the window will be larger than the specified
-; measurements). Try to keep an aspect ratio of 1.333333 if at all possible.
-; These numbers are NOT the true size of the window, but of the drawing area.
-;
-;(window-size 650 487)  ; Good size for 800x600
-(window-size 900 650)   ; Good size for 1024x768
-;(window-size 950 712)  ; Good size for 1152x864
-;(window-size 1100 825) ; Good size for 1280x1024
 
 
 ; middle-button string

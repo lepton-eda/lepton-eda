@@ -692,22 +692,6 @@ SCM g_rc_add_menu(SCM scm_menu_name, SCM scm_menu_items)
  *  \par Function Description
  *
  */
-SCM g_rc_window_size(SCM width, SCM height)
-{
-  SCM_ASSERT (scm_is_integer (width),  width,  SCM_ARG1, "window-size");
-  SCM_ASSERT (scm_is_integer (height), height, SCM_ARG2, "window-size");
-
-  default_width  = scm_to_int (width);
-  default_height = scm_to_int (height);
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_warp_cursor(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

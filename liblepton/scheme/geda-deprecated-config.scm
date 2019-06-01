@@ -176,6 +176,7 @@ option's value:
 (define-rc-dead-config raise-dialog-boxes-on-expose)
 (define-rc-dead-config image-size)
 (define-rc-dead-config image-color)
+(define-rc-dead-config window-size)
 
 ;; ===================================================================
 ;; Deprecated lepton-netlist configuration functions
