@@ -1834,23 +1834,54 @@ geometry_save (GschemToplevel* w_current)
 /*! \brief Restore main window's geometry.
  *
  *  \par Function Description
- *  Read main window's geometry from the CACHE config context and restore it.
- *  Unless valid configuration values are read, set default width and height.
+ *  If [schematic.gui]::restore-window-geometry configuration key is
+ *  set to true, read main window's geometry from the CACHE config
+ *  context and restore it.
+ *  Unless valid configuration values are read, use default width
+ *  and height.
  *
  *  \param w_current The toplevel environment.
  */
 static void
 geometry_restore (GschemToplevel* w_current)
 {
-  EdaConfig* cfg = eda_config_get_cache_context();
+  gchar* cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
 
-  gint x = eda_config_get_int (cfg, "schematic.window-geometry", "x", NULL);
-  gint y = eda_config_get_int (cfg, "schematic.window-geometry", "y", NULL);
+  gboolean restore = TRUE; /* by default, restore geometry */
+  GError*  err = NULL;
+  gboolean val = eda_config_get_boolean (cfg,
+                                         "schematic.gui",
+                                         "restore-window-geometry",
+                                         &err);
+  if (err == NULL)
+  {
+    restore = val;
+  }
 
-  gtk_window_move (GTK_WINDOW (w_current->main_window), x, y);
+  g_clear_error (&err);
 
-  gint width  = eda_config_get_int (cfg, "schematic.window-geometry", "width",  NULL);
-  gint height = eda_config_get_int (cfg, "schematic.window-geometry", "height", NULL);
+
+  gint width  = -1;
+  gint height = -1;
+
+  if (restore)
+  {
+    EdaConfig* ccfg = eda_config_get_cache_context();
+
+    gint x = eda_config_get_int (ccfg, "schematic.window-geometry", "x", NULL);
+    gint y = eda_config_get_int (ccfg, "schematic.window-geometry", "y", NULL);
+
+    if (x > 0 && y > 0)
+    {
+      gtk_window_move (GTK_WINDOW (w_current->main_window), x, y);
+    }
+
+    width  = eda_config_get_int (ccfg, "schematic.window-geometry", "width",  NULL);
+    height = eda_config_get_int (ccfg, "schematic.window-geometry", "height", NULL);
+  }
+
 
   if (width <= 0 || height <= 0)
   {
@@ -1859,6 +1890,7 @@ geometry_restore (GschemToplevel* w_current)
   }
 
   gtk_window_resize (GTK_WINDOW (w_current->main_window), width, height);
+
 
   if (x_widgets_use_docks())
   {
