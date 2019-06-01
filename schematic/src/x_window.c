@@ -85,6 +85,13 @@ create_notebook_bottom (GschemToplevel *w_current);
 
 
 static void
+geometry_save (GschemToplevel* w_current);
+
+static void
+geometry_restore (GschemToplevel* w_current);
+
+
+static void
 open_page_error_dialog (GschemToplevel* w_current,
                         const gchar*    filename,
                         GError*         err);
@@ -138,18 +145,9 @@ void x_window_setup (GschemToplevel *w_current)
  */
 void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
 {
-  /* drawing next */
-  w_current->drawing_area = GTK_WIDGET (gschem_page_view_new_with_page (w_current->toplevel->page_current));
-  /* Set the size here.  Be sure that it has an aspect ratio of 1.333
-   * We could calculate this based on root window size, but for now
-   * lets just set it to:
-   * Width = root_width*3/4   Height = Width/1.3333333333
-   * 1.3333333 is the desired aspect ratio!
-   */
-
-  gtk_widget_set_size_request (w_current->drawing_area,
-                               default_width,
-                               default_height);
+  PAGE* page = w_current->toplevel->page_current;
+  GschemPageView* view = gschem_page_view_new_with_page (page);
+  w_current->drawing_area = GTK_WIDGET (view);
 
   gtk_container_add(GTK_CONTAINER(scrolled), w_current->drawing_area);
 
@@ -556,6 +554,7 @@ void x_window_create_main(GschemToplevel *w_current)
   */
   create_bottom_widget (w_current, main_box);
 
+  geometry_restore (w_current);
 
   /* show all widgets: */
   gtk_widget_show_all (w_current->main_window);
@@ -633,6 +632,11 @@ void x_window_close(GschemToplevel *w_current)
   if (g_list_length (global_window_list) == 1) {
     /* no more window after this one, remember to quit */
     last_window = TRUE;
+  }
+
+  if (last_window)
+  {
+    geometry_save (w_current);
   }
 
   if (toplevel->major_changed_refdes) {
@@ -1798,3 +1802,68 @@ x_window_untitled_page (PAGE* page)
 
 } /* untitled_page() */
 
+
+
+/*! \brief Save main window's geometry to the CACHE config context.
+ *
+ *  \param w_current The toplevel environment.
+ */
+static void
+geometry_save (GschemToplevel* w_current)
+{
+  gint x = 0;
+  gint y = 0;
+  gtk_window_get_position (GTK_WINDOW (w_current->main_window), &x, &y);
+
+  gint width = 0;
+  gint height = 0;
+  gtk_window_get_size (GTK_WINDOW (w_current->main_window), &width, &height);
+
+  EdaConfig* cfg = eda_config_get_cache_context();
+
+  eda_config_set_int (cfg, "schematic.window-geometry", "x", x);
+  eda_config_set_int (cfg, "schematic.window-geometry", "y", y);
+  eda_config_set_int (cfg, "schematic.window-geometry", "width", width);
+  eda_config_set_int (cfg, "schematic.window-geometry", "height", height);
+
+  eda_config_save (cfg, NULL);
+}
+
+
+
+/*! \brief Restore main window's geometry.
+ *
+ *  \par Function Description
+ *  Read main window's geometry from the CACHE config context and restore it.
+ *  Unless valid configuration values are read, set default width and height.
+ *
+ *  \param w_current The toplevel environment.
+ */
+static void
+geometry_restore (GschemToplevel* w_current)
+{
+  EdaConfig* cfg = eda_config_get_cache_context();
+
+  gint x = eda_config_get_int (cfg, "schematic.window-geometry", "x", NULL);
+  gint y = eda_config_get_int (cfg, "schematic.window-geometry", "y", NULL);
+
+  gtk_window_move (GTK_WINDOW (w_current->main_window), x, y);
+
+  gint width  = eda_config_get_int (cfg, "schematic.window-geometry", "width",  NULL);
+  gint height = eda_config_get_int (cfg, "schematic.window-geometry", "height", NULL);
+
+  if (width <= 0 || height <= 0)
+  {
+    width  = default_width;
+    height = default_height;
+  }
+
+  gtk_window_resize (GTK_WINDOW (w_current->main_window), width, height);
+
+  if (x_widgets_use_docks())
+  {
+    gtk_widget_set_size_request (w_current->find_text_state,
+                                 -1,
+                                 height / 4);
+  }
+}
