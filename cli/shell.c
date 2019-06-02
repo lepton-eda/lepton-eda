@@ -47,7 +47,7 @@ shell_usage (void)
 {
   printf (_("Usage: lepton-cli shell [OPTION ...]\n"
 "\n"
-"Shell for interactive processing of gEDA data using Scheme.\n"
+"Shell for interactive processing of Lepton EDA data using Scheme.\n"
 "\n"
 "  -s FILE        load Scheme source code from FILE, and exit\n"
 "  -c EXPR        evaluate Scheme expression EXPR, and exit\n"

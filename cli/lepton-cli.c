@@ -73,9 +73,9 @@ usage (void)
 "  -V, --version  display version information and exit\n"
 "\n"
 "Commonly-used commands (type `lepton-cli <cmd> --help' for usage):\n"
-"  shell          Scheme REPL for interactive gEDA data processing\n"
-"  config         Edit gEDA configuration\n"
-"  export         Export gEDA files in various image formats.\n"
+"  shell          Scheme REPL for interactive Lepton EDA data processing\n"
+"  config         Edit Lepton EDA configuration\n"
+"  export         Export Lepton EDA files in various image formats.\n"
 "\n"
 "Please report bugs to %1$s.\n"),
 PACKAGE_BUGREPORT);
@@ -87,11 +87,11 @@ static void
 version (void)
 {
   printf(_("Lepton EDA %1$s (g%2$.7s)\n"
-"Copyright (C) 1998-2017 gEDA developers\n"
-"Copyright (C) 2017 Lepton EDA developers\n"
+"Copyright (C) 1998-2016 gEDA developers\n"
+"Copyright (C) 2017-2019 Lepton EDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
-"included in the gEDA distribution.\n"
+"included in the Lepton EDA distribution.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n"),
          PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
   exit (0);
