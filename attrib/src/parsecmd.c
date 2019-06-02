@@ -71,7 +71,7 @@ extern int optind;
 void usage(char *cmd)
 {
     printf(_("\n"
-             "Gattrib:  The gEDA project\'s attribute editor.\n"
+             "lepton-attrib: Lepton EDA attribute editor.\n"
              "Presents schematic attributes in easy-to-edit spreadsheet format.\n"
              "\n"
              "Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
@@ -92,7 +92,9 @@ void usage(char *cmd)
              "     If slots are present on the component, then the different slots appear\n"
              "     in different rows with the slot number after the period.  Example:  C101.2.\n"
              "\n"
-             "Copyright (C) 2003 -- 2006 Stuart D. Brorson.\n"
+             "Copyright (C) 2003-2006 Stuart D. Brorson.\n"
+             "Copyright (C) 2007-2016 gEDA Contributors.\n"
+             "Copyright (C) 2017-2019 Lepton EDA Contributors.\n"
              "\n"
              "Please report bugs to %2$s.\n"),
              cmd,
