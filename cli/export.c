@@ -963,7 +963,7 @@ export_usage (void)
 {
   printf (_("Usage: lepton-cli export [OPTION ...] -o OUTPUT [--] FILE ...\n"
 "\n"
-"Export gEDA files in various image formats.\n"
+"Export Lepton EDA files in various image formats.\n"
 "\n"
 "  -f, --format=TYPE      output format (normally autodetected)\n"
 "  -o, --output=OUTPUT    output filename\n"

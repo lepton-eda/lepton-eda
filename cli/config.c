@@ -48,7 +48,7 @@ config_usage (void)
 {
   printf (_("Usage: lepton-cli config [OPTION] [GROUP KEY [VALUE]]\n"
 "\n"
-"View and modify gEDA configuration.\n"
+"View and modify Lepton EDA configuration.\n"
 "\n"
 "  -p, --project[=PATH]  select project configuration [PATH=.]\n"
 "  -u, --user     select user configuration\n"
