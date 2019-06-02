@@ -299,7 +299,7 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
                   largs)) {
       if (stat (pcb_file, &st) != 0 || mtime == st.st_mtime) {
           fprintf (stderr,
-                   "gsch2pcb: gnetlist command failed, `%s' not updated\n",
+                   "lepton-sch2pcb: netlister command failed, `%s' not updated\n",
                    pcb_file
                    );
           if (m4_override_file)
@@ -1282,12 +1282,12 @@ load_extra_project_files (void)
 }
 
 static const gchar *usage_string0 =
-  "usage: gsch2pcb [options] {project | foo.sch [foo1.sch ...]}\n"
+  "usage: lepton-sch2pcb [options] {project | foo.sch [foo1.sch ...]}\n"
   "\n"
-  "Generate a PCB layout file from a set of gschem schematics.\n"
-  "   gnetlist -g PCB is run to generate foo.net from the schematics.\n"
+  "Generate a PCB layout file from a set of Lepton EDA schematics.\n"
+  "   lepton-netlist -g PCB is run to generate foo.net from the schematics.\n"
   "\n"
-  "   gnetlist -g gsch2pcb is run to get PCB m4 derived elements which\n"
+  "   lepton-netlist -g gsch2pcb is run to get PCB m4 derived elements which\n"
   "   match schematic footprints.  For schematic footprints which don't match\n"
   "   any PCB m4 layout elements, search a set of file element directories in\n"
   "   an attempt to find matching PCB file elements.\n"
@@ -1297,7 +1297,7 @@ static const gchar *usage_string0 =
   "   have no matching schematic component, then remove those elements from\n"
   "   foo.pcb and rename foo.pcb to a foo.pcb.bak sequence.\n"
   "\n"
-  "   gnetlist -g pcbpins is run to get a PCB actions file which will rename all\n"
+  "   lepton-netlist -g pcbpins is run to get a PCB actions file which will rename all\n"
   "   of the pins in a .pcb file to match pin names from the schematic.\n"
   "\n"
   "   \"project\" is a file (not ending in .sch) containing a list of\n"
@@ -1330,7 +1330,7 @@ static const gchar *usage_string0 =
   "                           in the schematics.  Note that elements with an empty\n"
   "                           element name (schematic refdes) are never deleted,\n"
   "                           so you really shouldn't need this option.\n"
-  "   -q, --quiet             Don't tell the user what to do next after running gsch2pcb.\n"
+  "   -q, --quiet             Don't tell the user what to do next after running lepton-sch2pcb.\n"
   "\n"
   "   -s, --skip-m4           Skip m4 when looking for footprints.  The default is to use\n"
   "                           m4 (which is what previous versions did).\n"
@@ -1344,26 +1344,27 @@ static const gchar *usage_string1 =
   "   --backend-net backend   Backend that generates netlist file (.net)\n"
   "   --backend-pcb backend   Backend that generates board files (.pcb, .pcb.new)\n"
   "\n"
-  "   --gnetlist backend      A convenience run of extra gnetlist -g commands.\n"
-  "                           Example:  gnetlist partslist3\n"
+  "   --gnetlist backend      A convenience run of extra lepton-netlist -g commands.\n"
+  "                           Example:  lepton-netlist partslist3\n"
   "                           Creates:  myproject.partslist3\n"
   "   --empty-footprint name  See the project.sample file.\n"
   "\n"
   "options (not recognized in a project file):\n"
-  "   --gnetlist-arg arg      Allows additional arguments to be passed to gnetlist.\n"
+  "   --gnetlist-arg arg      Allows additional arguments to be passed to lepton-netlist.\n"
   "   --fix-elements          If a schematic component footprint is not equal\n"
   "                           to its PCB element Description, update the\n"
   "                           Description instead of replacing the element.\n"
-  "                           Do this the first time gsch2pcb is used with\n"
+  "                           Do this the first time lepton-sch2pcb is used with\n"
   "                           PCB files originally created with gschem2pcb.\n"
   "   -v, --verbose           Use -v -v for additional file element debugging.\n"
   "   -V, --version\n\n"
   "environment variables:\n"
-  "   NETLISTER               If set, this specifies the name of the gnetlist program\n"
+  "   NETLISTER               If set, this specifies the name of the netlister program\n"
   "                           to execute.\n"
   "\n"
   "Additional Resources:\n"
   "\n"
+  "  Lepton EDA homepage:     https://github.com/lepton-eda/lepton-eda\n"
   "  gnetlist user guide:     http://wiki.geda-project.org/geda:gnetlist_ug\n"
   "  gEDA homepage:           http://www.geda-project.org\n"
   "  PCB homepage:            http://pcb.geda-project.org\n"  "\n";
@@ -1391,7 +1392,7 @@ get_args (gint argc, gchar ** argv)
       if (*opt == '-')
         ++opt;
       if (!strcmp (opt, "version") || !strcmp (opt, "V")) {
-        printf ("gsch2pcb %s\n", GSC2PCB_VERSION);
+        printf ("lepton-sch2pcb %s\n", GSC2PCB_VERSION);
         exit (0);
       } else if (!strcmp (opt, "verbose") || !strcmp (opt, "v")) {
         verbose += 1;
@@ -1413,7 +1414,7 @@ get_args (gint argc, gchar ** argv)
         i += r;
         continue;
       }
-      printf ("gsch2pcb: bad or incomplete arg: %s\n", argv[i]);
+      printf ("lepton-sch2pcb: bad or incomplete arg: %s\n", argv[i]);
       usage ();
     } else {
       if (!g_str_has_suffix (argv[i], ".sch")) {
