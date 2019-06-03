@@ -25,6 +25,7 @@
   #:use-module ((ice-9 rdelim) #:select (read-string) #:prefix rdelim:)
   #:use-module (ice-9 ftw)
   #:use-module (ice-9 i18n)
+  #:use-module (ice-9 regex)
   #:use-module (netlist option)
   #:use-module (netlist schematic-component)
   #:use-module (netlist sort)
@@ -809,6 +810,7 @@ General options:
   -o FILE         Filename for netlist data output.
   -L DIR          Add DIR to Scheme search path.
   -g BACKEND      Specify netlist backend to use.
+  -f FILE         Specify path to netlist backend file to use.
   -O STRING       Pass an option string to backend.
   -l FILE         Load Scheme file before loading backend.
   -m FILE         Load Scheme file after loading backend.
@@ -861,6 +863,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ( output-filename   (get-output-filename) )
   ( files             (netlist-option-ref '()) )            ; schematics
   ( opt-backend       (netlist-option-ref 'backend) )       ; -g
+  ( opt-file-backend  (netlist-option-ref 'file-backend) )  ; -f
   ( opt-interactive   (netlist-option-ref 'interactive) )   ; -i
   ( opt-verbose       (netlist-option-ref 'verbose) )       ; --verbose (-v)
   ( opt-code-to-eval  (netlist-option-ref 'eval-code) )     ; -c
@@ -872,6 +875,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ( netlist-mode      'geda )
   ( backend-path      #f )
   ( schematic         #f )
+  ( backend-proc-name #f )
   )
 
   ; local functions:
@@ -890,6 +894,28 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     (netlist-error 1 (_ "Could not find backend `~A' in load path.\n~
                          Run `~A --list-backends' for a full list of available backends.\n")
                      backend (car (program-arguments)))
+  )
+
+  ( define ( error-backend-file-name bname )
+    (netlist-error 1 (_ "Can't load backend file ~S.\n~
+                         Backend files are expected to have names like \"gnet-NAME.scm\"\n~
+                         and contain entry point function NAME (where NAME is the backend's name).\n")
+                     bname)
+  )
+
+  ( define ( get-backend-proc-name filename )
+  ( let*
+    (
+    ( bname (basename filename) )
+    ( re    (string-match "^gnet-(.*).scm$" bname) )
+    )
+
+    ; return:
+    ( if re
+        ( match:substring re 1 )          ; if
+        ( error-backend-file-name bname ) ; else
+    )
+  )
   )
 
 
@@ -950,12 +976,23 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     )
   )
 
-  ; Load backend:
+  ; Backend specified by name:
   ;
   ( when opt-backend
     ( set! backend-path ( %search-load-path (format #f "gnet-~A.scm" opt-backend) ) )
+    ( set! backend-proc-name opt-backend )
   )
 
+  ; Backend specified by file name:
+  ;
+  ( when opt-file-backend
+    ( set! backend-path opt-file-backend )
+    ( set! backend-proc-name (get-backend-proc-name backend-path) )
+  )
+
+
+  ; Load backend file:
+  ;
   ( when backend-path
     ( catch #t
       ( lambda()
@@ -986,9 +1023,9 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     ( print-gnetlist-config )
   )
 
-  ; Neither backend (-g), nor interactive mode (-i) specified:
+  ; Neither backend (-g or -f), nor interactive mode (-i) specified:
   ;
-  ( unless ( or opt-backend opt-interactive )
+  ( unless ( or opt-backend opt-file-backend opt-interactive )
     ( error-no-backend )
   )
 
@@ -1006,10 +1043,10 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ; Do actual work:
   ;
   ( if opt-interactive
-    ( lepton-repl )   ; if
-    ( if backend-path ; else
-      ( run-backend opt-backend output-filename ) ; if
-      ( error-backend-not-found opt-backend )     ; else
+    ( lepton-repl )                             ; if
+    ( if ( and backend-path backend-proc-name ) ; else
+      ( run-backend backend-proc-name output-filename ) ; if
+      ( error-backend-not-found opt-backend )           ; else
     )
   )
 

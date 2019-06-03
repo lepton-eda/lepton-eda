@@ -34,6 +34,7 @@
     (verbose . #f)
     (load-path . ())
     (backend . #f)
+    (file-backend . #f)
     (backend-option . ())
     (list-backends . #f)
     (output . "output.net")

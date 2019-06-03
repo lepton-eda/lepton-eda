@@ -35,6 +35,7 @@ exec @GUILE@ -s "$0" "$@"
     (verbose (single-char #\v))
     (load-path (single-char #\L) (value #t))
     (backend (single-char #\g) (value #t))
+    (file-backend (single-char #\f) (value #t))
     (backend-option (single-char #\O) (value #t))
     (list-backends)
     (output (single-char #\o) (value #t))
