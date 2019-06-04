@@ -106,7 +106,7 @@ void s_log_init (const gchar *prefix)
    *
    * Then run through it finding the "biggest" existing filename with
    * a matching prefix & date. */
-  dir_path = g_build_filename (eda_get_user_config_dir(), "logs", NULL);
+  dir_path = g_build_filename (eda_get_user_cache_dir(), "logs", NULL);
   /* Try to create the directory. */
   s = g_mkdir_with_parents (dir_path, 0777/*octal*/);
   if (s != 0) {
