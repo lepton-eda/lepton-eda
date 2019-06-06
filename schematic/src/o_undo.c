@@ -165,7 +165,7 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
 
   if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {
 
-    filename = g_strdup_printf("%s%cgschem.save%d_%d.sch",
+    filename = g_strdup_printf("%s%clepton-schematic.save%d_%d.sch",
                                tmp_path, G_DIR_SEPARATOR,
                                prog_pid, undo_file_index++);
 
@@ -563,7 +563,7 @@ void o_undo_cleanup(void)
   char *filename;
 
   for (i = 0 ; i < undo_file_index; i++) {
-    filename = g_strdup_printf("%s%cgschem.save%d_%d.sch", tmp_path,
+    filename = g_strdup_printf("%s%clepton-schematic.save%d_%d.sch", tmp_path,
                                G_DIR_SEPARATOR, prog_pid, i);
     unlink(filename);
     g_free(filename);
