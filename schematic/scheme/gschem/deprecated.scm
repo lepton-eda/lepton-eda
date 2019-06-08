@@ -414,3 +414,23 @@
 ;; added to the selection.  Argument is the empty list.
 (define-public select-net-hook (make-hook 1))
 (add-hook!/full-attribs select-objects-hook select-net-hook net?)
+
+
+;
+; 3 functions used to be in schematic/src/g_funcs.c:
+;
+
+(define-public (gschem-image filename)
+  (format (current-error-port)
+   "WARNING: gschem-image function is deprecated and does nothing.~%")
+)
+
+(define-public (gschem-pdf filename)
+  (format (current-error-port)
+   "WARNING: gschem-pdf function is deprecated and does nothing.~%")
+)
+
+(define-public (gschem-use-rc-values)
+  (format (current-error-port)
+   "WARNING: gschem-use-rc-values function is deprecated and does nothing.~%")
+)
