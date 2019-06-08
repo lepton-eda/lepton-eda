@@ -28,7 +28,7 @@
 
 #include "gschem.h"
 
-#define GETOPT_OPTIONS "c:hL:o:pqs:vV"
+#define GETOPT_OPTIONS "c:hL:pqs:vV"
 
 extern char *optarg;
 extern int optind;
@@ -44,13 +44,9 @@ struct option long_options[] =
     {"version", 0, 0, 'V'},
     {"quiet", 0, 0, 'q'},
     {"verbose", 0, 0, 'v'},
-    {"output", 0, 0, 'o'},
     {0, 0, 0, 0}
   };
 #endif
-
-/*! Contains an output filename for Scheme export functions */
-SCM output_filename_s = SCM_BOOL_F;
 
 /*! Contains a Scheme expression arising from command-line arguments.
  *  This is evaluated after initialising gschem, but before loading
@@ -86,7 +82,6 @@ usage(char *cmd)
 "  -L DIR                   Add DIR to Scheme search path.\n"
 "  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
-"  -o, --output=FILE        Output filename (for printing).\n"
 "  -p                       Automatically place the window.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
@@ -171,10 +166,6 @@ parse_commandline(int argc, char *argv[])
           scm_cons (scm_list_2 (sym_eval_string,
                                 scm_from_locale_string (optarg)),
                     s_post_load_expr);
-        break;
-
-      case 'o':
-        output_filename_s = scm_from_locale_string (optarg);
         break;
 
       case 'p':

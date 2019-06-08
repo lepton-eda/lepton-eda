@@ -29,9 +29,6 @@ extern GList *global_window_list;
 extern GdkColor white;
 extern GdkColor black;
 
-/* File name for export */
-extern SCM output_filename_s;
-
 extern int do_logging;
 
 
