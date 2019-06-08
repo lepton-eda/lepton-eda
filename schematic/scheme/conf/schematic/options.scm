@@ -299,12 +299,6 @@
 ;(window-size 950 712)  ; Good size for 1152x864
 ;(window-size 1100 825) ; Good size for 1280x1024
 
-; image-color string
-;
-; Controls if image (png) is color (enabled) or black/white (disabled)
-;
-(image-color "enabled")
-;(image-color "disabled")
 
 ; middle-button string
 ;

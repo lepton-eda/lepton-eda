@@ -339,23 +339,6 @@ SCM g_rc_scrollbars(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_image_color(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("image-color",
-		   default_image_color,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_log_window(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

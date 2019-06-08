@@ -53,9 +53,6 @@ struct st_toplevel
   int auto_save_interval;
   gint auto_save_timeout;
 
-  /* either TRUE or FALSE (color or no color) */
-  int image_color;
-
   /* controls if the net consolidation code is used */
   int net_consolidate;
 

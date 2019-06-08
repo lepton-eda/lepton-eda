@@ -15,7 +15,6 @@ extern int default_scrollbars_flag;
 extern gchar *default_print_paper;
 extern int default_print_orientation;
 extern int default_print_color;
-extern int default_image_color;
 extern int default_width;
 extern int default_height;
 extern int default_log_window;

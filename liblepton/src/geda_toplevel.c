@@ -68,8 +68,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->major_changed_refdes = NULL;
 
-  toplevel->image_color = FALSE;
-
   toplevel->net_consolidate = FALSE;
 
   /* The following is an attempt at getting (deterministic) defaults */
