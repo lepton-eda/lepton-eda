@@ -1,5 +1,5 @@
 SUBDIRS = \
-	po bitmap data docs examples include lib scheme scripts \
+	po bitmap data docs examples include lib scheme \
 	src tests
 
 EXTRA_DIST = ChangeLog ChangeLog-1.0

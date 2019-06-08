@@ -216,7 +216,6 @@ AC_CONFIG_FILES([Makefile
                  schematic/po/Makefile.in
                  schematic/docs/Makefile
                  schematic/include/Makefile
-                 schematic/scripts/Makefile
                  schematic/src/Makefile
                  schematic/examples/Makefile
                  schematic/lib/Makefile
