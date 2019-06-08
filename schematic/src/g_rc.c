@@ -356,23 +356,6 @@ SCM g_rc_image_color(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_image_size(SCM width, SCM height)
-{
-  SCM_ASSERT (scm_is_integer (width),  width,  SCM_ARG1, "image-size");
-  SCM_ASSERT (scm_is_integer (height), height, SCM_ARG2, "image-size");
-
-  /* yes this is legit, we are casting the resulting double to an int */
-  default_image_width  = scm_to_int (width);
-  default_image_height = scm_to_int (height);
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_log_window(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

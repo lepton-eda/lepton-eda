@@ -167,7 +167,6 @@ struct st_gschem_toplevel {
   /* --------------------- */
   int num_untitled;                     /* keep track of untitled wins */
   int event_state;                      /* Current event state */
-  int image_width, image_height;        /* h, w of image write */
   int min_zoom;                         /* minimum zoom factor */
   int max_zoom;                         /* maximum zoom factor */
   int inside_redraw;                    /* complex vs list redrawing */

@@ -174,6 +174,7 @@ option's value:
 (define-rc-dead-config logging-destination)
 (define-rc-dead-config log-window-type)
 (define-rc-dead-config raise-dialog-boxes-on-expose)
+(define-rc-dead-config image-size)
 
 ;; ===================================================================
 ;; Deprecated lepton-netlist configuration functions

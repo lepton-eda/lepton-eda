@@ -65,7 +65,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "attribute-name",               1, 0, 0, (SCM (*) ()) g_rc_attribute_name },
 
   { "image-color",                  1, 0, 0, (SCM (*) ()) g_rc_image_color },
-  { "image-size",                   2, 0, 0, (SCM (*) ()) g_rc_image_size },
   { "log-window",                   1, 0, 0, (SCM (*) ()) g_rc_log_window },
   { "third-button",                 1, 0, 0, (SCM (*) ()) g_rc_third_button },
   { "third-button-cancel",          1, 0, 0, (SCM (*) ()) g_rc_third_button_cancel },

@@ -37,8 +37,6 @@ int   default_snap_size = DEFAULT_SNAP_SIZE;
 
 int   default_scrollbars_flag = TRUE;
 int   default_image_color = TRUE;
-int   default_image_width = 800;
-int   default_image_height = 600;
 int   default_log_window = MAP_ON_STARTUP;
 int   default_third_button = POPUP_ENABLED;
 int   default_third_button_cancel = TRUE;
@@ -113,8 +111,6 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->log_window      = default_log_window;
 
   toplevel->image_color        = default_image_color;
-  w_current->image_width        = default_image_width;
-  w_current->image_height       = default_image_height;
   w_current->third_button       = default_third_button;
   w_current->third_button_cancel= default_third_button_cancel;
   w_current->middle_button      = default_middle_button;
