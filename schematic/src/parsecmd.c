@@ -28,7 +28,7 @@
 
 #include "gschem.h"
 
-#define GETOPT_OPTIONS "c:hL:pqs:vV"
+#define GETOPT_OPTIONS "c:hL:qs:vV"
 
 extern char *optarg;
 extern int optind;
@@ -82,7 +82,6 @@ usage(char *cmd)
 "  -L DIR                   Add DIR to Scheme search path.\n"
 "  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
-"  -p                       Automatically place the window.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
@@ -166,10 +165,6 @@ parse_commandline(int argc, char *argv[])
           scm_cons (scm_list_2 (sym_eval_string,
                                 scm_from_locale_string (optarg)),
                     s_post_load_expr);
-        break;
-
-      case 'p':
-        auto_place_mode = TRUE;
         break;
 
       case 'L':

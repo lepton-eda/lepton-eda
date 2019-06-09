@@ -430,15 +430,6 @@ void x_window_create_main(GschemToplevel *w_current)
    * see below
    */
 
-   /*
-    * normally we let the window manager handle locating and sizing
-    * the window.  However, for some batch processing of schematics
-    * (generating a pdf of all schematics for example) we want to
-    * override this.  Hence "auto_place_mode".
-    */
-   if( auto_place_mode )
-   	gtk_widget_set_uposition (w_current->main_window, 10, 10);
-
   /* this should work fine */
   g_signal_connect (G_OBJECT (w_current->main_window), "delete_event",
                     G_CALLBACK (i_callback_close_wm),
