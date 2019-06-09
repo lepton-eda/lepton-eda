@@ -39,10 +39,6 @@ Specify a Scheme script to be executed at startup.
 \fB-c\fR \fIEXPR\fR
 Specify a Scheme expression to be evaluated at startup.
 .TP 8
-\fB-p\fR
-Automatically place the window. This may be useful if running \fBlepton-schematic\fR
-from the command line and generating output.
-.TP 8
 \fB-h\fR, \fB--help\fR
 Print a help message.
 .TP 8
