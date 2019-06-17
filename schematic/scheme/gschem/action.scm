@@ -114,29 +114,30 @@
   ;; The action is a magical procedure that does nothing but call
   ;; eval-action! *on itself*.  This allows you to invoke an action
   ;; just by calling it like a normal function.
-  (letrec ((action (lambda () (eval-action! action))))
+  (let ((unique-tag (list #f)))
+    (letrec ((action (case-lambda
+                       (() (eval-action! action))
+                       ((x) unique-tag))))
 
-    ;; The action data is stored in procedure properties -- most
-    ;; importantly, the actual thunk that the action wraps
-    (let ((sp! (lambda (k v) (set-procedure-property! action k v))))
-      (sp! 'gschem-cookie %cookie)
-      (sp! 'gschem-thunk thunk)
-      (sp! 'gschem-properties '()))
+      ;; The action data is stored in procedure properties -- most
+      ;; importantly, the actual thunk that the action wraps
+      (let ((sp! (lambda (k v) (set-procedure-property! action k v))))
+        (sp! 'gschem-cookie %cookie)
+        (sp! 'gschem-thunk thunk)
+        (sp! 'gschem-properties '()))
 
-    ;; Deal with any properties.  props should contain arguments in
-    ;; pairs, where the first element of each pair is a keyword naming
-    ;; a procedure property (e.g. #:icon) and the second element in
-    ;; the corresponding value (e.g. "insert-text").
-    (let loop ((lst props))
-      (and (< 1 (length lst))
-           (set-action-property! action
-                                 (keyword->symbol (list-ref lst 0))
-                                 (list-ref lst 1))
-           (loop (list-tail lst 2))))
-          
-          
+      ;; Deal with any properties.  props should contain arguments in
+      ;; pairs, where the first element of each pair is a keyword naming
+      ;; a procedure property (e.g. #:icon) and the second element in
+      ;; the corresponding value (e.g. "insert-text").
+      (let loop ((lst props))
+        (and (< 1 (length lst))
+             (set-action-property! action
+                                   (keyword->symbol (list-ref lst 0))
+                                   (list-ref lst 1))
+             (loop (list-tail lst 2))))
 
-    action))
+      action)))
 
 (define (action-thunk action)
   (procedure-property action 'gschem-thunk))
