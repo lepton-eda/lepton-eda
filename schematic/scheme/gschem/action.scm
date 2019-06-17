@@ -105,21 +105,16 @@
   (false-if-exception
    (eq? %cookie (procedure-property proc 'gschem-cookie))))
 
-;;; define-action syntax defines a procedure being a result of
-;;; calling eval-action! on a dummy thunk with properties returned
-;;; by make-action. Those predefined properties include a new
-;;; thunk defined by FORMS, which will be the core of the result.
-;;; This allows you to invoke an action just by calling it like a
-;;; normal function.
 (define-syntax define-action
   (syntax-rules ()
     ((_ (name . args) . forms)
-     (define name
-       (lambda ()
-         (eval-action! (make-action (lambda () . forms) . args)))))))
+     (define name (make-action (lambda () . forms) . args)))))
 
 (define-public (make-action thunk . props)
-  (let ((action (lambda () "Dummy action.")))
+  ;; The action is a magical procedure that does nothing but call
+  ;; eval-action! *on itself*.  This allows you to invoke an action
+  ;; just by calling it like a normal function.
+  (letrec ((action (lambda () (eval-action! action))))
 
     ;; The action data is stored in procedure properties -- most
     ;; importantly, the actual thunk that the action wraps
@@ -138,8 +133,9 @@
                                  (keyword->symbol (list-ref lst 0))
                                  (list-ref lst 1))
            (loop (list-tail lst 2))))
+          
+          
 
-    ;; Return dummy thunk with properties.
     action))
 
 (define (action-thunk action)
