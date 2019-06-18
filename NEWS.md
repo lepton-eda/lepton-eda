@@ -77,6 +77,9 @@ Notable changes in Lepton EDA 1.9.8
   their translation *PO* files when the tools are built from
   sources.
 
+- A CSS file has been added to prettify generated Scheme API
+  reference HTML pages.
+
 ### Changes in `liblepton`:
 
 - `liblepton` configuration C and Scheme API has been extended
