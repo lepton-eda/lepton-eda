@@ -279,6 +279,11 @@ Notable changes in Lepton EDA 1.9.8
 
 ### Changes in `lepton-attrib`:
 
+- The program no longer loads `gattribrc` files since for many
+  years they provided no useful settings for the user.  Previously
+  available Scheme functions `quit()`, `exit()`, and
+  `gattrib-version()` have been removed as well.
+
 - Separate menu description *XML* file has been removed. Now the
   menu structure is defined in the source code only.
 
