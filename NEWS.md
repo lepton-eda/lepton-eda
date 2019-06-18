@@ -50,6 +50,9 @@ Notable changes in Lepton EDA 1.9.8
 
 - Fixed some portability issues in documentation building.
 
+- Building of documentation no longer depends on the `fig2dev`
+  program.  The dependency has been eliminated.
+
 - **Gettext** translation subsystem has been changed for most of
   the tools in that to avoid unintentional and unwanted updates of
   their translation *PO* files when the tools are built from
