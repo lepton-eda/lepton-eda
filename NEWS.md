@@ -33,6 +33,8 @@ Notable changes in Lepton EDA 1.9.8
 
 ### Changes when building from source:
 
+- Building of the tools with Guile 2.2 is now supported.
+
 - Lepton now requires Glib 2.38.0 or later versions for build.
 
 - Fixed and improved *VPATH* (out-of-source) builds on some
