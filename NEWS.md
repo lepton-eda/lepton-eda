@@ -184,6 +184,11 @@ Notable changes in Lepton EDA 1.9.8
     component to lock or unlock it together with the attributes,
     without having to additionally select them.
 
+- In the 'Edit Attributes' dialog, it is now possible to copy names
+  and values of inherited attributes to clipboard. The feature was
+  first requested on *launchpad* in
+  [#1405314](https://bugs.launchpad.net/geda/+bug/1405314).
+
 - Distinct parts of the `system-gschemrc` configuration file are
   moved to separate files under the `conf/schematic/` subdirectory
   to simplify dealing with certain aspects of `lepton-schematic`
