@@ -40,6 +40,12 @@ Notable changes in Lepton EDA 1.9.8
   only regular files.  This has been fixed by changing appropriate
   Makefiles to search for symlinks as well.
 
+- Build errors on FreeBSD 13.0-CURRENT on the link stage in the
+  `utils/gschlas/` directory have been fixed.  In earlier FreeBSD
+  version Lepton EDA builds without errors.  The issue happened to
+  appear due to changing of the default linker from GNU `ld` to
+  `ld.lld` from the `llvm` distribution.
+
 - Fixed build failures on Gentoo with gcc-8.2.0.
 
 - Several C functions in `liblepton`, various Lepton tools,
