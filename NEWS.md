@@ -20,6 +20,17 @@ Notable changes in Lepton EDA 1.9.8
   in both libraries' and GUI tools' code, removed some unused
   function arguments.
 
+- A main category has been added into Lepton desktop
+  files. According to
+  https://specifications.freedesktop.org/menu-spec/latest/apa.html,
+  previously there was no valid main category in the desktop
+  files.  The problem is that without a main category, it is not
+  possible to know for sure if a freedesktop compliant menu will
+  show the applications the desktop files were made up for.  This
+  has been fixed by adding "Development" as main category for
+  Lepton. Two additional categories have been rearranged in order
+  "Electronics" to have priority over "Engineering".
+
 ### Changes when building from source:
 
 - Fixed and improved *VPATH* (out-of-source) builds on some
