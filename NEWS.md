@@ -16,6 +16,10 @@ Notable changes in Lepton EDA 1.9.8
 - Warnings about deprecated and "dead" RC functions are now more
   verbose, and contain link to Configuration Settings wiki page.
 
+- Several clean-ups in the code and documentation have been made
+  in both libraries' and GUI tools' code, removed some unused
+  function arguments.
+
 ### Changes when building from source:
 
 - Several C functions in `liblepton`, various Lepton tools,
