@@ -265,6 +265,10 @@ Notable changes in Lepton EDA 1.9.8
   status bar containing characters which are treated specially by
   GTK, such as '<' and '>'.
 
+- Page "changed" indicator is now shown in the tab headers as
+  well: the file name shown is output in bolder font and an
+  asterisk is added to emphasize that the file has been changed.
+
 ### Changes in `lepton-attrib`:
 
 - Separate menu description *XML* file has been removed. Now the
