@@ -344,6 +344,12 @@ Notable changes in Lepton EDA 1.9.8
   neither interactive mode nor input files are specified on
   command line.
 
+### Changes in `lepton-schlas`:
+- The program no longer loads `system-gschlasrc` since for many
+  years it provided no useful settings for the user.  Previously
+  available Scheme functions `quit()`, `exit()`, and
+  `gschlas-version()` have been removed as well.
+
 
 ### Scheme API changes
 - Three legacy rc procedures, `attribute-promotion`,
