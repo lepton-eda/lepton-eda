@@ -297,6 +297,31 @@ Notable changes in Lepton EDA 1.9.8
     component to lock or unlock it together with the attributes,
     without having to additionally select them.
 
+- The action 'File → Save All' and processing of "untitled"
+  schematics have been improved:
+
+  - It used to be that on saving all files, all opened pages were
+    silently saved, even if there were new "untitled" pages among
+    them, that is, the pages newly created under the default file
+    name and not yet saved to disk.  Now such files are skipped
+    from saving.
+
+  - When constructing file name for a new "untitled" page, the
+    names of already opened files and existing files in the current
+    directory are taken into account. These names are not reused
+    to prevent possible consequent data loss.  The skipped names
+    are printed to the log.
+
+  - A message indicating the result of the "save all" operation is
+    now shown in the status bar.
+
+  - If tabbed GUI is enabled in configuration, the header of each
+    tab widget correctly updates to reflect the status of its
+    page, if it is saved or not.
+
+  - "Save As" dialog box is now opened for new "untitled" pages on
+    the "save all" operation, prompting the user to save them.
+
 - In the 'Edit Attributes' dialog, it is now possible to copy names
   and values of inherited attributes to clipboard. The feature was
   first requested on *launchpad* in
