@@ -68,6 +68,13 @@ Notable changes in Lepton EDA 1.9.8
 
 ### Changes in `lepton-schematic`:
 
+- The `sys-doc-dir()` function code in the module `(gschem
+  gschemdoc)` module responsible for searching for system
+  documentation directories has been known to fail in some
+  circumstances when it tried to guess where the documentation
+  files are installed. The guess-work has been eliminated by using
+  fixed compile-time variables in the code.
+
 - The **macro widget** has been improved in several ways:
 
   - A new configuration group, `schematic.macro-widget`, has been
