@@ -205,6 +205,12 @@ Notable changes in Lepton EDA 1.9.8
   used by other tools, e.g., when they're loaded while working in
   `lepton-schematic` GUI.
 
+- A new module `(netlist page)` has been added.  The new module
+  now contains an only procedure, `filename->page()`, which opens
+  a schematic page by filename.  Depending on the form of its
+  call, it can return either an already opened page for a given
+  filename, or a new page, if the user so desires.
+
 - Several issues related to hierarchical names have been fixed:
 
   - Reverse order setting for refdes attribute no longer affects
