@@ -115,6 +115,12 @@ Notable changes in Lepton EDA 1.9.8
   legacy code that is a subject for deprecation in the next stable
   release.
 
+- A new function, `set-netlist-option!`, has been added to the
+  `(netlist option)` module.  It lets the users set arbitrary
+  default netlister option values when the netlister modules are
+  used by other tools, e.g., when they're loaded while working in
+  `lepton-schematic` GUI.
+
 - The following fixes have been made in the VAMS example:
   - Deprecated gnetlistrc settings have been replaced with new
     configuration options.
