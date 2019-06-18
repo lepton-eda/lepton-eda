@@ -285,6 +285,15 @@ Notable changes in Lepton EDA 1.9.8
   transformation by gtk functions resulted in unreadable text in
   the log window.
 
+- The file `gschem.scm`, that defined some previously global
+  Scheme functions, has been transformed into two modules —
+  `(schematic gui keymap)` and `(schematic gui strokes)`.  While
+  this simplifies Lepton code a little and eliminates a
+  superfluous step of loading the file with auxiliary functions,
+  the functions are no more global, so the users may have to fix
+  up their extensions, if they want to use those functions, by
+  making sure the necessary modules are loaded within them.
+
 ### Changes in `lepton-attrib`:
 
 - The program no longer loads `gattribrc` files since for many
