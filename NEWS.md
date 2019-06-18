@@ -342,6 +342,10 @@ Notable changes in Lepton EDA 1.9.8
     `schematic.macro-widget` group in the *user* configuration
     context can now be used for setting up the font of the widget.
 
+  - As a side effect of refactoring of the widget, the program no
+    longer crashes on evaluating of the command `(file-quit)` in
+    the prompt.
+
 - New accelerator keys have been added to facilitate keyboard
   navigation in the following dialogs:
   - `Single Attribute Editor`
