@@ -51,11 +51,11 @@ Notable changes in Lepton EDA 1.9.8
 - Fixed build failures on Gentoo with gcc-8.2.0.
 
 - Several C functions in `liblepton`, various Lepton tools,
-  contributed code (`olib`, `sarlacc_schem`, `convert_sym`) as
-  well as PO-files have been fixed to avoid compilation warnings
-  and errors.  Now `lepton-eda` compiles without warnings with
-  gcc/g++ on several platforms.  Several warnings reported by llvm
-  have been fixed as well.
+  contributed code (`olib`, `sarlacc_schem`, `convert_sym`,
+  `gmk_sym`) as well as PO-files have been fixed to avoid
+  compilation warnings and errors.  Now `lepton-eda` compiles
+  without warnings with gcc/g++ on several platforms.  Several
+  warnings reported by llvm have been fixed as well.
 
 - The like changes as above have been done in the Scheme part of
   code to prevent various compilation and deprecation warnings in
@@ -374,6 +374,9 @@ Notable changes in Lepton EDA 1.9.8
   available Scheme functions `quit()`, `exit()`, and
   `gschlas-version()` have been removed as well.
 
+### Changes in `gmk_sym`:
+
+- Non-working `-d` (debug) option has been removed.
 
 ### Scheme API changes
 - Three legacy rc procedures, `attribute-promotion`,
