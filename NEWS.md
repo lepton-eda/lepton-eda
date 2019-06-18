@@ -119,6 +119,10 @@ Notable changes in Lepton EDA 1.9.8
 - Schematic page filename and more verbose information is now
   displayed in the page revert dialog.
 
+- If you select 'Print to File' option in the print dialog, the
+  output PDF file name is now derived from the name of the current
+  page instead of previous default name "output.pdf".
+
 ### Changes in `lepton-attrib`:
 
 - Separate menu description *XML* file has been removed. Now the
