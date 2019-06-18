@@ -43,6 +43,28 @@ Notable changes in Lepton EDA 1.9.8
 - `liblepton` configuration C and Scheme API has been extended
   with functions for removing configuration keys and groups.
 
+### Changes in `libleptonrenderer`:
+
+- Changes in path rendering:
+
+  - Previously, the library was not able to render zero line width
+    paths properly since the zero value for the line width field
+    in the path definition was interpreted as a request for
+    the default line width.  Therefore the path objects were always
+    enlarged by some amount in size. Now, when line width of a
+    path is set to zero, the stroke is not rendered, thus allowing
+    drawing of filled figures without increasing their size by a
+    half of the line width, so the object sizes strongly
+    correspond to what the user wanted.  No line is drawn when
+    exported with `lepton-cli export` command. In the
+    `lepton-schematic` GUI, 1 screen pixel line is used for
+    rendering zero line width path objects to provide visual
+    feedback to the user.
+
+  - Now, path objects can be rendered with different line cap
+    styles when the line width is non-zero.  Previously, the
+    default `square` style was always used.
+
 ### Changes in `lepton-netlist`:
 
 - A new record, `<schematic-component>`, has been added. It is now
