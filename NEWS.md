@@ -277,6 +277,14 @@ Notable changes in Lepton EDA 1.9.8
   well: the file name shown is output in bolder font and an
   asterisk is added to emphasize that the file has been changed.
 
+- Fixed a broken output of translated strings to the log when the
+  program is compiled using guile-2.2.  It is a [known
+  issue](https://lists.gnu.org/archive/html/bug-guile/2017-01/msg00020.htm)
+  in guile-2.2.  The function `scm_puts()` broke translated
+  Unicode strings and output them as sets of bytes.  Their further
+  transformation by gtk functions resulted in unreadable text in
+  the log window.
+
 ### Changes in `lepton-attrib`:
 
 - The program no longer loads `gattribrc` files since for many
