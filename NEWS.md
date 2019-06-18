@@ -16,6 +16,11 @@ Notable changes in Lepton EDA 1.9.8
 - Warnings about deprecated and "dead" RC functions are now more
   verbose, and contain link to Configuration Settings wiki page.
 
+### Changes in `liblepton`:
+
+- `liblepton` configuration C and Scheme API has been extended
+  with functions for removing configuration keys and groups.
+
 ### Changes in `lepton-netlist`:
 
 - A new record, `<schematic-component>`, has been added. It is now
