@@ -9,6 +9,18 @@ Notable changes in Lepton EDA 1.9.8
 
 ### General changes:
 
+- A new configuration upgrade tool, `lepton-upcfg`, and C and
+  Scheme infrastructure for it have been added to simplify moving
+  to Lepton's new configuration system.  The new tool is aimed to
+  convert legacy `geda*.conf` files into new `lepton*.conf` files
+  by importing and renaming the settings in them.  For example, in
+  order to produce `lepton-user.conf` from `geda-user.conf`, the
+  user can use the command `lepton-upcfg --user`.  Additionally,
+  the user can switch between using of legacy and new
+  configuration system using a new function,
+  `config-set-legacy-mode!()`, which may be set in some of Scheme
+  files loaded by the tools.
+
 - The module `(geda library)` has been renamed to `(lepton library)`.
   All the functions and variables available are still re-exported
   in the former one but its using is discouraged.
