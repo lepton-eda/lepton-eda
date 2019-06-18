@@ -336,6 +336,10 @@ Notable changes in Lepton EDA 1.9.8
   transformation by gtk functions resulted in unreadable text in
   the log window.
 
+- Fixed segfaults triggered on some systems by the sequence
+  <kbd>Control</kbd>+<kbd>x</kbd> <kbd>Control</kbd>+<kbd>v</kbd>
+  when a component was selected.
+
 - The file `gschem.scm`, that defined some previously global
   Scheme functions, has been transformed into two modules —
   `(schematic gui keymap)` and `(schematic gui strokes)`.  While
