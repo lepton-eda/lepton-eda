@@ -37,6 +37,29 @@ Notable changes in Lepton EDA 1.9.8
 
 - Lepton now requires Glib 2.38.0 or later versions for build.
 
+- It is now possible to accelerate the tools some parts of which
+  are written in Scheme when they are launched for the first time.
+  Previously, on first running much time would be spent on
+  compilation of Scheme code involved.  The startup time can be
+  reduced if the code is compiled and installed in advance.  To
+  make it work, a new `make` target, `precompile` has been added.
+  While the command `make precompile` can be used for local
+  builds, it could be much more convenient for end users if
+  package managers working on packaging Lepton for some
+  distributions "precompile" the code on the package building
+  stage.  The technik of "precompilation" has been already
+  implemented to make packages for FreeBSD:
+  [FreeBSD port](https://github.com/graahnul-grom/freebsd-lepton-eda/tree/master/wip.pc)
+  and [binary package](http://graahnul.beget.tech/lepton-eda-pc/lepton-eda-1.9.7.txz)
+  made from it.  In essence, it included two steps:
+
+  - A relevant section has been added to the port's
+    [`Makefile`](https://github.com/graahnul-grom/freebsd-lepton-eda/blob/master/wip.pc/Makefile), and
+  - The list of compiled files has been added to the port's [`pkg-plist`](https://github.com/graahnul-grom/freebsd-lepton-eda/blob/master/wip.pc/pkg-plist).
+
+  Package managers of other distributions could adopt this
+  technik.  Please see discussion at #339 for more information.
+
 - Fixed and improved *VPATH* (out-of-source) builds on some
   systems. It used to be that Lepton did not install files from
   the `docs/wiki/` subdirectory when the command `make install`
