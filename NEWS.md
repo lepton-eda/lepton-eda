@@ -29,6 +29,8 @@ Notable changes in Lepton EDA 1.9.8
   only regular files.  This has been fixed by changing appropriate
   Makefiles to search for symlinks as well.
 
+- Fixed build failures on Gentoo with gcc-8.2.0.
+
 - Several C functions in `liblepton`, various Lepton tools,
   contributed code (`olib`, `sarlacc_schem`, `convert_sym`) as
   well as PO-files have been fixed to avoid compilation warnings
