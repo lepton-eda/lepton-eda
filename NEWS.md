@@ -117,11 +117,39 @@ Notable changes in Lepton EDA 1.9.8
 
 ### Changes in `lepton-netlist`:
 
+- A few improvements have been made in option processing:
+
+  - Getopt-long functions are no more directly used inside
+    netlister modules, so the modules can now be loaded in other
+    programs having other options. This affects unit testing and
+    `lepton-schematic` GUI, as in those cases another set of
+    options may be used.
+
+  - Processing of some options yielding lists when several of such
+    options are used, no more results in reversed lists.
+
+  - Processing of the `-c` option has been fixed so there is now
+    no errors when it used more than once.
+
 - The option *-w* introduced in Lepton EDA 1.9.6 has been
   removed. It was used to suppress warnings about missing
   configuration files.  This is no longer needed, since the
   function `config-load!()` has been fixed to not complain if
   those files are absent.
+
+- A few improvements have been made in the SRFI-64 unit-test suite:
+
+  - There is no more limit for backtrace length if an error
+    occurs, the unit-test script uses default stack size which
+    makes debugging a bit more convenient.
+
+  - Backtrace output is now formatted properly without newline
+    mangling.
+
+  - Directories containing modules `lepton-netlist` depends on
+    have been added to the unit-test script load path. Modules
+    depending on `liblepton` and `symcheck` can now be used with
+    the script.
 
 - A new record, `<schematic-component>`, has been added. It is now
   the basic record for using in the backends that work with
