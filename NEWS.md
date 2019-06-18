@@ -177,6 +177,26 @@ Notable changes in Lepton EDA 1.9.8
   used by other tools, e.g., when they're loaded while working in
   `lepton-schematic` GUI.
 
+- Several issues related to hierarchical names have been fixed:
+
+  - Reverse order setting for refdes attribute no longer affects
+    netnames.
+
+  - Now netnames are formed using true reversed hierarchical name,
+    before they were formed from a string representing
+    hierarchical refdes and local netnames. Since the hierarchical
+    refdes string might be not reversed depending of the reverse
+    order setting for refdes, the resulting strings did not
+    reflect hierarchy correctly.
+
+  - For the same reason, the separator for the "net=" and
+    "netname=" attributes did not affected resulting net names,
+    which has been fixed as well.
+
+  - Removing of refdes mangling was previously possible only if
+    the refdes separator was "/".  This has been fixed to support
+    other separators.
+
 - The following fixes have been made in the VAMS example:
   - Deprecated gnetlistrc settings have been replaced with new
     configuration options.
