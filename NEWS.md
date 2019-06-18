@@ -226,6 +226,11 @@ Notable changes in Lepton EDA 1.9.8
   output PDF file name is now derived from the name of the current
   page instead of previous default name "output.pdf".
 
+- File filters in the dialog boxes 'Open...' and 'Save As...' now
+  keep their last chosen values while the program is running.
+  Previously, the filters were always set to choosing schematic
+  files when the user opened the dialogs.
+
 - Wrong behaviour of the program when the value of **draw-grips**
   is set to "disabled" in `gschemrc` has been fixed, so now this
   setting prohibits drawing grips of selected objects still
