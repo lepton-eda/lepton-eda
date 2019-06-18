@@ -300,6 +300,13 @@ Notable changes in Lepton EDA 1.9.8
   well: the file name shown is output in bolder font and an
   asterisk is added to emphasize that the file has been changed.
 
+- Fixed font preview in the font selection dialog. Previously, if
+  a custom font name was specified in the configuration key `font`
+  in the `schematic.gui` configuration group, the text became
+  invisible in the preview widget of the dialog, because the
+  "Size" field was always initially set to zero.  This has been
+  fixed by setting the initial font size to non-zero value.
+
 - Fixed a broken output of translated strings to the log when the
   program is compiled using guile-2.2.  It is a [known
   issue](https://lists.gnu.org/archive/html/bug-guile/2017-01/msg00020.htm)
