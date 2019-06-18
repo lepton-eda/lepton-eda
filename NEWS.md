@@ -22,6 +22,13 @@ Notable changes in Lepton EDA 1.9.8
 
 ### Changes when building from source:
 
+- Fixed and improved *VPATH* (out-of-source) builds on some
+  systems. It used to be that Lepton did not install files from
+  the `docs/wiki/` subdirectory when the command `make install`
+  was used, because it was assumed that the directory contained
+  only regular files.  This has been fixed by changing appropriate
+  Makefiles to search for symlinks as well.
+
 - Several C functions in `liblepton`, various Lepton tools,
   contributed code (`olib`, `sarlacc_schem`, `convert_sym`) as
   well as PO-files have been fixed to avoid compilation warnings
