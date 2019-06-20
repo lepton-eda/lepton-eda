@@ -86,6 +86,9 @@ Notable changes in Lepton EDA 1.9.8
 - `liblepton` configuration C and Scheme API has been extended
   with functions for removing configuration keys and groups.
 
+- Fixed `'config-keys` unit test which previously did not work
+  correctly on some Ubuntu versions.
+
 ### Changes in `libleptonrenderer`:
 
 - Changes in path rendering:
