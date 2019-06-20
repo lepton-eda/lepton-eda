@@ -33,6 +33,8 @@ Notable changes in Lepton EDA 1.9.8
 
 ### Changes when building from source:
 
+- Lepton now requires Glib 2.38.0 or later versions for build.
+
 - Fixed and improved *VPATH* (out-of-source) builds on some
   systems. It used to be that Lepton did not install files from
   the `docs/wiki/` subdirectory when the command `make install`
