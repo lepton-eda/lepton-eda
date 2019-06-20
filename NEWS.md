@@ -123,6 +123,11 @@ Notable changes in Lepton EDA 1.9.8
   output PDF file name is now derived from the name of the current
   page instead of previous default name "output.pdf".
 
+- Wrong behaviour of the program when the value of **draw-grips**
+  is set to "disabled" in `gschemrc` has been fixed, so now this
+  setting prohibits drawing grips of selected objects still
+  allowing the user to resize them.
+
 ### Changes in `lepton-attrib`:
 
 - Separate menu description *XML* file has been removed. Now the
