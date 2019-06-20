@@ -72,19 +72,26 @@
 
 ;  net-direction-mode string
 ;
-;  Controlls if the net direction mode is used. This mode tries to guess
+;  Controls if the net direction mode is used. This mode tries to guess
 ;  the best continuation direction of a L-shape net when adding a net.
 ;
 (net-direction-mode "enabled")
 ;(net-direction-mode "disabled")
 
-;  net-selection-mode string
+; net-selection-mode string
 ;
-; Controls how many net segments are selected when you click at a net
-; If one of the enabled items is used, the selection state will toggle
-; through all selection states. The mode defines the maximum search depth
-; for the net selection mode
+; Controls how many net segments are selected when you click at a net.
 ;
+; - enabled_all:
+;   - first click selects the net itself
+;   - second click selects all nets directly connected to the selected one
+;   - third click in addition selects all nets with equal "netname" attributes
+; - enabled_net:
+;   - first click selects the net itself
+;   - second click selects all nets directly connected to the selected one
+; - disabled:
+;   - mouse clicks just selects the clicked net
+
 ;(net-selection-mode "disabled")
 (net-selection-mode "enabled_net")
 ;(net-selection-mode "enabled_all")
