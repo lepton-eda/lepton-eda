@@ -115,6 +115,12 @@ Notable changes in Lepton EDA 1.9.8
 
 ### Changes in `lepton-netlist`:
 
+- The option *-w* introduced in Lepton EDA 1.9.6 has been
+  removed. It was used to suppress warnings about missing
+  configuration files.  This is no longer needed, since the
+  function `config-load!()` has been fixed to not complain if
+  those files are absent.
+
 - A new record, `<schematic-component>`, has been added. It is now
   the basic record for using in the backends that work with
   components such as **spice** ones.
