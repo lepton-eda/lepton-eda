@@ -310,6 +310,12 @@ Notable changes in Lepton EDA 1.9.8
   "Size" field was always initially set to zero.  This has been
   fixed by setting the initial font size to non-zero value.
 
+- Fixed page "changed" status indication.  Previously, after
+  successful *Edit* → *Embed* and *Edit* → *Unembed* operations
+  the "changed" status of the page would not reflect in the page
+  manager and in the window's title.  Now, both are correctly
+  updated so that the status is visible to the user.
+
 - Fixed a broken output of translated strings to the log when the
   program is compiled using guile-2.2.  It is a [known
   issue](https://lists.gnu.org/archive/html/bug-guile/2017-01/msg00020.htm)
