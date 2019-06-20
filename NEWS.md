@@ -337,6 +337,11 @@ Notable changes in Lepton EDA 1.9.8
 - Separate menu description *XML* file has been removed. Now the
   menu structure is defined in the source code only.
 
+- The size and position of the main window is now saved in the
+  **cache** configuration context, in the group
+  `attrib.window-geometry`, and restored on launching of the
+  program.
+
 ### Changes in `lepton-symcheck`:
 
 - The program no longer requires specifying any file name when
