@@ -220,9 +220,11 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       break;
 
       case(REPEAT):
-      if (w_current->last_callback != NULL) {
-        (*w_current->last_callback)(w_current, 0, NULL);
-      }
+        g_scm_c_eval_string_protected
+        (
+          "( use-modules (gschem action) )"
+          "( &repeat-last-action )"
+        );
       break;
 #ifdef HAVE_LIBSTROKE
       case(STROKE):
