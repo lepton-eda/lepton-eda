@@ -522,8 +522,6 @@ DEFINE_I_CALLBACK(edit_copy)
 
   g_return_if_fail (w_current != NULL);
 
-  i_update_middle_button (w_current, i_callback_edit_copy, _("Copy"));
-
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);
     if (g_action_get_position (TRUE, &wx, &wy)) {
@@ -546,8 +544,6 @@ DEFINE_I_CALLBACK(edit_mcopy)
   gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button(w_current, i_callback_edit_mcopy, _("Multiple Copy"));
 
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);
@@ -572,8 +568,6 @@ DEFINE_I_CALLBACK(edit_move)
 
   g_return_if_fail (w_current != NULL);
 
-  i_update_middle_button(w_current, i_callback_edit_move, _("Move"));
-
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);
     if (g_action_get_position (TRUE, &wx, &wy)) {
@@ -595,8 +589,6 @@ DEFINE_I_CALLBACK(edit_delete)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button(w_current, i_callback_edit_delete, _("Delete"));
 
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);
@@ -620,7 +612,6 @@ DEFINE_I_CALLBACK(edit_edit)
 
   g_return_if_fail (w_current != NULL);
 
-  i_update_middle_button(w_current, i_callback_edit_edit, _("Edit"));
   o_edit(w_current, geda_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list ) );
 }
 
@@ -634,8 +625,6 @@ DEFINE_I_CALLBACK(edit_text)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button(w_current, i_callback_edit_text, _("Edit Text"));
 
   text_edit_dialog (w_current);
 }
@@ -654,7 +643,6 @@ DEFINE_I_CALLBACK(edit_slot)
 
   object = o_select_return_first_object(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_slot, _("Slot"));
   if (object) {
     o_slot_start(w_current, object);
   }
@@ -705,7 +693,6 @@ DEFINE_I_CALLBACK(edit_rotate_90)
 
   if (!g_action_get_position (TRUE, &wx, &wy)) {
     i_set_state(w_current, ROTATEMODE);
-    i_update_middle_button(w_current, i_callback_edit_rotate_90, _("Rotate"));
     return;
   }
 
@@ -714,8 +701,6 @@ DEFINE_I_CALLBACK(edit_rotate_90)
   object_list = geda_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list );
 
   if (object_list) {
-    i_update_middle_button(w_current,
-                           i_callback_edit_rotate_90, _("Rotate"));
     /* Allow o_rotate_world_update to redraw the objects */
     o_rotate_world_update(w_current, wx, wy, 90, object_list);
   }
@@ -753,7 +738,6 @@ DEFINE_I_CALLBACK(edit_mirror)
 
   if (!g_action_get_position (TRUE, &wx, &wy)) {
     i_set_state(w_current, MIRRORMODE);
-    i_update_middle_button(w_current, i_callback_edit_mirror, _("Mirror"));
     return;
   }
 
@@ -762,8 +746,6 @@ DEFINE_I_CALLBACK(edit_mirror)
   object_list = geda_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list );
 
   if (object_list) {
-    i_update_middle_button(w_current,
-                           i_callback_edit_mirror, _("Mirror"));
     o_mirror_world_update(w_current, wx, wy, object_list);
   }
 }
@@ -779,8 +761,6 @@ DEFINE_I_CALLBACK(edit_lock)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button(w_current, i_callback_edit_lock, _("Lock"));
 
   if (o_select_return_first_object(w_current)) {
     o_lock(w_current);
@@ -798,7 +778,6 @@ DEFINE_I_CALLBACK(edit_unlock)
 
   g_return_if_fail (w_current != NULL);
 
-  i_update_middle_button(w_current, i_callback_edit_unlock, _("Unlock"));
   if (o_select_return_first_object(w_current)) {
     o_unlock(w_current);
   }
@@ -815,9 +794,6 @@ DEFINE_I_CALLBACK(edit_translate)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button(w_current,
-                         i_callback_edit_translate, _("Translate"));
 
   snap_mode = gschem_options_get_snap_mode (w_current->options);
 
@@ -863,8 +839,6 @@ DEFINE_I_CALLBACK(edit_embed)
 
   g_return_if_fail (w_current != NULL);
 
-  i_update_middle_button(w_current, i_callback_edit_embed, _("Embed"));
-
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     /* yes, embed each selected component */
@@ -907,7 +881,6 @@ DEFINE_I_CALLBACK(edit_unembed)
 
   g_return_if_fail (w_current != NULL);
 
-  i_update_middle_button(w_current, i_callback_edit_unembed, _("Unembed"));
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     /* yes, unembed each selected component */
@@ -953,7 +926,6 @@ DEFINE_I_CALLBACK(edit_update)
 
   g_return_if_fail (w_current != NULL);
 
-  i_update_middle_button(w_current, i_callback_edit_update, _("Update"));
   if (o_select_selected(w_current)) {
 
     /* Updating components modifies the selection. Therefore, create a
@@ -992,10 +964,6 @@ DEFINE_I_CALLBACK(edit_show_hidden)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button(w_current,
-                         i_callback_edit_show_hidden,
-                         _("ShowHidden"));
 
   o_edit_show_hidden (w_current,
                       s_page_objects (gschem_toplevel_get_toplevel (w_current)->page_current));
@@ -1263,8 +1231,6 @@ DEFINE_I_CALLBACK(view_pan)
 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
-
-  i_update_middle_button(w_current, i_callback_view_pan, _("Pan"));
 
   if (!g_action_get_position (FALSE, &wx, &wy)) {
     o_redraw_cleanstates (w_current);
@@ -1671,9 +1637,6 @@ DEFINE_I_CALLBACK(clipboard_copy)
   g_return_if_fail (w_current != NULL);
   if (!o_select_selected (w_current)) return;
 
-  i_update_middle_button (w_current, i_callback_clipboard_copy,
-                          _("Copy to clipboard"));
-
   o_buffer_copy (w_current, CLIPBOARD_BUFFER);
 }
 
@@ -1687,9 +1650,6 @@ DEFINE_I_CALLBACK(clipboard_cut)
 
   g_return_if_fail (w_current != NULL);
   if (!o_select_selected (w_current)) return;
-
-  i_update_middle_button (w_current, i_callback_clipboard_cut,
-                          _("Cut to clipboard"));
 
   o_redraw_cleanstates(w_current);
   o_buffer_cut (w_current, CLIPBOARD_BUFFER);
@@ -1710,8 +1670,6 @@ DEFINE_I_CALLBACK(clipboard_paste)
   gint wx = 0, wy = 0;
 
   g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button (w_current, i_callback_clipboard_paste, _("Paste from clipboard"));
 
   g_action_get_position (TRUE, &wx, &wy);
 
@@ -1735,18 +1693,12 @@ i_callback_buffer_copy (gpointer data, guint callback_action,
                         void (*f)(gpointer, guint, GtkWidget *))
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  gchar *msg;
 
   g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
 
-  /* TRANSLATORS: The number is the number of the buffer that the
-   * selection is being copied to. */
-  msg = g_strdup_printf(_("Copy %i"), n);
-  i_update_middle_button(w_current, f, msg);
-  g_free (msg);
   o_buffer_copy(w_current, n-1);
   i_update_menus(w_current);
 }
@@ -1762,18 +1714,12 @@ i_callback_buffer_cut (gpointer data, guint callback_action,
                        void (*f)(gpointer, guint, GtkWidget *))
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  gchar *msg;
 
   g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
 
-  /* TRANSLATORS: The number is the number of the buffer that the
-   * selection is being cut to. */
-  msg = g_strdup_printf(_("Cut %i"), n);
-  i_update_middle_button(w_current, f, msg);
-  g_free (msg);
   o_buffer_cut(w_current, n-1);
   i_update_menus(w_current);
 }
@@ -1789,7 +1735,6 @@ i_callback_buffer_paste (gpointer data, guint callback_action,
                          void (*f)(gpointer, guint, GtkWidget *))
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  gchar *msg;
   int empty;
 
   /* Choose a default position to start pasting. This is required to
@@ -1798,12 +1743,6 @@ i_callback_buffer_paste (gpointer data, guint callback_action,
   gint wx = 0, wy = 0;
 
   g_return_if_fail (w_current != NULL);
-
-  /* TRANSLATORS: The number is the number of the buffer that is being
-   * pasted to the schematic. */
-  msg = g_strdup_printf(_("Paste %i"), n);
-  i_update_middle_button(w_current, f, msg);
-  g_free (msg);
 
   g_action_get_position (TRUE, &wx, &wy);
 
@@ -1857,9 +1796,6 @@ DEFINE_I_CALLBACK(add_component)
   i_set_state(w_current, COMPMODE);
   x_compselect_open (w_current);
 
-  i_update_middle_button(w_current,
-                         i_callback_add_component, _("Component"));
-
   i_set_state(w_current, SELECT);
 }
 
@@ -1889,8 +1825,6 @@ DEFINE_I_CALLBACK(add_attribute)
 
   attrib_edit_dialog(w_current, NULL,
                      g_action_get_position (TRUE, NULL, NULL) ? FROM_HOTKEY : FROM_MENU);
-  i_update_middle_button(w_current, i_callback_add_attribute,
-                         _("Attribute"));
 
   i_set_state(w_current, SELECT);
 }
@@ -1910,7 +1844,6 @@ DEFINE_I_CALLBACK(add_net)
   o_redraw_cleanstates(w_current);
 
   i_set_state(w_current, NETMODE);
-  i_update_middle_button(w_current, i_callback_add_net, _("Net"));
 
   if (g_action_get_position (TRUE, &wx, &wy)) {
     o_net_reset(w_current);
@@ -1953,7 +1886,6 @@ DEFINE_I_CALLBACK(add_bus)
   o_invalidate_rubber (w_current);
 
   i_set_state(w_current, BUSMODE);
-  i_update_middle_button(w_current, i_callback_add_bus, _("Bus"));
 
   if (g_action_get_position (TRUE, &wx, &wy)) {
     o_bus_start(w_current, wx, wy);
@@ -1995,7 +1927,6 @@ DEFINE_I_CALLBACK(add_text)
 
   i_action_stop (w_current);
   i_set_state(w_current, SELECT);
-  i_update_middle_button(w_current, i_callback_add_text, _("Text"));
 
   text_input_dialog(w_current);
 }
@@ -2029,7 +1960,6 @@ DEFINE_I_CALLBACK(add_line)
   o_invalidate_rubber (w_current);
 
   i_set_state(w_current, LINEMODE);
-  i_update_middle_button(w_current, i_callback_add_line, _("Line"));
 
   if (g_action_get_position (TRUE, &wx, &wy)) {
     o_line_start(w_current, wx, wy);
@@ -2046,7 +1976,6 @@ DEFINE_I_CALLBACK(add_path)
   o_invalidate_rubber (w_current);
 
   i_set_state (w_current, PATHMODE);
-  i_update_middle_button (w_current, i_callback_add_path, _("Path"));
 
   /* Don't start path here since setting of its first point and
    * control point requires the left button click and release */
@@ -2068,7 +1997,6 @@ DEFINE_I_CALLBACK(add_box)
   o_invalidate_rubber (w_current);
 
   i_set_state(w_current, BOXMODE);
-  i_update_middle_button(w_current, i_callback_add_box, _("Box"));
 
   if (g_action_get_position (TRUE, &wx, &wy)) {
     o_box_start(w_current, wx, wy);
@@ -2110,7 +2038,6 @@ DEFINE_I_CALLBACK(add_circle)
   o_invalidate_rubber (w_current);
 
   i_set_state(w_current, CIRCLEMODE);
-  i_update_middle_button(w_current, i_callback_add_circle, _("Circle"));
 
   if (g_action_get_position (TRUE, &wx, &wy)) {
     o_circle_start(w_current, wx, wy);
@@ -2133,7 +2060,6 @@ DEFINE_I_CALLBACK(add_arc)
   o_invalidate_rubber (w_current);
 
   i_set_state(w_current, ARCMODE);
-  i_update_middle_button(w_current, i_callback_add_arc, _("Arc"));
 
   if (g_action_get_position (TRUE, &wx, &wy)) {
     o_arc_start(w_current, wx, wy);
@@ -2156,7 +2082,6 @@ DEFINE_I_CALLBACK(add_pin)
   o_invalidate_rubber (w_current);
 
   i_set_state (w_current, PINMODE);
-  i_update_middle_button(w_current, i_callback_add_pin, _("Pin"));
 
   if (g_action_get_position (TRUE, &wx, &wy)) {
     o_pin_start(w_current, wx, wy);
@@ -2422,11 +2347,6 @@ DEFINE_I_CALLBACK(attributes_attach)
     return;
   }
 
-  /* do we want to update the shortcut outside of the ifs? */
-  /* probably, if this fails the user may want to try again */
-  i_update_middle_button(w_current, i_callback_attributes_attach,
-                         _("Attach"));
-
   /* skip over head */
   s_current = geda_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list );
   if (!s_current) {
@@ -2479,9 +2399,6 @@ DEFINE_I_CALLBACK(attributes_show_name)
     return;
   }
 
-  i_update_middle_button(w_current, i_callback_attributes_show_name,
-                         _("ShowN"));
-
   if (o_select_selected (w_current)) {
     SELECTION *selection = toplevel->page_current->selection_list;
     GList *s_current;
@@ -2515,9 +2432,6 @@ DEFINE_I_CALLBACK(attributes_show_value)
   if (w_current->inside_action) {
     return;
   }
-
-  i_update_middle_button(w_current, i_callback_attributes_show_value,
-                         _("ShowV"));
 
   if (o_select_selected (w_current)) {
     SELECTION *selection = toplevel->page_current->selection_list;
@@ -2553,9 +2467,6 @@ DEFINE_I_CALLBACK(attributes_show_both)
     return;
   }
 
-  i_update_middle_button(w_current, i_callback_attributes_show_both,
-                         _("ShowB"));
-
   if (o_select_selected (w_current)) {
     SELECTION *selection = toplevel->page_current->selection_list;
     GList *s_current;
@@ -2589,10 +2500,6 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
   if (w_current->inside_action) {
     return;
   }
-
-  i_update_middle_button(w_current,
-                         i_callback_attributes_visibility_toggle,
-                         _("VisToggle"));
 
   if (o_select_selected (w_current)) {
     SELECTION *selection = toplevel->page_current->selection_list;

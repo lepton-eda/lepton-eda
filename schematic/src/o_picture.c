@@ -177,9 +177,7 @@ void picture_selection_dialog (GschemToplevel *w_current)
 #endif
 
       o_invalidate_rubber(w_current);
-      i_update_middle_button (w_current,
-                              (void (*) (gpointer, guint, GtkWidget*)) i_callback_add_picture,
-                              _("Picture"));
+
       i_action_stop (w_current);
 
       o_picture_set_pixbuf(w_current, pixbuf, filename);

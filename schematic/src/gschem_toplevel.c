@@ -297,7 +297,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->SHIFTKEY   = 0;
   w_current->ALTKEY     = 0;
   w_current->buffer_number = 0;
-  w_current->last_callback = NULL;
   w_current->clipboard_buffer = NULL;
 
   /* ------------------ */
