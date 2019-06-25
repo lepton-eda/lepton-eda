@@ -1316,6 +1316,26 @@ create_translate_widget (GschemToplevel *w_current, GtkWidget *work_box)
 static void
 create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
 {
+  const char* text_mid_button = _("none");
+
+#ifdef HAVE_LIBSTROKE
+  if (w_current->middle_button == STROKE)
+    text_mid_button = _("Stroke");
+#endif
+
+  if (w_current->middle_button == ACTION)
+    text_mid_button = _("Action");
+  else
+  if (w_current->middle_button == REPEAT)
+      text_mid_button = _("Repeat");
+  else
+  if (w_current->middle_button == MID_MOUSEPAN_ENABLED)
+      text_mid_button = _("Pan");
+  else
+  if (w_current->middle_button == POPUP_ENABLED)
+      text_mid_button = _("Menu");
+
+
   const char* text_right_button_action = NULL;
   const char* text_right_button_cancel = NULL;
   char*       text_right_button        = NULL;
@@ -1356,7 +1376,7 @@ create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
                                "left-button-text",
                                _("Pick"),
                                "middle-button-text",
-                               _("none"),
+                               text_mid_button,
                                "right-button-text",
                                text_right_button,
                                "snap-mode",
@@ -1374,8 +1394,6 @@ create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
   g_free (text_right_button);
 
   w_current->bottom_widget = GTK_WIDGET (obj);
-
-  i_update_middle_button (w_current, NULL, NULL);
 
   gtk_box_pack_start (GTK_BOX (main_box),
                       w_current->bottom_widget,
