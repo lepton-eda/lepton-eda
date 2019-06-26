@@ -1319,20 +1319,20 @@ create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
   const char* text_mid_button = _("none");
 
 #ifdef HAVE_LIBSTROKE
-  if (w_current->middle_button == STROKE)
+  if (w_current->middle_button == MOUSEBTN_DO_STROKE)
     text_mid_button = _("Stroke");
 #endif
 
-  if (w_current->middle_button == ACTION)
+  if (w_current->middle_button == MOUSEBTN_DO_ACTION)
     text_mid_button = _("Action");
   else
-  if (w_current->middle_button == REPEAT)
+  if (w_current->middle_button == MOUSEBTN_DO_REPEAT)
       text_mid_button = _("Repeat");
   else
   if (w_current->middle_button == MID_MOUSEPAN_ENABLED)
       text_mid_button = _("Pan");
   else
-  if (w_current->middle_button == POPUP_ENABLED)
+  if (w_current->middle_button == MOUSEBTN_DO_POPUP)
       text_mid_button = _("Menu");
 
 
@@ -1340,12 +1340,12 @@ create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
   const char* text_right_button_cancel = NULL;
   char*       text_right_button        = NULL;
 
-  if (w_current->third_button == POPUP_ENABLED)
+  if (w_current->third_button == MOUSEBTN_DO_POPUP)
   {
     text_right_button_action = _("Menu");
   }
   else
-  if (w_current->third_button == MOUSEPAN_ENABLED)
+  if (w_current->third_button == MOUSEBTN_DO_PAN)
   {
     text_right_button_action = _("Pan");
   }

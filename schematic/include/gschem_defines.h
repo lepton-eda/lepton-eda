@@ -92,12 +92,12 @@ typedef enum
 #define MAP_ON_STARTUP		1
 
 /* mouse buttons actions */
-#define STROKE			0
-#define REPEAT			1
-#define ACTION			2
-#define MID_MOUSEPAN_ENABLED	3
-#define POPUP_ENABLED   4
-#define MOUSEPAN_ENABLED  5
+#define MOUSEBTN_DO_STROKE   0
+#define MOUSEBTN_DO_REPEAT   1
+#define MOUSEBTN_DO_ACTION   2
+#define MID_MOUSEPAN_ENABLED 3
+#define MOUSEBTN_DO_POPUP    4
+#define MOUSEBTN_DO_PAN      5
 
 /* for scroll-wheel */
 #define SCROLL_WHEEL_CLASSIC 0

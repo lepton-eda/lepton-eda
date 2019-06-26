@@ -37,9 +37,9 @@ int   default_snap_size = DEFAULT_SNAP_SIZE;
 
 int   default_scrollbars_flag = TRUE;
 int   default_log_window = MAP_ON_STARTUP;
-int   default_third_button = POPUP_ENABLED;
+int   default_third_button = MOUSEBTN_DO_POPUP;
 int   default_third_button_cancel = TRUE;
-int   default_middle_button = MOUSEPAN_ENABLED;
+int   default_middle_button = MOUSEBTN_DO_PAN;
 int   default_scroll_wheel = SCROLL_WHEEL_CLASSIC;
 int   default_net_consolidate = TRUE;
 int   default_file_preview = TRUE;

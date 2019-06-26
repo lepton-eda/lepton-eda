@@ -193,7 +193,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
     switch(w_current->middle_button) {
 
-      case(ACTION):
+      case(MOUSEBTN_DO_ACTION):
 
       /* don't want to search if shift */
       /* key is pressed */
@@ -219,7 +219,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       }
       break;
 
-      case(REPEAT):
+      case(MOUSEBTN_DO_REPEAT):
         g_scm_c_eval_string_protected
         (
           "( use-modules (gschem action) )"
@@ -227,7 +227,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         );
       break;
 #ifdef HAVE_LIBSTROKE
-      case(STROKE):
+      case(MOUSEBTN_DO_STROKE):
       DOING_STROKE=TRUE;
       break;
 #endif /* HAVE_LIBSTROKE */
@@ -236,7 +236,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       break;
 
-      case (POPUP_ENABLED):
+      case (MOUSEBTN_DO_POPUP):
         i_update_menus(w_current);
         do_popup(w_current, event);
         break;
@@ -245,7 +245,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
   } else if (event->button == 3) {
     if (!w_current->inside_action) {
-      if (w_current->third_button == POPUP_ENABLED) {
+      if (w_current->third_button == MOUSEBTN_DO_POPUP) {
         /* (third-button "popup") */
         i_update_menus(w_current);  /* update menus before popup  */
         do_popup(w_current, event);
@@ -254,7 +254,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       }
     } else {
-      if ((w_current->third_button == MOUSEPAN_ENABLED) &&
+      if ((w_current->third_button == MOUSEBTN_DO_PAN) &&
           (!w_current->third_button_cancel)) {
         gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       } else { /* this is the default cancel */
@@ -380,7 +380,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
     }
 
     switch(w_current->middle_button) {
-      case(ACTION):
+      case(MOUSEBTN_DO_ACTION):
         if (w_current->inside_action && (page->place_list != NULL)) {
           switch(w_current->event_state) {
             case (COPYMODE): o_copy_end(w_current); break;
@@ -390,7 +390,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
       break;
 
 #ifdef HAVE_LIBSTROKE
-      case(STROKE):
+      case(MOUSEBTN_DO_STROKE):
       DOING_STROKE = FALSE;
       x_stroke_translate_and_execute (w_current);
       break;

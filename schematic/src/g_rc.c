@@ -359,8 +359,8 @@ SCM g_rc_log_window(SCM mode)
 SCM g_rc_third_button(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
-    {POPUP_ENABLED   , "popup"   },
-    {MOUSEPAN_ENABLED, "mousepan"},
+    {MOUSEBTN_DO_POPUP, "popup"   },
+    {MOUSEBTN_DO_PAN,   "mousepan"},
   };
 
   RETURN_G_RC_MODE("third-button",
@@ -402,11 +402,11 @@ SCM g_rc_third_button_cancel(SCM mode)
 SCM g_rc_middle_button(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
-    {STROKE, "stroke"},
-    {REPEAT, "repeat"},
-    {ACTION, "action"},
+    {MOUSEBTN_DO_STROKE, "stroke"},
+    {MOUSEBTN_DO_REPEAT, "repeat"},
+    {MOUSEBTN_DO_ACTION, "action"},
     {MID_MOUSEPAN_ENABLED, "mousepan"},
-    {POPUP_ENABLED,        "popup"   },
+    {MOUSEBTN_DO_POPUP,  "popup"},
   };
 
   RETURN_G_RC_MODE("middle-button",
