@@ -3,7 +3,7 @@
 lepton-netlist - Lepton EDA Netlist Extraction and Generation
 .SH SYNOPSIS
 .B lepton-netlist
-[\fIOPTION\fR ...] [\fB-g\fR \fIBACKEND\fR] [\fI--\fR] \fIFILE\fR ...
+[\fIOPTION\fR ...] [\fB-g\fR \fIBACKEND\fR | \fB-f\fR \fIFILE\fR] [\fI--\fR] \fIFILE\fR ...
 
 .SH DESCRIPTION
 .PP
@@ -38,6 +38,11 @@ Scheme files.
 .TP 8
 \fB-g\fR \fIBACKEND\fR
 Specify the netlist backend to be used.
+.TP 8
+\fB-f\fR \fIFILE\fR
+Load and use netlist backend from \fIFILE\fR.
+\fIFILE\fR is expected to have name like "gnet-NAME.scm" and contain entry
+point function NAME (where NAME is the backend's name).
 .TP 8
 \fB-O\fR \fISTRING\fR
 Pass an option string to the backend.
