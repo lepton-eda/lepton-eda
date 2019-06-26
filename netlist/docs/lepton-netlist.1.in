@@ -10,7 +10,7 @@ lepton-netlist - Lepton EDA Netlist Extraction and Generation
 
 \fBlepton-netlist\fR is a netlist extraction and generation tool, and is
 part of the Lepton EDA (Electronic Design Automation) toolset.  It takes
-one or electronic schematics as input, and outputs a netlist.  A
+one or more electronic schematics as input, and outputs a netlist.  A
 netlist is a machine-interpretable description of the way that
 components in an electronic circuit are connected together, and is
 commonly used as the input to a PCB layout program such as
@@ -170,6 +170,9 @@ Structural SystemC code generation.
 .TP 8
 \fBtango\fR
 Tango netlist format.
+.TP 8
+\fBtEDAx\fR
+Trivial EDA eXchange (tEDAx) format.
 .TP 8
 \fBvams\fR
 VHDL-AMS code generation.
