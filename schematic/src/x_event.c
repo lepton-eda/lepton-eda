@@ -232,7 +232,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       break;
 #endif /* HAVE_LIBSTROKE */
 
-      case(MID_MOUSEPAN_ENABLED):
+      case(MOUSEBTN_DO_PAN):
       gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       break;
 
@@ -396,7 +396,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
       break;
 #endif /* HAVE_LIBSTROKE */
 
-      case(MID_MOUSEPAN_ENABLED):
+      case(MOUSEBTN_DO_PAN):
         if (gschem_page_view_pan_end (page_view) && w_current->undo_panzoom) {
           o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
         }

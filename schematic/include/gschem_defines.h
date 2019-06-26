@@ -95,7 +95,6 @@ typedef enum
 #define MOUSEBTN_DO_STROKE   0
 #define MOUSEBTN_DO_REPEAT   1
 #define MOUSEBTN_DO_ACTION   2
-#define MID_MOUSEPAN_ENABLED 3
 #define MOUSEBTN_DO_POPUP    4
 #define MOUSEBTN_DO_PAN      5
 

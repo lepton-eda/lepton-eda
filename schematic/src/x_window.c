@@ -1329,7 +1329,7 @@ create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
   if (w_current->middle_button == MOUSEBTN_DO_REPEAT)
       text_mid_button = _("Repeat");
   else
-  if (w_current->middle_button == MID_MOUSEPAN_ENABLED)
+  if (w_current->middle_button == MOUSEBTN_DO_PAN)
       text_mid_button = _("Pan");
   else
   if (w_current->middle_button == MOUSEBTN_DO_POPUP)

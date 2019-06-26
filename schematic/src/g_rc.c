@@ -405,7 +405,7 @@ SCM g_rc_middle_button(SCM mode)
     {MOUSEBTN_DO_STROKE, "stroke"},
     {MOUSEBTN_DO_REPEAT, "repeat"},
     {MOUSEBTN_DO_ACTION, "action"},
-    {MID_MOUSEPAN_ENABLED, "mousepan"},
+    {MOUSEBTN_DO_PAN,    "mousepan"},
     {MOUSEBTN_DO_POPUP,  "popup"},
   };
 
