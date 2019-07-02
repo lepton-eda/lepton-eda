@@ -363,9 +363,22 @@ SCM g_rc_third_button(SCM mode)
     {MOUSEBTN_DO_PAN,   "mousepan"},
   };
 
+  const int table_size = sizeof (mode_table) / sizeof (mode_table[0]);
+
+  if (scm_is_eq (mode, SCM_UNDEFINED))
+  {
+    for (int i = 0; i < table_size; ++i)
+    {
+      if (default_third_button == mode_table[i].m_val)
+        return scm_from_utf8_string (mode_table[i].m_str);
+    }
+
+    return scm_from_utf8_string ("none");
+  }
+
   RETURN_G_RC_MODE("third-button",
 		   default_third_button,
-		   2);
+		   table_size);
 }
 
 /*! \brief Verify if the third button cancel mode is set in the RC
@@ -409,9 +422,22 @@ SCM g_rc_middle_button(SCM mode)
     {MOUSEBTN_DO_POPUP,  "popup"},
   };
 
+  const int table_size = sizeof (mode_table) / sizeof (mode_table[0]);
+
+  if (scm_is_eq (mode, SCM_UNDEFINED))
+  {
+    for (int i = 0; i < table_size; ++i)
+    {
+      if (default_middle_button == mode_table[i].m_val)
+        return scm_from_utf8_string (mode_table[i].m_str);
+    }
+
+    return scm_from_utf8_string ("none");
+  }
+
   RETURN_G_RC_MODE("middle-button",
 		   default_middle_button,
-		   5);
+		   table_size);
 }
 
 /*! \todo Finish function documentation!!!
