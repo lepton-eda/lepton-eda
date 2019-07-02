@@ -24,37 +24,19 @@
  */
 
 #include <config.h>
-
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#ifdef HAVE_FCNTL_H
-#include <fcntl.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
 #include "gschem.h"
+
+
+/* convenience macro - gobject type implementation:
+*/
+G_DEFINE_TYPE (GschemLogWidget, gschem_log_widget, GSCHEM_TYPE_BIN);
 
 
 static void
 changed_cb (GtkTextBuffer *buffer, GschemLogWidget *widget);
 
-static void
-class_init (GschemLogWidgetClass *klass);
-
 static GtkTextBuffer*
 create_text_buffer();
-
-static void
-instance_init (GschemLogWidget *log);
 
 static void
 log_message (GschemLogWidgetClass *klass, const gchar *message, const gchar *style);
@@ -73,43 +55,6 @@ populate_popup_menu (GtkTextView* txtview,
                      GtkMenu*     menu,
                      gpointer     data);
 
-
-
-/*!
- *  \brief Get the Log class type
- *
- *  \par Function Description
- *
- * On first call, registers the Log class with the GType dynamic type system.
- * On subsequent calls, returns the saved value from first execution.
- * \returns the type identifier for the Log class
- */
-GType
-gschem_log_widget_get_type ()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemLogWidgetClass),
-      NULL,                                 /* base_init */
-      NULL,                                 /* base_finalize */
-      (GClassInitFunc) class_init,
-      NULL,                                 /* class_finalize */
-      NULL,                                 /* class_data */
-      sizeof(GschemLogWidget),
-      0,                                    /* n_preallocs */
-      (GInstanceInitFunc) instance_init,
-    };
-
-    type = g_type_register_static (GSCHEM_TYPE_BIN,
-                                   "GschemLogWidget",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
-}
 
 
 /*! \brief create a new status log widget
@@ -206,7 +151,7 @@ changed_cb (GtkTextBuffer *buffer, GschemLogWidget *widget)
 /*! \brief initialize class
  */
 static void
-class_init (GschemLogWidgetClass *klass)
+gschem_log_widget_class_init (GschemLogWidgetClass *klass)
 {
   gchar *contents;
 /*   GObjectClass *gobject_class = G_OBJECT_CLASS (klass); */
@@ -281,7 +226,7 @@ create_text_buffer()
  *  \param [in] widget an instance of the widget
  */
 static void
-instance_init (GschemLogWidget *widget)
+gschem_log_widget_init (GschemLogWidget *widget)
 {
   GschemLogWidgetClass *klass = GSCHEM_LOG_WIDGET_GET_CLASS (widget);
   GtkWidget *scrolled;
