@@ -55,6 +55,9 @@ populate_popup_menu (GtkTextView* txtview,
                      GtkMenu*     menu,
                      gpointer     data);
 
+static void
+finalize (GObject* object);
+
 
 
 /*! \brief create a new status log widget
@@ -154,7 +157,9 @@ static void
 gschem_log_widget_class_init (GschemLogWidgetClass *klass)
 {
   gchar *contents;
-/*   GObjectClass *gobject_class = G_OBJECT_CLASS (klass); */
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+
+  gobject_class->finalize = &finalize;
 
   klass->buffer = create_text_buffer ();
 
@@ -487,3 +492,18 @@ populate_popup_menu (GtkTextView* txtview,
 
 } /* populate_popup_menu() */
 
+
+
+/*! \brief "destructor" function for gobject instance
+ */
+static void
+finalize (GObject* object)
+{
+  GschemLogWidgetClass* cls = GSCHEM_LOG_WIDGET_GET_CLASS (object);
+
+  /* disconnect the "changed" signal handler:
+  */
+  g_signal_handlers_disconnect_by_func (cls->buffer, &changed_cb, object);
+
+  G_OBJECT_CLASS (gschem_log_widget_parent_class)->finalize (object);
+}
