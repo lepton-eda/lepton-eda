@@ -130,10 +130,28 @@ get_main_menu(GschemToplevel *w_current)
     gtk_widget_show(menu_item);
 
     scm_items_len = (int) scm_ilength (scm_items);
-    for (j = 0 ; j < scm_items_len; j++) {
 
+
+    /* cycle through menu items:
+    */
+    for (j = 0 ; j < scm_items_len; j++)
+    {
       scm_index = scm_from_int (j);
+
+      /* menu item:
+      */
       scm_item = scm_list_ref (scm_items, scm_index);
+
+      /* check if [scm_item] is valid, it must be a
+       * ( list TEXT ACTION ICON ):
+      */
+      if ( scm_is_false (scm_list_p (scm_item)) )
+        continue;
+
+      if ( scm_to_int (scm_length (scm_item)) != 3 )
+        continue;
+
+
       scm_item_name = SCM_CAR (scm_item);
       scm_item_func = SCM_CADR (scm_item);
       scm_item_stock = scm_is_pair (SCM_CDDR (scm_item)) ?
