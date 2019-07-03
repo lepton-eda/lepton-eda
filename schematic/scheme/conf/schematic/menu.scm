@@ -102,28 +102,47 @@
 ) ; buffer-menu-items
 
 
-( define view-menu-items
-( list
-  ( list (N_ "Side Dock")           '&view-sidebar           #f )
-  ( list (N_ "Bottom Dock")         '&view-status            #f )
-  ( list "SEPARATOR" #f #f )
-  ( list (N_ "Find Text Results")   '&view-find-text-state   #f )
-  ( list "SEPARATOR" #f #f )
-  ( list (N_ "_Redraw")             '&view-redraw            "gtk-refresh" )
-  ( list (N_ "_Pan")                '&view-pan               #f )
-  ( list (N_ "Zoom _Box")           '&view-zoom-box          #f )
-  ( list (N_ "Zoom _Extents")       '&view-zoom-extents      "gtk-zoom-fit" )
-  ( list (N_ "Zoom _In")            '&view-zoom-in           "gtk-zoom-in" )
-  ( list (N_ "Zoom _Out")           '&view-zoom-out          "gtk-zoom-out" )
-  ( list (N_ "Zoom _Full")          '&view-zoom-full         #f )
-  ( list "SEPARATOR" #f #f )
-  ( list (N_ "_Dark Color Scheme")  '&view-dark-colors       #f )
-  ( list (N_ "_Light Color Scheme") '&view-light-colors      #f )
-  ( list (N_ "B_W Color Scheme")    '&view-bw-colors         #f )
-  ( list "SEPARATOR" #f #f )
-  ( list (N_ "Color Scheme Editor...") '&view-color-edit     #f )
-)
-) ; view-menu-items
+( define ( view-menu-items )
+( let*
+  (
+  ( grp "schematic.gui" )
+  ( key "use-docks" )
+  ( cfg ( path-config-context (getcwd) ) )
+  ( val ( if cfg (config-boolean cfg grp key) #f ) )
+  )
+
+  ( define ( opt-item item )
+    ; return:
+    ( if val
+      item ; if
+      '()  ; else
+    )
+  )
+
+  ; return:
+  ( list
+    ( opt-item (list (N_ "Side Dock")   '&view-sidebar #f) )
+    ( opt-item (list (N_ "Bottom Dock") '&view-status  #f) )
+    ( opt-item (list "SEPARATOR" #f #f) )
+    ( list (N_ "Find Text Results")   '&view-find-text-state   #f )
+    ( list "SEPARATOR" #f #f )
+    ( list (N_ "_Redraw")             '&view-redraw            "gtk-refresh" )
+    ( list (N_ "_Pan")                '&view-pan               #f )
+    ( list (N_ "Zoom _Box")           '&view-zoom-box          #f )
+    ( list (N_ "Zoom _Extents")       '&view-zoom-extents      "gtk-zoom-fit" )
+    ( list (N_ "Zoom _In")            '&view-zoom-in           "gtk-zoom-in" )
+    ( list (N_ "Zoom _Out")           '&view-zoom-out          "gtk-zoom-out" )
+    ( list (N_ "Zoom _Full")          '&view-zoom-full         #f )
+    ( list "SEPARATOR" #f #f )
+    ( list (N_ "_Dark Color Scheme")  '&view-dark-colors       #f )
+    ( list (N_ "_Light Color Scheme") '&view-light-colors      #f )
+    ( list (N_ "B_W Color Scheme")    '&view-bw-colors         #f )
+    ( list "SEPARATOR" #f #f )
+    ( list (N_ "Color Scheme Editor...") '&view-color-edit     #f )
+  )
+
+) ; let
+) ; view-menu-items()
 
 
 ( define ( page-menu-items )
@@ -264,7 +283,7 @@
 ( add-menu (N_ "_File")       file-menu-items )
 ( add-menu (N_ "_Edit")       edit-menu-items )
 ; ( add-menu (N_ "_Buffer")     buffer-menu-items )
-( add-menu (N_ "_View")       view-menu-items )
+( add-menu (N_ "_View")       (view-menu-items) )
 ( add-menu (N_ "_Page")       (page-menu-items) )
 ( add-menu (N_ "_Add")        add-menu-items )
 ( add-menu (N_ "Hie_rarchy")  hierarchy-menu-items )
