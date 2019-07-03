@@ -126,20 +126,39 @@
 ) ; view-menu-items
 
 
-( define page-menu-items
-( list
-  ( list (N_ "_Manager...")  '&page-manager  #f )
-  ( list "SEPARATOR" #f #f )
-  ( list (N_ "_Previous")    '&page-prev     "gtk-go-back" )
-  ( list (N_ "_Next")        '&page-next     "gtk-go-forward" )
-  ( list (N_ "_Close")       '&page-close    "gtk-close" )
-  ( list "SEPARATOR" #f #f )
-  ( list (N_ "_Revert...")   '&page-revert   "gtk-revert-to-saved" )
-  ( list "SEPARATOR" #f #f )
-  ( list (N_ "Next Tab")     '&page-next-tab "gtk-go-forward" )
-  ( list (N_ "Previous Tab") '&page-prev-tab "gtk-go-back" )
-)
-) ; page-menu-items
+( define ( page-menu-items )
+( let*
+  (
+  ( grp "schematic.gui" )
+  ( key "use-tabs" )
+  ( cfg ( path-config-context (getcwd) ) )
+  ( val ( if cfg (config-boolean cfg grp key) #t ) )
+  )
+
+  ( define ( opt-item item )
+    ; return:
+    ( if val
+      item ; if
+      '()  ; else
+    )
+  )
+
+  ; return:
+  ( list
+    ( list (N_ "_Manager...")  '&page-manager  #f )
+    ( list "SEPARATOR" #f #f )
+    ( list (N_ "_Previous")    '&page-prev     "gtk-go-back" )
+    ( list (N_ "_Next")        '&page-next     "gtk-go-forward" )
+    ( list (N_ "_Close")       '&page-close    "gtk-close" )
+    ( list "SEPARATOR" #f #f )
+    ( list (N_ "_Revert...")   '&page-revert   "gtk-revert-to-saved" )
+    ( opt-item (list "SEPARATOR" #f #f) )
+    ( opt-item (list (N_ "Next Tab")     '&page-next-tab "gtk-go-forward") )
+    ( opt-item (list (N_ "Previous Tab") '&page-prev-tab "gtk-go-back") )
+  )
+
+) ; let
+) ; page-menu-items()
 
 
 ( define add-menu-items
@@ -246,7 +265,7 @@
 ( add-menu (N_ "_Edit")       edit-menu-items )
 ; ( add-menu (N_ "_Buffer")     buffer-menu-items )
 ( add-menu (N_ "_View")       view-menu-items )
-( add-menu (N_ "_Page")       page-menu-items )
+( add-menu (N_ "_Page")       (page-menu-items) )
 ( add-menu (N_ "_Add")        add-menu-items )
 ( add-menu (N_ "Hie_rarchy")  hierarchy-menu-items )
 ( add-menu (N_ "A_ttributes") attributes-menu-items )

@@ -8,7 +8,8 @@
              (schematic gui stroke)
              (schematic netlist)
              (gschem builtins)
-             (gschem action))
+             (gschem action)
+             (geda config))
 
 
 ; gschem-version string
