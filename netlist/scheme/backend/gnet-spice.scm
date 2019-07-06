@@ -1,6 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
+;;; Copyright (C) 2019 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -22,8 +23,9 @@
 ;; SPICE netlist backend written by S. Gieltjes starts here
 ;;
 
-;; Common functions for the `spice' and `spice-sdb' backends
-(load-from-path "common/spice.scm")
+(use-modules (netlist schematic)
+             (netlist schematic toplevel)
+             (spice common))
 
 
 ;;  write mos transistor

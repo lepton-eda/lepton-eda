@@ -75,7 +75,7 @@ DIST_SCM_BACKENDS = \
 	backend/gnet-vipec.scm
 
 DIST_SCM_BACKENDS_COMMON = \
-	backend/common/spice.scm
+	backend/spice/common.scm
 
 DIST_SCM = \
 	netlist.scm \

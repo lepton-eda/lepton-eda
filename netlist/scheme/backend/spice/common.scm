@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2014 Ales Hvezda
 ;;; Copyright (C) 1998-2016 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2019 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -23,9 +23,23 @@
 ;; By S. Gieltjes and others.
 ;; --------------------------------------------------------------------------
 
-(use-modules (srfi srfi-1)
-             (netlist schematic)
-             (netlist schematic toplevel))
+(define-module (spice common)
+  #:use-module (srfi srfi-1)
+  #:use-module (netlist)
+  #:use-module (netlist deprecated)
+  #:use-module (netlist schematic)
+  #:use-module (netlist schematic toplevel)
+  #:export (spice:write-net-names-on-component)
+  #:export (spice:write-ccvs)
+  #:export (spice:write-cccs)
+  #:export (spice:write-vccs)
+  #:export (spice:write-vcvs)
+  #:export (spice:write-nullor)
+  #:export (spice:format-attrib-list)
+  #:export (spice:component-value)
+  #:export (spice:get-net)
+)
+
 
 ;;---------------------------------------------------------------------
 ;; write netnames connected to pin-a and pin-b
