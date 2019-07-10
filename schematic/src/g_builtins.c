@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2013-2015 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -133,7 +133,6 @@ static struct BuiltinInfo builtins[] = {
   { "%hierarchy-down-schematic",     0, 0, 0, (SCM (*) ()) g_keys_hierarchy_down_schematic },
   { "%hierarchy-down-symbol",        0, 0, 0, (SCM (*) ()) g_keys_hierarchy_down_symbol },
   { "%hierarchy-up",                 0, 0, 0, (SCM (*) ()) g_keys_hierarchy_up },
-  { "%attributes-attach",            0, 0, 0, (SCM (*) ()) g_keys_attributes_attach },
   { "%attributes-show-name",         0, 0, 0, (SCM (*) ()) g_keys_attributes_show_name },
   { "%attributes-show-value",        0, 0, 0, (SCM (*) ()) g_keys_attributes_show_value },
   { "%attributes-show-both",         0, 0, 0, (SCM (*) ()) g_keys_attributes_show_both },

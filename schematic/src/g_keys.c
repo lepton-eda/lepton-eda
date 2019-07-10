@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +17,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+
 #include <config.h>
-
-#include <stdio.h>
-#include <sys/stat.h>
-#include <ctype.h>
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include "gschem.h"
 
 #include <gdk/gdkkeysyms.h>
@@ -172,7 +159,6 @@ DEFINE_G_KEYS(add_pin)
 DEFINE_G_KEYS(hierarchy_down_schematic)
 DEFINE_G_KEYS(hierarchy_down_symbol)
 DEFINE_G_KEYS(hierarchy_up)
-DEFINE_G_KEYS(attributes_attach)
 DEFINE_G_KEYS(attributes_show_name)
 DEFINE_G_KEYS(attributes_show_value)
 DEFINE_G_KEYS(attributes_show_both)

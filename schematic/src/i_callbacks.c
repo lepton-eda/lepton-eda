@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,20 +17,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+
 #include <config.h>
-
-#include <stdio.h>
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include "gschem.h"
 
-/*! \brief */
-#define DELIMITERS ", "
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -2325,61 +2315,6 @@ DEFINE_I_CALLBACK(hierarchy_up)
     x_window_set_current_page(w_current, up_page);
   }
 }
-
-/*! \section attributes-menu Attributes Menu Callback Functions */
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(attributes_attach)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  OBJECT *first_object;
-  GList *s_current;
-  GList *attached_objects = NULL;
-
-  g_return_if_fail (w_current != NULL);
-
-  /* This is a new addition 3/15 to prevent this from executing
-   * inside an action */
-  if (w_current->inside_action) {
-    return;
-  }
-
-  /* skip over head */
-  s_current = geda_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list );
-  if (!s_current) {
-    return;
-  }
-
-  first_object = (OBJECT *) s_current->data;
-  if (!first_object) {
-    return;
-  }
-
-  /* skip over first object */
-  s_current = g_list_next(s_current);
-  while (s_current != NULL) {
-    OBJECT *object = (OBJECT*) s_current->data;
-    if (object != NULL) {
-      o_attrib_attach (gschem_toplevel_get_toplevel (w_current), object, first_object, TRUE);
-      attached_objects = g_list_prepend (attached_objects, object);
-      gschem_toplevel_get_toplevel (w_current)->page_current->CHANGED=1;
-    }
-    s_current = g_list_next(s_current);
-  }
-
-  if (attached_objects != NULL) {
-    g_run_hook_object_list (w_current, "%attach-attribs-hook",
-                            attached_objects);
-    g_list_free (attached_objects);
-  }
-
-  o_undo_savestate_old(w_current, UNDO_ALL);
-}
-
-
 
 /*! \todo Finish function documentation!!!
  *  \brief

@@ -312,8 +312,74 @@
 ;; -------------------------------------------------------------------
 ;;;; Attribute actions
 
-(define-action-public (&attributes-attach #:label (_ "Attach Attributes") #:icon "attribute-attach")
-  (%attributes-attach))
+( define-action-public
+  ( &attributes-attach
+    #:label (_ "Attach Attributes")
+    #:icon  "attribute-attach"
+  )
+
+  ( let*
+    (
+    ( page ( active-page ) )
+    ( sel  ( if page (page-selection page) '() ) )
+    )
+
+    ( define ( can-attach-to? obj )
+      ; return:
+      ( and
+        ( object? obj )
+        ( not (text? obj) )
+      )
+    )
+
+    ( define ( attachable-attr? obj )
+      ; return:
+      ( and
+        ( attribute?    obj )           ; if it's attribute
+        ( text-visible? obj )           ; if it's visible
+        ( not (attrib-attachment obj) ) ; and does not already attached
+      )
+    )
+
+    ( define ( attach-attr obj attr )
+      ( attach-attribs! obj attr )
+      ( log! 'message (_ "Attribute attached: [~a]") (text-string attr) )
+      ( deselect-object! attr )
+    )
+
+
+    ( let*
+      (
+      ( obj   (find   can-attach-to?   sel) )
+      ( attrs (filter attachable-attr? sel) )
+      ( attrs-not-empty ( not (null? attrs) ) )
+      )
+
+      ( when ( and obj attrs-not-empty )
+
+        ( for-each
+        ( lambda( attr )
+          ( attach-attr obj attr )
+        )
+        attrs
+        )
+
+        ( deselect-object! obj )
+
+        ( set-page-dirty! page )
+        ( run-hook attach-attribs-hook attrs )
+        ( undo-save-state )
+
+      ) ; when
+
+      ; return:
+      attrs
+
+    ) ; let
+
+  ) ; let
+
+) ; &attributes-attach action
 
 
 
