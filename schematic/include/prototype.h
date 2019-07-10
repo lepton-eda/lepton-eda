@@ -345,7 +345,6 @@ void i_callback_add_pin(gpointer data, guint callback_action, GtkWidget *widget)
 void i_callback_hierarchy_down_schematic(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_hierarchy_down_symbol(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_hierarchy_up(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_attributes_attach(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_attributes_show_name(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_attributes_show_value(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_attributes_show_both(gpointer data, guint callback_action, GtkWidget *widget);
