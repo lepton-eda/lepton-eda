@@ -314,7 +314,7 @@ x_widgets_show_in_dialog (GschemToplevel* w_current,
   GtkWidget* dlg = gschem_dialog_new_with_buttons(
     title,
     GTK_WINDOW (w_current->main_window),
-    (GtkDialogFlags) 0,
+    (GtkDialogFlags) GTK_DIALOG_DESTROY_WITH_PARENT,
     ini_group,
     w_current,
     GTK_STOCK_CLOSE, GTK_RESPONSE_NONE,
