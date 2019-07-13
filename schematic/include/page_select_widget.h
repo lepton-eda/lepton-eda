@@ -19,8 +19,8 @@
  * MA 02111-1301 USA.
  */
 
-#ifndef LEPTON_PAGESEL_H_
-#define LEPTON_PAGESEL_H_
+#ifndef LEPTON_PAGE_SELECT_WIDGET_H_
+#define LEPTON_PAGE_SELECT_WIDGET_H_
 
 
 #define PAGE_SELECT_WIDGET_TYPE (page_select_widget_get_type())
@@ -52,14 +52,14 @@ GtkWidget*
 page_select_widget_new (GschemToplevel* w_current);
 
 void
-page_select_widget_close (GschemToplevel *w_current);
+page_select_widget_close (GschemToplevel* w_current);
 
 void
-page_select_widget_update (GschemToplevel *w_current);
+page_select_widget_update (GschemToplevel* w_current);
 
 
 GType
 page_select_widget_get_type();
 
-#endif /* LEPTON_PAGESEL_H_ */
+#endif /* LEPTON_PAGE_SELECT_WIDGET_H_ */
 
