@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,6 +76,9 @@ struct st_gschem_toplevel {
   /* font selection widget: */
   GtkWidget *font_select_widget;
 
+  /* page selection widget: */
+  GtkWidget *page_select_widget;
+
   /* dialogs for widgets */
   GtkWidget *options_widget_dialog;
   GtkWidget *text_properties_dialog;
@@ -83,6 +87,7 @@ struct st_gschem_toplevel {
   GtkWidget *find_text_state_dialog;
   GtkWidget *color_edit_dialog;
   GtkWidget *font_select_dialog;
+  GtkWidget *page_select_dialog;
 
 
   gchar *keyaccel_string;               /* visual feedback when pressing
@@ -95,7 +100,6 @@ struct st_gschem_toplevel {
   GtkWidget *sowindow;                  /* Script open */
   GtkWidget *pfswindow;                 /* Picture File Selection window */
   GtkWidget *cswindow;                  /* component select */
-  GtkWidget *pswindow;                  /* page select */
   GtkWidget *tiwindow;                  /* text input */
   GtkWidget *sewindow;                  /* slot edit */
   GtkWidget *aawindow;                  /* arc attribs */

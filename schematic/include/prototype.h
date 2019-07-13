@@ -696,12 +696,6 @@ void x_menu_attach_recent_files_submenu(GschemToplevel *w_current);
 void x_multiattrib_open (GschemToplevel *w_current);
 void x_multiattrib_close (GschemToplevel *w_current);
 void x_multiattrib_update (GschemToplevel *w_current);
-/* x_multimulti.c */
-/* x_pagesel.c */
-void x_pagesel_open (GschemToplevel *w_current);
-void x_pagesel_close (GschemToplevel *w_current);
-void x_pagesel_update (GschemToplevel *w_current);
-/* x_preview.c */
 /* x_print.c */
 gboolean x_print_export_pdf_page (GschemToplevel *w_current, const gchar *filename);
 gboolean x_print_export_pdf (GschemToplevel *w_current, const gchar *filename, gboolean is_color);
@@ -755,6 +749,7 @@ void x_widgets_show_log (GschemToplevel* w_current);
 void x_widgets_show_find_text_state (GschemToplevel* w_current);
 void x_widgets_show_color_edit (GschemToplevel* w_current);
 void x_widgets_show_font_select (GschemToplevel* w_current);
+void x_widgets_show_page_select (GschemToplevel* w_current);
 
 /* x_tabs.c */
 gboolean x_tabs_enabled();

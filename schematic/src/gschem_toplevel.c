@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -198,6 +198,9 @@ GschemToplevel *gschem_toplevel_new ()
   /* font selection widget: */
   w_current->font_select_widget = NULL;
 
+  /* page selection widget: */
+  w_current->page_select_widget = NULL;
+
   /* dialogs for widgets */
   w_current->options_widget_dialog    = NULL;
   w_current->text_properties_dialog   = NULL;
@@ -206,6 +209,7 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->find_text_state_dialog   = NULL;
   w_current->color_edit_dialog        = NULL;
   w_current->font_select_dialog       = NULL;
+  w_current->page_select_dialog       = NULL;
 
 
   w_current->keyaccel_string = NULL;
@@ -217,7 +221,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->sowindow     = NULL;
   w_current->pfswindow    = NULL;
   w_current->cswindow     = NULL;
-  w_current->pswindow     = NULL;
   w_current->tiwindow     = NULL;
   w_current->sewindow     = NULL;
   w_current->aawindow     = NULL;
@@ -689,7 +692,7 @@ gschem_toplevel_page_content_changed (GschemToplevel *w_current, PAGE *page)
 
   page->CHANGED = 1;
 
-  x_pagesel_update (w_current);
+  page_select_widget_update (w_current);
 }
 
 

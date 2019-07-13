@@ -1,5 +1,5 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 2017 dmn <graahnul.grom@gmail.com>
+ * Copyright (C) 2017-2019 dmn <graahnul.grom@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -130,6 +130,8 @@ void x_widgets_create (GschemToplevel* w_current)
   w_current->color_edit_widget = color_edit_widget_new (w_current);
 
   w_current->font_select_widget = font_select_widget_new (w_current);
+
+  w_current->page_select_widget = page_select_widget_new (w_current);
 
 } /* x_widgets_create() */
 
@@ -265,6 +267,19 @@ void x_widgets_show_font_select (GschemToplevel* w_current)
                             &w_current->font_select_dialog,
                             _("Select Schematic Font"),
                             "fontsel");
+}
+
+
+
+void x_widgets_show_page_select (GschemToplevel* w_current)
+{
+  g_return_if_fail (w_current != NULL);
+
+  x_widgets_show_in_dialog (w_current,
+                            GTK_WIDGET (w_current->page_select_widget),
+                            &w_current->page_select_dialog,
+                            _("Page Manager"),
+                            "pagesel");
 }
 
 
