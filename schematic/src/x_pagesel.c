@@ -22,140 +22,17 @@
 #include "gschem.h"
 
 
-G_DEFINE_TYPE (Pagesel, pagesel, GSCHEM_TYPE_DIALOG);
+G_DEFINE_TYPE (PageSelectWidget, page_select_widget, GSCHEM_TYPE_BIN);
 
 
-
-typedef enum
+enum /* gobject property IDs */
 {
-  PAGESEL_RESPONSE_UPDATE = 1
-
-} PageselResponseType;
-
+  PROPID_TOPLEVEL = 1,
+};
 
 
-static void x_pagesel_callback_response (GtkDialog *dialog,
-                                         gint arg1,
-                                         gpointer user_data);
-
-static void pagesel_update (Pagesel* pagesel);
-
-
-
-/*! \brief Open the page manager dialog.
- *  \par Function Description
- *  Opens the page manager dialog for <B>toplevel</B> if it is not already.
- *  In this last case, it raises the dialog.
- *
- *  \param [in] w_current  The GschemToplevel object to open page manager for.
- */
-void x_pagesel_open (GschemToplevel *w_current)
+enum /* tree view column IDs */
 {
-  g_return_if_fail (w_current != NULL);
-
-  if (w_current->pswindow == NULL)
-  {
-    w_current->pswindow = GTK_WIDGET (g_object_new (TYPE_PAGESEL,
-                                                    /* GschemDialog */
-                                                    "settings-name", "pagesel",
-                                                    "gschem-toplevel", w_current,
-                                                    NULL));
-
-    g_signal_connect (w_current->pswindow,
-                      "response",
-                      G_CALLBACK (x_pagesel_callback_response),
-                      w_current);
-
-    g_signal_connect (w_current->pswindow,
-                      "delete-event",
-                      G_CALLBACK (&gtk_widget_hide_on_delete),
-                      NULL);
-
-    gtk_widget_show (w_current->pswindow);
-  }
-  else
-  {
-    gtk_widget_show (w_current->pswindow);
-    gdk_window_raise (w_current->pswindow->window);
-  }
-
-}
-
-/*! \brief Close the page manager dialog.
- *  \par Function Description
- *  Closes the page manager dialog associated with <B>toplevel</B>.
- *
- *  \param [in] w_current  The GschemToplevel object to close page manager for.
- */
-void x_pagesel_close (GschemToplevel *w_current)
-{
-  if (w_current->pswindow) {
-    g_assert (IS_PAGESEL (w_current->pswindow));
-    gtk_widget_destroy (w_current->pswindow);
-    w_current->pswindow = NULL;
-  }
-  
-}
-
-/*! \brief Update the list and status of <B>toplevel</B>'s pages.
- *  \par Function Description
- *  Updates the list and status of <B>toplevel</B>\'s pages if the page
- *  manager dialog is opened.
- *
- *  \param [in] w_current  The GschemToplevel object to update.
- */
-void x_pagesel_update (GschemToplevel *w_current)
-{
-  if (w_current->pswindow) {
-    g_assert (IS_PAGESEL (w_current->pswindow));
-    pagesel_update (PAGESEL (w_current->pswindow));
-  }
-
-  PAGE *page = gschem_page_view_get_page (gschem_toplevel_get_current_page_view (w_current));
-  if (page == NULL) {
-    return;
-  }
-
-  i_set_filename (w_current, s_page_get_filename (page),
-                  page->CHANGED);
-
-  if (x_tabs_enabled())
-  {
-    x_tabs_hdr_update (w_current, page);
-  }
-}
-
-/*! \brief Callback for page manager response.
- *  \par Function Description
- *  Handles response <B>arg1</B> of the page manager dialog <B>dialog</B>.
- *
- *  \param [in] dialog     GtkDialog that issues callback.
- *  \param [in] arg1       Response argument of page manager dialog.
- *  \param [in] user_data  Pointer to relevant GschemToplevel structure.
- */
-static void x_pagesel_callback_response (GtkDialog *dialog,
-					 gint arg1,
-					 gpointer user_data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data);
-
-  switch (arg1)
-  {
-      case PAGESEL_RESPONSE_UPDATE:
-        pagesel_update (PAGESEL (dialog));
-        break;
-      case GTK_RESPONSE_DELETE_EVENT:
-      case GTK_RESPONSE_CLOSE:
-        g_assert (GTK_WIDGET (dialog) == w_current->pswindow);
-        gtk_widget_hide (GTK_WIDGET (dialog));
-        break;
-      default:
-        g_assert_not_reached ();
-  }
-  
-}
-
-enum {
   COLUMN_PAGE,
   COLUMN_NAME,
   COLUMN_CHANGED,
@@ -163,28 +40,176 @@ enum {
 };
 
 
-static void pagesel_popup_menu (Pagesel *pagesel,
-                                GdkEventButton *event);
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/* --------------------------------------------------------
+ *
+ * forward declarations:
  *
  */
-static void pagesel_callback_selection_changed (GtkTreeSelection *selection,
-						gpointer user_data)
-{
-  GtkTreeModel *model;
-  GtkTreeIter iter;
-  Pagesel *pagesel = (Pagesel*)user_data;
-  GschemToplevel *w_current;
-  PAGE *page;
 
-  if (!gtk_tree_selection_get_selected (selection, &model, &iter)) {
+static void
+pagesel_update (PageSelectWidget* pagesel);
+
+static void
+pagesel_popup_menu (PageSelectWidget* pagesel, GdkEventButton* event);
+
+static void
+widget_create (PageSelectWidget *pagesel);
+
+
+
+/*! \brief Create new PageSelectWidget object.
+ *  \public
+ */
+GtkWidget*
+page_select_widget_new (GschemToplevel* w_current)
+{
+  gpointer obj = g_object_new (PAGE_SELECT_WIDGET_TYPE,
+                               "toplevel", w_current,
+                               NULL);
+  return GTK_WIDGET (obj);
+}
+
+
+
+/* --------------------------------------------------------
+ *
+ * gobject stuff:
+ *
+ */
+
+static void
+get_property (GObject* obj, guint id, GValue* val, GParamSpec* spec)
+{
+  PageSelectWidget* widget = PAGE_SELECT_WIDGET (obj);
+
+  if (id == PROPID_TOPLEVEL)
+  {
+    g_value_set_pointer (val, widget->toplevel_);
+  }
+  else
+  {
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (obj, id, spec);
+  }
+}
+
+
+
+static void
+set_property (GObject* obj, guint id, const GValue* val, GParamSpec* spec)
+{
+  PageSelectWidget* widget = PAGE_SELECT_WIDGET (obj);
+
+  if (id == PROPID_TOPLEVEL)
+  {
+    gpointer ptr = g_value_get_pointer (val);
+    widget->toplevel_ = GSCHEM_TOPLEVEL (ptr);
+  }
+  else
+  {
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (obj, id, spec);
+  }
+}
+
+
+
+static void
+page_select_widget_class_init (PageSelectWidgetClass* cls)
+{
+  GObjectClass* gcls = G_OBJECT_CLASS (cls);
+
+  gcls->get_property = &get_property;
+  gcls->set_property = &set_property;
+
+  GParamFlags flags = (GParamFlags) (G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
+  GParamSpec* spec = g_param_spec_pointer ("toplevel", "", "", flags);
+  g_object_class_install_property (gcls, PROPID_TOPLEVEL, spec);
+}
+
+
+
+static void
+page_select_widget_init (PageSelectWidget* widget)
+{
+  widget_create (widget);
+}
+
+
+
+/* --------------------------------------------------------
+ *
+ * implementation:
+ *
+ */
+
+/*! \brief Close the page manager.
+ *  \public
+ */
+void
+page_select_widget_close (GschemToplevel* w_current)
+{
+  if (w_current->page_select_dialog)
+  {
+    gtk_widget_destroy (w_current->page_select_dialog);
+    w_current->page_select_dialog = NULL;
+  }
+}
+
+
+
+/*! \brief Update the list and status of pages in the page manager.
+ *  \public
+ */
+void
+page_select_widget_update (GschemToplevel* w_current)
+{
+  GtkWidget* widget = w_current->page_select_widget;
+
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (IS_PAGE_SELECT_WIDGET (widget));
+
+  if (gtk_widget_get_visible (widget))
+  {
+    pagesel_update (PAGE_SELECT_WIDGET (widget));
+  }
+
+  GschemPageView* view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE* page = gschem_page_view_get_page (view);
+
+  if (page == NULL)
+  {
     return;
   }
 
-  w_current = GSCHEM_DIALOG (pagesel)->w_current;
+  i_set_filename (w_current, s_page_get_filename (page), page->CHANGED);
+
+  if (x_tabs_enabled())
+  {
+    x_tabs_hdr_update (w_current, page);
+  }
+}
+
+
+
+/*! \brief "changed" signal handler for GtkTreeSelection object.
+ */
+static void
+pagesel_callback_selection_changed (GtkTreeSelection* selection,
+                                    gpointer data)
+{
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  PageSelectWidget *pagesel = (PageSelectWidget*) data;
+  GschemToplevel *w_current;
+  PAGE *page;
+
+  if (!gtk_tree_selection_get_selected (selection, &model, &iter))
+  {
+    return;
+  }
+
+  w_current = pagesel->toplevel_;
+
   gtk_tree_model_get (model, &iter,
                       COLUMN_PAGE, &page,
                       -1);
@@ -192,23 +217,28 @@ static void pagesel_callback_selection_changed (GtkTreeSelection *selection,
   /* Since setting the current page may call x_pagesel_update(), which
    * might change the current page selection, make sure we do nothing
    * if the newly-selected page is already the current page. */
-  if (page == w_current->toplevel->page_current) return;
+  if (page == w_current->toplevel->page_current)
+  {
+    return;
+  }
+
   x_window_set_current_page (w_current, page);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+
+
+/*! \brief "button-press-event" signal handler.
  */
-static gboolean pagesel_callback_button_pressed (GtkWidget *widget,
-						 GdkEventButton *event,
-						 gpointer user_data)
+static gboolean
+pagesel_callback_button_pressed (GtkWidget* widget,
+                                 GdkEventButton* event,
+                                 gpointer data)
 {
-  Pagesel *pagesel = (Pagesel*)user_data;
+  PageSelectWidget* pagesel = (PageSelectWidget*) data;
   gboolean ret = FALSE;
 
-  if (event->type == GDK_BUTTON_PRESS  &&  event->button == 3) {
+  if (event->type == GDK_BUTTON_PRESS && event->button == 3)
+  {
     pagesel_popup_menu (pagesel, event);
     ret = TRUE;
   }
@@ -216,18 +246,18 @@ static gboolean pagesel_callback_button_pressed (GtkWidget *widget,
   return ret;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+
+
+/*! \brief "popup-menu" signal handler.
  */
-static gboolean pagesel_callback_popup_menu (GtkWidget *widget,
-					     gpointer user_data)
+static gboolean
+pagesel_callback_popup_menu (GtkWidget* widget,
+                             gpointer data)
 {
-  Pagesel *pagesel = (Pagesel*)user_data;
+  PageSelectWidget* pagesel = (PageSelectWidget*) data;
 
   pagesel_popup_menu (pagesel, NULL);
-  
+
   return TRUE;
 }
 
@@ -238,7 +268,9 @@ static gboolean pagesel_callback_popup_menu (GtkWidget *widget,
 static void
 pagesel_callback_popup_new_page (GtkMenuItem* mitem, gpointer data)
 {
-  GschemToplevel* toplevel = GSCHEM_DIALOG(data)->w_current;
+  PageSelectWidget* pagesel = (PageSelectWidget*) data;
+  GschemToplevel* toplevel = pagesel->toplevel_;
+
   i_callback_file_new (toplevel, 0, NULL);
 }
 
@@ -249,7 +281,9 @@ pagesel_callback_popup_new_page (GtkMenuItem* mitem, gpointer data)
 static void
 pagesel_callback_popup_open_page (GtkMenuItem* mitem, gpointer data)
 {
-  GschemToplevel* toplevel = GSCHEM_DIALOG(data)->w_current;
+  PageSelectWidget* pagesel = (PageSelectWidget*) data;
+  GschemToplevel* toplevel = pagesel->toplevel_;
+
   i_callback_file_open (toplevel, 0, NULL);
 }
 
@@ -260,7 +294,9 @@ pagesel_callback_popup_open_page (GtkMenuItem* mitem, gpointer data)
 static void
 pagesel_callback_popup_save_page (GtkMenuItem* mitem, gpointer data)
 {
-  GschemToplevel* toplevel = GSCHEM_DIALOG(data)->w_current;
+  PageSelectWidget* pagesel = (PageSelectWidget*) data;
+  GschemToplevel* toplevel = pagesel->toplevel_;
+
   i_callback_file_save (toplevel, 0, NULL);
 }
 
@@ -271,7 +307,9 @@ pagesel_callback_popup_save_page (GtkMenuItem* mitem, gpointer data)
 static void
 pagesel_callback_popup_close_page (GtkMenuItem* mitem, gpointer data)
 {
-  GschemToplevel* toplevel = GSCHEM_DIALOG(data)->w_current;
+  PageSelectWidget* pagesel = (PageSelectWidget*) data;
+  GschemToplevel* toplevel = pagesel->toplevel_;
+
   i_callback_page_close (toplevel, 0, NULL);
 }
 
@@ -282,10 +320,10 @@ pagesel_callback_popup_close_page (GtkMenuItem* mitem, gpointer data)
 static void
 pagesel_callback_fullpaths_toggled (GtkToggleButton* btn, gpointer data)
 {
-  Pagesel* pagesel = (Pagesel*) data;
+  PageSelectWidget* pagesel = (PageSelectWidget*) data;
   g_return_if_fail (pagesel != NULL);
 
-  pagesel->show_full_paths = gtk_toggle_button_get_active (btn);
+  pagesel->show_paths_ = gtk_toggle_button_get_active (btn);
   pagesel_update (pagesel);
 
   /* Save config: whether to show full paths in the pages list:
@@ -296,7 +334,7 @@ pagesel_callback_fullpaths_toggled (GtkToggleButton* btn, gpointer data)
     eda_config_set_boolean (cfg,
                            "schematic.page-manager",
                            "show-full-paths",
-                           pagesel->show_full_paths);
+                           pagesel->show_paths_);
     GError* err = NULL;
     eda_config_save (cfg, &err);
     g_clear_error (&err);
@@ -307,17 +345,15 @@ pagesel_callback_fullpaths_toggled (GtkToggleButton* btn, gpointer data)
 
 
 /*! \brief Popup context-sensitive menu.
- *  \par Function Description
- *  Pops up a context-sensitive menu.
  *
- *  <B>event</B> can be NULL if the popup is triggered by a key binding
+ *  \a event can be NULL if the popup is triggered by a key binding
  *  instead of a mouse click.
  *
  *  \param [in] pagesel  The Pagesel object.
  *  \param [in] event    Mouse click event info.
  */
-static void pagesel_popup_menu (Pagesel *pagesel,
-				GdkEventButton *event)
+static void
+pagesel_popup_menu (PageSelectWidget* pagesel, GdkEventButton* event)
 {
   GtkTreePath *path;
   GtkWidget *menu;
@@ -333,14 +369,14 @@ static void pagesel_popup_menu (Pagesel *pagesel,
     { N_("Close Page"),   G_CALLBACK (pagesel_callback_popup_close_page)   },
     { NULL,               NULL                                             } };
   struct menuitem_t *tmp;
-  
+
   if (event != NULL &&
-      gtk_tree_view_get_path_at_pos (pagesel->treeview,
-                                     (gint)event->x, 
+      gtk_tree_view_get_path_at_pos (pagesel->treeview_,
+                                     (gint)event->x,
                                      (gint)event->y,
                                      &path, NULL, NULL, NULL)) {
     GtkTreeSelection *selection;
-    selection = gtk_tree_view_get_selection (pagesel->treeview);
+    selection = gtk_tree_view_get_selection (pagesel->treeview_);
     gtk_tree_selection_unselect_all (selection);
     gtk_tree_selection_select_path (selection, path);
     gtk_tree_path_free (path);
@@ -366,64 +402,24 @@ static void pagesel_popup_menu (Pagesel *pagesel,
   gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
                   (event != NULL) ? event->button : 0,
                   gdk_event_get_time ((GdkEvent*)event));
-  
-}
+
+} /* pagesel_popup_menu() */
 
 
-/*! \brief Handler for the notify::gschem-toplevel signal of GschemDialog
- *
- *  \par Function Description
- *
- *  When the gschem-toplevel property is set on the parent GschemDialog,
- *  we should update the pagesel dialog.
- *
- *  \param [in] gobject    the object which received the signal.
- *  \param [in] arg1      the GParamSpec of the property which changed
- *  \param [in] user_data  user data set when the signal handler was connected.
+
+/*! \brief Construct the widget.
  */
-static void notify_gschem_toplevel_cb (GObject    *gobject,
-                                       GParamSpec *arg1,
-                                       gpointer    user_data)
+static void
+widget_create (PageSelectWidget* pagesel)
 {
-  Pagesel *pagesel = PAGESEL( gobject );
+  GtkWidget* vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (pagesel), vbox);
 
-  pagesel_update( pagesel );
-}
-
-
-
-/*! \brief gobject class initialization function
- */
-static void pagesel_class_init (PageselClass *klass)
-{
-}
-
-
-
-/*! \brief gobject instance initialization function
- */
-static void pagesel_init (Pagesel *pagesel)
-{
   GtkWidget *scrolled_win, *treeview;
   GtkTreeModel *store;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
   GtkTreeSelection *selection;
-
-  /* dialog initialization */
-  g_object_set (G_OBJECT (pagesel),
-                /* GtkContainer */
-                "border-width",    0,
-                /* GtkWindow */
-                "title",           _("Page Manager"),
-                "default-height",  180,
-                "default-width",   515,
-                "modal",           FALSE,
-                "window-position", GTK_WIN_POS_NONE,
-                "type-hint",       GDK_WINDOW_TYPE_HINT_NORMAL,
-                /* GtkDialog */
-                "has-separator",   TRUE,
-                NULL);
 
   /* create the model for the treeview */
   store = (GtkTreeModel*)gtk_tree_store_new (NUM_COLUMNS,
@@ -461,7 +457,7 @@ static void pagesel_init (Pagesel *pagesel)
   g_signal_connect (selection,
                     "changed",
                     G_CALLBACK (pagesel_callback_selection_changed),
-                    pagesel); 
+                    pagesel);
   /*   - first column: page name */
   renderer = GTK_CELL_RENDERER (
     g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
@@ -493,21 +489,21 @@ static void pagesel_init (Pagesel *pagesel)
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
   gtk_tree_view_column_add_attribute (column, renderer, "active", COLUMN_CHANGED);
   gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
-      
+
   /* add the treeview to the scrolled window */
   gtk_container_add (GTK_CONTAINER (scrolled_win), treeview);
   /* set treeview of pagesel */
-  pagesel->treeview = GTK_TREE_VIEW (treeview);
+  pagesel->treeview_ = GTK_TREE_VIEW (treeview);
 
   /* add the scrolled window to the dialog vbox */
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pagesel)->vbox), scrolled_win,
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_win,
                       TRUE, TRUE, 0);
   gtk_widget_show_all (scrolled_win);
 
 
   /* By default, show basenames in the pages list:
   */
-  pagesel->show_full_paths = FALSE;
+  pagesel->show_paths_ = FALSE;
 
 
   /* Read config: whether to show full paths in the pages list:
@@ -522,7 +518,7 @@ static void pagesel_init (Pagesel *pagesel)
                                            &err);
     if (err == NULL)
     {
-      pagesel->show_full_paths = val;
+      pagesel->show_paths_ = val;
     }
 
     g_clear_error (&err);
@@ -533,7 +529,7 @@ static void pagesel_init (Pagesel *pagesel)
   */
 
   GtkWidget* hbox = gtk_hbox_new (TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pagesel)->vbox),
+  gtk_box_pack_start (GTK_BOX (vbox),
                       hbox, FALSE, TRUE, 0);
   gtk_widget_show (hbox);
 
@@ -541,7 +537,7 @@ static void pagesel_init (Pagesel *pagesel)
   gtk_box_pack_start (GTK_BOX (hbox), chkbox, FALSE, TRUE, 5);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (chkbox),
-                                pagesel->show_full_paths);
+                                pagesel->show_paths_);
 
   g_signal_connect(G_OBJECT (chkbox),
                    "toggled",
@@ -549,18 +545,6 @@ static void pagesel_init (Pagesel *pagesel)
                    pagesel);
 
   gtk_widget_show (chkbox);
-
-
-  /* now add buttons in the action area */
-  gtk_dialog_add_buttons (GTK_DIALOG (pagesel),
-                          /*  - update button */
-                          GTK_STOCK_REFRESH, PAGESEL_RESPONSE_UPDATE,
-                          /*  - close button */
-                          GTK_STOCK_CLOSE,   GTK_RESPONSE_CLOSE,
-                          NULL);
-
-  g_signal_connect( pagesel, "notify::gschem-toplevel",
-                    G_CALLBACK( notify_gschem_toplevel_cb ), NULL );
 
 } /* pagesel_init() */
 
@@ -580,8 +564,9 @@ static void pagesel_init (Pagesel *pagesel)
  *  \param [in] page    The PAGE object to update tree model from.
  *  \param [in] pagesel The Pagesel object.
  */
-static void add_page (GtkTreeModel *model, GtkTreeIter *parent,
-                      GedaPageList *pages, PAGE *page, Pagesel *pagesel)
+static void
+add_page (GtkTreeModel *model, GtkTreeIter *parent,
+          GedaPageList *pages, PAGE *page, PageSelectWidget *pagesel)
 {
   GtkTreeIter iter;
   PAGE *p_current;
@@ -593,7 +578,7 @@ static void add_page (GtkTreeModel *model, GtkTreeIter *parent,
                          parent);
 
   const gchar* page_filename = s_page_get_filename (page);
-  gchar* display_filename = pagesel->show_full_paths
+  gchar* display_filename = pagesel->show_paths_
                             ? g_strdup (page_filename)
                             : g_path_get_basename (page_filename);
 
@@ -616,16 +601,15 @@ static void add_page (GtkTreeModel *model, GtkTreeIter *parent,
       add_page (model, &iter, pages, p_current, pagesel);
     }
   }
-}
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *  Recursive function to select the current page in the treeview
- *
+} /* add_page() */
+
+
+
+/*! \brief Recursive function to select the current page in the treeview.
  */
-static void select_page(GtkTreeView *treeview,
-			GtkTreeIter *parent, PAGE *page)
+static void
+select_page(GtkTreeView* treeview, GtkTreeIter* parent, PAGE* page)
 {
   GtkTreeModel *treemodel = gtk_tree_view_get_model (treeview);
   GtkTreeIter iter;
@@ -648,29 +632,28 @@ static void select_page(GtkTreeView *treeview,
     }
 
     select_page (treeview, &iter, page);
-    
-  } while (gtk_tree_model_iter_next (treemodel, &iter));
-  
-}
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+  } while (gtk_tree_model_iter_next (treemodel, &iter));
+
+} /* select_page() */
+
+
+
+/*! \brief Rebuild the list of pages.
  */
-static void pagesel_update (Pagesel *pagesel)
+static void
+pagesel_update (PageSelectWidget* pagesel)
 {
   GtkTreeModel *model;
   TOPLEVEL *toplevel;
   PAGE *p_current;
   GList *iter;
 
-  g_assert (IS_PAGESEL (pagesel));
+  g_assert (IS_PAGE_SELECT_WIDGET (pagesel));
+  g_return_if_fail (pagesel->toplevel_ != NULL);
 
-  g_return_if_fail (GSCHEM_DIALOG (pagesel)->w_current);
-
-  toplevel = gschem_toplevel_get_toplevel (GSCHEM_DIALOG (pagesel)->w_current);
-  model    = gtk_tree_view_get_model (pagesel->treeview);
+  toplevel = gschem_toplevel_get_toplevel (pagesel->toplevel_);
+  model    = gtk_tree_view_get_model (pagesel->treeview_);
 
   /* wipe out every thing in the store */
   gtk_tree_store_clear (GTK_TREE_STORE (model));
@@ -689,6 +672,7 @@ static void pagesel_update (Pagesel *pagesel)
   }
 
   /* select the current page in the treeview */
-  select_page (pagesel->treeview, NULL, toplevel->page_current);  
-}
+  select_page (pagesel->treeview_, NULL, toplevel->page_current);
+
+} /* pagesel_update() */
 

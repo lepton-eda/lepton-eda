@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+
 #include <config.h>
-
-#include <stdio.h>
-
 #include "gschem.h"
+
 
 #define GSCHEM_THEME_ICON_NAME "lepton-schematic"
 
@@ -609,7 +608,7 @@ void x_window_close(GschemToplevel *w_current)
   if (w_current->aewindow)
   gtk_widget_destroy(w_current->aewindow);
 
-  x_pagesel_close (w_current);
+  page_select_widget_close (w_current);
 
   if (w_current->hkwindow)
   gtk_widget_destroy(w_current->hkwindow);
@@ -799,7 +798,7 @@ x_window_set_current_page_impl (GschemToplevel *w_current, PAGE *page)
   i_update_menus (w_current);
   /* i_set_filename (w_current, page->page_filename); */
 
-  x_pagesel_update (w_current);
+  page_select_widget_update (w_current);
   x_multiattrib_update (w_current);
 
 } /* x_window_set_current_page_impl() */
@@ -872,8 +871,7 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
     /* add to recent file list */
     recent_manager_add (w_current, filename);
 
-    /* i_set_filename (w_current, page->page_filename); */
-    x_pagesel_update (w_current);
+    page_select_widget_update (w_current);
   }
 
   /* log status of operation */
@@ -882,7 +880,8 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
   i_set_state_msg  (w_current, SELECT, state_msg);
 
   return ret;
-}
+
+} /* x_window_save_page() */
 
 
 

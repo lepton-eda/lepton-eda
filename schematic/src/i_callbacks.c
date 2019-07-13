@@ -250,7 +250,7 @@ DEFINE_I_CALLBACK(file_save_all)
     }
   }
 
-  x_pagesel_update (w_current);
+  page_select_widget_update (w_current);
   i_update_menus(w_current);
 
 } /* i_callback_file_save_all() */
@@ -847,7 +847,7 @@ DEFINE_I_CALLBACK(edit_embed)
     }
 
     o_undo_savestate_old(w_current, UNDO_ALL);
-    x_pagesel_update (w_current);
+    page_select_widget_update (w_current);
 
   } else {
     /* nothing selected, go back to select state */
@@ -889,7 +889,7 @@ DEFINE_I_CALLBACK(edit_unembed)
     }
 
     o_undo_savestate_old(w_current, UNDO_ALL);
-    x_pagesel_update (w_current);
+    page_select_widget_update (w_current);
 
   } else {
     /* nothing selected, go back to select state */
@@ -1379,7 +1379,8 @@ DEFINE_I_CALLBACK(page_manager)
 
   g_return_if_fail (w_current != NULL);
 
-  x_pagesel_open (w_current);
+  x_widgets_show_page_select (w_current);
+  page_select_widget_update (w_current);
 }
 
 /*! \todo Finish function documentation!!!

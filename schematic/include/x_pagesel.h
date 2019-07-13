@@ -1,5 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
+ * Copyright (C) 2012 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -21,30 +23,43 @@
 #define LEPTON_PAGESEL_H_
 
 
-#define TYPE_PAGESEL         (pagesel_get_type())
-#define PAGESEL(obj)         (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_PAGESEL, Pagesel))
-#define PAGESEL_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), TYPE_PAGESEL, PageselClass))
-#define IS_PAGESEL(obj)      (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_PAGESEL))
+#define PAGE_SELECT_WIDGET_TYPE (page_select_widget_get_type())
+#define PAGE_SELECT_WIDGET(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PAGE_SELECT_WIDGET_TYPE, PageSelectWidget))
+#define PAGE_SELECT_WIDGET_CLASS(cls) (G_TYPE_CHECK_CLASS_CAST ((cls), PAGE_SELECT_WIDGET_TYPE, PageSelectWidgetClass))
+#define IS_PAGE_SELECT_WIDGET(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), PAGE_SELECT_WIDGET_TYPE))
+#define PAGE_SELECT_WIDGET_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), PAGE_SELECT_WIDGET_TYPE, PageSelectWidgetClass))
 
 
-typedef struct _PageselClass PageselClass;
-typedef struct _Pagesel      Pagesel;
-
-
-struct _PageselClass {
-  GschemDialogClass parent_class;
+struct _PageSelectWidgetClass
+{
+  GschemBinClass parent_class;
 };
 
-struct _Pagesel {
-  GschemDialog parent_instance;
+struct _PageSelectWidget
+{
+  GschemBinClass parent_instance;
 
-  GtkTreeView *treeview;
-
-  gboolean show_full_paths;
+  GschemToplevel* toplevel_;
+  GtkTreeView*    treeview_;
+  gboolean        show_paths_;
 };
 
+typedef struct _PageSelectWidgetClass PageSelectWidgetClass;
+typedef struct _PageSelectWidget      PageSelectWidget;
 
-GType pagesel_get_type (void);
+
+GtkWidget*
+page_select_widget_new (GschemToplevel* w_current);
+
+void
+page_select_widget_close (GschemToplevel *w_current);
+
+void
+page_select_widget_update (GschemToplevel *w_current);
+
+
+GType
+page_select_widget_get_type();
 
 #endif /* LEPTON_PAGESEL_H_ */
 

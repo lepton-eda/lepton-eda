@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -511,7 +512,7 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
   g_free(save_filename);
 
   /* final redraw */
-  x_pagesel_update (w_current);
+  page_select_widget_update (w_current);
   x_multiattrib_update (w_current);
   i_update_menus(w_current);
 
