@@ -628,6 +628,17 @@ select_page(GtkTreeView* treeview, GtkTreeIter* parent, PAGE* page)
       gtk_tree_selection_select_iter (
         gtk_tree_view_get_selection (treeview),
         &iter);
+
+      /* Ensure that currently selected item is visible:
+      */
+      GtkTreePath* path = gtk_tree_model_get_path (treemodel, &iter);
+      if (path != NULL)
+      {
+        gtk_tree_view_scroll_to_cell (treeview, path, NULL, TRUE, 0.5, 0);
+        gtk_tree_view_set_cursor (treeview, path, NULL, FALSE);
+        gtk_tree_path_free (path);
+      }
+
       return;
     }
 
