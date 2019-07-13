@@ -40,7 +40,6 @@ typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 #include "gschem_preview.h"
 #include "x_compselect.h"
 #include "x_dialog.h"
-#include "x_pagesel.h"
 #include "x_states.h"
 #include "gschem_swatch_column_renderer.h"
 #include "gschem_fill_swatch_cell_renderer.h"
@@ -57,6 +56,7 @@ typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 
 #include "color_edit_widget.h"
 #include "font_select_widget.h"
+#include "page_select_widget.h"
 
 /* Gettext translation */
 #include "gettext.h"

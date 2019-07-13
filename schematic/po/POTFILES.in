@@ -94,7 +94,7 @@ schematic/src/x_menus.c
 schematic/src/x_misc.c
 schematic/src/x_multiattrib.c
 schematic/src/x_newtext.c
-schematic/src/x_pagesel.c
+schematic/src/page_select_widget.c
 schematic/src/x_print.c
 schematic/src/x_rc.c
 schematic/src/x_script.c

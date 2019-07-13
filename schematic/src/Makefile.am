@@ -112,7 +112,7 @@ lepton_schematic_SOURCES = \
 	x_misc.c \
 	x_multiattrib.c \
 	x_newtext.c \
-	x_pagesel.c \
+	page_select_widget.c \
 	x_print.c \
 	x_rc.c \
 	x_script.c \
