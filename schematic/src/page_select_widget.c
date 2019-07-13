@@ -263,6 +263,18 @@ pagesel_callback_popup_menu (GtkWidget* widget,
 
 
 
+/*! \brief Context menu item handler for "Refresh".
+ */
+static void
+pagesel_callback_popup_refresh (GtkMenuItem* mitem, gpointer data)
+{
+  PageSelectWidget* pagesel = (PageSelectWidget*) data;
+
+  pagesel_update (pagesel);
+}
+
+
+
 /*! \brief Context menu item handler for "New Page".
  */
 static void
@@ -362,6 +374,8 @@ pagesel_popup_menu (PageSelectWidget* pagesel, GdkEventButton* event)
     GCallback callback;
   };
   struct menuitem_t menuitems[] = {
+    { N_("Refresh"),      G_CALLBACK (pagesel_callback_popup_refresh)      },
+    { "-",                NULL                                             },
     { N_("New Page"),     G_CALLBACK (pagesel_callback_popup_new_page)     },
     { N_("Open Page..."), G_CALLBACK (pagesel_callback_popup_open_page)    },
     { "-",                NULL                                             },
