@@ -503,7 +503,7 @@ finalize (GObject* object)
 
   /* disconnect the "changed" signal handler:
   */
-  g_signal_handlers_disconnect_by_func (cls->buffer, &changed_cb, object);
+  g_signal_handlers_disconnect_by_func (cls->buffer, (gpointer) changed_cb, object);
 
   G_OBJECT_CLASS (gschem_log_widget_parent_class)->finalize (object);
 }
