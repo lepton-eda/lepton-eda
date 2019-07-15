@@ -142,21 +142,6 @@ page_select_widget_init (PageSelectWidget* widget)
  *
  */
 
-/*! \brief Close the page manager.
- *  \public
- */
-void
-page_select_widget_close (GschemToplevel* w_current)
-{
-  if (w_current->page_select_dialog)
-  {
-    gtk_widget_destroy (w_current->page_select_dialog);
-    w_current->page_select_dialog = NULL;
-  }
-}
-
-
-
 /*! \brief Update the list and status of pages in the page manager.
  *  \public
  */
