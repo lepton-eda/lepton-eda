@@ -52,9 +52,6 @@ GtkWidget*
 page_select_widget_new (GschemToplevel* w_current);
 
 void
-page_select_widget_close (GschemToplevel* w_current);
-
-void
 page_select_widget_update (GschemToplevel* w_current);
 
 

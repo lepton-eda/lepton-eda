@@ -608,8 +608,6 @@ void x_window_close(GschemToplevel *w_current)
   if (w_current->aewindow)
   gtk_widget_destroy(w_current->aewindow);
 
-  page_select_widget_close (w_current);
-
   if (w_current->hkwindow)
   gtk_widget_destroy(w_current->hkwindow);
 
