@@ -47,8 +47,6 @@ BEGIN
 			14 => Vcc);
 
   U400 : ENTITY 7400
-	GENERIC MAP (
-			slot => 1)
 	PORT MAP (	1 => signal1,
 			2 => DGND,
 			3 => signal3,
@@ -63,8 +61,6 @@ BEGIN
 			14 => Vcc);
 
   U500 : ENTITY 7400
-	GENERIC MAP (
-			slot => 1)
 	PORT MAP (	1 => signal1,
 			2 => OPEN,
 			3 => unnamed_net4,

@@ -609,7 +609,8 @@ ARCHITECTURE ~A OF ~A IS
   (define non-generics '(refdes
                          source
                          architecture
-                         net))
+                         net
+                         slot))
 
   (define (permitted-attrib->pair attrib)
     (let ((value (gnetlist:get-package-attribute uref attrib)))
