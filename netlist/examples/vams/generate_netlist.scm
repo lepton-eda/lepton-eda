@@ -89,10 +89,7 @@
        "-g"
        "vams"
        (get-selected-filename)
-     )
-
-     (newline)
-     )))
+       ))))
 
 
 ;; HELP FUNCTIONS
