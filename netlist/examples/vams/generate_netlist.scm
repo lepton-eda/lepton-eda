@@ -26,19 +26,23 @@
 
 (use-modules (geda page) (geda object) (geda attrib))
 
+;; Generate a sensible output-filename
+;; <old-path>/<old-basefilename>.vhdl.
+(define (schematic-name->vhdl-name name)
+  (string-join
+   (reverse
+    (cons "vhdl"
+          (cdr
+           (reverse
+            (string-split (basename name) #\.)))))
+   "."))
+
 (define generate-netlist
   (lambda ()
     (let* ((command "")
 	   (source-file (page-filename (active-page)))
 	   (source-file-length (string-length source-file))
-
-	   ;;generate a sensible output-filename (<old-path>/<old-basefilename>.vhdl)
-	   (target-file (string-append
-			 (substring source-file
-				    (+ (string-rindex source-file #\/ 0
-						      (string-length source-file)) 1)
-				    (- (string-length source-file) 4))
-			 ".vhdl")))
+           (target-file (schematic-name->vhdl-name source-file)))
 
       ;;generating the complex gnetlist command
       (display (getcwd))
