@@ -92,13 +92,7 @@
      )
 
      (newline)
-
-     ;; not important
-     ;;(set! command (string-append "dtpad " vhdl-path "/" target-file " &"))
-     ;;(if (null? top-attribs)
-     ;;	 (system command))
-
-)))
+     )))
 
 
 ;; HELP FUNCTIONS
