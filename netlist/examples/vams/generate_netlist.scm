@@ -42,7 +42,7 @@
 
       ;;generating the complex gnetlist command
       (display (getcwd))
-      (set! command "lepton-netlist -w -c '(chdir \"..\") (display (getcwd)) (newline)'")
+      (set! command "lepton-netlist -c '(chdir \"..\") (display (getcwd)) (newline)'")
       (set! command (string-append command " -o " vhdl-path "/" target-file))
       (set! command (string-append command " -g vams " source-file))
       (display "\ngenerating netlist from current schematic\n")
@@ -77,7 +77,6 @@
 
      (system*
        "lepton-netlist"
-       "-w"
        "-c"
        (format #f "(chdir \"..\")~
                    (define top-attribs '~a)~
