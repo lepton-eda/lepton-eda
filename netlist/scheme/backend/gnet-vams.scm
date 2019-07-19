@@ -150,7 +150,7 @@
 ;;; not really clever, but a first solution
 
 (define (vams:write-context-clause)
-  (format #t "LIBRARY ieee,disciplines;
+  (format #f "LIBRARY ieee,disciplines;
 USE ieee.math_real.all;
 USE ieee.math_real.all;
 USE work.electrical_system.all;
