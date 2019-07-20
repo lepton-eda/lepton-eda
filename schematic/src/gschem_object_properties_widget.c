@@ -656,7 +656,7 @@ update_cap_style_widget (GschemObjectPropertiesWidget *dialog)
   g_return_if_fail (dialog->line_end != NULL);
 
   if (dialog->adapter != NULL) {
-    OBJECT_END end = (OBJECT_END) gschem_selection_adapter_get_cap_style (dialog->adapter);
+    int end = gschem_selection_adapter_get_cap_style (dialog->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (dialog->line_end),
                                      (gpointer) update_cap_style_model,
@@ -668,7 +668,7 @@ update_cap_style_widget (GschemObjectPropertiesWidget *dialog)
                                        (gpointer) update_cap_style_model,
                                        dialog);
 
-    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_end), (end != NO_SELECTION));
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_end), end != NO_SELECTION);
   }
 }
 
@@ -787,7 +787,7 @@ update_line_type_widget (GschemObjectPropertiesWidget *dialog)
   g_return_if_fail (dialog->line_type != NULL);
 
   if (dialog->adapter != NULL) {
-    OBJECT_TYPE type = (OBJECT_TYPE) gschem_selection_adapter_get_line_type (dialog->adapter);
+    int type = gschem_selection_adapter_get_line_type (dialog->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (dialog->line_type),
                                      (gpointer) update_line_type_model,
@@ -799,7 +799,7 @@ update_line_type_widget (GschemObjectPropertiesWidget *dialog)
                                        (gpointer) update_line_type_model,
                                        dialog);
 
-    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_type), (type != NO_SELECTION));
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_type), type != NO_SELECTION);
   }
 }
 
