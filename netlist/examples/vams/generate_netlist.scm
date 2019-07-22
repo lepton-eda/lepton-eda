@@ -15,9 +15,6 @@
 ;;   1 - generate netlist of current schematic
 ;;   2 - generate entity of selected component, or of toplevel, when non selected
 ;;
-;; get-selected-filename: - returns the whole filename of
-;;                          the current-gschem-schematic
-;;
 ;; get-selected-component-attributes: - returns all toplevel attributes
 ;;                                      of the current entity
 
@@ -79,9 +76,10 @@
             (append (substring (car top-attribs) 7
                                (string-length (car top-attribs))))
             (which-source-file (cdr top-attribs)))
-        (append (get-selected-filename))))
+        (append (page-filename (active-page)))))
 
-  (let* ((top-attribs (get-selected-component-attributes))
+  (let* ((sch-name (page-filename (active-page)))
+         (top-attribs (get-selected-component-attributes))
          (source-name (which-source-file top-attribs))
          ;; generates the vhdl-name, like <source-filebasename>.vhdl
          (vhdl-name (replace-extension (basename source-name) "vhdl"))
@@ -97,10 +95,10 @@
                                        vhdl-name)
                         "-g"
                         "vams"
-                        (get-selected-filename))))
+                        sch-name)))
 
     (log! 'message (format #f "Generate entity for ~A:\n~A\n"
-                           (get-selected-filename)
+                           sch-name
                            command))
     (apply system* command)))
 
