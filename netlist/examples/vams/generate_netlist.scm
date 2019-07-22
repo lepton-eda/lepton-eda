@@ -59,7 +59,9 @@
          (command (make-netlist-command
                    ".."
                    sch-name
-                   (format #f "~a/~a" vhdl-path vhdl-name))))
+                   (string-append vhdl-path
+                                  file-name-separator-string
+                                  vhdl-name))))
     (log! 'message
           (format #f "Generate netlist from current schematic\n~A\n"
                   command))
@@ -93,10 +95,9 @@
                                     (define generate-mode '2)"
                                 top-attribs)
                         "-o"
-                        (format #f
-                                "~a/~a"
-                                vhdl-path
-                                target-file)
+                        (string-append vhdl-path
+                                       file-name-separator-string
+                                       target-file)
                         "-g"
                         "vams"
                         (get-selected-filename))))
