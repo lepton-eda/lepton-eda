@@ -39,28 +39,28 @@
             (string-split (basename name) #\.)))))
    "."))
 
-(define generate-netlist
-  (lambda ()
-    (let* ((source-file (page-filename (active-page)))
-	   (target-file (schematic-name->vhdl-name source-file))
-           (command (list "lepton-netlist"
-                          "-c"
-                          "(chdir \"..\")"
-                          "-o"
-                          (format #f
-                                  "~a/~a"
-                                  vhdl-path
-                                  target-file)
-                          "-g"
-                          "vams"
-                          source-file)))
+(define (generate-netlist)
+  (let* ((source-file (page-filename (active-page)))
+         (target-file (schematic-name->vhdl-name source-file))
+         (command (list "lepton-netlist"
+                        "-c"
+                        "(chdir \"..\")"
+                        "-o"
+                        (format #f
+                                "~a/~a"
+                                vhdl-path
+                                target-file)
+                        "-g"
+                        "vams"
+                        source-file)))
 
-      ;;generating the complex gnetlist command
-      (display (getcwd))
-      (display "\ngenerating netlist from current schematic\n")
-      (display command)
-      (newline)
-      (apply system* command))))
+    ;;generating the complex gnetlist command
+    (display (getcwd))
+    (display "\ngenerating netlist from current schematic\n")
+    (display command)
+    (newline)
+    (apply system* command)))
+
 
 ;; Makes the same like generate-netlist, but its activate a
 ;; generating-entity-call.
