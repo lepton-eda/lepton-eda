@@ -76,7 +76,7 @@
             (append (substring (car top-attribs) 7
                                (string-length (car top-attribs))))
             (which-source-file (cdr top-attribs)))
-        (append (page-filename (active-page)))))
+        (page-filename (active-page))))
 
   (let* ((sch-name (page-filename (active-page)))
          (top-attribs (get-selected-component-attributes))
