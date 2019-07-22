@@ -62,8 +62,7 @@
 
 (define generate-entity
  (lambda ()
-   (let* ((command "")
-	  (top-attribs (get-selected-component-attributes))
+   (let* ((top-attribs (get-selected-component-attributes))
 
 	  ;; search the right schematic-file for gnetlist call
 	  ;; Is necessary, when the selected component contents a
