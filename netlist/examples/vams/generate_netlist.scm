@@ -24,7 +24,10 @@
 ;; This function only put together the gnetlist command for the
 ;; generating-netlist-call.
 
-(use-modules (geda page) (geda object) (geda attrib))
+(use-modules (geda attrib)
+             (geda log)
+             (geda object)
+             (geda page))
 
 ;;; Generate vhdl file name for given schematic NAME.
 (define (schematic-name->vhdl-name name)
@@ -122,4 +125,4 @@
 (global-set-key "G N" 'generate-netlist)
 (global-set-key "G E" 'generate-entity)
 
-(display "loaded generate-netlist.scm\n")
+(log! 'message "Loaded generate-netlist.scm\n")
