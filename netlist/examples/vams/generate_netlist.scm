@@ -39,6 +39,7 @@
             (string-split (basename name) #\.)))))
    "."))
 
+;;; Generates full VAMS netlist.
 (define (generate-netlist)
   (let* ((source-file (page-filename (active-page)))
          (target-file (schematic-name->vhdl-name source-file))
