@@ -78,7 +78,7 @@
        (format #f "(chdir \"..\")~
                    (define top-attribs '~a)~
                    (define generate-mode '2)"
-                   (list2string top-attribs))
+               top-attribs)
        "-o"
        (format #f "~a/~a"
                   vhdl-path
@@ -90,10 +90,6 @@
 
 
 ;; HELP FUNCTIONS
-
-;; generates a string from a list.
-(define (list2string ls)
-  (string-append "(" (string-join ls " ") ")"))
 
 ;; search the right source-file, when selected component contents a
 ;; underlying schematic. which is saved in the source-attribute of
