@@ -55,11 +55,9 @@
                         "vams"
                         source-file)))
 
-    ;;generating the complex gnetlist command
-    (display (getcwd))
-    (display "\ngenerating netlist from current schematic\n")
-    (display command)
-    (newline)
+    (log! 'message
+          (format #f "Generate netlist from current schematic\n~A\n"
+                  command))
     (apply system* command)))
 
 
