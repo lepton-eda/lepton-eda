@@ -54,12 +54,12 @@
 
 ;;; Generates full VAMS netlist.
 (define (generate-netlist)
-  (let* ((source-file (page-filename (active-page)))
-         (target-file (schematic-name->vhdl-name source-file))
+  (let* ((sch-name (page-filename (active-page)))
+         (vhdl-name (schematic-name->vhdl-name sch-name))
          (command (make-netlist-command
                    ".."
-                   source-file
-                   (format #f "~a/~a" vhdl-path target-file))))
+                   sch-name
+                   (format #f "~a/~a" vhdl-path vhdl-name))))
     (log! 'message
           (format #f "Generate netlist from current schematic\n~A\n"
                   command))
