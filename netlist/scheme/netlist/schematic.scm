@@ -49,6 +49,8 @@
                    schematic-connections set-schematic-connections!)
 
   #:export (make-toplevel-schematic
+            file-name-list->schematic
+            page-list->schematic
             schematic-toplevel-attrib
             schematic-non-unique-package-names
             schematic-package-names
@@ -204,23 +206,25 @@
                                     (schematic-component-refdes schematic-component)))
   schematic-component)
 
-(define (make-toplevel-schematic files netlist-mode)
-  "Creates a new schematic record based on TOPLEVEL-PAGES which
-must be a list of pages."
+
+(define* (page-list->schematic pages
+                               #:optional (netlist-mode 'geda))
+  "Creates a new schematic record from PAGES, which must be a list
+of schematic pages.  An optional argument NETLIST-MODE can be
+'geda or 'spice, the former value is the default."
   (define (plain-package? x)
     (and (not (schematic-component-graphical? x))
          (not (schematic-component-nc? x))))
 
   (let* ((id (next-schematic-id))
-         (toplevel-pages (map filename->page files))
-         (toplevel-attribs (get-toplevel-attributes toplevel-pages))
-         (toplevel-netlist (traverse toplevel-pages netlist-mode))
+         (toplevel-attribs (get-toplevel-attributes pages))
+         (toplevel-netlist (traverse pages netlist-mode))
          (full-netlist (map compat-refdes toplevel-netlist))
          (netlist (filter plain-package? full-netlist))
          (packages (make-package-list netlist))
-         (connections (make-schematic-connections toplevel-pages))
+         (connections (make-schematic-connections pages))
          (graphicals (filter schematic-component-graphical? full-netlist))
-         (tree (schematic->sxml netlist toplevel-pages))
+         (tree (schematic->sxml netlist pages))
          (nu-nets (get-all-nets netlist))
          (unique-nets (get-nets netlist)))
     ;; Partition all unique net names into 'no-connection' nets
@@ -230,7 +234,7 @@ must be a list of pages."
                      (nc-net? x (filter schematic-component-nc? full-netlist)))
                    unique-nets)
       (make-schematic id
-                      toplevel-pages
+                      pages
                       toplevel-attribs
                       tree
                       netlist
@@ -241,6 +245,20 @@ must be a list of pages."
                       nc-nets
                       connections
                       ))))
+
+
+(define* (file-name-list->schematic filenames
+                                    #:optional (netlist-mode 'geda))
+  "Creates a new schematic record from FILENAMES, which must be a
+list of strings representing file names.  An optional argument
+NETLIST-MODE can be 'geda or 'spice, the former value is the
+default."
+  (let ((pages (map filename->page filenames)))
+    (page-list->schematic pages netlist-mode)))
+
+
+;;; An alias for the above procedure.
+(define make-toplevel-schematic file-name-list->schematic)
 
 (define (schematic-toplevel-attrib schematic attrib-name)
   "Returns value of toplevel attribute ATTRIB-NAME for SCHEMATIC."
