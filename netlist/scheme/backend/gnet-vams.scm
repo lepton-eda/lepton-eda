@@ -529,6 +529,8 @@ ARCHITECTURE ~A OF ~A IS
 ;;;    as well as replicating the identifier as component simple name just to
 ;;;    be in line with good VAMS-93 practice and keep compilers happy.
 
+;;; Checks if VAL is a value of a default generic attribute.  Such
+;;; values should start with '?'.
 (define (default-generic-value? val)
   (char=? (string-ref val 0) #\?))
 
