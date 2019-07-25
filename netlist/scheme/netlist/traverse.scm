@@ -216,7 +216,6 @@
                  nets))
            (make-package-pin (object-id object)
                              object
-                             'net-pin
                              (assq-ref attribs 'pinnumber)
                              netname
                              (assq-ref attribs 'pinlabel)
@@ -293,7 +292,7 @@
            (object #f)
            (attribs '())
            (nets (list (make-pin-net id net-priority netname refdes pinnumber))))
-      (make-package-pin id object 'net pinnumber netname label attribs nets #f)))
+      (make-package-pin id object pinnumber netname label attribs nets #f)))
 
   (define (add-net-power-pin-override pin net-map tag)
     (define (power-pin? pin)

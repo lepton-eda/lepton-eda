@@ -25,7 +25,6 @@
   #:export-syntax (make-package-pin package-pin?
                    package-pin-id set-package-pin-id!
                    package-pin-object set-package-pin-object!
-                   package-pin-type set-package-pin-type!
                    package-pin-number set-package-pin-number!
                    package-pin-name set-package-pin-name!
                    package-pin-label set-package-pin-label!
@@ -36,15 +35,13 @@
   #:export (set-package-pin-printer!))
 
 (define-record-type <package-pin>
-  (make-package-pin id object type number name label attribs nets connection)
+  (make-package-pin id object number name label attribs nets connection)
   package-pin?
   ;; This field is used just for the record representation in
   ;; set-record-type-printer! below.
   (id package-pin-id set-package-pin-id!)
   ;; The underlying primitive pin object.
   (object package-pin-object set-package-pin-object!)
-  ;; Corresponds to pin's "pintype" attribute.
-  (type package-pin-type set-package-pin-type!)
   ;; Corresponds to pin's "pinnumber" attribute.
   (number package-pin-number set-package-pin-number!)
   ;; Corresponds to net name of the net the pin is connected to.
@@ -69,7 +66,6 @@ FORMAT-STRING must be in the form required by the procedure
 `format'. The following ARGS may be used:
   'id
   'object
-  'type
   'number
   'name
   'label
@@ -89,7 +85,6 @@ Example usage:
                (match arg
                  ('id (package-pin-id record))
                  ('object (package-pin-object record))
-                 ('type (package-pin-type record))
                  ('number (package-pin-number record))
                  ('name (package-pin-name record))
                  ('label (package-pin-label record))
