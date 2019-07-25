@@ -38,14 +38,24 @@
 (define-record-type <package-pin>
   (make-package-pin id object type number name label attribs nets connection)
   package-pin?
+  ;; This field is used just for the record representation in
+  ;; set-record-type-printer! below.
   (id package-pin-id set-package-pin-id!)
+  ;; The underlying primitive pin object.
   (object package-pin-object set-package-pin-object!)
+  ;; Corresponds to pin's "pintype" attribute.
   (type package-pin-type set-package-pin-type!)
+  ;; Corresponds to pin's "pinnumber" attribute.
   (number package-pin-number set-package-pin-number!)
+  ;; Corresponds to net name of the net the pin is connected to.
   (name package-pin-name set-package-pin-name!)
+  ;; Corresponds to pin's "pinlabel" attribute.
   (label package-pin-label set-package-pin-label!)
+  ;; The alist representing attributes of the underlying object.
   (attribs package-pin-attribs set-package-pin-attribs!)
+  ;; The list of <pin-net>'s connected to the pin.
   (nets package-pin-nets set-package-pin-nets!)
+  ;; <schematic-connection> the pin is connected to.
   (connection package-pin-connection set-package-pin-connection!))
 
 ;;; Sets default printer for <package-pin>
