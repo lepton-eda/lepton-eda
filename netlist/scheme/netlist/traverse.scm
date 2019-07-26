@@ -96,8 +96,11 @@
            (net-attrib-net? (and (pin? object) (not (or refdes (not pinnumber))))))
 
       (make-pin-net
+       ;; id
        (object-id object)
+       ;; priority
        net-attrib-net?
+       ;; name
        (if (pin? object)
            (and net-attrib-net?
                 ;; Use hierarchy tag here to make this net unique.
@@ -106,12 +109,14 @@
                                        pinnumber)
                  tag))
            (create-net-netname object tag))
+       ;; connection-package
        (and (pin? object)
             (not net-attrib-net?)
             (hierarchy-create-refdes
              (check-create-refdes refdes
                                   pinnumber)
              tag))
+       ;; connection-pinnumber
        (and (pin? object)
             (not net-attrib-net?)
             (if refdes
