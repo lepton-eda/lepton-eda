@@ -92,16 +92,16 @@
            ;; component, we consider it to be a special symbol
            ;; (like "gnd-1.sym") and get the net name we need from
            ;; its "net=" attribute.
-           (net-attrib-net? (and pinnumber (not refdes))))
+           (net-attrib-pin? (and pinnumber (not refdes))))
 
       (make-pin-net
        ;; id
        (object-id object)
        ;; priority
-       net-attrib-net?
+       net-attrib-pin?
        ;; name
        (if (pin? object)
-           (and net-attrib-net?
+           (and net-attrib-pin?
                 ;; Use hierarchy tag here to make this net unique.
                 (create-netattrib
                  (netattrib-search-net (object-component object)
@@ -110,14 +110,14 @@
            (create-net-netname object tag))
        ;; connection-package
        (and (pin? object)
-            (not net-attrib-net?)
+            (not net-attrib-pin?)
             (hierarchy-create-refdes
              (check-create-refdes refdes
                                   pinnumber)
              tag))
        ;; connection-pinnumber
        (and (pin? object)
-            (not net-attrib-net?)
+            (not net-attrib-pin?)
             (if refdes
                 pinnumber
                 (or pinnumber "?"))))))
