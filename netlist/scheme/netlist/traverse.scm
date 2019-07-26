@@ -77,19 +77,14 @@
       ;; Otherwise, anything is OK, return it as is.
       (x x)))
 
-  (define (make-new-net object)
-    (let* ((component (and (pin? object)
-                           (object-component object)))
-           (component-refdes (and component
-                                  (attrib-value-by-name component "refdes")))
-           (component-pinnumber (and component
-                                     (attrib-value-by-name object "pinnumber")))
-           (refdes-pinnumber-pair
-            (and component
-                 (check-refdes-pinnumber-pair component-refdes
-                                              component-pinnumber)))
-           (refdes (and=> refdes-pinnumber-pair car))
-           (pinnumber (and=> refdes-pinnumber-pair cdr))
+  (define (make-new-net/pin object)
+    (let* ((component (object-component object))
+           (component-refdes (attrib-value-by-name component "refdes"))
+           (component-pinnumber (attrib-value-by-name object "pinnumber"))
+           (refdes-pinnumber-pair (check-refdes-pinnumber-pair component-refdes
+                                                               component-pinnumber))
+           (refdes (car refdes-pinnumber-pair))
+           (pinnumber (cdr refdes-pinnumber-pair))
            ;; If there is a pin object with the "pinnumber="
            ;; attribute, but there is no refdes on pin's parent
            ;; component, we consider it to be a special symbol
@@ -103,33 +98,45 @@
        ;; priority
        net-attrib-pin?
        ;; name
-       (if (pin? object)
-           ;; The object is a pin, and it defines net name using
-           ;; "net=".
-           (and net-attrib-pin?
-                ;; Use hierarchy tag here to make this net unique.
-                (create-netattrib (netattrib-search-net component
-                                                        pinnumber)
-                 tag))
-           ;; The object is a net.  For nets we check the
-           ;; "netname=" attribute.
-           (let ((netname (attrib-value-by-name object "netname")))
-             (and netname (create-netname netname tag))))
+       (and net-attrib-pin?
+            ;; The object is a pin, and it defines net name using
+            ;; "net=".  Use hierarchy tag here to make this net
+            ;; unique.
+            (create-netattrib (netattrib-search-net component
+                                                    pinnumber)
+                              tag))
 
        ;; connection-package
-       (and (pin? object)
-            (not net-attrib-pin?)
+       (and (not net-attrib-pin?)
             (hierarchy-create-refdes refdes tag))
        ;; connection-pinnumber
-       (and (pin? object)
-            (not net-attrib-pin?)
+       (and (not net-attrib-pin?)
             pinnumber))))
+
+  (define (make-new-net/net object)
+    (make-pin-net
+     ;; id
+     (object-id object)
+     ;; priority
+     #f
+     ;; name
+     ;; The object is a net.  For nets we check the "netname="
+     ;; attribute.
+     (let ((netname (attrib-value-by-name object "netname")))
+       (and netname (create-netname netname tag)))
+     ;; connection-package
+     #f
+     ;; connection-pinnumber
+     #f))
 
   (when starting
     (clear-visits!))
 
   (visit! object)
-  (let ((nets (cons (make-new-net object) current-nets)))
+  (let* ((make-new-net (if (net? object)
+                           make-new-net/net
+                           make-new-net/pin))
+         (nets (cons (make-new-net object) current-nets)))
     (if (or (not (pin? object))
             starting)
         (let loop ((connections (object-connections object))
