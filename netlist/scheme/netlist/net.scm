@@ -30,7 +30,6 @@
 
   #:export (create-netattrib
             create-netname
-            create-net-netname
             netattrib-search-net
             check-net-maps
             attrib-value-by-name))
@@ -81,11 +80,6 @@
   (first* (map attrib-value
                (filter has-appropriate-name? (object-attribs object)))))
 
-(define (create-net-netname object hierarchy-tag)
-  ;; Ignore netname= attributes on any objects apart from nets.
-  (and (net? object)
-       (let ((netname (attrib-value-by-name object "netname")))
-         (and netname (create-netname netname hierarchy-tag)))))
 
 (define (blame-missing-colon net-attrib-value)
   (log! 'critical

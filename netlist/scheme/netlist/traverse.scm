@@ -101,13 +101,19 @@
        net-attrib-pin?
        ;; name
        (if (pin? object)
+           ;; The object is a pin, and it defines net name using
+           ;; "net=".
            (and net-attrib-pin?
                 ;; Use hierarchy tag here to make this net unique.
                 (create-netattrib
                  (netattrib-search-net (object-component object)
                                        pinnumber)
                  tag))
-           (create-net-netname object tag))
+           ;; The object is a net.  For nets we check the
+           ;; "netname=" attribute.
+           (let ((netname (attrib-value-by-name object "netname")))
+             (and netname (create-netname netname tag))))
+
        ;; connection-package
        (and (pin? object)
             (not net-attrib-pin?)
