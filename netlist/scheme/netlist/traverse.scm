@@ -62,7 +62,7 @@
 
 (define (traverse-net current-nets starting object tag)
   ;; We don't support other object types apart from net-pins and nets yet.
-  (define (connection-type object)
+  (define (connection-type? object)
     (or (net-pin? object)
         (net? object)
         (and (log! 'critical
@@ -126,7 +126,7 @@
     (clear-visits!))
 
   (visit! object)
-  (if (connection-type object)
+  (if (connection-type? object)
       (let ((nets (cons (make-new-net object) current-nets)))
         (if (or (not (pin? object))
                 starting)
