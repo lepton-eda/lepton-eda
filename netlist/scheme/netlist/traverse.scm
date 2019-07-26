@@ -250,9 +250,14 @@
 (define (net-maps->pins net-maps id refdes tag pin-list)
   (define (pinnumber->pin pinnumber pin-list)
     (and (not (null? pin-list))
-         (if (string=? (package-pin-number (car pin-list)) pinnumber)
-             (car pin-list)
-             (pinnumber->pin pinnumber (cdr pin-list)))))
+         (let ((package-pinnumber (package-pin-number (car pin-list))))
+           ;; FIXME: a pin may have no "pinnumber=", and we have
+           ;; to deal with such cases. A test and drc check is
+           ;; needed.
+           (if (and package-pinnumber
+                    (string=? package-pinnumber pinnumber))
+               (car pin-list)
+               (pinnumber->pin pinnumber (cdr pin-list))))))
 
   (define (check-shorted-nets a b priority)
     (log! 'critical
