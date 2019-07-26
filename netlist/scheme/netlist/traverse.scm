@@ -83,40 +83,40 @@
               "U?"))))
 
   (define (make-new-net object)
-    (if (pin? object)
-        (let* ((pinnumber (attrib-value-by-name object "pinnumber"))
-               (refdes (attrib-value-by-name (object-component object) "refdes"))
-               ;; If refdes= of pin component exists, or there is
-               ;; no refdes but pinnumber= exists (which means the
-               ;; pin exists too), we consider the pin to be
-               ;; normal (in the latter case, the symbol is
-               ;; special, like "gnd-1.sym"). Otherwise we believe
-               ;; the pin was created from net= attribute.
-               (net-attrib-net? (not (or refdes (not pinnumber)))))
-          (make-pin-net
-           (object-id object)
-           net-attrib-net?
+    (let* ((pinnumber (and (pin? object)
+                           (attrib-value-by-name object "pinnumber")))
+           (refdes (and (pin? object)
+                        (attrib-value-by-name (object-component object) "refdes")))
+           ;; If refdes= of pin component exists, or there is
+           ;; no refdes but pinnumber= exists (which means the
+           ;; pin exists too), we consider the pin to be
+           ;; normal (in the latter case, the symbol is
+           ;; special, like "gnd-1.sym"). Otherwise we believe
+           ;; the pin was created from net= attribute.
+           (net-attrib-net? (and (pin? object) (not (or refdes (not pinnumber))))))
+
+      (make-pin-net
+       (object-id object)
+       net-attrib-net?
+       (if (pin? object)
            (and net-attrib-net?
                 ;; Use hierarchy tag here to make this net unique.
                 (create-netattrib
                  (netattrib-search-net (object-component object)
                                        pinnumber)
                  tag))
-           (and (not net-attrib-net?)
-                (hierarchy-create-refdes
-                 (check-create-refdes refdes
-                                      pinnumber)
-                 tag))
-           (and (not net-attrib-net?)
-                (if refdes
-                    pinnumber
-                    (or pinnumber "?")))))
-        (make-pin-net
-         (object-id object)
-          #f
-          (create-net-netname object tag)
-          #f
-          #f)))
+           (create-net-netname object tag))
+       (and (pin? object)
+            (not net-attrib-net?)
+            (hierarchy-create-refdes
+             (check-create-refdes refdes
+                                  pinnumber)
+             tag))
+       (and (pin? object)
+            (not net-attrib-net?)
+            (if refdes
+                pinnumber
+                (or pinnumber "?"))))))
 
   (when starting
     (clear-visits!))
