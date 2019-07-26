@@ -207,6 +207,9 @@
     (and (net-pin? object)
          (let* ((attribs (make-pin-attrib-list object))
                 (nets (if (null? (object-connections object))
+                          ;; If there is no connections, we have
+                          ;; an only pin. There is no point to do
+                          ;; something in this case.
                           '()
                           (reverse (traverse-net '() #t object tag))))
                 (netname (or
