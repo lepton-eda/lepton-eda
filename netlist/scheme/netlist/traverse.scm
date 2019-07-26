@@ -61,15 +61,6 @@
 
 
 (define (traverse-net current-nets starting object tag)
-  ;; We don't support other object types apart from net-pins and nets yet.
-  (define (connection-type? object)
-    (or (net-pin? object)
-        (net? object)
-        (and (log! 'critical
-                   (_ "Traverse nets: object type ~A is not supported.")
-                   (object-type object))
-             #f)))
-
   (define (check-refdes-pinnumber-pair refdes pinnumber)
     (match `(,refdes . ,pinnumber)
       ;; Wrong case, neither refdes nor pinnumber found.
@@ -138,21 +129,19 @@
     (clear-visits!))
 
   (visit! object)
-  (if (connection-type? object)
-      (let ((nets (cons (make-new-net object) current-nets)))
-        (if (or (not (pin? object))
-                starting)
-            (let loop ((connections (object-connections object))
-                       (nets nets))
-              (if (null? connections)
-                  nets
-                  (loop (cdr connections)
-                        (let ((conn (car connections)))
-                          (if (visited? conn)
-                              nets
-                              (traverse-net nets #f conn tag))))))
-            nets))
-      current-nets))
+  (let ((nets (cons (make-new-net object) current-nets)))
+    (if (or (not (pin? object))
+            starting)
+        (let loop ((connections (object-connections object))
+                   (nets nets))
+          (if (null? connections)
+              nets
+              (loop (cdr connections)
+                    (let ((conn (car connections)))
+                      (if (visited? conn)
+                          nets
+                          (traverse-net nets #f conn tag))))))
+        nets)))
 
 
 (define %unnamed-net-counter 0)
