@@ -71,16 +71,20 @@
              #f)))
 
   (define (check-create-refdes refdes pinnumber)
-    (if pinnumber
-        refdes
-        ;; No pinnumber, broken pin, use "?", but probably refdes exists.
-        (if refdes
-            (begin
-              (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
-              refdes)
-            (begin
-              (log! 'critical (_ "Missing attributes refdes= and pinnumber="))
-              "U?"))))
+    (match `(,refdes . ,pinnumber)
+      ;; Wrong case, neither refdes nor pinnumber found.
+      ((#f . #f)
+       (log! 'critical (_ "Missing attributes refdes= and pinnumber="))
+       '("U?" . "?"))
+      ;; Acceptable case for using with the "net="
+      ;; attribute. Return it as is.
+      ((#f . pinnumber) `(#f . ,pinnumber))
+      ;; Missing pin number while refdes exists.
+      ((refdes . #f)
+       (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
+       `(,refdes . "?"))
+      ;; Otherwise, anything is OK, return it as is.
+      (x x)))
 
   (define (make-new-net object)
     (let* ((pinnumber (and (pin? object)
@@ -117,10 +121,9 @@
        ;; connection-package
        (and (pin? object)
             (not net-attrib-pin?)
-            (hierarchy-create-refdes
-             (check-create-refdes refdes
-                                  pinnumber)
-             tag))
+            (hierarchy-create-refdes (car (check-create-refdes refdes
+                                                               pinnumber))
+                                     tag))
        ;; connection-pinnumber
        (and (pin? object)
             (not net-attrib-pin?)
