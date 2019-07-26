@@ -93,24 +93,24 @@
                ;; special, like "gnd-1.sym"). Otherwise we believe
                ;; the pin was created from net= attribute.
                (net-attrib-net? (not (or refdes (not pinnumber)))))
-          (if net-attrib-net?
-              (make-pin-net
-                (object-id object)
-                #t
+          (make-pin-net
+           (object-id object)
+           net-attrib-net?
+           (and net-attrib-net?
                 ;; Use hierarchy tag here to make this net unique.
-                (create-netattrib (netattrib-search-net (object-component object)
-                                                         pinnumber)
-                                   tag)
-                #f
-                #f)
-              (make-pin-net
-               (object-id object)
-                #f
-                #f
-                (hierarchy-create-refdes (check-create-refdes refdes
-                                                               pinnumber)
-                                          tag)
-                (if refdes pinnumber (or pinnumber "?")))))
+                (create-netattrib
+                 (netattrib-search-net (object-component object)
+                                       pinnumber)
+                 tag))
+           (and (not net-attrib-net?)
+                (hierarchy-create-refdes
+                 (check-create-refdes refdes
+                                      pinnumber)
+                 tag))
+           (and (not net-attrib-net?)
+                (if refdes
+                    pinnumber
+                    (or pinnumber "?")))))
         (make-pin-net
          (object-id object)
           #f
