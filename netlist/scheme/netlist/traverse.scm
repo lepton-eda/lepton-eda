@@ -87,16 +87,25 @@
       (x x)))
 
   (define (make-new-net object)
-    (let* ((pinnumber (and (pin? object)
-                           (attrib-value-by-name object "pinnumber")))
-           (refdes (and (pin? object)
-                        (attrib-value-by-name (object-component object) "refdes")))
+    (let* ((component (and (pin? object)
+                           (object-component object)))
+           (component-refdes (and component
+                                  (attrib-value-by-name component "refdes")))
+           (component-pinnumber (and component
+                                     (attrib-value-by-name object "pinnumber")))
+           (refdes-pinnumber-pair
+            (and component
+                 (check-create-refdes
+                  component-refdes
+                  component-pinnumber)))
+           (refdes (and=> refdes-pinnumber-pair car))
+           (pinnumber (and=> refdes-pinnumber-pair cdr))
            ;; If there is a pin object with the "pinnumber="
            ;; attribute, but there is no refdes on pin's parent
            ;; component, we consider it to be a special symbol
            ;; (like "gnd-1.sym") and get the net name we need from
            ;; its "net=" attribute.
-           (net-attrib-pin? (and pinnumber (not refdes))))
+           (net-attrib-pin? (and component-pinnumber (not component-refdes))))
 
       (make-pin-net
        ;; id
@@ -109,9 +118,8 @@
            ;; "net=".
            (and net-attrib-pin?
                 ;; Use hierarchy tag here to make this net unique.
-                (create-netattrib
-                 (netattrib-search-net (object-component object)
-                                       pinnumber)
+                (create-netattrib (netattrib-search-net component
+                                                        pinnumber)
                  tag))
            ;; The object is a net.  For nets we check the
            ;; "netname=" attribute.
@@ -121,15 +129,11 @@
        ;; connection-package
        (and (pin? object)
             (not net-attrib-pin?)
-            (hierarchy-create-refdes (car (check-create-refdes refdes
-                                                               pinnumber))
-                                     tag))
+            (hierarchy-create-refdes refdes tag))
        ;; connection-pinnumber
        (and (pin? object)
             (not net-attrib-pin?)
-            (if refdes
-                pinnumber
-                (or pinnumber "?"))))))
+            pinnumber))))
 
   (when starting
     (clear-visits!))
