@@ -87,13 +87,12 @@
                            (attrib-value-by-name object "pinnumber")))
            (refdes (and (pin? object)
                         (attrib-value-by-name (object-component object) "refdes")))
-           ;; If refdes= of pin component exists, or there is
-           ;; no refdes but pinnumber= exists (which means the
-           ;; pin exists too), we consider the pin to be
-           ;; normal (in the latter case, the symbol is
-           ;; special, like "gnd-1.sym"). Otherwise we believe
-           ;; the pin was created from net= attribute.
-           (net-attrib-net? (and (pin? object) (not (or refdes (not pinnumber))))))
+           ;; If there is a pin object with the "pinnumber="
+           ;; attribute, but there is no refdes on pin's parent
+           ;; component, we consider it to be a special symbol
+           ;; (like "gnd-1.sym") and get the net name we need from
+           ;; its "net=" attribute.
+           (net-attrib-net? (and pinnumber (not refdes))))
 
       (make-pin-net
        ;; id
