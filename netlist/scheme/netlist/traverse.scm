@@ -70,7 +70,7 @@
                    (object-type object))
              #f)))
 
-  (define (check-create-refdes refdes pinnumber)
+  (define (check-refdes-pinnumber-pair refdes pinnumber)
     (match `(,refdes . ,pinnumber)
       ;; Wrong case, neither refdes nor pinnumber found.
       ((#f . #f)
@@ -95,9 +95,8 @@
                                      (attrib-value-by-name object "pinnumber")))
            (refdes-pinnumber-pair
             (and component
-                 (check-create-refdes
-                  component-refdes
-                  component-pinnumber)))
+                 (check-refdes-pinnumber-pair component-refdes
+                                              component-pinnumber)))
            (refdes (and=> refdes-pinnumber-pair car))
            (pinnumber (and=> refdes-pinnumber-pair cdr))
            ;; If there is a pin object with the "pinnumber="
