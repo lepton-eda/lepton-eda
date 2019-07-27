@@ -66,15 +66,13 @@
     ((#f . #f)
      (log! 'critical (_ "Missing attributes refdes= and pinnumber="))
      '("U?" . "?"))
-    ;; Acceptable case for using with the "net="
-    ;; attribute. Return it as is.
-    ((#f . pinnumber) `(#f . ,pinnumber))
     ;; Missing pin number while refdes exists.
-
     ((refdes . #f)
      (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
      `(,refdes . "?"))
-    ;; Otherwise, anything is OK, return it as is.
+    ;; Otherwise, anything is OK, return it as is.  Even if
+    ;; refdes=#f and pinnumber is non-#f, it is an acceptable case
+    ;; for using with the "net=" attribute. Return it as is.
     (x x)))
 
 
