@@ -39,7 +39,7 @@ sc_signal<0> signal6;
 sc_signal<0> signal8;
 sc_signal<0> signal12;
 sc_signal<0> unnamed_net1;
-sc_signal<0> unnamed_net4;
+sc_signal<0> unnamed_net2;
 
 
 /* Package instantiations */
@@ -89,9 +89,9 @@ SC_CTOR(not found):
     U400.14(Vcc);
 
     U500.1(signal1);
-    U500.3(unnamed_net4);
-    U500.4(unnamed_net4);
-    U500.5(unnamed_net4);
+    U500.3(unnamed_net2);
+    U500.4(unnamed_net2);
+    U500.5(unnamed_net2);
     U500.7(sig9);
     U500.9(sig9);
     U500.10(DIGITAL_GND);

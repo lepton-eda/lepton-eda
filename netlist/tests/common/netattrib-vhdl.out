@@ -35,7 +35,7 @@ ARCHITECTURE netlist OF not found IS
     SIGNAL signal8 : Std_Logic;
     SIGNAL signal12 : Std_Logic;
     SIGNAL unnamed_net1 : Std_Logic;
-    SIGNAL unnamed_net4 : Std_Logic;
+    SIGNAL unnamed_net2 : Std_Logic;
 BEGIN
 -- Architecture statement part
     F1 : FUSE
@@ -85,9 +85,9 @@ BEGIN
     PORT MAP (
         1 => signal1,
         2 => OPEN,
-        3 => unnamed_net4,
-        4 => unnamed_net4,
-        5 => unnamed_net4,
+        3 => unnamed_net2,
+        4 => unnamed_net2,
+        5 => unnamed_net2,
         6 => OPEN,
         7 => sig9,
         8 => OPEN,

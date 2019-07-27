@@ -23,13 +23,14 @@ No "no-connect" nets found
 START renamed-nets
 
 two -> one
+signal3 -> out3
+signal8 -> out8
 GND -> sig9
+signal6 -> signal9
 unconnected_pin-4 -> signal1
 unconnected_pin-6 -> signal1
 out3 -> signal3
-unnamed_net3 -> signal4
 signal9 -> signal6
-unnamed_net2 -> signal6
 out8 -> signal8
 
 END renamed-nets
@@ -52,7 +53,7 @@ signal6 : U400 6, U400 9
 signal8 : U400 8
 signal12 : U400 12
 unnamed_net1 : U300 2
-unnamed_net4 : U500 3, U500 4, U500 5
+unnamed_net2 : U500 3, U500 4, U500 5
 
 END nets
 

@@ -29,9 +29,9 @@ v["U400","9"]=v["signal6"];
 v["U400","8"]=v["signal8"];
 v["U400","12"]=v["signal12"];
 v["U300","2"]=v["unnamed_net1"];
-v["U500","3"]=v["unnamed_net4"];
-v["U500","4"]=v["unnamed_net4"];
-v["U500","5"]=v["unnamed_net4"];
+v["U500","3"]=v["unnamed_net2"];
+v["U500","4"]=v["unnamed_net2"];
+v["U500","5"]=v["unnamed_net2"];
 nodeEquations={
 i["U500","14"]==0,
 i["U500","14"]==0,
@@ -74,7 +74,7 @@ v["signal6"],
 v["signal8"],
 v["signal12"],
 v["unnamed_net1"],
-v["unnamed_net4"],
+v["unnamed_net2"],
 i["F1","1"],
 i["U100","3"],
 i["U100","5"],

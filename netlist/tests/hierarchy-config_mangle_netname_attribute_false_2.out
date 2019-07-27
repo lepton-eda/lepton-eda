@@ -24,10 +24,11 @@ middleA -> U1_2_to_B
 rockA -> U1_2_to_B
 unnamed_net2 -> U1_2_to_B
 unnamed_net4 -> U1_2_to_B
-middleB -> U2_1_to_E
-rockB -> U2_1_to_E
-unnamed_net1 -> U2_1_to_E
-unnamed_net3 -> U2_1_to_E
+U2_1_to_E -> U2_1_to_E-net
+middleB -> U2_1_to_E-net
+rockB -> U2_1_to_E-net
+unnamed_net1 -> U2_1_to_E-net
+unnamed_net3 -> U2_1_to_E-net
 U2_1_to_E -> U2_1_to_E-net
 
 END renamed-nets

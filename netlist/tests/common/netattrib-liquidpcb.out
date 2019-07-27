@@ -63,7 +63,7 @@
 		<net name="unnamed_net1">
 			<netnode component="U300" pin=2 />
 		</net>
-		<net name="unnamed_net4">
+		<net name="unnamed_net2">
 			<netnode component="U500" pin=3 />
 			<netnode component="U500" pin=4 />
 			<netnode component="U500" pin=5 />

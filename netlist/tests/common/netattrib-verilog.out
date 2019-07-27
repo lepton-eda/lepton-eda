@@ -31,7 +31,7 @@ wire signal6 ;
 wire signal8 ;
 wire signal12 ;
 wire unnamed_net1 ;
-wire unnamed_net4 ;
+wire unnamed_net2 ;
 
 /* continuous assignments */
 
@@ -78,9 +78,9 @@ FUSE F1 (
 
 \7400  U500 (
     .\1  ( signal1 ),
-    .\3  ( unnamed_net4 ),
-    .\4  ( unnamed_net4 ),
-    .\5  ( unnamed_net4 ),
+    .\3  ( unnamed_net2 ),
+    .\4  ( unnamed_net2 ),
+    .\5  ( unnamed_net2 ),
     .\7  ( sig9 ),
     .\9  ( sig9 ),
     .\10  ( DIGITAL_GND ),
