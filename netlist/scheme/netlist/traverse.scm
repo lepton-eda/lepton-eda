@@ -60,20 +60,27 @@
   (set! %visits '()))
 
 
-(define (check-pin-refdes-pinnumber-pair refdes pinnumber)
-  (match `(,refdes . ,pinnumber)
-    ;; Wrong case, neither refdes nor pinnumber found.
-    ((#f . #f)
-     (log! 'critical (_ "Missing attributes refdes= and pinnumber="))
-     '("U?" . "?"))
-    ;; Missing pin number while refdes exists.
-    ((refdes . #f)
-     (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
-     `(,refdes . "?"))
-    ;; Otherwise, anything is OK, return it as is.  Even if
-    ;; refdes=#f and pinnumber is non-#f, it is an acceptable case
-    ;; for using with the "net=" attribute. Return it as is.
-    (x x)))
+;;; Lookups for pinnumber and parent component's refdes for PIN.
+;;; If they're somehow wrong, warns the users and sets new
+;;; appropriate values.  Returns the pair (refdes . pinnumber),
+;;; fixed if needed.
+(define (pin-refdes-pinnumber-pair pin)
+  (let ((refdes (attrib-value-by-name (object-component pin)
+                                      "refdes"))
+        (pinnumber (attrib-value-by-name pin "pinnumber")))
+    (match `(,refdes . ,pinnumber)
+      ;; Wrong case, neither refdes nor pinnumber found.
+      ((#f . #f)
+       (log! 'critical (_ "Missing attributes refdes= and pinnumber="))
+       '("U?" . "?"))
+      ;; Missing pin number while refdes exists.
+      ((refdes . #f)
+       (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
+       `(,refdes . "?"))
+      ;; Otherwise, anything is OK, return it as is.  Even if
+      ;; refdes=#f and pinnumber is non-#f, it is an acceptable case
+      ;; for using with the "net=" attribute. Return it as is.
+      (x x))))
 
 ;;; Checks if OBJECT is a pin that should be treated as one
 ;;; defining a name of the net connected to it via the "net="
@@ -91,11 +98,7 @@
 
 (define (traverse-net current-nets starting object tag)
   (define (make-new-net/pin object)
-    (let* ((component (object-component object))
-           (component-refdes (attrib-value-by-name component "refdes"))
-           (component-pinnumber (attrib-value-by-name object "pinnumber"))
-           (refdes-pinnumber-pair (check-pin-refdes-pinnumber-pair component-refdes
-                                                                   component-pinnumber))
+    (let* ((refdes-pinnumber-pair (pin-refdes-pinnumber-pair object))
            (refdes (car refdes-pinnumber-pair))
            (pinnumber (cdr refdes-pinnumber-pair))
            (net-driven? (net-attrib-pin? object)))
@@ -112,7 +115,7 @@
             ;; The object is a pin, and it defines net name using
             ;; "net=".  Use hierarchy tag here to make this net
             ;; unique.
-            (create-netattrib (netattrib-search-net component
+            (create-netattrib (netattrib-search-net (object-component object)
                                                     pinnumber)
                               tag))
 
