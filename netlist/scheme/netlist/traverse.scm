@@ -127,8 +127,7 @@
      ;; name
      ;; The object is a net.  For nets we check the "netname="
      ;; attribute.
-     (let ((netname (attrib-value-by-name object "netname")))
-       (and netname (create-netname netname tag)))
+     #f
      ;; connection-package
      #f
      ;; connection-pinnumber
@@ -141,19 +140,24 @@
   (let* ((make-new-net (if (net? object)
                            make-new-net/net
                            make-new-net/pin))
-         (nets (cons (make-new-net object) current-nets)))
-    (if (or (net? object)
-            starting)
-        (let loop ((connections (object-connections object))
-                   (nets nets))
-          (if (null? connections)
-              nets
-              (loop (cdr connections)
-                    (let ((conn (car connections)))
-                      (if (visited? conn)
-                          nets
-                          (traverse-net nets #f conn tag))))))
-        nets)))
+         (new-net (make-new-net object)))
+    (when (net? object)
+      (let ((netname (attrib-value-by-name object "netname")))
+        (set-pin-net-name! new-net
+                           (and netname (create-netname netname tag)))))
+    (let ((nets (cons new-net current-nets)))
+      (if (or (net? object)
+              starting)
+          (let loop ((connections (object-connections object))
+                     (nets nets))
+            (if (null? connections)
+                nets
+                (loop (cdr connections)
+                      (let ((conn (car connections)))
+                        (if (visited? conn)
+                            nets
+                            (traverse-net nets #f conn tag))))))
+          nets))))
 
 
 (define %unnamed-net-counter 0)
