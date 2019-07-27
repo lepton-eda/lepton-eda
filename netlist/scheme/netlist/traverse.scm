@@ -75,6 +75,18 @@
     ;; for using with the "net=" attribute. Return it as is.
     (x x)))
 
+;;; Checks if OBJECT is a pin that should be treated as one
+;;; defining a name of the net connected to it via the "net="
+;;; attribute of its parent component object.  Such components
+;;; (e.g. "gnd-1.sym") have to have no refdes, and their "net="
+;;; components should correspond to pinnumbers of their existing
+;;; pins.
+(define (net-attrib-pin? object)
+  (and (pin? object)
+       (let ((refdes (attrib-value-by-name (object-component object)
+                                           "refdes"))
+             (pinnumber (attrib-value-by-name object "pinnumber")))
+         (and pinnumber (not refdes)))))
 
 
 (define (traverse-net current-nets starting object tag)
@@ -86,12 +98,7 @@
                                                                    component-pinnumber))
            (refdes (car refdes-pinnumber-pair))
            (pinnumber (cdr refdes-pinnumber-pair))
-           ;; If there is a pin object with the "pinnumber="
-           ;; attribute, but there is no refdes on pin's parent
-           ;; component, we consider it to be a special symbol
-           ;; (like "gnd-1.sym") and get the net name we need from
-           ;; its "net=" attribute.
-           (net-attrib-pin? (and component-pinnumber (not component-refdes))))
+           (net-driven? (net-attrib-pin? object)))
 
       (make-pin-net
        ;; id
@@ -99,9 +106,9 @@
        ;; object
        object
        ;; priority
-       net-attrib-pin?
+       net-driven?
        ;; name
-       (and net-attrib-pin?
+       (and net-driven?
             ;; The object is a pin, and it defines net name using
             ;; "net=".  Use hierarchy tag here to make this net
             ;; unique.
@@ -110,10 +117,10 @@
                               tag))
 
        ;; connection-package
-       (and (not net-attrib-pin?)
+       (and (not net-driven?)
             (hierarchy-create-refdes refdes tag))
        ;; connection-pinnumber
-       (and (not net-attrib-pin?)
+       (and (not net-driven?)
             pinnumber))))
 
   (define (make-new-net/net object)
