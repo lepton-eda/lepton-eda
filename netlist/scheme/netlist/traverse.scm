@@ -125,8 +125,6 @@
      ;; priority
      #f
      ;; name
-     ;; The object is a net.  For nets we check the "netname="
-     ;; attribute.
      #f
      ;; connection-package
      #f
@@ -140,24 +138,20 @@
   (let* ((make-new-net (if (net? object)
                            make-new-net/net
                            make-new-net/pin))
-         (new-net (make-new-net object)))
-    (when (net? object)
-      (let ((netname (attrib-value-by-name object "netname")))
-        (set-pin-net-name! new-net
-                           (and netname (create-netname netname tag)))))
-    (let ((nets (cons new-net current-nets)))
-      (if (or (net? object)
-              starting)
-          (let loop ((connections (object-connections object))
-                     (nets nets))
-            (if (null? connections)
-                nets
-                (loop (cdr connections)
-                      (let ((conn (car connections)))
-                        (if (visited? conn)
-                            nets
-                            (traverse-net nets #f conn tag))))))
-          nets))))
+         (new-net (make-new-net object))
+         (nets (cons new-net current-nets)))
+    (if (or (net? object)
+            starting)
+        (let loop ((connections (object-connections object))
+                   (nets nets))
+          (if (null? connections)
+              nets
+              (loop (cdr connections)
+                    (let ((conn (car connections)))
+                      (if (visited? conn)
+                          nets
+                          (traverse-net nets #f conn tag))))))
+        nets)))
 
 
 (define %unnamed-net-counter 0)
@@ -214,38 +208,48 @@
 
   (define (object->package-pin object)
     (and (net-pin? object)
-         (let* ((attribs (make-pin-attrib-list object))
-                (nets (if (null? (object-connections object))
-                          ;; If there is no connections, we have
-                          ;; an only pin. There is no point to do
-                          ;; something in this case.
-                          '()
-                          (reverse (traverse-net '() #t object tag))))
-                (netname (or
-                          ;; If there is no netname, probably
-                          ;; some of nets has been already named.
-                          (search-net-name nets)
-                          ;; Didn't find a name.  Go looking for
-                          ;; another net which might have already
-                          ;; been named, i.e. we don't want to
-                          ;; create a new unnamed net if the net
-                          ;; has already been named before.
-                          (search-in-hash-table nets)
-                          ;; Last resort. We have not found a
-                          ;; name. Make a new one.
-                          (make-special-netname nets))))
-           (and netname
-                (for-each
-                 (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
-                 nets))
-           (make-package-pin (object-id object)
-                             object
-                             (assq-ref attribs 'pinnumber)
-                             netname
-                             (assq-ref attribs 'pinlabel)
-                             attribs
-                             nets
-                             (get-package-pin-connection object connections)))))
+         (let ((attribs (make-pin-attrib-list object))
+               (nets (if (null? (object-connections object))
+                         ;; If there is no connections, we have
+                         ;; an only pin. There is no point to do
+                         ;; something in this case.
+                         '()
+                         (reverse (traverse-net '() #t object tag)))))
+           (for-each
+            (lambda (net)
+              (let ((object (pin-net-object net)))
+                (when (net? object)
+                  (let ((netname (attrib-value-by-name object "netname")))
+                    ;; The object is a net.  For nets we check the "netname="
+                    ;; attribute.
+                    (set-pin-net-name! net
+                                       (and netname (create-netname netname tag)))))))
+            nets)
+           (let ((netname (or
+                           ;; If there is no netname, probably
+                           ;; some of nets has been already named.
+                           (search-net-name nets)
+                           ;; Didn't find a name.  Go looking for
+                           ;; another net which might have already
+                           ;; been named, i.e. we don't want to
+                           ;; create a new unnamed net if the net
+                           ;; has already been named before.
+                           (search-in-hash-table nets)
+                           ;; Last resort. We have not found a
+                           ;; name. Make a new one.
+                           (make-special-netname nets))))
+             (and netname
+                  (for-each
+                   (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
+                   nets))
+             (make-package-pin (object-id object)
+                               object
+                               (assq-ref attribs 'pinnumber)
+                               netname
+                               (assq-ref attribs 'pinlabel)
+                               attribs
+                               nets
+                               (get-package-pin-connection object connections))))))
 
   (filter-map object->package-pin (component-contents object)))
 
