@@ -60,29 +60,32 @@
   (set! %visits '()))
 
 
-(define (traverse-net current-nets starting object tag)
-  (define (check-refdes-pinnumber-pair refdes pinnumber)
-    (match `(,refdes . ,pinnumber)
-      ;; Wrong case, neither refdes nor pinnumber found.
-      ((#f . #f)
-       (log! 'critical (_ "Missing attributes refdes= and pinnumber="))
-       '("U?" . "?"))
-      ;; Acceptable case for using with the "net="
-      ;; attribute. Return it as is.
-      ((#f . pinnumber) `(#f . ,pinnumber))
-      ;; Missing pin number while refdes exists.
-      ((refdes . #f)
-       (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
-       `(,refdes . "?"))
-      ;; Otherwise, anything is OK, return it as is.
-      (x x)))
+(define (check-pin-refdes-pinnumber-pair refdes pinnumber)
+  (match `(,refdes . ,pinnumber)
+    ;; Wrong case, neither refdes nor pinnumber found.
+    ((#f . #f)
+     (log! 'critical (_ "Missing attributes refdes= and pinnumber="))
+     '("U?" . "?"))
+    ;; Acceptable case for using with the "net="
+    ;; attribute. Return it as is.
+    ((#f . pinnumber) `(#f . ,pinnumber))
+    ;; Missing pin number while refdes exists.
 
+    ((refdes . #f)
+     (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
+     `(,refdes . "?"))
+    ;; Otherwise, anything is OK, return it as is.
+    (x x)))
+
+
+
+(define (traverse-net current-nets starting object tag)
   (define (make-new-net/pin object)
     (let* ((component (object-component object))
            (component-refdes (attrib-value-by-name component "refdes"))
            (component-pinnumber (attrib-value-by-name object "pinnumber"))
-           (refdes-pinnumber-pair (check-refdes-pinnumber-pair component-refdes
-                                                               component-pinnumber))
+           (refdes-pinnumber-pair (check-pin-refdes-pinnumber-pair component-refdes
+                                                                   component-pinnumber))
            (refdes (car refdes-pinnumber-pair))
            (pinnumber (cdr refdes-pinnumber-pair))
            ;; If there is a pin object with the "pinnumber="
