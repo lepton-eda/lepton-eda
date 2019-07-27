@@ -141,7 +141,7 @@
                            make-new-net/net
                            make-new-net/pin))
          (nets (cons (make-new-net object) current-nets)))
-    (if (or (not (pin? object))
+    (if (or (net? object)
             starting)
         (let loop ((connections (object-connections object))
                    (nets nets))
