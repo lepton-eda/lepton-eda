@@ -95,6 +95,8 @@
       (make-pin-net
        ;; id
        (object-id object)
+       ;; object
+       object
        ;; priority
        net-attrib-pin?
        ;; name
@@ -117,6 +119,8 @@
     (make-pin-net
      ;; id
      (object-id object)
+     ;; object
+     object
      ;; priority
      #f
      ;; name
@@ -272,11 +276,13 @@
   (define (update-pin-netname pin netname id refdes)
     (let ((nets (package-pin-nets pin))
           (pinnumber (package-pin-number pin))
-          (net-priority #t))
+          (net-priority #t)
+          (object #f))
       (set-package-pin-name! pin netname)
       (if (null? nets)
           (set-package-pin-nets! pin
                                  (list (make-pin-net id
+                                                     object
                                                      net-priority
                                                      netname
                                                      refdes
@@ -311,7 +317,7 @@
            (label #f)
            (object #f)
            (attribs '())
-           (nets (list (make-pin-net id net-priority netname refdes pinnumber))))
+           (nets (list (make-pin-net id object net-priority netname refdes pinnumber))))
       (make-package-pin id object pinnumber netname label attribs nets #f)))
 
   (define (add-net-power-pin-override pin net-map tag)

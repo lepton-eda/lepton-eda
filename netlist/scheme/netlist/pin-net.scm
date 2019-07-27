@@ -23,6 +23,7 @@
   #:use-module (srfi srfi-9 gnu)
   #:export (make-pin-net pin-net?
             pin-net-id set-pin-net-id!
+            pin-net-object set-pin-net-object!
             pin-net-priority set-pin-net-priority!
             pin-net-name set-pin-net-name!
             pin-net-connection-package set-pin-net-connection-package!
@@ -30,9 +31,10 @@
             set-pin-net-printer!))
 
 (define-record-type <pin-net>
-  (make-pin-net id priority name connection-package connection-pinnumber)
+  (make-pin-net id object priority name connection-package connection-pinnumber)
   pin-net?
   (id pin-net-id set-pin-net-id!)
+  (object pin-net-object set-pin-net-object!)
   (priority pin-net-priority set-pin-net-priority!)
   (name pin-net-name set-pin-net-name!)
   (connection-package pin-net-connection-package set-pin-net-connection-package!)
@@ -48,6 +50,7 @@
 FORMAT-STRING must be in the form required by the procedure
 `format'. The following ARGS may be used:
   'id
+  'object
   'priority
   'name
   'connection-package
@@ -64,6 +67,7 @@ Example usage:
              (lambda (arg)
                (match arg
                  ('id (pin-net-id record))
+                 ('object (pin-net-object record))
                  ('priority (pin-net-priority record))
                  ('name (pin-net-name record))
                  ('connection-package (pin-net-connection-package record))
