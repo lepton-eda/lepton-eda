@@ -196,33 +196,37 @@
            (for-each
             (lambda (net)
               (let ((object (pin-net-object net)))
-                (if (net? object)
-                    (let ((netname (attrib-value-by-name object "netname")))
-                      ;; The object is a net.  For nets we check the "netname="
-                      ;; attribute.
-                      (set-pin-net-name! net
-                                         (and netname (create-netname netname tag))))
-
-                    (let* ((refdes-pinnumber-pair (pin-refdes-pinnumber-pair object))
-                           (refdes (car refdes-pinnumber-pair))
-                           (pinnumber (cdr refdes-pinnumber-pair))
-                           (net-driven? (net-attrib-pin? object)))
-                      (and net-driven?
-                           (set-pin-net-priority! net net-driven?))
-                      ;; The object is a pin, and it defines net name using
-                      ;; "net=".  Use hierarchy tag here to make this net
-                      ;; unique.
-                      (set-pin-net-name! net
-                                         (create-netattrib
-                                          (netattrib-search-net (object-component object)
-                                                                pinnumber)
-                                          tag))
-                      (set-pin-net-connection-package! net
-                                                       (and (not net-driven?)
-                                                            (hierarchy-create-refdes refdes tag)))
-                      (set-pin-net-connection-pinnumber! net
-                                                         (and (not net-driven?)
-                                                              pinnumber))))))
+                (and (net? object)
+                     (let ((netname (attrib-value-by-name object "netname")))
+                       ;; The object is a net.  For nets we check the "netname="
+                       ;; attribute.
+                       (set-pin-net-name! net
+                                          (and netname (create-netname netname tag)))))))
+            nets)
+           (for-each
+            (lambda (net)
+              (let ((object (pin-net-object net)))
+                (and (pin? object)
+                     (let* ((refdes-pinnumber-pair (pin-refdes-pinnumber-pair object))
+                            (refdes (car refdes-pinnumber-pair))
+                            (pinnumber (cdr refdes-pinnumber-pair))
+                            (net-driven? (net-attrib-pin? object)))
+                       (and net-driven?
+                            (set-pin-net-priority! net net-driven?))
+                       ;; The object is a pin, and it defines net name using
+                       ;; "net=".  Use hierarchy tag here to make this net
+                       ;; unique.
+                       (set-pin-net-name! net
+                                          (create-netattrib
+                                           (netattrib-search-net (object-component object)
+                                                                 pinnumber)
+                                           tag))
+                       (set-pin-net-connection-package! net
+                                                        (and (not net-driven?)
+                                                             (hierarchy-create-refdes refdes tag)))
+                       (set-pin-net-connection-pinnumber! net
+                                                          (and (not net-driven?)
+                                                               pinnumber))))))
             nets)
            (let ((netname (or
                            ;; If there is no netname, probably
