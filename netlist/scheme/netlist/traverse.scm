@@ -195,14 +195,12 @@
                          (reverse (traverse-net '() #t object)))))
            (for-each
             (lambda (net)
-              (let ((object (pin-net-object net)))
-                (and (net? object)
-                     (let ((netname (attrib-value-by-name object "netname")))
-                       ;; The object is a net.  For nets we check the "netname="
-                       ;; attribute.
-                       (set-pin-net-name! net
-                                          (and netname (create-netname netname tag)))))))
-            nets)
+              (let ((netname (attrib-value-by-name (pin-net-object net) "netname")))
+                ;; The object is a net.  For nets we check the "netname="
+                ;; attribute.
+                (set-pin-net-name! net
+                                   (and netname (create-netname netname tag)))))
+            (filter (lambda (x) (net? (pin-net-object x))) nets))
            (for-each
             (lambda (net)
               (let ((object (pin-net-object net)))
