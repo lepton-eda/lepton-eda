@@ -273,7 +273,7 @@
 
   (for-each fix-composite-package components)
 
-  (hierarchy-remove-all-composite
-   ((if (gnetlist-config-ref 'mangle-refdes)
-        identity
-        remove-refdes-mangling) components)))
+  ((if (gnetlist-config-ref 'mangle-refdes)
+       identity
+       remove-refdes-mangling)
+   (hierarchy-remove-all-composite components)))
