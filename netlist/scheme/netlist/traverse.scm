@@ -96,7 +96,7 @@
          (and pinnumber (not refdes)))))
 
 
-(define (traverse-net current-nets starting object tag)
+(define (traverse-net current-nets starting object)
   (define (make-new-net object)
     (make-pin-net
      ;; id
@@ -128,7 +128,7 @@
                     (let ((conn (car connections)))
                       (if (visited? conn)
                           nets
-                          (traverse-net nets #f conn tag))))))
+                          (traverse-net nets #f conn))))))
         nets)))
 
 
@@ -192,7 +192,7 @@
                          ;; an only pin. There is no point to do
                          ;; something in this case.
                          '()
-                         (reverse (traverse-net '() #t object tag)))))
+                         (reverse (traverse-net '() #t object)))))
            (for-each
             (lambda (net)
               (let ((object (pin-net-object net)))
