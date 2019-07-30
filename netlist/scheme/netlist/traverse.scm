@@ -247,6 +247,7 @@
                                object
                                (assq-ref attribs 'pinnumber)
                                netname
+                               '()
                                (assq-ref attribs 'pinlabel)
                                attribs
                                ;; No net-map yet.
@@ -281,7 +282,7 @@
            (object #f)
            (attribs '())
            (nets (list (make-pin-net id object net-priority netname refdes pinnumber))))
-      (make-package-pin id object pinnumber netname label attribs net-map nets #f)))
+      (make-package-pin id object pinnumber netname '() label attribs net-map nets #f)))
 
   (define (make-or-update-net-map-pin net-map)
     (let ((pin (pinnumber->pin (net-map-pinnumber net-map)
