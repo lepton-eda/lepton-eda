@@ -31,7 +31,8 @@
                    schematic-connection-id set-schematic-connection-id!
                    schematic-connection-name set-schematic-connection-name!
                    schematic-connection-override-name set-schematic-connection-override-name!
-                   schematic-connection-objects set-schematic-connection-objects!)
+                   schematic-connection-objects set-schematic-connection-objects!
+                   schematic-connection-pins set-schematic-connection-pins!)
 
   #:export (make-page-schematic-connections
             set-schematic-connection-printer!))
@@ -41,13 +42,14 @@
 ;;; netnames - the list of all netname= attribs
 ;;; objects - all net segments in the schematic-connection
 (define-record-type <schematic-connection>
-  (make-schematic-connection id page name override-name objects)
+  (make-schematic-connection id page name override-name objects pins)
   schematic-connection?
   (id schematic-connection-id set-schematic-connection-id!)
   (page schematic-connection-page set-schematic-connection-page!)
   (name schematic-connection-name set-schematic-connection-name!)
   (override-name schematic-connection-override-name set-schematic-connection-override-name!)
-  (objects schematic-connection-objects set-schematic-connection-objects!))
+  (objects schematic-connection-objects set-schematic-connection-objects!)
+  (pins schematic-connection-pins set-schematic-connection-pins!))
 
 
 ;;; Sets default printer for <schematic-connection>
@@ -64,6 +66,7 @@ FORMAT-STRING must be in the form required by the procedure
   'name
   'override-name
   'objects
+  'pins
 Any other unrecognized argument will lead to yielding '?' in the
 corresponding place.
 Example usage:
@@ -80,6 +83,7 @@ Example usage:
                  ('name (schematic-connection-name record))
                  ('override-name (schematic-connection-override-name record))
                  ('objects (schematic-connection-objects record))
+                 ('pins (schematic-connection-pins record))
                  (_ #\?)))
              args)))))
 
@@ -131,14 +135,15 @@ Example usage:
          (objects (cdr schematic-connection-ls))
          (id (object-id (car objects))))
     (make-schematic-connection id
-                    page
-                    ;; netname
-                    (if (null? netnames)
-                        '()
-                        (get-schematic-connection-netname netnames))
-                    ;; override-netname
-                    #f
-                    objects)))
+                               page
+                               ;; netname
+                               (if (null? netnames)
+                                   '()
+                                   (get-schematic-connection-netname netnames))
+                               ;; override-netname
+                               #f
+                               objects
+                               '())))
 
 (define (make-page-schematic-connections page)
   (define (connection? object)
