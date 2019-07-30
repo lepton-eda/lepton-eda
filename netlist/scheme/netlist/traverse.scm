@@ -184,6 +184,13 @@
         (create-unconnected-netname)
         (create-unnamed-netname tag netlist-mode)))
 
+  (define (nets-netnames nets)
+    (filter-map
+     (lambda (x) (let ((object (pin-net-object x)))
+              (and (net? object)
+                   (attrib-value-by-name object "netname"))))
+     nets))
+
   (define (object->package-pin object)
     (and (net-pin? object)
          (let ((attribs (make-pin-attrib-list object))
@@ -247,7 +254,7 @@
                                object
                                (assq-ref attribs 'pinnumber)
                                netname
-                               '()
+                               (nets-netnames nets)
                                (assq-ref attribs 'pinlabel)
                                attribs
                                ;; No net-map yet.
