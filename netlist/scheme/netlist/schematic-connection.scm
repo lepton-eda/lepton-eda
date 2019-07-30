@@ -35,6 +35,7 @@
                    schematic-connection-pins set-schematic-connection-pins!)
 
   #:export (make-page-schematic-connections
+            schematic-connection-add-pin!
             set-schematic-connection-printer!))
 
 
@@ -160,3 +161,9 @@ Example usage:
 
   (map (cut get-schematic-connection page <>)
        (connections->netname-groups (group-connections (page-connections page)))))
+
+
+(define (schematic-connection-add-pin! connection pin)
+  (set-schematic-connection-pins!
+   connection
+   (cons pin (schematic-connection-pins connection))))

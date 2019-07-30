@@ -27,7 +27,7 @@ START nets
 Utop/GND : Utop/Ubottom 7
 Utop/Vcc : Utop/Ubottom 14
 Utop/net-A : Utop/A 1, Utop/Ubottom 1
-Utop/net-B : Utop/Ubottom 2
+Utop/net-B : Utop/U? 1, Utop/Ubottom 2
 top-net-A : 
 top-net-B : 
 

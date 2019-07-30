@@ -170,6 +170,28 @@
            (or (and (member pin-object (schematic-connection-objects group)) group)
                (loop (cdr groups)))))))
 
+;;; Search for connection by netname.
+(define (get-connection-by-netname netname connections)
+  (let loop ((groups connections))
+    (if (null? groups)
+        (make-schematic-connection
+         ;; id
+         #f
+         ;; page
+         #f
+         ;; netname
+         #f
+         ;; override-netname
+         netname
+         ;; objects
+         #f
+         ;; pins
+         '())
+        (let ((group (car groups)))
+          (if (or (equal? netname (schematic-connection-name group))
+                  (equal? netname (schematic-connection-override-name group)))
+              group
+              (loop (cdr groups)))))))
 
 (define (object-pins object tag netlist-mode connections)
   (define (make-pin-attrib-list object)
@@ -194,6 +216,7 @@
   (define (object->package-pin object)
     (and (net-pin? object)
          (let ((attribs (make-pin-attrib-list object))
+               (connection (get-package-pin-connection object connections))
                (nets (if (null? (object-connections object))
                          ;; If there is no connections, we have
                          ;; an only pin. There is no point to do
@@ -250,19 +273,21 @@
                   (for-each
                    (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
                    nets))
-             (make-package-pin (object-id object)
-                               object
-                               (assq-ref attribs 'pinnumber)
-                               netname
-                               (nets-netnames nets)
-                               (assq-ref attribs 'pinlabel)
-                               attribs
-                               ;; No net-map yet.
-                               #f
-                               nets
-                               ;; Set parent component later.
-                               #f
-                               (get-package-pin-connection object connections))))))
+             (let ((pin (make-package-pin (object-id object)
+                                          object
+                                          (assq-ref attribs 'pinnumber)
+                                          netname
+                                          (nets-netnames nets)
+                                          (assq-ref attribs 'pinlabel)
+                                          attribs
+                                          ;; No net-map yet.
+                                          #f
+                                          nets
+                                          ;; Set parent component later.
+                                          #f
+                                          connection)))
+               (schematic-connection-add-pin! connection pin)
+               pin)))))
 
   (filter-map object->package-pin (component-contents object)))
 
@@ -271,7 +296,7 @@
 ;;; corresponding pins in PIN-LIST, otherwise creates new pins and
 ;;; adds them to the list.  ID, REFDES, and hierarchy TAG are used
 ;;; to create hierarchical net name.
-(define (net-maps->pins net-maps id refdes tag pin-list)
+(define (net-maps->pins net-maps id refdes tag pin-list connections)
   (define (pinnumber->pin pinnumber pin-list)
     (and (not (null? pin-list))
          (let ((package-pinnumber (package-pin-number (car pin-list))))
@@ -290,8 +315,22 @@
            (label #f)
            (object #f)
            (attribs '())
-           (nets (list (make-pin-net id object net-priority netname refdes pinnumber))))
-      (make-package-pin id object pinnumber netname '() label attribs net-map nets #f #f)))
+           (nets (list (make-pin-net id object net-priority netname refdes pinnumber)))
+           (connection (get-connection-by-netname netname connections))
+           (pin (make-package-pin id
+                                  object
+                                  pinnumber
+                                  netname
+                                  '()
+                                  label
+                                  attribs
+                                  net-map
+                                  nets
+                                  #f
+                                  #f)))
+      (set-package-pin-connection! pin connection)
+      (schematic-connection-add-pin! connection pin)
+      pin))
 
   (define (make-or-update-net-map-pin net-map)
     (let ((pin (pinnumber->pin (net-map-pinnumber net-map)
@@ -401,7 +440,8 @@
                                  id
                                  refdes
                                  hierarchy-tag
-                                 real-pins))
+                                 real-pins
+                                 connections))
            (pins (append real-pins net-map-pins)))
       (set-schematic-component-refdes! package refdes)
       (set-schematic-component-sources! package sources)

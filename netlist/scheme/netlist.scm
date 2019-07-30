@@ -28,6 +28,7 @@
   #:use-module (ice-9 regex)
   #:use-module (netlist option)
   #:use-module (netlist schematic-component)
+  #:use-module (netlist schematic-connection)
   #:use-module (netlist sort)
   #:use-module (netlist attrib compare)
   #:use-module (geda page)
@@ -362,24 +363,22 @@ NETNAME in SCHEMATIC."
 
   (define netlist (schematic-components schematic))
 
-  (define non-graphical-refdeses
-    (filter-map schematic-component-refdes netlist))
-
-  (define (refdes->string refdes)
-    (let ((refdes (schematic-component-refdes->string refdes)))
-      (and (member refdes non-graphical-refdeses)
-           refdes)))
+  (define (pin->refdes-pinnumber-pair pin)
+    (let* ((component (package-pin-parent pin))
+           (refdes (schematic-component-refdes->string
+                    (schematic-component-refdes component)))
+           (pinnumber (package-pin-number pin)))
+      (and (not (schematic-component-graphical? component))
+           refdes
+           pinnumber
+           (cons refdes pinnumber))))
 
   (define (get-found-pin-connections pin)
     (if (found? (package-pin-name pin))
-        (filter-map
-         (lambda (net)
-           (let ((refdes (refdes->string (pin-net-connection-package net)))
-                 (pinnumber (pin-net-connection-pinnumber net)))
-             (and refdes
-                  pinnumber
-                  (cons refdes pinnumber))))
-         (package-pin-nets pin))
+        (filter-map pin->refdes-pinnumber-pair
+                    (if (package-pin-connection pin)
+                        (schematic-connection-pins (package-pin-connection pin))
+                        '()))
         '()))
 
   (define (get-netlist-connections netlist)
