@@ -134,7 +134,7 @@ Example usage:
                     page
                     ;; netname
                     (if (null? netnames)
-                        (string-append "unnamed_net" (number->string id))
+                        '()
                         (get-schematic-connection-netname netnames))
                     ;; override-netname
                     #f
