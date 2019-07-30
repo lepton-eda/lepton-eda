@@ -187,6 +187,17 @@ Notable changes in Lepton EDA 1.9.8
 - Separate menu description *XML* file has been removed. Now the
   menu structure is defined in the source code only.
 
+### Changes in `lepton-symcheck`:
+
+- The program no longer requires specifying any file name when
+  interactive mode is requested, which may be convenient, for
+  example, for debugging its functions.
+
+- A simple error is output instead of Scheme backtrace when
+  neither interactive mode nor input files are specified on
+  command line.
+
+
 ### Scheme API changes
 - Three legacy rc procedures, `attribute-promotion`,
   `promote-invisible`, and `keep-invisible`, have been adjusted to
