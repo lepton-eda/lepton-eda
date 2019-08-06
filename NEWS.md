@@ -125,6 +125,20 @@ Notable changes in Lepton EDA 1.9.8
 - `liblepton` configuration C and Scheme API has been extended
   with functions for removing configuration keys and groups.
 
+- A new Scheme module, `(lepton file-system)`, has been added. It
+  exports functions that previously were global:
+  `regular-file?()`, `directory?()`, and `file-readable?()`.  The
+  users may need to fix their scripts in which those functions
+  were used by adding corresponding `(use-modules ...)` line..
+
+- A new Scheme module, `(lepton rc)`, has been added.  It exports
+  functions and variables that previously were global: build-path,
+  `geda-data-path()`, `geda-rc-path()`, `path-sep()`,
+  `load-scheme-dir()`, and `load-rc-from-sys-config-dirs()`.  The
+  users may need to fix their scripts in which those functions and
+  variables were used by adding corresponding `(use-modules ...)`
+  line.
+
 - Fixed `'config-keys` unit test which previously did not work
   correctly on some Ubuntu versions.
 
