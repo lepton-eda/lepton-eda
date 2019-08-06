@@ -213,6 +213,19 @@
                    (attrib-value-by-name object "netname"))))
      nets))
 
+  (define (nets-netname nets)
+    (or
+     ;; If there is no netname, probably some of nets has been
+     ;; already named.
+     (search-net-name nets)
+     ;; Didn't find a name.  Go looking for another net which
+     ;; might have already been named, i.e. we don't want to
+     ;; create a new unnamed net if the net has already been named
+     ;; before.
+     (search-in-hash-table nets)
+     ;; Last resort. We have not found a name. Make a new one.
+     (make-special-netname nets)))
+
   (define (object->package-pin object)
     (and (net-pin? object)
          (let ((attribs (make-pin-attrib-list object))
@@ -256,19 +269,7 @@
                                                           (and (not net-driven?)
                                                                pinnumber))))))
             nets)
-           (let ((netname (or
-                           ;; If there is no netname, probably
-                           ;; some of nets has been already named.
-                           (search-net-name nets)
-                           ;; Didn't find a name.  Go looking for
-                           ;; another net which might have already
-                           ;; been named, i.e. we don't want to
-                           ;; create a new unnamed net if the net
-                           ;; has already been named before.
-                           (search-in-hash-table nets)
-                           ;; Last resort. We have not found a
-                           ;; name. Make a new one.
-                           (make-special-netname nets))))
+           (let ((netname (nets-netname nets)))
              (and netname
                   (for-each
                    (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
