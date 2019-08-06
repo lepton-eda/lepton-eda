@@ -120,6 +120,10 @@ Notable changes in Lepton EDA 1.9.8
 - A CSS file has been added to prettify generated Scheme API
   reference HTML pages.
 
+- Some empty application-specific directories that previously
+  could not be removed after uninstalling all files by `make
+  uninstall` are now correctly deleted.
+
 ### Changes in `liblepton`:
 
 - `liblepton` configuration C and Scheme API has been extended
