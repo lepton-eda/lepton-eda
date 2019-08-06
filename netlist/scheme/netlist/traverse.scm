@@ -226,6 +226,12 @@
      ;; Last resort. We have not found a name. Make a new one.
      (make-special-netname nets)))
 
+  (define (update-netnames-hash-table netname nets)
+    (and netname
+         (for-each
+          (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
+          nets)))
+
   (define (object->package-pin object)
     (and (net-pin? object)
          (let ((attribs (make-pin-attrib-list object))
@@ -270,10 +276,7 @@
                                                                pinnumber))))))
             nets)
            (let ((netname (nets-netname nets)))
-             (and netname
-                  (for-each
-                   (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
-                   nets))
+             (update-netnames-hash-table netname nets)
              (let ((pin (make-package-pin (object-id object)
                                           object
                                           (assq-ref attribs 'pinnumber)
