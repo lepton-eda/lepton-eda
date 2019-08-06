@@ -460,6 +460,23 @@ Notable changes in Lepton EDA 1.9.8
   manager and in the window's title.  Now, both are correctly
   updated so that the status is visible to the user.
 
+- Page manager visual appearance has been improved in several ways:
+
+  - When working on hierarchical schematics, full schematic paths
+    used to clutter the view most of the time. Now they can be
+    shown at any time or hidden away by checking the "Show full
+    paths" checkbox. By default, they are hidden.  The state of
+    the "Show full paths" checkbox is stored in the
+    `show-full-paths` key of the `schematic.page-manager` group in
+    the **cache** configuration context.
+
+  - Minimal "Filename" column width has been reduced.
+
+  - Scrollbars are now shown only when needed.
+
+  - Superfluous "Right click on the filename for more options..."
+    label has been removed.
+
 - Fixed a broken output of translated strings to the log when the
   program is compiled using guile-2.2.  It is a [known
   issue](https://lists.gnu.org/archive/html/bug-guile/2017-01/msg00020.htm)
