@@ -290,11 +290,19 @@ Notable changes in Lepton EDA 1.9.8
   - Wrong netlister name has been fixed.
   - generate_netlist.scm has been moved to the example directory.
 
-- A list of attributes that cannot form generic has been
-  introduced in the `vams` backend code.  Two internal (or
-  abstract) attributes, `slot=` and `net=`, are no longer used in
-  forming VHDL generic maps, since they are intended for internal
-  use by netlister itself.
+- The `vams` backend code has been fixed as follows:
+
+  - The code does no longer emit Scheme return values of
+    procedures, which previously mangled the output.
+
+  - The output of generic and port definitions is now going into
+    appropriate place.
+
+  - A list of attributes that cannot form generics does no longer
+    appear in the output.  Two internal (or abstract) attributes,
+    `slot=` and `net=`, are no longer used in forming VHDL generic
+    maps, since they are intended for internal use by netlister
+    itself.
 
 - The `allegro` backend has been refactored so obsolete procedures
   are no longer used in it.
