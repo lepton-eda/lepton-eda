@@ -24,7 +24,6 @@
   #:use-module (netlist package-pin)
 
   #:export (search-rename
-            search-net-rename
             add-rename
             add-net-rename
             reset-rename!
@@ -110,8 +109,6 @@ This warning is okay if you have multiple levels of hierarchy!
 (define (search-rename from to quiet)
   (%search-rename %netname-renames from to quiet))
 
-(define (search-net-rename from to quiet)
-  (%search-rename %net-renames from to quiet))
 
 (define (rename-all netlist)
   (hash-table-walk %netname-renames
