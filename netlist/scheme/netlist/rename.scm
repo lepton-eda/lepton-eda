@@ -27,7 +27,6 @@
             search-net-rename
             add-rename
             add-net-rename
-            get-rename-list
             reset-rename!
             rename-all
             get-rename-list))
