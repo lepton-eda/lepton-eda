@@ -499,7 +499,6 @@
     (append schematic-components underlying-components)))
 
 (define (traverse toplevel-pages netlist-mode)
-  (reset-rename!)
   (rename-all (hierarchy-post-process (traverse-pages toplevel-pages
                                                       #f ; toplevel hierarchy tag
                                                       netlist-mode))))

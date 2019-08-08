@@ -26,7 +26,6 @@
   #:export (search-rename
             add-rename
             add-net-rename
-            reset-rename!
             rename-all
             get-rename-list))
 
@@ -45,16 +44,15 @@
 ;;; Hash tables for renamings by netname= and net= attributes.
 (define %netname-renames (make-hash-table))
 (define %net-renames (make-hash-table))
+;;; Hash tables to store results for post-use.
+(define %%netname-renames)
+(define %%net-renames)
 
 (define (renamed? rename-table from)
   (hash-table-ref/default rename-table from #f))
 
 (define (set-rename! rename-table from to)
   (hash-table-set! rename-table from to))
-
-(define-public (reset-rename!)
-  (set! %netname-renames (make-hash-table))
-  (set! %net-renames (make-hash-table)))
 
 (define (update-rename rename-table from to)
   (let ((from-rename (renamed? rename-table from))
@@ -111,12 +109,20 @@ This warning is okay if you have multiple levels of hierarchy!
 
 
 (define (rename-all netlist)
+  ;; Do actual renaming.
   (hash-table-walk %netname-renames
                    (lambda (from to)
                      (rename-lowlevel netlist from to)))
   (hash-table-walk %net-renames
                    (lambda (from to)
                      (rename-lowlevel netlist from to)))
+
+  ;; Backup hash tables for usage in get-rename-list().
+  (set! %%netname-renames %netname-renames)
+  (set! %%net-renames %net-renames)
+  ;; Reinitialise hash tables to prepare for next time work.
+  (set! %netname-renames (make-hash-table))
+  (set! %net-renames (make-hash-table))
   netlist)
 
 ;; Return the alist of renames.  Sort it so that it's in a canonical
@@ -128,5 +134,5 @@ This warning is okay if you have multiple levels of hierarchy!
         (and (string= (cdr a) (cdr b))
              (string<? (car a) (car b)))))
 
-  (append (sort! (hash-table->alist %netname-renames) pair<?)
-          (sort! (hash-table->alist %net-renames) pair<?)))
+  (append (sort! (hash-table->alist %%netname-renames) pair<?)
+          (sort! (hash-table->alist %%net-renames) pair<?)))
