@@ -273,21 +273,21 @@
   (filter-map object->package-pin (component-contents object)))
 
 
-;;; Searches for pinnumers in NET-MAPS and, if found, updates
-;;; corresponding pins in PIN-LIST, otherwise creates new pins and
-;;; adds them to the list.  ID, REFDES, and hierarchy TAG are used
-;;; to create hierarchical net name.
-(define (net-maps->pins net-maps id refdes tag pin-list)
-  (define (pinnumber->pin pinnumber pin-list)
-    (and (not (null? pin-list))
-         (let ((package-pinnumber (package-pin-number (car pin-list))))
-           ;; FIXME: a pin may have no "pinnumber=", and we have
-           ;; to deal with such cases. A test and drc check is
-           ;; needed.
-           (if (and package-pinnumber
-                    (string=? package-pinnumber pinnumber))
-               (car pin-list)
-               (pinnumber->pin pinnumber (cdr pin-list))))))
+;;; This function does renaming job for PIN.
+(define (net-map-update-pin pin id refdes tag)
+  (define (add-net-power-pin-override pin net-map tag)
+    (define (power-pin? pin)
+      (string=? "pwr" (assq-ref (package-pin-attribs pin) 'pintype)))
+
+    (let ((connection (package-pin-connection pin))
+          (name (create-netattrib (net-map-netname net-map) tag)))
+      (when (power-pin? pin)
+        (set-schematic-connection-override-name!
+         connection
+         (match (schematic-connection-override-name connection)
+           ((? list? x) `(,name . ,x))
+           (#f name)
+           (x `(,name ,x)))))))
 
   (define (check-shorted-nets a b priority)
     (log! 'critical
@@ -322,36 +322,38 @@
             (set-pin-net-connection-package! net refdes)
             (set-pin-net-connection-pinnumber! net pinnumber)))))
 
-  (define (add-net-power-pin-override pin net-map tag)
-    (define (power-pin? pin)
-      (string=? "pwr" (assq-ref (package-pin-attribs pin) 'pintype)))
+  (let ((net-map (package-pin-net-map pin)))
+    (add-net-power-pin-override pin net-map tag)
+    (and refdes
+         (let ((netname (create-netattrib (net-map-netname net-map) tag))
+               (pin-netname (package-pin-name pin)))
+           (if (and pin-netname
+                    (not (unnamed-net-or-unconnected-pin? pin-netname)))
+               (if (gnetlist-config-ref 'netname-attribute-priority)
+                   (check-shorted-nets netname pin-netname 'netname)
+                   (check-shorted-nets pin-netname netname 'net))
+               (begin
+                 (when (unnamed-net-or-unconnected-pin? pin-netname)
+                   ;; Rename unconnected pins and unnamed nets.
+                   (add-net-rename pin-netname netname))
+                 (update-pin-netname pin netname id refdes)))))))
 
-    (let ((connection (package-pin-connection pin))
-          (name (create-netattrib (net-map-netname net-map) tag)))
-      (when (power-pin? pin)
-        (set-schematic-connection-override-name!
-         connection
-         (match (schematic-connection-override-name connection)
-           ((? list? x) `(,name . ,x))
-           (#f name)
-           (x `(,name ,x)))))))
 
-  (define (update-pin pin)
-    (let ((net-map (package-pin-net-map pin)))
-      (add-net-power-pin-override pin net-map tag)
-      (and refdes
-           (let ((netname (create-netattrib (net-map-netname net-map) tag))
-                 (pin-netname (package-pin-name pin)))
-             (if (and pin-netname
-                      (not (unnamed-net-or-unconnected-pin? pin-netname)))
-                 (if (gnetlist-config-ref 'netname-attribute-priority)
-                     (check-shorted-nets netname pin-netname 'netname)
-                     (check-shorted-nets pin-netname netname 'net))
-                 (begin
-                   (when (unnamed-net-or-unconnected-pin? pin-netname)
-                     ;; Rename unconnected pins and unnamed nets.
-                     (add-net-rename pin-netname netname))
-                   (update-pin-netname pin netname id refdes)))))))
+;;; Searches for pinnumers in NET-MAPS and, if found, updates
+;;; corresponding pins in PIN-LIST, otherwise creates new pins and
+;;; adds them to the list.  ID, REFDES, and hierarchy TAG are used
+;;; to create hierarchical net name.
+(define (net-maps->pins net-maps id refdes tag pin-list)
+  (define (pinnumber->pin pinnumber pin-list)
+    (and (not (null? pin-list))
+         (let ((package-pinnumber (package-pin-number (car pin-list))))
+           ;; FIXME: a pin may have no "pinnumber=", and we have
+           ;; to deal with such cases. A test and drc check is
+           ;; needed.
+           (if (and package-pinnumber
+                    (string=? package-pinnumber pinnumber))
+               (car pin-list)
+               (pinnumber->pin pinnumber (cdr pin-list))))))
 
   (define (pin-exists? net-map pin-list)
     (let ((pin (pinnumber->pin (net-map-pinnumber net-map)
@@ -376,7 +378,7 @@
                                     net-maps))
         (net-maps-to-create-pins (filter (cut pin-doesnt-exist? <> pin-list)
                                          net-maps)))
-    (for-each update-pin pins-to-update)
+    (for-each (cut net-map-update-pin <> id refdes tag) pins-to-update)
     (map make-net-map-pin net-maps-to-create-pins)))
 
 
