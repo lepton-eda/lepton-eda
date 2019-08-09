@@ -354,14 +354,16 @@
          #f))
 
   (define (pin-exists? net-map pin-list)
-    (pinnumber->pin (net-map-pinnumber net-map)
-                    pin-list))
+    (let ((pin (pinnumber->pin (net-map-pinnumber net-map)
+                               pin-list)))
+      (and pin
+           (set-package-pin-net-map! pin net-map)
+           pin)))
 
-  (define (update-pin-if-exists net-map pin-list)
-    (let ((pin (pin-exists? net-map pin-list)))
-      (if pin
-          (update-pin pin net-map)
-          net-map)))
+  (define pin-doesnt-exist? (negate pin-exists?))
+
+  (define (update-pin-if-exists pin)
+    (update-pin pin (package-pin-net-map pin)))
 
   (define (make-net-map-pin net-map id refdes tag)
     (let* ((pinnumber (net-map-pinnumber net-map))
@@ -373,8 +375,12 @@
            (nets (list (make-pin-net id object net-priority netname refdes pinnumber))))
       (make-package-pin id object pinnumber netname label attribs net-map nets #f)))
 
-  (map (cut make-net-map-pin <> id refdes tag)
-       (filter (cut update-pin-if-exists <> pin-list) net-maps)))
+  (let ((pins-to-update (filter-map (cut pin-exists? <> pin-list)
+                                    net-maps))
+        (net-maps-to-create-pins (filter (cut pin-doesnt-exist? <> pin-list)
+                                         net-maps)))
+    (for-each update-pin-if-exists pins-to-update)
+    (map (cut make-net-map-pin <> id refdes tag) net-maps-to-create-pins)))
 
 
 (define (get-sources graphical? inherited-attribs attached-attribs)
