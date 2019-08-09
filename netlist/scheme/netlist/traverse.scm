@@ -339,6 +339,14 @@
                  (update-pin-netname pin netname id refdes)))))))
 
 
+(define (update-net-mapped-pins pins id refdes tag)
+  (define (update-pin pin)
+    (and (package-pin-object pin)
+         (package-pin-net-map pin)
+         (net-map-update-pin pin id refdes tag)))
+  (for-each update-pin pins))
+
+
 ;;; Searches for pinnumers in NET-MAPS and, if found, updates
 ;;; corresponding pins in PIN-LIST, otherwise creates new pins and
 ;;; adds them to the list.  ID, REFDES, and hierarchy TAG are used
@@ -355,15 +363,6 @@
                (car pin-list)
                (pinnumber->pin pinnumber (cdr pin-list))))))
 
-  (define (pin-exists? net-map pin-list)
-    (let ((pin (pinnumber->pin (net-map-pinnumber net-map)
-                               pin-list)))
-      (and pin
-           (set-package-pin-net-map! pin net-map)
-           pin)))
-
-  (define pin-doesnt-exist? (negate pin-exists?))
-
   (define (make-net-map-pin net-map)
     (let* ((pinnumber (net-map-pinnumber net-map))
            (netname (create-netattrib (net-map-netname net-map) tag))
@@ -374,12 +373,20 @@
            (nets (list (make-pin-net id object net-priority netname refdes pinnumber))))
       (make-package-pin id object pinnumber netname label attribs net-map nets #f)))
 
-  (let ((pins-to-update (filter-map (cut pin-exists? <> pin-list)
-                                    net-maps))
-        (net-maps-to-create-pins (filter (cut pin-doesnt-exist? <> pin-list)
-                                         net-maps)))
-    (for-each (cut net-map-update-pin <> id refdes tag) pins-to-update)
-    (map make-net-map-pin net-maps-to-create-pins)))
+  (define (make-or-update-net-map-pin net-map)
+    (let ((pin (pinnumber->pin (net-map-pinnumber net-map)
+                               pin-list)))
+      (if pin
+          ;; If pin exists, just assign net-map for it.
+          (begin
+            (set-package-pin-net-map! pin net-map)
+            ;; Return #f to filter out existing pins.
+            #f)
+          ;; Otherwise, make a new virtual pin.
+          (make-net-map-pin net-map))))
+
+  ;; Create virtual 'net-map' pins.
+  (filter-map make-or-update-net-map-pin net-maps))
 
 
 (define (get-sources graphical? inherited-attribs attached-attribs)
@@ -476,6 +483,7 @@
                                  hierarchy-tag
                                  real-pins))
            (pins (append real-pins net-map-pins)))
+      (update-net-mapped-pins pins id refdes hierarchy-tag)
       (set-schematic-component-refdes! package refdes)
       (set-schematic-component-sources! package sources)
       (set-schematic-component-pins! package pins)
