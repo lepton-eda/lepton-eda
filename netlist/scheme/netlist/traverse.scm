@@ -335,6 +335,7 @@
            (x `(,name ,x)))))))
 
   (define (update-pin pin net-map id refdes tag)
+    (add-net-power-pin-override pin net-map tag)
     (and refdes
          (let ((netname (create-netattrib (net-map-netname net-map) tag))
                (pin-netname (package-pin-name pin)))
@@ -365,9 +366,7 @@
            (lambda (net-map)
              (let ((pin (pinnumber->pin (net-map-pinnumber net-map) pin-list)))
                (if pin
-                   (begin
-                     (add-net-power-pin-override pin net-map tag)
-                     (update-pin pin net-map id refdes tag))
+                   (update-pin pin net-map id refdes tag)
                    (make-net-map-pin net-map id refdes tag))))
            net-maps)))
 
