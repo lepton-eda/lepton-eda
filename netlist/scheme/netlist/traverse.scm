@@ -362,7 +362,7 @@
 
   (define pin-doesnt-exist? (negate pin-exists?))
 
-  (define (make-net-map-pin net-map id refdes tag)
+  (define (make-net-map-pin net-map)
     (let* ((pinnumber (net-map-pinnumber net-map))
            (netname (create-netattrib (net-map-netname net-map) tag))
            (net-priority #t)
@@ -377,7 +377,7 @@
         (net-maps-to-create-pins (filter (cut pin-doesnt-exist? <> pin-list)
                                          net-maps)))
     (for-each update-pin pins-to-update)
-    (map (cut make-net-map-pin <> id refdes tag) net-maps-to-create-pins)))
+    (map make-net-map-pin net-maps-to-create-pins)))
 
 
 (define (get-sources graphical? inherited-attribs attached-attribs)
