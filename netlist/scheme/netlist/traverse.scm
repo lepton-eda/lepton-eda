@@ -336,22 +336,22 @@
            (#f name)
            (x `(,name ,x)))))))
 
-  (define (update-pin pin net-map)
-    (add-net-power-pin-override pin net-map tag)
-    (and refdes
-         (let ((netname (create-netattrib (net-map-netname net-map) tag))
-               (pin-netname (package-pin-name pin)))
-           (if (and pin-netname
-                    (not (unnamed-net-or-unconnected-pin? pin-netname)))
-               (if (gnetlist-config-ref 'netname-attribute-priority)
-                   (check-shorted-nets netname pin-netname 'netname)
-                   (check-shorted-nets pin-netname netname 'net))
-               (begin
-                 (when (unnamed-net-or-unconnected-pin? pin-netname)
-                   ;; Rename unconnected pins and unnamed nets.
-                   (add-net-rename pin-netname netname))
-                 (update-pin-netname pin netname id refdes))))
-         #f))
+  (define (update-pin pin)
+    (let ((net-map (package-pin-net-map pin)))
+      (add-net-power-pin-override pin net-map tag)
+      (and refdes
+           (let ((netname (create-netattrib (net-map-netname net-map) tag))
+                 (pin-netname (package-pin-name pin)))
+             (if (and pin-netname
+                      (not (unnamed-net-or-unconnected-pin? pin-netname)))
+                 (if (gnetlist-config-ref 'netname-attribute-priority)
+                     (check-shorted-nets netname pin-netname 'netname)
+                     (check-shorted-nets pin-netname netname 'net))
+                 (begin
+                   (when (unnamed-net-or-unconnected-pin? pin-netname)
+                     ;; Rename unconnected pins and unnamed nets.
+                     (add-net-rename pin-netname netname))
+                   (update-pin-netname pin netname id refdes)))))))
 
   (define (pin-exists? net-map pin-list)
     (let ((pin (pinnumber->pin (net-map-pinnumber net-map)
@@ -361,9 +361,6 @@
            pin)))
 
   (define pin-doesnt-exist? (negate pin-exists?))
-
-  (define (update-pin-if-exists pin)
-    (update-pin pin (package-pin-net-map pin)))
 
   (define (make-net-map-pin net-map id refdes tag)
     (let* ((pinnumber (net-map-pinnumber net-map))
@@ -379,7 +376,7 @@
                                     net-maps))
         (net-maps-to-create-pins (filter (cut pin-doesnt-exist? <> pin-list)
                                          net-maps)))
-    (for-each update-pin-if-exists pins-to-update)
+    (for-each update-pin pins-to-update)
     (map (cut make-net-map-pin <> id refdes tag) net-maps-to-create-pins)))
 
 
