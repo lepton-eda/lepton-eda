@@ -265,6 +265,8 @@
                                netname
                                (assq-ref attribs 'pinlabel)
                                attribs
+                               ;; No net-map yet.
+                               #f
                                nets
                                (get-package-pin-connection object connections))))))
 
@@ -369,7 +371,7 @@
            (object #f)
            (attribs '())
            (nets (list (make-pin-net id object net-priority netname refdes pinnumber))))
-      (make-package-pin id object pinnumber netname label attribs nets #f)))
+      (make-package-pin id object pinnumber netname label attribs net-map nets #f)))
 
   (map (cut make-net-map-pin <> id refdes tag)
        (filter (cut update-pin-if-exists <> pin-list) net-maps)))

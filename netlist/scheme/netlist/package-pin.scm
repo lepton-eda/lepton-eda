@@ -29,13 +29,14 @@
                    package-pin-name set-package-pin-name!
                    package-pin-label set-package-pin-label!
                    package-pin-attribs set-package-pin-attribs!
+                   package-pin-net-map set-package-pin-net-map!
                    package-pin-nets set-package-pin-nets!
                    package-pin-connection set-package-pin-connection!)
 
   #:export (set-package-pin-printer!))
 
 (define-record-type <package-pin>
-  (make-package-pin id object number name label attribs nets connection)
+  (make-package-pin id object number name label attribs net-map nets connection)
   package-pin?
   ;; This field is used just for the record representation in
   ;; set-record-type-printer! below.
@@ -50,6 +51,8 @@
   (label package-pin-label set-package-pin-label!)
   ;; The alist representing attributes of the underlying object.
   (attribs package-pin-attribs set-package-pin-attribs!)
+  ;; net= attribute mapping for the pin.
+  (net-map package-pin-net-map set-package-pin-net-map!)
   ;; The list of <pin-net>'s connected to the pin.
   (nets package-pin-nets set-package-pin-nets!)
   ;; <schematic-connection> the pin is connected to.
@@ -70,6 +73,7 @@ FORMAT-STRING must be in the form required by the procedure
   'name
   'label
   'attribs
+  'net-map
   'nets
   'connection
 Any other unrecognized argument will lead to yielding '?' in the
@@ -89,6 +93,7 @@ Example usage:
                  ('name (package-pin-name record))
                  ('label (package-pin-label record))
                  ('attribs (package-pin-attribs record))
+                 ('net-map (package-pin-net-map record))
                  ('nets (package-pin-nets record))
                  ('connection (package-pin-connection record))
                  (_ #\?)))
