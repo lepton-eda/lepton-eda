@@ -23,11 +23,14 @@
   #:use-module (geda log)
   #:use-module (netlist config)
   #:use-module (netlist core gettext)
+  #:use-module (netlist net)
   #:use-module (netlist rename)
   #:use-module (netlist schematic-component)
+  #:use-module (netlist schematic-connection)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
   #:use-module (netlist verbose)
+  #:use-module (symbol check net-attrib)
 
   #:export (hierarchy-create-refdes
             hierarchy-post-process
@@ -165,13 +168,93 @@
   netlist)
 
 
-(define (hierarchy-post-process netlist)
+;;; This function does renaming job for PIN.
+(define (net-map-update-pin pin id refdes tag)
+  (define (add-net-power-pin-override pin net-map tag)
+    (define (power-pin? pin)
+      (string=? "pwr" (assq-ref (package-pin-attribs pin) 'pintype)))
+
+    (let ((connection (package-pin-connection pin))
+          (name (create-netattrib (net-map-netname net-map) tag)))
+      (when (power-pin? pin)
+        (set-schematic-connection-override-name!
+         connection
+         (match (schematic-connection-override-name connection)
+           ((? list? x) `(,name . ,x))
+           (#f name)
+           (x `(,name ,x)))))))
+
+  (define (check-shorted-nets a b priority)
+    (log! 'critical
+          (_ "Rename shorted nets (~A= has priority): ~A -> ~A")
+          priority
+          a
+          b)
+    (add-net-rename a b))
+
+  (define (unnamed-net-or-unconnected-pin? name)
+    (or (string-prefix? "unnamed_net" name)
+        (string-prefix? "unconnected_pin" name)))
+
+  (define (update-pin-netname pin netname id refdes)
+    (let ((nets (package-pin-nets pin))
+          (pinnumber (package-pin-number pin))
+          (net-priority #t)
+          (object #f))
+      (set-package-pin-name! pin netname)
+      (if (null? nets)
+          (set-package-pin-nets! pin
+                                 (list (make-pin-net id
+                                                     object
+                                                     net-priority
+                                                     netname
+                                                     refdes
+                                                     pinnumber)))
+          (let ((net (car nets)))
+            (set-pin-net-id! net id)
+            (set-pin-net-priority! net net-priority)
+            (set-pin-net-name! net netname)
+            (set-pin-net-connection-package! net refdes)
+            (set-pin-net-connection-pinnumber! net pinnumber)))))
+
+  (let ((net-map (package-pin-net-map pin)))
+    (add-net-power-pin-override pin net-map tag)
+    (and refdes
+         (let ((netname (create-netattrib (net-map-netname net-map) tag))
+               (pin-netname (package-pin-name pin)))
+           (if (and pin-netname
+                    (not (unnamed-net-or-unconnected-pin? pin-netname)))
+               (if (gnetlist-config-ref 'netname-attribute-priority)
+                   (check-shorted-nets netname pin-netname 'netname)
+                   (check-shorted-nets pin-netname netname 'net))
+               (begin
+                 (when (unnamed-net-or-unconnected-pin? pin-netname)
+                   ;; Rename unconnected pins and unnamed nets.
+                   (add-net-rename pin-netname netname))
+                 (update-pin-netname pin netname id refdes)))))))
+
+
+(define (update-component-net-mapped-pins component)
+  (define pins (schematic-component-pins component))
+  (define id (schematic-component-id component))
+  (define refdes (schematic-component-refdes component))
+  (define tag (schematic-component-tag component))
+
+  (define (update-pin pin)
+    (and (package-pin-object pin)
+         (package-pin-net-map pin)
+         (net-map-update-pin pin id refdes tag)))
+
+  (for-each update-pin pins))
+
+
+(define (hierarchy-post-process components)
   (define (fix-pin pin refdes)
     (let ((label (package-pin-label pin))
           (pinnumber (package-pin-number pin))
           (nets (package-pin-nets pin)))
      (if label
-         (unless (hierarchy-setup-rename netlist refdes label nets)
+         (unless (hierarchy-setup-rename components refdes label nets)
            (log! 'critical
                  (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
                  refdes
@@ -186,9 +269,11 @@
       (for-each (cut fix-pin <> (schematic-component-refdes package))
                 (schematic-component-pins package))))
 
-  (for-each fix-composite-package netlist)
+  (for-each update-component-net-mapped-pins components)
+
+  (for-each fix-composite-package components)
 
   (hierarchy-remove-all-composite
    ((if (gnetlist-config-ref 'mangle-refdes)
         identity
-        remove-refdes-mangling) netlist)))
+        remove-refdes-mangling) components)))

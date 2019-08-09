@@ -273,80 +273,6 @@
   (filter-map object->package-pin (component-contents object)))
 
 
-;;; This function does renaming job for PIN.
-(define (net-map-update-pin pin id refdes tag)
-  (define (add-net-power-pin-override pin net-map tag)
-    (define (power-pin? pin)
-      (string=? "pwr" (assq-ref (package-pin-attribs pin) 'pintype)))
-
-    (let ((connection (package-pin-connection pin))
-          (name (create-netattrib (net-map-netname net-map) tag)))
-      (when (power-pin? pin)
-        (set-schematic-connection-override-name!
-         connection
-         (match (schematic-connection-override-name connection)
-           ((? list? x) `(,name . ,x))
-           (#f name)
-           (x `(,name ,x)))))))
-
-  (define (check-shorted-nets a b priority)
-    (log! 'critical
-          (_ "Rename shorted nets (~A= has priority): ~A -> ~A")
-          priority
-          a
-          b)
-    (add-net-rename a b))
-
-  (define (unnamed-net-or-unconnected-pin? name)
-    (or (string-prefix? "unnamed_net" name)
-        (string-prefix? "unconnected_pin" name)))
-
-  (define (update-pin-netname pin netname id refdes)
-    (let ((nets (package-pin-nets pin))
-          (pinnumber (package-pin-number pin))
-          (net-priority #t)
-          (object #f))
-      (set-package-pin-name! pin netname)
-      (if (null? nets)
-          (set-package-pin-nets! pin
-                                 (list (make-pin-net id
-                                                     object
-                                                     net-priority
-                                                     netname
-                                                     refdes
-                                                     pinnumber)))
-          (let ((net (car nets)))
-            (set-pin-net-id! net id)
-            (set-pin-net-priority! net net-priority)
-            (set-pin-net-name! net netname)
-            (set-pin-net-connection-package! net refdes)
-            (set-pin-net-connection-pinnumber! net pinnumber)))))
-
-  (let ((net-map (package-pin-net-map pin)))
-    (add-net-power-pin-override pin net-map tag)
-    (and refdes
-         (let ((netname (create-netattrib (net-map-netname net-map) tag))
-               (pin-netname (package-pin-name pin)))
-           (if (and pin-netname
-                    (not (unnamed-net-or-unconnected-pin? pin-netname)))
-               (if (gnetlist-config-ref 'netname-attribute-priority)
-                   (check-shorted-nets netname pin-netname 'netname)
-                   (check-shorted-nets pin-netname netname 'net))
-               (begin
-                 (when (unnamed-net-or-unconnected-pin? pin-netname)
-                   ;; Rename unconnected pins and unnamed nets.
-                   (add-net-rename pin-netname netname))
-                 (update-pin-netname pin netname id refdes)))))))
-
-
-(define (update-net-mapped-pins pins id refdes tag)
-  (define (update-pin pin)
-    (and (package-pin-object pin)
-         (package-pin-net-map pin)
-         (net-map-update-pin pin id refdes tag)))
-  (for-each update-pin pins))
-
-
 ;;; Searches for pinnumers in NET-MAPS and, if found, updates
 ;;; corresponding pins in PIN-LIST, otherwise creates new pins and
 ;;; adds them to the list.  ID, REFDES, and hierarchy TAG are used
@@ -483,7 +409,6 @@
                                  hierarchy-tag
                                  real-pins))
            (pins (append real-pins net-map-pins)))
-      (update-net-mapped-pins pins id refdes hierarchy-tag)
       (set-schematic-component-refdes! package refdes)
       (set-schematic-component-sources! package sources)
       (set-schematic-component-pins! package pins)
