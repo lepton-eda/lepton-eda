@@ -351,6 +351,13 @@
                  (update-pin-netname pin netname id refdes))))
          #f))
 
+  (define (update-pin-if-exists net-map pin-list)
+    (let ((pin (pinnumber->pin (net-map-pinnumber net-map)
+                               pin-list)))
+      (if pin
+          (update-pin pin net-map id refdes tag)
+          net-map)))
+
   (define (make-net-map-pin net-map id refdes tag)
     (let* ((pinnumber (net-map-pinnumber net-map))
            (netname (create-netattrib (net-map-netname net-map) tag))
@@ -362,15 +369,8 @@
       (make-package-pin id object pinnumber netname label attribs nets #f)))
 
   (append pin-list
-          (map
-           (cut make-net-map-pin <> id refdes tag)
-           (filter-map
-            (lambda (net-map)
-              (let ((pin (pinnumber->pin (net-map-pinnumber net-map) pin-list)))
-                (if pin
-                    (update-pin pin net-map id refdes tag)
-                    net-map)))
-            net-maps))))
+          (map (cut make-net-map-pin <> id refdes tag)
+               (filter (cut update-pin-if-exists <> pin-list) net-maps))))
 
 
 (define (get-sources graphical? inherited-attribs attached-attribs)
