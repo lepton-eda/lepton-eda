@@ -362,13 +362,15 @@
       (make-package-pin id object pinnumber netname label attribs nets #f)))
 
   (append pin-list
-          (filter-map
-           (lambda (net-map)
-             (let ((pin (pinnumber->pin (net-map-pinnumber net-map) pin-list)))
-               (if pin
-                   (update-pin pin net-map id refdes tag)
-                   (make-net-map-pin net-map id refdes tag))))
-           net-maps)))
+          (map
+           (cut make-net-map-pin <> id refdes tag)
+           (filter-map
+            (lambda (net-map)
+              (let ((pin (pinnumber->pin (net-map-pinnumber net-map) pin-list)))
+                (if pin
+                    (update-pin pin net-map id refdes tag)
+                    net-map)))
+            net-maps))))
 
 
 (define (get-sources graphical? inherited-attribs attached-attribs)
