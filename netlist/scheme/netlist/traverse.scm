@@ -368,9 +368,8 @@
            (nets (list (make-pin-net id object net-priority netname refdes pinnumber))))
       (make-package-pin id object pinnumber netname label attribs nets #f)))
 
-  (append pin-list
-          (map (cut make-net-map-pin <> id refdes tag)
-               (filter (cut update-pin-if-exists <> pin-list) net-maps))))
+  (map (cut make-net-map-pin <> id refdes tag)
+       (filter (cut update-pin-if-exists <> pin-list) net-maps)))
 
 
 (define (get-sources graphical? inherited-attribs attached-attribs)
@@ -460,11 +459,13 @@
            (sources (get-sources graphical
                                  inherited-attribs
                                  attached-attribs))
-           (pins (net-maps->pins net-maps
+           (real-pins (object-pins object hierarchy-tag netlist-mode connections))
+           (net-map-pins (net-maps->pins net-maps
                                  id
                                  refdes
                                  hierarchy-tag
-                                 (object-pins object hierarchy-tag netlist-mode connections))))
+                                 real-pins))
+           (pins (append real-pins net-map-pins)))
       (set-schematic-component-refdes! package refdes)
       (set-schematic-component-sources! package sources)
       (set-schematic-component-pins! package pins)
