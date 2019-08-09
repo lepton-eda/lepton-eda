@@ -320,6 +320,20 @@
             (set-pin-net-connection-package! net refdes)
             (set-pin-net-connection-pinnumber! net pinnumber)))))
 
+  (define (add-net-power-pin-override pin net-map tag)
+    (define (power-pin? pin)
+      (string=? "pwr" (assq-ref (package-pin-attribs pin) 'pintype)))
+
+    (let ((connection (package-pin-connection pin))
+          (name (create-netattrib (net-map-netname net-map) tag)))
+      (when (power-pin? pin)
+        (set-schematic-connection-override-name!
+         connection
+         (match (schematic-connection-override-name connection)
+           ((? list? x) `(,name . ,x))
+           (#f name)
+           (x `(,name ,x)))))))
+
   (define (update-pin pin net-map id refdes tag)
     (and refdes
          (let ((netname (create-netattrib (net-map-netname net-map) tag))
@@ -345,20 +359,6 @@
            (attribs '())
            (nets (list (make-pin-net id object net-priority netname refdes pinnumber))))
       (make-package-pin id object pinnumber netname label attribs nets #f)))
-
-  (define (add-net-power-pin-override pin net-map tag)
-    (define (power-pin? pin)
-      (string=? "pwr" (assq-ref (package-pin-attribs pin) 'pintype)))
-
-    (let ((connection (package-pin-connection pin))
-          (name (create-netattrib (net-map-netname net-map) tag)))
-      (when (power-pin? pin)
-        (set-schematic-connection-override-name!
-         connection
-         (match (schematic-connection-override-name connection)
-           ((? list? x) `(,name . ,x))
-           (#f name)
-           (x `(,name ,x)))))))
 
   (append pin-list
           (filter-map
