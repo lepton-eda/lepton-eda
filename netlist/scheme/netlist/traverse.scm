@@ -351,9 +351,12 @@
                  (update-pin-netname pin netname id refdes))))
          #f))
 
+  (define (pin-exists? net-map pin-list)
+    (pinnumber->pin (net-map-pinnumber net-map)
+                    pin-list))
+
   (define (update-pin-if-exists net-map pin-list)
-    (let ((pin (pinnumber->pin (net-map-pinnumber net-map)
-                               pin-list)))
+    (let ((pin (pin-exists? net-map pin-list)))
       (if pin
           (update-pin pin net-map id refdes tag)
           net-map)))
