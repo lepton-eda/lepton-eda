@@ -201,36 +201,12 @@
 
     (map add-attrib (object-attribs object)))
 
-  (define (make-special-netname nets)
-    (if (null? nets)
-        (create-unconnected-netname)
-        (create-unnamed-netname tag netlist-mode)))
-
   (define (nets-netnames nets)
     (filter-map
      (lambda (x) (let ((object (pin-net-object x)))
               (and (net? object)
                    (attrib-value-by-name object "netname"))))
      nets))
-
-  (define (nets-netname nets)
-    (or
-     ;; If there is no netname, probably some of nets has been
-     ;; already named.
-     (search-net-name nets)
-     ;; Didn't find a name.  Go looking for another net which
-     ;; might have already been named, i.e. we don't want to
-     ;; create a new unnamed net if the net has already been named
-     ;; before.
-     (search-in-hash-table nets)
-     ;; Last resort. We have not found a name. Make a new one.
-     (make-special-netname nets)))
-
-  (define (update-netnames-hash-table netname nets)
-    (and netname
-         (for-each
-          (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
-          nets)))
 
   (define (object->package-pin object)
     (and (net-pin? object)
@@ -275,23 +251,22 @@
                                                           (and (not net-driven?)
                                                                pinnumber))))))
             nets)
-           (let ((netname (nets-netname nets)))
-             (update-netnames-hash-table netname nets)
-             (let ((pin (make-package-pin (object-id object)
-                                          object
-                                          (assq-ref attribs 'pinnumber)
-                                          netname
-                                          (nets-netnames nets)
-                                          (assq-ref attribs 'pinlabel)
-                                          attribs
-                                          ;; No net-map yet.
-                                          #f
-                                          nets
-                                          ;; Set parent component later.
-                                          #f
-                                          connection)))
-               (schematic-connection-add-pin! connection pin)
-               pin)))))
+           (let ((pin (make-package-pin (object-id object)
+                                        object
+                                        (assq-ref attribs 'pinnumber)
+                                        ;; Add name later.
+                                        #f
+                                        (nets-netnames nets)
+                                        (assq-ref attribs 'pinlabel)
+                                        attribs
+                                        ;; No net-map yet.
+                                        #f
+                                        nets
+                                        ;; Set parent component later.
+                                        #f
+                                        connection)))
+             (schematic-connection-add-pin! connection pin)
+             pin))))
 
   (filter-map object->package-pin (component-contents object)))
 
@@ -418,6 +393,36 @@
                (page-filename (object-page object)))
          "U?"))
 
+  (define (make-special-netname nets)
+    (if (null? nets)
+        (create-unconnected-netname)
+        (create-unnamed-netname hierarchy-tag netlist-mode)))
+
+  (define (nets-netname nets)
+    (or
+     ;; If there is no netname, probably some of nets has been
+     ;; already named.
+     (search-net-name nets)
+     ;; Didn't find a name.  Go looking for another net which
+     ;; might have already been named, i.e. we don't want to
+     ;; create a new unnamed net if the net has already been named
+     ;; before.
+     (search-in-hash-table nets)
+     ;; Last resort. We have not found a name. Make a new one.
+     (make-special-netname nets)))
+
+  (define (update-netnames-hash-table netname nets)
+    (and netname
+         (for-each
+          (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
+          nets)))
+
+  (define (update-package-pin-name pin)
+    (let* ((nets (package-pin-nets pin))
+           (netname (nets-netname nets)))
+      (set-package-pin-name! pin netname)
+      (update-netnames-hash-table netname nets)))
+
   (define (traverse-object object connections)
     (let* ((id (object-id object))
            (inherited-attribs (make-attrib-list inherited-attribs object))
@@ -447,6 +452,7 @@
                                  real-pins
                                  connections))
            (pins (append real-pins net-map-pins)))
+      (for-each update-package-pin-name real-pins)
       (set-schematic-component-refdes! package refdes)
       (set-schematic-component-sources! package sources)
       (set-schematic-component-pins/parent! package pins)
