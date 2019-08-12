@@ -452,11 +452,14 @@
                                  real-pins
                                  connections))
            (pins (append real-pins net-map-pins)))
-      (for-each update-package-pin-name real-pins)
       (set-schematic-component-refdes! package refdes)
       (set-schematic-component-sources! package sources)
       (set-schematic-component-pins/parent! package pins)
       package))
+
+  (define (update-component-pins schematic-component)
+    (for-each update-package-pin-name
+              (schematic-component-pins schematic-component)))
 
   (when hierarchy-tag
     (log! 'message (_ "Going to traverse source ~S") (page-filename page)))
@@ -465,6 +468,7 @@
          (components (filter component? objects))
          (connections (make-page-schematic-connections page))
          (schematic-components (map (cut traverse-object <> connections) components)))
+    (for-each update-component-pins schematic-components)
     schematic-components))
 
 ;;; Traverses pages obtained from files defined in the 'source='
