@@ -834,7 +834,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (and (eq? (netlist-mode) 'spice)
        (set! get-uref get-spice-refdes))
   (for-each process-gafrc files)
-  (set-toplevel-schematic! (make-toplevel-schematic files (netlist-mode))))
+  (set-toplevel-schematic! (make-toplevel-schematic files)))
 
 
 (define (catch-handler tag . args)

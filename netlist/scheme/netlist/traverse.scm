@@ -33,6 +33,7 @@
   #:use-module (netlist config)
   #:use-module (netlist hierarchy)
   #:use-module (netlist rename)
+  #:use-module (netlist mode)
   #:use-module (netlist net)
   #:use-module (netlist option)
   #:use-module (netlist package-pin)
@@ -132,37 +133,6 @@
         nets)))
 
 
-(define %unnamed-net-counter 0)
-(define (increment-unnamed-net-counter)
-  (set! %unnamed-net-counter (1+ %unnamed-net-counter))
-  %unnamed-net-counter)
-
-
-(define (create-unnamed-netname tag netlist-mode)
-  (define (hierarchical-default-name s)
-    (create-netname (string-append (gnetlist-config-ref 'default-net-name) s)
-                    tag))
-  ((if (eq? netlist-mode 'spice) identity hierarchical-default-name)
-   (number->string (increment-unnamed-net-counter))))
-
-
-(define %unnamed-pin-counter 0)
-(define (increment-unnamed-pin-counter)
-  (set! %unnamed-pin-counter (1+ %unnamed-pin-counter))
-  %unnamed-pin-counter)
-
-
-(define (create-unconnected-netname)
-  (string-append "unconnected_pin-"
-                 (number->string (increment-unnamed-pin-counter))))
-
-(define %netnames (make-hash-table))
-
-(define (search-in-hash-table nets)
-    (and (not (null? nets))
-         (or (hash-ref %netnames (pin-net-id (car nets)))
-             (search-in-hash-table (cdr nets)))))
-
 (define (get-package-pin-connection pin-object connections)
   (let loop ((groups connections))
     (and (not (null? groups))
@@ -193,7 +163,7 @@
               group
               (loop (cdr groups)))))))
 
-(define (object-pins object tag netlist-mode connections)
+(define (object-pins object tag connections)
   (define (make-pin-attrib-list object)
     (define (add-attrib attrib)
       (cons (string->symbol (attrib-name attrib))
@@ -350,18 +320,18 @@
         (filename->page filename 'new-page)
         (log! 'error (_ "Failed to load subcircuit ~S.") name))))
 
-(define (traverse-page page hierarchy-tag netlist-mode)
+(define (traverse-page page hierarchy-tag)
   ;; Get refdes= of OBJECT depending on NETLIST-MODE.
-  (define (get-refdes attribs netlist-mode)
+  (define (get-refdes attribs)
     (let ((refdes (and=> (assq-ref attribs 'refdes) car)))
-      (case netlist-mode
+      (case (netlist-mode)
         ((spice)
          (let ((slot (and=> (assq-ref attribs 'slot) car)))
            (if slot
                (string-append refdes "." slot)
                refdes)))
         ((geda) refdes)
-        (else (error (_ "Netlist mode ~S is not supported.") netlist-mode)))))
+        (else (error (_ "Netlist mode ~S is not supported.") (netlist-mode))))))
 
   ;; Makes attribute list of OBJECT using getter GET-ATTRIBS.
   (define (make-attrib-list get-attribs object)
@@ -393,36 +363,6 @@
                (page-filename (object-page object)))
          "U?"))
 
-  (define (make-special-netname nets)
-    (if (null? nets)
-        (create-unconnected-netname)
-        (create-unnamed-netname hierarchy-tag netlist-mode)))
-
-  (define (nets-netname nets)
-    (or
-     ;; If there is no netname, probably some of nets has been
-     ;; already named.
-     (search-net-name nets)
-     ;; Didn't find a name.  Go looking for another net which
-     ;; might have already been named, i.e. we don't want to
-     ;; create a new unnamed net if the net has already been named
-     ;; before.
-     (search-in-hash-table nets)
-     ;; Last resort. We have not found a name. Make a new one.
-     (make-special-netname nets)))
-
-  (define (update-netnames-hash-table netname nets)
-    (and netname
-         (for-each
-          (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
-          nets)))
-
-  (define (update-package-pin-name pin)
-    (let* ((nets (package-pin-nets pin))
-           (netname (nets-netname nets)))
-      (set-package-pin-name! pin netname)
-      (update-netnames-hash-table netname nets)))
-
   (define (traverse-object object connections)
     (let* ((id (object-id object))
            (inherited-attribs (make-attrib-list inherited-attribs object))
@@ -438,13 +378,13 @@
                                               '())) ; get pins later
            (graphical (or (schematic-component-graphical? package)
                           (schematic-component-nc? package)))
-           (refdes  (hierarchy-create-refdes (or (get-refdes attached-attribs netlist-mode)
+           (refdes  (hierarchy-create-refdes (or (get-refdes attached-attribs)
                                                  (refdes-by-net object net-maps graphical))
                                              hierarchy-tag))
            (sources (get-sources graphical
                                  inherited-attribs
                                  attached-attribs))
-           (real-pins (object-pins object hierarchy-tag netlist-mode connections))
+           (real-pins (object-pins object hierarchy-tag connections))
            (net-map-pins (net-maps->pins net-maps
                                  id
                                  refdes
@@ -457,10 +397,6 @@
       (set-schematic-component-pins/parent! package pins)
       package))
 
-  (define (update-component-pins schematic-component)
-    (for-each update-package-pin-name
-              (schematic-component-pins schematic-component)))
-
   (when hierarchy-tag
     (log! 'message (_ "Going to traverse source ~S") (page-filename page)))
 
@@ -468,30 +404,28 @@
          (components (filter component? objects))
          (connections (make-page-schematic-connections page))
          (schematic-components (map (cut traverse-object <> connections) components)))
-    (for-each update-component-pins schematic-components)
     schematic-components))
 
 ;;; Traverses pages obtained from files defined in the 'source='
 ;;; attributes of COMPONENT with respect to HIERARCHY-TAG and
 ;;; NETLIST-MODE.
-(define (traverse-component-sources component hierarchy-tag netlist-mode)
+(define (traverse-component-sources component hierarchy-tag)
   (let ((hierarchy-tag (schematic-component-refdes component))
         (source-pages (map hierarchy-down-schematic
                            (schematic-component-sources component))))
-    (traverse-pages source-pages hierarchy-tag netlist-mode)))
+    (traverse-pages source-pages hierarchy-tag)))
 
-(define (traverse-pages pages hierarchy-tag netlist-mode)
-  (let* ((schematic-components (append-map (cut traverse-page <> hierarchy-tag netlist-mode) pages))
+(define (traverse-pages pages hierarchy-tag)
+  (let* ((schematic-components (append-map (cut traverse-page <> hierarchy-tag) pages))
          (composites (filter schematic-component-sources schematic-components))
          ;; Traverse underlying schematics.
          (underlying-components (append-map (cut traverse-component-sources
                                                  <>
-                                                 hierarchy-tag
-                                                 netlist-mode)
+                                                 hierarchy-tag)
                                             composites)))
     (append schematic-components underlying-components)))
 
-(define (traverse toplevel-pages netlist-mode)
+(define (traverse toplevel-pages)
   (rename-all (hierarchy-post-process (traverse-pages toplevel-pages
                                                       #f ; toplevel hierarchy tag
-                                                      netlist-mode))))
+                                                      ))))

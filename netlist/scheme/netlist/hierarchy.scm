@@ -23,6 +23,7 @@
   #:use-module (geda log)
   #:use-module (netlist config)
   #:use-module (netlist core gettext)
+  #:use-module (netlist mode)
   #:use-module (netlist net)
   #:use-module (netlist rename)
   #:use-module (netlist schematic-component)
@@ -248,26 +249,96 @@
   (for-each update-pin pins))
 
 
+(define (update-component-pins schematic-component)
+  (for-each update-package-pin-name
+            (schematic-component-pins schematic-component)))
+
+(define %unnamed-net-counter 0)
+(define (increment-unnamed-net-counter)
+  (set! %unnamed-net-counter (1+ %unnamed-net-counter))
+  %unnamed-net-counter)
+
+
+(define (create-unnamed-netname tag)
+  (define (hierarchical-default-name s)
+    (create-netname (string-append (gnetlist-config-ref 'default-net-name) s)
+                    tag))
+  ((if (eq? (netlist-mode) 'spice) identity hierarchical-default-name)
+   (number->string (increment-unnamed-net-counter))))
+
+
+(define %unnamed-pin-counter 0)
+(define (increment-unnamed-pin-counter)
+  (set! %unnamed-pin-counter (1+ %unnamed-pin-counter))
+  %unnamed-pin-counter)
+
+
+(define (create-unconnected-netname)
+  (string-append "unconnected_pin-"
+                 (number->string (increment-unnamed-pin-counter))))
+
+(define %netnames (make-hash-table))
+
+(define (search-in-hash-table nets)
+    (and (not (null? nets))
+         (or (hash-ref %netnames (pin-net-id (car nets)))
+             (search-in-hash-table (cdr nets)))))
+
+(define (make-special-netname nets hierarchy-tag)
+  (if (null? nets)
+      (create-unconnected-netname)
+      (create-unnamed-netname hierarchy-tag)))
+
+
+(define (nets-netname nets hierarchy-tag)
+  (or
+   ;; If there is no netname, probably some of nets has been
+   ;; already named.
+   (search-net-name nets)
+   ;; Didn't find a name.  Go looking for another net which
+   ;; might have already been named, i.e. we don't want to
+   ;; create a new unnamed net if the net has already been named
+   ;; before.
+   (search-in-hash-table nets)
+   ;; Last resort. We have not found a name. Make a new one.
+   (make-special-netname nets hierarchy-tag)))
+
+(define (update-netnames-hash-table netname nets)
+  (and netname
+       (for-each
+        (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
+        nets)))
+
+(define (update-package-pin-name pin)
+  (let* ((nets (package-pin-nets pin))
+         (component (package-pin-parent pin))
+         (hierarchy-tag (schematic-component-tag component))
+         (netname (nets-netname nets hierarchy-tag)))
+    (set-package-pin-name! pin netname)
+    (update-netnames-hash-table netname nets)))
+
 (define (hierarchy-post-process components)
   (define (fix-pin pin refdes)
     (let ((label (package-pin-label pin))
           (pinnumber (package-pin-number pin))
           (nets (package-pin-nets pin)))
-     (if label
-         (unless (hierarchy-setup-rename components refdes label nets)
-           (log! 'critical
-                 (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
-                 refdes
-                 label))
-         (log! 'critical
-               (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
-               pinnumber
-               refdes))))
+      (if label
+          (unless (hierarchy-setup-rename components refdes label nets)
+            (log! 'critical
+                  (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
+                  refdes
+                  label))
+          (log! 'critical
+                (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
+                pinnumber
+                refdes))))
 
   (define (fix-composite-package package)
     (when (schematic-component-sources package)
       (for-each (cut fix-pin <> (schematic-component-refdes package))
                 (schematic-component-pins package))))
+
+  (for-each update-component-pins components)
 
   (for-each update-component-net-mapped-pins components)
 

@@ -279,18 +279,16 @@
   schematic-component)
 
 
-(define* (page-list->schematic pages
-                               #:optional (netlist-mode 'geda))
+(define* (page-list->schematic pages)
   "Creates a new schematic record from PAGES, which must be a list
-of schematic pages.  An optional argument NETLIST-MODE can be
-'geda or 'spice, the former value is the default."
+of schematic pages."
   (define (plain-package? x)
     (and (not (schematic-component-graphical? x))
          (not (schematic-component-nc? x))))
 
   (let* ((id (next-schematic-id))
          (toplevel-attribs (get-toplevel-attributes pages))
-         (toplevel-netlist (traverse pages netlist-mode))
+         (toplevel-netlist (traverse pages))
          (full-netlist (map compat-refdes toplevel-netlist))
          (netlist (filter plain-package? full-netlist))
          (packages (make-package-list netlist))
@@ -317,14 +315,11 @@ of schematic pages.  An optional argument NETLIST-MODE can be
                       ))))
 
 
-(define* (file-name-list->schematic filenames
-                                    #:optional (netlist-mode 'geda))
+(define* (file-name-list->schematic filenames)
   "Creates a new schematic record from FILENAMES, which must be a
-list of strings representing file names.  An optional argument
-NETLIST-MODE can be 'geda or 'spice, the former value is the
-default."
+list of strings representing file names."
   (let ((pages (map filename->page filenames)))
-    (page-list->schematic pages netlist-mode)))
+    (page-list->schematic pages)))
 
 
 ;;; An alias for the above procedure.
