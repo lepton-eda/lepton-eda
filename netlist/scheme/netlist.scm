@@ -475,7 +475,7 @@ PACKAGE."
     (match found
       (() '("ERROR_INVALID_PIN"))
       (((netname . rest) ...)
-       (cons (car netname) (append-map identity (filter-map identity rest))))
+       (cons (car netname) (apply append (delq #f rest))))
       (_ '("ERROR_INVALID_PIN")))))
 
 
