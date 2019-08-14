@@ -398,9 +398,8 @@ NETNAME."
 
 
 (define (get-pins-nets package)
-  "Returns a list of pairs (pin-name . net-name) where net-name is
-the name of the net connected to the pin pin-name for specified
-PACKAGE."
+  "For specified PACKAGE, returns a list of strings defining
+connection pairs in the form (\"pin-number\" . \"net-name\")."
 
   (define (found? x)
     (and x
