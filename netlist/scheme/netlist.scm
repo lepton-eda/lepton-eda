@@ -473,7 +473,6 @@ PACKAGE."
 
   (let ((found (lookup-through-netlist (schematic-components (toplevel-schematic)))))
     (match found
-      (() '("ERROR_INVALID_PIN"))
       (((netname . rest) ...)
        (cons (car netname) (apply append (delq #f rest))))
       (_ '("ERROR_INVALID_PIN")))))
