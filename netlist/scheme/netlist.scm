@@ -397,13 +397,13 @@ NETNAME."
   (get-connections netname (toplevel-schematic)))
 
 
-(define (get-pins-nets package)
-  "For specified PACKAGE, returns a list of strings defining
+(define (get-pins-nets refdes)
+  "For specified REFDES, returns a list of strings defining
 connection pairs in the form (\"pin-number\" . \"net-name\")."
 
   (define (found? x)
     (and x
-         (string=? x package)))
+         (string=? x refdes)))
 
   (define (get-pin-netname-pair pin)
     (let ((pin-number (package-pin-number pin))
@@ -412,9 +412,9 @@ connection pairs in the form (\"pin-number\" . \"net-name\")."
            pin-name
            (cons pin-number pin-name))))
 
-  (define (get-pin-netname-list package)
-     (if (found? (schematic-component-refdes package))
-         (filter-map get-pin-netname-pair (schematic-component-pins package))
+  (define (get-pin-netname-list component)
+     (if (found? (schematic-component-refdes component))
+         (filter-map get-pin-netname-pair (schematic-component-pins component))
          '()))
 
   ;; Currently, netlist can contain many `packages' with the same
