@@ -32,6 +32,7 @@
   #:use-module (lepton library)
   #:use-module (netlist config)
   #:use-module (netlist hierarchy)
+  #:use-module (netlist rename)
   #:use-module (netlist mode)
   #:use-module (netlist net)
   #:use-module (netlist option)
@@ -367,16 +368,16 @@
            (inherited-attribs (make-attrib-list inherited-attribs object))
            (attached-attribs (make-attrib-list object-attribs object))
            (net-maps (check-net-maps object))
-           (package (make-schematic-component id
-                                              #f   ; get refdes later
-                                              hierarchy-tag
-                                              #f   ; get sources later
-                                              object
-                                              inherited-attribs
-                                              attached-attribs
-                                              '())) ; get pins later
-           (graphical (or (schematic-component-graphical? package)
-                          (schematic-component-nc? package)))
+           (component (make-schematic-component id
+                                                #f ; get refdes later
+                                                hierarchy-tag
+                                                #f ; get sources later
+                                                object
+                                                inherited-attribs
+                                                attached-attribs
+                                                '())) ; get pins later
+           (graphical (or (schematic-component-graphical? component)
+                          (schematic-component-nc? component)))
            (refdes  (hierarchy-create-refdes (or (get-refdes attached-attribs)
                                                  (refdes-by-net object net-maps graphical))
                                              hierarchy-tag))
@@ -385,16 +386,16 @@
                                  attached-attribs))
            (real-pins (object-pins object hierarchy-tag connections))
            (net-map-pins (net-maps->pins net-maps
-                                 id
-                                 refdes
-                                 hierarchy-tag
-                                 real-pins
-                                 connections))
+                                         id
+                                         refdes
+                                         hierarchy-tag
+                                         real-pins
+                                         connections))
            (pins (append real-pins net-map-pins)))
-      (set-schematic-component-refdes! package refdes)
-      (set-schematic-component-sources! package sources)
-      (set-schematic-component-pins/parent! package pins)
-      package))
+      (set-schematic-component-refdes! component refdes)
+      (set-schematic-component-sources! component sources)
+      (set-schematic-component-pins/parent! component pins)
+      component))
 
   (when hierarchy-tag
     (log! 'message (_ "Going to traverse source ~S") (page-filename page)))
