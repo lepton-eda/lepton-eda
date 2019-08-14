@@ -32,7 +32,6 @@
   #:use-module (lepton library)
   #:use-module (netlist config)
   #:use-module (netlist hierarchy)
-  #:use-module (netlist rename)
   #:use-module (netlist mode)
   #:use-module (netlist net)
   #:use-module (netlist option)
@@ -426,6 +425,6 @@
     (append schematic-components underlying-components)))
 
 (define (traverse toplevel-pages)
-  (rename-all (hierarchy-post-process (traverse-pages toplevel-pages
-                                                      #f ; toplevel hierarchy tag
-                                                      ))))
+  (hierarchy-post-process (traverse-pages toplevel-pages
+                                          #f ; toplevel hierarchy tag
+                                          )))

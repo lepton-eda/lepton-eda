@@ -344,7 +344,8 @@
 
   (for-each fix-composite-package components)
 
-  ((if (gnetlist-config-ref 'mangle-refdes)
-       identity
-       remove-refdes-mangling)
-   (hierarchy-remove-all-composite components)))
+  (rename-all
+   ((if (gnetlist-config-ref 'mangle-refdes)
+        identity
+        remove-refdes-mangling)
+    (hierarchy-remove-all-composite components))))
