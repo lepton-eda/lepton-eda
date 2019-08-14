@@ -21,6 +21,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (geda log)
+  #:use-module (geda object)
   #:use-module (netlist config)
   #:use-module (netlist core gettext)
   #:use-module (netlist mode)
@@ -34,7 +35,8 @@
   #:use-module (symbol check net-attrib)
 
   #:export (hierarchy-create-refdes
-            hierarchy-post-process))
+            hierarchy-post-process
+            net-attrib-pin?))
 
 (define (hierarchy-create-refdes basename hierarchy-tag)
   (match hierarchy-tag
@@ -168,6 +170,20 @@
   netlist)
 
 
+;;; Checks if OBJECT is a pin that should be treated as one
+;;; defining a name of the net connected to it via the "net="
+;;; attribute of its parent component object.  Such components
+;;; (e.g. "gnd-1.sym") have to have no refdes, and their "net="
+;;; components should correspond to pinnumbers of their existing
+;;; pins.
+(define (net-attrib-pin? object)
+  (and (net-pin? object)
+       (let ((refdes (attrib-value-by-name (object-component object)
+                                           "refdes"))
+             (pinnumber (attrib-value-by-name object "pinnumber")))
+         (and pinnumber (not refdes)))))
+
+
 ;;; This function does renaming job for PIN.
 (define (net-map-update-pin pin id refdes tag)
   (define (add-net-power-pin-override pin net-map tag)
@@ -199,7 +215,7 @@
   (define (update-pin-netname pin netname id refdes)
     (let ((nets (package-pin-nets pin))
           (pinnumber (package-pin-number pin))
-          (net-priority #t)
+          (net-priority (net-attrib-pin? (package-pin-object pin)))
           (object #f))
       (set-package-pin-name! pin netname)
       (if (null? nets)

@@ -83,19 +83,6 @@
       ;; for using with the "net=" attribute. Return it as is.
       (x x))))
 
-;;; Checks if OBJECT is a pin that should be treated as one
-;;; defining a name of the net connected to it via the "net="
-;;; attribute of its parent component object.  Such components
-;;; (e.g. "gnd-1.sym") have to have no refdes, and their "net="
-;;; components should correspond to pinnumbers of their existing
-;;; pins.
-(define (net-attrib-pin? object)
-  (and (pin? object)
-       (let ((refdes (attrib-value-by-name (object-component object)
-                                           "refdes"))
-             (pinnumber (attrib-value-by-name object "pinnumber")))
-         (and pinnumber (not refdes)))))
-
 
 (define (traverse-net current-nets starting object)
   (define (make-new-net object)
