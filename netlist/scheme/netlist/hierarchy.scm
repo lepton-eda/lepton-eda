@@ -34,8 +34,7 @@
   #:use-module (symbol check net-attrib)
 
   #:export (hierarchy-create-refdes
-            hierarchy-post-process
-            search-net-name))
+            hierarchy-post-process))
 
 (define (hierarchy-create-refdes basename hierarchy-tag)
   (match hierarchy-tag
