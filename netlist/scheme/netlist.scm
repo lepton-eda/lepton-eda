@@ -402,8 +402,7 @@ NETNAME."
 connection pairs in the form (\"pin-number\" . \"net-name\")."
 
   (define (found? x)
-    (and x
-         (string=? x refdes)))
+    (string= x refdes))
 
   (define (get-pin-netname-pair pin)
     (let ((pin-number (package-pin-number pin))
@@ -413,7 +412,7 @@ connection pairs in the form (\"pin-number\" . \"net-name\")."
            (cons pin-number pin-name))))
 
   (define (get-pin-netname-list component)
-     (if (found? (schematic-component-refdes component))
+     (if (and=> (schematic-component-refdes component) found?)
          (filter-map get-pin-netname-pair (schematic-component-pins component))
          '()))
 
