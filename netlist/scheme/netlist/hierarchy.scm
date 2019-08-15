@@ -121,26 +121,21 @@
           (has-priority? (pin-net-priority net)))
       (if (and prev-name current-name)
           ;; Both names defined.
-          (if (string=? prev-name current-name)
-              ;; No doubts I know which one to return ;-)
-              prev-name
-              ;; Otherwise the decision depends on config priority
-              ;; settings.
-              (if has-priority?
-                  (if (gnetlist-config-ref 'netname-attribute-priority)
-                      ;; netname= has priority over net=.
-                      ;; Rename the current net to the previously
-                      ;; found name (label= name) and return the
-                      ;; latter.
-                      (simple-add-rename current-name prev-name)
-                      ;; net= has priority over netname=.
-                      ;; Since the net has net= priority set, use
-                      ;; its name instead of the name found
-                      ;; previously.
-                      (simple-add-rename prev-name current-name))
-                  ;; Do the rename anyways (this might cause problems).
-                  ;; Rename net which has the same label=.
-                  (log/add-rename prev-name current-name)))
+          (if has-priority?
+              (if (gnetlist-config-ref 'netname-attribute-priority)
+                  ;; netname= has priority over net=.
+                  ;; Rename the current net to the previously
+                  ;; found name (label= name) and return the
+                  ;; latter.
+                  (simple-add-rename current-name prev-name)
+                  ;; net= has priority over netname=.
+                  ;; Since the net has net= priority set, use
+                  ;; its name instead of the name found
+                  ;; previously.
+                  (simple-add-rename prev-name current-name))
+              ;; Do the rename anyways (this might cause problems).
+              ;; Rename net which has the same label=.
+              (log/add-rename prev-name current-name))
           ;; One or both undefined: return either defined or #f.
           (or prev-name current-name))))
 
