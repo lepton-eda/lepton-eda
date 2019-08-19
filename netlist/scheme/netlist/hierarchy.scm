@@ -107,11 +107,10 @@
     to)
 
   (define (get-new-netname net prev-name)
-    (let ((current-name (pin-net-name net))
-          (has-priority? (pin-net-priority net)))
+    (let ((current-name (pin-net-name net)))
       (if (and prev-name current-name)
           ;; Both names defined.
-          (if has-priority?
+          (if (pin-net-priority net)
               (if (gnetlist-config-ref 'netname-attribute-priority)
                   ;; netname= has priority over net=.
                   ;; Rename the current net to the previously
