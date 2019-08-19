@@ -32,7 +32,6 @@
   #:use-module (lepton library)
   #:use-module (netlist config)
   #:use-module (netlist hierarchy)
-  #:use-module (netlist rename)
   #:use-module (netlist mode)
   #:use-module (netlist net)
   #:use-module (netlist option)
