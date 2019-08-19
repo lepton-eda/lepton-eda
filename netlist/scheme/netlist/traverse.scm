@@ -180,8 +180,7 @@
               (let ((netname (attrib-value-by-name (pin-net-object net) "netname")))
                 ;; The object is a net.  For nets we check the "netname="
                 ;; attribute.
-                (set-pin-net-name! net
-                                   (and netname (create-netname netname tag)))))
+                (set-pin-net-name! net (create-netname netname tag))))
             (filter (lambda (x) (net? (pin-net-object x))) nets))
            (for-each
             (lambda (net)
