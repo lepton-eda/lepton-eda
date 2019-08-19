@@ -23,8 +23,7 @@
   #:use-module (netlist schematic-component)
   #:use-module (netlist package-pin)
 
-  #:export (search-rename
-            add-rename
+  #:export (add-rename
             add-net-rename
             rename-all
             get-rename-list))
@@ -81,32 +80,6 @@
 
 (define (add-net-rename from to)
   (%add-rename %net-renames from to))
-
-(define (%search-rename rename-table from to quiet)
-  "Searches rename source FROM and rename destination TO in the
-internal netlist rename list. Returns #t if either FROM or TO is
-found. In the latter case, if QUIET is not #f warns the user that
-the net in question has been renamed several times."
-  ;; FIXME[2017-02-20] This warning message is very unhelpful
-  (define (warn)
-    (when (not quiet)
-          (format (current-error-port)
-                  (_ "WARNING: Trying to rename something twice:
-\t~A and ~A
-are both a src and dest name
-This warning is okay if you have multiple levels of hierarchy!
-")
-                  to
-                  to)))
-
-  (cond
-   ((renamed? rename-table from) #t)
-   ((renamed? rename-table to) (begin (warn) #t))
-   (else #f)))
-
-(define (search-rename from to quiet)
-  (%search-rename %netname-renames from to quiet))
-
 
 (define (rename-all netlist)
   ;; Do actual renaming.

@@ -101,16 +101,6 @@
 
 
 (define (search-net-name nets)
-  (define (log/add-rename from to)
-    (unless (search-rename from to #t)
-      (log! 'critical
-            (_ "Found duplicate net name, renaming ~A to ~A")
-            from
-            to))
-    (add-rename from to)
-    ;; Return new name.
-    to)
-
   (define (simple-add-rename from to)
     (add-rename from to)
     ;; Return new name.
@@ -135,7 +125,7 @@
                   (simple-add-rename prev-name current-name))
               ;; Do the rename anyways (this might cause problems).
               ;; Rename net which has the same label=.
-              (log/add-rename prev-name current-name))
+              (simple-add-rename prev-name current-name))
           ;; One or both undefined: return either defined or #f.
           (or prev-name current-name))))
 
