@@ -245,11 +245,10 @@
   (define (make-net-map-pin net-map)
     (let* ((pinnumber (net-map-pinnumber net-map))
            (netname (create-netattrib (net-map-netname net-map) tag))
-           (net-priority #t)
            (label #f)
            (object #f)
            (attribs '())
-           (nets (list (make-pin-net id object net-priority netname refdes pinnumber)))
+           (nets (list (make-pin-net id object #f netname refdes pinnumber)))
            (connection (get-connection-by-netname netname connections))
            (pin (make-package-pin id
                                   object
