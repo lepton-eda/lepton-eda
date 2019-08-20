@@ -317,20 +317,29 @@
     (update-netnames-hash-table netname nets)))
 
 (define (hierarchy-post-process components)
-  (define (fix-pin pin refdes)
-    (let ((label (package-pin-label pin))
+  (define (warn-no-port parent-component-refdes port-refdes)
+    (log! 'critical
+          (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
+          parent-component-refdes
+          port-refdes))
+
+  (define (warn-no-pinlabel pinnumber refdes)
+    (log! 'critical
+          (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
+          pinnumber
+          refdes))
+
+  (define (fix-pin pin parent-component-refdes)
+    (let ((port-refdes (package-pin-label pin))
           (pinnumber (package-pin-number pin))
           (nets (package-pin-nets pin)))
-      (if label
-          (unless (hierarchy-setup-rename components refdes label nets)
-            (log! 'critical
-                  (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
-                  refdes
-                  label))
-          (log! 'critical
-                (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
-                pinnumber
-                refdes))))
+      (if port-refdes
+          (unless (hierarchy-setup-rename components
+                                          parent-component-refdes
+                                          port-refdes
+                                          nets)
+            (warn-no-port parent-component-refdes port-refdes))
+          (warn-no-pinlabel pinnumber parent-component-refdes))))
 
   (define (fix-composite-package package)
     (when (schematic-component-sources package)
