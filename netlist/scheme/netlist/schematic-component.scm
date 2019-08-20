@@ -123,14 +123,14 @@ a string."
   (schematic-component-attribute-string=? component 'graphical "1"))
 
 
-(define (schematic-component-nc? package)
-  "Returns #t if SCHEMATIC-COMPONENT is 'no-connect' package, that is, it has
-attribute \"symbol=nc\". Otherwise returns #f."
-  (or (schematic-component-attribute-string=? package 'symbol "nc")
-      ;; Obsolete "no-connect" package definition.
-      (and (schematic-component-graphical? package)
-           (schematic-component-attribute-string=? package 'device "DRC_Directive")
-           (schematic-component-attribute-string=? package 'value "NoConnection"))))
+(define (schematic-component-nc? component)
+  "Returns #t if COMPONENT is 'no-connect' component, that is, it
+has attribute \"symbol=nc\". Otherwise returns #f."
+  (or (schematic-component-attribute-string=? component 'symbol "nc")
+      ;; Obsolete "no-connect" component definition.
+      (and (schematic-component-graphical? component)
+           (schematic-component-attribute-string=? component 'device "DRC_Directive")
+           (schematic-component-attribute-string=? component 'value "NoConnection"))))
 
 (define (set-schematic-component-pins/parent! component pins)
   "Sets COMPONENT field [pins] to PINS and, for each pin in PINS,
