@@ -334,12 +334,13 @@
           (loop (cdr in)
                 (add-attrib out (car in))))))
 
-  (define (refdes-by-net object net-maps graphical)
-    ;; If there is net=, it's a power or some other special symbol.
+  (define (special-refdes object net-maps graphical)
+    ;; If there is net=, it's a power or some other special
+    ;; graphical symbol.  In such a case, refdes is #f.
     (and (null? net-maps)
-         ;; Do not bother traversing the hierarchy if the symbol has an
-         ;; graphical attribute attached to it.
          (not graphical)
+         ;; Otherwise, refdes is just missing.  Warn the user, and
+         ;; make up an artificial refdes.
          (log! 'critical
                (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
                (component-basename object)
@@ -363,7 +364,7 @@
            (graphical (or (schematic-component-graphical? component)
                           (schematic-component-nc? component)))
            (refdes  (hierarchy-create-refdes (or (get-refdes attached-attribs)
-                                                 (refdes-by-net object net-maps graphical))
+                                                 (special-refdes object net-maps graphical))
                                              hierarchy-tag))
            (sources (get-sources graphical
                                  inherited-attribs
