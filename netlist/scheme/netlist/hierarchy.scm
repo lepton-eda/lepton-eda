@@ -81,7 +81,6 @@
     (schematic-component-refdes (package-pin-parent outer-port-pin)))
   (define port-refdes (package-pin-label outer-port-pin))
   (define pinnumber (package-pin-number outer-port-pin))
-  (define outer-nets (package-pin-nets outer-port-pin))
   ;; Define hierarchical refdes for a source schematic port
   ;; corresponding to the given pin.
   (define hierarchy-refdes (hierarchy-create-refdes port-refdes
@@ -91,38 +90,48 @@
     (log! 'critical
           (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
           parent-component-refdes
-          port-refdes))
+          port-refdes)
+    #f)
 
   (define (warn-no-pinlabel)
     (log! 'critical
           (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
           pinnumber
-          parent-component-refdes))
+          parent-component-refdes)
+    #f)
 
-  (define (rename-and-remove-connection port-component)
+  (define (get-matching-inner-port-pin port-component)
     (and (equal? (schematic-component-refdes port-component)
                  hierarchy-refdes)
          (not (null? (schematic-component-pins port-component)))
+         ;; Return the inner port pin found.
          ;; Well, we assume a port has only one pin.
-         (let ((inner-port-pin (car (schematic-component-pins port-component))))
-           ;; Skip overhead of special I/O symbol.
-           (add-rename
-            ;; Netname of nets connected to inner port pin.
-            (package-pin-name inner-port-pin)
-            ;; Get source net name, all outer nets are named
-            ;; already.
-            (search-net-name outer-nets))
-           ;; Disable refdes of the inner port component.
-           (hierarchy-disable-refdes components hierarchy-refdes)
-           ;; Return a pair of outer and inner port pins.
-           (cons outer-port-pin inner-port-pin))))
+         (car (schematic-component-pins port-component))))
 
   (if port-refdes
-      ;; Not empty filtered list means that we have found and
-      ;; disabled it.
-      (unless (not (null? (filter-map rename-and-remove-connection
-                                      components)))
-        (warn-no-port))
+      ;; Not empty filtered list means that we have found the
+      ;; matching inner pin.
+      (let ((pins (filter-map get-matching-inner-port-pin
+                              components)))
+        (if (null? pins)
+            ;; Warn if no port found in the subcircuit. Return #f.
+            (warn-no-port)
+            ;; Otherwise, rename inner nets using outer net name and
+            ;; disable inner port component refdes.
+            ;; FIXME: It's assumed that only one pair of
+            ;; matching pins found.
+            (let ((inner-port-pin (car pins)))
+              (add-rename
+               ;; Netname of nets connected to inner port pin.
+               (package-pin-name inner-port-pin)
+               ;; Get source net name, all outer nets are named
+               ;; already.
+               (search-net-name (package-pin-nets outer-port-pin)))
+              ;; Disable refdes of the inner port component.
+              (hierarchy-disable-refdes components hierarchy-refdes)
+              ;; Return the found pair of pins.
+              (cons outer-port-pin inner-port-pin))))
+      ;; Warn if no pinlabel found on the outer pin. Return #f.
       (warn-no-pinlabel)))
 
 
