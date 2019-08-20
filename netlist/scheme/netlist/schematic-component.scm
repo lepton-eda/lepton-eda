@@ -117,10 +117,10 @@ a string."
          (lambda (x) (string=? x value))))
 
 
-(define (schematic-component-graphical? package)
-  "Returns #t if PACKAGE is graphical, that is, it has attribute
+(define (schematic-component-graphical? component)
+  "Returns #t if COMPONENT is graphical, that is, it has attribute
 \"graphical=1\", otherwise returns #f."
-  (schematic-component-attribute-string=? package 'graphical "1"))
+  (schematic-component-attribute-string=? component 'graphical "1"))
 
 
 (define (schematic-component-nc? package)
