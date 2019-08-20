@@ -334,19 +334,21 @@
           (loop (cdr in)
                 (add-attrib out (car in))))))
 
-  (define (special-refdes object net-maps graphical)
-    ;; If there is net=, it's a power or some other special
-    ;; graphical symbol.  In such a case, refdes is #f.
-    (and (null? net-maps)
-         (not graphical)
-         ;; Otherwise, refdes is just missing.  Warn the user, and
-         ;; make up an artificial refdes.
-         (log! 'critical
-               (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
-               (component-basename object)
-               (component-position object)
-               (page-filename (object-page object)))
-         "U?"))
+  (define (special-refdes object attribs net-maps graphical)
+    ;; First try to get refdes from attribs.
+    (or (get-refdes attribs)
+        ;; If there is net=, it's a power or some other special
+        ;; graphical symbol.  In such a case, refdes is #f.
+        (and (null? net-maps)
+             (not graphical)
+             ;; Otherwise, refdes is just missing.  Warn the user, and
+             ;; make up an artificial refdes.
+             (log! 'critical
+                   (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
+                   (component-basename object)
+                   (component-position object)
+                   (page-filename (object-page object)))
+             "U?")))
 
   (define (traverse-object object connections)
     (let* ((id (object-id object))
@@ -363,8 +365,10 @@
                                                 '())) ; get pins later
            (graphical (or (schematic-component-graphical? component)
                           (schematic-component-nc? component)))
-           (refdes  (hierarchy-create-refdes (or (get-refdes attached-attribs)
-                                                 (special-refdes object net-maps graphical))
+           (refdes  (hierarchy-create-refdes (special-refdes object
+                                                             attached-attribs
+                                                             net-maps
+                                                             graphical)
                                              hierarchy-tag))
            (sources (get-sources graphical
                                  inherited-attribs
