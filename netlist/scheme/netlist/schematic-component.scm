@@ -101,12 +101,13 @@ attributes have been found, returns #f."
       (assq-ref (schematic-component-iattribs component) name)))
 
 
-(define (schematic-component-attribute schematic-component name)
-  "Returns first attached attribute of SCHEMATIC-COMPONENT called
-NAME. NAME must be a Scheme symbol (not string). If no attached
-attribute found, returns first inherited attribute with NAME. If
-neither attached nor inherited attribute found, returns #f."
-  (and=> (schematic-component-attributes schematic-component name) car))
+(define (schematic-component-attribute component name)
+  "Returns first attached attribute of COMPONENT called NAME. NAME
+must be a Scheme symbol (not string). If no attached attribute
+found, returns first inherited attribute with NAME. If neither
+attached nor inherited attribute found, returns #f."
+  (and=> (schematic-component-attributes component name) car))
+
 
 (define (schematic-component-attribute-string=? schematic-component name value)
   "Returns #t if SCHEMATIC-COMPONENT has attribute NAME equal to VALUE,
