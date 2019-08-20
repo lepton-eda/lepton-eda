@@ -91,14 +91,14 @@ Example usage:
              args)))))
 
 
-(define (schematic-component-attributes schematic-component name)
+(define (schematic-component-attributes component name)
   "Returns the list of attached attributes called NAME for
-SCHEMATIC-COMPONENT. NAME must be a Scheme symbol (not string). If
-no attached attributes found, returns the list of inherited
+COMPONENT. NAME must be a Scheme symbol (not string). If no
+attached attributes found, returns the list of inherited
 attributes with the same name. If neither attached nor inherited
 attributes have been found, returns #f."
-  (or (assq-ref (schematic-component-attribs schematic-component) name)
-      (assq-ref (schematic-component-iattribs schematic-component) name)))
+  (or (assq-ref (schematic-component-attribs component) name)
+      (assq-ref (schematic-component-iattribs component) name)))
 
 
 (define (schematic-component-attribute schematic-component name)
