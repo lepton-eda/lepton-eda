@@ -341,16 +341,16 @@
             (warn-no-port parent-component-refdes port-refdes))
           (warn-no-pinlabel pinnumber parent-component-refdes))))
 
-  (define (fix-composite-package package)
-    (when (schematic-component-sources package)
-      (for-each (cut fix-pin <> (schematic-component-refdes package))
-                (schematic-component-pins package))))
+  (define (fix-composite-component component)
+    (when (schematic-component-sources component)
+      (for-each (cut fix-pin <> (schematic-component-refdes component))
+                (schematic-component-pins component))))
 
   (for-each update-component-pins components)
 
   (for-each update-component-net-mapped-pins components)
 
-  (for-each fix-composite-package components)
+  (for-each fix-composite-component components)
 
   (rename-all
    ((if (gnetlist-config-ref 'mangle-refdes)
