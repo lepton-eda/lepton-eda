@@ -76,7 +76,7 @@
    netlist))
 
 
-(define (hierarchy-setup-rename netlist refdes label nets)
+(define (hierarchy-setup-rename components parent-component-refdes port-refdes nets)
   (define (rename-and-remove-connection component hierarchy-refdes)
     (and (schematic-component-refdes component)
          (equal? (schematic-component-refdes component)
@@ -88,16 +88,19 @@
            (add-rename (package-pin-name pin)
                        ;; Get source net name, all nets are named already.
                        (search-net-name nets))
-           (hierarchy-disable-refdes netlist (schematic-component-refdes component))
+           (hierarchy-disable-refdes components
+                                     (schematic-component-refdes component))
            ;; Return component with no refdes.
            component)))
-  ;; Search for hierarchical refdes created from LABEL and REFDES
-  (let ((hierarchy-refdes (hierarchy-create-refdes label refdes)))
+  ;; Search for hierarchical refdes created from PORT-REFDES and
+  ;; PARENT-COMPONENT-REFDES.
+  (let ((hierarchy-refdes (hierarchy-create-refdes port-refdes
+                                                   parent-component-refdes)))
     ;; Not empty filtered list means that we have found and disabled it.
     (not (null? (filter-map (cut rename-and-remove-connection
                                  <>
                                  hierarchy-refdes)
-                            netlist)))))
+                            components)))))
 
 
 (define (search-net-name nets)
