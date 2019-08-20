@@ -76,12 +76,12 @@
    netlist))
 
 
-(define (hierarchy-setup-rename components pin)
+(define (hierarchy-setup-rename components outer-port-pin)
   (define parent-component-refdes
-    (schematic-component-refdes (package-pin-parent pin)))
-  (define port-refdes (package-pin-label pin))
-  (define pinnumber (package-pin-number pin))
-  (define outer-nets (package-pin-nets pin))
+    (schematic-component-refdes (package-pin-parent outer-port-pin)))
+  (define port-refdes (package-pin-label outer-port-pin))
+  (define pinnumber (package-pin-number outer-port-pin))
+  (define outer-nets (package-pin-nets outer-port-pin))
   ;; Define hierarchical refdes for a source schematic port
   ;; corresponding to the given pin.
   (define hierarchy-refdes (hierarchy-create-refdes port-refdes
@@ -114,8 +114,8 @@
             (search-net-name outer-nets))
            ;; Disable refdes of the inner port component.
            (hierarchy-disable-refdes components hierarchy-refdes)
-           ;; Return component with no refdes.
-           port-component)))
+           ;; Return a pair of outer and inner port pins.
+           (cons outer-port-pin inner-port-pin))))
 
   (if port-refdes
       ;; Not empty filtered list means that we have found and
