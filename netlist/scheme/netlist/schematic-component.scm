@@ -109,11 +109,11 @@ attached nor inherited attribute found, returns #f."
   (and=> (schematic-component-attributes component name) car))
 
 
-(define (schematic-component-attribute-string=? schematic-component name value)
-  "Returns #t if SCHEMATIC-COMPONENT has attribute NAME equal to VALUE,
+(define (schematic-component-attribute-string=? component name value)
+  "Returns #t if COMPONENT has attribute NAME equal to VALUE,
 otherwise returns #f. NAME must be a symbol, while VALUE should be
 a string."
-  (and=> (schematic-component-attribute schematic-component name)
+  (and=> (schematic-component-attribute component name)
          (lambda (x) (string=? x value))))
 
 
