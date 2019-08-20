@@ -87,6 +87,18 @@
   (define hierarchy-refdes (hierarchy-create-refdes port-refdes
                                                     parent-component-refdes))
 
+  (define (warn-no-port)
+    (log! 'critical
+          (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
+          parent-component-refdes
+          port-refdes))
+
+  (define (warn-no-pinlabel)
+    (log! 'critical
+          (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
+          pinnumber
+          parent-component-refdes))
+
   (define (rename-and-remove-connection component)
     (and (equal? (schematic-component-refdes component)
                  hierarchy-refdes)
@@ -101,8 +113,13 @@
            ;; Return component with no refdes.
            component)))
 
-  ;; Not empty filtered list means that we have found and disabled it.
-  (not (null? (filter-map rename-and-remove-connection components))))
+  (if port-refdes
+      ;; Not empty filtered list means that we have found and
+      ;; disabled it.
+      (unless (not (null? (filter-map rename-and-remove-connection
+                                      components)))
+        (warn-no-port))
+      (warn-no-pinlabel)))
 
 
 (define (search-net-name nets)
@@ -322,30 +339,9 @@
     (update-netnames-hash-table netname nets)))
 
 (define (hierarchy-post-process components)
-  (define (warn-no-port parent-component-refdes port-refdes)
-    (log! 'critical
-          (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
-          parent-component-refdes
-          port-refdes))
-
-  (define (warn-no-pinlabel pinnumber refdes)
-    (log! 'critical
-          (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
-          pinnumber
-          refdes))
-
-  (define (fix-pin pin)
-    (let ((parent-component-refdes
-           (schematic-component-refdes (package-pin-parent pin)))
-          (port-refdes (package-pin-label pin))
-          (pinnumber (package-pin-number pin)))
-      (if port-refdes
-          (unless (hierarchy-setup-rename components pin)
-            (warn-no-port parent-component-refdes port-refdes))
-          (warn-no-pinlabel pinnumber parent-component-refdes))))
-
   (define (fix-composite-component component)
-    (for-each fix-pin (schematic-component-pins component)))
+    (for-each (cut hierarchy-setup-rename components <>)
+              (schematic-component-pins component)))
 
   (for-each update-component-pins components)
 
