@@ -36,6 +36,7 @@
             schematic-component-attribute
             schematic-component-graphical?
             schematic-component-nc?
+            schematic-component-subcircuit?
             set-schematic-component-printer!
             set-schematic-component-pins/parent!))
 
@@ -131,6 +132,14 @@ has attribute \"symbol=nc\". Otherwise returns #f."
       (and (schematic-component-graphical? component)
            (schematic-component-attribute-string=? component 'device "DRC_Directive")
            (schematic-component-attribute-string=? component 'value "NoConnection"))))
+
+
+(define (schematic-component-subcircuit? component)
+  "Returns #t if COMPONENT is composite, that is, it has
+underlying subcircuit defined by its \"source=\"
+attributes. Otherwise returns #f."
+  (not (not (schematic-component-sources component))))
+
 
 (define (set-schematic-component-pins/parent! component pins)
   "Sets COMPONENT field [pins] to PINS and, for each pin in PINS,
