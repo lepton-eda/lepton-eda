@@ -81,7 +81,7 @@
     (schematic-component-refdes (package-pin-parent pin)))
   (define port-refdes (package-pin-label pin))
   (define pinnumber (package-pin-number pin))
-  (define nets (package-pin-nets pin))
+  (define outer-nets (package-pin-nets pin))
   ;; Define hierarchical refdes for a source schematic port
   ;; corresponding to the given pin.
   (define hierarchy-refdes (hierarchy-create-refdes port-refdes
@@ -99,19 +99,23 @@
           pinnumber
           parent-component-refdes))
 
-  (define (rename-and-remove-connection component)
-    (and (equal? (schematic-component-refdes component)
+  (define (rename-and-remove-connection port-component)
+    (and (equal? (schematic-component-refdes port-component)
                  hierarchy-refdes)
-         (not (null? (schematic-component-pins component)))
+         (not (null? (schematic-component-pins port-component)))
          ;; Well, we assume a port has only one pin.
-         (let ((pin (car (schematic-component-pins component))))
+         (let ((inner-port-pin (car (schematic-component-pins port-component))))
            ;; Skip overhead of special I/O symbol.
-           (add-rename (package-pin-name pin)
-                       ;; Get source net name, all nets are named already.
-                       (search-net-name nets))
+           (add-rename
+            ;; Netname of nets connected to inner port pin.
+            (package-pin-name inner-port-pin)
+            ;; Get source net name, all outer nets are named
+            ;; already.
+            (search-net-name outer-nets))
+           ;; Disable refdes of the inner port component.
            (hierarchy-disable-refdes components hierarchy-refdes)
            ;; Return component with no refdes.
-           component)))
+           port-component)))
 
   (if port-refdes
       ;; Not empty filtered list means that we have found and
