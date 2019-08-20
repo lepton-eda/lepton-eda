@@ -329,8 +329,10 @@
           pinnumber
           refdes))
 
-  (define (fix-pin pin parent-component-refdes)
-    (let ((port-refdes (package-pin-label pin))
+  (define (fix-pin pin)
+    (let ((parent-component-refdes
+           (schematic-component-refdes (package-pin-parent pin)))
+          (port-refdes (package-pin-label pin))
           (pinnumber (package-pin-number pin))
           (nets (package-pin-nets pin)))
       (if port-refdes
@@ -343,8 +345,7 @@
 
   (define (fix-composite-component component)
     (when (schematic-component-sources component)
-      (for-each (cut fix-pin <> (schematic-component-refdes component))
-                (schematic-component-pins component))))
+      (for-each fix-pin (schematic-component-pins component))))
 
   (for-each update-component-pins components)
 
