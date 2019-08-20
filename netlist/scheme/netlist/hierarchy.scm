@@ -76,9 +76,14 @@
    netlist))
 
 
-(define (hierarchy-setup-rename components parent-component-refdes port-refdes nets)
-  ;; Search for hierarchical refdes created from PORT-REFDES and
-  ;; PARENT-COMPONENT-REFDES.
+(define (hierarchy-setup-rename components pin)
+  (define parent-component-refdes
+    (schematic-component-refdes (package-pin-parent pin)))
+  (define port-refdes (package-pin-label pin))
+  (define pinnumber (package-pin-number pin))
+  (define nets (package-pin-nets pin))
+  ;; Define hierarchical refdes for a source schematic port
+  ;; corresponding to the given pin.
   (define hierarchy-refdes (hierarchy-create-refdes port-refdes
                                                     parent-component-refdes))
 
@@ -333,13 +338,9 @@
     (let ((parent-component-refdes
            (schematic-component-refdes (package-pin-parent pin)))
           (port-refdes (package-pin-label pin))
-          (pinnumber (package-pin-number pin))
-          (nets (package-pin-nets pin)))
+          (pinnumber (package-pin-number pin)))
       (if port-refdes
-          (unless (hierarchy-setup-rename components
-                                          parent-component-refdes
-                                          port-refdes
-                                          nets)
+          (unless (hierarchy-setup-rename components pin)
             (warn-no-port parent-component-refdes port-refdes))
           (warn-no-pinlabel pinnumber parent-component-refdes))))
 
