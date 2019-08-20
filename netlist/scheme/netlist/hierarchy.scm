@@ -345,14 +345,14 @@
           (warn-no-pinlabel pinnumber parent-component-refdes))))
 
   (define (fix-composite-component component)
-    (when (schematic-component-sources component)
-      (for-each fix-pin (schematic-component-pins component))))
+    (for-each fix-pin (schematic-component-pins component)))
 
   (for-each update-component-pins components)
 
   (for-each update-component-net-mapped-pins components)
 
-  (for-each fix-composite-component components)
+  (for-each fix-composite-component
+            (filter schematic-component-subcircuit? components))
 
   (rename-all
    ((if (gnetlist-config-ref 'mangle-refdes)
