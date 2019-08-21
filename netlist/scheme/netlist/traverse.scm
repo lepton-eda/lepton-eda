@@ -362,7 +362,10 @@
                                                 object
                                                 inherited-attribs
                                                 attached-attribs
-                                                '())) ; get pins later
+                                                ;; get pins later
+                                                '()
+                                                ;; not a port initially
+                                                #f))
            (graphical (or (schematic-component-graphical? component)
                           (schematic-component-nc? component)))
            (refdes  (hierarchy-create-refdes (special-refdes object

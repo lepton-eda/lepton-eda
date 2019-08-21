@@ -30,7 +30,8 @@
                    schematic-component-object set-schematic-component-object!
                    schematic-component-iattribs set-schematic-component-iattribs!
                    schematic-component-attribs set-schematic-component-attribs!
-                   schematic-component-pins set-schematic-component-pins!)
+                   schematic-component-pins set-schematic-component-pins!
+                   schematic-component-port set-schematic-component-port!)
 
   #:export (schematic-component-attributes
             schematic-component-attribute
@@ -41,7 +42,7 @@
             set-schematic-component-pins/parent!))
 
 (define-record-type <schematic-component>
-  (make-schematic-component id refdes tag sources object iattribs attribs pins)
+  (make-schematic-component id refdes tag sources object iattribs attribs pins port)
   schematic-component?
   (id schematic-component-id set-schematic-component-id!)
   (refdes schematic-component-refdes set-schematic-component-refdes!)
@@ -50,7 +51,8 @@
   (object schematic-component-object set-schematic-component-object!)
   (iattribs schematic-component-iattribs set-schematic-component-iattribs!)
   (attribs schematic-component-attribs set-schematic-component-attribs!)
-  (pins schematic-component-pins set-schematic-component-pins!))
+  (pins schematic-component-pins set-schematic-component-pins!)
+  (port schematic-component-port set-schematic-component-port!))
 
 ;;; Sets default printer for <schematic-component>
 (set-record-type-printer!
@@ -69,6 +71,7 @@ FORMAT-STRING must be in the form required by the procedure
   'iattribs
   'attribs
   'pins
+  'port
 Any other unrecognized argument will lead to yielding '?' in the
 corresponding place.
 Example usage:
@@ -88,6 +91,7 @@ Example usage:
                  ('iattribs (schematic-component-iattribs record))
                  ('attribs (schematic-component-attribs record))
                  ('pins (schematic-component-pins record))
+                 ('port (schematic-component-port record))
                  (_ #\?)))
              args)))))
 
