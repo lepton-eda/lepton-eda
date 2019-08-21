@@ -110,19 +110,13 @@
             ;; disable inner port component refdes.
             ;; FIXME: It's assumed that only one pair of
             ;; matching pins found.
-            (let ((inner-port-pin (car pins)))
-              (add-rename
-               ;; Netname of nets connected to inner port pin.
-               (package-pin-name inner-port-pin)
-               ;; Get source net name, all outer nets are named
-               ;; already.
-               (search-net-name (package-pin-nets outer-port-pin)))
-              ;; Return the found pair of pins.
-              (let ((port (make-schematic-port inner-port-pin outer-port-pin)))
-                (set-schematic-component-port! (package-pin-parent inner-port-pin)
-                                               port)
-                ;; Return new <schematic-port> created.
-                port))))
+            (let* ((inner-port-pin (car pins))
+                   (port (make-schematic-port inner-port-pin outer-port-pin)))
+              ;; Update schematic component representing the port.
+              (set-schematic-component-port! (package-pin-parent inner-port-pin)
+                                             port)
+              ;; Return new <schematic-port> created.
+              port)))
       ;; Warn if no pinlabel found on the outer pin. Return #f.
       (warn-no-pinlabel)))
 
@@ -348,7 +342,16 @@
     (schematic-component-refdes (schematic-port-inner-component port)))
 
   (define (outer-pin->schematic-port outer-port-pin)
-    (hierarchy-make-schematic-port components outer-port-pin))
+    (let ((port (hierarchy-make-schematic-port components outer-port-pin)))
+      (and port
+           ;; Net renaming stuff.
+           (add-rename
+            ;; Netname of nets connected to inner port pin.
+            (package-pin-name (schematic-port-inner-pin port))
+            ;; Get source net name, all outer nets are named
+            ;; already.
+            (search-net-name (package-pin-nets outer-port-pin)))
+           port)))
 
   (define (fix-composite-component component)
     ;; Disable refdeses of all inner port components.
