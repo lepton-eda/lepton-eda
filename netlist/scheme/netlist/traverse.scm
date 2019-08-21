@@ -172,6 +172,8 @@
                         ;; Set parent component later.
                         #f
                         ;; No connection yet.
+                        #f
+                        ;; No netname connection yet.
                         #f)))
 
   (map object->package-pin
@@ -211,6 +213,7 @@
                             #f
                             '()
                             net-map
+                            #f
                             #f
                             #f
                             #f))))
