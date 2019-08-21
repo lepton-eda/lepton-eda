@@ -65,17 +65,6 @@
   netlist)
 
 
-(define (hierarchy-remove-all-composite netlist)
-  (fold
-   (lambda (package prev-netlist)
-     (if (and (schematic-component-sources package)
-              (schematic-component-refdes package))
-         (hierarchy-disable-refdes prev-netlist (schematic-component-refdes package))
-         prev-netlist))
-   netlist
-   netlist))
-
-
 (define (hierarchy-setup-rename components outer-port-pin)
   (define parent-component-refdes
     (schematic-component-refdes (package-pin-parent outer-port-pin)))
@@ -359,8 +348,9 @@
   (define (fix-composite-component component)
     ;; Disable refdeses of all inner port components.
     (map (cut hierarchy-disable-refdes components <>)
-         (filter-map outer-pin->inner-port-refdes
-                     (schematic-component-pins component))))
+         (cons (schematic-component-refdes component)
+               (filter-map outer-pin->inner-port-refdes
+                           (schematic-component-pins component)))))
 
   (for-each update-component-pins components)
 
@@ -373,4 +363,4 @@
    ((if (gnetlist-config-ref 'mangle-refdes)
         identity
         remove-refdes-mangling)
-    (hierarchy-remove-all-composite components))))
+    components)))
