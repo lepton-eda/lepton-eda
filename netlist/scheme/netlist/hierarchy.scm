@@ -338,9 +338,6 @@
     (update-netnames-hash-table netname nets)))
 
 (define (hierarchy-post-process components)
-  (define (inner-port-component-refdes port)
-    (schematic-component-refdes (schematic-port-inner-component port)))
-
   (define (outer-pin->schematic-port outer-port-pin)
     (let ((port (hierarchy-make-schematic-port components outer-port-pin)))
       (and port
@@ -353,13 +350,17 @@
             (search-net-name (package-pin-nets outer-port-pin)))
            port)))
 
+  (define (component-subcircuit-ports component)
+    (filter-map outer-pin->schematic-port
+                (schematic-component-pins component)))
+
   (define (fix-composite-component component)
     ;; Disable refdeses of all inner port components.
-    (map (cut hierarchy-disable-refdes components <>)
-         (cons (schematic-component-refdes component)
-               (map inner-port-component-refdes
-                    (filter-map outer-pin->schematic-port
-                                (schematic-component-pins component))))))
+    (for-each (cut hierarchy-disable-refdes components <>)
+              (map schematic-component-refdes
+                   (cons component
+                         (map schematic-port-inner-component
+                              (component-subcircuit-ports component))))))
 
   (for-each update-component-pins components)
 
