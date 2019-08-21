@@ -66,7 +66,7 @@
   netlist)
 
 
-(define (hierarchy-setup-rename components outer-port-pin)
+(define (hierarchy-make-schematic-port components outer-port-pin)
   (define parent-component-refdes
     (schematic-component-refdes (package-pin-parent outer-port-pin)))
   (define port-refdes (package-pin-label outer-port-pin))
@@ -348,7 +348,7 @@
     (schematic-component-refdes (schematic-port-inner-component port)))
 
   (define (outer-pin->schematic-port outer-port-pin)
-    (hierarchy-setup-rename components outer-port-pin))
+    (hierarchy-make-schematic-port components outer-port-pin))
 
   (define (fix-composite-component component)
     ;; Disable refdeses of all inner port components.
