@@ -29,6 +29,7 @@
   #:use-module (netlist rename)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
+  #:use-module (netlist schematic-port)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
   #:use-module (netlist verbose)
@@ -117,7 +118,11 @@
                ;; already.
                (search-net-name (package-pin-nets outer-port-pin)))
               ;; Return the found pair of pins.
-              (cons outer-port-pin inner-port-pin))))
+              (let ((port (make-schematic-port inner-port-pin outer-port-pin)))
+                (set-schematic-component-port! (package-pin-parent inner-port-pin)
+                                               port)
+                ;; Return new <schematic-port> created.
+                port))))
       ;; Warn if no pinlabel found on the outer pin. Return #f.
       (warn-no-pinlabel)))
 
@@ -339,18 +344,19 @@
     (update-netnames-hash-table netname nets)))
 
 (define (hierarchy-post-process components)
-  (define (outer-pin->inner-port-refdes outer-port-pin)
-    (let ((inner-port-pin
-           (and=> (hierarchy-setup-rename components outer-port-pin) cdr)))
-      (and inner-port-pin
-           (schematic-component-refdes (package-pin-parent inner-port-pin)))))
+  (define (inner-port-component-refdes port)
+    (schematic-component-refdes (schematic-port-inner-component port)))
+
+  (define (outer-pin->schematic-port outer-port-pin)
+    (hierarchy-setup-rename components outer-port-pin))
 
   (define (fix-composite-component component)
     ;; Disable refdeses of all inner port components.
     (map (cut hierarchy-disable-refdes components <>)
          (cons (schematic-component-refdes component)
-               (filter-map outer-pin->inner-port-refdes
-                           (schematic-component-pins component)))))
+               (map inner-port-component-refdes
+                    (filter-map outer-pin->schematic-port
+                                (schematic-component-pins component))))))
 
   (for-each update-component-pins components)
 
