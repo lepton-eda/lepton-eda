@@ -35,6 +35,7 @@
   #:use-module (netlist package)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
+  #:use-module (netlist schematic-port)
   #:use-module (netlist subschematic)
   #:use-module (netlist package-pin)
   #:use-module (geda page)
@@ -59,6 +60,7 @@
             schematic-toplevel-attrib
             schematic-non-unique-package-names
             schematic-package-names
+            schematic-ports
             schematic-component-refdes->string
             schematic-tree
             schematic-name-tree
@@ -356,3 +358,8 @@ list of strings representing file names."
 ;;; Guile bug appearing at least in the versions up to 2.2.
 (define (schematic-components* schematic)
   (schematic-components schematic))
+
+(define (schematic-ports schematic)
+  "Returns a list of port components for SCHEMATIC."
+  (filter-map schematic-component-port
+              (schematic-components schematic)))
