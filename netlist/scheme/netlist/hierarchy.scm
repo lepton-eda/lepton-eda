@@ -127,8 +127,6 @@
                ;; Get source net name, all outer nets are named
                ;; already.
                (search-net-name (package-pin-nets outer-port-pin)))
-              ;; Disable refdes of the inner port component.
-              (hierarchy-disable-refdes components hierarchy-refdes)
               ;; Return the found pair of pins.
               (cons outer-port-pin inner-port-pin))))
       ;; Warn if no pinlabel found on the outer pin. Return #f.
@@ -352,9 +350,17 @@
     (update-netnames-hash-table netname nets)))
 
 (define (hierarchy-post-process components)
+  (define (outer-pin->inner-port-refdes outer-port-pin)
+    (let ((inner-port-pin
+           (and=> (hierarchy-setup-rename components outer-port-pin) cdr)))
+      (and inner-port-pin
+           (schematic-component-refdes (package-pin-parent inner-port-pin)))))
+
   (define (fix-composite-component component)
-    (for-each (cut hierarchy-setup-rename components <>)
-              (schematic-component-pins component)))
+    ;; Disable refdeses of all inner port components.
+    (map (cut hierarchy-disable-refdes components <>)
+         (filter-map outer-pin->inner-port-refdes
+                     (schematic-component-pins component))))
 
   (for-each update-component-pins components)
 
