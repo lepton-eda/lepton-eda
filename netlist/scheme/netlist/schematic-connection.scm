@@ -39,17 +39,23 @@
             set-schematic-connection-printer!))
 
 
-;;; name - chosen netname
-;;; netnames - the list of all netname= attribs
-;;; objects - all net segments in the schematic-connection
 (define-record-type <schematic-connection>
   (make-schematic-connection id page name override-name objects pins)
   schematic-connection?
+  ;; ID. Dunno, why it is here...
   (id schematic-connection-id set-schematic-connection-id!)
+  ;; Parent page for direct connections.  Has no sense for named
+  ;; or hierarchical connections.
   (page schematic-connection-page set-schematic-connection-page!)
+  ;; Net name of the connection taken from the "netname="
+  ;; attributes of the connection objects.
   (name schematic-connection-name set-schematic-connection-name!)
+  ;; Net name of the connection taken from the "net=" attributes
+  ;; of the connection objects.
   (override-name schematic-connection-override-name set-schematic-connection-override-name!)
+  ;; Objects of the connection.  They can be net or pin primitives.
   (objects schematic-connection-objects set-schematic-connection-objects!)
+  ;; Pins of the connections. Now they are <package-pin> objects.
   (pins schematic-connection-pins set-schematic-connection-pins!))
 
 
