@@ -59,6 +59,7 @@
             schematic-toplevel-attrib
             schematic-non-unique-package-names
             schematic-package-names
+            schematic-pins
             schematic-ports
             schematic-tree
             schematic-name-tree
@@ -340,4 +341,10 @@ list of strings representing file names."
 (define (schematic-ports schematic)
   "Returns a list of port components for SCHEMATIC."
   (filter-map schematic-component-port
+              (schematic-components schematic)))
+
+
+(define (schematic-pins schematic)
+  "Returns a list of all component pins in SCHEMATIC."
+  (append-map schematic-component-pins
               (schematic-components schematic)))
