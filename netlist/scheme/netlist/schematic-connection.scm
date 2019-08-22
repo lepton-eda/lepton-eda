@@ -29,6 +29,7 @@
 
   #:export-syntax (make-schematic-connection schematic-connection?
                    schematic-connection-id set-schematic-connection-id!
+                   schematic-connection-tag set-schematic-connection-tag!
                    schematic-connection-name set-schematic-connection-name!
                    schematic-connection-override-name set-schematic-connection-override-name!
                    schematic-connection-objects set-schematic-connection-objects!
@@ -40,10 +41,16 @@
 
 
 (define-record-type <schematic-connection>
-  (make-schematic-connection id page name override-name objects pins)
+  (make-schematic-connection id tag page name override-name objects pins)
   schematic-connection?
   ;; ID. Dunno, why it is here...
   (id schematic-connection-id set-schematic-connection-id!)
+  ;; Hierarchical tag.  Well, it is here temporarily (which may
+  ;; mean forever :)), to form real hierarchical net names.
+  ;; Should be set only for non-hierarchical connections.  Really,
+  ;; here could be parent (sub)schematic instead, to gather this
+  ;; info by some function.
+  (tag schematic-connection-tag set-schematic-connection-tag!)
   ;; Parent page for direct connections.  Has no sense for named
   ;; or hierarchical connections.
   (page schematic-connection-page set-schematic-connection-page!)
@@ -69,6 +76,7 @@
 FORMAT-STRING must be in the form required by the procedure
 `format'. The following ARGS may be used:
   'id
+  'tag
   'page
   'name
   'override-name
@@ -86,6 +94,7 @@ Example usage:
              (lambda (arg)
                (match arg
                  ('id (schematic-connection-id record))
+                 ('tag (schematic-connection-tag record))
                  ('page (schematic-connection-page record))
                  ('name (schematic-connection-name record))
                  ('override-name (schematic-connection-override-name record))
@@ -137,11 +146,12 @@ Example usage:
     ((c) c)
     ((a b ...) netnames)))
 
-(define (get-schematic-connection page schematic-connection-ls)
+(define (get-schematic-connection page tag schematic-connection-ls)
   (let* ((netnames (car schematic-connection-ls))
          (objects (cdr schematic-connection-ls))
          (id (object-id (car objects))))
     (make-schematic-connection id
+                               tag
                                page
                                ;; netname
                                (if (null? netnames)
@@ -152,7 +162,7 @@ Example usage:
                                objects
                                '())))
 
-(define (make-page-schematic-connections page)
+(define (make-page-schematic-connections page tag)
   (define (connection? object)
     (or (net-pin? object)
         (net? object)))
@@ -165,7 +175,7 @@ Example usage:
                                             (page-contents page))))))
       (append nets pins)))
 
-  (map (cut get-schematic-connection page <>)
+  (map (cut get-schematic-connection page tag <>)
        (connections->netname-groups (group-connections (page-connections page)))))
 
 

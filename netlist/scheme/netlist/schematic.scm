@@ -23,6 +23,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
+  #:use-module (srfi srfi-26)
   #:use-module (sxml match)
   #:use-module (sxml transform)
   #:use-module (netlist attrib compare)
@@ -251,8 +252,9 @@
   (any wanted-package-pin-netname=? packages))
 
 
-(define (make-schematic-connections pages)
-  (append-map make-page-schematic-connections pages))
+;;; Collect schematic connections for PAGES.
+(define (make-schematic-connections pages tag)
+  (append-map (cut make-page-schematic-connections <> tag) pages))
 
 (define (schematic-component-refdes->string refdes)
   (define reverse-refdes-order?
@@ -292,7 +294,7 @@ of schematic pages."
          (full-netlist (map compat-refdes toplevel-netlist))
          (netlist (filter plain-package? full-netlist))
          (packages (make-package-list netlist))
-         (connections (make-schematic-connections pages))
+         (connections (make-schematic-connections pages '()))
          (graphicals (filter schematic-component-graphical? full-netlist))
          (nu-nets (get-all-nets netlist))
          (unique-nets (get-nets netlist)))

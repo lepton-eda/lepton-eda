@@ -127,12 +127,14 @@
                (loop (cdr groups)))))))
 
 ;;; Search for connection by netname.
-(define (get-connection-by-netname netname connections)
+(define (get-connection-by-netname netname connections tag)
   (let loop ((groups connections))
     (if (null? groups)
         (make-schematic-connection
          ;; id
          #f
+         ;; hierarchical tag
+         tag
          ;; page
          #f
          ;; netname
@@ -249,7 +251,7 @@
            (object #f)
            (attribs '())
            (nets (list (make-pin-net id object #f netname refdes pinnumber)))
-           (connection (get-connection-by-netname netname connections))
+           (connection (get-connection-by-netname netname connections tag))
            (pin (make-package-pin id
                                   object
                                   pinnumber
@@ -394,7 +396,7 @@
 
   (let* ((objects (page-contents page))
          (components (filter component? objects))
-         (connections (make-page-schematic-connections page))
+         (connections (make-page-schematic-connections page hierarchy-tag))
          (schematic-components (map (cut traverse-object <> connections) components)))
     schematic-components))
 
