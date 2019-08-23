@@ -195,7 +195,9 @@
       (string=? "pwr" (assq-ref (package-pin-attribs pin) 'pintype)))
 
     (let ((connection (package-pin-connection pin))
-          (name (create-netattrib (net-map-netname net-map) tag)))
+          (name (create-net-name (net-map-netname net-map)
+                                 tag
+                                 'power-rail)))
       (when (power-pin? pin)
         (set-schematic-connection-override-name!
          connection
@@ -240,7 +242,9 @@
   (let ((net-map (package-pin-net-map pin)))
     (add-net-power-pin-override pin net-map tag)
     (and refdes
-         (let ((netname (create-netattrib (net-map-netname net-map) tag))
+         (let ((netname (create-net-name (net-map-netname net-map)
+                                         tag
+                                         'power-rail))
                (pin-netname (package-pin-name pin)))
            (if (and pin-netname
                     (not (unnamed-net-or-unconnected-pin? pin-netname)))
@@ -280,8 +284,10 @@
 
 (define (create-unnamed-netname tag)
   (define (hierarchical-default-name s)
-    (create-netname (string-append (gnetlist-config-ref 'default-net-name) s)
-                    tag))
+    (create-net-name (string-append (gnetlist-config-ref 'default-net-name) s)
+                     tag
+                     ;; The below means just #f.
+                     (not 'power-rail)))
   ((if (eq? (netlist-mode) 'spice) identity hierarchical-default-name)
    (number->string (increment-unnamed-net-counter))))
 

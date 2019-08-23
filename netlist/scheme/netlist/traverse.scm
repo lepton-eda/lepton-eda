@@ -181,7 +181,10 @@
               (let ((netname (attrib-value-by-name (pin-net-object net) "netname")))
                 ;; The object is a net.  For nets we check the "netname="
                 ;; attribute.
-                (set-pin-net-name! net (create-netname netname tag))))
+                (set-pin-net-name! net (create-net-name netname
+                                                        tag
+                                                        ;; The below means just #f.
+                                                        (not 'power-rail)))))
             (filter (lambda (x) (net? (pin-net-object x))) nets))
            (for-each
             (lambda (net)
@@ -197,10 +200,11 @@
                        ;; "net=".  Use hierarchy tag here to make this net
                        ;; unique.
                        (set-pin-net-name! net
-                                          (create-netattrib
+                                          (create-net-name
                                            (netattrib-search-net (object-component object)
                                                                  pinnumber)
-                                           tag))
+                                           tag
+                                           'power-rail))
                        (set-pin-net-connection-package! net
                                                         (and (not net-driven?)
                                                              (hierarchy-create-refdes refdes tag)))
@@ -246,7 +250,9 @@
 
   (define (make-net-map-pin net-map)
     (let* ((pinnumber (net-map-pinnumber net-map))
-           (netname (create-netattrib (net-map-netname net-map) tag))
+           (netname (create-net-name (net-map-netname net-map)
+                                      tag
+                                      'power-rail))
            (label #f)
            (object #f)
            (attribs '())

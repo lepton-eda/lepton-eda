@@ -28,37 +28,38 @@
   #:use-module (symbol check net-attrib)
   #:use-module (symbol check duplicate)
 
-  #:export (create-netattrib
-            create-netname
+  #:export (create-net-name
             netattrib-search-net
             check-net-maps
             attrib-value-by-name))
 
-(define (hierarchy-name->string name separator reverse-order?)
+(define (hierarchical-name->string name separator reverse?)
   ;; Hierarchical name is already reversed, so we have to
-  ;; reverse it again if no reverse-order? is set.
-  (string-join (if reverse-order? name (reverse name))
+  ;; reverse it again if no reverse? is set.
+  (string-join (if reverse? name (reverse name))
                (or separator "")))
 
-(define (create-netattrib basename hierarchy-tag)
-  (define make-hierarchical-name? (gnetlist-config-ref 'mangle-net))
-  (define reverse-order?  (gnetlist-config-ref 'reverse-net-order))
-  (define separator (gnetlist-config-ref 'net-separator))
+(define (create-net-name basename
+                         hierarchy-tag
+                         power-rail?)
+  "Create string representing net name using BASENAME and
+HIERARCHY-TAG.  If POWER-RAIL? is #t, the procedure creates the
+name using settings for \"net=\" attribute which is used in power
+symbols to assign net name. Otherwise, settings for \"netname=\"
+attribute are used, the latter is used to assign names for net
+primitives."
+  (define hierarchical?
+    (gnetlist-config-ref (if power-rail? 'mangle-net 'mangle-netname)))
+  (define reverse?
+    (gnetlist-config-ref (if power-rail? 'reverse-net-order 'reverse-netname-order)))
+  (define separator
+    (gnetlist-config-ref (if power-rail? 'net-separator 'netname-separator)))
   (define name (cons basename hierarchy-tag))
 
-  (if (and make-hierarchical-name? basename)
-      (hierarchy-name->string name separator reverse-order?)
+  (if (and basename hierarchical?)
+      (hierarchical-name->string name separator reverse?)
       basename))
 
-(define (create-netname basename hierarchy-tag)
-  (define make-hierarchical-name? (gnetlist-config-ref 'mangle-netname))
-  (define reverse-order?  (gnetlist-config-ref 'reverse-netname-order))
-  (define separator (gnetlist-config-ref 'netname-separator))
-  (define name (cons basename hierarchy-tag))
-
-  (if (and make-hierarchical-name? basename)
-      (hierarchy-name->string name separator reverse-order?)
-      basename))
 
 (define (attrib-value-by-name object name)
   (define (has-appropriate-name? attrib)
