@@ -119,6 +119,10 @@
 
 ;;; Search for connection by netname.
 (define (get-connection-by-netname netname connections tag)
+  (define (netname-matches? group)
+    (or (equal? netname (schematic-connection-name group))
+        (equal? netname (schematic-connection-override-name group))))
+
   (let loop ((groups connections))
     (if (null? groups)
         (make-schematic-connection
@@ -137,8 +141,7 @@
          ;; pins
          '())
         (let ((group (car groups)))
-          (if (or (equal? netname (schematic-connection-name group))
-                  (equal? netname (schematic-connection-override-name group)))
+          (if (netname-matches? group)
               group
               (loop (cdr groups)))))))
 
