@@ -119,9 +119,10 @@
 
 ;;; Search for connection by netname.
 (define (get-connection-by-netname netname connections tag)
-  (define (netname-matches? group)
-    (or (equal? netname (schematic-connection-name group))
-        (equal? netname (schematic-connection-override-name group))))
+  (define (netname-matches? connection)
+    (and (equal? tag (schematic-connection-tag connection))
+         (or (equal? netname (schematic-connection-name connection))
+             (equal? netname (schematic-connection-override-name connection)))))
 
   (let loop ((groups connections))
     (if (null? groups)
@@ -272,7 +273,7 @@
          (nets (list (make-pin-net (package-pin-id pin)
                                    (package-pin-object pin)
                                    netname)))
-         (connection (get-connection-by-netname netname
+         (connection (get-connection-by-netname (net-map-netname (package-pin-net-map pin))
                                                 connections
                                                 tag)))
     (set-package-pin-name! pin netname)
