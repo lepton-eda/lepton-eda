@@ -34,41 +34,31 @@
             check-net-maps
             attrib-value-by-name))
 
-(define (hierarchy-tag->string hierarchy-tag separator reverse-order?)
-  (match hierarchy-tag
-    ;; Hierarchy tag is already reversed, so we have to reverse it
-    ;; again if no reverse-order? is set.
-    ((? list? tag) (string-join (if reverse-order? tag (reverse tag))
-                                (or separator "")))
-    (tag tag)))
+(define (hierarchy-name->string name separator reverse-order?)
+  ;; Hierarchical name is already reversed, so we have to
+  ;; reverse it again if no reverse-order? is set.
+  (string-join (if reverse-order? name (reverse name))
+               (or separator "")))
 
 (define (create-netattrib basename hierarchy-tag)
-  (define mangle? (gnetlist-config-ref 'mangle-net))
+  (define make-hierarchical-name? (gnetlist-config-ref 'mangle-net))
   (define reverse-order?  (gnetlist-config-ref 'reverse-net-order))
   (define separator (gnetlist-config-ref 'net-separator))
+  (define name (cons basename hierarchy-tag))
 
-  (let ((hierarchy-tag (hierarchy-tag->string hierarchy-tag
-                                              separator
-                                              reverse-order?)))
-   (if (and hierarchy-tag mangle? basename)
-       (if reverse-order?
-           (string-append basename (or separator "") hierarchy-tag)
-           (string-append hierarchy-tag (or separator "") basename))
-       basename)))
+  (if (and make-hierarchical-name? basename)
+      (hierarchy-name->string name separator reverse-order?)
+      basename))
 
 (define (create-netname basename hierarchy-tag)
-  (define mangle? (gnetlist-config-ref 'mangle-netname))
+  (define make-hierarchical-name? (gnetlist-config-ref 'mangle-netname))
   (define reverse-order?  (gnetlist-config-ref 'reverse-netname-order))
   (define separator (gnetlist-config-ref 'netname-separator))
+  (define name (cons basename hierarchy-tag))
 
-  (let ((hierarchy-tag (hierarchy-tag->string hierarchy-tag
-                                              separator
-                                              reverse-order?)))
-   (if (and hierarchy-tag mangle? basename)
-       (if reverse-order?
-           (string-append basename (or separator "") hierarchy-tag)
-           (string-append hierarchy-tag (or separator "") basename))
-       basename)))
+  (if (and make-hierarchical-name? basename)
+      (hierarchy-name->string name separator reverse-order?)
+      basename))
 
 (define (attrib-value-by-name object name)
   (define (has-appropriate-name? attrib)

@@ -15,5 +15,5 @@ U400.2 signal4 signal3 signal6 unknown
 U400.3 signal6 signal4 signal8 unknown
 U500.1 signal1 unconnected_pin-5 2 unknown
 U500.2 2 2 unconnected_pin-7 unknown
-U500.3 sig9 DIGITAL_GND unconnected_pin-8 unknown
+U500.3 0 DIGITAL_GND unconnected_pin-8 unknown
 .end

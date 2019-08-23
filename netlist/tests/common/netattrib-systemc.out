@@ -27,11 +27,11 @@ sc_signal<0> 3.3V;
 sc_signal<0> 5V;
 sc_signal<0> DGND;
 sc_signal<0> DIGITAL_GND;
+sc_signal<0> GND;
 sc_signal<0> Vcc;
 sc_signal<0> XGND;
 sc_signal<0> netattrib;
 sc_signal<0> one;
-sc_signal<0> sig9;
 sc_signal<0> signal1;
 sc_signal<0> signal3;
 sc_signal<0> signal4;
@@ -62,7 +62,7 @@ SC_CTOR(not found):
 
     U100.3(one);
     U100.5(netattrib);
-    U100.7(sig9);
+    U100.7(GND);
     U100.14(Vcc);
 
     U200.1(one);
@@ -72,7 +72,7 @@ SC_CTOR(not found):
 
     U300.1(one);
     U300.2(unnamed_net1);
-    U300.7(sig9);
+    U300.7(GND);
     U300.14(Vcc);
 
     U400.1(signal1);
@@ -81,7 +81,7 @@ SC_CTOR(not found):
     U400.4(signal4);
     U400.5(signal3);
     U400.6(signal6);
-    U400.7(sig9);
+    U400.7(GND);
     U400.8(signal8);
     U400.9(signal6);
     U400.10(signal4);
@@ -92,8 +92,8 @@ SC_CTOR(not found):
     U500.3(unnamed_net2);
     U500.4(unnamed_net2);
     U500.5(unnamed_net2);
-    U500.7(sig9);
-    U500.9(sig9);
+    U500.7(GND);
+    U500.9(GND);
     U500.10(DIGITAL_GND);
     U500.14(3.3V);
     U500.14(5V);

@@ -19,11 +19,11 @@ wire \3.3V  ;
 wire \5V  ;
 wire DGND ;
 wire DIGITAL_GND ;
+wire GND ;
 wire Vcc ;
 wire XGND ;
 wire netattrib ;
 wire one ;
-wire sig9 ;
 wire signal1 ;
 wire signal3 ;
 wire signal4 ;
@@ -43,7 +43,7 @@ FUSE F1 (
 \7400  U100 (
     .\3  ( one ),
     .\5  ( netattrib ),
-    .\7  ( sig9 ),
+    .\7  ( GND ),
     .\14  ( Vcc )
     );
 
@@ -57,7 +57,7 @@ FUSE F1 (
 \7404  U300 (
     .\1  ( one ),
     .\2  ( unnamed_net1 ),
-    .\7  ( sig9 ),
+    .\7  ( GND ),
     .\14  ( Vcc )
     );
 
@@ -68,7 +68,7 @@ FUSE F1 (
     .\4  ( signal4 ),
     .\5  ( signal3 ),
     .\6  ( signal6 ),
-    .\7  ( sig9 ),
+    .\7  ( GND ),
     .\8  ( signal8 ),
     .\9  ( signal6 ),
     .\10  ( signal4 ),
@@ -81,8 +81,8 @@ FUSE F1 (
     .\3  ( unnamed_net2 ),
     .\4  ( unnamed_net2 ),
     .\5  ( unnamed_net2 ),
-    .\7  ( sig9 ),
-    .\9  ( sig9 ),
+    .\7  ( GND ),
+    .\9  ( GND ),
     .\10  ( DIGITAL_GND ),
     .\14  ( \3.3V  ),
     .\14  ( \5V  )

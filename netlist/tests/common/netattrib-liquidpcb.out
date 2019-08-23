@@ -12,6 +12,13 @@
 		<net name="DIGITAL_GND">
 			<netnode component="U500" pin=10 />
 		</net>
+		<net name="GND">
+			<netnode component="U100" pin=7 />
+			<netnode component="U300" pin=7 />
+			<netnode component="U400" pin=7 />
+			<netnode component="U500" pin=7 />
+			<netnode component="U500" pin=9 />
+		</net>
 		<net name="Vcc">
 			<netnode component="U100" pin=14 />
 			<netnode component="U200" pin=14 />
@@ -30,13 +37,6 @@
 			<netnode component="U100" pin=3 />
 			<netnode component="U200" pin=1 />
 			<netnode component="U300" pin=1 />
-		</net>
-		<net name="sig9">
-			<netnode component="U100" pin=7 />
-			<netnode component="U300" pin=7 />
-			<netnode component="U400" pin=7 />
-			<netnode component="U500" pin=7 />
-			<netnode component="U500" pin=9 />
 		</net>
 		<net name="signal1">
 			<netnode component="U400" pin=1 />

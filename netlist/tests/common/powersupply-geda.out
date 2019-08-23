@@ -33,6 +33,7 @@ No "no-connect" nets found
 START renamed-nets
 
 four -> GND
+four -> GND
 
 END renamed-nets
 

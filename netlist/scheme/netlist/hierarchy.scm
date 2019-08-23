@@ -41,9 +41,8 @@
 
 (define (hierarchy-create-refdes basename hierarchy-tag)
   (match hierarchy-tag
-    (#f basename)
     ((? list? tag) `(,basename . ,tag))
-    (tag `(,basename ,tag))))
+    (non-list (error (_ "Invalid hierarchy tag.") hierarchy-tag))))
 
 (define (hierarchy-disable-refdes netlist disabled-refdes)
   (define (disabled? refdes)

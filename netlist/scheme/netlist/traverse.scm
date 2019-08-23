@@ -421,5 +421,5 @@
 
 (define (traverse toplevel-pages)
   (hierarchy-post-process (traverse-pages toplevel-pages
-                                          #f ; toplevel hierarchy tag
+                                          '() ; toplevel hierarchy tag
                                           )))

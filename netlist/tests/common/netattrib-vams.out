@@ -6,11 +6,11 @@ ARCHITECTURE default_architecture OF default_entity IS
 	unknown 5V 	:  unknown;
 	unknown DGND 	:  unknown;
 	unknown DIGITAL_GND 	:  unknown;
+	unknown GND 	:  unknown;
 	unknown Vcc 	:  unknown;
 	unknown XGND 	:  unknown;
 	unknown netattrib 	:  unknown;
 	unknown one 	:  unknown;
-	unknown sig9 	:  unknown;
 	unknown signal1 	:  unknown;
 	unknown signal3 	:  unknown;
 	unknown signal4 	:  unknown;
@@ -31,7 +31,7 @@ BEGIN
 			2 => OPEN,
 			3 => one,
 			5 => netattrib,
-			7 => sig9,
+			7 => GND,
 			14 => Vcc);
 
   U200 : ENTITY 7404
@@ -43,7 +43,7 @@ BEGIN
   U300 : ENTITY 7404
 	PORT MAP (	1 => one,
 			2 => unnamed_net1,
-			7 => sig9,
+			7 => GND,
 			14 => Vcc);
 
   U400 : ENTITY 7400
@@ -53,7 +53,7 @@ BEGIN
 			4 => signal4,
 			5 => signal3,
 			6 => signal6,
-			7 => sig9,
+			7 => GND,
 			8 => signal8,
 			9 => signal6,
 			10 => signal4,
@@ -67,9 +67,9 @@ BEGIN
 			4 => unnamed_net2,
 			5 => unnamed_net2,
 			6 => OPEN,
-			7 => sig9,
+			7 => GND,
 			8 => OPEN,
-			9 => sig9,
+			9 => GND,
 			10 => DIGITAL_GND,
 			14 => 3.3V,
 			14 => 5V);

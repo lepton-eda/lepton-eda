@@ -33,6 +33,12 @@ begin netlist v1 netlist
 
 	conn DIGITAL_GND U500 10
 
+	conn GND U100 7
+	conn GND U300 7
+	conn GND U400 7
+	conn GND U500 7
+	conn GND U500 9
+
 	conn Vcc U100 14
 	conn Vcc U200 14
 	conn Vcc U300 14
@@ -47,12 +53,6 @@ begin netlist v1 netlist
 	conn one U100 3
 	conn one U200 1
 	conn one U300 1
-
-	conn sig9 U100 7
-	conn sig9 U300 7
-	conn sig9 U400 7
-	conn sig9 U500 7
-	conn sig9 U500 9
 
 	conn signal1 U400 1
 	conn signal1 U500 1

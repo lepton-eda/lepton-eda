@@ -434,7 +434,8 @@ connection pairs in the form (\"pin-number\" . \"net-name\")."
              (pinnumber (pin-net-connection-pinnumber net)))
          (and package
               pinnumber
-              (cons package pinnumber))))
+              (cons (schematic-component-refdes->string package)
+                    pinnumber))))
      nets))
 
   (define (lookup-through-nets nets package pin-number)

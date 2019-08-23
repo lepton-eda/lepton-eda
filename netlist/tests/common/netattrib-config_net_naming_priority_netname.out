@@ -29,6 +29,7 @@ GND -> sig9
 signal6 -> signal9
 signal3 -> out3
 signal8 -> out8
+GND -> sig9
 unconnected_pin-4 -> signal1
 unconnected_pin-6 -> signal1
 signal6 -> signal9
