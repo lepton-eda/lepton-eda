@@ -166,26 +166,29 @@
                    (attrib-value-by-name object "netname"))))
      nets))
 
+  (define (assign-net-netname net)
+    ;; The object is a net.  For nets we check the "netname="
+    ;; attribute.
+    (set-pin-net-name!
+     net
+     (create-net-name (attrib-value-by-name (pin-net-object net) "netname")
+                      tag
+                      ;; The below means just #f.
+                      (not 'power-rail))))
+
   (define (object->package-pin object)
     (and (net-pin? object)
-         (let ((attribs (make-pin-attrib-list object))
-               (connection (get-package-pin-connection object connections))
-               (nets (if (null? (object-connections object))
-                         ;; If there is no connections, we have
-                         ;; an only pin. There is no point to do
-                         ;; something in this case.
-                         '()
-                         (reverse (traverse-net '() #t object)))))
-           (for-each
-            (lambda (net)
-              (let ((netname (attrib-value-by-name (pin-net-object net) "netname")))
-                ;; The object is a net.  For nets we check the "netname="
-                ;; attribute.
-                (set-pin-net-name! net (create-net-name netname
-                                                        tag
-                                                        ;; The below means just #f.
-                                                        (not 'power-rail)))))
-            (filter (lambda (x) (net? (pin-net-object x))) nets))
+         (let* ((attribs (make-pin-attrib-list object))
+                (connection (get-package-pin-connection object connections))
+                (nets (if (null? (object-connections object))
+                          ;; If there is no connections, we have
+                          ;; an only pin. There is no point to do
+                          ;; something in this case.
+                          '()
+                          (reverse (traverse-net '() #t object))))
+                (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets)))
+
+           (for-each assign-net-netname net-objects)
            (for-each
             (lambda (net)
               (let ((object (pin-net-object net)))
