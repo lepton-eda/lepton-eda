@@ -176,6 +176,33 @@
                       ;; The below means just #f.
                       (not 'power-rail))))
 
+  (define (assign-pin-properties pin)
+    (let* ((object (pin-net-object pin))
+           (refdes-pinnumber-pair (pin-refdes-pinnumber-pair object))
+           (refdes (car refdes-pinnumber-pair))
+           (pinnumber (cdr refdes-pinnumber-pair))
+           (net-driven? (net-attrib-pin? object)))
+      (and net-driven?
+           (set-pin-net-priority! pin net-driven?))
+      ;; The object is a pin, and it defines net name using
+      ;; "net=".  Use hierarchy tag here to make this netname
+      ;; unique.
+      (set-pin-net-name!
+       pin
+       (create-net-name (netattrib-search-net (object-component object)
+                                              pinnumber)
+                        tag
+                        'power-rail))
+      (set-pin-net-connection-package!
+       pin
+       (and (not net-driven?)
+            (hierarchy-create-refdes refdes tag)))
+      (set-pin-net-connection-pinnumber!
+       pin
+       (and (not net-driven?)
+            pinnumber))))
+
+
   (define (object->package-pin object)
     (and (net-pin? object)
          (let* ((attribs (make-pin-attrib-list object))
@@ -186,35 +213,11 @@
                           ;; something in this case.
                           '()
                           (reverse (traverse-net '() #t object))))
-                (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets)))
+                (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
+                (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
 
            (for-each assign-net-netname net-objects)
-           (for-each
-            (lambda (net)
-              (let ((object (pin-net-object net)))
-                (and (pin? object)
-                     (let* ((refdes-pinnumber-pair (pin-refdes-pinnumber-pair object))
-                            (refdes (car refdes-pinnumber-pair))
-                            (pinnumber (cdr refdes-pinnumber-pair))
-                            (net-driven? (net-attrib-pin? object)))
-                       (and net-driven?
-                            (set-pin-net-priority! net net-driven?))
-                       ;; The object is a pin, and it defines net name using
-                       ;; "net=".  Use hierarchy tag here to make this net
-                       ;; unique.
-                       (set-pin-net-name! net
-                                          (create-net-name
-                                           (netattrib-search-net (object-component object)
-                                                                 pinnumber)
-                                           tag
-                                           'power-rail))
-                       (set-pin-net-connection-package! net
-                                                        (and (not net-driven?)
-                                                             (hierarchy-create-refdes refdes tag)))
-                       (set-pin-net-connection-pinnumber! net
-                                                          (and (not net-driven?)
-                                                               pinnumber))))))
-            nets)
+           (for-each assign-pin-properties pin-objects)
            (let ((pin (make-package-pin (object-id object)
                                         object
                                         (assq-ref attribs 'pinnumber)
