@@ -166,7 +166,7 @@
                    (attrib-value-by-name object "netname"))))
      nets))
 
-  (define (assign-net-netname net)
+  (define (assign-net-netname! net)
     ;; The object is a net.  For nets we check the "netname="
     ;; attribute.
     (set-pin-net-name!
@@ -176,7 +176,7 @@
                       ;; The below means just #f.
                       (not 'power-rail))))
 
-  (define (assign-pin-properties pin)
+  (define (assign-pin-properties! pin)
     (let* ((object (pin-net-object pin))
            (refdes-pinnumber-pair (pin-refdes-pinnumber-pair object))
            (refdes (car refdes-pinnumber-pair))
@@ -216,8 +216,8 @@
                 (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
                 (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
 
-           (for-each assign-net-netname net-objects)
-           (for-each assign-pin-properties pin-objects)
+           (for-each assign-net-netname! net-objects)
+           (for-each assign-pin-properties! pin-objects)
            (let ((pin (make-package-pin (object-id object)
                                         object
                                         (assq-ref attribs 'pinnumber)
