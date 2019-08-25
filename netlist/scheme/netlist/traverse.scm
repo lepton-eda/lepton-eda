@@ -151,7 +151,7 @@
               group
               (loop (cdr groups)))))))
 
-(define (object-pins object tag connections)
+(define (object-pins->package-pins object tag connections)
   (define (make-pin-attrib-list object)
     (define (add-attrib attrib)
       (cons (string->symbol (attrib-name attrib))
@@ -242,7 +242,7 @@
 ;;; corresponding pins in PIN-LIST, otherwise creates new pins and
 ;;; adds them to the list.  ID, REFDES, and hierarchy TAG are used
 ;;; to create hierarchical net name.
-(define (net-maps->pins net-maps id refdes tag pin-list connections)
+(define (net-maps->package-pins net-maps id refdes tag pin-list connections)
   (define (pinnumber->pin pinnumber pin-list)
     (and (not (null? pin-list))
          (let ((package-pinnumber (package-pin-number (car pin-list))))
@@ -391,8 +391,8 @@
          (sources (get-sources graphical
                                inherited-attribs
                                attached-attribs))
-         (real-pins (object-pins object hierarchy-tag connections))
-         (net-map-pins (net-maps->pins net-maps
+         (real-pins (object-pins->package-pins object hierarchy-tag connections))
+         (net-map-pins (net-maps->package-pins net-maps
                                        id
                                        refdes
                                        hierarchy-tag
