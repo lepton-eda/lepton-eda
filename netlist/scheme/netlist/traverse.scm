@@ -318,7 +318,8 @@
         (filename->page filename 'new-page)
         (log! 'error (_ "Failed to load subcircuit ~S.") name))))
 
-(define (traverse-page page hierarchy-tag)
+
+(define (special-refdes object attribs net-maps graphical)
   ;; Get refdes= of OBJECT depending on NETLIST-MODE.
   (define (get-refdes attribs)
     (let ((refdes (and=> (assq-ref attribs 'refdes) car)))
@@ -331,6 +332,23 @@
         ((geda) refdes)
         (else (error (_ "Netlist mode ~S is not supported.") (netlist-mode))))))
 
+  ;; First try to get refdes from attribs.
+  (or (get-refdes attribs)
+      ;; If there is net=, it's a power or some other special
+      ;; graphical symbol.  In such a case, refdes is #f.
+      (and (null? net-maps)
+           (not graphical)
+           ;; Otherwise, refdes is just missing.  Warn the user, and
+           ;; make up an artificial refdes.
+           (log! 'critical
+                 (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
+                 (component-basename object)
+                 (component-position object)
+                 (page-filename (object-page object)))
+           "U?")))
+
+
+(define (traverse-object object connections hierarchy-tag)
   ;; Makes attribute list of OBJECT using getter GET-ATTRIBS.
   (define (make-attrib-list get-attribs object)
     (define (add-attrib ls attrib)
@@ -348,69 +366,53 @@
           (loop (cdr in)
                 (add-attrib out (car in))))))
 
-  (define (special-refdes object attribs net-maps graphical)
-    ;; First try to get refdes from attribs.
-    (or (get-refdes attribs)
-        ;; If there is net=, it's a power or some other special
-        ;; graphical symbol.  In such a case, refdes is #f.
-        (and (null? net-maps)
-             (not graphical)
-             ;; Otherwise, refdes is just missing.  Warn the user, and
-             ;; make up an artificial refdes.
-             (log! 'critical
-                   (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
-                   (component-basename object)
-                   (component-position object)
-                   (page-filename (object-page object)))
-             "U?")))
+  (let* ((id (object-id object))
+         (inherited-attribs (make-attrib-list inherited-attribs object))
+         (attached-attribs (make-attrib-list object-attribs object))
+         (net-maps (check-net-maps object))
+         (component (make-schematic-component id
+                                              #f ; get refdes later
+                                              hierarchy-tag
+                                              #f ; get sources later
+                                              object
+                                              inherited-attribs
+                                              attached-attribs
+                                              ;; get pins later
+                                              '()
+                                              ;; not a port initially
+                                              #f))
+         (graphical (or (schematic-component-graphical? component)
+                        (schematic-component-nc? component)))
+         (refdes  (hierarchy-create-refdes (special-refdes object
+                                                           attached-attribs
+                                                           net-maps
+                                                           graphical)
+                                           hierarchy-tag))
+         (sources (get-sources graphical
+                               inherited-attribs
+                               attached-attribs))
+         (real-pins (object-pins object hierarchy-tag connections))
+         (net-map-pins (net-maps->pins net-maps
+                                       id
+                                       refdes
+                                       hierarchy-tag
+                                       real-pins
+                                       connections))
+         (pins (append real-pins net-map-pins)))
+    (set-schematic-component-refdes! component refdes)
+    (set-schematic-component-sources! component sources)
+    (set-schematic-component-pins/parent! component pins)
+    component))
 
-  (define (traverse-object object connections)
-    (let* ((id (object-id object))
-           (inherited-attribs (make-attrib-list inherited-attribs object))
-           (attached-attribs (make-attrib-list object-attribs object))
-           (net-maps (check-net-maps object))
-           (component (make-schematic-component id
-                                                #f ; get refdes later
-                                                hierarchy-tag
-                                                #f ; get sources later
-                                                object
-                                                inherited-attribs
-                                                attached-attribs
-                                                ;; get pins later
-                                                '()
-                                                ;; not a port initially
-                                                #f))
-           (graphical (or (schematic-component-graphical? component)
-                          (schematic-component-nc? component)))
-           (refdes  (hierarchy-create-refdes (special-refdes object
-                                                             attached-attribs
-                                                             net-maps
-                                                             graphical)
-                                             hierarchy-tag))
-           (sources (get-sources graphical
-                                 inherited-attribs
-                                 attached-attribs))
-           (real-pins (object-pins object hierarchy-tag connections))
-           (net-map-pins (net-maps->pins net-maps
-                                         id
-                                         refdes
-                                         hierarchy-tag
-                                         real-pins
-                                         connections))
-           (pins (append real-pins net-map-pins)))
-      (set-schematic-component-refdes! component refdes)
-      (set-schematic-component-sources! component sources)
-      (set-schematic-component-pins/parent! component pins)
-      component))
 
+(define (traverse-page page hierarchy-tag)
   (when hierarchy-tag
     (log! 'message (_ "Going to traverse source ~S") (page-filename page)))
 
-  (let* ((objects (page-contents page))
-         (components (filter component? objects))
-         (connections (make-page-schematic-connections page hierarchy-tag))
-         (schematic-components (map (cut traverse-object <> connections) components)))
-    schematic-components))
+  (let* ((connections (make-page-schematic-connections page hierarchy-tag)))
+    (map (cut traverse-object <> connections hierarchy-tag)
+         (filter component? (page-contents page)))))
+
 
 ;;; Traverses pages obtained from files defined in the 'source='
 ;;; attributes of COMPONENT with respect to HIERARCHY-TAG and
