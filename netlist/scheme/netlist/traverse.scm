@@ -83,7 +83,7 @@
       (x x))))
 
 
-(define (traverse-net current-nets object)
+(define (traverse-net pin-object)
   (define (make-new-net object)
     (make-pin-net
      ;; id
@@ -117,7 +117,12 @@
           nets)))
 
   (clear-visits!)
-  (traverse-net-object current-nets #t object))
+
+  (if (null? (object-connections pin-object))
+      ;; If there is no connections, we have an only pin. There is
+      ;; no point to do something in this case.
+      '()
+      (reverse (traverse-net-object '() #t pin-object))))
 
 
 (define (get-package-pin-connection pin-object connections)
@@ -204,12 +209,7 @@
   (define (object->package-pin pin-object)
     (let* ((attribs (make-pin-attrib-list pin-object))
            (connection (get-package-pin-connection pin-object connections))
-           (nets (if (null? (object-connections pin-object))
-                     ;; If there is no connections, we have
-                     ;; an only pin. There is no point to do
-                     ;; something in this case.
-                     '()
-                     (reverse (traverse-net '() pin-object))))
+           (nets (traverse-net pin-object))
            (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
            (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
 
