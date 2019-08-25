@@ -203,22 +203,22 @@
             pinnumber))))
 
 
-  (define (object->package-pin object)
-    (let* ((attribs (make-pin-attrib-list object))
-           (connection (get-package-pin-connection object connections))
-           (nets (if (null? (object-connections object))
+  (define (object->package-pin pin-object)
+    (let* ((attribs (make-pin-attrib-list pin-object))
+           (connection (get-package-pin-connection pin-object connections))
+           (nets (if (null? (object-connections pin-object))
                      ;; If there is no connections, we have
                      ;; an only pin. There is no point to do
                      ;; something in this case.
                      '()
-                     (reverse (traverse-net '() #t object))))
+                     (reverse (traverse-net '() #t pin-object))))
            (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
            (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
 
       (for-each assign-net-netname! net-objects)
       (for-each assign-pin-properties! pin-objects)
-      (let ((pin (make-package-pin (object-id object)
-                                   object
+      (let ((pin (make-package-pin (object-id pin-object)
+                                   pin-object
                                    (assq-ref attribs 'pinnumber)
                                    ;; Add name later.
                                    #f
