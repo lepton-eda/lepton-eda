@@ -182,8 +182,6 @@
            (refdes (car refdes-pinnumber-pair))
            (pinnumber (cdr refdes-pinnumber-pair))
            (net-driven? (net-attrib-pin? object)))
-      (and net-driven?
-           (set-pin-net-priority! pin net-driven?))
       ;; The object is a pin, and it defines net name using
       ;; "net=".  Use hierarchy tag here to make this netname
       ;; unique.
@@ -193,14 +191,13 @@
                                               pinnumber)
                         tag
                         'power-rail))
-      (set-pin-net-connection-package!
-       pin
-       (and (not net-driven?)
-            (hierarchy-create-refdes refdes tag)))
-      (set-pin-net-connection-pinnumber!
-       pin
-       (and (not net-driven?)
-            pinnumber))))
+      (if net-driven?
+          (set-pin-net-priority! pin net-driven?)
+          (begin
+            (set-pin-net-connection-package! pin
+                                             (hierarchy-create-refdes refdes
+                                                                      tag))
+            (set-pin-net-connection-pinnumber! pin pinnumber)))))
 
 
   (define (object->package-pin pin-object)
