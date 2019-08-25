@@ -84,25 +84,9 @@
 
 
 (define (traverse-net pin-object)
-  (define (make-new-net object)
-    (make-pin-net
-     ;; id
-     (object-id object)
-     ;; object
-     object
-     ;; priority
-     #f
-     ;; name
-     #f
-     ;; connection-package
-     #f
-     ;; connection-pinnumber
-     #f))
-
-  (define (traverse-net-object current-nets starting object)
+  (define (traverse-net-object connection-objects starting object)
     (visit! object)
-    (let* ((new-net (make-new-net object))
-           (nets (cons new-net current-nets)))
+    (let ((nets (cons object connection-objects)))
       (if (or (net? object)
               starting)
           (let loop ((connections (object-connections object))
@@ -205,11 +189,25 @@
                                                                       tag))
             (set-pin-net-connection-pinnumber! pin pinnumber)))))
 
+  (define (make-new-pin-net object)
+    (make-pin-net
+     ;; id
+     (object-id object)
+     ;; object
+     object
+     ;; priority
+     #f
+     ;; name
+     #f
+     ;; connection-package
+     #f
+     ;; connection-pinnumber
+     #f))
 
   (define (object->package-pin pin-object)
     (let* ((attribs (make-pin-attrib-list pin-object))
            (connection (get-package-pin-connection pin-object connections))
-           (nets (traverse-net pin-object))
+           (nets (map make-new-pin-net (traverse-net pin-object)))
            (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
            (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
 
