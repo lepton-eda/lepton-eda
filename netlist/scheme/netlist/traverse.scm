@@ -83,7 +83,7 @@
       (x x))))
 
 
-(define (traverse-net current-nets starting object)
+(define (traverse-net current-nets object)
   (define (make-new-net object)
     (make-pin-net
      ;; id
@@ -99,24 +99,25 @@
      ;; connection-pinnumber
      #f))
 
-  (when starting
-    (clear-visits!))
+  (define (traverse-net-object current-nets starting object)
+    (visit! object)
+    (let* ((new-net (make-new-net object))
+           (nets (cons new-net current-nets)))
+      (if (or (net? object)
+              starting)
+          (let loop ((connections (object-connections object))
+                     (nets nets))
+            (if (null? connections)
+                nets
+                (loop (cdr connections)
+                      (let ((conn (car connections)))
+                        (if (visited? conn)
+                            nets
+                            (traverse-net-object nets #f conn))))))
+          nets)))
 
-  (visit! object)
-  (let* ((new-net (make-new-net object))
-         (nets (cons new-net current-nets)))
-    (if (or (net? object)
-            starting)
-        (let loop ((connections (object-connections object))
-                   (nets nets))
-          (if (null? connections)
-              nets
-              (loop (cdr connections)
-                    (let ((conn (car connections)))
-                      (if (visited? conn)
-                          nets
-                          (traverse-net nets #f conn))))))
-        nets)))
+  (clear-visits!)
+  (traverse-net-object current-nets #t object))
 
 
 (define (get-package-pin-connection pin-object connections)
@@ -208,7 +209,7 @@
                      ;; an only pin. There is no point to do
                      ;; something in this case.
                      '()
-                     (reverse (traverse-net '() #t pin-object))))
+                     (reverse (traverse-net '() pin-object))))
            (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
            (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
 
