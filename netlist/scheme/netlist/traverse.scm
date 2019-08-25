@@ -204,38 +204,38 @@
 
 
   (define (object->package-pin object)
-    (and (net-pin? object)
-         (let* ((attribs (make-pin-attrib-list object))
-                (connection (get-package-pin-connection object connections))
-                (nets (if (null? (object-connections object))
-                          ;; If there is no connections, we have
-                          ;; an only pin. There is no point to do
-                          ;; something in this case.
-                          '()
-                          (reverse (traverse-net '() #t object))))
-                (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
-                (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
+    (let* ((attribs (make-pin-attrib-list object))
+           (connection (get-package-pin-connection object connections))
+           (nets (if (null? (object-connections object))
+                     ;; If there is no connections, we have
+                     ;; an only pin. There is no point to do
+                     ;; something in this case.
+                     '()
+                     (reverse (traverse-net '() #t object))))
+           (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
+           (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
 
-           (for-each assign-net-netname! net-objects)
-           (for-each assign-pin-properties! pin-objects)
-           (let ((pin (make-package-pin (object-id object)
-                                        object
-                                        (assq-ref attribs 'pinnumber)
-                                        ;; Add name later.
-                                        #f
-                                        (nets-netnames nets)
-                                        (assq-ref attribs 'pinlabel)
-                                        attribs
-                                        ;; No net-map yet.
-                                        #f
-                                        nets
-                                        ;; Set parent component later.
-                                        #f
-                                        connection)))
-             (schematic-connection-add-pin! connection pin)
-             pin))))
+      (for-each assign-net-netname! net-objects)
+      (for-each assign-pin-properties! pin-objects)
+      (let ((pin (make-package-pin (object-id object)
+                                   object
+                                   (assq-ref attribs 'pinnumber)
+                                   ;; Add name later.
+                                   #f
+                                   (nets-netnames nets)
+                                   (assq-ref attribs 'pinlabel)
+                                   attribs
+                                   ;; No net-map yet.
+                                   #f
+                                   nets
+                                   ;; Set parent component later.
+                                   #f
+                                   connection)))
+        (schematic-connection-add-pin! connection pin)
+        pin)))
 
-  (filter-map object->package-pin (component-contents object)))
+  (map object->package-pin
+       (filter net-pin? (component-contents object))))
 
 
 ;;; Searches for pinnumers in NET-MAPS and, if found, updates
