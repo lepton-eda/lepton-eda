@@ -458,7 +458,7 @@
 
 ;;; Traverses pages obtained from files defined in the 'source='
 ;;; attributes of COMPONENT with respect to HIERARCHY-TAG.
-(define (traverse-component-sources component hierarchy-tag)
+(define (traverse-component-sources component)
   (let ((hierarchy-tag (schematic-component-refdes component))
         (source-pages (map hierarchy-down-schematic
                            (schematic-component-sources component))))
@@ -468,9 +468,7 @@
   (let* ((schematic-components (append-map (cut traverse-page <> hierarchy-tag) pages))
          (composites (filter schematic-component-sources schematic-components))
          ;; Traverse underlying schematics.
-         (underlying-components (append-map (cut traverse-component-sources
-                                                 <>
-                                                 hierarchy-tag)
+         (underlying-components (append-map traverse-component-sources
                                             composites)))
     (append schematic-components underlying-components)))
 
