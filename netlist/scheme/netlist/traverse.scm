@@ -253,7 +253,7 @@
 
 (define (special-refdes object attribs net-maps graphical)
   ;; Get refdes= of OBJECT depending on NETLIST-MODE.
-  (define (get-refdes attribs)
+  (define (get-refdes)
     (let ((refdes (and=> (assq-ref attribs 'refdes) car)))
       (case (netlist-mode)
         ((spice)
@@ -265,7 +265,7 @@
         (else (error (_ "Netlist mode ~S is not supported.") (netlist-mode))))))
 
   ;; First try to get refdes from attribs.
-  (or (get-refdes attribs)
+  (or (get-refdes)
       ;; If there is net=, it's a power or some other special
       ;; graphical symbol.  In such a case, refdes is #f.
       (and (null? net-maps)
