@@ -346,8 +346,9 @@
           (set-pin-net-connection-pinnumber! pin pinnumber)))))
 
 
-(define (set-package-pin-connection-properties! pin connections tag)
-  (let* ((pin-object (package-pin-object pin))
+(define (set-package-pin-connection-properties! pin connections)
+  (let* ((tag (schematic-component-tag (package-pin-parent pin)))
+         (pin-object (package-pin-object pin))
          (connection (get-package-pin-connection pin-object connections))
          (nets (map make-new-pin-net (traverse-net pin-object)))
          (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
@@ -417,8 +418,7 @@
     (set-schematic-component-pins/parent! component pins)
     (for-each (cut set-package-pin-connection-properties!
                    <>
-                   connections
-                   hierarchy-tag)
+                   connections)
               real-pins)
     component))
 
