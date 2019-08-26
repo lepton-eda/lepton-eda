@@ -192,25 +192,6 @@
                (car pin-list)
                (pinnumber->pin pinnumber (cdr pin-list))))))
 
-  (define (make-net-map-pin net-map)
-    (let* ((pinnumber (net-map-pinnumber net-map))
-           (id #f)
-           (label #f)
-           (object #f)
-           (attribs '())
-           (pin (make-package-pin id
-                                  object
-                                  pinnumber
-                                  #f
-                                  '()
-                                  label
-                                  attribs
-                                  net-map
-                                  #f
-                                  #f
-                                  #f)))
-      pin))
-
   (define (make-or-update-net-map-pin net-map)
     (let ((pin (pinnumber->pin (net-map-pinnumber net-map)
                                pin-list)))
@@ -221,7 +202,17 @@
             ;; Return #f to filter out existing pins.
             #f)
           ;; Otherwise, make a new virtual pin.
-          (make-net-map-pin net-map))))
+          (make-package-pin #f
+                            #f
+                            (net-map-pinnumber net-map)
+                            #f
+                            '()
+                            #f
+                            '()
+                            net-map
+                            #f
+                            #f
+                            #f))))
 
   ;; Create virtual 'net-map' pins.
   (filter-map make-or-update-net-map-pin net-maps))
