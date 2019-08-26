@@ -408,6 +408,7 @@
                                               object
                                               inherited-attribs
                                               attached-attribs
+                                              net-maps
                                               ;; get pins later
                                               '()
                                               ;; not a port initially

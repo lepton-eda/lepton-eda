@@ -30,6 +30,7 @@
                    schematic-component-object set-schematic-component-object!
                    schematic-component-iattribs set-schematic-component-iattribs!
                    schematic-component-attribs set-schematic-component-attribs!
+                   schematic-component-net-maps set-schematic-component-net-maps!
                    schematic-component-pins set-schematic-component-pins!
                    schematic-component-port set-schematic-component-port!)
 
@@ -42,7 +43,7 @@
             set-schematic-component-pins/parent!))
 
 (define-record-type <schematic-component>
-  (make-schematic-component id refdes tag sources object iattribs attribs pins port)
+  (make-schematic-component id refdes tag sources object iattribs attribs net-maps pins port)
   schematic-component?
   (id schematic-component-id set-schematic-component-id!)
   (refdes schematic-component-refdes set-schematic-component-refdes!)
@@ -51,6 +52,7 @@
   (object schematic-component-object set-schematic-component-object!)
   (iattribs schematic-component-iattribs set-schematic-component-iattribs!)
   (attribs schematic-component-attribs set-schematic-component-attribs!)
+  (net-maps schematic-component-net-maps set-schematic-component-net-maps!)
   (pins schematic-component-pins set-schematic-component-pins!)
   (port schematic-component-port set-schematic-component-port!))
 
@@ -70,6 +72,7 @@ FORMAT-STRING must be in the form required by the procedure
   'object
   'iattribs
   'attribs
+  'net-maps
   'pins
   'port
 Any other unrecognized argument will lead to yielding '?' in the
@@ -90,6 +93,7 @@ Example usage:
                  ('object (schematic-component-object record))
                  ('iattribs (schematic-component-iattribs record))
                  ('attribs (schematic-component-attribs record))
+                 ('net-maps (schematic-component-net-maps record))
                  ('pins (schematic-component-pins record))
                  ('port (schematic-component-port record))
                  (_ #\?)))
