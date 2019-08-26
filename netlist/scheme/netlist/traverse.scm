@@ -242,7 +242,14 @@
         (log! 'error (_ "Failed to load subcircuit ~S.") name))))
 
 
-(define (create-schematic-component-refdes object attribs net-maps graphical hierarchy-tag)
+(define (create-schematic-component-refdes component)
+  (define object (schematic-component-object component))
+  (define attribs (schematic-component-attribs component))
+  (define net-maps (schematic-component-net-maps component))
+  (define graphical? (or (schematic-component-graphical? component)
+                         (schematic-component-nc? component)))
+  (define hierarchy-tag (schematic-component-tag component))
+
   ;; Get refdes= of OBJECT depending on NETLIST-MODE.
   (define (get-refdes)
     (let ((refdes (and=> (assq-ref attribs 'refdes) car)))
@@ -259,7 +266,7 @@
     ;; If there is net=, it's a power or some other special
     ;; graphical symbol.  In such a case, refdes is #f.
     (and (null? net-maps)
-         (not graphical)
+         (not graphical?)
          ;; Otherwise, refdes is just missing.  Warn the user, and
          ;; make up an artificial refdes.
          (log! 'critical
@@ -421,18 +428,14 @@
                                               #f))
          (graphical (or (schematic-component-graphical? component)
                         (schematic-component-nc? component)))
-         (refdes (create-schematic-component-refdes object
-                                                    attached-attribs
-                                                    net-maps
-                                                    graphical
-                                                    hierarchy-tag))
          (sources (get-sources graphical
                                inherited-attribs
                                attached-attribs))
          (real-pins (object-pins->package-pins object))
          (net-map-pins (net-maps->package-pins net-maps real-pins))
          (pins (append real-pins net-map-pins)))
-    (set-schematic-component-refdes! component refdes)
+    (set-schematic-component-refdes! component
+                                     (create-schematic-component-refdes component))
     (set-schematic-component-sources! component sources)
     (set-schematic-component-pins/parent! component pins)
     component))
