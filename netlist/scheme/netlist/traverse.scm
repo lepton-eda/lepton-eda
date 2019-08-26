@@ -355,6 +355,28 @@
     pin))
 
 
+(define (set-net-map-package-pin-connection-properties! pin connections)
+  (let* ((parent-component (package-pin-parent pin))
+         (tag (schematic-component-tag parent-component))
+         (refdes (schematic-component-refdes parent-component))
+         (netname (create-net-name (net-map-netname (package-pin-net-map pin))
+                                   tag
+                                   'power-rail))
+         (nets (list (make-pin-net (package-pin-id pin)
+                                   (package-pin-object pin)
+                                   #f
+                                   netname
+                                   refdes
+                                   (package-pin-number pin))))
+         (connection (get-connection-by-netname netname
+                                                connections
+                                                tag)))
+    (set-package-pin-name! pin netname)
+    (set-package-pin-nets! pin nets)
+    (set-package-pin-connection! pin connection)
+    (schematic-connection-add-pin! connection pin)))
+
+
 (define (traverse-object object connections hierarchy-tag)
   ;; Makes attribute list of OBJECT using getter GET-ATTRIBS.
   (define (make-attrib-list get-attribs object)
@@ -410,25 +432,10 @@
                    <>
                    connections)
               real-pins)
-    (for-each
-     (lambda (pin)
-       (let* ((netname (create-net-name (net-map-netname (package-pin-net-map pin))
-                                        hierarchy-tag
-                                        'power-rail))
-              (nets (list (make-pin-net (package-pin-id pin)
-                                        (package-pin-object pin)
-                                        #f
-                                        netname
-                                        refdes
-                                        (package-pin-number pin))))
-              (connection (get-connection-by-netname netname
-                                                     connections
-                                                     hierarchy-tag)))
-         (set-package-pin-name! pin netname)
-         (set-package-pin-nets! pin nets)
-         (set-package-pin-connection! pin connection)
-         (schematic-connection-add-pin! connection pin)))
-     net-map-pins)
+    (for-each (cut set-net-map-package-pin-connection-properties!
+                   <>
+                   connections)
+              net-map-pins)
 
     component))
 
