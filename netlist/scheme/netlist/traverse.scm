@@ -276,12 +276,14 @@
                (page-filename (object-page object)))
          "U?"))
 
-  (hierarchy-create-refdes
-   ;; First try to get refdes from attribs.
-   (or (get-refdes)
-       ;; If no refdes found, make a mock one.
-       (make-special-refdes))
-   hierarchy-tag))
+  (set-schematic-component-refdes!
+   component
+   (hierarchy-create-refdes
+    ;; First try to get refdes from attribs.
+    (or (get-refdes)
+        ;; If no refdes found, make a mock one.
+        (make-special-refdes))
+    hierarchy-tag)))
 
 
 (define (make-new-pin-net object)
@@ -392,7 +394,7 @@
   (for-each set-properties! (schematic-component-pins component)))
 
 
-(define (component->schematic-component object hierarchy-tag)
+(define (component->schematic-component object)
   ;; Makes attribute list of OBJECT using getter GET-ATTRIBS.
   (define (make-attrib-list get-attribs object)
     (define (add-attrib ls attrib)
@@ -416,7 +418,7 @@
          (net-maps (check-net-maps object))
          (component (make-schematic-component id
                                               #f ; get refdes later
-                                              hierarchy-tag
+                                              #f ; get hierarchy-tag later
                                               #f ; get sources later
                                               object
                                               inherited-attribs
@@ -434,8 +436,6 @@
          (real-pins (object-pins->package-pins object))
          (net-map-pins (net-maps->package-pins net-maps real-pins))
          (pins (append real-pins net-map-pins)))
-    (set-schematic-component-refdes! component
-                                     (create-schematic-component-refdes component))
     (set-schematic-component-sources! component sources)
     (set-schematic-component-pins/parent! component pins)
     component))
@@ -446,8 +446,10 @@
     (log! 'message (_ "Going to traverse source ~S") (page-filename page)))
 
   (let ((connections (make-page-schematic-connections page hierarchy-tag))
-        (components (map (cut component->schematic-component <> hierarchy-tag)
+        (components (map component->schematic-component
                          (filter component? (page-contents page)))))
+    (for-each (cut set-schematic-component-tag! <> hierarchy-tag) components)
+    (for-each create-schematic-component-refdes components)
     (for-each
      (cut set-package-pin-connection-properties! <> connections)
      components)
