@@ -141,82 +141,13 @@
               group
               (loop (cdr groups)))))))
 
-(define (object-pins->package-pins object tag connections)
+(define (object-pins->package-pins object)
   (define (make-pin-attrib-list object)
     (define (add-attrib attrib)
       (cons (string->symbol (attrib-name attrib))
             (attrib-value attrib)))
 
     (map add-attrib (object-attribs object)))
-
-  (define (nets-netnames nets)
-    (filter-map
-     (lambda (x) (let ((object (pin-net-object x)))
-              (and (net? object)
-                   (attrib-value-by-name object "netname"))))
-     nets))
-
-  (define (assign-net-netname! net)
-    ;; The object is a net.  For nets we check the "netname="
-    ;; attribute.
-    (set-pin-net-name!
-     net
-     (create-net-name (attrib-value-by-name (pin-net-object net) "netname")
-                      tag
-                      ;; The below means just #f.
-                      (not 'power-rail))))
-
-  (define (assign-pin-properties! pin)
-    (let* ((object (pin-net-object pin))
-           (refdes-pinnumber-pair (pin-refdes-pinnumber-pair object))
-           (refdes (car refdes-pinnumber-pair))
-           (pinnumber (cdr refdes-pinnumber-pair))
-           (net-driven? (net-attrib-pin? object)))
-      ;; The object is a pin, and it defines net name using
-      ;; "net=".  Use hierarchy tag here to make this netname
-      ;; unique.
-      (set-pin-net-name!
-       pin
-       (create-net-name (netattrib-search-net (object-component object)
-                                              pinnumber)
-                        tag
-                        'power-rail))
-      (if net-driven?
-          (set-pin-net-priority! pin net-driven?)
-          (begin
-            (set-pin-net-connection-package! pin
-                                             (hierarchy-create-refdes refdes
-                                                                      tag))
-            (set-pin-net-connection-pinnumber! pin pinnumber)))))
-
-  (define (make-new-pin-net object)
-    (make-pin-net
-     ;; id
-     (object-id object)
-     ;; object
-     object
-     ;; priority
-     #f
-     ;; name
-     #f
-     ;; connection-package
-     #f
-     ;; connection-pinnumber
-     #f))
-
-  (define (set-package-pin-connection-properties! pin)
-    (let* ((pin-object (package-pin-object pin))
-           (connection (get-package-pin-connection pin-object connections))
-           (nets (map make-new-pin-net (traverse-net pin-object)))
-           (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
-           (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
-      (set-package-pin-connection! pin connection)
-      (schematic-connection-add-pin! connection pin)
-      (set-package-pin-nets! pin nets)
-      (set-package-pin-netname! pin (nets-netnames nets))
-      (for-each assign-net-netname! net-objects)
-      (for-each assign-pin-properties! pin-objects)
-      pin))
 
   (define (object->package-pin pin-object)
     (let ((attribs (make-pin-attrib-list pin-object)))
@@ -242,9 +173,8 @@
                         ;; No connection yet.
                         #f)))
 
-  (map set-package-pin-connection-properties!
-       (map object->package-pin
-            (filter net-pin? (component-contents object)))))
+  (map object->package-pin
+       (filter net-pin? (component-contents object))))
 
 
 ;;; Searches for pinnumers in NET-MAPS and, if found, updates
@@ -357,6 +287,80 @@
            "U?")))
 
 
+(define (make-new-pin-net object)
+  (make-pin-net
+   ;; id
+   (object-id object)
+   ;; object
+   object
+   ;; priority
+   #f
+   ;; name
+   #f
+   ;; connection-package
+   #f
+   ;; connection-pinnumber
+   #f))
+
+
+(define (nets-netnames nets)
+  (filter-map
+   (lambda (x) (let ((object (pin-net-object x)))
+            (and (net? object)
+                 (attrib-value-by-name object "netname"))))
+   nets))
+
+
+(define (assign-net-netname! net tag)
+  ;; The object is a net.  For nets we check the "netname="
+  ;; attribute.
+  (set-pin-net-name!
+   net
+   (create-net-name (attrib-value-by-name (pin-net-object net) "netname")
+                    tag
+                    ;; The below means just #f.
+                    (not 'power-rail))))
+
+
+(define (assign-pin-properties! pin tag)
+  (let* ((object (pin-net-object pin))
+         (refdes-pinnumber-pair (pin-refdes-pinnumber-pair object))
+         (refdes (car refdes-pinnumber-pair))
+         (pinnumber (cdr refdes-pinnumber-pair))
+         (net-driven? (net-attrib-pin? object)))
+    ;; The object is a pin, and it defines net name using
+    ;; "net=".  Use hierarchy tag here to make this netname
+    ;; unique.
+    (set-pin-net-name!
+     pin
+     (create-net-name (netattrib-search-net (object-component object)
+                                            pinnumber)
+                      tag
+                      'power-rail))
+    (if net-driven?
+        (set-pin-net-priority! pin net-driven?)
+        (begin
+          (set-pin-net-connection-package! pin
+                                           (hierarchy-create-refdes refdes
+                                                                    tag))
+          (set-pin-net-connection-pinnumber! pin pinnumber)))))
+
+
+(define (set-package-pin-connection-properties! pin connections tag)
+  (let* ((pin-object (package-pin-object pin))
+         (connection (get-package-pin-connection pin-object connections))
+         (nets (map make-new-pin-net (traverse-net pin-object)))
+         (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
+         (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
+    (set-package-pin-connection! pin connection)
+    (schematic-connection-add-pin! connection pin)
+    (set-package-pin-nets! pin nets)
+    (set-package-pin-netname! pin (nets-netnames nets))
+    (for-each (cut assign-net-netname! <> tag) net-objects)
+    (for-each (cut assign-pin-properties! <> tag) pin-objects)
+    pin))
+
+
 (define (traverse-object object connections hierarchy-tag)
   ;; Makes attribute list of OBJECT using getter GET-ATTRIBS.
   (define (make-attrib-list get-attribs object)
@@ -400,7 +404,11 @@
          (sources (get-sources graphical
                                inherited-attribs
                                attached-attribs))
-         (real-pins (object-pins->package-pins object hierarchy-tag connections))
+         (real-pins (map (cut set-package-pin-connection-properties!
+                              <>
+                              connections
+                              hierarchy-tag)
+                         (object-pins->package-pins object)))
          (net-map-pins (net-maps->package-pins net-maps
                                        id
                                        refdes
