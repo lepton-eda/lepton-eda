@@ -388,7 +388,7 @@
   (for-each set-properties! (schematic-component-pins component)))
 
 
-(define (traverse-object object hierarchy-tag)
+(define (component->schematic-component object hierarchy-tag)
   ;; Makes attribute list of OBJECT using getter GET-ATTRIBS.
   (define (make-attrib-list get-attribs object)
     (define (add-attrib ls attrib)
@@ -447,7 +447,7 @@
     (log! 'message (_ "Going to traverse source ~S") (page-filename page)))
 
   (let ((connections (make-page-schematic-connections page hierarchy-tag))
-        (components (map (cut traverse-object <> hierarchy-tag)
+        (components (map (cut component->schematic-component <> hierarchy-tag)
                          (filter component? (page-contents page)))))
     (for-each
      (cut set-package-pin-connection-properties! <> connections)
