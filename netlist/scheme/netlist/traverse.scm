@@ -404,11 +404,7 @@
          (sources (get-sources graphical
                                inherited-attribs
                                attached-attribs))
-         (real-pins (map (cut set-package-pin-connection-properties!
-                              <>
-                              connections
-                              hierarchy-tag)
-                         (object-pins->package-pins object)))
+         (real-pins (object-pins->package-pins object))
          (net-map-pins (net-maps->package-pins net-maps
                                        id
                                        refdes
@@ -419,6 +415,11 @@
     (set-schematic-component-refdes! component refdes)
     (set-schematic-component-sources! component sources)
     (set-schematic-component-pins/parent! component pins)
+    (for-each (cut set-package-pin-connection-properties!
+                   <>
+                   connections
+                   hierarchy-tag)
+              real-pins)
     component))
 
 
