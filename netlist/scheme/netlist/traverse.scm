@@ -376,7 +376,7 @@
     (set-package-pin-connection! pin connection)
     (schematic-connection-add-pin! connection pin)))
 
-(define (set-package-pin-connection-properties! pins connections)
+(define (set-package-pin-connection-properties! component connections)
   (define (real-pin? pin)
     (package-pin-object pin))
 
@@ -385,10 +385,10 @@
         (set-real-package-pin-connection-properties! pin connections)
         (set-net-map-package-pin-connection-properties! pin connections)))
 
-  (for-each set-properties! pins))
+  (for-each set-properties! (schematic-component-pins component)))
 
 
-(define (traverse-object object connections hierarchy-tag)
+(define (traverse-object object hierarchy-tag)
   ;; Makes attribute list of OBJECT using getter GET-ATTRIBS.
   (define (make-attrib-list get-attribs object)
     (define (add-attrib ls attrib)
@@ -439,7 +439,6 @@
     (set-schematic-component-refdes! component refdes)
     (set-schematic-component-sources! component sources)
     (set-schematic-component-pins/parent! component pins)
-    (set-package-pin-connection-properties! pins connections)
     component))
 
 
@@ -447,9 +446,13 @@
   (when hierarchy-tag
     (log! 'message (_ "Going to traverse source ~S") (page-filename page)))
 
-  (let* ((connections (make-page-schematic-connections page hierarchy-tag)))
-    (map (cut traverse-object <> connections hierarchy-tag)
-         (filter component? (page-contents page)))))
+  (let ((connections (make-page-schematic-connections page hierarchy-tag))
+        (components (map (cut traverse-object <> hierarchy-tag)
+                         (filter component? (page-contents page)))))
+    (for-each
+     (cut set-package-pin-connection-properties! <> connections)
+     components)
+    components))
 
 
 ;;; Traverses pages obtained from files defined in the 'source='
