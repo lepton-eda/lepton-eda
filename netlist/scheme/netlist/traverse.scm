@@ -455,8 +455,7 @@
 
 
 ;;; Traverses pages obtained from files defined in the 'source='
-;;; attributes of COMPONENT with respect to HIERARCHY-TAG and
-;;; NETLIST-MODE.
+;;; attributes of COMPONENT with respect to HIERARCHY-TAG.
 (define (traverse-component-sources component hierarchy-tag)
   (let ((hierarchy-tag (schematic-component-refdes component))
         (source-pages (map hierarchy-down-schematic
