@@ -40,6 +40,7 @@
   #:use-module (netlist pin-net)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
+  #:use-module (netlist subschematic)
   #:use-module (netlist verbose)
   #:use-module (symbol check net-attrib)
 
@@ -441,7 +442,7 @@
     component))
 
 
-(define (traverse-page page hierarchy-tag)
+(define (page->subschematic page hierarchy-tag)
   (when hierarchy-tag
     (log! 'message (_ "Going to traverse source ~S") (page-filename page)))
 
@@ -453,7 +454,10 @@
     (for-each
      (cut set-package-pin-connection-properties! <> connections)
      components)
-    components))
+    (make-subschematic (page-filename page)
+                       (list page)
+                       components
+                       connections)))
 
 
 ;;; Traverses pages obtained from files defined in the 'source='
@@ -465,7 +469,9 @@
     (traverse-pages source-pages hierarchy-tag)))
 
 (define (traverse-pages pages hierarchy-tag)
-  (let* ((schematic-components (append-map (cut traverse-page <> hierarchy-tag) pages))
+  (let* ((page-subschematics (map (cut page->subschematic <> hierarchy-tag) pages))
+         (schematic-components (append-map subschematic-components page-subschematics))
+         (schematic-connections (append-map subschematic-connections page-subschematics))
          (composites (filter schematic-component-sources schematic-components))
          ;; Traverse underlying schematics.
          (underlying-components (append-map traverse-component-sources
