@@ -242,7 +242,7 @@
         (log! 'error (_ "Failed to load subcircuit ~S.") name))))
 
 
-(define (special-refdes object attribs net-maps graphical)
+(define (create-schematic-component-refdes object attribs net-maps graphical hierarchy-tag)
   ;; Get refdes= of OBJECT depending on NETLIST-MODE.
   (define (get-refdes)
     (let ((refdes (and=> (assq-ref attribs 'refdes) car)))
@@ -255,20 +255,26 @@
         ((geda) refdes)
         (else (error (_ "Netlist mode ~S is not supported.") (netlist-mode))))))
 
-  ;; First try to get refdes from attribs.
-  (or (get-refdes)
-      ;; If there is net=, it's a power or some other special
-      ;; graphical symbol.  In such a case, refdes is #f.
-      (and (null? net-maps)
-           (not graphical)
-           ;; Otherwise, refdes is just missing.  Warn the user, and
-           ;; make up an artificial refdes.
-           (log! 'critical
-                 (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
-                 (component-basename object)
-                 (component-position object)
-                 (page-filename (object-page object)))
-           "U?")))
+  (define (make-special-refdes)
+    ;; If there is net=, it's a power or some other special
+    ;; graphical symbol.  In such a case, refdes is #f.
+    (and (null? net-maps)
+         (not graphical)
+         ;; Otherwise, refdes is just missing.  Warn the user, and
+         ;; make up an artificial refdes.
+         (log! 'critical
+               (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
+               (component-basename object)
+               (component-position object)
+               (page-filename (object-page object)))
+         "U?"))
+
+  (hierarchy-create-refdes
+   ;; First try to get refdes from attribs.
+   (or (get-refdes)
+       ;; If no refdes found, make a mock one.
+       (make-special-refdes))
+   hierarchy-tag))
 
 
 (define (make-new-pin-net object)
@@ -415,11 +421,11 @@
                                               #f))
          (graphical (or (schematic-component-graphical? component)
                         (schematic-component-nc? component)))
-         (refdes  (hierarchy-create-refdes (special-refdes object
-                                                           attached-attribs
-                                                           net-maps
-                                                           graphical)
-                                           hierarchy-tag))
+         (refdes (create-schematic-component-refdes object
+                                                    attached-attribs
+                                                    net-maps
+                                                    graphical
+                                                    hierarchy-tag))
          (sources (get-sources graphical
                                inherited-attribs
                                attached-attribs))
