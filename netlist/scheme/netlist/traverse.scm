@@ -204,34 +204,47 @@
      ;; connection-pinnumber
      #f))
 
-  (define (object->package-pin pin-object)
-    (let* ((attribs (make-pin-attrib-list pin-object))
+  (define (set-package-pin-connection-properties! pin)
+    (let* ((pin-object (package-pin-object pin))
            (connection (get-package-pin-connection pin-object connections))
            (nets (map make-new-pin-net (traverse-net pin-object)))
            (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
            (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
-
+      (set-package-pin-connection! pin connection)
+      (schematic-connection-add-pin! connection pin)
+      (set-package-pin-nets! pin nets)
+      (set-package-pin-netname! pin (nets-netnames nets))
       (for-each assign-net-netname! net-objects)
       (for-each assign-pin-properties! pin-objects)
-      (let ((pin (make-package-pin (object-id pin-object)
-                                   pin-object
-                                   (assq-ref attribs 'pinnumber)
-                                   ;; Add name later.
-                                   #f
-                                   (nets-netnames nets)
-                                   (assq-ref attribs 'pinlabel)
-                                   attribs
-                                   ;; No net-map yet.
-                                   #f
-                                   nets
-                                   ;; Set parent component later.
-                                   #f
-                                   connection)))
-        (schematic-connection-add-pin! connection pin)
-        pin)))
+      pin))
 
-  (map object->package-pin
-       (filter net-pin? (component-contents object))))
+  (define (object->package-pin pin-object)
+    (let ((attribs (make-pin-attrib-list pin-object)))
+      (make-package-pin (object-id pin-object)
+                        ;; Primitive pin object.
+                        pin-object
+                        ;; Number.
+                        (assq-ref attribs 'pinnumber)
+                        ;; Add name later.
+                        #f
+                        ;; Add netname list later.
+                        #f
+                        ;; Label.
+                        (assq-ref attribs 'pinlabel)
+                        ;; Attributes.
+                        attribs
+                        ;; No net-map yet.
+                        #f
+                        ;; No nets yet.
+                        #f
+                        ;; Set parent component later.
+                        #f
+                        ;; No connection yet.
+                        #f)))
+
+  (map set-package-pin-connection-properties!
+       (map object->package-pin
+            (filter net-pin? (component-contents object)))))
 
 
 ;;; Searches for pinnumers in NET-MAPS and, if found, updates
