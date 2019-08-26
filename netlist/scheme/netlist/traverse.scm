@@ -181,7 +181,7 @@
 ;;; corresponding pins in PIN-LIST, otherwise creates new pins and
 ;;; adds them to the list.  ID, REFDES, and hierarchy TAG are used
 ;;; to create hierarchical net name.
-(define (net-maps->package-pins net-maps id refdes tag pin-list)
+(define (net-maps->package-pins net-maps id pin-list)
   (define (pinnumber->pin pinnumber pin-list)
     (and (not (null? pin-list))
          (let ((package-pinnumber (package-pin-number (car pin-list))))
@@ -195,22 +195,18 @@
 
   (define (make-net-map-pin net-map)
     (let* ((pinnumber (net-map-pinnumber net-map))
-           (netname (create-net-name (net-map-netname net-map)
-                                      tag
-                                      'power-rail))
            (label #f)
            (object #f)
            (attribs '())
-           (nets (list (make-pin-net id object #f netname refdes pinnumber)))
            (pin (make-package-pin id
                                   object
                                   pinnumber
-                                  netname
+                                  #f
                                   '()
                                   label
                                   attribs
                                   net-map
-                                  nets
+                                  #f
                                   #f
                                   #f)))
       pin))
@@ -405,8 +401,6 @@
          (real-pins (object-pins->package-pins object))
          (net-map-pins (net-maps->package-pins net-maps
                                                id
-                                               refdes
-                                               hierarchy-tag
                                                real-pins))
          (pins (append real-pins net-map-pins)))
     (set-schematic-component-refdes! component refdes)
@@ -418,9 +412,20 @@
               real-pins)
     (for-each
      (lambda (pin)
-       (let ((connection (get-connection-by-netname (package-pin-name pin)
-                                                    connections
-                                                    hierarchy-tag)))
+       (let* ((netname (create-net-name (net-map-netname (package-pin-net-map pin))
+                                        hierarchy-tag
+                                        'power-rail))
+              (nets (list (make-pin-net (package-pin-id pin)
+                                        (package-pin-object pin)
+                                        #f
+                                        netname
+                                        refdes
+                                        (package-pin-number pin))))
+              (connection (get-connection-by-netname netname
+                                                     connections
+                                                     hierarchy-tag)))
+         (set-package-pin-name! pin netname)
+         (set-package-pin-nets! pin nets)
          (set-package-pin-connection! pin connection)
          (schematic-connection-add-pin! connection pin)))
      net-map-pins)
