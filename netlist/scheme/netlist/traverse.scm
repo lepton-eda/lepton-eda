@@ -181,7 +181,7 @@
 ;;; corresponding pins in PIN-LIST, otherwise creates new pins and
 ;;; adds them to the list.  ID, REFDES, and hierarchy TAG are used
 ;;; to create hierarchical net name.
-(define (net-maps->package-pins net-maps id refdes tag pin-list connections)
+(define (net-maps->package-pins net-maps id refdes tag pin-list)
   (define (pinnumber->pin pinnumber pin-list)
     (and (not (null? pin-list))
          (let ((package-pinnumber (package-pin-number (car pin-list))))
@@ -202,7 +202,6 @@
            (object #f)
            (attribs '())
            (nets (list (make-pin-net id object #f netname refdes pinnumber)))
-           (connection (get-connection-by-netname netname connections tag))
            (pin (make-package-pin id
                                   object
                                   pinnumber
@@ -214,8 +213,6 @@
                                   nets
                                   #f
                                   #f)))
-      (set-package-pin-connection! pin connection)
-      (schematic-connection-add-pin! connection pin)
       pin))
 
   (define (make-or-update-net-map-pin net-map)
@@ -407,11 +404,10 @@
                                attached-attribs))
          (real-pins (object-pins->package-pins object))
          (net-map-pins (net-maps->package-pins net-maps
-                                       id
-                                       refdes
-                                       hierarchy-tag
-                                       real-pins
-                                       connections))
+                                               id
+                                               refdes
+                                               hierarchy-tag
+                                               real-pins))
          (pins (append real-pins net-map-pins)))
     (set-schematic-component-refdes! component refdes)
     (set-schematic-component-sources! component sources)
@@ -420,6 +416,15 @@
                    <>
                    connections)
               real-pins)
+    (for-each
+     (lambda (pin)
+       (let ((connection (get-connection-by-netname (package-pin-name pin)
+                                                    connections
+                                                    hierarchy-tag)))
+         (set-package-pin-connection! pin connection)
+         (schematic-connection-add-pin! connection pin)))
+     net-map-pins)
+
     component))
 
 
