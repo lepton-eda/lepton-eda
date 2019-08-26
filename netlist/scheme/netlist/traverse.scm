@@ -179,9 +179,8 @@
 
 ;;; Searches for pinnumers in NET-MAPS and, if found, updates
 ;;; corresponding pins in PIN-LIST, otherwise creates new pins and
-;;; adds them to the list.  ID, REFDES, and hierarchy TAG are used
-;;; to create hierarchical net name.
-(define (net-maps->package-pins net-maps id pin-list)
+;;; adds them to the list.
+(define (net-maps->package-pins net-maps pin-list)
   (define (pinnumber->pin pinnumber pin-list)
     (and (not (null? pin-list))
          (let ((package-pinnumber (package-pin-number (car pin-list))))
@@ -195,6 +194,7 @@
 
   (define (make-net-map-pin net-map)
     (let* ((pinnumber (net-map-pinnumber net-map))
+           (id #f)
            (label #f)
            (object #f)
            (attribs '())
@@ -432,9 +432,7 @@
                                inherited-attribs
                                attached-attribs))
          (real-pins (object-pins->package-pins object))
-         (net-map-pins (net-maps->package-pins net-maps
-                                               id
-                                               real-pins))
+         (net-map-pins (net-maps->package-pins net-maps real-pins))
          (pins (append real-pins net-map-pins)))
     (set-schematic-component-refdes! component refdes)
     (set-schematic-component-sources! component sources)
