@@ -44,7 +44,7 @@
   #:use-module (netlist verbose)
   #:use-module (symbol check net-attrib)
 
-  #:export (traverse))
+  #:export (page-list->subschematic))
 
 
 ;;; Tracks which objects have been visited so far, and how many
@@ -488,17 +488,3 @@
          (composites (filter schematic-component-sources components)))
     (for-each traverse-component-sources composites)
     subschematic))
-
-
-(define (collect-components-recursively subschematic)
-  (let* ((components (subschematic-components subschematic))
-         (subschematics (filter-map schematic-component-subschematic components)))
-    (append components
-            (append-map collect-components-recursively subschematics))))
-
-
-(define (traverse toplevel-pages)
-  (hierarchy-post-process
-   (collect-components-recursively
-    ;; '() is toplevel hierarchy tag
-    (page-list->subschematic toplevel-pages '()))))

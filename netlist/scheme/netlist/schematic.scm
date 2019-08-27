@@ -28,12 +28,14 @@
   #:use-module (sxml transform)
   #:use-module (netlist attrib compare)
   #:use-module (netlist config)
+  #:use-module (netlist hierarchy)
   #:use-module (netlist page)
   #:use-module (netlist sort)
   #:use-module (netlist traverse)
   #:use-module (netlist package)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
+  #:use-module (netlist subschematic)
   #:use-module (netlist package-pin)
   #:use-module (geda page)
   #:use-module (geda attrib)
@@ -279,6 +281,20 @@
                                    (schematic-component-refdes->string
                                     (schematic-component-refdes schematic-component)))
   schematic-component)
+
+
+(define (collect-components-recursively subschematic)
+  (let* ((components (subschematic-components subschematic))
+         (subschematics (filter-map schematic-component-subschematic components)))
+    (append components
+            (append-map collect-components-recursively subschematics))))
+
+
+(define (traverse toplevel-pages)
+  (hierarchy-post-process
+   (collect-components-recursively
+    ;; '() is toplevel hierarchy tag
+    (page-list->subschematic toplevel-pages '()))))
 
 
 (define* (page-list->schematic pages)
