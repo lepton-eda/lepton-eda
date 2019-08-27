@@ -42,6 +42,7 @@
   #:use-module (geda object)
   #:export-syntax (make-schematic schematic?
                    schematic-id set-schematic-id!
+                   schematic-subschematic set-schematic-subschematic!
                    schematic-toplevel-pages set-schematic-toplevel-pages!
                    schematic-toplevel-attribs set-schematic-toplevel-attribs!
                    schematic-components set-schematic-components!
@@ -65,6 +66,7 @@
 
 (define-record-type <schematic>
   (make-schematic id
+                  subschematic
                   toplevel-pages
                   toplevel-attribs
                   components
@@ -76,6 +78,7 @@
                   connections)
   schematic?
   (id schematic-id set-schematic-id!)
+  (subschematic schematic-subschematic set-schematic-subschematic!)
   (toplevel-pages schematic-toplevel-pages set-schematic-toplevel-pages!)
   (toplevel-attribs schematic-toplevel-attribs set-schematic-toplevel-attribs!)
   (components schematic-components set-schematic-components!)
@@ -317,6 +320,7 @@ of schematic pages."
                      (nc-net? x (filter schematic-component-nc? full-netlist)))
                    unique-nets)
       (make-schematic id
+                      subschematic
                       pages
                       toplevel-attribs
                       netlist
