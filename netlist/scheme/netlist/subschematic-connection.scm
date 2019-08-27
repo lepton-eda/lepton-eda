@@ -25,7 +25,7 @@
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
 
-  #:export (subschematic-connections))
+  #:export (make-subschematic-connections))
 
 (define (connection-netnames conn)
   (define (any->ls x)
@@ -121,6 +121,7 @@
     connection))
 
 
-(define (subschematic-connections subschematic)
-  (map make-netname-connection
-       (group-connections (subschematic-pin-connections subschematic))))
+(define (make-subschematic-connections subschematic)
+  (let ((name (subschematic-name subschematic)))
+    (map (cut make-netname-connection name <>)
+         (group-connections (subschematic-pin-connections subschematic)))))

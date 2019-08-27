@@ -41,6 +41,7 @@
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
   #:use-module (netlist subschematic)
+  #:use-module (netlist subschematic-connection)
   #:use-module (netlist verbose)
   #:use-module (symbol check net-attrib)
 
@@ -466,10 +467,12 @@
 
 
 (define (subschematic-list->subschematic name subschematics)
-  (let ((pages (append-map subschematic-pages subschematics))
-        (components (append-map subschematic-components subschematics))
-        (connections (append-map subschematic-connections subschematics)))
-    (make-subschematic name pages components connections)))
+  (let* ((pages (append-map subschematic-pages subschematics))
+         (components (append-map subschematic-components subschematics))
+         (subschematic (make-subschematic name pages components '())))
+    (set-subschematic-connections! subschematic
+                                   (make-subschematic-connections subschematic))
+    subschematic))
 
 
 ;;; Traverses pages obtained from files defined in the 'source='
