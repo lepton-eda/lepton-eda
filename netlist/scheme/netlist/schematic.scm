@@ -290,13 +290,6 @@
             (append-map collect-components-recursively subschematics))))
 
 
-(define (traverse toplevel-pages)
-  (hierarchy-post-process
-   (collect-components-recursively
-    ;; '() is toplevel hierarchy tag
-    (page-list->subschematic toplevel-pages '()))))
-
-
 (define* (page-list->schematic pages)
   "Creates a new schematic record from PAGES, which must be a list
 of schematic pages."
@@ -306,7 +299,10 @@ of schematic pages."
 
   (let* ((id (next-schematic-id))
          (toplevel-attribs (get-toplevel-attributes pages))
-         (toplevel-netlist (traverse pages))
+         ;; '() is toplevel hierarchy tag
+         (subschematic (page-list->subschematic pages '()))
+         (toplevel-netlist (hierarchy-post-process
+                            (collect-components-recursively subschematic)))
          (full-netlist (map compat-refdes toplevel-netlist))
          (netlist (filter plain-package? full-netlist))
          (packages (make-package-list netlist))
