@@ -78,7 +78,7 @@
                           (subschematic-pins subschematic))))
 
 
-(define (make-netname-connection group)
+(define (make-netname-connection name group)
   (define (any->ls x)
     (if (list? x) x (list x)))
 
@@ -108,8 +108,8 @@
          (pins (merge-pins group))
          (connection (make-schematic-connection
                       id
-                      ;; Hierarchy tag.
-                      #f
+                      ;; The same as hierarchy tag.
+                      name
                       page
                       netnames
                       net-names
