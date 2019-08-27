@@ -34,6 +34,7 @@
   #:use-module (ice-9 ftw)
   #:use-module (ice-9 match)
   #:use-module (lepton file-system)
+  #:use-module (lepton library component)
 
   #:export (%default-source-library
             ;; deprecated
@@ -44,7 +45,9 @@
             source-library-contents
             set-source-library-contents!
             ;; temporary
-            get-source-library-file))
+            get-source-library-file)
+
+  #:re-export (component-library-search))
 
 
 (define-record-type <source-library>

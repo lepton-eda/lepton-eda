@@ -16,6 +16,7 @@ nobase_dist_scmdata_DATA = \
 	geda/repl.scm \
 	lepton/file-system.scm \
 	lepton/library.scm \
+	lepton/library/component.scm \
 	lepton/rc.scm \
 	lepton/version.scm \
 	lepton/legacy-config/keylist.scm \
