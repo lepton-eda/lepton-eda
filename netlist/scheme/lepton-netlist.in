@@ -71,6 +71,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; program is compiled by Guile. The following modules are
 ;;; necessary to actually run the code below.
 (primitive-eval '(use-modules (geda core toplevel)
+                              (geda deprecated)
                               (geda log)
                               (netlist)))
 

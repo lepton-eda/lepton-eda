@@ -53,6 +53,7 @@ edascm_init_impl (void *data)
   edascm_init_log ();
   edascm_init_version ();
   edascm_init_deprecated ();
+  edascm_init_rc ();
   return NULL;
 }
 
