@@ -428,6 +428,8 @@
                                               ;; get pins later
                                               '()
                                               ;; not a port initially
+                                              #f
+                                              ;; no subschematic
                                               #f))
          (graphical (or (schematic-component-graphical? component)
                         (schematic-component-nc? component)))

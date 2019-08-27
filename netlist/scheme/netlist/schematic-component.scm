@@ -32,7 +32,8 @@
                    schematic-component-attribs set-schematic-component-attribs!
                    schematic-component-net-maps set-schematic-component-net-maps!
                    schematic-component-pins set-schematic-component-pins!
-                   schematic-component-port set-schematic-component-port!)
+                   schematic-component-port set-schematic-component-port!
+                   schematic-component-subschematic set-schematic-component-subschematic!)
 
   #:export (schematic-component-attributes
             schematic-component-attribute
@@ -43,7 +44,7 @@
             set-schematic-component-pins/parent!))
 
 (define-record-type <schematic-component>
-  (make-schematic-component id refdes tag sources object iattribs attribs net-maps pins port)
+  (make-schematic-component id refdes tag sources object iattribs attribs net-maps pins port subschematic)
   schematic-component?
   (id schematic-component-id set-schematic-component-id!)
   (refdes schematic-component-refdes set-schematic-component-refdes!)
@@ -54,7 +55,8 @@
   (attribs schematic-component-attribs set-schematic-component-attribs!)
   (net-maps schematic-component-net-maps set-schematic-component-net-maps!)
   (pins schematic-component-pins set-schematic-component-pins!)
-  (port schematic-component-port set-schematic-component-port!))
+  (port schematic-component-port set-schematic-component-port!)
+  (subschematic schematic-component-subschematic set-schematic-component-subschematic!))
 
 ;;; Sets default printer for <schematic-component>
 (set-record-type-printer!
@@ -75,6 +77,7 @@ FORMAT-STRING must be in the form required by the procedure
   'net-maps
   'pins
   'port
+  'subschematic
 Any other unrecognized argument will lead to yielding '?' in the
 corresponding place.
 Example usage:
@@ -96,6 +99,7 @@ Example usage:
                  ('net-maps (schematic-component-net-maps record))
                  ('pins (schematic-component-pins record))
                  ('port (schematic-component-port record))
+                 ('subschematic (schematic-component-subschematic record))
                  (_ #\?)))
              args)))))
 
