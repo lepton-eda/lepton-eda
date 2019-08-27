@@ -133,7 +133,7 @@
          ;; override-netname
          netname
          ;; objects
-         #f
+         '()
          ;; pins
          '())
         (let ((group (car groups)))
