@@ -13,7 +13,6 @@ SCM g_rc_promote_invisible(SCM mode);
 SCM g_rc_keep_invisible(SCM mode);
 SCM g_rc_always_promote_attributes(SCM scmsymname);
 SCM g_rc_make_backup_files(SCM mode);
-SCM g_rc_print_color_map (SCM scm_map);
 
 /* g_register.c */
 void g_register_libgeda_funcs(void);

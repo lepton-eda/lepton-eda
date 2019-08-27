@@ -24,6 +24,7 @@
  ;; Import C procedures
  #:use-module (geda core gettext)
  #:use-module (geda core deprecated)
+ #:use-module (lepton core rc)
 
  #:use-module (geda page)
  #:use-module (geda object)
@@ -40,7 +41,8 @@
               load-scheme-dir
               load-rc-from-sys-config-dirs)
 
- #:export (deprecated-module-log-warning!))
+ #:export (deprecated-module-log-warning!
+           print-color-map))
 
 (define (deprecated-module-log-warning!)
   (log! 'warning
@@ -130,3 +132,5 @@
       (set-car! (cdr bounds) bottom)
       (set-cdr! (cdr bounds) top)
       bounds)))
+
+(define print-color-map %print-color-map)

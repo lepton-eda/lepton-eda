@@ -43,7 +43,7 @@
 #endif
 
 #include "libgeda_priv.h"
-#include "libgedaguile.h"
+#include "libgedaguile_priv.h"
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -926,14 +926,15 @@ SCM g_rc_make_backup_files(SCM mode)
                   2);
 }
 
-SCM g_rc_print_color_map (SCM scm_map)
+SCM_DEFINE (print_color_map, "%print-color-map", 0, 1, 0,
+            (SCM scm_map), "Set or view current print color map.")
 {
   if (scm_is_eq (scm_map, SCM_UNDEFINED)) {
     return s_color_map_to_scm (print_colors);
   }
 
   SCM_ASSERT (scm_is_true (scm_list_p (scm_map)),
-              scm_map, SCM_ARG1, "print-color-map");
+              scm_map, SCM_ARG1, s_print_color_map);
 
   s_color_map_from_scm (print_colors, scm_map, "print-color-map");
   return SCM_BOOL_T;
@@ -971,3 +972,38 @@ g_rc_load_cache_config (TOPLEVEL* toplevel, GError** err)
   return status;
 }
 
+
+
+/*!
+ * \brief Create the (lepton core rc) Scheme module.
+ * \par Function Description
+ * Defines procedures in the (lepton core rc) module. The module can
+ * be accessed using (use-modules (lepton core rc)).
+ */
+static void
+init_module_lepton_core_rc (void *unused)
+{
+  /* Register the functions and symbols */
+  /* #include "scheme_rc.x" */
+  #include "g_rc.x"
+
+  /* Add them to the module's public definitions. */
+  scm_c_export (s_print_color_map,
+                NULL);
+}
+
+/*!
+ * \brief Initialise the host platform support procedures.
+ * \par Function Description
+
+ * Registers some Scheme procedures that provide cross-platform
+ * support. Should only be called by edascm_init().
+ */
+void
+edascm_init_rc ()
+{
+  /* Define the (lepton core os) module */
+  scm_c_define_module ("lepton core rc",
+                       (void (*)(void*)) init_module_lepton_core_rc,
+                       NULL);
+}
