@@ -462,25 +462,43 @@
                        connections)))
 
 
+(define (subschematic-list->subschematic name subschematics)
+  (let ((pages (append-map subschematic-pages subschematics))
+        (components (append-map subschematic-components subschematics))
+        (connections (append-map subschematic-connections subschematics)))
+    (make-subschematic name pages components connections)))
+
+
 ;;; Traverses pages obtained from files defined in the 'source='
 ;;; attributes of COMPONENT with respect to HIERARCHY-TAG.
 (define (traverse-component-sources component)
-  (let ((hierarchy-tag (schematic-component-refdes component))
-        (source-pages (map hierarchy-down-schematic
-                           (schematic-component-sources component))))
-    (traverse-pages source-pages hierarchy-tag)))
+  (let* ((hierarchy-tag (schematic-component-refdes component))
+         (source-pages (map hierarchy-down-schematic
+                            (schematic-component-sources component)))
+         (subschematic (traverse-pages source-pages hierarchy-tag)))
+    (set-schematic-component-subschematic! component subschematic)
+    component))
+
 
 (define (traverse-pages pages hierarchy-tag)
   (let* ((page-subschematics (map (cut page->subschematic <> hierarchy-tag) pages))
-         (components (append-map subschematic-components page-subschematics))
-         (connections (append-map subschematic-connections page-subschematics))
-         (composites (filter schematic-component-sources components))
-         ;; Traverse underlying schematics.
-         (underlying-components (append-map traverse-component-sources
-                                            composites)))
-    (append components underlying-components)))
+         (subschematic (subschematic-list->subschematic hierarchy-tag
+                                                        page-subschematics))
+         (components (subschematic-components subschematic))
+         (composites (filter schematic-component-sources components)))
+    (for-each traverse-component-sources composites)
+    subschematic))
+
+
+(define (collect-components-recursively subschematic)
+  (let* ((components (subschematic-components subschematic))
+         (subschematics (filter-map schematic-component-subschematic components)))
+    (append components
+            (append-map collect-components-recursively subschematics))))
+
 
 (define (traverse toplevel-pages)
-  (hierarchy-post-process (traverse-pages toplevel-pages
-                                          '() ; toplevel hierarchy tag
-                                          )))
+  (hierarchy-post-process
+   (collect-components-recursively
+    ;; '() is toplevel hierarchy tag
+    (traverse-pages toplevel-pages '()))))
