@@ -472,13 +472,13 @@
 
 (define (traverse-pages pages hierarchy-tag)
   (let* ((page-subschematics (map (cut page->subschematic <> hierarchy-tag) pages))
-         (schematic-components (append-map subschematic-components page-subschematics))
-         (schematic-connections (append-map subschematic-connections page-subschematics))
-         (composites (filter schematic-component-sources schematic-components))
+         (components (append-map subschematic-components page-subschematics))
+         (connections (append-map subschematic-connections page-subschematics))
+         (composites (filter schematic-component-sources components))
          ;; Traverse underlying schematics.
          (underlying-components (append-map traverse-component-sources
                                             composites)))
-    (append schematic-components underlying-components)))
+    (append components underlying-components)))
 
 (define (traverse toplevel-pages)
   (hierarchy-post-process (traverse-pages toplevel-pages
