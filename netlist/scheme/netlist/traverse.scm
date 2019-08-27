@@ -475,12 +475,12 @@
   (let* ((hierarchy-tag (schematic-component-refdes component))
          (source-pages (map hierarchy-down-schematic
                             (schematic-component-sources component)))
-         (subschematic (traverse-pages source-pages hierarchy-tag)))
+         (subschematic (page-list->subschematic source-pages hierarchy-tag)))
     (set-schematic-component-subschematic! component subschematic)
     component))
 
 
-(define (traverse-pages pages hierarchy-tag)
+(define (page-list->subschematic pages hierarchy-tag)
   (let* ((page-subschematics (map (cut page->subschematic <> hierarchy-tag) pages))
          (subschematic (subschematic-list->subschematic hierarchy-tag
                                                         page-subschematics))
@@ -501,4 +501,4 @@
   (hierarchy-post-process
    (collect-components-recursively
     ;; '() is toplevel hierarchy tag
-    (traverse-pages toplevel-pages '()))))
+    (page-list->subschematic toplevel-pages '()))))
