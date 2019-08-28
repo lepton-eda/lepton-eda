@@ -802,20 +802,26 @@ SCM g_rc_reset_component_library(void)
  *  \par Function Description
  *
  */
-SCM g_rc_attribute_promotion(SCM mode)
+SCM_DEFINE (attribute_promotion, "%attribute-promotion", 0, 1, 0,
+            (SCM s_mode), "Set attribute promotion behaviour or return its state.")
 {
-  if (scm_is_eq (mode, SCM_UNDEFINED)) {
+  if (scm_is_eq (s_mode, SCM_UNDEFINED)) {
     return scm_from_bool (default_attribute_promotion);
   }
+
+  SCM_ASSERT (scm_is_string (s_mode), s_mode,
+              SCM_ARG1, s_attribute_promotion);
 
   static const vstbl_entry mode_table[] = {
     {TRUE , "enabled" },
     {FALSE, "disabled"},
   };
 
-  RETURN_G_RC_MODE("attribute-promotion",
-		   default_attribute_promotion,
-		   2);
+  return g_rc_mode_general (s_mode,
+                            "attribute-promotion",
+                            &default_attribute_promotion,
+                            mode_table,
+                            2);
 }
 
 /*! \todo Finish function documentation!!!
@@ -993,7 +999,8 @@ init_module_lepton_core_rc (void *unused)
   #include "g_rc.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_bitmap_directory,
+  scm_c_export (s_attribute_promotion,
+                s_bitmap_directory,
                 s_bus_ripper_symname,
                 s_print_color_map,
                 s_scheme_directory,
