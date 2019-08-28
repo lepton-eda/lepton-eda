@@ -1,7 +1,6 @@
 /* g_rc.c */
 int vstbl_lookup_str(const vstbl_entry *table, int size, const char *str);
 int vstbl_get_val(const vstbl_entry *table, int index);
-SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name);
 SCM g_rc_reset_component_library(void);
 SCM scheme_directory(SCM s_path);
 
