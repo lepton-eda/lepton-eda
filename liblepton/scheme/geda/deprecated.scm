@@ -46,6 +46,7 @@
            bitmap-directory
            bus-ripper-symname
            print-color-map
+           promote-invisible
            scheme-directory))
 
 (define (deprecated-module-log-warning!)
@@ -146,3 +147,5 @@
 (define bus-ripper-symname %bus-ripper-symname)
 
 (define attribute-promotion %attribute-promotion)
+
+(define promote-invisible %promote-invisible)

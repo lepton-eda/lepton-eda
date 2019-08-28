@@ -829,20 +829,26 @@ SCM_DEFINE (attribute_promotion, "%attribute-promotion", 0, 1, 0,
  *  \par Function Description
  *
  */
-SCM g_rc_promote_invisible(SCM mode)
+SCM_DEFINE (promote_invisible, "%promote-invisible", 0, 1, 0,
+            (SCM s_mode), "Set attribute promotion behaviour for invisible attributes or return its state.")
 {
-  if (scm_is_eq (mode, SCM_UNDEFINED)) {
+  if (scm_is_eq (s_mode, SCM_UNDEFINED)) {
     return scm_from_bool (default_promote_invisible);
   }
+
+  SCM_ASSERT (scm_is_string (s_mode), s_mode,
+              SCM_ARG1, s_promote_invisible);
 
   static const vstbl_entry mode_table[] = {
     {TRUE , "enabled" },
     {FALSE, "disabled"},
   };
 
-  RETURN_G_RC_MODE("promote-invisible",
-		   default_promote_invisible,
-		   2);
+  return g_rc_mode_general (s_mode,
+                            "promote-invisible",
+                            &default_promote_invisible,
+                            mode_table,
+                            2);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1003,6 +1009,7 @@ init_module_lepton_core_rc (void *unused)
                 s_bitmap_directory,
                 s_bus_ripper_symname,
                 s_print_color_map,
+                s_promote_invisible,
                 s_scheme_directory,
                 NULL);
 }
