@@ -42,6 +42,7 @@
               load-rc-from-sys-config-dirs)
 
  #:export (deprecated-module-log-warning!
+           bitmap-directory
            print-color-map
            scheme-directory))
 
@@ -137,3 +138,5 @@
 (define print-color-map %print-color-map)
 
 (define scheme-directory %scheme-directory)
+
+(define bitmap-directory %bitmap-directory)

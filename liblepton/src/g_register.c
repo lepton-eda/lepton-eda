@@ -53,7 +53,6 @@ static struct gsubr_t libgeda_funcs[] = {
   
   { "reset-component-library",   0, 0, 0, (SCM (*) ()) g_rc_reset_component_library },
   
-  { "bitmap-directory",          0, 1, 0, (SCM (*) ()) g_rc_bitmap_directory },
   { "bus-ripper-symname",        1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_symname },
   { "attribute-promotion",       0, 1, 0, (SCM (*) ()) g_rc_attribute_promotion },
   { "promote-invisible",         0, 1, 0, (SCM (*) ()) g_rc_promote_invisible },
