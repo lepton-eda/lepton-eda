@@ -545,20 +545,25 @@ SCM_DEFINE (component_library, "%component-library", 1, 1, 0,
  *  \param [in] name    Optional descriptive name for component source.
  *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
  */
-SCM
-g_rc_component_library_command (SCM listcmd, SCM getcmd,
-                                SCM name)
+SCM_DEFINE (component_library_command, "%component-library-command", 3, 0, 0,
+            (SCM listcmd, SCM getcmd, SCM name),
+            "Creates a component library source called NAME (the third"
+"argument) driven by two user commands: LIST-COMMAND (the first"
+"argument) and GET-COMMAND (the second argument). The list command"
+"should return a list of component names in the source.  The get"
+"command should return symbol contents by specified component name."
+"Both commands should output their results to stdout.")
 {
   const CLibSource *src;
   gchar *lcmdstr, *gcmdstr;
   char *tmp_str, *namestr;
 
   SCM_ASSERT (scm_is_string (listcmd), listcmd, SCM_ARG1, 
-              "component-library-command");
+              s_component_library_command);
   SCM_ASSERT (scm_is_string (getcmd), getcmd, SCM_ARG2, 
-              "component-library-command");
+              s_component_library_command);
   SCM_ASSERT (scm_is_string (name), name, SCM_ARG3, 
-              "component-library-command");
+              s_component_library_command);
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
@@ -1027,6 +1032,7 @@ init_module_lepton_core_rc (void *unused)
                 s_bitmap_directory,
                 s_bus_ripper_symname,
                 s_component_library,
+                s_component_library_command,
                 s_keep_invisible,
                 s_make_backup_files,
                 s_print_color_map,

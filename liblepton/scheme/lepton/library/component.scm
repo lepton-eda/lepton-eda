@@ -33,9 +33,11 @@
   #:use-module (lepton core rc)
 
   #:export (component-library
-            component-library-search))
+            component-library-search
+            component-library-command))
 
 (define component-library %component-library)
+(define component-library-command %component-library-command)
 
 (define* (component-library-search rootdir  #:optional (prefix ""))
   "Add all symbol libraries found below ROOTDIR to be searched for
