@@ -49,7 +49,8 @@
 
   #:re-export (component-library
                component-library-search
-               component-library-command))
+               component-library-command
+               component-library-funcs))
 
 
 (define-record-type <source-library>

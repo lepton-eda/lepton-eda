@@ -612,17 +612,26 @@ SCM_DEFINE (component_library_command, "%component-library-command", 3, 0, 0,
  *
  *  \returns SCM_BOOL_T on success, SCM_BOOL_F otherwise.
  */
-SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name)
+
+SCM_DEFINE (component_library_funcs, "%component-library-funcs", 3, 0, 0,
+            (SCM listfunc, SCM getfunc, SCM name),
+            "Creates a component library source called NAME (the third"
+"argument) driven by two user Scheme procedures: LIST-FUNCTION (the"
+"first argument) and GET-FUNCTION (the second argument). The list"
+"function should return a Scheme list of component names in the"
+"source.  The get function should return symbol contents by"
+"specified component name as a Scheme string or #f, if there is no"
+"such name in the list.")
 {
   char *namestr;
   SCM result = SCM_BOOL_F;
 
   SCM_ASSERT (scm_is_true (scm_procedure_p (listfunc)), listfunc, SCM_ARG1,
-	      "component-library-funcs");
+              s_component_library_funcs);
   SCM_ASSERT (scm_is_true (scm_procedure_p (getfunc)), getfunc, SCM_ARG2,
-	      "component-library-funcs");
+              s_component_library_funcs);
   SCM_ASSERT (scm_is_string (name), name, SCM_ARG3, 
-	      "component-library-funcs");
+              s_component_library_funcs);
 
   namestr = scm_to_utf8_string (name);
 
@@ -1033,6 +1042,7 @@ init_module_lepton_core_rc (void *unused)
                 s_bus_ripper_symname,
                 s_component_library,
                 s_component_library_command,
+                s_component_library_funcs,
                 s_keep_invisible,
                 s_make_backup_files,
                 s_print_color_map,
