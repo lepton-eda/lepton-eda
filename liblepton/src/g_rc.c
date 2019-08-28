@@ -827,19 +827,8 @@ SCM_DEFINE (attribute_promotion, "%attribute-promotion", 0, 1, 0,
     return scm_from_bool (default_attribute_promotion);
   }
 
-  SCM_ASSERT (scm_is_string (s_mode), s_mode,
-              SCM_ARG1, s_attribute_promotion);
-
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  return g_rc_mode_general (s_mode,
-                            "attribute-promotion",
-                            &default_attribute_promotion,
-                            mode_table,
-                            2);
+  default_attribute_promotion = scm_is_true (s_mode);
+  return s_mode;
 }
 
 /*! \todo Finish function documentation!!!
@@ -854,19 +843,8 @@ SCM_DEFINE (promote_invisible, "%promote-invisible", 0, 1, 0,
     return scm_from_bool (default_promote_invisible);
   }
 
-  SCM_ASSERT (scm_is_string (s_mode), s_mode,
-              SCM_ARG1, s_promote_invisible);
-
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  return g_rc_mode_general (s_mode,
-                            "promote-invisible",
-                            &default_promote_invisible,
-                            mode_table,
-                            2);
+  default_promote_invisible = scm_is_true (s_mode);
+  return s_mode;
 }
 
 /*! \todo Finish function documentation!!!
@@ -881,19 +859,8 @@ SCM_DEFINE (keep_invisible, "%keep-invisible", 0, 1, 0,
     return scm_from_bool (default_keep_invisible);
   }
 
-  SCM_ASSERT (scm_is_string (s_mode), s_mode,
-              SCM_ARG1, s_keep_invisible);
-
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  return g_rc_mode_general (s_mode,
-                            "keep-invisible",
-                            &default_keep_invisible,
-                            mode_table,
-                            2);
+  default_keep_invisible = scm_is_true (s_mode);
+  return s_mode;
 }
 
 /*! \todo Finish function description!!!
@@ -960,19 +927,8 @@ SCM_DEFINE (always_promote_attributes, "%always-promote-attributes", 1, 0, 0,
 SCM_DEFINE (make_backup_files, "%make-backup-files", 1, 0, 0,
             (SCM s_mode), "Enable or disable the creation of backup files.")
 {
-  SCM_ASSERT (scm_is_string (s_mode), s_mode,
-              SCM_ARG1, s_make_backup_files);
-
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  return g_rc_mode_general (s_mode,
-                            "make-backup-files",
-                            &default_make_backup_files,
-                            mode_table,
-                            2);
+  default_make_backup_files = scm_is_true (s_mode);
+  return s_mode;
 }
 
 SCM_DEFINE (print_color_map, "%print-color-map", 0, 1, 0,

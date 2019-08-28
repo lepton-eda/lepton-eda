@@ -145,16 +145,23 @@
 
 (define scheme-directory %scheme-directory)
 
+(define always-promote-attributes %always-promote-attributes)
+
 (define bitmap-directory %bitmap-directory)
 
 (define bus-ripper-symname %bus-ripper-symname)
 
-(define attribute-promotion %attribute-promotion)
+(define (enabled? x)
+  (string= "enabled" x))
 
-(define promote-invisible %promote-invisible)
+(define (attribute-promotion mode)
+  (%attribute-promotion (enabled? mode)))
 
-(define keep-invisible %keep-invisible)
+(define (promote-invisible mode)
+  (%promote-invisible (enabled? mode)))
 
-(define always-promote-attributes %always-promote-attributes)
+(define (keep-invisible mode)
+  (%keep-invisible (enabled? mode)))
 
-(define make-backup-files %make-backup-files)
+(define (make-backup-files mode)
+  (%make-backup-files (enabled? mode)))
