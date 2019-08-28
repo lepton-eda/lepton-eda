@@ -885,10 +885,12 @@ SCM_DEFINE (keep_invisible, "%keep-invisible", 0, 1, 0,
  *  \param [in] attrlist
  *  \return SCM_BOOL_T always.
  */
-SCM g_rc_always_promote_attributes(SCM attrlist)
+SCM_DEFINE (always_promote_attributes, "%always-promote-attributes", 1, 0, 0,
+            (SCM attrlist),
+            "Set the list of attributes that are always promoted regardless of their visibility.")
 {
-  SCM_ASSERT(scm_is_true (scm_list_p (attrlist)), attrlist, SCM_ARG1,
-             "always-promote-attributes");
+  SCM_ASSERT (scm_is_true (scm_list_p (attrlist)), attrlist, SCM_ARG1,
+              s_always_promote_attributes);
 
   if (default_always_promote_attributes) {
     g_ptr_array_unref (default_always_promote_attributes);
@@ -1011,7 +1013,8 @@ init_module_lepton_core_rc (void *unused)
   #include "g_rc.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_attribute_promotion,
+  scm_c_export (s_always_promote_attributes,
+                s_attribute_promotion,
                 s_bitmap_directory,
                 s_bus_ripper_symname,
                 s_keep_invisible,

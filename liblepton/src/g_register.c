@@ -53,7 +53,6 @@ static struct gsubr_t libgeda_funcs[] = {
   
   { "reset-component-library",   0, 0, 0, (SCM (*) ()) g_rc_reset_component_library },
   
-  { "always-promote-attributes", 1, 0, 0, (SCM (*) ()) g_rc_always_promote_attributes },
   { "make-backup-files",         1, 0, 0, (SCM (*) ()) g_rc_make_backup_files },
   { "rc-filename",               0, 0, 0, (SCM (*) ()) g_rc_rc_filename },
   { "rc-config",                 0, 0, 0, (SCM (*) ()) g_rc_rc_config },
