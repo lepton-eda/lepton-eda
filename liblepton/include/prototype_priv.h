@@ -8,7 +8,6 @@ SCM g_rc_reset_component_library(void);
 SCM g_rc_bitmap_directory(SCM path);
 SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_bus_ripper_symname(SCM scmsymname);
-SCM g_rc_map_font_character_to_file(SCM character_param, SCM file_param);
 SCM g_rc_attribute_promotion(SCM mode);
 SCM g_rc_promote_invisible(SCM mode);
 SCM g_rc_keep_invisible(SCM mode);
