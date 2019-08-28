@@ -47,6 +47,7 @@
            bitmap-directory
            bus-ripper-symname
            keep-invisible
+           make-backup-files
            print-color-map
            promote-invisible
            scheme-directory))
@@ -155,3 +156,5 @@
 (define keep-invisible %keep-invisible)
 
 (define always-promote-attributes %always-promote-attributes)
+
+(define make-backup-files %make-backup-files)

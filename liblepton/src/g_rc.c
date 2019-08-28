@@ -935,20 +935,26 @@ SCM_DEFINE (always_promote_attributes, "%always-promote-attributes", 1, 0, 0,
  *  If enabled then a backup file, of the form 'example.sch~', is created when
  *  saving a file.
  *
- *  \param [in] mode  String. 'enabled' or 'disabled'
- *  \return           Bool. False if mode is not a valid value; true if it is.
+ *  \param [in] s_mode  String. 'enabled' or 'disabled'
+ *  \return           Bool. False if s_mode is not a valid value; true if it is.
  *
  */
-SCM g_rc_make_backup_files(SCM mode)
+SCM_DEFINE (make_backup_files, "%make-backup-files", 1, 0, 0,
+            (SCM s_mode), "Enable or disable the creation of backup files.")
 {
+  SCM_ASSERT (scm_is_string (s_mode), s_mode,
+              SCM_ARG1, s_make_backup_files);
+
   static const vstbl_entry mode_table[] = {
     {TRUE , "enabled" },
     {FALSE, "disabled"},
   };
 
-  RETURN_G_RC_MODE("make-backup-files",
-                  default_make_backup_files,
-                  2);
+  return g_rc_mode_general (s_mode,
+                            "make-backup-files",
+                            &default_make_backup_files,
+                            mode_table,
+                            2);
 }
 
 SCM_DEFINE (print_color_map, "%print-color-map", 0, 1, 0,
@@ -1018,6 +1024,7 @@ init_module_lepton_core_rc (void *unused)
                 s_bitmap_directory,
                 s_bus_ripper_symname,
                 s_keep_invisible,
+                s_make_backup_files,
                 s_print_color_map,
                 s_promote_invisible,
                 s_scheme_directory,
