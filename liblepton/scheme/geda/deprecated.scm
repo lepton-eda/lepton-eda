@@ -42,6 +42,7 @@
               load-rc-from-sys-config-dirs)
 
  #:export (deprecated-module-log-warning!
+           attribute-promotion
            bitmap-directory
            bus-ripper-symname
            print-color-map
@@ -143,3 +144,5 @@
 (define bitmap-directory %bitmap-directory)
 
 (define bus-ripper-symname %bus-ripper-symname)
+
+(define attribute-promotion %attribute-promotion)
