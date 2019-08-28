@@ -43,6 +43,7 @@
 
  #:export (deprecated-module-log-warning!
            bitmap-directory
+           bus-ripper-symname
            print-color-map
            scheme-directory))
 
@@ -140,3 +141,5 @@
 (define scheme-directory %scheme-directory)
 
 (define bitmap-directory %bitmap-directory)
+
+(define bus-ripper-symname %bus-ripper-symname)
