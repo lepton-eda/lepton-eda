@@ -721,9 +721,11 @@ SCM_DEFINE (scheme_directory,"%scheme-directory", 1, 0, 0,
  *  \param [in] path  
  *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
  */
-SCM g_rc_bitmap_directory(SCM path)
+
+SCM_DEFINE (bitmap_directory, "%bitmap-directory", 0, 1, 0,
+            (SCM s_path), "Set bitmap directory to retrieve pictures from.")
 {
-  if (scm_is_eq (path, SCM_UNDEFINED)) {
+  if (scm_is_eq (s_path, SCM_UNDEFINED)) {
     if (default_bitmap_directory != NULL) {
       return scm_from_utf8_string (default_bitmap_directory);
     } else {
@@ -734,11 +736,11 @@ SCM g_rc_bitmap_directory(SCM path)
   gchar *string;
   char *temp;
 
-  SCM_ASSERT (scm_is_string (path), path,
-              SCM_ARG1, "bitmap-directory");
+  SCM_ASSERT (scm_is_string (s_path), s_path,
+              SCM_ARG1, s_bitmap_directory);
   
   /* take care of any shell variables */
-  temp = scm_to_utf8_string (path);
+  temp = scm_to_utf8_string (s_path);
   string = s_expand_env_variables (temp);
   free (temp);
 
@@ -989,7 +991,8 @@ init_module_lepton_core_rc (void *unused)
   #include "g_rc.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_print_color_map,
+  scm_c_export (s_bitmap_directory,
+                s_print_color_map,
                 s_scheme_directory,
                 NULL);
 }
