@@ -6,7 +6,7 @@ SCM g_rc_component_library_command (SCM listcmd, SCM getcmd, SCM name);
 SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name);
 SCM g_rc_reset_component_library(void);
 SCM g_rc_bitmap_directory(SCM path);
-SCM g_rc_scheme_directory(SCM path);
+SCM scheme_directory(SCM s_path);
 SCM g_rc_bus_ripper_symname(SCM scmsymname);
 SCM g_rc_attribute_promotion(SCM mode);
 SCM g_rc_promote_invisible(SCM mode);
