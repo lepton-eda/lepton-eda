@@ -807,7 +807,8 @@ SCM_DEFINE (bus_ripper_symname, "%bus-ripper-symname", 1, 0, 0,
  *
  *  \return SCM_BOOL_T always.
  */
-SCM g_rc_reset_component_library(void)
+SCM_DEFINE (reset_component_library, "%reset-component-library", 0, 0, 0,
+            (void), "Reset component library and initialise it to an empty list.")
 {
   s_clib_init();
   
@@ -1047,6 +1048,7 @@ init_module_lepton_core_rc (void *unused)
                 s_make_backup_files,
                 s_print_color_map,
                 s_promote_invisible,
+                s_reset_component_library,
                 s_scheme_directory,
                 NULL);
 }

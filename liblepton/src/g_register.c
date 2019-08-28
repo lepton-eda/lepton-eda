@@ -47,8 +47,6 @@ static struct gsubr_t libgeda_funcs[] = {
   { "eval-protected",            1, 1, 0, (SCM (*) ()) g_scm_eval_protected },
   { "eval-string-protected",     1, 0, 0, (SCM (*) ()) g_scm_eval_string_protected },
 
-  { "reset-component-library",   0, 0, 0, (SCM (*) ()) g_rc_reset_component_library },
-  
   { "rc-filename",               0, 0, 0, (SCM (*) ()) g_rc_rc_filename },
   { "rc-config",                 0, 0, 0, (SCM (*) ()) g_rc_rc_config },
   { "parse-rc",                  2, 0, 0, (SCM (*) ()) g_rc_parse_rc },

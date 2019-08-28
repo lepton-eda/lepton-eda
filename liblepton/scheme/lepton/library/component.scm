@@ -35,11 +35,13 @@
   #:export (component-library
             component-library-search
             component-library-command
-            component-library-funcs))
+            component-library-funcs
+            reset-component-library))
 
 (define component-library %component-library)
 (define component-library-command %component-library-command)
 (define component-library-funcs %component-library-funcs)
+(define reset-component-library %reset-component-library)
 
 (define* (component-library-search rootdir  #:optional (prefix ""))
   "Add all symbol libraries found below ROOTDIR to be searched for
