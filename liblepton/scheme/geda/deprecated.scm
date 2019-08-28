@@ -42,7 +42,8 @@
               load-rc-from-sys-config-dirs)
 
  #:export (deprecated-module-log-warning!
-           print-color-map))
+           print-color-map
+           scheme-directory))
 
 (define (deprecated-module-log-warning!)
   (log! 'warning
@@ -134,3 +135,5 @@
       bounds)))
 
 (define print-color-map %print-color-map)
+
+(define scheme-directory %scheme-directory)

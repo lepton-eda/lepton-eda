@@ -53,7 +53,6 @@ static struct gsubr_t libgeda_funcs[] = {
   
   { "reset-component-library",   0, 0, 0, (SCM (*) ()) g_rc_reset_component_library },
   
-  { "scheme-directory",          1, 0, 0, (SCM (*) ()) g_rc_scheme_directory },
   { "bitmap-directory",          0, 1, 0, (SCM (*) ()) g_rc_bitmap_directory },
   { "bus-ripper-symname",        1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_symname },
   { "attribute-promotion",       0, 1, 0, (SCM (*) ()) g_rc_attribute_promotion },
@@ -90,7 +89,7 @@ static void
 g_register_scheme_data_dir (const gchar *data_dir)
 {
   gchar *scheme_dir = g_build_filename (data_dir, "scheme", NULL);
-  g_rc_scheme_directory (scm_from_locale_string (scheme_dir));
+  scheme_directory (scm_from_locale_string (scheme_dir));
   g_free (scheme_dir);
 }
 

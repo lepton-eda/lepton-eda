@@ -686,7 +686,8 @@ g_rc_rc_config()
  *  \param [in] s_path  Path to be added.
  *  \return SCM_BOOL_T.
  */
-SCM g_rc_scheme_directory(SCM s_path)
+SCM_DEFINE (scheme_directory,"%scheme-directory", 1, 0, 0,
+            (SCM s_path),"Add a directory to the Guile load path.")
 {
   char *temp;
   gchar *expanded;
@@ -694,7 +695,7 @@ SCM g_rc_scheme_directory(SCM s_path)
   SCM s_load_path;
 
   SCM_ASSERT (scm_is_string (s_path), s_path,
-              SCM_ARG1, "scheme-directory");
+              SCM_ARG1, s_scheme_directory);
 
   /* take care of any shell variables */
   temp = scm_to_utf8_string (s_path);
@@ -989,6 +990,7 @@ init_module_lepton_core_rc (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_print_color_map,
+                s_scheme_directory,
                 NULL);
 }
 
