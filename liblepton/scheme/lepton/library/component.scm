@@ -30,9 +30,12 @@
 (define-module (lepton library component)
   #:use-module (ice-9 ftw)
   #:use-module (geda os)
+  #:use-module (lepton core rc)
 
-  #:export (component-library-search))
+  #:export (component-library
+            component-library-search))
 
+(define component-library %component-library)
 
 (define* (component-library-search rootdir  #:optional (prefix ""))
   "Add all symbol libraries found below ROOTDIR to be searched for
