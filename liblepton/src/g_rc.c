@@ -766,12 +766,14 @@ SCM_DEFINE (bitmap_directory, "%bitmap-directory", 0, 1, 0,
  *  \param [in] scmsymname  
  *  \return SCM_BOOL_T always.
  */
-SCM g_rc_bus_ripper_symname(SCM scmsymname)
+SCM_DEFINE (bus_ripper_symname, "%bus-ripper-symname", 1, 0, 0,
+            (SCM scmsymname),
+            "Choose the name of a symbol which should represent bus-rippers in schematics.")
 {
   char *temp;
 
   SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
-              SCM_ARG1, "bus-ripper-symname");
+              SCM_ARG1, s_bus_ripper_symname);
 
   g_free(default_bus_ripper_symname);
 
@@ -992,6 +994,7 @@ init_module_lepton_core_rc (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_bitmap_directory,
+                s_bus_ripper_symname,
                 s_print_color_map,
                 s_scheme_directory,
                 NULL);
