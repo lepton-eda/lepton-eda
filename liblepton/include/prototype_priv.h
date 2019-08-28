@@ -6,7 +6,6 @@ SCM g_rc_component_library_command (SCM listcmd, SCM getcmd, SCM name);
 SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name);
 SCM g_rc_reset_component_library(void);
 SCM scheme_directory(SCM s_path);
-SCM g_rc_promote_invisible(SCM mode);
 SCM g_rc_keep_invisible(SCM mode);
 SCM g_rc_always_promote_attributes(SCM scmsymname);
 SCM g_rc_make_backup_files(SCM mode);
