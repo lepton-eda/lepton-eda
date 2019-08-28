@@ -45,6 +45,7 @@
            attribute-promotion
            bitmap-directory
            bus-ripper-symname
+           keep-invisible
            print-color-map
            promote-invisible
            scheme-directory))
@@ -149,3 +150,5 @@
 (define attribute-promotion %attribute-promotion)
 
 (define promote-invisible %promote-invisible)
+
+(define keep-invisible %keep-invisible)
