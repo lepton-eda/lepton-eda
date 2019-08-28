@@ -484,19 +484,22 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
  *  \param [in] name Optional descriptive name for library directory.
  *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
  */
-SCM g_rc_component_library(SCM path, SCM name)
+
+SCM_DEFINE (component_library, "%component-library", 1, 1, 0,
+            (SCM path, SCM name),
+            "Adds the component library with specified PATH and NAME to the list of component libraries.")
 {
   gchar *string;
   char *temp;
   char *namestr = NULL;
 
   SCM_ASSERT (scm_is_string (path), path,
-              SCM_ARG1, "component-library");
+              SCM_ARG1, s_component_library);
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   if (!scm_is_eq (name, SCM_UNDEFINED)) {
     SCM_ASSERT (scm_is_string (name), name,
-		SCM_ARG2, "component-library");
+		SCM_ARG2, s_component_library);
     namestr = scm_to_utf8_string (name);
     scm_dynwind_free(namestr);
   }
@@ -1023,6 +1026,7 @@ init_module_lepton_core_rc (void *unused)
                 s_attribute_promotion,
                 s_bitmap_directory,
                 s_bus_ripper_symname,
+                s_component_library,
                 s_keep_invisible,
                 s_make_backup_files,
                 s_print_color_map,

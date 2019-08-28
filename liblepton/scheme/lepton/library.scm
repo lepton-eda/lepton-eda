@@ -47,7 +47,8 @@
             ;; temporary
             get-source-library-file)
 
-  #:re-export (component-library-search))
+  #:re-export (component-library
+               component-library-search))
 
 
 (define-record-type <source-library>
