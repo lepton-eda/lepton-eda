@@ -42,6 +42,7 @@
               load-rc-from-sys-config-dirs)
 
  #:export (deprecated-module-log-warning!
+           always-promote-attributes
            attribute-promotion
            bitmap-directory
            bus-ripper-symname
@@ -152,3 +153,5 @@
 (define promote-invisible %promote-invisible)
 
 (define keep-invisible %keep-invisible)
+
+(define always-promote-attributes %always-promote-attributes)
