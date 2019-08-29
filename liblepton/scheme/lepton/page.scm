@@ -30,6 +30,8 @@
                 #:select (read-string)
                 #:prefix rdelim:)
 
+  #:use-module (geda os)
+
   #:export (file->page))
 
 (define-public object-page %object-page)
@@ -78,7 +80,8 @@
   "Given FILENAME, returns an opened page for it, or a new page if
 none exists. Optional argument NEW-PAGE? can be used to force
 creation of a new page for given filename."
-  (if new-page?
-      (file-contents->page filename)
-      (or (page-by-filename filename (active-pages))
-          (file-contents->page filename))))
+  (let ((filename (expand-env-variables filename)))
+    (if new-page?
+        (file-contents->page filename)
+        (or (page-by-filename filename (active-pages))
+            (file-contents->page filename)))))
