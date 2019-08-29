@@ -247,7 +247,7 @@
     (if filename
         (when (not quiet-mode)
           (log! 'message (_ "Loading subcircuit ~S.") filename)
-          (filename->page filename 'new-page))
+          (file->page filename 'new-page))
         (log! 'error (_ "Failed to load subcircuit ~S.") name))))
 
 

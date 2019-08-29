@@ -26,6 +26,7 @@
   #:use-module (srfi srfi-26)
   #:use-module (sxml match)
   #:use-module (sxml transform)
+  #:use-module (lepton page)
   #:use-module (netlist attrib compare)
   #:use-module (netlist config)
   #:use-module (netlist hierarchy)
@@ -39,7 +40,7 @@
   #:use-module (netlist package-pin)
   #:use-module (geda attrib)
   #:use-module (geda object)
-  #:use-module (lepton page)
+
   #:export-syntax (make-schematic schematic?
                    schematic-id set-schematic-id!
                    schematic-subschematic set-schematic-subschematic!
@@ -337,7 +338,7 @@ of schematic pages."
 (define* (file-name-list->schematic filenames)
   "Creates a new schematic record from FILENAMES, which must be a
 list of strings representing file names."
-  (let ((pages (map filename->page filenames)))
+  (let ((pages (map file->page filenames)))
     (page-list->schematic pages)))
 
 

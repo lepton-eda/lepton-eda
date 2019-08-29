@@ -30,7 +30,7 @@
                 #:select (read-string)
                 #:prefix rdelim:)
 
-  #:export (filename->page))
+  #:export (file->page))
 
 (define-public object-page %object-page)
 
@@ -74,7 +74,7 @@
              (page-by-filename filename (cdr pages))))))
 
 
-(define* (filename->page filename #:optional new-page?)
+(define* (file->page filename #:optional new-page?)
   "Given FILENAME, returns an opened page for it, or a new page if
 none exists. Optional argument NEW-PAGE? can be used to force
 creation of a new page for given filename."

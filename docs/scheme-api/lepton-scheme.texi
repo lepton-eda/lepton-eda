@@ -399,6 +399,17 @@ Sets the filename of @var{page} to @var{filename}.  Returns
 @var{page}.
 @end defun
 
+@subsection Conversion between files and pages
+Pages can be converted to and from files in the gEDA schematic file
+format.
+
+@defun file->page filename [new-page?]
+Return a @code{page} for @var{filename} which must be a string. If
+such a page has been already opened, that page is returned, otherwise
+a new page is created.  If @var{new-page?} is not @samp{#f}, new page
+creation is forced.  Returns the resulting @code{page}.
+@end defun
+
 @subsection Page serialisation
 
 Pages can be converted to and from strings in the gEDA schematic file
@@ -2774,24 +2785,6 @@ a local file.  Convenience function which calls
 
 The Scheme modules and functions described in this chapter are
 available in the Lepton netlister application lepton-netlist.
-
-@menu
-* Files and pages::
-@end menu
-
-@node Files and pages
-@section Files and pages
-
-To use the functions described in this section, you will need to load
-the @code{(netlist page)} module.
-
-@defun filename->page filename [new-page?]
-Return a @code{page} for @var{filename} which must be a string. If
-such a page has been already opened, that page is returned, otherwise
-a new page is created.  If @var{new-page?} is not @samp{#f}, new page
-creation is forced.  Returns the resulting @code{page}.
-@end defun
-
 
 @node Concept Index
 @unnumbered Concept Index

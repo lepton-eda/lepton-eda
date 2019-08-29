@@ -39,6 +39,11 @@ Notable changes in Lepton EDA 1.9.10
 - A new module, `(netlist mode)`, has been added. It contains
   accessor functions for current netlisting mode.
 
+- The module `(netlist page)` has been eliminated in favour of the
+  `(lepton page)` module.  All functions from the former have been
+  moved to the latter.  The procedure `filename->page()` has been
+  renamed to `file->page()`.
+
 ### Changes in `lepton-archive`:
 - The initial Python script has been rewritten in Scheme.  It was
   broken at least since 2007, when system-gafrc was refactored by

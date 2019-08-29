@@ -564,7 +564,7 @@ component names used."
     (define (schematic-symbols filename)
       (map component-basename
            (filter component?
-                   (page-contents (filename->page filename)))))
+                   (page-contents (file->page filename)))))
 
     (delete-duplicates (append-map schematic-symbols schematic-file-list)))
 
@@ -634,7 +634,7 @@ symbol cache directory."
 
 
 (define (schematic-pages schematic)
-  (map filename->page (subschematic-page-filenames schematic)))
+  (map file->page (subschematic-page-filenames schematic)))
 
 
 (define (save-schematics-and-sources toplevel-schematics temp-dir cache-dir)
