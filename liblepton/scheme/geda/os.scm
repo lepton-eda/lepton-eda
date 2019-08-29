@@ -64,9 +64,19 @@
       ;; on str
       (define (expand-once str)
         (regexp-substitute/global #f rx str 'pre match-getenv 'post))
+      ;; Transform prefix "~/" to "${HOME}/" for subsequent
+      ;; expansion.
+      (define (tilda-prefix->home-prefix s)
+        (if (and (char=? (string-ref s 0) #\~)
+                 (file-name-separator? (string-ref s 1)))
+            (string-append "${HOME}"
+                           file-name-separator-string
+                           (substring s 2))
+            s))
+
       ;; Tail-recursively expands str until no more environment variables
       ;; can be expanded.
-      (let ((result (expand-once str)))
+      (let ((result (expand-once (tilda-prefix->home-prefix str))))
         (if (string=? str result)
             result
             (expand-env-variables result))))))
