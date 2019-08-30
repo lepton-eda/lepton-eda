@@ -152,9 +152,15 @@
 (define* (component-library-search rootdir  #:optional (prefix ""))
   "Add all symbol libraries found below ROOTDIR to be searched for
 components, naming them with an optional PREFIX."
+  ;; Recursively removes file name separator suffices in DIR-NAME.
+  (define (remove-/-suffices dir-name)
+    (if (string-suffix? file-name-separator-string dir-name)
+        (remove-/-suffices (string-drop-right dir-name
+                                              (string-length file-name-separator-string)))
+        dir-name))
 
   (let ((dht (make-hash-table 31))
-        (rootdir (expand-env-variables rootdir)))
+        (rootdir (remove-/-suffices (expand-env-variables rootdir))))
 
     ;; Build symbol directory list.
     (ftw rootdir
@@ -168,6 +174,9 @@ components, naming them with an optional PREFIX."
             (else
              (and (eq? 'regular flags)
                   (string-suffix-ci? ".sym" filename)
+                  ;; Filter out symbol files in root dir.  Dunno,
+                  ;; where to add them.
+                  (not (string= (dirname filename) rootdir))
                   (hashq-set! dht
                               (string->symbol (dirname filename))
                               #t))))
