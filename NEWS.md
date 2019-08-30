@@ -545,6 +545,16 @@ Notable changes in Lepton EDA 1.9.8
   sensitive only if a component is selected, providing the user
   with a useful feedback.
 
+- The action `&repeat-last-action` (the /repeat/ key *.*) has been
+  improved, so it now does as following:
+
+  - It now displays a log message when there is no last action to
+    repeat rather than warning about an invalid action.
+
+  - If an invalid action is requested, instead of using the Scheme
+    function `error()` to report the failure, it just prints a
+    warning to the log.
+
 ### Changes in `lepton-attrib`:
 
 - The program no longer loads `gattribrc` files since for many
