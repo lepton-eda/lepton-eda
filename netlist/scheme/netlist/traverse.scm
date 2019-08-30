@@ -243,6 +243,7 @@
 (define (hierarchy-down-schematic name)
   (define quiet-mode (netlist-option-ref 'quiet))
 
+  (log! 'message (_ "Going to traverse source ~S.") name)
   (let ((filename (get-source-library-file name)))
     (if filename
         (begin
@@ -454,9 +455,6 @@
 
 
 (define (page->subschematic page hierarchy-tag)
-  (when hierarchy-tag
-    (log! 'message (_ "Going to traverse source ~S") (page-filename page)))
-
   (let ((connections (make-page-schematic-connections page hierarchy-tag))
         (components (map component->schematic-component
                          (filter component? (page-contents page)))))
