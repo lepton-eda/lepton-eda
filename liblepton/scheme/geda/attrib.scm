@@ -25,7 +25,7 @@
   #:use-module (geda core gettext)
 
   #:use-module (geda object)
-  #:use-module (geda page))
+  #:use-module (lepton page))
 
 (define-public parse-attrib %parse-attrib)
 (define-public attrib-name %attrib-name)

@@ -359,7 +359,7 @@ available to be used in all gEDA applications.
 @section Core page functions
 
 To use the functions described in this section, you will need to load
-the @code{(geda page)} module.
+the @code{(lepton page)} module.
 
 @xref{Pages}.
 
