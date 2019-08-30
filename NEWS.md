@@ -541,6 +541,10 @@ Notable changes in Lepton EDA 1.9.8
 - Exceptions in the (gschem gschemdoc) module are now catched and
   reported to the user in a message box.
 
+- The menu item *Help* → *Find Component Documentation* is now
+  sensitive only if a component is selected, providing the user
+  with a useful feedback.
+
 ### Changes in `lepton-attrib`:
 
 - The program no longer loads `gattribrc` files since for many
