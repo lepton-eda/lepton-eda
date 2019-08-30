@@ -2,7 +2,7 @@
 
 (use-modules (unit-test))
 (use-modules (geda object))
-(use-modules (geda page))
+(use-modules (lepton page))
 
 (define P (make-page "/test/page/A"))
 

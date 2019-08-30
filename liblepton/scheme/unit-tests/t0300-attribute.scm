@@ -2,8 +2,8 @@
 
 (use-modules (unit-test))
 (use-modules (geda attrib))
-(use-modules (geda page))
 (use-modules (geda object))
+(use-modules (lepton page))
 
 (begin-test 'parse-attrib
   (let ((good (make-text '(1 . 2) 'lower-left 0 "name=value" 10 #t 'both))

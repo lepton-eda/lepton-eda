@@ -2,9 +2,9 @@
 
 (use-modules (unit-test))
 (use-modules (geda object))
-(use-modules (geda page))
 (use-modules (geda attrib))
 (use-modules (lepton library))
+(use-modules (lepton page))
 
 (begin-test 'component
   (let ((a (make-component "test component" '(1 . 2) 0 #t #f)))

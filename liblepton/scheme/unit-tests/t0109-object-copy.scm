@@ -2,8 +2,8 @@
 
 (use-modules (unit-test))
 (use-modules (geda object))
-(use-modules (geda page))
 (use-modules (geda attrib))
+(use-modules (lepton page))
 (use-modules (srfi srfi-1))
 
 ;; This test verifies that if an object is copied, any links to
