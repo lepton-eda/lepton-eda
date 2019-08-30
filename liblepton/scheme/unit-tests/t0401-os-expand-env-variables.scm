@@ -43,6 +43,8 @@
 	     (assert-equal "/a/${-USER-}/b/c"
 			   (expand-env-variables "/a/${-USER-}/b/c"))
 	     ; Good expression samples
+	     (assert-equal "myhome/a/b/c"
+			   (expand-env-variables "~/a/b/c"))
 	     (setenv "EXPAND_ENV_VARS_TEST" "abc")
 	     (setenv "VARS_TEST" "_VARS_TEST")
 	     (assert-equal "/a/abc/b/c"
