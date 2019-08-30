@@ -26,9 +26,9 @@
 
   #:use-module (gschem core gettext)
 
-  #:use-module (geda page)
   #:use-module (geda object)
   #:use-module (geda attrib)
+  #:use-module (lepton page)
   #:use-module (gschem window)
   #:use-module (gschem hook)
   #:use-module (gschem selection)

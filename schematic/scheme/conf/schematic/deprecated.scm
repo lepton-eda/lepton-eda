@@ -1,5 +1,5 @@
 (use-modules (ice-9 regex)
-             (geda page)
+             (lepton page)
              (gschem hook)
              (gschem window))
 

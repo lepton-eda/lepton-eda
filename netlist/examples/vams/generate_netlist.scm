@@ -27,7 +27,7 @@
 (use-modules (geda attrib)
              (geda log)
              (geda object)
-             (geda page))
+             (lepton page))
 
 ;;; Replace extension in the basename of a file NAME with EXT
 (define (replace-extension #;in name #;with ext)

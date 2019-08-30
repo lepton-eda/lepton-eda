@@ -25,7 +25,7 @@
   #:use-module (srfi srfi-26)
   #:use-module (geda attrib)
   #:use-module (geda object)
-  #:use-module (geda page)
+  #:use-module (lepton page)
 
   #:export-syntax (make-schematic-connection schematic-connection?
                    schematic-connection-id set-schematic-connection-id!

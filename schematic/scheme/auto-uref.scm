@@ -18,8 +18,8 @@
 
 (use-modules (ice-9 regex)
              (srfi srfi-1)
-             (geda page)
              (geda attrib)
+             (lepton page)
              (gschem window))
 
 (define auto-uref-page-offset 0)

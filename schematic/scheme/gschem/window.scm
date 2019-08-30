@@ -22,7 +22,7 @@
   ; Import C procedures
   #:use-module (gschem core window)
 
-  #:use-module (geda page)
+  #:use-module (lepton page)
   #:re-export (close-page!))
 
 (define-public active-page %active-page)

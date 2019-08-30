@@ -25,7 +25,7 @@
                 #:select (read-string)
                 #:prefix rdelim:)
   #:use-module (geda log)
-  #:use-module (geda page)
+  #:use-module (lepton page)
   #:use-module (netlist option)
 
   #:export (filename->page))

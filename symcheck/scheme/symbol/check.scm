@@ -21,7 +21,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (sxml match)
-  #:use-module (geda page)
+  #:use-module (lepton page)
   #:use-module (symbol blame)
   #:use-module (symbol check attrib)
   #:use-module (symbol check entity-pin)

@@ -83,7 +83,7 @@
              (srfi srfi-1)
              (sxml transform)
              (sxml match)
-             (geda page)
+             (lepton page)
              (netlist schematic)
              (netlist schematic-component)
              (netlist schematic toplevel))

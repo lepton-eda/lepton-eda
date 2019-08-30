@@ -142,7 +142,7 @@
 (use-modules (srfi srfi-1)
              (srfi srfi-26)
              (geda object)
-             (geda page)
+             (lepton page)
              (netlist schematic-component)
              (netlist schematic)
              (netlist schematic toplevel))

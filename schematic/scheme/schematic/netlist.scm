@@ -19,8 +19,8 @@
 ;;; Netlist export actions in schematic editor.
 
 (define-module (schematic netlist)
-  #:use-module (geda page)
   #:use-module (geda log)
+  #:use-module (lepton page)
   #:use-module (netlist)
   #:use-module (netlist schematic)
 
