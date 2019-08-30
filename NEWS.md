@@ -538,6 +538,9 @@ Notable changes in Lepton EDA 1.9.8
   up their extensions, if they want to use those functions, by
   making sure the necessary modules are loaded within them.
 
+- Exceptions in the (gschem gschemdoc) module are now catched and
+  reported to the user in a message box.
+
 ### Changes in `lepton-attrib`:
 
 - The program no longer loads `gattribrc` files since for many
