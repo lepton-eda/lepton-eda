@@ -348,6 +348,27 @@ Notable changes in Lepton EDA 1.9.8
 
 ### Changes in `lepton-schematic`:
 
+- The attribute detachment behaviour has been changed.  Before,
+  attributes of selected objects (visible and invisible, selected
+  or not) were all unconditionally stripped.  The detachment code
+  has been rewritten in Scheme, changed and fixed in several ways:
+
+  - Now only selected visible attributes are detached from their
+    respective parent objects.
+
+  - There is no need to select parent objects in order to detach
+    their attributes any more.
+
+  - The info about successfully detached attributes is now output to
+    the log.
+
+  - If there is no selection, the selected attributes are not
+    attached to any object, or selection does not include any
+    attributes, nothing is undertaken.
+
+  - Just detached attributes get unselected and their color is
+    changed to the color of detached attributes.
+
 - Several improvements/fixes with regard to locking/unlocking of
   components and their attributes have been introduced:
 
