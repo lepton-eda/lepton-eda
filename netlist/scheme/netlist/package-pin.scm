@@ -123,6 +123,7 @@ Example usage:
 
 
 (define (object->package-pin pin-object)
+  "Transform a primitive PIN-OBJECT into <package-pin>."
   (define (make-pin-attrib-list object)
     (define (add-attrib attrib)
       (cons (string->symbol (attrib-name attrib))
