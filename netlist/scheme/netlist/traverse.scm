@@ -143,10 +143,6 @@
               (loop (cdr groups)))))))
 
 
-(define (object-pins->package-pins object)
-  (filter-map object->package-pin (component-contents object)))
-
-
 ;;; Searches for pinnumers in NET-MAPS and, if found, updates
 ;;; corresponding pins in PIN-LIST, otherwise creates new pins and
 ;;; adds them to the list.
@@ -412,7 +408,8 @@
          (sources (get-sources graphical
                                inherited-attribs
                                attached-attribs))
-         (real-pins (object-pins->package-pins object))
+         (real-pins (filter-map object->package-pin
+                                (component-contents object)))
          (net-map-pins (net-maps->package-pins net-maps real-pins))
          (pins (append real-pins net-map-pins)))
     (set-schematic-component-sources! component sources)
