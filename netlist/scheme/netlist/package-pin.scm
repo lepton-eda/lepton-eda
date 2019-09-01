@@ -21,6 +21,8 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
+  #:use-module (geda attrib)
+  #:use-module (geda object)
 
   #:export-syntax (make-package-pin package-pin?
                    package-pin-id set-package-pin-id!
@@ -36,7 +38,8 @@
                    package-pin-connection set-package-pin-connection!
                    package-pin-named-connection set-package-pin-named-connection!)
 
-  #:export (set-package-pin-printer!
+  #:export (object->package-pin
+            set-package-pin-printer!
             set-package-pin-parent-component!))
 
 (define-record-type <package-pin>
@@ -117,3 +120,37 @@ Example usage:
 
 (define (set-package-pin-parent-component! pin component)
   (delay (set-package-pin-parent! pin component)))
+
+
+(define (object->package-pin pin-object)
+  (define (make-pin-attrib-list object)
+    (define (add-attrib attrib)
+      (cons (string->symbol (attrib-name attrib))
+            (attrib-value attrib)))
+
+    (map add-attrib (object-attribs object)))
+
+  (let ((attribs (make-pin-attrib-list pin-object)))
+    (make-package-pin (object-id pin-object)
+                      ;; Primitive pin object.
+                      pin-object
+                      ;; Number.
+                      (assq-ref attribs 'pinnumber)
+                      ;; Add name later.
+                      #f
+                      ;; Add netname list later.
+                      #f
+                      ;; Label.
+                      (assq-ref attribs 'pinlabel)
+                      ;; Attributes.
+                      attribs
+                      ;; No net-map yet.
+                      #f
+                      ;; No nets yet.
+                      #f
+                      ;; Set parent component later.
+                      #f
+                      ;; No connection yet.
+                      #f
+                      ;; No netname connection yet.
+                      #f)))

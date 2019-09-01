@@ -142,40 +142,8 @@
               group
               (loop (cdr groups)))))))
 
+
 (define (object-pins->package-pins object)
-  (define (make-pin-attrib-list object)
-    (define (add-attrib attrib)
-      (cons (string->symbol (attrib-name attrib))
-            (attrib-value attrib)))
-
-    (map add-attrib (object-attribs object)))
-
-  (define (object->package-pin pin-object)
-    (let ((attribs (make-pin-attrib-list pin-object)))
-      (make-package-pin (object-id pin-object)
-                        ;; Primitive pin object.
-                        pin-object
-                        ;; Number.
-                        (assq-ref attribs 'pinnumber)
-                        ;; Add name later.
-                        #f
-                        ;; Add netname list later.
-                        #f
-                        ;; Label.
-                        (assq-ref attribs 'pinlabel)
-                        ;; Attributes.
-                        attribs
-                        ;; No net-map yet.
-                        #f
-                        ;; No nets yet.
-                        #f
-                        ;; Set parent component later.
-                        #f
-                        ;; No connection yet.
-                        #f
-                        ;; No netname connection yet.
-                        #f)))
-
   (map object->package-pin
        (filter net-pin? (component-contents object))))
 
