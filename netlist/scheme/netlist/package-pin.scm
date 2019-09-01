@@ -131,26 +131,27 @@ Example usage:
   (define attribs
     (map add-attrib (object-attribs pin-object)))
 
-  (make-package-pin (object-id pin-object)
-                    ;; Primitive pin object.
-                    pin-object
-                    ;; Number.
-                    (assq-ref attribs 'pinnumber)
-                    ;; Add name later.
-                    #f
-                    ;; Add netname list later.
-                    #f
-                    ;; Label.
-                    (assq-ref attribs 'pinlabel)
-                    ;; Attributes.
-                    attribs
-                    ;; No net-map yet.
-                    #f
-                    ;; No nets yet.
-                    #f
-                    ;; Set parent component later.
-                    #f
-                    ;; No connection yet.
-                    #f
-                    ;; No netname connection yet.
-                    #f))
+  (and (net-pin? pin-object)
+       (make-package-pin (object-id pin-object)
+                         ;; Primitive pin object.
+                         pin-object
+                         ;; Number.
+                         (assq-ref attribs 'pinnumber)
+                         ;; Add name later.
+                         #f
+                         ;; Add netname list later.
+                         #f
+                         ;; Label.
+                         (assq-ref attribs 'pinlabel)
+                         ;; Attributes.
+                         attribs
+                         ;; No net-map yet.
+                         #f
+                         ;; No nets yet.
+                         #f
+                         ;; Set parent component later.
+                         #f
+                         ;; No connection yet.
+                         #f
+                         ;; No netname connection yet.
+                         #f)))
