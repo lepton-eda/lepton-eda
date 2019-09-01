@@ -144,8 +144,7 @@
 
 
 (define (object-pins->package-pins object)
-  (map object->package-pin
-       (filter net-pin? (component-contents object))))
+  (filter-map object->package-pin (component-contents object)))
 
 
 ;;; Searches for pinnumers in NET-MAPS and, if found, updates
