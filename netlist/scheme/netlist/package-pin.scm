@@ -124,34 +124,33 @@ Example usage:
 
 (define (object->package-pin pin-object)
   "Transform a primitive PIN-OBJECT into <package-pin>."
-  (define (make-pin-attrib-list object)
-    (define (add-attrib attrib)
-      (cons (string->symbol (attrib-name attrib))
-            (attrib-value attrib)))
+  (define (add-attrib attrib)
+    (cons (string->symbol (attrib-name attrib))
+          (attrib-value attrib)))
 
-    (map add-attrib (object-attribs object)))
+  (define attribs
+    (map add-attrib (object-attribs pin-object)))
 
-  (let ((attribs (make-pin-attrib-list pin-object)))
-    (make-package-pin (object-id pin-object)
-                      ;; Primitive pin object.
-                      pin-object
-                      ;; Number.
-                      (assq-ref attribs 'pinnumber)
-                      ;; Add name later.
-                      #f
-                      ;; Add netname list later.
-                      #f
-                      ;; Label.
-                      (assq-ref attribs 'pinlabel)
-                      ;; Attributes.
-                      attribs
-                      ;; No net-map yet.
-                      #f
-                      ;; No nets yet.
-                      #f
-                      ;; Set parent component later.
-                      #f
-                      ;; No connection yet.
-                      #f
-                      ;; No netname connection yet.
-                      #f)))
+  (make-package-pin (object-id pin-object)
+                    ;; Primitive pin object.
+                    pin-object
+                    ;; Number.
+                    (assq-ref attribs 'pinnumber)
+                    ;; Add name later.
+                    #f
+                    ;; Add netname list later.
+                    #f
+                    ;; Label.
+                    (assq-ref attribs 'pinlabel)
+                    ;; Attributes.
+                    attribs
+                    ;; No net-map yet.
+                    #f
+                    ;; No nets yet.
+                    #f
+                    ;; Set parent component later.
+                    #f
+                    ;; No connection yet.
+                    #f
+                    ;; No netname connection yet.
+                    #f))
