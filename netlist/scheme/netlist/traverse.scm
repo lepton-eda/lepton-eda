@@ -143,66 +143,6 @@
               (loop (cdr groups)))))))
 
 
-;;; Searches for pinnumers in NET-MAPS and, if found, updates
-;;; corresponding pins in PIN-LIST, otherwise creates new pins and
-;;; adds them to the list.
-(define (net-maps->package-pins net-maps pin-list)
-  (define (pinnumber->pin pinnumber pin-list)
-    (and (not (null? pin-list))
-         (let ((package-pinnumber (package-pin-number (car pin-list))))
-           ;; FIXME: a pin may have no "pinnumber=", and we have
-           ;; to deal with such cases. A test and drc check is
-           ;; needed.
-           (if (and package-pinnumber
-                    (string=? package-pinnumber pinnumber))
-               (car pin-list)
-               (pinnumber->pin pinnumber (cdr pin-list))))))
-
-  (define (make-or-update-net-map-pin net-map)
-    (let ((pin (pinnumber->pin (net-map-pinnumber net-map)
-                               pin-list)))
-      (if pin
-          ;; If pin exists, just assign net-map for it.
-          (begin
-            (set-package-pin-net-map! pin net-map)
-            ;; Return #f to filter out existing pins.
-            #f)
-          ;; Otherwise, make a new virtual pin.
-          (make-package-pin #f
-                            #f
-                            (net-map-pinnumber net-map)
-                            #f
-                            '()
-                            #f
-                            '()
-                            net-map
-                            #f
-                            #f
-                            #f
-                            #f))))
-
-  ;; Create virtual 'net-map' pins.
-  (filter-map make-or-update-net-map-pin net-maps))
-
-
-(define (get-sources graphical? inherited-attribs attached-attribs)
-  (define (non-null* ls)
-    (and (not (null? ls)) ls))
-
-  ;; Given a list of strings, some of which may contain commas,
-  ;; splits comma separated strings and returns the new combined
-  ;; list
-  (define (comma-separated->list ls)
-    (append-map (lambda (s) (string-split s #\,)) ls))
-
-  (and (not graphical?)
-       (gnetlist-config-ref 'traverse-hierarchy)
-       (let ((sources
-              (or (non-null* (assq-ref attached-attribs 'source))
-                  (non-null* (assq-ref inherited-attribs 'source)))))
-         (and=> sources comma-separated->list))))
-
-
 (define (hierarchy-down-schematic name)
   (define quiet-mode (netlist-option-ref 'quiet))
 
@@ -347,56 +287,6 @@
         (set-net-map-package-pin-connection-properties! pin connections)))
 
   (for-each set-properties! (schematic-component-pins component)))
-
-
-(define (component->schematic-component object)
-  ;; Makes attribute list of OBJECT using getter GET-ATTRIBS.
-  (define (make-attrib-list get-attribs object)
-    (define (add-attrib ls attrib)
-      (let* ((name (string->symbol (attrib-name attrib)))
-             (prev-value (assq-ref ls name))
-             (new-value (attrib-value attrib)))
-        (if prev-value
-            (assq-set! ls name (cons new-value prev-value))
-            (acons name (list new-value) ls))))
-
-    (let loop ((in (get-attribs object))
-               (out '()))
-      (if (null? in)
-          out
-          (loop (cdr in)
-                (add-attrib out (car in))))))
-
-  (let* ((id (object-id object))
-         (inherited-attribs (make-attrib-list inherited-attribs object))
-         (attached-attribs (make-attrib-list object-attribs object))
-         (net-maps (check-net-maps object))
-         (component (make-schematic-component id
-                                              #f ; get refdes later
-                                              #f ; get hierarchy-tag later
-                                              #f ; get sources later
-                                              object
-                                              inherited-attribs
-                                              attached-attribs
-                                              net-maps
-                                              ;; get pins later
-                                              '()
-                                              ;; not a port initially
-                                              #f
-                                              ;; no subschematic
-                                              #f))
-         (graphical (or (schematic-component-graphical? component)
-                        (schematic-component-nc? component)))
-         (sources (get-sources graphical
-                               inherited-attribs
-                               attached-attribs))
-         (real-pins (filter-map object->package-pin
-                                (component-contents object)))
-         (net-map-pins (net-maps->package-pins net-maps real-pins))
-         (pins (append real-pins net-map-pins)))
-    (set-schematic-component-sources! component sources)
-    (set-schematic-component-pins/parent! component pins)
-    component))
 
 
 (define (page->subschematic page hierarchy-tag)
