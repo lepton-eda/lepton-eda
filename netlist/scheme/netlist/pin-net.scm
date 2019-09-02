@@ -26,19 +26,15 @@
             pin-net-object set-pin-net-object!
             pin-net-priority set-pin-net-priority!
             pin-net-name set-pin-net-name!
-            pin-net-connection-package set-pin-net-connection-package!
-            pin-net-connection-pinnumber set-pin-net-connection-pinnumber!
             set-pin-net-printer!))
 
 (define-record-type <pin-net>
-  (make-pin-net id object priority name connection-package connection-pinnumber)
+  (make-pin-net id object priority name)
   pin-net?
   (id pin-net-id set-pin-net-id!)
   (object pin-net-object set-pin-net-object!)
   (priority pin-net-priority set-pin-net-priority!)
-  (name pin-net-name set-pin-net-name!)
-  (connection-package pin-net-connection-package set-pin-net-connection-package!)
-  (connection-pinnumber pin-net-connection-pinnumber set-pin-net-connection-pinnumber!))
+  (name pin-net-name set-pin-net-name!))
 
 ;;; Sets default printer for <pin-net>
 (set-record-type-printer!
@@ -53,8 +49,6 @@ FORMAT-STRING must be in the form required by the procedure
   'object
   'priority
   'name
-  'connection-package
-  'connection-pinnumber
 Any other unrecognized argument will lead to yielding '?' in the
 corresponding place.
 Example usage:
@@ -70,7 +64,5 @@ Example usage:
                  ('object (pin-net-object record))
                  ('priority (pin-net-priority record))
                  ('name (pin-net-name record))
-                 ('connection-package (pin-net-connection-package record))
-                 ('connection-pinnumber (pin-net-connection-pinnumber record))
                  (_ #\?)))
              args)))))

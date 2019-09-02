@@ -268,10 +268,6 @@
    ;; priority
    #f
    ;; name
-   #f
-   ;; connection-package
-   #f
-   ;; connection-pinnumber
    #f))
 
 
@@ -309,13 +305,8 @@
                                             pinnumber)
                       tag
                       'power-rail))
-    (if net-driven?
-        (set-pin-net-priority! pin net-driven?)
-        (begin
-          (set-pin-net-connection-package! pin
-                                           (hierarchy-create-refdes refdes
-                                                                    tag))
-          (set-pin-net-connection-pinnumber! pin pinnumber)))))
+    (when net-driven?
+      (set-pin-net-priority! pin net-driven?))))
 
 
 (define (set-real-package-pin-connection-properties! pin connections)
@@ -344,9 +335,7 @@
          (nets (list (make-pin-net (package-pin-id pin)
                                    (package-pin-object pin)
                                    #f
-                                   netname
-                                   refdes
-                                   (package-pin-number pin))))
+                                   netname)))
          (connection (get-connection-by-netname netname
                                                 connections
                                                 tag)))

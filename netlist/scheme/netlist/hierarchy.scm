@@ -48,17 +48,9 @@
   (define (disabled? refdes)
     (equal? refdes disabled-refdes))
 
-  (define (disable-net-connected-to net)
-    (when (and=> (pin-net-connection-package net) disabled?)
-      (set-pin-net-connection-package! net #f)))
-
-  (define (disable-nets-connected-to pin)
-    (for-each disable-net-connected-to (package-pin-nets pin)))
-
   (define (disable-package-refdes package)
     (when (and=> (schematic-component-refdes package) disabled?)
-      (set-schematic-component-refdes! package #f))
-    (for-each disable-nets-connected-to (schematic-component-pins package)))
+      (set-schematic-component-refdes! package #f)))
 
   (for-each disable-package-refdes netlist)
   ;; Return the modified netlist.
@@ -157,17 +149,9 @@
       ((? list? refdes) (car refdes))
       (refdes refdes)))
 
-  (define (fix-net-connections net)
-    (set-pin-net-connection-package! net
-                                     (base-refdes (pin-net-connection-package net))))
-
-  (define (fix-pin-connections pin)
-    (for-each fix-net-connections (package-pin-nets pin)))
-
   (define (fix-package package)
     (set-schematic-component-refdes! package
-                         (base-refdes (schematic-component-refdes package)))
-    (for-each fix-pin-connections (schematic-component-pins package))
+                                     (base-refdes (schematic-component-refdes package)))
     package)
 
   (for-each fix-package netlist)
@@ -229,15 +213,11 @@
                                  (list (make-pin-net id
                                                      object
                                                      net-priority
-                                                     netname
-                                                     refdes
-                                                     pinnumber)))
+                                                     netname)))
           (let ((net (car nets)))
             (set-pin-net-id! net id)
             (set-pin-net-priority! net net-priority)
-            (set-pin-net-name! net netname)
-            (set-pin-net-connection-package! net refdes)
-            (set-pin-net-connection-pinnumber! net pinnumber)))))
+            (set-pin-net-name! net netname)))))
 
   (let ((net-map (package-pin-net-map pin)))
     (add-net-power-pin-override pin net-map tag)
