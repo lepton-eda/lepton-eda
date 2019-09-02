@@ -17,6 +17,7 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (netlist verbose)
+  #:use-module (ice-9 format)
   #:use-module (netlist option)
   #:use-module (netlist schematic-component)
   #:use-module (netlist package-pin)
