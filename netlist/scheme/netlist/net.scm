@@ -24,7 +24,6 @@
   #:use-module (geda object)
   #:use-module (netlist config)
   #:use-module (netlist core gettext)
-  #:use-module (netlist hierarchy)
   #:use-module (symbol check net-attrib)
   #:use-module (symbol check duplicate)
 
