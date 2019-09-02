@@ -20,31 +20,31 @@
   #:use-module (ice-9 format)
   #:use-module (netlist option)
   #:use-module (netlist schematic-component)
+  #:use-module (netlist schematic-connection)
   #:use-module (netlist package-pin)
-  #:use-module (netlist pin-net)
 
   #:export (verbose-print-netlist))
 
 (define (verbose-print-netlist netlist)
-  (define (print-net net)
-    (let ((package (pin-net-connection-package net))
-          (pinnumber (pin-net-connection-pinnumber net)))
-      (if (and package pinnumber)
+  (define (print-pin-connection-info pin)
+    (let ((refdes (schematic-component-refdes (package-pin-parent pin)))
+          (pinnumber (package-pin-number pin)))
+      (if (and refdes pinnumber)
           (format #f "\t\t~A ~A [~A]\n"
-                  package
+                  refdes
                   pinnumber
-                  (pin-net-id net))
+                  (package-pin-id pin))
           "")))
-
-  (define (print-nets net-list)
-    (string-join (map print-net net-list) ""))
 
   (define (print-pin-info pin)
     (format #f "\tpin~A (~A) ~A\n~A\n"
             (or (package-pin-number pin) "?")
             (or (package-pin-label pin) "")
             (or (package-pin-name pin) "Null net name")
-            (print-nets (package-pin-nets pin))))
+            (string-join
+             (map print-pin-connection-info
+                  (schematic-connection-pins (package-pin-connection pin)))
+             "")))
 
   (define (print-pin-list pin-list)
     (map print-pin-info pin-list))
