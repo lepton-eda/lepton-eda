@@ -6,6 +6,9 @@ more information, please consult `git log` history.
 
 Notable changes in Lepton EDA 1.9.8
 -----------------------------------
+### Breaking changes:
+- The configure switch `--disable-gattrib` has been renamed to
+  `--disable-attrib`.
 
 ### General changes:
 
