@@ -427,19 +427,22 @@ connection pairs in the form (\"pin-number\" . \"net-name\")."
 ;;; It should first search for netname, and then get all
 ;;; package-pin pairs by that netname.
 (define (get-nets package pin-number)
-  (define (net-connections nets)
-    (filter-map
-     (lambda (net)
-       (let ((package (pin-net-connection-package net))
-             (pinnumber (pin-net-connection-pinnumber net)))
-         (and package
-              pinnumber
-              (cons (schematic-component-refdes->string package)
-                    pinnumber))))
-     nets))
+  (define (pin-connections pin)
+    (let ((pins (schematic-connection-pins (package-pin-connection pin))))
+      (filter-map
+       (lambda (pin)
+         (let ((refdes (schematic-component-refdes->string
+                        (schematic-component-refdes (package-pin-parent pin))))
+               (pinnumber (package-pin-number pin)))
+           (and refdes
+                pinnumber
+                (or (package-pin-net-map pin)
+                    (not (null? (cdr pins))))
+                (cons refdes pinnumber))))
+       pins)))
 
-  (define (lookup-through-nets nets package pin-number)
-    (let ((connections (net-connections nets)))
+  (define (lookup-through-connections pin package pin-number)
+    (let ((connections (pin-connections pin)))
       (and (not (null? connections))
            (member (cons package pin-number) connections)
            connections)))
@@ -453,9 +456,9 @@ connection pairs in the form (\"pin-number\" . \"net-name\")."
      (lambda (pin)
        (and (found-pin-number? (package-pin-number pin))
             (cons (package-pin-name pin)
-                  (lookup-through-nets (package-pin-nets pin)
-                                       package
-                                       pin-number))))
+                  (lookup-through-connections pin
+                                              package
+                                              pin-number))))
      pins))
 
   (define (found-package? x)
