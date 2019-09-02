@@ -472,7 +472,7 @@ connection pairs in the form (\"pin-number\" . \"net-name\")."
 
   (let ((found (lookup-through-netlist (schematic-components (toplevel-schematic)))))
     (match found
-      (((netname . rest) ...)
+      (((netname . rest) ..1)
        (cons (car netname) (apply append (delq #f rest))))
       (_ '("ERROR_INVALID_PIN")))))
 
