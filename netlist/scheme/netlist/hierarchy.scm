@@ -44,18 +44,6 @@
     ((? list? tag) `(,basename . ,tag))
     (non-list (error (_ "Invalid hierarchy tag.") hierarchy-tag))))
 
-(define (hierarchy-disable-refdes netlist disabled-refdes)
-  (define (disabled? refdes)
-    (equal? refdes disabled-refdes))
-
-  (define (disable-package-refdes package)
-    (when (and=> (schematic-component-refdes package) disabled?)
-      (set-schematic-component-refdes! package #f)))
-
-  (for-each disable-package-refdes netlist)
-  ;; Return the modified netlist.
-  netlist)
-
 
 (define (hierarchy-make-schematic-port components outer-port-pin)
   (define parent-component-refdes
@@ -339,13 +327,15 @@
     (filter-map outer-pin->schematic-port
                 (schematic-component-pins component)))
 
+  (define (disable-component-refdes component)
+    (set-schematic-component-refdes! component #f))
+
   (define (fix-composite-component component)
     ;; Disable refdeses of all inner port components.
-    (for-each (cut hierarchy-disable-refdes components <>)
-              (map schematic-component-refdes
-                   (cons component
-                         (map schematic-port-inner-component
-                              (component-subcircuit-ports component))))))
+    (for-each disable-component-refdes
+              (cons component
+                    (map schematic-port-inner-component
+                         (component-subcircuit-ports component)))))
 
   (for-each update-component-pins components)
 
