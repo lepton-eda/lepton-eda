@@ -202,9 +202,7 @@
                                                      netname)))
           (let ((net (car nets)))
             (set-pin-net-id! net id)
-            (set-pin-net-name! net netname)))
-      (when (net-attrib-pin? (package-pin-object pin))
-        (set-pin-net-priority! pin #t))))
+            (set-pin-net-name! net netname)))))
 
   (let ((net-map (package-pin-net-map pin)))
     (add-net-power-pin-override pin net-map tag)

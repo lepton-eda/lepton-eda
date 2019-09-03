@@ -304,8 +304,7 @@
                                             pinnumber)
                       tag
                       'power-rail))
-    (when (net-attrib-pin? object)
-      (set-pin-net-priority! pin #t))))
+    (set-pin-net-priority! pin (net-attrib-pin? object))))
 
 
 (define (set-real-package-pin-connection-properties! pin connections)
