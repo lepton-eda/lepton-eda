@@ -192,19 +192,19 @@
 
   (define (update-pin-netname pin netname id refdes)
     (let ((nets (package-pin-nets pin))
-          (net-priority (net-attrib-pin? (package-pin-object pin)))
           (object #f))
       (set-package-pin-name! pin netname)
       (if (null? nets)
           (set-package-pin-nets! pin
                                  (list (make-pin-net id
                                                      object
-                                                     net-priority
+                                                     #f
                                                      netname)))
           (let ((net (car nets)))
             (set-pin-net-id! net id)
-            (set-pin-net-priority! net net-priority)
-            (set-pin-net-name! net netname)))))
+            (set-pin-net-name! net netname)))
+      (when (net-attrib-pin? (package-pin-object pin))
+        (set-pin-net-priority! pin #t))))
 
   (let ((net-map (package-pin-net-map pin)))
     (add-net-power-pin-override pin net-map tag)
