@@ -110,20 +110,13 @@
     (let ((current-name (pin-net-name net)))
       (if (and prev-name current-name)
           ;; Both names defined.
-          (if (pin-net-priority net)
-              (if (gnetlist-config-ref 'netname-attribute-priority)
-                  ;; netname= has priority over net=.
-                  ;; Rename the current net to the previously
-                  ;; found name (label= name) and return the
-                  ;; latter.
-                  (simple-add-rename current-name prev-name)
-                  ;; net= has priority over netname=.
-                  ;; Since the net has net= priority set, use
-                  ;; its name instead of the name found
-                  ;; previously.
-                  (simple-add-rename prev-name current-name))
-              ;; Do the rename anyways (this might cause problems).
-              ;; Rename net which has the same label=.
+          (if (and (pin-net-priority net)
+                   (gnetlist-config-ref 'netname-attribute-priority))
+              ;; If netname= has priority over net=, but the pin
+              ;; is a power (net= driven) pin, use netname=,
+              ;; anyways.
+              (simple-add-rename current-name prev-name)
+              ;; Otherwise, do the rename anyways (this might cause problems).
               (simple-add-rename prev-name current-name))
           ;; One or both undefined: return either defined or #f.
           (or prev-name current-name))))
