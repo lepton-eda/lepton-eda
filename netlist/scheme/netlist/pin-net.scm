@@ -24,16 +24,14 @@
   #:export (make-pin-net pin-net?
             pin-net-id set-pin-net-id!
             pin-net-object set-pin-net-object!
-            pin-net-priority set-pin-net-priority!
             pin-net-name set-pin-net-name!
             set-pin-net-printer!))
 
 (define-record-type <pin-net>
-  (make-pin-net id object priority name)
+  (make-pin-net id object name)
   pin-net?
   (id pin-net-id set-pin-net-id!)
   (object pin-net-object set-pin-net-object!)
-  (priority pin-net-priority set-pin-net-priority!)
   (name pin-net-name set-pin-net-name!))
 
 ;;; Sets default printer for <pin-net>
@@ -47,7 +45,6 @@ FORMAT-STRING must be in the form required by the procedure
 `format'. The following ARGS may be used:
   'id
   'object
-  'priority
   'name
 Any other unrecognized argument will lead to yielding '?' in the
 corresponding place.
@@ -62,7 +59,6 @@ Example usage:
                (match arg
                  ('id (pin-net-id record))
                  ('object (pin-net-object record))
-                 ('priority (pin-net-priority record))
                  ('name (pin-net-name record))
                  (_ #\?)))
              args)))))

@@ -110,7 +110,7 @@
     (let ((current-name (pin-net-name net)))
       (if (and prev-name current-name)
           ;; Both names defined.
-          (if (and (pin-net-priority net)
+          (if (and (net-attrib-pin? (pin-net-object net))
                    (gnetlist-config-ref 'netname-attribute-priority))
               ;; If netname= has priority over net=, but the pin
               ;; is a power (net= driven) pin, use netname=,
@@ -191,7 +191,6 @@
           (set-package-pin-nets! pin
                                  (list (make-pin-net id
                                                      object
-                                                     #f
                                                      netname)))
           (let ((net (car nets)))
             (set-pin-net-id! net id)

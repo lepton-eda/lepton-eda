@@ -265,8 +265,6 @@
    (object-id object)
    ;; object
    object
-   ;; priority
-   #f
    ;; name
    #f))
 
@@ -303,8 +301,7 @@
      (create-net-name (netattrib-search-net (object-component object)
                                             pinnumber)
                       tag
-                      'power-rail))
-    (set-pin-net-priority! pin (net-attrib-pin? object))))
+                      'power-rail))))
 
 
 (define (set-real-package-pin-connection-properties! pin connections)
@@ -332,7 +329,6 @@
                                    'power-rail))
          (nets (list (make-pin-net (package-pin-id pin)
                                    (package-pin-object pin)
-                                   #f
                                    netname)))
          (connection (get-connection-by-netname netname
                                                 connections
