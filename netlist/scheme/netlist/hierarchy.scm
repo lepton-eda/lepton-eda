@@ -159,22 +159,6 @@
   (define refdes (schematic-component-refdes component))
   (define tag (schematic-component-tag component))
 
-  (define (add-net-power-pin-override pin net-map tag)
-    (define (power-pin? pin)
-      (string=? "pwr" (assq-ref (package-pin-attribs pin) 'pintype)))
-
-    (let ((connection (package-pin-connection pin))
-          (name (create-net-name (net-map-netname net-map)
-                                 tag
-                                 'power-rail)))
-      (when (power-pin? pin)
-        (set-schematic-connection-override-name!
-         connection
-         (match (schematic-connection-override-name connection)
-           ((? list? x) `(,name . ,x))
-           (#f name)
-           (x `(,name ,x)))))))
-
   (define (check-shorted-nets a b priority)
     (log! 'critical
           (_ "Rename shorted nets (~A= has priority): ~A -> ~A")
@@ -201,7 +185,6 @@
             (set-pin-net-name! net netname)))))
 
   (let ((net-map (package-pin-net-map pin)))
-    (add-net-power-pin-override pin net-map tag)
     (and refdes
          (let ((netname (create-net-name (net-map-netname net-map)
                                          tag
