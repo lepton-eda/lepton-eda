@@ -291,7 +291,6 @@
 (define (assign-pin-properties! pin tag)
   (let* ((object (pin-net-object pin))
          (refdes-pinnumber-pair (pin-refdes-pinnumber-pair object))
-         (refdes (car refdes-pinnumber-pair))
          (pinnumber (cdr refdes-pinnumber-pair)))
     ;; The object is a pin, and it defines net name using
     ;; "net=".  Use hierarchy tag here to make this netname
