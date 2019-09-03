@@ -294,8 +294,7 @@
   (let* ((object (pin-net-object pin))
          (refdes-pinnumber-pair (pin-refdes-pinnumber-pair object))
          (refdes (car refdes-pinnumber-pair))
-         (pinnumber (cdr refdes-pinnumber-pair))
-         (net-driven? (net-attrib-pin? object)))
+         (pinnumber (cdr refdes-pinnumber-pair)))
     ;; The object is a pin, and it defines net name using
     ;; "net=".  Use hierarchy tag here to make this netname
     ;; unique.
@@ -305,8 +304,8 @@
                                             pinnumber)
                       tag
                       'power-rail))
-    (when net-driven?
-      (set-pin-net-priority! pin net-driven?))))
+    (when (net-attrib-pin? object)
+      (set-pin-net-priority! pin #t))))
 
 
 (define (set-real-package-pin-connection-properties! pin connections)
