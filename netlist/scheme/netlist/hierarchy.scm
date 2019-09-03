@@ -186,6 +186,8 @@
 
   (let ((net-map (package-pin-net-map pin)))
     (and refdes
+         net-map
+         (package-pin-object pin)
          (let ((netname (create-net-name (net-map-netname net-map)
                                          tag
                                          'power-rail))
@@ -203,12 +205,8 @@
 
 
 (define (update-component-net-mapped-pins component)
-  (define (update-pin pin)
-    (and (package-pin-object pin)
-         (package-pin-net-map pin)
-         (net-map-update-pin component pin)))
-
-  (for-each update-pin (schematic-component-pins component)))
+  (for-each (cut net-map-update-pin component <>)
+            (schematic-component-pins component)))
 
 
 (define (update-component-pins schematic-component)
