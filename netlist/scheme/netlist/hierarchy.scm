@@ -192,7 +192,6 @@
 
   (define (update-pin-netname pin netname id refdes)
     (let ((nets (package-pin-nets pin))
-          (pinnumber (package-pin-number pin))
           (net-priority (net-attrib-pin? (package-pin-object pin)))
           (object #f))
       (set-package-pin-name! pin netname)
