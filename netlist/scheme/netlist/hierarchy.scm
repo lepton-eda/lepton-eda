@@ -154,7 +154,11 @@
 
 
 ;;; This function does renaming job for PIN.
-(define (net-map-update-pin pin id refdes tag)
+(define (net-map-update-pin component pin)
+  (define id (schematic-component-id component))
+  (define refdes (schematic-component-refdes component))
+  (define tag (schematic-component-tag component))
+
   (define (add-net-power-pin-override pin net-map tag)
     (define (power-pin? pin)
       (string=? "pwr" (assq-ref (package-pin-attribs pin) 'pintype)))
@@ -216,17 +220,12 @@
 
 
 (define (update-component-net-mapped-pins component)
-  (define pins (schematic-component-pins component))
-  (define id (schematic-component-id component))
-  (define refdes (schematic-component-refdes component))
-  (define tag (schematic-component-tag component))
-
   (define (update-pin pin)
     (and (package-pin-object pin)
          (package-pin-net-map pin)
-         (net-map-update-pin pin id refdes tag)))
+         (net-map-update-pin component pin)))
 
-  (for-each update-pin pins))
+  (for-each update-pin (schematic-component-pins component)))
 
 
 (define (update-component-pins schematic-component)
