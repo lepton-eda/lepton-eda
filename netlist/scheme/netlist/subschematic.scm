@@ -33,7 +33,7 @@
                    subschematic-components set-subschematic-components!
                    subschematic-connections set-subschematic-connections!)
 
-  #:export (file-name->subschematic))
+  #:export (page->subschematic))
 
 (define-record-type <subschematic>
   (make-subschematic name pages components connections)
@@ -50,17 +50,14 @@
                           "#<subschematic-~A>"
                           (subschematic-name record))))
 
-(define (file-name->subschematic filename page)
-  "Creates a new subschematic record from FILENAME, which must be
-a string."
-  (let ((page ;; (file->page filename)
-              page))
-    (make-subschematic filename
-                       ;; One page in the list of pages.
-                       (list page)
-                       ;; Page components.
-                       (map component->schematic-component
-                            (filter component? (page-contents page)))
-                       ;; Page connections.
-                       (make-page-schematic-connections page)
-                       )))
+(define (page->subschematic page)
+  "Creates a new subschematic record from PAGE."
+  (make-subschematic (page-filename page)
+                     ;; One page in the list of pages.
+                     (list page)
+                     ;; Page components.
+                     (map component->schematic-component
+                          (filter component? (page-contents page)))
+                     ;; Page connections.
+                     (make-page-schematic-connections page)
+                     ))
