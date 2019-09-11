@@ -29,6 +29,7 @@
 
   #:export-syntax (make-schematic-connection schematic-connection?
                    schematic-connection-id set-schematic-connection-id!
+                   schematic-connection-parent set-schematic-connection-parent!
                    schematic-connection-tag set-schematic-connection-tag!
                    schematic-connection-name set-schematic-connection-name!
                    schematic-connection-override-name set-schematic-connection-override-name!
@@ -41,10 +42,12 @@
 
 
 (define-record-type <schematic-connection>
-  (make-schematic-connection id tag page name override-name objects pins)
+  (make-schematic-connection id parent tag page name override-name objects pins)
   schematic-connection?
   ;; ID. Dunno, why it is here...
   (id schematic-connection-id set-schematic-connection-id!)
+  ;; Parent subschematic of the connection.
+  (parent schematic-connection-parent set-schematic-connection-parent!)
   ;; Hierarchical tag.  Well, it is here temporarily (which may
   ;; mean forever :)), to form real hierarchical net names.
   ;; Should be set only for non-hierarchical connections.  Really,
@@ -76,6 +79,7 @@
 FORMAT-STRING must be in the form required by the procedure
 `format'. The following ARGS may be used:
   'id
+  'parent
   'tag
   'page
   'name
@@ -94,6 +98,7 @@ Example usage:
              (lambda (arg)
                (match arg
                  ('id (schematic-connection-id record))
+                 ('parent (schematic-connection-parent record))
                  ('tag (schematic-connection-tag record))
                  ('page (schematic-connection-page record))
                  ('name (schematic-connection-name record))
@@ -151,6 +156,8 @@ Example usage:
          (objects (cdr schematic-connection-ls))
          (id (object-id (car objects))))
     (make-schematic-connection id
+                               ;; No parent subschematic yet.
+                               #f
                                ;; hierarchy-tag
                                #f
                                page

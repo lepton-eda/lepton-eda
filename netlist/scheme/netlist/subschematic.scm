@@ -22,6 +22,7 @@
 (define-module (netlist subschematic)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
+  #:use-module (srfi srfi-26)
   #:use-module (geda object)
   #:use-module (lepton page)
   #:use-module (netlist schematic-component)
@@ -52,13 +53,17 @@
 
 (define (page->subschematic page uplevel-name)
   "Creates a new subschematic record from PAGE."
-  (let ((subschematic-name (cons (page-filename page) uplevel-name)))
-   (make-subschematic subschematic-name
-                      ;; One page in the list of pages.
-                      (list page)
-                      ;; Page components.
-                      (map component->schematic-component
-                           (filter component? (page-contents page)))
-                      ;; Page connections.
-                      (make-page-schematic-connections page)
-                      )))
+  (let* ((subschematic-name (cons (page-filename page) uplevel-name))
+         (connections (make-page-schematic-connections page))
+         (subschematic
+          (make-subschematic subschematic-name
+                             ;; One page in the list of pages.
+                             (list page)
+                             ;; Page components.
+                             (map component->schematic-component
+                                  (filter component? (page-contents page)))
+                             ;; Page connections.
+                             connections)))
+    (for-each (cut set-schematic-connection-parent! <> subschematic)
+              connections)
+    subschematic))

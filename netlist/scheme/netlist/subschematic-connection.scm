@@ -108,6 +108,8 @@
          (pins (merge-pins group))
          (connection (make-schematic-connection
                       id
+                      ;; Parent subschematic.
+                      #f
                       ;; The same as hierarchy tag.
                       name
                       page
@@ -122,6 +124,8 @@
 
 
 (define (make-subschematic-connections subschematic)
-  (let ((name (subschematic-name subschematic)))
-    (map (cut make-netname-connection name <>)
-         (group-connections (subschematic-pin-connections subschematic)))))
+  (let* ((name (subschematic-name subschematic))
+         (named-connections
+          (map (cut make-netname-connection name <>)
+               (group-connections (subschematic-pin-connections subschematic)))))
+    named-connections))

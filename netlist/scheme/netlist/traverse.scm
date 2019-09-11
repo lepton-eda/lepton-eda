@@ -129,6 +129,8 @@
         (make-schematic-connection
          ;; id
          #f
+         ;; Parent subschematic.
+         #f
          ;; hierarchical tag
          tag
          ;; page
@@ -310,9 +312,10 @@
 (define (subschematic-list->subschematic name subschematics)
   (let* ((pages (append-map subschematic-pages subschematics))
          (components (append-map subschematic-components subschematics))
-         (subschematic (make-subschematic name pages components '())))
-    (set-subschematic-connections! subschematic
-                                   (make-subschematic-connections subschematic))
+         (subschematic (make-subschematic name pages components '()))
+         (connections (make-subschematic-connections subschematic)))
+    (set-subschematic-connections! subschematic connections)
+    (for-each (cut set-schematic-connection-parent! <> subschematic) connections)
     subschematic))
 
 
