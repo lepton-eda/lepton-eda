@@ -120,7 +120,7 @@
 ;;; Search for connection by netname.
 (define (get-connection-by-netname netname connections tag)
   (define (netname-matches? connection)
-    (and (equal? tag (schematic-connection-tag connection))
+    (and (equal? tag (cdr (subschematic-name (schematic-connection-parent connection))))
          (or (equal? netname (schematic-connection-name connection))
              (equal? netname (schematic-connection-override-name connection)))))
 
