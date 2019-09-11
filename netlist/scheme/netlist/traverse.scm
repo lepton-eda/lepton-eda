@@ -302,10 +302,11 @@
     (for-each
      (cut set-package-pin-connection-properties! <> connections)
      components)
-    (make-subschematic (page-filename page)
-                       (list page)
-                       components
-                       connections)))
+
+    (let ((subschematic (file-name->subschematic (page-filename page))))
+      (set-subschematic-components! subschematic components)
+      (set-subschematic-connections! subschematic connections)
+      subschematic)))
 
 
 (define (subschematic-list->subschematic name subschematics)

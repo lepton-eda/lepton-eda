@@ -22,12 +22,15 @@
 (define-module (netlist subschematic)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
+  #:use-module (lepton page)
 
   #:export-syntax (make-subschematic subschematic?
                    subschematic-name set-subschematic-name!
                    subschematic-pages set-subschematic-pages!
                    subschematic-components set-subschematic-components!
-                   subschematic-connections set-subschematic-connections!))
+                   subschematic-connections set-subschematic-connections!)
+
+  #:export (file-name->subschematic))
 
 (define-record-type <subschematic>
   (make-subschematic name pages components connections)
@@ -43,3 +46,16 @@
  (lambda (record port) (format port
                           "#<subschematic-~A>"
                           (subschematic-name record))))
+
+(define (file-name->subschematic filename)
+  "Creates a new subschematic record from FILENAME, which must be
+a string."
+  (let ((page (file->page filename)))
+    (make-subschematic filename
+                       ;; One page in the list of pages.
+                       (list page)
+                       ;; No components yet.
+                       '()
+                       ;; No connections yet.
+                       '()
+                       )))
