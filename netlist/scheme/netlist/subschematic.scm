@@ -22,7 +22,9 @@
 (define-module (netlist subschematic)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
+  #:use-module (geda object)
   #:use-module (lepton page)
+  #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
 
   #:export-syntax (make-subschematic subschematic?
@@ -56,8 +58,9 @@ a string."
     (make-subschematic filename
                        ;; One page in the list of pages.
                        (list page)
-                       ;; No components yet.
-                       '()
+                       ;; Page components.
+                       (map component->schematic-component
+                            (filter component? (page-contents page)))
                        ;; Page connections.
                        (make-page-schematic-connections page)
                        )))

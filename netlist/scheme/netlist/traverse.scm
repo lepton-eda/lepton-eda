@@ -294,10 +294,9 @@
 
 
 (define (page->subschematic page hierarchy-tag)
-  (let* ((components (map component->schematic-component
-                          (filter component? (page-contents page))))
-         (subschematic (file-name->subschematic (page-filename page) page))
-         (connections (subschematic-connections subschematic)))
+  (let* ((subschematic (file-name->subschematic (page-filename page) page))
+         (connections (subschematic-connections subschematic))
+         (components (subschematic-components subschematic)))
     (for-each (cut set-schematic-connection-tag! <> hierarchy-tag) connections)
     (for-each (cut set-schematic-component-tag! <> hierarchy-tag) components)
     (for-each create-schematic-component-refdes components)
@@ -305,7 +304,6 @@
      (cut set-package-pin-connection-properties! <> connections)
      components)
 
-    (set-subschematic-components! subschematic components)
     subschematic))
 
 
