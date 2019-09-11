@@ -261,7 +261,10 @@
 
 ;;; Collect schematic connections for PAGES.
 (define (make-schematic-connections pages tag)
-  (append-map (cut make-page-schematic-connections <> tag) pages))
+  (let ((connections (append-map make-page-schematic-connections
+                                 pages)))
+    (for-each (cut set-schematic-connection-tag! <> tag) connections)
+    connections))
 
 (define (schematic-component-refdes->string refdes)
   (define reverse-refdes-order?

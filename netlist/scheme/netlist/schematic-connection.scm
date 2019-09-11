@@ -146,12 +146,13 @@ Example usage:
     ((c) c)
     ((a b ...) netnames)))
 
-(define (get-schematic-connection page tag schematic-connection-ls)
+(define (get-schematic-connection page schematic-connection-ls)
   (let* ((netnames (car schematic-connection-ls))
          (objects (cdr schematic-connection-ls))
          (id (object-id (car objects))))
     (make-schematic-connection id
-                               tag
+                               ;; hierarchy-tag
+                               #f
                                page
                                ;; netname
                                (if (null? netnames)
@@ -162,7 +163,7 @@ Example usage:
                                objects
                                '())))
 
-(define (make-page-schematic-connections page tag)
+(define (make-page-schematic-connections page)
   (define (connection? object)
     (or (net-pin? object)
         (net? object)))
@@ -175,7 +176,7 @@ Example usage:
                                             (page-contents page))))))
       (append nets pins)))
 
-  (map (cut get-schematic-connection page tag <>)
+  (map (cut get-schematic-connection page <>)
        (connections->netname-groups (group-connections (page-connections page)))))
 
 
