@@ -294,7 +294,7 @@
 
 
 (define (page->subschematic* page hierarchy-tag)
-  (let* ((subschematic (page->subschematic page))
+  (let* ((subschematic (page->subschematic page hierarchy-tag))
          (connections (subschematic-connections subschematic))
          (components (subschematic-components subschematic)))
     (for-each (cut set-schematic-connection-tag! <> hierarchy-tag) connections)

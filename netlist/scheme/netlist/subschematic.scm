@@ -50,14 +50,15 @@
                           "#<subschematic-~A>"
                           (subschematic-name record))))
 
-(define (page->subschematic page)
+(define (page->subschematic page uplevel-name)
   "Creates a new subschematic record from PAGE."
-  (make-subschematic (page-filename page)
-                     ;; One page in the list of pages.
-                     (list page)
-                     ;; Page components.
-                     (map component->schematic-component
-                          (filter component? (page-contents page)))
-                     ;; Page connections.
-                     (make-page-schematic-connections page)
-                     ))
+  (let ((subschematic-name (cons (page-filename page) uplevel-name)))
+   (make-subschematic subschematic-name
+                      ;; One page in the list of pages.
+                      (list page)
+                      ;; Page components.
+                      (map component->schematic-component
+                           (filter component? (page-contents page)))
+                      ;; Page connections.
+                      (make-page-schematic-connections page)
+                      )))
