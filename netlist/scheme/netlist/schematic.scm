@@ -335,7 +335,7 @@ of schematic pages."
                       ))))
 
 
-(define* (file-name-list->schematic filenames)
+(define (file-name-list->schematic filenames)
   "Creates a new schematic record from FILENAMES, which must be a
 list of strings representing file names."
   (let ((pages (map file->page filenames)))
