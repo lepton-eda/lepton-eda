@@ -110,8 +110,6 @@
                       id
                       ;; Parent subschematic.
                       #f
-                      ;; The same as hierarchy tag.
-                      name
                       page
                       netnames
                       net-names

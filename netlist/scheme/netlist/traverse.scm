@@ -137,8 +137,6 @@
          #f
          ;; Parent subschematic.
          #f
-         ;; hierarchical tag
-         tag
          ;; page
          #f
          ;; netname
@@ -303,7 +301,6 @@
   (let* ((subschematic (page->subschematic page hierarchy-tag))
          (connections (subschematic-connections subschematic))
          (components (subschematic-components subschematic)))
-    (for-each (cut set-schematic-connection-tag! <> hierarchy-tag) connections)
     (for-each (cut set-schematic-component-tag! <> hierarchy-tag) components)
     (for-each create-schematic-component-refdes components)
     (for-each
