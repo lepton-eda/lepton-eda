@@ -118,7 +118,13 @@
                (loop (cdr groups)))))))
 
 ;;; Search for connection by netname.
-(define (get-connection-by-netname netname connections tag)
+(define (get-net-map-pin-connection pin connections)
+  (define pin-component (package-pin-parent pin))
+
+  (define tag (schematic-component-tag pin-component))
+
+  (define netname (net-map-netname (package-pin-net-map pin)))
+
   (define (netname-matches? connection)
     (and (equal? tag (cdr (subschematic-name (schematic-connection-parent connection))))
          (or (equal? netname (schematic-connection-name connection))
@@ -275,9 +281,7 @@
          (nets (list (make-pin-net (package-pin-id pin)
                                    (package-pin-object pin)
                                    netname)))
-         (connection (get-connection-by-netname (net-map-netname (package-pin-net-map pin))
-                                                connections
-                                                tag)))
+         (connection (get-net-map-pin-connection pin connections)))
     (set-package-pin-name! pin netname)
     (set-package-pin-nets! pin nets)
     (set-package-pin-connection! pin connection)
