@@ -125,8 +125,11 @@
 
   (define netname (net-map-netname (package-pin-net-map pin)))
 
+  (define (subschematic-connection-tag connection)
+    (cdr (subschematic-name (schematic-connection-parent connection))))
+
   (define (netname-matches? connection)
-    (and (equal? tag (cdr (subschematic-name (schematic-connection-parent connection))))
+    (and (equal? tag (subschematic-connection-tag connection))
          (or (equal? netname (schematic-connection-name connection))
              (equal? netname (schematic-connection-override-name connection)))))
 
