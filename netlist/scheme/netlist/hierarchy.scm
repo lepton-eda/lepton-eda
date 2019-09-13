@@ -212,6 +212,14 @@
 
 
 (define (update-component-pins schematic-component)
+  (define (update-package-pin-name pin)
+    (let* ((nets (package-pin-nets pin))
+           (component (package-pin-parent pin))
+           (hierarchy-tag (schematic-component-tag component))
+           (netname (nets-netname nets hierarchy-tag)))
+      (set-package-pin-name! pin netname)
+      (update-netnames-hash-table netname nets)))
+
   (for-each update-package-pin-name
             (schematic-component-pins schematic-component)))
 
@@ -273,13 +281,6 @@
         (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
         nets)))
 
-(define (update-package-pin-name pin)
-  (let* ((nets (package-pin-nets pin))
-         (component (package-pin-parent pin))
-         (hierarchy-tag (schematic-component-tag component))
-         (netname (nets-netname nets hierarchy-tag)))
-    (set-package-pin-name! pin netname)
-    (update-netnames-hash-table netname nets)))
 
 (define (hierarchy-post-process components)
   (define (outer-pin->schematic-port outer-port-pin)
