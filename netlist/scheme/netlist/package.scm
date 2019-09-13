@@ -31,7 +31,6 @@
   #:export-syntax (make-package package?
                    package-id set-package-id!
                    package-refdes set-package-refdes!
-                   package-tag set-package-tag!
                    package-sources set-package-sources
                    package-attribs set-package-attribs!
                    package-components set-package-components!
@@ -44,11 +43,10 @@
             make-package-list))
 
 (define-record-type <package>
-  (make-package id refdes tag sources attribs components pins)
+  (make-package id refdes sources attribs components pins)
   package?
   (id package-id set-package-id!)
   (refdes package-refdes set-package-refdes!)
-  (tag package-tag set-package-tag!)
   (sources package-sources set-package-sources)
   (attribs package-attribs set-package-attribs!)
   (components package-components set-package-components!)
@@ -65,7 +63,6 @@ FORMAT-STRING must be in the form required by the procedure
 `format'. The following ARGS may be used:
   'id
   'refdes
-  'tag
   'sources
   'attribs
   'components
@@ -83,7 +80,6 @@ Example usage:
                (match arg
                  ('id (package-id record))
                  ('refdes (package-refdes record))
-                 ('tag (package-tag record))
                  ('sources (package-sources record))
                  ('attribs (package-attribs record))
                  ('components (package-components record))
@@ -189,11 +185,10 @@ a string."
                            (list ls-or-component)))
            (id (schematic-component-id (car components)))
            (refdes (schematic-component-refdes (car components)))
-           (tag (schematic-component-tag (car components)))
            (composite (any schematic-component-sources components))
            (attribs (get-attribs components))
            (pins (merge-component-pins components)))
-      (make-package id refdes tag composite attribs components pins)))
+      (make-package id refdes composite attribs components pins)))
 
   ;; The first inherited "refdes=" attrib value is considered to
   ;; be the default refdes of COMPONENT.
