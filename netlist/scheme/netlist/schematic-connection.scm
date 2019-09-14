@@ -160,13 +160,18 @@ Example usage:
                                '())))
 
 (define (make-page-schematic-connections page)
+  (define (connection-object->list x)
+    (match x
+      ;; Return a net as one element list.
+      ((? net? x) `(,x))
+      ;; Replace components with the lists of their pins.
+      ((? component? x) (filter net-pin? (component-contents x)))
+      ;; Return empty list for non-connection objects.
+      (_ '())))
+
   (define (page-connections page)
-    (let ((nets (filter net? (page-contents page)))
-          (pins (filter net-pin?
-                        (append-map component-contents
-                                    (filter component?
-                                            (page-contents page))))))
-      (append nets pins)))
+    (apply append
+           (map connection-object->list (page-contents page))))
 
   (map (cut get-schematic-connection page <>)
        (connections->netname-groups (group-connections (page-connections page)))))
