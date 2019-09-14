@@ -30,6 +30,7 @@
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
   #:use-module (netlist schematic-port)
+  #:use-module (netlist subschematic)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
   #:use-module (netlist verbose)
@@ -157,7 +158,7 @@
 (define (net-map-update-pin component pin)
   (define id (schematic-component-id component))
   (define refdes (schematic-component-refdes component))
-  (define tag (schematic-component-tag component))
+  (define tag (cdr (subschematic-name (schematic-component-parent component))))
 
   (define (check-shorted-nets a b priority)
     (unless (string=? a b)
@@ -215,7 +216,8 @@
   (define (update-package-pin-name pin)
     (let* ((nets (package-pin-nets pin))
            (component (package-pin-parent pin))
-           (hierarchy-tag (schematic-component-tag component))
+           (hierarchy-tag
+            (cdr (subschematic-name (schematic-component-parent component))))
            (netname (nets-netname nets hierarchy-tag)))
       (set-package-pin-name! pin netname)
       (update-netnames-hash-table netname nets)))
