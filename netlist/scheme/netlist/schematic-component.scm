@@ -33,7 +33,6 @@
                    schematic-component-id set-schematic-component-id!
                    schematic-component-refdes set-schematic-component-refdes!
                    schematic-component-parent set-schematic-component-parent!
-                   schematic-component-tag set-schematic-component-tag!
                    schematic-component-sources set-schematic-component-sources!
                    schematic-component-object set-schematic-component-object!
                    schematic-component-iattribs set-schematic-component-iattribs!
@@ -52,12 +51,11 @@
             set-schematic-component-printer!))
 
 (define-record-type <schematic-component>
-  (make-schematic-component id refdes parent tag sources object iattribs attribs net-maps pins port subschematic)
+  (make-schematic-component id refdes parent sources object iattribs attribs net-maps pins port subschematic)
   schematic-component?
   (id schematic-component-id set-schematic-component-id!)
   (refdes schematic-component-refdes set-schematic-component-refdes!)
   (parent schematic-component-parent set-schematic-component-parent!)
-  (tag schematic-component-tag set-schematic-component-tag!)
   (sources schematic-component-sources set-schematic-component-sources!)
   (object schematic-component-object set-schematic-component-object!)
   (iattribs schematic-component-iattribs set-schematic-component-iattribs!)
@@ -79,7 +77,6 @@ FORMAT-STRING must be in the form required by the procedure
   'id
   'refdes
   'parent
-  'tag
   'sources
   'object
   'iattribs
@@ -102,7 +99,6 @@ Example usage:
                  ('id (schematic-component-id record))
                  ('refdes (schematic-component-refdes record))
                  ('parent (schematic-component-parent record))
-                 ('tag (schematic-component-tag record))
                  ('sources (schematic-component-sources record))
                  ('object (schematic-component-object record))
                  ('iattribs (schematic-component-iattribs record))
@@ -259,7 +255,6 @@ sets the component to be its parent component."
          (component (make-schematic-component id
                                               #f ; get refdes later
                                               #f ; get parent subschematic later
-                                              #f ; get hierarchy-tag later
                                               #f ; get sources later
                                               object
                                               inherited-attribs

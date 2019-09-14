@@ -306,7 +306,6 @@
   (let* ((subschematic (page->subschematic page hierarchy-tag))
          (connections (subschematic-connections subschematic))
          (components (subschematic-components subschematic)))
-    (for-each (cut set-schematic-component-tag! <> hierarchy-tag) components)
     (for-each create-schematic-component-refdes components)
     (for-each
      (cut set-package-pin-connection-properties! <> connections)
