@@ -160,10 +160,6 @@ Example usage:
                                '())))
 
 (define (make-page-schematic-connections page)
-  (define (connection? object)
-    (or (net-pin? object)
-        (net? object)))
-
   (define (page-connections page)
     (let ((nets (filter net? (page-contents page)))
           (pins (filter net-pin?
