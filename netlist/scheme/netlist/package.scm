@@ -31,7 +31,6 @@
   #:export-syntax (make-package package?
                    package-id set-package-id!
                    package-refdes set-package-refdes!
-                   package-sources set-package-sources
                    package-attribs set-package-attribs!
                    package-components set-package-components!
                    package-pins set-package-pins!)
@@ -43,11 +42,10 @@
             make-package-list))
 
 (define-record-type <package>
-  (make-package id refdes sources attribs components pins)
+  (make-package id refdes attribs components pins)
   package?
   (id package-id set-package-id!)
   (refdes package-refdes set-package-refdes!)
-  (sources package-sources set-package-sources)
   (attribs package-attribs set-package-attribs!)
   (components package-components set-package-components!)
   (pins package-pins set-package-pins!))
@@ -63,7 +61,6 @@ FORMAT-STRING must be in the form required by the procedure
 `format'. The following ARGS may be used:
   'id
   'refdes
-  'sources
   'attribs
   'components
   'pins
@@ -80,7 +77,6 @@ Example usage:
                (match arg
                  ('id (package-id record))
                  ('refdes (package-refdes record))
-                 ('sources (package-sources record))
                  ('attribs (package-attribs record))
                  ('components (package-components record))
                  ('pins (package-pins record))
@@ -188,7 +184,7 @@ a string."
            (composite (any schematic-component-sources components))
            (attribs (get-attribs components))
            (pins (merge-component-pins components)))
-      (make-package id refdes composite attribs components pins)))
+      (make-package id refdes attribs components pins)))
 
   ;; The first inherited "refdes=" attrib value is considered to
   ;; be the default refdes of COMPONENT.
