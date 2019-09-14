@@ -21,6 +21,7 @@
   #:use-module (netlist option)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
+  #:use-module (netlist subschematic)
   #:use-module (netlist package-pin)
 
   #:export (verbose-print-netlist))
@@ -54,7 +55,7 @@
                 Hierarchy tag: ~S\n~
                 ~A\n"
             (or (schematic-component-refdes package) "SPECIAL")
-            (or (schematic-component-tag package) "")
+            (or (cdr (subschematic-name (schematic-component-parent package))) "")
             (print-pin-list (schematic-component-pins package))))
 
    (format #t "\nInternal netlist representation:\n\n~
