@@ -121,7 +121,7 @@
 (define (get-net-map-pin-connection pin connections)
   (define pin-component (package-pin-parent pin))
 
-  (define tag (schematic-component-tag pin-component))
+  (define tag (cdr (subschematic-name (schematic-component-parent pin-component))))
 
   (define netname (net-map-netname (package-pin-net-map pin)))
 
@@ -174,7 +174,7 @@
   (define net-maps (schematic-component-net-maps component))
   (define graphical? (or (schematic-component-graphical? component)
                          (schematic-component-nc? component)))
-  (define hierarchy-tag (schematic-component-tag component))
+  (define hierarchy-tag (cdr (subschematic-name (schematic-component-parent component))))
 
   ;; Get refdes= of OBJECT depending on NETLIST-MODE.
   (define (get-refdes)
@@ -257,7 +257,9 @@
 
 
 (define (set-real-package-pin-connection-properties! pin connections)
-  (let* ((tag (schematic-component-tag (package-pin-parent pin)))
+  (let* ((tag
+          (cdr (subschematic-name (schematic-component-parent
+                                   (package-pin-parent pin)))))
          (pin-object (package-pin-object pin))
          (connection (get-package-pin-connection pin-object connections))
          (nets (map make-new-pin-net (traverse-net pin-object)))
@@ -274,7 +276,7 @@
 
 (define (set-net-map-package-pin-connection-properties! pin connections)
   (let* ((parent-component (package-pin-parent pin))
-         (tag (schematic-component-tag parent-component))
+         (tag (cdr (subschematic-name (schematic-component-parent parent-component))))
          (refdes (schematic-component-refdes parent-component))
          (netname (create-net-name (net-map-netname (package-pin-net-map pin))
                                    tag
