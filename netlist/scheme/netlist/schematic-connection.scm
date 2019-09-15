@@ -179,6 +179,8 @@ Example usage:
 
 
 (define (schematic-connection-add-pin! connection pin)
+  "Add <package-pin> object PIN to <schematic-connection> object
+CONNECTION."
   (set-schematic-connection-pins!
    connection
    (cons pin (schematic-connection-pins connection))))
