@@ -160,6 +160,7 @@ Example usage:
                                '())))
 
 (define (make-page-schematic-connections page)
+  "Create <schematic-connection> records from PAGE primitives."
   (define (connection-object->list x)
     (match x
       ;; Return a net as one element list.
