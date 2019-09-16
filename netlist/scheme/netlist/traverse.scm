@@ -329,19 +329,20 @@
 ;;; Traverses pages obtained from files defined in the 'source='
 ;;; attributes of COMPONENT with respect to HIERARCHY-TAG.
 (define (traverse-component-sources component)
-  (let* ((hierarchy-tag (schematic-component-refdes component))
-         (source-pages (map hierarchy-down-schematic
-                            (schematic-component-sources component)))
-         (subschematic (page-list->subschematic source-pages hierarchy-tag)))
-    (set-schematic-component-subschematic! component subschematic)
-    component))
+  (and (schematic-component-sources component)
+       (let* ((hierarchy-tag (schematic-component-refdes component))
+              (source-pages (map hierarchy-down-schematic
+                                 (schematic-component-sources component)))
+              (subschematic (page-list->subschematic source-pages hierarchy-tag)))
+         (set-schematic-component-subschematic! component subschematic)
+         component)))
 
 
 (define (page-list->subschematic pages hierarchy-tag)
-  (let* ((page-subschematics (map (cut page->subschematic* <> hierarchy-tag) pages))
+  (let* ((page-subschematics (map (cut page->subschematic* <> hierarchy-tag)
+                                  pages))
          (subschematic (subschematic-list->subschematic hierarchy-tag
-                                                        page-subschematics))
-         (components (subschematic-components subschematic))
-         (composites (filter schematic-component-sources components)))
-    (for-each traverse-component-sources composites)
+                                                        page-subschematics)))
+    (for-each traverse-component-sources
+              (subschematic-components subschematic))
     subschematic))
