@@ -207,17 +207,14 @@
    nets))
 
 
-(define (set-real-package-pin-connection-properties! pin connections)
+(define (set-real-package-pin-nets-properties! pin)
   (let* ((tag
           (cdr (subschematic-name (schematic-component-parent
                                    (package-pin-parent pin)))))
          (pin-object (package-pin-object pin))
-         (connection (get-package-pin-connection pin-object connections))
          (nets (map make-new-pin-net (traverse-net pin-object)))
          (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
          (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
-    (set-package-pin-connection! pin connection)
-    (schematic-connection-add-pin! connection pin)
     (set-package-pin-nets! pin nets)
     (set-package-pin-netname! pin (nets-netnames nets))
     (for-each (cut assign-net-netname! <> tag) net-objects)
@@ -225,21 +222,37 @@
     pin))
 
 
-(define (set-net-map-package-pin-connection-properties! pin connections)
+(define (set-real-package-pin-connection! pin connections)
+  (let ((connection (get-package-pin-connection (package-pin-object pin)
+                                                connections)))
+    (set-package-pin-connection! pin connection)
+    (schematic-connection-add-pin! connection pin)
+    pin))
+
+
+(define (set-net-map-package-pin-nets-properties! pin)
   (let* ((parent-component (package-pin-parent pin))
          (tag (cdr (subschematic-name (schematic-component-parent parent-component))))
-         (refdes (schematic-component-refdes parent-component))
          (netname (create-net-name (net-map-netname (package-pin-net-map pin))
                                    tag
                                    'power-rail))
          (nets (list (make-pin-net (package-pin-id pin)
                                    (package-pin-object pin)
-                                   netname)))
+                                   netname))))
+    (set-package-pin-nets! pin nets)))
+
+
+(define (set-net-map-package-pin-connection! pin connections)
+  (let* ((parent-component (package-pin-parent pin))
+         (tag (cdr (subschematic-name (schematic-component-parent parent-component))))
+         (netname (create-net-name (net-map-netname (package-pin-net-map pin))
+                                   tag
+                                   'power-rail))
          (connection (get-net-map-pin-connection pin connections)))
     (set-package-pin-name! pin netname)
-    (set-package-pin-nets! pin nets)
     (set-package-pin-connection! pin connection)
     (schematic-connection-add-pin! connection pin)))
+
 
 (define (set-package-pin-connection-properties! component connections)
   (define (real-pin? pin)
@@ -247,8 +260,12 @@
 
   (define (set-properties! pin)
     (if (real-pin? pin)
-        (set-real-package-pin-connection-properties! pin connections)
-        (set-net-map-package-pin-connection-properties! pin connections)))
+        (begin
+          (set-real-package-pin-connection! pin connections)
+          (set-real-package-pin-nets-properties! pin))
+        (begin
+          (set-net-map-package-pin-connection! pin connections)
+          (set-net-map-package-pin-nets-properties! pin))))
 
   (for-each set-properties! (schematic-component-pins component)))
 
