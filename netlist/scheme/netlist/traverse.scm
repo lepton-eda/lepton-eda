@@ -305,8 +305,8 @@
 
   (let* ((page-subschematics (map (cut page->subschematic* <> hierarchy-tag)
                                   pages))
-         (subschematic (subschematic-list->subschematic hierarchy-tag
-                                                        page-subschematics)))
+         (subschematic (subschematic-list->subschematic page-subschematics
+                                                        hierarchy-tag)))
     ;; Traverse pages obtained from files defined in the 'source='
     ;; attributes of schematic components.
     (for-each traverse-component-sources

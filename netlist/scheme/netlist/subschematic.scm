@@ -76,9 +76,9 @@
     subschematic))
 
 
-(define (subschematic-list->subschematic name subschematics)
-  "Creates a new subschematic from the SUBSCHEMATICS list.  NAME
-is used as its hierarchical name."
+(define* (subschematic-list->subschematic subschematics #:optional name)
+  "Creates a new subschematic from the SUBSCHEMATICS list.  If
+specified, NAME is used as its hierarchical name."
   (let* ((pages (append-map subschematic-pages subschematics))
          (components (append-map subschematic-components subschematics))
          (connections (make-subschematic-connections components name))
