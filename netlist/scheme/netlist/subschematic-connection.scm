@@ -21,7 +21,6 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (netlist package-pin)
-  #:use-module (netlist subschematic)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
 
@@ -68,16 +67,6 @@
   (fold reconnect-connections '() (map list ls)))
 
 
-(define (subschematic-pins subschematic)
-  (append-map schematic-component-pins
-              (subschematic-components subschematic)))
-
-
-(define (subschematic-pin-connections subschematic)
-  (delete-duplicates (map package-pin-connection
-                          (subschematic-pins subschematic))))
-
-
 (define (make-netname-connection name group)
   (define (any->ls x)
     (if (list? x) x (list x)))
@@ -121,9 +110,12 @@
     connection))
 
 
-(define (make-subschematic-connections subschematic)
-  (let* ((name (subschematic-name subschematic))
-         (named-connections
-          (map (cut make-netname-connection name <>)
-               (group-connections (subschematic-pin-connections subschematic)))))
-    named-connections))
+(define (make-subschematic-connections components name)
+  (define pins
+    (append-map schematic-component-pins components))
+
+  (define pin-connections
+    (delete-duplicates (map package-pin-connection pins)))
+
+  (map (cut make-netname-connection name <>)
+       (group-connections pin-connections)))

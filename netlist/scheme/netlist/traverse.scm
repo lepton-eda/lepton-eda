@@ -297,7 +297,7 @@
   (let* ((pages (append-map subschematic-pages subschematics))
          (components (append-map subschematic-components subschematics))
          (subschematic (make-subschematic name pages components '()))
-         (connections (make-subschematic-connections subschematic)))
+         (connections (make-subschematic-connections components name)))
     (set-subschematic-connections! subschematic connections)
     (for-each (cut set-schematic-connection-parent! <> subschematic) connections)
     subschematic))
