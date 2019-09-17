@@ -22,7 +22,6 @@
   ; Import C procedures and variables
   #:use-module (netlist core gettext)
 
-  #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (geda attrib)
@@ -40,7 +39,6 @@
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
   #:use-module (netlist subschematic)
-  #:use-module (netlist verbose)
   #:use-module (symbol check net-attrib)
 
   #:export (page-list->subschematic))
