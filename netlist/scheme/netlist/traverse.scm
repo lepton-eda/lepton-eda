@@ -254,20 +254,28 @@
     (schematic-connection-add-pin! connection pin)))
 
 
+(define (set-package-pin-nets-properties! component)
+  (define (real-pin? pin)
+    (package-pin-object pin))
+
+  (define (set-nets-properties! pin)
+    (if (real-pin? pin)
+        (set-real-package-pin-nets-properties! pin)
+        (set-net-map-package-pin-nets-properties! pin)))
+
+  (for-each set-nets-properties! (schematic-component-pins component)))
+
+
 (define (set-package-pin-connection-properties! component connections)
   (define (real-pin? pin)
     (package-pin-object pin))
 
-  (define (set-properties! pin)
+  (define (set-connection-properties! pin)
     (if (real-pin? pin)
-        (begin
-          (set-real-package-pin-connection! pin connections)
-          (set-real-package-pin-nets-properties! pin))
-        (begin
-          (set-net-map-package-pin-connection! pin connections)
-          (set-net-map-package-pin-nets-properties! pin))))
+        (set-real-package-pin-connection! pin connections)
+        (set-net-map-package-pin-connection! pin connections)))
 
-  (for-each set-properties! (schematic-component-pins component)))
+  (for-each set-connection-properties! (schematic-component-pins component)))
 
 
 (define (page->subschematic* page hierarchy-tag)
@@ -280,6 +288,7 @@
     (for-each
      (cut set-package-pin-connection-properties! <> connections)
      components)
+    (for-each set-package-pin-nets-properties! components)
 
     subschematic))
 
