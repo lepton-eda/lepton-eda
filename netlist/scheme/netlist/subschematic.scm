@@ -20,6 +20,7 @@
 ;;; in the "source=" attributes of a component.
 
 (define-module (netlist subschematic)
+  #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
   #:use-module (srfi srfi-26)
@@ -27,6 +28,7 @@
   #:use-module (lepton page)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
+  #:use-module (netlist subschematic-connection)
 
   #:export-syntax (make-subschematic subschematic?
                    subschematic-name set-subschematic-name!
@@ -34,7 +36,8 @@
                    subschematic-components set-subschematic-components!
                    subschematic-connections set-subschematic-connections!)
 
-  #:export (page->subschematic))
+  #:export (page->subschematic
+            subschematic-list->subschematic))
 
 (define-record-type <subschematic>
   (make-subschematic name pages components connections)
@@ -70,4 +73,15 @@
               connections)
     (for-each (cut set-schematic-component-parent! <> subschematic)
               components)
+    subschematic))
+
+
+(define (subschematic-list->subschematic name subschematics)
+  "Creates a new subschematic from the SUBSCHEMATICS list.  NAME
+is used as its hierarchical name."
+  (let* ((pages (append-map subschematic-pages subschematics))
+         (components (append-map subschematic-components subschematics))
+         (connections (make-subschematic-connections components name))
+         (subschematic (make-subschematic name pages components connections)))
+    (for-each (cut set-schematic-connection-parent! <> subschematic) connections)
     subschematic))

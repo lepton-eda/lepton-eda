@@ -40,7 +40,6 @@
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
   #:use-module (netlist subschematic)
-  #:use-module (netlist subschematic-connection)
   #:use-module (netlist verbose)
   #:use-module (symbol check net-attrib)
 
@@ -290,17 +289,6 @@
      components)
     (for-each set-package-pin-nets-properties! components)
 
-    subschematic))
-
-
-(define (subschematic-list->subschematic name subschematics)
-  "Creates a new subschematic from the SUBSCHEMATICS list.  NAME
-is used as its hierarchical name."
-  (let* ((pages (append-map subschematic-pages subschematics))
-         (components (append-map subschematic-components subschematics))
-         (connections (make-subschematic-connections components name))
-         (subschematic (make-subschematic name pages components connections)))
-    (for-each (cut set-schematic-connection-parent! <> subschematic) connections)
     subschematic))
 
 
