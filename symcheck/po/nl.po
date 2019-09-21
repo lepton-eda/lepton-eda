@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gsymcheck\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2018-08-12 12:34+0300\n"
+"POT-Creation-Date: 2019-09-21 00:09+0300\n"
 "PO-Revision-Date: 2014-08-31 22:48+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -18,254 +18,205 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
-#: symcheck/scheme/symbol/check/arc.scm:34
 #, scheme-format
 msgid "Zero radius arc at ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/arc.scm:46
 #, scheme-format
 msgid "Zero angle arc at ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/attrib.scm:51
 #, scheme-format
 msgid ""
 "Set 'graphical=1' if you want the symbol to be graphical, current value: ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/attrib.scm:68
 #, fuzzy
 msgid "Graphical symbols should have device=none"
 msgstr "Grafisch symbool gevonden, device=none\n"
 
-#: symcheck/scheme/symbol/check/attrib.scm:80
 #, fuzzy, scheme-format
 msgid "Forbidden attribute: ~A"
 msgstr "Verboden %s= attribuut: [%s=%s] gevonden\n"
 
-#: symcheck/scheme/symbol/check/attrib.scm:85
 #, scheme-format
 msgid "Obsolete attribute: ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/attrib.scm:93
 #, fuzzy, scheme-format
 msgid "Misplaced pin attribute: ~A"
 msgstr "Misplaatst pen attribuut: [%s=%s] gevonden\n"
 
-#: symcheck/scheme/symbol/check/attrib.scm:105
 #, fuzzy, scheme-format
 msgid "Wrongly attached attribute: ~A"
 msgstr "Verkeerd bevestigd attribuut: [%s=%s] gevonden\n"
 
-#: symcheck/scheme/symbol/check/attrib.scm:110
 #, scheme-format
 msgid "Unknown attribute: ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/attrib.scm:118
 #, fuzzy, scheme-format
 msgid "Duplicate floating attribute: ~A"
 msgstr "Meerdere footprint= attributen gevonden\n"
 
-#: symcheck/scheme/symbol/check/attrib.scm:155
 #, fuzzy, scheme-format
 msgid "Missing required attribute: ~A"
 msgstr "Ontbrekend refdes= attribuut\n"
 
-#: symcheck/scheme/symbol/check/box.scm:34
 #, scheme-format
 msgid "Zero sized box at ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/circle.scm:33
 #, scheme-format
 msgid "Zero radius circle at ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/connection.scm:32
 #, scheme-format
 msgid "Object with forbidden connections: ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/forbidden.scm:38
 #, scheme-format
 msgid "Object forbidden inside symbols: ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/line.scm:35
 #, scheme-format
 msgid "Zero length ~A at ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/log.scm:35
 msgid "Wrong check log destination!"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/net-attrib.scm:55
 #, fuzzy, scheme-format
 msgid "Missing pin number after \":\" or \",\": ~A"
 msgstr "Ontbrekend pinnumber= attribuut\n"
 
-#: symcheck/scheme/symbol/check/net-attrib.scm:73
 #, fuzzy, scheme-format
 msgid "Duplicate pin number in one net= attribute ~A: ~A"
 msgstr "Pen met nummer 0 in net= attribuut gevonden\n"
 
-#: symcheck/scheme/symbol/check/net-attrib.scm:103
 #, fuzzy, scheme-format
 msgid "Invalid net attribute: net=~A"
 msgstr "Slecht net= attribuut [net=%s]\n"
 
-#: symcheck/scheme/symbol/check/net-attrib.scm:115
 #, fuzzy, scheme-format
 msgid "Duplicate pin number in net= attribute ~A: ~A"
 msgstr "Pen met nummer 0 in net= attribuut gevonden\n"
 
-#: symcheck/scheme/symbol/check/net-attrib.scm:153
 #, scheme-format
 msgid "Duplicate pin number ~A: ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/path.scm:59
 #, scheme-format
 msgid "Zero length path element: ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/picture.scm:35
 #, scheme-format
 msgid "Zero sized picture at ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/picture.scm:51
 #, scheme-format
 msgid "Picture file ~S does not exist or is not readable."
 msgstr ""
 
-#: symcheck/scheme/symbol/check/pin.scm:107
 #, fuzzy, scheme-format
 msgid "Duplicate pin attribute on one pin: ~A"
 msgstr "Meerdere pinseq=%s attributen op een pen gevonden\n"
 
-#: symcheck/scheme/symbol/check/pin.scm:125
 #, scheme-format
 msgid "Prohibited zero value pin attribute: ~A=0"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/pin.scm:132
 #, fuzzy, scheme-format
 msgid "Invalid pin attribute value: pintype=~A"
 msgstr "Ongeldig pintype=%s attribuut\n"
 
-#: symcheck/scheme/symbol/check/pin.scm:146
 #, fuzzy, scheme-format
 msgid "Missing pin attribute: ~A"
 msgstr "Ontbrekend pinseq= attribuut\n"
 
-#: symcheck/scheme/symbol/check/pin-attrib.scm:61
 #, fuzzy, scheme-format
 msgid "Duplicate pin attribute in the symbol: ~A=~A"
 msgstr "Dubbel pinseq=%s attribuut in het symbool gevonden\n"
 
-#: symcheck/scheme/symbol/check/primitive.scm:59
 #, scheme-format
 msgid "Object: ~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/slot.scm:89
 #, fuzzy, scheme-format
 msgid "Found ~A=~A attribute"
 msgstr "%s attribuut gevonden\n"
 
-#: symcheck/scheme/symbol/check/slot.scm:95
 #, fuzzy, scheme-format
 msgid "Invalid slotdef=~A attribute (the format is #:#,#,#,...)"
 msgstr "Misvormd slotdef= (het formaat is #:#,#,#,...)\n"
 
-#: symcheck/scheme/symbol/check/slot.scm:110
 #, scheme-format
 msgid "Negative attribute: numslots=~A"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/slot.scm:113
 #, fuzzy
 msgid "numslots set to 0, symbol does not have slots"
 msgstr "numslots op nul ingesteld, symbool heeft geen slots\n"
 
-#: symcheck/scheme/symbol/check/slot.scm:122
 #, fuzzy, scheme-format
 msgid "Zero pin number in slotdef=~A"
 msgstr "Dubbel slot nummer in slotdef=%s\n"
 
-#: symcheck/scheme/symbol/check/slot.scm:139
 #, fuzzy, scheme-format
 msgid "Found a zero slot in slotdef=~A"
 msgstr "Een nul slot gevonden in slotdef=%s\n"
 
-#: symcheck/scheme/symbol/check/slot.scm:143
 #, scheme-format
 msgid ""
 "Slot number ~A (slotdef=~A) is greater than the maximum slot number (~A)"
 msgstr ""
 
-#: symcheck/scheme/symbol/check/slot.scm:192
 #, fuzzy, scheme-format
 msgid "Superfluous slotdef=~A:... (there should be ~A slotdef= attributes)"
 msgstr "Ontbrekend slotdef= (er zouden %s slotdef= attributen moeten zijn)\n"
 
-#: symcheck/scheme/symbol/check/slot.scm:203
 #, fuzzy, scheme-format
 msgid "Missing slotdef=~A:... (there should be ~A slotdef= attributes)"
 msgstr "Ontbrekend slotdef= (er zouden %s slotdef= attributen moeten zijn)\n"
 
-#: symcheck/scheme/symbol/check/slot.scm:218
 #, fuzzy, scheme-format
 msgid "Not enough pins in slotdef=~A (must be ~A)"
 msgstr "Niet genoeg pennen in slotdef=%s\n"
 
-#: symcheck/scheme/symbol/check/slot.scm:224
 #, fuzzy, scheme-format
 msgid "Too many pins in slotdef=~A (must be ~A)"
 msgstr "Teveel pennen in slotdef=%s\n"
 
-#: symcheck/scheme/symbol/check/slot.scm:238
 #, fuzzy, scheme-format
 msgid "Duplicate slot number ~A: ~A"
 msgstr "Dubbel slot nummer in slotdef=%s\n"
 
-#: symcheck/scheme/symbol/check/slot.scm:258
 #, fuzzy, scheme-format
 msgid "Found ~A distinct pins in slots"
 msgstr "%d aparte pennen in slots gevonden\n"
 
-#: symcheck/scheme/symbol/check/text.scm:41
 #, fuzzy, scheme-format
 msgid "Simple text object with only SHOW_NAME or SHOW_VALUE set: ~A"
 msgstr ""
 "Een eenvoudig tekst object gevonden met alleen SHOW_NAME of SHOW_VALUE "
 "ingesteld [%s]\n"
 
-#: symcheck/scheme/symbol/check/text.scm:80
 #, fuzzy, scheme-format
 msgid "Text with a trailing '\\', consider to escape it with '\\\\': ~A"
 msgstr ""
 "Tekst met een achterblijvende '': overweeg om met een '\\\\' stuurcode te "
 "ontkomen [%s]\n"
 
-#: symcheck/scheme/symbol/check/text.scm:82
 #, fuzzy, scheme-format
 msgid "Text with unbalanced overbar markers '\\_' in it': ~A"
 msgstr "Tekst met ongebalanceerde overstreep merkers '\\_' gevonden' [%s]\n"
 
-#: symcheck/scheme/symbol/check/text.scm:84
 #, fuzzy, scheme-format
 msgid "Text with a '\\' in it, consider to escape it with '\\\\': ~A"
 msgstr ""
 "Tekst met een '\\' gevonden: overweeg om met een '\\\\' stuurcode te "
 "ontkomen [%s]\n"
 
-#: symcheck/scheme/symcheck/check.scm:36
 #, fuzzy, scheme-format
 msgid ""
 "Usage: ~A [OPTIONS] FILENAME ...\n"
@@ -286,64 +237,52 @@ msgstr ""
 "bestandsnaam1 ... bestandsnaamN zijn de te controleren symbolen\n"
 "\n"
 
-#: symcheck/scheme/symcheck/check.scm:52
 #, scheme-format
 msgid "Loading schematic ~S"
 msgstr ""
 
-#: symcheck/scheme/symcheck/check.scm:59
 #, fuzzy, scheme-format
 msgid "Checking: ~A\n"
 msgstr "Controleer: %s\n"
 
-#: symcheck/scheme/symcheck/check.scm:73
 #, scheme-format
 msgid ""
 "No schematic files specified for processing.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
 
-#: symcheck/scheme/symcheck/report.scm:41
 #, fuzzy, scheme-format
 msgid "Info: ~A"
 msgstr "Info: %s"
 
-#: symcheck/scheme/symcheck/report.scm:45
 #, fuzzy, scheme-format
 msgid "Warning: ~A"
 msgstr "Waarschuwing: %s"
 
-#: symcheck/scheme/symcheck/report.scm:49
 #, fuzzy, scheme-format
 msgid "ERROR: ~A"
 msgstr "FOUT: %s"
 
-#: symcheck/scheme/symcheck/report.scm:52
 #, scheme-format
 msgid "Unrecognized info: ~A\n"
 msgstr ""
 
-#: symcheck/scheme/symcheck/report.scm:77
 #, fuzzy, scheme-format
 msgid "~A warning found"
 msgstr "%d waarschuwingen gevonden "
 
-#: symcheck/scheme/symcheck/report.scm:82
 #, fuzzy
 msgid "(use -vv to view details)"
 msgstr "(gebruik -vv om details te zien)\n"
 
-#: symcheck/scheme/symcheck/report.scm:85
 #, fuzzy
 msgid "No errors found"
 msgstr "Geen fouten gevonden\n"
 
-#: symcheck/scheme/symcheck/report.scm:87
 #, fuzzy, scheme-format
 msgid "~A ERROR found"
 msgstr "1 FOUT gevonden "
 
-#: symcheck/scheme/symcheck/report.scm:92
 #, fuzzy
 msgid "(use -v to view details)"
 msgstr "(gebruik -v om details te zien)\n"
