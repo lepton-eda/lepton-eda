@@ -43,6 +43,28 @@ Notable changes in Lepton EDA 1.9.8
   Lepton. Two additional categories have been rearranged in order
   "Electronics" to have priority over "Engineering".
 
+- The following rc procedures are now exported in the module
+`(lepton library)`:
+
+  - `component-library-command`
+  - `component-library-funcs`
+  - `component-library-search`
+  - `component-library`
+  - `reset-component-library`
+
+- The following rc procedures are now exported in the module
+`(geda deprecated)`:
+
+  - `always-promote-attributes`
+  - `attribute-promotion`
+  - `bitmap-directory`
+  - `bus-ripper-symname`
+  - `keep-invisible`
+  - `make-backup-files`
+  - `print-color-map`
+  - `promote-invisible`
+  - `scheme-directory`
+
 ### Changes when building from source:
 
 - Building of the tools with Guile 2.2 is now supported.
