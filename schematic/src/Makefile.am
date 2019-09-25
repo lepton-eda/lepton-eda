@@ -128,7 +128,7 @@ lepton_schematic_CPPFLAGS = -I$(top_srcdir)/liblepton/include  -I$(srcdir)/../in
 	-I$(top_srcdir) -I$(includedir)
 lepton_schematic_CFLAGS = $(GCC_CFLAGS) $(LIBSTROKE_CFLAGS) \
 	$(MINGW_CFLAGS) \
-	$(GLIB_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS)
+	$(GLIB_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS) $(CFLAGS)
 lepton_schematic_LDFLAGS = $(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
 	$(GTHREAD_LIBS) $(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
 lepton_schematic_LDADD = \
