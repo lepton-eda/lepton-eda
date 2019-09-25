@@ -68,6 +68,22 @@ Notable changes in Lepton EDA 1.9.8
   - `promote-invisible`
   - `scheme-directory`
 
+- Symbols with duplicated names have been moved to separate folders:
+
+  - `share/lepton-eda/sym-gnetman`
+  - `share/lepton-eda/sym-verilog`
+  - `share/lepton-eda/sym-vhdl`
+
+  Now it's possible to use `gafrc` function `component-library-search`
+  with `share/lepton-eda/sym` without getting tons of warnings about
+  duplicated symbols in the log.
+
+- System-wide configuration files `geda-system.conf` and `lepton-system.conf`
+  have been added.
+
+- The location of log files has been changed to `$XDG_CACHE_HOME/lepton-eda/logs/`.
+  Previously they were stored in the user's configuration directory.
+
 ### Changes when building from source:
 
 - Building of the tools with Guile 2.2 is now supported.
@@ -349,6 +365,16 @@ Notable changes in Lepton EDA 1.9.8
   the program that did not however go to the repository, so the
   removing is safe.
 
+- Netlister backends and associated files have been moved to a new
+  subdirectory `share/lepton-eda/scheme/backend`.
+
+- An arbitrary backend file can be loaded by specifying its path
+  via the new `-f` command line switch to `lepton-netlist`.
+  File should be named like `gnet-NAME.scm`, where `NAME` is the
+  backend's name. It's useful for testing new and 3rd party
+  backends, as well as running backends from different
+  installation paths.
+
 ### Changes in `lepton-schematic`:
 
 - The attribute detachment behaviour has been changed.  Before,
@@ -476,6 +502,9 @@ Notable changes in Lepton EDA 1.9.8
   menu item in the context menu.  The user can cancel the action
   in the confirmation dialog.
 
+- Long lines in the log window can now be wrapped by clicking the
+  "Wrap Long Lines" menu item in the log window's context menu.
+
 - Schematic page filename and more verbose information is now
   displayed in the page revert dialog.
 
@@ -578,6 +607,29 @@ Notable changes in Lepton EDA 1.9.8
   - If an invalid action is requested, instead of using the Scheme
     function `error()` to report the failure, it just prints a
     warning to the log.
+
+- Deprecated export scripts `image.scm`, `print.scm` and the `--output`
+  command line option have been removed. Schematics can be exported by
+  using `lepton-cli export` and 'File → Write Image...' dialog box.
+
+- Current schematic's full file path can be shown in the main window's
+  title if the `title-show-path` configuration key (boolean) in the
+  `schematic.gui` group is set to `true`.
+
+- Close confirmation dialog has been improved:
+
+  - It can be resized.
+  - "Show full paths" checkbox has been added.
+
+- `Write Image...` dialog has been improved:
+
+  - Image color mode can now be selected (greyscale or color)
+  - 1024x768 has been added to the list of image sizes.
+  - Selected directory, image size, image type and color mode
+    are saved and restored when this dialog is opened next time.
+
+- Temporary files created by undo subsystem in `$TMP` are given
+  new names: `lepton-schematic.save*` instead of `gschem.save*`.
 
 ### Changes in `lepton-attrib`:
 
