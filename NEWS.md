@@ -78,8 +78,10 @@ Notable changes in Lepton EDA 1.9.8
   with `share/lepton-eda/sym` without getting tons of warnings about
   duplicated symbols in the log.
 
-- System-wide configuration files `geda-system.conf` and `lepton-system.conf`
-  have been added.
+- System-wide configuration file, `lepton-system.conf`, has been
+  added to the distribution with default settings applicable for
+  most installations.  Its legacy predecessor, `geda-system.conf`,
+  has been added as well for backwards compatibility.
 
 - The location of log files has been changed to `$XDG_CACHE_HOME/lepton-eda/logs/`.
   Previously they were stored in the user's configuration directory.
