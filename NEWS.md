@@ -401,6 +401,21 @@ Notable changes in Lepton EDA 1.9.8
   - Monospace font is used in the macro widget entry
     (`schematic.macro-widget::font=Monospace 11`).
 
+- The attribute attachment code has been rewritten in Scheme,
+  changed and fixed in several ways:
+
+  - Now attributes can be attached to any non-text objects.
+
+  - Only visible attributes can be now attached.
+
+  - If attributes are already attached or no attribute is
+    selected, no action is undertaken.
+
+  - Information about successful attachment is now printed to the
+    log.
+
+  - Successfully attached attributes and the object they are
+    attached to are deselected after the attachment operation.
 
 - The attribute detachment behaviour has been changed.  Before,
   attributes of selected objects (visible and invisible, selected
