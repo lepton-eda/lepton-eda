@@ -467,6 +467,10 @@ Notable changes in Lepton EDA 1.9.8
   - `stroke.scm`
 
 - Several `gschemrc` settings has been changed as follows:
+  - `add-attribute-offset` is now deprecated and does nothing.
+  - `logging-destination` is now deprecated and does nothing.
+  - `log-window-type` is now deprecated and does nothing.
+  - `raise-dialog-boxes-on-exp` is now deprecated and does nothing.
   - `window-size` is now deprecated and does nothing.
   - `warp-cursor` is now "disabled" by default.
   - `fast-mousepan` is now "disabled" by default.
