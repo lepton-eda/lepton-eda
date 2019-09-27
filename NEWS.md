@@ -636,6 +636,9 @@ Notable changes in Lepton EDA 1.9.8
   - Superfluous "Right click on the filename for more options..."
     label has been removed.
 
+  - The "Update" button has been removed from the page manager
+    dialog, and a similar item has been added to the context menu.
+
 - Fixed a broken output of translated strings to the log when the
   program is compiled using guile-2.2.  It is a [known
   issue](https://lists.gnu.org/archive/html/bug-guile/2017-01/msg00020.htm)
