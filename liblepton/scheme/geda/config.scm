@@ -1,7 +1,7 @@
 ;; Lepton EDA
 ;; liblepton - Lepton's library - Scheme API
 ;; Copyright (C) 2011-2012 Peter Brett <peter@peter-b.co.uk>
-;; Copyright (C) 2017-2018 Lepton EDA Contributors
+;; Copyright (C) 2017-2019 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

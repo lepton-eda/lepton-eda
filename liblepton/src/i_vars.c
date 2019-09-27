@@ -1,5 +1,4 @@
-/* Lepton EDA
- * liblepton - Lepton's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2017 gEDA Contributors
  * Copyright (C) 2017-2019 Lepton EDA Contributors

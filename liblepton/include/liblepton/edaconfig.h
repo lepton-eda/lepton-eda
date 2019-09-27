@@ -1,7 +1,6 @@
-/* Lepton EDA
- * liblepton - Lepton's library
- * Copyright (C) 2011-2012 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+/* Lepton EDA library
+ * Copyright (C) 2011-2013 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

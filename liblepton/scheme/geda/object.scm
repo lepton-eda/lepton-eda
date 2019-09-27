@@ -1,5 +1,4 @@
-;; Lepton EDA
-;; liblepton - Lepton's library - Scheme API
+;; Lepton EDA library - Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2012-2016 gEDA Contributors
 ;; Copyright (C) 2017-2019 Lepton EDA Contributors
