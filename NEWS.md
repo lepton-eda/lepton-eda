@@ -692,6 +692,13 @@ Notable changes in Lepton EDA 1.9.8
   with page hooks they can allow to save locking status of
   primitive objects without changing the current file format.
 
+- The function `arc-end-angle` has been fixed so it now correctly
+  returns the end angle of an arc.  Since its creation, it gave
+  improper results because it was a sibling of a C function
+  returning the sweep angle of an arc. A new function,
+  `arc-sweep-angle`, has been added to maintain that
+  functionality.
+
 
 Notable changes in Lepton EDA 1.9.7
 -----------------------------------
