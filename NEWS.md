@@ -687,8 +687,9 @@ Notable changes in Lepton EDA 1.9.8
   - Selected directory, image size, image type and color mode
     are saved and restored when this dialog is opened next time.
 
-- Temporary files created by undo subsystem in `$TMP` are given
-  new names: `lepton-schematic.save*` instead of `gschem.save*`.
+- New names are now used for temporary files created by undo
+  subsystem in `$TMP`: `lepton-schematic.save*` instead of
+  `gschem.save*`.
 
 ### Changes in `lepton-attrib`:
 
