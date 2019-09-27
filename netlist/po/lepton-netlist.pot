@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR gEDA Developers
+# Copyright (C) YEAR Lepton Developers
 # This file is distributed under the same license as the lepton-eda package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
