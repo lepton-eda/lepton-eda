@@ -128,6 +128,10 @@ Notable changes in Lepton EDA 1.9.8
   appear due to changing of the default linker from GNU `ld` to
   `ld.lld` from the `llvm` distribution.
 
+- Fixed FreeBSD build errors on the `powerpc64` architecture with
+  base system compiler gcc-4.2: (FreeBSD bug report
+  [#239311](https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=239311)).
+
 - Fixed build failures on Gentoo with gcc-8.2.0.
 
 - Several C functions in `liblepton`, various Lepton tools,
