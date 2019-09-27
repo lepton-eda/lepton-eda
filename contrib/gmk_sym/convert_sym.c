@@ -5,7 +5,9 @@
  *  accept one argument, the name of the file to
  *  convert, converted output is displayed on stdout.
  *
- *     Copyright (C) 1999-2010  Mike Jarabek
+ *  Copyright (C) 1999-2010 Mike Jarabek
+ *  Copyright (C) 1999-2016 gEDA Contributors
+ *  Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  *     CHANGE HISTORY:
  *

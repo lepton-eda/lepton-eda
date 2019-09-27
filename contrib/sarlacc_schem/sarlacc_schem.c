@@ -1,5 +1,8 @@
 /*   Orcad.c  v 0.92
  *   Copyright (C) 1999-2010 Matthew Ettus
+ *   Copyright (C) 1999-2016 gEDA Contributors
+ *   Copyright (C) 2017-2019 Lepton EDA Contributors
+ *
  *   For more info email matt@ettus.com
  *   Ths code is released under the terms of the GNU GPL
  *   See www.fsf.org for a copy of the license
