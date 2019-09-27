@@ -1,6 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
+/* Lepton EDA attribute editor
  * Copyright (C) 1998-2010 Ales Hvezda
+ * Copyright (C) 1998-2012 gEDA Contributors
+ * Copyright (C) 2018-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
