@@ -466,8 +466,15 @@ Notable changes in Lepton EDA 1.9.8
   - `options.scm`
   - `stroke.scm`
 
+- The following Scheme functions are now deprecated and do nothing:
+  - `gschem-image`
+  - `gschem-pdf`
+  - `gschem-use-rc-values`
+
 - Several `gschemrc` settings has been changed as follows:
   - `add-attribute-offset` is now deprecated and does nothing.
+  - `image-color` is now deprecated and does nothing.
+  - `image-size` is now deprecated and does nothing.
   - `logging-destination` is now deprecated and does nothing.
   - `log-window-type` is now deprecated and does nothing.
   - `raise-dialog-boxes-on-exp` is now deprecated and does nothing.
