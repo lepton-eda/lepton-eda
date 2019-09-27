@@ -217,6 +217,32 @@ Notable changes in Lepton EDA 1.9.8
     styles when the line width is non-zero.  Previously, the
     default `square` style was always used.
 
+### Scheme API changes
+- Three legacy rc procedures, `attribute-promotion`,
+  `promote-invisible`, and `keep-invisible`, have been adjusted to
+  return their boolean values if used with no arguments, instead
+  of just `#t`. This allows using the results in Scheme
+  plugins. The procedure `bitmap-directory` now returns its string
+  value if used with no arguments.  If no value has been
+  previously set, it returns `#f`.
+
+- A new hook, `open-page-hook`, has been added to the `(gschem
+  hook)` module.  It allows to evaluate Scheme code when an
+  existing schematic page is loaded.
+
+- New Scheme API functions for working with object selectable
+  status have been added to the `(geda object)` module:
+  `object-selectable?` and `set-object-selectable!`.  Together
+  with page hooks they can allow to save locking status of
+  primitive objects without changing the current file format.
+
+- The function `arc-end-angle` has been fixed so it now correctly
+  returns the end angle of an arc.  Since its creation, it gave
+  improper results because it was a sibling of a C function
+  returning the sweep angle of an arc. A new function,
+  `arc-sweep-angle`, has been added to maintain that
+  functionality.
+
 ### Changes in `lepton-netlist`:
 
 - A few improvements have been made in option processing:
@@ -734,49 +760,22 @@ Notable changes in Lepton EDA 1.9.8
   neither interactive mode nor input files are specified on
   command line.
 
+### Changes in `lepton-cli`:
+- Default font name for the `export` command has been changed from
+  `Arial` to `Sans` (`export::font=Sans`).
+
 ### Changes in `lepton-schlas`:
 - The program no longer loads `system-gschlasrc` since for many
   years it provided no useful settings for the user.  Previously
   available Scheme functions `quit()`, `exit()`, and
   `gschlas-version()` have been removed as well.
 
-### Changes in `gmk_sym`:
-
-- Non-working `-d` (debug) option has been removed.
-
-### Scheme API changes
-- Three legacy rc procedures, `attribute-promotion`,
-  `promote-invisible`, and `keep-invisible`, have been adjusted to
-  return their boolean values if used with no arguments, instead
-  of just `#t`. This allows using the results in Scheme
-  plugins. The procedure `bitmap-directory` now returns its string
-  value if used with no arguments.  If no value has been
-  previously set, it returns `#f`.
-
-- A new hook, `open-page-hook`, has been added to the `(gschem
-  hook)` module.  It allows to evaluate Scheme code when an
-  existing schematic page is loaded.
-
-- New Scheme API functions for working with object selectable
-  status have been added to the `(geda object)` module:
-  `object-selectable?` and `set-object-selectable!`.  Together
-  with page hooks they can allow to save locking status of
-  primitive objects without changing the current file format.
-
-- The function `arc-end-angle` has been fixed so it now correctly
-  returns the end angle of an arc.  Since its creation, it gave
-  improper results because it was a sibling of a C function
-  returning the sweep angle of an arc. A new function,
-  `arc-sweep-angle`, has been added to maintain that
-  functionality.
-
-### Changes in `lepton-cli`:
-- Default font name for the `export` command has been changed from
-  `Arial` to `Sans` (`export::font=Sans`).
-
 ### Changes in `lepton-schdiff`:
 - Default font name has been changed from `Arial` to `Sans`.
 
+### Changes in `gmk_sym`:
+
+- Non-working `-d` (debug) option has been removed.
 
 Notable changes in Lepton EDA 1.9.7
 -----------------------------------
