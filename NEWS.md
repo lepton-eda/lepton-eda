@@ -585,6 +585,10 @@ Notable changes in Lepton EDA 1.9.8
   <kbd>Control</kbd>+<kbd>x</kbd> <kbd>Control</kbd>+<kbd>v</kbd>
   when a component was selected.
 
+- Fixed errors triggered by the function `file-quit` on startup,
+  for example, using the following command: `lepton-schematic -c
+  '(file-quit)'`.
+
 - The file `gschem.scm`, that defined some previously global
   Scheme functions, has been transformed into two modules —
   `(schematic gui keymap)` and `(schematic gui strokes)`.  While
