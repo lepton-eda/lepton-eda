@@ -468,6 +468,11 @@ Notable changes in Lepton EDA 1.9.8
 
 - Several `gschemrc` settings has been changed as follows:
   - `window-size` is now deprecated and does nothing.
+  - `warp-cursor` is now "disabled" by default.
+  - `fast-mousepan` is now "disabled" by default.
+  - `log-window` is now "later" by default.
+  - `undo-levels` is now "20" by default.
+  - `undo-panzoom` is now "disabled" by default.
 
 - The `sys-doc-dir()` function code in the module `(gschem
   gschemdoc)` module responsible for searching for system
