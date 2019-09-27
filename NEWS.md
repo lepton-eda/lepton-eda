@@ -160,8 +160,9 @@ Notable changes in Lepton EDA 1.9.8
   their translation *PO* files when the tools are built from
   sources.
 
-- A CSS file has been added to prettify generated Scheme API
-  reference HTML pages.
+- Now *Lepton EDA Scheme Reference Manual* in the `HTML` format is
+  built and installed with other files on `make && make install`.
+  A CSS file has been added to prettify the generated HTML pages.
 
 - Some empty application-specific directories that previously
   could not be removed after uninstalling all files by `make
