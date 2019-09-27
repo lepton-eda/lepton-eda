@@ -1,5 +1,4 @@
-/* Lepton EDA - Lepton Electronic Design Automation
- * lepton-schlas - Lepton EDA Load and Save
+/* Lepton EDA Schematic Load and Save utility
  * Copyright (C) 2002-2010 Ales Hvezda
  * Copyright (C) 2002-2016 gEDA Contributors
  * Copyright (C) 2017-2019 Lepton EDA Contributors

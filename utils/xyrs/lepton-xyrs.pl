@@ -3,7 +3,7 @@
 # Copyright (C) 2008 Carlos Nieves Onega
 # Copyright (C) 2008 other contributors
 #                        (see ChangeLog or SCM history for details)
- 
+# Copyright (C) 2018-2019 Lepton EDA Contributors
 # This file is part of lepton-xyrs.
 
 # This program is free software; you can redistribute it and/or

@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * gschlas - gEDA Load and Save
+/* Lepton EDA Schematic Load and Save utility
  * Copyright (C) 2002-2010 Ales Hvezda
- * Copyright (C) 2002-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2002-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
