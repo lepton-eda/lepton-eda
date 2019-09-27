@@ -589,6 +589,9 @@ Notable changes in Lepton EDA 1.9.8
   for example, using the following command: `lepton-schematic -c
   '(file-quit)'`.
 
+- Fixed a bug of searching for `gschem-gtkrc` in wrong system
+  config directories.
+
 - The file `gschem.scm`, that defined some previously global
   Scheme functions, has been transformed into two modules —
   `(schematic gui keymap)` and `(schematic gui strokes)`.  While
