@@ -1,5 +1,6 @@
 ;;; Autotools compatible SRFI-64 Scheme unit-test framework
 ;;; Copyright (C) 2016 gEDA Contributors
+;;; Copyright (C) 2018-2019 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
