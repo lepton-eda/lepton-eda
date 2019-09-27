@@ -19,6 +19,7 @@
  */
 
 #include <config.h>
+#include <gdk/gdkkeysyms.h>
 #include "gschem.h"
 
 
@@ -208,6 +209,31 @@ pagesel_callback_selection_changed (GtkTreeSelection* selection,
   }
 
   x_window_set_current_page (w_current, page);
+}
+
+
+
+/*! \brief "key-press-event" signal handler.
+ *  \par Function Description
+ *  Disable PgUp/PgDown keys.
+ *  \todo Investiagte why the program crashes on PgUp/PgDown.
+ */
+static gboolean
+pagesel_callback_key_pressed (GtkWidget*   widget,
+                              GdkEventKey* event,
+                              gpointer     data)
+{
+  gboolean blockKeys = FALSE;
+
+  if (event->type == GDK_KEY_PRESS)
+  {
+    blockKeys = event->keyval == GDK_KEY_Page_Up    ||
+                event->keyval == GDK_KEY_Page_Down  ||
+                event->keyval == GDK_KEY_KP_Page_Up ||
+                event->keyval == GDK_KEY_KP_Page_Down;
+  }
+
+  return blockKeys;
 }
 
 
@@ -442,6 +468,12 @@ widget_create (PageSelectWidget* pagesel)
                                        "model",      store,
                                        "rules-hint", TRUE,
                                        NULL));
+
+  g_signal_connect (treeview,
+                    "key-press-event",
+                    G_CALLBACK (pagesel_callback_key_pressed),
+                    NULL);
+
   g_signal_connect (treeview,
                     "button-press-event",
                     G_CALLBACK (pagesel_callback_button_pressed),
