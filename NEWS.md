@@ -135,7 +135,7 @@ Notable changes in Lepton EDA 1.9.8
   `gmk_sym`) as well as PO-files have been fixed to avoid
   compilation warnings and errors.  Now `lepton-eda` compiles
   without warnings with gcc/g++ on several platforms.  Several
-  warnings reported by llvm have been fixed as well.
+  warnings reported by clang++/llvm have been fixed as well.
 
 - The like changes as above have been done in the Scheme part of
   code to prevent various compilation and deprecation warnings in
