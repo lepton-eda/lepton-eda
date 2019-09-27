@@ -623,9 +623,9 @@ Notable changes in Lepton EDA 1.9.8
   - It can be resized.
   - "Show full paths" checkbox has been added.
 
-- `Write Image...` dialog has been improved:
+- The `Write Image...` dialog box has been improved as follows:
 
-  - Image color mode can now be selected (greyscale or color)
+  - Image color mode can now be selected (greyscale or color).
   - 1024x768 has been added to the list of image sizes.
   - Selected directory, image size, image type and color mode
     are saved and restored when this dialog is opened next time.
