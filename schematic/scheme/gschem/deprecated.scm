@@ -1,6 +1,8 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett
+;; Copyright (C) 2010-2012 gEDA Contributors
+;; Copyright (C) 2017-2019 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

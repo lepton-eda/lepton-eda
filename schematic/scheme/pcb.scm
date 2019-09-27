@@ -1,6 +1,8 @@
 ;; -*- Scheme -*-
 ;;
 ;; Copyright (C) 2006-2010 Dan McMahill
+;; Copyright (C) 2006-2011 gEDA Contributors
+;; Copyright (C) 2019 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
