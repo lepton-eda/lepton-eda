@@ -645,9 +645,10 @@ Notable changes in Lepton EDA 1.9.8
     function `error()` to report the failure, it just prints a
     warning to the log.
 
-- Deprecated export scripts `image.scm`, `print.scm` and the `--output`
-  command line option have been removed. Schematics can be exported by
-  using `lepton-cli export` and 'File → Write Image...' dialog box.
+- Deprecated export scripts `image.scm`, `print.scm` and the
+  `--output` command line option have been removed. Schematics can
+  be exported by using `lepton-cli export` or via the 'File →
+  Write Image...' dialog box.
 
 - Current schematic's full file path can be shown in the main window's
   title if the `title-show-path` configuration key (boolean) in the
