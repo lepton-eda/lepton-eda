@@ -195,6 +195,7 @@ Notable changes in Lepton EDA 1.9.8
   correctly on some Ubuntu versions.
 
 ### Changes in `libleptonrenderer`:
+- Default font name has been changed from `Arial` to `Sans`.
 
 - Changes in path rendering:
 
@@ -387,6 +388,19 @@ Notable changes in Lepton EDA 1.9.8
 - The command line option *-p* has been removed. It was used to
   automatically place the main window with some default widget
   sizes.
+
+- Several configuration settings have been changed to ensure
+  reasonable default values:
+  - The **rubber band** mode and **magnetic net** mode status bar
+    indicators are now shown by default
+    (`schematic.status-bar::show-rubber-band=true`,
+    `schematic.status-bar::show-magnetic-net=true`).
+  - The tabbed GUI is enabled (`schematic.gui::use-tabs=true`).
+  - Monospace font is used in the log window
+    (`schematic.log-window::font=Monospace 11`).
+  - Monospace font is used in the macro widget entry
+    (`schematic.macro-widget::font=Monospace 11`).
+
 
 - The attribute detachment behaviour has been changed.  Before,
   attributes of selected objects (visible and invisible, selected
@@ -736,6 +750,13 @@ Notable changes in Lepton EDA 1.9.8
   returning the sweep angle of an arc. A new function,
   `arc-sweep-angle`, has been added to maintain that
   functionality.
+
+### Changes in `lepton-cli`:
+- Default font name for the `export` command has been changed from
+  `Arial` to `Sans` (`export::font=Sans`).
+
+### Changes in `lepton-schdiff`:
+- Default font name has been changed from `Arial` to `Sans`.
 
 
 Notable changes in Lepton EDA 1.9.7
