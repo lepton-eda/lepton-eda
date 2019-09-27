@@ -384,6 +384,10 @@ Notable changes in Lepton EDA 1.9.8
 
 ### Changes in `lepton-schematic`:
 
+- The command line option *-p* has been removed. It was used to
+  automatically place the main window with some default widget
+  sizes.
+
 - The attribute detachment behaviour has been changed.  Before,
   attributes of selected objects (visible and invisible, selected
   or not) were all unconditionally stripped.  The detachment code
@@ -462,12 +466,22 @@ Notable changes in Lepton EDA 1.9.8
   - `options.scm`
   - `stroke.scm`
 
+- Several `gschemrc` settings has been changed as follows:
+  - `window-size` is now deprecated and does nothing.
+
 - The `sys-doc-dir()` function code in the module `(gschem
   gschemdoc)` module responsible for searching for system
   documentation directories has been known to fail in some
   circumstances when it tried to guess where the documentation
   files are installed. The guess-work has been eliminated by using
   fixed compile-time variables in the code.
+
+- The geometry (size and position) of `lepton-schematic`'s main
+  window can now be stored in the **cache** configuration context,
+  in the `schematic.window-geometry` group. The geometry is saved
+  on exit and restored on startup if the (new)
+  `[schematic.gui]::restore-window-geometry` configuration key is
+  set to `true` (which is so by default).
 
 - The **macro widget** has been improved in several ways:
 
