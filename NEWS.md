@@ -377,7 +377,7 @@ Notable changes in Lepton EDA 1.9.8
 
 - An arbitrary backend file can be loaded by specifying its path
   via the new `-f` command line switch to `lepton-netlist`.
-  File should be named like `gnet-NAME.scm`, where `NAME` is the
+  The file should be named like `gnet-NAME.scm`, where `NAME` is the
   backend's name. It's useful for testing new and 3rd party
   backends, as well as running backends from different
   installation paths.
