@@ -29,7 +29,7 @@ PO_DEPENDS_ON_POT = no
 # or entity, or to disclaim their copyright.  The empty string stands for
 # the public domain; in this case the translators are expected to disclaim
 # their copyright.
-COPYRIGHT_HOLDER = gEDA Developers
+COPYRIGHT_HOLDER = Lepton Developers
 
 # This is the email address or URL to which the translators shall report
 # bugs in the untranslated strings:
