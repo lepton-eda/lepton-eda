@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gschem ru\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-02-22 14:08+0300\n"
+"POT-Creation-Date: 2019-09-28 09:34+0300\n"
 "PO-Revision-Date: 2015-09-13 16:05+0300\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
@@ -128,12 +128,6 @@ msgstr ""
 "недопустимое значение «%d»\n"
 
 #, fuzzy, c-format
-msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
-msgstr ""
-"add-attribute-offset (отступ атрибута от объекта при его добавлении): "
-"недопустимое значение «%d»\n"
-
-#, fuzzy, c-format
 msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
 msgstr ""
 "auto-save-interval (интервал автосохранения в секундах): недопустимое "
@@ -191,18 +185,6 @@ msgstr "Это версия для MINGW32.\n"
 #, fuzzy, c-format
 msgid "Current locale settings: %1$s\n"
 msgstr "Текущие настройки локализации: %s\n"
-
-#, fuzzy, c-format
-msgid "Couldn't find init scm file [%1$s]"
-msgstr "Не удалось найти scm-файл инициализации «%s»\n"
-
-#, fuzzy, c-format
-msgid "Read init scm file [%1$s]"
-msgstr "Чтение scm-файла инициализации «%s»\n"
-
-#, fuzzy, c-format
-msgid "Failed to read init scm file [%1$s]"
-msgstr "Не удалось прочесть scm-файл инициализации «%s»\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -311,11 +293,15 @@ msgstr "НЕТ"
 msgid "Grid(%1$s, %2$s)"
 msgstr "Сетка(%s, %s)"
 
+msgid "S_elect the schematics you want to save:"
+msgstr "_Выберите сохраняемые схемы:"
+
 msgid "Name"
 msgstr "Имя"
 
-msgid "S_elect the schematics you want to save:"
-msgstr "_Выберите сохраняемые схемы:"
+#, fuzzy
+msgid "Show _full paths"
+msgstr "По_казать имя и значение"
 
 #, fuzzy, c-format
 msgid "Save the changes to schematic \"%1$s\" before closing?"
@@ -395,8 +381,11 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "Закрытие окна\n"
 
+msgid "_Wrap Long Lines"
+msgstr ""
+
 #, fuzzy
-msgid "Clear Log _Window"
+msgid "Clea_r Log Window"
 msgstr "Показать окно журнала"
 
 msgid "Macro:"
@@ -646,27 +635,6 @@ msgstr "Привязка отключена"
 msgid "Resnap Active"
 msgstr "Режим перепривязки"
 
-msgid "Stroke"
-msgstr "Жест"
-
-# Эта строка выводится в режиме ввода жестов, когда библиотека жестов не
-# подключена.
-msgid "none"
-msgstr "---"
-
-# Функция средней кнопки мыши.
-# За этой строкой следует название действия
-msgid "Repeat/"
-msgstr "Повтор: "
-
-# Функция средней кнопки мыши.
-# Должно соответствовать переводам строк "Repeat/" и "none", указанным выше
-msgid "Repeat/none"
-msgstr "Повтор: ---"
-
-msgid "Pan"
-msgstr "Центрирование"
-
 #, fuzzy, c-format
 msgid "New page created [%1$s]"
 msgstr "Создана новая страница «%s»\n"
@@ -675,56 +643,18 @@ msgstr "Создана новая страница «%s»\n"
 msgid "New Window created [%1$s]"
 msgstr "Создано новое окно «%s»\n"
 
-msgid "Failed to Save All"
-msgstr "Не удалось сохранить все файлы"
-
 msgid "Saved All"
 msgstr "Все файлы сохранены"
+
+msgid "Failed to Save All"
+msgstr "Не удалось сохранить все файлы"
 
 #, fuzzy
 msgid "Closing Window"
 msgstr "Закрытие окна\n"
 
-# Это используется только в функциях обновления строки состояния, поэтому
-# переводится как существительное, а не глагол, так как означает режим работы.
-msgid "Copy"
-msgstr "Копирование"
-
 msgid "Select objs first"
 msgstr "Сначала что-нибудь выделите"
-
-# См. примечание выше для "Copy"
-msgid "Multiple Copy"
-msgstr "Многократное копирование"
-
-# См. примечание выше для "Copy"
-msgid "Move"
-msgstr "Перемещение"
-
-msgid "Delete"
-msgstr "Удалить"
-
-msgid "Edit"
-msgstr "Правка"
-
-msgid "Edit Text"
-msgstr "Правка текста"
-
-# Отображение последнего действия для повтора
-msgid "Slot"
-msgstr "Правка секции"
-
-msgid "Rotate"
-msgstr "Поворот"
-
-msgid "Mirror"
-msgstr "Отражение"
-
-msgid "Lock"
-msgstr "Блокировка"
-
-msgid "Unlock"
-msgstr "Разблокировка"
 
 #, fuzzy
 msgid "WARNING: Do not translate with snap off!"
@@ -746,21 +676,6 @@ msgstr ""
 "ВНИМАНИЕ: Если символ смещается в начало координат, размер сетки привязки "
 "должен быть установлен в 100\n"
 
-msgid "Embed"
-msgstr "Внедрение"
-
-msgid "Unembed"
-msgstr "Исключение"
-
-msgid "Update"
-msgstr "Обновление"
-
-# Как и прочие строки в gschem/src/i_callbacks.c данная строка используется
-# для показа последнего действия, которое будет использоваться при повторе. В
-# данном случае текст при повторе будет то скрываться, то отображаться
-msgid "ShowHidden"
-msgstr "Отображение/скрытие текста"
-
 #, c-format
 msgid ""
 "<b>Revert page:</b>\n"
@@ -775,71 +690,13 @@ msgstr ""
 msgid "Revert"
 msgstr "_Возвратить"
 
-msgid "Copy to clipboard"
-msgstr "Копирование в буфер"
-
-msgid "Cut to clipboard"
-msgstr "Вырезание в буфер"
-
-msgid "Paste from clipboard"
-msgstr "Вставка из буфера"
-
 msgid "Empty clipboard"
 msgstr "Буфер пуст"
-
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being copied to.
-#, c-format
-msgid "Copy %i"
-msgstr "Копирование в %i"
-
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being cut to.
-#, c-format
-msgid "Cut %i"
-msgstr "Вырезание в %i"
-
-#. TRANSLATORS: The number is the number of the buffer that is being
-#. * pasted to the schematic.
-#, c-format
-msgid "Paste %i"
-msgstr "Вставка из %i"
 
 # Здесь на самом деле не действие, а состояние. Поэтому не "Очистить буфер", а
 # "Буфер пуст".
 msgid "Empty buffer"
 msgstr "Буфер пуст"
-
-# В обеих функциях речь идёт о добавлении компонента
-msgid "Component"
-msgstr "Добавление компонента"
-
-msgid "Attribute"
-msgstr "Атрибут"
-
-msgid "Net"
-msgstr "Соединение"
-
-msgid "Bus"
-msgstr "Шина"
-
-msgid "Line"
-msgstr "Линия"
-
-msgid "Path"
-msgstr "Контур"
-
-msgid "Box"
-msgstr "Прямоугольник"
-
-msgid "Circle"
-msgstr "Окружность"
-
-msgid "Arc"
-msgstr "Дуга"
-
-msgid "Pin"
-msgstr "Вывод"
 
 #, fuzzy, c-format
 msgid "Searching for source [%1$s]"
@@ -875,24 +732,6 @@ msgstr "Нет реального файла для символа. Символ
 #, fuzzy
 msgid "Cannot find any schematics above the current one!"
 msgstr "Для текущей схемы не удалось найти схему, вышестоящую по иерархии!\n"
-
-msgid "Attach"
-msgstr "Прикрепление"
-
-msgid "Detach"
-msgstr "Отделение"
-
-msgid "ShowN"
-msgstr "Отображение имени"
-
-msgid "ShowV"
-msgstr "Отображение значения"
-
-msgid "ShowB"
-msgstr "Отображение имя=значение"
-
-msgid "VisToggle"
-msgstr "Переключение видимости"
 
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
@@ -949,14 +788,6 @@ msgstr "Режим «магнитных» соединений включён\n"
 #, fuzzy
 msgid "magnetic net mode: OFF"
 msgstr "Режим «магнитных» соединений отключён\n"
-
-#. TRANSLATORS: this string is used to generate a filename for
-#. newly-created files.  It will be used to create a filename of
-#. the form "untitled_N.sch", where N is a number.  Please make
-#. sure that the translation contains characters suitable for use
-#. in a filename.
-msgid "untitled"
-msgstr "безымянный"
 
 #, fuzzy, c-format
 msgid "Translating schematic [%1$d %2$d]"
@@ -1049,10 +880,6 @@ msgstr "Выберите файл изображения"
 msgid "Failed to load picture: %1$s"
 msgstr "Не удалось загрузить изображение: «%s»"
 
-# Используется для вывода действия повтора в строке состояния
-msgid "Picture"
-msgstr "Вставка изображения"
-
 # Квадратные скобки добавлены для единообразия
 #, c-format
 msgid "Failed to replace pictures: %s"
@@ -1084,9 +911,9 @@ msgstr "Отмена/повтор отключены в файле настро�
 msgid ""
 "Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"Interactively edit gEDA schematics or symbols.  If one or more FILEs\n"
-"are specified, open them for editing; otherwise, create a new, empty\n"
-"schematic.\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
 "\n"
 "Options:\n"
 "  -q, --quiet              Quiet mode.\n"
@@ -1094,14 +921,12 @@ msgid ""
 "  -L DIR                   Add DIR to Scheme search path.\n"
 "  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
-"  -o, --output=FILE        Output filename (for printing).\n"
-"  -p                       Automatically place the window.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"gEDA/gaf homepage: <http://www.geda-project.org/>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
 "Использование: %s [КЛЮЧ ...] [--] [ФАЙЛ ...]\n"
 "\n"
@@ -1352,11 +1177,20 @@ msgstr "Запрос недопустимого цвета: %d\n"
 msgid "Background"
 msgstr "Фон"
 
+msgid "Pin"
+msgstr "Вывод"
+
 msgid "Net endpoint"
 msgstr "Метка конца соединения"
 
 msgid "Graphic"
 msgstr "Графический объект"
+
+msgid "Net"
+msgstr "Соединение"
+
+msgid "Attribute"
+msgstr "Атрибут"
 
 msgid "Logic bubble"
 msgstr "Логическая инверсия"
@@ -1366,6 +1200,9 @@ msgstr "Точка сетки"
 
 msgid "Detached attribute"
 msgstr "Неприкреплённый атрибут"
+
+msgid "Bus"
+msgstr "Шина"
 
 msgid "Selection"
 msgstr "Выделение"
@@ -1377,6 +1214,12 @@ msgstr "Ограничительная рамка"
 
 msgid "Zoom box"
 msgstr "Рамка масштабирования"
+
+msgid "Stroke"
+msgstr "Жест"
+
+msgid "Lock"
+msgstr "Блокировка"
 
 # Можно было бы "Фон распечатки", но можно вывести и в файл...
 msgid "Output background"
@@ -1557,11 +1400,26 @@ msgstr "Записано чёрно-белое изображение в «%s» 
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
 msgstr "x_image_lowlevel: не удалось получить растровую копию окна gschem.\n"
 
+msgid "NOTE: print-color-map will be used for PDF export"
+msgstr ""
+
 msgid "Width x Height"
 msgstr "Ширина × высота"
 
 msgid "Image type"
 msgstr "Формат"
+
+# Отображение последнего действия для повтора
+#, fuzzy
+msgid "Color mode"
+msgstr "Правка цвета"
+
+# Отображение последнего действия для повтора
+msgid "Color"
+msgstr "Правка цвета"
+
+msgid "Grayscale"
+msgstr ""
 
 msgid "Write image..."
 msgstr "Введите имя файла для изображения"
@@ -1624,6 +1482,18 @@ msgstr "Правка..."
 #, fuzzy
 msgid "Object Properties..."
 msgstr "<b>Текст</b>"
+
+# Это используется только в функциях обновления строки состояния, поэтому
+# переводится как существительное, а не глагол, так как означает режим работы.
+msgid "Copy"
+msgstr "Копирование"
+
+# См. примечание выше для "Copy"
+msgid "Move"
+msgstr "Перемещение"
+
+msgid "Delete"
+msgstr "Удалить"
 
 msgid "Down Schematic"
 msgstr "Войти в подсхему"
@@ -1729,6 +1599,9 @@ msgstr[2] "%i атрибутов"
 msgid "Text Entry..."
 msgstr "Ввод текста..."
 
+msgid "Refresh"
+msgstr ""
+
 msgid "New Page"
 msgstr "Новая страница"
 
@@ -1741,15 +1614,8 @@ msgstr "Сохранить страницу"
 msgid "Close Page"
 msgstr "Закрыть страницу"
 
-msgid "Page Manager"
-msgstr "Менеджер страниц"
-
 msgid "Changed"
 msgstr "Изменён"
-
-msgid "Right click on the filename for more options..."
-msgstr ""
-"Щёлкните по имени файла правой кнопкой для выбора дополнительных действий."
 
 # Квадратные скобки добавлены для единообразия
 #, c-format
@@ -1836,6 +1702,9 @@ msgstr "Светлая цветовая схема"
 msgid "Select Schematic Font"
 msgstr "_Выберите сохраняемые схемы:"
 
+msgid "Page Manager"
+msgstr "Менеджер страниц"
+
 #, fuzzy, c-format
 msgid "Loading schematic [%1$s]"
 msgstr "Загрузка схемы «%s»\n"
@@ -1911,6 +1780,10 @@ msgstr ""
 "для добавления щёлкните левой кнопкой в нужном месте.\n"
 "Щелчок правой кнопкой отменяет операцию"
 
+# В обеих функциях речь идёт о добавлении компонента
+msgid "Component"
+msgstr "Добавление компонента"
+
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
@@ -1937,11 +1810,26 @@ msgstr "Показать"
 msgid "Show text starting with:"
 msgstr "Показать текст, начинающийся с:"
 
-msgid "Menu/Cancel"
-msgstr "Меню/Отмена действия"
+# Эта строка выводится в режиме ввода жестов, когда библиотека жестов не
+# подключена.
+msgid "none"
+msgstr "---"
 
-msgid "Pan/Cancel"
-msgstr "Прокрутка/Отмена действия"
+# Функция средней кнопки мыши.
+# За этой строкой следует название действия
+#, fuzzy
+msgid "Repeat"
+msgstr "Повтор: "
+
+msgid "Pan"
+msgstr "Центрирование"
+
+msgid "Menu"
+msgstr ""
+
+#, fuzzy
+msgid "/Cancel"
+msgstr "Отмена"
 
 # Функция левой кнопки мыши.
 # Имеется в виду выбор чего угодно -- объектов, пунктов меню и т. д.
@@ -1975,6 +1863,10 @@ msgstr ""
 
 msgid "Failed to load file"
 msgstr "Не удалось загрузить файл"
+
+#, c-format
+msgid "Skipping existing file [%s]"
+msgstr ""
 
 #, fuzzy
 msgid "Lepton EDA Schematic Editor"
@@ -2060,6 +1952,9 @@ msgstr "Правка текста..."
 
 msgid "Slot..."
 msgstr "Секция..."
+
+msgid "Unlock"
+msgstr "Разблокировка"
 
 msgid "Embed Component/Picture"
 msgstr "Внедрить компонент/изображение"
@@ -2369,9 +2264,12 @@ msgstr "_Соединение"
 msgid "_Help"
 msgstr "_Справка"
 
-#, scheme-format
-msgid "~S is not a valid gschem action."
+#, fuzzy, scheme-format
+msgid "[~A] is not a valid lepton-schematic action."
 msgstr "Недопустимое для gschem действие ~S."
+
+msgid "There is no last action to repeat."
+msgstr ""
 
 msgid "Repeat Last Action"
 msgstr "Повторить последнее действие"
@@ -2405,6 +2303,9 @@ msgstr "Выход"
 
 msgid "Terminal REPL"
 msgstr ""
+
+msgid "Edit Text"
+msgstr "Правка текста"
 
 msgid "Choose Slot"
 msgstr "Выбрать секцию"
@@ -2505,8 +2406,16 @@ msgstr "Вверх по иерархии"
 msgid "Attach Attributes"
 msgstr "Прикрепить атрибуты"
 
+#, scheme-format
+msgid "Attribute attached: [~a]"
+msgstr ""
+
 msgid "Detach Attributes"
 msgstr "Отделить атрибуты"
+
+#, scheme-format
+msgid "Attribute detached: [~a]"
+msgstr ""
 
 msgid "Show Attribute Value"
 msgstr "Показать значение атрибута"
@@ -2568,43 +2477,51 @@ msgstr "Документация на компонент"
 msgid "View documentation for selected component"
 msgstr "Просмотр документации для выбранного компонента"
 
-msgid ""
-"Could not show documentation for selected component:\n"
-"\n"
-msgstr ""
-"Не удалось показать документацию для выбранного компонента:\n"
-"\n"
-
-msgid "gEDA Manuals"
+#, fuzzy
+msgid "Lepton EDA Manuals"
 msgstr "Документация gEDA"
 
-msgid "View the front page of the gEDA documentation in a browser."
+#, fuzzy
+msgid "View the front page of the Lepton EDA documentation in a browser."
 msgstr "Открыть основную страницу документации gEDA в браузере."
 
-msgid "gschem User Guide"
+#, fuzzy
+msgid "lepton-schematic User Guide"
 msgstr "Руководство пользователя gschem"
 
-msgid "View the gschem User Guide in a browser."
+#, fuzzy
+msgid "View the lepton-schematic User Guide in a browser."
 msgstr "Открыть «Руководство пользователя gschem» в браузере."
 
-msgid "gschem FAQ"
-msgstr "gschem FAQ"
+#, fuzzy
+msgid "lepton-schematic FAQ"
+msgstr "_Выберите сохраняемые схемы:"
 
-msgid "Frequently Asked Questions about using gschem."
+#, fuzzy
+msgid "Frequently Asked Questions about using lepton-schematic."
 msgstr "Часто задаваемые вопросы по использованию gschem."
 
-msgid "gEDA wiki"
+#, fuzzy
+msgid "Lepton EDA wiki"
 msgstr "gEDA wiki"
 
-msgid "View the front page of the gEDA wiki in a browser."
+#, fuzzy
+msgid "View the front page of the Lepton EDA wiki in a browser."
 msgstr "Открыть основную страницу gEDA wiki в браузере."
 
-msgid "About gschem"
+#, fuzzy
+msgid "About lepton-schematic"
 msgstr "О программе..."
 
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr "Недопустимое выравнивание текста ~A."
+
+#, fuzzy
+msgid "Could not show documentation:"
+msgstr ""
+"Не удалось показать документацию для выбранного компонента:\n"
+"\n"
 
 msgid "No documentation found"
 msgstr "Документация не найдена"
@@ -2617,6 +2534,132 @@ msgstr "Недопустимая комбинация клавиш ~S."
 msgid "~S is not a prefix key sequence."
 msgstr "~S не является префиксом клавишной последовательности."
 
+#, fuzzy
+#~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
+#~ msgstr ""
+#~ "add-attribute-offset (отступ атрибута от объекта при его добавлении): "
+#~ "недопустимое значение «%d»\n"
+
+#, fuzzy
+#~ msgid "Couldn't find init scm file [%1$s]"
+#~ msgstr "Не удалось найти scm-файл инициализации «%s»\n"
+
+#, fuzzy
+#~ msgid "Read init scm file [%1$s]"
+#~ msgstr "Чтение scm-файла инициализации «%s»\n"
+
+#, fuzzy
+#~ msgid "Failed to read init scm file [%1$s]"
+#~ msgstr "Не удалось прочесть scm-файл инициализации «%s»\n"
+
+# Функция средней кнопки мыши.
+# Должно соответствовать переводам строк "Repeat/" и "none", указанным выше
+#~ msgid "Repeat/none"
+#~ msgstr "Повтор: ---"
+
+# См. примечание выше для "Copy"
+#~ msgid "Multiple Copy"
+#~ msgstr "Многократное копирование"
+
+#~ msgid "Edit"
+#~ msgstr "Правка"
+
+# Отображение последнего действия для повтора
+#~ msgid "Slot"
+#~ msgstr "Правка секции"
+
+#~ msgid "Rotate"
+#~ msgstr "Поворот"
+
+#~ msgid "Mirror"
+#~ msgstr "Отражение"
+
+#~ msgid "Embed"
+#~ msgstr "Внедрение"
+
+#~ msgid "Unembed"
+#~ msgstr "Исключение"
+
+#~ msgid "Update"
+#~ msgstr "Обновление"
+
+# Как и прочие строки в gschem/src/i_callbacks.c данная строка используется
+# для показа последнего действия, которое будет использоваться при повторе. В
+# данном случае текст при повторе будет то скрываться, то отображаться
+#~ msgid "ShowHidden"
+#~ msgstr "Отображение/скрытие текста"
+
+#~ msgid "Copy to clipboard"
+#~ msgstr "Копирование в буфер"
+
+#~ msgid "Cut to clipboard"
+#~ msgstr "Вырезание в буфер"
+
+#~ msgid "Paste from clipboard"
+#~ msgstr "Вставка из буфера"
+
+#~ msgid "Copy %i"
+#~ msgstr "Копирование в %i"
+
+#~ msgid "Cut %i"
+#~ msgstr "Вырезание в %i"
+
+#~ msgid "Paste %i"
+#~ msgstr "Вставка из %i"
+
+#~ msgid "Line"
+#~ msgstr "Линия"
+
+#~ msgid "Path"
+#~ msgstr "Контур"
+
+#~ msgid "Box"
+#~ msgstr "Прямоугольник"
+
+#~ msgid "Circle"
+#~ msgstr "Окружность"
+
+#~ msgid "Arc"
+#~ msgstr "Дуга"
+
+#~ msgid "Attach"
+#~ msgstr "Прикрепление"
+
+#~ msgid "Detach"
+#~ msgstr "Отделение"
+
+#~ msgid "ShowN"
+#~ msgstr "Отображение имени"
+
+#~ msgid "ShowV"
+#~ msgstr "Отображение значения"
+
+#~ msgid "ShowB"
+#~ msgstr "Отображение имя=значение"
+
+#~ msgid "VisToggle"
+#~ msgstr "Переключение видимости"
+
+#~ msgid "untitled"
+#~ msgstr "безымянный"
+
+# Используется для вывода действия повтора в строке состояния
+#~ msgid "Picture"
+#~ msgstr "Вставка изображения"
+
+#~ msgid "Right click on the filename for more options..."
+#~ msgstr ""
+#~ "Щёлкните по имени файла правой кнопкой для выбора дополнительных действий."
+
+#~ msgid "Menu/Cancel"
+#~ msgstr "Меню/Отмена действия"
+
+#~ msgid "Pan/Cancel"
+#~ msgstr "Прокрутка/Отмена действия"
+
+#~ msgid "gschem FAQ"
+#~ msgstr "gschem FAQ"
+
 #~ msgid "Off"
 #~ msgstr "Откл."
 
@@ -2628,10 +2671,6 @@ msgstr "~S не является префиксом клавишной посл�
 
 #~ msgid "Edit pin type"
 #~ msgstr "Правка типа вывода"
-
-# Отображение последнего действия для повтора
-#~ msgid "Color"
-#~ msgstr "Правка цвета"
 
 #~ msgid "Edit Pin Type..."
 #~ msgstr "Изменить тип вывода..."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-02-22 14:08+0300\n"
+"POT-Creation-Date: 2019-09-28 09:34+0300\n"
 "PO-Revision-Date: 2014-08-31 22:35+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -122,10 +122,6 @@ msgstr ""
 "threshold\n"
 
 #, fuzzy, c-format
-msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
-msgstr "Ongeldige offset waarde [%d] overgedragen aan add-attribute-offset\n"
-
-#, fuzzy, c-format
 msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
 msgstr "Ongeldig aantal seconden [%d] overgedragen naar auto-save-interval\n"
 
@@ -170,18 +166,6 @@ msgstr "Dit is de MINGW32 versie.\n"
 #, fuzzy, c-format
 msgid "Current locale settings: %1$s\n"
 msgstr "Huidige locale instellingen: %s\n"
-
-#, fuzzy, c-format
-msgid "Couldn't find init scm file [%1$s]"
-msgstr "Kan init scm bestand [%s]niet vinden\n"
-
-#, fuzzy, c-format
-msgid "Read init scm file [%1$s]"
-msgstr "Lees init scm bestand [%s]\n"
-
-#, fuzzy, c-format
-msgid "Failed to read init scm file [%1$s]"
-msgstr "Fout bij het lezen van het init scm bestand [%s]\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -291,11 +275,15 @@ msgstr "GEEN"
 msgid "Grid(%1$s, %2$s)"
 msgstr "Raster(%s, %s)"
 
+msgid "S_elect the schematics you want to save:"
+msgstr "S_electeer de schema's die je op wil slaan:"
+
 msgid "Name"
 msgstr "Naam"
 
-msgid "S_elect the schematics you want to save:"
-msgstr "S_electeer de schema's die je op wil slaan:"
+#, fuzzy
+msgid "Show _full paths"
+msgstr "Toon _Beide"
 
 #, fuzzy, c-format
 msgid "Save the changes to schematic \"%1$s\" before closing?"
@@ -374,8 +362,11 @@ msgstr "** Ongeldige UTF-8 in logboek bericht. Zie stderr of gschem.log.\n"
 msgid "Clear log window?"
 msgstr "Sluit Venster\n"
 
+msgid "_Wrap Long Lines"
+msgstr ""
+
 #, fuzzy
-msgid "Clear Log _Window"
+msgid "Clea_r Log Window"
 msgstr "Toon Logboek Venster"
 
 msgid "Macro:"
@@ -636,21 +627,6 @@ msgstr "Snap Aan"
 msgid "Resnap Active"
 msgstr "Hersnappen Aktief"
 
-msgid "Stroke"
-msgstr "Slag"
-
-msgid "none"
-msgstr "geen"
-
-msgid "Repeat/"
-msgstr "Herhaal/"
-
-msgid "Repeat/none"
-msgstr "Herhaal/geen"
-
-msgid "Pan"
-msgstr "Schuif"
-
 #, fuzzy, c-format
 msgid "New page created [%1$s]"
 msgstr "Nieuwe pagina gemaakt [%s]\n"
@@ -659,51 +635,18 @@ msgstr "Nieuwe pagina gemaakt [%s]\n"
 msgid "New Window created [%1$s]"
 msgstr "Nieuw venster gemaakt [%s]\n"
 
-msgid "Failed to Save All"
-msgstr "Fout tijdens Alles Opslaan"
-
 msgid "Saved All"
 msgstr "Alles Opgeslagen"
+
+msgid "Failed to Save All"
+msgstr "Fout tijdens Alles Opslaan"
 
 #, fuzzy
 msgid "Closing Window"
 msgstr "Sluit Venster\n"
 
-msgid "Copy"
-msgstr "Kopieer"
-
 msgid "Select objs first"
 msgstr "Selecteer voorwerpen eerst"
-
-msgid "Multiple Copy"
-msgstr "Meervoudig Kopieren"
-
-msgid "Move"
-msgstr "Verplaats"
-
-msgid "Delete"
-msgstr "Verwijder"
-
-msgid "Edit"
-msgstr "Bewerk"
-
-msgid "Edit Text"
-msgstr "Bewerk Tekst"
-
-msgid "Slot"
-msgstr "Slot"
-
-msgid "Rotate"
-msgstr "Roteer"
-
-msgid "Mirror"
-msgstr "Spiegel"
-
-msgid "Lock"
-msgstr "Vergrendel"
-
-msgid "Unlock"
-msgstr "Ontgrendel"
 
 #, fuzzy
 msgid "WARNING: Do not translate with snap off!"
@@ -725,18 +668,6 @@ msgstr ""
 "WAARSCHUWING: Als je een symbool naar de oorsprong verschuift, dan moet de "
 "snap grip waarde op 100 gezet worden\n"
 
-msgid "Embed"
-msgstr "Insluiten"
-
-msgid "Unembed"
-msgstr "Uitsluiten"
-
-msgid "Update"
-msgstr "Vernieuw"
-
-msgid "ShowHidden"
-msgstr "ZichtbaarVerborgen"
-
 #, c-format
 msgid ""
 "<b>Revert page:</b>\n"
@@ -751,68 +682,11 @@ msgstr ""
 msgid "Revert"
 msgstr "Te_rughalen"
 
-msgid "Copy to clipboard"
-msgstr "Kopieer naar klembord"
-
-msgid "Cut to clipboard"
-msgstr "Knip naar klembord"
-
-msgid "Paste from clipboard"
-msgstr "Plak van klembord"
-
 msgid "Empty clipboard"
 msgstr "Leeg het klembord"
 
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being copied to.
-#, c-format
-msgid "Copy %i"
-msgstr "Kopieer %i"
-
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being cut to.
-#, c-format
-msgid "Cut %i"
-msgstr "Knip %i"
-
-#. TRANSLATORS: The number is the number of the buffer that is being
-#. * pasted to the schematic.
-#, c-format
-msgid "Paste %i"
-msgstr "Plak %i"
-
 msgid "Empty buffer"
 msgstr "Maak buffer leeg"
-
-msgid "Component"
-msgstr "Component"
-
-msgid "Attribute"
-msgstr "Attribuut"
-
-msgid "Net"
-msgstr "Draad"
-
-msgid "Bus"
-msgstr "Bus"
-
-msgid "Line"
-msgstr "Lijn"
-
-msgid "Path"
-msgstr "Pad"
-
-msgid "Box"
-msgstr "Rechthoek"
-
-msgid "Circle"
-msgstr "Cirkel"
-
-msgid "Arc"
-msgstr "Boog"
-
-msgid "Pin"
-msgstr "Pen"
 
 #, fuzzy, c-format
 msgid "Searching for source [%1$s]"
@@ -846,24 +720,6 @@ msgstr "Symbool is geen werkelijk bestand. Symbool kan niet geladen worden.\n"
 #, fuzzy
 msgid "Cannot find any schematics above the current one!"
 msgstr "Kan geen schema's vinden boven het huidige schema!\n"
-
-msgid "Attach"
-msgstr "Vastmaken"
-
-msgid "Detach"
-msgstr "Losmaken"
-
-msgid "ShowN"
-msgstr "ToonN"
-
-msgid "ShowV"
-msgstr "ToonW"
-
-msgid "ShowB"
-msgstr "ToonB"
-
-msgid "VisToggle"
-msgstr "SchakelZichtbaarheid"
 
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
@@ -920,14 +776,6 @@ msgstr "magnetische draad mode: AAN\n"
 #, fuzzy
 msgid "magnetic net mode: OFF"
 msgstr "magnetische draad mode: UIT\n"
-
-#. TRANSLATORS: this string is used to generate a filename for
-#. newly-created files.  It will be used to create a filename of
-#. the form "untitled_N.sch", where N is a number.  Please make
-#. sure that the translation contains characters suitable for use
-#. in a filename.
-msgid "untitled"
-msgstr "onbetiteld"
 
 #, fuzzy, c-format
 msgid "Translating schematic [%1$d %2$d]"
@@ -1010,9 +858,6 @@ msgstr "Selecteer een afbeelding bestands..."
 msgid "Failed to load picture: %1$s"
 msgstr "Fout bij het lezen van afbeelding: %s"
 
-msgid "Picture"
-msgstr "Afbeelding"
-
 #, c-format
 msgid "Failed to replace pictures: %s"
 msgstr "Fout bij het vervangen van afbeeldingen: %s"
@@ -1041,9 +886,9 @@ msgstr "Ongedaan/Opnieuw doen uitgeschakeld in rc bestand\n"
 msgid ""
 "Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"Interactively edit gEDA schematics or symbols.  If one or more FILEs\n"
-"are specified, open them for editing; otherwise, create a new, empty\n"
-"schematic.\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
 "\n"
 "Options:\n"
 "  -q, --quiet              Quiet mode.\n"
@@ -1051,14 +896,12 @@ msgid ""
 "  -L DIR                   Add DIR to Scheme search path.\n"
 "  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
-"  -o, --output=FILE        Output filename (for printing).\n"
-"  -p                       Automatically place the window.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"gEDA/gaf homepage: <http://www.geda-project.org/>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
 "Gebruik: %s [OPTIE ...] [--] [BESTAND ...]\n"
 "\n"
@@ -1275,11 +1118,20 @@ msgstr "Probeerde een ongeldige kleur te verkrijgen: %d\n"
 msgid "Background"
 msgstr "Achtergrond"
 
+msgid "Pin"
+msgstr "Pen"
+
 msgid "Net endpoint"
 msgstr "Draad eindpunt"
 
 msgid "Graphic"
 msgstr "Grafisch"
+
+msgid "Net"
+msgstr "Draad"
+
+msgid "Attribute"
+msgstr "Attribuut"
 
 msgid "Logic bubble"
 msgstr "Logische inverter"
@@ -1291,6 +1143,9 @@ msgstr "Rasterpunt"
 msgid "Detached attribute"
 msgstr "Maak Attributen Los"
 
+msgid "Bus"
+msgstr "Bus"
+
 msgid "Selection"
 msgstr "Selectie"
 
@@ -1299,6 +1154,12 @@ msgstr "Omhullende rechthoek"
 
 msgid "Zoom box"
 msgstr "Vergroot venster"
+
+msgid "Stroke"
+msgstr "Slag"
+
+msgid "Lock"
+msgstr "Vergrendel"
 
 msgid "Output background"
 msgstr "Uitvoer achtergrond"
@@ -1473,11 +1334,24 @@ msgstr "Schreef zwart/wit afbeelding naar [%s] [%d x %d]\n"
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
 msgstr "x_image_lowlevel: Kan geen pixbuf krijgen van gschem's venster.\n"
 
+msgid "NOTE: print-color-map will be used for PDF export"
+msgstr ""
+
 msgid "Width x Height"
 msgstr "Breedte x Hoogte"
 
 msgid "Image type"
 msgstr "Afbeelding type"
+
+#, fuzzy
+msgid "Color mode"
+msgstr "Kleur Bewerken"
+
+msgid "Color"
+msgstr "Kleur"
+
+msgid "Grayscale"
+msgstr ""
 
 msgid "Write image..."
 msgstr "Schrijf afbeelding..."
@@ -1539,6 +1413,15 @@ msgstr "Bewerk..."
 #, fuzzy
 msgid "Object Properties..."
 msgstr "<b>Tekst Eigenschappen</b>"
+
+msgid "Copy"
+msgstr "Kopieer"
+
+msgid "Move"
+msgstr "Verplaats"
+
+msgid "Delete"
+msgstr "Verwijder"
 
 msgid "Down Schematic"
 msgstr "Naar Schema"
@@ -1640,6 +1523,9 @@ msgstr[1] "%i attributen"
 msgid "Text Entry..."
 msgstr "Tekst Ingeven..."
 
+msgid "Refresh"
+msgstr ""
+
 msgid "New Page"
 msgstr "Nieuwe Pagina"
 
@@ -1652,14 +1538,8 @@ msgstr "Opslaan Pagina"
 msgid "Close Page"
 msgstr "Sluit Pagina"
 
-msgid "Page Manager"
-msgstr "Pagina Manager"
-
 msgid "Changed"
 msgstr "Veranderd"
-
-msgid "Right click on the filename for more options..."
-msgstr "Klik met rechts op de bestandnaam voor meer opties..."
 
 #, c-format
 msgid "Failed to write PDF to '%s': %s\n"
@@ -1748,6 +1628,9 @@ msgstr "Licht Kleuren Schema"
 msgid "Select Schematic Font"
 msgstr "S_electeer de schema's die je op wil slaan:"
 
+msgid "Page Manager"
+msgstr "Pagina Manager"
+
 #, fuzzy, c-format
 msgid "Loading schematic [%1$s]"
 msgstr "Bezig met laden van schema [%s]\n"
@@ -1823,6 +1706,9 @@ msgstr ""
 "muisindicator in het hoofdvensterklik om component te plaatsen\n"
 "Rechter muisknop om af te breken"
 
+msgid "Component"
+msgstr "Component"
+
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
@@ -1850,11 +1736,22 @@ msgstr "ToonN"
 msgid "Show text starting with:"
 msgstr "Toon tekst beginnend met:"
 
-msgid "Menu/Cancel"
-msgstr "Menu/Afbreken"
+msgid "none"
+msgstr "geen"
 
-msgid "Pan/Cancel"
-msgstr "Schuif/Afbreken"
+#, fuzzy
+msgid "Repeat"
+msgstr "Herhaal/"
+
+msgid "Pan"
+msgstr "Schuif"
+
+msgid "Menu"
+msgstr ""
+
+#, fuzzy
+msgid "/Cancel"
+msgstr "Afbreken"
 
 msgid "Pick"
 msgstr "Pak"
@@ -1884,6 +1781,10 @@ msgstr ""
 
 msgid "Failed to load file"
 msgstr "Fout bij het lezen van bestand"
+
+#, c-format
+msgid "Skipping existing file [%s]"
+msgstr ""
 
 #, fuzzy
 msgid "Lepton EDA Schematic Editor"
@@ -1966,6 +1867,9 @@ msgstr "Bewerk Tekst..."
 
 msgid "Slot..."
 msgstr "Slot..."
+
+msgid "Unlock"
+msgstr "Ontgrendel"
 
 msgid "Embed Component/Picture"
 msgstr "Component/Afbeelding Insluiten"
@@ -2275,9 +2179,12 @@ msgstr "_Draad"
 msgid "_Help"
 msgstr "_Help"
 
-#, scheme-format
-msgid "~S is not a valid gschem action."
+#, fuzzy, scheme-format
+msgid "[~A] is not a valid lepton-schematic action."
 msgstr "~S is geen geldige gschem actie."
+
+msgid "There is no last action to repeat."
+msgstr ""
 
 msgid "Repeat Last Action"
 msgstr "Herhaal Laatste Actie"
@@ -2311,6 +2218,9 @@ msgstr "Stoppen"
 
 msgid "Terminal REPL"
 msgstr ""
+
+msgid "Edit Text"
+msgstr "Bewerk Tekst"
 
 msgid "Choose Slot"
 msgstr "Kies Slot"
@@ -2411,8 +2321,16 @@ msgstr "Hierarchie Omhoog"
 msgid "Attach Attributes"
 msgstr "Bevestig Attributen"
 
+#, scheme-format
+msgid "Attribute attached: [~a]"
+msgstr ""
+
 msgid "Detach Attributes"
 msgstr "Maak Attributen Los"
+
+#, scheme-format
+msgid "Attribute detached: [~a]"
+msgstr ""
 
 msgid "Show Attribute Value"
 msgstr "Toon Attribuut Waarde"
@@ -2474,44 +2392,51 @@ msgstr "Component Documentatie"
 msgid "View documentation for selected component"
 msgstr "Toon documentatie voor geselecteerde component"
 
-msgid ""
-"Could not show documentation for selected component:\n"
-"\n"
-msgstr ""
-"Kan geen documentatie tonen voor de geselecteerde component:\n"
-"\n"
-
-msgid "gEDA Manuals"
+#, fuzzy
+msgid "Lepton EDA Manuals"
 msgstr "gEDA Handleidingen"
 
 #, fuzzy
-msgid "View the front page of the gEDA documentation in a browser."
+msgid "View the front page of the Lepton EDA documentation in a browser."
 msgstr "Toon de voorpagina van de gEDA documentatie in een browser."
 
-msgid "gschem User Guide"
+#, fuzzy
+msgid "lepton-schematic User Guide"
 msgstr "gschem Gebruikers Gids"
 
-msgid "View the gschem User Guide in a browser."
+#, fuzzy
+msgid "View the lepton-schematic User Guide in a browser."
 msgstr "Toon de gschem Gebruikers Gids in een browser."
 
-msgid "gschem FAQ"
-msgstr "gschem FAQ"
+#, fuzzy
+msgid "lepton-schematic FAQ"
+msgstr "S_electeer de schema's die je op wil slaan:"
 
-msgid "Frequently Asked Questions about using gschem."
+#, fuzzy
+msgid "Frequently Asked Questions about using lepton-schematic."
 msgstr "Veel Gestelde Vragen over het gebruik van gschem."
 
-msgid "gEDA wiki"
+#, fuzzy
+msgid "Lepton EDA wiki"
 msgstr "gEDA wiki"
 
-msgid "View the front page of the gEDA wiki in a browser."
+#, fuzzy
+msgid "View the front page of the Lepton EDA wiki in a browser."
 msgstr "Toon de voorpagina van de gEDA wiki in een browser."
 
-msgid "About gschem"
+#, fuzzy
+msgid "About lepton-schematic"
 msgstr "Over gschem"
 
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr "Ongeldige tekst uitlijning ~A."
+
+#, fuzzy
+msgid "Could not show documentation:"
+msgstr ""
+"Kan geen documentatie tonen voor de geselecteerde component:\n"
+"\n"
 
 msgid "No documentation found"
 msgstr "Geen documentatie gevonden"
@@ -2524,6 +2449,122 @@ msgstr "~S is geen geldige toetsencombinatie."
 msgid "~S is not a prefix key sequence."
 msgstr "~S is geen voorafgaande toetsen combinatie."
 
+#, fuzzy
+#~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
+#~ msgstr ""
+#~ "Ongeldige offset waarde [%d] overgedragen aan add-attribute-offset\n"
+
+#, fuzzy
+#~ msgid "Couldn't find init scm file [%1$s]"
+#~ msgstr "Kan init scm bestand [%s]niet vinden\n"
+
+#, fuzzy
+#~ msgid "Read init scm file [%1$s]"
+#~ msgstr "Lees init scm bestand [%s]\n"
+
+#, fuzzy
+#~ msgid "Failed to read init scm file [%1$s]"
+#~ msgstr "Fout bij het lezen van het init scm bestand [%s]\n"
+
+#~ msgid "Repeat/none"
+#~ msgstr "Herhaal/geen"
+
+#~ msgid "Multiple Copy"
+#~ msgstr "Meervoudig Kopieren"
+
+#~ msgid "Edit"
+#~ msgstr "Bewerk"
+
+#~ msgid "Slot"
+#~ msgstr "Slot"
+
+#~ msgid "Rotate"
+#~ msgstr "Roteer"
+
+#~ msgid "Mirror"
+#~ msgstr "Spiegel"
+
+#~ msgid "Embed"
+#~ msgstr "Insluiten"
+
+#~ msgid "Unembed"
+#~ msgstr "Uitsluiten"
+
+#~ msgid "Update"
+#~ msgstr "Vernieuw"
+
+#~ msgid "ShowHidden"
+#~ msgstr "ZichtbaarVerborgen"
+
+#~ msgid "Copy to clipboard"
+#~ msgstr "Kopieer naar klembord"
+
+#~ msgid "Cut to clipboard"
+#~ msgstr "Knip naar klembord"
+
+#~ msgid "Paste from clipboard"
+#~ msgstr "Plak van klembord"
+
+#~ msgid "Copy %i"
+#~ msgstr "Kopieer %i"
+
+#~ msgid "Cut %i"
+#~ msgstr "Knip %i"
+
+#~ msgid "Paste %i"
+#~ msgstr "Plak %i"
+
+#~ msgid "Line"
+#~ msgstr "Lijn"
+
+#~ msgid "Path"
+#~ msgstr "Pad"
+
+#~ msgid "Box"
+#~ msgstr "Rechthoek"
+
+#~ msgid "Circle"
+#~ msgstr "Cirkel"
+
+#~ msgid "Arc"
+#~ msgstr "Boog"
+
+#~ msgid "Attach"
+#~ msgstr "Vastmaken"
+
+#~ msgid "Detach"
+#~ msgstr "Losmaken"
+
+#~ msgid "ShowN"
+#~ msgstr "ToonN"
+
+#~ msgid "ShowV"
+#~ msgstr "ToonW"
+
+#~ msgid "ShowB"
+#~ msgstr "ToonB"
+
+#~ msgid "VisToggle"
+#~ msgstr "SchakelZichtbaarheid"
+
+#~ msgid "untitled"
+#~ msgstr "onbetiteld"
+
+#~ msgid "Picture"
+#~ msgstr "Afbeelding"
+
+#~ msgid "Right click on the filename for more options..."
+#~ msgstr "Klik met rechts op de bestandnaam voor meer opties..."
+
+#~ msgid "Menu/Cancel"
+#~ msgstr "Menu/Afbreken"
+
+#~ msgid "Pan/Cancel"
+#~ msgstr "Schuif/Afbreken"
+
+#~ msgid "gschem FAQ"
+#~ msgstr "gschem FAQ"
+
 #~ msgid "Really revert page?"
 #~ msgstr "Echt Terughalen pagina?"
 
@@ -2532,9 +2573,6 @@ msgstr "~S is geen voorafgaande toetsen combinatie."
 
 #~ msgid "Edit pin type"
 #~ msgstr "Bewerk pen type"
-
-#~ msgid "Color"
-#~ msgstr "Kleur"
 
 #~ msgid "Edit Pin Type..."
 #~ msgstr "Bewerk Pen Type..."
@@ -2801,9 +2839,6 @@ msgstr "~S is geen voorafgaande toetsen combinatie."
 
 #~ msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 #~ msgstr "FOUT: NULL object in color_edit_dialog_apply!\n"
-
-#~ msgid "Color Edit"
-#~ msgstr "Kleur Bewerken"
 
 #~ msgid "Discard Page"
 #~ msgstr "Pagina Wegdoen"

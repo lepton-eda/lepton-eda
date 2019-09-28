@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-02-22 14:08+0300\n"
+"POT-Creation-Date: 2019-09-28 09:34+0300\n"
 "PO-Revision-Date: 2014-12-29 20:06+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -123,10 +123,6 @@ msgstr ""
 "Spaziatura pixel non valida [%d] passata a mesh-grid-display-threshold\n"
 
 #, fuzzy, c-format
-msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
-msgstr "Offset non valido [%d] passato a  add-attribute-offset\n"
-
-#, fuzzy, c-format
 msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
 msgstr ""
 "Il numero di secondi indicati [%d] non è valido ai fini dell'intervallo di "
@@ -172,18 +168,6 @@ msgstr "Port per MINGW32.\n"
 #, fuzzy, c-format
 msgid "Current locale settings: %1$s\n"
 msgstr "Impostazioni locali correnti: %s\n"
-
-#, fuzzy, c-format
-msgid "Couldn't find init scm file [%1$s]"
-msgstr "Impossibile trovare il file di inizializzazione scm [%s]\n"
-
-#, fuzzy, c-format
-msgid "Read init scm file [%1$s]"
-msgstr "Lettura del file init scm [%s]\n"
-
-#, fuzzy, c-format
-msgid "Failed to read init scm file [%1$s]"
-msgstr "Fallita la lettura del file init scm [%s]\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -295,11 +279,15 @@ msgstr ""
 msgid "Grid(%1$s, %2$s)"
 msgstr ""
 
+msgid "S_elect the schematics you want to save:"
+msgstr "S_eleziona lo schema che vuoi salvare:"
+
 msgid "Name"
 msgstr "Nome"
 
-msgid "S_elect the schematics you want to save:"
-msgstr "S_eleziona lo schema che vuoi salvare:"
+#, fuzzy
+msgid "Show _full paths"
+msgstr "Mostra _entrambi"
 
 #, fuzzy, c-format
 msgid "Save the changes to schematic \"%1$s\" before closing?"
@@ -381,8 +369,11 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "Chiusura Finestra\n"
 
+msgid "_Wrap Long Lines"
+msgstr ""
+
 #, fuzzy
-msgid "Clear Log _Window"
+msgid "Clea_r Log Window"
 msgstr "Mostra la finestra di log"
 
 msgid "Macro:"
@@ -637,21 +628,6 @@ msgstr "Snap Off"
 msgid "Resnap Active"
 msgstr "Resnap Attivo"
 
-msgid "Stroke"
-msgstr "Tratto"
-
-msgid "none"
-msgstr "nessuno"
-
-msgid "Repeat/"
-msgstr "Ripeti/"
-
-msgid "Repeat/none"
-msgstr "Ripeti/Niente"
-
-msgid "Pan"
-msgstr "Pan"
-
 #, fuzzy, c-format
 msgid "New page created [%1$s]"
 msgstr "Nuova Pagina Creata [%s]\n"
@@ -660,51 +636,18 @@ msgstr "Nuova Pagina Creata [%s]\n"
 msgid "New Window created [%1$s]"
 msgstr "Creata Nuova Finestra [%s]\n"
 
-msgid "Failed to Save All"
-msgstr "Salvataggio Fallito"
-
 msgid "Saved All"
 msgstr "Salvato Tutto"
+
+msgid "Failed to Save All"
+msgstr "Salvataggio Fallito"
 
 #, fuzzy
 msgid "Closing Window"
 msgstr "Chiusura Finestra\n"
 
-msgid "Copy"
-msgstr "Copia"
-
 msgid "Select objs first"
 msgstr "Seleziona prima un oggetto"
-
-msgid "Multiple Copy"
-msgstr "Copia Multipla"
-
-msgid "Move"
-msgstr "Sposta"
-
-msgid "Delete"
-msgstr "Cancella"
-
-msgid "Edit"
-msgstr "Modifica"
-
-msgid "Edit Text"
-msgstr "Modifica Testo"
-
-msgid "Slot"
-msgstr "Slot"
-
-msgid "Rotate"
-msgstr "Ruota"
-
-msgid "Mirror"
-msgstr "Specchio"
-
-msgid "Lock"
-msgstr "Blocca"
-
-msgid "Unlock"
-msgstr "Sblocca"
 
 #, fuzzy
 msgid "WARNING: Do not translate with snap off!"
@@ -728,18 +671,6 @@ msgstr ""
 "ATTENZIONE: se stai convertendo un simbolo dalla sua origine, è opportuno "
 "che l'ampiezza snap gride venga impostata a 100\n"
 
-msgid "Embed"
-msgstr "Incorpora"
-
-msgid "Unembed"
-msgstr "Scorpora"
-
-msgid "Update"
-msgstr "Aggiorna"
-
-msgid "ShowHidden"
-msgstr "Mostra Nascosto"
-
 #, c-format
 msgid ""
 "<b>Revert page:</b>\n"
@@ -754,68 +685,11 @@ msgstr ""
 msgid "Revert"
 msgstr "_Ripristina"
 
-msgid "Copy to clipboard"
-msgstr "Copia negli appunti"
-
-msgid "Cut to clipboard"
-msgstr "Taglia negli appunti"
-
-msgid "Paste from clipboard"
-msgstr "Incolla dagli appunti"
-
 msgid "Empty clipboard"
 msgstr "Appunti vuoti"
 
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being copied to.
-#, c-format
-msgid "Copy %i"
-msgstr "Copia %i"
-
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being cut to.
-#, c-format
-msgid "Cut %i"
-msgstr "Taglia %i"
-
-#. TRANSLATORS: The number is the number of the buffer that is being
-#. * pasted to the schematic.
-#, c-format
-msgid "Paste %i"
-msgstr "Incolla %i"
-
 msgid "Empty buffer"
 msgstr "Buffer vuoto"
-
-msgid "Component"
-msgstr "Componente"
-
-msgid "Attribute"
-msgstr "Attributo"
-
-msgid "Net"
-msgstr "Collegamento"
-
-msgid "Bus"
-msgstr "Bus"
-
-msgid "Line"
-msgstr "Linea"
-
-msgid "Path"
-msgstr "Percorso"
-
-msgid "Box"
-msgstr "Rettangolo"
-
-msgid "Circle"
-msgstr "Cerchio"
-
-msgid "Arc"
-msgstr "Arco"
-
-msgid "Pin"
-msgstr "Pin"
 
 #, fuzzy, c-format
 msgid "Searching for source [%1$s]"
@@ -849,24 +723,6 @@ msgstr "Il simolo non è un file reale, impossibile caricarlo.\n"
 #, fuzzy
 msgid "Cannot find any schematics above the current one!"
 msgstr "Impossibile trovare uno schema a livello più alto di questo!\n"
-
-msgid "Attach"
-msgstr "Collega"
-
-msgid "Detach"
-msgstr "Scollega"
-
-msgid "ShowN"
-msgstr "MostraN"
-
-msgid "ShowV"
-msgstr "MostraV"
-
-msgid "ShowB"
-msgstr "MostraB"
-
-msgid "VisToggle"
-msgstr "Visibilità Strumenti"
 
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
@@ -923,14 +779,6 @@ msgstr "modalià net magnetiche: ON\n"
 #, fuzzy
 msgid "magnetic net mode: OFF"
 msgstr "modalià net magnetiche: OFF\n"
-
-#. TRANSLATORS: this string is used to generate a filename for
-#. newly-created files.  It will be used to create a filename of
-#. the form "untitled_N.sch", where N is a number.  Please make
-#. sure that the translation contains characters suitable for use
-#. in a filename.
-msgid "untitled"
-msgstr "senzanome"
 
 #, fuzzy, c-format
 msgid "Translating schematic [%1$d %2$d]"
@@ -1016,9 +864,6 @@ msgstr "Seleziona un file disegno..."
 msgid "Failed to load picture: %1$s"
 msgstr "Fallito il caricamento del disegno: %s"
 
-msgid "Picture"
-msgstr "Disegno"
-
 #, c-format
 msgid "Failed to replace pictures: %s"
 msgstr "Fallito il rimpiazzo dei disegni: %s"
@@ -1047,9 +892,9 @@ msgstr "Cancella/Ripristina disabilitato nel file rc\n"
 msgid ""
 "Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"Interactively edit gEDA schematics or symbols.  If one or more FILEs\n"
-"are specified, open them for editing; otherwise, create a new, empty\n"
-"schematic.\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
 "\n"
 "Options:\n"
 "  -q, --quiet              Quiet mode.\n"
@@ -1057,14 +902,12 @@ msgid ""
 "  -L DIR                   Add DIR to Scheme search path.\n"
 "  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
-"  -o, --output=FILE        Output filename (for printing).\n"
-"  -p                       Automatically place the window.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"gEDA/gaf homepage: <http://www.geda-project.org/>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
 "Uso: %s [OPZIONE ...] [--] [FILE ...]\n"
 "\n"
@@ -1280,12 +1123,21 @@ msgstr "Provato a ottenere un colore non valido: %d\n"
 msgid "Background"
 msgstr ""
 
+msgid "Pin"
+msgstr "Pin"
+
 #, fuzzy
 msgid "Net endpoint"
 msgstr "Net pin"
 
 msgid "Graphic"
 msgstr ""
+
+msgid "Net"
+msgstr "Collegamento"
+
+msgid "Attribute"
+msgstr "Attributo"
 
 msgid "Logic bubble"
 msgstr ""
@@ -1298,6 +1150,9 @@ msgstr "Imposta la spaziatura griglia"
 msgid "Detached attribute"
 msgstr "Scollega attributi"
 
+msgid "Bus"
+msgstr "Bus"
+
 #, fuzzy
 msgid "Selection"
 msgstr "Seleziona"
@@ -1308,6 +1163,12 @@ msgstr ""
 #, fuzzy
 msgid "Zoom box"
 msgstr "Ingrandisci Riquadro"
+
+msgid "Stroke"
+msgstr "Tratto"
+
+msgid "Lock"
+msgstr "Blocca"
 
 msgid "Output background"
 msgstr ""
@@ -1486,11 +1347,24 @@ msgstr ""
 "x_image_lowlevel: incapace ad ottenere immagine pixbuf dalla finestra di "
 "gschem.\n"
 
+msgid "NOTE: print-color-map will be used for PDF export"
+msgstr ""
+
 msgid "Width x Height"
 msgstr "Larghezza x Altezza"
 
 msgid "Image type"
 msgstr "Tipo di immagine"
+
+#, fuzzy
+msgid "Color mode"
+msgstr "Colore"
+
+msgid "Color"
+msgstr "Colore"
+
+msgid "Grayscale"
+msgstr ""
 
 msgid "Write image..."
 msgstr "Scrivi immagine..."
@@ -1552,6 +1426,15 @@ msgstr "Modifica..."
 #, fuzzy
 msgid "Object Properties..."
 msgstr "<b>Opzioni</b>"
+
+msgid "Copy"
+msgstr "Copia"
+
+msgid "Move"
+msgstr "Sposta"
+
+msgid "Delete"
+msgstr "Cancella"
 
 msgid "Down Schematic"
 msgstr "Giu nello schema"
@@ -1655,6 +1538,9 @@ msgstr[1] "%i attributi"
 msgid "Text Entry..."
 msgstr "_Testo..."
 
+msgid "Refresh"
+msgstr ""
+
 msgid "New Page"
 msgstr "Nuova pagina"
 
@@ -1667,16 +1553,8 @@ msgstr "Salva la pagina"
 msgid "Close Page"
 msgstr "Chiudi pagina"
 
-msgid "Page Manager"
-msgstr "Gestore Pagina"
-
 msgid "Changed"
 msgstr "Cambiato"
-
-msgid "Right click on the filename for more options..."
-msgstr ""
-"Clicca con il tasto destro del mouse sul nome del file per ulteriori "
-"opzioni..."
 
 #, c-format
 msgid "Failed to write PDF to '%s': %s\n"
@@ -1765,6 +1643,9 @@ msgstr "Schema colori chiari"
 msgid "Select Schematic Font"
 msgstr "S_eleziona lo schema che vuoi salvare:"
 
+msgid "Page Manager"
+msgstr "Gestore Pagina"
+
 #, fuzzy, c-format
 msgid "Loading schematic [%1$s]"
 msgstr "Caricamento schema [%s]\n"
@@ -1842,6 +1723,9 @@ msgstr ""
 "Il tasto destro del mouse serve ad abbandonare il componente al fine di "
 "sceglierne un altro."
 
+msgid "Component"
+msgstr "Componente"
+
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
@@ -1871,11 +1755,22 @@ msgstr "MostraN"
 msgid "Show text starting with:"
 msgstr "Mostra il testo iniziando con:"
 
-msgid "Menu/Cancel"
-msgstr "Menu/Cancella"
+msgid "none"
+msgstr "nessuno"
 
-msgid "Pan/Cancel"
-msgstr "Pan/Cancella"
+#, fuzzy
+msgid "Repeat"
+msgstr "Ripeti/"
+
+msgid "Pan"
+msgstr "Pan"
+
+msgid "Menu"
+msgstr ""
+
+#, fuzzy
+msgid "/Cancel"
+msgstr "Annulla"
 
 msgid "Pick"
 msgstr "Prendi"
@@ -1906,6 +1801,10 @@ msgstr ""
 
 msgid "Failed to load file"
 msgstr "Impossibile caricare il file"
+
+#, c-format
+msgid "Skipping existing file [%s]"
+msgstr ""
 
 #, fuzzy
 msgid "Lepton EDA Schematic Editor"
@@ -1988,6 +1887,9 @@ msgstr "Modifica il testo..."
 
 msgid "Slot..."
 msgstr "Slot..."
+
+msgid "Unlock"
+msgstr "Sblocca"
 
 msgid "Embed Component/Picture"
 msgstr "Componente/Immagine fissato/a"
@@ -2297,9 +2199,12 @@ msgstr "_Net"
 msgid "_Help"
 msgstr "Aiuto"
 
-#, scheme-format
-msgid "~S is not a valid gschem action."
+#, fuzzy, scheme-format
+msgid "[~A] is not a valid lepton-schematic action."
 msgstr "~S non è un'azione valida gschem."
+
+msgid "There is no last action to repeat."
+msgstr ""
 
 msgid "Repeat Last Action"
 msgstr "Ripeti l'ultima azione"
@@ -2333,6 +2238,9 @@ msgstr "Esci"
 
 msgid "Terminal REPL"
 msgstr ""
+
+msgid "Edit Text"
+msgstr "Modifica Testo"
 
 msgid "Choose Slot"
 msgstr "Scegli slot"
@@ -2433,8 +2341,16 @@ msgstr "Su nella gerarchia"
 msgid "Attach Attributes"
 msgstr "Collega attributi"
 
+#, scheme-format
+msgid "Attribute attached: [~a]"
+msgstr ""
+
 msgid "Detach Attributes"
 msgstr "Scollega attributi"
+
+#, scheme-format
+msgid "Attribute detached: [~a]"
+msgstr ""
 
 msgid "Show Attribute Value"
 msgstr "Mostra il valore dell'attributo"
@@ -2496,45 +2412,52 @@ msgstr "Documentazione componente"
 msgid "View documentation for selected component"
 msgstr "Mostra la documentazione per il componente selezionato"
 
-msgid ""
-"Could not show documentation for selected component:\n"
-"\n"
-msgstr ""
-"Impossibile mostrare la documentazione per i componenti selezionati:\n"
-"\n"
-
-msgid "gEDA Manuals"
+#, fuzzy
+msgid "Lepton EDA Manuals"
 msgstr "Manuali gEDA"
 
 #, fuzzy
-msgid "View the front page of the gEDA documentation in a browser."
+msgid "View the front page of the Lepton EDA documentation in a browser."
 msgstr ""
 "Visualizza la pagina principale della documentazione gEDA in un browser."
 
-msgid "gschem User Guide"
+#, fuzzy
+msgid "lepton-schematic User Guide"
 msgstr "Guida utente di gschem"
 
-msgid "View the gschem User Guide in a browser."
+#, fuzzy
+msgid "View the lepton-schematic User Guide in a browser."
 msgstr "Mostra la guida utente di gschem in un browser."
 
-msgid "gschem FAQ"
-msgstr "FAQ di gschem"
+#, fuzzy
+msgid "lepton-schematic FAQ"
+msgstr "S_eleziona lo schema che vuoi salvare:"
 
-msgid "Frequently Asked Questions about using gschem."
+#, fuzzy
+msgid "Frequently Asked Questions about using lepton-schematic."
 msgstr "Le domande ricorrenti su gschem."
 
-msgid "gEDA wiki"
+#, fuzzy
+msgid "Lepton EDA wiki"
 msgstr "Wiki di gEDA"
 
-msgid "View the front page of the gEDA wiki in a browser."
+#, fuzzy
+msgid "View the front page of the Lepton EDA wiki in a browser."
 msgstr "Visualizza la pagina principale del wiki di gEDA in un browser."
 
-msgid "About gschem"
+#, fuzzy
+msgid "About lepton-schematic"
 msgstr "Informazioni su gschem"
 
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr "Allineamento testo non valido ~A."
+
+#, fuzzy
+msgid "Could not show documentation:"
+msgstr ""
+"Impossibile mostrare la documentazione per i componenti selezionati:\n"
+"\n"
 
 msgid "No documentation found"
 msgstr "Nessun documento trovato"
@@ -2547,6 +2470,123 @@ msgstr "~S non è una combinazione di tasti valida."
 msgid "~S is not a prefix key sequence."
 msgstr "~S non è un prefisso di sequenza di tasti."
 
+#, fuzzy
+#~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
+#~ msgstr "Offset non valido [%d] passato a  add-attribute-offset\n"
+
+#, fuzzy
+#~ msgid "Couldn't find init scm file [%1$s]"
+#~ msgstr "Impossibile trovare il file di inizializzazione scm [%s]\n"
+
+#, fuzzy
+#~ msgid "Read init scm file [%1$s]"
+#~ msgstr "Lettura del file init scm [%s]\n"
+
+#, fuzzy
+#~ msgid "Failed to read init scm file [%1$s]"
+#~ msgstr "Fallita la lettura del file init scm [%s]\n"
+
+#~ msgid "Repeat/none"
+#~ msgstr "Ripeti/Niente"
+
+#~ msgid "Multiple Copy"
+#~ msgstr "Copia Multipla"
+
+#~ msgid "Edit"
+#~ msgstr "Modifica"
+
+#~ msgid "Slot"
+#~ msgstr "Slot"
+
+#~ msgid "Rotate"
+#~ msgstr "Ruota"
+
+#~ msgid "Mirror"
+#~ msgstr "Specchio"
+
+#~ msgid "Embed"
+#~ msgstr "Incorpora"
+
+#~ msgid "Unembed"
+#~ msgstr "Scorpora"
+
+#~ msgid "Update"
+#~ msgstr "Aggiorna"
+
+#~ msgid "ShowHidden"
+#~ msgstr "Mostra Nascosto"
+
+#~ msgid "Copy to clipboard"
+#~ msgstr "Copia negli appunti"
+
+#~ msgid "Cut to clipboard"
+#~ msgstr "Taglia negli appunti"
+
+#~ msgid "Paste from clipboard"
+#~ msgstr "Incolla dagli appunti"
+
+#~ msgid "Copy %i"
+#~ msgstr "Copia %i"
+
+#~ msgid "Cut %i"
+#~ msgstr "Taglia %i"
+
+#~ msgid "Paste %i"
+#~ msgstr "Incolla %i"
+
+#~ msgid "Line"
+#~ msgstr "Linea"
+
+#~ msgid "Path"
+#~ msgstr "Percorso"
+
+#~ msgid "Box"
+#~ msgstr "Rettangolo"
+
+#~ msgid "Circle"
+#~ msgstr "Cerchio"
+
+#~ msgid "Arc"
+#~ msgstr "Arco"
+
+#~ msgid "Attach"
+#~ msgstr "Collega"
+
+#~ msgid "Detach"
+#~ msgstr "Scollega"
+
+#~ msgid "ShowN"
+#~ msgstr "MostraN"
+
+#~ msgid "ShowV"
+#~ msgstr "MostraV"
+
+#~ msgid "ShowB"
+#~ msgstr "MostraB"
+
+#~ msgid "VisToggle"
+#~ msgstr "Visibilità Strumenti"
+
+#~ msgid "untitled"
+#~ msgstr "senzanome"
+
+#~ msgid "Picture"
+#~ msgstr "Disegno"
+
+#~ msgid "Right click on the filename for more options..."
+#~ msgstr ""
+#~ "Clicca con il tasto destro del mouse sul nome del file per ulteriori "
+#~ "opzioni..."
+
+#~ msgid "Menu/Cancel"
+#~ msgstr "Menu/Cancella"
+
+#~ msgid "Pan/Cancel"
+#~ msgstr "Pan/Cancella"
+
+#~ msgid "gschem FAQ"
+#~ msgstr "FAQ di gschem"
+
 #~ msgid "Really revert page?"
 #~ msgstr "Vuoi veramente ritornare alla pagina precedente?"
 
@@ -2555,9 +2595,6 @@ msgstr "~S non è un prefisso di sequenza di tasti."
 
 #~ msgid "Edit pin type"
 #~ msgstr "Modifica tipo di pin"
-
-#~ msgid "Color"
-#~ msgstr "Colore"
 
 #~ msgid "Edit Pin Type..."
 #~ msgstr "Modifica tipo pin..."

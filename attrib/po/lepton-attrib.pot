@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda 1.9.7\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-05-10 08:15+0300\n"
+"POT-Creation-Date: 2019-09-28 09:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,12 +30,12 @@ msgstr ""
 msgid "o_save: Could not open [%1$s]"
 msgstr ""
 
-#: attrib/src/lepton-attrib.c:179
+#: attrib/src/lepton-attrib.c:180
 #, c-format
 msgid "Lepton EDA/lepton-attrib version %1$s%2$s.%3$s git: %4$.7s"
 msgstr ""
 
-#: attrib/src/lepton-attrib.c:212
+#: attrib/src/lepton-attrib.c:213
 #, c-format
 msgid "Couldn't find file [%1$s]\n"
 msgstr ""
@@ -48,11 +48,11 @@ msgstr ""
 msgid "Widget must be a GtkSheet child"
 msgstr ""
 
-#: attrib/src/parsecmd.c:73
+#: attrib/src/parsecmd.c:74
 #, c-format
 msgid ""
 "\n"
-"Gattrib:  The gEDA project's attribute editor.\n"
+"lepton-attrib: Lepton EDA attribute editor.\n"
 "Presents schematic attributes in easy-to-edit spreadsheet format.\n"
 "\n"
 "Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
@@ -75,7 +75,9 @@ msgid ""
 "     in different rows with the slot number after the period.  Example:  "
 "C101.2.\n"
 "\n"
-"Copyright (C) 2003 -- 2006 Stuart D. Brorson.\n"
+"Copyright (C) 2003-2006 Stuart D. Brorson.\n"
+"Copyright (C) 2007-2016 gEDA Contributors.\n"
+"Copyright (C) 2017-2019 Lepton EDA Contributors.\n"
 "\n"
 "Please report bugs to %2$s.\n"
 msgstr ""
@@ -231,23 +233,23 @@ msgstr ""
 msgid "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"
 msgstr ""
 
-#: attrib/src/x_dialog.c:74
+#: attrib/src/x_dialog.c:75
 msgid "Add new attribute"
 msgstr ""
 
-#: attrib/src/x_dialog.c:83
+#: attrib/src/x_dialog.c:84
 msgid "Enter new attribute name"
 msgstr ""
 
-#: attrib/src/x_dialog.c:147
+#: attrib/src/x_dialog.c:148
 msgid "Are you sure you want to delete this attribute?"
 msgstr ""
 
-#: attrib/src/x_dialog.c:149
+#: attrib/src/x_dialog.c:150
 msgid "Delete attribute"
 msgstr ""
 
-#: attrib/src/x_dialog.c:174
+#: attrib/src/x_dialog.c:175
 msgid ""
 "One or more components have been found with missing symbol files!\n"
 "\n"
@@ -258,31 +260,31 @@ msgid ""
 "\"Forward\" to continue working with lepton-attrib.\n"
 msgstr ""
 
-#: attrib/src/x_dialog.c:187
+#: attrib/src/x_dialog.c:188
 msgid "Missing symbol file found for component!"
 msgstr ""
 
-#: attrib/src/x_dialog.c:214
+#: attrib/src/x_dialog.c:215
 msgid "Save the changes before closing?"
 msgstr ""
 
-#: attrib/src/x_dialog.c:215
+#: attrib/src/x_dialog.c:216
 msgid "<big><b>"
 msgstr ""
 
-#: attrib/src/x_dialog.c:215
+#: attrib/src/x_dialog.c:216
 msgid "</b></big>"
 msgstr ""
 
-#: attrib/src/x_dialog.c:217
+#: attrib/src/x_dialog.c:218
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 
-#: attrib/src/x_dialog.c:227
+#: attrib/src/x_dialog.c:228
 msgid "Close without saving"
 msgstr ""
 
-#: attrib/src/x_dialog.c:274
+#: attrib/src/x_dialog.c:275
 msgid ""
 "Sorry -- you have chosen a feature which has not been\n"
 "implemented yet.\n"
@@ -296,15 +298,15 @@ msgid ""
 "Otherwise, just hang tight -- I'll implement this feature soon!\n"
 msgstr ""
 
-#: attrib/src/x_dialog.c:282
+#: attrib/src/x_dialog.c:283
 msgid "Unimplemented feature!"
 msgstr ""
 
-#: attrib/src/x_dialog.c:309
+#: attrib/src/x_dialog.c:310
 msgid "Fatal error"
 msgstr ""
 
-#: attrib/src/x_dialog.c:324
+#: attrib/src/x_dialog.c:325
 #, c-format
 msgid ""
 "Lepton Electronic Design Automation\n"
@@ -318,11 +320,11 @@ msgid ""
 "and gtkextra, as well as support from the gEDA community."
 msgstr ""
 
-#: attrib/src/x_dialog.c:335
+#: attrib/src/x_dialog.c:336
 msgid "About..."
 msgstr ""
 
-#: attrib/src/x_dialog.c:351
+#: attrib/src/x_dialog.c:352
 msgid "Export CSV"
 msgstr ""
 
@@ -370,57 +372,55 @@ msgstr ""
 msgid "Could NOT save [%1$s]"
 msgstr ""
 
-#: attrib/src/x_gtksheet.c:70 attrib/src/x_gtksheet.c:79
+#: attrib/src/x_gtksheet.c:71 attrib/src/x_gtksheet.c:80
 msgid "Components"
 msgstr ""
 
-#: attrib/src/x_gtksheet.c:71 attrib/src/x_gtksheet.c:88
-#: attrib/src/x_gtksheet.c:91
+#: attrib/src/x_gtksheet.c:72 attrib/src/x_gtksheet.c:89
+#: attrib/src/x_gtksheet.c:92
 msgid "Nets"
 msgstr ""
 
-#: attrib/src/x_gtksheet.c:72 attrib/src/x_gtksheet.c:104
-#: attrib/src/x_gtksheet.c:107
+#: attrib/src/x_gtksheet.c:73 attrib/src/x_gtksheet.c:105
+#: attrib/src/x_gtksheet.c:108
 msgid "Pins"
 msgstr ""
 
-#: attrib/src/x_gtksheet.c:81
+#: attrib/src/x_gtksheet.c:82
 msgid ""
 "No components found in design.  Please check your schematic and try again!\n"
 msgstr ""
 
-#: attrib/src/x_gtksheet.c:92 attrib/src/x_gtksheet.c:94
+#: attrib/src/x_gtksheet.c:93 attrib/src/x_gtksheet.c:95
 msgid "TBD"
 msgstr ""
 
-#: attrib/src/x_gtksheet.c:355
+#: attrib/src/x_gtksheet.c:356
 msgid "couldn't allocate color"
 msgstr ""
 
-#: attrib/src/x_window.c:94
+#: attrib/src/x_window.c:95
 msgid "lepton-attrib - Lepton EDA attribute editor"
 msgstr ""
 
-#: attrib/src/x_window.c:318
+#: attrib/src/x_window.c:339
 #, c-format
-msgid ""
-"Error loading %1$s:\n"
-"%2$s\n"
+msgid "Error loading menu: %1$s\n"
 msgstr ""
 
-#: attrib/src/x_window.c:356
+#: attrib/src/x_window.c:375
 msgid ""
 "No components found in entire design!\n"
 "Do you have refdeses on your components?"
 msgstr ""
 
-#: attrib/src/x_window.c:361
+#: attrib/src/x_window.c:380
 msgid ""
 "No configurable component attributes found in entire design!\n"
 "Please attach at least some attributes before running lepton-attrib."
 msgstr ""
 
-#: attrib/src/x_window.c:366
+#: attrib/src/x_window.c:385
 msgid ""
 "No pins found on any components!\n"
 "Please check your design."

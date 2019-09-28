@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-05-13 11:16+0300\n"
+"POT-Creation-Date: 2019-09-28 09:34+0300\n"
 "PO-Revision-Date: 2014-06-06 16:40+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
@@ -861,6 +861,12 @@ msgstr "Перехват функций Scheme для EdascmHookProxy"
 msgid "Object ~A is not part of a page"
 msgstr "Объект ~A не является частью схемы"
 
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
 #, fuzzy, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr "source-library: недопустимый путь «%s»\n"
@@ -871,12 +877,6 @@ msgstr ""
 #, fuzzy, scheme-format
 msgid "File ~S is not readable.\n"
 msgstr "Файл %s только для чтения"
-
-msgid "Welcome to Lepton REPL!\n"
-msgstr ""
-
-msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr ""
 
 #, fuzzy
 #~ msgid ""

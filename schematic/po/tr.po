@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-02-22 14:08+0300\n"
+"POT-Creation-Date: 2019-09-28 09:34+0300\n"
 "PO-Revision-Date: 2012-01-27 14:22+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -111,10 +111,6 @@ msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
 msgstr ""
 
 #, c-format
-msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
-msgstr ""
-
-#, c-format
 msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
 msgstr ""
 
@@ -158,18 +154,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Current locale settings: %1$s\n"
 msgstr "Şu andaki yerel ayarlar: %s\n"
-
-#, c-format
-msgid "Couldn't find init scm file [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "Read init scm file [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "Failed to read init scm file [%1$s]"
-msgstr ""
 
 #, c-format
 msgid ""
@@ -261,10 +245,13 @@ msgstr ""
 msgid "Grid(%1$s, %2$s)"
 msgstr ""
 
+msgid "S_elect the schematics you want to save:"
+msgstr ""
+
 msgid "Name"
 msgstr ""
 
-msgid "S_elect the schematics you want to save:"
+msgid "Show _full paths"
 msgstr ""
 
 #, c-format
@@ -341,8 +328,11 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "Pencere kapatılıyor\n"
 
+msgid "_Wrap Long Lines"
+msgstr ""
+
 #, fuzzy
-msgid "Clear Log _Window"
+msgid "Clea_r Log Window"
 msgstr "Yeni pencere"
 
 msgid "Macro:"
@@ -580,21 +570,6 @@ msgstr ""
 msgid "Resnap Active"
 msgstr ""
 
-msgid "Stroke"
-msgstr ""
-
-msgid "none"
-msgstr ""
-
-msgid "Repeat/"
-msgstr ""
-
-msgid "Repeat/none"
-msgstr ""
-
-msgid "Pan"
-msgstr "Kaydırma"
-
 #, fuzzy, c-format
 msgid "New page created [%1$s]"
 msgstr "Yeni sayfa oluşturuldu [%s]\n"
@@ -603,51 +578,18 @@ msgstr "Yeni sayfa oluşturuldu [%s]\n"
 msgid "New Window created [%1$s]"
 msgstr "Yeni pencere oluşturuldu [%s]\n"
 
-msgid "Failed to Save All"
-msgstr ""
-
 msgid "Saved All"
 msgstr "Hepsi kaydedildi"
+
+msgid "Failed to Save All"
+msgstr ""
 
 #, fuzzy
 msgid "Closing Window"
 msgstr "Pencere kapatılıyor\n"
 
-msgid "Copy"
-msgstr "Kopyala"
-
 msgid "Select objs first"
 msgstr ""
-
-msgid "Multiple Copy"
-msgstr "Çoklu kopyala"
-
-msgid "Move"
-msgstr "Taşı"
-
-msgid "Delete"
-msgstr "Sil"
-
-msgid "Edit"
-msgstr "Düzenle"
-
-msgid "Edit Text"
-msgstr "Metni Düzenle"
-
-msgid "Slot"
-msgstr "Slot"
-
-msgid "Rotate"
-msgstr "Döndür"
-
-msgid "Mirror"
-msgstr ""
-
-msgid "Lock"
-msgstr "Kilitle"
-
-msgid "Unlock"
-msgstr "Kilidi Aç"
 
 msgid "WARNING: Do not translate with snap off!"
 msgstr ""
@@ -663,18 +605,6 @@ msgid ""
 "should be set to 100"
 msgstr ""
 
-msgid "Embed"
-msgstr ""
-
-msgid "Unembed"
-msgstr ""
-
-msgid "Update"
-msgstr "Güncelle"
-
-msgid "ShowHidden"
-msgstr ""
-
 #, c-format
 msgid ""
 "<b>Revert page:</b>\n"
@@ -688,67 +618,10 @@ msgstr ""
 msgid "Revert"
 msgstr ""
 
-msgid "Copy to clipboard"
-msgstr ""
-
-msgid "Cut to clipboard"
-msgstr ""
-
-msgid "Paste from clipboard"
-msgstr ""
-
 msgid "Empty clipboard"
 msgstr ""
 
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being copied to.
-#, fuzzy, c-format
-msgid "Copy %i"
-msgstr "Kopyala"
-
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being cut to.
-#, fuzzy, c-format
-msgid "Cut %i"
-msgstr "1'e Kes"
-
-#. TRANSLATORS: The number is the number of the buffer that is being
-#. * pasted to the schematic.
-#, fuzzy, c-format
-msgid "Paste %i"
-msgstr "1'den yapıştır"
-
 msgid "Empty buffer"
-msgstr ""
-
-msgid "Component"
-msgstr ""
-
-msgid "Attribute"
-msgstr ""
-
-msgid "Net"
-msgstr "Ağ"
-
-msgid "Bus"
-msgstr "Veriyolu"
-
-msgid "Line"
-msgstr "Satır"
-
-msgid "Path"
-msgstr ""
-
-msgid "Box"
-msgstr "Kutu"
-
-msgid "Circle"
-msgstr "Daire"
-
-msgid "Arc"
-msgstr "Eğri"
-
-msgid "Pin"
 msgstr ""
 
 #, c-format
@@ -777,24 +650,6 @@ msgid "Symbol is not a real file. Symbol cannot be loaded."
 msgstr ""
 
 msgid "Cannot find any schematics above the current one!"
-msgstr ""
-
-msgid "Attach"
-msgstr "Ekle"
-
-msgid "Detach"
-msgstr "Ayır"
-
-msgid "ShowN"
-msgstr ""
-
-msgid "ShowV"
-msgstr ""
-
-msgid "ShowB"
-msgstr ""
-
-msgid "VisToggle"
 msgstr ""
 
 #, c-format
@@ -838,14 +693,6 @@ msgid "magnetic net mode: ON"
 msgstr ""
 
 msgid "magnetic net mode: OFF"
-msgstr ""
-
-#. TRANSLATORS: this string is used to generate a filename for
-#. newly-created files.  It will be used to create a filename of
-#. the form "untitled_N.sch", where N is a number.  Please make
-#. sure that the translation contains characters suitable for use
-#. in a filename.
-msgid "untitled"
 msgstr ""
 
 #, c-format
@@ -921,9 +768,6 @@ msgstr ""
 msgid "Failed to load picture: %1$s"
 msgstr ""
 
-msgid "Picture"
-msgstr ""
-
 #, c-format
 msgid "Failed to replace pictures: %s"
 msgstr ""
@@ -948,9 +792,9 @@ msgstr ""
 msgid ""
 "Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"Interactively edit gEDA schematics or symbols.  If one or more FILEs\n"
-"are specified, open them for editing; otherwise, create a new, empty\n"
-"schematic.\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
 "\n"
 "Options:\n"
 "  -q, --quiet              Quiet mode.\n"
@@ -958,14 +802,12 @@ msgid ""
 "  -L DIR                   Add DIR to Scheme search path.\n"
 "  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
-"  -o, --output=FILE        Output filename (for printing).\n"
-"  -p                       Automatically place the window.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"gEDA/gaf homepage: <http://www.geda-project.org/>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
 
 #, c-format
@@ -1140,10 +982,19 @@ msgstr ""
 msgid "Background"
 msgstr ""
 
+msgid "Pin"
+msgstr ""
+
 msgid "Net endpoint"
 msgstr ""
 
 msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr "Ağ"
+
+msgid "Attribute"
 msgstr ""
 
 msgid "Logic bubble"
@@ -1156,6 +1007,9 @@ msgstr ""
 msgid "Detached attribute"
 msgstr "Öznitelikler"
 
+msgid "Bus"
+msgstr "Veriyolu"
+
 #, fuzzy
 msgid "Selection"
 msgstr "Seçim Kipi"
@@ -1165,6 +1019,12 @@ msgstr ""
 
 msgid "Zoom box"
 msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr "Kilitle"
 
 msgid "Output background"
 msgstr ""
@@ -1315,10 +1175,23 @@ msgstr ""
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
 msgstr ""
 
+msgid "NOTE: print-color-map will be used for PDF export"
+msgstr ""
+
 msgid "Width x Height"
 msgstr ""
 
 msgid "Image type"
+msgstr ""
+
+#, fuzzy
+msgid "Color mode"
+msgstr "Renk"
+
+msgid "Color"
+msgstr "Renk"
+
+msgid "Grayscale"
 msgstr ""
 
 msgid "Write image..."
@@ -1382,6 +1255,15 @@ msgstr "Düzenle..."
 
 msgid "Object Properties..."
 msgstr ""
+
+msgid "Copy"
+msgstr "Kopyala"
+
+msgid "Move"
+msgstr "Taşı"
+
+msgid "Delete"
+msgstr "Sil"
 
 #, fuzzy
 msgid "Down Schematic"
@@ -1481,6 +1363,9 @@ msgstr[1] "Öznitelikler"
 msgid "Text Entry..."
 msgstr ""
 
+msgid "Refresh"
+msgstr ""
+
 msgid "New Page"
 msgstr "Yeni Sayfa"
 
@@ -1493,13 +1378,7 @@ msgstr "Sayfayı Kaydet"
 msgid "Close Page"
 msgstr "Sayfayı Kapat"
 
-msgid "Page Manager"
-msgstr ""
-
 msgid "Changed"
-msgstr ""
-
-msgid "Right click on the filename for more options..."
 msgstr ""
 
 #, c-format
@@ -1575,6 +1454,9 @@ msgstr "gEDA Şematik Editörü"
 msgid "Select Schematic Font"
 msgstr "Seçim Kipi"
 
+msgid "Page Manager"
+msgstr ""
+
 #, c-format
 msgid "Loading schematic [%1$s]"
 msgstr ""
@@ -1645,6 +1527,9 @@ msgid ""
 "Right mouse button to cancel"
 msgstr ""
 
+msgid "Component"
+msgstr ""
+
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
@@ -1667,10 +1552,19 @@ msgstr ""
 msgid "Show text starting with:"
 msgstr ""
 
-msgid "Menu/Cancel"
+msgid "none"
 msgstr ""
 
-msgid "Pan/Cancel"
+msgid "Repeat"
+msgstr ""
+
+msgid "Pan"
+msgstr "Kaydırma"
+
+msgid "Menu"
+msgstr ""
+
+msgid "/Cancel"
 msgstr ""
 
 msgid "Pick"
@@ -1697,6 +1591,10 @@ msgid ""
 msgstr ""
 
 msgid "Failed to load file"
+msgstr ""
+
+#, c-format
+msgid "Skipping existing file [%s]"
 msgstr ""
 
 #, fuzzy
@@ -1778,6 +1676,9 @@ msgstr "Metin Düzenle..."
 
 msgid "Slot..."
 msgstr "Yuva..."
+
+msgid "Unlock"
+msgstr "Kilidi Aç"
 
 msgid "Embed Component/Picture"
 msgstr "Bileşen/Resim göm"
@@ -2074,7 +1975,10 @@ msgid "_Help"
 msgstr "Yardım"
 
 #, scheme-format
-msgid "~S is not a valid gschem action."
+msgid "[~A] is not a valid lepton-schematic action."
+msgstr ""
+
+msgid "There is no last action to repeat."
 msgstr ""
 
 msgid "Repeat Last Action"
@@ -2113,6 +2017,9 @@ msgstr ""
 
 msgid "Terminal REPL"
 msgstr ""
+
+msgid "Edit Text"
+msgstr "Metni Düzenle"
 
 msgid "Choose Slot"
 msgstr ""
@@ -2222,9 +2129,17 @@ msgstr "Hiyerarşi"
 msgid "Attach Attributes"
 msgstr "Öznitelikler"
 
+#, scheme-format
+msgid "Attribute attached: [~a]"
+msgstr ""
+
 #, fuzzy
 msgid "Detach Attributes"
 msgstr "Öznitelikler"
+
+#, scheme-format
+msgid "Attribute detached: [~a]"
+msgstr ""
 
 #, fuzzy
 msgid "Show Attribute Value"
@@ -2290,40 +2205,41 @@ msgstr ""
 msgid "View documentation for selected component"
 msgstr ""
 
-msgid ""
-"Could not show documentation for selected component:\n"
-"\n"
+msgid "Lepton EDA Manuals"
 msgstr ""
 
-msgid "gEDA Manuals"
+msgid "View the front page of the Lepton EDA documentation in a browser."
 msgstr ""
 
-msgid "View the front page of the gEDA documentation in a browser."
+msgid "lepton-schematic User Guide"
 msgstr ""
 
-msgid "gschem User Guide"
+msgid "View the lepton-schematic User Guide in a browser."
 msgstr ""
 
-msgid "View the gschem User Guide in a browser."
+#, fuzzy
+msgid "lepton-schematic FAQ"
+msgstr "Seçim Kipi"
+
+msgid "Frequently Asked Questions about using lepton-schematic."
 msgstr ""
 
-msgid "gschem FAQ"
+#, fuzzy
+msgid "Lepton EDA wiki"
+msgstr "gEDA Şematik Editörü"
+
+msgid "View the front page of the Lepton EDA wiki in a browser."
 msgstr ""
 
-msgid "Frequently Asked Questions about using gschem."
-msgstr ""
-
-msgid "gEDA wiki"
-msgstr ""
-
-msgid "View the front page of the gEDA wiki in a browser."
-msgstr ""
-
-msgid "About gschem"
+#, fuzzy
+msgid "About lepton-schematic"
 msgstr "gschem Hakkında"
 
 #, scheme-format
 msgid "Invalid text alignment ~A."
+msgstr ""
+
+msgid "Could not show documentation:"
 msgstr ""
 
 msgid "No documentation found"
@@ -2337,8 +2253,50 @@ msgstr ""
 msgid "~S is not a prefix key sequence."
 msgstr ""
 
-#~ msgid "Color"
-#~ msgstr "Renk"
+#~ msgid "Multiple Copy"
+#~ msgstr "Çoklu kopyala"
+
+#~ msgid "Edit"
+#~ msgstr "Düzenle"
+
+#~ msgid "Slot"
+#~ msgstr "Slot"
+
+#~ msgid "Rotate"
+#~ msgstr "Döndür"
+
+#~ msgid "Update"
+#~ msgstr "Güncelle"
+
+#, fuzzy
+#~ msgid "Copy %i"
+#~ msgstr "Kopyala"
+
+#, fuzzy
+#~ msgid "Cut %i"
+#~ msgstr "1'e Kes"
+
+#, fuzzy
+#~ msgid "Paste %i"
+#~ msgstr "1'den yapıştır"
+
+#~ msgid "Line"
+#~ msgstr "Satır"
+
+#~ msgid "Box"
+#~ msgstr "Kutu"
+
+#~ msgid "Circle"
+#~ msgstr "Daire"
+
+#~ msgid "Arc"
+#~ msgstr "Eğri"
+
+#~ msgid "Attach"
+#~ msgstr "Ekle"
+
+#~ msgid "Detach"
+#~ msgstr "Ayır"
 
 #, fuzzy
 #~ msgid "Edit Pin Type..."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda 1.9.7\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-05-13 12:09+0300\n"
+"POT-Creation-Date: 2019-09-28 09:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: netlist/scheme/netlist.scm:102
+#: netlist/scheme/netlist.scm:103
 msgid ""
 "Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2018 Lepton EDA Contributors\n"
+"Copyright (C) 2017-2019 Lepton EDA Contributors\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the Lepton EDA distribution.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:179
+#: netlist/scheme/netlist.scm:180
 #, scheme-format
 msgid ""
 "Possible attribute conflict for refdes: ~A\n"
@@ -35,16 +35,16 @@ msgid ""
 "values: ~A\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:245
+#: netlist/scheme/netlist.scm:246
 #, scheme-format
 msgid "Uref ~a: Bad slot number: ~a.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:288
+#: netlist/scheme/netlist.scm:289
 msgid "Couldn't wrap string  at requested position\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:561
+#: netlist/scheme/netlist.scm:562
 #, scheme-format
 msgid ""
 "There is a net name collision!\n"
@@ -56,7 +56,7 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:598
+#: netlist/scheme/netlist.scm:599
 #, scheme-format
 msgid ""
 "There is a refdes name collision!\n"
@@ -68,12 +68,12 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:791
+#: netlist/scheme/netlist.scm:792
 #, scheme-format
 msgid "Can't open directory ~S.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:802
+#: netlist/scheme/netlist.scm:803
 #, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
@@ -86,6 +86,7 @@ msgid ""
 "  -o FILE         Filename for netlist data output.\n"
 "  -L DIR          Add DIR to Scheme search path.\n"
 "  -g BACKEND      Specify netlist backend to use.\n"
+"  -f FILE         Specify path to netlist backend file to use.\n"
 "  -O STRING       Pass an option string to backend.\n"
 "  -l FILE         Load Scheme file before loading backend.\n"
 "  -m FILE         Load Scheme file after loading backend.\n"
@@ -100,7 +101,7 @@ msgid ""
 "Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:840
+#: netlist/scheme/netlist.scm:842
 #, scheme-format
 msgid ""
 "\n"
@@ -109,11 +110,11 @@ msgid ""
 "\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:880
+#: netlist/scheme/netlist.scm:884
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:884
+#: netlist/scheme/netlist.scm:888
 #, scheme-format
 msgid ""
 "No schematic files specified for processing.\n"
@@ -121,7 +122,7 @@ msgid ""
 "                         Run `~A --help' for more information.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:890
+#: netlist/scheme/netlist.scm:894
 #, scheme-format
 msgid ""
 "Could not find backend `~A' in load path.\n"
@@ -130,19 +131,31 @@ msgid ""
 "available backends.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:915
+#: netlist/scheme/netlist.scm:900
+#, scheme-format
+msgid ""
+"Can't load backend file ~S.\n"
+"~\n"
+"                         Backend files are expected to have names like "
+"\"gnet-NAME.scm\"\n"
+"~\n"
+"                         and contain entry point function NAME (where NAME "
+"is the backend's name).\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:941
 msgid "Failed to evaluate Scheme expression at startup.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:949
+#: netlist/scheme/netlist.scm:975
 msgid "Failed to load Scheme file before loading backend.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:966
+#: netlist/scheme/netlist.scm:1003
 msgid "Failed to load backend file.\n"
 msgstr ""
 
-#: netlist/scheme/netlist.scm:979
+#: netlist/scheme/netlist.scm:1016
 msgid "Failed to load Scheme file after loading backend.\n"
 msgstr ""
 

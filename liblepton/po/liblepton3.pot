@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda 1.9.7\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-05-13 11:16+0300\n"
+"POT-Creation-Date: 2019-09-28 09:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -221,12 +221,12 @@ msgstr ""
 msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr ""
 
-#: liblepton/src/g_rc.c:512
+#: liblepton/src/g_rc.c:515
 #, c-format
 msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr ""
 
-#: liblepton/src/g_rc.c:738
+#: liblepton/src/g_rc.c:766
 #, c-format
 msgid "Invalid path [%1$s] passed to bitmap-directory\n"
 msgstr ""
@@ -747,16 +747,16 @@ msgstr ""
 msgid "component missing pinseq= attribute."
 msgstr ""
 
-#: liblepton/src/edaconfig.c:837 liblepton/src/edaconfig.c:923
+#: liblepton/src/edaconfig.c:836 liblepton/src/edaconfig.c:922
 msgid "Undefined configuration filename"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1248 liblepton/src/edaconfig.c:1312
+#: liblepton/src/edaconfig.c:1247 liblepton/src/edaconfig.c:1311
 #, c-format
 msgid "Configuration does not have group '%s'"
 msgstr ""
 
-#: liblepton/src/edaconfig.c:1326
+#: liblepton/src/edaconfig.c:1325
 #, c-format
 msgid "Configuration does not have key '%s'"
 msgstr ""
@@ -777,131 +777,131 @@ msgstr ""
 msgid "Object ~A is attribute of wrong object"
 msgstr ""
 
-#: liblepton/src/scheme_complex.c:148
+#: liblepton/src/scheme_complex.c:151
 msgid "Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
-#: liblepton/src/scheme_complex.c:270 liblepton/src/scheme_page.c:246
+#: liblepton/src/scheme_complex.c:273 liblepton/src/scheme_page.c:246
 msgid "Object ~A is already attached to something"
 msgstr ""
 
-#: liblepton/src/scheme_complex.c:332
+#: liblepton/src/scheme_complex.c:335
 msgid "Object ~A is attached to a different complex"
 msgstr ""
 
-#: liblepton/src/scheme_complex.c:339
+#: liblepton/src/scheme_complex.c:342
 msgid "Object ~A is attached to a page"
 msgstr ""
 
-#: liblepton/src/scheme_complex.c:346 liblepton/src/scheme_page.c:298
+#: liblepton/src/scheme_complex.c:349 liblepton/src/scheme_page.c:298
 msgid "Object ~A is attached as an attribute"
 msgstr ""
 
-#: liblepton/src/scheme_complex.c:353 liblepton/src/scheme_page.c:305
+#: liblepton/src/scheme_complex.c:356 liblepton/src/scheme_page.c:305
 msgid "Object ~A has attributes"
 msgstr ""
 
-#: liblepton/src/scheme_object.c:236
+#: liblepton/src/scheme_object.c:235
 msgid "Object ~A has bad type '~A'"
 msgstr ""
 
-#: liblepton/src/scheme_object.c:380
+#: liblepton/src/scheme_object.c:379
 msgid "Object ~A has invalid stroke cap style ~A"
 msgstr ""
 
-#: liblepton/src/scheme_object.c:393
+#: liblepton/src/scheme_object.c:392
 msgid "Object ~A has invalid stroke dash style ~A"
 msgstr ""
 
-#: liblepton/src/scheme_object.c:457
+#: liblepton/src/scheme_object.c:456
 msgid "Invalid stroke cap style ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:468
+#: liblepton/src/scheme_object.c:467
 msgid "Invalid stroke dash style ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:478
+#: liblepton/src/scheme_object.c:477
 msgid "Missing dash length parameter for dash style ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:488
+#: liblepton/src/scheme_object.c:487
 msgid "Missing dot/dash space parameter for dash style ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:556
+#: liblepton/src/scheme_object.c:555
 msgid "Object ~A has invalid fill style ~A"
 msgstr ""
 
-#: liblepton/src/scheme_object.c:605
+#: liblepton/src/scheme_object.c:604
 msgid "Invalid fill style ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:613
+#: liblepton/src/scheme_object.c:612
 msgid "Missing second space parameter for fill style ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:622
+#: liblepton/src/scheme_object.c:621
 msgid "Missing second angle parameter for fill style ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:632
+#: liblepton/src/scheme_object.c:631
 msgid "Missing stroke width parameter for fill style ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:641
+#: liblepton/src/scheme_object.c:640
 msgid "Missing space parameter for fill style ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:650
+#: liblepton/src/scheme_object.c:649
 msgid "Missing angle parameter for fill style ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:1034
+#: liblepton/src/scheme_object.c:1033
 msgid "Invalid pin type ~A, must be 'net or 'bus"
 msgstr ""
 
-#: liblepton/src/scheme_object.c:1083
+#: liblepton/src/scheme_object.c:1082
 msgid "Object ~A has invalid pin type."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:1489
+#: liblepton/src/scheme_object.c:1488
 msgid "Invalid text alignment ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:1505
+#: liblepton/src/scheme_object.c:1504
 msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
-#: liblepton/src/scheme_object.c:1524
+#: liblepton/src/scheme_object.c:1523
 msgid "Invalid text name/value visibility ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:1598
+#: liblepton/src/scheme_object.c:1597
 msgid "Text object ~A has invalid text alignment ~A"
 msgstr ""
 
-#: liblepton/src/scheme_object.c:1607
+#: liblepton/src/scheme_object.c:1606
 msgid "Text object ~A has invalid visibility ~A"
 msgstr ""
 
-#: liblepton/src/scheme_object.c:1617
+#: liblepton/src/scheme_object.c:1616
 msgid "Text object ~A has invalid text attribute visibility ~A"
 msgstr ""
 
-#: liblepton/src/scheme_object.c:1658
+#: liblepton/src/scheme_object.c:1657
 msgid "Object ~A is not included in a page."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:1811
+#: liblepton/src/scheme_object.c:1810
 msgid "Path object ~A has invalid element type ~A at index ~A"
 msgstr ""
 
-#: liblepton/src/scheme_object.c:1925
+#: liblepton/src/scheme_object.c:1924
 msgid "Invalid path element type ~A."
 msgstr ""
 
-#: liblepton/src/scheme_object.c:2097
+#: liblepton/src/scheme_object.c:2096
 msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
@@ -913,11 +913,11 @@ msgstr ""
 msgid "Parse error: ~s"
 msgstr ""
 
-#: liblepton/src/edascmhookproxy.c:81
+#: liblepton/src/edascmhookproxy.c:82
 msgid "Scheme hook"
 msgstr ""
 
-#: liblepton/src/edascmhookproxy.c:82
+#: liblepton/src/edascmhookproxy.c:83
 msgid "The Scheme-level hook to proxy"
 msgstr ""
 
@@ -926,24 +926,24 @@ msgstr ""
 msgid "Object ~A is not part of a page"
 msgstr ""
 
-#: liblepton/scheme/geda/library.scm:108
-#, scheme-format
-msgid "Invalid path ~S or source not readable.\n"
-msgstr ""
-
-#: liblepton/scheme/geda/library.scm:110
-msgid "Source library path must be a string.\n"
-msgstr ""
-
-#: liblepton/scheme/geda/library.scm:169
-#, scheme-format
-msgid "File ~S is not readable.\n"
-msgstr ""
-
 #: liblepton/scheme/geda/repl.scm:48
 msgid "Welcome to Lepton REPL!\n"
 msgstr ""
 
 #: liblepton/scheme/geda/repl.scm:53
 msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#: liblepton/scheme/lepton/library.scm:102
+#, scheme-format
+msgid "Invalid path ~S or source not readable.\n"
+msgstr ""
+
+#: liblepton/scheme/lepton/library.scm:104
+msgid "Source library path must be a string.\n"
+msgstr ""
+
+#: liblepton/scheme/lepton/library.scm:163
+#, scheme-format
+msgid "File ~S is not readable.\n"
 msgstr ""

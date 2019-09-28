@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda 1.9.7\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-02-22 14:08+0300\n"
+"POT-Creation-Date: 2019-09-28 09:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Save Color Scheme As..."
 msgstr ""
 
-#: schematic/src/color_edit_widget.c:482 schematic/src/x_fileselect.c:378
+#: schematic/src/color_edit_widget.c:482 schematic/src/x_fileselect.c:407
 #, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -41,36 +41,36 @@ msgid ""
 "Would you like to overwrite it?"
 msgstr ""
 
-#: schematic/src/color_edit_widget.c:486 schematic/src/x_fileselect.c:381
+#: schematic/src/color_edit_widget.c:486 schematic/src/x_fileselect.c:411
 msgid "Overwrite file?"
 msgstr ""
 
-#: schematic/src/font_select_widget.c:211
+#: schematic/src/font_select_widget.c:216
 msgid "_Apply"
 msgstr ""
 
-#: schematic/src/font_select_widget.c:215
+#: schematic/src/font_select_widget.c:220
 msgid "Sa_ve..."
 msgstr ""
 
-#: schematic/src/font_select_widget.c:278
+#: schematic/src/font_select_widget.c:283
 #, c-format
 msgid "<b>Current:</b> %s"
 msgstr ""
 
-#: schematic/src/font_select_widget.c:453
+#: schematic/src/font_select_widget.c:470
 msgid "Save configuration"
 msgstr ""
 
-#: schematic/src/font_select_widget.c:461
+#: schematic/src/font_select_widget.c:478
 msgid "Save settings to:"
 msgstr ""
 
-#: schematic/src/font_select_widget.c:465
+#: schematic/src/font_select_widget.c:482
 msgid "Local configuration file (in current directory)"
 msgstr ""
 
-#: schematic/src/font_select_widget.c:467
+#: schematic/src/font_select_widget.c:484
 msgid "User configuration file (geda-user.conf)"
 msgstr ""
 
@@ -109,62 +109,57 @@ msgstr ""
 msgid "Invalid size [%1$d] passed to snap-size\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:620
+#: schematic/src/g_rc.c:560
 #, c-format
 msgid "Invalid num levels [%1$d] passed to undo-levels\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:831
+#: schematic/src/g_rc.c:755
 #, c-format
 msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:931
+#: schematic/src/g_rc.c:855
 #, c-format
 msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:972
+#: schematic/src/g_rc.c:896
 #, c-format
 msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:998
+#: schematic/src/g_rc.c:922
 #, c-format
 msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:1023
-#, c-format
-msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
-msgstr ""
-
-#: schematic/src/g_rc.c:1047
+#: schematic/src/g_rc.c:946
 #, c-format
 msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:1071
+#: schematic/src/g_rc.c:970
 #, c-format
 msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:1094
+#: schematic/src/g_rc.c:993
 #, c-format
 msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:1118
+#: schematic/src/g_rc.c:1017
 #, c-format
 msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:1144
+#: schematic/src/g_rc.c:1043
 #, c-format
 msgid "Invalid gain [%1$d] passed to zoom-gain\n"
 msgstr ""
 
-#: schematic/src/g_rc.c:1169
+#: schematic/src/g_rc.c:1068
 #, c-format
 msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
 msgstr ""
@@ -182,37 +177,22 @@ msgstr ""
 msgid "Found invalid gschem window smob ~S"
 msgstr ""
 
-#: schematic/src/lepton-schematic.c:155
+#: schematic/src/lepton-schematic.c:208
 #, c-format
 msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
 msgstr ""
 
-#: schematic/src/lepton-schematic.c:162
+#: schematic/src/lepton-schematic.c:215
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr ""
 
-#: schematic/src/lepton-schematic.c:166
+#: schematic/src/lepton-schematic.c:219
 #, c-format
 msgid "Current locale settings: %1$s\n"
 msgstr ""
 
-#: schematic/src/lepton-schematic.c:200
-#, c-format
-msgid "Couldn't find init scm file [%1$s]"
-msgstr ""
-
-#: schematic/src/lepton-schematic.c:205
-#, c-format
-msgid "Read init scm file [%1$s]"
-msgstr ""
-
-#: schematic/src/lepton-schematic.c:209
-#, c-format
-msgid "Failed to read init scm file [%1$s]"
-msgstr ""
-
-#: schematic/src/lepton-schematic.c:289
+#: schematic/src/lepton-schematic.c:324
 #, c-format
 msgid ""
 "ERROR: Failed to load or evaluate startup script.\n"
@@ -220,16 +200,16 @@ msgid ""
 "The lepton-schematic log may contain more information.\n"
 msgstr ""
 
-#: schematic/src/gschem_about_dialog.c:48
+#: schematic/src/gschem_about_dialog.c:49
 #, c-format
 msgid "%s (git: %.7s)"
 msgstr ""
 
-#: schematic/src/gschem_about_dialog.c:72
+#: schematic/src/gschem_about_dialog.c:73
 msgid "Lepton Electronic Design Automation"
 msgstr ""
 
-#: schematic/src/gschem_about_dialog.c:80
+#: schematic/src/gschem_about_dialog.c:81
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
 "Copyright © 2017-2019 Lepton Developers.\n"
@@ -288,73 +268,77 @@ msgstr ""
 msgid "_Degrees of Sweep:"
 msgstr ""
 
-#: schematic/src/gschem_bottom_widget.c:504
+#: schematic/src/gschem_bottom_widget.c:505
 msgid "Left mouse button"
 msgstr ""
 
-#: schematic/src/gschem_bottom_widget.c:508
+#: schematic/src/gschem_bottom_widget.c:509
 msgid "Middle mouse button"
 msgstr ""
 
-#: schematic/src/gschem_bottom_widget.c:512
+#: schematic/src/gschem_bottom_widget.c:513
 msgid "Right mouse button"
 msgstr ""
 
-#: schematic/src/gschem_bottom_widget.c:595
+#: schematic/src/gschem_bottom_widget.c:596
 msgid "(Snap size, Grid size)"
 msgstr ""
 
-#: schematic/src/gschem_bottom_widget.c:603
+#: schematic/src/gschem_bottom_widget.c:604
 msgid "Net rubber band mode"
 msgstr ""
 
-#: schematic/src/gschem_bottom_widget.c:614
+#: schematic/src/gschem_bottom_widget.c:615
 msgid "Magnetic net mode"
 msgstr ""
 
-#: schematic/src/gschem_bottom_widget.c:622
+#: schematic/src/gschem_bottom_widget.c:623
 msgid "Current action mode"
 msgstr ""
 
-#: schematic/src/gschem_bottom_widget.c:935
-#: schematic/src/gschem_bottom_widget.c:951
+#: schematic/src/gschem_bottom_widget.c:939
+#: schematic/src/gschem_bottom_widget.c:955
 msgid "OFF"
 msgstr ""
 
-#: schematic/src/gschem_bottom_widget.c:954
+#: schematic/src/gschem_bottom_widget.c:958
 msgid "NONE"
 msgstr ""
 
-#: schematic/src/gschem_bottom_widget.c:960
+#: schematic/src/gschem_bottom_widget.c:964
 #, c-format
 msgid "Grid(%1$s, %2$s)"
 msgstr ""
 
-#: schematic/src/gschem_close_confirmation_dialog.c:350
-#: schematic/src/x_compselect.c:1236 schematic/src/x_multiattrib.c:2068
-msgid "Name"
-msgstr ""
-
-#: schematic/src/gschem_close_confirmation_dialog.c:372
+#: schematic/src/gschem_close_confirmation_dialog.c:342
 msgid "S_elect the schematics you want to save:"
 msgstr ""
 
-#: schematic/src/gschem_close_confirmation_dialog.c:467
+#: schematic/src/gschem_close_confirmation_dialog.c:377
+#: schematic/src/x_compselect.c:1236 schematic/src/x_multiattrib.c:2108
+msgid "Name"
+msgstr ""
+
+#: schematic/src/gschem_close_confirmation_dialog.c:397
+msgid "Show _full paths"
+msgstr ""
+
+#: schematic/src/gschem_close_confirmation_dialog.c:505
 #, c-format
 msgid "Save the changes to schematic \"%1$s\" before closing?"
 msgstr ""
 
-#: schematic/src/gschem_close_confirmation_dialog.c:473
+#: schematic/src/gschem_close_confirmation_dialog.c:511
 #, c-format
 msgid ""
 "There are %1$d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 
-#: schematic/src/gschem_close_confirmation_dialog.c:502
+#: schematic/src/gschem_close_confirmation_dialog.c:540
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 
-#: schematic/src/gschem_close_confirmation_dialog.c:522
+#: schematic/src/gschem_close_confirmation_dialog.c:560
 msgid "Close _without saving"
 msgstr ""
 
@@ -370,13 +354,14 @@ msgstr ""
 msgid "World"
 msgstr ""
 
-#: schematic/src/gschem_find_text_state.c:809 schematic/src/x_pagesel.c:432
+#: schematic/src/gschem_find_text_state.c:809
+#: schematic/src/page_select_widget.c:501
 msgid "Filename"
 msgstr ""
 
-#: schematic/src/gschem_find_text_state.c:821 schematic/src/i_callbacks.c:1970
-#: schematic/src/x_colorcb.c:154 schematic/src/x_widgets.c:179
-#: schematic/src/x_window.c:1226 schematic/src/x_window.c:1440
+#: schematic/src/gschem_find_text_state.c:821 schematic/src/x_colorcb.c:154
+#: schematic/src/x_widgets.c:175 schematic/src/x_window.c:1201
+#: schematic/src/x_window.c:1450
 msgid "Text"
 msgstr ""
 
@@ -404,45 +389,49 @@ msgstr ""
 msgid "Check symbol:"
 msgstr ""
 
-#: schematic/src/gschem_hotkey_dialog.c:200
+#: schematic/src/gschem_hotkey_dialog.c:191
 msgid "Hotkeys"
 msgstr ""
 
-#: schematic/src/gschem_hotkey_dialog.c:229
+#: schematic/src/gschem_hotkey_dialog.c:214
 msgid ""
 "Start typing action name or keystroke to filter the list.\n"
 "Type hotkeys as they are displayed in \"Keystroke(s)\" column."
 msgstr ""
 
-#: schematic/src/gschem_hotkey_dialog.c:233 schematic/src/x_compselect.c:1124
+#: schematic/src/gschem_hotkey_dialog.c:218 schematic/src/x_compselect.c:1124
 msgid "_Filter:"
 msgstr ""
 
-#: schematic/src/gschem_hotkey_dialog.c:259 schematic/src/i_basic.c:280
+#: schematic/src/gschem_hotkey_dialog.c:244 schematic/src/x_window.c:1319
 msgid "Action"
 msgstr ""
 
-#: schematic/src/gschem_hotkey_dialog.c:277
+#: schematic/src/gschem_hotkey_dialog.c:262
 msgid "Keystroke(s)"
 msgstr ""
 
-#: schematic/src/gschem_log_widget.c:177
+#: schematic/src/gschem_log_widget.c:128
 msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
 msgstr ""
 
-#: schematic/src/gschem_log_widget.c:434
+#: schematic/src/gschem_log_widget.c:392
 msgid "Clear log window?"
 msgstr ""
 
-#: schematic/src/gschem_log_widget.c:477
-msgid "Clear Log _Window"
+#: schematic/src/gschem_log_widget.c:463
+msgid "_Wrap Long Lines"
 msgstr ""
 
-#: schematic/src/gschem_macro_widget.c:231
+#: schematic/src/gschem_log_widget.c:484
+msgid "Clea_r Log Window"
+msgstr ""
+
+#: schematic/src/gschem_macro_widget.c:349
 msgid "Macro:"
 msgstr ""
 
-#: schematic/src/gschem_macro_widget.c:387
+#: schematic/src/gschem_macro_widget.c:397
 msgid "Evaluate"
 msgstr ""
 
@@ -586,12 +575,12 @@ msgid "Preview Buffer"
 msgstr ""
 
 #: schematic/src/gschem_show_hide_text_widget.c:148
-#: schematic/src/x_window.c:1268
+#: schematic/src/x_window.c:1243
 msgid "Hide"
 msgstr ""
 
 #: schematic/src/gschem_show_hide_text_widget.c:157
-#: schematic/src/x_window.c:1269
+#: schematic/src/x_window.c:1244
 msgid "Hide text starting with:"
 msgstr ""
 
@@ -636,255 +625,168 @@ msgstr ""
 msgid "Coordinate:"
 msgstr ""
 
-#: schematic/src/gschem_translate_widget.c:405 schematic/src/i_callbacks.c:800
+#: schematic/src/gschem_translate_widget.c:405
 msgid "Translate"
 msgstr ""
 
-#: schematic/src/i_basic.c:64 schematic/src/x_window.c:1369
+#: schematic/src/i_basic.c:65 schematic/src/x_window.c:1379
 #: schematic/scheme/conf/schematic/menu.scm:59
-#: schematic/scheme/gschem/builtins.scm:99
+#: schematic/scheme/gschem/builtins.scm:102
 msgid "Select Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:65
+#: schematic/src/i_basic.c:66
 msgid "Select Box Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:66
+#: schematic/src/i_basic.c:67
 msgid "Text Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:67
+#: schematic/src/i_basic.c:68
 msgid "Pan Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:70
+#: schematic/src/i_basic.c:71
 #, c-format
 msgid "Paste %d Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:74
+#: schematic/src/i_basic.c:75
 msgid "Magnetic Net Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:76
+#: schematic/src/i_basic.c:77
 msgid "Net Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:77
+#: schematic/src/i_basic.c:78
 msgid "Arc Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:78
+#: schematic/src/i_basic.c:79
 msgid "Box Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:79
+#: schematic/src/i_basic.c:80
 msgid "Bus Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:80
+#: schematic/src/i_basic.c:81
 msgid "Circle Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:81
+#: schematic/src/i_basic.c:82
 msgid "Component Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:82 schematic/scheme/conf/schematic/menu.scm:62
-#: schematic/scheme/gschem/builtins.scm:114
+#: schematic/src/i_basic.c:83 schematic/scheme/conf/schematic/menu.scm:62
+#: schematic/scheme/gschem/builtins.scm:117
 msgid "Copy Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:83 schematic/scheme/conf/schematic/menu.scm:63
-#: schematic/scheme/gschem/builtins.scm:117
+#: schematic/src/i_basic.c:84 schematic/scheme/conf/schematic/menu.scm:63
+#: schematic/scheme/gschem/builtins.scm:120
 msgid "Multiple Copy Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:84
+#: schematic/src/i_basic.c:85
 msgid "Line Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:85 schematic/scheme/conf/schematic/menu.scm:66
-#: schematic/scheme/gschem/builtins.scm:123
+#: schematic/src/i_basic.c:86 schematic/scheme/conf/schematic/menu.scm:66
+#: schematic/scheme/gschem/builtins.scm:126
 msgid "Mirror Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:86 schematic/scheme/conf/schematic/menu.scm:64
-#: schematic/scheme/gschem/builtins.scm:111
+#: schematic/src/i_basic.c:87 schematic/scheme/conf/schematic/menu.scm:64
+#: schematic/scheme/gschem/builtins.scm:114
 msgid "Move Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:87
+#: schematic/src/i_basic.c:88
 msgid "Path Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:88
+#: schematic/src/i_basic.c:89
 msgid "Picture Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:89
+#: schematic/src/i_basic.c:90
 msgid "Pin Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:90 schematic/scheme/gschem/builtins.scm:120
+#: schematic/src/i_basic.c:91 schematic/scheme/gschem/builtins.scm:123
 msgid "Rotate Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:91
+#: schematic/src/i_basic.c:92
 msgid "Modify Mode"
 msgstr ""
 
-#: schematic/src/i_basic.c:92 schematic/src/x_menus.c:49
-#: schematic/scheme/gschem/builtins.scm:204
+#: schematic/src/i_basic.c:93 schematic/src/x_menus.c:49
+#: schematic/scheme/gschem/builtins.scm:207
 msgid "Zoom Box"
 msgstr ""
 
-#: schematic/src/i_basic.c:121
+#: schematic/src/i_basic.c:122
 msgid "Show Hidden"
 msgstr ""
 
-#: schematic/src/i_basic.c:124
+#: schematic/src/i_basic.c:125
 msgid "Snap Off"
 msgstr ""
 
-#: schematic/src/i_basic.c:126
+#: schematic/src/i_basic.c:127
 msgid "Resnap Active"
 msgstr ""
 
-#: schematic/src/i_basic.c:288 schematic/src/x_colorcb.c:159
-msgid "Stroke"
-msgstr ""
-
-#: schematic/src/i_basic.c:296 schematic/src/i_basic.c:330
-#: schematic/src/x_window.c:1361
-msgid "none"
-msgstr ""
-
-#: schematic/src/i_basic.c:304
-msgid "Repeat/"
-msgstr ""
-
-#: schematic/src/i_basic.c:315
-msgid "Repeat/none"
-msgstr ""
-
-#: schematic/src/i_basic.c:323 schematic/src/i_callbacks.c:1239
-#: schematic/scheme/gschem/builtins.scm:189
-msgid "Pan"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:74
+#: schematic/src/i_callbacks.c:64
 #, c-format
 msgid "New page created [%1$s]"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:108
+#: schematic/src/i_callbacks.c:98
 #, c-format
 msgid "New Window created [%1$s]"
 msgstr ""
 
 #: schematic/src/i_callbacks.c:245
-msgid "Failed to Save All"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:247
 msgid "Saved All"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:308
+#: schematic/src/i_callbacks.c:249
+msgid "Failed to Save All"
+msgstr ""
+
+#: schematic/src/i_callbacks.c:318
 msgid "Closing Window"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:505 schematic/src/x_menus.c:55
-#: schematic/scheme/gschem/builtins.scm:168
-msgid "Copy"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:514 schematic/src/i_callbacks.c:539
-#: schematic/src/i_callbacks.c:564
+#: schematic/src/i_callbacks.c:522 schematic/src/i_callbacks.c:545
+#: schematic/src/i_callbacks.c:568
 msgid "Select objs first"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:530
-msgid "Multiple Copy"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:555 schematic/src/x_menus.c:56
-msgid "Move"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:579 schematic/src/x_menus.c:57
-#: schematic/src/x_multiattrib.c:1656 schematic/scheme/gschem/builtins.scm:108
-msgid "Delete"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:603
-msgid "Edit"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:618 schematic/scheme/gschem/builtins.scm:129
-msgid "Edit Text"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:637
-msgid "Slot"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:688 schematic/src/i_callbacks.c:698
-msgid "Rotate"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:736 schematic/src/i_callbacks.c:746
-msgid "Mirror"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:763 schematic/src/x_colorcb.c:160
-#: schematic/scheme/conf/schematic/menu.scm:73
-#: schematic/scheme/gschem/builtins.scm:141
-msgid "Lock"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:781 schematic/scheme/conf/schematic/menu.scm:74
-#: schematic/scheme/gschem/builtins.scm:144
-msgid "Unlock"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:805
+#: schematic/src/i_callbacks.c:791
 msgid "WARNING: Do not translate with snap off!"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:806
+#: schematic/src/i_callbacks.c:792
 msgid "WARNING: Turning snap on and continuing with translate."
 msgstr ""
 
-#: schematic/src/i_callbacks.c:813
+#: schematic/src/i_callbacks.c:799
 msgid "WARNING: Snap grid size is not equal to 100!"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:815
+#: schematic/src/i_callbacks.c:801
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:847
-msgid "Embed"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:886
-msgid "Unembed"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:928
-msgid "Update"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:970
-msgid "ShowHidden"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:1537
+#: schematic/src/i_callbacks.c:1522
 #, c-format
 msgid ""
 "<b>Revert page:</b>\n"
@@ -895,98 +797,24 @@ msgid ""
 "discarded and page file will be reloaded from disk."
 msgstr ""
 
-#: schematic/src/i_callbacks.c:1555
+#: schematic/src/i_callbacks.c:1540
 msgid "Revert"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:1647
-msgid "Copy to clipboard"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:1664
-msgid "Cut to clipboard"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:1686
-msgid "Paste from clipboard"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:1694
+#: schematic/src/i_callbacks.c:1671
 msgid "Empty clipboard"
 msgstr ""
 
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being copied to.
-#: schematic/src/i_callbacks.c:1719
-#, c-format
-msgid "Copy %i"
-msgstr ""
-
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being cut to.
-#: schematic/src/i_callbacks.c:1746
-#, c-format
-msgid "Cut %i"
-msgstr ""
-
-#. TRANSLATORS: The number is the number of the buffer that is being
-#. * pasted to the schematic.
-#: schematic/src/i_callbacks.c:1776
-#, c-format
-msgid "Paste %i"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:1785
+#: schematic/src/i_callbacks.c:1743
 msgid "Empty buffer"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:1833 schematic/src/x_window.c:1203
-msgid "Component"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:1865 schematic/src/x_colorcb.c:150
-msgid "Attribute"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:1885 schematic/src/x_colorcb.c:149
-msgid "Net"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:1928 schematic/src/x_colorcb.c:155
-#: schematic/src/x_window.c:1222
-msgid "Bus"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2004
-msgid "Line"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2021
-msgid "Path"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2043
-msgid "Box"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2085
-msgid "Circle"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2108
-msgid "Arc"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2131 schematic/src/x_colorcb.c:146
-msgid "Pin"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2191
+#: schematic/src/i_callbacks.c:2135
 #, c-format
 msgid "Searching for source [%1$s]"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2223
+#: schematic/src/i_callbacks.c:2167
 #, c-format
 msgid ""
 "Failed to descend hierarchy into '%1$s': %2$s\n"
@@ -994,116 +822,83 @@ msgid ""
 "The lepton-schematic log may contain more information."
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2227
+#: schematic/src/i_callbacks.c:2171
 #, c-format
 msgid "Failed to descend into '%1$s': %2$s"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2234
+#: schematic/src/i_callbacks.c:2178
 msgid "Failed to descend hierarchy."
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2312
+#: schematic/src/i_callbacks.c:2256
 #, c-format
 msgid "Searching for symbol [%1$s]"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2320
+#: schematic/src/i_callbacks.c:2264
 msgid "Symbol is not a real file. Symbol cannot be loaded."
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2367 schematic/src/x_tabs.c:1060
+#: schematic/src/i_callbacks.c:2311 schematic/src/x_tabs.c:1068
 msgid "Cannot find any schematics above the current one!"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2400
-msgid "Attach"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2456
-msgid "Detach"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2500
-msgid "ShowN"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2537
-msgid "ShowV"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2574
-msgid "ShowB"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2612
-msgid "VisToggle"
-msgstr ""
-
-#: schematic/src/i_callbacks.c:2643
+#: schematic/src/i_callbacks.c:2469
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2703
+#: schematic/src/i_callbacks.c:2529
 msgid "Action feedback mode set to OUTLINE"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2706
+#: schematic/src/i_callbacks.c:2532
 msgid "Action feedback mode set to BOUNDINGBOX"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2730
+#: schematic/src/i_callbacks.c:2556
 msgid "Grid OFF"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2731
+#: schematic/src/i_callbacks.c:2557
 msgid "Dot grid selected"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2732
+#: schematic/src/i_callbacks.c:2558
 msgid "Mesh grid selected"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2733
+#: schematic/src/i_callbacks.c:2559
 msgid "Invalid grid mode"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2755
+#: schematic/src/i_callbacks.c:2581
 msgid "Snap OFF (CAUTION!)"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2758
+#: schematic/src/i_callbacks.c:2584
 msgid "Snap ON"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2761
+#: schematic/src/i_callbacks.c:2587
 msgid "Snap back to the grid (CAUTION!)"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2790
+#: schematic/src/i_callbacks.c:2616
 msgid "Rubber band ON"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2792
+#: schematic/src/i_callbacks.c:2618
 msgid "Rubber band OFF"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2811
+#: schematic/src/i_callbacks.c:2637
 msgid "magnetic net mode: ON"
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2814
+#: schematic/src/i_callbacks.c:2640
 msgid "magnetic net mode: OFF"
-msgstr ""
-
-#. TRANSLATORS: this string is used to generate a filename for
-#. newly-created files.  It will be used to create a filename of
-#. the form "untitled_N.sch", where N is a number.  Please make
-#. sure that the translation contains characters suitable for use
-#. in a filename.
-#: schematic/src/i_vars.c:202
-msgid "untitled"
 msgstr ""
 
 #: schematic/src/o_complex.c:192 schematic/src/o_complex.c:195
@@ -1171,39 +966,35 @@ msgstr ""
 msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr ""
 
-#: schematic/src/o_net.c:444
+#: schematic/src/o_net.c:446
 msgid "Warning: Starting net at off grid coordinate"
 msgstr ""
 
-#: schematic/src/o_net.c:508
+#: schematic/src/o_net.c:510
 msgid "Warning: Ending net at off grid coordinate"
 msgstr ""
 
-#: schematic/src/o_net.c:856 schematic/src/o_net.c:893
-#: schematic/src/o_net.c:964 schematic/src/o_net.c:1000
+#: schematic/src/o_net.c:858 schematic/src/o_net.c:895
+#: schematic/src/o_net.c:966 schematic/src/o_net.c:1002
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 
-#: schematic/src/o_net.c:1068
+#: schematic/src/o_net.c:1070
 #, c-format
 msgid "Bus ripper symbol [%1$s] was not found in any component library"
 msgstr ""
 
-#: schematic/src/o_picture.c:133 schematic/src/o_picture.c:343
+#: schematic/src/o_picture.c:134 schematic/src/o_picture.c:342
 msgid "Select a picture file..."
 msgstr ""
 
-#: schematic/src/o_picture.c:166
+#: schematic/src/o_picture.c:167
 #, c-format
 msgid "Failed to load picture: %1$s"
 msgstr ""
 
-#: schematic/src/o_picture.c:182
-msgid "Picture"
-msgstr ""
-
-#: schematic/src/o_picture.c:378
+#: schematic/src/o_picture.c:377
 #, c-format
 msgid "Failed to replace pictures: %s"
 msgstr ""
@@ -1224,18 +1015,18 @@ msgstr ""
 msgid "New slot number out of range"
 msgstr ""
 
-#: schematic/src/o_undo.c:397
+#: schematic/src/o_undo.c:398
 msgid "Undo/Redo disabled in rc file"
 msgstr ""
 
-#: schematic/src/parsecmd.c:77
+#: schematic/src/parsecmd.c:73
 #, c-format
 msgid ""
 "Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"Interactively edit gEDA schematics or symbols.  If one or more FILEs\n"
-"are specified, open them for editing; otherwise, create a new, empty\n"
-"schematic.\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
 "\n"
 "Options:\n"
 "  -q, --quiet              Quiet mode.\n"
@@ -1243,17 +1034,15 @@ msgid ""
 "  -L DIR                   Add DIR to Scheme search path.\n"
 "  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
-"  -o, --output=FILE        Output filename (for printing).\n"
-"  -p                       Automatically place the window.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"gEDA/gaf homepage: <http://www.geda-project.org/>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
 
-#: schematic/src/parsecmd.c:110
+#: schematic/src/parsecmd.c:104
 #, c-format
 msgid ""
 "Lepton EDA %1$s (git: %2$.7s)\n"
@@ -1291,11 +1080,11 @@ msgstr ""
 msgid "N_ame:"
 msgstr ""
 
-#: schematic/src/x_attribedit.c:396 schematic/src/x_multiattrib.c:2222
+#: schematic/src/x_attribedit.c:396 schematic/src/x_multiattrib.c:2262
 msgid "_Value:"
 msgstr ""
 
-#: schematic/src/x_attribedit.c:415 schematic/src/x_multiattrib.c:2281
+#: schematic/src/x_attribedit.c:415 schematic/src/x_multiattrib.c:2321
 msgid "Vi_sible"
 msgstr ""
 
@@ -1307,8 +1096,8 @@ msgstr ""
 msgid "Show Name Only"
 msgstr ""
 
-#: schematic/src/x_attribedit.c:438 schematic/src/x_multiattrib.c:1620
-#: schematic/scheme/gschem/builtins.scm:324
+#: schematic/src/x_attribedit.c:438 schematic/src/x_multiattrib.c:1660
+#: schematic/scheme/gschem/builtins.scm:443
 msgid "Show Name & Value"
 msgstr ""
 
@@ -1325,7 +1114,7 @@ msgstr ""
 msgid "Components"
 msgstr ""
 
-#: schematic/src/x_attribedit.c:492 schematic/src/x_window.c:1214
+#: schematic/src/x_attribedit.c:492 schematic/src/x_window.c:1189
 msgid "Nets"
 msgstr ""
 
@@ -1477,12 +1266,24 @@ msgstr ""
 msgid "Background"
 msgstr ""
 
+#: schematic/src/x_colorcb.c:146
+msgid "Pin"
+msgstr ""
+
 #: schematic/src/x_colorcb.c:147
 msgid "Net endpoint"
 msgstr ""
 
 #: schematic/src/x_colorcb.c:148
 msgid "Graphic"
+msgstr ""
+
+#: schematic/src/x_colorcb.c:149
+msgid "Net"
+msgstr ""
+
+#: schematic/src/x_colorcb.c:150
+msgid "Attribute"
 msgstr ""
 
 #: schematic/src/x_colorcb.c:151
@@ -1497,6 +1298,10 @@ msgstr ""
 msgid "Detached attribute"
 msgstr ""
 
+#: schematic/src/x_colorcb.c:155 schematic/src/x_window.c:1197
+msgid "Bus"
+msgstr ""
+
 #: schematic/src/x_colorcb.c:156
 msgid "Selection"
 msgstr ""
@@ -1507,6 +1312,15 @@ msgstr ""
 
 #: schematic/src/x_colorcb.c:158
 msgid "Zoom box"
+msgstr ""
+
+#: schematic/src/x_colorcb.c:159 schematic/src/x_window.c:1315
+msgid "Stroke"
+msgstr ""
+
+#: schematic/src/x_colorcb.c:160 schematic/scheme/conf/schematic/menu.scm:73
+#: schematic/scheme/gschem/builtins.scm:144
+msgid "Lock"
 msgstr ""
 
 #: schematic/src/x_colorcb.c:161
@@ -1553,7 +1367,7 @@ msgstr ""
 msgid "Reload all libraries"
 msgstr ""
 
-#: schematic/src/x_compselect.c:1245 schematic/src/x_multiattrib.c:2092
+#: schematic/src/x_compselect.c:1245 schematic/src/x_multiattrib.c:2132
 msgid "Value"
 msgstr ""
 
@@ -1589,22 +1403,22 @@ msgstr ""
 msgid "Attributes"
 msgstr ""
 
-#: schematic/src/x_dialog.c:325
+#: schematic/src/x_dialog.c:286
 msgid "Major symbol changes detected."
 msgstr ""
 
-#: schematic/src/x_dialog.c:349
+#: schematic/src/x_dialog.c:310
 msgid ""
 "Changes have occurred to the symbols shown below.\n"
 "\n"
 "Be sure to verify each of these symbols."
 msgstr ""
 
-#: schematic/src/x_dialog.c:369
+#: schematic/src/x_dialog.c:330
 msgid "Symbol"
 msgstr ""
 
-#: schematic/src/x_dialog.c:406
+#: schematic/src/x_dialog.c:367
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1615,7 +1429,7 @@ msgid ""
 "The value cannot start with a space."
 msgstr ""
 
-#: schematic/src/x_dialog.c:408
+#: schematic/src/x_dialog.c:369
 msgid "Invalid Attribute"
 msgstr ""
 
@@ -1639,15 +1453,15 @@ msgstr ""
 msgid "Open..."
 msgstr ""
 
-#: schematic/src/x_fileselect.c:315
+#: schematic/src/x_fileselect.c:328
 msgid "Save as..."
 msgstr ""
 
-#: schematic/src/x_fileselect.c:383
+#: schematic/src/x_fileselect.c:415
 msgid "Save cancelled on user request"
 msgstr ""
 
-#: schematic/src/x_fileselect.c:420
+#: schematic/src/x_fileselect.c:468
 msgid ""
 "\n"
 "If you load the original file, the backup file will be overwritten in the "
@@ -1672,12 +1486,12 @@ msgstr ""
 msgid "Hatch"
 msgstr ""
 
-#: schematic/src/x_image.c:279
+#: schematic/src/x_image.c:406
 #, c-format
 msgid "x_image_lowlevel: Unable to write %1$s file %2$s."
 msgstr ""
 
-#: schematic/src/x_image.c:289
+#: schematic/src/x_image.c:416
 #, c-format
 msgid ""
 "There was the following error when saving image with type %1$s to filename:\n"
@@ -1686,29 +1500,45 @@ msgid ""
 "%3$s.\n"
 msgstr ""
 
-#: schematic/src/x_image.c:309
+#: schematic/src/x_image.c:436
 #, c-format
 msgid "Wrote color image to [%1$s] [%2$d x %3$d]"
 msgstr ""
 
-#: schematic/src/x_image.c:311
+#: schematic/src/x_image.c:438
 #, c-format
 msgid "Wrote black and white image to [%1$s] [%2$d x %3$d]"
 msgstr ""
 
-#: schematic/src/x_image.c:319
+#: schematic/src/x_image.c:446
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
 msgstr ""
 
-#: schematic/src/x_image.c:358
+#: schematic/src/x_image.c:487
+msgid "NOTE: print-color-map will be used for PDF export"
+msgstr ""
+
+#: schematic/src/x_image.c:496
 msgid "Width x Height"
 msgstr ""
 
-#: schematic/src/x_image.c:374
+#: schematic/src/x_image.c:512
 msgid "Image type"
 msgstr ""
 
-#: schematic/src/x_image.c:395
+#: schematic/src/x_image.c:527
+msgid "Color mode"
+msgstr ""
+
+#: schematic/src/x_image.c:534
+msgid "Color"
+msgstr ""
+
+#: schematic/src/x_image.c:535
+msgid "Grayscale"
+msgstr ""
+
+#: schematic/src/x_image.c:551
 msgid "Write image..."
 msgstr ""
 
@@ -1744,45 +1574,45 @@ msgstr ""
 msgid "Phantom"
 msgstr ""
 
-#: schematic/src/x_menus.c:41 schematic/scheme/gschem/builtins.scm:267
+#: schematic/src/x_menus.c:41 schematic/scheme/gschem/builtins.scm:270
 msgid "Add Net"
 msgstr ""
 
-#: schematic/src/x_menus.c:42 schematic/src/x_multiattrib.c:2187
-#: schematic/scheme/gschem/builtins.scm:264
+#: schematic/src/x_menus.c:42 schematic/src/x_multiattrib.c:2227
+#: schematic/scheme/gschem/builtins.scm:267
 msgid "Add Attribute"
 msgstr ""
 
-#: schematic/src/x_menus.c:43 schematic/scheme/gschem/builtins.scm:261
+#: schematic/src/x_menus.c:43 schematic/scheme/gschem/builtins.scm:264
 msgid "Add Component"
 msgstr ""
 
-#: schematic/src/x_menus.c:44 schematic/scheme/gschem/builtins.scm:270
+#: schematic/src/x_menus.c:44 schematic/scheme/gschem/builtins.scm:273
 msgid "Add Bus"
 msgstr ""
 
-#: schematic/src/x_menus.c:45 schematic/scheme/gschem/builtins.scm:273
+#: schematic/src/x_menus.c:45 schematic/scheme/gschem/builtins.scm:276
 msgid "Add Text"
 msgstr ""
 
-#: schematic/src/x_menus.c:47 schematic/scheme/gschem/builtins.scm:210
+#: schematic/src/x_menus.c:47 schematic/scheme/gschem/builtins.scm:213
 msgid "Zoom In"
 msgstr ""
 
-#: schematic/src/x_menus.c:48 schematic/scheme/gschem/builtins.scm:213
+#: schematic/src/x_menus.c:48 schematic/scheme/gschem/builtins.scm:216
 msgid "Zoom Out"
 msgstr ""
 
-#: schematic/src/x_menus.c:50 schematic/scheme/gschem/builtins.scm:207
+#: schematic/src/x_menus.c:50 schematic/scheme/gschem/builtins.scm:210
 msgid "Zoom Extents"
 msgstr ""
 
-#: schematic/src/x_menus.c:52 schematic/src/x_window.c:1233
+#: schematic/src/x_menus.c:52 schematic/src/x_window.c:1208
 msgid "Select"
 msgstr ""
 
 #: schematic/src/x_menus.c:53 schematic/scheme/conf/schematic/menu.scm:69
-#: schematic/scheme/gschem/builtins.scm:126
+#: schematic/scheme/gschem/builtins.scm:129
 msgid "Edit..."
 msgstr ""
 
@@ -1790,11 +1620,24 @@ msgstr ""
 msgid "Object Properties..."
 msgstr ""
 
-#: schematic/src/x_menus.c:59 schematic/scheme/gschem/builtins.scm:300
+#: schematic/src/x_menus.c:55 schematic/scheme/gschem/builtins.scm:171
+msgid "Copy"
+msgstr ""
+
+#: schematic/src/x_menus.c:56
+msgid "Move"
+msgstr ""
+
+#: schematic/src/x_menus.c:57 schematic/src/x_multiattrib.c:1696
+#: schematic/scheme/gschem/builtins.scm:111
+msgid "Delete"
+msgstr ""
+
+#: schematic/src/x_menus.c:59 schematic/scheme/gschem/builtins.scm:303
 msgid "Down Schematic"
 msgstr ""
 
-#: schematic/src/x_menus.c:60 schematic/scheme/gschem/builtins.scm:303
+#: schematic/src/x_menus.c:60 schematic/scheme/gschem/builtins.scm:306
 msgid "Down Symbol"
 msgstr ""
 
@@ -1802,12 +1645,12 @@ msgstr ""
 msgid "Up"
 msgstr ""
 
-#: schematic/src/x_menus.c:336
+#: schematic/src/x_menus.c:354
 #, c-format
 msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
 msgstr ""
 
-#: schematic/src/x_menus.c:360
+#: schematic/src/x_menus.c:378
 #, c-format
 msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
 msgstr ""
@@ -1816,91 +1659,91 @@ msgstr ""
 msgid "The operating system is out of memory or resources."
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:798 schematic/src/x_multiattrib.c:2704
+#: schematic/src/x_multiattrib.c:812 schematic/src/x_multiattrib.c:2744
 msgid "<various>"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:930
+#: schematic/src/x_multiattrib.c:957
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:1622
+#: schematic/src/x_multiattrib.c:1662
 msgid "Show Value only"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:1624
+#: schematic/src/x_multiattrib.c:1664
 msgid "Show Name only"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:1651
+#: schematic/src/x_multiattrib.c:1691
 msgid "Promote"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:1655
+#: schematic/src/x_multiattrib.c:1695
 msgid "Duplicate"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:1657
+#: schematic/src/x_multiattrib.c:1697
 msgid "Copy to all"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:1986 schematic/src/x_multiattrib.c:2602
+#: schematic/src/x_multiattrib.c:2026 schematic/src/x_multiattrib.c:2642
 msgid "Edit Attributes"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:2112
+#: schematic/src/x_multiattrib.c:2152
 msgid "Vis?"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:2130
+#: schematic/src/x_multiattrib.c:2170
 msgid "N"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:2148
+#: schematic/src/x_multiattrib.c:2188
 msgid "V"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:2170
+#: schematic/src/x_multiattrib.c:2210
 msgid "Sho_w inherited attributes"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:2197
+#: schematic/src/x_multiattrib.c:2237
 msgid "_Name:"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:2241
+#: schematic/src/x_multiattrib.c:2281
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
-#: schematic/src/x_multiattrib.c:2618
+#: schematic/src/x_multiattrib.c:2658
 #, c-format
 msgid "%2$i symbol (%1$s)"
 msgid_plural "%2$i symbols (%1$s)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: schematic/src/x_multiattrib.c:2624
+#: schematic/src/x_multiattrib.c:2664
 #, c-format
 msgid "%1$i pin"
 msgid_plural "%1$i pins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: schematic/src/x_multiattrib.c:2630
+#: schematic/src/x_multiattrib.c:2670
 #, c-format
 msgid "%1$i net"
 msgid_plural "%1$i nets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: schematic/src/x_multiattrib.c:2636
+#: schematic/src/x_multiattrib.c:2676
 #, c-format
 msgid "%1$i bus"
 msgid_plural "%1$i buses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: schematic/src/x_multiattrib.c:2642
+#: schematic/src/x_multiattrib.c:2682
 #, c-format
 msgid "%1$i attribute"
 msgid_plural "%1$i attributes"
@@ -1911,45 +1754,42 @@ msgstr[1] ""
 msgid "Text Entry..."
 msgstr ""
 
-#: schematic/src/x_pagesel.c:253
+#: schematic/src/page_select_widget.c:388
+msgid "Refresh"
+msgstr ""
+
+#: schematic/src/page_select_widget.c:390
 msgid "New Page"
 msgstr ""
 
-#: schematic/src/x_pagesel.c:254
+#: schematic/src/page_select_widget.c:391
 msgid "Open Page..."
 msgstr ""
 
-#: schematic/src/x_pagesel.c:256
+#: schematic/src/page_select_widget.c:393
 msgid "Save Page"
 msgstr ""
 
-#: schematic/src/x_pagesel.c:257 schematic/scheme/gschem/builtins.scm:246
+#: schematic/src/page_select_widget.c:394
+#: schematic/scheme/gschem/builtins.scm:249
 msgid "Close Page"
 msgstr ""
 
-#: schematic/src/x_pagesel.c:376 schematic/scheme/gschem/builtins.scm:237
-msgid "Page Manager"
-msgstr ""
-
-#: schematic/src/x_pagesel.c:448
+#: schematic/src/page_select_widget.c:517
 msgid "Changed"
 msgstr ""
 
-#: schematic/src/x_pagesel.c:468
-msgid "Right click on the filename for more options..."
-msgstr ""
-
-#: schematic/src/x_print.c:306
+#: schematic/src/x_print.c:307
 #, c-format
 msgid "Failed to write PDF to '%s': %s\n"
 msgstr ""
 
-#: schematic/src/x_print.c:364
+#: schematic/src/x_print.c:367
 #, c-format
 msgid "Failed to write PDF to '%1$s': %2$s\n"
 msgstr ""
 
-#: schematic/src/x_print.c:449
+#: schematic/src/x_print.c:452
 #, c-format
 msgid ""
 "Error printing file:\n"
@@ -1984,7 +1824,7 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
-#: schematic/src/x_script.c:42 schematic/scheme/conf/schematic/menu.scm:40
+#: schematic/src/x_script.c:42 schematic/scheme/conf/schematic/menu.scm:39
 msgid "Execute Script..."
 msgstr ""
 
@@ -1993,122 +1833,126 @@ msgstr ""
 msgid "Executing guile script [%1$s]"
 msgstr ""
 
-#: schematic/src/x_tabs.c:860
+#: schematic/src/x_tabs.c:868
 #, c-format
 msgid "Hierarchy up: %s"
 msgstr ""
 
-#: schematic/src/x_tabs.c:863
+#: schematic/src/x_tabs.c:871
 msgid "Hierarchy up"
 msgstr ""
 
-#: schematic/src/x_widgets.c:158 schematic/src/x_window.c:1444
+#: schematic/src/x_widgets.c:154 schematic/src/x_window.c:1454
 msgid "Options"
 msgstr ""
 
-#: schematic/src/x_widgets.c:203 schematic/src/x_window.c:1436
+#: schematic/src/x_widgets.c:199 schematic/src/x_window.c:1446
 msgid "Object"
 msgstr ""
 
-#: schematic/src/x_widgets.c:224
+#: schematic/src/x_widgets.c:220
 msgid "Log"
 msgstr ""
 
-#: schematic/src/x_widgets.c:245 schematic/src/x_window.c:1466
+#: schematic/src/x_widgets.c:241 schematic/src/x_window.c:1476
 msgid "Find Text"
 msgstr ""
 
-#: schematic/src/x_widgets.c:259
+#: schematic/src/x_widgets.c:255
 msgid "Color Scheme Editor"
 msgstr ""
 
-#: schematic/src/x_widgets.c:272 schematic/scheme/gschem/builtins.scm:378
+#: schematic/src/x_widgets.c:268 schematic/scheme/gschem/builtins.scm:497
 msgid "Select Schematic Font"
 msgstr ""
 
-#: schematic/src/x_window.c:763
+#: schematic/src/x_widgets.c:281 schematic/scheme/gschem/builtins.scm:240
+msgid "Page Manager"
+msgstr ""
+
+#: schematic/src/x_window.c:738
 #, c-format
 msgid "Loading schematic [%1$s]"
 msgstr ""
 
-#: schematic/src/x_window.c:864
+#: schematic/src/x_window.c:839
 #, c-format
 msgid "Could NOT save page [%1$s]\n"
 msgstr ""
 
-#: schematic/src/x_window.c:865
+#: schematic/src/x_window.c:840
 msgid "Error while trying to save"
 msgstr ""
 
-#: schematic/src/x_window.c:875
+#: schematic/src/x_window.c:850
 msgid "Failed to save file"
 msgstr ""
 
-#: schematic/src/x_window.c:885
+#: schematic/src/x_window.c:860
 #, c-format
 msgid "Saved as [%1$s]"
 msgstr ""
 
-#: schematic/src/x_window.c:887
+#: schematic/src/x_window.c:862
 #, c-format
 msgid "Saved [%1$s]"
 msgstr ""
 
-#: schematic/src/x_window.c:889
+#: schematic/src/x_window.c:864
 msgid "Saved"
 msgstr ""
 
-#: schematic/src/x_window.c:966
+#: schematic/src/x_window.c:941
 #, c-format
 msgid "Discarding page [%1$s]"
 msgstr ""
 
-#: schematic/src/x_window.c:966
+#: schematic/src/x_window.c:941
 #, c-format
 msgid "Closing [%1$s]"
 msgstr ""
 
-#: schematic/src/x_window.c:1175
+#: schematic/src/x_window.c:1150
 msgid "New"
 msgstr ""
 
-#: schematic/src/x_window.c:1175
+#: schematic/src/x_window.c:1150
 msgid "New file"
 msgstr ""
 
-#: schematic/src/x_window.c:1179
+#: schematic/src/x_window.c:1154
 msgid "Open"
 msgstr ""
 
-#: schematic/src/x_window.c:1179
+#: schematic/src/x_window.c:1154
 msgid "Open file"
 msgstr ""
 
-#: schematic/src/x_window.c:1183 schematic/scheme/gschem/builtins.scm:59
+#: schematic/src/x_window.c:1158 schematic/scheme/gschem/builtins.scm:62
 msgid "Save"
 msgstr ""
 
-#: schematic/src/x_window.c:1183
+#: schematic/src/x_window.c:1158
 msgid "Save file"
 msgstr ""
 
-#: schematic/src/x_window.c:1189 schematic/scheme/gschem/builtins.scm:93
+#: schematic/src/x_window.c:1164 schematic/scheme/gschem/builtins.scm:96
 msgid "Undo"
 msgstr ""
 
-#: schematic/src/x_window.c:1189
+#: schematic/src/x_window.c:1164
 msgid "Undo last operation"
 msgstr ""
 
-#: schematic/src/x_window.c:1193 schematic/scheme/gschem/builtins.scm:96
+#: schematic/src/x_window.c:1168 schematic/scheme/gschem/builtins.scm:99
 msgid "Redo"
 msgstr ""
 
-#: schematic/src/x_window.c:1193
+#: schematic/src/x_window.c:1168
 msgid "Redo last undo"
 msgstr ""
 
-#: schematic/src/x_window.c:1198
+#: schematic/src/x_window.c:1173
 msgid ""
 "Add component...\n"
 "Select library and component from list, move the mouse into main window, "
@@ -2116,56 +1960,73 @@ msgid ""
 "Right mouse button to cancel"
 msgstr ""
 
-#: schematic/src/x_window.c:1209
+#: schematic/src/x_window.c:1178
+msgid "Component"
+msgstr ""
+
+#: schematic/src/x_window.c:1184
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
 msgstr ""
 
-#: schematic/src/x_window.c:1217
+#: schematic/src/x_window.c:1192
 msgid ""
 "Add buses mode\n"
 "Right mouse button to cancel"
 msgstr ""
 
-#: schematic/src/x_window.c:1226
+#: schematic/src/x_window.c:1201
 msgid "Add Text..."
 msgstr ""
 
-#: schematic/src/x_window.c:1233
+#: schematic/src/x_window.c:1208
 msgid "Select mode"
 msgstr ""
 
-#: schematic/src/x_window.c:1288
+#: schematic/src/x_window.c:1263
 msgid "Show"
 msgstr ""
 
-#: schematic/src/x_window.c:1289
+#: schematic/src/x_window.c:1264
 msgid "Show text starting with:"
 msgstr ""
 
-#: schematic/src/x_window.c:1345
-msgid "Menu/Cancel"
+#: schematic/src/x_window.c:1311 schematic/src/x_window.c:1346
+msgid "none"
 msgstr ""
 
-#: schematic/src/x_window.c:1349
-msgid "Pan/Cancel"
+#: schematic/src/x_window.c:1322
+msgid "Repeat"
 msgstr ""
 
-#: schematic/src/x_window.c:1359
+#: schematic/src/x_window.c:1325 schematic/src/x_window.c:1342
+#: schematic/scheme/gschem/builtins.scm:192
+msgid "Pan"
+msgstr ""
+
+#: schematic/src/x_window.c:1328 schematic/src/x_window.c:1337
+msgid "Menu"
+msgstr ""
+
+#: schematic/src/x_window.c:1351
+msgid "/Cancel"
+msgstr ""
+
+#: schematic/src/x_window.c:1369
 msgid "Pick"
 msgstr ""
 
-#: schematic/src/x_window.c:1470 schematic/scheme/gschem/builtins.scm:180
+#: schematic/src/x_window.c:1480 schematic/scheme/gschem/builtins.scm:183
 msgid "Status"
 msgstr ""
 
-#: schematic/src/x_window.c:1568
+#: schematic/src/x_window.c:1578
 #, c-format
 msgid "New file [%s]"
 msgstr ""
 
-#: schematic/src/x_window.c:1598
+#: schematic/src/x_window.c:1608
 #, c-format
 msgid ""
 "<b>An error occurred while loading the requested file.</b>\n"
@@ -2179,8 +2040,13 @@ msgid ""
 "monitor program's output in terminal window."
 msgstr ""
 
-#: schematic/src/x_window.c:1617
+#: schematic/src/x_window.c:1627
 msgid "Failed to load file"
+msgstr ""
+
+#: schematic/src/x_window.c:1726
+#, c-format
+msgid "Skipping existing file [%s]"
 msgstr ""
 
 #: schematic/data/lepton-schematic.desktop.in:3
@@ -2199,49 +2065,49 @@ msgstr ""
 msgid "_Open..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:30
+#: schematic/scheme/conf/schematic/menu.scm:29
 msgid "Open Recen_t"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:32
+#: schematic/scheme/conf/schematic/menu.scm:31
 msgid "_Save"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:33
+#: schematic/scheme/conf/schematic/menu.scm:32
 msgid "Save _As..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:34
-#: schematic/scheme/gschem/builtins.scm:65
+#: schematic/scheme/conf/schematic/menu.scm:33
+#: schematic/scheme/gschem/builtins.scm:68
 msgid "Save All"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:36
+#: schematic/scheme/conf/schematic/menu.scm:35
 msgid "_Print..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:37
+#: schematic/scheme/conf/schematic/menu.scm:36
 msgid "Write _Image..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:39
+#: schematic/scheme/conf/schematic/menu.scm:38
 msgid "Invoke Macro..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:41
+#: schematic/scheme/conf/schematic/menu.scm:40
 msgid "REPL..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:43
-#: schematic/scheme/gschem/builtins.scm:77
+#: schematic/scheme/conf/schematic/menu.scm:42
+#: schematic/scheme/gschem/builtins.scm:80
 msgid "New Window"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:44
+#: schematic/scheme/conf/schematic/menu.scm:43
 msgid "_Close Window"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:45
+#: schematic/scheme/conf/schematic/menu.scm:44
 msgid "_Quit"
 msgstr ""
 
@@ -2270,12 +2136,12 @@ msgid "_Delete"
 msgstr ""
 
 #: schematic/scheme/conf/schematic/menu.scm:60
-#: schematic/scheme/gschem/builtins.scm:102
+#: schematic/scheme/gschem/builtins.scm:105
 msgid "Select All"
 msgstr ""
 
 #: schematic/scheme/conf/schematic/menu.scm:61
-#: schematic/scheme/gschem/builtins.scm:105
+#: schematic/scheme/gschem/builtins.scm:108
 msgid "Deselect"
 msgstr ""
 
@@ -2291,18 +2157,23 @@ msgstr ""
 msgid "Slot..."
 msgstr ""
 
+#: schematic/scheme/conf/schematic/menu.scm:74
+#: schematic/scheme/gschem/builtins.scm:147
+msgid "Unlock"
+msgstr ""
+
 #: schematic/scheme/conf/schematic/menu.scm:76
-#: schematic/scheme/gschem/builtins.scm:150
+#: schematic/scheme/gschem/builtins.scm:153
 msgid "Embed Component/Picture"
 msgstr ""
 
 #: schematic/scheme/conf/schematic/menu.scm:77
-#: schematic/scheme/gschem/builtins.scm:153
+#: schematic/scheme/gschem/builtins.scm:156
 msgid "Unembed Component/Picture"
 msgstr ""
 
 #: schematic/scheme/conf/schematic/menu.scm:78
-#: schematic/scheme/gschem/builtins.scm:156
+#: schematic/scheme/gschem/builtins.scm:159
 msgid "Update Component"
 msgstr ""
 
@@ -2310,681 +2181,697 @@ msgstr ""
 msgid "Symbol Translate..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:85
+#: schematic/scheme/conf/schematic/menu.scm:86
 msgid "Copy into 1"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:86
+#: schematic/scheme/conf/schematic/menu.scm:87
 msgid "Copy into 2"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:87
+#: schematic/scheme/conf/schematic/menu.scm:88
 msgid "Copy into 3"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:88
+#: schematic/scheme/conf/schematic/menu.scm:89
 msgid "Copy into 4"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:89
+#: schematic/scheme/conf/schematic/menu.scm:90
 msgid "Copy into 5"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:90
+#: schematic/scheme/conf/schematic/menu.scm:91
 msgid "Cut into 1"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:91
+#: schematic/scheme/conf/schematic/menu.scm:92
 msgid "Cut into 2"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:92
+#: schematic/scheme/conf/schematic/menu.scm:93
 msgid "Cut into 3"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:93
+#: schematic/scheme/conf/schematic/menu.scm:94
 msgid "Cut into 4"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:94
+#: schematic/scheme/conf/schematic/menu.scm:95
 msgid "Cut into 5"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:95
+#: schematic/scheme/conf/schematic/menu.scm:96
 msgid "Paste from 1"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:96
+#: schematic/scheme/conf/schematic/menu.scm:97
 msgid "Paste from 2"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:97
+#: schematic/scheme/conf/schematic/menu.scm:98
 msgid "Paste from 3"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:98
+#: schematic/scheme/conf/schematic/menu.scm:99
 msgid "Paste from 4"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:99
+#: schematic/scheme/conf/schematic/menu.scm:100
 msgid "Paste from 5"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:105
+#: schematic/scheme/conf/schematic/menu.scm:124
 msgid "Side Dock"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:106
+#: schematic/scheme/conf/schematic/menu.scm:125
 msgid "Bottom Dock"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:108
+#: schematic/scheme/conf/schematic/menu.scm:127
 msgid "Find Text Results"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:110
+#: schematic/scheme/conf/schematic/menu.scm:129
 msgid "_Redraw"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:111
+#: schematic/scheme/conf/schematic/menu.scm:130
 msgid "_Pan"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:112
+#: schematic/scheme/conf/schematic/menu.scm:131
 msgid "Zoom _Box"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:113
+#: schematic/scheme/conf/schematic/menu.scm:132
 msgid "Zoom _Extents"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:114
+#: schematic/scheme/conf/schematic/menu.scm:133
 msgid "Zoom _In"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:115
+#: schematic/scheme/conf/schematic/menu.scm:134
 msgid "Zoom _Out"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:116
+#: schematic/scheme/conf/schematic/menu.scm:135
 msgid "Zoom _Full"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:118
+#: schematic/scheme/conf/schematic/menu.scm:137
 msgid "_Dark Color Scheme"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:119
+#: schematic/scheme/conf/schematic/menu.scm:138
 msgid "_Light Color Scheme"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:120
+#: schematic/scheme/conf/schematic/menu.scm:139
 msgid "B_W Color Scheme"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:122
+#: schematic/scheme/conf/schematic/menu.scm:141
 msgid "Color Scheme Editor..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:129
+#: schematic/scheme/conf/schematic/menu.scm:167
 msgid "_Manager..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:131
+#: schematic/scheme/conf/schematic/menu.scm:169
 msgid "_Previous"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:132
+#: schematic/scheme/conf/schematic/menu.scm:170
 msgid "_Next"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:133
+#: schematic/scheme/conf/schematic/menu.scm:171
 msgid "_Close"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:135
+#: schematic/scheme/conf/schematic/menu.scm:173
 msgid "_Revert..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:137
-#: schematic/scheme/gschem/builtins.scm:249
+#: schematic/scheme/conf/schematic/menu.scm:175
+#: schematic/scheme/gschem/builtins.scm:252
 msgid "Next Tab"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:138
-#: schematic/scheme/gschem/builtins.scm:252
+#: schematic/scheme/conf/schematic/menu.scm:176
+#: schematic/scheme/gschem/builtins.scm:255
 msgid "Previous Tab"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:146
+#: schematic/scheme/conf/schematic/menu.scm:185
 msgid "_Component..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:148
+#: schematic/scheme/conf/schematic/menu.scm:187
 msgid "_Net"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:149
+#: schematic/scheme/conf/schematic/menu.scm:188
 msgid "B_us"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:151
+#: schematic/scheme/conf/schematic/menu.scm:190
 msgid "_Attribute..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:152
+#: schematic/scheme/conf/schematic/menu.scm:191
 msgid "_Text..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:154
+#: schematic/scheme/conf/schematic/menu.scm:193
 msgid "_Line"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:155
+#: schematic/scheme/conf/schematic/menu.scm:194
 msgid "Pat_h"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:156
+#: schematic/scheme/conf/schematic/menu.scm:195
 msgid "_Box"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:157
+#: schematic/scheme/conf/schematic/menu.scm:196
 msgid "C_ircle"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:158
+#: schematic/scheme/conf/schematic/menu.scm:197
 msgid "A_rc"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:159
+#: schematic/scheme/conf/schematic/menu.scm:198
 msgid "_Pin"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:161
+#: schematic/scheme/conf/schematic/menu.scm:200
 msgid "Pictu_re..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:167
+#: schematic/scheme/conf/schematic/menu.scm:207
 msgid "_Up"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:169
+#: schematic/scheme/conf/schematic/menu.scm:209
 msgid "_Down Schematic"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:170
+#: schematic/scheme/conf/schematic/menu.scm:210
 msgid "Down _Symbol"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:176
+#: schematic/scheme/conf/schematic/menu.scm:217
 msgid "_Attach"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:177
+#: schematic/scheme/conf/schematic/menu.scm:218
 msgid "_Detach"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:179
+#: schematic/scheme/conf/schematic/menu.scm:220
 msgid "Show _Value"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:180
+#: schematic/scheme/conf/schematic/menu.scm:221
 msgid "Show _Name"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:181
+#: schematic/scheme/conf/schematic/menu.scm:222
 msgid "Show _Both"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:182
+#: schematic/scheme/conf/schematic/menu.scm:223
 msgid "_Toggle Visibility"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:184
+#: schematic/scheme/conf/schematic/menu.scm:225
 msgid "_Hide Specific Text..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:185
+#: schematic/scheme/conf/schematic/menu.scm:226
 msgid "_Show Specific Text..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:186
+#: schematic/scheme/conf/schematic/menu.scm:227
 msgid "Show/Hide Hidden Text"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:188
+#: schematic/scheme/conf/schematic/menu.scm:229
 msgid "_Find Text/Check Symbol..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:189
+#: schematic/scheme/conf/schematic/menu.scm:230
 msgid "A_utonumber Text..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:195
+#: schematic/scheme/conf/schematic/menu.scm:237
 msgid "_Options..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:196
+#: schematic/scheme/conf/schematic/menu.scm:238
 msgid "_Font..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:198
+#: schematic/scheme/conf/schematic/menu.scm:240
 msgid "Grid +"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:199
+#: schematic/scheme/conf/schematic/menu.scm:241
 msgid "Grid -"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:201
+#: schematic/scheme/conf/schematic/menu.scm:243
 msgid "Grid Style: Cycle Dots/Mesh/Off"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:202
+#: schematic/scheme/conf/schematic/menu.scm:244
 msgid "Grid Snap: Cycle Grid/Resnap/Off"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:204
+#: schematic/scheme/conf/schematic/menu.scm:246
 msgid "Feedback Mode: Outline/Box"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:205
+#: schematic/scheme/conf/schematic/menu.scm:247
 msgid "Net: Rubberband On/Off"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:206
+#: schematic/scheme/conf/schematic/menu.scm:248
 msgid "Net: Magnetic On/Off"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:208
+#: schematic/scheme/conf/schematic/menu.scm:250
 msgid "_Coord Window"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:209
+#: schematic/scheme/conf/schematic/menu.scm:251
 msgid "_Log Window"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:215
+#: schematic/scheme/conf/schematic/menu.scm:258
 msgid "_1 allegro"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:223
+#: schematic/scheme/conf/schematic/menu.scm:265
 msgid "User _Guide"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:224
+#: schematic/scheme/conf/schematic/menu.scm:266
 msgid "_FAQ"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:225
+#: schematic/scheme/conf/schematic/menu.scm:267
 msgid "Docu_mentation"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:226
+#: schematic/scheme/conf/schematic/menu.scm:268
 msgid "_Wiki"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:228
+#: schematic/scheme/conf/schematic/menu.scm:270
 msgid "Find Component D_ocumentation"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:230
+#: schematic/scheme/conf/schematic/menu.scm:272
 msgid "_Hotkeys..."
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:231
+#: schematic/scheme/conf/schematic/menu.scm:273
 msgid "_About"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:237
+#: schematic/scheme/conf/schematic/menu.scm:283
 msgid "_File"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:238
+#: schematic/scheme/conf/schematic/menu.scm:284
 msgid "_Edit"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:240
+#: schematic/scheme/conf/schematic/menu.scm:286
 msgid "_View"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:241
+#: schematic/scheme/conf/schematic/menu.scm:287
 msgid "_Page"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:242
+#: schematic/scheme/conf/schematic/menu.scm:288
 msgid "_Add"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:243
+#: schematic/scheme/conf/schematic/menu.scm:289
 msgid "Hie_rarchy"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:244
+#: schematic/scheme/conf/schematic/menu.scm:290
 msgid "A_ttributes"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:245
+#: schematic/scheme/conf/schematic/menu.scm:291
 msgid "_Options"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:246
+#: schematic/scheme/conf/schematic/menu.scm:292
 msgid "_Netlist"
 msgstr ""
 
-#: schematic/scheme/conf/schematic/menu.scm:247
+#: schematic/scheme/conf/schematic/menu.scm:293
 msgid "_Help"
 msgstr ""
 
 #: schematic/scheme/gschem/action.scm:43
 #, scheme-format
-msgid "~S is not a valid gschem action."
+msgid "[~A] is not a valid lepton-schematic action."
 msgstr ""
 
-#: schematic/scheme/gschem/action.scm:162
+#: schematic/scheme/gschem/action.scm:45
+msgid "There is no last action to repeat."
+msgstr ""
+
+#: schematic/scheme/gschem/action.scm:166
 msgid "Repeat Last Action"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:47
+#: schematic/scheme/gschem/builtins.scm:50
 msgid "Cancel"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:53
+#: schematic/scheme/gschem/builtins.scm:56
 msgid "New File"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:56
+#: schematic/scheme/gschem/builtins.scm:59
 msgid "Open File"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:62
+#: schematic/scheme/gschem/builtins.scm:65
 msgid "Save As"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:68
+#: schematic/scheme/gschem/builtins.scm:71
 msgid "Print"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:71
+#: schematic/scheme/gschem/builtins.scm:74
 msgid "Export Image"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:74
+#: schematic/scheme/gschem/builtins.scm:77
 msgid "Run Script"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:80
+#: schematic/scheme/gschem/builtins.scm:83
 msgid "Close Window"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:83
+#: schematic/scheme/gschem/builtins.scm:86
 msgid "Quit"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:87
+#: schematic/scheme/gschem/builtins.scm:90
 msgid "Terminal REPL"
 msgstr ""
 
 #: schematic/scheme/gschem/builtins.scm:132
-msgid "Choose Slot"
+msgid "Edit Text"
 msgstr ""
 
 #: schematic/scheme/gschem/builtins.scm:135
-msgid "Edit Object Properties"
+msgid "Choose Slot"
 msgstr ""
 
 #: schematic/scheme/gschem/builtins.scm:138
+msgid "Edit Object Properties"
+msgstr ""
+
+#: schematic/scheme/gschem/builtins.scm:141
 msgid "Translate Symbol"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:147
+#: schematic/scheme/gschem/builtins.scm:150
 msgid "Invoke Macro"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:159
+#: schematic/scheme/gschem/builtins.scm:162
 msgid "Show/Hide Invisible Text"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:165
+#: schematic/scheme/gschem/builtins.scm:168
 msgid "Cut"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:171
+#: schematic/scheme/gschem/builtins.scm:174
 msgid "Paste"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:177
+#: schematic/scheme/gschem/builtins.scm:180
 msgid "Sidebar"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:183
+#: schematic/scheme/gschem/builtins.scm:186
 msgid "Find Text State"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:186
+#: schematic/scheme/gschem/builtins.scm:189
 msgid "Redraw"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:192
+#: schematic/scheme/gschem/builtins.scm:195
 msgid "Pan Left"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:195
+#: schematic/scheme/gschem/builtins.scm:198
 msgid "Pan Right"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:198
+#: schematic/scheme/gschem/builtins.scm:201
 msgid "Pan Up"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:201
+#: schematic/scheme/gschem/builtins.scm:204
 msgid "Pan Down"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:216
+#: schematic/scheme/gschem/builtins.scm:219
 msgid "Zoom Full"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:219
+#: schematic/scheme/gschem/builtins.scm:222
 msgid "Dark Color Scheme"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:222
+#: schematic/scheme/gschem/builtins.scm:225
 msgid "Light Color Scheme"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:225
+#: schematic/scheme/gschem/builtins.scm:228
 msgid "Monochrome Color Scheme"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:228
+#: schematic/scheme/gschem/builtins.scm:231
 msgid "Show Color Scheme Editor"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:234
+#: schematic/scheme/gschem/builtins.scm:237
 msgid "Revert Changes"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:240
+#: schematic/scheme/gschem/builtins.scm:243
 msgid "Previous Page"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:243
+#: schematic/scheme/gschem/builtins.scm:246
 msgid "Next Page"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:255
+#: schematic/scheme/gschem/builtins.scm:258
 msgid "Print Page"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:276
+#: schematic/scheme/gschem/builtins.scm:279
 msgid "Add Line"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:279
+#: schematic/scheme/gschem/builtins.scm:282
 msgid "Add Path"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:282
+#: schematic/scheme/gschem/builtins.scm:285
 msgid "Add Box"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:285
+#: schematic/scheme/gschem/builtins.scm:288
 msgid "Add Circle"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:288
+#: schematic/scheme/gschem/builtins.scm:291
 msgid "Add Arc"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:291
+#: schematic/scheme/gschem/builtins.scm:294
 msgid "Add Pin"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:294
+#: schematic/scheme/gschem/builtins.scm:297
 msgid "Add Picture"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:306
+#: schematic/scheme/gschem/builtins.scm:309
 msgid "Up Hierarchy"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:312
+#: schematic/scheme/gschem/builtins.scm:317
 msgid "Attach Attributes"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:315
+#: schematic/scheme/gschem/builtins.scm:346
+#, scheme-format
+msgid "Attribute attached: [~a]"
+msgstr ""
+
+#: schematic/scheme/gschem/builtins.scm:389
 msgid "Detach Attributes"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:318
+#: schematic/scheme/gschem/builtins.scm:410
+#, scheme-format
+msgid "Attribute detached: [~a]"
+msgstr ""
+
+#: schematic/scheme/gschem/builtins.scm:437
 msgid "Show Attribute Value"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:321
+#: schematic/scheme/gschem/builtins.scm:440
 msgid "Show Attribute Name"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:327
+#: schematic/scheme/gschem/builtins.scm:446
 msgid "Toggle Text Visibility"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:330
+#: schematic/scheme/gschem/builtins.scm:449
 msgid "Find Specific Text"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:333
+#: schematic/scheme/gschem/builtins.scm:452
 msgid "Hide Specific Text"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:336
+#: schematic/scheme/gschem/builtins.scm:455
 msgid "Show Specific Text"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:339
+#: schematic/scheme/gschem/builtins.scm:458
 msgid "Autonumber Text"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:345
+#: schematic/scheme/gschem/builtins.scm:464
 msgid "Show Hotkeys"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:348
+#: schematic/scheme/gschem/builtins.scm:467
 msgid "Switch Grid Style"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:351
+#: schematic/scheme/gschem/builtins.scm:470
 msgid "Switch Snap Mode"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:354
+#: schematic/scheme/gschem/builtins.scm:473
 msgid "Set Grid Spacing"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:357
+#: schematic/scheme/gschem/builtins.scm:476
 msgid "Increase Grid Spacing"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:360
+#: schematic/scheme/gschem/builtins.scm:479
 msgid "Decrease Grid Spacing"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:363
+#: schematic/scheme/gschem/builtins.scm:482
 msgid "Toggle Outline Drawing"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:366
+#: schematic/scheme/gschem/builtins.scm:485
 msgid "Toggle Net Rubber Band"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:369
+#: schematic/scheme/gschem/builtins.scm:488
 msgid "Toggle Magnetic Nets"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:372
+#: schematic/scheme/gschem/builtins.scm:491
 msgid "Show Log Window"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:375
+#: schematic/scheme/gschem/builtins.scm:494
 msgid "Show Coordinate Window"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:385
+#: schematic/scheme/gschem/builtins.scm:504
 msgid "Component Documentation"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:387
+#: schematic/scheme/gschem/builtins.scm:506
 msgid "View documentation for selected component"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:403
-msgid ""
-"Could not show documentation for selected component:\n"
-"\n"
+#: schematic/scheme/gschem/builtins.scm:519
+msgid "Lepton EDA Manuals"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:408
-msgid "gEDA Manuals"
+#: schematic/scheme/gschem/builtins.scm:520
+msgid "View the front page of the Lepton EDA documentation in a browser."
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:409
-msgid "View the front page of the gEDA documentation in a browser."
+#: schematic/scheme/gschem/builtins.scm:525
+msgid "lepton-schematic User Guide"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:414
-msgid "gschem User Guide"
+#: schematic/scheme/gschem/builtins.scm:526
+msgid "View the lepton-schematic User Guide in a browser."
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:415
-msgid "View the gschem User Guide in a browser."
+#: schematic/scheme/gschem/builtins.scm:531
+msgid "lepton-schematic FAQ"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:420
-msgid "gschem FAQ"
+#: schematic/scheme/gschem/builtins.scm:532
+msgid "Frequently Asked Questions about using lepton-schematic."
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:421
-msgid "Frequently Asked Questions about using gschem."
+#: schematic/scheme/gschem/builtins.scm:537
+msgid "Lepton EDA wiki"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:426
-msgid "gEDA wiki"
+#: schematic/scheme/gschem/builtins.scm:538
+msgid "View the front page of the Lepton EDA wiki in a browser."
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:427
-msgid "View the front page of the gEDA wiki in a browser."
+#: schematic/scheme/gschem/builtins.scm:542
+msgid "About lepton-schematic"
 msgstr ""
 
-#: schematic/scheme/gschem/builtins.scm:431
-msgid "About gschem"
-msgstr ""
-
-#: schematic/scheme/gschem/deprecated.scm:102
+#: schematic/scheme/gschem/deprecated.scm:104
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr ""
 
-#: schematic/scheme/gschem/gschemdoc.scm.in:218
+#: schematic/scheme/gschem/gschemdoc.scm.in:53
+msgid "Could not show documentation:"
+msgstr ""
+
+#: schematic/scheme/gschem/gschemdoc.scm.in:256
 msgid "No documentation found"
 msgstr ""
 

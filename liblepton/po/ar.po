@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-05-13 11:16+0300\n"
+"POT-Creation-Date: 2019-09-28 09:34+0300\n"
 "PO-Revision-Date: 2012-01-31 12:11+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -800,6 +800,12 @@ msgstr ""
 msgid "Object ~A is not part of a page"
 msgstr ""
 
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
 #, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr ""
@@ -809,12 +815,6 @@ msgstr ""
 
 #, scheme-format
 msgid "File ~S is not readable.\n"
-msgstr ""
-
-msgid "Welcome to Lepton REPL!\n"
-msgstr ""
-
-msgid "WARNING: Readline library is not supported in your configuration.\n"
 msgstr ""
 
 #, fuzzy

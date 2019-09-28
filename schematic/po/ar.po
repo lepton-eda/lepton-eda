@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-02-22 14:08+0300\n"
+"POT-Creation-Date: 2019-09-28 09:34+0300\n"
 "PO-Revision-Date: 2010-02-14 06:08+0000\n"
 "Last-Translator: عبدالله شلي (Abdellah Chelli) <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -118,10 +118,6 @@ msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
 msgstr "مرّر تباعد بكسل غير صالح [%d] إلى 'عتبة العرض لشبيكة الشُرَط'\n"
 
 #, fuzzy, c-format
-msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
-msgstr "مرّرت قيمة إزاحة غير صالحة [%d] إلى 'إزاحة إضافة السمة'\n"
-
-#, fuzzy, c-format
 msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
 msgstr "مرّر عدد ثواني غير صالح [%d] إلى 'مدّة الحفظ الآلي'\n"
 
@@ -165,18 +161,6 @@ msgstr "هذا نقل(Port) عن طريق MINGW32.\n"
 #, fuzzy, c-format
 msgid "Current locale settings: %1$s\n"
 msgstr "الإعدادات المحلية الحالية: %s\n"
-
-#, fuzzy, c-format
-msgid "Couldn't find init scm file [%1$s]"
-msgstr "تعذّر العثور على ملف الاستهلال [‎%s‬]\n"
-
-#, fuzzy, c-format
-msgid "Read init scm file [%1$s]"
-msgstr "قراءة ملف الاستهلال [‎%s‬]\n"
-
-#, fuzzy, c-format
-msgid "Failed to read init scm file [%1$s]"
-msgstr "فشل قراءة ملف الاستهلال [‎%s‬]\n"
 
 #, c-format
 msgid ""
@@ -280,11 +264,15 @@ msgstr "لا شيئ"
 msgid "Grid(%1$s, %2$s)"
 msgstr "شبيكة(%s, %s)"
 
+msgid "S_elect the schematics you want to save:"
+msgstr "انتق المخططات التي تريد حفظها:"
+
 msgid "Name"
 msgstr "اسم"
 
-msgid "S_elect the schematics you want to save:"
-msgstr "انتق المخططات التي تريد حفظها:"
+#, fuzzy
+msgid "Show _full paths"
+msgstr "أظهر الإ_ثنين"
 
 #, fuzzy, c-format
 msgid "Save the changes to schematic \"%1$s\" before closing?"
@@ -363,8 +351,11 @@ msgstr "‏﻿** UTF-8 غير صالح في رسالة سجل. راجع stderr �
 msgid "Clear log window?"
 msgstr "إغلاق النافذة\n"
 
+msgid "_Wrap Long Lines"
+msgstr ""
+
 #, fuzzy
-msgid "Clear Log _Window"
+msgid "Clea_r Log Window"
 msgstr "أظهر نافذة ال_سجل..."
 
 msgid "Macro:"
@@ -624,21 +615,6 @@ msgstr "إيقاف الجذب"
 msgid "Resnap Active"
 msgstr "تفعيل إعادة الجذب"
 
-msgid "Stroke"
-msgstr "جرة (Stroke)"
-
-msgid "none"
-msgstr "لا شيء"
-
-msgid "Repeat/"
-msgstr "كرّر/"
-
-msgid "Repeat/none"
-msgstr "كرّر/لا شيء"
-
-msgid "Pan"
-msgstr "انتقل"
-
 #, fuzzy, c-format
 msgid "New page created [%1$s]"
 msgstr "أنشئت صفحة جديدة [‎%s‬]\n"
@@ -647,51 +623,18 @@ msgstr "أنشئت صفحة جديدة [‎%s‬]\n"
 msgid "New Window created [%1$s]"
 msgstr "أنشئت نافذة جديدة [‎%s‬]\n"
 
-msgid "Failed to Save All"
-msgstr "فشل حفظ الكل"
-
 msgid "Saved All"
 msgstr "حفظ الكل"
+
+msgid "Failed to Save All"
+msgstr "فشل حفظ الكل"
 
 #, fuzzy
 msgid "Closing Window"
 msgstr "إغلاق النافذة\n"
 
-msgid "Copy"
-msgstr "انسخ"
-
 msgid "Select objs first"
 msgstr "انتق الكائنات أولا"
-
-msgid "Multiple Copy"
-msgstr "نسخ متعدد"
-
-msgid "Move"
-msgstr "حرّك"
-
-msgid "Delete"
-msgstr "احذف"
-
-msgid "Edit"
-msgstr "تحرير"
-
-msgid "Edit Text"
-msgstr "حرّر النص"
-
-msgid "Slot"
-msgstr "شقّ"
-
-msgid "Rotate"
-msgstr "أدر"
-
-msgid "Mirror"
-msgstr "مرآة"
-
-msgid "Lock"
-msgstr "أقفل"
-
-msgid "Unlock"
-msgstr "فكّ القفل"
 
 #, fuzzy
 msgid "WARNING: Do not translate with snap off!"
@@ -712,18 +655,6 @@ msgid ""
 msgstr ""
 "تحذير: إذا كنت تسحب رمزا إلى المبدأ، يجب أن يعيّن حجم شبيكة الجذب إلى 100\n"
 
-msgid "Embed"
-msgstr "ضمّن"
-
-msgid "Unembed"
-msgstr "لا تضمّن"
-
-msgid "Update"
-msgstr "حدّث"
-
-msgid "ShowHidden"
-msgstr "أظهر المخفي"
-
 #, c-format
 msgid ""
 "<b>Revert page:</b>\n"
@@ -738,69 +669,12 @@ msgstr ""
 msgid "Revert"
 msgstr "ت_راجع"
 
-msgid "Copy to clipboard"
-msgstr "انسخ إلى الحافظة"
-
-msgid "Cut to clipboard"
-msgstr "قصّ إلى الحافظة"
-
-msgid "Paste from clipboard"
-msgstr "ألصق من الحافظة"
-
 #, fuzzy
 msgid "Empty clipboard"
 msgstr "انسخ إلى الحافظة"
 
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being copied to.
-#, fuzzy, c-format
-msgid "Copy %i"
-msgstr "انسخ 1"
-
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being cut to.
-#, fuzzy, c-format
-msgid "Cut %i"
-msgstr "قص 1"
-
-#. TRANSLATORS: The number is the number of the buffer that is being
-#. * pasted to the schematic.
-#, fuzzy, c-format
-msgid "Paste %i"
-msgstr "ألصق 1"
-
 msgid "Empty buffer"
 msgstr "أفرغ المخزن"
-
-msgid "Component"
-msgstr "مكوّن"
-
-msgid "Attribute"
-msgstr "سمة"
-
-msgid "Net"
-msgstr "شبكة"
-
-msgid "Bus"
-msgstr "ناقل"
-
-msgid "Line"
-msgstr "خط"
-
-msgid "Path"
-msgstr ""
-
-msgid "Box"
-msgstr "إطار"
-
-msgid "Circle"
-msgstr "دائرة"
-
-msgid "Arc"
-msgstr "قوس"
-
-msgid "Pin"
-msgstr "دبوس"
 
 #, fuzzy, c-format
 msgid "Searching for source [%1$s]"
@@ -832,24 +706,6 @@ msgstr "الرمز ليس ملفا حقيقيا. يتعذر تحميل الرم�
 #, fuzzy
 msgid "Cannot find any schematics above the current one!"
 msgstr "يتعذر إيجاد أي مخطط فوق الحالي!\n"
-
-msgid "Attach"
-msgstr "أرفق"
-
-msgid "Detach"
-msgstr "افصل"
-
-msgid "ShowN"
-msgstr "أظهرN"
-
-msgid "ShowV"
-msgstr "أظهرV"
-
-msgid "ShowB"
-msgstr "أظهرB"
-
-msgid "VisToggle"
-msgstr "تبديل الرؤية"
 
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
@@ -906,14 +762,6 @@ msgstr "وضع الشبكة المغناطيسية: مشغل\n"
 #, fuzzy
 msgid "magnetic net mode: OFF"
 msgstr "وضع الشبكة المغناطيسية: موقف\n"
-
-#. TRANSLATORS: this string is used to generate a filename for
-#. newly-created files.  It will be used to create a filename of
-#. the form "untitled_N.sch", where N is a number.  Please make
-#. sure that the translation contains characters suitable for use
-#. in a filename.
-msgid "untitled"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "Translating schematic [%1$d %2$d]"
@@ -993,9 +841,6 @@ msgstr "انتق اسم ملف بوست-سكريبت..."
 msgid "Failed to load picture: %1$s"
 msgstr "فشل تحميل الصورة: %s"
 
-msgid "Picture"
-msgstr "صورة"
-
 #, fuzzy, c-format
 msgid "Failed to replace pictures: %s"
 msgstr "فشل تحميل الصورة: %s"
@@ -1024,9 +869,9 @@ msgstr "التراجع/الإعادة معطلين في الملف rc\n"
 msgid ""
 "Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"Interactively edit gEDA schematics or symbols.  If one or more FILEs\n"
-"are specified, open them for editing; otherwise, create a new, empty\n"
-"schematic.\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
 "\n"
 "Options:\n"
 "  -q, --quiet              Quiet mode.\n"
@@ -1034,14 +879,12 @@ msgid ""
 "  -L DIR                   Add DIR to Scheme search path.\n"
 "  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
-"  -o, --output=FILE        Output filename (for printing).\n"
-"  -p                       Automatically place the window.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"gEDA/gaf homepage: <http://www.geda-project.org/>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
 
 #, c-format
@@ -1223,11 +1066,20 @@ msgstr "حاول الحصول على لون غير صالح: %d\n"
 msgid "Background"
 msgstr "خلفيّة"
 
+msgid "Pin"
+msgstr "دبوس"
+
 msgid "Net endpoint"
 msgstr "﻿نقطة النهاية للشبكة"
 
 msgid "Graphic"
 msgstr "رسم"
+
+msgid "Net"
+msgstr "شبكة"
+
+msgid "Attribute"
+msgstr "سمة"
 
 msgid "Logic bubble"
 msgstr "﻿فقاعة المنطق"
@@ -1239,6 +1091,9 @@ msgstr "﻿نقطة شبيكة"
 msgid "Detached attribute"
 msgstr "سمة مفصولة"
 
+msgid "Bus"
+msgstr "ناقل"
+
 msgid "Selection"
 msgstr "منتقى"
 
@@ -1247,6 +1102,12 @@ msgstr "مربع إحاطة"
 
 msgid "Zoom box"
 msgstr "قرّب المربع"
+
+msgid "Stroke"
+msgstr "جرة (Stroke)"
+
+msgid "Lock"
+msgstr "أقفل"
 
 msgid "Output background"
 msgstr "﻿خلفية الإخراج"
@@ -1413,11 +1274,24 @@ msgstr "﻿كتب صورة بالأبيض والأسود إلى [%s] [%d x %d]\n
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
 msgstr "﻿‏x_image_lowlevel: تعذر الحصول على pixbuf من نافذة gschem.\n"
 
+msgid "NOTE: print-color-map will be used for PDF export"
+msgstr ""
+
 msgid "Width x Height"
 msgstr "عرض × ارتفاع"
 
 msgid "Image type"
 msgstr "نوع الصورة"
+
+#, fuzzy
+msgid "Color mode"
+msgstr "تحرير اللون"
+
+msgid "Color"
+msgstr "لون"
+
+msgid "Grayscale"
+msgstr ""
 
 msgid "Write image..."
 msgstr "أكتب صورة..."
@@ -1486,6 +1360,15 @@ msgstr "حرّر..."
 #, fuzzy
 msgid "Object Properties..."
 msgstr "<b>خصائص النص</b>"
+
+msgid "Copy"
+msgstr "انسخ"
+
+msgid "Move"
+msgstr "حرّك"
+
+msgid "Delete"
+msgstr "احذف"
 
 #, fuzzy
 msgid "Down Schematic"
@@ -1588,6 +1471,9 @@ msgstr[1] "سمة"
 msgid "Text Entry..."
 msgstr "مدخل نص..."
 
+msgid "Refresh"
+msgstr ""
+
 msgid "New Page"
 msgstr "صفحة جديدة"
 
@@ -1600,14 +1486,8 @@ msgstr "احفظ الصفحة"
 msgid "Close Page"
 msgstr "أغلق الصفحة"
 
-msgid "Page Manager"
-msgstr "مدير الصفحات"
-
 msgid "Changed"
 msgstr "غُيّر"
-
-msgid "Right click on the filename for more options..."
-msgstr "نقرة يمنى فوق اسم الملف للحصول على المزيد من الخيارات..."
 
 #, fuzzy, c-format
 msgid "Failed to write PDF to '%s': %s\n"
@@ -1681,6 +1561,9 @@ msgstr "مخطط ألوان _فاتحة"
 #, fuzzy
 msgid "Select Schematic Font"
 msgstr "انتق المخططات التي تريد حفظها:"
+
+msgid "Page Manager"
+msgstr "مدير الصفحات"
 
 #, fuzzy, c-format
 msgid "Loading schematic [%1$s]"
@@ -1758,6 +1641,9 @@ msgstr ""
 "لوضعه\n"
 "الزر الأيمن للفارة للإلغاء"
 
+msgid "Component"
+msgstr "مكوّن"
+
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
@@ -1785,10 +1671,21 @@ msgstr "أظهرN"
 msgid "Show text starting with:"
 msgstr "أظهر النص البادئ بـ:"
 
-msgid "Menu/Cancel"
-msgstr "قائمة/ألغِ"
+msgid "none"
+msgstr "لا شيء"
 
-msgid "Pan/Cancel"
+#, fuzzy
+msgid "Repeat"
+msgstr "كرّر/"
+
+msgid "Pan"
+msgstr "انتقل"
+
+msgid "Menu"
+msgstr ""
+
+#, fuzzy
+msgid "/Cancel"
 msgstr "انتقل/ألغِ"
 
 msgid "Pick"
@@ -1816,6 +1713,10 @@ msgstr ""
 
 msgid "Failed to load file"
 msgstr "فشل تحميل الملف"
+
+#, c-format
+msgid "Skipping existing file [%s]"
+msgstr ""
 
 #, fuzzy
 msgid "Lepton EDA Schematic Editor"
@@ -1901,6 +1802,9 @@ msgstr "حرّر النص..."
 
 msgid "Slot..."
 msgstr "شقّ..."
+
+msgid "Unlock"
+msgstr "فكّ القفل"
 
 msgid "Embed Component/Picture"
 msgstr "ضمّن المكون/الصورة"
@@ -2211,7 +2115,10 @@ msgid "_Help"
 msgstr "مساع_دة"
 
 #, scheme-format
-msgid "~S is not a valid gschem action."
+msgid "[~A] is not a valid lepton-schematic action."
+msgstr ""
+
+msgid "There is no last action to repeat."
 msgstr ""
 
 msgid "Repeat Last Action"
@@ -2253,6 +2160,9 @@ msgstr "أ_خرج"
 
 msgid "Terminal REPL"
 msgstr ""
+
+msgid "Edit Text"
+msgstr "حرّر النص"
 
 msgid "Choose Slot"
 msgstr ""
@@ -2376,9 +2286,17 @@ msgstr "تسلسل هرمي"
 msgid "Attach Attributes"
 msgstr "حرّر المواصفات"
 
+#, scheme-format
+msgid "Attribute attached: [~a]"
+msgstr ""
+
 #, fuzzy
 msgid "Detach Attributes"
 msgstr "سمة مفصولة"
+
+#, scheme-format
+msgid "Attribute detached: [~a]"
+msgstr ""
 
 #, fuzzy
 msgid "Show Attribute Value"
@@ -2457,45 +2375,45 @@ msgstr "توثيق الم_كونات"
 msgid "View documentation for selected component"
 msgstr ""
 
-msgid ""
-"Could not show documentation for selected component:\n"
-"\n"
-msgstr ""
-
 #, fuzzy
-msgid "gEDA Manuals"
+msgid "Lepton EDA Manuals"
 msgstr "يدوي"
 
-msgid "View the front page of the gEDA documentation in a browser."
+msgid "View the front page of the Lepton EDA documentation in a browser."
 msgstr ""
 
 #, fuzzy
-msgid "gschem User Guide"
+msgid "lepton-schematic User Guide"
 msgstr "الأ_سئلة الأكثر شيوعا لـ gschem"
 
-msgid "View the gschem User Guide in a browser."
+msgid "View the lepton-schematic User Guide in a browser."
 msgstr ""
 
 #, fuzzy
-msgid "gschem FAQ"
-msgstr "الأ_سئلة الأكثر شيوعا لـ gschem"
+msgid "lepton-schematic FAQ"
+msgstr "انتق المخططات التي تريد حفظها:"
 
-msgid "Frequently Asked Questions about using gschem."
+msgid "Frequently Asked Questions about using lepton-schematic."
 msgstr ""
 
 #, fuzzy
-msgid "gEDA wiki"
+msgid "Lepton EDA wiki"
 msgstr "_ويكي gEDA..."
 
-msgid "View the front page of the gEDA wiki in a browser."
+msgid "View the front page of the Lepton EDA wiki in a browser."
 msgstr ""
 
-msgid "About gschem"
+#, fuzzy
+msgid "About lepton-schematic"
 msgstr "عن gschem"
 
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr ""
+
+#, fuzzy
+msgid "Could not show documentation:"
+msgstr "توثيق الم_كونات"
 
 #, fuzzy
 msgid "No documentation found"
@@ -2509,6 +2427,119 @@ msgstr ""
 msgid "~S is not a prefix key sequence."
 msgstr ""
 
+#, fuzzy
+#~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
+#~ msgstr "مرّرت قيمة إزاحة غير صالحة [%d] إلى 'إزاحة إضافة السمة'\n"
+
+#, fuzzy
+#~ msgid "Couldn't find init scm file [%1$s]"
+#~ msgstr "تعذّر العثور على ملف الاستهلال [‎%s‬]\n"
+
+#, fuzzy
+#~ msgid "Read init scm file [%1$s]"
+#~ msgstr "قراءة ملف الاستهلال [‎%s‬]\n"
+
+#, fuzzy
+#~ msgid "Failed to read init scm file [%1$s]"
+#~ msgstr "فشل قراءة ملف الاستهلال [‎%s‬]\n"
+
+#~ msgid "Repeat/none"
+#~ msgstr "كرّر/لا شيء"
+
+#~ msgid "Multiple Copy"
+#~ msgstr "نسخ متعدد"
+
+#~ msgid "Edit"
+#~ msgstr "تحرير"
+
+#~ msgid "Slot"
+#~ msgstr "شقّ"
+
+#~ msgid "Rotate"
+#~ msgstr "أدر"
+
+#~ msgid "Mirror"
+#~ msgstr "مرآة"
+
+#~ msgid "Embed"
+#~ msgstr "ضمّن"
+
+#~ msgid "Unembed"
+#~ msgstr "لا تضمّن"
+
+#~ msgid "Update"
+#~ msgstr "حدّث"
+
+#~ msgid "ShowHidden"
+#~ msgstr "أظهر المخفي"
+
+#~ msgid "Copy to clipboard"
+#~ msgstr "انسخ إلى الحافظة"
+
+#~ msgid "Cut to clipboard"
+#~ msgstr "قصّ إلى الحافظة"
+
+#~ msgid "Paste from clipboard"
+#~ msgstr "ألصق من الحافظة"
+
+#, fuzzy
+#~ msgid "Copy %i"
+#~ msgstr "انسخ 1"
+
+#, fuzzy
+#~ msgid "Cut %i"
+#~ msgstr "قص 1"
+
+#, fuzzy
+#~ msgid "Paste %i"
+#~ msgstr "ألصق 1"
+
+#~ msgid "Line"
+#~ msgstr "خط"
+
+#~ msgid "Box"
+#~ msgstr "إطار"
+
+#~ msgid "Circle"
+#~ msgstr "دائرة"
+
+#~ msgid "Arc"
+#~ msgstr "قوس"
+
+#~ msgid "Attach"
+#~ msgstr "أرفق"
+
+#~ msgid "Detach"
+#~ msgstr "افصل"
+
+#~ msgid "ShowN"
+#~ msgstr "أظهرN"
+
+#~ msgid "ShowV"
+#~ msgstr "أظهرV"
+
+#~ msgid "ShowB"
+#~ msgstr "أظهرB"
+
+#~ msgid "VisToggle"
+#~ msgstr "تبديل الرؤية"
+
+#~ msgid "Picture"
+#~ msgstr "صورة"
+
+#~ msgid "Right click on the filename for more options..."
+#~ msgstr "نقرة يمنى فوق اسم الملف للحصول على المزيد من الخيارات..."
+
+#~ msgid "Menu/Cancel"
+#~ msgstr "قائمة/ألغِ"
+
+#~ msgid "Pan/Cancel"
+#~ msgstr "انتقل/ألغِ"
+
+#, fuzzy
+#~ msgid "gschem FAQ"
+#~ msgstr "الأ_سئلة الأكثر شيوعا لـ gschem"
+
 #~ msgid "Really revert page?"
 #~ msgstr "تريد استعادة الصفحة حقا؟"
 
@@ -2517,9 +2548,6 @@ msgstr ""
 
 #~ msgid "Edit pin type"
 #~ msgstr "حرّر نوع الدبوس"
-
-#~ msgid "Color"
-#~ msgstr "لون"
 
 #, fuzzy
 #~ msgid "Edit Pin Type..."
@@ -2783,9 +2811,6 @@ msgstr ""
 
 #~ msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 #~ msgstr "﻿خطأ: كائن فارغ (NULL) في color_edit_dialog_apply!\n"
-
-#~ msgid "Color Edit"
-#~ msgstr "تحرير اللون"
 
 #~ msgid "Discard Page"
 #~ msgstr "أهمل الصفحة"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-05-13 11:16+0300\n"
+"POT-Creation-Date: 2019-09-28 09:34+0300\n"
 "PO-Revision-Date: 2012-09-01 18:46+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -787,6 +787,12 @@ msgstr ""
 msgid "Object ~A is not part of a page"
 msgstr "Το αντικείμενο ~A δεν είναι μέρος καμίας σελίδας"
 
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
 #, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr ""
@@ -797,12 +803,6 @@ msgstr ""
 #, fuzzy, scheme-format
 msgid "File ~S is not readable.\n"
 msgstr "Το αρχείο %s είναι μόνο για ανάγνωση"
-
-msgid "Welcome to Lepton REPL!\n"
-msgstr ""
-
-msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr ""
 
 #~ msgid "o_save_objects: object %p has unknown type '%c'\n"
 #~ msgstr "o_save_objects: το αντικείμενο %p έχει άγνωστο τύπο '%c'\n"

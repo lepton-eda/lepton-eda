@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-02-22 14:08+0300\n"
+"POT-Creation-Date: 2019-09-28 09:34+0300\n"
 "PO-Revision-Date: 2012-01-27 14:18+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -111,10 +111,6 @@ msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
 msgstr ""
 
 #, c-format
-msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
-msgstr ""
-
-#, c-format
 msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
 msgstr ""
 
@@ -157,18 +153,6 @@ msgstr ""
 
 #, c-format
 msgid "Current locale settings: %1$s\n"
-msgstr ""
-
-#, c-format
-msgid "Couldn't find init scm file [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "Read init scm file [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "Failed to read init scm file [%1$s]"
 msgstr ""
 
 #, c-format
@@ -261,10 +245,13 @@ msgstr "NIŠTA"
 msgid "Grid(%1$s, %2$s)"
 msgstr ""
 
+msgid "S_elect the schematics you want to save:"
+msgstr ""
+
 msgid "Name"
 msgstr ""
 
-msgid "S_elect the schematics you want to save:"
+msgid "Show _full paths"
 msgstr ""
 
 #, c-format
@@ -341,8 +328,11 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "Novi prozor"
 
+msgid "_Wrap Long Lines"
+msgstr ""
+
 #, fuzzy
-msgid "Clear Log _Window"
+msgid "Clea_r Log Window"
 msgstr "Novi prozor"
 
 msgid "Macro:"
@@ -578,21 +568,6 @@ msgstr ""
 msgid "Resnap Active"
 msgstr ""
 
-msgid "Stroke"
-msgstr "Potez"
-
-msgid "none"
-msgstr "ništa"
-
-msgid "Repeat/"
-msgstr "Ponovi/"
-
-msgid "Repeat/none"
-msgstr ""
-
-msgid "Pan"
-msgstr "Paniraj"
-
 #, fuzzy, c-format
 msgid "New page created [%1$s]"
 msgstr "Nova strana kreirana [%s]\n"
@@ -601,51 +576,18 @@ msgstr "Nova strana kreirana [%s]\n"
 msgid "New Window created [%1$s]"
 msgstr "Novi prozor keriran [%s]\n"
 
-msgid "Failed to Save All"
+msgid "Saved All"
 msgstr ""
 
-msgid "Saved All"
+msgid "Failed to Save All"
 msgstr ""
 
 #, fuzzy
 msgid "Closing Window"
 msgstr "Novi prozor"
 
-msgid "Copy"
-msgstr "Kopiraj"
-
 msgid "Select objs first"
 msgstr ""
-
-msgid "Multiple Copy"
-msgstr ""
-
-msgid "Move"
-msgstr "Premjesti"
-
-msgid "Delete"
-msgstr "Obriši"
-
-msgid "Edit"
-msgstr "Izmijeni"
-
-msgid "Edit Text"
-msgstr "Izmijeni tekst"
-
-msgid "Slot"
-msgstr "Slot"
-
-msgid "Rotate"
-msgstr "Rotiraj"
-
-msgid "Mirror"
-msgstr "Ogledalo"
-
-msgid "Lock"
-msgstr "Zaključaj"
-
-msgid "Unlock"
-msgstr "Otključaj"
 
 msgid "WARNING: Do not translate with snap off!"
 msgstr ""
@@ -661,18 +603,6 @@ msgid ""
 "should be set to 100"
 msgstr ""
 
-msgid "Embed"
-msgstr ""
-
-msgid "Unembed"
-msgstr ""
-
-msgid "Update"
-msgstr "Ažuriraj"
-
-msgid "ShowHidden"
-msgstr "Prikaz skrivenih objekata"
-
 #, c-format
 msgid ""
 "<b>Revert page:</b>\n"
@@ -687,69 +617,12 @@ msgstr ""
 msgid "Revert"
 msgstr "_Vrati"
 
-msgid "Copy to clipboard"
-msgstr "Kopiraj na međuspremnik"
-
-msgid "Cut to clipboard"
-msgstr "Isijeci u međuspremnik"
-
-msgid "Paste from clipboard"
-msgstr "Umetni iz međuspremnika"
-
 #, fuzzy
 msgid "Empty clipboard"
 msgstr "Kopiraj na međuspremnik"
 
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being copied to.
-#, fuzzy, c-format
-msgid "Copy %i"
-msgstr "Kopiraj 1"
-
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being cut to.
-#, fuzzy, c-format
-msgid "Cut %i"
-msgstr "Isijeci 1"
-
-#. TRANSLATORS: The number is the number of the buffer that is being
-#. * pasted to the schematic.
-#, fuzzy, c-format
-msgid "Paste %i"
-msgstr "Umetni"
-
 msgid "Empty buffer"
 msgstr "Isprazni bafer"
-
-msgid "Component"
-msgstr "Komponenta"
-
-msgid "Attribute"
-msgstr "Atribut"
-
-msgid "Net"
-msgstr "Mreža"
-
-msgid "Bus"
-msgstr "Sabirnica"
-
-msgid "Line"
-msgstr "Linija"
-
-msgid "Path"
-msgstr ""
-
-msgid "Box"
-msgstr "Okvir"
-
-msgid "Circle"
-msgstr "Krug"
-
-msgid "Arc"
-msgstr "Luk"
-
-msgid "Pin"
-msgstr "Pin"
 
 #, fuzzy, c-format
 msgid "Searching for source [%1$s]"
@@ -777,24 +650,6 @@ msgid "Symbol is not a real file. Symbol cannot be loaded."
 msgstr ""
 
 msgid "Cannot find any schematics above the current one!"
-msgstr ""
-
-msgid "Attach"
-msgstr "Priloži"
-
-msgid "Detach"
-msgstr "Odvoji"
-
-msgid "ShowN"
-msgstr ""
-
-msgid "ShowV"
-msgstr ""
-
-msgid "ShowB"
-msgstr ""
-
-msgid "VisToggle"
 msgstr ""
 
 #, c-format
@@ -838,14 +693,6 @@ msgid "magnetic net mode: ON"
 msgstr ""
 
 msgid "magnetic net mode: OFF"
-msgstr ""
-
-#. TRANSLATORS: this string is used to generate a filename for
-#. newly-created files.  It will be used to create a filename of
-#. the form "untitled_N.sch", where N is a number.  Please make
-#. sure that the translation contains characters suitable for use
-#. in a filename.
-msgid "untitled"
 msgstr ""
 
 #, c-format
@@ -921,9 +768,6 @@ msgstr ""
 msgid "Failed to load picture: %1$s"
 msgstr ""
 
-msgid "Picture"
-msgstr ""
-
 #, c-format
 msgid "Failed to replace pictures: %s"
 msgstr ""
@@ -948,9 +792,9 @@ msgstr ""
 msgid ""
 "Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"Interactively edit gEDA schematics or symbols.  If one or more FILEs\n"
-"are specified, open them for editing; otherwise, create a new, empty\n"
-"schematic.\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
 "\n"
 "Options:\n"
 "  -q, --quiet              Quiet mode.\n"
@@ -958,14 +802,12 @@ msgid ""
 "  -L DIR                   Add DIR to Scheme search path.\n"
 "  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
-"  -o, --output=FILE        Output filename (for printing).\n"
-"  -p                       Automatically place the window.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"gEDA/gaf homepage: <http://www.geda-project.org/>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
 
 #, c-format
@@ -1140,11 +982,20 @@ msgstr ""
 msgid "Background"
 msgstr ""
 
+msgid "Pin"
+msgstr "Pin"
+
 msgid "Net endpoint"
 msgstr ""
 
 msgid "Graphic"
 msgstr ""
+
+msgid "Net"
+msgstr "Mreža"
+
+msgid "Attribute"
+msgstr "Atribut"
 
 msgid "Logic bubble"
 msgstr ""
@@ -1156,6 +1007,9 @@ msgstr ""
 msgid "Detached attribute"
 msgstr "Atribut"
 
+msgid "Bus"
+msgstr "Sabirnica"
+
 #, fuzzy
 msgid "Selection"
 msgstr "Režim izabiranja"
@@ -1166,6 +1020,12 @@ msgstr ""
 #, fuzzy
 msgid "Zoom box"
 msgstr "Okvir zooma"
+
+msgid "Stroke"
+msgstr "Potez"
+
+msgid "Lock"
+msgstr "Zaključaj"
 
 msgid "Output background"
 msgstr ""
@@ -1317,10 +1177,23 @@ msgstr ""
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
 msgstr ""
 
+msgid "NOTE: print-color-map will be used for PDF export"
+msgstr ""
+
 msgid "Width x Height"
 msgstr ""
 
 msgid "Image type"
+msgstr ""
+
+#, fuzzy
+msgid "Color mode"
+msgstr "Boja"
+
+msgid "Color"
+msgstr "Boja"
+
+msgid "Grayscale"
 msgstr ""
 
 msgid "Write image..."
@@ -1387,6 +1260,15 @@ msgstr "Izmijeni..."
 
 msgid "Object Properties..."
 msgstr ""
+
+msgid "Copy"
+msgstr "Kopiraj"
+
+msgid "Move"
+msgstr "Premjesti"
+
+msgid "Delete"
+msgstr "Obriši"
 
 #, fuzzy
 msgid "Down Schematic"
@@ -1489,6 +1371,9 @@ msgstr[1] "Atribut"
 msgid "Text Entry..."
 msgstr "_Tekst..."
 
+msgid "Refresh"
+msgstr ""
+
 msgid "New Page"
 msgstr ""
 
@@ -1501,13 +1386,7 @@ msgstr ""
 msgid "Close Page"
 msgstr ""
 
-msgid "Page Manager"
-msgstr ""
-
 msgid "Changed"
-msgstr ""
-
-msgid "Right click on the filename for more options..."
 msgstr ""
 
 #, c-format
@@ -1582,6 +1461,9 @@ msgstr ""
 msgid "Select Schematic Font"
 msgstr "Režim izabiranja"
 
+msgid "Page Manager"
+msgstr ""
+
 #, c-format
 msgid "Loading schematic [%1$s]"
 msgstr ""
@@ -1652,6 +1534,9 @@ msgid ""
 "Right mouse button to cancel"
 msgstr ""
 
+msgid "Component"
+msgstr "Komponenta"
+
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
@@ -1674,10 +1559,20 @@ msgstr ""
 msgid "Show text starting with:"
 msgstr ""
 
-msgid "Menu/Cancel"
+msgid "none"
+msgstr "ništa"
+
+#, fuzzy
+msgid "Repeat"
+msgstr "Ponovi/"
+
+msgid "Pan"
+msgstr "Paniraj"
+
+msgid "Menu"
 msgstr ""
 
-msgid "Pan/Cancel"
+msgid "/Cancel"
 msgstr ""
 
 msgid "Pick"
@@ -1704,6 +1599,10 @@ msgid ""
 msgstr ""
 
 msgid "Failed to load file"
+msgstr ""
+
+#, c-format
+msgid "Skipping existing file [%s]"
 msgstr ""
 
 msgid "Lepton EDA Schematic Editor"
@@ -1784,6 +1683,9 @@ msgstr "Izmijeni tekst..."
 
 msgid "Slot..."
 msgstr "Slot..."
+
+msgid "Unlock"
+msgstr "Otključaj"
 
 msgid "Embed Component/Picture"
 msgstr ""
@@ -2083,7 +1985,10 @@ msgid "_Help"
 msgstr "_Pomoć"
 
 #, scheme-format
-msgid "~S is not a valid gschem action."
+msgid "[~A] is not a valid lepton-schematic action."
+msgstr ""
+
+msgid "There is no last action to repeat."
 msgstr ""
 
 msgid "Repeat Last Action"
@@ -2123,6 +2028,9 @@ msgstr "_Izlaz"
 
 msgid "Terminal REPL"
 msgstr ""
+
+msgid "Edit Text"
+msgstr "Izmijeni tekst"
 
 msgid "Choose Slot"
 msgstr ""
@@ -2233,9 +2141,17 @@ msgstr "Hije_rarhija"
 msgid "Attach Attributes"
 msgstr "Atribut"
 
+#, scheme-format
+msgid "Attribute attached: [~a]"
+msgstr ""
+
 #, fuzzy
 msgid "Detach Attributes"
 msgstr "Atribut"
+
+#, scheme-format
+msgid "Attribute detached: [~a]"
+msgstr ""
 
 #, fuzzy
 msgid "Show Attribute Value"
@@ -2301,40 +2217,39 @@ msgstr ""
 msgid "View documentation for selected component"
 msgstr ""
 
-msgid ""
-"Could not show documentation for selected component:\n"
-"\n"
+msgid "Lepton EDA Manuals"
 msgstr ""
 
-msgid "gEDA Manuals"
+msgid "View the front page of the Lepton EDA documentation in a browser."
 msgstr ""
 
-msgid "View the front page of the gEDA documentation in a browser."
+msgid "lepton-schematic User Guide"
 msgstr ""
 
-msgid "gschem User Guide"
+msgid "View the lepton-schematic User Guide in a browser."
 msgstr ""
 
-msgid "View the gschem User Guide in a browser."
+#, fuzzy
+msgid "lepton-schematic FAQ"
+msgstr "Režim izabiranja"
+
+msgid "Frequently Asked Questions about using lepton-schematic."
 msgstr ""
 
-msgid "gschem FAQ"
+msgid "Lepton EDA wiki"
 msgstr ""
 
-msgid "Frequently Asked Questions about using gschem."
+msgid "View the front page of the Lepton EDA wiki in a browser."
 msgstr ""
 
-msgid "gEDA wiki"
-msgstr ""
-
-msgid "View the front page of the gEDA wiki in a browser."
-msgstr ""
-
-msgid "About gschem"
+msgid "About lepton-schematic"
 msgstr ""
 
 #, scheme-format
 msgid "Invalid text alignment ~A."
+msgstr ""
+
+msgid "Could not show documentation:"
 msgstr ""
 
 msgid "No documentation found"
@@ -2348,8 +2263,62 @@ msgstr ""
 msgid "~S is not a prefix key sequence."
 msgstr ""
 
-#~ msgid "Color"
-#~ msgstr "Boja"
+#~ msgid "Edit"
+#~ msgstr "Izmijeni"
+
+#~ msgid "Slot"
+#~ msgstr "Slot"
+
+#~ msgid "Rotate"
+#~ msgstr "Rotiraj"
+
+#~ msgid "Mirror"
+#~ msgstr "Ogledalo"
+
+#~ msgid "Update"
+#~ msgstr "Ažuriraj"
+
+#~ msgid "ShowHidden"
+#~ msgstr "Prikaz skrivenih objekata"
+
+#~ msgid "Copy to clipboard"
+#~ msgstr "Kopiraj na međuspremnik"
+
+#~ msgid "Cut to clipboard"
+#~ msgstr "Isijeci u međuspremnik"
+
+#~ msgid "Paste from clipboard"
+#~ msgstr "Umetni iz međuspremnika"
+
+#, fuzzy
+#~ msgid "Copy %i"
+#~ msgstr "Kopiraj 1"
+
+#, fuzzy
+#~ msgid "Cut %i"
+#~ msgstr "Isijeci 1"
+
+#, fuzzy
+#~ msgid "Paste %i"
+#~ msgstr "Umetni"
+
+#~ msgid "Line"
+#~ msgstr "Linija"
+
+#~ msgid "Box"
+#~ msgstr "Okvir"
+
+#~ msgid "Circle"
+#~ msgstr "Krug"
+
+#~ msgid "Arc"
+#~ msgstr "Luk"
+
+#~ msgid "Attach"
+#~ msgstr "Priloži"
+
+#~ msgid "Detach"
+#~ msgstr "Odvoji"
 
 #, fuzzy
 #~ msgid "Edit Pin Type..."

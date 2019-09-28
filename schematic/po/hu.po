@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-02-22 14:08+0300\n"
+"POT-Creation-Date: 2019-09-28 09:34+0300\n"
 "PO-Revision-Date: 2012-01-27 14:23+0000\n"
 "Last-Translator: kop <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -116,10 +116,6 @@ msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
-msgstr "Érvénytelen méret [%d] szöveg méretként\n"
-
-#, fuzzy, c-format
 msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
 msgstr "Érvénytelen méret [%d] szöveg méretként\n"
 
@@ -163,18 +159,6 @@ msgstr "Ez a MinGW32 port.\n"
 #, fuzzy, c-format
 msgid "Current locale settings: %1$s\n"
 msgstr "Jelenlegi területi beállítás: %s\n"
-
-#, fuzzy, c-format
-msgid "Couldn't find init scm file [%1$s]"
-msgstr "[%s] init scm fájl olvasása sikertelen.\n"
-
-#, fuzzy, c-format
-msgid "Read init scm file [%1$s]"
-msgstr "[%s] init scm fájl olvasása.\n"
-
-#, fuzzy, c-format
-msgid "Failed to read init scm file [%1$s]"
-msgstr "[%s] init scm fájl olvasása sikertelen.\n"
 
 #, c-format
 msgid ""
@@ -273,11 +257,15 @@ msgstr ""
 msgid "Grid(%1$s, %2$s)"
 msgstr "Háló (%s, %s)"
 
+msgid "S_elect the schematics you want to save:"
+msgstr "Válaszd ki a menteni kívánt rajzot:"
+
 msgid "Name"
 msgstr "Név"
 
-msgid "S_elect the schematics you want to save:"
-msgstr "Válaszd ki a menteni kívánt rajzot:"
+#, fuzzy
+msgid "Show _full paths"
+msgstr "Mindkettő mutatása"
 
 #, fuzzy, c-format
 msgid "Save the changes to schematic \"%1$s\" before closing?"
@@ -358,8 +346,11 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "Ablak bezárása\n"
 
+msgid "_Wrap Long Lines"
+msgstr ""
+
 #, fuzzy
-msgid "Clear Log _Window"
+msgid "Clea_r Log Window"
 msgstr "Új ablak"
 
 msgid "Macro:"
@@ -616,21 +607,6 @@ msgstr ""
 msgid "Resnap Active"
 msgstr ""
 
-msgid "Stroke"
-msgstr ""
-
-msgid "none"
-msgstr "semmi"
-
-msgid "Repeat/"
-msgstr "Imétlés/"
-
-msgid "Repeat/none"
-msgstr "Ismétlés/semmi"
-
-msgid "Pan"
-msgstr "Középre"
-
 #, fuzzy, c-format
 msgid "New page created [%1$s]"
 msgstr "[%s] oldal létrehozva.\n"
@@ -639,51 +615,18 @@ msgstr "[%s] oldal létrehozva.\n"
 msgid "New Window created [%1$s]"
 msgstr "[%s] ablak létrehozva.\n"
 
-msgid "Failed to Save All"
-msgstr "Nem sikerült mindent menteni."
-
 msgid "Saved All"
 msgstr "Minden oldal elmentve."
+
+msgid "Failed to Save All"
+msgstr "Nem sikerült mindent menteni."
 
 #, fuzzy
 msgid "Closing Window"
 msgstr "Ablak bezárása\n"
 
-msgid "Copy"
-msgstr "Másolás"
-
 msgid "Select objs first"
 msgstr "Először válassz objektumokat"
-
-msgid "Multiple Copy"
-msgstr "Többszörös másolás"
-
-msgid "Move"
-msgstr "Mozgatás"
-
-msgid "Delete"
-msgstr "Törlés"
-
-msgid "Edit"
-msgstr "Szerkesztés"
-
-msgid "Edit Text"
-msgstr "Szöveg szerkesztése"
-
-msgid "Slot"
-msgstr ""
-
-msgid "Rotate"
-msgstr "Forgatás"
-
-msgid "Mirror"
-msgstr "Tükrözés"
-
-msgid "Lock"
-msgstr "Zárolás"
-
-msgid "Unlock"
-msgstr "Zárolás feloldása"
 
 msgid "WARNING: Do not translate with snap off!"
 msgstr ""
@@ -703,18 +646,6 @@ msgstr ""
 "Vigyázat, az alkatrész kezdőponthoz való tolásához a hálószemméretnek 100-"
 "nak kell lennie!\n"
 
-msgid "Embed"
-msgstr "Beágyazás"
-
-msgid "Unembed"
-msgstr "Beágyazás megszüntetése"
-
-msgid "Update"
-msgstr "Frissítés"
-
-msgid "ShowHidden"
-msgstr "Rejtettek megjelenítése"
-
 #, c-format
 msgid ""
 "<b>Revert page:</b>\n"
@@ -729,69 +660,12 @@ msgstr ""
 msgid "Revert"
 msgstr "_Visszaállítás"
 
-msgid "Copy to clipboard"
-msgstr ""
-
-msgid "Cut to clipboard"
-msgstr "Kivágás a vágólapra"
-
-msgid "Paste from clipboard"
-msgstr "Beillesztés a vágólapról"
-
 #, fuzzy
 msgid "Empty clipboard"
 msgstr "Kivágás a vágólapra"
 
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being copied to.
-#, fuzzy, c-format
-msgid "Copy %i"
-msgstr "Másolás az 1-be"
-
-#. TRANSLATORS: The number is the number of the buffer that the
-#. * selection is being cut to.
-#, fuzzy, c-format
-msgid "Cut %i"
-msgstr "Kivágás az 1-be"
-
-#. TRANSLATORS: The number is the number of the buffer that is being
-#. * pasted to the schematic.
-#, fuzzy, c-format
-msgid "Paste %i"
-msgstr "Beillesztés az 1-ből"
-
 msgid "Empty buffer"
 msgstr "Üres buffer"
-
-msgid "Component"
-msgstr "Alkatrész"
-
-msgid "Attribute"
-msgstr "Attribútum"
-
-msgid "Net"
-msgstr "Net"
-
-msgid "Bus"
-msgstr "Busz"
-
-msgid "Line"
-msgstr "Vonal"
-
-msgid "Path"
-msgstr ""
-
-msgid "Box"
-msgstr "Téglalap"
-
-msgid "Circle"
-msgstr "Kör"
-
-msgid "Arc"
-msgstr "Ív"
-
-msgid "Pin"
-msgstr "Alkatrészláb"
 
 #, fuzzy, c-format
 msgid "Searching for source [%1$s]"
@@ -820,24 +694,6 @@ msgstr ""
 
 msgid "Cannot find any schematics above the current one!"
 msgstr ""
-
-msgid "Attach"
-msgstr "Csatolás"
-
-msgid "Detach"
-msgstr "Leválasztás"
-
-msgid "ShowN"
-msgstr ""
-
-msgid "ShowV"
-msgstr ""
-
-msgid "ShowB"
-msgstr ""
-
-msgid "VisToggle"
-msgstr "Láthatóság be/ki"
 
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
@@ -885,14 +741,6 @@ msgstr "Összeköttetés üzemmód"
 #, fuzzy
 msgid "magnetic net mode: OFF"
 msgstr "Összeköttetés üzemmód"
-
-#. TRANSLATORS: this string is used to generate a filename for
-#. newly-created files.  It will be used to create a filename of
-#. the form "untitled_N.sch", where N is a number.  Please make
-#. sure that the translation contains characters suitable for use
-#. in a filename.
-msgid "untitled"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "Translating schematic [%1$d %2$d]"
@@ -968,9 +816,6 @@ msgstr "PostScript fájlnév kiválasztása..."
 msgid "Failed to load picture: %1$s"
 msgstr "Sikertelen a(z) %s kép betöltése"
 
-msgid "Picture"
-msgstr "Kép"
-
 #, c-format
 msgid "Failed to replace pictures: %s"
 msgstr ""
@@ -997,9 +842,9 @@ msgstr "A visszavonás/újra művelet nem használható rc fájlban.\n"
 msgid ""
 "Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"Interactively edit gEDA schematics or symbols.  If one or more FILEs\n"
-"are specified, open them for editing; otherwise, create a new, empty\n"
-"schematic.\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
 "\n"
 "Options:\n"
 "  -q, --quiet              Quiet mode.\n"
@@ -1007,14 +852,12 @@ msgid ""
 "  -L DIR                   Add DIR to Scheme search path.\n"
 "  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
-"  -o, --output=FILE        Output filename (for printing).\n"
-"  -p                       Automatically place the window.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"gEDA/gaf homepage: <http://www.geda-project.org/>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
 
 #, c-format
@@ -1194,11 +1037,20 @@ msgstr ""
 msgid "Background"
 msgstr ""
 
+msgid "Pin"
+msgstr "Alkatrészláb"
+
 msgid "Net endpoint"
 msgstr ""
 
 msgid "Graphic"
 msgstr ""
+
+msgid "Net"
+msgstr "Net"
+
+msgid "Attribute"
+msgstr "Attribútum"
 
 msgid "Logic bubble"
 msgstr ""
@@ -1210,6 +1062,9 @@ msgstr ""
 msgid "Detached attribute"
 msgstr "Attribútumok szerkesztése"
 
+msgid "Bus"
+msgstr "Busz"
+
 #, fuzzy
 msgid "Selection"
 msgstr "Kiválasztás"
@@ -1220,6 +1075,12 @@ msgstr ""
 #, fuzzy
 msgid "Zoom box"
 msgstr "Doboz nagyítás"
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr "Zárolás"
 
 msgid "Output background"
 msgstr ""
@@ -1381,11 +1242,24 @@ msgstr "Fekete-fehér kép kiírva: [%s] [%d x %d]\n"
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
 msgstr ""
 
+msgid "NOTE: print-color-map will be used for PDF export"
+msgstr ""
+
 msgid "Width x Height"
 msgstr "szélesség x magasság"
 
 msgid "Image type"
 msgstr "Képtípus"
+
+#, fuzzy
+msgid "Color mode"
+msgstr "Szín szerkesztése"
+
+msgid "Color"
+msgstr "Szín"
+
+msgid "Grayscale"
+msgstr ""
 
 msgid "Write image..."
 msgstr "Képfájl írása..."
@@ -1454,6 +1328,15 @@ msgstr "Szerkesztés..."
 #, fuzzy
 msgid "Object Properties..."
 msgstr "<b>Szöveg tulajdonságai</b>"
+
+msgid "Copy"
+msgstr "Másolás"
+
+msgid "Move"
+msgstr "Mozgatás"
+
+msgid "Delete"
+msgstr "Törlés"
 
 #, fuzzy
 msgid "Down Schematic"
@@ -1559,6 +1442,9 @@ msgstr[1] "Attribútum"
 msgid "Text Entry..."
 msgstr "Szöveg"
 
+msgid "Refresh"
+msgstr ""
+
 msgid "New Page"
 msgstr "Új lap"
 
@@ -1571,14 +1457,8 @@ msgstr "Mentés"
 msgid "Close Page"
 msgstr "Lap bezárása"
 
-msgid "Page Manager"
-msgstr "Oldalkiválasztó"
-
 msgid "Changed"
 msgstr "Módosítva"
-
-msgid "Right click on the filename for more options..."
-msgstr "Kattints a jobb egérgombbal a fájlnével a további opciókért..."
 
 #, fuzzy, c-format
 msgid "Failed to write PDF to '%s': %s\n"
@@ -1654,6 +1534,9 @@ msgstr "Világos színséma"
 msgid "Select Schematic Font"
 msgstr "Válaszd ki a menteni kívánt rajzot:"
 
+msgid "Page Manager"
+msgstr "Oldalkiválasztó"
+
 #, fuzzy, c-format
 msgid "Loading schematic [%1$s]"
 msgstr "[%s] rajz betöltése\n"
@@ -1728,6 +1611,9 @@ msgstr ""
 "Válaszd ki a könyvtárt és abból az alkatrészt, mozgasd az egérmutatót a rajz "
 "fölé, lerakás bal klikk."
 
+msgid "Component"
+msgstr "Alkatrész"
+
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
@@ -1751,10 +1637,21 @@ msgstr "Szöveg mutatása"
 msgid "Show text starting with:"
 msgstr "A következővel kezdődő szöveg mutatása:"
 
-msgid "Menu/Cancel"
-msgstr "Menü/mégsem"
+msgid "none"
+msgstr "semmi"
 
-msgid "Pan/Cancel"
+#, fuzzy
+msgid "Repeat"
+msgstr "Imétlés/"
+
+msgid "Pan"
+msgstr "Középre"
+
+msgid "Menu"
+msgstr ""
+
+#, fuzzy
+msgid "/Cancel"
 msgstr "Középre/mégsem"
 
 msgid "Pick"
@@ -1782,6 +1679,10 @@ msgstr ""
 
 msgid "Failed to load file"
 msgstr "A fájl betöltése nem sikerült."
+
+#, c-format
+msgid "Skipping existing file [%s]"
+msgstr ""
 
 #, fuzzy
 msgid "Lepton EDA Schematic Editor"
@@ -1866,6 +1767,9 @@ msgstr "Szöveg szerkesztése..."
 
 msgid "Slot..."
 msgstr ""
+
+msgid "Unlock"
+msgstr "Zárolás feloldása"
 
 msgid "Embed Component/Picture"
 msgstr "Alkatrész/kép beágyazása"
@@ -2174,7 +2078,10 @@ msgid "_Help"
 msgstr "Segítség"
 
 #, scheme-format
-msgid "~S is not a valid gschem action."
+msgid "[~A] is not a valid lepton-schematic action."
+msgstr ""
+
+msgid "There is no last action to repeat."
 msgstr ""
 
 msgid "Repeat Last Action"
@@ -2216,6 +2123,9 @@ msgstr "Kilépés"
 
 msgid "Terminal REPL"
 msgstr ""
+
+msgid "Edit Text"
+msgstr "Szöveg szerkesztése"
 
 msgid "Choose Slot"
 msgstr ""
@@ -2339,9 +2249,17 @@ msgstr "Hie_rarchia"
 msgid "Attach Attributes"
 msgstr "Attribútumok szerkesztése"
 
+#, scheme-format
+msgid "Attribute attached: [~a]"
+msgstr ""
+
 #, fuzzy
 msgid "Detach Attributes"
 msgstr "Attribútumok szerkesztése"
+
+#, scheme-format
+msgid "Attribute detached: [~a]"
+msgstr ""
 
 #, fuzzy
 msgid "Show Attribute Value"
@@ -2416,43 +2334,44 @@ msgstr "Alkatrész dokumentáció"
 msgid "View documentation for selected component"
 msgstr ""
 
-msgid ""
-"Could not show documentation for selected component:\n"
-"\n"
+msgid "Lepton EDA Manuals"
 msgstr ""
 
-msgid "gEDA Manuals"
-msgstr ""
-
-msgid "View the front page of the gEDA documentation in a browser."
+msgid "View the front page of the Lepton EDA documentation in a browser."
 msgstr ""
 
 #, fuzzy
-msgid "gschem User Guide"
+msgid "lepton-schematic User Guide"
 msgstr "gschem _GYIK..."
 
-msgid "View the gschem User Guide in a browser."
+msgid "View the lepton-schematic User Guide in a browser."
 msgstr ""
 
 #, fuzzy
-msgid "gschem FAQ"
-msgstr "gschem _GYIK..."
+msgid "lepton-schematic FAQ"
+msgstr "Válaszd ki a menteni kívánt rajzot:"
 
-msgid "Frequently Asked Questions about using gschem."
+msgid "Frequently Asked Questions about using lepton-schematic."
 msgstr ""
 
-msgid "gEDA wiki"
+#, fuzzy
+msgid "Lepton EDA wiki"
+msgstr "gEDA kapcsolásirajz-szerkesztő"
+
+msgid "View the front page of the Lepton EDA wiki in a browser."
 msgstr ""
 
-msgid "View the front page of the gEDA wiki in a browser."
-msgstr ""
-
-msgid "About gschem"
+#, fuzzy
+msgid "About lepton-schematic"
 msgstr "Névjegy"
 
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr ""
+
+#, fuzzy
+msgid "Could not show documentation:"
+msgstr "Alkatrész dokumentáció"
 
 msgid "No documentation found"
 msgstr "Nem találtam dokumentumot"
@@ -2465,14 +2384,109 @@ msgstr ""
 msgid "~S is not a prefix key sequence."
 msgstr ""
 
+#, fuzzy
+#~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
+#~ msgstr "Érvénytelen méret [%d] szöveg méretként\n"
+
+#, fuzzy
+#~ msgid "Couldn't find init scm file [%1$s]"
+#~ msgstr "[%s] init scm fájl olvasása sikertelen.\n"
+
+#, fuzzy
+#~ msgid "Read init scm file [%1$s]"
+#~ msgstr "[%s] init scm fájl olvasása.\n"
+
+#, fuzzy
+#~ msgid "Failed to read init scm file [%1$s]"
+#~ msgstr "[%s] init scm fájl olvasása sikertelen.\n"
+
+#~ msgid "Repeat/none"
+#~ msgstr "Ismétlés/semmi"
+
+#~ msgid "Multiple Copy"
+#~ msgstr "Többszörös másolás"
+
+#~ msgid "Edit"
+#~ msgstr "Szerkesztés"
+
+#~ msgid "Rotate"
+#~ msgstr "Forgatás"
+
+#~ msgid "Mirror"
+#~ msgstr "Tükrözés"
+
+#~ msgid "Embed"
+#~ msgstr "Beágyazás"
+
+#~ msgid "Unembed"
+#~ msgstr "Beágyazás megszüntetése"
+
+#~ msgid "Update"
+#~ msgstr "Frissítés"
+
+#~ msgid "ShowHidden"
+#~ msgstr "Rejtettek megjelenítése"
+
+#~ msgid "Cut to clipboard"
+#~ msgstr "Kivágás a vágólapra"
+
+#~ msgid "Paste from clipboard"
+#~ msgstr "Beillesztés a vágólapról"
+
+#, fuzzy
+#~ msgid "Copy %i"
+#~ msgstr "Másolás az 1-be"
+
+#, fuzzy
+#~ msgid "Cut %i"
+#~ msgstr "Kivágás az 1-be"
+
+#, fuzzy
+#~ msgid "Paste %i"
+#~ msgstr "Beillesztés az 1-ből"
+
+#~ msgid "Line"
+#~ msgstr "Vonal"
+
+#~ msgid "Box"
+#~ msgstr "Téglalap"
+
+#~ msgid "Circle"
+#~ msgstr "Kör"
+
+#~ msgid "Arc"
+#~ msgstr "Ív"
+
+#~ msgid "Attach"
+#~ msgstr "Csatolás"
+
+#~ msgid "Detach"
+#~ msgstr "Leválasztás"
+
+#~ msgid "VisToggle"
+#~ msgstr "Láthatóság be/ki"
+
+#~ msgid "Picture"
+#~ msgstr "Kép"
+
+#~ msgid "Right click on the filename for more options..."
+#~ msgstr "Kattints a jobb egérgombbal a fájlnével a további opciókért..."
+
+#~ msgid "Menu/Cancel"
+#~ msgstr "Menü/mégsem"
+
+#~ msgid "Pan/Cancel"
+#~ msgstr "Középre/mégsem"
+
+#, fuzzy
+#~ msgid "gschem FAQ"
+#~ msgstr "gschem _GYIK..."
+
 #~ msgid "Really revert page?"
 #~ msgstr "Biztosan újratöltsem az oldalt?"
 
 #~ msgid "Filter:"
 #~ msgstr "Szűrő:"
-
-#~ msgid "Color"
-#~ msgstr "Szín"
 
 #, fuzzy
 #~ msgid "Edit Pin Type..."
@@ -2667,9 +2681,6 @@ msgstr ""
 
 #~ msgid "*unchanged*"
 #~ msgstr "*változatlan*"
-
-#~ msgid "Color Edit"
-#~ msgstr "Szín szerkesztése"
 
 #~ msgid "Discard Page"
 #~ msgstr "Rajz eldobása"
