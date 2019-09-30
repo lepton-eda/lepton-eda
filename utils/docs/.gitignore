@@ -6,7 +6,6 @@ latex
 *.1
 lepton-renum.html
 lepton-sch2pcb.html
-lepton-xyrs.html
 lepton-pcb_backannotate.html
 lepton-refdes_renum.html
 lepton-schdiff.html
