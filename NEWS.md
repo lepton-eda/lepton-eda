@@ -4,6 +4,14 @@ Recent Changes in Lepton EDA
 This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
+Notable changes in Lepton EDA 1.9.9
+-----------------------------------
+### General changes:
+
+- The utility `lepton-xyrs` has been removed from the distribution
+  since it has not been maintained or changed for many years and
+  it does not belong to schematic capture.
+
 Notable changes in Lepton EDA 1.9.8
 -----------------------------------
 ### Breaking changes:
