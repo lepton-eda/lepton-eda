@@ -1,5 +1,5 @@
 
-SUBDIRS = src schlas scripts xyrs include examples docs tests upcfg
+SUBDIRS = src schlas scripts include examples docs tests upcfg
 
 EXTRA_DIST = ChangeLog ChangeLog.tragesym-1.0 ChangeLog.gsch2pcb-1.0 \
 	ChangeLog-1.0 AUTHORS
@@ -12,8 +12,3 @@ ChangeLog: $(top_builddir)/stamp-git
 	  echo "WARNING: ChangeLog information not available from git" >&2 ; \
 	) > $@
 endif HAVE_GIT_REPO
-
-MOSTLYCLEANFILES = *.log core FILE *~
-CLEANFILES = *.log core FILE *~
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in ChangeLog
