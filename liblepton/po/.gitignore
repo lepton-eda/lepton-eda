@@ -12,5 +12,4 @@ Makevars.template
 stamp-po
 stamp-it
 stamp-i18n
-domain.mak
 *~

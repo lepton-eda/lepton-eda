@@ -195,7 +195,6 @@ AC_CONFIG_FILES([Makefile
 
                  liblepton/Makefile
                  liblepton/liblepton.pc
-                 liblepton/po/domain.mak
                  liblepton/po/Makefile.in
                  liblepton/data/Makefile
                  liblepton/docs/Makefile
