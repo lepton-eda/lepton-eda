@@ -12,6 +12,16 @@ Notable changes in Lepton EDA 1.9.9
   since it has not been maintained or changed for many years and
   it does not belong to schematic capture.
 
+### Changes in `lepton-netlist`:
+- Two new procedures, `page-list->schematic` and
+  `file-name-list->schematic` have been added to the `(lepton
+  schematic)` module to provide users with more intuitive way of
+  `<schematic>` record creation. The previously present procedure
+  `make-toplevel-schematic` is still there, and has been made an
+  alias of the latter. Its `netlist-mode` argument has been made
+  optional and is `'geda` by default.
+
+
 Notable changes in Lepton EDA 1.9.8
 -----------------------------------
 ### Breaking changes:
