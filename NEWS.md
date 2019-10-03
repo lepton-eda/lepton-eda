@@ -12,6 +12,9 @@ Notable changes in Lepton EDA 1.9.9
   since it has not been maintained or changed for many years and
   it does not belong to schematic capture.
 
+### Changes in `liblepton`:
+- Static gettext domain name is now used for translation files.
+
 ### Changes in `lepton-netlist`:
 - Two new procedures, `page-list->schematic` and
   `file-name-list->schematic` have been added to the `(lepton
