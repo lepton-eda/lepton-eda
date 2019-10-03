@@ -7,6 +7,7 @@ more information, please consult `git log` history.
 Notable changes in Lepton EDA 1.9.9
 -----------------------------------
 ### General changes:
+- The version of the `libleptonrenderer` library has been fixed.
 
 - The utility `lepton-xyrs` has been removed from the distribution
   since it has not been maintained or changed for many years and
