@@ -5,7 +5,6 @@ nobase_dist_scmdata_DATA = \
 	auto-refdes.scm \
 	auto-uref.scm \
 	list-keys.scm \
-	print-NB-attribs.scm \
 	auto-place-attribs.scm \
 	auto-place-netname.scm \
 	pcb.scm \
