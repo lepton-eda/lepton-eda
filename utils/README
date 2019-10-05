@@ -3,14 +3,6 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-README for utilities 
-
-- System Requirements
-
-        See liblepton/README for current system requirements.
-
-
-
 - Utilities
 
    gmk_sym		
