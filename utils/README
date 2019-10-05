@@ -1,135 +1,135 @@
 Lepton EDA utilities
 
-   gmk_sym		
+* gmk_sym
    Updated by Matthew Ettus, matt@ettus.com
 
-	Jerry's instructions below still work.  There are
-	additional features for the first input line.
-	See TL16C554AFN.txt for an example of the extended input
+        Jerry's instructions below still work.  There are
+        additional features for the first input line.
+        See TL16C554AFN.txt for an example of the extended input
 
-   Written by: Jerry O'Keefe, jerryok@pacbell.net 
+   Written by: Jerry O'Keefe, jerryok@pacbell.net
 
-	This is a simple utility to convert comma separated
-	descriptions into rectangular gschem symbols.  It should
-	be useful for easily creating memory, processors or
-	connector style parts. All pin positions are in normal pin
-	spacing (300).	Pin styles supported are line, dot-line,
-	and clock line. Pins can be placed on all sides of the
-	symbol's box. For example to place a dot-line style pin of
-	name INPUT at the normal pin 1 position of a IC would be:
+        This is a simple utility to convert comma separated
+        descriptions into rectangular gschem symbols.  It should
+        be useful for easily creating memory, processors or
+        connector style parts. All pin positions are in normal pin
+        spacing (300).	Pin styles supported are line, dot-line,
+        and clock line. Pins can be placed on all sides of the
+        symbol's box. For example to place a dot-line style pin of
+        name INPUT at the normal pin 1 position of a IC would be:
 
-		INPUT,1,dot,L,1
+                INPUT,1,dot,L,1
 
-	The size of the symbol's box is also in pin spacings. So
-	a symbol with 6 inputs and 6 outputs would typically
-	require a size of: 3 for width and 7 for height.
+        The size of the symbol's box is also in pin spacings. So
+        a symbol with 6 inputs and 6 outputs would typically
+        require a size of: 3 for width and 7 for height.
 
-	See the included 7474.txt and 8031.txt as example files.
+        See the included 7474.txt and 8031.txt as example files.
 
-	This utility is not strong on error checking and slotting
-	is not supported.
-		
-	gmk_sym typical use:
+        This utility is not strong on error checking and slotting
+        is not supported.
 
-		./gmk_sym 7474.txt >7474-3.sym
+        gmk_sym typical use:
 
-	gmk_sym is installed when make install is run.
+                ./gmk_sym 7474.txt >7474-3.sym
+
+        gmk_sym is installed when make install is run.
 
 
 
-   smash_megafile		
+* smash_megafile
    Written by: Mike Jarabek, mjarabek@istop.com
 
-	smash_megafile is a C program that will take a viewlogic
-	megafile and extract the contents into a directory of the same
-	name, with one file representing each element in the library.
-	This program should compile without any problems for anyone.
-	This program cannot create megafiles, it can just extract all
-	the contents. (Useful for say, extracting all the symbols from
-	a library...)  Be aware that megafiles from PC versions of
-	ViewDraw use PC end of line terminations, it may be necessary
-	to use a program like dos2unix to convert the resulting text
-	files... before doing useful things with them.
+        smash_megafile is a C program that will take a viewlogic
+        megafile and extract the contents into a directory of the same
+        name, with one file representing each element in the library.
+        This program should compile without any problems for anyone.
+        This program cannot create megafiles, it can just extract all
+        the contents. (Useful for say, extracting all the symbols from
+        a library...)  Be aware that megafiles from PC versions of
+        ViewDraw use PC end of line terminations, it may be necessary
+        to use a program like dos2unix to convert the resulting text
+        files... before doing useful things with them.
 
-	smash_megafile typical use:
+        smash_megafile typical use:
 
-		 ./smash_megafile megafile
+                 ./smash_megafile megafile
 
-	where megafile is the name of a viewlogic megafile whithout
-	any extensions.  The file megafile.lib and megafile.tbl must
-	exist in the same directory
+        where megafile is the name of a viewlogic megafile whithout
+        any extensions.  The file megafile.lib and megafile.tbl must
+        exist in the same directory
 
-	smash_megafile is installed when make install is run.
+        smash_megafile is installed when make install is run.
 
 
-   convert_sym
+* convert_sym
    Written by: Mike Jarabek, mjarabek@istop.com
 
-	convert_sym converts Viewlogic schematics and symbols into
-	geda format.
+        convert_sym converts Viewlogic schematics and symbols into
+        geda format.
 
-	This utility should be considered a work in progress.
-	Be warned, the program has a few limitations:
+        This utility should be considered a work in progress.
+        Be warned, the program has a few limitations:
 
-		1) Some text spacing may be lost due to the way that I
-		   extract the text from the viewlogic records
+                1) Some text spacing may be lost due to the way that I
+                   extract the text from the viewlogic records
 
-		2) Arcs in viewlogic are stored implicitly as a record
-		   where the arc passes through three points,
-		   the conversion from this format to geda's
-		   center/radius/start/stop notation is not exact,
-		   so some arcs may not render well.
+                2) Arcs in viewlogic are stored implicitly as a record
+                   where the arc passes through three points,
+                   the conversion from this format to geda's
+                   center/radius/start/stop notation is not exact,
+                   so some arcs may not render well.
 
-		3) Bubbles are drawn on pins that are negated.	I believe
-		   the code is correct, but have not tried all the
-		   end cases.
+                3) Bubbles are drawn on pins that are negated.	I believe
+                   the code is correct, but have not tried all the
+                   end cases.
 
-		4) Rotated and mirrored components may not show up correctly,
-		   but should be better now, thanks to patches from 
+                4) Rotated and mirrored components may not show up correctly,
+                   but should be better now, thanks to patches from
                    Thepthai Tabtieng <tabtieng@lsil.com>.
 
 
-	convert_sym (the C version) typical use:
+        convert_sym (the C version) typical use:
 
-		convert_sym -s viewlogic_symbol.1 > viewlogic_symbol-1.sym
+                convert_sym -s viewlogic_symbol.1 > viewlogic_symbol-1.sym
 
-		convert_sym viewlogic_schematic.1 > viewlogic_schematic-1.sch
+                convert_sym viewlogic_schematic.1 > viewlogic_schematic-1.sch
 
-	convert_sym is installed when make install is run.
+        convert_sym is installed when make install is run.
 
-	Thanks to Thepthai Tabtieng <tabtieng@lsil.com> for code to
-	support rotated and mirrored components, and a fix for
-	component instantiations.
-		
+        Thanks to Thepthai Tabtieng <tabtieng@lsil.com> for code to
+        support rotated and mirrored components, and a fix for
+        component instantiations.
 
-    Sarlacc (consists of sarlacc_schem and sarlacc_sym)
+
+* Sarlacc (consists of sarlacc_schem and sarlacc_sym)
     Written by: Matthew Ettus
 
-    Sarlacc is an OrCAD to gEDA format schematic converter. This software is 
+    Sarlacc is an OrCAD to gEDA format schematic converter. This software is
     beta, so it still has limitations.  To convert files do the following:
 
       * Go into ORCAD, load up your schematic, and save it as "SDT IV format".
         All of the versions of ORCAD should be able to do this.  This
-        is the old ORCAD 16 bit format.  In this process, your library parts 
+        is the old ORCAD 16 bit format.  In this process, your library parts
         will be converted to a new format.  Along the way, there is an
-        intermediate format which is all text.  It is probably kept in your 
-        tmp directory (C:\windows\temp ?), and it has a .src extension. 
-        Save this file too. 
-      * To convert schematics type:  sarlacc_schem orcadfile > gedafile.sch 
-      * To convert symbols type: sarlacc_sym orcadlibrary.src 
-          This will create individual .sym files for gschem. You will need to 
+        intermediate format which is all text.  It is probably kept in your
+        tmp directory (C:\windows\temp ?), and it has a .src extension.
+        Save this file too.
+      * To convert schematics type:  sarlacc_schem orcadfile > gedafile.sch
+      * To convert symbols type: sarlacc_sym orcadlibrary.src
+          This will create individual .sym files for gschem. You will need to
           put them somewhere gschem will find them
 
 
-    olib
+* olib
     Written by: Mario Pascucci
 
     olib is a simple automated converter from OrCAD(tm) v4 (in SDT version
     1.10) parts library (in ASCII dump format, through "decomp" utility)
     to gEDA component definition in .sym format file.
 
-    
-    refdes_renum
+
+* refdes_renum
     Dan McMahill
 
     refdes_renum reads a gschem schematic file or files and renumbers
@@ -137,11 +137,11 @@ Lepton EDA utilities
     starting with 1 and the old schematic file is replaced by the modified
     schematic file.
 
-    Run the program with no parameters or with --help to see usage 
+    Run the program with no parameters or with --help to see usage
     information.
 
 
-    tragesym
+ * tragesym
     Werner Hoch
 
     tragesym is a symbol creator for gEDA/gaf.  The aim of this python
@@ -149,32 +149,32 @@ Lepton EDA utilities
 
     Program features:
 
-    * create pins and arrange their elements (clocksign, dot, type, pinnumber, 
+    * create pins and arrange their elements (clocksign, dot, type, pinnumber,
       label)
     * sort pins alphabetical and numerical
     * swap words of pinlabels if wished
     * draw negation lines on the labels
     * rotate pinlabels if wished
     * some syntax check to the input file
- 
-    Please see the README.tragesym and ChangeLog.tragesym for more info.  
+
+    Please see the README.tragesym and ChangeLog.tragesym for more info.
     Be sure to look at the examples in examples/tragesym.  There you will
     find the template.src file referenced in the README.tragesym file.
 
 
-    pads_backannotate
+* pads_backannotate
     Dan McMahill
 
-    A perl program which implements backannotation from Pads PowerPCB 
+    A perl program which implements backannotation from Pads PowerPCB
     board layouts to gschem schematics.
-   
+
     Please see the pads_backannotate.[dvi|html|ps|pdf] documentation for more
     details.
 
-   
-    gsch2pcb 
+
+    gsch2pcb
     Bill Wilson
-  
+
     gsch2pcb is conceptually based on the gschem2pcb shell script
     distributed with gnetlist, but additionally handles multiple
     schematics, handles element file footprints, and removes pc board
@@ -185,7 +185,7 @@ Lepton EDA utilities
     examples/gsch2pcb/project.sample for an example of a project file.
 
 
-    garchive
+* garchive
     Stuart Brorson
 
     This program is used to create a gEDA design archive.  It operates
@@ -194,12 +194,12 @@ Lepton EDA utilities
     extract mode it extracts the files from the archive and places them in
     the local dir.
 
-    garchive requires python to run.  
+    garchive requires python to run.
     Run:  garchive -h  for help information.
- 
-    
-    schdiff
+
+
+* schdiff
     Alan Somers
-    This script is used to produce graphical diffs of gschem files.  It 
+    This script is used to produce graphical diffs of gschem files.  It
     integrates with Git, Mercurial, and Subversion.  It requires ImageMagick
     to run.  Run schdiff -h for usage instructions.
