@@ -129,10 +129,10 @@ Lepton EDA utilities
     to gEDA component definition in .sym format file.
 
 
-* refdes_renum
+* lepton-refdes_renum
     Dan McMahill
 
-    refdes_renum reads a gschem schematic file or files and renumbers
+    lepton-refdes_renum reads a gschem schematic file or files and renumbers
     all reference designators.  The reference designators are numbered
     starting with 1 and the old schematic file is replaced by the modified
     schematic file.
@@ -141,10 +141,10 @@ Lepton EDA utilities
     information.
 
 
- * tragesym
+ * lepton-tragesym
     Werner Hoch
 
-    tragesym is a symbol creator for gEDA/gaf.  The aim of this python
+    lepton-tragesym is a symbol creator for gEDA/gaf.  The aim of this python
     script is to make it easier (and faster) to create symbols for gEDA.
 
     Program features:
@@ -185,7 +185,7 @@ Lepton EDA utilities
     examples/gsch2pcb/project.sample for an example of a project file.
 
 
-* garchive
+* lepton-archive
     Stuart Brorson
 
     This program is used to create a gEDA design archive.  It operates
@@ -194,12 +194,12 @@ Lepton EDA utilities
     extract mode it extracts the files from the archive and places them in
     the local dir.
 
-    garchive requires python to run.
-    Run:  garchive -h  for help information.
+    lepton-archive requires python to run.
+    Run:  lepton-archive -h  for help information.
 
 
-* schdiff
+* lepton-schdiff
     Alan Somers
     This script is used to produce graphical diffs of gschem files.  It
     integrates with Git, Mercurial, and Subversion.  It requires ImageMagick
-    to run.  Run schdiff -h for usage instructions.
+    to run.  Run lepton-schdiff -h for usage instructions.
