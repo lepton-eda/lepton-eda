@@ -64,9 +64,6 @@ The major components of the Lepton suite are:
 Installation
 ============
 
-The information in this section is intended to supplement the
-information in the `INSTALL` file.
-
 Dependencies
 ------------
 
@@ -173,8 +170,6 @@ And install it (if you used a `--prefix` outside your $HOME directory,
 you may need to run this as root):
 
     make install
-
-For more information on installing Lepton, see the `INSTALL` document.
 
 Installation from the git repository
 ------------------------------------

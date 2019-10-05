@@ -7,13 +7,6 @@ GPL Electronic Design Automation
 README for symbols 
 
 
-- Installation
-
-	See the toplevel INSTALL for more instructions on how to install 
-	these symbols
-
-
-
 - System Requirements
 
 	See liblepton/README or gschem/README for system requirements.
