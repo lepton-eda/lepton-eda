@@ -1,9 +1,4 @@
-gEDA
-
-GPL Electronic Design Automation
-------------------------------------------------------------------------------
-
-- Utilities
+Lepton EDA utilities
 
    gmk_sym		
    Updated by Matthew Ettus, matt@ettus.com
