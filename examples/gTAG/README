@@ -10,25 +10,24 @@ to your circuits which talks JTAG.
 
 Copyright
 ---------
-These schematics is (C) by Stefan Petersen (spe@stacken.kth.se) and 
-released under GPL (see the attached file COPYING). GPL is mainly 
-written for software, ie intellectual property in electronic form. 
+These schematics is (C) by Stefan Petersen (spe@stacken.kth.se) and
+released under GPL (see the attached file COPYING). GPL is mainly
+written for software, ie intellectual property in electronic form.
 By making this schematic an intellectual property in electronic
 form gTAG schematics can be covered by GPL.
 
 How?
 ----
 These schematics are made with gschem and netlists are then generated
-with gnetlist. Both gschem and gnetlist are part of gEDA 
+with gnetlist. Both gschem and gnetlist are part of gEDA
 (http://www.geda-project.org/).
 
 Files
 -----
 The distribution of the schematics of gTAG should consist of:
 * README - this file.
-* COPYING - GPL copyright notice.
 * crdist.sh - shell script used to generate the tar.gz.
-* ChangeLog - tries to scribble down what has changed between versions.
+* ChangeLog-1.0 - tries to scribble down what has changed between versions.
 * Four component symbols:
   - 7414-1.sym - Original 7414 from gschem without power attributes.
   - max882.sym - 5-to-3.3 V converter.
@@ -36,12 +35,11 @@ The distribution of the schematics of gTAG should consist of:
   - sn75240pw.sym - Surge supressor for USB
   - copyleft.sym - Symbol with GPL text for all schematics.
 * Five schematics with four symbols:
-  - gTAG.sch.sch - Toplevel schematic for gTAG
+  - gTAG.sch - Toplevel schematic for gTAG
   - gTAG-jtagio.[sym/sch]
   - gTAG-ucont.[sym/sch]
   - gTAG-consio.[sym/sch]
   - gTAG-psu.[sym/sch]
 * gEDA rc-files for this project:
-  - commonrc - contains common declarations for both gschem and gnetlist
-  - gnetlistrc - gnetlist specific and and calls commonrc
-  - gschemrc   - gschem specific and and calls commonrc
+  - geda.conf - Netlister settings.
+  - gafrc     - Symbols and subschematics search paths.
