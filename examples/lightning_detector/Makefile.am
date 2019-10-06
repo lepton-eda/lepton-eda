@@ -1,8 +1,6 @@
 exampledir = $(docdir)/examples/lightning_detector/
 
 nobase_example_DATA = \
-	bom \
-	bom.readme \
 	lightning.net \
 	lightning.pcb \
 	lightning.sch \
