@@ -29,6 +29,7 @@
 
 (define-module (lepton library component)
   #:use-module (ice-9 ftw)
+  #:use-module (srfi srfi-9)
   #:use-module (geda core gettext)
   #:use-module (geda log)
   #:use-module (geda os)
@@ -39,27 +40,45 @@
             component-library-command
             component-library-funcs
             component-libraries
-            reset-component-library))
+            reset-component-library)
+
+  #:export-syntax (make-symbol-library
+                   symbol-library?
+                   symbol-library-name set-symbol-library-name!
+                   symbol-library-path set-symbol-library-path!))
+
+(define-record-type <symbol-library>
+  (make-symbol-library name path)
+  symbol-library?
+  (name symbol-library-name set-symbol-library-name!)
+  (path symbol-library-path set-symbol-library-path!))
 
 (define %component-libraries '())
 (define (component-libraries)
   %component-libraries)
 
 (define (add-component-library! path name)
-  (set! %component-libraries
-        (assoc-set! %component-libraries path name))
-  (%component-library path name))
+  (define (library-path-exists? path)
+    (let loop ((libs %component-libraries))
+      (and (not (null? libs))
+           (or (string= path (symbol-library-path (car libs)))
+               (loop (cdr libs))))))
+
+  (if (library-path-exists? path)
+      (log! 'message (_ "Library at ~S has been already added.") path)
+      (begin
+        (set! %component-libraries
+              (cons (make-symbol-library name path)
+                    %component-libraries))
+        (%component-library path name))))
 
 (define* (component-library path #:optional name)
   ;; Expand environment variables here, too.  They are expanded
   ;; when the procedure is called in component-library-search, but
   ;; in other cases it is not so.
   (let* ((path (expand-env-variables path))
-         (lib (assoc-ref %component-libraries path))
          (name (or name path)))
-    (if lib
-        (log! 'message (_ "Skip already added path ~S.") path)
-        (add-component-library! path name))))
+    (add-component-library! path name)))
 
 (define component-library-command %component-library-command)
 (define component-library-funcs %component-library-funcs)
