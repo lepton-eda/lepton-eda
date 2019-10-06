@@ -29,6 +29,7 @@
 
 (define-module (lepton library component)
   #:use-module (ice-9 ftw)
+  #:use-module (geda log)
   #:use-module (geda os)
   #:use-module (lepton core rc)
 
@@ -38,10 +39,27 @@
             component-library-funcs
             reset-component-library))
 
-(define component-library %component-library)
+(define %component-libraries '())
+(define (component-libraries)
+  %component-libraries)
+
+(define (add-component-library! path name)
+  (set! %component-libraries
+        (assoc-set! %component-libraries path name))
+  (%component-library path name))
+
+(define* (component-library path #:optional name)
+  (let ((lib (assoc-ref %component-libraries path))
+        (name (or name path)))
+    (if lib
+        (log! 'message "Skip already added path ~S." path)
+        (add-component-library! path name))))
+
 (define component-library-command %component-library-command)
 (define component-library-funcs %component-library-funcs)
-(define reset-component-library %reset-component-library)
+(define (reset-component-library)
+  (set! %component-libraries '())
+  (%reset-component-library))
 
 (define* (component-library-search rootdir  #:optional (prefix ""))
   "Add all symbol libraries found below ROOTDIR to be searched for
