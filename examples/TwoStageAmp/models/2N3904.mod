@@ -3,4 +3,4 @@
 +               Cjc=3.638p Mjc=.3085 Vjc=.75 Fc=.5 Cje=4.493p Mje=.2593 Vje=.75
 +               Tr=239.5n Tf=301.2p Itf=.4 Vtf=4 Xtf=2 Rb=10)
 *               Fairchild        pid=23          case=TO92
-*               88-09-08 bam    creation 
+*               88-09-08 bam    creation
