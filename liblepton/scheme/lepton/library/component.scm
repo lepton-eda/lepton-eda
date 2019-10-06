@@ -29,6 +29,7 @@
 
 (define-module (lepton library component)
   #:use-module (ice-9 ftw)
+  #:use-module (geda core gettext)
   #:use-module (geda log)
   #:use-module (geda os)
   #:use-module (lepton core rc)
@@ -37,6 +38,7 @@
             component-library-search
             component-library-command
             component-library-funcs
+            component-libraries
             reset-component-library))
 
 (define %component-libraries '())
@@ -52,7 +54,7 @@
   (let ((lib (assoc-ref %component-libraries path))
         (name (or name path)))
     (if lib
-        (log! 'message "Skip already added path ~S." path)
+        (log! 'message (_ "Skip already added path ~S.") path)
         (add-component-library! path name))))
 
 (define component-library-command %component-library-command)
