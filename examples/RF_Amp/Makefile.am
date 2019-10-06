@@ -1,9 +1,6 @@
-
-SUBDIRS = model sym
-
 exampledir = $(docdir)/examples/RF_Amp/
 
-example_DATA = \
+nobase_example_DATA = \
 	5980-2396E.pdf \
 	MSA-2643.cir \
 	MSA-2643.sch \
@@ -13,9 +10,21 @@ example_DATA = \
 	Q2.sch \
 	README \
 	Simulation.cmd \
-	gafrc
+	gafrc \
+	model/BJTM1_Q1.mod \
+	model/BJTM1_Q2.mod \
+	model/DiodeM1_Q1.mod \
+	model/DiodeM1_Q2.mod \
+	model/DiodeM2_Q1.mod \
+	model/DiodeM2_Q2.mod \
+	model/DiodeM3_Q1.mod \
+	model/DiodeM3_Q2.mod \
+	sym/BJT_Model.sym \
+	sym/Q_Model.sym \
+	sym/spice-subcircuit-IO-1.sym \
+	sym/spice-subcircuit-LL-1.sym
 
-EXTRA_DIST = $(example_DATA)
+EXTRA_DIST = $(nobase_example_DATA)
 
 MOSTLYCLEANFILES = gschem.log *~
 CLEANFILES = gschem.log *~
