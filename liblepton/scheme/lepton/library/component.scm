@@ -51,8 +51,12 @@
   (%component-library path name))
 
 (define* (component-library path #:optional name)
-  (let ((lib (assoc-ref %component-libraries path))
-        (name (or name path)))
+  ;; Expand environment variables here, too.  They are expanded
+  ;; when the procedure is called in component-library-search, but
+  ;; in other cases it is not so.
+  (let* ((path (expand-env-variables path))
+         (lib (assoc-ref %component-libraries path))
+         (name (or name path)))
     (if lib
         (log! 'message (_ "Skip already added path ~S.") path)
         (add-component-library! path name))))
