@@ -23,7 +23,7 @@ example_DATA = \
 	gTAG.bom \
 	gTAG.ps \
 	gTAG.sch \
-	gnetlistrc \
+	geda.conf \
 	max882.sym \
 	sn75240pw.sym \
 	README
