@@ -29,6 +29,8 @@
 
 (define-module (lepton library component)
   #:use-module (ice-9 ftw)
+  #:use-module (ice-9 match)
+  #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (geda core gettext)
   #:use-module (geda log)
@@ -40,7 +42,8 @@
             component-library-command
             component-library-funcs
             component-libraries
-            reset-component-library)
+            reset-component-library
+            absolute-component-name)
 
   #:export-syntax (make-symbol-library
                    symbol-library?
@@ -64,13 +67,73 @@
            (or (string= path (symbol-library-path (car libs)))
                (loop (cdr libs))))))
 
+  (define (normalize-path path)
+    (if (absolute-file-name? path)
+        path
+        (string-append (getcwd)
+                       file-name-separator-string
+                       path)))
+
   (if (library-path-exists? path)
       (log! 'message (_ "Library at ~S has been already added.") path)
       (begin
         (set! %component-libraries
-              (cons (make-symbol-library name path)
+              (cons (make-symbol-library name (normalize-path path))
                     %component-libraries))
         (%component-library path name))))
+
+
+(define (component-library-symbol-names path)
+  (define symbol-files
+    (match-lambda
+      ;; Pick up only flat files.
+      ((name stat)
+       (and (string-suffix-ci? ".sym" name) name))
+      ;; Filter anything other.
+      (_ #f)))
+
+  (define directory-symbols
+    (match-lambda
+      ;; The path must be directory.
+      ((name stat children ...)
+       (filter-map symbol-files children))
+      ;; Return empty list if something went wrong.
+      (_ '())))
+
+  (define (enter? name stat) #t)
+
+  ;; Use the 'stat' procedure here to allow traversing of symbolic
+  ;; links.
+  (let ((tree (file-system-tree path enter? stat)))
+    (if tree
+        (directory-symbols tree)
+        '())))
+
+
+(define (lookup-in-component-library path symbol-name)
+  (let loop ((symbol-names (component-library-symbol-names path)))
+    (and (not (null? symbol-names))
+         (or (string= symbol-name (car symbol-names))
+             (loop (cdr symbol-names))))))
+
+
+(define (lookup-in-component-libraries symbol-name)
+  (let loop ((libs (component-libraries)))
+    (and (not (null? libs))
+         (let ((lib (car libs)))
+           (if (lookup-in-component-library (symbol-library-path lib)
+                                            symbol-name)
+               lib
+               (loop (cdr libs)))))))
+
+
+(define (absolute-component-name component-basename)
+  (let ((lib (lookup-in-component-libraries component-basename)))
+    (and lib
+         (string-append (symbol-library-path lib)
+                        file-name-separator-string
+                        component-basename))))
+
 
 (define* (component-library path #:optional name)
   ;; Expand environment variables here, too.  They are expanded
