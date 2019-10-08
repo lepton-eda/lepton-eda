@@ -1,7 +1,3 @@
-## $Id$
-##
-## Process this file with automake to produce Makefile.in
-
 bin_SCRIPTS = lepton-refdes_renum \
 	      lepton-tragesym lepton-pcb_backannotate lepton-archive lepton-symfix \
 	      lepton-schdiff
@@ -20,7 +16,4 @@ lepton-archive: lepton-archive.in
 	$(do_subst) < $(srcdir)/$@.in > $@
 	chmod +x $@
 
-MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
 CLEANFILES = lepton-archive
-DISTCLEANFILES = *.log core FILE tmp *~
-MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in
