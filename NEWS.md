@@ -14,6 +14,10 @@ Notable changes in Lepton EDA 1.9.10
   using this prefix in functions like `component-library` and
   `source-library`.
 
+### Changes in `lepton-netlist`:
+- Fixed crashes on power symbols (the symbols having one pin and
+  no *"refdes="* attribute) having a *"net="* attribute but no
+  *"pinnumber=* attribute attached to its pin.
 
 Notable changes in Lepton EDA 1.9.9
 -----------------------------------
