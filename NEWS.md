@@ -4,6 +4,17 @@ Recent Changes in Lepton EDA
 This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
+Notable changes in Lepton EDA 1.9.10
+------------------------------------
+### Scheme API changes
+- Apart from expanding environment variables, the function
+  `expand-env-variables` from the `(geda os)` module now replaces
+  **~/** (user home directory prefix) in file names in order to
+  make such names understandable for other functions.  This allows
+  using this prefix in functions like `component-library` and
+  `source-library`.
+
+
 Notable changes in Lepton EDA 1.9.9
 -----------------------------------
 ### General changes:
