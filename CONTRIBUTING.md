@@ -89,12 +89,14 @@ Some general suggestions:
 
 - Provide updated tests and documentation
 
+- Do not leave trailing spaces in edited files
+
 When writing C code:
 
 - Do not use C++-style comments `// ...`; use C-style `/* ... */`
   comments instead.
 
-- This set of options to GNU `indent` approximates the gEDA C
+- This set of options to GNU `indent` approximates the lepton-eda C
   indentation style: (note the `-nut` option, which disables
   the use of tab characters: please use spaces for code indentation)
 
@@ -130,3 +132,6 @@ When writing Makefile code:
 - Do not use `$<` ("implied source") variable in explicit rules.
   In implementations of `make` other than GNU, it may be defined only
   in implicit (i.e. suffix-transformation) rules.
+
+- When defining a makefile variable that contain a long list of files,
+put each file name on its own line.
