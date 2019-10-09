@@ -161,7 +161,7 @@ components, naming them with an optional PREFIX."
          (lambda (filename statinfo flags)
            (cond
             ((eq? 'invalid-stat flags)
-             (error "Invalid path ~S." filename))
+             (log! 'critical "Invalid path ~S." filename))
             ((or (eq? 'directory-not-readable flags)
                  (eq? 'symlink flags))
              (format #t "Warning: Cannot access ~S.\n" filename))
