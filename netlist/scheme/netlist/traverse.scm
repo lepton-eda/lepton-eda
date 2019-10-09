@@ -249,7 +249,7 @@
           (unless quiet-mode
             (log! 'message (_ "Loading subcircuit ~S.") filename))
           (file->page filename 'new-page))
-        (log! 'error (_ "Failed to load subcircuit ~S.") name))))
+        (log! 'critical (_ "Failed to load subcircuit ~S.") name))))
 
 
 (define (create-schematic-component-refdes component)

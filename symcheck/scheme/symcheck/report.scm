@@ -49,7 +49,7 @@
          (check-log! 'critical (format #f (_ "ERROR: ~A") msg)))
        '(0 0 1 0))
       (_
-       (check-log! 'error (format #f (_ "Unrecognized info: ~A\n") blame))
+       (check-log! 'critical (format #f (_ "Unrecognized info: ~A\n") blame))
        '(0 0 0 1))))
 
   (map report (or (object-blames object) '())))

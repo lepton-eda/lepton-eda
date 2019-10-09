@@ -99,9 +99,9 @@ code. Use set-library-contents! instead."
                                                         file-name-separator-string
                                                         expanded-path)))
             (and
-             (log! 'error (_ "Invalid path ~S or source not readable.\n") path)
+             (log! 'critical (_ "Invalid path ~S or source not readable.\n") path)
              #f)))
-      (and (log! 'error (_ "Source library path must be a string.\n")) #f)))
+      (and (log! 'critical (_ "Source library path must be a string.\n")) #f)))
 
 
 (define (reset-source-library)
@@ -160,7 +160,7 @@ been found."
                (if (file-readable? full-name)
                    full-name
                    (begin
-                     (log! 'error (_ "File ~S is not readable.\n")
+                     (log! 'critical (_ "File ~S is not readable.\n")
                            full-name)
                      (loop (cdr paths)))))
              (loop (cdr paths))))))
