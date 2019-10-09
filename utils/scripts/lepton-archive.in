@@ -83,8 +83,11 @@ exec @GUILE@ -s "$0" "$@"
                (geda os)
                (geda page)
                (lepton file-system)
+               (lepton library)
                (lepton library component)
-               (netlist page)))
+               (netlist page)
+               (netlist schematic)
+               (netlist schematic-component)))
 
 
 ;;; Helper functions and data structures.
@@ -452,6 +455,7 @@ Continue? [y/N] "
 
 
 (define (copy-to-dir filename directory-name)
+  (debug-format "Copy ~S => ~S" filename directory-name)
   (let ((destination (make-absolute-filename directory-name
                                              (basename filename))))
     (if (directory? filename)
@@ -552,77 +556,6 @@ component names used."
 
     (delete-duplicates (append-map schematic-symbols schematic-file-list)))
 
-;;; FIXME: here must be the list of all resources, namely:
-;;; - bitmaps
-;;; - files listed in source= attributes -- they should go to the
-;;;   schematic file list
-;;; - files listed in file= attributes
-;;; - files listed in model-file= attributes (?)
-(define (create-spice-file-list schematic-file-list)
-    "This function opens each .sch file found and loops through
-it. While looping, it looks for SPICE files (typically lurking in
-lines like \"file=/path/to/spice/models/circuit.cir\". When it
-finds a SPICE file, it sticks it in the spice-file-list. The SPICE
-file names found are returned as absolute paths."
-    (define (page-contents->file-attrib-value-list page)
-      (append-map
-       (lambda (c)
-         (filter-map
-          (lambda (a) (and (string= (attrib-name a) "file") (attrib-value a)))
-          (object-attribs c)))
-       (filter component? (page-contents page))))
-
-    (define (file-attrib-filenames schematic-filename)
-      (let ((schematic (filename->page (make-absolute-filename project-directory
-                                                               (basename schematic-filename)))))
-        (page-contents->file-attrib-value-list schematic)))
-
-    ;;  Open file in user dir.
-    ;;  This needs to be more sophosticated
-    ;; spice-file = os.path.normpath(spice-file)
-    ;; (set! spice-file (os.path.abspath spice-file))
-    ;; (debug-format "Found ~S in schematic ~S." spice-file schematic-filename)
-    (delete-duplicates (append-map file-attrib-filenames schematic-file-list)))
-
-(define (page->file page filename)
-  (with-output-to-file filename
-    (lambda () (display (page->string page)))))
-
-(define (update-schematic-files schematic-file-list temp-dir)
-  "This function opens each .sch file found and loops through it.
-It stuffs each file line found into a list of lines.  While
-looping, it looks for SPICE files (typically lurking in lines like
-\"file=/path/to/spice/models/circuit.cir\" .  When it finds a
-SPICE file, it substitutes the line found with
-\"file=./gschem-files/circuit.cir\".  After running through the
-file, it closes the file, re-opens it as write-only, and outputs
-the changed file."
-  (define (canonicalize-spice-filename spice-filename)
-    (make-absolute-filename cache-directory
-                            (basename spice-filename)))
-
-  (define (update-schematic schematic-filename)
-    ;; Open file in user dir.
-    (let* ((tempdir-filename (make-absolute-filename temp-dir
-                                                     (basename schematic-filename)))
-           (page (filename->page tempdir-filename))
-           (file-attribs
-            (append-map
-             (lambda (c)
-               (filter-map
-                (lambda (a) (and (string= (attrib-name a) "file") a))
-                (object-attribs c)))
-             (filter component? (page-contents page)))))
-      (for-each
-       (lambda (a)
-         (set-attrib-value! a
-                            (canonicalize-spice-filename (attrib-value a))))
-       file-attribs)
-
-      (page->file page tempdir-filename)))
-
-  (for-each update-schematic schematic-file-list))
-
 
 (define (save-symbols symbol-file-list archive-directory)
   "Copies symbols in SYMBOL-FILE-LIST to ARCHIVE-DIRECTORY."
@@ -636,31 +569,72 @@ the changed file."
    symbol-file-list))
 
 
-(define (save-spice-files spice-file-list archive-directory)
-  "This function loops through all SPICE files in the list, finds
-the corresponding file somewhere in the directory tree, and then
-copies the file into the local archive."
-   (define (copy-spice-file spice-file-name)
-     (debug-format "Save SPICE file ~S"
-                   spice-file-name
-                   archive-directory)
-     (system* "cp"
-              spice-file-name
-              (make-absolute-filename archive-directory
-                                      (basename spice-file-name))))
-
-  (for-each copy-spice-file spice-file-list))
-
-
 (define (update-rc dir)
   "Updates gafrc by resetting component libraries and adding a new
 symbol cache directory."
   (let ((port (open (make-absolute-filename dir (basename gafrc))
                     (logior O_WRONLY O_APPEND))))
     (format port
-            "\n(reset-component-library)\n(component-library ~S)\n"
+            "
+(reset-component-library)
+(component-library ~S)
+(reset-source-library)
+(source-library ~S)
+"
+            cache-directory
             cache-directory)
     (close port)))
+
+(define (flatten-tree ls)
+  (let loop ((result '())
+             (ls ls))
+    (if (null? ls)
+        result
+        (let ((x (car ls))
+              (rest (cdr ls)))
+          (loop
+           (if (list? x)
+               (append (flatten-tree x) result)
+               (cons x result))
+           (cdr ls))))))
+
+
+(define (source-library-filename filename)
+  (let ((source-filename (get-source-library-file filename)))
+    (and source-filename
+         (file-exists? source-filename)
+         source-filename)))
+
+
+(define (schematic-page-filenames toplevel-schematics)
+  (filter-map
+   (lambda (sch) (let ((cwd-filename (string-append (getcwd)
+                                               file-name-separator-string
+                                               sch)))
+              (and (file-exists? cwd-filename) cwd-filename)))
+   toplevel-schematics))
+
+
+(define (subschematic-page-filenames schematic)
+  (let ((files (delete-duplicates
+                (flatten-tree (schematic-name-tree schematic)))))
+    (filter-map source-library-filename files)))
+
+
+(define (schematic-pages schematic)
+  (map filename->page (subschematic-page-filenames schematic)))
+
+
+(define (save-schematics-and-sources toplevel-schematics temp-dir cache-dir)
+  (let* ((schematic (file-name-list->schematic toplevel-schematics))
+         (subschematic-filenames (subschematic-page-filenames schematic))
+         (schematic-sources (filter-map (lambda (c) (schematic-component-attribute c 'file))
+                                        (schematic-components* schematic)))
+         (source-filenames (filter-map source-library-filename schematic-sources)))
+    (for-each (lambda (sch) (copy-to-dir sch temp-dir))
+              (schematic-page-filenames toplevel-schematics))
+    (for-each (lambda (sch) (copy-to-dir sch cache-dir)) subschematic-filenames)
+    (for-each (lambda (cir) (copy-to-dir cir cache-dir)) source-filenames)))
 
 
 ;;; Archiver.
@@ -689,18 +663,10 @@ symbol cache directory."
          ;; Now run through schematic-file-list and create list of
          ;; symbols.  Symbols are returned with only base file
          ;; name (i.e. no path).
-         (symbol-file-list (create-symbol-file-list schematic-file-list))
-         ;; Now run through schematic-file-list and create list of
-         ;; pointers to spice files ("file" attributes).
-         ;; spice-files are returned using absolute paths.
-         (spice-file-list (create-spice-file-list schematic-file-list)))
+         (symbol-file-list (create-symbol-file-list schematic-file-list)))
 
     ;; Copy all files over to temporary directory.
     (for-each (cut copy-to-dir <> tmpdir) archive-file-list)
-
-    ;; Now run through schematic-file-list and update .sch file by stuffing names
-    ;; of SPICE files into them.  Save the resulting .sch files in the /tmp directory.
-    (update-schematic-files schematic-file-list tmpdir)
 
     ;; Add cache directory for symbols.  Stick symbol & SPICE
     ;; files into it.
@@ -710,7 +676,9 @@ symbol cache directory."
       (mkdir* tmp/cache-directory)
 
       (save-symbols symbol-file-list tmp/cache-directory)
-      (save-spice-files spice-file-list tmp/cache-directory))
+      (save-schematics-and-sources schematic-file-list
+                                   tmpdir
+                                   tmp/cache-directory))
 
     ;; Now create tar file.  We copy remaining files over to /tmp, and then tar them
     ;; all up using a local, relative file prefix.
