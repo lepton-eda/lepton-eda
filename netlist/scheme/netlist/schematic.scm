@@ -23,6 +23,8 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
+  #:use-module (sxml match)
+  #:use-module (sxml transform)
   #:use-module (netlist attrib compare)
   #:use-module (netlist config)
   #:use-module (netlist page)
@@ -55,6 +57,7 @@
             schematic-package-names
             schematic-component-refdes->string
             schematic-tree
+            schematic-name-tree
             schematic-components*))
 
 (define-record-type <schematic>
@@ -123,6 +126,76 @@
 
   `(*TOP* (package "TOPLEVEL"
                    ,@(map page->sxml toplevel-pages))))
+
+
+(define (schematic-sxml->schematic-name-tree tree)
+  (define (page-name p)
+    (and (page? p)
+         (basename (page-filename p))))
+
+  (define (sxml-page-name page)
+    (sxml-match
+     page
+     ((page (@ (page-name ,name)) ,deps ...) name)))
+
+  (define (sxml-page-prerequisites page)
+    (sxml-match page ((page (@ (prerequisites ,pr)) ,deps ...) pr)))
+
+  ;; Package prerequisites are the names of its subcircuit pages
+  ;; defined in its source= attribs and the subcircuit names the
+  ;; pages depend on, i.e. their prerequisites. Here we append all
+  ;; that info and remove duplicates.
+  (define (package-prerequisites pages)
+    (append (map sxml-page-name pages)
+             (append-map sxml-page-prerequisites pages)))
+
+  (define (sxml-package-name package)
+    (sxml-match
+     package
+     ((package (@ (package-name ,name)) ,deps ...) name)))
+
+  ;; SXML package-name attribute is #f if package is not composite
+  ;; and has no file= attribute attached to it, so we filter such
+  ;; packages out.
+  (define (page-prerequisites packages)
+    (filter-map sxml-package-name packages))
+
+  (define (sxml-package-rules package)
+    (sxml-match
+     package
+     ((package (@ (rules ,r)) ,deps ...) `(,r))))
+
+  (define (page-rules packages)
+    (filter (lambda (x) (not (null? x)))
+
+    (append-map sxml-package-rules packages)))
+
+  (define (sxml-page-rules page)
+    (sxml-match
+     page
+     ((page (@ (rules ,r)) ,deps ...) r)))
+
+  (define (package-rules pages)
+         `(,@(package-prerequisites pages) ,@(append-map sxml-page-rules pages)))
+
+  (pre-post-order
+   tree
+   `((*TOP* . ,(lambda (x . t) (sxml-package-rules (car t))))
+     (page . ,(lambda (x pg . deps)
+                `(page (@ (page-name ,(page-name pg))
+                          (prerequisites ,(page-prerequisites deps))
+                          (rules ,(page-rules deps))))))
+     (package . ,(lambda (x pk . deps)
+                   `(package (@ (package-name #f)
+                                  (rules ,(package-rules deps))))))
+     (*text* . ,(lambda (x t) t))
+     (*default* . ,(lambda (x . t) t)))))
+
+
+(define (schematic-name-tree schematic)
+  "Recursively returns the names of all subschematic pages in SCHEMATIC."
+  (schematic-sxml->schematic-name-tree (schematic-tree schematic)))
+
 
 ;;; Gets non unique set of package refdeses.
 ;;; Backward compatibility procedure for legacy backends.
@@ -265,5 +338,8 @@ default."
   (schematic->sxml (schematic-components schematic)
                    (schematic-toplevel-pages schematic)))
 
+;;; This is a work-around to allow the 'schematic-components'
+;;; syntax-transformer to be used in toplevel code.  This is known
+;;; Guile bug appearing at least in the versions up to 2.2.
 (define (schematic-components* schematic)
   (schematic-components schematic))
