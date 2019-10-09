@@ -20,9 +20,7 @@ nobase_example_DATA = \
 	model/DiodeM3_Q1.mod \
 	model/DiodeM3_Q2.mod \
 	sym/BJT_Model.sym \
-	sym/Q_Model.sym \
-	sym/spice-subcircuit-IO-1.sym \
-	sym/spice-subcircuit-LL-1.sym
+	sym/Q_Model.sym
 
 EXTRA_DIST = $(nobase_example_DATA)
 

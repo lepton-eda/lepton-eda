@@ -2,12 +2,12 @@
 * Begin .SUBCKT model         *
 * spice-sdb ver 2.10.2007     *
 *******************************
-.SUBCKT Q2_MSA26F 5 4 6 
+.SUBCKT Q2_MSA26F 5 4 6
 *vvvvvvvv  Included SPICE model from model/DiodeM1_Q2.mod vvvvvvvv
 * This is a diode model used in the Agilent MSA-26 model
 * documented in 5980-2496E.pdf.
 * Model entered 3.30.2003 by SDB
-.model DIODEM1_Q2   D(IS=5.62e-17 N=1 CJO=9.676e-14 
+.model DIODEM1_Q2   D(IS=5.62e-17 N=1 CJO=9.676e-14
 +  VJ=0.729 M=0.44 FC=0.8 TNOM=21)
 *^^^^^^^^  End of included SPICE model from model/DiodeM1_Q2.mod ^^^^^^^^
 *
@@ -15,7 +15,7 @@
 * This is a diode model used in the Agilent MSA-26 model
 * documented in 5980-2496E.pdf.
 * Model entered 3.30.2003 by SDB
-.model DIODEM2_Q2   D(IS=1e-24 N=1.0029 CJO=9.023e-14 
+.model DIODEM2_Q2   D(IS=1e-24 N=1.0029 CJO=9.023e-14
 +  VJ=0.8971 M=2.292e-1 FC=0.8 TNOM=21)
 *^^^^^^^^  End of included SPICE model from model/DiodeM2_Q2.mod ^^^^^^^^
 *
@@ -27,18 +27,18 @@
 +  VAF=44 NF=1 TF=5.37e-12 XTF=20 VTF=0.8 ITF=8.872e-1 PTF=22
 +  XTB=0.7 BR=1 IKR=4.4e-2 NC=2 VAR=3.37 NR=1.005 TR=4e-9
 +  EG=1.17 IS=1.79e-17 XTI=3 TNOM=21 CJC=3.717e-14
-+  VJC=0.6775 MJC=0.3319 XCJC=4.398e-1 FC=0.8 CJE=3.217e-13 
++  VJC=0.6775 MJC=0.3319 XCJC=4.398e-1 FC=0.8 CJE=3.217e-13
 +  VJE=0.9907 MJE=0.5063 RB=2.325 IRB=3.272e-4 RBM=2.5e-2 KF=1.026e-24)
 *^^^^^^^^  End of included SPICE model from model/BJTM1_Q2.mod ^^^^^^^^
 *
 *==============  Begin SPICE netlist of main design ============
-Rbx 4 3 0.463  
-Q2 1 3 2 BJTM1_Q2 
-Rcx 1 6 1.716  
-Ceox 5 3 2.417e-14F  
-Re 5 2 0.443  
-D2 3 2 DIODEM2_Q2 
-D1 4 1 DIODEM1_Q2 
-Ccox 4 1 6.598e-14F  
+Rbx 4 3 0.463
+Q2 1 3 2 BJTM1_Q2
+Rcx 1 6 1.716
+Ceox 5 3 2.417e-14F
+Re 5 2 0.443
+D2 3 2 DIODEM2_Q2
+D1 4 1 DIODEM1_Q2
+Ccox 4 1 6.598e-14F
 .ends Q2_MSA26F
 *******************************
