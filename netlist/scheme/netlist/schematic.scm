@@ -39,7 +39,6 @@
                    schematic-id set-schematic-id!
                    schematic-toplevel-pages set-schematic-toplevel-pages!
                    schematic-toplevel-attribs set-schematic-toplevel-attribs!
-                   schematic-tree set-schematic-tree!
                    schematic-components set-schematic-components!
                    schematic-packages set-schematic-packages!
                    schematic-graphicals set-schematic-graphicals!
@@ -54,13 +53,13 @@
             schematic-toplevel-attrib
             schematic-non-unique-package-names
             schematic-package-names
-            schematic-component-refdes->string))
+            schematic-component-refdes->string
+            schematic-tree))
 
 (define-record-type <schematic>
   (make-schematic id
                   toplevel-pages
                   toplevel-attribs
-                  tree
                   components
                   packages
                   graphicals
@@ -72,7 +71,6 @@
   (id schematic-id set-schematic-id!)
   (toplevel-pages schematic-toplevel-pages set-schematic-toplevel-pages!)
   (toplevel-attribs schematic-toplevel-attribs set-schematic-toplevel-attribs!)
-  (tree schematic-tree set-schematic-tree!)
   (components schematic-components set-schematic-components!)
   (packages schematic-packages set-schematic-packages!)
   (graphicals schematic-graphicals set-schematic-graphicals!)
@@ -224,7 +222,6 @@ of schematic pages.  An optional argument NETLIST-MODE can be
          (packages (make-package-list netlist))
          (connections (make-schematic-connections pages))
          (graphicals (filter schematic-component-graphical? full-netlist))
-         (tree (schematic->sxml netlist pages))
          (nu-nets (get-all-nets netlist))
          (unique-nets (get-nets netlist)))
     ;; Partition all unique net names into 'no-connection' nets
@@ -236,7 +233,6 @@ of schematic pages.  An optional argument NETLIST-MODE can be
       (make-schematic id
                       pages
                       toplevel-attribs
-                      tree
                       netlist
                       packages
                       graphicals
@@ -263,3 +259,7 @@ default."
 (define (schematic-toplevel-attrib schematic attrib-name)
   "Returns value of toplevel attribute ATTRIB-NAME for SCHEMATIC."
   (assq-ref (schematic-toplevel-attribs schematic) attrib-name))
+
+(define (schematic-tree schematic)
+  (schematic->sxml (schematic-components schematic)
+                   (schematic-toplevel-pages schematic)))
