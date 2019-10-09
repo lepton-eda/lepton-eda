@@ -257,15 +257,17 @@ Continue? [y/N] "
         (format #t "Cannot delete file ~S.\n~S: ~S\n" filename key args))
       #f)))
 
-(define (copy-file* old-filename new-filename)
+(define* (copy-file* old-filename new-filename #:optional quiet)
   (catch #t
     (lambda () (copy-file old-filename new-filename))
     (lambda (key . args)
-      (format #t "Cannot copy file ~S to ~S.\n~S: ~S\n"
-              old-filename
-              new-filename
-              key
-              args))))
+      (unless quiet
+        (format #t "Cannot copy file ~S to ~S.\n~S: ~S\n"
+                old-filename
+                new-filename
+                key
+                args))
+      #f)))
 
 (define (copy-file-to-dir filename directory-name)
   (copy-file* filename
@@ -276,11 +278,15 @@ Continue? [y/N] "
   (catch #t
     (lambda () (rename-file old-filename new-filename))
     (lambda (key . args)
-      (format #t "Cannot rename file ~S to ~S.\n~S: ~S\n"
-              old-filename
-              new-filename
-              key
-              args))))
+      (or (and (copy-file* old-filename new-filename 'quiet)
+               (delete-file* old-filename 'quiet))
+          (begin
+            (format #t "Cannot rename file ~S to ~S.\n~S: ~S\n"
+                    old-filename
+                    new-filename
+                    key
+                    args)
+            #f)))))
 
 (define (mkdir* path . args)
   (if (file-exists? path)
