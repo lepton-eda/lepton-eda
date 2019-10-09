@@ -54,7 +54,8 @@
             schematic-non-unique-package-names
             schematic-package-names
             schematic-component-refdes->string
-            schematic-tree))
+            schematic-tree
+            schematic-components*))
 
 (define-record-type <schematic>
   (make-schematic id
@@ -263,3 +264,6 @@ default."
 (define (schematic-tree schematic)
   (schematic->sxml (schematic-components schematic)
                    (schematic-toplevel-pages schematic)))
+
+(define (schematic-components* schematic)
+  (schematic-components schematic))
