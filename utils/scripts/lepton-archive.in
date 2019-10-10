@@ -154,7 +154,7 @@ default-archive-name))
 
 (define %option-spec
   '((help (single-char #\h) (value #f))
-    (filename (single-char #\f) (value #f))
+    (files-from (single-char #\f) (value #f))
     (verbose (single-char #\v) (value #f))
     (extract (single-char #\e) (value #f))
     (archive (single-char #\a) (value #f))
@@ -214,7 +214,7 @@ default-archive-name))
 (define archiverc
   (and (not extract-mode?)
        (check-existence
-        (or (option-ref %options 'filename #f)
+        (or (option-ref %options 'files-from #f)
             "archiverc"))))
 
 (define (request-confirmation prompt result)
