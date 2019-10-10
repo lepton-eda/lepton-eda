@@ -77,7 +77,6 @@ exec @GUILE@ -s "$0" "$@"
 
 (primitive-eval
  '(use-modules (geda core toplevel)
-               (geda attrib)
                (geda log)
                (geda object)
                (geda os)
