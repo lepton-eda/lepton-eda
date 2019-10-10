@@ -154,11 +154,11 @@ default-archive-name))
 
 (define %option-spec
   '((help (single-char #\h) (value #f))
-    (files-from (single-char #\f) (value #f))
+    (files-from (single-char #\f) (value #t))
     (verbose (single-char #\v) (value #f))
     (extract (single-char #\e) (value #f))
     (archive (single-char #\a) (value #f))
-    (output (single-char #\o) (value #f))))
+    (output (single-char #\o) (value #t))))
 
 
 (define (format-error s . args)
