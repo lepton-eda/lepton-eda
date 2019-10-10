@@ -209,7 +209,8 @@ default-archive-name))
 (define (check-existence filename)
   (if (file-exists? filename)
       filename
-      (option-error "Resource file ~S doesn't exist.  Exiting.\n" filename)))
+      (option-error "Resource file ~S doesn't exist.  Exiting.\n"
+                    filename)))
 
 (define archiverc
   (and (not extract-mode?)
