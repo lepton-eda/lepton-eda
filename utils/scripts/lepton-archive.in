@@ -505,16 +505,16 @@ option \"--files-from\" (\"-f\")."
           filename
           (match source
             ('command-line
-             (format #t "Filename ~S listed in command line doesn't exist. Ignoring...\n"
+             (format #t "Ignore non-existent file listed in command line: ~S\n"
                      filename)
              #f)
             ('archiverc
-             (format #t "File ~S listed in ~S doesn't exist. Ignoring...\n"
-                     filename
-                     archiverc)
+             (format #t "Ignore non-existent file listed in ~S: ~S\n"
+                     archiverc
+                     filename)
              #f)
             ('rc
-             (format #t "~S doesn't exist.  Create empty version in local dir? [Y/n] "
+             (format #t "Non-existent file ~S.\nCreate empty version in local dir? [Y/n] "
                      filename)
              (let ((input-char (read-char (current-input-port))))
                (if (char=? input-char #\n)
