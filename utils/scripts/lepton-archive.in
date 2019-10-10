@@ -34,8 +34,9 @@ exec @GUILE@ -s "$0" "$@"
 
 ;;; Archive mode algorithm:
 ;;; - In the project directory (current directory), create archive
-;;;   file list containing 'archiverc', 'gafrc', files listed on
-;;;   command line, and archiverc contents.
+;;;   file list containing 'gafrc', files listed on command line,
+;;;   and contents of the file specified with the --files-from (-f)
+;;;   option.
 ;;; - Make temporary directory with the name of the project.
 ;;; - Make cache directory in it.
 ;;; - Create schematic file list from the archive file list.
@@ -98,37 +99,38 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Help string.
 (define usage-info
   (format #f
-          "lepton-archive -- the Lepton EDA archiving utility.
+          "Usage: ~A [OPTION...] FILES...
+
 Used to create as well as extract Lepton EDA designs from an
 archive.  The two modes of operation are \"archive mode\"
 (archive creation) and \"extract mode\".  Archive mode is the default.
 
 Command line switches:
-  -f <filename>  -- Optional.  Used in archive mode.  Read files to archive from
-                    <filename> instead of archiverc.
-  -v             -- Optional.  Verbose mode.  Used in both archive and extract mode.
-                    Spews lots of info about what the prog is doing.
-  -e             -- Mandatory if you want to extract.  Extract mode.
-                    Open up the archive specified on the command line.
-  -a             -- Optional.  Archive mode.  Archive mode (i.e. create a project
-                    archive) is the default; this flag exists to give people
-                    the warm and fuzzies.
-  -o <outfile>   -- Optional.  Used in archive mode.  Specifies the name of
-                    the output archive file.  The output file extension
-                    should be \".tar.gz\".  If this flag is not specified, the
-                    output file name is ~S.
+  -f,--files-from=FILE  -- Additionally read filenames to archive
+                           from FILE.
+  -v,--verbose          -- Verbose mode.
+  -e,--extract          -- Extract mode. Mandatory if you want to
+                           extract from archive.
+  -a,--archive          -- Archive mode. It is the default mode.
+  -o,--output=FILE      -- Specify the name of the output archive file
+                           in archive mode.  The output file extension
+                           should be \".tar.gz\".  Default name is
+                           ~S.
 
 Example usage:
-   Create an archive named \"MyArchive.tar.gz\" (files to store listed in \"archiverc\"):
-   lepton-archive -o MyArchive.tar.gz
+   Create an archive named \"MyArchive.tar.gz\",
+   files to store are listed in \"archive-list\":
 
-   Verbosely create an archive (archives files listed on command line
-   as well as those listed in \"archiverc\"):
-   lepton-archive -v -o MyArchive.tar.gz README Schematic1.sch Schematic2.sch Schematic3.sch
+   lepton-archive -f archive-list -o MyArchive.tar.gz
+
+   Verbosely create an archive from files listed on command line:
+
+   lepton-archive -v README sch1.sch sch2.sch sch3.sch
 
    Extract an archive:
    lepton-archive -e ~A
 "
+(basename (car (program-arguments)))
 default-archive-name
 default-archive-name))
 
