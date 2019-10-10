@@ -213,10 +213,11 @@ default-archive-name))
                     filename)))
 
 (define archiverc
-  (and (not extract-mode?)
-       (check-existence
-        (or (option-ref %options 'files-from #f)
-            "archiverc"))))
+  (let ((files-from (option-ref %options 'files-from #f)))
+    (and (not extract-mode?)
+         (string? files-from)
+         files-from
+         (check-existence files-from))))
 
 (define (request-confirmation prompt result)
   (format #t prompt)
@@ -470,21 +471,24 @@ Continue? [y/N] "
 
 
 (define (create-archive-file-list)
-  "This creates the list of files in the archive.  It starts with
-known files, and then adds the names of the files to archive,
-given either at the command line or in the archiverc file."
+  "Create the list of files to archive, including \"gafrc\",
+files listed in the command line, and in the file specified by
+option \"--files-from\" (\"-f\")."
   (define not-string-null? (negate string-null?))
 
   (define (archiverc-filenames)
-    (with-input-from-file archiverc
-      (lambda ()
-        (let loop ((line (read-line))
-                   (result '()))
-          (if (eof-object? line)
-              (filter not-string-null? result)
-              (loop (read-line)
-                    (cons (string-trim-both line)
-                          result)))))))
+    (if archiverc
+        (with-input-from-file archiverc
+          (lambda ()
+            (let loop ((line (read-line))
+                       (result '()))
+              (if (eof-object? line)
+                  (filter not-string-null? result)
+                  (loop (read-line)
+                        (cons (string-trim-both line)
+                              result))))))
+        ;; The file has not been specified, return empty list.
+        '()))
 
   (define (make-empty-file filename)
     (format #t "Creating ~S in archive." filename)
@@ -526,10 +530,8 @@ given either at the command line or in the archiverc file."
 
   (delete-duplicates
    (append
-    (list
      ;; Add RC files.
-     (add-rc-file gafrc)
-     (add-rc-file archiverc))
+    (list (add-rc-file gafrc))
     ;; Get names of all schematics and other files to archive.
     ;; First get file names from command line.
     (filter-map add-command-line-file command-line-file-list)
