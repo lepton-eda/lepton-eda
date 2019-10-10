@@ -4,11 +4,9 @@
 lepton-archive \- create and extract Lepton EDA design archives
 
 .SH SYNOPSIS
-.B lepton-archive 
-.RI [ options ] 
-.RB [ \-o
-.IR output_file ] 
-.I file
+.B lepton-archive
+.RI [ OPTIONS ]
+.I FILE
 \&...
 
 .SH DESCRIPTION
@@ -17,50 +15,43 @@ creates and extracts Lepton EDA designs from an archive. The two modes of
 operation are "archive mode" (archive creation) and "extract mode".
 In archive mode it creates a project archive from a bunch of project
 files, and in extract mode it extracts the files from the archive and
-places them in the local dir.
+places them in the local directory.
+.PP
+In archive mode the program processes schematic files traversing
+their hierarchy, collecting and caching all subschematics, symbols
+and subcircuits specified in the "file=" attributes.
 .PP
 Archive mode is the default.
 
 .SH OPTIONS
-.TP
-.BI \-f\  filename
-Optional.  Used in archive mode.  Read files to archive from <filename>
-instead of garchiverc.
-.TP
-.B \-v
-Verbose mode.
-.TP
-.B \-e
-Extract the archive specified on the command line.
-.TP
-.B \-a
-Create an archive. This is the default.
-.TP
-.BI \-o\  outfile
-Optional.  Used in archive mode.  Specifies the name of the
-output archive file.  The output file extension should be ".tar.gz".
-If this flag is not specified, the output file name is
-"ProjectArchive.tar.gz".
-.TP
-.BR \-h ", " \-\-help
-Print usage information.
+.nf
+\-h, \-\-help             Print usage information.
+\-v, \-\-verbose          Verbose mode.
+\-f, \-\-files\-from=FILE  Additionally read filenames to archive from FILE.
+\-e, \-\-extract          Extract mode. Mandatory if you want to extract from archive.
+\-a, \-\-archive          Archive mode. It is the default mode.
+\-o, \-\-output=FILE      Specify the name of the output archive file
+                       in archive mode. The output file extension should be ".tar.gz".
+                       Default name is "project-archive.tar.gz".
+
 .SH EXAMPLES
-To create an archive named MyArchive.tar.gz (the files to store listed in
-garchiverc):
+To create an archive named MyArchive.tar.gz, the files to store
+are listed in "archive-list":
 .IP
-lepton-archive \-o MyArchive.tar.gz
+lepton-archive \-f archive-list \-o MyArchive.tar.gz
 .PP
-Verbosely create an archive (archives files listed on cmd line
-as well as those listed in garchiverc):
+Verbosely create an archive from files listed on command line:
 .IP
-lepton-archive \-v \-o MyArchive.tar.gz README Schematic1.sch Schematic2.sch Schematic3.sch
+lepton-archive \-v README sch1.sch sch2.sch sch3.sch
 .PP
 Extract an archive:
 .IP
-lepton-archive \-e ProjectArchive.tar.gz
+lepton-archive \-e project-archive.tar.gz
 
 .SH AUTHOR
-Stuart Brorson <sdb@cloud9.net>
+The initial Python script has been written by Stuart Brorson
+<sdb@cloud9.net>. The program has been rewritten almost from
+scratch in Scheme by Vladimir Zhbanov <vzhbanov@gmail.com>.
 
 .SH SEE ALSO
 .BR lepton-schematic(1)
@@ -68,6 +59,7 @@ Stuart Brorson <sdb@cloud9.net>
 .SH COPYRIGHT
 .nf
 Copyright \(co 2012-2017 gEDA Contributors.
+Copyright \(co 2019 Lepton EDA Contributors.
 License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
 file included with this program for full details.
 .PP
