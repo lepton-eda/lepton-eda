@@ -365,7 +365,11 @@ Continue? [y/N] "
       (if (and (file-exists? new-filename)
                (not (overwrite-file? (format #f "~S already exists.  Overwrite? [y/N]"
                                              new-filename))))
-          (report-preserve-existing-file new-filename)
+          (begin
+            (report-preserve-existing-file new-filename)
+            ;; Remove the file anyway. The user can restore it
+            ;; from the same archive later, if needed.
+            (delete-file* name))
           (rename-file* name new-filename))
       result))
 
