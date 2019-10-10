@@ -106,9 +106,10 @@ archive.  The two modes of operation are \"archive mode\"
 (archive creation) and \"extract mode\".  Archive mode is the default.
 
 Command line switches:
+  -h,--help             -- Print usage information.
+  -v,--verbose          -- Verbose mode.
   -f,--files-from=FILE  -- Additionally read filenames to archive
                            from FILE.
-  -v,--verbose          -- Verbose mode.
   -e,--extract          -- Extract mode. Mandatory if you want to
                            extract from archive.
   -a,--archive          -- Archive mode. It is the default mode.
