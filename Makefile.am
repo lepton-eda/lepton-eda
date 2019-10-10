@@ -83,15 +83,16 @@ precompile:
 	$(bindir)/lepton-schematic
 
 
+install-data-local:
+	$(MKDIR_P) $(DESTDIR)$(docdir)
+	cp -v $(srcdir)/README.md $(DESTDIR)$(docdir)
+	cp -v $(srcdir)/NEWS.md $(DESTDIR)$(docdir)
+
 uninstall-local:
-	rm -fr $(datadir)/lepton-eda/ccache
-
-
-uninstall-hook:
-	rm -fr $(includedir)/liblepton
-	rm -fr $(includedir)/libleptonrenderer
-	rm -fr $(docdir)
-	rm -fr $(pkgdatadir)
+	rm -vfr $(DESTDIR)$(includedir)/liblepton
+	rm -vfr $(DESTDIR)$(includedir)/libleptonrenderer
+	rm -vfr $(DESTDIR)$(pkgdatadir)
+	rm -vfr $(DESTDIR)$(docdir)
 
 
 DISTCLEANFILES = stamp-git
