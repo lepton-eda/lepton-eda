@@ -537,8 +537,6 @@ given either at the command line or in the archiverc file."
     (filter-map add-archiverc-file (archiverc-filenames)))))
 
 
-;;; FIXME: it should go recursively through all resources, as
-;;; netlister does.
 (define (create-schematic-file-list filename-list)
   "Creates the list of schematic files to search.  Right now
 I just run through FILE-LIST and pull out all files ending in .sch.
