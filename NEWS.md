@@ -14,10 +14,77 @@ Notable changes in Lepton EDA 1.9.10
   using this prefix in functions like `component-library` and
   `source-library`.
 
+### Changes in `liblepton`:
+- The module `(lepton library component)` has been amended to
+  support new Scheme layer around internal `%component-library` in
+  the `component-library` procedure, which prevents loading of
+  duplicate component libraries.
+
 ### Changes in `lepton-netlist`:
 - Fixed crashes on power symbols (the symbols having one pin and
   no *"refdes="* attribute) having a *"net="* attribute but no
   *"pinnumber=* attribute attached to its pin.
+
+### Changes in `lepton-archive`:
+- The initial Python script has been rewritten in Scheme.  It was
+  broken at least since 2007, when system-gafrc was refactored by
+  removing `component-library` calls from it.  It parsed that file
+  for the "component-library" strings, but could not find and save
+  any stock symbols.  The new Scheme script has the following
+  advantages:
+
+  - It eliminates issues with Python versions incompatibilities
+    due to moving in most distributions to the more recent
+    versions.
+
+  - The previous script could only expand one environment variable
+    in a file name. Now all environment variables are expanded
+    recursively in file names, the tilda prefix (**~**) is
+    expanded, too.
+
+  - OS specific file name separator is now supported.
+
+  - The script replaces using of system utilites *cp*, *mv*, *rm*
+    in most cases with appropriate Scheme procedures.
+
+  - Instead of direct parsing of component lines in schematic
+    files (**"C x y ..."**), which may be wrong in some cases, it
+    uses info on internal schematic provided by `liblepton`
+    modules.
+
+  - The new script eliminates direct setting of
+    `GEDADATA`/`GEDADATADIR` to the directory where `system-gafrc`
+    should be placed, and parsing of the lines containing
+    `component-library` and `component-library-search` in system
+    rc files, as it is no longer required.
+
+  - `gafrc` is now used instead of `gschemrc` as rc file to
+    update; local project's `gafrc` is processed to get info on
+    component libraries used in the project.  `gafrc` in the
+    resulting archive is changed in that to load symbols from its
+    local cache directory.
+
+  - Symbol and SPICE file cache directory name has been changed
+    from `gschem-files` to `cache`.
+
+  - The program can now collect and cache all symbols and
+    subschematics in a hierarchical schematic, as well as
+    subcircuits mentioned in the *"file="* attributes of
+    components.
+
+  - RC file listing files to be archived is no longer used. The
+    file set by the option `--files-from` (`-f`) is used
+    instead. The script copies all files mentioned in that file
+    and in command line to the archive, including files not living
+    in the project directory.
+
+  - Lowercase archive name is now used by default:
+    `project-archive.tar.gz` instead of
+    `ProjectArchive.tar.gz`. It is to avoid issues with case
+    sensitive filesystems.
+
+  - The program options now have long equivalents, please see
+    `lepton-archive --help` for more information.
 
 Notable changes in Lepton EDA 1.9.9
 -----------------------------------
