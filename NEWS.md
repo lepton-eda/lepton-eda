@@ -25,6 +25,9 @@ Notable changes in Lepton EDA 1.9.10
   no *"refdes="* attribute) having a *"net="* attribute but no
   *"pinnumber=* attribute attached to its pin.
 
+- A new module, `(netlist mode)`, has been added. It contains
+  accessor functions for current netlisting mode.
+
 ### Changes in `lepton-archive`:
 - The initial Python script has been rewritten in Scheme.  It was
   broken at least since 2007, when system-gafrc was refactored by
