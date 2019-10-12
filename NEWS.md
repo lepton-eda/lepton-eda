@@ -6,7 +6,11 @@ more information, please consult `git log` history.
 
 Notable changes in Lepton EDA 1.9.10
 ------------------------------------
-### Scheme API changes
+### Changes when building from source:
+- Building of the Scheme API HTML documentation with multiple
+  make jobs on FreeBSD has been fixed.
+
+### Scheme API changes:
 - Apart from expanding environment variables, the function
   `expand-env-variables` from the `(geda os)` module now replaces
   **~/** (user home directory prefix) in file names in order to
