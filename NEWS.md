@@ -29,6 +29,9 @@ Notable changes in Lepton EDA 1.9.10
   no *"refdes="* attribute) having a *"net="* attribute but no
   *"pinnumber=* attribute attached to its pin.
 
+- Fixed crashes in the `spice-sdb` backend when processing I/O
+  components.
+
 - A new module, `(netlist mode)`, has been added. It contains
   accessor functions for current netlisting mode.
 
