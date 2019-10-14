@@ -1,4 +1,4 @@
-GNET=gnetlist -L ../../.. -g spice-noqsi
+GNET=lepton-netlist -L ../../.. -g spice-noqsi
 #
 # Alternate for using the spice-sdb back end instead
 # GNET=gnetlist -g spice-sdb
