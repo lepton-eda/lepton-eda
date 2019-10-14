@@ -30,8 +30,7 @@
 (use-modules (netlist schematic)
              (netlist schematic toplevel))
 
-(define (spice-noqsi filename)
-    (set-current-output-port(open-output-file filename))
+(define (space-noqsi filename)
     (write-header)
     (for-each reserve-refdes (schematic-package-names (toplevel-schematic)))
     (for-each collect-file (schematic-package-names (toplevel-schematic)))
@@ -50,22 +49,6 @@
         (format (current-error-port) "~A errors.\n" error-count)
         (primitive-exit 1))))
 
-;; Lepton/geda-gaf compatibility
-
-
-; (or (defined? 'gnetlist:get-pins) 
-;	(use-modules (netlist schematic))
-; )
-
-;; Different Lepton versions use a different definition for
-;; (toplevel-schematic)
-
-;(define (top-schem)
-;	(if (schematic? (toplevel-schematic))
-;		(toplevel-schematic)
-;		((toplevel-schematic))
-;	)
-;)
 
 ;; Provide definitions for old geda-gaf functions if absent.
 
@@ -79,16 +62,6 @@
                     (string->symbol attr))
                 "not found"))))
 
-(define gnetlist:get-pins
-    (if (defined? 'gnetlist:get-pins)
-        gnetlist:get-pins
-        get-pins))
-	
-	
-(define gnetlist:get-nets
-    (if (defined? 'gnetlist:get-nets)
-        gnetlist:get-nets
-        get-nets))
 	
 ;; Write a header. Critical because SPICE may treat the first line
 ;; as a comment, even if it's not!
@@ -275,7 +248,7 @@ This may indicate an erroneously duplicated refdes.\n"
 ;; replace the partially broken (gnetlist:get-nets).
 
 (define (get-net refdes pin)
-    (let ((net (car (gnetlist:get-nets refdes pin))))
+    (let ((net (car (get-nets refdes pin))))
         (if (equal? "ERROR_INVALID_PIN" net)
             (error-report "pinnumber=~A not found for refdes=~A\n" pin refdes)
             net)))
@@ -464,7 +437,7 @@ This may indicate an erroneously duplicated refdes.\n"
         (string-join
             (map
                 (lambda (n) (get-net-by-pinseq refdes n))
-                (iota (length (gnetlist:get-pins refdes)) 1))
+                (iota (length (get-pins refdes)) 1))
             " ")))
 
 
@@ -553,7 +526,7 @@ This may indicate an erroneously duplicated refdes.\n"
 	    (cons 
 	        (gnetlist:get-attribute-by-pinnumber refdes p "pinlabel")
 		p ))
-	(gnetlist:get-pins refdes)))
+	(get-pins refdes)))
 
 
 ;; Default prototypes by device
