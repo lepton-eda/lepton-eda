@@ -344,8 +344,8 @@ scroll_to_bottom (GtkTextBuffer* buffer, GschemLogWidget* widget)
    * of gtk_text_view_scroll_to_iter() (as suggested in the
    * documentation of gtk_text_view_scroll_to_iter() doesn't help.
   */
-  while (gtk_events_pending())
-    gtk_main_iteration();
+  /* while (gtk_events_pending()) */
+  /*   gtk_main_iteration(); */
 
   GtkTextIter iter;
   gtk_text_buffer_get_end_iter (buffer, &iter);
