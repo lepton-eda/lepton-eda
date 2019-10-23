@@ -1,34 +1,34 @@
 exampledir = $(docdir)/examples/gTAG/
 
-example_DATA = \
-	7414-1.sym \
+nobase_example_DATA = \
 	attribs \
 	gafrc \
-	copyleft.sym \
 	crdist.sh \
-	cy7c64603-52nc.sym \
 	gTAG-consio.ps \
 	gTAG-consio.sch \
-	gTAG-consio.sym \
 	gTAG-jtagio.ps \
 	gTAG-jtagio.sch \
-	gTAG-jtagio.sym \
 	gTAG-pcb.net \
 	gTAG-psu.ps \
 	gTAG-psu.sch \
-	gTAG-psu.sym \
 	gTAG-ucont.ps \
 	gTAG-ucont.sch \
-	gTAG-ucont.sym \
 	gTAG.bom \
 	gTAG.ps \
 	gTAG.sch \
 	geda.conf \
-	max882.sym \
-	sn75240pw.sym \
-	README
+	README \
+	sym/7414-1.sym \
+	sym/copyleft.sym \
+	sym/cy7c64603-52nc.sym \
+	sym/gTAG-consio.sym \
+	sym/gTAG-jtagio.sym \
+	sym/gTAG-psu.sym \
+	sym/gTAG-ucont.sym \
+	sym/max882.sym \
+	sym/sn75240pw.sym
 
-EXTRA_DIST = ChangeLog-1.0 $(example_DATA)
+EXTRA_DIST = ChangeLog-1.0 $(nobase_example_DATA)
 
 MOSTLYCLEANFILES = gschem.log *~
 CLEANFILES = gschem.log *~
