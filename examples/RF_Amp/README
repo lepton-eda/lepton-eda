@@ -10,7 +10,7 @@ follows:
 RF_Amp (base directory)
 
 MSA-2643.sch -- schematic of stuff inside device package (as shown in
-p. 7 of datasheet.  Note that I have not included the transmission 
+p. 7 of datasheet.  Note that I have not included the transmission
 lines in this schematic because no value of Z was included in the data
 sheet.   (Yes, it's probably 50 ohms, but including them was a
 sideshow compared to my main intent: build a hierarchical model of an
@@ -26,7 +26,7 @@ Q2.cir -- netlisted circuit holding .SUBCKT model of Q2.
 README -- this file.
 
 Simulation.cmd -- a file holding SPICE analysis commands which is read
-at simulation time by the SPICE simulator.  
+at simulation time by the SPICE simulator.
 
 5980-2396E.pdf -- Agilent datasheet about the MSA-2643.
 
@@ -43,20 +43,21 @@ These models were obtained from parameters give in p. 8 of the datasheet.
 ./sym/
 
 BJT_Model.sym
-spice-subcircuit-IO-1.sym
-spice-subcircuit-LL-1.sym
 Q_Model.sym -- symbol pointing to lower level models placed on upper
 level schematic.
+Other symbols from stock library used in this example's schematics.
 
-------------  Usage of hierarchical spice models ---------------------
+
+------------  Usage of hierarchical SPICE models ---------------------
+
 This project exemplifies construction of a hierarchical SPICE
-simulation using gEDA.  The project is built in the following way:
+simulation using Lepton EDA.  The project is built in the following way:
 
 1.  Use a text editor to create .mod files containing SPICE models of
-the transistors and diodes on p. 8 of the datasheet.  
+the transistors and diodes on p. 8 of the datasheet.
 
-2.  Create Q1 and Q2 transistor model schematics using gschem.  Place
-the .SUBCKT SPICE block on the schematic to alert the netlister that
+2.  Create Q1 and Q2 transistor model schematics using lepton-schematic.
+Place the .SUBCKT SPICE block on the schematic to alert the netlister that
 the schematic is a lower level .SUBCKT for incorporation into other
 schematics.  Place spice-IO pads on the schematic to instantiate the
 IOs.  Make sure to number the spice-IO pads in the same order as you
@@ -64,8 +65,8 @@ wish them to appear in the .SUBCKT line in the .cir.
 
 3.  Generate the .SUBCKT netlist by saying:
 
-gnetlist -g spice-sdb -o Q1.cir Q1.sch
-gnetlist -g spice-sdb -o Q2.cir Q2.sch
+lepton-netlist -g spice-sdb -o Q1.cir Q1.sch
+lepton-netlist -g spice-sdb -o Q2.cir Q2.sch
 
 4.  Create a symbol for Q1.cir and Q2.cir which will be dropped onto
 the higher lever schematic.  Name the symbol Q_Model.sym.  Set the
@@ -73,11 +74,11 @@ symbol "DEVICE" attribute = NPN_TRANSISTOR_subcircuit.  This causes
 the netlister to use "write-default-component" to write out the SPICE
 line for the component.  Make sure that the "REFDES" attribute is X?
 and not Q? -- this enables the .SUBCKT file to be attached to the
-device. 
+device.
 
 5.  Create the higher layer schematic MSA-2643.sch.  Place
 two copies of Q_Model.sym onto the schematic, corresponding to Q1 and
-Q2.  Make Q1 point to its model by setting the following attributes: 
+Q2.  Make Q1 point to its model by setting the following attributes:
 
 model-name: Q1_MSA26F
 file: Q1.cir
@@ -86,21 +87,15 @@ Do the same for Q2.
 
 6.  Create the rest of the higher layer schematic the usual way.  Make
 sure to place a spice-include block on the schematic and point it to
-"Simulation.cmd".  Place any analysis commands (e.g. .DC, .AC, .TRAN,
+"Simulation.cmd".  Place any analysis commands (e.g. dc, ac, tran,
 etc.) into the file "Simulation.cmd".
 
 7.  Netlist the higher layer design:
 
-gnetlist -g spice-sdb -o MSA-2643.cir MSA-2643.sch
+lepton-netlist -g spice-sdb -o MSA-2643.cir MSA-2643.sch
 
 8.  The circuit may be simulated by any desired SPICE simulation
-and analysis package, e.g. LTSpice.
+and analysis package, e.g. ngspice.
 
---------------------  Contact  ----------------------------
-Documentation and other materials relevant to SPICE simulation under
-gEDA lives at http://www.brorson.com/gEDA/SPICE
-
-For inquiries or bug reports, please contact me:
 
 Stuart Brorson
-mailto:sdb@cloud9.net
