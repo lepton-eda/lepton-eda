@@ -1,2 +1,2 @@
-(component-library ".")
+(component-library "./sym")
 (source-library  ".")
