@@ -4,26 +4,25 @@ Lepton EDA examples
 
     Author: Stefan Petersen
     Copyright (C) 2001-2003 Stefan Petersen
-    License: GPL
+
     gTAG is an interface to connect your USB port of computer to talk
     to your circuits which talks JTAG.
 
-    See gTAG/README and gTAG/ChangeLog for more information.
+    See gTAG/README and gTAG/ChangeLog-1.0 for more information.
 
-    gTAG shows off how to do hierarchical schematics in gEDA/gaf.
+    gTAG shows off how to do hierarchical schematics in Lepton EDA.
 
 
 * lightning_detector - A lightning detector
 
     Author: Terry Porter
     Copyright (C) 2003 Terry Porter
-    License: GPL
+
     This unit flashes a lamp, the brightness proportional to the
     range/power of lightning.
 
-    lightning detector shows off how to use gEDA/gaf and PCB.
-    Also includes the start of a bom creator which reads sch files
-    directly.
+    lightning detector shows off how to use Lepton EDA and PCB
+    printed circuit board layout editor (http://pcb.geda-project.org).
 
 
 * RF_Amp - Schematics and associated materials for a
@@ -33,8 +32,7 @@ Lepton EDA examples
     Copyright (C) 2003 Stuart Brorson
 
     This project exemplifies construction of a hierarchical SPICE
-    simulation using gEDA.  You may have edit some paths to get the
-    examples to netlist.
+    simulation using Lepton EDA.
 
 
 * TwoStageAmp - A Two stage amplifier SPICE playpen
@@ -42,7 +40,6 @@ Lepton EDA examples
     Author: Stuart Brorson
     Copyright (C) 2003 Stuart Brorson
 
-    This example shows how to do gEDA SPICE netlisting with SPICE
-    models, includes, and directives.  You may have edit some paths
-    to get the examples to netlist.
+    This example shows how to do Lepton EDA SPICE netlisting with
+    SPICE models, includes, and directives.
 
