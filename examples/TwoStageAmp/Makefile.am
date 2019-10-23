@@ -2,6 +2,7 @@ exampledir = $(docdir)/examples/TwoStageAmp/
 
 nobase_example_DATA = \
 	Simulation.cmd \
+	Simulation.batch.cmd \
 	TwoStageAmp.sch \
 	spice.netlist \
 	gafrc \

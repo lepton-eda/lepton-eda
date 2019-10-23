@@ -10,6 +10,7 @@ nobase_example_DATA = \
 	Q2.sch \
 	README \
 	Simulation.cmd \
+	Simulation.batch.cmd \
 	gafrc \
 	model/BJTM1_Q1.mod \
 	model/BJTM1_Q2.mod \
