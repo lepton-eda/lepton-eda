@@ -43,3 +43,17 @@ Lepton EDA examples
     This example shows how to do Lepton EDA SPICE netlisting with
     SPICE models, includes, and directives.
 
+
+
+Notes about SPICE simulation
+
+The examples designed to be used with SPICE simulation
+software usually include Simulation.cmd file with
+commands to be executed by simulator.
+This file is sourced by default from the generated netlist
+and contains the *interactive mode* commands.
+If you need to run simulation in *batch mode* instead (for
+example, with LTSpice), the corresponding Simulation.batch.cmd
+commands file should be used. Modify INCLUDE symbol's "file"
+attribute in schematics by setting it to the path of the
+Simulation.batch.cmd file and regenerate the netlist.
