@@ -1,48 +1,48 @@
 Lepton EDA examples
 
-	gTAG -  USB to JTAG interface
-	-----------------------------
-	Author: Stefan Petersen
-	Copyright (C) 2001-2003 Stefan Petersen
-	License: GPL
-	gTAG is an interface to connect your USB port of computer to talk
-	to your circuits which talks JTAG.
+* gTAG - USB to JTAG interface
 
-	See gTAG/README and gTAG/ChangeLog for more information.
+    Author: Stefan Petersen
+    Copyright (C) 2001-2003 Stefan Petersen
+    License: GPL
+    gTAG is an interface to connect your USB port of computer to talk
+    to your circuits which talks JTAG.
 
-	gTAG shows off how to do hierarchical schematics in gEDA/gaf.
+    See gTAG/README and gTAG/ChangeLog for more information.
 
-
-	lightning_detector - A lightning detector
-	-----------------------------
-	Author: Terry Porter
-	Copyright (C) 2003 Terry Porter
-	License: GPL
-	This unit flashes a lamp, the brightness proportional to the
-	range/power of lightning.
-
-	lightning detector shows off how to use gEDA/gaf and PCB.
-	Also includes the start of a bom creator which reads sch files
-	directly.
+    gTAG shows off how to do hierarchical schematics in gEDA/gaf.
 
 
-	RF_Amp - schematics and associated materials for a SPICE model
-	of Agilent's MSA-2643 bipolar amp.
-	-----------------------------
-	Author: Stuart Brorson
-	Copyright (C) 2003 Stuart Brorson
+* lightning_detector - A lightning detector
 
-	This project exemplifies construction of a hierarchical SPICE
-	simulation using gEDA.  You may have edit some paths to get the
-	examples to netlist.
+    Author: Terry Porter
+    Copyright (C) 2003 Terry Porter
+    License: GPL
+    This unit flashes a lamp, the brightness proportional to the
+    range/power of lightning.
+
+    lightning detector shows off how to use gEDA/gaf and PCB.
+    Also includes the start of a bom creator which reads sch files
+    directly.
 
 
-	TwoStageAmp - A Two stage amplifier SPICE playpen
-	-----------------------------
-	Author: Stuart Brorson
-	Copyright (C) 2003 Stuart Brorson
+* RF_Amp - Schematics and associated materials for a
+           SPICE model of Agilent's MSA-2643 bipolar amp.
 
-	This example shows how to do gEDA SPICE netlisting with SPICE
-	models, includes, and directives.  You may have edit some paths
-	to get the examples to netlist.
+    Author: Stuart Brorson
+    Copyright (C) 2003 Stuart Brorson
+
+    This project exemplifies construction of a hierarchical SPICE
+    simulation using gEDA.  You may have edit some paths to get the
+    examples to netlist.
+
+
+* TwoStageAmp - A Two stage amplifier SPICE playpen
+
+    Author: Stuart Brorson
+    Copyright (C) 2003 Stuart Brorson
+
+    This example shows how to do gEDA SPICE netlisting with SPICE
+    models, includes, and directives.  You may have edit some paths
+    to get the examples to netlist.
 
