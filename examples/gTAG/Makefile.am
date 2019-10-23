@@ -4,17 +4,12 @@ nobase_example_DATA = \
 	attribs \
 	gafrc \
 	crdist.sh \
-	gTAG-consio.ps \
 	gTAG-consio.sch \
-	gTAG-jtagio.ps \
 	gTAG-jtagio.sch \
 	gTAG-pcb.net \
-	gTAG-psu.ps \
 	gTAG-psu.sch \
-	gTAG-ucont.ps \
 	gTAG-ucont.sch \
 	gTAG.bom \
-	gTAG.ps \
 	gTAG.sch \
 	geda.conf \
 	README \
@@ -41,7 +36,12 @@ nobase_example_DATA = \
 	sym/jumper-1.sym \
 	sym/out-1.sym \
 	sym/resistor-2.sym \
-	sym/title-A2.sym
+	sym/title-A2.sym \
+	ps/gTAG-consio.ps \
+	ps/gTAG-jtagio.ps \
+	ps/gTAG-psu.ps \
+	ps/gTAG-ucont.ps \
+	ps/gTAG.ps
 
 EXTRA_DIST = ChangeLog-1.0 $(nobase_example_DATA)
 
