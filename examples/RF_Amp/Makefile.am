@@ -22,7 +22,16 @@ nobase_example_DATA = \
 	sym/BJT_Model.sym \
 	sym/Q_Model.sym \
 	sym/spice-subcircuit-IO-1.sym \
-	sym/spice-subcircuit-LL-1.sym
+	sym/spice-subcircuit-LL-1.sym \
+	sym/capacitor-1.sym \
+	sym/diode-1.sym \
+	sym/gnd-1.sym \
+	sym/inductor-1.sym \
+	sym/resistor-1.sym \
+	sym/spice-include-1.sym \
+	sym/title-B.sym \
+	sym/vac-1.sym \
+	sym/vdc-1.sym
 
 EXTRA_DIST = $(nobase_example_DATA)
 
