@@ -10,6 +10,10 @@ Notable changes in Lepton EDA 1.9.10
 - Building of the Scheme API HTML documentation with multiple
   make jobs on FreeBSD has been fixed.
 
+- `icon-theme-installer` script has been fixed by simplifying
+  its command line arguments checks, which makes it more portable
+  among various build environments.
+
 ### Scheme API changes:
 - Apart from expanding environment variables, the function
   `expand-env-variables` from the `(geda os)` module now replaces
