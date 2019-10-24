@@ -1,5 +1,7 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+;;; Copyright (C) 2010-2017 gEDA Contributors
+;;; Copyright (C) 2017-2019 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,10 +21,16 @@
 (define-module (lepton page)
 
   ;; Import C procedures
+  #:use-module (geda core gettext)
   #:use-module (geda core smob)
   #:use-module (geda core page)
 
-  #:use-module (ice-9 optargs))
+  #:use-module (ice-9 optargs)
+  #:use-module ((ice-9 rdelim)
+                #:select (read-string)
+                #:prefix rdelim:)
+
+  #:export (filename->page))
 
 (define-public object-page %object-page)
 
@@ -47,3 +55,30 @@
 
 (define*-public (set-page-dirty! page #:optional (state #t))
   (%set-page-dirty! page state))
+
+
+;;; Reads file FILENAME and outputs a page with the same name.
+(define (file-contents->page filename)
+  (with-input-from-file filename
+    (lambda ()
+      (string->page filename (rdelim:read-string)))))
+
+
+;;; Returns an opened page from PAGES by FILENAME. If no
+;;; corresponding page found, returns #f.
+(define (page-by-filename filename pages)
+  (and (not (null? pages))
+       (let ((page (car pages)))
+         (if (string= filename (page-filename page))
+             page
+             (page-by-filename filename (cdr pages))))))
+
+
+(define* (filename->page filename #:optional new-page?)
+  "Given FILENAME, returns an opened page for it, or a new page if
+none exists. Optional argument NEW-PAGE? can be used to force
+creation of a new page for given filename."
+  (if new-page?
+      (file-contents->page filename)
+      (or (page-by-filename filename (active-pages))
+          (file-contents->page filename))))

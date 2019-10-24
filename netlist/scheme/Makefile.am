@@ -91,7 +91,6 @@ DIST_SCM = \
 	netlist/option.scm \
 	netlist/package-pin.scm \
 	netlist/package.scm \
-	netlist/page.scm \
 	netlist/partlist.scm \
 	netlist/partlist/common.scm \
 	netlist/pin-net.scm \

@@ -29,7 +29,6 @@
   #:use-module (netlist attrib compare)
   #:use-module (netlist config)
   #:use-module (netlist hierarchy)
-  #:use-module (netlist page)
   #:use-module (netlist sort)
   #:use-module (netlist traverse)
   #:use-module (netlist package)

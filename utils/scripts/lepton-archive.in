@@ -81,11 +81,10 @@ exec @GUILE@ -s "$0" "$@"
                (geda log)
                (geda object)
                (geda os)
-               (geda page)
                (lepton file-system)
                (lepton library)
                (lepton library component)
-               (netlist page)
+               (lepton page)
                (netlist schematic)
                (netlist schematic-component)))
 

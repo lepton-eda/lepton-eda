@@ -36,7 +36,6 @@
   #:use-module (netlist net)
   #:use-module (netlist option)
   #:use-module (netlist package-pin)
-  #:use-module (netlist page)
   #:use-module (netlist pin-net)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
@@ -240,10 +239,15 @@
                   (non-null* (assq-ref inherited-attribs 'source)))))
          (and=> sources comma-separated->list))))
 
+
 (define (hierarchy-down-schematic name)
+  (define quiet-mode (netlist-option-ref 'quiet))
+
   (let ((filename (get-source-library-file name)))
     (if filename
-        (filename->page filename 'new-page)
+        (when (not quiet-mode)
+          (log! 'message (_ "Loading subcircuit ~S.") filename)
+          (filename->page filename 'new-page))
         (log! 'error (_ "Failed to load subcircuit ~S.") name))))
 
 
