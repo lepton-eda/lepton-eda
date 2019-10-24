@@ -939,7 +939,7 @@ export_config (void)
   }
 }
 
-#define export_short_options "a:cd:f:F:hl:m:o:p:s:k:"
+#define export_short_options "a:cd:f:F:hl:m:o:p:Ps:k:"
 
 static struct option export_long_options[] = {
   {"no-color", 0, NULL, 2},
@@ -953,6 +953,7 @@ static struct option export_long_options[] = {
   {"margins", 1, NULL, 'm'},
   {"output", 1, NULL, 'o'},
   {"paper", 1, NULL, 'p'},
+  {"paper-names", 0, NULL, 'P'},
   {"size", 1, NULL, 's'},
   {"scale", 1, NULL, 'k'},
   {NULL, 0, NULL, 0},
@@ -968,6 +969,7 @@ export_usage (void)
 "  -f, --format=TYPE      output format (normally autodetected)\n"
 "  -o, --output=OUTPUT    output filename\n"
 "  -p, --paper=NAME       select paper size by name\n"
+"  -P, --paper-names      list available paper size names and exit\n"
 "  -s, --size=WIDTH;HEIGHT  specify exact paper size\n"
 "  -k, --scale=FACTOR     specify output scale factor\n"
 "  -l, --layout=ORIENT    page orientation\n"
@@ -979,10 +981,25 @@ export_usage (void)
 "  -c, --color            enable color output\n"
 "  --no-color             disable color output\n"
 "  -F, --font=NAME        set font family for printing text\n"
-"  -h, --help     display usage information and exit\n"
+"  -h, --help             display usage information and exit\n"
 "\n"
 "Please report bugs to %1$s.\n"),
           PACKAGE_BUGREPORT);
+  exit (0);
+}
+
+static void
+export_list_paper_size_names()
+{
+  GList* names = gtk_paper_size_get_paper_sizes (TRUE);
+
+  for (GList* p = names; p != NULL; p = p->next)
+  {
+    printf ("%s\n", gtk_paper_size_get_name (p->data));
+    gtk_paper_size_free (p->data);
+  }
+
+  g_list_free (names);
   exit (0);
 }
 
@@ -1109,6 +1126,10 @@ export_command_line (int argc, char * const *argv)
         exit (1);
       }
       g_free (str);
+      break;
+
+    case 'P':
+      export_list_paper_size_names();
       break;
 
     case 's':
