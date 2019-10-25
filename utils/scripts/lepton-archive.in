@@ -633,10 +633,6 @@ symbol cache directory."
     (filter-map source-library-filename files)))
 
 
-(define (schematic-pages schematic)
-  (map file->page (subschematic-page-filenames schematic)))
-
-
 (define (save-schematics-and-sources toplevel-schematics temp-dir cache-dir)
   (let* ((schematic (file-name-list->schematic toplevel-schematics))
          (subschematic-filenames (subschematic-page-filenames schematic))
