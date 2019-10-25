@@ -245,7 +245,7 @@
 
   (let ((filename (get-source-library-file name)))
     (if filename
-        (when (not quiet-mode)
+        (unless quiet-mode
           (log! 'message (_ "Loading subcircuit ~S.") filename)
           (file->page filename 'new-page))
         (log! 'error (_ "Failed to load subcircuit ~S.") name))))
