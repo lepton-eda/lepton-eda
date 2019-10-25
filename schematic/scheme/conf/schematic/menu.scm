@@ -243,6 +243,7 @@
   ( list (N_ "Grid Style: Cycle Dots/Mesh/Off")  '&options-grid #f )
   ( list (N_ "Grid Snap: Cycle Grid/Resnap/Off") '&options-snap #f )
   ( list "SEPARATOR" #f #f )
+  ( list (N_ "Grips: On/Off")              '&options-draw-grips #f )
   ( list (N_ "Feedback Mode: Outline/Box") '&options-action-feedback #f )
   ( list (N_ "Net: Rubberband On/Off")     '&options-rubberband #f )
   ( list (N_ "Net: Magnetic On/Off")       '&options-magneticnet #f )

@@ -2775,6 +2775,17 @@ DEFINE_I_CALLBACK(options_select_font)
   x_widgets_show_font_select (w_current);
 }
 
+DEFINE_I_CALLBACK(options_draw_grips)
+{
+  GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
+  g_return_if_fail (w_current != NULL);
+
+  w_current->draw_grips = !w_current->draw_grips;
+
+  GschemPageView* view = gschem_toplevel_get_current_page_view (w_current);
+  gschem_page_view_invalidate_all (view);
+}
+
 /* these is a special wrapper function which cannot use the above */
 /* DEFINE_I_CALLBACK macro */
 
