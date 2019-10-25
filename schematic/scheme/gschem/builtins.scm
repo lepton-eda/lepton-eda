@@ -497,6 +497,9 @@
 (define-action-public (&options-select-font #:label (_ "Select Schematic Font"))
   (%options-select-font))
 
+(define-action-public (&options-draw-grips #:label (_ "Toggle Grips"))
+  (%options-draw-grips))
+
 ;; -------------------------------------------------------------------
 ;;;; Documentation-related actions
 

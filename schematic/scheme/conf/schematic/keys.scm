@@ -116,6 +116,7 @@
 (global-set-key "O L" '&options-show-log-window)
 (global-set-key "O C" '&options-show-coord-window)
 (global-set-key "O F" '&options-select-font)
+(global-set-key "O I" '&options-draw-grips)
 
 (global-set-key "P M" '&page-manager)
 (global-set-key "P N" '&page-next)
