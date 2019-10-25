@@ -167,7 +167,6 @@ default-archive-name))
   (apply format (current-error-port) s args)
   (primitive-exit 1))
 
-(define option-error format-error)
 
 (define (wrong-option-handler)
   "Primitive wrong option handler for getopt-long."
@@ -194,7 +193,7 @@ default-archive-name))
 (define archive-mode?
   (if (and extract-mode?
            (option-ref %options 'archive #f))
-      (option-error "Mutually exclusive option --archive and --extract.\n")
+      (format-error "Mutually exclusive option --archive and --extract.\n")
       (not extract-mode?)))
 
 (define gafrc "gafrc")
@@ -203,7 +202,7 @@ default-archive-name))
 (define (validate/extract-mode filename)
   (if extract-mode?
       (and filename
-           (option-error "Incompatible command line arguments.\n"))
+           (format-error "Incompatible command line arguments.\n"))
       filename))
 
 
@@ -211,7 +210,7 @@ default-archive-name))
 (define (check-existence filename)
   (if (file-exists? filename)
       filename
-      (option-error "Resource file ~S doesn't exist.  Exiting.\n"
+      (format-error "Resource file ~S doesn't exist.  Exiting.\n"
                     filename)))
 
 (define archiverc
