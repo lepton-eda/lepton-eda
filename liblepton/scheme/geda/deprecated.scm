@@ -53,10 +53,15 @@
            promote-invisible
            scheme-directory))
 
-(define (deprecated-module-log-warning!)
+(define* (deprecated-module-log-warning! #:optional (new-modname #f))
   (log! 'warning
-        (_ "The module ~S is deprecated.\nPlease don't use it any more.")
-        (module-name (current-module))))
+        (_ "The module ~S is deprecated. Please don't use it any more.~A")
+        (module-name (current-module))
+        (if new-modname
+          (format #f
+                  (_ "\n  It has been replaced by the ~A module.")
+                  new-modname)
+          "")))
 
 (define-public get-line-width %get-line-width)
 

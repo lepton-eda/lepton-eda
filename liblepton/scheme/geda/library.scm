@@ -12,4 +12,4 @@
                set-source-library-contents!
                get-source-library-file))
 
-(deprecated-module-log-warning!)
+(deprecated-module-log-warning! "(lepton library)")
