@@ -993,8 +993,8 @@ export_list_paper_size_names()
 
   for (GList* p = names; p != NULL; p = p->next)
   {
-    printf ("%s\n", gtk_paper_size_get_name (p->data));
-    gtk_paper_size_free (p->data);
+    printf ("%s\n", gtk_paper_size_get_name ((GtkPaperSize*) p->data));
+    gtk_paper_size_free ((GtkPaperSize*) p->data);
   }
 
   g_list_free (names);
