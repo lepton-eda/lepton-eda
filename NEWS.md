@@ -100,6 +100,11 @@ Notable changes in Lepton EDA 1.9.10
   - The program options now have long equivalents, please see
     `lepton-archive --help` for more information.
 
+### Changes in `lepton-cli`:
+- A new command line option has been added for the `export`
+  command: `--paper-names` (`-P`). It displays a list of paper
+  size names suitable for the `--paper` option.
+
 Notable changes in Lepton EDA 1.9.9
 -----------------------------------
 ### General changes:
