@@ -642,11 +642,16 @@ symbol cache directory."
          (subschematic-filenames (subschematic-page-filenames schematic))
          (schematic-sources (filter-map (lambda (c) (schematic-component-attribute c 'file))
                                         (schematic-components* schematic)))
-         (source-filenames (filter-map source-library-filename schematic-sources)))
+         (source-filenames (filter-map source-library-filename schematic-sources))
+         (symbol-filenames (create-symbol-file-list
+                            (append (schematic-page-filenames toplevel-schematics)
+                                    subschematic-filenames))))
+
     (for-each (lambda (sch) (copy-to-dir sch temp-dir))
               (schematic-page-filenames toplevel-schematics))
     (for-each (lambda (sch) (copy-to-dir sch cache-dir)) subschematic-filenames)
-    (for-each (lambda (cir) (copy-to-dir cir cache-dir)) source-filenames)))
+    (for-each (lambda (cir) (copy-to-dir cir cache-dir)) source-filenames)
+    (save-symbols symbol-filenames cache-dir)))
 
 
 ;;; Archiver.
@@ -671,11 +676,7 @@ symbol cache directory."
          (archive-file-list (create-archive-file-list))
          ;; Create list of schematic files to open and search.
          ;; Returned paths give only the base name (i.e. no path)
-         (schematic-file-list (create-schematic-file-list archive-file-list))
-         ;; Now run through schematic-file-list and create list of
-         ;; symbols.  Symbols are returned with only base file
-         ;; name (i.e. no path).
-         (symbol-file-list (create-symbol-file-list schematic-file-list)))
+         (schematic-file-list (create-schematic-file-list archive-file-list)))
 
     ;; Copy all files over to temporary directory.
     (for-each (cut copy-to-dir <> tmpdir) archive-file-list)
@@ -687,7 +688,6 @@ symbol cache directory."
       (debug-format "Cache directory: ~S" tmp/cache-directory)
       (mkdir* tmp/cache-directory)
 
-      (save-symbols symbol-file-list tmp/cache-directory)
       (save-schematics-and-sources schematic-file-list
                                    tmpdir
                                    tmp/cache-directory))
