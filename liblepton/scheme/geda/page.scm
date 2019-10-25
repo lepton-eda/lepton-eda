@@ -19,4 +19,4 @@
                page-remove!
                set-page-dirty!))
 
-(deprecated-module-log-warning!)
+(deprecated-module-log-warning! "(lepton page)")
