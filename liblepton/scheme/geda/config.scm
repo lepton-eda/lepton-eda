@@ -29,6 +29,7 @@
 (define-public system-config-context %system-config-context)
 (define-public user-config-context %user-config-context)
 (define-public path-config-context %path-config-context)
+(define-public cache-config-context %cache-config-context)
 (define-public config-filename %config-filename)
 (define-public config-load! %config-load!)
 (define-public config-loaded? %config-loaded?)
