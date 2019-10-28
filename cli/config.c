@@ -33,7 +33,7 @@
 
 #include <liblepton/liblepton.h>
 
-#define config_short_options "hp::su"
+#define config_short_options "hp::suc"
 
 static struct option config_long_options[] =
   {
@@ -41,6 +41,7 @@ static struct option config_long_options[] =
     {"project", 2, NULL, 'p'},
     {"system", 0, NULL, 's'},
     {"user", 0, NULL, 'u'},
+    {"cache", 0, NULL, 'c'}
   };
 
 static void
@@ -53,6 +54,7 @@ config_usage (void)
 "  -p, --project[=PATH]  select project configuration [PATH=.]\n"
 "  -u, --user     select user configuration\n"
 "  -s, --system   select system configuration\n"
+"  -c, --cache    select cache configuration\n"
 "  -h, --help     display usage information and exit\n"
 "\n"
 "If GROUP and KEY are specified, retrieves the value of that\n"
@@ -116,6 +118,15 @@ cmd_config_impl (void *data, int argc, char **argv)
         exit (1);
       }
       cfg = eda_config_get_user_context ();
+      break;
+
+    case 'c':
+      if (cfg != NULL || project_store_path != NULL) {
+        fprintf (stderr, multi_store_msg);
+        fprintf (stderr, see_help_msg);
+        exit (1);
+      }
+      cfg = eda_config_get_cache_context();
       break;
 
     case 'h':

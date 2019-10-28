@@ -154,6 +154,10 @@ Select the user configuration store.
 \fB-s\fR, \fB--system\fR
 Select the system configuration store.  Depending on user permissions,
 the system configuration store may be read-only.
+.TP 8
+\fB-c\fR, \fB--cache\fR
+Select the program-specific configuration store (CACHE configuration context,
+associated with $XDG_CACHE_HOME/lepton-eda/gui.conf configuration file).
 
 .SH "SCHEME PROCESSING"
 .B lepton-cli shell
