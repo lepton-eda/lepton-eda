@@ -60,11 +60,8 @@ SCM s_pre_load_expr = SCM_EOL;
 SCM s_post_load_expr = SCM_EOL;
 
 /*! \brief Print brief help message and exit.
- * \par Function Description
- * Print brief help message describing gschem usage & command-line
- * options, then exit with \a exit_status.
  *
- * \param cmd         First element of argv (name of program as run).
+ * \param cmd  First element of argv (name of program as run).
  */
 static void
 usage(char *cmd)
@@ -86,36 +83,28 @@ usage(char *cmd)
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"),
-         cmd);
+"Report bugs at <%2$s>\n"
+"Lepton EDA homepage: <%3$s>\n"),
+    cmd,
+    PACKAGE_BUGREPORT,
+    PACKAGE_URL);
+
   exit(0);
 }
 
 /*! \brief Print version info and exit.
- * \par Function Description
- * Print gEDA version, and copyright/warranty notices, and exit with
- * exit status 0.
  */
 static void
-version ()
+version()
 {
-  printf(_(
-"Lepton EDA %1$s (git: %2$.7s)\n"
-"Copyright (C) 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright (C) 2017-2019 Lepton Developers.\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"),
-         PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
+  char* msg = version_message();
+  printf ("%s\n", msg);
+  free (msg);
+
   exit (0);
 }
 
-/*! \brief Parse gschem command-line options.
- * \par Function Description
- * Parse command line options, displaying usage message or version
- * information as required.
+/*! \brief Parse command-line options.
  *
  * \param argc Number of command-line arguments.
  * \param argv Array of command-line arguments.
