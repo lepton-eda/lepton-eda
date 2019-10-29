@@ -22,6 +22,9 @@ Verbose mode.  Output all diagnostic information.
 .TP 8
 \fB-h\fR, \fB--help\fR
 Print a help message.
+.TP 8
+\fB-V\fR, \fB--version\fR
+Print version information.
 
 .SH ENVIRONMENT
 .TP 8

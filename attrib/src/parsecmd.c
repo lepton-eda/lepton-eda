@@ -26,6 +26,7 @@
  */
 
 #include <config.h>
+#include <version.h>
 
 #include <stdio.h>
 #ifdef HAVE_STRING_H
@@ -46,7 +47,7 @@
  *  Command line option string for getopt. Defines "q" for quiet,
  *  "v" for verbose and "h" for help.
  */
-#define OPTIONS "qvh"
+#define OPTIONS "qvhV"
 extern char *optarg;
 extern int optind;
 #endif   /* Checking for getopt_long  */
@@ -68,13 +69,15 @@ extern int optind;
  */
 void usage(char *cmd)
 {
-    printf(_("\n"
+    printf(_("Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
+             "\n"
              "lepton-attrib: Lepton EDA attribute editor.\n"
              "Presents schematic attributes in easy-to-edit spreadsheet format.\n"
              "\n"
-             "Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
+             "Options:\n"
              "  -q, --quiet            Quiet mode\n"
              "  -v, --verbose          Verbose mode on\n"
+             "  -V, --version          Show version information\n"
              "  -h, --help             This help menu\n"
              "\n"
              "  FAQ:\n"
@@ -103,17 +106,24 @@ void usage(char *cmd)
     exit(0);
 }
 
+/*! \brief Print version info and exit.
+ */
+static void
+version()
+{
+  char* msg = version_message();
+  printf ("%s\n", msg);
+  free (msg);
+
+  exit (0);
+}
+
 /*!
  * \brief Parse command line switches.
  *
- * Parse command line switches at startup. There are only 3 command
- * line switches:
- * - verbose
- * - quiet
- * - help
  * \param argc Number of command line arguments
  * \param argv Command line arguments (array of strings)
- * \returns I don't know what - looks uninitialised in some circumstances.
+ * \returns I don't know what - looks uninitialised in some circumstances // :-)
  *
  */
 int parse_commandline(int argc, char *argv[])
@@ -127,41 +137,50 @@ int parse_commandline(int argc, char *argv[])
       {"help", 0, 0, 'h'},
       {"quiet", 0, 0, 'q'},
       {"verbose", 0, 0, 'v'},
+      {"version", 0, 0, 'V'},
       {0, 0, 0, 0}
     };
 
     while (1) {
-      ch = getopt_long(argc, argv, "hqv", long_options, &option_index);
+      ch = getopt_long(argc, argv, "hqvV", long_options, &option_index);
       if (ch == -1)
-	break;
+        break;
 #else
     /* Otherwise just use regular getopt */
     while ((ch = getopt(argc, argv, OPTIONS)) != -1) {
 #endif
 
-      switch (ch) {
+      switch (ch)
+      {
+        case 'v':
+          verbose_mode = TRUE;
+          break;
 	
-      case 'v':
-	verbose_mode = TRUE;
-	break;
+        case 'q':
+          quiet_mode = TRUE;
+          break;
 	
-      case 'q':
-	quiet_mode = TRUE;
-	break;
+        case 'h':
+          usage(argv[0]);
+          break;
+
+        case 'V':
+          version();
+          break;
 	
-      case 'h':
-	usage(argv[0]);
-	break;
-	
-      case '?':
-      default:
-	usage(argv[0]);
-	break;
+        case '?':
+          fprintf (stderr, _("\nRun `lepton-attrib --help' for more information.\n"));
+          exit (1);
+
+        default:
+          usage(argv[0]);
+          break;
       }
     }
     
-    if (quiet_mode) {
-	verbose_mode = FALSE;
+    if (quiet_mode)
+    {
+      verbose_mode = FALSE;
     }
 
     return (optind);
