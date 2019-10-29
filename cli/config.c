@@ -18,9 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
+#include <config.h>
 #include <version.h>
 
 #include <unistd.h>
@@ -64,8 +62,11 @@ config_usage (void)
 "store for the current directory). If no GROUP and KEY were provided,\n"
 "outputs the filename of the selected configuration store.\n"
 "\n"
-"Please report bugs to %1$s.\n"),
-          PACKAGE_BUGREPORT);
+"Report bugs at <%1$s>\n"
+"Lepton EDA homepage: <%2$s>\n"),
+    PACKAGE_BUGREPORT,
+    PACKAGE_URL);
+
   exit (0);
 }
 

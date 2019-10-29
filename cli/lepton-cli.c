@@ -19,12 +19,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
-#include <locale.h>
+#include <config.h>
 #include <version.h>
 
+#include <locale.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -37,6 +35,9 @@
 #include <glib.h>
 
 #include "builtins.h"
+
+#include <liblepton/liblepton.h>
+
 
 #define short_options "+hV"
 
@@ -79,8 +80,11 @@ usage (void)
 "  config         Edit Lepton EDA configuration\n"
 "  export         Export Lepton EDA files in various image formats.\n"
 "\n"
-"Please report bugs to %1$s.\n"),
-PACKAGE_BUGREPORT);
+"Report bugs at <%1$s>\n"
+"Lepton EDA homepage: <%2$s>\n"),
+    PACKAGE_BUGREPORT,
+    PACKAGE_URL);
+
   exit (0);
 }
 
@@ -88,14 +92,10 @@ PACKAGE_BUGREPORT);
 static void
 version (void)
 {
-  printf(_("Lepton EDA %1$s (g%2$.7s)\n"
-"Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2019 Lepton EDA developers\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"),
-         PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
+  char* msg = version_message();
+  printf ("%s\n", msg);
+  free (msg);
+
   exit (0);
 }
 

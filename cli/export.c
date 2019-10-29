@@ -18,9 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
+#include <config.h>
 #include <version.h>
 
 #include <unistd.h>
@@ -981,8 +979,11 @@ export_usage (void)
 "  -F, --font=NAME                      set font family for printing text\n"
 "  -h, --help                           display usage information and exit\n"
 "\n"
-"Please report bugs to %1$s.\n"),
-          PACKAGE_BUGREPORT);
+"Report bugs at <%1$s>\n"
+"Lepton EDA homepage: <%2$s>\n"),
+    PACKAGE_BUGREPORT,
+    PACKAGE_URL);
+
   exit (0);
 }
 
