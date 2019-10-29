@@ -28,19 +28,35 @@
   #:use-module (symbol check)
   #:use-module (symbol check log)
   #:use-module (symbol gettext)
+  #:use-module (lepton version)
 
   #:export (check-all-symbols))
 
 (define (usage)
   (format #t
-          (_ "Usage: ~A [OPTIONS] FILENAME ...
+          (_ "Usage: ~A [OPTIONS] FILE ...
+
+Check one or more Lepton EDA symbol FILEs.
+
+General options:
   -h, --help        Print usage
+  -V, --version     Show version information
   -q, --quiet       Quiet mode
-  -v, --verbose     Verbose mode (cumulative: errors, warnings, info)
-                    Use this to get the actual symbol error messages
-FILENAME ... are the symbols to check.
+  -v, --verbose     Verbose mode (cumulative, i.e. -v will show error
+                    messages, -vv will show errors and warnings, and
+                    -vvv displays also informational messages)
+
+Report bugs at <~A>
+Lepton EDA homepage: <~A>
 ")
-          (car (program-arguments)))
+          (car (program-arguments))
+          (lepton-version 'bugs)
+          (lepton-version 'url))
+  (primitive-exit 0))
+
+
+(define (lepton-symcheck-version)
+  (format #t "~a~%" (lepton-version 'msg))
   (primitive-exit 0))
 
 
@@ -72,9 +88,13 @@ Run `~A --help' for more information.\n")
 
   (let ((files (symcheck-option-ref '()))
         (help (symcheck-option-ref 'help))
+        (version (symcheck-option-ref 'version))
         (interactive (symcheck-option-ref 'interactive)))
+    (if version
+        (lepton-symcheck-version))
     (if help
-        (usage)
+        (usage))
+
         (let ((pages (map file->page files)))
           (if interactive
               ;; Interactive mode. Just run the REPL to work with
@@ -84,4 +104,4 @@ Run `~A --help' for more information.\n")
               (if (null? pages)
                   (error-no-files-specified)
                   ;; now report the info/warnings/errors to the user
-                  (primitive-exit (apply + (map report-symbol-statistics pages)))))))))
+                  (primitive-exit (apply + (map report-symbol-statistics pages))))))))
