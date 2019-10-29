@@ -90,9 +90,6 @@ In order to compile gEDA from the distributed source archives, you
 - The `awk` tool for data processing.  GNU Awk (`gawk`) is
   recommended.  <http://www.gnu.org/software/gawk/>
 
-- The CPython interpreter, version 2.7, including the development
-  headers.  <https://www.python.org/downloads/>
-
 The following tools and libraries are **highly recommended**:
 
 - GNU `troff` (`groff`). <http://www.gnu.org/software/groff/>
