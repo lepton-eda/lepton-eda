@@ -3,19 +3,16 @@
 lepton-symcheck \- Lepton EDA Symbol Checker
 .SH SYNOPSIS
 .B lepton-symcheck
-.RB [ \-h ]
-.RB [ \-v ]
-.RB [ \-q ]
-.I symbol1
-.RI [... symbolN ]
+[\fIOPTION\fR ...] \fIFILE\fR ...
 .SH DESCRIPTION
 .PP
 .B lepton-symcheck
 is a symbol checker for Lepton EDA.
+It checks one or more symbol \fIFILE\fRs passed on the command line.
+
 Here is a list of checks that
 .B lepton-symcheck
 performs:
-
 .IP \[bu] 2
 Checks for \f[I]graphical\f[] attribute (if present does varied tests)
 .IP \[bu]
@@ -44,37 +41,32 @@ Checks to make sure the number of pins is the correct number
 accepts the following options:
 .TP 8
 .BR \-q ", " \-\-quiet
-Quiet mode on.  This mode turns off all warnings/notes/messages. (optional)
+Quiet mode on.  This mode turns off all warnings/notes/messages.
 .TP 8
 .BR \-v ", " \-\-verbose
-Verbose mode 1.  This mode will show all error messages (optional)
+Verbose mode 1.  This mode will show all error messages.
 .TP 8
 .B -vv
-Verbose mode 2.  This mode will show all error and warning messages (optional)
+Verbose mode 2.  This mode will show all error and warning messages.
 .TP 8
 .B -vvv
-Verbose mode 2.  This mode will show all error, warning, and info
-messages (optional)
+Verbose mode 3.  This mode will show all error, warning, and info
+messages.
+.TP 8
+.BR \-V ", " \-\-version
+Print version information.
 .TP 8
 .BR -h ", " \-\-help
-Usage summary /
-.B lepton-symcheck
-help
-.TP 8
-.IR symbol1 " [..." symbolN ]
-At least one symbol file must be specified.
-If multiple symbols are
-specified then they are sequentially read in and checked.
-It is important that the schematic(s) follow all the options (i.e. last).
+Print a help message.
 
 .SH EXAMPLES
 Here are some examples on how to run
 .BR lepton-symcheck :
 
-To get usage information just run:
+To get usage information run:
 
 .RS
-lepton-symcheck
+lepton-symcheck \-\-help
 .RE
 
 To actually check a symbol with just error counts, run:
