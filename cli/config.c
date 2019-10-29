@@ -39,7 +39,8 @@ static struct option config_long_options[] =
     {"project", 2, NULL, 'p'},
     {"system", 0, NULL, 's'},
     {"user", 0, NULL, 'u'},
-    {"cache", 0, NULL, 'c'}
+    {"cache", 0, NULL, 'c'},
+    {0, 0, 0, 0}
   };
 
 static void
