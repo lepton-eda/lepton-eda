@@ -144,8 +144,9 @@ Lepton EDA utilities
  * lepton-tragesym
     Werner Hoch
 
-    lepton-tragesym is a symbol creator for gEDA/gaf.  The aim of this python
-    script is to make it easier (and faster) to create symbols for gEDA.
+    lepton-tragesym is a symbol creator for gEDA/gaf.  The aim of
+    this script is to make it easier (and faster) to create
+    symbols for Lepton EDA.
 
     Program features:
 
