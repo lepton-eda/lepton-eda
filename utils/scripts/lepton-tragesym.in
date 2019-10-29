@@ -63,23 +63,6 @@ exec @GUILE@ -s "$0" "$@"
 (define special-attributes
   '("version" "name" "refdes"))
 
-;;; FIXME: Get rid of official attributes. The symbol can be
-;;; checked with symcheck if needed.
-(define official-attributes
-  '("device"
-    "footprint"
-    "numslots"
-    "slot"
-    "slotdef"
-    "description"
-    "comment"
-    "author"
-    "documentation"
-    "value"
-    "dist-license"
-    "use-license"
-    "net"))
-
 ;;; FIXME: There should be symversion= here.
 (define single-attribute-warning
   '("device"
@@ -808,8 +791,6 @@ Based on original \"tragesym\" version
           (visibility #f)
           (alignment 'lower-left)
           (color 5))
-      (unless (member name official-attributes)
-        (format-warning "The attribute '~A=~A' is not official." name value))
       (page-append! page
                     (make-text `(,x . ,y)
                                alignment
