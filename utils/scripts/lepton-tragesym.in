@@ -59,9 +59,8 @@ exec @GUILE@ -s "$0" "$@"
 (define %options
   (getopt-long (command-line) %option-spec))
 
-;;; FIXME: Get rid of version=.
 (define special-attributes
-  '("version" "name" "refdes"))
+  '("name" "refdes"))
 
 ;;; FIXME: There should be symversion= here.
 (define single-attribute-warning
