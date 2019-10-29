@@ -186,17 +186,10 @@ Lepton EDA utilities
 
 
 * lepton-archive
-    Stuart Brorson
 
-    This program is used to create a gEDA design archive.  It operates
-    in two modes: archive mode and extract mode.  In archive mode it
-    creates a project archive from a bunch of project files, and in
-    extract mode it extracts the files from the archive and places them in
-    the local dir.
-
-    lepton-archive requires python to run.
-    Run:  lepton-archive -h  for help information.
-
+Create design archive from a set of schematics and configuration
+files including symbols, SPICE source files, etc.  See
+lepton-archive(1) for more information.
 
 * lepton-schdiff
     Alan Somers
