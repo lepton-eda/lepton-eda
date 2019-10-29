@@ -7,8 +7,7 @@ noinst_SCRIPTS = \
 	bompp.sh.in \
 	bom_xref.sh.in \
 	sch2eaglepos.sh \
-	sw2asc \
-	bom
+	sw2asc
 
 dist_noinst_MANS = gnet_hier_verilog.1 pads_backannotate.1 \
 	sarlacc_sym.1 sw2asc.1
@@ -23,9 +22,7 @@ EXTRA_DIST = \
 	pads_backannotate.1.in \
 	sarlacc_sym.1.in \
 	sw2asc.1.in \
-	sch2eaglepos.sh \
-	bom \
-	bom.readme
+	sch2eaglepos.sh
 
 .1.in.1:
 	d=`$(GUILE) -c '(setlocale LC_ALL "C") \
