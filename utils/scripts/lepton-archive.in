@@ -251,6 +251,11 @@ Continue? [y/N] "
 (define command-line-file-list (option-ref %options '() '()))
 
 
+(define (overwrite-file? message)
+  (display message)
+  (string= (read-line (current-input-port)) "y"))
+
+
 (define* (delete-file* filename #:optional quiet)
   (catch #t
     (lambda () (delete-file filename))
@@ -314,11 +319,6 @@ Continue? [y/N] "
               filename
               key
               args))))
-
-
-(define (overwrite-file? message)
-  (display message)
-  (string= (read-line (current-input-port)) "y"))
 
 
 (define (report-preserve-existing-file file)
