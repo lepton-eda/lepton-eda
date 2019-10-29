@@ -251,7 +251,7 @@ The section won't be processed." section-name))
   (primitive-exit 1))
 
 
-(define (check pin)
+(define (check-pin-info pin)
   (if (string= (pin-style pin) "spacer")
       (begin
         (when (component-option 'sort_labels)
@@ -978,7 +978,7 @@ which values are equal in terms of F-EQUAL?."
     (when (component-option 'generate_pinseq)
       (generate-pinseq pins))
 
-    (for-each check pins)
+    (for-each check-pin-info pins)
 
     (for-each
      (lambda (name)
