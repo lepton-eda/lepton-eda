@@ -181,18 +181,19 @@ The section won't be processed." section-name))
     section-name))
 
 (define (file-contents filename)
-  (with-input-from-file filename
-    (lambda ()
-      (let loop ((s (read-line))
-                 (ls '()))
-        (if (eof-object? s)
-            (reverse ls)
-            (let ((trimmed-s (string-trim-both s char-set:whitespace)))
-              (loop (read-line)
-                    (if (or (string-null? trimmed-s)
-                            (char=? #\# (string-ref trimmed-s 0)))
-                        ls
-                        (cons trimmed-s ls)))))))))
+  (let ((cs (char-set-delete char-set:whitespace #\tab)))
+    (with-input-from-file filename
+      (lambda ()
+        (let loop ((s (read-line))
+                   (ls '()))
+          (if (eof-object? s)
+              (reverse ls)
+              (let ((trimmed-s (string-trim-both s cs)))
+                (loop (read-line)
+                      (if (or (string-null? trimmed-s)
+                              (char=? #\# (string-ref trimmed-s 0)))
+                          ls
+                          (cons trimmed-s ls))))))))))
 
 
 ;;; FIXME: check with spaces before and after section name.
