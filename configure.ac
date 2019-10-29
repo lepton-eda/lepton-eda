@@ -8,7 +8,11 @@ dnl directory.
 # Set up configuration system
 #####################################################################
 
-AC_INIT([lepton EDA], [1.9.9], [https://github.com/lepton-eda/lepton-eda/issues], [lepton-eda])
+AC_INIT([Lepton EDA],
+        [1.9.9],
+        [https://github.com/lepton-eda/lepton-eda/issues],
+        [lepton-eda],
+        [https://github.com/lepton-eda/lepton-eda])
 AC_PREREQ([2.60])
 
 AC_CONFIG_SRCDIR([liblepton/src/liblepton.c])
