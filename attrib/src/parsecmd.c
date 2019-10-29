@@ -62,13 +62,10 @@ extern int optind;
 #include "../include/gettext.h"
 
 /*!
- * \brief Print usage message
+ * \brief Print usage message and exit.
  *
- * Prints gattrib usage information to stdout.
- * \param cmd Unused parameter.
- *
+ * \param cmd  First element of argv (name of program as run).
  */
-
 void usage(char *cmd)
 {
     printf(_("\n"
@@ -97,9 +94,12 @@ void usage(char *cmd)
              "Copyright (C) 2007-2016 gEDA Contributors.\n"
              "Copyright (C) 2017-2019 Lepton EDA Contributors.\n"
              "\n"
-             "Please report bugs to %2$s.\n"),
+             "Report bugs at <%2$s>\n"
+             "Lepton EDA homepage: <%3$s>\n"),
              cmd,
-             PACKAGE_BUGREPORT);
+             PACKAGE_BUGREPORT,
+             PACKAGE_URL);
+
     exit(0);
 }
 
