@@ -62,7 +62,6 @@ exec @GUILE@ -s "$0" "$@"
 (define special-attributes
   '("name" "refdes"))
 
-;;; FIXME: There should be symversion= here.
 (define single-attribute-warning
   '("device"
     "footprint"
@@ -70,6 +69,7 @@ exec @GUILE@ -s "$0" "$@"
     "documentation"
     "description"
     "numslots"
+    "symversion"
     "dist-license"
     "use-license"))
 
