@@ -256,6 +256,11 @@ Continue? [y/N] "
   (string= (read-line (current-input-port)) "y"))
 
 
+(define (report-preserve-existing-file file)
+  (format #t "Preserving existing ~S in local directory.\n\n" file)
+  #f)
+
+
 (define* (delete-file* filename #:optional quiet)
   (catch #t
     (lambda () (delete-file filename))
@@ -319,11 +324,6 @@ Continue? [y/N] "
               filename
               key
               args))))
-
-
-(define (report-preserve-existing-file file)
-  (format #t "Preserving existing ~S in local directory.\n\n" file)
-  #f)
 
 
 (define (ls->path ls prefix)
