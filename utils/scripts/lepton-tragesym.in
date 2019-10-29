@@ -73,13 +73,6 @@ exec @GUILE@ -s "$0" "$@"
     "dist-license"
     "use-license"))
 
-(define single-attribute
-  '("slot"))
-
-(define multiple-attributes
-  '("slotdef"
-    "comment"))
-
 (define stylelist
   '("line" "dot" "clk" "dotclk" "spacer" "none"))
 
