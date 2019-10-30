@@ -16,8 +16,10 @@ exec @GUILE@ "$0" "$@"
 ; Avoid Scheme compile-time errors using a clever trick
 ; from netlist/scheme/lepton-netlist.in (see comments there):
 ;
+( primitive-eval '(use-modules (ice-9 format)) )
 ( primitive-eval '(use-modules (lepton legacy-config)) )
 ( primitive-eval '(use-modules (ice-9 getopt-long)) )
+( primitive-eval '(use-modules (lepton version)) )
 
 
 
@@ -45,17 +47,42 @@ exec @GUILE@ "$0" "$@"
     ( list 'single-char #\x )
     ( list 'value        #f )
   )
+  ( list ; --help (-h)
+    'help
+    ( list 'single-char #\h )
+    ( list 'value        #f )
+  )
 )
 ) ; cmd-line-args-spec
 
 
 
 ( define ( usage exit-code )
-    ( format #t
-      "Usage: lepton-upcfg ~
-       -l | -u | -s [-x]~%"
-    )
-    ( primitive-exit exit-code )
+  ( format #t "~
+Usage: lepton-upcfg -l | -u | -s [-x] | -h
+
+Lepton EDA configuration upgrade utility.
+Converts geda*.conf configuration files
+to corresponding lepton*.conf files.
+
+Options:
+  -l, --local      geda.conf => lepton.conf
+                   (in current directory)
+  -u, --user       geda-user.conf => lepton-user.conf
+                   (in user configuration directory)
+  -s, --system     geda-system.conf => lepton-system.conf
+                   (in system configuration directory)
+  -x, --overwrite  Overwrite existing files
+  -h, --help       Show usage information
+
+Report bugs at <~a>
+Lepton EDA homepage: <~a>
+"
+    ( lepton-version 'bugs )
+    ( lepton-version 'url )
+  )
+
+  ( primitive-exit exit-code )
 )
 
 
@@ -79,6 +106,10 @@ exec @GUILE@ "$0" "$@"
   ( set! args-len (length cmd-line-args) )
   ( when ( or (< args-len 2) (> args-len 3) )
     ( usage 1 )
+  )
+
+  ( if (option-ref cmd-line-args 'help #f)
+    ( usage 0 )
   )
 
   ( if (option-ref cmd-line-args 'local #f)
@@ -118,8 +149,4 @@ exec @GUILE@ "$0" "$@"
 ; top-level code:
 ;
 ( main )
-
-
-
-; vim: ft=scheme tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
