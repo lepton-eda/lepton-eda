@@ -12,7 +12,6 @@ pinwidthvertical=400
 pinwidthhorizontal=400
 
 [geda_attr]
-version=20060113 1
 name=4099
 device=4099
 refdes=U?

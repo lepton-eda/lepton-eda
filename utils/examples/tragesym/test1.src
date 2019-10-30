@@ -12,7 +12,6 @@ pinwidthvertical=400
 pinwidthhorizontal=600
 
 [geda_attr]
-version=20060113 1
 name=TEST1
 device=devTEST1
 refdes=U?

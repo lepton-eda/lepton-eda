@@ -12,7 +12,6 @@ pinwidthvertical=400
 pinwidthhorizontal=500
 
 [geda_attr]
-version=20060113 1
 name=AT90S8535
 device=AT90S8535_TQFP
 refdes=U?
