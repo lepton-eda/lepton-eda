@@ -18,9 +18,8 @@
  */
 
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include <config.h>
+#include <version.h>
 
 #include <glib.h>
 
@@ -30,8 +29,6 @@
 #include <ctype.h>
 #include <unistd.h>
 #include <sys/stat.h>
-
-#define GSC2PCB_VERSION "1.6"
 
 #define DEFAULT_PCB_INC "pcb.inc"
 
@@ -1285,9 +1282,10 @@ static const gchar *usage_string0 =
   "usage: lepton-sch2pcb [options] {project | foo.sch [foo1.sch ...]}\n"
   "\n"
   "Generate a PCB layout file from a set of Lepton EDA schematics.\n"
-  "   lepton-netlist -g PCB is run to generate foo.net from the schematics.\n"
   "\n"
-  "   lepton-netlist -g gsch2pcb is run to get PCB m4 derived elements which\n"
+  "   1) `lepton-netlist -g PCB` is run to generate foo.net from the schematics.\n"
+  "\n"
+  "   2) `lepton-netlist -g gsch2pcb` is run to get PCB m4 derived elements which\n"
   "   match schematic footprints.  For schematic footprints which don't match\n"
   "   any PCB m4 layout elements, search a set of file element directories in\n"
   "   an attempt to find matching PCB file elements.\n"
@@ -1297,7 +1295,7 @@ static const gchar *usage_string0 =
   "   have no matching schematic component, then remove those elements from\n"
   "   foo.pcb and rename foo.pcb to a foo.pcb.bak sequence.\n"
   "\n"
-  "   lepton-netlist -g pcbpins is run to get a PCB actions file which will rename all\n"
+  "   3) `lepton-netlist -g pcbpins` is run to get a PCB actions file which will rename all\n"
   "   of the pins in a .pcb file to match pin names from the schematic.\n"
   "\n"
   "   \"project\" is a file (not ending in .sch) containing a list of\n"
@@ -1306,7 +1304,7 @@ static const gchar *usage_string0 =
   "   Options in a project file are like command line args without the \"-\":\n"
   "       output-name myproject\n"
   "\n"
-  "options (may be included in a project file):\n"
+  "Options (may be included in a project file):\n"
   "   -d, --elements-dir D    Search D for PCB file elements.  These defaults\n"
   "                           are searched if they exist: ./packages,\n"
   "                           /usr/local/share/pcb/newlib, /usr/share/pcb/newlib,\n"
@@ -1349,7 +1347,7 @@ static const gchar *usage_string1 =
   "                           Creates:  myproject.partslist3\n"
   "   --empty-footprint name  See the project.sample file.\n"
   "\n"
-  "options (not recognized in a project file):\n"
+  "Options (not recognized in a project file):\n"
   "   --gnetlist-arg arg      Allows additional arguments to be passed to lepton-netlist.\n"
   "   --fix-elements          If a schematic component footprint is not equal\n"
   "                           to its PCB element Description, update the\n"
@@ -1358,23 +1356,45 @@ static const gchar *usage_string1 =
   "                           PCB files originally created with gschem2pcb.\n"
   "   -v, --verbose           Use -v -v for additional file element debugging.\n"
   "   -V, --version\n\n"
-  "environment variables:\n"
+  "Environment variables:\n"
   "   NETLISTER               If set, this specifies the name of the netlister program\n"
   "                           to execute.\n"
   "\n"
   "Additional Resources:\n"
-  "\n"
-  "  Lepton EDA homepage:     https://github.com/lepton-eda/lepton-eda\n"
   "  gnetlist user guide:     http://wiki.geda-project.org/geda:gnetlist_ug\n"
   "  gEDA homepage:           http://www.geda-project.org\n"
-  "  PCB homepage:            http://pcb.geda-project.org\n"  "\n";
+  "  PCB homepage:            http://pcb.geda-project.org\n"
+  "\n"
+  "Report bugs at <%s>\n"
+  "Lepton EDA homepage: <%s>\n";
 
 static void
 usage ()
 {
   puts (usage_string0);
   printf ("                           %s\n\n", default_m4_pcbdir);
-  puts (usage_string1);
+  printf (usage_string1, PACKAGE_BUGREPORT, PACKAGE_URL);
+  exit (0);
+}
+
+static void
+version()
+{
+  const char* msg =
+    "Lepton EDA %s.%s (git: %.7s)\n"
+    "Copyright (C) 1998-2016 gEDA developers\n"
+    "Copyright (C) 2017-2019 Lepton EDA developers\n"
+    "This is free software, and you are welcome to redistribute it\n"
+    "under certain conditions. For details, see the file `COPYING',\n"
+    "which is included in the Lepton EDA distribution.\n"
+    "There is NO WARRANTY, to the extent permitted by law."
+    "\n";
+
+  printf (msg,
+          PACKAGE_DOTTED_VERSION,
+          PACKAGE_DATE_VERSION,
+          PACKAGE_GIT_COMMIT);
+
   exit (0);
 }
 
@@ -1392,8 +1412,7 @@ get_args (gint argc, gchar ** argv)
       if (*opt == '-')
         ++opt;
       if (!strcmp (opt, "version") || !strcmp (opt, "V")) {
-        printf ("lepton-sch2pcb %s\n", GSC2PCB_VERSION);
-        exit (0);
+        version();
       } else if (!strcmp (opt, "verbose") || !strcmp (opt, "v")) {
         verbose += 1;
         continue;
@@ -1509,7 +1528,7 @@ main (gint argc, gchar ** argv)
 
   if (!run_gnetlist (pins_file_name, net_file_name, pcb_new_file_name,
 		     sch_basename, schematics)) {
-    fprintf(stderr, "Failed to run gnetlist\n");
+    fprintf(stderr, "Failed to run netlister\n");
     exit (1);
   }
 

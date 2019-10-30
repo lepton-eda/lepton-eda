@@ -8,7 +8,8 @@ lepton_renum_SOURCES = lepton-renum.c lepton-renum.h
 lepton_sch2pcb_SOURCES = lepton-sch2pcb.c
 lepton_sch2pcb_CPPFLAGS = \
 	-DPCBM4DIR=\"$(PCBM4DIR)\" \
-	-DPCBLIBPATH=\"$(PCBLIBPATH)\"
+	-DPCBLIBPATH=\"$(PCBLIBPATH)\" \
+	-I$(top_srcdir)
 lepton_sch2pcb_CFLAGS = $(GLIB_CFLAGS)
 lepton_sch2pcb_LDFLAGS = $(GLIB_LIBS)
 
