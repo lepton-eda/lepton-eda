@@ -18,28 +18,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-#include <config.h>
 
-#include <stdio.h>
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-#ifdef HAVE_STRARG_H
-#include <stdarg.h>
-#endif
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
+#include "config.h"
+#include "version.h"
 
 #include "libgeda_priv.h"
 #include "liblepton/libgedaguile.h"
 
-/*! \brief Perform runtime initialization of libgeda library.
+/*! \brief Perform runtime initialization of liblepton library.
+ *
  *  \par Function Description
  *  This function is responsible for making sure that any runtime
- *  initialization is done for all the libgeda routines.  It should
- *  be called before any other libgeda functions are called.
- *
+ *  initialization is done for all the liblepton routines. It should
+ *  be called before any other liblepton functions are called.
  */
 void libgeda_init(void)
 {
@@ -88,5 +79,39 @@ set_guile_compiled_path()
   }
 
   setenv ("GUILE_LOAD_COMPILED_PATH", path, 1);
+}
+
+
+
+/*! \brief Returns a message to be used in the --version output.
+ *  \note  Caller must free() the returned value.
+ */
+char*
+version_message()
+{
+  const char* msg =
+    _("Lepton EDA %s%s.%s (git: %.7s)\n"
+    "Copyright (C) 1998-2016 gEDA developers\n"
+    "Copyright (C) 2017-2019 Lepton EDA developers\n"
+    "This is free software, and you are welcome to redistribute it\n"
+    "under certain conditions. For details, see the file `COPYING',\n"
+    "which is included in the Lepton EDA distribution.\n"
+    "There is NO WARRANTY, to the extent permitted by law.");
+
+  size_t sz = snprintf (NULL, 0, msg,
+                        PREPEND_VERSION_STRING,
+                        PACKAGE_DOTTED_VERSION,
+                        PACKAGE_DATE_VERSION,
+                        PACKAGE_GIT_COMMIT);
+
+  char* res = (char*) malloc (++sz);
+
+  snprintf (res, sz, msg,
+            PREPEND_VERSION_STRING,
+            PACKAGE_DOTTED_VERSION,
+            PACKAGE_DATE_VERSION,
+            PACKAGE_GIT_COMMIT);
+
+  return res;
 }
 
