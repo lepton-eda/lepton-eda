@@ -110,7 +110,7 @@ included in the Lepton EDA distribution.
 There is NO WARRANTY, to the extent permitted by law.\n"))
 
   (match (lepton-version)
-    ((prepend dotted date commit)
+    ((prepend dotted date commit bugs url msg)
      (if output-to-log?
          (log! 'message version-msg prepend dotted date (string-take commit 7))
          (begin
