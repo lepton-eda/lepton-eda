@@ -205,23 +205,20 @@ The section won't be processed." section-name))
        (char=? #\] (string-ref s (1- (string-length s))))))
 
 
+(define (merge-options ls)
+  (sxml-match
+   ls
+   [(list (section . ,section) (element ,element) . ,[anything])
+    (merge-options `((section ,@section ,element) ,@anything))]
+   [,other other]))
+
+
 (define (file-contents->alist filename)
-  (map
-   (lambda (x)
-     (sxml-match x
-                 ((list (section ,name) (element ,elem) ...)
-                  (cons name elem))))
-   (cdr (fold-right
-         (lambda (n p)
-           (if (null? p)
-               ;; New sublist.
-               (if (eq? 'section (car n))
-                   (cons '() (list (list n)))
-                   (list (list n)))
-               (if (eq? 'section (car n))
-                   (cons '() (cons (cons n (car p)) (cdr p)))
-                   (cons (cons n (car p)) (cdr p)))))
-         '() (file-contents filename)))))
+  (sxml-match
+   (merge-options (file-contents filename))
+   ;; The same as (map car list-of-sections).
+   [(list (section . ,anything) ...)
+    `((,@anything) ...)]))
 
 
 ;;; Encapsulates data related to a pin.
