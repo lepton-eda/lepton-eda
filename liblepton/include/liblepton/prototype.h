@@ -42,6 +42,7 @@ void i_vars_libgeda_freenames();
 /* libgeda.c */
 void libgeda_init(void);
 void set_guile_compiled_path();
+char* version_message();
 
 /* m_hatch.c */
 void m_hatch_box(GedaBox *box, gint angle, gint pitch, GArray *lines);
