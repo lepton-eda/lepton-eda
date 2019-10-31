@@ -189,13 +189,13 @@ The section won't be processed." section-name))
                    (ls '()))
           (if (eof-object? s)
               (reverse ls)
-              (let ((trimmed-s (string-trim-both s cs)))
+              (let ((trimmed-s (string-trim-right (string-trim-both s cs) #\tab)))
                 (loop (read-line)
                       (if (or (string-null? trimmed-s)
                               (char=? #\# (string-ref trimmed-s 0)))
                           ls
-                          (if (section-name? s)
-                              (cons `(section ,(section-string->symbol s)) ls)
+                          (if (section-name? trimmed-s)
+                              (cons `(section ,(section-string->symbol trimmed-s)) ls)
                               (cons `(element ,trimmed-s) ls)))))))))))
 
 
