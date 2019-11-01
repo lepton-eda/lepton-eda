@@ -243,7 +243,6 @@
 (define (hierarchy-down-schematic name)
   (define quiet-mode (netlist-option-ref 'quiet))
 
-  (log! 'message (_ "Going to traverse source ~S.") name)
   (let ((filename (get-source-library-file name)))
     (if filename
         (begin
