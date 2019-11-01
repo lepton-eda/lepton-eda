@@ -110,6 +110,11 @@ Notable changes in Lepton EDA 1.9.10
   command: `--paper-names` (`-P`). It displays a list of paper
   size names suitable for the `--paper` option.
 
+### Changes in `lepton-schematic`:
+- Grips can now be turned on and off at run-time.
+  Use the new 'Options → Grips: On/Off' menu item or
+  <kbd>O</kbd>-<kbd>I</kbd> keyboard shortcut.
+
 Notable changes in Lepton EDA 1.9.9
 -----------------------------------
 ### General changes:
