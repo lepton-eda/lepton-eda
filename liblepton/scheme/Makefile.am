@@ -50,6 +50,7 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0111-object-path.scm \
 	unit-tests/t0112-object-picture.scm \
 	unit-tests/t0113-object-selectable.scm \
+	unit-tests/t0114-object-embedded.scm \
 	unit-tests/t0200-page.scm \
 	unit-tests/t0201-page-dirty.scm \
 	unit-tests/t0202-page-string.scm \
@@ -90,6 +91,6 @@ update-cli-tool:
 .PHONY: update-cli-tool
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ geda/core/gettext.scm
+CLEANFILES = *.log *~ geda/core/gettext.scm unit-tests/dummy.sym unit-tests/dummy.xpm
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log *~ Makefile.in
