@@ -6,6 +6,11 @@ more information, please consult `git log` history.
 
 Notable changes in Lepton EDA 1.9.10
 ------------------------------------
+### General changes:
+- Two unused old scheme scripts `print-NB-attribs.scm` and
+  `list-keys.scm` have been removed.
+- Several other cleanups have been made in the source tree.
+
 ### Changes when building from source:
 - Building of the Scheme API HTML documentation with multiple
   make jobs on FreeBSD has been fixed.
@@ -135,6 +140,16 @@ Notable changes in Lepton EDA 1.9.9
   `make-toplevel-schematic` is still there, and has been made an
   alias of the latter. Its `netlist-mode` argument has been made
   optional and is `'geda` by default.
+
+### Changes in `examples`:
+- The `bom` python script has been moved to *contrib/*.
+
+- Several `README` files have been updated.
+
+- `RF_Amp` and `TwoStageAmp` examples have been updated to make
+  SPICE simulation work properly.
+
+- `gTAG` example scripts and configuration files have been fixed.
 
 
 Notable changes in Lepton EDA 1.9.8
