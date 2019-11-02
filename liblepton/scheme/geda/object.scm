@@ -473,3 +473,6 @@
 
 ( define-public object-selectable?     %object-selectable? )
 ( define-public set-object-selectable! %set-object-selectable! )
+
+( define-public object-embedded?     %object-embedded? )
+( define-public set-object-embedded! %set-object-embedded! )
