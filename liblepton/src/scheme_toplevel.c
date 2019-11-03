@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library - Scheme API
+/* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,17 @@ SCM_DEFINE (edascm_make_toplevel, "%make-toplevel", 0, 0, 0,
             (),
             "Make new TOPLEVEL.")
 {
-  return edascm_from_toplevel (s_toplevel_new ());
+  TOPLEVEL* toplevel = s_toplevel_new();
+
+  /* Almost all calls to s_toplevel_new() are accompanied
+   * by subsequent call to i_vars_libgeda_set() in C code.
+   * It can't be done in Scheme.
+   * To get properly initialized TOPLEVEL object in Scheme
+   * code, call i_vars_libgeda_set() here:
+  */
+  i_vars_libgeda_set (toplevel);
+
+  return edascm_from_toplevel (toplevel);
 }
 
 
