@@ -153,7 +153,7 @@ enum geda_smob_flags {
 #else
 #  define EDASCM_ASSERT_SMOB_VALID(x) \
   do { if (!EDASCM_SMOB_VALIDP(x)) {                                    \
-      scm_misc_error (NULL, "Found invalid gEDA smob ~S", scm_list_1 (x)); \
+      scm_misc_error (NULL, "Found invalid object (smob) ~S", scm_list_1 (x)); \
     } } while (0)
 #endif
 
