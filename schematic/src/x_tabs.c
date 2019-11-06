@@ -53,7 +53,7 @@
  * key:         use-tabs
  * group:       schematic.gui
  * type:        boolean
- * default val: false
+ * default val: true
  *
  * 2) Whether to show "close" button on tabs:
  * key:         show-close-button
@@ -75,7 +75,7 @@
 
 
 static gboolean
-g_x_tabs_enabled = FALSE;
+g_x_tabs_enabled = TRUE;
 
 static gboolean
 g_x_tabs_show_close_button = TRUE;
