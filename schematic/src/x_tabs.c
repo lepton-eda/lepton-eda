@@ -284,6 +284,12 @@ x_tabs_page_on_sel (GtkNotebook* nbook,
                     guint        ndx,
                     gpointer     data);
 
+static void
+x_tabs_page_on_reordered (GtkNotebook* nbook,
+                          GtkWidget*   wtab,
+                          guint        newindex,
+                          gpointer     data);
+
 
 
 /* page view: */
@@ -409,7 +415,24 @@ x_tabs_dbg_pages_dump (GschemToplevel* w_current)
   printf( " ^^^^^^^^^^^^^^ pages ^^^^^^^^^^^^^^^^^^\n\n" );
 }
 
-#endif
+static void
+x_tabs_dbg_pages_dump_simple (GschemToplevel* w_current)
+{
+  printf( " >> pages:\n" );
+  g_return_if_fail( w_current != NULL );
+
+  for ( GList* node = w_current->toplevel->pages->glist;
+        node != NULL;
+        node = g_list_next( node ) )
+  {
+    PAGE* p = node->data;
+    printf( "    p: [%s]\n", g_path_get_basename( s_page_get_filename(p) ) );
+  }
+
+  printf( "\n" );
+}
+
+#endif /* DEBUG */
 
 
 
@@ -660,6 +683,11 @@ x_tabs_nbook_create (GschemToplevel* w_current, GtkWidget* work_box)
 
   g_signal_connect (nbook, "switch-page",
                     G_CALLBACK (&x_tabs_page_on_sel), w_current);
+
+  g_signal_connect (nbook,
+                    "page-reordered",
+                    G_CALLBACK (&x_tabs_page_on_reordered),
+                    w_current);
 
 } /* x_tabs_nbook_create() */
 
@@ -1160,6 +1188,8 @@ x_tabs_page_new (GschemToplevel* w_current, PAGE* page)
   x_tabs_tl_pview_cur_set (w_current, pview);
   gint ndx = x_tabs_nbook_page_add (w_current, page, pview, wtab);
 
+  gtk_notebook_set_tab_reorderable (w_current->xtabs_nbook, wtab, TRUE);
+
   return x_tabs_info_add (w_current, ndx, page, pview, wtab);
 
 } /* x_tabs_page_new() */
@@ -1484,4 +1514,34 @@ x_tabs_page_on_sel (GtkNotebook* nbook,
   x_window_set_current_page_impl (w_current, nfo->page_);
 
 } /* x_tabs_page_on_sel() */
+
+
+
+/*! \brief GtkNotebook "page-reordered" signal handler.
+ */
+static void
+x_tabs_page_on_reordered (GtkNotebook* nbook,
+                          GtkWidget*   wtab,
+                          guint        newindex,
+                          gpointer     data)
+{
+  GschemToplevel* w_current = (GschemToplevel*) data;
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->toplevel != NULL);
+  g_return_if_fail (w_current->toplevel->pages != NULL);
+
+  TabInfo* nfo = x_tabs_info_find_by_wtab (w_current->xtabs_info_list, wtab);
+  g_return_if_fail (nfo != NULL);
+
+  GedaPageList* pages = w_current->toplevel->pages;
+  geda_list_move_item (pages, nfo->page_, newindex);
+
+  gtk_widget_grab_focus (GTK_WIDGET (nfo->pview_));
+  page_select_widget_update (w_current);
+
+#ifdef DEBUG
+  x_tabs_dbg_pages_dump_simple( w_current );
+#endif
+
+} /* x_tabs_page_on_reordered() */
 
