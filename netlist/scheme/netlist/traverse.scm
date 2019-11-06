@@ -285,7 +285,6 @@
      (cut set-package-pin-connection-properties! <> connections)
      components)
     (for-each create-schematic-component-refdes components)
-    (for-each set-package-pin-nets-properties! components)
 
     subschematic))
 
@@ -305,6 +304,10 @@
                                   pages))
          (subschematic (subschematic-list->subschematic page-subschematics
                                                         hierarchy-tag)))
+
+    (for-each set-package-pin-nets-properties!
+              (subschematic-components subschematic))
+
     ;; Traverse pages obtained from files defined in the 'source='
     ;; attributes of schematic components.
     (for-each traverse-component-sources
