@@ -284,7 +284,6 @@
     (for-each
      (cut set-package-pin-connection-properties! <> connections)
      components)
-    (for-each create-schematic-component-refdes components)
 
     subschematic))
 
@@ -304,6 +303,9 @@
                                   pages))
          (subschematic (subschematic-list->subschematic page-subschematics
                                                         hierarchy-tag)))
+
+    (for-each create-schematic-component-refdes
+              (subschematic-components subschematic))
 
     (for-each set-package-pin-nets-properties!
               (subschematic-components subschematic))
