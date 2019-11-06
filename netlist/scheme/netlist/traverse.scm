@@ -95,17 +95,11 @@
 (define (get-net-map-pin-connection pin connections)
   (define pin-component (package-pin-parent pin))
 
-  (define tag (cdr (subschematic-name (schematic-component-parent pin-component))))
-
   (define netname (net-map-netname (package-pin-net-map pin)))
 
-  (define (subschematic-connection-tag connection)
-    (cdr (subschematic-name (schematic-connection-parent connection))))
-
   (define (netname-matches? connection)
-    (and (equal? tag (subschematic-connection-tag connection))
-         (or (equal? netname (schematic-connection-name connection))
-             (equal? netname (schematic-connection-override-name connection)))))
+    (or (equal? netname (schematic-connection-name connection))
+        (equal? netname (schematic-connection-override-name connection))))
 
   (let loop ((groups connections))
     (if (null? groups)
