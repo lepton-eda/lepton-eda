@@ -26,6 +26,7 @@
   #:use-module (geda attrib)
   #:use-module (geda object)
   #:use-module (lepton page)
+  #:use-module (netlist package-pin)
 
   #:export-syntax (make-schematic-connection schematic-connection?
                    schematic-connection-id set-schematic-connection-id!
@@ -183,4 +184,7 @@ Example usage:
 CONNECTION."
   (set-schematic-connection-pins!
    connection
-   (cons pin (schematic-connection-pins connection))))
+   (cons pin (schematic-connection-pins connection)))
+  (set-package-pin-connection! pin connection)
+  ;; Return value.
+  connection)

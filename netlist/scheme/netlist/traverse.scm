@@ -215,7 +215,6 @@
 (define (set-real-package-pin-connection! pin connections)
   (let ((connection (get-package-pin-connection (package-pin-object pin)
                                                 connections)))
-    (set-package-pin-connection! pin connection)
     (schematic-connection-add-pin! connection pin)
     pin))
 
@@ -240,7 +239,6 @@
                                    'power-rail))
          (connection (get-net-map-pin-connection pin connections)))
     (set-package-pin-name! pin netname)
-    (set-package-pin-connection! pin connection)
     (schematic-connection-add-pin! connection pin)))
 
 
