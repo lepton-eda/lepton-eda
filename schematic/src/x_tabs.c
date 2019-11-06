@@ -291,6 +291,10 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
                           gpointer     data);
 
 
+static gboolean
+x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data);
+
+
 
 /* page view: */
 
@@ -941,7 +945,18 @@ x_tabs_hdr_set (GtkNotebook* nbook, TabInfo* nfo)
   g_return_if_fail (nfo != NULL);
 
   GtkWidget* hdr = x_tabs_hdr_create (nfo);
-  gtk_notebook_set_tab_label (nbook, nfo->wtab_, hdr);
+
+  GtkWidget* ebox = gtk_event_box_new();
+  gtk_event_box_set_visible_window (GTK_EVENT_BOX (ebox), FALSE);
+  gtk_container_add (GTK_CONTAINER (ebox), hdr);
+  gtk_widget_show_all (ebox);
+
+  g_signal_connect (ebox,
+                    "button-press-event",
+                    G_CALLBACK (&x_tabs_hdr_on_mouse_click),
+                    nfo);
+
+  gtk_notebook_set_tab_label (nbook, nfo->wtab_, ebox);
 }
 
 
@@ -1544,4 +1559,150 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
 #endif
 
 } /* x_tabs_page_on_reordered() */
+
+
+
+static void
+xtabs_menu_on_new (GtkMenuItem* mitem, gpointer data)
+{
+  TabInfo* nfo = (TabInfo*) data;
+  i_callback_file_new (nfo->tl_, 0, NULL);
+}
+
+
+
+static void
+xtabs_menu_on_open (GtkMenuItem* mitem, gpointer data)
+{
+  TabInfo* nfo = (TabInfo*) data;
+  i_callback_file_open (nfo->tl_, 0, NULL);
+}
+
+
+
+static void
+xtabs_menu_on_save (GtkMenuItem* mitem, gpointer data)
+{
+  TabInfo* nfo = (TabInfo*) data;
+  i_callback_file_save (nfo->tl_, 0, NULL);
+}
+
+
+
+static void
+xtabs_menu_on_saveas (GtkMenuItem* mitem, gpointer data)
+{
+  TabInfo* nfo = (TabInfo*) data;
+  i_callback_file_save_as (nfo->tl_, 0, NULL);
+}
+
+
+
+static void
+xtabs_menu_on_close (GtkMenuItem* mitem, gpointer data)
+{
+  TabInfo* nfo = (TabInfo*) data;
+  i_callback_page_close (nfo->tl_, 0, NULL);
+}
+
+
+
+static void
+xtabs_menu_on_pmanager (GtkMenuItem* mitem, gpointer data)
+{
+  TabInfo* nfo = (TabInfo*) data;
+  i_callback_page_manager (nfo->tl_, 0, NULL);
+}
+
+
+
+/*! \brief Create popup menu for tab's header.
+ *  \todo  Refactor
+ */
+static GtkMenu*
+x_tabs_menu_create (TabInfo* nfo)
+{
+  GtkWidget* menu = gtk_menu_new();
+  GtkWidget* item = NULL;
+
+  item = gtk_menu_item_new_with_mnemonic (_("_New"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  g_signal_connect (item, "activate", G_CALLBACK (&xtabs_menu_on_new), nfo);
+
+  item = gtk_menu_item_new_with_mnemonic (_("_Open..."));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  g_signal_connect (item, "activate", G_CALLBACK (&xtabs_menu_on_open), nfo);
+
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), gtk_separator_menu_item_new());
+
+  item = gtk_menu_item_new_with_mnemonic (_("_Save"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  g_signal_connect (item, "activate", G_CALLBACK (&xtabs_menu_on_save), nfo);
+
+  item = gtk_menu_item_new_with_mnemonic (_("Save _As..."));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  g_signal_connect (item, "activate", G_CALLBACK (&xtabs_menu_on_saveas), nfo);
+
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), gtk_separator_menu_item_new());
+
+  item = gtk_menu_item_new_with_mnemonic (_("_Close"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  g_signal_connect (item, "activate", G_CALLBACK (&xtabs_menu_on_close), nfo);
+
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), gtk_separator_menu_item_new());
+
+  item = gtk_menu_item_new_with_mnemonic (_("Page _Manager..."));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  g_signal_connect (item, "activate", G_CALLBACK (&xtabs_menu_on_pmanager), nfo);
+
+  gtk_widget_show_all (menu);
+  return GTK_MENU (menu);
+
+} /* x_tabs_menu_create() */
+
+
+
+/*! \brief Tab's header widget "button-press-event" signal handler.
+ *  \todo  Consider switching to clicked tab
+ */
+static gboolean
+x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data)
+{
+  g_return_val_if_fail (data != NULL, FALSE);
+  GdkEventButton* ebtn = (GdkEventButton*) e;
+
+  TabInfo* nfo    = (TabInfo*) data;
+  TabInfo* nfocur = x_tabs_info_cur (nfo->tl_);
+
+  /* show menu for current tab only:
+  */
+  if (nfo != nfocur)
+    return FALSE;
+
+#ifdef DEBUG
+  printf( "p: [%s]\n",   g_path_get_basename( s_page_get_filename(nfo->page_) ) );
+  printf( "C: [%s]\n\n", g_path_get_basename( s_page_get_filename(nfocur->page_) ) );
+#endif
+
+  if (ebtn->type == GDK_BUTTON_PRESS && ebtn->button == 3)
+  {
+    GtkMenu* menu = x_tabs_menu_create (nfo);
+
+    int btn = 0;
+    int etime = 0;
+    if (ebtn != NULL)
+    {
+      btn = ebtn->button;
+      etime = gtk_get_current_event_time();
+    }
+
+    gtk_menu_attach_to_widget (menu, hdr, NULL);
+    gtk_menu_popup (menu, NULL, NULL, NULL, NULL, btn, etime);
+
+    return TRUE;
+  }
+
+  return FALSE;
+
+} /* x_tabs_page_on_mouse_click() */
 
