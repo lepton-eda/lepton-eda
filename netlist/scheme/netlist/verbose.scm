@@ -55,7 +55,7 @@
                 Hierarchy tag: ~S\n~
                 ~A\n"
             (or (schematic-component-refdes package) "SPECIAL")
-            (or (cdr (subschematic-name (schematic-component-parent package))) "")
+            (or (subschematic-name (schematic-component-parent package)) "")
             (print-pin-list (schematic-component-pins package))))
 
    (format #t "\nInternal netlist representation:\n\n~

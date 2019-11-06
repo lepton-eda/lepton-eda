@@ -158,7 +158,7 @@
 (define (net-map-update-pin component pin)
   (define id (schematic-component-id component))
   (define refdes (schematic-component-refdes component))
-  (define tag (cdr (subschematic-name (schematic-component-parent component))))
+  (define tag (subschematic-name (schematic-component-parent component)))
 
   (define (check-shorted-nets a b priority)
     (unless (string=? a b)
@@ -217,7 +217,7 @@
     (let* ((nets (package-pin-nets pin))
            (component (package-pin-parent pin))
            (hierarchy-tag
-            (cdr (subschematic-name (schematic-component-parent component))))
+            (subschematic-name (schematic-component-parent component)))
            (netname (nets-netname nets hierarchy-tag)))
       (set-package-pin-name! pin netname)
       (update-netnames-hash-table netname nets)))

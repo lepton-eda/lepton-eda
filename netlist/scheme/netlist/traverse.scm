@@ -142,7 +142,8 @@
   (define net-maps (schematic-component-net-maps component))
   (define graphical? (or (schematic-component-graphical? component)
                          (schematic-component-nc? component)))
-  (define hierarchy-tag (cdr (subschematic-name (schematic-component-parent component))))
+  (define hierarchy-tag
+    (subschematic-name (schematic-component-parent component)))
 
   ;; Get refdes= of OBJECT depending on NETLIST-MODE.
   (define (get-refdes)
@@ -200,8 +201,8 @@
 
 (define (set-real-package-pin-nets-properties! pin)
   (let* ((tag
-          (cdr (subschematic-name (schematic-component-parent
-                                   (package-pin-parent pin)))))
+          (subschematic-name (schematic-component-parent
+                              (package-pin-parent pin))))
          (pin-object (package-pin-object pin))
          (nets (map make-new-pin-net (traverse-net pin-object)))
          (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
@@ -223,7 +224,7 @@
 
 (define (set-net-map-package-pin-nets-properties! pin)
   (let* ((parent-component (package-pin-parent pin))
-         (tag (cdr (subschematic-name (schematic-component-parent parent-component))))
+         (tag (subschematic-name (schematic-component-parent parent-component)))
          (netname (create-net-name (net-map-netname (package-pin-net-map pin))
                                    tag
                                    'power-rail))
@@ -297,6 +298,7 @@
                                   pages))
          (subschematic (subschematic-list->subschematic page-subschematics
                                                         hierarchy-tag)))
+    (set-subschematic-name! subschematic hierarchy-tag)
 
     (for-each create-schematic-component-refdes
               (subschematic-components subschematic))
