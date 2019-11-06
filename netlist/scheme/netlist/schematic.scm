@@ -325,6 +325,7 @@ of schematic pages."
         (partition (lambda (x)
                      (nc-net? x (filter schematic-component-nc? full-netlist)))
                    unique-nets)
+      (set-subschematic-connections! subschematic connections)
       (make-schematic id
                       subschematic
                       pages
