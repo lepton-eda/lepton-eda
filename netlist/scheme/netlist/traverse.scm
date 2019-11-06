@@ -93,8 +93,6 @@
 
 ;;; Search for connection by netname.
 (define (get-net-map-pin-connection pin connections)
-  (define pin-component (package-pin-parent pin))
-
   (define netname (net-map-netname (package-pin-net-map pin)))
 
   (define (netname-matches? connection)
