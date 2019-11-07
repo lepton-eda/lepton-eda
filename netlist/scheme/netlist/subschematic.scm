@@ -26,9 +26,11 @@
   #:use-module (srfi srfi-26)
   #:use-module (geda object)
   #:use-module (lepton page)
+  #:use-module (netlist package-pin)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
   #:use-module (netlist subschematic-connection)
+  #:use-module (symbol check net-attrib)
 
   #:export-syntax (make-subschematic subschematic?
                    subschematic-name set-subschematic-name!
@@ -54,6 +56,69 @@
                           "#<subschematic-~A>"
                           (subschematic-name record))))
 
+(define (get-package-pin-connection pin-object connections)
+  (let loop ((groups connections))
+    (and (not (null? groups))
+         (let ((group (car groups)))
+           (or (and (member pin-object (schematic-connection-objects group)) group)
+               (loop (cdr groups)))))))
+
+
+(define (set-real-package-pin-connection! pin connections)
+  (let ((connection (get-package-pin-connection (package-pin-object pin)
+                                                connections)))
+    (schematic-connection-add-pin! connection pin)
+    pin))
+
+
+;;; Search for connection by netname.
+(define (get-net-map-pin-connection pin connections)
+  (define netname (net-map-netname (package-pin-net-map pin)))
+
+  (define (netname-matches? connection)
+    (or (equal? netname (schematic-connection-name connection))
+        (equal? netname (schematic-connection-override-name connection))))
+
+  (let loop ((groups connections))
+    (if (null? groups)
+        (make-schematic-connection
+         ;; id
+         #f
+         ;; Parent subschematic.
+         #f
+         ;; page
+         #f
+         ;; netname
+         #f
+         ;; override-netname
+         netname
+         ;; objects
+         '()
+         ;; pins
+         '())
+        (let ((group (car groups)))
+          (if (netname-matches? group)
+              group
+              (loop (cdr groups)))))))
+
+
+(define (set-net-map-package-pin-connection! pin connections)
+  (let ((connection (get-net-map-pin-connection pin connections)))
+    (schematic-connection-add-pin! connection pin)))
+
+
+(define (set-package-pin-connection-properties! component connections)
+  (define (real-pin? pin)
+    (package-pin-object pin))
+
+  (define (set-connection-properties! pin)
+    ((if (real-pin? pin)
+         set-real-package-pin-connection!
+         set-net-map-package-pin-connection!) pin connections))
+
+  (for-each set-connection-properties! (schematic-component-pins component)))
+
+
 (define (page->subschematic page)
   "Creates a new subschematic record from PAGE."
   (let* ((connections (make-page-schematic-connections page))
@@ -73,6 +138,10 @@
               connections)
     (for-each (cut set-schematic-component-parent! <> subschematic)
               components)
+    (for-each
+     (cut set-package-pin-connection-properties! <> connections)
+     components)
+
     subschematic))
 
 
