@@ -1,8 +1,20 @@
 
-SUBDIRS = src schlas scripts include examples docs tests upcfg
+SUBDIRS = \
+	docs \
+	examples \
+	include \
+	schlas \
+	scripts \
+	src \
+	tests \
+	upcfg
 
-EXTRA_DIST = ChangeLog ChangeLog.tragesym-1.0 ChangeLog.gsch2pcb-1.0 \
-	ChangeLog-1.0 AUTHORS
+EXTRA_DIST = \
+	AUTHORS \
+	ChangeLog \
+	ChangeLog-1.0 \
+	ChangeLog.gsch2pcb-1.0 \
+	ChangeLog.tragesym-1.0
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git

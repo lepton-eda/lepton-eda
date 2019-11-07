@@ -1,12 +1,22 @@
-bin_SCRIPTS = lepton-refdes_renum \
-	      lepton-tragesym lepton-pcb_backannotate lepton-archive lepton-symfix \
-	      lepton-schdiff
+bin_SCRIPTS = \
+	lepton-archive \
+	lepton-pcb_backannotate \
+	lepton-refdes_renum \
+	lepton-schdiff \
+	lepton-symfix \
+	lepton-tragesym
 
 noinst_SCRIPTS = gschupdate gsymupdate
 
-EXTRA_DIST = gschupdate gsymupdate lepton-refdes_renum lepton-symfix \
-	     lepton-tragesym lepton-pcb_backannotate lepton-archive.in \
-	     lepton-schdiff
+EXTRA_DIST = \
+	gschupdate \
+	gsymupdate \
+	lepton-archive.in \
+	lepton-pcb_backannotate \
+	lepton-refdes_renum \
+	lepton-schdiff \
+	lepton-symfix \
+	lepton-tragesym
 
 do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
 	-e 's,[@]GUILE[@],$(GUILE),g' \
@@ -17,3 +27,4 @@ lepton-archive: lepton-archive.in
 	chmod +x $@
 
 CLEANFILES = lepton-archive
+MAINTAINERCLEANFILES = Makefile.in
