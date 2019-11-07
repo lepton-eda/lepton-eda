@@ -253,9 +253,9 @@
     (package-pin-object pin))
 
   (define (set-connection-properties! pin)
-    (if (real-pin? pin)
-        (set-real-package-pin-connection! pin connections)
-        (set-net-map-package-pin-connection! pin connections)))
+    ((if (real-pin? pin)
+         set-real-package-pin-connection!
+         set-net-map-package-pin-connection!) pin connections))
 
   (for-each set-connection-properties! (schematic-component-pins component)))
 
