@@ -219,20 +219,19 @@
 
   (let* ((page-subschematics (map page->subschematic pages))
          (subschematic (subschematic-list->subschematic page-subschematics
-                                                        hierarchy-tag)))
+                                                        hierarchy-tag))
+         (components (subschematic-components subschematic)))
     (let ((net-map-pins (filter net-map-pin?
                                 (append-map schematic-component-pins
-                                            (subschematic-components subschematic)))))
+                                            components))))
       (for-each set-pin-name! net-map-pins))
 
-    (for-each create-schematic-component-refdes
-              (subschematic-components subschematic))
+    (for-each create-schematic-component-refdes components)
 
-    (for-each set-package-pin-nets-properties!
-              (subschematic-components subschematic))
+    (for-each set-package-pin-nets-properties! components)
 
     ;; Traverse pages obtained from files defined in the 'source='
     ;; attributes of schematic components.
     (for-each traverse-component-sources
-              (subschematic-components subschematic))
+              components)
     subschematic))
