@@ -1,27 +1,22 @@
-.TH lepton-schlas 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-embed 1 "@DATE@" "Lepton EDA" @VERSION@
 
 .SH NAME
-lepton-schlas \- Lepton EDA schematic load and save
+lepton-embed \- Embed/unembed schematic components and pictures
 
 .SH SYNOPSIS
-.B lepton-schlas
-.RB [ \-e | \-u "] [" \-q | \-v ]
-.I file
-[
-.I file ...
-]
-.PP
-.B lepton-schlas -h
+.B lepton-embed
+.RB OPTIONS
+.I FILE ...
 
 .SH DESCRIPTION
-.B lepton-schlas
+.B lepton-embed
 can embed the in-use schematic symbols and pictures into a schematic
 or set of schematics.
-It allows, for instance, putting a schematic on a website or in an email 
-without the recipient needing to download lots of custom symbols for the 
+It allows, for instance, putting a schematic on a website or in an email
+without the recipient needing to download lots of custom symbols for the
 design.
 .PP
-.B lepton-schlas
+.B lepton-embed
 can also unembed symbol references from a schematic, but note that the
 symbols revert to library references; if the symbol doesn't exist in
 the current Lepton EDA project's library path, a broken schematic results.
@@ -29,22 +24,21 @@ the current Lepton EDA project's library path, a broken schematic results.
 .SH OPTIONS
 .TP
 .BR \-e ", " \-\-embed
-Embed all components/pictures.
+Embed all components and pictures.
 .TP
 .BR \-u ", " \-\-unembed
-Unembed all components/pictures.
+Unembed all components and pictures.
 .TP
-.BR \-q ", " \-\-quiet
-Quiet mode.
-.TP
-.BR \-v ", " \-\-verbose
-Verbose mode.
+.BR \-V ", " \-\-version
+Show version information.
 .TP
 .BR \-h ", " \-\-help
-Print usage information.
+Show usage information.
 
 .SH AUTHOR
-Ales Hvezda
+The initial program (gschlas, later renamed to lepton-schlas) has
+been written by Ales Hvezda <ahvezda@seul.org>. The lepton-embed
+Scheme script has been written by dmn <graahnul.grom@gmail.com>.
 
 .SH SEE ALSO
 .BR lepton-schematic(1)
@@ -52,6 +46,7 @@ Ales Hvezda
 .SH COPYRIGHT
 .nf
 Copyright \(co 2012-2017 gEDA Contributors.
+Copyright \(co 2019 Lepton EDA Contributors.
 License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
 file included with this program for full details.
 .PP
