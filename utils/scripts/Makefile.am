@@ -1,5 +1,6 @@
 bin_SCRIPTS = \
 	lepton-archive \
+	lepton-embed \
 	lepton-pcb_backannotate \
 	lepton-refdes_renum \
 	lepton-schdiff \
@@ -12,6 +13,7 @@ EXTRA_DIST = \
 	gschupdate \
 	gsymupdate \
 	lepton-archive.in \
+	lepton-embed.in \
 	lepton-pcb_backannotate \
 	lepton-refdes_renum \
 	lepton-schdiff \
@@ -26,5 +28,9 @@ lepton-archive: lepton-archive.in
 	$(do_subst) < $(srcdir)/$@.in > $@
 	chmod +x $@
 
-CLEANFILES = lepton-archive
+lepton-embed: lepton-embed.in
+	$(do_subst) < $(srcdir)/$@.in > $@
+	chmod +x $@
+
+CLEANFILES = lepton-archive lepton-embed
 MAINTAINERCLEANFILES = Makefile.in
