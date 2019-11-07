@@ -1,4 +1,5 @@
 Makefile
 Makefile.in
 lepton-archive
+lepton-embed
 *~
