@@ -145,8 +145,8 @@
 
 
 (define* (page-list->subschematic pages #:optional name)
-  "Creates a new subschematic from the SUBSCHEMATICS list.  If
-specified, NAME is used as its hierarchical name."
+  "Creates a new subschematic from the PAGES list.  If specified,
+NAME is used as its hierarchical name."
   (let* ((subschematics (map page->subschematic pages))
          (components (append-map subschematic-components subschematics))
          (connections (make-subschematic-connections components))
