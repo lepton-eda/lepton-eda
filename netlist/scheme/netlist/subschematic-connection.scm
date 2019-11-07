@@ -67,7 +67,7 @@
   (fold reconnect-connections '() (map list ls)))
 
 
-(define (make-netname-connection name group)
+(define (make-netname-connection group)
   (define (any->ls x)
     (if (list? x) x (list x)))
 
@@ -110,12 +110,12 @@
     connection))
 
 
-(define (make-subschematic-connections components name)
+(define (make-subschematic-connections components)
   (define pins
     (append-map schematic-component-pins components))
 
   (define pin-connections
     (delete-duplicates (map package-pin-connection pins)))
 
-  (map (cut make-netname-connection name <>)
+  (map (cut make-netname-connection <>)
        (group-connections pin-connections)))

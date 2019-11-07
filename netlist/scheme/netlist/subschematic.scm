@@ -149,7 +149,7 @@
 specified, NAME is used as its hierarchical name."
   (let* ((subschematics (map page->subschematic pages))
          (components (append-map subschematic-components subschematics))
-         (connections (make-subschematic-connections components name))
+         (connections (make-subschematic-connections components))
          (subschematic (make-subschematic name pages components connections)))
     (for-each (cut set-schematic-connection-parent! <> subschematic)
               connections)
