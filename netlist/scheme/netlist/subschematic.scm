@@ -38,8 +38,7 @@
                    subschematic-components set-subschematic-components!
                    subschematic-connections set-subschematic-connections!)
 
-  #:export (page->subschematic
-            subschematic-list->subschematic))
+  #:export (page-list->subschematic))
 
 (define-record-type <subschematic>
   (make-subschematic name pages components connections)
@@ -145,10 +144,10 @@
     subschematic))
 
 
-(define* (subschematic-list->subschematic subschematics #:optional name)
+(define* (page-list->subschematic pages #:optional name)
   "Creates a new subschematic from the SUBSCHEMATICS list.  If
 specified, NAME is used as its hierarchical name."
-  (let* ((pages (append-map subschematic-pages subschematics))
+  (let* ((subschematics (map page->subschematic pages))
          (components (append-map subschematic-components subschematics))
          (connections (make-subschematic-connections components name))
          (subschematic (make-subschematic name pages components connections)))

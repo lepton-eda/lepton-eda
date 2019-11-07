@@ -217,9 +217,7 @@
                                     'power-rail)))
       (set-package-pin-name! pin netname)))
 
-  (let* ((page-subschematics (map page->subschematic pages))
-         (subschematic (subschematic-list->subschematic page-subschematics
-                                                        hierarchy-tag))
+  (let* ((subschematic (page-list->subschematic pages hierarchy-tag))
          (components (subschematic-components subschematic)))
     (let ((net-map-pins (filter net-map-pin?
                                 (append-map schematic-component-pins
