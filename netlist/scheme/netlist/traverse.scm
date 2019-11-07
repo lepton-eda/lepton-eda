@@ -264,8 +264,6 @@
   (let* ((subschematic (page->subschematic page))
          (connections (subschematic-connections subschematic))
          (components (subschematic-components subschematic)))
-    (set-subschematic-name! subschematic
-                            (cons (page-filename page) hierarchy-tag))
     (for-each
      (cut set-package-pin-connection-properties! <> connections)
      components)
