@@ -222,8 +222,6 @@
   (let* ((page-subschematics (map page->subschematic pages))
          (subschematic (subschematic-list->subschematic page-subschematics
                                                         hierarchy-tag)))
-    (set-subschematic-name! subschematic hierarchy-tag)
-
     (let ((net-map-pins (filter net-map-pin?
                                 (append-map schematic-component-pins
                                             (subschematic-components subschematic)))))
