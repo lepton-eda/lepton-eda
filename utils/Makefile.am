@@ -2,8 +2,6 @@
 SUBDIRS = \
 	docs \
 	examples \
-	include \
-	schlas \
 	scripts \
 	src \
 	tests \

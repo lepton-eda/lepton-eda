@@ -1,7 +1,0 @@
-Makefile
-Makefile.in
-.deps
-lepton-schlas
-lepton-schlas.exe
-*.o
-*~
