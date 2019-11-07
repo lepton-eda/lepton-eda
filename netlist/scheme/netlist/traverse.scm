@@ -209,7 +209,8 @@
            (set-schematic-component-subschematic! component subschematic)
            component)))
 
-  (define (net-map-pin? pin) (not (package-pin-object pin)))
+  (define (net-map-pin? pin)
+    (package-pin-net-map pin))
 
   (define (set-pin-name! pin)
     (let ((netname (create-net-name (net-map-netname (package-pin-net-map pin))
