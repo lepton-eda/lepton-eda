@@ -41,7 +41,7 @@
   #:use-module (netlist subschematic)
   #:use-module (symbol check net-attrib)
 
-  #:export (page-list->subschematic))
+  #:export (page-list->hierarchical-subschematic))
 
 
 ;;; Tracks which objects have been visited so far, and how many
@@ -198,14 +198,14 @@
   (for-each set-nets-properties! (schematic-component-pins component)))
 
 
-(define (page-list->subschematic pages hierarchy-tag)
+(define (page-list->hierarchical-subschematic pages hierarchy-tag)
   (define (traverse-component-sources component)
     (and (schematic-component-sources component)
          (let* ((hierarchy-tag (schematic-component-refdes component))
                 (source-pages (map hierarchy-down-schematic
                                    (schematic-component-sources component)))
                 ;; Recursive processing of sources.
-                (subschematic (page-list->subschematic source-pages hierarchy-tag)))
+                (subschematic (page-list->hierarchical-subschematic source-pages hierarchy-tag)))
            (set-schematic-component-subschematic! component subschematic)
            component)))
 

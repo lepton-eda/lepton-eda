@@ -309,7 +309,7 @@ of schematic pages."
   (let* ((id (next-schematic-id))
          (toplevel-attribs (get-toplevel-attributes pages))
          ;; '() is toplevel hierarchy tag
-         (subschematic (page-list->subschematic pages '()))
+         (subschematic (page-list->hierarchical-subschematic pages '()))
          (toplevel-netlist (hierarchy-post-process
                             (collect-components-recursively subschematic)))
          (full-netlist (map compat-refdes toplevel-netlist))
