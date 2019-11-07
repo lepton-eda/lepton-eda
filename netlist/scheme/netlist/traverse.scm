@@ -212,11 +212,9 @@
   (define (net-map-pin? pin) (not (package-pin-object pin)))
 
   (define (set-pin-name! pin)
-    (let* ((parent-component (package-pin-parent pin))
-           (tag (subschematic-name (schematic-component-parent parent-component)))
-           (netname (create-net-name (net-map-netname (package-pin-net-map pin))
-                                     tag
-                                     'power-rail)))
+    (let ((netname (create-net-name (net-map-netname (package-pin-net-map pin))
+                                    hierarchy-tag
+                                    'power-rail)))
       (set-package-pin-name! pin netname)))
 
   (let* ((page-subschematics (map page->subschematic pages))
