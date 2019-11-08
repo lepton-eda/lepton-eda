@@ -24,6 +24,7 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
+
   #:use-module (geda log)
   #:use-module (geda object)
   #:use-module (netlist attrib refdes)
@@ -38,7 +39,6 @@
   #:use-module (netlist schematic-connection)
   #:use-module (netlist schematic-port)
   #:use-module (netlist subschematic)
-  #:use-module (netlist verbose)
   #:use-module (symbol check net-attrib)
 
   #:export (hierarchy-post-process))
