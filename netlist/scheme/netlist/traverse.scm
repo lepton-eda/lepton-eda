@@ -37,7 +37,8 @@
   #:use-module (netlist subschematic)
   #:use-module (symbol check net-attrib)
 
-  #:export (page-list->hierarchical-subschematic))
+  #:export (set-package-pin-nets-properties!
+            page-list->hierarchical-subschematic))
 
 
 ;;; Tracks which objects have been visited so far, and how many
@@ -175,8 +176,6 @@
                                 (append-map schematic-component-pins
                                             components))))
       (for-each set-pin-name! net-map-pins))
-
-    (for-each set-package-pin-nets-properties! components)
 
     ;; Traverse pages obtained from files defined in the 'source='
     ;; attributes of schematic components.

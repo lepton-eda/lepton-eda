@@ -33,6 +33,7 @@
   #:use-module (netlist subschematic)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
+  #:use-module (netlist traverse)
   #:use-module (netlist verbose)
   #:use-module (symbol check net-attrib)
 
@@ -310,6 +311,8 @@
               (cons component
                     (map schematic-port-inner-component
                          (component-subcircuit-ports component)))))
+
+  (for-each set-package-pin-nets-properties! components)
 
   (for-each update-component-pins components)
 
