@@ -266,13 +266,6 @@
     connections))
 
 
-(define (compat-refdes schematic-component)
-  (set-schematic-component-refdes! schematic-component
-                                   (schematic-component-refdes->string
-                                    (schematic-component-refdes schematic-component)))
-  schematic-component)
-
-
 (define (collect-components-recursively subschematic)
   (let* ((components (subschematic-components subschematic))
          (subschematics (filter-map schematic-component-subschematic components)))
@@ -291,9 +284,8 @@ of schematic pages."
          (toplevel-attribs (get-toplevel-attributes pages))
          ;; '() is toplevel hierarchy tag
          (subschematic (page-list->hierarchical-subschematic pages '()))
-         (toplevel-netlist (hierarchy-post-process
-                            (collect-components-recursively subschematic)))
-         (full-netlist (map compat-refdes toplevel-netlist))
+         (full-netlist (hierarchy-post-process
+                        (collect-components-recursively subschematic)))
          (netlist (filter plain-package? full-netlist))
          (packages (make-package-list netlist))
          (connections (make-schematic-connections subschematic pages))

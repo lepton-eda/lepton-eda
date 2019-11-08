@@ -433,6 +433,13 @@
    (schematic-component-refdes* component)))
 
 
+(define (compat-refdes schematic-component)
+  (set-schematic-component-refdes! schematic-component
+                                   (schematic-component-refdes->string
+                                    (schematic-component-refdes schematic-component)))
+  schematic-component)
+
+
 (define (hierarchy-post-process components)
   (define (outer-pin->schematic-port outer-port-pin)
     (let ((port (hierarchy-make-schematic-port components outer-port-pin)))
@@ -485,9 +492,9 @@
 
   (for-each fix-composite-component
             (filter schematic-component-subcircuit? components))
-
-  (rename-all
-   ((if (gnetlist-config-ref 'mangle-refdes)
-        identity
-        remove-refdes-mangling)
-    components)))
+  (map compat-refdes
+       (rename-all
+        ((if (gnetlist-config-ref 'mangle-refdes)
+             identity
+             remove-refdes-mangling)
+         components))))
