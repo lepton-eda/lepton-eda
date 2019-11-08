@@ -80,6 +80,7 @@ DIST_SCM_BACKENDS_COMMON = \
 DIST_SCM = \
 	netlist.scm \
 	netlist/attrib/compare.scm \
+	netlist/attrib/refdes.scm \
 	netlist/backend-getopt.scm \
 	netlist/config.scm \
 	netlist/core/gettext.scm \

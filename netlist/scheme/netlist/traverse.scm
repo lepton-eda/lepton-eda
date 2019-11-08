@@ -24,20 +24,16 @@
 
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
-  #:use-module (geda attrib)
   #:use-module (geda object)
   #:use-module (geda log)
   #:use-module (lepton library)
+  #:use-module (netlist attrib refdes)
   #:use-module (lepton page)
-  #:use-module (netlist config)
-  #:use-module (netlist hierarchy)
-  #:use-module (netlist mode)
   #:use-module (netlist net)
   #:use-module (netlist option)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
   #:use-module (netlist schematic-component)
-  #:use-module (netlist schematic-connection)
   #:use-module (netlist subschematic)
   #:use-module (symbol check net-attrib)
 
@@ -97,48 +93,9 @@
 
 
 (define (create-schematic-component-refdes component)
-  (define object (schematic-component-object component))
-  (define attribs (schematic-component-attribs component))
-  (define net-maps (schematic-component-net-maps component))
-  (define graphical? (or (schematic-component-graphical? component)
-                         (schematic-component-nc? component)))
-  (define hierarchy-tag
-    (subschematic-name (schematic-component-parent component)))
-
-  ;; Get refdes= of OBJECT depending on NETLIST-MODE.
-  (define (get-refdes)
-    (let ((refdes (and=> (assq-ref attribs 'refdes) car)))
-      (case (netlist-mode)
-        ((spice)
-         (let ((slot (and=> (assq-ref attribs 'slot) car)))
-           (if slot
-               (string-append refdes "." slot)
-               refdes)))
-        ((geda) refdes)
-        (else (error (_ "Netlist mode ~S is not supported.") (netlist-mode))))))
-
-  (define (make-special-refdes)
-    ;; If there is net=, it's a power or some other special
-    ;; graphical symbol.  In such a case, refdes is #f.
-    (and (null? net-maps)
-         (not graphical?)
-         ;; Otherwise, refdes is just missing.  Warn the user, and
-         ;; make up an artificial refdes.
-         (log! 'critical
-               (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
-               (component-basename object)
-               (component-position object)
-               (page-filename (object-page object)))
-         "U?"))
-
   (set-schematic-component-refdes!
    component
-   (hierarchy-create-refdes
-    ;; First try to get refdes from attribs.
-    (or (get-refdes)
-        ;; If no refdes found, make a mock one.
-        (make-special-refdes))
-    hierarchy-tag)))
+   (schematic-component-refdes* component)))
 
 
 (define (make-new-pin-net object)
