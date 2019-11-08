@@ -375,6 +375,12 @@
         nets)))
 
 
+(define (create-schematic-component-refdes component)
+  (set-schematic-component-refdes!
+   component
+   (schematic-component-refdes* component)))
+
+
 (define (hierarchy-post-process components)
   (define (outer-pin->schematic-port outer-port-pin)
     (let ((port (hierarchy-make-schematic-port components outer-port-pin)))
@@ -413,6 +419,8 @@
                            (subschematic-name
                             (schematic-component-parent (package-pin-parent pin)))
                            'power-rail))))
+
+  (for-each create-schematic-component-refdes components)
 
   (for-each set-net-map-pin-name!
             (append-map schematic-component-pins components))

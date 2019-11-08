@@ -299,13 +299,6 @@
             (append-map collect-components-recursively subschematics))))
 
 
-(define (create-schematic-component-refdes component)
-  (set-schematic-component-refdes!
-   component
-   (schematic-component-refdes* component))
-  component)
-
-
 (define* (page-list->schematic pages)
   "Creates a new schematic record from PAGES, which must be a list
 of schematic pages."
@@ -318,8 +311,7 @@ of schematic pages."
          ;; '() is toplevel hierarchy tag
          (subschematic (page-list->hierarchical-subschematic pages '()))
          (toplevel-netlist (hierarchy-post-process
-                            (map create-schematic-component-refdes
-                                 (collect-components-recursively subschematic))))
+                            (collect-components-recursively subschematic)))
          (full-netlist (map compat-refdes toplevel-netlist))
          (netlist (filter plain-package? full-netlist))
          (packages (make-package-list netlist))
