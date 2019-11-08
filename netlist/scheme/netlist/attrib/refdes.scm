@@ -22,6 +22,7 @@
   ;; Import C procedures and variables.
   #:use-module (netlist core gettext)
 
+  #:use-module (ice-9 match)
   #:use-module (geda object)
   #:use-module (geda log)
   #:use-module (lepton page)
@@ -30,7 +31,15 @@
   #:use-module (netlist schematic-component)
   #:use-module (netlist subschematic)
 
-  #:export (schematic-component-refdes*))
+  #:export (hierarchy-create-refdes
+            schematic-component-refdes*))
+
+
+(define (hierarchy-create-refdes basename hierarchy-tag)
+  (match hierarchy-tag
+    ((? list? tag) `(,basename . ,tag))
+    (non-list (error (_ "Invalid hierarchy tag.") hierarchy-tag))))
+
 
 (define (schematic-component-refdes* component)
   (define object (schematic-component-object component))

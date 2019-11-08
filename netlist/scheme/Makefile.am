@@ -106,7 +106,6 @@ DIST_SCM = \
 	netlist/sort.scm \
 	netlist/subschematic.scm \
 	netlist/subschematic-connection.scm \
-	netlist/traverse.scm \
 	netlist/verbose.scm
 
 TESTS = unit-tests/test-netlist-load-path.scm \
