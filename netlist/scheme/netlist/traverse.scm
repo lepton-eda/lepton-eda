@@ -161,25 +161,10 @@
            (set-schematic-component-subschematic! component subschematic)
            component)))
 
-  (define (net-map-pin? pin)
-    (package-pin-net-map pin))
-
-  (define (set-pin-name! pin)
-    (let ((netname (create-net-name (net-map-netname (package-pin-net-map pin))
-                                    hierarchy-tag
-                                    'power-rail)))
-      (set-package-pin-name! pin netname)))
-
-  (let* ((subschematic (page-list->subschematic pages hierarchy-tag))
-         (components (subschematic-components subschematic)))
-    (let ((net-map-pins (filter net-map-pin?
-                                (append-map schematic-component-pins
-                                            components))))
-      (for-each set-pin-name! net-map-pins))
-
+  (let ((subschematic (page-list->subschematic pages hierarchy-tag)))
     ;; Traverse pages obtained from files defined in the 'source='
     ;; attributes of schematic components.
     (for-each traverse-component-sources
-              components)
+              (subschematic-components subschematic))
 
     subschematic))

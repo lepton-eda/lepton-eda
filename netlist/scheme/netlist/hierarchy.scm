@@ -312,6 +312,21 @@
                     (map schematic-port-inner-component
                          (component-subcircuit-ports component)))))
 
+  (define (net-map-pin? pin)
+    (package-pin-net-map pin))
+
+  (define (set-net-map-pin-name! pin)
+    (and (net-map-pin? pin)
+         (set-package-pin-name!
+          pin
+          (create-net-name (net-map-netname (package-pin-net-map pin))
+                           (subschematic-name
+                            (schematic-component-parent (package-pin-parent pin)))
+                           'power-rail))))
+
+  (for-each set-net-map-pin-name!
+            (append-map schematic-component-pins components))
+
   (for-each set-package-pin-nets-properties! components)
 
   (for-each update-component-pins components)
