@@ -92,12 +92,6 @@
         (log! 'critical (_ "Failed to load subcircuit ~S.") name))))
 
 
-(define (create-schematic-component-refdes component)
-  (set-schematic-component-refdes!
-   component
-   (schematic-component-refdes* component)))
-
-
 (define (make-new-pin-net object)
   (make-pin-net
    ;; id
@@ -158,7 +152,7 @@
 (define (page-list->hierarchical-subschematic pages hierarchy-tag)
   (define (traverse-component-sources component)
     (and (schematic-component-sources component)
-         (let* ((hierarchy-tag (schematic-component-refdes component))
+         (let* ((hierarchy-tag (schematic-component-refdes* component))
                 (source-pages (map hierarchy-down-schematic
                                    (schematic-component-sources component)))
                 ;; Recursive processing of sources.
@@ -182,12 +176,11 @@
                                             components))))
       (for-each set-pin-name! net-map-pins))
 
-    (for-each create-schematic-component-refdes components)
-
     (for-each set-package-pin-nets-properties! components)
 
     ;; Traverse pages obtained from files defined in the 'source='
     ;; attributes of schematic components.
     (for-each traverse-component-sources
               components)
+
     subschematic))
