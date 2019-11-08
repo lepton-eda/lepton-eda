@@ -32,7 +32,6 @@
   #:use-module (netlist config)
   #:use-module (netlist hierarchy)
   #:use-module (netlist sort)
-  #:use-module (netlist traverse)
   #:use-module (netlist package)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)

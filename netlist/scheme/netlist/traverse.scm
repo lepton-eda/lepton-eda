@@ -18,27 +18,17 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (netlist traverse)
-
-  ; Import C procedures and variables
-  #:use-module (netlist core gettext)
-
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (geda object)
-  #:use-module (geda log)
-  #:use-module (lepton library)
-  #:use-module (netlist attrib refdes)
-  #:use-module (lepton page)
   #:use-module (netlist net)
-  #:use-module (netlist option)
   #:use-module (netlist package-pin)
   #:use-module (netlist pin-net)
   #:use-module (netlist schematic-component)
   #:use-module (netlist subschematic)
   #:use-module (symbol check net-attrib)
 
-  #:export (set-package-pin-nets-properties!
-            page-list->hierarchical-subschematic))
+  #:export (set-package-pin-nets-properties!))
 
 
 ;;; Tracks which objects have been visited so far, and how many
@@ -79,18 +69,6 @@
       ;; no point to do something in this case.
       '()
       (reverse (traverse-net-object '() #t pin-object))))
-
-
-(define (hierarchy-down-schematic name)
-  (define quiet-mode (netlist-option-ref 'quiet))
-
-  (let ((filename (get-source-library-file name)))
-    (if filename
-        (begin
-          (unless quiet-mode
-            (log! 'message (_ "Loading subcircuit ~S.") filename))
-          (file->page filename 'new-page))
-        (log! 'critical (_ "Failed to load subcircuit ~S.") name))))
 
 
 (define (make-new-pin-net object)
@@ -148,23 +126,3 @@
         (set-net-map-package-pin-nets-properties! pin)))
 
   (for-each set-nets-properties! (schematic-component-pins component)))
-
-
-(define (page-list->hierarchical-subschematic pages hierarchy-tag)
-  (define (traverse-component-sources component)
-    (and (schematic-component-sources component)
-         (let* ((hierarchy-tag (schematic-component-refdes* component))
-                (source-pages (map hierarchy-down-schematic
-                                   (schematic-component-sources component)))
-                ;; Recursive processing of sources.
-                (subschematic (page-list->hierarchical-subschematic source-pages hierarchy-tag)))
-           (set-schematic-component-subschematic! component subschematic)
-           component)))
-
-  (let ((subschematic (page-list->subschematic pages hierarchy-tag)))
-    ;; Traverse pages obtained from files defined in the 'source='
-    ;; attributes of schematic components.
-    (for-each traverse-component-sources
-              (subschematic-components subschematic))
-
-    subschematic))
