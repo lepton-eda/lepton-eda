@@ -293,6 +293,18 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
 
 static gboolean
 x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data);
+static GtkMenu*
+x_tabs_menu_create (TabInfo* nfo);
+static void
+x_tabs_menu_create_item (GschemToplevel* toplevel,
+                         GtkWidget*      menu,
+                         const gchar*    action_name,
+                         const gchar*    action_label,
+                         const gchar*    icon_name);
+static void
+x_tabs_menu_create_item_separ (GtkWidget* menu);
+static void
+x_tabs_menu_item_on_activate (GtkAction* action, gpointer data);
 
 
 
@@ -1562,98 +1574,26 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
 
 
 
-static void
-xtabs_menu_on_new (GtkMenuItem* mitem, gpointer data)
-{
-  TabInfo* nfo = (TabInfo*) data;
-  i_callback_file_new (nfo->tl_, 0, NULL);
-}
-
-
-
-static void
-xtabs_menu_on_open (GtkMenuItem* mitem, gpointer data)
-{
-  TabInfo* nfo = (TabInfo*) data;
-  i_callback_file_open (nfo->tl_, 0, NULL);
-}
-
-
-
-static void
-xtabs_menu_on_save (GtkMenuItem* mitem, gpointer data)
-{
-  TabInfo* nfo = (TabInfo*) data;
-  i_callback_file_save (nfo->tl_, 0, NULL);
-}
-
-
-
-static void
-xtabs_menu_on_saveas (GtkMenuItem* mitem, gpointer data)
-{
-  TabInfo* nfo = (TabInfo*) data;
-  i_callback_file_save_as (nfo->tl_, 0, NULL);
-}
-
-
-
-static void
-xtabs_menu_on_close (GtkMenuItem* mitem, gpointer data)
-{
-  TabInfo* nfo = (TabInfo*) data;
-  i_callback_page_close (nfo->tl_, 0, NULL);
-}
-
-
-
-static void
-xtabs_menu_on_pmanager (GtkMenuItem* mitem, gpointer data)
-{
-  TabInfo* nfo = (TabInfo*) data;
-  i_callback_page_manager (nfo->tl_, 0, NULL);
-}
-
-
-
 /*! \brief Create popup menu for tab's header.
- *  \todo  Refactor
  */
 static GtkMenu*
 x_tabs_menu_create (TabInfo* nfo)
 {
+  g_return_val_if_fail (nfo != NULL, NULL);
+
+  GschemToplevel* tl = nfo->tl_;
+  g_return_val_if_fail (tl != NULL, NULL);
+
   GtkWidget* menu = gtk_menu_new();
-  GtkWidget* item = NULL;
-
-  item = gtk_menu_item_new_with_mnemonic (_("_New"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  g_signal_connect (item, "activate", G_CALLBACK (&xtabs_menu_on_new), nfo);
-
-  item = gtk_menu_item_new_with_mnemonic (_("_Open..."));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  g_signal_connect (item, "activate", G_CALLBACK (&xtabs_menu_on_open), nfo);
-
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), gtk_separator_menu_item_new());
-
-  item = gtk_menu_item_new_with_mnemonic (_("_Save"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  g_signal_connect (item, "activate", G_CALLBACK (&xtabs_menu_on_save), nfo);
-
-  item = gtk_menu_item_new_with_mnemonic (_("Save _As..."));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  g_signal_connect (item, "activate", G_CALLBACK (&xtabs_menu_on_saveas), nfo);
-
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), gtk_separator_menu_item_new());
-
-  item = gtk_menu_item_new_with_mnemonic (_("_Close"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  g_signal_connect (item, "activate", G_CALLBACK (&xtabs_menu_on_close), nfo);
-
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), gtk_separator_menu_item_new());
-
-  item = gtk_menu_item_new_with_mnemonic (_("Page _Manager..."));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  g_signal_connect (item, "activate", G_CALLBACK (&xtabs_menu_on_pmanager), nfo);
+  x_tabs_menu_create_item (tl, menu, "file-new", _("_New"), GTK_STOCK_NEW);
+  x_tabs_menu_create_item (tl, menu, "file-open", _("_Open"), GTK_STOCK_OPEN);
+  x_tabs_menu_create_item_separ (menu);
+  x_tabs_menu_create_item (tl, menu, "file-save", _("_Save"), GTK_STOCK_SAVE);
+  x_tabs_menu_create_item (tl, menu, "file-save-as", _("Save _As..."), GTK_STOCK_SAVE_AS);
+  x_tabs_menu_create_item_separ (menu);
+  x_tabs_menu_create_item (tl, menu, "page-manager", _("Page _Manager..."), NULL);
+  x_tabs_menu_create_item_separ (menu);
+  x_tabs_menu_create_item (tl, menu, "page-close", _("_Close"), GTK_STOCK_CLOSE);
 
   gtk_widget_show_all (menu);
   return GTK_MENU (menu);
@@ -1705,4 +1645,55 @@ x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data)
   return FALSE;
 
 } /* x_tabs_page_on_mouse_click() */
+
+
+
+/*! \brief "activate" signal handler for context menu item action.
+ */
+static void
+x_tabs_menu_item_on_activate (GtkAction* action, gpointer data)
+{
+  GschemToplevel* toplevel    = (GschemToplevel*) data;
+  const gchar*    action_name = gtk_action_get_name (action);
+
+  g_action_eval_by_name (toplevel, action_name);
+}
+
+
+
+/*! \brief Create and add popup menu item separator.
+ */
+static void
+x_tabs_menu_create_item_separ (GtkWidget* menu)
+{
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu),
+                         gtk_separator_menu_item_new());
+}
+
+
+
+/*! \brief Create and add popup menu item.
+ */
+static void
+x_tabs_menu_create_item (GschemToplevel* toplevel,
+                         GtkWidget*      menu,
+                         const gchar*    action_name,
+                         const gchar*    action_label,
+                         const gchar*    icon_name)
+{
+  GschemAction* action = gschem_action_new (action_name,  /* name */
+                                            action_label, /* label */
+                                            NULL,         /* tooltip */
+                                            icon_name,    /* stock_id */
+                                            NULL);        /* multikey_accel */
+
+  GtkWidget* item = gtk_action_create_menu_item (GTK_ACTION (action));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+  g_signal_connect (action,
+                    "activate",
+                    G_CALLBACK (&x_tabs_menu_item_on_activate),
+                    toplevel);
+
+} /* x_tabs_menu_create_item() */
 
