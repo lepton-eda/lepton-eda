@@ -5,7 +5,8 @@ bin_SCRIPTS = \
 	lepton-refdes_renum \
 	lepton-schdiff \
 	lepton-symfix \
-	lepton-tragesym
+	lepton-tragesym \
+	lepton-upcfg
 
 noinst_SCRIPTS = gschupdate gsymupdate
 
@@ -18,7 +19,8 @@ EXTRA_DIST = \
 	lepton-refdes_renum \
 	lepton-schdiff \
 	lepton-symfix \
-	lepton-tragesym
+	lepton-tragesym \
+	lepton-upcfg.in
 
 do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
 	-e 's,[@]GUILE[@],$(GUILE),g' \
@@ -32,5 +34,9 @@ lepton-embed: lepton-embed.in
 	$(do_subst) < $(srcdir)/$@.in > $@
 	chmod +x $@
 
-CLEANFILES = lepton-archive lepton-embed
+lepton-upcfg: lepton-upcfg.in
+	$(do_subst) < $(srcdir)/$@.in > $@
+	chmod +x $@
+
+CLEANFILES = lepton-archive lepton-embed lepton-upcfg
 MAINTAINERCLEANFILES = Makefile.in

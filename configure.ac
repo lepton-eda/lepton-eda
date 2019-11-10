@@ -269,7 +269,6 @@ AC_CONFIG_FILES([Makefile
                  utils/tests/refdes_renum/Makefile
                  utils/tests/refdes_renum/inputs/Makefile
                  utils/tests/refdes_renum/outputs/Makefile
-                 utils/upcfg/Makefile
 
                  symbols/Makefile
                  symbols/documentation/Makefile

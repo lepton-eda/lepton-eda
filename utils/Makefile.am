@@ -4,8 +4,7 @@ SUBDIRS = \
 	examples \
 	scripts \
 	src \
-	tests \
-	upcfg
+	tests
 
 EXTRA_DIST = \
 	AUTHORS \
