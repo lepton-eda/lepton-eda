@@ -1229,7 +1229,7 @@ create_attributes_treeview (Compselect *compselect)
 
   /* two columns for name and value of the attributes */
   renderer = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
-                                              "editable", FALSE,
+                                              "editable", TRUE,
                                               NULL));
 
   column = GTK_TREE_VIEW_COLUMN (g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
