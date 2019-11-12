@@ -36,14 +36,15 @@
                    package-pin-nets set-package-pin-nets!
                    package-pin-parent set-package-pin-parent!
                    package-pin-connection set-package-pin-connection!
-                   package-pin-named-connection set-package-pin-named-connection!)
+                   package-pin-named-connection set-package-pin-named-connection!
+                   package-pin-port-connection set-package-pin-port-connection!)
 
   #:export (object->package-pin
             set-package-pin-printer!
             set-package-pin-parent-component!))
 
 (define-record-type <package-pin>
-  (make-package-pin id object number name netname label attribs net-map nets parent connection named-connection)
+  (make-package-pin id object number name netname label attribs net-map nets parent connection named-connection port-connection)
   package-pin?
   ;; This field is used just for the record representation in
   ;; set-record-type-printer! below.
@@ -69,7 +70,9 @@
   ;; <schematic-connection> the pin is connected to.
   (connection package-pin-connection set-package-pin-connection!)
   ;; Common net name <schematic-connection> the pin is connected to.
-  (named-connection package-pin-named-connection set-package-pin-named-connection!))
+  (named-connection package-pin-named-connection set-package-pin-named-connection!)
+  ;; Hierarchical (via port) <schematic-connection> the pin is connected to.
+  (port-connection package-pin-port-connection set-package-pin-port-connection!))
 
 ;;; Sets default printer for <package-pin>
 (set-record-type-printer!
@@ -115,6 +118,7 @@ Example usage:
                  ('parent (package-pin-parent record))
                  ('connection (package-pin-connection record))
                  ('named-connection (package-pin-named-connection record))
+                 ('port-connection (package-pin-port-connection record))
                  (_ #\?)))
              args)))))
 
@@ -154,4 +158,6 @@ Example usage:
                          ;; No connection yet.
                          #f
                          ;; No netname connection yet.
+                         #f
+                         ;; No port connection yet.
                          #f)))
