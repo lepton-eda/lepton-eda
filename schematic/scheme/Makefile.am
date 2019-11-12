@@ -9,7 +9,6 @@ nobase_dist_scmdata_DATA = \
 	pcb.scm \
 	default-attrib-positions.scm \
 	gschem/core/gettext.scm \
-	gschem/gschemdoc.scm \
 	gschem/window.scm \
 	gschem/selection.scm \
 	gschem/deprecated.scm \
@@ -32,6 +31,8 @@ nobase_dist_scmdata_DATA = \
 	conf/schematic/menu.scm \
 	conf/schematic/options.scm \
 	conf/schematic/stroke.scm
+
+nobase_scmdata_DATA = gschem/gschemdoc.scm
 
 gschem/gschemdoc.scm: gschem/gschemdoc.scm.in
 	$(MKDIR_P) gschem/; \
