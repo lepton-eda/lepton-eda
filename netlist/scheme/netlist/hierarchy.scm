@@ -493,9 +493,9 @@
 
   (for-each update-component-net-mapped-pins components)
 
+  ((if (gnetlist-config-ref 'mangle-refdes)
+       identity
+       remove-refdes-mangling) components)
+
   (map compat-refdes
-       (rename-all
-        ((if (gnetlist-config-ref 'mangle-refdes)
-             identity
-             remove-refdes-mangling)
-         components))))
+       (rename-all components)))
