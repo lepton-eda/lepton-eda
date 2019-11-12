@@ -31,6 +31,7 @@
   #:use-module (netlist schematic-connection)
   #:use-module (netlist sort)
   #:use-module (netlist attrib compare)
+  #:use-module (netlist attrib refdes)
   #:use-module (geda deprecated)
   #:use-module (geda log)
   #:use-module (geda repl)

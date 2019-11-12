@@ -26,13 +26,15 @@
   #:use-module (geda object)
   #:use-module (geda log)
   #:use-module (lepton page)
+  #:use-module (netlist config)
   #:use-module (netlist hierarchy)
   #:use-module (netlist mode)
   #:use-module (netlist schematic-component)
   #:use-module (netlist subschematic)
 
   #:export (hierarchy-create-refdes
-            schematic-component-refdes*))
+            schematic-component-refdes*
+            schematic-component-refdes->string))
 
 
 (define (hierarchy-create-refdes basename hierarchy-tag)
@@ -82,3 +84,22 @@
        ;; If no refdes found, make a mock one.
        (make-special-refdes))
    hierarchy-tag))
+
+
+(define (schematic-component-refdes->string refdes)
+  (define reverse-refdes-order?
+    (gnetlist-config-ref 'reverse-refdes-order))
+
+  (define refdes-separator
+    (gnetlist-config-ref 'refdes-separator))
+
+  (match refdes
+    ;; Return #f for graphical, hierarchical, etc. symbols.
+    ((#f a ...) #f)
+    ((? list? refdes)
+     (string-join
+      ;; Refdes list is already reversed, so we have to reverse
+      ;; it again if we do not need the reverse order.
+      (if reverse-refdes-order? refdes (reverse refdes))
+      refdes-separator))
+    (refdes refdes)))

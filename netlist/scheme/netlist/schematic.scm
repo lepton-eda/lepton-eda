@@ -18,7 +18,6 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (netlist schematic)
-  #:use-module (ice-9 match)
   #:use-module (ice-9 receive)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
@@ -61,7 +60,6 @@
             schematic-non-unique-package-names
             schematic-package-names
             schematic-ports
-            schematic-component-refdes->string
             schematic-tree
             schematic-name-tree
             schematic-components*))
@@ -267,23 +265,6 @@
               connections)
     connections))
 
-(define (schematic-component-refdes->string refdes)
-  (define reverse-refdes-order?
-    (gnetlist-config-ref 'reverse-refdes-order))
-
-  (define refdes-separator
-    (gnetlist-config-ref 'refdes-separator))
-
-  (match refdes
-    ;; Return #f for graphical, hierarchical, etc. symbols.
-    ((#f a ...) #f)
-    ((? list? refdes)
-     (string-join
-      ;; Refdes list is already reversed, so we have to reverse
-      ;; it again if we do not need the reverse order.
-      (if reverse-refdes-order? refdes (reverse refdes))
-      refdes-separator))
-    (refdes refdes)))
 
 (define (compat-refdes schematic-component)
   (set-schematic-component-refdes! schematic-component
