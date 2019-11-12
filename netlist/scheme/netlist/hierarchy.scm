@@ -497,5 +497,6 @@
        identity
        remove-refdes-mangling) components)
 
-  (map compat-refdes
-       (rename-all components)))
+  (rename-all components)
+
+  (map compat-refdes components))
