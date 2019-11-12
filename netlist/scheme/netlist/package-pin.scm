@@ -68,7 +68,7 @@
   (parent package-pin-parent set-package-pin-parent!)
   ;; <schematic-connection> the pin is connected to.
   (connection package-pin-connection set-package-pin-connection!)
-  ;; common netname <schematic-connection> the pin is connected to.
+  ;; Common net name <schematic-connection> the pin is connected to.
   (named-connection package-pin-named-connection set-package-pin-named-connection!))
 
 ;;; Sets default printer for <package-pin>
