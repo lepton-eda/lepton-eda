@@ -479,8 +479,6 @@
                             (schematic-component-parent (package-pin-parent pin)))
                            'power-rail))))
 
-  (for-each create-schematic-component-refdes components)
-
   (for-each set-net-map-pin-name!
             (append-map schematic-component-pins components))
 
@@ -488,10 +486,13 @@
 
   (for-each update-component-pins components)
 
-  (for-each update-component-net-mapped-pins components)
+  (for-each create-schematic-component-refdes components)
 
   (for-each fix-composite-component
             (filter schematic-component-subcircuit? components))
+
+  (for-each update-component-net-mapped-pins components)
+
   (map compat-refdes
        (rename-all
         ((if (gnetlist-config-ref 'mangle-refdes)
