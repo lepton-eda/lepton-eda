@@ -37,8 +37,18 @@
 
 ; private:
 ;
+; Display a message box.
+;
+( define ( doc-msg-box msg )
+  ( (@@ (guile-user) gschem-msg) msg )
+)
+
+
+
+; private:
+;
 ; Call (gschem util)::show-uri( url ), catching exceptions.
-; Display message box on error.
+; Display a message box on error.
 ;
 ( define ( doc-show-uri url )
 
@@ -54,7 +64,7 @@
       ( exmsg ( apply format #f msg args ) )
       ( ermsg ( format #f "~a~%'~a in ~a():~%~%~a" str key subr exmsg ) )
       )
-        ( (@@ (guile-user) gschem-msg) ermsg )
+        ( doc-msg-box ermsg )
       )
     )
   ) ; catch()
@@ -66,24 +76,20 @@
 ; private:
 ;
 ( define ( doc-show-file fpath )
-  ; return:
   ( doc-show-uri (format #f "file://~a" fpath) )
 )
 
 
 
 (define (sys-doc-dir)
-  "sys-doc-dir
+  "Get the directory where documentation is stored."
 
-Get the directory where gEDA documentation is stored."
-
+  ; return:
   "@docdir@"
 )
 
 (define (user-doc-dir)
-  "user-doc-dir
-
-Get the directory where per-user gEDA documentation is stored."
+  "Get the directory where per-user documentation is stored."
 
   (string-join (list (user-data-dir)
                      "doc" "lepton-eda")
@@ -103,9 +109,8 @@ Get the directory where per-user gEDA documentation is stored."
   "show-wiki PAGE
 
 Launch a browser to display a page from the offline version of the
-gEDA wiki shipped with gEDA/gaf.  The specified PAGE should be a
-string containing the page name as used on the live version of the
-wiki."
+wiki.  The specified PAGE should be a string containing the page
+name as used on the live version of the wiki."
 
   (doc-show-uri
    (string-append "file://"
@@ -181,7 +186,7 @@ wiki."
 Find the documentation for COMPONENT, by inspecting (in order) its
 \"documentation\", \"device\" and \"value\" attributes, and its
 component basename, and searching in the current directory, the user
-and system gEDA documentation directories, and Google.  In most cases,
+and system documentation directories, and Google.  In most cases,
 results are restricted to \".pdf\" files.  The documentation is
 displayed in the system associated viewer application."
 
@@ -253,4 +258,4 @@ displayed in the system associated viewer application."
          (directory-doc-search (sys-doc-dir) name ".pdf"))))
 
      ;; 4) Fail miserably
-     (error (_ "No documentation found")))))
+     (doc-msg-box (_ "No documentation found")))))
