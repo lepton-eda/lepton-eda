@@ -109,6 +109,7 @@ DIST_SCM = \
 	netlist/verbose.scm
 
 TESTS = unit-tests/test-netlist-load-path.scm \
+	unit-tests/test-component-library-search.scm \
 	unit-tests/test-netlist-attrib.scm \
 	unit-tests/test-netlist-partlist.scm
 
