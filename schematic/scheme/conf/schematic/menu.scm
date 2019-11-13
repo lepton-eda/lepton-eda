@@ -12,6 +12,8 @@
 ; The SEPARATOR keyword is case sensitive and puts a separator into the menu.
 ;
 
+( use-modules ( ice-9 format ) )
+( use-modules ( geda config ) )
 
 ;; Define a no-op macro for flagging strings as translatable.
 (define-syntax N_
@@ -105,17 +107,35 @@
 ( define ( view-menu-items )
 ( let*
   (
+  ( default-use-docks #f )
+  ( use-docks default-use-docks )
   ( grp "schematic.gui" )
   ( key "use-docks" )
-  ( cfg ( path-config-context (getcwd) ) )
-  ( val ( if cfg (config-boolean cfg grp key) #f ) )
+  ( cfg #f )
   )
 
   ( define ( opt-item item )
     ; return:
-    ( if val
+    ( if use-docks
       item ; if
       '()  ; else
+    )
+  )
+
+
+  ( catch #t
+    ( lambda()
+      ( set! cfg ( path-config-context (getcwd) ) )
+      ( set! use-docks ( config-boolean cfg grp key ) )
+    )
+    ( lambda( ex . args )
+      ( format
+        ( current-error-port )
+        "menu.scm: Cannot read configuration key [~a::~a]:~%~
+         '~a: ~a~%~
+         Please check your installation.~%"
+        grp key ex args
+      )
     )
   )
 
@@ -148,17 +168,35 @@
 ( define ( page-menu-items )
 ( let*
   (
+  ( default-use-tabs #t )
+  ( use-tabs default-use-tabs )
   ( grp "schematic.gui" )
   ( key "use-tabs" )
-  ( cfg ( path-config-context (getcwd) ) )
-  ( val ( if cfg (config-boolean cfg grp key) #t ) )
+  ( cfg #f )
   )
 
   ( define ( opt-item item )
     ; return:
-    ( if val
+    ( if use-tabs
       item ; if
       '()  ; else
+    )
+  )
+
+
+  ( catch #t
+    ( lambda()
+      ( set! cfg ( path-config-context (getcwd) ) )
+      ( set! use-tabs ( config-boolean cfg grp key ) )
+    )
+    ( lambda( ex . args )
+      ( format
+        ( current-error-port )
+        "menu.scm: Cannot read configuration key [~a::~a]:~%~
+         '~a: ~a~%~
+         Please check your installation.~%"
+        grp key ex args
+      )
     )
   )
 
