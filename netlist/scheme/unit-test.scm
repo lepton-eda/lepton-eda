@@ -54,11 +54,16 @@
 ;;;   Must be present once if several tests are done in one
 ;;;   script. It should output some summary.
 
-
 (use-modules (srfi srfi-64)
              (srfi srfi-26)
              (ice-9 getopt-long)
              (ice-9 pretty-print))
+
+;;; In order to facilitate debugging, you can increase the pile of
+;;; info reported on errors by setting the COLUMNS environment
+;;; variable to a bigger value. Example:
+;; (setenv "COLUMNS" "1000")
+
 
 ;;; Initialize liblepton variables and functions.
 (load-extension "../../liblepton/src/liblepton" "libgeda_init")
