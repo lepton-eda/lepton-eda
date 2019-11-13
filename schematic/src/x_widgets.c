@@ -37,7 +37,7 @@
 
 
 static gboolean
-g_x_widgets_use_docks = TRUE;
+g_x_widgets_use_docks = FALSE;
 
 
 
@@ -74,9 +74,8 @@ gboolean x_widgets_use_docks()
  * key:   use-docks
  * group: schematic.gui
  * type:  boolean
- * default value: true
+ * default value: false
  *
- * \return TRUE if use-docks option is set to true, FALSE otherwise.
  */
 void x_widgets_init()
 {
