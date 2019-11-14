@@ -5,8 +5,7 @@ lepton-embed \- Embed/unembed schematic components and pictures
 
 .SH SYNOPSIS
 .B lepton-embed
-.RB OPTIONS
-.I FILE ...
+\fB-e\fR | \fB-u\fR [\fIOPTIONS\fR] \fIFILE\fR ...
 
 .SH DESCRIPTION
 .B lepton-embed
@@ -24,10 +23,16 @@ the current Lepton EDA project's library path, a broken schematic results.
 .SH OPTIONS
 .TP
 .BR \-e ", " \-\-embed
-Embed all components and pictures.
+Embed. Without \fB-p\fR or \fB-c\fR, embed all components and pictures.
 .TP
 .BR \-u ", " \-\-unembed
-Unembed all components and pictures.
+Unembed. Without \fB-p\fR or \fB-c\fR, unembed all components and pictures.
+.TP
+.BR \-p ", " \-\-pictures
+Process pictures only.
+.TP
+.BR \-c ", " \-\-components
+Process components only.
 .TP
 .BR \-V ", " \-\-version
 Show version information.

@@ -39,6 +39,16 @@ exec @GUILE@ "$0" "$@"
     ( list 'single-char #\u )
     ( list 'value        #f )
   )
+  ( list ; --pictures (-p)
+    'pictures
+    ( list 'single-char #\p )
+    ( list 'value        #f )
+  )
+  ( list ; --components (-c)
+    'components
+    ( list 'single-char #\c )
+    ( list 'value        #f )
+  )
   ( list ; --help (-h)
     'help
     ( list 'single-char #\h )
@@ -56,13 +66,15 @@ exec @GUILE@ "$0" "$@"
 
 ( define ( usage exit-code )
   ( format #t "~
-Usage: lepton-embed OPTIONS FILE ...
+Usage: lepton-embed -e | -u [OPTIONS] FILE ...
 
 Lepton EDA component embedding/unembedding utility.
 
 Options:
-  -e, --embed      Embed all components and pictures
-  -u, --unembed    Unembed all components and pictures
+  -e, --embed      Embed: without -p or -c, all components and pictures
+  -u, --unembed    Unembed: without -p or -c, all components and pictures
+  -p, --pictures   Process pictures only
+  -c, --components Process components only
   -h, --help       Show usage information
   -V, --version    Show version information
 
@@ -177,6 +189,8 @@ Lepton EDA homepage: <~a>
   ( files         '() )
   ( arg-embed      #f )
   ( arg-unembed    #f )
+  ( arg-pics       #f )
+  ( arg-comps      #f )
   ( chk-embeddable embeddable? )
   )
 
@@ -204,6 +218,19 @@ Lepton EDA homepage: <~a>
   ( set! files ( option-ref cmd-line-args '() '() ) )
   ( if ( null? files )
     ( usage 3 )
+  )
+
+  ( set! arg-pics  ( option-ref cmd-line-args 'pictures   #f ) )
+  ( set! arg-comps ( option-ref cmd-line-args 'components #f ) )
+
+  ( if arg-pics
+    ( set! chk-embeddable picture? )
+  )
+  ( if arg-comps
+    ( set! chk-embeddable component? )
+  )
+  ( if ( and arg-pics arg-comps )
+    ( set! chk-embeddable embeddable? )
   )
 
 
