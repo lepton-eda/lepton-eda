@@ -139,27 +139,27 @@ Lepton EDA homepage: <~a>
 
 
 
-( define ( do-embed page embed )
+( define ( do-embed page embed chk-embeddable )
 
   ( for-each
   ( lambda( comp )
       ( set-object-embedded! comp embed )
   )
-  ( filter embeddable? (page-contents page) )
+  ( filter chk-embeddable (page-contents page) )
   )
 
 ) ; do-embed()
 
 
 
-( define ( process-file file embed )
+( define ( process-file file embed chk-embeddable )
 ( let
   (
   ( page ( page-open file ) )
   )
 
   ( when page
-    ( do-embed page embed )
+    ( do-embed page embed chk-embeddable )
     ( if ( and (page-dirty? page) (page-save page) )
       ( format #t "Saved: [~a]~%" file )
     )
@@ -177,6 +177,7 @@ Lepton EDA homepage: <~a>
   ( files         '() )
   ( arg-embed      #f )
   ( arg-unembed    #f )
+  ( chk-embeddable embeddable? )
   )
 
   ( set! cmd-line-args
@@ -210,7 +211,7 @@ Lepton EDA homepage: <~a>
 
   ( for-each
   ( lambda( file )
-    ( process-file file arg-embed )
+    ( process-file file arg-embed chk-embeddable )
   )
     files
   )
