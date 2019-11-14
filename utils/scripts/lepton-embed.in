@@ -133,11 +133,13 @@ Lepton EDA homepage: <~a>
 
 
 
-( define ( do-embed page embed )
+( define ( embeddable? obj )
+  ( or (component? obj) (picture? obj) )
+)
 
-  ( define ( embeddable? obj )
-    ( or (component? obj) (picture? obj) )
-  )
+
+
+( define ( do-embed page embed )
 
   ( for-each
   ( lambda( comp )
