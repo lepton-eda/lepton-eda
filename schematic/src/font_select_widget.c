@@ -467,25 +467,38 @@ save_settings_dlg (FontSelectWidget* widget)
 
   /* create dialog: */
   GtkWidget* dlg = gtk_dialog_new_with_buttons(
-    _("Save configuration"),
+    _("Save configuration to:"),
     GTK_WINDOW (widget->toplevel_->main_window),
     GTK_DIALOG_MODAL,
     GTK_STOCK_OK,     GTK_RESPONSE_ACCEPT,
     GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
     NULL);
 
-  /* label: */
-  GtkWidget* lab = gtk_label_new (_("Save settings to:"));
+  /* text for radio buttons: */
+  gchar* cwd = g_get_current_dir();
+  EdaConfig* ctx_local = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+  const gchar* file_local = eda_config_get_filename (ctx_local);
+  gchar* txt_btn1 = g_strdup_printf ("%s\n%s",
+                                   _("Local configuration file:"),
+                                   file_local);
+
+  EdaConfig* ctx_user = eda_config_get_user_context();
+  const gchar* file_user = eda_config_get_filename (ctx_user);
+  gchar* txt_btn2 = g_strdup_printf ("%s\n%s",
+                                   _("User configuration file:"),
+                                   file_user);
 
   /* radio buttons: */
-  GtkWidget* btn1 = gtk_radio_button_new_with_label (
-    NULL, _("Local configuration file (in current directory)"));
+  GtkWidget* btn1 = gtk_radio_button_new_with_label (NULL, txt_btn1);
   GtkWidget* btn2 = gtk_radio_button_new_with_label_from_widget(
-    GTK_RADIO_BUTTON (btn1), _("User configuration file (geda-user.conf)"));
+    GTK_RADIO_BUTTON (btn1), txt_btn2);
+
+  g_free (txt_btn1);
+  g_free (txt_btn2);
 
   /* pack to vbox: */
   GtkWidget* vbox = gtk_vbox_new (TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), lab,  TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), btn1, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), btn2, TRUE, TRUE, 0);
 
@@ -504,14 +517,12 @@ save_settings_dlg (FontSelectWidget* widget)
   {
     if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (btn1)))
     {
-      gchar* cwd = g_get_current_dir();
-      ctx = eda_config_get_context_for_path (cwd);
-      g_free (cwd);
+      ctx = ctx_local;
     }
     else
     if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (btn2)))
     {
-      ctx = eda_config_get_user_context();
+      ctx = ctx_user;
     }
   }
 
