@@ -34,6 +34,10 @@ Process pictures only.
 .BR \-c ", " \-\-components
 Process components only.
 .TP
+.BR \-x ", " \-\-suffix " " \fBSUFFIX\fR
+Do not change input files. Modified files will be saved as
+\fIFILE\fR\fB.SUFFIX\fR.
+.TP
 .BR \-V ", " \-\-version
 Show version information.
 .TP

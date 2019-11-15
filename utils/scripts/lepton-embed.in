@@ -49,6 +49,11 @@ exec @GUILE@ "$0" "$@"
     ( list 'single-char #\c )
     ( list 'value        #f )
   )
+  ( list ; --suffix (-x)
+    'suffix
+    ( list 'single-char #\x )
+    ( list 'value        #t )
+  )
   ( list ; --help (-h)
     'help
     ( list 'single-char #\h )
@@ -68,15 +73,16 @@ exec @GUILE@ "$0" "$@"
   ( format #t "~
 Usage: lepton-embed -e | -u [OPTIONS] FILE ...
 
-Lepton EDA component embedding/unembedding utility.
+Lepton EDA schematic components and pictures embedding/unembedding utility.
 
 Options:
-  -e, --embed      Embed: without -p or -c, all components and pictures
-  -u, --unembed    Unembed: without -p or -c, all components and pictures
-  -p, --pictures   Process pictures only
-  -c, --components Process components only
-  -h, --help       Show usage information
-  -V, --version    Show version information
+  -e, --embed          Embed: without -p or -c, all components and pictures
+  -u, --unembed        Unembed: without -p or -c, all components and pictures
+  -p, --pictures       Process pictures only
+  -c, --components     Process components only
+  -x, --suffix SUFFIX  Keep input files intact, save to FILE.SUFFIX
+  -h, --help           Show usage information
+  -V, --version        Show version information
 
 Report bugs at <~a>
 Lepton EDA homepage: <~a>
@@ -116,15 +122,29 @@ Lepton EDA homepage: <~a>
 
 
 ( define* ( page-save page #:optional (suffix "") )
-( let
+
+  ( define ( mk-out-file-name file )
+    ; return:
+    ( if ( string-null? suffix )
+      file                         ; if
+      ( format #f "~a~a~a.~a"      ; else
+        ( dirname file )
+        file-name-separator-string
+        ( basename file )
+        suffix
+      )
+    )
+  ) ; mk-out-file-name()
+
+( let*
   (
   ( file ( page-filename page ) )
+  ( out  ( mk-out-file-name file ) )
   )
 
   ( catch #t
   ( lambda()
-    ( with-output-to-file
-      ( format #f "~a~a" file suffix )
+    ( with-output-to-file out
       ( lambda()
         ; return:
         ( format #t "~a" (page->string page) )
@@ -134,7 +154,7 @@ Lepton EDA homepage: <~a>
   ( lambda( ex . args )
     ( format (current-error-port)
               "Cannot save file [~a]:~%  '~a: ~a ~%"
-              file ex args )
+              out ex args )
     ; return:
     #f
   )
@@ -164,7 +184,7 @@ Lepton EDA homepage: <~a>
 
 
 
-( define ( process-file file embed chk-embeddable )
+( define ( process-file file embed chk-embeddable suffix )
 ( let
   (
   ( page ( page-open file ) )
@@ -172,7 +192,7 @@ Lepton EDA homepage: <~a>
 
   ( when page
     ( do-embed page embed chk-embeddable )
-    ( if ( and (page-dirty? page) (page-save page) )
+    ( if ( and (page-dirty? page) (page-save page suffix) )
       ( format #t "Saved: [~a]~%" file )
     )
   )
@@ -183,7 +203,7 @@ Lepton EDA homepage: <~a>
 
 
 ( define ( main )
-( let
+( let*
   (
   ( cmd-line-args '() )
   ( files         '() )
@@ -192,6 +212,8 @@ Lepton EDA homepage: <~a>
   ( arg-pics       #f )
   ( arg-comps      #f )
   ( chk-embeddable embeddable? )
+  ( suffix-default     "" )
+  ( suffix suffix-default )
   )
 
   ( set! cmd-line-args
@@ -233,12 +255,14 @@ Lepton EDA homepage: <~a>
     ( set! chk-embeddable embeddable? )
   )
 
+  ( set! suffix ( option-ref cmd-line-args 'suffix suffix-default ) )
+
 
   ( (@@ (guile-user) parse-rc) "lepton-embed" "gafrc" )
 
   ( for-each
   ( lambda( file )
-    ( process-file file arg-embed chk-embeddable )
+    ( process-file file arg-embed chk-embeddable suffix )
   )
     files
   )
