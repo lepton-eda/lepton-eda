@@ -4,8 +4,8 @@ Recent Changes in Lepton EDA
 This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
-Notable changes in Lepton EDA 1.9.10
-------------------------------------
+Notable changes in Lepton EDA 1.9.10 (upcoming)
+-----------------------------------------------
 ### General changes:
 - Two unused old scheme scripts `print-NB-attribs.scm` and
   `list-keys.scm` have been removed.
@@ -160,8 +160,8 @@ Notable changes in Lepton EDA 1.9.10
 
 - `gTAG` example scripts and configuration files have been fixed.
 
-Notable changes in Lepton EDA 1.9.9
------------------------------------
+Notable changes in Lepton EDA 1.9.9 (20191003)
+----------------------------------------------
 ### General changes:
 - The version of the `libleptonrenderer` library has been fixed.
 
@@ -181,8 +181,8 @@ Notable changes in Lepton EDA 1.9.9
   alias of the latter. Its `netlist-mode` argument has been made
   optional and is `'geda` by default.
 
-Notable changes in Lepton EDA 1.9.8
------------------------------------
+Notable changes in Lepton EDA 1.9.8 (20190928)
+----------------------------------------------
 ### Breaking changes:
 - The configure switch `--disable-gattrib` has been renamed to
   `--disable-attrib`.
@@ -954,8 +954,8 @@ Notable changes in Lepton EDA 1.9.8
 
 - Non-working `-d` (debug) option has been removed.
 
-Notable changes in Lepton EDA 1.9.7
------------------------------------
+Notable changes in Lepton EDA 1.9.7 (20181211)
+----------------------------------------------
 
 ### Changes in `lepton-schematic`:
 
@@ -1050,8 +1050,8 @@ Notable changes in Lepton EDA 1.9.7
   debugging.
 
 
-Notable changes in Lepton EDA 1.9.6
------------------------------------
+Notable changes in Lepton EDA 1.9.6 (20181101)
+----------------------------------------------
 ### Breaking changes:
 - All `(gnetlist module-name)` Scheme modules have been renamed to
  `(netlist module-name)`.
@@ -1154,8 +1154,8 @@ Notable changes in Lepton EDA 1.9.6
   default, if that key is not set, *Arial* is used.
 
 
-Notable changes in Lepton EDA 1.9.5
------------------------------------
+Notable changes in Lepton EDA 1.9.5 (20180820)
+----------------------------------------------
 
 ### Changes when building from source:
 - The version of the `libleptonrenderer` library, mistakenly
@@ -1183,8 +1183,8 @@ Notable changes in Lepton EDA 1.9.5
   line option has been avoided.
 
 
-Notable changes in Lepton EDA 1.9.4
------------------------------------
+Notable changes in Lepton EDA 1.9.4 (20180812)
+----------------------------------------------
 
 ### Breaking changes:
 
@@ -1466,8 +1466,8 @@ changes `font` key in `schematic.gui` group mentioned below.
   [in the lepton-eda wiki](https://github.com/lepton-eda/lepton-eda/wiki/Lepton-EDA-and-Cygwin).
 
 
-Notable changes in Lepton EDA 1.9.3
------------------------------------
+Notable changes in Lepton EDA 1.9.3 (20170226)
+----------------------------------------------
 
 ### Breaking changes:
 
