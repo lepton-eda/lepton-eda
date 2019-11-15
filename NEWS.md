@@ -27,6 +27,14 @@ Notable changes in Lepton EDA 1.9.10
   using this prefix in functions like `component-library` and
   `source-library`.
 
+- A couple of functions have been added to the `(geda object)`
+  module to work with object's "embedded" state:
+  `object-embedded?` and `set-object-embedded!`.
+
+- The **cache** configuration context can now be accessed in
+  Scheme code: `cache-config-context` function has been added
+  to the `(geda config)` module.
+
 ### Changes in `liblepton`:
 - The module `(lepton library component)` has been amended to
   support new Scheme layer around internal `%component-library` in
@@ -115,10 +123,32 @@ Notable changes in Lepton EDA 1.9.10
   command: `--paper-names` (`-P`). It displays a list of paper
   size names suitable for the `--paper` option.
 
+- The default paper size is now defined in the system configuration
+  files: the `paper` configuration key in the `export` and
+  `gschem.printing` groups is set to `iso_a4`.
+
+- `lepton-cli config` can now read and write configuration
+  stored in the **cache** configuration context: a new
+  command-line option `--cache` (`-c`) has been added.
+
 ### Changes in `lepton-schematic`:
 - Grips can now be turned on and off at run-time.
   Use the new 'Options → Grips: On/Off' menu item or
   <kbd>O</kbd>-<kbd>I</kbd> keyboard shortcut.
+
+- In the 'Select Component' dialog, it is now possible to copy
+  names and values of attributes to clipboard.
+
+- In tabbed GUI, tabs can now be rearranged by dragging them
+  with mouse.
+
+- A context menu with common actions (`New`, `Open`, `Save`,
+  `Save As`, `Page Manager`, and `Close`) has been added to
+  the active tab's header widget.
+
+- If *Help* → *Find Component Documentation* cannot find any
+  documentation, a message box is displayed. No backtrace, nor
+  Guile errors are printed to the log window.
 
 ### Changes in `examples`:
 - The `bom` python script has been moved to *contrib/*.
