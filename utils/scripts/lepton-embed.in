@@ -146,14 +146,16 @@ Lepton EDA homepage: <~a>
   ( lambda()
     ( with-output-to-file out
       ( lambda()
-        ; return:
         ( format #t "~a" (page->string page) )
+        ( format (current-error-port) "Saved: [~a]~%" out )
+        ; return:
+        #t
       )
     )
   )
   ( lambda( ex . args )
     ( format (current-error-port)
-              "Cannot save file [~a]:~%  '~a: ~a ~%"
+              "Cannot save file [~a]:~%  '~a: ~a~%"
               out ex args )
     ; return:
     #f
@@ -192,8 +194,8 @@ Lepton EDA homepage: <~a>
 
   ( when page
     ( do-embed page embed chk-embeddable )
-    ( if ( and (page-dirty? page) (page-save page suffix) )
-      ( format #t "Saved: [~a]~%" file )
+    ( if ( page-dirty? page )
+      ( page-save page suffix )
     )
   )
 
