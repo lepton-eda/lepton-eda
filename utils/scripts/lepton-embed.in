@@ -111,7 +111,7 @@ Lepton EDA homepage: <~a>
   )
   ( lambda( ex . args )
     ( format (current-error-port)
-              "Cannot open file [~a]:~%  '~a: ~a ~%"
+              "Cannot open file [~a]:~%  '~a: ~a~%"
               file ex args )
     ; return:
     #f
@@ -121,7 +121,7 @@ Lepton EDA homepage: <~a>
 
 
 
-( define* ( page-save page #:optional (suffix "") )
+( define ( page-save page suffix )
 
   ( define ( mk-out-file-name file )
     ; return:
@@ -168,7 +168,11 @@ Lepton EDA homepage: <~a>
 
 
 ( define ( embeddable? obj )
-  ( or (component? obj) (picture? obj) )
+  ; return:
+  ( or
+    ( component? obj )
+    ( picture?   obj )
+  )
 )
 
 
@@ -207,19 +211,14 @@ Lepton EDA homepage: <~a>
 ( define ( main )
 ( let*
   (
-  ( cmd-line-args '() )
-  ( files         '() )
-  ( arg-embed      #f )
-  ( arg-unembed    #f )
-  ( arg-pics       #f )
-  ( arg-comps      #f )
+  ( cmd-line-args  (getopt-long (program-arguments) cmd-line-args-spec) )
+  ( files          (option-ref cmd-line-args '()        '()) )
+  ( arg-embed      (option-ref cmd-line-args 'embed      #f) )
+  ( arg-unembed    (option-ref cmd-line-args 'unembed    #f) )
+  ( arg-pics       (option-ref cmd-line-args 'pictures   #f) )
+  ( arg-comps      (option-ref cmd-line-args 'components #f) )
+  ( suffix         (option-ref cmd-line-args 'suffix     "") )
   ( chk-embeddable embeddable? )
-  ( suffix-default     "" )
-  ( suffix suffix-default )
-  )
-
-  ( set! cmd-line-args
-    ( getopt-long (program-arguments) cmd-line-args-spec )
   )
 
   ( if ( option-ref cmd-line-args 'help #f )
@@ -229,9 +228,6 @@ Lepton EDA homepage: <~a>
     ( version )
   )
 
-  ( set! arg-embed   ( option-ref cmd-line-args 'embed #f ) )
-  ( set! arg-unembed ( option-ref cmd-line-args 'unembed #f ) )
-
   ( if ( and arg-embed arg-unembed )
     ( usage 1 )
   )
@@ -239,13 +235,9 @@ Lepton EDA homepage: <~a>
     ( usage 2 )
   )
 
-  ( set! files ( option-ref cmd-line-args '() '() ) )
   ( if ( null? files )
     ( usage 3 )
   )
-
-  ( set! arg-pics  ( option-ref cmd-line-args 'pictures   #f ) )
-  ( set! arg-comps ( option-ref cmd-line-args 'components #f ) )
 
   ( if arg-pics
     ( set! chk-embeddable picture? )
@@ -256,8 +248,6 @@ Lepton EDA homepage: <~a>
   ( if ( and arg-pics arg-comps )
     ( set! chk-embeddable embeddable? )
   )
-
-  ( set! suffix ( option-ref cmd-line-args 'suffix suffix-default ) )
 
 
   ( (@@ (guile-user) parse-rc) "lepton-embed" "gafrc" )
