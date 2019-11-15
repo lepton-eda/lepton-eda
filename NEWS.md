@@ -120,6 +120,16 @@ Notable changes in Lepton EDA 1.9.10
   Use the new 'Options → Grips: On/Off' menu item or
   <kbd>O</kbd>-<kbd>I</kbd> keyboard shortcut.
 
+### Changes in `examples`:
+- The `bom` python script has been moved to *contrib/*.
+
+- Several `README` files have been updated.
+
+- `RF_Amp` and `TwoStageAmp` examples have been updated to make
+  SPICE simulation work properly.
+
+- `gTAG` example scripts and configuration files have been fixed.
+
 Notable changes in Lepton EDA 1.9.9
 -----------------------------------
 ### General changes:
@@ -140,17 +150,6 @@ Notable changes in Lepton EDA 1.9.9
   `make-toplevel-schematic` is still there, and has been made an
   alias of the latter. Its `netlist-mode` argument has been made
   optional and is `'geda` by default.
-
-### Changes in `examples`:
-- The `bom` python script has been moved to *contrib/*.
-
-- Several `README` files have been updated.
-
-- `RF_Amp` and `TwoStageAmp` examples have been updated to make
-  SPICE simulation work properly.
-
-- `gTAG` example scripts and configuration files have been fixed.
-
 
 Notable changes in Lepton EDA 1.9.8
 -----------------------------------
