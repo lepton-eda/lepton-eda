@@ -467,7 +467,7 @@ save_settings_dlg (FontSelectWidget* widget)
 
   /* create dialog: */
   GtkWidget* dlg = gtk_dialog_new_with_buttons(
-    _("Save configuration to:"),
+    _("Save configuration"),
     GTK_WINDOW (widget->toplevel_->main_window),
     GTK_DIALOG_MODAL,
     GTK_STOCK_OK,     GTK_RESPONSE_ACCEPT,
@@ -490,15 +490,24 @@ save_settings_dlg (FontSelectWidget* widget)
                                    file_user);
 
   /* radio buttons: */
-  GtkWidget* btn1 = gtk_radio_button_new_with_label (NULL, txt_btn1);
+  GtkWidget* btn1 = gtk_radio_button_new_with_label(
+    NULL, txt_btn1);
   GtkWidget* btn2 = gtk_radio_button_new_with_label_from_widget(
     GTK_RADIO_BUTTON (btn1), txt_btn2);
 
   g_free (txt_btn1);
   g_free (txt_btn2);
 
+  /* font label: */
+  gchar* font = get_schematic_font (widget->toplevel_);
+  GtkWidget* label_font = gtk_label_new (font);
+  gtk_label_set_text (GTK_LABEL (label_font), font);
+  g_free (font);
+
   /* pack to vbox: */
-  GtkWidget* vbox = gtk_vbox_new (TRUE, 0);
+  GtkWidget* vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), label_font, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), gtk_hseparator_new(), TRUE, TRUE, 10);
   gtk_box_pack_start (GTK_BOX (vbox), btn1, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), btn2, TRUE, TRUE, 0);
 
