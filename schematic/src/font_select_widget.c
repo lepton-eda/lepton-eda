@@ -63,25 +63,25 @@ static void
 update_font_label (FontSelectWidget* widget, const gchar* font);
 
 static gchar*
-get_schematic_font (GschemToplevel* toplevel);
+schematic_get_font (GschemToplevel* toplevel);
 
 static void
-set_schematic_font (GschemToplevel* toplevel, const gchar* font);
+schematic_set_font (GschemToplevel* toplevel, const gchar* font);
+
+static gchar*
+fontsel_get_font (GtkFontSelection* sel);
 
 static void
-save_schematic_font (GschemToplevel* toplevel, EdaConfig* cfg);
+fontsel_set_font (FontSelectWidget* widget, const gchar* font);
+
+static void
+config_save (GschemToplevel* toplevel, EdaConfig* cfg);
 
 static void
 on_btn_apply(GtkWidget* btn, gpointer p);
 
 static void
 on_btn_save(GtkWidget* btn, gpointer p);
-
-static gchar*
-font_sel_get_font (GtkFontSelection* sel);
-
-static void
-fontsel_set_font (FontSelectWidget* widget, const gchar* font);
 
 static EdaConfig*
 save_settings_dlg (FontSelectWidget* widget);
@@ -258,7 +258,7 @@ font_select_widget_on_show (GtkWidget* w)
   if (widget->toplevel_ == NULL)
     return;
 
-  gchar* font = get_schematic_font (widget->toplevel_);
+  gchar* font = schematic_get_font (widget->toplevel_);
 
   update_font_label (widget, font);
   fontsel_set_font (widget, font);
@@ -295,7 +295,7 @@ update_font_label (FontSelectWidget* widget, const gchar* font)
  *  \return Current schematic font name
  */
 static gchar*
-get_schematic_font (GschemToplevel* toplevel)
+schematic_get_font (GschemToplevel* toplevel)
 {
   g_return_val_if_fail (toplevel != NULL, NULL);
   g_return_val_if_fail (toplevel->renderer != NULL, NULL);
@@ -314,7 +314,7 @@ get_schematic_font (GschemToplevel* toplevel)
  *  \param font     Font name
  */
 static void
-set_schematic_font (GschemToplevel* toplevel, const gchar* font)
+schematic_set_font (GschemToplevel* toplevel, const gchar* font)
 {
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (toplevel->renderer != NULL);
@@ -333,12 +333,12 @@ set_schematic_font (GschemToplevel* toplevel, const gchar* font)
  * *  \param cfg      Configuration context to save settings to
  */
 static void
-save_schematic_font (GschemToplevel* toplevel, EdaConfig* cfg)
+config_save (GschemToplevel* toplevel, EdaConfig* cfg)
 {
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (cfg != NULL);
 
-  gchar* font = get_schematic_font (toplevel);
+  gchar* font = schematic_get_font (toplevel);
 
   if (cfg != NULL && font != NULL)
   {
@@ -347,6 +347,29 @@ save_schematic_font (GschemToplevel* toplevel, EdaConfig* cfg)
   }
 
   g_free (font);
+}
+
+
+
+/*! \brief Get selected font as a string composed of family and face
+ *  \note  Caller must g_free() return value
+ *
+ *  \param sel Pointer to a GtkFontSelection widget
+ *
+ *  \return string in the form "family face"
+ */
+static gchar*
+fontsel_get_font (GtkFontSelection* sel)
+{
+  g_return_val_if_fail (sel != NULL, NULL);
+
+  PangoFontFamily* family = gtk_font_selection_get_family (sel);
+  const char* family_name = pango_font_family_get_name (family);
+
+  PangoFontFace* face = gtk_font_selection_get_face (sel);
+  const char* face_name = pango_font_face_get_face_name (face);
+
+  return g_strdup_printf ("%s %s", family_name, face_name);
 }
 
 
@@ -393,9 +416,9 @@ on_btn_apply (GtkWidget* btn, gpointer p)
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->toplevel_ != NULL);
 
-  gchar* font = font_sel_get_font (widget->font_sel_);
+  gchar* font = fontsel_get_font (widget->font_sel_);
 
-  set_schematic_font (widget->toplevel_, font);
+  schematic_set_font (widget->toplevel_, font);
   update_font_label (widget, font);
 
   g_free (font);
@@ -416,7 +439,7 @@ on_btn_save (GtkWidget* btn, gpointer p)
 
   if (cfg != NULL)
   {
-    save_schematic_font (widget->toplevel_, cfg);
+    config_save (widget->toplevel_, cfg);
   }
 
 } /* on_btn_save() */
@@ -429,29 +452,6 @@ on_btn_save (GtkWidget* btn, gpointer p)
  * helpers:
  *
  */
-
-/*! \brief Get selected font as a string composed of family and face
- *  \note  Caller must g_free() return value
- *
- *  \param sel Pointer to a GtkFontSelection widget
- *
- *  \return string in the form "family face"
- */
-static gchar*
-font_sel_get_font (GtkFontSelection* sel)
-{
-  g_return_val_if_fail (sel != NULL, NULL);
-
-  PangoFontFamily* family = gtk_font_selection_get_family (sel);
-  const char* family_name = pango_font_family_get_name (family);
-
-  PangoFontFace* face = gtk_font_selection_get_face (sel);
-  const char* face_name = pango_font_face_get_face_name (face);
-
-  return g_strdup_printf ("%s %s", family_name, face_name);
-}
-
-
 
 /*! \brief Open save settings dialog
  *
@@ -499,7 +499,7 @@ save_settings_dlg (FontSelectWidget* widget)
   g_free (txt_btn2);
 
   /* font label: */
-  gchar* font = get_schematic_font (widget->toplevel_);
+  gchar* font = schematic_get_font (widget->toplevel_);
   GtkWidget* label_font = gtk_label_new (font);
   gtk_label_set_text (GTK_LABEL (label_font), font);
   g_free (font);
