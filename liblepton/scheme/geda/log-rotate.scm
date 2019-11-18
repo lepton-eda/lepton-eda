@@ -44,7 +44,7 @@
 ;; FIXME This should be obtained from the code that decides where to
 ;; create and populate log files.
 (define (log-directory)
-  (string-append (user-config-dir) file-name-separator-string "logs"))
+  (string-append (user-cache-dir) file-name-separator-string "logs"))
 
 ;;;; get-log-toolname path
 ;;
