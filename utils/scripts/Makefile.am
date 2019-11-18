@@ -8,11 +8,7 @@ bin_SCRIPTS = \
 	lepton-tragesym \
 	lepton-upcfg
 
-noinst_SCRIPTS = gschupdate gsymupdate
-
 EXTRA_DIST = \
-	gschupdate \
-	gsymupdate \
 	lepton-archive.in \
 	lepton-embed.in \
 	lepton-pcb_backannotate \
