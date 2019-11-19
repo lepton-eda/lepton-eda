@@ -325,40 +325,26 @@ static void clipboard_usable_cb (int usable, void *userdata)
 
 
 
-/*! \brief Return TRUE if at least 1 text object is selected
+/*! \brief Return TRUE if at least one object of type \a type is selected
+ *
+ *  \param toplevel  pointer to TOPLEVEL structure
+ *  \param type      object type constant (OBJ_TEXT, OBJ_COMPLEX, etc.) (o_types.h)
  */
 static gboolean
-selected_at_least_one_text_object(GschemToplevel *w_current)
-{
-  OBJECT *obj;
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  GList *list = geda_list_get_glist(toplevel->page_current->selection_list);
-
-  while(list != NULL) {
-    obj = (OBJECT *) list->data;
-    if (obj->type == OBJ_TEXT)
-      return TRUE;
-    list = g_list_next(list);
-  }
-  return FALSE;
-}
-
-
-
-/*! \brief Return TRUE if at least 1 component object is selected
- */
-static gboolean
-selected_at_least_one_comp_object(GschemToplevel *w_current)
+obj_selected (TOPLEVEL* toplevel, int type)
 {
   gboolean result = FALSE;
-  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
-  GList* selected = geda_list_get_glist (toplevel->page_current->selection_list);
+  SELECTION* selection = toplevel->page_current->selection_list;
 
-  for ( ; selected != NULL; selected = g_list_next (selected) )
+  GList* gl = geda_list_get_glist (selection);
+  for ( ; gl != NULL; gl = g_list_next (gl) )
   {
-    OBJECT* obj = (OBJECT*) selected->data;
-    if (obj->complex != NULL)
+    OBJECT* obj = (OBJECT*) gl->data;
+    if (obj->type == type)
     {
+#ifdef DEBUG
+      printf (" >> obj_selected(): obj->type: [%c]\n", obj->type);
+#endif
       result = TRUE;
       break;
     }
@@ -371,101 +357,66 @@ selected_at_least_one_comp_object(GschemToplevel *w_current)
 
 /*! \brief Update sensitivity of relevant menu items
  *
- *  \par Function Description
- *  Update sensitivity of relevant menu items.
- *
  *  \param [in] w_current GschemToplevel structure
  */
 void i_update_menus(GschemToplevel *w_current)
 {
-  gboolean have_text_selected = FALSE;
-  gboolean have_comp_selected = FALSE;
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  /*
-   * This is very simplistic.  Right now it just disables all menu
-   * items which get greyed out when a component is not selected.
-   * Eventually what gets enabled/disabled
-   * should be based on what is in the selection list
-   */
+  g_return_if_fail (w_current != NULL);
 
-  g_assert(w_current != NULL);
-  g_assert(toplevel->page_current != NULL);
+  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (toplevel->page_current != NULL);
 
+  /* update Edit->Paste sensitivity in clipboard_usable_cb():
+  */
   x_clipboard_query_usable (w_current, clipboard_usable_cb, w_current);
 
-  if (o_select_selected (w_current)) {
-    have_text_selected = selected_at_least_one_text_object(w_current);
-    have_comp_selected = selected_at_least_one_comp_object(w_current);
+  gboolean selected      = o_select_selected (w_current);
+  gboolean text_selected = selected && obj_selected (toplevel, OBJ_TEXT);
+  gboolean comp_selected = selected && obj_selected (toplevel, OBJ_COMPLEX);
+  gboolean pic_selected  = selected && obj_selected (toplevel, OBJ_PICTURE);
+  gboolean embeddable    = comp_selected || pic_selected;
 
-    /* since one or more things are selected, we set these TRUE */
-    /* These strings should NOT be internationalized */
-    x_menus_sensitivity(w_current, "_Edit/Cu_t", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/_Copy", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/_Delete", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Copy Mode", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Multiple Copy Mode", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Move Mode", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Rotate 90 Mode", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Mirror Mode", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Edit...", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Slot...", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Lock", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Unlock", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Embed Component/Picture", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Unembed Component/Picture", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Update Component", TRUE);
-    x_menus_sensitivity(w_current, "Hie_rarchy/_Down Schematic", TRUE);
-    x_menus_sensitivity(w_current, "Hie_rarchy/Down _Symbol", TRUE);
-    x_menus_sensitivity(w_current, "_Help/Find Component D_ocumentation",
-                        have_comp_selected);
-    x_menus_sensitivity(w_current, "A_ttributes/_Attach", TRUE);
-    x_menus_sensitivity(w_current, "A_ttributes/_Detach", TRUE);
-    x_menus_sensitivity(w_current, "A_ttributes/Show _Value", have_text_selected);
-    x_menus_sensitivity(w_current, "A_ttributes/Show _Name", have_text_selected);
-    x_menus_sensitivity(w_current, "A_ttributes/Show _Both", have_text_selected);
-    x_menus_sensitivity(w_current, "A_ttributes/_Toggle Visibility", have_text_selected);
+  /* These strings should NOT be internationalized */
+  x_menus_sensitivity (w_current, "_Edit/Cu_t", selected);
+  x_menus_sensitivity (w_current, "_Edit/_Copy", selected);
+  x_menus_sensitivity (w_current, "_Edit/_Delete", selected);
+  x_menus_sensitivity (w_current, "_Edit/Copy Mode", selected);
+  x_menus_sensitivity (w_current, "_Edit/Multiple Copy Mode", selected);
+  x_menus_sensitivity (w_current, "_Edit/Move Mode", selected);
+  x_menus_sensitivity (w_current, "_Edit/Rotate 90 Mode", selected);
+  x_menus_sensitivity (w_current, "_Edit/Mirror Mode", selected);
+  x_menus_sensitivity (w_current, "_Edit/Edit...", selected);
+  x_menus_sensitivity (w_current, "_Edit/Edit Text...", text_selected);
+  x_menus_sensitivity (w_current, "_Edit/Object Properties...", selected);
+  x_menus_sensitivity (w_current, "_Edit/Slot...", comp_selected);
+  x_menus_sensitivity (w_current, "_Edit/Lock", selected);
+  x_menus_sensitivity (w_current, "_Edit/Unlock", selected);
+  x_menus_sensitivity (w_current, "_Edit/Embed Component/Picture", embeddable);
+  x_menus_sensitivity (w_current, "_Edit/Unembed Component/Picture", embeddable);
+  x_menus_sensitivity (w_current, "_Edit/Update Component", comp_selected);
 
-    /*  Menu items for hierarchy added by SDB 1.9.2005.  */
-    x_menus_popup_sensitivity(w_current, "Down Schematic", TRUE);
-    x_menus_popup_sensitivity(w_current, "Down Symbol", TRUE);
-    /* x_menus_popup_sensitivity(w_current, "/Up", TRUE); */
+  x_menus_sensitivity (w_current, "Hie_rarchy/_Down Schematic", comp_selected);
+  x_menus_sensitivity (w_current, "Hie_rarchy/Down _Symbol", comp_selected);
 
-  } else {
-    /* Nothing is selected, grey these out */
-    /* These strings should NOT be internationalized */
-    x_menus_sensitivity(w_current, "_Edit/Cu_t", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/_Copy", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/_Delete", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Copy Mode", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Multiple Copy Mode", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Move Mode", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Rotate 90 Mode", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Mirror Mode", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Edit...", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Slot...", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Lock", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Unlock", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Embed Component/Picture", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Unembed Component/Picture", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Update Component", FALSE);
-    x_menus_sensitivity(w_current, "Hie_rarchy/_Down Schematic", FALSE);
-    x_menus_sensitivity(w_current, "Hie_rarchy/Down _Symbol", FALSE);
-    x_menus_sensitivity(w_current, "_Help/Find Component D_ocumentation", FALSE);
-    x_menus_sensitivity(w_current, "A_ttributes/_Attach", FALSE);
-    x_menus_sensitivity(w_current, "A_ttributes/_Detach", FALSE);
-    x_menus_sensitivity(w_current, "A_ttributes/Show _Value", FALSE);
-    x_menus_sensitivity(w_current, "A_ttributes/Show _Name", FALSE);
-    x_menus_sensitivity(w_current, "A_ttributes/Show _Both", FALSE);
-    x_menus_sensitivity(w_current, "A_ttributes/_Toggle Visibility", FALSE);
+  x_menus_sensitivity (w_current, "A_ttributes/_Attach", selected);
+  x_menus_sensitivity (w_current, "A_ttributes/_Detach", selected);
+  x_menus_sensitivity (w_current, "A_ttributes/Show _Value", text_selected);
+  x_menus_sensitivity (w_current, "A_ttributes/Show _Name", text_selected);
+  x_menus_sensitivity (w_current, "A_ttributes/Show _Both", text_selected);
+  x_menus_sensitivity (w_current, "A_ttributes/_Toggle Visibility", text_selected);
 
-    /*  Menu items for hierarchy added by SDB 1.9.2005.  */
-    x_menus_popup_sensitivity(w_current, "Down Schematic", FALSE);
-    x_menus_popup_sensitivity(w_current, "Down Symbol", FALSE);
-    /* x_menus_popup_sensitivity(w_current, "/Up", FALSE);	*/
-  }
+  x_menus_sensitivity (w_current, "_Help/Find Component D_ocumentation", comp_selected);
+
+  x_menus_popup_sensitivity (w_current, "Edit...", selected);
+  x_menus_popup_sensitivity (w_current, "Object Properties...", selected);
+  x_menus_popup_sensitivity (w_current, "Delete", selected);
+  x_menus_popup_sensitivity (w_current, "Down Schematic", comp_selected);
+  x_menus_popup_sensitivity (w_current, "Down Symbol", comp_selected);
+
+} /* i_update_menus() */
 
 
-}
 
 /*! \brief Set the main window's title
  *
