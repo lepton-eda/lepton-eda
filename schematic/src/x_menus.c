@@ -37,28 +37,29 @@ struct PopupEntry
   const gchar* stock_id;
 };
 
-static struct PopupEntry popup_items[] = {
-  { N_("Add Net"), "add-net", "insert-net" },
-  { N_("Add Attribute"), "add-attribute", "insert-attribute" },
-  { N_("Add Component"), "add-component", "insert-symbol" },
-  { N_("Add Bus"), "add-bus", "insert-bus" },
-  { N_("Add Text"), "add-text", "insert-text" },
+static struct PopupEntry popup_items[] =
+{
+  { N_("Add Net"),       "&add-net",       "insert-net" },
+  { N_("Add Attribute"), "&add-attribute", "insert-attribute" },
+  { N_("Add Component"), "&add-component", "insert-symbol" },
+  { N_("Add Bus"),       "&add-bus",       "insert-bus" },
+  { N_("Add Text"),      "&add-text",      "insert-text" },
   { "SEPARATOR", NULL, NULL },
-  { N_("Zoom In"), "view-zoom-in", "gtk-zoom-in" },
-  { N_("Zoom Out"), "view-zoom-out", "gtk-zoom-out" },
-  { N_("Zoom Box"), "view-zoom-box", NULL },
-  { N_("Zoom Extents"), "view-zoom-extents", "gtk-zoom-fit" },
+  { N_("Zoom In"),      "&view-zoom-in",      "gtk-zoom-in" },
+  { N_("Zoom Out"),     "&view-zoom-out",     "gtk-zoom-out" },
+  { N_("Zoom Box"),     "&view-zoom-box",     NULL },
+  { N_("Zoom Extents"), "&view-zoom-extents", "gtk-zoom-fit" },
   { "SEPARATOR", NULL, NULL },
-  { N_("Select"), "edit-select", "select" },
-  { N_("Edit..."), "edit-edit", NULL },
-  { N_("Object Properties..."), "edit-object-properties", NULL },
-  { N_("Copy"), "edit-copy", "clone" },
-  { N_("Move"), "edit-move", NULL },
-  { N_("Delete"), "edit-delete", "gtk-delete" },
+  { N_("Select"),               "&edit-select",            "select" },
+  { N_("Edit..."),              "&edit-edit",              NULL },
+  { N_("Object Properties..."), "&edit-object-properties", NULL },
+  { N_("Copy"),                 "&edit-copy",              "clone" },
+  { N_("Move"),                 "&edit-move",              NULL },
+  { N_("Delete"),               "&edit-delete",            "gtk-delete" },
   { "SEPARATOR", NULL, NULL },
-  { N_("Down Schematic"), "hierarchy-down-schematic", "gtk-go-down" },
-  { N_("Down Symbol"), "hierarchy-down-symbol", "gtk-goto-bottom" },
-  { N_("Up"), "hierarchy-up", "gtk-go-up" },
+  { N_("Down Schematic"), "&hierarchy-down-schematic", "gtk-go-down" },
+  { N_("Down Symbol"),    "&hierarchy-down-symbol",    "gtk-goto-bottom" },
+  { N_("Up"),             "&hierarchy-up",             "gtk-go-up" },
 
   { NULL, NULL, NULL }, /* Guard */
 };
