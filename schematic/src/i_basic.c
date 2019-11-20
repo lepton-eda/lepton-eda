@@ -311,6 +311,7 @@ void i_update_toolbar(GschemToplevel *w_current)
 }
 
 
+
 /*! \brief Update sensitivity of the Edit/Paste menu item
  *
  *  \par Function Description
@@ -320,7 +321,7 @@ void i_update_toolbar(GschemToplevel *w_current)
 static void clipboard_usable_cb (int usable, void *userdata)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (userdata);
-  x_menus_sensitivity (w_current, "_Edit/_Paste", usable);
+  x_menus_sensitivity (w_current, "&clipboard-paste", usable);
 }
 
 
@@ -377,36 +378,35 @@ void i_update_menus(GschemToplevel *w_current)
   gboolean pic_selected  = selected && obj_selected (toplevel, OBJ_PICTURE);
   gboolean embeddable    = comp_selected || pic_selected;
 
-  /* These strings should NOT be internationalized */
-  x_menus_sensitivity (w_current, "_Edit/Cu_t", selected);
-  x_menus_sensitivity (w_current, "_Edit/_Copy", selected);
-  x_menus_sensitivity (w_current, "_Edit/_Delete", selected);
-  x_menus_sensitivity (w_current, "_Edit/Copy Mode", selected);
-  x_menus_sensitivity (w_current, "_Edit/Multiple Copy Mode", selected);
-  x_menus_sensitivity (w_current, "_Edit/Move Mode", selected);
-  x_menus_sensitivity (w_current, "_Edit/Rotate 90 Mode", selected);
-  x_menus_sensitivity (w_current, "_Edit/Mirror Mode", selected);
-  x_menus_sensitivity (w_current, "_Edit/Edit...", selected);
-  x_menus_sensitivity (w_current, "_Edit/Edit Text...", text_selected);
-  x_menus_sensitivity (w_current, "_Edit/Object Properties...", selected);
-  x_menus_sensitivity (w_current, "_Edit/Slot...", comp_selected);
-  x_menus_sensitivity (w_current, "_Edit/Lock", selected);
-  x_menus_sensitivity (w_current, "_Edit/Unlock", selected);
-  x_menus_sensitivity (w_current, "_Edit/Embed Component/Picture", embeddable);
-  x_menus_sensitivity (w_current, "_Edit/Unembed Component/Picture", embeddable);
-  x_menus_sensitivity (w_current, "_Edit/Update Component", comp_selected);
+  x_menus_sensitivity (w_current, "&clipboard-cut", selected);
+  x_menus_sensitivity (w_current, "&clipboard-copy", selected);
+  x_menus_sensitivity (w_current, "&edit-delete", selected);
+  x_menus_sensitivity (w_current, "&edit-copy", selected);
+  x_menus_sensitivity (w_current, "&edit-mcopy", selected);
+  x_menus_sensitivity (w_current, "&edit-move", selected);
+  x_menus_sensitivity (w_current, "&edit-rotate-90", selected);
+  x_menus_sensitivity (w_current, "&edit-mirror", selected);
+  x_menus_sensitivity (w_current, "&edit-edit", selected);
+  x_menus_sensitivity (w_current, "&edit-text", text_selected);
+  x_menus_sensitivity (w_current, "&edit-object-properties", selected);
+  x_menus_sensitivity (w_current, "&edit-slot", comp_selected);
+  x_menus_sensitivity (w_current, "&edit-lock", selected);
+  x_menus_sensitivity (w_current, "&edit-unlock", selected);
+  x_menus_sensitivity (w_current, "&edit-embed", embeddable);
+  x_menus_sensitivity (w_current, "&edit-unembed", embeddable);
+  x_menus_sensitivity (w_current, "&edit-update", comp_selected);
 
-  x_menus_sensitivity (w_current, "Hie_rarchy/_Down Schematic", comp_selected);
-  x_menus_sensitivity (w_current, "Hie_rarchy/Down _Symbol", comp_selected);
+  x_menus_sensitivity (w_current, "&hierarchy-down-schematic", comp_selected);
+  x_menus_sensitivity (w_current, "&hierarchy-down-symbol", comp_selected);
 
-  x_menus_sensitivity (w_current, "A_ttributes/_Attach", selected);
-  x_menus_sensitivity (w_current, "A_ttributes/_Detach", selected);
-  x_menus_sensitivity (w_current, "A_ttributes/Show _Value", text_selected);
-  x_menus_sensitivity (w_current, "A_ttributes/Show _Name", text_selected);
-  x_menus_sensitivity (w_current, "A_ttributes/Show _Both", text_selected);
-  x_menus_sensitivity (w_current, "A_ttributes/_Toggle Visibility", text_selected);
+  x_menus_sensitivity (w_current, "&attributes-attach", selected);
+  x_menus_sensitivity (w_current, "&attributes-detach", selected);
+  x_menus_sensitivity (w_current, "&attributes-show-value", text_selected);
+  x_menus_sensitivity (w_current, "&attributes-show-name", text_selected);
+  x_menus_sensitivity (w_current, "&attributes-show-both", text_selected);
+  x_menus_sensitivity (w_current, "&attributes-visibility-toggle", text_selected);
 
-  x_menus_sensitivity (w_current, "_Help/Find Component D_ocumentation", comp_selected);
+  x_menus_sensitivity (w_current, "&hierarchy-documentation", comp_selected);
 
   x_menus_popup_sensitivity (w_current, "Edit...", selected);
   x_menus_popup_sensitivity (w_current, "Object Properties...", selected);

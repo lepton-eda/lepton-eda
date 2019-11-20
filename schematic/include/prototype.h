@@ -646,7 +646,7 @@ gboolean x_show_uri (GschemToplevel *w_current, const gchar *buf, GError **err);
 GtkWidget *get_main_menu(GschemToplevel *w_current);
 GtkWidget *get_main_popup(GschemToplevel *w_current);
 gint do_popup(GschemToplevel *w_current, GdkEventButton *event);
-void x_menus_sensitivity(GschemToplevel *w_current, const char *buf, int flag);
+void x_menus_sensitivity (GschemToplevel* w_current, const gchar* action_name, gboolean sensitive);
 void x_menus_popup_sensitivity(GschemToplevel *w_current, const char *buf, int flag);
 /* x_multiattrib.c */
 void x_multiattrib_open (GschemToplevel *w_current);

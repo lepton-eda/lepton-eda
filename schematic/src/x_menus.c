@@ -353,27 +353,23 @@ gint do_popup (GschemToplevel *w_current, GdkEventButton *event)
  *  \par Function Description
  *
  */
-void x_menus_sensitivity (GschemToplevel *w_current, const char *buf, int flag)
+void
+x_menus_sensitivity (GschemToplevel* w_current,
+                     const gchar*    action_name,
+                     gboolean        sensitive)
 {
-  GtkWidget* item=NULL;
-  
-  if (!buf) {
-    return;
-  }
+  GObject* obj = G_OBJECT (w_current->menubar);
+  gpointer data = g_object_get_data (obj, action_name);
 
-  if (!w_current->menubar) {
-    return;
+  GschemAction* action = (GschemAction*) data;
+  if (action != NULL)
+  {
+    gtk_action_set_sensitive (GTK_ACTION (action), sensitive);
   }
-  
-  item = (GtkWidget *) g_object_get_data (G_OBJECT (w_current->menubar), buf);
-
-  if (item) {
-    gtk_widget_set_sensitive(GTK_WIDGET(item), flag);
-    /* free(item); */ /* Why doesn't this need to be freed?  */
-  } else {
-    g_debug(_("Tried to set the sensitivity on non-existent menu item '%1$s'"), buf);
+  else
+  {
+    g_debug(_("x_menus_sensitivity(): cannot find action [%s]"), action_name);
   }
- 
 }
 
 /*! \todo Finish function documentation!!!
