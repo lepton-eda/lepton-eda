@@ -354,11 +354,11 @@ gint do_popup (GschemToplevel *w_current, GdkEventButton *event)
  *
  */
 void
-x_menus_sensitivity (GschemToplevel* w_current,
-                     const gchar*    action_name,
-                     gboolean        sensitive)
+x_menus_sensitivity (GtkWidget*   menu,
+                     const gchar* action_name,
+                     gboolean     sensitive)
 {
-  GObject* obj = G_OBJECT (w_current->menubar);
+  GObject* obj = G_OBJECT (menu);
   gpointer data = g_object_get_data (obj, action_name);
 
   GschemAction* action = (GschemAction*) data;
