@@ -29,6 +29,7 @@
 #include <glib/gstdio.h>
 
 #define DEFAULT_MAX_RECENT_FILES 10
+#define RECENT_MENU_ITEM_NAME "Open Recen_t"
 
 struct PopupEntry
 {
@@ -248,7 +249,7 @@ get_main_menu(GschemToplevel *w_current)
       gtk_widget_show (menu_item);
 
 
-      if (strcmp (raw_menu_item_name, "Open Recen_t") == 0)
+      if (strcmp (raw_menu_item_name, RECENT_MENU_ITEM_NAME) == 0)
       {
         x_menu_attach_recent_files_submenu (w_current, menu_item);
       }
