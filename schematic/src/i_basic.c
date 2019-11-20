@@ -410,11 +410,14 @@ void i_update_menus(GschemToplevel *w_current)
 
   x_menus_sensitivity (mmenu, "&hierarchy-documentation", comp_selected);
 
-  x_menus_popup_sensitivity (w_current, "Edit...", selected);
-  x_menus_popup_sensitivity (w_current, "Object Properties...", selected);
-  x_menus_popup_sensitivity (w_current, "Delete", selected);
-  x_menus_popup_sensitivity (w_current, "Down Schematic", comp_selected);
-  x_menus_popup_sensitivity (w_current, "Down Symbol", comp_selected);
+
+  GtkWidget* pmenu = w_current->popup_menu;
+
+  x_menus_sensitivity (pmenu, "edit-edit", selected);
+  x_menus_sensitivity (pmenu, "edit-object-properties", selected);
+  x_menus_sensitivity (pmenu, "edit-delete", selected);
+  x_menus_sensitivity (pmenu, "hierarchy-down-schematic", comp_selected);
+  x_menus_sensitivity (pmenu, "hierarchy-down-symbol", comp_selected);
 
 } /* i_update_menus() */
 
