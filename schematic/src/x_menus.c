@@ -64,6 +64,13 @@ static struct PopupEntry popup_items[] = {
 };
 
 
+
+static void
+x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
+                                    GtkWidget*      menuitem);
+
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -236,6 +243,14 @@ get_main_menu(GschemToplevel *w_current)
       /* add a handle to the menu_bar object to get access to widget objects */
       /* This string should NOT be internationalized */
       buf = g_strdup_printf("%s/%s", *raw_menu_name, raw_menu_item_name);
+
+
+      if (strcmp (raw_menu_item_name, "Open Recen_t") == 0)
+      {
+        x_menu_attach_recent_files_submenu (w_current, menu_item);
+      }
+
+
       g_object_set_data (G_OBJECT (menu_bar), buf, menu_item);
       g_free(buf);
 
@@ -403,14 +418,14 @@ recent_chooser_item_activated (GtkRecentChooser *chooser, GschemToplevel *w_curr
   g_free(filename);
 }
 
-/*! \brief Attach a submenu with filenames to the 'Open Recent'
- *         menu item.
- *
- *  Called from x_window_setup().
+
+
+/*! \brief Attach 'Open Recent' submenu to \a menuitem.
  */
-void x_menu_attach_recent_files_submenu(GschemToplevel *w_current)
+static void
+x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
+                                    GtkWidget*      menuitem)
 {
-  GtkWidget* menuitem_to_append_to = NULL;
   GtkRecentFilter *recent_filter;
   GtkWidget *menuitem_file_recent_items;
 
@@ -458,9 +473,8 @@ void x_menu_attach_recent_files_submenu(GschemToplevel *w_current)
   g_signal_connect(GTK_OBJECT(menuitem_file_recent_items), "item-activated",
                    G_CALLBACK(recent_chooser_item_activated), w_current);
 
-  menuitem_to_append_to = (GtkWidget *) g_object_get_data (G_OBJECT (w_current->menubar),
-                                                           "_File/Open Recen_t");
-  if(menuitem_to_append_to == NULL)
+  if (menuitem == NULL)
     return;
-  gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem_to_append_to), menuitem_file_recent_items);
+
+  gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem), menuitem_file_recent_items);
 }

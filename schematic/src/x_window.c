@@ -133,8 +133,6 @@ void x_window_setup (GschemToplevel *w_current)
 
   /* X related stuff */
   x_window_create_main (w_current);
-
-  x_menu_attach_recent_files_submenu(w_current);
 }
 
 /*! \todo Finish function documentation!!!
