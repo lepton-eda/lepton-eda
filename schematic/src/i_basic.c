@@ -321,7 +321,7 @@ void i_update_toolbar(GschemToplevel *w_current)
 static void clipboard_usable_cb (int usable, void *userdata)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (userdata);
-  x_menus_sensitivity (w_current, "&clipboard-paste", usable);
+  x_menus_sensitivity (w_current->menubar, "&clipboard-paste", usable);
 }
 
 
@@ -378,35 +378,37 @@ void i_update_menus(GschemToplevel *w_current)
   gboolean pic_selected  = selected && obj_selected (toplevel, OBJ_PICTURE);
   gboolean embeddable    = comp_selected || pic_selected;
 
-  x_menus_sensitivity (w_current, "&clipboard-cut", selected);
-  x_menus_sensitivity (w_current, "&clipboard-copy", selected);
-  x_menus_sensitivity (w_current, "&edit-delete", selected);
-  x_menus_sensitivity (w_current, "&edit-copy", selected);
-  x_menus_sensitivity (w_current, "&edit-mcopy", selected);
-  x_menus_sensitivity (w_current, "&edit-move", selected);
-  x_menus_sensitivity (w_current, "&edit-rotate-90", selected);
-  x_menus_sensitivity (w_current, "&edit-mirror", selected);
-  x_menus_sensitivity (w_current, "&edit-edit", selected);
-  x_menus_sensitivity (w_current, "&edit-text", text_selected);
-  x_menus_sensitivity (w_current, "&edit-object-properties", selected);
-  x_menus_sensitivity (w_current, "&edit-slot", comp_selected);
-  x_menus_sensitivity (w_current, "&edit-lock", selected);
-  x_menus_sensitivity (w_current, "&edit-unlock", selected);
-  x_menus_sensitivity (w_current, "&edit-embed", embeddable);
-  x_menus_sensitivity (w_current, "&edit-unembed", embeddable);
-  x_menus_sensitivity (w_current, "&edit-update", comp_selected);
+  GtkWidget* mmenu = w_current->menubar;
 
-  x_menus_sensitivity (w_current, "&hierarchy-down-schematic", comp_selected);
-  x_menus_sensitivity (w_current, "&hierarchy-down-symbol", comp_selected);
+  x_menus_sensitivity (mmenu, "&clipboard-cut", selected);
+  x_menus_sensitivity (mmenu, "&clipboard-copy", selected);
+  x_menus_sensitivity (mmenu, "&edit-delete", selected);
+  x_menus_sensitivity (mmenu, "&edit-copy", selected);
+  x_menus_sensitivity (mmenu, "&edit-mcopy", selected);
+  x_menus_sensitivity (mmenu, "&edit-move", selected);
+  x_menus_sensitivity (mmenu, "&edit-rotate-90", selected);
+  x_menus_sensitivity (mmenu, "&edit-mirror", selected);
+  x_menus_sensitivity (mmenu, "&edit-edit", selected);
+  x_menus_sensitivity (mmenu, "&edit-text", text_selected);
+  x_menus_sensitivity (mmenu, "&edit-object-properties", selected);
+  x_menus_sensitivity (mmenu, "&edit-slot", comp_selected);
+  x_menus_sensitivity (mmenu, "&edit-lock", selected);
+  x_menus_sensitivity (mmenu, "&edit-unlock", selected);
+  x_menus_sensitivity (mmenu, "&edit-embed", embeddable);
+  x_menus_sensitivity (mmenu, "&edit-unembed", embeddable);
+  x_menus_sensitivity (mmenu, "&edit-update", comp_selected);
 
-  x_menus_sensitivity (w_current, "&attributes-attach", selected);
-  x_menus_sensitivity (w_current, "&attributes-detach", selected);
-  x_menus_sensitivity (w_current, "&attributes-show-value", text_selected);
-  x_menus_sensitivity (w_current, "&attributes-show-name", text_selected);
-  x_menus_sensitivity (w_current, "&attributes-show-both", text_selected);
-  x_menus_sensitivity (w_current, "&attributes-visibility-toggle", text_selected);
+  x_menus_sensitivity (mmenu, "&hierarchy-down-schematic", comp_selected);
+  x_menus_sensitivity (mmenu, "&hierarchy-down-symbol", comp_selected);
 
-  x_menus_sensitivity (w_current, "&hierarchy-documentation", comp_selected);
+  x_menus_sensitivity (mmenu, "&attributes-attach", selected);
+  x_menus_sensitivity (mmenu, "&attributes-detach", selected);
+  x_menus_sensitivity (mmenu, "&attributes-show-value", text_selected);
+  x_menus_sensitivity (mmenu, "&attributes-show-name", text_selected);
+  x_menus_sensitivity (mmenu, "&attributes-show-both", text_selected);
+  x_menus_sensitivity (mmenu, "&attributes-visibility-toggle", text_selected);
+
+  x_menus_sensitivity (mmenu, "&hierarchy-documentation", comp_selected);
 
   x_menus_popup_sensitivity (w_current, "Edit...", selected);
   x_menus_popup_sensitivity (w_current, "Object Properties...", selected);
