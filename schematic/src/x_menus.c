@@ -83,6 +83,8 @@ static void g_menu_execute(GtkAction *action, gpointer user_data)
   g_action_eval_by_name (w_current, action_name);
 }
 
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -91,7 +93,6 @@ static void g_menu_execute(GtkAction *action, gpointer user_data)
 GtkWidget *
 get_main_menu(GschemToplevel *w_current)
 {
-  char *buf;
   GschemAction *action;
   GtkWidget *menu_item;
   GtkWidget *root_menu;
@@ -226,6 +227,9 @@ get_main_menu(GschemToplevel *w_current)
           }
 
 
+          g_object_set_data (G_OBJECT (menu_bar), action_name, action);
+
+
           free(action_name);
           free(menu_item_stock);
 
@@ -233,16 +237,14 @@ get_main_menu(GschemToplevel *w_current)
           g_signal_connect (G_OBJECT(action), "activate",
                             G_CALLBACK(g_menu_execute),
                             w_current);
-        }
+
+        } // scm_item_func == TRUE
 
         gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
-      }
+
+      } // !separator
 
       gtk_widget_show (menu_item);
-
-      /* add a handle to the menu_bar object to get access to widget objects */
-      /* This string should NOT be internationalized */
-      buf = g_strdup_printf("%s/%s", *raw_menu_name, raw_menu_item_name);
 
 
       if (strcmp (raw_menu_item_name, "Open Recen_t") == 0)
@@ -251,11 +253,9 @@ get_main_menu(GschemToplevel *w_current)
       }
 
 
-      g_object_set_data (G_OBJECT (menu_bar), buf, menu_item);
-      g_free(buf);
-
       scm_dynwind_end();
-    }
+
+    } // for j: menu items
     
     menu_name = (char *) gettext(*raw_menu_name);
     root_menu = gtk_menu_item_new_with_mnemonic (menu_name);
@@ -266,12 +266,17 @@ get_main_menu(GschemToplevel *w_current)
     gtk_widget_show (root_menu);
     gtk_menu_item_set_submenu (GTK_MENU_ITEM (root_menu), menu);
     gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), root_menu);
-  }
+
+  } // fot i: menus (file, edit, ...)
+
   scm_dynwind_end ();
 
   g_free(raw_menu_name);
   return menu_bar;
-}
+
+} /* get_main_menu() */
+
+
 
 GtkWidget *
 get_main_popup (GschemToplevel *w_current)
