@@ -73,10 +73,7 @@ x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
 
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+/*! \brief Callback function for menu items. Execute action \a action.
  */
 static void g_menu_execute(GtkAction *action, gpointer user_data)
 {
@@ -87,13 +84,18 @@ static void g_menu_execute(GtkAction *action, gpointer user_data)
 
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Create and return the main menu widget.
  *
+*  \par Function Description
+ *  The key/value data (see g_object_set_data()/g_object_get_data())
+ *  associated with the menu widget created by this function:
+ *  - key:   action name, string, e.g. "&edit-object-properties"
+ *  - value: pointer to a corresponding GschemAction object
+ *
+ *  \todo Refactor
  */
-GtkWidget *
-get_main_menu(GschemToplevel *w_current)
+GtkWidget*
+get_main_menu (GschemToplevel* w_current)
 {
   GschemAction *action;
   GtkWidget *menu_item;
@@ -240,11 +242,11 @@ get_main_menu(GschemToplevel *w_current)
                             G_CALLBACK(g_menu_execute),
                             w_current);
 
-        } // scm_item_func == TRUE
+        } /* scm_item_func == TRUE */
 
         gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 
-      } // !separator
+      } /* !separator */
 
       gtk_widget_show (menu_item);
 
@@ -257,19 +259,17 @@ get_main_menu(GschemToplevel *w_current)
 
       scm_dynwind_end();
 
-    } // for j: menu items
+    } /* for j: menu items */
     
     menu_name = (char *) gettext(*raw_menu_name);
     root_menu = gtk_menu_item_new_with_mnemonic (menu_name);
     /* do not free *raw_menu_name */
 
-    /* no longer right justify the help menu since that has gone out of style */
-
     gtk_widget_show (root_menu);
     gtk_menu_item_set_submenu (GTK_MENU_ITEM (root_menu), menu);
     gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), root_menu);
 
-  } // fot i: menus (file, edit, ...)
+  } /* fot i: menus (File, Edit, ...) */
 
   scm_dynwind_end ();
 
@@ -280,8 +280,16 @@ get_main_menu(GschemToplevel *w_current)
 
 
 
-GtkWidget *
-get_main_popup (GschemToplevel *w_current)
+/*! \brief Create and return the popup menu widget.
+ *
+ *  \par Function Description
+ *  The key/value data (see g_object_set_data()/g_object_get_data())
+ *  associated with the menu widget created by this function:
+ *  - key:   action name, string, e.g. "&edit-object-properties"
+ *  - value: pointer to a corresponding GschemAction object
+ */
+GtkWidget*
+get_main_popup (GschemToplevel* w_current)
 {
   GschemAction *action;
   GtkWidget *menu_item;
@@ -329,9 +337,7 @@ get_main_popup (GschemToplevel *w_current)
   return menu;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Show the popup menu.
  *
  *  \note
  *  need to look at this... here and the setup
@@ -347,10 +353,15 @@ gint do_popup (GschemToplevel *w_current, GdkEventButton *event)
   return FALSE;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Enable/disable menu item linked to the action \a action_name.
  *
+ *  \par Function Description
+ *  Use the key/value data associated with the \a menu to find
+ *  an action object, and if found, set its sensitivity (\a sensitive).
+ *
+ *  \param menu         Menu widget (menubar, popup_menu in st_gschem_toplevel)
+ *  \param action_name  Action name (e.g. "&edit-object-properties")
+ *  \param sensitive    Boolean, enable or disable the action
  */
 void
 x_menus_sensitivity (GtkWidget*   menu,
@@ -373,7 +384,8 @@ x_menus_sensitivity (GtkWidget*   menu,
 
 /*! \brief Callback for recent-chooser.
  *
- * Will be called if element of recent-file-list is activated
+ *  \par Function Description
+ *  Will be called if element of recent-file-list is activated
  */
 void
 recent_chooser_item_activated (GtkRecentChooser *chooser, GschemToplevel *w_current)
