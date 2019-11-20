@@ -321,10 +321,7 @@ get_main_popup (GschemToplevel *w_current)
     menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 
-    /* Add a handle to the menu object to get access to widget
-       objects. Horrible horrible hack, but it's the same approach as
-       taken for the main menu bar. :-( */
-    g_object_set_data (G_OBJECT (menu), e.name, menu_item);
+    g_object_set_data (G_OBJECT (menu), e.action, action);
   }
 
   return menu;
@@ -369,30 +366,6 @@ x_menus_sensitivity (GtkWidget*   menu,
   else
   {
     g_debug(_("x_menus_sensitivity(): cannot find action [%s]"), action_name);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *  This function sets the sensitivity of the items in the right button
- *  popup.
- */
-void x_menus_popup_sensitivity (GschemToplevel *w_current, const char *buf, int flag)
-{
-  GtkWidget *item;
-
-  g_assert (w_current);
-  g_assert (buf);
-  g_assert (w_current->popup_menu);
-
-  item = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->popup_menu), buf));
-
-  if (item) {
-    gtk_widget_set_sensitive (item, flag);
-  } else {
-    g_critical (_("Tried to set the sensitivity on non-existent menu item '%s'\n"),
-                buf);
   }
 }
 
