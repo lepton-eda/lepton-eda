@@ -326,7 +326,7 @@ static void clipboard_usable_cb (int usable, void *userdata)
 
 
 
-/*! \brief Return TRUE if at least one object of type \a type is selected
+/*! \brief Return TRUE if at least one object of type \a type is selected.
  *
  *  \param toplevel  pointer to TOPLEVEL structure
  *  \param type      object type constant (OBJ_TEXT, OBJ_COMPLEX, etc.) (o_types.h)
@@ -356,11 +356,11 @@ obj_selected (TOPLEVEL* toplevel, int type)
 
 
 
-/*! \brief Update sensitivity of relevant menu items
+/*! \brief Update menu items sensitivity for the main and popup menus.
  *
  *  \param [in] w_current GschemToplevel structure
  */
-void i_update_menus(GschemToplevel *w_current)
+void i_update_menus (GschemToplevel* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
