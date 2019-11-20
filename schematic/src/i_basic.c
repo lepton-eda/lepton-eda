@@ -366,7 +366,9 @@ void i_update_menus(GschemToplevel *w_current)
 
   TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (toplevel->page_current != NULL);
+
+  PAGE* page = toplevel->page_current;
+  g_return_if_fail (page != NULL);
 
   /* update Edit->Paste sensitivity in clipboard_usable_cb():
   */
@@ -377,6 +379,7 @@ void i_update_menus(GschemToplevel *w_current)
   gboolean comp_selected = selected && obj_selected (toplevel, OBJ_COMPLEX);
   gboolean pic_selected  = selected && obj_selected (toplevel, OBJ_PICTURE);
   gboolean embeddable    = comp_selected || pic_selected;
+  gboolean has_parent = s_hierarchy_find_up_page (toplevel->pages, page) != NULL;
 
   GtkWidget* mmenu = w_current->menubar;
 
@@ -400,6 +403,7 @@ void i_update_menus(GschemToplevel *w_current)
 
   x_menus_sensitivity (mmenu, "&hierarchy-down-schematic", comp_selected);
   x_menus_sensitivity (mmenu, "&hierarchy-down-symbol", comp_selected);
+  x_menus_sensitivity (mmenu, "&hierarchy-up", has_parent);
 
   x_menus_sensitivity (mmenu, "&attributes-attach", selected);
   x_menus_sensitivity (mmenu, "&attributes-detach", selected);
@@ -418,6 +422,7 @@ void i_update_menus(GschemToplevel *w_current)
   x_menus_sensitivity (pmenu, "&edit-delete", selected);
   x_menus_sensitivity (pmenu, "&hierarchy-down-schematic", comp_selected);
   x_menus_sensitivity (pmenu, "&hierarchy-down-symbol", comp_selected);
+  x_menus_sensitivity (pmenu, "&hierarchy-up", has_parent);
 
 } /* i_update_menus() */
 
