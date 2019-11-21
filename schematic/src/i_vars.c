@@ -79,6 +79,31 @@ int default_select_slack_pixels = 10;
 int default_zoom_gain = 20;
 int default_scrollpan_steps = 8;
 
+
+
+/* \brief Read [schematic.gui]::draw-grips, set w_current->draw_grips.
+ */
+static void
+cfg_read_draw_grips (GschemToplevel* w_current)
+{
+  gchar* cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError* err = NULL;
+  gboolean draw_grips =
+    eda_config_get_boolean (cfg, "schematic.gui", "draw-grips", &err);
+
+  if (err == NULL)
+    w_current->draw_grips = draw_grips;
+  else
+    w_current->draw_grips = default_draw_grips;
+
+  g_clear_error (&err);
+}
+
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -123,7 +148,10 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->undo_type = default_undo_type;
   w_current->undo_panzoom = default_undo_panzoom;
 
-  w_current->draw_grips = default_draw_grips;
+
+  cfg_read_draw_grips (w_current);
+
+
   gschem_options_set_net_rubber_band_mode (w_current->options, default_netconn_rubberband);
   gschem_options_set_magnetic_net_mode (w_current->options, default_magnetic_net_mode);
   w_current->warp_cursor = default_warp_cursor;
