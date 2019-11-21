@@ -222,3 +222,7 @@ option's value:
 (define-rc-deprecated-config
   hierarchy-netattrib-separator "gnetlist.hierarchy" "net-attribute-separator"
   rc-deprecated-string-transformer)
+
+(define-rc-deprecated-config
+ draw-grips "schematic.gui" "draw-grips"
+ rc-deprecated-string-boolean-transformer)
