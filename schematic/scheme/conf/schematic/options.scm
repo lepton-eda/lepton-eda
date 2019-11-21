@@ -63,13 +63,6 @@
 ; Autosaving will not be allowed if setting it to zero.
 (auto-save-interval 120)
 
-; draw-grips string
-;
-; Controls if the editing grips are drawn when selecting objects
-;
-(draw-grips "enabled")
-;(draw-grips "disabled")
-
 ;  net-direction-mode string
 ;
 ;  Controls if the net direction mode is used. This mode tries to guess
