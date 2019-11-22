@@ -109,6 +109,16 @@
   (display ".END")
   (newline))
 
+
+; public:
+; Instruct the netlister to use 'spice mode
+;
+( define ( request-netlist-mode )
+  ; return:
+  'spice
+)
+
+
 ;;
 ;; Spice netlist generation
 ;;
