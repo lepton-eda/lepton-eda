@@ -907,6 +907,16 @@ the name is changed to canonical."
 "
           subckt-name))
 
+
+; public:
+; Instruct the netlister to use 'spice mode
+;
+( define ( request-netlist-mode )
+  ; return:
+  'spice
+)
+
+
 ;;---------------------------------------------------------------
 ;; Spice netlist generation
 ;;   This is the entry point.
