@@ -18,12 +18,26 @@
 
 (define-module (netlist mode)
   #:export (netlist-mode
-            set-netlist-mode!))
+            set-netlist-mode!
+            netlist-modes
+            default-netlist-mode
+            netlist-mode?))
 
-(define %netlist-mode 'geda)
+(define %netlist-modes (list 'geda 'spice))
+(define %default-netlist-mode 'geda)
+(define %netlist-mode %default-netlist-mode)
 
 (define (netlist-mode)
   %netlist-mode)
 
 (define (set-netlist-mode! mode)
   (set! %netlist-mode mode))
+
+(define (netlist-modes)
+  %netlist-modes)
+
+(define (default-netlist-mode)
+  %default-netlist-mode)
+
+(define (netlist-mode? mode)
+  (member mode (netlist-modes)))
