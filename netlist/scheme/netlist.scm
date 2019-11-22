@@ -900,6 +900,10 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
                      bname)
   )
 
+  ( define ( error-backend-mode mode )
+    (netlist-error 1 (_ "Netlist mode requested by backend is not supported: ~A\n") mode)
+  )
+
   ( define ( get-backend-proc-name filename )
   ( let*
     (
@@ -915,18 +919,38 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   )
   )
 
+  ; Backend can request what netlist mode should be used
+  ; by providing request-netlist-mode() function, that
+  ; returns the desired mode:
+  ;
+  ( define ( query-backend-mode )
+  ( let*
+    (
+    ( proc-name 'request-netlist-mode )
+    ( proc      (module-variable (current-module) proc-name) )
+    ( mode      #f )
+    )
+
+    ( when proc
+      ( set! proc ( primitive-eval proc-name ) )
+      ( set! mode ( proc ) )
+
+      ( if ( netlist-mode? mode )
+        ( set-netlist-mode!  mode ) ; if
+        ( error-backend-mode mode ) ; else
+      )
+    )
+  )
+  )
+
 
   ; Parse configuration:
   ;
   ( (@@ (guile-user) parse-rc) "lepton-netlist" "gnetlistrc" )
 
-  ; This is a kludge to make sure that spice mode gets set:
+  ; Set default netlist mode:
   ;
-  (set-netlist-mode!
-   (if (and opt-backend
-            (string-prefix? "spice" opt-backend))
-       'spice
-       'geda))
+  ( set-netlist-mode! (default-netlist-mode) )
 
   ; Evaluate Scheme expression at startup (-c EXPR):
   ;
@@ -996,6 +1020,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     ( catch #t
       ( lambda()
         ( primitive-load backend-path )
+        ( query-backend-mode )
       )
       ( lambda( tag . args )
         ( catch-handler tag args )
