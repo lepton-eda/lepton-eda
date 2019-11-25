@@ -393,6 +393,9 @@
 (define-public (component-basename c)
   (list-ref (component-info c) 0))
 
+(define-public (component-filename c)
+  (%complex-filename c))
+
 (define-public (component-position c)
   (list-ref (component-info c) 1))
 

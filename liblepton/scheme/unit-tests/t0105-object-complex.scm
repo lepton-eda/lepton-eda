@@ -218,3 +218,67 @@
 
 ;; Clear component library again
 (reset-component-library)
+
+
+
+( begin-test 'component-filename
+( let*
+  (
+  ( srcdir ( getcwd ) ) ; cwd is liblepton/scheme/
+  ( symdir "unit-tests" )
+  ( dir    ( format #f "~a/~a" srcdir symdir ) )
+  ( bname1 "dummy.sym" )
+  ( fname1 ( format #f "~a/~a" dir bname1 ) )
+  ( comp1  #f )
+  ( comp2  #f )
+  )
+
+  ( define ( mk-comp1 )
+    ( with-output-to-file fname1
+      ( lambda()
+        ( format #t "v 20191003 2~%" )
+        ( format #t "B 0 0 500 500 3 10 1 0 -1 -1 0 -1 -1 -1 -1 -1~%" )
+        ( format #t "T 0 600 21 6 1 0 0 0 1~%" )
+        ( format #t "refdes=R?" )
+      )
+    )
+
+    ( component-library symdir "t0105" )
+
+    ; return:
+    ( make-component/library
+      bname1                 ; basename
+      ( cons 0 0 )           ; position
+      0                      ; angle
+      #f                     ; mirror
+      #f                     ; locked
+    )
+  )
+
+  ( define ( mk-comp2 )
+    ; return:
+    ( make-component
+      "does-not-exist"       ; basename
+      ( cons 0 0 )           ; position
+      0                      ; angle
+      #f                     ; mirror
+      #f                     ; locked
+    )
+  )
+
+
+  ( format #t "srcdir: [~a]~%" srcdir )   ; [debug]
+  ( format #t "dir:    [~a]~%" dir )      ; [debug]
+  ( format #t "cwd:    [~a]~%" (getcwd) ) ; [debug]
+  ( format #t "fname1: [~a]~%" fname1 )   ; [debug]
+
+  ( set! comp1 ( mk-comp1 ) )
+  ( set! comp2 ( mk-comp2 ) )
+
+  ( assert-equal (component-filename comp1) fname1 )
+  ( assert-false (component-filename comp2) )
+
+  ( reset-component-library )
+
+) ; let
+) ; 'component-filename()
