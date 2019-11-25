@@ -2259,11 +2259,15 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
   if (sym == NULL)
     return;
 
-  if (s_clib_symbol_get_filename (sym) == NULL)
+  gchar* fname = s_clib_symbol_get_filename (sym);
+  if (fname == NULL)
   {
     s_log_message (_("Symbol is not a real file. Symbol cannot be loaded."));
 	  return;
   }
+
+  g_free (fname);
+
 
   TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
 
