@@ -10,7 +10,7 @@ export LIBLEPTON
 
 GNETLIST="${abs_top_builddir}/netlist/scheme/lepton-netlist"
 GEDADATA="${abs_top_srcdir}/netlist" # HACKHACKHACK
-GEDADATARC="${abs_top_builddir}/netlist/lib"
+GEDADATARC="${abs_top_builddir}/liblepton/lib"
 export GEDADATA
 export GEDADATARC
 
