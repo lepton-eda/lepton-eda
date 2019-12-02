@@ -14,6 +14,8 @@ GEDADATARC="${abs_top_builddir}/netlist/lib"
 export GEDADATA
 export GEDADATARC
 
+export GUILE_LOAD_PATH="${abs_top_srcdir}/netlist/scheme:${abs_top_builddir}/netlist/scheme:${abs_top_srcdir}/liblepton/scheme:${abs_top_builddir}/liblepton/scheme:${abs_top_srcdir}/symcheck/scheme:${abs_top_builddir}/symcheck/scheme:..."
+
 schematic="${abs_srcdir}/${stem}.sch"
 # Multi-page schematic
 if test "X${stem}" = "Xhierarchy3" ; then
@@ -263,8 +265,6 @@ postload)
     fi
     ;;
 esac
-
-export GUILE_LOAD_PATH="${abs_top_srcdir}/netlist/scheme:${abs_top_builddir}/netlist/scheme:${abs_top_srcdir}/liblepton/scheme:${abs_top_builddir}/liblepton/scheme:${abs_top_srcdir}/symcheck/scheme:${abs_top_builddir}/symcheck/scheme:..."
 
 # run gnetlist
 echo "${GNETLIST} -c ${cmd} -g ${backend} ${args} ${schematic}"
