@@ -67,6 +67,12 @@
 
 ;;; Initialize liblepton variables and functions.
 (setenv "LEPTON_INHIBIT_RC_FILES" "yes")
+;;; The load path should not be changed after loading the
+;;; liblepton library.  This is tested in the unit test
+;;; "test-netlist-load-path.scm".
+(setenv "INITIAL_GUILE_LOAD_PATH"
+        (with-output-to-string (lambda () (write %load-path))))
+
 
 (load-extension "../../liblepton/src/liblepton" "libgeda_init")
 (define with-toplevel (@@ (geda core toplevel) %with-toplevel))
