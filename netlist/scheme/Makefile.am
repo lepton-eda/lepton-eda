@@ -108,8 +108,10 @@ DIST_SCM = \
 	netlist/traverse.scm \
 	netlist/verbose.scm
 
-TESTS = unit-tests/test-netlist-partlist.scm \
-	unit-tests/test-netlist-attrib.scm
+TESTS = unit-tests/test-netlist-load-path.scm \
+	unit-tests/test-netlist-attrib.scm \
+	unit-tests/test-netlist-partlist.scm
+
 TEST_EXTENSIONS = .scm
 # $(srcdir) and $(builddir) are added here and not in
 # AM_SCM_LOG_FLAGS below because guile must know where to find
