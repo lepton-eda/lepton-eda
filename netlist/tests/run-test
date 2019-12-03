@@ -251,14 +251,12 @@ vams-device)
     cmd="(define generate-mode 2) (define top-attribs '(refdes=U1 device=7404 footprint=DIP14))"
     ;;
 postload)
-    (cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
-                  -L "${abs_top_builddir}/liblepton/scheme" \
-                  -L "${abs_top_srcdir}/symcheck/scheme" \
-                  -L "${abs_top_builddir}/symcheck/scheme" \
-                  -g "geda" \
-                  -o - \
-                  -m "${abs_srcdir}/postload/test-postload.scm" \
-                  ${schematic})
+    (cd "${rundir}" &&
+         "${GNETLIST}" \
+             -g "geda" \
+             -o - \
+             -m "${abs_srcdir}/postload/test-postload.scm" \
+             ${schematic})
     if test $? -ne 100 ; then
         echo "FAILED: Post backend load check failed."
         exit 1
