@@ -66,6 +66,8 @@
 
 
 ;;; Initialize liblepton variables and functions.
+(setenv "LEPTON_INHIBIT_RC_FILES" "yes")
+
 (load-extension "../../liblepton/src/liblepton" "libgeda_init")
 (define with-toplevel (@@ (geda core toplevel) %with-toplevel))
 (define make-toplevel (@@ (geda core toplevel) %make-toplevel))
