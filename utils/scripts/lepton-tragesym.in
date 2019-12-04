@@ -269,13 +269,14 @@ Cheat fraudulent label names for them to sort them properly."))
         (unless (member (pin-pos pin) poslist)
           (format-error "Position is not allowed: ~A." (pin-info pin))))
       (begin
-        (unless (string= (pin-style pin) "none")
-          ;; This will work if pin-seq is not auto-generated.
-          (unless (integer? (pin-seq pin))
-            (let ((num (string->integer (pin-seq pin))))
-              (if num
-                  (set-pin-seq! pin num)
-                  (format-error "Pinseq needs to be a number: ~A." (pin-info pin))))))
+        (when (component-option 'generate_pinseq)
+          (unless (string= (pin-style pin) "none")
+            ;; This will work if pin-seq is not auto-generated.
+            (unless (integer? (pin-seq pin))
+              (let ((num (string->integer (pin-seq pin))))
+                (if num
+                    (set-pin-seq! pin num)
+                    (format-error "Pinseq needs to be a number: ~A." (pin-info pin)))))))
         (unless (member (pin-type pin) typelist)
           (format-error "Pintype not allowed: ~A." (pin-info pin)))
         (unless (member (pin-style pin) stylelist)
@@ -616,16 +617,16 @@ Based on original \"tragesym\" version
               (match which?
                 ((or "t" "b") (if %rotate-labels 90 0))
                 (_ 0)))
-             (pinseq
-              (make-text `(,pinseq-x . ,pinseq-y)
-                         pinseq-alignment
-                         pinseq-angle
-                         (format #f "pinseq=~A" (pin-seq pin))
-                         ;; Size.
-                         8
-                         ;; Invisible.
-                         #f
-                         'value))
+             (pinseq (and (pin-seq pin)
+                          (make-text `(,pinseq-x . ,pinseq-y)
+                                     pinseq-alignment
+                                     pinseq-angle
+                                     (format #f "pinseq=~A" (pin-seq pin))
+                                     ;; Size.
+                                     8
+                                     ;; Invisible.
+                                     #f
+                                     'value)))
              (clk? (or (string= (pin-style pin) "clk")
                        (string= (pin-style pin) "dotclk")))
              (pinlabel-distance 50)
@@ -717,10 +718,12 @@ Based on original \"tragesym\" version
                          8
                          ;; Invisible.
                          #f
-                         'value)))
+                         'value))
+             (attribs (filter identity
+                              (list pinnumber pinseq pinlabel pintype))))
 
-        (page-append! page pin-object pinnumber pinseq pinlabel pintype)
-        (attach-attribs! pin-object pinnumber pinseq pinlabel pintype)
+        (apply page-append! page pin-object attribs)
+        (apply attach-attribs! pin-object attribs)
         (set-object-color! pinlabel 9))))
 
   (define (draw-with-increment draw-function items position increment)
@@ -854,6 +857,11 @@ Based on original \"tragesym\" version
   ;; Return value.
   pins)
 
+(define (remove-pinseq pins)
+  (define (delete-pinseq pin)
+    (set-pin-seq! pin #f))
+  (for-each delete-pinseq pins))
+
 
 (define (attribute-string->pair s)
   (define (drop-warning)
@@ -982,8 +990,9 @@ which values are equal in terms of F-EQUAL?."
                       (assq-ref input-file-alist
                                 'pins))))
 
-    (when (component-option 'generate_pinseq)
-      (generate-pinseq pins))
+    (if (component-option 'generate_pinseq)
+        (generate-pinseq pins)
+        (remove-pinseq pins))
 
     (for-each check-pin-info pins)
 
