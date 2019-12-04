@@ -224,17 +224,13 @@
 ( begin-test 'component-filename
 ( let*
   (
-  ( srcdir ( getcwd ) ) ; cwd is liblepton/scheme/
-  ( symdir "unit-tests" )
-  ( dir    ( format #f "~a/~a" srcdir symdir ) )
-  ( bname1 "dummy.sym" )
-  ( fname1 ( format #f "~a/~a" dir bname1 ) )
+  ( fname1 ( format #f "~a/unit-tests/dummy.sym" (getcwd) ) )
   ( comp1  #f )
   ( comp2  #f )
   )
 
   ( define ( mk-comp1 )
-    ( with-output-to-file fname1
+    ( with-output-to-file "unit-tests/dummy.sym"
       ( lambda()
         ( format #t "v 20191003 2~%" )
         ( format #t "B 0 0 500 500 3 10 1 0 -1 -1 0 -1 -1 -1 -1 -1~%" )
@@ -243,11 +239,11 @@
       )
     )
 
-    ( component-library symdir "t0105" )
+    ( component-library "unit-tests" ) ; cwd is liblepton/scheme/
 
     ; return:
     ( make-component/library
-      bname1                 ; basename
+      "dummy.sym"            ; basename
       ( cons 0 0 )           ; position
       0                      ; angle
       #f                     ; mirror
@@ -267,8 +263,6 @@
   )
 
 
-  ( format #t "srcdir: [~a]~%" srcdir )   ; [debug]
-  ( format #t "dir:    [~a]~%" dir )      ; [debug]
   ( format #t "cwd:    [~a]~%" (getcwd) ) ; [debug]
   ( format #t "fname1: [~a]~%" fname1 )   ; [debug]
 
