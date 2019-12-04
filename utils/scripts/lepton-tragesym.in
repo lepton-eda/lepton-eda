@@ -262,7 +262,7 @@ The section won't be processed." section-name))
   (if (string= (pin-style pin) "spacer")
       (begin
         (when (component-option 'sort_labels)
-           (format-warning "Spacers may be in unpredictable place when sorting labels.
+          (format-warning "Spacers may be in unpredictable place when sorting labels.
 Cheat fraudulent label names for them to sort them properly."))
         (when (string-null? (pin-pos pin))
           (format-error "There must be a position with a spacer."))
