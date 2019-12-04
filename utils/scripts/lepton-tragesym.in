@@ -416,13 +416,11 @@ Based on original \"tragesym\" version
         (+ (/ (+ origin-y symbol-height) 2) 100)
         (+ origin-y symbol-height 100)))
 
-  (define textx name-x)
+  (define textx origin-x)
   (define texty
-    (+ name-y
-       200
-       (if (> pin-count/top 0)
-           100
-           0)))
+    (if (> pin-count/top 0)
+        (+ origin-y symbol-height %pinlength 100)
+        (+ name-y 200)))
 
 
   (define (draw-name)
