@@ -149,6 +149,27 @@
   (set! %component-libraries '())
   (%reset-component-library))
 
+
+
+(define (make-node-name rootdir dir prefix)
+  (define (same-dirs? a b)
+    (string=
+     (string-trim-right a file-name-separator?)
+     (string-trim-right b file-name-separator?)))
+
+  (define (string-drop-rootdir dir)
+    (string-trim (string-drop dir (string-length rootdir))
+                 file-name-separator?))
+
+  (if (string-null? prefix)
+      (if (same-dirs? dir rootdir)
+          (basename dir)
+          (string-drop-rootdir dir))
+      (if (same-dirs? dir rootdir)
+          prefix
+          (string-append prefix
+                         (string-drop-rootdir dir)))))
+
 (define* (component-library-search rootdir  #:optional (prefix ""))
   "Add all symbol libraries found below ROOTDIR to be searched for
 components, naming them with an optional PREFIX."
@@ -174,9 +195,6 @@ components, naming them with an optional PREFIX."
             (else
              (and (eq? 'regular flags)
                   (string-suffix-ci? ".sym" filename)
-                  ;; Filter out symbol files in root dir.  Dunno,
-                  ;; where to add them.
-                  (not (string= (dirname filename) rootdir))
                   (hashq-set! dht
                               (string->symbol (dirname filename))
                               #t))))
@@ -185,8 +203,8 @@ components, naming them with an optional PREFIX."
     ;; Fill component library tree.
     (for-each
      (lambda (dir)
-       (let ((name (substring dir (string-length rootdir))))
-         (component-library dir (string-append prefix name))))
+       (let ((name (make-node-name rootdir dir prefix)))
+         (component-library dir name)))
      (sort-list! (hash-map->list (lambda (key val)
                                    (symbol->string key))
                                  dht)
