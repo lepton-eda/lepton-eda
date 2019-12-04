@@ -269,14 +269,14 @@ Cheat fraudulent label names for them to sort them properly."))
         (unless (member (pin-pos pin) poslist)
           (format-error "Position is not allowed: ~A." (pin-info pin))))
       (begin
-        (when (component-option 'generate_pinseq)
-          (unless (string= (pin-style pin) "none")
-            ;; This will work if pin-seq is not auto-generated.
-            (unless (integer? (pin-seq pin))
-              (let ((num (string->integer (pin-seq pin))))
-                (if num
-                    (set-pin-seq! pin num)
-                    (format-error "Pinseq needs to be a number: ~A." (pin-info pin)))))))
+        (when (and (component-option 'generate_pinseq)
+                   (not (string= (pin-style pin) "none"))
+                   ;; This will work if pin-seq is not auto-generated.
+                   (not (integer? (pin-seq pin))))
+          (let ((num (string->integer (pin-seq pin))))
+            (if num
+                (set-pin-seq! pin num)
+                (format-error "Pinseq needs to be a number: ~A." (pin-info pin)))))
         (unless (member (pin-type pin) typelist)
           (format-error "Pintype not allowed: ~A." (pin-info pin)))
         (unless (member (pin-style pin) stylelist)
