@@ -238,3 +238,6 @@ option's value:
 (define-rc-deprecated-config
  zoom-with-pan "schematic.gui" "zoom-with-pan"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ fast-mousepan "schematic.gui" "fast-mousepan"
+ rc-deprecated-string-boolean-transformer)
