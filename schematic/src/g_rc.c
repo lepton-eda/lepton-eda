@@ -322,23 +322,6 @@ SCM g_rc_attribute_name(SCM scm_path)
  *  \par Function Description
  *
  */
-SCM g_rc_scrollbars(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("scrollbars",
-		   default_scrollbars_flag,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_log_window(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
