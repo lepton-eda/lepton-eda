@@ -58,7 +58,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "net-consolidate",              1, 0, 0, (SCM (*) ()) g_rc_net_consolidate },
   { "file-preview",                 1, 0, 0, (SCM (*) ()) g_rc_file_preview },
   { "enforce-hierarchy",            1, 0, 0, (SCM (*) ()) g_rc_enforce_hierarchy },
-  { "continue-component-place",     1, 0, 0, (SCM (*) ()) g_rc_continue_component_place },
   { "undo-levels",                  1, 0, 0, (SCM (*) ()) g_rc_undo_levels },
   { "undo-control",                 1, 0, 0, (SCM (*) ()) g_rc_undo_control },
   { "undo-type",                    1, 0, 0, (SCM (*) ()) g_rc_undo_type },

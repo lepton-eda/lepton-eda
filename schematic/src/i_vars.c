@@ -164,8 +164,10 @@ void i_vars_set(GschemToplevel *w_current)
   cfg_read_bool ("schematic.gui", "fast-mousepan",
                  default_fast_mousepan, &w_current->fast_mousepan);
 
+  cfg_read_bool ("schematic.gui", "continue-component-place",
+                 default_continue_component_place, &w_current->continue_component_place);
 
-  w_current->continue_component_place = default_continue_component_place;
+
   w_current->undo_levels = default_undo_levels;
   w_current->undo_control = default_undo_control;
   w_current->undo_type = default_undo_type;
