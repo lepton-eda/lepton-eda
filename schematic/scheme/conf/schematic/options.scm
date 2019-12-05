@@ -2,14 +2,6 @@
 ; Start of mode related keywords
 ;
 
-; handleboxes string
-;
-; Controls if the handleboxes (which contain the menu and toolbar) are
-; visible or not.
-;
-(handleboxes "enabled")
-;(handleboxes "disabled")
-
 ; undo-control string
 ;
 ; Controls if the undo is enabled or not
