@@ -135,7 +135,11 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->net_direction_mode = default_net_direction_mode;
   w_current->net_selection_mode = default_net_selection_mode;
 
-  w_current->zoom_with_pan           = default_zoom_with_pan;
+
+  cfg_read_bool ("schematic.gui", "zoom-with-pan",
+                 default_zoom_with_pan, &w_current->zoom_with_pan);
+
+
   w_current->actionfeedback_mode     = default_actionfeedback_mode;
 
 

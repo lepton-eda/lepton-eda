@@ -235,3 +235,6 @@ option's value:
 (define-rc-deprecated-config
  handleboxes "schematic.gui" "handleboxes"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ zoom-with-pan "schematic.gui" "zoom-with-pan"
+ rc-deprecated-string-boolean-transformer)
