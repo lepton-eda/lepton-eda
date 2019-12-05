@@ -244,3 +244,6 @@ option's value:
 (define-rc-deprecated-config
  continue-component-place "schematic.gui" "continue-component-place"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ file-preview "schematic.gui" "file-preview"
+ rc-deprecated-string-boolean-transformer)

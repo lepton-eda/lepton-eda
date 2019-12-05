@@ -445,24 +445,6 @@ SCM g_rc_net_consolidate(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_file_preview(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  /* this variable is inconsistantly named with the rest */
-  RETURN_G_RC_MODE("file-preview",
-		   default_file_preview,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_enforce_hierarchy(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

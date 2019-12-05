@@ -216,13 +216,6 @@
 ;(text-caps-style "lower")
 ;(text-caps-style "upper")
 
-;  file-preview string
-;
-;  Controls if the preview area in the File Open/Save As and Component
-;  dialog boxes is enabled by default or not
-;
-(file-preview "enabled")
-;(file-preview "disabled")
 
 ;  enforce-hierarchy string
 ;
