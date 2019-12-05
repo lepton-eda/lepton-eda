@@ -2,13 +2,6 @@
 ; Start of mode related keywords
 ;
 
-; toolbars string
-;
-; Controls if the toolbars are visible or not.
-;
-(toolbars "enabled")
-;(toolbars "disabled")
-
 ; handleboxes string
 ;
 ; Controls if the handleboxes (which contain the menu and toolbar) are

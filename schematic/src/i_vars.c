@@ -91,13 +91,36 @@ cfg_read_draw_grips (GschemToplevel* w_current)
   g_free (cwd);
 
   GError* err = NULL;
-  gboolean draw_grips =
+  gboolean val =
     eda_config_get_boolean (cfg, "schematic.gui", "draw-grips", &err);
 
   if (err == NULL)
-    w_current->draw_grips = draw_grips;
+    w_current->draw_grips = val;
   else
     w_current->draw_grips = default_draw_grips;
+
+  g_clear_error (&err);
+}
+
+
+
+/* \brief Read [schematic.gui]::toolbars, set w_current->toolbars.
+ */
+static void
+cfg_read_toolbars (GschemToplevel* w_current)
+{
+  gchar* cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError* err = NULL;
+  gboolean val =
+    eda_config_get_boolean (cfg, "schematic.gui", "toolbars", &err);
+
+  if (err == NULL)
+    w_current->toolbars = val;
+  else
+    w_current->toolbars = default_toolbars;
 
   g_clear_error (&err);
 }
@@ -155,7 +178,11 @@ void i_vars_set(GschemToplevel *w_current)
   gschem_options_set_net_rubber_band_mode (w_current->options, default_netconn_rubberband);
   gschem_options_set_magnetic_net_mode (w_current->options, default_magnetic_net_mode);
   w_current->warp_cursor = default_warp_cursor;
-  w_current->toolbars = default_toolbars;
+
+
+  cfg_read_toolbars (w_current);
+
+
   w_current->handleboxes = default_handleboxes;
 
   w_current->bus_ripper_size  = default_bus_ripper_size;
