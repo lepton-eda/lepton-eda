@@ -101,14 +101,6 @@
 (magnetic-net-mode "enabled")
 ;(magnetic-net-mode "disabled")
 
-; zoom-with-pan string
-;
-; Sets the zoom in and zoom out functions to pan the display and then zoom.
-; Basically zoom in / out where the mouse pointer sits on the display.
-; Comment out if you want the default mode.
-;
-(zoom-with-pan "enabled")
-;(zoom-with-pan "disabled")
 
 ; zoom-gain integer
 ;

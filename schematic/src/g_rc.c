@@ -177,23 +177,6 @@ SCM g_rc_action_feedback_mode(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_zoom_with_pan(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE,  "enabled" },
-    {FALSE, "disabled"}
-  };
-
-  RETURN_G_RC_MODE("zoom-with-pan",
-		   default_zoom_with_pan,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_logging(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
