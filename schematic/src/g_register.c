@@ -42,7 +42,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "net-selection-mode",           1, 0, 0, (SCM (*) ()) g_rc_net_selection_mode },
   { "zoom-with-pan",                1, 0, 0, (SCM (*) ()) g_rc_zoom_with_pan },
   { "action-feedback-mode",         1, 0, 0, (SCM (*) ()) g_rc_action_feedback_mode },
-  { "scrollbars",                   1, 0, 0, (SCM (*) ()) g_rc_scrollbars },
   { "embed-components",             1, 0, 0, (SCM (*) ()) g_rc_embed_components },
   { "logging",                      1, 0, 0, (SCM (*) ()) g_rc_logging },
   { "text-size",                    1, 0, 0, (SCM (*) ()) g_rc_text_size },

@@ -165,7 +165,6 @@ SCM g_rc_text_size(SCM size);
 SCM g_rc_text_caps_style(SCM mode);
 SCM g_rc_snap_size(SCM size);
 SCM g_rc_attribute_name(SCM path);
-SCM g_rc_scrollbars(SCM mode);
 SCM g_rc_log_window(SCM mode);
 SCM g_rc_third_button(SCM mode);
 SCM g_rc_third_button_cancel(SCM mode);
