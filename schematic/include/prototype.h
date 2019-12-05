@@ -172,7 +172,6 @@ SCM g_rc_scroll_wheel(SCM mode);
 SCM g_rc_net_consolidate(SCM mode);
 SCM g_rc_file_preview(SCM mode);
 SCM g_rc_enforce_hierarchy(SCM mode);
-SCM g_rc_continue_component_place(SCM mode);
 SCM g_rc_undo_levels(SCM levels);
 SCM g_rc_undo_control(SCM mode);
 SCM g_rc_undo_type(SCM mode);

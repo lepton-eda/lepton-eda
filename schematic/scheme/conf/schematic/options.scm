@@ -158,17 +158,6 @@
 (action-feedback-mode "outline")
 ;(action-feedback-mode "boundingbox")
 
-; continue-component-place string
-;
-; If this enabled then multiple instances of the same component can be placed
-; immediately without having to click on the name or Apply in the Component
-; Place... dialog box.  If this is disabled then only one component can be
-; placed (the user must then press Apply in the dialog box to place multiple
-; instances of the same component)
-;
-(continue-component-place "enabled")
-;(continue-component-place "disabled")
-
 
 ; embed-components string
 ;
