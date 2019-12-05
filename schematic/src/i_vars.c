@@ -159,7 +159,12 @@ void i_vars_set(GschemToplevel *w_current)
   toplevel->net_consolidate    = default_net_consolidate;
   w_current->file_preview       = default_file_preview;
   w_current->enforce_hierarchy  = default_enforce_hierarchy;
-  w_current->fast_mousepan      = default_fast_mousepan;
+
+
+  cfg_read_bool ("schematic.gui", "fast-mousepan",
+                 default_fast_mousepan, &w_current->fast_mousepan);
+
+
   w_current->continue_component_place = default_continue_component_place;
   w_current->undo_levels = default_undo_levels;
   w_current->undo_control = default_undo_control;

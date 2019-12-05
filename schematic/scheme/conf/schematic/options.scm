@@ -114,13 +114,6 @@
 (zoom-gain 20)
 ;(zoom-gain 50) ; Hard-coded behaviour up to version 1.5.0.20080706
 
-; fast-mousepan string
-;
-; Controls if text is drawn properly or if a simplified version (a line which
-; represents the text string) is drawn during mouse pan.  Drawing a simple
-; line speeds up mousepan a lot for big schematics
-;(fast-mousepan "enabled")
-(fast-mousepan "disabled")
 
 ; mousepan-gain integer
 ;
