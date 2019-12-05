@@ -675,23 +675,6 @@ SCM g_rc_warp_cursor(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_handleboxes(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("handleboxes",
-		   default_handleboxes,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_bus_ripper_size(SCM size)
 {
   int val;

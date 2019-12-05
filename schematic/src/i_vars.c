@@ -176,7 +176,8 @@ void i_vars_set(GschemToplevel *w_current)
                  default_toolbars, &w_current->toolbars);
 
 
-  w_current->handleboxes = default_handleboxes;
+  cfg_read_bool ("schematic.gui", "handleboxes",
+                 default_handleboxes, &w_current->handleboxes);
 
   w_current->bus_ripper_size  = default_bus_ripper_size;
   w_current->bus_ripper_type  = default_bus_ripper_type;

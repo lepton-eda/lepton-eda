@@ -232,3 +232,6 @@ option's value:
 (define-rc-deprecated-config
  scrollbars "schematic.gui" "scrollbars"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ handleboxes "schematic.gui" "handleboxes"
+ rc-deprecated-string-boolean-transformer)
