@@ -157,7 +157,12 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->middle_button      = default_middle_button;
   w_current->scroll_wheel       = default_scroll_wheel;
   toplevel->net_consolidate    = default_net_consolidate;
-  w_current->file_preview       = default_file_preview;
+
+
+  cfg_read_bool ("schematic.gui", "file-preview",
+                 default_file_preview, &w_current->file_preview);
+
+
   w_current->enforce_hierarchy  = default_enforce_hierarchy;
 
 
