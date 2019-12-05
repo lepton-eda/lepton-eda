@@ -81,48 +81,35 @@ int default_scrollpan_steps = 8;
 
 
 
-/* \brief Read [schematic.gui]::draw-grips, set w_current->draw_grips.
+/* \brief Read a boolean configuration key.
+ *
+ * \par Function Description
+ * On success, set \a result to the value of the
+ * configuration key, otherwise set it to \a defval.
+ *
+ * \param [in]       group   Configuration group name
+ * \param [in]       key     Configuration key name
+ * \param [in]       defval  Default value
+ * \param [in, out]  result  Result
  */
-static void
-cfg_read_draw_grips (GschemToplevel* w_current)
+static gboolean
+cfg_read_bool (const gchar* group,
+               const gchar* key,
+               gboolean     defval,
+               gboolean*    result)
 {
-  gchar* cwd = g_get_current_dir();
+  gchar*     cwd = g_get_current_dir();
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
   g_free (cwd);
 
-  GError* err = NULL;
-  gboolean val =
-    eda_config_get_boolean (cfg, "schematic.gui", "draw-grips", &err);
+  GError*  err = NULL;
+  gboolean val = eda_config_get_boolean (cfg, group, key, &err);
 
-  if (err == NULL)
-    w_current->draw_grips = val;
-  else
-    w_current->draw_grips = default_draw_grips;
-
+  gboolean success = err == NULL;
   g_clear_error (&err);
-}
 
-
-
-/* \brief Read [schematic.gui]::toolbars, set w_current->toolbars.
- */
-static void
-cfg_read_toolbars (GschemToplevel* w_current)
-{
-  gchar* cwd = g_get_current_dir();
-  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
-  g_free (cwd);
-
-  GError* err = NULL;
-  gboolean val =
-    eda_config_get_boolean (cfg, "schematic.gui", "toolbars", &err);
-
-  if (err == NULL)
-    w_current->toolbars = val;
-  else
-    w_current->toolbars = default_toolbars;
-
-  g_clear_error (&err);
+  *result = success ? val : defval;
+  return success;
 }
 
 
@@ -172,7 +159,8 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->undo_panzoom = default_undo_panzoom;
 
 
-  cfg_read_draw_grips (w_current);
+  cfg_read_bool ("schematic.gui", "draw-grips",
+                 default_draw_grips, &w_current->draw_grips);
 
 
   gschem_options_set_net_rubber_band_mode (w_current->options, default_netconn_rubberband);
@@ -180,7 +168,8 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->warp_cursor = default_warp_cursor;
 
 
-  cfg_read_toolbars (w_current);
+  cfg_read_bool ("schematic.gui", "toolbars",
+                 default_toolbars, &w_current->toolbars);
 
 
   w_current->handleboxes = default_handleboxes;
