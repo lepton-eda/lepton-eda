@@ -226,3 +226,6 @@ option's value:
 (define-rc-deprecated-config
  draw-grips "schematic.gui" "draw-grips"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ toolbars "schematic.gui" "toolbars"
+ rc-deprecated-string-boolean-transformer)

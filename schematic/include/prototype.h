@@ -184,7 +184,6 @@ SCM g_rc_netconn_rubberband(SCM mode);
 SCM g_rc_magnetic_net_mode(SCM mode);
 SCM g_rc_add_menu(SCM menu_name, SCM menu_items);
 SCM g_rc_warp_cursor(SCM mode);
-SCM g_rc_toolbars(SCM mode);
 SCM g_rc_handleboxes(SCM mode);
 SCM g_rc_bus_ripper_size(SCM size);
 SCM g_rc_bus_ripper_type(SCM mode);
