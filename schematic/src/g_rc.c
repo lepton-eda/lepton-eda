@@ -125,23 +125,6 @@ SCM g_rc_gschem_version(SCM scm_version)
  *  \par Function Description
  *
  */
-SCM g_rc_net_direction_mode(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"}
-  };
-
-  RETURN_G_RC_MODE("net-direction-mode",
-		   default_net_direction_mode,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_net_selection_mode(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

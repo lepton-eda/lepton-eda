@@ -155,7 +155,6 @@ void g_init_keys ();
 /* g_rc.c */
 void g_rc_parse_gtkrc();
 SCM g_rc_gschem_version(SCM version);
-SCM g_rc_net_direction_mode(SCM mode);
 SCM g_rc_net_selection_mode(SCM mode);
 SCM g_rc_action_feedback_mode(SCM mode);
 SCM g_rc_logging(SCM mode);
