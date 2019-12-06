@@ -114,12 +114,21 @@ cfg_read_bool (const gchar* group,
 
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+static void
+i_vars_set_options (GschemOptions* opts)
+{
+  gschem_options_set_snap_size (opts, default_snap_size);
+  gschem_options_set_grid_mode (opts, (GRID_MODE) default_grid_mode);
+  gschem_options_set_net_rubber_band_mode (opts, default_netconn_rubberband);
+  gschem_options_set_magnetic_net_mode (opts, default_magnetic_net_mode);
+}
+
+
+
+/*! \brief Read configuration and set toplevel options appropriately.
  */
-void i_vars_set(GschemToplevel *w_current)
+void
+i_vars_set (GschemToplevel* w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   i_vars_libgeda_set(toplevel);
@@ -155,7 +164,6 @@ void i_vars_set(GschemToplevel *w_current)
 
 
   w_current->include_complex = default_include_complex;
-  gschem_options_set_snap_size (w_current->options, default_snap_size);
   w_current->log_window      = default_log_window;
 
   w_current->third_button       = default_third_button;
@@ -193,11 +201,6 @@ void i_vars_set(GschemToplevel *w_current)
   cfg_read_bool ("schematic.gui", "draw-grips",
                  default_draw_grips, &w_current->draw_grips);
 
-
-  gschem_options_set_net_rubber_band_mode (w_current->options, default_netconn_rubberband);
-  gschem_options_set_magnetic_net_mode (w_current->options, default_magnetic_net_mode);
-
-
   cfg_read_bool ("schematic.gui", "warp-cursor",
                  default_warp_cursor, &w_current->warp_cursor);
 
@@ -218,7 +221,6 @@ void i_vars_set(GschemToplevel *w_current)
                  default_force_boundingbox, &toplevel->force_boundingbox);
 
 
-  gschem_options_set_grid_mode (w_current->options, (GRID_MODE) default_grid_mode);
   w_current->dots_grid_dot_size          = default_dots_grid_dot_size;
   w_current->dots_grid_mode              = default_dots_grid_mode;
   w_current->dots_grid_fixed_threshold   = default_dots_grid_fixed_threshold;
@@ -232,6 +234,9 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->scrollpan_steps = default_scrollpan_steps;
 
   toplevel->auto_save_interval = default_auto_save_interval;
+
+
+  i_vars_set_options (w_current->options);
 }
 
 
