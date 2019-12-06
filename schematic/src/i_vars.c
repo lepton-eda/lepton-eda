@@ -153,7 +153,12 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->log_window      = default_log_window;
 
   w_current->third_button       = default_third_button;
-  w_current->third_button_cancel= default_third_button_cancel;
+
+
+  cfg_read_bool ("schematic.gui", "file-preview",
+                 default_third_button_cancel, &w_current->third_button_cancel);
+
+
   w_current->middle_button      = default_middle_button;
   w_current->scroll_wheel       = default_scroll_wheel;
   toplevel->net_consolidate    = default_net_consolidate;

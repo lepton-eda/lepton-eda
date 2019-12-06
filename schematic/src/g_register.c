@@ -52,7 +52,6 @@ static struct gsubr_t gschem_funcs[] = {
 
   { "log-window",                   1, 0, 0, (SCM (*) ()) g_rc_log_window },
   { "third-button",                 0, 1, 0, (SCM (*) ()) g_rc_third_button },
-  { "third-button-cancel",          1, 0, 0, (SCM (*) ()) g_rc_third_button_cancel },
   { "middle-button",                0, 1, 0, (SCM (*) ()) g_rc_middle_button },
   { "scroll-wheel",                 1, 0, 0, (SCM (*) ()) g_rc_scroll_wheel },
   { "net-consolidate",              1, 0, 0, (SCM (*) ()) g_rc_net_consolidate },
