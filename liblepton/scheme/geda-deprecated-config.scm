@@ -268,3 +268,6 @@ option's value:
 (define-rc-deprecated-config
  netconn-rubberband "schematic.gui" "netconn-rubberband"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ magnetic-net-mode "schematic.gui" "magnetic-net-mode"
+ rc-deprecated-string-boolean-transformer)

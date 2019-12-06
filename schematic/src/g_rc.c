@@ -456,23 +456,6 @@ SCM g_rc_undo_panzoom(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_magnetic_net_mode(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("magnetic-net-mode",
-		   default_magnetic_net_mode,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_add_menu(SCM scm_menu_name, SCM scm_menu_items)
 {
   char *menu_name;

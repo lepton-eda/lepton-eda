@@ -58,7 +58,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "undo-type",                    1, 0, 0, (SCM (*) ()) g_rc_undo_type },
   { "undo-panzoom",                 1, 0, 0, (SCM (*) ()) g_rc_undo_panzoom },
 
-  { "magnetic-net-mode",            1, 0, 0, (SCM (*) ()) g_rc_magnetic_net_mode },
   { "add-menu",                     2, 0, 0, (SCM (*) ()) g_rc_add_menu },
   { "bus-ripper-size",              1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_size },
   { "bus-ripper-type",              1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_type },

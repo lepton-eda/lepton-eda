@@ -125,7 +125,9 @@ i_vars_set_options (GschemOptions* opts)
                  default_netconn_rubberband, &val);
   gschem_options_set_net_rubber_band_mode (opts, val);
 
-  gschem_options_set_magnetic_net_mode (opts, default_magnetic_net_mode);
+  cfg_read_bool ("schematic.gui", "magnetic-net-mode",
+                 default_magnetic_net_mode, &val);
+  gschem_options_set_magnetic_net_mode (opts, val);
 }
 
 

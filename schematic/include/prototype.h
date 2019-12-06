@@ -171,7 +171,6 @@ SCM g_rc_undo_levels(SCM levels);
 SCM g_rc_undo_control(SCM mode);
 SCM g_rc_undo_type(SCM mode);
 SCM g_rc_undo_panzoom(SCM mode);
-SCM g_rc_magnetic_net_mode(SCM mode);
 SCM g_rc_add_menu(SCM menu_name, SCM menu_items);
 SCM g_rc_bus_ripper_size(SCM size);
 SCM g_rc_bus_ripper_type(SCM mode);
