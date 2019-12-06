@@ -217,19 +217,6 @@
 ;(text-caps-style "upper")
 
 
-;  enforce-hierarchy string
-;
-;  Controls if the movement between hierarchy levels (of the same underlying
-;  schematics) is allowed or not.
-;  If this is enabled, then the user cannot (without using the page manager)
-;  move between hierarchy levels otherwise, if enabled, the user sees all
-;  the hierarchy levels as being flat.
-;
-(enforce-hierarchy "enabled")
-;(enforce-hierarchy "disabled")
-
-
-
 ; middle-button string
 ;
 ; Controls if the middle mouse button draws strokes, repeats the last
