@@ -262,3 +262,6 @@ option's value:
 (define-rc-deprecated-config
  net-direction-mode "schematic.gui" "net-direction-mode"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ embed-components "schematic.gui" "embed-components"
+ rc-deprecated-string-boolean-transformer)

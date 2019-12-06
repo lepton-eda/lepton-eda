@@ -40,7 +40,6 @@ static struct gsubr_t gschem_funcs[] = {
 
   { "net-selection-mode",           1, 0, 0, (SCM (*) ()) g_rc_net_selection_mode },
   { "action-feedback-mode",         1, 0, 0, (SCM (*) ()) g_rc_action_feedback_mode },
-  { "embed-components",             1, 0, 0, (SCM (*) ()) g_rc_embed_components },
   { "logging",                      1, 0, 0, (SCM (*) ()) g_rc_logging },
   { "text-size",                    1, 0, 0, (SCM (*) ()) g_rc_text_size },
   { "snap-size",                    1, 0, 0, (SCM (*) ()) g_rc_snap_size },

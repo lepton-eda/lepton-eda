@@ -150,8 +150,10 @@ void i_vars_set(GschemToplevel *w_current)
   cfg_read_bool ("schematic.gui", "scrollbars",
                  default_scrollbars_flag, &w_current->scrollbars_flag);
 
+  cfg_read_bool ("schematic.gui", "embed-components",
+                 default_embed_complex, &w_current->embed_complex);
 
-  w_current->embed_complex   = default_embed_complex;
+
   w_current->include_complex = default_include_complex;
   gschem_options_set_snap_size (w_current->options, default_snap_size);
   w_current->log_window      = default_log_window;
