@@ -250,3 +250,6 @@ option's value:
 (define-rc-deprecated-config
  enforce-hierarchy "schematic.gui" "enforce-hierarchy"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ third-button-cancel "schematic.gui" "third-button-cancel"
+ rc-deprecated-string-boolean-transformer)
