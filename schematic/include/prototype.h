@@ -184,7 +184,6 @@ SCM g_rc_auto_save_interval(SCM seconds);
 SCM g_rc_mousepan_gain(SCM mode);
 SCM g_rc_keyboardpan_gain(SCM mode);
 SCM g_rc_select_slack_pixels(SCM pixels);
-SCM g_rc_zoom_gain(SCM gain);
 SCM g_rc_scrollpan_steps(SCM steps);
 SCM g_rc_display_color_map (SCM scm_map);
 SCM g_rc_display_outline_color_map (SCM scm_map);

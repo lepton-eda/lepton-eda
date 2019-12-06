@@ -746,31 +746,6 @@ SCM g_rc_select_slack_pixels(SCM pixels)
  *  \par Function Description
  *
  */
-SCM g_rc_zoom_gain(SCM gain)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (gain), gain, SCM_ARG1, "zoom-gain");
-
-  val = scm_to_int (gain);
-
-  /* Allow -ve numbers in case the user wishes to reverse zoom direction,
-   * but don't allow zero gain as this would disable the zoom action */
-  if (val == 0) {
-    fprintf(stderr, _("Invalid gain [%1$d] passed to zoom-gain\n"), val);
-    val = 20; /* absolute default */
-  }
-
-  default_zoom_gain = val;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_scrollpan_steps(SCM steps)
 {
   int val;

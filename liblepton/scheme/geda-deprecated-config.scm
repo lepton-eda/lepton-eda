@@ -108,6 +108,8 @@ option's value:
 ;; Identity value transformer for define-rc-deprecated-config
 (define (rc-deprecated-string-transformer str) str)
 
+(define (rc-deprecated-int-transformer num) num)
+
 ;; Transformer for "enabled"/"disabled" to boolean
 (define (rc-deprecated-string-boolean-transformer str)
   (string=? "enabled" str))
@@ -271,3 +273,6 @@ option's value:
 (define-rc-deprecated-config
  magnetic-net-mode "schematic.gui" "magnetic-net-mode"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ zoom-gain "schematic.gui" "zoom-gain"
+ rc-deprecated-int-transformer)
