@@ -79,15 +79,6 @@
 ;(net-consolidate "disabled")
 
 
-; magnetic-net-mode string
-;
-; Controls the initial setting of the magnetic net mode. The magnetic
-; net mode marks a possible connection that is close to the current
-; cursor position
-(magnetic-net-mode "enabled")
-;(magnetic-net-mode "disabled")
-
-
 ; zoom-gain integer
 ;
 ; Controls the percentage size increase when zooming into the page.
