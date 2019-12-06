@@ -152,18 +152,6 @@
 ;(action-feedback-mode "boundingbox")
 
 
-; embed-components string
-;
-; Determines if the newly placed components are embedded in the schematic
-; or if only the filename is specified and the component is searched for
-; instead.  If it is enabled, then all new components will be embedded
-; otherwise they are not embedded.  This can be controlled on the fly during
-; runtime with the "Embed Component" checkbox on the select component dialog
-; box
-;
-;(embed-components "enabled")
-(embed-components "disabled")
-
 ; logging string
 ;
 ; Determines if the logging mechanism is enabled or disabled

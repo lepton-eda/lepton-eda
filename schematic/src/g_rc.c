@@ -177,23 +177,6 @@ SCM g_rc_logging(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_embed_components(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"}
-  };
-
-  RETURN_G_RC_MODE("embed-components",
-		   default_embed_complex,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_text_size(SCM size)
 {
   int val;

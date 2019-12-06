@@ -158,7 +158,6 @@ SCM g_rc_gschem_version(SCM version);
 SCM g_rc_net_selection_mode(SCM mode);
 SCM g_rc_action_feedback_mode(SCM mode);
 SCM g_rc_logging(SCM mode);
-SCM g_rc_embed_components(SCM mode);
 SCM g_rc_text_size(SCM size);
 SCM g_rc_text_caps_style(SCM mode);
 SCM g_rc_snap_size(SCM size);
