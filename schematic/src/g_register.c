@@ -38,7 +38,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "display-color-map",            0, 1, 0, (SCM (*) ()) g_rc_display_color_map },
   { "display-outline-color-map",    0, 1, 0, (SCM (*) ()) g_rc_display_outline_color_map },
 
-  { "net-direction-mode",           1, 0, 0, (SCM (*) ()) g_rc_net_direction_mode },
   { "net-selection-mode",           1, 0, 0, (SCM (*) ()) g_rc_net_selection_mode },
   { "action-feedback-mode",         1, 0, 0, (SCM (*) ()) g_rc_action_feedback_mode },
   { "embed-components",             1, 0, 0, (SCM (*) ()) g_rc_embed_components },

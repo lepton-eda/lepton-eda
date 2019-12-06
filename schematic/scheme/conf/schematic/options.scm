@@ -48,13 +48,6 @@
 ; Autosaving will not be allowed if setting it to zero.
 (auto-save-interval 120)
 
-;  net-direction-mode string
-;
-;  Controls if the net direction mode is used. This mode tries to guess
-;  the best continuation direction of a L-shape net when adding a net.
-;
-(net-direction-mode "enabled")
-;(net-direction-mode "disabled")
 
 ; net-selection-mode string
 ;

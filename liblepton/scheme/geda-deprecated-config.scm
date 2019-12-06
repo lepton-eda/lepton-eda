@@ -259,3 +259,6 @@ option's value:
 (define-rc-deprecated-config
  force-boundingbox "schematic.gui" "force-boundingbox"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ net-direction-mode "schematic.gui" "net-direction-mode"
+ rc-deprecated-string-boolean-transformer)
