@@ -335,15 +335,6 @@
 ;
 (mesh-grid-display-threshold 3)
 
-; force-boundingbox string
-;
-; Controls if the entire bounding box of a symbol is used when figuring out
-; whichend of the pin is considered the active port.  Enable this when
-; gschem is guessing incorrectly.
-;
-(force-boundingbox "disabled")
-;(force-boundingbox "enabled")
-
 
 ; reset-component-library
 ;
