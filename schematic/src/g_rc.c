@@ -546,23 +546,6 @@ SCM g_rc_add_menu(SCM scm_menu_name, SCM scm_menu_items)
  *  \par Function Description
  *
  */
-SCM g_rc_warp_cursor(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("warp-cursor",
-		   default_warp_cursor,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_bus_ripper_size(SCM size)
 {
   int val;

@@ -63,7 +63,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "netconn-rubberband",           1, 0, 0, (SCM (*) ()) g_rc_netconn_rubberband },
   { "magnetic-net-mode",            1, 0, 0, (SCM (*) ()) g_rc_magnetic_net_mode },
   { "add-menu",                     2, 0, 0, (SCM (*) ()) g_rc_add_menu },
-  { "warp-cursor",                  1, 0, 0, (SCM (*) ()) g_rc_warp_cursor },
   { "bus-ripper-size",              1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_size },
   { "bus-ripper-type",              1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_type },
   { "bus-ripper-rotation",          1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_rotation },

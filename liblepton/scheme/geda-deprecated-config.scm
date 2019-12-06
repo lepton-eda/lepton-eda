@@ -253,3 +253,6 @@ option's value:
 (define-rc-deprecated-config
  third-button-cancel "schematic.gui" "third-button-cancel"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ warp-cursor "schematic.gui" "warp-cursor"
+ rc-deprecated-string-boolean-transformer)
