@@ -119,7 +119,12 @@ i_vars_set_options (GschemOptions* opts)
 {
   gschem_options_set_snap_size (opts, default_snap_size);
   gschem_options_set_grid_mode (opts, (GRID_MODE) default_grid_mode);
-  gschem_options_set_net_rubber_band_mode (opts, default_netconn_rubberband);
+
+  gboolean val = FALSE;
+  cfg_read_bool ("schematic.gui", "netconn-rubberband",
+                 default_netconn_rubberband, &val);
+  gschem_options_set_net_rubber_band_mode (opts, val);
+
   gschem_options_set_magnetic_net_mode (opts, default_magnetic_net_mode);
 }
 

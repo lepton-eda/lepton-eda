@@ -78,13 +78,6 @@
 (net-consolidate "enabled")
 ;(net-consolidate "disabled")
 
-; netconn-rubberband string
-;
-; Controls if net connections are maintained when you move a connecting
-; component or net.
-;
-(netconn-rubberband "enabled")
-;(netconn-rubberband "disabled")
 
 ; magnetic-net-mode string
 ;
