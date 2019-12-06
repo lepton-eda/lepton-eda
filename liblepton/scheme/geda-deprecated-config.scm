@@ -247,3 +247,6 @@ option's value:
 (define-rc-deprecated-config
  file-preview "schematic.gui" "file-preview"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ enforce-hierarchy "schematic.gui" "enforce-hierarchy"
+ rc-deprecated-string-boolean-transformer)

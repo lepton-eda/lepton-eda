@@ -162,8 +162,8 @@ void i_vars_set(GschemToplevel *w_current)
   cfg_read_bool ("schematic.gui", "file-preview",
                  default_file_preview, &w_current->file_preview);
 
-
-  w_current->enforce_hierarchy  = default_enforce_hierarchy;
+  cfg_read_bool ("schematic.gui", "enforce-hierarchy",
+                 default_enforce_hierarchy, &w_current->enforce_hierarchy);
 
 
   cfg_read_bool ("schematic.gui", "fast-mousepan",

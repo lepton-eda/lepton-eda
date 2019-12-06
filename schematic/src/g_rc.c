@@ -445,23 +445,6 @@ SCM g_rc_net_consolidate(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_enforce_hierarchy(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("enforce-hierarchy",
-		   default_enforce_hierarchy,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_undo_levels(SCM levels)
 {
   int val;
