@@ -258,14 +258,6 @@
 (scrollpan-steps 8)
 ;(scrollpan-steps 4) ; Hard-coded behaviour up to version 1.5.0.20080706
 
-; warp-cursor string
-;
-; Controls if the cursor is warped (or moved) when you zoom in and out.
-; Some people find this forced cursor movement annoying.
-;
-;(warp-cursor "enabled")
-(warp-cursor "disabled")
-
 
 ; Bus ripper controls
 ; The following keywords control the auto bus ripper addition code

@@ -190,7 +190,10 @@ void i_vars_set(GschemToplevel *w_current)
 
   gschem_options_set_net_rubber_band_mode (w_current->options, default_netconn_rubberband);
   gschem_options_set_magnetic_net_mode (w_current->options, default_magnetic_net_mode);
-  w_current->warp_cursor = default_warp_cursor;
+
+
+  cfg_read_bool ("schematic.gui", "warp-cursor",
+                 default_warp_cursor, &w_current->warp_cursor);
 
 
   cfg_read_bool ("schematic.gui", "toolbars",
