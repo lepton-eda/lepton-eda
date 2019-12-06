@@ -70,7 +70,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "mousepan-gain",                1, 0, 0, (SCM (*) ()) g_rc_mousepan_gain },
   { "keyboardpan-gain",             1, 0, 0, (SCM (*) ()) g_rc_keyboardpan_gain },
   { "select-slack-pixels",          1, 0, 0, (SCM (*) ()) g_rc_select_slack_pixels },
-  { "zoom-gain",                    1, 0, 0, (SCM (*) ()) g_rc_zoom_gain },
   { "scrollpan-steps",              1, 0, 0, (SCM (*) ()) g_rc_scrollpan_steps },
 
   /* backup functions */

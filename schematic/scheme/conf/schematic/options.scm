@@ -79,19 +79,6 @@
 ;(net-consolidate "disabled")
 
 
-; zoom-gain integer
-;
-; Controls the percentage size increase when zooming into the page.
-; Un-zooming uses the inverse factor such that a zoom in / zoom out
-; pair will return the schematic to the same size.
-;  E.g:
-;    20% increment => x 1.2 original size when zooming in
-;                  => x 1 / 1.2 x original size when zooming out
-;
-(zoom-gain 20)
-;(zoom-gain 50) ; Hard-coded behaviour up to version 1.5.0.20080706
-
-
 ; mousepan-gain integer
 ;
 ; Controls how much the display pans when using mousepan.  A larger value
