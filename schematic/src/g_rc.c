@@ -599,23 +599,6 @@ SCM g_rc_bus_ripper_rotation(SCM mode)
 		   2);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_force_boundingbox(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE,  "enabled" },
-    {FALSE, "disabled"  }
-  };
-
-  RETURN_G_RC_MODE("force-boundingbox",
-		   default_force_boundingbox,
-		   2);
-}
-
 /*! \brief Verify the grid mode set in the RC file under evaluation.
  *  \par Function Description
  *

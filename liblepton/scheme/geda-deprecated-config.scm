@@ -256,3 +256,6 @@ option's value:
 (define-rc-deprecated-config
  warp-cursor "schematic.gui" "warp-cursor"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ force-boundingbox "schematic.gui" "force-boundingbox"
+ rc-deprecated-string-boolean-transformer)

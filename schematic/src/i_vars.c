@@ -207,7 +207,10 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->bus_ripper_type  = default_bus_ripper_type;
   w_current->bus_ripper_rotation  = default_bus_ripper_rotation;
 
-  toplevel->force_boundingbox  = default_force_boundingbox;
+
+  cfg_read_bool ("schematic.gui", "force-boundingbox",
+                 default_force_boundingbox, &toplevel->force_boundingbox);
+
 
   gschem_options_set_grid_mode (w_current->options, (GRID_MODE) default_grid_mode);
   w_current->dots_grid_dot_size          = default_dots_grid_dot_size;
