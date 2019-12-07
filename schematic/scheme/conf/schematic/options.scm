@@ -79,17 +79,6 @@
 ;(net-consolidate "disabled")
 
 
-; select-slack-pixels integer
-;
-; Controls how many pixels around an object can still be clicked as part of
-; that object.
-; A larger value gives greater ease in selecting small, or narrow objects.
-(select-slack-pixels 10)
-;(select-slack-pixels 4)
-;(select-slack-pixels 0)
-;(select-slack-pixels 1)
-
-
 ; action-feedback-mode string
 ;
 ; Set the default action feedback mode (for copy/move/component place).
