@@ -79,17 +79,6 @@
 ;(net-consolidate "disabled")
 
 
-; keyboardpan-gain integer
-;
-; Controls how much the display pans when using the keyboard cursor keys.
-; A larger value provides greater pan distance when pressing the cursor
-; keys, while a smaller value provides a smoother, but smaller pan
-; distance when moving the cursor keys.
-(keyboardpan-gain 20)
-;(keyboardpan-gain 10)
-;(keyboardpan-gain 1)
-;(keyboardpan-gain 5)
-
 ; select-slack-pixels integer
 ;
 ; Controls how many pixels around an object can still be clicked as part of
