@@ -169,14 +169,13 @@ check_int_greater_eq_0 (gint val) { return val >= 0; }
  * configuration key, otherwise set it to \a defval.
  * Also, check read value with pfn_check() function, and
  * if it returns FALSE, reset \a result to \a defval and
- * print \a errmsg (substituting a value in it) to STDERR.
+ * print an error message to STDERR.
  *
  * \param [in]       group      Configuration group name
  * \param [in]       key        Configuration key name
  * \param [in]       defval     Default value
  * \param [in, out]  result     Result
  * \param [in]       pfn_check  Function to check if value is valid
- * \param [in]       errmsg     Error mesage format string with single %d
  *
  * \return  TRUE if a specified config parameter was successfully read
  */
@@ -185,8 +184,7 @@ cfg_read_int_with_check (const gchar* group,
                          const gchar* key,
                          gint         defval,
                          gint*        result,
-                         gboolean     (*pfn_check)(int),
-                         const gchar* errmsg)
+                         gboolean     (*pfn_check)(int))
 {
   gint val = 0;
   gboolean success = cfg_read_int (group, key, defval, &val);
@@ -198,7 +196,8 @@ cfg_read_int_with_check (const gchar* group,
   else
   {
     *result = defval;
-    fprintf (stderr, errmsg, val);
+    const gchar* errmsg = _("Invalid [%s]::%s (%d) is set in configuration\n");
+    fprintf (stderr, errmsg, group, key, val);
   }
 
   return success;
@@ -328,8 +327,7 @@ i_vars_set (GschemToplevel* w_current)
 
   cfg_read_int_with_check ("schematic.gui", "mousepan-gain",
                            default_mousepan_gain, &w_current->mousepan_gain,
-                           &check_int_greater_0,
-                           _("Invalid mousepan-gain (%d) is set in configuration\n"));
+                           &check_int_greater_0);
 
 
   w_current->keyboardpan_gain = default_keyboardpan_gain;
@@ -339,8 +337,7 @@ i_vars_set (GschemToplevel* w_current)
 
   cfg_read_int_with_check ("schematic.gui", "zoom-gain",
                            default_zoom_gain, &w_current->zoom_gain,
-                           &check_int_not_0,
-                           _("Invalid zoom-gain (%d) is set in configuration\n"));
+                           &check_int_not_0);
 
 
   w_current->scrollpan_steps = default_scrollpan_steps;
