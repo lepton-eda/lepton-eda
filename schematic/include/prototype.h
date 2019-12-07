@@ -181,7 +181,6 @@ SCM g_rc_dots_grid_mode(SCM mode);
 SCM g_rc_dots_grid_fixed_threshold(SCM spacing);
 SCM g_rc_mesh_grid_display_threshold(SCM spacing);
 SCM g_rc_auto_save_interval(SCM seconds);
-SCM g_rc_mousepan_gain(SCM mode);
 SCM g_rc_keyboardpan_gain(SCM mode);
 SCM g_rc_select_slack_pixels(SCM pixels);
 SCM g_rc_scrollpan_steps(SCM steps);

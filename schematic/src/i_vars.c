@@ -325,7 +325,13 @@ i_vars_set (GschemToplevel* w_current)
   w_current->dots_grid_fixed_threshold   = default_dots_grid_fixed_threshold;
   w_current->mesh_grid_display_threshold = default_mesh_grid_display_threshold;
 
-  w_current->mousepan_gain = default_mousepan_gain;
+
+  cfg_read_int_with_check ("schematic.gui", "mousepan-gain",
+                           default_mousepan_gain, &w_current->mousepan_gain,
+                           &check_int_greater_0,
+                           _("Invalid mousepan-gain (%d) is set in configuration\n"));
+
+
   w_current->keyboardpan_gain = default_keyboardpan_gain;
 
   w_current->select_slack_pixels = default_select_slack_pixels;

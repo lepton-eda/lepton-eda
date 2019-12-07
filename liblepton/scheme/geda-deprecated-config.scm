@@ -276,3 +276,6 @@ option's value:
 (define-rc-deprecated-config
  zoom-gain "schematic.gui" "zoom-gain"
  rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ mousepan-gain "schematic.gui" "mousepan-gain"
+ rc-deprecated-int-transformer)

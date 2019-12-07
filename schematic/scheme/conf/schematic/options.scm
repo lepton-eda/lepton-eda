@@ -79,15 +79,6 @@
 ;(net-consolidate "disabled")
 
 
-; mousepan-gain integer
-;
-; Controls how much the display pans when using mousepan.  A larger value
-; provides greater pan distance when moving the mouse, while a smaller value
-; provides a smoother, but smaller pan distance when moving the mouse.
-(mousepan-gain 1)
-;(mousepan-gain 5)
-;(mousepan-gain 10)
-
 ; keyboardpan-gain integer
 ;
 ; Controls how much the display pans when using the keyboard cursor keys.
