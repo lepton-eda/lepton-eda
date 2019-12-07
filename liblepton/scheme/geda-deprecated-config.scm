@@ -282,3 +282,6 @@ option's value:
 (define-rc-deprecated-config
  keyboardpan-gain "schematic.gui" "keyboardpan-gain"
  rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ select-slack-pixels "schematic.gui" "select-slack-pixels"
+ rc-deprecated-int-transformer)

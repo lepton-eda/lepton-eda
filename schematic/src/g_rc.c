@@ -675,30 +675,6 @@ SCM g_rc_auto_save_interval(SCM seconds)
  *  \par Function Description
  *
  */
-SCM g_rc_select_slack_pixels(SCM pixels)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (pixels), pixels, SCM_ARG1, "select-slack-pixels");
-
-  val = scm_to_int (pixels);
-
-  if (val <= 0) {
-    fprintf(stderr, _("Invalid number of pixels [%1$d] passed to select-slack-pixels\n"),
-            val);
-    val = 4; /* absolute default */
-  }
-
-  default_select_slack_pixels = val;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_scrollpan_steps(SCM steps)
 {
   int val;
