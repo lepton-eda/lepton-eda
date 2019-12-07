@@ -114,12 +114,6 @@
 (log-window "later")
 
 
-; snap-size number
-;
-; Sets the default grid spacing at start-up of gschem.
-;
-(snap-size 100)
-
 ; text-caps-style string
 ;
 ; Sets the default caps style used for the input of text

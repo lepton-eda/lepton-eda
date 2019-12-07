@@ -211,7 +211,14 @@ cfg_read_int_with_check (const gchar* group,
 static void
 i_vars_set_options (GschemOptions* opts)
 {
-  gschem_options_set_snap_size (opts, default_snap_size);
+//  gschem_options_set_snap_size (opts, default_snap_size);
+  gint snap_size;
+  cfg_read_int_with_check ("schematic.gui", "snap-size",
+                           default_snap_size, &snap_size,
+                           &check_int_greater_0);
+  gschem_options_set_snap_size (opts, snap_size);
+
+
   gschem_options_set_grid_mode (opts, (GRID_MODE) default_grid_mode);
 
   gboolean val = FALSE;
