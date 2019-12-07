@@ -114,12 +114,6 @@
 (log-window "later")
 
 
-; text-size number
-;
-; Sets the default text size.
-;
-(text-size 10)
-
 ; snap-size number
 ;
 ; Sets the default grid spacing at start-up of gschem.

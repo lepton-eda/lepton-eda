@@ -160,6 +160,9 @@ check_int_greater_0 (gint val) { return val > 0; }
 static gboolean
 check_int_greater_eq_0 (gint val) { return val >= 0; }
 
+static gboolean
+check_int_text_size (gint val) { return val >= MINIMUM_TEXT_SIZE; }
+
 
 
 /* \brief Read an int configuration key, check read value.
@@ -236,7 +239,12 @@ i_vars_set (GschemToplevel* w_current)
     do_logging = default_do_logging;
   }
 
-  w_current->text_size     = default_text_size;
+
+  cfg_read_int_with_check ("schematic.gui", "text-size",
+                           default_text_size, &w_current->text_size,
+                           &check_int_text_size);
+
+
   w_current->text_caps     = default_text_caps;
 
 
