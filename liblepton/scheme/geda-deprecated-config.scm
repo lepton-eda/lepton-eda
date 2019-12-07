@@ -288,3 +288,6 @@ option's value:
 (define-rc-deprecated-config
  text-size "schematic.gui" "text-size"
  rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ snap-size "schematic.gui" "snap-size"
+ rc-deprecated-int-transformer)

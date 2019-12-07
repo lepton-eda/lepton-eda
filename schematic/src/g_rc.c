@@ -197,29 +197,6 @@ SCM g_rc_text_caps_style(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_snap_size(SCM size)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (size), size, SCM_ARG1, "snap-size");
-
-  val = scm_to_int (size);
-  if (val == 0) {
-    fprintf(stderr, _("Invalid size [%1$d] passed to snap-size\n"),
-            val);
-    val = 100; /* absolute default */
-  }
-
-  default_snap_size = val;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_attribute_name(SCM scm_path)
 {
   char *path;
