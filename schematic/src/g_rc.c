@@ -623,31 +623,6 @@ SCM g_rc_auto_save_interval(SCM seconds)
   return SCM_BOOL_T;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_scrollpan_steps(SCM steps)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (steps), steps, SCM_ARG1, "scrollpan-steps");
-
-  val = scm_to_int (steps);
-
-  /* Allow -ve numbers in case the user wishes to reverse scroll direction,
-   * but don't allow zero steps as this would cause a division by zero error */
-  if (val == 0) {
-    fprintf(stderr, _("Invalid number of steps [%1$d] scrollpan-steps\n"), val);
-    val = 8; /* absolute default */
-  }
-
-  default_scrollpan_steps = val;
-
-  return SCM_BOOL_T;
-}
-
 
 extern GedaColorMap display_colors;
 extern GedaColorMap display_outline_colors;

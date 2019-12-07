@@ -159,15 +159,6 @@
 ;(scroll-wheel "gtk")
 
 
-; scrollpan-steps integer
-;
-; Controls the number of scroll pan events required to traverse the viewed
-; schematic area. Larger numbers mean more scroll steps are required to
-; pan across the viewed area and giving finer control over positioning.
-(scrollpan-steps 8)
-;(scrollpan-steps 4) ; Hard-coded behaviour up to version 1.5.0.20080706
-
-
 ; Bus ripper controls
 ; The following keywords control the auto bus ripper addition code
 ;

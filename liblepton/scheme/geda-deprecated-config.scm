@@ -291,3 +291,6 @@ option's value:
 (define-rc-deprecated-config
  snap-size "schematic.gui" "snap-size"
  rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ scrollpan-steps "schematic.gui" "scrollpan-steps"
+ rc-deprecated-int-transformer)

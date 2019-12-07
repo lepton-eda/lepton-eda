@@ -356,8 +356,10 @@ i_vars_set (GschemToplevel* w_current)
                            default_zoom_gain, &w_current->zoom_gain,
                            &check_int_not_0);
 
+  cfg_read_int_with_check ("schematic.gui", "scrollpan-steps",
+                           default_scrollpan_steps, &w_current->scrollpan_steps,
+                           &check_int_not_0);
 
-  w_current->scrollpan_steps = default_scrollpan_steps;
 
   toplevel->auto_save_interval = default_auto_save_interval;
 
