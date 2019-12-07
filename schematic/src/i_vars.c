@@ -91,6 +91,8 @@ int default_scrollpan_steps = 8;
  * \param [in]       key     Configuration key name
  * \param [in]       defval  Default value
  * \param [in, out]  result  Result
+ *
+ * \return  TRUE if a specified config parameter was successfully read
  */
 static gboolean
 cfg_read_bool (const gchar* group,
@@ -114,6 +116,19 @@ cfg_read_bool (const gchar* group,
 
 
 
+/* \brief Read an int configuration key.
+ *
+ * \par Function Description
+ * On success, set \a result to the value of the
+ * configuration key, otherwise set it to \a defval.
+ *
+ * \param [in]       group   Configuration group name
+ * \param [in]       key     Configuration key name
+ * \param [in]       defval  Default value
+ * \param [in, out]  result  Result
+ *
+ * \return  TRUE if a specified config parameter was successfully read
+ */
 static gboolean
 cfg_read_int (const gchar* group,
               const gchar* key,
@@ -136,6 +151,61 @@ cfg_read_int (const gchar* group,
 
 
 
+static gboolean
+check_int_not_0 (gint val) { return val != 0; }
+
+static gboolean
+check_int_greater_0 (gint val) { return val > 0; }
+
+static gboolean
+check_int_greater_eq_0 (gint val) { return val >= 0; }
+
+
+
+/* \brief Read an int configuration key, check read value.
+ *
+ * \par Function Description
+ * On success, set \a result to the value of the
+ * configuration key, otherwise set it to \a defval.
+ * Also, check read value with pfn_check() function, and
+ * if it returns FALSE, reset \a result to \a defval and
+ * print \a errmsg (substituting a value in it) to STDERR.
+ *
+ * \param [in]       group      Configuration group name
+ * \param [in]       key        Configuration key name
+ * \param [in]       defval     Default value
+ * \param [in, out]  result     Result
+ * \param [in]       pfn_check  Function to check if value is valid
+ * \param [in]       errmsg     Error mesage format string with single %d
+ *
+ * \return  TRUE if a specified config parameter was successfully read
+ */
+static gboolean
+cfg_read_int_with_check (const gchar* group,
+                         const gchar* key,
+                         gint         defval,
+                         gint*        result,
+                         gboolean     (*pfn_check)(int),
+                         const gchar* errmsg)
+{
+  gint val = 0;
+  gboolean success = cfg_read_int (group, key, defval, &val);
+
+  if (pfn_check (val))
+  {
+    *result = val;
+  }
+  else
+  {
+    *result = defval;
+    fprintf (stderr, errmsg, val);
+  }
+
+  return success;
+}
+
+
+
 static void
 i_vars_set_options (GschemOptions* opts)
 {
@@ -150,32 +220,6 @@ i_vars_set_options (GschemOptions* opts)
   cfg_read_bool ("schematic.gui", "magnetic-net-mode",
                  default_magnetic_net_mode, &val);
   gschem_options_set_magnetic_net_mode (opts, val);
-}
-
-
-
-/* \brief Read the zoom gain configuration value, set it for \a w_current
- *
- * \note Comment from options.scm:
- *
- * Controls the percentage size increase when zooming into the page.
- * Un-zooming uses the inverse factor such that a zoom in / zoom out
- * pair will return the schematic to the same size.
- *  E.g:
- *    20% increment => x 1.2 original size when zooming in
- *                  => x 1 / 1.2 x original size when zooming out
- */
-static void
-i_vars_set_zoom_gain (GschemToplevel* w_current)
-{
-  cfg_read_int ("schematic.gui", "zoom-gain",
-                default_zoom_gain, &w_current->zoom_gain);
-
-  if (w_current->zoom_gain == 0)
-  {
-    fprintf (stderr, _("Invalid zoom-gain (0) is set in configuration\n"));
-    w_current->zoom_gain = default_zoom_gain;
-  }
 }
 
 
@@ -287,7 +331,10 @@ i_vars_set (GschemToplevel* w_current)
   w_current->select_slack_pixels = default_select_slack_pixels;
 
 
-  i_vars_set_zoom_gain (w_current);
+  cfg_read_int_with_check ("schematic.gui", "zoom-gain",
+                           default_zoom_gain, &w_current->zoom_gain,
+                           &check_int_not_0,
+                           _("Invalid zoom-gain (%d) is set in configuration\n"));
 
 
   w_current->scrollpan_steps = default_scrollpan_steps;
