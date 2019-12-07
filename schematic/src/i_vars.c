@@ -330,7 +330,12 @@ i_vars_set (GschemToplevel* w_current)
                            &check_int_greater_0);
 
 
-  w_current->keyboardpan_gain = default_keyboardpan_gain;
+
+  cfg_read_int_with_check ("schematic.gui", "keyboardpan-gain",
+                           default_keyboardpan_gain, &w_current->keyboardpan_gain,
+                           &check_int_greater_0);
+
+
 
   w_current->select_slack_pixels = default_select_slack_pixels;
 

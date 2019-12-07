@@ -279,3 +279,6 @@ option's value:
 (define-rc-deprecated-config
  mousepan-gain "schematic.gui" "mousepan-gain"
  rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ keyboardpan-gain "schematic.gui" "keyboardpan-gain"
+ rc-deprecated-int-transformer)
