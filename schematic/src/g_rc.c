@@ -513,30 +513,6 @@ SCM g_rc_grid_mode (SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_dots_grid_dot_size (SCM dotsize)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (dotsize), dotsize, SCM_ARG1, "dots-grid-dot-size");
-
-  val = scm_to_int (dotsize);
-
-  if (val <= 0) {
-    fprintf(stderr, _("Invalid dot size [%1$d] passed to dots-grid-dot-size\n"),
-            val);
-    val = 1; /* absolute default */
-  }
-
-  default_dots_grid_dot_size = val;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_dots_grid_mode (SCM mode)
 {
   static const vstbl_entry mode_table[] = {

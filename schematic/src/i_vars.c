@@ -333,8 +333,11 @@ i_vars_set (GschemToplevel* w_current)
   cfg_read_bool ("schematic.gui", "force-boundingbox",
                  default_force_boundingbox, &toplevel->force_boundingbox);
 
+  cfg_read_int_with_check ("schematic.gui", "dots-grid-dot-size",
+                           default_dots_grid_dot_size, &w_current->dots_grid_dot_size,
+                           &check_int_greater_0);
 
-  w_current->dots_grid_dot_size          = default_dots_grid_dot_size;
+
   w_current->dots_grid_mode              = default_dots_grid_mode;
   w_current->dots_grid_fixed_threshold   = default_dots_grid_fixed_threshold;
   w_current->mesh_grid_display_threshold = default_mesh_grid_display_threshold;

@@ -196,17 +196,6 @@
 ;(grid-mode "dots")
 (grid-mode "mesh")
 
-; Dots grid dot size
-;
-; The dots-grid-dot-size keyword controls the size of the grid dots in the
-; dots grid display. The units are in pixels. The default (min) value of 1
-; is the best performing as the grid dot size is rendered as a single pixel.
-; Values of 2 and 3 are good values to try if the default grid dot size is
-; too small for your tastes. Anything larger than 3 is probably too large.
-;
-(dots-grid-dot-size 1)
-;(dots-grid-dot-size 2)
-;(dots-grid-dot-size 3)
 
 ; Dots grid mode
 ;
