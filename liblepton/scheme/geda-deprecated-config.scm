@@ -285,3 +285,6 @@ option's value:
 (define-rc-deprecated-config
  select-slack-pixels "schematic.gui" "select-slack-pixels"
  rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ text-size "schematic.gui" "text-size"
+ rc-deprecated-int-transformer)

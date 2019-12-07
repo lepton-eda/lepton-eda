@@ -176,30 +176,6 @@ SCM g_rc_logging(SCM mode)
  *  \brief
  *  \par Function Description
  *
- */
-SCM g_rc_text_size(SCM size)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (size), size, SCM_ARG1, "text-size");
-
-  val = scm_to_int (size);
-  if (val < MINIMUM_TEXT_SIZE) {
-    fprintf(stderr,
-            _("Invalid size [%1$d] passed to text-size\n"),
-            val);
-    val = DEFAULT_TEXT_SIZE; /* absolute default */
-  }
-
-  default_text_size = val;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  *  \todo inconsistant naming with keyword name and variable to hold
  *        variable
  */
