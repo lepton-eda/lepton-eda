@@ -294,3 +294,6 @@ option's value:
 (define-rc-deprecated-config
  scrollpan-steps "schematic.gui" "scrollpan-steps"
  rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ dots-grid-dot-size "schematic.gui" "dots-grid-dot-size"
+ rc-deprecated-int-transformer)
