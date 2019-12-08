@@ -207,14 +207,6 @@
 (dots-grid-mode "variable")
 ;(dots-grid-mode "fixed")
 
-; Dots grid fixed threshold
-;
-; The dots-grid-fixed-threshold specifies the minimum number of pixels
-; grid-spacing for the grid to be displayed. Using this parameter you can
-; control thedensity of the displayed grid (smaller numbers will cause the
-; grid to be drawn denser). This mode is only used when grid-mode is fixed.
-;
-(dots-grid-fixed-threshold 10)
 
 ; Mesh grid display threshold
 ;

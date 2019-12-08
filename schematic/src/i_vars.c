@@ -339,7 +339,13 @@ i_vars_set (GschemToplevel* w_current)
 
 
   w_current->dots_grid_mode              = default_dots_grid_mode;
-  w_current->dots_grid_fixed_threshold   = default_dots_grid_fixed_threshold;
+
+
+  cfg_read_int_with_check ("schematic.gui", "dots-grid-fixed-threshold",
+                           default_dots_grid_fixed_threshold, &w_current->dots_grid_fixed_threshold,
+                           &check_int_greater_0);
+
+
   w_current->mesh_grid_display_threshold = default_mesh_grid_display_threshold;
 
 
