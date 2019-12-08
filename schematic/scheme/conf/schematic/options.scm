@@ -208,14 +208,6 @@
 ;(dots-grid-mode "fixed")
 
 
-; Mesh grid display threshold
-;
-; The mesh-grid-display-threshold specifies the minimum line pitch for a the
-; grid to be displayed. Using this parameter you can control maximum density
-; of the displayed before the minor, then major grid-lines are switched off.
-;
-(mesh-grid-display-threshold 3)
-
 
 ; reset-component-library
 ;

@@ -18,8 +18,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
-#include <stdio.h>
-
 #include "gschem.h"
 
 /* Absolute default used when default_... strings are NULL */
@@ -157,8 +155,8 @@ check_int_not_0 (gint val) { return val != 0; }
 static gboolean
 check_int_greater_0 (gint val) { return val > 0; }
 
-static gboolean
-check_int_greater_eq_0 (gint val) { return val >= 0; }
+/* static gboolean
+check_int_greater_eq_0 (gint val) { return val >= 0; } */
 
 static gboolean
 check_int_text_size (gint val) { return val >= MINIMUM_TEXT_SIZE; }
@@ -211,8 +209,7 @@ cfg_read_int_with_check (const gchar* group,
 static void
 i_vars_set_options (GschemOptions* opts)
 {
-//  gschem_options_set_snap_size (opts, default_snap_size);
-  gint snap_size;
+  gint snap_size = 0;
   cfg_read_int_with_check ("schematic.gui", "snap-size",
                            default_snap_size, &snap_size,
                            &check_int_greater_0);
@@ -297,7 +294,6 @@ i_vars_set (GschemToplevel* w_current)
   cfg_read_bool ("schematic.gui", "enforce-hierarchy",
                  default_enforce_hierarchy, &w_current->enforce_hierarchy);
 
-
   cfg_read_bool ("schematic.gui", "fast-mousepan",
                  default_fast_mousepan, &w_current->fast_mousepan);
 
@@ -317,10 +313,8 @@ i_vars_set (GschemToplevel* w_current)
   cfg_read_bool ("schematic.gui", "warp-cursor",
                  default_warp_cursor, &w_current->warp_cursor);
 
-
   cfg_read_bool ("schematic.gui", "toolbars",
                  default_toolbars, &w_current->toolbars);
-
 
   cfg_read_bool ("schematic.gui", "handleboxes",
                  default_handleboxes, &w_current->handleboxes);
@@ -345,9 +339,9 @@ i_vars_set (GschemToplevel* w_current)
                            default_dots_grid_fixed_threshold, &w_current->dots_grid_fixed_threshold,
                            &check_int_greater_0);
 
-
-  w_current->mesh_grid_display_threshold = default_mesh_grid_display_threshold;
-
+  cfg_read_int_with_check ("schematic.gui", "mesh-grid-display-threshold",
+                           default_mesh_grid_display_threshold, &w_current->mesh_grid_display_threshold,
+                           &check_int_greater_0);
 
   cfg_read_int_with_check ("schematic.gui", "mousepan-gain",
                            default_mousepan_gain, &w_current->mousepan_gain,

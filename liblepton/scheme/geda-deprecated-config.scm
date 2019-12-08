@@ -300,3 +300,6 @@ option's value:
 (define-rc-deprecated-config
  dots-grid-fixed-threshold "schematic.gui" "dots-grid-fixed-threshold"
  rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ mesh-grid-display-threshold "schematic.gui" "mesh-grid-display-threshold"
+ rc-deprecated-int-transformer)
