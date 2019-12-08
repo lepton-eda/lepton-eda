@@ -62,7 +62,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "bus-ripper-rotation",          1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_rotation },
   { "grid-mode",                    1, 0, 0, (SCM (*) ()) g_rc_grid_mode },
   { "dots-grid-mode",               1, 0, 0, (SCM (*) ()) g_rc_dots_grid_mode },
-  { "dots-grid-fixed-threshold",    1, 0, 0, (SCM (*) ()) g_rc_dots_grid_fixed_threshold },
   { "mesh-grid-display-threshold",  1, 0, 0, (SCM (*) ()) g_rc_mesh_grid_display_threshold },
 
   /* backup functions */

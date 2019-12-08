@@ -530,31 +530,6 @@ SCM g_rc_dots_grid_mode (SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_dots_grid_fixed_threshold (SCM spacing)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (spacing), spacing, SCM_ARG1, "dots-grid-fixed-threshold");
-
-  val = scm_to_int (spacing);
-
-  if (val <= 0) {
-    fprintf(stderr, _("Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"),
-            val);
-    val = 10; /* absolute default */
-  }
-
-  default_dots_grid_fixed_threshold = val;
-
-  return SCM_BOOL_T;
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_mesh_grid_display_threshold (SCM spacing)
 {
   int val;
