@@ -6,7 +6,7 @@
 wordswap=yes
 rotate_labels=no
 sort_labels=no
-generate_pinseq=yes
+generate_pinseq=no
 sym_width=1400
 pinwidthvertical=400
 pinwidthhorizontal=400
@@ -33,7 +33,7 @@ numslots=0
 
 [pins]
 #-----------------------------------------------------
-#pinnr	seq	type	style	posit.	net	label	
+#pinnr	seq	type	style	posit.	net	label
 #-----------------------------------------------------
 5		in	line	l		A0
 6		in	line	l		A1

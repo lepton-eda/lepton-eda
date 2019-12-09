@@ -6,7 +6,7 @@
 wordswap=yes
 rotate_labels=yes
 sort_labels=yes
-generate_pinseq=yes
+generate_pinseq=no
 sym_width=2200
 pinwidthvertical=400
 pinwidthhorizontal=400
@@ -31,7 +31,7 @@ numslots=0
 
 [pins]
 #-----------------------------------------------------
-#pinnr	seq	type	style	posit.	net	label	
+#pinnr	seq	type	style	posit.	net	label
 #-----------------------------------------------------
 1		io	line	l		hello
 2		out	clk	l		\_neg\_
