@@ -34,7 +34,7 @@ comment=blablub
 
 [pins]
 #-----------------------------------------------------
-#pinnr	seq	type	style	posit.	net	label	
+#pinnr	seq	type	style	posit.	net	label
 #-----------------------------------------------------
 1	21	i	line	l		hello
 2	20	o	clk	l		\_neg\_

@@ -31,7 +31,7 @@ numslots=0
 
 [pins]
 #-----------------------------------------------------
-#pinnr	seq	type	style	posit.	net	label	
+#pinnr	seq	type	style	posit.	net	label
 #-----------------------------------------------------
 1		io	line	l		PB5 (MOSI)
 2		io	line	l		PB6 (MISO)
