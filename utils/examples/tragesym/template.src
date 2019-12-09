@@ -51,8 +51,8 @@ numslots=0
 # posit. can be (l,r,t,b) or empty for nets.
 # net specifies the name of the net. Vcc or GND for example.
 # label represents the pinlabel.
-#	negation lines can be added with "\_" example: \_enable\_ 
+#	negation lines can be added with "\_" example: \_enable\_
 #	if you want to write a "\" use "\\" as escape sequence
 #-----------------------------------------------------
-#pinnr	seq	type	style	posit.	net	label	
+#pinnr	seq	type	style	posit.	net	label
 #-----------------------------------------------------
