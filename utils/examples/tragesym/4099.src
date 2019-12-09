@@ -33,7 +33,7 @@ numslots=0
 
 [pins]
 #-----------------------------------------------------
-#pinnr	seq	type	style	posit.	net	label	
+#pinnr	seq	type	style	posit.	net	label
 #-----------------------------------------------------
 5		in	line	l		A0
 6		in	line	l		A1

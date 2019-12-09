@@ -31,7 +31,7 @@ comment	comment3
 
 [pins]
 #-----------------------------------------------------
-#pinnr	seq	type	style	posit.	net	label	
+#pinnr	seq	type	style	posit.	net	label
 #-----------------------------------------------------
 1		io	line	l		hello
 2		out	clk	l		\_neg\_
