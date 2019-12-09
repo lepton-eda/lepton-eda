@@ -847,11 +847,10 @@ Based on original \"tragesym\" version
     (and (not (string= (pin-style pin) "none"))
          (not (string= (pin-style pin) "spacer"))))
 
-  (let loop ((filtered-pins (filter pin-with-pinseq? pins))
-             (pinseq 1))
+  (let loop ((filtered-pins (filter pin-with-pinseq? pins)))
     (and (not (null? filtered-pins))
-         (set-pin-seq! (car filtered-pins) pinseq)
-         (loop (cdr filtered-pins) (1+ pinseq))))
+         (set-pin-seq! (car filtered-pins) (pin-seq (car filtered-pins)))
+         (loop (cdr filtered-pins))))
   ;; Return value.
   pins)
 
