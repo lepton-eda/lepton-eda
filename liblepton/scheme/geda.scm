@@ -1,6 +1,7 @@
 ; -*-Scheme-*-
 (use-modules (lepton library))
 
-;; Clean up logfiles
-;; FIXME this should be a plugin
+; Clean up logfiles:
+;
 (use-modules (geda log-rotate))
+(cleanup-old-logs!)

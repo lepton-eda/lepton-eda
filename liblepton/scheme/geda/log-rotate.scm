@@ -1,6 +1,6 @@
-;; gEDA - GPL Electronic Design Automation
-;; libgeda - gEDA's library - Log rotation plugin
+;; Lepton EDA library - Scheme API
 ;; Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2017-2019 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -17,13 +17,14 @@
 ;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 ;;
 
-(define-module (geda log-rotate))
+(define-module (geda log-rotate)
+  #:use-module (geda os)
+  #:use-module (srfi srfi-1)
+  #:use-module (ice-9 ftw)
+  #:use-module (ice-9 regex)
+  #:use-module (ice-9 hash-table)
+  #:export (cleanup-old-logs!))
 
-(use-modules (geda os)
-             (srfi srfi-1)
-             (ice-9 ftw)
-             (ice-9 regex)
-             (ice-9 hash-table))
 
 ;; Log horizon in seconds.
 (define LOG-THRESHOLD (* 24 60 60))
@@ -147,10 +148,8 @@
   (cadr
    (fold-right collect-deletable '(0 ()) log-files)))
 
-;;;; cleanup-old-logs!
-;;
 ;; Delete old logs
-(define (cleanup-old-logs!)
+(define (cleanup-old-logs-impl!)
 
   (define (cleanup-old-tool-logs! tool-logs)
     (for-each delete-file (files-to-delete tool-logs)))
@@ -158,7 +157,20 @@
   (for-each (compose cleanup-old-tool-logs! cadr)
             (log-files-by-tool)))
 
-;; Occasionally clean up old logs when this module is loaded.
-(let ((theta (random:uniform (random-state-from-platform))))
-  (if (< theta LOG-ROTATE-PROBABILITY)
-      (cleanup-old-logs!)))
+
+; public:
+; Clean up old log files
+;
+( define ( cleanup-old-logs! )
+( let*
+  (
+  ( state ( random-state-from-platform ) )
+  ( theta ( random:uniform state ) )
+  )
+
+  ( if ( < theta LOG-ROTATE-PROBABILITY )
+    ( cleanup-old-logs-impl! )
+  )
+
+) ; let
+) ; cleanup-old-logs!()
