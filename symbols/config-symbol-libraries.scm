@@ -5,9 +5,6 @@
 
 (define geda-sym-path (build-path geda-data-path "sym"))
 
-; NOTE: Some of the below component libraries below are commented out.
-;       This was done because there are conflicting filenames within these
-;       libraries.  
 (for-each
  (lambda (dir)
    (if (list? dir)

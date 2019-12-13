@@ -44,15 +44,22 @@ symbol_dirs = \
 	tube \
 	xilinx
 
-SUBDIRS = documentation gnetman verilog vhdl
+SUBDIRS = \
+	documentation \
+	gnetman \
+	verilog \
+	vhdl
 
 gafrcddir = $(GEDADATADIR)/gafrc.d
-dist_gafrcd_DATA = geda-clib.scm
+dist_gafrcd_DATA = config-symbol-libraries.scm
 
 datasymdir = $(GEDADATADIR)/sym
 
-EXTRA_DIST = ChangeLog ChangeLog-1.0 \
-	radio/README AUTHORS
+EXTRA_DIST = \
+	ChangeLog \
+	ChangeLog-1.0 \
+	radio/README \
+	AUTHORS
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git
