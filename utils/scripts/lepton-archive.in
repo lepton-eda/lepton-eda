@@ -621,7 +621,7 @@ symbol cache directory."
   (filter-map
    (lambda (sch) (let ((cwd-filename (string-append (getcwd)
                                                file-name-separator-string
-                                               sch)))
+                                               (basename sch))))
               (and (file-exists? cwd-filename) cwd-filename)))
    toplevel-schematics))
 
