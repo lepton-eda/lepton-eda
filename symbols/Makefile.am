@@ -50,7 +50,7 @@ SUBDIRS = \
 	verilog \
 	vhdl
 
-gafrcddir = $(GEDADATADIR)/gafrc.d
+gafrcddir = $(GEDADATADIR)/scheme/autoload
 dist_gafrcd_DATA = config-symbol-libraries.scm
 
 datasymdir = $(GEDADATADIR)/sym

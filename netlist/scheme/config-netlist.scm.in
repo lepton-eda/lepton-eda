@@ -1,5 +1,5 @@
 ;
-; lepton-netlist gafrc.d/ configuration file
+; lepton-netlist configuration file
 ;
 
 ; Add netlist backends directory to %load-path:

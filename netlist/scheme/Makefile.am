@@ -32,7 +32,7 @@ nobase_scmdata_DATA = $(DIST_SCM) $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMO
 config-netlist.scm: config-netlist.scm.in
 	sed -e 's,[@]backenddir[@],$(scmdatadir)/backend,g' < $(srcdir)/$@.in > $@
 
-gafrcddir = @GEDADATADIR@/gafrc.d
+gafrcddir = @GEDADATADIR@/scheme/autoload
 gafrcd_DATA = config-netlist.scm
 
 

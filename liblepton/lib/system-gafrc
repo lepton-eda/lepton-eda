@@ -114,7 +114,7 @@
 ;;;; Process configuration script directory
 
 ;; The directory containing any extra scheme files to load
-(define geda-confd-path (build-path geda-data-path "gafrc.d"))
+(define autoload-path (build-path geda-data-path "scheme" "autoload"))
 
-;; Execute any scheme files found in the geda-confd-path directory.
-(load-scheme-dir geda-confd-path)
+;; Execute any scheme files found in the autoload-path directory.
+(load-scheme-dir autoload-path)
