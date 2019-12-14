@@ -101,17 +101,6 @@
 (log-window "later")
 
 
-; scroll-wheel string
-;
-; Controls the binding of the mouse scroll wheel.
-; "classic" style is the gschem default, where scrolling with no modifier
-; key is mapped to zoom, + CTRL -> x-axis pan, + SHIFT -> y-axis pan.
-; "gtk" style changes the behaviour to be more like other GTK applications,
-; no modifier -> y-axis pan, + CTRL -> zoom, + SHIFT -> x-axis pan.
-(scroll-wheel "classic")
-;(scroll-wheel "gtk")
-
-
 ; Bus ripper controls
 ; The following keywords control the auto bus ripper addition code
 ;

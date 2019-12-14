@@ -159,7 +159,6 @@ SCM g_rc_net_selection_mode(SCM mode);
 SCM g_rc_logging(SCM mode);
 SCM g_rc_attribute_name(SCM path);
 SCM g_rc_log_window(SCM mode);
-SCM g_rc_scroll_wheel(SCM mode);
 SCM g_rc_net_consolidate(SCM mode);
 SCM g_rc_undo_levels(SCM levels);
 SCM g_rc_undo_control(SCM mode);

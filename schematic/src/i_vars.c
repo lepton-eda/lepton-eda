@@ -411,7 +411,22 @@ i_vars_set (GschemToplevel* w_current)
                        &w_current->middle_button);
 
 
-  w_current->scroll_wheel       = default_scroll_wheel;
+  /* scroll-wheel:
+  */
+  const struct OptionStringInt vals_sw[] =
+  {
+    { "classic", SCROLL_WHEEL_CLASSIC },
+    { "gtk",     SCROLL_WHEEL_GTK     }
+  };
+
+  cfg_read_string2int ("schematic.gui",
+                       "scroll-wheel",
+                       default_scroll_wheel,
+                       vals_sw,
+                       sizeof( vals_sw ) / sizeof( vals_sw[0] ),
+                       &w_current->scroll_wheel);
+
+
   toplevel->net_consolidate    = default_net_consolidate;
 
 

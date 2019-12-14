@@ -204,23 +204,6 @@ SCM g_rc_log_window(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_scroll_wheel(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {SCROLL_WHEEL_CLASSIC, "classic"},
-    {SCROLL_WHEEL_GTK,     "gtk"},
-  };
-
-  RETURN_G_RC_MODE("scroll-wheel",
-                   default_scroll_wheel,
-                   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_net_consolidate(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

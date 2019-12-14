@@ -315,3 +315,6 @@ option's value:
 (define-rc-deprecated-config
  third-button "schematic.gui" "third-button"
  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ scroll-wheel "schematic.gui" "scroll-wheel"
+ rc-deprecated-string-transformer)
