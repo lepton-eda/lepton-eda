@@ -79,19 +79,6 @@
 ;(net-consolidate "disabled")
 
 
-; action-feedback-mode string
-;
-; Set the default action feedback mode (for copy/move/component place).
-; Set to outline to get an outline of the selection.
-; Set to boundingbox to get a bounding box of the selection.
-; For a fast machines with fast video use outline (it looks good).
-; For a slow machine use boundingbox; it is much faster.
-; Comment out if you want the default mode.
-;
-(action-feedback-mode "outline")
-;(action-feedback-mode "boundingbox")
-
-
 ; logging string
 ;
 ; Determines if the logging mechanism is enabled or disabled

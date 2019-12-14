@@ -303,3 +303,6 @@ option's value:
 (define-rc-deprecated-config
  mesh-grid-display-threshold "schematic.gui" "mesh-grid-display-threshold"
  rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ action-feedback-mode "schematic.gui" "action-feedback-mode"
+ rc-deprecated-string-transformer)

@@ -205,6 +205,74 @@ cfg_read_int_with_check (const gchar* group,
 }
 
 
+/* \struct OptionStringInt
+ * \brief  A mapping of a string option's value to an int value.
+ */
+struct OptionStringInt
+{
+  const gchar* str_; /* a string value of an option */
+  gint         int_; /* an int value of an option */
+};
+
+
+
+/* \brief Read a string configuration key, set a corresponding int option.
+ *
+ * \par Function Description
+ * Read and compare a configuration value to the options passed
+ * as an array of OptionStringInt structures - the mapping of
+ * the string option values to the corresponding int values.
+ * On success, set the \a result to the int value of
+ * the option (if found), otherwise set it to \a defval.
+ *
+ * \param [in]       group      Configuration group name
+ * \param [in]       key        Configuration key name
+ * \param [in]       defval     Default value
+ * \param [in]       vals       An array of OptionStringInt structures
+ * \param [in]       nvals      A size of \a vals array
+ * \param [in, out]  result     Result
+ *
+ * \return  TRUE if a specified config parameter was successfully read
+ */
+static gboolean
+cfg_read_string2int (const gchar* group,
+                     const gchar* key,
+                     gint         defval,
+                     const struct OptionStringInt* vals,
+                     size_t       nvals,
+                     gint*        result)
+{
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError* err = NULL;
+  gchar*  str = eda_config_get_string (cfg, group, key, &err);
+
+  gboolean success = err == NULL;
+  g_clear_error (&err);
+
+  *result = defval;
+
+  if (success)
+  {
+    for (size_t i = 0; i < nvals; ++i)
+    {
+      if ( strcmp (vals[i].str_, str) == 0 )
+      {
+        *result = vals[i].int_;
+        break;
+      }
+    }
+
+    g_free (str);
+  }
+
+  return success;
+
+} /* cfg_read_string2int() */
+
+
 
 static void
 i_vars_set_options (GschemOptions* opts)
@@ -263,7 +331,20 @@ i_vars_set (GschemToplevel* w_current)
                  default_zoom_with_pan, &w_current->zoom_with_pan);
 
 
-  w_current->actionfeedback_mode     = default_actionfeedback_mode;
+  /* action-feedback-mode:
+  */
+  const struct OptionStringInt vals_afm[] =
+  {
+    { "outline",     OUTLINE     },
+    { "boundingbox", BOUNDINGBOX }
+  };
+
+  cfg_read_string2int ("schematic.gui",
+                       "action-feedback-mode",
+                       default_actionfeedback_mode,
+                       vals_afm,
+                       sizeof( vals_afm ) / sizeof( vals_afm[0] ),
+                       &w_current->actionfeedback_mode);
 
 
   cfg_read_bool ("schematic.gui", "scrollbars",

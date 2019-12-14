@@ -143,23 +143,6 @@ SCM g_rc_net_selection_mode(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_action_feedback_mode(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {OUTLINE    , "outline"   },
-    {BOUNDINGBOX, "boundingbox"}
-  };
-
-  RETURN_G_RC_MODE("action-feedback-mode",
-		   default_actionfeedback_mode,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_logging(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
