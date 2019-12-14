@@ -160,7 +160,6 @@ SCM g_rc_attribute_name(SCM path);
 SCM g_rc_log_window(SCM mode);
 SCM g_rc_net_consolidate(SCM mode);
 SCM g_rc_undo_levels(SCM levels);
-SCM g_rc_undo_control(SCM mode);
 SCM g_rc_undo_type(SCM mode);
 SCM g_rc_undo_panzoom(SCM mode);
 SCM g_rc_add_menu(SCM menu_name, SCM menu_items);

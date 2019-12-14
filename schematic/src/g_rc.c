@@ -227,21 +227,6 @@ SCM g_rc_undo_levels(SCM levels)
  *  \par Function Description
  *
  */
-SCM g_rc_undo_control(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("undo-control", default_undo_control, 2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_undo_type(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

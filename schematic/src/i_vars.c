@@ -477,7 +477,12 @@ i_vars_set (GschemToplevel* w_current)
 
 
   w_current->undo_levels = default_undo_levels;
-  w_current->undo_control = default_undo_control;
+
+
+  cfg_read_bool ("schematic.undo", "undo-control",
+                 default_undo_control, &w_current->undo_control);
+
+
   w_current->undo_type = default_undo_type;
   w_current->undo_panzoom = default_undo_panzoom;
 

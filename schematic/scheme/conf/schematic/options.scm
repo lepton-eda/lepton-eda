@@ -2,13 +2,6 @@
 ; Start of mode related keywords
 ;
 
-; undo-control string
-;
-; Controls if the undo is enabled or not
-;
-(undo-control "enabled")
-;(undo-control "disabled")
-
 ; undo-levels number
 ;
 ; Determines the number of levels of undo.  Basically this number decides

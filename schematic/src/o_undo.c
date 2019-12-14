@@ -395,7 +395,7 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
   g_return_if_fail (page != NULL);
 
   if (w_current->undo_control == FALSE) {
-    s_log_message(_("Undo/Redo disabled in rc file"));
+    s_log_message(_("Undo/Redo is disabled in configuration"));
     return;
   }
 

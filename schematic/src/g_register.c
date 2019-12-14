@@ -45,7 +45,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "log-window",                   1, 0, 0, (SCM (*) ()) g_rc_log_window },
   { "net-consolidate",              1, 0, 0, (SCM (*) ()) g_rc_net_consolidate },
   { "undo-levels",                  1, 0, 0, (SCM (*) ()) g_rc_undo_levels },
-  { "undo-control",                 1, 0, 0, (SCM (*) ()) g_rc_undo_control },
   { "undo-type",                    1, 0, 0, (SCM (*) ()) g_rc_undo_type },
   { "undo-panzoom",                 1, 0, 0, (SCM (*) ()) g_rc_undo_panzoom },
 
