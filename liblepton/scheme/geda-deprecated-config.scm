@@ -324,3 +324,6 @@ option's value:
 (define-rc-deprecated-config
  dots-grid-mode "schematic.gui" "dots-grid-mode"
  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ net-selection-mode "schematic.gui" "net-selection-mode"
+ rc-deprecated-string-transformer)

@@ -356,7 +356,22 @@ i_vars_set (GschemToplevel* w_current)
                  default_net_direction_mode, &w_current->net_direction_mode);
 
 
-  w_current->net_selection_mode = default_net_selection_mode;
+  /* net-selection-mode:
+   * TODO: define and use constants for the net-selection-mode values
+  */
+  const struct OptionStringInt vals_nsm[] =
+  {
+    { "disabled",    0 },
+    { "enabled_net", 2 },
+    { "enabled_all", 3 }
+  };
+
+  cfg_read_string2int ("schematic.gui",
+                       "net-selection-mode",
+                       default_net_selection_mode,
+                       vals_nsm,
+                       sizeof( vals_nsm ) / sizeof( vals_nsm[0] ),
+                       &w_current->net_selection_mode);
 
 
   cfg_read_bool ("schematic.gui", "zoom-with-pan",

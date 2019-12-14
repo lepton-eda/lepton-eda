@@ -49,24 +49,6 @@
 (auto-save-interval 120)
 
 
-; net-selection-mode string
-;
-; Controls how many net segments are selected when you click at a net.
-;
-; - enabled_all:
-;   - first click selects the net itself
-;   - second click selects all nets directly connected to the selected one
-;   - third click in addition selects all nets with equal "netname" attributes
-; - enabled_net:
-;   - first click selects the net itself
-;   - second click selects all nets directly connected to the selected one
-; - disabled:
-;   - mouse clicks just selects the clicked net
-
-;(net-selection-mode "disabled")
-(net-selection-mode "enabled_net")
-;(net-selection-mode "enabled_all")
-
 ;  net-consolidate string
 ;
 ;  Controls if the net consolidation code is used when schematics are read
