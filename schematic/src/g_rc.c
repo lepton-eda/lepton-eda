@@ -371,23 +371,6 @@ SCM g_rc_bus_ripper_rotation(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_dots_grid_mode (SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {DOTS_GRID_VARIABLE_MODE, "variable" },
-    {DOTS_GRID_FIXED_MODE,    "fixed"  }
-  };
-
-  RETURN_G_RC_MODE ("dots-grid-mode",
-                    default_dots_grid_mode,
-                    2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_auto_save_interval(SCM seconds)
 {
   int val;

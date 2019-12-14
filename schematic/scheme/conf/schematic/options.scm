@@ -131,18 +131,6 @@
 ;(bus-ripper-type "net")
 
 
-; Dots grid mode
-;
-; The dots-grid-mode keyword controls the mode of the dotted grid, either
-; variable or fixed. In the variable mode, the grid spacing changes
-; depending on the zoom factor. In the fixed mode, the grid always
-; represents the same number of units as the snap-spacing. You can
-; control the density of the grid using the dots-grid-fixed-threshold.
-(dots-grid-mode "variable")
-;(dots-grid-mode "fixed")
-
-
-
 ; reset-component-library
 ;
 ; When reset-component-library is executed, then all known component library

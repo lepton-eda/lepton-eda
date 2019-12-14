@@ -492,7 +492,20 @@ i_vars_set (GschemToplevel* w_current)
                            &check_int_greater_0);
 
 
-  w_current->dots_grid_mode              = default_dots_grid_mode;
+  /* dots-grid-mode:
+  */
+  const struct OptionStringInt vals_dgm[] =
+  {
+    { "variable", DOTS_GRID_VARIABLE_MODE },
+    { "fixed",    DOTS_GRID_FIXED_MODE    }
+  };
+
+  cfg_read_string2int ("schematic.gui",
+                       "dots-grid-mode",
+                       default_dots_grid_mode,
+                       vals_dgm,
+                       sizeof( vals_dgm ) / sizeof( vals_dgm[0] ),
+                       &w_current->dots_grid_mode);
 
 
   cfg_read_int_with_check ("schematic.gui", "dots-grid-fixed-threshold",

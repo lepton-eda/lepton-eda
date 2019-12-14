@@ -168,7 +168,6 @@ SCM g_rc_add_menu(SCM menu_name, SCM menu_items);
 SCM g_rc_bus_ripper_size(SCM size);
 SCM g_rc_bus_ripper_type(SCM mode);
 SCM g_rc_bus_ripper_rotation(SCM mode);
-SCM g_rc_dots_grid_mode(SCM mode);
 SCM g_rc_auto_save_interval(SCM seconds);
 SCM g_rc_display_color_map (SCM scm_map);
 SCM g_rc_display_outline_color_map (SCM scm_map);
