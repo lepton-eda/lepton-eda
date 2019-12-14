@@ -9,16 +9,6 @@
 ;
 (undo-levels 20)
 
-; undo-type string
-;
-; Controls which kind of undo is used.  The default is to use the disk as
-; the storing medium (ie after every action the undo information is stored
-; to disk).  The other mechanism uses only memory.  The disk mechanism is
-; nice because you get undo-level number of backups of the schematic written
-; to disk as backups so you should never lose a schematic due to a crash.
-;
-(undo-type "disk")
-;(undo-type "memory")
 
 ; undo-panzoom string
 ;

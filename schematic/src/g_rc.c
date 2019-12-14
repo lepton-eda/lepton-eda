@@ -227,23 +227,6 @@ SCM g_rc_undo_levels(SCM levels)
  *  \par Function Description
  *
  */
-SCM g_rc_undo_type(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {UNDO_DISK  , "disk"   },
-    {UNDO_MEMORY, "memory" },
-  };
-
-  RETURN_G_RC_MODE("undo-type",
-		   default_undo_type,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_undo_panzoom(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

@@ -330,3 +330,6 @@ option's value:
 (define-rc-deprecated-config
  undo-control "schematic.undo" "undo-control"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ undo-type "schematic.undo" "undo-type"
+ rc-deprecated-string-transformer)

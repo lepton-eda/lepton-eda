@@ -483,7 +483,22 @@ i_vars_set (GschemToplevel* w_current)
                  default_undo_control, &w_current->undo_control);
 
 
-  w_current->undo_type = default_undo_type;
+  /* undo-type:
+  */
+  const struct OptionStringInt vals_ut[] =
+  {
+    { "disk",   UNDO_DISK   },
+    { "memory", UNDO_MEMORY }
+  };
+
+  cfg_read_string2int ("schematic.undo",
+                       "undo-type",
+                       default_undo_type,
+                       vals_ut,
+                       sizeof( vals_ut ) / sizeof( vals_ut[0] ),
+                       &w_current->undo_type);
+
+
   w_current->undo_panzoom = default_undo_panzoom;
 
 
