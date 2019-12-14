@@ -203,30 +203,6 @@ SCM g_rc_net_consolidate(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_undo_levels(SCM levels)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (levels), levels, SCM_ARG1, "undo-levels");
-
-  val = scm_to_int (levels);
-
-  if (val == 0) {
-    fprintf(stderr, _("Invalid num levels [%1$d] passed to undo-levels\n"),
-            val);
-    val = 10; /* absolute default */
-  }
-
-  default_undo_levels = val;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_undo_panzoom(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

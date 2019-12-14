@@ -2,13 +2,6 @@
 ; Start of mode related keywords
 ;
 
-; undo-levels number
-;
-; Determines the number of levels of undo.  Basically this number decides
-; how many backup schematics are saved on disk.
-;
-(undo-levels 20)
-
 
 ; undo-panzoom string
 ;
