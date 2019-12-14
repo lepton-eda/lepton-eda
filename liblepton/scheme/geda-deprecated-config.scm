@@ -342,3 +342,6 @@ option's value:
 (define-rc-deprecated-config
  bus-ripper-size "schematic" "bus-ripper-size"
  rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ bus-ripper-type "schematic" "bus-ripper-type"
+ rc-deprecated-string-transformer)

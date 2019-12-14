@@ -519,7 +519,22 @@ i_vars_set (GschemToplevel* w_current)
                            &check_int_greater_0);
 
 
-  w_current->bus_ripper_type  = default_bus_ripper_type;
+  /* bus-ripper-type:
+  */
+  const struct OptionStringInt vals_brt[] =
+  {
+    { "component", COMP_BUS_RIPPER },
+    { "net",       NET_BUS_RIPPER  }
+  };
+
+  cfg_read_string2int ("schematic",
+                       "bus-ripper-type",
+                       default_bus_ripper_type,
+                       vals_brt,
+                       sizeof( vals_brt ) / sizeof( vals_brt[0] ),
+                       &w_current->bus_ripper_type);
+
+
   w_current->bus_ripper_rotation  = default_bus_ripper_rotation;
 
 

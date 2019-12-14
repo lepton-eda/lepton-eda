@@ -224,23 +224,6 @@ SCM g_rc_add_menu(SCM scm_menu_name, SCM scm_menu_items)
  *  \par Function Description
  *
  */
-SCM g_rc_bus_ripper_type(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {COMP_BUS_RIPPER, "component" },
-    {NET_BUS_RIPPER,  "net" }
-  };
-
-  RETURN_G_RC_MODE("bus-ripper-type",
-		   default_bus_ripper_type,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_bus_ripper_rotation(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

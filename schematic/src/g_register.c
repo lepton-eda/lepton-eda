@@ -46,7 +46,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "net-consolidate",              1, 0, 0, (SCM (*) ()) g_rc_net_consolidate },
 
   { "add-menu",                     2, 0, 0, (SCM (*) ()) g_rc_add_menu },
-  { "bus-ripper-type",              1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_type },
   { "bus-ripper-rotation",          1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_rotation },
 
   /* backup functions */
