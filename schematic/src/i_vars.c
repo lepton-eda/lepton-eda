@@ -499,8 +499,8 @@ i_vars_set (GschemToplevel* w_current)
                        &w_current->undo_type);
 
 
-  w_current->undo_panzoom = default_undo_panzoom;
-
+  cfg_read_bool ("schematic.undo", "undo-panzoom",
+                 default_undo_panzoom, &w_current->undo_panzoom);
 
   cfg_read_bool ("schematic.gui", "draw-grips",
                  default_draw_grips, &w_current->draw_grips);

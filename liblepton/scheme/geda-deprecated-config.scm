@@ -336,3 +336,6 @@ option's value:
 (define-rc-deprecated-config
  undo-levels "schematic.undo" "undo-levels"
  rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ undo-panzoom "schematic.undo" "undo-panzoom"
+ rc-deprecated-string-boolean-transformer)
