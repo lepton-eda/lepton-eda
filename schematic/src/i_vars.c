@@ -378,7 +378,25 @@ i_vars_set (GschemToplevel* w_current)
                  default_third_button_cancel, &w_current->third_button_cancel);
 
 
-  w_current->middle_button      = default_middle_button;
+  /* middle-button:
+  */
+  const struct OptionStringInt vals_mb[] =
+  {
+    { "stroke",   MOUSEBTN_DO_STROKE },
+    { "repeat",   MOUSEBTN_DO_REPEAT },
+    { "action",   MOUSEBTN_DO_ACTION },
+    { "mousepan", MOUSEBTN_DO_PAN    },
+    { "popup",    MOUSEBTN_DO_POPUP  }
+  };
+
+  cfg_read_string2int ("schematic.gui",
+                       "middle-button",
+                       default_middle_button,
+                       vals_mb,
+                       sizeof( vals_mb ) / sizeof( vals_mb[0] ),
+                       &w_current->middle_button);
+
+
   w_current->scroll_wheel       = default_scroll_wheel;
   toplevel->net_consolidate    = default_net_consolidate;
 
