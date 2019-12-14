@@ -204,36 +204,6 @@ SCM g_rc_log_window(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_third_button(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {MOUSEBTN_DO_POPUP, "popup"   },
-    {MOUSEBTN_DO_PAN,   "mousepan"},
-  };
-
-  const int table_size = sizeof (mode_table) / sizeof (mode_table[0]);
-
-  if (scm_is_eq (mode, SCM_UNDEFINED))
-  {
-    for (int i = 0; i < table_size; ++i)
-    {
-      if (default_third_button == mode_table[i].m_val)
-        return scm_from_utf8_string (mode_table[i].m_str);
-    }
-
-    return scm_from_utf8_string ("none");
-  }
-
-  RETURN_G_RC_MODE("third-button",
-		   default_third_button,
-		   table_size);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_scroll_wheel(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

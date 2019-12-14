@@ -312,3 +312,6 @@ option's value:
 (define-rc-deprecated-config
  middle-button "schematic.gui" "middle-button"
  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ third-button "schematic.gui" "third-button"
+ rc-deprecated-string-transformer)

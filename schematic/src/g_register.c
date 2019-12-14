@@ -44,7 +44,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "attribute-name",               1, 0, 0, (SCM (*) ()) g_rc_attribute_name },
 
   { "log-window",                   1, 0, 0, (SCM (*) ()) g_rc_log_window },
-  { "third-button",                 0, 1, 0, (SCM (*) ()) g_rc_third_button },
   { "scroll-wheel",                 1, 0, 0, (SCM (*) ()) g_rc_scroll_wheel },
   { "net-consolidate",              1, 0, 0, (SCM (*) ()) g_rc_net_consolidate },
   { "undo-levels",                  1, 0, 0, (SCM (*) ()) g_rc_undo_levels },

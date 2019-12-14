@@ -101,15 +101,6 @@
 (log-window "later")
 
 
-; third-button string
-;
-; Controls if the third mouse button performs the popup ("popup") or
-; if it does the mouse panning ("mousepan")
-;
-(third-button "popup")
-;(third-button "mousepan")
-
-
 ; scroll-wheel string
 ;
 ; Controls the binding of the mouse scroll wheel.

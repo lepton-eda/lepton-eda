@@ -371,7 +371,21 @@ i_vars_set (GschemToplevel* w_current)
   w_current->include_complex = default_include_complex;
   w_current->log_window      = default_log_window;
 
-  w_current->third_button       = default_third_button;
+
+  /* third-button:
+  */
+  const struct OptionStringInt vals_tb[] =
+  {
+    { "popup",    MOUSEBTN_DO_POPUP },
+    { "mousepan", MOUSEBTN_DO_PAN   }
+  };
+
+  cfg_read_string2int ("schematic.gui",
+                       "third-button",
+                       default_third_button,
+                       vals_tb,
+                       sizeof( vals_tb ) / sizeof( vals_tb[0] ),
+                       &w_current->third_button);
 
 
   cfg_read_bool ("schematic.gui", "file-preview",
