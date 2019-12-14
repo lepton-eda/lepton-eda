@@ -224,30 +224,6 @@ SCM g_rc_add_menu(SCM scm_menu_name, SCM scm_menu_items)
  *  \par Function Description
  *
  */
-SCM g_rc_bus_ripper_size(SCM size)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (size), size, SCM_ARG1, "bus-ripper-size");
-
-  val = scm_to_int (size);
-
-  if (val == 0) {
-    fprintf(stderr, _("Invalid size [%1$d] passed to bus-ripper-size\n"),
-            val);
-    val = 200; /* absolute default */
-  }
-
-  default_bus_ripper_size = val;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_bus_ripper_type(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

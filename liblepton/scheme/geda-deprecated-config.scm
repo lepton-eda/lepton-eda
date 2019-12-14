@@ -339,3 +339,6 @@ option's value:
 (define-rc-deprecated-config
  undo-panzoom "schematic.undo" "undo-panzoom"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ bus-ripper-size "schematic" "bus-ripper-size"
+ rc-deprecated-int-transformer)

@@ -514,7 +514,11 @@ i_vars_set (GschemToplevel* w_current)
   cfg_read_bool ("schematic.gui", "handleboxes",
                  default_handleboxes, &w_current->handleboxes);
 
-  w_current->bus_ripper_size  = default_bus_ripper_size;
+  cfg_read_int_with_check ("schematic", "bus-ripper-size",
+                           default_bus_ripper_size, &w_current->bus_ripper_size,
+                           &check_int_greater_0);
+
+
   w_current->bus_ripper_type  = default_bus_ripper_type;
   w_current->bus_ripper_rotation  = default_bus_ripper_rotation;
 
