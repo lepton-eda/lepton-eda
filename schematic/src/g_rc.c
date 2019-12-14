@@ -224,23 +224,6 @@ SCM g_rc_add_menu(SCM scm_menu_name, SCM scm_menu_items)
  *  \par Function Description
  *
  */
-SCM g_rc_bus_ripper_rotation(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {SYMMETRIC,     "symmetric" },
-    {NON_SYMMETRIC, "non-symmetric"  }
-  };
-
-  RETURN_G_RC_MODE("bus-ripper-rotation",
-		   default_bus_ripper_rotation,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_auto_save_interval(SCM seconds)
 {
   int val;

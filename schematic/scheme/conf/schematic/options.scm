@@ -61,7 +61,6 @@
 
 ; The default bus ripper
 (bus-ripper-symname "busripper-1.sym")
-(bus-ripper-rotation "non-symmetric")
 
 ; A symmetric alternative
 ;(bus-ripper-size 200)

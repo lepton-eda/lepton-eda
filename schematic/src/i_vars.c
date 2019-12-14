@@ -535,7 +535,20 @@ i_vars_set (GschemToplevel* w_current)
                        &w_current->bus_ripper_type);
 
 
-  w_current->bus_ripper_rotation  = default_bus_ripper_rotation;
+  /* bus-ripper-rotation:
+  */
+  const struct OptionStringInt vals_brr[] =
+  {
+    { "non-symmetric", NON_SYMMETRIC },
+    { "symmetric",     SYMMETRIC     }
+  };
+
+  cfg_read_string2int ("schematic",
+                       "bus-ripper-rotation",
+                       default_bus_ripper_rotation,
+                       vals_brr,
+                       sizeof( vals_brr ) / sizeof( vals_brr[0] ),
+                       &w_current->bus_ripper_rotation);
 
 
   cfg_read_bool ("schematic.gui", "force-boundingbox",
