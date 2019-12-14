@@ -185,30 +185,6 @@ SCM g_rc_add_menu(SCM scm_menu_name, SCM scm_menu_items)
   return SCM_BOOL_T;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_auto_save_interval(SCM seconds)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (seconds), seconds, SCM_ARG1, "auto-save-interval");
-
-  val = scm_to_int (seconds);
-
-  if (val < 0) {
-    fprintf(stderr, _("Invalid number of seconds [%1$d] passed to auto-save-interval\n"),
-            val);
-    val = 120; /* absolute default */
-  }
-
-  default_auto_save_interval = val;
-
-  return SCM_BOOL_T;
-}
-
 
 extern GedaColorMap display_colors;
 extern GedaColorMap display_outline_colors;

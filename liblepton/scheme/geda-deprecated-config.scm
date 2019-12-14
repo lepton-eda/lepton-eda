@@ -354,3 +354,6 @@ option's value:
 (define-rc-deprecated-config
  logging "schematic" "logging"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ auto-save-interval "schematic" "auto-save-interval"
+ rc-deprecated-int-transformer)

@@ -155,8 +155,8 @@ check_int_not_0 (gint val) { return val != 0; }
 static gboolean
 check_int_greater_0 (gint val) { return val > 0; }
 
-/* static gboolean
-check_int_greater_eq_0 (gint val) { return val >= 0; } */
+static gboolean
+check_int_greater_eq_0 (gint val) { return val >= 0; }
 
 static gboolean
 check_int_text_size (gint val) { return val >= MINIMUM_TEXT_SIZE; }
@@ -606,12 +606,14 @@ i_vars_set (GschemToplevel* w_current)
                            default_scrollpan_steps, &w_current->scrollpan_steps,
                            &check_int_not_0);
 
-
-  toplevel->auto_save_interval = default_auto_save_interval;
+  cfg_read_int_with_check ("schematic", "auto-save-interval",
+                           default_auto_save_interval, &toplevel->auto_save_interval,
+                           &check_int_greater_eq_0);
 
 
   i_vars_set_options (w_current->options);
-}
+
+} /* i_vars_set() */
 
 
 /*! \brief Free default names

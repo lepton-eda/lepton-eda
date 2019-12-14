@@ -3,15 +3,6 @@
 ;
 
 
-; autosave interval
-;
-; Controls if a backup copy is made every "interval" seconds.
-; Note that the backup copy is made when you make some change to the schematic,
-; and there were more than "interval" seconds from the last autosave.
-; Autosaving will not be allowed if setting it to zero.
-(auto-save-interval 120)
-
-
 ; log-window string
 ;
 ; Controls if the log message window is mapped when gschem is started up

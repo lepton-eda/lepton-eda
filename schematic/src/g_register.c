@@ -44,9 +44,6 @@ static struct gsubr_t gschem_funcs[] = {
 
   { "add-menu",                     2, 0, 0, (SCM (*) ()) g_rc_add_menu },
 
-  /* backup functions */
-  { "auto-save-interval",           1, 0, 0, (SCM (*) ()) g_rc_auto_save_interval },
-
   /* general guile functions */
   { "gschem-exit",                  0, 0, 0, (SCM (*) ()) g_funcs_exit },
   { "gschem-log",                   1, 0, 0, (SCM (*) ()) g_funcs_log },
