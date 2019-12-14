@@ -348,3 +348,6 @@ option's value:
 (define-rc-deprecated-config
  bus-ripper-rotation "schematic" "bus-ripper-rotation"
  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ net-consolidate "schematic" "net-consolidate"
+ rc-deprecated-string-boolean-transformer)

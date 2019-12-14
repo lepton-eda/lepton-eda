@@ -12,18 +12,6 @@
 (auto-save-interval 120)
 
 
-;  net-consolidate string
-;
-;  Controls if the net consolidation code is used when schematics are read
-;  in, written to disk, and when nets are being drawn (does not consolidate
-;  when things are being copied or moved yet).  Net consolidation is the
-;  connection of nets which can be combined into one.
-;  Comment out if you want the default mode
-;
-(net-consolidate "enabled")
-;(net-consolidate "disabled")
-
-
 ; logging string
 ;
 ; Determines if the logging mechanism is enabled or disabled

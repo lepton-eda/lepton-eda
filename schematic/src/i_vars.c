@@ -460,8 +460,8 @@ i_vars_set (GschemToplevel* w_current)
                        &w_current->scroll_wheel);
 
 
-  toplevel->net_consolidate    = default_net_consolidate;
-
+  cfg_read_bool ("schematic", "net-consolidate",
+                 default_net_consolidate, &toplevel->net_consolidate);
 
   cfg_read_bool ("schematic.gui", "file-preview",
                  default_file_preview, &w_current->file_preview);

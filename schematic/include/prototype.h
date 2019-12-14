@@ -158,7 +158,6 @@ SCM g_rc_gschem_version(SCM version);
 SCM g_rc_logging(SCM mode);
 SCM g_rc_attribute_name(SCM path);
 SCM g_rc_log_window(SCM mode);
-SCM g_rc_net_consolidate(SCM mode);
 SCM g_rc_add_menu(SCM menu_name, SCM menu_items);
 SCM g_rc_auto_save_interval(SCM seconds);
 SCM g_rc_display_color_map (SCM scm_map);

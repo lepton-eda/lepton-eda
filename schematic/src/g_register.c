@@ -43,7 +43,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "attribute-name",               1, 0, 0, (SCM (*) ()) g_rc_attribute_name },
 
   { "log-window",                   1, 0, 0, (SCM (*) ()) g_rc_log_window },
-  { "net-consolidate",              1, 0, 0, (SCM (*) ()) g_rc_net_consolidate },
 
   { "add-menu",                     2, 0, 0, (SCM (*) ()) g_rc_add_menu },
 
