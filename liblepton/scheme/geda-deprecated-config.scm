@@ -351,3 +351,6 @@ option's value:
 (define-rc-deprecated-config
  net-consolidate "schematic" "net-consolidate"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ logging "schematic" "logging"
+ rc-deprecated-string-boolean-transformer)

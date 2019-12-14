@@ -12,16 +12,6 @@
 (auto-save-interval 120)
 
 
-; logging string
-;
-; Determines if the logging mechanism is enabled or disabled
-;   Possible options: enabled or disabled
-; Default is enabled.
-;
-(logging "enabled")
-;(logging "disabled")
-
-
 ; log-window string
 ;
 ; Controls if the log message window is mapped when gschem is started up

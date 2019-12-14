@@ -155,7 +155,6 @@ void g_init_keys ();
 /* g_rc.c */
 void g_rc_parse_gtkrc();
 SCM g_rc_gschem_version(SCM version);
-SCM g_rc_logging(SCM mode);
 SCM g_rc_attribute_name(SCM path);
 SCM g_rc_log_window(SCM mode);
 SCM g_rc_add_menu(SCM menu_name, SCM menu_items);

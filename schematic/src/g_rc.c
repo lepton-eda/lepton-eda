@@ -125,23 +125,6 @@ SCM g_rc_gschem_version(SCM scm_version)
  *  \par Function Description
  *
  */
-SCM g_rc_logging(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"}
-  };
-
-  RETURN_G_RC_MODE("logging",
-		   default_do_logging,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_attribute_name(SCM scm_path)
 {
   char *path;

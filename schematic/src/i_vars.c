@@ -324,9 +324,12 @@ i_vars_set (GschemToplevel* w_current)
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   i_vars_libgeda_set(toplevel);
 
+
   /* this will be false if logging cannot be enabled */
-  if (do_logging != FALSE) {
-    do_logging = default_do_logging;
+  if (do_logging != FALSE)
+  {
+    cfg_read_bool ("schematic", "logging",
+                   default_do_logging, &do_logging);
   }
 
 

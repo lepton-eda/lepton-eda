@@ -38,8 +38,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "display-color-map",            0, 1, 0, (SCM (*) ()) g_rc_display_color_map },
   { "display-outline-color-map",    0, 1, 0, (SCM (*) ()) g_rc_display_outline_color_map },
 
-  { "logging",                      1, 0, 0, (SCM (*) ()) g_rc_logging },
-
   { "attribute-name",               1, 0, 0, (SCM (*) ()) g_rc_attribute_name },
 
   { "log-window",                   1, 0, 0, (SCM (*) ()) g_rc_log_window },
