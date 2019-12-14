@@ -317,7 +317,21 @@ i_vars_set (GschemToplevel* w_current)
                            &check_int_text_size);
 
 
-  w_current->text_caps     = default_text_caps;
+  /* text-caps-style:
+  */
+  const struct OptionStringInt vals_tcs[] =
+  {
+    { "both",  BOTH  },
+    { "lower", LOWER },
+    { "upper", UPPER }
+  };
+
+  cfg_read_string2int ("schematic.gui",
+                       "text-caps-style",
+                       default_text_caps,
+                       vals_tcs,
+                       sizeof( vals_tcs ) / sizeof( vals_tcs[0] ),
+                       &w_current->text_caps);
 
 
   cfg_read_bool ("schematic.gui", "net-direction-mode",

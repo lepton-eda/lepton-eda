@@ -306,3 +306,6 @@ option's value:
 (define-rc-deprecated-config
  action-feedback-mode "schematic.gui" "action-feedback-mode"
  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ text-caps-style "schematic.gui" "text-caps-style"
+ rc-deprecated-string-transformer)

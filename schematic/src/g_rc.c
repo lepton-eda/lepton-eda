@@ -159,26 +159,6 @@ SCM g_rc_logging(SCM mode)
  *  \brief
  *  \par Function Description
  *
- *  \todo inconsistant naming with keyword name and variable to hold
- *        variable
- */
-SCM g_rc_text_caps_style(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {LOWER, "lower" },
-    {UPPER, "upper" },
-    {BOTH , "both"  }
-  };
-
-  RETURN_G_RC_MODE("text-caps-style",
-		   default_text_caps,
-		   3);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  */
 SCM g_rc_attribute_name(SCM scm_path)
 {

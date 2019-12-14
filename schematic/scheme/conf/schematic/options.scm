@@ -101,18 +101,6 @@
 (log-window "later")
 
 
-; text-caps-style string
-;
-; Sets the default caps style used for the input of text
-; lower specifies that all inputed text is in lowercase
-; upper specifies that all inputed text is in uppercase
-; both specifies that all inputed text is used as is (no case conversion)
-;
-(text-caps-style "both")
-;(text-caps-style "lower")
-;(text-caps-style "upper")
-
-
 ; middle-button string
 ;
 ; Controls if the middle mouse button draws strokes, repeats the last
