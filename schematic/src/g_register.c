@@ -54,7 +54,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "bus-ripper-size",              1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_size },
   { "bus-ripper-type",              1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_type },
   { "bus-ripper-rotation",          1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_rotation },
-  { "grid-mode",                    1, 0, 0, (SCM (*) ()) g_rc_grid_mode },
   { "dots-grid-mode",               1, 0, 0, (SCM (*) ()) g_rc_dots_grid_mode },
 
   /* backup functions */

@@ -284,7 +284,25 @@ i_vars_set_options (GschemOptions* opts)
   gschem_options_set_snap_size (opts, snap_size);
 
 
-  gschem_options_set_grid_mode (opts, (GRID_MODE) default_grid_mode);
+  /* grid-mode:
+  */
+  const struct OptionStringInt vals_gm[] =
+  {
+    { "none", GRID_MODE_NONE },
+    { "dots", GRID_MODE_DOTS },
+    { "mesh", GRID_MODE_MESH }
+  };
+
+  int grid_mode = 0;
+  cfg_read_string2int ("schematic.gui",
+                       "grid-mode",
+                       default_grid_mode,
+                       vals_gm,
+                       sizeof( vals_gm ) / sizeof( vals_gm[0] ),
+                       &grid_mode);
+
+  gschem_options_set_grid_mode (opts, (GRID_MODE) grid_mode);
+
 
   gboolean val = FALSE;
   cfg_read_bool ("schematic.gui", "netconn-rubberband",

@@ -366,31 +366,6 @@ SCM g_rc_bus_ripper_rotation(SCM mode)
 		   2);
 }
 
-/*! \brief Verify the grid mode set in the RC file under evaluation.
- *  \par Function Description
- *
- *  Implements the Scheme function "grid-mode". Tests the grid mode
- *  string in the argument against the grid mode of the application
- *  itself.
- *
- *  \param [in] mode Scheme object containing the grid mode string
- *
- *  \returns #t if the grid mode specified in the RC file matches the
- *           application, else #f.
- */
-SCM g_rc_grid_mode (SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {GRID_MODE_NONE, "none" },
-    {GRID_MODE_DOTS, "dots" },
-    {GRID_MODE_MESH, "mesh" }
-  };
-
-  RETURN_G_RC_MODE ("grid-mode",
-                    default_grid_mode,
-                    3);
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

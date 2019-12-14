@@ -318,3 +318,6 @@ option's value:
 (define-rc-deprecated-config
  scroll-wheel "schematic.gui" "scroll-wheel"
  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ grid-mode "schematic.gui" "grid-mode"
+ rc-deprecated-string-transformer)

@@ -130,14 +130,6 @@
 ;(bus-ripper-size 200)
 ;(bus-ripper-type "net")
 
-; Grid mode
-;
-; The grid-mode keyword controls which mode of grid is used by default in
-; gschem.
-;(grid-mode "none")
-;(grid-mode "dots")
-(grid-mode "mesh")
-
 
 ; Dots grid mode
 ;
