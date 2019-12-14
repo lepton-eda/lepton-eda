@@ -357,3 +357,6 @@ option's value:
 (define-rc-deprecated-config
  auto-save-interval "schematic" "auto-save-interval"
  rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ log-window "schematic" "log-window"
+ rc-deprecated-string-transformer)

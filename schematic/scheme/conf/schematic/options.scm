@@ -3,18 +3,6 @@
 ;
 
 
-; log-window string
-;
-; Controls if the log message window is mapped when gschem is started up
-; Possible options:
-;       startup - opened up when gschem starts
-;       later   - NOT opened up when gschem starts
-;                 (can be opened by Options/Show Log Window)
-;
-;(log-window "startup")
-(log-window "later")
-
-
 ; Bus ripper controls
 ; The following keywords control the auto bus ripper addition code
 ;

@@ -405,7 +405,22 @@ i_vars_set (GschemToplevel* w_current)
 
 
   w_current->include_complex = default_include_complex;
-  w_current->log_window      = default_log_window;
+
+
+  /* log-window:
+  */
+  const struct OptionStringInt vals_lw[] =
+  {
+    { "startup", MAP_ON_STARTUP },
+    { "later",   MAP_LATER      }
+  };
+
+  cfg_read_string2int ("schematic",
+                       "log-window",
+                       default_log_window,
+                       vals_lw,
+                       sizeof( vals_lw ) / sizeof( vals_lw[0] ),
+                       &w_current->log_window);
 
 
   /* third-button:
