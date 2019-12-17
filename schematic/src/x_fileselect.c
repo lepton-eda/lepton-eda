@@ -257,7 +257,11 @@ x_fileselect_open(GschemToplevel *w_current)
 					  GTK_RESPONSE_CANCEL,
 					  -1);
 
-  x_fileselect_add_preview (GTK_FILE_CHOOSER (dialog));
+  if (w_current->file_preview)
+  {
+    x_fileselect_add_preview (GTK_FILE_CHOOSER (dialog));
+  }
+
   g_object_set (dialog,
                 /* GtkFileChooser */
                 "select-multiple", TRUE,
