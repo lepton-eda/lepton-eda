@@ -27,6 +27,13 @@
 ;; The directory containing various bitmaps (e.g. icons)
 (bitmap-directory (build-path geda-data-path "bitmap"))
 
+; The default bus ripper symbol, used when the
+; schematic::bus-ripper-type configuration key
+; is set to "component".
+; The symbol must exist in a component library.
+;
+(bus-ripper-symname "busripper-1.sym")
+
 ; scheme-directory dir
 ;
 ; This keyword allows additional directories to be added to the list

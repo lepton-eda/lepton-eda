@@ -16,8 +16,6 @@
 ;                        is auto added to a schematic.
 ;
 
-; The default bus ripper
-(bus-ripper-symname "busripper-1.sym")
 
 ; A symmetric alternative
 ;(bus-ripper-size 200)
