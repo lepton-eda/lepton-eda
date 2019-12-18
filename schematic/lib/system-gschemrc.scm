@@ -23,7 +23,6 @@
 
 
 ( load-from-path "conf/schematic/deprecated.scm" )
-( load-from-path "conf/schematic/options.scm"    )
 ( load-from-path "conf/schematic/attribs.scm"    )
 ( load-from-path "conf/schematic/stroke.scm"     )
 ( load-from-path "conf/schematic/keys.scm"       )

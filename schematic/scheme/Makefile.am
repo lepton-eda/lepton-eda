@@ -29,7 +29,6 @@ nobase_dist_scmdata_DATA = \
 	conf/schematic/deprecated.scm \
 	conf/schematic/keys.scm \
 	conf/schematic/menu.scm \
-	conf/schematic/options.scm \
 	conf/schematic/stroke.scm
 
 nobase_scmdata_DATA = gschem/gschemdoc.scm
