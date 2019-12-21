@@ -35,6 +35,9 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   Scheme code: `cache-config-context` function has been added
   to the `(geda config)` module.
 
+- A new function, `component-filename`, has been added to the `(geda object)`
+  module. It returns the full component's symbol file path.
+
 ### Changes in `liblepton`:
 - The module `(lepton library component)` has been amended to
   support new Scheme layer around internal `%component-library` in
@@ -56,6 +59,11 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   `(lepton page)` module.  All functions from the former have been
   moved to the latter.  The procedure `filename->page()` has been
   renamed to `file->page()`.
+
+- Netlist backends can now set the desired netlist mode by defining
+  a `request-netlist-mode` function, which should return either `'geda` or
+  `'spice`. `lepton-netlist` no longer relies on the backend's filename
+  when setting the operation mode.
 
 ### Changes in `lepton-archive`:
 - The initial Python script has been rewritten in Scheme.  It was
@@ -118,6 +126,12 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   - The program options now have long equivalents, please see
     `lepton-archive --help` for more information.
 
+### Changes in `lepton-schlas`:
+- This utility has been rewritten in Scheme and renamed to `lepton-embed`.
+- Its functionality has been extended: it can now embed/unembed pictures (`-p`)
+  or components (`-c`) only, and may be instructed to leave source files intact,
+  saving its output to a separate files with a given suffix (`-x`).
+
 ### Changes in `lepton-cli`:
 - A new command line option has been added for the `export`
   command: `--paper-names` (`-P`). It displays a list of paper
@@ -149,6 +163,15 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
 - If *Help* → *Find Component Documentation* cannot find any
   documentation, a message box is displayed. No backtrace, nor
   Guile errors are printed to the log window.
+
+- The `system-gschemrc` file has been removed, all settings have been migrated
+  to new configuration system (`*.conf` files). Use `lepton-cli config` to read
+  and modify them. New options have the same names and possible values (use
+  `true`/`false` for booleans instead of `"enabled"` and `"disabled"`). Old RC
+  options are deprecated now, though you can still use them in `gschemrc` files
+  (warnings will be issued). Please refer to the
+  [Configuration Settings](https://github.com/graahnul-grom/lepton-eda/wiki/Configuration-Settings)
+  document for more information.
 
 ### Changes in `examples`:
 - The `bom` python script has been moved to *contrib/*.
