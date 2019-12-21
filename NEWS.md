@@ -174,14 +174,14 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   document for more information.
 
 ### Changes in `examples`:
-- The `bom` python script has been moved to *contrib/*.
-
-- Several `README` files have been updated.
-
 - `RF_Amp` and `TwoStageAmp` examples have been updated to make
   SPICE simulation work properly.
 
 - `gTAG` example scripts and configuration files have been fixed.
+
+- Several `README` files have been updated.
+
+- The `bom` python script has been removed.
 
 Notable changes in Lepton EDA 1.9.9 (20191003)
 ----------------------------------------------
