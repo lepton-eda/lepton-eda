@@ -41,7 +41,8 @@ edascm_init_impl (void *data)
 {
   #include "scheme_init.x"
 
-  scm_setlocale(scm_variable_ref(scm_c_lookup("LC_ALL")), scm_from_locale_string(""));
+  scm_setlocale (scm_variable_ref (scm_c_lookup ("LC_ALL")),
+                 SCM_UNDEFINED);
   edascm_init_smob ();
   edascm_init_toplevel ();
   edascm_init_object ();
