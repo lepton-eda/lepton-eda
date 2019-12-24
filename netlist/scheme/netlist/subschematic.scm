@@ -27,9 +27,7 @@
                    subschematic-name set-subschematic-name!
                    subschematic-pages set-subschematic-pages!
                    subschematic-components set-subschematic-components!
-                   subschematic-connections set-subschematic-connections!)
-
-  #:export (filename->subschematic))
+                   subschematic-connections set-subschematic-connections!))
 
 (define-record-type <subschematic>
   (make-subschematic name pages components connections)
