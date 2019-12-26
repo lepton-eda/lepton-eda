@@ -226,8 +226,9 @@ default-archive-name))
       result
       (primitive-exit 1)))
 
-;;; Output archive name.
-(define output-file-name
+
+;;; Make up output archive name.
+(define (make-output-file-name)
   (let ((filename
          (or (validate/extract-mode (option-ref %options 'output #f))
              default-archive-name)))
@@ -693,7 +694,10 @@ symbol cache directory."
     ;; Update copy of gafrc.
     (update-rc tmpdir)
 
-    (let* ((output-basename (basename output-file-name ".tar.gz"))
+    (let* (
+           ;; Output archive name.
+           (output-file-name (make-output-file-name))
+           (output-basename (basename output-file-name ".tar.gz"))
            (output.tar (string-append output-basename ".tar"))
            (temp/output.tar.gz
             (make-absolute-filename tmpdir output-file-name))
