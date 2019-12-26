@@ -676,9 +676,10 @@ symbol cache directory."
          ;; Make a temporary directory.
          (temp/ (make-tmp-dir (tmpnam)))
          ;; Temporary project directory to put files and create archive in.
-         (tmpdir (make-tmp-dir (string-append temp/
-                                              file-name-separator-string
-                                              (basename project-directory))))
+         (temp/project
+          (make-tmp-dir (string-append temp/
+                                       file-name-separator-string
+                                       (basename project-directory))))
          ;; Create list of files (and directories) to stick into
          ;; archive.  Returned paths point to the absolute paths of
          ;; the files.
@@ -688,24 +689,24 @@ symbol cache directory."
          (schematic-file-list (create-schematic-file-list archive-file-list)))
 
     ;; Copy all files over to temporary directory.
-    (for-each (cut copy-to-dir <> tmpdir) archive-file-list)
+    (for-each (cut copy-to-dir <> temp/project) archive-file-list)
 
     ;; Add cache directory for symbols.  Stick symbol & SPICE
     ;; files into it.
-    (let ((tmp/cache-directory (make-absolute-filename tmpdir
+    (let ((tmp/cache-directory (make-absolute-filename temp/project
                                                        cache-directory)))
       (debug-format "Cache directory: ~S" tmp/cache-directory)
       (mkdir* tmp/cache-directory)
 
       (save-schematics-and-sources schematic-file-list
-                                   tmpdir
+                                   temp/project
                                    tmp/cache-directory))
 
     ;; Now create tar file.  We copy remaining files over to /tmp, and then tar them
     ;; all up using a local, relative file prefix.
 
     ;; Update copy of gafrc.
-    (update-rc tmpdir)
+    (update-rc temp/project)
 
     (let* (
            ;; Output archive name.
@@ -713,21 +714,21 @@ symbol cache directory."
            (output-basename (basename output-file-name ".tar.gz"))
            (output.tar (basename output-file-name ".gz"))
            (temp/output.tar.gz
-            (make-absolute-filename tmpdir output-file-name))
+            (make-absolute-filename temp/project output-file-name))
            (output.tar.gz
             (make-absolute-filename project-directory output-file-name)))
 
-      (debug-format "Archive directory: ~S" tmpdir)
+      (debug-format "Archive directory: ~S" temp/project)
 
       ;; Now cd into the temporary directory.
-      (chdir (dirname tmpdir))
+      (chdir (dirname temp/project))
 
       ;;  Now use this in tar command.
       (system* "tar"
                "-c"
                "-f"
                output.tar
-               (basename tmpdir))
+               (basename temp/project))
       (system* "gzip" output.tar)
 
       ;; Now try to move completed archive back to user directory.
@@ -753,11 +754,11 @@ Your new archive lives in ~S\n" temp/output.tar.gz))
     ;; Return to the project directory.
     (chdir project-directory)
     ;; Get rid of temporary directory.
-    (debug-format "Remove temporary directory ~S" (dirname tmpdir))
+    (debug-format "Remove temporary directory ~S" (dirname temp/project))
     ;; Well, I could make a procedure for recursive removing of
     ;; the directory contents, but it is simpler just to use 'rm'
     ;; here.
-    (system* "rm" "-r" "-f" (dirname tmpdir))))
+    (system* "rm" "-r" "-f" (dirname temp/project))))
 
 
 ;;; Extracter.
