@@ -693,14 +693,14 @@ symbol cache directory."
 
     ;; Add cache directory for symbols.  Stick symbol & SPICE
     ;; files into it.
-    (let ((tmp/cache-directory (make-absolute-filename temp/project
-                                                       cache-directory)))
-      (debug-format "Cache directory: ~S" tmp/cache-directory)
-      (mkdir* tmp/cache-directory)
+    (let ((temp/project/cache (make-absolute-filename temp/project
+                                                      cache-directory)))
+      (debug-format "Cache directory: ~S" temp/project/cache)
+      (mkdir* temp/project/cache)
 
       (save-schematics-and-sources schematic-file-list
                                    temp/project
-                                   tmp/cache-directory))
+                                   temp/project/cache))
 
     ;; Now create tar file.  We copy remaining files over to /tmp, and then tar them
     ;; all up using a local, relative file prefix.
