@@ -141,6 +141,17 @@ default-archive-name))
     (apply format (current-error-port) s args)
     (newline)))
 
+
+(define (prompt-confirmed? prompt default-char)
+  (display prompt)
+  (let ((input-string (read-line (current-input-port))))
+    (display #\newline)
+    (and (not (string-ci=? input-string "n"))
+         (or (string-ci=? input-string "y")
+             (and (not (string-ci=? default-char "n"))
+                  (string-ci=? default-char "y"))))))
+
+
 (define (make-absolute-filename dir-name file-name)
   (if (absolute-file-name? file-name)
       file-name
@@ -220,12 +231,6 @@ default-archive-name))
          files-from
          (check-existence files-from))))
 
-(define (request-confirmation prompt result)
-  (format #t prompt)
-  (if (char=? (read-char (current-input-port)) #\y)
-      result
-      (primitive-exit 1)))
-
 
 ;;; Make up output archive name.
 (define (make-output-file-name)
@@ -234,12 +239,13 @@ default-archive-name))
              default-archive-name)))
     (if (check-archive-filename filename)
         filename
-        (request-confirmation
-         "Warning: output file suffix is not \".tar.gz\" -- the
+        (if (prompt-confirmed?
+             "Warning: output file suffix is not \".tar.gz\" -- the
 extractor won't know how to deal with your archive.
 Continue? [y/N] "
-         filename))))
-
+             "n")
+            filename
+            (primitive-exit 1)))))
 
 ;;; Directory holding files to archive. It is the current
 ;;; directory where the program was invoked.
@@ -250,11 +256,6 @@ Continue? [y/N] "
 
 
 (define command-line-file-list (option-ref %options '() '()))
-
-
-(define (overwrite-file? message)
-  (display message)
-  (string= (read-line (current-input-port)) "y"))
 
 
 (define (report-preserve-existing-file file)
@@ -306,9 +307,11 @@ Continue? [y/N] "
       ;; If file exists, and it is directory, do nothing.
       ;; Otherwise, ask the user, if she wants to overwrite it.
       (unless (directory? path)
-        (if (overwrite-file?
-             (format #f "~S already exists and is not directory. Overwrite? [y/N]"
-                     path))
+        (if (prompt-confirmed?
+             (format #f "~S already exists and is not directory. Overwrite? [y/N] "
+                     path)
+             ;; default
+             "n")
             (begin
               (delete-file* path)
               (apply mkdir path args))
@@ -348,9 +351,11 @@ Continue? [y/N] "
       ;; Otherwise, ask the user, if she wants to overwrite it.
       (if (and (file-exists? directory-name)
                (not (directory? directory-name)))
-          (if (overwrite-file?
-               (format #f "~S already exists and is not directory. Overwrite? [y/N]"
-                       directory-name))
+          (if (prompt-confirmed?
+               (format #f "~S already exists and is not directory. Overwrite? [y/N] "
+                       directory-name)
+               ;; default
+               "n")
               (delete-file* directory-name)
               (report-preserve-existing-file directory-name))
           ;; No file exists, just create the directory.
@@ -362,8 +367,11 @@ Continue? [y/N] "
                                   to-path)))
       (debug-format "Move file ~S to ~S" name new-filename)
       (if (and (file-exists? new-filename)
-               (not (overwrite-file? (format #f "~S already exists.  Overwrite? [y/N]"
-                                             new-filename))))
+               (not (prompt-confirmed?
+                     (format #f "~S already exists.  Overwrite? [y/N] "
+                             new-filename)
+                     ;; default
+                     "n")))
           (begin
             (report-preserve-existing-file new-filename)
             ;; Remove the file anyway. The user can restore it
@@ -418,9 +426,11 @@ Continue? [y/N] "
       ;; Otherwise, ask the user, if she wants to overwrite it.
       (if (and (file-exists? directory-name)
                (not (directory? directory-name)))
-          (if (overwrite-file?
-               (format #f "~S already exists and is not directory. Overwrite? [y/N]"
-                       directory-name))
+          (if (prompt-confirmed?
+               (format #f "~S already exists and is not directory. Overwrite? [y/N] "
+                       directory-name)
+               ;; default
+               "n")
               (delete-file* directory-name)
               (report-preserve-existing-file directory-name))
           ;; No file exists, just create the directory.
@@ -432,8 +442,11 @@ Continue? [y/N] "
                                   to-path)))
       (debug-format "Copy file ~S to ~S" name new-filename)
       (if (and (file-exists? new-filename)
-               (not (overwrite-file? (format #f "~S already exists.  Overwrite? [y/N]"
-                                             new-filename))))
+               (not (prompt-confirmed?
+                     (format #f "~S already exists.  Overwrite? [y/N] "
+                             new-filename)
+                     ;; default
+                     "n")))
           (report-preserve-existing-file new-filename)
           (copy-file* name new-filename))
       result))
@@ -518,12 +531,13 @@ option \"--files-from\" (\"-f\")."
                      filename)
              #f)
             ('rc
-             (format #t "Non-existent file ~S.\nCreate empty version in local dir? [Y/n] "
-                     filename)
-             (let ((input-char (read-char (current-input-port))))
-               (if (char=? input-char #\n)
-                   (format-error "You need ~S to create archive. Aborting.\n" filename)
-                   (make-empty-file filename))))))))
+             (if (prompt-confirmed?
+                  (format #f "Non-existent file ~S.\nCreate empty version in local dir? [Y/n] "
+                          filename)
+                  ;; default
+                  "y")
+                 (make-empty-file filename)
+                 (format-error "You need ~S to create archive. Aborting.\n" filename)))))))
 
   (define (add-rc-file filename)
     (add-file filename 'rc))
@@ -721,19 +735,19 @@ symbol cache directory."
       (debug-format "Rename archive to ~S" output.tar.gz)
       (if (file-exists? output.tar.gz)
           ;; Directory already exists
-          (begin
-            (format #t "~S already exists. Overwrite? [y/N] " output.tar.gz)
-            (let ((input-char (read-char (current-input-port))))
-              (if (char=? input-char #\y)
-                  ;; Remove old archive
-                  (begin
-                    (delete-file* output.tar.gz)
-                    (rename-file* output-file-name output.tar.gz)
-                    (format #t "Project archive ~S created successfully!\n"
-                            output.tar.gz))
-                  ;; Report place of the new archive.
-                  (format #t "Preserving existing archive in local directory.
-Your new archive lives in ~S\n" temp/output.tar.gz))))
+          (if (prompt-confirmed?
+               (format #f "~S already exists. Overwrite? [y/N] " output.tar.gz)
+               ;; default
+               "n")
+              ;; Remove old archive
+              (begin
+                (delete-file* output.tar.gz)
+                (rename-file* output-file-name output.tar.gz)
+                (format #t "Project archive ~S created successfully!\n"
+                        output.tar.gz))
+              ;; Report place of the new archive.
+              (format #t "Preserving existing archive in local directory.
+Your new archive lives in ~S\n" temp/output.tar.gz))
           ;; Archive is not in user directory yet, no need to force it.
           (rename-file* output-file-name output.tar.gz)))
 
