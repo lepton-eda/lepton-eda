@@ -359,7 +359,7 @@ Continue? [y/N] "
   (define (leaf name stat result)
     ;; Increment the number of files processed.
     (let ((new-filename (ls->path (cons (basename name) result)
-                                   to-path)))
+                                  to-path)))
       (debug-format "Move file ~S to ~S" name new-filename)
       (if (and (file-exists? new-filename)
                (not (overwrite-file? (format #f "~S already exists.  Overwrite? [y/N]"
@@ -429,7 +429,7 @@ Continue? [y/N] "
   (define (leaf name stat result)
     ;; Increment the number of files processed.
     (let ((new-filename (ls->path (cons (basename name) result)
-                                   to-path)))
+                                  to-path)))
       (debug-format "Copy file ~S to ~S" name new-filename)
       (if (and (file-exists? new-filename)
                (not (overwrite-file? (format #f "~S already exists.  Overwrite? [y/N]"
