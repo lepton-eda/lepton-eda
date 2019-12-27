@@ -492,6 +492,15 @@ default-archive-name))
         (copy-file* filename destination))))
 
 
+(define (remove-temp-dir dir)
+  ;; Get rid of temporary directory.
+  (debug-format "Remove temporary directory ~S" dir)
+  ;; Well, I could make a procedure for recursive removing of
+  ;; the directory contents, but it is simpler just to use 'rm'
+  ;; here.
+  (system* "rm" "-r" "-f" dir))
+
+
 (define (create-archive-file-list)
   "Create the list of files to archive, including \"gafrc\",
 files listed in the command line, and in the file specified by
@@ -754,12 +763,7 @@ Your new archive lives in ~S\n" temp/output.tar.gz))
           ;; Archive is not in user directory yet, no need to force it.
           (rename-file* temp/output.tar.gz project/output.tar.gz)))
 
-    ;; Get rid of temporary directory.
-    (debug-format "Remove temporary directory ~S" temp/)
-    ;; Well, I could make a procedure for recursive removing of
-    ;; the directory contents, but it is simpler just to use 'rm'
-    ;; here.
-    (system* "rm" "-r" "-f" temp/)))
+    (remove-temp-dir temp/)))
 
 
 ;;; Extracter.
