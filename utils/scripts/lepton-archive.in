@@ -710,14 +710,14 @@ symbol cache directory."
 
     (let* (
            ;; Output archive name.
-           (output-file-name (make-output-file-name))
+           (output.tar.gz (make-output-file-name))
            (temp/output.tar.gz
-            (make-absolute-filename temp/project output-file-name))
+            (make-absolute-filename temp/project output.tar.gz))
            (temp/output.tar
             (make-absolute-filename temp/project
-                                    (basename output-file-name ".gz")))
+                                    (basename output.tar.gz ".gz")))
            (project/output.tar.gz
-            (make-absolute-filename project-directory output-file-name)))
+            (make-absolute-filename project-directory output.tar.gz)))
 
       (debug-format "Archive directory: ~S" temp/project)
 
