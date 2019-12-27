@@ -711,11 +711,11 @@ symbol cache directory."
     (let* (
            ;; Output archive name.
            (output-file-name (make-output-file-name))
-           (output.tar (basename output-file-name ".gz"))
            (temp/output.tar.gz
             (make-absolute-filename temp/project output-file-name))
            (temp/output.tar
-            (make-absolute-filename temp/project output.tar))
+            (make-absolute-filename temp/project
+                                    (basename output-file-name ".gz")))
            (output.tar.gz
             (make-absolute-filename project-directory output-file-name)))
 
