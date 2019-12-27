@@ -93,7 +93,7 @@ exec @GUILE@ -s "$0" "$@"
 
 ;;; Default archive name. Use lowercase letters to avoid issues
 ;;; with case sensitive filesystems.
-(define default-archive-name "project-archive.tar.gz")
+(define default-archive-name "project-archive")
 
 ;;; Help string.
 (define usage-info
@@ -113,9 +113,9 @@ Command line switches:
                            extract from archive.
   -a,--archive          -- Archive mode. It is the default mode.
   -o,--output=FILE      -- Specify the name of the output archive file
-                           in archive mode.  The output file extension
-                           should be \".tar.gz\".  Default name is
-                           ~S.
+                           in archive mode.   If FILE has no \".tar.gz\"
+                           suffix it will be automatically appended.
+                           Default file name is ~S.
 
 Example usage:
    Create an archive named \"MyArchive.tar.gz\",
@@ -123,12 +123,16 @@ Example usage:
 
    lepton-archive -f archive-list -o MyArchive.tar.gz
 
+   The same by using just file basename:
+
+   lepton-archive -f archive-list -o MyArchive
+
    Verbosely create an archive from files listed on command line:
 
    lepton-archive -v README sch1.sch sch2.sch sch3.sch
 
    Extract an archive:
-   lepton-archive -e ~A
+   lepton-archive -e ~A.tar.gz
 "
 (basename (car (program-arguments)))
 default-archive-name
@@ -159,10 +163,10 @@ default-archive-name))
                      file-name-separator-string
                      file-name)))
 
+
 (define (check-archive-filename filename)
   "Checks if FILENAME is a valid archive filename."
   (string-suffix-ci? ".tar.gz" filename))
-
 
 
 (define %option-spec
@@ -232,20 +236,19 @@ default-archive-name))
          (check-existence files-from))))
 
 
+(define (form-output-file-name s)
+  (let* ((suffix ".tar.gz")
+         (suffix-length (string-length ".tar.gz")))
+    (if (string-suffix-ci? suffix s)
+        (string-drop-right s suffix-length)
+        s)))
+
+
 ;;; Make up output archive name.
 (define (make-output-file-name)
-  (let ((filename
-         (or (validate/extract-mode (option-ref %options 'output #f))
-             default-archive-name)))
-    (if (check-archive-filename filename)
-        filename
-        (if (prompt-confirmed?
-             "Warning: output file suffix is not \".tar.gz\" -- the
-extractor won't know how to deal with your archive.
-Continue? [y/N] "
-             "n")
-            filename
-            (primitive-exit 1)))))
+  (form-output-file-name
+   (or (validate/extract-mode (option-ref %options 'output #f))
+       default-archive-name)))
 
 ;;; Directory holding files to archive. It is the current
 ;;; directory where the program was invoked.
@@ -708,14 +711,13 @@ symbol cache directory."
     ;; Update copy of gafrc.
     (update-rc temp/project)
 
-    (let* (
-           ;; Output archive name.
-           (output.tar.gz (make-output-file-name))
+    (let* ((output (make-output-file-name))
+           (output.tar (string-append output ".tar"))
+           (output.tar.gz (string-append output ".tar.gz"))
+           (temp/output.tar
+            (make-absolute-filename temp/project output.tar))
            (temp/output.tar.gz
             (make-absolute-filename temp/project output.tar.gz))
-           (temp/output.tar
-            (make-absolute-filename temp/project
-                                    (basename output.tar.gz ".gz")))
            (project/output.tar.gz
             (make-absolute-filename project-directory output.tar.gz)))
 

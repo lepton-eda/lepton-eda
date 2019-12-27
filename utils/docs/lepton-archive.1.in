@@ -31,14 +31,19 @@ Archive mode is the default.
 \-e, \-\-extract          Extract mode. Mandatory if you want to extract from archive.
 \-a, \-\-archive          Archive mode. It is the default mode.
 \-o, \-\-output=FILE      Specify the name of the output archive file
-                       in archive mode. The output file extension should be ".tar.gz".
-                       Default name is "project-archive.tar.gz".
+                       in archive mode. If FILE has no ".tar.gz" suffix it will be
+                       automatically appended.
+                       Default file name is "project-archive.tar.gz".
 
 .SH EXAMPLES
 To create an archive named MyArchive.tar.gz, the files to store
 are listed in "archive-list":
 .IP
 lepton-archive \-f archive-list \-o MyArchive.tar.gz
+.PP
+The same by using just file basename:
+.IP
+lepton-archive \-f archive-list \-o MyArchive
 .PP
 Verbosely create an archive from files listed on command line:
 .IP
