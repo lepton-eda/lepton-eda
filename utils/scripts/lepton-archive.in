@@ -711,25 +711,26 @@ symbol cache directory."
     (let* (
            ;; Output archive name.
            (output-file-name (make-output-file-name))
-           (output-basename (basename output-file-name ".tar.gz"))
            (output.tar (basename output-file-name ".gz"))
            (temp/output.tar.gz
             (make-absolute-filename temp/project output-file-name))
+           (temp/output.tar
+            (make-absolute-filename temp/project output.tar))
            (output.tar.gz
             (make-absolute-filename project-directory output-file-name)))
 
       (debug-format "Archive directory: ~S" temp/project)
 
-      ;; Now cd into the temporary directory.
-      (chdir (dirname temp/project))
-
       ;;  Now use this in tar command.
       (system* "tar"
+               "-C"
+               temp/
                "-c"
                "-f"
-               output.tar
+               temp/output.tar
                (basename temp/project))
-      (system* "gzip" output.tar)
+      (system* "gzip" temp/output.tar)
+      ;; Now we should have temp/output.tar.gz prepared.
 
       ;; Now try to move completed archive back to user directory.
       (debug-format "Rename archive to ~S" output.tar.gz)
@@ -742,17 +743,15 @@ symbol cache directory."
               ;; Remove old archive
               (begin
                 (delete-file* output.tar.gz)
-                (rename-file* output-file-name output.tar.gz)
+                (rename-file* temp/output.tar.gz output.tar.gz)
                 (format #t "Project archive ~S created successfully!\n"
                         output.tar.gz))
               ;; Report place of the new archive.
               (format #t "Preserving existing archive in local directory.
 Your new archive lives in ~S\n" temp/output.tar.gz))
           ;; Archive is not in user directory yet, no need to force it.
-          (rename-file* output-file-name output.tar.gz)))
+          (rename-file* temp/output.tar.gz output.tar.gz)))
 
-    ;; Return to the project directory.
-    (chdir project-directory)
     ;; Get rid of temporary directory.
     (debug-format "Remove temporary directory ~S" (dirname temp/project))
     ;; Well, I could make a procedure for recursive removing of
