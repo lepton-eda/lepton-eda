@@ -755,11 +755,11 @@ Your new archive lives in ~S\n" temp/output.tar.gz))
           (rename-file* temp/output.tar.gz project/output.tar.gz)))
 
     ;; Get rid of temporary directory.
-    (debug-format "Remove temporary directory ~S" (dirname temp/project))
+    (debug-format "Remove temporary directory ~S" temp/)
     ;; Well, I could make a procedure for recursive removing of
     ;; the directory contents, but it is simpler just to use 'rm'
     ;; here.
-    (system* "rm" "-r" "-f" (dirname temp/project))))
+    (system* "rm" "-r" "-f" temp/)))
 
 
 ;;; Extracter.
