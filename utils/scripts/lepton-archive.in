@@ -757,12 +757,11 @@ symbol cache directory."
               (delete-file* project/output.tar.gz))
             (rename-file* temp/output.tar.gz project/output.tar.gz)
             (format #t "Project archive ~S created successfully!\n"
-                    project/output.tar.gz))
+                    project/output.tar.gz)
+            (remove-temp-dir temp/))
           ;; Otherwise, report the place of the new archive.
           (format #t "Preserving existing archive in local directory.
-Your new archive lives in ~S\n" temp/output.tar.gz)))
-
-    (remove-temp-dir temp/)))
+Your new archive lives in ~S\n" temp/output.tar.gz)))))
 
 
 ;;; Extracter.
