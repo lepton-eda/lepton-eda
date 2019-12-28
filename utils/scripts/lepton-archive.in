@@ -692,8 +692,10 @@ symbol cache directory."
           (make-tmp-dir (string-append temp/
                                        file-name-separator-string
                                        (basename project-directory))))
-         (temp/project/cache (make-absolute-filename temp/project
-                                                     cache-directory))
+         ;; Add cache directory for symbols.
+         (temp/project/cache
+          (make-tmp-dir (make-absolute-filename temp/project
+                                                cache-directory)))
 
          (output (make-output-file-name))
          (output.tar (string-append output ".tar"))
@@ -718,10 +720,7 @@ symbol cache directory."
     ;; Copy all files over to temporary directory.
     (for-each (cut copy-to-dir <> temp/project) archive-file-list)
 
-    ;; Add cache directory for symbols.  Stick symbol & SPICE
-    ;; files into it.
-    (mkdir* temp/project/cache)
-
+    ;; Stick symbol & SPICE files into the cache directory.
     (save-schematics-and-sources schematic-file-list
                                  temp/project
                                  temp/project/cache)
