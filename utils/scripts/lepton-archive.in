@@ -745,23 +745,22 @@ symbol cache directory."
 
       ;; Now try to move completed archive back to user directory.
       (debug-format "Rename archive to ~S" project/output.tar.gz)
-      (if (file-exists? project/output.tar.gz)
-          ;; Directory already exists
-          (if (prompt-confirmed?
+      (if (or (not (file-exists? project/output.tar.gz))
+              (prompt-confirmed?
                (format #f "~S already exists. Overwrite? [y/N] " project/output.tar.gz)
                ;; default
-               "n")
-              ;; Remove old archive
-              (begin
-                (delete-file* project/output.tar.gz)
-                (rename-file* temp/output.tar.gz project/output.tar.gz)
-                (format #t "Project archive ~S created successfully!\n"
-                        project/output.tar.gz))
-              ;; Report place of the new archive.
-              (format #t "Preserving existing archive in local directory.
-Your new archive lives in ~S\n" temp/output.tar.gz))
-          ;; Archive is not in user directory yet, no need to force it.
-          (rename-file* temp/output.tar.gz project/output.tar.gz)))
+               "n"))
+          ;; Force renaming.
+          (begin
+            (when (file-exists? project/output.tar.gz)
+              ;; Remove old archive if it exists.
+              (delete-file* project/output.tar.gz))
+            (rename-file* temp/output.tar.gz project/output.tar.gz)
+            (format #t "Project archive ~S created successfully!\n"
+                    project/output.tar.gz))
+          ;; Otherwise, report the place of the new archive.
+          (format #t "Preserving existing archive in local directory.
+Your new archive lives in ~S\n" temp/output.tar.gz)))
 
     (remove-temp-dir temp/)))
 
