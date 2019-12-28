@@ -692,6 +692,18 @@ symbol cache directory."
           (make-tmp-dir (string-append temp/
                                        file-name-separator-string
                                        (basename project-directory))))
+         (temp/project/cache (make-absolute-filename temp/project
+                                                     cache-directory))
+
+         (output (make-output-file-name))
+         (output.tar (string-append output ".tar"))
+         (output.tar.gz (string-append output ".tar.gz"))
+         (temp/output.tar
+          (make-absolute-filename temp/project output.tar))
+         (temp/output.tar.gz
+          (make-absolute-filename temp/project output.tar.gz))
+         (project/output.tar.gz
+          (make-absolute-filename project-directory output.tar.gz))
          ;; Create list of files (and directories) to stick into
          ;; archive.  Returned paths point to the absolute paths of
          ;; the files.
@@ -700,19 +712,19 @@ symbol cache directory."
          ;; Returned paths give only the base name (i.e. no path)
          (schematic-file-list (create-schematic-file-list archive-file-list)))
 
+    (debug-format "Cache directory: ~S" temp/project/cache)
+    (debug-format "Archive directory: ~S" temp/project)
+
     ;; Copy all files over to temporary directory.
     (for-each (cut copy-to-dir <> temp/project) archive-file-list)
 
     ;; Add cache directory for symbols.  Stick symbol & SPICE
     ;; files into it.
-    (let ((temp/project/cache (make-absolute-filename temp/project
-                                                      cache-directory)))
-      (debug-format "Cache directory: ~S" temp/project/cache)
-      (mkdir* temp/project/cache)
+    (mkdir* temp/project/cache)
 
-      (save-schematics-and-sources schematic-file-list
-                                   temp/project
-                                   temp/project/cache))
+    (save-schematics-and-sources schematic-file-list
+                                 temp/project
+                                 temp/project/cache)
 
     ;; Now create tar file.  We copy remaining files over to /tmp,
     ;; and then tar them all up using a local, relative file
@@ -721,48 +733,36 @@ symbol cache directory."
     ;; Update copy of gafrc.
     (update-rc temp/project)
 
-    (let* ((output (make-output-file-name))
-           (output.tar (string-append output ".tar"))
-           (output.tar.gz (string-append output ".tar.gz"))
-           (temp/output.tar
-            (make-absolute-filename temp/project output.tar))
-           (temp/output.tar.gz
-            (make-absolute-filename temp/project output.tar.gz))
-           (project/output.tar.gz
-            (make-absolute-filename project-directory output.tar.gz)))
+    ;;  Now use this in tar command.
+    (system* "tar"
+             "-C"
+             temp/
+             "-c"
+             "-f"
+             temp/output.tar
+             (basename temp/project))
+    (system* "gzip" temp/output.tar)
+    ;; Now we should have temp/output.tar.gz prepared.
 
-      (debug-format "Archive directory: ~S" temp/project)
-
-      ;;  Now use this in tar command.
-      (system* "tar"
-               "-C"
-               temp/
-               "-c"
-               "-f"
-               temp/output.tar
-               (basename temp/project))
-      (system* "gzip" temp/output.tar)
-      ;; Now we should have temp/output.tar.gz prepared.
-
-      ;; Now try to move completed archive back to user directory.
-      (debug-format "Rename archive to ~S" project/output.tar.gz)
-      (if (or (not (file-exists? project/output.tar.gz))
-              (prompt-confirmed?
-               (format #f "~S already exists. Overwrite? [y/N] " project/output.tar.gz)
-               ;; default
-               "n"))
-          ;; Force renaming.
-          (begin
-            (when (file-exists? project/output.tar.gz)
-              ;; Remove old archive if it exists.
-              (delete-file* project/output.tar.gz))
-            (rename-file* temp/output.tar.gz project/output.tar.gz)
-            (format #t "Project archive ~S created successfully!\n"
-                    project/output.tar.gz)
-            (remove-temp-dir temp/))
-          ;; Otherwise, report the place of the new archive.
-          (format #t "Preserving existing archive in local directory.
-Your new archive lives in ~S\n" temp/output.tar.gz)))))
+    ;; Now try to move completed archive back to user directory.
+    (debug-format "Rename archive to ~S" project/output.tar.gz)
+    (if (or (not (file-exists? project/output.tar.gz))
+            (prompt-confirmed?
+             (format #f "~S already exists. Overwrite? [y/N] " project/output.tar.gz)
+             ;; default
+             "n"))
+        ;; Force renaming.
+        (begin
+          (when (file-exists? project/output.tar.gz)
+            ;; Remove old archive if it exists.
+            (delete-file* project/output.tar.gz))
+          (rename-file* temp/output.tar.gz project/output.tar.gz)
+          (format #t "Project archive ~S created successfully!\n"
+                  project/output.tar.gz)
+          (remove-temp-dir temp/))
+        ;; Otherwise, report the place of the new archive.
+        (format #t "Preserving existing archive in local directory.
+Your new archive lives in ~S\n" temp/output.tar.gz))))
 
 
 ;;; Extracter.
