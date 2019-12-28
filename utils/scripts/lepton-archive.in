@@ -714,8 +714,11 @@ symbol cache directory."
          ;; Returned paths give only the base name (i.e. no path)
          (schematic-file-list (create-schematic-file-list archive-file-list)))
 
-    (debug-format "Cache directory: ~S" temp/project/cache)
-    (debug-format "Archive directory: ~S" temp/project)
+    (debug-format "Temp directory: ~S" temp/)
+    (debug-format "Temp project directory: ~S" temp/project)
+    (debug-format "Temp cache directory: ~S" temp/project/cache)
+    (debug-format "Temp archive name: ~S" temp/output.tar.gz)
+    (debug-format "Destination archive name: ~S" project/output.tar.gz)
 
     ;; Copy all files over to temporary directory.
     (for-each (cut copy-to-dir <> temp/project) archive-file-list)
