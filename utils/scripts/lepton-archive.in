@@ -701,9 +701,9 @@ symbol cache directory."
          (output.tar (string-append output ".tar"))
          (output.tar.gz (string-append output ".tar.gz"))
          (temp/output.tar
-          (make-absolute-filename temp/project output.tar))
+          (make-absolute-filename temp/ output.tar))
          (temp/output.tar.gz
-          (make-absolute-filename temp/project output.tar.gz))
+          (make-absolute-filename temp/ output.tar.gz))
          (project/output.tar.gz
           (make-absolute-filename project-directory output.tar.gz))
          ;; Create list of files (and directories) to stick into
