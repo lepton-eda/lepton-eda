@@ -115,7 +115,7 @@ Command line switches:
   -o,--output=FILE      -- Specify the name of the output archive file
                            in archive mode.   If FILE has no \".tar.gz\"
                            suffix it will be automatically appended.
-                           Default file name is ~S.
+                           Default file name is \"~A.tar.gz\".
 
 Example usage:
    Create an archive named \"MyArchive.tar.gz\",
