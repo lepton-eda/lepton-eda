@@ -714,8 +714,9 @@ symbol cache directory."
                                    temp/project
                                    temp/project/cache))
 
-    ;; Now create tar file.  We copy remaining files over to /tmp, and then tar them
-    ;; all up using a local, relative file prefix.
+    ;; Now create tar file.  We copy remaining files over to /tmp,
+    ;; and then tar them all up using a local, relative file
+    ;; prefix.
 
     ;; Update copy of gafrc.
     (update-rc temp/project)
