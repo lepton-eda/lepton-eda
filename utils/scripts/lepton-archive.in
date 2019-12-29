@@ -687,11 +687,12 @@ symbol cache directory."
   (let* (
          ;; Make a temporary directory.
          (temp/ (make-tmp-dir (tmpnam)))
-         ;; Temporary project directory to put files and create archive in.
+         ;; Temporary project directory to put files and create
+         ;; archive in.
          (temp/project
-          (make-tmp-dir (string-append temp/
-                                       file-name-separator-string
-                                       (basename project-directory))))
+          (make-tmp-dir
+           (make-absolute-filename temp/
+                                   (basename project-directory))))
          ;; Add cache directory for symbols.
          (temp/project/cache
           (make-tmp-dir (make-absolute-filename temp/project
