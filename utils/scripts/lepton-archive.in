@@ -669,6 +669,10 @@ symbol cache directory."
                             (append (schematic-page-filenames toplevel-schematics)
                                     subschematic-filenames))))
 
+    (debug-format "Subschematic filenames: ~S" subschematic-filenames)
+    (debug-format "Source filenames: ~S" source-filenames)
+    (debug-format "Symbol filenames: ~S" symbol-filenames)
+
     (for-each (lambda (sch) (copy-to-dir sch temp-dir))
               (schematic-page-filenames toplevel-schematics))
     (for-each (lambda (sch) (copy-to-dir sch cache-dir)) subschematic-filenames)
