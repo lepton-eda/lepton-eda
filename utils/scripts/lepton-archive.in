@@ -134,9 +134,9 @@ Example usage:
    Extract an archive:
    lepton-archive -e ~A.tar.gz
 "
-(basename (car (program-arguments)))
-default-archive-name
-default-archive-name))
+          (basename (car (program-arguments)))
+          default-archive-name
+          default-archive-name))
 
 (define (debug-format s . args)
   "Formats and outputs S using ARGS when the verbose mode is set."
