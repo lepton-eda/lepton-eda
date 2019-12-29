@@ -644,15 +644,6 @@ symbol cache directory."
          source-filename)))
 
 
-(define (schematic-page-filenames toplevel-schematics)
-  (filter-map
-   (lambda (sch) (let ((cwd-filename (string-append (getcwd)
-                                               file-name-separator-string
-                                               sch)))
-              (and (file-exists? cwd-filename) cwd-filename)))
-   toplevel-schematics))
-
-
 (define (subschematic-page-filenames schematic)
   (let ((files (delete-duplicates
                 (flatten-tree (schematic-name-tree schematic)))))
@@ -666,15 +657,9 @@ symbol cache directory."
                                         (schematic-components* schematic)))
          (source-filenames (filter-map source-library-filename schematic-sources))
          (symbol-filenames (create-symbol-file-list
-                            (append (schematic-page-filenames toplevel-schematics)
-                                    subschematic-filenames))))
+                            (append toplevel-schematics subschematic-filenames))))
 
-    (debug-format "Subschematic filenames: ~S" subschematic-filenames)
-    (debug-format "Source filenames: ~S" source-filenames)
-    (debug-format "Symbol filenames: ~S" symbol-filenames)
-
-    (for-each (lambda (sch) (copy-to-dir sch temp-dir))
-              (schematic-page-filenames toplevel-schematics))
+    (for-each (lambda (sch) (copy-to-dir sch temp-dir)) toplevel-schematics)
     (for-each (lambda (sch) (copy-to-dir sch cache-dir)) subschematic-filenames)
     (for-each (lambda (cir) (copy-to-dir cir cache-dir)) source-filenames)
     (save-symbols symbol-filenames cache-dir)))
