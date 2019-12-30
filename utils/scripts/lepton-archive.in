@@ -639,9 +639,13 @@ symbol cache directory."
 
 (define (source-library-filename filename)
   (let ((source-filename (get-source-library-file filename)))
-    (and source-filename
-         (file-exists? source-filename)
-         source-filename)))
+    (if (and source-filename
+             (file-exists? source-filename))
+        source-filename
+        (begin
+          (debug-format "File ~S does not exist. Check your source-library."
+                        filename)
+          #f))))
 
 
 (define (subschematic-page-filenames schematic)
