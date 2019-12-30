@@ -157,6 +157,10 @@ Example usage:
 
 
 (define (make-absolute-filename dir-name file-name)
+  "Transforms FILE-NAME into an absolute filename using DIR-NAME
+as a prefix if it is a relative filename, otherwise leaves it as
+is.  Thus, filenames containing special paths like \".\" or \"..\"
+or no directory path can be converted into absolute."
   (if (absolute-file-name? file-name)
       file-name
       (string-append dir-name
