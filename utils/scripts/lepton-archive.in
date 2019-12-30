@@ -648,15 +648,22 @@ symbol cache directory."
           #f))))
 
 
-(define (subschematic-page-filenames schematic)
+(define (subschematic-page-filenames schematic toplevel-schematics)
+  (define (non-toplevel? name)
+    (not (member (make-absolute-filename project-directory
+                                         name)
+                 toplevel-schematics)))
+
   (let ((files (delete-duplicates
                 (flatten-tree (schematic-name-tree schematic)))))
-    (filter-map source-library-filename files)))
+    (filter-map source-library-filename
+                (filter non-toplevel? files))))
 
 
 (define (save-schematics-and-sources toplevel-schematics temp-dir cache-dir)
   (let* ((schematic (file-name-list->schematic toplevel-schematics))
-         (subschematic-filenames (subschematic-page-filenames schematic))
+         (subschematic-filenames (subschematic-page-filenames schematic
+                                                              toplevel-schematics))
          (schematic-sources (filter-map (lambda (c) (schematic-component-attribute c 'file))
                                         (schematic-components* schematic)))
          (source-filenames (filter-map source-library-filename schematic-sources))
