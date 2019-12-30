@@ -175,6 +175,14 @@ Example usage:
 (define command-line-file-list (option-ref %options '() '()))
 
 
+(define gafrc "gafrc")
+;;; Directory holding files to archive. It is the current
+;;; directory where the program was invoked.
+(define project-directory (getcwd))
+;;; Directory for caching schematic files.
+(define cache-directory "cache")
+
+
 (define (debug-format s . args)
   "Formats and outputs S using ARGS when the verbose mode is set."
   (when verbose-mode?
@@ -209,8 +217,6 @@ or no directory path can be converted into absolute."
   "Checks if FILENAME is a valid archive filename."
   (string-suffix-ci? ".tar.gz" filename))
 
-
-(define gafrc "gafrc")
 
 ;;; Check for options invalid in extract mode.
 (define (validate/extract-mode filename)
@@ -248,13 +254,6 @@ or no directory path can be converted into absolute."
   (form-output-file-name
    (or (validate/extract-mode output-archive-name)
        default-archive-name)))
-
-;;; Directory holding files to archive. It is the current
-;;; directory where the program was invoked.
-(define project-directory (getcwd))
-
-;;; Directory for caching schematic files.
-(define cache-directory "cache")
 
 
 (define (report-preserve-existing-file file)
