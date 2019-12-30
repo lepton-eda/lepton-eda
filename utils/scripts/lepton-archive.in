@@ -218,19 +218,15 @@ or no directory path can be converted into absolute."
   (string-suffix-ci? ".tar.gz" filename))
 
 
-(define (form-output-file-name s)
-  (let* ((suffix ".tar.gz")
-         (suffix-length (string-length ".tar.gz")))
-    (if (string-suffix-ci? suffix s)
-        (string-drop-right s suffix-length)
-        s)))
-
-
 ;;; Make up output archive name.
-(define (make-output-file-name)
-  (form-output-file-name
-   (or output-archive-name
-       default-archive-name)))
+(define (form-output-file-name)
+  (let* ((name (or output-archive-name
+                   default-archive-name))
+         (suffix ".tar.gz")
+         (suffix-length (string-length ".tar.gz")))
+    (if (string-suffix-ci? suffix name)
+        (string-drop-right name suffix-length)
+        name)))
 
 
 (define (report-preserve-existing-file file)
@@ -687,7 +683,7 @@ symbol cache directory."
           (make-tmp-dir (make-absolute-filename temp/project
                                                 cache-directory)))
 
-         (output (make-output-file-name))
+         (output (form-output-file-name))
          (output.tar (string-append output ".tar"))
          (output.tar.gz (string-append output.tar ".gz"))
          (temp/output.tar
