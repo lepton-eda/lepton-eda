@@ -210,20 +210,6 @@ or no directory path can be converted into absolute."
   (string-suffix-ci? ".tar.gz" filename))
 
 
-;;; Program mode.
-(define check-help-mode?
-  (and help-mode?
-       (display usage-info)
-       (primitive-exit 0)))
-
-
-;; Archive mode is default. Don't check any options, just check
-;; extract mode is not set.
-(define check-archive-mode?
-  (if (and extract-mode? archive-mode?)
-      (format-error "Mutually exclusive option --archive and --extract.\n")
-      (not extract-mode?)))
-
 (define gafrc "gafrc")
 
 ;;; Check for options invalid in extract mode.
@@ -866,9 +852,18 @@ the file manually.\n"))
 
 ;;; Main program.
 (define (main)
-  (if extract-mode?
-      (extract)
-      (archive)))
+  (when help-mode?
+    (display usage-info)
+    (primitive-exit 0))
+
+  (if (and extract-mode? archive-mode?)
+      (format-error "Mutually exclusive option --archive and --extract.\n")
+
+      ;; Archive mode is default. Don't check any options, just check
+      ;; extract mode is set or not.
+      (if extract-mode?
+          (extract)
+          (archive))))
 
 
 (%with-toplevel (%make-toplevel)
