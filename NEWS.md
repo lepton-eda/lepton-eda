@@ -164,13 +164,11 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   documentation, a message box is displayed. No backtrace, nor
   Guile errors are printed to the log window.
 
-- The `system-gschemrc` file has been removed, all settings have been migrated
+- All the `gschemrc` options are now deprecated, the settings have been migrated
   to new configuration system (`*.conf` files). Use `lepton-cli config` to read
   and modify them. New options have the same names and possible values (use
-  `true`/`false` for booleans instead of `"enabled"` and `"disabled"`). Old RC
-  options are deprecated now, though you can still use them in `gschemrc` files
-  (warnings will be issued). Please refer to the
-  [Configuration Settings](https://github.com/graahnul-grom/lepton-eda/wiki/Configuration-Settings)
+  `true`/`false` for booleans instead of `"enabled"` and `"disabled"`). Please refer
+  to the [Configuration Settings](https://github.com/graahnul-grom/lepton-eda/wiki/Configuration-Settings)
   document for more information.
 
 ### Changes in `examples`:
