@@ -226,19 +226,17 @@ or no directory path can be converted into absolute."
       filename))
 
 
-;;; File must exist.
-(define (check-existence filename)
-  (if (file-exists? filename)
-      filename
-      (format-error "Resource file ~S doesn't exist.  Exiting.\n"
-                    filename)))
 
 (define archiverc
   (let ((files-from archiverc-name))
     (and (not extract-mode?)
          (string? files-from)
          files-from
-         (check-existence files-from))))
+         ;; The file must exist.
+         (if (file-exists? files-from)
+             files-from
+             (format-error "Resource file ~S doesn't exist.  Exiting.\n"
+                           files-from)))))
 
 
 (define (form-output-file-name s)
