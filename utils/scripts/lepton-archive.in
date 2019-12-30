@@ -226,19 +226,6 @@ or no directory path can be converted into absolute."
       filename))
 
 
-
-(define archiverc
-  (let ((files-from archiverc-name))
-    (and (not extract-mode?)
-         (string? files-from)
-         files-from
-         ;; The file must exist.
-         (if (file-exists? files-from)
-             files-from
-             (format-error "Resource file ~S doesn't exist.  Exiting.\n"
-                           files-from)))))
-
-
 (define (form-output-file-name s)
   (let* ((suffix ".tar.gz")
          (suffix-length (string-length ".tar.gz")))
@@ -498,6 +485,16 @@ or no directory path can be converted into absolute."
   "Create the list of files to archive, including \"gafrc\",
 files listed in the command line, and in the file specified by
 option \"--files-from\" (\"-f\")."
+  (define archiverc
+    (let ((files-from archiverc-name))
+      (and (string? files-from)
+           files-from
+           ;; The file must exist.
+           (if (file-exists? files-from)
+               files-from
+               (format-error "Resource file ~S doesn't exist.  Exiting.\n"
+                             files-from)))))
+
   (define not-string-null? (negate string-null?))
 
   (define (archiverc-filenames)
