@@ -620,6 +620,11 @@ symbol cache directory."
         ;; If we cannot find the filename in the source library,
         ;; maybe it was specified prefixed with a directory name.
         (and (not (string= filename (basename filename)))
+             (format #t "File ~S will be copied to the ~S subdirectory of your archive.
+This can lead to wrong processing of your schematics by other tools.
+Please use file basenames in your schematics to fix this.\n\n"
+                     filename
+                     cache-directory)
              (make-absolute-filename project-directory filename))))
 
   (let ((source-filename (get-source-or-absolute-filename)))
