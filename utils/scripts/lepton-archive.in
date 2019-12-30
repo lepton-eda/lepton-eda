@@ -555,7 +555,7 @@ option \"--files-from\" (\"-f\")."
 
   (delete-duplicates
    (append
-     ;; Add RC files.
+    ;; Add RC files.
     (list (add-rc-file gafrc))
     ;; Get names of all schematics and other files to archive.
     ;; First get file names from command line.
