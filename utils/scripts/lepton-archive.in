@@ -638,7 +638,14 @@ symbol cache directory."
 
 
 (define (source-library-filename filename)
-  (let ((source-filename (get-source-library-file filename)))
+  (define (get-source-or-absolute-filename)
+    (or (get-source-library-file filename)
+        ;; If we cannot find the filename in the source library,
+        ;; maybe it was specified prefixed with a directory name.
+        (and (not (string= filename (basename filename)))
+             (make-absolute-filename project-directory filename))))
+
+  (let ((source-filename (get-source-or-absolute-filename)))
     (if (and source-filename
              (file-exists? source-filename))
         source-filename
