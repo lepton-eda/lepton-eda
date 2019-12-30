@@ -218,14 +218,6 @@ or no directory path can be converted into absolute."
   (string-suffix-ci? ".tar.gz" filename))
 
 
-;;; Check for options invalid in extract mode.
-(define (validate/extract-mode filename)
-  (if extract-mode?
-      (and filename
-           (format-error "Incompatible command line arguments.\n"))
-      filename))
-
-
 (define (form-output-file-name s)
   (let* ((suffix ".tar.gz")
          (suffix-length (string-length ".tar.gz")))
@@ -237,7 +229,7 @@ or no directory path can be converted into absolute."
 ;;; Make up output archive name.
 (define (make-output-file-name)
   (form-output-file-name
-   (or (validate/extract-mode output-archive-name)
+   (or output-archive-name
        default-archive-name)))
 
 
@@ -856,7 +848,10 @@ the file manually.\n"))
       ;; Archive mode is default. Don't check any options, just check
       ;; extract mode is set or not.
       (if extract-mode?
-          (extract)
+          (if output-archive-name
+              ;; Check for options invalid in extract mode.
+              (format-error "Incompatible command line arguments --extract and --output.\n")
+              (extract))
           (archive))))
 
 
