@@ -138,9 +138,46 @@ Example usage:
           default-archive-name
           default-archive-name))
 
+(define %option-spec
+  '((help (single-char #\h) (value #f))
+    (files-from (single-char #\f) (value #t))
+    (verbose (single-char #\v) (value #f))
+    (extract (single-char #\e) (value #f))
+    (archive (single-char #\a) (value #f))
+    (output (single-char #\o) (value #t))))
+
+
+(define (format-error s . args)
+  (apply format (current-error-port) s args)
+  (primitive-exit 1))
+
+
+(define (wrong-option-handler)
+  "Primitive wrong option handler for getopt-long."
+  (format-error "Use \"~A -h\" for help\n" (car (program-arguments))))
+
+
+;;; Options.
+(define %options
+  (catch #t
+    (lambda ()
+      (getopt-long (program-arguments) %option-spec))
+    (lambda (key . args)
+      (wrong-option-handler))))
+
+
+(define archive-mode? (option-ref %options 'archive #f))
+(define extract-mode? (option-ref %options 'extract #f))
+(define output-archive-name (option-ref %options 'output #f))
+(define archiverc-name (option-ref %options 'files-from #f))
+(define help-mode? (option-ref %options 'help #f))
+(define verbose-mode? (option-ref %options 'verbose #f))
+(define command-line-file-list (option-ref %options '() '()))
+
+
 (define (debug-format s . args)
   "Formats and outputs S using ARGS when the verbose mode is set."
-  (when (option-ref %options 'verbose #f)
+  (when verbose-mode?
     (display "---- ")
     (apply format (current-error-port) s args)
     (newline)))
@@ -173,45 +210,17 @@ or no directory path can be converted into absolute."
   (string-suffix-ci? ".tar.gz" filename))
 
 
-(define %option-spec
-  '((help (single-char #\h) (value #f))
-    (files-from (single-char #\f) (value #t))
-    (verbose (single-char #\v) (value #f))
-    (extract (single-char #\e) (value #f))
-    (archive (single-char #\a) (value #f))
-    (output (single-char #\o) (value #t))))
-
-
-(define (format-error s . args)
-  (apply format (current-error-port) s args)
-  (primitive-exit 1))
-
-
-(define (wrong-option-handler)
-  "Primitive wrong option handler for getopt-long."
-  (format-error "Use \"~A -h\" for help\n" (car (program-arguments))))
-
-;;; Options.
-(define %options
-  (catch #t
-    (lambda ()
-      (getopt-long (program-arguments) %option-spec))
-    (lambda (key . args)
-      (wrong-option-handler))))
-
 ;;; Program mode.
-(define help-mode?
-  (and (option-ref %options 'help #f)
+(define check-help-mode?
+  (and help-mode?
        (display usage-info)
        (primitive-exit 0)))
 
-(define extract-mode? (option-ref %options 'extract #f))
 
 ;; Archive mode is default. Don't check any options, just check
 ;; extract mode is not set.
-(define archive-mode?
-  (if (and extract-mode?
-           (option-ref %options 'archive #f))
+(define check-archive-mode?
+  (if (and extract-mode? archive-mode?)
       (format-error "Mutually exclusive option --archive and --extract.\n")
       (not extract-mode?)))
 
@@ -233,7 +242,7 @@ or no directory path can be converted into absolute."
                     filename)))
 
 (define archiverc
-  (let ((files-from (option-ref %options 'files-from #f)))
+  (let ((files-from archiverc-name))
     (and (not extract-mode?)
          (string? files-from)
          files-from
@@ -251,7 +260,7 @@ or no directory path can be converted into absolute."
 ;;; Make up output archive name.
 (define (make-output-file-name)
   (form-output-file-name
-   (or (validate/extract-mode (option-ref %options 'output #f))
+   (or (validate/extract-mode output-archive-name)
        default-archive-name)))
 
 ;;; Directory holding files to archive. It is the current
@@ -260,9 +269,6 @@ or no directory path can be converted into absolute."
 
 ;;; Directory for caching schematic files.
 (define cache-directory "cache")
-
-
-(define command-line-file-list (option-ref %options '() '()))
 
 
 (define (report-preserve-existing-file file)
