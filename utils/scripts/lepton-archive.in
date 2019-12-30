@@ -94,6 +94,13 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Default archive name. Use lowercase letters to avoid issues
 ;;; with case sensitive filesystems.
 (define default-archive-name "project-archive")
+(define gafrc "gafrc")
+;;; Directory holding files to archive. It is the current
+;;; directory where the program was invoked.
+(define project-directory (getcwd))
+;;; Directory for caching schematic files.
+(define cache-directory "cache")
+
 
 ;;; Help string.
 (define usage-info
@@ -173,14 +180,6 @@ Example usage:
 (define help-mode? (option-ref %options 'help #f))
 (define verbose-mode? (option-ref %options 'verbose #f))
 (define command-line-file-list (option-ref %options '() '()))
-
-
-(define gafrc "gafrc")
-;;; Directory holding files to archive. It is the current
-;;; directory where the program was invoked.
-(define project-directory (getcwd))
-;;; Directory for caching schematic files.
-(define cache-directory "cache")
 
 
 (define (debug-format s . args)
