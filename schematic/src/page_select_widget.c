@@ -349,6 +349,11 @@ pagesel_callback_fullpaths_toggled (GtkToggleButton* btn, gpointer data)
   pagesel->show_paths_ = gtk_toggle_button_get_active (btn);
   pagesel_update (pagesel);
 
+  if (!pagesel->show_paths_)
+  {
+    gtk_tree_view_columns_autosize (pagesel->treeview_);
+  }
+
   /* Save config: whether to show full paths in the pages list:
   */
   EdaConfig* cfg = eda_config_get_cache_context();
