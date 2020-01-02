@@ -134,6 +134,92 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
 
 
 
+/*! \brief Replace last 3 chars in filename with \a suffix and get basename
+ *
+ *  \par Function Description
+ *  Example:
+ *  basename_switch_suffix( "/path/to/file.sch", "sym" ) => "file.sym"
+ *  Caller must g_free() the return value.
+ *
+ *  \param  path    Full file path.
+ *  \param  suffix  A new suffix.
+ *
+ *  \return File's basename with suffix replaces with \a suffix
+ */
+static gchar*
+basename_switch_suffix (const gchar* path, const gchar* suffix)
+{
+  gchar* bname = g_path_get_basename (path);
+  if (bname == NULL)
+  {
+    return NULL;
+  }
+
+  gchar* name      = (gchar*) malloc (PATH_MAX);
+  glong  len_bname = g_utf8_strlen (bname, -1);
+
+  const gsize len_suffix = 3;
+  g_utf8_strncpy (name, bname, len_bname - len_suffix);
+
+  gchar* bname_new = g_strconcat (name, suffix, NULL);
+
+#ifdef DEBUG
+  printf( " .. bname:     [%s]\n",  bname );
+  printf( " .. len_bname: [%lu]\n", len_bname );
+  printf( " .. name:      [%s]\n",  name );
+  printf( " .. bname_new: [%s]\n",  bname_new );
+#endif
+
+  g_free (name);
+  g_free (bname);
+
+  return bname_new;
+
+} /* basename_switch_suffix() */
+
+
+
+/*! \brief Dialog's "filter" property change notification handler
+ *
+ *  \par Function Description
+ *  Change filename's extension (.sch or .sym) in the "Save As"
+ *  dialog according to the currently selected filter.
+ */
+static void
+on_filter_changed (GtkFileChooserDialog* dialog, gpointer data)
+{
+  GtkFileChooser* chooser = GTK_FILE_CHOOSER (dialog);
+  GtkFileFilter*  filter  = gtk_file_chooser_get_filter (chooser);
+
+  gchar* fname = gtk_file_chooser_get_filename (chooser);
+  if (fname == NULL)
+  {
+    return;
+  }
+
+
+  gchar* bname = NULL;
+
+  if (filter == filter_sch && g_str_has_suffix (fname, ".sym"))
+  {
+    bname = basename_switch_suffix (fname, "sch");
+  }
+  else
+  if (filter == filter_sym && g_str_has_suffix (fname, ".sch"))
+  {
+    bname = basename_switch_suffix (fname, "sym");
+  }
+
+  if (bname != NULL)
+  {
+    gtk_file_chooser_set_current_name (chooser, bname);
+    g_free (bname);
+  }
+
+} /* on_filter_changed() */
+
+
+
 /*! \brief Updates the preview when the selection changes.
  *  \par Function Description
  *  This is the callback function connected to the 'update-preview'
@@ -382,6 +468,14 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page, gboolean* result)
     gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), bname);
     g_free (bname);
   }
+
+
+  /* add handler for dialog's "filter" property change notification:
+  */
+  g_signal_connect (dialog,
+                    "notify::filter",
+                    G_CALLBACK (&on_filter_changed),
+                    NULL);
 
 
   /*
