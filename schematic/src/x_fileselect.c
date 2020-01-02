@@ -54,7 +54,7 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
   {
     filter_sch = gtk_file_filter_new();
 
-    gtk_file_filter_set_name (filter_sch, _("Schematics"));
+    gtk_file_filter_set_name (filter_sch, _("Schematics (*.sch)"));
     gtk_file_filter_add_pattern (filter_sch, "*.sch");
 
     /* NOTE: GtkFileChooser object takes ownership of the filter:
@@ -66,7 +66,7 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
   {
     filter_sym = gtk_file_filter_new();
 
-    gtk_file_filter_set_name (filter_sym, _("Symbols"));
+    gtk_file_filter_set_name (filter_sym, _("Symbols (*.sym)"));
     gtk_file_filter_add_pattern (filter_sym, "*.sym");
 
     g_object_ref (G_OBJECT (filter_sym));
@@ -76,7 +76,7 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
   {
     filter_sch_sym = gtk_file_filter_new();
 
-    gtk_file_filter_set_name (filter_sch_sym, _("Schematics and symbols"));
+    gtk_file_filter_set_name (filter_sch_sym, _("Schematics and symbols (*.sch *.sym)"));
     gtk_file_filter_add_pattern (filter_sch_sym, "*.sym");
     gtk_file_filter_add_pattern (filter_sch_sym, "*.sch");
 
