@@ -811,9 +811,6 @@ x_tabs_hdr_create (TabInfo* nfo)
   GtkWidget* box_lab        = gtk_hbox_new (FALSE, 0);
   GtkWidget* box_btns_right = gtk_hbox_new (FALSE, 0);
 
-  const gboolean show_btn_up    = x_tabs_show_up_button();
-  const gboolean show_btn_close = x_tabs_show_close_button();
-
 
   /* label:
   */
@@ -899,7 +896,7 @@ x_tabs_hdr_create (TabInfo* nfo)
   TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (nfo->tl_);
   PAGE* parent = s_hierarchy_find_up_page (toplevel->pages, nfo->page_);
 
-  if (show_btn_up && parent != NULL)
+  if (x_tabs_show_up_button() && parent != NULL)
   {
     const gchar* parent_fname = s_page_get_filename (parent);
     gchar*       parent_bname = NULL;
@@ -929,7 +926,7 @@ x_tabs_hdr_create (TabInfo* nfo)
 
   /* setup "close" btn:
   */
-  if (show_btn_close)
+  if (x_tabs_show_close_button())
   {
     gtk_box_pack_start (GTK_BOX (box_btns_right), btn_close, FALSE, FALSE, 0);
 
