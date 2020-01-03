@@ -67,6 +67,12 @@
  * type:        boolean
  * default val: true
  *
+ * 4) Whether to show tabs tooltips:
+ * key:         show-tooltips
+ * group:       schematic.tabs
+ * type:        boolean
+ * default val: true
+ *
  */
 
 #include "gschem.h"
@@ -82,6 +88,9 @@ g_x_tabs_show_close_button = TRUE;
 
 static gboolean
 g_x_tabs_show_up_button = TRUE;
+
+static gboolean
+g_x_tabs_show_tooltips = TRUE;
 
 
 
@@ -108,6 +117,14 @@ static gboolean
 x_tabs_show_up_button()
 {
   return g_x_tabs_show_up_button;
+}
+
+
+
+static gboolean
+x_tabs_show_tooltips()
+{
+  return g_x_tabs_show_tooltips;
 }
 
 
@@ -169,7 +186,22 @@ x_tabs_init()
     }
 
     g_clear_error (&err);
-  }
+
+
+    /* read config: whether to show tabs tooltips:
+    */
+    val = eda_config_get_boolean (cfg,
+                                  "schematic.tabs",
+                                  "show-tooltips",
+                                  &err);
+    if (err == NULL)
+    {
+      g_x_tabs_show_tooltips = val;
+    }
+
+    g_clear_error (&err);
+
+  } /* if: cfg */
 
 } /* x_tabs_init() */
 
@@ -840,8 +872,12 @@ x_tabs_hdr_create (TabInfo* nfo)
 
   /* tab's tooltip:
   */
-  /* display full path of the schematic file: */
-  gtk_widget_set_tooltip_text (box_hdr, fname);
+  if (x_tabs_show_tooltips())
+  {
+    /* the full path of the schematic file:
+    */
+    gtk_widget_set_tooltip_text (box_hdr, fname);
+  }
 
 
   /* make tab btns smaller => smaller tabs:
