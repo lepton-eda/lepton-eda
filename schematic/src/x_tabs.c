@@ -129,7 +129,26 @@ x_tabs_show_tooltips()
 
 
 
-/*! \brief Initialize tabbed GUI.
+static void
+cfg_read_bool (EdaConfig*   cfg,
+               const gchar* group,
+               const gchar* key,
+               gboolean*    result)
+{
+  GError*  err = NULL;
+  gboolean val = eda_config_get_boolean (cfg, group, key, &err);
+
+  if (err == NULL)
+  {
+    *result = val;
+  }
+
+  g_clear_error (&err);
+}
+
+
+
+/*! \brief Initialize tabbed GUI; read configuration
  *  \public
  *
  *  \par Function Description
@@ -144,64 +163,18 @@ x_tabs_init()
 
   if (cfg != NULL)
   {
-    GError* err = NULL;
+    cfg_read_bool (cfg, "schematic.gui", "use-tabs",
+                   &g_x_tabs_enabled);
 
-    /* read config: whether to use tabbed GUI:
-    */
-    gboolean val = eda_config_get_boolean (cfg,
-                                           "schematic.gui",
-                                           "use-tabs",
-                                           &err);
-    if (err == NULL)
-    {
-      g_x_tabs_enabled = val;
-    }
+    cfg_read_bool (cfg, "schematic.tabs", "show-close-button",
+                   &g_x_tabs_show_close_button);
 
-    g_clear_error (&err);
+    cfg_read_bool (cfg, "schematic.tabs", "show-up-button",
+                   &g_x_tabs_show_up_button);
 
-
-    /* read config: whether to show "close" button:
-    */
-    val = eda_config_get_boolean (cfg,
-                                  "schematic.tabs",
-                                  "show-close-button",
-                                  &err);
-    if (err == NULL)
-    {
-      g_x_tabs_show_close_button = val;
-    }
-
-    g_clear_error (&err);
-
-
-    /* read config: whether to show "hierarchy up" button:
-    */
-    val = eda_config_get_boolean (cfg,
-                                  "schematic.tabs",
-                                  "show-up-button",
-                                  &err);
-    if (err == NULL)
-    {
-      g_x_tabs_show_up_button = val;
-    }
-
-    g_clear_error (&err);
-
-
-    /* read config: whether to show tabs tooltips:
-    */
-    val = eda_config_get_boolean (cfg,
-                                  "schematic.tabs",
-                                  "show-tooltips",
-                                  &err);
-    if (err == NULL)
-    {
-      g_x_tabs_show_tooltips = val;
-    }
-
-    g_clear_error (&err);
-
-  } /* if: cfg */
+    cfg_read_bool (cfg, "schematic.tabs", "show-tooltips",
+                   &g_x_tabs_show_tooltips);
+  }
 
 } /* x_tabs_init() */
 
