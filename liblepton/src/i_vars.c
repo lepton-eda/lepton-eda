@@ -28,12 +28,10 @@
  * Kazu Hirata <kazu@seul.org> on July 16, 1999 - Added these absolute
  * defaults used when default_... is NULL.
  */
-#define DEFAULT_BITMAP_DIRECTORY "../lib/bitmaps"
 #define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
 
 
 
-char *default_bitmap_directory = NULL;
 char *default_bus_ripper_symname = NULL;
 GPtrArray *default_always_promote_attributes = NULL;
 
@@ -73,11 +71,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
 
   /* you cannot free the default* strings here since new windows */
   /* need them */
-  g_free (toplevel->bitmap_directory);
-  toplevel->bitmap_directory = g_strdup (default_bitmap_directory ?
-                                         default_bitmap_directory :
-                                         DEFAULT_BITMAP_DIRECTORY);
-
   g_free (toplevel->bus_ripper_symname);
   toplevel->bus_ripper_symname = g_strdup (default_bus_ripper_symname ?
                                            default_bus_ripper_symname :
@@ -93,7 +86,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
  */
 void i_vars_libgeda_freenames()
 {
-  g_free(default_bitmap_directory);
   g_free(default_bus_ripper_symname);
 
   g_ptr_array_unref (default_always_promote_attributes);

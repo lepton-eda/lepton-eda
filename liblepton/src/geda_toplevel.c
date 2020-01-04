@@ -49,8 +49,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->RC_list = NULL;
 
-  toplevel->bitmap_directory   = NULL;
-
   /* These values are the default extents of the schematic drawing area.
    *
    * The negative values allow symbols, residing at the origin, to be
@@ -114,7 +112,6 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
     g_source_remove (toplevel->auto_save_timeout);
   }
 
-  g_free (toplevel->bitmap_directory);
   g_free (toplevel->bus_ripper_symname);
 
   /* delete all pages */

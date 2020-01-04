@@ -31,8 +31,6 @@ struct st_toplevel
 
   GList *RC_list;                       /* List of RC files which have been read in. */
 
-  char *bitmap_directory; 		/* path of the bitmaps */
-
   int init_left, init_right; 		/* Starting values for above */
   int init_top, init_bottom;
 

@@ -24,9 +24,6 @@
 (use-modules (geda deprecated))
 
 
-;; The directory containing various bitmaps (e.g. icons)
-(bitmap-directory (build-path geda-data-path "bitmap"))
-
 ; The default bus ripper symbol, used when the
 ; schematic::bus-ripper-type configuration key
 ; is set to "component".
