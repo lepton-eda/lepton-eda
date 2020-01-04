@@ -1,5 +1,3 @@
-extern char *default_bus_ripper_symname;
-
 extern GPtrArray *default_always_promote_attributes;
 
 extern int default_attribute_promotion;

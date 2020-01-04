@@ -76,8 +76,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->make_backup_files = TRUE;
 
-  toplevel->bus_ripper_symname = NULL;
-
   toplevel->force_boundingbox = FALSE;
 
   toplevel->always_promote_attributes = NULL;
@@ -111,8 +109,6 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
     /* Assume this works */
     g_source_remove (toplevel->auto_save_timeout);
   }
-
-  g_free (toplevel->bus_ripper_symname);
 
   /* delete all pages */
   s_page_delete_list (toplevel);

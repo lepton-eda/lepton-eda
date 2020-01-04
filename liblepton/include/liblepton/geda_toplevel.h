@@ -66,9 +66,6 @@ struct st_toplevel
   /* controls the generation of backup (~) files */
   int make_backup_files;
 
-  /* filename of the bus ripper component if set above */
-  char *bus_ripper_symname;
-
   /* controls if the whole bounding box is used in the auto whichend code */
   int force_boundingbox;
 

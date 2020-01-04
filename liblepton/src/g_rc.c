@@ -734,31 +734,6 @@ SCM_DEFINE (scheme_directory,"%scheme-directory", 1, 0, 0,
  *  \brief
  *  \par Function Description
  *
- *  \param [in] scmsymname  
- *  \return SCM_BOOL_T always.
- */
-SCM_DEFINE (bus_ripper_symname, "%bus-ripper-symname", 1, 0, 0,
-            (SCM scmsymname),
-            "Choose the name of a symbol which should represent bus-rippers in schematics.")
-{
-  char *temp;
-
-  SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
-              SCM_ARG1, s_bus_ripper_symname);
-
-  g_free(default_bus_ripper_symname);
-
-  temp = scm_to_utf8_string (scmsymname);
-  default_bus_ripper_symname = g_strdup (temp);
-  free (temp);
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
  *  \return SCM_BOOL_T always.
  */
 SCM_DEFINE (reset_component_library, "%reset-component-library", 0, 0, 0,
@@ -949,7 +924,6 @@ init_module_lepton_core_rc (void *unused)
   /* Add them to the module's public definitions. */
   scm_c_export (s_always_promote_attributes,
                 s_attribute_promotion,
-                s_bus_ripper_symname,
                 s_component_library,
                 s_component_library_command,
                 s_component_library_funcs,
