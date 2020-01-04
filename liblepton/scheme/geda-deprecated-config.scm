@@ -120,6 +120,7 @@ option's value:
 
 (define-rc-dead-config postscript-prolog)
 (define-rc-dead-config world-size)
+(define-rc-dead-config bitmap-directory)
 
 ;; ===================================================================
 ;; Deprecated lepton-schematic configuration functions
