@@ -28,11 +28,8 @@
  * Kazu Hirata <kazu@seul.org> on July 16, 1999 - Added these absolute
  * defaults used when default_... is NULL.
  */
-#define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
 
 
-
-char *default_bus_ripper_symname = NULL;
 GPtrArray *default_always_promote_attributes = NULL;
 
 int   default_attribute_promotion = TRUE;
@@ -69,12 +66,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
       g_ptr_array_ref (default_always_promote_attributes);
   }
 
-  /* you cannot free the default* strings here since new windows */
-  /* need them */
-  g_free (toplevel->bus_ripper_symname);
-  toplevel->bus_ripper_symname = g_strdup (default_bus_ripper_symname ?
-                                           default_bus_ripper_symname :
-                                           DEFAULT_BUS_RIPPER_SYMNAME);
 }
 
 
@@ -86,8 +77,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
  */
 void i_vars_libgeda_freenames()
 {
-  g_free(default_bus_ripper_symname);
-
   g_ptr_array_unref (default_always_promote_attributes);
   default_always_promote_attributes = NULL;
 }

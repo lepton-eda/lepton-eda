@@ -360,3 +360,6 @@ option's value:
 (define-rc-deprecated-config
  log-window "schematic" "log-window"
  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ bus-ripper-symname "schematic" "bus-ripper-symname"
+ rc-deprecated-string-transformer)

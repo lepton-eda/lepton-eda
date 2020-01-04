@@ -45,7 +45,6 @@
  #:export (deprecated-module-log-warning!
            always-promote-attributes
            attribute-promotion
-           bus-ripper-symname
            keep-invisible
            make-backup-files
            print-color-map
@@ -151,8 +150,6 @@
 (define scheme-directory %scheme-directory)
 
 (define always-promote-attributes %always-promote-attributes)
-
-(define bus-ripper-symname %bus-ripper-symname)
 
 (define (enabled? x)
   (string= "enabled" x))
