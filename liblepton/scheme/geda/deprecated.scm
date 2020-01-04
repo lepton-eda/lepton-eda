@@ -45,7 +45,6 @@
  #:export (deprecated-module-log-warning!
            always-promote-attributes
            attribute-promotion
-           bitmap-directory
            bus-ripper-symname
            keep-invisible
            make-backup-files
@@ -152,8 +151,6 @@
 (define scheme-directory %scheme-directory)
 
 (define always-promote-attributes %always-promote-attributes)
-
-(define bitmap-directory %bitmap-directory)
 
 (define bus-ripper-symname %bus-ripper-symname)
 

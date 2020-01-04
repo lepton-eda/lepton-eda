@@ -734,51 +734,6 @@ SCM_DEFINE (scheme_directory,"%scheme-directory", 1, 0, 0,
  *  \brief
  *  \par Function Description
  *
- *  \param [in] path  
- *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
- */
-
-SCM_DEFINE (bitmap_directory, "%bitmap-directory", 0, 1, 0,
-            (SCM s_path), "Set bitmap directory to retrieve pictures from.")
-{
-  if (scm_is_eq (s_path, SCM_UNDEFINED)) {
-    if (default_bitmap_directory != NULL) {
-      return scm_from_utf8_string (default_bitmap_directory);
-    } else {
-      return SCM_BOOL_F;
-    }
-  }
-
-  gchar *string;
-  char *temp;
-
-  SCM_ASSERT (scm_is_string (s_path), s_path,
-              SCM_ARG1, s_bitmap_directory);
-  
-  /* take care of any shell variables */
-  temp = scm_to_utf8_string (s_path);
-  string = s_expand_env_variables (temp);
-  free (temp);
-
-  /* invalid path? */
-  if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
-    fprintf (stderr,
-             _("Invalid path [%1$s] passed to bitmap-directory\n"),
-             string);
-    g_free(string);
-    return SCM_BOOL_F;
-  }
-
-  g_free(default_bitmap_directory);
-  default_bitmap_directory = string;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
  *  \param [in] scmsymname  
  *  \return SCM_BOOL_T always.
  */
@@ -994,7 +949,6 @@ init_module_lepton_core_rc (void *unused)
   /* Add them to the module's public definitions. */
   scm_c_export (s_always_promote_attributes,
                 s_attribute_promotion,
-                s_bitmap_directory,
                 s_bus_ripper_symname,
                 s_component_library,
                 s_component_library_command,

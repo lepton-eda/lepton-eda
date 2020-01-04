@@ -1,4 +1,3 @@
-extern char *default_bitmap_directory;
 extern char *default_bus_ripper_symname;
 
 extern GPtrArray *default_always_promote_attributes;
