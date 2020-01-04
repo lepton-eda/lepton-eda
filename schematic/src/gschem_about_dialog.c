@@ -69,7 +69,12 @@ void about_dialog (GschemToplevel *w_current)
 
   gtk_about_dialog_set_name (adlg, "lepton-schematic");
   gtk_about_dialog_set_version (adlg, version_string);
-  gtk_about_dialog_set_logo (adlg, logo);
+
+  if (logo != NULL)
+  {
+    gtk_about_dialog_set_logo (adlg, logo);
+  }
+
   gtk_about_dialog_set_comments (adlg, _("Lepton Electronic Design Automation"));
 
   /*
@@ -116,7 +121,11 @@ void about_dialog (GschemToplevel *w_current)
   gtk_widget_destroy (dlg);
 
   g_free (version_string);
-  g_object_unref (logo);
+
+  if (logo != NULL)
+  {
+    g_object_unref (logo);
+  }
 }
 
 /***************** End of help/about dialog box *********************/
