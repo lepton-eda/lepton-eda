@@ -890,8 +890,9 @@ void autonumber_sortorder_create(GschemToplevel *w_current, GtkWidget *sort_orde
     gtk_list_store_append(store, &iter);
     gtk_list_store_set(store, &iter,
 		       0, _(names[i]),
-		       1, pixbuf,
+		       1, pixbuf ? pixbuf : NULL,
 		       -1);
+    g_clear_error (&error);
   }
 
   gtk_combo_box_set_model(GTK_COMBO_BOX(sort_order), GTK_TREE_MODEL(store));
