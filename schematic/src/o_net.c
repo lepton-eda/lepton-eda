@@ -1042,7 +1042,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
 
     if (w_current->bus_ripper_type == COMP_BUS_RIPPER) {
       GList *symlist =
-        s_clib_search (page->toplevel->bus_ripper_symname, CLIB_EXACT);
+        s_clib_search (w_current->bus_ripper_symname, CLIB_EXACT);
       if (symlist != NULL) {
         rippersym = (CLibSymbol *) symlist->data;
       }
@@ -1062,13 +1062,13 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
                                    rippers[i].x[0], rippers[i].y[0],
                                    complex_angle, 0,
                                    rippersym,
-                                   page->toplevel->bus_ripper_symname, 1);
+                                   w_current->bus_ripper_symname, 1);
           s_page_append_list (page->toplevel, page,
                               o_complex_promote_attribs (page->toplevel, new_obj));
           s_page_append (page->toplevel, page, new_obj);
         } else {
           s_log_message(_("Bus ripper symbol [%1$s] was not found in any component library"),
-                        page->toplevel->bus_ripper_symname);
+                        w_current->bus_ripper_symname);
         }
       }
     }
