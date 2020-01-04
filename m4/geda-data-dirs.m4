@@ -82,6 +82,12 @@ Only libgeda should use this - apps should use eda_get_system_data_dirs()])
 
   AC_SUBST([LEPTON_SCM_PRECOMPILE_DIR], ["$GEDADATADIR_expand/ccache"])
 
+  AC_DEFINE_UNQUOTED([BITMAP_DIRECTORY],
+                     ["$GEDADATADIR_expand/bitmap"],
+                     [directory with bitmaps])
+
+  AC_SUBST([BITMAP_DIRECTORY], ["$GEDADATADIR_expand/bitmap"])
+
   AC_SUBST([GEDADATADIR])
   AC_SUBST([GEDARCDIR])
 
