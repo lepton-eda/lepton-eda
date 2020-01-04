@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -883,7 +883,7 @@ void autonumber_sortorder_create(GschemToplevel *w_current, GtkWidget *sort_orde
   store = gtk_list_store_new(2, G_TYPE_STRING, GDK_TYPE_PIXBUF);
 
   for (i=0; filenames[i] != NULL; i++) {
-    path=g_build_filename(w_current->toplevel->bitmap_directory,
+    path=g_build_filename(BITMAP_DIRECTORY,
 		     filenames[i], NULL);
     pixbuf = gdk_pixbuf_new_from_file(path, &error);
     g_free(path);
