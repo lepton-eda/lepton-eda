@@ -22,6 +22,8 @@
 
 /* Absolute default used when default_... strings are NULL */
 
+#define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
+
 int   default_text_size = DEFAULT_TEXT_SIZE;
 int   default_text_caps = BOTH;
 int   default_net_direction_mode = TRUE;
@@ -627,6 +629,23 @@ i_vars_set (GschemToplevel* w_current)
 
 
   i_vars_set_options (w_current->options);
+
+
+  /* bus-ripper-symname:
+  */
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError* err = NULL;
+  gchar*  str = eda_config_get_string (cfg,
+                                       "schematic",
+                                       "bus-ripper-symname",
+                                       &err);
+  w_current->bus_ripper_symname =
+    str ? str : g_strdup (DEFAULT_BUS_RIPPER_SYMNAME);
+
+  g_clear_error (&err);
 
 } /* i_vars_set() */
 
