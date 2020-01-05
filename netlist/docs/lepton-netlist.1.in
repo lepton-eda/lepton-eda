@@ -47,7 +47,7 @@ point function NAME (where NAME is the backend's name).
 \fB-O\fR \fISTRING\fR
 Pass an option string to the backend.
 .TP 8
-\fB--list-backends\fR
+\fB-b\fR, \fB--list-backends\fR
 Print a list of available netlist backends.
 .TP 8
 \fB-o\fR \fIFILE\fR
