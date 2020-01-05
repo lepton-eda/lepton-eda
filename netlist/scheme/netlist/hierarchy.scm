@@ -160,11 +160,13 @@
   (define tag (schematic-component-tag component))
 
   (define (check-shorted-nets a b priority)
+    (unless (string=? a b)
     (log! 'critical
           (_ "Rename shorted nets (~A= has priority): ~A -> ~A")
           priority
           a
           b)
+    )
     (add-net-rename a b))
 
   (define (unnamed-net-or-unconnected-pin? name)
