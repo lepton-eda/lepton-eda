@@ -806,21 +806,21 @@ begins with \"gnet-\" and ends with \".scm\"."
 Generate a netlist from one or more Lepton EDA schematic FILEs.
 
 General options:
-  -q              Quiet mode.
-  -v, --verbose   Verbose mode.
-  -o FILE         Filename for netlist data output.
-  -L DIR          Add DIR to Scheme search path.
-  -g BACKEND      Specify netlist backend to use.
-  -f FILE         Specify path to netlist backend file to use.
-  -O STRING       Pass an option string to backend.
-  -l FILE         Load Scheme file before loading backend.
-  -m FILE         Load Scheme file after loading backend.
-  -c EXPR         Evaluate Scheme expression at startup.
-  -i              Enter interactive Scheme REPL after loading.
-  --list-backends Print a list of available netlist backends.
-  -h, --help      Help; this message.
-  -V, --version   Show version information.
-  --              Treat all remaining arguments as filenames.
+  -q                  Quiet mode.
+  -v, --verbose       Verbose mode.
+  -o FILE             Filename for netlist data output.
+  -L DIR              Add DIR to Scheme search path.
+  -g BACKEND          Specify netlist backend to use.
+  -f FILE             Specify path to netlist backend file to use.
+  -O STRING           Pass an option string to backend.
+  -l FILE             Load Scheme file before loading backend.
+  -m FILE             Load Scheme file after loading backend.
+  -c EXPR             Evaluate Scheme expression at startup.
+  -i                  Enter interactive Scheme REPL after loading.
+  -b, --list-backends Print a list of available netlist backends.
+  -h, --help          Help; this message.
+  -V, --version       Show version information.
+  --                  Treat all remaining arguments as filenames.
 
 Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>
 Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
