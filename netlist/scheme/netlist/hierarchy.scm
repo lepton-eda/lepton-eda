@@ -203,7 +203,6 @@
   ;; port pin if the outer pin has the same "pinlabel=" attribute
   ;; value as the refdes of the inner component.
   (define inner-port-component-refdes (package-pin-label outer-port-pin))
-  (define pinnumber (package-pin-number outer-port-pin))
 
   (define (warn-no-port)
     (log! 'critical
@@ -215,7 +214,7 @@
   (define (warn-no-pinlabel)
     (log! 'critical
           (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
-          pinnumber
+          (package-pin-number outer-port-pin)
           parent-component-refdes)
     #f)
 
