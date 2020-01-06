@@ -442,20 +442,22 @@
 
 (define (hierarchy-post-process components)
   (define (outer-pin->schematic-port outer-port-pin)
-    (let ((port (hierarchy-make-schematic-port components outer-port-pin)))
-      (and port
-           ;; Net renaming stuff.
-           (add-rename
-            ;; Netname of nets connected to inner port pin.
-            (package-pin-name (schematic-port-inner-pin port))
-            ;; Get source net name, all outer nets are named
-            ;; already.
-            (search-net-name (package-pin-nets outer-port-pin)))
-           port)))
+    (hierarchy-make-schematic-port components outer-port-pin))
+
+  (define (add-port-rename port)
+    ;; Net renaming stuff.
+    (add-rename
+     ;; Netname of nets connected to inner port pin.
+     (package-pin-name (schematic-port-inner-pin port))
+     ;; Get source net name, all outer nets are named
+     ;; already.
+     (search-net-name (package-pin-nets (schematic-port-outer-pin port))))
+    port)
 
   (define (component-subcircuit-ports component)
-    (filter-map outer-pin->schematic-port
-                (schematic-component-pins component)))
+    (map add-port-rename
+         (filter-map outer-pin->schematic-port
+                     (schematic-component-pins component))))
 
   (define (disable-component-refdes component)
     (set-schematic-component-refdes! component #f))
