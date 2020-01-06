@@ -448,8 +448,10 @@
   (define subcircuit-components
     (filter schematic-component-subcircuit? components))
 
-  (define (outer-pin->schematic-port outer-port-pin)
-    (hierarchy-make-schematic-port components outer-port-pin))
+  (define (outer-pin->schematic-port component outer-port-pin)
+    (let ((subschematic (schematic-component-subschematic component)))
+      (hierarchy-make-schematic-port (subschematic-components subschematic)
+                                     outer-port-pin)))
 
   (define (add-port-rename port)
     ;; Net renaming stuff.
@@ -463,7 +465,7 @@
 
   (define (component-subcircuit-ports component)
     (map add-port-rename
-         (filter-map outer-pin->schematic-port
+         (filter-map (cut outer-pin->schematic-port component <>)
                      (schematic-component-pins component))))
 
   (define (disable-component-refdes component)
