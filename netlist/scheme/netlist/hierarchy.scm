@@ -441,6 +441,9 @@
 
 
 (define (hierarchy-post-process components)
+  (define subcircuit-components
+    (filter schematic-component-subcircuit? components))
+
   (define (outer-pin->schematic-port outer-port-pin)
     (hierarchy-make-schematic-port components outer-port-pin))
 
@@ -490,8 +493,7 @@
 
   (for-each create-schematic-component-refdes components)
 
-  (for-each fix-composite-component
-            (filter schematic-component-subcircuit? components))
+  (for-each fix-composite-component subcircuit-components)
 
   (for-each update-component-net-mapped-pins components)
 
