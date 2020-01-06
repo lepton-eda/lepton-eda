@@ -198,10 +198,7 @@
 (define (hierarchy-make-schematic-port inner-components outer-port-pin)
   (define parent-component-refdes
     (schematic-component-refdes (package-pin-parent outer-port-pin)))
-  ;; Port component inside subcircuit (inner component) is
-  ;; considered to be matching to the outer (parent) component
-  ;; port pin if the outer pin has the same "pinlabel=" attribute
-  ;; value as the refdes of the inner component.
+
   (define outer-port-pin-pinlabel (package-pin-label outer-port-pin))
 
   (define (warn-no-port)
@@ -219,6 +216,10 @@
     #f)
 
   (define (get-matching-inner-port-pin inner-port-component)
+    ;; A port component inside subcircuit (inner component) is
+    ;; considered to be matching to the outer (parent) component
+    ;; port pin if the refdes of the former is the same as the
+    ;; value of the "pinlabel=" attribute of the latter.
     (and (equal? (base-refdes (schematic-component-refdes inner-port-component))
                  outer-port-pin-pinlabel)
          (not (null? (schematic-component-pins inner-port-component)))
