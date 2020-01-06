@@ -202,13 +202,13 @@
   ;; considered to be matching to the outer (parent) component
   ;; port pin if the outer pin has the same "pinlabel=" attribute
   ;; value as the refdes of the inner component.
-  (define inner-port-component-refdes (package-pin-label outer-port-pin))
+  (define outer-port-pin-pinlabel (package-pin-label outer-port-pin))
 
   (define (warn-no-port)
     (log! 'critical
           (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
           parent-component-refdes
-          inner-port-component-refdes)
+          outer-port-pin-pinlabel)
     #f)
 
   (define (warn-no-pinlabel)
@@ -220,13 +220,13 @@
 
   (define (get-matching-inner-port-pin port-component)
     (and (equal? (base-refdes (schematic-component-refdes port-component))
-                 inner-port-component-refdes)
+                 outer-port-pin-pinlabel)
          (not (null? (schematic-component-pins port-component)))
          ;; Return the inner port pin found.
          ;; Well, we assume a port has only one pin.
          (car (schematic-component-pins port-component))))
 
-  (if inner-port-component-refdes
+  (if outer-port-pin-pinlabel
       ;; Not empty filtered list means that we have found the
       ;; matching inner pin.
       (let ((pins (filter-map get-matching-inner-port-pin
