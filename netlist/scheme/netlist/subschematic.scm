@@ -174,15 +174,17 @@ NAME is used as its hierarchical name."
           (unless quiet-mode
             (log! 'message (_ "Loading subcircuit ~S.") filename))
           (file->page filename 'new-page))
-        (log! 'critical (_ "Failed to load subcircuit ~S.") name))))
+        (begin
+          (log! 'critical (_ "Failed to load subcircuit ~S.") name)
+          #f))))
 
 
 (define (page-list->hierarchical-subschematic pages hierarchy-tag)
   (define (traverse-component-sources component)
     (and (schematic-component-sources component)
          (let* ((hierarchy-tag (schematic-component-refdes* component))
-                (source-pages (map hierarchy-down-schematic
-                                   (schematic-component-sources component)))
+                (source-pages (filter-map hierarchy-down-schematic
+                                          (schematic-component-sources component)))
                 ;; Recursive processing of sources.
                 (subschematic (page-list->hierarchical-subschematic source-pages hierarchy-tag)))
            (set-schematic-component-subschematic! component subschematic)
