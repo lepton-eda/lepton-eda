@@ -27,6 +27,7 @@
   #:use-module (geda log)
   #:use-module (lepton page)
   #:use-module (netlist config)
+  #:use-module (netlist error)
   #:use-module (netlist hierarchy)
   #:use-module (netlist mode)
   #:use-module (netlist schematic-component)
@@ -38,9 +39,12 @@
 
 
 (define (hierarchy-create-refdes basename hierarchy-tag)
+  (define (error-invalid-hierarchy-tag tag)
+    (netlist-error 1 (_ "Invalid hierarchy tag: ~S") tag))
+
   (match hierarchy-tag
     ((? list? tag) `(,basename . ,tag))
-    (non-list (error (_ "Invalid hierarchy tag.") hierarchy-tag))))
+    (_ (error-invalid-hierarchy-tag hierarchy-tag))))
 
 
 (define (schematic-component-refdes* component)
@@ -52,6 +56,9 @@
   (define hierarchy-tag
     (subschematic-name (schematic-component-parent component)))
 
+  (define (error-netlist-mode-not-supported mode)
+    (netlist-error 1 (_ "Netlist mode ~S is not supported.") mode))
+
   ;; Get refdes= of OBJECT depending on NETLIST-MODE.
   (define (get-refdes)
     (let ((refdes (and=> (assq-ref attribs 'refdes) car)))
@@ -62,7 +69,7 @@
                (string-append refdes "." slot)
                refdes)))
         ((geda) refdes)
-        (else (error (_ "Netlist mode ~S is not supported.") (netlist-mode))))))
+        (else (error-netlist-mode-not-supported (netlist-mode))))))
 
   (define (make-special-refdes)
     ;; If there is net=, it's a power or some other special
