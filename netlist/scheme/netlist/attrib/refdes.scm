@@ -33,8 +33,7 @@
   #:use-module (netlist schematic-component)
   #:use-module (netlist subschematic)
 
-  #:export (hierarchy-create-refdes
-            schematic-component-refdes*
+  #:export (schematic-component-refdes*
             schematic-component-refdes->string))
 
 
