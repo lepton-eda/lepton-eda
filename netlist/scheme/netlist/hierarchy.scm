@@ -189,6 +189,12 @@
   (for-each set-nets-properties! (schematic-component-pins component)))
 
 
+(define (base-refdes refdes)
+  (match refdes
+    ((? list? refdes) (car refdes))
+    (refdes refdes)))
+
+
 (define (hierarchy-make-schematic-port components outer-port-pin)
   (define parent-component-refdes
     (schematic-component-refdes (package-pin-parent outer-port-pin)))
@@ -198,10 +204,6 @@
   ;; value as the refdes of the inner component.
   (define inner-port-component-refdes (package-pin-label outer-port-pin))
   (define pinnumber (package-pin-number outer-port-pin))
-  ;; Define hierarchical refdes for a source schematic port
-  ;; corresponding to the given pin.
-  (define hierarchy-refdes (hierarchy-create-refdes inner-port-component-refdes
-                                                    parent-component-refdes))
 
   (define (warn-no-port)
     (log! 'critical
@@ -218,8 +220,8 @@
     #f)
 
   (define (get-matching-inner-port-pin port-component)
-    (and (equal? (schematic-component-refdes port-component)
-                 hierarchy-refdes)
+    (and (equal? (base-refdes (schematic-component-refdes port-component))
+                 inner-port-component-refdes)
          (not (null? (schematic-component-pins port-component)))
          ;; Return the inner port pin found.
          ;; Well, we assume a port has only one pin.
@@ -273,11 +275,6 @@
 
 
 (define (remove-refdes-mangling netlist)
-  (define (base-refdes refdes)
-    (match refdes
-      ((? list? refdes) (car refdes))
-      (refdes refdes)))
-
   (define (fix-package package)
     (set-schematic-component-refdes! package
                                      (base-refdes (schematic-component-refdes package)))
