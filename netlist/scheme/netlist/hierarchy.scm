@@ -195,7 +195,7 @@
     (refdes refdes)))
 
 
-(define (hierarchy-make-schematic-port components outer-port-pin)
+(define (hierarchy-make-schematic-port inner-components outer-port-pin)
   (define parent-component-refdes
     (schematic-component-refdes (package-pin-parent outer-port-pin)))
   ;; Port component inside subcircuit (inner component) is
@@ -230,7 +230,7 @@
       ;; Not empty filtered list means that we have found the
       ;; matching inner pin.
       (let ((pins (filter-map get-matching-inner-port-pin
-                              components)))
+                              inner-components)))
         (if (null? pins)
             ;; Warn if no port found in the subcircuit. Return #f.
             (warn-no-port)
