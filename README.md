@@ -233,6 +233,13 @@ and the rest of the gEDA tools:
   (no registration is required to read the messages posted there).
   This is probably the fastest way to get in touch with us.
 
+- If you prefer using IRC, there is now a Lepton channel on OFTC:
+  irc.oftc.net#lepton-eda. Sometimes you can catch Lepton users or
+  developers there.
+
+- [Lepton EDA wiki](https://github.com/lepton-eda/lepton-eda/wiki)
+  is the first place to search for Lepton specific information.
+
 - The gEDA website <http://www.geda-project.org> has more extensive
   information on the gEDA tools, and links to some successful
   projects which use gEDA.
@@ -266,7 +273,7 @@ The programs and associated files are:
 
   Copyright (C) 1998-2017 by Ales Hvezda and the respective original
   authors.
-  Copyright (C) 2017-2019 Lepton Developers.
+  Copyright (C) 2017-2020 Lepton Developers.
 
 See the `AUTHORS` file for a more extensive list of contributors to
 Lepton EDA and gEDA.
