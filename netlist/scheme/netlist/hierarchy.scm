@@ -192,18 +192,22 @@
 (define (hierarchy-make-schematic-port components outer-port-pin)
   (define parent-component-refdes
     (schematic-component-refdes (package-pin-parent outer-port-pin)))
-  (define port-refdes (package-pin-label outer-port-pin))
+  ;; Port component inside subcircuit (inner component) is
+  ;; considered to be matching to the outer (parent) component
+  ;; port pin if the outer pin has the same "pinlabel=" attribute
+  ;; value as the refdes of the inner component.
+  (define inner-port-component-refdes (package-pin-label outer-port-pin))
   (define pinnumber (package-pin-number outer-port-pin))
   ;; Define hierarchical refdes for a source schematic port
   ;; corresponding to the given pin.
-  (define hierarchy-refdes (hierarchy-create-refdes port-refdes
+  (define hierarchy-refdes (hierarchy-create-refdes inner-port-component-refdes
                                                     parent-component-refdes))
 
   (define (warn-no-port)
     (log! 'critical
           (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
           parent-component-refdes
-          port-refdes)
+          inner-port-component-refdes)
     #f)
 
   (define (warn-no-pinlabel)
@@ -221,7 +225,7 @@
          ;; Well, we assume a port has only one pin.
          (car (schematic-component-pins port-component))))
 
-  (if port-refdes
+  (if inner-port-component-refdes
       ;; Not empty filtered list means that we have found the
       ;; matching inner pin.
       (let ((pins (filter-map get-matching-inner-port-pin
