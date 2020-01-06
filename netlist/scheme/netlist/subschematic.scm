@@ -41,6 +41,7 @@
 
   #:export-syntax (make-subschematic subschematic?
                    subschematic-name set-subschematic-name!
+                   subschematic-parent set-subschematic-parent!
                    subschematic-pages set-subschematic-pages!
                    subschematic-components set-subschematic-components!
                    subschematic-connections set-subschematic-connections!)
@@ -48,9 +49,10 @@
   #:export (page-list->hierarchical-subschematic))
 
 (define-record-type <subschematic>
-  (make-subschematic name pages components connections)
+  (make-subschematic name parent pages components connections)
   subschematic?
   (name subschematic-name set-subschematic-name!)
+  (parent subschematic-parent set-subschematic-parent!)
   (pages subschematic-pages set-subschematic-pages!)
   (components subschematic-components set-subschematic-components!)
   (connections subschematic-connections set-subschematic-connections!))
@@ -134,6 +136,8 @@
           (make-subschematic
            ;; Assign the name later.
            #f
+           ;; Assign parent component later.
+           #f
            ;; One page in the list of pages.
            (list page)
            ;; Page components.
@@ -157,7 +161,7 @@ NAME is used as its hierarchical name."
   (let* ((subschematics (map page->subschematic pages))
          (components (append-map subschematic-components subschematics))
          (connections (make-subschematic-connections components))
-         (subschematic (make-subschematic name pages components connections)))
+         (subschematic (make-subschematic name #f pages components connections)))
     (for-each (cut set-schematic-connection-parent! <> subschematic)
               connections)
     (for-each (cut set-schematic-component-parent! <> subschematic)
@@ -188,6 +192,7 @@ NAME is used as its hierarchical name."
                 ;; Recursive processing of sources.
                 (subschematic (page-list->hierarchical-subschematic source-pages hierarchy-tag)))
            (set-schematic-component-subschematic! component subschematic)
+           (set-subschematic-parent! subschematic component)
            component)))
 
   (let ((subschematic (page-list->subschematic pages hierarchy-tag)))
