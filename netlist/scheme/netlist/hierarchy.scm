@@ -218,13 +218,13 @@
           parent-component-refdes)
     #f)
 
-  (define (get-matching-inner-port-pin port-component)
-    (and (equal? (base-refdes (schematic-component-refdes port-component))
+  (define (get-matching-inner-port-pin inner-port-component)
+    (and (equal? (base-refdes (schematic-component-refdes inner-port-component))
                  outer-port-pin-pinlabel)
-         (not (null? (schematic-component-pins port-component)))
+         (not (null? (schematic-component-pins inner-port-component)))
          ;; Return the inner port pin found.
          ;; Well, we assume a port has only one pin.
-         (car (schematic-component-pins port-component))))
+         (car (schematic-component-pins inner-port-component))))
 
   (if outer-port-pin-pinlabel
       ;; Not empty filtered list means that we have found the
