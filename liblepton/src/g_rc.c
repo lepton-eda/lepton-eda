@@ -796,22 +796,6 @@ SCM_DEFINE (always_promote_attributes, "%always-promote-attributes", 1, 0, 0,
   return SCM_BOOL_T;
 }
 
-/*! \brief Enable the creation of backup files when saving
- *  \par Function Description
- *  If enabled then a backup file, of the form 'example.sch~', is created when
- *  saving a file.
- *
- *  \param [in] s_mode  String. 'enabled' or 'disabled'
- *  \return           Bool. False if s_mode is not a valid value; true if it is.
- *
- */
-SCM_DEFINE (make_backup_files, "%make-backup-files", 1, 0, 0,
-            (SCM s_mode), "Enable or disable the creation of backup files.")
-{
-  default_make_backup_files = scm_is_true (s_mode);
-  return s_mode;
-}
-
 SCM_DEFINE (print_color_map, "%print-color-map", 0, 1, 0,
             (SCM scm_map), "Set or view current print color map.")
 {
@@ -878,7 +862,6 @@ init_module_lepton_core_rc (void *unused)
                 s_component_library,
                 s_component_library_command,
                 s_component_library_funcs,
-                s_make_backup_files,
                 s_print_color_map,
                 s_reset_component_library,
                 s_scheme_directory,
