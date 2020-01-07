@@ -47,6 +47,7 @@
             schematic-component-attribute
             schematic-component-graphical?
             schematic-component-nc?
+            schematic-component-simple-refdes
             schematic-component-subcircuit?
             set-schematic-component-printer!))
 
@@ -279,3 +280,11 @@ sets the component to be its parent component."
     (set-schematic-component-sources! component sources)
     (set-schematic-component-pins/parent! component pins)
     component))
+
+
+(define (schematic-component-simple-refdes component)
+  "Returns simple, non-hierarchical refdes of COMPONENT."
+  (let ((refdes (schematic-component-refdes component)))
+    (match refdes
+      ((? list? refdes) (car refdes))
+      (refdes refdes))))
