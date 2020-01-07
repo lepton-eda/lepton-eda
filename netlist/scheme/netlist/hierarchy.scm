@@ -190,12 +190,6 @@
   (for-each set-nets-properties! (schematic-component-pins component)))
 
 
-(define (base-refdes refdes)
-  (match refdes
-    ((? list? refdes) (car refdes))
-    (refdes refdes)))
-
-
 (define (hierarchy-make-schematic-port inner-components outer-port-pin)
   (define parent-component-refdes
     (schematic-component-refdes (package-pin-parent outer-port-pin)))
@@ -214,7 +208,7 @@
     ;; considered to be matching to the outer (parent) component
     ;; port pin if the refdes of the former is the same as the
     ;; value of the "pinlabel=" attribute of the latter.
-    (and (equal? (base-refdes (schematic-component-refdes inner-port-component))
+    (and (equal? (schematic-component-simple-refdes inner-port-component)
                  outer-port-pin-pinlabel)
          (not (null? (schematic-component-pins inner-port-component)))
          ;; Return the inner port pin found.
@@ -268,7 +262,7 @@
 (define (remove-refdes-mangling netlist)
   (define (fix-package package)
     (set-schematic-component-refdes! package
-                                     (base-refdes (schematic-component-refdes package)))
+                                     (schematic-component-simple-refdes package))
     package)
 
   (for-each fix-package netlist)
