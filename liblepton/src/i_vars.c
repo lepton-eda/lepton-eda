@@ -96,7 +96,8 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
   cfg_read_bool ("schematic.attrib", "keep-invisible",
                  default_keep_invisible, &toplevel->keep_invisible);
 
-  toplevel->make_backup_files = default_make_backup_files;
+  cfg_read_bool ("schematic.backup", "create-files",
+                 default_make_backup_files, &toplevel->make_backup_files);
 
   /* copy the always_promote_attributes list from the default */
   if (toplevel->always_promote_attributes) {

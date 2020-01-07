@@ -114,6 +114,9 @@
 (define-rc-deprecated-config
  keep-invisible "schematic.attrib" "keep-invisible"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ make-backup-files "schematic.backup" "create-files"
+ rc-deprecated-string-boolean-transformer)
 
 ;; ===================================================================
 ;; Deprecated lepton-schematic configuration functions
