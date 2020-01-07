@@ -749,22 +749,6 @@ SCM_DEFINE (reset_component_library, "%reset-component-library", 0, 0, 0,
  *  \par Function Description
  *
  */
-SCM_DEFINE (attribute_promotion, "%attribute-promotion", 0, 1, 0,
-            (SCM s_mode), "Set attribute promotion behaviour or return its state.")
-{
-  if (scm_is_eq (s_mode, SCM_UNDEFINED)) {
-    return scm_from_bool (default_attribute_promotion);
-  }
-
-  default_attribute_promotion = scm_is_true (s_mode);
-  return s_mode;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM_DEFINE (promote_invisible, "%promote-invisible", 0, 1, 0,
             (SCM s_mode), "Set attribute promotion behaviour for invisible attributes or return its state.")
 {
@@ -923,7 +907,6 @@ init_module_lepton_core_rc (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_always_promote_attributes,
-                s_attribute_promotion,
                 s_component_library,
                 s_component_library_command,
                 s_component_library_funcs,

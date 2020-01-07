@@ -105,6 +105,9 @@
 (define-rc-dead-config postscript-prolog)
 (define-rc-dead-config world-size)
 (define-rc-dead-config bitmap-directory)
+(define-rc-deprecated-config
+ attribute-promotion "schematic.attrib" "promote"
+ rc-deprecated-string-boolean-transformer)
 
 ;; ===================================================================
 ;; Deprecated lepton-schematic configuration functions

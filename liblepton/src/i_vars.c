@@ -40,6 +40,43 @@ int   default_make_backup_files = TRUE;
 
 
 
+/* \brief Read a boolean configuration key.
+ *
+ * \par Function Description
+ * On success, set \a result to the value of the
+ * configuration key, otherwise set it to \a defval.
+ *
+ * \todo  Refactoring: this function was copied as is from schematic/src/i_vars.c.
+ *
+ * \param [in]       group   Configuration group name
+ * \param [in]       key     Configuration key name
+ * \param [in]       defval  Default value
+ * \param [in, out]  result  Result
+ *
+ * \return  TRUE if a specified config parameter was successfully read
+ */
+static gboolean
+cfg_read_bool (const gchar* group,
+               const gchar* key,
+               gboolean     defval,
+               gboolean*    result)
+{
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError*  err = NULL;
+  gboolean val = eda_config_get_boolean (cfg, group, key, &err);
+
+  gboolean success = err == NULL;
+  g_clear_error (&err);
+
+  *result = success ? val : defval;
+  return success;
+}
+
+
+
 /*! \brief Initialize variables in TOPLEVEL object
  *  \par Function Description
  *  This function will initialize variables to default values.
@@ -50,7 +87,9 @@ int   default_make_backup_files = TRUE;
 void i_vars_libgeda_set(TOPLEVEL *toplevel)
 {
 
-  toplevel->attribute_promotion = default_attribute_promotion;
+  cfg_read_bool ("schematic.attrib", "promote",
+                 default_attribute_promotion, &toplevel->attribute_promotion);
+
   toplevel->promote_invisible = default_promote_invisible;
   toplevel->keep_invisible = default_keep_invisible;
 
