@@ -39,6 +39,7 @@
   #:use-module (netlist schematic-connection)
   #:use-module (netlist schematic-port)
   #:use-module (netlist subschematic)
+  #:use-module (symbol check duplicate)
   #:use-module (symbol check net-attrib)
 
   #:export (hierarchy-post-process))
@@ -208,13 +209,6 @@
           outer-port-pin-pinlabel)
     #f)
 
-  (define (warn-no-pinlabel)
-    (log! 'critical
-          (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
-          (package-pin-number outer-port-pin)
-          parent-component-refdes)
-    #f)
-
   (define (get-matching-inner-port-pin inner-port-component)
     ;; A port component inside subcircuit (inner component) is
     ;; considered to be matching to the outer (parent) component
@@ -227,27 +221,24 @@
          ;; Well, we assume a port has only one pin.
          (car (schematic-component-pins inner-port-component))))
 
-  (if outer-port-pin-pinlabel
-      ;; Not empty filtered list means that we have found the
-      ;; matching inner pin.
-      (let ((pins (filter-map get-matching-inner-port-pin
-                              inner-components)))
-        (if (null? pins)
-            ;; Warn if no port found in the subcircuit. Return #f.
-            (warn-no-port)
-            ;; Otherwise, rename inner nets using outer net name and
-            ;; disable inner port component refdes.
-            ;; FIXME: It's assumed that only one pair of
-            ;; matching pins found.
-            (let* ((inner-port-pin (car pins))
-                   (port (make-schematic-port inner-port-pin outer-port-pin)))
-              ;; Update schematic component representing the port.
-              (set-schematic-component-port! (package-pin-parent inner-port-pin)
-                                             port)
-              ;; Return new <schematic-port> created.
-              port)))
-      ;; Warn if no pinlabel found on the outer pin. Return #f.
-      (warn-no-pinlabel)))
+  ;; Not empty filtered list means that we have found the
+  ;; matching inner pin.
+  (let ((pins (filter-map get-matching-inner-port-pin
+                          inner-components)))
+    (if (null? pins)
+        ;; Warn if no port found in the subcircuit. Return #f.
+        (warn-no-port)
+        ;; Otherwise, rename inner nets using outer net name and
+        ;; disable inner port component refdes.
+        ;; FIXME: It's assumed that only one pair of
+        ;; matching pins found.
+        (let* ((inner-port-pin (car pins))
+               (port (make-schematic-port inner-port-pin outer-port-pin)))
+          ;; Update schematic component representing the port.
+          (set-schematic-component-port! (package-pin-parent inner-port-pin)
+                                         port)
+          ;; Return new <schematic-port> created.
+          port))))
 
 
 (define (search-net-name nets)
@@ -442,6 +433,34 @@
 
 
 (define (hierarchy-post-process components)
+  (define (pinlabel=? x y)
+    (string= (package-pin-label x) (package-pin-label y)))
+
+  (define (pinlabel<? x y)
+    (string< (package-pin-label x) (package-pin-label y)))
+
+  (define (warn-no-pinlabel pin)
+    ;; Warn if no pinlabel found on the pin and return #f in such
+    ;; a case.
+    (or (package-pin-label pin)
+        (begin
+          (log! 'critical
+                (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
+                (package-pin-number pin)
+                (schematic-component-refdes (package-pin-parent pin)))
+          #f)))
+
+  (define (warn-duplicate-pinlabel arg)
+    (if (list? arg)
+        (begin
+          (log! 'critical
+                (_ "Pins with numbers ~A of the component ~S have the same \"pinlabel\" attribute.")
+                (string-join (map package-pin-number  arg) ", ")
+                (schematic-component-refdes (package-pin-parent (car arg))))
+          ;; Return first duplicate pin.
+          (car arg))
+        arg))
+
   (define subcircuit-components
     (filter schematic-component-subcircuit? components))
 
@@ -460,10 +479,16 @@
      (search-net-name (package-pin-nets (schematic-port-outer-pin port))))
     port)
 
+  (define (check-schematic-component-pins pins)
+    (map warn-duplicate-pinlabel
+         (list->duplicate-list (filter warn-no-pinlabel pins)
+                               pinlabel<?
+                               pinlabel=?)))
+
   (define (component-subcircuit-ports component)
     (map add-port-rename
          (filter-map (cut outer-pin->schematic-port component <>)
-                     (schematic-component-pins component))))
+                     (check-schematic-component-pins (schematic-component-pins component)))))
 
   (define (disable-component-refdes component)
     (set-schematic-component-refdes! component #f))
