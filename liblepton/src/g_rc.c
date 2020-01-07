@@ -744,22 +744,6 @@ SCM_DEFINE (reset_component_library, "%reset-component-library", 0, 0, 0,
   return SCM_BOOL_T;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM_DEFINE (keep_invisible, "%keep-invisible", 0, 1, 0,
-            (SCM s_mode), "Controls or sets if invisible promoted attributes are not deleted.")
-{
-  if (scm_is_eq (s_mode, SCM_UNDEFINED)) {
-    return scm_from_bool (default_keep_invisible);
-  }
-
-  default_keep_invisible = scm_is_true (s_mode);
-  return s_mode;
-}
-
 /*! \todo Finish function description!!!
  *  \brief
  *  \par Function Description
@@ -894,7 +878,6 @@ init_module_lepton_core_rc (void *unused)
                 s_component_library,
                 s_component_library_command,
                 s_component_library_funcs,
-                s_keep_invisible,
                 s_make_backup_files,
                 s_print_color_map,
                 s_reset_component_library,
