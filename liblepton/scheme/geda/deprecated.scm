@@ -47,7 +47,6 @@
            keep-invisible
            make-backup-files
            print-color-map
-           promote-invisible
            scheme-directory))
 
 (define* (deprecated-module-log-warning! #:optional (new-modname #f))
@@ -152,9 +151,6 @@
 
 (define (enabled? x)
   (string= "enabled" x))
-
-(define (promote-invisible mode)
-  (%promote-invisible (enabled? mode)))
 
 (define (keep-invisible mode)
   (%keep-invisible (enabled? mode)))

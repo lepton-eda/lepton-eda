@@ -108,6 +108,9 @@
 (define-rc-deprecated-config
  attribute-promotion "schematic.attrib" "promote"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ promote-invisible "schematic.attrib" "promote-invisible"
+ rc-deprecated-string-boolean-transformer)
 
 ;; ===================================================================
 ;; Deprecated lepton-schematic configuration functions

@@ -90,7 +90,10 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
   cfg_read_bool ("schematic.attrib", "promote",
                  default_attribute_promotion, &toplevel->attribute_promotion);
 
-  toplevel->promote_invisible = default_promote_invisible;
+  cfg_read_bool ("schematic.attrib", "promote-invisible",
+                 default_promote_invisible, &toplevel->promote_invisible);
+
+
   toplevel->keep_invisible = default_keep_invisible;
 
   toplevel->make_backup_files = default_make_backup_files;
