@@ -111,6 +111,9 @@
 (define-rc-deprecated-config
  promote-invisible "schematic.attrib" "promote-invisible"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ keep-invisible "schematic.attrib" "keep-invisible"
+ rc-deprecated-string-boolean-transformer)
 
 ;; ===================================================================
 ;; Deprecated lepton-schematic configuration functions

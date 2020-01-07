@@ -44,7 +44,6 @@
 
  #:export (deprecated-module-log-warning!
            always-promote-attributes
-           keep-invisible
            make-backup-files
            print-color-map
            scheme-directory))
@@ -151,9 +150,6 @@
 
 (define (enabled? x)
   (string= "enabled" x))
-
-(define (keep-invisible mode)
-  (%keep-invisible (enabled? mode)))
 
 (define (make-backup-files mode)
   (%make-backup-files (enabled? mode)))
