@@ -44,7 +44,6 @@
 
  #:export (deprecated-module-log-warning!
            always-promote-attributes
-           attribute-promotion
            keep-invisible
            make-backup-files
            print-color-map
@@ -153,9 +152,6 @@
 
 (define (enabled? x)
   (string= "enabled" x))
-
-(define (attribute-promotion mode)
-  (%attribute-promotion (enabled? mode)))
 
 (define (promote-invisible mode)
   (%promote-invisible (enabled? mode)))

@@ -37,17 +37,6 @@
 ; Start of attribute promotion keywords
 ;
 
-; attribute-promotion string
-;
-; This keyword controls if attribute promotion occurs when you instanciate a
-; component.  Attribute promotion basically means that any floating attribute
-; (unattached) which is inside a symbol gets "promoted" or attached to the
-; newly inserted component.  This only occurs when the component is
-; instanciated.
-;
-(attribute-promotion "enabled")
-;(attribute-promotion "disabled")
-
 ; promote-invisible string
 ;
 ; If attribute-promotion is enabled, then this controls if invisible floating
