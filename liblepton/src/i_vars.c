@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2017 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +28,6 @@
  * Kazu Hirata <kazu@seul.org> on July 16, 1999 - Added these absolute
  * defaults used when default_... is NULL.
  */
-
-
-GPtrArray *default_always_promote_attributes = NULL;
 
 int   default_attribute_promotion = TRUE;
 int   default_promote_invisible = FALSE;
@@ -77,16 +74,12 @@ cfg_read_bool (const gchar* group,
 
 
 
-/*! \brief Initialize variables in TOPLEVEL object
- *  \par Function Description
- *  This function will initialize variables to default values.
+/*! \brief Read configuration, initialize variables in TOPLEVEL object.
  *
  *  \param [in] toplevel  The TOPLEVEL object to be updated.
- *
  */
 void i_vars_libgeda_set(TOPLEVEL *toplevel)
 {
-
   cfg_read_bool ("schematic.attrib", "promote",
                  default_attribute_promotion, &toplevel->attribute_promotion);
 
@@ -99,27 +92,56 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
   cfg_read_bool ("schematic.backup", "create-files",
                  default_make_backup_files, &toplevel->make_backup_files);
 
-  /* copy the always_promote_attributes list from the default */
-  if (toplevel->always_promote_attributes) {
+
+  if (toplevel->always_promote_attributes)
+  {
     g_ptr_array_unref (toplevel->always_promote_attributes);
     toplevel->always_promote_attributes = NULL;
   }
-  if (default_always_promote_attributes) {
-    toplevel->always_promote_attributes =
-      g_ptr_array_ref (default_always_promote_attributes);
+
+  toplevel->always_promote_attributes = g_ptr_array_new (); /* => refcnt == 1 */
+
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError* err   = NULL;
+  gsize   size  = 0;
+  gchar** ppstr = eda_config_get_string_list (cfg,
+                                              "schematic.attrib",
+                                              "always-promote",
+                                              &size,
+                                              &err);
+  if (err == NULL && ppstr != NULL)
+  {
+    for (gsize i = 0; i < size; ++i)
+    {
+      gchar* attr = ppstr[i];
+
+      if (attr != NULL && strlen (attr) > 0)
+      {
+#ifdef DEBUG
+        printf( " >> always_promote_attributes += [%s]\n", attr );
+#endif
+        /* important: use g_intern_string() here, because attr strings are
+         * compared like pointers in o_complex_is_eligible_attribute():
+        */
+        g_ptr_array_add (toplevel->always_promote_attributes,
+                         (gpointer) g_intern_string (attr));
+      }
+    }
+
+    g_strfreev (ppstr);
   }
 
-}
+  g_clear_error (&err);
+
+} /* i_vars_libgeda_set() */
 
 
 
-/*! \brief Free default names
- *  \par Function Description
- *  This function will free all of the default variables for libgeda.
- *
+/*! \brief Free default variables.
  */
 void i_vars_libgeda_freenames()
 {
-  g_ptr_array_unref (default_always_promote_attributes);
-  default_always_promote_attributes = NULL;
 }

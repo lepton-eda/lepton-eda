@@ -94,6 +94,21 @@
 
 (define (rc-deprecated-int-transformer num) num)
 
+; ( list "attr1" "attr2" "attr3" ) => "attr1;attr2;attr3":
+;
+( define ( rc-deprecated-strlist-transformer strlist )
+  ; return:
+  ( apply
+    string-append
+    ( map
+      ( lambda( str )
+        ( format #f "~a;" str )
+      )
+      strlist
+    )
+  )
+)
+
 ;; Transformer for "enabled"/"disabled" to boolean
 (define (rc-deprecated-string-boolean-transformer str)
   (string=? "enabled" str))
@@ -117,6 +132,9 @@
 (define-rc-deprecated-config
  make-backup-files "schematic.backup" "create-files"
  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ always-promote-attributes "schematic.attrib" "always-promote"
+ rc-deprecated-strlist-transformer)
 
 ;; ===================================================================
 ;; Deprecated lepton-schematic configuration functions

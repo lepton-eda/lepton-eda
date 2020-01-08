@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -744,58 +744,6 @@ SCM_DEFINE (reset_component_library, "%reset-component-library", 0, 0, 0,
   return SCM_BOOL_T;
 }
 
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
- *  \param [in] attrlist
- *  \return SCM_BOOL_T always.
- */
-SCM_DEFINE (always_promote_attributes, "%always-promote-attributes", 1, 0, 0,
-            (SCM attrlist),
-            "Set the list of attributes that are always promoted regardless of their visibility.")
-{
-  SCM_ASSERT (scm_is_true (scm_list_p (attrlist)), attrlist, SCM_ARG1,
-              s_always_promote_attributes);
-
-  if (default_always_promote_attributes) {
-    g_ptr_array_unref (default_always_promote_attributes);
-  }
-
-  GPtrArray *promote = g_ptr_array_new ();
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  scm_dynwind_unwind_handler ((void (*)(void *)) g_ptr_array_unref,
-                              promote,
-                              (scm_t_wind_flags) 0);
-
-  for (SCM iter = attrlist; !scm_is_null(iter); iter = scm_cdr(iter))
-  {
-    SCM car = scm_car (iter);
-
-    if (scm_is_string (car))
-    {
-      char* attr = scm_to_utf8_string (car);
-
-      /* Only accept non-empty strings:
-      */
-      if (strlen (attr) > 0)
-      {
-        g_ptr_array_add (promote, (gpointer) g_intern_string (attr));
-      }
-
-      free (attr);
-    }
-
-  }
-
-  scm_dynwind_end();
-
-  default_always_promote_attributes = promote;
-
-  return SCM_BOOL_T;
-}
-
 SCM_DEFINE (print_color_map, "%print-color-map", 0, 1, 0,
             (SCM scm_map), "Set or view current print color map.")
 {
@@ -858,8 +806,7 @@ init_module_lepton_core_rc (void *unused)
   #include "g_rc.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_always_promote_attributes,
-                s_component_library,
+  scm_c_export (s_component_library,
                 s_component_library_command,
                 s_component_library_funcs,
                 s_print_color_map,
