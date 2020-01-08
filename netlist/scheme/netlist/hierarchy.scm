@@ -214,16 +214,6 @@
   (fold get-new-netname #f nets))
 
 
-(define (remove-refdes-mangling netlist)
-  (define (fix-package package)
-    (set-schematic-component-refdes! package
-                                     (schematic-component-simple-refdes package))
-    package)
-
-  (for-each fix-package netlist)
-  netlist)
-
-
 ;;; Checks if OBJECT is a pin that should be treated as one
 ;;; defining a name of the net connected to it via the "net="
 ;;; attribute of its parent component object.  Such components
@@ -371,7 +361,8 @@
 (define (create-schematic-component-refdes component)
   (set-schematic-component-refdes!
    component
-   (schematic-component-refdes* component)))
+   (schematic-component-refdes* component
+                                (gnetlist-config-ref 'mangle-refdes))))
 
 
 (define (compat-refdes schematic-component)
@@ -570,10 +561,6 @@
   (for-each fix-composite-component subcircuit-components)
 
   (for-each update-component-net-mapped-pins components)
-
-  ((if (gnetlist-config-ref 'mangle-refdes)
-       identity
-       remove-refdes-mangling) components)
 
   (rename-all components)
 

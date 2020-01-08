@@ -46,7 +46,7 @@
     (_ (error-invalid-hierarchy-tag hierarchy-tag))))
 
 
-(define (schematic-component-refdes* component)
+(define* (schematic-component-refdes* component #:optional hierarchical?)
   (define object (schematic-component-object component))
   (define attribs (schematic-component-attribs component))
   (define net-maps (schematic-component-net-maps component))
@@ -84,12 +84,15 @@
                (page-filename (object-page object)))
          "U?"))
 
-  (hierarchy-create-refdes
-   ;; First try to get refdes from attribs.
-   (or (get-refdes)
-       ;; If no refdes found, make a mock one.
-       (make-special-refdes))
-   hierarchy-tag))
+  (define refdes
+    ;; First try to get refdes from attribs.
+    (or (get-refdes)
+        ;; If no refdes found, make a mock one.
+        (make-special-refdes)))
+
+  (if hierarchical?
+      (hierarchy-create-refdes refdes hierarchy-tag)
+      refdes))
 
 
 (define (schematic-component-refdes->string refdes)
