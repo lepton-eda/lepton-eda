@@ -186,7 +186,8 @@ NAME is used as its hierarchical name."
 (define (page-list->hierarchical-subschematic pages hierarchy-tag)
   (define (traverse-component-sources component)
     (and (schematic-component-sources component)
-         (let* ((hierarchy-tag (schematic-component-refdes* component))
+         (let* ((hierarchy-tag (schematic-component-refdes* component
+                                                            'hierarchical))
                 (source-pages (filter-map hierarchy-down-schematic
                                           (schematic-component-sources component)))
                 ;; Recursive processing of sources.
