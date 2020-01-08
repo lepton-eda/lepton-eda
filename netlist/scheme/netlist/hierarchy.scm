@@ -258,7 +258,7 @@
     (or (string-prefix? "unnamed_net" name)
         (string-prefix? "unconnected_pin" name)))
 
-  (define (update-pin-netname pin netname id refdes)
+  (define (update-pin-netname pin netname id)
     (let ((nets (package-pin-nets pin))
           (object #f))
       (set-package-pin-name! pin netname)
@@ -288,7 +288,7 @@
                  (when (unnamed-net-or-unconnected-pin? pin-netname)
                    ;; Rename unconnected pins and unnamed nets.
                    (add-net-rename pin-netname netname))
-                 (update-pin-netname pin netname id refdes)))))))
+                 (update-pin-netname pin netname id)))))))
 
 
 (define (update-component-net-mapped-pins component)
