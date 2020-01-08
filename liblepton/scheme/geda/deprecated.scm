@@ -43,7 +43,6 @@
               load-rc-from-sys-config-dirs)
 
  #:export (deprecated-module-log-warning!
-           always-promote-attributes
            print-color-map
            scheme-directory))
 
@@ -144,8 +143,6 @@
 (define print-color-map %print-color-map)
 
 (define scheme-directory %scheme-directory)
-
-(define always-promote-attributes %always-promote-attributes)
 
 (define (enabled? x)
   (string= "enabled" x))
