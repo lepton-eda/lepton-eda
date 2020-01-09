@@ -231,7 +231,6 @@
 ;;; This function does renaming job for PIN.
 (define (net-map-update-pin component pin)
   (define id (schematic-component-id component))
-  (define refdes (schematic-component-refdes component))
   (define tag (subschematic-name (schematic-component-parent component)))
 
   (define (check-shorted-nets a b priority)
@@ -262,7 +261,8 @@
             (set-pin-net-name! net netname)))))
 
   (let ((net-map (package-pin-net-map pin)))
-    (and refdes
+    (and (not (or (schematic-component-port component)
+                  (schematic-component-subschematic component)))
          net-map
          (package-pin-object pin)
          (let ((netname (create-net-name (net-map-netname net-map)
