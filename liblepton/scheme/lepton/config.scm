@@ -21,7 +21,10 @@
 
   ; Import C procedures
   #:use-module (geda core smob)
-  #:use-module (geda core config))
+  #:use-module (geda core config)
+
+  #:use-module (ice-9 optargs) ; for define*-public
+)
 
 (define-public config? %config?)
 (define-public default-config-context %default-config-context)
@@ -30,7 +33,11 @@
 (define-public path-config-context %path-config-context)
 (define-public cache-config-context %cache-config-context)
 (define-public config-filename %config-filename)
-(define-public config-load! %config-load!)
+
+( define*-public ( config-load! cfg #:key (force-load #f) )
+  ( %config-load! cfg force-load )
+)
+
 (define-public config-loaded? %config-loaded?)
 (define-public config-save! %config-save!)
 (define-public config-changed? %config-changed?)

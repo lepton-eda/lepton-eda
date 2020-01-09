@@ -84,9 +84,9 @@
     (assert-equal a (config-load! a))
     (assert-true (config-loaded? a))
     (chmod *testdirAconf* #o000) ;; Make conf unreadable
-    (assert-thrown 'system-error (config-load! a)))
+    (assert-thrown 'system-error (config-load! a #:force-load #t)))
 
-  (assert-thrown 'system-error (config-load! (default-config-context))))
+  (assert-thrown 'system-error (config-load! (default-config-context) #:force-load #t)))
 
 (begin-config-test 'config-save
   (let ((a (path-config-context *testdirA*)))
@@ -137,7 +137,7 @@
 
 (begin-config-test 'config-changed
   (let ((a (path-config-context *testdirA*)))
-    (config-load! a)
+    (config-load! a #:force-load #t)
     (assert-equal #f (config-changed? a))
     (set-config! a "foo" "bar" #t)
     (assert-true (config-changed? a))
@@ -145,7 +145,7 @@
     (assert-equal #f (config-changed? a))
     (set-config! a "foo" "bar" #f)
     (assert-true (config-changed? a))
-    (config-load! a)
+    (config-load! a #:force-load #t)
     (assert-equal #f (config-changed? a))))
 
 (begin-config-test 'config-groups
@@ -155,8 +155,8 @@
        (lambda () (set-config-parent! b a))
        (lambda ()
 
-         (config-load! a)
-         (config-load! b)
+         (config-load! a #:force-load #t)
+         (config-load! b #:force-load #t)
 
          (assert-equal '() (config-groups a))
          (assert-equal '() (config-groups b))
@@ -202,8 +202,8 @@
        (lambda () (set-config-parent! b a))
        (lambda ()
          (set-config-parent! b a)
-         (config-load! a)
-         (config-load! b)
+         (config-load! a #:force-load #t)
+         (config-load! b #:force-load #t)
 
          (assert-thrown 'config-error '() (config-keys a "foo"))
 
@@ -477,9 +477,9 @@
     (assert-equal a (geda:config-load! a))
     (assert-true (geda:config-loaded? a))
     (chmod *testdir-geda-Aconf* #o000) ;; Make conf unreadable
-    (assert-thrown 'system-error (geda:config-load! a)))
+    (assert-thrown 'system-error (geda:config-load! a #:force-load #t)))
 
-  (assert-thrown 'system-error (geda:config-load! (geda:default-config-context))))
+  (assert-thrown 'system-error (geda:config-load! (geda:default-config-context) #:force-load #t)))
 
 (begin-geda-config-test 'geda:config-save
   (let ((a (geda:path-config-context *testdir-geda-A*)))
@@ -530,7 +530,7 @@
 
 (begin-geda-config-test 'geda:config-changed
   (let ((a (geda:path-config-context *testdir-geda-A*)))
-    (geda:config-load! a)
+    (geda:config-load! a #:force-load #t)
     (assert-equal #f (geda:config-changed? a))
     (geda:set-config! a "foo" "bar" #t)
     (assert-true (geda:config-changed? a))
@@ -538,7 +538,7 @@
     (assert-equal #f (geda:config-changed? a))
     (geda:set-config! a "foo" "bar" #f)
     (assert-true (geda:config-changed? a))
-    (geda:config-load! a)
+    (geda:config-load! a #:force-load #t)
     (assert-equal #f (geda:config-changed? a))))
 
 (begin-geda-config-test 'geda:config-groups
@@ -548,8 +548,8 @@
        (lambda () (geda:set-config-parent! b a))
        (lambda ()
 
-         (geda:config-load! a)
-         (geda:config-load! b)
+         (geda:config-load! a #:force-load #t)
+         (geda:config-load! b #:force-load #t)
 
          (assert-equal '() (geda:config-groups a))
          (assert-equal '() (geda:config-groups b))
@@ -595,8 +595,8 @@
        (lambda () (geda:set-config-parent! b a))
        (lambda ()
          (geda:set-config-parent! b a)
-         (geda:config-load! a)
-         (geda:config-load! b)
+         (geda:config-load! a #:force-load #t)
+         (geda:config-load! b #:force-load #t)
 
          (assert-thrown 'config-error '() (geda:config-keys a "foo"))
 
