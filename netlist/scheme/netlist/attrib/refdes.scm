@@ -76,11 +76,7 @@
   "U?")
 
 
-(define (make-refdes object attribs has-net? graphical? hierarchy-tag)
-  (define plain-symbol?
-    (and (not has-net?)
-         (not graphical?)))
-
+(define (make-refdes object attribs plain-symbol? hierarchy-tag)
   (define refdes
     ;; First try to get refdes from attribs.
     (or (netlist-mode-refdes attribs)
@@ -102,11 +98,13 @@
   (define has-net? (not (null? (schematic-component-net-maps component))))
   (define graphical? (or (schematic-component-graphical? component)
                          (schematic-component-nc? component)))
+  (define plain-symbol? (and (not has-net?)
+                             (not graphical?)))
   (define hierarchy-tag
     (and hierarchical?
          (subschematic-name (schematic-component-parent component))))
 
-  (make-refdes object attribs has-net? graphical? hierarchy-tag))
+  (make-refdes object attribs plain-symbol? hierarchy-tag))
 
 
 (define (schematic-component-refdes->string refdes)
