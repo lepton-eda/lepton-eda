@@ -46,8 +46,8 @@
                    subschematic-components set-subschematic-components!
                    subschematic-connections set-subschematic-connections!)
 
-  #:export (page-list->hierarchical-subschematic
-            schematic-component-refdes*))
+  #:export (make-schematic-component-refdes
+            page-list->hierarchical-subschematic))
 
 (define-record-type <subschematic>
   (make-subschematic name parent pages components connections)
@@ -184,7 +184,7 @@ NAME is used as its hierarchical name."
           #f))))
 
 
-(define* (schematic-component-refdes* component #:optional hierarchical?)
+(define* (make-schematic-component-refdes component #:optional hierarchical?)
   (define object (schematic-component-object component))
   (define attribs (schematic-component-attribs component))
   (define has-net? (not (null? (schematic-component-net-maps component))))
@@ -208,7 +208,7 @@ NAME is used as its hierarchical name."
 (define (page-list->hierarchical-subschematic pages hierarchy-tag)
   (define (traverse-component-sources component)
     (and (schematic-component-sources component)
-         (let* ((hierarchy-tag (schematic-component-refdes* component
+         (let* ((hierarchy-tag (make-schematic-component-refdes component
                                                             'hierarchical))
                 (source-pages (filter-map hierarchy-down-schematic
                                           (schematic-component-sources component)))
