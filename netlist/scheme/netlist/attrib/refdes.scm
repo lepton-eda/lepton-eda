@@ -42,9 +42,10 @@
     (netlist-error 1 (_ "Invalid hierarchy tag: ~S") tag))
 
   (and basename
-   (match hierarchy-tag
-     ((? list? tag) `(,basename . ,tag))
-     (_ (error-invalid-hierarchy-tag hierarchy-tag)))))
+       (match hierarchy-tag
+         ((? list? tag) `(,basename . ,tag))
+         (#f basename)
+         (_ (error-invalid-hierarchy-tag hierarchy-tag)))))
 
 
 ;;; Create refdes from object ATTRIBS depending on the current
@@ -73,18 +74,12 @@
         (component-basename object)
         (component-position object)
         (page-filename (object-page object)))
-  (let ((refdes "U?"))
-    (if hierarchy-tag
-        (hierarchy-create-refdes refdes hierarchy-tag)
-        refdes)))
+  (hierarchy-create-refdes "U?" hierarchy-tag))
 
 ;;; Make up a plain symbol refdes from symbol ATTRIBS with
 ;;; HIERARCHY-TAG.
 (define (make-refdes attribs hierarchy-tag)
-  (let ((refdes (netlist-mode-refdes attribs)))
-    (if hierarchy-tag
-        (hierarchy-create-refdes refdes hierarchy-tag)
-        refdes)))
+  (hierarchy-create-refdes (netlist-mode-refdes attribs) hierarchy-tag))
 
 
 (define* (schematic-component-refdes* component #:optional hierarchical?)
