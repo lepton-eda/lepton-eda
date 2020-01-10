@@ -33,7 +33,7 @@
 
   #:export (make-refdes
             make-mock-refdes
-            schematic-component-refdes->string))
+            hierarchical-refdes->string))
 
 
 ;;; Refdes value used in netlists for plain symbols without
@@ -41,7 +41,7 @@
 (define mock-refdes "U?")
 
 
-(define (hierarchy-create-refdes basename hierarchy-tag)
+(define (make-hierarchical-refdes basename hierarchy-tag)
   (define (error-invalid-hierarchy-tag tag)
     (netlist-error 1 (_ "Invalid hierarchy tag: ~S") tag))
 
@@ -78,15 +78,15 @@
         (component-basename object)
         (component-position object)
         (page-filename (object-page object)))
-  (hierarchy-create-refdes mock-refdes hierarchy-tag))
+  (make-hierarchical-refdes mock-refdes hierarchy-tag))
 
 ;;; Make up a plain symbol refdes from symbol ATTRIBS with
 ;;; HIERARCHY-TAG.
 (define (make-refdes attribs hierarchy-tag)
-  (hierarchy-create-refdes (netlist-mode-refdes attribs) hierarchy-tag))
+  (make-hierarchical-refdes (netlist-mode-refdes attribs) hierarchy-tag))
 
 
-(define (schematic-component-refdes->string refdes)
+(define (hierarchical-refdes->string refdes)
   (define reverse-refdes-order?
     (gnetlist-config-ref 'reverse-refdes-order))
 
