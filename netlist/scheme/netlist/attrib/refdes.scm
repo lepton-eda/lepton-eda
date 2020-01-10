@@ -41,9 +41,10 @@
   (define (error-invalid-hierarchy-tag tag)
     (netlist-error 1 (_ "Invalid hierarchy tag: ~S") tag))
 
-  (match hierarchy-tag
-    ((? list? tag) `(,basename . ,tag))
-    (_ (error-invalid-hierarchy-tag hierarchy-tag))))
+  (and basename
+   (match hierarchy-tag
+     ((? list? tag) `(,basename . ,tag))
+     (_ (error-invalid-hierarchy-tag hierarchy-tag)))))
 
 
 ;;; Create refdes from object ATTRIBS depending on the current
@@ -64,32 +65,26 @@
       ((geda) refdes)
       (else (error-netlist-mode-not-supported (netlist-mode))))))
 
-
-(define (mock-refdes object)
-  ;; Otherwise, refdes is just missing.  Warn the user, and
-  ;; make up an artificial refdes.
+;;; Make up an artificial refdes for OBJECT with HIERARCHY-TAG, if
+;;; needed, and warn the user about this.
+(define (mock-refdes object hierarchy-tag)
   (log! 'critical
         (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
         (component-basename object)
         (component-position object)
         (page-filename (object-page object)))
-  "U?")
+  (let ((refdes "U?"))
+    (if hierarchy-tag
+        (hierarchy-create-refdes refdes hierarchy-tag)
+        refdes)))
 
-
-(define (make-refdes object attribs plain-symbol? hierarchy-tag)
-  (define refdes
-    ;; First try to get refdes from attribs.
-    (or (netlist-mode-refdes attribs)
-        ;; If no refdes found, make a mock one.  For graphical
-        ;; symbols, or for symbols having the "net=" attribute,
-        ;; which are considered to be power or some other special
-        ;; symbols, return #f.
-        (and plain-symbol?
-             (mock-refdes object))))
-
-  (if hierarchy-tag
-      (hierarchy-create-refdes refdes hierarchy-tag)
-      refdes))
+;;; Make up a plain symbol refdes from symbol ATTRIBS with
+;;; HIERARCHY-TAG.
+(define (make-refdes attribs hierarchy-tag)
+  (let ((refdes (netlist-mode-refdes attribs)))
+    (if hierarchy-tag
+        (hierarchy-create-refdes refdes hierarchy-tag)
+        refdes)))
 
 
 (define* (schematic-component-refdes* component #:optional hierarchical?)
@@ -104,7 +99,13 @@
     (and hierarchical?
          (subschematic-name (schematic-component-parent component))))
 
-  (make-refdes object attribs plain-symbol? hierarchy-tag))
+  ;; First try to get refdes from attribs.
+  (or (make-refdes attribs hierarchy-tag)
+      ;; If no refdes found, make a mock one for non-special
+      ;; symbols.  For graphical symbols, or for symbols having
+      ;; the "net=" attribute, which are considered to be power
+      ;; or some other special symbols, it is #f.
+      (and plain-symbol? (mock-refdes object hierarchy-tag))))
 
 
 (define (schematic-component-refdes->string refdes)
