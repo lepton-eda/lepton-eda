@@ -368,7 +368,7 @@
 
 (define (compat-refdes schematic-component)
   (set-schematic-component-refdes! schematic-component
-                                   (schematic-component-refdes->string
+                                   (hierarchical-refdes->string
                                     (schematic-component-refdes schematic-component)))
   schematic-component)
 

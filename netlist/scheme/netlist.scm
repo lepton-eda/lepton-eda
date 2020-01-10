@@ -346,8 +346,8 @@ REFDES. As a result, slots may be repeated in the returned list."
 
 ;;; Helper function for sorting connections.
 (define (pair<? a b)
-  (let ((refdes-a (schematic-component-refdes->string (car a)))
-        (refdes-b (schematic-component-refdes->string (car b)))
+  (let ((refdes-a (hierarchical-refdes->string (car a)))
+        (refdes-b (hierarchical-refdes->string (car b)))
         (pin-a (cdr a))
         (pin-b (cdr b)))
     (or (refdes<? refdes-a refdes-b)
@@ -367,7 +367,7 @@ NETNAME in SCHEMATIC."
 
   (define (pin->refdes-pinnumber-pair pin)
     (let* ((component (package-pin-parent pin))
-           (refdes (schematic-component-refdes->string
+           (refdes (hierarchical-refdes->string
                     (schematic-component-refdes component)))
            (pinnumber (package-pin-number pin)))
       (and (not (schematic-component-graphical? component))
@@ -432,7 +432,7 @@ connection pairs in the form (\"pin-number\" . \"net-name\")."
     (let ((pins (schematic-connection-pins (package-pin-connection pin))))
       (filter-map
        (lambda (pin)
-         (let ((refdes (schematic-component-refdes->string
+         (let ((refdes (hierarchical-refdes->string
                         (schematic-component-refdes (package-pin-parent pin))))
                (pinnumber (package-pin-number pin)))
            (and refdes
