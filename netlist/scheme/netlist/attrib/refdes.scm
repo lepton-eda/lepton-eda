@@ -46,6 +46,25 @@
     (_ (error-invalid-hierarchy-tag hierarchy-tag))))
 
 
+;;; Create refdes from object ATTRIBS depending on the current
+;;; netlist mode.  In "geda" mode it is the plain value of the
+;;; refdes attribute.  In "spice" mode it is a string of the form
+;;; "refdes-attrib-value.slot-attrib-value".
+(define (netlist-mode-refdes attribs)
+  (define (error-netlist-mode-not-supported mode)
+    (netlist-error 1 (_ "Netlist mode ~S is not supported.") mode))
+
+  (let ((refdes (and=> (assq-ref attribs 'refdes) car)))
+    (case (netlist-mode)
+      ((spice)
+       (let ((slot (and=> (assq-ref attribs 'slot) car)))
+         (if slot
+             (string-append refdes "." slot)
+             refdes)))
+      ((geda) refdes)
+      (else (error-netlist-mode-not-supported (netlist-mode))))))
+
+
 (define* (schematic-component-refdes* component #:optional hierarchical?)
   (define object (schematic-component-object component))
   (define attribs (schematic-component-attribs component))
@@ -54,21 +73,6 @@
                          (schematic-component-nc? component)))
   (define hierarchy-tag
     (subschematic-name (schematic-component-parent component)))
-
-  (define (error-netlist-mode-not-supported mode)
-    (netlist-error 1 (_ "Netlist mode ~S is not supported.") mode))
-
-  ;; Get refdes= of OBJECT depending on NETLIST-MODE.
-  (define (get-refdes)
-    (let ((refdes (and=> (assq-ref attribs 'refdes) car)))
-      (case (netlist-mode)
-        ((spice)
-         (let ((slot (and=> (assq-ref attribs 'slot) car)))
-           (if slot
-               (string-append refdes "." slot)
-               refdes)))
-        ((geda) refdes)
-        (else (error-netlist-mode-not-supported (netlist-mode))))))
 
   (define (make-special-refdes)
     ;; If there is net=, it's a power or some other special
@@ -86,7 +90,7 @@
 
   (define refdes
     ;; First try to get refdes from attribs.
-    (or (get-refdes)
+    (or (netlist-mode-refdes attribs)
         ;; If no refdes found, make a mock one.
         (make-special-refdes)))
 
