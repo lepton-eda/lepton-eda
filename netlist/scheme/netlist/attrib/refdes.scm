@@ -30,10 +30,9 @@
   #:use-module (netlist error)
   #:use-module (netlist hierarchy)
   #:use-module (netlist mode)
-  #:use-module (netlist schematic-component)
-  #:use-module (netlist subschematic)
 
-  #:export (schematic-component-refdes*
+  #:export (make-refdes
+            make-mock-refdes
             schematic-component-refdes->string))
 
 
@@ -85,27 +84,6 @@
 ;;; HIERARCHY-TAG.
 (define (make-refdes attribs hierarchy-tag)
   (hierarchy-create-refdes (netlist-mode-refdes attribs) hierarchy-tag))
-
-
-(define* (schematic-component-refdes* component #:optional hierarchical?)
-  (define object (schematic-component-object component))
-  (define attribs (schematic-component-attribs component))
-  (define has-net? (not (null? (schematic-component-net-maps component))))
-  (define graphical? (or (schematic-component-graphical? component)
-                         (schematic-component-nc? component)))
-  (define plain-symbol? (and (not has-net?)
-                             (not graphical?)))
-  (define hierarchy-tag
-    (and hierarchical?
-         (subschematic-name (schematic-component-parent component))))
-
-  ;; First try to get refdes from attribs.
-  (or (make-refdes attribs hierarchy-tag)
-      ;; If no refdes found, make a mock one for non-special
-      ;; symbols.  For graphical symbols, or for symbols having
-      ;; the "net=" attribute, which are considered to be power
-      ;; or some other special symbols, it is #f.
-      (and plain-symbol? (make-mock-refdes object hierarchy-tag))))
 
 
 (define (schematic-component-refdes->string refdes)
