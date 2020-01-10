@@ -70,9 +70,13 @@
       ((geda) refdes)
       (else (error-netlist-mode-not-supported (netlist-mode))))))
 
-;;; Make up an artificial refdes for OBJECT with HIERARCHY-TAG, if
-;;; needed, and warn the user about this.
+
 (define (make-mock-refdes object hierarchy-tag)
+  "Makes up an artificial refdes for OBJECT. It may be used when
+the object has neither attached \"refdes\" attribute, nor any
+special other one. If HIERARCHY-TAG is not #F, forms a
+hierarchical refdes in the form of a list. Logs a warning with the
+object info."
   (log! 'critical
         (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
         (component-basename object)
@@ -80,13 +84,18 @@
         (page-filename (object-page object)))
   (make-hierarchical-refdes mock-refdes hierarchy-tag))
 
-;;; Make up a plain symbol refdes from symbol ATTRIBS with
-;;; HIERARCHY-TAG.
+
 (define (make-refdes attribs hierarchy-tag)
-  (make-hierarchical-refdes (netlist-mode-refdes attribs) hierarchy-tag))
+  "Makes up a plain symbol refdes from symbol ATTRIBS. If
+HIERARCHY-TAG is not #F, forms a hierarchical refdes in the form
+of a list."
+  (make-hierarchical-refdes (netlist-mode-refdes attribs)
+                            hierarchy-tag))
 
 
 (define (hierarchical-refdes->string refdes)
+  "Transforms hierarchical REFDES, being a list, into string form
+accounting for netlister settings."
   (define reverse-refdes-order?
     (gnetlist-config-ref 'reverse-refdes-order))
 
