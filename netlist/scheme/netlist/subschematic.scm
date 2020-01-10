@@ -46,7 +46,8 @@
                    subschematic-components set-subschematic-components!
                    subschematic-connections set-subschematic-connections!)
 
-  #:export (page-list->hierarchical-subschematic))
+  #:export (page-list->hierarchical-subschematic
+            schematic-component-refdes*))
 
 (define-record-type <subschematic>
   (make-subschematic name parent pages components connections)
@@ -181,6 +182,27 @@ NAME is used as its hierarchical name."
         (begin
           (log! 'critical (_ "Failed to load subcircuit ~S.") name)
           #f))))
+
+
+(define* (schematic-component-refdes* component #:optional hierarchical?)
+  (define object (schematic-component-object component))
+  (define attribs (schematic-component-attribs component))
+  (define has-net? (not (null? (schematic-component-net-maps component))))
+  (define graphical? (or (schematic-component-graphical? component)
+                         (schematic-component-nc? component)))
+  (define plain-symbol? (and (not has-net?)
+                             (not graphical?)))
+  (define hierarchy-tag
+    (and hierarchical?
+         (subschematic-name (schematic-component-parent component))))
+
+  ;; First try to get refdes from attribs.
+  (or (make-refdes attribs hierarchy-tag)
+      ;; If no refdes found, make a mock one for non-special
+      ;; symbols.  For graphical symbols, or for symbols having
+      ;; the "net=" attribute, which are considered to be power
+      ;; or some other special symbols, it is #f.
+      (and plain-symbol? (make-mock-refdes object hierarchy-tag))))
 
 
 (define (page-list->hierarchical-subschematic pages hierarchy-tag)
