@@ -68,7 +68,7 @@
 (define* (schematic-component-refdes* component #:optional hierarchical?)
   (define object (schematic-component-object component))
   (define attribs (schematic-component-attribs component))
-  (define net-maps (schematic-component-net-maps component))
+  (define has-net? (not (null? (schematic-component-net-maps component))))
   (define graphical? (or (schematic-component-graphical? component)
                          (schematic-component-nc? component)))
   (define hierarchy-tag
@@ -77,7 +77,7 @@
   (define (make-special-refdes)
     ;; If there is net=, it's a power or some other special
     ;; graphical symbol.  In such a case, refdes is #f.
-    (and (null? net-maps)
+    (and (not has-net?)
          (not graphical?)
          ;; Otherwise, refdes is just missing.  Warn the user, and
          ;; make up an artificial refdes.
