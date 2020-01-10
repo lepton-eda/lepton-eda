@@ -65,15 +65,7 @@
       (else (error-netlist-mode-not-supported (netlist-mode))))))
 
 
-(define* (schematic-component-refdes* component #:optional hierarchical?)
-  (define object (schematic-component-object component))
-  (define attribs (schematic-component-attribs component))
-  (define has-net? (not (null? (schematic-component-net-maps component))))
-  (define graphical? (or (schematic-component-graphical? component)
-                         (schematic-component-nc? component)))
-  (define hierarchy-tag
-    (subschematic-name (schematic-component-parent component)))
-
+(define (make-refdes object attribs has-net? graphical? hierarchy-tag)
   (define (make-special-refdes)
     ;; If there is net=, it's a power or some other special
     ;; graphical symbol.  In such a case, refdes is #f.
@@ -94,9 +86,22 @@
         ;; If no refdes found, make a mock one.
         (make-special-refdes)))
 
-  (if hierarchical?
+  (if hierarchy-tag
       (hierarchy-create-refdes refdes hierarchy-tag)
       refdes))
+
+
+(define* (schematic-component-refdes* component #:optional hierarchical?)
+  (define object (schematic-component-object component))
+  (define attribs (schematic-component-attribs component))
+  (define has-net? (not (null? (schematic-component-net-maps component))))
+  (define graphical? (or (schematic-component-graphical? component)
+                         (schematic-component-nc? component)))
+  (define hierarchy-tag
+    (and hierarchical?
+         (subschematic-name (schematic-component-parent component))))
+
+  (make-refdes object attribs has-net? graphical? hierarchy-tag))
 
 
 (define (schematic-component-refdes->string refdes)
