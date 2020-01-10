@@ -361,8 +361,9 @@
 (define (create-schematic-component-refdes component)
   (set-schematic-component-refdes!
    component
-   (schematic-component-refdes* component
-                                (gnetlist-config-ref 'mangle-refdes))))
+   (make-schematic-component-refdes
+    component
+    (gnetlist-config-ref 'mangle-refdes))))
 
 
 (define (compat-refdes schematic-component)
