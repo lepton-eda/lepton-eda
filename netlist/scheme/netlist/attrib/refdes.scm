@@ -37,6 +37,11 @@
             schematic-component-refdes->string))
 
 
+;;; Refdes value used in netlists for plain symbols without
+;;; refdes.
+(define mock-refdes "U?")
+
+
 (define (hierarchy-create-refdes basename hierarchy-tag)
   (define (error-invalid-hierarchy-tag tag)
     (netlist-error 1 (_ "Invalid hierarchy tag: ~S") tag))
@@ -68,13 +73,13 @@
 
 ;;; Make up an artificial refdes for OBJECT with HIERARCHY-TAG, if
 ;;; needed, and warn the user about this.
-(define (mock-refdes object hierarchy-tag)
+(define (make-mock-refdes object hierarchy-tag)
   (log! 'critical
         (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
         (component-basename object)
         (component-position object)
         (page-filename (object-page object)))
-  (hierarchy-create-refdes "U?" hierarchy-tag))
+  (hierarchy-create-refdes mock-refdes hierarchy-tag))
 
 ;;; Make up a plain symbol refdes from symbol ATTRIBS with
 ;;; HIERARCHY-TAG.
@@ -100,7 +105,7 @@
       ;; symbols.  For graphical symbols, or for symbols having
       ;; the "net=" attribute, which are considered to be power
       ;; or some other special symbols, it is #f.
-      (and plain-symbol? (mock-refdes object hierarchy-tag))))
+      (and plain-symbol? (make-mock-refdes object hierarchy-tag))))
 
 
 (define (schematic-component-refdes->string refdes)
