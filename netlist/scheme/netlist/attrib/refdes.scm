@@ -66,25 +66,29 @@
 
 
 (define (make-refdes object attribs has-net? graphical? hierarchy-tag)
-  (define (make-special-refdes)
-    ;; If there is net=, it's a power or some other special
-    ;; graphical symbol.  In such a case, refdes is #f.
+  (define plain-symbol?
     (and (not has-net?)
-         (not graphical?)
-         ;; Otherwise, refdes is just missing.  Warn the user, and
-         ;; make up an artificial refdes.
-         (log! 'critical
-               (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
-               (component-basename object)
-               (component-position object)
-               (page-filename (object-page object)))
-         "U?"))
+         (not graphical?)))
+
+  (define (make-special-refdes)
+    ;; Otherwise, refdes is just missing.  Warn the user, and
+    ;; make up an artificial refdes.
+    (log! 'critical
+          (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
+          (component-basename object)
+          (component-position object)
+          (page-filename (object-page object)))
+    "U?")
 
   (define refdes
     ;; First try to get refdes from attribs.
     (or (netlist-mode-refdes attribs)
-        ;; If no refdes found, make a mock one.
-        (make-special-refdes)))
+        ;; If no refdes found, make a mock one.  For graphical
+        ;; symbols, or for symbols having the "net=" attribute,
+        ;; which are considered to be power or some other special
+        ;; symbols, return #f.
+        (and plain-symbol?
+             (make-special-refdes))))
 
   (if hierarchy-tag
       (hierarchy-create-refdes refdes hierarchy-tag)
