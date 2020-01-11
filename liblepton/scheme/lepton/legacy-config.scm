@@ -12,6 +12,8 @@
   #:use-module  ( lepton legacy-config keylist )
 
   #:export      ( config-upgrade )
+  #:export      ( warning-option-deprecated )
+  #:export      ( warning-option-obsolete )
 )
 
 
@@ -216,5 +218,52 @@
 
 
 
-; vim: ft=scheme tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+; public:
+;
+( define ( warning-option-deprecated old-name new-group new-key )
+  ; return:
+  ( format #f
+"
+WARNING: The RC file function '~A' is deprecated.
+RC configuration functions will be removed in an upcoming Lepton EDA
+release. Please use .conf configuration files instead:
+https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
+
+Put the following lines into the ~A file (in current directory)
+or ~A (in user's configuration directory, typically
+$HOME/.config/lepton-eda/), replacing MYVALUE with the desired
+option's value:
+
+[~A]
+~A=MYVALUE
+
+"
+    old-name
+    "geda.conf"
+    "geda-user.conf"
+    new-group
+    new-key
+  )
+
+) ; warning-option-deprecated()
+
+
+
+; public:
+;
+( define ( warning-option-obsolete old-name )
+  ; return:
+  ( format #f
+"
+WARNING: The RC file function '~A' is deprecated
+and does nothing.
+RC configuration functions will be removed in an upcoming Lepton EDA
+release. Please use .conf configuration files instead:
+https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
+
+"
+    old-name
+  )
+
+) ; warning-option-obsolete()
 

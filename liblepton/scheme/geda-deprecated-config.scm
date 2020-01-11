@@ -30,22 +30,20 @@
 ;; Utility functions and macros
 ;; ===================================================================
 
+
+( use-modules ( lepton legacy-config ) )
+
+
 ;; Returns an RC function closure to replace the legacy configuration
 ;; function OLD-ID.  The returned closure takes an arbitrary number of
 ;; arguments, and does nothing other than print a deprecation message
 ;; the first time it is called.
 (define (rc-dead-config old-id)
-  ;; FIXME more helpful error message with link to documentation.
-  (define (deprecation-warning)
-    (format (current-error-port)
-"
-WARNING: The RC file function '~A' is deprecated
-and does nothing.
-RC configuration functions will be removed in an upcoming Lepton EDA
-release. Please use .conf configuration files instead:
-https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
 
-" old-id))
+  (define (deprecation-warning)
+    (format (current-error-port) (warning-option-obsolete old-id))
+  )
+
   (let ((warned? #f))
     (lambda args
       (or warned? (begin (deprecation-warning) (set! warned? #t))))))
@@ -67,24 +65,11 @@ https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
 ;; VALUE-TRANSFORMER.  The first time the closure is called, it prints
 ;; a deprecation message.
 (define (rc-deprecated-config old-id group key value-transformer)
-  ;; FIXME more helpful error message with link to documentation.
+
   (define (deprecation-warning)
-    (format (current-error-port)
-"
-WARNING: The RC file function '~A' is deprecated.
-RC configuration functions will be removed in an upcoming Lepton EDA
-release. Please use .conf configuration files instead:
-https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
+    (format (current-error-port) (warning-option-deprecated old-id group key))
+  )
 
-Put the following lines into the ~A file (in current directory)
-or ~A (in user's configuration directory, typically
-$HOME/.config/lepton-eda/), replacing MYVALUE with the desired
-option's value:
-
-[~A]
-~A=MYVALUE
-
-" old-id "geda.conf" "geda-user.conf" group key))
   (let ((warned? #f))
     (lambda args
       (or warned?
