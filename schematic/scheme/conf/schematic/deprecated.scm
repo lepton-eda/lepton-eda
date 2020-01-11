@@ -1,7 +1,9 @@
 (use-modules (ice-9 regex)
              (lepton page)
              (gschem hook)
-             (gschem window))
+             (gschem window)
+             (geda config)
+             (lepton legacy-config))
 
 ;
 ; Start of color section
@@ -122,36 +124,80 @@
 (load-from-path "auto-place-netname.scm")
 (add-hook! add-objects-hook place-netname-attribute-handler)
 
-; Automatically place a titleblock (or other components) when creating
-; a new page.
-; Comment in these lines if you want gschem to automatically place a titleblock
-; when you create a new _empty_ page.
-; Users can customize the default titleblock by adding the following line
-; (without the semi-colons at the beginning) to the gschemrc file:
-;; (define default-titleblock "title-A4.sym")
-;; Change "title-A4.sym" by the name of your preferred titleblock!
-;
-; If you don't want a titleblock to be added automatically, then add one of
-; the following lines to your gschemrc file (without the semicolon).
-; There are several ways, so just choose one:
-;   (define default-titleblock "")
-;   (define default-titleblock '())
-;   (define default-titleblock #f)
-;
-(define default-titleblock "title-B.sym")
 
-(add-hook! new-page-hook (lambda (page)
-   ; Only place the titleblock if there are no objects in the page
-   ; and the page filename ends in ".sym".
-   (if (and (null? (get-objects-in-page page))
-	    (not (string-match ".*\\.[sS][yY][mM]"
-                               (get-page-filename page))))
-;      Syntax             Symbol name        X   Y    angle selectable mirrored
-       (add-component-at-xy page default-titleblock 40000 40000   0       #f       #f))
 
-   ;; After adding titleblock, reset page to mark as unchanged.
-   (set-page-dirty! page #f))
-	   #t)
+; Automatically place a titleblock when creating a new page.
+;
+( define ( add-titleblock page )
+
+  ( define ( warn-deprecated )
+    ( format (current-error-port)
+      ( warning-option-deprecated
+        "default-titleblock"
+        "schematic.gui"
+        "default-titleblock"
+      )
+    )
+  )
+
+  ( define ( read-cfg cfg )
+    ( config-string cfg "schematic.gui" "default-titleblock" )
+  )
+
+  ( define ( add? symname )
+    ( and
+      ( not (string-null? symname) )
+      ( null? (page-contents page) )
+      ( not (string-match ".*\\.[sS][yY][mM]" (page-filename page)) )
+    )
+  )
+
+  ( define ( add-to-page symname )
+  ( let*
+    (
+    ( attrs '() )
+    ( pos    ( cons 40000 40000 ) )
+    ( comp   ( make-component/library symname pos 0 #f #t ) )
+    )
+
+    ( when comp
+      ( page-append! page comp )
+      ( set! attrs ( promote-attribs! comp ) )
+      ( run-hook add-objects-hook (cons comp attrs) )
+      ( set-page-dirty! page #f )
+    )
+
+  ) ; let
+  ) ; add-to-page()
+
+
+  ( let*
+    (
+    ( default "title-B.sym" )
+    ( cfg ( path-config-context (getcwd) ) )
+    ( symname ( false-if-exception (read-cfg cfg) ) )
+    )
+
+    ( when ( defined? 'default-titleblock )
+      ( set! symname default-titleblock )
+      ( warn-deprecated )
+    )
+
+    ( unless symname
+      ( set! symname default )
+    )
+
+    ( if ( add? symname )
+      ( add-to-page symname )
+    )
+
+  ) ; let
+
+) ; add-titleblock()
+
+
+
+( add-hook! new-page-hook add-titleblock )
 
 ;
 ; End of hooks
