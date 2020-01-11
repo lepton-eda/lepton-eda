@@ -31,6 +31,7 @@
   #:export-syntax (make-schematic-connection schematic-connection?
                    schematic-connection-id set-schematic-connection-id!
                    schematic-connection-parent set-schematic-connection-parent!
+                   schematic-connection-page set-schematic-connection-page!
                    schematic-connection-name set-schematic-connection-name!
                    schematic-connection-override-name set-schematic-connection-override-name!
                    schematic-connection-objects set-schematic-connection-objects!
