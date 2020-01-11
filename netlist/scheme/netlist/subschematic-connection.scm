@@ -117,5 +117,5 @@
   (define pin-connections
     (delete-duplicates (map package-pin-connection pins)))
 
-  (map (cut make-netname-connection <>)
+  (map make-netname-connection
        (group-connections pin-connections)))
