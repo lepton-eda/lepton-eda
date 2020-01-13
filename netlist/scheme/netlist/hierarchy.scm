@@ -22,6 +22,7 @@
   #:use-module (netlist core gettext)
 
   #:use-module (ice-9 match)
+  #:use-module (ice-9 receive)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
 
@@ -39,7 +40,6 @@
   #:use-module (netlist schematic-connection)
   #:use-module (netlist schematic-port)
   #:use-module (netlist subschematic)
-  #:use-module (symbol check duplicate)
   #:use-module (symbol check net-attrib)
 
   #:export (hierarchy-post-process))
@@ -363,143 +363,6 @@
                                    (hierarchical-refdes->string
                                     (schematic-component-refdes schematic-component)))
   schematic-component)
-
-
-(define (warn-no-pinlabel pin)
-  (or (package-pin-label pin)
-      (begin
-        (log! 'critical
-              (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
-              (package-pin-number pin)
-              (schematic-component-refdes (package-pin-parent pin)))
-        #f)))
-
-
-(define (warn-no-inner-pins component)
-  (log! 'critical (_ "Port component ~S has no pins.")
-        (schematic-component-refdes component))
-  #f)
-
-;;; Warn if no port found in the subcircuit. Return #f.
-(define (warn-no-port pin)
-  (log! 'critical
-        (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
-        (schematic-component-refdes (package-pin-parent pin))
-        (package-pin-label pin))
-  #f)
-
-
-(define (warn-one-pin-multiple-components pin)
-  (log! 'critical
-        (_ "There are several subschematic components for the pin with \"pinlabel=~A\" of the component ~S.")
-        (package-pin-label pin)
-        (component-basename (schematic-component-object (package-pin-parent pin)))))
-
-
-(define (warn-duplicate-pinlabel arg)
-  (if (list? arg)
-      (begin
-        (log! 'critical
-              (_ "Pins with numbers ~A of the component ~S have the same \"pinlabel\" attribute.")
-              (string-join (map package-pin-number  arg) ", ")
-              (schematic-component-refdes (package-pin-parent (car arg))))
-        ;; Return first duplicate pin.
-        (car arg))
-      arg))
-
-
-(define (component-refdes<? x y)
-  (string<
-   (schematic-component-simple-refdes x)
-   (schematic-component-simple-refdes y)))
-
-
-(define (component-refdes=? x y)
-  (string=
-   (schematic-component-simple-refdes x)
-   (schematic-component-simple-refdes y)))
-
-
-(define (pinlabel<? x y)
-  (string< (package-pin-label x) (package-pin-label y)))
-
-
-(define (pinlabel=? x y)
-  (string= (package-pin-label x) (package-pin-label y)))
-
-
-(define (check-schematic-component-pins pins)
-  (map warn-duplicate-pinlabel
-       (list->duplicate-list (filter warn-no-pinlabel pins)
-                             pinlabel<?
-                             pinlabel=?)))
-
-
-(define (schematic-component-port-pairs component)
-  (let ((pins
-         (check-schematic-component-pins (schematic-component-pins component)))
-        (components
-         (list->duplicate-list
-          (filter schematic-component-simple-refdes
-                  (subschematic-components
-                   (schematic-component-subschematic component)))
-          component-refdes<?
-          component-refdes=?)))
-    (let loop ((pins pins)
-               (components components)
-               (result '()))
-      (if (null? pins)
-          result
-          (if (null? components)
-              (begin
-                (warn-no-port (car pins))
-                (loop (cdr pins) components result))
-              ;; both pins and components exist
-              (let* ((c (car components))
-                     (c* (if (list? c) (car c) c))
-                     (p (car pins)))
-                ;; A port component inside subcircuit (inner
-                ;; component) is considered to be matching to the
-                ;; outer (parent) component port pin if the refdes
-                ;; of the former is the same as the value of the
-                ;; "pinlabel=" attribute of the latter.
-                (if (string= (package-pin-label p) (schematic-component-simple-refdes c*))
-                    (if (list? c)
-                        (begin (warn-one-pin-multiple-components p)
-                               (loop (cdr pins) (cdr components) (cons (cons p c*) result)))
-                        ;; c is simple component
-                        (loop (cdr pins) (cdr components) (cons (cons p c*) result)))
-                    ;; different pinlabel and component refdes
-                    (if (string> (package-pin-label p) (schematic-component-simple-refdes c*))
-                        ;; If the pinlabel of pin pinlabel is greater than the component
-                        ;; refdes, we consider the component being internal one.
-                        ;; Then just continue with the next component, drop the current one.
-                        (loop pins (cdr components) result)
-                        ;; Otherwise, it's obvious that the pin has no correspondent component.
-                        (begin
-                          (warn-no-port p)
-                          (loop (cdr pins) components result))))))))))
-
-
-(define (pin-component-pair->schematic-port p)
-  (let* ((outer-pin (car p))
-         (component (cdr p))
-         (inner-pins (schematic-component-pins component)))
-    (if (null? inner-pins)
-        (warn-no-inner-pins component)
-        ;; FIXME: It's assumed that only one pair of matching pins
-        ;; found, that is, the port has only one pin.
-        (let* ((inner-pin (car inner-pins))
-               (port (make-schematic-port inner-pin outer-pin)))
-          ;; Update schematic component representing the port.
-          (set-schematic-component-port! component port)
-          ;; Return new <schematic-port> created.
-          port))))
-
-
-(define (schematic-component-ports component)
-  (filter-map pin-component-pair->schematic-port
-              (schematic-component-port-pairs component)))
 
 
 (define (hierarchy-post-process components)
