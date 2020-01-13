@@ -549,8 +549,6 @@
 
   (for-each update-component-pins components)
 
-  (for-each make-schematic-component-refdes components)
-
   (for-each fix-composite-component subcircuit-components)
 
   (for-each update-component-net-mapped-pins components)

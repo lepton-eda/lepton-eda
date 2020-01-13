@@ -47,8 +47,7 @@
                    subschematic-components set-subschematic-components!
                    subschematic-connections set-subschematic-connections!)
 
-  #:export (make-schematic-component-refdes
-            page-list->hierarchical-subschematic))
+  #:export (page-list->hierarchical-subschematic))
 
 (define-record-type <subschematic>
   (make-subschematic name parent pages components connections)
@@ -157,34 +156,6 @@
     subschematic))
 
 
-(define* (page-list->subschematic pages #:optional name)
-  "Creates a new subschematic from the PAGES list.  If specified,
-NAME is used as its hierarchical name."
-  (let* ((subschematics (map page->subschematic pages))
-         (components (append-map subschematic-components subschematics))
-         (connections (make-subschematic-connections components))
-         (subschematic (make-subschematic name #f pages components connections)))
-    (for-each (cut set-schematic-connection-parent! <> subschematic)
-              connections)
-    (for-each (cut set-schematic-component-parent! <> subschematic)
-              components)
-    subschematic))
-
-
-(define (hierarchy-down-schematic name)
-  (define quiet-mode (netlist-option-ref 'quiet))
-
-  (let ((filename (get-source-library-file name)))
-    (if filename
-        (begin
-          (unless quiet-mode
-            (log! 'message (_ "Loading subcircuit ~S.") filename))
-          (file->page filename 'new-page))
-        (begin
-          (log! 'critical (_ "Failed to load subcircuit ~S.") name)
-          #f))))
-
-
 (define* (make-schematic-component-refdes* component #:optional hierarchical?)
   (define object (schematic-component-object component))
   (define attribs (schematic-component-attribs component))
@@ -212,6 +183,35 @@ NAME is used as its hierarchical name."
    (make-schematic-component-refdes*
     component
     (gnetlist-config-ref 'mangle-refdes))))
+
+
+(define* (page-list->subschematic pages #:optional name)
+  "Creates a new subschematic from the PAGES list.  If specified,
+NAME is used as its hierarchical name."
+  (let* ((subschematics (map page->subschematic pages))
+         (components (append-map subschematic-components subschematics))
+         (connections (make-subschematic-connections components))
+         (subschematic (make-subschematic name #f pages components connections)))
+    (for-each (cut set-schematic-connection-parent! <> subschematic)
+              connections)
+    (for-each (cut set-schematic-component-parent! <> subschematic)
+              components)
+    (for-each make-schematic-component-refdes components)
+    subschematic))
+
+
+(define (hierarchy-down-schematic name)
+  (define quiet-mode (netlist-option-ref 'quiet))
+
+  (let ((filename (get-source-library-file name)))
+    (if filename
+        (begin
+          (unless quiet-mode
+            (log! 'message (_ "Loading subcircuit ~S.") filename))
+          (file->page filename 'new-page))
+        (begin
+          (log! 'critical (_ "Failed to load subcircuit ~S.") name)
+          #f))))
 
 
 (define (page-list->hierarchical-subschematic pages hierarchy-tag)
