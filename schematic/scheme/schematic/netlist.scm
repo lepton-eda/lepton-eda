@@ -31,9 +31,8 @@
 ;;; pages, or get schematic files using `lepton-schematic' options
 ;;; (that is, file names on the command line).
 (define (%schematic)
-  ;; FIXME: Just now only 'geda mode is used.
-  (make-toplevel-schematic (map page-filename (active-pages))
-                           'geda))
+  (make-toplevel-schematic (map page-filename (active-pages)))
+)
 
 ;;; First load allegro backend code in order to use `allegro*'
 ;;; below.
