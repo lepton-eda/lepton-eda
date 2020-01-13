@@ -32,6 +32,7 @@
   #:use-module (lepton library)
   #:use-module (lepton page)
   #:use-module (netlist attrib refdes)
+  #:use-module (netlist config)
   #:use-module (netlist option)
   #:use-module (netlist package-pin)
   #:use-module (netlist schematic-component)
@@ -184,7 +185,7 @@ NAME is used as its hierarchical name."
           #f))))
 
 
-(define* (make-schematic-component-refdes component #:optional hierarchical?)
+(define* (make-schematic-component-refdes* component #:optional hierarchical?)
   (define object (schematic-component-object component))
   (define attribs (schematic-component-attribs component))
   (define has-net? (not (null? (schematic-component-net-maps component))))
@@ -205,11 +206,19 @@ NAME is used as its hierarchical name."
       (and plain-symbol? (make-mock-refdes object hierarchy-tag))))
 
 
+(define (make-schematic-component-refdes component)
+  (set-schematic-component-refdes!
+   component
+   (make-schematic-component-refdes*
+    component
+    (gnetlist-config-ref 'mangle-refdes))))
+
+
 (define (page-list->hierarchical-subschematic pages hierarchy-tag)
   (define (traverse-component-sources component)
     (and (schematic-component-sources component)
-         (let* ((hierarchy-tag (make-schematic-component-refdes component
-                                                            'hierarchical))
+         (let* ((hierarchy-tag (make-schematic-component-refdes* component
+                                                                 'hierarchical))
                 (source-pages (filter-map hierarchy-down-schematic
                                           (schematic-component-sources component)))
                 ;; Recursive processing of sources.

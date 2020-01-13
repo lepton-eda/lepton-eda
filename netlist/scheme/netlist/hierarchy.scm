@@ -358,14 +358,6 @@
         nets)))
 
 
-(define (create-schematic-component-refdes component)
-  (set-schematic-component-refdes!
-   component
-   (make-schematic-component-refdes
-    component
-    (gnetlist-config-ref 'mangle-refdes))))
-
-
 (define (compat-refdes schematic-component)
   (set-schematic-component-refdes! schematic-component
                                    (hierarchical-refdes->string
@@ -557,7 +549,7 @@
 
   (for-each update-component-pins components)
 
-  (for-each create-schematic-component-refdes components)
+  (for-each make-schematic-component-refdes components)
 
   (for-each fix-composite-component subcircuit-components)
 
