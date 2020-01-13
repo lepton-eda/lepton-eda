@@ -416,11 +416,19 @@ NAME is used as its hierarchical name."
   (define (any->ls x)
     (if (list? x) x (list x)))
 
+  (define (connection-hierarchical-name connection)
+    (cons (schematic-connection-name connection)
+          (subschematic-name (schematic-connection-parent connection))))
+
+  (define (connection-hierarchical-override-name connection)
+    (cons (schematic-connection-override-name connection)
+          (subschematic-name (schematic-connection-parent connection))))
+
   (define (merge-names ls)
-    (map schematic-connection-name ls))
+    (map connection-hierarchical-name ls))
 
   (define (merge-override-names ls)
-    (map schematic-connection-override-name ls))
+    (map connection-hierarchical-override-name ls))
 
   (define (merge-objects ls)
     (delete-duplicates (append-map schematic-connection-objects ls)))
@@ -483,6 +491,8 @@ NAME is used as its hierarchical name."
 
   (let* ((connections (collect-connections subschematic))
          (simple-connections (filter no-port? connections))
-         (new-port-connections (map make-port-connection
-                                    (group-connections port-connection-pairs))))
-    (map copy-connection (append new-port-connections simple-connections))))
+         (new-port-connections (group-connections port-connection-pairs)))
+    (map copy-connection
+         (map make-port-connection
+              (append new-port-connections
+                      (map list simple-connections))))))
