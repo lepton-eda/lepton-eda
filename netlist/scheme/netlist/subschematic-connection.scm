@@ -23,6 +23,7 @@
   #:use-module (netlist package-pin)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
+  #:use-module (symbol check net-attrib)
 
   #:export (make-subschematic-connections))
 
@@ -110,12 +111,21 @@
     connection))
 
 
+(define (update-connection-override-name connection)
+  (let ((net-names (map net-map-netname
+                        (filter-map package-pin-net-map
+                                    (schematic-connection-pins connection)))))
+    (set-schematic-connection-override-name! connection net-names)
+    connection))
+
+
 (define (make-subschematic-connections components)
   (define pins
     (append-map schematic-component-pins components))
 
   (define pin-connections
-    (delete-duplicates (map package-pin-connection pins)))
+    (map update-connection-override-name
+         (delete-duplicates (map package-pin-connection pins))))
 
   (map make-netname-connection
        (group-connections pin-connections)))
