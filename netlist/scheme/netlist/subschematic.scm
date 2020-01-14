@@ -504,29 +504,26 @@ NAME is used as its hierarchical name."
   (define netnames (name-list->sorted-name-list c #t))
   (define nets (name-list->sorted-name-list c #f))
 
+  (define (compare-netname-net netname net)
+    (if (= (length netname) (length net))
+        (if prefer-netname?
+            netname
+            net)
+        (if (< (length netname) (length net))
+            netname
+            net)))
+
   (let ((netname (car netnames))
         (net (car nets)))
     (if (unnamed? netname)
         (if (unnamed? net)
-            (if (= (length netname) (length net))
-                (if prefer-netname?
-                    netname
-                    net)
-                (if (< (length netname) (length net))
-                    netname
-                    net))
+            (compare-netname-net netname net)
             ;; net= is named, while netname= is not.
             net)
         (if (unnamed? net)
             ;; netname= is named, while net= is not.
             netname
-            (if (= (length netname) (length net))
-                (if prefer-netname?
-                    netname
-                    net)
-                (if (< (length netname) (length net))
-                    netname
-                    net))))))
+            (compare-netname-net netname net)))))
 
 
 (define (copy-connection c)
