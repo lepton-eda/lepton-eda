@@ -258,15 +258,6 @@
   (any wanted-package-pin-netname=? packages))
 
 
-;;; Collect schematic connections for PAGES.
-(define (make-schematic-connections subschematic pages)
-  (let ((connections (append-map make-page-schematic-connections
-                                 pages)))
-    (for-each (cut set-schematic-connection-parent! <> subschematic)
-              connections)
-    connections))
-
-
 (define (collect-components-recursively subschematic)
   (let* ((components (subschematic-components subschematic))
          (subschematics (filter-map schematic-component-subschematic components)))
@@ -289,7 +280,7 @@ of schematic pages."
                         (collect-components-recursively subschematic)))
          (netlist (filter plain-package? full-netlist))
          (packages (make-package-list netlist))
-         (connections (make-schematic-connections subschematic pages))
+         (connections (make-hierarchical-connections subschematic))
          (graphicals (filter schematic-component-graphical? full-netlist))
          (nu-nets (get-all-nets netlist))
          (unique-nets (get-nets netlist)))
