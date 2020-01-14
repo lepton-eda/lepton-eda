@@ -276,11 +276,11 @@ of schematic pages."
          (toplevel-attribs (get-toplevel-attributes pages))
          ;; '() is toplevel hierarchy tag
          (subschematic (page-list->hierarchical-subschematic pages '()))
-         (full-netlist (hierarchy-post-process
-                        (collect-components-recursively subschematic)))
+         (components (collect-components-recursively subschematic))
+         (connections (make-hierarchical-connections subschematic))
+         (full-netlist (hierarchy-post-process components connections))
          (netlist (filter plain-package? full-netlist))
          (packages (make-package-list netlist))
-         (connections (make-hierarchical-connections subschematic))
          (graphicals (filter schematic-component-graphical? full-netlist))
          (nu-nets (get-all-nets netlist))
          (unique-nets (get-nets netlist)))
@@ -290,7 +290,6 @@ of schematic pages."
         (partition (lambda (x)
                      (nc-net? x (filter schematic-component-nc? full-netlist)))
                    unique-nets)
-      (set-subschematic-connections! subschematic connections)
       (make-schematic id
                       subschematic
                       pages
