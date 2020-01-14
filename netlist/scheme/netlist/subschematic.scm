@@ -33,6 +33,7 @@
   #:use-module (lepton library)
   #:use-module (lepton page)
   #:use-module (netlist attrib refdes)
+  #:use-module (netlist attrib compare)
   #:use-module (netlist config)
   #:use-module (netlist option)
   #:use-module (netlist package-pin)
@@ -52,7 +53,8 @@
 
   #:export (page-list->hierarchical-subschematic
             schematic-component-ports
-            make-hierarchical-connections))
+            make-hierarchical-connections
+            make-hierarchical-connection-name))
 
 (define-record-type <subschematic>
   (make-subschematic name parent pages components connections)
@@ -462,6 +464,71 @@ NAME is used as its hierarchical name."
           (append-map collect-connections
                       (filter-map schematic-component-subschematic
                                   (subschematic-components subschematic)))))
+
+
+(define (name<? x y)
+  (define (unnamed? a)
+    (not (car a)))
+  (if (null? x)
+      (if (null? y)
+          x
+          y)
+      (if (null? y)
+          x
+          (if (unnamed? x)
+              (and (unnamed? y)
+                   (name<? (cdr x) (cdr y)))
+              (or (unnamed? y)
+                  (if (= (length x) (length y))
+                      (if (string=? (car x) (car y))
+                          (name<? (cdr x) (cdr y))
+                          (refdes<? (car x) (car y)))
+                      (< (length x) (length y))))))))
+
+
+(define (name-list->sorted-name-list connection netname?)
+  (sort (delete-duplicates
+         (append-map
+          (lambda (n)
+            (if (null? (car n))
+                (list (cons #f (cdr n)))
+                (map (lambda (z) (cons z (cdr n))) (car n))))
+          (if netname?
+              (schematic-connection-name connection)
+              (schematic-connection-override-name connection))))
+        name<?))
+
+
+(define (make-hierarchical-connection-name c prefer-netname?)
+  (define (unnamed? x)
+    (not (car x)))
+
+  (define netnames (name-list->sorted-name-list c #t))
+  (define nets (name-list->sorted-name-list c #f))
+
+  (let ((netname (car netnames))
+        (net (car nets)))
+    (if (unnamed? netname)
+        (if (unnamed? net)
+            (if (= (length netname) (length net))
+                (if prefer-netname?
+                    netname
+                    net)
+                (if (< (length netname) (length net))
+                    netname
+                    net))
+            ;; net= is named, while netname= is not.
+            net)
+        (if (unnamed? net)
+            ;; netname= is named, while net= is not.
+            netname
+            (if (= (length netname) (length net))
+                (if prefer-netname?
+                    netname
+                    net)
+                (if (< (length netname) (length net))
+                    netname
+                    net))))))
 
 
 (define (copy-connection c)
