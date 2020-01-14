@@ -415,19 +415,26 @@ NAME is used as its hierarchical name."
 
 
 (define (make-port-connection group)
+  (define (fix-ls ls)
+    (if (null? ls) '(#f) ls))
+
   (define (connection-hierarchical-name connection)
-    (cons (schematic-connection-name connection)
-          (subschematic-name (schematic-connection-parent connection))))
+    (let ((names (fix-ls (schematic-connection-name connection)))
+          (tag (subschematic-name (schematic-connection-parent connection))))
+      (map (cut cons <> tag) names)))
 
   (define (connection-hierarchical-override-name connection)
-    (cons (schematic-connection-override-name connection)
-          (subschematic-name (schematic-connection-parent connection))))
+    (let ((names (fix-ls (schematic-connection-override-name connection)))
+          (tag (subschematic-name (schematic-connection-parent connection))))
+      (map (cut cons <> tag) names)))
 
   (define (merge-names ls)
-    (map connection-hierarchical-name ls))
+    (delete-duplicates (append-map connection-hierarchical-name
+                                   ls)))
 
   (define (merge-override-names ls)
-    (map connection-hierarchical-override-name ls))
+    (delete-duplicates (append-map connection-hierarchical-override-name
+                                   ls)))
 
   (define (merge-objects ls)
     (delete-duplicates (append-map schematic-connection-objects ls)))
@@ -484,15 +491,9 @@ NAME is used as its hierarchical name."
 
 
 (define (name-list->sorted-name-list connection netname?)
-  (sort (delete-duplicates
-         (append-map
-          (lambda (n)
-            (if (null? (car n))
-                (list (cons #f (cdr n)))
-                (map (lambda (z) (cons z (cdr n))) (car n))))
-          (if netname?
-              (schematic-connection-name connection)
-              (schematic-connection-override-name connection))))
+  (sort (if netname?
+            (schematic-connection-name connection)
+            (schematic-connection-override-name connection))
         name<?))
 
 
