@@ -415,9 +415,6 @@ NAME is used as its hierarchical name."
 
 
 (define (make-port-connection group)
-  (define (any->ls x)
-    (if (list? x) x (list x)))
-
   (define (connection-hierarchical-name connection)
     (cons (schematic-connection-name connection)
           (subschematic-name (schematic-connection-parent connection))))
