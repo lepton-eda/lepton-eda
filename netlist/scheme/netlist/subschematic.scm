@@ -555,7 +555,8 @@ NAME is used as its hierarchical name."
 
   (let* ((connections (collect-connections subschematic))
          (simple-connections (filter no-port? connections))
-         (new-port-connections (group-connections port-connection-pairs)))
+         (new-port-connections
+          (delete-duplicates (group-connections port-connection-pairs))))
     (map copy-connection
          (map make-port-connection
               (append new-port-connections
