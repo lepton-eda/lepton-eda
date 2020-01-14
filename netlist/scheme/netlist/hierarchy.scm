@@ -365,7 +365,7 @@
   schematic-component)
 
 
-(define (hierarchy-post-process components)
+(define (hierarchy-post-process components connections)
   (define subcircuit-components
     (filter schematic-component-subcircuit? components))
 
