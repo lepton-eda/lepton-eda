@@ -86,8 +86,6 @@
 
 (define (make-new-pin-net object)
   (make-pin-net
-   ;; id
-   (object-id object)
    ;; object
    object
    ;; name
@@ -172,8 +170,7 @@
          (netname (create-net-name (net-map-netname (package-pin-net-map pin))
                                    tag
                                    'power-rail))
-         (nets (list (make-pin-net (package-pin-id pin)
-                                   (package-pin-object pin)
+         (nets (list (make-pin-net (package-pin-object pin)
                                    netname))))
     (set-package-pin-nets! pin nets)))
 
@@ -230,7 +227,6 @@
 
 ;;; This function does renaming job for PIN.
 (define (net-map-update-pin component pin)
-  (define id (schematic-component-id component))
   (define tag (subschematic-name (schematic-component-parent component)))
 
   (define (check-shorted-nets a b priority)
@@ -247,17 +243,15 @@
     (or (string-prefix? "unnamed_net" name)
         (string-prefix? "unconnected_pin" name)))
 
-  (define (update-pin-netname pin netname id)
+  (define (update-pin-netname pin netname)
     (let ((nets (package-pin-nets pin))
           (object #f))
       (set-package-pin-name! pin netname)
       (if (null? nets)
           (set-package-pin-nets! pin
-                                 (list (make-pin-net id
-                                                     object
+                                 (list (make-pin-net object
                                                      netname)))
           (let ((net (car nets)))
-            (set-pin-net-id! net id)
             (set-pin-net-name! net netname)))))
 
   (let ((net-map (package-pin-net-map pin)))
@@ -278,7 +272,7 @@
                  (when (unnamed-net-or-unconnected-pin? pin-netname)
                    ;; Rename unconnected pins and unnamed nets.
                    (add-net-rename pin-netname netname))
-                 (update-pin-netname pin netname id)))))))
+                 (update-pin-netname pin netname)))))))
 
 
 (define (update-component-net-mapped-pins component)
