@@ -321,9 +321,9 @@
                  (number->string (increment-unnamed-pin-counter))))
 
 
-(define (make-special-netname nets hierarchy-tag)
-  (if (and (= (length nets) 1)
-           (net-pin? (car nets)))
+(define (make-special-netname objects hierarchy-tag)
+  (if (and (= (length objects) 1)
+           (net-pin? (car objects)))
       (create-unconnected-netname)
       (create-unnamed-netname hierarchy-tag)))
 
