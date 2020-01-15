@@ -187,30 +187,6 @@
   (for-each set-nets-properties! (schematic-component-pins component)))
 
 
-(define (search-net-name nets)
-  (define (simple-add-rename from to)
-    (add-rename from to)
-    ;; Return new name.
-    to)
-
-  (define (get-new-netname net prev-name)
-    (let ((current-name (pin-net-name net)))
-      (if (and prev-name current-name)
-          ;; Both names defined.
-          (if (and (net-attrib-pin? (pin-net-object net))
-                   (gnetlist-config-ref 'netname-attribute-priority))
-              ;; If netname= has priority over net=, but the pin
-              ;; is a power (net= driven) pin, use netname=,
-              ;; anyways.
-              (simple-add-rename current-name prev-name)
-              ;; Otherwise, do the rename anyways (this might cause problems).
-              (simple-add-rename prev-name current-name))
-          ;; One or both undefined: return either defined or #f.
-          (or prev-name current-name))))
-
-  (fold get-new-netname #f nets))
-
-
 ;;; Checks if OBJECT is a pin that should be treated as one
 ;;; defining a name of the net connected to it via the "net="
 ;;; attribute of its parent component object.  Such components
@@ -223,61 +199,6 @@
                                            "refdes"))
              (pinnumber (attrib-value-by-name object "pinnumber")))
          (and pinnumber (not refdes)))))
-
-
-;;; This function does renaming job for PIN.
-(define (net-map-update-pin component pin)
-  (define tag (subschematic-name (schematic-component-parent component)))
-
-  (define (check-shorted-nets a b priority)
-    (unless (string=? a b)
-    (log! 'critical
-          (_ "Rename shorted nets (~A= has priority): ~A -> ~A")
-          priority
-          a
-          b)
-    )
-    (add-net-rename a b))
-
-  (define (unnamed-net-or-unconnected-pin? name)
-    (or (string-prefix? "unnamed_net" name)
-        (string-prefix? "unconnected_pin" name)))
-
-  (define (update-pin-netname pin netname)
-    (let ((nets (package-pin-nets pin))
-          (object #f))
-      (set-package-pin-name! pin netname)
-      (if (null? nets)
-          (set-package-pin-nets! pin
-                                 (list (make-pin-net object
-                                                     netname)))
-          (let ((net (car nets)))
-            (set-pin-net-name! net netname)))))
-
-  (let ((net-map (package-pin-net-map pin)))
-    (and (not (or (schematic-component-port component)
-                  (schematic-component-subschematic component)))
-         net-map
-         (package-pin-object pin)
-         (let ((netname (create-net-name (net-map-netname net-map)
-                                         tag
-                                         'power-rail))
-               (pin-netname (package-pin-name pin)))
-           (if (and pin-netname
-                    (not (unnamed-net-or-unconnected-pin? pin-netname)))
-               (if (gnetlist-config-ref 'netname-attribute-priority)
-                   (check-shorted-nets netname pin-netname 'netname)
-                   (check-shorted-nets pin-netname netname 'net))
-               (begin
-                 (when (unnamed-net-or-unconnected-pin? pin-netname)
-                   ;; Rename unconnected pins and unnamed nets.
-                   (add-net-rename pin-netname netname))
-                 (update-pin-netname pin netname)))))))
-
-
-(define (update-component-net-mapped-pins component)
-  (for-each (cut net-map-update-pin component <>)
-            (schematic-component-pins component)))
 
 
 (define (update-component-pins schematic-component)
@@ -349,19 +270,8 @@
   (define subcircuit-components
     (filter schematic-component-subcircuit? components))
 
-  (define (add-port-rename port)
-    ;; Rename inner nets using outer net name and disable inner
-    ;; port component refdes.
-    (add-rename
-     ;; Netname of nets connected to inner port pin.
-     (package-pin-name (schematic-port-inner-pin port))
-     ;; Get source net name, all outer nets are named
-     ;; already.
-     (search-net-name (package-pin-nets (schematic-port-outer-pin port))))
-    port)
-
   (define (component-subcircuit-ports component)
-    (map add-port-rename (schematic-component-ports component)))
+    (schematic-component-ports component))
 
   (define (disable-component-refdes component)
     (set-schematic-component-refdes! component #f))
@@ -395,9 +305,5 @@
   (for-each update-component-pins components)
 
   (for-each fix-composite-component subcircuit-components)
-
-  (for-each update-component-net-mapped-pins components)
-
-  ;; (rename-all components)
 
   (map compat-refdes components))
