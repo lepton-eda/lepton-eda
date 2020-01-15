@@ -22,14 +22,9 @@ No "no-connect" nets found
 
 START renamed-nets
 
-two -> one
-signal3 -> out3
-signal8 -> out8
-GND -> sig9
-signal6 -> signal9
 sig9 -> GND
-unconnected_pin-4 -> signal1
-unconnected_pin-6 -> signal1
+netattrib -> netattrib
+two -> one
 out3 -> signal3
 signal9 -> signal6
 out8 -> signal8

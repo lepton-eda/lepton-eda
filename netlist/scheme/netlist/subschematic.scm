@@ -415,27 +415,6 @@ NAME is used as its hierarchical name."
 
 
 (define (make-port-connection group)
-  (define (fix-ls ls)
-    (if (null? ls) '(#f) ls))
-
-  (define (connection-hierarchical-name connection)
-    (let ((names (fix-ls (schematic-connection-name connection)))
-          (tag (subschematic-name (schematic-connection-parent connection))))
-      (map (cut cons <> tag) names)))
-
-  (define (connection-hierarchical-override-name connection)
-    (let ((names (fix-ls (schematic-connection-override-name connection)))
-          (tag (subschematic-name (schematic-connection-parent connection))))
-      (map (cut cons <> tag) names)))
-
-  (define (merge-names ls)
-    (delete-duplicates (append-map connection-hierarchical-name
-                                   ls)))
-
-  (define (merge-override-names ls)
-    (delete-duplicates (append-map connection-hierarchical-override-name
-                                   ls)))
-
   (define (merge-objects ls)
     (delete-duplicates (append-map schematic-connection-objects ls)))
 
@@ -444,8 +423,9 @@ NAME is used as its hierarchical name."
 
   (let* ((id #f)
          (page #f)
-         (netnames (merge-names group))
-         (net-names (merge-override-names group))
+         (netnames (group-hierarchical-name group
+                                            (gnetlist-config-ref
+                                             'netname-attribute-priority)))
          (objects (merge-objects group))
          (pins (merge-pins group))
          (connection (make-schematic-connection
@@ -454,9 +434,10 @@ NAME is used as its hierarchical name."
                       #f
                       page
                       netnames
-                      net-names
+                      #f
                       objects
                       pins)))
+
     (for-each
      (cut set-package-pin-port-connection! <> connection)
      pins)
@@ -470,71 +451,56 @@ NAME is used as its hierarchical name."
                                   (subschematic-components subschematic)))))
 
 
-(define (name<? x y)
-  (define (unnamed? a)
-    (not (car a)))
-  (if (null? x)
-      (if (null? y)
-          x
-          y)
-      (if (null? y)
-          x
-          (if (unnamed? x)
-              (and (unnamed? y)
-                   (name<? (cdr x) (cdr y)))
-              (or (unnamed? y)
-                  (if (= (length x) (length y))
-                      (if (string=? (car x) (car y))
-                          (name<? (cdr x) (cdr y))
-                          (refdes<? (car x) (car y)))
-                      (< (length x) (length y))))))))
+(define (make-hierarchical-connection-name c)
+  (car (schematic-connection-name c)))
 
 
-(define (name-list->sorted-name-list connection netname?)
-  (sort (if netname?
-            (schematic-connection-name connection)
-            (schematic-connection-override-name connection))
-        name<?))
-
-
-(define (make-hierarchical-connection-name c prefer-netname?)
+(define (name<? a b prefer-netname?)
   (define (unnamed? x)
-    (not (car x)))
+    (eq? 'unnamed (car x)))
+  (define (length< a b)
+    (< (length a) (length b)))
+  (define (length= a b)
+    (= (length a) (length b)))
+  (define (ls->str x)
+    (string-join (cdr x)))
+  (define (refdes-list< a b)
+    (refdes<? (ls->str a) (ls->str b)))
+  (define (preferred? x)
+    (eq? (if prefer-netname? 'netname 'net)
+         (car x)))
+  (define (ls< a b)
+    (or (length< a b)
+        (and (length= a b)
+             (if (preferred? a)
+                 (or (not (preferred? b))
+                     (and (preferred? b)
+                          (refdes-list< a b)))
+                 (and (not (preferred? b))
+                      (refdes-list< a b))))))
+  (if (unnamed? a)
+      (and (unnamed? b)
+           (ls< a b))
+      (or (unnamed? b)
+          (ls< a b))))
 
-  (define netnames (name-list->sorted-name-list c #t))
-  (define nets (name-list->sorted-name-list c #f))
 
-  (define (compare-netname-net netname net)
-    (if (= (length netname) (length net))
-        (if prefer-netname?
-            netname
-            net)
-        (if (< (length netname) (length net))
-            netname
-            net)))
-
-  (let ((netname (car netnames))
-        (net (car nets)))
-    (if (unnamed? netname)
-        (if (unnamed? net)
-            (compare-netname-net netname net)
-            ;; net= is named, while netname= is not.
-            net)
-        (if (unnamed? net)
-            ;; netname= is named, while net= is not.
-            netname
-            (compare-netname-net netname net)))))
+(define (connection-hierarchical-name connection)
+  (let* ((netnames (schematic-connection-name connection))
+         (nets (schematic-connection-override-name connection))
+         (tag (subschematic-name (schematic-connection-parent connection)))
+         (names (append (map (cut list 'netname <>) netnames)
+                        (map (cut list 'net <>) nets))))
+    (map (cut append <> tag)
+         (if (null? names) '((unnamed)) names))))
 
 
-(define (copy-connection c)
-  (make-schematic-connection
-   (schematic-connection-id c)
-   (schematic-connection-parent c)
-   (schematic-connection-page c)
-   (schematic-connection-name c)
-   (schematic-connection-override-name c)
-   (schematic-connection-objects c)
-   (schematic-connection-pins c)))
+(define (group-hierarchical-name group prefer-netname?)
+  (define (name<?* a b)
+    (name<? a b prefer-netname?))
+  (sort
+   (delete-duplicates (append-map connection-hierarchical-name group))
+   name<?*))
 
 
 (define (make-hierarchical-connections subschematic)
@@ -554,8 +520,7 @@ NAME is used as its hierarchical name."
   (let* ((connections (collect-connections subschematic))
          (simple-connections (filter no-port? connections))
          (new-port-connections
-          (delete-duplicates (group-connections port-connection-pairs))))
-    (map copy-connection
-         (map make-port-connection
-              (append new-port-connections
-                      (map list simple-connections))))))
+          (delete-duplicates (group-connections port-connection-pairs)))
+         (new-connections (append new-port-connections
+                                  (map list simple-connections))))
+    (map make-port-connection new-connections)))

@@ -25,18 +25,18 @@ No "no-connect" nets found
 
 START renamed-nets
 
-Utop/Umiddle/Urock/unnamed_net4 -> U1_2_to_B
-Utop/Umiddle/rockA -> U1_2_to_B
 Utop/middleA -> U1_2_to_B
-Uunder/Umiddle/Urock/unnamed_net2 -> U1_2_to_B
-Uunder/Umiddle/rockA -> U1_2_to_B
 Uunder/middleA -> U1_2_to_B
-Utop/Umiddle/Urock/unnamed_net3 -> U2_1_to_E
-Utop/Umiddle/rockB -> U2_1_to_E
+Utop/Umiddle/rockA -> U1_2_to_B
+Uunder/Umiddle/rockA -> U1_2_to_B
+Utop/Umiddle/Urock/unnamed_net_at_18600x38200 -> U1_2_to_B
+Uunder/Umiddle/Urock/unnamed_net_at_18600x38200 -> U1_2_to_B
 Utop/middleB -> U2_1_to_E
-Uunder/Umiddle/Urock/unnamed_net1 -> U2_1_to_E
-Uunder/Umiddle/rockB -> U2_1_to_E
 Uunder/middleB -> U2_1_to_E
+Utop/Umiddle/rockB -> U2_1_to_E
+Uunder/Umiddle/rockB -> U2_1_to_E
+Utop/Umiddle/Urock/unnamed_net_at_22100x37700 -> U2_1_to_E
+Uunder/Umiddle/Urock/unnamed_net_at_22100x37700 -> U2_1_to_E
 
 END renamed-nets
 
