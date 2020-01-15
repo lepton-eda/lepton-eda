@@ -26,10 +26,8 @@ No "no-connect" nets found
 
 START renamed-nets
 
-U100/unnamed_net1 -> one
-U100/unnamed_net2 -> one
-U102/unnamed_net3 -> two
-U102/unnamed_net4 -> two
+U100/unnamed_net_at_45900x47500 -> one
+U102/unnamed_net_at_45900x47500 -> two
 
 END renamed-nets
 

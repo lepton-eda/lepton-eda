@@ -288,13 +288,8 @@
 
 (define (update-component-pins schematic-component)
   (define (update-package-pin-name pin)
-    (let* ((nets (package-pin-nets pin))
-           (component (package-pin-parent pin))
-           (hierarchy-tag
-            (subschematic-name (schematic-component-parent component)))
-           (netname (nets-netname nets hierarchy-tag)))
-      (set-package-pin-name! pin netname)
-      (update-netnames-hash-table netname nets)))
+    (set-package-pin-name! pin
+                           (schematic-connection-override-name (package-pin-port-connection pin))))
 
   (for-each update-package-pin-name
             (schematic-component-pins schematic-component)))
@@ -325,37 +320,28 @@
   (string-append "unconnected_pin-"
                  (number->string (increment-unnamed-pin-counter))))
 
-(define %netnames (make-hash-table))
-
-(define (search-in-hash-table nets)
-    (and (not (null? nets))
-         (or (hash-ref %netnames (pin-net-id (car nets)))
-             (search-in-hash-table (cdr nets)))))
 
 (define (make-special-netname nets hierarchy-tag)
-  (if (null? nets)
+  (if (and (= (length nets) 1)
+           (net-pin? (car nets)))
       (create-unconnected-netname)
       (create-unnamed-netname hierarchy-tag)))
 
 
-(define (nets-netname nets hierarchy-tag)
-  (or
-   ;; If there is no netname, probably some of nets has been
-   ;; already named.
-   (search-net-name nets)
-   ;; Didn't find a name.  Go looking for another net which
-   ;; might have already been named, i.e. we don't want to
-   ;; create a new unnamed net if the net has already been named
-   ;; before.
-   (search-in-hash-table nets)
-   ;; Last resort. We have not found a name. Make a new one.
-   (make-special-netname nets hierarchy-tag)))
+(define (nets-netname connection)
+  (define (unnamed? name)
+    (eq? 'unnamed (car name)))
 
-(define (update-netnames-hash-table netname nets)
-  (and netname
-       (for-each
-        (lambda (net) (hash-set! %netnames (pin-net-id net) netname))
-        nets)))
+  (define (net? name)
+    (eq? 'net (car name)))
+
+  (let ((name (make-hierarchical-connection-name connection)))
+    (set-schematic-connection-override-name!
+     connection
+     (if (unnamed? name)
+         (make-special-netname (schematic-connection-objects connection)
+                               (cdr name))
+         (create-net-name (cadr name) (cddr name) (net? name))))))
 
 
 (define (compat-refdes schematic-component)
@@ -405,6 +391,8 @@
                             (schematic-component-parent (package-pin-parent pin)))
                            'power-rail))))
 
+  (for-each nets-netname connections)
+
   (for-each set-net-map-pin-name!
             (append-map schematic-component-pins components))
 
@@ -416,6 +404,6 @@
 
   (for-each update-component-net-mapped-pins components)
 
-  (rename-all components)
+  ;; (rename-all components)
 
   (map compat-refdes components))

@@ -22,17 +22,12 @@ No "no-connect" nets found
 
 START renamed-nets
 
+netattrib -> netattrib
 two -> one
 signal3 -> out3
 signal8 -> out8
 GND -> sig9
-signal6 -> signal9
-signal3 -> out3
-signal8 -> out8
-GND -> sig9
-unconnected_pin-4 -> signal1
-unconnected_pin-6 -> signal1
-signal6 -> signal9
+signal9 -> signal6
 
 END renamed-nets
 
@@ -51,7 +46,7 @@ out8 : U400 8
 sig9 : U100 7, U300 7, U400 7, U500 7, U500 9
 signal1 : U400 1, U500 1
 signal4 : U400 4, U400 10
-signal9 : U400 6, U400 9
+signal6 : U400 6, U400 9
 signal12 : U400 12
 unnamed_net1 : U300 2
 unnamed_net2 : U500 3, U500 4, U500 5

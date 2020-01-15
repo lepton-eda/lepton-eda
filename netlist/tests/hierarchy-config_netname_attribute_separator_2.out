@@ -21,15 +21,18 @@ No "no-connect" nets found
 START renamed-nets
 
 middleA -> U1_2_to_B
+middleA -> U1_2_to_B
 rockA -> U1_2_to_B
-unnamed_net2 -> U1_2_to_B
-unnamed_net4 -> U1_2_to_B
+rockA -> U1_2_to_B
+unnamed_net_at_18600x38200 -> U1_2_to_B
+unnamed_net_at_18600x38200 -> U1_2_to_B
 U2_1_to_E -> U2_1_to_E-net
 middleB -> U2_1_to_E-net
+middleB -> U2_1_to_E-net
 rockB -> U2_1_to_E-net
-unnamed_net1 -> U2_1_to_E-net
-unnamed_net3 -> U2_1_to_E-net
-U2_1_to_E -> U2_1_to_E-net
+rockB -> U2_1_to_E-net
+unnamed_net_at_22100x37700 -> U2_1_to_E-net
+unnamed_net_at_22100x37700 -> U2_1_to_E-net
 
 END renamed-nets
 
