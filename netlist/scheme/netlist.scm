@@ -45,7 +45,6 @@
   #:use-module (netlist mode)
   #:use-module (netlist schematic)
   #:use-module (netlist package-pin)
-  #:use-module (netlist pin-net)
   #:use-module (netlist schematic toplevel)
   #:use-module (netlist verbose)
   #:use-module ((netlist rename) #:select (get-rename-list))

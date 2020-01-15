@@ -94,7 +94,6 @@ DIST_SCM = \
 	netlist/package.scm \
 	netlist/partlist.scm \
 	netlist/partlist/common.scm \
-	netlist/pin-net.scm \
 	netlist/port.scm \
 	netlist/rename.scm \
 	netlist/repl.scm \

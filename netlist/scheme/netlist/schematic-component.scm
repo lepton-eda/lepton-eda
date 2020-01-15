@@ -225,7 +225,6 @@ sets the component to be its parent component."
                             #f
                             #f
                             #f
-                            #f
                             #f))))
 
   ;; Create virtual 'net-map' pins.
