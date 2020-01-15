@@ -23,34 +23,31 @@
   #:use-module (srfi srfi-9 gnu)
 
   #:export (make-pin-net pin-net?
-            pin-net-id set-pin-net-id!
             pin-net-object set-pin-net-object!
             pin-net-name set-pin-net-name!
             set-pin-net-printer!))
 
 (define-record-type <pin-net>
-  (make-pin-net id object name)
+  (make-pin-net object name)
   pin-net?
-  (id pin-net-id set-pin-net-id!)
   (object pin-net-object set-pin-net-object!)
   (name pin-net-name set-pin-net-name!))
 
 ;;; Sets default printer for <pin-net>
 (set-record-type-printer!
  <pin-net>
- (lambda (record port) (format port "#<pin-net ~A>" (pin-net-id record))))
+ (lambda (record port) (format port "#<pin-net ~A>" (pin-net-name record))))
 
 (define (set-pin-net-printer! format-string . args)
   "Adjust pretty-printing of <pin-net> records.
 FORMAT-STRING must be in the form required by the procedure
 `format'. The following ARGS may be used:
-  'id
   'object
   'name
 Any other unrecognized argument will lead to yielding '?' in the
 corresponding place.
 Example usage:
-  (set-pin-net-printer! \"<pin-net-~A (~A)>\" 'id 'name)"
+  (set-pin-net-printer! \"<pin-net ~A>\" 'name)"
   (set-record-type-printer!
    <pin-net>
    (lambda (record port)
@@ -58,7 +55,6 @@ Example usage:
             (map
              (lambda (arg)
                (match arg
-                 ('id (pin-net-id record))
                  ('object (pin-net-object record))
                  ('name (pin-net-name record))
                  (_ #\?)))
