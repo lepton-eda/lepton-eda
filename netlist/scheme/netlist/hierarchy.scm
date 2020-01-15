@@ -34,7 +34,6 @@
   #:use-module (netlist mode)
   #:use-module (netlist net)
   #:use-module (netlist package-pin)
-  #:use-module (netlist pin-net)
   #:use-module (netlist rename)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
@@ -44,71 +43,6 @@
 
   #:export (hierarchy-post-process))
 
-;;; Tracks which objects have been visited so far, and how many
-;;; times.
-(define %visits '())
-;;; Increment the current visit count for a particular OBJECT.
-(define (visit! object)
-  (set! %visits (cons object %visits)))
-;;; Retrieve the current visit count for a particular OBJECT.
-(define (visited? object)
-  (member object %visits))
-;;; Reset all visit counts. Simply clears the %visits completely.
-(define (clear-visits!)
-  (set! %visits '()))
-
-
-(define (traverse-net pin-object)
-  (define (traverse-net-object connection-objects starting object)
-    (visit! object)
-    (let ((nets (cons object connection-objects)))
-      (if (or (net? object)
-              starting)
-          (let loop ((connections (object-connections object))
-                     (nets nets))
-            (if (null? connections)
-                nets
-                (loop (cdr connections)
-                      (let ((conn (car connections)))
-                        (if (visited? conn)
-                            nets
-                            (traverse-net-object nets #f conn))))))
-          nets)))
-
-  (clear-visits!)
-
-  (if (null? (object-connections pin-object))
-      ;; If there is no connections, we have an only pin. There is
-      ;; no point to do something in this case.
-      '()
-      (reverse (traverse-net-object '() #t pin-object))))
-
-
-(define (make-new-pin-net object)
-  (make-pin-net
-   ;; object
-   object
-   ;; name
-   #f))
-
-
-(define (nets-netnames nets)
-  (filter-map
-   (lambda (x) (let ((object (pin-net-object x)))
-            (and (net? object)
-                 (attrib-value-by-name object "netname"))))
-   nets))
-
-
-(define (assign-net-netname! net tag)
-  ;; The object is a net.  For nets we check the "netname="
-  ;; attribute.
-  (set-pin-net-name!
-   net
-   (create-net-name (attrib-value-by-name (pin-net-object net) "netname")
-                    tag
-                    ;; The below means just #f.
-                    (not 'power-rail))))
 
 
 ;;; Lookups for pinnumber and parent component's refdes for PIN.
@@ -132,59 +66,6 @@
       ;; refdes=#f and pinnumber is non-#f, it is an acceptable case
       ;; for using with the "net=" attribute. Return it as is.
       (x x))))
-
-
-(define (assign-pin-properties! pin tag)
-  (let* ((object (pin-net-object pin))
-         (refdes-pinnumber-pair (pin-refdes-pinnumber-pair object))
-         (pinnumber (cdr refdes-pinnumber-pair)))
-    ;; The object is a pin, and it defines net name using
-    ;; "net=".  Use hierarchy tag here to make this netname
-    ;; unique.
-    (set-pin-net-name!
-     pin
-     (create-net-name (netattrib-search-net (object-component object)
-                                            pinnumber)
-                      tag
-                      'power-rail))))
-
-
-(define (set-real-package-pin-nets-properties! pin)
-  (let* ((tag
-          (subschematic-name (schematic-component-parent
-                              (package-pin-parent pin))))
-         (pin-object (package-pin-object pin))
-         (nets (map make-new-pin-net (traverse-net pin-object)))
-         (net-objects (filter (lambda (x) (net? (pin-net-object x))) nets))
-         (pin-objects (filter (lambda (x) (pin? (pin-net-object x))) nets)))
-    (set-package-pin-nets! pin nets)
-    (set-package-pin-netname! pin (nets-netnames nets))
-    (for-each (cut assign-net-netname! <> tag) net-objects)
-    (for-each (cut assign-pin-properties! <> tag) pin-objects)
-    pin))
-
-
-(define (set-net-map-package-pin-nets-properties! pin)
-  (let* ((parent-component (package-pin-parent pin))
-         (tag (subschematic-name (schematic-component-parent parent-component)))
-         (netname (create-net-name (net-map-netname (package-pin-net-map pin))
-                                   tag
-                                   'power-rail))
-         (nets (list (make-pin-net (package-pin-object pin)
-                                   netname))))
-    (set-package-pin-nets! pin nets)))
-
-
-(define (set-package-pin-nets-properties! component)
-  (define (real-pin? pin)
-    (package-pin-object pin))
-
-  (define (set-nets-properties! pin)
-    (if (real-pin? pin)
-        (set-real-package-pin-nets-properties! pin)
-        (set-net-map-package-pin-nets-properties! pin)))
-
-  (for-each set-nets-properties! (schematic-component-pins component)))
 
 
 ;;; Checks if OBJECT is a pin that should be treated as one
@@ -299,8 +180,6 @@
 
   (for-each set-net-map-pin-name!
             (append-map schematic-component-pins components))
-
-  (for-each set-package-pin-nets-properties! components)
 
   (for-each update-component-pins components)
 

@@ -33,7 +33,6 @@
                    package-pin-label set-package-pin-label!
                    package-pin-attribs set-package-pin-attribs!
                    package-pin-net-map set-package-pin-net-map!
-                   package-pin-nets set-package-pin-nets!
                    package-pin-parent set-package-pin-parent!
                    package-pin-connection set-package-pin-connection!
                    package-pin-named-connection set-package-pin-named-connection!
@@ -44,7 +43,7 @@
             set-package-pin-parent-component!))
 
 (define-record-type <package-pin>
-  (make-package-pin id object number name netname label attribs net-map nets parent connection named-connection port-connection)
+  (make-package-pin id object number name netname label attribs net-map parent connection named-connection port-connection)
   package-pin?
   ;; This field is used just for the record representation in
   ;; set-record-type-printer! below.
@@ -63,8 +62,6 @@
   (attribs package-pin-attribs set-package-pin-attribs!)
   ;; net= attribute mapping for the pin.
   (net-map package-pin-net-map set-package-pin-net-map!)
-  ;; The list of <pin-net>'s connected to the pin.
-  (nets package-pin-nets set-package-pin-nets!)
   ;; Parent component of the pin.
   (parent package-pin-parent set-package-pin-parent!)
   ;; <schematic-connection> the pin is connected to.
@@ -91,7 +88,6 @@ FORMAT-STRING must be in the form required by the procedure
   'label
   'attribs
   'net-map
-  'nets
   'parent
   'connection
   'named-connection
@@ -114,7 +110,6 @@ Example usage:
                  ('label (package-pin-label record))
                  ('attribs (package-pin-attribs record))
                  ('net-map (package-pin-net-map record))
-                 ('nets (package-pin-nets record))
                  ('parent (package-pin-parent record))
                  ('connection (package-pin-connection record))
                  ('named-connection (package-pin-named-connection record))
@@ -150,8 +145,6 @@ Example usage:
                          ;; Attributes.
                          attribs
                          ;; No net-map yet.
-                         #f
-                         ;; No nets yet.
                          #f
                          ;; Set parent component later.
                          #f
