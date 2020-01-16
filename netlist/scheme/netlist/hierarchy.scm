@@ -150,9 +150,6 @@
   (define subcircuit-components
     (filter schematic-component-subcircuit? components))
 
-  (define (component-subcircuit-ports component)
-    (schematic-component-ports component))
-
   (define (disable-component-refdes component)
     (set-schematic-component-refdes! component #f))
 
@@ -161,7 +158,7 @@
     (for-each disable-component-refdes
               (cons component
                     (map schematic-port-inner-component
-                         (component-subcircuit-ports component)))))
+                         (schematic-component-ports component)))))
 
   (define (net-map-pin? pin)
     (package-pin-net-map pin))
