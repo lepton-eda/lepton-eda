@@ -21,16 +21,11 @@
   ;; Import C procedures and variables.
   #:use-module (netlist core gettext)
 
-  #:use-module (ice-9 match)
-  #:use-module (ice-9 receive)
   #:use-module (srfi srfi-1)
-  #:use-module (srfi srfi-26)
 
-  #:use-module (geda log)
   #:use-module (geda object)
   #:use-module (netlist attrib refdes)
   #:use-module (netlist config)
-  #:use-module (netlist core gettext)
   #:use-module (netlist mode)
   #:use-module (netlist net)
   #:use-module (netlist package-pin)
