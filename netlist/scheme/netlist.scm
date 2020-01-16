@@ -26,6 +26,7 @@
   #:use-module (ice-9 ftw)
   #:use-module (ice-9 i18n)
   #:use-module (ice-9 regex)
+  #:use-module (netlist net)
   #:use-module (netlist option)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic-connection)
@@ -34,6 +35,7 @@
   #:use-module (netlist attrib refdes)
   #:use-module (geda deprecated)
   #:use-module (geda log)
+  #:use-module (geda object)
   #:use-module (geda repl)
   #:use-module (lepton library)
   #:use-module (lepton page)
@@ -47,7 +49,6 @@
   #:use-module (netlist package-pin)
   #:use-module (netlist schematic toplevel)
   #:use-module (netlist verbose)
-  #:use-module ((netlist rename) #:select (get-rename-list))
 
   #:export (lepton-netlist-version
             main
@@ -516,14 +517,43 @@ connection pairs in the form (\"pin-number\" . \"net-name\")."
        (get-all-connections netname)))
 (define (gnetlist:get-backend-arguments)
   (netlist-option-ref 'backend-option))
+
 (define (gnetlist:get-renamed-nets level)
-  (map
-   (lambda (rename)
-     (match rename
-       ((src . dest)
-        (list src dest))
-       (_ #f)))
-   (get-rename-list)))
+  "Return the sorted list of net renames in toplevel schematic.
+The argument LEVEL is dummy."
+  (define (make-special-netname connection hname)
+    (let* ((object (car (schematic-connection-objects connection)))
+           (coord (line-start object)))
+      (create-net-name
+       (format #f "unnamed_net_at_~Ax~A" (car coord) (cdr coord))
+       hname
+       #f)))
+
+  (define (unnamed? name)
+    (eq? 'unnamed (car name)))
+
+  (define (name<? a b)
+    (refdes<? (schematic-connection-override-name a)
+              (schematic-connection-override-name b)))
+
+  (define (net? name)
+    (eq? 'net (car name)))
+
+  (define (create-net-name* connection hname)
+    (if (unnamed? hname)
+        (make-special-netname connection (cdr hname))
+        (create-net-name (cadr hname) (cddr hname) (net? hname))))
+
+  (let ((connections (sort (schematic-connections (toplevel-schematic))
+                           name<?)))
+    (append-map
+     (lambda (connection)
+       (let ((common-name (schematic-connection-override-name connection))
+             (other-names (map (cut create-net-name* connection <>)
+                               (cdr (schematic-connection-name connection)))))
+
+         (map (cut list <> common-name) other-names)))
+     connections)))
 
 ;;
 ;; Functions for dealing with naming requirements for different
