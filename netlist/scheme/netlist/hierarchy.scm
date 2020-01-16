@@ -43,44 +43,6 @@
   #:export (hierarchy-post-process))
 
 
-
-;;; Lookups for pinnumber and parent component's refdes for PIN.
-;;; If they're somehow wrong, warns the users and sets new
-;;; appropriate values.  Returns the pair (refdes . pinnumber),
-;;; fixed if needed.
-(define (pin-refdes-pinnumber-pair pin)
-  (let ((refdes (attrib-value-by-name (object-component pin)
-                                      "refdes"))
-        (pinnumber (attrib-value-by-name pin "pinnumber")))
-    (match `(,refdes . ,pinnumber)
-      ;; Wrong case, neither refdes nor pinnumber found.
-      ((#f . #f)
-       (log! 'critical (_ "Missing attributes refdes= and pinnumber="))
-       '("U?" . "?"))
-      ;; Missing pin number while refdes exists.
-      ((refdes . #f)
-       (log! 'critical (_ "Missing pinnumber= for refdes=~A)") refdes)
-       `(,refdes . "?"))
-      ;; Otherwise, anything is OK, return it as is.  Even if
-      ;; refdes=#f and pinnumber is non-#f, it is an acceptable case
-      ;; for using with the "net=" attribute. Return it as is.
-      (x x))))
-
-
-;;; Checks if OBJECT is a pin that should be treated as one
-;;; defining a name of the net connected to it via the "net="
-;;; attribute of its parent component object.  Such components
-;;; (e.g. "gnd-1.sym") have to have no refdes, and their "net="
-;;; components should correspond to pinnumbers of their existing
-;;; pins.
-(define (net-attrib-pin? object)
-  (and (net-pin? object)
-       (let ((refdes (attrib-value-by-name (object-component object)
-                                           "refdes"))
-             (pinnumber (attrib-value-by-name object "pinnumber")))
-         (and pinnumber (not refdes)))))
-
-
 (define (update-component-pins schematic-component)
   (define (update-package-pin-name pin)
     (set-package-pin-name! pin
