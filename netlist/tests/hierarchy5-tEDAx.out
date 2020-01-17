@@ -1,0 +1,25 @@
+tEDAx v1
+begin netlist v1 netlist
+
+	footprint Z1/R1 m1608_a.fp
+	device Z1/R1 Resistor
+	value Z1/R1 1k
+
+	footprint Z2/R1 m1608_a.fp
+	device Z2/R1 Resistor
+	value Z2/R1 1k
+
+	footprint Z3/R1 m1608_a.fp
+	device Z3/R1 Resistor
+	value Z3/R1 1k
+
+	conn GND Z2/R1 1
+	conn GND Z2/R1 2
+
+	conn Z1/A Z1/R1 1
+	conn Z1/A Z1/R1 2
+
+	conn Z3/A Z3/R1 1
+	conn Z3/A Z3/R1 2
+
+end netlist

@@ -42,6 +42,11 @@ input_files = \
 	hierarchy4-sources/h4-bottom.sch \
 	hierarchy4-symbols/h4-bottom.sym \
 	hierarchy4.sch \
+	hierarchy5-sources/simple.sch \
+	hierarchy5-symbols/simple.sym \
+	hierarchy5-symbols/res_h.sym \
+	hierarchy5-symbols/netif_other.sym \
+	hierarchy5.sch \
 	stack-torture.sch \
 	drc2/connected-noconnects.sch \
 	drc2/connected-noconnects-symbols/nc-2.sym \
@@ -129,6 +134,10 @@ TESTS = stack_1-geda.out \
 	hierarchy3-vams-device.out \
 	hierarchy4-geda.out \
 	hierarchy4-drc2.out \
+	hierarchy5-geda.out \
+	hierarchy5-tEDAx.out \
+	hierarchy5-pcbpins.out \
+	hierarchy5-PCB.out \
 	stack-torture-geda.out \
 	missing-source-geda.out \
 	drc2/connected-noconnects-drc2.out \
