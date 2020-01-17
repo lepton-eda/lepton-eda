@@ -22,11 +22,11 @@
 (define-module (netlist deprecated)
   #:use-module (srfi srfi-1)
   #:use-module (netlist attrib compare)
+  #:use-module (netlist duplicate)
   #:use-module (netlist option)
   #:use-module (netlist package-pin)
   #:use-module (netlist schematic-component)
   #:use-module (netlist schematic)
-  #:use-module (netlist sort)
   #:use-module (netlist schematic toplevel)
 
   #:export (;; deprecated procedures

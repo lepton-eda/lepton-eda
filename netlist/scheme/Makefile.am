@@ -85,6 +85,7 @@ DIST_SCM = \
 	netlist/config.scm \
 	netlist/core/gettext.scm \
 	netlist/deprecated.scm \
+	netlist/duplicate.scm \
 	netlist/error.scm \
 	netlist/hierarchy.scm \
 	netlist/mode.scm \
@@ -101,7 +102,6 @@ DIST_SCM = \
 	netlist/schematic-port.scm \
 	netlist/schematic.scm \
 	netlist/schematic/toplevel.scm \
-	netlist/sort.scm \
 	netlist/subschematic.scm \
 	netlist/subschematic-connection.scm \
 	netlist/verbose.scm
