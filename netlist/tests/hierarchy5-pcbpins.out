@@ -1,0 +1,13 @@
+# Pin name action command file
+
+# Start of element Z1/R1
+ChangePinName(Z1/R1, 1, 1)
+ChangePinName(Z1/R1, 2, 2)
+
+# Start of element Z2/R1
+ChangePinName(Z2/R1, 1, 1)
+ChangePinName(Z2/R1, 2, 2)
+
+# Start of element Z3/R1
+ChangePinName(Z3/R1, 1, 1)
+ChangePinName(Z3/R1, 2, 2)
