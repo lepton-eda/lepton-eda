@@ -38,9 +38,9 @@
 
 (use-modules (srfi srfi-1)
              (netlist attrib compare)
+             (netlist duplicate)
              (netlist port)
              (netlist schematic)
-             (netlist sort)
              (netlist schematic toplevel))
 
 (define (vhdl:get-top-port-list packages)

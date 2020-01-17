@@ -1,6 +1,6 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 2016 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(define-module (netlist sort)
+(define-module (netlist duplicate)
   #:use-module (srfi srfi-1)
   #:export (sort-remove-duplicates))
 
