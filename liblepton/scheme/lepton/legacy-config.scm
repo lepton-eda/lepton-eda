@@ -239,8 +239,8 @@ option's value:
 
 "
     old-name
-    "geda.conf"
-    "geda-user.conf"
+    ( basename ( config-filename (path-config-context (getcwd)) ) )
+    ( basename ( config-filename (user-config-context) ) )
     new-group
     new-key
   )
