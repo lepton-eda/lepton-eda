@@ -438,6 +438,10 @@ x_print (GschemToplevel *w_current)
   */
   gtk_print_operation_set_print_settings (print, settings);
 
+  /* enable the "paper size" and "orientation" combo boxes:
+  */
+  gtk_print_operation_set_embed_page_setup (print, TRUE);
+
 
   res = gtk_print_operation_run (print, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
                                  GTK_WINDOW (w_current->main_window), &err);
