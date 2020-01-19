@@ -53,14 +53,11 @@ AC_DEFUN([AX_CHECK_GUILE],
 
   AC_SUBST([GUILE_PKG_NAME])
 
-  # Check for the `guile' executable
-  # --------------------------------
-  AC_ARG_VAR([GUILE], [Path to guile executable])
-  AC_CHECK_PROG([GUILE], [guile], [guile], [no])
-  if test "X$GUILE" = "Xno"; then
-    AC_MSG_WARN([The `guile' interpreter could not be found. Some configuration checks
-will not be able to be carried out.])
-  fi
+
+  GUILE_FLAGS
+  GUILE_PROGS
+  GUILE_PKG([2.2 2.0])
+
 
   # Check for the `guile-snarf' build tool
   # --------------------------------------
