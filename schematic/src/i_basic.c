@@ -321,7 +321,8 @@ void i_update_toolbar(GschemToplevel *w_current)
 static void clipboard_usable_cb (int usable, void *userdata)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (userdata);
-  x_menus_sensitivity (w_current->menubar, "&clipboard-paste", usable);
+  x_menus_sensitivity (w_current->menubar,    "&clipboard-paste", usable);
+  x_menus_sensitivity (w_current->popup_menu, "&clipboard-paste", usable);
 }
 
 
@@ -417,9 +418,14 @@ void i_update_menus (GschemToplevel* w_current)
 
   GtkWidget* pmenu = w_current->popup_menu;
 
-  x_menus_sensitivity (pmenu, "&edit-edit", selected);
-  x_menus_sensitivity (pmenu, "&edit-object-properties", selected);
+  x_menus_sensitivity (pmenu, "&clipboard-cut", selected);
+  x_menus_sensitivity (pmenu, "&clipboard-copy", selected);
   x_menus_sensitivity (pmenu, "&edit-delete", selected);
+
+  x_menus_sensitivity (pmenu, "&edit-edit", selected);
+  x_menus_sensitivity (pmenu, "&edit-text", text_selected);
+  x_menus_sensitivity (pmenu, "&edit-object-properties", selected);
+
   x_menus_sensitivity (pmenu, "&hierarchy-down-schematic", comp_selected);
   x_menus_sensitivity (pmenu, "&hierarchy-down-symbol", comp_selected);
   x_menus_sensitivity (pmenu, "&hierarchy-up", has_parent);
