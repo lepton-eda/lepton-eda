@@ -119,7 +119,6 @@ name as used on the live version of the wiki."
                   (wiki-munge page)
                   ".html")))
 
-(define %pdf-search-template "http://www.google.com/search?q=~S%20filetype:pdf")
 
 ;; Get the value of a named attribute.  Attached attributes are
 ;; searched first, followed by inherited attributes.  The first
@@ -165,12 +164,17 @@ name as used on the live version of the wiki."
   (let ((filename (false-if-exception (directory-any dirname test-dir-entry))))
     (and filename (begin (doc-show-file filename) #t))))
 
-;; Searches for documentation STRING on the Internet, using
-;; %pdf-search-template.
+;; Searches for documentation STRING on the Internet, using PDF
+;; search template.
 ;;
 ;; FIXME string should be URL-encoded.
 (define (internet-doc-search string)
-  (doc-show-uri (format #f %pdf-search-template string)) #t)
+  (doc-show-uri
+   (format #f
+           ;; PDF search template.
+           "http://www.google.com/search?q=~S%20filetype:pdf"
+           string))
+  #t)
 
 ;; Munges a component basename to look more like a device name
 (define (munge-basename basename)
