@@ -41,8 +41,7 @@
 (define (rc-dead-config old-id)
 
   (define (deprecation-warning)
-    (format (current-error-port) (warning-option-obsolete old-id))
-  )
+    (display (warning-option-obsolete old-id) (current-error-port)))
 
   (let ((warned? #f))
     (lambda args
@@ -67,8 +66,8 @@
 (define (rc-deprecated-config old-id group key value-transformer)
 
   (define (deprecation-warning)
-    (format (current-error-port) (warning-option-deprecated old-id group key))
-  )
+    (display (warning-option-deprecated old-id group key)
+             (current-error-port)))
 
   (let ((warned? #f))
     (lambda args
