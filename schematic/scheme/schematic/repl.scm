@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2015 gEDA Contributors
-;; Copyright (C) 2017 Lepton EDA Contributors
+;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 ;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 ;;
 
-(define-module (gschem repl)
+(define-module (schematic repl)
   #:use-module (ice-9 threads)
   #:use-module (lepton repl))
 

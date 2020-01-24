@@ -31,9 +31,9 @@
   #:use-module (gschem core builtins)
   #:use-module (gschem action)
   #:use-module (gschem gschemdoc)
-  #:use-module (gschem repl)
   #:use-module (gschem selection)
   #:use-module (gschem window)
+  #:use-module (schematic repl)
   #:use-module (srfi srfi-1))
 
 

@@ -15,7 +15,6 @@ nobase_dist_scmdata_DATA = \
 	gschem/hook.scm \
 	gschem/attrib.scm \
 	gschem/keymap.scm \
-	gschem/repl.scm \
 	gschem/util.scm \
 	gschem/action.scm \
 	gschem/builtins.scm \
@@ -23,8 +22,9 @@ nobase_dist_scmdata_DATA = \
 	schematic/gui/keymap.scm \
 	schematic/gui/stroke.scm \
 	schematic/netlist.scm \
-	schematic/undo.scm \
 	schematic/precompile.scm \
+	schematic/repl.scm \
+	schematic/undo.scm \
 	conf/schematic/attribs.scm \
 	conf/schematic/deprecated.scm \
 	conf/schematic/keys.scm \
