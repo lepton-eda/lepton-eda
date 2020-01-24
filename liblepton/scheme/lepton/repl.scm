@@ -51,7 +51,7 @@
 (define (lepton-repl-readline-warning)
   (display (_ "WARNING: Readline library is not supported in your configuration.\n")))
 
-(define* (lepton-repl)
+(define (lepton-repl)
   "Runs interactive REPL in a terminal."
   (let ((repl (make-repl (current-language) #f)))
     (repl-eval repl
