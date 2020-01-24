@@ -96,7 +96,6 @@ DIST_SCM = \
 	netlist/partlist.scm \
 	netlist/partlist/common.scm \
 	netlist/port.scm \
-	netlist/repl.scm \
 	netlist/schematic-component.scm \
 	netlist/schematic-connection.scm \
 	netlist/schematic-port.scm \
