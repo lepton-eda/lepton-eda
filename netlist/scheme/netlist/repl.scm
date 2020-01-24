@@ -17,7 +17,7 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (netlist repl)
-  #:use-module (geda repl)
+  #:use-module (lepton repl)
 
   #:export (gnetlist-repl))
 

@@ -1,6 +1,6 @@
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017-2019 Lepton EDA Contributors
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@
                 #:select (read-string)
                 #:prefix rdelim:)
   #:use-module (geda log)
-  #:use-module (geda repl)
   #:use-module (lepton page)
+  #:use-module (lepton repl)
+  #:use-module (lepton version)
   #:use-module (symcheck option)
   #:use-module (symcheck report)
   #:use-module (symbol check)
   #:use-module (symbol check log)
   #:use-module (symbol gettext)
-  #:use-module (lepton version)
 
   #:export (check-all-symbols))
 

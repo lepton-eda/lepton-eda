@@ -19,8 +19,8 @@
 ;;
 
 (define-module (gschem repl)
-  #:use-module (geda repl)
-  #:use-module (ice-9 threads))
+  #:use-module (ice-9 threads)
+  #:use-module (lepton repl))
 
 (define-public (start-repl-in-background-terminal)
   (begin-thread (lepton-repl)))
