@@ -1637,7 +1637,7 @@ where source files are stored or @code{'()}.
 @cindex Configuration
 
 To use the functions described in this section, you will need to load
-the @code{(geda config)} module.
+the @code{(lepton config)} module.
 
 This section describes some functions for accessing, monitoring and
 modifying the configuration of gEDA libraries and applications.
@@ -2052,7 +2052,7 @@ Since 1.10.
 @subsection Configuration errors
 @cindex Configuration errors
 
-All errors in functions in the @code{(geda config)} are reported using
+All errors in functions in the @code{(lepton config)} are reported using
 one of two keys:
 
 @enumerate

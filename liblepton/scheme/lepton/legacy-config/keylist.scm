@@ -1,11 +1,12 @@
 ;; Lepton EDA
 ;; liblepton - Lepton's library - Scheme API
 ;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
+;; Copyright (C) 2019-2020 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file
 ;;
 
 ( define-module ( lepton legacy-config keylist )
-  #:use-module  ( geda config )
+  #:use-module  ( lepton config )
   #:export      ( config-keylist )
 )
 

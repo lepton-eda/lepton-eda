@@ -2,7 +2,7 @@
              (lepton page)
              (gschem hook)
              (gschem window)
-             (geda config)
+             (lepton config)
              (lepton legacy-config))
 
 ;

@@ -1,6 +1,6 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 2016-2017 gEDA Contributors
-;;; Copyright (C) 2017-2019 Lepton EDA Contributors
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@
 
 (define-module (netlist config)
   #:use-module (ice-9 format)
-  #:use-module (geda log)
-  #:use-module (geda config)
   #:use-module (ice-9 match)
+  #:use-module (geda log)
+  #:use-module (lepton config)
   #:use-module (netlist option)
   #:export (gnetlist-config-ref
             print-gnetlist-config))

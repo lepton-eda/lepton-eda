@@ -24,6 +24,10 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   All the functions and variables available are still re-exported
   in the former one but its using is discouraged.
 
+- The module `(geda config)` has been renamed to `(lepton config)`.
+  All the functions and variables available are still re-exported
+  in the former one but its using is discouraged.
+
 - The module `(geda object)` has been renamed to `(lepton object)`.
   All the functions and variables available are still re-exported
   in the former one but its using is discouraged.
@@ -41,7 +45,7 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
 
 - The **cache** configuration context can now be accessed in
   Scheme code: `cache-config-context` function has been added
-  to the `(geda config)` module.
+  to the `(lepton config)` module.
 
 - A new function, `component-filename`, has been added to the
   `(lepton object)` module. It returns the full component's symbol

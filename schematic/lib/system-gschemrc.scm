@@ -9,7 +9,7 @@
              (schematic netlist)
              (gschem builtins)
              (gschem action)
-             (geda config))
+             (lepton config))
 
 
 ; gschem-version string

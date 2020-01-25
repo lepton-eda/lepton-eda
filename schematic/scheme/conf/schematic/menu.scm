@@ -13,7 +13,7 @@
 ;
 
 ( use-modules ( ice-9 format ) )
-( use-modules ( geda config ) )
+( use-modules ( lepton config ) )
 
 ;; Define a no-op macro for flagging strings as translatable.
 (define-syntax N_
