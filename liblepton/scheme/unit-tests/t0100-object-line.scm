@@ -29,8 +29,6 @@
     (set-object-color! a 21)
     (assert-equal 21 (list-ref (line-info a) 2))))
 
-(make-net '(1 . 2) '(3 . 4))
-
 (begin-test 'nets
   (let ((a (make-net '(1 . 2) '(3 . 4) 21))
         (b (make-net '(1 . 2) '(3 . 4))))
