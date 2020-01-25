@@ -3,7 +3,7 @@
 ;;; ---------------------------------------------------------------------
 
 ;;; Copyright (C) 2000,2016 gEDA Contributors
-;;; Copyright (C) 2017-2019 Lepton EDA Contributors
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 
 ;;; This file contents two functions to the hot-keys
 ;;; g-n and g-e, which stand for (g)enerate (n)etlist and - (e)ntity.
@@ -26,7 +26,7 @@
 
 (use-modules (geda attrib)
              (geda log)
-             (geda object)
+             (lepton object)
              (lepton page))
 
 ;;; Replace extension in the basename of a file NAME with EXT

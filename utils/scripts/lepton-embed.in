@@ -7,6 +7,7 @@ exec @GUILE@ "$0" "$@"
 ;; Lepton EDA
 ;; lepton-embed - schematic components and pictures embedding utility
 ;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
+;; Copyright (C) 2019-2020 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file
 ;;
 
@@ -19,7 +20,7 @@ exec @GUILE@ "$0" "$@"
 ( use-modules ( ice-9 format ) )
 
 ( primitive-eval '(use-modules (geda core toplevel)) )
-( primitive-eval '(use-modules (geda object)) )
+( primitive-eval '(use-modules (lepton object)) )
 ( primitive-eval '(use-modules (lepton page)) )
 ( primitive-eval '(use-modules (lepton version)) )
 

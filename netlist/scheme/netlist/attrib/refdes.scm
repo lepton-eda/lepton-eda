@@ -23,8 +23,8 @@
   #:use-module (netlist core gettext)
 
   #:use-module (ice-9 match)
-  #:use-module (geda object)
   #:use-module (geda log)
+  #:use-module (lepton object)
   #:use-module (lepton page)
   #:use-module (netlist config)
   #:use-module (netlist error)

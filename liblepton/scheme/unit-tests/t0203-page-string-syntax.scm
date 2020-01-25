@@ -2,7 +2,7 @@
 ;; strings.
 
 (use-modules (unit-test)
-             (geda object)
+             (lepton object)
              ((geda page) #:renamer (symbol-prefix-proc 'geda:))
              (lepton page))
 

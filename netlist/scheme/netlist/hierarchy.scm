@@ -23,7 +23,7 @@
 
   #:use-module (srfi srfi-1)
 
-  #:use-module (geda object)
+  #:use-module (lepton object)
   #:use-module (netlist attrib refdes)
   #:use-module (netlist config)
   #:use-module (netlist mode)

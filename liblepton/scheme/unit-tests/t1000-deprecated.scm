@@ -1,9 +1,9 @@
 ;; Test deprecated procedures from legacy Scheme API.
 
 (use-modules (unit-test))
-(use-modules (geda deprecated))
-(use-modules (geda object))
 (use-modules (geda attrib))
+(use-modules (geda deprecated))
+(use-modules (lepton object))
 (use-modules (lepton page))
 
 (begin-test 'get-attribute-name-value

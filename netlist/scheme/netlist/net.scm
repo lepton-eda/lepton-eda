@@ -1,5 +1,5 @@
 ;;; Lepton EDA netlister
-;;; Copyright (C) 2017-2018 Lepton EDA Contributors
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (geda attrib)
   #:use-module (geda log)
-  #:use-module (geda object)
+  #:use-module (lepton object)
   #:use-module (netlist config)
   #:use-module (netlist core gettext)
   #:use-module (symbol check net-attrib)

@@ -20,6 +20,10 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   among various build environments.
 
 ### Scheme API changes:
+- The module `(geda object)` has been renamed to `(lepton object)`.
+  All the functions and variables available are still re-exported
+  in the former one but its using is discouraged.
+
 - Apart from expanding environment variables, the function
   `expand-env-variables` from the `(geda os)` module now replaces
   **~/** (user home directory prefix) in file names in order to
@@ -27,7 +31,7 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   using this prefix in functions like `component-library` and
   `source-library`.
 
-- A couple of functions have been added to the `(geda object)`
+- A couple of functions have been added to the `(lepton object)`
   module to work with object's "embedded" state:
   `object-embedded?` and `set-object-embedded!`.
 
@@ -35,8 +39,9 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   Scheme code: `cache-config-context` function has been added
   to the `(geda config)` module.
 
-- A new function, `component-filename`, has been added to the `(geda object)`
-  module. It returns the full component's symbol file path.
+- A new function, `component-filename`, has been added to the
+  `(lepton object)` module. It returns the full component's symbol
+  file path.
 
 ### Changes in `liblepton`:
 - The module `(lepton library component)` has been amended to

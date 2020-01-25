@@ -1,9 +1,9 @@
 ;; Test promotable-attributes function
 
-(use-modules (unit-test))
-(use-modules (geda object))
-(use-modules (geda attrib))
-(use-modules (lepton page))
+(use-modules (unit-test)
+             (geda attrib)
+             (lepton object)
+             (lepton page))
 
 ;; Unfortunately, we can't test this at the moment, because the
 ;; default list of promotable attribute names is empty.  We suppress

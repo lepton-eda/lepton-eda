@@ -38,7 +38,7 @@
   #:use-module (netlist subschematic)
   #:use-module (netlist package-pin)
   #:use-module (geda attrib)
-  #:use-module (geda object)
+  #:use-module (lepton object)
 
   #:export-syntax (make-schematic schematic?
                    schematic-id set-schematic-id!

@@ -1,7 +1,7 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2010 Peter Brett
 ;;; Copyright (C) 2010-2014 gEDA Contributors
-;;; Copyright (C) 2017-2019 Lepton EDA Contributors
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -27,10 +27,10 @@
  #:use-module (geda core deprecated)
  #:use-module (lepton core rc)
 
- #:use-module (lepton page)
- #:use-module (geda object)
  #:use-module (geda attrib)
  #:use-module (geda log)
+ #:use-module (lepton object)
+ #:use-module (lepton page)
  #:use-module (lepton rc)
 
  #:re-export (OBJ_LINE OBJ_PATH OBJ_BOX OBJ_PICTURE OBJ_CIRCLE OBJ_NET

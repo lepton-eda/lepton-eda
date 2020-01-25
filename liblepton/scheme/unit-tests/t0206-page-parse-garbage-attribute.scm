@@ -1,7 +1,7 @@
 ;; Test that garbage in attribute lists causes a parse error.
 
 (use-modules (unit-test)
-             (geda object)
+             (lepton object)
              (geda attrib)
              ((geda page) #:renamer (symbol-prefix-proc 'geda:))
              (lepton page))

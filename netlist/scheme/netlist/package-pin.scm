@@ -22,7 +22,7 @@
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
   #:use-module (geda attrib)
-  #:use-module (geda object)
+  #:use-module (lepton object)
 
   #:export-syntax (make-package-pin package-pin?
                    package-pin-id set-package-pin-id!

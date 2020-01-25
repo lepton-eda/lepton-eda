@@ -20,9 +20,9 @@
 ;;
 
 (define-module (gschem builtins)
-  #:use-module (geda object)
   #:use-module (geda attrib)
   #:use-module (geda log)
+  #:use-module (lepton object)
   #:use-module (lepton page)
   #:use-module (lepton repl)
   #:use-module (gschem hook)

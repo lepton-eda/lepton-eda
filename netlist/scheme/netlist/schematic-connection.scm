@@ -24,7 +24,7 @@
   #:use-module (srfi srfi-9 gnu)
   #:use-module (srfi srfi-26)
   #:use-module (geda attrib)
-  #:use-module (geda object)
+  #:use-module (lepton object)
   #:use-module (lepton page)
   #:use-module (netlist package-pin)
 

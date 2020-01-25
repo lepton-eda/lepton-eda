@@ -2,7 +2,7 @@
 export GUILE_LOAD_COMPILED_PATH="@ccachedir@:${GUILE_LOAD_COMPILED_PATH}"
 exec @GUILE@ -s "$0" "$@"
 !#
-;;; Copyright (C) 2019 Lepton EDA Contributors
+;;; Copyright (C) 2019-2020 Lepton EDA Contributors
 ;;;
 ;;; Based on Python script by Stuart Brorson:
 ;;; Copyright (C) 2003 Stuart Brorson <sdb@cloud9.net>
@@ -79,11 +79,11 @@ exec @GUILE@ -s "$0" "$@"
 (primitive-eval
  '(use-modules (geda core toplevel)
                (geda log)
-               (geda object)
                (geda os)
                (lepton file-system)
                (lepton library)
                (lepton library component)
+               (lepton object)
                (lepton page)
                (netlist schematic)
                (netlist schematic-component)))
