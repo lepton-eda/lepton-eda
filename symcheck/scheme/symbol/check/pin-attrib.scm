@@ -18,7 +18,7 @@
 
 (define-module (symbol check pin-attrib)
   #:use-module (srfi srfi-1)
-  #:use-module (geda attrib)
+  #:use-module (lepton attrib)
   #:use-module (lepton object)
   #:use-module (symbol gettext)
   #:use-module (symbol blame)

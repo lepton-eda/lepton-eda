@@ -1,7 +1,7 @@
 ;; Test Scheme procedures related to pages.
 
 (use-modules (unit-test)
-             (geda attrib)
+             (lepton attrib)
              (lepton object)
              ((geda page) #:renamer (symbol-prefix-proc 'geda:))
              (lepton page))

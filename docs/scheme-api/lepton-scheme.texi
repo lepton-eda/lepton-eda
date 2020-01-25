@@ -1505,7 +1505,7 @@ are attached as an attribute.
 @section Core attribute functions
 
 To use the functions described in this section, you will need to load
-the @code{(geda attrib)} module.
+the @code{(lepton attrib)} module.
 
 Attributes are text @code{object}s with a particular format of string.
 They can be floating, or they can be attached to another

@@ -1,8 +1,8 @@
 ;; Test Scheme procedures related to pages' changed flags.
 
 (use-modules (unit-test)
+             (lepton attrib)
              (lepton object)
-             (geda attrib)
              ((geda page) #:renamer (symbol-prefix-proc 'geda:))
              (lepton page))
 

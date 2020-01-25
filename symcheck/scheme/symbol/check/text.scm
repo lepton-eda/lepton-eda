@@ -20,7 +20,7 @@
   ;; See a note about UTF-8 below.
   ;; #:use-module (rnrs bytevectors)
   ;; #:use-module (rnrs io ports)
-  #:use-module (geda attrib)
+  #:use-module (lepton attrib)
   #:use-module (lepton object)
   #:use-module (symbol gettext)
   #:use-module (symbol blame)

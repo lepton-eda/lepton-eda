@@ -2,8 +2,8 @@
 ;; in the correct order.
 
 (use-modules (unit-test)
+             (lepton attrib)
              (lepton object)
-             (geda attrib)
              ((geda page) #:renamer (symbol-prefix-proc 'geda:))
              (lepton page))
 

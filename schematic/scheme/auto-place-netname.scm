@@ -18,8 +18,8 @@
 ;;; MA 02111-1301 USA.
 
 (use-modules (gschem hook)
-             (lepton object)
-             (geda attrib))
+             (lepton attrib)
+             (lepton object))
 
 (define (place-netname-attribute attribute)
   ;; Only attached netname attributes

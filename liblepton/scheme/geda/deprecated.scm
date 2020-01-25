@@ -27,8 +27,8 @@
  #:use-module (geda core deprecated)
  #:use-module (lepton core rc)
 
- #:use-module (geda attrib)
  #:use-module (geda log)
+ #:use-module (lepton attrib)
  #:use-module (lepton object)
  #:use-module (lepton page)
  #:use-module (lepton rc)

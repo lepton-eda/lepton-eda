@@ -17,8 +17,8 @@
 ;;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 
 (define-module (symbol check primitive)
+  #:use-module (lepton attrib)
   #:use-module (lepton object)
-  #:use-module (geda attrib)
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
   #:use-module (symbol check alignment)

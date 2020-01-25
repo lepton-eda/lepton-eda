@@ -41,7 +41,7 @@ exec @GUILE@ -s "$0" "$@"
                 "libgeda_init")
 
 (primitive-eval '(use-modules (geda core toplevel)
-                              (geda attrib)
+                              (lepton attrib)
                               (lepton object)
                               (lepton page)
                               (netlist attrib compare)))

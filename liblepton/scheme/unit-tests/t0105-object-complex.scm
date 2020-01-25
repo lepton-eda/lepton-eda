@@ -1,7 +1,7 @@
 ;; Test Scheme procedures related to component objects.
 
 (use-modules (unit-test)
-             (geda attrib)
+             (lepton attrib)
              (lepton library)
              (lepton object)
              ((geda object) #:renamer (symbol-prefix-proc 'geda:))

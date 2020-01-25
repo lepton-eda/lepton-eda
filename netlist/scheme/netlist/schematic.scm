@@ -25,6 +25,8 @@
   #:use-module (srfi srfi-26)
   #:use-module (sxml match)
   #:use-module (sxml transform)
+  #:use-module (lepton attrib)
+  #:use-module (lepton object)
   #:use-module (lepton page)
   #:use-module (netlist attrib compare)
   #:use-module (netlist attrib refdes)
@@ -37,8 +39,6 @@
   #:use-module (netlist schematic-port)
   #:use-module (netlist subschematic)
   #:use-module (netlist package-pin)
-  #:use-module (geda attrib)
-  #:use-module (lepton object)
 
   #:export-syntax (make-schematic schematic?
                    schematic-id set-schematic-id!

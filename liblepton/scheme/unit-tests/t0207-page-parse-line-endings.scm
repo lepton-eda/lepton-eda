@@ -2,7 +2,7 @@
 ;; dealt with properly.
 
 (use-modules (unit-test)
-             (geda attrib)
+             (lepton attrib)
              (lepton object)
              ((geda page) #:renamer (symbol-prefix-proc 'geda:))
              (lepton page))

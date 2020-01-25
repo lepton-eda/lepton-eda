@@ -22,7 +22,7 @@
 (define-module (gschem gschemdoc)
   #:use-module (gschem core gettext)
   #:use-module (geda os)
-  #:use-module (geda attrib)
+  #:use-module (lepton attrib)
   #:use-module (lepton object)
   #:use-module (gschem util)
   #:use-module (ice-9 optargs)

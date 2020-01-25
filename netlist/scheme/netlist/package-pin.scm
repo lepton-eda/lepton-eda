@@ -21,7 +21,7 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
-  #:use-module (geda attrib)
+  #:use-module (lepton attrib)
   #:use-module (lepton object)
 
   #:export-syntax (make-package-pin package-pin?

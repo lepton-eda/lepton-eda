@@ -13,6 +13,7 @@ nobase_dist_scmdata_DATA = \
 	geda/log-rotate.scm \
 	geda/log.scm \
 	geda/library.scm \
+	lepton/attrib.scm \
 	lepton/file-system.scm \
 	lepton/library.scm \
 	lepton/library/component.scm \

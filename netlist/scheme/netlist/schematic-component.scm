@@ -22,7 +22,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
-  #:use-module (geda attrib)
+  #:use-module (lepton attrib)
   #:use-module (lepton object)
   #:use-module (netlist config)
   #:use-module (netlist net)

@@ -19,7 +19,7 @@
 (define-module (symbol check attrib)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
-  #:use-module (geda attrib)
+  #:use-module (lepton attrib)
   #:use-module (lepton object)
   #:use-module (lepton page)
   #:use-module (symbol gettext)

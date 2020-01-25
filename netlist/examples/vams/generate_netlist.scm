@@ -24,7 +24,7 @@
 ;; This function only put together the gnetlist command for the
 ;; generating-netlist-call.
 
-(use-modules (geda attrib)
+(use-modules (lepton attrib)
              (geda log)
              (lepton object)
              (lepton page))

@@ -2,7 +2,7 @@
 
 (use-modules (unit-test)
              (srfi srfi-1)
-             (geda attrib)
+             (lepton attrib)
              (lepton object)
              ((geda object) #:renamer (symbol-prefix-proc 'geda:))
              (lepton page))
