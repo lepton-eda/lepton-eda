@@ -3,5 +3,5 @@
 
 ; Clean up logfiles:
 ;
-(use-modules (geda log-rotate))
+(use-modules (lepton log-rotate))
 (cleanup-old-logs!)

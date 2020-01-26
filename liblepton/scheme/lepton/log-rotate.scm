@@ -17,7 +17,7 @@
 ;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 ;;
 
-(define-module (geda log-rotate)
+(define-module (lepton log-rotate)
   #:use-module (lepton os)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 ftw)

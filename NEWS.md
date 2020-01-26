@@ -28,6 +28,9 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   All the functions and variables available are still re-exported
   in the former one but its using is discouraged.
 
+- The module `(geda log-rotate)` has been renamed to `(lepton
+  log-rotate)`.
+
 - The module `(geda object)` has been renamed to `(lepton object)`.
   All the functions and variables available are still re-exported
   in the former one but its using is discouraged.
