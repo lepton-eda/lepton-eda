@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -437,7 +437,7 @@ eda_get_user_cache_dir()
  * \par Function Description
  * Compute and initialise configuration and data search paths used by
  * gEDA, and set any related environment variables.  Should only be
- * called (once) by libgeda_init().
+ * called (once) by liblepton_init().
  */
 void
 eda_paths_init(void)

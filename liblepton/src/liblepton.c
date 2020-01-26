@@ -2,7 +2,7 @@
  * Copyright (C) 1998, 1999, 2000 Kazu Hirata / Ales Hvezda
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2010, 2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
  *  initialization is done for all the liblepton routines. It should
  *  be called before any other liblepton functions are called.
  */
-void libgeda_init(void)
+void liblepton_init(void)
 {
 #ifdef ENABLE_NLS
   /* Initialise gettext */
@@ -94,7 +94,7 @@ version_message()
   const char* msg =
     _("Lepton EDA %s%s.%s (git: %.7s)\n"
     "Copyright (C) 1998-2016 gEDA developers\n"
-    "Copyright (C) 2017-2019 Lepton EDA developers\n"
+    "Copyright (C) 2017-2020 Lepton EDA developers\n"
     "This is free software, and you are welcome to redistribute it\n"
     "under certain conditions. For details, see the file `COPYING',\n"
     "which is included in the Lepton EDA distribution.\n"

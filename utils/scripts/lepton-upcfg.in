@@ -7,11 +7,12 @@ exec @GUILE@ "$0" "$@"
 ;; Lepton EDA
 ;; lepton-upcfg - gEDA => Lepton EDA configuration upgrade utility
 ;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
+;; Copyright (C) 2019-2020 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file
 ;;
 
 ( load-extension ( or (getenv "LIBLEPTON") "@libdir@/liblepton" )
-                 "libgeda_init" )
+                 "liblepton_init" )
 
 ; Avoid Scheme compile-time errors using a clever trick
 ; from netlist/scheme/lepton-netlist.in (see comments there):

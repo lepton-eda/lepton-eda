@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 2010-2013 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
  * To initialise the API, edascm_init() needs to be called before any
  * Scheme code is executed or any of the other functions listed in
  * this module are called.  Normally, this will be called
- * automatically by libgeda_init().
+ * automatically by liblepton_init().
  *
  * The Scheme API requires a libgeda #TOPLEVEL context to be available
  * at any given time.  The #TOPLEVEL can be set on a per-thread basis

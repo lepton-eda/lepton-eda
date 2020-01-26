@@ -38,7 +38,7 @@ exec @GUILE@ -s "$0" "$@"
 
 ;;; Load and initialize liblepton library.
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
-                "libgeda_init")
+                "liblepton_init")
 
 (primitive-eval '(use-modules (geda core toplevel)
                               (lepton attrib)

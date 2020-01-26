@@ -64,7 +64,7 @@ exec @GUILE@ -s "$0" "$@"
 
 ;;; Load and initialize liblepton library.
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
-                "libgeda_init")
+                "liblepton_init")
 
 (use-modules (ice-9 ftw)
              (ice-9 getopt-long)

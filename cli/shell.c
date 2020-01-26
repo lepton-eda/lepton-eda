@@ -2,7 +2,7 @@
  * Lepton EDA command-line utility
  * Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2014-2015 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -110,7 +110,7 @@ cmd_shell_impl (void *data, int argc, char **argv)
     }
   }
 
-  libgeda_init ();
+  liblepton_init ();
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   toplevel = s_toplevel_new ();
   edascm_dynwind_toplevel (toplevel);

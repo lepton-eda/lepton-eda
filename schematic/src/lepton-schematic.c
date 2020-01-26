@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ precompile_run()
 
   if (scm_precompile_script != NULL)
   {
-    libgeda_init();
+    liblepton_init();
     g_register_funcs();
     g_init_window();
     g_init_select();
@@ -200,7 +200,7 @@ void main_prog(void *closure, int argc, char *argv[])
   argv_index = parse_commandline(argc, argv);
   cwd = g_get_current_dir();
 
-  libgeda_init();
+  liblepton_init();
 
   /* create log file right away even if logging is enabled */
   s_log_init ("schematic");

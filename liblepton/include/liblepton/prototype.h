@@ -39,8 +39,8 @@ SCM g_rc_parse_rc (SCM pname_s, SCM rcname_s);
 void i_vars_libgeda_set(TOPLEVEL *toplevel);
 void i_vars_libgeda_freenames();
 
-/* libgeda.c */
-void libgeda_init(void);
+/* liblepton.c */
+void liblepton_init(void);
 void set_guile_compiled_path();
 char* version_message();
 

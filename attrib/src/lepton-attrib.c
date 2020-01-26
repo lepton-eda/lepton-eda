@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2005-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -166,7 +166,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
 #endif
 
   /* Initialize gEDA stuff */
-  libgeda_init();
+  liblepton_init();
 
   /* Note that argv_index holds index to first non-flag command line option
    * (that is, to the first file name) */

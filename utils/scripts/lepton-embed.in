@@ -13,7 +13,7 @@ exec @GUILE@ "$0" "$@"
 
 ( load-extension
   ( or (getenv "LIBLEPTON") "@libdir@/liblepton" )
-  "libgeda_init"
+  "liblepton_init"
 )
 
 ( use-modules ( ice-9 getopt-long ) )
