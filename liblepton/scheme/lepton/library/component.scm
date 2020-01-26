@@ -33,8 +33,8 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (geda core gettext)
-  #:use-module (geda log)
   #:use-module (lepton core rc)
+  #:use-module (lepton log)
   #:use-module (lepton os)
 
   #:export (component-library

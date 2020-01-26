@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2018-19 Lepton EDA Contributors
+;;; Copyright (C) 2018-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 ;;; Netlist export actions in schematic editor.
 
 (define-module (schematic netlist)
-  #:use-module (geda log)
+  #:use-module (lepton log)
   #:use-module (lepton page)
   #:use-module (netlist)
   #:use-module (netlist schematic)

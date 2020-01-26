@@ -78,7 +78,7 @@ exec @GUILE@ -s "$0" "$@"
 
 (primitive-eval
  '(use-modules (geda core toplevel)
-               (geda log)
+               (lepton log)
                (lepton file-system)
                (lepton library)
                (lepton library component)

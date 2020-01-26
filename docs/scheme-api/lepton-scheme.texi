@@ -2083,7 +2083,7 @@ A configuration value could not be parsed into the requested format.
 @section Logging functions
 
 To use the functions described in this section, you will need to load
-the @code{(geda log)} module.
+the @code{(lepton log)} module.
 
 @defun log! level message [format-args...]
 Emit a log message with the specified @var{level}.  The @var{message}

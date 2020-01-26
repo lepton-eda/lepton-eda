@@ -72,8 +72,8 @@ exec @GUILE@ -s "$0" "$@"
 ;;; necessary to actually run the code below.
 (primitive-eval '(use-modules (geda core toplevel)
                               (geda deprecated)
-                              (geda log)
                               (lepton library)
+                              (lepton log)
                               (netlist)))
 
 ;;; Run netlister in new toplevel environment.

@@ -25,7 +25,7 @@
 ;; generating-netlist-call.
 
 (use-modules (lepton attrib)
-             (geda log)
+             (lepton log)
              (lepton object)
              (lepton page))
 

@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
-;; Copyright (C) 2017-2019 Lepton EDA Contributors
+;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
   #:use-module (gschem core gettext)
   #:use-module (gschem window)
   #:use-module (gschem hook)
-  #:use-module (geda log)
+  #:use-module (lepton log)
   #:use-module (ice-9 optargs)
   #:export-syntax (define-action))
 

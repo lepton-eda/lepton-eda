@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -296,7 +296,7 @@ exec_macro (GschemToplevel* toplevel, const gchar* macro_text)
   g_dynwind_window (toplevel);
 
   gchar* cmd = g_strdup_printf(
-    "(use-modules (geda log)) (log! 'message (format #f \"~A\" %s))",
+    "(use-modules (lepton log)) (log! 'message (format #f \"~A\" %s))",
     macro_text);
 
   g_scm_c_eval_string_protected (cmd);

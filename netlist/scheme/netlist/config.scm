@@ -20,8 +20,8 @@
 (define-module (netlist config)
   #:use-module (ice-9 format)
   #:use-module (ice-9 match)
-  #:use-module (geda log)
   #:use-module (lepton config)
+  #:use-module (lepton log)
   #:use-module (netlist option)
   #:export (gnetlist-config-ref
             print-gnetlist-config))

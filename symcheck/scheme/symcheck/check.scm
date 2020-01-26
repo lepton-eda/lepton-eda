@@ -20,7 +20,7 @@
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
                 #:prefix rdelim:)
-  #:use-module (geda log)
+  #:use-module (lepton log)
   #:use-module (lepton page)
   #:use-module (lepton repl)
   #:use-module (lepton version)
