@@ -32,8 +32,12 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   All the functions and variables available are still re-exported
   in the former one but its using is discouraged.
 
+- The module `(geda os)` has been renamed to `(lepton os)`.
+  All the functions and variables available are still re-exported
+  in the former one but its using is discouraged.
+
 - Apart from expanding environment variables, the function
-  `expand-env-variables` from the `(geda os)` module now replaces
+  `expand-env-variables` from the `(lepton os)` module now replaces
   **~/** (user home directory prefix) in file names in order to
   make such names understandable for other functions.  This allows
   using this prefix in functions like `component-library` and

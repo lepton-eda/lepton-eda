@@ -2,9 +2,9 @@
 
 (use-modules (unit-test)
              (srfi srfi-1)
-             (geda os)
              (lepton config)
-             ((geda config) #:renamer (symbol-prefix-proc 'geda:)))
+             ((geda config) #:renamer (symbol-prefix-proc 'geda:))
+             (lepton os))
 
 
 (define *testdir*      (string-append (getcwd)   file-name-separator-string "t0402-tmp"))

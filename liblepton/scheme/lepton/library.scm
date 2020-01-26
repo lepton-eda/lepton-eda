@@ -1,6 +1,6 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2016 gEDA Contributors
-;;; Copyright (C) 2019 Lepton EDA Contributors
+;;; Copyright (C) 2019-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@
 (define-module (lepton library)
   #:use-module (geda core gettext)
 
-  #:use-module (geda os)
   #:use-module (geda log)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
@@ -35,6 +34,7 @@
   #:use-module (ice-9 match)
   #:use-module (lepton file-system)
   #:use-module (lepton library component)
+  #:use-module (lepton os)
 
   #:export (%default-source-library
             ;; deprecated

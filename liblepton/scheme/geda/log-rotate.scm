@@ -1,6 +1,6 @@
 ;; Lepton EDA library - Scheme API
 ;; Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
-;; Copyright (C) 2017-2019 Lepton EDA Contributors
+;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 ;;
 
 (define-module (geda log-rotate)
-  #:use-module (geda os)
+  #:use-module (lepton os)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 ftw)
   #:use-module (ice-9 regex)

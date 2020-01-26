@@ -1,6 +1,6 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2007-2016 gEDA Contributors
-;;; Copyright (C) 2017-2019 Lepton EDA Contributors
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@
 
 (define-module (lepton rc)
   #:use-module (srfi srfi-1)
-  #:use-module (geda os)
   #:use-module (lepton file-system)
+  #:use-module (lepton os)
 
   #:export (build-path
             geda-data-path

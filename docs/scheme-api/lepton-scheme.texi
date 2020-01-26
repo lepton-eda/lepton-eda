@@ -2104,7 +2104,7 @@ should be localised.
 @section System information
 
 To use the functions described in this section, you will need to load
-the @code{(geda os)} module.
+the @code{(lepton os)} module.
 
 This section describes some functions and variables that are useful
 for Scheme code that needs to behave differently depending on which

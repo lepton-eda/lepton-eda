@@ -22,7 +22,7 @@
   #:use-module (system repl repl)
   #:use-module (system repl common)
   #:use-module (geda core gettext)
-  #:use-module ((geda os) #:select (user-config-dir))
+  #:use-module ((lepton os) #:select (user-config-dir))
 
   #:export (lepton-repl
             lepton-repl-save-history

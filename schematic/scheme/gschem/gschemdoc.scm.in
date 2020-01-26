@@ -21,9 +21,9 @@
 
 (define-module (gschem gschemdoc)
   #:use-module (gschem core gettext)
-  #:use-module (geda os)
   #:use-module (lepton attrib)
   #:use-module (lepton object)
+  #:use-module (lepton os)
   #:use-module (gschem util)
   #:use-module (ice-9 optargs)
   #:use-module (ice-9 regex)
