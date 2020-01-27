@@ -24,7 +24,7 @@
 
 (define-module (gschem deprecated)
 
-  #:use-module (gschem core gettext)
+  #:use-module (schematic core gettext)
 
   #:use-module (lepton attrib)
   #:use-module (lepton object)
