@@ -2734,7 +2734,7 @@ when a command is invoked by hotkey.
 @subsection lepton-schematic Attribute Helpers
 
 To use the functions described in this section, you will need to load
-the @code{(gschem attrib)} module.
+the @code{(schematic attrib)} module.
 
 @defun add-attrib! target name value visible show
 Create a new attribute, either attached to a @var{target}

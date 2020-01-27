@@ -9,17 +9,18 @@ nobase_dist_scmdata_DATA = \
 	pcb.scm \
 	default-attrib-positions.scm \
 	gschem/action.scm \
+	gschem/attrib.scm \
 	gschem/core/gettext.scm \
 	gschem/window.scm \
 	gschem/selection.scm \
 	gschem/deprecated.scm \
 	gschem/hook.scm \
-	gschem/attrib.scm \
 	gschem/keymap.scm \
 	gschem/util.scm \
 	gschem/builtins.scm \
 	gschem/symbol/check.scm \
 	schematic/action.scm \
+	schematic/attrib.scm \
 	schematic/gui/keymap.scm \
 	schematic/gui/stroke.scm \
 	schematic/netlist.scm \
