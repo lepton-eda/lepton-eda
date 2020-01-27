@@ -2598,7 +2598,7 @@ Since 1.10.
 @cindex Actions
 
 To use the functions described in this section, you will need to load
-the @code{(gschem action)} module.
+the @code{(schematic action)} module.
 
 @subsection Action objects
 @cindex Action objects

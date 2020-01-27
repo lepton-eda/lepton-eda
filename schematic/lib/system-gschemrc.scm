@@ -4,11 +4,11 @@
 ;
 
 (use-modules (gschem deprecated)
+             (schematic action)
              (schematic gui keymap)
              (schematic gui stroke)
              (schematic netlist)
              (gschem builtins)
-             (gschem action)
              (lepton config))
 
 

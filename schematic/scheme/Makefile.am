@@ -8,6 +8,7 @@ nobase_dist_scmdata_DATA = \
 	auto-place-netname.scm \
 	pcb.scm \
 	default-attrib-positions.scm \
+	gschem/action.scm \
 	gschem/core/gettext.scm \
 	gschem/window.scm \
 	gschem/selection.scm \
@@ -16,9 +17,9 @@ nobase_dist_scmdata_DATA = \
 	gschem/attrib.scm \
 	gschem/keymap.scm \
 	gschem/util.scm \
-	gschem/action.scm \
 	gschem/builtins.scm \
 	gschem/symbol/check.scm \
+	schematic/action.scm \
 	schematic/gui/keymap.scm \
 	schematic/gui/stroke.scm \
 	schematic/netlist.scm \

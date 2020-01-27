@@ -26,14 +26,14 @@
   #:use-module (lepton page)
   #:use-module (lepton repl)
   #:use-module (gschem hook)
-  #:use-module (schematic undo)
   #:use-module (gschem core gettext)
   #:use-module (gschem core builtins)
-  #:use-module (gschem action)
   #:use-module (gschem gschemdoc)
   #:use-module (gschem selection)
   #:use-module (gschem window)
+  #:use-module (schematic action)
   #:use-module (schematic repl)
+  #:use-module (schematic undo)
   #:use-module (srfi srfi-1))
 
 

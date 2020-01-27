@@ -170,6 +170,10 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   command-line option `--cache` (`-c`) has been added.
 
 ### Changes in `lepton-schematic`:
+- The module `(gschem action)` has been renamed to `(schematic
+  action)`.  All the functions and variables available are still
+  re-exported in the former one but its using is discouraged.
+
 - Grips can now be turned on and off at run-time.
   Use the new 'Options → Grips: On/Off' menu item or
   <kbd>O</kbd>-<kbd>I</kbd> keyboard shortcut.
