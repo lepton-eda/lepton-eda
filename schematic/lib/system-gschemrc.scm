@@ -5,10 +5,10 @@
 
 (use-modules (gschem deprecated)
              (schematic action)
+             (schematic builtins)
              (schematic gui keymap)
              (schematic gui stroke)
              (schematic netlist)
-             (gschem builtins)
              (lepton config))
 
 

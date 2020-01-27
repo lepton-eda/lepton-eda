@@ -19,8 +19,8 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (schematic gui stroke)
-  #:use-module (gschem builtins)
   #:use-module (schematic action)
+  #:use-module (schematic builtins)
 
   #:export (eval-stroke))
 

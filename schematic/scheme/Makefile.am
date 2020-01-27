@@ -10,6 +10,7 @@ nobase_dist_scmdata_DATA = \
 	default-attrib-positions.scm \
 	gschem/action.scm \
 	gschem/attrib.scm \
+	gschem/builtins.scm \
 	gschem/core/gettext.scm \
 	gschem/window.scm \
 	gschem/selection.scm \
@@ -17,10 +18,10 @@ nobase_dist_scmdata_DATA = \
 	gschem/hook.scm \
 	gschem/keymap.scm \
 	gschem/util.scm \
-	gschem/builtins.scm \
 	gschem/symbol/check.scm \
 	schematic/action.scm \
 	schematic/attrib.scm \
+	schematic/builtins.scm \
 	schematic/gui/keymap.scm \
 	schematic/gui/stroke.scm \
 	schematic/netlist.scm \
