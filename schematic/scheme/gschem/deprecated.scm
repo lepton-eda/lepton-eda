@@ -32,7 +32,7 @@
   #:use-module (gschem window)
   #:use-module (gschem hook)
   #:use-module (gschem selection)
-  #:use-module (gschem attrib)
+  #:use-module (schematic attrib)
 
   #:use-module (geda deprecated)
 
@@ -45,7 +45,7 @@
 ;; or both of the strings "name and "value" (if neither is specified,
 ;; both are assumed).
 ;;
-;; See also add-attrib! in the (gschem attrib) module.
+;; See also add-attrib! in the (schematic attrib) module.
 (define-public (add-attribute-to-object object name value visible show)
   (add-attrib! object name value visible
                (let ((n (member "name" show))

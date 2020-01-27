@@ -149,7 +149,7 @@ init_module_gschem_core_attrib (void *unused)
 }
 
 /*!
- * \brief Initialise the gschem attribute procedures.
+ * \brief Initialise the lepton-schematic attribute procedures.
  * \par Function Description
 
  * Registers some Scheme procedures for working with
