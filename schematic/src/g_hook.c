@@ -175,7 +175,7 @@ g_hook_new_proxy_by_name (const char *name)
 /*! \brief Create the (gschem core hook) Scheme module.
  * \par Function Description
  * Defines some hooks in the (gschem core hook) module.  These hooks
- * allow Scheme callbacks to be triggered on certain gschem actions.
+ * allow Scheme callbacks to be triggered on certain lepton-schematic actions.
  * For a description of the arguments and behaviour of these hooks,
  * please see ../scheme/gschem/hook.scm.
  */

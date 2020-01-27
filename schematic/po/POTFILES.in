@@ -107,7 +107,7 @@ schematic/data/lepton-schematic.desktop.in
 
 schematic/scheme/conf/schematic/menu.scm
 
-schematic/scheme/gschem/action.scm
+schematic/scheme/schematic/action.scm
 schematic/scheme/gschem/builtins.scm
 schematic/scheme/gschem/deprecated.scm
 schematic/scheme/gschem/gschemdoc.scm.in

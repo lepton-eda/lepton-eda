@@ -222,7 +222,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       case(MOUSEBTN_DO_REPEAT):
         g_scm_c_eval_string_protected
         (
-          "( use-modules (gschem action) )"
+          "( use-modules (schematic action) )"
           "( &repeat-last-action )"
         );
       break;
