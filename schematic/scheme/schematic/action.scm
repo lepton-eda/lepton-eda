@@ -19,11 +19,14 @@
 ;;
 
 (define-module (schematic action)
-  #:use-module (gschem core gettext)
-  #:use-module (gschem window)
-  #:use-module (gschem hook)
   #:use-module (lepton log)
   #:use-module (ice-9 optargs)
+
+  #:use-module (gschem window)
+  #:use-module (gschem hook)
+
+  #:use-module (schematic core gettext)
+
   #:export-syntax (define-action))
 
 

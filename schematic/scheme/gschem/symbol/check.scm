@@ -1,6 +1,6 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
-;; Copyright (C) 2017 Lepton EDA Contributors
+;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -19,10 +19,11 @@
 
 (define-module (gschem symbol check)
   #:use-module (srfi srfi-1)
-  #:use-module (gschem core gettext)
   #:use-module (gschem window)
   #:use-module (geda core toplevel)
   #:use-module (lepton page)
+
+  #:use-module (schematic core gettext)
   #:use-module (symbol blame)
   #:use-module ((symbol check) #:prefix sym:))
 

@@ -1,6 +1,8 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2011-2012 gEDA Contributors
+;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -17,11 +19,11 @@
 ;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 ;;
 
-;; I18n for libgeda Scheme API.
+;; I18n for lepton-schematic Scheme API.
 ;;
 ;; This module is for internal use only.
 
-(define-module (gschem core gettext))
+(define-module (schematic core gettext))
 
 (define %schematic-gettext-domain "lepton-schematic")
 (define-public (_ msg) (gettext msg %schematic-gettext-domain))

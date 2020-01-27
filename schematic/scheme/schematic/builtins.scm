@@ -19,21 +19,23 @@
 ;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 
 (define-module (schematic builtins)
+  #:use-module (srfi srfi-1)
+
   #:use-module (lepton attrib)
   #:use-module (lepton log)
   #:use-module (lepton object)
   #:use-module (lepton page)
   #:use-module (lepton repl)
   #:use-module (gschem hook)
-  #:use-module (gschem core gettext)
   #:use-module (gschem core builtins)
   #:use-module (gschem gschemdoc)
   #:use-module (gschem selection)
   #:use-module (gschem window)
+
   #:use-module (schematic action)
+  #:use-module (schematic core gettext)
   #:use-module (schematic repl)
-  #:use-module (schematic undo)
-  #:use-module (srfi srfi-1))
+  #:use-module (schematic undo))
 
 
 (define-syntax define-action-public

@@ -11,7 +11,6 @@ nobase_dist_scmdata_DATA = \
 	gschem/action.scm \
 	gschem/attrib.scm \
 	gschem/builtins.scm \
-	gschem/core/gettext.scm \
 	gschem/window.scm \
 	gschem/selection.scm \
 	gschem/deprecated.scm \
@@ -22,6 +21,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/action.scm \
 	schematic/attrib.scm \
 	schematic/builtins.scm \
+	schematic/core/gettext.scm \
 	schematic/gui/keymap.scm \
 	schematic/gui/stroke.scm \
 	schematic/netlist.scm \

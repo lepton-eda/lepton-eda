@@ -1,6 +1,8 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2011-2013 gEDA Contributors
+;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -19,12 +21,13 @@
 
 (define-module (gschem keymap)
   #:use-module (gschem core keymap)
-  #:use-module (gschem core gettext)
   #:use-module (gschem hook)
   #:use-module (ice-9 control)
   #:use-module (ice-9 optargs)
   #:use-module (srfi srfi-1)
-  #:use-module (srfi srfi-9))
+  #:use-module (srfi srfi-9)
+
+  #:use-module (schematic core gettext))
 
 ;; -------------------- Key combinations --------------------
 
