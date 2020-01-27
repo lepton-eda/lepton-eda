@@ -1,0 +1,6 @@
+Makefile
+Makefile.in
+annotate.sh
+bom_xref.sh
+bompp.sh
+*~

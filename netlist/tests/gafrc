@@ -1,0 +1,8 @@
+(source-library "hierarchy-sources")
+(source-library "hierarchy2-sources")
+(source-library "hierarchy3-sources")
+(source-library "hierarchy4-sources")
+(component-library "hierarchy-symbols")
+(component-library "hierarchy2-symbols")
+(component-library "hierarchy3-symbols")
+(component-library "hierarchy4-symbols")

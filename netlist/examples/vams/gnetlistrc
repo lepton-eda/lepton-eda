@@ -1,0 +1,13 @@
+(load "./commonrc")
+
+;; AVH, this is probably needed, since this didn't exist when the vams backend
+;; was originally written
+(hierarchy-traversal "disabled")
+
+;; AVH not really needed
+;; (load (string-append examples-path "/../../scheme/gnet-vams.scm"))
+(display "loaded local gnetlistrc\n")
+
+
+;;       (debug-enable 'debug 'backtrace)
+;;       (read-enable 'positions)

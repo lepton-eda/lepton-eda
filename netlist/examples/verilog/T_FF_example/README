@@ -1,0 +1,31 @@
+Test circuit for T-type Flip flop.
+==================================
+Symbol in sym directory.
+Use verilog backend for generation of netlist.
+Models are in model directory.
+Simulation tested via Icarus Verilog compiler (iverilog).
+
+Please note, directory rip_gmk_example contains an example text file used with gmk_sym
+to create the symbol used with this example (i.e. T_FF). See gmk_sym in contrib directory.
+
+Usage
+=====
+Netlist generation:
+  lepton-netlist -g verilog -o verilog_modules/RIPPLE_COUNT.v sch/verilog_rip_test.sch
+
+Test compilation:
+  iverilog -y verilog_modules/ -o dummy_test.out dummy_test.v
+
+Generating VCD:
+  ./dummy_test.out
+
+Watching the result:
+  gtkwave test.vcd
+
+
+Documentation
+=============
+- http://iverilog.icarus.com/
+- iverilog(1)
+- http://gtkwave.sourceforge.net/
+- gtkwave(1)

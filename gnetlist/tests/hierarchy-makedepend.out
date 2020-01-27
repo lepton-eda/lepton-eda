@@ -1,5 +1,0 @@
-all: hierarchy.cir
-hierarchy.cir: hierarchy.sch middle.cir
-middle.cir: middle.sch bottom.cir
-bottom.cir: bottom.sch rock.cir
-rock.cir: rock.sch

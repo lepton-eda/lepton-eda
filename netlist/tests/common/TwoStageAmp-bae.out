@@ -1,0 +1,39 @@
+LAYOUT board;
+PARTS
+    A1 : unknown;
+    A2 : unknown;
+    A3 : unknown;
+    C1 : unknown;
+    C2 : unknown;
+    CE1 : unknown;
+    CE2 : unknown;
+    Cout : unknown;
+    Q1 : unknown;
+    Q2 : unknown;
+    R1 : unknown;
+    R2 : unknown;
+    R3 : unknown;
+    R4 : unknown;
+    R5 : unknown;
+    R8 : unknown;
+    RC1 : unknown;
+    RC2 : unknown;
+    RE1 : unknown;
+    RE2 : unknown;
+    RL : unknown;
+    VCC : none;
+    Vinput : none;
+CONNECT
+    /'GND'/ CE1.1=CE2.1=R2.1=R4.1=RE1.1=RE2.1=RL.1=VCC.2=Vinput.2;
+    /'VColl2'/ Cout.1=Q2.3=RC2.1;
+    /'Vbase1'/ C1.2=Q1.2=R1.1=R2.2;
+    /'Vbase2'/ C2.2=Q2.2=R3.1=R4.2;
+    /'Vcc'/ R1.2=R3.2=RC1.2=RC2.2=VCC.1;
+    /'Vcoll1'/ Q1.3=R8.1=RC1.1;
+    /'Vem1'/ CE1.2=Q1.1=RE1.2;
+    /'Vem2'/ CE2.2=Q2.1=RE2.2;
+    /'Vin'/ R5.1=Vinput.1;
+    /'Vout'/ Cout.2=RL.2;
+    /'unnamed_net1'/ C1.1=R5.2;
+    /'unnamed_net2'/ C2.1=R8.2;
+END.

@@ -1,0 +1,6 @@
+(define examples-path (getcwd))
+
+(component-library "./sym")
+(source-library "./sch")
+
+(display "\nloaded local commonrc\n")

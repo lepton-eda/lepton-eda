@@ -1,0 +1,9 @@
+;; device name ,name, name location(tl,tc,tr,bl,bc,br),X size in pins,Y
+;;size in pins
+T_FF,T_FF,tl,2,2
+;;
+;; pin name,pin number,shape(line,clock,dot,both(dot&clock)),side(r,l,t,b),pin
+;;position
+cl,clock_,both,L,1
+r,reset_,clock,B,1
+q,q_,line,R,1

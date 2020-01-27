@@ -1,0 +1,6 @@
+# List of translatable files
+
+gnetlist/scheme/gnetlist.scm
+gnetlist/scheme/gnetlist/hierarchy.scm
+gnetlist/scheme/gnetlist/net.scm
+gnetlist/scheme/gnetlist/rename.scm

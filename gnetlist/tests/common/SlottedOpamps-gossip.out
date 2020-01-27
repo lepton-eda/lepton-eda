@@ -1,9 +1,0 @@
-;; Gossip Netlist Created by gNetlist
-
-;; Created By Matt Ettus <matt@ettus.com>
-;; Libraries:
-
-(use-library unknown *)
-(define-block (not found (
-(signals (minusin_slot1_pin_b minusin_slot2_pin6_b minusin_slot3_pin_b minusin_slot4_pin13_b plusin_slot1_pin3_a plusin_slot2_pin5_a plusin_slot3_pin10_a plusin_slot4_pin12_a samenet_output_c))
-   (U1)

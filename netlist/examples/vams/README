@@ -1,0 +1,14 @@
+================================================================
+For a smooth run of the example, type 
+
+	gschem sch/transitest.sch
+
+in the example directory.
+
+Try the hotkeys  g n and g e and look for the comments in the
+terminal window.
+
+NOTE: the schematic is hierachical 
+	(test schematic -> BJT -> diode)
+
+================================================================

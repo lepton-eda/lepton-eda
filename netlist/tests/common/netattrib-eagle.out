@@ -1,0 +1,81 @@
+   ;
+ADD 'F1' unknown@smd-ipc (1 1);
+VALUE 'F1' 'FUSE';
+ADD 'U100' DIP14@smd-ipc (1 1);
+VALUE 'U100' '7400';
+ADD 'U200' DIP14@smd-ipc (1 1);
+VALUE 'U200' '7404';
+ADD 'U300' DIP14@smd-ipc (1 1);
+VALUE 'U300' '7404';
+ADD 'U400' DIP14@smd-ipc (1 1);
+VALUE 'U400' '7400';
+ADD 'U500' DIP14@smd-ipc (1 1);
+VALUE 'U500' '7400';
+SIGNAL '3.3V'
+   'U500' '14'
+;
+SIGNAL '5V'
+   'U500' '14'
+;
+SIGNAL 'DGND'
+   'U400' '2'
+;
+SIGNAL 'DIGITAL_GND'
+   'U500' '10'
+;
+SIGNAL 'VCC'
+   'U100' '14'
+   'U200' '14'
+   'U300' '14'
+   'U400' '14'
+;
+SIGNAL 'XGND'
+   'U200' '7'
+;
+SIGNAL 'NETATTRIB'
+   'U100' '5'
+   'U200' '2'
+;
+SIGNAL 'ONE'
+   'F1' '1'
+   'U100' '3'
+   'U200' '1'
+   'U300' '1'
+;
+SIGNAL 'SIG9'
+   'U100' '7'
+   'U300' '7'
+   'U400' '7'
+   'U500' '7'
+   'U500' '9'
+;
+SIGNAL 'SIGNAL1'
+   'U400' '1'
+   'U500' '1'
+;
+SIGNAL 'SIGNAL3'
+   'U400' '3'
+   'U400' '5'
+;
+SIGNAL 'SIGNAL4'
+   'U400' '4'
+   'U400' '10'
+;
+SIGNAL 'SIGNAL6'
+   'U400' '6'
+   'U400' '9'
+;
+SIGNAL 'SIGNAL8'
+   'U400' '8'
+;
+SIGNAL 'SIGNAL12'
+   'U400' '12'
+;
+SIGNAL 'UNNAMED_NET1'
+   'U300' '2'
+;
+SIGNAL 'UNNAMED_NET4'
+   'U500' '3'
+   'U500' '4'
+   'U500' '5'
+;

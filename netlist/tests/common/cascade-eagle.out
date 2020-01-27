@@ -1,0 +1,44 @@
+   ;
+ADD 'AMP1' none@smd-ipc (1 1);
+VALUE 'AMP1' 'cascade-amp';
+ADD 'AMP2' none@smd-ipc (1 1);
+VALUE 'AMP2' 'cascade-amp';
+ADD 'DEF1' none@smd-ipc (1 1);
+VALUE 'DEF1' 'cascade-defaults';
+ADD 'DEFAULTS' unknown@smd-ipc (1 1);
+VALUE 'DEFAULTS' 'cascade-defaults-top';
+ADD 'FL1' none@smd-ipc (1 1);
+VALUE 'FL1' 'cascade-filter';
+ADD 'MX1' none@smd-ipc (1 1);
+VALUE 'MX1' 'cascade-mixer';
+ADD 'SOURCE' none@smd-ipc (1 1);
+VALUE 'SOURCE' 'cascade-source';
+ADD 'T1' none@smd-ipc (1 1);
+VALUE 'T1' 'cascade-transformer';
+SIGNAL 'GND'
+   'DEFAULTS' '1'
+;
+SIGNAL 'UNNAMED_NET1'
+   'AMP1' '1'
+   'SOURCE' '1'
+;
+SIGNAL 'UNNAMED_NET2'
+   'AMP1' '2'
+   'DEF1' '1'
+;
+SIGNAL 'UNNAMED_NET3'
+   'DEF1' '2'
+   'FL1' '1'
+;
+SIGNAL 'UNNAMED_NET4'
+   'FL1' '2'
+   'MX1' '1'
+;
+SIGNAL 'UNNAMED_NET5'
+   'MX1' '2'
+   'T1' '1'
+;
+SIGNAL 'UNNAMED_NET6'
+   'AMP2' '1'
+   'T1' '2'
+;

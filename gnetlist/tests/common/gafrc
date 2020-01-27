@@ -1,4 +1,0 @@
-(component-library "JD-symbols")
-(component-library "SlottedOpamps-symbols")
-(component-library "TwoStageAmp-symbols")
-(component-library "netattrib-symbols")

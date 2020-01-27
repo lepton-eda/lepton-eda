@@ -1,5 +1,0 @@
-all: hierarchy3.cir
-hierarchy3.cir: hierarchy3-1.sch hierarchy3-2.sch h3-middle.cir diode.cir
-h3-middle.cir: h3-middle.sch h3-bottom.cir
-h3-bottom.cir: h3-bottom-3.sch h3-bottom-1.sch h3-bottom-2.sch h3-rock.cir
-h3-rock.cir: h3-rock.sch

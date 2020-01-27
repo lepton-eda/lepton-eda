@@ -1,7 +1,0 @@
-GND	DEFAULTS-1
-unnamed_net1	AMP1-1 SOURCE-1
-unnamed_net2	AMP1-2 DEF1-1
-unnamed_net3	DEF1-2 FL1-1
-unnamed_net4	FL1-2 MX1-1
-unnamed_net5	MX1-2 T1-1
-unnamed_net6	AMP2-1 T1-2

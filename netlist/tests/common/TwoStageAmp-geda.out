@@ -1,0 +1,57 @@
+START header
+
+gEDA's netlist format
+Created specifically for testing of gnetlist
+
+END header
+
+START components
+
+A1 device=model
+A2 device=include
+A3 device=directive
+C1 device=CAPACITOR
+C2 device=CAPACITOR
+CE1 device=CAPACITOR
+CE2 device=CAPACITOR
+Cout device=CAPACITOR
+Q1 device=NPN_TRANSISTOR
+Q2 device=NPN_TRANSISTOR
+R1 device=RESISTOR
+R2 device=RESISTOR
+R3 device=RESISTOR
+R4 device=RESISTOR
+R5 device=RESISTOR
+R8 device=RESISTOR
+RC1 device=RESISTOR
+RC2 device=RESISTOR
+RE1 device=RESISTOR
+RE2 device=RESISTOR
+RL device=RESISTOR
+VCC device=VOLTAGE_SOURCE
+Vinput device=vsin
+
+END components
+
+START renamed-nets
+
+
+END renamed-nets
+
+START nets
+
+GND : CE1 1, CE2 1, R2 1, R4 1, RE1 1, RE2 1, RL 1, VCC 2, Vinput 2
+VColl2 : Cout 1, Q2 3, RC2 1
+Vbase1 : C1 2, Q1 2, R1 1, R2 2
+Vbase2 : C2 2, Q2 2, R3 1, R4 2
+Vcc : R1 2, R3 2, RC1 2, RC2 2, VCC 1
+Vcoll1 : Q1 3, R8 1, RC1 1
+Vem1 : CE1 2, Q1 1, RE1 2
+Vem2 : CE2 2, Q2 1, RE2 2
+Vin : R5 1, Vinput 1
+Vout : Cout 2, RL 2
+unnamed_net1 : C1 1, R5 2
+unnamed_net2 : C2 1, R8 2
+
+END nets
+

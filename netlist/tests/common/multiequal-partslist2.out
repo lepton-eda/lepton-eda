@@ -1,0 +1,6 @@
+.START
+..refdes	device	value	footprint	quantity
+A1	options	abotol=1e-11	unknown	1
+R1	RESISTOR	20	unknown	1
+V1	VOLTAGE_SOURCE	DC 1V	none	1
+.END

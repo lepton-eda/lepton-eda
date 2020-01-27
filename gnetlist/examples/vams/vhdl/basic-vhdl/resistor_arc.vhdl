@@ -1,5 +1,0 @@
-ARCHITECTURE beh OF resistor IS 
-QUANTITY v ACROSS i THROUGH lt to rt;
-BEGIN
-  v == r * i;
-END ARCHITECTURE beh;

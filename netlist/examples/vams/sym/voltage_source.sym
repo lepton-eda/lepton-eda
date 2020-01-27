@@ -1,0 +1,46 @@
+v 20021103
+P 100 200 300 200 1 0 0
+{
+T 0 450 5 3 0 0 0 0
+pinnumber=LT
+T 0 450 5 3 0 0 0 0
+pinseq=1
+T -100 400 5 3 0 0 0 0
+port_type=electrical
+T -100 300 5 3 0 0 0 0
+port_object=terminal
+}
+P 1000 200 800 200 1 0 0
+{
+T 1000 450 5 3 0 0 0 0
+pinnumber=RT
+T 1000 450 5 3 0 0 0 0
+pinseq=2
+T 900 400 5 3 0 0 0 0
+port_type=electrical
+T 900 300 5 3 0 0 0 0
+port_object=terminal
+}
+V 550 200 200 3 0 0 0 -1 -1 0 0 -1 -1 -1 -1
+{
+T 100 900 5 5 0 0 0 0
+device=VOLTAGE_SOURCE
+}
+L 300 200 350 200 3 0 0 0 -1 -1
+L 750 200 800 200 3 0 0 0 -1 -1
+T 300 800 8 4 0 0 0 0
+refdes=VS
+T 0 600 8 3 0 0 0 0
+k=?100.0
+T 0 700 8 3 0 0 0 0
+period=?0.005
+T 400 700 8 3 0 0 0 0
+width=?0.002
+T 400 600 8 3 0 0 0 0
+offset=?1.2
+T 800 600 8 3 0 0 0 0
+amplitude=?2.0
+T 900 800 8 3 0 0 0 4
+architecture=?sinusodial
+T 400 200 9 7 1 0 0 4
++

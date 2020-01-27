@@ -1,0 +1,15 @@
+% ViPEC RF Netlister
+% Written by Matthew Ettus
+% Based on code by Bas Gieltjes
+CKT
+	error	1 2 	% AMP1
+	error	6 #<unspecified> 	% AMP2
+	error	2 3 	% DEF1
+	error	#<unspecified> 	% DEFAULTS
+	error	3 4 	% FL1
+	error	4 5 	% MX1
+	error	1 	% SOURCE
+	error	5 6 	% T1
+	DEF2P	#<unspecified>  #<unspecified>
+	TERM	50 50
+

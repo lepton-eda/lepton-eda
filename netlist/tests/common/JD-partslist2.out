@@ -1,0 +1,14 @@
+.START
+..refdes	device	value	footprint	quantity
+Cm	CAPACITOR	20p	unknown	1
+Cp	CAPACITOR	20p	unknown	1
+X1	LVD	unknown	unknown	1
+A1	model	unknown	unknown	1
+M1	PMOS_TRANSISTOR	unknown	unknown	1
+Rt	RESISTOR	1k	unknown	1
+Rlp	RESISTOR	1meg	unknown	1
+Rb	RESISTOR	5.6k	unknown	1
+Rlm	RESISTOR	500k	unknown	1
+Vdd	VOLTAGE_SOURCE	DC 3.3V	none	1
+V1	vpulse	pulse 3.3 0 1u 10p 10p 1.25u 2.5u	none	1
+.END

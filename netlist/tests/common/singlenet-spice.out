@@ -1,0 +1,5 @@
+* Spice netlister for gnetlist
+U100.1 SING_N_2 unconnected_pin-1 SING_N_2 ERROR_INVALID_PIN ERROR_INVALID_PIN <No valid value attribute found>
+U100.2 SING_N SING_N SING_N ERROR_INVALID_PIN ERROR_INVALID_PIN <No valid value attribute found>
+U100.3 SING_N SING_N SING_N ERROR_INVALID_PIN ERROR_INVALID_PIN <No valid value attribute found>
+.END

@@ -1,0 +1,47 @@
+v 20100214 2
+C 40000 40000 0 0 0 title-B.sym
+C 48500 45300 1 90 0 resistor-2.sym
+{
+T 48150 45700 5 10 0 0 90 0 1
+device=RESISTOR
+T 48200 45500 5 10 1 1 90 0 1
+refdes=R1
+}
+C 49200 45300 1 90 0 resistor-2.sym
+{
+T 48850 45700 5 10 0 0 90 0 1
+device=RESISTOR
+T 48900 45500 5 10 1 1 90 0 1
+refdes=R2
+}
+C 48300 45000 1 0 0 gnd-1.sym
+C 49000 45000 1 0 0 gnd-1.sym
+N 48400 46200 48400 46400 4
+N 48400 46400 49100 46400 4
+{
+T 48400 46400 5 10 1 1 0 0 1
+netname=bad_net
+}
+N 49100 46400 49100 46200 4
+C 49800 45300 1 90 0 resistor-2.sym
+{
+T 49450 45700 5 10 0 0 90 0 1
+device=RESISTOR
+T 49500 45500 5 10 1 1 90 0 1
+refdes=R3
+}
+C 49600 45000 1 0 0 gnd-1.sym
+C 48200 46400 1 0 0 nc-top-1.sym
+{
+T 48600 46900 5 10 0 0 0 0 1
+value=NoConnection
+T 48600 47100 5 10 0 0 0 0 1
+device=DRC_Directive
+}
+C 49500 46200 1 0 0 nc-top-1.sym
+{
+T 49900 46700 5 10 0 0 0 0 1
+value=NoConnection
+T 49900 46900 5 10 0 0 0 0 1
+device=DRC_Directive
+}

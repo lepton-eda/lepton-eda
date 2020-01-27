@@ -1,0 +1,375 @@
+#!/bin/sh
+
+ref="$1"
+tmp="`echo "$1" | sed -e 's:.*/tests/::' -e 's:\\.out$::' -e 's:\\./::'`"
+stem="`echo "${tmp}" | sed -E -e 's:-spice-.*:@@@:' -e 's:-vams-.*:@@@:' -e 's:(-[^-@]*|@@@)$::'`"
+backend="`echo "${tmp}" | sed -e "s:^${stem}-::"`"
+
+LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton"
+export LIBLEPTON
+
+GNETLIST="${abs_top_builddir}/gnetlist/scheme/lepton-netlist"
+GEDADATA="${abs_top_srcdir}/gnetlist" # HACKHACKHACK
+GEDADATARC="${abs_top_builddir}/gnetlist/lib"
+export GEDADATA
+export GEDADATARC
+
+schematic="${abs_srcdir}/${stem}.sch"
+# Multi-page schematic
+if test "X${stem}" = "Xhierarchy3" ; then
+    schematic="${abs_srcdir}/${stem}-*.sch"
+fi
+
+rundir="run.$$"
+
+# create temporary run directory
+mkdir -p "${rundir}"
+
+# Create the files needed
+if test -d "${srcdir}/${stem}-extras" ; then
+    for f in "${srcdir}/${stem}-extras"/* ; do
+        cp "${f}" "${rundir}/"
+    done
+fi
+
+(echo refdes; echo value; echo device) > "${rundir}/attribs"
+
+cat > "${rundir}/gafrc" << EOF
+;; We want to point at the scheme code that hasn't been installed yet so that
+;; 'make check' during development can work correctly.
+(scheme-directory "${abs_top_srcdir}/gnetlist/scheme")
+(scheme-directory "${abs_top_builddir}/gnetlist/scheme")
+(scheme-directory "${abs_top_srcdir}/liblepton/scheme")
+(scheme-directory "${abs_top_builddir}/liblepton/scheme")
+
+;; We want to use the symbols that haven't been installed yet
+(map (lambda (x)
+       (component-library
+        (string-join (list "${abs_top_srcdir}/symbols/" x) "")))
+     '("io" "74" "analog" "power" "misc" "diode" "linear" "connector" "switch"
+       "asic" "spice" "cascade" "titleblock" "memory"))
+
+;; Rather than checking what m4 and pcb's m4 files do with
+;; the output we produce, just see what output gnetlist produces.
+(define gsch2pcb:pcb-m4-command-line "cat - >>")
+EOF
+
+if test -d "${srcdir}/${stem}-symbols" ; then
+    cat >> "${rundir}/gafrc" << EOF
+(component-library "${abs_srcdir}/${stem}-symbols")
+EOF
+fi
+if test -d "${srcdir}/${stem}-sources" ; then
+    cat >> "${rundir}/gafrc" << EOF
+(source-library "${abs_srcdir}/${stem}-sources")
+EOF
+fi
+
+cmd="\"()\""
+
+args=
+case "${backend}" in
+config_refdes_attribute_order_true)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+refdes-attribute-order=true
+EOF
+    backend=geda
+    ;;
+config_refdes_attribute_order_false)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+refdes-attribute-order=false
+EOF
+    backend=geda
+    ;;
+config_mangle_refdes_attribute_false_1)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-refdes-attribute=false
+refdes-attribute-order=false
+EOF
+    backend=geda
+    ;;
+config_mangle_refdes_attribute_false_2)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-refdes-attribute=false
+refdes-attribute-order=true
+EOF
+    backend=geda
+    ;;
+config_mangle_refdes_attribute_true)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-refdes-attribute=true
+EOF
+    backend=geda
+    ;;
+config_net_attribute_order_true)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+net-attribute-order=true
+EOF
+    backend=geda
+    ;;
+config_net_attribute_order_false)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+net-attribute-order=false
+EOF
+    backend=geda
+    ;;
+config_mangle_net_attribute_false_1)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-net-attribute=false
+net-attribute-order=false
+EOF
+    backend=geda
+    ;;
+config_mangle_net_attribute_false_2)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-net-attribute=false
+net-attribute-order=true
+EOF
+    backend=geda
+    ;;
+# Default net-attribute-separator.
+config_net_attribute_separator_1)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-net-attribute=true
+net-attribute-separator=:
+EOF
+    backend=geda
+    ;;
+config_net_attribute_separator_2)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-net-attribute=false
+net-attribute-separator=:
+EOF
+    backend=geda
+    ;;
+config_netname_attribute_order_true)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+netname-attribute-order=true
+EOF
+    backend=geda
+    ;;
+config_netname_attribute_order_false)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+netname-attribute-order=false
+EOF
+    backend=geda
+    ;;
+config_mangle_netname_attribute_false_1)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-netname-attribute=false
+netname-attribute-order=false
+EOF
+    backend=geda
+    ;;
+config_mangle_netname_attribute_false_2)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-netname-attribute=false
+netname-attribute-order=true
+EOF
+    backend=geda
+    ;;
+# Default netname-attribute-separator.
+config_netname_attribute_separator_1)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-netname-attribute=true
+netname-attribute-separator=:
+EOF
+    backend=geda
+    ;;
+config_netname_attribute_separator_2)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist.hierarchy]
+mangle-netname-attribute=false
+netname-attribute-separator=:
+EOF
+    backend=geda
+    ;;
+config_net_naming_priority_net)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist]
+net-naming-priority=net-attribute
+EOF
+    backend=geda
+    ;;
+config_net_naming_priority_netname)
+    cat >> "${rundir}/geda.conf" << EOF
+[gnetlist]
+net-naming-priority=netname-attribute
+EOF
+    backend=geda
+    ;;
+spice-sdb-nomunge)
+    backend=spice-sdb
+    args="-O nomunge_mode"
+    ;;
+spice-sdb-include)
+    backend=spice-sdb
+    args="-O include_mode"
+    ;;
+spice-sdb-include-nomunge)
+    backend=spice-sdb
+    args="-O include_mode -O nomunge_mode"
+    ;;
+spice-sdb-sort)
+    backend=spice-sdb
+    args="-O sort_mode"
+    ;;
+spice-sdb-sort-nomunge)
+    backend=spice-sdb
+    args="-O sort_mode -O nomunge_mode"
+    ;;
+vams-entity)
+    backend=vams
+    vamsmode=entity
+    cmd="(define generate-mode 2)"
+    ;;
+vams-device)
+    backend=vams
+    vamsmode=device
+    cmd="(define generate-mode 2) (define top-attribs '(refdes=U1 device=7404 footprint=DIP14))"
+    ;;
+postload)
+    (cd "${rundir}" && "${GNETLIST}" -L "${abs_top_srcdir}/liblepton/scheme" \
+                  -L "${abs_top_builddir}/liblepton/scheme" \
+                  -L "${abs_top_srcdir}/symcheck/scheme" \
+                  -L "${abs_top_builddir}/symcheck/scheme" \
+                  -g "geda" \
+                  -o - \
+                  -m "${abs_srcdir}/postload/test-postload.scm" \
+                  ${schematic})
+    if test $? -ne 100 ; then
+        echo "FAILED: Post backend load check failed."
+        exit 1
+    else
+        exit 0
+    fi
+    ;;
+esac
+
+export GUILE_LOAD_PATH="${abs_top_srcdir}/liblepton/scheme:${abs_top_builddir}/liblepton/scheme:${abs_top_srcdir}/symcheck/scheme:${abs_top_builddir}/symcheck/scheme:$GUILE_LOAD_PATH"
+
+# run gnetlist
+echo "${GNETLIST} -c ${cmd} -g ${backend} ${args} ${schematic}"
+(cd "${rundir}" && "${GNETLIST}" -c "${cmd}" \
+                                 -g "${backend}" \
+                                 ${args} ${schematic})
+rc1=$?
+
+echo "${GNETLIST} -c ${cmd} -g ${backend} -o - ${args} ${schematic} > stdout.net"
+(cd "${rundir}" && "${GNETLIST}" -c "${cmd}" \
+                                 -g "${backend}" \
+                                 -o - ${args} ${schematic} > stdout.net)
+rc2=$?
+
+echo "${GNETLIST} -c ${cmd} -g ${backend} -v -o verbose.net ${args} ${schematic}"
+(cd "${rundir}" && "${GNETLIST}" -c "${cmd}" \
+                                 -g "${backend}" \
+                                 -v -o verbose.net ${args} ${schematic})
+rc3=$?
+
+wait
+
+# OK, now check results of run.
+status=99
+
+out="${rundir}/output.net"
+std="${rundir}/stdout.net"
+vrb="${rundir}/verbose.net"
+
+# Hack to help with vams backend
+if test "X${backend}" = "Xvams" ; then
+    case "${vamsmode}" in
+        entity) vhdl="default_entity.vhdl";;
+        device)
+            case "${stem}" in
+                hierarchy) vhdl="7404.vhdl";;
+                hierarchy3) vhdl="7404.vhdl";;
+                common/SlottedOpamps) vhdl="lm324.vhdl";;
+                common/powersupply) vhdl="diode-bridge.vhdl";;
+                *) vhdl="unknown.vhdl";;
+            esac
+            ;;
+        *) vhdl="default_entity_arc.net";;
+    esac
+
+    if [ -f "${rundir}/${vhdl}" ]; then
+        mv "${rundir}/${vhdl}" "${out}"
+        # vams intentionally outputs data into several files, so checking it with
+        # the option '-o verbose.net' is nonsense
+        cp "${out}" "${vrb}"
+    else
+        echo "FAILED: vams: Output file ${rundir}/${vhdl} not found."
+        status=1
+    fi
+fi
+
+if test "X${REGEN}" = "X1" ; then
+    # copy output on top of golden output
+    cp "${out}" "${ref}"
+    echo "Regenerated ${ref}"
+    status=0
+elif test ${rc1} -ne 0 ; then
+    echo "FAILED:  gnetlist -g ${backend} returned ${rc1}"
+    status=1
+elif test ${rc2} -ne 0 ; then
+    echo "FAILED:  gnetlist -g ${backend} -o - returned ${rc2}"
+    status=1
+elif test ${rc3} -ne 0 ; then
+    echo "FAILED:  gnetlist -g ${backend} -v returned ${rc3}"
+    status=1
+else
+    sed '/lepton-netlist -[gcL]/d' "${ref}" > "${out}.tmp1"
+    sed '/lepton-netlist -[gcL]/d' "${out}" > "${out}.tmp2"
+    sed '/lepton-netlist -[gcL]/d' "${std}" > "${out}.tmp3"
+    sed '/lepton-netlist -[gcL]/d' "${vrb}" > "${out}.tmp4"
+
+    # Hack to help with allegro backend
+    # Device files are ignored as yet
+    if test "X${backend}" = "Xallegro" ; then
+        sed '/^\$END$/ q' "${std}" > "${out}.tmp3"
+    fi
+
+    if ! diff "${out}.tmp1" "${out}.tmp2" >/dev/null; then
+        echo "FAILED: Wrong plain output. See diff ${ref} ${out}"
+        echo "--------------------------------8<--------------------------------"
+        diff -u ${ref} ${out}
+        echo "-------------------------------->8--------------------------------"
+        status=1
+    elif ! diff "${out}.tmp1" "${out}.tmp3" >/dev/null; then
+        echo "FAILED: Wrong stdout output. See diff ${ref} ${std}"
+        echo "--------------------------------8<--------------------------------"
+        diff -u ${ref} ${std}
+        echo "-------------------------------->8--------------------------------"
+        status=1
+    elif ! diff "${out}.tmp1" "${out}.tmp4" >/dev/null; then
+        echo "FAILED: Wrong verbose output. See diff ${ref} ${vrb}"
+        echo "--------------------------------8<--------------------------------"
+        diff -u ${ref} ${vrb}
+        echo "-------------------------------->8--------------------------------"
+        status=1
+    else
+        echo "PASS"
+        status=0
+    fi
+fi
+
+# Delete the run directory in prep for the next test
+rm -fr "${rundir}"
+
+exit ${status}

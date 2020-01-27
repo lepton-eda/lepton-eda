@@ -1,0 +1,19 @@
+.START
+..device	value	footprint	quantity	refdes
+CAPACITOR	1pF	unknown	2	CE1 CE2
+CAPACITOR	2.2uF	unknown	3	C1 C2 Cout
+directive	.options TEMP=25	unknown	1	A3
+model	unknown	unknown	1	A1
+NPN_TRANSISTOR	unknown	unknown	2	Q1 Q2
+RESISTOR	1	unknown	1	R8
+RESISTOR	10	unknown	1	R5
+RESISTOR	100	unknown	2	RE1 RE2
+RESISTOR	100K	unknown	1	RL
+RESISTOR	1K	unknown	1	RC2
+RESISTOR	2.8K	unknown	1	R4
+RESISTOR	28K	unknown	2	R1 R3
+RESISTOR	2K	unknown	1	R2
+RESISTOR	3.3K	unknown	1	RC1
+VOLTAGE_SOURCE	DC 15V	none	1	VCC
+vsin	DC 1.6V AC 10MV SIN(0 1MV 1KHZ)	none	1	Vinput
+.END

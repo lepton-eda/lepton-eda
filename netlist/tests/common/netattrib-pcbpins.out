@@ -1,0 +1,52 @@
+# Pin name action command file
+
+# Start of element F1
+ChangePinName(F1, 1, 1)
+ChangePinName(F1, 2, 2)
+
+# Start of element U100
+ChangePinName(U100, 1, A)
+ChangePinName(U100, 2, B)
+ChangePinName(U100, 3, Y)
+ChangePinName(U100, unknown, unknown)
+ChangePinName(U100, unknown, unknown)
+ChangePinName(U100, unknown, unknown)
+
+# Start of element U200
+ChangePinName(U200, 1, A)
+ChangePinName(U200, 2, Y)
+ChangePinName(U200, unknown, unknown)
+ChangePinName(U200, unknown, unknown)
+
+# Start of element U300
+ChangePinName(U300, 1, A)
+ChangePinName(U300, 2, Y)
+ChangePinName(U300, unknown, unknown)
+ChangePinName(U300, unknown, unknown)
+
+# Start of element U400
+ChangePinName(U400, 1, A)
+ChangePinName(U400, 2, B)
+ChangePinName(U400, 3, Y)
+ChangePinName(U400, 4, A)
+ChangePinName(U400, 5, B)
+ChangePinName(U400, 6, Y)
+ChangePinName(U400, unknown, unknown)
+ChangePinName(U400, 8, Y)
+ChangePinName(U400, 9, A)
+ChangePinName(U400, 10, B)
+ChangePinName(U400, unknown, unknown)
+ChangePinName(U400, unknown, unknown)
+
+# Start of element U500
+ChangePinName(U500, 1, A)
+ChangePinName(U500, 2, B)
+ChangePinName(U500, 3, Y)
+ChangePinName(U500, 4, A)
+ChangePinName(U500, 5, B)
+ChangePinName(U500, 6, Y)
+ChangePinName(U500, unknown, unknown)
+ChangePinName(U500, 8, Y)
+ChangePinName(U500, 9, A)
+ChangePinName(U500, 10, B)
+ChangePinName(U500, unknown, unknown)

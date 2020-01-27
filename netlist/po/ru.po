@@ -1,0 +1,422 @@
+# Russian translation for gEDA gnetlist
+# Copyright (c) 2014 gEDA Developers
+# Copyright (c) Vladimir Zhbanov <vzhbanov@gmail.com>, 2014.
+#
+# This file is distributed under the same license as the gEDA gnetlist package.
+#
+# Переводчикам: см. примечания в liblepton/po/ru.po
+msgid ""
+msgstr ""
+"Project-Id-Version: geda gnetlist\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2017-02-26 10:33+0300\n"
+"PO-Revision-Date: 2014-05-20 08:55+0400\n"
+"Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
+"Language-Team: gEDA Developers\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: gnetlist/src/gnetlist.c:170
+#, c-format
+msgid ""
+"This is the MINGW32 port.\n"
+"\n"
+msgstr ""
+"Это версия для MINGW32.\n"
+"\n"
+
+#: gnetlist/src/gnetlist.c:187
+#, fuzzy, c-format
+msgid ""
+"gEDA/gnetlist version %s%s.%s\n"
+"gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
+"details.\n"
+"This is free software, and you are welcome to redistribute it under certain\n"
+"conditions; please see the COPYING file for more details.\n"
+msgstr ""
+"gEDA/gnetlist версии %s%s.%s\n"
+"gEDA/gnetlist поставляется БЕЗ КАКИХ БЫ ТО НИ БЫЛО ГАРАНТИЙ; подробности см. "
+"в файле COPYING.\n"
+"Это свободное программное обеспечение, и его можно распространять при "
+"определённых\n"
+"условиях. Подробности см. в файле COPYING.\n"
+"\n"
+
+#: gnetlist/src/parsecmd.c:67
+#, fuzzy, c-format
+msgid ""
+"Usage: %s [OPTION ...] [-g BACKEND] [--] FILE ...\n"
+"\n"
+"Generate a netlist from one or more gEDA schematic FILEs.\n"
+"\n"
+"General options:\n"
+"  -q              Quiet mode.\n"
+"  -v, --verbose   Verbose mode.\n"
+"  -o FILE         Filename for netlist data output.\n"
+"  -L DIR          Add DIR to Scheme search path.\n"
+"  -g BACKEND      Specify netlist backend to use.\n"
+"  -O STRING       Pass an option string to backend.\n"
+"  -l FILE         Load Scheme file before loading backend.\n"
+"  -m FILE         Load Scheme file after loading backend.\n"
+"  -c EXPR         Evaluate Scheme expression at startup.\n"
+"  -i              Enter interactive Scheme REPL after loading.\n"
+"  --list-backends Print a list of available netlist backends.\n"
+"  -h, --help      Help; this message.\n"
+"  -V, --version   Show version information.\n"
+"  --              Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
+"gEDA/gaf homepage: <http://www.geda-project.org/>\n"
+msgstr ""
+"Использование: %s [КЛЮЧ ...] [-g ДРАЙВЕР] [--] ФАЙЛ ...\n"
+"\n"
+"Создание списка соединений из одного или нескольких ФАЙЛов схем gEDA.\n"
+"\n"
+"Общие ключи:\n"
+"  -q              Без вывода информации.\n"
+"  -v, --verbose   Подробный вывод.\n"
+"  -o ФАЙЛ         Вывести список соединений в ФАЙЛ.\n"
+"  -L КАТАЛОГ      Добавить КАТАЛОГ к пути поиска файлов Scheme.\n"
+"  -g ДРАЙВЕР      Задать драйвер списка соединений.\n"
+"  -O СТРОКА       Задать строку опций для драйвера.\n"
+"  -l ФАЙЛ         Загрузить ФАЙЛ Scheme до загрузки драйвера.\n"
+"  -m ФАЙЛ         Загрузить ФАЙЛ Scheme после загрузки драйвера.\n"
+"  -c ВЫРАЖЕНИЕ    Выполнить выражение Scheme при запуске.\n"
+"  -i              После загрузки войти в интерактивный цикл Scheme (REPL).\n"
+"  --list-backends Вывести список доступных драйверов списков соединений.\n"
+"  -h, --help      Данная справка.\n"
+"  -V, --version   Информация о версии.\n"
+"  --              Считать все последующие аргументы именами файлов.\n"
+"\n"
+"Отчёты об ошибках отправляйте по адресу <https://bugs.launchpad.net/geda>\n"
+"Домашняя страница gEDA/gaf: <http://www.geda-project.org/>\n"
+
+#: gnetlist/src/parsecmd.c:102
+#, c-format
+msgid ""
+"gEDA %s (g%.7s)\n"
+"Copyright (C) 1998-2012 gEDA developers\n"
+"This is free software, and you are welcome to redistribute it under\n"
+"certain conditions. For details, see the file `COPYING', which is\n"
+"included in the gEDA distribution.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
+msgstr ""
+"gEDA %s (g%.7s)\n"
+"Это свободное программное обеспечение, и его можно распространять при\n"
+"определённых условиях. Подробности см. в файле COPYING\n"
+"в дистрибутиве gEDA.\n"
+"Нет НИКАКИХ ГАРАНТИЙ в рамках, допустимых имеющимся\n"
+"законодательством.\n"
+
+#: gnetlist/src/parsecmd.c:116
+#, c-format
+msgid ""
+"\n"
+"Just got an error; tag is\n"
+"        "
+msgstr ""
+"\n"
+"Обнаружена ошибка; имя тега\n"
+"        "
+
+#: gnetlist/src/parsecmd.c:222
+#, c-format
+msgid ""
+"ERROR: -%c option requires an argument.\n"
+"\n"
+msgstr ""
+"ОШИБКА: для опции -%c необходим аргумент.\n"
+"\n"
+
+#: gnetlist/src/parsecmd.c:225
+#, c-format
+msgid ""
+"ERROR: Unknown option -%c.\n"
+"\n"
+msgstr ""
+"ОШИБКА: Неизвестная опция -%c.\n"
+"\n"
+
+#: gnetlist/src/parsecmd.c:227
+#, c-format
+msgid ""
+"ERROR: Unknown option character `\\x%x'.\n"
+"\n"
+msgstr ""
+"ОШИБКА: Неизвестный символ опции «\\x%x».\n"
+"\n"
+
+#: gnetlist/src/parsecmd.c:231
+#, c-format
+msgid ""
+"\n"
+"Run `%s --help' for more information.\n"
+msgstr ""
+"\n"
+"Подробности см. в выводе команды «%s --help».\n"
+
+#: gnetlist/src/s_hierarchy.c:85
+#, fuzzy, c-format
+msgid "Going to traverse source [%1$s]"
+msgstr "Переход к обработке источника данных «%s»\n"
+
+#: gnetlist/src/s_hierarchy.c:104
+#, fuzzy, c-format
+msgid "Failed to load subcircuit '%1$s': %2$s\n"
+msgstr "Не удалось загрузить подсхему «%s»: %s\n"
+
+#: gnetlist/src/s_hierarchy.c:106
+#, fuzzy, c-format
+msgid "ERROR: Failed to load subcircuit '%1$s': %2$s\n"
+msgstr "ОШИБКА: Не удалось загрузить подсхему «%s»: %s\n"
+
+#: gnetlist/src/s_hierarchy.c:206
+#, fuzzy, c-format
+msgid "Found a pin [%1$s] on component [%2$s] which does not have a label!\n"
+msgstr "Найден вывод «%s» компонента «%s» без атрибута «pinlabel»!\n"
+
+#: gnetlist/src/s_hierarchy.c:230
+#, fuzzy, c-format
+msgid ""
+"Missing I/O symbol with refdes [%1$s] inside schematic for symbol [%2$s]\n"
+msgstr ""
+"Отсутствует символ ввода-вывода с позиционным обозначением «%s» в схеме для "
+"символа «%s»\n"
+
+#: gnetlist/src/s_misc.c:54
+#, c-format
+msgid ""
+"\n"
+"DONE\n"
+msgstr ""
+"\n"
+"ЗАВЕРШЕНО\n"
+
+#: gnetlist/src/s_misc.c:56
+#, c-format
+msgid " DONE\n"
+msgstr " ЗАВЕРШЕНО\n"
+
+#: gnetlist/src/s_netattrib.c:72
+#, fuzzy, c-format
+msgid "ERROR: `%1$s' is reserved for internal use."
+msgstr "ОШИБКА: префикс «%s» зарезервирован для внутреннего использования."
+
+#: gnetlist/src/s_netattrib.c:94
+#, c-format
+msgid "Found malformed net attribute\n"
+msgstr "Обнаружен атрибут соединения в недопустимом формате\n"
+
+#: gnetlist/src/s_netattrib.c:150
+#, fuzzy, c-format
+msgid "Found a cpinlist head with a netname! [%1$s]\n"
+msgstr "Найдено начало списка выводов компонента с именем соединения! «%s»\n"
+
+#: gnetlist/src/s_netattrib.c:263 gnetlist/src/s_netattrib.c:294
+#, fuzzy, c-format
+msgid ""
+"Got an invalid net= attrib [net=%1$s]\n"
+"Missing : in net= attrib\n"
+msgstr ""
+"Недопустимый атрибут «net» («net=%s»)\n"
+"В атрибуте «net» отсутствует символ «:»\n"
+
+#: gnetlist/src/s_net.c:120
+#, c-format
+msgid "Missing Attributes (refdes and pin number)\n"
+msgstr "Отсутствуют атрибуты «refdes» и «pinnumber»\n"
+
+#: gnetlist/src/s_net.c:209 gnetlist/src/s_net.c:246
+#, fuzzy, c-format
+msgid "Found duplicate net name, renaming [%1$s] to [%2$s]\n"
+msgstr "Обнаружено ещё одно имя для соединения «%s», переименование в «%s»\n"
+
+#: gnetlist/src/s_net.c:354
+#, fuzzy, c-format
+msgid "s_net_name: incorrect connectivity type %1$i\n"
+msgstr "s_net_name: неверный тип соединения «%i»\n"
+
+#: gnetlist/src/s_net.c:374
+#, c-format
+msgid "Increase number of unnamed nets (s_net.c)\n"
+msgstr "Увеличьте количество безымянных соединений (в s_net.c)\n"
+
+#: gnetlist/src/s_traverse.c:165
+#, fuzzy, c-format
+msgid ""
+"WARNING: Found a placeholder/missing component, are you missing a symbol "
+"file? [%1$s]\n"
+msgstr ""
+"ПРЕДУПРЕЖДЕНИЕ: Найден временный/отсутствующий компонент, может быть нет "
+"файла символа для «%s»?\n"
+
+#: gnetlist/src/s_traverse.c:222
+#, c-format
+msgid ""
+"Could not find refdes on component and could not find any special "
+"attributes!\n"
+msgstr ""
+"Не удалось обнаружить ни позиционное обозначение компонента, ни каких-либо "
+"специальных атрибутов!\n"
+
+#: gnetlist/src/s_traverse.c:312
+msgid "Non-connectable object being queried for connection type\n"
+msgstr "Запрос типа соединения для неприсоединяемого объекта.\n"
+
+#: gnetlist/src/s_traverse.c:348
+#, fuzzy, c-format
+msgid "WARNING: Found label=%1$s. label= is deprecated, please use netname=\n"
+msgstr ""
+"ПРЕДУПРЕЖДЕНИЕ: Найден атрибут «label=%s». Использовать «label» не "
+"рекомендуется, вместо него следует использовать «netname».\n"
+
+#: gnetlist/src/s_traverse.c:398
+#, c-format
+msgid "Found a possible net/pin infinite connection\n"
+msgstr ""
+"Обнаружено возможно бесконечное число подключений для вывода/соединения\n"
+
+#: gnetlist/scheme/gnetlist.scm:127
+#, scheme-format
+msgid ""
+"Possible attribute conflict for refdes: ~A\n"
+"name: ~A\n"
+"values: ~A\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:192
+#, scheme-format
+msgid "Uref ~a: Bad slot number: ~a.\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:235
+msgid "Couldn't wrap string  at requested position\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:266
+#, scheme-format
+msgid "WARNING: Found uref=~A"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:269
+#, fuzzy, scheme-format
+msgid "uref= is deprecated, please use refdes=~A"
+msgstr ""
+"ПРЕДУПРЕЖДЕНИЕ: Найден атрибут «label=%s». Использовать «label» не "
+"рекомендуется, вместо него следует использовать «netname».\n"
+
+#: gnetlist/scheme/gnetlist.scm:310
+msgid "Welcome to Gnetlist REPL!\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:322
+msgid "Could not load module (ice-9 readline).\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:546
+#, scheme-format
+msgid ""
+"There is a net name collision!\n"
+"The net called \"~A\" will be remapped\n"
+"to \"~A\" which is already used\n"
+"by the net called \"~A\".\n"
+"This may be caused by netname attributes colliding with other netnames\n"
+"due to truncation of the name, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:584
+#, scheme-format
+msgid ""
+"There is a refdes name collision!\n"
+"The refdes \"~A\" will be mapped\n"
+"to \"~A\" which is already used\n"
+"by \"~A\".\n"
+"This may be caused by refdes attributes colliding with others\n"
+"due to truncation of the refdes, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#: gnetlist/scheme/gnetlist.scm:750
+#, scheme-format
+msgid "Loading schematic ~S\n"
+msgstr "Загрузка схемы ~S\n"
+
+#: gnetlist/scheme/gnetlist.scm:774
+#, scheme-format
+msgid "Can't open directory ~S.\n"
+msgstr "Не удалось открыть каталог ~S.\n"
+
+#: gnetlist/scheme/gnetlist.scm:778
+msgid ""
+"List of available backends: \n"
+"\n"
+msgstr ""
+"Список доступных драйверов: \n"
+"\n"
+
+#: gnetlist/scheme/gnetlist.scm:791
+#, scheme-format
+msgid ""
+"No schematics files specified for processing.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+"Не заданы файлы схем для обработки.\n"
+"\n"
+"Подробности см. в выводе команды «~A --help».\n"
+
+#: gnetlist/scheme/gnetlist.scm:822
+#, scheme-format
+msgid ""
+"Could not find backend `~A' in load path.\n"
+"\n"
+"Run `~A --list-backends' for a full list of available backends.\n"
+msgstr ""
+"Не удалось найти драйвер «~A» в пути загрузки.\n"
+"\n"
+"Список всех доступных драйверов можно узнать по команде «~A --list-"
+"backends».\n"
+
+#: gnetlist/scheme/gnetlist.scm:850
+msgid "You gave neither backend to execute nor interactive mode!\n"
+msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
+
+#: gnetlist/scheme/gnetlist/rename.scm:68
+#, fuzzy, scheme-format
+msgid ""
+"WARNING: Trying to rename something twice:\n"
+"\t~A and ~A\n"
+"are both a src and dest name\n"
+"This warning is okay if you have multiple levels of hierarchy!\n"
+msgstr ""
+"ПРЕДУПРЕЖДЕНИЕ: Попытка двойного переименования:\n"
+"\t%s и %s\n"
+"оба являются именами источника и назначения\n"
+
+#~ msgid "ERROR: Overwriting a valid rename list.\n"
+#~ msgstr "ОШИБКА: Перезапись действующего списка переименований.\n"
+
+#~ msgid "This warning is okay if you have multiple levels of hierarchy!\n"
+#~ msgstr ""
+#~ "Это предупреждение несущественно, если имеется несколько уровней "
+#~ "иерархии!\n"
+
+#~ msgid "ERROR: Failed to load '%s': %s\n"
+#~ msgstr "ОШИБКА: Не удалось загрузить «%s»: %s\n"
+
+#~ msgid ""
+#~ "You are running gEDA/gaf version [%s%s.%s],\n"
+#~ "but you have a version [%s] gnetlistrc file:\n"
+#~ "[%s]\n"
+#~ "Please be sure that you have the latest rc file.\n"
+#~ msgstr ""
+#~ "Вы работаете с gEDA/gaf версии %s%s.%s,\n"
+#~ "но версия файла gnetlistrc «%s»:\n"
+#~ "%s\n"
+#~ "Удостоверьтесь, что у вас последняя версия файла настроек.\n"
+
+#~ msgid "Invalid refdes ('%s') and pin ('%s') passed to get-nets\n"
+#~ msgstr ""
+#~ "get-nets: недопустимое позиционное обозначение («%s») и вывод («%s»)\n"
