@@ -2,8 +2,8 @@
              (lepton config)
              (lepton legacy-config)
              (lepton page)
-             (gschem window)
-             (schematic hook))
+             (schematic hook)
+             (schematic window))
 
 ;
 ; Start of color section

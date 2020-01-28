@@ -209,6 +209,10 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   util)`.  All the functions and variables available are still
   re-exported in the former one but its using is discouraged.
 
+- The module `(gschem window)` has been renamed to `(schematic
+  window)`.  All the functions and variables available are still
+  re-exported in the former one but its using is discouraged.
+
 - Grips can now be turned on and off at run-time.
   Use the new 'Options → Grips: On/Off' menu item or
   <kbd>O</kbd>-<kbd>I</kbd> keyboard shortcut.

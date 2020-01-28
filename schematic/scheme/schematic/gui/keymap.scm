@@ -1,7 +1,7 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2013 gEDA Contributors
-;;; Copyright (C) 2017-2019 Lepton EDA Contributors
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@
 
 (define-module (schematic gui keymap)
   #:use-module (srfi srfi-1)
-  #:use-module (gschem window)
   #:use-module (schematic action)
   #:use-module (schematic builtins)
   #:use-module (schematic keymap)
+  #:use-module (schematic window)
 
   #:export (%global-keymap
             current-keymap

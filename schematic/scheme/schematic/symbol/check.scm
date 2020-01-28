@@ -19,11 +19,11 @@
 
 (define-module (schematic symbol check)
   #:use-module (srfi srfi-1)
-  #:use-module (gschem window)
   #:use-module (geda core toplevel)
   #:use-module (lepton page)
 
   #:use-module (schematic core gettext)
+  #:use-module (schematic window)
   #:use-module (symbol blame)
   #:use-module ((symbol check) #:prefix sym:))
 

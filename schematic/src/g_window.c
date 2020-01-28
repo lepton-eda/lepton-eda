@@ -1,5 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2015 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -136,7 +138,7 @@ g_current_window ()
 
   if (!(SCM_SMOB_PREDICATE (window_smob_tag, window_s)
         &&  ((void *)SCM_SMOB_DATA (window_s) != NULL))) {
-    scm_misc_error (NULL, _("Found invalid gschem window smob ~S"),
+    scm_misc_error (NULL, _("Found invalid lepton-schematic window smob ~S"),
                     scm_list_1 (window_s));
   }
 
@@ -146,8 +148,9 @@ g_current_window ()
 /*!
  * \brief Get the active page.
  * \par Function Description
- * Returns the page which is active in the current gschem window.  If
- * there is no active page, returns SCM_BOOL_F.
+ * Returns the page which is active in the current
+ * lepton-schematic window.  If there is no active page, returns
+ * SCM_BOOL_F.
  *
  * \note Scheme API: Implements the %active-page procedure in the
  * (gschem core window) module.
@@ -168,8 +171,8 @@ SCM_DEFINE (active_page, "%active-page", 0, 0, 0,
 /*!
  * \brief Set the active page.
  * \par Function Description
- * Sets the page which is active in the current gschem window to \a
- * page_s.
+ * Sets the page which is active in the current lepton-schematic
+ * window to \a page_s.
  *
  * \note Scheme API: Implements the %set-active-page! procedure in the
  * (gschem core window) module.
