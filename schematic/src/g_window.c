@@ -198,7 +198,7 @@ SCM_DEFINE (set_active_page_x, "%set-active-page!", 1, 0, 0,
  *
  * \note Scheme API: Implements the %close-page! procedure in the
  * (schematic core window) module.  Overrides the %close-page! procedure
- * in the (geda core page) module.
+ * in the (lepton core page) module.
  *
  * \param page_s Page to close.
  * \return SCM_UNDEFINED
@@ -309,9 +309,9 @@ init_module_schematic_core_window (void *unused)
                 s_override_close_page_x, s_pointer_position,
                 s_snap_point, NULL);
 
-  /* Override procedures in the (geda core page) module */
+  /* Override procedures in the (lepton core page) module */
   {
-    SCM geda_page_module = scm_c_resolve_module ("geda core page");
+    SCM geda_page_module = scm_c_resolve_module ("lepton core page");
     SCM close_page_proc =
       scm_variable_ref (scm_c_lookup (s_override_close_page_x));
     scm_c_module_define (geda_page_module, "%close-page!", close_page_proc);
@@ -329,7 +329,7 @@ init_module_schematic_core_window (void *unused)
 void
 g_init_window ()
 {
-  /* Register gEDA smob type */
+  /* Register Lepton EDA smob type */
   window_smob_tag = scm_make_smob_type ("gschem-window", 0);
   scm_set_smob_free (window_smob_tag, smob_free);
   scm_set_smob_print (window_smob_tag, smob_print);
