@@ -15,7 +15,7 @@ model_files =
 SUBDIRS = 
 
 EXTRA_DIST = README gafrc ngspice.cmd wiki\
-	$(sch_files) $(sym_files) $(ref_files)
+	$(sch_files) $(sym_files) $(ref_files) $(model_files)
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
 CLEANFILES = core *.log FILE *.ps *~
