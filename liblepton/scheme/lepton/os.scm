@@ -18,13 +18,10 @@
 
 
 (define-module (lepton os)
-
-  ; Import C procedures and variables
-  #:use-module (geda core os)
-
   #:use-module (srfi srfi-1)
-
-  #:use-module (ice-9 regex))
+  #:use-module (ice-9 regex)
+  ;; Import C procedures and variables
+  #:use-module (lepton core os))
 
 (define-public platform %platform)
 
