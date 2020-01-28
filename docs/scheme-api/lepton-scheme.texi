@@ -2237,7 +2237,7 @@ closest grid location to @var{point}.  Expects a point in the form
 @section Key mapping
 
 To use the functions described in this section, you will need to load
-the @code{(gschem keymap)} module.
+the @code{(schematic keymap)} module.
 
 @subsection Key combinations
 
