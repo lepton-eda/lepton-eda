@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2013-2015 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  */
 
 /*! \file g_builtins.c
- * \brief gschem built-in actions
+ * \brief lepton-schematic built-in actions
  */
 
 #include <config.h>
@@ -156,13 +156,13 @@ static struct BuiltinInfo builtins[] = {
   { NULL, 0, 0, 0, NULL }, /* Custodian */
 };
 
-/*! \brief Create the (gschem core builtins) Scheme module.
+/*! \brief Create the (schematic core builtins) Scheme module.
  * \par Function Description
- * Defines procedures in the (gschem core builtins) module. The module can
- * be accessed using (use-modules (gschem core builtins)).
+ * Defines procedures in the (schematic core builtins) module. The module can
+ * be accessed using (use-modules (schematic core builtins)).
  */
 static void
-init_module_gschem_core_builtins (void *unused)
+init_module_schematic_core_builtins (void *unused)
 {
   int i;
 
@@ -176,18 +176,17 @@ init_module_gschem_core_builtins (void *unused)
 }
 
 /*!
- * \brief Initialise gschem built-in actions.
+ * \brief Initialise lepton-schematic built-in actions.
  * \par Function Description
-
- * Registers the Scheme procedures used to access gschem's built-in
- * editing actions implemented in C.  Should only be called by
- * main_prog().
+ * Registers the Scheme procedures used to access
+ * lepton-schematic's built-in editing actions implemented in C.
+ * Should only be called by main_prog().
  */
 void
 g_init_builtins ()
 {
-  /* Define the (gschem core builtins) module */
-  scm_c_define_module ("gschem core builtins",
-                       (void (*)(void*)) init_module_gschem_core_builtins,
+  /* Define the (schematic core builtins) module */
+  scm_c_define_module ("schematic core builtins",
+                       (void (*)(void*)) init_module_schematic_core_builtins,
                        NULL);
 }

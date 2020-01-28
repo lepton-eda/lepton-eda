@@ -26,9 +26,9 @@
   #:use-module (lepton object)
   #:use-module (lepton page)
   #:use-module (lepton repl)
-  #:use-module (gschem core builtins)
 
   #:use-module (schematic action)
+  #:use-module (schematic core builtins)
   #:use-module (schematic core gettext)
   #:use-module (schematic gschemdoc)
   #:use-module (schematic hook)
