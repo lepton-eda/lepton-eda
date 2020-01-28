@@ -1,5 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +27,7 @@ SCM_SYMBOL (object_state_sym, "object-state");
  * Retrieve a list of selected objects on \a page_s.
  *
  * \note Scheme API: Implements the %page-selection procedure in the
- * (gschem core selection) module.
+ * (schematic core selection) module.
  *
  * \param page_s #PAGE smob for the page from which to get the selection.
  * \return a list of #OBJECT smobs.
@@ -57,7 +58,7 @@ SCM_DEFINE (page_selection, "%page-selection", 1, 0, 0,
  * selected, does nothing.
  *
  * \note Scheme API: Implements the %select-object! procedure in the
- * (gschem core selection) module.
+ * (schematic core selection) module.
  *
  * \param obj_s #OBJECT smob for object to be selected.
  * \return obj_s.
@@ -94,7 +95,7 @@ SCM_DEFINE (select_object_x, "%select-object!", 1, 0, 0,
  * does nothing.
  *
  * \note Scheme API: Implements the %deselect-object! procedure in the
- * (gschem core selection) module.
+ * (schematic core selection) module.
  *
  * \param obj_s #OBJECT smob for object to be deselected.
  * \return obj_s.
@@ -130,7 +131,7 @@ SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
  * (i.e. not via inclusion in a component), throws a Scheme error.
  *
  * \note Scheme API: Implements the %object-selected? procedure in the
- * (gschem core selection) module.
+ * (schematic core selection) module.
  *
  * \param obj_s #OBJECT smob to be tested.
  * \return SCM_BOOL_T if \a obj_s is selected, otherwise SCM_BOOL_F.
@@ -154,13 +155,13 @@ SCM_DEFINE (object_selected_p, "%object-selected?", 1, 0, 0,
   return (obj->selected ? SCM_BOOL_T : SCM_BOOL_F);
 }
 
-/*! \brief Create the (gschem core selection) Scheme module
+/*! \brief Create the (schematic core selection) Scheme module
  * \par Function Description
- * Defines procedures in the (gschem core selection) module. The module
- * can be accessed using (use-modules (gschem core selection)).
+ * Defines procedures in the (schematic core selection) module. The module
+ * can be accessed using (use-modules (schematic core selection)).
  */
 static void
-init_module_gschem_core_select (void *unused)
+init_module_schematic_core_select (void *unused)
 {
   /* Register the functions */
   #include "g_select.x"
@@ -178,8 +179,8 @@ init_module_gschem_core_select (void *unused)
 void
 g_init_select ()
 {
-  /* Define the (gschem core selection) module */
-  scm_c_define_module ("gschem core selection",
-                       (void (*)(void*)) init_module_gschem_core_select,
+  /* Define the (schematic core selection) module */
+  scm_c_define_module ("schematic core selection",
+                       (void (*)(void*)) init_module_schematic_core_select,
                        NULL);
 }
