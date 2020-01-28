@@ -1,7 +1,7 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
  * to be embedded.
  *
  * \note Scheme API: Implements the %make-complex procedure in the
- * (geda core complex) module.
+ * (lepton core complex) module.
  *
  * \return a newly-created complex object.
  */
@@ -69,7 +69,7 @@ SCM_DEFINE (make_complex, "%make-complex", 1, 0, 0,
  * SCM_BOOL_F.
  *
  * \note Scheme API: Implements the %make-complex/library procedure in
- * the (geda core complex) module.
+ * the (lepton core complex) module.
  *
  * \param basename component name to search for in the component
  *                 library.
@@ -110,7 +110,7 @@ SCM_DEFINE (make_complex_library, "%make-complex/library", 1, 0, 0,
  * to new values.
  *
  * \note Scheme API: Implements the %set-complex! procedure in the
- * (geda core complex) module.
+ * (lepton core complex) module.
  *
  * \param complex_s the complex object to modify.
  * \param x_s       the new x-coordinate of the complex object.
@@ -183,7 +183,7 @@ SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
  * -# Whether object is locked.
  *
  * \note Scheme API: Implements the %complex-info procedure in the
- * (geda core complex) module.
+ * (lepton core complex) module.
  *
  * \param complex_s the complex object to inspect.
  * \return a list of complex object parameters.
@@ -212,7 +212,7 @@ SCM_DEFINE (complex_info, "%complex-info", 1, 0, 0,
  * Retrieves a list of the primitive objects that make up a complex object.
  *
  * \note Scheme API: Implements the %complex-contents procedure in the
- * (geda core complex) module.
+ * (lepton core complex) module.
  *
  * \param complex_s a complex object.
  * \return a list of primitive objects.
@@ -241,7 +241,7 @@ SCM_DEFINE (complex_contents, "%complex-contents", 1, 0, 0,
  * attached to \a complex_s, does nothing.
  *
  * \note Scheme API: Implements the %complex-append! procedure of the
- * (geda core complex) module.
+ * (lepton core complex) module.
  *
  * \param complex_s complex object to modify.
  * \param obj_s     primitive object to add.
@@ -309,7 +309,7 @@ SCM_DEFINE (complex_append_x, "%complex-append!", 2, 0, 0,
  * Scheme error.  If \a obj_s is unattached, does nothing.
  *
  * \note Scheme API: Implements the %complex-remove! procedure of the
- * (geda core complex) module.
+ * (lepton core complex) module.
  *
  * \param complex_s complex object to modify.
  * \param obj_s     primitive object to remove.
@@ -387,7 +387,7 @@ SCM_DEFINE (complex_remove_x, "%complex-remove!", 2, 0, 0,
  * file's full path.
  *
  * \note Scheme API: Implements the %complex-filename procedure in the
- * (geda core complex) module.
+ * (lepton core complex) module.
  *
  * \param complex_s  a complex object.
  * \return           symbols's file path or #f.
@@ -420,13 +420,13 @@ SCM_DEFINE (complex_filename, "%complex-filename", 1, 0, 0,
 
 
 /*!
- * \brief Create the (geda core complex) Scheme module.
+ * \brief Create the (lepton core complex) Scheme module.
  * \par Function Description
- * Defines procedures in the (geda core complex) module. The module can
- * be accessed using (use-modules (geda core complex)).
+ * Defines procedures in the (lepton core complex) module. The module can
+ * be accessed using (use-modules (lepton core complex)).
  */
 static void
-init_module_geda_core_complex (void *unused)
+init_module_lepton_core_complex (void *unused)
 {
   /* Register the functions and symbols */
   #include "scheme_complex.x"
@@ -444,7 +444,7 @@ init_module_geda_core_complex (void *unused)
 }
 
 /*!
- * \brief Initialise the basic gEDA complex object manipulation procedures.
+ * \brief Initialise the basic Lepton EDA complex object manipulation procedures.
  * \par Function Description
  * Registers some Scheme procedures for working with complex #OBJECT
  * smobs. Should only be called by edascm_init().
@@ -452,8 +452,8 @@ init_module_geda_core_complex (void *unused)
 void
 edascm_init_complex ()
 {
-  /* Define the (geda core object) module */
-  scm_c_define_module ("geda core complex",
-                       (void (*)(void*)) init_module_geda_core_complex,
+  /* Define the (lepton core complex) module */
+  scm_c_define_module ("lepton core complex",
+                       (void (*)(void*)) init_module_lepton_core_complex,
                        NULL);
 }
