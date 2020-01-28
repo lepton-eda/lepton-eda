@@ -21,7 +21,7 @@
 (define-module (schematic window)
 
   ; Import C procedures
-  #:use-module (gschem core window)
+  #:use-module (schematic core window)
 
   #:use-module (lepton page)
   #:re-export (close-page!))
