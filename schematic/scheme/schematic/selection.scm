@@ -21,7 +21,7 @@
 (define-module (schematic selection)
 
   ;; Import C procedures
-  #:use-module (gschem core selection))
+  #:use-module (schematic core selection))
 
 (define-public page-selection %page-selection)
 
