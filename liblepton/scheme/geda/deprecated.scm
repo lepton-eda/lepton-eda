@@ -23,7 +23,7 @@
 
 (define-module (geda deprecated)
  ;; Import C procedures
- #:use-module (geda core deprecated)
+ #:use-module (lepton core deprecated)
  #:use-module (lepton core gettext)
  #:use-module (lepton core rc)
 
