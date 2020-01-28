@@ -30,6 +30,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/netlist.scm \
 	schematic/precompile.scm \
 	schematic/repl.scm \
+	schematic/selection.scm \
 	schematic/undo.scm \
 	conf/schematic/attribs.scm \
 	conf/schematic/deprecated.scm \

@@ -31,12 +31,12 @@
   #:use-module (lepton object)
   #:use-module (lepton page)
 
-  #:use-module (gschem selection)
   #:use-module (gschem window)
 
   #:use-module (schematic attrib)
   #:use-module (schematic core gettext)
-  #:use-module (schematic hook))
+  #:use-module (schematic hook)
+  #:use-module (schematic selection))
 
 ;; add-attribute-to-object object name value visible show
 ;;

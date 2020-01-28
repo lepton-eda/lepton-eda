@@ -2390,7 +2390,7 @@ Recursively searches @var{keymap} for the key sequence bound to
 @section Selections
 
 To use the functions described in this section, you will need to load
-the @code{(gschem selection)} module.
+the @code{(schematic selection)} module.
 
 Each @code{page} in lepton-schematic has a @dfn{selection} associated
 with it, which is some subset of the @code{page}s contents.  Most
