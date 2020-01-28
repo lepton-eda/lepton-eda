@@ -1,6 +1,6 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -130,13 +130,13 @@ edascm_c_with_toplevel (TOPLEVEL *toplevel, SCM (*func)(void *),
 }
 
 /*!
- * \brief Create the (geda core toplevel) Scheme module
+ * \brief Create the (lepton core toplevel) Scheme module
  * \par Function Description
- * Defines procedures in the (geda core toplevel) module. The module
- * can be accessed using (use-modules (geda core toplevel)).
+ * Defines procedures in the (lepton core toplevel) module. The module
+ * can be accessed using (use-modules (lepton core toplevel)).
  */
 static void
-init_module_geda_core_toplevel (void *unused)
+init_module_lepton_core_toplevel (void *unused)
 {
   /* Register the functions */
   #include "scheme_toplevel.x"
@@ -160,8 +160,8 @@ edascm_init_toplevel ()
 {
   scheme_toplevel_fluid = scm_permanent_object (scm_make_fluid ());
 
-  /* Define the (geda core toplevel) module */
-  scm_c_define_module ("geda core toplevel",
-                       (void (*)(void*)) init_module_geda_core_toplevel,
+  /* Define the (lepton core toplevel) module */
+  scm_c_define_module ("lepton core toplevel",
+                       (void (*)(void*)) init_module_lepton_core_toplevel,
                        NULL);
 }

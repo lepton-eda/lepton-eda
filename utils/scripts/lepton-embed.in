@@ -19,7 +19,7 @@ exec @GUILE@ "$0" "$@"
 ( use-modules ( ice-9 getopt-long ) )
 ( use-modules ( ice-9 format ) )
 
-( primitive-eval '(use-modules (geda core toplevel)) )
+( primitive-eval '(use-modules (lepton core toplevel)) )
 ( primitive-eval '(use-modules (lepton object)) )
 ( primitive-eval '(use-modules (lepton page)) )
 ( primitive-eval '(use-modules (lepton version)) )

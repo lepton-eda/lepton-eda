@@ -40,7 +40,7 @@ exec @GUILE@ -s "$0" "$@"
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
                 "liblepton_init")
 
-(primitive-eval '(use-modules (geda core toplevel)
+(primitive-eval '(use-modules (lepton core toplevel)
                               (lepton attrib)
                               (lepton object)
                               (lepton page)
