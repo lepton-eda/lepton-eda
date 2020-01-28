@@ -19,17 +19,14 @@
 ;;
 
 (define-module (lepton object)
+  ;; Optional arguments
+  #:use-module (ice-9 optargs)
+  #:use-module (srfi srfi-1)
 
-  ; Import C procedures
-  #:use-module (geda core smob)
-
+  ;; Import C procedures
   #:use-module (lepton core complex)
   #:use-module (lepton core object)
-
-  ; Optional arguments
-  #:use-module (ice-9 optargs)
-
-  #:use-module (srfi srfi-1))
+  #:use-module (lepton core smob))
 
 (define-public object-type %object-type)
 (define-public object-id %object-id)

@@ -1,6 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library - Scheme API
+/* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2013, 2016 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2016 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +20,11 @@
 
 /*!
  * \file scheme_smob.c
- * \brief Scheme representations of gEDA C structures
+ * \brief Scheme representations of Lepton EDA C structures
  *
- * In order for Scheme code to be able to manipulate libgeda data
+ * In order for Scheme code to be able to manipulate liblepton data
  * structures, it is convenient for it to be able to get handles to
- * several of the different C structures that libgeda uses, in
+ * several of the different C structures that liblepton uses, in
  * particular #TOPLEVEL, #PAGE and #OBJECT.
  *
  * A particular issue is that, in principle, Guile can stash a
@@ -61,8 +62,8 @@
  *
  * \sa weakref.c
  *
- * This file also provides support for a variety of GObject-based gEDA
- * types, including EdaConfig instances.
+ * This file also provides support for a variety of GObject-based
+ * Lepton EDA types, including EdaConfig instances.
  */
 
 #include <config.h>
@@ -209,9 +210,9 @@ smob_cache_contains (void *target)
   return result;
 }
 
-/*! \brief Weak reference notify function for gEDA smobs.
+/*! \brief Weak reference notify function for Lepton EDA smobs.
  * \par Function Description
- * Clears a gEDA smob's pointer when the target object is destroyed.
+ * Clears a Lepton EDA smob's pointer when the target object is destroyed.
  */
 static void
 smob_weakref_notify (void *target, void *smob) {
@@ -220,10 +221,10 @@ smob_weakref_notify (void *target, void *smob) {
   smob_cache_remove (target);
 }
 
-/*! \brief Weak reference notify function for double-length gEDA smobs.
+/*! \brief Weak reference notify function for double-length Lepton EDA smobs.
  * \par Function Description
- * Clears a gEDA smob's second pointer when the target object is
- * destroyed.
+ * Clears a Lepton EDA smob's second pointer when the target
+ * object is destroyed.
  *
  * \see edascm_from_object().
  */
@@ -235,9 +236,9 @@ smob_weakref2_notify (void *target, void *smob) {
   smob_cache_remove (target);
 }
 
-/*! \brief Free a gEDA smob.
+/*! \brief Free a Lepton EDA smob.
  * \par Function Description
- * Finalizes a gEDA smob for deletion, removing the weak reference.
+ * Finalizes a Lepton EDA smob for deletion, removing the weak reference.
  *
  * Used internally to Guile.
  */
@@ -315,11 +316,11 @@ smob_free (SCM smob)
   return 0;
 }
 
-/*! \brief Print a representation of a gEDA smob.
+/*! \brief Print a representation of a Lepton EDA smob.
  * \par Function Description
- * Outputs a string representing the gEDA \a smob to a Scheme output
+ * Outputs a string representing the Lepton EDA \a smob to a Scheme output
  * \a port. The format used is "#<geda-TYPE b7ef65d0>", where TYPE is
- * a string describing the C structure represented by the gEDA smob.
+ * a string describing the C structure represented by the Lepton EDA smob.
  *
  * Used internally to Guile.
  */
@@ -367,9 +368,9 @@ smob_print (SCM smob, SCM port, scm_print_state *pstate)
   return 1;
 }
 
-/*! \brief Check gEDA smobs for equality.
+/*! \brief Check Lepton EDA smobs for equality.
  * \par Function description
- * Returns SCM_BOOL_T if \a obj1 represents the same gEDA structure as
+ * Returns SCM_BOOL_T if \a obj1 represents the same Lepton EDA structure as
  * \a obj2 does. Otherwise, returns SCM_BOOL_F.
  *
  * Used internally to Guile.
@@ -593,7 +594,7 @@ edascm_from_closure (SCM (*func)(SCM, gpointer), gpointer user_data)
   return smob;
 }
 
-/*! \brief Set whether a gEDA object may be garbage collected.
+/*! \brief Set whether a Lepton EDA object may be garbage collected.
  * \ingroup guile_c_iface
  * \par Function Description
  * If \a gc is non-zero, allow the structure represented by \a smob to
@@ -672,8 +673,8 @@ edascm_is_config (SCM smob)
  * If \a page_smob is a #PAGE instance, returns \b SCM_BOOL_T;
  * otherwise returns \b SCM_BOOL_F.
  *
- * \note Scheme API: Implements the %page? procedure in the (geda
- * core smob) module.
+ * \note Scheme API: Implements the %page? procedure in the
+ * (lepton core smob) module.
  *
  * \param [in] page_smob Guile value to test.
  *
@@ -681,7 +682,7 @@ edascm_is_config (SCM smob)
  */
 SCM_DEFINE (page_p, "%page?", 1, 0, 0,
             (SCM page_smob),
-            "Test whether the value is a gEDA PAGE instance.")
+            "Test whether the value is a Lepton EDA PAGE instance.")
 {
   return (EDASCM_PAGEP (page_smob) ? SCM_BOOL_T : SCM_BOOL_F);
 }
@@ -691,8 +692,8 @@ SCM_DEFINE (page_p, "%page?", 1, 0, 0,
  * If \a object_smob is an #OBJECT instance, returns \b SCM_BOOL_T;
  * otherwise returns \b SCM_BOOL_F.
  *
- * \note Scheme API: Implements the %object? procedure in the (geda
- * core smob) module.
+ * \note Scheme API: Implements the %object? procedure in the
+ * (lepton core smob) module.
  *
  * \param [in] object_smob Guile value to test.
  *
@@ -700,7 +701,7 @@ SCM_DEFINE (page_p, "%page?", 1, 0, 0,
  */
 SCM_DEFINE (object_p, "%object?", 1, 0, 0,
             (SCM object_smob),
-            "Test whether the value is a gEDA OBJECT instance.")
+            "Test whether the value is a Lepton EDA OBJECT instance.")
 {
   return (EDASCM_OBJECTP (object_smob) ? SCM_BOOL_T : SCM_BOOL_F);
 }
@@ -710,8 +711,8 @@ SCM_DEFINE (object_p, "%object?", 1, 0, 0,
  * If \a config_smob is a configuration context, returns \b
  * SCM_BOOL_T; otherwise returns \b SCM_BOOL_F.
  *
- * \note Scheme API: Implements the %config? procedure in the (geda
- * core smob) module.
+ * \note Scheme API: Implements the %config? procedure in the
+ * (lepton core smob) module.
  *
  * \param [in] config_smob Guile value to test.
  *
@@ -719,19 +720,19 @@ SCM_DEFINE (object_p, "%object?", 1, 0, 0,
  */
 SCM_DEFINE (config_p, "%config?", 1, 0, 0,
             (SCM config_smob),
-            "Test whether the value is a gEDA configuration context.")
+            "Test whether the value is a Lepton EDA configuration context.")
 {
   return (EDASCM_CONFIGP (config_smob) ? SCM_BOOL_T : SCM_BOOL_F);
 }
 
 /*!
- * \brief Create the (geda core smob) Scheme module.
+ * \brief Create the (lepton core smob) Scheme module.
  * \par Function Description
- * Defines procedures in the (geda core smob) module. The module can
- * be accessed using (use-modules (geda core smob)).
+ * Defines procedures in the (lepton core smob) module. The module can
+ * be accessed using (use-modules (lepton core smob)).
  */
 static void
-init_module_geda_core_smob (void *unused)
+init_module_lepton_core_smob (void *unused)
 {
   /* Register the functions. */
   #include "scheme_smob.x"
@@ -741,13 +742,13 @@ init_module_geda_core_smob (void *unused)
 }
 
 /*!
- * \brief Initialise the basic gEDA smob types.
+ * \brief Initialise the basic Lepton EDA smob types.
  * \par Function Description
- * Registers the gEDA core smob types and some procedures acting on
- * them.  gEDA only uses a single Guile smob, and uses the flags field
- * to multiplex the several different underlying C structures that may
- * be represented by that smob. Should only be called by
- * edascm_init().
+ * Registers the Lepton EDA core smob types and some procedures
+ * acting on them.  Lepton EDA only uses a single Guile smob, and
+ * uses the flags field to multiplex the several different
+ * underlying C structures that may be represented by that
+ * smob. Should only be called by edascm_init().
  */
 void
 edascm_init_smob ()
@@ -755,14 +756,14 @@ edascm_init_smob ()
   /* Initialize smob cache */
   smob_cache_init ();
 
-  /* Register gEDA smob type */
+  /* Register Lepton EDA smob type */
   geda_smob_tag = scm_make_smob_type ("geda", 0);
   scm_set_smob_free (geda_smob_tag, smob_free);
   scm_set_smob_print (geda_smob_tag, smob_print);
   scm_set_smob_equalp (geda_smob_tag, smob_equalp);
 
-  /* Define the (geda core smob) module */
-  scm_c_define_module ("geda core smob",
-                       (void (*)(void*)) init_module_geda_core_smob,
+  /* Define the (lepton core smob) module */
+  scm_c_define_module ("lepton core smob",
+                       (void (*)(void*)) init_module_lepton_core_smob,
                        NULL);
 }

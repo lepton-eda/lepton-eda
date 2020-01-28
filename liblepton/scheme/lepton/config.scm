@@ -21,8 +21,8 @@
   #:use-module (ice-9 optargs) ; for define*-public
 
   ; Import C procedures
-  #:use-module (geda core smob)
-  #:use-module (lepton core config))
+  #:use-module (lepton core config)
+  #:use-module (lepton core smob))
 
 (define-public config? %config?)
 (define-public default-config-context %default-config-context)

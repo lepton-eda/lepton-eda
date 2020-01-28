@@ -19,17 +19,15 @@
 
 
 (define-module (lepton page)
-
-  ;; Import C procedures
-  #:use-module (geda core smob)
-  #:use-module (lepton core page)
-
   #:use-module (ice-9 optargs)
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
                 #:prefix rdelim:)
 
+  ;; Import C procedures
   #:use-module (lepton core gettext)
+  #:use-module (lepton core page)
+  #:use-module (lepton core smob)
 
   #:use-module (lepton os)
 
