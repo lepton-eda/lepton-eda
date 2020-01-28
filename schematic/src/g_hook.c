@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 #include "gschem.h"
 
 SCM_SYMBOL (at_sym, "@");
-SCM_SYMBOL (gschem_sym, "gschem");
+SCM_SYMBOL (schematic_sym, "schematic");
 SCM_SYMBOL (core_sym, "core");
 SCM_SYMBOL (hook_sym, "hook");
 SCM_SYMBOL (run_hook_sym, "run-hook");
@@ -36,17 +36,17 @@ SCM_SYMBOL (list_sym, "list");
 
 /*! \brief Gets a Scheme hook object by name.
  * \par Function Description
- * Returns the contents of variable with the given name in the (gschem
- * core hook).  Used for looking up hook objects.
+ * Returns the contents of variable with the given name in the
+ * (schematic core hook).  Used for looking up hook objects.
  *
  * \param name name of hook to lookup.
- * \return value found in the (gschem core hook) module.
+ * \return value found in the (schematic core hook) module.
  */
 static SCM
 g_get_hook_by_name (const char *name)
 {
   SCM exp = scm_list_3 (at_sym,
-                        scm_list_3 (gschem_sym, core_sym, hook_sym),
+                        scm_list_3 (schematic_sym, core_sym, hook_sym),
                         scm_from_utf8_symbol (name));
   return g_scm_eval_protected (exp, SCM_UNDEFINED);
 }
@@ -172,15 +172,15 @@ g_hook_new_proxy_by_name (const char *name)
   return edascm_hook_proxy_new_with_hook (hook);
 }
 
-/*! \brief Create the (gschem core hook) Scheme module.
+/*! \brief Create the (schematic core hook) Scheme module.
  * \par Function Description
- * Defines some hooks in the (gschem core hook) module.  These hooks
+ * Defines some hooks in the (schematic core hook) module.  These hooks
  * allow Scheme callbacks to be triggered on certain lepton-schematic actions.
  * For a description of the arguments and behaviour of these hooks,
  * please see ../scheme/schematic/hook.scm.
  */
 static void
-init_module_gschem_core_hook (void *unused)
+init_module_schematic_core_hook (void *unused)
 {
 
 #include "g_hook.x"
@@ -212,15 +212,14 @@ init_module_gschem_core_hook (void *unused)
 /*!
  * \brief Initialise the lepton-schematic hooks.
  * \par Function Description
-
- * Registers gschem's Guile hooks for various events.. Should only be
- * called by main_prog().
+ * Registers lepton-schematic's Guile hooks for various
+ * events.. Should only be called by main_prog().
  */
 void
 g_init_hook ()
 {
-  /* Define the (gschem core hook) module */
-  scm_c_define_module ("gschem core hook",
-                       (void (*)(void*)) init_module_gschem_core_hook,
+  /* Define the (schematic core hook) module */
+  scm_c_define_module ("schematic core hook",
+                       (void (*)(void*)) init_module_schematic_core_hook,
                        NULL);
 }
