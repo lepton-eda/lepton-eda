@@ -1,5 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2011-2016 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +21,7 @@
 /*!
  * \file g_attrib.c
  * \brief Scheme API functions for manipulating attributes in
- * gschem-specific ways.
+ * lepton-schematic-specific ways.
  */
 
 #include <config.h>
@@ -41,15 +43,16 @@ SCM_SYMBOL (object_state_sym, "object-state");
  * attribute-formatted string should be shown, and should be one of
  * the symbols "name", "value" or "both".
  *
- * If \a target_s is specified and is a gEDA object, the new attribute
- * will be attached to it. If \a target_s is not in gschem's active
- * page, an "object-state" error will be raised.
+ * If \a target_s is specified and is a gEDA object, the new
+ * attribute will be attached to it. If \a target_s is not in
+ * lepton-schematic's active page, an "object-state" error will be
+ * raised.
  *
  * If \a target_s is #f, the new attribute will be floating in
- * gschem's current active page.
+ * lepton-schematic's current active page.
  *
  * \note Scheme API: Implements the %add-attrib! procedure in the
- * (gschem core attrib) module.
+ * (schematic core attrib) module.
  *
  * \bug This function does not verify that \a name_s is actually a
  * valid attribute name.
@@ -87,7 +90,7 @@ SCM_DEFINE (add_attrib_x, "%add-attrib!", 5, 0, 0,
     if (o_get_page (toplevel, obj) != toplevel->page_current) {
       scm_error (object_state_sym,
                  s_add_attrib_x,
-                 _("Object ~A is not included in the current gschem page."),
+                 _("Object ~A is not included in the current lepton-schematic page."),
                  scm_list_1 (target_s), SCM_EOL);
     }
   }
@@ -133,13 +136,13 @@ SCM_DEFINE (add_attrib_x, "%add-attrib!", 5, 0, 0,
 }
 
 /*!
- * \brief Create the (gschem core attrib) Scheme module.
+ * \brief Create the (schematic core attrib) Scheme module.
  * \par Function Description
- * Defines procedures in the (gschem core attrib) module. The module can
- * be accessed using (use-modules (gschem core attrib)).
+ * Defines procedures in the (schematic core attrib) module. The module can
+ * be accessed using (use-modules (schematic core attrib)).
  */
 static void
-init_module_gschem_core_attrib (void *unused)
+init_module_schematic_core_attrib (void *unused)
 {
   /* Register the functions and symbols */
   #include "g_attrib.x"
@@ -158,8 +161,8 @@ init_module_gschem_core_attrib (void *unused)
 void
 g_init_attrib ()
 {
-  /* Define the (gschem core attrib) module */
-  scm_c_define_module ("gschem core attrib",
-                       (void (*)(void*)) init_module_gschem_core_attrib,
+  /* Define the (schematic core attrib) module */
+  scm_c_define_module ("schematic core attrib",
+                       (void (*)(void*)) init_module_schematic_core_attrib,
                        NULL);
 }

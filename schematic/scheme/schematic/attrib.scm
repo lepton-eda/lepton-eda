@@ -20,7 +20,7 @@
 
 (define-module (schematic attrib)
 
-  #:use-module (gschem core attrib))
+  #:use-module (schematic core attrib))
 
 ;; add-attrib! target name value visible attribute-mode
 ;;
