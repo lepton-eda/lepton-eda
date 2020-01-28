@@ -25,12 +25,12 @@
 ;;; a warning is output that some of those files won't be used.
 
 (define-module (lepton library)
-  #:use-module (geda core gettext)
 
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (ice-9 ftw)
   #:use-module (ice-9 match)
+  #:use-module (lepton core gettext)
   #:use-module (lepton file-system)
   #:use-module (lepton library component)
   #:use-module (lepton log)

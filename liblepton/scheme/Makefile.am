@@ -27,7 +27,7 @@ nobase_dist_scmdata_DATA = \
 	lepton/version.scm \
 	lepton/legacy-config/keylist.scm \
 	lepton/legacy-config.scm
-nobase_scmdata_DATA = geda/core/gettext.scm
+nobase_scmdata_DATA = lepton/core/gettext.scm
 
 check-am: update-cli-tool
 
@@ -76,11 +76,11 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 XFAIL_TESTS = \
 	unit-tests/t0301-promotable-attributes.scm
 
-dist_noinst_DATA = geda/core/gettext.scm.in unit-test.scm $(TESTS)
+dist_noinst_DATA = lepton/core/gettext.scm.in unit-test.scm $(TESTS)
 
-geda/core/gettext.scm: $(srcdir)/geda/core/gettext.scm.in Makefile
+lepton/core/gettext.scm: $(srcdir)/lepton/core/gettext.scm.in Makefile
 	@domain=$(LIBLEPTON_GETTEXT_DOMAIN); \
-	$(MKDIR_P) geda/core; \
+	$(MKDIR_P) lepton/core; \
 	sed -e"s:[@]LIBLEPTON_GETTEXT_DOMAIN@:$$domain:" < $(srcdir)/$@.in > $@.new; \
 	if cmp $@ $@.new > /dev/null 2>&1; then \
 	  rm $@.new; echo "$@ is unchanged"; \
@@ -95,7 +95,5 @@ update-cli-tool:
 
 .PHONY: update-cli-tool
 
-MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ geda/core/gettext.scm unit-tests/dummy.sym unit-tests/dummy.xpm
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~ Makefile.in
+CLEANFILES = lepton/core/gettext.scm unit-tests/dummy.sym unit-tests/dummy.xpm
+MAINTAINERCLEANFILES = Makefile.in

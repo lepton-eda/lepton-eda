@@ -21,7 +21,6 @@
 (define-module (lepton page)
 
   ;; Import C procedures
-  #:use-module (geda core gettext)
   #:use-module (geda core smob)
   #:use-module (geda core page)
 
@@ -29,6 +28,8 @@
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
                 #:prefix rdelim:)
+
+  #:use-module (lepton core gettext)
 
   #:use-module (lepton os)
 
