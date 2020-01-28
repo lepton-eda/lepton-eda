@@ -20,10 +20,10 @@
 
 (define-module (schematic gui keymap)
   #:use-module (srfi srfi-1)
-  #:use-module (gschem keymap)
   #:use-module (gschem window)
   #:use-module (schematic action)
   #:use-module (schematic builtins)
+  #:use-module (schematic keymap)
 
   #:export (%global-keymap
             current-keymap
