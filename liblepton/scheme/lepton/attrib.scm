@@ -23,8 +23,7 @@
 
   ; Import C procedures
   #:use-module (lepton core attrib)
-
-  #:use-module (geda core gettext)
+  #:use-module (lepton core gettext)
 
   #:use-module (lepton object)
   #:use-module (lepton page))

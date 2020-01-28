@@ -21,7 +21,8 @@
 (define-module (lepton repl)
   #:use-module (system repl repl)
   #:use-module (system repl common)
-  #:use-module (geda core gettext)
+
+  #:use-module (lepton core gettext)
   #:use-module ((lepton os) #:select (user-config-dir))
 
   #:export (lepton-repl
