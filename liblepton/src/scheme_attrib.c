@@ -1,6 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library - Scheme API
+/* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2016 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +38,7 @@ SCM_SYMBOL (attribute_format_sym, "attribute-format");
  * <tt>attribute-format</tt> error.
  *
  * \note Scheme API: Implements the %attrib-parse procedure of the
- * (geda core attrib) module.
+ * (lepton core attrib) module.
  *
  * \param text_s text object to attempt to split.
  * \return name/value pair, or SCM_BOOL_F.
@@ -81,7 +82,7 @@ SCM_DEFINE (parse_attrib, "%parse-attrib", 1, 0, 0,
  * <tt>attribute-format</tt> error.
  *
  * \note Scheme API: Implements the %attrib-name procedure of the
- * (geda core attrib) module.
+ * (lepton core attrib) module.
  *
  * \param text_s text object to parse
  * \return name, or SCM_BOOL_F.
@@ -112,7 +113,7 @@ SCM_DEFINE (attrib_name, "%attrib-name", 1, 0, 0,
  * #OBJECT smobs.
  *
  * \note Scheme API: Implements the %object-attribs procedure of the
- * (geda core attrib) module.
+ * (lepton core attrib) module.
  *
  * \param obj_s object to get attributes for.
  * \return a list of #OBJECT smobs.
@@ -135,7 +136,7 @@ SCM_DEFINE (object_attribs, "%object-attribs", 1, 0, 0,
  * attrib_s is not attached as an attribute, returns SCM_BOOL_F.
  *
  * \note Scheme API: Implements the %attrib-attachment procedure of
- * the (geda core attrib) module.
+ * the (lepton core attrib) module.
  *
  * \param attrib_s the object to get attribute attachment for.
  * \return the object to which \a attrib_s is attached, or SCM_BOOL_F.
@@ -175,7 +176,7 @@ SCM_DEFINE (attrib_attachment, "%attrib-attachment", 1, 0, 0,
  * successfully.
  *
  * \note Scheme API: Implements the %attach-attrib! procedure of
- * the (geda core attrib) module.
+ * the (lepton core attrib) module.
  *
  * \param obj_s the object to which to attach an attribute.
  * \param attrib_s the attribute to attach.
@@ -236,7 +237,7 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
  * error.
  *
  * \note Scheme API: Implements the %detach-attrib! procedure of
- * the (geda core attrib) module.
+ * the (lepton core attrib) module.
  *
  * \param obj_s the object from which to detach an attribute.
  * \param attrib_s the attribute to detach.
@@ -303,13 +304,13 @@ SCM_DEFINE (promotable_attribs, "%promotable-attribs", 1, 0, 0,
 
 
 /*!
- * \brief Create the (geda core attrib) Scheme module.
+ * \brief Create the (lepton core attrib) Scheme module.
  * \par Function Description
- * Defines procedures in the (geda core attrib) module. The module can
- * be accessed using (use-modules (geda core attrib)).
+ * Defines procedures in the (lepton core attrib) module. The module can
+ * be accessed using (use-modules (lepton core attrib)).
  */
 static void
-init_module_geda_core_attrib (void *unused)
+init_module_lepton_core_attrib (void *unused)
 {
   /* Register the functions */
   #include "scheme_attrib.x"
@@ -330,8 +331,8 @@ init_module_geda_core_attrib (void *unused)
 void
 edascm_init_attrib ()
 {
-  /* Define the (geda core attrib) module */
-  scm_c_define_module ("geda core attrib",
-                       (void (*)(void*)) init_module_geda_core_attrib,
+  /* Define the (lepton core attrib) module */
+  scm_c_define_module ("lepton core attrib",
+                       (void (*)(void*)) init_module_lepton_core_attrib,
                        NULL);
 }
