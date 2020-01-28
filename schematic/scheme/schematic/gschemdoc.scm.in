@@ -29,7 +29,7 @@
   #:use-module (lepton os)
 
   #:use-module (schematic core gettext)
-  #:use-module (gschem util)
+  #:use-module (schematic util)
 
   #:export (sys-doc-dir)
   #:export (user-doc-dir)
@@ -50,7 +50,7 @@
 
 ; private:
 ;
-; Call (gschem util)::show-uri( url ), catching exceptions.
+; Call (schematic util)::show-uri( url ), catching exceptions.
 ; Display a message box on error.
 ;
 ( define ( doc-show-uri url )
