@@ -2764,7 +2764,7 @@ built-in @strong{Add Attribute} action.
 @subsection Miscellaneous utility functions
 
 To use the functions described in this section, you will need to load
-the @code{(gschem util)} module.
+the @code{(schematic util)} module.
 
 @defun show-uri uri
 Open @var{uri} in the registered default application associated for
