@@ -1,5 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2011-2015 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +31,8 @@
  * Launches the default application associated with \a uri_s on the
  * host platform.  Raises an error on failure.
  *
- * \note Scheme API: Implements the %show-uri procedure in the (gschem
- * core util) module.
+ * \note Scheme API: Implements the %show-uri procedure in the
+ * (schematic core util) module.
  *
  * \sa x_show_uri().
  *
@@ -59,13 +61,13 @@ SCM_DEFINE (show_uri, "%show-uri", 1, 0, 0, (SCM uri_s),
   return SCM_UNDEFINED;
 }
 
-/*! \brief Create the (gschem core util) Scheme module.
+/*! \brief Create the (schematic core util) Scheme module.
  * \par Function Description
- * Defines procedures in the (gschem core util) module. The module can
- * be accessed using (use-modules (gschem core util)).
+ * Defines procedures in the (schematic core util) module. The module can
+ * be accessed using (use-modules (schematic core util)).
  */
 static void
-init_module_gschem_core_util (void *unused)
+init_module_schematic_core_util (void *unused)
 {
   /* Register the functions */
   #include "g_util.x"
@@ -85,8 +87,8 @@ init_module_gschem_core_util (void *unused)
 void
 g_init_util ()
 {
-  /* Define the (gschem core util) module */
-  scm_c_define_module ("gschem core util",
-                       (void (*)(void*)) init_module_gschem_core_util,
+  /* Define the (schematic core util) module */
+  scm_c_define_module ("schematic core util",
+                       (void (*)(void*)) init_module_schematic_core_util,
                        NULL);
 }
