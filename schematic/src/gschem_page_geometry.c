@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -344,8 +345,12 @@ gschem_page_geometry_new_with_values (int screen_width,
 {
   GschemPageGeometry *geometry = g_new0 (GschemPageGeometry, 1);
 
+  double val1 = fabs ((double)(viewport_right - viewport_left) / screen_width);
+  double val2 = fabs ((double)(viewport_top - viewport_bottom) / screen_height);
+  double scale = MAX (val1, val2);
+
   gschem_page_geometry_set_values (geometry,
-                                   MAX (abs ((double)(viewport_right - viewport_left) / screen_width), (abs ((double)(viewport_top - viewport_bottom) / screen_height))),
+                                   scale,
                                    screen_width,
                                    screen_height,
                                    viewport_left,
@@ -569,7 +574,8 @@ gschem_page_geometry_set_screen_width (GschemPageGeometry *geometry, int screen_
 
 /*! \brief Get page geometry for this view
  *
- *  \param [in] view The view
+ *  \param [in] view   The view
+ *  \param [in] scale  This parameter is currently unused
  *  \return The page for the view
  */
 void

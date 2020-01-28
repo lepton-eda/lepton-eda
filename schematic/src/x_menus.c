@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,45 +28,50 @@
 
 #include <glib/gstdio.h>
 
-struct PopupEntry {
-  #ifdef __cplusplus
-  const gchar *name, *action, *stock_id;
-  #else
-  const gchar const *name, *action, *stock_id;
-  #endif
+#define DEFAULT_MAX_RECENT_FILES 10
+#define RECENT_MENU_ITEM_NAME "Open Recen_t"
+
+struct PopupEntry
+{
+  const gchar* name;
+  const gchar* action;
+  const gchar* stock_id;
 };
 
-static struct PopupEntry popup_items[] = {
-  { N_("Add Net"), "add-net", "insert-net" },
-  { N_("Add Attribute"), "add-attribute", "insert-attribute" },
-  { N_("Add Component"), "add-component", "insert-symbol" },
-  { N_("Add Bus"), "add-bus", "insert-bus" },
-  { N_("Add Text"), "add-text", "insert-text" },
+static struct PopupEntry popup_items[] =
+{
+  { N_("Add Co_mponent..."), "&add-component", "insert-symbol" },
+  { N_("Add Te_xt..."),      "&add-text",      "insert-text" },
+  { N_("Add _Attribute..."), "&add-attribute", "insert-attribute" },
   { "SEPARATOR", NULL, NULL },
-  { N_("Zoom In"), "view-zoom-in", "gtk-zoom-in" },
-  { N_("Zoom Out"), "view-zoom-out", "gtk-zoom-out" },
-  { N_("Zoom Box"), "view-zoom-box", NULL },
-  { N_("Zoom Extents"), "view-zoom-extents", "gtk-zoom-fit" },
+  { N_("Add _Net"), "&add-net", "insert-net" },
+  { N_("Add _Bus"), "&add-bus", "insert-bus" },
   { "SEPARATOR", NULL, NULL },
-  { N_("Select"), "edit-select", "select" },
-  { N_("Edit..."), "edit-edit", NULL },
-  { N_("Edit Pin Type..."), "edit-pin-type", NULL },
-  { N_("Copy"), "edit-copy", "clone" },
-  { N_("Move"), "edit-move", NULL },
-  { N_("Delete"), "edit-delete", "gtk-delete" },
+  { N_("Cu_t"),    "&clipboard-cut",   "gtk-cut" },
+  { N_("_Copy"),   "&clipboard-copy",  "gtk-copy" },
+  { N_("_Paste"),  "&clipboard-paste", "gtk-paste" },
+  { N_("_Delete"), "&edit-delete",     "gtk-delete" },
   { "SEPARATOR", NULL, NULL },
-  { N_("Down Schematic"), "hierarchy-down-schematic", "gtk-go-down" },
-  { N_("Down Symbol"), "hierarchy-down-symbol", "gtk-go-bottom" },
-  { N_("Up"), "hierarchy-up", "gtk-go-up" },
+  { N_("_Edit..."),              "&edit-edit",              NULL },
+  { N_("Ed_it Text..."),         "&edit-text",              "gtk-edit" },
+  { N_("_Object Properties..."), "&edit-object-properties", "gtk-properties" },
+  { "SEPARATOR", NULL, NULL },
+  { N_("Hierarchy: Down _Schematic"), "&hierarchy-down-schematic", "gtk-go-down" },
+  { N_("Hierarchy: Down S_ymbol"),    "&hierarchy-down-symbol",    "gtk-goto-bottom" },
+  { N_("Hierarchy: _Up"),             "&hierarchy-up",             "gtk-go-up" },
 
   { NULL, NULL, NULL }, /* Guard */
 };
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+
+static void
+x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
+                                    GtkWidget*      menuitem);
+
+
+
+/*! \brief Callback function for menu items. Execute action \a action.
  */
 static void g_menu_execute(GtkAction *action, gpointer user_data)
 {
@@ -74,15 +80,21 @@ static void g_menu_execute(GtkAction *action, gpointer user_data)
   g_action_eval_by_name (w_current, action_name);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+
+
+/*! \brief Create and return the main menu widget.
  *
+*  \par Function Description
+ *  The key/value data (see g_object_set_data()/g_object_get_data())
+ *  associated with the menu widget created by this function:
+ *  - key:   action name, string, e.g. "&edit-object-properties"
+ *  - value: pointer to a corresponding GschemAction object
+ *
+ *  \todo Refactor
  */
-GtkWidget *
-get_main_menu(GschemToplevel *w_current)
+GtkWidget*
+get_main_menu (GschemToplevel* w_current)
 {
-  char *buf;
   GschemAction *action;
   GtkWidget *menu_item;
   GtkWidget *root_menu;
@@ -128,10 +140,28 @@ get_main_menu(GschemToplevel *w_current)
     gtk_widget_show(menu_item);
 
     scm_items_len = (int) scm_ilength (scm_items);
-    for (j = 0 ; j < scm_items_len; j++) {
 
+
+    /* cycle through menu items:
+    */
+    for (j = 0 ; j < scm_items_len; j++)
+    {
       scm_index = scm_from_int (j);
+
+      /* menu item:
+      */
       scm_item = scm_list_ref (scm_items, scm_index);
+
+      /* check if [scm_item] is valid, it must be a
+       * ( list TEXT ACTION ICON ):
+      */
+      if ( scm_is_false (scm_list_p (scm_item)) )
+        continue;
+
+      if ( scm_to_int (scm_length (scm_item)) != 3 )
+        continue;
+
+
       scm_item_name = SCM_CAR (scm_item);
       scm_item_func = SCM_CADR (scm_item);
       scm_item_stock = scm_is_pair (SCM_CDDR (scm_item)) ?
@@ -199,6 +229,9 @@ get_main_menu(GschemToplevel *w_current)
           }
 
 
+          g_object_set_data (G_OBJECT (menu_bar), action_name, action);
+
+
           free(action_name);
           free(menu_item_stock);
 
@@ -206,40 +239,55 @@ get_main_menu(GschemToplevel *w_current)
           g_signal_connect (G_OBJECT(action), "activate",
                             G_CALLBACK(g_menu_execute),
                             w_current);
-        }
+
+        } /* scm_item_func == TRUE */
 
         gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
-      }
+
+      } /* !separator */
 
       gtk_widget_show (menu_item);
 
-      /* add a handle to the menu_bar object to get access to widget objects */
-      /* This string should NOT be internationalized */
-      buf = g_strdup_printf("%s/%s", *raw_menu_name, raw_menu_item_name);
-      g_object_set_data (G_OBJECT (menu_bar), buf, menu_item);
-      g_free(buf);
+
+      if (strcmp (raw_menu_item_name, RECENT_MENU_ITEM_NAME) == 0)
+      {
+        x_menu_attach_recent_files_submenu (w_current, menu_item);
+      }
+
 
       scm_dynwind_end();
-    }
+
+    } /* for j: menu items */
     
     menu_name = (char *) gettext(*raw_menu_name);
     root_menu = gtk_menu_item_new_with_mnemonic (menu_name);
     /* do not free *raw_menu_name */
 
-    /* no longer right justify the help menu since that has gone out of style */
-
     gtk_widget_show (root_menu);
     gtk_menu_item_set_submenu (GTK_MENU_ITEM (root_menu), menu);
     gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), root_menu);
-  }
+
+  } /* fot i: menus (File, Edit, ...) */
+
   scm_dynwind_end ();
 
   g_free(raw_menu_name);
   return menu_bar;
-}
 
-GtkWidget *
-get_main_popup (GschemToplevel *w_current)
+} /* get_main_menu() */
+
+
+
+/*! \brief Create and return the popup menu widget.
+ *
+ *  \par Function Description
+ *  The key/value data (see g_object_set_data()/g_object_get_data())
+ *  associated with the menu widget created by this function:
+ *  - key:   action name, string, e.g. "&edit-object-properties"
+ *  - value: pointer to a corresponding GschemAction object
+ */
+GtkWidget*
+get_main_popup (GschemToplevel* w_current)
 {
   GschemAction *action;
   GtkWidget *menu_item;
@@ -281,18 +329,13 @@ get_main_popup (GschemToplevel *w_current)
     menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 
-    /* Add a handle to the menu object to get access to widget
-       objects. Horrible horrible hack, but it's the same approach as
-       taken for the main menu bar. :-( */
-    g_object_set_data (G_OBJECT (menu), e.name, menu_item);
+    g_object_set_data (G_OBJECT (menu), e.action, action);
   }
 
   return menu;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Show the popup menu.
  *
  *  \note
  *  need to look at this... here and the setup
@@ -308,62 +351,39 @@ gint do_popup (GschemToplevel *w_current, GdkEventButton *event)
   return FALSE;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Enable/disable menu item linked to the action \a action_name.
  *
- */
-void x_menus_sensitivity (GschemToplevel *w_current, const char *buf, int flag)
-{
-  GtkWidget* item=NULL;
-  
-  if (!buf) {
-    return;
-  }
-
-  if (!w_current->menubar) {
-    return;
-  }
-  
-  item = (GtkWidget *) g_object_get_data (G_OBJECT (w_current->menubar), buf);
-
-  if (item) {
-    gtk_widget_set_sensitive(GTK_WIDGET(item), flag);
-    /* free(item); */ /* Why doesn't this need to be freed?  */
-  } else {
-    g_debug(_("Tried to set the sensitivity on non-existent menu item '%1$s'"), buf);
-  }
- 
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
  *  \par Function Description
- *  This function sets the sensitivity of the items in the right button
- *  popup.
+ *  Use the key/value data associated with the \a menu to find
+ *  an action object, and if found, set its sensitivity (\a sensitive).
+ *
+ *  \param menu         Menu widget (menubar, popup_menu in st_gschem_toplevel)
+ *  \param action_name  Action name (e.g. "&edit-object-properties")
+ *  \param sensitive    Boolean, enable or disable the action
  */
-void x_menus_popup_sensitivity (GschemToplevel *w_current, const char *buf, int flag)
+void
+x_menus_sensitivity (GtkWidget*   menu,
+                     const gchar* action_name,
+                     gboolean     sensitive)
 {
-  GtkWidget *item;
+  GObject* obj = G_OBJECT (menu);
+  gpointer data = g_object_get_data (obj, action_name);
 
-  g_assert (w_current);
-  g_assert (buf);
-  g_assert (w_current->popup_menu);
-
-  item = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->popup_menu), buf));
-
-  if (item) {
-    gtk_widget_set_sensitive (item, flag);
-  } else {
-    g_critical (_("Tried to set the sensitivity on non-existent menu item '%s'\n"),
-                buf);
+  GschemAction* action = (GschemAction*) data;
+  if (action != NULL)
+  {
+    gtk_action_set_sensitive (GTK_ACTION (action), sensitive);
+  }
+  else
+  {
+    g_debug(_("x_menus_sensitivity(): cannot find action [%s]"), action_name);
   }
 }
 
-#define MAX_RECENT_FILES 10
 /*! \brief Callback for recent-chooser.
  *
- * Will be called if element of recent-file-list is activated
+ *  \par Function Description
+ *  Will be called if element of recent-file-list is activated
  */
 void
 recent_chooser_item_activated (GtkRecentChooser *chooser, GschemToplevel *w_current)
@@ -384,14 +404,14 @@ recent_chooser_item_activated (GtkRecentChooser *chooser, GschemToplevel *w_curr
   g_free(filename);
 }
 
-/*! \brief Attach a submenu with filenames to the 'Open Recent'
- *         menu item.
- *
- *  Called from x_window_setup().
+
+
+/*! \brief Attach 'Open Recent' submenu to \a menuitem.
  */
-void x_menu_attach_recent_files_submenu(GschemToplevel *w_current)
+static void
+x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
+                                    GtkWidget*      menuitem)
 {
-  GtkWidget* menuitem_to_append_to = NULL;
   GtkRecentFilter *recent_filter;
   GtkWidget *menuitem_file_recent_items;
 
@@ -402,8 +422,8 @@ void x_menu_attach_recent_files_submenu(GschemToplevel *w_current)
 
   /* Show only schematic- and symbol-files (*.sch and *.sym) in list */
   recent_filter = gtk_recent_filter_new();
-  gtk_recent_filter_add_mime_type(recent_filter, "application/x-geda-schematic");
-  gtk_recent_filter_add_mime_type(recent_filter, "application/x-geda-symbol");
+  gtk_recent_filter_add_mime_type(recent_filter, "application/x-lepton-schematic");
+  gtk_recent_filter_add_mime_type(recent_filter, "application/x-lepton-symbol");
   gtk_recent_filter_add_pattern(recent_filter, "*.sch");
   gtk_recent_filter_add_pattern(recent_filter, "*.sym");
   gtk_recent_chooser_add_filter(GTK_RECENT_CHOOSER(menuitem_file_recent_items), recent_filter);
@@ -411,15 +431,36 @@ void x_menu_attach_recent_files_submenu(GschemToplevel *w_current)
   gtk_recent_chooser_set_show_tips(GTK_RECENT_CHOOSER(menuitem_file_recent_items), TRUE);
   gtk_recent_chooser_set_sort_type(GTK_RECENT_CHOOSER(menuitem_file_recent_items),
                                    GTK_RECENT_SORT_MRU);
-  gtk_recent_chooser_set_limit(GTK_RECENT_CHOOSER(menuitem_file_recent_items), MAX_RECENT_FILES);
+
+  /* read configuration: maximum number of recent files: */
+  gchar* cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  gint max_items = DEFAULT_MAX_RECENT_FILES;
+
+  if (cfg != NULL)
+  {
+    GError* err = NULL;
+    gint val = eda_config_get_int (cfg, "schematic.gui", "max-recent-files", &err);
+
+    if (err == NULL && val > 0)
+    {
+      max_items = val;
+    }
+
+    g_clear_error (&err);
+  }
+
+  gtk_recent_chooser_set_limit(GTK_RECENT_CHOOSER(menuitem_file_recent_items), max_items);
+
   gtk_recent_chooser_set_local_only(GTK_RECENT_CHOOSER(menuitem_file_recent_items), FALSE);
   gtk_recent_chooser_menu_set_show_numbers(GTK_RECENT_CHOOSER_MENU(menuitem_file_recent_items), TRUE);
   g_signal_connect(GTK_OBJECT(menuitem_file_recent_items), "item-activated",
                    G_CALLBACK(recent_chooser_item_activated), w_current);
 
-  menuitem_to_append_to = (GtkWidget *) g_object_get_data (G_OBJECT (w_current->menubar),
-                                                           "_File/Open Recen_t");
-  if(menuitem_to_append_to == NULL)
+  if (menuitem == NULL)
     return;
-  gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem_to_append_to), menuitem_file_recent_items);
+
+  gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem), menuitem_file_recent_items);
 }

@@ -1,6 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library - Scheme API
+/* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2011-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -718,6 +719,166 @@ SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
 
   return obj_s;
 }
+
+
+
+/*! \brief Check whether an object is locked.
+ *
+ * \par Function Description
+ * Check the state of an object's selectable flag: if it's true, the
+ * object is considered to be unlocked, otherwise it is locked.
+ *
+ * \note Scheme API: Implements the %object-selectable? procedure in the
+ * (geda core object) module.
+ *
+ * \param obj_s  #OBJECT smob to inspect.
+ *
+ * \return       Boolean value indicating whether \a obj_s is selectable.
+ */
+SCM_DEFINE (object_selectable_p, "%object-selectable?", 1, 0, 0,
+            (SCM obj_s), "Check whether an object is locked.")
+{
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
+              SCM_ARG1, s_object_selectable_p);
+
+  OBJECT* obj = edascm_to_object (obj_s);
+
+  return scm_from_bool (obj->selectable);
+
+} /* object_selectable_p() */
+
+
+
+/*! \brief Lock or unlock an object.
+ *
+ * \par Function Description
+ * Set object's selectable flag: locked objects cannot be selected.
+ *
+ * \note Scheme API: Implements the %set-object-selectable! procedure in
+ * the (geda core object) module.
+ *
+ * \param obj_s         #OBJECT smob to modify.
+ * \param selectable_s  boolean: object's selectable flag.
+ *
+ * \return          the object (\a obj_s).
+ */
+SCM_DEFINE (set_object_selectable_x, "%set-object-selectable!", 2, 0, 0,
+            (SCM obj_s, SCM selectable_s), "Lock or unlock an object.")
+{
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
+              SCM_ARG1, s_set_object_selectable_x);
+  SCM_ASSERT (scm_is_bool (selectable_s), selectable_s,
+              SCM_ARG2, s_set_object_selectable_x);
+
+  OBJECT* obj = edascm_to_object (obj_s);
+
+  int selectable = scm_is_true (selectable_s);
+
+  if (obj->selectable != selectable)
+  {
+    obj->selectable = selectable;
+
+    /* mark the page as changed:
+    */
+    TOPLEVEL* toplevel = edascm_c_current_toplevel();
+    o_page_changed (toplevel, obj);
+  }
+
+  return obj_s;
+
+} /* set_object_selectable_x() */
+
+
+
+/*! \brief Check whether an object is embedded.
+ *
+ * \note Scheme API: Implements the %object-embedded? procedure in the
+ * (geda core object) module.
+ *
+ * \param obj_s  #OBJECT smob to inspect.
+ *
+ * \return       Boolean value indicating whether \a obj_s is embedded.
+ */
+SCM_DEFINE (object_embedded_p, "%object-embedded?", 1, 0, 0,
+            (SCM obj_s), "Check whether an object is embedded.")
+{
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
+              SCM_ARG1, s_object_embedded_p);
+
+  OBJECT*  obj = edascm_to_object (obj_s);
+  gboolean ret = FALSE;
+
+  if (obj->type == OBJ_COMPLEX)
+  {
+    ret = o_complex_is_embedded (obj);
+  }
+  else
+  if (obj->type == OBJ_PICTURE)
+  {
+    ret = o_picture_is_embedded (obj);
+  }
+
+  return scm_from_bool (ret);
+
+} /* object_embedded_p() */
+
+
+
+/*! \brief Embed or unembed an object.
+ *
+ * \par Function Description
+ * Embeds (or unembeds) component or picture.
+ * If either the object \a obj_s is already embedded and \a embed_s is #t,
+ * or \a obj_s is not embedded and \a embed_s is #f,
+ * or \a obj_s is not a component or picture, does nothing.
+ *
+ * \note Scheme API: Implements the %set-object-embedded! procedure in
+ * the (geda core object) module.
+ *
+ * \param obj_s    #OBJECT smob to modify.
+ * \param embed_s  boolean: whether to embed (#t) or unembed (#f) the object.
+ *
+ * \return         the object (\a obj_s).
+ */
+SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
+            (SCM obj_s, SCM embed_s), "Embed or unembed an object.")
+{
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
+              SCM_ARG1, s_set_object_embedded_x);
+  SCM_ASSERT (scm_is_bool (embed_s), embed_s,
+              SCM_ARG2, s_set_object_embedded_x);
+
+  OBJECT* obj   = edascm_to_object (obj_s);
+  int     embed = scm_is_true (embed_s);
+
+  gboolean component  = obj->type == OBJ_COMPLEX;
+  gboolean picture    = obj->type == OBJ_PICTURE;
+  gboolean embeddable = component || picture;
+
+  if (embeddable)
+  {
+    TOPLEVEL* toplevel = edascm_c_current_toplevel();
+    gboolean  embedded = component ? o_complex_is_embedded (obj)
+                                   : o_picture_is_embedded (obj);
+
+    if (embed && !embedded)
+    {
+      o_embed (toplevel, obj);
+      o_page_changed (toplevel, obj);
+    }
+    else
+    if (!embed && embedded)
+    {
+      o_unembed (toplevel, obj);
+      o_page_changed (toplevel, obj);
+    }
+  }
+
+  return obj_s;
+
+} /* set_object_embedded_x() */
+
+
 
 /*! \brief Create a new line.
  * \par Function Description
@@ -2244,24 +2405,52 @@ init_module_geda_core_object (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_object_id,
-                s_object_type, s_copy_object, s_object_bounds,
-                s_object_stroke, s_set_object_stroke_x,
-                s_object_fill, s_set_object_fill_x,
-                s_object_color, s_set_object_color_x,
-                s_make_line, s_make_net, s_make_bus,
-                s_make_pin, s_pin_type,
-                s_set_line_x, s_line_info,
-                s_make_box, s_set_box_x, s_box_info,
-                s_make_circle, s_set_circle_x, s_circle_info,
-                s_make_arc, s_set_arc_x, s_arc_info,
-                s_make_text, s_set_text_x, s_text_info,
-                s_object_connections, s_object_complex,
-                s_make_path, s_path_length, s_path_ref,
-                s_path_remove_x, s_path_insert_x,
-                s_make_picture, s_picture_info, s_set_picture_x,
+                s_object_type,
+                s_copy_object,
+                s_object_bounds,
+                s_object_stroke,
+                s_set_object_stroke_x,
+                s_object_fill,
+                s_set_object_fill_x,
+                s_object_color,
+                s_set_object_color_x,
+                s_make_line,
+                s_make_net,
+                s_make_bus,
+                s_make_pin,
+                s_pin_type,
+                s_set_line_x,
+                s_line_info,
+                s_make_box,
+                s_set_box_x,
+                s_box_info,
+                s_make_circle,
+                s_set_circle_x,
+                s_circle_info,
+                s_make_arc,
+                s_set_arc_x,
+                s_arc_info,
+                s_make_text,
+                s_set_text_x,
+                s_text_info,
+                s_object_connections,
+                s_object_complex,
+                s_make_path,
+                s_path_length,
+                s_path_ref,
+                s_path_remove_x,
+                s_path_insert_x,
+                s_make_picture,
+                s_picture_info,
+                s_set_picture_x,
                 s_set_picture_data_vector_x,
-                s_translate_object_x, s_rotate_object_x,
+                s_translate_object_x,
+                s_rotate_object_x,
                 s_mirror_object_x,
+                s_object_selectable_p,
+                s_set_object_selectable_x,
+                s_object_embedded_p,
+                s_set_object_embedded_x,
                 NULL);
 }
 

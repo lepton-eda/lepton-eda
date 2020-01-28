@@ -3,13 +3,11 @@ USE ieee.math_real.all;
 USE ieee.math_real.all;
 USE work.electrical_system.all;
 USE work.all;
-	 GENERIC (	device : REAL := 7404;
-			footprint : REAL := DIP14 );
-#t
+
 -- Entity declaration --
 
 ENTITY unknown IS
-#<unspecified>
-#<unspecified>
+	 GENERIC (	device : REAL := 7404;
+			footprint : REAL := DIP14 );
 END ENTITY unknown;
 

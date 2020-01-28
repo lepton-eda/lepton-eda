@@ -1,0 +1,357 @@
+# Catalan translation for geda
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the geda package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: geda\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2019-10-03 23:30+0300\n"
+"PO-Revision-Date: 2012-01-27 14:17+0000\n"
+"Last-Translator: Launchpad Translators\n"
+"Language-Team: Catalan <ca@li.org>\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
+
+#, fuzzy
+msgid "Lepton EDA Attribute Editor"
+msgstr "Editor d'atributs gEDA"
+
+#, fuzzy
+msgid "Manipulate component attributes with lepton-attrib"
+msgstr "Manipuleu atributs de components amb el gattrib"
+
+#, c-format
+msgid "o_save: Could not open [%1$s]"
+msgstr ""
+
+#, c-format
+msgid "Lepton EDA/lepton-attrib version %1$s%2$s.%3$s git: %4$.7s"
+msgstr ""
+
+#, c-format
+msgid "Couldn't find file [%1$s]\n"
+msgstr ""
+
+msgid "Entry type must be GtkEntry subclass, using default"
+msgstr ""
+
+msgid "Widget must be a GtkSheet child"
+msgstr ""
+
+#, c-format
+msgid ""
+"\n"
+"lepton-attrib: Lepton EDA attribute editor.\n"
+"Presents schematic attributes in easy-to-edit spreadsheet format.\n"
+"\n"
+"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
+"  -q, --quiet            Quiet mode\n"
+"  -v, --verbose          Verbose mode on\n"
+"  -h, --help             This help menu\n"
+"\n"
+"  FAQ:\n"
+"  *  What do the colors of the cell text mean?\n"
+"     The cell colors indicate the visibility of the attribute.\n"
+"     Black = Visible attribute, value displayed only.\n"
+"     Grey  = Invisible attribute.\n"
+"     Red   = Visible attribute, name displayed only.\n"
+"     Blue  = Visible attribute, both name and value displayed.\n"
+"\n"
+"  *  What does the period (\".\") at the end of some component refdeses "
+"mean?\n"
+"     The period is placed after the refdeses of slotted components.\n"
+"     If slots are present on the component, then the different slots appear\n"
+"     in different rows with the slot number after the period.  Example:  "
+"C101.2.\n"
+"\n"
+"Copyright (C) 2003-2006 Stuart D. Brorson.\n"
+"Copyright (C) 2007-2016 gEDA Contributors.\n"
+"Copyright (C) 2017-2019 Lepton EDA Contributors.\n"
+"\n"
+"Please report bugs to %2$s.\n"
+msgstr ""
+
+#, c-format
+msgid "WARNING: Found uref=%1$s, uref= is deprecated, please use refdes=\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"\n"
+"DONE\n"
+msgstr ""
+
+#, c-format
+msgid " DONE\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"In s_object_replace_attrib_in_object, we have failed to find the attrib %1$s "
+"on the component.  Exiting . . .\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"In s_object_remove_attrib_in_object, we have failed to find the attrib %1$s "
+"on the component.  Exiting . . .\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex "
+"or non-net!\n"
+msgstr ""
+
+#, c-format
+msgid "- Starting master comp list creation.\n"
+msgstr ""
+
+#, c-format
+msgid "- Starting master comp attrib list creation.\n"
+msgstr ""
+
+#, c-format
+msgid "- Starting master pin list creation.\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"In s_sheet_data_add_master_pin_list_items, found component pin with no "
+"pinnumber.\n"
+msgstr ""
+
+#, c-format
+msgid "- Starting master pin attrib list creation.\n"
+msgstr ""
+
+#, c-format
+msgid "In s_string_list_add_item, tried to add to a NULL list.\n"
+msgstr ""
+
+#, c-format
+msgid "In s_string_list_delete_item, tried to remove item from empty list\n"
+msgstr ""
+
+#, c-format
+msgid "In s_string_list_delete_item, couldn't delete item %s\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"In s_table_create_attrib_pair, we didn't find the row name in the row list!\n"
+msgstr ""
+
+#, c-format
+msgid "- Starting internal component TABLE creation\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"In s_table_add_toplevel_comp_items_to_comp_table, we didn't find either row "
+"or col in the lists!\n"
+msgstr ""
+
+#, c-format
+msgid "- Starting internal pin TABLE creation\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"In s_table_add_toplevel_pin_items_to_pin_table, we didn't find either row or "
+"col in the lists!\n"
+msgstr ""
+
+msgid "_cancel"
+msgstr ""
+
+#, c-format
+msgid "In s_toplevel_delete_attrib_col, can't get attrib name\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes in "
+"the master list!\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"In s_toplevel_get_component_attribs_in_sheet, count != i!  Exiting . . . .\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"In s_toplevel_get_pin_attribs_in_sheet, either refdes or pinnumber of object "
+"missing!\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"In s_toplevel_get_pin_attribs_in_sheet, we didn't find the refdes:pin in the "
+"master list!\n"
+msgstr ""
+
+#, c-format
+msgid "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"
+msgstr ""
+
+msgid "Add new attribute"
+msgstr ""
+
+msgid "Enter new attribute name"
+msgstr ""
+
+msgid "Are you sure you want to delete this attribute?"
+msgstr ""
+
+msgid "Delete attribute"
+msgstr ""
+
+msgid ""
+"One or more components have been found with missing symbol files!\n"
+"\n"
+"This probably happened because lepton-attrib couldn't find your component "
+"libraries, perhaps because your gafrc or gattribrc files are misconfigured.\n"
+"\n"
+"Choose \"Quit\" to leave lepton-attrib and fix the problem, or\n"
+"\"Forward\" to continue working with lepton-attrib.\n"
+msgstr ""
+
+msgid "Missing symbol file found for component!"
+msgstr ""
+
+msgid "Save the changes before closing?"
+msgstr ""
+
+msgid "<big><b>"
+msgstr ""
+
+msgid "</b></big>"
+msgstr ""
+
+msgid "If you don't save, all your changes will be permanently lost."
+msgstr ""
+
+msgid "Close without saving"
+msgstr ""
+
+msgid ""
+"Sorry -- you have chosen a feature which has not been\n"
+"implemented yet.\n"
+"\n"
+"lepton-attrib is an open-source program which\n"
+"I work on as a hobby.  It is still a work in progress.\n"
+"If you wish to contribute (perhaps by implementing this\n"
+"feature), please do so!  Please send patches to lepton-attrib\n"
+"to Stuart Brorson: sdb@cloud9.net.\n"
+"\n"
+"Otherwise, just hang tight -- I'll implement this feature soon!\n"
+msgstr ""
+
+msgid "Unimplemented feature!"
+msgstr ""
+
+msgid "Fatal error"
+msgstr ""
+
+#, c-format
+msgid ""
+"Lepton Electronic Design Automation\n"
+"\n"
+"lepton-attrib - Lepton EDA attribute editor\n"
+"\n"
+"lepton-attrib version: %1$s%2$s.%3$s\n"
+"\n"
+"lepton-attrib is written by: Stuart Brorson (sdb@cloud9.net)\n"
+"with generous helpings of code from gschem, gnetlist, \n"
+"and gtkextra, as well as support from the gEDA community."
+msgstr ""
+
+msgid "About..."
+msgstr ""
+
+msgid "Export CSV"
+msgstr ""
+
+msgid "Schematics"
+msgstr ""
+
+msgid "Symbols"
+msgstr ""
+
+msgid "Schematics and symbols"
+msgstr ""
+
+msgid "All files"
+msgstr ""
+
+#, c-format
+msgid "Loading file [%1$s]"
+msgstr ""
+
+#, c-format
+msgid "Couldn't load schematic [%1$s]\n"
+msgstr ""
+
+msgid "Open..."
+msgstr ""
+
+msgid "Save as..."
+msgstr ""
+
+#, c-format
+msgid "Saved As [%1$s]"
+msgstr ""
+
+#, c-format
+msgid "Could NOT save [%1$s]"
+msgstr ""
+
+msgid "Components"
+msgstr ""
+
+msgid "Nets"
+msgstr ""
+
+msgid "Pins"
+msgstr ""
+
+msgid ""
+"No components found in design.  Please check your schematic and try again!\n"
+msgstr ""
+
+msgid "TBD"
+msgstr ""
+
+msgid "couldn't allocate color"
+msgstr ""
+
+#, fuzzy
+msgid "lepton-attrib - Lepton EDA attribute editor"
+msgstr "Editor d'atributs gEDA"
+
+#, c-format
+msgid "Error loading menu: %1$s\n"
+msgstr ""
+
+msgid ""
+"No components found in entire design!\n"
+"Do you have refdeses on your components?"
+msgstr ""
+
+msgid ""
+"No configurable component attributes found in entire design!\n"
+"Please attach at least some attributes before running lepton-attrib."
+msgstr ""
+
+msgid ""
+"No pins found on any components!\n"
+"Please check your design."
+msgstr ""

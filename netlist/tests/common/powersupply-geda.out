@@ -1,9 +1,15 @@
 START header
 
 gEDA's netlist format
-Created specifically for testing of gnetlist
+(Initially created for testing of gnetlist)
 
 END header
+
+START graphical symbols
+
+Component without refdes: title-C.sym at ((51800 . 66900) 73800 . 49900)
+
+END graphical symbols
 
 START components
 
@@ -21,6 +27,8 @@ U1 device=DIODE-BRIDGE
 U2 device=LM317
 
 END components
+
+No "no-connect" nets found
 
 START renamed-nets
 

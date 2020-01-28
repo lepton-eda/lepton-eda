@@ -1,16 +1,14 @@
 
 SUBDIRS = vams
 
-EXTRA_DIST = $(html_man_files) logo.png \
-	     gnetlist-main.txt what-is-geda.html what-is-gnetlist.html \
-	     gnetlist.dox gnetlist.1.in mk_verilog_syms.1.in
+EXTRA_DIST = $(html_man_files) lepton-netlist.1.in mk_verilog_syms.1.in
 
 docsreadmedir = $(docdir)/readmes
 dist_docsreadme_DATA = \
 	README.bom README.pcb README.switcap README.verilog \
 	README.vhdl README.sysc README.eagle
 
-dist_man_MANS = gnetlist.1
+dist_man_MANS = lepton-netlist.1
 noinst_MANS = mk_verilog_syms.1
 
 .1.in.1:
@@ -38,22 +36,7 @@ else
 	@! :
 endif
 
-doxygen: gnetlist.dox
-	@echo 'Creating doxygen documentation for gnetlist...'
-if ENABLE_DOXYGEN
-	$(DOXYGEN) gnetlist.dox
-else
-	@echo 'configure was not run with the --enable-doxygen switch.'
-	@echo 'The documentation cannot be built from the sources.'
-endif
-
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~
+CLEANFILES = $(dist_man_MANS) $(html_man_files)
 DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~ Makefile.in $(html_man_files)
-
-distclean-local:
-	-rm -rf html latex
-
-maintainer-clean-local:
-	-rm -rf html latex
+MAINTAINERCLEANFILES = *.log *~

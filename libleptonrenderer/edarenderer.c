@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libleptonrenderer - Rendering Lepton EDA schematics with Cairo
- * Copyright (C) 2010-2012 gEDA Contributors (see ChangeLog for details)
+/* libleptonrenderer - Rendering Lepton EDA schematics with Cairo
+ * Copyright (C) 2010-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -79,10 +79,21 @@ static inline gboolean
 EDA_RENDERER_CHECK_FLAG (EdaRenderer *r, int f) {
   return r->priv->flags & f;
 }
+
+
+
+/* EDA_RENDERER_SET_FLAG() function is currently unused.
+ * Comment it out to suppress compiler warnings.
+
 static inline void
 EDA_RENDERER_SET_FLAG (EdaRenderer *r, int f, gboolean e) {
   if (e) { r->priv->flags |= f; } else { r->priv->flags &= ~f; }
 }
+
+*/
+
+
+
 static inline unsigned int
 EDA_RENDERER_CAIRO_FLAGS (EdaRenderer *r) {
   return EDA_RENDERER_CHECK_FLAG (r, FLAG_HINTING) ? EDA_CAIRO_ENABLE_HINTS : 0;
@@ -92,8 +103,14 @@ EDA_RENDERER_STROKE_WIDTH (EdaRenderer *r, double width) {
   /* For now, the minimum line width possible is half the net width. */
   return fmax (width, NET_WIDTH / 2);
 }
+/* The same as above, but returns 0 if width is 0. Especially
+   added to allow (filled) paths with zero width line. */
+static inline double
+EDA_RENDERER_STROKE_WIDTH0 (EdaRenderer *r, double width) {
+  return (width == 0) ? 0 : EDA_RENDERER_STROKE_WIDTH (r, width);
+}
 
-#define DEFAULT_FONT_NAME "Arial"
+#define DEFAULT_FONT_NAME "Sans"
 #define GRIP_STROKE_COLOR SELECT_COLOR
 #define GRIP_FILL_COLOR BACKGROUND_COLOR
 #define TEXT_MARKER_SIZE 10
@@ -165,7 +182,7 @@ eda_renderer_get_text_user_bounds (EdaRenderer *renderer,
                                    double *right,
                                    double *bottom);
 
-G_DEFINE_TYPE (EdaRenderer, eda_renderer, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (EdaRenderer, eda_renderer, G_TYPE_OBJECT);
 
 GType
 eda_renderer_flags_get_type ()
@@ -191,8 +208,6 @@ eda_renderer_class_init (EdaRendererClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GParamFlags param_flags;
-
-  g_type_class_add_private (gobject_class, sizeof (EdaRendererPrivate));
 
   /* Register functions with base class */
   gobject_class->constructor = eda_renderer_constructor;
@@ -763,7 +778,7 @@ eda_renderer_draw_path (EdaRenderer *renderer, OBJECT *object)
   if (fill_solid) cairo_fill_preserve (renderer->priv->cr);
   eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     object->line_type, object->line_end,
-                    EDA_RENDERER_STROKE_WIDTH (renderer, object->line_width),
+                    EDA_RENDERER_STROKE_WIDTH0 (renderer, object->line_width),
                     object->line_length, object->line_space);
 }
 
@@ -1035,8 +1050,8 @@ eda_renderer_draw_picture (EdaRenderer *renderer, OBJECT *object)
   cairo_translate (renderer->priv->cr,
                    object->picture->upper_x, object->picture->upper_y);
   cairo_scale (renderer->priv->cr,
-               fabs (object->picture->upper_x - object->picture->lower_x) / orig_width,
-               - fabs (object->picture->upper_y - object->picture->lower_y) / orig_height);
+               abs (object->picture->upper_x - object->picture->lower_x) / orig_width,
+               - abs (object->picture->upper_y - object->picture->lower_y) / orig_height);
 
   /* Evil magic translates picture origin to the right position for a given rotation */
   switch (object->picture->angle) {

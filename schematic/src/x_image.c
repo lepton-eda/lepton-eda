@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,30 +17,159 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+
 #include <config.h>
-
-#include <stdio.h>
-#include <unistd.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
-#include <glib.h>
-
 #include "gschem.h"
 
+
+
 #define X_IMAGE_DEFAULT_SIZE "800x600"
-
-#define X_IMAGE_SIZE_MENU_NAME "image_size_menu"
-#define X_IMAGE_TYPE_MENU_NAME "image_type_menu"
-
 #define X_IMAGE_DEFAULT_TYPE "PNG"
 
-static const char *x_image_sizes[] = {"320x240", "640x480", "800x600", "1200x768",
-  "1280x960", "1600x1200", "3200x2400", NULL};
+static const char *x_image_sizes[] =
+{
+  "320x240",
+  "640x480",
+  "800x600",
+  "1024x768",
+  "1200x768",
+  "1280x960",
+  "1600x1200",
+  "3200x2400",
+  NULL
+};
+
+
+
+/*! \brief Restore last selected item in \a combo combobox
+ *
+ *  \par Function Description
+ *  Helper function used in settings_restore().
+ */
+static void
+settings_restore_combo (EdaConfig*   cfg,
+                        GtkComboBox* combo,
+                        const gchar* group,
+                        const gchar* key)
+{
+  GtkTreeModel* model = gtk_combo_box_get_model (combo);
+  gint          count = gtk_tree_model_iter_n_children (model, NULL);
+
+  GError* err = NULL;
+  gint index = eda_config_get_int (cfg, group, key, &err);
+
+  if (err == NULL && index >= 0 && index < count)
+  {
+    gtk_combo_box_set_active (combo, index);
+  }
+
+  g_clear_error (&err);
+}
+
+
+
+/*! \brief Restore "Write image" dialog settings
+ *
+ *  \par Function Description
+ *  Load the following settings from the CACHE configuration
+ *  context ("schematic.write-image-dialog" group):
+ *  - selected directory
+ *  - image size
+ *  - image type
+ *  - image color mode
+ *
+ *  \note Call this function after the dialog is fully constructed.
+ *
+*   \param dialog      "Write image" dialog widget
+ *  \param size_combo  Combo box widget with list of image sizes
+ *  \param type_combo  Combo box widget with list of image types
+ *  \param color_combo Combo box widget with list of color modes
+ */
+static void
+settings_restore (GtkFileChooser* dialog,
+                  GtkComboBox*    size_combo,
+                  GtkComboBox*    type_combo,
+                  GtkComboBox*    color_combo)
+{
+  EdaConfig* cfg = eda_config_get_cache_context();
+  GError*    err = NULL;
+
+  gchar* dir = eda_config_get_string (cfg,
+                                      "schematic.write-image-dialog",
+                                      "save-path",
+                                      &err);
+  if (err == NULL && dir != NULL)
+  {
+    gtk_file_chooser_set_current_folder (dialog, dir);
+    g_free (dir);
+  }
+
+  settings_restore_combo (cfg,
+                          size_combo,
+                          "schematic.write-image-dialog",
+                          "image-size");
+  settings_restore_combo (cfg,
+                          type_combo,
+                          "schematic.write-image-dialog",
+                          "image-type");
+  settings_restore_combo (cfg,
+                          color_combo,
+                          "schematic.write-image-dialog",
+                          "image-color");
+}
+
+
+
+/*! \brief Save "Write image" dialog settings
+ *
+ *  \par Function Description
+ *  Save the following settings to the CACHE configuration
+ *  context ("schematic.write-image-dialog" group):
+ *  - selected directory
+ *  - image size
+ *  - image type
+ *  - image color mode
+ *
+*   \param dialog      "Write image" dialog widget
+ *  \param size_combo  Combo box widget with list of image sizes
+ *  \param type_combo  Combo box widget with list of image types
+ *  \param color_combo Combo box widget with list of color modes
+ */
+static void
+settings_save (GtkFileChooser* dialog,
+               GtkComboBox*    size_combo,
+               GtkComboBox*    type_combo,
+               GtkComboBox*    color_combo)
+{
+  EdaConfig* cfg = eda_config_get_cache_context();
+
+  gchar* dir = gtk_file_chooser_get_current_folder (dialog);
+  if (dir != NULL)
+  {
+    eda_config_set_string (cfg,
+                           "schematic.write-image-dialog",
+                           "save-path",
+                           dir);
+    g_free (dir);
+  }
+
+  eda_config_set_int (cfg,
+                      "schematic.write-image-dialog",
+                      "image-size",
+                      gtk_combo_box_get_active (size_combo));
+  eda_config_set_int (cfg,
+                      "schematic.write-image-dialog",
+                      "image-type",
+                      gtk_combo_box_get_active (type_combo));
+  eda_config_set_int (cfg,
+                      "schematic.write-image-dialog",
+                      "image-color",
+                      gtk_combo_box_get_active (color_combo));
+
+  eda_config_save (cfg, NULL);
+}
+
+
 
 /*! \brief Create the options of the image size combobox
  *  \par This function adds the options of the image size to the given combobox.
@@ -70,8 +200,6 @@ static void create_size_menu (GtkComboBox *combo)
 
   /* Set the default menu */
   gtk_combo_box_set_active(GTK_COMBO_BOX (combo), default_index);
-
-  return;
 }
 
 /*! \brief Create the options of the image type combobox
@@ -111,7 +239,6 @@ static void create_type_menu(GtkComboBox *combo)
 
   /* Set the default menu */
   gtk_combo_box_set_active(GTK_COMBO_BOX(combo), default_index);
-  return;
 }
 
 /*! \brief Given a gdk-pixbuf image type description, it returns the type,
@@ -224,13 +351,13 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
  *  \param width     [in] the image width chosen by the user.
  *  \param height    [in] the image height chosen by the user.
  *  \param filetype  [in] image filetype.
+ *  \param is_color  [in] write image using colors (TRUE) or in grayscale (FALSE).
  *  \return nothing
  *
  */
 void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
-                       int width, int height, const char *filetype)
+                       int width, int height, const char *filetype, gboolean is_color)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int save_page_left, save_page_right, save_page_top, save_page_bottom;
   int page_width, page_height, page_center_left, page_center_top;
   GdkPixbuf *pixbuf;
@@ -271,9 +398,9 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
   o_select_unselect_all( w_current );
 
   if (strcmp(filetype, "pdf") == 0)
-    x_print_export_pdf (w_current, filename);
+    x_print_export_pdf (w_current, filename, is_color);
   else {
-    pixbuf = x_image_get_pixbuf(w_current, width, height);
+    pixbuf = x_image_get_pixbuf(w_current, width, height, is_color);
     if (pixbuf != NULL) {
       if (!gdk_pixbuf_save(pixbuf, filename, filetype, &gerror, NULL)) {
         s_log_message(_("x_image_lowlevel: Unable to write %1$s file %2$s."),
@@ -305,7 +432,7 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
         /* unlink(filename); */
       }
       else {
-        if (toplevel->image_color == TRUE) {
+        if (is_color) {
           s_log_message(_("Wrote color image to [%1$s] [%2$d x %3$d]"), filename, width, height);
         } else {
           s_log_message(_("Wrote black and white image to [%1$s] [%2$d x %3$d]"), filename, width, height);
@@ -353,6 +480,17 @@ void x_image_setup (GschemToplevel *w_current)
 
   hbox = gtk_hbox_new(FALSE, 0);
 
+
+  GtkWidget* vbox = gtk_vbox_new (FALSE, 0);
+  GtkWidget* hbox2 = gtk_hbox_new (FALSE, 0);
+  GtkWidget* label = gtk_label_new(
+    _("NOTE: print-color-map will be used for PDF export"));
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 10);
+  gtk_box_pack_start (GTK_BOX (vbox),  hbox2, FALSE, FALSE, 5);
+  gtk_box_pack_start (GTK_BOX (vbox),  hbox,  FALSE, FALSE, 0);
+  gtk_widget_show_all (vbox);
+
+
   /* Image size selection */
   vbox1 = gtk_vbox_new(TRUE, 0);
   label1 = gtk_label_new (_("Width x Height"));
@@ -382,6 +520,24 @@ void x_image_setup (GschemToplevel *w_current)
   gtk_box_pack_start (GTK_BOX (vbox2), type_combo, TRUE, TRUE, 0);
   create_type_menu (GTK_COMBO_BOX(type_combo));
 
+
+  /* Color/grayscale selection:
+  */
+  GtkWidget* vbox3 = gtk_vbox_new (TRUE, 0);
+  GtkWidget* label3 = gtk_label_new (_("Color mode"));
+  gtk_misc_set_alignment (GTK_MISC (label3), 0, 0);
+  gtk_misc_set_padding (GTK_MISC (label3), 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox3), label3, FALSE, FALSE, 0);
+
+  GtkWidget* color_combo = gtk_combo_box_new_text();
+  gtk_box_pack_start (GTK_BOX (vbox3), color_combo, TRUE, TRUE, 0);
+  gtk_combo_box_append_text (GTK_COMBO_BOX (color_combo), _("Color"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (color_combo), _("Grayscale"));
+  gtk_combo_box_set_active (GTK_COMBO_BOX (color_combo), 0);
+
+  gtk_widget_show_all (vbox3);
+
+
   /* Connect the changed signal to the callback, so the filename
      gets updated every time the image type is changed */
   g_signal_connect (type_combo, "changed",
@@ -408,8 +564,9 @@ void x_image_setup (GschemToplevel *w_current)
   /* Add the extra widgets to the dialog*/
   gtk_box_pack_start(GTK_BOX(hbox), vbox1, FALSE, FALSE, 10);
   gtk_box_pack_start(GTK_BOX(hbox), vbox2, FALSE, FALSE, 10);
+  gtk_box_pack_start(GTK_BOX(hbox), vbox3, FALSE, FALSE, 10);
 
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER(dialog), hbox);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER(dialog), vbox);
 
   g_object_set (dialog,
       /* GtkFileChooser */
@@ -431,6 +588,13 @@ void x_image_setup (GschemToplevel *w_current)
   gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dialog)->vbox),
       DIALOG_V_SPACING);
 
+
+  settings_restore (GTK_FILE_CHOOSER (dialog),
+                    GTK_COMBO_BOX (size_combo),
+                    GTK_COMBO_BOX (type_combo),
+                    GTK_COMBO_BOX (color_combo));
+
+
   gtk_widget_show (dialog);
 
   if (gtk_dialog_run((GTK_DIALOG(dialog))) == GTK_RESPONSE_ACCEPT) {
@@ -442,10 +606,20 @@ void x_image_setup (GschemToplevel *w_current)
     sscanf(image_size, "%ix%i", &width, &height);
     filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 
-    x_image_lowlevel(w_current, filename, width, height, image_type);
+    /* the first item in the color_combo is "Color", 2nd = "Grayscale":
+    */
+    gboolean is_color = gtk_combo_box_get_active (GTK_COMBO_BOX (color_combo)) == 0;
+
+    x_image_lowlevel(w_current, filename, width, height, image_type, is_color);
 
     g_free (filename);
     g_free (image_type);
+
+
+    settings_save (GTK_FILE_CHOOSER (dialog),
+                   GTK_COMBO_BOX (size_combo),
+                   GTK_COMBO_BOX (type_combo),
+                   GTK_COMBO_BOX (color_combo));
   }
 
   gtk_widget_destroy (dialog);
@@ -505,7 +679,7 @@ static void x_image_convert_to_greyscale(GdkPixbuf *pixbuf)
  *
  */
 GdkPixbuf
-*x_image_get_pixbuf (GschemToplevel *w_current, int width, int height)
+*x_image_get_pixbuf (GschemToplevel *w_current, int width, int height, gboolean is_color)
 {
   GdkPixbuf *pixbuf;
   GschemPageView *page_view;
@@ -535,11 +709,13 @@ GdkPixbuf
 
   gschem_options_set_grid_mode (new_w_current.options, GRID_MODE_NONE);
 
-  if (toplevel.image_color == FALSE)
-  {
-    /*! \bug Need to handle image color setting properly. See
-     * Launchpad bug 1086530. */
-  }
+  /*! \bug Need to handle image color setting properly.
+   *       See gEDA Launchpad bug 1086530.
+   *
+   * if (toplevel.image_color == FALSE)
+   * {
+   * }
+  */
 
   origin_x = origin_y = 0;
   right = width;
@@ -575,7 +751,7 @@ GdkPixbuf
                                         right-origin_x,
                                         bottom-origin_y);
 
-  if (toplevel.image_color == FALSE)
+  if (!is_color)
   {
     x_image_convert_to_greyscale(pixbuf);
   }

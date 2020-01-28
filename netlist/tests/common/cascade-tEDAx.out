@@ -1,0 +1,56 @@
+tEDAx v1
+begin netlist v1 netlist
+
+	footprint AMP1 none
+	device AMP1 cascade-amp
+	value AMP1 
+
+	footprint AMP2 none
+	device AMP2 cascade-amp
+	value AMP2 
+
+	footprint DEF1 none
+	device DEF1 cascade-defaults
+	value DEF1 
+
+	footprint DEFAULTS UNKNOWN
+	device DEFAULTS cascade-defaults-top
+	value DEFAULTS 
+
+	footprint FL1 none
+	device FL1 cascade-filter
+	value FL1 
+
+	footprint MX1 none
+	device MX1 cascade-mixer
+	value MX1 
+
+	footprint SOURCE none
+	device SOURCE cascade-source
+	value SOURCE 
+
+	footprint T1 none
+	device T1 cascade-transformer
+	value T1 
+
+	conn GND DEFAULTS 1
+
+	conn unnamed_net1 AMP1 1
+	conn unnamed_net1 SOURCE 1
+
+	conn unnamed_net2 AMP1 2
+	conn unnamed_net2 DEF1 1
+
+	conn unnamed_net3 DEF1 2
+	conn unnamed_net3 FL1 1
+
+	conn unnamed_net4 FL1 2
+	conn unnamed_net4 MX1 1
+
+	conn unnamed_net5 MX1 2
+	conn unnamed_net5 T1 1
+
+	conn unnamed_net6 AMP2 1
+	conn unnamed_net6 T1 2
+
+end netlist

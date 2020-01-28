@@ -1,7 +1,7 @@
 
 SUBDIRS = po data docs include lib src scheme tests
 
-EXTRA_DIST = HACKING ChangeLog ChangeLog-1.0 po/domain.mak.in
+EXTRA_DIST = HACKING ChangeLog ChangeLog-1.0
 
 pkgconfigdir            = $(libdir)/pkgconfig
 pkgconfig_DATA          = liblepton.pc
@@ -21,5 +21,5 @@ endif HAVE_GIT_REPO
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
-DISTCLEANFILES = *.log core FILE *~ liblepton.pc po/domain.mak
+DISTCLEANFILES = *.log core FILE *~ liblepton.pc
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in liblepton.pc ChangeLog

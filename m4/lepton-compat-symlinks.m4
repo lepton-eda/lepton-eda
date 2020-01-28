@@ -36,8 +36,8 @@ AC_DEFUN([AX_OPTION_COMPAT_SYMLINKS],[dnl
 
   AC_MSG_CHECKING([whether to install geda-gaf compatibility symlinks])
   AC_ARG_ENABLE([compat-symlinks],
-    [AS_HELP_STRING([--disable-compat-symlinks], [don't install geda-gaf compatibility symlinks])],
-    [], [enable_compat_symlinks="yes"])
+    [AS_HELP_STRING([--enable-compat-symlinks], [install geda-gaf compatibility symlinks])],
+    [], [enable_compat_symlinks="no"])
 
   if test "X$enable_compat_symlinks" = "Xyes"; then
     AC_MSG_RESULT([yes])

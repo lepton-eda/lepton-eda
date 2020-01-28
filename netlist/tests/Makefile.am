@@ -42,8 +42,15 @@ input_files = \
 	hierarchy4-sources/h4-bottom.sch \
 	hierarchy4-symbols/h4-bottom.sym \
 	hierarchy4.sch \
+	hierarchy5-sources/simple.sch \
+	hierarchy5-symbols/simple.sym \
+	hierarchy5-symbols/res_h.sym \
+	hierarchy5-symbols/netif_other.sym \
+	hierarchy5.sch \
 	stack-torture.sch \
 	drc2/connected-noconnects.sch \
+	drc2/connected-noconnects-symbols/nc-2.sym \
+	drc2/connected-noconnects-symbols/nc-top-1-old.sym \
 	drc2/duplicated-refdes.sch \
 	drc2/duplicated_slot.sch \
 	drc2/gnd-with-nc-directive.sch \
@@ -73,12 +80,15 @@ input_files = \
 	common/TwoStageAmp-symbols/transistor.sym \
 	common/TwoStageAmp.sch \
 	common/cascade.sch \
+	common/graphical.sch \
 	common/multiequal.sch \
 	common/netattrib-symbols/7400-custom.sym \
 	common/netattrib-symbols/gnd-custom.sym \
 	common/netattrib.sch \
 	common/powersupply.sch \
-	common/singlenet.sch
+	common/singlenet.sch \
+	verilog_rip_test.sch \
+	verilog_rip_test-symbols/D_FF.sym
 
 XFAIL_TESTS = \
 	missing-source-geda.out \
@@ -124,9 +134,14 @@ TESTS = stack_1-geda.out \
 	hierarchy3-vams-device.out \
 	hierarchy4-geda.out \
 	hierarchy4-drc2.out \
+	hierarchy5-geda.out \
+	hierarchy5-tEDAx.out \
+	hierarchy5-pcbpins.out \
+	hierarchy5-PCB.out \
 	stack-torture-geda.out \
 	missing-source-geda.out \
 	drc2/connected-noconnects-drc2.out \
+	drc2/connected-noconnects-geda.out \
 	drc2/duplicated-refdes-drc2.out \
 	drc2/duplicated_slot-drc2.out \
 	drc2/gnd-with-nc-directive-drc2.out \
@@ -181,6 +196,7 @@ TESTS = stack_1-geda.out \
 	common/JD-switcap.out \
 	common/JD-systemc.out \
 	common/JD-tango.out \
+	common/JD-tEDAx.out \
 	common/JD-vams.out \
 	common/JD-vams-entity.out \
 	common/JD-vams-device.out \
@@ -217,6 +233,7 @@ TESTS = stack_1-geda.out \
 	common/SlottedOpamps-switcap.out \
 	common/SlottedOpamps-systemc.out \
 	common/SlottedOpamps-tango.out \
+	common/SlottedOpamps-tEDAx.out \
 	common/SlottedOpamps-vams.out \
 	common/SlottedOpamps-vams-entity.out \
 	common/SlottedOpamps-vams-device.out \
@@ -255,6 +272,7 @@ TESTS = stack_1-geda.out \
 	common/TwoStageAmp-switcap.out \
 	common/TwoStageAmp-systemc.out \
 	common/TwoStageAmp-tango.out \
+	common/TwoStageAmp-tEDAx.out \
 	common/TwoStageAmp-vams.out \
 	common/TwoStageAmp-vams-entity.out \
 	common/TwoStageAmp-vams-device.out \
@@ -292,12 +310,50 @@ TESTS = stack_1-geda.out \
 	common/cascade-switcap.out \
 	common/cascade-systemc.out \
 	common/cascade-tango.out \
+	common/cascade-tEDAx.out \
 	common/cascade-vams.out \
 	common/cascade-vams-entity.out \
 	common/cascade-vams-device.out \
 	common/cascade-verilog.out \
 	common/cascade-vhdl.out \
 	common/cascade-vipec.out \
+	common/graphical-PCB.out \
+	common/graphical-allegro.out \
+	common/graphical-bae.out \
+	common/graphical-bom.out \
+	common/graphical-bom2.out \
+	common/graphical-calay.out \
+	common/graphical-drc.out \
+	common/graphical-drc2.out \
+	common/graphical-eagle.out \
+	common/graphical-ewnet.out \
+	common/graphical-futurenet2.out \
+	common/graphical-geda.out \
+	common/graphical-gossip.out \
+	common/graphical-gsch2pcb.out \
+	common/graphical-liquidpcb.out \
+	common/graphical-mathematica.out \
+	common/graphical-maxascii.out \
+	common/graphical-osmond.out \
+	common/graphical-pads.out \
+	common/graphical-partslist1.out \
+	common/graphical-partslist2.out \
+	common/graphical-partslist3.out \
+	common/graphical-pcbpins.out \
+	common/graphical-protelII.out \
+	common/graphical-redac.out \
+	common/graphical-spice-sdb.out \
+	common/graphical-spice.out \
+	common/graphical-switcap.out \
+	common/graphical-systemc.out \
+	common/graphical-tango.out \
+	common/graphical-tEDAx.out \
+	common/graphical-vams.out \
+	common/graphical-vams-entity.out \
+	common/graphical-vams-device.out \
+	common/graphical-verilog.out \
+	common/graphical-vhdl.out \
+	common/graphical-vipec.out \
 	common/multiequal-PCB.out \
 	common/multiequal-allegro.out \
 	common/multiequal-bae.out \
@@ -328,6 +384,7 @@ TESTS = stack_1-geda.out \
 	common/multiequal-switcap.out \
 	common/multiequal-systemc.out \
 	common/multiequal-tango.out \
+	common/multiequal-tEDAx.out \
 	common/multiequal-vams.out \
 	common/multiequal-vams-entity.out \
 	common/multiequal-vams-device.out \
@@ -364,6 +421,7 @@ TESTS = stack_1-geda.out \
 	common/netattrib-spice.out \
 	common/netattrib-systemc.out \
 	common/netattrib-tango.out \
+	common/netattrib-tEDAx.out \
 	common/netattrib-vams.out \
 	common/netattrib-vams-entity.out \
 	common/netattrib-vams-device.out \
@@ -400,6 +458,7 @@ TESTS = stack_1-geda.out \
 	common/powersupply-switcap.out \
 	common/powersupply-systemc.out \
 	common/powersupply-tango.out \
+	common/powersupply-tEDAx.out \
 	common/powersupply-vams.out \
 	common/powersupply-vams-entity.out \
 	common/powersupply-vams-device.out \
@@ -436,9 +495,11 @@ TESTS = stack_1-geda.out \
 	common/singlenet-switcap.out \
 	common/singlenet-systemc.out \
 	common/singlenet-tango.out \
+	common/singlenet-tEDAx.out \
 	common/singlenet-vams.out \
 	common/singlenet-vams-entity.out \
 	common/singlenet-vams-device.out \
 	common/singlenet-verilog.out \
 	common/singlenet-vhdl.out \
-	common/singlenet-vipec.out
+	common/singlenet-vipec.out \
+	verilog_rip_test-verilog.out

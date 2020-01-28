@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +32,7 @@ struct st_gschem_toplevel {
   /* ------------------- */
   GtkWidget *main_window;
 
-  GtkWidget *drawing_area;
+  GtkWidget *drawing_area; /* page view */
   GtkWidget *menubar;
   GtkWidget *popup_menu;
 
@@ -48,6 +49,14 @@ struct st_gschem_toplevel {
   GtkWidget *toolbar_net;
   GtkWidget *toolbar_bus;
 
+
+  /* tabbed GUI: notebook: */
+  GtkNotebook* xtabs_nbook;
+
+  /* tabbed GUI: data structures: */
+  GList* xtabs_info_list;
+
+
   GtkWidget *bottom_notebook;
 
   /* Widgets inside notebook at bottom of window */
@@ -61,6 +70,14 @@ struct st_gschem_toplevel {
   GtkWidget *options_widget;
   GtkWidget *text_properties;
 
+  /* color scheme editor widget: */
+  GtkWidget *color_edit_widget;
+
+  /* font selection widget: */
+  GtkWidget *font_select_widget;
+
+  /* page selection widget: */
+  GtkWidget *page_select_widget;
 
   /* dialogs for widgets */
   GtkWidget *options_widget_dialog;
@@ -68,6 +85,9 @@ struct st_gschem_toplevel {
   GtkWidget *object_properties_dialog;
   GtkWidget *log_widget_dialog;
   GtkWidget *find_text_state_dialog;
+  GtkWidget *color_edit_dialog;
+  GtkWidget *font_select_dialog;
+  GtkWidget *page_select_dialog;
 
 
   gchar *keyaccel_string;               /* visual feedback when pressing
@@ -80,7 +100,6 @@ struct st_gschem_toplevel {
   GtkWidget *sowindow;                  /* Script open */
   GtkWidget *pfswindow;                 /* Picture File Selection window */
   GtkWidget *cswindow;                  /* component select */
-  GtkWidget *pswindow;                  /* page select */
   GtkWidget *tiwindow;                  /* text input */
   GtkWidget *sewindow;                  /* slot edit */
   GtkWidget *aawindow;                  /* arc attribs */
@@ -152,7 +171,6 @@ struct st_gschem_toplevel {
   /* --------------------- */
   int num_untitled;                     /* keep track of untitled wins */
   int event_state;                      /* Current event state */
-  int image_width, image_height;        /* h, w of image write */
   int min_zoom;                         /* minimum zoom factor */
   int max_zoom;                         /* maximum zoom factor */
   int inside_redraw;                    /* complex vs list redrawing */
@@ -162,8 +180,6 @@ struct st_gschem_toplevel {
   int SHIFTKEY;                         /* shift key pressed? */
   int ALTKEY;                           /* alt key pressed? */
   int buffer_number;                    /* current paste buffer in use */
-
-  i_callback_func last_callback;        /* Last i_call* cmd executed */
 
   GList *clipboard_buffer;              /* buffer for system clipboard integration */
 
@@ -185,7 +201,6 @@ struct st_gschem_toplevel {
   int include_complex;    /* controls if complex objects are included */
   int scrollbars_flag;    /* controls if scrollbars are displayed */
   int log_window;         /* controls if the log windows mapped on startup */
-  int log_window_type;    /* controls if the log window is decorated or not */
   int third_button;       /* controls what the third mouse button does */
   int third_button_cancel;/* controls if the third mouse button cancels actions */
   int middle_button;      /* controls what the third mouse button does */
@@ -193,7 +208,6 @@ struct st_gschem_toplevel {
   int file_preview;       /* controls if the preview area is enabled or not */
   int enforce_hierarchy;  /* controls how much freedom user has when traversing the hierarchy */
   int fast_mousepan;      /* controls if text is completely drawn during mouse pan */
-  int raise_dialog_boxes; /*controls if expose events raise dialog boxes*/
 
   /* controls if after doing a place the same component can be placed again */
   int continue_component_place;
@@ -221,15 +235,13 @@ struct st_gschem_toplevel {
   /* Minimum grid line pitch to display. Applies to major and minor lines. */
   int mesh_grid_display_threshold;
 
-  /* sets the offset (in world coordinates) that are added to netname */
-  /* attributes when they are attached to vertical or horizontal nets */
-  int add_attribute_offset;
-
   int mousepan_gain;      /* Controls the gain of the mouse pan */
   int keyboardpan_gain;   /* Controls the gain of the keyboard pan */
   int select_slack_pixels; /* Number of pixels around an object we can still select it with */
   int zoom_gain;          /* Percentage increase in size for a zoom-in operation */
   int scrollpan_steps;    /* Number of scroll pan events required to traverse the viewed area */
+
+  gchar* bus_ripper_symname; /* default bus ripper symbol file name */
 
   gboolean dont_invalidate;
 

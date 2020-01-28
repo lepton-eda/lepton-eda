@@ -1,9 +1,11 @@
 START header
 
 gEDA's netlist format
-Created specifically for testing of gnetlist
+(Initially created for testing of gnetlist)
 
 END header
+
+No graphical symbols found
 
 START components
 
@@ -16,17 +18,16 @@ U500 device=7400
 
 END components
 
+No "no-connect" nets found
+
 START renamed-nets
 
+netattrib -> netattrib
 two -> one
-GND -> sig9
 signal3 -> out3
 signal8 -> out8
-unconnected_pin-4 -> signal1
-unconnected_pin-6 -> signal1
-unnamed_net3 -> signal4
+GND -> sig9
 signal9 -> signal6
-unnamed_net2 -> signal6
 
 END renamed-nets
 
@@ -48,7 +49,7 @@ signal4 : U400 4, U400 10
 signal6 : U400 6, U400 9
 signal12 : U400 12
 unnamed_net1 : U300 2
-unnamed_net4 : U500 3, U500 4, U500 5
+unnamed_net2 : U500 3, U500 4, U500 5
 
 END nets
 

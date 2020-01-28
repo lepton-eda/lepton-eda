@@ -23,7 +23,7 @@ AC_DEFUN([AX_OPTION_CONTRIB],dnl
 [AC_PREREQ([2.60])dnl
 
   AC_MSG_CHECKING([whether to enable build of contributed software])
-  AC_ARG_ENABLE([relocatable],
+  AC_ARG_ENABLE([contrib],
     [AS_HELP_STRING([--enable-contrib], [enable building of contributed software])])
 
   if test "X$enable_contrib" = "Xyes"; then

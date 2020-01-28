@@ -1,0 +1,72 @@
+.TH lepton-archive 1 "@DATE@" "Lepton EDA" @VERSION@
+
+.SH NAME
+lepton-archive \- create and extract Lepton EDA design archives
+
+.SH SYNOPSIS
+.B lepton-archive
+.RI [ OPTIONS ]
+.I FILE
+\&...
+
+.SH DESCRIPTION
+.B lepton-archive
+creates and extracts Lepton EDA designs from an archive. The two modes of
+operation are "archive mode" (archive creation) and "extract mode".
+In archive mode it creates a project archive from a bunch of project
+files, and in extract mode it extracts the files from the archive and
+places them in the local directory.
+.PP
+In archive mode the program processes schematic files traversing
+their hierarchy, collecting and caching all subschematics, symbols
+and subcircuits specified in the "file=" attributes.
+.PP
+Archive mode is the default.
+
+.SH OPTIONS
+.nf
+\-h, \-\-help             Print usage information.
+\-v, \-\-verbose          Verbose mode.
+\-f, \-\-files\-from=FILE  Additionally read filenames to archive from FILE.
+\-e, \-\-extract          Extract mode. Mandatory if you want to extract from archive.
+\-a, \-\-archive          Archive mode. It is the default mode.
+\-o, \-\-output=FILE      Specify the name of the output archive file
+                       in archive mode. If FILE has no ".tar.gz" suffix it will be
+                       automatically appended.
+                       Default file name is "project-archive.tar.gz".
+
+.SH EXAMPLES
+To create an archive named MyArchive.tar.gz, the files to store
+are listed in "archive-list":
+.IP
+lepton-archive \-f archive-list \-o MyArchive.tar.gz
+.PP
+The same by using just file basename:
+.IP
+lepton-archive \-f archive-list \-o MyArchive
+.PP
+Verbosely create an archive from files listed on command line:
+.IP
+lepton-archive \-v README sch1.sch sch2.sch sch3.sch
+.PP
+Extract an archive:
+.IP
+lepton-archive \-e project-archive.tar.gz
+
+.SH AUTHOR
+The initial Python script has been written by Stuart Brorson
+<sdb@cloud9.net>. The program has been rewritten almost from
+scratch in Scheme by Vladimir Zhbanov <vzhbanov@gmail.com>.
+
+.SH SEE ALSO
+.BR lepton-schematic(1)
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 2012-2017 gEDA Contributors.
+Copyright \(co 2019 Lepton EDA Contributors.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

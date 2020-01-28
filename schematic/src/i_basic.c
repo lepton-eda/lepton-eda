@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -261,79 +262,6 @@ void i_set_state_msg(GschemToplevel *w_current, enum x_states newstate,
 
 /*! \todo Finish function documentation!!!
  *  \brief
- *  \par Function Description
- *
- */
-void i_update_middle_button (GschemToplevel *w_current,
-                             i_callback_func func_ptr,
-                             const char *string)
-{
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->bottom_widget != NULL);
-
-  switch(w_current->middle_button) {
-
-    /* remove this case eventually and make it a null case */
-    case(ACTION):
-      gschem_bottom_widget_set_middle_button_text (
-          GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-          _("Action"));
-      w_current->last_callback = NULL;
-      break;
-
-#ifdef HAVE_LIBSTROKE
-    case(STROKE):
-      gschem_bottom_widget_set_middle_button_text (
-          GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-          _("Stroke"));
-      w_current->last_callback = NULL;
-    break;
-#else
-    /* remove this case eventually and make it a null case */
-    case(STROKE):
-      gschem_bottom_widget_set_middle_button_text (
-          GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-          _("none"));
-      w_current->last_callback = NULL;
-      break;
-#endif
-
-    case(REPEAT):
-      if ((string != NULL) && (func_ptr != NULL))
-      {
-        char *temp_string = g_strconcat (_("Repeat/"), string, NULL);
-
-        gschem_bottom_widget_set_middle_button_text (
-            GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-            temp_string);
-
-        g_free(temp_string);
-        w_current->last_callback = func_ptr;
-      } else {
-        gschem_bottom_widget_set_middle_button_text (
-            GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-            _("Repeat/none"));
-        w_current->last_callback = NULL;
-      }
-      break;
-
-    case(MID_MOUSEPAN_ENABLED):
-      gschem_bottom_widget_set_middle_button_text (
-          GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-          _("Pan"));
-      w_current->last_callback = NULL;
-      break;
-
-    default:
-      gschem_bottom_widget_set_middle_button_text (
-          GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-          _("none"));
-      w_current->last_callback = NULL;
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
  *  \param [in] w_current GschemToplevel structure
  *
  */
@@ -383,6 +311,7 @@ void i_update_toolbar(GschemToplevel *w_current)
 }
 
 
+
 /*! \brief Update sensitivity of the Edit/Paste menu item
  *
  *  \par Function Description
@@ -392,150 +321,176 @@ void i_update_toolbar(GschemToplevel *w_current)
 static void clipboard_usable_cb (int usable, void *userdata)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (userdata);
-  x_menus_sensitivity (w_current, "_Edit/_Paste", usable);
-}
-
-static gboolean
-selected_at_least_one_text_object(GschemToplevel *w_current)
-{
-  OBJECT *obj;
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  GList *list = geda_list_get_glist(toplevel->page_current->selection_list);
-
-  while(list != NULL) {
-    obj = (OBJECT *) list->data;
-    if (obj->type == OBJ_TEXT)
-      return TRUE;
-    list = g_list_next(list);
-  }
-  return FALSE;
+  x_menus_sensitivity (w_current->menubar,    "&clipboard-paste", usable);
+  x_menus_sensitivity (w_current->popup_menu, "&clipboard-paste", usable);
 }
 
 
-/*! \brief Update sensitivity of relevant menu items
+
+/*! \brief Return TRUE if at least one object of type \a type is selected.
  *
- *  \par Function Description
- *  Update sensitivity of relevant menu items.
+ *  \param toplevel  pointer to TOPLEVEL structure
+ *  \param type      object type constant (OBJ_TEXT, OBJ_COMPLEX, etc.) (o_types.h)
+ */
+static gboolean
+obj_selected (TOPLEVEL* toplevel, int type)
+{
+  gboolean result = FALSE;
+  SELECTION* selection = toplevel->page_current->selection_list;
+
+  GList* gl = geda_list_get_glist (selection);
+  for ( ; gl != NULL; gl = g_list_next (gl) )
+  {
+    OBJECT* obj = (OBJECT*) gl->data;
+    if (obj->type == type)
+    {
+#ifdef DEBUG
+      printf (" >> obj_selected(): obj->type: [%c]\n", obj->type);
+#endif
+      result = TRUE;
+      break;
+    }
+  }
+
+  return result;
+}
+
+
+
+/*! \brief Update menu items sensitivity for the main and popup menus.
  *
  *  \param [in] w_current GschemToplevel structure
  */
-void i_update_menus(GschemToplevel *w_current)
+void i_update_menus (GschemToplevel* w_current)
 {
-  gboolean have_text_selected;
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  /*
-   * This is very simplistic.  Right now it just disables all menu
-   * items which get greyed out when a component is not selected.
-   * Eventually what gets enabled/disabled
-   * should be based on what is in the selection list
-   */
+  g_return_if_fail (w_current != NULL);
 
-  g_assert(w_current != NULL);
-  g_assert(toplevel->page_current != NULL);
+  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_if_fail (toplevel != NULL);
 
+  PAGE* page = toplevel->page_current;
+  g_return_if_fail (page != NULL);
+
+  /* update Edit->Paste sensitivity in clipboard_usable_cb():
+  */
   x_clipboard_query_usable (w_current, clipboard_usable_cb, w_current);
 
-  if (o_select_selected (w_current)) {
-    have_text_selected = selected_at_least_one_text_object(w_current);
+  gboolean selected      = o_select_selected (w_current);
+  gboolean text_selected = selected && obj_selected (toplevel, OBJ_TEXT);
+  gboolean comp_selected = selected && obj_selected (toplevel, OBJ_COMPLEX);
+  gboolean pic_selected  = selected && obj_selected (toplevel, OBJ_PICTURE);
+  gboolean embeddable    = comp_selected || pic_selected;
+  gboolean has_parent = s_hierarchy_find_up_page (toplevel->pages, page) != NULL;
 
-    /* since one or more things are selected, we set these TRUE */
-    /* These strings should NOT be internationalized */
-    x_menus_sensitivity(w_current, "_Edit/Cu_t", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/_Copy", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/_Delete", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Copy Mode", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Multiple Copy Mode", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Move Mode", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Rotate 90 Mode", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Mirror Mode", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Edit...", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Slot...", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Lock", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Unlock", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Embed Component/Picture", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Unembed Component/Picture", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Update Component", TRUE);
-    x_menus_sensitivity(w_current, "Hie_rarchy/_Down Schematic", TRUE);
-    x_menus_sensitivity(w_current, "Hie_rarchy/Down _Symbol", TRUE);
-    x_menus_sensitivity(w_current, "Hie_rarchy/D_ocumentation...", TRUE);
-    x_menus_sensitivity(w_current, "A_ttributes/_Attach", TRUE);
-    x_menus_sensitivity(w_current, "A_ttributes/_Detach", TRUE);
-    x_menus_sensitivity(w_current, "A_ttributes/Show _Value", have_text_selected);
-    x_menus_sensitivity(w_current, "A_ttributes/Show _Name", have_text_selected);
-    x_menus_sensitivity(w_current, "A_ttributes/Show _Both", have_text_selected);
-    x_menus_sensitivity(w_current, "A_ttributes/_Toggle Visibility", have_text_selected);
+  GtkWidget* mmenu = w_current->menubar;
 
-    /*  Menu items for hierarchy added by SDB 1.9.2005.  */
-    x_menus_popup_sensitivity(w_current, "Down Schematic", TRUE);
-    x_menus_popup_sensitivity(w_current, "Down Symbol", TRUE);
-    /* x_menus_popup_sensitivity(w_current, "/Up", TRUE); */
+  x_menus_sensitivity (mmenu, "&clipboard-cut", selected);
+  x_menus_sensitivity (mmenu, "&clipboard-copy", selected);
+  x_menus_sensitivity (mmenu, "&edit-delete", selected);
+  x_menus_sensitivity (mmenu, "&edit-copy", selected);
+  x_menus_sensitivity (mmenu, "&edit-mcopy", selected);
+  x_menus_sensitivity (mmenu, "&edit-move", selected);
+  x_menus_sensitivity (mmenu, "&edit-rotate-90", selected);
+  x_menus_sensitivity (mmenu, "&edit-mirror", selected);
+  x_menus_sensitivity (mmenu, "&edit-edit", selected);
+  x_menus_sensitivity (mmenu, "&edit-text", text_selected);
+  x_menus_sensitivity (mmenu, "&edit-object-properties", selected);
+  x_menus_sensitivity (mmenu, "&edit-slot", comp_selected);
+  x_menus_sensitivity (mmenu, "&edit-lock", selected);
+  x_menus_sensitivity (mmenu, "&edit-unlock", selected);
+  x_menus_sensitivity (mmenu, "&edit-embed", embeddable);
+  x_menus_sensitivity (mmenu, "&edit-unembed", embeddable);
+  x_menus_sensitivity (mmenu, "&edit-update", comp_selected);
 
-  } else {
-    /* Nothing is selected, grey these out */
-    /* These strings should NOT be internationalized */
-    x_menus_sensitivity(w_current, "_Edit/Cu_t", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/_Copy", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/_Delete", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Copy Mode", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Multiple Copy Mode", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Move Mode", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Rotate 90 Mode", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Mirror Mode", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Edit...", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Slot...", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Lock", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Unlock", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Embed Component/Picture", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Unembed Component/Picture", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Update Component", FALSE);
-    x_menus_sensitivity(w_current, "Hie_rarchy/_Down Schematic", FALSE);
-    x_menus_sensitivity(w_current, "Hie_rarchy/Down _Symbol", FALSE);
-    x_menus_sensitivity(w_current, "Hie_rarchy/D_ocumentation...", FALSE);
-    x_menus_sensitivity(w_current, "A_ttributes/_Attach", FALSE);
-    x_menus_sensitivity(w_current, "A_ttributes/_Detach", FALSE);
-    x_menus_sensitivity(w_current, "A_ttributes/Show _Value", FALSE);
-    x_menus_sensitivity(w_current, "A_ttributes/Show _Name", FALSE);
-    x_menus_sensitivity(w_current, "A_ttributes/Show _Both", FALSE);
-    x_menus_sensitivity(w_current, "A_ttributes/_Toggle Visibility", FALSE);
+  x_menus_sensitivity (mmenu, "&hierarchy-down-schematic", comp_selected);
+  x_menus_sensitivity (mmenu, "&hierarchy-down-symbol", comp_selected);
+  x_menus_sensitivity (mmenu, "&hierarchy-up", has_parent);
 
-    /*  Menu items for hierarchy added by SDB 1.9.2005.  */
-    x_menus_popup_sensitivity(w_current, "Down Schematic", FALSE);
-    x_menus_popup_sensitivity(w_current, "Down Symbol", FALSE);
-    /* x_menus_popup_sensitivity(w_current, "/Up", FALSE);	*/
+  x_menus_sensitivity (mmenu, "&attributes-attach", selected);
+  x_menus_sensitivity (mmenu, "&attributes-detach", selected);
+  x_menus_sensitivity (mmenu, "&attributes-show-value", text_selected);
+  x_menus_sensitivity (mmenu, "&attributes-show-name", text_selected);
+  x_menus_sensitivity (mmenu, "&attributes-show-both", text_selected);
+  x_menus_sensitivity (mmenu, "&attributes-visibility-toggle", text_selected);
+
+  x_menus_sensitivity (mmenu, "&hierarchy-documentation", comp_selected);
+
+
+  GtkWidget* pmenu = w_current->popup_menu;
+
+  x_menus_sensitivity (pmenu, "&clipboard-cut", selected);
+  x_menus_sensitivity (pmenu, "&clipboard-copy", selected);
+  x_menus_sensitivity (pmenu, "&edit-delete", selected);
+
+  x_menus_sensitivity (pmenu, "&edit-edit", selected);
+  x_menus_sensitivity (pmenu, "&edit-text", text_selected);
+  x_menus_sensitivity (pmenu, "&edit-object-properties", selected);
+
+  x_menus_sensitivity (pmenu, "&hierarchy-down-schematic", comp_selected);
+  x_menus_sensitivity (pmenu, "&hierarchy-down-symbol", comp_selected);
+  x_menus_sensitivity (pmenu, "&hierarchy-up", has_parent);
+
+} /* i_update_menus() */
+
+
+
+/*! \brief Set the main window's title
+ *
+ *  \par Function Description
+ *  Set the main window's title using \a filename.
+ *  Prepend an asterisk ("*") to indicate that the page
+ *  is modified if \a changed is TRUE.
+ *  Depending on [schematic.gui]::title-show-path configuration
+ *  value, either full path or basename of \a filename is shown
+ *  in the title.
+ *
+ *  \param [in] w_current GschemToplevel structure
+ *  \param [in] filename  The filename
+ *  \param [in] changed   Page changed status
+ */
+void i_set_filename (GschemToplevel* w_current,
+                     const gchar* filename,
+                     gboolean changed)
+{
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->main_window != NULL);
+  g_return_if_fail (filename);
+
+  gchar* cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  gboolean show_fullpath = FALSE;
+
+  if (cfg != NULL)
+  {
+    GError*  err = NULL;
+    gboolean val = eda_config_get_boolean (cfg,
+                                           "schematic.gui",
+                                           "title-show-path",
+                                           &err);
+    if (err == NULL)
+    {
+      show_fullpath = val;
+    }
+
+    g_clear_error (&err);
   }
 
 
-}
+  gchar* fname = show_fullpath
+                 ? g_strdup (filename)
+                 : g_path_get_basename (filename);
 
-/*! \brief Set filename as gschem window title
- *
- *  \par Function Description
- *  Set filename as gschem window title using
- *  the gnome HID format style.
- *
- *  \param [in] w_current GschemToplevel structure
- *  \param [in] string The filename
- *  \param [in] string 'Page changed' indication in window's title
- */
-void i_set_filename(GschemToplevel *w_current, const gchar *string, const gchar *changed)
-{
-  gchar *print_string=NULL;
-  gchar *filename=NULL;
+  gchar* title = g_strdup_printf ("%s%s - lepton-schematic",
+                                  changed ? "* " : "",
+                                  fname);
 
-  if (!w_current->main_window)
-    return;
-  if (string == NULL)
-    return;
+  gtk_window_set_title (GTK_WINDOW (w_current->main_window),
+                        title);
 
-  filename = g_path_get_basename(string);
-
-  print_string = g_strdup_printf("%s%s - gschem", changed, filename);
-
-  gtk_window_set_title(GTK_WINDOW(w_current->main_window),
-		       print_string);
-
-  g_free(print_string);
-  g_free(filename);
+  g_free (title);
+  g_free (fname);
 }
 
 /*! \brief Write the grid settings to the gschem status bar
@@ -575,3 +530,22 @@ i_update_grid_info_callback (GschemPageView *view, GschemToplevel *w_current)
 {
   i_update_grid_info (w_current);
 }
+
+
+
+/*! \brief Update the status bar: rubber band, magnetic net modes
+ *
+ *  \param [in] w_current GschemToplevel structure
+ */
+void
+i_update_net_options_status (GschemToplevel* w_current)
+{
+  gschem_bottom_widget_set_rubber_band_mode(
+    GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+    gschem_options_get_net_rubber_band_mode (w_current->options));
+
+  gschem_bottom_widget_set_magnetic_net_mode(
+    GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+    gschem_options_get_magnetic_net_mode (w_current->options));
+}
+

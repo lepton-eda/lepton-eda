@@ -1,4 +1,6 @@
-* .OP
-.AC DEC 20 1MegHz 100GHz
-* .DC I1 0 5mA .001mA
-* .TRAN 0ns 20ns
+* interactive mode commands:
+*
+.control
+  ac dec 20 1e6 100e9
+  plot vdb(vout)
+.endc

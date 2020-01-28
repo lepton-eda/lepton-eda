@@ -1,6 +1,7 @@
-;; gEDA - GPL Electronic Design Automation
-;; libgeda - gEDA's library - Scheme API
-;; Copyright (C) 2010 Peter Brett
+;;; Lepton EDA library - Scheme API
+;;; Copyright (C) 2010 Peter Brett
+;;; Copyright (C) 2010-2014 gEDA Contributors
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -21,16 +22,44 @@
 ;; be used in new code.
 
 (define-module (geda deprecated)
-
- #:use-module (geda page)
- #:use-module (geda object)
- #:use-module (geda attrib)
-
  ;; Import C procedures
+ #:use-module (geda core gettext)
  #:use-module (geda core deprecated)
+ #:use-module (lepton core rc)
+
+ #:use-module (lepton attrib)
+ #:use-module (lepton log)
+ #:use-module (lepton object)
+ #:use-module (lepton page)
+ #:use-module (lepton rc)
+
  #:re-export (OBJ_LINE OBJ_PATH OBJ_BOX OBJ_PICTURE OBJ_CIRCLE OBJ_NET
               OBJ_BUS OBJ_COMPLEX OBJ_TEXT OBJ_PIN OBJ_ARC)
-)
+ ;; Re-export procedures and variables from (lepton rc).
+ #:re-export (build-path
+              geda-data-path
+              geda-rc-path
+              load-scheme-dir
+              load-rc-from-sys-config-dirs)
+
+ #:export (deprecated-module-log-warning!
+           always-promote-attributes
+           attribute-promotion
+           keep-invisible
+           make-backup-files
+           print-color-map
+           promote-invisible
+           scheme-directory))
+
+(define* (deprecated-module-log-warning! #:optional (new-modname #f))
+  (log! 'warning
+        (_ "The module ~S is deprecated. Please don't use it any more.~A")
+        (module-name (current-module))
+        (if new-modname
+          (format #f
+                  (_ "\n  It has been replaced by the ~A module.")
+                  new-modname)
+          "")))
 
 (define-public get-line-width %get-line-width)
 
@@ -115,3 +144,24 @@
       (set-car! (cdr bounds) bottom)
       (set-cdr! (cdr bounds) top)
       bounds)))
+
+(define print-color-map %print-color-map)
+
+(define scheme-directory %scheme-directory)
+
+(define always-promote-attributes %always-promote-attributes)
+
+(define (enabled? x)
+  (string= "enabled" x))
+
+(define (attribute-promotion mode)
+  (%attribute-promotion (enabled? mode)))
+
+(define (promote-invisible mode)
+  (%promote-invisible (enabled? mode)))
+
+(define (keep-invisible mode)
+  (%keep-invisible (enabled? mode)))
+
+(define (make-backup-files mode)
+  (%make-backup-files (enabled? mode)))

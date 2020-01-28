@@ -1,0 +1,494 @@
+# Russian translation for gEDA gattrib
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# Copyright (c) Vladimir Zhbanov <vzhbanov@gmail.com>, 2011, 2014.
+#
+# This file is distributed under the same license as the gEDA gattrib package.
+#
+# Переводчикам: см. примечания в liblepton/po/ru.po
+msgid ""
+msgstr ""
+"Project-Id-Version: geda gattrib\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2019-10-03 23:30+0300\n"
+"PO-Revision-Date: 2014-03-08 20:49+0400\n"
+"Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
+"Language-Team: gEDA developers <geda-dev@seul.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#, fuzzy
+msgid "Lepton EDA Attribute Editor"
+msgstr "Редактор атрибутов gEDA"
+
+#, fuzzy
+msgid "Manipulate component attributes with lepton-attrib"
+msgstr "Управление атрибутами компонента с помощью gattrib"
+
+#, fuzzy, c-format
+msgid "o_save: Could not open [%1$s]"
+msgstr "o_save: Не удалось открыть «%s»\n"
+
+#, c-format
+msgid "Lepton EDA/lepton-attrib version %1$s%2$s.%3$s git: %4$.7s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Couldn't find file [%1$s]\n"
+msgstr "Не удалось найти файл «%s»\n"
+
+msgid "Entry type must be GtkEntry subclass, using default"
+msgstr ""
+"Тип записи должен быть подклассом GtkEntry, используется значение по "
+"умолчанию"
+
+msgid "Widget must be a GtkSheet child"
+msgstr "Виджет должен быть дочерним для GtkSheet"
+
+#, fuzzy, c-format
+msgid ""
+"\n"
+"lepton-attrib: Lepton EDA attribute editor.\n"
+"Presents schematic attributes in easy-to-edit spreadsheet format.\n"
+"\n"
+"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
+"  -q, --quiet            Quiet mode\n"
+"  -v, --verbose          Verbose mode on\n"
+"  -h, --help             This help menu\n"
+"\n"
+"  FAQ:\n"
+"  *  What do the colors of the cell text mean?\n"
+"     The cell colors indicate the visibility of the attribute.\n"
+"     Black = Visible attribute, value displayed only.\n"
+"     Grey  = Invisible attribute.\n"
+"     Red   = Visible attribute, name displayed only.\n"
+"     Blue  = Visible attribute, both name and value displayed.\n"
+"\n"
+"  *  What does the period (\".\") at the end of some component refdeses "
+"mean?\n"
+"     The period is placed after the refdeses of slotted components.\n"
+"     If slots are present on the component, then the different slots appear\n"
+"     in different rows with the slot number after the period.  Example:  "
+"C101.2.\n"
+"\n"
+"Copyright (C) 2003-2006 Stuart D. Brorson.\n"
+"Copyright (C) 2007-2016 gEDA Contributors.\n"
+"Copyright (C) 2017-2019 Lepton EDA Contributors.\n"
+"\n"
+"Please report bugs to %2$s.\n"
+msgstr ""
+"\n"
+"Gattrib:  редактор атрибутов проекта gEDA.\n"
+"Представляет атрибуты схемы в удобном для редактирования формате электронной "
+"таблицы.\n"
+"\n"
+"Использование: %s [КЛЮЧИ] имя_файла1 ... имя_файлаN\n"
+"  -q, --quiet            Без вывода информации\n"
+"  -v, --verbose          Подробный вывод\n"
+"  -h, --help             Данная справка\n"
+"\n"
+"  FAQ:\n"
+"  *  Что означает цвет текста в ячейках?\n"
+"     Цвет текста отражает видимость атрибута.\n"
+"     Чёрный  = видимый атрибут, отображается только значение.\n"
+"     Серый   = Невидимый атрибут.\n"
+"     Красный = Видимый атрибут, отображается только имя.\n"
+"     Синий   = Видимый атрибут, отображается и имя, и значение.\n"
+"\n"
+"  *  Что означает точка («.») в конце позиционных обозначений некоторых "
+"компонентов?\n"
+"     Точка помещается после позиционных обозначений многосекционных "
+"компонентов.\n"
+"     Если компонент содержит секции, то различные секции отображаются\n"
+"     в различных строках с номером секции после точки. Пример:  C101.2.\n"
+"\n"
+"Copyright (C) 2003 -- 2006 Stuart D. Brorson.  E-mail: sdb (AT) cloud9 (DOT) "
+"net.\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "WARNING: Found uref=%1$s, uref= is deprecated, please use refdes=\n"
+msgstr ""
+"ВНИМАНИЕ: Обнаружен не рекомендуемый к использованию атрибут «uref=%s», "
+"используйте вместо него «refdes».\n"
+
+#, c-format
+msgid ""
+"\n"
+"DONE\n"
+msgstr ""
+"\n"
+"ЗАВЕРШЕНО\n"
+
+#, c-format
+msgid " DONE\n"
+msgstr " ЗАВЕРШЕНО\n"
+
+#, fuzzy, c-format
+msgid ""
+"In s_object_replace_attrib_in_object, we have failed to find the attrib %1$s "
+"on the component.  Exiting . . .\n"
+msgstr ""
+"s_object_replace_attrib_in_object: не удалось найти атрибут «%s» для "
+"компонента. Выход . . .\n"
+
+#, fuzzy, c-format
+msgid ""
+"In s_object_remove_attrib_in_object, we have failed to find the attrib %1$s "
+"on the component.  Exiting . . .\n"
+msgstr ""
+"s_object_remove_attrib_in_object: не удалось найти атрибут «%s» для "
+"компонента. Выход . . .\n"
+
+#, c-format
+msgid ""
+"In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex "
+"or non-net!\n"
+msgstr ""
+"s_object_attrib_add_attrib_in_object: попытка добавить атрибут к объекту, не "
+"являющимся ни составным, ни соединением!\n"
+
+#, c-format
+msgid "- Starting master comp list creation.\n"
+msgstr "- Приступаем к созданию основного списка компонентов.\n"
+
+#, c-format
+msgid "- Starting master comp attrib list creation.\n"
+msgstr "- Приступаем к созданию основного списка атрибутов компонентов.\n"
+
+#, c-format
+msgid "- Starting master pin list creation.\n"
+msgstr "- Приступаем к созданию основного списка выводов.\n"
+
+#, c-format
+msgid ""
+"In s_sheet_data_add_master_pin_list_items, found component pin with no "
+"pinnumber.\n"
+msgstr ""
+"s_sheet_data_add_master_pin_list_items: обнаружен вывод компонента без "
+"атрибута pinnumber.\n"
+
+#, c-format
+msgid "- Starting master pin attrib list creation.\n"
+msgstr "- Приступаем к созданию основного списка атрибутов выводов.\n"
+
+#, c-format
+msgid "In s_string_list_add_item, tried to add to a NULL list.\n"
+msgstr ""
+"s_string_list_add_item: попытка добавления к списку со значением NULL.\n"
+
+#, c-format
+msgid "In s_string_list_delete_item, tried to remove item from empty list\n"
+msgstr ""
+"s_string_list_delete_item: попытка удаления элемента из пустого списка\n"
+
+#, c-format
+msgid "In s_string_list_delete_item, couldn't delete item %s\n"
+msgstr "s_string_list_delete_item: не удалось удалить элемент %s\n"
+
+#, c-format
+msgid ""
+"In s_table_create_attrib_pair, we didn't find the row name in the row list!\n"
+msgstr ""
+"s_table_create_attrib_pair: не удалось найти имя строки в списке строк!\n"
+
+#, c-format
+msgid "- Starting internal component TABLE creation\n"
+msgstr "- Приступаем к созданию внутренней таблицы компонентов\n"
+
+#, c-format
+msgid ""
+"In s_table_add_toplevel_comp_items_to_comp_table, we didn't find either row "
+"or col in the lists!\n"
+msgstr ""
+"s_table_add_toplevel_comp_items_to_comp_table: не удалось найти либо строку, "
+"либо столбец в соответствующем списке!\n"
+
+#, c-format
+msgid "- Starting internal pin TABLE creation\n"
+msgstr "- Приступаем к созданию внутренней таблицы выводов\n"
+
+#, c-format
+msgid ""
+"In s_table_add_toplevel_pin_items_to_pin_table, we didn't find either row or "
+"col in the lists!\n"
+msgstr ""
+"s_table_add_toplevel_pin_items_to_pin_table: не удалось найти либо строку, "
+"либо столбец в соответствующем списке!\n"
+
+msgid "_cancel"
+msgstr ""
+
+#, c-format
+msgid "In s_toplevel_delete_attrib_col, can't get attrib name\n"
+msgstr "s_toplevel_delete_attrib_col: не удалось получить имя атрибута\n"
+
+#, c-format
+msgid ""
+"In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes in "
+"the master list!\n"
+msgstr ""
+"s_toplevel_get_component_attribs_in_sheet: не найдено значение «refdes» в "
+"основном списке!\n"
+
+#, c-format
+msgid ""
+"In s_toplevel_get_component_attribs_in_sheet, count != i!  Exiting . . . .\n"
+msgstr "s_toplevel_get_component_attribs_in_sheet: count != i!  Выход . . .\n"
+
+#, c-format
+msgid ""
+"In s_toplevel_get_pin_attribs_in_sheet, either refdes or pinnumber of object "
+"missing!\n"
+msgstr ""
+"s_toplevel_get_pin_attribs_in_sheet: отсутствует атрибут «refdes» или "
+"«pinnumber» у объекта!\n"
+
+#, c-format
+msgid ""
+"In s_toplevel_get_pin_attribs_in_sheet, we didn't find the refdes:pin in the "
+"master list!\n"
+msgstr ""
+"s_toplevel_get_pin_attribs_in_sheet: не удалось найти нужную строку "
+"«refdes»:«pinnumber» в основном списке!\n"
+
+#, c-format
+msgid "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"
+msgstr "s_toplevel_get_pin_attribs_in_sheet: count != i!  Выход . . .\n"
+
+msgid "Add new attribute"
+msgstr "Добавление нового атрибута"
+
+msgid "Enter new attribute name"
+msgstr "Введите новое имя атрибута"
+
+msgid "Are you sure you want to delete this attribute?"
+msgstr "Вы уверены, что хотите удалить этот атрибут?"
+
+msgid "Delete attribute"
+msgstr "Удаление атрибута"
+
+#, fuzzy
+msgid ""
+"One or more components have been found with missing symbol files!\n"
+"\n"
+"This probably happened because lepton-attrib couldn't find your component "
+"libraries, perhaps because your gafrc or gattribrc files are misconfigured.\n"
+"\n"
+"Choose \"Quit\" to leave lepton-attrib and fix the problem, or\n"
+"\"Forward\" to continue working with lepton-attrib.\n"
+msgstr ""
+"Отсутствуют файлы символов одного или нескольких компонентов!\n"
+"\n"
+"Это могло случиться из-за того, что программе gattrib не удалось найти "
+"библиотеки ваших компонентов, причиной чего могут быть неправильные "
+"настройки в одном из файлов gafrc или gattribrc.\n"
+"\n"
+"Выберите «Выход» для выхода из gattrib и устранения проблемы или \n"
+"«Вперёд» для продолжения работы с gattrib.\n"
+
+msgid "Missing symbol file found for component!"
+msgstr "Не найден символ компонента!"
+
+msgid "Save the changes before closing?"
+msgstr "Сохранить изменения перед закрытием?"
+
+msgid "<big><b>"
+msgstr "<big><b>"
+
+msgid "</b></big>"
+msgstr "</b></big>"
+
+msgid "If you don't save, all your changes will be permanently lost."
+msgstr "Если их не сохранить, все изменения будут безвозвратно утрачены."
+
+msgid "Close without saving"
+msgstr "Закрыть без сохранения"
+
+#, fuzzy
+msgid ""
+"Sorry -- you have chosen a feature which has not been\n"
+"implemented yet.\n"
+"\n"
+"lepton-attrib is an open-source program which\n"
+"I work on as a hobby.  It is still a work in progress.\n"
+"If you wish to contribute (perhaps by implementing this\n"
+"feature), please do so!  Please send patches to lepton-attrib\n"
+"to Stuart Brorson: sdb@cloud9.net.\n"
+"\n"
+"Otherwise, just hang tight -- I'll implement this feature soon!\n"
+msgstr ""
+"Выбранная вами функция ещё не реализована.\n"
+"\n"
+"gattrib — программа с открытым исходным кодом, и для\n"
+"меня это хобби. Работа всё ещё продолжается.\n"
+"Если вы хотите помочь (может быть реализовать\n"
+"данную функцию), так и сделайте! Патчи для gattrib\n"
+"отправляйте Стюарту Брорсону (Stuart Brorson): sdb@cloud9.net.\n"
+"\n"
+"Иначе просто ждите — я скоро напишу эту функцию!\n"
+
+msgid "Unimplemented feature!"
+msgstr "Отсутствующая функциональность!"
+
+msgid "Fatal error"
+msgstr "Фатальная ошибка"
+
+#, fuzzy, c-format
+msgid ""
+"Lepton Electronic Design Automation\n"
+"\n"
+"lepton-attrib - Lepton EDA attribute editor\n"
+"\n"
+"lepton-attrib version: %1$s%2$s.%3$s\n"
+"\n"
+"lepton-attrib is written by: Stuart Brorson (sdb@cloud9.net)\n"
+"with generous helpings of code from gschem, gnetlist, \n"
+"and gtkextra, as well as support from the gEDA community."
+msgstr ""
+"gEDA : GPL Electronic Design Automation\n"
+"\n"
+"Это gattrib -- редактор атрибутов gEDA\n"
+"\n"
+"Версия gattrib: %s%s.%s\n"
+"\n"
+"Программа написана Стюартом Брорсоном (Stuart Brorson) (sdb@cloud9.net)\n"
+"с использованием изрядных кусков кода из gschem, gnetlist, \n"
+"и gtkextra, а также при поддержке сообщества gEDA."
+
+msgid "About..."
+msgstr "О программе..."
+
+msgid "Export CSV"
+msgstr "Экспорт CSV"
+
+msgid "Schematics"
+msgstr "Схемы"
+
+msgid "Symbols"
+msgstr "Символы"
+
+msgid "Schematics and symbols"
+msgstr "Схемы и символы"
+
+msgid "All files"
+msgstr "Все файлы"
+
+#, fuzzy, c-format
+msgid "Loading file [%1$s]"
+msgstr "Загрузка файла «%s»\n"
+
+#, fuzzy, c-format
+msgid "Couldn't load schematic [%1$s]\n"
+msgstr "Не удалось загрузить схему «%s»\n"
+
+msgid "Open..."
+msgstr "Открыть..."
+
+msgid "Save as..."
+msgstr "Сохранить как..."
+
+#, fuzzy, c-format
+msgid "Saved As [%1$s]"
+msgstr "Файл сохранён как «%s»\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save [%1$s]"
+msgstr "Не удалось сохранить «%s»\n"
+
+msgid "Components"
+msgstr "Компоненты"
+
+msgid "Nets"
+msgstr "Соединения"
+
+msgid "Pins"
+msgstr "Выводы"
+
+msgid ""
+"No components found in design.  Please check your schematic and try again!\n"
+msgstr ""
+"Не обнаружено компонентов в проекте. Проверьте свою схему и попробуйте "
+"снова!\n"
+
+msgid "TBD"
+msgstr "не реализовано"
+
+msgid "couldn't allocate color"
+msgstr "Не удалось выделить цвет"
+
+#, fuzzy
+msgid "lepton-attrib - Lepton EDA attribute editor"
+msgstr "gattrib — редактор атрибутов gEDA"
+
+#, fuzzy, c-format
+msgid "Error loading menu: %1$s\n"
+msgstr ""
+"Ошибка загрузки %s:\n"
+"%s\n"
+
+msgid ""
+"No components found in entire design!\n"
+"Do you have refdeses on your components?"
+msgstr ""
+"Во всём проекте не обнаружено ни одного компонента!\n"
+"Вы не забыли добавить для своих компонентов позиционные обозначения?"
+
+#, fuzzy
+msgid ""
+"No configurable component attributes found in entire design!\n"
+"Please attach at least some attributes before running lepton-attrib."
+msgstr ""
+"Во всём проекте не обнаружено ни одного атрибута компонента, который можно "
+"отредактировать!\n"
+"Прикрепите хотя бы несколько атрибутов, прежде чем запускать gattrib."
+
+msgid ""
+"No pins found on any components!\n"
+"Please check your design."
+msgstr ""
+"Не найдено выводов ни у одного компонента!\n"
+"Проверьте свой проект."
+
+#, fuzzy
+#~ msgid ""
+#~ "gEDA/gattrib version %1$s%2$s.%3$s\n"
+#~ "gEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
+#~ "details.\n"
+#~ "This is free software, and you are welcome to redistribute it under "
+#~ "certain\n"
+#~ "conditions; please see the COPYING file for more details.\n"
+#~ msgstr ""
+#~ "gEDA/gattrib version версии %s%s.%s\n"
+#~ "gEDA/gattrib поставляется БЕЗ КАКИХ БЫ ТО НИ БЫЛО ГАРАНТИЙ; подробности "
+#~ "см. в файле COPYING.\n"
+#~ "Это свободное программное обеспечение, и его можно распространять при "
+#~ "определённых\n"
+#~ "\n"
+
+#~ msgid "Increase number of rename_pair sets in s_net.c\n"
+#~ msgstr "Следует увеличить количество наборов rename_pair в s_net.c\n"
+
+#~ msgid "%d) Source: _%s_"
+#~ msgstr "%d) Источник: _%s_"
+
+#~ msgid " -> Dest: _%s_\n"
+#~ msgstr " -> Назначение: _%s_\n"
+
+#~ msgid ""
+#~ "WARNING: Trying to rename something twice:\n"
+#~ "\t%s and %s\n"
+#~ "are both a src and dest name\n"
+#~ "This warning is okay if you have multiple levels of hierarchy!\n"
+#~ msgstr ""
+#~ "ПРЕДУПРЕЖДЕНИЕ: Попытка двойного переименования:\n"
+#~ "\t%s и %s\n"
+#~ "оба являются именами источника и назначения\n"
+#~ "Это предупреждение несущественно, если имеется несколько уровней "
+#~ "иерархии!\n"
+
+#~ msgid "Increase number of rename_pairs (MAX_RENAME) in s_rename.c\n"
+#~ msgstr "Увеличьте количество пар переименования (MAX_RENAME) в s_rename.c\n"

@@ -1,0 +1,8 @@
+;
+; lepton-netlist configuration file
+;
+
+; Add netlist backends directory to %load-path:
+;
+( scheme-directory "@backenddir@" )
+

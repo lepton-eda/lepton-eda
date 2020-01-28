@@ -334,8 +334,8 @@ CONTENT:
 	- set in .gEDA/gschemrc or wherever you want, but place it
 	  right.
 
-	   	(attribute-promotion "enable")
-		(promote-invisible "enable")
+	   	(attribute-promotion "enabled")
+		(promote-invisible "enabled")
 		(enforce-hierarchy "disabled")
 
 		(attribute-name "port_object")
@@ -553,18 +553,6 @@ CONTENT:
 
    2.2.3.1. ROUTINES
 
-   It exists two new c-functions. Both are put down in
-   misc_for_gnetlist.c.
-
-
-     SCM get_selected_filename(gpointer data,
-			  guint callback_action,
-			  GtkWidget *widget)
-
-   This function returns the whole filename of the current schematic,
-   which is picked from the w_current->page_current->page_filename
-   string.
-
 
      SCM get_selected_component_attributes(gpointer data,
 				      guint callback_action,
@@ -574,39 +562,3 @@ CONTENT:
    the selected component. It is realized with a simple while loop
    over all objects of the schematic, which picked out all elements
    where the selected flag is set.
-
-
-   2.2.3.2. CODE-ADAPTATION
-
-   Here are some actions you must conclude to makes the software
-   runable.
-
-   (1) new lines in /gschem/src/g_register.c
-
-	gh_new_procedure0_0 ("get-selected-filename",g_get_selected_filename);
-
-
-   (2) new lines in /gschem/include/prototype.h
-
-	SCM g_get_selected_filename();
-
-
-   (3) copy the file misc_for_gnetlist.c to gschem/src
-
-   (4) add in file /gschem/src/Makefile.in or directly in Makefile.
-
-       (if you have edited Makefile.in you must run make config of
-       course)
-
-	- add "misc_for_gnetlist.c" to gschem_SOURCES - variable
-	- add "misc_for_gnetlist.o" to gschem_OBJECTS - variable
-
-   (5) add new lines in /gschem/src/g_key.c
-
-	 SCM g_get_selected_filename(void)
-	 {
-	   return (get_selected_filename(window_current, 0, NULL));
-	 }
-
-
-   (6) compile your changed c-code newly

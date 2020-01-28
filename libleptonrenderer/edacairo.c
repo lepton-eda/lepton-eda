@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libleptonrenderer - Rendering Lepton EDA schematics with Cairo
- * Copyright (C) 1998-2012 gEDA Contributors (see ChangeLog for details)
+/* libleptonrenderer - Rendering Lepton EDA schematics with Cairo
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -363,6 +363,7 @@ eda_cairo_stroke (cairo_t *cr, int flags, int line_type, int line_end,
   double dummy = 0;
   cairo_line_cap_t cap;
   cairo_line_cap_t round_cap_if_legible = CAIRO_LINE_CAP_ROUND;
+  cairo_line_join_t join = CAIRO_LINE_JOIN_MITER;
   int num_dashes;
   int iwidth;
   double width = wwidth, length = wlength, space = wspace;
@@ -381,18 +382,28 @@ eda_cairo_stroke (cairo_t *cr, int flags, int line_type, int line_end,
       (iwidth <= 1) ? CAIRO_LINE_CAP_SQUARE : CAIRO_LINE_CAP_ROUND;
   }
 
-  cairo_set_line_width (cr, width);
-  cairo_set_line_join (cr, CAIRO_LINE_JOIN_MITER);
-
   switch (line_end) {
-    case END_NONE:   cap = CAIRO_LINE_CAP_BUTT;   break;
-    case END_SQUARE: cap = CAIRO_LINE_CAP_SQUARE; break;
-    case END_ROUND:  cap = round_cap_if_legible;  break;
+    case END_NONE:
+      cap = CAIRO_LINE_CAP_BUTT;
+      join = CAIRO_LINE_JOIN_BEVEL;
+      break;
+    case END_SQUARE:
+      cap = CAIRO_LINE_CAP_SQUARE;
+      join = CAIRO_LINE_JOIN_MITER;
+      break;
+    case END_ROUND:
+      cap = round_cap_if_legible;
+      join = CAIRO_LINE_JOIN_ROUND;
+      break;
     default:
       g_warn_if_reached ();
       cap = CAIRO_LINE_CAP_BUTT;
+      join = CAIRO_LINE_JOIN_MITER;
     break;
   }
+
+  cairo_set_line_width (cr, width);
+  cairo_set_line_join (cr, join);
 
   switch (line_type) {
 
@@ -492,7 +503,11 @@ eda_cairo_path (cairo_t *cr, int flags, double line_width,
   double dummy = 0;
 
   if (flags & EDA_CAIRO_ENABLE_HINTS) {
-    s_line_width = screen_width (cr, line_width);
+    if (line_width == 0) {
+      s_line_width = 1;
+    } else {
+      s_line_width = screen_width (cr, line_width);
+    }
   } else {
     cairo_user_to_device (cr, &line_width, &dummy);
     s_line_width = line_width;

@@ -15,7 +15,8 @@ BUILT_SOURCES = \
 	scheme_closure.x \
 	scheme_log.x \
 	scheme_version.x \
-	scheme_deprecated.x
+	scheme_deprecated.x \
+	g_rc.x
 
 scheme_api_sources = \
 	scheme_init.c \
@@ -32,7 +33,8 @@ scheme_api_sources = \
 	scheme_log.c \
 	scheme_version.c \
 	edascmhookproxy.c \
-	edascmvaluetypes.c
+	edascmvaluetypes.c \
+	g_rc.c
 
 liblepton_la_SOURCES = \
 	$(scheme_api_sources) \
@@ -74,7 +76,6 @@ liblepton_la_SOURCES = \
 	geda_toplevel.c \
 	geda_transform.c \
 	geda_undo.c \
-	g_rc.c \
 	g_register.c \
 	i_vars.c \
 	liblepton.c \
@@ -99,7 +100,7 @@ liblepton_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"  $(DATADIR_DEFS) \
 	-I$(srcdir)/../include -I$(srcdir)/../include/liblepton -I$(top_srcdir)
 liblepton_la_CFLAGS = \
 	$(GCC_CFLAGS) $(MINGW_CFLAGS) $(GUILE_CFLAGS) $(GLIB_CFLAGS) \
-	$(GDK_PIXBUF_CFLAGS)
+	$(GDK_PIXBUF_CFLAGS) $(CFLAGS)
 liblepton_la_LDFLAGS = -version-info $(LIBLEPTON_SHLIB_VERSION) \
 	$(WINDOWS_LIBTOOL_FLAGS) $(MINGW_LDFLAGS) $(GUILE_LIBS) \
 	$(GLIB_LIBS) $(GDK_PIXBUF_LIBS)

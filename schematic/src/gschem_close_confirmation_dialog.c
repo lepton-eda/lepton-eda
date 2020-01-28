@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,21 +19,7 @@
  */
 /*! \todo STILL NEED to clean up line lengths in aa and tr */
 #include <config.h>
-#include <version.h>
-
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
 #include "gschem.h"
-
-#define GLADE_HOOKUP_OBJECT(component,widget,name) \
-  g_object_set_data_full (G_OBJECT (component), name, \
-    gtk_widget_ref (widget), (GDestroyNotify) g_object_unref)
 
 
 
@@ -54,6 +41,8 @@ struct _CloseConfirmationDialog
   GtkDialog parent;
 
   GtkListStore *store_unsaved_pages;
+
+  gboolean show_paths;
 };
 
 struct _CloseConfirmationDialogClass
@@ -203,12 +192,13 @@ count_pages (GtkTreeModel *model)
  *
  *  The returned value must be freed by caller.
  *
- *  \param [in] model The tree model.
- *  \param [in] piter A pointer on a GtkTreeIter of model or NULL.
+ *  \param [in] model     The tree model.
+ *  \param [in] piter     A pointer on a GtkTreeIter of model or NULL.
+ *  \param [in] full_path Get full page path (TRUE) or basename (FALSE).
  *  \returns The name for the page.
  */
 static gchar*
-get_page_name (GtkTreeModel *model, GtkTreeIter *piter)
+get_page_name (GtkTreeModel *model, GtkTreeIter *piter, gboolean full_path)
 {
   GtkTreeIter iter;
   PAGE *page;
@@ -225,7 +215,9 @@ get_page_name (GtkTreeModel *model, GtkTreeIter *piter)
                       COLUMN_PAGE, &page,
                       -1);
   g_assert (page != NULL);
-  return g_path_get_basename (s_page_get_filename (page));
+
+  return full_path ? g_strdup (s_page_get_filename (page))
+                   : g_path_get_basename (s_page_get_filename (page));
 }
 
 /*! \brief Sets the contents of the name cell in the treeview of dialog.
@@ -247,9 +239,12 @@ close_confirmation_dialog_set_page_name (GtkTreeViewColumn *tree_column,
                                          GtkTreeIter       *iter,
                                          gpointer           data)
 {
+  CloseConfirmationDialog* dialog = CLOSE_CONFIRMATION_DIALOG (data);
+  g_return_if_fail (dialog != NULL);
+
   gchar *page_name;
 
-  page_name = get_page_name (tree_model, iter);
+  page_name = get_page_name (tree_model, iter, dialog->show_paths);
   g_object_set (cell,
                 "text", page_name,
                 NULL);
@@ -291,6 +286,25 @@ close_confirmation_dialog_callback_renderer_toggled (GtkCellRendererToggle *cell
 
 }
 
+
+
+/*! \brief "Show full paths" checkbox "toggled" signal handler
+ */
+static void
+on_show_full_paths (GtkToggleButton* btn, gpointer data)
+{
+  CloseConfirmationDialog* dialog = CLOSE_CONFIRMATION_DIALOG (data);
+  g_return_if_fail (dialog != NULL);
+
+  dialog->show_paths = gtk_toggle_button_get_active (btn);
+
+  /* redraw the dialog widget in order to update the tree view:
+  */
+  gtk_widget_queue_draw (GTK_WIDGET (dialog));
+}
+
+
+
 /*! \brief Adds a treeview to confirmation dialog for selecting of pages.
  *  \par Function Description
  *  This function adds a treeview and caption to display the content
@@ -315,6 +329,19 @@ close_confirmation_dialog_build_page_list (CloseConfirmationDialog *dialog)
                                    "homogeneous", FALSE,
                                    "spacing",     8,
                                    NULL));
+
+
+  /* the caption label above the list of pages */
+  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
+                                    /* GtkMisc */
+                                    "xalign",          0.0,
+                                    "yalign",          0.0,
+                                    /* GtkLabel */
+                                    "wrap",            TRUE,
+                                    NULL));
+  text = _("S_elect the schematics you want to save:");
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+
 
   /* the list of pages with changes */
   /*  - scrolled window as container for the treeview first */
@@ -352,28 +379,32 @@ close_confirmation_dialog_build_page_list (CloseConfirmationDialog *dialog)
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
   gtk_tree_view_column_set_cell_data_func (column, renderer,
                                            close_confirmation_dialog_set_page_name,
-                                           NULL, NULL);
+                                           dialog, NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
   gtk_container_add (GTK_CONTAINER (scrolled_window), treeview);
 
-  gtk_box_pack_end (GTK_BOX (vbox), scrolled_window,
-                    TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_window,
+                      TRUE, TRUE, 0);
 
-  /* the caption label above the list of pages */
-  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
-                                    /* GtkMisc */
-                                    "xalign",          0.0,
-                                    "yalign",          0.0,
-                                    /* GtkLabel */
-                                    "wrap",            TRUE,
-                                    "mnemonic-widget", treeview,
-                                    NULL));
-  text = _("S_elect the schematics you want to save:");
+
   gtk_label_set_text_with_mnemonic (GTK_LABEL (label), text);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), treeview);
-  gtk_box_pack_start (GTK_BOX (vbox), label,
-                      FALSE, FALSE, 0);
+
+
+  /* "Show full paths" check box:
+  */
+  GtkWidget* chkbox = gtk_check_button_new_with_mnemonic (_("Show _full paths"));
+  gtk_box_pack_start (GTK_BOX (vbox), chkbox, FALSE, TRUE, 0);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (chkbox),
+                                dialog->show_paths);
+  gtk_widget_show (chkbox);
+
+  g_signal_connect (G_OBJECT (chkbox),
+                    "toggled",
+                    G_CALLBACK (&on_show_full_paths),
+                    dialog);
 
   return vbox;
 }
@@ -399,11 +430,17 @@ close_confirmation_dialog_constructor (GType type,
       construct_params);
   dialog = CLOSE_CONFIRMATION_DIALOG (object);
 
+
+  /* do not show full paths in the pages list by default:
+  */
+  dialog->show_paths = FALSE;
+
+
   g_object_set (dialog,
                 /* GtkDialog */
                 "has-separator",     FALSE,
                 /* GtkWindow */
-                "resizable",         FALSE,
+                "resizable",         TRUE,
                 "skip-taskbar-hint", TRUE,
                 /* GtkContainer */
                 "border-width",      5,
@@ -462,7 +499,8 @@ close_confirmation_dialog_constructor (GType type,
     gchar *page_name;
 
     page_name = get_page_name (GTK_TREE_MODEL (dialog->store_unsaved_pages),
-                               NULL);
+                               NULL,
+                               dialog->show_paths);
     tmp = g_strdup_printf (
       _("Save the changes to schematic \"%1$s\" before closing?"),
       page_name);
@@ -495,7 +533,7 @@ close_confirmation_dialog_constructor (GType type,
     /* the opportunity to save them before exiting */
     gtk_box_pack_start (GTK_BOX (vbox),
                         close_confirmation_dialog_build_page_list (dialog),
-                        FALSE, FALSE, 0);
+                        TRUE, TRUE, 0);
   }
 
   /* secondary label */
@@ -514,7 +552,7 @@ close_confirmation_dialog_constructor (GType type,
 
 
   gtk_box_pack_start (GTK_BOX (hbox), vbox,
-                      FALSE, FALSE, 0);
+                      TRUE, TRUE, 0);
 
 
   /* add buttons to dialog action area */
@@ -537,7 +575,7 @@ close_confirmation_dialog_constructor (GType type,
   gtk_widget_show_all (hbox);
 
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox,
-                      FALSE, FALSE, 0);
+                      TRUE, TRUE, 0);
 
   return object;
 }

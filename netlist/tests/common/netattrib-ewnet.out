@@ -65,6 +65,20 @@
 		(settings_locked "0")
 		(net_group "")
 	)
+	( net "GND"
+		(trackwidth "-1.00000000e+000")
+		(trackwidth_max "-1.00000000e+000")
+		(trackwidth_min "-1.00000000e+000")
+		(tracklength_max "-1.00000000e+000")
+		(tracklength_min "-1.00000000e+000")
+		(clearance_to_trace "-1.00000000e+000")
+		(clearance_to_pad "-1.00000000e+000")
+		(clearance_to_via "-1.00000000e+000")
+		(clearance_to_copper "-1.00000000e+000")
+		(routing_layer "")
+		(settings_locked "0")
+		(net_group "")
+	)
 	( net "Vcc"
 		(trackwidth "-1.00000000e+000")
 		(trackwidth_max "-1.00000000e+000")
@@ -108,20 +122,6 @@
 		(net_group "")
 	)
 	( net "one"
-		(trackwidth "-1.00000000e+000")
-		(trackwidth_max "-1.00000000e+000")
-		(trackwidth_min "-1.00000000e+000")
-		(tracklength_max "-1.00000000e+000")
-		(tracklength_min "-1.00000000e+000")
-		(clearance_to_trace "-1.00000000e+000")
-		(clearance_to_pad "-1.00000000e+000")
-		(clearance_to_via "-1.00000000e+000")
-		(clearance_to_copper "-1.00000000e+000")
-		(routing_layer "")
-		(settings_locked "0")
-		(net_group "")
-	)
-	( net "sig9"
 		(trackwidth "-1.00000000e+000")
 		(trackwidth_max "-1.00000000e+000")
 		(trackwidth_min "-1.00000000e+000")
@@ -233,7 +233,7 @@
 		(settings_locked "0")
 		(net_group "")
 	)
-	( net "unnamed_net4"
+	( net "unnamed_net2"
 		(trackwidth "-1.00000000e+000")
 		(trackwidth_max "-1.00000000e+000")
 		(trackwidth_min "-1.00000000e+000")
@@ -319,7 +319,7 @@
 			(gate "")
 		)
 		(pin "unknown"
-			(net "sig9")
+			(net "GND")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -405,7 +405,7 @@
 			(gate "")
 		)
 		(pin "unknown"
-			(net "sig9")
+			(net "GND")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -480,7 +480,7 @@
 			(gate "")
 		)
 		(pin "unknown"
-			(net "sig9")
+			(net "GND")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -555,7 +555,7 @@
 			(gate "")
 		)
 		(pin "3"
-			(net "unnamed_net4")
+			(net "unnamed_net2")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -563,7 +563,7 @@
 			(gate "")
 		)
 		(pin "4"
-			(net "unnamed_net4")
+			(net "unnamed_net2")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -571,7 +571,7 @@
 			(gate "")
 		)
 		(pin "5"
-			(net "unnamed_net4")
+			(net "unnamed_net2")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -587,7 +587,7 @@
 			(gate "")
 		)
 		(pin "unknown"
-			(net "sig9")
+			(net "GND")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")
@@ -603,7 +603,7 @@
 			(gate "")
 		)
 		(pin "9"
-			(net "sig9")
+			(net "GND")
 			(pintype "BIDIR")
 			(gategroup "")
 			(pingroup "")

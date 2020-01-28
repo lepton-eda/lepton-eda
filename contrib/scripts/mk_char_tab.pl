@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #
 # This is a perl script to create a character width table from gEDA's 
 #   font .sym files.

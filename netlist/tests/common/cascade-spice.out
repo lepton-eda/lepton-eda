@@ -1,4 +1,4 @@
-* Spice netlister for gnetlist
+* SPICE Lepton EDA netlister backend
 AMP1 1 2 <No valid value attribute found>
 AMP2 6 unconnected_pin-1 <No valid value attribute found>
 DEF1 2 3 <No valid value attribute found>

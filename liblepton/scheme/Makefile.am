@@ -1,11 +1,32 @@
 
 scmdatadir = $(GEDADATADIR)/scheme
 nobase_dist_scmdata_DATA = \
-	geda.scm geda-deprecated-config.scm color-map.scm \
-	geda/object.scm geda/page.scm geda/attrib.scm geda/deprecated.scm \
-	geda/os.scm geda/config.scm geda/log-rotate.scm geda/log.scm \
-	geda/library.scm geda/repl.scm \
-	lepton/version.scm
+	geda.scm \
+	geda-deprecated-config.scm \
+	color-map.scm \
+	geda/object.scm \
+	geda/page.scm \
+	geda/attrib.scm \
+	geda/deprecated.scm \
+	geda/os.scm \
+	geda/config.scm \
+	geda/log.scm \
+	geda/library.scm \
+	lepton/attrib.scm \
+	lepton/config.scm \
+	lepton/file-system.scm \
+	lepton/library.scm \
+	lepton/library/component.scm \
+	lepton/log.scm \
+	lepton/log-rotate.scm \
+	lepton/object.scm \
+	lepton/os.scm \
+	lepton/page.scm \
+	lepton/rc.scm \
+	lepton/repl.scm \
+	lepton/version.scm \
+	lepton/legacy-config/keylist.scm \
+	lepton/legacy-config.scm
 nobase_scmdata_DATA = geda/core/gettext.scm
 
 check-am: update-cli-tool
@@ -33,6 +54,8 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0110-object-transform.scm \
 	unit-tests/t0111-object-path.scm \
 	unit-tests/t0112-object-picture.scm \
+	unit-tests/t0113-object-selectable.scm \
+	unit-tests/t0114-object-embedded.scm \
 	unit-tests/t0200-page.scm \
 	unit-tests/t0201-page-dirty.scm \
 	unit-tests/t0202-page-string.scm \
@@ -73,6 +96,6 @@ update-cli-tool:
 .PHONY: update-cli-tool
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ geda/core/gettext.scm
+CLEANFILES = *.log *~ geda/core/gettext.scm unit-tests/dummy.sym unit-tests/dummy.xpm
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log *~ Makefile.in

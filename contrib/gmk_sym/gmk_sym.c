@@ -2,16 +2,16 @@
 /* gmk_sym, a program to create rectangular symbols for gschem           */
 /* from a file composed of comma separated lines                         */
 /*  From: Jerry O'Keefe, jerryok@pacbell.net                             */
-/* Version: 0.000005							 */
-/*									 */
-/* History:								 */
+/* Version: 0.000005                                                     */
+/*                                                                       */
+/* History:                                                              */
 /* 99/03/23 Fixed pin#= placeholder as define in Component Symbol Guide  */
 /* 99/04/02 Fixed pin spacing on right side and changed name to gmk_sym  */
-/* 99/04/27 Add Mike Jarabek's updates, alphanumeric pin name support	 */
+/* 99/04/27 Add Mike Jarabek's updates, alphanumeric pin name support    */
 /*          and improved text spacing                                    */
-/* 99/05/02 Add char_width.c support					 */
-/*									 */
-/* 00/07/12 Major changes to match new styles for text and attributes	 */
+/* 99/05/02 Add char_width.c support                                     */
+/*                                                                       */
+/* 00/07/12 Major changes to match new styles for text and attributes    */
 /* 02/01/19 Changed the way pin labels and numbers are anchored to the   */
 /*          pins.  They make use of the text origin feature so that      */
 /*          calculation of the string width is no longer needed.  This   */
@@ -22,9 +22,9 @@
 /*          bottom pin numbers are rotated by 90 degrees to match the    */
 /*          pin rotation.  Added pin type attribute capability. (Roberto */
 /*          Puon)                                                        */
-/*									 */
-/* 2002/05/15 Added checks to prevent segfaults on invalid 		 */
-/*	         input data (Chris Ellec)							 */
+/*                                                                       */
+/* 2002/05/15 Added checks to prevent segfaults on invalid               */
+/*           input data (Chris Ellec)                                    */
 /* 2002/08/14 Check for multiple instances of the same pin number and quit */
 /*            when this happens, give Fatal error messsage. (Chris Ellec)  */
 /* 2002/12/30 Change to new file format (Chris Ellec), version 20021103  */
@@ -34,42 +34,42 @@
 /*-----------------------------------------------------------------------*/
 /* This program is free software; you can redistribute it and/or modify  */
 /* it under the terms of the GNU General Public License as published by  */
-/* the Free Software Foundation; either version 2 of the License, or	 */
-/* (at your option) any later version.					 */
-/* 									 */
-/* This program is distributed in the hope that it will be useful,	 */
-/* but WITHOUT ANY WARRANTY; without even the implied warranty of	 */
-/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the	 */
+/* the Free Software Foundation; either version 2 of the License, or     */
+/* (at your option) any later version.                                   */
+/*                                                                       */
+/* This program is distributed in the hope that it will be useful,       */
+/* but WITHOUT ANY WARRANTY; without even the implied warranty of        */
+/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         */
 /* GNU General Public License for more details.                          */
-/*									 */
+/*                                                                       */
 /*-----------------------------------------------------------------------*/
 /* GMK_SYM typical use:                                                  */
 /*  gk_sym 7474.txt >7474-3.sym                                          */
-/* To build:								 */
-/*    gcc -O2 -Wall gmk_sym.c -o gmk_sym     				 */
+/* To build:                                                             */
+/*    gcc -O2 -Wall gmk_sym.c -o gmk_sym                                 */
 /*-----------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------*/
-/* The input file format:				  		 */
-/*  1. lines starting with ';' are comment lines, and 			 */
-/*     are not processed.						 */
-/*  2. The 1st valid line describes a device				 */
-/*     1st value: device name						 */
-/*     2nd value: visible name					         */
-/*     3rd value: visible name location on package,			 */
-/*     4th value: box's hoz size, in pins spacings    		         */
-/*     5th value: box's ver size, in pins spacings			 */
-/*     6th value: uref prefix, like U or J               		 */
-/*     7th value: Footprint						 */
-/*     8th value: Total number of pins on device (including hidden)	 */
-/*  3. All other valid lines describes the symbol's pins		 */
-/*     1st value: pin name						 */
-/*     2nd value: pin number						 */
+/* The input file format:                                                */
+/*  1. lines starting with ';' are comment lines, and                    */
+/*     are not processed.                                                */
+/*  2. The 1st valid line describes a device                             */
+/*     1st value: device name                                            */
+/*     2nd value: visible name                                           */
+/*     3rd value: visible name location on package,                      */
+/*     4th value: box's hoz size, in pins spacings                       */
+/*     5th value: box's ver size, in pins spacings                       */
+/*     6th value: uref prefix, like U or J                               */
+/*     7th value: Footprint                                              */
+/*     8th value: Total number of pins on device (including hidden)      */
+/*  3. All other valid lines describes the symbol's pins                 */
+/*     1st value: pin name                                               */
+/*     2nd value: pin number                                             */
 /*     3rd value: pin shape, choice of: line, clock, dot&line            */
 /*     4th value: side of box to attach the pin,choice of: R, L, T, B    */
-/*     5th value: location of pin on side of box, in pin spacings	 */
+/*     5th value: location of pin on side of box, in pin spacings        */
 /*     6th value: (optional) pin type attribute: in, out, io, oc, oe,    */
 /*                pas, tp, tri, clk, pwr                                 */
-/*  See the 7474 sample file below					 */
+/*  See the 7474 sample file below                                       */
 /*************************************************************************/
 #if 0
 /****************************************************/
@@ -77,7 +77,7 @@
 ;;   An example of a 7474 symbol make file
 ; This is a comment line
 /* puon: added "cc" */
-;; device name ,name, name location(tl,tc,tr,bl,bc,br,cc),X size in pins,Y size in pins 
+;; device name ,name, name location(tl,tc,tr,bl,bc,br,cc),X size in pins,Y size in pins
 7474,74HC74,tr,3,5
 ;;
 ;; pin name,pin number,shape(line,clock,dot),side(r,l,t,b),pin position
@@ -105,26 +105,26 @@ PRE,1,dot,B,1
 #include <time.h>
 #include <errno.h>
 
-#define BLACK		0
-#define WHITE		1
-#define RED		2
-#define GREEN		3
-#define BLUE		4
-#define YELLOW		5
-#define CYAN		6
-#define GREY		7
+#define BLACK   0
+#define WHITE   1
+#define RED     2
+#define GREEN   3
+#define BLUE    4
+#define YELLOW  5
+#define CYAN    6
+#define GREY    7
 
 #define MAX_FIELDS      10
 
-#define L_SIDE	0
-#define R_SIDE	1
-#define B_SIDE	2
-#define T_SIDE	3
+#define L_SIDE  0
+#define R_SIDE  1
+#define B_SIDE  2
+#define T_SIDE  3
 
 #define LINE_SHAPE  0
 #define DOT_SHAPE   1
 #define CLOCK_SHAPE 2
-#define BOTH	    3
+#define BOTH        3
 #define PINTYPE_IN  "IN"
 #define PINTYPE_OUT "OUT"
 #define PINTYPE_IO  "IO"
@@ -162,7 +162,7 @@ int pin_0_x,pin_0_y;
 int BoxHeight,BoxWidth;
 int net_pin=0;
 
-char pin_used[300][5];       /* keep track of pin number used. Assume 300 pins max */
+char pin_used[300][6];       /* keep track of pin number used. Assume 300 pins max */
 int pin_counter=0;
 
 /***************************************************/
@@ -171,22 +171,20 @@ int main(int argc,char **argv)
 {
   FILE *stream;
   char LineBuf[256];
-  int fldcnt,i,c,Debug=0;
+  int fldcnt,i,c;
   char *pFields[MAX_FIELDS];
   int line_nub=0;
 
-  while ((c = getopt(argc, argv, "?hd:")) != EOF)
+  while ((c = getopt(argc, argv, "?h:")) != EOF)
         {
         switch (c)
           {
-	  case 'd': Debug = 1;
-	            break;
-	  case '?':
-          case 'h': 
-                    fprintf(stderr,"usage: %s -dh?\n",argv[0]);
-		    exit(0);
-		    break;
-	  }
+          case '?':
+          case 'h':
+            fprintf(stderr,"usage: %s -h?\n",argv[0]);
+            exit(0);
+            break;
+          }
         }
 
   for(i=0;i<MAX_FIELDS;i++)
@@ -208,20 +206,20 @@ int main(int argc,char **argv)
   while (fgets(LineBuf,sizeof(LineBuf)-1,stream) != NULL)
         {
         if (line_chk(LineBuf) < 0)
-	   continue;
-	if ((fldcnt = line2fields(LineBuf,10,pFields)) > 0)
-	   {
-	   line_nub++;
-	   if (line_nub == 0)
+          continue;
+        if ((fldcnt = line2fields(LineBuf,10,pFields)) > 0)
+          {
+            line_nub++;
+            if (line_nub == 0)
               make_box(fldcnt,pFields);
-	   else
+            else
               if (make_pin(fldcnt,pFields)< 0) {
                     fields_free(pFields);
                     break;                /* error processing the pin, get out */
-              }      
+              }
            fields_free(pFields);
-	   }
-	}
+          }
+        }
   fclose(stream);
   return 0;
 }
@@ -268,20 +266,20 @@ void cross(int pos_x,int pos_y,int color)
 
 /***************************************************/
 /***************************************************/
-void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *type)
+void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, const char *type)
 { int x,y;
   int xdir=0,ydir=0,font_size=8;
 
   switch (dir)
     {
     case L_SIDE: xdir =  1; ydir =  0;
-	    break;
+      break;
     case R_SIDE: xdir = -1; ydir =  0;
-	    break;
+      break;
     case B_SIDE: xdir =  0; ydir =  1;
-	    break;
+      break;
     case T_SIDE: xdir =  0; ydir = -1;
-	    break;
+      break;
     }
 
   if (shape == LINE_SHAPE)
@@ -289,16 +287,16 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
      /* Added "0 1" to match the new file format for pins - Chris Ellec */
      printf("P %d %d %d %d %d 0 1\n",pos_x,pos_y,
                                  pos_x-pin_len*xdir,pos_y-pin_len*ydir,
-			         WHITE);
+                                 WHITE);
      printf("{\n");
      }
   else if (shape == DOT_SHAPE)
      {
      printf("V %d %d 50 %d 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n",
-	                         pos_x-50*xdir,pos_y-50*ydir,CYAN);
+                                 pos_x-50*xdir,pos_y-50*ydir,CYAN);
      printf("P %d %d %d %d %d 0 1\n",pos_x-100*xdir,pos_y-100*ydir,
                                  pos_x-pin_len*xdir,pos_y-pin_len*ydir,
-			         WHITE);
+                                 WHITE);
      printf("{\n");
      }
   else if (shape == CLOCK_SHAPE)
@@ -309,7 +307,7 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
                                  pos_x+100*xdir,pos_y+100*ydir,GREEN);
      printf("P %d %d %d %d %d 0 1\n",pos_x,pos_y,
                                  pos_x-pin_len*xdir,pos_y-pin_len*ydir,
-				 WHITE);
+                                 WHITE);
      printf("{\n");
      } else if (shape == BOTH) {
     /* clock shape */
@@ -373,40 +371,40 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
    if (type)
      {
        switch (dir)
-	 {
-	 case L_SIDE:
-	   printf("T %d %d %d %d 0 0 0 7\n",pos_x-400,pos_y,YELLOW,font_size);
-	   break;
-	 case R_SIDE:
-	   printf("T %d %d %d %d 0 0 0 1\n",pos_x+400,pos_y,YELLOW,font_size);
-	   break;
-	 case B_SIDE:
-	   printf("T %d %d %d %d 0 0 90 7\n",pos_x,pos_y-400,YELLOW,font_size);
-	   break;
-	 case T_SIDE:
-	   printf("T %d %d %d %d 0 0 90 1\n",pos_x,pos_y+400,YELLOW,font_size);
-	   break;
-	 }
+         {
+         case L_SIDE:
+           printf("T %d %d %d %d 0 0 0 7\n",pos_x-400,pos_y,YELLOW,font_size);
+           break;
+         case R_SIDE:
+           printf("T %d %d %d %d 0 0 0 1\n",pos_x+400,pos_y,YELLOW,font_size);
+           break;
+         case B_SIDE:
+           printf("T %d %d %d %d 0 0 90 7\n",pos_x,pos_y-400,YELLOW,font_size);
+           break;
+         case T_SIDE:
+           printf("T %d %d %d %d 0 0 90 1\n",pos_x,pos_y+400,YELLOW,font_size);
+           break;
+         }
        printf("pintype=%s\n",type);
      }
 
   if (strlen(name))
     {
       switch (dir)
-	{
-	case L_SIDE:
-	  printf("T %d %d %d %d 1 1 0 1\n",pos_x+100,pos_y,GREEN,font_size);
-	  break;
-	case R_SIDE:
-	  printf("T %d %d %d %d 1 1 0 7\n",pos_x-100,pos_y,GREEN,font_size);
-	  break;
-	case B_SIDE:
-	  printf("T %d %d %d %d 1 1 90 1\n",pos_x,pos_y+100,GREEN,font_size);
-	  break;
-	case T_SIDE:
-	  printf("T %d %d %d %d 1 1 90 7\n",pos_x,pos_y-100,GREEN,font_size);
-	  break;
-	}
+        {
+        case L_SIDE:
+          printf("T %d %d %d %d 1 1 0 1\n",pos_x+100,pos_y,GREEN,font_size);
+          break;
+        case R_SIDE:
+          printf("T %d %d %d %d 1 1 0 7\n",pos_x-100,pos_y,GREEN,font_size);
+          break;
+        case B_SIDE:
+          printf("T %d %d %d %d 1 1 90 1\n",pos_x,pos_y+100,GREEN,font_size);
+          break;
+        case T_SIDE:
+          printf("T %d %d %d %d 1 1 90 7\n",pos_x,pos_y-100,GREEN,font_size);
+          break;
+        }
       printf("pinlabel=%s\n",name);
     }
 
@@ -441,28 +439,28 @@ int make_box(int fldcnt,char *pFields[])
 
   if(fldcnt >=8)
   {
-  	strcpy(uref,pFields[5]);
-  	strcat(uref,"?");
-  	if(uref[0]=='U' || uref[0]=='u')strcpy(klass,"IC");
-  	if(uref[0]=='J' || uref[0]=='j')strcpy(klass,"IO");
-  	if(uref[0]=='C' || uref[0]=='c')strcpy(klass,"IO");
-	/* U is for ICs, J or CONN for IO.  We assume no discretes
+    strcpy(uref,pFields[5]);
+    strcat(uref,"?");
+    if(uref[0]=='U' || uref[0]=='u')strcpy(klass,"IC");
+    if(uref[0]=='J' || uref[0]=='j')strcpy(klass,"IO");
+    if(uref[0]=='C' || uref[0]=='c')strcpy(klass,"IO");
+    /* U is for ICs, J or CONN for IO.  We assume no discretes
          *  with this tool */
-	strcpy(footprint,pFields[6]);
-	pincount = atoi(pFields[7]);
-        printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+1100,YELLOW,font_size);
-        printf("footprint=%s\n",footprint);
-        printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+1300,YELLOW,font_size);
-        printf("pins=%d\n",pincount);
+    strcpy(footprint,pFields[6]);
+    pincount = atoi(pFields[7]);
+    printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+1100,YELLOW,font_size);
+    printf("footprint=%s\n",footprint);
+    printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+1300,YELLOW,font_size);
+    printf("pins=%d\n",pincount);
   }
   else
   {
-	strcpy(klass,"IC");
-	strcpy(uref,"U?");
+    strcpy(klass,"IC");
+    strcpy(uref,"U?");
   }
 
 
-     /* new file format: x y width height color width 
+     /* new file format: x y width height color width
      end type length space filling fillwidth angle1 pitch1 angle2 pitch2 */
   printf("B %d %d %d %d %d 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n",pos_x,pos_y,BoxWidth,BoxHeight,GREEN);
   printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+700,YELLOW,font_size);
@@ -490,37 +488,37 @@ int make_box(int fldcnt,char *pFields[])
         {
         pos_x = pin_0_x;
         pos_y = pin_0_y+50;
-	}
+        }
      else if (!strcasecmp(name_pos,"tc"))
         {
         pos_x = pin_0_x+BoxWidth/2-name_size/2;
         pos_y = pin_0_y+50;
-	}
+        }
      else if (!strcasecmp(name_pos,"tr"))
         {
         pos_x = pin_0_x+BoxWidth-name_size/2;
         pos_y = pin_0_y+50;
-	}
+        }
      else if (!strcasecmp(name_pos,"bl"))
         {
         pos_x = pin_0_x;
         pos_y = pin_0_y-BoxHeight-175;
-	}
+        }
      else if (!strcasecmp(name_pos,"bc"))
         {
         pos_x = pin_0_x+BoxWidth/2-name_size/2;
         pos_y = pin_0_y-BoxHeight-175;
-	}
+        }
      else if (!strcasecmp(name_pos,"br"))
         {
         pos_x = pin_0_x+BoxWidth-(name_size)/2;
         pos_y = pin_0_y-BoxHeight-175;
-	}
+        }
      /* puon: begin */
      else if (!strcmp(name_pos,"cc"))
        {
-	 pos_x = pin_0_x+BoxWidth/2-(name_size)/2;
-	 pos_y = pin_0_y-BoxHeight/2;
+         pos_x = pin_0_x+BoxWidth/2-(name_size)/2;
+         pos_y = pin_0_y-BoxHeight/2;
        }
      /* puon: end */
      else
@@ -541,24 +539,28 @@ int make_pin(int fldcnt,char *pFields[]) {
   char pin_name[40];
   char pin[40];
   int pin_pos;
-  char *type;
+  const char *type;
 
   if (fldcnt < 5) {
-	fprintf (stderr,"\nError, not enough parameters on input line:%i instead of 5 !\n",fldcnt);
-	fprintf (stderr,"\nPlease fix the input file then try again.\n\n");
-	return -1;
+    fprintf (stderr,"\nError, not enough parameters on input line:%i instead of 5 !\n",fldcnt);
+    fprintf (stderr,"\nPlease fix the input file then try again.\n\n");
+    return -1;
   }
-  
+
   strcpy(pin_name,pFields[0]);
-  strcpy(pin,pFields[1]); 	      /* get pin number */
-  
+  strcpy(pin,pFields[1]);         /* get pin number */
+
   for (i=0;i<pin_counter;i++)
      if (!strcmp(pin,pin_used[i])) {
           fprintf (stderr,"\nFatal Error, pin %s is used more that once !\n\n",pin);
           return -1;
      }
-  strncpy(pin_used[pin_counter++],pin,5);    /* save the current pin, the first 5 char */
-  
+
+  size_t sz = sizeof( pin_used[ pin_counter ] ) - 1;
+  memcpy( pin_used[ pin_counter ], pin, sz ); /* save the current pin, the first 5 char */
+  pin_used[ pin_counter ][ sz ] ='\0';
+  pin_counter ++ ;
+
   shape = LINE_SHAPE;
   if (!strcasecmp(pFields[2],"dot"))     /* get shape */
      shape = DOT_SHAPE;
@@ -577,7 +579,7 @@ int make_pin(int fldcnt,char *pFields[]) {
           fprintf (stderr,"\nError, %s not a valid position, should be l,t,b or r.\n",pFields[3]);
           return -1;
         }
-		  
+
   pin_pos = atoi(pFields[4]);
 
   type = NULL;
@@ -690,5 +692,3 @@ int line_chk(char *pBuf)
       return -1;
   return 0;
 }
-
-

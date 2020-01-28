@@ -1,0 +1,52 @@
+.TH lepton-attrib 1 "@DATE@" "Lepton EDA" @VERSION@
+.SH NAME
+lepton-attrib - Lepton EDA Schematic Attribute Editor
+.SH SYNOPSIS
+.B lepton-attrib
+[\fIOPTION\fR ...] [\fIFILE\fR ...]
+.SH DESCRIPTION
+.PP
+\fBlepton-attrib\fR is a spreadsheet-like tool for bulk editing of
+attributes in Lepton EDA schematics, usually created in \fBlepton-schematic\fR(1).
+.PP
+If no \fIFILE\fRs to open are specified on the command line,
+\fBlepton-attrib\fR will display a file selector dialog on startup.
+
+.SH OPTIONS
+.TP 8
+\fB-q\fR, \fB--quiet\fR
+Quiet mode. Turn off all warnings/notes/messages.
+.TP 8
+\fB-v\fR, \fB--verbose\fR
+Verbose mode.  Output all diagnostic information.
+.TP 8
+\fB-h\fR, \fB--help\fR
+Print a help message.
+.TP 8
+\fB-V\fR, \fB--version\fR
+Print version information.
+
+.SH ENVIRONMENT
+.TP 8
+.B GEDADATA
+specifies the search directory for Scheme and rc files.  The default
+is `${prefix}/share/lepton-eda'.
+.TP 8
+.B GEDADATARC
+specifies the search directory for rc files.  The default is `$GEDADATA'.
+
+.SH AUTHORS
+See the `AUTHORS' file included with this program.
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 1998-2017 by Ales Hvezda and the respective original authors.
+Copyright \(co 2017-@YEAR@ Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+.SH SEE ALSO
+\fBlepton-schematic\fR(1)

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+GenericName=lepton-schematic
+_Name=Lepton EDA Schematic Editor
+_Comment=Create and edit electrical schematics and symbols with lepton-schematic
+Type=Application
+Exec=lepton-schematic %F
+Icon=lepton-schematic
+MimeType=application/x-lepton-schematic;application/x-lepton-symbol;
+Categories=Development;Electronics;Engineering;

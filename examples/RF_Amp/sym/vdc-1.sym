@@ -1,0 +1,38 @@
+v 20031231 1
+T 700 650 8 10 1 1 0 0 1
+refdes=V?
+T 700 850 5 10 0 0 0 0 1
+device=VOLTAGE_SOURCE
+T 700 1050 5 10 0 0 0 0 1
+footprint=none
+T 700 1250 5 10 0 0 0 0 1
+numslots=0
+T 700 1450 5 10 0 0 0 0 1
+description=dc power source
+P 300 1200 300 900 1 0 0
+{
+T 350 1000 5 8 1 1 0 0 1
+pinnumber=1
+T 350 1000 5 8 0 1 0 2 1
+pinseq=1
+T 300 850 9 8 1 1 0 5 1
+pinlabel=+
+T 300 700 5 8 0 1 0 5 1
+pintype=pwr
+}
+P 300 0 300 300 1 0 0
+{
+T 350 100 5 8 1 1 0 0 1
+pinnumber=2
+T 350 100 5 8 0 1 0 2 1
+pinseq=2
+T 300 350 9 8 1 1 0 3 1
+pinlabel=-
+T 300 500 5 8 0 1 0 3 1
+pintype=pwr
+}
+V 300 600 300 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+L 175 625 425 625 3 0 0 0 -1 -1
+L 175 575 425 575 3 0 0 0 -1 -1
+T 700 450 5 10 1 1 0 0 1
+value=DC 1V

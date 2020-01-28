@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2014 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -148,11 +149,11 @@ static void geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar* group
 static void show_handler (GtkWidget *widget)
 {
   gchar *group_name;
-  EdaConfig *cfg = eda_config_get_user_context ();
+  EdaConfig *cfg = eda_config_get_cache_context ();
   GschemDialog *dialog = GSCHEM_DIALOG( widget );
 
   if (dialog->settings_name != NULL) {
-    group_name = g_strdup_printf ("gschem.dialog-geometry.%s",
+    group_name = g_strdup_printf ("schematic.dialog-geometry.%s",
                                   dialog->settings_name);
 
     g_assert (cfg != NULL);
@@ -182,11 +183,11 @@ static void show_handler (GtkWidget *widget)
 static void unmap_handler (GtkWidget *widget)
 {
   gchar *group_name;
-  EdaConfig *cfg = eda_config_get_user_context ();
+  EdaConfig *cfg = eda_config_get_cache_context ();
   GschemDialog *dialog = GSCHEM_DIALOG (widget);
 
   if (dialog->settings_name != NULL) {
-    group_name = g_strdup_printf ("gschem.dialog-geometry.%s",
+    group_name = g_strdup_printf ("schematic.dialog-geometry.%s",
                                   dialog->settings_name);
 
     g_assert (cfg != NULL);

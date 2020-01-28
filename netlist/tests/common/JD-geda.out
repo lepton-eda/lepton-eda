@@ -1,9 +1,15 @@
 START header
 
 gEDA's netlist format
-Created specifically for testing of gnetlist
+(Initially created for testing of gnetlist)
 
 END header
+
+START graphical symbols
+
+Component without refdes: title-bordered-A.sym at ((5200 . 88900) 16200 . 80400)
+
+END graphical symbols
 
 START components
 
@@ -20,6 +26,8 @@ Vdd device=VOLTAGE_SOURCE
 X1 device=LVD
 
 END components
+
+No "no-connect" nets found
 
 START renamed-nets
 

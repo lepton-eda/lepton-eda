@@ -1,7 +1,5 @@
 
-EXTRA_DIST = $(html_man_files) lepton-symcheck.dox logo.png \
-	     gsymcheck-main.txt what-is-geda.html what-is-gsymcheck.html \
-	lepton-symcheck.1.in
+EXTRA_DIST = $(html_man_files) lepton-symcheck.1.in
 
 dist_man_MANS = lepton-symcheck.1
 
@@ -30,24 +28,8 @@ else
 	@! :
 endif
 
-doxygen: lepton-symcheck.dox
-	@echo 'Creating doxygen documentation for lepton-symcheck...'
-if ENABLE_DOXYGEN
-	$(DOXYGEN) lepton-symcheck.dox
-else
-	@echo 'configure was not run with the --enable-doxygen switch.'
-	@echo 'The documentation cannot be built from the sources.'
-endif
-
-
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ lepton-symcheck.html
+CLEANFILES = $(dist_man_MANS) $(html_man_files)
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log *~ Makefile.in $(html_man_files)
-
-distclean-local:
-	-rm -rf html latex
-
-maintainer-clean-local:
-	-rm -rf html latex

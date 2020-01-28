@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,7 +80,7 @@ void o_net_reset(GschemToplevel *w_current)
  *  as a bitfield.
  */
 void o_net_guess_direction(GschemToplevel *w_current,
-			   int wx, int wy)
+                           int wx, int wy)
 {
   int up=0, down=0, left=0, right=0;
   int x1, y1, x2, y2;
@@ -107,20 +108,21 @@ void o_net_guess_direction(GschemToplevel *w_current,
       o_current = (OBJECT*) iter2->data;
 
       if ((orientation = geda_net_object_orientation (o_current)) == NEITHER)
-	continue;
+        continue;
 
       switch (o_current->type) {
       case OBJ_NET:
-	current_rules = (int*) net_rules;
-	break;
+        current_rules = (int*) net_rules;
+        break;
       case OBJ_PIN:
-	current_rules = (int*) pin_rules;
-	break;
+        current_rules = (int*) pin_rules;
+        break;
       case OBJ_BUS:
-	current_rules = (int*) bus_rules;
-	break;
+        current_rules = (int*) bus_rules;
+        break;
       default:
-	g_assert_not_reached ();
+        current_rules = (int*) net_rules;
+        g_assert_not_reached ();
       }
 
       x1 = o_current->line->x[0];
@@ -134,50 +136,50 @@ void o_net_guess_direction(GschemToplevel *w_current,
       ymax = MAX(y1, y2);
 
       if (orientation == HORIZONTAL && wy == y1) {
-	if (wx == xmin) {
-	  up = MAX(up, current_rules[1]);
-	  down = MAX(down, current_rules[1]);
-	  right = MAX(right, current_rules[0]);
-	  left = MAX(left, current_rules[2]);
-	}
-	else if (wx == xmax) {
-	  up = MAX(up, current_rules[1]);
-	  down = MAX(down, current_rules[1]);
-	  right = MAX(right, current_rules[2]);
-	  left = MAX(left, current_rules[0]);
-	}
-	else if (xmin < wx && wx < xmax) {
-	  up = MAX(up, current_rules[1]);
-	  down = MAX(down, current_rules[1]);
-	  right = MAX(right, current_rules[0]);
-	  left = MAX(left, current_rules[0]);
-	}
-	else {
-	  continue;
-	}
+        if (wx == xmin) {
+          up = MAX(up, current_rules[1]);
+          down = MAX(down, current_rules[1]);
+          right = MAX(right, current_rules[0]);
+          left = MAX(left, current_rules[2]);
+        }
+        else if (wx == xmax) {
+          up = MAX(up, current_rules[1]);
+          down = MAX(down, current_rules[1]);
+          right = MAX(right, current_rules[2]);
+          left = MAX(left, current_rules[0]);
+        }
+        else if (xmin < wx && wx < xmax) {
+          up = MAX(up, current_rules[1]);
+          down = MAX(down, current_rules[1]);
+          right = MAX(right, current_rules[0]);
+          left = MAX(left, current_rules[0]);
+        }
+        else {
+          continue;
+        }
       }
       if (orientation == VERTICAL && wx == x1) {
-	if (wy == ymin) {
-	  up = MAX(up, current_rules[0]);
-	  down = MAX(down, current_rules[2]);
-	  right = MAX(right, current_rules[1]);
-	  left = MAX(left, current_rules[1]);
-	}
-	else if (wy == ymax) {
-	  up = MAX(up, current_rules[2]);
-	  down = MAX(down, current_rules[0]);
-	  right = MAX(right, current_rules[1]);
-	  left = MAX(left, current_rules[1]);
-	}
-	else if (ymin < wy && wy < ymax) {
-	  up = MAX(up, current_rules[0]);
-	  down = MAX(down, current_rules[0]);
-	  right = MAX(right, current_rules[1]);
-	  left = MAX(left, current_rules[1]);
-	}
-	else {
-	  continue;
-	}
+        if (wy == ymin) {
+          up = MAX(up, current_rules[0]);
+          down = MAX(down, current_rules[2]);
+          right = MAX(right, current_rules[1]);
+          left = MAX(left, current_rules[1]);
+        }
+        else if (wy == ymax) {
+          up = MAX(up, current_rules[2]);
+          down = MAX(down, current_rules[0]);
+          right = MAX(right, current_rules[1]);
+          left = MAX(left, current_rules[1]);
+        }
+        else if (ymin < wy && wy < ymax) {
+          up = MAX(up, current_rules[0]);
+          down = MAX(down, current_rules[0]);
+          right = MAX(right, current_rules[1]);
+          left = MAX(left, current_rules[1]);
+        }
+        else {
+          continue;
+        }
       }
     }
   }
@@ -190,7 +192,7 @@ void o_net_guess_direction(GschemToplevel *w_current,
 
 #if 0
   printf("o_net_guess_direction: up=%d down=%d left=%d right=%d direction=%d\n",
-	 up, down, left, right, w_current->net_direction);
+         up, down, left, right, w_current->net_direction);
 #endif
   g_list_free (object_list);
 }
@@ -206,7 +208,7 @@ void o_net_guess_direction(GschemToplevel *w_current,
  *  are set to -1.
  */
 void o_net_find_magnetic(GschemToplevel *w_current,
-			 int w_x, int w_y)
+                         int w_x, int w_y)
 {
   int x1, x2, y1, y2, min_x, min_y;
   double mindist, minbest, dist1, dist2;
@@ -239,74 +241,74 @@ void o_net_find_magnetic(GschemToplevel *w_current,
       if (!geda_object_calculate_visible_bounds(page->toplevel, o_current,
                                                 &left, &top, &right, &bottom) ||
           !visible (w_current, left, top, right, bottom))
-	continue; /* skip invisible objects */
+        continue; /* skip invisible objects */
 
       if (o_current->type == OBJ_PIN) {
-	min_x = o_current->line->x[o_current->whichend];
-	min_y = o_current->line->y[o_current->whichend];
+        min_x = o_current->line->x[o_current->whichend];
+        min_y = o_current->line->y[o_current->whichend];
 
-	mindist = hypot(w_x - min_x, w_y - min_y);
-	weight = mindist / MAGNETIC_PIN_WEIGHT;
+        mindist = hypot(w_x - min_x, w_y - min_y);
+        weight = mindist / MAGNETIC_PIN_WEIGHT;
       }
 
       else if (o_current->type == OBJ_NET
-	       || o_current->type == OBJ_BUS) {
-	/* we have 3 possible points to connect:
-	   2 endpoints and 1 midpoint point */
-	x1 = o_current->line->x[0];
-	y1 = o_current->line->y[0];
-	x2 = o_current->line->x[1];
-	y2 = o_current->line->y[1];
-	/* endpoint tests */
-	dist1 = hypot(w_x - x1, w_y - y1);
-	dist2 = hypot(w_x - x2, w_y - y2);
-	if (dist1 < dist2) {
-	  min_x = x1;
-	  min_y = y1;
-	  mindist = dist1;
-	}
-	else {
-	  min_x = x2;
-	  min_y = y2;
-	  mindist = dist2;
-	}
+               || o_current->type == OBJ_BUS) {
+        /* we have 3 possible points to connect:
+           2 endpoints and 1 midpoint point */
+        x1 = o_current->line->x[0];
+        y1 = o_current->line->y[0];
+        x2 = o_current->line->x[1];
+        y2 = o_current->line->y[1];
+        /* endpoint tests */
+        dist1 = hypot(w_x - x1, w_y - y1);
+        dist2 = hypot(w_x - x2, w_y - y2);
+        if (dist1 < dist2) {
+          min_x = x1;
+          min_y = y1;
+          mindist = dist1;
+        }
+        else {
+          min_x = x2;
+          min_y = y2;
+          mindist = dist2;
+        }
 
-	/* midpoint tests */
-	if ((x1 == x2)  /* vertical net */
-	    && ((y1 >= w_y && w_y >= y2)
-		|| (y2 >= w_y && w_y >= y1))) {
-	  if (abs(w_x - x1) < mindist) {
-	    mindist = abs(w_x - x1);
-	    min_x = x1;
-	    min_y = w_y;
-	  }
-	}
-	if ((y1 == y2)  /* horitontal net */
-	    && ((x1 >= w_x && w_x >= x2)
-		|| (x2 >= w_x && w_x >= x1))) {
-	  if (abs(w_y - y1) < mindist) {
-	    mindist = abs(w_y - y1);
-	    min_x = w_x;
-	    min_y = y1;
-	  }
-	}
+        /* midpoint tests */
+        if ((x1 == x2)  /* vertical net */
+            && ((y1 >= w_y && w_y >= y2)
+                || (y2 >= w_y && w_y >= y1))) {
+          if (abs(w_x - x1) < mindist) {
+            mindist = abs(w_x - x1);
+            min_x = x1;
+            min_y = w_y;
+          }
+        }
+        if ((y1 == y2)  /* horitontal net */
+            && ((x1 >= w_x && w_x >= x2)
+                || (x2 >= w_x && w_x >= x1))) {
+          if (abs(w_y - y1) < mindist) {
+            mindist = abs(w_y - y1);
+            min_x = w_x;
+            min_y = y1;
+          }
+        }
 
-	if (o_current->type == OBJ_BUS)
-	  weight = mindist / MAGNETIC_BUS_WEIGHT;
-	else /* OBJ_NET */
-	  weight = mindist / MAGNETIC_NET_WEIGHT;
+        if (o_current->type == OBJ_BUS)
+          weight = mindist / MAGNETIC_BUS_WEIGHT;
+        else /* OBJ_NET */
+          weight = mindist / MAGNETIC_NET_WEIGHT;
       }
       else { /* neither pin nor net or bus */
-	continue;
+        continue;
       }
 
       if (o_magnetic == NULL
-	  || weight < min_weight) {
-	minbest = mindist;
-	min_weight = weight;
-	o_magnetic = o_current;
-	w_current->magnetic_wx = min_x;
-	w_current->magnetic_wy = min_y;
+          || weight < min_weight) {
+        minbest = mindist;
+        min_weight = weight;
+        o_magnetic = o_current;
+        w_current->magnetic_wx = min_x;
+        w_current->magnetic_wy = min_y;
       }
     }
   }
@@ -342,10 +344,10 @@ void o_net_finishmagnetic(GschemToplevel *w_current)
   int primary_zero_length, secondary_zero_length;
 
   primary_zero_length = ((w_current->first_wx == w_current->second_wx)
-			 && (w_current->first_wy == w_current->second_wy));
+                         && (w_current->first_wy == w_current->second_wy));
 
   secondary_zero_length = ((w_current->second_wx == w_current->third_wx)
-			   && (w_current->second_wy == w_current->third_wy));
+                           && (w_current->second_wy == w_current->third_wy));
 
   if (!primary_zero_length && secondary_zero_length) {
     if (w_current->first_wx == w_current->second_wx) {
@@ -532,9 +534,9 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
                                                    new_net->conn_list);
       if (found_primary_connection)
       {
-      	/* if a net connection is found, reset start point of next net */
-	save_wx = w_current->second_wx;
-	save_wy = w_current->second_wy;
+        /* if a net connection is found, reset start point of next net */
+        save_wx = w_current->second_wx;
+        save_wy = w_current->second_wy;
       }
   }
 
@@ -601,8 +603,8 @@ void o_net_motion (GschemToplevel *w_current, int w_x, int w_y)
   if (magnetic_net_mode) {
     if (w_current->CONTROLKEY) {
       /* set the magnetic marker position to current xy if the
-	 controlkey is pressed. Thus the net will not connect to
-	 the closest net if we finish the net drawing */
+         controlkey is pressed. Thus the net will not connect to
+         the closest net if we finish the net drawing */
       w_current->magnetic_wx = w_x;
       w_current->magnetic_wy = w_y;
     }
@@ -800,16 +802,16 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
       GList *cl_current2 = net_obj->conn_list;
       done = FALSE;
       while (cl_current2 != NULL && !done) {
-	CONN *tmp_conn = (CONN *) cl_current2->data;
+        CONN *tmp_conn = (CONN *) cl_current2->data;
 
-	if (tmp_conn && tmp_conn->other_object &&
-	    tmp_conn->other_object == bus_object) {
+        if (tmp_conn && tmp_conn->other_object &&
+            tmp_conn->other_object == bus_object) {
 
-	  found_conn = tmp_conn;
-	  done = TRUE;
-	}
+          found_conn = tmp_conn;
+          done = TRUE;
+        }
 
-	cl_current2 = g_list_next(cl_current2);
+        cl_current2 = g_list_next(cl_current2);
       }
 
       if (!found_conn) {
@@ -820,7 +822,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
 
       /* now deal with the found connection */
       if (bus_orientation == HORIZONTAL && net_orientation == VERTICAL) {
-	/* printf("found horiz bus %s %d!\n", bus_object->name,
+        /* printf("found horiz bus %s %d!\n", bus_object->name,
            found_conn->whichone);*/
 
         sign = geda_bus_object_get_ripper_direction (bus_object);
@@ -925,9 +927,9 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
 
 
       } else if (bus_orientation == VERTICAL &&
-		 net_orientation == HORIZONTAL) {
+                 net_orientation == HORIZONTAL) {
 
-	/* printf("found vert bus %s %d!\n", bus_object->name,
+        /* printf("found vert bus %s %d!\n", bus_object->name,
            found_conn->whichone); */
 
         sign = geda_bus_object_get_ripper_direction (bus_object);
@@ -1040,7 +1042,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
 
     if (w_current->bus_ripper_type == COMP_BUS_RIPPER) {
       GList *symlist =
-	s_clib_search (page->toplevel->bus_ripper_symname, CLIB_EXACT);
+        s_clib_search (w_current->bus_ripper_symname, CLIB_EXACT);
       if (symlist != NULL) {
         rippersym = (CLibSymbol *) symlist->data;
       }
@@ -1060,13 +1062,13 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
                                    rippers[i].x[0], rippers[i].y[0],
                                    complex_angle, 0,
                                    rippersym,
-                                   page->toplevel->bus_ripper_symname, 1);
+                                   w_current->bus_ripper_symname, 1);
           s_page_append_list (page->toplevel, page,
                               o_complex_promote_attribs (page->toplevel, new_obj));
           s_page_append (page->toplevel, page, new_obj);
         } else {
           s_log_message(_("Bus ripper symbol [%1$s] was not found in any component library"),
-                        page->toplevel->bus_ripper_symname);
+                        w_current->bus_ripper_symname);
         }
       }
     }

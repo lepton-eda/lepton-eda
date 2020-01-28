@@ -188,8 +188,9 @@ check_serialization ()
     s_delete_object (toplevel, object0);
     g_assert (buffer0 != NULL);
 
-    TextBuffer *tb = s_textbuffer_new (buffer0, -1);
-    gchar *line = s_textbuffer_next_line (tb);
+    TextBuffer *tb = s_textbuffer_new (buffer0, -1,
+                                       "test_text_object.c::check_serialization()");
+    const gchar *line = s_textbuffer_next_line (tb);
 
     GedaObject *object1 = o_text_read (toplevel,
                                       line,

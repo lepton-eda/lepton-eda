@@ -1,0 +1,79 @@
+tEDAx v1
+begin netlist v1 netlist
+
+	footprint F1 UNKNOWN
+	device F1 FUSE
+	value F1 
+
+	footprint U100 DIP14
+	device U100 7400
+	value U100 
+
+	footprint U200 DIP14
+	device U200 7404
+	value U200 
+
+	footprint U300 DIP14
+	device U300 7404
+	value U300 
+
+	footprint U400 DIP14
+	device U400 7400
+	value U400 
+
+	footprint U500 DIP14
+	device U500 7400
+	value U500 
+
+	conn 3.3V U500 14
+
+	conn 5V U500 14
+
+	conn DGND U400 2
+
+	conn DIGITAL_GND U500 10
+
+	conn GND U100 7
+	conn GND U300 7
+	conn GND U400 7
+	conn GND U500 7
+	conn GND U500 9
+
+	conn Vcc U100 14
+	conn Vcc U200 14
+	conn Vcc U300 14
+	conn Vcc U400 14
+
+	conn XGND U200 7
+
+	conn netattrib U100 5
+	conn netattrib U200 2
+
+	conn one F1 1
+	conn one U100 3
+	conn one U200 1
+	conn one U300 1
+
+	conn signal1 U400 1
+	conn signal1 U500 1
+
+	conn signal3 U400 3
+	conn signal3 U400 5
+
+	conn signal4 U400 4
+	conn signal4 U400 10
+
+	conn signal6 U400 6
+	conn signal6 U400 9
+
+	conn signal8 U400 8
+
+	conn signal12 U400 12
+
+	conn unnamed_net1 U300 2
+
+	conn unnamed_net2 U500 3
+	conn unnamed_net2 U500 4
+	conn unnamed_net2 U500 5
+
+end netlist

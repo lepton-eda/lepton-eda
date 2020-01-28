@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -257,9 +257,9 @@ process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err) {
   /* Capture long error message (including possible backtrace) */
   s_port = scm_open_output_string ();
   if (scm_is_true (scm_stack_p (s_stack))) {
-    scm_puts (_("\nBacktrace:\n"), s_port);
+    scm_display (scm_from_utf8_string (_("\nBacktrace:\n")), s_port);
     scm_display_backtrace (s_stack, s_port, SCM_BOOL_F, SCM_BOOL_F);
-    scm_puts ("\n", s_port);
+    scm_display (scm_from_utf8_string ("\n"), s_port);
   }
 
 #ifdef HAVE_SCM_DISPLAY_ERROR_STACK

@@ -16,7 +16,8 @@
 ; Copyright (C) 2011  L.S.P. <ultrabit@gmail.com>
 ;
 (use-modules (unit-test)
-	     (geda os))
+             (lepton os)
+             ((geda os) #:renamer (symbol-prefix-proc 'geda:)))
 
 (begin-test 'expand-env-variables
 	    (and
@@ -43,6 +44,8 @@
 	     (assert-equal "/a/${-USER-}/b/c"
 			   (expand-env-variables "/a/${-USER-}/b/c"))
 	     ; Good expression samples
+	     (assert-equal "myhome/a/b/c"
+			   (expand-env-variables "~/a/b/c"))
 	     (setenv "EXPAND_ENV_VARS_TEST" "abc")
 	     (setenv "VARS_TEST" "_VARS_TEST")
 	     (assert-equal "/a/abc/b/c"
@@ -54,4 +57,47 @@
 	     ; Recursed expansion
 	     (assert-equal "/a/abc/abc/b/c"
 	     		   (expand-env-variables "/a/${EXPAND_ENV${VARS_TEST}}/${EXPAND_ENV_VARS_TEST}/b/c"))
+	     ))
+
+;;; The same tests for the deprecated (geda os) module
+;;; functions.
+
+(begin-test 'geda:expand-env-variables
+	    (and
+	     ; Bad expression samples
+
+	     ; FreeBSD: setenv() has no effect on existing env vars,
+	     ;   unless putenv() is called first:
+	     ;
+	     (putenv "USER")
+	     (putenv "HOME")
+
+	     (setenv "USER" "myuser")
+	     (setenv "HOME" "myhome")
+	     (assert-equal "/a/${USER myhome }/b/c"
+	     		   (geda:expand-env-variables "/a/${USER ${HOME} }/b/c"))
+	     (assert-equal "/a/${USER=myhome }/b/c"
+	     		   (geda:expand-env-variables "/a/${USER=${HOME} }/b/c"))
+	     (assert-equal "/a/${USER=myhome}/b/c"
+	     		   (geda:expand-env-variables "/a/${USER=${HOME}}/b/c"))
+	     (assert-equal "/a/${=USER=}/b/c"
+	     		   (geda:expand-env-variables "/a/${=USER=}/b/c"))
+	     (assert-equal "/a//b/c"
+	     		   (geda:expand-env-variables "/a/${}/b/c"))
+	     (assert-equal "/a/${-USER-}/b/c"
+			   (geda:expand-env-variables "/a/${-USER-}/b/c"))
+	     ; Good expression samples
+	     (assert-equal "myhome/a/b/c"
+			   (geda:expand-env-variables "~/a/b/c"))
+	     (setenv "EXPAND_ENV_VARS_TEST" "abc")
+	     (setenv "VARS_TEST" "_VARS_TEST")
+	     (assert-equal "/a/abc/b/c"
+	     		   (geda:expand-env-variables "/a/${EXPAND_ENV_VARS_TEST}/b/c"))
+	     (assert-equal "/a/abcabc/b/c"
+	     		   (geda:expand-env-variables "/a/${EXPAND_ENV_VARS_TEST}${EXPAND_ENV_VARS_TEST}/b/c"))
+	     (assert-equal "/a/abc/abc/b/c"
+	     		   (geda:expand-env-variables "/a/${EXPAND_ENV_VARS_TEST}/${EXPAND_ENV_VARS_TEST}/b/c"))
+	     ; Recursed expansion
+	     (assert-equal "/a/abc/abc/b/c"
+	     		   (geda:expand-env-variables "/a/${EXPAND_ENV${VARS_TEST}}/${EXPAND_ENV_VARS_TEST}/b/c"))
 	     ))

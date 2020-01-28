@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +17,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+
 #include <config.h>
-
-#include <stdio.h>
-#include <sys/stat.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_ASSERT_H
-#include <assert.h>
-#endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include "gschem.h"
 
 /*! \brief */
@@ -49,71 +38,11 @@ static struct gsubr_t gschem_funcs[] = {
   { "display-color-map",            0, 1, 0, (SCM (*) ()) g_rc_display_color_map },
   { "display-outline-color-map",    0, 1, 0, (SCM (*) ()) g_rc_display_outline_color_map },
 
-  { "net-direction-mode",           1, 0, 0, (SCM (*) ()) g_rc_net_direction_mode },
-  { "net-selection-mode",           1, 0, 0, (SCM (*) ()) g_rc_net_selection_mode },
-  { "zoom-with-pan",                1, 0, 0, (SCM (*) ()) g_rc_zoom_with_pan },
-  { "action-feedback-mode",         1, 0, 0, (SCM (*) ()) g_rc_action_feedback_mode },
-  { "scrollbars",                   1, 0, 0, (SCM (*) ()) g_rc_scrollbars },
-  { "embed-components",             1, 0, 0, (SCM (*) ()) g_rc_embed_components },
-  { "logging",                      1, 0, 0, (SCM (*) ()) g_rc_logging },
-  { "text-size",                    1, 0, 0, (SCM (*) ()) g_rc_text_size },
-  { "snap-size",                    1, 0, 0, (SCM (*) ()) g_rc_snap_size },
-
-  { "text-caps-style",              1, 0, 0, (SCM (*) ()) g_rc_text_caps_style },
-  { "logging-destination",          1, 0, 0, (SCM (*) ()) g_rc_logging_destination },
-
   { "attribute-name",               1, 0, 0, (SCM (*) ()) g_rc_attribute_name },
 
-  { "image-color",                  1, 0, 0, (SCM (*) ()) g_rc_image_color },
-  { "image-size",                   2, 0, 0, (SCM (*) ()) g_rc_image_size },
-  { "log-window",                   1, 0, 0, (SCM (*) ()) g_rc_log_window },
-  { "log-window-type",              1, 0, 0, (SCM (*) ()) g_rc_log_window_type },
-  { "third-button",                 1, 0, 0, (SCM (*) ()) g_rc_third_button },
-  { "third-button-cancel",          1, 0, 0, (SCM (*) ()) g_rc_third_button_cancel },
-  { "middle-button",                1, 0, 0, (SCM (*) ()) g_rc_middle_button },
-  { "scroll-wheel",                 1, 0, 0, (SCM (*) ()) g_rc_scroll_wheel },
-  { "net-consolidate",              1, 0, 0, (SCM (*) ()) g_rc_net_consolidate },
-  { "file-preview",                 1, 0, 0, (SCM (*) ()) g_rc_file_preview },
-  { "enforce-hierarchy",            1, 0, 0, (SCM (*) ()) g_rc_enforce_hierarchy },
-  { "fast-mousepan",                1, 0, 0, (SCM (*) ()) g_rc_fast_mousepan },
-  { "raise-dialog-boxes-on-expose", 1, 0, 0, (SCM (*) ()) g_rc_raise_dialog_boxes_on_expose },
-  { "continue-component-place",     1, 0, 0, (SCM (*) ()) g_rc_continue_component_place },
-  { "undo-levels",                  1, 0, 0, (SCM (*) ()) g_rc_undo_levels },
-  { "undo-control",                 1, 0, 0, (SCM (*) ()) g_rc_undo_control },
-  { "undo-type",                    1, 0, 0, (SCM (*) ()) g_rc_undo_type },
-  { "undo-panzoom",                 1, 0, 0, (SCM (*) ()) g_rc_undo_panzoom },
-
-  { "draw-grips",                   1, 0, 0, (SCM (*) ()) g_rc_draw_grips },
-  { "netconn-rubberband",           1, 0, 0, (SCM (*) ()) g_rc_netconn_rubberband },
-  { "magnetic-net-mode",            1, 0, 0, (SCM (*) ()) g_rc_magnetic_net_mode },
   { "add-menu",                     2, 0, 0, (SCM (*) ()) g_rc_add_menu },
-  { "window-size",                  2, 0, 0, (SCM (*) ()) g_rc_window_size },
-  { "warp-cursor",                  1, 0, 0, (SCM (*) ()) g_rc_warp_cursor },
-  { "toolbars",                     1, 0, 0, (SCM (*) ()) g_rc_toolbars },
-  { "handleboxes",                  1, 0, 0, (SCM (*) ()) g_rc_handleboxes },
-  { "bus-ripper-size",              1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_size },
-  { "bus-ripper-type",              1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_type },
-  { "bus-ripper-rotation",          1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_rotation },
-  { "force-boundingbox",            1, 0, 0, (SCM (*) ()) g_rc_force_boundingbox },
-  { "grid-mode",                    1, 0, 0, (SCM (*) ()) g_rc_grid_mode },
-  { "dots-grid-dot-size",           1, 0, 0, (SCM (*) ()) g_rc_dots_grid_dot_size },
-  { "dots-grid-mode",               1, 0, 0, (SCM (*) ()) g_rc_dots_grid_mode },
-  { "dots-grid-fixed-threshold",    1, 0, 0, (SCM (*) ()) g_rc_dots_grid_fixed_threshold },
-  { "mesh-grid-display-threshold",  1, 0, 0, (SCM (*) ()) g_rc_mesh_grid_display_threshold },
-  { "add-attribute-offset",         1, 0, 0, (SCM (*) ()) g_rc_add_attribute_offset },
-  { "mousepan-gain",                1, 0, 0, (SCM (*) ()) g_rc_mousepan_gain },
-  { "keyboardpan-gain",             1, 0, 0, (SCM (*) ()) g_rc_keyboardpan_gain },
-  { "select-slack-pixels",          1, 0, 0, (SCM (*) ()) g_rc_select_slack_pixels },
-  { "zoom-gain",                    1, 0, 0, (SCM (*) ()) g_rc_zoom_gain },
-  { "scrollpan-steps",              1, 0, 0, (SCM (*) ()) g_rc_scrollpan_steps },
-
-  /* backup functions */
-  { "auto-save-interval",           1, 0, 0, (SCM (*) ()) g_rc_auto_save_interval },
 
   /* general guile functions */
-  { "gschem-pdf",                   1, 0, 0, (SCM (*) ()) g_funcs_pdf },
-  { "gschem-image",                 1, 0, 0, (SCM (*) ()) g_funcs_image },
-  { "gschem-use-rc-values",         0, 0, 0, (SCM (*) ()) g_funcs_use_rc_values },
   { "gschem-exit",                  0, 0, 0, (SCM (*) ()) g_funcs_exit },
   { "gschem-log",                   1, 0, 0, (SCM (*) ()) g_funcs_log },
   { "gschem-msg",                   1, 0, 0, (SCM (*) ()) g_funcs_msg },
@@ -144,14 +73,11 @@ static struct gsubr_t gschem_funcs[] = {
   { "edit-rotate-90",               0, 0, 0, (SCM (*) ()) g_keys_edit_rotate_90 },
   { "edit-mirror",                  0, 0, 0, (SCM (*) ()) g_keys_edit_mirror },
   { "edit-slot",                    0, 0, 0, (SCM (*) ()) g_keys_edit_slot },
-  { "edit-color",                   0, 0, 0, (SCM (*) ()) g_keys_edit_color },
+  { "edit-object-properties",       0, 0, 0, (SCM (*) ()) g_keys_edit_object_properties },
   { "edit-edit",                    0, 0, 0, (SCM (*) ()) g_keys_edit_edit },
   { "edit-text",                    0, 0, 0, (SCM (*) ()) g_keys_edit_text },
   { "edit-lock",                    0, 0, 0, (SCM (*) ()) g_keys_edit_lock },
   { "edit-unlock",                  0, 0, 0, (SCM (*) ()) g_keys_edit_unlock },
-  { "edit-linetype",                0, 0, 0, (SCM (*) ()) g_keys_edit_linetype },
-  { "edit-filltype",                0, 0, 0, (SCM (*) ()) g_keys_edit_filltype },
-  { "edit-pin-type",                0, 0, 0, (SCM (*) ()) g_keys_edit_pin_type },
   { "edit-translate",               0, 0, 0, (SCM (*) ()) g_keys_edit_translate },
   { "edit-invoke-macro",            0, 0, 0, (SCM (*) ()) g_keys_edit_invoke_macro },
   { "edit-embed",                   0, 0, 0, (SCM (*) ()) g_keys_edit_embed },
@@ -185,6 +111,7 @@ static struct gsubr_t gschem_funcs[] = {
 
   { "view-sidebar",                 0, 0, 0, (SCM (*) ()) g_keys_view_sidebar },
   { "view-status",                  0, 0, 0, (SCM (*) ()) g_keys_view_status },
+  { "view-find-text-state",         0, 0, 0, (SCM (*) ()) g_keys_view_find_text_state },
   { "view-redraw",                  0, 0, 0, (SCM (*) ()) g_keys_view_redraw },
   { "view-zoom-full",               0, 0, 0, (SCM (*) ()) g_keys_view_zoom_full },
   { "view-zoom-extents",            0, 0, 0, (SCM (*) ()) g_keys_view_zoom_extents },
@@ -199,10 +126,13 @@ static struct gsubr_t gschem_funcs[] = {
   { "view-dark-colors",             0, 0, 0, (SCM (*) ()) g_keys_view_dark_colors },
   { "view-light-colors",            0, 0, 0, (SCM (*) ()) g_keys_view_light_colors },
   { "view-bw-colors",               0, 0, 0, (SCM (*) ()) g_keys_view_bw_colors },
+  { "view-color-edit",              0, 0, 0, (SCM (*) ()) g_keys_view_color_edit },
   { "page-manager",                 0, 0, 0, (SCM (*) ()) g_keys_page_manager },
   { "page-next",                    0, 0, 0, (SCM (*) ()) g_keys_page_next },
   { "page-prev",                    0, 0, 0, (SCM (*) ()) g_keys_page_prev },
   { "page-close",                   0, 0, 0, (SCM (*) ()) g_keys_page_close },
+  { "page-next-tab",                0, 0, 0, (SCM (*) ()) g_keys_page_next_tab },
+  { "page-prev-tab",                0, 0, 0, (SCM (*) ()) g_keys_page_prev_tab },
   { "page-revert",                  0, 0, 0, (SCM (*) ()) g_keys_page_revert },
   { "page-print",                   0, 0, 0, (SCM (*) ()) g_keys_page_print },
   { "add-component",                0, 0, 0, (SCM (*) ()) g_keys_add_component },
@@ -220,13 +150,10 @@ static struct gsubr_t gschem_funcs[] = {
   { "hierarchy-down-schematic",     0, 0, 0, (SCM (*) ()) g_keys_hierarchy_down_schematic },
   { "hierarchy-down-symbol",        0, 0, 0, (SCM (*) ()) g_keys_hierarchy_down_symbol },
   { "hierarchy-up",                 0, 0, 0, (SCM (*) ()) g_keys_hierarchy_up },
-  { "attributes-attach",            0, 0, 0, (SCM (*) ()) g_keys_attributes_attach },
-  { "attributes-detach",            0, 0, 0, (SCM (*) ()) g_keys_attributes_detach },
   { "attributes-show-name",         0, 0, 0, (SCM (*) ()) g_keys_attributes_show_name },
   { "attributes-show-value",        0, 0, 0, (SCM (*) ()) g_keys_attributes_show_value },
   { "attributes-show-both",         0, 0, 0, (SCM (*) ()) g_keys_attributes_show_both },
   { "attributes-visibility-toggle", 0, 0, 0, (SCM (*) ()) g_keys_attributes_visibility_toggle },
-  { "options-text-size",            0, 0, 0, (SCM (*) ()) g_keys_options_text_size },
   { "options-snap-size",            0, 0, 0, (SCM (*) ()) g_keys_options_snap_size },
   { "options-scale-up-snap-size",   0, 0, 0, (SCM (*) ()) g_keys_options_scale_up_snap_size },
   { "options-scale-down-snap-size", 0, 0, 0, (SCM (*) ()) g_keys_options_scale_down_snap_size },
@@ -237,6 +164,8 @@ static struct gsubr_t gschem_funcs[] = {
   { "options-magneticnet",          0, 0, 0, (SCM (*) ()) g_keys_options_magneticnet },
   { "options-show-log-window",      0, 0, 0, (SCM (*) ()) g_keys_options_show_log_window },
   { "options-show-coord-window",    0, 0, 0, (SCM (*) ()) g_keys_options_show_coord_window },
+  { "options-select-font",          0, 0, 0, (SCM (*) ()) g_keys_options_select_font },
+  { "options-draw-grips",           0, 0, 0, (SCM (*) ()) g_keys_options_draw_grips },
   { "help-about",                   0, 0, 0, (SCM (*) ()) g_keys_help_about },
   { "help-hotkeys",                 0, 0, 0, (SCM (*) ()) g_keys_help_hotkeys },
   { "cancel",                       0, 0, 0, (SCM (*) ()) g_keys_cancel },

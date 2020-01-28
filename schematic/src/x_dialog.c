@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,46 +31,6 @@
 
 #include "gschem.h"
 
-
-/*********** Start of misc support functions for dialog boxes *******/
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_dialog_raise_all(GschemToplevel *w_current)
-{
-  if(w_current->sowindow) {
-    gdk_window_raise(w_current->sowindow->window);
-  }
-  if(w_current->cswindow) {
-    gdk_window_raise(w_current->cswindow->window);
-  }
-  if(w_current->tiwindow) {
-    gdk_window_raise(w_current->tiwindow->window);
-  }
-  if(w_current->sewindow) {
-    gdk_window_raise(w_current->sewindow->window);
-  }
-  if(w_current->aawindow) {
-    gdk_window_raise(w_current->aawindow->window);
-  }
-  if(w_current->mawindow) {
-    gdk_window_raise(w_current->mawindow->window);
-  }
-  if(w_current->aewindow) {
-    gdk_window_raise(w_current->aewindow->window);
-  }
-  if(w_current->hkwindow) {
-    gdk_window_raise(w_current->hkwindow->window);
-  }
-  if(w_current->cowindow) {
-    gdk_window_raise(w_current->cowindow->window);
-  }
-}
-
-/*********** End of misc support functions for dialog boxes *******/
 
 /***************** Start of generic message dialog box *******************/
 
@@ -162,7 +123,7 @@ char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
                                           NULL,
                                           GTK_FILE_CHOOSER_ACTION_SAVE,
                                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                          GTK_STOCK_OPEN, GTK_RESPONSE_OK,
+                                          GTK_STOCK_SAVE, GTK_RESPONSE_OK,
                                           NULL);
   }
 

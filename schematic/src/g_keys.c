@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,21 +17,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+
 #include <config.h>
-
-#include <stdio.h>
-#include <sys/stat.h>
-#include <ctype.h>
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include "gschem.h"
 
 #include <gdk/gdkkeysyms.h>
@@ -87,14 +75,11 @@ DEFINE_G_KEYS(edit_delete)
 DEFINE_G_KEYS(edit_rotate_90)
 DEFINE_G_KEYS(edit_mirror)
 DEFINE_G_KEYS(edit_slot)
-DEFINE_G_KEYS(edit_color)
+DEFINE_G_KEYS(edit_object_properties)
 DEFINE_G_KEYS(edit_edit)
-DEFINE_G_KEYS(edit_pin_type)
 DEFINE_G_KEYS(edit_text)
 DEFINE_G_KEYS(edit_lock)
 DEFINE_G_KEYS(edit_unlock)
-DEFINE_G_KEYS(edit_linetype)
-DEFINE_G_KEYS(edit_filltype)
 DEFINE_G_KEYS(edit_translate)
 DEFINE_G_KEYS(edit_invoke_macro)
 DEFINE_G_KEYS(edit_embed)
@@ -128,6 +113,7 @@ DEFINE_G_KEYS(buffer_paste5)
 
 DEFINE_G_KEYS(view_sidebar)
 DEFINE_G_KEYS(view_status)
+DEFINE_G_KEYS(view_find_text_state)
 
 /* repeat middle shortcut doesn't make sense on redraw, just hit right
  * button */
@@ -149,10 +135,13 @@ DEFINE_G_KEYS(view_pan_down)
 DEFINE_G_KEYS(view_dark_colors)
 DEFINE_G_KEYS(view_light_colors)
 DEFINE_G_KEYS(view_bw_colors)
+DEFINE_G_KEYS(view_color_edit)
 DEFINE_G_KEYS(page_manager)
 DEFINE_G_KEYS(page_next)
 DEFINE_G_KEYS(page_prev)
 DEFINE_G_KEYS(page_close)
+DEFINE_G_KEYS(page_next_tab)
+DEFINE_G_KEYS(page_prev_tab)
 DEFINE_G_KEYS(page_revert)
 DEFINE_G_KEYS(page_print)
 DEFINE_G_KEYS(add_component)
@@ -170,8 +159,6 @@ DEFINE_G_KEYS(add_pin)
 DEFINE_G_KEYS(hierarchy_down_schematic)
 DEFINE_G_KEYS(hierarchy_down_symbol)
 DEFINE_G_KEYS(hierarchy_up)
-DEFINE_G_KEYS(attributes_attach)
-DEFINE_G_KEYS(attributes_detach)
 DEFINE_G_KEYS(attributes_show_name)
 DEFINE_G_KEYS(attributes_show_value)
 DEFINE_G_KEYS(attributes_show_both)
@@ -179,10 +166,6 @@ DEFINE_G_KEYS(attributes_visibility_toggle)
 
 /* i_callback_script_console is not currently implemented */
 DEFINE_G_KEYS(script_console)
-
-/* repeat last command doesn't make sense on options either??? (does
- * it?) */
-DEFINE_G_KEYS(options_text_size)
 
 /* repeat last command doesn't make sense on options either??? (does
  * it?) */
@@ -196,6 +179,8 @@ DEFINE_G_KEYS(options_rubberband)
 DEFINE_G_KEYS(options_magneticnet)
 DEFINE_G_KEYS(options_show_log_window)
 DEFINE_G_KEYS(options_show_coord_window)
+DEFINE_G_KEYS(options_select_font)
+DEFINE_G_KEYS(options_draw_grips)
 
 DEFINE_G_KEYS(help_about)
 DEFINE_G_KEYS(help_hotkeys)
@@ -576,7 +561,10 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
     GSource *timer =
       g_main_context_find_source_by_id (NULL,
                                         w_current->keyaccel_string_source_id);
-    g_source_destroy (timer);
+    if (timer != NULL)
+    {
+      g_source_destroy (timer);
+    }
     w_current->keyaccel_string_source_id = 0;
   }
   if (!scm_is_eq (s_retval, prefix_sym)) {

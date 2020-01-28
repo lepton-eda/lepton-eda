@@ -1,6 +1,6 @@
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017 Lepton EDA Contributors
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
 ;;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 
 (define-module (symbol check primitive)
-  #:use-module (geda object)
-  #:use-module (geda attrib)
+  #:use-module (lepton attrib)
+  #:use-module (lepton object)
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
   #:use-module (symbol check alignment)

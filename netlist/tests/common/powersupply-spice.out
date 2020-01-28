@@ -1,4 +1,4 @@
-* Spice netlister for gnetlist
+* SPICE Lepton EDA netlister backend
 C1 eight nine 2200uF
 C2 eight nine 0.1uF
 C3 ten nine 22uF

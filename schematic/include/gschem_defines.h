@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2014 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -91,19 +92,12 @@ typedef enum
 #define MAP_LATER		0
 #define MAP_ON_STARTUP		1
 
-/* for log-window-type */
-#define DECORATED		0
-#define TRANSIENT		1
-
-/* for third-mouse */
-#define POPUP_ENABLED		0
-#define MOUSEPAN_ENABLED	1
-
-/* for middle-mouse */
-#define STROKE			0
-#define REPEAT			1
-#define ACTION			2
-#define MID_MOUSEPAN_ENABLED	3
+/* mouse buttons actions */
+#define MOUSEBTN_DO_STROKE   0
+#define MOUSEBTN_DO_REPEAT   1
+#define MOUSEBTN_DO_ACTION   2
+#define MOUSEBTN_DO_POPUP    4
+#define MOUSEBTN_DO_PAN      5
 
 /* for scroll-wheel */
 #define SCROLL_WHEEL_CLASSIC 0
@@ -113,5 +107,18 @@ typedef enum
 #define DONTCARE		0
 #define MENU			1
 #define HOTKEY			2
+
+/* The prefix of the default filename used for newly created pages
+ *
+ * TRANSLATORS:
+ *
+ * This string is used to generate a filename for newly-created files.
+ * It will be used to create a filename of the form "untitled_N.sch",
+ * where N is a number.
+ * Please make sure that the translation contains characters
+ * suitable for use in a filename.
+ *
+ * */
+#define UNTITLED_FILENAME_PREFIX _("untitled")
 
 #endif /* !_GSCHEM_DEFINES_H_INCL */

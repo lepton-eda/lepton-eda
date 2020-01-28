@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,51 +90,97 @@ void o_edit(GschemToplevel *w_current, GList *list)
   /* some sort of redrawing? */
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Lock selected objects
  *
+ *  \par Function Description
+ *  This locks the entire selected list. It does lock components,
+ *  but does NOT change the color of primatives of the components.
+ *
+ *  \note This function cannot be called recursively.
+ *
+ *  \param w_current  The toplevel environment.
  */
-/* This locks the entire selected list.  It does lock components, but does NOT
- * change the color (of primatives of the components) though
- * this cannot be called recursively */
 void o_lock(GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->toplevel != NULL);
   g_return_if_fail (w_current->toplevel->page_current != NULL);
 
-  geda_object_list_set_selectable (
-      geda_list_get_glist (w_current->toplevel->page_current->selection_list),
-      FALSE);
+  PAGE*  page = w_current->toplevel->page_current;
+  GList* objs = geda_list_get_glist (page->selection_list);
+
+  /* lock selected objects:
+  */
+  OBJECT* obj = NULL;
+  for (GList* iter = objs; iter != NULL; iter = g_list_next (iter))
+  {
+    obj = (OBJECT*) iter->data;
+    geda_object_set_selectable (obj, FALSE);
+
+    /* for objects with attributes, also lock them:
+    */
+    if (obj->attribs != NULL)
+    {
+      geda_object_list_set_selectable (obj->attribs, FALSE);
+    }
+  }
 
   gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
-  if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
+
+  if (!w_current->SHIFTKEY)
+    o_select_unselect_all(w_current);
+
   o_undo_savestate_old(w_current, UNDO_ALL);
   i_update_menus(w_current);
+
+  /* refresh view to properly restore attributes' colors:
+  */
+  GschemPageView* view = gschem_toplevel_get_current_page_view (w_current);
+  gschem_page_view_invalidate_all (view);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Unlock selected objects
  *
+ *  \par Function Description
+ *  Unlock objects currenly selected.
+ *  Locked objects can be selected with a bounding box.
+ *
+ *  \note This function cannot be called recursively.
+ *
+ *  \param w_current  The toplevel environment.
  */
-/* You can unlock something by selecting it with a bounding box... */
-/* this will probably change in the future, but for now it's a
-   something.. :-) */
-/* this cannot be called recursively */
 void o_unlock(GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->toplevel != NULL);
   g_return_if_fail (w_current->toplevel->page_current != NULL);
 
-  geda_object_list_set_selectable (
-      geda_list_get_glist (w_current->toplevel->page_current->selection_list),
-      TRUE);
+  PAGE*  page = w_current->toplevel->page_current;
+  GList* objs = geda_list_get_glist (page->selection_list);
 
-  gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
+  /* unlock selected objects:
+  */
+  OBJECT* obj = NULL;
+  for (GList* iter = objs; iter != NULL; iter = g_list_next (iter))
+  {
+    obj = (OBJECT*) iter->data;
+    geda_object_set_selectable (obj, TRUE);
+
+    /* for objects with attributes, also unlock them:
+    */
+    if (obj->attribs != NULL)
+    {
+      geda_object_list_set_selectable (obj->attribs, TRUE);
+    }
+  }
+
+  gschem_toplevel_page_content_changed (w_current, page);
   o_undo_savestate_old(w_current, UNDO_ALL);
+
+  /* refresh view to properly restore attributes' colors:
+  */
+  GschemPageView* view = gschem_toplevel_get_current_page_view (w_current);
+  gschem_page_view_invalidate_all (view);
 }
 
 /*! \brief Rotate all objects in list.
@@ -543,7 +590,7 @@ void o_autosave_backups(GschemToplevel *w_current)
         dirname = g_path_get_dirname (real_filename);
         only_filename = g_path_get_basename(real_filename);
 
-        backup_filename = g_strdup_printf("%s%c"AUTOSAVE_BACKUP_FILENAME_STRING,
+        backup_filename = g_strdup_printf("%s%c" AUTOSAVE_BACKUP_FILENAME_STRING,
                                           dirname, G_DIR_SEPARATOR, only_filename);
 
         /* If there is not an existing file with that name, compute the

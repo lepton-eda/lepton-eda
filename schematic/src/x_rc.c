@@ -1,5 +1,6 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2014 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +42,7 @@ x_rc_parse_gschem_error (GError **err)
     /* Dialog message */
     msg2 =
       g_strdup (_("An unknown error occurred while parsing configuration files."
-                  "\n\nThe gschem log may contain more information."));
+                  "\n\nThe lepton-schematic log may contain more information."));
   } else {
 
     /* Config files are allowed to be missing or skipped; check for
@@ -56,14 +57,14 @@ x_rc_parse_gschem_error (GError **err)
 
     /* Dialog message */
     msg2 = g_strdup_printf (_("%1$s\n\n"
-                              "The gschem log may contain more information."),
+                              "The lepton-schematic log may contain more information."),
                             (*err)->message);
   }
 
   dialog = gtk_message_dialog_new (NULL,
                                    GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
                                    GTK_BUTTONS_OK,
-                                   _("Cannot load gschem configuration."));
+                                   _("Cannot load lepton-schematic configuration."));
   g_object_set (G_OBJECT (dialog), "secondary-text", msg2, NULL);
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);

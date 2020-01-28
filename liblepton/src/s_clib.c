@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+/* Lepton EDA library
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -666,7 +666,7 @@ static void refresh_command (CLibSource *source)
   if (cmdout == NULL) return;
 
   /* Use a TextBuffer to help reading out the lines of the output */
-  tb = s_textbuffer_new (cmdout, -1);
+  tb = s_textbuffer_new (cmdout, -1, "s_clib.c::refresh_command()");
 
   while (1) {
     line = s_textbuffer_next_line (tb);

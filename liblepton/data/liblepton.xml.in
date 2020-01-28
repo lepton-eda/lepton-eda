@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="application/x-geda-schematic">
+  <mime-type type="application/x-lepton-schematic">
     <sub-class-of type="text/plain"/>
-    <_comment>gEDA circuit schematic</_comment>
+    <_comment>Lepton EDA circuit schematic</_comment>
     <glob pattern="*.sch"/>
     <magic priority="70">
       <match value="v 201" type="string" offset="0"/>
       <match value="v 200" type="string" offset="0"/>
     </magic>
   </mime-type>
-  <mime-type type="application/x-geda-symbol">
+  <mime-type type="application/x-lepton-symbol">
     <sub-class-of type="text/plain"/>
-    <_comment>gEDA schematic symbol</_comment>
+    <_comment>Lepton EDA schematic symbol</_comment>
     <glob pattern="*.sym"/>
     <magic priority="70">
       <match value="v 201" type="string" offset="0"/>
       <match value="v 200" type="string" offset="0"/>
     </magic>
   </mime-type>
-  <mime-type type="application/x-geda-gsch2pcb-project">
+  <mime-type type="application/x-lepton-sch2pcb-project">
     <sub-class-of type="text/plain"/>
-    <_comment>gEDA gsch2pcb project</_comment>
-    <glob pattern="*.gsch2pcb"/>
+    <_comment>Lepton EDA sch2pcb project</_comment>
+    <glob pattern="*.sch2pcb"/>
     <glob pattern="*.prj"/>
   </mime-type>
 </mime-info>

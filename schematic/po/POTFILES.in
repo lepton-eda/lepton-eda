@@ -1,4 +1,6 @@
 schematic/src/a_zoom.c
+schematic/src/color_edit_widget.c
+schematic/src/font_select_widget.c
 schematic/src/g_attrib.c
 schematic/src/g_funcs.c
 schematic/src/g_hook.c
@@ -92,19 +94,21 @@ schematic/src/x_menus.c
 schematic/src/x_misc.c
 schematic/src/x_multiattrib.c
 schematic/src/x_newtext.c
-schematic/src/x_pagesel.c
+schematic/src/page_select_widget.c
 schematic/src/x_print.c
 schematic/src/x_rc.c
 schematic/src/x_script.c
 schematic/src/x_stroke.c
+schematic/src/x_tabs.c
+schematic/src/x_widgets.c
 schematic/src/x_window.c
 
-schematic/data/geda-gschem.desktop.in
+schematic/data/lepton-schematic.desktop.in
 
-schematic/lib/system-gschemrc.scm
+schematic/scheme/conf/schematic/menu.scm
 
 schematic/scheme/gschem/action.scm
 schematic/scheme/gschem/builtins.scm
 schematic/scheme/gschem/deprecated.scm
-schematic/scheme/gschem/gschemdoc.scm
+schematic/scheme/gschem/gschemdoc.scm.in
 schematic/scheme/gschem/keymap.scm

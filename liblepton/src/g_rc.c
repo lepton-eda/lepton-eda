@@ -1,8 +1,8 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@
 #endif
 
 #include "libgeda_priv.h"
-#include "libgedaguile.h"
+#include "libgedaguile_priv.h"
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -451,6 +451,9 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
   do { if (err == NULL) break;  handler (&err, user_data);        \
        g_clear_error (&err); } while (0)
 
+  /* Load cache configuration: */
+  g_rc_load_cache_config (toplevel, &err); HANDLER_DISPATCH;
+
   /* Load RC files in order. */
   /* First gafrc files. */
   g_rc_parse_system (toplevel, NULL, &err); HANDLER_DISPATCH;
@@ -480,19 +483,22 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
  *  \param [in] name Optional descriptive name for library directory.
  *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
  */
-SCM g_rc_component_library(SCM path, SCM name)
+
+SCM_DEFINE (component_library, "%component-library", 1, 1, 0,
+            (SCM path, SCM name),
+            "Adds the component library with specified PATH and NAME to the list of component libraries.")
 {
   gchar *string;
   char *temp;
   char *namestr = NULL;
 
   SCM_ASSERT (scm_is_string (path), path,
-              SCM_ARG1, "component-library");
+              SCM_ARG1, s_component_library);
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   if (!scm_is_eq (name, SCM_UNDEFINED)) {
     SCM_ASSERT (scm_is_string (name), name,
-		SCM_ARG2, "component-library");
+		SCM_ARG2, s_component_library);
     namestr = scm_to_utf8_string (name);
     scm_dynwind_free(namestr);
   }
@@ -538,20 +544,25 @@ SCM g_rc_component_library(SCM path, SCM name)
  *  \param [in] name    Optional descriptive name for component source.
  *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
  */
-SCM
-g_rc_component_library_command (SCM listcmd, SCM getcmd,
-                                SCM name)
+SCM_DEFINE (component_library_command, "%component-library-command", 3, 0, 0,
+            (SCM listcmd, SCM getcmd, SCM name),
+            "Creates a component library source called NAME (the third"
+"argument) driven by two user commands: LIST-COMMAND (the first"
+"argument) and GET-COMMAND (the second argument). The list command"
+"should return a list of component names in the source.  The get"
+"command should return symbol contents by specified component name."
+"Both commands should output their results to stdout.")
 {
   const CLibSource *src;
   gchar *lcmdstr, *gcmdstr;
   char *tmp_str, *namestr;
 
   SCM_ASSERT (scm_is_string (listcmd), listcmd, SCM_ARG1, 
-              "component-library-command");
+              s_component_library_command);
   SCM_ASSERT (scm_is_string (getcmd), getcmd, SCM_ARG2, 
-              "component-library-command");
+              s_component_library_command);
   SCM_ASSERT (scm_is_string (name), name, SCM_ARG3, 
-              "component-library-command");
+              s_component_library_command);
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
@@ -600,17 +611,26 @@ g_rc_component_library_command (SCM listcmd, SCM getcmd,
  *
  *  \returns SCM_BOOL_T on success, SCM_BOOL_F otherwise.
  */
-SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name)
+
+SCM_DEFINE (component_library_funcs, "%component-library-funcs", 3, 0, 0,
+            (SCM listfunc, SCM getfunc, SCM name),
+            "Creates a component library source called NAME (the third"
+"argument) driven by two user Scheme procedures: LIST-FUNCTION (the"
+"first argument) and GET-FUNCTION (the second argument). The list"
+"function should return a Scheme list of component names in the"
+"source.  The get function should return symbol contents by"
+"specified component name as a Scheme string or #f, if there is no"
+"such name in the list.")
 {
   char *namestr;
   SCM result = SCM_BOOL_F;
 
   SCM_ASSERT (scm_is_true (scm_procedure_p (listfunc)), listfunc, SCM_ARG1,
-	      "component-library-funcs");
+              s_component_library_funcs);
   SCM_ASSERT (scm_is_true (scm_procedure_p (getfunc)), getfunc, SCM_ARG2,
-	      "component-library-funcs");
+              s_component_library_funcs);
   SCM_ASSERT (scm_is_string (name), name, SCM_ARG3, 
-	      "component-library-funcs");
+              s_component_library_funcs);
 
   namestr = scm_to_utf8_string (name);
 
@@ -682,7 +702,8 @@ g_rc_rc_config()
  *  \param [in] s_path  Path to be added.
  *  \return SCM_BOOL_T.
  */
-SCM g_rc_scheme_directory(SCM s_path)
+SCM_DEFINE (scheme_directory,"%scheme-directory", 1, 0, 0,
+            (SCM s_path),"Add a directory to the Guile load path.")
 {
   char *temp;
   gchar *expanded;
@@ -690,7 +711,7 @@ SCM g_rc_scheme_directory(SCM s_path)
   SCM s_load_path;
 
   SCM_ASSERT (scm_is_string (s_path), s_path,
-              SCM_ARG1, "scheme-directory");
+              SCM_ARG1, s_scheme_directory);
 
   /* take care of any shell variables */
   temp = scm_to_utf8_string (s_path);
@@ -713,67 +734,10 @@ SCM g_rc_scheme_directory(SCM s_path)
  *  \brief
  *  \par Function Description
  *
- *  \param [in] path  
- *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
- */
-SCM g_rc_bitmap_directory(SCM path)
-{
-  gchar *string;
-  char *temp;
-
-  SCM_ASSERT (scm_is_string (path), path,
-              SCM_ARG1, "bitmap-directory");
-  
-  /* take care of any shell variables */
-  temp = scm_to_utf8_string (path);
-  string = s_expand_env_variables (temp);
-  free (temp);
-
-  /* invalid path? */
-  if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
-    fprintf (stderr,
-             _("Invalid path [%1$s] passed to bitmap-directory\n"),
-             string);
-    g_free(string);
-    return SCM_BOOL_F;
-  }
-
-  g_free(default_bitmap_directory);
-  default_bitmap_directory = string;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
- *  \param [in] scmsymname  
  *  \return SCM_BOOL_T always.
  */
-SCM g_rc_bus_ripper_symname(SCM scmsymname)
-{
-  char *temp;
-
-  SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
-              SCM_ARG1, "bus-ripper-symname");
-
-  g_free(default_bus_ripper_symname);
-
-  temp = scm_to_utf8_string (scmsymname);
-  default_bus_ripper_symname = g_strdup (temp);
-  free (temp);
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
- *  \return SCM_BOOL_T always.
- */
-SCM g_rc_reset_component_library(void)
+SCM_DEFINE (reset_component_library, "%reset-component-library", 0, 0, 0,
+            (void), "Reset component library and initialise it to an empty list.")
 {
   s_clib_init();
   
@@ -785,16 +749,15 @@ SCM g_rc_reset_component_library(void)
  *  \par Function Description
  *
  */
-SCM g_rc_attribute_promotion(SCM mode)
+SCM_DEFINE (attribute_promotion, "%attribute-promotion", 0, 1, 0,
+            (SCM s_mode), "Set attribute promotion behaviour or return its state.")
 {
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
+  if (scm_is_eq (s_mode, SCM_UNDEFINED)) {
+    return scm_from_bool (default_attribute_promotion);
+  }
 
-  RETURN_G_RC_MODE("attribute-promotion",
-		   default_attribute_promotion,
-		   2);
+  default_attribute_promotion = scm_is_true (s_mode);
+  return s_mode;
 }
 
 /*! \todo Finish function documentation!!!
@@ -802,16 +765,15 @@ SCM g_rc_attribute_promotion(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_promote_invisible(SCM mode)
+SCM_DEFINE (promote_invisible, "%promote-invisible", 0, 1, 0,
+            (SCM s_mode), "Set attribute promotion behaviour for invisible attributes or return its state.")
 {
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
+  if (scm_is_eq (s_mode, SCM_UNDEFINED)) {
+    return scm_from_bool (default_promote_invisible);
+  }
 
-  RETURN_G_RC_MODE("promote-invisible",
-		   default_promote_invisible,
-		   2);
+  default_promote_invisible = scm_is_true (s_mode);
+  return s_mode;
 }
 
 /*! \todo Finish function documentation!!!
@@ -819,16 +781,15 @@ SCM g_rc_promote_invisible(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_keep_invisible(SCM mode)
+SCM_DEFINE (keep_invisible, "%keep-invisible", 0, 1, 0,
+            (SCM s_mode), "Controls or sets if invisible promoted attributes are not deleted.")
 {
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
+  if (scm_is_eq (s_mode, SCM_UNDEFINED)) {
+    return scm_from_bool (default_keep_invisible);
+  }
 
-  RETURN_G_RC_MODE("keep-invisible",
-		   default_keep_invisible,
-		   2);
+  default_keep_invisible = scm_is_true (s_mode);
+  return s_mode;
 }
 
 /*! \todo Finish function description!!!
@@ -838,8 +799,13 @@ SCM g_rc_keep_invisible(SCM mode)
  *  \param [in] attrlist
  *  \return SCM_BOOL_T always.
  */
-SCM g_rc_always_promote_attributes(SCM attrlist)
+SCM_DEFINE (always_promote_attributes, "%always-promote-attributes", 1, 0, 0,
+            (SCM attrlist),
+            "Set the list of attributes that are always promoted regardless of their visibility.")
 {
+  SCM_ASSERT (scm_is_true (scm_list_p (attrlist)), attrlist, SCM_ARG1,
+              s_always_promote_attributes);
+
   if (default_always_promote_attributes) {
     g_ptr_array_unref (default_always_promote_attributes);
   }
@@ -851,33 +817,24 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
                               promote,
                               (scm_t_wind_flags) 0);
 
-  if (scm_is_string (attrlist)) {
-    s_log_message(_("WARNING: using a string for 'always-promote-attributes'"
-        " is deprecated. Use a list of strings instead."));
+  for (SCM iter = attrlist; !scm_is_null(iter); iter = scm_cdr(iter))
+  {
+    SCM car = scm_car (iter);
 
-    /* convert the space separated strings into a GList */
-    char *attr_string = scm_to_utf8_string (attrlist);
-    gchar **split_names = g_strsplit(attr_string," ", 0);
-    free (attr_string);
+    if (scm_is_string (car))
+    {
+      char* attr = scm_to_utf8_string (car);
 
-    for (gchar **iter = split_names; iter; ++iter) {
-      if ((*iter)[0]) /* Only accept non-empty strings */
-        g_ptr_array_add (promote, (gpointer) g_intern_string (*iter));
-    }
-
-    g_strfreev(split_names);
-
-  } else {
-    SCM_ASSERT(scm_is_true (scm_list_p (attrlist)), attrlist, SCM_ARG1,
-               "always-promote-attributes");
-    for (SCM iter = attrlist; !scm_is_null(iter); iter = scm_cdr(iter)) {
-      SCM_ASSERT (scm_is_string (scm_car (iter)), scm_car (iter),
-                  SCM_ARG1, "always-promote-attributes");
-      char *attr = scm_to_utf8_string (scm_car (iter));
-      if (attr[0]) /* Only accept non-empty strings */
+      /* Only accept non-empty strings:
+      */
+      if (strlen (attr) > 0)
+      {
         g_ptr_array_add (promote, (gpointer) g_intern_string (attr));
+      }
+
       free (attr);
     }
+
   }
 
   scm_dynwind_end();
@@ -892,31 +849,105 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
  *  If enabled then a backup file, of the form 'example.sch~', is created when
  *  saving a file.
  *
- *  \param [in] mode  String. 'enabled' or 'disabled'
- *  \return           Bool. False if mode is not a valid value; true if it is.
+ *  \param [in] s_mode  String. 'enabled' or 'disabled'
+ *  \return           Bool. False if s_mode is not a valid value; true if it is.
  *
  */
-SCM g_rc_make_backup_files(SCM mode)
+SCM_DEFINE (make_backup_files, "%make-backup-files", 1, 0, 0,
+            (SCM s_mode), "Enable or disable the creation of backup files.")
 {
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("make-backup-files",
-                  default_make_backup_files,
-                  2);
+  default_make_backup_files = scm_is_true (s_mode);
+  return s_mode;
 }
 
-SCM g_rc_print_color_map (SCM scm_map)
+SCM_DEFINE (print_color_map, "%print-color-map", 0, 1, 0,
+            (SCM scm_map), "Set or view current print color map.")
 {
   if (scm_is_eq (scm_map, SCM_UNDEFINED)) {
     return s_color_map_to_scm (print_colors);
   }
 
   SCM_ASSERT (scm_is_true (scm_list_p (scm_map)),
-              scm_map, SCM_ARG1, "print-color-map");
+              scm_map, SCM_ARG1, s_print_color_map);
 
   s_color_map_from_scm (print_colors, scm_map, "print-color-map");
   return SCM_BOOL_T;
+}
+
+
+
+/*! \brief Load cache configuration data.
+ *
+ * \param toplevel  The current #TOPLEVEL structure.
+ * \param err       Return location for errors, or NULL.
+ * \return TRUE on success, FALSE on failure.
+ */
+gboolean
+g_rc_load_cache_config (TOPLEVEL* toplevel, GError** err)
+{
+  g_return_val_if_fail (toplevel != NULL, FALSE);
+
+  EdaConfig* cfg = eda_config_get_cache_context();
+
+  gboolean status = FALSE;
+  if (cfg != NULL)
+  {
+    GError* tmp_err = NULL;
+    status = eda_config_load (cfg, &tmp_err);
+
+    /* It's OK if file is not found (e.g. on first program run): */
+    if (g_error_matches (tmp_err, G_IO_ERROR, G_IO_ERROR_NOT_FOUND))
+    {
+      g_clear_error (&tmp_err);
+      status = TRUE;
+    }
+  }
+
+  return status;
+}
+
+
+
+/*!
+ * \brief Create the (lepton core rc) Scheme module.
+ * \par Function Description
+ * Defines procedures in the (lepton core rc) module. The module can
+ * be accessed using (use-modules (lepton core rc)).
+ */
+static void
+init_module_lepton_core_rc (void *unused)
+{
+  /* Register the functions and symbols */
+  /* #include "scheme_rc.x" */
+  #include "g_rc.x"
+
+  /* Add them to the module's public definitions. */
+  scm_c_export (s_always_promote_attributes,
+                s_attribute_promotion,
+                s_component_library,
+                s_component_library_command,
+                s_component_library_funcs,
+                s_keep_invisible,
+                s_make_backup_files,
+                s_print_color_map,
+                s_promote_invisible,
+                s_reset_component_library,
+                s_scheme_directory,
+                NULL);
+}
+
+/*!
+ * \brief Initialise the host platform support procedures.
+ * \par Function Description
+
+ * Registers some Scheme procedures that provide cross-platform
+ * support. Should only be called by edascm_init().
+ */
+void
+edascm_init_rc ()
+{
+  /* Define the (lepton core os) module */
+  scm_c_define_module ("lepton core rc",
+                       (void (*)(void*)) init_module_lepton_core_rc,
+                       NULL);
 }

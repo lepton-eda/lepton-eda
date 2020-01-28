@@ -1,6 +1,6 @@
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017 Lepton EDA Contributors
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,9 +20,10 @@
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
                 #:prefix rdelim:)
-  #:use-module (geda log)
-  #:use-module (geda page)
-  #:use-module (geda repl)
+  #:use-module (lepton log)
+  #:use-module (lepton page)
+  #:use-module (lepton repl)
+  #:use-module (lepton version)
   #:use-module (symcheck option)
   #:use-module (symcheck report)
   #:use-module (symbol check)
@@ -33,14 +34,29 @@
 
 (define (usage)
   (format #t
-          (_ "Usage: ~A [OPTIONS] FILENAME ...
+          (_ "Usage: ~A [OPTIONS] FILE ...
+
+Check one or more Lepton EDA symbol FILEs.
+
+General options:
   -h, --help        Print usage
+  -V, --version     Show version information
   -q, --quiet       Quiet mode
-  -v, --verbose     Verbose mode (cumulative: errors, warnings, info)
-                    Use this to get the actual symbol error messages
-FILENAME ... are the symbols to check.
+  -v, --verbose     Verbose mode (cumulative, i.e. -v will show error
+                    messages, -vv will show errors and warnings, and
+                    -vvv displays also informational messages)
+
+Report bugs at <~A>
+Lepton EDA homepage: <~A>
 ")
-          (car (program-arguments)))
+          (car (program-arguments))
+          (lepton-version 'bugs)
+          (lepton-version 'url))
+  (primitive-exit 0))
+
+
+(define (lepton-symcheck-version)
+  (format #t "~a~%" (lepton-version 'msg))
   (primitive-exit 0))
 
 
@@ -60,23 +76,32 @@ FILENAME ... are the symbols to check.
     (check-symbol page)
     (check-report `(,page . ,(page-contents page))))
 
+  (define (error-no-files-specified)
+    (format #t
+            (_ "No schematic files specified for processing.
+Run `~A --help' for more information.\n")
+            (car (program-arguments)))
+    (primitive-exit 1))
+
   ;; Symcheck logs to stdout by default.
   (set-check-log-destination! 'stdout)
 
   (let ((files (symcheck-option-ref '()))
         (help (symcheck-option-ref 'help))
+        (version (symcheck-option-ref 'version))
         (interactive (symcheck-option-ref 'interactive)))
+    (if version
+        (lepton-symcheck-version))
     (if help
-        (usage)
-        (if (null? files)
-            (error (format #f
-                           (_ "No schematic files specified for processing.
-Run `~A --help' for more information.
-")
-                           (car (program-arguments))))
-            (let ((pages (map file->page files)))
-              (if interactive
-                  (lepton-repl)
+        (usage))
 
+        (let ((pages (map file->page files)))
+          (if interactive
+              ;; Interactive mode. Just run the REPL to work with
+              ;; schematic pages.
+              (lepton-repl)
+              ;; Non-interactive mode.
+              (if (null? pages)
+                  (error-no-files-specified)
                   ;; now report the info/warnings/errors to the user
-                  (primitive-exit (apply + (map report-symbol-statistics pages)))))))))
+                  (primitive-exit (apply + (map report-symbol-statistics pages))))))))

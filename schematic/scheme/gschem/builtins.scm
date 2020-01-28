@@ -1,7 +1,8 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
-;; Copyright (C) 2017 Lepton EDA Contributors
+;; Copyright (C) 2013-2015 gEDA Contributors
+;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -19,19 +20,22 @@
 ;;
 
 (define-module (gschem builtins)
-  #:use-module (geda object)
-  #:use-module (geda repl)
+  #:use-module (lepton attrib)
+  #:use-module (lepton log)
+  #:use-module (lepton object)
+  #:use-module (lepton page)
+  #:use-module (lepton repl)
+  #:use-module (gschem hook)
+  #:use-module (schematic undo)
   #:use-module (gschem core gettext)
   #:use-module (gschem core builtins)
   #:use-module (gschem action)
   #:use-module (gschem gschemdoc)
-  #:use-module (gschem repl)
   #:use-module (gschem selection)
   #:use-module (gschem window)
+  #:use-module (schematic repl)
   #:use-module (srfi srfi-1))
 
-(or (defined? 'define-syntax)
-    (use-modules (ice-9 syncase)))
 
 (define-syntax define-action-public
   (syntax-rules ()
@@ -131,17 +135,8 @@
 (define-action-public (&edit-slot #:label (_ "Choose Slot"))
   (%edit-slot))
 
-(define-action-public (&edit-color #:label (_ "Edit Color") #:icon "gtk-select-color")
-  (%edit-color))
-
-(define-action-public (&edit-linetype #:label (_ "Edit Line Width & Type"))
-  (%edit-linetype))
-
-(define-action-public (&edit-filltype #:label (_ "Edit Fill Type"))
-  (%edit-filltype))
-
-(define-action-public (&edit-pin-type #:label (_ "Edit Pin Type"))
-  (%edit-pin-type))
+(define-action-public (&edit-object-properties #:label (_ "Edit Object Properties") #:icon "gtk-properties")
+  (%edit-object-properties))
 
 (define-action-public (&edit-translate #:label (_ "Translate Symbol"))
   (%edit-translate))
@@ -188,6 +183,9 @@
 (define-action-public (&view-status #:label (_ "Status"))
   (%view-status))
 
+(define-action-public (&view-find-text-state #:label (_ "Find Text State"))
+  (%view-find-text-state))
+
 (define-action-public (&view-redraw #:label (_ "Redraw") #:icon "gtk-refresh")
   (%view-redraw))
 
@@ -230,6 +228,9 @@
 (define-action-public (&view-bw-colors #:label (_ "Monochrome Color Scheme"))
   (%view-bw-colors))
 
+(define-action-public (&view-color-edit #:label (_ "Show Color Scheme Editor"))
+ (%view-color-edit))
+
 ;; -------------------------------------------------------------------
 ;;;; Page-related actions
 
@@ -247,6 +248,12 @@
 
 (define-action-public (&page-close #:label (_ "Close Page") #:icon "gtk-close")
   (%page-close))
+
+(define-action-public (&page-next-tab #:label (_ "Next Tab") #:icon "gtk-go-forward")
+  (%page-next-tab))
+
+(define-action-public (&page-prev-tab #:label (_ "Previous Tab") #:icon "gtk-go-back")
+  (%page-prev-tab))
 
 (define-action-public (&page-print #:label (_ "Print Page") #:icon "gtk-print")
   (%page-print))
@@ -305,11 +312,127 @@
 ;; -------------------------------------------------------------------
 ;;;; Attribute actions
 
-(define-action-public (&attributes-attach #:label (_ "Attach Attributes") #:icon "attribute-attach")
-  (%attributes-attach))
+( define-action-public
+  ( &attributes-attach
+    #:label (_ "Attach Attributes")
+    #:icon  "attribute-attach"
+  )
 
-(define-action-public (&attributes-detach #:label (_ "Detach Attributes") #:icon "attribute-detach")
-  (%attributes-detach))
+  ( let*
+    (
+    ( page ( active-page ) )
+    ( sel  ( if page (page-selection page) '() ) )
+    )
+
+    ( define ( can-attach-to? obj )
+      ; return:
+      ( and
+        ( object? obj )
+        ( not (text? obj) )
+      )
+    )
+
+    ( define ( attachable-attr? obj )
+      ; return:
+      ( and
+        ( attribute?    obj )           ; if it's attribute
+        ( text-visible? obj )           ; if it's visible
+        ( not (attrib-attachment obj) ) ; and does not already attached
+      )
+    )
+
+    ( define ( attach-attr obj attr )
+      ( attach-attribs! obj attr )
+      ( log! 'message (_ "Attribute attached: [~a]") (text-string attr) )
+      ( deselect-object! attr )
+    )
+
+
+    ( let*
+      (
+      ( obj   (find   can-attach-to?   sel) )
+      ( attrs (filter attachable-attr? sel) )
+      ( attrs-not-empty ( not (null? attrs) ) )
+      )
+
+      ( when ( and obj attrs-not-empty )
+
+        ( for-each
+        ( lambda( attr )
+          ( attach-attr obj attr )
+        )
+        attrs
+        )
+
+        ( deselect-object! obj )
+
+        ( set-page-dirty! page )
+        ( run-hook attach-attribs-hook attrs )
+        ( undo-save-state )
+
+      ) ; when
+
+      ; return:
+      attrs
+
+    ) ; let
+
+  ) ; let
+
+) ; &attributes-attach action
+
+
+
+( define-action-public
+  (
+    &attributes-detach
+    #:label (_ "Detach Attributes")
+    #:icon "attribute-detach"
+  )
+
+  ( let*
+    (
+    ( page ( active-page ) )
+    ( sel  ( if page (page-selection page) '() ) )
+    )
+
+    ( define ( detachable-attr? obj ) ; predicate
+      ; return:
+      ( and
+        ( attribute?        obj ) ; if it's attribute
+        ( text-visible?     obj ) ; if it's visible
+        ( attrib-attachment obj ) ; and attached to some object
+      )
+    )
+
+    ( define ( detach-attr attr )
+      ( detach-attribs! (attrib-attachment attr) attr )
+      ( log! 'message (_ "Attribute detached: [~a]") (text-string attr) )
+      ( deselect-object! attr )
+    )
+
+
+    ( let
+      (
+      ( attrs (filter detachable-attr? sel) )
+      )
+
+      ( unless (null? attrs)
+        ( for-each detach-attr attrs )
+        ( set-page-dirty! page )
+        ( run-hook detach-attribs-hook attrs )
+        ( undo-save-state )
+      )
+
+      ; return:
+      attrs
+    )
+
+  ) ; let*
+
+) ; &attributes-detach action
+
+
 
 (define-action-public (&attributes-show-value #:label (_ "Show Attribute Value") #:icon "attribute-show-value")
   (%attributes-show-value))
@@ -341,9 +464,6 @@
 (define-action-public (&help-hotkeys #:label (_ "Show Hotkeys") #:icon "preferences-desktop-keyboard-shortcuts")
   (%help-hotkeys))
 
-(define-action-public (&options-text-size #:label (_ "Set Default Text Size"))
-  (%options-text-size))
-
 (define-action-public (&options-grid #:label (_ "Switch Grid Style"))
   (%options-grid))
 
@@ -374,6 +494,12 @@
 (define-action-public (&options-show-coord-window #:label (_ "Show Coordinate Window"))
   (%options-show-coord-window))
 
+(define-action-public (&options-select-font #:label (_ "Select Schematic Font"))
+  (%options-select-font))
+
+(define-action-public (&options-draw-grips #:label (_ "Toggle Grips"))
+  (%options-draw-grips))
+
 ;; -------------------------------------------------------------------
 ;;;; Documentation-related actions
 
@@ -386,46 +512,47 @@
 documentation in a browser or PDF viewer. If no documentation can be
 found, shows a dialog with an error message."
 
-  (catch 'misc-error
-
-   (lambda ()
      (let ((component
             (any (lambda (obj) (and (component? obj) obj))
                  (page-selection (active-page)))))
        (and component (show-component-documentation component))))
 
-   (lambda (key subr msg args . rest)
-     ((@@ (guile-user) gschem-msg) (string-append
-                  (_ "Could not show documentation for selected component:\n\n")
-                  (apply format #f msg args))))))
-
 
 (define-action-public
-    (&help-manual #:label (_ "gEDA Manuals") #:icon "help-browser"
-     #:tooltip (_ "View the front page of the gEDA documentation in a browser."))
+    (&help-manual #:label (_ "Lepton EDA Manuals") #:icon "help-browser"
+     #:tooltip (_ "View the front page of the Lepton EDA documentation in a browser."))
   (show-wiki "geda:documentation"))
 
 
 (define-action-public
-    (&help-guide #:label (_ "gschem User Guide") #:icon "gtk-help"
-                 #:tooltip (_ "View the gschem User Guide in a browser."))
+    (&help-guide #:label (_ "lepton-schematic User Guide") #:icon "gtk-help"
+                 #:tooltip (_ "View the lepton-schematic User Guide in a browser."))
   (show-wiki "geda:gschem_ug"))
 
 
 (define-action-public
-    (&help-faq #:label (_ "gschem FAQ") #:icon "help-faq"
-     #:tooltip (_ "Frequently Asked Questions about using gschem."))
+    (&help-faq #:label (_ "lepton-schematic FAQ") #:icon "help-faq"
+     #:tooltip (_ "Frequently Asked Questions about using lepton-schematic."))
   (show-wiki "geda:faq-gschem"))
 
 
 (define-action-public
-    (&help-wiki #:label (_ "gEDA wiki") #:icon "web-browser"
-     #:tooltip (_ "View the front page of the gEDA wiki in a browser."))
+    (&help-wiki #:label (_ "Lepton EDA wiki") #:icon "web-browser"
+     #:tooltip (_ "View the front page of the Lepton EDA wiki in a browser."))
   (show-wiki))
 
 
-(define-action-public (&help-about #:label (_ "About gschem") #:icon "gtk-about")
+(define-action-public (&help-about #:label (_ "About lepton-schematic") #:icon "gtk-about")
   (%help-about))
+
+
+
+; Backward compatibility:
+;
+(define &edit-color    &edit-object-properties) (export &edit-color)
+(define &edit-linetype &edit-object-properties) (export &edit-linetype)
+(define &edit-filltype &edit-object-properties) (export &edit-filltype)
+(define &edit-pin-type &edit-object-properties) (export &edit-pin-type)
 
 ;; Local Variables:
 ;; eval: (put 'define-action-public 'scheme-indent-function 1)

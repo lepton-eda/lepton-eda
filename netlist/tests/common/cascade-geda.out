@@ -1,9 +1,15 @@
 START header
 
 gEDA's netlist format
-Created specifically for testing of gnetlist
+(Initially created for testing of gnetlist)
 
 END header
+
+START graphical symbols
+
+Component without refdes: title-B.sym at ((40000 . 51000) 57000 . 40000)
+
+END graphical symbols
 
 START components
 
@@ -17,6 +23,8 @@ SOURCE device=cascade-source
 T1 device=cascade-transformer
 
 END components
+
+No "no-connect" nets found
 
 START renamed-nets
 

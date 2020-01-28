@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -761,11 +762,18 @@ multiattrib_column_set_data_name (GtkTreeViewColumn *tree_column,
                       COLUMN_PRESENT_IN_ALL, &present_in_all,
                       -1);
 
+  /*
+   * Set "editable" property to TRUE even for inherited attributes.
+   * This is done to allow the user to copy cell contents to clipboard.
+   * For inherited attributes no action will be taken on edit:
+   * multiattrib_callback_edited_name() will just return.
+  */
+
   g_object_set (cell,
                 "text", name,
                 "foreground-gdk", inherited ? &dialog->insensitive_text_color :
                                   (!present_in_all ? &dialog->not_present_in_all_text_color : NULL),
-                "editable", !inherited,
+                "editable", TRUE,
                 NULL);
   g_free (name);
 }
@@ -793,11 +801,18 @@ multiattrib_column_set_data_value (GtkTreeViewColumn *tree_column,
                       COLUMN_IDENTICAL_VALUE, &identical_value,
                       -1);
 
+  /*
+   * Set "editable" property to TRUE even for inherited attributes.
+   * This is done to allow the user to copy cell contents to clipboard.
+   * For inherited attributes no action will be taken on edit:
+   * multiattrib_callback_edited_value() will just return.
+  */
+
   g_object_set (cell,
                 "text", identical_value ? value : _("<various>"),
                 "foreground-gdk", inherited ? &dialog->insensitive_text_color :
                                   (!identical_value ? &dialog->not_identical_value_text_color : NULL),
-                "editable", !inherited,
+                "editable", TRUE,
                 NULL);
   g_free (value);
 }
@@ -912,6 +927,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   GschemToplevel *w_current;
   gchar *value, *newtext;
   int visibility;
+  int inherited;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
   w_current = GSCHEM_DIALOG (multiattrib)->w_current;
@@ -919,6 +935,18 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   if (!gtk_tree_model_get_iter_from_string (model, &iter, arg1)) {
     return;
   }
+
+
+  /* Do not allow editing of inherited attributes:
+  */
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_INHERITED, &inherited,
+                      -1);
+  if (inherited)
+  {
+    return;
+  }
+
 
   if (g_ascii_strcasecmp (new_name, "") == 0) {
     GtkWidget *dialog = gtk_message_dialog_new (
@@ -994,6 +1022,7 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   char *old_value;
   char *newtext;
   int visibility;
+  int inherited;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
   w_current = GSCHEM_DIALOG (multiattrib)->w_current;
@@ -1001,6 +1030,18 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   if (!gtk_tree_model_get_iter_from_string (model, &iter, arg1)) {
     return;
   }
+
+
+  /* Do not allow editing of inherited attributes:
+  */
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_INHERITED, &inherited,
+                      -1);
+  if (inherited)
+  {
+    return;
+  }
+
 
   gtk_tree_model_get (model, &iter,
                       COLUMN_NAME, &name,
@@ -2166,7 +2207,7 @@ multiattrib_init (Multiattrib *multiattrib)
   gtk_box_pack_start (GTK_BOX (attrib_vbox), scrolled_win, TRUE, TRUE, 0);
 
   /* create the show inherited button */
-  show_inherited = gtk_check_button_new_with_label (_("Show inherited attributes"));
+  show_inherited = gtk_check_button_new_with_mnemonic (_("Sho_w inherited attributes"));
   multiattrib->show_inherited = show_inherited;
   gtk_box_pack_start (GTK_BOX (attrib_vbox), show_inherited, FALSE, FALSE, 0);
 
@@ -2193,19 +2234,19 @@ multiattrib_init (Multiattrib *multiattrib)
                                     NULL));
 
   /*   - the name entry: a GtkComboBoxEntry */
-  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
-                                    /* GtkMisc */
-                                    "xalign", 0.0,
-                                    "yalign", 0.5,
-                                    /* GtkLabel */
-                                    "label",  _("Name:"),
-                                    NULL));
+  label = gtk_label_new_with_mnemonic (_("_Name:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+
   combo = GTK_WIDGET (g_object_new (GTK_TYPE_COMBO,
                                     /* GtkCombo */
                                     "value-in-list", FALSE,
                                     NULL));
   multiattrib_init_attrib_names (GTK_COMBO (combo));
   multiattrib->combo_name = GTK_COMBO (combo);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label),
+                                 multiattrib->combo_name->entry);
+
   gtk_table_attach (GTK_TABLE (table), label,
                     0, 1, 0, 1,
                     (GtkAttachOptions) 0,
@@ -2218,13 +2259,9 @@ multiattrib_init (Multiattrib *multiattrib)
                     6, 3);
 
   /*   - the value entry: a GtkEntry */
-  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
-                                    /* GtkMisc */
-                                    "xalign", 0.0,
-                                    "yalign", 0.5,
-                                    /* GtkLabel */
-                                    "label",  _("Value:"),
-                                    NULL));
+  label = gtk_label_new_with_mnemonic (_("_Value:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+
   scrolled_win = GTK_WIDGET (
                              g_object_new (GTK_TYPE_SCROLLED_WINDOW,
                                            /* GtkScrolledWindow */
@@ -2237,7 +2274,9 @@ multiattrib_init (Multiattrib *multiattrib)
                                            NULL));
   /*! \todo Forcing the size request is a horrible band-aid and
    *  should be replaced by a better heuristic. */
-  textview = GTK_WIDGET (g_object_new (GTK_TYPE_TEXT_VIEW, NULL));
+  textview = GTK_WIDGET (g_object_new (GTK_TYPE_TEXT_VIEW,
+                                       "height-request", 50,
+                                       NULL));
   gtk_widget_set_tooltip_text (GTK_WIDGET (textview),
                   _("Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"));
   g_signal_connect (textview,
@@ -2248,6 +2287,9 @@ multiattrib_init (Multiattrib *multiattrib)
                     "grab-focus",
                     G_CALLBACK (multiattrib_callback_value_grab_focus),
                     multiattrib);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), textview);
+
   /* Save the GTK_STATE_NORMAL color so we can work around GtkTextView's
    * stubborn refusal to draw with GTK_STATE_INSENSITIVE later on */
   style = gtk_widget_get_style (textview);
@@ -2276,11 +2318,9 @@ multiattrib_init (Multiattrib *multiattrib)
                     6, 3);
 
   /*   - the visible status */
-  button = GTK_WIDGET (g_object_new (GTK_TYPE_CHECK_BUTTON,
-                                     /* GtkButton */
-                                     "label", _("Visible"),
-                                     "active", TRUE,
-                                     NULL));
+  button = gtk_check_button_new_with_mnemonic (_("Vi_sible"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+
   multiattrib->button_visible = GTK_CHECK_BUTTON (button);
   gtk_table_attach (GTK_TABLE (table), button,
                     0, 1, 2, 3,
@@ -2585,7 +2625,7 @@ multiattrib_populate_liststore (Multiattrib *multiattrib,
 static void
 append_dialog_title_extra (GString *title_string,
                            int *num_title_extras,
-                           char *text,
+                           const char *text,
                            ...)
 {
   va_list args;
@@ -2597,7 +2637,7 @@ append_dialog_title_extra (GString *title_string,
 }
 
 static void
-update_dialog_title (Multiattrib *multiattrib, char *complex_title_name)
+update_dialog_title (Multiattrib *multiattrib, const char *complex_title_name)
 {
   GString *title_string = g_string_new (_("Edit Attributes"));
   int num_title_extras = 0;
@@ -2667,7 +2707,7 @@ multiattrib_update (Multiattrib *multiattrib)
   gboolean list_sensitive;
   gboolean add_sensitive;
   GList *model_rows = NULL;
-  char *complex_title_name = NULL;
+  const char *complex_title_name = NULL;
 
   show_inherited =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (multiattrib->show_inherited));

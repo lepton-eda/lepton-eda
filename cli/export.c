@@ -1,6 +1,8 @@
 /*
  * Lepton EDA command-line utility
  * Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2014-2016 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
+#include <config.h>
 #include <version.h>
 
 #include <unistd.h>
@@ -165,7 +165,7 @@ cmd_export_impl (void *data, int argc, char **argv)
 
   gtk_init_check (&argc, &argv);
   scm_init_guile ();
-  libgeda_init ();
+  liblepton_init ();
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   toplevel = s_toplevel_new ();
   edascm_dynwind_toplevel (toplevel);
@@ -937,7 +937,7 @@ export_config (void)
   }
 }
 
-#define export_short_options "a:cd:f:F:hl:m:o:p:s:k:"
+#define export_short_options "a:cd:f:F:hl:m:o:p:Ps:k:"
 
 static struct option export_long_options[] = {
   {"no-color", 0, NULL, 2},
@@ -951,6 +951,7 @@ static struct option export_long_options[] = {
   {"margins", 1, NULL, 'm'},
   {"output", 1, NULL, 'o'},
   {"paper", 1, NULL, 'p'},
+  {"paper-names", 0, NULL, 'P'},
   {"size", 1, NULL, 's'},
   {"scale", 1, NULL, 'k'},
   {NULL, 0, NULL, 0},
@@ -961,26 +962,43 @@ export_usage (void)
 {
   printf (_("Usage: lepton-cli export [OPTION ...] -o OUTPUT [--] FILE ...\n"
 "\n"
-"Export gEDA files in various image formats.\n"
+"Export Lepton EDA files in various image formats.\n"
 "\n"
-"  -f, --format=TYPE      output format (normally autodetected)\n"
-"  -o, --output=OUTPUT    output filename\n"
-"  -p, --paper=NAME       select paper size by name\n"
-"  -s, --size=WIDTH;HEIGHT  specify exact paper size\n"
-"  -k, --scale=FACTOR     specify output scale factor\n"
-"  -l, --layout=ORIENT    page orientation\n"
-"  -m, --margins=TOP;LEFT;BOTTOM;RIGHT\n"
-"                           set page margins\n"
-"  -a, --align=HALIGN;VALIGN\n"
-"                           set alignment of drawing within page\n"
-"  -d, --dpi=DPI          pixels-per-inch for raster outputs\n"
-"  -c, --color            enable color output\n"
-"  --no-color             disable color output\n"
-"  -F, --font=NAME        set font family for printing text\n"
-"  -h, --help     display usage information and exit\n"
+"  -f, --format=TYPE                    output format (normally autodetected)\n"
+"  -o, --output=OUTPUT                  output filename\n"
+"  -p, --paper=NAME                     select paper size by name\n"
+"  -P, --paper-names                    list paper size names and exit\n"
+"  -s, --size=WIDTH;HEIGHT              specify exact paper size\n"
+"  -k, --scale=FACTOR                   specify output scale factor\n"
+"  -l, --layout=ORIENT                  page orientation\n"
+"  -m, --margins=TOP;LEFT;BOTTOM;RIGHT  set page margins\n"
+"  -a, --align=HALIGN;VALIGN            set alignment of drawing within page\n"
+"  -d, --dpi=DPI                        pixels-per-inch for raster outputs\n"
+"  -c, --color                          enable color output\n"
+"  --no-color                           disable color output\n"
+"  -F, --font=NAME                      set font family for printing text\n"
+"  -h, --help                           display usage information and exit\n"
 "\n"
-"Please report bugs to %1$s.\n"),
-          PACKAGE_BUGREPORT);
+"Report bugs at <%1$s>\n"
+"Lepton EDA homepage: <%2$s>\n"),
+    PACKAGE_BUGREPORT,
+    PACKAGE_URL);
+
+  exit (0);
+}
+
+static void
+export_list_paper_size_names()
+{
+  GList* names = gtk_paper_size_get_paper_sizes (TRUE);
+
+  for (GList* p = names; p != NULL; p = p->next)
+  {
+    printf ("%s\n", gtk_paper_size_get_name ((GtkPaperSize*) p->data));
+    gtk_paper_size_free ((GtkPaperSize*) p->data);
+  }
+
+  g_list_free (names);
   exit (0);
 }
 
@@ -1109,6 +1127,10 @@ export_command_line (int argc, char * const *argv)
       g_free (str);
       break;
 
+    case 'P':
+      export_list_paper_size_names();
+      break;
+
     case 's':
       str = export_command_line__utf8_check (optarg, "-s,--size");
       if (!export_parse_size (str)) {
@@ -1157,6 +1179,8 @@ export_command_line (int argc, char * const *argv)
 int
 cmd_export (int argc, char **argv)
 {
+  set_guile_compiled_path();
+
   scm_boot_guile (argc, argv, cmd_export_impl, NULL); /* Doesn't return */
   return 0;
 }

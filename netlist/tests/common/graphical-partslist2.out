@@ -1,0 +1,6 @@
+.START
+..refdes	device	value	footprint	quantity
+R1	RESISTOR	unknown	ACY300.fp	1
+R2	RESISTOR	unknown	ACY300.fp	1
+R3	RESISTOR	unknown	ACY300.fp	1
+.END

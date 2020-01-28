@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library - Scheme API
+/* Lepton EDA library - Scheme API
  * Copyright (C) 2011-2012 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -204,6 +204,23 @@ SCM_DEFINE (path_config_context, "%path-config-context", 1, 0, 0,
   return result;
 }
 
+/*! \brief Get the cache configuration context.
+ * \par Function Description
+ * Returns the configuration context for program-specific settings.
+ *
+ * \see eda_config_get_cache_context().
+ *
+ * \note Scheme API: Implements the \%cache-config-context procedure
+ * in the (geda core config) module.
+ *
+ * \return an #EdaConfig smob for the cache context.
+ */
+SCM_DEFINE (cache_config_context, "%cache-config-context", 0, 0, 0,
+            (), "Get cache configuration context.")
+{
+  return edascm_from_config (eda_config_get_cache_context());
+}
+
 /*! \brief Get a configuration context's filename.
  * \par Function Description
  * Returns the underlying filename for the configuration context \a
@@ -258,9 +275,17 @@ SCM_DEFINE (config_load_x, "%config-load!", 1, 0, 0,
 
   EdaConfig *cfg = edascm_to_config (cfg_s);
   GError *error = NULL;
-  if (!eda_config_load (cfg, &error)) {
-    error_from_gerror (s_config_load_x, &error);
+
+  if (!eda_config_load (cfg, &error))
+  {
+    /* Missing configuration file is not an error:
+    */
+    if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND))
+    {
+      error_from_gerror (s_config_load_x, &error);
+    }
   }
+
   return cfg_s;
 }
 
@@ -1125,6 +1150,128 @@ SCM_DEFINE (remove_config_event_x, "%remove-config-event!", 2, 0, 0,
   return cfg_s;
 }
 
+
+
+/*! \brief Remove a configuration parameter.
+ *
+ * \par Function Description
+ * Remove the configuration parameter specified by \a group_s
+ * and \a key_s in the configuration context \a cfg_s.
+ *
+ * \see eda_config_remove_key().
+ *
+ * \note Scheme API: Implements the \%config-remove-key!
+ * procedure in the (geda core config) module.
+ *
+ * \param cfg_s    #EdaConfig smob of configuration context.
+ * \param group_s  Group name as a string.
+ * \param key_s    Key name as a string.
+ *
+ * \return         Boolean value indicating success or failure.
+ */
+SCM_DEFINE (config_remove_key, "%config-remove-key!", 3, 0, 0,
+            (SCM  cfg_s, SCM group_s, SCM key_s),
+            "Remove a configuration key.")
+{
+  ASSERT_CFG_GROUP_KEY (s_config_remove_key);
+
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+
+  EdaConfig* cfg = edascm_to_config (cfg_s);
+
+  char* group = scm_to_utf8_string (group_s);
+  scm_dynwind_free (group);
+
+  char* key = scm_to_utf8_string (key_s);
+  scm_dynwind_free (key);
+
+  GError* error = NULL;
+  gboolean result = eda_config_remove_key (cfg, group, key, &error);
+
+  if (!result)
+  {
+    error_from_gerror (s_config_remove_key, &error);
+  }
+
+  scm_dynwind_end ();
+  return result ? SCM_BOOL_T : SCM_BOOL_F;
+}
+
+
+
+/*! \brief Remove a configuration group and all its parameters.
+ *
+ * \par Function Description
+ * Remove the configuration group specified by \a group_s
+ * and all its parameters in the configuration context \a cfg_s.
+ *
+ * \see eda_config_remove_group().
+ *
+ * \note Scheme API: Implements the \%config-remove-group!
+ * procedure in the (geda core config) module.
+ *
+ * \param cfg_s    #EdaConfig smob of configuration context.
+ * \param group_s  Group name as a string.
+ *
+ * \return         Boolean value indicating success or failure.
+ */
+SCM_DEFINE (config_remove_group, "%config-remove-group!", 2, 0, 0,
+            (SCM  cfg_s, SCM group_s),
+            "Remove a configuration group and all its parameters.")
+{
+  SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1, s_config_remove_group);
+  SCM_ASSERT (scm_is_string (group_s), group_s, SCM_ARG2, s_config_remove_group);
+
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+
+  EdaConfig* cfg = edascm_to_config (cfg_s);
+
+  char* group = scm_to_utf8_string (group_s);
+  scm_dynwind_free (group);
+
+  GError* error = NULL;
+  gboolean result = eda_config_remove_group (cfg, group, &error);
+
+  if (!result)
+  {
+    error_from_gerror (s_config_remove_group, &error);
+  }
+
+  scm_dynwind_end ();
+  return result ? SCM_BOOL_T : SCM_BOOL_F;
+}
+
+
+
+/*! \brief Sets whether to use legacy configuration file names.
+ *
+ * \par Function Description
+ * This function is added to assist in config migration and
+ * not intended for the end user.
+ * It will be removed.
+ *
+ * \see config_set_legacy_mode().
+ *
+ * \note Scheme API: Implements the \%config-set-legacy-mode!
+ * procedure in the (geda core config) module.
+ *
+ * \param legacy_s  Boolean: set legacy mode or not.
+ *
+ * \return         SCM_BOOL_T.
+ */
+SCM_DEFINE (config_set_legacy_mode_x, "%config-set-legacy-mode!", 1, 0, 0,
+            (SCM  legacy_s),
+            "Sets whether to use legacy configuration file names.")
+{
+  SCM_ASSERT (scm_is_bool (legacy_s), legacy_s, SCM_ARG1, s_config_set_legacy_mode_x);
+
+  config_set_legacy_mode (scm_to_bool (legacy_s));
+
+  return SCM_BOOL_T;
+}
+
+
+
 /*!
  * \brief Create the (geda core config) Scheme module.
  * \par Function Description
@@ -1142,6 +1289,7 @@ init_module_geda_core_config (void *unused)
                 s_system_config_context,
                 s_user_config_context,
                 s_path_config_context,
+                s_cache_config_context,
                 s_config_filename,
                 s_config_load_x,
                 s_config_loaded_p,
@@ -1166,6 +1314,9 @@ init_module_geda_core_config (void *unused)
                 s_set_config_x,
                 s_add_config_event_x,
                 s_remove_config_event_x,
+                s_config_remove_key,
+                s_config_remove_group,
+                s_config_set_legacy_mode_x,
                 NULL);
 }
 

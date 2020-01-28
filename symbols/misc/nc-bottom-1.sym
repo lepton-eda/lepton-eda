@@ -17,3 +17,7 @@ T 0 1000 8 10 0 0 0 0 1
 device=DRC_Directive
 T 0 1200 8 10 0 0 0 0 1
 graphical=1
+T 0 1400 8 10 0 0 0 0 1
+symversion=1.1
+T 0 1600 8 10 0 0 0 0 1
+symbol=nc

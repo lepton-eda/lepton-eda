@@ -1,10 +1,10 @@
 ;; Test deprecated procedures from legacy Scheme API.
 
 (use-modules (unit-test))
+(use-modules (lepton attrib))
 (use-modules (geda deprecated))
-(use-modules (geda object))
-(use-modules (geda attrib))
-(use-modules (geda page))
+(use-modules (lepton object))
+(use-modules (lepton page))
 
 (begin-test 'get-attribute-name-value
   (let ((t (make-text '(1 . 2) 'lower-left 0 "name=value" 10 #t 'both)))

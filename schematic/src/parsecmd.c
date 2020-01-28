@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2012 Ales Hvezda
- * Copyright (C) 1998-2012 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +28,7 @@
 
 #include "gschem.h"
 
-#define GETOPT_OPTIONS "c:hL:o:pq:s:vV"
+#define GETOPT_OPTIONS "c:hL:qs:vV"
 
 extern char *optarg;
 extern int optind;
@@ -43,13 +44,9 @@ struct option long_options[] =
     {"version", 0, 0, 'V'},
     {"quiet", 0, 0, 'q'},
     {"verbose", 0, 0, 'v'},
-    {"output", 0, 0, 'o'},
     {0, 0, 0, 0}
   };
 #endif
-
-/*! Contains an output filename for Scheme export functions */
-SCM output_filename_s = SCM_BOOL_F;
 
 /*! Contains a Scheme expression arising from command-line arguments.
  *  This is evaluated after initialising gschem, but before loading
@@ -63,11 +60,8 @@ SCM s_pre_load_expr = SCM_EOL;
 SCM s_post_load_expr = SCM_EOL;
 
 /*! \brief Print brief help message and exit.
- * \par Function Description
- * Print brief help message describing gschem usage & command-line
- * options, then exit with \a exit_status.
  *
- * \param cmd         First element of argv (name of program as run).
+ * \param cmd  First element of argv (name of program as run).
  */
 static void
 usage(char *cmd)
@@ -75,9 +69,9 @@ usage(char *cmd)
   printf(_(
 "Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"Interactively edit gEDA schematics or symbols.  If one or more FILEs\n"
-"are specified, open them for editing; otherwise, create a new, empty\n"
-"schematic.\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
 "\n"
 "Options:\n"
 "  -q, --quiet              Quiet mode.\n"
@@ -85,41 +79,32 @@ usage(char *cmd)
 "  -L DIR                   Add DIR to Scheme search path.\n"
 "  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
-"  -o, --output=FILE        Output filename (for printing).\n"
-"  -p                       Automatically place the window.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"gEDA/gaf homepage: <http://www.geda-project.org/>\n"),
-         cmd);
+"Report bugs at <%2$s>\n"
+"Lepton EDA homepage: <%3$s>\n"),
+    cmd,
+    PACKAGE_BUGREPORT,
+    PACKAGE_URL);
+
   exit(0);
 }
 
 /*! \brief Print version info and exit.
- * \par Function Description
- * Print gEDA version, and copyright/warranty notices, and exit with
- * exit status 0.
  */
 static void
-version ()
+version()
 {
-  printf(_(
-"gEDA %1$s (g%2$.7s)\n"
-"Copyright (C) 1998-2012 gEDA developers\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the gEDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"),
-         PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
+  char* msg = version_message();
+  printf ("%s\n", msg);
+  free (msg);
+
   exit (0);
 }
 
-/*! \brief Parse gschem command-line options.
- * \par Function Description
- * Parse command line options, displaying usage message or version
- * information as required.
+/*! \brief Parse command-line options.
  *
  * \param argc Number of command-line arguments.
  * \param argv Array of command-line arguments.
@@ -144,6 +129,7 @@ parse_commandline(int argc, char *argv[])
     switch (ch) {
       case 'v':
         verbose_mode = TRUE;
+        verbose_loading = TRUE; /* defined in liblepton: globals.h s_textbuffer.c */
         break;
 
       case 'q':
@@ -168,14 +154,6 @@ parse_commandline(int argc, char *argv[])
           scm_cons (scm_list_2 (sym_eval_string,
                                 scm_from_locale_string (optarg)),
                     s_post_load_expr);
-        break;
-
-      case 'o':
-        output_filename_s = scm_from_locale_string (optarg);
-        break;
-
-      case 'p':
-        auto_place_mode = TRUE;
         break;
 
       case 'L':

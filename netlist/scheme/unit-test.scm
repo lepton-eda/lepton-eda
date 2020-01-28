@@ -1,5 +1,6 @@
 ;;; Autotools compatible SRFI-64 Scheme unit-test framework
 ;;; Copyright (C) 2016 gEDA Contributors
+;;; Copyright (C) 2018-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -53,11 +54,30 @@
 ;;;   Must be present once if several tests are done in one
 ;;;   script. It should output some summary.
 
-
 (use-modules (srfi srfi-64)
              (srfi srfi-26)
              (ice-9 getopt-long)
              (ice-9 pretty-print))
+
+;;; In order to facilitate debugging, you can increase the pile of
+;;; info reported on errors by setting the COLUMNS environment
+;;; variable to a bigger value. Example:
+;; (setenv "COLUMNS" "1000")
+
+
+;;; Initialize liblepton variables and functions.
+(setenv "LEPTON_INHIBIT_RC_FILES" "yes")
+;;; The load path should not be changed after loading the
+;;; liblepton library.  This is tested in the unit test
+;;; "test-netlist-load-path.scm".
+(setenv "INITIAL_GUILE_LOAD_PATH"
+        (with-output-to-string (lambda () (write %load-path))))
+
+
+(load-extension "../../liblepton/src/liblepton" "liblepton_init")
+(define with-toplevel (@@ (geda core toplevel) %with-toplevel))
+(define make-toplevel (@@ (geda core toplevel) %make-toplevel))
+
 
 (define (report s port)
   (display s port)
@@ -166,13 +186,13 @@ Actual error:
                 (load-from-path name))
               (lambda (key . args) 
                 (report (format #f
-                                "ERROR:\n Unexpected exception on loading file ~S:\n~S\n"
+                                "ERROR:\n Unexpected exception on loading file ~S:\n~A\n"
                                 name
-                                (display-backtrace
-                                 captured-stack
-                                 (current-output-port)
-                                 6
-                                 5))
+                                (with-output-to-string
+                                  (lambda ()
+                                    (display-backtrace
+                                     captured-stack
+                                     (current-output-port)))))
                         log-port))
               (lambda (key . args)
                 ;; Capture the stack here:
@@ -188,3 +208,9 @@ Actual error:
           (close-port log-port)
           (close-port trs-port))
         (display "Use 'make check' to run tests.\n"))))
+
+;;; Wrapper for the main() function allowing using of liblepton
+;;; variables, procedures, and modules.
+(define (main/with-toplevel args)
+  (with-toplevel (make-toplevel)
+   (lambda () (main args))))

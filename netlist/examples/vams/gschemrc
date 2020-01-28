@@ -1,5 +1,4 @@
-(load "./commonrc")
-(load "../../../gschem/scheme/generate_netlist.scm")
+(load "generate_netlist.scm")
 
 (attribute-promotion "enabled")
 (promote-invisible "enabled")
@@ -13,7 +12,5 @@
 (attribute-name "architecture")
 
 (define vhdl-path "./vhdl/new-vhdl")
-(define schematic-path "./sch")
 
 (display "loaded local gschemrc\n")
-

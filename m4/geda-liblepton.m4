@@ -3,6 +3,7 @@
 
 dnl liblepton-specific setup
 dnl Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
+dnl Copyright (C) 2019 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -30,8 +31,7 @@ AC_DEFUN([AX_LIBLEPTON],
 
   # Work out the gettext domain to use
   AC_MSG_CHECKING([liblepton gettext domain])
-  so_major=`echo $LIBLEPTON_SHLIB_VERSION | sed -e "s/:.*//"`
-  LIBLEPTON_GETTEXT_DOMAIN="liblepton$so_major"
+  LIBLEPTON_GETTEXT_DOMAIN="liblepton"
   AC_MSG_RESULT([$LIBLEPTON_GETTEXT_DOMAIN])
   AC_SUBST([LIBLEPTON_GETTEXT_DOMAIN])
   AC_DEFINE_UNQUOTED([LIBLEPTON_GETTEXT_DOMAIN], ["$LIBLEPTON_GETTEXT_DOMAIN"],

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gnetlist\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2017-02-26 10:33+0300\n"
+"POT-Creation-Date: 2019-10-03 23:33+0300\n"
 "PO-Revision-Date: 2014-08-31 20:38+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -18,38 +18,67 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
-#: gnetlist/src/gnetlist.c:170
-#, c-format
+#, fuzzy
 msgid ""
-"This is the MINGW32 port.\n"
-"\n"
+"Copyright (C) 1998-2016 gEDA developers\n"
+"Copyright (C) 2017-2019 Lepton EDA Contributors\n"
+"This is free software, and you are welcome to redistribute it under\n"
+"certain conditions. For details, see the file `COPYING', which is\n"
+"included in the Lepton EDA distribution.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr ""
-"Dit is de MINGW32 versie.\n"
-"\n"
+"gEDA %s (g%.7s)\n"
+"Copyright (C) 1998-2012 gEDA developers\n"
+"Dit is vrije software, en u bent welkom om deze te herdistribueren onder\n"
+"bepaalde condities. Voor details, zie het bestand `COPYING', welke is\n"
+"bijgesloten in de gEDA distributie.\n"
+"Er is GEEN GARANTIE, voor zover toegestaan door de wet.\n"
 
-#: gnetlist/src/gnetlist.c:187
-#, fuzzy, c-format
+#, scheme-format
 msgid ""
-"gEDA/gnetlist version %s%s.%s\n"
-"gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
-"details.\n"
-"This is free software, and you are welcome to redistribute it under certain\n"
-"conditions; please see the COPYING file for more details.\n"
+"Possible attribute conflict for refdes: ~A\n"
+"name: ~A\n"
+"values: ~A\n"
 msgstr ""
-"gEDA/gnetlist versie %s%s.%s\n"
-"gEDA/gnetlist komt met ABSOLUUT GEEN GARANTIE; zie ook COPYING voor meer "
-"details.\n"
-"Dit is vrije software, en U bent welkom om dit te verspreiden onder "
-"bepaalde \n"
-"condities; zie alstublieft het COPYING bestand voor meer details.\n"
-"\n"
 
-#: gnetlist/src/parsecmd.c:67
-#, fuzzy, c-format
+#, scheme-format
+msgid "Uref ~a: Bad slot number: ~a.\n"
+msgstr ""
+
+msgid "Couldn't wrap string  at requested position\n"
+msgstr ""
+
+#, scheme-format
 msgid ""
-"Usage: %s [OPTION ...] [-g BACKEND] [--] FILE ...\n"
+"There is a net name collision!\n"
+"The net called \"~A\" will be remapped\n"
+"to \"~A\" which is already used\n"
+"by the net called \"~A\".\n"
+"This may be caused by netname attributes colliding with other netnames\n"
+"due to truncation of the name, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There is a refdes name collision!\n"
+"The refdes \"~A\" will be mapped\n"
+"to \"~A\" which is already used\n"
+"by \"~A\".\n"
+"This may be caused by refdes attributes colliding with others\n"
+"due to truncation of the refdes, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Can't open directory ~S.\n"
+msgstr "Kan bestandenmap ~S niet openen\n"
+
+#, fuzzy, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
 "\n"
-"Generate a netlist from one or more gEDA schematic FILEs.\n"
+"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
 "\n"
 "General options:\n"
 "  -q              Quiet mode.\n"
@@ -57,6 +86,7 @@ msgid ""
 "  -o FILE         Filename for netlist data output.\n"
 "  -L DIR          Add DIR to Scheme search path.\n"
 "  -g BACKEND      Specify netlist backend to use.\n"
+"  -f FILE         Specify path to netlist backend file to use.\n"
 "  -O STRING       Pass an option string to backend.\n"
 "  -l FILE         Load Scheme file before loading backend.\n"
 "  -m FILE         Load Scheme file after loading backend.\n"
@@ -68,7 +98,7 @@ msgid ""
 "  --              Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"gEDA/gaf homepage: <http://www.geda-project.org/>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
 "Gebruik: %s [OPTIE ...] [-g BACKEND] [--] BESTAND ...\n"
 "\n"
@@ -93,293 +123,84 @@ msgstr ""
 "Rapporteer gebreken op <https://bugs.launchpad.net/geda>\n"
 "gEDA/gaf huispagina: <http://www.geda-project.org/>\n"
 
-#: gnetlist/src/parsecmd.c:102
-#, c-format
-msgid ""
-"gEDA %s (g%.7s)\n"
-"Copyright (C) 1998-2012 gEDA developers\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the gEDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
-"gEDA %s (g%.7s)\n"
-"Copyright (C) 1998-2012 gEDA developers\n"
-"Dit is vrije software, en u bent welkom om deze te herdistribueren onder\n"
-"bepaalde condities. Voor details, zie het bestand `COPYING', welke is\n"
-"bijgesloten in de gEDA distributie.\n"
-"Er is GEEN GARANTIE, voor zover toegestaan door de wet.\n"
-
-#: gnetlist/src/parsecmd.c:116
-#, c-format
+#, fuzzy, scheme-format
 msgid ""
 "\n"
-"Just got an error; tag is\n"
-"        "
+"Just got an error '~A':\n"
+"        ~A\n"
+"\n"
 msgstr ""
 "\n"
 "Kreeg net een fout; tag is\n"
 "        "
 
-#: gnetlist/src/parsecmd.c:222
-#, c-format
-msgid ""
-"ERROR: -%c option requires an argument.\n"
-"\n"
-msgstr ""
-"FOUT: -%c optie vereist een argument.\n"
-"\n"
+msgid "You gave neither backend to execute nor interactive mode!\n"
+msgstr "U gaf geen backend om uit voeren noch interactieve modus!\n"
 
-#: gnetlist/src/parsecmd.c:225
-#, c-format
-msgid ""
-"ERROR: Unknown option -%c.\n"
-"\n"
-msgstr ""
-"FOUT: Onbekende optie -%c.\n"
-"\n"
-
-#: gnetlist/src/parsecmd.c:227
-#, c-format
-msgid ""
-"ERROR: Unknown option character `\\x%x'.\n"
-"\n"
-msgstr ""
-"FOUT: Onbekend optie karakter `\\x%x'.\n"
-"\n"
-
-#: gnetlist/src/parsecmd.c:231
-#, c-format
-msgid ""
-"\n"
-"Run `%s --help' for more information.\n"
-msgstr ""
-"\n"
-"Doe `%s --help' voor meer informatie.\n"
-
-#: gnetlist/src/s_hierarchy.c:85
-#, fuzzy, c-format
-msgid "Going to traverse source [%1$s]"
-msgstr "Ga de bron doorkruisen [%s]\n"
-
-#: gnetlist/src/s_hierarchy.c:104
-#, fuzzy, c-format
-msgid "Failed to load subcircuit '%1$s': %2$s\n"
-msgstr "Faalde bij het laden van subcircuit '%s': %s\n"
-
-#: gnetlist/src/s_hierarchy.c:106
-#, fuzzy, c-format
-msgid "ERROR: Failed to load subcircuit '%1$s': %2$s\n"
-msgstr "FOUT: Faalde om subcircuit '%s': %s te laden\n"
-
-#: gnetlist/src/s_hierarchy.c:206
-#, fuzzy, c-format
-msgid "Found a pin [%1$s] on component [%2$s] which does not have a label!\n"
-msgstr "Vond een pen [%s] op component [%s] welke geen label heeft!\n"
-
-#: gnetlist/src/s_hierarchy.c:230
-#, fuzzy, c-format
-msgid ""
-"Missing I/O symbol with refdes [%1$s] inside schematic for symbol [%2$s]\n"
-msgstr ""
-"Ontbrekend I/O symbool met refdes [%s] in een schema voor symbool [%s]\n"
-
-#: gnetlist/src/s_misc.c:54
-#, c-format
-msgid ""
-"\n"
-"DONE\n"
-msgstr ""
-"\n"
-"GEDAAN\n"
-
-#: gnetlist/src/s_misc.c:56
-#, c-format
-msgid " DONE\n"
-msgstr " GEDAAN\n"
-
-#: gnetlist/src/s_netattrib.c:72
-#, fuzzy, c-format
-msgid "ERROR: `%1$s' is reserved for internal use."
-msgstr "FOUT: `%s' is gereserveerd voor intern gebruik."
-
-#: gnetlist/src/s_netattrib.c:94
-#, c-format
-msgid "Found malformed net attribute\n"
-msgstr "Vond een misvormd net attribuut\n"
-
-#: gnetlist/src/s_netattrib.c:150
-#, fuzzy, c-format
-msgid "Found a cpinlist head with a netname! [%1$s]\n"
-msgstr "Vond een cpinlist kop met een netnaam! [%s]\n"
-
-#: gnetlist/src/s_netattrib.c:263 gnetlist/src/s_netattrib.c:294
-#, fuzzy, c-format
-msgid ""
-"Got an invalid net= attrib [net=%1$s]\n"
-"Missing : in net= attrib\n"
-msgstr ""
-"Kreeg een ongeldig= attrib [net=%s]\n"
-"Ontbrekend : in net= attrib\n"
-
-#: gnetlist/src/s_net.c:120
-#, c-format
-msgid "Missing Attributes (refdes and pin number)\n"
-msgstr "Ontbrekende Attributen (refdes en pennummer)\n"
-
-#: gnetlist/src/s_net.c:209 gnetlist/src/s_net.c:246
-#, fuzzy, c-format
-msgid "Found duplicate net name, renaming [%1$s] to [%2$s]\n"
-msgstr "Vond een duplicaat net naam, hernoem [%s] naar [%s]\n"
-
-#: gnetlist/src/s_net.c:354
-#, fuzzy, c-format
-msgid "s_net_name: incorrect connectivity type %1$i\n"
-msgstr "s_net_name: incorrect verbinding type %i\n"
-
-#: gnetlist/src/s_net.c:374
-#, c-format
-msgid "Increase number of unnamed nets (s_net.c)\n"
-msgstr "Verhoog aantal naamloze netten (s_net.c)\n"
-
-#: gnetlist/src/s_traverse.c:165
-#, fuzzy, c-format
-msgid ""
-"WARNING: Found a placeholder/missing component, are you missing a symbol "
-"file? [%1$s]\n"
-msgstr ""
-"WAARSCHUWING: Vond een plaatshouder/ontbrekend component, mist U een symbool "
-"bestand? [%s]\n"
-
-#: gnetlist/src/s_traverse.c:222
-#, c-format
-msgid ""
-"Could not find refdes on component and could not find any special "
-"attributes!\n"
-msgstr ""
-"Kon geen refdes vinden op component en kon geen speciaal attributen vinden!\n"
-
-#: gnetlist/src/s_traverse.c:312
-msgid "Non-connectable object being queried for connection type\n"
-msgstr "Niet-verbindbaar object naar verbindingtype gevraagd\n"
-
-#: gnetlist/src/s_traverse.c:348
-#, fuzzy, c-format
-msgid "WARNING: Found label=%1$s. label= is deprecated, please use netname=\n"
-msgstr ""
-"WAARSCHUWING: vond label=%s. label= is vervallen, gebruik alstublieft "
-"netname=\n"
-
-#: gnetlist/src/s_traverse.c:398
-#, c-format
-msgid "Found a possible net/pin infinite connection\n"
-msgstr "Vond een mogelijk oneindige net/pen verbinding\n"
-
-#: gnetlist/scheme/gnetlist.scm:127
-#, scheme-format
-msgid ""
-"Possible attribute conflict for refdes: ~A\n"
-"name: ~A\n"
-"values: ~A\n"
-msgstr ""
-
-#: gnetlist/scheme/gnetlist.scm:192
-#, scheme-format
-msgid "Uref ~a: Bad slot number: ~a.\n"
-msgstr ""
-
-#: gnetlist/scheme/gnetlist.scm:235
-msgid "Couldn't wrap string  at requested position\n"
-msgstr ""
-
-#: gnetlist/scheme/gnetlist.scm:266
-#, scheme-format
-msgid "WARNING: Found uref=~A"
-msgstr ""
-
-#: gnetlist/scheme/gnetlist.scm:269
 #, fuzzy, scheme-format
-msgid "uref= is deprecated, please use refdes=~A"
-msgstr ""
-"WAARSCHUWING: vond label=%s. label= is vervallen, gebruik alstublieft "
-"netname=\n"
-
-#: gnetlist/scheme/gnetlist.scm:310
-msgid "Welcome to Gnetlist REPL!\n"
-msgstr ""
-
-#: gnetlist/scheme/gnetlist.scm:322
-msgid "Could not load module (ice-9 readline).\n"
-msgstr ""
-
-#: gnetlist/scheme/gnetlist.scm:546
-#, scheme-format
 msgid ""
-"There is a net name collision!\n"
-"The net called \"~A\" will be remapped\n"
-"to \"~A\" which is already used\n"
-"by the net called \"~A\".\n"
-"This may be caused by netname attributes colliding with other netnames\n"
-"due to truncation of the name, case insensitivity, or\n"
-"other limitations imposed by this netlist format.\n"
-msgstr ""
-
-#: gnetlist/scheme/gnetlist.scm:584
-#, scheme-format
-msgid ""
-"There is a refdes name collision!\n"
-"The refdes \"~A\" will be mapped\n"
-"to \"~A\" which is already used\n"
-"by \"~A\".\n"
-"This may be caused by refdes attributes colliding with others\n"
-"due to truncation of the refdes, case insensitivity, or\n"
-"other limitations imposed by this netlist format.\n"
-msgstr ""
-
-#: gnetlist/scheme/gnetlist.scm:750
-#, scheme-format
-msgid "Loading schematic ~S\n"
-msgstr "Laden van schema ~S\n"
-
-#: gnetlist/scheme/gnetlist.scm:774
-#, scheme-format
-msgid "Can't open directory ~S.\n"
-msgstr "Kan bestandenmap ~S niet openen\n"
-
-#: gnetlist/scheme/gnetlist.scm:778
-msgid ""
-"List of available backends: \n"
-"\n"
-msgstr ""
-"Lijst van beschikbare backends:\n"
-"\n"
-
-#: gnetlist/scheme/gnetlist.scm:791
-#, scheme-format
-msgid ""
-"No schematics files specified for processing.\n"
-"Run `~A --help' for more information.\n"
+"No schematic files specified for processing.\n"
+"~\n"
+"                         Run `~A --help' for more information.\n"
 msgstr ""
 "Geen schema bestanden gespecificeerd voor verwerking.\n"
 "\n"
 "Doe `~A --help' voor meer informatie.\n"
 
-#: gnetlist/scheme/gnetlist.scm:822
-#, scheme-format
+#, fuzzy, scheme-format
 msgid ""
 "Could not find backend `~A' in load path.\n"
-"\n"
-"Run `~A --list-backends' for a full list of available backends.\n"
+"~\n"
+"                         Run `~A --list-backends' for a full list of "
+"available backends.\n"
 msgstr ""
 "Kan backend `~A' niet vinden in het laadpad.\n"
 "\n"
 "Doe `~A --list-backends' voor een volledige lijst van beschikbare backends.\n"
 
-#: gnetlist/scheme/gnetlist.scm:850
-msgid "You gave neither backend to execute nor interactive mode!\n"
-msgstr "U gaf geen backend om uit voeren noch interactieve modus!\n"
+#, scheme-format
+msgid ""
+"Can't load backend file ~S.\n"
+"~\n"
+"                         Backend files are expected to have names like "
+"\"gnet-NAME.scm\"\n"
+"~\n"
+"                         and contain entry point function NAME (where NAME "
+"is the backend's name).\n"
+msgstr ""
 
-#: gnetlist/scheme/gnetlist/rename.scm:68
+msgid "Failed to evaluate Scheme expression at startup.\n"
+msgstr ""
+
+msgid "Failed to load Scheme file before loading backend.\n"
+msgstr ""
+
+msgid "Failed to load backend file.\n"
+msgstr ""
+
+msgid "Failed to load Scheme file after loading backend.\n"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Found duplicate net name, renaming ~A to ~A"
+msgstr "Vond een duplicaat net naam, hernoem [%s] naar [%s]\n"
+
+#, scheme-format
+msgid "Source schematic of the component ~S has no port with \"refdes=~A\"."
+msgstr ""
+
+#, scheme-format
+msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
+msgstr ""
+
+#, scheme-format
+msgid "Invalid attribute (missing ':'): net=~A"
+msgstr ""
+
+#, scheme-format
+msgid "Attached net ~A:~A overrides inherited net ~A:~A"
+msgstr ""
+
 #, fuzzy, scheme-format
 msgid ""
 "WARNING: Trying to rename something twice:\n"
@@ -390,6 +211,164 @@ msgstr ""
 "WAARSCHUWING: Probeer iets dubbel te hernoemen:\n"
 "\t%s en %s\n"
 "zijn beide een bron- en bestemmingnaam\n"
+
+#~ msgid "Loading schematic ~S\n"
+#~ msgstr "Laden van schema ~S\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "gEDA/gnetlist version ~A~A.~A\n"
+#~ "gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
+#~ "details.\n"
+#~ "This is free software, and you are welcome to redistribute it under "
+#~ "certain\n"
+#~ "conditions; please see the COPYING file for more details.\n"
+#~ msgstr ""
+#~ "gEDA/gnetlist versie %s%s.%s\n"
+#~ "gEDA/gnetlist komt met ABSOLUUT GEEN GARANTIE; zie ook COPYING voor meer "
+#~ "details.\n"
+#~ "Dit is vrije software, en U bent welkom om dit te verspreiden onder "
+#~ "bepaalde \n"
+#~ "condities; zie alstublieft het COPYING bestand voor meer details.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "List of available backends: \n"
+#~ "\n"
+#~ msgstr ""
+#~ "Lijst van beschikbare backends:\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "This is the MINGW32 port.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Dit is de MINGW32 versie.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "ERROR: -%c option requires an argument.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "FOUT: -%c optie vereist een argument.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "ERROR: Unknown option -%c.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "FOUT: Onbekende optie -%c.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "ERROR: Unknown option character `\\x%x'.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "FOUT: Onbekend optie karakter `\\x%x'.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Run `%s --help' for more information.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Doe `%s --help' voor meer informatie.\n"
+
+#, fuzzy
+#~ msgid "Going to traverse source [%1$s]"
+#~ msgstr "Ga de bron doorkruisen [%s]\n"
+
+#, fuzzy
+#~ msgid "Failed to load subcircuit '%1$s': %2$s\n"
+#~ msgstr "Faalde bij het laden van subcircuit '%s': %s\n"
+
+#, fuzzy
+#~ msgid "ERROR: Failed to load subcircuit '%1$s': %2$s\n"
+#~ msgstr "FOUT: Faalde om subcircuit '%s': %s te laden\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Found a pin [%1$s] on component [%2$s] which does not have a label!\n"
+#~ msgstr "Vond een pen [%s] op component [%s] welke geen label heeft!\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Missing I/O symbol with refdes [%1$s] inside schematic for symbol [%2$s]\n"
+#~ msgstr ""
+#~ "Ontbrekend I/O symbool met refdes [%s] in een schema voor symbool [%s]\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "DONE\n"
+#~ msgstr ""
+#~ "\n"
+#~ "GEDAAN\n"
+
+#~ msgid " DONE\n"
+#~ msgstr " GEDAAN\n"
+
+#, fuzzy
+#~ msgid "ERROR: `%1$s' is reserved for internal use."
+#~ msgstr "FOUT: `%s' is gereserveerd voor intern gebruik."
+
+#~ msgid "Found malformed net attribute\n"
+#~ msgstr "Vond een misvormd net attribuut\n"
+
+#, fuzzy
+#~ msgid "Found a cpinlist head with a netname! [%1$s]\n"
+#~ msgstr "Vond een cpinlist kop met een netnaam! [%s]\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Got an invalid net= attrib [net=%1$s]\n"
+#~ "Missing : in net= attrib\n"
+#~ msgstr ""
+#~ "Kreeg een ongeldig= attrib [net=%s]\n"
+#~ "Ontbrekend : in net= attrib\n"
+
+#~ msgid "Missing Attributes (refdes and pin number)\n"
+#~ msgstr "Ontbrekende Attributen (refdes en pennummer)\n"
+
+#, fuzzy
+#~ msgid "s_net_name: incorrect connectivity type %1$i\n"
+#~ msgstr "s_net_name: incorrect verbinding type %i\n"
+
+#~ msgid "Increase number of unnamed nets (s_net.c)\n"
+#~ msgstr "Verhoog aantal naamloze netten (s_net.c)\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Found a placeholder/missing component, are you missing a symbol "
+#~ "file? [%1$s]\n"
+#~ msgstr ""
+#~ "WAARSCHUWING: Vond een plaatshouder/ontbrekend component, mist U een "
+#~ "symbool bestand? [%s]\n"
+
+#~ msgid ""
+#~ "Could not find refdes on component and could not find any special "
+#~ "attributes!\n"
+#~ msgstr ""
+#~ "Kon geen refdes vinden op component en kon geen speciaal attributen "
+#~ "vinden!\n"
+
+#~ msgid "Non-connectable object being queried for connection type\n"
+#~ msgstr "Niet-verbindbaar object naar verbindingtype gevraagd\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Found label=%1$s. label= is deprecated, please use netname=\n"
+#~ msgstr ""
+#~ "WAARSCHUWING: vond label=%s. label= is vervallen, gebruik alstublieft "
+#~ "netname=\n"
+
+#~ msgid "Found a possible net/pin infinite connection\n"
+#~ msgstr "Vond een mogelijk oneindige net/pen verbinding\n"
+
+#, fuzzy
+#~ msgid "uref= is deprecated, please use refdes=~A"
+#~ msgstr ""
+#~ "WAARSCHUWING: vond label=%s. label= is vervallen, gebruik alstublieft "
+#~ "netname=\n"
 
 #~ msgid "ERROR: Overwriting a valid rename list.\n"
 #~ msgstr "FOUT: Overschrijf een geldige hernoem-lijst.\n"

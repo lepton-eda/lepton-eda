@@ -1,5 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2013-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,14 +56,11 @@ static struct BuiltinInfo builtins[] = {
   { "%edit-rotate-90",               0, 0, 0, (SCM (*) ()) g_keys_edit_rotate_90 },
   { "%edit-mirror",                  0, 0, 0, (SCM (*) ()) g_keys_edit_mirror },
   { "%edit-slot",                    0, 0, 0, (SCM (*) ()) g_keys_edit_slot },
-  { "%edit-color",                   0, 0, 0, (SCM (*) ()) g_keys_edit_color },
+  { "%edit-object-properties",       0, 0, 0, (SCM (*) ()) g_keys_edit_object_properties },
   { "%edit-edit",                    0, 0, 0, (SCM (*) ()) g_keys_edit_edit },
   { "%edit-text",                    0, 0, 0, (SCM (*) ()) g_keys_edit_text },
   { "%edit-lock",                    0, 0, 0, (SCM (*) ()) g_keys_edit_lock },
   { "%edit-unlock",                  0, 0, 0, (SCM (*) ()) g_keys_edit_unlock },
-  { "%edit-linetype",                0, 0, 0, (SCM (*) ()) g_keys_edit_linetype },
-  { "%edit-filltype",                0, 0, 0, (SCM (*) ()) g_keys_edit_filltype },
-  { "%edit-pin-type",                0, 0, 0, (SCM (*) ()) g_keys_edit_pin_type },
   { "%edit-translate",               0, 0, 0, (SCM (*) ()) g_keys_edit_translate },
   { "%edit-invoke-macro",            0, 0, 0, (SCM (*) ()) g_keys_edit_invoke_macro },
   { "%edit-embed",                   0, 0, 0, (SCM (*) ()) g_keys_edit_embed },
@@ -95,6 +94,7 @@ static struct BuiltinInfo builtins[] = {
 
   { "%view-sidebar",                 0, 0, 0, (SCM (*) ()) g_keys_view_sidebar },
   { "%view-status",                  0, 0, 0, (SCM (*) ()) g_keys_view_status },
+  { "%view-find-text-state",         0, 0, 0, (SCM (*) ()) g_keys_view_find_text_state },
   { "%view-redraw",                  0, 0, 0, (SCM (*) ()) g_keys_view_redraw },
   { "%view-zoom-full",               0, 0, 0, (SCM (*) ()) g_keys_view_zoom_full },
   { "%view-zoom-extents",            0, 0, 0, (SCM (*) ()) g_keys_view_zoom_extents },
@@ -109,10 +109,13 @@ static struct BuiltinInfo builtins[] = {
   { "%view-dark-colors",             0, 0, 0, (SCM (*) ()) g_keys_view_dark_colors },
   { "%view-light-colors",            0, 0, 0, (SCM (*) ()) g_keys_view_light_colors },
   { "%view-bw-colors",               0, 0, 0, (SCM (*) ()) g_keys_view_bw_colors },
+  { "%view-color-edit",              0, 0, 0, (SCM (*) ()) g_keys_view_color_edit },
   { "%page-manager",                 0, 0, 0, (SCM (*) ()) g_keys_page_manager },
   { "%page-next",                    0, 0, 0, (SCM (*) ()) g_keys_page_next },
   { "%page-prev",                    0, 0, 0, (SCM (*) ()) g_keys_page_prev },
   { "%page-close",                   0, 0, 0, (SCM (*) ()) g_keys_page_close },
+  { "%page-next-tab",                0, 0, 0, (SCM (*) ()) g_keys_page_next_tab },
+  { "%page-prev-tab",                0, 0, 0, (SCM (*) ()) g_keys_page_prev_tab },
   { "%page-revert",                  0, 0, 0, (SCM (*) ()) g_keys_page_revert },
   { "%page-print",                   0, 0, 0, (SCM (*) ()) g_keys_page_print },
   { "%add-component",                0, 0, 0, (SCM (*) ()) g_keys_add_component },
@@ -130,13 +133,10 @@ static struct BuiltinInfo builtins[] = {
   { "%hierarchy-down-schematic",     0, 0, 0, (SCM (*) ()) g_keys_hierarchy_down_schematic },
   { "%hierarchy-down-symbol",        0, 0, 0, (SCM (*) ()) g_keys_hierarchy_down_symbol },
   { "%hierarchy-up",                 0, 0, 0, (SCM (*) ()) g_keys_hierarchy_up },
-  { "%attributes-attach",            0, 0, 0, (SCM (*) ()) g_keys_attributes_attach },
-  { "%attributes-detach",            0, 0, 0, (SCM (*) ()) g_keys_attributes_detach },
   { "%attributes-show-name",         0, 0, 0, (SCM (*) ()) g_keys_attributes_show_name },
   { "%attributes-show-value",        0, 0, 0, (SCM (*) ()) g_keys_attributes_show_value },
   { "%attributes-show-both",         0, 0, 0, (SCM (*) ()) g_keys_attributes_show_both },
   { "%attributes-visibility-toggle", 0, 0, 0, (SCM (*) ()) g_keys_attributes_visibility_toggle },
-  { "%options-text-size",            0, 0, 0, (SCM (*) ()) g_keys_options_text_size },
   { "%options-snap-size",            0, 0, 0, (SCM (*) ()) g_keys_options_snap_size },
   { "%options-scale-up-snap-size",   0, 0, 0, (SCM (*) ()) g_keys_options_scale_up_snap_size },
   { "%options-scale-down-snap-size", 0, 0, 0, (SCM (*) ()) g_keys_options_scale_down_snap_size },
@@ -147,6 +147,8 @@ static struct BuiltinInfo builtins[] = {
   { "%options-magneticnet",          0, 0, 0, (SCM (*) ()) g_keys_options_magneticnet },
   { "%options-show-log-window",      0, 0, 0, (SCM (*) ()) g_keys_options_show_log_window },
   { "%options-show-coord-window",    0, 0, 0, (SCM (*) ()) g_keys_options_show_coord_window },
+  { "%options-select-font",          0, 0, 0, (SCM (*) ()) g_keys_options_select_font },
+  { "%options-draw-grips",           0, 0, 0, (SCM (*) ()) g_keys_options_draw_grips },
   { "%help-about",                   0, 0, 0, (SCM (*) ()) g_keys_help_about },
   { "%help-hotkeys",                 0, 0, 0, (SCM (*) ()) g_keys_help_hotkeys },
   { "%cancel",                       0, 0, 0, (SCM (*) ()) g_keys_cancel },

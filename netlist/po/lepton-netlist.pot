@@ -1,0 +1,194 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Lepton Developers
+# This file is distributed under the same license as the lepton-eda package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: lepton-eda 1.9.9\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2019-10-03 23:33+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: netlist/scheme/netlist.scm:103
+msgid ""
+"Copyright (C) 1998-2016 gEDA developers\n"
+"Copyright (C) 2017-2019 Lepton EDA Contributors\n"
+"This is free software, and you are welcome to redistribute it under\n"
+"certain conditions. For details, see the file `COPYING', which is\n"
+"included in the Lepton EDA distribution.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:180
+#, scheme-format
+msgid ""
+"Possible attribute conflict for refdes: ~A\n"
+"name: ~A\n"
+"values: ~A\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:246
+#, scheme-format
+msgid "Uref ~a: Bad slot number: ~a.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:289
+msgid "Couldn't wrap string  at requested position\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:562
+#, scheme-format
+msgid ""
+"There is a net name collision!\n"
+"The net called \"~A\" will be remapped\n"
+"to \"~A\" which is already used\n"
+"by the net called \"~A\".\n"
+"This may be caused by netname attributes colliding with other netnames\n"
+"due to truncation of the name, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:599
+#, scheme-format
+msgid ""
+"There is a refdes name collision!\n"
+"The refdes \"~A\" will be mapped\n"
+"to \"~A\" which is already used\n"
+"by \"~A\".\n"
+"This may be caused by refdes attributes colliding with others\n"
+"due to truncation of the refdes, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:792
+#, scheme-format
+msgid "Can't open directory ~S.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:803
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
+"\n"
+"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
+"\n"
+"General options:\n"
+"  -q              Quiet mode.\n"
+"  -v, --verbose   Verbose mode.\n"
+"  -o FILE         Filename for netlist data output.\n"
+"  -L DIR          Add DIR to Scheme search path.\n"
+"  -g BACKEND      Specify netlist backend to use.\n"
+"  -f FILE         Specify path to netlist backend file to use.\n"
+"  -O STRING       Pass an option string to backend.\n"
+"  -l FILE         Load Scheme file before loading backend.\n"
+"  -m FILE         Load Scheme file after loading backend.\n"
+"  -c EXPR         Evaluate Scheme expression at startup.\n"
+"  -i              Enter interactive Scheme REPL after loading.\n"
+"  --list-backends Print a list of available netlist backends.\n"
+"  -h, --help      Help; this message.\n"
+"  -V, --version   Show version information.\n"
+"  --              Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:842
+#, scheme-format
+msgid ""
+"\n"
+"Just got an error '~A':\n"
+"        ~A\n"
+"\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:884
+msgid "You gave neither backend to execute nor interactive mode!\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:888
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"~\n"
+"                         Run `~A --help' for more information.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:894
+#, scheme-format
+msgid ""
+"Could not find backend `~A' in load path.\n"
+"~\n"
+"                         Run `~A --list-backends' for a full list of "
+"available backends.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:900
+#, scheme-format
+msgid ""
+"Can't load backend file ~S.\n"
+"~\n"
+"                         Backend files are expected to have names like "
+"\"gnet-NAME.scm\"\n"
+"~\n"
+"                         and contain entry point function NAME (where NAME "
+"is the backend's name).\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:941
+msgid "Failed to evaluate Scheme expression at startup.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:975
+msgid "Failed to load Scheme file before loading backend.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:1003
+msgid "Failed to load backend file.\n"
+msgstr ""
+
+#: netlist/scheme/netlist.scm:1016
+msgid "Failed to load Scheme file after loading backend.\n"
+msgstr ""
+
+#: netlist/scheme/netlist/hierarchy.scm:102
+#, scheme-format
+msgid "Found duplicate net name, renaming ~A to ~A"
+msgstr ""
+
+#: netlist/scheme/netlist/hierarchy.scm:176
+#, scheme-format
+msgid "Source schematic of the component ~S has no port with \"refdes=~A\"."
+msgstr ""
+
+#: netlist/scheme/netlist/hierarchy.scm:180
+#, scheme-format
+msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
+msgstr ""
+
+#: netlist/scheme/netlist/net.scm:92
+#, scheme-format
+msgid "Invalid attribute (missing ':'): net=~A"
+msgstr ""
+
+#: netlist/scheme/netlist/net.scm:148
+#, scheme-format
+msgid "Attached net ~A:~A overrides inherited net ~A:~A"
+msgstr ""
+
+#: netlist/scheme/netlist/rename.scm:98
+#, scheme-format
+msgid ""
+"WARNING: Trying to rename something twice:\n"
+"\t~A and ~A\n"
+"are both a src and dest name\n"
+"This warning is okay if you have multiple levels of hierarchy!\n"
+msgstr ""

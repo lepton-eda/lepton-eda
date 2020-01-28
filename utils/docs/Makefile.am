@@ -1,19 +1,40 @@
-dist_man_MANS = gsch2pcb.1 grenum.1 gxyrs.1 \
-	pcb_backannotate.1 refdes_renum.1 schdiff.1 tragesym.1 \
-	garchive.1 gschlas.1 \
-	gsymfix.1
+dist_man_MANS = \
+	lepton-archive.1 \
+	lepton-embed.1 \
+	lepton-pcb_backannotate.1 \
+	lepton-refdes_renum.1 \
+	lepton-renum.1 \
+	lepton-sch2pcb.1 \
+	lepton-schdiff.1 \
+	lepton-symfix.1 \
+	lepton-tragesym.1
 
-EXTRA_DIST = README.gsch2pcb README.tragesym README.grenum \
-	TODO.grenum why.grenum logo.png utils-main.txt \
-	what-is-geda.html what-is-utils.html utils.dox \
-	gsch2pcb.1.in grenum.1.in gxyrs.1.in \
-	pcb_backannotate.1.in refdes_renum.1.in \
-	schdiff.1.in tragesym.1.in \
-	garchive.1.in gschlas.1.in \
-	gsymfix.1.in
+EXTRA_DIST = \
+	lepton-archive.1.in \
+	lepton-embed.1.in \
+	lepton-pcb_backannotate.1.in \
+	lepton-refdes_renum.1.in \
+	lepton-renum.1.in \
+	lepton-sch2pcb.1.in \
+	lepton-schdiff.1.in \
+	lepton-symfix.1.in \
+	lepton-tragesym.1.in \
+	README.lepton-renum \
+	README.lepton-sch2pcb \
+	README.lepton-tragesym \
+	TODO.lepton-renum \
+	why.lepton-renum \
+	logo.png \
+	utils-main.txt \
+	utils.dox \
+	what-is-geda.html \
+	what-is-utils.html
 
 docsreadmedir = $(docdir)/readmes
-docsreadme_DATA = README.gsch2pcb README.tragesym README.grenum
+docsreadme_DATA = \
+	README.lepton-renum \
+	README.lepton-sch2pcb \
+	README.lepton-tragesym
 
 doxygen: utils.dox
 	@echo 'Creating doxygen documentation for utils...'
@@ -50,12 +71,12 @@ else
 endif
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ 
+CLEANFILES = $(dist_man_MANS) $(html_man_files)
 DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~ Makefile.in $(html_man_files)
+MAINTAINERCLEANFILES = *.log *~ Makefile.in
 
 distclean-local:
 	-rm -rf html latex
 
 maintainer-clean-local:
-	-rm -rf html latex 
+	-rm -rf html latex

@@ -1,6 +1,8 @@
 ;; -*- Scheme -*-
 ;;
 ;; Copyright (C) 2006-2010 Dan McMahill
+;; Copyright (C) 2006-2011 gEDA Contributors
+;; Copyright (C) 2019 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -263,7 +265,7 @@
 )
 
 (define (pcb:load-project)
-  (let ((f nil))
+  (let ((f #f))
     (gschem-msg "This menu choice does not really do anything yet other than select a file\n")
 
     (set! f (gschem-filesel "Select Project File" pcb:project-file-name  'open 'must_exist))
@@ -272,7 +274,7 @@
 )
 
 (define (pcb:save-project)
-  (let ((f def nil))
+  (let ((f #f))
     (gschem-msg "This menu choice does not really do anything yet other than select a file\n")
 
     (set! f (gschem-filesel "Save Project File As" pcb:project-file-name 'save 'may_exist))

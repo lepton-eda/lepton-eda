@@ -1,7 +1,7 @@
 Makefile
 Makefile.in
 lepton-netlist
-gnet-gsch2pcb.scm
+config-netlist.scm
 *.log
 *.trs
 *~

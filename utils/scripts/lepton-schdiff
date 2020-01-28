@@ -1,0 +1,90 @@
+#! /bin/sh
+
+VIEWER="display"
+DEFAULT_FONT="Sans"
+
+usage ()
+{
+  cat <<EOF
+Usage: lepton-schdiff [-d VIEWER] old new
+
+View a graphical diff of Lepton EDA schematics using lepton-schematic and ImageMagick.
+If specified, use VIEWER program ('display' by default) to show the result.
+
+Usage with git:
+  git difftool -x lepton-schdiff ...
+
+Usage with Mercurial:
+  Add the following to .hgrc:
+
+    [extensions]
+    hgext.extdiff =
+    [extdiff]
+    cmd.schdiff = /path/to/lepton-schdiff
+
+  Then use: hg schdiff ...
+
+Usage with Subversion:
+  svn diff --diff-cmd lepton-schdiff
+
+Report bugs to <https://github.com/lepton-eda/lepton-eda/issues>
+Lepton EDA homepage <https://github.com/lepton-eda/lepton-eda>
+EOF
+
+}
+
+while getopts "d:" arg
+do
+    case "${arg}" in
+        d) VIEWER=$OPTARG ;;
+        *) usage ; exit 1 ;;
+    esac
+done
+
+shift $(( $OPTIND - 1 ))
+
+for PROG in lepton-cli composite
+do
+  if which $PROG > /dev/null
+  then
+    true
+  else
+    echo "$PROG is not found.  Either it is not installed, or not in your PATH"
+    exit 1
+  fi
+done
+
+if test $# -lt 2
+  then usage; exit 1
+fi
+
+#In case the script was invoked with extra option arguments, throw them away
+shift `expr $# - 2`
+
+if test -d $1 -o -d $2
+  then echo "ERROR: lepton-schdiff cannot diff entire directories"
+  exit 1
+fi
+
+LEFTFILE=$1
+RIGHTFILE=$2
+
+LEFTPNG=`mktemp /tmp/lepton-schdiff-old.XXXXXXXXXX`
+RIGHTPNG=`mktemp /tmp/lepton-schdiff-new.XXXXXXXXXX`
+DIFFPNG=`mktemp /tmp/lepton-schdiff-diff.XXXXXXXXXX`
+
+font="`lepton-cli config schematic.gui font`"
+if [ -z "${font}" ]
+then
+  font=$DEFAULT_FONT
+fi
+
+lepton-cli export -f png -s 1344px:1008px --no-color -F "${font}" -o $RIGHTPNG $RIGHTFILE && \
+lepton-cli export -f png -s 1344px:1008px --no-color -F "${font}" -o $LEFTPNG  $LEFTFILE  && \
+composite -stereo 0 $LEFTPNG $RIGHTPNG $DIFFPNG && \
+$VIEWER $DIFFPNG
+
+rm $LEFTPNG
+rm $RIGHTPNG
+rm $DIFFPNG
+

@@ -452,7 +452,6 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
     page->saved_since_first_loaded = 1;
 
     /* Reset the last saved timer */
-    g_get_current_time (&page->last_load_or_save_time);
     page->ops_since_last_backup = 0;
     page->do_autosave_backup = 0;
 

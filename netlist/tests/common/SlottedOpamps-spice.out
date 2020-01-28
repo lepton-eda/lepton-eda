@@ -1,4 +1,4 @@
-* Spice netlister for gnetlist
+* SPICE Lepton EDA netlister backend
 U1.1 samenet_output_c minusin_slot1_pin_b plusin_slot1_pin3_a <No valid value attribute found>
 U1.2 samenet_output_c minusin_slot2_pin6_b plusin_slot2_pin5_a <No valid value attribute found>
 U1.3 samenet_output_c minusin_slot3_pin_b plusin_slot3_pin10_a <No valid value attribute found>

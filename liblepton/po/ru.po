@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2017-02-26 10:32+0300\n"
+"POT-Creation-Date: 2019-10-03 23:35+0300\n"
 "PO-Revision-Date: 2014-06-06 16:40+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
@@ -35,40 +35,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: liblepton/data/liblepton.xml.in:3
-msgid "gEDA circuit schematic"
+#, fuzzy
+msgid "Lepton EDA circuit schematic"
 msgstr "Принципиальная схема gEDA"
 
-#: liblepton/data/liblepton.xml.in:4
-msgid "gEDA schematic symbol"
+#, fuzzy
+msgid "Lepton EDA schematic symbol"
 msgstr "Символ схемы gEDA"
 
-#: liblepton/data/liblepton.xml.in:5
-msgid "gEDA gsch2pcb project"
+#, fuzzy
+msgid "Lepton EDA sch2pcb project"
 msgstr "Проект gsch2pcb gEDA"
 
-#: liblepton/data/x-geda-gsch2pcb-project.desktop.in:3
-msgid "gEDA Gsch2pcb Project"
+#, fuzzy
+msgid "Lepton EDA sch2pcb Project"
 msgstr "Проект gsch2pcb gEDA"
 
-#: liblepton/data/x-geda-schematic.desktop.in:3
-msgid "gEDA Circuit Schematic"
+#, fuzzy
+msgid "Lepton EDA Circuit Schematic"
 msgstr "Принципиальная схема gEDA"
 
-#: liblepton/data/x-geda-symbol.desktop.in:3
-msgid "gEDA Schematic Symbol"
+#, fuzzy
+msgid "Lepton EDA Schematic Symbol"
 msgstr "Символ схемы gEDA"
 
-#: liblepton/src/a_basic.c:57 liblepton/src/f_basic.c:377
 #, fuzzy, c-format
 msgid "File %1$s is read-only"
 msgstr "Файл %s только для чтения"
 
-#: liblepton/src/a_basic.c:114
 msgid "Schematic data was not valid UTF-8"
 msgstr "Данные принципиальной схемы не являются допустимыми для UTF-8"
 
-#: liblepton/src/a_basic.c:246
 #, fuzzy, c-format
 msgid ""
 "Read unexpected attach symbol start marker in [%1$s] :\n"
@@ -79,7 +76,6 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: liblepton/src/a_basic.c:263
 #, fuzzy, c-format
 msgid ""
 "Read unexpected embedded symbol start marker in [%1$s] :\n"
@@ -90,7 +86,6 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: liblepton/src/a_basic.c:294
 #, c-format
 msgid ""
 "Read unexpected embedded symbol end marker in [%s] :\n"
@@ -101,7 +96,6 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: liblepton/src/a_basic.c:329
 #, fuzzy, c-format
 msgid ""
 "Read an old format sym/sch file!\n"
@@ -112,7 +106,6 @@ msgstr ""
 "Выполните g[sym|sch]update для:\n"
 "«%s»\n"
 
-#: liblepton/src/a_basic.c:335
 #, fuzzy, c-format
 msgid ""
 "Read garbage in [%1$s] :\n"
@@ -123,17 +116,14 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: liblepton/src/f_basic.c:119 liblepton/src/f_basic.c:132
 #, fuzzy, c-format
 msgid "Failed to stat [%1$s]: %2$s"
 msgstr "Ошибка чтения статуса «%s»: %s"
 
-#: liblepton/src/f_basic.c:211
 #, fuzzy, c-format
 msgid "Cannot find file %1$s: %2$s"
 msgstr "Файл «%s» не найден: %s"
 
-#: liblepton/src/f_basic.c:260
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -146,11 +136,9 @@ msgstr ""
 "  %s.\n"
 "\n"
 
-#: liblepton/src/f_basic.c:262
 msgid "I could not guess if it is newer, so you have to do it manually.\n"
 msgstr "Не удалось определить новее ли он, решите это сами.\n"
 
-#: liblepton/src/f_basic.c:264
 msgid ""
 "The backup copy is newer than the schematic, so it seems you should load it "
 "instead of the original file.\n"
@@ -158,18 +146,18 @@ msgstr ""
 "Резервная копия новее схемы, поэтому, видимо, следует загрузить её вместо "
 "оригинального файла.\n"
 
-#: liblepton/src/f_basic.c:266
+#, fuzzy
 msgid ""
-"Gschem usually makes backup copies automatically, and this situation happens "
-"when it crashed or it was forced to exit abruptly.\n"
+"lepton-schematic usually makes backup copies automatically, and this "
+"situation happens when it crashed or it was forced to exit abruptly.\n"
 msgstr ""
 "Обычно gschem автоматически создаёт резервные копии, и такая ситуация может "
 "быть результатом крушения или внезапного завершения программы.\n"
 
-#: liblepton/src/f_basic.c:269
+#, fuzzy
 msgid ""
 "\n"
-"Run gschem and correct the situation.\n"
+"Run lepton-schematic and correct the situation.\n"
 "\n"
 msgstr ""
 "\n"
@@ -178,51 +166,42 @@ msgstr ""
 
 # Эта функция пытается найти для указанного имени реальный файл (не являющийся
 # ссылкой).
-#: liblepton/src/f_basic.c:367
 #, fuzzy, c-format
 msgid "Can't get the real filename of %1$s: %2$s"
 msgstr "Не удалось определить имя реального файла для %s: %s"
 
-#: liblepton/src/f_basic.c:398
 #, fuzzy, c-format
 msgid "Could NOT set previous backup file [%1$s] read-write."
 msgstr ""
 "Не удалось установить режим чтения-записи для файла предыдущей резервной  "
 "копии «%s»\n"
 
-#: liblepton/src/f_basic.c:404
 #, fuzzy, c-format
 msgid "Can't save backup file: %1$s."
 msgstr "Не удалось сохранить файл резервной копии: %s."
 
-#: liblepton/src/f_basic.c:414
 #, fuzzy, c-format
 msgid "Could NOT set backup file [%1$s] readonly."
 msgstr ""
 "Не удалось установить режим доступа только на чтение для резервной копии "
 "файла «%s»\n"
 
-#: liblepton/src/f_basic.c:463
 #, fuzzy, c-format
 msgid "Failed to restore permissions on '%1$s': %2$s\n"
 msgstr "Не удалось восстановить права для «%s»: %s\n"
 
-#: liblepton/src/f_basic.c:468
 #, fuzzy, c-format
 msgid "Failed to restore ownership on '%1$s': %2$s\n"
 msgstr "Не удалось восстановить владельца для «%s»: %s\n"
 
-#: liblepton/src/f_basic.c:478
 #, fuzzy, c-format
 msgid "Could NOT save file: %1$s"
 msgstr "Не удалось сохранить файл: %s"
 
-#: liblepton/src/f_basic.c:604
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: liblepton/src/g_basic.c:260
 msgid ""
 "\n"
 "Backtrace:\n"
@@ -230,197 +209,142 @@ msgstr ""
 "\n"
 "Последовательность вызовов подпрограмм:\n"
 
-#: liblepton/src/g_rc.c:99
 #, fuzzy, c-format
 msgid "Invalid mode [%1$s] passed to %2$s\n"
 msgstr "%2$s: недопустимый режим «%1$s»\n"
 
-#: liblepton/src/g_rc.c:139
 msgid "RC file already loaded"
 msgstr "Файл настроек уже загружен"
 
-#: liblepton/src/g_rc.c:183
 #, fuzzy, c-format
 msgid "Failed to load config from '%1$s': %2$s\n"
 msgstr "Не удалось загрузить настройки из файла «%s»: %s\n"
 
-#: liblepton/src/g_rc.c:207
 #, fuzzy, c-format
 msgid "Loaded RC file [%1$s]"
 msgstr "Загружен файл настроек «%s»\n"
 
-#: liblepton/src/g_rc.c:211
 #, fuzzy, c-format
 msgid "Failed to load RC file [%1$s]: "
 msgstr "Не удалось загрузить файл настроек «%s»: "
 
-#: liblepton/src/g_rc.c:341
 msgid "ERROR: An unknown error occurred while parsing configuration files."
 msgstr "ОШИБКА: неизвестная ошибка при анализе файлов настроек"
 
-#: liblepton/src/g_rc.c:353
 #, fuzzy, c-format
 msgid "ERROR: %1$s"
 msgstr "ОШИБКА: %s\n"
 
-#: liblepton/src/g_rc.c:354
 #, fuzzy, c-format
 msgid "ERROR: %1$s\n"
 msgstr "ОШИБКА: %s\n"
 
-#: liblepton/src/g_rc.c:360
 #, fuzzy, c-format
 msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr "ОШИБКА: в файле журнала %s может быть больше информации\n"
 
-#: liblepton/src/g_rc.c:481
 #, fuzzy, c-format
 msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr "component-library: недопустимый путь «%s»\n"
 
-#: liblepton/src/g_rc.c:707
 #, fuzzy, c-format
 msgid "Invalid path [%1$s] passed to bitmap-directory\n"
 msgstr "bitmap-directory: недопустимый путь «%s»\n"
 
-#: liblepton/src/g_rc.c:826
-#, fuzzy
-msgid ""
-"WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
-"list of strings instead."
-msgstr ""
-"ВНИМАНИЕ: для «always-promote-attributes» не рекомендуется использовать "
-"строку. Следует использовать список строк\n"
-
 # Эта функция пытается найти для указанного имени реальный файл (не являющийся
 # ссылкой).
-#: liblepton/src/geda_page.c:197
 #, fuzzy, c-format
 msgid "s_page_delete: Can't get the real filename of %1$s."
 msgstr "s_page_delete: не удалось определить имя реального файла для %s."
 
-#: liblepton/src/geda_page.c:208
 #, fuzzy, c-format
 msgid "s_page_delete: Unable to delete backup file %1$s."
 msgstr "s_page_delete: не удалось удалить файл резервной копии %s."
 
-#: liblepton/src/geda_page.c:489
 #, fuzzy, c-format
 msgid "Saved [%1$s]"
 msgstr "Файл «%s» сохранён\n"
 
-#: liblepton/src/geda_page.c:495
 #, fuzzy, c-format
 msgid "Could NOT save [%1$s]"
 msgstr "Не удалось сохранить «%s»\n"
 
-#: liblepton/src/geda_arc_object.c:408 liblepton/src/geda_arc_object.c:421
 msgid "Failed to parse arc object"
 msgstr "Ошибка в определении дуги"
 
-#: liblepton/src/geda_arc_object.c:428
 #, fuzzy, c-format
 msgid "Found a zero radius arc [ %1$c %2$d, %3$d, %4$d, %5$d, %6$d, %7$d ]"
 msgstr "Дуга с нулевым радиусом «%c %d, %d, %d, %d, %d, %d»\n"
 
-#: liblepton/src/geda_arc_object.c:435 liblepton/src/geda_box_object.c:328
-#: liblepton/src/geda_bus_object.c:364 liblepton/src/geda_circle_object.c:387
-#: liblepton/src/geda_line_object.c:427 liblepton/src/geda_net_object.c:308
-#: liblepton/src/geda_path_object.c:214 liblepton/src/geda_pin_object.c:369
-#: liblepton/src/geda_text_object.c:553
 #, fuzzy, c-format
 msgid "Found an invalid color [ %1$s ]"
 msgstr "Недопустимое значение цветового индекса «%s»\n"
 
-#: liblepton/src/geda_arc_object.c:436 liblepton/src/geda_box_object.c:329
-#: liblepton/src/geda_bus_object.c:365 liblepton/src/geda_circle_object.c:388
-#: liblepton/src/geda_line_object.c:428 liblepton/src/geda_net_object.c:309
-#: liblepton/src/geda_path_object.c:215 liblepton/src/geda_pin_object.c:370
-#: liblepton/src/geda_text_object.c:555
 #, fuzzy
 msgid "Setting color to default color."
 msgstr "Установка цвета по умолчанию\n"
 
-#: liblepton/src/o_attrib.c:111
 #, fuzzy, c-format
 msgid "Attribute [%1$s] already attached\n"
 msgstr "Атрибут «%s» уже прикреплён\n"
 
-#: liblepton/src/o_attrib.c:117
 msgid "Attempt to attach non text item as an attribute!\n"
 msgstr "Попытка прикрепить не текстовый элемент как атрибут!\n"
 
-#: liblepton/src/o_attrib.c:122
 #, fuzzy, c-format
 msgid "Attempt to attach attribute [%1$s] to more than one object\n"
 msgstr "Попытка прикрепить атрибут «%s» к более чем одному объекту\n"
 
-#: liblepton/src/o_attrib.c:325
 msgid "Tried to attach a non-text item as an attribute"
 msgstr "Попытка прикрепить не текстовый элемент как атрибут!"
 
-#: liblepton/src/o_attrib.c:332
 msgid "Unexpected end-of-file in attribute list"
 msgstr "Неожиданный конец файла при обработке списка атрибутов"
 
-#: liblepton/src/geda_box_object.c:287 liblepton/src/geda_box_object.c:316
 msgid "Failed to parse box object"
 msgstr "Ошибка в определении прямоугольника"
 
-#: liblepton/src/geda_box_object.c:322
 #, fuzzy, c-format
 msgid "Found a zero width/height box [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
 msgstr "Прямоугольник нулевой ширины или высоты «%c %d %d %d %d %d»\n"
 
-#: liblepton/src/geda_bus_object.c:345 liblepton/src/geda_bus_object.c:352
 msgid "Failed to parse bus object"
 msgstr "Ошибка в определении шины"
 
-#: liblepton/src/geda_bus_object.c:358
 #, fuzzy, c-format
 msgid "Found a zero length bus [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
 msgstr "Шина нулевой длины «%c %d %d %d %d %d»\n"
 
-#: liblepton/src/geda_bus_object.c:370
 #, fuzzy, c-format
 msgid "Found an invalid bus ripper direction [ %1$s ]"
 msgstr ""
 "Недопустимое значение поля «ripperdir» (направление ответвления от шины) "
 "«%s»\n"
 
-#: liblepton/src/geda_bus_object.c:371
 #, fuzzy
 msgid "Resetting direction to neutral (no direction)."
 msgstr "Сброс направления в нейтральное значение (направление не задано)\n"
 
-#: liblepton/src/geda_circle_object.c:343
-#: liblepton/src/geda_circle_object.c:372
 msgid "Failed to parse circle object"
 msgstr "Ошибка в определении окружности"
 
-#: liblepton/src/geda_circle_object.c:379
 #, fuzzy, c-format
 msgid "Found a zero or negative radius circle [ %1$c %2$d %3$d %4$d %5$d ]"
 msgstr "Окружность с нулевым или отрицательным радиусом «%c %d %d %d %d»\n"
 
-#: liblepton/src/geda_circle_object.c:382
 #, fuzzy
 msgid "Setting radius to 0."
 msgstr "Установка радиуса в 0\n"
 
-#: liblepton/src/geda_color.c:217
 msgid "Color map entry must be a two-element list"
 msgstr "Запись в таблице цветов должна быть двухэлементным списком"
 
-#: liblepton/src/geda_color.c:225
 msgid "Index in color map entry must be an integer"
 msgstr "Индекс записи в таблице цветов должен быть целым числом"
 
-#: liblepton/src/geda_color.c:251
 msgid "Value in color map entry must be #f or a string"
 msgstr "Значение записи в таблице цветов должно быть «#f» или строкой"
 
-#: liblepton/src/geda_complex_object.c:367
 #, fuzzy, c-format
 msgid ""
 "Component not found:\n"
@@ -429,11 +353,9 @@ msgstr ""
 "Не найден компонент:\n"
 " %s"
 
-#: liblepton/src/geda_complex_object.c:579
 msgid "Failed to parse complex object"
 msgstr "Ошибка в определении составного объекта"
 
-#: liblepton/src/geda_complex_object.c:592
 #, fuzzy, c-format
 msgid ""
 "Found a component with an invalid rotation [ %1$c %2$d %3$d %4$d %5$d %6$d "
@@ -442,13 +364,10 @@ msgstr ""
 "Недопустимое значение угла поворота в определении компонента «%c %d %d %d %d "
 "%d %s»\n"
 
-#: liblepton/src/geda_complex_object.c:595
-#: liblepton/src/geda_picture_object.c:105
 #, fuzzy
 msgid "Setting angle to 0."
 msgstr "Установка угла поворота в 0\n"
 
-#: liblepton/src/geda_complex_object.c:607
 #, fuzzy, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %1$c %2$d %3$d %4$d %5$d "
@@ -457,12 +376,10 @@ msgstr ""
 "Недопустимое значение поля «mirror» в определении компонента «%c %d %d %d %d "
 "%d %s»\n"
 
-#: liblepton/src/geda_complex_object.c:610
 #, fuzzy
 msgid "Setting mirror to 0."
 msgstr "Установка «mirror» в 0\n"
 
-#: liblepton/src/geda_complex_object.c:933
 #, fuzzy, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %1$s:\n"
@@ -471,7 +388,6 @@ msgstr ""
 "ВНИМАНИЕ: ошибка при анализе версии символа с поз. обозначением %s:\n"
 "\tНекорректный атрибут «symversion=%s» в файле символа\n"
 
-#: liblepton/src/geda_complex_object.c:937
 #, fuzzy, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %1$s:\n"
@@ -480,7 +396,6 @@ msgstr ""
 "ВНИМАНИЕ: ошибка при анализе версии символа с поз. обозначением %s:\n"
 "\tНекорректный атрибут «symversion» в файле символа\n"
 
-#: liblepton/src/geda_complex_object.c:953
 #, fuzzy, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %1$s:\n"
@@ -489,7 +404,6 @@ msgstr ""
 "ВНИМАНИЕ: ошибка при анализе версии символа с поз. обозначением %s:\n"
 "\tПрикреплён некорректный атрибут «symversion=%s»\n"
 
-#: liblepton/src/geda_complex_object.c:978
 #, fuzzy, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %1$s:\n"
@@ -500,7 +414,6 @@ msgstr ""
 "\tК экземпляру символа прикреплён атрибут «symversion=%s», но в файле "
 "символа «symversion» отсутствует\n"
 
-#: liblepton/src/geda_complex_object.c:992
 #, fuzzy, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
@@ -511,21 +424,18 @@ msgstr ""
 
 # Под file здесь имеется в виду символ. Последняя переменная -- позиционное
 # обозначение. Думаю, не стоит это специально отмечать.
-#: liblepton/src/geda_complex_object.c:1020
 #, fuzzy, c-format
 msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
 msgstr ""
 "\tИЗМЕНЕНИЕ СТАРШЕГО НОМЕРА ВЕРСИИ\t(версия символа %.3f, версия экземпляра "
 "%.3f, %s)!\n"
 
-#: liblepton/src/geda_complex_object.c:1038
 #, fuzzy, c-format
 msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
 msgstr ""
 "\tИзменение младшего номера версии\t(версия символа %.3f, версия экземпляра "
 "%.3f)\n"
 
-#: liblepton/src/geda_complex_object.c:1049
 #, fuzzy, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %1$s:\n"
@@ -534,12 +444,10 @@ msgstr ""
 "ВНИМАНИЕ: некорректное задание версии для символа с поз. обозначением %s:\n"
 "\tЭкземпляр в схеме новее символа в библиотеке\n"
 
-#: liblepton/src/o_embed.c:54
 #, fuzzy, c-format
 msgid "Component [%1$s] has been embedded."
 msgstr "Компонент «%s» внедрён\n"
 
-#: liblepton/src/o_embed.c:98
 #, fuzzy, c-format
 msgid ""
 "Could not find component [%1$s], while trying to unembed. Component is still "
@@ -548,151 +456,120 @@ msgstr ""
 "Не удалось найти библиотечный символ для исключаемого компонента «%s». "
 "Компонент останется внедрённым\n"
 
-#: liblepton/src/o_embed.c:106
 #, fuzzy, c-format
 msgid "Component [%1$s] has been successfully unembedded."
 msgstr "Компонент «%s» успешно исключён\n"
 
-#: liblepton/src/geda_line_object.c:391 liblepton/src/geda_line_object.c:409
 msgid "Failed to parse line object"
 msgstr "Ошибка в определении линии"
 
-#: liblepton/src/geda_line_object.c:421
 #, fuzzy, c-format
 msgid "Found a zero length line [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
 msgstr "Линия нулевой длины «%c %d %d %d %d %d»\n"
 
-#: liblepton/src/geda_net_object.c:297
 msgid "Failed to parse net object"
 msgstr "Ошибка в определении соединения"
 
-#: liblepton/src/geda_net_object.c:302
 #, fuzzy, c-format
 msgid "Found a zero length net [ %1$c %2$d %3$d %4$d %5$d %6$d ]"
 msgstr "Соединение нулевой длины «%c %d %d %d %d %d»\n"
 
-#: liblepton/src/geda_path_object.c:206
 msgid "Failed to parse path object"
 msgstr "Ошибка в определении контура"
 
-#: liblepton/src/geda_path_object.c:232
 msgid "Unexpected end-of-file when reading path"
 msgstr "Неожиданный конец файла при обработке контура"
 
-#: liblepton/src/geda_picture_object.c:71
 msgid "Failed to parse picture definition"
 msgstr "Ошибка в определении изображения"
 
-#: liblepton/src/geda_picture_object.c:76
 #, fuzzy, c-format
 msgid "Found a zero width/height picture [ %1$c %2$d %3$d %4$d %5$d ]"
 msgstr "Изображение нулевой ширины или высоты «%c %d %d %d %d»\n"
 
-#: liblepton/src/geda_picture_object.c:82
 #, fuzzy, c-format
 msgid "Found a picture with a wrong 'mirrored' parameter: %1$d."
 msgstr "Недопустимое значение поля «mirrored» в определении изображения: %d.\n"
 
-#: liblepton/src/geda_picture_object.c:84
 #, fuzzy
 msgid "Setting mirrored to 0."
 msgstr "Установка «mirrored» в 0\n"
 
-#: liblepton/src/geda_picture_object.c:89
 #, fuzzy, c-format
 msgid "Found a picture with a wrong 'embedded' parameter: %1$d."
 msgstr "Недопустимое значение поля «embedded» в определении изображения: %d.\n"
 
-#: liblepton/src/geda_picture_object.c:91
 #, fuzzy
 msgid "Setting embedded to 0."
 msgstr "Установка «embedded» в 0\n"
 
-#: liblepton/src/geda_picture_object.c:104
 #, fuzzy, c-format
 msgid "Found an unsupported picture angle [ %1$d ]"
 msgstr "Неподдерживаемое значение угла поворота изображения «%d»\n"
 
-#: liblepton/src/geda_picture_object.c:116
 msgid "Found an image with no filename."
 msgstr "Обнаружено изображение без имени файла"
 
-#: liblepton/src/geda_picture_object.c:147
 #, fuzzy, c-format
 msgid "Failed to load image from embedded data [%1$s]: %2$s"
 msgstr "Не удалось загрузить изображение из внедрённых данных «%s»: %s\n"
 
-#: liblepton/src/geda_picture_object.c:148
 msgid "Base64 decoding failed."
 msgstr "Ошибка расшифровки данных в формате base64."
 
-#: liblepton/src/geda_picture_object.c:149
 #, fuzzy
 msgid "Falling back to file loading. Picture unembedded."
 msgstr "Возврат к загрузке из файла. Изображение исключено.\n"
 
-#: liblepton/src/geda_picture_object.c:208
 #, fuzzy
 msgid "ERROR: o_picture_save: unable to encode the picture."
 msgstr "ОШИБКА: o_picture_save: невозможно закодировать изображение.\n"
 
 # Ошибка, если данные изображения уже есть во внутреннем буфере
-#: liblepton/src/geda_picture_object.c:308
 #, fuzzy, c-format
 msgid "Failed to load buffer image [%1$s]: %2$s"
 msgstr "Не удалось загрузить изображение «%s» из буфера: %s\n"
 
-#: liblepton/src/geda_picture_object.c:321
 #, fuzzy, c-format
 msgid "Failed to load image from [%1$s]: %2$s"
 msgstr "Не удалось загрузить изображение из файла «%s»: %s\n"
 
-#: liblepton/src/geda_picture_object.c:415
 #, fuzzy, c-format
 msgid "Picture %1$p has invalid angle %2$i\n"
 msgstr "Недопустимое значение угла поворота изображения «%p»: %i\n"
 
 # Указатель на данные возвращает NULL
-#: liblepton/src/geda_picture_object.c:772
 #, fuzzy, c-format
 msgid "Picture [%1$s] has no image data."
 msgstr "Файл «%s» не содержит данных изображения.\n"
 
-#: liblepton/src/geda_picture_object.c:773
 #, fuzzy
 msgid "Falling back to file loading. Picture is still unembedded."
 msgstr "Возврат к загрузке из файла. Изображение всё ещё исключено.\n"
 
-#: liblepton/src/geda_picture_object.c:781
 #, fuzzy, c-format
 msgid "Picture [%1$s] has been embedded."
 msgstr "Изображение «%s» внедрено\n"
 
-#: liblepton/src/geda_picture_object.c:805
 #, fuzzy, c-format
 msgid "Failed to load image from file [%1$s]: %2$s"
 msgstr "Не удалось загрузить изображение из файла «%s»: %s\n"
 
-#: liblepton/src/geda_picture_object.c:807
 #, fuzzy
 msgid "Picture is still embedded."
 msgstr "Изображение всё ещё внедрено.\n"
 
-#: liblepton/src/geda_picture_object.c:815
 #, fuzzy, c-format
 msgid "Picture [%1$s] has been unembedded."
 msgstr "Изображение «%s» исключено\n"
 
-#: liblepton/src/geda_picture_object.c:1052
 #, fuzzy, c-format
 msgid "Failed to load fallback image %1$s: %2$s.\n"
 msgstr "Не удалось загрузить копию изображения для отката «%s»: %s\n"
 
-#: liblepton/src/geda_pin_object.c:346 liblepton/src/geda_pin_object.c:354
 msgid "Failed to parse pin object"
 msgstr "Ошибка в определении вывода"
 
-#: liblepton/src/geda_pin_object.c:360
 #, fuzzy
 msgid ""
 "Found a pin which did not have the whichend field set.\n"
@@ -701,68 +578,54 @@ msgstr ""
 "Вывод с неустановленным полем «whichend».\n"
 "Проверьте и исправьте вручную.\n"
 
-#: liblepton/src/geda_pin_object.c:363
 #, fuzzy, c-format
 msgid "Found an invalid whichend on a pin (reseting to zero): %d"
 msgstr ""
 "Недопустимое значение поля «whichend» в определении вывода (сброс в 0): %d\n"
 
-#: liblepton/src/geda_text_object.c:493 liblepton/src/geda_text_object.c:503
-#: liblepton/src/geda_text_object.c:513
 msgid "Failed to parse text object"
 msgstr "Ошибка в определении текстового объекта"
 
-#: liblepton/src/geda_text_object.c:520
 #, fuzzy, c-format
 msgid "Found an invalid text size [ %1$s ]"
 msgstr "Недопустимое значение цветового индекса «%s»\n"
 
-#: liblepton/src/geda_text_object.c:522
 #, fuzzy, c-format
 msgid "Setting text size to %1$d."
 msgstr "Установка «mirrored» в 0\n"
 
-#: liblepton/src/geda_text_object.c:526
 #, fuzzy, c-format
 msgid "Found an unsupported text angle [ %1$s ]"
 msgstr "Неподдерживаемое значение угла поворота изображения «%d»\n"
 
-#: liblepton/src/geda_text_object.c:528
 #, fuzzy, c-format
 msgid "Setting angle to %1$d."
 msgstr "Установка угла поворота в 0\n"
 
-#: liblepton/src/geda_text_object.c:545
 #, fuzzy, c-format
 msgid "Found an unsupported text alignment [ %1$s ]"
 msgstr "Неподдерживаемое значение угла поворота изображения «%d»\n"
 
-#: liblepton/src/geda_text_object.c:548
 #, fuzzy
 msgid "Setting alignment to LOWER_LEFT."
 msgstr "Установка выравнивания по левому нижнему углу\n"
 
-#: liblepton/src/geda_text_object.c:568
 #, fuzzy, c-format
 msgid "Unexpected end-of-file after %1$d lines"
 msgstr "Неожиданный конец файла после %d строк"
 
-#: liblepton/src/s_clib.c:460
 #, fuzzy, c-format
 msgid "Library command failed [%1$s]: %2$s"
 msgstr "Ошибка при выполнении команды над библиотекой «%s»: %s\n"
 
-#: liblepton/src/s_clib.c:465
 #, fuzzy, c-format
 msgid "Library command failed [%1$s]: Uncaught signal %2$i."
 msgstr "Сбой команды создания библиотеки «%s»: необработанный сигнал %i.\n"
 
-#: liblepton/src/s_clib.c:469
 #, fuzzy, c-format
 msgid "Library command failed [%1$s]"
 msgstr "Сбой команды создания библиотеки «%s»\n"
 
-#: liblepton/src/s_clib.c:470
 #, fuzzy, c-format
 msgid ""
 "Error output was:\n"
@@ -771,35 +634,29 @@ msgstr ""
 "Вывод ошибки:\n"
 "%s\n"
 
-#: liblepton/src/s_clib.c:556
 #, fuzzy, c-format
 msgid "Library name [%1$s] already in use.  Using [%2$s]."
 msgstr "Библиотека с именем «%s» уже имеется. Используется «%s».\n"
 
-#: liblepton/src/s_clib.c:593
 #, fuzzy, c-format
 msgid "Failed to open directory [%1$s]: %2$s"
 msgstr "Не удалось открыть каталог «%s»: %s\n"
 
-#: liblepton/src/s_clib.c:729
 #, fuzzy, c-format
 msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
 msgstr ""
 "Ошибка сканирования библиотеки «%s»: функция Scheme возвратила не список\n"
 
-#: liblepton/src/s_clib.c:737
 #, fuzzy, c-format
 msgid "Non-string symbol name while scanning library [%1$s]"
 msgstr ""
 "При сканировании библиотеки обнаружено имя символа, не являющееся строкой "
 "«%s»\n"
 
-#: liblepton/src/s_clib.c:893 liblepton/src/s_clib.c:940
 #, fuzzy
 msgid "Cannot add library: name not specified."
 msgstr "Невозможно добавить библиотеку: не указано имя\n"
 
-#: liblepton/src/s_clib.c:900
 #, fuzzy, c-format
 msgid ""
 "Cannot add library [%1$s]: both 'list' and 'get' commands must be specified."
@@ -807,273 +664,227 @@ msgstr ""
 "Невозможно добавить библиотеку «%s»: должны быть указаны обе команды «list» "
 "и «get».\n"
 
-#: liblepton/src/s_clib.c:948
 #, fuzzy, c-format
 msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
 msgstr ""
 "Невозможно добавить библиотеку Scheme «%s»: функции обратного вызова должны "
 "быть замкнутыми выражениями\n"
 
-#: liblepton/src/s_clib.c:1075
 #, fuzzy, c-format
 msgid "Failed to load symbol from file [%1$s]: %2$s"
 msgstr "Ошибка загрузки символа из файла «%s»: %s\n"
 
-#: liblepton/src/s_clib.c:1135
 #, fuzzy, c-format
 msgid "Failed to load symbol data [%1$s] from source [%2$s]"
 msgstr "Ошибка загрузки данных символа «%s» из источника «%s»\n"
 
-#: liblepton/src/s_clib.c:1377
 #, fuzzy, c-format
 msgid "Component [%1$s] was not found in the component library."
 msgstr "Компонент «%s» не найден в библиотеке компонентов\n"
 
-#: liblepton/src/s_clib.c:1383
 #, fuzzy, c-format
 msgid "More than one component found with name [%1$s]."
 msgstr "Обнаружено несколько компонентов с именем «%s»\n"
 
-#: liblepton/src/s_hierarchy.c:78 liblepton/src/s_hierarchy.c:240
 msgid "Schematic not found in source library."
 msgstr "Схема не найдена в библиотеке исходных данных."
 
-#: liblepton/src/s_hierarchy.c:100
 msgid "Hierarchy contains a circular dependency."
 msgstr "Циклическая зависимость в иерархической структуре."
 
-#: liblepton/src/s_hierarchy.c:200
 #, fuzzy
 msgid "There are no schematics above the current one!"
 msgstr "Для текущей схемы нет схемы, вышестоящей по иерархии!\n"
 
-#: liblepton/src/s_hierarchy.c:341
 #, fuzzy, c-format
 msgid "Failed to descend hierarchy into '%1$s': %2$s"
 msgstr "Не удалось перейти к подсхеме «%s»: %s\n"
 
-#: liblepton/src/s_slot.c:158
 #, fuzzy
 msgid "Did not find slotdef=#:#,#,#... attribute."
 msgstr "Не удалось найти атрибут «slotdef=#:#,#,#...»\n"
 
-#: liblepton/src/s_slot.c:164
 #, fuzzy
 msgid "Improper slotdef syntax: missing \":\"."
 msgstr "Неверный синтаксис атрибута «slotdef»: отсутствует «:».\n"
 
-#: liblepton/src/s_slot.c:179
 #, fuzzy
 msgid "Did not find proper slotdef=#:#,#,#... attribute."
 msgstr "Не удалось найти атрибут «slotdef=#:#,#,#...» в допустимом формате\n"
 
-#: liblepton/src/s_slot.c:209
 #, fuzzy
 msgid "component missing pinseq= attribute."
 msgstr "Отсутствует атрибут «pinseq» у вывода компонента\n"
 
-#: liblepton/src/edaconfig.c:647 liblepton/src/edaconfig.c:733
 msgid "Undefined configuration filename"
 msgstr "Не определено имя файла настроек"
 
-#: liblepton/src/edaconfig.c:1058 liblepton/src/edaconfig.c:1122
 #, c-format
 msgid "Configuration does not have group '%s'"
 msgstr "В настройках не обнаружено группы «%s»"
 
-#: liblepton/src/edaconfig.c:1136
 #, c-format
 msgid "Configuration does not have key '%s'"
 msgstr "В настройках не обнаружено ключа «%s»"
 
-#: liblepton/src/scheme_attrib.c:66 liblepton/src/scheme_attrib.c:100
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr "~A не является допустимым атрибутом: недопустимая строка «~A»."
 
-#: liblepton/src/scheme_attrib.c:204
 msgid "Objects ~A and ~A are not part of the same page and/or complex object"
 msgstr ""
 "Объекты ~A и ~A не являются частями одной схемы и (или) одного составного "
 "объекта"
 
-#: liblepton/src/scheme_attrib.c:211 liblepton/src/scheme_attrib.c:216
 msgid "Object ~A is already attached as an attribute"
 msgstr "Объект ~A уже прикреплён как атрибут"
 
-#: liblepton/src/scheme_attrib.c:265
 msgid "Object ~A is attribute of wrong object"
 msgstr "Объект ~A является атрибутом другого объекта"
 
-#: liblepton/src/scheme_complex.c:148
 msgid "Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 "Недопустимый угол поворота составного объекта ~A. Должен быть 0, 90, 180 или "
 "270 градусов"
 
-#: liblepton/src/scheme_complex.c:263 liblepton/src/scheme_page.c:246
 msgid "Object ~A is already attached to something"
 msgstr "Объект ~A уже к чему-то прикреплён"
 
-#: liblepton/src/scheme_complex.c:325
 msgid "Object ~A is attached to a different complex"
 msgstr "Объект ~A прикреплён к другому составному объекту"
 
-#: liblepton/src/scheme_complex.c:332
 msgid "Object ~A is attached to a page"
 msgstr "Объект ~A прикреплён к странице"
 
-#: liblepton/src/scheme_complex.c:339 liblepton/src/scheme_page.c:298
 msgid "Object ~A is attached as an attribute"
 msgstr "Объект ~A прикреплён как атрибут"
 
-#: liblepton/src/scheme_complex.c:346 liblepton/src/scheme_page.c:305
 msgid "Object ~A has attributes"
 msgstr "К объекту ~A прикреплены атрибуты"
 
-#: liblepton/src/scheme_object.c:232
 msgid "Object ~A has bad type '~A'"
 msgstr "Недопустимый тип объекта ~A: «~A»"
 
-#: liblepton/src/scheme_object.c:376
 msgid "Object ~A has invalid stroke cap style ~A"
 msgstr "Недопустимый стиль концов линий объекта ~A: ~A"
 
 # 'stroke' в данном случае означает линию, а не жест
-#: liblepton/src/scheme_object.c:389
 msgid "Object ~A has invalid stroke dash style ~A"
 msgstr "Недопустимый тип линий для объекта ~A: ~A"
 
-#: liblepton/src/scheme_object.c:453
 msgid "Invalid stroke cap style ~A."
 msgstr "Недопустимое значение поля «capstyle» (стиль концов линии): ~A."
 
-#: liblepton/src/scheme_object.c:464
 msgid "Invalid stroke dash style ~A."
 msgstr "Недопустимое значение поля «dashstyle» (тип линии): ~A."
 
-#: liblepton/src/scheme_object.c:474
 msgid "Missing dash length parameter for dash style ~A."
 msgstr "Отсутствует поле «dashlength» (длина штриха): ~A."
 
-#: liblepton/src/scheme_object.c:484
 msgid "Missing dot/dash space parameter for dash style ~A."
 msgstr "Отсутствует поле «dashspace» (тип линии): ~A."
 
-#: liblepton/src/scheme_object.c:546
 msgid "Object ~A has invalid fill style ~A"
 msgstr "Недопустимый тип заполнения объекта ~A: ~A"
 
-#: liblepton/src/scheme_object.c:595
 msgid "Invalid fill style ~A."
 msgstr "Недопустимый тип заполнения ~A."
 
-#: liblepton/src/scheme_object.c:603
 msgid "Missing second space parameter for fill style ~A."
 msgstr "Отсутствует параметр типа заполнения «pitch2»: ~A."
 
-#: liblepton/src/scheme_object.c:612
 msgid "Missing second angle parameter for fill style ~A."
 msgstr "Отсутствует параметр типа заполнения «angle2»: ~A."
 
-#: liblepton/src/scheme_object.c:622
 msgid "Missing stroke width parameter for fill style ~A."
 msgstr "Отсутствует параметр типа заполнения «fillwidth»: ~A."
 
-#: liblepton/src/scheme_object.c:631
 msgid "Missing space parameter for fill style ~A."
 msgstr "Отсутствует параметр типа заполнения «pitch1»: ~A."
 
-#: liblepton/src/scheme_object.c:640
 msgid "Missing angle parameter for fill style ~A."
 msgstr "Отсутствует параметр типа заполнения «angle1»: ~A."
 
-#: liblepton/src/scheme_object.c:948
 msgid "Invalid pin type ~A, must be 'net or 'bus"
 msgstr "Недопустимый тип вывода ~A, должен быть «'net» или «'bus»"
 
-#: liblepton/src/scheme_object.c:997
 msgid "Object ~A has invalid pin type."
 msgstr "Недопустимый тип вывода объекта ~A."
 
-#: liblepton/src/scheme_object.c:1403
 msgid "Invalid text alignment ~A."
 msgstr "Недопустимое значение поля «alignment» текстового объекта: ~A."
 
-#: liblepton/src/scheme_object.c:1419
 msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 "Недопустимое значение угла поворота текстового объекта ~A. Угол должен быть "
 "равен  0, 90, 180 или 270 градусов"
 
-#: liblepton/src/scheme_object.c:1438
 msgid "Invalid text name/value visibility ~A."
 msgstr "Недопустимое значение поля «show_name_value» текстового объекта: ~A."
 
-#: liblepton/src/scheme_object.c:1512
 msgid "Text object ~A has invalid text alignment ~A"
 msgstr "Недопустимое значение поля «alignment» текстового объекта ~A: ~A"
 
-#: liblepton/src/scheme_object.c:1521
 msgid "Text object ~A has invalid visibility ~A"
 msgstr "Недопустимое значение поля «visibility» текстового объекта ~A: ~A"
 
-#: liblepton/src/scheme_object.c:1531
 msgid "Text object ~A has invalid text attribute visibility ~A"
 msgstr "Недопустимое значение поля «show_name_value» текстового объекта ~A: ~A"
 
-#: liblepton/src/scheme_object.c:1572
 msgid "Object ~A is not included in a page."
 msgstr "Объекта ~A нет на странице."
 
-#: liblepton/src/scheme_object.c:1725
 msgid "Path object ~A has invalid element type ~A at index ~A"
 msgstr "Контур ~A имеет недопустимое значение типа элемента ~A с индексом ~A"
 
-#: liblepton/src/scheme_object.c:1839
 msgid "Invalid path element type ~A."
 msgstr "Недопустимое значение типа элемента контура: ~A."
 
-#: liblepton/src/scheme_object.c:2011
 msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 "Недопустимое значение угла поворота изображения ~A. Угол должен быть равен  "
 "0, 90, 180 или 270 градусов"
 
-#: liblepton/src/scheme_page.c:291
 msgid "Object ~A is attached to a complex or different page"
 msgstr ""
 "Объект ~A прикреплён к составному объекту или находится на другой странице"
 
-#: liblepton/src/scheme_page.c:438
 msgid "Parse error: ~s"
 msgstr "Ошибка обработки: ~s"
 
-#: liblepton/src/edascmhookproxy.c:81
 msgid "Scheme hook"
 msgstr "Функция перехвата Scheme"
 
-#: liblepton/src/edascmhookproxy.c:82
 msgid "The Scheme-level hook to proxy"
 msgstr "Перехват функций Scheme для EdascmHookProxy"
 
-#: liblepton/scheme/geda/attrib.scm:56
 #, scheme-format
 msgid "Object ~A is not part of a page"
 msgstr "Объект ~A не является частью схемы"
 
-#: liblepton/scheme/geda/library.scm:108
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
 #, fuzzy, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr "source-library: недопустимый путь «%s»\n"
 
-#: liblepton/scheme/geda/library.scm:109
 msgid "Source library path must be a string.\n"
 msgstr ""
 
-#: liblepton/scheme/geda/library.scm:168
 #, fuzzy, scheme-format
 msgid "File ~S is not readable.\n"
 msgstr "Файл %s только для чтения"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: using a string for 'always-promote-attributes' is deprecated. "
+#~ "Use a list of strings instead."
+#~ msgstr ""
+#~ "ВНИМАНИЕ: для «always-promote-attributes» не рекомендуется использовать "
+#~ "строку. Следует использовать список строк\n"
 
 #~ msgid "always-promote-attribute: list element is not a string"
 #~ msgstr "always-promote-attribute: элемент списка не является строкой"

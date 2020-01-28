@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -136,9 +137,9 @@ void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
                               0 /*DIALOG_INDENTATION */, 0);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
 
-    label[0] = gschem_dialog_misc_create_property_label (_("Arc Radius:"));
-    label[1] = gschem_dialog_misc_create_property_label (_("Start Angle:"));
-    label[2] = gschem_dialog_misc_create_property_label (_("Degrees of Sweep:"));
+    label[0] = gschem_dialog_misc_create_property_label (_("Arc _Radius:"));
+    label[1] = gschem_dialog_misc_create_property_label (_("Start _Angle:"));
+    label[2] = gschem_dialog_misc_create_property_label (_("_Degrees of Sweep:"));
 
     widget[0] = gtk_spin_button_new_with_range (1, 100000, 100);
     gtk_entry_set_activates_default (GTK_ENTRY(widget[0]), TRUE);

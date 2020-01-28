@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,18 +33,13 @@
 #	define GEDARCDIR GEDADATADIR
 #endif
 
-#ifdef __cplusplus
-static const gchar DATA_ENV[] = "GEDADATA";
-static const gchar CONFIG_ENV[] = "GEDADATARC";
-static const gchar DATA_XDG_SUBDIR[] = "gEDA";
-static const gchar DATA_GUESS_FILE[] = "scheme/geda.scm";
-static const gchar USER_DOTDIR[] = ".gEDA";
-#else
-static const gchar const DATA_ENV[] = "GEDADATA";
-static const gchar const CONFIG_ENV[] = "GEDADATARC";
-static const gchar const DATA_XDG_SUBDIR[] = "gEDA";
-static const gchar const DATA_GUESS_FILE[] = "scheme/geda.scm";
-static const gchar const USER_DOTDIR[] = ".gEDA";
+static const gchar* const DATA_ENV        = "GEDADATA";
+static const gchar* const CONFIG_ENV      = "GEDADATARC";
+static const gchar* const DATA_XDG_SUBDIR = "lepton-eda";
+
+#if defined(ENABLE_DEPRECATED)
+static const gchar* const DATA_GUESS_FILE = "scheme/geda.scm";
+static const gchar* const USER_DOTDIR     = ".gEDA";
 #endif
 
 /* ================================================================
@@ -75,7 +70,7 @@ guess_install_data_dir(void)
 		if (g_file_test("/proc/self/exe", G_FILE_TEST_IS_SYMLINK)) {
 			gchar *bin = canonicalize_file_name("/proc/self/exe");
 			gchar *prefix = dirname(dirname(bin));
-			tmp_dir = g_build_filename(prefix, "share/gEDA", NULL);
+			tmp_dir = g_build_filename(prefix, "share/lepton-eda", NULL);
 			free(bin);
 		}
 #endif
@@ -267,6 +262,19 @@ get_user_dotdir(void)
  * Public accessors
  * ================================================================ */
 
+#ifdef DEBUG
+static void
+dbg_out_dirs (const gchar* const* dirs, const gchar* name)
+{
+  fprintf (stderr, " >> %s:\n", name);
+  for (const gchar* const* pp = dirs; *pp != NULL; ++pp)
+  {
+    fprintf (stderr, "      [%s]\n", *pp);
+  }
+  fprintf (stderr, "\n");
+}
+#endif
+
 /*!
  * \brief Get an ordered list of gEDA data directories
  * \par Function Description
@@ -299,6 +307,16 @@ eda_get_system_data_dirs(void)
 
 		const gchar **dirs =
 			build_search_list(env_names, xdg_dirs, cfg_dirs);
+
+#ifdef DEBUG
+    fprintf (stderr, "\n");
+    dbg_out_dirs (env_names, "eda_get_system_data_dirs()::env_names");
+    dbg_out_dirs (xdg_dirs,  "eda_get_system_data_dirs()::xdg_dirs");
+    dbg_out_dirs (cfg_dirs,  "eda_get_system_data_dirs()::cfg_dirs");
+    fprintf (stderr, "\n");
+    dbg_out_dirs (dirs, "eda_get_system_data_dirs()::dirs (combined)");
+    fprintf (stderr, "\n");
+#endif
 
 		g_once_init_leave(&system_data_dirs, dirs);
 	}
@@ -338,6 +356,16 @@ eda_get_system_config_dirs(void)
 
 		const gchar **dirs =
 			build_search_list(env_names, xdg_dirs, cfg_dirs);
+
+#ifdef DEBUG
+    fprintf (stderr, "\n");
+    dbg_out_dirs (env_names, "eda_get_system_config_dirs()::env_names");
+    dbg_out_dirs (xdg_dirs,  "eda_get_system_config_dirs()::xdg_dirs");
+    dbg_out_dirs (cfg_dirs,  "eda_get_system_config_dirs()::cfg_dirs");
+    fprintf (stderr, "\n");
+    dbg_out_dirs (dirs, "eda_get_system_config_dirs()::dirs (combined)");
+    fprintf (stderr, "\n");
+#endif
 
 		g_once_init_leave(&system_config_dirs, dirs);
 	}
@@ -384,6 +412,22 @@ eda_get_user_config_dir(void)
 	return user_config_dir;
 }
 
+const gchar*
+eda_get_user_cache_dir()
+{
+  static gchar* user_cache_dir = NULL;
+
+  if (g_once_init_enter (&user_cache_dir))
+  {
+    gchar* dir = g_build_filename (g_get_user_cache_dir(),
+                                   DATA_XDG_SUBDIR, NULL);
+
+    g_once_init_leave (&user_cache_dir, dir);
+  }
+
+  return user_cache_dir;
+}
+
 /* ================================================================
  * Module initialisation
  * ================================================================ */
@@ -393,7 +437,7 @@ eda_get_user_config_dir(void)
  * \par Function Description
  * Compute and initialise configuration and data search paths used by
  * gEDA, and set any related environment variables.  Should only be
- * called (once) by libgeda_init().
+ * called (once) by liblepton_init().
  */
 void
 eda_paths_init(void)
@@ -403,6 +447,7 @@ eda_paths_init(void)
 	eda_get_system_config_dirs();
 	eda_get_user_data_dir();
 	eda_get_user_config_dir();
+	eda_get_user_cache_dir();
 
 	eda_paths_init_env();
 }

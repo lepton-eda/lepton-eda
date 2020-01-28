@@ -1,5 +1,5 @@
 Checking non-numbered parts...
-ERROR: Not numbered refdes: U? (out-1.sym at (8700 . 4400) on page "h4-bottom.sch").
+ERROR: Not numbered refdes: Utop/U? (out-1.sym at (8700 . 4400) on page "h4-bottom.sch").
 
 Checking duplicated references...
 
@@ -8,12 +8,11 @@ Checking NoConnection nets for connections...
 Checking nets with only one connection...
 ERROR: Net 'Utop/GND' is connected to only one pin: Utop/Ubottom:7.
 ERROR: Net 'Utop/Vcc' is connected to only one pin: Utop/Ubottom:14.
-ERROR: Net 'Utop/net-B' is connected to only one pin: Utop/Ubottom:2.
 ERROR: Net 'top-net-A' has no connections.
 ERROR: Net 'top-net-B' has no connections.
 
 Checking pins without the 'pintype' attribute...
-NOTE: Found pins without the 'pintype' attribute: Utop/A:1
+NOTE: Found pins without the 'pintype' attribute: Utop/A:1 Utop/U?:1
 Checking type of pins connected to a net...
 ERROR: Net top-net-A is not driven.
 ERROR: Net top-net-B is not driven.
@@ -32,4 +31,4 @@ WARNING: Unused slot 5 of refdes Utop/Ubottom
 WARNING: Unused slot 6 of refdes Utop/Ubottom
 
 Found 5 warnings.
-Found 8 errors.
+Found 7 errors.

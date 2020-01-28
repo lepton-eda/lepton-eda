@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -146,7 +146,6 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   page->weak_refs = NULL;
 
   /* Backup variables */
-  g_get_current_time (&page->last_load_or_save_time);
   page->ops_since_last_backup = 0;
   page->saved_since_first_loaded = 0;
   page->do_autosave_backup = 0;
@@ -416,6 +415,47 @@ PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename)
       return page;
   }
   return NULL;
+}
+
+/*! \brief Search for page by its filename's basename.
+ *  \par Function Description
+ *  Searches in \a toplevel's list of pages for a page with
+ *  basename( filename ) equal to \a filename.
+ *
+ *  \param toplevel  The TOPLEVEL object
+ *  \param filename  The filename string to search for
+ *
+ *  \return PAGE pointer to a matching page, NULL otherwise.
+ */
+PAGE *s_page_search_by_basename (TOPLEVEL *toplevel, const gchar *filename)
+{
+  const GList* iter   = NULL;
+  PAGE*        page   = NULL;
+  PAGE*        result = NULL;
+
+  for ( iter = geda_list_get_glist( toplevel->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) )
+  {
+    page = (PAGE*) iter->data;
+
+    const gchar* fname = s_page_get_filename (page);
+    gchar* bname = g_path_get_basename (fname);
+
+    /* FIXME this may not be correct on platforms with
+     * case-insensitive filesystems. */
+
+    if ( strcmp( bname, filename ) == 0 )
+    {
+      result = page;
+      g_free (bname);
+      break;
+    }
+
+    g_free (bname);
+  }
+
+  return result;
 }
 
 /*! \brief Search for a page given its page id in a page list.

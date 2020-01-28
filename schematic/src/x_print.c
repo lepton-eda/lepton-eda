@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -322,12 +323,14 @@ x_print_export_pdf_page (GschemToplevel *w_current,
  *
  * \param w_current A #GschemToplevel structure.
  * \param filename  The filename for generated PDF.
+ * \param is_color  Export using colors (TRUE) or in grayscale (FALSE).
  *
  * \returns TRUE if the operation was successful.
  */
 gboolean
 x_print_export_pdf (GschemToplevel *w_current,
-                    const gchar *filename)
+                    const gchar *filename,
+                    gboolean is_color)
 {
   cairo_surface_t *surface;
   cairo_status_t cr_status;
@@ -354,7 +357,7 @@ x_print_export_pdf (GschemToplevel *w_current,
 
   x_print_draw_page (w_current->toplevel, w_current->toplevel->page_current,
                      cr, NULL, width, height,
-                     w_current->toplevel->image_color, FALSE);
+                     is_color, FALSE);
 
   cairo_destroy (cr);
   cairo_surface_finish (surface);
@@ -386,7 +389,7 @@ x_print (GschemToplevel *w_current)
   GtkPrintOperation *print;
   GtkPrintOperationResult res;
   GError *err = NULL;
-  int num_pages = 1;
+  const int num_pages = 1;
 
   /* Create the print operation and set it up */
   print = GTK_PRINT_OPERATION (g_object_new (GTK_TYPE_PRINT_OPERATION,
@@ -395,15 +398,50 @@ x_print (GschemToplevel *w_current)
                                              "unit", GTK_UNIT_POINTS,
                                              NULL));
 
-  if (settings != NULL) {
-    gtk_print_operation_set_print_settings (print, settings);
-  }
   setup = x_print_default_page_setup (w_current->toplevel,
                                       w_current->toplevel->page_current);
   gtk_print_operation_set_default_page_setup (print, setup);
 
   g_signal_connect (print, "draw_page", G_CALLBACK (draw_page__print_operation),
                     w_current);
+
+
+  /* create print settings:
+  */
+  if (settings == NULL)
+  {
+    settings = gtk_print_settings_new();
+  }
+
+
+#ifdef DEBUG
+  const gchar* uri_prev = gtk_print_settings_get (settings, "output-uri");
+  printf (" >> uri_prev = [%s]\n", uri_prev);
+#endif
+
+
+  /* derive output file name from the file name of the current page:
+  */
+  PAGE* page = w_current->toplevel->page_current;
+  if (page != NULL)
+  {
+    const gchar* path = s_page_get_filename (page);
+    gchar* uri = g_strdup_printf ("file://%s.pdf", path);
+
+    gtk_print_settings_set (settings, "output-uri", uri);
+
+    g_free (uri);
+  }
+
+
+  /* set print operation settings:
+  */
+  gtk_print_operation_set_print_settings (print, settings);
+
+  /* enable the "paper size" and "orientation" combo boxes:
+  */
+  gtk_print_operation_set_embed_page_setup (print, TRUE);
+
 
   res = gtk_print_operation_run (print, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
                                  GTK_WINDOW (w_current->main_window), &err);

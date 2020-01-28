@@ -29,9 +29,9 @@ Mike Jarabek
 .BR gnetlist (1)
 .SH COPYRIGHT
 .nf
-Copyright \(co 1999-@YEAR@ gEDA Contributors.  License GPLv2+: GNU GPL
-version 2 or later.  Please see the `COPYING' file included with this
-program for full details.
+Copyright \(co 1999-2017 gEDA Contributors.
+License GPLv2+: GNU GPL version 2 or later.  Please see the
+`COPYING' file included with this program for full details.
 .PP
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.

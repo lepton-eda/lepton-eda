@@ -1,5 +1,8 @@
 /*   Orcad.c  v 0.92
  *   Copyright (C) 1999-2010 Matthew Ettus
+ *   Copyright (C) 1999-2016 gEDA Contributors
+ *   Copyright (C) 2017-2019 Lepton EDA Contributors
+ *
  *   For more info email matt@ettus.com
  *   Ths code is released under the terms of the GNU GPL
  *   See www.fsf.org for a copy of the license
@@ -196,7 +199,7 @@ void parse_titleblock(int fd)
     read_string(data,sizeof(data),localbuf+DATE);
     fprintf(stderr,"%s\n",data);
 
-    switch(localbuf[4] && 0x0F)
+    switch(localbuf[4] & 0x0F)
     {
 	case 0: pagesize = 'A'; ypos = 8*scale+scale/2; break;
 	case 1: pagesize = 'B'; ypos = 11*scale; break;
@@ -625,7 +628,7 @@ void parse_power (int fd)
 {
     char localbuf[256];
     char textbuf[256];
-    char *symbol;
+    const char *symbol;
     int size;
     int x,y,xtext,ytext;
     int angle;

@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,12 +36,11 @@ OBJECT *o_picture_new(TOPLEVEL *toplevel,
                       int embedded) G_GNUC_WARN_UNUSED_RESULT;
 
 void
-geda_picture_object_calculate_bounds (TOPLEVEL *toplevel,
-                                      const OBJECT *object,
+geda_picture_object_calculate_bounds (const OBJECT *object,
                                       GedaBounds *bounds);
 
 double
-o_picture_get_ratio (TOPLEVEL *toplevel, OBJECT *object);
+o_picture_get_ratio (OBJECT *object);
 
 void
 o_picture_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
