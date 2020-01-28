@@ -30,7 +30,7 @@
  * \par Function Description
  * Returns the line width used to draw an object. Deprecated because
  * it doesn't respect type restrictions, unlike the %object-stroke
- * function in (geda core object).
+ * function in (lepton core object).
  *
  * \param obj_s the object to get line width for.
  * \return the line width.
