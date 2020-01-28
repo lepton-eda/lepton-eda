@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+/* Lepton EDA library - Scheme API
+ * Copyright (C) 1998-2013 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,13 +47,13 @@ SCM_DEFINE (get_line_width, "%get-line-width", 1, 0, 0,
 }
 
 /*!
- * \brief Create the (geda core deprecated) Scheme module.
+ * \brief Create the (lepton core deprecated) Scheme module.
  * \par Function Description
- * Defines procedures in the (geda core deprecated) module. The module can
- * be accessed using (use-modules (geda core deprecated)).
+ * Defines procedures in the (lepton core deprecated) module. The module can
+ * be accessed using (use-modules (lepton core deprecated)).
  */
 static void
-init_module_geda_core_deprecated (void *unused)
+init_module_lepton_core_deprecated (void *unused)
 {
   /* Register the functions */
   #include "scheme_deprecated.x"
@@ -79,16 +79,15 @@ init_module_geda_core_deprecated (void *unused)
 }
 
 /*!
- * \brief Initialise the basic gEDA page manipulation procedures.
+ * \brief Initialise the deprecated Lepton EDA / gEDA procedures.
  * \par Function Description
- * Registers some Scheme procedures for working with #PAGE
- * smobs. Should only be called by edascm_init().
+ * Should only be called by edascm_init().
  */
 void
 edascm_init_deprecated ()
 {
-  /* Define the (geda core page) module */
-  scm_c_define_module ("geda core deprecated",
-                       (void (*)(void*)) init_module_geda_core_deprecated,
+  /* Define the (lepton core deprecated) module */
+  scm_c_define_module ("lepton core deprecated",
+                       (void (*)(void*)) init_module_lepton_core_deprecated,
                        NULL);
 }
