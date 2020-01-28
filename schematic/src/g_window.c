@@ -153,7 +153,7 @@ g_current_window ()
  * SCM_BOOL_F.
  *
  * \note Scheme API: Implements the %active-page procedure in the
- * (gschem core window) module.
+ * (schematic core window) module.
  *
  * \return the active page.
  */
@@ -175,7 +175,7 @@ SCM_DEFINE (active_page, "%active-page", 0, 0, 0,
  * window to \a page_s.
  *
  * \note Scheme API: Implements the %set-active-page! procedure in the
- * (gschem core window) module.
+ * (schematic core window) module.
  *
  * \param page_s Page to switch to.
  * \return \a page_s.
@@ -197,7 +197,7 @@ SCM_DEFINE (set_active_page_x, "%set-active-page!", 1, 0, 0,
  * Closes the page \a page_s.
  *
  * \note Scheme API: Implements the %close-page! procedure in the
- * (gschem core window) module.  Overrides the %close-page! procedure
+ * (schematic core window) module.  Overrides the %close-page! procedure
  * in the (geda core page) module.
  *
  * \param page_s Page to close.
@@ -241,7 +241,7 @@ SCM_DEFINE (override_close_page_x, "%close-page!", 1, 0, 0,
  * <code>(x . y)</code>
  *
  * \note Scheme API: Implements the %pointer-position procedure in the
- * (gschem core window) module.
+ * (schematic core window) module.
  *
  * \return The current pointer position, or SCM_BOOL_F.
  */
@@ -268,7 +268,7 @@ SCM_DEFINE (pointer_position, "%pointer-position", 0, 0, 0,
  * current user snap settings.
  *
  * \note Scheme API: Implements the %snap-point procedure in the
- * (gschem core window) module.
+ * (schematic core window) module.
  *
  * \param x_s the x-coordinate of the point to be snapped to grid.
  * \param y_s the y-coordinate of the point to be snapped to grid.
@@ -293,13 +293,13 @@ SCM_DEFINE (snap_point, "%snap-point", 2, 0, 0,
 }
 
 /*!
- * \brief Create the (gschem core window) Scheme module
+ * \brief Create the (schematic core window) Scheme module
  * \par Function Description
- * Defines procedures in the (gschem core window) module. The module
- * can be accessed using (use-modules (gschem core window)).
+ * Defines procedures in the (schematic core window) module. The module
+ * can be accessed using (use-modules (schematic core window)).
  */
 static void
-init_module_gschem_core_window (void *unused)
+init_module_schematic_core_window (void *unused)
 {
   /* Register the functions */
   #include "g_window.x"
@@ -337,8 +337,8 @@ g_init_window ()
   /* Create fluid */
   scheme_window_fluid = scm_permanent_object (scm_make_fluid ());
 
-  /* Define the (gschem core window) module */
-  scm_c_define_module ("gschem core window",
-                       (void (*)(void*)) init_module_gschem_core_window,
+  /* Define the (schematic core window) module */
+  scm_c_define_module ("schematic core window",
+                       (void (*)(void*)) init_module_schematic_core_window,
                        NULL);
 }
