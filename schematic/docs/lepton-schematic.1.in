@@ -1,23 +1,23 @@
-.TH gschem 1 "@DATE@" "Lepton EDA" @VERSION@
+.TH lepton-schematic 1 "@DATE@" "Lepton EDA" @VERSION@
 .SH NAME
-gschem - gEDA/gaf Schematic Capture
+lepton-schematic - Lepton EDA Schematic Capture
 .SH SYNOPSIS
-.B gschem
+.B lepton-schematic
 [\fIOPTION\fR ...] [\fI--\fR] [\fIFILE\fR ...]
 .SH DESCRIPTION
 .PP
-.B gschem
+.B lepton-schematic
 is a schematic capture application, and is part of the
-gEDA (GPL Electronic Design Automation) toolset.  It is used to draw
+Lepton EDA (Electronic Design Automation) toolset.  It is used to draw
 electronic schematics, which describe the logical structure of an
-circuit.  Schematics are made up of symbols, which represent the
+circuit. Schematics are made up of symbols, which represent the
 various components in the circuit, and are obtained either from a
 standard library or created by the user.  The connections between
 components represented by nets (wires).  Schematics may be printed to
 a PostScript file for printing or further conversion to other output
 formats.  Output to various image formats is also supported.
 
-.B gschem
+.B lepton-schematic
 can also be used for editing symbols for use in
 schematics.
 
@@ -39,21 +39,11 @@ Specify a Scheme script to be executed at startup.
 \fB-c\fR \fIEXPR\fR
 Specify a Scheme expression to be evaluated at startup.
 .TP 8
-\fB-o\fR, \fB--output\fR=\fIFILE\fR
-Specify a filename for PostScript output.  This command line argument
-is useful when running \fBgschem\fR from a shell script and with a
-Scheme script.  The filename can be changed through the print dialog
-box.
-.TP 8
-\fB-p\fR
-Automatically place the window. This may be useful if running \fBgschem\fR
-from the command line and generating output.
-.TP 8
 \fB-h\fR, \fB--help\fR
 Print a help message.
 .TP 8
 \fB-V\fR, \fB--version\fR
-Print \fBgschem\fR version information.
+Print \fBlepton-schematic\fR version information.
 .TP 8
 \fB--\fR
 Treat all remaining arguments as schematic or symbol filenames.  Use
@@ -70,28 +60,30 @@ editing.
 .SH ENVIRONMENT
 .TP 8
 .B GEDADATA
-specifies the search directory for Scheme and rc files.  The default
-is `${prefix}/share/gEDA'.
+specifies the search directory for Scheme and rc files.
+The default is `${prefix}/share/lepton-eda'.
 .TP 8
 .B GEDADATARC
-specifies the search directory for rc files.  The default is `$GEDADATA'.
+specifies the search directory for rc files.
+The default is `$GEDADATA'.
 
 .SH AUTHORS
 See the `AUTHORS' file included with this program.
 
 .SH COPYRIGHT
 .nf
-Copyright \(co 1999-@YEAR@ gEDA Contributors.  License GPLv2+: GNU GPL
-version 2 or later.  Please see the `COPYING' file included with this
-program for full details.
+Copyright \(co 2012-2017 gEDA Contributors.
+Copyright \(co 2017-@YEAR@ Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
 .PP
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
 .SH SEE ALSO
-\fBgnetlist\fR(1), \fBlepton-symcheck\fR(1)
+\fBlepton-netlist\fR(1), \fBlepton-symcheck\fR(1)
 .PP
 The full documentation for
-.B gschem
-is available from within the program by selecting the `gEDA
-Documentation' option from the program's `Help' menu.
+.B lepton-schematic
+is available from within the program by selecting the
+`Documentation' option from the program's `Help' menu.

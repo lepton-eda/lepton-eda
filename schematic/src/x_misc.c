@@ -1,5 +1,6 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2011-2013 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -123,33 +124,28 @@ x_show_uri (GschemToplevel *w_current, const gchar *uri,
 
 # else
   gboolean spawn_status;
-  gint exit_status;
+  GPid pid;
   gchar *argv[3];
 
   g_assert (uri);
 
-  argv[0] = SHOW_URI_COMMAND;
+  argv[0] = (gchar *) SHOW_URI_COMMAND;
   argv[1] = (gchar *) uri;
   argv[2] = NULL; /* Null-terminated */
 
-  spawn_status = g_spawn_sync (NULL, /* Inherit working directory */
-                               argv,
-                               NULL, /* Inherit environment */
-                               G_SPAWN_SEARCH_PATH, /* Flags */
-                               NULL, /* No child setup function */
-                               NULL, /* No child setup function data */
-                               NULL, /* Don't need stdout */
-                               NULL, /* Don't need stderr */
-                               &exit_status,
-                               error);
+  spawn_status = g_spawn_async (NULL, /* Inherit working directory */
+                                argv,
+                                NULL, /* Inherit environment */
+                                G_SPAWN_SEARCH_PATH, /* Flags */
+                                NULL, /* No child setup function */
+                                NULL, /* No child setup function data */
+                                &pid,
+                                error);
 
-  if (!spawn_status) return FALSE;
+  g_spawn_close_pid (pid);
 
-  if (exit_status != 0) {
-    g_set_error (error, G_SPAWN_ERROR, G_SPAWN_ERROR_FAILED,
-                 _("%1$s failed to launch URI"), argv[0]);
+  if (!spawn_status)
     return FALSE;
-  }
 
   return TRUE;
 

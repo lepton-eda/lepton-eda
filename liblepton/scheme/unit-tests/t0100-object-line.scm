@@ -1,7 +1,8 @@
 ;; Test Scheme procedures related to line objects.
 
-(use-modules (unit-test))
-(use-modules (geda object))
+(use-modules (unit-test)
+             (lepton object)
+             ((geda object) #:renamer (symbol-prefix-proc 'geda:)))
 
 (begin-test 'lines
   (let ((a (make-line '(1 . 2) '(3 . 4) 21))
@@ -28,8 +29,6 @@
 
     (set-object-color! a 21)
     (assert-equal 21 (list-ref (line-info a) 2))))
-
-(make-net '(1 . 2) '(3 . 4))
 
 (begin-test 'nets
   (let ((a (make-net '(1 . 2) '(3 . 4) 21))
@@ -138,3 +137,140 @@
 
     (set-object-color! a 21)
     (assert-equal 21 (list-ref (line-info a) 2))))
+
+;;; The same tests for the deprecated (geda object) module
+;;; functions.
+
+(begin-test 'geda:lines
+  (let ((a (geda:make-line '(1 . 2) '(3 . 4) 21))
+        (b (geda:make-line '(1 . 2) '(3 . 4))))
+
+    (assert-equal 'line (geda:object-type a))
+
+    (assert-true (geda:line? a))
+
+    (assert-equal '(1 . 2) (geda:line-start a))
+    (assert-equal '(3 . 4) (geda:line-end a))
+    (assert-equal (geda:line-start a) (geda:line-start b))
+    (assert-equal (geda:line-end a) (geda:line-end b))
+    (assert-equal 21 (geda:object-color a))
+    (assert-equal (list (geda:line-start a) (geda:line-end a) (geda:object-color a)) (geda:line-info a))
+
+    (geda:set-line! a '(5 . 6) '(7 . 8))
+    (assert-equal '(5 . 6) (geda:line-start a))
+    (assert-equal '(7 . 8) (geda:line-end a))
+    (assert-equal 21 (geda:object-color a))
+
+    (geda:set-line! a '(5 . 6) '(7 . 8) 22)
+    (assert-equal 22 (geda:object-color a))
+
+    (geda:set-object-color! a 21)
+    (assert-equal 21 (list-ref (geda:line-info a) 2))))
+
+(begin-test 'geda:nets
+  (let ((a (geda:make-net '(1 . 2) '(3 . 4) 21))
+        (b (geda:make-net '(1 . 2) '(3 . 4))))
+
+    (assert-equal 'net (geda:object-type a))
+
+    (assert-true (geda:net? a))
+
+    (assert-equal '(1 . 2) (geda:line-start a))
+    (assert-equal '(3 . 4) (geda:line-end a))
+    (assert-equal (geda:line-start a) (geda:line-start b))
+    (assert-equal (geda:line-end a) (geda:line-end b))
+    (assert-equal 21 (geda:object-color a))
+    (assert-equal (list (geda:line-start a) (geda:line-end a) (geda:object-color a)) (geda:line-info a))
+
+    (geda:set-line! a '(5 . 6) '(7 . 8))
+    (assert-equal '(5 . 6) (geda:line-start a))
+    (assert-equal '(7 . 8) (geda:line-end a))
+    (assert-equal 21 (geda:object-color a))
+
+    (geda:set-line! a '(5 . 6) '(7 . 8) 22)
+    (assert-equal 22 (geda:object-color a))
+
+    (geda:set-object-color! a 21)
+    (assert-equal 21 (list-ref (geda:line-info a) 2))))
+
+(begin-test 'geda:buses
+  (let ((a (geda:make-bus '(1 . 2) '(3 . 4) 21))
+        (b (geda:make-bus '(1 . 2) '(3 . 4))))
+
+    (assert-equal 'bus (geda:object-type a))
+
+    (assert-true (geda:bus? a))
+
+    (assert-equal '(1 . 2) (geda:line-start a))
+    (assert-equal '(3 . 4) (geda:line-end a))
+    (assert-equal (geda:line-start a) (geda:line-start b))
+    (assert-equal (geda:line-end a) (geda:line-end b))
+    (assert-equal 21 (geda:object-color a))
+    (assert-equal (list (geda:line-start a) (geda:line-end a) (geda:object-color a)) (geda:line-info a))
+
+    (geda:set-line! a '(5 . 6) '(7 . 8))
+    (assert-equal '(5 . 6) (geda:line-start a))
+    (assert-equal '(7 . 8) (geda:line-end a))
+    (assert-equal 21 (geda:object-color a))
+
+    (geda:set-line! a '(5 . 6) '(7 . 8) 22)
+    (assert-equal 22 (geda:object-color a))
+
+    (geda:set-object-color! a 21)
+    (assert-equal 21 (list-ref (geda:line-info a) 2))))
+
+(begin-test 'geda:net-pins
+  (let ((a (geda:make-net-pin '(1 . 2) '(3 . 4) 21))
+        (b (geda:make-net-pin '(1 . 2) '(3 . 4))))
+
+    (assert-equal 'pin (geda:object-type a))
+
+    (assert-true (geda:pin? a))
+    (assert-true (geda:net-pin? a))
+    (assert-true (not (geda:bus-pin? a)))
+
+    (assert-equal '(1 . 2) (geda:line-start a))
+    (assert-equal '(3 . 4) (geda:line-end a))
+    (assert-equal (geda:line-start a) (geda:line-start b))
+    (assert-equal (geda:line-end a) (geda:line-end b))
+    (assert-equal 21 (geda:object-color a))
+    (assert-equal (list (geda:line-start a) (geda:line-end a) (geda:object-color a)) (geda:line-info a))
+
+    (geda:set-line! a '(5 . 6) '(7 . 8))
+    (assert-equal '(5 . 6) (geda:line-start a))
+    (assert-equal '(7 . 8) (geda:line-end a))
+    (assert-equal 21 (geda:object-color a))
+
+    (geda:set-line! a '(5 . 6) '(7 . 8) 22)
+    (assert-equal 22 (geda:object-color a))
+
+    (geda:set-object-color! a 21)
+    (assert-equal 21 (list-ref (geda:line-info a) 2))))
+
+(begin-test 'geda:bus-pins
+  (let ((a (geda:make-bus-pin '(1 . 2) '(3 . 4) 21))
+        (b (geda:make-bus-pin '(1 . 2) '(3 . 4))))
+
+    (assert-equal 'pin (geda:object-type a))
+
+    (assert-true (geda:pin? a))
+    (assert-true (geda:bus-pin? a))
+    (assert-true (not (geda:net-pin? a)))
+
+    (assert-equal '(1 . 2) (geda:line-start a))
+    (assert-equal '(3 . 4) (geda:line-end a))
+    (assert-equal (geda:line-start a) (geda:line-start b))
+    (assert-equal (geda:line-end a) (geda:line-end b))
+    (assert-equal 21 (geda:object-color a))
+    (assert-equal (list (geda:line-start a) (geda:line-end a) (geda:object-color a)) (geda:line-info a))
+
+    (geda:set-line! a '(5 . 6) '(7 . 8))
+    (assert-equal '(5 . 6) (geda:line-start a))
+    (assert-equal '(7 . 8) (geda:line-end a))
+    (assert-equal 21 (geda:object-color a))
+
+    (geda:set-line! a '(5 . 6) '(7 . 8) 22)
+    (assert-equal 22 (geda:object-color a))
+
+    (geda:set-object-color! a 21)
+    (assert-equal 21 (list-ref (geda:line-info a) 2))))

@@ -1,0 +1,16 @@
+(load "generate_netlist.scm")
+
+(attribute-promotion "enabled")
+(promote-invisible "enabled")
+(keep-invisible "enabled")
+(enforce-hierarchy "disabled")
+
+(attribute-name "port_object")
+(attribute-name "port_type")
+(attribute-name "port_mode")
+(attribute-name "entity")
+(attribute-name "architecture")
+
+(define vhdl-path "./vhdl/new-vhdl")
+
+(display "loaded local gschemrc\n")

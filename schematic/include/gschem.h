@@ -1,3 +1,6 @@
+#ifndef LEPTON_MAIN_HEADER_H_
+#define LEPTON_MAIN_HEADER_H_
+
 /* System headers which gschem headers rely on */
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -37,7 +40,6 @@ typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 #include "gschem_preview.h"
 #include "x_compselect.h"
 #include "x_dialog.h"
-#include "x_pagesel.h"
 #include "x_states.h"
 #include "gschem_swatch_column_renderer.h"
 #include "gschem_fill_swatch_cell_renderer.h"
@@ -52,5 +54,13 @@ typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 #include "gschem_text_properties_widget.h"
 #include "gschem_translate_widget.h"
 
+#include "color_edit_widget.h"
+#include "font_select_widget.h"
+#include "page_select_widget.h"
+
 /* Gettext translation */
 #include "gettext.h"
+
+
+#endif /* LEPTON_MAIN_HEADER_H_ */
+

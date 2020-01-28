@@ -1,7 +1,7 @@
 ;;; Test Scheme procedures for working with source library.
 
 (use-modules (unit-test)
-             (geda library))
+             (lepton library))
 
 (define *testdir*      (string-append (getcwd)   file-name-separator-string "t0500-tmp"))
 ;; (define *testcir*      (string-append *testdir*  file-name-separator-string "file.cir"))

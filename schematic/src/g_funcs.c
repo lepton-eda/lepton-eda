@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,78 +34,6 @@
 
 #include "gschem.h"
 
-/*! \brief Export current page to PDF.
- * \par Function Description
- * Exports current page to PDF format and saves it to a file which
- * name is set either to the value of the option \a -o or, if it
- * was not used, to \a filename_s.
- *
- * \param filename_s File to save the document to if option \a -o
- * is not used.
- * \return SCM_BOOL_T if export was successful, otherwise SCM_BOOL_F.
- */
-SCM g_funcs_pdf (SCM filename_s)
-{
-  SCM real_filename_s;
-  char *filename;
-  gboolean status;
-  GschemToplevel *w_current = g_current_window ();
-
-  SCM_ASSERT (scm_is_string (filename_s), filename_s,
-              SCM_ARG1, "gschem-pdf");
-
-  real_filename_s =
-    scm_is_true (output_filename_s) ? output_filename_s : filename_s;
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-
-  filename = scm_to_locale_string (real_filename_s);
-  scm_dynwind_free (filename);
-
-  status = x_print_export_pdf (w_current, filename);
-
-  scm_dynwind_end ();
-
-  return (status ? SCM_BOOL_T : SCM_BOOL_F);
-}
-
-/*! \brief Export current page to an image format.
- * \par Function Description
- * Exports current page to PDF format and saves it to a file which
- * name is set either to the value of the option \a -o or, if it
- * was not used, to \a filename_s. The image format is defined by
- * extension of the file name.
- *
- * \param filename_s  File to save the document to.
- * \return SCM_BOOL_T.
- */
-SCM g_funcs_image (SCM filename_s)
-{
-  SCM real_filename_s;
-  char *filename;
-  GschemToplevel *w_current = g_current_window ();
-
-  SCM_ASSERT (scm_is_string (filename_s), filename_s,
-              SCM_ARG1, "gschem-image");
-
-  real_filename_s =
-    scm_is_true (output_filename_s) ? output_filename_s : filename_s;
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-
-  filename = scm_to_locale_string (real_filename_s);
-  scm_dynwind_free (filename);
-
-  x_image_lowlevel (w_current,
-                    filename,
-                    w_current->image_width,
-                    w_current->image_height,
-                    "png");
-
-  scm_dynwind_end ();
-
-  return SCM_BOOL_T;
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -165,7 +94,7 @@ SCM g_funcs_confirm(SCM scm_msg)
   char *msg;
 
   SCM_ASSERT (scm_is_string (scm_msg), scm_msg,
-	      SCM_ARG1, "gschem-msg");
+	      SCM_ARG1, "gschem-confirm");
   
   msg = scm_to_utf8_string (scm_msg);
   r = generic_confirm_dialog (msg);
@@ -186,7 +115,7 @@ SCM g_funcs_filesel(SCM scm_msg, SCM scm_templ, SCM scm_flags)
 {
   int c_flags;
   char *r, *msg, *templ;
-  SCM v;
+  SCM v = SCM_BOOL_F;
 
   SCM_ASSERT (scm_is_string (scm_msg), scm_msg,
 	      SCM_ARG1, "gschem-filesel");
@@ -235,19 +164,11 @@ SCM g_funcs_filesel(SCM scm_msg, SCM scm_templ, SCM scm_flags)
   r = generic_filesel_dialog (msg, templ, c_flags);
   scm_dynwind_unwind_handler (g_free, r, SCM_F_WIND_EXPLICITLY);
 
-  v = scm_from_utf8_string (r);
+  if (r != NULL)
+  {
+    v = scm_from_utf8_string (r);
+  }
 
   scm_dynwind_end();
   return v;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_funcs_use_rc_values(void)
-{
-  i_vars_set(g_current_window ());
-  return SCM_BOOL_T;
 }

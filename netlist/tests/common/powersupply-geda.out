@@ -1,0 +1,54 @@
+START header
+
+gEDA's netlist format
+(Initially created for testing of gnetlist)
+
+END header
+
+START graphical symbols
+
+Component without refdes: title-C.sym at ((51800 . 66900) 73800 . 49900)
+
+END graphical symbols
+
+START components
+
+C1 device=POLARIZED_CAPACITOR
+C2 device=POLARIZED_CAPACITOR
+C3 device=POLARIZED_CAPACITOR
+C4 device=POLARIZED_CAPACITOR
+CONN1 device=MAINS_CONNECTOR
+F1 device=FUSE
+R1 device=VARIABLE_RESISTOR
+R2 device=RESISTOR
+S1 device=SPST
+T1 device=transformer
+U1 device=DIODE-BRIDGE
+U2 device=LM317
+
+END components
+
+No "no-connect" nets found
+
+START renamed-nets
+
+four -> GND
+
+END renamed-nets
+
+START nets
+
+GND : CONN1 3
+eight : C1 1, C2 1, U1 1, U2 3
+eleven : C4 1, R2 2, U2 2
+five : CONN1 2, T1 2
+nine : C1 2, C2 2, C3 2, C4 2, R1 1, R1 3, U1 2
+one : CONN1 1, S1 1
+seven : T1 4, U1 3
+six : T1 3, U1 4
+ten : C3 1, R1 2, R2 1, U2 1
+three : F1 2, T1 1
+two : F1 1, S1 2
+
+END nets
+

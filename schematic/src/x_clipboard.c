@@ -27,7 +27,7 @@
 
 #include "gschem.h"
 
-#define MIME_TYPE_SCHEMATIC "application/x-geda-schematic"
+#define MIME_TYPE_SCHEMATIC "application/x-lepton-schematic"
 #define CLIP_TYPE_SCHEMATIC 1
 
 /* \brief Callback for handling system clipboard owner change.

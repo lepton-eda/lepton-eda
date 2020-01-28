@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,50 +18,33 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
-#include <stdio.h>
-
 #include "gschem.h"
-
-/*! \def INIT_STR(w, name, str) */
-#define INIT_STR(w, name, str) {                                        \
-        g_free((w)->name);                                              \
-        (w)->name = g_strdup(((default_ ## name) != NULL) ?             \
-                             (default_ ## name) : (str));               \
-}
 
 /* Absolute default used when default_... strings are NULL */
 
+#define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
+
 int   default_text_size = DEFAULT_TEXT_SIZE;
-int   default_text_caps = LOWER;
+int   default_text_caps = BOTH;
 int   default_net_direction_mode = TRUE;
 int   default_net_selection_mode = 0;
 int   default_actionfeedback_mode = OUTLINE;
 int   default_zoom_with_pan = TRUE;
 int   default_do_logging = TRUE;
-int   default_logging_dest = LOG_WINDOW;
 int   default_embed_complex = FALSE;
 int   default_include_complex = FALSE;
 int   default_snap_size = DEFAULT_SNAP_SIZE;
 
 int   default_scrollbars_flag = TRUE;
-int   default_image_color = FALSE;
-int   default_image_width = 800;
-int   default_image_height = 600;
 int   default_log_window = MAP_ON_STARTUP;
-int   default_log_window_type = DECORATED;
-int   default_third_button = POPUP_ENABLED;
+int   default_third_button = MOUSEBTN_DO_POPUP;
 int   default_third_button_cancel = TRUE;
-#ifdef HAVE_LIBSTROKE
-int   default_middle_button = STROKE;
-#else
-int   default_middle_button = REPEAT;
-#endif
+int   default_middle_button = MOUSEBTN_DO_PAN;
 int   default_scroll_wheel = SCROLL_WHEEL_CLASSIC;
 int   default_net_consolidate = TRUE;
-int   default_file_preview = FALSE;
+int   default_file_preview = TRUE;
 int   default_enforce_hierarchy = TRUE;
-int   default_fast_mousepan = TRUE;
-int   default_raise_dialog_boxes = FALSE;
+int   default_fast_mousepan = FALSE;
 int   default_continue_component_place = TRUE;
 int   default_undo_levels = 20;
 int   default_undo_control = TRUE;
@@ -69,7 +53,7 @@ int   default_undo_panzoom = FALSE;
 int   default_draw_grips = TRUE;
 int   default_netconn_rubberband = DEFAULT_NET_RUBBER_BAND_MODE;
 int   default_magnetic_net_mode = DEFAULT_MAGNETIC_NET_MODE;
-int   default_warp_cursor = TRUE;
+int   default_warp_cursor = FALSE;
 int   default_toolbars = TRUE;
 int   default_handleboxes = TRUE;
 int   default_setpagedevice_orientation = FALSE;
@@ -83,105 +67,592 @@ int   default_dots_grid_dot_size = 1;
 int   default_dots_grid_mode = DOTS_GRID_VARIABLE_MODE;
 int   default_dots_grid_fixed_threshold = 10;
 int   default_mesh_grid_display_threshold = 3;
-int   default_add_attribute_offset = 50;
 
 int   default_auto_save_interval = 120;
 
 int   default_width = 800;  /* these variables are used in x_window.c */
 int   default_height = 600;
 
-int default_mousepan_gain = 5;
+int default_mousepan_gain = 1;
 int default_keyboardpan_gain = 20;
-int default_select_slack_pixels = 4;
+int default_select_slack_pixels = 10;
 int default_zoom_gain = 20;
 int default_scrollpan_steps = 8;
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+
+
+/* \brief Read a boolean configuration key.
  *
+ * \par Function Description
+ * On success, set \a result to the value of the
+ * configuration key, otherwise set it to \a defval.
+ *
+ * \param [in]       group   Configuration group name
+ * \param [in]       key     Configuration key name
+ * \param [in]       defval  Default value
+ * \param [in, out]  result  Result
+ *
+ * \return  TRUE if a specified config parameter was successfully read
  */
-void i_vars_set(GschemToplevel *w_current)
+static gboolean
+cfg_read_bool (const gchar* group,
+               const gchar* key,
+               gboolean     defval,
+               gboolean*    result)
+{
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError*  err = NULL;
+  gboolean val = eda_config_get_boolean (cfg, group, key, &err);
+
+  gboolean success = err == NULL;
+  g_clear_error (&err);
+
+  *result = success ? val : defval;
+  return success;
+}
+
+
+
+/* \brief Read an int configuration key.
+ *
+ * \par Function Description
+ * On success, set \a result to the value of the
+ * configuration key, otherwise set it to \a defval.
+ *
+ * \param [in]       group   Configuration group name
+ * \param [in]       key     Configuration key name
+ * \param [in]       defval  Default value
+ * \param [in, out]  result  Result
+ *
+ * \return  TRUE if a specified config parameter was successfully read
+ */
+static gboolean
+cfg_read_int (const gchar* group,
+              const gchar* key,
+              gint         defval,
+              gint*        result)
+{
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError*  err = NULL;
+  gint val = eda_config_get_int (cfg, group, key, &err);
+
+  gboolean success = err == NULL;
+  g_clear_error (&err);
+
+  *result = success ? val : defval;
+  return success;
+}
+
+
+
+static gboolean
+check_int_not_0 (gint val) { return val != 0; }
+
+static gboolean
+check_int_greater_0 (gint val) { return val > 0; }
+
+static gboolean
+check_int_greater_eq_0 (gint val) { return val >= 0; }
+
+static gboolean
+check_int_text_size (gint val) { return val >= MINIMUM_TEXT_SIZE; }
+
+
+
+/* \brief Read an int configuration key, check read value.
+ *
+ * \par Function Description
+ * On success, set \a result to the value of the
+ * configuration key, otherwise set it to \a defval.
+ * Also, check read value with pfn_check() function, and
+ * if it returns FALSE, reset \a result to \a defval and
+ * print an error message to STDERR.
+ *
+ * \param [in]       group      Configuration group name
+ * \param [in]       key        Configuration key name
+ * \param [in]       defval     Default value
+ * \param [in, out]  result     Result
+ * \param [in]       pfn_check  Function to check if value is valid
+ *
+ * \return  TRUE if a specified config parameter was successfully read
+ */
+static gboolean
+cfg_read_int_with_check (const gchar* group,
+                         const gchar* key,
+                         gint         defval,
+                         gint*        result,
+                         gboolean     (*pfn_check)(int))
+{
+  gint val = 0;
+  gboolean success = cfg_read_int (group, key, defval, &val);
+
+  if (pfn_check (val))
+  {
+    *result = val;
+  }
+  else
+  {
+    *result = defval;
+    const gchar* errmsg = _("Invalid [%s]::%s (%d) is set in configuration\n");
+    fprintf (stderr, errmsg, group, key, val);
+  }
+
+  return success;
+}
+
+
+/* \struct OptionStringInt
+ * \brief  A mapping of a string option's value to an int value.
+ */
+struct OptionStringInt
+{
+  const gchar* str_; /* a string value of an option */
+  gint         int_; /* an int value of an option */
+};
+
+
+
+/* \brief Read a string configuration key, set a corresponding int option.
+ *
+ * \par Function Description
+ * Read and compare a configuration value to the options passed
+ * as an array of OptionStringInt structures - the mapping of
+ * the string option values to the corresponding int values.
+ * On success, set the \a result to the int value of
+ * the option (if found), otherwise set it to \a defval.
+ *
+ * \param [in]       group      Configuration group name
+ * \param [in]       key        Configuration key name
+ * \param [in]       defval     Default value
+ * \param [in]       vals       An array of OptionStringInt structures
+ * \param [in]       nvals      A size of \a vals array
+ * \param [in, out]  result     Result
+ *
+ * \return  TRUE if a specified config parameter was successfully read
+ */
+static gboolean
+cfg_read_string2int (const gchar* group,
+                     const gchar* key,
+                     gint         defval,
+                     const struct OptionStringInt* vals,
+                     size_t       nvals,
+                     gint*        result)
+{
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError* err = NULL;
+  gchar*  str = eda_config_get_string (cfg, group, key, &err);
+
+  gboolean success = err == NULL;
+  g_clear_error (&err);
+
+  *result = defval;
+
+  if (success)
+  {
+    for (size_t i = 0; i < nvals; ++i)
+    {
+      if ( strcmp (vals[i].str_, str) == 0 )
+      {
+        *result = vals[i].int_;
+        break;
+      }
+    }
+
+    g_free (str);
+  }
+
+  return success;
+
+} /* cfg_read_string2int() */
+
+
+
+static void
+i_vars_set_options (GschemOptions* opts)
+{
+  gint snap_size = 0;
+  cfg_read_int_with_check ("schematic.gui", "snap-size",
+                           default_snap_size, &snap_size,
+                           &check_int_greater_0);
+  gschem_options_set_snap_size (opts, snap_size);
+
+
+  /* grid-mode:
+  */
+  const struct OptionStringInt vals_gm[] =
+  {
+    { "none", GRID_MODE_NONE },
+    { "dots", GRID_MODE_DOTS },
+    { "mesh", GRID_MODE_MESH }
+  };
+
+  int grid_mode = 0;
+  cfg_read_string2int ("schematic.gui",
+                       "grid-mode",
+                       default_grid_mode,
+                       vals_gm,
+                       sizeof( vals_gm ) / sizeof( vals_gm[0] ),
+                       &grid_mode);
+
+  gschem_options_set_grid_mode (opts, (GRID_MODE) grid_mode);
+
+
+  gboolean val = FALSE;
+  cfg_read_bool ("schematic.gui", "netconn-rubberband",
+                 default_netconn_rubberband, &val);
+  gschem_options_set_net_rubber_band_mode (opts, val);
+
+  cfg_read_bool ("schematic.gui", "magnetic-net-mode",
+                 default_magnetic_net_mode, &val);
+  gschem_options_set_magnetic_net_mode (opts, val);
+}
+
+
+
+/*! \brief Read configuration and set toplevel options appropriately.
+ */
+void
+i_vars_set (GschemToplevel* w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   i_vars_libgeda_set(toplevel);
 
+
   /* this will be false if logging cannot be enabled */
-  if (do_logging != FALSE) {
-    do_logging = default_do_logging;
+  if (do_logging != FALSE)
+  {
+    cfg_read_bool ("schematic", "logging",
+                   default_do_logging, &do_logging);
   }
 
-  logging_dest = default_logging_dest;
 
-  w_current->text_size     = default_text_size;
-  w_current->text_caps     = default_text_caps;
+  cfg_read_int_with_check ("schematic.gui", "text-size",
+                           default_text_size, &w_current->text_size,
+                           &check_int_text_size);
 
-  w_current->net_direction_mode = default_net_direction_mode;
-  w_current->net_selection_mode = default_net_selection_mode;
 
-  w_current->zoom_with_pan           = default_zoom_with_pan;
-  w_current->actionfeedback_mode     = default_actionfeedback_mode;
-  w_current->scrollbars_flag         = default_scrollbars_flag;
+  /* text-caps-style:
+  */
+  const struct OptionStringInt vals_tcs[] =
+  {
+    { "both",  BOTH  },
+    { "lower", LOWER },
+    { "upper", UPPER }
+  };
 
-  w_current->embed_complex   = default_embed_complex;
+  cfg_read_string2int ("schematic.gui",
+                       "text-caps-style",
+                       default_text_caps,
+                       vals_tcs,
+                       sizeof( vals_tcs ) / sizeof( vals_tcs[0] ),
+                       &w_current->text_caps);
+
+
+  cfg_read_bool ("schematic.gui", "net-direction-mode",
+                 default_net_direction_mode, &w_current->net_direction_mode);
+
+
+  /* net-selection-mode:
+   * TODO: define and use constants for the net-selection-mode values
+  */
+  const struct OptionStringInt vals_nsm[] =
+  {
+    { "disabled",    0 },
+    { "enabled_net", 2 },
+    { "enabled_all", 3 }
+  };
+
+  cfg_read_string2int ("schematic.gui",
+                       "net-selection-mode",
+                       default_net_selection_mode,
+                       vals_nsm,
+                       sizeof( vals_nsm ) / sizeof( vals_nsm[0] ),
+                       &w_current->net_selection_mode);
+
+
+  cfg_read_bool ("schematic.gui", "zoom-with-pan",
+                 default_zoom_with_pan, &w_current->zoom_with_pan);
+
+
+  /* action-feedback-mode:
+  */
+  const struct OptionStringInt vals_afm[] =
+  {
+    { "outline",     OUTLINE     },
+    { "boundingbox", BOUNDINGBOX }
+  };
+
+  cfg_read_string2int ("schematic.gui",
+                       "action-feedback-mode",
+                       default_actionfeedback_mode,
+                       vals_afm,
+                       sizeof( vals_afm ) / sizeof( vals_afm[0] ),
+                       &w_current->actionfeedback_mode);
+
+
+  cfg_read_bool ("schematic.gui", "scrollbars",
+                 default_scrollbars_flag, &w_current->scrollbars_flag);
+
+  cfg_read_bool ("schematic.gui", "embed-components",
+                 default_embed_complex, &w_current->embed_complex);
+
+
   w_current->include_complex = default_include_complex;
-  gschem_options_set_snap_size (w_current->options, default_snap_size);
-  w_current->log_window      = default_log_window;
-  w_current->log_window_type = default_log_window_type;
 
-  toplevel->image_color        = default_image_color;
-  w_current->image_width        = default_image_width;
-  w_current->image_height       = default_image_height;
-  w_current->third_button       = default_third_button;
-  w_current->third_button_cancel= default_third_button_cancel;
-  w_current->middle_button      = default_middle_button;
-  w_current->scroll_wheel       = default_scroll_wheel;
-  toplevel->net_consolidate    = default_net_consolidate;
-  w_current->file_preview       = default_file_preview;
-  w_current->enforce_hierarchy  = default_enforce_hierarchy;
-  w_current->fast_mousepan      = default_fast_mousepan;
-  w_current->raise_dialog_boxes = default_raise_dialog_boxes;
-  w_current->continue_component_place = default_continue_component_place;
-  w_current->undo_levels = default_undo_levels;
-  w_current->undo_control = default_undo_control;
-  w_current->undo_type = default_undo_type;
-  w_current->undo_panzoom = default_undo_panzoom;
 
-  w_current->draw_grips = default_draw_grips;
-  gschem_options_set_net_rubber_band_mode (w_current->options, default_netconn_rubberband);
-  gschem_options_set_magnetic_net_mode (w_current->options, default_magnetic_net_mode);
-  w_current->warp_cursor = default_warp_cursor;
-  w_current->toolbars = default_toolbars;
-  w_current->handleboxes = default_handleboxes;
+  /* log-window:
+  */
+  const struct OptionStringInt vals_lw[] =
+  {
+    { "startup", MAP_ON_STARTUP },
+    { "later",   MAP_LATER      }
+  };
 
-  w_current->bus_ripper_size  = default_bus_ripper_size;
-  w_current->bus_ripper_type  = default_bus_ripper_type;
-  w_current->bus_ripper_rotation  = default_bus_ripper_rotation;
+  cfg_read_string2int ("schematic",
+                       "log-window",
+                       default_log_window,
+                       vals_lw,
+                       sizeof( vals_lw ) / sizeof( vals_lw[0] ),
+                       &w_current->log_window);
 
-  toplevel->force_boundingbox  = default_force_boundingbox;
 
-  gschem_options_set_grid_mode (w_current->options, (GRID_MODE) default_grid_mode);
-  w_current->dots_grid_dot_size          = default_dots_grid_dot_size;
-  w_current->dots_grid_mode              = default_dots_grid_mode;
-  w_current->dots_grid_fixed_threshold   = default_dots_grid_fixed_threshold;
-  w_current->mesh_grid_display_threshold = default_mesh_grid_display_threshold;
+  /* third-button:
+  */
+  const struct OptionStringInt vals_tb[] =
+  {
+    { "popup",    MOUSEBTN_DO_POPUP },
+    { "mousepan", MOUSEBTN_DO_PAN   }
+  };
 
-  w_current->add_attribute_offset  = default_add_attribute_offset;
+  cfg_read_string2int ("schematic.gui",
+                       "third-button",
+                       default_third_button,
+                       vals_tb,
+                       sizeof( vals_tb ) / sizeof( vals_tb[0] ),
+                       &w_current->third_button);
 
-  w_current->mousepan_gain = default_mousepan_gain;
-  w_current->keyboardpan_gain = default_keyboardpan_gain;
 
-  w_current->select_slack_pixels = default_select_slack_pixels;
-  w_current->zoom_gain = default_zoom_gain;
-  w_current->scrollpan_steps = default_scrollpan_steps;
+  cfg_read_bool ("schematic.gui", "file-preview",
+                 default_third_button_cancel, &w_current->third_button_cancel);
 
-  toplevel->auto_save_interval = default_auto_save_interval;
-}
+
+  /* middle-button:
+  */
+  const struct OptionStringInt vals_mb[] =
+  {
+    { "stroke",   MOUSEBTN_DO_STROKE },
+    { "repeat",   MOUSEBTN_DO_REPEAT },
+    { "action",   MOUSEBTN_DO_ACTION },
+    { "mousepan", MOUSEBTN_DO_PAN    },
+    { "popup",    MOUSEBTN_DO_POPUP  }
+  };
+
+  cfg_read_string2int ("schematic.gui",
+                       "middle-button",
+                       default_middle_button,
+                       vals_mb,
+                       sizeof( vals_mb ) / sizeof( vals_mb[0] ),
+                       &w_current->middle_button);
+
+
+  /* scroll-wheel:
+  */
+  const struct OptionStringInt vals_sw[] =
+  {
+    { "classic", SCROLL_WHEEL_CLASSIC },
+    { "gtk",     SCROLL_WHEEL_GTK     }
+  };
+
+  cfg_read_string2int ("schematic.gui",
+                       "scroll-wheel",
+                       default_scroll_wheel,
+                       vals_sw,
+                       sizeof( vals_sw ) / sizeof( vals_sw[0] ),
+                       &w_current->scroll_wheel);
+
+
+  cfg_read_bool ("schematic", "net-consolidate",
+                 default_net_consolidate, &toplevel->net_consolidate);
+
+  cfg_read_bool ("schematic.gui", "file-preview",
+                 default_file_preview, &w_current->file_preview);
+
+  cfg_read_bool ("schematic.gui", "enforce-hierarchy",
+                 default_enforce_hierarchy, &w_current->enforce_hierarchy);
+
+  cfg_read_bool ("schematic.gui", "fast-mousepan",
+                 default_fast_mousepan, &w_current->fast_mousepan);
+
+  cfg_read_bool ("schematic.gui", "continue-component-place",
+                 default_continue_component_place, &w_current->continue_component_place);
+
+  cfg_read_int_with_check ("schematic.undo", "undo-levels",
+                           default_undo_levels, &w_current->undo_levels,
+                           &check_int_greater_0);
+
+  cfg_read_bool ("schematic.undo", "undo-control",
+                 default_undo_control, &w_current->undo_control);
+
+
+  /* undo-type:
+  */
+  const struct OptionStringInt vals_ut[] =
+  {
+    { "disk",   UNDO_DISK   },
+    { "memory", UNDO_MEMORY }
+  };
+
+  cfg_read_string2int ("schematic.undo",
+                       "undo-type",
+                       default_undo_type,
+                       vals_ut,
+                       sizeof( vals_ut ) / sizeof( vals_ut[0] ),
+                       &w_current->undo_type);
+
+
+  cfg_read_bool ("schematic.undo", "undo-panzoom",
+                 default_undo_panzoom, &w_current->undo_panzoom);
+
+  cfg_read_bool ("schematic.gui", "draw-grips",
+                 default_draw_grips, &w_current->draw_grips);
+
+  cfg_read_bool ("schematic.gui", "warp-cursor",
+                 default_warp_cursor, &w_current->warp_cursor);
+
+  cfg_read_bool ("schematic.gui", "toolbars",
+                 default_toolbars, &w_current->toolbars);
+
+  cfg_read_bool ("schematic.gui", "handleboxes",
+                 default_handleboxes, &w_current->handleboxes);
+
+  cfg_read_int_with_check ("schematic", "bus-ripper-size",
+                           default_bus_ripper_size, &w_current->bus_ripper_size,
+                           &check_int_greater_0);
+
+
+  /* bus-ripper-type:
+  */
+  const struct OptionStringInt vals_brt[] =
+  {
+    { "component", COMP_BUS_RIPPER },
+    { "net",       NET_BUS_RIPPER  }
+  };
+
+  cfg_read_string2int ("schematic",
+                       "bus-ripper-type",
+                       default_bus_ripper_type,
+                       vals_brt,
+                       sizeof( vals_brt ) / sizeof( vals_brt[0] ),
+                       &w_current->bus_ripper_type);
+
+
+  /* bus-ripper-rotation:
+  */
+  const struct OptionStringInt vals_brr[] =
+  {
+    { "non-symmetric", NON_SYMMETRIC },
+    { "symmetric",     SYMMETRIC     }
+  };
+
+  cfg_read_string2int ("schematic",
+                       "bus-ripper-rotation",
+                       default_bus_ripper_rotation,
+                       vals_brr,
+                       sizeof( vals_brr ) / sizeof( vals_brr[0] ),
+                       &w_current->bus_ripper_rotation);
+
+
+  cfg_read_bool ("schematic.gui", "force-boundingbox",
+                 default_force_boundingbox, &toplevel->force_boundingbox);
+
+  cfg_read_int_with_check ("schematic.gui", "dots-grid-dot-size",
+                           default_dots_grid_dot_size, &w_current->dots_grid_dot_size,
+                           &check_int_greater_0);
+
+
+  /* dots-grid-mode:
+  */
+  const struct OptionStringInt vals_dgm[] =
+  {
+    { "variable", DOTS_GRID_VARIABLE_MODE },
+    { "fixed",    DOTS_GRID_FIXED_MODE    }
+  };
+
+  cfg_read_string2int ("schematic.gui",
+                       "dots-grid-mode",
+                       default_dots_grid_mode,
+                       vals_dgm,
+                       sizeof( vals_dgm ) / sizeof( vals_dgm[0] ),
+                       &w_current->dots_grid_mode);
+
+
+  cfg_read_int_with_check ("schematic.gui", "dots-grid-fixed-threshold",
+                           default_dots_grid_fixed_threshold, &w_current->dots_grid_fixed_threshold,
+                           &check_int_greater_0);
+
+  cfg_read_int_with_check ("schematic.gui", "mesh-grid-display-threshold",
+                           default_mesh_grid_display_threshold, &w_current->mesh_grid_display_threshold,
+                           &check_int_greater_0);
+
+  cfg_read_int_with_check ("schematic.gui", "mousepan-gain",
+                           default_mousepan_gain, &w_current->mousepan_gain,
+                           &check_int_greater_0);
+
+  cfg_read_int_with_check ("schematic.gui", "keyboardpan-gain",
+                           default_keyboardpan_gain, &w_current->keyboardpan_gain,
+                           &check_int_greater_0);
+
+  cfg_read_int_with_check ("schematic.gui", "select-slack-pixels",
+                           default_select_slack_pixels, &w_current->select_slack_pixels,
+                           &check_int_greater_0);
+
+  cfg_read_int_with_check ("schematic.gui", "zoom-gain",
+                           default_zoom_gain, &w_current->zoom_gain,
+                           &check_int_not_0);
+
+  cfg_read_int_with_check ("schematic.gui", "scrollpan-steps",
+                           default_scrollpan_steps, &w_current->scrollpan_steps,
+                           &check_int_not_0);
+
+  cfg_read_int_with_check ("schematic", "auto-save-interval",
+                           default_auto_save_interval, &toplevel->auto_save_interval,
+                           &check_int_greater_eq_0);
+
+
+  i_vars_set_options (w_current->options);
+
+
+  /* bus-ripper-symname:
+  */
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError* err = NULL;
+  gchar*  str = eda_config_get_string (cfg,
+                                       "schematic",
+                                       "bus-ripper-symname",
+                                       &err);
+  w_current->bus_ripper_symname =
+    str ? str : g_strdup (DEFAULT_BUS_RIPPER_SYMNAME);
+
+  g_clear_error (&err);
+
+} /* i_vars_set() */
 
 
 /*! \brief Free default names
  *  \par Function Description
- *  This function will free all of the default variables for gschem.
+ *  This function will free all of the default variables.
  *
  */
 void i_vars_freenames()
@@ -189,41 +660,35 @@ void i_vars_freenames()
 }
 
 
-/*! \brief Setup gschem default configuration.
+
+/*! \brief Setup default configuration.
  * \par Function Description
  * Populate the default configuration context with compiled-in
  * defaults.
  */
 void
-i_vars_init_gschem_defaults()
+i_vars_init_defaults()
 {
-  EdaConfig *cfg = eda_config_get_default_context ();
-
-  /* This is the prefix of the default filename used for newly created
-   * schematics and symbols. */
-  /// TRANSLATORS: this string is used to generate a filename for
-  /// newly-created files.  It will be used to create a filename of
-  /// the form "untitled_N.sch", where N is a number.  Please make
-  /// sure that the translation contains characters suitable for use
-  /// in a filename.
-  eda_config_set_string (cfg, "gschem", "default-filename", _("untitled"));
 }
 
-/*! \brief Save user config on exit.
- * \par Function Description
- * When gschem exits, try to save the user configuration to disk.
+
+
+/*! \brief Save cache config on exit.
  */
 void
-i_vars_atexit_save_user_config (gpointer user_data)
+i_vars_atexit_save_cache_config (gpointer user_data)
 {
-  EdaConfig *cfg = eda_config_get_user_context ();
-  GError *err = NULL;
+  EdaConfig* cfg = eda_config_get_cache_context();
 
+  GError* err = NULL;
   eda_config_save (cfg, &err);
-  if (err != NULL) {
-    g_warning ("Failed to save user configuration to '%1$s': %2$s.",
+
+  if (err != NULL)
+  {
+    g_warning ("Failed to save cache configuration to '%1$s': %2$s.",
                eda_config_get_filename (cfg),
                err->message);
     g_clear_error (&err);
   }
 }
+

@@ -1,7 +1,5 @@
 Makefile
 Makefile.in
-html
-latex
 lepton-symcheck.1
 lepton-symcheck.html
 *~

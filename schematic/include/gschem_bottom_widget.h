@@ -49,6 +49,13 @@ struct _GschemBottomWidget
   int       snap_mode;
   int       snap_size;
   GtkWidget *status_label;
+  gboolean  rubber_band_mode;
+  GtkWidget *rubber_band_label;
+  gboolean  magnetic_net_mode;
+  GtkWidget *magnetic_net_label;
+  GdkColor  status_inactive_color;
+  GdkColor  status_active_color;
+  gboolean  status_bold_font;
 };
 
 
@@ -76,6 +83,12 @@ gschem_bottom_widget_get_snap_size (GschemBottomWidget *widget);
 
 const char*
 gschem_bottom_widget_get_status_text (GschemBottomWidget *widget);
+
+gboolean
+gschem_bottom_widget_get_rubber_band_mode (GschemBottomWidget *widget);
+
+gboolean
+gschem_bottom_widget_get_magnetic_net_mode (GschemBottomWidget *widget);
 
 GType
 gschem_bottom_widget_get_type ();
@@ -106,3 +119,10 @@ gschem_bottom_widget_set_status_text (GschemBottomWidget *widget, const char *te
 
 void
 gschem_bottom_widget_set_status_text_color (GschemBottomWidget *widget, gboolean active);
+
+void
+gschem_bottom_widget_set_rubber_band_mode (GschemBottomWidget *widget, gboolean mode);
+
+void
+gschem_bottom_widget_set_magnetic_net_mode (GschemBottomWidget *widget, gboolean mode);
+

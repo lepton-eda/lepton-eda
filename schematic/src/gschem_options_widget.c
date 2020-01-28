@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -196,7 +197,7 @@ create_grid_mode_widget (GschemOptionsWidget *widget)
   box = gtk_hbox_new (FALSE, FALSE);
 
   for (index=0; index<GRID_MODE_COUNT; index++) {
-    widget->grid_radio[index] = gtk_toggle_button_new ();
+    widget->grid_radio[index] = gtk_toggle_button_new_with_mnemonic (NULL);
 
     gtk_box_pack_start (GTK_BOX (box),                           /* box     */
                         widget->grid_radio[index],               /* child   */
@@ -213,13 +214,13 @@ create_grid_mode_widget (GschemOptionsWidget *widget)
   }
 
   gtk_button_set_label (GTK_BUTTON (widget->grid_radio[GRID_MODE_NONE]),
-                        _("Off"));
+                        _("_Off"));
 
   gtk_button_set_label (GTK_BUTTON (widget->grid_radio[GRID_MODE_DOTS]),
-                        _("Dots"));
+                        _("_Dots"));
 
   gtk_button_set_label (GTK_BUTTON (widget->grid_radio[GRID_MODE_MESH]),
-                        _("Mesh"));
+                        _("M_esh"));
 
   return box;
 }
@@ -241,8 +242,8 @@ create_net_section (GschemOptionsWidget *widget)
 
   /* These widgets are shown in the same order as the options menu */
 
-  label[0] = gschem_dialog_misc_create_property_label (_("Net Rubber Band Mode:"));
-  label[1] = gschem_dialog_misc_create_property_label (_("Magnetic Net Mode:"));
+  label[0] = gschem_dialog_misc_create_property_label (_("Net R_ubber Band Mode:"));
+  label[1] = gschem_dialog_misc_create_property_label (_("_Magnetic Net Mode:"));
 
   /*! \todo These should become a GtkSwitch when updating to GTK 3.0 */
 
@@ -280,7 +281,7 @@ create_snap_section (GschemOptionsWidget *widget)
 
   label[0] = gschem_dialog_misc_create_property_label (_("Grid Mode:"));
   label[1] = gschem_dialog_misc_create_property_label (_("Snap Mode:"));
-  label[2] = gschem_dialog_misc_create_property_label (_("Snap Size:"));
+  label[2] = gschem_dialog_misc_create_property_label (_("_Snap Size:"));
 
   editor[0] = create_grid_mode_widget (widget);
   editor[1] = create_snap_mode_widget (widget);
@@ -319,7 +320,7 @@ create_snap_mode_widget (GschemOptionsWidget *widget)
   box = gtk_hbox_new (FALSE, FALSE);
 
   for (index=0; index<SNAP_STATE_COUNT; index++) {
-    widget->snap_radio[index] = gtk_toggle_button_new ();
+    widget->snap_radio[index] = gtk_toggle_button_new_with_mnemonic (NULL);
 
     gtk_box_pack_start (GTK_BOX (box),                           /* box     */
                         widget->snap_radio[index],               /* child   */
@@ -336,13 +337,13 @@ create_snap_mode_widget (GschemOptionsWidget *widget)
   }
 
   gtk_button_set_label (GTK_BUTTON (widget->snap_radio[SNAP_OFF]),
-                        _("Off"));
+                        _("O_ff"));
 
   gtk_button_set_label (GTK_BUTTON (widget->snap_radio[SNAP_GRID]),
-                        _("Grid"));
+                        _("_Grid"));
 
   gtk_button_set_label (GTK_BUTTON (widget->snap_radio[SNAP_RESNAP]),
-                        _("Resnap"));
+                        _("_Resnap"));
 
   return box;
 }
@@ -629,6 +630,11 @@ update_magnetic_net_mode_model (GschemOptionsWidget *widget)
 
   gschem_options_set_magnetic_net_mode (w_current->options,
                                         gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget->magnetic_net_widget)));
+
+  if (w_current->bottom_widget != NULL)
+  {
+    i_update_net_options_status (w_current);
+  }
 }
 
 
@@ -674,6 +680,11 @@ update_net_rubber_band_mode_model (GschemOptionsWidget *widget)
 
   gschem_options_set_net_rubber_band_mode (w_current->options,
                                            gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget->net_rubber_band_widget)));
+
+  if (w_current->bottom_widget != NULL)
+  {
+    i_update_net_options_status (w_current);
+  }
 }
 
 

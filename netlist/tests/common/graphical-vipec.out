@@ -1,0 +1,10 @@
+% ViPEC RF Netlister
+% Written by Matthew Ettus
+% Based on code by Bas Gieltjes
+CKT
+	RES	0 1 R=use value attrib for resistance		% R1
+	RES	1 2 R=use value attrib for resistance		% R2
+	RES	2 0 R=use value attrib for resistance		% R3
+	DEF2P	#<unspecified>  #<unspecified>
+	TERM	50 50
+

@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's Library
- * Copyright (C) 2011-2012 gEDA Contributors (see ChangeLog for details)
+/* Lepton EDA library
+ * Copyright (C) 2011-2012 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,12 +48,102 @@ struct _EdaConfigPrivate
   gboolean changed;
 };
 
-/*! Filename for gEDA system configuration files */
-#define SYSTEM_CONFIG_NAME "geda-system.conf"
-/*! Filename for gEDA user configuration files */
-#define USER_CONFIG_NAME "geda-user.conf"
-/*! Filename for gEDA local configuration files */
-#define LOCAL_CONFIG_NAME "geda.conf"
+
+
+/*! User configuration context
+ */
+static EdaConfig* g_context_user = NULL;
+static EdaConfig* g_context_user_legacy = NULL;
+
+/*! System configuration context
+ */
+static EdaConfig* g_context_system = NULL;
+static EdaConfig* g_context_system_legacy = NULL;
+
+
+
+/*!
+ * Global variable declared in globals.h
+ * Whether to use legacy configuration file names:
+ */
+gboolean config_legacy_mode = TRUE;
+
+/*! \brief Set config_legacy_mode global variable
+ */
+void
+config_set_legacy_mode(gboolean legacy)
+{
+  config_legacy_mode = legacy;
+}
+
+
+
+/*! Legacy configuration file names:
+ */
+#define CONFIG_FILENAME_LEGACY_SYSTEM "geda-system.conf"
+#define CONFIG_FILENAME_LEGACY_USER "geda-user.conf"
+#define CONFIG_FILENAME_LEGACY_LOCAL "geda.conf"
+
+/*! New configuration file names:
+ */
+#define CONFIG_FILENAME_SYSTEM "lepton-system.conf"
+#define CONFIG_FILENAME_USER "lepton-user.conf"
+#define CONFIG_FILENAME_LOCAL "lepton.conf"
+
+/*! Configuration file name for CACHE config context:
+ */
+#define CONFIG_FILENAME_CACHE "gui.conf"
+
+
+
+/*! \brief Get filename for system configuration files
+ */
+static const gchar*
+cfg_filename_system()
+{
+  if (config_legacy_mode)
+    return CONFIG_FILENAME_LEGACY_SYSTEM;
+  else
+    return CONFIG_FILENAME_SYSTEM;
+}
+
+
+
+/*! \brief Get filename for user configuration files
+ */
+static const gchar*
+cfg_filename_user()
+{
+  if (config_legacy_mode)
+    return CONFIG_FILENAME_LEGACY_USER;
+  else
+    return CONFIG_FILENAME_USER;
+}
+
+
+
+/*! \brief Get filename for local configuration files
+ */
+static const gchar*
+cfg_filename_local()
+{
+  if (config_legacy_mode)
+    return CONFIG_FILENAME_LEGACY_LOCAL;
+  else
+    return CONFIG_FILENAME_LOCAL;
+}
+
+
+
+/*! \brief Get filename for cache configuration files
+ */
+static const gchar*
+cfg_filename_cache()
+{
+  return CONFIG_FILENAME_CACHE;
+}
+
+
 
 static void eda_config_dispose (GObject *object);
 static void eda_config_finalize (GObject *object);
@@ -72,7 +162,7 @@ static void parent_config_changed_handler (EdaConfig *parent, const gchar *group
 static void propagate_key_file_error (GError *src, GError **dest);
 
 /*! Magic helpful GObject macro */
-G_DEFINE_TYPE (EdaConfig, eda_config, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (EdaConfig, eda_config, G_TYPE_OBJECT);
 
 /*! Initialise EdaConfig class. */
 static void
@@ -80,8 +170,6 @@ eda_config_class_init (EdaConfigClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
   GParamSpec *pspec;
-
-  g_type_class_add_private (gobject_class, sizeof (EdaConfigPrivate));
 
   /* Register functions with base class */
   gobject_class->dispose = eda_config_dispose;
@@ -277,6 +365,45 @@ eda_config_get_property (GObject *object, guint property_id,
 }
 
 /*! \public \memberof EdaConfig
+ * \brief Return the cache configuration context.
+ *
+ * This context is used for application-specific configuration,
+ * and is loaded from the cache directory: $XDG_CACHE_HOME,
+ * usually $HOME/.cache/lepton-eda
+ * It has no parent context.
+ *
+ * \return the cache #EdaConfig configuration context.
+ */
+EdaConfig*
+eda_config_get_cache_context()
+{
+  static gsize initialized = 0;
+  static EdaConfig* config = NULL;
+
+  if (g_once_init_enter (&initialized))
+  {
+    gchar* filename = NULL;
+    GFile* file;
+
+    filename = g_build_filename (eda_get_user_cache_dir(),
+                                 cfg_filename_cache(), NULL);
+
+    file = g_file_new_for_path (filename);
+
+    config = EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
+                                       "file",    file,
+                                       "trusted", TRUE,
+                                       NULL));
+
+    g_free (filename);
+    g_object_unref (file);
+
+    g_once_init_leave (&initialized, 1);
+  }
+  return config;
+}
+
+/*! \public \memberof EdaConfig
  * \brief Return the default configuration context.
  *
  * The default context is not associated with any physical path or
@@ -305,109 +432,166 @@ eda_config_get_default_context ()
   return config;
 }
 
+
+
+/*! \brief Create and return new system configuration context.
+ */
+static EdaConfig*
+create_config_system()
+{
+  /* Candidate configuration file in the first system configuration
+   * directory. */
+  GFile *first_file = NULL;
+  /* Actual file to use */
+  GFile *found_file = NULL;
+
+  /* Search for a system configuration file in the system config
+   * search path. */
+  const gchar * const * dirs = eda_get_system_config_dirs();
+  for (gint i = 0; !found_file && dirs[i]; ++i) {
+    gchar *tmp_filename =
+      g_build_filename(dirs[i], cfg_filename_system(), NULL);
+    GFile *tmp_file = g_file_new_for_path(tmp_filename);
+    g_free(tmp_filename);
+
+    /* Keep track of the the first path's config filename in case we
+     * need to fall back to it */
+    if (!first_file) {
+      first_file = G_FILE (g_object_ref (tmp_file));
+    }
+
+    if (g_file_query_exists(tmp_file, NULL)) {
+      found_file = G_FILE (g_object_ref (tmp_file));
+    }
+    g_object_unref(tmp_file);
+  }
+
+  /* No pre-existing file found; fall back to file in the first
+   * system config directory. */
+  if (!found_file) {
+    g_return_val_if_fail(first_file, NULL);
+    found_file = G_FILE (g_object_ref (first_file));
+  } else {
+    g_object_unref(first_file);
+  }
+
+  /* Construct the system configuration context */
+  g_return_val_if_fail(found_file, NULL);
+
+  EdaConfig *config =
+    EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
+                              "file", found_file,
+                              "parent", eda_config_get_default_context (),
+                              "trusted", TRUE,
+                              NULL));
+  g_object_unref (found_file);
+
+  return config;
+}
+
+
+
 /*! \public \memberof EdaConfig
  * \brief Return the system configuration context.
  *
  * The system context is used for system-wide configuration.  It is
  * located by searching the system configuration path for a
- * "geda-system.conf" configuration file.
+ * "geda-system.conf" or "lepton-system.conf" configuration file.
  *
  * Its parent context is the default context.
+ *
+ * Depending on the \a config_legacy_mode value, this function
+ * will return different contexts for legacy (geda-system.conf file)
+ * and new configurations (lepton-system.conf file).
  *
  * \return the system #EdaConfig configuration context.
  */
 EdaConfig *
 eda_config_get_system_context ()
 {
-	static EdaConfig *system_config = NULL;
-	if (g_once_init_enter (&system_config)) {
-		/* Candidate configuration file in the first system configuration
-		 * directory. */
-		GFile *first_file = NULL;
-		/* Actual file to use */
-		GFile *found_file = NULL;
+  if (config_legacy_mode)
+  {
+    if (g_once_init_enter (&g_context_system_legacy))
+    {
+      g_once_init_leave (&g_context_system_legacy, create_config_system());
+    }
+  }
+  else
+  {
+    if (g_once_init_enter (&g_context_system))
+    {
+      g_once_init_leave (&g_context_system, create_config_system());
+    }
+  }
 
-		/* Search for a system configuration file in the system config
-		 * search path. */
-		const gchar * const * dirs = eda_get_system_config_dirs();
-		for (gint i = 0; !found_file && dirs[i]; ++i) {
-			gchar *tmp_filename =
-				g_build_filename(dirs[i], SYSTEM_CONFIG_NAME, NULL);
-			GFile *tmp_file = g_file_new_for_path(tmp_filename);
-			g_free(tmp_filename);
-
-			/* Keep track of the the first path's config filename in case we
-			 * need to fall back to it */
-			if (!first_file) {
-				first_file = G_FILE (g_object_ref (tmp_file));
-			}
-
-			if (g_file_query_exists(tmp_file, NULL)) {
-				found_file = G_FILE (g_object_ref (tmp_file));
-			}
-			g_object_unref(tmp_file);
-		}
-
-		/* No pre-existing file found; fall back to file in the first
-		 * system config directory. */
-		if (!found_file) {
-			g_return_val_if_fail(first_file, NULL);
-			found_file = G_FILE (g_object_ref (first_file));
-		} else {
-			g_object_unref(first_file);
-		}
-
-		/* Construct the system configuration context */
-		g_return_val_if_fail(found_file, NULL);
-
-		EdaConfig *config =
-			EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
-                                "file", found_file,
-                                "parent", eda_config_get_default_context (),
-                                "trusted", TRUE,
-                                NULL));
-		g_object_unref (found_file);
-
-		g_once_init_leave (&system_config, config);
-	}
-	return system_config;
+  return config_legacy_mode ? g_context_system_legacy : g_context_system;
 }
+
+
+
+/*! \brief Create and return new user configuration context.
+ */
+static EdaConfig*
+create_config_user()
+{
+  EdaConfig *config = NULL;
+  gchar *filename = NULL;
+  GFile *file;
+
+  /* Search for a user configuration file in XDG_CONFIG_HOME */
+  filename = g_build_filename (eda_get_user_config_dir(),
+                               cfg_filename_user(), NULL);
+  file = g_file_new_for_path (filename);
+
+  config = EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
+                                     "file", file,
+                                     "parent", eda_config_get_system_context (),
+                                     "trusted", TRUE,
+                                     NULL));
+
+  g_free (filename);
+  g_object_unref (file);
+
+  return config;
+}
+
+
 
 /*! \public \memberof EdaConfig
  * \brief Return the user configuration context.
  *
  * The user context is used for user-specific configuration, and is
- * loaded from the user configuration directory.. Its parent context
+ * loaded from the user configuration directory. Its parent context
  * is the system context.
+ *
+ * Depending on the \a config_legacy_mode value, this function
+ * will return different contexts for legacy (geda-user.conf file)
+ * and new configurations (lepton-user.conf file).
  *
  * \return the user #EdaConfig configuration context.
  */
 EdaConfig *
 eda_config_get_user_context ()
 {
-  static gsize initialized = 0;
-  static EdaConfig *config = NULL;
-  if (g_once_init_enter (&initialized)) {
-    gchar *filename = NULL;
-    GFile *file;
-
-    /* Search for a user configuration file in XDG_CONFIG_HOME */
-    filename = g_build_filename (eda_get_user_config_dir(),
-                                 USER_CONFIG_NAME, NULL);
-    file = g_file_new_for_path (filename);
-
-    config = EDA_CONFIG (g_object_new (EDA_TYPE_CONFIG,
-                                       "file", file,
-                                       "parent", eda_config_get_system_context (),
-                                       "trusted", TRUE,
-                                       NULL));
-
-    g_free (filename);
-    g_object_unref (file);
-    g_once_init_leave (&initialized, 1);
+  if (config_legacy_mode)
+  {
+    if (g_once_init_enter (&g_context_user_legacy))
+    {
+      g_once_init_leave (&g_context_user_legacy, create_config_user());
+    }
   }
-  return config;
+  else
+  {
+    if (g_once_init_enter (&g_context_user))
+    {
+      g_once_init_leave (&g_context_user, create_config_user());
+    }
+  }
+
+  return config_legacy_mode ? g_context_user_legacy : g_context_user;
 }
+
+
 
 /*! Recursively searches upwards from \a path, looking for a
  * "geda.conf" file.  If the root directory is reached without finding
@@ -449,7 +633,7 @@ find_project_root (GFile *path)
   /* Iterate upward from dir, looking for a geda.conf file. */
   base_dir = G_FILE (g_object_ref (dir));
   while (result == NULL && dir != NULL) {
-    GFile *cfg_file = g_file_get_child (dir, LOCAL_CONFIG_NAME);
+    GFile *cfg_file = g_file_get_child (dir, cfg_filename_local());
     GFile *next_dir;
     if (g_file_query_exists (cfg_file, NULL)) {
       result = G_FILE (g_object_ref (dir));
@@ -527,7 +711,7 @@ eda_config_get_context_for_file (GFile *path)
   /* Find the project root, and the corresponding configuration
    * filename. */
   root = find_project_root (path);
-  file = g_file_get_child (root, LOCAL_CONFIG_NAME);
+  file = g_file_get_child (root, cfg_filename_local());
 
   /* If there's already a context available for this file, return
    * that. Otherwise, create a new context and record it in the global
@@ -1104,7 +1288,7 @@ eda_config_has_key (EdaConfig *cfg, const gchar *group,
  * Returns the configuration context (either \a cfg or one of its
  * parent contexts) in which the configuration parameter with the
  * given \a group and \a key has a value specified.  If the group or
- * key cannot be found, returns FALSE and sets \a error.
+ * key cannot be found, returns NULL and sets \a error.
  *
  * \see eda_config_is_inherited().
  *
@@ -1618,6 +1802,69 @@ eda_config_set_double_list (EdaConfig *cfg, const char *group,
                               list, length);
   g_signal_emit_by_name (cfg, "config-changed", group, key);
 }
+
+
+
+/*! \public \memberof EdaConfig
+ * \brief Remove a configuration parameter.
+ *
+ * Remove the configuration parameter specified by \a group
+ * and \a key in the configuration context \a cfg.
+ *
+ * \param cfg    Configuration context.
+ * \param group  Configuration group name.
+ * \param key    Configuration key name.
+ * \param error  Return location for error information.
+ *
+ * \return       TRUE on success, FALSE otherwise.
+ */
+gboolean
+eda_config_remove_key (EdaConfig *cfg, const char *group,
+                       const char *key, GError **error)
+{
+  GError* tmp_err = NULL;
+  gboolean result =
+    g_key_file_remove_key (cfg->priv->keyfile, group, key, &tmp_err);
+
+  propagate_key_file_error (tmp_err, error);
+
+  if (result)
+    g_signal_emit_by_name (cfg, "config-changed", group, key);
+
+  return result;
+}
+
+
+
+/*! \public \memberof EdaConfig
+ * \brief Remove a configuration group and all its parameters.
+ *
+ * Remove the configuration group specified by \a group
+ * and all its parameters in the configuration context \a cfg.
+ *
+ * \param cfg    Configuration context.
+ * \param group  Configuration group name.
+ * \param error  Return location for error information.
+ *
+ * \return       TRUE on success, FALSE otherwise.
+ */
+gboolean
+eda_config_remove_group (EdaConfig *cfg, const char *group,
+                         GError **error)
+{
+  GError* tmp_err = NULL;
+  gboolean result =
+    g_key_file_remove_group (cfg->priv->keyfile, group, &tmp_err);
+
+  propagate_key_file_error (tmp_err, error);
+
+  if (result)
+    g_signal_emit_by_name (cfg, "config-changed", group, "");
+
+  return result;
+}
+
+
 
 /*! \brief Callback marshal function for config-changed signals.
  * \par Function Description

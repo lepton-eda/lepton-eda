@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2014 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \todo Add global variable documentation!!!
- *
- */
+
 #include <config.h>
 #include <stdio.h>
 
@@ -31,12 +30,9 @@ GList *global_window_list = NULL;
 GdkColor white;
 GdkColor black;
 
-int logging_dest = LOG_WINDOW;
-
 /* command line options */
 int quiet_mode = FALSE;
 int verbose_mode = FALSE;
-int auto_place_mode = FALSE;
 
 /* Hooks */
 SCM complex_place_list_changed_hook;

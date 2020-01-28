@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gaf\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2017-02-26 10:32+0300\n"
+"POT-Creation-Date: 2019-10-03 23:36+0300\n"
 "PO-Revision-Date: 2014-08-31 20:24+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers\n"
@@ -17,22 +17,21 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
-#: gaf/gaf.c:66
 #, fuzzy, c-format
 msgid ""
-"Usage: gaf [OPTION...] COMMAND [ARGS ...]\n"
+"Usage: lepton-cli [OPTION...] COMMAND [ARGS ...]\n"
 "\n"
-"gEDA/gaf command-line utility.\n"
+"Lepton EDA command-line utility.\n"
 "\n"
 "General options:\n"
 "  --no-rcfiles   inhibit loading of 'gafrc' files\n"
 "  -h, --help     display usage information and exit\n"
 "  -V, --version  display version information and exit\n"
 "\n"
-"Commonly-used commands (type `gaf <cmd> --help' for usage):\n"
-"  shell          Scheme REPL for interactive gEDA data processing\n"
-"  config         Edit gEDA configuration\n"
-"  export         Export gEDA files in various image formats.\n"
+"Commonly-used commands (type `lepton-cli <cmd> --help' for usage):\n"
+"  shell          Scheme REPL for interactive Lepton EDA data processing\n"
+"  config         Edit Lepton EDA configuration\n"
+"  export         Export Lepton EDA files in various image formats.\n"
 "\n"
 "Please report bugs to %1$s.\n"
 msgstr ""
@@ -50,14 +49,14 @@ msgstr ""
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
 
-#: gaf/gaf.c:89
 #, fuzzy, c-format
 msgid ""
-"gEDA/gaf %1$s (g%2$.7s)\n"
-"Copyright (C) 1998-2012 gEDA developers\n"
+"Lepton EDA %1$s (g%2$.7s)\n"
+"Copyright (C) 1998-2016 gEDA developers\n"
+"Copyright (C) 2017-2019 Lepton EDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
-"included in the gEDA distribution.\n"
+"included in the Lepton EDA distribution.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr ""
 "gEDA/gaf %s (g%.7s)\n"
@@ -67,43 +66,39 @@ msgstr ""
 "de gEDA distributie is bijgevoegd.\n"
 "Er is GEEN GARANTIE, voor zover toegelaten door de wet.\n"
 
-#: gaf/gaf.c:137
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
-"Run `gaf --help' for more information.\n"
+"Run `lepton-cli --help' for more information.\n"
 msgstr ""
 "\n"
-"Voer `gaf --help' uit voor meer informatie.\n"
+"Voer `gaf config --help' uit voor meer informatie.\n"
 
-#: gaf/gaf.c:149
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "ERROR: You must specify a command to run.\n"
 "\n"
-"Run `gaf --help' for more information.\n"
+"Run `lepton-cli --help' for more information.\n"
 msgstr ""
 "FOUT: U moet een opdracht specificeren om te starten.\n"
 "\n"
 "Voer `gaf --help' uit voor meer informatie.\n"
 
-#: gaf/gaf.c:167
 #, fuzzy, c-format
 msgid ""
 "ERROR: Unrecognised command `%1$s'.\n"
 "\n"
-"Run `gaf --help' for more information.\n"
+"Run `lepton-cli --help' for more information.\n"
 msgstr ""
 "FOUT: Onherkenbare opdracht `%s'.\n"
 "\n"
 "Voer `gaf --help' uit voor meer informatie.\n"
 
-#: gaf/config.c:47
 #, fuzzy, c-format
 msgid ""
-"Usage: gaf config [OPTION] [GROUP KEY [VALUE]]\n"
+"Usage: lepton-cli config [OPTION] [GROUP KEY [VALUE]]\n"
 "\n"
-"View and modify gEDA configuration.\n"
+"View and modify Lepton EDA configuration.\n"
 "\n"
 "  -p, --project[=PATH]  select project configuration [PATH=.]\n"
 "  -u, --user     select user configuration\n"
@@ -140,64 +135,55 @@ msgstr ""
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
 
-#: gaf/config.c:68
+#, fuzzy
 msgid ""
 "\n"
-"Run `gaf config --help' for more information.\n"
+"Run `lepton-cli config --help' for more information.\n"
 msgstr ""
 "\n"
 "Voer `gaf config --help' uit voor meer informatie.\n"
 
-#: gaf/config.c:69
 msgid "ERROR: You may only specify a single configuration store.\n"
 msgstr "FOUT: U mag alleen een enkele configuratie opslag specificeren.\n"
 
 #. TRANSLATORS: The first string is the filename, the second is
 #. * the detailed error message
-#: gaf/config.c:160
 #, fuzzy, c-format
 msgid "WARNING: Could not load '%1$s': %2$s.\n"
 msgstr "WAARSCHUWING: Kan '%s': %s niet laden.\n"
 
-#: gaf/config.c:172
 #, c-format
 msgid "ERROR: You must specify both configuration group and key.\n"
 msgstr "FOUT: U moet beide configuratie groep en sleutel specificeren.\n"
 
-#: gaf/config.c:184 gaf/config.c:198
 #, fuzzy, c-format
 msgid "ERROR: %1$s.\n"
 msgstr "FOUT: %s.\n"
 
-#: gaf/export.c:150
 #, fuzzy, c-format
 msgid "ERROR: Bad argument '%1$s' to %2$s option.\n"
 msgstr "FOUT: Slecht argument '%s' voor %s optie.\n"
 
-#: gaf/export.c:151
+#, fuzzy
 msgid ""
 "\n"
-"Run `gaf export --help' for more information.\n"
+"Run `lepton-cli export --help' for more information.\n"
 msgstr ""
 "\n"
 "Voer `gaf export --help' uit voor meer informatie.\n"
 
-#: gaf/export.c:191
 #, fuzzy, c-format
 msgid "ERROR: Cannot infer output format from filename '%1$s'.\n"
 msgstr "FOUT: Kan geen uitvoerformaat afleiden van bestandsnaam '%s'.\n"
 
-#: gaf/export.c:208
 #, fuzzy, c-format
 msgid "ERROR: Cannot find supported format for filename '%1$s'.\n"
 msgstr "FOUT: Kan geen ondersteund formaat vinden voor bestandsnaam '%s'.\n"
 
-#: gaf/export.c:213
 #, fuzzy, c-format
 msgid "ERROR: Unsupported output format '%1$s'.\n"
 msgstr "FOUT: Niet ondersteund uitvoer formaat '%s'.\n"
 
-#: gaf/export.c:225
 #, c-format
 msgid "ERROR: Selected output format does not support multipage output\n"
 msgstr ""
@@ -205,27 +191,23 @@ msgstr ""
 
 #. TRANSLATORS: The first string is the filename, the second
 #. * is the detailed error message
-#: gaf/export.c:239
 #, fuzzy, c-format
 msgid "ERROR: Failed to load '%1$s': %2$s\n"
 msgstr "FOUT: Faalde om '%s': %s te laden\n"
 
-#: gaf/export.c:245
 #, fuzzy, c-format
 msgid "ERROR: Failed to change directory to '%1$s': %2$s\n"
 msgstr "Faalde om bestandenmap te wijzigen naar '%s': %s\n"
 
-#: gaf/export.c:327
 #, c-format
 msgid "ERROR: %s.\n"
 msgstr "FOUT: %s.\n"
 
-#: gaf/export.c:913
 #, fuzzy, c-format
 msgid ""
-"Usage: gaf export [OPTION ...] -o OUTPUT [--] FILE ...\n"
+"Usage: lepton-cli export [OPTION ...] -o OUTPUT [--] FILE ...\n"
 "\n"
-"Export gEDA files in various image formats.\n"
+"Export Lepton EDA files in various image formats.\n"
 "\n"
 "  -f, --format=TYPE      output format (normally autodetected)\n"
 "  -o, --output=OUTPUT    output filename\n"
@@ -267,22 +249,19 @@ msgstr ""
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
 
-#: gaf/export.c:1092
 #, c-format
 msgid "ERROR: You must specify at least one input filename.\n"
 msgstr "FOUT: U moet tenminste een invoer bestandsnaam specificeren.\n"
 
-#: gaf/export.c:1101
 #, c-format
 msgid "ERROR: You must specify an output filename.\n"
 msgstr "FOUT: U moet een uitvoer bestandnaam specificeren.\n"
 
-#: gaf/shell.c:46
 #, fuzzy, c-format
 msgid ""
-"Usage: gaf shell [OPTION ...]\n"
+"Usage: lepton-cli shell [OPTION ...]\n"
 "\n"
-"Shell for interactive processing of gEDA data using Scheme.\n"
+"Shell for interactive processing of Lepton EDA data using Scheme.\n"
 "\n"
 "  -s FILE        load Scheme source code from FILE, and exit\n"
 "  -c EXPR        evaluate Scheme expression EXPR, and exit\n"
@@ -315,11 +294,17 @@ msgstr ""
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
 
-#: gaf/shell.c:102
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
-"Run `gaf shell --help' for more information.\n"
+"Run `lepton-cli shell --help' for more information.\n"
 msgstr ""
 "\n"
 "Voer `gaf shell --help' uit voor meer informatie.\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Run `gaf --help' for more information.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Voer `gaf --help' uit voor meer informatie.\n"

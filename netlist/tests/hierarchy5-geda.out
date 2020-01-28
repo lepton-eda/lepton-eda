@@ -1,0 +1,38 @@
+START header
+
+gEDA's netlist format
+(Initially created for testing of gnetlist)
+
+END header
+
+No graphical symbols found
+
+START components
+
+Z1/R1 device=Resistor
+Z2/R1 device=Resistor
+Z3/R1 device=Resistor
+
+END components
+
+No "no-connect" nets found
+
+START renamed-nets
+
+Z2/A -> GND
+Z2/B -> GND
+Z1/B -> Z1/A
+unnamed_net_at_1400x2000 -> Z1/A
+Z3/A -> Z3/A
+Z3/B -> Z3/A
+
+END renamed-nets
+
+START nets
+
+GND : Z2/R1 1, Z2/R1 2
+Z1/A : Z1/R1 1, Z1/R1 2
+Z3/A : Z3/R1 1, Z3/R1 2
+
+END nets
+

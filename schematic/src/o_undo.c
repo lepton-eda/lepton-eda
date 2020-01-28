@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,13 +66,13 @@ void o_undo_init(void)
  * \par Function Description
  *
  * This function reads the value of "modify-viewport" configuration
- * setting in "gschem.undo" group, which determines
+ * setting in "schematic.undo" group, which determines
  * if undo/redo operations are allowed to change pan and zoom (i.e. viewport)
  * when "undo-panzoom" option (in gschemrc) is set to "disabled".
  *
  * Configuration setting description:
  * key:   modify-viewport
- * group: gschem.undo
+ * group: schematic.undo
  * type:  boolean
  * default value: false
  *
@@ -95,7 +96,7 @@ o_undo_modify_viewport()
 
   GError* err = NULL;
   gboolean val = eda_config_get_boolean (cfg,
-                                         "gschem.undo",
+                                         "schematic.undo",
                                          "modify-viewport",
                                          &err);
   if (err == NULL)
@@ -165,7 +166,7 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
 
   if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {
 
-    filename = g_strdup_printf("%s%cgschem.save%d_%d.sch",
+    filename = g_strdup_printf("%s%clepton-schematic.save%d_%d.sch",
                                tmp_path, G_DIR_SEPARATOR,
                                prog_pid, undo_file_index++);
 
@@ -394,7 +395,7 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
   g_return_if_fail (page != NULL);
 
   if (w_current->undo_control == FALSE) {
-    s_log_message(_("Undo/Redo disabled in rc file"));
+    s_log_message(_("Undo/Redo is disabled in configuration"));
     return;
   }
 
@@ -511,7 +512,7 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
   g_free(save_filename);
 
   /* final redraw */
-  x_pagesel_update (w_current);
+  page_select_widget_update (w_current);
   x_multiattrib_update (w_current);
   i_update_menus(w_current);
 
@@ -563,7 +564,7 @@ void o_undo_cleanup(void)
   char *filename;
 
   for (i = 0 ; i < undo_file_index; i++) {
-    filename = g_strdup_printf("%s%cgschem.save%d_%d.sch", tmp_path,
+    filename = g_strdup_printf("%s%clepton-schematic.save%d_%d.sch", tmp_path,
                                G_DIR_SEPARATOR, prog_pid, i);
     unlink(filename);
     g_free(filename);

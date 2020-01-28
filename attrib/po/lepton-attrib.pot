@@ -1,0 +1,427 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Lepton Developers
+# This file is distributed under the same license as the lepton-eda package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: lepton-eda 1.9.9\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2019-10-03 23:30+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: attrib/data/lepton-attrib.desktop.in:3
+msgid "Lepton EDA Attribute Editor"
+msgstr ""
+
+#: attrib/data/lepton-attrib.desktop.in:4
+msgid "Manipulate component attributes with lepton-attrib"
+msgstr ""
+
+#: attrib/src/f_export.c:82
+#, c-format
+msgid "o_save: Could not open [%1$s]"
+msgstr ""
+
+#: attrib/src/lepton-attrib.c:180
+#, c-format
+msgid "Lepton EDA/lepton-attrib version %1$s%2$s.%3$s git: %4$.7s"
+msgstr ""
+
+#: attrib/src/lepton-attrib.c:213
+#, c-format
+msgid "Couldn't find file [%1$s]\n"
+msgstr ""
+
+#: attrib/src/gtksheet_2_2.c:6302
+msgid "Entry type must be GtkEntry subclass, using default"
+msgstr ""
+
+#: attrib/src/gtksheet_2_2.c:8499
+msgid "Widget must be a GtkSheet child"
+msgstr ""
+
+#: attrib/src/parsecmd.c:74
+#, c-format
+msgid ""
+"\n"
+"lepton-attrib: Lepton EDA attribute editor.\n"
+"Presents schematic attributes in easy-to-edit spreadsheet format.\n"
+"\n"
+"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
+"  -q, --quiet            Quiet mode\n"
+"  -v, --verbose          Verbose mode on\n"
+"  -h, --help             This help menu\n"
+"\n"
+"  FAQ:\n"
+"  *  What do the colors of the cell text mean?\n"
+"     The cell colors indicate the visibility of the attribute.\n"
+"     Black = Visible attribute, value displayed only.\n"
+"     Grey  = Invisible attribute.\n"
+"     Red   = Visible attribute, name displayed only.\n"
+"     Blue  = Visible attribute, both name and value displayed.\n"
+"\n"
+"  *  What does the period (\".\") at the end of some component refdeses "
+"mean?\n"
+"     The period is placed after the refdeses of slotted components.\n"
+"     If slots are present on the component, then the different slots appear\n"
+"     in different rows with the slot number after the period.  Example:  "
+"C101.2.\n"
+"\n"
+"Copyright (C) 2003-2006 Stuart D. Brorson.\n"
+"Copyright (C) 2007-2016 gEDA Contributors.\n"
+"Copyright (C) 2017-2019 Lepton EDA Contributors.\n"
+"\n"
+"Please report bugs to %2$s.\n"
+msgstr ""
+
+#: attrib/src/s_attrib.c:101
+#, c-format
+msgid "WARNING: Found uref=%1$s, uref= is deprecated, please use refdes=\n"
+msgstr ""
+
+#: attrib/src/s_misc.c:81
+#, c-format
+msgid ""
+"\n"
+"DONE\n"
+msgstr ""
+
+#: attrib/src/s_misc.c:83
+#, c-format
+msgid " DONE\n"
+msgstr ""
+
+#: attrib/src/s_object.c:217
+#, c-format
+msgid ""
+"In s_object_replace_attrib_in_object, we have failed to find the attrib %1$s "
+"on the component.  Exiting . . .\n"
+msgstr ""
+
+#: attrib/src/s_object.c:276
+#, c-format
+msgid ""
+"In s_object_remove_attrib_in_object, we have failed to find the attrib %1$s "
+"on the component.  Exiting . . .\n"
+msgstr ""
+
+#: attrib/src/s_object.c:329
+#, c-format
+msgid ""
+"In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex "
+"or non-net!\n"
+msgstr ""
+
+#: attrib/src/s_sheet_data.c:116
+#, c-format
+msgid "- Starting master comp list creation.\n"
+msgstr ""
+
+#: attrib/src/s_sheet_data.c:184
+#, c-format
+msgid "- Starting master comp attrib list creation.\n"
+msgstr ""
+
+#: attrib/src/s_sheet_data.c:297
+#, c-format
+msgid "- Starting master pin list creation.\n"
+msgstr ""
+
+#: attrib/src/s_sheet_data.c:331
+#, c-format
+msgid ""
+"In s_sheet_data_add_master_pin_list_items, found component pin with no "
+"pinnumber.\n"
+msgstr ""
+
+#: attrib/src/s_sheet_data.c:389
+#, c-format
+msgid "- Starting master pin attrib list creation.\n"
+msgstr ""
+
+#: attrib/src/s_string_list.c:123
+#, c-format
+msgid "In s_string_list_add_item, tried to add to a NULL list.\n"
+msgstr ""
+
+#: attrib/src/s_string_list.c:188
+#, c-format
+msgid "In s_string_list_delete_item, tried to remove item from empty list\n"
+msgstr ""
+
+#: attrib/src/s_string_list.c:252
+#, c-format
+msgid "In s_string_list_delete_item, couldn't delete item %s\n"
+msgstr ""
+
+#: attrib/src/s_table.c:242
+#, c-format
+msgid ""
+"In s_table_create_attrib_pair, we didn't find the row name in the row list!\n"
+msgstr ""
+
+#: attrib/src/s_table.c:285
+#, c-format
+msgid "- Starting internal component TABLE creation\n"
+msgstr ""
+
+#: attrib/src/s_table.c:344
+#, c-format
+msgid ""
+"In s_table_add_toplevel_comp_items_to_comp_table, we didn't find either row "
+"or col in the lists!\n"
+msgstr ""
+
+#: attrib/src/s_table.c:493
+#, c-format
+msgid "- Starting internal pin TABLE creation\n"
+msgstr ""
+
+#: attrib/src/s_table.c:553
+#, c-format
+msgid ""
+"In s_table_add_toplevel_pin_items_to_pin_table, we didn't find either row or "
+"col in the lists!\n"
+msgstr ""
+
+#: attrib/src/s_toplevel.c:185
+msgid "_cancel"
+msgstr ""
+
+#: attrib/src/s_toplevel.c:318
+#, c-format
+msgid "In s_toplevel_delete_attrib_col, can't get attrib name\n"
+msgstr ""
+
+#: attrib/src/s_toplevel.c:554
+#, c-format
+msgid ""
+"In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes in "
+"the master list!\n"
+msgstr ""
+
+#: attrib/src/s_toplevel.c:582
+#, c-format
+msgid ""
+"In s_toplevel_get_component_attribs_in_sheet, count != i!  Exiting . . . .\n"
+msgstr ""
+
+#: attrib/src/s_toplevel.c:891
+#, c-format
+msgid ""
+"In s_toplevel_get_pin_attribs_in_sheet, either refdes or pinnumber of object "
+"missing!\n"
+msgstr ""
+
+#: attrib/src/s_toplevel.c:900
+#, c-format
+msgid ""
+"In s_toplevel_get_pin_attribs_in_sheet, we didn't find the refdes:pin in the "
+"master list!\n"
+msgstr ""
+
+#: attrib/src/s_toplevel.c:928
+#, c-format
+msgid "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"
+msgstr ""
+
+#: attrib/src/x_dialog.c:75
+msgid "Add new attribute"
+msgstr ""
+
+#: attrib/src/x_dialog.c:84
+msgid "Enter new attribute name"
+msgstr ""
+
+#: attrib/src/x_dialog.c:148
+msgid "Are you sure you want to delete this attribute?"
+msgstr ""
+
+#: attrib/src/x_dialog.c:150
+msgid "Delete attribute"
+msgstr ""
+
+#: attrib/src/x_dialog.c:175
+msgid ""
+"One or more components have been found with missing symbol files!\n"
+"\n"
+"This probably happened because lepton-attrib couldn't find your component "
+"libraries, perhaps because your gafrc or gattribrc files are misconfigured.\n"
+"\n"
+"Choose \"Quit\" to leave lepton-attrib and fix the problem, or\n"
+"\"Forward\" to continue working with lepton-attrib.\n"
+msgstr ""
+
+#: attrib/src/x_dialog.c:188
+msgid "Missing symbol file found for component!"
+msgstr ""
+
+#: attrib/src/x_dialog.c:215
+msgid "Save the changes before closing?"
+msgstr ""
+
+#: attrib/src/x_dialog.c:216
+msgid "<big><b>"
+msgstr ""
+
+#: attrib/src/x_dialog.c:216
+msgid "</b></big>"
+msgstr ""
+
+#: attrib/src/x_dialog.c:218
+msgid "If you don't save, all your changes will be permanently lost."
+msgstr ""
+
+#: attrib/src/x_dialog.c:228
+msgid "Close without saving"
+msgstr ""
+
+#: attrib/src/x_dialog.c:275
+msgid ""
+"Sorry -- you have chosen a feature which has not been\n"
+"implemented yet.\n"
+"\n"
+"lepton-attrib is an open-source program which\n"
+"I work on as a hobby.  It is still a work in progress.\n"
+"If you wish to contribute (perhaps by implementing this\n"
+"feature), please do so!  Please send patches to lepton-attrib\n"
+"to Stuart Brorson: sdb@cloud9.net.\n"
+"\n"
+"Otherwise, just hang tight -- I'll implement this feature soon!\n"
+msgstr ""
+
+#: attrib/src/x_dialog.c:283
+msgid "Unimplemented feature!"
+msgstr ""
+
+#: attrib/src/x_dialog.c:310
+msgid "Fatal error"
+msgstr ""
+
+#: attrib/src/x_dialog.c:325
+#, c-format
+msgid ""
+"Lepton Electronic Design Automation\n"
+"\n"
+"lepton-attrib - Lepton EDA attribute editor\n"
+"\n"
+"lepton-attrib version: %1$s%2$s.%3$s\n"
+"\n"
+"lepton-attrib is written by: Stuart Brorson (sdb@cloud9.net)\n"
+"with generous helpings of code from gschem, gnetlist, \n"
+"and gtkextra, as well as support from the gEDA community."
+msgstr ""
+
+#: attrib/src/x_dialog.c:336
+msgid "About..."
+msgstr ""
+
+#: attrib/src/x_dialog.c:352
+msgid "Export CSV"
+msgstr ""
+
+#: attrib/src/x_fileselect.c:87
+msgid "Schematics"
+msgstr ""
+
+#: attrib/src/x_fileselect.c:92
+msgid "Symbols"
+msgstr ""
+
+#: attrib/src/x_fileselect.c:97
+msgid "Schematics and symbols"
+msgstr ""
+
+#: attrib/src/x_fileselect.c:103
+msgid "All files"
+msgstr ""
+
+#: attrib/src/x_fileselect.c:134
+#, c-format
+msgid "Loading file [%1$s]"
+msgstr ""
+
+#: attrib/src/x_fileselect.c:140
+#, c-format
+msgid "Couldn't load schematic [%1$s]\n"
+msgstr ""
+
+#: attrib/src/x_fileselect.c:230
+msgid "Open..."
+msgstr ""
+
+#: attrib/src/x_fileselect.c:275
+msgid "Save as..."
+msgstr ""
+
+#: attrib/src/x_fileselect.c:304
+#, c-format
+msgid "Saved As [%1$s]"
+msgstr ""
+
+#: attrib/src/x_fileselect.c:314
+#, c-format
+msgid "Could NOT save [%1$s]"
+msgstr ""
+
+#: attrib/src/x_gtksheet.c:71 attrib/src/x_gtksheet.c:80
+msgid "Components"
+msgstr ""
+
+#: attrib/src/x_gtksheet.c:72 attrib/src/x_gtksheet.c:89
+#: attrib/src/x_gtksheet.c:92
+msgid "Nets"
+msgstr ""
+
+#: attrib/src/x_gtksheet.c:73 attrib/src/x_gtksheet.c:105
+#: attrib/src/x_gtksheet.c:108
+msgid "Pins"
+msgstr ""
+
+#: attrib/src/x_gtksheet.c:82
+msgid ""
+"No components found in design.  Please check your schematic and try again!\n"
+msgstr ""
+
+#: attrib/src/x_gtksheet.c:93 attrib/src/x_gtksheet.c:95
+msgid "TBD"
+msgstr ""
+
+#: attrib/src/x_gtksheet.c:356
+msgid "couldn't allocate color"
+msgstr ""
+
+#: attrib/src/x_window.c:95
+msgid "lepton-attrib - Lepton EDA attribute editor"
+msgstr ""
+
+#: attrib/src/x_window.c:339
+#, c-format
+msgid "Error loading menu: %1$s\n"
+msgstr ""
+
+#: attrib/src/x_window.c:375
+msgid ""
+"No components found in entire design!\n"
+"Do you have refdeses on your components?"
+msgstr ""
+
+#: attrib/src/x_window.c:380
+msgid ""
+"No configurable component attributes found in entire design!\n"
+"Please attach at least some attributes before running lepton-attrib."
+msgstr ""
+
+#: attrib/src/x_window.c:385
+msgid ""
+"No pins found on any components!\n"
+"Please check your design."
+msgstr ""

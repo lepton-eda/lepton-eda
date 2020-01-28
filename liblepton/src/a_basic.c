@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -115,7 +115,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
     return NULL;
   }
 
-  tb = s_textbuffer_new (buffer, size);
+  tb = s_textbuffer_new (buffer, size, name);
 
   while (1) {
 
@@ -360,8 +360,13 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
   object_list = g_list_concat (object_list, new_object_list);
 
   return(object_list);
- error:
+
+error:
   geda_object_list_delete (toplevel, new_object_list);
+
+  unsigned long linenum = s_textbuffer_linenum (tb);
+  g_prefix_error (err, "Parsing stopped at line %lu:\n", linenum);
+
   return NULL;
 }
 

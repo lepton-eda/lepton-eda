@@ -1,0 +1,325 @@
+;;; -*-scheme-*-
+;;;
+
+;;; Lepton EDA netlister
+;;; Copyright (C) 1998-2010 Ales Hvezda
+;;; Copyright (C) 2007-2016 gEDA Contributors
+;;; Copyright (C) 2018-2019 Lepton EDA Contributors
+;;;
+;;; This program is free software; you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation; either version 2 of the License, or
+;;; (at your option) any later version.
+;;;
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU General Public License
+;;; along with this program; if not, write to the Free Software
+;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+;;; MA 02111-1301 USA.
+
+;;  gsch2pcb format  (based on PCBboard format by JM Routoure & Stefan Petersen)
+;;  Bill Wilson    billw@wt.net
+;;  6/17/2003
+
+(use-modules (ice-9 popen)
+             (ice-9 rdelim)
+             (netlist schematic)
+             (netlist schematic toplevel))
+
+
+;;
+;;
+(define gsch2pcb:write-top-header
+  (lambda ()
+    (display "# release: pcb 1.99x\n")
+    (display "# To read pcb files, the pcb version (or the")
+    (display " cvs source date) must be >= the file version\n")
+    (display "FileVersion[20070407]\n")
+    (display "PCB[\"\" 600000 500000]\n")
+    (display "Grid[10000.000000 0 0 0]\n")
+    (display "Cursor[0 0 0.000000]\n")
+    (display "PolyArea[200000000.000000]\n")
+    (display "Thermal[0.500000]\n")
+    (display "DRC[1000 1000 1000 1000 1500 1000]\n")
+    (display "Flags(\"nameonpcb,uniquename,clearnew,snappin\")\n")
+    (display "Groups(\"1,c:2:3:4:5:6,s:7:8\")\n")
+    (display "Styles[\"Signal,1000,3600,2000,1000:")
+    (display "Power,2500,6000,3500,1000:")
+    (display "Fat,4000,6000,3500,1000:")
+    (display "Skinny,600,2402,1181,600\"]\n")
+))
+
+;;
+;;
+(define gsch2pcb:write-bottom-footer
+  (lambda ()
+    (display "Layer(1 \"top\")\n(\n)\n")
+    (display "Layer(2 \"ground\")\n(\n)\n")
+    (display "Layer(3 \"signal2\")\n(\n)\n")
+    (display "Layer(4 \"signal3\")\n(\n)\n")
+    (display "Layer(5 \"power\")\n(\n)\n")
+    (display "Layer(6 \"bottom\")\n(\n)\n")
+    (display "Layer(7 \"outline\")\n(\n)\n")
+    (display "Layer(8 \"spare\")\n(\n)\n")
+    (display "Layer(9 \"silk\")\n(\n)\n")
+    (display "Layer(10 \"silk\")\n(\n)")
+    (newline)))
+
+;;
+;;
+
+;; Splits a string with space separated words and returns a list
+;; of the words (still as strings).
+(define (gsch2pcb:split-to-list the-string)
+  (filter!
+   (lambda (x) (not (string=? "" x)))
+   (string-split the-string #\space)))
+
+;; Check if `str' contains only characters valid in an M4 function
+;; name.  Note that this *doesn't* check that str is a valid M4
+;; function name.
+(define gsch2pcb:m4-valid?
+  (let ((rx (make-regexp "^[A-Za-z0-9_]*$")))
+    (lambda (str)
+      (regexp-exec rx str))))
+
+;; Quote a string to protect from M4 macro expansion
+(define (gsch2pcb:m4-quote str)
+  (string-append "`" str "'"))
+
+;; Write the footprint for the package `refdes' to `port'.  If M4
+;; footprints are enabled, writes in a format suitable for
+;; macro-expansion by M4.  Any footprint names that obviously can't be
+;; M4 footprints are protected from macro-expansion.
+(define (gsch2pcb:write-value-footprint refdes port)
+
+  (let* ((value (gnetlist:get-package-attribute refdes "value"))
+         (footprint (gsch2pcb:split-to-list
+                     (gnetlist:get-package-attribute refdes "footprint")))
+         (fp (car footprint))
+         (fp-args (cdr footprint))
+
+         (nq (lambda (x) x)) ; A non-quoting operator
+         (q (if gsch2pcb:use-m4 gsch2pcb:m4-quote nq))) ; A quoting operator
+
+    (format port "~A(~A,~A,~A~A)\n"
+            ;; If the footprint is obviously not an M4 footprint,
+            ;; protect it from macro-expansion.
+            ((if (gsch2pcb:m4-valid? fp) nq q) (string-append "PKG_" fp))
+            (q (string-join footprint "-"))
+            (q refdes)
+            (q value)
+            (string-join (map q fp-args) "," 'prefix))))
+
+;; Write the footprints for all the refdes' in `lst'.
+(define (gsch2pcb:write-value-footprints port lst)
+  (for-each (lambda (x) (gsch2pcb:write-value-footprint x port)) lst))
+
+;;
+;;
+
+(define gsch2pcb:use-m4 #f)
+
+;; Macro that defines and sets a variable only if it's not already defined.
+(define-syntax define-undefined
+  (syntax-rules ()
+    ((_ name expr)
+     (define name
+       (if (defined? (quote name))
+           name
+           expr)))))
+
+;; Let the user override the m4 command, the directory
+;; where pcb stores its m4 files and the pcb config directory.
+(define-undefined gsch2pcb:pcb-m4-command "@m4@")
+(define-undefined gsch2pcb:pcb-m4-dir "@pcbm4dir@")
+(define-undefined gsch2pcb:m4-files "")
+
+;;; Use different port mode names for guile-2.0 and guile-2.2.
+(define setvbuf-mode @mode@)
+
+;; Let the user override the m4 search path
+(define-undefined gsch2pcb:pcb-m4-path '("$HOME/.pcb" "."))
+
+;; List of the m4 command line entries
+(define (gsch2pcb:build-m4-command-line-list)
+  (delv ""
+        (append
+          (list
+            gsch2pcb:pcb-m4-command
+            "-d")
+          (map-in-order
+            (lambda (x) (string-append "-I" x))
+            (cons
+              gsch2pcb:pcb-m4-dir
+              gsch2pcb:pcb-m4-path))
+          (list
+            (string-append gsch2pcb:pcb-m4-dir "/common.m4")
+            gsch2pcb:m4-files
+            "-"))))
+
+;; Build up the m4 command line
+(define (gsch2pcb:build-m4-command-line)
+  (string-join
+    (gsch2pcb:build-m4-command-line-list)
+    " "
+    'infix))
+
+;; run a child process and return a pair of input and output ports.
+;; Executes the program 'command' with optional arguments 'args'
+;; (all strings) in a subprocess.
+;; Two ports to the process (based on pipes) are created and
+;; returned.
+;; The procedure is a modified version of the popen open-pipe*
+;; procedure. Its functionality is close to that of
+;; open-input-output-pipe. Changes are made to make it return two
+;; ports instead of one in order to have a possibility to close
+;; each one separately. This allows closing of the input pipe by
+;; using (close-port port) when needed and emit EOF to the running
+;; child process.
+(define (gsch2pcb:open-io-pipe command . args)
+  (let* ((c2p (pipe))  ; child to parent
+         (p2c (pipe))) ; parent to child
+
+    ; setvbuf( port, mode ) function:
+    ; Guile 2.0: [mode] is an integer (either _IONBF, _IOLBF or _IOFBF)
+    ; Guile 2.2: [mode] is a  symbol  (either 'none,  'line  or 'block)
+    ;
+    (setvbuf (cdr c2p) setvbuf-mode)
+    (setvbuf (cdr p2c) setvbuf-mode)
+
+    (let ((pid (primitive-fork)))
+      (if (= pid 0)
+        (begin
+         ;; child process
+         (ensure-batch-mode!)
+
+         ;; select the three file descriptors to be used as
+         ;; standard descriptors 0, 1, 2 for the new
+         ;; process. They are pipes to/from the parent or taken
+         ;; from the current Scheme input/output/error ports if
+         ;; possible.
+
+         (let ((input-fdes (fileno (car p2c)))
+           (output-fdes (fileno (cdr c2p)))
+           (error-fdes
+             (or (false-if-exception (fileno (current-error-port)))
+                 (open-fdes *null-device* O_WRONLY))))
+
+           ;; close all file descriptors in ports inherited from
+           ;; the parent except for the three selected above.
+           ;; this is to avoid causing problems for other pipes in
+           ;; the parent.
+
+           ;; use low-level system calls, not close-port or the
+           ;; scsh routines, to avoid side-effects such as
+           ;; flushing port buffers or evicting ports.
+
+           (port-for-each (lambda (pt-entry)
+                (false-if-exception
+                 (let ((pt-fileno (fileno pt-entry)))
+                   (if (not (or (= pt-fileno input-fdes)
+                        (= pt-fileno output-fdes)
+                        (= pt-fileno error-fdes)))
+                       (close-fdes pt-fileno))))))
+
+           ;; Copy the three selected descriptors to the standard
+           ;; descriptors 0, 1, 2, if not already there
+
+           (if (not (= input-fdes 0))
+             (begin
+               (if (= output-fdes 0) (set! output-fdes (dup->fdes 0)))
+               (if (= error-fdes  0) (set! error-fdes  (dup->fdes 0)))
+               (dup2 input-fdes 0)
+               ;; it's possible input-fdes is error-fdes
+               (if (not (= input-fdes error-fdes))
+                 (close-fdes input-fdes))))
+
+           (if (not (= output-fdes 1))
+             (begin
+               (if (= error-fdes 1) (set! error-fdes (dup->fdes 1)))
+               (dup2 output-fdes 1)
+               ;; it's possible output-fdes is error-fdes
+               (if (not (= output-fdes error-fdes))
+                 (close-fdes output-fdes))))
+
+           (if (not (= error-fdes 2))
+             (begin
+               (dup2 error-fdes 2)
+               (close-fdes error-fdes)))
+
+           (apply execlp command command args)))
+        (begin
+          ;; parent process
+          ;; the forked child process should use these ports so
+          ;; the parent process doesn't need them any more
+          (close-port (cdr c2p))
+          (close-port (car p2c))
+          ;; return input and output ports
+          (cons (car c2p) (cdr p2c))
+          )))))
+
+(define (gsch2pcb output-filename)
+  (gsch2pcb:write-top-header)
+
+  (format (current-error-port)
+          "=====================================================
+gsch2pcb backend configuration:
+
+   ----------------------------------------
+   Variables which may be changed in gafrc:
+   ----------------------------------------
+   gsch2pcb:pcb-m4-command:    ~S
+   gsch2pcb:pcb-m4-dir:        ~S
+   gsch2pcb:pcb-m4-path:       ~S
+   gsch2pcb:m4-files:          ~S
+
+   ---------------------------------------------------
+   Variables which may be changed in the project file:
+   ---------------------------------------------------
+   gsch2pcb:use-m4:            ~A
+
+   ----------------
+   M4 command line:
+   ----------------
+   ~A
+
+=====================================================
+"
+          gsch2pcb:pcb-m4-command
+          gsch2pcb:pcb-m4-dir
+          gsch2pcb:pcb-m4-path
+          gsch2pcb:m4-files
+          (if gsch2pcb:use-m4 "yes" "no")
+          (gsch2pcb:build-m4-command-line))
+
+  (let ((packages (schematic-package-names (toplevel-schematic))))
+    ;; If we have defined gsch2pcb:use-m4 then run the footprints
+    ;; through the pcb m4 setup.  Otherwise skip m4 entirely
+    (if gsch2pcb:use-m4
+        ;; pipe with the macro define in pcb program
+        (let* ((pipe-ports
+                (apply gsch2pcb:open-io-pipe
+                       (gsch2pcb:build-m4-command-line-list)))
+               (ip (car pipe-ports))
+               (op (cdr pipe-ports)))
+
+          (message "Using the m4 processor for pcb footprints\n")
+          ;; packages is a list with the different refdes value
+          (gsch2pcb:write-value-footprints op packages)
+          (close-port op)
+          (do ((line (read-line ip) (read-line ip)))
+              ((eof-object? line))
+            (display line)
+            (newline)))
+
+        ;; don't use m4
+        (begin
+          (message "Skipping the m4 processor for pcb footprints\n")
+          (gsch2pcb:write-value-footprints (current-output-port) packages))))
+
+  (gsch2pcb:write-bottom-footer))

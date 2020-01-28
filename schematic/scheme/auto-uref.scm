@@ -1,6 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Copyright (C) 1998-2010 Ales Hvezda
-;; Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+;; Copyright (C) 1998-2010 gEDA Contributors
+;; Copyright (C) 2019-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -18,8 +19,8 @@
 
 (use-modules (ice-9 regex)
              (srfi srfi-1)
-             (geda page)
-             (geda attrib)
+             (lepton attrib)
+             (lepton page)
              (gschem window))
 
 (define auto-uref-page-offset 0)

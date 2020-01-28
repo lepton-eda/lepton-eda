@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -882,15 +883,16 @@ void autonumber_sortorder_create(GschemToplevel *w_current, GtkWidget *sort_orde
   store = gtk_list_store_new(2, G_TYPE_STRING, GDK_TYPE_PIXBUF);
 
   for (i=0; filenames[i] != NULL; i++) {
-    path=g_build_filename(w_current->toplevel->bitmap_directory,
+    path=g_build_filename(BITMAP_DIRECTORY,
 		     filenames[i], NULL);
     pixbuf = gdk_pixbuf_new_from_file(path, &error);
     g_free(path);
     gtk_list_store_append(store, &iter);
     gtk_list_store_set(store, &iter,
 		       0, _(names[i]),
-		       1, pixbuf,
+		       1, pixbuf ? pixbuf : NULL,
 		       -1);
+    g_clear_error (&error);
   }
 
   gtk_combo_box_set_model(GTK_COMBO_BOX(sort_order), GTK_TREE_MODEL(store));
@@ -1203,7 +1205,6 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   GtkWidget *table3;
   GtkWidget *label12;
   GtkWidget *label13;
-  GtkObject *opt_startnum_adj;
   GtkWidget *opt_startnum;
   GtkWidget *sort_order;
   GtkWidget *opt_removenum;
@@ -1343,8 +1344,19 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label13), 0, 0.5);
 
-  opt_startnum_adj = gtk_adjustment_new (1, 0, 10000, 1, 10, 10);
-  opt_startnum = gtk_spin_button_new (GTK_ADJUSTMENT (opt_startnum_adj), 1, 0);
+
+  /* this sets the page size to 10 (step * 10).
+   * if different page size is required,
+   * use gtk_spin_button_set_increments()
+  */
+  opt_startnum = gtk_spin_button_new_with_range (0,     /* min */
+                                                 10000, /* max */
+                                                 1);    /* step */
+
+  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (opt_startnum), 0);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (opt_startnum), 1);
+
+
   gtk_entry_set_activates_default(GTK_ENTRY(opt_startnum), TRUE);
   gtk_widget_show (opt_startnum);
   gtk_table_attach (GTK_TABLE (table3), opt_startnum, 1, 2, 0, 1,

@@ -112,20 +112,23 @@ lepton_schematic_SOURCES = \
 	x_misc.c \
 	x_multiattrib.c \
 	x_newtext.c \
-	x_pagesel.c \
+	page_select_widget.c \
 	x_print.c \
 	x_rc.c \
 	x_script.c \
 	x_stroke.c \
 	x_window.c \
 	x_widgets.c \
-	scheme_undo.c
+	scheme_undo.c \
+	x_tabs.c \
+	color_edit_widget.c \
+	font_select_widget.c
 
 lepton_schematic_CPPFLAGS = -I$(top_srcdir)/liblepton/include  -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
 lepton_schematic_CFLAGS = $(GCC_CFLAGS) $(LIBSTROKE_CFLAGS) \
 	$(MINGW_CFLAGS) \
-	$(GLIB_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS)
+	$(GLIB_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS) $(CFLAGS)
 lepton_schematic_LDFLAGS = $(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
 	$(GTHREAD_LIBS) $(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
 lepton_schematic_LDADD = \

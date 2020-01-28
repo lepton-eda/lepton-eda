@@ -1,0 +1,55 @@
+START header
+
+gEDA's netlist format
+(Initially created for testing of gnetlist)
+
+END header
+
+No graphical symbols found
+
+START components
+
+F1 device=FUSE
+U100 device=7400
+U200 device=7404
+U300 device=7404
+U400 device=7400
+U500 device=7400
+
+END components
+
+No "no-connect" nets found
+
+START renamed-nets
+
+netattrib -> netattrib
+two -> one
+signal3 -> out3
+signal8 -> out8
+GND -> sig9
+signal9 -> signal6
+
+END renamed-nets
+
+START nets
+
+3.3V : U500 14
+5V : U500 14
+DGND : U400 2
+DIGITAL_GND : U500 10
+Vcc : U100 14, U200 14, U300 14, U400 14
+XGND : U200 7
+netattrib : U100 5, U200 2
+one : F1 1, U100 3, U200 1, U300 1
+out3 : U400 3, U400 5
+out8 : U400 8
+sig9 : U100 7, U300 7, U400 7, U500 7, U500 9
+signal1 : U400 1, U500 1
+signal4 : U400 4, U400 10
+signal6 : U400 6, U400 9
+signal12 : U400 12
+unnamed_net1 : U300 2
+unnamed_net2 : U500 3, U500 4, U500 5
+
+END nets
+

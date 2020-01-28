@@ -1,7 +1,8 @@
 ;; Test Scheme procedures for working with object bounds.
 
-(use-modules (unit-test))
-(use-modules (geda object))
+(use-modules (unit-test)
+             (lepton object)
+             ((geda object) #:renamer (symbol-prefix-proc 'geda:)))
 
 (begin-test 'bounds
   (let ((x (make-box '(0 . 1) '(1 . 0)))
@@ -51,3 +52,55 @@
       (assert-equal a (fold-bounds #f a))
       (assert-equal a (fold-bounds a #f))
       (assert-equal #f (fold-bounds #f #f)))))
+
+;;; The same tests for the deprecated (geda object) module
+;;; functions.
+
+(begin-test 'geda:bounds
+  (let ((x (geda:make-box '(0 . 1) '(1 . 0)))
+        (y (geda:make-box '(2 . 3) '(3 . 2)))
+        (t (geda:make-text '(1 . 2) 'lower-left 0 "test text" 10 #t 'both))
+        (C (geda:make-component "test component" '(0 . 0) 0 #t #f)))
+
+    ;; No arguments
+    (assert-equal #f (geda:object-bounds))
+
+    ;; Single argument
+    (assert-equal '((-5 . 6) . (6 . -5)) (geda:object-bounds x))
+
+    ;; Multiple arguments
+    (assert-equal '((-5 . 8) . (8 . -5)) (geda:object-bounds x y))
+
+    ;; Unfortunately, libgeda has no text renderer, so text never has
+    ;; any bounds.  What a shame.
+    (assert-true (not (geda:object-bounds t)))
+
+    ;; Empty components should have no bounds...
+    (assert-equal '() (geda:component-contents C))
+    (assert-true (not (geda:object-bounds C)))
+
+    ;; ... but they should get bounds when you add stuff to them.
+    (geda:component-append! C x)
+    (assert-equal '((-5 . 6) . (6 . -5)) (geda:object-bounds x))
+    ))
+
+(begin-test 'geda:fold-bounds
+  (let ((x (geda:make-box '(0 . 1) '(1 . 0)))
+        (y (geda:make-box '(2 . 3) '(3 . 2))))
+
+    ;; No arguments
+    (assert-equal #f (geda:fold-bounds #f))
+
+    ;; One argument
+    (let ((a (geda:object-bounds x)))
+      (assert-equal a (geda:fold-bounds a))
+      (assert-equal #f (geda:fold-bounds #f)))
+
+    ;; > 1 argument
+    (let ((a (geda:object-bounds x))
+          (b (geda:object-bounds y)))
+      (assert-equal '((-5 . 8) . (8 . -5))
+                    (geda:fold-bounds a b))
+      (assert-equal a (geda:fold-bounds #f a))
+      (assert-equal a (geda:fold-bounds a #f))
+      (assert-equal #f (geda:fold-bounds #f #f)))))

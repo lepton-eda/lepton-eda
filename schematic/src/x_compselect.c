@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1120,12 +1121,9 @@ create_lib_treeview (Compselect *compselect)
                                           NULL));
 
   /* create the entry label */
-  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
-                                    /* GtkMisc */
-                                    "xalign", 0.0,
-                                    /* GtkLabel */
-                                    "label",  _("Filter:"),
-                                    NULL));
+  label = gtk_label_new_with_mnemonic (_("_Filter:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+
   /* add the search label to the filter area */
   gtk_box_pack_start (GTK_BOX (hbox), label,
                       FALSE, FALSE, 0);
@@ -1139,6 +1137,8 @@ create_lib_treeview (Compselect *compselect)
                     "changed",
                     G_CALLBACK (compselect_callback_filter_entry_changed),
                     compselect);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
 
   /* now that that we have an entry, set the filter func of model */
   gtk_tree_model_filter_set_visible_func ((GtkTreeModelFilter*)model,
@@ -1165,6 +1165,9 @@ create_lib_treeview (Compselect *compselect)
   gtk_container_add (GTK_CONTAINER (button),
                      gtk_image_new_from_stock (GTK_STOCK_CLEAR,
                                                GTK_ICON_SIZE_SMALL_TOOLBAR));
+
+  gtk_widget_set_tooltip_text (button, _("Reset filter"));
+
   g_signal_connect (button,
                     "clicked",
                     G_CALLBACK (compselect_callback_filter_button_clicked),
@@ -1172,6 +1175,7 @@ create_lib_treeview (Compselect *compselect)
   /* add the clear button to the filter area */
   gtk_box_pack_start (GTK_BOX (hbox), button,
                       FALSE, FALSE, 0);
+
   /* set clear button of compselect */
   compselect->button_clear = GTK_BUTTON (button);
 
@@ -1185,6 +1189,8 @@ create_lib_treeview (Compselect *compselect)
   gtk_container_add (GTK_CONTAINER (button),
                      gtk_image_new_from_stock (GTK_STOCK_REFRESH,
                                             GTK_ICON_SIZE_SMALL_TOOLBAR));
+  gtk_widget_set_tooltip_text (button, _("Reload all libraries"));
+
   /* add the refresh button to the filter area */
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   g_signal_connect (button,
@@ -1223,7 +1229,7 @@ create_attributes_treeview (Compselect *compselect)
 
   /* two columns for name and value of the attributes */
   renderer = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
-                                              "editable", FALSE,
+                                              "editable", TRUE,
                                               NULL));
 
   column = GTK_TREE_VIEW_COLUMN (g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
@@ -1462,11 +1468,11 @@ compselect_constructor (GType type,
 
   inuseview = create_inuse_treeview (compselect);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), inuseview,
-                            gtk_label_new (_("In Use")));
+                            gtk_label_new_with_mnemonic (_("In Us_e")));
 
   libview = create_lib_treeview (compselect);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), libview,
-                            gtk_label_new (_("Libraries")));
+                            gtk_label_new_with_mnemonic (_("Lib_raries")));
 
   /* include the vertical box in horizontal box */
   gtk_paned_pack1 (GTK_PANED (hpaned), notebook, TRUE, FALSE);

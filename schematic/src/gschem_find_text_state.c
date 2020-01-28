@@ -794,6 +794,11 @@ instance_init (GschemFindTextState *state)
   scrolled = gtk_scrolled_window_new (NULL, NULL);
   gtk_container_add (GTK_CONTAINER (state), scrolled);
 
+  /* show scrollbars only when needed: */
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+
   tree_widget = gtk_tree_view_new_with_model (GTK_TREE_MODEL (state->store));
   gtk_container_add (GTK_CONTAINER (scrolled), tree_widget);
 

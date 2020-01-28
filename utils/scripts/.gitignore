@@ -1,4 +1,7 @@
 Makefile
 Makefile.in
-garchive
+lepton-archive
+lepton-embed
+lepton-tragesym
+lepton-upcfg
 *~

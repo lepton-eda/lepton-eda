@@ -55,7 +55,7 @@ static GtkListStore* color_list_store = NULL;
 
 
 static GtkListStore* create_color_list_store();
-static char* get_color_name(int index);
+static const char* get_color_name(int index);
 
 
 
@@ -88,9 +88,57 @@ create_color_list_store ()
 
 
 
+/*! \brief Update colors in color selection combo box.
+ *
+ *  \par Function Description
+ *  Call this function after the color scheme is changed.
+ */
+void
+x_colorcb_update_colors()
+{
+  GtkListStore* store = color_list_store;
+  if (store == NULL)
+    return;
+
+  GtkTreeModel* model = GTK_TREE_MODEL (store);
+  GtkTreeIter iter;
+
+  gboolean res = gtk_tree_model_get_iter_first (model, &iter);
+
+  while (res)
+  {
+    int color_index = -1;
+    gtk_tree_model_get (model, &iter, COLUMN_INDEX, &color_index, -1);
+
+    if (x_color_display_enabled (color_index))
+    {
+      GdkColor* color = x_get_color (color_index);
+      x_colorcb_set_color (&iter, color);
+    }
+
+    res = gtk_tree_model_iter_next (model, &iter);
+  }
+
+} /* x_colorcb_update_colors() */
+
+
+
+/*! \brief Set color for combo box entry
+ *
+ *  \param  iter  Iterator pointing to combo box entry to be modified
+ *  \param  color A pointer to GdkColor struture
+ */
+void
+x_colorcb_set_color (GtkTreeIter* iter, GdkColor* color)
+{
+  gtk_list_store_set (color_list_store, iter, COLUMN_COLOR, color, -1);
+}
+
+
+
 /*! \brief Given the color index, obtain a human readable name
  */
-static char*
+static const char*
 get_color_name (int index)
 {
   switch(index) {

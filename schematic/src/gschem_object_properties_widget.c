@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -117,34 +118,6 @@ gschem_object_properties_widget_new (GschemToplevel *w_current)
 
 
 
-/*! \brief Open the dialog box to edit fill properties
- *
- *  \par Function Description
- *  This function creates or raises the modal text entry dialog
- *
- *  \param [in] w_current The gschem toplevel
- */
-void
-line_type_dialog (GschemToplevel *w_current)
-{
-  x_widgets_show_object_properties (w_current);
-}
-
-
-
-/*! \brief Open the dialog box to edit pin type
- *
- *  \param [in] w_current The gschem toplevel
- *  \param [in] obj_list unused
- */
-void
-x_dialog_edit_pin_type (GschemToplevel *w_current, const GList *obj_list)
-{
-  x_widgets_show_object_properties (w_current);
-}
-
-
-
 /*! \private
  *  \brief Initialize GschemObjectPropertiesWidget class
  *
@@ -196,12 +169,12 @@ create_fill_property_widget (GschemObjectPropertiesWidget *dialog)
   GtkWidget *table;
   GtkWidget *widget[6];
 
-  label[0] = gschem_dialog_misc_create_property_label (_("Fill Type:"));
-  label[1] = gschem_dialog_misc_create_property_label (_("Line Width:"));
-  label[2] = gschem_dialog_misc_create_property_label (_("Angle 1:"));
-  label[3] = gschem_dialog_misc_create_property_label (_("Pitch 1:"));
-  label[4] = gschem_dialog_misc_create_property_label (_("Angle 2:"));
-  label[5] = gschem_dialog_misc_create_property_label (_("Pitch 2:"));
+  label[0] = gschem_dialog_misc_create_property_label (_("_Fill Type:"));
+  label[1] = gschem_dialog_misc_create_property_label (_("Lin_e Width:"));
+  label[2] = gschem_dialog_misc_create_property_label (_("Angle _1:"));
+  label[3] = gschem_dialog_misc_create_property_label (_("P_itch 1:"));
+  label[4] = gschem_dialog_misc_create_property_label (_("Angle _2:"));
+  label[5] = gschem_dialog_misc_create_property_label (_("Pitc_h 2:"));
 
   widget[0] = dialog->fstylecb = x_fstylecb_new ();
   widget[1] = dialog->widthe = gschem_integer_combo_box_new ();
@@ -279,7 +252,7 @@ create_general_property_widget (GschemObjectPropertiesWidget *dialog)
   GtkWidget *table;
   GtkWidget *widget[1];
 
-  label[0] = gschem_dialog_misc_create_property_label (_("Color:"));
+  label[0] = gschem_dialog_misc_create_property_label (_("Colo_r:"));
 
   widget[0] = dialog->colorcb = x_colorcb_new ();
 
@@ -308,11 +281,11 @@ create_line_property_widget (GschemObjectPropertiesWidget *dialog)
   GtkWidget *table;
   GtkWidget *widget[5];
 
-  label[0] = gschem_dialog_misc_create_property_label (_("Type:"));
-  label[1] = gschem_dialog_misc_create_property_label (_("Width:"));
-  label[2] = gschem_dialog_misc_create_property_label (_("Dash Length:"));
-  label[3] = gschem_dialog_misc_create_property_label (_("Dash Space:"));
-  label[4] = gschem_dialog_misc_create_property_label (_("Cap style:"));
+  label[0] = gschem_dialog_misc_create_property_label (_("_Type:"));
+  label[1] = gschem_dialog_misc_create_property_label (_("_Width:"));
+  label[2] = gschem_dialog_misc_create_property_label (_("Dash _Length:"));
+  label[3] = gschem_dialog_misc_create_property_label (_("Dash _Space:"));
+  label[4] = gschem_dialog_misc_create_property_label (_("C_ap style:"));
 
   widget[0] = dialog->line_type = x_linetypecb_new ();
   widget[1] = dialog->width_entry = gschem_integer_combo_box_new ();
@@ -375,7 +348,7 @@ create_pin_property_widget (GschemObjectPropertiesWidget *dialog)
   GtkWidget *table;
   GtkWidget *widget[1];
 
-  label[0] = gschem_dialog_misc_create_property_label (_("Pin Type:"));
+  label[0] = gschem_dialog_misc_create_property_label (_("_Pin Type:"));
 
   widget[0] = dialog->pin_type = gschem_pin_type_combo_new ();
 
@@ -463,7 +436,7 @@ gschem_object_properties_widget_init (GschemObjectPropertiesWidget *dialog)
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   GTK_POLICY_NEVER,
-                                  GTK_POLICY_ALWAYS);
+                                  GTK_POLICY_AUTOMATIC);
 
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
                                        GTK_SHADOW_NONE);
@@ -683,7 +656,7 @@ update_cap_style_widget (GschemObjectPropertiesWidget *dialog)
   g_return_if_fail (dialog->line_end != NULL);
 
   if (dialog->adapter != NULL) {
-    OBJECT_END end = (OBJECT_END) gschem_selection_adapter_get_cap_style (dialog->adapter);
+    int end = gschem_selection_adapter_get_cap_style (dialog->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (dialog->line_end),
                                      (gpointer) update_cap_style_model,
@@ -695,7 +668,7 @@ update_cap_style_widget (GschemObjectPropertiesWidget *dialog)
                                        (gpointer) update_cap_style_model,
                                        dialog);
 
-    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_end), (end != NO_SELECTION));
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_end), end != NO_SELECTION);
   }
 }
 
@@ -814,7 +787,7 @@ update_line_type_widget (GschemObjectPropertiesWidget *dialog)
   g_return_if_fail (dialog->line_type != NULL);
 
   if (dialog->adapter != NULL) {
-    OBJECT_TYPE type = (OBJECT_TYPE) gschem_selection_adapter_get_line_type (dialog->adapter);
+    int type = gschem_selection_adapter_get_line_type (dialog->adapter);
 
     g_signal_handlers_block_by_func (G_OBJECT (dialog->line_type),
                                      (gpointer) update_line_type_model,
@@ -826,7 +799,7 @@ update_line_type_widget (GschemObjectPropertiesWidget *dialog)
                                        (gpointer) update_line_type_model,
                                        dialog);
 
-    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_type), (type != NO_SELECTION));
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_type), type != NO_SELECTION);
   }
 }
 

@@ -1,8 +1,8 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,21 +46,6 @@ static struct gsubr_t libgeda_funcs[] = {
   { "eval-protected",            1, 1, 0, (SCM (*) ()) g_scm_eval_protected },
   { "eval-string-protected",     1, 0, 0, (SCM (*) ()) g_scm_eval_string_protected },
 
-  { "component-library",         1, 1, 0, (SCM (*) ()) g_rc_component_library },
-  { "component-library-command", 3, 0, 0, (SCM (*) ()) g_rc_component_library_command },
-  { "component-library-funcs",   3, 0, 0, (SCM (*) ()) g_rc_component_library_funcs },
-  
-  { "reset-component-library",   0, 0, 0, (SCM (*) ()) g_rc_reset_component_library },
-  
-  { "scheme-directory",          1, 0, 0, (SCM (*) ()) g_rc_scheme_directory },
-  { "bitmap-directory",          1, 0, 0, (SCM (*) ()) g_rc_bitmap_directory },
-  { "bus-ripper-symname",        1, 0, 0, (SCM (*) ()) g_rc_bus_ripper_symname },
-  { "attribute-promotion",       1, 0, 0, (SCM (*) ()) g_rc_attribute_promotion },
-  { "promote-invisible",         1, 0, 0, (SCM (*) ()) g_rc_promote_invisible },
-  { "keep-invisible",            1, 0, 0, (SCM (*) ()) g_rc_keep_invisible },
-  { "always-promote-attributes", 1, 0, 0, (SCM (*) ()) g_rc_always_promote_attributes },
-  { "make-backup-files",         1, 0, 0, (SCM (*) ()) g_rc_make_backup_files },
-  { "print-color-map",           0, 1, 0, (SCM (*) ()) g_rc_print_color_map },
   { "rc-filename",               0, 0, 0, (SCM (*) ()) g_rc_rc_filename },
   { "rc-config",                 0, 0, 0, (SCM (*) ()) g_rc_rc_config },
   { "parse-rc",                  2, 0, 0, (SCM (*) ()) g_rc_parse_rc },
@@ -90,7 +75,7 @@ static void
 g_register_scheme_data_dir (const gchar *data_dir)
 {
   gchar *scheme_dir = g_build_filename (data_dir, "scheme", NULL);
-  g_rc_scheme_directory (scm_from_locale_string (scheme_dir));
+  scheme_directory (scm_from_locale_string (scheme_dir));
   g_free (scheme_dir);
 }
 
@@ -105,6 +90,10 @@ g_register_libgeda_dirs (void)
   const gchar * const *sys_dirs = eda_get_system_data_dirs();
   for (gint i = 0; sys_dirs[i]; ++i) {
     g_register_scheme_data_dir (sys_dirs[i]);
+
+#ifdef DEBUG
+    fprintf (stderr, " >> g_register_libgeda_dirs(): [%s]\n", sys_dirs[i]);
+#endif
   }
   g_register_scheme_data_dir (eda_get_user_data_dir());
 }

@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2014 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +59,8 @@ enum
   PROP_SNAP_SIZE,
   PROP_STATUS_TEXT,
   PROP_STATUS_TEXT_COLOR,
+  PROP_RUBBER_BAND_MODE,
+  PROP_MAGNETIC_NET_MODE
 };
 
 
@@ -82,6 +85,12 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
 static void
 update_grid_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused);
+
+static void
+update_rubber_band_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused);
+
+static void
+update_magnetic_net_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused);
 
 
 static GObjectClass *gschem_bottom_widget_parent_class = NULL;
@@ -157,6 +166,14 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
     case PROP_STATUS_TEXT:
       g_value_set_string (value, gschem_bottom_widget_get_status_text (widget));
+      break;
+
+    case PROP_RUBBER_BAND_MODE:
+      g_value_set_boolean (value, gschem_bottom_widget_get_rubber_band_mode (widget));
+      break;
+
+    case PROP_MAGNETIC_NET_MODE:
+      g_value_set_boolean (value, gschem_bottom_widget_get_magnetic_net_mode (widget));
       break;
 
     default:
@@ -269,6 +286,25 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
                                                          FALSE,
                                                          (GParamFlags) (G_PARAM_READWRITE
                                                                         | G_PARAM_CONSTRUCT)));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_RUBBER_BAND_MODE,
+                                   g_param_spec_boolean ("net-rubber-band-mode",
+                                                         "Rubber Band Mode",
+                                                         "Rubber Band Mode",
+                                                         TRUE,
+                                                         (GParamFlags) (G_PARAM_READWRITE
+                                                                        | G_PARAM_CONSTRUCT)));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_MAGNETIC_NET_MODE,
+                                   g_param_spec_boolean ("magnetic-net-mode",
+                                                         "Magnetic Net Mode",
+                                                         "Magnetic Net Mode",
+                                                         TRUE,
+                                                         (GParamFlags) (G_PARAM_READWRITE
+                                                                        | G_PARAM_CONSTRUCT)));
+
 }
 
 
@@ -393,6 +429,36 @@ gschem_bottom_widget_get_status_text (GschemBottomWidget *widget)
 
 
 
+/*! \brief Get the rubber band mode
+ *
+ *  \param  widget This GschemBottomWidget
+ *  \return        The rubber band mode: on (TRUE) or off (FALSE)
+ */
+gboolean
+gschem_bottom_widget_get_rubber_band_mode (GschemBottomWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, 0);
+
+  return widget->rubber_band_mode;
+}
+
+
+
+/*! \brief Get the magnetic net mode
+ *
+ *  \param  widget This GschemBottomWidget
+ *  \return        The magnetic net mode: on (TRUE) or off (FALSE)
+ */
+gboolean
+gschem_bottom_widget_get_magnetic_net_mode (GschemBottomWidget *widget)
+{
+  g_return_val_if_fail (widget != NULL, 0);
+
+  return widget->magnetic_net_mode;
+}
+
+
+
 /*! \brief Get/register GschemBottomWidget type.
  */
 GType
@@ -436,36 +502,130 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   g_return_if_fail (widget != NULL);
 
   widget->left_button_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->left_button_label, _("Left mouse button"));
   gtk_misc_set_padding (GTK_MISC (widget->left_button_label), LABEL_XPAD, LABEL_YPAD);
-  gtk_box_pack_start (GTK_BOX (widget), widget->left_button_label, FALSE, FALSE, 0);
-
-  separator = gtk_vseparator_new ();
-  gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
   widget->middle_button_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->middle_button_label, _("Middle mouse button"));
   gtk_misc_set_padding (GTK_MISC (widget->middle_button_label), LABEL_XPAD, LABEL_YPAD);
-  gtk_box_pack_start (GTK_BOX (widget), widget->middle_button_label, FALSE, FALSE, 0);
-
-  separator = gtk_vseparator_new ();
-  gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
   widget->right_button_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->right_button_label, _("Right mouse button"));
   gtk_misc_set_padding (GTK_MISC (widget->right_button_label), LABEL_XPAD, LABEL_YPAD);
-  gtk_box_pack_start (GTK_BOX (widget), widget->right_button_label, FALSE, FALSE, 0);
 
-  separator = gtk_vseparator_new ();
-  gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
+
+  /* default values for configuration settings: */
+  gboolean show_mouse_indicators       = TRUE;
+  gboolean show_rubber_band_indicator  = FALSE;
+  gboolean show_magnetic_net_indicator = FALSE;
+  gdk_color_parse ("black", &widget->status_inactive_color);
+  gdk_color_parse ("green", &widget->status_active_color);
+  widget->status_bold_font = FALSE;
+
+  gchar* cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  if (cfg != NULL)
+  {
+    GError*  err = NULL;
+    gboolean val = FALSE;
+
+    /* mouse indicators: */
+    val = eda_config_get_boolean (cfg,
+                                  "schematic.status-bar",
+                                  "show-mouse-buttons",
+                                  &err);
+    if (err == NULL)
+      show_mouse_indicators = val;
+    g_clear_error (&err);
+
+    /* net rubber band indicator: */
+    val = eda_config_get_boolean (cfg,
+                                  "schematic.status-bar",
+                                  "show-rubber-band",
+                                  &err);
+    if (err == NULL)
+      show_rubber_band_indicator = val;
+    g_clear_error (&err);
+
+    /* magnetic net indicator: */
+    val = eda_config_get_boolean (cfg,
+                                  "schematic.status-bar",
+                                  "show-magnetic-net",
+                                  &err);
+    if (err == NULL)
+      show_magnetic_net_indicator = val;
+    g_clear_error (&err);
+
+    /* status line active color: */
+    gchar* color = eda_config_get_string (cfg,
+                                          "schematic.status-bar",
+                                          "status-active-color",
+                                          &err);
+    if (color != NULL)
+    {
+      gdk_color_parse (color, &widget->status_active_color);
+      g_free (color);
+    }
+    g_clear_error (&err);
+
+    /* status line bold font: */
+    val = eda_config_get_boolean (cfg,
+                                  "schematic.status-bar",
+                                  "status-bold-font",
+                                  &err);
+    if (err == NULL)
+      widget->status_bold_font = val;
+    g_clear_error (&err);
+  }
+
+
+  if (show_mouse_indicators)
+  {
+    gtk_box_pack_start (GTK_BOX (widget), widget->left_button_label, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), widget->middle_button_label, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), widget->right_button_label, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+  }
+
 
   widget->grid_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->grid_label, _("(Snap size, Grid size)"));
   gtk_misc_set_padding (GTK_MISC (widget->grid_label), LABEL_XPAD, LABEL_YPAD);
   gtk_box_pack_start (GTK_BOX (widget), widget->grid_label, FALSE, FALSE, 0);
 
   separator = gtk_vseparator_new ();
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
+  widget->rubber_band_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->rubber_band_label, _("Net rubber band mode"));
+  gtk_misc_set_padding (GTK_MISC (widget->rubber_band_label), LABEL_XPAD, LABEL_YPAD);
+  if (show_rubber_band_indicator)
+  {
+    gtk_box_pack_start (GTK_BOX (widget), widget->rubber_band_label, FALSE, FALSE, 0);
+  }
+
+  separator = gtk_vseparator_new ();
+  gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
+
+  widget->magnetic_net_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->magnetic_net_label, _("Magnetic net mode"));
+  gtk_misc_set_padding (GTK_MISC (widget->magnetic_net_label), LABEL_XPAD, LABEL_YPAD);
+  if (show_magnetic_net_indicator)
+  {
+    gtk_box_pack_start (GTK_BOX (widget), widget->magnetic_net_label, FALSE, FALSE, 0);
+  }
+
   widget->status_label = gtk_label_new (NULL);
+  gtk_widget_set_tooltip_text (widget->status_label, _("Current action mode"));
   gtk_misc_set_padding (GTK_MISC (widget->status_label), LABEL_XPAD, LABEL_YPAD);
   gtk_box_pack_end (GTK_BOX (widget), widget->status_label, FALSE, FALSE, 0);
+
+  separator = gtk_vseparator_new ();
+  gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
   g_signal_connect (G_OBJECT (widget),
                     "notify::grid-mode",
@@ -485,6 +645,16 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   g_signal_connect (G_OBJECT (widget),
                     "notify::snap-size",
                     G_CALLBACK (update_grid_label),
+                    NULL);
+
+  g_signal_connect (G_OBJECT (widget),
+                    "notify::net-rubber-band-mode",
+                    G_CALLBACK (update_rubber_band_label),
+                    NULL);
+
+  g_signal_connect (G_OBJECT (widget),
+                    "notify::magnetic-net-mode",
+                    G_CALLBACK (update_magnetic_net_label),
                     NULL);
 }
 
@@ -622,15 +792,15 @@ gschem_bottom_widget_set_status_text_color (GschemBottomWidget *widget, gboolean
 {
   g_return_if_fail (widget != NULL);
 
-  GdkColor color;
+  const GdkColor* color = NULL;
 
   if (active) {
-    gdk_color_parse ("green", &color);
+    color = &widget->status_active_color;
   } else {
-    gdk_color_parse ("black", &color);
+    color = &widget->status_inactive_color;
   }
 
-  gtk_widget_modify_fg (GTK_WIDGET (widget->status_label), GTK_STATE_NORMAL, &color);
+  gtk_widget_modify_fg (GTK_WIDGET (widget->status_label), GTK_STATE_NORMAL, color);
 }
 
 
@@ -644,9 +814,49 @@ gschem_bottom_widget_set_status_text (GschemBottomWidget *widget, const char *te
 {
   g_return_if_fail (widget != NULL);
 
-  gtk_label_set_text (GTK_LABEL (widget->status_label), text);
+  gchar* str = g_markup_printf_escaped (widget->status_bold_font
+                                        ? "<b>%s</b>"
+                                        : "%s",
+                                        text);
+
+  gtk_label_set_markup (GTK_LABEL (widget->status_label), str);
+  g_free (str);
 
   g_object_notify (G_OBJECT (widget), "status-text");
+}
+
+
+
+/*! \brief Set the rubber band mode
+ *
+ *  \param [in] widget  This GschemBottomWidget
+ *  \param [in] mode    The rubber band mode: on (TRUE) or off (FALSE)
+ */
+void
+gschem_bottom_widget_set_rubber_band_mode (GschemBottomWidget *widget, gboolean mode)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->rubber_band_mode = mode;
+
+  g_object_notify (G_OBJECT (widget), "net-rubber-band-mode");
+}
+
+
+
+/*! \brief Set the magnetic net mode
+ *
+ *  \param [in] widget  This GschemBottomWidget
+ *  \param [in] mode    The magnetic net mode: on (TRUE) or off (FALSE)
+ */
+void
+gschem_bottom_widget_set_magnetic_net_mode (GschemBottomWidget *widget, gboolean mode)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->magnetic_net_mode = mode;
+
+  g_object_notify (G_OBJECT (widget), "magnetic-net-mode");
 }
 
 
@@ -693,6 +903,14 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
     case PROP_STATUS_TEXT_COLOR:
       gschem_bottom_widget_set_status_text_color (widget, g_value_get_boolean (value));
+      break;
+
+    case PROP_RUBBER_BAND_MODE:
+      gschem_bottom_widget_set_rubber_band_mode (widget, g_value_get_boolean (value));
+      break;
+
+    case PROP_MAGNETIC_NET_MODE:
+      gschem_bottom_widget_set_magnetic_net_mode (widget, g_value_get_boolean (value));
       break;
 
     default:
@@ -752,3 +970,54 @@ update_grid_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unuse
     g_free (snap_text);
   }
 }
+
+
+
+/*! \brief Display the rubber band indicator in the status bar
+ *
+ *  \param [in] widget This GschemBottomWidget
+ *  \param [in] pspec  The parameter that changed
+ *  \param [in] unused
+ */
+static void
+update_rubber_band_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused)
+{
+  g_return_if_fail (widget != NULL);
+
+  GdkColor color;
+  gdk_color_parse (widget->rubber_band_mode ? "green" : "blue", &color);
+
+  gtk_widget_modify_fg (GTK_WIDGET (widget->rubber_band_label),
+                        GTK_STATE_NORMAL,
+                        &color);
+
+  gtk_label_set_markup (GTK_LABEL (widget->rubber_band_label),
+                        widget->rubber_band_mode ?
+                        "RB: <b>ON</b>" : "RB: off");
+}
+
+
+
+/*! \brief Display the magnetic net indicator in the status bar
+ *
+ *  \param [in] widget This GschemBottomWidget
+ *  \param [in] pspec  The parameter that changed
+ *  \param [in] unused
+ */
+static void
+update_magnetic_net_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused)
+{
+  g_return_if_fail (widget != NULL);
+
+  GdkColor color;
+  gdk_color_parse (widget->magnetic_net_mode ? "purple" : "darkgray", &color);
+
+  gtk_widget_modify_fg (GTK_WIDGET (widget->magnetic_net_label),
+                        GTK_STATE_NORMAL,
+                        &color);
+
+  gtk_label_set_markup (GTK_LABEL (widget->magnetic_net_label),
+                    widget->magnetic_net_mode ?
+                    "MN: <b>ON</b>" : "MN: off");
+}
+

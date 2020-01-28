@@ -1,8 +1,17 @@
 
-SUBDIRS = src gschlas scripts gxyrs lib include examples docs tests
+SUBDIRS = \
+	docs \
+	examples \
+	scripts \
+	src \
+	tests
 
-EXTRA_DIST = ChangeLog ChangeLog.tragesym-1.0 ChangeLog.gsch2pcb-1.0 \
-	ChangeLog-1.0 AUTHORS
+EXTRA_DIST = \
+	AUTHORS \
+	ChangeLog \
+	ChangeLog-1.0 \
+	ChangeLog.gsch2pcb-1.0 \
+	ChangeLog.tragesym-1.0
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git
@@ -12,8 +21,3 @@ ChangeLog: $(top_builddir)/stamp-git
 	  echo "WARNING: ChangeLog information not available from git" >&2 ; \
 	) > $@
 endif HAVE_GIT_REPO
-
-MOSTLYCLEANFILES = *.log core FILE *~
-CLEANFILES = *.log core FILE *~
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in ChangeLog

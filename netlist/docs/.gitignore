@@ -1,0 +1,7 @@
+Makefile
+Makefile.in
+lepton-netlist.1
+lepton-netlist.html
+mk_verilog_syms.1
+mk_verilog_syms.html
+*~

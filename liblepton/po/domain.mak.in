@@ -1,3 +1,0 @@
-#                                                       -*-GNUmakefile-*-
-# This is a workaround for buggy logic in the gettext m4 files.
-DOMAIN = @LIBLEPTON_GETTEXT_DOMAIN@

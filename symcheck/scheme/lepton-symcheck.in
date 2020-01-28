@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
-exec guile -s "$0" "$@"
+export GUILE_LOAD_COMPILED_PATH="@ccachedir@:${GUILE_LOAD_COMPILED_PATH}"
+exec @GUILE@ -s "$0" "$@"
 !#
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017 Lepton EDA Contributors
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,13 +21,14 @@ exec guile -s "$0" "$@"
 ;;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
-                "libgeda_init")
+                "liblepton_init")
 
 ;;; At compile time of this program guile won't be aware of these
 ;;; modules, since it compiles the code before loading the above
 ;;; extension. Let's make it quiet here.
 (define with-toplevel (@@ (geda core toplevel) %with-toplevel))
 (define make-toplevel (@@ (geda core toplevel) %make-toplevel))
-(define check-all (@@ (symcheck check) check-all-symbols))
 
-(with-toplevel (make-toplevel) check-all)
+(primitive-eval '(use-modules (symcheck check)))
+
+(with-toplevel (make-toplevel) check-all-symbols)

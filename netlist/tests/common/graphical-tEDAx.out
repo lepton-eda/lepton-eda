@@ -1,0 +1,25 @@
+tEDAx v1
+begin netlist v1 netlist
+
+	footprint R1 ACY300.fp
+	device R1 RESISTOR
+	value R1 
+
+	footprint R2 ACY300.fp
+	device R2 RESISTOR
+	value R2 
+
+	footprint R3 ACY300.fp
+	device R3 RESISTOR
+	value R3 
+
+	conn GND R1 1
+	conn GND R3 2
+
+	conn netx R1 2
+	conn netx R2 1
+
+	conn nety R2 2
+	conn nety R3 1
+
+end netlist

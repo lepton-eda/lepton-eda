@@ -1,6 +1,8 @@
 /*
  * Lepton EDA command-line utility
  * Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2014-2015 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
+#include <config.h>
 #include <version.h>
 
 #include <unistd.h>
@@ -45,7 +45,7 @@ shell_usage (void)
 {
   printf (_("Usage: lepton-cli shell [OPTION ...]\n"
 "\n"
-"Shell for interactive processing of gEDA data using Scheme.\n"
+"Shell for interactive processing of Lepton EDA data using Scheme.\n"
 "\n"
 "  -s FILE        load Scheme source code from FILE, and exit\n"
 "  -c EXPR        evaluate Scheme expression EXPR, and exit\n"
@@ -58,8 +58,11 @@ shell_usage (void)
 "  -l FILE        load Scheme source code from FILE\n"
 "  -h, --help     display usage information and exit\n"
 "\n"
-"Please report bugs to %1$s.\n"),
-PACKAGE_BUGREPORT);
+"Report bugs at <%1$s>\n"
+"Lepton EDA homepage: <%2$s>\n"),
+    PACKAGE_BUGREPORT,
+    PACKAGE_URL);
+
   exit (0);
 }
 
@@ -107,7 +110,7 @@ cmd_shell_impl (void *data, int argc, char **argv)
     }
   }
 
-  libgeda_init ();
+  liblepton_init ();
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   toplevel = s_toplevel_new ();
   edascm_dynwind_toplevel (toplevel);
@@ -115,7 +118,7 @@ cmd_shell_impl (void *data, int argc, char **argv)
   /* Interactive, so enable readline support and print an abbreviated
    * version message. */
   if (interactive) {
-    fprintf (stderr, "gEDA %s (g%.7s)\n", PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
+    fprintf (stderr, "Lepton EDA %s (g%.7s)\n", PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
   /* readline is not supported for MinGW builds yet */
 #ifndef __MINGW32__
     SCM expr = scm_list_3 (sym_begin,
@@ -141,6 +144,8 @@ cmd_shell_impl (void *data, int argc, char **argv)
 int
 cmd_shell (int argc, char **argv)
 {
+  set_guile_compiled_path();
+
   scm_boot_guile (argc, argv, cmd_shell_impl, NULL); /* Doesn't return */
   return 0;
 }

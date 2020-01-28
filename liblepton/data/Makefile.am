@@ -3,9 +3,9 @@ xdgdatadir=@XDGDATADIR@
 themedir=$(xdgdatadir)/icons/$(theme)
 
 mime_icons = \
-	application-x-geda-gsch2pcb-project \
-	application-x-geda-schematic        \
-	application-x-geda-symbol
+	application-x-lepton-sch2pcb-project \
+	application-x-lepton-schematic        \
+	application-x-lepton-symbol
 
 mime_icon_files = \
 	$(mime_icons:%=%-16.png) \
@@ -31,9 +31,9 @@ xml_in_files = liblepton.xml.in
 xml_DATA = $(xml_in_files:.xml.in=.xml)
 
 application_in_files = \
-	x-geda-gsch2pcb-project.desktop.in \
-	x-geda-schematic.desktop.in \
-	x-geda-symbol.desktop.in
+	x-lepton-sch2pcb-project.desktop.in \
+	x-lepton-schematic.desktop.in \
+	x-lepton-symbol.desktop.in
 
 if ENABLE_KDE_DESKTOP_DATA
 kdedatadir=@KDEDATADIR@
@@ -71,8 +71,9 @@ if ENABLE_UPDATE_XDG_DATABASE
 endif
 	$(install_icon_exec) -u $(theme_icons)
 
+CLEANFILES = $(xml_DATA)
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
-DISTCLEANFILES = $(xml_DATA) $(application_DATA)
+DISTCLEANFILES = $(application_DATA)
 EXTRA_DIST = $(mime_icon_files) $(mime_icon_sources) \
              $(xml_in_files) $(application_in_files)
 

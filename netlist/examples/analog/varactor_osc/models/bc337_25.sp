@@ -1,0 +1,10 @@
+* bc337-25 model(internet)spice3
+.model BC337_25 NPN( 
++IS = 4.13E-14 NF = 0.9822 ISE = 3.534E-15 NE = 1.35 
++BF = 292.4 IKF = 0.9 VAF = 145.7 NR = 0.982 ISC = 1.957E-13 
++NC = 1.3 BR = 23.68 IKR = 0.1 VAR = 20 RB = 60 IRB = 0.0002 
++RBM = 8 RE = 0.1129 RC = 0.25 XTB = 0 EG = 1.11 XTI = 3 
++CJE = 3.799E-11 VJE = 0.6752 MJE = 0.3488 TF = 5.4E-10 
++XTF = 4 VTF = 4.448 ITF = 0.665 PTF = 90 CJC = 1.355E-11 
++VJC = 0.3523 MJC = 0.3831 XCJC = 0.455 TR = 3E-08 
++CJS = 0 VJS = 0.75 MJS = 0.333 FC = 0.643)

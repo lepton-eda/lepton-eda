@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
- * Copyright (C) 2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2013-2015 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -254,10 +255,10 @@ create_text_property_section (GschemTextPropertiesWidget *widget)
   GtkWidget *table;
   GtkWidget *editor[4];
 
-  label[0] = gschem_dialog_misc_create_property_label(_("Color:"));
-  label[1] = gschem_dialog_misc_create_property_label(_("Size:"));
-  label[2] = gschem_dialog_misc_create_property_label(_("Alignment:"));
-  label[3] = gschem_dialog_misc_create_property_label(_("Rotation:"));
+  label[0] = gschem_dialog_misc_create_property_label(_("Colo_r:"));
+  label[1] = gschem_dialog_misc_create_property_label(_("_Size:"));
+  label[2] = gschem_dialog_misc_create_property_label(_("Ali_gnment:"));
+  label[3] = gschem_dialog_misc_create_property_label(_("Ro_tation:"));
 
   editor[0] = widget->colorcb = x_colorcb_new ();
   editor[1] = widget->textsizecb = gschem_integer_combo_box_new ();
@@ -373,7 +374,7 @@ gschem_text_properties_widget_init (GschemTextPropertiesWidget *widget)
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   GTK_POLICY_NEVER,
-                                  GTK_POLICY_ALWAYS);
+                                  GTK_POLICY_AUTOMATIC);
 
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
                                        GTK_SHADOW_NONE);

@@ -30,6 +30,7 @@ const gchar * const *eda_get_system_data_dirs(void);
 const gchar * const *eda_get_system_config_dirs(void);
 const gchar *eda_get_user_data_dir(void);
 const gchar *eda_get_user_config_dir(void);
+const gchar *eda_get_user_cache_dir(void);
 
 /* ----------------------------------------------------------------
  * Initialisation

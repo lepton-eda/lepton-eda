@@ -1,6 +1,7 @@
-;; Lepton EDA
-;; lepton-schematic - Lepton EDA Schematic Capture - Scheme API
+;; Lepton EDA library - Scheme API
 ;; Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2016 gEDA Contributors
+;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -25,24 +26,23 @@
 ;; are intended for use in legacy RC files during the transition
 ;; process.
 
-(or (defined? 'define-syntax)
-    (use-modules (ice-9 syncase)))
-
 ;; ===================================================================
 ;; Utility functions and macros
 ;; ===================================================================
+
+
+( use-modules ( lepton legacy-config ) )
+
 
 ;; Returns an RC function closure to replace the legacy configuration
 ;; function OLD-ID.  The returned closure takes an arbitrary number of
 ;; arguments, and does nothing other than print a deprecation message
 ;; the first time it is called.
 (define (rc-dead-config old-id)
-  ;; FIXME more helpful error message with link to documentation.
-  (define (deprecation-warning)
-    (format (current-error-port)
-"WARNING: The RC file function '~A' is deprecated and does nothing.
 
-" old-id))
+  (define (deprecation-warning)
+    (display (warning-option-obsolete old-id) (current-error-port)))
+
   (let ((warned? #f))
     (lambda args
       (or warned? (begin (deprecation-warning) (set! warned? #t))))))
@@ -64,20 +64,16 @@
 ;; VALUE-TRANSFORMER.  The first time the closure is called, it prints
 ;; a deprecation message.
 (define (rc-deprecated-config old-id group key value-transformer)
-  ;; FIXME more helpful error message with link to documentation.
+
   (define (deprecation-warning)
-    (format (current-error-port)
-"WARNING: The RC file function '~A' is deprecated.
+    (display (warning-option-deprecated old-id group key)
+             (current-error-port)))
 
-RC configuration functions will be removed in an upcoming gEDA
-release.  Please use configuration files instead.
-
-" old-id))
   (let ((warned? #f))
     (lambda args
       (or warned?
           (begin (deprecation-warning) (set! warned? #t)))
-      ((@ (geda config) set-config!)
+      ((@ (lepton config) set-config!)
        (rc-config) group key (apply value-transformer args)))))
 
 ;; Convenience macro for using rc-deprecated-config.
@@ -96,19 +92,22 @@ release.  Please use configuration files instead.
 ;; Identity value transformer for define-rc-deprecated-config
 (define (rc-deprecated-string-transformer str) str)
 
+(define (rc-deprecated-int-transformer num) num)
+
 ;; Transformer for "enabled"/"disabled" to boolean
 (define (rc-deprecated-string-boolean-transformer str)
   (string=? "enabled" str))
 
 ;; ===================================================================
-;; Deprecated libgeda configuration functions
+;; Deprecated liblepton configuration functions
 ;; ===================================================================
 
 (define-rc-dead-config postscript-prolog)
 (define-rc-dead-config world-size)
+(define-rc-dead-config bitmap-directory)
 
 ;; ===================================================================
-;; Deprecated gschem configuration functions
+;; Deprecated lepton-schematic configuration functions
 ;; ===================================================================
 
 (define-rc-dead-config output-capstyle)
@@ -158,8 +157,16 @@ release.  Please use configuration files instead.
  component-dialog-attributes "gschem.library" "component-attributes"
  (lambda (x) x))
 
+(define-rc-dead-config add-attribute-offset)
+(define-rc-dead-config logging-destination)
+(define-rc-dead-config log-window-type)
+(define-rc-dead-config raise-dialog-boxes-on-expose)
+(define-rc-dead-config image-size)
+(define-rc-dead-config image-color)
+(define-rc-dead-config window-size)
+
 ;; ===================================================================
-;; Deprecated gnetlist configuration functions
+;; Deprecated lepton-netlist configuration functions
 ;; ===================================================================
 (define-rc-dead-config gnetlist-version)
 
@@ -202,3 +209,142 @@ release.  Please use configuration files instead.
 (define-rc-deprecated-config
   hierarchy-netattrib-separator "gnetlist.hierarchy" "net-attribute-separator"
   rc-deprecated-string-transformer)
+
+(define-rc-deprecated-config
+ draw-grips "schematic.gui" "draw-grips"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ toolbars "schematic.gui" "toolbars"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ scrollbars "schematic.gui" "scrollbars"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ handleboxes "schematic.gui" "handleboxes"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ zoom-with-pan "schematic.gui" "zoom-with-pan"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ fast-mousepan "schematic.gui" "fast-mousepan"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ continue-component-place "schematic.gui" "continue-component-place"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ file-preview "schematic.gui" "file-preview"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ enforce-hierarchy "schematic.gui" "enforce-hierarchy"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ third-button-cancel "schematic.gui" "third-button-cancel"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ warp-cursor "schematic.gui" "warp-cursor"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ force-boundingbox "schematic.gui" "force-boundingbox"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ net-direction-mode "schematic.gui" "net-direction-mode"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ embed-components "schematic.gui" "embed-components"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ netconn-rubberband "schematic.gui" "netconn-rubberband"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ magnetic-net-mode "schematic.gui" "magnetic-net-mode"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ zoom-gain "schematic.gui" "zoom-gain"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ mousepan-gain "schematic.gui" "mousepan-gain"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ keyboardpan-gain "schematic.gui" "keyboardpan-gain"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ select-slack-pixels "schematic.gui" "select-slack-pixels"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ text-size "schematic.gui" "text-size"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ snap-size "schematic.gui" "snap-size"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ scrollpan-steps "schematic.gui" "scrollpan-steps"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ dots-grid-dot-size "schematic.gui" "dots-grid-dot-size"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ dots-grid-fixed-threshold "schematic.gui" "dots-grid-fixed-threshold"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ mesh-grid-display-threshold "schematic.gui" "mesh-grid-display-threshold"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ action-feedback-mode "schematic.gui" "action-feedback-mode"
+ rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ text-caps-style "schematic.gui" "text-caps-style"
+ rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ middle-button "schematic.gui" "middle-button"
+ rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ third-button "schematic.gui" "third-button"
+ rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ scroll-wheel "schematic.gui" "scroll-wheel"
+ rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ grid-mode "schematic.gui" "grid-mode"
+ rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ dots-grid-mode "schematic.gui" "dots-grid-mode"
+ rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ net-selection-mode "schematic.gui" "net-selection-mode"
+ rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ undo-control "schematic.undo" "undo-control"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ undo-type "schematic.undo" "undo-type"
+ rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ undo-levels "schematic.undo" "undo-levels"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ undo-panzoom "schematic.undo" "undo-panzoom"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ bus-ripper-size "schematic" "bus-ripper-size"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ bus-ripper-type "schematic" "bus-ripper-type"
+ rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ bus-ripper-rotation "schematic" "bus-ripper-rotation"
+ rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ net-consolidate "schematic" "net-consolidate"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ logging "schematic" "logging"
+ rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+ auto-save-interval "schematic" "auto-save-interval"
+ rc-deprecated-int-transformer)
+(define-rc-deprecated-config
+ log-window "schematic" "log-window"
+ rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+ bus-ripper-symname "schematic" "bus-ripper-symname"
+ rc-deprecated-string-transformer)

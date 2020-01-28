@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,27 +49,6 @@ x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_cu
 
   return(0);
 }
-
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint
-x_event_raise_dialog_boxes (GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current)
-{
-  g_return_val_if_fail (w_current != NULL, 0);
-
-  /* raise the dialog boxes if this feature is enabled */
-  if (w_current->raise_dialog_boxes) {
-    x_dialog_raise_all(w_current);
-  }
-
-  return 0;
-}
-
 
 
 
@@ -213,7 +193,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
     switch(w_current->middle_button) {
 
-      case(ACTION):
+      case(MOUSEBTN_DO_ACTION):
 
       /* don't want to search if shift */
       /* key is pressed */
@@ -239,25 +219,33 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       }
       break;
 
-      case(REPEAT):
-      if (w_current->last_callback != NULL) {
-        (*w_current->last_callback)(w_current, 0, NULL);
-      }
+      case(MOUSEBTN_DO_REPEAT):
+        g_scm_c_eval_string_protected
+        (
+          "( use-modules (gschem action) )"
+          "( &repeat-last-action )"
+        );
       break;
 #ifdef HAVE_LIBSTROKE
-      case(STROKE):
+      case(MOUSEBTN_DO_STROKE):
       DOING_STROKE=TRUE;
       break;
 #endif /* HAVE_LIBSTROKE */
 
-      case(MID_MOUSEPAN_ENABLED):
+      case(MOUSEBTN_DO_PAN):
       gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       break;
-    }
+
+      case (MOUSEBTN_DO_POPUP):
+        i_update_menus(w_current);
+        do_popup(w_current, event);
+        break;
+
+    } /* switch w_current->middle_button */
 
   } else if (event->button == 3) {
     if (!w_current->inside_action) {
-      if (w_current->third_button == POPUP_ENABLED) {
+      if (w_current->third_button == MOUSEBTN_DO_POPUP) {
         /* (third-button "popup") */
         i_update_menus(w_current);  /* update menus before popup  */
         do_popup(w_current, event);
@@ -266,7 +254,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       }
     } else {
-      if ((w_current->third_button == MOUSEPAN_ENABLED) &&
+      if ((w_current->third_button == MOUSEBTN_DO_PAN) &&
           (!w_current->third_button_cancel)) {
         gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       } else { /* this is the default cancel */
@@ -392,7 +380,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
     }
 
     switch(w_current->middle_button) {
-      case(ACTION):
+      case(MOUSEBTN_DO_ACTION):
         if (w_current->inside_action && (page->place_list != NULL)) {
           switch(w_current->event_state) {
             case (COPYMODE): o_copy_end(w_current); break;
@@ -402,13 +390,13 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
       break;
 
 #ifdef HAVE_LIBSTROKE
-      case(STROKE):
+      case(MOUSEBTN_DO_STROKE):
       DOING_STROKE = FALSE;
       x_stroke_translate_and_execute (w_current);
       break;
 #endif /* HAVE_LIBSTROKE */
 
-      case(MID_MOUSEPAN_ENABLED):
+      case(MOUSEBTN_DO_PAN):
         if (gschem_page_view_pan_end (page_view) && w_current->undo_panzoom) {
           o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
         }
@@ -577,6 +565,26 @@ x_event_configure (GschemPageView    *page_view,
   }
 
   page_view->previous_allocation = current_allocation;
+
+
+  /* tabbed GUI: zoom/pan, mark page_view as configured and return:
+   * there is only one page per page view.
+  */
+  if (x_tabs_enabled())
+  {
+    if (page_view->configured)
+    {
+      gschem_page_view_pan_mouse (page_view, 0, 0);
+    }
+    else
+    {
+      gschem_page_view_zoom_extents (page_view, NULL);
+    }
+
+    page_view->configured = TRUE;
+    return FALSE;
+  }
+
 
   /* re-pan each page of the TOPLEVEL */
   for ( iter = geda_list_get_glist (p_current->toplevel->pages);
@@ -817,8 +825,8 @@ x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint 
 
   g_return_val_if_fail (GTK_WIDGET (page_view)->window != NULL, FALSE);
 
-  /* \todo The following line is depricated in GDK 2.24 */
-  gdk_drawable_get_size (GTK_WIDGET (page_view)->window, &width, &height);
+  width = gdk_window_get_width (GTK_WIDGET (page_view)->window);
+  height = gdk_window_get_height (GTK_WIDGET (page_view)->window);
 
   gtk_widget_get_pointer(GTK_WIDGET (page_view), &sx, &sy);
 

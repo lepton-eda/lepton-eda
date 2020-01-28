@@ -1,0 +1,22 @@
+This simulation came about as I was fixing a FRG-7700 SSB radio.
+It simulates the bandpass filter before the first RF amp.
+The simulation should be run in NGSPICE.
+It should show a bandpass responce.
+
+
+You will find;
+
+-reference material for frg_7700 in the directory.
+-spice models for the simulaton in models directory.
+-ngspice cmds used to run simulation.
+
+
+
+
+You must also have gaw wave viewer` installed.
+http://gaw.tuxfamily.org/linux/gaw.php
+
+
+drforbin
+
+drforbin6@gmail.com

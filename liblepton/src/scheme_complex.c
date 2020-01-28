@@ -1,6 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library - Scheme API
+/* Lepton EDA library - Scheme API
  * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,6 +130,8 @@ SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
   SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_complex_x);
   SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_complex_x);
   SCM_ASSERT (scm_is_integer (angle_s), angle_s, SCM_ARG4, s_set_complex_x);
+  SCM_ASSERT (scm_is_bool (mirror_s), mirror_s,  SCM_ARG5, s_set_complex_x);
+  SCM_ASSERT (scm_is_bool (locked_s), locked_s,  SCM_ARG6, s_set_complex_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (complex_s);
@@ -377,6 +380,45 @@ SCM_DEFINE (complex_remove_x, "%complex-remove!", 2, 0, 0,
   return complex_s;
 }
 
+/*! \brief Get component's symbol full file name.
+ *
+ * \par Function Description
+ * If a component has a symbol file associated with it, get that
+ * file's full path.
+ *
+ * \note Scheme API: Implements the %complex-filename procedure in the
+ * (geda core complex) module.
+ *
+ * \param complex_s  a complex object.
+ * \return           symbols's file path or #f.
+ */
+SCM_DEFINE (complex_filename, "%complex-filename", 1, 0, 0,
+            (SCM complex_s),
+            "Get component's symbol full file name")
+{
+  SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPLEX), complex_s,
+              SCM_ARG1, s_complex_filename);
+
+  OBJECT* obj = edascm_to_object (complex_s);
+  const CLibSymbol* sym = s_clib_get_symbol_by_name (obj->complex_basename);
+
+  SCM result = SCM_BOOL_F;
+
+  if (sym != NULL)
+  {
+    gchar* fname = s_clib_symbol_get_filename (sym);
+    if (fname != NULL)
+    {
+      result = scm_from_utf8_string (fname);
+      g_free (fname);
+    }
+  }
+
+  return result;
+}
+
+
+
 /*!
  * \brief Create the (geda core complex) Scheme module.
  * \par Function Description
@@ -390,9 +432,15 @@ init_module_geda_core_complex (void *unused)
   #include "scheme_complex.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_make_complex, s_make_complex_library, s_set_complex_x,
-                s_complex_info, s_complex_contents, s_complex_append_x,
-                s_complex_remove_x, NULL);
+  scm_c_export (s_make_complex,
+                s_make_complex_library,
+                s_set_complex_x,
+                s_complex_info,
+                s_complex_contents,
+                s_complex_append_x,
+                s_complex_remove_x,
+                s_complex_filename,
+                NULL);
 }
 
 /*!

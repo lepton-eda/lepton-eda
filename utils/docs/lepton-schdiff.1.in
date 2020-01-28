@@ -1,0 +1,95 @@
+.TH lepton-schdiff 1 "@DATE@" "Lepton EDA" @VERSION@
+
+.SH NAME
+.B lepton-schdiff
+\- Graphical diff tool for schematics
+
+.SH SYNOPSIS
+.B lepton-schdiff
+.I [-d VIEWER] infile1.sch infile2.sch
+
+
+.SH DESCRIPTION
+
+The
+.B lepton-schdiff
+program will use 
+.B ImageMagick(1)
+to display a graphical diff of two schematic files.  It's most useful
+when combined with a revision control system so it can compare two revisions of
+the same file, review changes, etc.  However, it is limited in that it can only
+compare two files at a time; it cannot diff entire directories nor can it diff
+an entire revision (unless that revision affected only one file).
+
+\fIVIEWER\fR command, if specified, will be used to display the result.
+By default, it's
+.B display
+program from the ImageMagick package.
+
+.B lepton-schdiff
+can easily be configured to work with most revision control systems.  Here are
+instructions for three:
+
+.B git:
+Use the 
+.B difftool
+command exactly as you would use
+.B diff
+, but supply the
+.B \-x lepton-schdiff
+option.
+
+.B mercurial:
+Use the 
+.B lepton-schdiff
+command exactly as you would use
+.B diff
+, but add the following lines to your .hgrc:
+
+.RS
+  [extensions]
+  hgext.extdiff =
+  [extdiff]
+  cmd.schdiff = lepton-schdiff
+.RE
+
+.B subversion:
+Use the
+.B diff
+command like normal, but supply the
+.B --diff-cmd lepton-schdiff
+option.
+
+.B Note:
+To make lepton-schdiff work properly, all page contents
+should be enclosed in some form of bounding box (e.g.
+a title block), otherwise the symbols in exported
+images could have different relative positions and/or
+sizes, resulting in a difference image that is rather
+hard to comprehend.
+
+.SH EXAMPLES
+
+.TP
+Use git to view the changes to a file between two revisions
+git difftool \-x lepton-schdiff 182110f 039e012 cpu.sch
+
+.TP
+Use mercurial to see all the changes since a specific revision
+hg schdiff \-r 8442880f9835 cpld.sch
+
+.TP
+Use subversion to review a specific revision
+svn diff \-\-diff-cmd lepton-schdiff \-c 49 power.sch
+
+.SH BUGS
+
+If you find one, please report it at https://github.com/lepton-eda/lepton-eda/issues
+
+.SH AUTHOR
+
+Alan Somers
+
+.SH SEE ALSO
+
+.B composite(1), display(1), git(1), lepton-schematic(1), hg(1), svn(1)

@@ -23,7 +23,7 @@ AC_DEFUN([AX_OPTION_DEPRECATED],dnl
 [AC_PREREQ([2.60])dnl
 
   AC_MSG_CHECKING([whether to enable deprecated features])
-  AC_ARG_ENABLE([relocatable],
+  AC_ARG_ENABLE([deprecated],
     [AS_HELP_STRING([--disable-deprecated], [disable deprecated features])],
     [], [enable_deprecated="yes"])
 

@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,40 +22,203 @@
 #include "gschem.h"
 
 
+
+/*! Open/Save dialog file filters
+ */
+static GtkFileFilter* filter_sch      = NULL;
+static GtkFileFilter* filter_sym      = NULL;
+static GtkFileFilter* filter_sch_sym  = NULL;
+static GtkFileFilter* filter_all      = NULL;
+
+/*! Remember the last used filters
+ */
+static GtkFileFilter* filter_last_opendlg = NULL;
+static GtkFileFilter* filter_last_savedlg = NULL;
+
+
+
 /*! \brief Creates filter for file chooser.
  *  \par Function Description
  *  This function adds file filters to <B>filechooser</B>.
+ *  It also restores the last chosen filters (separate for
+ *  Open and Save dialogs).
  *
  *  \param [in] filechooser The file chooser to add filter to.
  */
 static void
 x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
 {
-  GtkFileFilter *filter;
+  /* create filters:
+  */
+  if (filter_sch == NULL)
+  {
+    filter_sch = gtk_file_filter_new();
 
-  /* file filter for schematic files (*.sch) */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Schematics"));
-  gtk_file_filter_add_pattern (filter, "*.sch");
-  gtk_file_chooser_add_filter (filechooser, filter);
-  /* file filter for symbol files (*.sym) */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Symbols"));
-  gtk_file_filter_add_pattern (filter, "*.sym");
-  gtk_file_chooser_add_filter (filechooser, filter);
-  /* file filter for both symbol and schematic files (*.sym+*.sch) */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Schematics and symbols"));
-  gtk_file_filter_add_pattern (filter, "*.sym");
-  gtk_file_filter_add_pattern (filter, "*.sch");
-  gtk_file_chooser_add_filter (filechooser, filter);
-  /* file filter that match any file */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All files"));
-  gtk_file_filter_add_pattern (filter, "*");
-  gtk_file_chooser_add_filter (filechooser, filter);
+    gtk_file_filter_set_name (filter_sch, _("Schematics (*.sch)"));
+    gtk_file_filter_add_pattern (filter_sch, "*.sch");
 
-}
+    /* NOTE: GtkFileChooser object takes ownership of the filter:
+    */
+    g_object_ref (G_OBJECT (filter_sch));
+  }
+
+  if (filter_sym == NULL)
+  {
+    filter_sym = gtk_file_filter_new();
+
+    gtk_file_filter_set_name (filter_sym, _("Symbols (*.sym)"));
+    gtk_file_filter_add_pattern (filter_sym, "*.sym");
+
+    g_object_ref (G_OBJECT (filter_sym));
+  }
+
+  if (filter_sch_sym == NULL)
+  {
+    filter_sch_sym = gtk_file_filter_new();
+
+    gtk_file_filter_set_name (filter_sch_sym, _("Schematics and symbols (*.sch *.sym)"));
+    gtk_file_filter_add_pattern (filter_sch_sym, "*.sym");
+    gtk_file_filter_add_pattern (filter_sch_sym, "*.sch");
+
+    g_object_ref (G_OBJECT (filter_sch_sym));
+  }
+
+  if (filter_all == NULL)
+  {
+    filter_all = gtk_file_filter_new();
+
+    gtk_file_filter_set_name (filter_all, _("All files"));
+    gtk_file_filter_add_pattern (filter_all, "*");
+
+    g_object_ref (G_OBJECT (filter_all));
+  }
+
+  /* add filters to [filechooser]:
+  */
+  gtk_file_chooser_add_filter (filechooser, filter_sch);
+  gtk_file_chooser_add_filter (filechooser, filter_sym);
+  gtk_file_chooser_add_filter (filechooser, filter_sch_sym);
+  gtk_file_chooser_add_filter (filechooser, filter_all);
+
+  /* use *.sch filter by default:
+  */
+  if (filter_last_opendlg == NULL)
+  {
+    filter_last_opendlg = filter_sch;
+  }
+
+  if (filter_last_savedlg == NULL)
+  {
+    filter_last_savedlg = filter_sch;
+  }
+
+  /* restore last used filters:
+  */
+  GtkFileChooserAction type = gtk_file_chooser_get_action (filechooser);
+
+  if (type == GTK_FILE_CHOOSER_ACTION_OPEN)
+  {
+    gtk_file_chooser_set_filter (filechooser, filter_last_opendlg);
+  }
+  else
+  if (type == GTK_FILE_CHOOSER_ACTION_SAVE)
+  {
+    gtk_file_chooser_set_filter (filechooser, filter_last_savedlg);
+  }
+  else
+  {
+    g_assert (FALSE && "Trying to set filter for unsupported dialog type");
+  }
+
+} /* x_fileselect_setup_filechooser_filters() */
+
+
+
+/*! \brief Replace last 3 chars in filename with \a suffix and get basename
+ *
+ *  \par Function Description
+ *  Example:
+ *  basename_switch_suffix( "/path/to/file.sch", "sym" ) => "file.sym"
+ *  Caller must g_free() the return value.
+ *
+ *  \param  path    Full file path.
+ *  \param  suffix  A new suffix.
+ *
+ *  \return File's basename with suffix replaces with \a suffix
+ */
+static gchar*
+basename_switch_suffix (const gchar* path, const gchar* suffix)
+{
+  gchar* bname = g_path_get_basename (path);
+  if (bname == NULL)
+  {
+    return NULL;
+  }
+
+  gchar* name      = (gchar*) malloc (PATH_MAX);
+  glong  len_bname = g_utf8_strlen (bname, -1);
+
+  const gsize len_suffix = 3;
+  g_utf8_strncpy (name, bname, len_bname - len_suffix);
+
+  gchar* bname_new = g_strconcat (name, suffix, NULL);
+
+#ifdef DEBUG
+  printf( " .. bname:     [%s]\n",  bname );
+  printf( " .. len_bname: [%lu]\n", len_bname );
+  printf( " .. name:      [%s]\n",  name );
+  printf( " .. bname_new: [%s]\n",  bname_new );
+#endif
+
+  g_free (name);
+  g_free (bname);
+
+  return bname_new;
+
+} /* basename_switch_suffix() */
+
+
+
+/*! \brief Dialog's "filter" property change notification handler
+ *
+ *  \par Function Description
+ *  Change filename's extension (.sch or .sym) in the "Save As"
+ *  dialog according to the currently selected filter.
+ */
+static void
+on_filter_changed (GtkFileChooserDialog* dialog, gpointer data)
+{
+  GtkFileChooser* chooser = GTK_FILE_CHOOSER (dialog);
+  GtkFileFilter*  filter  = gtk_file_chooser_get_filter (chooser);
+
+  gchar* fname = gtk_file_chooser_get_filename (chooser);
+  if (fname == NULL)
+  {
+    return;
+  }
+
+
+  gchar* bname = NULL;
+
+  if (filter == filter_sch && g_str_has_suffix (fname, ".sym"))
+  {
+    bname = basename_switch_suffix (fname, "sch");
+  }
+  else
+  if (filter == filter_sym && g_str_has_suffix (fname, ".sch"))
+  {
+    bname = basename_switch_suffix (fname, "sym");
+  }
+
+  if (bname != NULL)
+  {
+    gtk_file_chooser_set_current_name (chooser, bname);
+    g_free (bname);
+  }
+
+} /* on_filter_changed() */
+
+
 
 /*! \brief Updates the preview when the selection changes.
  *  \par Function Description
@@ -179,7 +343,11 @@ x_fileselect_open(GschemToplevel *w_current)
 					  GTK_RESPONSE_CANCEL,
 					  -1);
 
-  x_fileselect_add_preview (GTK_FILE_CHOOSER (dialog));
+  if (w_current->file_preview)
+  {
+    x_fileselect_add_preview (GTK_FILE_CHOOSER (dialog));
+  }
+
   g_object_set (dialog,
                 /* GtkFileChooser */
                 "select-multiple", TRUE,
@@ -192,6 +360,10 @@ x_fileselect_open(GschemToplevel *w_current)
   g_free (cwd);
   gtk_widget_show (dialog);
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT) {
+
+    /* remember current filter: */
+    filter_last_opendlg = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
+
     GSList *tmp, *filenames =
       gtk_file_chooser_get_filenames (GTK_FILE_CHOOSER (dialog));
 
@@ -211,42 +383,56 @@ x_fileselect_open(GschemToplevel *w_current)
 
 }
 
+
+
 /*! \brief Opens a file chooser for saving the current page.
  *  \par Function Description
  *  This function opens a file chooser dialog and wait for the user to
- *  select a file where the <B>toplevel</B>'s current page will be
- *  saved.
+ *  select a file where the \a page will be saved.
  *
  *  If the user cancels the operation (with the cancel button), the
- *  page is not saved.
+ *  page is not saved and FALSE is returned.
  *
- *  The function updates the user interface.
+ *  The function updates the user interface. (Actual UI update
+ *  is performed in x_window_save_page(), which is called by this
+ *  function).
  *
- *  \param [in] w_current The GschemToplevel environment.
+ *  \param  [in]     w_current The GschemToplevel environment.
+ *  \param  [in]     page      The page to be saved.
+ *  \param  [in,out] result    If not NULL, will be filled with save operation result.
+ *  \return                    TRUE if dialog was closed with ACCEPT response.
  */
-void
-x_fileselect_save (GschemToplevel *w_current)
+gboolean
+x_fileselect_save (GschemToplevel *w_current, PAGE* page, gboolean* result)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  GtkWidget *dialog;
+  g_return_val_if_fail (w_current != NULL, FALSE);
+  g_return_val_if_fail (page != NULL, FALSE);
 
-  dialog = gtk_file_chooser_dialog_new (_("Save as..."),
-                                        GTK_WINDOW(w_current->main_window),
-                                        GTK_FILE_CHOOSER_ACTION_SAVE,
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
-                                        NULL);
+  gboolean ret = FALSE;
+  if (result != NULL)
+  {
+    *result = FALSE;
+  }
 
-  /* Set the alternative button order (ok, cancel, help) for other systems */
+  GtkWidget* dialog = gtk_file_chooser_dialog_new(
+    _("Save as..."),
+    GTK_WINDOW(w_current->main_window),
+    GTK_FILE_CHOOSER_ACTION_SAVE,
+    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+    GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
+    NULL);
+
+  /* Set the alternative button order (ok, cancel, help) for other systems:
+  */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
 					  GTK_RESPONSE_ACCEPT,
 					  GTK_RESPONSE_CANCEL,
 					  -1);
 
   /* set default response signal. This is usually triggered by the
-     "Return" key */
-  gtk_dialog_set_default_response(GTK_DIALOG(dialog),
-				  GTK_RESPONSE_ACCEPT);
+   * "Return" key:
+  */
+  gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
 
   g_object_set (dialog,
                 /* GtkFileChooser */
@@ -254,32 +440,62 @@ x_fileselect_save (GschemToplevel *w_current)
                 /* only in GTK 2.8 */
                 /* "do-overwrite-confirmation", TRUE, */
                 NULL);
-  /* add file filters to dialog */
+
+  /* add file filters to dialog:
+  */
   x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
-  /* set the current filename or directory name if new document */
-  if (g_file_test (s_page_get_filename (toplevel->page_current),
-                   G_FILE_TEST_EXISTS)) {
+
+  /* set the current filename or directory name if new document:
+  */
+  if (g_file_test (s_page_get_filename (page), G_FILE_TEST_EXISTS))
+  {
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
-                                   s_page_get_filename (toplevel->page_current));
-  } else {
+                                   s_page_get_filename (page));
+  }
+  else
+  {
     gchar *cwd = g_get_current_dir ();
-    /* force save in current working dir */
+
+    /* force save in current working dir:
+    */
     gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), cwd);
     g_free (cwd);
-    gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog),
-                                       "untitled.sch");
+
+    /* set page file's basename as the current filename:
+    */
+    const gchar* fname = s_page_get_filename (page);
+    gchar* bname = g_path_get_basename (fname);
+    gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), bname);
+    g_free (bname);
   }
 
-  gtk_dialog_set_default_response(GTK_DIALOG(dialog),
-				  GTK_RESPONSE_ACCEPT);
+
+  /* add handler for dialog's "filter" property change notification:
+  */
+  g_signal_connect (dialog,
+                    "notify::filter",
+                    G_CALLBACK (&on_filter_changed),
+                    NULL);
+
+
+  /*
+   * Open "Save As.." dialog:
+  */
+
   gtk_widget_show (dialog);
-  if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT) {
-    gchar *filename =
-      gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+  if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT)
+  {
+    /* remember current filter:
+    */
+    filter_last_savedlg = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
+
+    gchar *filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
     /* If the file already exists, display a dialog box to check if
-       the user really wants to overwrite it. */
-    if ((filename != NULL) && g_file_test (filename, G_FILE_TEST_EXISTS)) {
+       the user really wants to overwrite it:
+    */
+    if ((filename != NULL) && g_file_test (filename, G_FILE_TEST_EXISTS))
+    {
       GtkWidget *checkdialog =
         gtk_message_dialog_new (GTK_WINDOW(dialog),
                                 (GtkDialogFlags) (GTK_DIALOG_MODAL |
@@ -289,26 +505,45 @@ x_fileselect_save (GschemToplevel *w_current)
                                 _("The selected file `%1$s' already exists.\n\n"
                                   "Would you like to overwrite it?"),
                                 filename);
+
       gtk_window_set_title (GTK_WINDOW (checkdialog), _("Overwrite file?"));
-      if (gtk_dialog_run (GTK_DIALOG (checkdialog)) != GTK_RESPONSE_YES) {
+
+      if (gtk_dialog_run (GTK_DIALOG (checkdialog)) != GTK_RESPONSE_YES)
+      {
         s_log_message (_("Save cancelled on user request"));
         g_free (filename);
         filename = NULL;
       }
+
       gtk_widget_destroy (checkdialog);
     }
-    /* try saving current page of toplevel to file filename */
-    if (filename != NULL) {
-      x_window_save_page (w_current,
-                          w_current->toplevel->page_current,
-                          filename);
+
+
+    /* try saving the page to file filename:
+    */
+    if (filename != NULL)
+    {
+      ret = TRUE;
+
+      gboolean res = x_window_save_page (w_current, page, filename);
+
+      if (result != NULL)
+      {
+        *result = res;
+      }
     }
 
     g_free (filename);
-  }
+
+  } /* if: accept response */
+
   gtk_widget_destroy (dialog);
 
-}
+  return ret;
+
+} /* x_fileselect_save() */
+
+
 
 /*! \brief Load/Backup selection dialog.
  *  \par Function Description

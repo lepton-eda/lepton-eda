@@ -1,0 +1,63 @@
+.TH lepton-embed 1 "@DATE@" "Lepton EDA" @VERSION@
+
+.SH NAME
+lepton-embed \- Embed/unembed schematic components and pictures
+
+.SH SYNOPSIS
+.B lepton-embed
+\fB-e\fR | \fB-u\fR [\fIOPTIONS\fR] \fIFILE\fR ...
+
+.SH DESCRIPTION
+.B lepton-embed
+can embed the in-use schematic symbols and pictures into a schematic
+or set of schematics.
+It allows, for instance, putting a schematic on a website or in an email
+without the recipient needing to download lots of custom symbols for the
+design.
+.PP
+.B lepton-embed
+can also unembed symbol references from a schematic, but note that the
+symbols revert to library references; if the symbol doesn't exist in
+the current Lepton EDA project's library path, a broken schematic results.
+
+.SH OPTIONS
+.TP
+.BR \-e ", " \-\-embed
+Embed. Without \fB-p\fR or \fB-c\fR, embed all components and pictures.
+.TP
+.BR \-u ", " \-\-unembed
+Unembed. Without \fB-p\fR or \fB-c\fR, unembed all components and pictures.
+.TP
+.BR \-p ", " \-\-pictures
+Process pictures only.
+.TP
+.BR \-c ", " \-\-components
+Process components only.
+.TP
+.BR \-x ", " \-\-suffix " " \fBSUFFIX\fR
+Do not change input files. Modified files will be saved as
+\fIFILE\fR\fB.SUFFIX\fR.
+.TP
+.BR \-V ", " \-\-version
+Show version information.
+.TP
+.BR \-h ", " \-\-help
+Show usage information.
+
+.SH AUTHOR
+The initial program (gschlas, later renamed to lepton-schlas) has
+been written by Ales Hvezda <ahvezda@seul.org>. The lepton-embed
+Scheme script has been written by dmn <graahnul.grom@gmail.com>.
+
+.SH SEE ALSO
+.BR lepton-schematic(1)
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 2012-2017 gEDA Contributors.
+Copyright \(co 2019 Lepton EDA Contributors.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

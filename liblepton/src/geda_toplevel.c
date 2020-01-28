@@ -1,8 +1,8 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998, 1999, 2000 Kazu Hirata / Ales Hvezda
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2017 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2017 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,8 +49,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->RC_list = NULL;
 
-  toplevel->bitmap_directory   = NULL;
-
   /* These values are the default extents of the schematic drawing area.
    *
    * The negative values allow symbols, residing at the origin, to be
@@ -68,8 +66,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->major_changed_refdes = NULL;
 
-  toplevel->image_color = FALSE;
-
   toplevel->net_consolidate = FALSE;
 
   /* The following is an attempt at getting (deterministic) defaults */
@@ -79,8 +75,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->keep_invisible      = FALSE;
 
   toplevel->make_backup_files = TRUE;
-
-  toplevel->bus_ripper_symname = NULL;
 
   toplevel->force_boundingbox = FALSE;
 
@@ -115,15 +109,6 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
     /* Assume this works */
     g_source_remove (toplevel->auto_save_timeout);
   }
-
-  g_free (toplevel->bitmap_directory);
-  g_free (toplevel->bus_ripper_symname);
-
-  /* free all fonts */
-  /* if you close a window, then you free the font set... */
-  /* this is probably a bad idea... */
-  /* The font set can ONLY be freed when exiting!!! */
-  /*  o_text_freeallfonts (toplevel); */
 
   /* delete all pages */
   s_page_delete_list (toplevel);

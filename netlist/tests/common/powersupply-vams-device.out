@@ -1,0 +1,17 @@
+LIBRARY ieee,disciplines;
+USE ieee.math_real.all;
+USE ieee.math_real.all;
+USE work.electrical_system.all;
+USE work.all;
+
+-- Entity declaration --
+
+ENTITY DIODE-BRIDGE IS
+	 GENERIC (	device : REAL := 7404;
+			footprint : REAL := DIP14 );
+	 PORT (		unknown 	1 	:  	unknown;
+			unknown 	2 	:  	unknown;
+			unknown 	3 	:  	unknown;
+			unknown 	4 	:  	unknown );
+END ENTITY DIODE-BRIDGE;
+

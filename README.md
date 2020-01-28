@@ -2,7 +2,7 @@ Lepton Electronic Design Automation
 ===================================
 
 Copyright (C) 1998-2017 gEDA Developers.
-Copyright (C) 2017 Lepton Developers.
+Copyright (C) 2017-2019 Lepton Developers.
 
 Introduction
 ============
@@ -14,7 +14,7 @@ design, schematic capture, simulation, prototyping, and
 production. Currently, the gEDA project offers a mature suite of free
 software applications for electronics design, including schematic
 capture, attribute management, bill of materials (BOM) generation,
-netlisting into over 20 netlist formats, analog and digital
+netlisting into over 30 netlist formats, analog and digital
 simulation, and printed circuit board (PCB) layout.
 
 The gEDA project was started because of the lack of free EDA tools for
@@ -39,16 +39,16 @@ The major components of the Lepton suite are:
 - `lepton-schematic`
   - A schematic editor.
 
-- `gattrib`
+- `lepton-attrib`
   - A spreadsheet-like program for bulk editing of component attributes.
 
-- `gnetlist`
+- `lepton-netlist`
   - A highly-flexible, hierarchy-aware utility which parses schematics
     to generate a number of outputs, including netlists for a wide
     variety of PCB layout tools.  It can also generate bills of
     materials and DRC reports for your schematics.
 
-- `gsch2pcb`
+- `lepton-sch2pcb`
   - A command-line utility for streamlining the workflow where
     'PCB' <http://pcb.geda-project.org/> and `lepton-schematic`
     are used together.
@@ -64,9 +64,6 @@ The major components of the Lepton suite are:
 Installation
 ============
 
-The information in this section is intended to supplement the
-information in the `INSTALL` file.
-
 Dependencies
 ------------
 
@@ -81,7 +78,7 @@ In order to compile gEDA from the distributed source archives, you
 - Guile ("GNU's Ubiquitous Intelligent Language for Extensions"),
   version 2.0.0 or later.  <http://www.gnu.org/software/guile/>
 
-- GTK+ (the Gimp Toolkit), version 2.18.0 or later.
+- GTK+ (the Gimp Toolkit), version 2.24.0 or later.
   <http://www.gtk.org/>
 
 - GNU `gettext`, version 0.18 or newer.
@@ -92,9 +89,6 @@ In order to compile gEDA from the distributed source archives, you
 
 - The `awk` tool for data processing.  GNU Awk (`gawk`) is
   recommended.  <http://www.gnu.org/software/gawk/>
-
-- The CPython interpreter, version 2.7, including the development
-  headers.  <https://www.python.org/downloads/>
 
 The following tools and libraries are **highly recommended**:
 
@@ -114,7 +108,7 @@ The following tools and libraries are optional:
 
 - The `doxygen` API documentation tool.  This is required for
   building the gEDA developer API documentation, not for the regular
-  user documentation.  <http://www.stack.nl/~dimitri/doxygen/>
+  user documentation.  <http://www.doxygen.nl>
 
 - 'Inkscape' or 'ImageMagick' for svg to png or pdf conversion
   This is required for building the gEDA developer API documentation,
@@ -145,6 +139,13 @@ packages:
 If you're having problems, make sure that you have all of the
 necessary `dev` or `devel` packages installed.
 
+> "I have installed two versions of guile, but `./configure`
+> uses a wrong one!"
+
+Specify right `guile` binary on the `configure` stage, e.g.:
+
+    ./configure GUILE=/usr/bin/guile-2.0
+
 Installation from a source archive
 ----------------------------------
 
@@ -166,8 +167,6 @@ And install it (if you used a `--prefix` outside your $HOME directory,
 you may need to run this as root):
 
     make install
-
-For more information on installing Lepton, see the `INSTALL` document.
 
 Installation from the git repository
 ------------------------------------
@@ -221,19 +220,25 @@ To compile the documentation (quite a slow process), run:
 The documentation can then be found in:
 
     */docs/html/index.html
-    */docs/latex/refman.pdf
-
-Some modules don't automatically generate the PDF version of the
-documentation.  If you want them you have to build them explicitly,
-e.g.:
-
-    cd gattrib/docs && make refman.pdf
 
 Getting help
 ============
 
 There are several ways to get help with installing and using Lepton
 and the rest of the gEDA tools:
+
+- Chat with Lepton developers and users at
+  [gitter.im](https://gitter.im/Lepton-EDA/Lobby).
+  You can sign in there using your Twitter, GitHub or GitLab account
+  (no registration is required to read the messages posted there).
+  This is probably the fastest way to get in touch with us.
+
+- If you prefer using IRC, there is now a Lepton channel on OFTC:
+  irc.oftc.net#lepton-eda. Sometimes you can catch Lepton users or
+  developers there.
+
+- [Lepton EDA wiki](https://github.com/lepton-eda/lepton-eda/wiki)
+  is the first place to search for Lepton specific information.
 
 - The gEDA website <http://www.geda-project.org> has more extensive
   information on the gEDA tools, and links to some successful
@@ -247,8 +252,10 @@ and the rest of the gEDA tools:
 - If the resources above didn't help you resolve your problem, or you
   are having a *design* problem that you want to get help with,
   consider subscribing to and posting your question to the
-  `geda-user` mailing list.
-  <http://wiki.geda-project.org/geda:mailinglists>
+  `geda-user` mailing list
+  (<http://wiki.geda-project.org/geda:mailinglists>).
+  You can also [browse](http://www.delorie.com/archives/browse.cgi?p=geda-user)
+  and [search](http://www.delorie.com/archives) the mailing list archives.
 
 - If you have discovered a bug, have a feature request, or have
   written a patch to Lepton, please create an item on the lepton-eda
@@ -266,7 +273,7 @@ The programs and associated files are:
 
   Copyright (C) 1998-2017 by Ales Hvezda and the respective original
   authors.
-  Copyright (C) 2017 Lepton Developers.
+  Copyright (C) 2017-2020 Lepton Developers.
 
 See the `AUTHORS` file for a more extensive list of contributors to
 Lepton EDA and gEDA.

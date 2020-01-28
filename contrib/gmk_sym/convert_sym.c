@@ -5,7 +5,9 @@
  *  accept one argument, the name of the file to
  *  convert, converted output is displayed on stdout.
  *
- *     Copyright (C) 1999-2010  Mike Jarabek
+ *  Copyright (C) 1999-2010 Mike Jarabek
+ *  Copyright (C) 1999-2016 gEDA Contributors
+ *  Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  *     CHANGE HISTORY:
  *
@@ -242,8 +244,8 @@ struct LineStyle linemap[8] =
 
 /* attribute translation table */
 struct Translation {
-  char *origName;       /* name as it appears on a viewlogic schematic */
-  char *newName;        /* name as it should appear in gEDA */
+  const char *origName; /* name as it appears on a viewlogic schematic */
+  const char *newName;  /* name as it should appear in gEDA */
   unsigned int action;  /* what to do with this name */
 };
 
@@ -667,6 +669,7 @@ do_attached_attribute(FILE *fp)
   unsigned int visibility, show_name_value;
   unsigned int index;
   char text[MAX_TEXTLEN],text2[MAX_TEXTLEN],*name,*value;
+  char text3[MAX_TEXTLEN + 10 + 1];
   struct LineStyle linestyle;
   struct FillStyle fillstyle;
 
@@ -834,19 +837,21 @@ do_attached_attribute(FILE *fp)
       attribute_object( x, y, color, size, visibility, show_name_value,
                         angle, name, value, origin );
 
+      char text3[MAX_TEXTLEN + 10 + 1];
+
 #ifdef HAVE_SNPRINTF
       snprintf(text, MAX_TEXTLEN, "pinnumber=%s", &text2[2]);
 #else
-      sprintf(text, "pinnumber=%s", &text2[2]);
+      sprintf(text3, "pinnumber=%s", &text2[2]);
 #endif
       /* pinnumber is visible */
       visibility = 1;         /* overide any previous settings */
       show_name_value = 1;
 
-      name = text;
-      index = strindex(text,'=');
-      text[index] = 0;
-      value = &text[index+1];
+      name = text3;
+      index = strindex(text3,'=');
+      text3[index] = 0;
+      value = &text3[index+1];
       attribute_object( x, y, color, size, visibility, show_name_value,
                         angle, name, value, origin );
 
@@ -855,12 +860,12 @@ do_attached_attribute(FILE *fp)
     }
   }
 
-  name = text;
-  index = strindex(text,'=');
-  if (text[index] == '=')
+  name = text3;
+  index = strindex(text3,'=');
+  if (text3[index] == '=')
   {
-    text[index] = 0;
-    value = &text[index+1];
+    text3[index] = 0;
+    value = &text3[index+1];
   }
   else
   {
@@ -1290,7 +1295,7 @@ do_label(FILE *fp)
 {
   int x, y, angle, global, overbar;
   unsigned int color, size, origin, visibility, show_name_value;
-  char text[MAX_TEXTLEN];
+  char text[MAX_TEXTLEN + 10 + 1];
   char text2[MAX_TEXTLEN];
   struct LineStyle linestyle;
   struct FillStyle fillstyle;
@@ -1491,7 +1496,7 @@ void
 do_instance(FILE *fp)
 {
   char text[MAX_TEXTLEN];
-  char lib[MAX_TEXTLEN], name[MAX_TEXTLEN], symName[MAX_TEXTLEN];
+  char lib[MAX_TEXTLEN], name[MAX_TEXTLEN], symName[MAX_TEXTLEN + 20 + 2];
   unsigned int extension, selectable;
   int x, y, angle, orientation, mirror;
   float scale_factor;
@@ -1765,7 +1770,7 @@ attribute_object(int x, int y, unsigned int color, unsigned int  size,
 		 int angle, char *name, char *value, unsigned int origin)
 {
 
-  char text[MAX_TEXTLEN], text2[MAX_TEXTLEN];
+  char text[MAX_TEXTLEN * 2 + 1], text2[MAX_TEXTLEN];
   char tmpName[MAX_TEXTLEN], tmpValue[MAX_TEXTLEN];
   unsigned int i, j, done, length;
 

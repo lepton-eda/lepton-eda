@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2017 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2017 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,6 @@ struct st_page
   int page_control;
 
   /* backup variables */
-  GTimeVal last_load_or_save_time;
   char saved_since_first_loaded;
   gint ops_since_last_backup;
   gchar do_autosave_backup;
@@ -90,6 +89,9 @@ s_page_goto (TOPLEVEL *toplevel, PAGE *p_new);
 
 PAGE*
 s_page_search (TOPLEVEL *toplevel, const gchar *filename);
+
+PAGE*
+s_page_search_by_basename (TOPLEVEL *toplevel, const gchar *filename);
 
 PAGE*
 s_page_search_by_page_id (GedaPageList *list, int pid);

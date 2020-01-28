@@ -1,1 +1,2 @@
+(reset-component-library)
 (component-library "./sym")

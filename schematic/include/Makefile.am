@@ -3,10 +3,14 @@
 ## Process this file with automake to produce Makefile.in
 
 noinst_HEADERS = \
-	globals.h i_vars.h prototype.h x_dialog.h x_states.h \
+	globals.h \
+	i_vars.h \
+	prototype.h \
+	x_dialog.h \
+	x_states.h \
 	gettext.h \
 	x_compselect.h \
-	x_multiattrib.h x_pagesel.h \
+	x_multiattrib.h \
 	gschem.h \
 	gschemhotkeystore.h \
 	gschem_accel_label.h \
@@ -38,7 +42,10 @@ noinst_HEADERS = \
 	gschem_swatch_column_renderer.h \
 	gschem_text_properties_widget.h \
 	gschem_translate_widget.h \
-	gschem_toplevel.h
+	gschem_toplevel.h \
+	color_edit_widget.h \
+	font_select_widget.h \
+	page_select_widget.h
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~

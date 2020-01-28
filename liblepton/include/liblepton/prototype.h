@@ -28,6 +28,7 @@ SCM g_rc_mode_general(SCM scmmode, const char *rc_name, int *mode_var,
 gboolean g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
 gboolean g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
 gboolean g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar *path, GError **err);
+gboolean g_rc_load_cache_config (TOPLEVEL* toplevel, GError** err);
 void g_rc_parse(TOPLEVEL *toplevel, const gchar* pname, const gchar* rcname, const gchar* rcfile);
 void g_rc_parse_handler (TOPLEVEL *toplevel, const gchar *rcname, const gchar *rcfile, ConfigParseErrorFunc handler, void *user_data);
 SCM g_rc_rc_filename();
@@ -38,8 +39,10 @@ SCM g_rc_parse_rc (SCM pname_s, SCM rcname_s);
 void i_vars_libgeda_set(TOPLEVEL *toplevel);
 void i_vars_libgeda_freenames();
 
-/* libgeda.c */
-void libgeda_init(void);
+/* liblepton.c */
+void liblepton_init(void);
+void set_guile_compiled_path();
+char* version_message();
 
 /* m_hatch.c */
 void m_hatch_box(GedaBox *box, gint angle, gint pitch, GArray *lines);
@@ -151,9 +154,10 @@ char *s_slot_search_slot(OBJECT *object, OBJECT **return_found);
 void s_slot_update_object(TOPLEVEL *toplevel, OBJECT *object);
 
 /* s_textbuffer.c */
-TextBuffer *s_textbuffer_new (const gchar *data, const gint size);
+TextBuffer *s_textbuffer_new (const gchar *data, const gint size, const gchar* name);
 TextBuffer *s_textbuffer_free (TextBuffer *tb);
 const gchar *s_textbuffer_next (TextBuffer *tb, const gssize count);
 const gchar *s_textbuffer_next_line (TextBuffer *tb);
+gsize s_textbuffer_linenum (TextBuffer* tb);
 
 G_END_DECLS

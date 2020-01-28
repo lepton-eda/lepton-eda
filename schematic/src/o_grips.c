@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -736,7 +737,7 @@ static void o_grips_start_picture(GschemToplevel *w_current, OBJECT *o_current,
   w_current->current_pixbuf = o_picture_get_pixbuf (toplevel, o_current);
   w_current->pixbuf_filename =
     g_strdup (o_picture_get_filename (o_current));
-  w_current->pixbuf_wh_ratio = o_picture_get_ratio (toplevel, o_current);
+  w_current->pixbuf_wh_ratio = o_picture_get_ratio (o_current);
 
   /* (second_wx,second_wy) is the selected corner */
   /* (first_wx, first_wy) is the opposite corner */
@@ -860,6 +861,9 @@ static void o_grips_start_line(GschemToplevel *w_current, OBJECT *o_current,
  *  variables <B>which_grip</B> and <B>which_object</B> with the identifier
  *  of the grip and the object it belongs to respectively.
  *
+ *  If the \a draw-grips rc setting is "disabled", no grids are
+ *  displayed though the object is modified the same way.
+ *
  *  \param [in]  w_current  The GschemToplevel object.
  *  \param [in]  w_x        Current x coordinate of pointer in world units.
  *  \param [in]  w_y        Current y coordinate of pointer in world units.
@@ -870,41 +874,38 @@ void o_grips_start(GschemToplevel *w_current, int w_x, int w_y)
   int whichone;
   void (*func) (GschemToplevel*, OBJECT*, int, int, int) = NULL;
 
-  if (w_current->draw_grips) {
+  /* search if there is a grip on a selected object at (w_x,w_y) */
+  object = o_grips_search_world(w_current, w_x, w_y, &whichone);
 
-    /* search if there is a grip on a selected object at (w_x,w_y) */
-    object = o_grips_search_world(w_current, w_x, w_y, &whichone);
+  if (object != NULL) {
+    w_current->which_grip = whichone;
+    w_current->which_object = object;
 
-    if (object != NULL) {
-      w_current->which_grip = whichone;
-      w_current->which_object = object;
+    /* Switch off drawing for the object being modified */
+    object->dont_redraw = TRUE;
+    o_invalidate (w_current, object);
 
-      /* Switch off drawing for the object being modified */
-      object->dont_redraw = TRUE;
-      o_invalidate (w_current, object);
+    /* there is one */
+    /* depending on its type, start the modification process */
+    switch (object->type) {
+    case OBJ_ARC:     func = o_grips_start_arc;     break;
+    case OBJ_BOX:     func = o_grips_start_box;     break;
+    case OBJ_PATH:    func = o_grips_start_path;    break;
+    case OBJ_PICTURE: func = o_grips_start_picture; break;
+    case OBJ_CIRCLE:  func = o_grips_start_circle;  break;
+    case OBJ_LINE:
+    case OBJ_NET:
+    case OBJ_PIN:
+    case OBJ_BUS:     func = o_grips_start_line;    break;
 
-      /* there is one */
-      /* depending on its type, start the modification process */
-      switch (object->type) {
-          case OBJ_ARC:     func = o_grips_start_arc;     break;
-          case OBJ_BOX:     func = o_grips_start_box;     break;
-          case OBJ_PATH:    func = o_grips_start_path;    break;
-          case OBJ_PICTURE: func = o_grips_start_picture; break;
-          case OBJ_CIRCLE:  func = o_grips_start_circle;  break;
-          case OBJ_LINE:
-          case OBJ_NET:
-          case OBJ_PIN:
-          case OBJ_BUS:     func = o_grips_start_line;    break;
+    default: break;
+    }
 
-          default: break;
-      }
-
-      /* start the modification of a grip on the object */
-      if (func != NULL) {
-        (*func) (w_current, object, w_x, w_y, whichone);
-        i_set_state (w_current, GRIPS);
-        i_action_start (w_current);
-      }
+    /* start the modification of a grip on the object */
+    if (func != NULL) {
+      (*func) (w_current, object, w_x, w_y, whichone);
+      i_set_state (w_current, GRIPS);
+      i_action_start (w_current);
     }
   }
 }

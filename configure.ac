@@ -8,7 +8,11 @@ dnl directory.
 # Set up configuration system
 #####################################################################
 
-AC_INIT([lepton EDA], [1.9.3], [https://github.com/lepton-eda/lepton-eda/issues], [lepton-eda])
+AC_INIT([Lepton EDA],
+        [1.9.9],
+        [https://github.com/lepton-eda/lepton-eda/issues],
+        [lepton-eda],
+        [https://github.com/lepton-eda/lepton-eda])
 AC_PREREQ([2.60])
 
 AC_CONFIG_SRCDIR([liblepton/src/liblepton.c])
@@ -25,7 +29,7 @@ AC_GNU_SOURCE # FIXME for some reason this is needed?
 # Do version number magic
 #####################################################################
 
-AX_GIT_VERSION([20170226])
+AX_GIT_VERSION([20191003])
 
 # This is used for keeping the ChangeLog files up-to-date
 AC_SUBST([CHANGELOG_BASE], [1.0-20070526])
@@ -50,7 +54,7 @@ AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 
 AM_PROG_CC_C_O
-AX_GCC_FLAGS([-Wall -Werror=maybe-uninitialized -std=gnu99])
+AX_GCC_FLAGS([-Wall -Werror=uninitialized -std=c99])
 
 AC_PROG_MKDIR_P
 AM_PROG_LEX
@@ -75,21 +79,21 @@ PKG_PROG_PKG_CONFIG
 
 AX_CHECK_GUILE([2.0.0])
 
-PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.20.0], ,
-  AC_MSG_ERROR([GLib 2.20.0 or later is required.]))
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.38.0], ,
+  AC_MSG_ERROR([GLib 2.38.0 or later is required.]))
 AC_DEFINE([G_DISABLE_DEPRECATED], [1], [Disable deprecated GLib features])
 
-PKG_CHECK_MODULES(GIO, [gio-2.0 >= 2.20.0], ,
-  AC_MSG_ERROR([GIO 2.20.0 or later is required.]))
+PKG_CHECK_MODULES(GIO, [gio-2.0 >= 2.38.0], ,
+  AC_MSG_ERROR([GIO 2.38.0 or later is required.]))
 
-PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.18.0], ,
-  AC_MSG_ERROR([GTK+ 2.18.0 or later is required.]))
+PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.24.0], ,
+  AC_MSG_ERROR([GTK+ 2.24.0 or later is required.]))
 
-PKG_CHECK_MODULES(GDK, [gdk-2.0 >= 2.18.0], ,
-  AC_MSG_ERROR([GDK 2.18.0 or later is required.]))
+PKG_CHECK_MODULES(GDK, [gdk-2.0 >= 2.24.0], ,
+  AC_MSG_ERROR([GDK 2.24.0 or later is required.]))
 
-PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 2.18.0], ,
-  AC_MSG_ERROR([GDK_PIXBUF 2.18.0 or later is required.]))
+PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 2.21.0], ,
+  AC_MSG_ERROR([GDK_PIXBUF 2.21.0 or later is required.]))
 
 AX_CHECK_CAIRO
 
@@ -167,8 +171,8 @@ AX_OPTION_KDE3_DATA
 AX_OPTION_XDG_DB
 # libstroke support
 AX_OPTION_STROKE
-# gattrib
-AX_OPTION_GATTRIB
+# attrib
+AX_OPTION_ATTRIB
 # geda-gaf compatibility symlinks
 AX_OPTION_COMPAT_SYMLINKS
 # contributed software
@@ -183,9 +187,9 @@ AX_DATA_DIRS
 # Where should PCB footprints be searched for?
 AX_PCB_DIRS
 # Set up liblepton with the correct ld version number
-AX_LIBLEPTON([1:0:0])
+AX_LIBLEPTON([4:0:0])
 # Set up libleptonrenderer with the correct ld version number
-AX_LIBLEPTONRENDERER([1:0:0])
+AX_LIBLEPTONRENDERER([1:2:0])
 
 #####################################################################
 # Generate output
@@ -195,7 +199,6 @@ AC_CONFIG_FILES([Makefile
 
                  liblepton/Makefile
                  liblepton/liblepton.pc
-                 liblepton/po/domain.mak
                  liblepton/po/Makefile.in
                  liblepton/data/Makefile
                  liblepton/docs/Makefile
@@ -216,7 +219,6 @@ AC_CONFIG_FILES([Makefile
                  schematic/po/Makefile.in
                  schematic/docs/Makefile
                  schematic/include/Makefile
-                 schematic/scripts/Makefile
                  schematic/src/Makefile
                  schematic/examples/Makefile
                  schematic/lib/Makefile
@@ -225,15 +227,13 @@ AC_CONFIG_FILES([Makefile
                  schematic/tests/Makefile
                  schematic/scheme/Makefile
 
-                 gattrib/Makefile
-                 gattrib/po/Makefile.in
-                 gattrib/design/Makefile
-                 gattrib/docs/Makefile
-                 gattrib/include/Makefile
-                 gattrib/lib/Makefile
-                 gattrib/lib/system-gattribrc
-                 gattrib/src/Makefile
-                 gattrib/data/Makefile
+                 attrib/Makefile
+                 attrib/po/Makefile.in
+                 attrib/design/Makefile
+                 attrib/docs/Makefile
+                 attrib/include/Makefile
+                 attrib/src/Makefile
+                 attrib/data/Makefile
 
                  symcheck/docs/Makefile
                  symcheck/po/Makefile.in
@@ -241,26 +241,26 @@ AC_CONFIG_FILES([Makefile
                  symcheck/Makefile
                  symcheck/scheme/Makefile
 
-                 gnetlist/Makefile
-                 gnetlist/po/Makefile.in
-                 gnetlist/scheme/Makefile
-                 gnetlist/examples/Makefile
-                 gnetlist/tests/Makefile
-                 gnetlist/docs/Makefile
-                 gnetlist/docs/vams/Makefile
-                 gnetlist/examples/vams/Makefile
-                 gnetlist/examples/vams/vhdl/Makefile
-                 gnetlist/examples/vams/vhdl/basic-vhdl/Makefile
-                 gnetlist/examples/vams/vhdl/new-vhdl/Makefile
-                 gnetlist/examples/switcap/Makefile
-                 gnetlist/utils/Makefile
-                 gnetlist/scripts/Makefile
-                 gnetlist/scripts/annotate.sh
-                 gnetlist/scripts/bom_xref.sh
-                 gnetlist/scripts/bompp.sh
-                 gnetlist/examples/verilog/Makefile
-                 gnetlist/examples/verilog/T_FF_example/Makefile
-                 gnetlist/examples/verilog/T_FF_example/verilog_modules/Makefile
+                 netlist/Makefile
+                 netlist/po/Makefile.in
+                 netlist/scheme/Makefile
+                 netlist/examples/Makefile
+                 netlist/tests/Makefile
+                 netlist/docs/Makefile
+                 netlist/docs/vams/Makefile
+                 netlist/examples/vams/Makefile
+                 netlist/examples/vams/vhdl/Makefile
+                 netlist/examples/vams/vhdl/basic-vhdl/Makefile
+                 netlist/examples/vams/vhdl/new-vhdl/Makefile
+                 netlist/examples/switcap/Makefile
+                 netlist/examples/verilog/Makefile
+                 netlist/examples/verilog/T_FF_example/Makefile
+                 netlist/examples/verilog/T_FF_example/verilog_modules/Makefile
+
+                 netlist/examples/analog/Makefile
+                 netlist/examples/analog/varactor_osc/Makefile
+                 netlist/examples/analog/bandpass/Makefile
+
 
                  gnetlist/examples/analog/Makefile
                  gnetlist/examples/analog/varactor_osc/Makefile
@@ -273,23 +273,18 @@ AC_CONFIG_FILES([Makefile
                  utils/examples/gmk_sym/Makefile
                  utils/examples/gsch2pcb/Makefile
                  utils/examples/tragesym/Makefile
-                 utils/gschlas/Makefile
-                 utils/gxyrs/Makefile
-                 utils/include/Makefile
-                 utils/lib/Makefile
-                 utils/lib/system-gschlasrc
                  utils/scripts/Makefile
                  utils/src/Makefile
                  utils/tests/Makefile
-                 utils/tests/gxyrs/Makefile
-                 utils/tests/gxyrs/inputs/Makefile
-                 utils/tests/gxyrs/outputs/Makefile
                  utils/tests/refdes_renum/Makefile
                  utils/tests/refdes_renum/inputs/Makefile
                  utils/tests/refdes_renum/outputs/Makefile
 
                  symbols/Makefile
                  symbols/documentation/Makefile
+                 symbols/gnetman/Makefile
+                 symbols/verilog/Makefile
+                 symbols/vhdl/Makefile
 
                  docs/Makefile
                  docs/scheme-api/Makefile
@@ -299,8 +294,6 @@ AC_CONFIG_FILES([Makefile
 
                  examples/Makefile
                  examples/RF_Amp/Makefile
-                 examples/RF_Amp/model/Makefile
-                 examples/RF_Amp/sym/Makefile
                  examples/TwoStageAmp/Makefile
                  examples/gTAG/Makefile
                  examples/lightning_detector/Makefile
@@ -311,6 +304,8 @@ AC_CONFIG_FILES([Makefile
                  contrib/gmk_sym/Makefile
                  contrib/sarlacc_schem/Makefile
                  contrib/scripts/Makefile
+                 contrib/scripts/bom_xref.sh
+                 contrib/scripts/bompp.sh
                  contrib/scripts/sw2asc
 ])
 AC_OUTPUT

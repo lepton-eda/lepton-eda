@@ -4,7 +4,7 @@
 gmk_sym \- create rectangular symbols for gschem from a text file
 
 .SH SYNOPSIS
-.B gmk_sym [ -d ]
+.B gmk_sym
 .I inputfile.txt
 .B >
 .I outputfile.sym
@@ -17,9 +17,6 @@ is a program to create rectangular symbols for gschem from a file
 composed of comma separated lines.
 
 .SH OPTIONS
-.TP
-\-d
-Turn on debug output
 .TP
 \-h, \-?
 Display usage information
@@ -70,13 +67,14 @@ pas, tp, tri, clk, pwr
 Jerry O'Keefe <jerryok@pacbell.net>
 
 .SH SEE ALSO
-.BR gschem (1)
+.BR lepton-schematic (1)
 
 .SH COPYRIGHT
 .nf
-Copyright \(co 1999-@YEAR@ gEDA Contributors.  License GPLv2+: GNU GPL
-version 2 or later.  Please see the `COPYING' file included with this
-program for full details.
+Copyright \(co 1999-2017 gEDA Contributors.
+Copyright \(co 2017-@YEAR@ Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later.  Please see the
+`COPYING' file included with this program for full details.
 .PP
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.

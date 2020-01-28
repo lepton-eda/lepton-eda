@@ -1,0 +1,34 @@
+v 20111231 2
+T 200 2600 5 10 0 0 0 0 1
+author=Karl Hammar
+T 200 2400 5 10 0 0 0 0 1
+copyright=Karl Hammar
+T 200 2200 5 10 0 0 0 0 1
+dist-license=GPL
+T 200 2000 5 10 0 0 0 0 1
+use-license=unlimited
+T 200 1600 5 10 0 0 0 0 1
+device=Net
+T 200 1400 5 10 0 0 0 0 1
+graphic=1
+T 200 1200 5 10 0 0 0 0 1
+documentation=gaf/docs/wiki/geda-na_howto.html
+T 200 1000 5 10 0 0 0 0 1
+description=net symbol, output signal
+T 620 450 5 8 1 1 0 0 1
+refdes=output
+T 620 600 5 8 0 1 0 0 1
+net=output:1
+P 800 400 400 400 1 0 0
+{
+T 120 300 5 5 0 1 0 0 1
+pintype=pas
+T 50 300 5 5 0 1 0 0 1
+pinlabel=1
+T 50 300 5 5 0 1 0 0 1
+pinnumber=1
+T 50 300 5 5 0 1 0 0 1
+pinseq=1
+}
+L 400 400 0 400 3 5 2 2 57 57
+L 400 850 400 50 3 5 2 3 100 50

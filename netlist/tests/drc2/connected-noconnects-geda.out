@@ -1,0 +1,54 @@
+START header
+
+gEDA's netlist format
+(Initially created for testing of gnetlist)
+
+END header
+
+START graphical symbols
+
+Component without refdes: title-B.sym at ((40000 . 51000) 57000 . 40000)
+
+END graphical symbols
+
+START components
+
+R1 device=RESISTOR
+R2 device=RESISTOR
+R3 device=RESISTOR
+R4 device=RESISTOR
+R5 device=RESISTOR
+R6 device=RESISTOR
+R7 device=RESISTOR
+R8 device=RESISTOR
+R9 device=RESISTOR
+R10 device=RESISTOR
+R11 device=RESISTOR
+R12 device=RESISTOR
+
+END components
+
+START "no-connect" nets
+
+bad_net_1
+bad_net_2
+bad_net_3
+bad_net_4
+unnamed_net1
+unnamed_net2
+unnamed_net3
+unnamed_net4
+
+END "no-connect" nets
+
+START renamed-nets
+
+
+END renamed-nets
+
+START nets
+
+GND : R1 1, R2 1, R3 1, R4 1, R5 1, R6 1, R7 1, R8 1, R9 1, R10 1, R11 1, R12 1
+
+END nets
+

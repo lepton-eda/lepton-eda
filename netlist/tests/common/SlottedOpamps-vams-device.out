@@ -1,0 +1,25 @@
+LIBRARY ieee,disciplines;
+USE ieee.math_real.all;
+USE ieee.math_real.all;
+USE work.electrical_system.all;
+USE work.all;
+
+-- Entity declaration --
+
+ENTITY LM324 IS
+	 GENERIC (	device : REAL := 7404;
+			footprint : REAL := DIP14 );
+	 PORT (		unknown 	1 	:  	unknown;
+			unknown 	2 	:  	unknown;
+			unknown 	3 	:  	unknown;
+			unknown 	5 	:  	unknown;
+			unknown 	6 	:  	unknown;
+			unknown 	7 	:  	unknown;
+			unknown 	8 	:  	unknown;
+			unknown 	9 	:  	unknown;
+			unknown 	10 	:  	unknown;
+			unknown 	12 	:  	unknown;
+			unknown 	13 	:  	unknown;
+			unknown 	14 	:  	unknown );
+END ENTITY LM324;
+

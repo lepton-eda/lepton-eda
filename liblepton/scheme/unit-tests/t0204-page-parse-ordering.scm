@@ -2,9 +2,10 @@
 ;; in the correct order.
 
 (use-modules (unit-test)
-             (geda page)
-             (geda object)
-             (geda attrib))
+             (lepton attrib)
+             (lepton object)
+             ((geda page) #:renamer (symbol-prefix-proc 'geda:))
+             (lepton page))
 
 (define test-page
 "v 20111231 2
@@ -20,6 +21,23 @@ attrib2=bar
 (begin-test 'parse-ordering-objects
   (let* ((A (string->page "test/page/A" test-page))
          (lst (page-contents A)))
+    (assert-true (line? (list-ref lst 0)))
+    (assert-true (net? (list-ref lst 1)))
+    (assert-true (text? (list-ref lst 2)))
+    (assert-true (text? (list-ref lst 3)))
+
+    (assert-equal "attrib1=foo" (text-string (list-ref lst 2)))
+    (assert-equal "attrib2=bar" (text-string (list-ref lst 3)))
+
+    (assert-equal (list-tail lst 2) (object-attribs (list-ref lst 1)))))
+
+
+;;; The same tests for the deprecated (geda page) module
+;;; functions.
+
+(begin-test 'geda:parse-ordering-objects
+  (let* ((A (geda:string->page "test/page/A" test-page))
+         (lst (geda:page-contents A)))
     (assert-true (line? (list-ref lst 0)))
     (assert-true (net? (list-ref lst 1)))
     (assert-true (text? (list-ref lst 2)))

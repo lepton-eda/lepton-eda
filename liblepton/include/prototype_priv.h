@@ -1,20 +1,7 @@
 /* g_rc.c */
 int vstbl_lookup_str(const vstbl_entry *table, int size, const char *str);
 int vstbl_get_val(const vstbl_entry *table, int index);
-SCM g_rc_component_library(SCM path, SCM name);
-SCM g_rc_component_library_command (SCM listcmd, SCM getcmd, SCM name);
-SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name);
-SCM g_rc_reset_component_library(void);
-SCM g_rc_bitmap_directory(SCM path);
-SCM g_rc_scheme_directory(SCM path);
-SCM g_rc_bus_ripper_symname(SCM scmsymname);
-SCM g_rc_map_font_character_to_file(SCM character_param, SCM file_param);
-SCM g_rc_attribute_promotion(SCM mode);
-SCM g_rc_promote_invisible(SCM mode);
-SCM g_rc_keep_invisible(SCM mode);
-SCM g_rc_always_promote_attributes(SCM scmsymname);
-SCM g_rc_make_backup_files(SCM mode);
-SCM g_rc_print_color_map (SCM scm_map);
+SCM scheme_directory(SCM s_path);
 
 /* g_register.c */
 void g_register_libgeda_funcs(void);

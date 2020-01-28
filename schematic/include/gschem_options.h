@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
- * Copyright (C) 2013 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2013-2014 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +40,7 @@
  *
  *  Loading a configuration will overwrite this value
  */
-#define DEFAULT_NET_RUBBER_BAND_MODE (FALSE)
+#define DEFAULT_NET_RUBBER_BAND_MODE (TRUE)
 
 
 /*! \brief The initial grid mode

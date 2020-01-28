@@ -1,5 +1,5 @@
-/* Lepton EDA
- * Copyright (C) 2017 Lepton Developers
+/* Lepton EDA library - Scheme API
+ * Copyright (C) 2017-2019 Lepton Developers
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,17 +31,32 @@
  * \brief Returns Lepton EDA version list.
  * \par Function Description
  * Returns the list consisting of Scheme strings representing
- * PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION, and
- * PACKAGE_GIT_COMMIT variables.
+ * the following variables:
+ * - PREPEND_VERSION_STRING
+ * - PACKAGE_DOTTED_VERSION
+ * - PACKAGE_GIT_COMMIT
+ * - PACKAGE_BUGREPORT
+ * - PACKAGE_URL
+ * The last element in the list contains version message that
+ * can be used in the --version output.
  */
 SCM_DEFINE (lepton_version, "%lepton-version", 0, 0, 0,
             (),
             "Return Lepton EDA version string list.")
 {
-  return scm_list_4 (scm_from_utf8_string (PREPEND_VERSION_STRING),
-                     scm_from_utf8_string (PACKAGE_DOTTED_VERSION),
-                     scm_from_utf8_string (PACKAGE_DATE_VERSION),
-                     scm_from_utf8_string (PACKAGE_GIT_COMMIT));
+  char* msg = version_message();
+
+  SCM res = scm_list_n (scm_from_utf8_string (PREPEND_VERSION_STRING),
+                        scm_from_utf8_string (PACKAGE_DOTTED_VERSION),
+                        scm_from_utf8_string (PACKAGE_DATE_VERSION),
+                        scm_from_utf8_string (PACKAGE_GIT_COMMIT),
+                        scm_from_utf8_string (PACKAGE_BUGREPORT),
+                        scm_from_utf8_string (PACKAGE_URL),
+                        scm_from_utf8_string (msg),
+                        SCM_UNDEFINED);
+
+  free (msg);
+  return res;
 }
 
 

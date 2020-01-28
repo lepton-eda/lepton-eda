@@ -1,6 +1,8 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett
+;; Copyright (C) 2010-2016 gEDA Contributors
+;; Copyright (C) 2017-2018 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -45,6 +47,8 @@
 (define-public deselect-objects-hook %deselect-objects-hook)
 
 (define-public new-page-hook %new-page-hook)
+
+(define-public open-page-hook %open-page-hook)
 
 (define-public action-property-hook %action-property-hook)
 

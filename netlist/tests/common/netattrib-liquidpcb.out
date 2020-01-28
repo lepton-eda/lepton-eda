@@ -1,0 +1,72 @@
+<LiquidPCB>
+	<netlist name="Main netlist">
+		<net name="3.3V">
+			<netnode component="U500" pin=14 />
+		</net>
+		<net name="5V">
+			<netnode component="U500" pin=14 />
+		</net>
+		<net name="DGND">
+			<netnode component="U400" pin=2 />
+		</net>
+		<net name="DIGITAL_GND">
+			<netnode component="U500" pin=10 />
+		</net>
+		<net name="GND">
+			<netnode component="U100" pin=7 />
+			<netnode component="U300" pin=7 />
+			<netnode component="U400" pin=7 />
+			<netnode component="U500" pin=7 />
+			<netnode component="U500" pin=9 />
+		</net>
+		<net name="Vcc">
+			<netnode component="U100" pin=14 />
+			<netnode component="U200" pin=14 />
+			<netnode component="U300" pin=14 />
+			<netnode component="U400" pin=14 />
+		</net>
+		<net name="XGND">
+			<netnode component="U200" pin=7 />
+		</net>
+		<net name="netattrib">
+			<netnode component="U100" pin=5 />
+			<netnode component="U200" pin=2 />
+		</net>
+		<net name="one">
+			<netnode component="F1" pin=1 />
+			<netnode component="U100" pin=3 />
+			<netnode component="U200" pin=1 />
+			<netnode component="U300" pin=1 />
+		</net>
+		<net name="signal1">
+			<netnode component="U400" pin=1 />
+			<netnode component="U500" pin=1 />
+		</net>
+		<net name="signal3">
+			<netnode component="U400" pin=3 />
+			<netnode component="U400" pin=5 />
+		</net>
+		<net name="signal4">
+			<netnode component="U400" pin=4 />
+			<netnode component="U400" pin=10 />
+		</net>
+		<net name="signal6">
+			<netnode component="U400" pin=6 />
+			<netnode component="U400" pin=9 />
+		</net>
+		<net name="signal8">
+			<netnode component="U400" pin=8 />
+		</net>
+		<net name="signal12">
+			<netnode component="U400" pin=12 />
+		</net>
+		<net name="unnamed_net1">
+			<netnode component="U300" pin=2 />
+		</net>
+		<net name="unnamed_net2">
+			<netnode component="U500" pin=3 />
+			<netnode component="U500" pin=4 />
+			<netnode component="U500" pin=5 />
+		</net>
+	</netlist>
+</LiquidPCB>

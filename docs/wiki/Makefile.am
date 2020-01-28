@@ -1,10 +1,18 @@
 wikidir = $(docdir)/wiki
 
+#
+# NOTE: While constructing the list of files to install,
+# we search for symbolic links (-type l) as well as
+# regular files (-type f). This is done to facilitate
+# out-of-source builds using a tree of symbolic links,
+# created, for example, with lndir(1).
+#
+
 # Copy wiki into distribution
 dist-hook:
 	@for dir in $$(cd $(srcdir) && find . -type d -print | sed -e's:^\./::' ); do \
 	  $(MKDIR_P) $(distdir)/$$dir; \
-	  list=`(cd $(srcdir)/$$dir && find . -maxdepth 1 -type f \! -name 'Makefile*' \! -name '.gitignore' -print | sed -e 's:^\./::')`; \
+	  list=`(cd $(srcdir)/$$dir && find . -maxdepth 1 \( -type f -o -type l \) \! -name 'Makefile*' \! -name '.gitignore' -print | sed -e 's:^\./::')`; \
 	  for file in $$list; do \
 	    cp -p $(srcdir)/$$dir/$$file $(distdir)/$$dir || exit $$?; \
 	  done; \
@@ -15,7 +23,7 @@ install-data-local:
 	@for dir in $$(cd $(srcdir) && find . -type d -print | sed -e's:^\./::' ); do \
 	  d="$(DESTDIR)$(wikidir)/$$dir"; \
 	  $(MKDIR_P) $$d; \
-	  list=`(cd $(srcdir)/$$dir && find . -maxdepth 1 -type f \! -name 'Makefile*' \! -name '.gitignore' -print | sed -e 's:^\./::')`; \
+	  list=`(cd $(srcdir)/$$dir && find . -maxdepth 1 \( -type f -o -type l \) \! -name 'Makefile*' \! -name '.gitignore' -print | sed -e 's:^\./::')`; \
 	  if test -n "$$list"; then \
 	    echo " ( cd $(srcdir)/$$dir && $(INSTALL_DATA)" $$list "'$$d' )"; \
 	    (cd $(srcdir)/$$dir && $(INSTALL_DATA) $$list "$$d") || exit $$?; \
@@ -26,7 +34,7 @@ install-data-local:
 uninstall-local:
 	@for dir in $$(cd $(srcdir) && find . -type d -print | sed -e's:^\./::' ); do \
 	  d="$(DESTDIR)$(wikidir)/$$dir"; \
-	  list=`(cd $(srcdir)/$$dir && find . -maxdepth 1 -type f \! -name 'Makefile*' \! -name '.gitignore' -print | sed -e 's:^\./::')`; \
+	  list=`(cd $(srcdir)/$$dir && find . -maxdepth 1 \( -type f -o -type l \) \! -name 'Makefile*' \! -name '.gitignore' -print | sed -e 's:^\./::')`; \
 	  if test -n "$$list"; then \
 	    echo " ( cd '$$d' && rm -f" $$list ")"; \
 	    (cd "$$d" && rm -f $$list) || exit $$?; \

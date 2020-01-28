@@ -10,6 +10,10 @@ top_builddir = ../..
 # These options get passed to xgettext.
 XGETTEXT_OPTIONS = --keyword=_ --keyword=N_
 
+MSGMERGE_OPTIONS = --no-location
+
+PO_DEPENDS_ON_POT = no
+
 # This is the copyright holder that gets inserted into the header of the
 # $(DOMAIN).pot file.  Set this to the copyright holder of the surrounding
 # package.  (Note that the msgstr strings, extracted from the package's
@@ -18,7 +22,7 @@ XGETTEXT_OPTIONS = --keyword=_ --keyword=N_
 # or entity, or to disclaim their copyright.  The empty string stands for
 # the public domain; in this case the translators are expected to disclaim
 # their copyright.
-COPYRIGHT_HOLDER = gEDA Developers
+COPYRIGHT_HOLDER = Lepton Developers
 
 # This is the email address or URL to which the translators shall report
 # bugs in the untranslated strings:

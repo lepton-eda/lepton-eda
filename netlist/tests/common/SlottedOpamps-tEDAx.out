@@ -1,0 +1,29 @@
+tEDAx v1
+begin netlist v1 netlist
+
+	footprint U1 UNKNOWN
+	device U1 LM324
+	value U1 
+
+	conn minusin_slot1_pin_b U1 2
+
+	conn minusin_slot2_pin6_b U1 6
+
+	conn minusin_slot3_pin_b U1 9
+
+	conn minusin_slot4_pin13_b U1 13
+
+	conn plusin_slot1_pin3_a U1 3
+
+	conn plusin_slot2_pin5_a U1 5
+
+	conn plusin_slot3_pin10_a U1 10
+
+	conn plusin_slot4_pin12_a U1 12
+
+	conn samenet_output_c U1 1
+	conn samenet_output_c U1 7
+	conn samenet_output_c U1 8
+	conn samenet_output_c U1 14
+
+end netlist

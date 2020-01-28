@@ -89,13 +89,16 @@ Some general suggestions:
 
 - Provide updated tests and documentation
 
+- Do not leave trailing spaces in edited files
+
 When writing C code:
 
 - Do not use C++-style comments `// ...`; use C-style `/* ... */`
   comments instead.
 
-- This set of options to GNU `indent` approximates the gEDA C
-  indentation style:
+- This set of options to GNU `indent` approximates the lepton-eda C
+  indentation style: (note the `-nut` option, which disables
+  the use of tab characters: please use spaces for code indentation)
 
       -br -blf -bls -cdw -ce -cs -ts2 -sc -nut -bap -pcs -psl -lp l80 -bbo
 
@@ -109,7 +112,11 @@ When writing Scheme code:
 - Predicate functions, i.e. functions that test something, should have
   names ending in `?`, e.g. `object?`; destructive functions, that
   modify one of their arguments or global state, should have names
-  ending in `!`, e.g. `config-set!`.
+  ending in `!`, e.g. `set-config!`.
+  When implementing such a functions in `C`, please follow the naming
+  convention: for Scheme names with `?`, corresponding C functions'
+  names should have `_p` suffix (e.g. `object_p`), for Scheme names with
+  `!` - `_x` suffix (e.g. `set_config_x`).
 
 - When defining a function please use the
   ["implicit `define`" form](http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-8.html#%_sec_5.2):
@@ -125,3 +132,6 @@ When writing Makefile code:
 - Do not use `$<` ("implied source") variable in explicit rules.
   In implementations of `make` other than GNU, it may be defined only
   in implicit (i.e. suffix-transformation) rules.
+
+- When defining a makefile variable that contain a long list of files,
+put each file name on its own line.

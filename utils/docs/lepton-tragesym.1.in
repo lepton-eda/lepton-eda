@@ -1,0 +1,52 @@
+.TH lepton-tragesym 1 "@DATE@" "Lepton EDA" @VERSION@
+
+.SH NAME
+lepton-tragesym \- create Lepton EDA symbols from structured text files
+
+.SH SYNOPSIS
+.B lepton-tragesym
+.I SOURCE-FILE SYMBOL-FILE
+
+.SH DESCRIPTION
+.B lepton-tragesym
+creates lepton-schematic symbols from structured text files.
+.PP
+.B lepton-tragesym
+can:
+.IP \(bu
+create pins, their elements (clocksign, negation bubble), and
+attributes (pinnumber, pinseq, pintype, and pinlabel);
+.IP \(bu
+sort the pins alphabetically by their attributes;
+.IP \(bu
+rotate pinlabel attributes of the top and bottom pins if requested;
+.IP \(bu
+swap words in the pinlabel attributes if requested (only for
+attributes of the right and top pins, in the latter case only
+if rotation is also requested);
+.IP \(bu
+do some syntax check to the input file.
+.SH TUTORIAL
+There is a tutorial on the use of
+.B lepton-tragesym
+at:
+.IP
+http://wiki.geda-project.org/geda:tragesym_tutorial
+.SH AUTHOR
+The initial Python script has been written by Werner Hoch
+<werner.ho@gmx.de>.  The program has been rewritten almost from
+scratch in Scheme by Vladimir Zhbanov <vzhbanov@gmail.com>.
+
+.SH SEE ALSO
+.BR lepton-schematic (1),
+.BR pcb (1)
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 2012-2017 gEDA Contributors.
+Copyright \(co 2019 Lepton EDA Contributors.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

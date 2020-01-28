@@ -1,4 +1,5 @@
-/* $Id$ */
+#ifndef LEPTON_PROTOTYPE_H_
+#define LEPTON_PROTOTYPE_H_
 
 /* a_zoom.c */
 void a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int selected_from);
@@ -16,14 +17,11 @@ void g_init_builtins (void);
 /* g_attrib.c */
 void g_init_attrib ();
 /* g_funcs.c */
-SCM g_funcs_pdf(SCM filename);
-SCM g_funcs_image(SCM filename);
 SCM g_funcs_exit(void);
 SCM g_funcs_log(SCM msg);
 SCM g_funcs_msg(SCM msg);
 SCM g_funcs_confirm(SCM msg);
 SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags);
-SCM g_funcs_use_rc_values(void);
 /* g_hook.c */
 void g_init_hook ();
 void g_run_hook_object (GschemToplevel *w_current, const char *name, OBJECT *obj);
@@ -57,14 +55,11 @@ SCM g_keys_edit_delete(SCM rest);
 SCM g_keys_edit_rotate_90(SCM rest);
 SCM g_keys_edit_mirror(SCM rest);
 SCM g_keys_edit_slot(SCM rest);
-SCM g_keys_edit_color(SCM rest);
+SCM g_keys_edit_object_properties(SCM rest);
 SCM g_keys_edit_edit(SCM rest);
-SCM g_keys_edit_pin_type(SCM rest);
 SCM g_keys_edit_text(SCM rest);
 SCM g_keys_edit_lock(SCM rest);
 SCM g_keys_edit_unlock(SCM rest);
-SCM g_keys_edit_linetype(SCM rest);
-SCM g_keys_edit_filltype(SCM rest);
 SCM g_keys_edit_translate(SCM rest);
 SCM g_keys_edit_invoke_macro(SCM rest);
 SCM g_keys_edit_embed(SCM rest);
@@ -95,6 +90,7 @@ SCM g_keys_buffer_paste4(SCM rest);
 SCM g_keys_buffer_paste5(SCM rest);
 SCM g_keys_view_sidebar(SCM rest);
 SCM g_keys_view_status(SCM rest);
+SCM g_keys_view_find_text_state(SCM rest);
 SCM g_keys_view_redraw(SCM rest);
 SCM g_keys_view_zoom_full(SCM rest);
 SCM g_keys_view_zoom_extents(SCM rest);
@@ -109,10 +105,13 @@ SCM g_keys_view_pan_down(SCM rest);
 SCM g_keys_view_dark_colors(SCM rest);
 SCM g_keys_view_light_colors(SCM rest);
 SCM g_keys_view_bw_colors(SCM rest);
+SCM g_keys_view_color_edit(SCM rest);
 SCM g_keys_page_manager(SCM rest);
 SCM g_keys_page_next(SCM rest);
 SCM g_keys_page_prev(SCM rest);
 SCM g_keys_page_close(SCM rest);
+SCM g_keys_page_next_tab(SCM rest);
+SCM g_keys_page_prev_tab(SCM rest);
 SCM g_keys_page_revert(SCM rest);
 SCM g_keys_page_print(SCM rest);
 SCM g_keys_add_component(SCM rest);
@@ -137,7 +136,6 @@ SCM g_keys_attributes_show_value(SCM rest);
 SCM g_keys_attributes_show_both(SCM rest);
 SCM g_keys_attributes_visibility_toggle(SCM rest);
 SCM g_keys_script_console(SCM rest);
-SCM g_keys_options_text_size(SCM rest);
 SCM g_keys_options_afeedback(SCM rest);
 SCM g_keys_options_grid(SCM rest);
 SCM g_keys_options_snap(SCM rest);
@@ -148,6 +146,8 @@ SCM g_keys_options_rubberband(SCM rest);
 SCM g_keys_options_magneticnet(SCM rest);
 SCM g_keys_options_show_log_window(SCM rest);
 SCM g_keys_options_show_coord_window(SCM rest);
+SCM g_keys_options_select_font(SCM rest);
+SCM g_keys_options_draw_grips(SCM rest);
 SCM g_keys_help_about(SCM rest);
 SCM g_keys_help_hotkeys(SCM rest);
 SCM g_keys_cancel(SCM rest);
@@ -155,60 +155,8 @@ void g_init_keys ();
 /* g_rc.c */
 void g_rc_parse_gtkrc();
 SCM g_rc_gschem_version(SCM version);
-SCM g_rc_net_direction_mode(SCM mode);
-SCM g_rc_net_selection_mode(SCM mode);
-SCM g_rc_action_feedback_mode(SCM mode);
-SCM g_rc_zoom_with_pan(SCM mode);
-SCM g_rc_logging(SCM mode);
-SCM g_rc_embed_components(SCM mode);
-SCM g_rc_text_size(SCM size);
-SCM g_rc_text_caps_style(SCM mode);
-SCM g_rc_snap_size(SCM size);
-SCM g_rc_logging_destination(SCM mode);
 SCM g_rc_attribute_name(SCM path);
-SCM g_rc_scrollbars(SCM mode);
-SCM g_rc_image_color(SCM mode);
-SCM g_rc_image_size(SCM width, SCM height);
-SCM g_rc_log_window(SCM mode);
-SCM g_rc_log_window_type(SCM mode);
-SCM g_rc_third_button(SCM mode);
-SCM g_rc_third_button_cancel(SCM mode);
-SCM g_rc_middle_button(SCM mode);
-SCM g_rc_scroll_wheel(SCM mode);
-SCM g_rc_net_consolidate(SCM mode);
-SCM g_rc_file_preview(SCM mode);
-SCM g_rc_enforce_hierarchy(SCM mode);
-SCM g_rc_fast_mousepan(SCM mode);
-SCM g_rc_raise_dialog_boxes_on_expose(SCM mode);
-SCM g_rc_continue_component_place(SCM mode);
-SCM g_rc_undo_levels(SCM levels);
-SCM g_rc_undo_control(SCM mode);
-SCM g_rc_undo_type(SCM mode);
-SCM g_rc_undo_panzoom(SCM mode);
-SCM g_rc_draw_grips(SCM mode);
-SCM g_rc_netconn_rubberband(SCM mode);
-SCM g_rc_magnetic_net_mode(SCM mode);
 SCM g_rc_add_menu(SCM menu_name, SCM menu_items);
-SCM g_rc_window_size(SCM width, SCM height);
-SCM g_rc_warp_cursor(SCM mode);
-SCM g_rc_toolbars(SCM mode);
-SCM g_rc_handleboxes(SCM mode);
-SCM g_rc_bus_ripper_size(SCM size);
-SCM g_rc_bus_ripper_type(SCM mode);
-SCM g_rc_bus_ripper_rotation(SCM mode);
-SCM g_rc_force_boundingbox(SCM mode);
-SCM g_rc_grid_mode(SCM mode);
-SCM g_rc_dots_grid_dot_size(SCM dotsize);
-SCM g_rc_dots_grid_mode(SCM mode);
-SCM g_rc_dots_grid_fixed_threshold(SCM spacing);
-SCM g_rc_mesh_grid_display_threshold(SCM spacing);
-SCM g_rc_add_attribute_offset(SCM offset);
-SCM g_rc_auto_save_interval(SCM seconds);
-SCM g_rc_mousepan_gain(SCM mode);
-SCM g_rc_keyboardpan_gain(SCM mode);
-SCM g_rc_select_slack_pixels(SCM pixels);
-SCM g_rc_zoom_gain(SCM gain);
-SCM g_rc_scrollpan_steps(SCM steps);
 SCM g_rc_display_color_map (SCM scm_map);
 SCM g_rc_display_outline_color_map (SCM scm_map);
 /* g_register.c */
@@ -238,12 +186,12 @@ void i_action_update_status(GschemToplevel *w_current,gboolean inside_action);
 void i_show_state(GschemToplevel *w_current, const char *message);
 void i_set_state(GschemToplevel *w_current, enum x_states newstate);
 void i_set_state_msg(GschemToplevel *w_current, enum x_states newstate, const char *message);
-void i_update_middle_button (GschemToplevel *w_current, i_callback_func func, const char *string);
 void i_update_toolbar(GschemToplevel *w_current);
 void i_update_menus(GschemToplevel *w_current);
-void i_set_filename(GschemToplevel *w_current, const gchar *string, const gchar *changed);
+void i_set_filename(GschemToplevel *w_current, const gchar *filename, gboolean changed);
 void i_update_grid_info(GschemToplevel *w_current);
 void i_update_grid_info_callback (GschemPageView *view, GschemToplevel *w_current);
+void i_update_net_options_status (GschemToplevel* w_current);
 /* i_callbacks.c */
 void i_callback_file_new(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_toolbar_file_new(GtkWidget *widget, gpointer data);
@@ -273,10 +221,9 @@ void i_callback_edit_mcopy(gpointer data, guint callback_action, GtkWidget *widg
 void i_callback_edit_move(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_delete(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_edit(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_edit_pin_type(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_text(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_slot(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_edit_color(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_object_properties(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_rotate_90(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_mirror(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_lock(gpointer data, guint callback_action, GtkWidget *widget);
@@ -291,10 +238,9 @@ void i_callback_edit_find(gpointer data, guint callback_action, GtkWidget *widge
 void i_callback_edit_hide_text(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_show_text(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_autonumber_text(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_edit_linetype(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_edit_filltype(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_sidebar(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_status(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_view_find_text_state(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_redraw(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_full(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_extents(gpointer data, guint callback_action, GtkWidget *widget);
@@ -309,10 +255,13 @@ void i_callback_view_pan_down(gpointer data, guint callback_action, GtkWidget *w
 void i_callback_view_dark_colors(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_light_colors(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_bw_colors(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_view_color_edit(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_manager(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_next(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_prev(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_close(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_page_next_tab(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_page_prev_tab(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_revert(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_print(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_clipboard_copy(gpointer data, guint callback_action, GtkWidget *widget);
@@ -352,14 +301,11 @@ void i_callback_add_pin(gpointer data, guint callback_action, GtkWidget *widget)
 void i_callback_hierarchy_down_schematic(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_hierarchy_down_symbol(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_hierarchy_up(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_attributes_attach(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_attributes_detach(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_attributes_show_name(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_attributes_show_value(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_attributes_show_both(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_attributes_visibility_toggle(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_script_console(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_options_text_size(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_snap_size(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_scale_up_snap_size(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_scale_down_snap_size(gpointer data, guint callback_action, GtkWidget *widget);
@@ -373,12 +319,14 @@ void i_callback_cancel(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_help_about(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_help_hotkeys(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_show_coord_window(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_options_select_font(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_options_draw_grips(gpointer data, guint callback_action, GtkWidget *widget);
 gboolean i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
 /* i_vars.c */
 void i_vars_set(GschemToplevel *w_current);
 void i_vars_freenames();
-void i_vars_init_gschem_defaults (void);
-void i_vars_atexit_save_user_config (gpointer user_data);
+void i_vars_init_defaults (void);
+void i_vars_atexit_save_cache_config (gpointer user_data);
  /* m_basic.c */
 int snap_grid(GschemToplevel *w_current, int input);
 int clip_nochange(GschemPageGeometry *geometry, int x1, int y1, int x2, int y2);
@@ -608,16 +556,23 @@ void x_color_allocate (void);
 GdkColor *x_get_color(int color);
 GedaColor *x_color_lookup(GschemToplevel *toplevel, int color);
 gboolean x_color_display_enabled (int index);
+void x_color_set_display (int color_index, GdkColor* color);
+void x_color_set_outline (int color_index, GdkColor* color);
+GString* x_color_map2str_display();
+GString* x_color_map2str_outline();
+
 /* x_colorcb.c */
 GtkWidget* x_colorcb_new ();
 int x_colorcb_get_index (GtkWidget *widget);
 void x_colorcb_set_index (GtkWidget *widget, int color_index);
+void x_colorcb_update_colors();
+void x_colorcb_set_color (GtkTreeIter* iter, GdkColor* color);
+
 /* x_dialog.c */
 int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);
 void select_all_text_in_textview(GtkTextView *textview);
 void text_input_dialog(GschemToplevel *w_current);
 void text_edit_dialog(GschemToplevel *w_current);
-void line_type_dialog(GschemToplevel *w_current);
 void arc_angle_dialog(GschemToplevel *w_current, OBJECT *arc_object);
 void snap_size_dialog(GschemToplevel *w_current);
 void slot_edit_dialog(GschemToplevel *w_current, const char *count, const char *string);
@@ -626,7 +581,6 @@ void coord_display_update(GschemToplevel *w_current, int x, int y);
 void coord_dialog(GschemToplevel *w_current, int x, int y);
 char *index2functionstring(int index);
 void x_dialog_hotkeys(GschemToplevel *w_current);
-void x_dialog_raise_all(GschemToplevel *w_current);
 
 void generic_msg_dialog(const char *);
 int generic_confirm_dialog(const char *);
@@ -639,10 +593,8 @@ void major_changed_dialog(GschemToplevel* w_current);
 gboolean x_dialog_close_changed_page (GschemToplevel *w_current, PAGE *page);
 gboolean x_dialog_close_window (GschemToplevel *w_current);
 int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
-void x_dialog_edit_pin_type(GschemToplevel *w_current, const GList *obj_list);
 /* x_event.c */
 gint x_event_expose(GschemPageView *widget, GdkEventExpose *event, GschemToplevel *w_current);
-gint x_event_raise_dialog_boxes (GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current);
 gint x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current);
 gint x_event_button_released(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current);
 gint x_event_motion(GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current);
@@ -657,7 +609,7 @@ void x_compselect_open (GschemToplevel *w_current);
 void x_compselect_deselect (GschemToplevel *w_current);
 /* x_fileselect.c */
 void x_fileselect_open(GschemToplevel *w_current);
-void x_fileselect_save(GschemToplevel *w_current);
+gboolean x_fileselect_save(GschemToplevel *w_current, PAGE* page, gboolean* result);
 int x_fileselect_load_backup(void *user_data, GString *message);
 /* x_fstylecb.c */
 GtkWidget* x_fstylecb_new ();
@@ -668,16 +620,15 @@ void x_grid_draw_region(GschemToplevel *w_current, cairo_t *cr, int x, int y, in
 int x_grid_query_drawn_spacing(GschemToplevel *w_current);
 /* x_image.c */
 void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
-                      int desired_width, int desired_height, const char *filetype);
+                      int desired_width, int desired_height, const char *filetype, gboolean is_color);
 void x_image_setup(GschemToplevel *w_current);
-GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current, int width, int height);
+GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current, int width, int height, gboolean is_color);
 /* x_integerls.c */
 GtkListStore* x_integerls_new ();
 GtkListStore* x_integerls_new_with_values (const char *value[], int count);
 void x_integerls_add_value (GtkListStore *store, const char *value);
 int x_integerls_get_value_column ();
 /* gschem_log_widget.c */
-void x_log_open (GschemToplevel *w_current);
 void x_log_message (const gchar *log_domain,
                     GLogLevelFlags log_level,
                     const gchar *message);
@@ -695,22 +646,14 @@ gboolean x_show_uri (GschemToplevel *w_current, const gchar *buf, GError **err);
 GtkWidget *get_main_menu(GschemToplevel *w_current);
 GtkWidget *get_main_popup(GschemToplevel *w_current);
 gint do_popup(GschemToplevel *w_current, GdkEventButton *event);
-void x_menus_sensitivity(GschemToplevel *w_current, const char *buf, int flag);
-void x_menus_popup_sensitivity(GschemToplevel *w_current, const char *buf, int flag);
-void x_menu_attach_recent_files_submenu(GschemToplevel *w_current);
+void x_menus_sensitivity (GtkWidget* menu, const gchar* action_name, gboolean sensitive);
 /* x_multiattrib.c */
 void x_multiattrib_open (GschemToplevel *w_current);
 void x_multiattrib_close (GschemToplevel *w_current);
 void x_multiattrib_update (GschemToplevel *w_current);
-/* x_multimulti.c */
-/* x_pagesel.c */
-void x_pagesel_open (GschemToplevel *w_current);
-void x_pagesel_close (GschemToplevel *w_current);
-void x_pagesel_update (GschemToplevel *w_current);
-/* x_preview.c */
 /* x_print.c */
 gboolean x_print_export_pdf_page (GschemToplevel *w_current, const gchar *filename);
-gboolean x_print_export_pdf (GschemToplevel *w_current, const gchar *filename);
+gboolean x_print_export_pdf (GschemToplevel *w_current, const gchar *filename, gboolean is_color);
 void x_print (GschemToplevel *w_current);
 /* x_rc.c */
 void x_rc_parse_gschem (TOPLEVEL *toplevel, const gchar *rcfile);
@@ -725,21 +668,30 @@ void x_stroke_init (void);
 void x_stroke_free (void);
 void x_stroke_record (GschemToplevel *w_current, gint x, gint y);
 gint x_stroke_translate_and_execute (GschemToplevel *w_current);
+
 /* x_window.c */
 void x_window_setup (GschemToplevel *w_current);
 void x_window_create_drawing(GtkWidget *drawbox, GschemToplevel *w_current);
-void x_window_setup_draw_events(GschemToplevel *w_current);
+void x_window_setup_draw_events_main_wnd (GschemToplevel* w_current,
+                                          GtkWidget*      main_window);
+void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
+                                              GschemPageView* drawing_area);
 void x_window_create_main(GschemToplevel *w_current);
 void x_window_close(GschemToplevel *w_current);
 void x_window_close_all(GschemToplevel *w_current);
 PAGE *x_window_open_page (GschemToplevel *w_current, const gchar *filename);
+PAGE *x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename);
 void x_window_set_current_page (GschemToplevel *w_current, PAGE *page);
+void x_window_set_current_page_impl (GschemToplevel *w_current, PAGE *page);
 gint x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename);
 void x_window_close_page (GschemToplevel *w_current, PAGE *page);
+PAGE* x_window_close_page_impl (GschemToplevel *w_current, PAGE *page);
 void x_window_set_default_icon (void);
 void x_window_init_icons (void);
 GschemToplevel* x_window_new (TOPLEVEL *toplevel);
 void x_window_select_object (GschemFindTextState *state, OBJECT *object, GschemToplevel *w_current);
+void x_window_setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled);
+gboolean x_window_untitled_page (PAGE* page);
 
 /* x_widgets.c */
 gboolean x_widgets_use_docks();
@@ -750,3 +702,28 @@ void x_widgets_show_text_properties (GschemToplevel* w_current);
 void x_widgets_show_object_properties (GschemToplevel* w_current);
 void x_widgets_show_log (GschemToplevel* w_current);
 void x_widgets_show_find_text_state (GschemToplevel* w_current);
+void x_widgets_show_color_edit (GschemToplevel* w_current);
+void x_widgets_show_font_select (GschemToplevel* w_current);
+void x_widgets_show_page_select (GschemToplevel* w_current);
+
+/* x_tabs.c */
+gboolean x_tabs_enabled();
+void x_tabs_init();
+void x_tabs_create (GschemToplevel* w_current, GtkWidget* work_box);
+PAGE* x_tabs_page_open (GschemToplevel* w_current, const gchar* filename);
+void x_tabs_page_set_cur (GschemToplevel* w_current, PAGE* page);
+void x_tabs_page_close (GschemToplevel* w_current, PAGE* page);
+void x_tabs_next (GschemToplevel* w_current);
+void x_tabs_prev (GschemToplevel* w_current);
+void x_tabs_hdr_update (GschemToplevel* w_current, PAGE* page);
+#ifdef DEBUG
+void x_tabs_dbg_infos_dump (GschemToplevel* w_current);
+void x_tabs_dbg_pages_dump (GschemToplevel* w_current);
+#endif
+
+/* color_edit_widget.c */
+void color_edit_widget_update (GschemToplevel* w_current);
+
+
+#endif /* LEPTON_PROTOTYPE_H_ */
+

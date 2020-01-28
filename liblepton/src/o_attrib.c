@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -123,6 +123,10 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
                 attrib->text->string);
     return;
   }
+
+  /* attribute inherit its selectable status from the object:
+  */
+  attrib->selectable = object->selectable;
 
   o_attrib_add (toplevel, object, attrib);
 

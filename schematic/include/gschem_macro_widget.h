@@ -1,6 +1,10 @@
+#ifndef LEPTON_MACRO_WIDGET_H_
+#define LEPTON_MACRO_WIDGET_H_
+
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2013 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +26,13 @@
  * \brief A widget for entering macros
  */
 
+/* Maximum number of items to keep in the
+ * macro widget command history by default:
+ */
+#define MACRO_WIDGET_HISTORY_MAX 10
+
+
+
 #define GSCHEM_TYPE_MACRO_WIDGET           (gschem_macro_widget_get_type())
 #define GSCHEM_MACRO_WIDGET(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_MACRO_WIDGET, GschemMacroWidget))
 #define GSCHEM_MACRO_WIDGET_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_MACRO_WIDGET, GschemMacroWidgetClass))
@@ -40,27 +51,28 @@ struct _GschemMacroWidget
 {
   GtkInfoBar parent;
 
+  /* command history: */
+  GtkListStore* store;
+
+  GschemToplevel* toplevel;
+
+  GtkWidget *combo;
   GtkWidget *entry;
   GtkWidget *evaluate_button;
-  GtkWidget *label;
 };
 
 
 
 GtkWidget*
-gschem_macro_widget_get_entry (GschemMacroWidget *widget);
+macro_widget_new (GschemToplevel* toplevel);
 
-const char*
-gschem_macro_widget_get_label_text (GschemMacroWidget *widget);
+void
+macro_widget_show (GtkWidget* widget);
 
-const char*
-gschem_macro_widget_get_macro_string (GschemMacroWidget *widget);
 
 GType
-gschem_macro_widget_get_type ();
+gschem_macro_widget_get_type();
 
-void
-gschem_macro_widget_set_label_text (GschemMacroWidget *widget, const char *text);
 
-void
-gschem_macro_widget_set_macro_string (GschemMacroWidget *widget, const char *str);
+#endif /* LEPTON_MACRO_WIDGET_H_ */
+

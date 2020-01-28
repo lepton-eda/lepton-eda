@@ -1,13 +1,12 @@
-gEDA
+Lepton EDA
+==========
 
-GPL Electronic Design Automation
-------------------------------------------------------------------------------
-
-gEDA/gaf AUTHORS and contributors
+Lepton EDA and gEDA/gaf AUTHORS and contributors
 
 Many thanks to the following individuals for their contributions:
 
 Antonio A Todo Bom
+Carl Allendorph
 Sergey Alyoshin
 Andrew Bardsley
 Richard Barlow
@@ -15,23 +14,35 @@ Nick Bastin
 Martin Benes
 Patrick Bernaud
 Erick Britis Ortiz
+Stephan Boettcher
 Stuart Brorson
 Eric Busta
 Jared Casper
 Jason Childs
+Marco Ciampa
 Peter Clifton
+Merlyn Cousins (@drforbin)
+Clif Cox
 Magnus Danielson
 Thomas Dean
 DJ Delorie
 Bryce Denney
+John Doty
+Robert Drehmel
 Andrew Dyer
 Gareth Edwards
+Ahmed El-Mahmoudy
 Chris Ellec
 Matt Ettus
 Rolf Fiedler
 Robert Fitzsimons
+Sergey Fukanchik
+Bdale Garbee
 Braddock Gaskill
 Bas Gieltjes
+Mario Giovinazzo (@mario-giovinazzo)
+John Griessen
+Karl Hammar
 Geoff Harland
 Thomas Heidel
 Edward Hennessy
@@ -39,18 +50,24 @@ Uwe Hermann
 Kazu Hirata
 Werner Hoch
 Ales Hvezda
+Alex Jakimenko
 Mike Jarabek
 Bernd Jendrissek
 Wojciech Kazubski
 Kai-Martin Knaak
+Dima Kogan
+Onno Kortmann
 Krzysztof Kosciuszkiewicz
 Reinhard Kotucha
+Levente Kovacs
+Eike Krumbacher
 Egil Kvaleberg
 Eivind Kvedalen
 Dave Lawrence
 Martin Lehmann
 Michael Linnemann
 Arnim Littek
+Riccardo Lucchese
 Roland Lutz 
 Ye Ma
 Joe Mac
@@ -58,6 +75,7 @@ Jeff Mallatt
 Dan McMahill
 Jeff McNeal
 Piotr Miarecki
+Eugene Mikhantiev
 Hamish Moffatt
 Kipton Moravec
 Eduard Moser
@@ -66,21 +84,27 @@ Carlos Nieves Onega
 Jerry O'Keefe
 Alexandre P. Nunes
 Gabriel Paubert
+Antony Pavlov
 Simon Peacock
 Stefan Petersen
 Michele Petrecca
 Maciej Pijanka
 Alex Precosky
 Mark Rages 
+Alex Ray
 Christian Riggenbach
 Manu Rouat
 JM Routoure
+Felix Ruoff
+Luigi S. Palese
 Nathan Schulte
 Bruno Schwander
 Andy Shevchenko
 Anatole Sokolov
 Tomaz Solc 
+Alan Somers
 Ivan Stankovic
+Sergey Stepanov
 Borge Strand
 Cesar Strauss
 Nuno Sucena
@@ -91,17 +115,18 @@ Stephen Tell
 Bert Timmerman
 Ron Van Dam
 Marius Vollmer
+Hannu Vuolasaho
 Rich Walker
 Dan White
 John White
 Roger Williams
 Bill Wilson
 Vladimir Zhbanov
+dmn (@graahnul-grom)
 
 
-For specific contributions, please check out the appropriate ChangeLog
-for more details.
+For specific contributions, please check out `git log' history.
 
-Also thanks go to all the people on the geda-* mailing list.  Many of
+Also thanks go to all the people on the geda-* mailing list!  Many of
 the subscribers provided good suggestions (as well as patches) that are
-greatly appreciated
+greatly appreciated.

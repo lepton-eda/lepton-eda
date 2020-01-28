@@ -179,3 +179,183 @@ x_color_display_enabled (int index)
 {
   return (gdk_colors[index] != NULL);
 }
+
+
+
+/*! \brief: For a given \a color_index, get Scheme symbol as a string
+ *
+ *  \param color_index  One of color index constants defined in geda_color_map.h
+ *  \return             Scheme symbol as a string
+ */
+static const gchar*
+x_color_lookup_scm_str (int color_index)
+{
+  switch (color_index)
+  {
+    case BACKGROUND_COLOR:         return "background";
+    case PIN_COLOR:                return "pin";
+    case NET_ENDPOINT_COLOR:       return "net-endpoint";
+    case GRAPHIC_COLOR:            return "graphic";
+    case NET_COLOR:                return "net";
+    case ATTRIBUTE_COLOR:          return "attribute";
+    case LOGIC_BUBBLE_COLOR:       return "logic-bubble";
+    case DOTS_GRID_COLOR:          return "dots-grid";
+    case DETACHED_ATTRIBUTE_COLOR: return "detached-attribute";
+    case TEXT_COLOR:               return "text";
+    case BUS_COLOR:                return "bus";
+    case SELECT_COLOR:             return "select";
+    case BOUNDINGBOX_COLOR:        return "bounding-box";
+    case ZOOM_BOX_COLOR:           return "zoom-box";
+    case STROKE_COLOR:             return "stroke";
+    case LOCK_COLOR:               return "lock";
+    case OUTPUT_BACKGROUND_COLOR:  return "output-background";
+    case FREESTYLE1_COLOR:         return "freestyle1";
+    case FREESTYLE2_COLOR:         return "freestyle2";
+    case FREESTYLE3_COLOR:         return "freestyle3";
+    case FREESTYLE4_COLOR:         return "freestyle4";
+    case JUNCTION_COLOR:           return "junction";
+    case MESH_GRID_MAJOR_COLOR:    return "mesh-grid-major";
+    case MESH_GRID_MINOR_COLOR:    return "mesh-grid-minor";
+    default:
+      break;
+  }
+
+  return "";
+
+} /* x_color_lookup_scm_str() */
+
+
+
+/*! \brief: Change a color in color map
+ *
+ *  \param colors_gdk   An array of GdkColor structures (gdk_colors or gdk_outline_colors)
+ *  \param colors_geda  An array of GedaColor structures (display_colors or display_outline_colors)
+ *  \param color_index  One of color index constants defined in geda_color_map.h
+ *  \param color        A pointer to GdkColor to be set
+ */
+static void
+x_color_set (GdkColor**   colors_gdk,
+             GedaColorMap colors_geda,
+             int          color_index,
+             GdkColor*    color)
+{
+  /* do nothing if color is disabled: */
+  if (colors_gdk[ color_index ] == NULL)
+  {
+    return;
+  }
+
+  guint16 r = color->red   >> 8;
+  guint16 g = color->green >> 8;
+  guint16 b = color->blue  >> 8;
+
+  colors_gdk[ color_index ]->red   = r;
+  colors_gdk[ color_index ]->green = g;
+  colors_gdk[ color_index ]->blue  = b;
+
+  /* this actually changes the color on the screen:
+  */
+  colors_geda[ color_index ].r = r;
+  colors_geda[ color_index ].g = g;
+  colors_geda[ color_index ].b = b;
+
+} /* x_color_set() */
+
+
+
+/*! \brief: Change a color in display color map
+ *
+ *  \param color_index  One of color index constants defined in geda_color_map.h
+ *  \param color        A pointer to GdkColor
+ */
+void
+x_color_set_display (int color_index, GdkColor* color)
+{
+  x_color_set (gdk_colors, display_colors, color_index, color);
+}
+
+
+
+/*! \brief: Change a color in outline color map
+ *
+ *  \param color_index  One of color index constants defined in geda_color_map.h
+ *  \param color        A pointer to GdkColor
+ */
+void
+x_color_set_outline (int color_index, GdkColor* color)
+{
+  x_color_set (gdk_outline_colors, display_outline_colors, color_index, color);
+}
+
+
+
+/*! \brief: Generate Scheme representation of a color map
+ *
+ *  \param  cmap   A color map
+ *  \return        Scheme code as a string
+ */
+static GString*
+x_color_map2str (GedaColorMap cmap)
+{
+  GString* str = g_string_new(NULL);
+
+  g_string_append (str, "'(\n");
+
+  for (int color_index = 0; color_index < MAX_COLORS - 1; color_index++)
+  {
+    GedaColor color = cmap[ color_index ];
+
+    const gchar* scm_str = x_color_lookup_scm_str (color_index);
+
+    if (color.enabled)
+    {
+      guint8 r = color.r;
+      guint8 g = color.g;
+      guint8 b = color.b;
+
+      /* the line will look like:
+       * (background "#AABBCC")
+      */
+      g_string_append_printf (str, "  (%-20s \"#%.2x%.2x%.2x\")",
+                             scm_str,
+                             r, g, b);
+    }
+    else
+    {
+      g_string_append_printf (str, "  (%-20s #f)", scm_str);
+    }
+
+    g_string_append (str, "\n");
+
+  } /* for */
+
+  g_string_append (str, ")");
+
+  return str;
+
+} /* x_color_map2str() */
+
+
+
+/*! \brief: Generate Scheme code for display color map
+ *
+ *  \return Scheme code as a string
+ */
+GString*
+x_color_map2str_display()
+{
+  return x_color_map2str (display_colors);
+}
+
+
+
+/*! \brief: Generate Scheme code for outline color map
+ *
+ *  \return Scheme code as a string
+ */
+GString*
+x_color_map2str_outline()
+{
+  return x_color_map2str (display_outline_colors);;
+}
+

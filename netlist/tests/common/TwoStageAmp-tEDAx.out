@@ -1,0 +1,150 @@
+tEDAx v1
+begin netlist v1 netlist
+
+	footprint A1 UNKNOWN
+	device A1 model
+	value A1 
+
+	footprint A2 UNKNOWN
+	device A2 include
+	value A2 
+
+	footprint A3 UNKNOWN
+	device A3 directive
+	value A3 .options TEMP=25
+
+	footprint C1 UNKNOWN
+	device C1 CAPACITOR
+	value C1 2.2uF
+
+	footprint C2 UNKNOWN
+	device C2 CAPACITOR
+	value C2 2.2uF
+
+	footprint CE1 UNKNOWN
+	device CE1 CAPACITOR
+	value CE1 1pF
+
+	footprint CE2 UNKNOWN
+	device CE2 CAPACITOR
+	value CE2 1pF
+
+	footprint Cout UNKNOWN
+	device Cout CAPACITOR
+	value Cout 2.2uF
+
+	footprint Q1 UNKNOWN
+	device Q1 NPN_TRANSISTOR
+	value Q1 
+
+	footprint Q2 UNKNOWN
+	device Q2 NPN_TRANSISTOR
+	value Q2 
+
+	footprint R1 UNKNOWN
+	device R1 RESISTOR
+	value R1 28K
+
+	footprint R2 UNKNOWN
+	device R2 RESISTOR
+	value R2 2K
+
+	footprint R3 UNKNOWN
+	device R3 RESISTOR
+	value R3 28K
+
+	footprint R4 UNKNOWN
+	device R4 RESISTOR
+	value R4 2.8K
+
+	footprint R5 UNKNOWN
+	device R5 RESISTOR
+	value R5 10
+
+	footprint R8 UNKNOWN
+	device R8 RESISTOR
+	value R8 1
+
+	footprint RC1 UNKNOWN
+	device RC1 RESISTOR
+	value RC1 3.3K
+
+	footprint RC2 UNKNOWN
+	device RC2 RESISTOR
+	value RC2 1K
+
+	footprint RE1 UNKNOWN
+	device RE1 RESISTOR
+	value RE1 100
+
+	footprint RE2 UNKNOWN
+	device RE2 RESISTOR
+	value RE2 100
+
+	footprint RL UNKNOWN
+	device RL RESISTOR
+	value RL 100K
+
+	footprint VCC none
+	device VCC VOLTAGE_SOURCE
+	value VCC DC 15V
+
+	footprint Vinput none
+	device Vinput vsin
+	value Vinput DC 1.6V AC 10MV SIN(0 1MV 1KHZ)
+
+	conn GND CE1 1
+	conn GND CE2 1
+	conn GND R2 1
+	conn GND R4 1
+	conn GND RE1 1
+	conn GND RE2 1
+	conn GND RL 1
+	conn GND VCC 2
+	conn GND Vinput 2
+
+	conn VColl2 Cout 1
+	conn VColl2 Q2 3
+	conn VColl2 RC2 1
+
+	conn Vbase1 C1 2
+	conn Vbase1 Q1 2
+	conn Vbase1 R1 1
+	conn Vbase1 R2 2
+
+	conn Vbase2 C2 2
+	conn Vbase2 Q2 2
+	conn Vbase2 R3 1
+	conn Vbase2 R4 2
+
+	conn Vcc R1 2
+	conn Vcc R3 2
+	conn Vcc RC1 2
+	conn Vcc RC2 2
+	conn Vcc VCC 1
+
+	conn Vcoll1 Q1 3
+	conn Vcoll1 R8 1
+	conn Vcoll1 RC1 1
+
+	conn Vem1 CE1 2
+	conn Vem1 Q1 1
+	conn Vem1 RE1 2
+
+	conn Vem2 CE2 2
+	conn Vem2 Q2 1
+	conn Vem2 RE2 2
+
+	conn Vin R5 1
+	conn Vin Vinput 1
+
+	conn Vout Cout 2
+	conn Vout RL 2
+
+	conn unnamed_net1 C1 1
+	conn unnamed_net1 R5 2
+
+	conn unnamed_net2 C2 1
+	conn unnamed_net2 R8 2
+
+end netlist

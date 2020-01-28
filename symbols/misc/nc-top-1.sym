@@ -11,9 +11,13 @@ T 200 250 9 10 1 0 0 3 1
 NC
 T 400 500 8 10 0 0 0 0 1
 value=NoConnection
-T 0 600 8 10 0 0 0 0 1
-documentation=nc.pdf
 T 400 700 8 10 0 0 0 0 1
 device=DRC_Directive
 T 400 900 8 10 0 0 0 0 1
 graphical=1
+T 400 1100 8 10 0 0 0 0 1
+documentation=nc.pdf
+T 400 1300 8 10 0 0 0 0 1
+symversion=1.1
+T 400 1500 8 10 0 0 0 0 1
+symbol=nc

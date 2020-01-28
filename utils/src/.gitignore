@@ -2,9 +2,9 @@ Makefile.in
 .deps
 .libs
 Makefile
-gsch2pcb
-grenum
+lepton-sch2pcb
+lepton-renum
 *.o
 *~
-grenum.exe
-gsch2pcb.exe
+lepton-renum.exe
+lepton-sch2pcb.exe

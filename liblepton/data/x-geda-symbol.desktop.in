@@ -1,8 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-_Comment=gEDA Schematic Symbol
-MimeType=application/x-geda-symbol
-Type=MimeType
-Icon=application-x-geda-symbol
-Patterns=*.sym
-X-KDE-IsAlso=text/plain

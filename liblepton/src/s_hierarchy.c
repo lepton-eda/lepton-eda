@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
   g_return_val_if_fail ((filename != NULL), NULL);
   g_return_val_if_fail ((parent != NULL), NULL);
 
-  SCM string_s = scm_call_1 (scm_c_public_ref ("geda library",
+  SCM string_s = scm_call_1 (scm_c_public_ref ("lepton library",
                                                "get-source-library-file"),
                              scm_from_utf8_string (filename));
 
@@ -197,7 +197,7 @@ s_hierarchy_find_up_page (GedaPageList *page_list, PAGE *current_page)
 {
   g_return_val_if_fail (current_page != NULL, NULL);
   if (current_page->up < 0) {
-    s_log_message(_("There are no schematics above the current one!"));
+    g_debug(_("There are no schematics above the current one!"));
     return NULL;
   }
 
@@ -229,7 +229,7 @@ s_hierarchy_load_subpage (PAGE *page, const char *filename, GError **error)
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (page != NULL, NULL);
 
-  SCM string_s = scm_call_1 (scm_c_public_ref ("geda library",
+  SCM string_s = scm_call_1 (scm_c_public_ref ("lepton library",
                                                "get-source-library-file"),
                              scm_from_utf8_string (filename));
 

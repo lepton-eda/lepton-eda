@@ -1,6 +1,8 @@
 /*
  * Lepton EDA command-line utility
  * Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2015 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
+#include <config.h>
 #include <version.h>
 
 #include <unistd.h>
@@ -31,7 +31,7 @@
 
 #include <liblepton/liblepton.h>
 
-#define config_short_options "hp::su"
+#define config_short_options "hp::suc"
 
 static struct option config_long_options[] =
   {
@@ -39,6 +39,8 @@ static struct option config_long_options[] =
     {"project", 2, NULL, 'p'},
     {"system", 0, NULL, 's'},
     {"user", 0, NULL, 'u'},
+    {"cache", 0, NULL, 'c'},
+    {0, 0, 0, 0}
   };
 
 static void
@@ -46,11 +48,12 @@ config_usage (void)
 {
   printf (_("Usage: lepton-cli config [OPTION] [GROUP KEY [VALUE]]\n"
 "\n"
-"View and modify gEDA configuration.\n"
+"View and modify Lepton EDA configuration.\n"
 "\n"
 "  -p, --project[=PATH]  select project configuration [PATH=.]\n"
 "  -u, --user     select user configuration\n"
 "  -s, --system   select system configuration\n"
+"  -c, --cache    select cache configuration\n"
 "  -h, --help     display usage information and exit\n"
 "\n"
 "If GROUP and KEY are specified, retrieves the value of that\n"
@@ -60,8 +63,11 @@ config_usage (void)
 "store for the current directory). If no GROUP and KEY were provided,\n"
 "outputs the filename of the selected configuration store.\n"
 "\n"
-"Please report bugs to %1$s.\n"),
-          PACKAGE_BUGREPORT);
+"Report bugs at <%1$s>\n"
+"Lepton EDA homepage: <%2$s>\n"),
+    PACKAGE_BUGREPORT,
+    PACKAGE_URL);
+
   exit (0);
 }
 
@@ -77,7 +83,7 @@ cmd_config_impl (void *data, int argc, char **argv)
   const char *group, *key;
 
   scm_init_guile ();
-  libgeda_init ();
+  liblepton_init ();
 
   /* Parse command-line arguments */
   while ((c = getopt_long (argc, argv, config_short_options,
@@ -114,6 +120,15 @@ cmd_config_impl (void *data, int argc, char **argv)
         exit (1);
       }
       cfg = eda_config_get_user_context ();
+      break;
+
+    case 'c':
+      if (cfg != NULL || project_store_path != NULL) {
+        fprintf (stderr, multi_store_msg);
+        fprintf (stderr, see_help_msg);
+        exit (1);
+      }
+      cfg = eda_config_get_cache_context();
       break;
 
     case 'h':
@@ -208,6 +223,8 @@ cmd_config_impl (void *data, int argc, char **argv)
 int
 cmd_config (int argc, char **argv)
 {
+  set_guile_compiled_path();
+
   scm_boot_guile (argc, argv, cmd_config_impl, NULL); /* Doesn't return */
   return 0;
 }

@@ -1,0 +1,94 @@
+tEDAx v1
+begin netlist v1 netlist
+
+	footprint C1 UNKNOWN
+	device C1 POLARIZED_CAPACITOR
+	value C1 2200uF
+
+	footprint C2 UNKNOWN
+	device C2 POLARIZED_CAPACITOR
+	value C2 0.1uF
+
+	footprint C3 UNKNOWN
+	device C3 POLARIZED_CAPACITOR
+	value C3 22uF
+
+	footprint C4 UNKNOWN
+	device C4 POLARIZED_CAPACITOR
+	value C4 1uf
+
+	footprint CONN1 UNKNOWN
+	device CONN1 MAINS_CONNECTOR
+	value CONN1 
+
+	footprint F1 UNKNOWN
+	device F1 FUSE
+	value F1 
+
+	footprint R1 UNKNOWN
+	device R1 VARIABLE_RESISTOR
+	value R1 5k
+
+	footprint R2 UNKNOWN
+	device R2 RESISTOR
+	value R2 220
+
+	footprint S1 UNKNOWN
+	device S1 SPST
+	value S1 
+
+	footprint T1 UNKNOWN
+	device T1 transformer
+	value T1 
+
+	footprint U1 UNKNOWN
+	device U1 DIODE-BRIDGE
+	value U1 
+
+	footprint U2 UNKNOWN
+	device U2 LM317
+	value U2 
+
+	conn GND CONN1 3
+
+	conn eight C1 1
+	conn eight C2 1
+	conn eight U1 1
+	conn eight U2 3
+
+	conn eleven C4 1
+	conn eleven R2 2
+	conn eleven U2 2
+
+	conn five CONN1 2
+	conn five T1 2
+
+	conn nine C1 2
+	conn nine C2 2
+	conn nine C3 2
+	conn nine C4 2
+	conn nine R1 1
+	conn nine R1 3
+	conn nine U1 2
+
+	conn one CONN1 1
+	conn one S1 1
+
+	conn seven T1 4
+	conn seven U1 3
+
+	conn six T1 3
+	conn six U1 4
+
+	conn ten C3 1
+	conn ten R1 2
+	conn ten R2 1
+	conn ten U2 1
+
+	conn three F1 2
+	conn three T1 1
+
+	conn two F1 1
+	conn two S1 2
+
+end netlist

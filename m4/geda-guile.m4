@@ -4,6 +4,8 @@
 dnl Check for guile
 dnl Copyright (C) 2009  Dan McMahill <dan@mcmahill.net>
 dnl Copyright (C) 2010-2011  Peter Brett <peter@peter-b.co.uk>
+dnl Copyright (C) 2009-2016 gEDA Contributors
+dnl Copyright (C) 2017-2019 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -34,20 +36,28 @@ AC_DEFUN([AX_CHECK_GUILE],
   GUILE_MIN_MINOR=`echo ${GUILE_MIN_VER} | sed -e 's;[[^\.]]*\.;;' -e 's;\..*;;g'`
   GUILE_MIN_TEENY=`echo ${GUILE_MIN_VER} | sed -e 's;.*\.;;'`
 
-  PKG_CHECK_MODULES(GUILE, [guile-2.0 >= $GUILE_MIN_VER],
-                           [GUILE_PKG_NAME=guile-2.0],
-                           [AC_MSG_ERROR([you need at least version ${GUILE_MIN_VER} of guile])])
+  _found_pkg_config_guile=yes
+  PKG_CHECK_MODULES(GUILE, [guile-2.2 >= $GUILE_MIN_VER],
+                           [GUILE_PKG_NAME=guile-2.2], [_found_pkg_config_guile=no])
+
+  if test "${_found_pkg_config_guile}" = "no" ; then
+   PKG_CHECK_MODULES(GUILE, [guile-2.0 >= $GUILE_MIN_VER],
+                            [_found_pkg_config_guile=yes
+                             GUILE_PKG_NAME=guile-2.0],
+                            [_found_pkg_config_guile=no])
+  fi
+
+  if test "${_found_pkg_config_guile}" = "no" ; then
+    AC_MSG_ERROR([you need at least version ${GUILE_MIN_VER} of guile])
+  fi
 
   AC_SUBST([GUILE_PKG_NAME])
 
-  # Check for the `guile' executable
-  # --------------------------------
-  AC_ARG_VAR([GUILE], [Path to guile executable])
-  AC_CHECK_PROG([GUILE], [guile], [guile], [no])
-  if test "X$GUILE" = "Xno"; then
-    AC_MSG_WARN([The `guile' interpreter could not be found. Some configuration checks
-will not be able to be carried out.])
-  fi
+
+  GUILE_FLAGS
+  GUILE_PROGS
+  GUILE_PKG([2.2 2.0])
+
 
   # Check for the `guile-snarf' build tool
   # --------------------------------------

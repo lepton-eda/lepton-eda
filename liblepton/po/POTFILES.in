@@ -1,7 +1,7 @@
 liblepton/data/liblepton.xml.in
-liblepton/data/x-geda-gsch2pcb-project.desktop.in
-liblepton/data/x-geda-schematic.desktop.in
-liblepton/data/x-geda-symbol.desktop.in
+liblepton/data/x-lepton-sch2pcb-project.desktop.in
+liblepton/data/x-lepton-schematic.desktop.in
+liblepton/data/x-lepton-symbol.desktop.in
 
 liblepton/src/a_basic.c
 liblepton/src/f_basic.c
@@ -34,6 +34,7 @@ liblepton/src/scheme_object.c
 liblepton/src/scheme_page.c
 liblepton/src/edascmhookproxy.c
 
-liblepton/scheme/geda/attrib.scm
-liblepton/scheme/geda/library.scm
-liblepton/scheme/geda/repl.scm
+liblepton/scheme/lepton/attrib.scm
+liblepton/scheme/lepton/library.scm
+liblepton/scheme/lepton/library/component.scm
+liblepton/scheme/lepton/repl.scm

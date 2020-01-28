@@ -21,8 +21,8 @@
   #:use-module (srfi srfi-1)
   #:use-module (gschem core gettext)
   #:use-module (gschem window)
-  #:use-module (geda page)
   #:use-module (geda core toplevel)
+  #:use-module (lepton page)
   #:use-module (symbol blame)
   #:use-module ((symbol check) #:prefix sym:))
 

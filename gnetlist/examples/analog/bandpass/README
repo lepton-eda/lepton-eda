@@ -1,8 +1,0 @@
-This simulation came about as I was fixing a FRG-7700 SSB radio.
-It simulates the bandpass filter before the first RF amp.
-The simulation should be run in NGSPICE (or similor)  ac dec 20 1000 40meg.
-It should show a bandpass responce.
-
-drforbin
-
-drforbin6@gmail.com

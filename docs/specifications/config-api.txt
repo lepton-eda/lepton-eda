@@ -21,6 +21,7 @@
         3.1.1  Default context
         3.1.2  System context
         3.1.3  User context
+        3.1.4  Cache context
       3.2  Loading configuration files
       3.3  Saving configuration files
       3.4  Context parents
@@ -127,10 +128,10 @@ Configuration contexts are reference counted.  You can increment and
 decrement their reference counters using ``g_object_ref()`` and
 ``g_object_unref()`` [GOBJECT]_.
 
-Three special contexts are always automatically defined: the `default
-context`_, the `system context`_, and the `user context`_.  The user
-context is the default parent context for newly-created configuration
-contexts.
+Four special contexts are always automatically defined: the `default
+context`_, the `system context`_, the `user context`_ and the
+`cache context`_.  The user context is the default parent context for
+newly-created configuration contexts.
 
 Obtaining a Context
 -------------------
@@ -228,6 +229,25 @@ Its parent context is the `system context`_.
 
 The configuration context returned by
 ``eda_config_get_user_context()`` is owned by the library, and should
+not be disposed of with ``g_object_unref()``.
+
+Cache context
+~~~~~~~~~~~~
+
+C function::
+
+  EdaConfig *eda_config_get_cache_context ()
+
+Scheme function::
+
+  None yet
+
+The cache context is used for program-specific configuration, and is
+loaded from ``${XDG_CACHE_HOME}/lepton-eda/gui.conf`` [XDGDIRS]_.
+It has no parent context.
+
+The configuration context returned by
+``eda_config_get_cache_context()`` is owned by the library, and should
 not be disposed of with ``g_object_unref()``.
 
 Loading configuration files
@@ -341,8 +361,8 @@ Configuration contexts can be flagged as being 'trusted'.  This allows
 code that needs to access such dangerous parameters to determine
 whether the value has been obtained from a safe source.
 
-By default, the `default context`_, `system context`_ and `user
-context`_ are trusted, and all other contexts untrusted.
+By default, the `default context`_, `system context`_, `user
+context`_ and `cache context`_ are trusted, and all other contexts untrusted.
 
 C function::
 
@@ -594,7 +614,7 @@ Scheme functions::
 
   set-config! cfg group key value
 
-The ``config-set!`` function infers the necessary type from the type
+The ``set-config!`` function infers the necessary type from the type
 of its ``value`` argument.
 
 Configuration Events

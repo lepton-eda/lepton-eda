@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2014 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +46,7 @@
 GtkWidget*
 gschem_dialog_misc_create_property_label (const char *label)
 {
-  GtkWidget *widget = gtk_label_new (label);
+  GtkWidget *widget = gtk_label_new_with_mnemonic (label);
 
   gtk_misc_set_alignment (GTK_MISC (widget),
                           0.0,                  /* xalign */
@@ -57,6 +58,12 @@ gschem_dialog_misc_create_property_label (const char *label)
 
 
 /*! \brief Create a property table
+ *
+ *  \par Function Description
+ *
+ *  If \a label[i] is GtkLabel and has a mnemonic key
+ *  in its text, corresponding \a widget[i] will be set
+ *  as a mnemonic widget for the label
  *
  *  \param [in] label The array of label widgets
  *  \param [in] widget The array of widgets
@@ -90,6 +97,12 @@ gschem_dialog_misc_create_property_table (GtkWidget *label[], GtkWidget *widget[
                                2,                 /* right_attach  */
                                index,             /* top_attach    */
                                index+1);          /* bottom_attach */
+
+    if (GTK_IS_LABEL (label[index]) &&
+        gtk_label_get_mnemonic_keyval (GTK_LABEL (label[index])) != GDK_VoidSymbol)
+    {
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label[index]), widget[index]);
+    }
   }
 
   return table;

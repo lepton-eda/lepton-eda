@@ -29,6 +29,7 @@
   '((quiet . #f)
     (verbose . ())
     (help . #f)
+    (version . #f)
     (interactive . #f)))
 
 ;;; This list contains key names which values must be lists.
@@ -44,6 +45,7 @@
                '((quiet (single-char #\q))
                  (verbose (single-char #\v))
                  (help (single-char #\h))
+                 (version (single-char #\V))
                  (interactive (single-char #\i)))))
 
 ;;; This function extends option-ref so that for keys which may

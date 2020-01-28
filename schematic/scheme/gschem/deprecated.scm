@@ -1,6 +1,8 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett
+;; Copyright (C) 2010-2012 gEDA Contributors
+;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -24,9 +26,9 @@
 
   #:use-module (gschem core gettext)
 
-  #:use-module (geda page)
-  #:use-module (geda object)
-  #:use-module (geda attrib)
+  #:use-module (lepton attrib)
+  #:use-module (lepton object)
+  #:use-module (lepton page)
   #:use-module (gschem window)
   #:use-module (gschem hook)
   #:use-module (gschem selection)
@@ -414,3 +416,23 @@
 ;; added to the selection.  Argument is the empty list.
 (define-public select-net-hook (make-hook 1))
 (add-hook!/full-attribs select-objects-hook select-net-hook net?)
+
+
+;
+; 3 functions used to be in schematic/src/g_funcs.c:
+;
+
+(define-public (gschem-image filename)
+  (format (current-error-port)
+   "WARNING: gschem-image function is deprecated and does nothing.~%")
+)
+
+(define-public (gschem-pdf filename)
+  (format (current-error-port)
+   "WARNING: gschem-pdf function is deprecated and does nothing.~%")
+)
+
+(define-public (gschem-use-rc-values)
+  (format (current-error-port)
+   "WARNING: gschem-use-rc-values function is deprecated and does nothing.~%")
+)

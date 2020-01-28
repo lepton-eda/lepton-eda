@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -372,7 +373,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   gtk_container_add (GTK_CONTAINER (alignment), table);
 
   /* Name selection */
-  label = gtk_label_new (_("Name:"));
+  label = gtk_label_new_with_mnemonic (_("N_ame:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
@@ -380,6 +381,9 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 
   attrib_combo_box_entry = gtk_combo_box_entry_new_text ();
   attrib_combo_entry = gtk_bin_get_child(GTK_BIN(attrib_combo_box_entry));
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), attrib_combo_box_entry);
+
   gtk_table_attach (GTK_TABLE (table), attrib_combo_box_entry, 1, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
@@ -389,7 +393,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
                             (GtkDestroyNotify) g_object_unref);
 
   /* Value entry */
-  label = gtk_label_new (_("Value:"));
+  label = gtk_label_new_with_mnemonic (_("_Value:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
@@ -399,13 +403,16 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   g_object_ref (value_entry);
   g_object_set_data_full (G_OBJECT (aewindow), "value_entry", value_entry,
                           (GtkDestroyNotify) g_object_unref);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), value_entry);
+
   gtk_table_attach (GTK_TABLE (table), value_entry, 1, 2, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_entry_set_activates_default(GTK_ENTRY(value_entry), TRUE);
 
   /* Visibility */
-  visbutton = gtk_check_button_new_with_label (_("Visible"));
+  visbutton = gtk_check_button_new_with_mnemonic (_("Vi_sible"));
   g_object_ref (visbutton);
   g_object_set_data_full (G_OBJECT (aewindow), "visbutton", visbutton,
                           (GtkDestroyNotify) g_object_unref);

@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +26,9 @@ handle_undo (GschemToplevel *w_current);
 
 static void
 notify_options (GschemToplevel *w_current);
+
+static void
+renderer_load_font (EdaRenderer* renderer);
 
 
 /* A list of common values for the dash length drop down menu
@@ -168,6 +172,13 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->toolbar_bus    = NULL;
 
 
+  /* tabbed GUI: notebook: */
+  w_current->xtabs_nbook = NULL;
+
+  /* tabbed GUI: data structures: */
+  w_current->xtabs_info_list = NULL;
+
+
   /* docks: */
   w_current->bottom_notebook = NULL;
   w_current->right_notebook  = NULL;
@@ -181,6 +192,14 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->text_properties   = NULL;
   w_current->options_widget    = NULL;
 
+  /* color scheme editor widget: */
+  w_current->color_edit_widget = NULL;
+
+  /* font selection widget: */
+  w_current->font_select_widget = NULL;
+
+  /* page selection widget: */
+  w_current->page_select_widget = NULL;
 
   /* dialogs for widgets */
   w_current->options_widget_dialog    = NULL;
@@ -188,6 +207,9 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->object_properties_dialog = NULL;
   w_current->log_widget_dialog        = NULL;
   w_current->find_text_state_dialog   = NULL;
+  w_current->color_edit_dialog        = NULL;
+  w_current->font_select_dialog       = NULL;
+  w_current->page_select_dialog       = NULL;
 
 
   w_current->keyaccel_string = NULL;
@@ -199,7 +221,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->sowindow     = NULL;
   w_current->pfswindow    = NULL;
   w_current->cswindow     = NULL;
-  w_current->pswindow     = NULL;
   w_current->tiwindow     = NULL;
   w_current->sewindow     = NULL;
   w_current->aawindow     = NULL;
@@ -242,6 +263,8 @@ GschemToplevel *gschem_toplevel_new ()
   /* Drawing state */
   /* ------------- */
   w_current->renderer = EDA_RENDERER (g_object_new (EDA_TYPE_RENDERER, NULL));
+  renderer_load_font (w_current->renderer);
+
   w_current->first_wx = -1;
   w_current->first_wy = -1;
   w_current->second_wx = -1;
@@ -269,8 +292,6 @@ GschemToplevel *gschem_toplevel_new ()
   /* --------------------- */
   w_current->num_untitled = 0;
   w_current->event_state = SELECT;
-  w_current->image_width  = 0;
-  w_current->image_height = 0;
   w_current->min_zoom = 0;
   w_current->max_zoom = 8;
   w_current->drawbounding_action_mode = FREE;
@@ -279,7 +300,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->SHIFTKEY   = 0;
   w_current->ALTKEY     = 0;
   w_current->buffer_number = 0;
-  w_current->last_callback = NULL;
   w_current->clipboard_buffer = NULL;
 
   /* ------------------ */
@@ -304,14 +324,12 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->include_complex = 0;
   w_current->scrollbars_flag = 0;
   w_current->log_window = 0;
-  w_current->log_window_type = 0;
   w_current->third_button = 0;
   w_current->third_button_cancel = TRUE;
   w_current->middle_button = 0;
   w_current->file_preview = 0;
   w_current->enforce_hierarchy = 0;
   w_current->fast_mousepan = 0;
-  w_current->raise_dialog_boxes = 0;
   w_current->continue_component_place = 0;
   w_current->undo_levels = 0;
   w_current->undo_control = 0;
@@ -329,12 +347,13 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->dots_grid_dot_size = 1;
   w_current->dots_grid_mode = DOTS_GRID_VARIABLE_MODE;
   w_current->mesh_grid_display_threshold = 3;
-  w_current->add_attribute_offset = 50;
   w_current->mousepan_gain = 5;
   w_current->keyboardpan_gain = 10;
   w_current->select_slack_pixels = 4;
   w_current->zoom_gain = 20;
   w_current->scrollpan_steps = 8;
+
+  w_current->bus_ripper_symname = NULL;
 
   w_current->smob = SCM_UNDEFINED;
 
@@ -580,8 +599,29 @@ gschem_toplevel_get_text_size_list_store (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
-  if (w_current->text_size_list_store == NULL) {
-    w_current->text_size_list_store = x_integerls_new_with_values (routine_text_size, ROUTINE_TEXT_SIZE_COUNT);
+  if (w_current->text_size_list_store == NULL)
+  {
+    gchar* cwd = g_get_current_dir();
+    EdaConfig* ctx = eda_config_get_context_for_path (cwd);
+    g_free (cwd);
+
+    gsize len = 0;
+    gchar** vals = eda_config_get_string_list (ctx,
+                                               "schematic.gui",
+                                               "text-sizes",
+                                               &len,
+                                               NULL);
+
+    if (vals != NULL && len > 0)
+    {
+      w_current->text_size_list_store = x_integerls_new_with_values ((const gchar**) vals, len);
+      g_strfreev (vals);
+
+    }
+    else
+    {
+      w_current->text_size_list_store = x_integerls_new_with_values (routine_text_size, ROUTINE_TEXT_SIZE_COUNT);
+    }
   }
 
   return w_current->text_size_list_store;
@@ -654,7 +694,7 @@ gschem_toplevel_page_content_changed (GschemToplevel *w_current, PAGE *page)
 
   page->CHANGED = 1;
 
-  x_pagesel_update (w_current);
+  page_select_widget_update (w_current);
 }
 
 
@@ -712,3 +752,35 @@ notify_options (GschemToplevel *w_current)
     gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
   }
 }
+
+
+
+/*! \brief Read configuration, set the font to render schematics
+ *
+ *  \param renderer A pointer to EdaRenderer to set font for
+ */
+static void
+renderer_load_font (EdaRenderer* renderer)
+{
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  if (cfg != NULL)
+  {
+    GError* err = NULL;
+    gchar* font = eda_config_get_string (cfg,
+                                         "schematic.gui",
+                                         "font",
+                                          &err);
+
+    if (font != NULL && strlen(font) > 0)
+    {
+      g_object_set (renderer, "font-name", font, NULL);
+      g_free (font);
+    }
+
+    g_clear_error (&err);
+  }
+}
+

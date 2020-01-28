@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,7 +106,7 @@ void s_log_init (const gchar *prefix)
    *
    * Then run through it finding the "biggest" existing filename with
    * a matching prefix & date. */
-  dir_path = g_build_filename (eda_get_user_config_dir(), "logs", NULL);
+  dir_path = g_build_filename (eda_get_user_cache_dir(), "logs", NULL);
   /* Try to create the directory. */
   s = g_mkdir_with_parents (dir_path, 0777/*octal*/);
   if (s != 0) {

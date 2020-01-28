@@ -1,6 +1,6 @@
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017 Lepton EDA Contributors
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 ;;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 
 (define-module (symbol check arc)
-  #:use-module (geda object)
+  #:use-module (lepton object)
   #:use-module (symbol gettext)
   #:use-module (symbol blame)
 
@@ -37,7 +37,7 @@
 (define (check-arc-angle object)
   "Checks that arc OBJECT has non-zero angle."
   (and (= 0 (euclidean-remainder
-             (- (arc-end-angle object)
+             (- (arc-sweep-angle object)
                 (arc-start-angle object))
              360))
        (blame-object object

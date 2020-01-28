@@ -1,7 +1,7 @@
-/* -*- geda-c -*-
- * Lepton EDA Schematic Capture
+/* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2014 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,17 +29,12 @@ extern GList *global_window_list;
 extern GdkColor white;
 extern GdkColor black;
 
-/* File name for export */
-extern SCM output_filename_s;
-
 extern int do_logging;
-extern int logging_dest;
 
 
 /* command line options */
 extern int quiet_mode;
 extern int verbose_mode;
-extern int auto_place_mode;
 
 /* Global buffers */
 #define MAX_BUFFERS      (5)

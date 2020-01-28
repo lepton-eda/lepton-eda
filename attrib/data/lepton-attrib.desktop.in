@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+GenericName=lepton-attrib
+_Name=Lepton EDA Attribute Editor
+_Comment=Manipulate component attributes with lepton-attrib
+Type=Application
+Exec=lepton-attrib %F
+Icon=lepton-attrib
+#MimeType=application/x-lepton-schematic;application/x-lepton-symbol;
+Categories=Development;Electronics;Engineering;

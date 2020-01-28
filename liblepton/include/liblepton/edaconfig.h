@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's Library
- * Copyright (C) 2011-2012 gEDA Contributors (see ChangeLog for details)
+/* Lepton EDA library
+ * Copyright (C) 2011-2013 gEDA Contributors
+ * Copyright (C) 2017-2019 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,6 +96,7 @@ GType eda_config_get_type (void) G_GNUC_CONST;
 EdaConfig *eda_config_get_context_for_file (GFile *path) G_GNUC_WARN_UNUSED_RESULT;
 EdaConfig *eda_config_get_context_for_path (const gchar *path) G_GNUC_WARN_UNUSED_RESULT;
 
+EdaConfig *eda_config_get_cache_context (void);
 EdaConfig *eda_config_get_default_context (void);
 EdaConfig *eda_config_get_system_context (void);
 EdaConfig *eda_config_get_user_context (void);
@@ -143,6 +144,11 @@ void eda_config_set_string_list (EdaConfig *cfg, const char *group, const char *
 void eda_config_set_boolean_list (EdaConfig *cfg, const char *group, const char *key, gboolean list[], gsize length);
 void eda_config_set_int_list (EdaConfig *cfg, const char *group, const char *key, gint list[], gsize length);
 void eda_config_set_double_list (EdaConfig *cfg, const char *group, const char *key, gdouble list[], gsize length);
+
+gboolean eda_config_remove_key (EdaConfig *cfg, const char *group, const char *key, GError **error);
+gboolean eda_config_remove_group (EdaConfig *cfg, const char *group, GError **error);
+
+void config_set_legacy_mode(gboolean legacy);
 
 G_END_DECLS
 

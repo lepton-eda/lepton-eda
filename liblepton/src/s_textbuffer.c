@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2013 gEDA Contributors
+ * Copyright (C) 2017-2018 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,15 @@
 
 #include "libgeda_priv.h"
 
+
+/*!
+ * When loading sch/sym files, print each line of the
+ * file while parsing it. 1 => enabled.
+ */
+int verbose_loading = 0;
+
+
+
 struct _TextBuffer
 {
   const gchar *buffer;
@@ -38,6 +47,9 @@ struct _TextBuffer
   gsize linesize;
 
   gsize offset;
+
+  gsize linenum; /*!< incremented each time s_textbuffer_next_line() is called */
+
 };
 
 #define TEXT_BUFFER_LINE_SIZE 1024
@@ -53,9 +65,10 @@ struct _TextBuffer
  *
  *  \param data The address of the buffer to be managed.
  *  \param size The length of the buffer.
+ *  \param name Buffer name to display in verbose output
  *  \retval Pointer to a new TextBuffer struct.
  */
-TextBuffer *s_textbuffer_new (const gchar *data, const gint size)
+TextBuffer *s_textbuffer_new (const gchar *data, const gint size, const gchar* name)
 {
   TextBuffer *result;
   gsize realsize;
@@ -75,6 +88,15 @@ TextBuffer *s_textbuffer_new (const gchar *data, const gint size)
 
   result->linesize = TEXT_BUFFER_LINE_SIZE;
   result->line = (gchar*) g_malloc(result->linesize);
+
+  result->linenum = 0;
+
+  if (verbose_loading)
+  {
+    fprintf (stderr, "\n");
+    fprintf (stderr, "vvvvvvvvvvvvvvvvvvvv s_textbuffer_new(): [%s]\n", name);
+    fprintf (stderr, "\n");
+  }
 
   return result;
 }
@@ -97,6 +119,14 @@ TextBuffer *s_textbuffer_free (TextBuffer *tb)
   g_free (tb->line);
   tb->line = NULL;
   g_free (tb);
+
+  if (verbose_loading)
+  {
+    fprintf (stderr, "\n");
+    fprintf (stderr, "^^^^^^^^^^^^^^^^^^^^ s_textbuffer_free()\n");
+    fprintf (stderr, "\n");
+  }
+
   return NULL;
 }
 
@@ -171,6 +201,7 @@ s_textbuffer_next (TextBuffer *tb, const gssize count)
 
   return tb->line;
 }
+
 /*! \brief Fetch the next line from a text buffer
  *
  *  \par Function description
@@ -188,5 +219,35 @@ s_textbuffer_next (TextBuffer *tb, const gssize count)
 const gchar *
 s_textbuffer_next_line (TextBuffer *tb)
 {
-  return s_textbuffer_next (tb, -1);
+  g_return_val_if_fail (tb != NULL, 0);
+
+  const gchar* line = s_textbuffer_next (tb, -1);
+
+  if (line != NULL)
+  {
+    ++tb->linenum;
+
+    if (verbose_loading)
+    {
+      fprintf (stderr, "%-4lu: %s", (unsigned long) tb->linenum, line);
+    }
+  }
+
+  return line;
 }
+
+
+
+/*! \brief Get current line number of a text buffer
+ *
+ *  \param  tb TextBuffer.
+ *  \retval    Current line number.
+ */
+gsize
+s_textbuffer_linenum (TextBuffer* tb)
+{
+  g_return_val_if_fail (tb != NULL, 0);
+
+  return tb->linenum;
+}
+

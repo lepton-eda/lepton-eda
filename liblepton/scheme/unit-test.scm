@@ -1,5 +1,6 @@
 ;; Minimal Scheme unit-test framework
-;; Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2018-2019 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -43,6 +44,7 @@
 (define-module (unit-test)
   #:use-module (ice-9 pretty-print)
   #:export (assert-true
+            assert-false
             assert-equal
             %assert-thrown
             tests-passed?
@@ -51,9 +53,6 @@
   #:export-syntax (skip-test
                    begin-test
                    assert-thrown))
-
-(or (defined? 'define-syntax)
-    (use-modules (ice-9 syncase)))
 
 (define *failed-tests* '())
 (define *passed-tests* '())
@@ -64,6 +63,12 @@
       #t
       (throw 'test-failed-exception
              (simple-format #f "  assert-true: got: ~S" result))))
+
+(define (assert-false result)
+  (if (not result)
+      #t
+      (throw 'test-failed-exception
+             (simple-format #f "  assert-false: got: ~S" result))))
 
 (define (assert-equal expected result)
   (if (equal? expected result)

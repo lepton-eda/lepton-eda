@@ -1,25 +1,42 @@
-## $Id$
-##
-## Process this file with automake to produce Makefile.in
+bin_SCRIPTS = \
+	lepton-archive \
+	lepton-embed \
+	lepton-pcb_backannotate \
+	lepton-refdes_renum \
+	lepton-schdiff \
+	lepton-symfix \
+	lepton-tragesym \
+	lepton-upcfg
 
-bin_SCRIPTS = refdes_renum \
-	      tragesym pcb_backannotate garchive gsymfix \
-	      schdiff
+EXTRA_DIST = \
+	lepton-archive.in \
+	lepton-embed.in \
+	lepton-pcb_backannotate \
+	lepton-refdes_renum \
+	lepton-schdiff \
+	lepton-symfix \
+	lepton-tragesym.in \
+	lepton-upcfg.in
 
-noinst_SCRIPTS = gschupdate gsymupdate
+do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
+	-e 's,[@]GUILE[@],$(GUILE),g' \
+	-e 's,[@]ccachedir[@],@LEPTON_SCM_PRECOMPILE_DIR@,g'
 
-EXTRA_DIST = gschupdate gsymupdate refdes_renum gsymfix \
-	     tragesym pcb_backannotate garchive.py \
-	     schdiff
+lepton-archive: lepton-archive.in
+	$(do_subst) < $(srcdir)/$@.in > $@
+	chmod +x $@
 
-##  SDB's stuff to enable garchive.  This hardcodes the path to the
-##  system libraries into garchive prior to installation.
-garchive: $(srcdir)/garchive.py
-	sed -e "s#GEDADATADIR#$(GEDADATADIR)#" $(srcdir)/garchive.py > tmp$@
-	chmod a+x tmp$@
-	mv -f tmp$@ $@
+lepton-tragesym: lepton-tragesym.in
+	$(do_subst) < $(srcdir)/$@.in > $@
+	chmod +x $@
 
-MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
-CLEANFILES = *.log *.ps core FILE tmp  *~
-DISTCLEANFILES = *.log core FILE tmp *~ garchive sw2asc
-MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in garchive
+lepton-embed: lepton-embed.in
+	$(do_subst) < $(srcdir)/$@.in > $@
+	chmod +x $@
+
+lepton-upcfg: lepton-upcfg.in
+	$(do_subst) < $(srcdir)/$@.in > $@
+	chmod +x $@
+
+CLEANFILES = lepton-archive lepton-embed lepton-tragesym lepton-upcfg
+MAINTAINERCLEANFILES = Makefile.in

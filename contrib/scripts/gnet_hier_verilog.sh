@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # gEDA - GPL Electronic Design Automation
 # Copyright (C) 2007-2008 Paul Tan (pt75234 at users.sourceforge.net)
 #

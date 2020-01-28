@@ -1,0 +1,35 @@
+START header
+
+gEDA's netlist format
+(Initially created for testing of gnetlist)
+
+END header
+
+No graphical symbols found
+
+START components
+
+Utop/A device=INPUT
+Utop/U? device=OUTPUT
+Utop/Ubottom device=7404
+
+END components
+
+No "no-connect" nets found
+
+START renamed-nets
+
+
+END renamed-nets
+
+START nets
+
+Utop/GND : Utop/Ubottom 7
+Utop/Vcc : Utop/Ubottom 14
+Utop/net-A : Utop/A 1, Utop/Ubottom 1
+Utop/net-B : Utop/U? 1, Utop/Ubottom 2
+top-net-A : 
+top-net-B : 
+
+END nets
+

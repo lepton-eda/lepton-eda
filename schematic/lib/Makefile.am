@@ -17,6 +17,6 @@ system-gschemrc: $(top_builddir)/configure system-gschemrc.scm
 EXTRA_DIST = system-gschemrc.scm gschem-gtkrc gschem-colormap-lightbg gschem-colormap-darkbg gschem-colormap-bw
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~
-DISTCLEANFILES = *.log core FILE *~ system-gschemrc
-MAINTAINERCLEANFILES = system-gschemrc system-gnetlistrc system-gsymbolrc *.log *~ Makefile.in
+CLEANFILES = system-gschemrc
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log *~ Makefile.in

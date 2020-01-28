@@ -1,0 +1,8 @@
+Makefile
+Makefile.in
+gnet-gsch2pcb.scm
+lepton-netlist
+config-netlist.scm
+*.log
+*.trs
+*~
