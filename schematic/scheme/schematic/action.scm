@@ -22,10 +22,9 @@
   #:use-module (lepton log)
   #:use-module (ice-9 optargs)
 
-  #:use-module (gschem window)
-
   #:use-module (schematic core gettext)
   #:use-module (schematic hook)
+  #:use-module (schematic window)
 
   #:export-syntax (define-action))
 

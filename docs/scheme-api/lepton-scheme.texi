@@ -2211,7 +2211,7 @@ operations.
 @section Windows and views
 
 To use the functions described in this section, you will need to load
-the @code{(gschem window)} module.
+the @code{(schematic window)} module.
 
 @defun active-page
 Returns the @code{page} currently being displayed for editing.

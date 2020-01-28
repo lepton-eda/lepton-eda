@@ -14,10 +14,10 @@ nobase_dist_scmdata_DATA = \
 	gschem/gschemdoc.scm \
 	gschem/hook.scm \
 	gschem/keymap.scm \
-	gschem/window.scm \
 	gschem/selection.scm \
 	gschem/symbol/check.scm \
 	gschem/util.scm \
+	gschem/window.scm \
 	gschem/deprecated.scm \
 	schematic/action.scm \
 	schematic/attrib.scm \
@@ -34,6 +34,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/symbol/check.scm \
 	schematic/util.scm \
 	schematic/undo.scm \
+	schematic/window.scm \
 	conf/schematic/attribs.scm \
 	conf/schematic/deprecated.scm \
 	conf/schematic/keys.scm \

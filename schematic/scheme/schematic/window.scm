@@ -1,6 +1,6 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
-;; Copyright (C) 2011 Peter Brett
+;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
@@ -18,22 +18,17 @@
 ;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 ;;
 
-(define-module (schematic attrib)
+(define-module (schematic window)
 
-  #:use-module (gschem core attrib))
+  ; Import C procedures
+  #:use-module (gschem core window)
 
-;; add-attrib! target name value visible attribute-mode
-;;
-;; Create a new attribute, either attached to a target object in the
-;; current page, or floating in the current page if target is #f.  The
-;; name and value for the attribute must be strings, and if visible is
-;; #f, the attribute will be invisible.  The attribute-mode controls
-;; which parts of the attribute will be visible, and must be one of
-;; the following symbols:
-;;
-;;   name
-;;   value
-;;   both
-;;
-;; See also active-page in the (schematic window) module.
-(define-public add-attrib! %add-attrib!)
+  #:use-module (lepton page)
+  #:re-export (close-page!))
+
+(define-public active-page %active-page)
+(define-public set-active-page! %set-active-page!)
+(define-public pointer-position %pointer-position)
+
+(define-public (snap-point point)
+  (%snap-point (car point) (cdr point)))

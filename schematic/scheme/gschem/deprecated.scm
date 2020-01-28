@@ -31,12 +31,11 @@
   #:use-module (lepton object)
   #:use-module (lepton page)
 
-  #:use-module (gschem window)
-
   #:use-module (schematic attrib)
   #:use-module (schematic core gettext)
   #:use-module (schematic hook)
-  #:use-module (schematic selection))
+  #:use-module (schematic selection)
+  #:use-module (schematic window))
 
 ;; add-attribute-to-object object name value visible show
 ;;
@@ -232,7 +231,7 @@
 ;; get-selected-filename
 ;;
 ;; Returns the filename associated with the active page in the current
-;; gschem window.
+;; lepton-schematic window.
 (define-public (get-selected-filename)
   (page-filename (active-page)))
 
