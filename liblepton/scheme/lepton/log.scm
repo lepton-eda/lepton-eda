@@ -18,7 +18,7 @@
 
 (define-module (lepton log)
   #:use-module (ice-9 format)
-  #:use-module (geda core log)
+  #:use-module (lepton core log)
 
   #:export (init-log
             log!))
