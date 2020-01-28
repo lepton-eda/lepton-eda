@@ -1,9 +1,9 @@
 (use-modules (ice-9 regex)
-             (lepton page)
-             (gschem hook)
-             (gschem window)
              (lepton config)
-             (lepton legacy-config))
+             (lepton legacy-config)
+             (lepton page)
+             (gschem window)
+             (schematic hook))
 
 ;
 ; Start of color section

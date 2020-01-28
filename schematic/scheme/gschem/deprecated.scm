@@ -23,20 +23,20 @@
 ;; be used in new code.
 
 (define-module (gschem deprecated)
+  #:use-module (srfi srfi-1)
 
-  #:use-module (schematic core gettext)
+  #:use-module (geda deprecated)
 
   #:use-module (lepton attrib)
   #:use-module (lepton object)
   #:use-module (lepton page)
-  #:use-module (gschem window)
-  #:use-module (gschem hook)
+
   #:use-module (gschem selection)
+  #:use-module (gschem window)
+
   #:use-module (schematic attrib)
-
-  #:use-module (geda deprecated)
-
-  #:use-module (srfi srfi-1))
+  #:use-module (schematic core gettext)
+  #:use-module (schematic hook))
 
 ;; add-attribute-to-object object name value visible show
 ;;

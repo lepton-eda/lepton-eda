@@ -17,9 +17,9 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 ;;; MA 02111-1301 USA.
 
-(use-modules (gschem hook)
-             (lepton attrib)
-             (lepton object))
+(use-modules (lepton attrib)
+             (lepton object)
+             (schematic hook))
 
 (define (place-netname-attribute attribute)
   ;; Only attached netname attributes

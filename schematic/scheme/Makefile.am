@@ -12,10 +12,10 @@ nobase_dist_scmdata_DATA = \
 	gschem/attrib.scm \
 	gschem/builtins.scm \
 	gschem/gschemdoc.scm \
+	gschem/hook.scm \
 	gschem/window.scm \
 	gschem/selection.scm \
 	gschem/deprecated.scm \
-	gschem/hook.scm \
 	gschem/keymap.scm \
 	gschem/util.scm \
 	gschem/symbol/check.scm \
@@ -25,6 +25,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/core/gettext.scm \
 	schematic/gui/keymap.scm \
 	schematic/gui/stroke.scm \
+	schematic/hook.scm \
 	schematic/netlist.scm \
 	schematic/precompile.scm \
 	schematic/repl.scm \

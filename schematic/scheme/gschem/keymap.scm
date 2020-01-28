@@ -20,14 +20,15 @@
 ;;
 
 (define-module (gschem keymap)
-  #:use-module (gschem core keymap)
-  #:use-module (gschem hook)
   #:use-module (ice-9 control)
   #:use-module (ice-9 optargs)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
 
-  #:use-module (schematic core gettext))
+  #:use-module (gschem core keymap)
+
+  #:use-module (schematic core gettext)
+  #:use-module (schematic hook))
 
 ;; -------------------- Key combinations --------------------
 

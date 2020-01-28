@@ -23,9 +23,9 @@
   #:use-module (ice-9 optargs)
 
   #:use-module (gschem window)
-  #:use-module (gschem hook)
 
   #:use-module (schematic core gettext)
+  #:use-module (schematic hook)
 
   #:export-syntax (define-action))
 
