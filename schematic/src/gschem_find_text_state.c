@@ -248,7 +248,7 @@ assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text)
     if (filter_text) {
       str = geda_text_object_get_string (object);
     } else {
-      str = scm_to_utf8_string (scm_call_1 (scm_c_public_ref ("gschem symbol check",
+      str = scm_to_utf8_string (scm_call_1 (scm_c_public_ref ("schematic symbol check",
                                                               "object-blaming-info"),
                                             edascm_from_object (object)));
     }
@@ -630,7 +630,7 @@ find_objects_using_check (GSList *pages)
   TOPLEVEL *toplevel = page->toplevel;
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   edascm_dynwind_toplevel (toplevel);
-  GSList *objects = scm_to_gslist (scm_call_0 (scm_c_public_ref ("gschem symbol check",
+  GSList *objects = scm_to_gslist (scm_call_0 (scm_c_public_ref ("schematic symbol check",
                                                                  "check-symbol")));
   scm_dynwind_end ();
   return objects;
