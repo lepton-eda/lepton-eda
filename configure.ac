@@ -262,11 +262,6 @@ AC_CONFIG_FILES([Makefile
                  netlist/examples/analog/bandpass/Makefile
 
 
-                 gnetlist/examples/analog/Makefile
-                 gnetlist/examples/analog/varactor_osc/Makefile
-                 gnetlist/examples/analog/bandpass/Makefile
-
-
                  utils/Makefile
                  utils/docs/Makefile
                  utils/examples/Makefile
