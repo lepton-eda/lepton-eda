@@ -75,8 +75,8 @@
 
 
 (load-extension "../../liblepton/src/liblepton" "liblepton_init")
-(define with-toplevel (@@ (geda core toplevel) %with-toplevel))
-(define make-toplevel (@@ (geda core toplevel) %make-toplevel))
+(define with-toplevel (@@ (lepton core toplevel) %with-toplevel))
+(define make-toplevel (@@ (lepton core toplevel) %make-toplevel))
 
 
 (define (report s port)

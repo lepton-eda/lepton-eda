@@ -19,9 +19,8 @@
 
 (define-module (schematic symbol check)
   #:use-module (srfi srfi-1)
-  #:use-module (geda core toplevel)
+  #:use-module (lepton core toplevel)
   #:use-module (lepton page)
-
   #:use-module (schematic core gettext)
   #:use-module (schematic window)
   #:use-module (symbol blame)

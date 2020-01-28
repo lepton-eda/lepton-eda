@@ -77,7 +77,7 @@ exec @GUILE@ -s "$0" "$@"
              (srfi srfi-26))
 
 (primitive-eval
- '(use-modules (geda core toplevel)
+ '(use-modules (lepton core toplevel)
                (lepton log)
                (lepton file-system)
                (lepton library)
