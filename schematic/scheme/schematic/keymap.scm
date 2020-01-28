@@ -25,9 +25,8 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
 
-  #:use-module (gschem core keymap)
-
   #:use-module (schematic core gettext)
+  #:use-module (schematic core keymap)
   #:use-module (schematic hook))
 
 ;; -------------------- Key combinations --------------------
