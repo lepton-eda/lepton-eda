@@ -219,6 +219,9 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
 - The module `(gschem core builtins)` has been renamed to
   `(schematic core builtins)`.
 
+- The module `(gschem core hook)` has been renamed to `(schematic
+  core hook)`.
+
 - Grips can now be turned on and off at run-time.
   Use the new 'Options → Grips: On/Off' menu item or
   <kbd>O</kbd>-<kbd>I</kbd> keyboard shortcut.

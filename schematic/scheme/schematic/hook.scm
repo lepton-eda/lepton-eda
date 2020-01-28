@@ -22,7 +22,7 @@
 (define-module (schematic hook)
 
   ;; Import C definitions
-  #:use-module (gschem core hook))
+  #:use-module (schematic core hook))
 
 (define-public add-objects-hook %add-objects-hook)
 
