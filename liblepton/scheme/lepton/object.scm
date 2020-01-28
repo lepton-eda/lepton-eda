@@ -22,9 +22,9 @@
 
   ; Import C procedures
   #:use-module (geda core smob)
-  #:use-module (geda core object)
 
   #:use-module (lepton core complex)
+  #:use-module (lepton core object)
 
   ; Optional arguments
   #:use-module (ice-9 optargs)

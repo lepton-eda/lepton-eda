@@ -1,7 +1,7 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2011-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -175,7 +175,7 @@ edascm_is_object_type (SCM smob, int type)
  * smob.
  *
  * \note Scheme API: Implements the %copy-object procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param [in] obj_s an #OBJECT smob.
  * \return a new #OBJECT smob containing a copy of the #OBJECT in \a obj_s.
@@ -204,7 +204,7 @@ SCM_DEFINE (copy_object, "%copy-object", 1, 0, 0,
  * Returns a symbol describing the type of the #OBJECT smob \a obj_s.
  *
  * \note Scheme API: Implements the %object-type procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param [in] obj_s an #OBJECT smob.
  * \return a Scheme symbol representing the object type.
@@ -245,7 +245,7 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
  * Returns an internal id number of the #OBJECT smob \a obj_s.
  *
  * \note Scheme API: Implements the %object-id procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param [in] obj_s an #OBJECT smob.
  * \return a Scheme symbol representing the object type.
@@ -279,7 +279,7 @@ SCM_DEFINE (object_id, "%object-id", 1, 0, 0,
  * objects, not the visible bounds.
  *
  * \note Scheme API: Implements the %object-bounds procedure in the
- * (geda core object) module.  The procedure takes any number of
+ * (lepton core object) module.  The procedure takes any number of
  * #OBJECT smobs as arguments.
  *
  * \param [in] rst_s Variable-length list of #OBJECT arguments.
@@ -344,7 +344,7 @@ SCM_DEFINE (object_bounds, "%object-bounds", 0, 0, 1,
  *    -# For other styles, dot/dash spacing and dash length.
  *
  * \note Scheme API: Implements the %object-stroke procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s object to get stroke settings for.
  * \return a list of stroke parameters.
@@ -413,7 +413,7 @@ SCM_DEFINE (object_stroke, "%object-stroke", 1, 0, 0,
  * SCM_UNDEFINED if not required by the dash style \a dash_s.
  *
  * \note Scheme API: Implements the %object-stroke procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s object to set stroke settings for.
  * \param width_s new stroke width for \a obj_s.
@@ -519,7 +519,7 @@ SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
  *      spacing for mesh fills.
  *
  * \note Scheme API: Implements the %object-fill procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s object to get fill settings for.
  * \return a list of fill parameters.
@@ -576,7 +576,7 @@ SCM_DEFINE (object_fill, "%object-fill", 1, 0, 0,
  * space2_s
  *
  * \note Scheme API: Implements the %object-fill procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s object to set fill settings for.
  * \return \a obj_s.
@@ -675,7 +675,7 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
  * object types.
  *
  * \note Scheme API: Implements the %object-color procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param [in] obj_s #OBJECT smob to inspect.
  * \return The colormap index used by \a obj_s.
@@ -697,7 +697,7 @@ SCM_DEFINE (object_color, "%object-color", 1, 0, 0,
  * for some object types.
  *
  * \note Scheme API: Implements the %set-object-color! procedure in
- * the (geda core object) module.
+ * the (lepton core object) module.
  *
  * \param obj_s   #OBJECT smob to modify.
  * \param color_s new colormap index to use for \a obj_s.
@@ -729,7 +729,7 @@ SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
  * object is considered to be unlocked, otherwise it is locked.
  *
  * \note Scheme API: Implements the %object-selectable? procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s  #OBJECT smob to inspect.
  *
@@ -755,7 +755,7 @@ SCM_DEFINE (object_selectable_p, "%object-selectable?", 1, 0, 0,
  * Set object's selectable flag: locked objects cannot be selected.
  *
  * \note Scheme API: Implements the %set-object-selectable! procedure in
- * the (geda core object) module.
+ * the (lepton core object) module.
  *
  * \param obj_s         #OBJECT smob to modify.
  * \param selectable_s  boolean: object's selectable flag.
@@ -793,7 +793,7 @@ SCM_DEFINE (set_object_selectable_x, "%set-object-selectable!", 2, 0, 0,
 /*! \brief Check whether an object is embedded.
  *
  * \note Scheme API: Implements the %object-embedded? procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s  #OBJECT smob to inspect.
  *
@@ -833,7 +833,7 @@ SCM_DEFINE (object_embedded_p, "%object-embedded?", 1, 0, 0,
  * or \a obj_s is not a component or picture, does nothing.
  *
  * \note Scheme API: Implements the %set-object-embedded! procedure in
- * the (geda core object) module.
+ * the (lepton core object) module.
  *
  * \param obj_s    #OBJECT smob to modify.
  * \param embed_s  boolean: whether to embed (#t) or unembed (#f) the object.
@@ -885,8 +885,8 @@ SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
  * Creates a new line object, with all its parameters set to default
  * values.
  *
- * \note Scheme API: Implements the %make-line procedure in the (geda
- * core object) module.
+ * \note Scheme API: Implements the %make-line procedure in the
+ * (lepton core object) module.
  *
  * \return a newly-created line object.
  */
@@ -913,8 +913,8 @@ SCM_DEFINE (make_line, "%make-line", 0, 0, 0,
  * \par Function Description
  * Modifies a line object by setting its parameters to new values.
  *
- * \note Scheme API: Implements the %set-line! procedure in the (geda
- * core object) module.
+ * \note Scheme API: Implements the %set-line! procedure in the
+ * (lepton core object) module.
  *
  * This function also works on net, bus and pin objects.  For pins,
  * the start is the connectable point on the pin.
@@ -1037,8 +1037,8 @@ SCM_DEFINE (line_info, "%line-info", 1, 0, 0,
  * Creates a new net object, with all its parameters set to default
  * values.
  *
- * \note Scheme API: Implements the %make-net procedure in the (geda
- * core object) module.
+ * \note Scheme API: Implements the %make-net procedure in the
+ * (lepton core object) module.
  *
  * \return a newly-created net object.
  */
@@ -1066,8 +1066,8 @@ SCM_DEFINE (make_net, "%make-net", 0, 0, 0,
  * Creates a new bus object, with all its parameters set to default
  * values.
  *
- * \note Scheme API: Implements the %make-bus procedure in the (geda
- * core object) module.
+ * \note Scheme API: Implements the %make-bus procedure in the
+ * (lepton core object) module.
  *
  * \todo Do we need a way to get/set bus ripper direction?
  *
@@ -1102,8 +1102,8 @@ SCM_DEFINE (make_bus, "%make-bus", 0, 0, 0,
  * values.  type_s is a Scheme symbol indicating whether the pin
  * should be a "net" pin or a "bus" pin.
  *
- * \note Scheme API: Implements the %make-pin procedure in the (geda
- * core object) module.
+ * \note Scheme API: Implements the %make-pin procedure in the
+ * (lepton core object) module.
  *
  * \return a newly-created pin object.
  */
@@ -1146,8 +1146,8 @@ SCM_DEFINE (make_pin, "%make-pin", 1, 0, 0,
  * Returns a symbol describing the pin type of the pin object \a
  * pin_s.
  *
- * \note Scheme API: Implements the %make-pin procedure in the (geda
- * core object) module.
+ * \note Scheme API: Implements the %make-pin procedure in the
+ * (lepton core object) module.
  *
  * \return the symbol 'pin or 'bus.
  */
@@ -1181,8 +1181,8 @@ SCM_DEFINE (pin_type, "%pin-type", 1, 0, 0,
  * Creates a new box object, with all its parameters set to default
  * values.
  *
- * \note Scheme API: Implements the %make-box procedure in the (geda
- * core object) module.
+ * \note Scheme API: Implements the %make-box procedure in the
+ * (lepton core object) module.
  *
  * \return a newly-created box object.
  */
@@ -1206,8 +1206,8 @@ SCM_DEFINE (make_box, "%make-box", 0, 0, 0,
  * \par Function Description
  * Modifies a box object by setting its parameters to new values.
  *
- * \note Scheme API: Implements the %set-box! procedure in the (geda
- * core object) module.
+ * \note Scheme API: Implements the %set-box! procedure in the
+ * (lepton core object) module.
  *
  * \param box_s  the box object to modify.
  * \param x1_s   the new x-coordinate of the top left of the box.
@@ -1280,7 +1280,7 @@ SCM_DEFINE (box_info, "%box-info", 1, 0, 0,
  * values.
  *
  * \note Scheme API: Implements the %make-circle procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \return a newly-created circle object.
  */
@@ -1307,7 +1307,7 @@ SCM_DEFINE (make_circle, "%make-circle", 0, 0, 0,
  * Modifies a circle object by setting its parameters to new values.
  *
  * \note Scheme API: Implements the %set-circle! procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param circle_s the circle object to modify.
  * \param x_s    the new x-coordinate of the center of the circle.
@@ -1376,7 +1376,7 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
  * values.
  *
  * \note Scheme API: Implements the %make-arc procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \return a newly-created arc object.
  */
@@ -1405,7 +1405,7 @@ SCM_DEFINE (make_arc, "%make-arc", 0, 0, 0,
  * Modifies a arc object by setting its parameters to new values.
  *
  * \note Scheme API: Implements the %set-arc! procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param arc_s         the arc object to modify.
  * \param x_s           the new x-coordinate of the center of the arc.
@@ -1460,7 +1460,7 @@ SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
  * -# Colormap index of color to be used for drawing the arc
  *
  * \note Scheme API: Implements the %arc-info procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param arc_s the arc object to inspect.
  * \return a list of arc parameters.
@@ -1488,7 +1488,7 @@ SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
  * values.
  *
  * \note Scheme API: Implements the %make-text procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \return a newly-created text object.
  */
@@ -1526,7 +1526,7 @@ SCM_DEFINE (make_text, "%make-text", 0, 0, 0,
  * the symbols "name", "value" or "both".
  *
  * \note Scheme API: Implements the %set-text! procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param text_s    the text object to modify.
  * \param x_s       the new x-coordinate of the anchor of the text.
@@ -1658,7 +1658,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
  * -# Colormap index of color to be used for drawing the text
  *
  * \note Scheme API: Implements the %text-info procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param text_s the text object to inspect.
  * \return a list of text parameters.
@@ -1727,7 +1727,7 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
  * list.
  *
  * \note Scheme API: Implements the %object-connections procedure of
- * the (geda core object) module.
+ * the (lepton core object) module.
  *
  * \param obj_s #OBJECT smob for object to get connections for.
  * \return a list of #OBJECT smobs.
@@ -1760,7 +1760,7 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
  * \a obj_s is not part of a component, returns SCM_BOOL_F.
  *
  * \note Scheme API: Implements the %object-complex procedure of the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s #OBJECT smob for object to get component of.
  * \return the #OBJECT smob of the containing component, or SCM_BOOL_F.
@@ -1786,8 +1786,8 @@ SCM_DEFINE (object_complex, "%object-complex", 1, 0, 0,
  * Creates a new, empty path object with default color, stroke and
  * fill options.
  *
- * \note Scheme API: Implements the %make-path procedure in the (geda
- * core object) module.
+ * \note Scheme API: Implements the %make-path procedure in the
+ * (lepton core object) module.
  *
  * \return a newly-created path object.
  */
@@ -1811,7 +1811,7 @@ SCM_DEFINE (make_path, "%make-path", 0, 0, 0,
  * Retrieves the number of path elements in the path object \a obj_s.
  *
  * \note Scheme API: Implements the %path-length procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s #OBJECT smob for path object to inspect.
  * \return The number of path elements in \a obj_s.
@@ -1848,8 +1848,8 @@ SCM_DEFINE (path_length, "%path-length", 1, 0, 0,
  *
  * All coordinates are absolute.
  *
- * \note Scheme API: Implements the %path-ref procedure in the (geda
- * core object) module.
+ * \note Scheme API: Implements the %path-ref procedure in the
+ * (lepton core object) module.
  *
  * \param obj_s   #OBJECT smob of path object to get element from.
  * \param index_s Index of element to retrieve from \a obj_s
@@ -1910,7 +1910,7 @@ SCM_DEFINE (path_ref, "%path-ref", 2, 0, 0,
  * "out-of-range" error.
  *
  * \note Scheme API: Implements the %path-remove! procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s   #OBJECT smob of path object to remove element from.
  * \param index_s Index of element to remove from \a obj_s.
@@ -1976,7 +1976,7 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
  * to the path.
  *
  * \note Scheme API: Implements the %path-insert! procedure of the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s   #OBJECT smob for the path object to modify.
  * \param index_s Index at which to insert new element.
@@ -2078,7 +2078,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
  * be embedded.
  *
  * \note Scheme API: Implements the %make-picture procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \return a newly-created picture object.
  */
@@ -2111,7 +2111,7 @@ SCM_DEFINE (make_picture, "%make-picture", 0, 0, 0, (),
  * -# Whether object is mirrored.
  *
  * \note Scheme API: Implements the %picture-info procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s the picture object to inspect.
  * \return a list of picture object parameters.
@@ -2145,7 +2145,7 @@ SCM_DEFINE (picture_info, "%picture-info", 1, 0, 0,
  * Sets the parameters of the picture object \a obj_s.
  *
  * \note Scheme API: Implements the %set-picture! procedure in the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s       the picture object to modify
  * \param x1_s  the new x-coordinate of the top left of the picture.
@@ -2208,7 +2208,7 @@ SCM_DEFINE (set_picture_x, "%set-picture!", 7, 0, 0,
  * format.
  *
  * \note Scheme API: Implements the %set-picture-data/vector!
- * procedure in the (geda core object) module.
+ * procedure in the (lepton core object) module.
  *
  * \param obj_s       The picture object to modify.
  * \param data_s      Vector containing encoded image data.
@@ -2276,7 +2276,7 @@ SCM_DEFINE (set_picture_data_vector_x, "%set-picture-data/vector!",
  * y-axis.
  *
  * \note Scheme API: Implements the %translate-object! procedure of the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s  #OBJECT smob for object to translate.
  * \param dx_s   Integer distance to translate along x-axis.
@@ -2314,7 +2314,7 @@ SCM_DEFINE (translate_object_x, "%translate-object!", 3, 0, 0,
  * multiple of 90 degrees.
  *
  * \note Scheme API: Implements the %rotate-object! procedure of the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s    #OBJECT smob for object to translate.
  * \param x_s      x-coordinate of centre of rotation.
@@ -2342,8 +2342,8 @@ SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
   int y = scm_to_int (y_s);
   int angle = scm_to_int (angle_s);
 
-  /* FIXME Work around horribly broken libgeda behaviour.  Some
-   * libgeda functions treat a rotation of -90 degrees as a rotation
+  /* FIXME Work around horribly broken liblepton behaviour.  Some
+   * liblepton functions treat a rotation of -90 degrees as a rotation
    * of +90 degrees, etc., which is not sane. */
   while (angle < 0) angle += 360;
   while (angle >= 360) angle -= 360;
@@ -2363,7 +2363,7 @@ SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
  * Mirrors \a obj_s in the line x = \a x_s.
  *
  * \note Scheme API: Implements the %mirror-object! procedure of the
- * (geda core object) module.
+ * (lepton core object) module.
  *
  * \param obj_s    #OBJECT smob for object to translate.
  * \param x_s      x-coordinate of centre of rotation.
@@ -2392,13 +2392,13 @@ SCM_DEFINE (mirror_object_x, "%mirror-object!", 2, 0, 0,
 }
 
 /*!
- * \brief Create the (geda core object) Scheme module.
+ * \brief Create the (lepton core object) Scheme module.
  * \par Function Description
- * Defines procedures in the (geda core object) module. The module can
- * be accessed using (use-modules (geda core object)).
+ * Defines procedures in the (lepton core object) module. The module can
+ * be accessed using (use-modules (lepton core object)).
  */
 static void
-init_module_geda_core_object (void *unused)
+init_module_lepton_core_object (void *unused)
 {
   /* Register the functions and symbols */
   #include "scheme_object.x"
@@ -2455,7 +2455,7 @@ init_module_geda_core_object (void *unused)
 }
 
 /*!
- * \brief Initialise the basic gEDA object manipulation procedures.
+ * \brief Initialise the basic Lepton EDA object manipulation procedures.
  * \par Function Description
  * Registers some Scheme procedures for working with #OBJECT
  * smobs. Should only be called by edascm_init().
@@ -2463,8 +2463,8 @@ init_module_geda_core_object (void *unused)
 void
 edascm_init_object ()
 {
-  /* Define the (geda core object) module */
-  scm_c_define_module ("geda core object",
-                       (void (*) (void*)) init_module_geda_core_object,
+  /* Define the (lepton core object) module */
+  scm_c_define_module ("lepton core object",
+                       (void (*) (void*)) init_module_lepton_core_object,
                        NULL);
 }
