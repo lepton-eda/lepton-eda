@@ -1,6 +1,6 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2011-2012 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ error_from_gerror (const gchar *subr, GError **error)
  * \see eda_config_get_default_context().
  *
  * \note Scheme API: Implements the \%default-config-context procedure
- * in the (geda core config) module.
+ * in the (lepton core config) module.
  *
  * \return an #EdaConfig smob for the default context.
  */
@@ -143,7 +143,7 @@ SCM_DEFINE (default_config_context, "%default-config-context", 0, 0, 0,
  * \see eda_config_get_system_context().
  *
  * \note Scheme API: Implements the \%system-config-context procedure
- * in the (geda core config) module.
+ * in the (lepton core config) module.
  *
  * \return an #EdaConfig smob for the system context.
  */
@@ -160,7 +160,7 @@ SCM_DEFINE (system_config_context, "%system-config-context", 0, 0, 0,
  * \see eda_config_get_user_context().
  *
  * \note Scheme API: Implements the \%user-config-context procedure
- * in the (geda core config) module.
+ * in the (lepton core config) module.
  *
  * \return an #EdaConfig smob for the user context.
  */
@@ -178,7 +178,7 @@ SCM_DEFINE (user_config_context, "%user-config-context", 0, 0, 0,
  * \see eda_config_get_context_for_path().
  *
  * \note Scheme API: Implements the \%path-config-context procedure in
- * the (geda core config) module.
+ * the (lepton core config) module.
  *
  * \param [in] path_s Path to get context for, as a string.
  * \return an #EdaConfig smob for \a path.
@@ -211,7 +211,7 @@ SCM_DEFINE (path_config_context, "%path-config-context", 1, 0, 0,
  * \see eda_config_get_cache_context().
  *
  * \note Scheme API: Implements the \%cache-config-context procedure
- * in the (geda core config) module.
+ * in the (lepton core config) module.
  *
  * \return an #EdaConfig smob for the cache context.
  */
@@ -229,7 +229,7 @@ SCM_DEFINE (cache_config_context, "%cache-config-context", 0, 0, 0,
  * \see eda_config_get_file().
  *
  * \note Scheme API: Implements the \%config-filename procedure in the
- * (geda core config) module.
+ * (lepton core config) module.
  *
  * \param cfg_s  #EdaConfig smob for configuration context.
  * \return string containing configuration filename.
@@ -262,7 +262,7 @@ SCM_DEFINE (config_filename, "%config-filename", 1, 0, 0,
  * \see eda_config_load().
  *
  * \note Scheme API: Implements the \%config-load! procedure in the
- * (geda core config) module.
+ * (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob for configuration context to load.
  * \param force_s  Force configuration loading even if it has been already loaded.
@@ -304,7 +304,7 @@ SCM_DEFINE (config_load_x, "%config-load!", 2, 0, 0,
  * \see eda_config_is_loaded().
  *
  * \note Scheme API: Implements the \%config-loaded? procedure in the
- * (geda core config) module.
+ * (lepton core config) module.
  *
  * \param cfg_s  #EdaConfig smob of configuration context.
  * \return #t if \a cfg_s has been loaded; #f otherwise.
@@ -327,7 +327,7 @@ SCM_DEFINE (config_loaded_p, "%config-loaded?", 1, 0, 0,
  * \see eda_config_save().
  *
  * \note Scheme API: Implements the \%config-save! procedure in the
- * (geda core config) module.
+ * (lepton core config) module.
  *
  * \param cfg_s #EdaConfig smob of configuration context.
  * \return \a cfg_s.
@@ -355,7 +355,7 @@ SCM_DEFINE (config_save_x, "%config-save!", 1, 0, 0,
  * \see eda_config_is_changed().
  *
  * \note Scheme API: Implements the \%config-changed? procedure in the
- * (geda core config) module.
+ * (lepton core config) module.
  *
  * \param cfg_s #EdaConfig smob of configuration context.
  * \return #t if \a cfg_s has unsaved changes, #f otherwise.
@@ -379,7 +379,7 @@ SCM_DEFINE (config_changed_p, "%config-changed?", 1, 0, 0,
  * \see eda_config_get_parent().
  *
  * \note Scheme API: Implements the \%config-parent procedure in the
- * (geda core config) module.
+ * (lepton core config) module.
  *
  * \param cfg_s #EdaConfig smob of configuration context.
  * \return parent context of \a cfg_s, or #f.
@@ -404,7 +404,7 @@ SCM_DEFINE (config_parent, "%config-parent", 1, 0, 0,
  * \see eda_config_set_parent().
  *
  * \note Scheme API: Implements the \%set-config-parent! procedure in
- * the (geda core config) module.
+ * the (lepton core config) module.
  *
  * \param cfg_s #EdaConfig smob of configuration context.
  * \param parent_s #EdaConfig smob of new parent context, or #f.
@@ -433,7 +433,7 @@ SCM_DEFINE (set_config_parent_x, "%set-config-parent!", 2, 0, 0,
  * \see eda_config_is_trusted().
  *
  * \note Scheme API: Implements the \%config-trusted? procedure in
- * the (geda core config) module.
+ * the (lepton core config) module.
  *
  * \param cfg_s #EdaConfig smob of configuration context.
  * \return #t if \a cfg_s is trusted, #f otherwise.
@@ -455,7 +455,7 @@ SCM_DEFINE (config_trusted_p, "%config-trusted?", 1, 0, 0,
  * \see eda_config_set_trusted().
  *
  * \note Scheme API: Implements the \%set-config-trusted! procedure in
- * the (geda core config) module.
+ * the (lepton core config) module.
  *
  * \param cfg_s #EdaConfig smob of configuration context.
  * \param trusted_s #f if \a cfg_s is not to be trusted.
@@ -481,7 +481,7 @@ SCM_DEFINE (set_config_trusted_x, "%set-config-trusted!", 2, 0, 0,
  * \see eda_config_get_groups().
  *
  * \note Scheme API: Implements the \%config-groups procedure in
- * the (geda core config) module.
+ * the (lepton core config) module.
  *
  * \param cfg_s #EdaConfig smob of configuration context.
  * \return a list of available group names as strings.
@@ -519,7 +519,7 @@ SCM_DEFINE (config_groups, "%config-groups", 1, 0, 0,
  * \see eda_config_has_group().
  *
  * \note Scheme API: Implements the \%config-has-group? procedure in
- * the (geda core config) module.
+ * the (lepton core config) module.
  *
  * \param cfg_s #EdaConfig smob of configuration context.
  * \param group_s Group name as a string.
@@ -551,7 +551,7 @@ SCM_DEFINE (config_has_group_p, "%config-has-group?", 2, 0, 0,
  * \see eda_config_get_keys().
  *
  * \note Scheme API: Implements the \%config-keys procedure in
- * the (geda core config) module.
+ * the (lepton core config) module.
  *
  * \param cfg_s #EdaConfig smob of configuration context.
  * \param group_s Group name as a string.
@@ -599,7 +599,7 @@ SCM_DEFINE (config_keys, "%config-keys", 2, 0, 0,
  * \see eda_config_get_source().
  *
  * \note Scheme API: Implements the \%config-source procedure in the
- * (geda core config module).
+ * (lepton core config module).
  *
  * \param cfg_s #EdaConfig smob of configuration context.
  * \param group_s Group name as a string.
@@ -634,7 +634,7 @@ SCM_DEFINE (config_source, "%config-source", 3, 0, 0,
  * \see eda_config_get_string().
  *
  * \note Scheme API: Implements the \%config-string procedure in the
- * (geda core config) module.
+ * (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param group_s  Group name as a string.
@@ -672,7 +672,7 @@ SCM_DEFINE (config_string, "%config-string", 3, 0, 0,
  * \see eda_config_get_boolean().
  *
  * \note Scheme API: Implements the \%config-boolean procedure in the
- * (geda core config) module.
+ * (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param group_s  Group name as a string.
@@ -707,7 +707,7 @@ SCM_DEFINE (config_boolean, "%config-boolean", 3, 0, 0,
  * \see eda_config_get_int().
  *
  * \note Scheme API: Implements the \%config-int procedure in the
- * (geda core config) module.
+ * (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param group_s  Group name as a string.
@@ -742,7 +742,7 @@ SCM_DEFINE (config_int, "%config-int", 3, 0, 0,
  * \see eda_config_get_double().
  *
  * \note Scheme API: Implements the \%config-real procedure in the
- * (geda core config) module.
+ * (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param group_s  Group name as a string.
@@ -777,7 +777,7 @@ SCM_DEFINE (config_real, "%config-real", 3, 0, 0,
  * \see eda_config_get_string_list().
  *
  * \note Scheme API: Implements the \%config-string-list procedure in
- * the (geda core config) module.
+ * the (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param group_s  Group name as a string.
@@ -820,7 +820,7 @@ SCM_DEFINE (config_string_list, "%config-string-list", 3, 0, 0,
  * \see eda_config_get_boolean_list().
  *
  * \note Scheme API: Implements the \%config-boolean-list procedure in
- * the (geda core config) module.
+ * the (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param group_s  Group name as a string.
@@ -863,7 +863,7 @@ SCM_DEFINE (config_boolean_list, "%config-boolean-list", 3, 0, 0,
  * \see eda_config_get_int_list().
  *
  * \note Scheme API: Implements the \%config-int-list procedure in
- * the (geda core config) module.
+ * the (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param group_s  Group name as a string.
@@ -906,7 +906,7 @@ SCM_DEFINE (config_int_list, "%config-int-list", 3, 0, 0,
  * \see eda_config_get_double_list().
  *
  * \note Scheme API: Implements the \%config-real-list procedure in
- * the (geda core config) module.
+ * the (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param group_s  Group name as a string.
@@ -949,7 +949,7 @@ SCM_DEFINE (config_real_list, "%config-real-list", 3, 0, 0,
  * integers, real numbers or booleans.
  *
  * \note Scheme API: Implements the \%set-config! procedure in the
- * (geda core config) module.
+ * (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param group_s  Group name as a string.
@@ -1079,7 +1079,7 @@ edascm_config_event_dispatcher (EdaConfig *cfg, const char *group,
  * caught and logged.
  *
  * \note Scheme API: Implements the \%add-config-event! procedure in the
- * (geda core config) module.
+ * (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param proc_s   Procedure to add as configuration change handler.
@@ -1124,7 +1124,7 @@ SCM_DEFINE (add_config_event_x, "%add-config-event!", 2, 0, 0,
  * the context \a cfg.
  *
  * \note Scheme API: Implements the \%remove-config-event! procedure
- * in the (geda core config) module.
+ * in the (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param proc_s   Procedure to remove as configuration change handler.
@@ -1168,7 +1168,7 @@ SCM_DEFINE (remove_config_event_x, "%remove-config-event!", 2, 0, 0,
  * \see eda_config_remove_key().
  *
  * \note Scheme API: Implements the \%config-remove-key!
- * procedure in the (geda core config) module.
+ * procedure in the (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param group_s  Group name as a string.
@@ -1215,7 +1215,7 @@ SCM_DEFINE (config_remove_key, "%config-remove-key!", 3, 0, 0,
  * \see eda_config_remove_group().
  *
  * \note Scheme API: Implements the \%config-remove-group!
- * procedure in the (geda core config) module.
+ * procedure in the (lepton core config) module.
  *
  * \param cfg_s    #EdaConfig smob of configuration context.
  * \param group_s  Group name as a string.
@@ -1260,7 +1260,7 @@ SCM_DEFINE (config_remove_group, "%config-remove-group!", 2, 0, 0,
  * \see config_set_legacy_mode().
  *
  * \note Scheme API: Implements the \%config-set-legacy-mode!
- * procedure in the (geda core config) module.
+ * procedure in the (lepton core config) module.
  *
  * \param legacy_s  Boolean: set legacy mode or not.
  *
@@ -1280,13 +1280,13 @@ SCM_DEFINE (config_set_legacy_mode_x, "%config-set-legacy-mode!", 1, 0, 0,
 
 
 /*!
- * \brief Create the (geda core config) Scheme module.
+ * \brief Create the (lepton core config) Scheme module.
  * \par Function Description
- * Defines procedures in the (geda core config) module. The module can
- * be accessed using (use-modules (geda core config)).
+ * Defines procedures in the (lepton core config) module. The module can
+ * be accessed using (use-modules (lepton core config)).
  */
 static void
-init_module_geda_core_config (void *unused)
+init_module_lepton_core_config (void *unused)
 {
   /* Register the functions and symbols */
   #include "scheme_config.x"
@@ -1328,7 +1328,7 @@ init_module_geda_core_config (void *unused)
 }
 
 /*!
- * \brief Initialise the basic gEDA configuration manipulation procedures.
+ * \brief Initialise the basic Lepton EDA configuration manipulation procedures.
  * \par Function Description
  * Registers some Scheme procedures for working with #EdaConfig
  * smobs. Should only be called by edascm_init().
@@ -1336,8 +1336,8 @@ init_module_geda_core_config (void *unused)
 void
 edascm_init_config ()
 {
-  /* Define the (geda core object) module */
-  scm_c_define_module ("geda core config",
-                       (void (*)(void*)) init_module_geda_core_config,
+  /* Define the (lepton core config) module */
+  scm_c_define_module ("lepton core config",
+                       (void (*)(void*)) init_module_lepton_core_config,
                        NULL);
 }

@@ -18,13 +18,11 @@
 ;;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 
 (define-module (lepton config)
+  #:use-module (ice-9 optargs) ; for define*-public
 
   ; Import C procedures
   #:use-module (geda core smob)
-  #:use-module (geda core config)
-
-  #:use-module (ice-9 optargs) ; for define*-public
-)
+  #:use-module (lepton core config))
 
 (define-public config? %config?)
 (define-public default-config-context %default-config-context)
