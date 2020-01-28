@@ -22,7 +22,7 @@
 (define-module (lepton attrib)
 
   ; Import C procedures
-  #:use-module (geda core attrib)
+  #:use-module (lepton core attrib)
 
   #:use-module (geda core gettext)
 
