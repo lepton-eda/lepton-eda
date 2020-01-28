@@ -83,12 +83,12 @@
 
 ;; Search the global keymap for a particular symbol and return the
 ;; keys which execute this hotkey, as a string suitable for display to
-;; the user. This is used by the gschem menu system.
+;; the user. This is used by the lepton-schematic menu system.
 (define (find-key action)
   (let ((keys (lookup-binding %global-keymap action)))
     (and keys (keys->display-string keys))))
 
-;; Printing out current key bindings for gEDA (gschem)
+;; Printing out current key bindings for lepton-schematic.
 (define (%gschem-hotkey-store/dump-global-keymap)
   (dump-keymap %global-keymap))
 
