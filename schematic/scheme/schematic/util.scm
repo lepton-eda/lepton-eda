@@ -20,7 +20,7 @@
 (define-module (schematic util)
 
   ; Import C procedures
-  #:use-module (gschem core util))
+  #:use-module (schematic core util))
 
 (define-public show-uri %show-uri)
 
