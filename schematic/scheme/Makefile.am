@@ -11,6 +11,7 @@ nobase_dist_scmdata_DATA = \
 	gschem/action.scm \
 	gschem/attrib.scm \
 	gschem/builtins.scm \
+	gschem/gschemdoc.scm \
 	gschem/window.scm \
 	gschem/selection.scm \
 	gschem/deprecated.scm \
@@ -34,15 +35,13 @@ nobase_dist_scmdata_DATA = \
 	conf/schematic/menu.scm \
 	conf/schematic/stroke.scm
 
-nobase_scmdata_DATA = gschem/gschemdoc.scm
+nobase_scmdata_DATA = schematic/gschemdoc.scm
 
-gschem/gschemdoc.scm: gschem/gschemdoc.scm.in
-	$(MKDIR_P) gschem/; \
+schematic/gschemdoc.scm: schematic/gschemdoc.scm.in
+	$(MKDIR_P) schematic/; \
 	sed -e 's,[@]docdir[@],$(docdir),g' < $(srcdir)/$@.in > $@
 
-EXTRA_DIST = gschem/gschemdoc.scm.in
+EXTRA_DIST = schematic/gschemdoc.scm.in
 
-MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ gschem/gschemdoc.scm schematic/precompile-config.scm
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~ Makefile.in
+CLEANFILES = schematic/gschemdoc.scm schematic/precompile-config.scm
+MAINTAINERCLEANFILES = Makefile.in

@@ -28,12 +28,12 @@
   #:use-module (lepton repl)
   #:use-module (gschem hook)
   #:use-module (gschem core builtins)
-  #:use-module (gschem gschemdoc)
   #:use-module (gschem selection)
   #:use-module (gschem window)
 
   #:use-module (schematic action)
   #:use-module (schematic core gettext)
+  #:use-module (schematic gschemdoc)
   #:use-module (schematic repl)
   #:use-module (schematic undo))
 
