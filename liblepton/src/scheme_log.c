@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library - Scheme API
+/* Lepton EDA library - Scheme API
  * Copyright (C) 2016  Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,8 +66,8 @@ decode_level (SCM level_s)
  * should be one of the symbols "error", "critical", "message", "info"
  * or "debug".
  *
- * \note Scheme API: Implements the \%log! procedure in the (geda core
- * log) module.
+ * \note Scheme API: Implements the \%log! procedure in the
+ * (lepton core log) module.
  *
  * \param domain_s  The log domain, as a string, or SCM_BOOL_F.
  * \param level_s   The log level, as a symbol.
@@ -110,7 +110,7 @@ SCM_DEFINE (log_x, "%log!", 3, 0, 0,
  * This is a Scheme wrapper for s_log_init().
  *
  * \note Scheme API: Implements the \%init-log procedure in the
- * (geda core log) module.
+ * (lepton core log) module.
  *
  * \param domain_s  The log domain, as a string.
  *
@@ -133,13 +133,13 @@ SCM_DEFINE (init_log, "%init-log", 1, 0, 0,
  * ================================================================ */
 
 /*!
- * \brief Create the (geda core log) Scheme module.
+ * \brief Create the (lepton core log) Scheme module.
  * \par Function Description
- * Defines procedures in the (geda core log) module.  The module can
- * be accessed using (use-modules (geda core log)).
+ * Defines procedures in the (lepton core log) module.  The module can
+ * be accessed using (use-modules (lepton core log)).
  */
 static void
-init_module_geda_core_log (void *unused)
+init_module_lepton_core_log (void *unused)
 {
   /* Register the functions and symbols */
   #include "scheme_log.x"
@@ -151,7 +151,7 @@ init_module_geda_core_log (void *unused)
 }
 
 /*!
- * \brief Initialise the basic gEDA logging procedures
+ * \brief Initialise the basic Lepton EDA logging procedures
  * \par Function Description
  *
  * Registers some core Scheme procedures for logging support.  Should
@@ -160,8 +160,8 @@ init_module_geda_core_log (void *unused)
 void
 edascm_init_log ()
 {
-  /* Define the (geda core log) module */
-  scm_c_define_module ("geda core log",
-                       (void (*)(void*)) init_module_geda_core_log,
+  /* Define the (lepton core log) module */
+  scm_c_define_module ("lepton core log",
+                       (void (*)(void*)) init_module_lepton_core_log,
                        NULL);
 }
