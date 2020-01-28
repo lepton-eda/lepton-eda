@@ -109,6 +109,6 @@ schematic/scheme/conf/schematic/menu.scm
 
 schematic/scheme/schematic/action.scm
 schematic/scheme/schematic/builtins.scm
+schematic/scheme/schematic/gschemdoc.scm.in
 schematic/scheme/gschem/deprecated.scm
-schematic/scheme/gschem/gschemdoc.scm.in
 schematic/scheme/gschem/keymap.scm
