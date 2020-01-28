@@ -22,7 +22,7 @@
 
   ;; Import C procedures
   #:use-module (geda core smob)
-  #:use-module (geda core page)
+  #:use-module (lepton core page)
 
   #:use-module (ice-9 optargs)
   #:use-module ((ice-9 rdelim)
