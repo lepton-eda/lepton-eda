@@ -2433,7 +2433,7 @@ nothing.  Returns @var{object}.
 @section Hooks
 
 To use the hooks described in this section, you will need to load the
-@code{(gschem hook)} module.
+@code{(schematic hook)} module.
 
 lepton-schematic defines a number of hooks that allow functions to be
 automatically run whenever a number of built-in actions are invoked by

@@ -1,57 +1,24 @@
-;; Lepton EDA Schematic Capture
-;; Scheme API
-;; Copyright (C) 2010-2011 Peter Brett
-;; Copyright (C) 2010-2016 gEDA Contributors
-;; Copyright (C) 2017-2018 Lepton EDA Contributors
-;;
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2 of the License, or
-;; (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; if not, write to the Free Software
-;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
-;;
+;;; Deprecated module.
 
 (define-module (gschem hook)
+  #:use-module (geda deprecated)
+  #:use-module (schematic hook)
 
-  ;; Import C definitions
-  #:use-module (gschem core hook))
+  #:re-export (add-objects-hook
+               copy-objects-hook
+               remove-objects-hook
+               move-objects-hook
+               mirror-objects-hook
+               rotate-objects-hook
+               paste-objects-hook
+               attach-attribs-hook
+               detach-attribs-hook
+               select-objects-hook
+               deselect-objects-hook
+               new-page-hook
+               open-page-hook
+               action-property-hook
+               bind-keys-hook
+               switch-action-mode-hook))
 
-(define-public add-objects-hook %add-objects-hook)
-
-(define-public copy-objects-hook %copy-objects-hook)
-
-(define-public remove-objects-hook %remove-objects-hook)
-
-(define-public move-objects-hook %move-objects-hook)
-
-(define-public mirror-objects-hook %mirror-objects-hook)
-
-(define-public rotate-objects-hook %rotate-objects-hook)
-
-(define-public paste-objects-hook %paste-objects-hook)
-
-(define-public attach-attribs-hook %attach-attribs-hook)
-
-(define-public detach-attribs-hook %detach-attribs-hook)
-
-(define-public select-objects-hook %select-objects-hook)
-
-(define-public deselect-objects-hook %deselect-objects-hook)
-
-(define-public new-page-hook %new-page-hook)
-
-(define-public open-page-hook %open-page-hook)
-
-(define-public action-property-hook %action-property-hook)
-
-(define-public bind-keys-hook %bind-keys-hook)
-
-(define-public switch-action-mode-hook %switch-action-mode-hook)
+(deprecated-module-log-warning! "(schematic hook)")
