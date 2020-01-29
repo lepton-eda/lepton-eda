@@ -256,6 +256,9 @@ AC_CONFIG_FILES([Makefile
                  netlist/examples/verilog/Makefile
                  netlist/examples/verilog/T_FF_example/Makefile
                  netlist/examples/verilog/T_FF_example/verilog_modules/Makefile
+                 netlist/examples/analog/Makefile
+                 netlist/examples/analog/varactor_osc/Makefile
+                 netlist/examples/analog/bandpass/Makefile
 
                  utils/Makefile
                  utils/docs/Makefile

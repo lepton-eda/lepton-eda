@@ -5,6 +5,9 @@ Use verilog backend for generation of netlist.
 Models are in model directory.
 Simulation tested via Icarus Verilog compiler (iverilog).
 
+Please note, directory rip_gmk_example contains an example text file used with gmk_sym
+to create the symbol used with this example (i.e. T_FF). See gmk_sym in contrib directory.
+
 Usage
 =====
 Netlist generation:
