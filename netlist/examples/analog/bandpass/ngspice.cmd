@@ -1,4 +1,5 @@
 .control
 ac dec 20 3meg 40meg
-write db(v(1)/1u) frg_band.raw
+write frg_band.raw db(v(1)/1u)
+rusage everything
 .endc
