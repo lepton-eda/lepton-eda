@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = vams switcap verilog
+SUBDIRS = vams switcap verilog analog
 
 EXTRA_DIST = 7447.sch test_verilog.sch stack_1.sch
 
