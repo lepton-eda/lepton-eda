@@ -415,6 +415,8 @@ void i_update_menus (GschemToplevel* w_current)
 
   x_menus_sensitivity (mmenu, "&hierarchy-documentation", comp_selected);
 
+  x_menus_sensitivity (mmenu, "&page-revert", !x_window_untitled_page (page));
+
 
   GtkWidget* pmenu = w_current->popup_menu;
 
