@@ -447,6 +447,7 @@ void i_update_menus (GschemToplevel* w_current)
   x_menus_sensitivity (mmenu, "&edit-embed", embeddable);
   x_menus_sensitivity (mmenu, "&edit-unembed", embeddable);
   x_menus_sensitivity (mmenu, "&edit-update", comp_selected);
+  x_menus_sensitivity (mmenu, "&edit-deselect", selected);
 
   x_menus_sensitivity (mmenu, "&hierarchy-down-schematic", parent);
   x_menus_sensitivity (mmenu, "&hierarchy-down-symbol", comp_selected);
