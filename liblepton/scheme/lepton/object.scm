@@ -24,7 +24,7 @@
   #:use-module (srfi srfi-1)
 
   ;; Import C procedures
-  #:use-module (lepton core complex)
+  #:use-module (lepton core component)
   #:use-module (lepton core object)
   #:use-module (lepton core smob))
 
