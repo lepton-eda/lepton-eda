@@ -195,6 +195,20 @@ void i_action_update_status (GschemToplevel *w_current, gboolean inside_action)
 }
 
 
+
+/*! \brief Update sensitivity of menu items according to current event state.
+ *
+ *  \param [in] w_current  GschemToplevel structure
+ *  \param [in] newstate   The new state
+ */
+static void
+update_state_menu_items (GschemToplevel* w_current, enum x_states newstate)
+{
+  x_menus_sensitivity (w_current->menubar, "&edit-select", newstate != SELECT);
+}
+
+
+
 /*! \brief Set new state, then show state field
  *
  *  \par Function Description
@@ -234,6 +248,8 @@ void i_set_state(GschemToplevel *w_current, enum x_states newstate)
       case MIRRORMODE: mode="mirror-mode"; break;
       case ROTATEMODE: mode="rotate-mode"; break;
     }
+
+  update_state_menu_items (w_current, newstate);
 
   g_run_hook_action_mode (w_current, "%switch-action-mode-hook", mode);
 }
@@ -401,6 +417,8 @@ void i_update_menus (GschemToplevel* w_current)
   /* update Edit->Paste sensitivity in clipboard_usable_cb():
   */
   x_clipboard_query_usable (w_current, clipboard_usable_cb, w_current);
+
+  update_state_menu_items (w_current, w_current->event_state);
 
   gboolean selected      = o_select_selected (w_current);
   gboolean text_selected = selected && obj_selected (toplevel, OBJ_TEXT);
