@@ -22,7 +22,7 @@ GList *o_read_attribs(TOPLEVEL *toplevel,
                       unsigned int fileformat_ver, GError **err);
 OBJECT *o_attrib_find_attrib_by_name (const GList *list, const char *name, int count);
 
-/* o_basic.c */
+/* geda_object.c */
 void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *object);
 void o_emit_pre_change_notify(TOPLEVEL *toplevel, OBJECT *object);
 void o_emit_change_notify(TOPLEVEL *toplevel, OBJECT *object);
