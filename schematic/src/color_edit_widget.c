@@ -187,7 +187,7 @@ color_edit_widget_create (ColorEditWidget* widget)
   gtk_container_add (GTK_CONTAINER (widget), vbox);
 
   GtkWidget* hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
 
   /* color selection combo box: */
   widget->color_cb_ = x_colorcb_new();
