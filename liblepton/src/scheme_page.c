@@ -251,7 +251,7 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
   /* Object cleanup now managed by C code. */
   edascm_c_set_gc (obj_s, 0);
   o_emit_pre_change_notify (toplevel, obj);
-  s_page_append (edascm_c_current_toplevel (), page, obj);
+  s_page_append (toplevel, page, obj);
   o_emit_change_notify (toplevel, obj);
   page->CHANGED = 1; /* Ugh. */
 
