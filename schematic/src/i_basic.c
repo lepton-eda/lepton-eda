@@ -357,6 +357,33 @@ obj_selected (TOPLEVEL* toplevel, int type)
 
 
 
+/*! \brief Return TRUE if a component with "source" attribute is selected.
+ *
+ *  \param [in] w_current  GschemToplevel structure
+ */
+static gboolean
+parent_comp_selected (TOPLEVEL* toplevel)
+{
+  gboolean result = FALSE;
+  OBJECT* obj = obj_selected (toplevel, OBJ_COMPLEX);
+
+  if (obj != NULL)
+  {
+    char* attr = o_attrib_search_attached_attribs_by_name (obj, "source", 0);
+    if (attr == NULL)
+    {
+      attr = o_attrib_search_inherited_attribs_by_name (obj, "source", 0);
+    }
+
+    result = attr != NULL;
+    g_free (attr);
+  }
+
+  return result;
+}
+
+
+
 /*! \brief Update menu items sensitivity for the main and popup menus.
  *
  *  \param [in] w_current GschemToplevel structure
@@ -380,7 +407,8 @@ void i_update_menus (GschemToplevel* w_current)
   gboolean comp_selected = selected && obj_selected (toplevel, OBJ_COMPLEX);
   gboolean pic_selected  = selected && obj_selected (toplevel, OBJ_PICTURE);
   gboolean embeddable    = comp_selected || pic_selected;
-  gboolean has_parent = s_hierarchy_find_up_page (toplevel->pages, page) != NULL;
+  gboolean has_parent    = s_hierarchy_find_up_page (toplevel->pages, page) != NULL;
+  gboolean parent        = comp_selected && parent_comp_selected (toplevel);
 
   GtkWidget* mmenu = w_current->menubar;
 
@@ -402,7 +430,7 @@ void i_update_menus (GschemToplevel* w_current)
   x_menus_sensitivity (mmenu, "&edit-unembed", embeddable);
   x_menus_sensitivity (mmenu, "&edit-update", comp_selected);
 
-  x_menus_sensitivity (mmenu, "&hierarchy-down-schematic", comp_selected);
+  x_menus_sensitivity (mmenu, "&hierarchy-down-schematic", parent);
   x_menus_sensitivity (mmenu, "&hierarchy-down-symbol", comp_selected);
   x_menus_sensitivity (mmenu, "&hierarchy-up", has_parent);
 
@@ -428,7 +456,7 @@ void i_update_menus (GschemToplevel* w_current)
   x_menus_sensitivity (pmenu, "&edit-text", text_selected);
   x_menus_sensitivity (pmenu, "&edit-object-properties", selected);
 
-  x_menus_sensitivity (pmenu, "&hierarchy-down-schematic", comp_selected);
+  x_menus_sensitivity (pmenu, "&hierarchy-down-schematic", parent);
   x_menus_sensitivity (pmenu, "&hierarchy-down-symbol", comp_selected);
   x_menus_sensitivity (pmenu, "&hierarchy-up", has_parent);
 
