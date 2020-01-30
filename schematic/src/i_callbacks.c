@@ -1525,7 +1525,8 @@ DEFINE_I_CALLBACK(page_revert)
       "\n"
       "Are you sure you want to revert this page?\n"
       "All unsaved changes in current schematic will be\n"
-      "discarded and page file will be reloaded from disk.");
+      "discarded and page file will be reloaded from disk.\n"
+      "This action will also reload all component libraries.");
 
   dialog = gtk_message_dialog_new_with_markup
     ((GtkWindow*) w_current->main_window,
