@@ -58,7 +58,7 @@
                `(begin
                   (use-modules (ice-9 session) ; help, apropos and such
                                (system repl command) ; guile meta-commands
-                               (geda repl)) ; this module
+                               (lepton repl)) ; this module
                   (lepton-repl-welcome)
                   (resolve-module '(ice-9 readline))
                   ;; After resolving that module the variable
