@@ -327,15 +327,15 @@ static void clipboard_usable_cb (int usable, void *userdata)
 
 
 
-/*! \brief Return TRUE if at least one object of type \a type is selected.
+/*! \brief Return the first object of type \a type if it is selected.
  *
  *  \param toplevel  pointer to TOPLEVEL structure
  *  \param type      object type constant (OBJ_TEXT, OBJ_COMPLEX, etc.) (o_types.h)
  */
-static gboolean
+static OBJECT*
 obj_selected (TOPLEVEL* toplevel, int type)
 {
-  gboolean result = FALSE;
+  OBJECT* result = FALSE;
   SELECTION* selection = toplevel->page_current->selection_list;
 
   GList* gl = geda_list_get_glist (selection);
@@ -347,7 +347,7 @@ obj_selected (TOPLEVEL* toplevel, int type)
 #ifdef DEBUG
       printf (" >> obj_selected(): obj->type: [%c]\n", obj->type);
 #endif
-      result = TRUE;
+      result = obj;
       break;
     }
   }
