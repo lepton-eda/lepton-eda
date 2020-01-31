@@ -527,9 +527,9 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
  *  \param [in]  selectable whether the object can be selected with the mouse
  *  \return a new complex object
  */
-OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel,
-			       char type, int color, int x, int y, int angle, int mirror,
-			       const gchar *basename, int selectable)
+OBJECT *o_component_new_embedded (TOPLEVEL *toplevel,
+                                  char type, int color, int x, int y, int angle, int mirror,
+                                  const gchar *basename, int selectable)
 {
   OBJECT *new_node=NULL;
 
@@ -620,10 +620,10 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
   }
   if (strncmp(basename, "EMBEDDED", 8) == 0) {
 
-    new_obj = o_complex_new_embedded(toplevel, type,
-                                     DEFAULT_COLOR, x1, y1, angle, mirror,
-                                     basename + 8,
-                                     selectable);
+    new_obj = o_component_new_embedded (toplevel, type,
+                                        DEFAULT_COLOR, x1, y1, angle, mirror,
+                                        basename + 8,
+                                        selectable);
   } else {
 
     const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);

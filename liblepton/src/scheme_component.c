@@ -45,9 +45,9 @@ SCM_DEFINE (make_component, "%make-component", 1, 0, 0,
   SCM_ASSERT (scm_is_string (basename_s), basename_s, SCM_ARG1, s_make_component);
 
   char *tmp = scm_to_utf8_string (basename_s);
-  OBJECT *obj = o_complex_new_embedded (edascm_c_current_toplevel (),
-                                        OBJ_COMPONENT, DEFAULT_COLOR, 0, 0, 0,
-                                        FALSE, tmp, TRUE);
+  OBJECT *obj = o_component_new_embedded (edascm_c_current_toplevel (),
+                                          OBJ_COMPONENT, DEFAULT_COLOR, 0, 0, 0,
+                                          FALSE, tmp, TRUE);
   free (tmp);
 
   SCM result = edascm_from_object (obj);

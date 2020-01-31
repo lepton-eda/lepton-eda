@@ -37,7 +37,7 @@ OBJECT*
 o_component_new (TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const CLibSymbol *clib_sym, const gchar *basename, int selectable);
 
 OBJECT*
-o_complex_new_embedded(TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const gchar *basename, int selectable);
+o_component_new_embedded (TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const gchar *basename, int selectable);
 
 void
 geda_component_object_calculate_bounds (TOPLEVEL *toplevel,
