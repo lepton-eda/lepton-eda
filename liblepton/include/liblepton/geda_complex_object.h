@@ -75,7 +75,7 @@ double
 geda_complex_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 
 gboolean
-geda_complex_object_get_position (const GedaObject *object, gint *x, gint *y);
+geda_component_object_get_position (const GedaObject *object, gint *x, gint *y);
 
 GList*
 o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach);

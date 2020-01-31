@@ -122,7 +122,7 @@ geda_component_object_calculate_bounds (TOPLEVEL *toplevel,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_complex_object_get_position (const GedaObject *object, gint *x, gint *y)
+geda_component_object_get_position (const GedaObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)), FALSE);
