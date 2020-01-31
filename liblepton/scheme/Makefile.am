@@ -46,7 +46,7 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0102-object-circle.scm \
 	unit-tests/t0103-object-arc.scm\
 	unit-tests/t0104-object-text.scm \
-	unit-tests/t0105-object-complex.scm \
+	unit-tests/t0105-object-component.scm \
 	unit-tests/t0106-object-bounds.scm \
 	unit-tests/t0107-object-stroke-fill.scm \
 	unit-tests/t0108-object-connections.scm \
@@ -64,7 +64,7 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0205-page-parse-unterminated-attribute-list.scm \
 	unit-tests/t0206-page-parse-garbage-attribute.scm \
 	unit-tests/t0207-page-parse-line-endings.scm \
-	unit-tests/t0208-page-parse-embed-no-complex.scm \
+	unit-tests/t0208-page-parse-embed-no-component.scm \
 	unit-tests/t0300-attribute.scm \
 	unit-tests/t0301-promotable-attributes.scm \
 	unit-tests/t0400-os.scm \
