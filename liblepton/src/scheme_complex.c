@@ -104,37 +104,37 @@ SCM_DEFINE (make_component_library, "%make-component/library", 1, 0, 0,
   return result;
 }
 
-/*! \brief Set complex object parameters.
+/*! \brief Set component object parameters.
  * \par Function Description
- * Modifies the complex object \a complex_s by setting its parameters
+ * Modifies the component object \a component_s by setting its parameters
  * to new values.
  *
- * \note Scheme API: Implements the %set-complex! procedure in the
+ * \note Scheme API: Implements the %set-component! procedure in the
  * (lepton core component) module.
  *
- * \param complex_s the complex object to modify.
- * \param x_s       the new x-coordinate of the complex object.
- * \param y_s       the new y-coordinate of the complex object.
+ * \param component_s the component object to modify.
+ * \param x_s       the new x-coordinate of the component object.
+ * \param y_s       the new y-coordinate of the component object.
  * \param angle_s   the new rotation angle.
- * \param mirror_s  whether the complex object should be mirrored.
- * \param locked_s  whether the complex object should be locked.
+ * \param mirror_s  whether the component object should be mirrored.
+ * \param locked_s  whether the component object should be locked.
  *
- * \return the modified \a complex_s.
+ * \return the modified \a component_s.
  */
-SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
-            (SCM complex_s, SCM x_s, SCM y_s, SCM angle_s, SCM mirror_s,
-             SCM locked_s), "Set complex object parameters")
+SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
+            (SCM component_s, SCM x_s, SCM y_s, SCM angle_s, SCM mirror_s,
+             SCM locked_s), "Set component object parameters")
 {
-  SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPLEX), complex_s,
-              SCM_ARG1, s_set_complex_x);
-  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_complex_x);
-  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_complex_x);
-  SCM_ASSERT (scm_is_integer (angle_s), angle_s, SCM_ARG4, s_set_complex_x);
-  SCM_ASSERT (scm_is_bool (mirror_s), mirror_s,  SCM_ARG5, s_set_complex_x);
-  SCM_ASSERT (scm_is_bool (locked_s), locked_s,  SCM_ARG6, s_set_complex_x);
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPLEX), component_s,
+              SCM_ARG1, s_set_component_x);
+  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_component_x);
+  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_component_x);
+  SCM_ASSERT (scm_is_integer (angle_s), angle_s, SCM_ARG4, s_set_component_x);
+  SCM_ASSERT (scm_is_bool (mirror_s), mirror_s,  SCM_ARG5, s_set_component_x);
+  SCM_ASSERT (scm_is_bool (locked_s), locked_s,  SCM_ARG6, s_set_component_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-  OBJECT *obj = edascm_to_object (complex_s);
+  OBJECT *obj = edascm_to_object (component_s);
 
   /* Angle */
   int angle = scm_to_int (angle_s);
@@ -147,8 +147,8 @@ SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
     break;
   default:
     /* Otherwise, not fine. */
-    scm_misc_error (s_set_complex_x,
-                    _("Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"),
+    scm_misc_error (s_set_component_x,
+                    _("Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"),
                     scm_list_1 (angle_s));
   }
 
@@ -167,7 +167,7 @@ SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
 
   o_page_changed (obj);
 
-  return complex_s;
+  return component_s;
 }
 
 /*! \brief Get complex object parameters.
@@ -434,7 +434,7 @@ init_module_lepton_core_complex (void *unused)
   /* Add them to the module's public definitions. */
   scm_c_export (s_make_component,
                 s_make_component_library,
-                s_set_complex_x,
+                s_set_component_x,
                 s_complex_info,
                 s_complex_contents,
                 s_complex_append_x,
