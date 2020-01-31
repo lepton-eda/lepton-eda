@@ -198,7 +198,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
 
     case(OBJ_COMPONENT):
     case(OBJ_PLACEHOLDER):
-      new_obj = o_complex_copy (toplevel, selected);
+      new_obj = o_component_copy (toplevel, selected);
       break;
 
     case(OBJ_TEXT):
