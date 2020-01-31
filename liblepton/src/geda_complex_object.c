@@ -318,7 +318,7 @@ GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
  *  \param [in]  toplevel The toplevel environment.
  *  \param [in]  object   The complex object being altered.
  */
-static void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object)
+static void o_component_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object)
 {
   GList *promotable, *iter;
 
@@ -635,7 +635,7 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
                                 basename, selectable);
     /* Delete or hide attributes eligible for promotion inside the complex */
     if (new_obj)
-      o_complex_remove_promotable_attribs (toplevel, new_obj);
+      o_component_remove_promotable_attribs (toplevel, new_obj);
   }
 
   g_free (basename);
@@ -750,7 +750,7 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   o_new->w_bounds_valid_for = NULL;
 
   /* Delete or hide attributes eligible for promotion inside the complex */
-  o_complex_remove_promotable_attribs (toplevel, o_new);
+  o_component_remove_promotable_attribs (toplevel, o_new);
 
   s_slot_update_object (toplevel, o_new);
 
