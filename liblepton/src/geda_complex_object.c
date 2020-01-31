@@ -716,7 +716,7 @@ geda_component_object_translate (GedaObject *object, int dx, int dy)
  *  \param [in] o_current    The object that is copied
  *  \return a new COMPLEX object
  */
-OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
+OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *o_new;
   GList *iter;

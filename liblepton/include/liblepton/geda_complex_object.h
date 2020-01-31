@@ -51,7 +51,7 @@ void
 geda_component_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT *
-o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current);
+o_component_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
 geda_complex_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
