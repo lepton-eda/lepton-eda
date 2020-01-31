@@ -284,7 +284,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
 
       case(OBJ_COMPONENT):
       case(OBJ_PLACEHOLDER):
-        if ((new_obj = o_complex_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+        if ((new_obj = o_component_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
           goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;

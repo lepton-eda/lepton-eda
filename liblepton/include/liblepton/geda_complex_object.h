@@ -66,7 +66,7 @@ void
 o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object);
 
 OBJECT*
-o_complex_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+o_component_read (TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 
 gchar*
 geda_complex_object_to_buffer (const GedaObject *object);
