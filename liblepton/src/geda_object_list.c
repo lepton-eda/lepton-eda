@@ -393,7 +393,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           break;
 
         case(OBJ_COMPONENT):
-          out = geda_complex_object_to_buffer (o_current);
+          out = geda_component_object_to_buffer (o_current);
           g_string_append_printf(acc, "%s\n", out);
           already_wrote = TRUE;
           g_free(out); /* need to free here because of the above flag */
@@ -410,7 +410,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           break;
 
         case(OBJ_PLACEHOLDER):  /* new type by SDB 1.20.2005 */
-          out = geda_complex_object_to_buffer (o_current);
+          out = geda_component_object_to_buffer (o_current);
           break;
 
         case(OBJ_TEXT):

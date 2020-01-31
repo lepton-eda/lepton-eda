@@ -654,7 +654,7 @@ OBJECT *o_component_read (TOPLEVEL *toplevel,
  *  \return the string representation of the complex OBJECT
  */
 gchar*
-geda_complex_object_to_buffer (const GedaObject *object)
+geda_component_object_to_buffer (const GedaObject *object)
 {
   gchar *basename;
   gchar *buffer;
