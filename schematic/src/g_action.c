@@ -1,5 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013, 2016 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +34,7 @@ SCM_SYMBOL (quote_sym, "quote");
  * action fails, prints a message to the log and returns FALSE;
  * otherwise, returns TRUE.
  *
- * \param w_current    Current gschem toplevel structure.
+ * \param w_current    Current lepton-schematic toplevel structure.
  * \param action_name  Name of action to evaluate.
  *
  * \return TRUE on success, FALSE on failure.

@@ -1,6 +1,6 @@
 ;; Lepton EDA
 ;; liblepton - Lepton's library - Scheme API
-;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
+;; Copyright (C) 2019-2020 dmn <graahnul.grom@gmail.com>
 ;; License: GPLv2+. See the COPYING file
 ;;
 
