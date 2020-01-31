@@ -372,11 +372,11 @@
     (cdr position))))
 
 (define-public (make-component basename . args)
-  (let ((c (%make-complex basename)))
+  (let ((c (%make-component basename)))
     (apply set-component! c args)))
 
 (define-public (make-component/library basename . args)
-  (let ((c (%make-complex/library basename)))
+  (let ((c (%make-component/library basename)))
     (if c (apply set-component! c args) #f)))
 
 (define-public (component-info c)
