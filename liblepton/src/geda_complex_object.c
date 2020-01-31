@@ -219,7 +219,7 @@ o_component_is_embedded (OBJECT *o_current)
  *  \param [in]  detach   Should the attributes be detached?
  *  \returns              A linked list of OBJECTs to promote.
  */
-GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
+GList *o_component_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
 {
   GList *promoted = NULL;
   GList *attribs;
@@ -269,7 +269,7 @@ GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
   GList *promotable = NULL;
   GList *iter = NULL;
 
-  promotable = o_complex_get_promotable (toplevel, object, FALSE);
+  promotable = o_component_get_promotable (toplevel, object, FALSE);
 
   /* Run through the attributes deciding if we want to keep them (in
    * which case we copy them and make them invisible) or if we want to
@@ -322,7 +322,7 @@ static void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *obj
 {
   GList *promotable, *iter;
 
-  promotable = o_complex_get_promotable (toplevel, object, FALSE);
+  promotable = o_component_get_promotable (toplevel, object, FALSE);
 
   if (promotable == NULL)
     return;
