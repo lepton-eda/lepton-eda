@@ -7,7 +7,7 @@ BUILT_SOURCES = \
 	scheme_smob.x \
 	scheme_toplevel.x \
 	scheme_object.x \
-	scheme_complex.x \
+	scheme_component.x \
 	scheme_page.x \
 	scheme_attrib.x \
 	scheme_os.x \
@@ -23,7 +23,7 @@ scheme_api_sources = \
 	scheme_smob.c \
 	scheme_toplevel.c \
 	scheme_object.c \
-	scheme_complex.c \
+	scheme_component.c \
 	scheme_os.c \
 	scheme_page.c \
 	scheme_attrib.c \
