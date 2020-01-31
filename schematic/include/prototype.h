@@ -382,7 +382,7 @@ void o_circle_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer);
 /* o_complex.c */
 void o_component_prepare_place (GschemToplevel *w_current, const CLibSymbol *sym);
 void o_component_place_changed_run_hook (GschemToplevel *w_current);
-void o_complex_translate_all(GschemToplevel *w_current, int offset);
+void o_component_translate_all (GschemToplevel *w_current, int offset);
 /* o_copy.c */
 void o_copy_start(GschemToplevel *w_current, int x, int y);
 void o_copy_end(GschemToplevel *w_current);

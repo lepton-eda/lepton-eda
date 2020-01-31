@@ -160,7 +160,8 @@ o_component_place_changed_run_hook (GschemToplevel *w_current)
  *  \note
  *  don't know if this belongs yet
  */
-void o_complex_translate_all(GschemToplevel *w_current, int offset)
+void
+o_component_translate_all (GschemToplevel *w_current, int offset)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int w_rleft, w_rtop, w_rright, w_rbottom;

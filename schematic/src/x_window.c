@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -393,8 +393,8 @@ static void
 x_window_translate_response (GschemTranslateWidget *widget, gint response, GschemToplevel *w_current)
 {
   if (response == GTK_RESPONSE_OK) {
-    o_complex_translate_all (w_current,
-                             gschem_translate_widget_get_value (widget));
+    o_component_translate_all (w_current,
+                               gschem_translate_widget_get_value (widget));
   }
 
   i_set_state (w_current, SELECT);
