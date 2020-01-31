@@ -444,13 +444,13 @@ init_module_lepton_core_component (void *unused)
 }
 
 /*!
- * \brief Initialise the basic Lepton EDA complex object manipulation procedures.
+ * \brief Initialise the basic Lepton EDA component object manipulation procedures.
  * \par Function Description
- * Registers some Scheme procedures for working with complex #OBJECT
- * smobs. Should only be called by edascm_init().
+ * Registers some Scheme procedures for working with component
+ * #OBJECT smobs. Should only be called by edascm_init().
  */
 void
-edascm_init_complex ()
+edascm_init_component ()
 {
   /* Define the (lepton core component) module */
   scm_c_define_module ("lepton core component",

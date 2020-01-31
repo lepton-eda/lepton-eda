@@ -89,7 +89,7 @@
 void edascm_init_smob ();
 void edascm_init_toplevel ();
 void edascm_init_object ();
-void edascm_init_complex ();
+void edascm_init_component ();
 void edascm_init_page ();
 void edascm_init_attrib ();
 void edascm_init_os ();

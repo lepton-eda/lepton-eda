@@ -1,7 +1,7 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2013 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ edascm_init_impl (void *data)
   edascm_init_smob ();
   edascm_init_toplevel ();
   edascm_init_object ();
-  edascm_init_complex ();
+  edascm_init_component ();
   edascm_init_page ();
   edascm_init_attrib ();
   edascm_init_os ();
