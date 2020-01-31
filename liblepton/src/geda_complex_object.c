@@ -263,7 +263,7 @@ GList *o_component_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detac
  *  \param [in]  object   The complex #OBJECT to promote from.
  *  \return A #GList of promoted attributes.
  */
-GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
+GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
 {
   GList *promoted = NULL;
   GList *promotable = NULL;
