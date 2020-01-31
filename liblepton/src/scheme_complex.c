@@ -28,21 +28,21 @@
 #include "libgeda_priv.h"
 #include "libgedaguile_priv.h"
 
-/*! \brief Create a new complex object.
+/*! \brief Create a new component object.
  * \par Function Description
- * Creates a new, empty complex object, with the given \a basename and
+ * Creates a new, empty component object, with the given \a basename and
  * with all other parameters set to default values.  It is initially set
  * to be embedded.
  *
- * \note Scheme API: Implements the %make-complex procedure in the
+ * \note Scheme API: Implements the %make-component procedure in the
  * (lepton core component) module.
  *
- * \return a newly-created complex object.
+ * \return a newly-created component object.
  */
-SCM_DEFINE (make_complex, "%make-complex", 1, 0, 0,
-            (SCM basename_s), "Create a new complex object.")
+SCM_DEFINE (make_component, "%make-component", 1, 0, 0,
+            (SCM basename_s), "Create a new component object.")
 {
-  SCM_ASSERT (scm_is_string (basename_s), basename_s, SCM_ARG1, s_make_complex);
+  SCM_ASSERT (scm_is_string (basename_s), basename_s, SCM_ARG1, s_make_component);
 
   char *tmp = scm_to_utf8_string (basename_s);
   OBJECT *obj = o_complex_new_embedded (edascm_c_current_toplevel (),
@@ -59,28 +59,28 @@ SCM_DEFINE (make_complex, "%make-complex", 1, 0, 0,
   return result;
 }
 
-/*! \brief Instantiate a complex object from the component library.
+/*! \brief Instantiate a component object from the component library.
  * \par Function Description
 
  * Searches the component library for a component with the given \a
- * basename.  If found, creates a new complex object by instantiating
+ * basename.  If found, creates a new component object by instantiating
  * that library component.  It is initially set to be unembedded.  If
  * no match is found for \a basename in the library, returns
  * SCM_BOOL_F.
  *
- * \note Scheme API: Implements the %make-complex/library procedure in
+ * \note Scheme API: Implements the %make-component/library procedure in
  * the (lepton core component) module.
  *
  * \param basename component name to search for in the component
  *                 library.
- * \return a newly-created complex object.
+ * \return a newly-created component object.
  */
-SCM_DEFINE (make_complex_library, "%make-complex/library", 1, 0, 0,
+SCM_DEFINE (make_component_library, "%make-component/library", 1, 0, 0,
             (SCM basename_s),
-            "Instantiate a complex object from the component library.")
+            "Instantiate a component object from the component library.")
 {
   SCM_ASSERT (scm_is_string (basename_s), basename_s, SCM_ARG1,
-              s_make_complex_library);
+              s_make_component_library);
 
   char *basename = scm_to_utf8_string (basename_s);
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
@@ -432,8 +432,8 @@ init_module_lepton_core_complex (void *unused)
   #include "scheme_complex.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_make_complex,
-                s_make_complex_library,
+  scm_c_export (s_make_component,
+                s_make_component_library,
                 s_set_complex_x,
                 s_complex_info,
                 s_complex_contents,
