@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1189,7 +1189,7 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
         if (o_current->complex->prim_objs == NULL)
           return 0;
 
-        geda_complex_object_calculate_bounds(toplevel, o_current, &bounds);
+        geda_component_object_calculate_bounds(toplevel, o_current, &bounds);
         break;
 
       case(OBJ_PIN):

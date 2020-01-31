@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,9 +40,9 @@ OBJECT*
 o_complex_new_embedded(TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const gchar *basename, int selectable);
 
 void
-geda_complex_object_calculate_bounds (TOPLEVEL *toplevel,
-                                      const OBJECT *complex,
-                                      GedaBounds *bounds);
+geda_component_object_calculate_bounds (TOPLEVEL *toplevel,
+                                        const OBJECT *complex,
+                                        GedaBounds *bounds);
 
 void
 o_complex_set_filename(TOPLEVEL *toplevel, const char *basename);
