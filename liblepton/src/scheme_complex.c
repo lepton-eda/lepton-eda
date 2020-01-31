@@ -170,9 +170,9 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
   return component_s;
 }
 
-/*! \brief Get complex object parameters.
+/*! \brief Get component object parameters.
  * \par Function Description
- * Retrieves the parameters of a complex object. The return value is a
+ * Retrieves the parameters of a component object. The return value is a
  * list of parameters:
  *
  * -# Basename
@@ -182,21 +182,21 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
  * -# Whether object is mirrored.
  * -# Whether object is locked.
  *
- * \note Scheme API: Implements the %complex-info procedure in the
+ * \note Scheme API: Implements the %component-info procedure in the
  * (lepton core component) module.
  *
- * \param complex_s the complex object to inspect.
- * \return a list of complex object parameters.
+ * \param component_s the component object to inspect.
+ * \return a list of component object parameters.
  */
-SCM_DEFINE (complex_info, "%complex-info", 1, 0, 0,
-            (SCM complex_s), "Get complex object parameters.")
+SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
+            (SCM component_s), "Get component object parameters.")
 {
-  SCM_ASSERT ((edascm_is_object_type (complex_s, OBJ_COMPLEX) ||
-               edascm_is_object_type (complex_s, OBJ_PLACEHOLDER)),
-              complex_s,
-              SCM_ARG1, s_complex_info);
+  SCM_ASSERT ((edascm_is_object_type (component_s, OBJ_COMPLEX) ||
+               edascm_is_object_type (component_s, OBJ_PLACEHOLDER)),
+              component_s,
+              SCM_ARG1, s_component_info);
 
-  OBJECT *obj = edascm_to_object (complex_s);
+  OBJECT *obj = edascm_to_object (component_s);
 
   return scm_list_n (scm_from_utf8_string (obj->complex_basename),
                      scm_from_int (obj->complex->x),
@@ -435,7 +435,7 @@ init_module_lepton_core_complex (void *unused)
   scm_c_export (s_make_component,
                 s_make_component_library,
                 s_set_component_x,
-                s_complex_info,
+                s_component_info,
                 s_complex_contents,
                 s_complex_append_x,
                 s_complex_remove_x,
