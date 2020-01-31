@@ -19,8 +19,8 @@
  */
 
 /*!
- * \file scheme_complex.c
- * \brief Scheme API complex object manipulation procedures.
+ * \file scheme_component.c
+ * \brief Scheme API component object manipulation procedures.
  */
 
 #include <config.h>
@@ -429,7 +429,7 @@ static void
 init_module_lepton_core_component (void *unused)
 {
   /* Register the functions and symbols */
-  #include "scheme_complex.x"
+  #include "scheme_component.x"
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_make_component,
