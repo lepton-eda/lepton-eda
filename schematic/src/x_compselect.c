@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -148,7 +148,7 @@ x_compselect_callback_response (GtkDialog *dialog,
           i_action_stop (w_current);
         } else {
           /* Otherwise set the new symbol to place */
-          o_complex_prepare_place (w_current, symbol);
+          o_component_prepare_place (w_current, symbol);
         }
         break;
       }
