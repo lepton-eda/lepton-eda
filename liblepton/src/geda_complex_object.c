@@ -149,7 +149,8 @@ geda_component_object_get_position (const GedaObject *object, gint *x, gint *y)
  *  \param [in] object    The attribute object to check
  *  \return TRUE if the object is a eligible attribute, FALSE otherwise
  */
-static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
+static int
+o_component_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
 {
   g_return_val_if_fail (toplevel, FALSE);
   g_return_val_if_fail (object, FALSE);
@@ -233,7 +234,7 @@ GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
     tmp = (OBJECT*) iter->data;
 
     /* Is it an attribute we want to promote? */
-    if (!o_complex_is_eligible_attribute(toplevel, tmp))
+    if (!o_component_is_eligible_attribute (toplevel, tmp))
       continue;
 
     if (detach) {
