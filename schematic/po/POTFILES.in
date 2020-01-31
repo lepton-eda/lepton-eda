@@ -58,7 +58,7 @@ schematic/src/o_box.c
 schematic/src/o_buffer.c
 schematic/src/o_bus.c
 schematic/src/o_circle.c
-schematic/src/o_complex.c
+schematic/src/o_component.c
 schematic/src/o_copy.c
 schematic/src/o_delete.c
 schematic/src/o_find.c
