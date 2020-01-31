@@ -366,7 +366,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         o_place_rotate(w_current);
 
         if (w_current->event_state == COMPMODE) {
-          o_complex_place_changed_run_hook (w_current);
+          o_component_place_changed_run_hook (w_current);
         }
 
         if (w_current->event_state == MOVEMODE) {

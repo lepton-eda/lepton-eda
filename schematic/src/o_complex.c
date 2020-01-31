@@ -116,7 +116,7 @@ o_component_prepare_place (GschemToplevel *w_current,
 
   /* Run the complex place list changed hook without redrawing */
   /* since the place list is going to be redrawn afterwards */
-  o_complex_place_changed_run_hook (w_current);
+  o_component_place_changed_run_hook (w_current);
 }
 
 
@@ -128,7 +128,9 @@ o_component_prepare_place (GschemToplevel *w_current,
  *  \param [in] w_current GschemToplevel structure.
  *
  */
-void o_complex_place_changed_run_hook(GschemToplevel *w_current) {
+void
+o_component_place_changed_run_hook (GschemToplevel *w_current)
+{
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *ptr = NULL;
 
