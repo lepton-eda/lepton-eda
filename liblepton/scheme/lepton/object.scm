@@ -409,7 +409,7 @@
 (define-public component-contents %component-contents)
 
 (define-public (component-append! component . objects)
-  (for-each (lambda (x) (%complex-append! component x)) objects)
+  (for-each (lambda (x) (%component-append! component x)) objects)
   component)
 
 (define-public (component-remove! component . objects)
