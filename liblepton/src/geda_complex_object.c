@@ -101,7 +101,7 @@ geda_complex_object_calculate_bounds (TOPLEVEL *toplevel,
   geda_bounds_init (bounds);
 
   g_return_if_fail (object != NULL);
-  g_return_if_fail (((object->type == OBJ_COMPLEX) || (object->type == OBJ_PLACEHOLDER)));
+  g_return_if_fail (((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)));
   g_return_if_fail (object->complex != NULL);
 
   world_get_object_glist_bounds (toplevel,
@@ -125,7 +125,7 @@ gboolean
 geda_complex_object_get_position (const GedaObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (((object->type == OBJ_COMPLEX) || (object->type == OBJ_PLACEHOLDER)), FALSE);
+  g_return_val_if_fail (((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)), FALSE);
   g_return_val_if_fail (object->complex != NULL, FALSE);
 
   if (x != NULL) {
@@ -659,18 +659,18 @@ geda_complex_object_to_buffer (const GedaObject *object)
 
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->complex != NULL, NULL);
-  g_return_val_if_fail ((object->type == OBJ_COMPLEX) ||
+  g_return_val_if_fail ((object->type == OBJ_COMPONENT) ||
                         (object->type == OBJ_PLACEHOLDER), NULL);
 
   basename = g_strdup_printf ("%s%s",
                               object->complex_embedded ? "EMBEDDED" : "",
                               object->complex_basename);
 
-  /* We force the object type to be output as OBJ_COMPLEX for both these object
+  /* We force the object type to be output as OBJ_COMPONENT for both these object
    * types.
    */
   buffer = g_strdup_printf ("%c %d %d %d %d %d %s",
-                            OBJ_COMPLEX,
+                            OBJ_COMPONENT,
                             object->complex->x,
                             object->complex->y,
                             geda_object_get_selectable (object),
@@ -695,7 +695,7 @@ void
 geda_complex_object_translate (GedaObject *object, int dx, int dy)
 {
   g_return_if_fail (object != NULL &&
-                    (object->type == OBJ_COMPLEX ||
+                    (object->type == OBJ_COMPONENT ||
                      object->type == OBJ_PLACEHOLDER));
 
   object->complex->x = object->complex->x + dx;
@@ -782,7 +782,7 @@ void geda_complex_object_rotate (TOPLEVEL *toplevel,
   int newx, newy;
 
   g_return_if_fail (object!=NULL);
-  g_return_if_fail ((object->type == OBJ_COMPLEX) ||
+  g_return_if_fail ((object->type == OBJ_COMPONENT) ||
                     (object->type == OBJ_PLACEHOLDER));
 
   x = object->complex->x + (-centerx);
@@ -818,7 +818,7 @@ void geda_complex_object_mirror (TOPLEVEL *toplevel,
   int x, y;
 
   g_return_if_fail( object != NULL );
-  g_return_if_fail( (object->type == OBJ_COMPLEX ||
+  g_return_if_fail( (object->type == OBJ_COMPONENT ||
                      object->type == OBJ_PLACEHOLDER) );
   g_return_if_fail( object->complex != NULL );
 
@@ -866,7 +866,7 @@ OBJECT *o_complex_find_pin_by_attribute (OBJECT *object,
   int found;
 
   g_return_val_if_fail (object != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_COMPLEX ||
+  g_return_val_if_fail (object->type == OBJ_COMPONENT ||
                         object->type == OBJ_PLACEHOLDER, NULL);
 
   for (iter = object->complex->prim_objs; iter != NULL;
@@ -914,7 +914,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   double outside_major, outside_minor;
 
   g_return_if_fail (object != NULL);
-  g_return_if_fail ((object->type == OBJ_COMPLEX ||
+  g_return_if_fail ((object->type == OBJ_COMPONENT ||
 		     object->type == OBJ_PLACEHOLDER));
   g_return_if_fail (object->complex != NULL);
 

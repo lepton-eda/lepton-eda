@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -346,7 +346,7 @@ static void clipboard_usable_cb (int usable, void *userdata)
 /*! \brief Return the first object of type \a type if it is selected.
  *
  *  \param toplevel  pointer to TOPLEVEL structure
- *  \param type      object type constant (OBJ_TEXT, OBJ_COMPLEX, etc.) (o_types.h)
+ *  \param type      object type constant (OBJ_TEXT, OBJ_COMPONENT, etc.) (o_types.h)
  */
 static OBJECT*
 obj_selected (TOPLEVEL* toplevel, int type)
@@ -381,7 +381,7 @@ static gboolean
 parent_comp_selected (TOPLEVEL* toplevel)
 {
   gboolean result = FALSE;
-  OBJECT* obj = obj_selected (toplevel, OBJ_COMPLEX);
+  OBJECT* obj = obj_selected (toplevel, OBJ_COMPONENT);
 
   if (obj != NULL)
   {
@@ -422,7 +422,7 @@ void i_update_menus (GschemToplevel* w_current)
 
   gboolean selected      = o_select_selected (w_current);
   gboolean text_selected = selected && obj_selected (toplevel, OBJ_TEXT);
-  gboolean comp_selected = selected && obj_selected (toplevel, OBJ_COMPLEX);
+  gboolean comp_selected = selected && obj_selected (toplevel, OBJ_COMPONENT);
   gboolean pic_selected  = selected && obj_selected (toplevel, OBJ_PICTURE);
   gboolean embeddable    = comp_selected || pic_selected;
   gboolean has_parent    = s_hierarchy_find_up_page (toplevel->pages, page) != NULL;

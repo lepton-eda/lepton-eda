@@ -185,7 +185,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
         object = (OBJECT *) s_current->data;
         if (object && !object->attached_to && object->type != OBJ_TEXT ) {
           addmask = 4;
-          if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) {
+          if (object->type == OBJ_COMPONENT || object->type == OBJ_PLACEHOLDER) {
             addmask = 2;
           }
           if (object->type == OBJ_NET) {

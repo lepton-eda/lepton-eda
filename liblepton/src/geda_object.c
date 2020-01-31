@@ -196,7 +196,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
       new_obj = geda_circle_object_copy (toplevel, selected);
       break;
 
-    case(OBJ_COMPLEX):
+    case(OBJ_COMPONENT):
     case(OBJ_PLACEHOLDER):
       new_obj = o_complex_copy (toplevel, selected);
       break;
@@ -625,7 +625,8 @@ geda_object_get_position (const GedaObject *object, gint *x, gint *y)
       case OBJ_PICTURE: func = geda_picture_object_get_position; break;
       case OBJ_CIRCLE:  func = geda_circle_object_get_position;  break;
       case OBJ_PLACEHOLDER:
-      case OBJ_COMPLEX: func = geda_complex_object_get_position; break;
+      case OBJ_COMPONENT:
+                        func = geda_complex_object_get_position; break;
       case OBJ_TEXT:    func = geda_text_object_get_position;    break;
       case OBJ_PATH:    func = geda_path_object_get_position;    break;
       case OBJ_PIN:     func = geda_pin_object_get_position;     break;
@@ -664,7 +665,8 @@ geda_object_translate (GedaObject *object, gint dx, gint dy)
       case OBJ_PICTURE: func = geda_picture_object_translate; break;
       case OBJ_CIRCLE:  func = geda_circle_object_translate;  break;
       case OBJ_PLACEHOLDER:
-      case OBJ_COMPLEX: func = geda_complex_object_translate; break;
+      case OBJ_COMPONENT:
+                        func = geda_complex_object_translate; break;
       case OBJ_TEXT:    func = geda_text_object_translate;    break;
       case OBJ_PATH:    func = geda_path_object_translate;    break;
       case OBJ_PIN:     func = geda_pin_object_translate;     break;
@@ -703,7 +705,8 @@ void geda_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_center
       case OBJ_PICTURE: func = geda_picture_object_rotate; break;
       case OBJ_CIRCLE:  func = geda_circle_object_rotate;  break;
       case OBJ_PLACEHOLDER:
-      case OBJ_COMPLEX: func = geda_complex_object_rotate; break;
+      case OBJ_COMPONENT:
+                        func = geda_complex_object_rotate; break;
       case OBJ_TEXT:    func = geda_text_object_rotate;    break;
       case OBJ_PATH:    func = geda_path_object_rotate;    break;
       case OBJ_PIN:     func = geda_pin_object_rotate;     break;
@@ -741,7 +744,8 @@ void geda_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_center
       case OBJ_PICTURE: func = geda_picture_object_mirror; break;
       case OBJ_CIRCLE:  func = geda_circle_object_mirror;  break;
       case OBJ_PLACEHOLDER:
-      case OBJ_COMPLEX: func = geda_complex_object_mirror; break;
+      case OBJ_COMPONENT:
+                        func = geda_complex_object_mirror; break;
       case OBJ_TEXT:    func = geda_text_object_mirror;    break;
       case OBJ_PATH:    func = geda_path_object_mirror;    break;
       case OBJ_PIN:     func = geda_pin_object_mirror;     break;
@@ -806,7 +810,7 @@ geda_object_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object,
     case OBJ_PICTURE:     func = geda_picture_object_shortest_distance;  break;
     case OBJ_CIRCLE:      func = geda_circle_object_shortest_distance;   break;
     case OBJ_PLACEHOLDER:
-    case OBJ_COMPLEX:     func = geda_complex_object_shortest_distance;  break;
+    case OBJ_COMPONENT:   func = geda_complex_object_shortest_distance;  break;
     case OBJ_TEXT:        func = geda_text_object_shortest_distance;     break;
     case OBJ_PATH:        func = geda_path_object_shortest_distance;     break;
     case OBJ_ARC:         func = geda_arc_object_shortest_distance;      break;
@@ -860,7 +864,7 @@ void o_set_color (TOPLEVEL *toplevel, OBJECT *object, int color)
 
   object->color = color;
 
-  if (object->type == OBJ_COMPLEX ||
+  if (object->type == OBJ_COMPONENT ||
       object->type == OBJ_PLACEHOLDER)
     geda_object_list_set_color (object->complex->prim_objs, color, toplevel);
 }
@@ -1176,7 +1180,7 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
         geda_circle_object_calculate_bounds (toplevel, o_current, &bounds);
         break;
 
-      case(OBJ_COMPLEX):
+      case(OBJ_COMPONENT):
       case(OBJ_PLACEHOLDER):
         /* realc routine Add this somewhere */
         /* libhack */

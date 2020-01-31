@@ -178,7 +178,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         new_object_list = g_list_prepend (new_object_list, new_obj);
         break;
 
-      case(OBJ_COMPLEX):
+      case(OBJ_COMPONENT):
       case(OBJ_PLACEHOLDER):
         if ((new_obj = o_complex_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
           goto error;
@@ -236,7 +236,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
           /* slots only apply to complex objects */
           if (new_obj != NULL &&
-              (new_obj->type == OBJ_COMPLEX ||
+              (new_obj->type == OBJ_COMPONENT ||
                new_obj->type == OBJ_PLACEHOLDER)) {
             s_slot_update_object (toplevel, new_obj);
           }
@@ -252,7 +252,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
       case(START_EMBEDDED):
         if (new_obj != NULL &&
-            (new_obj->type == OBJ_COMPLEX ||
+            (new_obj->type == OBJ_COMPONENT ||
              new_obj->type == OBJ_PLACEHOLDER)) {
 
           object_list_save = new_object_list;

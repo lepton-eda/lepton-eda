@@ -194,7 +194,7 @@ s_conn_remove_object_connections (TOPLEVEL *toplevel, OBJECT *to_remove)
       to_remove->conn_list = NULL;
       break;
 
-    case OBJ_COMPLEX:
+    case OBJ_COMPONENT:
     case OBJ_PLACEHOLDER:
       for (iter = to_remove->complex->prim_objs; iter != NULL; iter = g_list_next (iter)) {
         o_current = (OBJECT*) iter->data;
@@ -500,7 +500,7 @@ void s_conn_update_object (PAGE* page, OBJECT *object)
       s_conn_update_line_object (page, object);
       break;
 
-    case OBJ_COMPLEX:
+    case OBJ_COMPONENT:
     case OBJ_PLACEHOLDER:
       s_conn_update_glist (page, object->complex->prim_objs);
       break;
@@ -634,7 +634,7 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object)
       }
       break;
 
-    case OBJ_COMPLEX:
+    case OBJ_COMPONENT:
     case OBJ_PLACEHOLDER:
       return_list = s_conn_return_glist_others (return_list,
                                                 object->complex->prim_objs);
@@ -686,7 +686,7 @@ void s_conn_add_object (PAGE *page, OBJECT *object)
       s_conn_add_line_object (page, object);
       break;
 
-  case OBJ_COMPLEX:
+  case OBJ_COMPONENT:
   case OBJ_PLACEHOLDER:
     for (iter = object->complex->prim_objs;
          iter != NULL;
@@ -709,7 +709,7 @@ void s_conn_remove_object(PAGE* page, OBJECT *object)
   }
 
   /* Correctly deal with compound objects */
-  if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) {
+  if (object->type == OBJ_COMPONENT || object->type == OBJ_PLACEHOLDER) {
     for (iter = object->complex->prim_objs;
          iter != NULL;
          iter = g_list_next (iter)) {

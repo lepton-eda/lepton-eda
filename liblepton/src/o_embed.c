@@ -51,7 +51,7 @@ o_embed (OBJECT *o_current)
   }
 
   /* check o_current is a complex and is not already embedded */
-  if (o_current->type == OBJ_COMPLEX &&
+  if (o_current->type == OBJ_COMPONENT &&
       !o_complex_is_embedded (o_current))
   {
 
@@ -100,7 +100,7 @@ o_unembed (OBJECT *o_current)
   }
 
   /* check o_current is an embedded complex */
-  if (o_current->type == OBJ_COMPLEX &&
+  if (o_current->type == OBJ_COMPONENT &&
       o_complex_is_embedded (o_current))
   {
 

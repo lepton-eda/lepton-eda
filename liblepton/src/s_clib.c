@@ -1450,7 +1450,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
       o = (OBJECT *)o_iter->data;
-      if (o->type != OBJ_COMPLEX) continue;
+      if (o->type != OBJ_COMPONENT) continue;
       if (o->complex_basename == NULL)  continue;
 
       /* Since we're not looking at embedded symbols, the first

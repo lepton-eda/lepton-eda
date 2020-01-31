@@ -184,7 +184,7 @@ geda_object_list_print (GList *objects)
     printf("Type: %d\n", o_current->type);
     printf("Sid: %d\n", o_current->sid);
 
-    if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
+    if (o_current->type == OBJ_COMPONENT || o_current->type == OBJ_PLACEHOLDER) {
       geda_object_list_print (o_current->complex->prim_objs);
     }
 
@@ -392,7 +392,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           out = geda_circle_object_to_buffer (o_current);
           break;
 
-        case(OBJ_COMPLEX):
+        case(OBJ_COMPONENT):
           out = geda_complex_object_to_buffer (o_current);
           g_string_append_printf(acc, "%s\n", out);
           already_wrote = TRUE;

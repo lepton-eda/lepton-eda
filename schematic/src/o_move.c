@@ -195,7 +195,7 @@ void o_move_end(GschemToplevel *w_current)
 
 
     switch (object->type) {
-      case (OBJ_COMPLEX):
+      case (OBJ_COMPONENT):
       case (OBJ_PLACEHOLDER):
 
         /* TODO: Fix so we can just pass the complex to o_move_end_lowlevel,
@@ -647,7 +647,7 @@ void o_move_prep_rubberband(GschemToplevel *w_current)
         o_move_check_endpoint (w_current, object);
         break;
 
-      case (OBJ_COMPLEX):
+      case (OBJ_COMPONENT):
       case (OBJ_PLACEHOLDER):
         for (iter = object->complex->prim_objs;
              iter != NULL; iter = g_list_next (iter)) {

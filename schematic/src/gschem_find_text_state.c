@@ -733,7 +733,7 @@ get_subpages (PAGE *page)
       continue;
     }
 
-    if (object->type != OBJ_COMPLEX) {
+    if (object->type != OBJ_COMPONENT) {
       continue;
     }
 

@@ -300,7 +300,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
 #endif
 
     /* -----  Now process objects found on page  ----- */
-    if (o_current->type == OBJ_COMPLEX &&
+    if (o_current->type == OBJ_COMPONENT &&
         o_current->attribs != NULL) {
 
       /* ---- Don't process part if it lacks a refdes ----- */
@@ -368,7 +368,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
         }  /* while (a_current != NULL) */
         g_free(temp_uref);
       }  /* if (temp_uref) */
-    }    /* if (o_current->type == OBJ_COMPLEX)  */
+    }    /* if (o_current->type == OBJ_COMPONENT)  */
   }
  
   verbose_done();
@@ -506,7 +506,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
 #endif
 
     /* -----  Now process objects found on page  ----- */
-    if (o_current->type == OBJ_COMPLEX &&
+    if (o_current->type == OBJ_COMPONENT &&
         o_current->attribs != NULL) {
 
       /* ---- Don't process part if it lacks a refdes ----- */

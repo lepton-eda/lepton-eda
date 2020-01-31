@@ -38,7 +38,7 @@ void o_slot_start (GschemToplevel *w_current, OBJECT *object)
   char *slot_value;
 
   /* single object for now */
-  if (object->type != OBJ_COMPLEX)
+  if (object->type != OBJ_COMPONENT)
     return;
 
   slot_count = o_attrib_search_object_attribs_by_name (object, "numslots", 0);
