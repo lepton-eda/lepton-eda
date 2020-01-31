@@ -297,7 +297,7 @@ SCM_DEFINE (promotable_attribs, "%promotable-attribs", 1, 0, 0,
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (complex_s);
 
-  GList *lst = o_complex_get_promotable (toplevel, obj, FALSE);
+  GList *lst = o_component_get_promotable (toplevel, obj, FALSE);
 
   return edascm_from_object_glist (lst);
 }
