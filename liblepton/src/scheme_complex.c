@@ -426,7 +426,7 @@ SCM_DEFINE (component_filename, "%component-filename", 1, 0, 0,
  * be accessed using (use-modules (lepton core component)).
  */
 static void
-init_module_lepton_core_complex (void *unused)
+init_module_lepton_core_component (void *unused)
 {
   /* Register the functions and symbols */
   #include "scheme_complex.x"
@@ -454,6 +454,6 @@ edascm_init_complex ()
 {
   /* Define the (lepton core component) module */
   scm_c_define_module ("lepton core component",
-                       (void (*)(void*)) init_module_lepton_core_complex,
+                       (void (*)(void*)) init_module_lepton_core_component,
                        NULL);
 }
