@@ -233,43 +233,43 @@ SCM_DEFINE (component_contents, "%component-contents", 1, 0, 0,
   }
 }
 
-/*! \brief Add a primitive object to a complex object.
+/*! \brief Add a primitive object to a component object.
  * \par Function Description
- * Adds \a obj_s to \a complex_s.  If \a obj_s is already attached to
- * another complex object or to a #PAGE, or if \a obj_s is itself a
- * complex object, throws a Scheme error.  If \a obj_s is already
- * attached to \a complex_s, does nothing.
+ * Adds \a obj_s to \a component_s.  If \a obj_s is already attached to
+ * another component object or to a #PAGE, or if \a obj_s is itself a
+ * component object, throws a Scheme error.  If \a obj_s is already
+ * attached to \a component_s, does nothing.
  *
- * \note Scheme API: Implements the %complex-append! procedure of the
+ * \note Scheme API: Implements the %component-append! procedure of the
  * (lepton core component) module.
  *
- * \param complex_s complex object to modify.
+ * \param component_s component object to modify.
  * \param obj_s     primitive object to add.
  * \return \a obj_s.
  */
-SCM_DEFINE (complex_append_x, "%complex-append!", 2, 0, 0,
-            (SCM complex_s, SCM obj_s),
-            "Add a primitive object to a complex object")
+SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
+            (SCM component_s, SCM obj_s),
+            "Add a primitive object to a component object")
 {
   /* Ensure that the arguments have the correct types. */
-  SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPLEX), complex_s,
-              SCM_ARG1, s_complex_append_x);
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPLEX), component_s,
+              SCM_ARG1, s_component_append_x);
   SCM_ASSERT ((EDASCM_OBJECTP (obj_s)
                && !edascm_is_object_type (obj_s, OBJ_COMPLEX)
                && !edascm_is_object_type (obj_s, OBJ_PLACEHOLDER)),
-              obj_s, SCM_ARG2, s_complex_append_x);
+              obj_s, SCM_ARG2, s_component_append_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-  OBJECT *parent = edascm_to_object (complex_s);
+  OBJECT *parent = edascm_to_object (component_s);
   OBJECT *child = edascm_to_object (obj_s);
 
   PAGE* page = o_get_page (child);
   /* Check that object is not already attached to a page or a
-     different complex. */
+     different component. */
   if ((page != NULL)
       || ((child->parent != NULL) && (child->parent != parent))) {
     scm_error (edascm_object_state_sym,
-               s_complex_append_x,
+               s_component_append_x,
                _("Object ~A is already attached to something"),
                scm_list_1 (obj_s), SCM_EOL);
   }
@@ -299,7 +299,7 @@ SCM_DEFINE (complex_append_x, "%complex-append!", 2, 0, 0,
 
   o_page_changed (parent);
 
-  return complex_s;
+  return component_s;
 }
 
 /*! \brief Remove a primitive object from a complex object.
@@ -437,7 +437,7 @@ init_module_lepton_core_complex (void *unused)
                 s_set_component_x,
                 s_component_info,
                 s_component_contents,
-                s_complex_append_x,
+                s_component_append_x,
                 s_complex_remove_x,
                 s_complex_filename,
                 NULL);
