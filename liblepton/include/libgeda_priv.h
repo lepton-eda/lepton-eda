@@ -24,7 +24,7 @@
 #include "geda_bounds.h"
 #include "geda_box.h"
 #include "geda_circle.h"
-#include "geda_complex.h"
+#include "geda_component.h"
 #include "geda_coord.h"
 #include "geda_line.h"
 #include "geda_path.h"
