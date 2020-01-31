@@ -87,8 +87,8 @@ o_component_prepare_place (GschemToplevel *w_current,
   } else { /* if (w_current->include_complex) {..} else { */
     OBJECT *new_object;
 
-    new_object = o_complex_new (toplevel, OBJ_COMPONENT, DEFAULT_COLOR,
-                                0, 0, 0, 0, sym, sym_name, 1);
+    new_object = o_component_new (toplevel, OBJ_COMPONENT, DEFAULT_COLOR,
+                                  0, 0, 0, 0, sym, sym_name, 1);
 
     if (new_object->type == OBJ_PLACEHOLDER) {
       /* If created object is a placeholder, the loading failed and we end the insert action */

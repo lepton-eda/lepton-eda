@@ -34,7 +34,7 @@ GList*
 o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object);
 
 OBJECT*
-o_complex_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const CLibSymbol *clib_sym, const gchar *basename, int selectable);
+o_component_new (TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const CLibSymbol *clib_sym, const gchar *basename, int selectable);
 
 OBJECT*
 o_complex_new_embedded(TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const gchar *basename, int selectable);
