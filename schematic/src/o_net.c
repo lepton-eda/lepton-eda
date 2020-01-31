@@ -1058,11 +1058,11 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
       } else {
 
         if (rippersym != NULL) {
-          new_obj = o_complex_new (page->toplevel, OBJ_COMPONENT, DEFAULT_COLOR,
-                                   rippers[i].x[0], rippers[i].y[0],
-                                   complex_angle, 0,
-                                   rippersym,
-                                   w_current->bus_ripper_symname, 1);
+          new_obj = o_component_new (page->toplevel, OBJ_COMPONENT, DEFAULT_COLOR,
+                                     rippers[i].x[0], rippers[i].y[0],
+                                     complex_angle, 0,
+                                     rippersym,
+                                     w_current->bus_ripper_symname, 1);
           s_page_append_list (page->toplevel, page,
                               o_component_promote_attribs (page->toplevel, new_obj));
           s_page_append (page->toplevel, page, new_obj);

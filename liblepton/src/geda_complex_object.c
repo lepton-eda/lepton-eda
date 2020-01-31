@@ -440,12 +440,12 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
  *  \par Function Description
  *
  */
-OBJECT *o_complex_new(TOPLEVEL *toplevel,
-		      char type,
-		      int color, int x, int y, int angle,
-		      int mirror, const CLibSymbol *clib,
-		      const gchar *basename,
-		      int selectable)
+OBJECT *o_component_new (TOPLEVEL *toplevel,
+                         char type,
+                         int color, int x, int y, int angle,
+                         int mirror, const CLibSymbol *clib,
+                         const gchar *basename,
+                         int selectable)
 {
   OBJECT *new_node=NULL;
   GList *iter;
@@ -628,11 +628,11 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
 
     const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
 
-    new_obj = o_complex_new(toplevel, type,
-                                DEFAULT_COLOR,
-                                x1, y1,
-                                angle, mirror, clib,
-                                basename, selectable);
+    new_obj = o_component_new (toplevel, type,
+                               DEFAULT_COLOR,
+                               x1, y1,
+                               angle, mirror, clib,
+                               basename, selectable);
     /* Delete or hide attributes eligible for promotion inside the complex */
     if (new_obj)
       o_component_remove_promotable_attribs (toplevel, new_obj);

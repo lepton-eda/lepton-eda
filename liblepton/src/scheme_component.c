@@ -89,9 +89,9 @@ SCM_DEFINE (make_component_library, "%make-component/library", 1, 0, 0,
   SCM result = SCM_BOOL_F;
   const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
   if (clib != NULL) {
-    OBJECT *obj = o_complex_new (edascm_c_current_toplevel (),
-                                 OBJ_COMPONENT, DEFAULT_COLOR, 0, 0, 0,
-                                 FALSE, clib, basename, TRUE);
+    OBJECT *obj = o_component_new (edascm_c_current_toplevel (),
+                                   OBJ_COMPONENT, DEFAULT_COLOR, 0, 0, 0,
+                                   FALSE, clib, basename, TRUE);
 
     result = edascm_from_object (obj);
 
