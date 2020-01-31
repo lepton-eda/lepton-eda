@@ -20,32 +20,19 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   among various build environments.
 
 ### Scheme API changes:
-- The module `(geda attrib)` has been renamed to `(lepton attrib)`.
-  All the functions and variables available are still re-exported
-  in the former one but its using is discouraged.
-
-- The module `(geda config)` has been renamed to `(lepton config)`.
-  All the functions and variables available are still re-exported
-  in the former one but its using is discouraged.
-
-- The module `(geda log)` has been renamed to `(lepton log)`.
-  All the functions and variables available are still re-exported
-  in the former one but its using is discouraged.
-
 - The module `(geda log-rotate)` has been renamed to `(lepton
   log-rotate)`.
 
-- The module `(geda object)` has been renamed to `(lepton object)`.
-  All the functions and variables available are still re-exported
-  in the former one but its using is discouraged.
-
-- The module `(geda os)` has been renamed to `(lepton os)`.
-  All the functions and variables available are still re-exported
-  in the former one but its using is discouraged.
-
-- The module `(geda repl)` has been renamed to `(lepton repl)`.
-  All the functions and variables available are still re-exported
-  in the former one but its using is discouraged.
+- Several `(geda *)` modules have been renamed to `(lepton *)`
+  ones.  All the functions and variables available are still
+  re-exported in the former ones but their using is discouraged.
+  The following renames have been made:
+  - `(geda attrib)` => `(lepton attrib)`
+  - `(geda config)` => `(lepton config)`
+  - `(geda log)` => `(lepton log)`
+  - `(geda object)` => `(lepton object)`
+  - `(geda os)` => `(lepton os)`
+  - `(geda repl)` => `(lepton repl)`
 
 - The following *core* (written in C) Scheme modules have been
   renamed:
@@ -190,71 +177,35 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   command-line option `--cache` (`-c`) has been added.
 
 ### Changes in `lepton-schematic`:
-- The module `(gschem action)` has been renamed to `(schematic
-  action)`.  All the functions and variables available are still
-  re-exported in the former one but its using is discouraged.
+- Several `(gschem *)` modules have been renamed to `(schematic
+  *)` ones.  All the functions and variables available are still
+  re-exported in the former ones but their using is discouraged.
+  The following renames have been made:
+  - `(gschem action)` => `(schematic action)`
+  - `(gschem attrib)` => `(schematic attrib)`
+  - `(gschem builtins)` => `(schematic builtins)`
+  - `(gschem gschemdoc)` => `(schematic gschemdoc)`
+  - `(gschem hook)` => `(schematic hook)`
+  - `(gschem keymap)` => `(schematic keymap)`
+  - `(gschem selection)` => `(schematic selection)`
+  - `(gschem symbol check)` => `(schematic symbol check)`
+  - `(gschem util)` => `(schematic util)`
+  - `(gschem window)` => `(schematic window)`
 
-- The module `(gschem attrib)` has been renamed to `(schematic
-  attrib)`.  All the functions and variables available are still
-  re-exported in the former one but its using is discouraged.
+- The following modules were simply renamed without providing any
+  backwards compatibility:
+  - `(gschem core gettext)` => `(schematic core gettext)`
+  - `(gschem repl)` => `(schematic repl)`
 
-- The module `(gschem builtins)` has been renamed to `(schematic
-  builtins)`.  All the functions and variables available are still
-  re-exported in the former one but its using is discouraged.
-
-- The module `(gschem core gettext)` has been renamed to
-  `(schematic core gettext)`.
-
-- The module `(gschem gschemdoc)` has been renamed to `(schematic
-  gschemdoc)`.  All the functions and variables available are still
-  re-exported in the former one but its using is discouraged.
-
-- The module `(gschem hook)` has been renamed to `(schematic
-  hook)`.  All the functions and variables available are still
-  re-exported in the former one but its using is discouraged.
-
-- The module `(gschem keymap)` has been renamed to `(schematic
-  keymap)`.  All the functions and variables available are still
-  re-exported in the former one but its using is discouraged.
-
-- The module `(gschem selection)` has been renamed to `(schematic
-  selection)`.  All the functions and variables available are still
-  re-exported in the former one but its using is discouraged.
-
-- The module `(gschem symbol check)` has been renamed to `(schematic
-  symbol check)`.  All the functions and variables available are still
-  re-exported in the former one but its using is discouraged.
-
-- The module `(gschem util)` has been renamed to `(schematic
-  util)`.  All the functions and variables available are still
-  re-exported in the former one but its using is discouraged.
-
-- The module `(gschem window)` has been renamed to `(schematic
-  window)`.  All the functions and variables available are still
-  re-exported in the former one but its using is discouraged.
-
-- The module `(gschem repl)` has been renamed to `(schematic repl)`.
-
-- The module `(gschem core attrib)` has been renamed to
-  `(schematic core attrib)`.
-
-- The module `(gschem core builtins)` has been renamed to
-  `(schematic core builtins)`.
-
-- The module `(gschem core hook)` has been renamed to `(schematic
-  core hook)`.
-
-- The module `(gschem core keymap)` has been renamed to
-  `(schematic core keymap)`.
-
-- The module `(gschem core selection)` has been renamed to
-  `(schematic core selection)`.
-
-- The module `(gschem core util)` has been renamed to `(schematic
-  core util)`.
-
-- The module `(gschem core window)` has been renamed to
-  `(schematic core window)`.
+- The following *core* (written in C) Scheme modules have been
+  renamed:
+  - `(gschem core attrib)` => `(schematic core attrib)`
+  - `(gschem core builtins)` => `(schematic core builtins)`
+  - `(gschem core hook)` => `(schematic core hook)`
+  - `(gschem core keymap)` => `(schematic core keymap)`
+  - `(gschem core selection)` => `(schematic core selection)`
+  - `(gschem core util)` => `(schematic core util)`
+  - `(gschem core window)` => `(schematic core window)`
 
 - Grips can now be turned on and off at run-time.
   Use the new 'Options → Grips: On/Off' menu item or
