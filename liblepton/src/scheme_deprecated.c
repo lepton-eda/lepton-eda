@@ -65,7 +65,7 @@ init_module_lepton_core_deprecated (void *unused)
   scm_c_define("OBJ_CIRCLE",  SCM_MAKE_CHAR((unsigned char) OBJ_CIRCLE));
   scm_c_define("OBJ_NET",     SCM_MAKE_CHAR((unsigned char) OBJ_NET));
   scm_c_define("OBJ_BUS",     SCM_MAKE_CHAR((unsigned char) OBJ_BUS));
-  scm_c_define("OBJ_COMPLEX", SCM_MAKE_CHAR((unsigned char) OBJ_COMPLEX));
+  scm_c_define("OBJ_COMPLEX", SCM_MAKE_CHAR((unsigned char) OBJ_COMPONENT));
   scm_c_define("OBJ_TEXT",    SCM_MAKE_CHAR((unsigned char) OBJ_TEXT));
   scm_c_define("OBJ_PIN",     SCM_MAKE_CHAR((unsigned char) OBJ_PIN));
   scm_c_define("OBJ_ARC",     SCM_MAKE_CHAR((unsigned char) OBJ_ARC));

@@ -1,6 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's Library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
+ * Copyright (C) 1998-2012 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -29,7 +30,7 @@
 #define OBJ_CIRCLE      'V'
 #define OBJ_NET         'N'
 #define OBJ_BUS         'U'
-#define OBJ_COMPLEX     'C'
+#define OBJ_COMPONENT   'C'
 #define OBJ_TEXT        'T'
 #define OBJ_PIN         'P'
 #define OBJ_ARC         'A' 

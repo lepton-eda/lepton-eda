@@ -60,7 +60,7 @@ void o_edit(GschemToplevel *w_current, GList *list)
   switch(o_current->type) {
 
     /* also add the ability to multi attrib edit: nets, busses, pins */
-    case(OBJ_COMPLEX):
+    case(OBJ_COMPONENT):
     case(OBJ_PLACEHOLDER):
     case(OBJ_NET):
     case(OBJ_PIN):
@@ -329,7 +329,7 @@ void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
       o_text_recreate (toplevel, o_current);
     }
 
-    if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
+    if (o_current->type == OBJ_COMPONENT || o_current->type == OBJ_PLACEHOLDER) {
       o_edit_show_hidden_lowlevel(w_current, o_current->complex->prim_objs);
       o_current->w_bounds_valid_for = NULL;
     }
@@ -458,7 +458,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   const CLibSymbol *clib;
 
   g_return_val_if_fail (o_current != NULL, NULL);
-  g_return_val_if_fail (o_current->type == OBJ_COMPLEX, NULL);
+  g_return_val_if_fail (o_current->type == OBJ_COMPONENT, NULL);
   g_return_val_if_fail (o_current->complex_basename != NULL, NULL);
 
   page = o_get_page (o_current);
@@ -477,7 +477,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   o_selection_remove (toplevel, page->selection_list, o_current);
 
   /* Create new object and set embedded */
-  o_new = o_complex_new (toplevel, OBJ_COMPLEX, DEFAULT_COLOR,
+  o_new = o_complex_new (toplevel, OBJ_COMPONENT, DEFAULT_COLOR,
                          o_current->complex->x,
                          o_current->complex->y,
                          o_current->complex->angle,

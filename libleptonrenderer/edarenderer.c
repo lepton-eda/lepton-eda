@@ -523,7 +523,7 @@ eda_renderer_default_draw (EdaRenderer *renderer, OBJECT *object)
   case OBJ_TEXT:        draw_func = eda_renderer_draw_text; break;
   case OBJ_PICTURE:     draw_func = eda_renderer_draw_picture; break;
 
-  case OBJ_COMPLEX:
+  case OBJ_COMPONENT:
   case OBJ_PLACEHOLDER: draw_func = eda_renderer_draw_complex; break;
 
   default:
@@ -567,7 +567,7 @@ eda_renderer_is_drawable (EdaRenderer *renderer, OBJECT *object)
   int color = geda_object_get_drawing_color (object);
 
   /* Always attempt to draw complex objects */
-  if ((object->type == OBJ_COMPLEX) || (object->type == OBJ_PLACEHOLDER)) {
+  if ((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)) {
     return TRUE;
   }
   return eda_renderer_is_drawable_color (renderer, color, TRUE);
@@ -1151,7 +1151,7 @@ eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object)
         object->picture->upper_x, object->picture->lower_y,
         object->picture->lower_x, object->picture->lower_y);
     break;
-  case OBJ_COMPLEX:
+  case OBJ_COMPONENT:
   case OBJ_PLACEHOLDER:
     /* No grips */
     break;
@@ -1354,7 +1354,7 @@ eda_renderer_default_draw_cues (EdaRenderer *renderer, OBJECT *object)
   case OBJ_TEXT:
   case OBJ_PICTURE:
     break;
-  case OBJ_COMPLEX:
+  case OBJ_COMPONENT:
   case OBJ_PLACEHOLDER:
     /* Recurse */
     eda_renderer_draw_cues_list (renderer, object->complex->prim_objs);
@@ -1514,7 +1514,7 @@ eda_renderer_default_get_user_bounds (EdaRenderer *renderer,
   case OBJ_CIRCLE:
   case OBJ_PATH:
   case OBJ_PICTURE:
-  case OBJ_COMPLEX:
+  case OBJ_COMPONENT:
   case OBJ_PLACEHOLDER:
   case OBJ_NET:
   case OBJ_BUS:

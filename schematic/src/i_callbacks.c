@@ -839,7 +839,7 @@ DEFINE_I_CALLBACK(edit_embed)
     while (s_current != NULL) {
       o_current = (OBJECT *) s_current->data;
       g_assert (o_current != NULL);
-      if ( (o_current->type == OBJ_COMPLEX) ||
+      if ( (o_current->type == OBJ_COMPONENT) ||
 	   (o_current->type == OBJ_PICTURE) ) {
         o_embed (o_current);
       }
@@ -881,7 +881,7 @@ DEFINE_I_CALLBACK(edit_unembed)
     while (s_current != NULL) {
       o_current = (OBJECT *) s_current->data;
       g_assert (o_current != NULL);
-      if ( (o_current->type == OBJ_COMPLEX) ||
+      if ( (o_current->type == OBJ_COMPONENT) ||
            (o_current->type == OBJ_PICTURE) ) {
         o_unembed (o_current);
       }
@@ -925,7 +925,7 @@ DEFINE_I_CALLBACK(edit_update)
     selection = geda_list_get_glist (toplevel->page_current->selection_list);
     for (iter = selection; iter != NULL; iter = g_list_next (iter)) {
       OBJECT *o_current = (OBJECT *) iter->data;
-      if (o_current != NULL && o_current->type == OBJ_COMPLEX) {
+      if (o_current != NULL && o_current->type == OBJ_COMPONENT) {
         selected_components = g_list_prepend (selected_components, o_current);
       }
     }
@@ -2116,7 +2116,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
   object = o_select_return_first_object(w_current);
 
   /* only allow going into symbols */
-  if (object == NULL || object->type != OBJ_COMPLEX)
+  if (object == NULL || object->type != OBJ_COMPONENT)
     return;
 
   parent = gschem_toplevel_get_toplevel (w_current)->page_current;
@@ -2259,7 +2259,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
   OBJECT* object = o_select_return_first_object (w_current);
 
   /* only allow going into symbols */
-  if (object == NULL || object->type != OBJ_COMPLEX)
+  if (object == NULL || object->type != OBJ_COMPONENT)
     return;
 
   s_log_message (_("Searching for symbol [%1$s]"), object->complex_basename);

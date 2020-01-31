@@ -282,7 +282,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
         object_list = g_list_prepend (object_list, new_obj);
         break;
 
-      case(OBJ_COMPLEX):
+      case(OBJ_COMPONENT):
       case(OBJ_PLACEHOLDER):
         if ((new_obj = o_complex_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
           goto error;
@@ -604,7 +604,7 @@ char *o_attrib_search_inherited_attribs_by_name (OBJECT *object,
                                                  const char *name,
                                                  int counter)
 {
-  g_return_val_if_fail (object->type == OBJ_COMPLEX ||
+  g_return_val_if_fail (object->type == OBJ_COMPONENT ||
                         object->type == OBJ_PLACEHOLDER, NULL);
 
   return o_attrib_search_floating_attribs_by_name (object->complex->prim_objs, name, counter);
@@ -682,7 +682,7 @@ GList * o_attrib_return_attribs (OBJECT *object)
   attribs = g_list_reverse (attribs);
 
   /* Inherited attributes (inside complex objects) */
-  if (object->type == OBJ_COMPLEX ||
+  if (object->type == OBJ_COMPONENT ||
       object->type == OBJ_PLACEHOLDER) {
 
     inherited_attribs =

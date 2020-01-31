@@ -46,7 +46,7 @@ SCM_DEFINE (make_component, "%make-component", 1, 0, 0,
 
   char *tmp = scm_to_utf8_string (basename_s);
   OBJECT *obj = o_complex_new_embedded (edascm_c_current_toplevel (),
-                                        OBJ_COMPLEX, DEFAULT_COLOR, 0, 0, 0,
+                                        OBJ_COMPONENT, DEFAULT_COLOR, 0, 0, 0,
                                         FALSE, tmp, TRUE);
   free (tmp);
 
@@ -90,7 +90,7 @@ SCM_DEFINE (make_component_library, "%make-component/library", 1, 0, 0,
   const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
   if (clib != NULL) {
     OBJECT *obj = o_complex_new (edascm_c_current_toplevel (),
-                                 OBJ_COMPLEX, DEFAULT_COLOR, 0, 0, 0,
+                                 OBJ_COMPONENT, DEFAULT_COLOR, 0, 0, 0,
                                  FALSE, clib, basename, TRUE);
 
     result = edascm_from_object (obj);
@@ -125,7 +125,7 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
             (SCM component_s, SCM x_s, SCM y_s, SCM angle_s, SCM mirror_s,
              SCM locked_s), "Set component object parameters")
 {
-  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPLEX), component_s,
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT), component_s,
               SCM_ARG1, s_set_component_x);
   SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_component_x);
   SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_component_x);
@@ -191,7 +191,7 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
 SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
             (SCM component_s), "Get component object parameters.")
 {
-  SCM_ASSERT ((edascm_is_object_type (component_s, OBJ_COMPLEX) ||
+  SCM_ASSERT ((edascm_is_object_type (component_s, OBJ_COMPONENT) ||
                edascm_is_object_type (component_s, OBJ_PLACEHOLDER)),
               component_s,
               SCM_ARG1, s_component_info);
@@ -220,13 +220,13 @@ SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
 SCM_DEFINE (component_contents, "%component-contents", 1, 0, 0,
             (SCM component_s), "Get component object contents.")
 {
-  SCM_ASSERT ((edascm_is_object_type (component_s, OBJ_COMPLEX) ||
+  SCM_ASSERT ((edascm_is_object_type (component_s, OBJ_COMPONENT) ||
                edascm_is_object_type (component_s, OBJ_PLACEHOLDER)),
               component_s, SCM_ARG1, s_component_contents);
 
   OBJECT *obj = edascm_to_object (component_s);
 
-  if (edascm_is_object_type (component_s, OBJ_COMPLEX)) {
+  if (edascm_is_object_type (component_s, OBJ_COMPONENT)) {
     return edascm_from_object_glist (obj->complex->prim_objs);
   } else {
     return SCM_EOL;
@@ -252,10 +252,10 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
             "Add a primitive object to a component object")
 {
   /* Ensure that the arguments have the correct types. */
-  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPLEX), component_s,
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT), component_s,
               SCM_ARG1, s_component_append_x);
   SCM_ASSERT ((EDASCM_OBJECTP (obj_s)
-               && !edascm_is_object_type (obj_s, OBJ_COMPLEX)
+               && !edascm_is_object_type (obj_s, OBJ_COMPONENT)
                && !edascm_is_object_type (obj_s, OBJ_PLACEHOLDER)),
               obj_s, SCM_ARG2, s_component_append_x);
 
@@ -320,7 +320,7 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
             "Remove a primitive object from a component object")
 {
   /* Ensure that the arguments have the correct types. */
-  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPLEX), component_s,
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT), component_s,
               SCM_ARG1, s_component_remove_x);
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s, SCM_ARG2, s_component_remove_x);
 
@@ -396,7 +396,7 @@ SCM_DEFINE (component_filename, "%component-filename", 1, 0, 0,
             (SCM component_s),
             "Get component's symbol full file name")
 {
-  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPLEX), component_s,
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT), component_s,
               SCM_ARG1, s_component_filename);
 
   OBJECT* obj = edascm_to_object (component_s);

@@ -84,7 +84,7 @@ void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
   } else { /* if (w_current->include_complex) {..} else { */
     OBJECT *new_object;
 
-    new_object = o_complex_new (toplevel, OBJ_COMPLEX, DEFAULT_COLOR,
+    new_object = o_complex_new (toplevel, OBJ_COMPONENT, DEFAULT_COLOR,
                                 0, 0, 0, 0, sym, sym_name, 1);
 
     if (new_object->type == OBJ_PLACEHOLDER) {

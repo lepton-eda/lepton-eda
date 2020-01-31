@@ -226,7 +226,8 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
   case OBJ_PICTURE: result = picture_sym;    break;
   case OBJ_CIRCLE:  result = circle_sym;     break;
   case OBJ_PLACEHOLDER:
-  case OBJ_COMPLEX: result = complex_sym;    break;
+  case OBJ_COMPONENT:
+                    result = complex_sym;    break;
   case OBJ_TEXT:    result = text_sym;       break;
   case OBJ_PATH:    result = path_sym;       break;
   case OBJ_PIN:     result = pin_sym;        break;
@@ -807,7 +808,7 @@ SCM_DEFINE (object_embedded_p, "%object-embedded?", 1, 0, 0,
   OBJECT*  obj = edascm_to_object (obj_s);
   gboolean ret = FALSE;
 
-  if (obj->type == OBJ_COMPLEX)
+  if (obj->type == OBJ_COMPONENT)
   {
     ret = o_complex_is_embedded (obj);
   }
@@ -850,7 +851,7 @@ SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
   OBJECT* obj   = edascm_to_object (obj_s);
   int     embed = scm_is_true (embed_s);
 
-  gboolean component  = obj->type == OBJ_COMPLEX;
+  gboolean component  = obj->type == OBJ_COMPONENT;
   gboolean picture    = obj->type == OBJ_PICTURE;
   gboolean embeddable = component || picture;
 

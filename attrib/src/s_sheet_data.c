@@ -127,7 +127,7 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
 #endif
 
       /*-----  only process if this is a component with attributes ----*/
-      if (o_current->type == OBJ_COMPLEX &&
+      if (o_current->type == OBJ_COMPONENT &&
           o_current->attribs != NULL) {
 
 #if DEBUG
@@ -148,7 +148,7 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
 	  g_free(temp_uref);
 	}
 	
-      } /*  if (o_current->type == OBJ_COMPLEX . . . . .) */
+      } /*  if (o_current->type == OBJ_COMPONENT . . . . .) */
       
   }
   
@@ -184,7 +184,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
     printf(_("- Starting master comp attrib list creation.\n"));
   }
 
-  /* -----  Iterate through all objects found on page looking for components (OBJ_COMPLEX) ----- */
+  /* -----  Iterate through all objects found on page looking for components (OBJ_COMPONENT) ----- */
   for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     OBJECT *o_current = (OBJECT*) o_iter->data;
 
@@ -193,7 +193,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
 #endif
 
       /*-----  only process if this is a component with attributes ----*/
-      if (o_current->type == OBJ_COMPLEX &&
+      if (o_current->type == OBJ_COMPONENT &&
           o_current->attribs != NULL) {
 
 	verbose_print(" C");
@@ -224,7 +224,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
 	  a_iter = g_list_next (a_iter);
 	}   /*  while  */
 	
-      }   /* if (o_current->type == OBJ_COMPLEX) */
+      }   /* if (o_current->type == OBJ_COMPONENT) */
       
   }
   
@@ -268,7 +268,7 @@ void s_sheet_data_add_master_net_attrib_list_items (const GList *obj_start) {
  * list of pin names.  It writes the
  * label refdes:pinnumber into the global master pin list.
  * Algorithm:
- * -# Loop on o_current looking for OBJ_COMPLEX
+ * -# Loop on o_current looking for OBJ_COMPONENT
  * -# When we find a complex, save the refdes.
  * -# Dive down to o_lower_current = o_current->complex->prim_objs
  * -# Loop on o_lower_current looking for OBJ_PIN
@@ -305,7 +305,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
     printf ("In s_sheet_data_add_master_pin_list_items, examining o_current->name = %s\n", o_current->name);
 #endif
 
-    if (o_current->type == OBJ_COMPLEX) {
+    if (o_current->type == OBJ_COMPONENT) {
       temp_uref = s_attrib_get_refdes (o_current);
       if (temp_uref != NULL) {      /* make sure object complex has a refdes  */
 
@@ -346,7 +346,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
       }
       g_free (temp_uref);
 
-    }  /*  if (o_current->type == OBJ_COMPLEX)  */
+    }  /*  if (o_current->type == OBJ_COMPONENT)  */
   }
       
   return;
@@ -360,7 +360,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
  * list of pin attributes.  It writes 
  * each attrib name into the master pin attrib list.
  * Algorithm:
- * -# Loop on o_current looking for OBJ_COMPLEX
+ * -# Loop on o_current looking for OBJ_COMPONENT
  * -# When we find a complex, save the refdes.
  * -# Dive down to o_lower_current = o_current->complex->prim_objs
  * -# Loop on o_lower_current looking for OBJ_PIN
@@ -397,7 +397,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
       printf("In s_sheet_data_add_master_pin_attrib_list_items, examining o_current->name = %s\n", o_current->name);
 #endif
 
-      if (o_current->type == OBJ_COMPLEX) {
+      if (o_current->type == OBJ_COMPONENT) {
 	temp_uref = s_attrib_get_refdes(o_current);
 	if (temp_uref != NULL) {      /* make sure object complex has a refdes  */
 	  
@@ -444,7 +444,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
 	  g_free(temp_uref);
 	}  /*  if (temp_uref != NULL )  */
 	
-      }  /* if (o_current->type == OBJ_COMPLEX)  */
+      }  /* if (o_current->type == OBJ_COMPONENT)  */
   }
   return;
 

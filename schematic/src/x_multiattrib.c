@@ -542,7 +542,7 @@ static void multiattrib_popup_menu (Multiattrib *multiattrib,
  */
 static gboolean is_multiattrib_object (OBJECT *object)
 {
-  if (object->type == OBJ_COMPLEX ||
+  if (object->type == OBJ_COMPONENT ||
       object->type == OBJ_PLACEHOLDER ||
       object->type == OBJ_NET ||
       object->type == OBJ_BUS ||
@@ -2734,7 +2734,7 @@ multiattrib_update (Multiattrib *multiattrib)
     /* Count the different objects we are editing */
     multiattrib->total_num_in_list++;
 
-    if (object->type == OBJ_COMPLEX ||
+    if (object->type == OBJ_COMPONENT ||
         object->type == OBJ_PLACEHOLDER) {
       multiattrib->num_complex_in_list++;
 
