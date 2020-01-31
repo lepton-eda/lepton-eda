@@ -488,7 +488,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
     o_embed (o_new);
   }
 
-  new_attribs = o_complex_promote_attribs (toplevel, o_new);
+  new_attribs = o_component_promote_attribs (toplevel, o_new);
 
   /* Cull any attributes from new COMPLEX that are already attached to
    * old COMPLEX. Note that the new_attribs list is kept consistent by

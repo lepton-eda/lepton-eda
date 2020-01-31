@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1064,7 +1064,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
                                    rippersym,
                                    w_current->bus_ripper_symname, 1);
           s_page_append_list (page->toplevel, page,
-                              o_complex_promote_attribs (page->toplevel, new_obj));
+                              o_component_promote_attribs (page->toplevel, new_obj));
           s_page_append (page->toplevel, page, new_obj);
         } else {
           s_log_message(_("Bus ripper symbol [%1$s] was not found in any component library"),
