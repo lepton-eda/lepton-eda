@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2017 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2017 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,9 +94,9 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *head,
  *  \param [out] bounds The bounds of the complex object
  */
 void
-geda_complex_object_calculate_bounds (TOPLEVEL *toplevel,
-                                      const OBJECT *object,
-                                      GedaBounds *bounds)
+geda_component_object_calculate_bounds (TOPLEVEL *toplevel,
+                                        const OBJECT *object,
+                                        GedaBounds *bounds)
 {
   geda_bounds_init (bounds);
 
