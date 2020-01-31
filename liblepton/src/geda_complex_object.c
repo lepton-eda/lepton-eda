@@ -188,7 +188,8 @@ o_component_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
  *  \param o_current  The object to check
  *  \return 1 if embedded, 0 otherwise
  */
-int o_complex_is_embedded(OBJECT *o_current)
+int
+o_component_is_embedded (OBJECT *o_current)
 {
   g_return_val_if_fail(o_current != NULL, 0);
 

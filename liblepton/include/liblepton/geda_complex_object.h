@@ -28,7 +28,7 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *o_list,
 			     int *left, int *top,
 			     int *right, int *bottom);
 
-int o_complex_is_embedded(OBJECT *o_current);
+int o_component_is_embedded (OBJECT *o_current);
 
 GList*
 o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object);
