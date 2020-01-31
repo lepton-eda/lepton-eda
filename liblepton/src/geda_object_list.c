@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -398,7 +398,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           already_wrote = TRUE;
           g_free(out); /* need to free here because of the above flag */
 
-          if (o_complex_is_embedded(o_current)) {
+          if (o_component_is_embedded (o_current)) {
             g_string_append(acc, "[\n");
 
             out = o_save_objects(o_current->complex->prim_objs, FALSE);

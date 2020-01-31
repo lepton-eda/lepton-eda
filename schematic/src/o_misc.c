@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -484,7 +484,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
                          o_current->complex->mirror,
                          clib, o_current->complex_basename,
                          1);
-  if (o_complex_is_embedded (o_current)) {
+  if (o_component_is_embedded (o_current)) {
     o_embed (o_new);
   }
 

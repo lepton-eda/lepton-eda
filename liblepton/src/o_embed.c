@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ o_embed (OBJECT *o_current)
 
   /* check o_current is a complex and is not already embedded */
   if (o_current->type == OBJ_COMPONENT &&
-      !o_complex_is_embedded (o_current))
+      !o_component_is_embedded (o_current))
   {
 
     /* set the embedded flag */
@@ -101,7 +101,7 @@ o_unembed (OBJECT *o_current)
 
   /* check o_current is an embedded complex */
   if (o_current->type == OBJ_COMPONENT &&
-      o_complex_is_embedded (o_current))
+      o_component_is_embedded (o_current))
   {
 
     /* search for the symbol in the library */
