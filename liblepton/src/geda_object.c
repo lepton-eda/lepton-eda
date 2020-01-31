@@ -30,7 +30,7 @@
  *  in the object struct.
  *  The subobjects are picture (st_picture), path (st_path), arcs (st_arc),
  *  a line (st_line), box (st_box), circle (st_circle), text (st_text) and
- *  a complex type (st_complex).
+ *  a component type (st_component).
  *
  *  Pins, nets and busses are just a kind of a line.
  *
