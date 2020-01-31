@@ -568,9 +568,9 @@ OBJECT *o_component_new_embedded (TOPLEVEL *toplevel,
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  */
-OBJECT *o_complex_read (TOPLEVEL *toplevel,
-                        const char buf[], unsigned int release_ver,
-                        unsigned int fileformat_ver, GError **err)
+OBJECT *o_component_read (TOPLEVEL *toplevel,
+                          const char buf[], unsigned int release_ver,
+                          unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;
   char type;
