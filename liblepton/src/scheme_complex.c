@@ -207,26 +207,26 @@ SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
                      SCM_UNDEFINED);
 }
 
-/*! \brief Get the contents of a complex object.
+/*! \brief Get the contents of a component object.
  * \par Function Description
- * Retrieves a list of the primitive objects that make up a complex object.
+ * Retrieves a list of the primitive objects that make up a component object.
  *
- * \note Scheme API: Implements the %complex-contents procedure in the
+ * \note Scheme API: Implements the %component-contents procedure in the
  * (lepton core component) module.
  *
- * \param complex_s a complex object.
+ * \param component_s a component object.
  * \return a list of primitive objects.
  */
-SCM_DEFINE (complex_contents, "%complex-contents", 1, 0, 0,
-            (SCM complex_s), "Get complex object contents.")
+SCM_DEFINE (component_contents, "%component-contents", 1, 0, 0,
+            (SCM component_s), "Get component object contents.")
 {
-  SCM_ASSERT ((edascm_is_object_type (complex_s, OBJ_COMPLEX) ||
-               edascm_is_object_type (complex_s, OBJ_PLACEHOLDER)),
-              complex_s, SCM_ARG1, s_complex_contents);
+  SCM_ASSERT ((edascm_is_object_type (component_s, OBJ_COMPLEX) ||
+               edascm_is_object_type (component_s, OBJ_PLACEHOLDER)),
+              component_s, SCM_ARG1, s_component_contents);
 
-  OBJECT *obj = edascm_to_object (complex_s);
+  OBJECT *obj = edascm_to_object (component_s);
 
-  if (edascm_is_object_type (complex_s, OBJ_COMPLEX)) {
+  if (edascm_is_object_type (component_s, OBJ_COMPLEX)) {
     return edascm_from_object_glist (obj->complex->prim_objs);
   } else {
     return SCM_EOL;
@@ -436,7 +436,7 @@ init_module_lepton_core_complex (void *unused)
                 s_make_component_library,
                 s_set_component_x,
                 s_component_info,
-                s_complex_contents,
+                s_component_contents,
                 s_complex_append_x,
                 s_complex_remove_x,
                 s_complex_filename,

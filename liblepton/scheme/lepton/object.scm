@@ -406,7 +406,7 @@
 (define-public (component-locked? c)
   (list-ref (component-info c) 4))
 
-(define-public component-contents %complex-contents)
+(define-public component-contents %component-contents)
 
 (define-public (component-append! component . objects)
   (for-each (lambda (x) (%complex-append! component x)) objects)
