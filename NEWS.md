@@ -43,6 +43,24 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   All the functions and variables available are still re-exported
   in the former one but its using is discouraged.
 
+- The module `(geda repl)` has been renamed to `(lepton repl)`.
+  All the functions and variables available are still re-exported
+  in the former one but its using is discouraged.
+
+- The following *core* (written in C) Scheme modules have been
+  renamed:
+  - `(geda core attrib)` => `(lepton core attrib)`
+  - `(geda core complex)` => `(lepton core complex)`
+  - `(geda core config)` => `(lepton core config)`
+  - `(geda core deprecated)` => `(lepton core deprecated)`
+  - `(geda core gettext)` => `(lepton core gettext)`
+  - `(geda core log)` => `(lepton core log)`
+  - `(geda core object)` => `(lepton core object)`
+  - `(geda core os)` => `(lepton core os)`
+  - `(geda core page)` => `(lepton core page)`
+  - `(geda core smob)` => `(lepton core smob)`
+  - `(geda core toplevel)` => `(lepton core toplevel)`
+
 - Apart from expanding environment variables, the function
   `expand-env-variables` from the `(lepton os)` module now replaces
   **~/** (user home directory prefix) in file names in order to
@@ -83,6 +101,8 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   `(lepton page)` module.  All functions from the former have been
   moved to the latter.  The procedure `filename->page()` has been
   renamed to `file->page()`.
+
+- The unused Scheme module `(netlist repl)` has been removed.
 
 - Netlist backends can now set the desired netlist mode by defining
   a `request-netlist-mode` function, which should return either `'geda` or
@@ -212,6 +232,8 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
 - The module `(gschem window)` has been renamed to `(schematic
   window)`.  All the functions and variables available are still
   re-exported in the former one but its using is discouraged.
+
+- The module `(gschem repl)` has been renamed to `(schematic repl)`.
 
 - The module `(gschem core attrib)` has been renamed to
   `(schematic core attrib)`.
