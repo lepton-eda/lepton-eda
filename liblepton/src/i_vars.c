@@ -124,8 +124,8 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
         printf( " >> always_promote_attributes += [%s]\n", attr );
 #endif
         /* important: use g_intern_string() here, because attr strings are
-         * compared like pointers in o_complex_is_eligible_attribute():
-        */
+         * compared like pointers in o_component_is_eligible_attribute():
+         */
         g_ptr_array_add (toplevel->always_promote_attributes,
                          (gpointer) g_intern_string (attr));
       }
