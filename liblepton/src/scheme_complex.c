@@ -302,57 +302,57 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
   return component_s;
 }
 
-/*! \brief Remove a primitive object from a complex object.
+/*! \brief Remove a primitive object from a component object.
  * \par Function Description
- * Removes \a obj_s from \a complex_s.  If \a obj_s is attached to a
- * #PAGE or to a complex object other than \a complex_s, throws a
+ * Removes \a obj_s from \a component_s.  If \a obj_s is attached to a
+ * #PAGE or to a component object other than \a component_s, throws a
  * Scheme error.  If \a obj_s is unattached, does nothing.
  *
- * \note Scheme API: Implements the %complex-remove! procedure of the
+ * \note Scheme API: Implements the %component-remove! procedure of the
  * (lepton core component) module.
  *
- * \param complex_s complex object to modify.
- * \param obj_s     primitive object to remove.
+ * \param component_s component object to modify.
+ * \param obj_s       primitive object to remove.
  * \return \a obj_s.
  */
-SCM_DEFINE (complex_remove_x, "%complex-remove!", 2, 0, 0,
-            (SCM complex_s, SCM obj_s),
-            "Remove a primitive object from a complex object")
+SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
+            (SCM component_s, SCM obj_s),
+            "Remove a primitive object from a component object")
 {
   /* Ensure that the arguments have the correct types. */
-  SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPLEX), complex_s,
-              SCM_ARG1, s_complex_remove_x);
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s, SCM_ARG2, s_complex_remove_x);
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPLEX), component_s,
+              SCM_ARG1, s_component_remove_x);
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s, SCM_ARG2, s_component_remove_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-  OBJECT *parent = edascm_to_object (complex_s);
+  OBJECT *parent = edascm_to_object (component_s);
   OBJECT *child = edascm_to_object (obj_s);
   PAGE *child_page = o_get_page (child);
 
-  /* Check that object is not attached to a different complex. */
+  /* Check that object is not attached to a different component. */
   if ((child->parent != NULL) && (child->parent != parent)) {
-    scm_error (edascm_object_state_sym, s_complex_remove_x,
-               _("Object ~A is attached to a different complex"),
+    scm_error (edascm_object_state_sym, s_component_remove_x,
+               _("Object ~A is attached to a different component"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
   /* Check that object is not attached to a page. */
   if ((child->parent == NULL) && (child_page != NULL)) {
-    scm_error (edascm_object_state_sym, s_complex_remove_x,
+    scm_error (edascm_object_state_sym, s_component_remove_x,
                _("Object ~A is attached to a page"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
   /* Check that object is not attached as an attribute. */
   if (child->attached_to != NULL) {
-    scm_error (edascm_object_state_sym, s_complex_remove_x,
+    scm_error (edascm_object_state_sym, s_component_remove_x,
                _("Object ~A is attached as an attribute"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
   /* Check that object doesn't have attributes. */
   if (child->attribs != NULL) {
-    scm_error (edascm_object_state_sym, s_complex_remove_x,
+    scm_error (edascm_object_state_sym, s_component_remove_x,
                _("Object ~A has attributes"),
                scm_list_1 (obj_s), SCM_EOL);
   }
@@ -377,7 +377,7 @@ SCM_DEFINE (complex_remove_x, "%complex-remove!", 2, 0, 0,
 
   /* Object cleanup now managed by Guile. */
   edascm_c_set_gc (obj_s, 1);
-  return complex_s;
+  return component_s;
 }
 
 /*! \brief Get component's symbol full file name.
@@ -438,7 +438,7 @@ init_module_lepton_core_complex (void *unused)
                 s_component_info,
                 s_component_contents,
                 s_component_append_x,
-                s_complex_remove_x,
+                s_component_remove_x,
                 s_complex_filename,
                 NULL);
 }

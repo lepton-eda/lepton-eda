@@ -413,7 +413,7 @@
   component)
 
 (define-public (component-remove! component . objects)
-  (for-each (lambda (x) (%complex-remove! component x)) objects)
+  (for-each (lambda (x) (%component-remove! component x)) objects)
   component)
 
 ;;;; Fill and stroke
