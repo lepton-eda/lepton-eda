@@ -386,20 +386,20 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
  * If a component has a symbol file associated with it, get that
  * file's full path.
  *
- * \note Scheme API: Implements the %complex-filename procedure in the
+ * \note Scheme API: Implements the %component-filename procedure in the
  * (lepton core component) module.
  *
- * \param complex_s  a complex object.
- * \return           symbols's file path or #f.
+ * \param component_s  a component object.
+ * \return             symbols's file path or #f.
  */
-SCM_DEFINE (complex_filename, "%complex-filename", 1, 0, 0,
-            (SCM complex_s),
+SCM_DEFINE (component_filename, "%component-filename", 1, 0, 0,
+            (SCM component_s),
             "Get component's symbol full file name")
 {
-  SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPLEX), complex_s,
-              SCM_ARG1, s_complex_filename);
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPLEX), component_s,
+              SCM_ARG1, s_component_filename);
 
-  OBJECT* obj = edascm_to_object (complex_s);
+  OBJECT* obj = edascm_to_object (component_s);
   const CLibSymbol* sym = s_clib_get_symbol_by_name (obj->complex_basename);
 
   SCM result = SCM_BOOL_F;
@@ -439,7 +439,7 @@ init_module_lepton_core_complex (void *unused)
                 s_component_contents,
                 s_component_append_x,
                 s_component_remove_x,
-                s_complex_filename,
+                s_component_filename,
                 NULL);
 }
 
