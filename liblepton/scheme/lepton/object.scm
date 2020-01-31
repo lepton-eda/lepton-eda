@@ -380,7 +380,7 @@
     (if c (apply set-component! c args) #f)))
 
 (define-public (component-info c)
-  (let* ((params (%complex-info c))
+  (let* ((params (%component-info c))
          (tail (list-tail params 3))
          (position (list-tail params 1)))
     (set-car! position (cons (list-ref position 0)
