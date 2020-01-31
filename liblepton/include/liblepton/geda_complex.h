@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@
 /*! \file geda_complex.h
  */
 
-typedef struct st_complex GedaComplex;
-typedef struct st_complex COMPLEX;
+typedef struct st_component GedaComplex;
+typedef struct st_component COMPLEX;
 
-struct st_complex
+struct st_component
 {
   int x, y;            /* world origin */
 
@@ -31,7 +31,6 @@ struct st_complex
                        /* in degrees */
   int mirror;
 
-  GList *prim_objs;    /* Primitive objects */
-                       /* objects which make up the */
-                       /* complex */
+  GList *prim_objs;    /* Primitive objects objects which make up */
+                       /* the component */
 };
