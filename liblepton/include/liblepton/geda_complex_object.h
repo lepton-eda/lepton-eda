@@ -69,7 +69,7 @@ OBJECT*
 o_component_read (TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 
 gchar*
-geda_complex_object_to_buffer (const GedaObject *object);
+geda_component_object_to_buffer (const GedaObject *object);
 
 double
 geda_complex_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
