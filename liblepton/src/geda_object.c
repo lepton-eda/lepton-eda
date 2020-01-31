@@ -666,7 +666,7 @@ geda_object_translate (GedaObject *object, gint dx, gint dy)
       case OBJ_CIRCLE:  func = geda_circle_object_translate;  break;
       case OBJ_PLACEHOLDER:
       case OBJ_COMPONENT:
-                        func = geda_complex_object_translate; break;
+                        func = geda_component_object_translate; break;
       case OBJ_TEXT:    func = geda_text_object_translate;    break;
       case OBJ_PATH:    func = geda_path_object_translate;    break;
       case OBJ_PIN:     func = geda_pin_object_translate;     break;
