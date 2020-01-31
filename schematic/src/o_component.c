@@ -114,15 +114,15 @@ o_component_prepare_place (GschemToplevel *w_current,
     }
   }
 
-  /* Run the complex place list changed hook without redrawing */
+  /* Run the component place list changed hook without redrawing */
   /* since the place list is going to be redrawn afterwards */
   o_component_place_changed_run_hook (w_current);
 }
 
 
-/*! \brief Run the complex place list changed hook.
+/*! \brief Run the component place list changed hook.
  *  \par Function Description
- *  The complex place list is usually used when placing new components
+ *  The component place list is usually used when placing new components
  *  in the schematic. This function should be called whenever that list
  *  is modified.
  *  \param [in] w_current GschemToplevel structure.
@@ -134,7 +134,7 @@ o_component_place_changed_run_hook (GschemToplevel *w_current)
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *ptr = NULL;
 
-  /* Run the complex place list changed hook */
+  /* Run the component place list changed hook */
   if (scm_is_false (scm_hook_empty_p (complex_place_list_changed_hook)) &&
       toplevel->page_current->place_list != NULL) {
     ptr = toplevel->page_current->place_list;
