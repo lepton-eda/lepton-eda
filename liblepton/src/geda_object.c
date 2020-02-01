@@ -810,7 +810,7 @@ geda_object_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object,
     case OBJ_PICTURE:     func = geda_picture_object_shortest_distance;  break;
     case OBJ_CIRCLE:      func = geda_circle_object_shortest_distance;   break;
     case OBJ_PLACEHOLDER:
-    case OBJ_COMPONENT:   func = geda_complex_object_shortest_distance;  break;
+    case OBJ_COMPONENT:   func = geda_component_object_shortest_distance;  break;
     case OBJ_TEXT:        func = geda_text_object_shortest_distance;     break;
     case OBJ_PATH:        func = geda_path_object_shortest_distance;     break;
     case OBJ_ARC:         func = geda_arc_object_shortest_distance;      break;

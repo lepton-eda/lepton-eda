@@ -1092,8 +1092,8 @@ done:
  *  G_MAXDOUBLE.
  */
 double
-geda_complex_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
-                                       int x, int y, int force_solid)
+geda_component_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                         int x, int y, int force_solid)
 {
   double shortest_distance = G_MAXDOUBLE;
   double distance;
