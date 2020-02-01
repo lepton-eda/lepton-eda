@@ -41,7 +41,7 @@ o_component_new_embedded (TOPLEVEL *toplevel, char type, int color, int x, int y
 
 void
 geda_component_object_calculate_bounds (TOPLEVEL *toplevel,
-                                        const OBJECT *complex,
+                                        const OBJECT *object,
                                         GedaBounds *bounds);
 
 void
