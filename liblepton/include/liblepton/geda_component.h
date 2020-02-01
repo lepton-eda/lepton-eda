@@ -21,7 +21,7 @@
  */
 
 typedef struct st_component GedaComplex;
-typedef struct st_component COMPLEX;
+typedef struct st_component COMPONENT;
 
 struct st_component
 {

@@ -244,13 +244,13 @@ From the top down to a particular graphical object on a schematic page:
 
 That is, all objects in the design are graphical objects, and are held 
 in a linked list.  Note that an object is any graphical object, 
-such as text, a component (COMPLEX), an attribute, a line, a net, etc.
+such as text, a component, an attribute, a line, a net, etc.
 Stuff attached below the OBJECT level determine
 what kind of object the graphic is, its visibility, its name, etc. etc. etc.  
 
 
 ----  Components with attributes  ----
-Starting from a component (COMPLEX), an attribute is represented like this:
+Starting from a component, an attribute is represented like this:
 (OBJECT *component)->(ATTRIB *attribs)->(OBJECT *attrib_graphic)->(TEXT *text)->(char *string) // name=value string
                                                                               ->(int x, y)     // which coords?
                                                                               ->(int screen_x) // ???
@@ -288,9 +288,9 @@ by various fcns when needed.
 
 
 ----  Pins  ----
-As for pins, they are attached to components (COMPLEX) in the following way.
+As for pins, they are attached to components in the following way.
 Starting from the component:
-(OBJECT *component)->(COMPLEX *complex)->(OBJECT *prim_objs)->(int type)        // #define OBJ_PIN  'P'
+(OBJECT *component)->(COMPONENT *complex)->(OBJECT *prim_objs)->(int type)      // #define OBJ_PIN  'P'
                                                             ->(ATTRIB *attribs) // pin attrib list.
                                                             ->(int sid)         // unique identifier
                                                             ->(char *name)      // something like pin.3372
@@ -307,7 +307,7 @@ way:
 
 
 ----  Example  ----
-Component objects (COMPLEX) have lots of other other fields in teh struct.
+Component objects (COMPONENT) have lots of other other fields in teh struct.
 Here's an example taken  from a real design:
 
 (OBJECT *component)->name                                 = complex.188       // unique ID of component

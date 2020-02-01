@@ -466,7 +466,7 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
   new_node->color = color;
   new_node->selectable = selectable;
 
-  new_node->complex = (COMPLEX *) g_malloc(sizeof(COMPLEX));
+  new_node->complex = (COMPONENT *) g_malloc(sizeof(COMPONENT));
   new_node->complex->prim_objs = NULL;
   new_node->complex->angle = angle;
   new_node->complex->mirror = mirror;
@@ -537,7 +537,7 @@ OBJECT *o_component_new_embedded (TOPLEVEL *toplevel,
 
   new_node = s_basic_new_object(type, "complex");
 
-  new_node->complex = (COMPLEX *) g_malloc(sizeof(COMPLEX));
+  new_node->complex = (COMPONENT *) g_malloc(sizeof(COMPONENT));
   new_node->complex->x = x;
   new_node->complex->y = y;
 
@@ -733,7 +733,7 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   o_new->complex_basename = g_strdup(o_current->complex_basename);
   o_new->complex_embedded = o_current->complex_embedded;
 
-  o_new->complex = (COMPLEX*) g_malloc0 (sizeof (COMPLEX));
+  o_new->complex = (COMPONENT*) g_malloc0 (sizeof (COMPONENT));
   o_new->complex->x = o_current->complex->x;
   o_new->complex->y = o_current->complex->y;
   o_new->complex->angle = o_current->complex->angle;

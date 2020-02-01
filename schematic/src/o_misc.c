@@ -490,8 +490,8 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
 
   new_attribs = o_component_promote_attribs (toplevel, o_new);
 
-  /* Cull any attributes from new COMPLEX that are already attached to
-   * old COMPLEX. Note that the new_attribs list is kept consistent by
+  /* Cull any attributes from new COMPONENT that are already attached to
+   * old COMPONENT. Note that the new_attribs list is kept consistent by
    * setting GList data pointers to NULL if their OBJECTs are
    * culled. At the end, the new_attribs list is updated by removing
    * all list items with NULL data. This is slightly magic, but
