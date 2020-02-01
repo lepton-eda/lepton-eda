@@ -1,7 +1,8 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2013 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -188,7 +189,7 @@ void s_slot_update_object (TOPLEVEL *toplevel, OBJECT *object)
   while (current_pin != NULL) {
     /* get pin on this component with pinseq == pin_counter */
     pinseq = g_strdup_printf ("%d", pin_counter);
-    o_pin_object = o_complex_find_pin_by_attribute (object, "pinseq", pinseq);
+    o_pin_object = o_component_find_pin_by_attribute (object, "pinseq", pinseq);
     g_free (pinseq);
 
     if (o_pin_object != NULL) {
