@@ -745,7 +745,7 @@ void geda_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_center
       case OBJ_CIRCLE:  func = geda_circle_object_mirror;  break;
       case OBJ_PLACEHOLDER:
       case OBJ_COMPONENT:
-                        func = geda_complex_object_mirror; break;
+                        func = geda_component_object_mirror; break;
       case OBJ_TEXT:    func = geda_text_object_mirror;    break;
       case OBJ_PATH:    func = geda_path_object_mirror;    break;
       case OBJ_PIN:     func = geda_pin_object_mirror;     break;

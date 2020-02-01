@@ -814,9 +814,10 @@ geda_component_object_rotate (TOPLEVEL *toplevel,
  *  \par Function Description
  *
  */
-void geda_complex_object_mirror (TOPLEVEL *toplevel,
-                            int world_centerx, int world_centery,
-                            OBJECT *object)
+void
+geda_component_object_mirror (TOPLEVEL *toplevel,
+                              int world_centerx, int world_centery,
+                              OBJECT *object)
 {
   int x, y;
 
