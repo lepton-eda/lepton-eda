@@ -45,7 +45,7 @@
 #include "geda_box_object.h"
 #include "geda_bus_object.h"
 #include "geda_circle_object.h"
-#include "geda_complex_object.h"
+#include "geda_component_object.h"
 #include "geda_line_object.h"
 #include "geda_net_object.h"
 #include "geda_path_object.h"
