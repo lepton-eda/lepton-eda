@@ -59,7 +59,7 @@ struct st_object
   int fill_angle1, fill_pitch1;
   int fill_angle2, fill_pitch2;
 
-  gboolean complex_embedded;                    /* is embedded component? */
+  gboolean component_embedded;          /* is embedded component? */
   gchar *component_basename;            /* Component Library Symbol name */
   OBJECT *parent;                       /* Parent object pointer */
 

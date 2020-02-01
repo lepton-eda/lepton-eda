@@ -109,7 +109,7 @@ o_component_prepare_place (GschemToplevel *w_current,
       /* Flag the symbol as embedded if necessary */
       o_current = (OBJECT*) (g_list_last (toplevel->page_current->place_list))->data;
       if (w_current->embed_complex) {
-        o_current->complex_embedded = TRUE;
+        o_current->component_embedded = TRUE;
       }
     }
   }

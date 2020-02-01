@@ -56,7 +56,7 @@ o_embed (OBJECT *o_current)
   {
 
     /* set the embedded flag */
-    o_current->complex_embedded = TRUE;
+    o_current->component_embedded = TRUE;
 
     s_log_message (_("Component [%1$s] has been embedded."),
                    o_current->component_basename);
@@ -115,7 +115,7 @@ o_unembed (OBJECT *o_current)
 
     } else {
       /* clear the embedded flag */
-      o_current->complex_embedded = FALSE;
+      o_current->component_embedded = FALSE;
 
       s_log_message (_("Component [%1$s] has been successfully unembedded."),
                      o_current->component_basename);
