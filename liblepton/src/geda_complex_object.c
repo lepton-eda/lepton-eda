@@ -776,9 +776,10 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in]      angle     Rotation angle in degrees.
  *  \param [in,out]  object    Complex object to rotate.
  */
-void geda_complex_object_rotate (TOPLEVEL *toplevel,
-                            int centerx, int centery,
-                            int angle, OBJECT *object)
+void
+geda_component_object_rotate (TOPLEVEL *toplevel,
+                              int centerx, int centery,
+                              int angle, OBJECT *object)
 {
   int x, y;
   int newx, newy;
