@@ -905,7 +905,7 @@ o_component_find_pin_by_attribute (OBJECT *object,
  *  \param object    The complex OBJECT
  */
 void
-o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
+o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
 {
   char *inside = NULL;
   char *outside = NULL;
