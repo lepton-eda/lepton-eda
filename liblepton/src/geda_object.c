@@ -297,16 +297,16 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
     g_free(o_current->complex_basename);
     o_current->complex_basename = NULL;
 
-    if (o_current->complex) {
+    if (o_current->component) {
 
-      if (o_current->complex->prim_objs) {
+      if (o_current->component->prim_objs) {
         /* printf("sdeleting complex->primitive_objects\n");*/
-        geda_object_list_delete (toplevel, o_current->complex->prim_objs);
-        o_current->complex->prim_objs = NULL;
+        geda_object_list_delete (toplevel, o_current->component->prim_objs);
+        o_current->component->prim_objs = NULL;
       }
 
-      g_free(o_current->complex);
-      o_current->complex = NULL;
+      g_free(o_current->component);
+      o_current->component = NULL;
     }
 
     o_attrib_detach_all (toplevel, o_current);
@@ -866,7 +866,7 @@ void o_set_color (TOPLEVEL *toplevel, OBJECT *object, int color)
 
   if (object->type == OBJ_COMPONENT ||
       object->type == OBJ_PLACEHOLDER)
-    geda_object_list_set_color (object->complex->prim_objs, color, toplevel);
+    geda_object_list_set_color (object->component->prim_objs, color, toplevel);
 }
 
 
@@ -1184,9 +1184,9 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
       case(OBJ_PLACEHOLDER):
         /* realc routine Add this somewhere */
         /* libhack */
-        /* o_recalc(toplevel, o_current->complex);*/
+        /* o_recalc(toplevel, o_current->component);*/
 
-        if (o_current->complex->prim_objs == NULL)
+        if (o_current->component->prim_objs == NULL)
           return 0;
 
         geda_component_object_calculate_bounds(toplevel, o_current, &bounds);
@@ -1277,7 +1277,7 @@ s_basic_init_object (OBJECT *new_node, int type, char const *name)
   new_node->box = NULL;
   new_node->picture = NULL;
   new_node->text = NULL;
-  new_node->complex = NULL;
+  new_node->component = NULL;
 
   new_node->conn_list = NULL;
 

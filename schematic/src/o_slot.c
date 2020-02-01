@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -118,8 +119,8 @@ void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
        attribute since it doesn't exist */
     new_obj = geda_text_object_new (toplevel,
                                     ATTRIBUTE_COLOR,
-                                    object->complex->x,
-                                    object->complex->y,
+                                    object->component->x,
+                                    object->component->y,
                                     LOWER_LEFT,
                                     0, /* zero is angle */
                                     string,

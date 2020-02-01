@@ -156,9 +156,9 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
 
   int x = scm_to_int (x_s);
   int y = scm_to_int (y_s);
-  geda_object_translate (obj, x - obj->complex->x, y - obj->complex->y);
-  obj->complex->angle = angle;
-  obj->complex->mirror = scm_is_true (mirror_s);
+  geda_object_translate (obj, x - obj->component->x, y - obj->component->y);
+  obj->component->angle = angle;
+  obj->component->mirror = scm_is_true (mirror_s);
   obj->selectable = scm_is_false (locked_s);
 
   obj->w_bounds_valid_for = NULL; /* We need to do this explicitly... */
@@ -199,10 +199,10 @@ SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
   OBJECT *obj = edascm_to_object (component_s);
 
   return scm_list_n (scm_from_utf8_string (obj->complex_basename),
-                     scm_from_int (obj->complex->x),
-                     scm_from_int (obj->complex->y),
-                     scm_from_int (obj->complex->angle),
-                     obj->complex->mirror ? SCM_BOOL_T : SCM_BOOL_F,
+                     scm_from_int (obj->component->x),
+                     scm_from_int (obj->component->y),
+                     scm_from_int (obj->component->angle),
+                     obj->component->mirror ? SCM_BOOL_T : SCM_BOOL_F,
                      obj->selectable ? SCM_BOOL_F : SCM_BOOL_T,
                      SCM_UNDEFINED);
 }
@@ -227,7 +227,7 @@ SCM_DEFINE (component_contents, "%component-contents", 1, 0, 0,
   OBJECT *obj = edascm_to_object (component_s);
 
   if (edascm_is_object_type (component_s, OBJ_COMPONENT)) {
-    return edascm_from_object_glist (obj->complex->prim_objs);
+    return edascm_from_object_glist (obj->component->prim_objs);
   } else {
     return SCM_EOL;
   }
@@ -283,8 +283,8 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
    * it's guaranteed not to be present in a page at this point. */
   o_emit_pre_change_notify (toplevel, parent);
 
-  parent->complex->prim_objs =
-    g_list_append (parent->complex->prim_objs, child);
+  parent->component->prim_objs =
+    g_list_append (parent->component->prim_objs, child);
   child->parent = parent;
 
   parent->w_bounds_valid_for = NULL;
@@ -363,8 +363,8 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
    * only the parent will remain in the page. */
   o_emit_pre_change_notify (toplevel, parent);
 
-  parent->complex->prim_objs =
-    g_list_remove_all (parent->complex->prim_objs, child);
+  parent->component->prim_objs =
+    g_list_remove_all (parent->component->prim_objs, child);
   child->parent = NULL;
 
   /* We may need to update connections */

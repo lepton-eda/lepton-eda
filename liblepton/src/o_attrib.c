@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -607,7 +607,7 @@ char *o_attrib_search_inherited_attribs_by_name (OBJECT *object,
   g_return_val_if_fail (object->type == OBJ_COMPONENT ||
                         object->type == OBJ_PLACEHOLDER, NULL);
 
-  return o_attrib_search_floating_attribs_by_name (object->complex->prim_objs, name, counter);
+  return o_attrib_search_floating_attribs_by_name (object->component->prim_objs, name, counter);
 }
 
 
@@ -686,7 +686,7 @@ GList * o_attrib_return_attribs (OBJECT *object)
       object->type == OBJ_PLACEHOLDER) {
 
     inherited_attribs =
-      o_attrib_find_floating_attribs (object->complex->prim_objs);
+      o_attrib_find_floating_attribs (object->component->prim_objs);
 
     attribs = g_list_concat (attribs, inherited_attribs);
   }

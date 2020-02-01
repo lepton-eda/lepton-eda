@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -203,10 +204,10 @@ void o_move_end(GschemToplevel *w_current)
 
         /* this next section of code is from */
         /* o_complex_world_translate_world */
-        object->complex->x = object->complex->x + diff_x;
-        object->complex->y = object->complex->y + diff_y;
+        object->component->x = object->component->x + diff_x;
+        object->component->y = object->component->y + diff_y;
 
-        o_move_end_lowlevel_glist (w_current, object->complex->prim_objs,
+        o_move_end_lowlevel_glist (w_current, object->component->prim_objs,
                                    diff_x, diff_y);
         object->w_bounds_valid_for = NULL;
         break;
@@ -649,7 +650,7 @@ void o_move_prep_rubberband(GschemToplevel *w_current)
 
       case (OBJ_COMPONENT):
       case (OBJ_PLACEHOLDER):
-        for (iter = object->complex->prim_objs;
+        for (iter = object->component->prim_objs;
              iter != NULL; iter = g_list_next (iter)) {
           o_current = (OBJECT*) iter->data;
 

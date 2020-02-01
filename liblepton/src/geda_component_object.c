@@ -102,10 +102,10 @@ geda_component_object_calculate_bounds (TOPLEVEL *toplevel,
 
   g_return_if_fail (object != NULL);
   g_return_if_fail (((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)));
-  g_return_if_fail (object->complex != NULL);
+  g_return_if_fail (object->component != NULL);
 
   world_get_object_glist_bounds (toplevel,
-                                 object->complex->prim_objs,
+                                 object->component->prim_objs,
                                  &(bounds->min_x),
                                  &(bounds->min_y),
                                  &(bounds->max_x),
@@ -127,14 +127,14 @@ geda_component_object_get_position (const GedaObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)), FALSE);
-  g_return_val_if_fail (object->complex != NULL, FALSE);
+  g_return_val_if_fail (object->component != NULL, FALSE);
 
   if (x != NULL) {
-    *x = object->complex->x;
+    *x = object->component->x;
   }
 
   if (y != NULL) {
-    *y = object->complex->y;
+    *y = object->component->y;
   }
 
   return TRUE;
@@ -194,7 +194,7 @@ o_component_is_embedded (OBJECT *o_current)
 {
   g_return_val_if_fail(o_current != NULL, 0);
 
-  if(o_current->complex == NULL)
+  if(o_current->component == NULL)
     return 0;
 
   if (o_current->complex_embedded) {
@@ -230,7 +230,7 @@ GList *o_component_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detac
   if (!toplevel->attribute_promotion) /* controlled through rc file */
     return NULL;
 
-  attribs = o_attrib_find_floating_attribs (object->complex->prim_objs);
+  attribs = o_attrib_find_floating_attribs (object->component->prim_objs);
 
   for (iter = attribs; iter != NULL; iter = g_list_next (iter)) {
     tmp = (OBJECT*) iter->data;
@@ -241,8 +241,8 @@ GList *o_component_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detac
 
     if (detach) {
       tmp->parent = NULL;
-      object->complex->prim_objs =
-        g_list_remove (object->complex->prim_objs, tmp);
+      object->component->prim_objs =
+        g_list_remove (object->component->prim_objs, tmp);
     }
 
     promoted = g_list_prepend (promoted, tmp);
@@ -288,8 +288,8 @@ GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
     for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
       OBJECT *o_removed = (OBJECT *) iter->data;
       o_removed->parent = NULL;
-      object->complex->prim_objs =
-        g_list_remove (object->complex->prim_objs, o_removed);
+      object->component->prim_objs =
+        g_list_remove (object->component->prim_objs, o_removed);
     }
     promoted = promotable;
     /* Invalidate the object's bounds since we may have
@@ -334,8 +334,8 @@ static void o_component_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *o
     if (toplevel->keep_invisible == TRUE) {   /* Hide promotable attributes */
       o_set_visibility (toplevel, a_object, INVISIBLE);
     } else {                                /* Delete promotable attributes */
-      object->complex->prim_objs =
-        g_list_remove (object->complex->prim_objs, a_object);
+      object->component->prim_objs =
+        g_list_remove (object->component->prim_objs, a_object);
       s_delete_object (toplevel, a_object);
     }
   }
@@ -366,11 +366,11 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
     new_prim_obj = geda_line_object_new (toplevel,
                                         DETACHED_ATTRIBUTE_COLOR,
                                         x - 50, y, x + 50, y);
-    new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
+    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
     new_prim_obj = geda_line_object_new (toplevel,
                                          DETACHED_ATTRIBUTE_COLOR,
                                          x, y + 50, x, y - 50);
-    new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
+    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
 
     /* Add some useful text */
     not_found_text =
@@ -385,7 +385,7 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
                                          not_found_text,
                                          8,
                                          VISIBLE, SHOW_NAME_VALUE);
-    new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
+    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
     g_free(not_found_text);
 
     /* figure out where to put the hazard triangle */
@@ -404,7 +404,7 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
                                          y + NOT_FOUND_TEXT_Y + y_offset);
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
-    new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
+    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
     new_prim_obj = geda_line_object_new (toplevel,
                                          DETACHED_ATTRIBUTE_COLOR,
                                          x + NOT_FOUND_TEXT_X + x_offset,
@@ -413,7 +413,7 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
                                          y + NOT_FOUND_TEXT_Y + y_offset + 500);
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
-    new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
+    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
     new_prim_obj = geda_line_object_new (toplevel,
                                          DETACHED_ATTRIBUTE_COLOR,
                                          x + NOT_FOUND_TEXT_X + x_offset + 300,
@@ -422,7 +422,7 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
                                          y + NOT_FOUND_TEXT_Y + y_offset);
     o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
                        50, -1, -1);
-    new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
+    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
     new_prim_obj = geda_text_object_new (toplevel,
                                          DETACHED_ATTRIBUTE_COLOR,
                                          x + NOT_FOUND_TEXT_X + x_offset + 270,
@@ -433,8 +433,8 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
                                          18,
                                          VISIBLE,
                                          SHOW_NAME_VALUE);
-    new_node->complex->prim_objs = g_list_prepend (new_node->complex->prim_objs, new_prim_obj);
-    new_node->complex->prim_objs = g_list_reverse(new_node->complex->prim_objs);
+    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
+    new_node->component->prim_objs = g_list_reverse(new_node->component->prim_objs);
 }
 
 /* Done */
@@ -466,12 +466,12 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
   new_node->color = color;
   new_node->selectable = selectable;
 
-  new_node->complex = (COMPONENT *) g_malloc(sizeof(COMPONENT));
-  new_node->complex->prim_objs = NULL;
-  new_node->complex->angle = angle;
-  new_node->complex->mirror = mirror;
-  new_node->complex->x = x;
-  new_node->complex->y = y;
+  new_node->component = (COMPONENT *) g_malloc(sizeof(COMPONENT));
+  new_node->component->prim_objs = NULL;
+  new_node->component->angle = angle;
+  new_node->component->mirror = mirror;
+  new_node->component->x = x;
+  new_node->component->y = y;
 
   /* get the symbol data */
   if (clib != NULL) {
@@ -484,7 +484,7 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
     GError * err = NULL;
 
     /* add connections till translated */
-    new_node->complex->prim_objs = o_read_buffer (toplevel, NULL, buffer, -1, new_node->complex_basename, &err);
+    new_node->component->prim_objs = o_read_buffer (toplevel, NULL, buffer, -1, new_node->complex_basename, &err);
     if (err) {
       g_error_free(err);
       /* If reading fails, replace with placeholder object */
@@ -492,11 +492,11 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
     }
     else {
       if (mirror) {
-        geda_object_list_mirror (new_node->complex->prim_objs, 0, 0, toplevel);
+        geda_object_list_mirror (new_node->component->prim_objs, 0, 0, toplevel);
       }
 
-      geda_object_list_rotate (new_node->complex->prim_objs, 0, 0, angle, toplevel);
-      geda_object_list_translate (new_node->complex->prim_objs, x, y);
+      geda_object_list_rotate (new_node->component->prim_objs, 0, 0, angle, toplevel);
+      geda_object_list_translate (new_node->component->prim_objs, x, y);
     }
 
     g_free (buffer);
@@ -504,7 +504,7 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
   }
 
   /* set the parent field now */
-  for (iter = new_node->complex->prim_objs; iter != NULL; iter = g_list_next (iter)) {
+  for (iter = new_node->component->prim_objs; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *tmp = (OBJECT*) iter->data;
     tmp->parent = new_node;
   }
@@ -537,12 +537,12 @@ OBJECT *o_component_new_embedded (TOPLEVEL *toplevel,
 
   new_node = s_basic_new_object(type, "complex");
 
-  new_node->complex = (COMPONENT *) g_malloc(sizeof(COMPONENT));
-  new_node->complex->x = x;
-  new_node->complex->y = y;
+  new_node->component = (COMPONENT *) g_malloc(sizeof(COMPONENT));
+  new_node->component->x = x;
+  new_node->component->y = y;
 
-  new_node->complex->angle = angle;
-  new_node->complex->mirror = mirror;
+  new_node->component->angle = angle;
+  new_node->component->mirror = mirror;
 
   new_node->complex_basename = g_strdup(basename);
 
@@ -551,7 +551,7 @@ OBJECT *o_component_new_embedded (TOPLEVEL *toplevel,
   new_node->color = color;
   new_node->selectable = selectable;
 
-  new_node->complex->prim_objs = NULL;
+  new_node->component->prim_objs = NULL;
 
   /* don't have to translate/rotate/mirror here at all since the */
   /* object is in place */
@@ -663,7 +663,7 @@ geda_component_object_to_buffer (const GedaObject *object)
   gchar *buffer;
 
   g_return_val_if_fail (object != NULL, NULL);
-  g_return_val_if_fail (object->complex != NULL, NULL);
+  g_return_val_if_fail (object->component != NULL, NULL);
   g_return_val_if_fail ((object->type == OBJ_COMPONENT) ||
                         (object->type == OBJ_PLACEHOLDER), NULL);
 
@@ -676,11 +676,11 @@ geda_component_object_to_buffer (const GedaObject *object)
    */
   buffer = g_strdup_printf ("%c %d %d %d %d %d %s",
                             OBJ_COMPONENT,
-                            object->complex->x,
-                            object->complex->y,
+                            object->component->x,
+                            object->component->y,
                             geda_object_get_selectable (object),
-                            object->complex->angle,
-                            object->complex->mirror,
+                            object->component->angle,
+                            object->component->mirror,
                             basename);
 
   g_free (basename);
@@ -703,10 +703,10 @@ geda_component_object_translate (GedaObject *object, int dx, int dy)
                     (object->type == OBJ_COMPONENT ||
                      object->type == OBJ_PLACEHOLDER));
 
-  object->complex->x = object->complex->x + dx;
-  object->complex->y = object->complex->y + dy;
+  object->component->x = object->component->x + dx;
+  object->component->y = object->component->y + dy;
 
-  geda_object_list_translate (object->complex->prim_objs, dx, dy);
+  geda_object_list_translate (object->component->prim_objs, dx, dy);
 
   object->w_bounds_valid_for = NULL;
 }
@@ -733,18 +733,18 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   o_new->complex_basename = g_strdup(o_current->complex_basename);
   o_new->complex_embedded = o_current->complex_embedded;
 
-  o_new->complex = (COMPONENT*) g_malloc0 (sizeof (COMPONENT));
-  o_new->complex->x = o_current->complex->x;
-  o_new->complex->y = o_current->complex->y;
-  o_new->complex->angle = o_current->complex->angle;
-  o_new->complex->mirror = o_current->complex->mirror;
+  o_new->component = (COMPONENT*) g_malloc0 (sizeof (COMPONENT));
+  o_new->component->x = o_current->component->x;
+  o_new->component->y = o_current->component->y;
+  o_new->component->angle = o_current->component->angle;
+  o_new->component->mirror = o_current->component->mirror;
 
   /* Copy contents and set the parent pointers on the copied objects. */
-  o_new->complex->prim_objs =
-    o_glist_copy_all (toplevel, o_current->complex->prim_objs,
+  o_new->component->prim_objs =
+    o_glist_copy_all (toplevel, o_current->component->prim_objs,
                       NULL);
 
-  for (iter = o_new->complex->prim_objs;
+  for (iter = o_new->component->prim_objs;
        iter != NULL;
        iter = g_list_next (iter)) {
     ((OBJECT*) iter->data)->parent = o_new;
@@ -793,24 +793,24 @@ geda_component_object_rotate (TOPLEVEL *toplevel,
   g_return_if_fail ((object->type == OBJ_COMPONENT) ||
                     (object->type == OBJ_PLACEHOLDER));
 
-  x = object->complex->x + (-centerx);
-  y = object->complex->y + (-centery);
+  x = object->component->x + (-centerx);
+  y = object->component->y + (-centery);
 
   geda_point_rotate_90 (x, y, angle, &newx, &newy);
 
   x = newx + (centerx);
   y = newy + (centery);
 
-  geda_component_object_translate (object, -object->complex->x, -object->complex->y);
+  geda_component_object_translate (object, -object->component->x, -object->component->y);
 
-  geda_object_list_rotate (object->complex->prim_objs, 0, 0, angle, toplevel);
+  geda_object_list_rotate (object->component->prim_objs, 0, 0, angle, toplevel);
 
-  object->complex->x = 0;
-  object->complex->y = 0;
+  object->component->x = 0;
+  object->component->y = 0;
 
   geda_component_object_translate (object, x, y);
 
-  object->complex->angle = ( object->complex->angle + angle ) % 360;
+  object->component->angle = ( object->component->angle + angle ) % 360;
 }
 
 
@@ -829,27 +829,27 @@ geda_component_object_mirror (TOPLEVEL *toplevel,
   g_return_if_fail( object != NULL );
   g_return_if_fail( (object->type == OBJ_COMPONENT ||
                      object->type == OBJ_PLACEHOLDER) );
-  g_return_if_fail( object->complex != NULL );
+  g_return_if_fail( object->component != NULL );
 
-  x = 2 * world_centerx - object->complex->x;
-  y = object->complex->y;
+  x = 2 * world_centerx - object->component->x;
+  y = object->component->y;
 
-  geda_component_object_translate (object, -object->complex->x, -object->complex->y);
+  geda_component_object_translate (object, -object->component->x, -object->component->y);
 
-  geda_object_list_mirror (object->complex->prim_objs, 0, 0, toplevel);
+  geda_object_list_mirror (object->component->prim_objs, 0, 0, toplevel);
 
-  switch(object->complex->angle) {
+  switch(object->component->angle) {
     case(90):
-      object->complex->angle = 270;
+      object->component->angle = 270;
       break;
 
     case(270):
-      object->complex->angle = 90;
+      object->component->angle = 90;
       break;
 
   }
 
-  object->complex->mirror = !object->complex->mirror;
+  object->component->mirror = !object->component->mirror;
 
   geda_component_object_translate (object, x, y);
 }
@@ -879,7 +879,7 @@ o_component_find_pin_by_attribute (OBJECT *object,
   g_return_val_if_fail (object->type == OBJ_COMPONENT ||
                         object->type == OBJ_PLACEHOLDER, NULL);
 
-  for (iter = object->complex->prim_objs; iter != NULL;
+  for (iter = object->component->prim_objs; iter != NULL;
        iter = g_list_next (iter)) {
     o_current = (OBJECT*) iter->data;
 
@@ -926,7 +926,7 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
   g_return_if_fail (object != NULL);
   g_return_if_fail ((object->type == OBJ_COMPONENT ||
 		     object->type == OBJ_PLACEHOLDER));
-  g_return_if_fail (object->complex != NULL);
+  g_return_if_fail (object->component != NULL);
 
   /* first look on the inside for the symversion= attribute */
   inside = o_attrib_search_inherited_attribs_by_name (object, "symversion", 0);
@@ -1106,9 +1106,9 @@ geda_component_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
   BOX line_bounds;
   GList *iter;
 
-  g_return_val_if_fail (object->complex != NULL, G_MAXDOUBLE);
+  g_return_val_if_fail (object->component != NULL, G_MAXDOUBLE);
 
-  for (iter = object->complex->prim_objs;
+  for (iter = object->component->prim_objs;
        iter != NULL; iter= g_list_next (iter)) {
     OBJECT *obj = (OBJECT*) iter->data;
     int left, top, right, bottom;

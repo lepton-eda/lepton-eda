@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -243,8 +244,8 @@ OBJECT *o_attrib_add_attrib(GschemToplevel *w_current,
     switch(o_current->type) {
       case(OBJ_COMPONENT):
       case(OBJ_PLACEHOLDER):
-        world_x = o_current->complex->x;
-        world_y = o_current->complex->y;
+        world_x = o_current->component->x;
+        world_y = o_current->component->y;
         align = LOWER_LEFT;
         angle = 0;
         color = ATTRIBUTE_COLOR;
