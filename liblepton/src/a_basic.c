@@ -134,7 +134,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
     {
         /* yes */
         /* verify symbol version (not file format but rather contents) */
-        o_complex_check_symversion(toplevel, last_complex);
+        o_component_check_symversion(toplevel, last_complex);
         last_complex = NULL;  /* no longer need to check */
     }
 
@@ -230,7 +230,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
           {
             /* yes */
             /* verify symbol version (not file format but rather contents) */
-            o_complex_check_symversion(toplevel, last_complex);
+            o_component_check_symversion(toplevel, last_complex);
             last_complex = NULL;
           }
 
@@ -344,7 +344,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
   /* and had no attached attributes */
   if (last_complex)
   {
-        o_complex_check_symversion(toplevel, last_complex);
+        o_component_check_symversion(toplevel, last_complex);
         last_complex = NULL;  /* no longer need to check */
   }
 
