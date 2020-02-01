@@ -19,9 +19,9 @@
  */
 
 /*! \file o_complex_basic.c
- *  \brief Functions for complex objects
+ *  \brief Functions for component objects
  *
- *  Complex objects are collections of primary objects.
+ *  Component objects contain collections of primary objects.
  */
 
 #include <config.h>
@@ -85,13 +85,13 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *head,
   return found;
 }
 
-/*! \brief Calculate the bounds of a complex object
+/*! \brief Calculate the bounds of a component object
  *
  *  On failure, this function sets the bounds to empty.
  *
  *  \param [in] toplevel The toplevel object.
- *  \param [in] object The complex object.
- *  \param [out] bounds The bounds of the complex object
+ *  \param [in] object The component object.
+ *  \param [out] bounds The bounds of the component object
  */
 void
 geda_component_object_calculate_bounds (TOPLEVEL *toplevel,
@@ -112,9 +112,10 @@ geda_component_object_calculate_bounds (TOPLEVEL *toplevel,
                                  &(bounds->max_y));
 }
 
-/*! \brief get the position of the complex base point
+/*! \brief get the position of the component base point
  *  \par Function Description
- *  This function gets the position of the base point of a complex object.
+ *  This function gets the position of the base point of a
+ *  component object.
  *
  *  \param [in] object   The object to get the position.
  *  \param [out] x       pointer to the x-position
@@ -181,9 +182,9 @@ o_component_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
   return TRUE;
 }
 
-/*! \brief get the embedded state of an complex object
+/*! \brief get the embedded state of an component object
  *  \par Function Description
- *  Checks and returns the status of the complex object.
+ *  Checks and returns the status of the component object.
  *
  *  \param o_current  The object to check
  *  \return 1 if embedded, 0 otherwise
@@ -204,18 +205,18 @@ o_component_is_embedded (OBJECT *o_current)
 }
 
 
-/*! \brief Get attributes eligible for promotion from inside a complex
+/*! \brief Get attributes eligible for promotion from inside a component
  *
  *  \par Function Description
  *  Returns a GList of OBJECTs which are eligible for promotion from
- *  within the passed complex OBJECT.
+ *  within the passed component OBJECT.
  *
  *  If detach is TRUE, the function removes these attribute objects
- *  from the prim_objs of the complex.  If detach is FALSE, the
+ *  from the prim_objs of the component.  If detach is FALSE, the
  *  OBJECTs are left in place.
  *
  *  \param [in]  toplevel The toplevel environment.
- *  \param [in]  object   The complex object being modified.
+ *  \param [in]  object   The component object being modified.
  *  \param [in]  detach   Should the attributes be detached?
  *  \returns              A linked list of OBJECTs to promote.
  */
@@ -254,13 +255,13 @@ GList *o_component_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detac
 }
 
 
-/*! \brief Promote attributes from a complex OBJECT
+/*! \brief Promote attributes from a component OBJECT
  *  \par Function Description
  *  Selects promotable attributes from \a object, and returns a new
  *  #GList containing them (suitable for appending to a #PAGE).
  *
  *  \param [in]  toplevel The #TOPLEVEL environment.
- *  \param [in]  object   The complex #OBJECT to promote from.
+ *  \param [in]  object   The component #OBJECT to promote from.
  *  \return A #GList of promoted attributes.
  */
 GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
@@ -296,7 +297,8 @@ GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
     o_bounds_invalidate (toplevel, object);
   }
 
-  /* Attach promoted attributes to the original complex object */
+  /* Attach promoted attributes to the original component
+     object. */
   o_attrib_attach_list (toplevel, promoted, object, TRUE);
 
   return promoted;
@@ -316,7 +318,7 @@ GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
  *  promotion are kept in memory but flagged as invisible.
  *
  *  \param [in]  toplevel The toplevel environment.
- *  \param [in]  object   The complex object being altered.
+ *  \param [in]  object   The component object being altered.
  */
 static void o_component_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object)
 {
@@ -519,13 +521,13 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
  *  \param [in]  toplevel  The TOPLEVEL object
  *  \param [in]  type      The type of the object (usually OBJ_COMLEX)
  *  \param [in]  color     The color of the object
- *  \param [in]  x         The x location of the complex object
- *  \param [in]  y         The y location of the complex object
+ *  \param [in]  x         The x location of the component object
+ *  \param [in]  y         The y location of the component object
  *  \param [in]  angle     The rotation angle
  *  \param [in]  mirror    The mirror status
  *  \param [in]  basename  The basic name the embedded was created of
  *  \param [in]  selectable whether the object can be selected with the mouse
- *  \return a new complex object
+ *  \return a new component object
  */
 OBJECT *o_component_new_embedded (TOPLEVEL *toplevel,
                                   char type, int color, int x, int y, int angle, int mirror,
@@ -556,10 +558,10 @@ OBJECT *o_component_new_embedded (TOPLEVEL *toplevel,
   return new_node;
 }
 
-/*! \brief read a complex object from a char buffer
+/*! \brief read a component object from a char buffer
  *  \par Function Description
- *  This function reads a complex object from the buffer \a buf.
- *  If the complex object was read successfully, a new object is
+ *  This function reads a component object from the buffer \a buf.
+ *  If the component object was read successfully, a new object is
  *  allocated and appended to the \a object_list.
  *
  *  \param [in] toplevel     The TOPLEVEL object
@@ -633,7 +635,8 @@ OBJECT *o_component_read (TOPLEVEL *toplevel,
                                x1, y1,
                                angle, mirror, clib,
                                basename, selectable);
-    /* Delete or hide attributes eligible for promotion inside the complex */
+    /* Delete or hide attributes eligible for promotion inside the
+       component. */
     if (new_obj)
       o_component_remove_promotable_attribs (toplevel, new_obj);
   }
@@ -643,15 +646,15 @@ OBJECT *o_component_read (TOPLEVEL *toplevel,
   return new_obj;
 }
 
-/*! \brief Create a string representation of the complex object
+/*! \brief Create a string representation of the component object
  *  \par Function Description
- *  This function takes a complex \a object and return a string
+ *  This function takes a component \a object and return a string
  *  according to the file format definition.
  *
  *  On failure, this function returns NULL.
  *
- *  \param [in] object  a complex OBJECT
- *  \return the string representation of the complex OBJECT
+ *  \param [in] object  a component OBJECT
+ *  \return the string representation of the component OBJECT
  */
 gchar*
 geda_component_object_to_buffer (const GedaObject *object)
@@ -685,11 +688,11 @@ geda_component_object_to_buffer (const GedaObject *object)
   return buffer;
 }
 
-/*! \brief move a complex object
+/*! \brief move a component object
  *  \par Function Description
- *  This function changes the position of a complex \a object.
+ *  This function changes the position of a component \a object.
  *
- *  \param [ref] object  The complex GedaObject to be moved
+ *  \param [ref] object  The component GedaObject to be moved
  *  \param [in]  dx      The x-distance to move the object
  *  \param [in]  dy      The y-distance to move the object
  */
@@ -708,13 +711,14 @@ geda_component_object_translate (GedaObject *object, int dx, int dy)
   object->w_bounds_valid_for = NULL;
 }
 
-/*! \brief Create a copy of a COMPLEX object
+/*! \brief Create a copy of a component object
  *  \par Function Description
- *  This function creates a copy of the complex object \a o_current.
+ *  This function creates a copy of the component object \a
+ *  o_current.
  *
  *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] o_current    The object that is copied
- *  \return a new COMPLEX object
+ *  \return a new component object
  */
 OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
@@ -749,7 +753,8 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   /* Recalculate bounds */
   o_new->w_bounds_valid_for = NULL;
 
-  /* Delete or hide attributes eligible for promotion inside the complex */
+  /* Delete or hide attributes eligible for promotion inside the
+     component. */
   o_component_remove_promotable_attribs (toplevel, o_new);
 
   s_slot_update_object (toplevel, o_new);
@@ -764,9 +769,9 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 }
 
 
-/*! \brief Rotates a complex object in world coordinates
+/*! \brief Rotates a component object in world coordinates
  *  \par Function Description
- *  This function rotates a complex \a object around the
+ *  This function rotates a component \a object around the
  *  (\a centerx,\a centery) point by \a angle degrees.
  *  The center of rotation is in world units.
  *
@@ -774,7 +779,7 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in]      centerx   X coordinate of rotation center (world coords).
  *  \param [in]      centery   Y coordinate of rotation center (world coords).
  *  \param [in]      angle     Rotation angle in degrees.
- *  \param [in,out]  object    Complex object to rotate.
+ *  \param [in,out]  object    Component object to rotate.
  */
 void
 geda_component_object_rotate (TOPLEVEL *toplevel,
@@ -852,10 +857,10 @@ geda_component_object_mirror (TOPLEVEL *toplevel,
 
 /*! \brief Find a pin with a particular attribute.
  *  \par Function Description
- *  Search for a pin inside the given complex which has an attribute
+ *  Search for a pin inside the given component which has an attribute
  *  matching those passed.
  *
- *  \param [in] object        complex OBJECT whos pins to search.
+ *  \param [in] object        component OBJECT whos pins to search.
  *  \param [in] name          the attribute name to search for.
  *  \param [in] wanted_value  the attribute value to search for.
  *  \return The pin OBJECT with the given attribute, NULL otherwise.
@@ -893,7 +898,7 @@ o_component_find_pin_by_attribute (OBJECT *object,
 }
 
 
-/*! \brief check the symversion of a complex object
+/*! \brief check the symversion of a component object
  *  \par Function Description
  *  This function compares the symversion of a symbol with it's
  *  earlier saved symversion in a schematic.
@@ -902,7 +907,7 @@ o_component_find_pin_by_attribute (OBJECT *object,
  *  to the messaging system.
  *
  *  \param toplevel  The TOPLEVEL object
- *  \param object    The complex OBJECT
+ *  \param object    The component OBJECT
  */
 void
 o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
@@ -1075,14 +1080,14 @@ done:
 }
 
 /*! \brief Calculates the distance between the given point and the closest
- * point on an object within the complex object.
+ * point on an object within the component object.
  *
  *  \note When querying the distance to our child objects, we always
  *        force treating them as solid filled.
  *        We ignore the force_solid argument to this function.
  *
  *  \param [in] toplevel     The TOPLEVEL object.
- *  \param [in] object       The complex  OBJECT.
+ *  \param [in] object       The component OBJECT.
  *  \param [in] x            The x coordinate of the given point.
  *  \param [in] y            The y coordinate of the given point.
  *  \param [in] force_solid  If true, force treating the object as solid.
