@@ -16,7 +16,7 @@ liblepton/src/geda_box_object.c
 liblepton/src/geda_bus_object.c
 liblepton/src/geda_circle_object.c
 liblepton/src/geda_color.c
-liblepton/src/geda_complex_object.c
+liblepton/src/geda_component_object.c
 liblepton/src/o_embed.c
 liblepton/src/geda_line_object.c
 liblepton/src/geda_net_object.c
