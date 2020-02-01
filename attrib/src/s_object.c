@@ -326,7 +326,7 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
       break;
 
     default:
-      fprintf(stderr, _("In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex or non-net!\n"));
+      fprintf (stderr, _("In s_object_attrib_add_attrib_in_object, trying to add attrib to non-component or non-net!\n"));
       exit(-1);
     }
   } else {    /* This must be a floating attrib, but what is that !?!?!?!?!  */

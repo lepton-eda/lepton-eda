@@ -446,7 +446,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
 	g_free(temp_uref);
       } else {
 #ifdef DEBUG
-	printf("In s_toplevel_sheetdata_to_toplevel, found complex with no refdes. name = %s\n", 
+	printf ("In s_toplevel_sheetdata_to_toplevel, found component with no refdes. name = %s\n",
 	       o_current->name);
 #endif
       }
