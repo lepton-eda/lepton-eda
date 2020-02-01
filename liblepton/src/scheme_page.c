@@ -288,7 +288,7 @@ SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
   if ((curr_page != NULL && curr_page != page)
       || (obj->parent != NULL)) {
     scm_error (edascm_object_state_sym, s_page_remove_x,
-               _("Object ~A is attached to a complex or different page"),
+               _("Object ~A is attached to a component or different page"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
