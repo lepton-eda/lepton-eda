@@ -20,7 +20,6 @@
 /*! \file geda_component.h
  */
 
-typedef struct st_component GedaComplex;
 typedef struct st_component COMPONENT;
 
 struct st_component
