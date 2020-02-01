@@ -459,17 +459,17 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
 
   g_return_val_if_fail (o_current != NULL, NULL);
   g_return_val_if_fail (o_current->type == OBJ_COMPONENT, NULL);
-  g_return_val_if_fail (o_current->complex_basename != NULL, NULL);
+  g_return_val_if_fail (o_current->component_basename != NULL, NULL);
 
   page = o_get_page (o_current);
 
   /* Force symbol data to be reloaded from source */
-  clib = s_clib_get_symbol_by_name (o_current->complex_basename);
+  clib = s_clib_get_symbol_by_name (o_current->component_basename);
   s_clib_symbol_invalidate_data (clib);
 
   if (clib == NULL) {
     s_log_message (_("Could not find symbol [%1$s] in library. Update failed."),
-                   o_current->complex_basename);
+                   o_current->component_basename);
     return NULL;
   }
 
@@ -482,7 +482,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
                            o_current->component->y,
                            o_current->component->angle,
                            o_current->component->mirror,
-                           clib, o_current->complex_basename,
+                           clib, o_current->component_basename,
                            1);
   if (o_component_is_embedded (o_current)) {
     o_embed (o_new);

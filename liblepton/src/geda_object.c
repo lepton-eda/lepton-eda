@@ -293,9 +293,9 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
     o_current->name = NULL;
 
 
-    /*	printf("sdeleting complex_basename\n");*/
-    g_free(o_current->complex_basename);
-    o_current->complex_basename = NULL;
+    /*	printf("sdeleting component_basename\n");*/
+    g_free(o_current->component_basename);
+    o_current->component_basename = NULL;
 
     if (o_current->component) {
 
@@ -1281,7 +1281,7 @@ s_basic_init_object (OBJECT *new_node, int type, char const *name)
 
   new_node->conn_list = NULL;
 
-  new_node->complex_basename = NULL;
+  new_node->component_basename = NULL;
   new_node->parent = NULL;
 
   /* Setup the color */

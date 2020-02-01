@@ -375,7 +375,7 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
     /* Add some useful text */
     not_found_text =
       g_strdup_printf (_("Component not found:\n %1$s"),
-           new_node->complex_basename);
+           new_node->component_basename);
     new_prim_obj = geda_text_object_new (toplevel,
                                          DETACHED_ATTRIBUTE_COLOR,
                                          x + NOT_FOUND_TEXT_X,
@@ -456,9 +456,9 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
   new_node = s_basic_new_object(type, "complex");
 
   if (clib != NULL) {
-    new_node->complex_basename = g_strdup (s_clib_symbol_get_name (clib));
+    new_node->component_basename = g_strdup (s_clib_symbol_get_name (clib));
   } else {
-    new_node->complex_basename = g_strdup (basename);
+    new_node->component_basename = g_strdup (basename);
   }
 
 
@@ -484,7 +484,7 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
     GError * err = NULL;
 
     /* add connections till translated */
-    new_node->component->prim_objs = o_read_buffer (toplevel, NULL, buffer, -1, new_node->complex_basename, &err);
+    new_node->component->prim_objs = o_read_buffer (toplevel, NULL, buffer, -1, new_node->component_basename, &err);
     if (err) {
       g_error_free(err);
       /* If reading fails, replace with placeholder object */
@@ -544,7 +544,7 @@ OBJECT *o_component_new_embedded (TOPLEVEL *toplevel,
   new_node->component->angle = angle;
   new_node->component->mirror = mirror;
 
-  new_node->complex_basename = g_strdup(basename);
+  new_node->component_basename = g_strdup(basename);
 
   new_node->complex_embedded = TRUE;
 
@@ -669,7 +669,7 @@ geda_component_object_to_buffer (const GedaObject *object)
 
   basename = g_strdup_printf ("%s%s",
                               object->complex_embedded ? "EMBEDDED" : "",
-                              object->complex_basename);
+                              object->component_basename);
 
   /* We force the object type to be output as OBJ_COMPONENT for both these object
    * types.
@@ -730,7 +730,7 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   o_new = s_basic_new_object(o_current->type, "complex");
   o_new->color = o_current->color;
   o_new->selectable = o_current->selectable;
-  o_new->complex_basename = g_strdup(o_current->complex_basename);
+  o_new->component_basename = g_strdup(o_current->component_basename);
   o_new->complex_embedded = o_current->complex_embedded;
 
   o_new->component = (COMPONENT*) g_malloc0 (sizeof (COMPONENT));
@@ -1010,7 +1010,7 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
     s_log_message(_("WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
                     "\tSymbol in library is newer than "
                     "instantiated symbol."),
-                  refdes, object->complex_basename);
+                  refdes, object->component_basename);
 
     /* break up the version values into major.minor numbers */
     inside_major = floor(inside_value);
@@ -1042,7 +1042,7 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
       /* add the refdes to the major_changed_refdes GList */
       /* make sure refdes_copy is freed somewhere */
       refdes_copy = g_strconcat (refdes, " (",
-                                 object->complex_basename,
+                                 object->component_basename,
                                  ")", NULL);
       toplevel->major_changed_refdes =
         g_list_append(toplevel->major_changed_refdes, refdes_copy);

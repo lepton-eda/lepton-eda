@@ -133,7 +133,7 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
 
 #if DEBUG
 	printf("      In s_sheet_data_add_master_comp_list_items; found component on page\n");
-	printf(". . . . complex_basename = %s.\n", o_current->complex_basename);
+	printf(". . . . component_basename = %s.\n", o_current->component_basename);
 #endif
 	verbose_print(" C");
       
@@ -342,7 +342,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
       } else {          /* didn't find refdes.  Report error to log. */
 #ifdef DEBUG
         fprintf (stderr, "In s_sheet_data_add_master_pin_list_items, found component with no refdes.\n");
-        fprintf (stderr, ". . . . complex_basename = %s.\n", o_current->complex_basename);
+        fprintf (stderr, ". . . . component_basename = %s.\n", o_current->component_basename);
 #endif
       }
       g_free (temp_uref);

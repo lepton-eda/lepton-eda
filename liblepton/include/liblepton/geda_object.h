@@ -60,7 +60,7 @@ struct st_object
   int fill_angle2, fill_pitch2;
 
   gboolean complex_embedded;                    /* is embedded component? */
-  gchar *complex_basename;              /* Component Library Symbol name */
+  gchar *component_basename;            /* Component Library Symbol name */
   OBJECT *parent;                       /* Parent object pointer */
 
   int color; 				/* Which color */

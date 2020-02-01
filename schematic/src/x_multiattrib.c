@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2739,8 +2739,8 @@ multiattrib_update (Multiattrib *multiattrib)
       multiattrib->num_complex_in_list++;
 
       if (complex_title_name == NULL)
-        complex_title_name = object->complex_basename;
-      else if (strcmp (complex_title_name, object->complex_basename) != 0)
+        complex_title_name = object->component_basename;
+      else if (strcmp (complex_title_name, object->component_basename) != 0)
         complex_title_name = _("<various>");
     }
 

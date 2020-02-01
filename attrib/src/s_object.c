@@ -1,6 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
+/* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
+ * Copyright (C) 2003-2016 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -413,7 +414,7 @@ int s_object_has_sym_file(OBJECT *object)
 {
   char *filename;
 
-  filename = object->complex_basename;
+  filename = object->component_basename;
   if (filename != NULL) {
 #ifdef DEBUG
     printf("In s_object_has_sym_file, object has sym file = %s.\n", filename);

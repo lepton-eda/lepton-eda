@@ -2262,9 +2262,9 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
   if (object == NULL || object->type != OBJ_COMPONENT)
     return;
 
-  s_log_message (_("Searching for symbol [%1$s]"), object->complex_basename);
+  s_log_message (_("Searching for symbol [%1$s]"), object->component_basename);
 
-  const CLibSymbol* sym = s_clib_get_symbol_by_name (object->complex_basename);
+  const CLibSymbol* sym = s_clib_get_symbol_by_name (object->component_basename);
   if (sym == NULL)
     return;
 
