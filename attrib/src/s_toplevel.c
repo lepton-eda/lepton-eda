@@ -1,6 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
+/* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
+ * Copyright (C) 2003-2014 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -492,9 +493,9 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
        *  4.  Stick the attribs into the TOPLEVEL data structure.
        */
       temp_uref =  s_attrib_get_refdes(o_current);
-      if ( (temp_uref != NULL) && (o_current->complex->prim_objs) ) {    /* make sure object complex has a refdes  */
+      if ( (temp_uref != NULL) && (o_current->component->prim_objs) ) {    /* make sure object complex has a refdes  */
 
-        for (prim_iter = o_current->complex->prim_objs;
+        for (prim_iter = o_current->component->prim_objs;
              prim_iter != NULL;
              prim_iter = g_list_next (prim_iter)) {
           OBJECT *comp_prim_obj = (OBJECT*) prim_iter->data;

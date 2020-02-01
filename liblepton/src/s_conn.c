@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -196,7 +196,7 @@ s_conn_remove_object_connections (TOPLEVEL *toplevel, OBJECT *to_remove)
 
     case OBJ_COMPONENT:
     case OBJ_PLACEHOLDER:
-      for (iter = to_remove->complex->prim_objs; iter != NULL; iter = g_list_next (iter)) {
+      for (iter = to_remove->component->prim_objs; iter != NULL; iter = g_list_next (iter)) {
         o_current = (OBJECT*) iter->data;
         s_conn_remove_object_connections (toplevel, o_current);
       }
@@ -502,7 +502,7 @@ void s_conn_update_object (PAGE* page, OBJECT *object)
 
     case OBJ_COMPONENT:
     case OBJ_PLACEHOLDER:
-      s_conn_update_glist (page, object->complex->prim_objs);
+      s_conn_update_glist (page, object->component->prim_objs);
       break;
   }
 }
@@ -637,7 +637,7 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object)
     case OBJ_COMPONENT:
     case OBJ_PLACEHOLDER:
       return_list = s_conn_return_glist_others (return_list,
-                                                object->complex->prim_objs);
+                                                object->component->prim_objs);
       break;
   }
 
@@ -688,7 +688,7 @@ void s_conn_add_object (PAGE *page, OBJECT *object)
 
   case OBJ_COMPONENT:
   case OBJ_PLACEHOLDER:
-    for (iter = object->complex->prim_objs;
+    for (iter = object->component->prim_objs;
          iter != NULL;
          iter = g_list_next (iter)) {
       s_conn_add_object (page, (OBJECT*) iter->data);
@@ -710,7 +710,7 @@ void s_conn_remove_object(PAGE* page, OBJECT *object)
 
   /* Correctly deal with compound objects */
   if (object->type == OBJ_COMPONENT || object->type == OBJ_PLACEHOLDER) {
-    for (iter = object->complex->prim_objs;
+    for (iter = object->component->prim_objs;
          iter != NULL;
          iter = g_list_next (iter)) {
       s_conn_remove_object (page, (OBJECT*) iter->data);

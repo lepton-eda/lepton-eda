@@ -185,7 +185,7 @@ geda_object_list_print (GList *objects)
     printf("Sid: %d\n", o_current->sid);
 
     if (o_current->type == OBJ_COMPONENT || o_current->type == OBJ_PLACEHOLDER) {
-      geda_object_list_print (o_current->complex->prim_objs);
+      geda_object_list_print (o_current->component->prim_objs);
     }
 
     o_attrib_print (o_current->attribs);
@@ -401,7 +401,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           if (o_component_is_embedded (o_current)) {
             g_string_append(acc, "[\n");
 
-            out = o_save_objects(o_current->complex->prim_objs, FALSE);
+            out = o_save_objects(o_current->component->prim_objs, FALSE);
             g_string_append (acc, out);
             g_free(out);
 

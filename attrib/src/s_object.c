@@ -314,14 +314,14 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
     /* get coordinates of where to place the text object */
     switch (o_current->type) {
     case (OBJ_COMPONENT):
-      world_x = o_current->complex->x;
-      world_y = o_current->complex->y;
+      world_x = o_current->component->x;
+      world_y = o_current->component->y;
       color = ATTRIBUTE_COLOR;
       break;
 
     case (OBJ_NET):
-      world_x = o_current->complex->x;
-      world_y = o_current->complex->y;
+      world_x = o_current->component->x;
+      world_y = o_current->component->y;
       color = ATTRIBUTE_COLOR;
       break;
 

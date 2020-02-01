@@ -1,6 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
+/* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
+ * Copyright (C) 2003-2013 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -270,7 +271,7 @@ void s_sheet_data_add_master_net_attrib_list_items (const GList *obj_start) {
  * Algorithm:
  * -# Loop on o_current looking for OBJ_COMPONENT
  * -# When we find a complex, save the refdes.
- * -# Dive down to o_lower_current = o_current->complex->prim_objs
+ * -# Dive down to o_lower_current = o_current->component->prim_objs
  * -# Loop on o_lower_current looking for OBJ_PIN
  * -# When we find a pin, find the pinnumber by calling
  *    o_attrib_search_object_attribs_by_name(o_lower_current, "pinnumber", 0)
@@ -310,7 +311,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
       if (temp_uref != NULL) {      /* make sure object complex has a refdes  */
 
         /* -----  Now iterate through lower level objects looking for pins.  ----- */
-        for (o_lower_iter = o_current->complex->prim_objs;
+        for (o_lower_iter = o_current->component->prim_objs;
              o_lower_iter != NULL;
              o_lower_iter = g_list_next (o_lower_iter)) {
           OBJECT *o_lower_current = (OBJECT*) o_lower_iter->data;
@@ -362,7 +363,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
  * Algorithm:
  * -# Loop on o_current looking for OBJ_COMPONENT
  * -# When we find a complex, save the refdes.
- * -# Dive down to o_lower_current = o_current->complex->prim_objs
+ * -# Dive down to o_lower_current = o_current->component->prim_objs
  * -# Loop on o_lower_current looking for OBJ_PIN
  * -# When we find a pin, get pin_attribs = o_lower_current->attribs
  * -# Loop on attribs looking for non-NULL text.
@@ -402,7 +403,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
 	if (temp_uref != NULL) {      /* make sure object complex has a refdes  */
 	  
 	  /* -----  Now iterate through lower level objects looking for pins.  ----- */
-          for (o_lower_iter = o_current->complex->prim_objs;
+          for (o_lower_iter = o_current->component->prim_objs;
                o_lower_iter != NULL;
                o_lower_iter = g_list_next (o_lower_iter)) {
             OBJECT *o_lower_current = (OBJECT*) o_lower_iter->data;

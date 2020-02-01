@@ -330,7 +330,7 @@ void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
     }
 
     if (o_current->type == OBJ_COMPONENT || o_current->type == OBJ_PLACEHOLDER) {
-      o_edit_show_hidden_lowlevel(w_current, o_current->complex->prim_objs);
+      o_edit_show_hidden_lowlevel(w_current, o_current->component->prim_objs);
       o_current->w_bounds_valid_for = NULL;
     }
 
@@ -478,10 +478,10 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
 
   /* Create new object and set embedded */
   o_new = o_component_new (toplevel, OBJ_COMPONENT, DEFAULT_COLOR,
-                           o_current->complex->x,
-                           o_current->complex->y,
-                           o_current->complex->angle,
-                           o_current->complex->mirror,
+                           o_current->component->x,
+                           o_current->component->y,
+                           o_current->component->angle,
+                           o_current->component->mirror,
                            clib, o_current->complex_basename,
                            1);
   if (o_component_is_embedded (o_current)) {

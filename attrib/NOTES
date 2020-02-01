@@ -290,10 +290,10 @@ by various fcns when needed.
 ----  Pins  ----
 As for pins, they are attached to components in the following way.
 Starting from the component:
-(OBJECT *component)->(COMPONENT *complex)->(OBJECT *prim_objs)->(int type)      // #define OBJ_PIN  'P'
-                                                            ->(ATTRIB *attribs) // pin attrib list.
-                                                            ->(int sid)         // unique identifier
-                                                            ->(char *name)      // something like pin.3372
+(OBJECT *component)->(COMPONENT *component)->(OBJECT *prim_objs)->(int type)        // #define OBJ_PIN  'P'
+                                                                ->(ATTRIB *attribs) // pin attrib list.
+                                                                ->(int sid)         // unique identifier
+                                                                ->(char *name)      // something like pin.3372
 
 
 Pins also are held in the NETLIST data structure, which is a separate data structure.
@@ -316,8 +316,8 @@ Here's an example taken  from a real design:
                    ->attribs->next->object->name          = text.272          // attrib text
                    ->attribs->next->object->text->string  = refdes=C1         // actual attrib
                    
-                   ->complex->prim_objs->name             = complex-head.189  // head of prim_objs list                      
-                   ->complex->prim_objs->next->name       = pin.190           // actual object
+                   ->component->prim_objs->name           = complex-head.189  // head of prim_objs list
+                   ->component->prim_objs->next->name     = pin.190           // actual object
 
 Each list attached to a component has a head, followed by the actual list
 items.

@@ -33,7 +33,7 @@ struct st_object
   GedaBounds bounds;
   TOPLEVEL *w_bounds_valid_for;
 
-  COMPONENT *complex;
+  COMPONENT *component;
   GedaLine *line;
   GedaCircle *circle;
   GedaArc *arc;

@@ -1,6 +1,6 @@
 /* libleptonrenderer - Rendering Lepton EDA schematics with Cairo
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -641,7 +641,7 @@ static void
 eda_renderer_draw_complex (EdaRenderer *renderer, OBJECT *object)
 {
   /* Recurse */
-  eda_renderer_draw_list (renderer, object->complex->prim_objs);
+  eda_renderer_draw_list (renderer, object->component->prim_objs);
 }
 
 static void
@@ -1357,7 +1357,7 @@ eda_renderer_default_draw_cues (EdaRenderer *renderer, OBJECT *object)
   case OBJ_COMPONENT:
   case OBJ_PLACEHOLDER:
     /* Recurse */
-    eda_renderer_draw_cues_list (renderer, object->complex->prim_objs);
+    eda_renderer_draw_cues_list (renderer, object->component->prim_objs);
     break;
   case OBJ_NET:
   case OBJ_BUS:
