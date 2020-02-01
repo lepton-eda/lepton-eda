@@ -72,7 +72,7 @@ gchar*
 geda_component_object_to_buffer (const GedaObject *object);
 
 double
-geda_complex_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+geda_component_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 
 gboolean
 geda_component_object_get_position (const GedaObject *object, gint *x, gint *y);
