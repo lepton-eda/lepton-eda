@@ -586,7 +586,7 @@ OBJECT *o_component_read (TOPLEVEL *toplevel,
 
   if (sscanf(buf, "%c %d %d %d %d %d %s\n",
 	     &type, &x1, &y1, &selectable, &angle, &mirror, basename) != 7) {
-    g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse complex object"));
+    g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse component object"));
     return NULL;
   }
 
