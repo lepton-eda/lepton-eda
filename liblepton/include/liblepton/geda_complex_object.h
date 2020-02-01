@@ -45,9 +45,6 @@ geda_component_object_calculate_bounds (TOPLEVEL *toplevel,
                                         GedaBounds *bounds);
 
 void
-o_complex_set_filename(TOPLEVEL *toplevel, const char *basename);
-
-void
 geda_component_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT *
