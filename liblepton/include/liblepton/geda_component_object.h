@@ -17,9 +17,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file geda_complex_object.h
+/*! \file geda_component_object.h
  *
- *  \brief Functions operating on complex objects
+ *  \brief Functions operating on component objects
  */
 
 G_BEGIN_DECLS
