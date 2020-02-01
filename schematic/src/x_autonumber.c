@@ -417,7 +417,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
 	      slot = g_new(AUTONUMBER_SLOT,1);
 	      slot->number = number;
 	      slot->slotnr = slotnr;
-	      slot->symbolname = o_parent->complex_basename;
+	      slot->symbolname = o_parent->component_basename;
 
 
 	      slot_item = g_list_find_custom(autotext->used_slots,
@@ -493,7 +493,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
   o_parent = o_current->attached_to;
   if (autotext->slotting && o_parent != NULL) {
     freeslot = g_new(AUTONUMBER_SLOT,1);
-    freeslot->symbolname = o_parent->complex_basename;
+    freeslot->symbolname = o_parent->component_basename;
     freeslot->number = 0;
     freeslot->slotnr = 0;
     freeslot_item = g_list_find_custom(autotext->free_slots,
@@ -543,7 +543,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
 	*slot = 1;
 	for (i=2; i <=numslots; i++) {
 	  freeslot = g_new(AUTONUMBER_SLOT,1);
-	  freeslot->symbolname = o_parent->complex_basename;
+	  freeslot->symbolname = o_parent->component_basename;
 	  freeslot->number = new_number;
 	  freeslot->slotnr = i;
 	  autotext->free_slots = g_list_insert_sorted(autotext->free_slots,

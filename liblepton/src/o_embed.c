@@ -59,7 +59,7 @@ o_embed (OBJECT *o_current)
     o_current->complex_embedded = TRUE;
 
     s_log_message (_("Component [%1$s] has been embedded."),
-                   o_current->complex_basename);
+                   o_current->component_basename);
     page_modified = 1;
   }
 
@@ -105,20 +105,20 @@ o_unembed (OBJECT *o_current)
   {
 
     /* search for the symbol in the library */
-    sym = s_clib_get_symbol_by_name (o_current->complex_basename);
+    sym = s_clib_get_symbol_by_name (o_current->component_basename);
 
     if (sym == NULL) {
       /* symbol not found in the symbol library: signal an error */
       s_log_message (_("Could not find component [%1$s], while trying to "
                        "unembed. Component is still embedded."),
-                     o_current->complex_basename);
+                     o_current->component_basename);
 
     } else {
       /* clear the embedded flag */
       o_current->complex_embedded = FALSE;
 
       s_log_message (_("Component [%1$s] has been successfully unembedded."),
-                     o_current->complex_basename);
+                     o_current->component_basename);
 
       page_modified = 1;
     }

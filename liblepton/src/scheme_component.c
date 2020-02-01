@@ -198,7 +198,7 @@ SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
 
   OBJECT *obj = edascm_to_object (component_s);
 
-  return scm_list_n (scm_from_utf8_string (obj->complex_basename),
+  return scm_list_n (scm_from_utf8_string (obj->component_basename),
                      scm_from_int (obj->component->x),
                      scm_from_int (obj->component->y),
                      scm_from_int (obj->component->angle),
@@ -400,7 +400,7 @@ SCM_DEFINE (component_filename, "%component-filename", 1, 0, 0,
               SCM_ARG1, s_component_filename);
 
   OBJECT* obj = edascm_to_object (component_s);
-  const CLibSymbol* sym = s_clib_get_symbol_by_name (obj->complex_basename);
+  const CLibSymbol* sym = s_clib_get_symbol_by_name (obj->component_basename);
 
   SCM result = SCM_BOOL_F;
 

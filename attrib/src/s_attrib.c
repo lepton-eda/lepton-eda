@@ -1,6 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
+/* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
+ * Copyright (C) 2003-2013 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,7 +103,7 @@ char *s_attrib_get_refdes(OBJECT *object)
     } else {        /* didn't find refdes.  Report error to log. */
 #ifdef DEBUG
       printf("In s_attrib_get_refdes, found non-graphical component with no refdes.\n");
-      printf(". . . . complex_basename = %s.\n", object->complex_basename);
+      printf(". . . . component_basename = %s.\n", object->component_basename);
 #endif
       return NULL;
     } 
