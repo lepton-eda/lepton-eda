@@ -197,7 +197,7 @@ o_component_is_embedded (OBJECT *o_current)
   if(o_current->component == NULL)
     return 0;
 
-  if (o_current->complex_embedded) {
+  if (o_current->component_embedded) {
     return 1;
   } else {
     return 0;
@@ -462,7 +462,7 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
   }
 
 
-  new_node->complex_embedded = FALSE;
+  new_node->component_embedded = FALSE;
   new_node->color = color;
   new_node->selectable = selectable;
 
@@ -546,7 +546,7 @@ OBJECT *o_component_new_embedded (TOPLEVEL *toplevel,
 
   new_node->component_basename = g_strdup(basename);
 
-  new_node->complex_embedded = TRUE;
+  new_node->component_embedded = TRUE;
 
   new_node->color = color;
   new_node->selectable = selectable;
@@ -668,7 +668,7 @@ geda_component_object_to_buffer (const GedaObject *object)
                         (object->type == OBJ_PLACEHOLDER), NULL);
 
   basename = g_strdup_printf ("%s%s",
-                              object->complex_embedded ? "EMBEDDED" : "",
+                              object->component_embedded ? "EMBEDDED" : "",
                               object->component_basename);
 
   /* We force the object type to be output as OBJ_COMPONENT for both these object
@@ -731,7 +731,7 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   o_new->color = o_current->color;
   o_new->selectable = o_current->selectable;
   o_new->component_basename = g_strdup(o_current->component_basename);
-  o_new->complex_embedded = o_current->complex_embedded;
+  o_new->component_embedded = o_current->component_embedded;
 
   o_new->component = (COMPONENT*) g_malloc0 (sizeof (COMPONENT));
   o_new->component->x = o_current->component->x;
