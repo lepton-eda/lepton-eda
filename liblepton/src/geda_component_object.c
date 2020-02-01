@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file o_complex_basic.c
+/*! \file geda_component_object.c
  *  \brief Functions for component objects
  *
  *  Component objects contain collections of primary objects.
