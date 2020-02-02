@@ -108,7 +108,7 @@ void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
   }
 
   /* first see if slot attribute already exists outside
-   * complex */
+   * component */
   slot_value = s_slot_search_slot (object, &o_slot);
   g_free (slot_value);
 

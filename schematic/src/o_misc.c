@@ -191,7 +191,7 @@ void o_unlock(GschemToplevel *w_current)
  *  The list contains a given object and all its attributes
  *  (refdes, pinname, pinlabel, ...).
  *  There is a second pass to run the rotate hooks of non-simple objects,
- *  like pin or complex objects, for example.
+ *  like pin or component objects, for example.
  *
  *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] centerx    Center x coordinate of rotation.

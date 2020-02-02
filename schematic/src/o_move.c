@@ -199,11 +199,8 @@ void o_move_end(GschemToplevel *w_current)
       case (OBJ_COMPONENT):
       case (OBJ_PLACEHOLDER):
 
-        /* TODO: Fix so we can just pass the complex to o_move_end_lowlevel,
+        /* TODO: Fix so we can just pass the component to o_move_end_lowlevel,
          * IE.. by falling through the bottom of this case statement. */
-
-        /* this next section of code is from */
-        /* o_complex_world_translate_world */
         object->component->x = object->component->x + diff_x;
         object->component->y = object->component->y + diff_y;
 
