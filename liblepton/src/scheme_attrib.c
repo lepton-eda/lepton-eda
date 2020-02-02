@@ -165,7 +165,7 @@ SCM_DEFINE (attrib_attachment, "%attrib-attachment", 1, 0, 0,
  * - Neither \a obj_s nor \a attrib_s may be already attached as an
  *   attribute.
  * - Both \a obj_s and \a attrib_s must be part of the same page
- *   and/or complex object. (They can't be "loose" objects).
+ *   and/or component object. (They can't be "loose" objects).
  * - \a attrib_s must be a text object.
  *
  * These restrictions are intentionally harsher than those of the C
@@ -197,7 +197,7 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
   /* Check that attachment doesn't already exist */
   if (attrib->attached_to == obj) return obj_s;
 
-  /* Check that both are in the same page and/or complex object */
+  /* Check that both are in the same page and/or component object */
   if ((obj->parent != attrib->parent)
       || (o_get_page (obj) != o_get_page (attrib))
       || ((obj->parent == NULL) && (o_get_page (obj) == NULL))) {
@@ -279,12 +279,12 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
   return obj_s;
 }
 
-/*! \brief Get a complex object's promotable attribs.
+/*! \brief Get a component object's promotable attribs.
  * \par Function Description
  * Returns the promotable attributes of \a complex_s, according to the
  * current gEDA configuration.
  *
- * \param complex_s the complex object for which to get promotable
+ * \param complex_s the component object for which to get promotable
  *                  attributes.
  * \return a list of promotable attributes.
  */

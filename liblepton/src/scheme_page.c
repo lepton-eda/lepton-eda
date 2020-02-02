@@ -218,7 +218,7 @@ SCM_DEFINE (object_page, "%object-page", 1, 0, 0,
 /*! \brief Add an object to a page.
  * \par Function Description
  * Adds \a obj_s to \a page_s.  If \a obj_s is already attached to a
- * #PAGE or to a complex #OBJECT, throws a Scheme error.
+ * #PAGE or to a component #OBJECT, throws a Scheme error.
  *
  * \note Scheme API: Implements the %page-append! procedure of the
  * (lepton core page) module.
@@ -262,7 +262,7 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
 /*! \brief Remove an object from a page.
  * \par Function Description
  * Removes \a obj_s from \a page_s.  If \a obj_s is attached to a
- * #PAGE other than \a page_s, or to a complex #OBJECT, throws a
+ * #PAGE other than \a page_s, or to a component #OBJECT, throws a
  * Scheme error. If \a obj_s is not attached to a page, does nothing.
  *
  * \note Scheme API: Implements the %page-remove! procedure of the

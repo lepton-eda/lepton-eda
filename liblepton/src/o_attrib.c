@@ -650,7 +650,7 @@ char *o_attrib_search_object_attribs_by_name (OBJECT *object,
  *  This function aggregates the attached and inherited attributes
  *  belonging to a given OBJECT. (inherited attributes are those
  *  which live as toplevel un-attached attributes inside in a
- *  complex OBJECT's prim_objs).
+ *  component OBJECT's prim_objs).
  *
  *  \param [in] object       OBJECT whos attributes to return.
  *  \return A GList of attributes belinging to the passed object.
@@ -681,7 +681,7 @@ GList * o_attrib_return_attribs (OBJECT *object)
 
   attribs = g_list_reverse (attribs);
 
-  /* Inherited attributes (inside complex objects) */
+  /* Inherited attributes (inside component objects) */
   if (object->type == OBJ_COMPONENT ||
       object->type == OBJ_PLACEHOLDER) {
 
@@ -698,7 +698,7 @@ GList * o_attrib_return_attribs (OBJECT *object)
 /*! \brief Query whether a given attribute OBJECT is "inherited"
  *  \par Function Description
  *  This function returns TRUE if the given attribute OBJECT is a
- *  toplevel un-attached attribute inside a complex's prim_objs.
+ *  toplevel un-attached attribute inside a component's prim_objs.
  *
  *  \param [in] attrib       OBJECT who's status to query.
  *  \return TRUE if the given attribute is inside a symbol
