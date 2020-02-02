@@ -115,12 +115,12 @@ x_compselect_callback_response (GtkDialog *dialog,
                       "behavior", &behavior,
                       NULL);
 
-        w_current->include_component = w_current->embed_complex = 0;
+        w_current->include_component = w_current->embed_component = 0;
         switch (behavior) {
             case COMPSELECT_BEHAVIOR_REFERENCE:
               break;
             case COMPSELECT_BEHAVIOR_EMBED:
-              w_current->embed_complex   = 1;
+              w_current->embed_component = 1;
               break;
             case COMPSELECT_BEHAVIOR_INCLUDE:
               w_current->include_component = 1;

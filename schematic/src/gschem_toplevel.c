@@ -320,7 +320,7 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->net_direction_mode = TRUE;
   w_current->net_selection_mode = 0;
   w_current->net_selection_state = 0;
-  w_current->embed_complex = 0;
+  w_current->embed_component = 0;
   w_current->include_component = 0;
   w_current->scrollbars_flag = 0;
   w_current->log_window = 0;
