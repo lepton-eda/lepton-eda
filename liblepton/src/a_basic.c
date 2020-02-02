@@ -101,7 +101,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
   unsigned int release_ver = 0;
   unsigned int fileformat_ver = 0;
   int found_pin = 0;
-  OBJECT* last_complex = NULL;
+  OBJECT* last_component = NULL;
   int itemsread = 0;
 
   int embedded_level = 0;
@@ -125,17 +125,17 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
     sscanf(line, "%c", &objtype);
 
     /* Do we need to check the symbol version?  Yes, but only if */
-    /* 1) the last object read was a complex and */
+    /* 1) the last object read was a component and */
     /* 2) the next object isn't the start of attributes.  */
     /* If the next object is the start of attributes, then check the */
     /* symbol version after the attributes have been read in, see the */
     /* STARTATTACH_ATTR case */
-    if (last_complex && objtype != STARTATTACH_ATTR)
+    if (last_component && objtype != STARTATTACH_ATTR)
     {
         /* yes */
         /* verify symbol version (not file format but rather contents) */
-        o_component_check_symversion(toplevel, last_complex);
-        last_complex = NULL;  /* no longer need to check */
+        o_component_check_symversion(toplevel, last_component);
+        last_component = NULL;  /* no longer need to check */
     }
 
     switch (objtype) {
@@ -184,8 +184,8 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
           goto error;
         new_object_list = g_list_prepend (new_object_list, new_obj);
 
-        /* last_complex is used for verifying symversion attribute */
-        last_complex = new_obj;
+        /* last_component is used for verifying symversion attribute */
+        last_component = new_obj;
         break;
 
       case(OBJ_TEXT):
@@ -225,16 +225,16 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
           new_object_list = g_list_concat (new_attrs_list, new_object_list);
 
           /* by now we have finished reading all the attributes */
-          /* did we just finish attaching to a complex object? */
-          if (last_complex)
+          /* did we just finish attaching to a component object? */
+          if (last_component)
           {
             /* yes */
             /* verify symbol version (not file format but rather contents) */
-            o_component_check_symversion(toplevel, last_complex);
-            last_complex = NULL;
+            o_component_check_symversion(toplevel, last_component);
+            last_component = NULL;
           }
 
-          /* slots only apply to complex objects */
+          /* slots only apply to component objects */
           if (new_obj != NULL &&
               (new_obj->type == OBJ_COMPONENT ||
                new_obj->type == OBJ_PLACEHOLDER)) {
@@ -272,7 +272,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
           /* don't do this since objects are already
            * stored/read translated
            * geda_component_object_translate (toplevel, new_object_list->x,
-           *                                  new_object_list->y, new_object_list->complex);
+           *                                  new_object_list->y, new_object_list->component);
            */
           new_object_list = g_list_reverse (new_object_list);
 
@@ -342,10 +342,10 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
   /* Was the very last thing we read a component and has it not been checked */
   /* yet?  This would happen if the component is at the very end of the file  */
   /* and had no attached attributes */
-  if (last_complex)
+  if (last_component)
   {
-        o_component_check_symversion(toplevel, last_complex);
-        last_complex = NULL;  /* no longer need to check */
+        o_component_check_symversion(toplevel, last_component);
+        last_component = NULL;  /* no longer need to check */
   }
 
   if (found_pin) {
