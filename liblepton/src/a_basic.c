@@ -339,8 +339,8 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
   }
 
-  /* Was the very last thing we read a complex and has it not been checked */
-  /* yet?  This would happen if the complex is at the very end of the file  */
+  /* Was the very last thing we read a component and has it not been checked */
+  /* yet?  This would happen if the component is at the very end of the file  */
   /* and had no attached attributes */
   if (last_complex)
   {

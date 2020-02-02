@@ -602,7 +602,7 @@ static GList *s_conn_return_glist_others (GList *input_list, GList *obj_list)
  *
  *  \par Function Description
  *  This function gets all other_object from the connection list of the current object.
- *  COMPLEX objects are entered, and their prim_objs processed. If an <b>input_list</b>
+ *  Component objects are entered, and their prim_objs processed. If an <b>input_list</b>
  *  is given, the other objects are appended to that list.
  *
  *  \param [in] input_list   GList of OBJECT's

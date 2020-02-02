@@ -32,7 +32,7 @@
 /*! \brief embed an object into a schematic
  *  \par Function Description
  *  This functions embeds an object \a o_current into a
- *  liblepton. Currently complex objects are just marked to
+ *  liblepton. Currently component objects are just marked to
  *  be embedded later. Picture objects are embedded immediately.
  *
  *  \param o_current The OBJECT to embed
@@ -50,7 +50,7 @@ o_embed (OBJECT *o_current)
     toplevel = page->toplevel;
   }
 
-  /* check o_current is a complex and is not already embedded */
+  /* check o_current is a component and is not already embedded */
   if (o_current->type == OBJ_COMPONENT &&
       !o_component_is_embedded (o_current))
   {
@@ -80,7 +80,7 @@ o_embed (OBJECT *o_current)
 /*! \brief unembed an object from a schematic
  *  \par Function Description
  *  This functions unembeds an object \a o_current from a
- *  liblepton structure. Complex objects are just marked to
+ *  liblepton structure. Component objects are just marked to
  *  be not embedded. Picture objects are unembedded immediately.
  *
  *  \param o_current The OBJECT to unembed
@@ -99,7 +99,7 @@ o_unembed (OBJECT *o_current)
     toplevel = page->toplevel;
   }
 
-  /* check o_current is an embedded complex */
+  /* check o_current is an embedded component */
   if (o_current->type == OBJ_COMPONENT &&
       o_component_is_embedded (o_current))
   {

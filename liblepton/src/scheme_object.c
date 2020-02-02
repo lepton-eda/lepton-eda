@@ -1722,7 +1722,7 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
  * \par Function Description
  * Returns a list of all objects directly connected to \a obj_s.  If
  * \a obj_s is not included in a page, throws a Scheme error.  If \a
- * obj_s is not a pin, net, bus, or complex object, returns the empty
+ * obj_s is not a pin, net, bus, or component object, returns the empty
  * list.
  *
  * \note Scheme API: Implements the %object-connections procedure of
@@ -1752,10 +1752,10 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
   return result;
 }
 
-/*! \brief Get the complex object that contains an object.
+/*! \brief Get the component object that contains an object.
  * \par Function Description
- * Returns the complex object that contains the object \a obj_s.  If
- * \a obj_s is not part of a component, returns SCM_BOOL_F.
+ * Returns the component object that contains the object \a obj_s.
+ * If \a obj_s is not part of a component, returns SCM_BOOL_F.
  *
  * \note Scheme API: Implements the %object-complex procedure of the
  * (lepton core object) module.

@@ -34,9 +34,9 @@
  *
  *  Pins, nets and busses are just a kind of a line.
  *
- *  The complex object can carry many primary objects. If the complex
- *  object is a symbol, then the complex symbol contains all the pins,
- *  the text and the graphics.
+ *  The component object can carry many primary objects. If the
+ *  component object is a symbol, then the component symbol contains
+ *  all the pins, the text and the graphics.
  *
  *  \image html o_object_relations.png
  *  \image latex o_object_relations.pdf "object relations" width=14cm
@@ -300,7 +300,7 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
     if (o_current->component) {
 
       if (o_current->component->prim_objs) {
-        /* printf("sdeleting complex->primitive_objects\n");*/
+        /* printf("sdeleting component's primitive objects\n");*/
         geda_object_list_delete (toplevel, o_current->component->prim_objs);
         o_current->component->prim_objs = NULL;
       }
@@ -891,15 +891,15 @@ o_get_page (OBJECT *object)
   return object->page;
 }
 
-/*! \brief Get an object's containing complex object.
+/*! \brief Get an object's containing component object.
  *
  * \par Function Description
- * If \a object is part of a complex #OBJECT, returns that
+ * If \a object is part of a component #OBJECT, returns that
  * #OBJECT. Otherwise, returns NULL.
  *
  * \param [in] toplevel  The TOPLEVEL structure.
  * \param [in] object    The OBJECT for which to get the containing OBJECT.
- * \return The complex OBJECT which owns \a object, or NULL.
+ * \return The component OBJECT which owns \a object, or NULL.
  */
 OBJECT *
 o_get_parent (TOPLEVEL *toplevel, OBJECT *object)
