@@ -149,7 +149,7 @@ static int eda_renderer_prepare_text (EdaRenderer *renderer, const GedaObject *o
 static void eda_renderer_calc_text_position (EdaRenderer *renderer, const GedaObject *object,
                                              int descent, double *x, double *y);
 static void eda_renderer_draw_picture (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_complex (EdaRenderer *renderer, OBJECT *object);
+static void eda_renderer_draw_component (EdaRenderer *renderer, OBJECT *object);
 
 static void eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_grips_list (EdaRenderer *renderer, GList *objects) G_GNUC_UNUSED;
@@ -524,7 +524,7 @@ eda_renderer_default_draw (EdaRenderer *renderer, OBJECT *object)
   case OBJ_PICTURE:     draw_func = eda_renderer_draw_picture; break;
 
   case OBJ_COMPONENT:
-  case OBJ_PLACEHOLDER: draw_func = eda_renderer_draw_complex; break;
+  case OBJ_PLACEHOLDER: draw_func = eda_renderer_draw_component; break;
 
   default:
     g_return_if_reached ();
@@ -638,7 +638,7 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_complex (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_component (EdaRenderer *renderer, OBJECT *object)
 {
   /* Recurse */
   eda_renderer_draw_list (renderer, object->component->prim_objs);
