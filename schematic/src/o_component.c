@@ -56,7 +56,7 @@ o_component_prepare_place (GschemToplevel *w_current,
   w_current->first_wx = 0;
   w_current->first_wy = 0;
 
-  if (w_current->include_complex) {
+  if (w_current->include_component) {
 
     temp_list = NULL;
 
@@ -84,7 +84,7 @@ o_component_prepare_place (GschemToplevel *w_current,
     toplevel->page_current->place_list =
       g_list_concat (toplevel->page_current->place_list, temp_list);
 
-  } else { /* if (w_current->include_complex) {..} else { */
+  } else { /* if (w_current->include_component) {..} else { */
     OBJECT *new_object;
 
     new_object = o_component_new (toplevel, OBJ_COMPONENT, DEFAULT_COLOR,

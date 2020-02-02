@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -198,7 +198,7 @@ struct st_gschem_toplevel {
   int net_selection_mode;  /* controls the behaviour when selecting a net */
   int net_selection_state;  /* current status of the net selecting mode */
   int embed_complex;      /* controls if complex objects are embedded */
-  int include_complex;    /* controls if complex objects are included */
+  int include_component;  /* controls if component objects are included */
   int scrollbars_flag;    /* controls if scrollbars are displayed */
   int log_window;         /* controls if the log windows mapped on startup */
   int third_button;       /* controls what the third mouse button does */
