@@ -597,7 +597,7 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
  *  \par Function Description
  *  This function updates the text content of the <B>o_current</B> object.
  *  If the <B>slot</B> value is not zero. It updates the slot attribut of the
- *  complex element that is also the parent object of the o_current element.
+ *  component element that is also the parent object of the o_current element.
  */
 void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
 			       gint number, gint slot)

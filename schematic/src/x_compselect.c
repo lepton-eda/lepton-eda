@@ -156,7 +156,7 @@ x_compselect_callback_response (GtkDialog *dialog,
       case COMPSELECT_RESPONSE_HIDE:
         /* Response when clicking on the "hide" button */
 
-        /* If there is no component in the complex place list, set the current one */
+        /* If there is no component in the place list, set the current one */
         if (toplevel->page_current->place_list == NULL) {
           gtk_dialog_response (GTK_DIALOG (compselect),
                                COMPSELECT_RESPONSE_PLACE);
