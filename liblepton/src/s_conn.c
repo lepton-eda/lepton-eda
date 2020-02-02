@@ -339,13 +339,13 @@ static void s_conn_update_line_object (PAGE* page, OBJECT *object)
   OBJECT *other_object;
   OBJECT *found;
   int j, k;
-  OBJECT *complex, *other_complex;
+  OBJECT *component, *other_component;
   TOPLEVEL *toplevel;
 
   toplevel = page->toplevel;
   g_return_if_fail (toplevel != NULL);
 
-  complex = o_get_parent (toplevel, object);
+  component = o_get_parent (toplevel, object);
 
   /* loop over all connectible objects */
   for (object_list = page->connectible_list;
@@ -356,25 +356,25 @@ static void s_conn_update_line_object (PAGE* page, OBJECT *object)
     if (object == other_object)
       continue;
 
-    other_complex = o_get_parent (toplevel, other_object);
+    other_component = o_get_parent (toplevel, other_object);
 
     /* An object inside a symbol can only be connected up to another
      * object if they are (a) both inside the same object, or (b)
      * the object inside a symbol is a pin. */
 
     /* 1. Both objects are inside a symbol */
-    if (complex && other_complex) {
+    if (component && other_component) {
       /* If inside different symbols, both must be pins to connect. */
-      if (complex != other_complex
+      if (component != other_component
           && (object->type != OBJ_PIN || other_object->type != OBJ_PIN)) {
         continue;
       }
 
     /* 2. Updating object is inside a symbol, but other object is not. */
-    } else if (complex && !other_complex) {
+    } else if (component && !other_component) {
       if (object->type != OBJ_PIN) continue;
     /* 3. Updating object not inside symbol, but other object is. */
-    } else if (!complex && other_complex) {
+    } else if (!component && other_component) {
       if (other_object->type != OBJ_PIN) continue;
     }
 
