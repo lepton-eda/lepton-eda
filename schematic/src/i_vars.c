@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ int   default_actionfeedback_mode = OUTLINE;
 int   default_zoom_with_pan = TRUE;
 int   default_do_logging = TRUE;
 int   default_embed_complex = FALSE;
-int   default_include_complex = FALSE;
+int   default_include_component = FALSE;
 int   default_snap_size = DEFAULT_SNAP_SIZE;
 
 int   default_scrollbars_flag = TRUE;
@@ -406,7 +406,7 @@ i_vars_set (GschemToplevel* w_current)
                  default_embed_complex, &w_current->embed_complex);
 
 
-  w_current->include_complex = default_include_complex;
+  w_current->include_component = default_include_component;
 
 
   /* log-window:

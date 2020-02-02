@@ -8,7 +8,7 @@ extern int default_zoom_with_pan;
 extern int default_actionfeedback_mode;
 extern int default_do_logging;
 extern int default_embed_complex;
-extern int default_include_complex;
+extern int default_include_component;
 extern int default_snap_size;
 
 extern int default_scrollbars_flag;

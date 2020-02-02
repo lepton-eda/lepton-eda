@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -321,7 +321,7 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->net_selection_mode = 0;
   w_current->net_selection_state = 0;
   w_current->embed_complex = 0;
-  w_current->include_complex = 0;
+  w_current->include_component = 0;
   w_current->scrollbars_flag = 0;
   w_current->log_window = 0;
   w_current->third_button = 0;
