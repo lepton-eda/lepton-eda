@@ -566,7 +566,7 @@ eda_renderer_is_drawable (EdaRenderer *renderer, OBJECT *object)
 {
   int color = geda_object_get_drawing_color (object);
 
-  /* Always attempt to draw complex objects */
+  /* Always attempt to draw component objects */
   if ((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)) {
     return TRUE;
   }
