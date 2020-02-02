@@ -281,21 +281,21 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
 
 /*! \brief Get a component object's promotable attribs.
  * \par Function Description
- * Returns the promotable attributes of \a complex_s, according to the
+ * Returns the promotable attributes of \a component_s, according to the
  * current gEDA configuration.
  *
- * \param complex_s the component object for which to get promotable
- *                  attributes.
+ * \param component_s the component object for which to get promotable
+ *                    attributes.
  * \return a list of promotable attributes.
  */
 SCM_DEFINE (promotable_attribs, "%promotable-attribs", 1, 0, 0,
-            (SCM complex_s), "Get a component's promotable attributes")
+            (SCM component_s), "Get a component's promotable attributes")
 {
-  SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPONENT), complex_s,
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT), component_s,
               SCM_ARG1, s_promotable_attribs);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-  OBJECT *obj = edascm_to_object (complex_s);
+  OBJECT *obj = edascm_to_object (component_s);
 
   GList *lst = o_component_get_promotable (toplevel, obj, FALSE);
 
