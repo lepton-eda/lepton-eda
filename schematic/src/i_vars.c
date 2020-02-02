@@ -31,7 +31,7 @@ int   default_net_selection_mode = 0;
 int   default_actionfeedback_mode = OUTLINE;
 int   default_zoom_with_pan = TRUE;
 int   default_do_logging = TRUE;
-int   default_embed_complex = FALSE;
+int   default_embed_component = FALSE;
 int   default_include_component = FALSE;
 int   default_snap_size = DEFAULT_SNAP_SIZE;
 
@@ -403,7 +403,7 @@ i_vars_set (GschemToplevel* w_current)
                  default_scrollbars_flag, &w_current->scrollbars_flag);
 
   cfg_read_bool ("schematic.gui", "embed-components",
-                 default_embed_complex, &w_current->embed_complex);
+                 default_embed_component, &w_current->embed_component);
 
 
   w_current->include_component = default_include_component;
