@@ -1757,18 +1757,18 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
  * Returns the component object that contains the object \a obj_s.
  * If \a obj_s is not part of a component, returns SCM_BOOL_F.
  *
- * \note Scheme API: Implements the %object-complex procedure of the
+ * \note Scheme API: Implements the %object-component procedure of the
  * (lepton core object) module.
  *
  * \param obj_s #OBJECT smob for object to get component of.
  * \return the #OBJECT smob of the containing component, or SCM_BOOL_F.
  */
-SCM_DEFINE (object_complex, "%object-complex", 1, 0, 0,
-            (SCM obj_s), "Get containing complex object of an object.")
+SCM_DEFINE (object_component, "%object-component", 1, 0, 0,
+            (SCM obj_s), "Get containing component object of an object.")
 {
   /* Ensure that the argument is an object smob */
   SCM_ASSERT (edascm_is_object (obj_s), obj_s,
-              SCM_ARG1, s_object_complex);
+              SCM_ARG1, s_object_component);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
@@ -2432,7 +2432,7 @@ init_module_lepton_core_object (void *unused)
                 s_set_text_x,
                 s_text_info,
                 s_object_connections,
-                s_object_complex,
+                s_object_component,
                 s_make_path,
                 s_path_length,
                 s_path_ref,
