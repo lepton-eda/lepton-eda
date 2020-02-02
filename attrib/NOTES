@@ -227,7 +227,7 @@ TOPLEVEL: 	The basic data structure in gschem.  Basically holds info
 PAGE:		Self explanatory.  The entire design is held as a
 		doubly linked list of PAGEs under TOPLEVEL.
 OBJECT:		A graphical object on the gschem page.  Can be a net
-		segment, a component complex, a bit of text, a
+		segment, a component, a bit of text, a
 		component's pin, or whatever.  Each page holds a
 		doubly linked list of OBJECTs present on that page.
 NETLIST:	Important in gnetlist.  This is a doubly linked list

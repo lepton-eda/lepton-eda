@@ -480,7 +480,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
        o_iter = g_list_previous (o_iter)) {
     OBJECT *o_current = (OBJECT*) o_iter->data;
 
-    /* ------- Object is a complex.  Handle pins by looking ------ */
+    /* ------- Object is a component.  Handle pins by looking ------ */
     /* ------- for all pins attached to a component.        ------ */
     if (o_current->type == OBJ_COMPONENT) {
       /*  Upon finding a component, here's what to do:
@@ -493,7 +493,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
        *  4.  Stick the attribs into the TOPLEVEL data structure.
        */
       temp_uref =  s_attrib_get_refdes(o_current);
-      if ( (temp_uref != NULL) && (o_current->component->prim_objs) ) {    /* make sure object complex has a refdes  */
+      if ( (temp_uref != NULL) && (o_current->component->prim_objs) ) {    /* make sure object component has a refdes  */
 
         for (prim_iter = o_current->component->prim_objs;
              prim_iter != NULL;
@@ -613,7 +613,7 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
  *    the name=value pair, create an attrib object and add it to the part
  *    on o_current.
  * \param toplevel TOPLEVEL structure
- * \param o_current Component (complex) to be updated.
+ * \param o_current Component to be updated.
  * \param new_comp_attrib_list list of name=value attribute pairs
  *                             from SHEET_DATA.
  */

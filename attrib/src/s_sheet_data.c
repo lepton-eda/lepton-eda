@@ -270,7 +270,7 @@ void s_sheet_data_add_master_net_attrib_list_items (const GList *obj_start) {
  * label refdes:pinnumber into the global master pin list.
  * Algorithm:
  * -# Loop on o_current looking for OBJ_COMPONENT
- * -# When we find a complex, save the refdes.
+ * -# When we find a component, save the refdes.
  * -# Dive down to o_lower_current = o_current->component->prim_objs
  * -# Loop on o_lower_current looking for OBJ_PIN
  * -# When we find a pin, find the pinnumber by calling
@@ -308,7 +308,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
 
     if (o_current->type == OBJ_COMPONENT) {
       temp_uref = s_attrib_get_refdes (o_current);
-      if (temp_uref != NULL) {      /* make sure object complex has a refdes  */
+      if (temp_uref != NULL) {      /* make sure object component has a refdes  */
 
         /* -----  Now iterate through lower level objects looking for pins.  ----- */
         for (o_lower_iter = o_current->component->prim_objs;
@@ -362,7 +362,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
  * each attrib name into the master pin attrib list.
  * Algorithm:
  * -# Loop on o_current looking for OBJ_COMPONENT
- * -# When we find a complex, save the refdes.
+ * -# When we find a component, save the refdes.
  * -# Dive down to o_lower_current = o_current->component->prim_objs
  * -# Loop on o_lower_current looking for OBJ_PIN
  * -# When we find a pin, get pin_attribs = o_lower_current->attribs
@@ -400,7 +400,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
 
       if (o_current->type == OBJ_COMPONENT) {
 	temp_uref = s_attrib_get_refdes(o_current);
-	if (temp_uref != NULL) {      /* make sure object complex has a refdes  */
+	if (temp_uref != NULL) {      /* make sure object component has a refdes  */
 	  
 	  /* -----  Now iterate through lower level objects looking for pins.  ----- */
           for (o_lower_iter = o_current->component->prim_objs;
