@@ -612,6 +612,14 @@ one of the following symbols:
 @end itemize
 @end defun
 
+@strong{Note}: The word @samp{complex} is only used in Scheme API to
+define component type for historical reasons, since before it was used
+in the gEDA C source code.  As Guile Scheme supports complex numbers,
+and the procedures related to working with complex numbers use the
+word @samp{complex} to describe them, any other code of both Lepton C
+and Scheme API uses the word @samp{component} instead to avoid
+ambiguity.
+
 @defun object-type? object type
 Returns @samp{#t} if and only if @var{object} is an @code{object} and
 that its subtype is @var{type}, which should be a symbol.
@@ -1380,12 +1388,6 @@ schematic, the @var{basename} is used to find the underlying symbol
 file in the component library.
 
 @xref{Component objects}.
-
-@strong{Note}: In the gEDA C source code, these are normally called
-``complex'' objects.  However, as Guile Scheme supports complex
-numbers, and the procedures related to working with complex numbers
-use the word @samp{complex} to describe them, this API uses
-@samp{component} to avoid ambiguity.
 
 The @var{position}, @var{angle} and @var{mirror} flag of a component
 indicates the transformation that was applied to the contents of the
