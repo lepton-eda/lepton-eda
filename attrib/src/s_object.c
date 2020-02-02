@@ -25,7 +25,7 @@
  * This file holds functions involved in manipulating the OBJECT data
  * structure.  OBJECT is defined in libgeda.  An OBJECT is a graphical
  * primitive normally used in gschem.  Example OBJECTs: some text,
- * a component (complex), a pin, a line, etc.
+ * a component, a pin, a line, etc.
  *
  * The functions herein are functions which I wrote as wrappers to the
  * fcns in libgeda.
