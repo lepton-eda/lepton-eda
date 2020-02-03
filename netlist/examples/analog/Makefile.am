@@ -1,8 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-
 SUBDIRS = varactor_osc bandpass voltage_doubler
-
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
 CLEANFILES = core *.log FILE *.ps *~
