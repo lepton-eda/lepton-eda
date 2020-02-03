@@ -1,5 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
+ * Copyright (C) 1998-2013 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -46,7 +48,7 @@ struct _Multiattrib {
 
   GedaList *object_list;
   int       total_num_in_list;
-  int       num_complex_in_list;
+  int       num_comp_in_list;
   int       num_pins_in_list;
   int       num_nets_in_list;
   int       num_buses_in_list;
