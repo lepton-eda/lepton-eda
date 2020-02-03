@@ -2637,7 +2637,7 @@ append_dialog_title_extra (GString *title_string,
 }
 
 static void
-update_dialog_title (Multiattrib *multiattrib, const char *complex_title_name)
+update_dialog_title (Multiattrib *multiattrib, const char *component_title_name)
 {
   GString *title_string = g_string_new (_("Edit Attributes"));
   int num_title_extras = 0;
@@ -2653,10 +2653,10 @@ update_dialog_title (Multiattrib *multiattrib, const char *complex_title_name)
    *
    * for more information.
    */
-  if (multiattrib->num_complex_in_list > 0) {
+  if (multiattrib->num_comp_in_list > 0) {
     append_dialog_title_extra (title_string, &num_title_extras,
-                               ngettext ("%2$i symbol (%1$s)", "%2$i symbols (%1$s)", multiattrib->num_complex_in_list),
-                               complex_title_name, multiattrib->num_complex_in_list);
+                               ngettext ("%2$i symbol (%1$s)", "%2$i symbols (%1$s)", multiattrib->num_comp_in_list),
+                               component_title_name, multiattrib->num_comp_in_list);
   }
 
   if (multiattrib->num_pins_in_list > 0) {
@@ -2707,13 +2707,13 @@ multiattrib_update (Multiattrib *multiattrib)
   gboolean list_sensitive;
   gboolean add_sensitive;
   GList *model_rows = NULL;
-  const char *complex_title_name = NULL;
+  const char *component_title_name = NULL;
 
   show_inherited =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (multiattrib->show_inherited));
 
   multiattrib->total_num_in_list        = 0;
-  multiattrib->num_complex_in_list      = 0;
+  multiattrib->num_comp_in_list      = 0;
   multiattrib->num_pins_in_list         = 0;
   multiattrib->num_nets_in_list         = 0;
   multiattrib->num_buses_in_list        = 0;
@@ -2736,12 +2736,12 @@ multiattrib_update (Multiattrib *multiattrib)
 
     if (object->type == OBJ_COMPONENT ||
         object->type == OBJ_PLACEHOLDER) {
-      multiattrib->num_complex_in_list++;
+      multiattrib->num_comp_in_list++;
 
-      if (complex_title_name == NULL)
-        complex_title_name = object->component_basename;
-      else if (strcmp (complex_title_name, object->component_basename) != 0)
-        complex_title_name = _("<various>");
+      if (component_title_name == NULL)
+        component_title_name = object->component_basename;
+      else if (strcmp (component_title_name, object->component_basename) != 0)
+        component_title_name = _("<various>");
     }
 
     if (object->type == OBJ_PIN)
@@ -2835,7 +2835,7 @@ multiattrib_update (Multiattrib *multiattrib)
   multiattrib_populate_liststore (multiattrib, model_rows);
 
   /* Update window title to describe the objects we are editing. */
-  update_dialog_title (multiattrib, complex_title_name);
+  update_dialog_title (multiattrib, component_title_name);
 
   /* Update sensitivities */
   gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->list_frame), list_sensitive);
