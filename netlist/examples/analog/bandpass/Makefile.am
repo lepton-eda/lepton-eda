@@ -5,10 +5,6 @@ sch_files = \
 
 sym_files = 
 
-ref_files = \
-	frg_7700_ref/yaesu-frg-7700-schematic.pdf\
-	frg_7700_ref/frg7700.pdf
-
 model_files =
 	models/D1N4148.sp
 

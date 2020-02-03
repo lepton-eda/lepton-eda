@@ -6,10 +6,6 @@ sch_files = \
 sym_files = \
 	sym/varactor-1.sym
 
-ref_files =\
-	frg_7700/yaesu-frg-7700-schematic.pdf\
-	frg_7700/frg7700.pdf
-
 model_files =
 	models/D1N4148.sp\
 	models/MV104.sp\
@@ -17,7 +13,7 @@ model_files =
 
 SUBDIRS =
 
-EXTRA_DIST = README gafrc wiki panel.jpeg ngspice.cmd\
+EXTRA_DIST = README gafrc wiki ngspice.cmd\
 	$(sch_files) $(sym_files) $(ref_files) $(model_files)
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
