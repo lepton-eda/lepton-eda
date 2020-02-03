@@ -28,7 +28,6 @@
   #:use-module (lepton page)
   #:use-module (netlist config)
   #:use-module (netlist error)
-  #:use-module (netlist hierarchy)
   #:use-module (netlist mode)
 
   #:export (make-refdes
