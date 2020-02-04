@@ -843,15 +843,15 @@ Based on original \"tragesym\" version
    (page->string page)))
 
 (define (generate-pinseq pins)
-  (define (pin-with-pinseq? pin)
+  (define (generate-pinseq? pin)
     (and (not (string= (pin-style pin) "none"))
          (not (string= (pin-style pin) "spacer"))))
 
-  (let loop ((filtered-pins (filter pin-with-pinseq? pins))
+  (let loop ((pins-to-process (filter generate-pinseq? pins))
              (pinseq 1))
-    (and (not (null? filtered-pins))
-         (set-pin-seq! (car filtered-pins) pinseq)
-         (loop (cdr filtered-pins) (1+ pinseq))))
+    (and (not (null? pins-to-process))
+         (set-pin-seq! (car pins-to-process) pinseq)
+         (loop (cdr pins-to-process) (1+ pinseq))))
   ;; Return value.
   pins)
 
