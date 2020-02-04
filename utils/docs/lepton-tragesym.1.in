@@ -15,7 +15,8 @@ creates lepton-schematic symbols from structured text files.
 can:
 .IP \(bu
 create pins, their elements (clocksign, negation bubble), and
-attributes (pinnumber, pinseq, pintype, and pinlabel);
+attributes (\*[lq]pinnumber\*[rq], \*[lq]pinseq\*[rq],
+\*[lq]pintype\*[rq], and \*[lq]pinlabel\*[rq]);
 .IP \(bu
 sort the pins alphabetically by their attributes;
 .IP \(bu
@@ -25,7 +26,161 @@ swap words in the pinlabel attributes if requested (only for
 attributes of the right and top pins, in the latter case only
 if rotation is also requested);
 .IP \(bu
-do some syntax check to the input file.
+do some syntax checking to the input file.
+
+.SH SOURCE FILE FORMAT
+.SS General
+
+Source file is a text file consisting of three sections:
+.br
+.rs
+\(bu
+.B [geda_attr]
+.br
+.rs
+\(bu
+.B [options]
+.br
+.rs
+\(bu
+.B [pins]
+.RE
+
+Section name should be enclosed in square brackets.
+
+Empty lines, lines consisting of whitespaces only, as well as
+lines beginning with the character '#' (comments) are silently
+ignored.
+
+.SS [options]
+The section contains export settings.  The following settings are
+supported:
+
+'IP \(bu
+.B wordswap
+.RI ( boolean )
+.br
+Swap labels if the pin is on the right side and contains space
+between words, that is, looks like this: \*[lq]PB1 (CLK)\*[rq].
+That may be useful for micro controller port labels.
+'IP \(bu
+.B rotate_labels
+.RI ( boolean )
+.br
+Rotate the \*[lq]pinlabel\*[rq] attribute of the top and bottom pins
+by 90 degrees.
+This may be useful for large symbols like FPGAs with more than 100
+pins.
+'IP \(bu
+.B sort_labels
+.RI ( boolean )
+.br
+Sort the pins by their \*[lq]pinlabel\*[rq] attributes, which is
+useful for address ports, busses, etc.
+'IP \(bu
+.B generate_pinseq
+.RI ( boolean )
+.br
+Automatically generate \*[lq]pinseq\*[rq] attributes for those
+pins whose corresponding field in the source file is empty.
+'IP \(bu
+.B sym_width
+.RI ( integer )
+.br
+Minimum box width of the resulting symbol.
+'IP \(bu
+.B pinwidthvertical
+.RI ( integer )
+.br
+The vertical distance between pins on the left or right hand side
+of the symbol.
+'IP \(bu
+.B pinwidthhorizontal
+.RI ( integer )
+.br
+The horizontal distance between pins on the top or bottom of the
+symbol.
+
+The boolean values are specified in the source file by the words
+\*[lq]yes\*[rq] or \*[lq]on\*[rq] meaning TRUE and \*[lq]no\*[rq]
+or \*[lq]off\*[rq] meaning FALSE.
+
+.SS [geda_attr]
+
+The section contains the list of Lepton symbol attributes
+(\*[lq]name=value\*[rq] pairs) which you would want to see in the symbol
+file.
+The attribute names may be separated by the equal or tabulation
+character (\*[lq]=\*[rq] or \*[lq]\\t\*[rq]).
+The tab separator is supported for convenient export from
+spreadsheet programs.
+
+.SS [pins]
+
+The section contains the description of symbol pins to be made,
+one pin per line.
+The pin description consists of seven tab separated fields, any of
+which may contain empty value (no character between tabs).
+The fields define the following pin attributes and properties:
+
+.nr step 1 1
+.IP \n[step]. 3
+\*[lq]pinnumber\*[rq] attribute
+.br
+The \*[lq]pinnumber\*[rq] attribute represents the physical number
+of the component pin.
+.IP \n+[step].
+\*[lq]pinseq\*[rq] attribute
+.br
+The \*[lq]pinseq\*[rq] attribute is used in Lepton to assign pin
+numbers for slotted components and by the SPICE backends to output
+pins in right order.  Leave the field blank if it doesn't matter.
+.IP \n+[step].
+\*[lq]pintype\*[rq] attribute
+.br
+The \*[lq]pintype\*[rq] attribute defines the pin function (input,
+output, power, etc.) and can be one of \*[lq]in\*[rq],
+\*[lq]out\*[rq], \*[lq]io\*[rq], \*[lq]oc\*[rq], \*[lq]oe\*[rq],
+\*[lq]pas\*[rq], \*[lq]tp\*[rq], \*[lq]tri\*[rq], \*[lq]clk\*[rq],
+or \*[lq]pwr\*[rq].  The attribute is used by the DRC backends to
+check component interconnection validity.
+.IP \n+[step].
+pin style
+.br
+Pin style determines the appearance of the pin.
+It can be one of \*[lq]line\*[rq] (simple pin), \*[lq]dot\*[rq]
+(pin with negation bubble), \*[lq]clk\*[rq] (pin with clock
+symbol), \*[lq]dotclk\*[rq] (bubble and clock), \*[lq]spacer\*[rq]
+(not a pin, just additional empty space between two pins), or
+\*[lq]none\*[rq] (to add a virtual pin via the \*[lq]net\*[rq]
+attribute).
+.IP \n+[step].
+pin position
+.br
+Pin position determines the side of the component the pin should
+be placed on.
+It can be \*[lq]l\*[rq] (left), \*[lq]r\*[rq] (right),
+\*[lq]t\*[rq] (top), \*[lq]b\*[rq] (bottom), or empty
+(\*[lq]\*[rq]) when the pin should be defined in the
+\*[lq]net\*[rq] attribute.
+.IP \n+[step].
+pin net
+.br
+Specifies the net name of the pin to define via the
+\*[lq]net\*[rq] attribute, for example, \*[lq]Vcc\*[rq] or
+\*[lq]GND\*[rq].
+.IP \n+[step].
+\*[lq]pinlabel\*[rq] attribute
+.br
+The \*[lq]pinlabel\*[rq] attribute represents the visible pin
+label defining its name in the component, for example
+\*[lq]A\*[rq] (anode) or \*[lq]C\*[rq] (cathode) in a diode
+symbol.
+Negation lines can be added with \*[lq]\\_\*[rq], for example,
+\*[lq]\\_enable\\_\*[rq].  If you want to add the character
+\*[lq]\\\*[rq], use \*[lq]\\\\\*[rq] as escape sequence.
+This is supported by `lepton-schematic`.
+
 .SH TUTORIAL
 There is a tutorial on the use of
 .B lepton-tragesym
@@ -44,7 +199,7 @@ scratch in Scheme by Vladimir Zhbanov <vzhbanov@gmail.com>.
 .SH COPYRIGHT
 .nf
 Copyright \(co 2012-2017 gEDA Contributors.
-Copyright \(co 2019 Lepton EDA Contributors.
+Copyright \(co 2019-2020 Lepton EDA Contributors.
 License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
 file included with this program for full details.
 .PP
