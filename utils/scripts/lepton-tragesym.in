@@ -615,7 +615,7 @@ Based on original \"tragesym\" version
               (match which?
                 ((or "t" "b") (if %rotate-labels 90 0))
                 (_ 0)))
-             (pinseq (and (pin-seq pin)
+             (pinseq-counter (and (pin-seq pin)
                           (make-text `(,pinseq-x . ,pinseq-y)
                                      pinseq-alignment
                                      pinseq-angle
@@ -718,7 +718,7 @@ Based on original \"tragesym\" version
                          #f
                          'value))
              (attribs (filter identity
-                              (list pinnumber pinseq pinlabel pintype))))
+                              (list pinnumber pinseq-counter pinlabel pintype))))
 
         (apply page-append! page pin-object attribs)
         (apply attach-attribs! pin-object attribs)
@@ -842,18 +842,43 @@ Based on original \"tragesym\" version
   (display
    (page->string page)))
 
+
 (define (generate-pinseq pins)
   (define (generate-pinseq? pin)
     (and (not (string= (pin-style pin) "none"))
          (not (string= (pin-style pin) "spacer"))))
 
-  (let loop ((pins-to-process (filter generate-pinseq? pins))
-             (pinseq 1))
-    (and (not (null? pins-to-process))
-         (set-pin-seq! (car pins-to-process) pinseq)
-         (loop (cdr pins-to-process) (1+ pinseq))))
+  (define (non-empty-pinseq? pin)
+    (let ((pinseq (pin-seq pin)))
+      (and (not (string-null? pinseq))
+           pinseq)))
+
+  (let* ((plain-pins (filter generate-pinseq? pins))
+         (available-pinseq-list (filter-map non-empty-pinseq? plain-pins)))
+    (let loop ((pins-to-process plain-pins)
+               (pinseq-counter 1))
+      (and (not (null? pins-to-process))
+           (let ((pin (car pins-to-process)))
+             (if (non-empty-pinseq? pin)
+                 ;; Pin already has pinseq=, so don't increment
+                 ;; our counter.  Continue with the rest of the
+                 ;; list.
+                 (loop (cdr pins-to-process) pinseq-counter)
+                 ;; Pin has no pinseq.  First check, if our
+                 ;; counter is valid, looking through the list of
+                 ;; already set pinseqs.
+                 (if (member (number->string pinseq-counter)
+                             available-pinseq-list)
+                     ;; Loop with the same pin list, just increment
+                     ;; the counter.
+                     (loop pins-to-process (1+ pinseq-counter))
+                     ;; Set new pinseq=, and continue.
+                     (begin
+                       (set-pin-seq! (car pins-to-process) (number->string pinseq-counter))
+                       (loop (cdr pins-to-process) (1+ pinseq-counter)))))))))
   ;; Return value.
   pins)
+
 
 (define (remove-pinseq pins)
   (define (delete-pinseq pin)
