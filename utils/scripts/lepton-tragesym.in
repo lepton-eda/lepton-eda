@@ -882,7 +882,8 @@ Based on original \"tragesym\" version
 
 (define (remove-pinseq pins)
   (define (delete-pinseq pin)
-    (set-pin-seq! pin #f))
+    (when (string-null? (pin-seq pin))
+      (set-pin-seq! pin #f)))
   (for-each delete-pinseq pins))
 
 
