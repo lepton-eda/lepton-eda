@@ -351,7 +351,7 @@
 
     ;; Now write out any model which is pointed to by the part.
     (when (not (unknown? model))
-      (format #t ".MODEL ~A ~A (~A)\n" model-name type package-model))))
+      (format #t ".MODEL ~A ~A (~A)\n" model-name type model))))
 
 
 ;;  Writes diode SPICE card for PACKAGE.
