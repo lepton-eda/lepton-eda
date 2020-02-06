@@ -7,8 +7,8 @@
 ( define-module ( lepton legacy-config )
 
   #:use-module  ( ice-9 format )
-  #:use-module  ( ice-9 match  )
-  #:use-module  ( geda  config )
+  #:use-module  ( ice-9 match )
+  #:use-module  ( lepton config )
   #:use-module  ( lepton legacy-config keylist )
 
   #:export      ( config-upgrade )

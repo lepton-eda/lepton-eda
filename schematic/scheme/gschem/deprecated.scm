@@ -23,20 +23,19 @@
 ;; be used in new code.
 
 (define-module (gschem deprecated)
+  #:use-module (srfi srfi-1)
 
-  #:use-module (gschem core gettext)
+  #:use-module (geda deprecated)
 
   #:use-module (lepton attrib)
   #:use-module (lepton object)
   #:use-module (lepton page)
-  #:use-module (gschem window)
-  #:use-module (gschem hook)
-  #:use-module (gschem selection)
-  #:use-module (gschem attrib)
 
-  #:use-module (geda deprecated)
-
-  #:use-module (srfi srfi-1))
+  #:use-module (schematic attrib)
+  #:use-module (schematic core gettext)
+  #:use-module (schematic hook)
+  #:use-module (schematic selection)
+  #:use-module (schematic window))
 
 ;; add-attribute-to-object object name value visible show
 ;;
@@ -45,7 +44,7 @@
 ;; or both of the strings "name and "value" (if neither is specified,
 ;; both are assumed).
 ;;
-;; See also add-attrib! in the (gschem attrib) module.
+;; See also add-attrib! in the (schematic attrib) module.
 (define-public (add-attribute-to-object object name value visible show)
   (add-attrib! object name value visible
                (let ((n (member "name" show))
@@ -232,7 +231,7 @@
 ;; get-selected-filename
 ;;
 ;; Returns the filename associated with the active page in the current
-;; gschem window.
+;; lepton-schematic window.
 (define-public (get-selected-filename)
   (page-filename (active-page)))
 

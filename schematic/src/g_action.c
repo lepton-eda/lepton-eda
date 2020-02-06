@@ -17,7 +17,7 @@
  */
 
 /*! \file g_action.c
- * \brief Functions relating to working with gschem actions.
+ * \brief Functions relating to working with lepton-schematic actions.
  */
 
 #include <config.h>
@@ -26,7 +26,7 @@
 
 SCM_SYMBOL (quote_sym, "quote");
 
-/*! \brief Evaluate a gschem action by name.
+/*! \brief Evaluate a lepton-schematic action by name.
  * \par Function Description
  * Evaluates the action named \a action_name, which should be a UTF-8
  * string naming a symbol in the user module.  If evaluating the
@@ -54,7 +54,7 @@ g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name)
 
   /* Get the eval-action procedure */
   s_eval_action_proc =
-	  scm_variable_ref (scm_c_public_variable ("gschem action",
+	  scm_variable_ref (scm_c_public_variable ("schematic action",
 	                                           "eval-action!"));
   /* Build expression to evaluate */
   s_expr = scm_list_2 (s_eval_action_proc,
@@ -80,7 +80,7 @@ g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name)
  * This should be used by actions implemented in C to figure out where
  * on the schematic the user wants them to apply the action.
  *
- * See also the (gschem action) Scheme module.
+ * See also the (schematic action) Scheme module.
  *
  * \param snap         "Snap" returned coords to the grid.
  * \param x            Location to store x coordinate.
@@ -99,7 +99,7 @@ g_action_get_position (gboolean snap, int *x, int *y)
 
   /* Get the action-position procedure */
   s_action_position_proc =
-	  scm_variable_ref (scm_c_public_variable ("gschem action",
+	  scm_variable_ref (scm_c_public_variable ("schematic action",
 	                                           "action-position"));
 
   /* Retrieve the action position */
@@ -124,7 +124,7 @@ g_action_get_position (gboolean snap, int *x, int *y)
 }
 
 /*!
- * \brief Initialise gschem action support.
+ * \brief Initialise lepton-schematic action support.
  * \par Function Description
 
  * Registers some Scheme support for action handling. Should only be

@@ -5,7 +5,7 @@
 ;
 ; This section defines associations between a stroke sequence and a
 ; guile function which is executed when the stroke is drawn in the
-; gschem window
+; lepton-schematic window
 ;
 ; Strokes are defined as follows:
 ;
