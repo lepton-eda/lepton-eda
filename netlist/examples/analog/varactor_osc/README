@@ -2,4 +2,11 @@
 Analog  simulation used on frg-7700 repair.
 This simulates one of the PLL's using a varactor.
 
-Please see Wiki in this directory for full explanation.
+FFT does a fft analysis on the vecs spicified. This is of course complex and 
+requires mag, just like bandpass example. You can also just look at transient 
+analysis which should be REAL and see the wave form.
+Both can be viewed with gaw, gwave or built in viewer in ngpsice.
+
+You will find the schematics and the custom symbols. The models directory contain the models for the project.
+
+Dr Forbin.
