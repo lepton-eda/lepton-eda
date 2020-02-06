@@ -259,6 +259,7 @@ AC_CONFIG_FILES([Makefile
                  netlist/examples/analog/Makefile
                  netlist/examples/analog/varactor_osc/Makefile
                  netlist/examples/analog/bandpass/Makefile
+                 netlist/examples/analog/voltage_doubler/Makefile
 
                  netlist/examples/analog/voltage_doubler/Makefile
 
