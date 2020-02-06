@@ -1592,7 +1592,7 @@ x_tabs_menu_create (TabInfo* nfo)
 
   GtkWidget* menu = gtk_menu_new();
   x_tabs_menu_create_item (tl, menu, "file-new", _("_New"), GTK_STOCK_NEW);
-  x_tabs_menu_create_item (tl, menu, "file-open", _("_Open"), GTK_STOCK_OPEN);
+  x_tabs_menu_create_item (tl, menu, "file-open", _("_Open..."), GTK_STOCK_OPEN);
   x_tabs_menu_create_item_separ (menu);
   x_tabs_menu_create_item (tl, menu, "file-save", _("_Save"), GTK_STOCK_SAVE);
   x_tabs_menu_create_item (tl, menu, "file-save-as", _("Save _As..."), GTK_STOCK_SAVE_AS);

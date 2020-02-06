@@ -19,15 +19,18 @@
 ;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 ;;
 
-(define-module (gschem gschemdoc)
-  #:use-module (gschem core gettext)
-  #:use-module (lepton attrib)
-  #:use-module (lepton object)
-  #:use-module (lepton os)
-  #:use-module (gschem util)
+(define-module (schematic gschemdoc)
   #:use-module (ice-9 optargs)
   #:use-module (ice-9 regex)
   #:use-module (srfi srfi-1)
+
+  #:use-module (lepton attrib)
+  #:use-module (lepton object)
+  #:use-module (lepton os)
+
+  #:use-module (schematic core gettext)
+  #:use-module (schematic util)
+
   #:export (sys-doc-dir)
   #:export (user-doc-dir)
   #:export (show-wiki)
@@ -47,7 +50,7 @@
 
 ; private:
 ;
-; Call (gschem util)::show-uri( url ), catching exceptions.
+; Call (schematic util)::show-uri( url ), catching exceptions.
 ; Display a message box on error.
 ;
 ( define ( doc-show-uri url )

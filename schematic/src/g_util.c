@@ -76,7 +76,7 @@ init_module_gschem_core_util (void *unused)
 }
 
 /*!
- * \brief Initialise miscellaneous gschem utility procedures.
+ * \brief Initialise miscellaneous lepton-schematic utility procedures.
  * \par Function Description
  * Registers some Scheme utility procedures for e.g. accessing
  * miscellaneous system services.  Should only be called by

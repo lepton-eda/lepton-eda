@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1516,6 +1516,14 @@ DEFINE_I_CALLBACK(page_revert)
   g_return_if_fail (w_current != NULL);
 
   page_current = gschem_toplevel_get_toplevel (w_current)->page_current;
+
+  /* do not revert untitled pages:
+  */
+  if (x_window_untitled_page (page_current))
+  {
+    return;
+  }
+
   filename = g_strdup (s_page_get_filename (page_current));
 
   const gchar* msg =
@@ -1525,7 +1533,8 @@ DEFINE_I_CALLBACK(page_revert)
       "\n"
       "Are you sure you want to revert this page?\n"
       "All unsaved changes in current schematic will be\n"
-      "discarded and page file will be reloaded from disk.");
+      "discarded and page file will be reloaded from disk.\n"
+      "This action will also reload all component libraries.");
 
   dialog = gtk_message_dialog_new_with_markup
     ((GtkWindow*) w_current->main_window,

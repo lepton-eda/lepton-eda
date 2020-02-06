@@ -170,6 +170,49 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   command-line option `--cache` (`-c`) has been added.
 
 ### Changes in `lepton-schematic`:
+- The module `(gschem action)` has been renamed to `(schematic
+  action)`.  All the functions and variables available are still
+  re-exported in the former one but its using is discouraged.
+
+- The module `(gschem attrib)` has been renamed to `(schematic
+  attrib)`.  All the functions and variables available are still
+  re-exported in the former one but its using is discouraged.
+
+- The module `(gschem builtins)` has been renamed to `(schematic
+  builtins)`.  All the functions and variables available are still
+  re-exported in the former one but its using is discouraged.
+
+- The module `(gschem core gettext)` has been renamed to
+  `(schematic core gettext)`.
+
+- The module `(gschem gschemdoc)` has been renamed to `(schematic
+  gschemdoc)`.  All the functions and variables available are still
+  re-exported in the former one but its using is discouraged.
+
+- The module `(gschem hook)` has been renamed to `(schematic
+  hook)`.  All the functions and variables available are still
+  re-exported in the former one but its using is discouraged.
+
+- The module `(gschem keymap)` has been renamed to `(schematic
+  keymap)`.  All the functions and variables available are still
+  re-exported in the former one but its using is discouraged.
+
+- The module `(gschem selection)` has been renamed to `(schematic
+  selection)`.  All the functions and variables available are still
+  re-exported in the former one but its using is discouraged.
+
+- The module `(gschem symbol check)` has been renamed to `(schematic
+  symbol check)`.  All the functions and variables available are still
+  re-exported in the former one but its using is discouraged.
+
+- The module `(gschem util)` has been renamed to `(schematic
+  util)`.  All the functions and variables available are still
+  re-exported in the former one but its using is discouraged.
+
+- The module `(gschem window)` has been renamed to `(schematic
+  window)`.  All the functions and variables available are still
+  re-exported in the former one but its using is discouraged.
+
 - Grips can now be turned on and off at run-time.
   Use the new 'Options → Grips: On/Off' menu item or
   <kbd>O</kbd>-<kbd>I</kbd> keyboard shortcut.

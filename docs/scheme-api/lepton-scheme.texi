@@ -2211,7 +2211,7 @@ operations.
 @section Windows and views
 
 To use the functions described in this section, you will need to load
-the @code{(gschem window)} module.
+the @code{(schematic window)} module.
 
 @defun active-page
 Returns the @code{page} currently being displayed for editing.
@@ -2237,7 +2237,7 @@ closest grid location to @var{point}.  Expects a point in the form
 @section Key mapping
 
 To use the functions described in this section, you will need to load
-the @code{(gschem keymap)} module.
+the @code{(schematic keymap)} module.
 
 @subsection Key combinations
 
@@ -2390,7 +2390,7 @@ Recursively searches @var{keymap} for the key sequence bound to
 @section Selections
 
 To use the functions described in this section, you will need to load
-the @code{(gschem selection)} module.
+the @code{(schematic selection)} module.
 
 Each @code{page} in lepton-schematic has a @dfn{selection} associated
 with it, which is some subset of the @code{page}s contents.  Most
@@ -2433,7 +2433,7 @@ nothing.  Returns @var{object}.
 @section Hooks
 
 To use the hooks described in this section, you will need to load the
-@code{(gschem hook)} module.
+@code{(schematic hook)} module.
 
 lepton-schematic defines a number of hooks that allow functions to be
 automatically run whenever a number of built-in actions are invoked by
@@ -2598,7 +2598,7 @@ Since 1.10.
 @cindex Actions
 
 To use the functions described in this section, you will need to load
-the @code{(gschem action)} module.
+the @code{(schematic action)} module.
 
 @subsection Action objects
 @cindex Action objects
@@ -2734,7 +2734,7 @@ when a command is invoked by hotkey.
 @subsection lepton-schematic Attribute Helpers
 
 To use the functions described in this section, you will need to load
-the @code{(gschem attrib)} module.
+the @code{(schematic attrib)} module.
 
 @defun add-attrib! target name value visible show
 Create a new attribute, either attached to a @var{target}
@@ -2764,7 +2764,7 @@ built-in @strong{Add Attribute} action.
 @subsection Miscellaneous utility functions
 
 To use the functions described in this section, you will need to load
-the @code{(gschem util)} module.
+the @code{(schematic util)} module.
 
 @defun show-uri uri
 Open @var{uri} in the registered default application associated for

@@ -21,7 +21,7 @@
              (srfi srfi-1)
              (lepton attrib)
              (lepton page)
-             (gschem window))
+             (schematic window))
 
 (define auto-uref-page-offset 0)
 

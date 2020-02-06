@@ -1,5 +1,5 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
+ * Copyright (C) 2018-2020 dmn <graahnul.grom@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -187,7 +187,7 @@ color_edit_widget_create (ColorEditWidget* widget)
   gtk_container_add (GTK_CONTAINER (widget), vbox);
 
   GtkWidget* hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
 
   /* color selection combo box: */
   widget->color_cb_ = x_colorcb_new();
@@ -220,6 +220,18 @@ color_edit_widget_create (ColorEditWidget* widget)
 
   /* separator: */
   gtk_box_pack_start (GTK_BOX (vbox), gtk_hseparator_new(), FALSE, FALSE, 5);
+
+
+  /* informational label: */
+  const gchar* msg =
+    _("Save your color scheme to a file by clicking on the \"Save As...\"\n"
+      "button. It can be loaded on startup with the following\n"
+      "expression in the gschemrc configuration file:\n"
+      "( primitive-load \"/path/to/saved-color-scheme-file\" )");
+
+  GtkWidget* label = gtk_label_new (msg);
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
 
   g_signal_connect (G_OBJECT (widget->color_cb_),

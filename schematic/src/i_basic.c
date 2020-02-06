@@ -195,6 +195,20 @@ void i_action_update_status (GschemToplevel *w_current, gboolean inside_action)
 }
 
 
+
+/*! \brief Update sensitivity of menu items according to current event state.
+ *
+ *  \param [in] w_current  GschemToplevel structure
+ *  \param [in] newstate   The new state
+ */
+static void
+update_state_menu_items (GschemToplevel* w_current, enum x_states newstate)
+{
+  x_menus_sensitivity (w_current->menubar, "&edit-select", newstate != SELECT);
+}
+
+
+
 /*! \brief Set new state, then show state field
  *
  *  \par Function Description
@@ -234,6 +248,8 @@ void i_set_state(GschemToplevel *w_current, enum x_states newstate)
       case MIRRORMODE: mode="mirror-mode"; break;
       case ROTATEMODE: mode="rotate-mode"; break;
     }
+
+  update_state_menu_items (w_current, newstate);
 
   g_run_hook_action_mode (w_current, "%switch-action-mode-hook", mode);
 }
@@ -327,15 +343,15 @@ static void clipboard_usable_cb (int usable, void *userdata)
 
 
 
-/*! \brief Return TRUE if at least one object of type \a type is selected.
+/*! \brief Return the first object of type \a type if it is selected.
  *
  *  \param toplevel  pointer to TOPLEVEL structure
  *  \param type      object type constant (OBJ_TEXT, OBJ_COMPLEX, etc.) (o_types.h)
  */
-static gboolean
+static OBJECT*
 obj_selected (TOPLEVEL* toplevel, int type)
 {
-  gboolean result = FALSE;
+  OBJECT* result = FALSE;
   SELECTION* selection = toplevel->page_current->selection_list;
 
   GList* gl = geda_list_get_glist (selection);
@@ -347,9 +363,36 @@ obj_selected (TOPLEVEL* toplevel, int type)
 #ifdef DEBUG
       printf (" >> obj_selected(): obj->type: [%c]\n", obj->type);
 #endif
-      result = TRUE;
+      result = obj;
       break;
     }
+  }
+
+  return result;
+}
+
+
+
+/*! \brief Return TRUE if a component with "source" attribute is selected.
+ *
+ *  \param [in] w_current  GschemToplevel structure
+ */
+static gboolean
+parent_comp_selected (TOPLEVEL* toplevel)
+{
+  gboolean result = FALSE;
+  OBJECT* obj = obj_selected (toplevel, OBJ_COMPLEX);
+
+  if (obj != NULL)
+  {
+    char* attr = o_attrib_search_attached_attribs_by_name (obj, "source", 0);
+    if (attr == NULL)
+    {
+      attr = o_attrib_search_inherited_attribs_by_name (obj, "source", 0);
+    }
+
+    result = attr != NULL;
+    g_free (attr);
   }
 
   return result;
@@ -375,12 +418,15 @@ void i_update_menus (GschemToplevel* w_current)
   */
   x_clipboard_query_usable (w_current, clipboard_usable_cb, w_current);
 
+  update_state_menu_items (w_current, w_current->event_state);
+
   gboolean selected      = o_select_selected (w_current);
   gboolean text_selected = selected && obj_selected (toplevel, OBJ_TEXT);
   gboolean comp_selected = selected && obj_selected (toplevel, OBJ_COMPLEX);
   gboolean pic_selected  = selected && obj_selected (toplevel, OBJ_PICTURE);
   gboolean embeddable    = comp_selected || pic_selected;
-  gboolean has_parent = s_hierarchy_find_up_page (toplevel->pages, page) != NULL;
+  gboolean has_parent    = s_hierarchy_find_up_page (toplevel->pages, page) != NULL;
+  gboolean parent        = comp_selected && parent_comp_selected (toplevel);
 
   GtkWidget* mmenu = w_current->menubar;
 
@@ -401,8 +447,9 @@ void i_update_menus (GschemToplevel* w_current)
   x_menus_sensitivity (mmenu, "&edit-embed", embeddable);
   x_menus_sensitivity (mmenu, "&edit-unembed", embeddable);
   x_menus_sensitivity (mmenu, "&edit-update", comp_selected);
+  x_menus_sensitivity (mmenu, "&edit-deselect", selected);
 
-  x_menus_sensitivity (mmenu, "&hierarchy-down-schematic", comp_selected);
+  x_menus_sensitivity (mmenu, "&hierarchy-down-schematic", parent);
   x_menus_sensitivity (mmenu, "&hierarchy-down-symbol", comp_selected);
   x_menus_sensitivity (mmenu, "&hierarchy-up", has_parent);
 
@@ -415,6 +462,8 @@ void i_update_menus (GschemToplevel* w_current)
 
   x_menus_sensitivity (mmenu, "&hierarchy-documentation", comp_selected);
 
+  x_menus_sensitivity (mmenu, "&page-revert", !x_window_untitled_page (page));
+
 
   GtkWidget* pmenu = w_current->popup_menu;
 
@@ -426,7 +475,7 @@ void i_update_menus (GschemToplevel* w_current)
   x_menus_sensitivity (pmenu, "&edit-text", text_selected);
   x_menus_sensitivity (pmenu, "&edit-object-properties", selected);
 
-  x_menus_sensitivity (pmenu, "&hierarchy-down-schematic", comp_selected);
+  x_menus_sensitivity (pmenu, "&hierarchy-down-schematic", parent);
   x_menus_sensitivity (pmenu, "&hierarchy-down-symbol", comp_selected);
   x_menus_sensitivity (pmenu, "&hierarchy-up", has_parent);
 

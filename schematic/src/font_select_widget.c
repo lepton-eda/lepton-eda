@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2019 Lepton EDA Contributors
+ * Copyright (C) 2018-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -231,6 +231,15 @@ font_select_widget_create (FontSelectWidget* widget)
 
   /* separator */
   gtk_box_pack_start (GTK_BOX (vbox), gtk_hseparator_new(), FALSE, FALSE, 5);
+
+  /* informational label: */
+  const gchar* msg =
+    _("After you're done choosing the font, it's recommended\n"
+      "to reopen schematics or restart the application.");
+
+  GtkWidget* label = gtk_label_new (msg);
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
   g_signal_connect (G_OBJECT (btn_apply),
                     "clicked",
