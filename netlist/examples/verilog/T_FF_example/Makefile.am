@@ -10,7 +10,7 @@ ex_gmk_files = \
 
 SUBDIRS = verilog_modules
 
-EXTRA_DIST = README gafrc dummy_test.v wiki\
+EXTRA_DIST = README gafrc dummy_test.v\
 	$(sch_files) $(sym_files) $(ex_gmk_files)
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
