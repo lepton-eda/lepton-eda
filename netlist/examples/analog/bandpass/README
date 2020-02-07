@@ -3,20 +3,17 @@ It simulates the bandpass filter before the first RF amp.
 The simulation should be run in NGSPICE.
 It should show a bandpass responce.
 
-
 You will find;
 
 -reference material for frg_7700 in the directory.
 -spice models for the simulaton in models directory.
 -ngspice cmds used to run simulation.
 
-
-
-
 You must also have gaw wave viewer` installed.
 http://gaw.tuxfamily.org/linux/gaw.php
 
+ac analysis results are complex so
+vectors must be show as mag(vec) or db(vec) which is equivalent to 
+db(mag(vec)). 
 
-drforbin
-
-drforbin6@gmail.com
+After writing file open file with gaw, set Abscissa (X) to Log scale and display.
