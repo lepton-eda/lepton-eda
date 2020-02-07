@@ -261,9 +261,6 @@ AC_CONFIG_FILES([Makefile
                  netlist/examples/analog/bandpass/Makefile
                  netlist/examples/analog/voltage_doubler/Makefile
 
-                 netlist/examples/analog/voltage_doubler/Makefile
-
-
                  utils/Makefile
                  utils/docs/Makefile
                  utils/examples/Makefile
