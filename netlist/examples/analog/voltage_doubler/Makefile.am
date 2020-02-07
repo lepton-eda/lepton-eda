@@ -1,6 +1,19 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = varactor_osc bandpass voltage_doubler
+sch_files = \
+	sch/doubler_a.sch\
+	sch/doubler_b.sch\
+	sch/doubler_c.sch
+
+sym_files = 
+
+model_files =
+	models/D1N4148.sp
+
+SUBDIRS = 
+
+EXTRA_DIST = README gafrc ngspice.cmd \
+	$(sch_files) $(sym_files) $(ref_files) $(model_files)
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
 CLEANFILES = core *.log FILE *.ps *~
