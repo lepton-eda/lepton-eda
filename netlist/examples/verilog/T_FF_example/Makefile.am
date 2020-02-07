@@ -1,6 +1,3 @@
-sch_files = sch/verilog_rip_test.sch
-
-
 sch_files = \
 	sch/verilog_rip_test.sch
 	
@@ -20,6 +17,3 @@ MOSTLYCLEANFILES =  core *.log FILE *.ps *~
 CLEANFILES = core *.log FILE *.ps *~
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = core *.log FILE *.ps *~ Makefile.in
-
-
-MAINTAINERCLEANFILES = Makefile.in
