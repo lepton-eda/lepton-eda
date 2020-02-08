@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2018 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -391,6 +391,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   g_object_set_data_full (G_OBJECT (aewindow),
                          "attrib_combo_entry", attrib_combo_entry,
                             (GtkDestroyNotify) g_object_unref);
+  gtk_entry_set_activates_default (GTK_ENTRY (attrib_combo_entry), TRUE);
 
   /* Value entry */
   label = gtk_label_new_with_mnemonic (_("_Value:"));
