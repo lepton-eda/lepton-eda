@@ -569,7 +569,6 @@ void x_window_create_main(GschemToplevel *w_current)
  */
 void x_window_close(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean last_window = FALSE;
 
   /* If we're closing whilst inside an action, re-wind the
@@ -623,17 +622,6 @@ void x_window_close(GschemToplevel *w_current)
   if (last_window)
   {
     geometry_save (w_current);
-  }
-
-  if (toplevel->major_changed_refdes) {
-    GList* current = toplevel->major_changed_refdes;
-    while (current)
-    {
-      /* printf("yeah freeing: %s\n", (char*) current->data); */
-      g_free(current->data);
-      current = g_list_next(current);
-    }
-    g_list_free(toplevel->major_changed_refdes);
   }
 
   /* stuff that has to be done before we free w_current */
