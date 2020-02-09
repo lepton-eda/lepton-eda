@@ -1132,13 +1132,29 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
                       "instantiated %2$.3f, %3$s)!"),
                     inside_value, outside_value, refdes);
 
-      /* add the refdes to the major_changed_refdes GList */
-      /* make sure refdes_copy is freed somewhere */
-      refdes_copy = g_strconcat ("refdes: ", refdes, " (",
-                                 object->component_basename,
-                                 ")", NULL);
-      toplevel->major_changed_refdes =
-        g_list_append(toplevel->major_changed_refdes, refdes_copy);
+
+      /* add the refdes and basename to the page's major_changed_refdes GList:
+      */
+      if (toplevel->page_current != NULL)
+      {
+        /* make sure refdes_copy is freed somewhere:
+        */
+        refdes_copy = g_strconcat ("refdes: ",
+                                   refdes,
+                                   " (",
+                                   object->component_basename,
+                                   ")",
+                                   NULL);
+
+        toplevel->page_current->major_changed_refdes =
+          g_list_append (toplevel->page_current->major_changed_refdes,
+                         refdes_copy);
+      }
+      else
+      {
+        g_warning (" >> o_complex_check_symversion(): !page_current");
+      }
+
 
       /* don't bother checking minor changes if there are major ones*/
       goto done;
