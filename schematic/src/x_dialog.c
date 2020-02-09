@@ -283,7 +283,7 @@ major_changed_dialog (GschemToplevel* w_current)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   /* Primary label */
   tmp = g_strconcat ("<big><b>",
-                     _("Major symbol changes detected."),
+                     _("Major symbol version changes detected."),
                      "</b></big>", NULL);
   label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
                                     /* GtkMisc */
@@ -307,8 +307,9 @@ major_changed_dialog (GschemToplevel* w_current)
                                     "wrap", TRUE,
                                     "use-markup", TRUE,
                                     "label",
-                                    _("Changes have occurred to the symbols shown below.\n\n"
-                                      "Be sure to verify each of these symbols."),
+                                    _("Changes have occurred to the symbols shown\n"
+                                      "below, be sure to verify each of these symbols.\n"
+                                      "Consult lepton-schematic log for details."),
                                     NULL));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   /* List of changed symbols */
