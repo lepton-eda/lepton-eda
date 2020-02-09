@@ -64,8 +64,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->show_hidden_text = 0;
 
-  toplevel->major_changed_refdes = NULL;
-
   /* The following is an attempt at getting (deterministic) defaults */
   /* for the following variables */
   toplevel->change_notify_funcs = NULL;

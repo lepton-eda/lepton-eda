@@ -44,9 +44,6 @@ struct st_toplevel
      lepton-schematic */
   int show_hidden_text;
 
-  GList* major_changed_refdes;          /* A list of all refdes's that have */
-                                        /* major symbol version changes */
-
   /* backup variables */
   int auto_save_interval;
   gint auto_save_timeout;
