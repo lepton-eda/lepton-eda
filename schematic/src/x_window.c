@@ -1492,14 +1492,26 @@ create_notebook_bottom (GschemToplevel* w_current)
 PAGE*
 x_window_open_page (GschemToplevel* w_current, const gchar* filename)
 {
+  PAGE* page = NULL;
+
   if (x_tabs_enabled())
   {
-    return x_tabs_page_open (w_current, filename);
+    page = x_tabs_page_open (w_current, filename);
   }
   else
   {
-    return x_window_open_page_impl (w_current, filename);
+    page = x_window_open_page_impl (w_current, filename);
   }
+
+  if (filename != NULL && page != NULL)
+  {
+    /* check for symbol version changes, display
+     * an error dialog box, if necessary:
+    */
+    major_changed_dialog (w_current);
+  }
+
+  return page;
 }
 
 
