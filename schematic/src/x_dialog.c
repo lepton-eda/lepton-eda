@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -225,13 +225,17 @@ major_changed_dialog (GschemToplevel* w_current)
   char* tmp;
   GList *curr;
 
-  if (w_current->toplevel->major_changed_refdes == NULL) return;
+  if (w_current->toplevel->page_current->major_changed_refdes == NULL)
+  {
+    return;
+  }
 
   list_store = gtk_list_store_new (1, G_TYPE_STRING);
 
-  for (curr = w_current->toplevel->major_changed_refdes;
+  for (curr = w_current->toplevel->page_current->major_changed_refdes;
        curr != NULL;
-       curr = g_list_next (curr)) {
+       curr = g_list_next (curr))
+  {
     char *value = (char *) curr->data;
     GtkTreeIter iter;
 
