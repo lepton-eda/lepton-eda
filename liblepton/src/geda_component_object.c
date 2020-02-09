@@ -1010,6 +1010,17 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
 		     object->type == OBJ_PLACEHOLDER));
   g_return_if_fail (object->component != NULL);
 
+
+  /* No need to check symversion if symbol is not found in libraries:
+  */
+  GList* symlist = s_clib_search (object->complex_basename, CLIB_EXACT);
+  if (symlist == NULL)
+  {
+    return;
+  }
+  g_list_free (symlist);
+
+
   /* first look on the inside for the symversion= attribute */
   inside = o_attrib_search_inherited_attribs_by_name (object, "symversion", 0);
 
