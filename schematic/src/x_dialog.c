@@ -241,15 +241,14 @@ major_changed_dialog (GschemToplevel* w_current)
                         -1);
   }
 
-  /*! \todo this would be much easier using
-   * gtk_message_dialog_get_message_area(). */
-  dialog = GTK_WIDGET (g_object_new (GTK_TYPE_DIALOG,
-                                     /* GtkContainer */
-                                     "border-width", 5,
-                                     NULL));
-  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          GTK_STOCK_OK, GTK_RESPONSE_OK,
-                          NULL);
+
+  dialog = gtk_dialog_new_with_buttons(
+    NULL,
+    GTK_WINDOW (w_current->main_window),
+    (GtkDialogFlags) GTK_DIALOG_DESTROY_WITH_PARENT,
+    GTK_STOCK_OK, GTK_RESPONSE_OK,
+    NULL);
+
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
   g_object_set (content_area,
                 /* GtkBox */
@@ -333,14 +332,20 @@ major_changed_dialog (GschemToplevel* w_current)
                                                      "text", 0,
                                                      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
+
+  g_signal_connect (G_OBJECT (dialog),
+                    "response",
+                    G_CALLBACK (&gtk_widget_hide),
+                    NULL);
+
+  g_signal_connect (G_OBJECT (dialog),
+                    "delete-event",
+                    G_CALLBACK (&gtk_widget_hide_on_delete),
+                    NULL);
+
   gtk_widget_show_all (dialog);
 
-  gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                GTK_WINDOW (w_current->main_window));
-
-  gtk_dialog_run (GTK_DIALOG (dialog));
-  gtk_widget_destroy (dialog);
-}
+} /* major_changed_dialog() */
 
 /*********** End of major symbol changed dialog box *******/
 
