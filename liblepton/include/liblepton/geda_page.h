@@ -59,6 +59,11 @@ struct st_page
   gint ops_since_last_backup;
   gchar do_autosave_backup;
 
+  /* list of 'symbol version changed' info messages, e.g.:
+   * "refdes: R1 (resistor.sym)"
+  */
+  GList* major_changed_refdes;
+
   GList *weak_refs; /* Weak references */
 };
 

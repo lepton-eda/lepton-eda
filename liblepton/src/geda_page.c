@@ -150,6 +150,8 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   page->saved_since_first_loaded = 0;
   page->do_autosave_backup = 0;
 
+  page->major_changed_refdes = NULL;
+
   /* now append page to page list of toplevel */
   geda_list_add( toplevel->pages, page );
   page->toplevel = toplevel;
@@ -245,6 +247,13 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   geda_list_remove( toplevel->pages, page );
 
   page->weak_refs = s_weakref_notify (page, page->weak_refs);
+
+
+  if (page->major_changed_refdes)
+  {
+    g_list_free_full (page->major_changed_refdes, &g_free);
+  }
+
 
   g_free (page);
 
