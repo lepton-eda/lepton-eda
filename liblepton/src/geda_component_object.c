@@ -1013,7 +1013,7 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
 
   /* No need to check symversion if symbol is not found in libraries:
   */
-  GList* symlist = s_clib_search (object->complex_basename, CLIB_EXACT);
+  GList* symlist = s_clib_search (object->component_basename, CLIB_EXACT);
   if (symlist == NULL)
   {
     return;
@@ -1134,7 +1134,7 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
 
       /* add the refdes to the major_changed_refdes GList */
       /* make sure refdes_copy is freed somewhere */
-      refdes_copy = g_strconcat (refdes, " (",
+      refdes_copy = g_strconcat ("refdes: ", refdes, " (",
                                  object->component_basename,
                                  ")", NULL);
       toplevel->major_changed_refdes =
