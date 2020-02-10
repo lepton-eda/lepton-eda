@@ -1,4 +1,5 @@
 Makefile
 Makefile.in
 test-suite.log
+lepton/core/gettext.scm
 *~
