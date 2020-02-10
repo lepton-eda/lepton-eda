@@ -1,5 +1,3 @@
-## Process this file with automake to produce Makefile.in
-
 EXTRA_DIST = bjt_transistor_simple.vhdl bjt_transistor_simple_arc.vhdl \
 	     capacitor.vhdl capacitor_arc.vhdl current_source.vhdl \
 	     current_source_arc.vhdl electrical_system.vhdl \
@@ -10,10 +8,7 @@ EXTRA_DIST = bjt_transistor_simple.vhdl bjt_transistor_simple_arc.vhdl \
 	     voltage_dependend_capacitor_arc.vhdl voltage_source.vhdl \
 	     voltage_source_arc.vhdl
 
-MOSTLYCLEANFILES =  core *.log FILE *.ps *~
-CLEANFILES = core *.log FILE *.ps *~
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = core *.log FILE *.ps *~ Makefile.in
+MAINTAINERCLEANFILES = Makefile.in
 
 
 
