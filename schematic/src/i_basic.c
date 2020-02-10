@@ -418,7 +418,7 @@ void i_update_menus (GschemToplevel* w_current)
   */
   x_clipboard_query_usable (w_current, clipboard_usable_cb, w_current);
 
-  update_state_menu_items (w_current, w_current->event_state);
+  update_state_menu_items (w_current, (enum x_states) w_current->event_state);
 
   gboolean selected      = o_select_selected (w_current);
   gboolean text_selected = selected && obj_selected (toplevel, OBJ_TEXT);
