@@ -183,7 +183,9 @@ This is supported by `lepton-schematic`.
 
 .SH TUTORIAL
 There is a tutorial on the use of
-.B lepton-tragesym
+.BR tragesym ,
+the predecessor of
+.BR lepton-tragesym ,
 at:
 .IP
 http://wiki.geda-project.org/geda:tragesym_tutorial
