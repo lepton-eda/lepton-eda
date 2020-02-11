@@ -46,11 +46,11 @@ static const gchar* const USER_DOTDIR     = ".gEDA";
  * Private initialisation functions
  * ================================================================ */
 
-/*! \brief Get the gEDA installation's data directory.
- * Attempt to find the "share/gEDA" directory in the prefix where gEDA
- * was installed.  Returns NULL if not on Windows and not a
- * relocatable build (in that case, the install location should have
- * been compiled in via configure options) */
+/*! \brief Get the Lepton EDA installation's data directory.
+ * Attempt to find the "share/lepton-eda" directory in the prefix
+ * where Lepton was installed.  Returns NULL if not on Windows and
+ * not a relocatable build (in that case, the install location
+ * should have been compiled in via configure options) */
 static const gchar *
 guess_install_data_dir(void)
 {
@@ -118,10 +118,10 @@ copy_search_list(const gchar **output,
 	}
 #endif /* ENABLE_DEPRECATED */
 
-	/* Otherwise, use the "gEDA" subdirectory of the configured standard
-	 * directories. */
+	/* Otherwise, use the "lepton-eda" subdirectory of the
+	 * configured standard directories. */
 	for (gsize i = 0; xdg_dirs && xdg_dirs[i]; ++i) {
-		/* Append "gEDA" to each XDG data path */
+		/* Append "lepton-eda" to each XDG data path */
 		if (output) {
 			output[copied] =
 				g_build_filename(xdg_dirs[i],
@@ -176,10 +176,10 @@ copy_search_list(const gchar **output,
  * \param env_names NULL-terminated list of environment variable
  *                  names.  If any of them is set, it is the only item
  *                  in the returned list.
- * \param xdg_dirs  NULL-terminated list of directory names.  All of
- *                  them have gEDA's XDG subdirectory (i.e. "gEDA")
- *                  appended to them and are added to the list in
- *                  order.
+ * \param xdg_dirs  NULL-terminated list of directory names.  All
+ *                  of them have Lepton's XDG subdirectory
+ *                  (i.e. "lepton-eda") appended to them and are
+ *                  added to the list in order.
  * \param cfg_dirs NULL terminated list of additional directories to
  *                 append to the list.
  * \return a newly-allocated, NULL-terminated array of strings.
@@ -207,7 +207,7 @@ build_search_list(const gchar * const * env_names,
 
 /* \brief Initialise backwards-compatible environment variables.
  * Ensure that the $GEDADATA environment variable is always set to
- * something sensible within gEDA programs.
+ * something sensible within Lepton programs.
  */
 static void
 eda_paths_init_env(void)
@@ -276,17 +276,17 @@ dbg_out_dirs (const gchar* const* dirs, const gchar* name)
 #endif
 
 /*!
- * \brief Get an ordered list of gEDA data directories
+ * \brief Get an ordered list of Lepton EDA data directories
  * \par Function Description
  * Return an ordered list of directories to be searched for
- * system-wide gEDA data.  This list is computed as follows:
+ * system-wide Lepton data.  This list is computed as follows:
  *
  * 1. If the $GEDADATA environment variable is set, add it to the
  *    list.
  *
- * 2. If the $GEDADATA environment variable is not set, add the "gEDA"
- *    subdirectory of each of the platform-specific system-wide
- *    application data directories, as provided by
+ * 2. If the $GEDADATA environment variable is not set, add the
+ *    "lepton-eda" subdirectory of each of the platform-specific
+ *    system-wide application data directories, as provided by
  *    g_get_system_data_dirs().
  *
  * 3. For non-relocatable builds the installation directory configured
@@ -325,21 +325,22 @@ eda_get_system_data_dirs(void)
 }
 
 /*!
- * \brief Get an ordered list of gEDA configuration directories
+ * \brief Get an ordered list of Lepton EDA configuration directories
  * \par Function Description
  * Return an ordered list of directories to be searched for
- * system-wide gEDA configuration.  This list is computed as follows:
+ * system-wide Lepton configuration.  This list is computed as
+ * follows:
  *
  * 1. If the $GEDADATARC environment variable is set, add it to the
  *    list.  Otherwise, if $GEDADATA is set, add that to the list.
  *
- * 2. If neither environment variable is set, add the "gEDA"
+ * 2. If neither environment variable is set, add the "lepton-eda"
  *    subdirectory of each of the platform-specific system-wide
  *    application directories, as provided by
  *    g_get_system_config_dirs().
  *
  * 3. For non-relocatable builds the configuration installation
- * directory configured at build time is appended to the list.
+ *    directory configured at build time is appended to the list.
  *
  * \return An ordered list of directories to be searched for system
  * configuration.
@@ -433,10 +434,10 @@ eda_get_user_cache_dir()
  * ================================================================ */
 
 /*!
- * \brief Initialise data and configuration search paths.
+ * \brief Initialise Lepton EDA data and configuration search paths.
  * \par Function Description
  * Compute and initialise configuration and data search paths used by
- * gEDA, and set any related environment variables.  Should only be
+ * Lepton, and set any related environment variables.  Should only be
  * called (once) by liblepton_init().
  */
 void
