@@ -194,7 +194,6 @@ scratch in Scheme by Vladimir Zhbanov <vzhbanov@gmail.com>.
 
 .SH SEE ALSO
 .BR lepton-schematic (1),
-.BR pcb (1)
 
 .SH COPYRIGHT
 .nf
