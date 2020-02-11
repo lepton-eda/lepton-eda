@@ -83,6 +83,11 @@ useful for address ports, busses, etc.
 .br
 Automatically generate \*[lq]pinseq\*[rq] attributes for those
 pins whose corresponding field in the source file is empty.
+The generated attribute values are numbers incremented in the
+order the pin description lines appear in the
+.B [pins]
+section except for already existing numbers.
+
 'IP \(bu
 .B sym_width
 .RI ( integer )
