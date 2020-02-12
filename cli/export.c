@@ -171,7 +171,7 @@ cmd_export_impl (void *data, int argc, char **argv)
   edascm_dynwind_toplevel (toplevel);
 
   /* Now load rc files, if necessary */
-  if (getenv ("GAF_INHIBIT_RCFILES") == NULL) {
+  if (getenv ("LEPTON_INHIBIT_RC_FILES") == NULL) {
     g_rc_parse (toplevel, "lepton-cli export", NULL, NULL);
   }
   i_vars_libgeda_set (toplevel); /* Ugh */

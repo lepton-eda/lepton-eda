@@ -126,7 +126,7 @@ main (int argc, char **argv)
       break;
 
     case 2: /* --no-rcfiles */
-      g_setenv ("GAF_INHIBIT_RCFILES", "1", 1);
+      g_setenv ("LEPTON_INHIBIT_RC_FILES", "1", 1);
       break;
 
     case 'V':
