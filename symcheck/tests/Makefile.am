@@ -76,6 +76,7 @@ tests:
 	abs_builddir='$(abs_builddir)'; export abs_builddir; \
 	abs_top_builddir='$(abs_top_builddir)'; export abs_top_builddir; \
 	LIBLEPTON='$(abs_top_builddir)/liblepton/src/liblepton'; export LIBLEPTON; \
+	export LEPTON_INHIBIT_RC_FILES="inhibit"; \
 	abs_srcdir='$(abs_srcdir)'; export abs_srcdir; \
 	abs_top_srcdir='$(abs_top_srcdir)'; export abs_top_srcdir; \
 	fail=0 ; \
