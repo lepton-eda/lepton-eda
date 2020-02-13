@@ -118,7 +118,7 @@
             (display "PIN,,")
 
             (display
-             (gnetlist:alias-net (package-pin-netname package pin)))
+             (gnetlist:alias-net (pin-netname package pin)))
 
             ;; XXX I've seen 20, 23, and 100 in the position where the
             ;; "23" is here.  Seems to be a property like signal vs

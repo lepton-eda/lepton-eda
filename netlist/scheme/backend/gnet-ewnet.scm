@@ -99,7 +99,7 @@
             ;; net
             (display "\t\t\t(net \"")
             (display
-             (gnetlist:alias-net (package-pin-netname package pin)))
+             (gnetlist:alias-net (pin-netname package pin)))
             (display "\")\n")
 
             ;; pin type.  I have seen "PWR", "GND", "IN", "OUT", "BIDIR"

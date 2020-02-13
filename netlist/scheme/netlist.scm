@@ -61,7 +61,7 @@
             get-nets
             get-pins-nets
             message
-            package-pin-netname
+            pin-netname
             gnetlist:alias-net
             gnetlist:alias-refdes
             gnetlist:build-net-aliases
@@ -481,7 +481,7 @@ connection pairs in the form (\"pin-number\" . \"net-name\")."
       (_ '("ERROR_INVALID_PIN")))))
 
 
-(define (package-pin-netname package pinnumber)
+(define (pin-netname package pinnumber)
   (or (assoc-ref (get-pins-nets package) pinnumber)
       "ERROR_INVALID_PIN"))
 

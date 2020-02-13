@@ -221,7 +221,7 @@
 ;; gnet-spice replacement of get-nets, a net labeled "GND" becomes 0
 ;;-----------------------------------------------------------
 (define (spice:get-net package pin-name)
-  (let ((net-name (package-pin-netname package pin-name)))
+  (let ((net-name (pin-netname package pin-name)))
     (if (string=? net-name "GND")
         "0"
         net-name)))

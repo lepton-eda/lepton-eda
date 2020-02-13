@@ -69,8 +69,7 @@
   (define (get-package-pin-netnames package)
     (and (string=? (gnetlist:get-package-attribute package attribute)
                    value)
-         (package-pin-netname package
-                              (car (get-pins package)))))
+         (pin-netname package (car (get-pins package)))))
 
   (filter-map get-package-pin-netnames package-list))
 

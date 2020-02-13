@@ -768,7 +768,7 @@ ARCHITECTURE ~A OF ~A IS
 ;;; REFDES-LIST.
 (define (vams:all-packages-nets refdes-list)
   (define (pin-net-names package)
-    (map (cut package-pin-netname package <>)
+    (map (cut pin-netname package <>)
          (get-pins package)))
 
   (map pin-net-names refdes-list))
@@ -830,7 +830,7 @@ ARCHITECTURE ~A OF ~A IS
     (car (get-pins port)))
 
   (define (first-pin-net port)
-    (package-pin-netname port (first-pin port)))
+    (pin-netname port (first-pin port)))
 
   (if (null? ports)
       '()
