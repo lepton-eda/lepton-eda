@@ -19,6 +19,9 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   its command line arguments checks, which makes it more portable
   among various build environments.
 
+- Detection of installed `Guile` run-time and development
+packages has been improved.
+
 ### Scheme API changes:
 - The module `(geda log-rotate)` has been renamed to `(lepton
   log-rotate)`.
@@ -67,11 +70,35 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   `(lepton object)` module. It returns the full component's symbol
   file path.
 
+- `config-load!()` function in the `(lepton config)` module has been
+  modified to accept a new optional `boolean` parameter `force-load`,
+  which is `false` by default. Configuration is no longer reloaded
+  each time this function is called, unless you explicitly request
+  it by `#:force-load #t`.
+
 ### Changes in `liblepton`:
 - The module `(lepton library component)` has been amended to
   support new Scheme layer around internal `%component-library` in
   the `component-library` procedure, which prevents loading of
   duplicate component libraries.
+
+- The `bitmap-directory` `gafrc` option has been removed.
+
+- The following `gafrc` options have been deprecated and
+replaced with the new configuration settings (types and default
+values are listed in parenthesis):
+  - `bus-ripper-symname` => `[schematic]::bus-ripper-symname`
+  (`string`, `busripper-1.sym`)
+  - `always-promote-attributes` => `[schematic.attrib]::always-promote`
+  (`string`, `footprint;device;value;model-name`)
+  - `keep-invisible` => `[schematic.attrib]::keep-invisible`
+  (`boolean`, `true`)
+  - `attribute-promotion` => `[schematic.attrib]::promote`
+  (`boolean`, `true`)
+  - `promote-invisible` => `[schematic.attrib]::promote-invisible`
+  (`boolean`, `false`)
+  - `make-backup-files` => `[schematic.backup]::create-files`
+  (`boolean`, `true`)
 
 ### Changes in `lepton-netlist`:
 - Fixed crashes on power symbols (the symbols having one pin and
@@ -95,6 +122,12 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   a `request-netlist-mode` function, which should return either `'geda` or
   `'spice`. `lepton-netlist` no longer relies on the backend's filename
   when setting the operation mode.
+
+- The `spice-sdb` backend has been fixed to generate SPICE
+`.MODEL` lines correctly.
+
+- The `--list-backends` command line option now has a short
+equivalent: `-b`.
 
 ### Changes in `lepton-archive`:
 - The initial Python script has been rewritten in Scheme.  It was
@@ -231,6 +264,38 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   `true`/`false` for booleans instead of `"enabled"` and `"disabled"`). Please refer
   to the [Configuration Settings](https://github.com/graahnul-grom/lepton-eda/wiki/Configuration-Settings)
   document for more information.
+
+- In the `Save As` dialog, the filter field now shows
+file extensions (`.sch`, `.sym`). A file's extension in the
+`Name` box is updated when the filter is changed.
+
+- Tree view columns in the `Page Manager` window are now
+automatically resized. It helps when displayed paths are long:
+the `Changed` column becomes visible again when you uncheck
+the `Show full paths` checkbox.
+
+- The `file-preview` option (`[schematic.gui]` group) processing
+has been fixed. The user can turn the preview area in the
+`Open...` dialog on and off.
+
+- The user can now change the paper size and orientation in the
+`Print` dialog. Combo boxed with these settings used to be set
+to default values and disabled.
+
+- The context menu has been reorganized and updated.
+
+- Informational messages have been added to several
+lepton-schematic dialog boxes.
+
+- An "untitled" page can no longer be reverted (`Page → Revert`).
+This operation doesn't make sense for it and has been disabled.
+
+- A new configuration parameter has been added: `show-tooltips` in
+the `schematic.tabs` group (`boolean`, `true` by default). It
+enables or disables tooltips for tab header widgets in tabbed GUI.
+
+- The `Single Attribute Editor` dialog can now be accepted by
+pressing the `Enter` key when the `Name` field is focused.
 
 ### Changes in `examples`:
 - `RF_Amp` and `TwoStageAmp` examples have been updated to make
