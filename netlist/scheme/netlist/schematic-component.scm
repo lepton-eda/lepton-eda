@@ -218,7 +218,6 @@ sets the component to be its parent component."
                             #f
                             (net-map-pinnumber net-map)
                             #f
-                            '()
                             #f
                             '()
                             net-map

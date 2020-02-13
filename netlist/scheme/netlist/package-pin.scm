@@ -29,7 +29,6 @@
                    package-pin-object set-package-pin-object!
                    package-pin-number set-package-pin-number!
                    package-pin-name set-package-pin-name!
-                   package-pin-netname set-package-pin-netname!
                    package-pin-label set-package-pin-label!
                    package-pin-attribs set-package-pin-attribs!
                    package-pin-net-map set-package-pin-net-map!
@@ -43,7 +42,7 @@
             set-package-pin-parent-component!))
 
 (define-record-type <package-pin>
-  (make-package-pin id object number name netname label attribs net-map parent connection named-connection port-connection)
+  (make-package-pin id object number name label attribs net-map parent connection named-connection port-connection)
   package-pin?
   ;; This field is used just for the record representation in
   ;; set-record-type-printer! below.
@@ -54,8 +53,6 @@
   (number package-pin-number set-package-pin-number!)
   ;; Corresponds to net name of the net the pin is connected to.
   (name package-pin-name set-package-pin-name!)
-  ;; Corresponds to netname= list of the nets the pin is connected to.
-  (netname package-pin-netname set-package-pin-netname!)
   ;; Corresponds to pin's "pinlabel" attribute.
   (label package-pin-label set-package-pin-label!)
   ;; The alist representing attributes of the underlying object.
@@ -84,7 +81,6 @@ FORMAT-STRING must be in the form required by the procedure
   'object
   'number
   'name
-  'netname
   'label
   'attribs
   'net-map
@@ -106,7 +102,6 @@ Example usage:
                  ('object (package-pin-object record))
                  ('number (package-pin-number record))
                  ('name (package-pin-name record))
-                 ('netname (package-pin-netname record))
                  ('label (package-pin-label record))
                  ('attribs (package-pin-attribs record))
                  ('net-map (package-pin-net-map record))
@@ -137,8 +132,6 @@ Example usage:
                          ;; Number.
                          (assq-ref attribs 'pinnumber)
                          ;; Add name later.
-                         #f
-                         ;; Add netname list later.
                          #f
                          ;; Label.
                          (assq-ref attribs 'pinlabel)
