@@ -559,6 +559,16 @@ If @var{state} is @samp{#f}, clears the selectable flag; if @var{state}
 is @samp{#t}, sets it. Returns @var{object}.
 @end defun
 
+@defun object-embedded? object
+Returns true (@samp{#t}) if @var{object} is embedded,
+false (@samp{#f}) otherwise.
+@end defun
+
+@defun set-object-embedded! object state
+Embed (if @var{state} is @samp{#t}) or unembed (if @var{state} is
+@samp{#t}) @var{object}. Returns @var{object}.
+@end defun
+
 @menu
 * Object sub-types::
 * Object transformations::
