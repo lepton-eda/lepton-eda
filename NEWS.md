@@ -9,7 +9,11 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
 ### General changes:
 - Two unused old scheme scripts `print-NB-attribs.scm` and
   `list-keys.scm` have been removed.
+
 - Several other cleanups have been made in the source tree.
+
+- The Scheme auto-load subdirectory `gafrc.d`
+has been renamed to `autoload`.
 
 ### Changes when building from source:
 - Building of the Scheme API HTML documentation with multiple
@@ -90,7 +94,7 @@ values are listed in parenthesis):
   - `bus-ripper-symname` => `[schematic]::bus-ripper-symname`
   (`string`, `busripper-1.sym`)
   - `always-promote-attributes` => `[schematic.attrib]::always-promote`
-  (`string`, `footprint;device;value;model-name`)
+  (`string list`, `footprint;device;value;model-name`)
   - `keep-invisible` => `[schematic.attrib]::keep-invisible`
   (`boolean`, `true`)
   - `attribute-promotion` => `[schematic.attrib]::promote`
@@ -279,7 +283,7 @@ has been fixed. The user can turn the preview area in the
 `Open...` dialog on and off.
 
 - The user can now change the paper size and orientation in the
-`Print` dialog. Combo boxed with these settings used to be set
+`Print` dialog. The combo boxes with these settings used to be set
 to default values and disabled.
 
 - The context menu has been reorganized and updated.
