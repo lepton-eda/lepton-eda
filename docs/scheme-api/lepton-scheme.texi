@@ -1460,6 +1460,12 @@ Returns the parameters of @var{component} as a list of the form:
 Returns the basename of @var{component}.
 @end defun
 
+@defun component-filename component
+If a component object @var{component} has a symbol file
+associated with it, returns its full path, otherwise
+returns false (@samp{#f}).
+@end defun
+
 @defun component-position component
 Returns the position to which the original symbol was translated when
 creating @var{component}.
