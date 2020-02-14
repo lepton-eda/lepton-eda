@@ -1753,9 +1753,11 @@ this will return @samp{#f}.
 Since 1.10.
 @end defun
 
-@defun config-load! cfg
+@defun config-load! cfg [force-load]
 Attempt to load configuration parameters for the context @var{cfg}
-from its associated file.
+from its associated file. If @var{force-load} keyword argument is true
+(@samp{#t}), configuration will be reloaded even if it has already been
+loaded. By default, @var{force-load} is set to false (@samp{#f}).
 @end defun
 
 @defun config-loaded? cfg
