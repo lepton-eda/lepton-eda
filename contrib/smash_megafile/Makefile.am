@@ -16,4 +16,5 @@ EXTRA_DIST = smash_megafile.1.in smash_megafile.1
 
 SUFFIXES = .1.in .1
 
-MAINTAINERCLEANFILES = Makefile.in smash_megafile.1
+CLEANFILES = smash_megafile.1
+MAINTAINERCLEANFILES = Makefile.in
