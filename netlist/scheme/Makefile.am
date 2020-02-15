@@ -166,5 +166,4 @@ clean-local:
 	fi
 
 CLEANFILES = backend/gnet-gsch2pcb.scm $(bin_SCRIPTS) config-netlist.scm
-DISTCLEANFILES = backend/gnet-gsch2pcb.scm config-netlist.scm
-MAINTAINERCLEANFILES = Makefile.in backend/gnet-gsch2pcb.scm config-netlist.scm
+MAINTAINERCLEANFILES = Makefile.in
