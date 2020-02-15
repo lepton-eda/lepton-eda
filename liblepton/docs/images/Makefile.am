@@ -16,9 +16,6 @@ all:
 
 images: $(png_images) $(pdf_images)
 
-clean-local:
-	rm -rf $(png_images) $(pdf_images)
-
 .svg.png:
 	if [ -x "`which inkscape`" ]; then inkscape -e $@ $< ; else  convert $< $@; fi
 
@@ -27,6 +24,4 @@ clean-local:
 
 SUFFIXES = .svg .pdf .png
 
-CLEANFILES = $(png_images) $(pdf_images)
-DISTCLEANFILES = $(png_images) $(pdf_images)
 MAINTAINERCLEANFILES = Makefile.in $(png_images) $(pdf_images)
