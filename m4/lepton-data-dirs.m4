@@ -1,4 +1,4 @@
-# geda-data-dirs.m4                                     -*-Autoconf-*-
+# lepton-data-dirs.m4                                   -*-Autoconf-*-
 # serial 2.0
 
 dnl Lepton EDA data and configuration directories
