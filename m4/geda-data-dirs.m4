@@ -1,7 +1,7 @@
 # geda-data-dirs.m4                                     -*-Autoconf-*-
 # serial 2.0
 
-dnl gEDA data and configuration directories
+dnl Lepton EDA data and configuration directories
 dnl Copyright (C) 2009, 2016  Peter Brett <peter@peter-b.co.uk>
 dnl Copyright (C) 2018-2019 Lepton EDA Contributors
 dnl
@@ -19,7 +19,7 @@ dnl You should have received a copy of the GNU General Public License
 dnl along with this program; if not, write to the Free Software
 dnl Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-# Check where gEDA data and configuration should be stored.
+# Check where Lepton data and configuration should be stored.
 AC_DEFUN([AX_DATA_DIRS],
 [
   AC_PREREQ([2.60])dnl
@@ -27,14 +27,11 @@ AC_DEFUN([AX_DATA_DIRS],
 
   # Check where to install ordinary data files (e.g. symbols and
   # gnetlist backends)
-  # FIXME at some point this should become "$datarootdir/geda-gaf" to
-  # match the tarball name.
   LEPTONDATADIR="$datarootdir/lepton-eda"
 
-  # Check where to install rc files.
-  # FIXME at some point the rc directory needs to start *defaulting*
-  # to "$sysconfdir/geda-gaf" in order to comply with the GNU & Linux
-  # FHS guidelines.
+  # Check where to install rc files.  The rc directory name
+  # defaults to "$sysconfdir/" in order to comply with the GNU &
+  # Linux FHS guidelines.
   AC_ARG_WITH([rcdir],
     AS_HELP_STRING([--with-rcdir[[[=DIR]]]],
       [install system config in specific DIR]),
@@ -54,14 +51,14 @@ AC_DEFUN([AX_DATA_DIRS],
   if test "x$enable_relocatable" != "xyes"; then
     LEPTONDATADIR_expand=`eval "echo $LEPTONDATADIR" | sed -e"s:^NONE:$ac_default_prefix:"`
     AC_DEFINE_UNQUOTED([LEPTONDATADIR], ["LEPTONDATADIR_expand"],
-      [Define to gEDA/gaf shared data directory.
-Only libgeda should use this - apps should use eda_get_system_data_dirs()])
+      [Define to Lepton EDA shared data directory.
+Only liblepton should use this - apps should use eda_get_system_data_dirs()])
 
     if test "x$LEPTONRCDIR" != "x"; then
       LEPTONRCDIR_expand=`eval "echo $LEPTONRCDIR" | sed -e"s:^NONE:$ac_default_prefix:"`
       AC_DEFINE_UNQUOTED([LEPTONRCDIR], ["$LEPTONRCDIR_expand"],
-        [Define to gEDA/gaf rc directory if different from LEPTONDATADIR.
-Only libgeda should use this - apps should use eda_get_system_data_dirs()])
+        [Define to Lepton EDA rc directory if different from LEPTONDATADIR.
+Only liblepton should use this - apps should use eda_get_system_data_dirs()])
     fi
   fi
 
