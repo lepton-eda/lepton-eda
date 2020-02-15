@@ -19,4 +19,4 @@ ChangeLog: $(top_builddir)/stamp-git
 endif HAVE_GIT_REPO
 
 DISTCLEANFILES = liblepton.pc
-MAINTAINERCLEANFILES = Makefile.in liblepton.pc
+MAINTAINERCLEANFILES = Makefile.in
