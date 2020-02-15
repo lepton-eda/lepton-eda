@@ -1,5 +1,5 @@
 
-rcdatadir = $(GEDARCDIR)
+rcdatadir = $(LEPTONRCDIR)
 rcdata_DATA = system-gschemrc gschem-gtkrc gschem-colormap-lightbg gschem-colormap-darkbg gschem-colormap-bw
 
 system-gschemrc: $(top_builddir)/configure system-gschemrc.scm

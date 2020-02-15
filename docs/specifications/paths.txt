@@ -52,7 +52,7 @@ There are some key considerations for backwards compatibility:
 
 1) Lepton historically observes the `$GEDADATA` environment variable by
    using the directory it specifies as the *sole* source of system
-   data.  Similarly, `$GEDARCDIR` specifies the directory for system
+   data.  Similarly, `$LEPTONRCDIR` specifies the directory for system
    configuration.
 
 2) Lepton also historically *ensures* that `$GEDADATA` points to the
@@ -132,7 +132,7 @@ follows:
    list.
 
 2. If neither relocatable builds are enabled nor the target platform
-   is Windows, the value of the `GEDARCDIR` preprocessor macro
+   is Windows, the value of the `LEPTONRCDIR` preprocessor macro
    (usually `${prefix}/share/lepton-eda`) is appended to the list.
 
 3. Finally, if relocatable builds *are* enabled, guess the

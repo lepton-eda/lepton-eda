@@ -29,8 +29,8 @@
 #if !defined(LEPTONDATADIR)
 #	define LEPTONDATADIR NULL
 #endif
-#if !defined(GEDARCDIR)
-#	define GEDARCDIR LEPTONDATADIR
+#if !defined(LEPTONRCDIR)
+#	define LEPTONRCDIR LEPTONDATADIR
 #endif
 
 static const gchar* const DATA_ENV        = "GEDADATA";
@@ -353,7 +353,7 @@ eda_get_system_config_dirs(void)
 	if (g_once_init_enter(&system_config_dirs)) {
 		const gchar * const env_names[] = { CONFIG_ENV, DATA_ENV, NULL };
 		const gchar * const * xdg_dirs = g_get_system_config_dirs();
-		const gchar * const cfg_dirs[] = { GEDARCDIR, NULL };
+		const gchar * const cfg_dirs[] = { LEPTONRCDIR, NULL };
 
 		const gchar **dirs =
 			build_search_list(env_names, xdg_dirs, cfg_dirs);
