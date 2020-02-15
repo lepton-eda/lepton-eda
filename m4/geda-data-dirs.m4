@@ -29,15 +29,12 @@ AC_DEFUN([AX_DATA_DIRS],
   # gnetlist backends)
   # FIXME at some point this should become "$datarootdir/geda-gaf" to
   # match the tarball name.
-  AC_MSG_CHECKING([where to install gEDA shared data])
   GEDADATADIR="$datarootdir/lepton-eda"
-  AC_MSG_RESULT([$GEDADATADIR])
 
   # Check where to install rc files.
   # FIXME at some point the rc directory needs to start *defaulting*
   # to "$sysconfdir/geda-gaf" in order to comply with the GNU & Linux
   # FHS guidelines.
-  AC_MSG_CHECKING([where to install gEDA rc files])
   AC_ARG_WITH([rcdir],
     AS_HELP_STRING([--with-rcdir[[[=DIR]]]],
       [install system config in specific DIR]),
@@ -47,12 +44,10 @@ AC_DEFUN([AX_DATA_DIRS],
         else
           GEDARCDIR="$with_rcdir"
         fi
-        AC_MSG_RESULT([$GEDARCDIR])
       else
-        AC_MSG_RESULT([$GEDADATADIR])
+        GEDARCDIR="$GEDADATADIR"
       fi ],
-    [ AC_MSG_RESULT([$GEDADATADIR])
-  ])
+      GEDARCDIR="$GEDADATADIR")
 
   # Now define some preprocessor symbols with the *expanded* values,
   # but only if not doing a relocatable build.
@@ -74,6 +69,15 @@ Only libgeda should use this - apps should use eda_get_system_data_dirs()])
     GEDARCDIR=$GEDADATADIR
   fi
 
+  AC_SUBST([GEDADATADIR])
+  AC_SUBST([GEDARCDIR])
+
+  AC_MSG_CHECKING([where to install Lepton shared data (GEDADATADIR)])
+  AC_MSG_RESULT([$GEDADATADIR])
+
+  AC_MSG_CHECKING([where to install Lepton rc files (GEDARCDIR)])
+  AC_MSG_RESULT([$GEDARCDIR])
+
   # create #define LEPTON_SCM_PRECOMPILE_DIR in config.h:
   #
   AC_DEFINE_UNQUOTED([LEPTON_SCM_PRECOMPILE_DIR],
@@ -87,8 +91,5 @@ Only libgeda should use this - apps should use eda_get_system_data_dirs()])
                      [directory with bitmaps])
 
   AC_SUBST([BITMAP_DIRECTORY], ["$GEDADATADIR_expand/bitmap"])
-
-  AC_SUBST([GEDADATADIR])
-  AC_SUBST([GEDARCDIR])
 
 ])dnl AX_DATA_DIRS
