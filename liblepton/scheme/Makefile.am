@@ -1,5 +1,5 @@
 
-scmdatadir = $(GEDADATADIR)/scheme
+scmdatadir = $(LEPTONDATADIR)/scheme
 nobase_dist_scmdata_DATA = \
 	geda.scm \
 	geda-deprecated-config.scm \

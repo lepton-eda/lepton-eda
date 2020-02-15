@@ -161,7 +161,7 @@ equivalent: `-b`.
     modules.
 
   - The new script eliminates direct setting of
-    `GEDADATA`/`GEDADATADIR` to the directory where `system-gafrc`
+    `GEDADATA`/`LEPTONDATADIR` to the directory where `system-gafrc`
     should be placed, and parsing of the lines containing
     `component-library` and `component-library-search` in system
     rc files, as it is no longer required.

@@ -26,11 +26,11 @@
 #include "libgeda_priv.h"
 
 /* For convenience in this file only! */
-#if !defined(GEDADATADIR)
-#	define GEDADATADIR NULL
+#if !defined(LEPTONDATADIR)
+#	define LEPTONDATADIR NULL
 #endif
 #if !defined(GEDARCDIR)
-#	define GEDARCDIR GEDADATADIR
+#	define GEDARCDIR LEPTONDATADIR
 #endif
 
 static const gchar* const DATA_ENV        = "GEDADATA";
@@ -303,7 +303,7 @@ eda_get_system_data_dirs(void)
 	if (g_once_init_enter(&system_data_dirs)) {
 		const gchar * const env_names[] = { DATA_ENV, NULL };
 		const gchar * const * xdg_dirs = g_get_system_data_dirs();
-		const gchar * const cfg_dirs[] = { GEDADATADIR, NULL };
+		const gchar * const cfg_dirs[] = { LEPTONDATADIR, NULL };
 
 		const gchar **dirs =
 			build_search_list(env_names, xdg_dirs, cfg_dirs);

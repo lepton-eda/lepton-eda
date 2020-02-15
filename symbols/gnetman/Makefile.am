@@ -1,5 +1,5 @@
 instdirname = sym-gnetman
-datasymdir = $(GEDADATADIR)/$(instdirname)
+datasymdir = $(LEPTONDATADIR)/$(instdirname)
 
 dist-hook:
 	$(MKDIR_P) $(distdir)

@@ -50,10 +50,10 @@ SUBDIRS = \
 	verilog \
 	vhdl
 
-gafrcddir = $(GEDADATADIR)/scheme/autoload
+gafrcddir = $(LEPTONDATADIR)/scheme/autoload
 dist_gafrcd_DATA = config-symbol-libraries.scm
 
-datasymdir = $(GEDADATADIR)/sym
+datasymdir = $(LEPTONDATADIR)/sym
 
 EXTRA_DIST = \
 	ChangeLog \

@@ -3,7 +3,7 @@ theme=hicolor
 # --------------------------------------------------------------------
 # These icons get installed to a gEDA-specific icons
 # directory. They're used within gschem.
-icondir = $(GEDADATADIR)/icons/$(theme)
+icondir = $(LEPTONDATADIR)/icons/$(theme)
 iconsvg = gschem-icons.svg
 
 action_icons = \

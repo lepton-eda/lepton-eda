@@ -25,14 +25,14 @@ M4=		@M4@
 PCBM4DIR=	@PCBM4DIR@
 PCBCONFDIR=	@PCBCONFDIR@
 
-scmdatadir = @GEDADATADIR@/scheme
+scmdatadir = @LEPTONDATADIR@/scheme
 nobase_scmdata_DATA = $(DIST_SCM) $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(BUILT_SCM)
 
 
 config-netlist.scm: config-netlist.scm.in
 	sed -e 's,[@]backenddir[@],$(scmdatadir)/backend,g' < $(srcdir)/$@.in > $@
 
-gafrcddir = @GEDADATADIR@/scheme/autoload
+gafrcddir = @LEPTONDATADIR@/scheme/autoload
 gafrcd_DATA = config-netlist.scm
 
 

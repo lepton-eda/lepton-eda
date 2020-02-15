@@ -1,5 +1,5 @@
 
-bitmapdatadir = $(GEDADATADIR)/bitmap
+bitmapdatadir = $(LEPTONDATADIR)/bitmap
 bitmapdata_DATA = \
                   gschem-about-logo.png                                  \
                   gschem-bus.xpm                                         \

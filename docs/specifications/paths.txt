@@ -98,7 +98,7 @@ searched in order.  The list is constructed as follows:
    `g_get_system_data_dirs()` is added to the list.
 
 2. If neither relocatable builds are enabled nor the target platform
-   is Windows, the value of the `GEDADATADIR` preprocessor macro
+   is Windows, the value of the `LEPTONDATADIR` preprocessor macro
    (usually `${prefix}/share/lepton-eda`) is appended to the list.
 
 3. Finally, if relocatable builds *are* enabled, guess the

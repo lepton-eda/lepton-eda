@@ -1,6 +1,6 @@
 ## -*- Makefile -*-
 
-scmdatadir = $(GEDADATADIR)/scheme
+scmdatadir = $(LEPTONDATADIR)/scheme
 nobase_dist_scmdata_DATA = \
 	auto-refdes.scm \
 	auto-uref.scm \

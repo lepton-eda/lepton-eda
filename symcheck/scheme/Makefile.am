@@ -22,7 +22,7 @@ uninstall-hook:
 	rm -f $(DESTDIR)$(bindir)/$(COMPAT_NAME)
 endif INSTALL_COMPAT_SYMLINKS
 
-scmdatadir = $(GEDADATADIR)/scheme
+scmdatadir = $(LEPTONDATADIR)/scheme
 nobase_dist_scmdata_DATA = \
 	symbol/blame.scm \
 	symbol/check.scm \
