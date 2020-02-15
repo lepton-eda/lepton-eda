@@ -5,4 +5,3 @@ model_files = models/D1N4148.sp
 EXTRA_DIST = README gafrc ngspice.cmd $(sch_files) $(model_files)
 
 MAINTAINERCLEANFILES = Makefile.in
-

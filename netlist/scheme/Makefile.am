@@ -165,7 +165,6 @@ clean-local:
 		echo "source directory = build directory" ; \
 	fi
 
-MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ backend/gnet-gsch2pcb.scm $(bin_SCRIPTS) config-netlist.scm
-DISTCLEANFILES = *.log core FILE *~ backend/gnet-gsch2pcb.scm config-netlist.scm
-MAINTAINERCLEANFILES = *.log *~ Makefile.in backend/gnet-gsch2pcb.scm config-netlist.scm
+CLEANFILES = backend/gnet-gsch2pcb.scm $(bin_SCRIPTS) config-netlist.scm
+DISTCLEANFILES = backend/gnet-gsch2pcb.scm config-netlist.scm
+MAINTAINERCLEANFILES = Makefile.in backend/gnet-gsch2pcb.scm config-netlist.scm

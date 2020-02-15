@@ -1,4 +1,3 @@
-## Process this file with automake to produce Makefile.in
 ## This Makefile.am created for gattrib by SDB 12.13.2003
 
 bin_PROGRAMS = lepton-attrib
@@ -53,7 +52,4 @@ endif INSTALL_COMPAT_SYMLINKS
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
-MOSTLYCLEANFILES = *.log *.ps core FILE *~ #*#
-CLEANFILES = *.log *.ps core FILE *~ #*#
-DISTCLEANFILES = *.log core FILE *~ #*#
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in #*#
+MAINTAINERCLEANFILES = Makefile.in

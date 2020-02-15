@@ -1,4 +1,3 @@
-
 scmdatadir = $(LEPTONDATADIR)/scheme
 nobase_dist_scmdata_DATA = \
 	geda.scm \

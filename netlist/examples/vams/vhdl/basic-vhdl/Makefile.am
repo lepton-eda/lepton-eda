@@ -9,6 +9,3 @@ EXTRA_DIST = bjt_transistor_simple.vhdl bjt_transistor_simple_arc.vhdl \
 	     voltage_source_arc.vhdl
 
 MAINTAINERCLEANFILES = Makefile.in
-
-
-

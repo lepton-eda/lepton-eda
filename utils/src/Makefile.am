@@ -1,5 +1,3 @@
-## Process this file with automake to produce Makefile.in
-
 bin_PROGRAMS = lepton-sch2pcb lepton-renum
 
 # don't forget all *.h files */
@@ -30,7 +28,5 @@ AM_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS)
 AM_CPPFLAGS = -I$(top_srcdir)/liblepton/include \
 	-I$(top_srcdir) -I$(includedir)
 
-MOSTLYCLEANFILES = *.log *.ps core FILE *~ olib.c
-CLEANFILES = *.log *.ps core FILE *~  olib.c
-DISTCLEANFILES = *.log core FILE *~ olib.c
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in olib.c
+CLEANFILES = olib.c
+MAINTAINERCLEANFILES = Makefile.in

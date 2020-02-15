@@ -1,4 +1,3 @@
-
 EXTRA_DIST = buses.sym \
 	     component.sym \
 	     connections1.sym connections2.sym connections3.sym \
@@ -15,13 +14,13 @@ EXTRA_DIST = buses.sym \
 	     invalid_slotdef5.sym \
 	     labelinside.sym lots_of_errors.sym \
 	     many_slotdefs.sym missing_device.sym missing_footprint.sym \
-             missing_numslots.sym missing_pinlabel.sym missing_pinnumber.sym \
-             missing_pinseq.sym missing_slotdef.sym multiple_footprint.sym \
-             multiple_pinlabel.sym multiple_pinnumber.sym \
-             multiple_pinseq.sym multiple_pintype.sym multiple_refdes.sym \
-             nameinside.sym nets.sym noslots.sym old_symbol.sym oldpins.sym \
-             oldslot.sym typeinside.sym urefinside.sym zero_pinnumber.sym \
-             zero_pinseq.sym zero_slotnum.sym zero_slots.sym \
+	     missing_numslots.sym missing_pinlabel.sym missing_pinnumber.sym \
+	     missing_pinseq.sym missing_slotdef.sym multiple_footprint.sym \
+	     multiple_pinlabel.sym multiple_pinnumber.sym \
+	     multiple_pinseq.sym multiple_pintype.sym multiple_refdes.sym \
+	     nameinside.sym nets.sym noslots.sym old_symbol.sym oldpins.sym \
+	     oldslot.sym typeinside.sym urefinside.sym zero_pinnumber.sym \
+	     zero_pinseq.sym zero_slotnum.sym zero_slots.sym \
 	     duplicate_net.sym pin_offgrid.sym pintypes.sym \
 	     misplaced_attributes.sym text_errors.sym \
 	     zero_arc.sym \
@@ -87,20 +86,17 @@ tests:
 	  base=`basename $$file`; \
 	  GEDADATARC="${abs_top_builddir}/liblepton/lib" \
 	  $(SHELL) $(srcdir)/runtest.sh $$file; \
-          if [ $$? -ne 0 ]; then \
+	  if [ $$? -ne 0 ]; then \
 	     echo "FAIL: $$base"; \
-             fail=`expr $$fail + 1`; \
+	     fail=`expr $$fail + 1`; \
 	   else \
 	     echo "PASS: $$base"; \
-             pass=`expr $$pass + 1`; \
+	     pass=`expr $$pass + 1`; \
 	   fi; \
 	done ; \
 	echo "passed: $$pass" ; \
 	echo "failed: $$fail" ; \
 	exit $$fail
 
-
-MOSTLYCLEANFILES = *.log *~ new_*
-CLEANFILES = *.log *~ new_*
-DISTCLEANFILES = *.log core FILE *~ new_*
-MAINTAINERCLEANFILES = *.log *~ Makefile.in
+DISTCLEANFILES = *.log
+MAINTAINERCLEANFILES = Makefile.in

@@ -1,4 +1,3 @@
-
 SUBDIRS = po data docs include lib src scheme tests
 
 EXTRA_DIST = HACKING ChangeLog ChangeLog-1.0
@@ -19,7 +18,5 @@ ChangeLog: $(top_builddir)/stamp-git
 	) > $@
 endif HAVE_GIT_REPO
 
-MOSTLYCLEANFILES = *.log core FILE *~
-CLEANFILES = *.log core FILE *~
-DISTCLEANFILES = *.log core FILE *~ liblepton.pc
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in liblepton.pc ChangeLog
+DISTCLEANFILES = liblepton.pc
+MAINTAINERCLEANFILES = Makefile.in liblepton.pc

@@ -36,8 +36,4 @@ nobase_example_DATA = \
 
 EXTRA_DIST = $(nobase_example_DATA)
 
-MOSTLYCLEANFILES = gschem.log *~
-CLEANFILES = gschem.log *~
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = gschem.log *~ Makefile.in
-
+MAINTAINERCLEANFILES = Makefile.in

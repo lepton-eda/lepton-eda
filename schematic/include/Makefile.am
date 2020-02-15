@@ -1,7 +1,3 @@
-## $Id$
-##
-## Process this file with automake to produce Makefile.in
-
 noinst_HEADERS = \
 	globals.h \
 	i_vars.h \
@@ -47,7 +43,4 @@ noinst_HEADERS = \
 	font_select_widget.h \
 	page_select_widget.h
 
-MOSTLYCLEANFILES = *.log core FILE *~
-CLEANFILES = *.log core FILE *~
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
+MAINTAINERCLEANFILES = Makefile.in

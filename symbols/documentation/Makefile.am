@@ -15,7 +15,7 @@ SUFFIXES = .ps .doc .pdf
 	@if test "x$(GROFF)" != xno; then                        \
 		LC_NUMERIC=C $(GROFF) -t -sp -ms $< > $@.tmp    ;\
 		mv -f $@.tmp $@                                 ;\
-	else						         \
+	else							 \
 		echo "** Did not find groff **"                 ;\
 		echo "Some Documentation might not be correct!" ;\
 		touch $@                                     ;\
@@ -37,7 +37,5 @@ SUFFIXES = .ps .doc .pdf
 #
 nc.pdf: nc.ps
 
-MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ *.ps *.pdf
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~ Makefile.in *.pdf *.ps
+CLEANFILES = *.ps *.pdf
+MAINTAINERCLEANFILES = Makefile.in *.pdf *.ps

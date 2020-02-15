@@ -16,7 +16,4 @@ EXTRA_DIST = smash_megafile.1.in smash_megafile.1
 
 SUFFIXES = .1.in .1
 
-MOSTLYCLEANFILES = *.log *.ps core FILE *~
-CLEANFILES = *.log *.ps core FILE *~
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in smash_megafile.1
+MAINTAINERCLEANFILES = Makefile.in smash_megafile.1

@@ -1,4 +1,3 @@
-
 svg_images = \
 	o_attrib_overview.svg \
 	o_object_relations.svg \
@@ -10,7 +9,7 @@ svg_images = \
 EXTRA_DIST = $(svg_images)
 
 png_images = $(EXTRA_DIST:.svg=.png)
-pdf_images = $(EXTRA_DIST:.svg=.pdf) 
+pdf_images = $(EXTRA_DIST:.svg=.pdf)
 
 all:
 	@echo 'Type: make images  to create all the png/pdf images'
@@ -28,7 +27,6 @@ clean-local:
 
 SUFFIXES = .svg .pdf .png
 
-MOSTLYCLEANFILES = *~ $(png_images) $(pdf_images)
-CLEANFILES = *~ $(png_images) $(pdf_images)
-DISTCLEANFILES = *~ $(png_images) $(pdf_images)
-MAINTAINERCLEANFILES = *~ Makefile.in $(png_images) $(pdf_images)
+CLEANFILES = $(png_images) $(pdf_images)
+DISTCLEANFILES = $(png_images) $(pdf_images)
+MAINTAINERCLEANFILES = Makefile.in $(png_images) $(pdf_images)

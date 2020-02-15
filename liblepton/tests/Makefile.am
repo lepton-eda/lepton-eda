@@ -1,4 +1,3 @@
-
 check_PROGRAMS = \
 	test_angle \
 	test_arc \

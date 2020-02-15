@@ -1,4 +1,3 @@
-
 SUBDIRS = gTAG lightning_detector RF_Amp TwoStageAmp
 
 exampledir = $(docdir)/examples/
@@ -16,7 +15,4 @@ ChangeLog: $(top_builddir)/stamp-git
 	) > $@
 endif HAVE_GIT_REPO
 
-MOSTLYCLEANFILES = *.log core FILE *~
-CLEANFILES = *.log core FILE *~
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in ChangeLog
+MAINTAINERCLEANFILES = Makefile.in

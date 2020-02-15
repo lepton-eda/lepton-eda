@@ -1,5 +1,3 @@
-## Process this file with automake to produce Makefile.in
-
 noinst_SCRIPTS = \
 	gnet_hier_verilog.sh \
 	sarlacc_sym \
@@ -38,7 +36,5 @@ EXTRA_DIST = \
 
 SUFFIXES = .1.in .1
 
-MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
-CLEANFILES = *.log *.ps core FILE tmp  *~
-DISTCLEANFILES = *.log core FILE tmp *~ bompp.sh bom_xref.sh sw2asc
-MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in *.1 bompp.sh bom_xref.sh sw2asc
+DISTCLEANFILES = bompp.sh bom_xref.sh sw2asc
+MAINTAINERCLEANFILES = Makefile.in *.1 bompp.sh bom_xref.sh sw2asc

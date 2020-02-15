@@ -105,7 +105,4 @@ uninstall-local:
 	  fi; \
 	done
 
-MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~ Makefile.in ChangeLog
+MAINTAINERCLEANFILES = Makefile.in

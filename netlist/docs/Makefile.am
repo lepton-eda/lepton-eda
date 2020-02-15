@@ -1,4 +1,3 @@
-
 SUBDIRS = vams
 
 EXTRA_DIST = $(html_man_files) lepton-netlist.1.in mk_verilog_syms.1.in
@@ -36,7 +35,5 @@ else
 	@! :
 endif
 
-MOSTLYCLEANFILES = *.log *~
 CLEANFILES = $(dist_man_MANS) $(html_man_files)
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~
+MAINTAINERCLEANFILES = Makefile.in

@@ -1,5 +1,3 @@
-## Process this file with automake to produce Makefile.in
-
 noinst_PROGRAMS = olib
 
 olib_SOURCES = olib.l geda_sym_format.h
@@ -19,8 +17,5 @@ EXTRA_DIST = olib.1 olib.1.in README.olib
 
 SUFFIXES = .1.in .1
 
-MOSTLYCLEANFILES = *.log *.ps core FILE *~ olib.c
-CLEANFILES = *.log *.ps core FILE *~  olib.c
-DISTCLEANFILES = *.log core FILE *~ olib.c
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in olib.c olib.1
-
+CLEANFILES = olib.c
+MAINTAINERCLEANFILES = olib.1 Makefile.in

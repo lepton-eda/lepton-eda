@@ -1,5 +1,3 @@
-## Process this file with automake to produce Makefile.in
-
 libleptonincludedir = $(includedir)/liblepton
 libleptoninclude_HEADERS = \
 	liblepton/defines.h \
@@ -63,8 +61,4 @@ noinst_HEADERS = \
 	prototype_priv.h \
 	libgedaguile_priv.h
 
-MOSTLYCLEANFILES = *.log core FILE *~
-CLEANFILES = *.log core FILE *~
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
-
+MAINTAINERCLEANFILES = Makefile.in

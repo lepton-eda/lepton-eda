@@ -54,7 +54,5 @@ nobase_dist_scmdata_DATA = \
 	symcheck/option.scm \
 	symcheck/report.scm
 
-MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ $(bin_SCRIPTS)
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~ Makefile.in
+CLEANFILES = $(bin_SCRIPTS)
+MAINTAINERCLEANFILES = Makefile.in

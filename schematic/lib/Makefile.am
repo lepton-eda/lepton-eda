@@ -1,4 +1,3 @@
-
 rcdatadir = $(LEPTONDATADIR)
 rcdata_DATA = system-gschemrc gschem-gtkrc gschem-colormap-lightbg gschem-colormap-darkbg gschem-colormap-bw
 
@@ -16,7 +15,5 @@ system-gschemrc: $(top_builddir)/configure system-gschemrc.scm
 
 EXTRA_DIST = system-gschemrc.scm gschem-gtkrc gschem-colormap-lightbg gschem-colormap-darkbg gschem-colormap-bw
 
-MOSTLYCLEANFILES = *.log *~
 CLEANFILES = system-gschemrc
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~ Makefile.in
+MAINTAINERCLEANFILES = Makefile.in

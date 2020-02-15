@@ -66,7 +66,7 @@ if ENABLE_DOXYGEN
 	@for subdir in attrib/docs schematic/docs \
 	  liblepton/docs utils/docs ; do \
 	  (cd $$subdir; $(MAKE) doxygen) || exit 1; \
-        done
+	done
 else
 	@echo 'configure was not run with the --enable-doxygen switch.'
 	@echo 'The documentation cannot be built from the sources.'

@@ -1,5 +1,3 @@
-## Process this file with automake to produce Makefile.in
-
 noinst_PROGRAMS = sarlacc_schem
 
 sarlacc_schem_SOURCES = sarlacc_schem.c
@@ -24,7 +22,4 @@ EXTRA_DIST = sarlacc_schem.1.in sarlacc_schem.1
 
 SUFFIXES = .1.in .1
 
-MOSTLYCLEANFILES = *.log *.ps core FILE *~
-CLEANFILES = *.log *.ps core FILE *~
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in
+MAINTAINERCLEANFILES = Makefile.in

@@ -1,4 +1,3 @@
-
 EXTRA_DIST = \
 	agile-vfo-block_1.sch \
 	alignment.sch \
@@ -39,7 +38,4 @@ EXTRA_DIST = \
 	versionsym_minor2.sym \
 	versionsym_minor.sym
 
-MOSTLYCLEANFILES =	*.log *~
-CLEANFILES = 		*.log *~
-DISTCLEANFILES = 	*.log core FILE *~
-MAINTAINERCLEANFILES = 	*.log *~ Makefile.in
+MAINTAINERCLEANFILES = Makefile.in

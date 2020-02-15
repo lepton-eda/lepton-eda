@@ -1,5 +1,3 @@
-## Process this file with automake to produce Makefile.in
-
 noinst_PROGRAMS = gmk_sym convert_sym
 
 dist_noinst_MANS = convert_sym.1 gmk_sym.1
@@ -23,7 +21,4 @@ SUFFIXES = .1.in .1
 AM_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS) $(GUILE_CFLAGS) $(GLIB_CFLAGS) $(GDK_PIXBUF_CFLAGS)
 AM_CPPFLAGS = -I$(top_srcdir)/liblepton/include -I$(top_srcdir)
 
-MOSTLYCLEANFILES = *.log *.ps core FILE *~
-CLEANFILES = *.log *.ps core FILE *~
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in
+MAINTAINERCLEANFILES = Makefile.in

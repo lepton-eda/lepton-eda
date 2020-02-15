@@ -1,4 +1,3 @@
-
 EXTRA_DIST = $(html_man_files) lepton-symcheck.1.in
 
 dist_man_MANS = lepton-symcheck.1
@@ -28,8 +27,5 @@ else
 	@! :
 endif
 
-
-MOSTLYCLEANFILES = *.log *~
 CLEANFILES = $(dist_man_MANS) $(html_man_files)
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~ Makefile.in $(html_man_files)
+MAINTAINERCLEANFILES = Makefile.in $(html_man_files)

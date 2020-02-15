@@ -42,9 +42,9 @@ regen-svg-icons: $(iconsvg)
 	  for f in $(action_icon_files); do \
 	    id=`echo $$f | sed -e's:.png::'`; \
 	    inkscape --export-use-hints \
-	             --export-id=$$id \
-	             --export-png=$(srcdir)/$$f \
-	             $(srcdir)/$(iconsvg); \
+		     --export-id=$$id \
+		     --export-png=$(srcdir)/$$f \
+		     $(srcdir)/$(iconsvg); \
 	  done; \
 	fi
 
@@ -120,8 +120,8 @@ endif
 	$(install_icons_exec) -u $(icons)
 	$(install_theme_icons_exec) -u $(theme_icons)
 
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
+MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = $(desktop_DATA)
 EXTRA_DIST = $(iconsvg) $(action_icon_files) \
-             $(app_icon_files) \
-             $(desktop_in_files) $(desktop_DATA)
+	     $(app_icon_files) \
+	     $(desktop_in_files) $(desktop_DATA)

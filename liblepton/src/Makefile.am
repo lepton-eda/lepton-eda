@@ -1,4 +1,3 @@
-
 # Build a libtool library for installation in libdir.
 lib_LTLIBRARIES = liblepton.la
 
@@ -114,10 +113,8 @@ snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 .c.x:
 	$(AM_V_GEN) CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
-MOSTLYCLEANFILES = *.log core FILE *~
-CLEANFILES = *.log core FILE *~ $(BUILT_SOURCES)
-DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
+CLEANFILES = $(BUILT_SOURCES)
+MAINTAINERCLEANFILES = Makefile.in
 
 # Unfortunately, in order to test libtool thoroughly, we need access
 # to its private directory.
