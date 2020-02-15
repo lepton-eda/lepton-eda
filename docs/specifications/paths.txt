@@ -1,6 +1,6 @@
-==============================
- gEDA Relocatable Directories
-==============================
+===================================
+ Lepton EDA Relocatable Directories
+===================================
 
 :Author: Peter Brett
 :Status: Implemented
@@ -30,15 +30,15 @@ Introduction
 ============
 
 This document describes a new API and approach for liblepton for
-locating gEDA's resource files, configuration files, and other
+locating Lepton's resource files, configuration files, and other
 run-time resources.  In particular, the new API is designed to:
 
-* facilitate relocatable builds (where a gEDA installation tree can be
+* facilitate relocatable builds (where a Lepton installation tree can be
   moved around the system without needing any further configuration)
 
 * improve the experience for Windows users by reducing the number of
   environment variables that need to be correctly configured in order
-  for gEDA to run
+  for Lepton to run
 
 * better respect the *XDG Base Directory Specification* [XDGDIRS]_ on
   UNIX platforms.
@@ -50,13 +50,13 @@ Backwards compatibility
 
 There are some key considerations for backwards compatibility:
 
-1) gEDA historically observes the `$GEDADATA` environment variable by
+1) Lepton historically observes the `$GEDADATA` environment variable by
    using the directory it specifies as the *sole* source of system
    data.  Similarly, `$GEDARCDIR` specifies the directory for system
    configuration.
 
-2) gEDA also historically *ensures* that `$GEDADATA` points to the
-   directory into which gEDA was installed, and there are a lot users
+2) Lepton also historically *ensures* that `$GEDADATA` points to the
+   directory into which Lepton was installed, and there are a lot users
    who depend on that being the case.
 
 3) In the past the installation path (specified with the `--prefix`
@@ -68,7 +68,7 @@ There are some key considerations for backwards compatibility:
 4) The legacy location for user data and configuration is
    `$HOME/.gEDA` (or `$HOMEDRIVE$HOMEPATH/.gEDA` on Windows.
 
-5) Finally, gEDA expects the default configuration files (such as
+5) Finally, Lepton expects the default configuration files (such as
    `system-gafrc`) to be loaded from the installation *data*
    directory.
 
@@ -94,16 +94,16 @@ searched in order.  The list is constructed as follows:
 
 1. If the `$GEDADATA` environment variable is set and deprecated
    features are enabled, it is added to the list.  Otherwise, the
-   "gEDA" subdirectory of each entry in `g_get_system_data_dirs()` is
-   added to the list.
+   "lepton-eda" subdirectory of each entry in
+   `g_get_system_data_dirs()` is added to the list.
 
 2. If neither relocatable builds are enabled nor the target platform
    is Windows, the value of the `GEDADATADIR` preprocessor macro
-   (usually `${prefix}/share/gEDA`) is appended to the list.
+   (usually `${prefix}/share/lepton-eda`) is appended to the list.
 
 3. Finally, if relocatable builds *are* enabled, guess the
-   installation prefix, add the corresponding "share/gEDA" directory
-   to it to, and append it to the list
+   installation prefix, add the corresponding "share/lepton-eda"
+   directory to it to, and append it to the list
 
 For backwards compatibility, if the `$GEDADATA` environment variable
 is not set, then it is set to the first directory in the search path
@@ -126,19 +126,20 @@ follows:
 
 1. If the `$GEDADATARC` environment variable is set and deprecated
    features are enabled, it is added to the list.  Otherwise, if
-   `$GEDADATA` is set and deprecated features are enabled, *that* is
-   added to the list.  Otherwise, the "gEDA" subdirectory of each
-   entry in `g_get_system_config_dirs()` is added to the list.
+   `$GEDADATA` is set and deprecated features are enabled, *that*
+   is added to the list.  Otherwise, the "lepton-eda" subdirectory
+   of each entry in `g_get_system_config_dirs()` is added to the
+   list.
 
 2. If neither relocatable builds are enabled nor the target platform
    is Windows, the value of the `GEDARCDIR` preprocessor macro
-   (usually `${prefix}/share/gEDA`) is appended to the list.
+   (usually `${prefix}/share/lepton-eda`) is appended to the list.
 
 3. Finally, if relocatable builds *are* enabled, guess the
-   installation prefix, add the corresponding "share/gEDA" directory
-   to it to, and append it to the list.  This ensures that the default
-   configuration files in the installation tree are in the
-   configuration search path.
+   installation prefix, add the corresponding "share/lepton-eda"
+   directory to it to, and append it to the list.  This ensures
+   that the default configuration files in the installation tree
+   are in the configuration search path.
 
 Per-user data path
 ------------------
@@ -156,8 +157,8 @@ Per-user data is read from a single directory.
 1. If `$HOME/.gEDA` exists (or `$HOMEDRIVE/$HOMEPATH/.gEDA` on
    Windows), this directory is returned.
 
-2. Otherwise, the `gEDA` subdirectory of `g_get_user_data_dir()` is
-   returned.
+2. Otherwise, the `lepton-eda` subdirectory of
+   `g_get_user_data_dir()` is returned.
 
 Per-user configuration path
 ---------------------------
@@ -175,8 +176,8 @@ Per-user data is stored in a single directory.
 1. If `$HOME/.gEDA` exists (or `$HOMEDRIVE/$HOMEPATH/.gEDA` on
    Windows), this directory is returned.
 
-2. Otherwise, the `gEDA` subdirectory of `g_get_user_config_dir()` is
-   returned.
+2. Otherwise, the `lepton-eda` subdirectory of
+   `g_get_user_config_dir()` is returned.
 
 Related changes
 ===============
