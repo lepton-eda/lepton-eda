@@ -50,7 +50,7 @@ AC_DEFUN([AX_DATA_DIRS],
   # but only if not doing a relocatable build.
   if test "x$enable_relocatable" != "xyes"; then
     LEPTONDATADIR_expand=`eval "echo $LEPTONDATADIR" | sed -e"s:^NONE:$ac_default_prefix:"`
-    AC_DEFINE_UNQUOTED([LEPTONDATADIR], ["LEPTONDATADIR_expand"],
+    AC_DEFINE_UNQUOTED([LEPTONDATADIR], ["$LEPTONDATADIR_expand"],
       [Define to Lepton EDA shared data directory.
 Only liblepton should use this - apps should use eda_get_system_data_dirs()])
 
