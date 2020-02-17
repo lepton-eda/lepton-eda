@@ -98,5 +98,5 @@ tests:
 	echo "failed: $$fail" ; \
 	exit $$fail
 
-DISTCLEANFILES = *.log
+CLEANFILES = *.log
 MAINTAINERCLEANFILES = Makefile.in
