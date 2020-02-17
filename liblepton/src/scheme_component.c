@@ -396,8 +396,11 @@ SCM_DEFINE (component_filename, "%component-filename", 1, 0, 0,
             (SCM component_s),
             "Get component's symbol full file name")
 {
-  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT), component_s,
-              SCM_ARG1, s_component_filename);
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT) ||
+              edascm_is_object_type (component_s, OBJ_PLACEHOLDER),
+              component_s,
+              SCM_ARG1,
+              s_component_filename);
 
   OBJECT* obj = edascm_to_object (component_s);
   const CLibSymbol* sym = s_clib_get_symbol_by_name (obj->component_basename);
