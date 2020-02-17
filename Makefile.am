@@ -94,6 +94,5 @@ uninstall-local:
 	rm -vfr $(DESTDIR)$(pkgdatadir)
 	rm -vfr $(DESTDIR)$(docdir)
 
-
-DISTCLEANFILES = stamp-git
+CLEANFILES = stamp-git
 MAINTAINERCLEANFILES=Makefile.in aclocal.m4 config.h.in configure
