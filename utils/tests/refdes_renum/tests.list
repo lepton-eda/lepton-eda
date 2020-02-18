@@ -1,6 +1,3 @@
-# $Id$
-#
-#
 # Format:
 #
 # test_name | input files | extra flags to pass to refdes_renum | return code if non-zero expected

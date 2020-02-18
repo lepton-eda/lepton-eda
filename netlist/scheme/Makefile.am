@@ -1,5 +1,3 @@
-## $Id$
-##
 bin_SCRIPTS = lepton-netlist
 
 do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \

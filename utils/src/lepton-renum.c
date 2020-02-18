@@ -1,4 +1,3 @@
-/* $Id$ */
 /*	This is lepton-renum, an advanced refdes renumber utility for Lepton EDA's lepton-schematic.
  *
  *	Copyright (C) 2005-2010  Levente Kovacs
