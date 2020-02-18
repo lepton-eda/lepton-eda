@@ -34,8 +34,6 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- *
- * 	$Id$
  */
 
 #include <stdio.h>
@@ -55,16 +53,6 @@
 #ifndef GCC_VERSION
 #define GCC_VERSION (__GNUC__ * 1000 + __GNUC_MINOR__)
 #endif /* GCC_VERSION */
-
-#if GCC_VERSION > 2007
-#define ATTRIBUTE_UNUSED __attribute__((unused))
-#else
-#define ATTRIBUTE_UNUSED
-#endif
-
-#ifndef lint
-static char vcid[] ATTRIBUTE_UNUSED = "$Id$";
-#endif /* lint */
 
 extern char *optarg;
 extern int optind;
