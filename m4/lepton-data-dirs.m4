@@ -23,21 +23,19 @@ dnl Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 AC_DEFUN([AX_DATA_DIRS],
 [
   AC_PREREQ([2.60])dnl
-  AC_REQUIRE([AX_OPTION_RELOCATABLE])dnl
 
   # Check where to install ordinary data files (e.g. symbols and
   # gnetlist backends)
   LEPTONDATADIR="$datarootdir/lepton-eda"
 
-  # Now define some preprocessor symbols with the *expanded* values,
-  # but only if not doing a relocatable build.
-  if test "x$enable_relocatable" != "xyes"; then
+
+  # Define some preprocessor symbols with the *expanded* values:
+  #
     LEPTONDATADIR_expand=`eval "echo $LEPTONDATADIR" | sed -e"s:^NONE:$ac_default_prefix:"`
     AC_DEFINE_UNQUOTED([LEPTONDATADIR], ["$LEPTONDATADIR_expand"],
       [Define to Lepton EDA shared data directory.
 Only liblepton should use this - apps should use eda_get_system_data_dirs()])
 
-  fi
 
   AC_SUBST([LEPTONDATADIR])
 

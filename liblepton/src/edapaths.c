@@ -65,14 +65,6 @@ guess_install_data_dir(void)
 		static const gchar * const *sys_dirs;
 		for (gint i = 0; sys_dirs[i]; ++i, tmp_dir = sys_dirs[i]);
 
-#elif defined(ENABLE_RELOCATABLE)
-		/* Look at /proc/self/exe, if it exists */
-		if (g_file_test("/proc/self/exe", G_FILE_TEST_IS_SYMLINK)) {
-			gchar *bin = canonicalize_file_name("/proc/self/exe");
-			gchar *prefix = dirname(dirname(bin));
-			tmp_dir = g_build_filename(prefix, "share/lepton-eda", NULL);
-			free(bin);
-		}
 #endif
 
 		/* Check that the directory actually exists */
@@ -130,7 +122,7 @@ copy_search_list(const gchar **output,
 		++copied;
 	}
 
-#if !defined(G_OS_WIN32) && !defined(ENABLE_RELOCATABLE)
+#if !defined(G_OS_WIN32)
 	/* Append the configured variables to the list */
 	for (gsize i = 0; cfg_dirs && cfg_dirs[i]; ++i) {
 		if (output) {
