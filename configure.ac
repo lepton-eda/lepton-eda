@@ -165,8 +165,6 @@ AX_OPTION_URI_VIEWER
 AX_OPTION_DOXYGEN
 # XDG desktop files
 AX_OPTION_XDG_DATA
-# KDE 3 desktop files
-AX_OPTION_KDE3_DATA
 # XDG database updates
 AX_OPTION_XDG_DB
 # libstroke support

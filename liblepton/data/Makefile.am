@@ -35,13 +35,6 @@ application_in_files = \
 	x-lepton-schematic.desktop.in \
 	x-lepton-symbol.desktop.in
 
-if ENABLE_KDE_DESKTOP_DATA
-kdedatadir=@KDEDATADIR@
-mimelnkdir = $(kdedatadir)/mimelnk
-applicationdir = $(mimelnkdir)/application
-application_DATA = $(application_in_files:.desktop.in=.desktop)
-endif ENABLE_KDE_DESKTOP_DATA
-
 install_icon_exec = \
 	$(ICON_THEME_INSTALLER) \
 	-t $(theme) \

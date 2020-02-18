@@ -18,40 +18,6 @@ dnl You should have received a copy of the GNU General Public License
 dnl along with this program; if not, write to the Free Software
 dnl Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-# Check where KDE data should be installed (needed for KDE 3)
-AC_DEFUN([AX_OPTION_KDE3_DATA],
-[
-  AC_PREREQ([2.60])dnl
-  AC_MSG_CHECKING([whether to install KDE 3 desktop files])
-
-  AC_ARG_WITH([kdedatadir],
-    AS_HELP_STRING([--with-kdedatadir[[[=DIR]]]],
-      [install KDE 3 desktop files in DIR [[DIR=DATAROOTDIR]]]),
-    # If --with-kdedatadir was specified, need to handle three cases
-    # for its argument: "yes", "no" and an explicit path.
-    [ if test "X$with_kdedatadir" != "Xno"; then
-        AC_MSG_RESULT([yes])
-        AC_MSG_CHECKING([where to install KDE 3 desktop files])
-        # If a path was given to --with-kdedatadir, use that path;
-        # otherwise, use $datadir.
-        if test "X$with_kdedatadir" = "Xyes"; then
-          KDEDATADIR="$datarootdir"
-        else
-          KDEDATADIR="$with_kdedatadir"
-        fi
-        AC_MSG_RESULT([$KDEDATADIR])
-      else
-        AC_MSG_RESULT([no])
-      fi ],
-    [ AC_MSG_RESULT([no]) ])
-
-  AM_CONDITIONAL([ENABLE_KDE_DESKTOP_DATA],
-                 test "X$KDEDATADIR" != "X")
-  AC_SUBST([KDEDATADIR])
-])dnl AX_OPTION_KDE3_DATA
-
-
-
 # Check where XDG data should be installed
 AC_DEFUN([AX_OPTION_XDG_DATA],
 [
