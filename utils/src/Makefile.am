@@ -28,5 +28,4 @@ AM_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS)
 AM_CPPFLAGS = -I$(top_srcdir)/liblepton/include \
 	-I$(top_srcdir) -I$(includedir)
 
-CLEANFILES = olib.c
 MAINTAINERCLEANFILES = Makefile.in
