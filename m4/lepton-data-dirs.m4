@@ -29,23 +29,6 @@ AC_DEFUN([AX_DATA_DIRS],
   # gnetlist backends)
   LEPTONDATADIR="$datarootdir/lepton-eda"
 
-  # Check where to install rc files.  The rc directory name
-  # defaults to "$sysconfdir/" in order to comply with the GNU &
-  # Linux FHS guidelines.
-  AC_ARG_WITH([rcdir],
-    AS_HELP_STRING([--with-rcdir[[[=DIR]]]],
-      [install system config in specific DIR]),
-    [ if test "X$with_rcdir" != "Xno"; then
-        if test "X$with_rcdir" = "Xyes"; then
-          LEPTONRCDIR="$sysconfdir/lepton-eda"
-        else
-          LEPTONRCDIR="$with_rcdir"
-        fi
-      else
-        LEPTONRCDIR="$LEPTONDATADIR"
-      fi ],
-      LEPTONRCDIR="$LEPTONDATADIR")
-
   # Now define some preprocessor symbols with the *expanded* values,
   # but only if not doing a relocatable build.
   if test "x$enable_relocatable" != "xyes"; then
@@ -54,26 +37,13 @@ AC_DEFUN([AX_DATA_DIRS],
       [Define to Lepton EDA shared data directory.
 Only liblepton should use this - apps should use eda_get_system_data_dirs()])
 
-    if test "x$LEPTONRCDIR" != "x"; then
-      LEPTONRCDIR_expand=`eval "echo $LEPTONRCDIR" | sed -e"s:^NONE:$ac_default_prefix:"`
-      AC_DEFINE_UNQUOTED([LEPTONRCDIR], ["$LEPTONRCDIR_expand"],
-        [Define to Lepton EDA rc directory if different from LEPTONDATADIR.
-Only liblepton should use this - apps should use eda_get_system_data_dirs()])
-    fi
-  fi
-
-  if test "x$LEPTONRCDIR" = "x"; then
-    LEPTONRCDIR=$LEPTONDATADIR
   fi
 
   AC_SUBST([LEPTONDATADIR])
-  AC_SUBST([LEPTONRCDIR])
 
   AC_MSG_CHECKING([where to install Lepton shared data (LEPTONDATADIR)])
   AC_MSG_RESULT([$LEPTONDATADIR])
 
-  AC_MSG_CHECKING([where to install Lepton rc files (LEPTONRCDIR)])
-  AC_MSG_RESULT([$LEPTONRCDIR])
 
   # create #define LEPTON_SCM_PRECOMPILE_DIR in config.h:
   #
