@@ -38,4 +38,4 @@ SUFFIXES = .ps .doc .pdf
 nc.pdf: nc.ps
 
 CLEANFILES = *.ps *.pdf
-MAINTAINERCLEANFILES = Makefile.in *.pdf *.ps
+MAINTAINERCLEANFILES = Makefile.in
