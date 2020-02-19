@@ -37,5 +37,4 @@ EXTRA_DIST = \
 SUFFIXES = .1.in .1
 
 CLEANFILES = $(dist_noinst_MANS)
-DISTCLEANFILES = bompp.sh bom_xref.sh sw2asc
-MAINTAINERCLEANFILES = Makefile.in bompp.sh bom_xref.sh sw2asc
+MAINTAINERCLEANFILES = Makefile.in
