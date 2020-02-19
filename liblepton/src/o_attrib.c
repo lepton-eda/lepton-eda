@@ -28,7 +28,7 @@
  *
  *  Attributes are attached to OBJECTs (st_object). Each attribute has
  *  a reference to the object it is attached to. Each object that has
- *  attributes has a list of pionters to its attributes.
+ *  attributes has a list of pointers to its attributes.
  *
  *  \image html o_attrib_overview.png
  *  \image latex o_attrib_overview.pdf "attribute overview" width=14cm
@@ -52,12 +52,9 @@
 
 
 /*! \brief Add an attribute to an existing attribute list.
- *  \par Function Description
- *  Add an attribute to an existing attribute list.
  *
  *  \param [in]  object     The OBJECT we're adding the attribute to.
  *  \param [in]  item       The item you want to add as an attribute.
- *  \return nothing.
  */
 void
 o_attrib_add (OBJECT *object, OBJECT *item)
@@ -69,8 +66,6 @@ o_attrib_add (OBJECT *object, OBJECT *item)
 
 
 /*! \brief Attach existing attribute to an object.
- *  \par Function Description
- *  Attach existing attribute to an object.
  *
  *  \param [in]  attrib       The attribute to be added.
  *  \param [out] object       The object where you want to add item as an attribute.
@@ -114,8 +109,6 @@ o_attrib_attach (OBJECT *attrib,
 
 
 /*! \brief Attach list of existing attributes to an object.
- *  \par Function Description
- *  Attach list of existing attributes to an object.
  *
  *  \param [in]  attr_list  The list of attributes to be added.
  *  \param [out] object     The object where you want to add item as an attribute.
@@ -133,11 +126,9 @@ o_attrib_attach_list (GList *attr_list,
 }
 
 
-/*! \brief Detach all attribute items in a list.
- *  \par Function Description
- *  Detach all attributes from an object.
+/*! \brief Detach all attributes from an object.
  *
- *  \param [in,out] object    The object whos attributes to detach.
+ *  \param [in,out] object    The object whose attributes to detach.
  */
 void
 o_attrib_detach_all (OBJECT *object)
@@ -158,8 +149,6 @@ o_attrib_detach_all (OBJECT *object)
 }
 
 /*! \brief Print all attributes to a Postscript document.
- *  \par Function Description
- *  Print all attributes to a Postscript document.
  *
  *  \param [in] attributes  List of attributes to print.
  */
@@ -201,9 +190,7 @@ o_attrib_remove (GList **list,
   *list = g_list_remove (*list, remove);
 }
 
-/*! \brief Read attributes from a buffer.
- *  \par Function Description
- *  Read attributes from a TextBuffer.
+/*! \brief Read attributes from a TextBuffer.
  *
  *  \param [in]  toplevel               The TOPLEVEL object.
  *  \param [in]  object_to_get_attribs  Object which gets these attribs.
@@ -322,6 +309,7 @@ error:
 
 
 /*! \brief Get name and value from an attribute 'name=value' string.
+ *
  *  \par Function Description
  *  This function parses the character string \a string expected to be
  *  an attribute string of the form 'name=value'.
@@ -380,10 +368,11 @@ o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **v
 
 
 /*! \brief Get name and value from an attribute OBJECT
+ *
  *  \par Function Description
  *  See o_attrib_string_get_name_value() for more details
  *
- *  \param [in]  attrib     The attribute OBJECT whos name/value to return.
+ *  \param [in]  attrib     The attribute OBJECT whose name/value to return.
  *  \param [out] name_ptr   The return location for the name, or NULL.
  *  \param [out] value_ptr  The return location for the value, or NULL.
  *  \return TRUE on success, FALSE otherwise.
@@ -400,6 +389,7 @@ o_attrib_get_name_value (const OBJECT *attrib,
 }
 
 /*! \brief Get the name from an attribute
+ *
  * \par Function Description
  * Get an interned string for the attribute name of the attribute text
  * object \a attrib.  If \a attrib is an invalid attribute, returns
@@ -417,14 +407,11 @@ o_attrib_get_name (const OBJECT *attrib)
 }
 
 /*! \brief Find all floating attributes in the given object list.
- *  \par Function Description
- *  Find all floating attributes in the given object list.
  *
  *  \param [in] list  GList of OBJECTs to search for floating attributes.
  *  \return GList of floating attributes from the input list
  *
- *  \warning
- *  Caller must g_list_free returned list.
+ *  Caller must g_list_free() the returned list.
  */
 GList *o_attrib_find_floating_attribs (const GList *list)
 {
@@ -453,12 +440,12 @@ GList *o_attrib_find_floating_attribs (const GList *list)
  *  \par Function Description
  *  Search for attribute by name.
  *
- *  Counter is the n'th occurance of the attribute, and starts searching
- *  from zero.  Zero is the first occurance of an attribute.
+ *  Counter is the n'th occurrence of the attribute, and starts searching
+ *  from zero.  Zero is the first occurrence of an attribute.
  *
  *  \param [in] list     GList of attributes to search.
  *  \param [in] name     Character string with attribute name to search for.
- *  \param [in] count    Which occurance to return.
+ *  \param [in] count    Which occurrence to return.
  *  \return The n'th attribute object in the given list with the given name.
  */
 OBJECT *o_attrib_find_attrib_by_name (const GList *list,
@@ -488,12 +475,12 @@ OBJECT *o_attrib_find_attrib_by_name (const GList *list,
  *  \par Function Description
  *  Search for attribute by name.
  *
- *  Counter is the n'th occurance of the attribute, and starts searching
- *  from zero.  Zero is the first occurance of an attribute.
+ *  Counter is the n'th occurrence of the attribute, and starts searching
+ *  from zero.  Zero is the first occurrence of an attribute.
  *
  *  \param [in] list     GList of attributes to search.
  *  \param [in] name     Character string with attribute name to search for.
- *  \param [in] counter  Which occurance to return.
+ *  \param [in] counter  Which occurrence to return.
  *  \return Character string with attribute value, NULL otherwise.
  */
 static char *o_attrib_search_attrib_list_by_name (const GList *list,
@@ -516,12 +503,12 @@ static char *o_attrib_search_attrib_list_by_name (const GList *list,
  *  \par Function Description
  *  Search for attribute by name.
  *
- *  Counter is the n'th occurance of the attribute, and starts searching
- *  from zero.  Zero is the first occurance of an attribute.
+ *  Counter is the n'th occurrence of the attribute, and starts searching
+ *  from zero.  Zero is the first occurrence of an attribute.
  *
  *  \param [in] list     GList of OBJECTs to search for floating attributes.
  *  \param [in] name     Character string with attribute name to search for.
- *  \param [in] counter  Which occurance to return.
+ *  \param [in] counter  Which occurrence to return.
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
@@ -546,12 +533,12 @@ char *o_attrib_search_floating_attribs_by_name (const GList *list,
  *  \par Function Description
  *  Search for attribute by name.
  *
- *  Counter is the n'th occurance of the attribute, and starts searching
- *  from zero.  Zero is the first occurance of an attribute.
+ *  Counter is the n'th occurrence of the attribute, and starts searching
+ *  from zero.  Zero is the first occurrence of an attribute.
  *
- *  \param [in] object   The OBJECT whos attached attributes to search.
+ *  \param [in] object   The OBJECT whose attached attributes to search.
  *  \param [in] name     Character string with attribute name to search for.
- *  \param [in] counter  Which occurance to return.
+ *  \param [in] counter  Which occurrence to return.
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
@@ -569,12 +556,12 @@ char *o_attrib_search_attached_attribs_by_name (OBJECT *object,
  *  \par Function Description
  *  Search for attribute by name.
  *
- *  Counter is the n'th occurance of the attribute, and starts searching
- *  from zero.  Zero is the first occurance of an attribute.
+ *  Counter is the n'th occurrence of the attribute, and starts searching
+ *  from zero.  Zero is the first occurrence of an attribute.
  *
- *  \param [in] object   The OBJECT whos inherited attributes to search.
+ *  \param [in] object   The OBJECT whose inherited attributes to search.
  *  \param [in] name     Character string with attribute name to search for.
- *  \param [in] counter  Which occurance to return.
+ *  \param [in] counter  Which occurrence to return.
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
@@ -591,20 +578,19 @@ char *o_attrib_search_inherited_attribs_by_name (OBJECT *object,
 }
 
 
-/*! \brief Search attributes of object by name.
- *  \par Function Description
- *  Search for attribute by name.
+/*! \brief Search attached and inherited attributes of object by name.
  *
- *  Counter is the n'th occurance of the attribute, and starts searching
- *  from zero.  Zero is the first occurance of an attribute.
+ *  \par Function Description
+ *
+ *  Counter is the n'th occurrence of the attribute, and starts searching
+ *  from zero.  Zero is the first occurrence of an attribute.
+ *
+ *  Caller must g_free() the returned character string.
  *
  *  \param [in] object   OBJECT who's attributes to search.
  *  \param [in] name     Character string with attribute name to search for.
- *  \param [in] counter  Which occurance to return.
- *  \return Character string with attribute value, NULL otherwise.
- *
- *  \warning
- *  Caller must g_free returned character string.
+ *  \param [in] counter  Which occurrence to return.
+ *  \return              Attribute value, NULL if not found.
  */
 char *o_attrib_search_object_attribs_by_name (OBJECT *object,
                                               const char *name,
@@ -621,19 +607,19 @@ char *o_attrib_search_object_attribs_by_name (OBJECT *object,
 }
 
 
-/*! \brief Get all attached attributes of the specified OBJECT.
- *  \par Function Description
- *  This function returns all attributes of the specified object.
+/*! \brief Get object's attached and inherited attributes.
  *
- *  The returned GList should be freed using the #g_list_free().
+ *  \par Function Description
  *
  *  This function aggregates the attached and inherited attributes
- *  belonging to a given OBJECT. (inherited attributes are those
- *  which live as toplevel un-attached attributes inside in a
- *  component OBJECT's prim_objs).
+ *  belonging to a given OBJECT into one GList and returns it.
+ *  Inherited attributes are those which live as toplevel un-attached
+ *  attributes inside in a component OBJECT's prim_objs.
  *
- *  \param [in] object       OBJECT whos attributes to return.
- *  \return A GList of attributes belinging to the passed object.
+ *  Caller must g_list_free() the returned GList.
+ *
+ *  \param [in] object  OBJECT whose attributes to return.
+ *  \return             A GList of attached and inherited attributes.
  */
 GList * o_attrib_return_attribs (OBJECT *object)
 {
@@ -675,13 +661,14 @@ GList * o_attrib_return_attribs (OBJECT *object)
 }
 
 
-/*! \brief Query whether a given attribute OBJECT is "inherited"
+/*! \brief Query whether a given attribute OBJECT is "inherited".
+ *
  *  \par Function Description
  *  This function returns TRUE if the given attribute OBJECT is a
  *  toplevel un-attached attribute inside a component's prim_objs.
  *
  *  \param [in] attrib       OBJECT who's status to query.
- *  \return TRUE if the given attribute is inside a symbol
+ *  \return TRUE if the attribute is inherited, FALSE otherwise.
  */
 int o_attrib_is_inherited (const OBJECT *attrib)
 {
@@ -689,9 +676,9 @@ int o_attrib_is_inherited (const OBJECT *attrib)
           attrib->parent != NULL);
 }
 
-/*! \brief Query whether an object is an attribute
- * \par Function Description
- * Return #TRUE if \a obj is a text attribute, and #FALSE otherwise.
+/*! \brief Query whether an object is an attribute.
+ *
+ *  \return  TRUE if \a obj is an attribute, FALSE otherwise.
  */
 gboolean
 o_attrib_is_attrib (const OBJECT *obj)
