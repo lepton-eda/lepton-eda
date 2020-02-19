@@ -37,5 +37,5 @@ SUFFIXES = .ps .doc .pdf
 #
 nc.pdf: nc.ps
 
-CLEANFILES = *.ps *.pdf
+CLEANFILES = $(BUILT_SOURCES)
 MAINTAINERCLEANFILES = Makefile.in
