@@ -24,14 +24,11 @@
 (use-modules (geda deprecated))
 
 
-; scheme-directory dir
+; Function: scheme-directory( dir )
 ;
-; This keyword allows additional directories to be added to the list
-; of directories which are used by gEDA to load Scheme code.
-; Environment variables in 'dir' are expanded.  By default,
-; '${GEDADATA}/scheme' is in the load path, as are all of the standard
-; Guile Scheme libraries.
-;(scheme-directory "${HOME}/.gEDA/scheme")
+; Allows additional directories to be added to the list
+; of directories which are used by Lepton EDA to load Scheme code.
+; Environment variables in 'dir' are expanded.
 
 
 ;;;; Color maps

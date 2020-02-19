@@ -39,7 +39,6 @@ static const gchar* const DATA_XDG_SUBDIR = "lepton-eda";
 
 #if defined(ENABLE_DEPRECATED)
 static const gchar* const DATA_GUESS_FILE = "scheme/geda.scm";
-static const gchar* const USER_DOTDIR     = ".gEDA";
 #endif
 
 /* ================================================================
@@ -236,20 +235,6 @@ eda_paths_init_env(void)
 #endif /* ENABLE_DEPRECATED */
 }
 
-static gchar *
-get_user_dotdir(void)
-{
-#if defined(ENABLE_DEPRECATED)
-	gchar *dotdir = g_build_filename(g_get_home_dir(),
-	                                 USER_DOTDIR, NULL);
-	if (g_file_test(dotdir, G_FILE_TEST_IS_DIR)) {
-		return dotdir;
-	}
-	g_free(dotdir);
-#endif /* ENABLE_DEPRECATED */
-	return NULL;
-}
-
 /* ================================================================
  * Public accessors
  * ================================================================ */
@@ -367,45 +352,48 @@ eda_get_system_config_dirs()
 
 
 
-const gchar *
-eda_get_user_data_dir(void)
+/*! \brief Get user's data directory (e.g. ~/.local/share/lepton-eda).
+ */
+const gchar*
+eda_get_user_data_dir()
 {
-	static gchar *user_data_dir;
+  static gchar* user_data_dir;
 
-	if (g_once_init_enter(&user_data_dir)) {
-		gchar *dir = get_user_dotdir();
+  if (g_once_init_enter (&user_data_dir))
+  {
+    gchar* dir = g_build_filename (g_get_user_data_dir(),
+                                   PACKAGE, NULL);
 
-		if (!dir) {
-			dir = g_build_filename(g_get_user_data_dir(),
+    g_once_init_leave (&user_data_dir, dir);
+  }
 
-			                       DATA_XDG_SUBDIR, NULL);
-		}
-
-		g_once_init_leave(&user_data_dir, dir);
-	}
-
-	return user_data_dir;
+  return user_data_dir;
 }
 
-const gchar *
-eda_get_user_config_dir(void)
+
+
+/*! \brief Get user's configuration directory (e.g. ~/.config/lepton-eda).
+ */
+const gchar*
+eda_get_user_config_dir()
 {
-	static gchar *user_config_dir;
+  static gchar* user_config_dir;
 
-	if (g_once_init_enter(&user_config_dir)) {
-		gchar *dir = get_user_dotdir();
+  if (g_once_init_enter (&user_config_dir))
+  {
+    gchar* dir = g_build_filename (g_get_user_config_dir(),
+                                   PACKAGE, NULL);
 
-		if (!dir) {
-			dir = g_build_filename(g_get_user_config_dir(),
-			                       DATA_XDG_SUBDIR, NULL);
-		}
+    g_once_init_leave (&user_config_dir, dir);
+  }
 
-		g_once_init_leave(&user_config_dir, dir);
-	}
-
-	return user_config_dir;
+  return user_config_dir;
 }
 
+
+
+/*! \brief Get user's cache directory (e.g. ~/.cache/lepton-eda).
+ */
 const gchar*
 eda_get_user_cache_dir()
 {
@@ -414,7 +402,7 @@ eda_get_user_cache_dir()
   if (g_once_init_enter (&user_cache_dir))
   {
     gchar* dir = g_build_filename (g_get_user_cache_dir(),
-                                   DATA_XDG_SUBDIR, NULL);
+                                   PACKAGE, NULL);
 
     g_once_init_leave (&user_cache_dir, dir);
   }
