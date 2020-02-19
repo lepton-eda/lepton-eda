@@ -28,4 +28,4 @@ else
 endif
 
 CLEANFILES = $(dist_man_MANS) $(html_man_files)
-MAINTAINERCLEANFILES = Makefile.in $(html_man_files)
+MAINTAINERCLEANFILES = Makefile.in
