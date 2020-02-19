@@ -1267,11 +1267,18 @@ load_extra_project_files (void)
   if (done)
     return;
 
+  /* TODO: rename project files ("gsch2pcb") */
+
+  /* TODO: consider linking sch2pcb with liblepton and
+   *       using eda_get_system_config_dirs() here:
+  */
   load_project ("/etc/gsch2pcb");
   load_project ("/usr/local/etc/gsch2pcb");
 
-  path = g_build_filename ((gchar *) g_get_home_dir (), ".gEDA",
-                           "gsch2pcb", NULL);
+  path = g_build_filename (g_get_user_config_dir(),
+                           PACKAGE,
+                           "gsch2pcb",
+                           NULL);
   load_project (path);
   g_free (path);
 
