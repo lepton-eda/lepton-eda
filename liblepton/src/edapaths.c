@@ -318,55 +318,54 @@ eda_get_system_data_dirs()
 
 
 
-/*!
- * \brief Get an ordered list of Lepton EDA configuration directories
- * \par Function Description
- * Return an ordered list of directories to be searched for
- * system-wide Lepton configuration.  This list is computed as
- * follows:
+/*! \brief Get an ordered list of system-wide configuration directories.
  *
- * 1. If the $GEDADATARC environment variable is set, add it to the
- *    list.  Otherwise, if $GEDADATA is set, add that to the list.
- *
- * 2. If neither environment variable is set, add the "lepton-eda"
- *    subdirectory of each of the platform-specific system-wide
- *    application directories, as provided by
- *    g_get_system_config_dirs().
- *
- * 3. For non-relocatable builds the configuration installation
- *    directory configured at build time is appended to the list.
- *
- * \return An ordered list of directories to be searched for system
- * configuration.
+ *  \return Immutable NULL-terminated string array.
  */
-const gchar * const *
-eda_get_system_config_dirs(void)
+const gchar* const*
+eda_get_system_config_dirs()
 {
-	static const gchar **system_config_dirs;
+  static const gchar** system_config_dirs;
 
-	if (g_once_init_enter(&system_config_dirs)) {
-		const gchar * const env_names[] = { CONFIG_ENV, DATA_ENV, NULL };
-		const gchar * const * xdg_dirs = g_get_system_config_dirs();
-		const gchar * const cfg_dirs[] = { LEPTONRCDIR, NULL };
+  if (g_once_init_enter (&system_config_dirs))
+  {
+    const gchar* const* dirs = g_get_system_config_dirs();
 
-		const gchar **dirs =
-			build_search_list(env_names, xdg_dirs, cfg_dirs);
+    /* determine [dirs] array size:
+     */
+    int count = 0;
+    for ( ; dirs[count] != NULL; ++count )
+    {
+    }
+
+    ++ count; /* for LEPTONDATADIR */
+    ++ count; /* for terminating NULL element */
+
+
+    const gchar** result = g_new0 (const gchar*, count);
+
+    int ndx = 0;
+    for ( ; dirs[ ndx ] != NULL; ++ndx )
+    {
+      result[ ndx ] = g_build_filename (dirs[ ndx ], PACKAGE, NULL);
+    }
+
+    result[ ndx ]   = LEPTONDATADIR; /* defined in config.h */
+    result[ ++ndx ] = NULL;
 
 #ifdef DEBUG
     fprintf (stderr, "\n");
-    dbg_out_dirs (env_names, "eda_get_system_config_dirs()::env_names");
-    dbg_out_dirs (xdg_dirs,  "eda_get_system_config_dirs()::xdg_dirs");
-    dbg_out_dirs (cfg_dirs,  "eda_get_system_config_dirs()::cfg_dirs");
-    fprintf (stderr, "\n");
-    dbg_out_dirs (dirs, "eda_get_system_config_dirs()::dirs (combined)");
-    fprintf (stderr, "\n");
+    dbg_out_dirs (result, "eda_get_system_config_dirs()");
 #endif
 
-		g_once_init_leave(&system_config_dirs, dirs);
-	}
+    g_once_init_leave (&system_config_dirs, result);
+  }
 
-	return system_config_dirs;
-}
+  return system_config_dirs;
+
+} /* eda_get_system_config_dirs() */
+
+
 
 const gchar *
 eda_get_user_data_dir(void)
