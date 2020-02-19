@@ -7,5 +7,3 @@ noinst_HEADERS = \
 	struct.h \
 	gtkextra-marshal.h \
 	gettext.h
-
-MAINTAINERCLEANFILES = Makefile.in

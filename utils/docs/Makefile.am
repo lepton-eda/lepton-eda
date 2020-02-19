@@ -71,7 +71,6 @@ else
 endif
 
 CLEANFILES = $(dist_man_MANS) $(html_man_files)
-MAINTAINERCLEANFILES = Makefile.in
 
 distclean-local:
 	-rm -rf html latex

@@ -68,4 +68,3 @@ EXTRA_DIST = $(mime_icon_files) $(mime_icon_sources) \
 	     $(xml_in_files) $(application_in_files)
 
 CLEANFILES = $(xml_DATA)
-MAINTAINERCLEANFILES = Makefile.in

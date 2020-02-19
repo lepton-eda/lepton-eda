@@ -44,5 +44,3 @@ nobase_example_DATA = \
 	ps/gTAG.ps
 
 EXTRA_DIST = ChangeLog-1.0 $(nobase_example_DATA)
-
-MAINTAINERCLEANFILES = Makefile.in

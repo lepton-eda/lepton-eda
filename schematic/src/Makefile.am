@@ -160,4 +160,3 @@ localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 CLEANFILES = $(BUILT_SOURCES)
-MAINTAINERCLEANFILES = Makefile.in

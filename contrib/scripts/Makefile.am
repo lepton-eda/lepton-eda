@@ -37,4 +37,3 @@ EXTRA_DIST = \
 SUFFIXES = .1.in .1
 
 CLEANFILES = $(dist_noinst_MANS)
-MAINTAINERCLEANFILES = Makefile.in

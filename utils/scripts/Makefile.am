@@ -39,4 +39,3 @@ lepton-upcfg: lepton-upcfg.in
 	chmod +x $@
 
 CLEANFILES = lepton-archive lepton-embed lepton-tragesym lepton-upcfg
-MAINTAINERCLEANFILES = Makefile.in

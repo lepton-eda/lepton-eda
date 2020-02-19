@@ -55,4 +55,3 @@ nobase_dist_scmdata_DATA = \
 	symcheck/report.scm
 
 CLEANFILES = $(bin_SCRIPTS)
-MAINTAINERCLEANFILES = Makefile.in

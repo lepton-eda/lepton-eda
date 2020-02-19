@@ -95,4 +95,4 @@ uninstall-local:
 	rm -vfr $(DESTDIR)$(docdir)
 
 CLEANFILES = stamp-git
-MAINTAINERCLEANFILES=Makefile.in aclocal.m4 config.h.in configure
+MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure

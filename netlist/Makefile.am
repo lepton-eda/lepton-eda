@@ -10,5 +10,3 @@ ChangeLog: $(top_builddir)/stamp-git
 	  echo "WARNING: ChangeLog information not available from git" >&2 ; \
 	) > $@
 endif HAVE_GIT_REPO
-
-MAINTAINERCLEANFILES = Makefile.in

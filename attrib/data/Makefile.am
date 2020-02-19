@@ -49,7 +49,6 @@ if ENABLE_UPDATE_XDG_DATABASE
 endif
 	$(install_icon_exec) -u $(theme_icons)
 
-MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = $(desktop_DATA)
 EXTRA_DIST = $(app_icon_files) \
 	     $(desktop_in_files) $(desktop_DATA)

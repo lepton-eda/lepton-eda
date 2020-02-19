@@ -18,4 +18,3 @@ EXTRA_DIST = olib.1 olib.1.in README.olib
 SUFFIXES = .1.in .1
 
 CLEANFILES = olib.c olib.1
-MAINTAINERCLEANFILES = Makefile.in

@@ -35,5 +35,3 @@ nobase_example_DATA = \
 	sym/vdc-1.sym
 
 EXTRA_DIST = $(nobase_example_DATA)
-
-MAINTAINERCLEANFILES = Makefile.in

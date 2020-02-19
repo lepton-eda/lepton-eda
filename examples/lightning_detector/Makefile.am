@@ -18,5 +18,3 @@ nobase_example_DATA = \
 	sym/title-A4.sym
 
 EXTRA_DIST = $(nobase_example_DATA)
-
-MAINTAINERCLEANFILES = Makefile.in

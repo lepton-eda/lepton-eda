@@ -99,4 +99,3 @@ tests:
 	exit $$fail
 
 CLEANFILES = *.log
-MAINTAINERCLEANFILES = Makefile.in

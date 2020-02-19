@@ -18,7 +18,6 @@ else
 	@echo 'The documentation cannot be built from the sources.'
 endif
 
-MAINTAINERCLEANFILES = Makefile.in
 
 distclean-local:
 	-rm -rf html latex

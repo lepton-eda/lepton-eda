@@ -84,4 +84,3 @@ endif
 SUFFIXES = .x .1.in .1 .html
 
 CLEANFILES = $(BUILT_SOURCES) $(dist_man_MANS) $(html_man_files)
-MAINTAINERCLEANFILES = ChangeLog

@@ -51,5 +51,3 @@ endif INSTALL_COMPAT_SYMLINKS
 
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
-
-MAINTAINERCLEANFILES = Makefile.in

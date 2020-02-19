@@ -114,7 +114,6 @@ snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(AM_V_GEN) CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
 CLEANFILES = $(BUILT_SOURCES)
-MAINTAINERCLEANFILES = Makefile.in
 
 # Unfortunately, in order to test libtool thoroughly, we need access
 # to its private directory.

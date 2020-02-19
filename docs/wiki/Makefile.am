@@ -40,5 +40,3 @@ uninstall-local:
 	    (cd "$$d" && rm -f $$list) || exit $$?; \
 	  fi; \
 	done
-
-MAINTAINERCLEANFILES = Makefile.in

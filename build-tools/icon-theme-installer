@@ -52,7 +52,6 @@
 #	uninstall-hook:
 #		$(install_icon_exec) -u $(theme_icons)
 #
-#	MAINTAINERCLEANFILES = Makefile.in
 #	EXTRA_DIST = $(wildcard *.svg *.png)
 # ---------------
 #

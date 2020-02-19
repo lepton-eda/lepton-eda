@@ -27,5 +27,3 @@ endif INSTALL_COMPAT_SYMLINKS
 AM_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS)
 AM_CPPFLAGS = -I$(top_srcdir)/liblepton/include \
 	-I$(top_srcdir) -I$(includedir)
-
-MAINTAINERCLEANFILES = Makefile.in

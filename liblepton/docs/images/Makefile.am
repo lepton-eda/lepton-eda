@@ -24,4 +24,4 @@ images: $(png_images) $(pdf_images)
 
 SUFFIXES = .svg .pdf .png
 
-MAINTAINERCLEANFILES = Makefile.in $(png_images) $(pdf_images)
+MAINTAINERCLEANFILES = $(png_images) $(pdf_images)

@@ -95,4 +95,3 @@ update-cli-tool:
 .PHONY: update-cli-tool
 
 CLEANFILES = lepton/core/gettext.scm unit-tests/dummy.sym unit-tests/dummy.xpm
-MAINTAINERCLEANFILES = Makefile.in

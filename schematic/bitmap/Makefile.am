@@ -28,5 +28,3 @@ bitmapdata_DATA = \
 EXTRA_DIST = $(bitmapdata_DATA)                                          \
 	     README                                                      \
 	     gschem-about-logo.xcf
-
-MAINTAINERCLEANFILES = Makefile.in

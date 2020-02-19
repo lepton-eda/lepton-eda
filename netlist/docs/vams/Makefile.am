@@ -3,5 +3,3 @@ EXTRA_DIST = content.txt syntax_architecture.txt syntax_entity.txt \
 
 docsreadmedir = $(docdir)/readmes
 docsreadme_DATA = vams_mode.txt syntax_architecture.txt syntax_entity.txt
-
-MAINTAINERCLEANFILES = Makefile.in

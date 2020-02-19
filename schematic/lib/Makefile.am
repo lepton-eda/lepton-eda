@@ -16,4 +16,3 @@ system-gschemrc: $(top_builddir)/configure system-gschemrc.scm
 EXTRA_DIST = system-gschemrc.scm gschem-gtkrc gschem-colormap-lightbg gschem-colormap-darkbg gschem-colormap-bw
 
 CLEANFILES = system-gschemrc
-MAINTAINERCLEANFILES = Makefile.in

@@ -120,7 +120,6 @@ endif
 	$(install_icons_exec) -u $(icons)
 	$(install_theme_icons_exec) -u $(theme_icons)
 
-MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = $(desktop_DATA)
 EXTRA_DIST = $(iconsvg) $(action_icon_files) \
 	     $(app_icon_files) \

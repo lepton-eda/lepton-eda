@@ -8,5 +8,3 @@ EXTRA_DIST= \
 	someold1.sch \
 	someold2.sch \
 	someold3.sch
-
-MAINTAINERCLEANFILES = Makefile.in

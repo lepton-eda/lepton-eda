@@ -14,5 +14,3 @@ EXTRA_DIST = \
 	multiplex_1.sch \
 	stack_1.sch \
 	README.agile
-
-MAINTAINERCLEANFILES = Makefile.in

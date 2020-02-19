@@ -37,5 +37,3 @@ EXTRA_DIST = \
 	versionsym_major.sym \
 	versionsym_minor2.sym \
 	versionsym_minor.sym
-
-MAINTAINERCLEANFILES = Makefile.in

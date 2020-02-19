@@ -19,5 +19,3 @@ SUBDIRS = vhdl
 
 EXTRA_DIST = README gschemrc geda.conf generate_netlist.scm \
 	$(sch_files) $(sym_files)
-
-MAINTAINERCLEANFILES = Makefile.in

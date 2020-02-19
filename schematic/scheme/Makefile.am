@@ -50,4 +50,3 @@ schematic/gschemdoc.scm: schematic/gschemdoc.scm.in
 EXTRA_DIST = schematic/gschemdoc.scm.in
 
 CLEANFILES = schematic/gschemdoc.scm schematic/precompile-config.scm
-MAINTAINERCLEANFILES = Makefile.in

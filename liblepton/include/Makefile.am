@@ -60,5 +60,3 @@ noinst_HEADERS = \
 	libgeda_priv.h \
 	prototype_priv.h \
 	libgedaguile_priv.h
-
-MAINTAINERCLEANFILES = Makefile.in

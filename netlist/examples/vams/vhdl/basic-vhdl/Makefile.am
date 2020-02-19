@@ -7,5 +7,3 @@ EXTRA_DIST = bjt_transistor_simple.vhdl bjt_transistor_simple_arc.vhdl \
 	     voltage_dependend_capacitor.vhdl \
 	     voltage_dependend_capacitor_arc.vhdl voltage_source.vhdl \
 	     voltage_source_arc.vhdl
-
-MAINTAINERCLEANFILES = Makefile.in

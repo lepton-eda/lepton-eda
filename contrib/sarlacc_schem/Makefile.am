@@ -21,5 +21,3 @@ EXTRA_DIST = sarlacc_schem.1.in sarlacc_schem.1
 	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" -e"s:[@]YEAR@:$$y:" < $< > $@
 
 SUFFIXES = .1.in .1
-
-MAINTAINERCLEANFILES = Makefile.in
