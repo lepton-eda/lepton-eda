@@ -37,10 +37,8 @@
 ;; usually return #f if gEDA was compiled with --disable-deprecated.
 ;; Use the sys-data-dirs and sys-config-dirs functions from the (geda
 ;; os) module instead.
-(define geda-data-path (or (getenv "GEDADATA")
-                           (last (sys-data-dirs))))
-(define geda-rc-path (or (getenv "GEDADATARC") (getenv "GEDADATA")
-                         (last (sys-config-dirs))))
+(define geda-data-path (last (sys-data-dirs)))
+(define geda-rc-path (last (sys-config-dirs)))
 
 (define (build-path first . rest)
   "Build path from one or more path components, separating them by
