@@ -25,7 +25,7 @@ ac_script=configure.ac
 am_version=1.11.0
 aclocal_flags="$ACLOCAL_FLAGS -I m4"
 tooldir=build-tools
-podirs="liblepton/po cli/po schematic/po gattrib/po gnetlist/po symcheck/po"
+podirs="liblepton/po cli/po schematic/po attrib/po netlist/po symcheck/po"
 
 srcdir=`dirname $0`
 if test "x$srcdir" = x ; then srcdir=.; fi
