@@ -84,7 +84,6 @@ tests:
 	[ -e $$ERRORLOG ] && rm $$ERRORLOG; \
 	for file in $(abs_srcdir)/*.sym; do \
 	  base=`basename $$file`; \
-	  GEDADATARC="${abs_top_builddir}/liblepton/lib" \
 	  $(SHELL) $(srcdir)/runtest.sh $$file; \
 	  if [ $$? -ne 0 ]; then \
 	     echo "FAIL: $$base"; \
