@@ -47,7 +47,6 @@
 void
 g_rc_parse_gtkrc(void)
 {
-#if defined(ENABLE_DEPRECATED)
 	gchar *filename;
 
 	/* Search for the first gschem-gtkrc file in the system
@@ -65,7 +64,6 @@ g_rc_parse_gtkrc(void)
 	                             "gschem-gtkrc", NULL);
   gtk_rc_parse (filename);
   g_free (filename);
-#endif /* ENABLE_DEPRECATED */
 }
 
 /*! \brief Verify the version of the RC file under evaluation.
