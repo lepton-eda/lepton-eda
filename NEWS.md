@@ -16,15 +16,26 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
 has been renamed to `autoload`.
 
 ### Changes when building from source:
+- Detection of installed `Guile` run-time and development packages
+  has been improved. Previously, after introducing support for
+  Guile 2.2, some users could encounter difficulties with building
+  from source when Guile development headers were distributed in
+  separate packages in their distribution and there was two
+  different Guile versions (2.0 and 2.2) installed on their
+  systems.  They could get misterious error messages about
+  applying a wrong object type.  Point is that Guile 2.0 and Guile
+  2.2 use incompatible binary code format for compiled programs.
+  Now Lepton build system checks what development packages are
+  installed on user's system and chooses a correct version of
+  Guile for compilation.  If it is impossible due to missing
+  required package, it reports the error on the configure stage.
+
 - Building of the Scheme API HTML documentation with multiple
   make jobs on FreeBSD has been fixed.
 
 - `icon-theme-installer` script has been fixed by simplifying
   its command line arguments checks, which makes it more portable
   among various build environments.
-
-- Detection of installed `Guile` run-time and development
-packages has been improved.
 
 ### Scheme API changes:
 - The module `(geda log-rotate)` has been renamed to `(lepton
