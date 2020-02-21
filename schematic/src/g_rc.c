@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,33 +19,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
-#include <version.h>
-
-#include <stdio.h>
-#include <sys/stat.h>
-#include <ctype.h>
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
+#include "version.h"
 #include "gschem.h"
 
-/*!
- *  \brief Load gschem's GTK+ resource files
+/*! \brief Load GTK resource files
+ *
  *  \par Function Description
- *  Load GTK system and user resource files.  These can be used to
- *  customize gschem's appearance.  The first such file in the system
- *  configuration file is loaded, followed by any resource file in the
- *  per-user configuration directory.
+ *  Search system and user configuration directories for
+ *  lepton-gtkrc files and load them in sequence.
  */
 void
-g_rc_parse_gtkrc(void)
+g_rc_parse_gtkrc()
 {
 	gchar *filename;
 
@@ -53,7 +37,7 @@ g_rc_parse_gtkrc(void)
 	 * configuration path. */
 	const gchar * const * sys_dirs = eda_get_system_config_dirs();
 	for (gint i = 0; sys_dirs[i]; ++i) {
-		filename = g_build_filename (sys_dirs[i], "gschem-gtkrc", NULL);
+		filename = g_build_filename (sys_dirs[i], "lepton-gtkrc", NULL);
 		if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
 			gtk_rc_parse (filename);
 		}
@@ -61,7 +45,7 @@ g_rc_parse_gtkrc(void)
 	}
 
 	filename = g_build_filename (eda_get_user_config_dir(),
-	                             "gschem-gtkrc", NULL);
+	                             "lepton-gtkrc", NULL);
   gtk_rc_parse (filename);
   g_free (filename);
 }
