@@ -370,6 +370,9 @@ enables or disables tooltips for tab header widgets in tabbed GUI.
 - The `Single Attribute Editor` dialog can now be accepted by
 pressing the `Enter` key when the `Name` field is focused.
 
+- Fixed crashes on printing via the menu 'File → Print...' on some
+  systems.
+
 ### Changes in `examples`:
 - `RF_Amp` and `TwoStageAmp` examples have been updated to make
   SPICE simulation work properly.
