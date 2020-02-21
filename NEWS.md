@@ -126,6 +126,60 @@ values are listed in parenthesis):
 - A new module, `(netlist mode)`, has been added. It contains
   accessor functions for current netlisting mode.
 
+- A new module, `(netlist schematic-port)` has been added. It
+  defines a new record, `<schematic-port>`, which contains info
+  about connections via ports between hierarchical levels.
+
+- A new module, `(netlist schematic-named-connection)`, has been
+  added. It contains functions for merging connections by net
+  name.
+
+- A new module, `(netlist subschematic)`, has been added. It
+  defines a new record, `<subschematic>`, which extends
+  `<#geda-page>` internal C structure and contains various netlist
+  related fields.
+
+- The `<package-pin>` record now has several new fields:
+  - `net-map` is defined for virtual pins created from the
+    *"net="* attribute.
+  - `parent` contains link to the parent component of a pin.
+  - `netname` collects the *"netname="* attribute values of the
+    nets connecting to a pin.
+
+- A new field, `pins`, has been added to the
+  `<schematic-connection>` record. For a connection object, it
+  contains `<package-pin>` objects that belong to the connection.
+
+- A new field, `subschematic`, has been added to the `<schematic>`
+  record. It contains toplevel multi-page `<subschematic>` of
+  `<schematic>`, thus allowing recursive access to low level
+  subschematics.
+
+- A new field, `subschematic`, has been added to the
+  `<schematic-component>` record. It contains its parent
+  `<subschematic> record.
+
+- A new field, `port`, has been added to the
+  `<schematic-component>` record. The field contains port
+  (`<schematic-port>` record) for components being port components
+  in subcircuits.
+
+- A new field, `net-maps`, has been added to the
+  `<schematic-component>` record.  It provides info on net mapping
+  for the component pins.
+
+- A new field, `tag`, has been added to the
+  `<schematic-connection>` record, to simplify construction of
+  names for hierarchical connections.
+
+- A new field, `named-connection`, has been added to the
+  `<package-pin>` record, which contains the parent
+  `<named-connection>` of a pin instance.
+
+- Fixed wrong usage of the *"netname="* attribute instead of
+  *"net="* when the `netname-priority` config setting is set to
+  false (`#f`), that is, when *"net="* should be preferred.
+
 - The module `(netlist page)` has been eliminated in favour of the
   `(lepton page)` module.  All functions from the former have been
   moved to the latter.  The procedure `filename->page()` has been
