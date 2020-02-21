@@ -180,6 +180,9 @@ values are listed in parenthesis):
   *"net="* when the `netname-priority` config setting is set to
   false (`#f`), that is, when *"net="* should be preferred.
 
+- Fixed issue with output of wrong warnings about renaming nets
+  with the same name (shorted to themselves).
+
 - The module `(netlist page)` has been eliminated in favour of the
   `(lepton page)` module.  All functions from the former have been
   moved to the latter.  The procedure `filename->page()` has been
