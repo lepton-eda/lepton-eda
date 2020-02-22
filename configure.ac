@@ -169,8 +169,6 @@ AX_OPTION_XDG_DB
 AX_OPTION_STROKE
 # attrib
 AX_OPTION_ATTRIB
-# geda-gaf compatibility symlinks
-AX_OPTION_COMPAT_SYMLINKS
 # contributed software
 AX_OPTION_CONTRIB
 
