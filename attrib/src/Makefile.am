@@ -37,17 +37,5 @@ lepton_attrib_LDFLAGS = $(GLIB_LIBS) $(GTK_LIBS) $(GTHREAD_LIBS) \
 lepton_attrib_LDADD = $(top_builddir)/liblepton/src/liblepton.la
 
 
-if INSTALL_COMPAT_SYMLINKS
-NAME = lepton-attrib$(EXEEXT)
-COMPAT_NAME = gattrib$(EXEEXT)
-install-exec-hook:
-	cd $(DESTDIR)$(bindir) && \
-	if [ -h $(COMPAT_NAME) ]; then rm -f $(COMPAT_NAME); fi && \
-	ln -s $(NAME) $(COMPAT_NAME)
-uninstall-hook:
-	rm -f $(DESTDIR)$(bindir)/$(COMPAT_NAME)
-endif INSTALL_COMPAT_SYMLINKS
-
-
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@

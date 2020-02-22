@@ -45,16 +45,6 @@ snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 .c.x:
 	$(AM_V_GEN) CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
-if INSTALL_COMPAT_SYMLINKS
-NAME = lepton-cli$(EXEEXT)
-COMPAT_NAME = gaf$(EXEEXT)
-install-exec-hook:
-	cd $(DESTDIR)$(bindir) && \
-	if [ -h $(COMPAT_NAME) ]; then rm -f $(COMPAT_NAME); fi && \
-	ln -s $(NAME) $(COMPAT_NAME)
-uninstall-hook:
-	rm -f $(DESTDIR)$(bindir)/$(COMPAT_NAME)
-endif INSTALL_COMPAT_SYMLINKS
 
 .1.in.1:
 	d=`$(GUILE) -c '(setlocale LC_ALL "C") \

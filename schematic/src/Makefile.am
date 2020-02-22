@@ -136,18 +136,6 @@ lepton_schematic_LDADD = \
 	$(top_builddir)/liblepton/src/liblepton.la
 
 
-if INSTALL_COMPAT_SYMLINKS
-NAME = lepton-schematic$(EXEEXT)
-COMPAT_NAME = gschem$(EXEEXT)
-install-exec-hook:
-	cd $(DESTDIR)$(bindir) && \
-	if [ -h $(COMPAT_NAME) ]; then rm -f $(COMPAT_NAME); fi && \
-	ln -s $(NAME) $(COMPAT_NAME)
-uninstall-hook:
-	rm -f $(DESTDIR)$(bindir)/$(COMPAT_NAME)
-endif INSTALL_COMPAT_SYMLINKS
-
-
 # This is used to generate boilerplate for defining Scheme functions
 # in C.
 SUFFIXES = .x

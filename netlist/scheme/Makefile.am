@@ -10,16 +10,6 @@ lepton-netlist: lepton-netlist.in Makefile
 	$(do_subst) < $(srcdir)/$@.in > $@
 	chmod +x $@
 
-if INSTALL_COMPAT_SYMLINKS
-NAME = lepton-netlist$(EXEEXT)
-COMPAT_NAME = gnetlist$(EXEEXT)
-install-exec-hook:
-	cd $(DESTDIR)$(bindir) && \
-	if [ -h $(COMPAT_NAME) ]; then rm -f $(COMPAT_NAME); fi && \
-	ln -s $(NAME) $(COMPAT_NAME)
-uninstall-hook:
-	rm -f $(DESTDIR)$(bindir)/$(COMPAT_NAME)
-endif INSTALL_COMPAT_SYMLINKS
 
 M4=		@M4@
 PCBM4DIR=	@PCBM4DIR@

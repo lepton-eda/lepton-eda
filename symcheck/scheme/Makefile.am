@@ -11,16 +11,6 @@ lepton-symcheck: lepton-symcheck.in Makefile
 	$(do_subst) < $(srcdir)/$@.in > $@
 	chmod +x $@
 
-if INSTALL_COMPAT_SYMLINKS
-NAME = lepton-symcheck$(EXEEXT)
-COMPAT_NAME = gsymcheck$(EXEEXT)
-install-exec-hook:
-	cd $(DESTDIR)$(bindir) && \
-	if [ -h $(COMPAT_NAME) ]; then rm -f $(COMPAT_NAME); fi && \
-	ln -s $(NAME) $(COMPAT_NAME)
-uninstall-hook:
-	rm -f $(DESTDIR)$(bindir)/$(COMPAT_NAME)
-endif INSTALL_COMPAT_SYMLINKS
 
 scmdatadir = $(LEPTONDATADIR)/scheme
 nobase_dist_scmdata_DATA = \
