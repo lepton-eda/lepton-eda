@@ -157,8 +157,6 @@ AX_AWK_FEATURES
 
 # Assertions
 AX_OPTION_ASSERT
-# Deprecated features
-AX_OPTION_DEPRECATED
 # Viewing documentation
 AX_OPTION_URI_VIEWER
 # API documentation

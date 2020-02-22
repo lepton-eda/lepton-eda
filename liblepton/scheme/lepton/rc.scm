@@ -33,10 +33,6 @@
 
 (define path-sep file-name-separator-string)
 
-;; Legacy gEDA data & configuration directories.  These functions will
-;; usually return #f if gEDA was compiled with --disable-deprecated.
-;; Use the sys-data-dirs and sys-config-dirs functions from the (geda
-;; os) module instead.
 (define geda-data-path (last (sys-data-dirs)))
 (define geda-rc-path (last (sys-config-dirs)))
 
