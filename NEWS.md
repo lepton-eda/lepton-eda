@@ -115,6 +115,8 @@ values are listed in parenthesis):
   - `make-backup-files` => `[schematic.backup]::create-files`
   (`boolean`, `true`)
 
+- Fixed rotation of logs broken in Lepton 1.9.8.
+
 ### Changes in `lepton-netlist`:
 - Fixed crashes on power symbols (the symbols having one pin and
   no *"refdes="* attribute) having a *"net="* attribute but no
