@@ -26,15 +26,6 @@ Print a help message.
 \fB-V\fR, \fB--version\fR
 Print version information.
 
-.SH ENVIRONMENT
-.TP 8
-.B GEDADATA
-specifies the search directory for Scheme and rc files.  The default
-is `${prefix}/share/lepton-eda'.
-.TP 8
-.B GEDADATARC
-specifies the search directory for rc files.  The default is `$GEDADATA'.
-
 .SH AUTHORS
 See the `AUTHORS' file included with this program.
 

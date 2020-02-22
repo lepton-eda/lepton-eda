@@ -93,17 +93,6 @@ To see all the error messages, warnings, and parse info, run:
 lepton-symcheck \-vvv \f[I]symbolfilename.sym\f[]
 .RE
 
-.SH "ENVIRONMENT"
-.B lepton-symcheck
-respects the following environment variable:
-.PP
-.TP 8
-.B GEDADATA
-specifies where the various required scheme and rc files are located
-(the default is ${prefix}/share/lepton-eda).  This environment variable does
-not need to be set by the end user unless they are moving the executables
-to a new install ${prefix}.
-
 .SH AUTHORS
 See the `AUTHORS' file included with this program.
 
