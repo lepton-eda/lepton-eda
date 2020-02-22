@@ -123,6 +123,13 @@ values are listed in parenthesis):
 - Fixed crashes in the `spice-sdb` backend when processing I/O
   components.
 
+- Removed output of version in the `spice-sdb` backend.  It has
+  not been updated since 2007 and does not reflect the changes in
+  the backend code.
+
+- Fixed a link to documentation in the output of the `spice-sdb`
+  backend.
+
 - A new module, `(netlist mode)`, has been added. It contains
   accessor functions for current netlisting mode.
 
