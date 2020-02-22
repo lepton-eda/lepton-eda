@@ -1,9 +1,6 @@
 Lepton Electronic Design Automation
 ===================================
 
-Copyright (C) 1998-2017 gEDA Developers.
-Copyright (C) 2017-2019 Lepton Developers.
-
 Introduction
 ============
 
