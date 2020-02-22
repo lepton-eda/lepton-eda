@@ -4,6 +4,11 @@ Lepton Electronic Design Automation
 Introduction
 ============
 
+The Lepton EDA suite provides schematic capture,
+netlisting into over 30 netlist formats,
+and many other features. It was forked from the
+[gEDA/gaf suite](http://wiki.geda-project.org/geda:gaf) in late 2016.
+
 The GPL Electronic Design Automation (gEDA) project has produced and
 continues working on a full GPL'd suite and toolkit of Electronic
 Design Automation tools. These tools are used for electrical circuit
@@ -11,7 +16,7 @@ design, schematic capture, simulation, prototyping, and
 production. Currently, the gEDA project offers a mature suite of free
 software applications for electronics design, including schematic
 capture, attribute management, bill of materials (BOM) generation,
-netlisting into over 30 netlist formats, analog and digital
+netlisting, analog and digital
 simulation, and printed circuit board (PCB) layout.
 
 The gEDA project was started because of the lack of free EDA tools for
@@ -19,11 +24,6 @@ POSIX systems with the primary purpose of advancing the state of free
 hardware or open source hardware. The suite is mainly being developed
 on the GNU/Linux platform with some development effort going into
 making sure the tools run on other platforms as well.
-
-The Lepton EDA suite (this package) provides schematic capture,
-netlisting, bill of materials generation, and many other features. It
-was forked from the
-[gEDA/gaf suite](http://wiki.geda-project.org/geda:gaf) in late 2016.
 
 Tools in the Lepton EDA suite
 =============================
