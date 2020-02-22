@@ -189,15 +189,6 @@ Evaluate Scheme source code from \fIFILE\fR.
 The \fB-s\fR, \fB-c\fR and \fB--\fR switches stop argument processing
 and pass all the remaining arguments as the value of `(command-line)'.
 
-.SH ENVIRONMENT
-.TP 8
-.B GEDADATA
-specifies the search directory for Scheme and rc files.  The default
-is `${prefix}/share/lepton-eda'.
-.TP 8
-.B GEDADATARC
-specifies the search directory for rc files.  The default is `$GEDADATA'.
-
 .SH AUTHORS
 See the `AUTHORS' file included with this program.
 

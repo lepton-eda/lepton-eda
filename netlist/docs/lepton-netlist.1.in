@@ -240,15 +240,6 @@ use the `\-i' option.
 \fBlepton-netlist\fR will load `stack_1.sh', and then enter an interactive
 Scheme read-eval-print loop.
 
-.SH ENVIRONMENT
-.TP 8
-.B GEDADATA
-specifies the search directory for Scheme and rc files.  The default
-is `${prefix}/share/lepton-eda'.
-.TP 8
-.B GEDADATARC
-specifies the search directory for rc files.  The default is `$GEDADATA'.
-
 .SH AUTHORS
 See the `AUTHORS' file included with this program.
 
