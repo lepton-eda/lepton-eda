@@ -269,7 +269,8 @@ equivalent: `-b`.
   to new configuration system (`*.conf` files). Use `lepton-cli config` to read
   and modify them. New options have the same names and possible values (use
   `true`/`false` for booleans instead of `"enabled"` and `"disabled"`). Please refer
-  to the [Configuration Settings](https://github.com/graahnul-grom/lepton-eda/wiki/Configuration-Settings)
+  to the
+  [Configuration Settings](https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings)
   document for more information.
 
 - In the `Save As` dialog, the filter field now shows
