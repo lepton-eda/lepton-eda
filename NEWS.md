@@ -192,6 +192,11 @@ values are listed in parenthesis):
 - Fixed issue with output of wrong warnings about renaming nets
   with the same name (shorted to themselves).
 
+- Previously, the program used to exit with error if some source
+  file was not readable or missing, even in the interactive mode.
+  Now, `lepton-netlist` just reports such errors as critical
+  without exit.
+
 - The module `(netlist page)` has been eliminated in favour of the
   `(lepton page)` module.  All functions from the former have been
   moved to the latter.  The procedure `filename->page()` has been
