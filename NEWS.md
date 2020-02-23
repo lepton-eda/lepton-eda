@@ -295,6 +295,23 @@ equivalent: `-b`.
   stored in the **cache** configuration context: a new
   command-line option `--cache` (`-c`) has been added.
 
+### Changes in `lepton-tragesym`:
+- The initial Python script has been rewritten in Scheme. The
+  program now does anything the previous version did, and more:
+
+  - `liblepton` functions are now used to create objects instead
+    of dealing with symbol text format directly.
+
+  - Fixed calculation of symbol width so that pins always touch
+    symbol box even if the user specified too little width in the
+    template file.
+
+  - Dealing with "spacer"s gives better results/notifications.
+
+- The man page of the program has been updated to provide
+  information about the source file format.  Please see
+  *lepton-tragesym(1)* for more information.
+
 ### Changes in `lepton-schematic`:
 - Several `(gschem *)` modules have been renamed to `(schematic
   *)` ones.  All the functions and variables available are still
