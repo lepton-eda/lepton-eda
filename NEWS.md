@@ -7,6 +7,11 @@ more information, please consult `git log` history.
 Notable changes in Lepton EDA 1.9.10 (upcoming)
 -----------------------------------------------
 ### General changes:
+- Utilities written in Python, `lepton-archive`, `lepton-tragesym`
+  and others (please see below for more information), have been
+  rewritten in Scheme or removed, so there is no dependency on
+  Python any more.
+
 - Two unused old scheme scripts `print-NB-attribs.scm` and
   `list-keys.scm` have been removed.
 
