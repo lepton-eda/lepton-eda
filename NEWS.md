@@ -409,6 +409,10 @@ enables or disables tooltips for tab header widgets in tabbed GUI.
 - The `Single Attribute Editor` dialog can now be accepted by
 pressing the `Enter` key when the `Name` field is focused.
 
+- The save font configuration dialog has been improved so now it
+  shows the name of selected font and full path names for
+  configuration files.
+
 - Fixed crashes on printing via the menu 'File → Print...' on some
   systems.
 
