@@ -17,8 +17,6 @@
 ( define pfn-get-bool     config-boolean     )
 ( define pfn-get-str      config-string      )
 ( define pfn-get-str-list config-string-list )
-( define pfn-get-int      config-int         )
-( define pfn-get-int-list config-int-list    )
 
 
 
@@ -125,127 +123,6 @@
          "schematic" "default-filename"
   )
 
-  ; --------------------------------------------------------
-
-  ; group: export
-  ;
-  ( list pfn-get-str "auto" ; TODO: real-list? "auto" | HALIGN;VALIGN
-         "export" "align"
-         "export" "align"
-  )
-  ( list pfn-get-int 96
-         "export" "dpi"
-         "export" "dpi"
-  )
-  ( list pfn-get-str "Sans"
-         "export" "font"
-         "export" "font"
-  )
-  ( list pfn-get-str "auto"
-         "export" "layout"
-         "export" "layout"
-  )
-  ( list pfn-get-int-list (list 18 18 18 18)
-         "export" "margins"
-         "export" "margins"
-  )
-  ( list pfn-get-bool #f
-         "export" "monochrome"
-         "export" "monochrome"
-  )
-  ( list pfn-get-str ""
-         "export" "paper"
-         "export" "paper"
-  )
-  ( list pfn-get-str ""
-         "export" "size"
-         "export" "size"
-  )
-
-  ; --------------------------------------------------------
-
-  ; group: schematic.gui
-  ;
-  ( list pfn-get-bool #f
-         "schematic.gui" "use-tabs"
-         "schematic.gui" "use-tabs"
-  )
-  ( list pfn-get-bool #t
-         "schematic.gui" "use-docks"
-         "schematic.gui" "use-docks"
-  )
-  ( list pfn-get-str ""
-         "schematic.gui" "font"
-         "schematic.gui" "font"
-  )
-  ( list pfn-get-int 10
-         "schematic.gui" "max-recent-files"
-         "schematic.gui" "max-recent-files"
-  )
-  ( list pfn-get-int-list '()
-         "schematic.gui" "text-sizes"
-         "schematic.gui" "text-sizes"
-  )
-
-  ; group: schematic.status-bar
-  ;
-  ( list pfn-get-bool #t
-         "schematic.status-bar" "show-mouse-buttons"
-         "schematic.status-bar" "show-mouse-buttons"
-  )
-  ( list pfn-get-bool #f
-         "schematic.status-bar" "show-rubber-band"
-         "schematic.status-bar" "show-rubber-band"
-  )
-  ( list pfn-get-bool #f
-         "schematic.status-bar" "show-magnetic-net"
-         "schematic.status-bar" "show-magnetic-net"
-  )
-  ( list pfn-get-bool #f
-         "schematic.status-bar" "status-bold-font"
-         "schematic.status-bar" "status-bold-font"
-  )
-  ( list pfn-get-str "green"
-         "schematic.status-bar" "status-active-color"
-         "schematic.status-bar" "status-active-color"
-  )
-
-  ; group: schematic.macro-widget
-  ;
-  ( list pfn-get-int 10
-         "schematic.macro-widget" "history-length"
-         "schematic.macro-widget" "history-length"
-  )
-  ( list pfn-get-str ""
-         "schematic.macro-widget" "font"
-         "schematic.macro-widget" "font"
-  )
-
-  ; group: schematic.undo
-  ;
-  ( list pfn-get-bool #f
-         "schematic.undo" "modify-viewport"
-         "schematic.undo" "modify-viewport"
-  )
-
-  ; group: schematic.tabs
-  ;
-  ( list pfn-get-bool #t
-         "schematic.tabs" "show-close-button"
-         "schematic.tabs" "show-close-button"
-  )
-  ( list pfn-get-bool #t
-         "schematic.tabs" "show-up-button"
-         "schematic.tabs" "show-up-button"
-  )
-
-  ; group: schematic.log-window
-  ;
-  ( list pfn-get-str ""
-         "schematic.log-window" "font"
-         "schematic.log-window" "font"
-  )
-
 ) ; list()
 ) ; keys-list
 
@@ -259,8 +136,4 @@
   ; return:
   keys-list
 )
-
-
-
-; vim: ft=scheme tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
