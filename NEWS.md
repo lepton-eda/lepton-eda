@@ -122,6 +122,16 @@ values are listed in parenthesis):
 
 - Fixed rotation of logs broken in Lepton 1.9.8.
 
+- Fixed two long standing bugs in the procedure
+  `component-library-search`:
+
+  - Failure of the procedure in some cases when the root directory
+    processed by the procedure contained symbol files.
+
+  - Failure of the procedure with the `'out-of-range` exception if
+    the processed path contained 2 identical components at the end
+    and trailing slash (e.g. "/path/sym/sym/").
+
 ### Changes in `lepton-netlist`:
 - Fixed crashes on power symbols (the symbols having one pin and
   no *"refdes="* attribute) having a *"net="* attribute but no
