@@ -426,6 +426,9 @@ pressing the `Enter` key when the `Name` field is focused.
 - Fixed crashes on printing via the menu 'File → Print...' on some
   systems.
 
+- Fixed segfaults when the locale set by environment variables was
+  not installed.
+
 - Fixed issue of incorrect main menu creation if system
   configuration file is missing.
 
