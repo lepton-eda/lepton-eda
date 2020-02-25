@@ -26,11 +26,22 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
 - The Scheme auto-load subdirectory `gafrc.d`
 has been renamed to `autoload`.
 
+- Obsolete environment variables `GEDADATA` and `GEDADATARC` are
+  no longer used in Lepton.  Please use Scheme procedures `load`
+  or `primitive-load` in *gafrc* files to load your extensions.
+
+- The directory *$HOME/.gEDA/* is no longer used for storing of
+  user configuration files.  The new location for user config
+  files is *$XDG_CONFIG_HOME/lepton-eda/* (usually,
+  it is *$HOME/.config/lepton-eda*).
+
 ### Changes when building from source:
 - The following obsolete `configure` options have been removed:
   - `--with-kdedatadir` (for KDE 3)
   - `--enable-relocatable` (non-portable)
   - `--with-rcdir` (no longer usable)
+  - `--disable-deprecated` (no longer usable)
+  - `--enable-compat-symlinks` (does not make sense any more)
 
 - Detection of installed `Guile` run-time and development packages
   has been improved. Previously, after introducing support for
@@ -437,6 +448,9 @@ pressing the `Enter` key when the `Name` field is focused.
 - The save font configuration dialog has been improved so now it
   shows the name of selected font and full path names for
   configuration files.
+
+- The file *lepton-gtkrc* residing in the Lepton config directory
+  can now be used to customize the appearance of the program.
 
 - Fixed crashes on printing via the menu 'File → Print...' on some
   systems.
