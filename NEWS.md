@@ -57,6 +57,10 @@ has been renamed to `autoload`.
   Guile for compilation.  If it is impossible due to missing
   required package, it reports the error on the configure stage.
 
+- The `autogen.sh` script, while still available, is no longer
+  required for installation from the git repository.  Please use
+  `autoreconf -ivf` instead.
+
 - Building of the Scheme API HTML documentation with multiple
   make jobs on FreeBSD has been fixed.
 
