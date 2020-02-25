@@ -262,7 +262,7 @@ equivalent: `-b`.
 
 ### Changes in `lepton-archive`:
 - The initial Python script has been rewritten in Scheme.  It was
-  broken at least since 2007, when system-gafrc was refactored by
+  broken at least since 2007, when *system-gafrc* was refactored by
   removing `component-library` calls from it.  It parsed that file
   for the "component-library" strings, but could not find and save
   any stock symbols.  The new Scheme script has the following
@@ -287,9 +287,9 @@ equivalent: `-b`.
     uses info on internal schematic provided by `liblepton`
     modules.
 
-  - The new script eliminates direct setting of
-    `GEDADATA`/`LEPTONDATADIR` to the directory where `system-gafrc`
-    should be placed, and parsing of the lines containing
+  - The new script eliminates direct setting of any environment
+    variables to the directory where `system-gafrc` should be
+    placed, and parsing of the lines containing
     `component-library` and `component-library-search` in system
     rc files, as it is no longer required.
 
