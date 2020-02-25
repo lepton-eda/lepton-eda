@@ -27,6 +27,11 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
 has been renamed to `autoload`.
 
 ### Changes when building from source:
+- The following obsolete `configure` options have been removed:
+  - `--with-kdedatadir` (for KDE 3)
+  - `--enable-relocatable` (non-portable)
+  - `--with-rcdir` (no longer usable)
+
 - Detection of installed `Guile` run-time and development packages
   has been improved. Previously, after introducing support for
   Guile 2.2, some users could encounter difficulties with building
