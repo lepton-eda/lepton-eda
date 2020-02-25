@@ -163,6 +163,68 @@ values are listed in parenthesis):
     and trailing slash (e.g. "/path/sym/sym/").
 
 ### Changes in `lepton-netlist`:
+
+- The module `(netlist rename)` has been removed.  All previous
+  renaming functionality has been wholly thrown away.
+
+- The module `(netlist pin-net)` has been removed.  `<pin-net>`
+  records are no longer used in netlisting.
+
+- The module `(netlist traverse)` has been removed. All its
+  functions have been moved to other appropriate modules.
+
+- New data structures, *hierarchical*, or *over-port*, or
+  *vertical*, connections, have been introduced.  They are used to
+  produce net names for schematics with subcircuits.  This fixed
+  the issue with toplevel unnamed connections, using of which lead
+  to wrong netlists, and resulted in the following changes in output
+  netlists:
+
+  - The `geda` backend no longer displays intermediate renamings
+    the same way it is used for unnamed nets shown in netlists.
+    Renamed unnamed nets of a subschematic are shown by the geda
+    backend differently, e.g.,
+    "*hierarchical/subciruit/name/unnamed_net_at_XxY*", where X
+    and Y are coords of one of their members.
+
+  - If a net has more than one preferred attribute attached
+    ("*net=*" or "*netname=*"), the lowest one by means of the
+    predicate `refdes<?` is chosen then.
+
+  - The sequence numbers of unconnected pins and unnamed nets have
+    been reduced due to removing of internal ones from the
+    sequence.
+
+- During netlisting, page contents is filtered once to make
+  connections.
+
+- Hierarchical names are now used for subschematics.
+
+- A new field, `parent`, has been added to the
+  `<schematic-component>` record to get hierarchical data.  For a
+  component, it contains the link to the `<subschematic>` instance
+  the component belongs to.
+
+- The `<schematic-connection>` record now also contains a new
+  field, `parent`.  For a connection, it contains the link to the
+  `<subschematic>` instance the connection belongs to.
+
+- The `<subschematic>` record now also contains a new field,
+  `parent`.  It contains the component the `<subschematic>`
+  belongs to, if any.
+
+- The unused `sources` field has been removed from the `<package>`
+  record.
+
+- The unused `tag` field has been removed from the `<package>`
+  record.
+
+- The <package-pin> record now contains a new field,
+  `port-connection`, which holds a hierarchical
+  `<schematic-connection>` a pin belongs to.
+
+- Crashes, when source file cannot be found, are now aovided.
+
 - Fixed crashes on power symbols (the symbols having one pin and
   no *"refdes="* attribute) having a *"net="* attribute but no
   *"pinnumber=* attribute attached to its pin.
@@ -221,10 +283,6 @@ values are listed in parenthesis):
 - A new field, `net-maps`, has been added to the
   `<schematic-component>` record.  It provides info on net mapping
   for the component pins.
-
-- A new field, `tag`, has been added to the
-  `<schematic-connection>` record, to simplify construction of
-  names for hierarchical connections.
 
 - A new field, `named-connection`, has been added to the
   `<package-pin>` record, which contains the parent
