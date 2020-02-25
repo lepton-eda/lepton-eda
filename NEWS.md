@@ -12,6 +12,12 @@ Notable changes in Lepton EDA 1.9.10 (upcoming)
   rewritten in Scheme or removed, so there is no dependency on
   Python any more.
 
+- C source files, Scheme modules, types, functions, variables,
+  structure fields have been renamed to avoid using of ambiguous
+  word "**complex**" since it is used in Scheme to designate
+  complex numbers. The Scheme object type `'complex` has not been
+  renamed for backwards compatibility.
+
 - Two unused old scheme scripts `print-NB-attribs.scm` and
   `list-keys.scm` have been removed.
 
@@ -60,7 +66,7 @@ has been renamed to `autoload`.
 - The following *core* (written in C) Scheme modules have been
   renamed:
   - `(geda core attrib)` => `(lepton core attrib)`
-  - `(geda core complex)` => `(lepton core complex)`
+  - `(geda core complex)` => `(lepton core component)`
   - `(geda core config)` => `(lepton core config)`
   - `(geda core deprecated)` => `(lepton core deprecated)`
   - `(geda core gettext)` => `(lepton core gettext)`
