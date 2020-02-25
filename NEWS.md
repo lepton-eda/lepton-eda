@@ -440,7 +440,7 @@ pressing the `Enter` key when the `Name` field is focused.
 
 - Several `README` files have been updated.
 
-- The `bom` python script has been removed.
+- The obsolete Python script `bom` has been removed.
 
 Notable changes in Lepton EDA 1.9.9 (20191003)
 ----------------------------------------------
