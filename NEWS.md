@@ -416,6 +416,11 @@ equivalent: `-b`.
   `Save As`, `Page Manager`, and `Close`) has been added to
   the active tab's header widget.
 
+- The main menu code has been refactored and changed so that the
+  type of selected objects is taken into account.  Thus, some menu
+  entries are not sensitive in some cases where it is
+  inappropriate.
+
 - If *Help* → *Find Component Documentation* cannot find any
   documentation, a message box is displayed. No backtrace, nor
   Guile errors are printed to the log window.
