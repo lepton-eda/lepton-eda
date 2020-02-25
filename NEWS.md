@@ -53,6 +53,10 @@ has been renamed to `autoload`.
   its command line arguments checks, which makes it more portable
   among various build environments.
 
+- The command `make maintainer-clean` no longer removes
+  *configure* and it helper files, as well as *ChangeLog* and
+  *Makefile.in* files.
+
 ### Scheme API changes:
 - The module `(geda log-rotate)` has been renamed to `(lepton
   log-rotate)`.
