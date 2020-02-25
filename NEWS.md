@@ -433,6 +433,9 @@ pressing the `Enter` key when the `Name` field is focused.
   configuration file is missing.
 
 ### Changes in `examples`:
+- Two new examples of analog simulation have been added. They
+  reside in the directory *netlist/examples/analog/*.
+
 - `RF_Amp` and `TwoStageAmp` examples have been updated to make
   SPICE simulation work properly.
 
