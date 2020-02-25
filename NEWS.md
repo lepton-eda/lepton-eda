@@ -321,6 +321,17 @@ equivalent: `-b`.
   - The program options now have long equivalents, please see
     `lepton-archive --help` for more information.
 
+  - The program now supports both absolute and relative source
+    filenames (such as "*/tmp/simulation.cmd*") or using relative
+    paths (like "*./*" or "*../*").
+
+  - Files missing in the source library are reported.
+
+  - The output archive file name can be specified without the
+    "*.tar.gz*" suffix.  The users can just use `-o
+    project-archive` to save their project to the
+    *project-archive.tar.gz* file.
+
 ### Changes in `lepton-schlas`:
 - This utility has been rewritten in Scheme and renamed to `lepton-embed`.
 - Its functionality has been extended: it can now embed/unembed pictures (`-p`)
