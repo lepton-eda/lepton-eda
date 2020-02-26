@@ -87,6 +87,7 @@ FORMAT-STRING must be in the form required by the procedure
   'parent
   'connection
   'named-connection
+  'port-connection
 Any other unrecognized argument will lead to yielding '?' in the
 corresponding place.
 Example usage:
