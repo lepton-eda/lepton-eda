@@ -69,7 +69,7 @@ has been renamed to `autoload`.
   among various build environments.
 
 - The command `make maintainer-clean` no longer removes
-  *configure* and it helper files, as well as *ChangeLog* and
+  *configure* and its helper files, as well as *ChangeLog* and
   *Makefile.in* files.
 
 ### Scheme API changes:
@@ -259,8 +259,6 @@ values are listed in parenthesis):
   - `net-map` is defined for virtual pins created from the
     *"net="* attribute.
   - `parent` contains link to the parent component of a pin.
-  - `netname` collects the *"netname="* attribute values of the
-    nets connecting to a pin.
 
 - A new field, `pins`, has been added to the
   `<schematic-connection>` record. For a connection object, it
@@ -527,8 +525,9 @@ pressing the `Enter` key when the `Name` field is focused.
   shows the name of selected font and full path names for
   configuration files.
 
-- The file *lepton-gtkrc* residing in the Lepton config directory
-  can now be used to customize the appearance of the program.
+- The files *lepton-gtkrc* are now read from the system and user
+  configuration directories. They can be used to customize the
+  appearance of the program.
 
 - Fixed crashes on printing via the menu 'File → Print...' on some
   systems.
