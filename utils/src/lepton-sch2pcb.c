@@ -1,4 +1,6 @@
 /* gsch2pcb
+ * Copyright (C) 2003-2016 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  *  Bill Wilson    billw@wt.net
  *
