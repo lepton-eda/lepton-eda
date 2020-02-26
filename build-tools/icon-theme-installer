@@ -1,7 +1,9 @@
 #!/bin/sh
-
 # icon-theme-installer
 # Copyright (C) 2006 Novell, Inc.
+# Copyright (C) 2007-2015 gEDA Contributors
+# Copyright (C) 2019-2020 Lepton EDA Contributors
+#
 # Written by Aaron Bockover <abock@gnome.org>
 # Licensed under the MIT/X11 license
 #
