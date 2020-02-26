@@ -3,6 +3,7 @@
 
 dnl MIME & desktop icon directories, and MIME database update options
 dnl Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
+dnl Copyright (C) 2020 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by

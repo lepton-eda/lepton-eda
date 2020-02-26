@@ -3,7 +3,7 @@
 
 dnl Lepton EDA data and configuration directories
 dnl Copyright (C) 2009, 2016  Peter Brett <peter@peter-b.co.uk>
-dnl Copyright (C) 2018-2019 Lepton EDA Contributors
+dnl Copyright (C) 2018-2020 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
