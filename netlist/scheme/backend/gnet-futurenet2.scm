@@ -2,7 +2,7 @@
 ;;; FutureNet2 backend
 ;;; Copyright (C) 2003, 2005-2010 Dan McMahill
 ;;; Copyright (C) 2003-2017 gEDA Contributors
-;;; Copyright (C) 2018 Lepton EDA Contributors
+;;; Copyright (C) 2018-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by

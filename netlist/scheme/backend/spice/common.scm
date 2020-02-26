@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2014 Ales Hvezda
 ;;; Copyright (C) 1998-2016 gEDA Contributors
-;;; Copyright (C) 2018-2019 Lepton EDA Contributors
+;;; Copyright (C) 2018-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
