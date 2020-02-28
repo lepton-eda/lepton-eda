@@ -397,7 +397,7 @@
 ) ; let
 ) ; 'config-remove-group()
 
-;;; The same tests for the deprecated (geda object) module
+;;; The same tests for the deprecated (geda config) module
 ;;; functions.
 
 (define *testdir-geda*      (string-append (getcwd)   file-name-separator-string "t0402-tmp-geda"))
