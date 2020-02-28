@@ -70,7 +70,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   /* The following is an attempt at getting (deterministic) defaults */
   /* for the following variables */
-  toplevel->attribute_promotion = FALSE;
   toplevel->promote_invisible   = FALSE;
   toplevel->keep_invisible      = FALSE;
 

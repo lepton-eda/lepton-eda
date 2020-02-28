@@ -37,6 +37,43 @@
 
 #include "libgeda_priv.h"
 
+
+/* \brief Read a boolean configuration key.
+ *
+ * \par Function Description
+ * On success, set \a result to the value of the
+ * configuration key, otherwise set it to \a defval.
+ *
+ * \todo  Refactoring: this function was copied as is from schematic/src/i_vars.c.
+ *
+ * \param [in]       group   Configuration group name
+ * \param [in]       key     Configuration key name
+ * \param [in]       defval  Default value
+ * \param [in, out]  result  Result
+ *
+ * \return  TRUE if a specified config parameter was successfully read
+ */
+static gboolean
+cfg_read_bool (const gchar* group,
+               const gchar* key,
+               gboolean     defval,
+               gboolean*    result)
+{
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError*  err = NULL;
+  gboolean val = eda_config_get_boolean (cfg, group, key, &err);
+
+  gboolean success = err == NULL;
+  g_clear_error (&err);
+
+  *result = success ? val : defval;
+  return success;
+}
+
+
 /*! \brief Return the bounds of the given GList of objects.
  *  \par Given a list of objects, calcule the bounds coordinates.
  *  \param [in]  toplevel The TOPLEVEL structure.
@@ -226,8 +263,12 @@ GList *o_component_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detac
   GList *attribs;
   GList *iter;
   OBJECT *tmp;
+  gboolean attribute_promotion;
 
-  if (!toplevel->attribute_promotion) /* controlled through rc file */
+  cfg_read_bool ("schematic.attrib", "promote",
+                 default_attribute_promotion, &attribute_promotion);
+
+  if (!attribute_promotion)
     return NULL;
 
   attribs = o_attrib_find_floating_attribs (object->component->prim_objs);
