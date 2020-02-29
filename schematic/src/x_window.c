@@ -831,7 +831,7 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
   g_return_val_if_fail (filename != NULL, 0);
 
   /* try saving page to filename */
-  ret = (gint)f_save (toplevel, page, filename, &err);
+  ret = (gint)f_save (page, filename, &err);
 
   if (ret != 1) {
     log_msg   = _("Could NOT save page [%1$s]\n");

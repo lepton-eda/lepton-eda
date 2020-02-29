@@ -16,7 +16,12 @@ int f_open(TOPLEVEL *toplevel, PAGE *page, const gchar *filename, GError **err);
 int f_open_flags(TOPLEVEL *toplevel, PAGE *page, const gchar *filename,
                  const gint flags, GError **err);
 void f_close(TOPLEVEL *toplevel);
-int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **error);
+
+int
+f_save (PAGE *page,
+        const char *filename,
+        GError **error);
+
 gchar *f_normalize_filename (const gchar *filename, GError **error) G_GNUC_WARN_UNUSED_RESULT;
 char *follow_symlinks (const gchar *filename, GError **error);
 

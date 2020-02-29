@@ -300,7 +300,7 @@ x_fileselect_save (void)
 
     /* try saving current page of toplevel to file filename */
     if (filename != NULL &&
-        f_save (pr_current, pr_current->page_current, filename, NULL)) {
+        f_save (pr_current->page_current, filename, NULL)) {
       s_log_message (_("Saved As [%1$s]"), filename);
 
       /* replace page filename with new one */

@@ -344,13 +344,15 @@ void f_close(TOPLEVEL *toplevel)
  *  \bug g_access introduces a race condition in certain cases, but
  *  solves bug #698565 in the normal use-case
  *
- *  \param [in,out] toplevel  The TOPLEVEL object containing the schematic.
  *  \param [in]      filename  The file name to save the schematic to.
  *  \param [in,out] err       #GError structure for error reporting, or
  *                            NULL to disable error reporting
  *  \return 1 on success, 0 on failure.
  */
-int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
+int
+f_save (PAGE *page,
+        const char *filename,
+        GError **err)
 {
   gchar *backup_filename;
   gchar *real_filename;
