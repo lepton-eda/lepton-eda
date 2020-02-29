@@ -79,4 +79,5 @@
 (define-public config-remove-group! %config-remove-group!)
 
 (define-public config-set-legacy-mode! %config-set-legacy-mode!)
+(define-public config-legacy-mode? %config-legacy-mode?)
 
