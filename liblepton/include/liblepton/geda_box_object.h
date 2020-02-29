@@ -67,8 +67,7 @@ geda_box_object_modify (TOPLEVEL *toplevel,
                         int whichone);
 
 void
-geda_box_object_modify_all (TOPLEVEL *toplevel,
-                            OBJECT *object,
+geda_box_object_modify_all (OBJECT *object,
                             int x1,
                             int y1,
                             int x2,
