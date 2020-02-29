@@ -1390,8 +1390,7 @@ gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int lin
                                   &temp_dash_space);
 
     if (success) {
-      o_set_line_options (adapter->toplevel,
-                          object,
+      o_set_line_options (object,
                           temp_cap_style,
                           (OBJECT_TYPE) line_type,
                           temp_line_width,
@@ -1450,8 +1449,7 @@ gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int li
                                   &temp_dash_space);
 
     if (success) {
-      o_set_line_options (adapter->toplevel,
-                          object,
+      o_set_line_options (object,
                           temp_cap_style,
                           temp_line_type,
                           line_width,
@@ -1508,8 +1506,7 @@ gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int d
                                   &temp_dash_space);
 
     if (success) {
-      o_set_line_options (adapter->toplevel,
-                          object,
+      o_set_line_options (object,
                           temp_cap_style,
                           temp_line_type,
                           temp_line_width,
@@ -1566,8 +1563,7 @@ gschem_selection_adapter_set_dash_space (GschemSelectionAdapter *adapter, int da
                                   &temp_dash_space);
 
     if (success) {
-      o_set_line_options (adapter->toplevel,
-                          object,
+      o_set_line_options (object,
                           temp_cap_style,
                           temp_line_type,
                           temp_line_width,
@@ -1624,8 +1620,7 @@ gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap
                                   &temp_dash_space);
 
     if (success) {
-      o_set_line_options (adapter->toplevel,
-                          object,
+      o_set_line_options (object,
                           (OBJECT_END) cap_style,
                           temp_line_type,
                           temp_line_width,

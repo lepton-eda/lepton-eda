@@ -197,8 +197,7 @@ o_set_fill_options(TOPLEVEL *toplevel,
                    int angle2);
 
 void
-o_set_line_options (TOPLEVEL *toplevel,
-                    OBJECT *o_current,
+o_set_line_options (OBJECT *o_current,
                     OBJECT_END end,
                     OBJECT_TYPE type,
                     int width,

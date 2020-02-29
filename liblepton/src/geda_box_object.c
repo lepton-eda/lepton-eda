@@ -74,8 +74,7 @@ geda_box_object_new (TOPLEVEL *toplevel, char type, int color,
   box->lower_y = y2;
 
   /* line type and filling initialized to default */
-  o_set_line_options (toplevel,
-                      new_node,
+  o_set_line_options (new_node,
                       DEFAULT_OBJECT_END,
                       TYPE_SOLID,
                       LINE_WIDTH,
@@ -116,9 +115,9 @@ geda_box_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   new_obj->box->lower_x = o_current->box->lower_x;
   new_obj->box->lower_y = o_current->box->lower_y;
 
-  o_set_line_options(toplevel, new_obj, o_current->line_end,
-		     o_current->line_type, o_current->line_width,
-		     o_current->line_length, o_current->line_space);
+  o_set_line_options (new_obj, o_current->line_end,
+                      o_current->line_type, o_current->line_width,
+                      o_current->line_length, o_current->line_space);
   o_set_fill_options(toplevel, new_obj,
 		     o_current->fill_type, o_current->fill_width,
 		     o_current->fill_pitch1, o_current->fill_angle1,
@@ -344,8 +343,7 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, const char buf[],
   /* create a new box */
   new_obj = geda_box_object_new (toplevel, type, color, d_x1, d_y1, d_x2, d_y2);
   /* set its line options */
-  o_set_line_options (toplevel,
-                      new_obj,
+  o_set_line_options (new_obj,
                       (OBJECT_END) box_end,
                       (OBJECT_TYPE) box_type,
                       box_width,
