@@ -97,9 +97,6 @@ geda_line_object_new (TOPLEVEL *toplevel,
                       -1,
                       -1);
 
-  /* compute bounding box */
-  new_node->w_bounds_valid_for = NULL;
-
   return new_node;
 }
 
@@ -141,8 +138,6 @@ geda_line_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
                      o_current->fill_angle1,
                      o_current->fill_pitch2,
                      o_current->fill_angle2);
-
-  o_current->w_bounds_valid_for = NULL;
 
   return new_obj;
 }
@@ -342,8 +337,6 @@ geda_line_object_modify (TOPLEVEL *toplevel, OBJECT *object,
       return;
   }
 
-  /* recalculate the bounding box */
-  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -513,9 +506,6 @@ geda_line_object_translate (GedaObject *object, int dx, int dy)
   object->line->y[0] = object->line->y[0] + dy;
   object->line->x[1] = object->line->x[1] + dx;
   object->line->y[1] = object->line->y[1] + dy;
-
-  /* Update bounding box */
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Rotate Line OBJECT using WORLD coordinates.

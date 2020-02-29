@@ -161,8 +161,6 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
   obj->component->mirror = scm_is_true (mirror_s);
   obj->selectable = scm_is_false (locked_s);
 
-  obj->w_bounds_valid_for = NULL; /* We need to do this explicitly... */
-
   o_emit_change_notify (toplevel, obj);
 
   o_page_changed (obj);
@@ -286,8 +284,6 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
   parent->component->prim_objs =
     g_list_append (parent->component->prim_objs, child);
   child->parent = parent;
-
-  parent->w_bounds_valid_for = NULL;
 
   PAGE* parent_page = o_get_page (parent);
   /* We may need to update connections */

@@ -31,7 +31,6 @@ struct st_object
   PAGE *page; /* Parent page */
 
   GedaBounds bounds;
-  TOPLEVEL *w_bounds_valid_for;
 
   COMPONENT *component;
   GedaLine *line;

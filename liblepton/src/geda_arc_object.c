@@ -95,10 +95,6 @@ geda_arc_object_new (TOPLEVEL *toplevel,
   o_set_fill_options(toplevel, new_node,
                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
-  new_node->w_bounds_valid_for = NULL;
-
-  /* new_node->graphical = arc; eventually */
-
   return new_node;
 }
 
@@ -353,7 +349,6 @@ geda_arc_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int wh
 	}
 
 	/* update the screen coords and the bounding box */
-	object->w_bounds_valid_for = NULL;
 	o_emit_change_notify (toplevel, object);
 }
 
@@ -515,10 +510,6 @@ geda_arc_object_translate (GedaObject *object, int dx, int dy)
   /* Do world coords */
   object->arc->x = object->arc->x + dx;
   object->arc->y = object->arc->y + dy;
-
-
-  /* Recalculate screen coords from new world coords */
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief
@@ -572,10 +563,6 @@ void geda_arc_object_rotate (TOPLEVEL *toplevel,
   /* translate object to its previous place */
   object->arc->x += world_centerx;
   object->arc->y += world_centery;
-
-  /* update the screen coords and the bounding box */
-  object->w_bounds_valid_for = NULL;
-
 }
 
 /*! \brief Mirror the WORLD coordinates of an ARC.
@@ -616,10 +603,6 @@ void geda_arc_object_mirror (TOPLEVEL *toplevel,
 
   /* translate object back to its previous position */
   object->arc->x += world_centerx;
-
-  /* update the screen coords and bounding box */
-  object->w_bounds_valid_for = NULL;
-
 }
 
 

@@ -112,9 +112,6 @@ geda_path_object_new_take_path (TOPLEVEL *toplevel,
   o_set_fill_options (toplevel, new_node,
                       FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
-  /* compute bounding box */
-  new_node->w_bounds_valid_for = NULL;
-
   return new_node;
 }
 
@@ -148,9 +145,6 @@ geda_path_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
                       o_current->fill_type, o_current->fill_width,
                       o_current->fill_pitch1, o_current->fill_angle1,
                       o_current->fill_pitch2, o_current->fill_angle2);
-
-  /* calc the bounding box */
-  o_current->w_bounds_valid_for = NULL;
 
   /* return the new tail of the object list */
   return new_obj;
@@ -372,8 +366,6 @@ geda_path_object_modify (TOPLEVEL *toplevel, OBJECT *object,
     }
   }
 
-  /* Update bounding box */
-  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -417,9 +409,6 @@ geda_path_object_translate (GedaObject *object, int dx, int dy)
       break;
     }
   }
-
-  /* Update bounding box */
-  object->w_bounds_valid_for = NULL;
 }
 
 
@@ -472,7 +461,6 @@ void geda_path_object_rotate (TOPLEVEL *toplevel,
       break;
     }
   }
-  object->w_bounds_valid_for = NULL;
 }
 
 
@@ -515,8 +503,6 @@ void geda_path_object_mirror (TOPLEVEL *toplevel, int world_centerx,
       break;
     }
   }
-
-  object->w_bounds_valid_for = NULL;
 }
 
 

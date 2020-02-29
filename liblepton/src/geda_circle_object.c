@@ -94,9 +94,6 @@ geda_circle_object_new (TOPLEVEL *toplevel,
                       -1,
                       -1);
 
-  /* compute the bounding box coords */
-  new_node->w_bounds_valid_for = NULL;
-
   return new_node;
 }
 
@@ -140,10 +137,6 @@ geda_circle_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
                       object->fill_angle1,
                       object->fill_pitch2,
                       object->fill_angle2);
-
-  new_obj->w_bounds_valid_for = NULL;
-
-  /*	new_obj->attribute = 0;*/
 
   return new_obj;
 }
@@ -292,8 +285,6 @@ geda_circle_object_modify (TOPLEVEL *toplevel,
       break;
   }
 
-  /* recalculate the boundings */
-  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -476,10 +467,6 @@ geda_circle_object_translate (GedaObject *object, gint dx, gint dy)
   /* Do world coords */
   object->circle->center_x = object->circle->center_x + dx;
   object->circle->center_y = object->circle->center_y + dy;
-
-  /* recalc the screen coords and the bounding box */
-  object->w_bounds_valid_for = NULL;
-
 }
 
 /*! \brief Rotate Circle OBJECT using WORLD coordinates.
@@ -536,8 +523,6 @@ geda_circle_object_rotate (TOPLEVEL *toplevel,
   /* translate back in position */
   object->circle->center_x += world_centerx;
   object->circle->center_y += world_centery;
-
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Mirror circle using WORLD coordinates.
@@ -571,9 +556,6 @@ geda_circle_object_mirror (TOPLEVEL *toplevel,
 
   /* translate back in position */
   object->circle->center_x += world_centerx;
-
-  /* recalc boundings and screen coords */
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Get circle bounding rectangle in WORLD coordinates.

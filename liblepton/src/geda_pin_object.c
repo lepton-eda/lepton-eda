@@ -311,8 +311,6 @@ geda_pin_object_new (TOPLEVEL *toplevel,
 
   geda_pin_object_set_type (toplevel, new_node, pin_type);
 
-  new_node->w_bounds_valid_for = NULL;
-
   new_node->whichend = whichend;
 
   return new_node;
@@ -434,9 +432,6 @@ geda_pin_object_translate (GedaObject *object, int dx, int dy)
   object->line->y[0] = object->line->y[0] + dy;
   object->line->x[1] = object->line->x[1] + dx;
   object->line->y[1] = object->line->y[1] + dy;
-
-  /* Update bounding box */
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief create a copy of a pin object
@@ -562,8 +557,6 @@ geda_pin_object_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whi
 
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
-
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief guess the whichend of pins of object list

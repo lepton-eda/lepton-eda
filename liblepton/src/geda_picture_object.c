@@ -624,9 +624,6 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
     }
   }
 
-  /* compute the bounding picture */
-  new_node->w_bounds_valid_for = NULL;
-
   return new_node;
 }
 
@@ -799,8 +796,6 @@ void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
     object->picture->lower_y = tmp;
   }
 
-  /* recalculate the screen coords and the boundings */
-  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -830,8 +825,6 @@ o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object,
   object->picture->upper_x = (x1 > x2) ? x2 : x1;
   object->picture->upper_y = (y1 > y2) ? y1 : y2;
 
-  /* recalculate the world coords and bounds */
-  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -899,10 +892,6 @@ void geda_picture_object_rotate (TOPLEVEL *toplevel,
   object->picture->upper_y += world_centery;
   object->picture->lower_x += world_centerx;
   object->picture->lower_y += world_centery;
-
-  /* recalc boundings and screen coords */
-  object->w_bounds_valid_for = NULL;
-
 }
 
 /*! \brief Mirror a picture using WORLD coordinates.
@@ -964,10 +953,6 @@ void geda_picture_object_mirror(TOPLEVEL *toplevel,
   object->picture->upper_y += world_centery;
   object->picture->lower_x += world_centerx;
   object->picture->lower_y += world_centery;
-
-  /* recalc boundings and screen coords */
-  object->w_bounds_valid_for = NULL;
-
 }
 
 /*! \brief Translate a picture position in WORLD coordinates by a delta.
@@ -991,9 +976,6 @@ geda_picture_object_translate (GedaObject *object, int dx, int dy)
   object->picture->upper_y = object->picture->upper_y + dy;
   object->picture->lower_x = object->picture->lower_x + dx;
   object->picture->lower_y = object->picture->lower_y + dy;
-
-  /* recalc the screen coords and the bounding picture */
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Create a copy of a picture.
@@ -1041,9 +1023,6 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
 
   /* Get the picture data */
   picture->pixbuf = o_picture_get_pixbuf (toplevel, object);
-
-  /* compute the bounding picture */
-  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }

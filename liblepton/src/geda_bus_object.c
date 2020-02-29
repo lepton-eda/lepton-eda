@@ -309,8 +309,6 @@ geda_bus_object_new (TOPLEVEL *toplevel,
 
   new_node->bus_ripper_direction = bus_ripper_direction;
 
-  new_node->w_bounds_valid_for = NULL;
-
   return new_node;
 }
 
@@ -422,9 +420,6 @@ geda_bus_object_translate (GedaObject *object, gint dx, gint dy)
   object->line->y[0] = object->line->y[0] + dy;
   object->line->x[1] = object->line->x[1] + dx;
   object->line->y[1] = object->line->y[1] + dy;
-
-  /* Update bounding box */
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief create a copy of a bus object
@@ -595,6 +590,4 @@ geda_bus_object_modify (TOPLEVEL *toplevel,
 
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
-
-  object->w_bounds_valid_for = NULL;
 }

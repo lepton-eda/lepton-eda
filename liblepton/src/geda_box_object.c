@@ -85,9 +85,6 @@ geda_box_object_new (TOPLEVEL *toplevel, char type, int color,
   o_set_fill_options(toplevel, new_node,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
-  /* compute the bounding box */
-  new_node->w_bounds_valid_for = NULL;
-
   return new_node;
 }
 
@@ -127,10 +124,6 @@ geda_box_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 		     o_current->fill_pitch1, o_current->fill_angle1,
 		     o_current->fill_pitch2, o_current->fill_angle2);
 
-  new_obj->w_bounds_valid_for = NULL;
-
-  /* new_obj->attribute = 0;*/
-
   return new_obj;
 }
 
@@ -159,8 +152,6 @@ geda_box_object_modify_all (TOPLEVEL *toplevel, OBJECT *object,
   object->box->upper_x = (x1 > x2) ? x2 : x1;
   object->box->upper_y = (y1 > y2) ? y1 : y2;
 
-  /* recalculate the world coords and bounds */
-  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -234,8 +225,6 @@ geda_box_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int wh
 		object->box->lower_y = tmp;
 	}
 
-	/* recalculate the world coords and the boundings */
-	object->w_bounds_valid_for = NULL;
 	o_emit_change_notify (toplevel, object);
 
 }
@@ -456,9 +445,6 @@ geda_box_object_translate (GedaObject *object, int dx, int dy)
   object->box->upper_y = object->box->upper_y + dy;
   object->box->lower_x = object->box->lower_x + dx;
   object->box->lower_y = object->box->lower_y + dy;
-
-  /* recalc the screen coords and the bounding box */
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Rotate BOX OBJECT using WORLD coordinates.
@@ -526,9 +512,6 @@ void geda_box_object_rotate (TOPLEVEL *toplevel,
   object->box->upper_y += world_centery;
   object->box->lower_x += world_centerx;
   object->box->lower_y += world_centery;
-
-  /* recalc boundings and world coords */
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Mirror BOX using WORLD coordinates.
@@ -578,10 +561,6 @@ void geda_box_object_mirror (TOPLEVEL *toplevel,
   object->box->upper_y += world_centery;
   object->box->lower_x += world_centerx;
   object->box->lower_y += world_centery;
-
-  /* recalc boundings and world coords */
-  object->w_bounds_valid_for = NULL;
-
 }
 
 /*! \brief Get BOX bounding rectangle in WORLD coordinates.

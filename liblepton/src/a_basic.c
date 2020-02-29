@@ -287,8 +287,6 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
             tmp->parent = new_obj;
           }
 
-          new_obj->w_bounds_valid_for = NULL;
-
           embedded_level--;
         } else {
           g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read unexpected embedded "
