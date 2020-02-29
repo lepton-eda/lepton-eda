@@ -57,9 +57,6 @@ struct st_toplevel
   /* controls if invisible attribs are promoted */
   int promote_invisible;
 
-  /* controls if invisible attribs are kept and not deleted */
-  int keep_invisible;
-
   /* controls the generation of backup (~) files */
   int make_backup_files;
 

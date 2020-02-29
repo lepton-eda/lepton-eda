@@ -310,13 +310,17 @@ GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
   GList *promoted = NULL;
   GList *promotable = NULL;
   GList *iter = NULL;
+  gboolean keep_invisible;
+
+  cfg_read_bool ("schematic.attrib", "keep-invisible",
+                 default_keep_invisible, &keep_invisible);
 
   promotable = o_component_get_promotable (toplevel, object, FALSE);
 
   /* Run through the attributes deciding if we want to keep them (in
    * which case we copy them and make them invisible) or if we want to
    * remove them. */
-  if (toplevel->keep_invisible) {
+  if (keep_invisible) {
     for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
       OBJECT *o_kept = (OBJECT *) iter->data;
       OBJECT *o_copy = o_object_copy (toplevel, o_kept);
@@ -351,9 +355,10 @@ GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
  *  disk. The schematic will already contain local copies of symbol's
  *  promotable objects, so we delete or hide the symbol's copies.
  *
- *  Deletion / hiding is dependant on the setting of
- *  toplevel->keep_invisible. If true, attributes eligible for
- *  promotion are kept in memory but flagged as invisible.
+ *  Deletion / hiding is dependant on the setting of the
+ *  "schematic.attrib::keep-invisible" config setting.  If it is
+ *  true, attributes eligible for promotion are kept in memory but
+ *  flagged as invisible.
  *
  *  \param [in]  toplevel The toplevel environment.
  *  \param [in]  object   The component object being altered.
@@ -361,15 +366,19 @@ GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
 static void o_component_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object)
 {
   GList *promotable, *iter;
+  gboolean keep_invisible;
 
   promotable = o_component_get_promotable (toplevel, object, FALSE);
 
   if (promotable == NULL)
     return;
 
+  cfg_read_bool ("schematic.attrib", "keep-invisible",
+                 default_keep_invisible, &keep_invisible);
+
   for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *a_object = (OBJECT*) iter->data;
-    if (toplevel->keep_invisible == TRUE) {   /* Hide promotable attributes */
+    if (keep_invisible == TRUE) {   /* Hide promotable attributes */
       o_set_visibility (toplevel, a_object, INVISIBLE);
     } else {                                /* Delete promotable attributes */
       object->component->prim_objs =
