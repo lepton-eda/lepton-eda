@@ -59,6 +59,13 @@ must provide the URL for the original version.
 @node Introduction
 @unnumbered Introduction
 
+@section About Lepton EDA
+Lepton EDA is a suite of free software tools for designing
+electronics. It provides schematic capture, netlisting into over 30
+netlist formats, and many other features. It was forked from the
+@url{http://wiki.geda-project.org/geda:gaf, gEDA/gaf suite} (part of
+gEDA, please see below) by most of its main developers in late 2016.
+
 @section About gEDA
 
 @dfn{gEDA}, or @emph{GPL Electronic Design Automation}, is a suite of
@@ -66,11 +73,7 @@ free software tools for designing electronics.  The gEDA project has
 produced and continues working on a full GPL'd suite and toolkit of
 Electronic Design Automation (EDA) tools. These tools are used for
 electrical circuit design, schematic capture, simulation, prototyping,
-and production. Currently, the gEDA project offers a mature suite of
-free software applications for electronics design, including schematic
-capture, attribute management, bill of materials (BOM) generation,
-netlisting into over 20 netlist formats, analog and digital
-simulation, and printed circuit board (PCB) layout.
+and production.
 
 The gEDA project was started because of the lack of free EDA tools for
 POSIX systems with the primary purpose of advancing the state of free
