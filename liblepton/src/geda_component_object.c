@@ -292,9 +292,6 @@ GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
         g_list_remove (object->component->prim_objs, o_removed);
     }
     promoted = promotable;
-    /* Invalidate the object's bounds since we may have
-     * stolen objects from inside it. */
-    o_bounds_invalidate (toplevel, object);
   }
 
   /* Attach promoted attributes to the original component
@@ -340,7 +337,6 @@ static void o_component_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *o
     }
   }
 
-  o_bounds_invalidate (toplevel, object);
   g_list_free (promotable);
 }
 
@@ -508,8 +504,6 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
     OBJECT *tmp = (OBJECT*) iter->data;
     tmp->parent = new_node;
   }
-
-  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }
@@ -707,8 +701,6 @@ geda_component_object_translate (GedaObject *object, int dx, int dy)
   object->component->y = object->component->y + dy;
 
   geda_object_list_translate (object->component->prim_objs, dx, dy);
-
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Create a copy of a component object
@@ -749,9 +741,6 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
        iter = g_list_next (iter)) {
     ((OBJECT*) iter->data)->parent = o_new;
   }
-
-  /* Recalculate bounds */
-  o_new->w_bounds_valid_for = NULL;
 
   /* Delete or hide attributes eligible for promotion inside the
      component. */

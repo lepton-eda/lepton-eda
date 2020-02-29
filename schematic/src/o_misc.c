@@ -331,7 +331,6 @@ void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
 
     if (o_current->type == OBJ_COMPONENT || o_current->type == OBJ_PLACEHOLDER) {
       o_edit_show_hidden_lowlevel(w_current, o_current->component->prim_objs);
-      o_current->w_bounds_valid_for = NULL;
     }
 
     iter = g_list_next (iter);

@@ -206,7 +206,6 @@ void o_move_end(GschemToplevel *w_current)
 
         o_move_end_lowlevel_glist (w_current, object->component->prim_objs,
                                    diff_x, diff_y);
-        object->w_bounds_valid_for = NULL;
         break;
 
       default:
@@ -723,7 +722,6 @@ void o_move_end_rubberband (GschemToplevel *w_current,
         continue;
       }
 
-      object->w_bounds_valid_for = NULL;
       s_conn_update_object (page, object);
       *objects = g_list_append (*objects, object);
     }

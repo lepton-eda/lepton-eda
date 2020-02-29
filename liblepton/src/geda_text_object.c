@@ -445,9 +445,6 @@ geda_text_object_new (TOPLEVEL *toplevel,
 
   update_disp_string (new_node);
 
-  /* Update bounding box */
-  new_node->w_bounds_valid_for = NULL;
-
   return new_node;
 }
 
@@ -658,7 +655,6 @@ o_text_recreate (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   o_emit_pre_change_notify (toplevel, o_current);
   update_disp_string (o_current);
-  o_current->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, o_current);
 }
 
@@ -679,9 +675,6 @@ geda_text_object_translate (GedaObject *object, int dx, int dy)
 
   object->text->x = object->text->x + dx;
   object->text->y = object->text->y + dy;
-
-  /* Update bounding box */
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief create a copy of a text object

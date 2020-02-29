@@ -457,8 +457,6 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
   o_current->line_length = length;
   o_current->line_space  = space;
 
-  /* Recalculate the object's bounding box */
-  o_current->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, o_current);
 
 }
@@ -826,28 +824,6 @@ geda_object_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object,
   return shortest_distance;
 }
 
-/*! \brief Mark an OBJECT's cached bounds as invalid
- *  \par Function Description
- *  Recursively marks the cached bounds of the given OBJECT and its
- *  parents as having been invalidated and in need of an update. They
- *  will be recalculated next time the OBJECT's bounds are requested
- *  (e.g. via geda_object_calculate_visible_bounds() ).
- *  \param [in] toplevel
- *  \param [in] object
- *
- *  \todo Turn this into a macro?
- */
-void
-o_bounds_invalidate (TOPLEVEL *toplevel, GedaObject *object)
-{
-  GedaObject *iter = object;
-
-  while (iter != NULL) {
-    iter->w_bounds_valid_for = NULL;
-    iter = iter->parent;
-  }
-}
-
 
 /*! \brief Change the color of an object
  *
@@ -1088,10 +1064,7 @@ void
 o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility)
 {
   g_return_if_fail (object != NULL);
-  if (object->visibility != visibility) {
-    object->visibility = visibility;
-    o_bounds_invalidate (toplevel, object);
-  }
+  object->visibility = visibility;
 }
 
 /*! \brief Return the bounds of the given object.
@@ -1125,104 +1098,101 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
     return 0;
   }
 
-  if (o_current->w_bounds_valid_for != toplevel) {
-    GedaBounds bounds;
+  GedaBounds bounds;
 
-    switch(o_current->type) {
+  switch(o_current->type) {
 
-      case(OBJ_LINE):
-        if (o_current->line == NULL) {
-          return 0;
-        }
-        geda_line_object_calculate_bounds (toplevel, o_current, &bounds);
-        break;
-
-      case(OBJ_NET):
-        if (o_current->line == NULL) {
-          return 0;
-        }
-        geda_net_object_calculate_bounds (toplevel, o_current, &bounds);
-        break;
-
-      case(OBJ_BUS):
-        if (o_current->line == NULL) {
-          return 0;
-        }
-        geda_bus_object_calculate_bounds(toplevel, o_current, &bounds);
-        break;
-
-      case(OBJ_BOX):
-        if (o_current->box == NULL) {
-          return 0;
-        }
-        geda_box_object_calculate_bounds (toplevel, o_current, &bounds);
-        break;
-
-      case(OBJ_PATH):
-        g_return_val_if_fail (o_current->path != NULL, 0);
-        if (o_current->path->num_sections <= 0) {
-          return 0;
-        }
-        geda_path_object_calculate_bounds (toplevel, o_current, &bounds);
-        break;
-
-      case(OBJ_PICTURE):
-        if (o_current->picture == NULL) {
-          return 0;
-        }
-        geda_picture_object_calculate_bounds (o_current, &bounds);
-        break;
-
-      case(OBJ_CIRCLE):
-        if (o_current->circle == NULL) {
-          return 0;
-        }
-        geda_circle_object_calculate_bounds (toplevel, o_current, &bounds);
-        break;
-
-      case(OBJ_COMPONENT):
-      case(OBJ_PLACEHOLDER):
-        /* realc routine Add this somewhere */
-        /* libhack */
-        /* o_recalc(toplevel, o_current->component);*/
-
-        if (o_current->component->prim_objs == NULL)
-          return 0;
-
-        geda_component_object_calculate_bounds(toplevel, o_current, &bounds);
-        break;
-
-      case(OBJ_PIN):
-        if (o_current->line == NULL) {
-          return 0;
-        }
-        geda_pin_object_calculate_bounds (toplevel, o_current, &bounds);
-        break;
-
-      case(OBJ_ARC):
-        if (o_current->arc == NULL) {
-          return 0;
-        }
-        geda_arc_object_calculate_bounds (toplevel, o_current,
-                                          &bounds.min_x,
-                                          &bounds.min_y,
-                                          &bounds.max_x,
-                                          &bounds.max_y);
-        break;
-
-      case(OBJ_TEXT):
-        if (!geda_text_object_calculate_bounds(toplevel, o_current, &bounds)) {
-          return 0;
-        }
-        break;
-
-      default:
-        return 0;
+  case(OBJ_LINE):
+    if (o_current->line == NULL) {
+      return 0;
     }
+    geda_line_object_calculate_bounds (toplevel, o_current, &bounds);
+    break;
 
-    o_current->bounds = bounds;
-    o_current->w_bounds_valid_for = toplevel;
+  case(OBJ_NET):
+    if (o_current->line == NULL) {
+      return 0;
+    }
+    geda_net_object_calculate_bounds (toplevel, o_current, &bounds);
+    break;
+
+  case(OBJ_BUS):
+    if (o_current->line == NULL) {
+      return 0;
+    }
+    geda_bus_object_calculate_bounds(toplevel, o_current, &bounds);
+    break;
+
+  case(OBJ_BOX):
+    if (o_current->box == NULL) {
+      return 0;
+    }
+    geda_box_object_calculate_bounds (toplevel, o_current, &bounds);
+    break;
+
+  case(OBJ_PATH):
+    g_return_val_if_fail (o_current->path != NULL, 0);
+    if (o_current->path->num_sections <= 0) {
+      return 0;
+    }
+    geda_path_object_calculate_bounds (toplevel, o_current, &bounds);
+    break;
+
+  case(OBJ_PICTURE):
+    if (o_current->picture == NULL) {
+      return 0;
+    }
+    geda_picture_object_calculate_bounds (o_current, &bounds);
+    break;
+
+  case(OBJ_CIRCLE):
+    if (o_current->circle == NULL) {
+      return 0;
+    }
+    geda_circle_object_calculate_bounds (toplevel, o_current, &bounds);
+    break;
+
+  case(OBJ_COMPONENT):
+  case(OBJ_PLACEHOLDER):
+    /* realc routine Add this somewhere */
+    /* libhack */
+    /* o_recalc(toplevel, o_current->component);*/
+
+    if (o_current->component->prim_objs == NULL)
+      return 0;
+
+    geda_component_object_calculate_bounds(toplevel, o_current, &bounds);
+    break;
+
+  case(OBJ_PIN):
+    if (o_current->line == NULL) {
+      return 0;
+    }
+    geda_pin_object_calculate_bounds (toplevel, o_current, &bounds);
+    break;
+
+  case(OBJ_ARC):
+    if (o_current->arc == NULL) {
+      return 0;
+    }
+    geda_arc_object_calculate_bounds (toplevel, o_current,
+                                      &bounds.min_x,
+                                      &bounds.min_y,
+                                      &bounds.max_x,
+                                      &bounds.max_y);
+    break;
+
+  case(OBJ_TEXT):
+    if (!geda_text_object_calculate_bounds(toplevel, o_current, &bounds)) {
+      return 0;
+    }
+    break;
+
+  default:
+    return 0;
   }
+
+  o_current->bounds = bounds;
 
   if (rleft != NULL) {
     *rleft = o_current->bounds.min_x;
@@ -1267,7 +1237,6 @@ s_basic_init_object (OBJECT *new_node, int type, char const *name)
 
   /* Setup the bounding box */
   geda_bounds_init (&(new_node->bounds));
-  new_node->w_bounds_valid_for = NULL;
 
   /* Setup line/circle structs */
   new_node->line = NULL;

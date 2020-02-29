@@ -266,8 +266,6 @@ geda_net_object_new (TOPLEVEL *toplevel, char type,
   new_node->line->y[1] = y2;
   new_node->line_width = NET_WIDTH;
 
-  new_node->w_bounds_valid_for = NULL;
-
   return new_node;
 }
 
@@ -359,9 +357,6 @@ geda_net_object_translate (GedaObject *object, int dx, int dy)
   object->line->y[0] = object->line->y[0] + dy;
   object->line->x[1] = object->line->x[1] + dx;
   object->line->y[1] = object->line->y[1] + dy;
-
-  /* Update bounding box */
-  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief create a copy of a net object
@@ -671,7 +666,6 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
           }
 
           s_delete_object (toplevel, other_object);
-          object->w_bounds_valid_for = NULL;
           s_conn_update_object (page, object);
           return(-1);
         }
@@ -740,6 +734,4 @@ geda_net_object_modify (TOPLEVEL *toplevel, OBJECT *object,
 {
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
-
-  object->w_bounds_valid_for = NULL;
 }
