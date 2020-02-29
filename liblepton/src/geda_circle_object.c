@@ -249,7 +249,6 @@ geda_circle_object_set_radius (GedaObject *object, gint radius)
  *  The bounding box of the circle object is updated after the modification of its
  *  parameters.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     Circle OBJECT to modify.
  *  \param [in]     x          New center x coordinate, or radius value.
  *  \param [in]     y          New center y coordinate.
@@ -263,8 +262,7 @@ geda_circle_object_set_radius (GedaObject *object, gint radius)
  *  </DL>
  */
 void
-geda_circle_object_modify (TOPLEVEL *toplevel,
-                           GedaObject *object,
+geda_circle_object_modify (GedaObject *object,
                            gint x,
                            gint y,
                            gint whichone)

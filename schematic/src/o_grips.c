@@ -1145,8 +1145,6 @@ static void o_grips_end_picture(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_circle(GschemToplevel *w_current, OBJECT *o_current,
                                int whichone)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-
   /* don't allow zero radius circles
    * this ends the circle drawing behavior
    * we want this? hack */
@@ -1157,7 +1155,7 @@ static void o_grips_end_circle(GschemToplevel *w_current, OBJECT *o_current,
   }
 
   /* modify the radius of the circle */
-  geda_circle_object_modify (toplevel, o_current, w_current->distance, -1, CIRCLE_RADIUS);
+  geda_circle_object_modify (o_current, w_current->distance, -1, CIRCLE_RADIUS);
 }
 
 /*! \brief End process of modifying line object with grip.
