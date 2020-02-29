@@ -722,5 +722,5 @@ geda_pin_object_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type)
       o_current->pin_type = PIN_TYPE_BUS;
       break;
   }
-  o_emit_change_notify (toplevel, o_current);
+  o_emit_change_notify (o_current);
 }

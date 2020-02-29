@@ -133,7 +133,6 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
   SCM_ASSERT (scm_is_bool (mirror_s), mirror_s,  SCM_ARG5, s_set_component_x);
   SCM_ASSERT (scm_is_bool (locked_s), locked_s,  SCM_ARG6, s_set_component_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (component_s);
 
   /* Angle */
@@ -161,7 +160,7 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
   obj->component->mirror = scm_is_true (mirror_s);
   obj->selectable = scm_is_false (locked_s);
 
-  o_emit_change_notify (toplevel, obj);
+  o_emit_change_notify (obj);
 
   o_page_changed (obj);
 
@@ -257,7 +256,6 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
                && !edascm_is_object_type (obj_s, OBJ_PLACEHOLDER)),
               obj_s, SCM_ARG2, s_component_append_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *parent = edascm_to_object (component_s);
   OBJECT *child = edascm_to_object (obj_s);
 
@@ -291,7 +289,7 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
     s_conn_update_object (parent_page, child);
   }
 
-  o_emit_change_notify (toplevel, parent);
+  o_emit_change_notify (parent);
 
   o_page_changed (parent);
 
@@ -367,7 +365,7 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
   s_conn_remove_object (child_page, child);
   s_conn_remove_object_connections (toplevel, child);
 
-  o_emit_change_notify (toplevel, parent);
+  o_emit_change_notify (parent);
 
   o_page_changed (parent);
 

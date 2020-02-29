@@ -1614,7 +1614,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   obj->visibility = visibility;
   obj->show_name_value = show;
 
-  o_emit_change_notify (toplevel, obj);
+  o_emit_change_notify (obj);
 
   char *tmp = scm_to_utf8_string (string_s);
   o_text_set_string (toplevel, obj, tmp);
@@ -1912,7 +1912,6 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
               SCM_ARG1, s_path_ref);
   SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_ref);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   int idx = scm_to_int (index_s);
 
@@ -1937,7 +1936,7 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
     obj->path->num_sections--;
   }
 
-  o_emit_change_notify (toplevel, obj);
+  o_emit_change_notify (obj);
   o_page_changed (obj);
 
   return obj_s;
@@ -1986,7 +1985,6 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_insert_x);
   SCM_ASSERT (scm_is_symbol (type_s), type_s, SCM_ARG3, s_path_insert_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   PATH *path = obj->path;
   PATH_SECTION section = {(PATH_CODE) 0, 0, 0, 0, 0, 0, 0};
@@ -2052,7 +2050,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   path->num_sections++;
   path->sections[idx] = section;
 
-  o_emit_change_notify (toplevel, obj);
+  o_emit_change_notify (obj);
   o_page_changed (obj);
 
   return obj_s;
@@ -2182,7 +2180,7 @@ SCM_DEFINE (set_picture_x, "%set-picture!", 7, 0, 0,
                         scm_to_int (x1_s), scm_to_int (y1_s),
                         scm_to_int (x2_s), scm_to_int (y2_s));
 
-  o_emit_change_notify (toplevel, obj);
+  o_emit_change_notify (obj);
   return obj_s;
 }
 
@@ -2281,14 +2279,13 @@ SCM_DEFINE (translate_object_x, "%translate-object!", 3, 0, 0,
   SCM_ASSERT (scm_is_integer (dy_s), dy_s,
               SCM_ARG3, s_translate_object_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   int dx = scm_to_int (dx_s);
   int dy = scm_to_int (dy_s);
 
   o_emit_pre_change_notify (obj);
   geda_object_translate (obj, dx, dy);
-  o_emit_change_notify (toplevel, obj);
+  o_emit_change_notify (obj);
   o_page_changed (obj);
 
   return obj_s;
@@ -2339,7 +2336,7 @@ SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
 
   o_emit_pre_change_notify (obj);
   geda_object_rotate (toplevel, x, y, angle, obj);
-  o_emit_change_notify (toplevel, obj);
+  o_emit_change_notify (obj);
   o_page_changed (obj);
 
   return obj_s;
@@ -2372,7 +2369,7 @@ SCM_DEFINE (mirror_object_x, "%mirror-object!", 2, 0, 0,
 
   o_emit_pre_change_notify (obj);
   geda_object_mirror (toplevel, x, 0, obj);
-  o_emit_change_notify (toplevel, obj);
+  o_emit_change_notify (obj);
   o_page_changed (obj);
 
   return obj_s;

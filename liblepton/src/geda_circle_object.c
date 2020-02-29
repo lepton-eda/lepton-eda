@@ -285,7 +285,7 @@ geda_circle_object_modify (TOPLEVEL *toplevel,
       break;
   }
 
-  o_emit_change_notify (toplevel, object);
+  o_emit_change_notify (object);
 }
 
 /*! \brief Create circle OBJECT from character string.
