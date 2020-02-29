@@ -19,7 +19,7 @@ The text of and illustrations in this document are licensed under a
 Creative Commons Attribution–Share Alike 3.0 Unported license
 ("CC-BY-SA"). An explanation of CC-BY-SA is available at
 @uref{http://creativecommons.org/licenses/by-sa/3.0/}. The original
-authors of this document designate the gEDA Project as the
+authors of this document designate the Lepton EDA Project as the
 "Attribution Party" for purposes of CC-BY-SA. In accordance with
 CC-BY-SA, if you distribute this document or an adaptation of it, you
 must provide the URL for the original version.
@@ -81,10 +81,10 @@ hardware or open source hardware. The suite is mainly being developed
 on the GNU/Linux platform with some development effort going into
 making sure the tools run on other platforms as well.
 
-@section About the gEDA Scheme API
+@section About the Lepton EDA Scheme API
 
-The @dfn{gEDA Scheme API}, documented in this manual, is a set of
-Scheme functions which can be used to enhance gEDA applications by
+The @dfn{Lepton EDA Scheme API}, documented in this manual, is a set of
+Scheme functions which can be used to enhance Lepton applications by
 adding new functionality or modify existing behaviour.
 
 Lepton EDA (formerly gEDA) has always used a Scheme interpreter for
@@ -93,10 +93,10 @@ lepton-schemactic (formerly gschem), and implementing netlist exporter
 backends in gnetlist.  However, for a long time the utility of
 embedding a Scheme interpreter was diminished by the lack of a
 low-level API for inspecting and modifying schematic documents.  The
-Scheme types and functions documented here were added to gEDA to
-address that need.
+Scheme types and functions documented here were added to gEDA and
+later to Lepton to address that need.
 
-gEDA uses the @emph{Guile} Scheme implementation (otherwise known as
+Lepton uses the @emph{Guile} Scheme implementation (otherwise known as
 the @emph{GNU Ubiquitous Intelligent Language for Extensions}) as its
 embedded Scheme.  For more information about Guile, please visit
 @uref{http://www.gnu.org/s/guile/}.
@@ -137,8 +137,8 @@ schematics are then processed with the gnetlist tool to generate a
 @emph{netlist}.
 
 This chapter describes the different data types used by the Scheme API
-to represent gEDA documents (both schematics and symbols), and how
-they relate to each other.
+to represent Lepton EDA documents (both schematics and symbols), and
+how they relate to each other.
 
 @menu
 * Pages::
@@ -255,7 +255,7 @@ other types of @code{object}.
 @cindex Attribute
 @cindex Attribute format
 
-A gEDA user is able to annotate schematic elements with additional
+A Lepton user is able to annotate schematic elements with additional
 data, such as footprints for components or net names for nets.  This
 is carried out using @dfn{attributes}.
 
@@ -287,10 +287,10 @@ must not begin with a space (@samp{ }, Unicode @code{U+0020}).
 @end enumerate
 @end itemize
 
-@strong{Note}: Due to assumptions made by some gEDA tools, it is
-@emph{strongly recommended} that you use attribute @var{name}s which
-contain only lower-case Latin characters, decimal digits, full stops
-@samp{.}  (@code{U+002E}), and hyphens @samp{-} (@code{U+002D}).
+@strong{Note}: Due to assumptions made by some Lepton and gEDA tools,
+it is @emph{strongly recommended} that you use attribute @var{name}s
+which contain only lower-case Latin characters, decimal digits, full
+stops @samp{.}  (@code{U+002E}), and hyphens @samp{-} (@code{U+002D}).
 
 There are two types of attribute:
 
@@ -314,7 +314,7 @@ to find the component's data sheet.
 @node Coordinate system
 @section Coordinate system
 
-gEDA documents use a @dfn{coordinate system} (internally referred to
+Lepton documents use a @dfn{coordinate system} (internally referred to
 as `world' coordinates) with coordinates increasing upwards and to the
 right (i.e. a conventional right-handed Cartesian coordinate
 system).
@@ -346,7 +346,7 @@ the smaller and larger y coordinates.
 
 The Scheme modules and functions described in this chapter are
 primitive operations for working with schematics and symbols, and are
-available to be used in all gEDA applications.
+available to be used in all Lepton applications.
 
 @menu
 * Core page functions::
@@ -679,7 +679,7 @@ returned.
 @node Object color
 @subsubsection Object color
 
-Object colors in gEDA documents are specified as indices into a color
+Object colors in Lepton documents are specified as indices into a color
 map.  This allows users to specify the color map that suits them when
 viewing schematics and symbols.
 
@@ -1068,7 +1068,7 @@ Returns the end angle of @var{arc} as an integer number of degrees.
 Paths are arbitrary shapes comprised of straight lines and Bézier
 curves.  Each path contains a sequence of @emph{path elements}, each
 of which requires zero or more absolute position parameters.  The
-element types supported by gEDA are:
+element types supported by Lepton are:
 
 @itemize
 @item
@@ -1661,7 +1661,7 @@ To use the functions described in this section, you will need to load
 the @code{(lepton config)} module.
 
 This section describes some functions for accessing, monitoring and
-modifying the configuration of gEDA libraries and applications.
+modifying the configuration of Lepton libraries and applications.
 
 @menu
 * Configuration contexts::
@@ -1871,7 +1871,7 @@ Since 1.10.
 @cindex Configuration group
 @cindex Configuration value
 
-A gEDA @dfn{configuration parameter} consists of three components:
+A Lepton @dfn{configuration parameter} consists of three components:
 
 @table @dfn
 @item Group
@@ -2131,7 +2131,7 @@ the @code{(lepton os)} module.
 
 This section describes some functions and variables that are useful
 for Scheme code that needs to behave differently depending on which
-operating system gEDA is running on.
+operating system Lepton is running on.
 
 @defvar separator-char
 The directory separator character that should be used on the host
@@ -2185,20 +2185,20 @@ otherwise.
 
 @defun sys-data-dirs
 Returns an ordered list of directories in which to access system-wide
-gEDA data.
+Lepton data.
 @end defun
 
 @defun sys-config-dirs
 Returns an ordered list of directories in which to access system-wide
-gEDA configuration information.
+Lepton configuration information.
 @end defun
 
 @defun user-data-dir
-Returns the directory in which to store user-specific gEDA data.
+Returns the directory in which to store user-specific Lepton data.
 @end defun
 
 @defun user-config-dir
-Returns the directory in which to store user-specific gEDA
+Returns the directory in which to store user-specific Lepton
 configuration information.
 @end defun
 
