@@ -1052,16 +1052,12 @@ geda_object_get_visible (const GedaObject *object)
 }
 
 /*! \brief Set visibility of the object.
- *  \par Function Description
- *  Set value of visibility field within the object.
- *  If resulting visibility value is changed,
- *  invalidate the bounds of the object and parent objects.
  *
- *  \param toplevel The #TOPLEVEL structure
- *  \param object   The #OBJECT structure to be modified
+ *  \param object     The #OBJECT structure to be modified
+ *  \param visibility If the object should be visible
  */
 void
-o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility)
+o_set_visibility (OBJECT *object, int visibility)
 {
   g_return_if_fail (object != NULL);
   object->visibility = visibility;

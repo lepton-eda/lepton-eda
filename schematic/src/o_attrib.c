@@ -168,7 +168,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object)
       o_invalidate (w_current, object);
     }
 
-    o_set_visibility (toplevel, object, INVISIBLE);
+    o_set_visibility (object, INVISIBLE);
 
     if (toplevel->show_hidden_text) {
       /* draw text so that little I is drawn */
@@ -182,7 +182,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object)
       o_invalidate (w_current, object);
     }
 
-    o_set_visibility (toplevel, object, VISIBLE);
+    o_set_visibility (object, VISIBLE);
     o_text_recreate(toplevel, object);
   }
 

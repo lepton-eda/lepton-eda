@@ -469,7 +469,7 @@ geda_text_object_new (TOPLEVEL *toplevel,
   new_node->text = text;
 
   new_node->color = color;
-  o_set_visibility (toplevel, new_node, visibility);
+  o_set_visibility (new_node, visibility);
   new_node->show_name_value = show_name_value;
 
   update_disp_string (new_node);

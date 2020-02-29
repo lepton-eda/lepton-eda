@@ -384,7 +384,7 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
       const gchar *str = geda_text_object_get_string (o_current);
       if (!strncmp (stext, str, strlen (stext))) {
         if (o_is_visible (toplevel, o_current)) {
-          o_set_visibility (toplevel, o_current, INVISIBLE);
+          o_set_visibility (o_current, INVISIBLE);
           o_text_recreate(toplevel, o_current);
 
           gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
@@ -418,7 +418,7 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
       const gchar *str = geda_text_object_get_string (o_current);
       if (!strncmp (stext, str, strlen (stext))) {
         if (!o_is_visible (toplevel, o_current)) {
-          o_set_visibility (toplevel, o_current, VISIBLE);
+          o_set_visibility (o_current, VISIBLE);
           o_text_recreate(toplevel, o_current);
 
           gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
