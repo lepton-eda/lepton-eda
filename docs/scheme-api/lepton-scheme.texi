@@ -1731,14 +1731,15 @@ Since 1.10.
 @defun system-config-context
 The system context is used for system-wide configuration.  Its parent
 context is the default context.  It is located by searching
-@code{sys-config-dirs} for a @file{gEDA/geda-system.conf} file.
+@code{sys-config-dirs} for a
+@file{$@{prefix@}/share/lepton-eda/lepton-system.conf} file.
 
 Since 1.10.
 @end defun
 
 @defun user-config-context
 The user context is used for user-specific configuration, and is
-loaded from @file{geda-user.conf} in @code{user-config-dir}.
+loaded from @file{lepton-user.conf} in @code{user-config-dir}.
 Its parent context is the system context.
 
 Since 1.10.
