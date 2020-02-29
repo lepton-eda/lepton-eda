@@ -810,10 +810,6 @@ x_window_set_current_page_impl (GschemToplevel *w_current, PAGE *page)
  *  to save page <B>page</B> to file <B>filename</B> (1 on success, 0
  *  on failure).
  *
- *  <B>page</B> may not be the current page of <B>toplevel</B>. The
- *  current page of <B>toplevel</B> is not affected by this function.
- *
- *  \param [in] w_current The toplevel environment.
  *  \param [in] page      The page to save.
  *  \param [in] filename  The name of the file in which to save page.
  *  \returns 1 on success, 0 otherwise.
@@ -821,12 +817,10 @@ x_window_set_current_page_impl (GschemToplevel *w_current, PAGE *page)
 gint
 x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   const gchar *log_msg, *state_msg;
   gint ret;
   GError *err = NULL;
 
-  g_return_val_if_fail (toplevel != NULL, 0);
   g_return_val_if_fail (page     != NULL, 0);
   g_return_val_if_fail (filename != NULL, 0);
 
