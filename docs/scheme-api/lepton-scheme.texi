@@ -109,13 +109,13 @@ If you think you have found a bug, please file a bug report:
 @samp{scheme-api}.  It will help us to fix your bug quickly if you can
 describe in detail how to reproduce the bug.
 
-If you have a question about using gEDA, or about extending gEDA using
-Scheme, you may wish to send a message to one of the gEDA mailing
-lists.  You may also find additional information in the gEDA
-wiki.
-
-Both the mailing lists and wiki can be accessed from the main gEDA
-website: @uref{http://www.geda-project.org/}.
+If you have a question about using Lepton EDA, or about extending
+Lepton using Scheme, you may wish to send a message to one of the gEDA
+mailing lists (@samp{geda-user} or @samp{geda-help}) which can be
+accessed from the main gEDA website:
+@uref{http://www.geda-project.org/}.  Currently, Lepton doesn't have
+an own mailing list. You may also find additional information in the
+@url{https://github.com/lepton-eda/lepton-eda/wiki, Lepton EDA wiki}.
 
 @section We Need Feedback!
 
