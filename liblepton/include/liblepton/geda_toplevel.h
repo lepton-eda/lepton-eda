@@ -54,9 +54,6 @@ struct st_toplevel
   /* controls if the net consolidation code is used */
   int net_consolidate;
 
-  /* controls the generation of backup (~) files */
-  int make_backup_files;
-
   /* controls if the whole bounding box is used in the auto whichend code */
   int force_boundingbox;
 

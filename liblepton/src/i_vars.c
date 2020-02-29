@@ -80,10 +80,6 @@ cfg_read_bool (const gchar* group,
  */
 void i_vars_libgeda_set(TOPLEVEL *toplevel)
 {
-  cfg_read_bool ("schematic.backup", "create-files",
-                 default_make_backup_files, &toplevel->make_backup_files);
-
-
   if (toplevel->always_promote_attributes)
   {
     g_ptr_array_unref (toplevel->always_promote_attributes);
