@@ -296,28 +296,35 @@ geda_arc_object_set_sweep_angle (GedaObject *object, gint angle)
  *  This function modifies the internal values of the arc object
  *  *object according to the whichone parameter.
  *
- *  The new values are given by <B>x</B> and/or <B>y</B>. Their meaning depends on the value of whichone.
+ *  The new values are given by <B>x</B> and/or <B>y</B>. Their
+ *  meaning depends on the value of whichone.
  *
- *  If <B>whichone</B> is equal to #ARC_CENTER, the (<B>x</B>,<B>y</B>) point is taken as the new center
- *  of the arc in world unit.
+ *  If <B>whichone</B> is equal to #ARC_CENTER, the
+ *  (<B>x</B>,<B>y</B>) point is taken as the new center of the
+ *  arc in world unit.
  *
- *  If <B>whichone</B> is equal to #ARC_RADIUS, the <B>x</B> parameter is taken to be the radius
- *  of the arc in world unit. The <B>y</B> parameter is ignored.
+ *  If <B>whichone</B> is equal to #ARC_RADIUS, the <B>x</B>
+ *  parameter is taken to be the radius of the arc in world
+ *  unit. The <B>y</B> parameter is ignored.
  *
- *  If <B>whichone</B> is equal to #ARC_START_ANGLE, the <B>x</B> parameter is the starting angle of the arc.
- *  <B>x</B> is in degrees. <B>y</B> is ignored.
+ *  If <B>whichone</B> is equal to #ARC_START_ANGLE, the <B>x</B>
+ *  parameter is the starting angle of the arc.  <B>x</B> is in
+ *  degrees. <B>y</B> is ignored.
  *
- *  If <B>whichone</B> is equal to #ARC_SWEEP_ANGLE, the <B>x</B> parameter is the ending angle of the arc.
- *  <B>x</B> is in degrees. <B>y</B> is ignored.
+ *  If <B>whichone</B> is equal to #ARC_SWEEP_ANGLE, the <B>x</B>
+ *  parameter is the ending angle of the arc.  <B>x</B> is in
+ *  degrees. <B>y</B> is ignored.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object
  *  \param [in]     x
  *  \param [in]     y
  *  \param [in]     whichone
  */
 void
-geda_arc_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone)
+geda_arc_object_modify (OBJECT *object,
+                        int x,
+                        int y,
+                        int whichone)
 {
 
 	o_emit_pre_change_notify (object);

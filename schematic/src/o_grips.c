@@ -1016,7 +1016,6 @@ void o_grips_cancel(GschemToplevel *w_current)
 static void o_grips_end_arc(GschemToplevel *w_current, OBJECT *o_current,
                             int whichone)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int arg1, arg2;
 
   /* erase the temporary arc */
@@ -1050,7 +1049,7 @@ static void o_grips_end_arc(GschemToplevel *w_current, OBJECT *o_current,
   }
 
   /* modify the arc with the parameters determined above */
-  geda_arc_object_modify (toplevel, o_current, arg1, arg2, whichone);
+  geda_arc_object_modify (o_current, arg1, arg2, whichone);
 }
 
 /*! \todo Finish function documentation!!!

@@ -68,9 +68,9 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
     arc_object = (OBJECT*) g_object_get_data(G_OBJECT(w_current->aawindow),"arc_object");
 
     if (arc_object != NULL) {
-      geda_arc_object_modify (w_current->toplevel, arc_object, radius, 0, ARC_RADIUS);
-      geda_arc_object_modify (w_current->toplevel, arc_object, start_angle, 0, ARC_START_ANGLE);
-      geda_arc_object_modify (w_current->toplevel, arc_object, sweep_angle, 0, ARC_SWEEP_ANGLE);
+      geda_arc_object_modify (arc_object, radius, 0, ARC_RADIUS);
+      geda_arc_object_modify (arc_object, start_angle, 0, ARC_START_ANGLE);
+      geda_arc_object_modify (arc_object, sweep_angle, 0, ARC_SWEEP_ANGLE);
     } else {
       o_arc_end4(w_current, radius, start_angle, sweep_angle);
     }

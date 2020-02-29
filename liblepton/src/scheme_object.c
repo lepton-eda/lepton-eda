@@ -1424,10 +1424,10 @@ SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (arc_s);
-  geda_arc_object_modify (toplevel, obj, scm_to_int(x_s), scm_to_int(y_s), ARC_CENTER);
-  geda_arc_object_modify (toplevel, obj, scm_to_int(r_s), 0, ARC_RADIUS);
-  geda_arc_object_modify (toplevel, obj, scm_to_int(start_angle_s), 0, ARC_START_ANGLE);
-  geda_arc_object_modify (toplevel, obj, scm_to_int(end_angle_s), 0, ARC_SWEEP_ANGLE);
+  geda_arc_object_modify (obj, scm_to_int(x_s), scm_to_int(y_s), ARC_CENTER);
+  geda_arc_object_modify (obj, scm_to_int(r_s), 0, ARC_RADIUS);
+  geda_arc_object_modify (obj, scm_to_int(start_angle_s), 0, ARC_START_ANGLE);
+  geda_arc_object_modify (obj, scm_to_int(end_angle_s), 0, ARC_SWEEP_ANGLE);
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
   o_page_changed (obj);
