@@ -708,7 +708,7 @@ geda_pin_object_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type)
   g_return_if_fail (o_current != NULL);
   g_return_if_fail (o_current->type == OBJ_PIN);
 
-  o_emit_pre_change_notify (toplevel, o_current);
+  o_emit_pre_change_notify (o_current);
   switch (pin_type) {
     default:
       g_critical ("geda_pin_object_set_type: Got invalid pin type %1$i\n", pin_type);

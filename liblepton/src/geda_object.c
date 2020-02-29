@@ -448,7 +448,7 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
     break;
   }
 
-  o_emit_pre_change_notify (toplevel, o_current);
+  o_emit_pre_change_notify (o_current);
 
   o_current->line_width = width;
   o_current->line_end   = end;
@@ -549,7 +549,7 @@ void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
     pitch2 = -1;
   }
 
-  o_emit_pre_change_notify (toplevel, o_current);
+  o_emit_pre_change_notify (o_current);
 
   o_current->fill_type = type;
   o_current->fill_width = width;
@@ -963,18 +963,25 @@ o_remove_change_notify (TOPLEVEL *toplevel,
 
 /*! \brief Emit an object pre-change notification.
  * \par Function Description
- * Calls each pre-change callback function registered with #TOPLEVEL
- * to notify listeners that \a object is about to be modified.  All
- * libgeda functions that modify #OBJECT structures should call this
- * just before making a change to an #OBJECT.
  *
- * \param toplevel #TOPLEVEL structure to emit notifications from.
+ * Calls each pre-change callback function registered with \a
+ * object's #TOPLEVEL to notify listeners that \a object is about
+ * to be modified.  All liblepton functions that modify #OBJECT
+ * structures should call this just before making a change to an
+ * #OBJECT.
+ *
  * \param object   #OBJECT structure to emit notifications for.
  */
 void
-o_emit_pre_change_notify (TOPLEVEL *toplevel, OBJECT *object)
+o_emit_pre_change_notify (OBJECT *object)
 {
   GList *iter;
+
+  if (object->page == NULL) {
+    return;
+  }
+
+  TOPLEVEL *toplevel = object->page->toplevel;
 
   if (toplevel == NULL) {
     return;

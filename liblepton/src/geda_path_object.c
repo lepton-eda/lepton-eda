@@ -335,7 +335,7 @@ geda_path_object_modify (TOPLEVEL *toplevel, OBJECT *object,
   int grip_no = 0;
   PATH_SECTION *section;
 
-  o_emit_pre_change_notify (toplevel, object);
+  o_emit_pre_change_notify (object);
 
   for (i = 0; i <  object->path->num_sections; i++) {
     section = &object->path->sections[i];

@@ -77,7 +77,7 @@ object_added (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 static void
 pre_object_removed (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
-  o_emit_pre_change_notify (toplevel, object);
+  o_emit_pre_change_notify (object);
 
   /* Remove object from the list of connectible objects */
   s_conn_remove_object (page, object);

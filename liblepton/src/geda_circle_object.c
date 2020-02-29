@@ -269,7 +269,7 @@ geda_circle_object_modify (TOPLEVEL *toplevel,
                            gint y,
                            gint whichone)
 {
-  o_emit_pre_change_notify (toplevel, object);
+  o_emit_pre_change_notify (object);
 
   switch(whichone) {
     case CIRCLE_CENTER:

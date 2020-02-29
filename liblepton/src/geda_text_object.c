@@ -682,7 +682,7 @@ geda_text_object_to_buffer (const GedaObject *object)
 void
 o_text_recreate (TOPLEVEL *toplevel, OBJECT *o_current)
 {
-  o_emit_pre_change_notify (toplevel, o_current);
+  o_emit_pre_change_notify (o_current);
   update_disp_string (o_current);
   o_emit_change_notify (toplevel, o_current);
 }

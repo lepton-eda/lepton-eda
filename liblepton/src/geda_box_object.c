@@ -144,7 +144,7 @@ void
 geda_box_object_modify_all (TOPLEVEL *toplevel, OBJECT *object,
                             int x1, int y1, int x2, int y2)
 {
-  o_emit_pre_change_notify (toplevel, object);
+  o_emit_pre_change_notify (object);
 
   object->box->lower_x = (x1 > x2) ? x1 : x2;
   object->box->lower_y = (y1 > y2) ? y2 : y1;
@@ -184,7 +184,7 @@ geda_box_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int wh
 {
 	int tmp;
 
-	o_emit_pre_change_notify (toplevel, object);
+	o_emit_pre_change_notify (object);
 
 	/* change the position of the selected corner */
 	switch(whichone) {

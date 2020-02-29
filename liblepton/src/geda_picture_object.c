@@ -739,7 +739,7 @@ void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
   int tmp;
   double ratio = o_picture_get_ratio (object);
 
-  o_emit_pre_change_notify (toplevel, object);
+  o_emit_pre_change_notify (object);
 
   /* change the position of the selected corner */
   switch(whichone) {
@@ -817,7 +817,7 @@ void
 o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object,
                       int x1, int y1, int x2, int y2)
 {
-  o_emit_pre_change_notify (toplevel, object);
+  o_emit_pre_change_notify (object);
 
   /* Normalise the requested rectangle. */
   object->picture->lower_x = (x1 > x2) ? x1 : x2;
@@ -1224,7 +1224,7 @@ o_picture_set_from_buffer (TOPLEVEL *toplevel, OBJECT *object,
   g_object_unref (stream);
   if (pixbuf == NULL) return FALSE;
 
-  o_emit_pre_change_notify (toplevel, object);
+  o_emit_pre_change_notify (object);
 
   if (object->picture->pixbuf != NULL) {
     g_object_unref (object->picture->pixbuf);
