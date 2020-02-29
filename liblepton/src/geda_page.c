@@ -70,7 +70,7 @@ object_added (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
   /* Update object connection tracking */
   s_conn_update_object (page, object);
 
-  o_emit_change_notify (toplevel, object);
+  o_emit_change_notify (object);
 }
 
 /* Called just before removing an OBJECT from a PAGE. */

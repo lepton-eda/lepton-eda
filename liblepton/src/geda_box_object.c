@@ -152,7 +152,7 @@ geda_box_object_modify_all (TOPLEVEL *toplevel, OBJECT *object,
   object->box->upper_x = (x1 > x2) ? x2 : x1;
   object->box->upper_y = (y1 > y2) ? y1 : y2;
 
-  o_emit_change_notify (toplevel, object);
+  o_emit_change_notify (object);
 }
 
 /*! \brief Modify a BOX OBJECT's coordinates.
@@ -225,7 +225,7 @@ geda_box_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int wh
 		object->box->lower_y = tmp;
 	}
 
-	o_emit_change_notify (toplevel, object);
+	o_emit_change_notify (object);
 
 }
 

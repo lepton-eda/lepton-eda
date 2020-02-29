@@ -337,7 +337,7 @@ geda_line_object_modify (TOPLEVEL *toplevel, OBJECT *object,
       return;
   }
 
-  o_emit_change_notify (toplevel, object);
+  o_emit_change_notify (object);
 }
 
 /*! \brief Create line OBJECT from character string.

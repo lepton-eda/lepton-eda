@@ -366,7 +366,7 @@ geda_path_object_modify (TOPLEVEL *toplevel, OBJECT *object,
     }
   }
 
-  o_emit_change_notify (toplevel, object);
+  o_emit_change_notify (object);
 }
 
 

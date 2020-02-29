@@ -796,7 +796,7 @@ void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
     object->picture->lower_y = tmp;
   }
 
-  o_emit_change_notify (toplevel, object);
+  o_emit_change_notify (object);
 }
 
 /*! \brief Modify a picture object's coordinates.
@@ -825,7 +825,7 @@ o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object,
   object->picture->upper_x = (x1 > x2) ? x2 : x1;
   object->picture->upper_y = (y1 > y2) ? y1 : y2;
 
-  o_emit_change_notify (toplevel, object);
+  o_emit_change_notify (object);
 }
 
 /*! \brief Rotate picture OBJECT using WORLD coordinates.
@@ -1246,7 +1246,7 @@ o_picture_set_from_buffer (TOPLEVEL *toplevel, OBJECT *object,
   object->picture->file_content = buf;
   object->picture->file_length = len;
 
-  o_emit_change_notify (toplevel, object);
+  o_emit_change_notify (object);
   return TRUE;
 }
 

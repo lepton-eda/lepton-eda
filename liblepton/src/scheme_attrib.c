@@ -221,7 +221,7 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
   /* Carry out the attachment */
   o_emit_pre_change_notify (attrib);
   o_attrib_attach (toplevel, attrib, obj, TRUE);
-  o_emit_change_notify (toplevel, attrib);
+  o_emit_change_notify (attrib);
 
   o_page_changed (obj);
 
@@ -271,7 +271,7 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
   o_emit_pre_change_notify (attrib);
   o_attrib_remove (toplevel, &obj->attribs, attrib);
   o_set_color (toplevel, attrib, DETACHED_ATTRIBUTE_COLOR);
-  o_emit_change_notify (toplevel, attrib);
+  o_emit_change_notify (attrib);
 
   o_page_changed (obj);
 

@@ -349,7 +349,7 @@ geda_arc_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int wh
 	}
 
 	/* update the screen coords and the bounding box */
-	o_emit_change_notify (toplevel, object);
+	o_emit_change_notify (object);
 }
 
 /*! \brief

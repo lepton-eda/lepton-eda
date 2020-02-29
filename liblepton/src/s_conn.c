@@ -153,7 +153,7 @@ int s_conn_remove_other (TOPLEVEL *toplevel, OBJECT *other_object,
 	c_current = g_list_next(c_current);
     }
 
-    o_emit_change_notify (toplevel, other_object);
+    o_emit_change_notify (other_object);
 
     return (FALSE);
 }
@@ -409,7 +409,7 @@ static void s_conn_update_line_object (PAGE* page, OBJECT *object)
                           object->line->x[j],
                           object->line->y[j], k, j);
 
-          o_emit_change_notify (toplevel, other_object);
+          o_emit_change_notify (other_object);
         }
       }
     }
