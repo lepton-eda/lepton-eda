@@ -51,6 +51,42 @@
 
 #include "libgeda_priv.h"
 
+/* \brief Read a boolean configuration key.
+ *
+ * \par Function Description
+ * On success, set \a result to the value of the
+ * configuration key, otherwise set it to \a defval.
+ *
+ * \todo  Refactoring: this function was copied as is from schematic/src/i_vars.c.
+ *
+ * \param [in]       group   Configuration group name
+ * \param [in]       key     Configuration key name
+ * \param [in]       defval  Default value
+ * \param [in, out]  result  Result
+ *
+ * \return  TRUE if a specified config parameter was successfully read
+ */
+static gboolean
+cfg_read_bool (const gchar* group,
+               const gchar* key,
+               gboolean     defval,
+               gboolean*    result)
+{
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError*  err = NULL;
+  gboolean val = eda_config_get_boolean (cfg, group, key, &err);
+
+  gboolean success = err == NULL;
+  g_clear_error (&err);
+
+  *result = success ? val : defval;
+  return success;
+}
+
+
 /*! \brief Get the autosave filename for a file
  *  \par Function description
  *  Returns the expected autosave filename for the \a filename passed.
@@ -358,6 +394,10 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
   mode_t saved_umask, mask;
   struct stat st;
   GError *tmp_err = NULL;
+  gboolean make_backup_files;
+
+  cfg_read_bool ("schematic.backup", "create-files",
+                 default_make_backup_files, &make_backup_files);
 
   /* Get the real filename and file permissions */
   real_filename = follow_symlinks (filename, &tmp_err);
@@ -384,7 +424,7 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
 
   /* Do a backup if it's not an undo file backup and it was never saved.
    * Only do a backup if backup files are enabled */
-  if (page->saved_since_first_loaded == 0 && toplevel->make_backup_files == TRUE) {
+  if (page->saved_since_first_loaded == 0 && make_backup_files == TRUE) {
     if ( (g_file_test (real_filename, G_FILE_TEST_EXISTS)) && 
 	 (!g_file_test(real_filename, G_FILE_TEST_IS_DIR)) )
     {
