@@ -65,8 +65,7 @@ geda_circle_object_mirror (TOPLEVEL *toplevel,
                            OBJECT *object);
 
 void
-geda_circle_object_modify (TOPLEVEL *toplevel,
-                           GedaObject *object,
+geda_circle_object_modify (GedaObject *object,
                            gint x,
                            gint y,
                            gint whichone);

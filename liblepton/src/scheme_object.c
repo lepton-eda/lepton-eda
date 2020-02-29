@@ -1319,9 +1319,9 @@ SCM_DEFINE (set_circle_x, "%set-circle!", 5, 0, 0,
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (circle_s);
-  geda_circle_object_modify (toplevel, obj, scm_to_int(x_s), scm_to_int(y_s),
+  geda_circle_object_modify (obj, scm_to_int(x_s), scm_to_int(y_s),
                              CIRCLE_CENTER);
-  geda_circle_object_modify (toplevel, obj, scm_to_int(r_s), 0, CIRCLE_RADIUS);
+  geda_circle_object_modify (obj, scm_to_int(r_s), 0, CIRCLE_RADIUS);
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
   o_page_changed (obj);
