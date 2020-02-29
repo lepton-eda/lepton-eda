@@ -149,6 +149,7 @@ gboolean eda_config_remove_key (EdaConfig *cfg, const char *group, const char *k
 gboolean eda_config_remove_group (EdaConfig *cfg, const char *group, GError **error);
 
 void config_set_legacy_mode(gboolean legacy);
+gboolean config_get_legacy_mode();
 
 G_END_DECLS
 

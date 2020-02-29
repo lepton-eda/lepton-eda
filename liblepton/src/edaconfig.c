@@ -78,6 +78,14 @@ config_set_legacy_mode(gboolean legacy)
 
 
 
+gboolean
+config_get_legacy_mode()
+{
+  return config_legacy_mode;
+}
+
+
+
 /*! Legacy configuration file names:
  */
 #define CONFIG_FILENAME_LEGACY_SYSTEM "geda-system.conf"
@@ -101,7 +109,7 @@ config_set_legacy_mode(gboolean legacy)
 static const gchar*
 cfg_filename_system()
 {
-  if (config_legacy_mode)
+  if (config_get_legacy_mode())
     return CONFIG_FILENAME_LEGACY_SYSTEM;
   else
     return CONFIG_FILENAME_SYSTEM;
@@ -114,7 +122,7 @@ cfg_filename_system()
 static const gchar*
 cfg_filename_user()
 {
-  if (config_legacy_mode)
+  if (config_get_legacy_mode())
     return CONFIG_FILENAME_LEGACY_USER;
   else
     return CONFIG_FILENAME_USER;
@@ -127,7 +135,7 @@ cfg_filename_user()
 static const gchar*
 cfg_filename_local()
 {
-  if (config_legacy_mode)
+  if (config_get_legacy_mode())
     return CONFIG_FILENAME_LEGACY_LOCAL;
   else
     return CONFIG_FILENAME_LOCAL;
@@ -509,7 +517,7 @@ create_config_system()
 EdaConfig *
 eda_config_get_system_context ()
 {
-  if (config_legacy_mode)
+  if (config_get_legacy_mode())
   {
     if (g_once_init_enter (&g_context_system_legacy))
     {
@@ -524,7 +532,7 @@ eda_config_get_system_context ()
     }
   }
 
-  return config_legacy_mode ? g_context_system_legacy : g_context_system;
+  return config_get_legacy_mode() ? g_context_system_legacy : g_context_system;
 }
 
 
@@ -573,7 +581,7 @@ create_config_user()
 EdaConfig *
 eda_config_get_user_context ()
 {
-  if (config_legacy_mode)
+  if (config_get_legacy_mode())
   {
     if (g_once_init_enter (&g_context_user_legacy))
     {
@@ -588,7 +596,7 @@ eda_config_get_user_context ()
     }
   }
 
-  return config_legacy_mode ? g_context_user_legacy : g_context_user;
+  return config_get_legacy_mode() ? g_context_user_legacy : g_context_user;
 }
 
 
