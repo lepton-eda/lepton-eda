@@ -38,14 +38,15 @@
  *  \bug g_access introduces a race condition in certain cases, but
  *  solves bug #698565 in the normal use-case
  *
- *  \param [in] toplevel    The current TOPLEVEL.
  *  \param [in] object_list The head of a GList of OBJECTs to save.
  *  \param [in] filename    The filename to save the data to.
  *  \param [in,out] err     #GError structure for error reporting.
  *  \return 1 on success, 0 on failure.
  */
-int o_save (TOPLEVEL *toplevel, const GList *object_list,
-            const char *filename, GError **err)
+int
+o_save (const GList *object_list,
+        const char *filename,
+        GError **err)
 {
   char *buffer;
 
