@@ -70,8 +70,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   /* The following is an attempt at getting (deterministic) defaults */
   /* for the following variables */
-  toplevel->promote_invisible   = FALSE;
-
   toplevel->make_backup_files = TRUE;
 
   toplevel->force_boundingbox = FALSE;
