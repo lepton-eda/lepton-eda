@@ -166,7 +166,6 @@ geda_box_object_modify_all (OBJECT *object,
  *  The coordinates of the corner is modified in the world coordinate system.
  *  Screen coordinates and boundings are then updated.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     BOX OBJECT to be modified.
  *  \param [in]     x          x coordinate.
  *  \param [in]     y          y coordinate.
@@ -182,7 +181,10 @@ geda_box_object_modify_all (OBJECT *object,
  *  </DL>
  */
 void
-geda_box_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone)
+geda_box_object_modify (OBJECT *object,
+                        int x,
+                        int y,
+                        int whichone)
 {
 	int tmp;
 
