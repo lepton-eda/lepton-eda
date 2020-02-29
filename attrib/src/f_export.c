@@ -79,7 +79,7 @@ void f_export_components(gchar *filename)
 #endif
   fp = fopen(filename, "wb");
   if (fp == NULL) {
-    s_log_message(_("o_save: Could not open [%1$s]"), filename);
+    s_log_message(_("Could not open [%1$s]"), filename);
     /* XXXXX Throw up error message  in window */
     return;
   }
