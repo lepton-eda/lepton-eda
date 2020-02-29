@@ -1177,8 +1177,6 @@ static void o_grips_end_circle(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_line(GschemToplevel *w_current, OBJECT *o_current,
                              int whichone)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-
   /* don't allow zero length nets / lines / pins
    * this ends the net drawing behavior
    * we want this? hack */
@@ -1190,8 +1188,8 @@ static void o_grips_end_line(GschemToplevel *w_current, OBJECT *o_current,
   }
 
   /* modify the right line end according to whichone */
-  geda_line_object_modify(toplevel, o_current,
-                          w_current->second_wx, w_current->second_wy, whichone);
+  geda_line_object_modify (o_current,
+                           w_current->second_wx, w_current->second_wy, whichone);
 }
 
 

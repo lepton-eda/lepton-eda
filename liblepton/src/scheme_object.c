@@ -945,8 +945,8 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
 
   switch (obj->type) {
   case OBJ_LINE:
-    geda_line_object_modify (toplevel, obj, x1, y1, LINE_END1);
-    geda_line_object_modify (toplevel, obj, x2, y2, LINE_END2);
+    geda_line_object_modify (obj, x1, y1, LINE_END1);
+    geda_line_object_modify (obj, x2, y2, LINE_END2);
     break;
   case OBJ_NET:
     geda_net_object_modify (toplevel, obj, x1, y1, 0);
