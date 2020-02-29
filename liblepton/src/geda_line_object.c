@@ -304,7 +304,6 @@ geda_line_object_set_y1 (GedaObject *object, gint y)
  *  The coordinates of the end of line is modified in the world
  *  coordinate system. Screen coordinates and boundings are then updated.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     Line OBJECT to modify.
  *  \param [in]     x          New x coordinate.
  *  \param [in]     y          New y coordinate.
@@ -317,7 +316,7 @@ geda_line_object_set_y1 (GedaObject *object, gint y)
  *  </DL>
  */
 void
-geda_line_object_modify (TOPLEVEL *toplevel, OBJECT *object,
+geda_line_object_modify (OBJECT *object,
                          int x, int y, int whichone)
 {
   o_emit_pre_change_notify (object);
