@@ -152,7 +152,7 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
                     scm_list_1 (angle_s));
   }
 
-  o_emit_pre_change_notify (toplevel, obj);
+  o_emit_pre_change_notify (obj);
 
   int x = scm_to_int (x_s);
   int y = scm_to_int (y_s);
@@ -279,7 +279,7 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
 
   /* Don't need to emit change notifications for the child because
    * it's guaranteed not to be present in a page at this point. */
-  o_emit_pre_change_notify (toplevel, parent);
+  o_emit_pre_change_notify (parent);
 
   parent->component->prim_objs =
     g_list_append (parent->component->prim_objs, child);
@@ -357,7 +357,7 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
 
   /* Don't need to emit change notifications for the child because
    * only the parent will remain in the page. */
-  o_emit_pre_change_notify (toplevel, parent);
+  o_emit_pre_change_notify (parent);
 
   parent->component->prim_objs =
     g_list_remove_all (parent->component->prim_objs, child);

@@ -251,7 +251,7 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
 
   /* Object cleanup now managed by C code. */
   edascm_c_set_gc (obj_s, 0);
-  o_emit_pre_change_notify (toplevel, obj);
+  o_emit_pre_change_notify (obj);
   s_page_append (toplevel, page, obj);
   o_emit_change_notify (toplevel, obj);
   page->CHANGED = 1; /* Ugh. */
@@ -308,7 +308,7 @@ SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
 
   if (curr_page == NULL) return obj_s;
 
-  o_emit_pre_change_notify (toplevel, obj);
+  o_emit_pre_change_notify (obj);
   s_page_remove (toplevel, page, obj);
   page->CHANGED = 1; /* Ugh. */
   /* If the object is currently selected, unselect it. */

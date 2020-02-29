@@ -320,7 +320,7 @@ void
 geda_arc_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone)
 {
 
-	o_emit_pre_change_notify (toplevel, object);
+	o_emit_pre_change_notify (object);
 
 	switch(whichone) {
 		case ARC_CENTER:

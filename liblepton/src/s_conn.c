@@ -117,7 +117,7 @@ int s_conn_remove_other (TOPLEVEL *toplevel, OBJECT *other_object,
     GList *c_current = NULL;
     CONN *conn = NULL;
 
-    o_emit_pre_change_notify (toplevel, other_object);
+    o_emit_pre_change_notify (other_object);
 
     c_current = other_object->conn_list;
     while (c_current != NULL) {
@@ -399,7 +399,7 @@ static void s_conn_update_line_object (PAGE* page, OBJECT *object)
             object->line->y[j] == other_object->line->y[k] &&
             check_direct_compat (object, other_object)) {
 
-          o_emit_pre_change_notify (toplevel, other_object);
+          o_emit_pre_change_notify (other_object);
 
           add_connection (object, other_object, CONN_ENDPOINT,
                           other_object->line->x[k],
