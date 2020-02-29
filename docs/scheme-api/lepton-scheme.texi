@@ -1695,12 +1695,12 @@ Normally, you shouldn't create a configuration context directly; you
 should obtain the configuration context associated with a @var{path}.
 
 @code{path-config-context} looks for a configuration file named
-@file{geda.conf}.  If @var{path} is not a directory, it is truncated,
-and then a file named @file{geda.conf} is looked for in that
+@file{lepton.conf}.  If @var{path} is not a directory, it is truncated,
+and then a file named @file{lepton.conf} is looked for in that
 directory.  If none is found, the parent directory is checked, and so
 on until a configuration file is found or the filesystem root is
 reached.  If no configuration file was found, the returned context
-will be associated with a @file{geda.conf} in the same directory as
+will be associated with a @file{lepton.conf} in the same directory as
 @var{path}.
 
 @strong{Warning}: Do not assume that the configuration file associated
