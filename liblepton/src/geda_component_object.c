@@ -190,8 +190,12 @@ geda_component_object_get_position (const GedaObject *object, gint *x, gint *y)
 static int
 o_component_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
 {
+  gboolean promote_invisible;
   g_return_val_if_fail (toplevel, FALSE);
   g_return_val_if_fail (object, FALSE);
+
+  cfg_read_bool ("schematic.attrib", "promote-invisible",
+                 default_promote_invisible, &promote_invisible);
 
   const gchar *name = o_attrib_get_name (object);
   if (!name) return FALSE;
@@ -212,7 +216,7 @@ o_component_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
 
   /* object is invisible and we do not want to promote invisible text */
   if ((!o_is_visible (toplevel, object)) &&
-      (toplevel->promote_invisible == FALSE))
+      (promote_invisible == FALSE))
     return FALSE; /* attribute not eligible for promotion */
 
   /* yup, attribute can be promoted */

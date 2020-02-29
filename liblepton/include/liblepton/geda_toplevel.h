@@ -54,9 +54,6 @@ struct st_toplevel
   /* controls if the net consolidation code is used */
   int net_consolidate;
 
-  /* controls if invisible attribs are promoted */
-  int promote_invisible;
-
   /* controls the generation of backup (~) files */
   int make_backup_files;
 
