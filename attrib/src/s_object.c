@@ -197,7 +197,7 @@ void s_object_replace_attrib_in_object(TOPLEVEL *toplevel,
 	new_attrib_text = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
   o_text_set_string (toplevel, a_current, new_attrib_text);
 	if (visibility != LEAVE_VISIBILITY_ALONE)
-	  o_set_visibility (toplevel, a_current, visibility);
+	  o_set_visibility (a_current, visibility);
 	if (show_name_value != LEAVE_NAME_VALUE_ALONE)
 	  a_current->show_name_value = show_name_value;
 	g_free(new_attrib_text);

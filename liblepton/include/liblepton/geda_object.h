@@ -206,7 +206,8 @@ o_set_line_options (TOPLEVEL *toplevel,
                     int space);
 
 void
-o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility);
+o_set_visibility (OBJECT *object,
+                  int visibility);
 
 void
 o_add_change_notify (TOPLEVEL *toplevel,

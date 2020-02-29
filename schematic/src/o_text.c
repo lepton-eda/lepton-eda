@@ -114,7 +114,7 @@ void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string,
 
   o_text_set_string (toplevel, object, string);
 
-  o_set_visibility (toplevel, object, visibility);
+  o_set_visibility (object, visibility);
   object->show_name_value = show;
   o_text_recreate(toplevel, object);
 
