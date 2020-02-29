@@ -133,7 +133,6 @@ geda_box_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  * the box to the rectangle enclosed by the points (\a x1, \a y1) and
  * (\a x2, \a y2).
  *
- * \param [in]     toplevel current #TOPLEVEL.
  * \param [in,out] object   box #OBJECT to be modified.
  * \param [in]     x1       x coordinate of first corner of box.
  * \param [in]     y1       y coordinate of first corner of box.
@@ -141,8 +140,11 @@ geda_box_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  * \param [in]     y2       y coordinate of second corner of box,
  */
 void
-geda_box_object_modify_all (TOPLEVEL *toplevel, OBJECT *object,
-                            int x1, int y1, int x2, int y2)
+geda_box_object_modify_all (OBJECT *object,
+                            int x1,
+                            int y1,
+                            int x2,
+                            int y2)
 {
   o_emit_pre_change_notify (object);
 

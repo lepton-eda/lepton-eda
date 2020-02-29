@@ -1221,7 +1221,7 @@ SCM_DEFINE (set_box_x, "%set-box!", 6, 0, 0,
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (box_s);
-  geda_box_object_modify_all (toplevel, obj,
+  geda_box_object_modify_all (obj,
                               scm_to_int (x1_s), scm_to_int (y1_s),
                               scm_to_int (x2_s), scm_to_int (y2_s));
   o_set_color (toplevel, obj, scm_to_int (color_s));
