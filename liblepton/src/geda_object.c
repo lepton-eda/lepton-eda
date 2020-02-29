@@ -404,7 +404,6 @@ s_object_remove_weak_ptr (OBJECT *object,
  *  See #OBJECT_END and #OBJECT_TYPE for information on valid
  *  object end and type values.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] o_current  OBJECT to set line options on.
  *  \param [in]     end        An OBJECT_END.
  *  \param [in]     type       An OBJECT_TYPE.
@@ -415,9 +414,13 @@ s_object_remove_weak_ptr (OBJECT *object,
  *  \todo Make space an unsigned int and check for a max value instead.
  *        If a max value is not required, then it would simplify the code.
  */
-void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
-			OBJECT_END end, OBJECT_TYPE type,
-			int width, int length, int space)
+void
+o_set_line_options (OBJECT *o_current,
+                    OBJECT_END end,
+                    OBJECT_TYPE type,
+                    int width,
+                    int length,
+                    int space)
 {
   g_return_if_fail (o_current != NULL);
 

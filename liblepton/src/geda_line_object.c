@@ -80,8 +80,7 @@ geda_line_object_new (TOPLEVEL *toplevel,
   new_node->line->y[1] = y2;
 
   /* line type and filling initialized to default */
-  o_set_line_options (toplevel,
-                      new_node,
+  o_set_line_options (new_node,
                       DEFAULT_OBJECT_END,
                       TYPE_SOLID,
                       LINE_WIDTH,
@@ -122,8 +121,7 @@ geda_line_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
                                   o_current->line->y[1]);
 
   /* copy the line type and filling options */
-  o_set_line_options (toplevel,
-                      new_obj,
+  o_set_line_options (new_obj,
                       o_current->line_end,
                       o_current->line_type,
                       o_current->line_width,
@@ -435,8 +433,7 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, const char buf[],
                                   y2);
 
   /* set its line options */
-  o_set_line_options (toplevel,
-                      new_obj,
+  o_set_line_options (new_obj,
                       (OBJECT_END) line_end,
                       (OBJECT_TYPE) line_type,
                       line_width,

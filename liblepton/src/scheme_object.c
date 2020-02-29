@@ -425,7 +425,6 @@ SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
                || edascm_is_object_type (obj_s, OBJ_PATH)),
               obj_s, SCM_ARG1, s_set_object_stroke_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   int cap, type, width, length = -1, space = -1;
 
@@ -483,8 +482,7 @@ SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
     /* This case intentionally falls through */
   }
 
-  o_set_line_options (toplevel,
-                      obj,
+  o_set_line_options (obj,
                       (OBJECT_END) cap,
                       (OBJECT_TYPE) type,
                       width,

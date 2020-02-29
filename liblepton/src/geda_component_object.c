@@ -498,8 +498,8 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
                                          y + NOT_FOUND_TEXT_Y + y_offset,
                                          x + NOT_FOUND_TEXT_X + x_offset + 600,
                                          y + NOT_FOUND_TEXT_Y + y_offset);
-    o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
-                       50, -1, -1);
+    o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
+                        50, -1, -1);
     new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
     new_prim_obj = geda_line_object_new (toplevel,
                                          DETACHED_ATTRIBUTE_COLOR,
@@ -507,8 +507,8 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
                                          y + NOT_FOUND_TEXT_Y + y_offset,
                                          x + NOT_FOUND_TEXT_X + x_offset + 300,
                                          y + NOT_FOUND_TEXT_Y + y_offset + 500);
-    o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
-                       50, -1, -1);
+    o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
+                        50, -1, -1);
     new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
     new_prim_obj = geda_line_object_new (toplevel,
                                          DETACHED_ATTRIBUTE_COLOR,
@@ -516,8 +516,8 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
                                          y + NOT_FOUND_TEXT_Y + y_offset + 500,
                                          x + NOT_FOUND_TEXT_X + x_offset + 600,
                                          y + NOT_FOUND_TEXT_Y + y_offset);
-    o_set_line_options(toplevel, new_prim_obj, END_ROUND, TYPE_SOLID,
-                       50, -1, -1);
+    o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
+                        50, -1, -1);
     new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
     new_prim_obj = geda_text_object_new (toplevel,
                                          DETACHED_ATTRIBUTE_COLOR,

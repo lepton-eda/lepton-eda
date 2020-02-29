@@ -77,8 +77,7 @@ geda_circle_object_new (TOPLEVEL *toplevel,
   new_node->circle->radius   = radius;
 
   /* line type and filling initialized to default */
-  o_set_line_options (toplevel,
-                      new_node,
+  o_set_line_options (new_node,
                       DEFAULT_OBJECT_END,
                       TYPE_SOLID,
                       LINE_WIDTH,
@@ -121,8 +120,7 @@ geda_circle_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
                                     object->circle->center_y,
                                     object->circle->radius);
 
-  o_set_line_options (toplevel,
-                      new_obj,
+  o_set_line_options (new_obj,
                       object->line_end,
                       object->line_type,
                       object->line_width,
@@ -387,13 +385,12 @@ o_circle_read (TOPLEVEL *toplevel,
    */
   new_obj = geda_circle_object_new (toplevel, color, x1, y1, radius);
 
-  o_set_line_options(toplevel,
-                     new_obj,
-                     (OBJECT_END) circle_end,
-                     (OBJECT_TYPE) circle_type,
-                     circle_width,
-                     circle_length,
-                     circle_space);
+  o_set_line_options (new_obj,
+                      (OBJECT_END) circle_end,
+                      (OBJECT_TYPE) circle_type,
+                      circle_width,
+                      circle_length,
+                      circle_space);
   o_set_fill_options(toplevel,
                      new_obj,
                      (OBJECT_FILLING) circle_fill,
