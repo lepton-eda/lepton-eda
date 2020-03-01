@@ -36,7 +36,7 @@ geda_pin_object_new (int color,
                      int whichend);
 
 OBJECT*
-geda_pin_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+geda_pin_object_copy (OBJECT *o_current);
 
 /* methods */
 
