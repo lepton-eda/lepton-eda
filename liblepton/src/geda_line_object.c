@@ -87,8 +87,7 @@ geda_line_object_new (TOPLEVEL *toplevel,
                       -1,
                       -1);
 
-  o_set_fill_options (toplevel,
-                      new_node,
+  o_set_fill_options (new_node,
                       FILLING_HOLLOW,
                       -1,
                       -1,
@@ -128,14 +127,13 @@ geda_line_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
                       o_current->line_length,
                       o_current->line_space);
 
-  o_set_fill_options(toplevel,
-                     new_obj,
-                     o_current->fill_type,
-                     o_current->fill_width,
-                     o_current->fill_pitch1,
-                     o_current->fill_angle1,
-                     o_current->fill_pitch2,
-                     o_current->fill_angle2);
+  o_set_fill_options (new_obj,
+                      o_current->fill_type,
+                      o_current->fill_width,
+                      o_current->fill_pitch1,
+                      o_current->fill_angle1,
+                      o_current->fill_pitch2,
+                      o_current->fill_angle2);
 
   return new_obj;
 }
@@ -440,7 +438,7 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, const char buf[],
                       line_length,
                       line_space);
   /* filling is irrelevant for line, just set to default */
-  o_set_fill_options (toplevel, new_obj,
+  o_set_fill_options (new_obj,
                       FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
   return new_obj;
