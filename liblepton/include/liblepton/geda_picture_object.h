@@ -43,7 +43,10 @@ double
 o_picture_get_ratio (OBJECT *object);
 
 void
-o_picture_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+o_picture_modify (OBJECT *object,
+                  int x,
+                  int y,
+                  int whichone);
 
 void
 o_picture_modify_all (OBJECT *object,
