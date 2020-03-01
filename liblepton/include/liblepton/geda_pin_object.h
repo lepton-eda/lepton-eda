@@ -27,8 +27,7 @@ G_BEGIN_DECLS
 /* construction, destruction */
 
 OBJECT*
-geda_pin_object_new (TOPLEVEL *toplevel,
-                     int color,
+geda_pin_object_new (int color,
                      int x1,
                      int y1,
                      int x2,

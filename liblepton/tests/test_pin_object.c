@@ -16,8 +16,7 @@ check_construction ()
     gint type = g_test_rand_int_range (0, 2);
     gint which = g_test_rand_int_range (0, 2);
 
-    GedaObject *object0 = geda_pin_object_new (toplevel,
-                                               color,
+    GedaObject *object0 = geda_pin_object_new (color,
                                                x0,
                                                y0,
                                                x1,
@@ -69,8 +68,7 @@ check_accessors ()
     gint type = g_test_rand_int_range (0, 2);
     gint which = g_test_rand_int_range (0, 2);
 
-    GedaObject *object0 = geda_pin_object_new (toplevel,
-                                               color,
+    GedaObject *object0 = geda_pin_object_new (color,
                                                x0,
                                                y0,
                                                x1,
@@ -125,8 +123,7 @@ check_serialization ()
     gint type = g_test_rand_int_range (0, 2);
     gint which = g_test_rand_int_range (0, 2);
 
-    GedaObject *object0 = geda_pin_object_new (toplevel,
-                                               color,
+    GedaObject *object0 = geda_pin_object_new (color,
                                                x0,
                                                y0,
                                                x1,

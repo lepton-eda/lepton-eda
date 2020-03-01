@@ -1108,8 +1108,7 @@ SCM_DEFINE (make_pin, "%make-pin", 1, 0, 0,
                     scm_list_1 (type_s));
   }
 
-  OBJECT *obj = geda_pin_object_new (edascm_c_current_toplevel (),
-                                     PIN_COLOR,
+  OBJECT *obj = geda_pin_object_new (PIN_COLOR,
                                      0,
                                      0,
                                      0,
