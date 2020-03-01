@@ -601,7 +601,7 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
 
   if (file_content != NULL) {
     GError *error = NULL;
-    if (!o_picture_set_from_buffer (toplevel, new_node, filename,
+    if (!o_picture_set_from_buffer (new_node, filename,
                                     file_content, file_length, &error)) {
       s_log_message (_("Failed to load buffer image [%1$s]: %2$s"),
                      filename, error->message);
@@ -1199,7 +1199,6 @@ o_picture_get_data (TOPLEVEL *toplevel, OBJECT *object,
  * Sets the contents of the picture \a object by reading image data
  * from a buffer.  The buffer should be in on-disk format.
  *
- * \param toplevel The current #TOPLEVEL.
  * \param object   The picture #OBJECT to modify.
  * \param filename The new filename for the picture.
  * \param data     The new image data buffer.
@@ -1208,9 +1207,10 @@ o_picture_get_data (TOPLEVEL *toplevel, OBJECT *object,
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-o_picture_set_from_buffer (TOPLEVEL *toplevel, OBJECT *object,
+o_picture_set_from_buffer (OBJECT *object,
                            const gchar *filename,
-                           const gchar *data, size_t len,
+                           const gchar *data,
+                           size_t len,
                            GError **error)
 {
   GdkPixbuf *pixbuf;
@@ -1280,7 +1280,7 @@ o_picture_set_from_file (TOPLEVEL *toplevel, OBJECT *object,
     return FALSE;
   }
 
-  status = o_picture_set_from_buffer (toplevel, object, filename,
+  status = o_picture_set_from_buffer (object, filename,
                                       buf, len, error);
   g_free (buf);
   return status;

@@ -76,9 +76,11 @@ const char*
 o_picture_get_data (TOPLEVEL *toplevel, OBJECT *object, size_t *len);
 
 gboolean
-o_picture_set_from_buffer (TOPLEVEL *toplevel, OBJECT *object,
-                                    const gchar *filename, const gchar *data,
-                                    size_t len, GError **error);
+o_picture_set_from_buffer (OBJECT *object,
+                           const gchar *filename,
+                           const gchar *data,
+                           size_t len,
+                           GError **error);
 
 gboolean
 o_picture_set_from_file (TOPLEVEL *toplevel, OBJECT *object,
