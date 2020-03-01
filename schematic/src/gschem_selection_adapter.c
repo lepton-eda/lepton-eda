@@ -1894,7 +1894,7 @@ gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const
     OBJECT *object = (OBJECT*) iter->data;
 
     if (object->type == OBJ_TEXT) {
-      o_text_set_string (adapter->toplevel, object, string);
+      o_text_set_string (object, string);
 
       /* handle slot= attribute, it's a special case */
       if (object->attached_to != NULL && g_ascii_strncasecmp (string, "slot=", 5) == 0) {

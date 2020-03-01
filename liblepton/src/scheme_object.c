@@ -1612,7 +1612,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   o_emit_change_notify (obj);
 
   char *tmp = scm_to_utf8_string (string_s);
-  o_text_set_string (toplevel, obj, tmp);
+  o_text_set_string (obj, tmp);
   free (tmp);
 
   o_text_recreate (obj);

@@ -193,9 +193,9 @@ void s_object_replace_attrib_in_object(TOPLEVEL *toplevel,
       old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
 
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
-	/* create attrib=value text string & stuff it back into toplevel */
+	/* create attrib=value text string */
 	new_attrib_text = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-  o_text_set_string (toplevel, a_current, new_attrib_text);
+        o_text_set_string (a_current, new_attrib_text);
 	if (visibility != LEAVE_VISIBILITY_ALONE)
 	  o_set_visibility (a_current, visibility);
 	if (show_name_value != LEAVE_NAME_VALUE_ALONE)

@@ -113,7 +113,7 @@ void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
   g_free (slot_value);
 
   if (o_slot != NULL && !o_attrib_is_inherited (o_slot)) {
-    o_text_set_string (toplevel, o_slot, string);
+    o_text_set_string (o_slot, string);
   } else {
     /* here you need to do the add the slot
        attribute since it doesn't exist */
