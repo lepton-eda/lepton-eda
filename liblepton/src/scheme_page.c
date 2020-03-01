@@ -281,7 +281,6 @@ SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
 
   PAGE *page = edascm_to_page (page_s);
   OBJECT *obj = edascm_to_object (obj_s);
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
   /* Check that the object is not attached to something else. */
   PAGE *curr_page = o_get_page (obj);
@@ -309,7 +308,7 @@ SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
   if (curr_page == NULL) return obj_s;
 
   o_emit_pre_change_notify (obj);
-  s_page_remove (toplevel, page, obj);
+  s_page_remove (page, obj);
   page->CHANGED = 1; /* Ugh. */
   /* If the object is currently selected, unselect it. */
   o_selection_remove (page->selection_list, obj);

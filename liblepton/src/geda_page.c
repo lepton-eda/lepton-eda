@@ -694,11 +694,12 @@ void s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list)
  *  Removes the passed OBJECT from the PAGE's
  *  linked list of objects.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] page      The PAGE the object is being removed from.
  *  \param [in] object    The OBJECT being removed from the page.
  */
-void s_page_remove (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
+void
+s_page_remove (PAGE *page,
+               OBJECT *object)
 {
   pre_object_removed (page, object);
   page->_object_list = g_list_remove (page->_object_list, object);

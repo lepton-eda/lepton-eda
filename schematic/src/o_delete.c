@@ -37,7 +37,7 @@ void o_delete (GschemToplevel *w_current, OBJECT *object)
   g_return_if_fail (object != NULL);
 
   o_selection_remove (toplevel->page_current->selection_list, object);
-  s_page_remove (toplevel, toplevel->page_current, object);
+  s_page_remove (toplevel->page_current, object);
   g_run_hook_object (w_current, "%remove-objects-hook", object);
   s_delete_object (toplevel, object);
 
@@ -112,7 +112,7 @@ void o_delete_selected (GschemToplevel *w_current)
   for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
     obj = (OBJECT *) iter->data;
     o_selection_remove (selection, obj);
-    s_page_remove (toplevel, toplevel->page_current, obj);
+    s_page_remove (toplevel->page_current, obj);
   }
 
   g_run_hook_object_list (w_current, "%remove-objects-hook", to_remove);
