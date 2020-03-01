@@ -178,7 +178,7 @@ PAGE*
 o_get_page (OBJECT *object);
 
 OBJECT*
-o_get_parent (TOPLEVEL *toplevel, OBJECT *object);
+o_get_parent (OBJECT *object);
 
 gboolean
 o_is_visible (const OBJECT *object);

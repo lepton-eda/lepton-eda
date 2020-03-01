@@ -1754,9 +1754,8 @@ SCM_DEFINE (object_component, "%object-component", 1, 0, 0,
   SCM_ASSERT (edascm_is_object (obj_s), obj_s,
               SCM_ARG1, s_object_component);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
-  OBJECT *parent = o_get_parent (toplevel, obj);
+  OBJECT *parent = o_get_parent (obj);
 
   if (parent == NULL) return SCM_BOOL_F;
 

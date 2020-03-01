@@ -341,12 +341,8 @@ static void s_conn_update_line_object (PAGE* page, OBJECT *object)
   OBJECT *found;
   int j, k;
   OBJECT *component, *other_component;
-  TOPLEVEL *toplevel;
 
-  toplevel = page->toplevel;
-  g_return_if_fail (toplevel != NULL);
-
-  component = o_get_parent (toplevel, object);
+  component = o_get_parent (object);
 
   /* loop over all connectible objects */
   for (object_list = page->connectible_list;
@@ -357,7 +353,7 @@ static void s_conn_update_line_object (PAGE* page, OBJECT *object)
     if (object == other_object)
       continue;
 
-    other_component = o_get_parent (toplevel, other_object);
+    other_component = o_get_parent (other_object);
 
     /* An object inside a symbol can only be connected up to another
      * object if they are (a) both inside the same object, or (b)
