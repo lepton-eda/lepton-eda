@@ -277,7 +277,6 @@ geda_pin_object_set_y1 (GedaObject *object, gint y)
  *  \par Function Description
  *  This function creates and returns a new pin object.
  *
- *  \param [in]     toplevel    The TOPLEVEL object.
  *  \param [in]     color       The color of the pin
  *  \param [in]     x1          x-coord of the first point
  *  \param [in]     y1          y-coord of the first point
@@ -288,8 +287,7 @@ geda_pin_object_set_y1 (GedaObject *object, gint y)
  *  \return A new pin OBJECT
  */
 OBJECT*
-geda_pin_object_new (TOPLEVEL *toplevel,
-                     int color,
+geda_pin_object_new (int color,
                      int x1,
                      int y1,
                      int x2,
@@ -369,8 +367,7 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
     color = DEFAULT_COLOR;
   }
 
-  new_obj = geda_pin_object_new (toplevel,
-                                 color,
+  new_obj = geda_pin_object_new (color,
                                  x1,
                                  y1,
                                  x2,
@@ -451,8 +448,7 @@ geda_pin_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   g_return_val_if_fail (o_current->line != NULL, NULL);
   g_return_val_if_fail (o_current->type == OBJ_PIN, NULL);
 
-  new_obj = geda_pin_object_new (toplevel,
-                                 o_current->color,
+  new_obj = geda_pin_object_new (o_current->color,
                                  o_current->line->x[0],
                                  o_current->line->y[0],
                                  o_current->line->x[1],
