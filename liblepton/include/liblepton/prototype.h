@@ -76,7 +76,11 @@ void o_unembed (OBJECT *o_current);
 
 /* o_selection.c */
 SELECTION *o_selection_new( void );
-void o_selection_add(TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected);
+
+void
+o_selection_add (SELECTION *selection,
+                 OBJECT *o_selected);
+
 void o_selection_print_all(const SELECTION *selection);
 void o_selection_remove(TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected);
 

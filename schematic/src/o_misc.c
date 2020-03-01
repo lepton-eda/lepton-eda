@@ -533,7 +533,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   s_delete_object (toplevel, o_current);
 
   /* Select new OBJECT */
-  o_selection_add (toplevel, page->selection_list, o_new);
+  o_selection_add (page->selection_list, o_new);
 
   /* mark the page as modified */
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);

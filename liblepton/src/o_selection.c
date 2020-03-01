@@ -41,11 +41,12 @@ SELECTION *o_selection_new( void )
  *  object visually selected.
  *  Skip objects that are already selected.
  *
- *  \param [in] toplevel   The TOPLEVEL object
  *  \param [in] selection  Pointer to the selection list
  *  \param [in] o_selected Object to select.
  */
-void o_selection_add (TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected)
+void
+o_selection_add (SELECTION *selection,
+                 OBJECT *o_selected)
 {
   if (o_selected->selected == FALSE)
   {

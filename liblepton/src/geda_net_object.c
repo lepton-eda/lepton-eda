@@ -662,7 +662,7 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
              * ensure we select the resulting object.
              */
             if (object->selected == FALSE) {
-              o_selection_add (toplevel, page->selection_list, object);
+              o_selection_add (page->selection_list, object);
             }
           }
 

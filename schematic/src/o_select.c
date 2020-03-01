@@ -193,8 +193,7 @@ void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
 
       /* object not select, add it to the selection list */
       o_select_run_hooks( w_current, o_current, 1 );
-      o_selection_add (toplevel,
-                       toplevel->page_current->selection_list, o_current);
+      o_selection_add (toplevel->page_current->selection_list, o_current);
 
       break;
 
@@ -227,8 +226,7 @@ void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
             o_select_unselect_all (w_current);
 
             o_select_run_hooks( w_current, o_current, 1 );
-            o_selection_add (toplevel,
-                             toplevel->page_current->selection_list, o_current);
+            o_selection_add (toplevel->page_current->selection_list, o_current);
           }
 
           /* condition: doing single object add */
@@ -239,8 +237,8 @@ void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
             o_select_unselect_all (w_current);
 
             o_select_run_hooks (w_current, o_current, 1);
-            o_selection_add (toplevel, toplevel->page_current->
-                                         selection_list, o_current);
+            o_selection_add (toplevel->page_current->selection_list,
+                             o_current);
           }
 
           if (CONTROLKEY) {
@@ -614,7 +612,7 @@ o_select_visible_unlocked (GschemToplevel *w_current)
      * w_current->SHIFTKEY and w_current->CONTROLKEY, which may well
      * be set if this function is called via a keystroke
      * (e.g. Ctrl-A). */
-    o_selection_add (toplevel, selection, obj);
+    o_selection_add (selection, obj);
 
     /* Add any attributes of object to selection as well. */
     o_attrib_add_selected (w_current, selection, obj);
