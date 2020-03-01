@@ -1108,7 +1108,7 @@ static void o_grips_end_path(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_picture(GschemToplevel *w_current, OBJECT *o_current,
                                 int whichone)
 {
-  /* don't allow zero width/height picturees
+  /* don't allow zero width/height pictures
    * this ends the picture drawing behavior
    * we want this? hack */
   if ((GET_PICTURE_WIDTH(w_current) == 0) || (GET_PICTURE_HEIGHT(w_current) == 0)) {
