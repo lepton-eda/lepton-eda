@@ -51,7 +51,7 @@ is_object_hit (GschemToplevel *w_current, OBJECT *object,
 
   /* We can't hit invisible (text) objects unless show_hidden_text is active.
    */
-  if (!o_is_visible (w_current->toplevel, object) &&
+  if (!o_is_visible (object) &&
       !w_current->toplevel->show_hidden_text)
     return FALSE;
 

@@ -616,7 +616,7 @@ multiattrib_action_duplicate_attributes (Multiattrib *multiattrib,
     /* create a new attribute and link it */
     o_attrib_add_attrib (w_current,
                          geda_text_object_get_string (o_attrib),
-                         o_is_visible (w_current->toplevel, o_attrib),
+                         o_is_visible (o_attrib),
                          o_attrib->show_name_value,
                          o_attrib->attached_to);
   }
@@ -644,7 +644,7 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
        iter = g_list_next (iter)) {
     OBJECT *o_attrib = (OBJECT *)iter->data;
 
-    if (o_is_visible (toplevel, o_attrib)) {
+    if (o_is_visible (o_attrib)) {
       /* If the attribute we're promoting is visible, don't clone its location */
       o_attrib_add_attrib (w_current,
                            geda_text_object_get_string (o_attrib),
@@ -723,7 +723,7 @@ multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
       /* Pick the first instance to copy from */
       OBJECT *attrib_to_copy = (OBJECT*) attr_list->data;
 
-      int visibility = o_is_visible (w_current->toplevel, attrib_to_copy)
+      int visibility = o_is_visible (attrib_to_copy)
           ? VISIBLE : INVISIBLE;
 
       /* create a new attribute and link it */
@@ -979,7 +979,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
        a_iter = g_list_next (a_iter)) {
     o_attrib = (OBJECT*) a_iter->data;
 
-    visibility = o_is_visible (w_current->toplevel, o_attrib)
+    visibility = o_is_visible (o_attrib)
         ? VISIBLE : INVISIBLE;
 
     /* actually modifies the attribute */
@@ -1066,7 +1066,7 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
        a_iter = g_list_next (a_iter)) {
     o_attrib = (OBJECT *)a_iter->data;
 
-    visibility = o_is_visible (w_current->toplevel, o_attrib)
+    visibility = o_is_visible (o_attrib)
         ? VISIBLE : INVISIBLE;
 
     /* actually modifies the attribute */
@@ -2460,7 +2460,6 @@ typedef struct {
 static GList *
 object_attributes_to_model_rows (Multiattrib *multiattrib, OBJECT *object)
 {
-  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
   GList *model_rows = NULL;
   GList *a_iter;
   GList *object_attribs = o_attrib_return_attribs (object);
@@ -2474,7 +2473,7 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, OBJECT *object)
 
     m_row->inherited = o_attrib_is_inherited (a_current);
     o_attrib_get_name_value (a_current, &m_row->name, &m_row->value);
-    m_row->visibility = o_is_visible (w_current->toplevel, a_current);
+    m_row->visibility = o_is_visible (a_current);
     m_row->show_name_value = a_current->show_name_value;
     m_row->nth_with_name = 0; /* Provisional value until we check below */
 
@@ -2524,7 +2523,6 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, OBJECT *object)
 static GList *
 lone_attributes_to_model_rows (Multiattrib *multiattrib)
 {
-  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
   GList *o_iter;
   GList *model_rows = NULL;
 
@@ -2546,7 +2544,7 @@ lone_attributes_to_model_rows (Multiattrib *multiattrib)
     m_row = g_new0 (MODEL_ROW, 1);
     m_row->inherited = o_attrib_is_inherited (object);
     o_attrib_get_name_value (object, &m_row->name, &m_row->value);
-    m_row->visibility = o_is_visible (w_current->toplevel, object);
+    m_row->visibility = o_is_visible (object);
     m_row->show_name_value = object->show_name_value;
     m_row->nth_with_name = 0; /* All selected attributes are treated individually */
 
