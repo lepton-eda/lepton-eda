@@ -39,7 +39,10 @@ geda_path_object_calculate_bounds (TOPLEVEL *toplevel,
                                    GedaBounds *bounds);
 
 void
-geda_path_object_modify (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+geda_path_object_modify (OBJECT *object,
+                         int x,
+                         int y,
+                         int whichone);
 
 void
 geda_path_object_translate (GedaObject *object, int dx, int dy);

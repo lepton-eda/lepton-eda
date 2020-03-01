@@ -318,15 +318,16 @@ geda_path_object_to_buffer (const GedaObject *object)
  *
  *  The new position is given by <B>x</B> and <B>y</B>.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object    The path OBJECT
  *  \param [in]     x         New x coordinate for the control point
  *  \param [in]     y         New y coordinate for the control point
  *  \param [in]     whichone  Which control point is being modified
  */
 void
-geda_path_object_modify (TOPLEVEL *toplevel, OBJECT *object,
-                         int x, int y, int whichone)
+geda_path_object_modify (OBJECT *object,
+                         int x,
+                         int y,
+                         int whichone)
 {
   int i;
   int grip_no = 0;
