@@ -108,7 +108,7 @@ void o_attrib_deselect_invisible (GschemToplevel *w_current,
     a_current = (OBJECT*) a_iter->data;
 
     if (a_current->selected && !o_is_visible (a_current)) {
-      o_selection_remove (w_current->toplevel, selection, a_current);
+      o_selection_remove (selection, a_current);
     }
   }
 }

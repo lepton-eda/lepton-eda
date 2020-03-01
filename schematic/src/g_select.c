@@ -106,7 +106,6 @@ SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
   SCM_ASSERT (edascm_is_object (obj_s), obj_s,
               SCM_ARG1, s_deselect_object_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   PAGE *page = o_get_page (obj);
   if ((page == NULL) || (obj->parent != NULL)) {
@@ -117,7 +116,7 @@ SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
   }
 
   if (obj->selected) {
-    o_selection_remove (toplevel, page->selection_list, obj);
+    o_selection_remove (page->selection_list, obj);
   }
 
   return obj_s;

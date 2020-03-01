@@ -61,11 +61,12 @@ o_selection_add (SELECTION *selection,
  *  It's ok to call this function with an object which is not necessarily
  *  selected.
  *
- *  \param [in] toplevel   The TOPLEVEL object
  *  \param [in] selection  Pointer to the selection list
  *  \param [in] o_selected Object to unselect and remove from the list.
  */
-void o_selection_remove (TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected)
+void
+o_selection_remove (SELECTION *selection,
+                    OBJECT *o_selected)
 {
   if (o_selected == NULL) {
     fprintf(stderr, "Got NULL for o_selected in o_selection_remove\n");
