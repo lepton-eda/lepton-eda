@@ -29,11 +29,17 @@ G_BEGIN_DECLS
 #define PICTURE_UPPER_RIGHT 2
 #define PICTURE_LOWER_LEFT  3
 
-OBJECT *o_picture_new(TOPLEVEL *toplevel,
-                      const gchar *file_content, gsize file_length,
-                      const gchar *filename, char type,
-                      int x1, int y1, int x2, int y2, int angle, int mirrored,
-                      int embedded) G_GNUC_WARN_UNUSED_RESULT;
+OBJECT *o_picture_new (const gchar *file_content,
+                       gsize file_length,
+                       const gchar *filename,
+                       char type,
+                       int x1,
+                       int y1,
+                       int x2,
+                       int y2,
+                       int angle,
+                       int mirrored,
+                       int embedded) G_GNUC_WARN_UNUSED_RESULT;
 
 void
 geda_picture_object_calculate_bounds (const OBJECT *object,
