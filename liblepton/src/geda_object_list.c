@@ -77,7 +77,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
     /* unselect the object before the copy */
     selected_save = src_object->selected;
     if (selected_save)
-      o_selection_unselect (toplevel, src_object);
+      o_selection_unselect (src_object);
 
     if (src_object->type != OBJ_TEXT) {
       dst_object = o_object_copy (toplevel, src_object);
@@ -101,7 +101,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
     /* unselect the object before the copy */
     selected_save = src_object->selected;
     if (selected_save)
-      o_selection_unselect (toplevel, src_object);
+      o_selection_unselect (src_object);
 
     if (src_object->type == OBJ_TEXT) {
       dst_object = o_object_copy (toplevel, src_object);

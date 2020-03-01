@@ -72,7 +72,7 @@ void o_selection_remove (TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_sel
   }
 
   if (g_list_find( geda_list_get_glist( selection ), o_selected ) != NULL) {
-    o_selection_unselect (toplevel, o_selected);
+    o_selection_unselect (o_selected);
     geda_list_remove( (GedaList *)selection, o_selected );
   }
 }
@@ -122,10 +122,10 @@ o_selection_select (OBJECT *object)
  *  given object.
  *  This function should not be called by anybody outside of this file.
  *
- *  \param [in] toplevel  The TOPLEVEL object
  *  \param [in] object    Object to unselect.
  */
-void o_selection_unselect (TOPLEVEL *toplevel, OBJECT *object)
+void
+o_selection_unselect (OBJECT *object)
 {
   if (object->selected == FALSE)
     return;
