@@ -879,12 +879,11 @@ o_get_page (OBJECT *object)
  * If \a object is part of a component #OBJECT, returns that
  * #OBJECT. Otherwise, returns NULL.
  *
- * \param [in] toplevel  The TOPLEVEL structure.
  * \param [in] object    The OBJECT for which to get the containing OBJECT.
  * \return The component OBJECT which owns \a object, or NULL.
  */
 OBJECT *
-o_get_parent (TOPLEVEL *toplevel, OBJECT *object)
+o_get_parent (OBJECT *object)
 {
   g_return_val_if_fail ((object != NULL), NULL);
 
