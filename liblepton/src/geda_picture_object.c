@@ -1071,10 +1071,10 @@ void o_picture_embed (TOPLEVEL *toplevel, OBJECT *object)
  * Verify that the file associated with \a object exists on disk and
  * is usable, and if so, reload the picture and mark it as unembedded.
  *
- *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     object       The picture OBJECT to unembed
  */
-void o_picture_unembed (TOPLEVEL *toplevel, OBJECT *object)
+void
+o_picture_unembed (OBJECT *object)
 {
   GError *err = NULL;
   const gchar *filename = o_picture_get_filename (object);

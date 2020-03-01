@@ -114,6 +114,6 @@ void
 o_picture_embed(TOPLEVEL *toplevel, OBJECT *object);
 
 void
-o_picture_unembed(TOPLEVEL *toplevel, OBJECT *object);
+o_picture_unembed (OBJECT *object);
 
 G_END_DECLS
