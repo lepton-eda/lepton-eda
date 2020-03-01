@@ -2149,7 +2149,6 @@ SCM_DEFINE (set_picture_x, "%set-picture!", 7, 0, 0,
   SCM_ASSERT (scm_is_integer (y2_s), x1_s, SCM_ARG5, s_set_picture_x);
   SCM_ASSERT (scm_is_integer (angle_s), angle_s, SCM_ARG6, s_set_picture_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
 
   /* Angle */
@@ -2172,7 +2171,7 @@ SCM_DEFINE (set_picture_x, "%set-picture!", 7, 0, 0,
 
   obj->picture->angle = scm_to_int (angle_s);
   obj->picture->mirrored = scm_is_true (mirror_s);
-  o_picture_modify_all (toplevel, obj,
+  o_picture_modify_all (obj,
                         scm_to_int (x1_s), scm_to_int (y1_s),
                         scm_to_int (x2_s), scm_to_int (y2_s));
 

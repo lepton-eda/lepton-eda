@@ -806,7 +806,6 @@ void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
  * the points (\a x1, \a y1) and (\a x2, \a y2), and scaled as large
  * as possible to still fit within that rectangle.
  *
- * \param [in]     toplevel current #TOPLEVEL.
  * \param [in,out] object   picture #OBJECT to be modified.
  * \param [in]     x1       x coordinate of first corner of box.
  * \param [in]     y1       y coordinate of first corner of box.
@@ -814,8 +813,11 @@ void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
  * \param [in]     y2       y coordinate of second corner of box.
  */
 void
-o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object,
-                      int x1, int y1, int x2, int y2)
+o_picture_modify_all (OBJECT *object,
+                      int x1,
+                      int y1,
+                      int x2,
+                      int y2)
 {
   o_emit_pre_change_notify (object);
 

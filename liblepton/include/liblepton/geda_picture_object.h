@@ -46,7 +46,11 @@ void
 o_picture_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 void
-o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object, int x1, int y1, int x2, int y2);
+o_picture_modify_all (OBJECT *object,
+                      int x1,
+                      int y1,
+                      int x2,
+                      int y2);
 
 void
 geda_picture_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle,OBJECT *object);
