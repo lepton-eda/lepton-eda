@@ -191,7 +191,7 @@ o_component_translate_all (GschemToplevel *w_current, int offset)
   for (iter = s_page_objects (toplevel->page_current);
        iter != NULL; iter = g_list_next (iter)) {
     o_current = (OBJECT*) iter->data;
-    s_conn_remove_object_connections (toplevel, o_current);
+    s_conn_remove_object_connections (o_current);
   }
 
   if (offset == 0) {

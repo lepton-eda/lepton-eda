@@ -937,7 +937,7 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   int y2 = scm_to_int (y2_s);
 
   /* We may need to update connectivity. */
-  s_conn_remove_object_connections (toplevel, obj);
+  s_conn_remove_object_connections (obj);
 
   switch (obj->type) {
   case OBJ_LINE:

@@ -125,7 +125,7 @@ gchar *s_clib_symbol_get_data_by_name (const gchar *name);
 GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel);
 
 /* s_conn.c */
-void s_conn_remove_object_connections (TOPLEVEL *toplevel, OBJECT *to_remove);
+void s_conn_remove_object_connections (OBJECT *to_remove);
 void s_conn_update_object (PAGE* page, OBJECT *object);
 int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list);
 GList *s_conn_return_others(GList *input_list, OBJECT *object);

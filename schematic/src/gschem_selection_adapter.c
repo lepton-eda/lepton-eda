@@ -1675,7 +1675,7 @@ gschem_selection_adapter_set_pin_type (GschemSelectionAdapter *adapter, int type
     OBJECT *object = (OBJECT*) iter->data;
 
     if (object->type == OBJ_PIN && object->pin_type != type) {
-      s_conn_remove_object_connections (adapter->toplevel, object);
+      s_conn_remove_object_connections (object);
       geda_pin_object_set_type (object, type);
       s_conn_update_object (object->page, object);
     }

@@ -1034,7 +1034,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
   }
 
   if (made_changes) {
-    s_conn_remove_object_connections (page->toplevel, net_obj);
+    s_conn_remove_object_connections (net_obj);
 
     if (w_current->bus_ripper_type == COMP_BUS_RIPPER) {
       GList *symlist =

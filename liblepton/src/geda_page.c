@@ -96,7 +96,7 @@ pre_object_removed (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
   }
 
   /* Remove object from connection system */
-  s_conn_remove_object_connections (toplevel, object);
+  s_conn_remove_object_connections (object);
 }
 
 /*! \brief create a new page object
