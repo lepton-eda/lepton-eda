@@ -83,8 +83,9 @@ o_picture_set_from_buffer (OBJECT *object,
                            GError **error);
 
 gboolean
-o_picture_set_from_file (TOPLEVEL *toplevel, OBJECT *object,
-                                  const gchar *filename, GError **error);
+o_picture_set_from_file (OBJECT *object,
+                         const gchar *filename,
+                         GError **error);
 const gchar*
 o_picture_get_filename (const GedaObject *object);
 
