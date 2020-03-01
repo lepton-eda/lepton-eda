@@ -49,7 +49,7 @@ void o_selection_add (TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_select
 {
   if (o_selected->selected == FALSE)
   {
-    o_selection_select (toplevel, o_selected);
+    o_selection_select (o_selected);
     geda_list_add( (GedaList *)selection, o_selected );
   }
 }
@@ -104,10 +104,10 @@ void o_selection_print_all(const SELECTION *selection)
  *  \par Sets the select flag, saves the color, and then selects the 
  *  given object
  *
- *  \param [in] toplevel  The TOPLEVEL object
  *  \param [in] object    Object to select.
  */
-void o_selection_select(TOPLEVEL *toplevel, OBJECT *object)
+void
+o_selection_select (OBJECT *object)
 {
   if (object->selected == TRUE)
     return;
