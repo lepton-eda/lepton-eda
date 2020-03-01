@@ -87,7 +87,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
 
     /* reselect it */
     if (selected_save)
-      o_selection_select (toplevel, src_object);
+      o_selection_select (src_object);
 
     src = g_list_next(src);
   }
@@ -121,7 +121,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
 
     /* reselect it */
     if (selected_save)
-      o_selection_select (toplevel, src_object);
+      o_selection_select (src_object);
 
     src = g_list_next(src);
   }

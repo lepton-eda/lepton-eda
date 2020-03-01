@@ -25,7 +25,7 @@ void o_emit_pre_change_notify (OBJECT *object);
 void o_emit_change_notify (OBJECT *object);
 
 /* o_selection.c */
-void o_selection_select(TOPLEVEL *toplevel, OBJECT *object);
+void o_selection_select (OBJECT *object);
 void o_selection_unselect(TOPLEVEL *toplevel, OBJECT *object);
 
 /* s_clib.c */
