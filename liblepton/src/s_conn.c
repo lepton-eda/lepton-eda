@@ -163,11 +163,11 @@ s_conn_remove_other (OBJECT *other_object,
  *  \par Function Description
  *  This function removes all connections from and to the OBJECT
  *  <b>to_remove</b>.
- *  \param toplevel  The TOPLEVEL structure
+ *
  *  \param to_remove OBJECT to unconnected from all other objects
  */
 void
-s_conn_remove_object_connections (TOPLEVEL *toplevel, OBJECT *to_remove)
+s_conn_remove_object_connections (OBJECT *to_remove)
 {
   GList *c_iter;
   CONN *conn;
@@ -199,7 +199,7 @@ s_conn_remove_object_connections (TOPLEVEL *toplevel, OBJECT *to_remove)
     case OBJ_PLACEHOLDER:
       for (iter = to_remove->component->prim_objs; iter != NULL; iter = g_list_next (iter)) {
         o_current = (OBJECT*) iter->data;
-        s_conn_remove_object_connections (toplevel, o_current);
+        s_conn_remove_object_connections (o_current);
       }
       break;
   }

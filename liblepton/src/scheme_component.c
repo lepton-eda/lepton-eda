@@ -318,7 +318,6 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
               SCM_ARG1, s_component_remove_x);
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s, SCM_ARG2, s_component_remove_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *parent = edascm_to_object (component_s);
   OBJECT *child = edascm_to_object (obj_s);
   PAGE *child_page = o_get_page (child);
@@ -363,7 +362,7 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
 
   /* We may need to update connections */
   s_conn_remove_object (child_page, child);
-  s_conn_remove_object_connections (toplevel, child);
+  s_conn_remove_object_connections (child);
 
   o_emit_change_notify (parent);
 

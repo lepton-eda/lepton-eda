@@ -249,7 +249,7 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
       s_page_remove (toplevel, o_current->page, o_current);
     }
 
-    s_conn_remove_object_connections (toplevel, o_current);
+    s_conn_remove_object_connections (o_current);
 
     if (o_current->attached_to != NULL) {
       /* do the actual remove */

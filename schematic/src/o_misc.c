@@ -222,7 +222,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = (OBJECT*) o_iter->data;
 
-    s_conn_remove_object_connections (toplevel, o_current);
+    s_conn_remove_object_connections (o_current);
   }
 
   geda_object_list_rotate ( list, centerx, centery, angle, toplevel );
@@ -280,7 +280,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = (OBJECT*) o_iter->data;
 
-    s_conn_remove_object_connections (toplevel, o_current);
+    s_conn_remove_object_connections (o_current);
   }
 
   geda_object_list_mirror ( list, centerx, centery, toplevel );
