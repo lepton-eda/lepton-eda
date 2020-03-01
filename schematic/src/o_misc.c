@@ -473,7 +473,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   }
 
   /* Unselect the old object. */
-  o_selection_remove (toplevel, page->selection_list, o_current);
+  o_selection_remove (page->selection_list, o_current);
 
   /* Create new object and set embedded */
   o_new = o_component_new (toplevel, OBJ_COMPONENT, DEFAULT_COLOR,

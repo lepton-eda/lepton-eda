@@ -656,7 +656,7 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
 
           changed++;
           if (other_object->selected == TRUE ) {
-            o_selection_remove (toplevel, page->selection_list, other_object);
+            o_selection_remove (page->selection_list, other_object);
 
             /* If we're consolidating with a selected object,
              * ensure we select the resulting object.

@@ -82,7 +82,10 @@ o_selection_add (SELECTION *selection,
                  OBJECT *o_selected);
 
 void o_selection_print_all(const SELECTION *selection);
-void o_selection_remove(TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected);
+
+void
+o_selection_remove (SELECTION *selection,
+                    OBJECT *o_selected);
 
 /* s_attrib.c */
 int s_attrib_add_entry(char *new_attrib);
