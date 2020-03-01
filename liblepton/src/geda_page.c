@@ -57,7 +57,7 @@ static gint global_pid = 0;
 /* Called just before removing an OBJECT from a PAGE
  * or after appending an OBJECT to a PAGE. */
 static void
-object_added (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
+object_added (PAGE *page, OBJECT *object)
 {
   /* Set up object parent pointer */
 #ifndef NDEBUG
@@ -666,7 +666,7 @@ gint s_page_autosave (TOPLEVEL *toplevel)
 void s_page_append (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
   page->_object_list = g_list_append (page->_object_list, object);
-  object_added (toplevel, page, object);
+  object_added (page, object);
 }
 
 /*! \brief Append a GList of OBJECTs to the PAGE
@@ -684,7 +684,7 @@ void s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list)
   GList *iter;
   page->_object_list = g_list_concat (page->_object_list, obj_list);
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    object_added (toplevel, page, (OBJECT*) iter->data);
+    object_added (page, (OBJECT*) iter->data);
   }
 }
 
@@ -730,7 +730,7 @@ s_page_replace (TOPLEVEL *toplevel, PAGE *page,
 
   pre_object_removed (toplevel, page, object1);
   iter->data = object2;
-  object_added (toplevel, page, object2);
+  object_added (page, object2);
 }
 
 /*! \brief Remove and free all OBJECTs from the PAGE
