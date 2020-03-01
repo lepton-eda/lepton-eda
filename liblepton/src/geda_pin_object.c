@@ -309,7 +309,7 @@ geda_pin_object_new (TOPLEVEL *toplevel,
   new_node->line->x[1] = x2;
   new_node->line->y[1] = y2;
 
-  geda_pin_object_set_type (toplevel, new_node, pin_type);
+  geda_pin_object_set_type (new_node, pin_type);
 
   new_node->whichend = whichend;
 
@@ -698,12 +698,12 @@ geda_pin_object_update_whichend (TOPLEVEL *toplevel,
  *  \par Function Description
  *  Sets the pin's type and width to a particular style.
  *
- *  \param [in] toplevel   The TOPLEVEL object
  *  \param [in] o_current  The pin OBJECT being modified
  *  \param [in] pin_type   The new type of this pin
  */
 void
-geda_pin_object_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type)
+geda_pin_object_set_type (OBJECT *o_current,
+                          int pin_type)
 {
   g_return_if_fail (o_current != NULL);
   g_return_if_fail (o_current->type == OBJ_PIN);

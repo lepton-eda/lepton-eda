@@ -85,7 +85,8 @@ geda_pin_object_rotate (TOPLEVEL *toplevel,
                         OBJECT *object);
 
 void
-geda_pin_object_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type);
+geda_pin_object_set_type (OBJECT *o_current,
+                          int pin_type);
 
 void
 geda_pin_object_set_x0 (GedaObject *object, gint x);
