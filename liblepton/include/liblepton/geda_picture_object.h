@@ -90,7 +90,7 @@ const gchar*
 o_picture_get_filename (const GedaObject *object);
 
 GdkPixbuf*
-o_picture_get_fallback_pixbuf (TOPLEVEL *toplevel) G_GNUC_WARN_UNUSED_RESULT;
+o_picture_get_fallback_pixbuf () G_GNUC_WARN_UNUSED_RESULT;
 
 OBJECT*
 o_picture_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);

@@ -620,7 +620,7 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
                      filename, error->message);
       g_error_free (error);
       /* picture not found; try to open a fall back pixbuf */
-      picture->pixbuf = o_picture_get_fallback_pixbuf(toplevel);
+      picture->pixbuf = o_picture_get_fallback_pixbuf ();
     }
   }
 
@@ -1310,7 +1310,7 @@ o_picture_get_filename (const GedaObject *object)
  * \return a #GdkPixbuf containing a warning image.
  */
 GdkPixbuf *
-o_picture_get_fallback_pixbuf (TOPLEVEL *toplevel)
+o_picture_get_fallback_pixbuf ()
 {
   static GdkPixbuf *pixbuf = NULL;
   static gboolean failed = FALSE;
