@@ -2066,8 +2066,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
 SCM_DEFINE (make_picture, "%make-picture", 0, 0, 0, (),
             "Create a new picture object")
 {
-  OBJECT *obj = o_picture_new (edascm_c_current_toplevel (),
-                               NULL, 0, NULL, OBJ_PICTURE,
+  OBJECT *obj = o_picture_new (NULL, 0, NULL, OBJ_PICTURE,
                                0, 0, 0, 0, 0, FALSE, TRUE);
   SCM result = edascm_from_object (obj);
 

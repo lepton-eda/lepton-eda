@@ -451,7 +451,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
 
   /* create the picture */
   /* The picture is described by its upper left and lower right corner */
-  new_obj = o_picture_new (toplevel, file_content, file_length, filename,
+  new_obj = o_picture_new (file_content, file_length, filename,
                            type,
                            x1, y1+height, x1+width, y1,
                            angle, mirrored, embedded);
@@ -554,7 +554,6 @@ geda_picture_object_to_buffer (const GedaObject *object)
  *  attempt to be loaded from \a filename.  Otherwise, the picture
  *  object will be initially empty.
  *
- *  \param [in]     toplevel      The TOPLEVEL object.
  *  \param [in]     file_content  Raw data of the image file, or NULL.
  *  \param [in]     file_length   Length of raw data buffer
  *  \param [in]     filename      File name backing this picture, or NULL.
@@ -568,11 +567,17 @@ geda_picture_object_to_buffer (const GedaObject *object)
  *  \param [in]     embedded      Whether the embedded flag should be set or not.
  *  \return A pointer to a new picture #OBJECT.
  */
-OBJECT *o_picture_new (TOPLEVEL *toplevel,
-                       const gchar *file_content, gsize file_length,
+OBJECT *o_picture_new (const gchar *file_content,
+                       gsize file_length,
                        const gchar *filename,
-                       char type, int x1, int y1, int x2, int y2, int angle,
-                       int mirrored, int embedded)
+                       char type,
+                       int x1,
+                       int y1,
+                       int x2,
+                       int y2,
+                       int angle,
+                       int mirrored,
+                       int embedded)
 {
   OBJECT *new_node;
   PICTURE *picture;
