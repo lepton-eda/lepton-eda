@@ -615,7 +615,7 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
   }
   if (picture->pixbuf == NULL && filename != NULL) {
     GError *error = NULL;
-    if (!o_picture_set_from_file (toplevel, new_node, filename, &error)) {
+    if (!o_picture_set_from_file (new_node, filename, &error)) {
       s_log_message (_("Failed to load image from [%1$s]: %2$s"),
                      filename, error->message);
       g_error_free (error);
@@ -1077,7 +1077,7 @@ void o_picture_unembed (TOPLEVEL *toplevel, OBJECT *object)
 
   if (!o_picture_is_embedded (object)) return;
 
-  o_picture_set_from_file (toplevel, object, filename, &err);
+  o_picture_set_from_file (object, filename, &err);
 
   if (err != NULL) {
     s_log_message (_("Failed to load image from file [%1$s]: %2$s"),
@@ -1259,14 +1259,13 @@ o_picture_set_from_buffer (OBJECT *object,
  * Sets the contents of the picture \a object by reading image data
  * from a file.
  *
- * \param toplevel The current #TOPLEVEL.
  * \param object   The picture #OBJECT to modify.
  * \param filename The filename to load image data from.
  * \param error    Location to return error information.
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-o_picture_set_from_file (TOPLEVEL *toplevel, OBJECT *object,
+o_picture_set_from_file (OBJECT *object,
                          const gchar *filename,
                          GError **error)
 {

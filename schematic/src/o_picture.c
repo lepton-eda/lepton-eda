@@ -315,7 +315,7 @@ o_picture_exchange (GschemToplevel *w_current,
       /* Erase previous picture */
       o_invalidate (w_current, object);
 
-      status = o_picture_set_from_file (toplevel, object, filename, error);
+      status = o_picture_set_from_file (object, filename, error);
       if (!status) return FALSE;
 
       /* Draw new picture */
