@@ -504,7 +504,6 @@ gboolean o_get_line_options(OBJECT *object,
  *  This function allows an #OBJECT's fill options to be configured.
  *  See #OBJECT_FILLING for information on valid fill types.
  *
- *  \param [in]      toplevel  The TOPLEVEL object.
  *  \param [in,out]  o_current  OBJECT to be updated.
  *  \param [in]      type       OBJECT_FILLING type.
  *  \param [in]      width      fill width.
@@ -514,10 +513,14 @@ gboolean o_get_line_options(OBJECT *object,
  *  \param [in]      angle2     cross hatch angle
  *
  */
-void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
-			OBJECT_FILLING type, int width,
-			int pitch1, int angle1,
-			int pitch2, int angle2)
+void
+o_set_fill_options (OBJECT *o_current,
+                    OBJECT_FILLING type,
+                    int width,
+                    int pitch1,
+                    int angle1,
+                    int pitch2,
+                    int angle2)
 {
   if(o_current == NULL) {
     return;

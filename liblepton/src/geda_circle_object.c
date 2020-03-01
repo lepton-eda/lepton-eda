@@ -84,8 +84,7 @@ geda_circle_object_new (TOPLEVEL *toplevel,
                       -1,
                       -1);
 
-  o_set_fill_options (toplevel,
-                      new_node,
+  o_set_fill_options (new_node,
                       FILLING_HOLLOW,
                       -1,
                       -1,
@@ -127,8 +126,7 @@ geda_circle_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
                       object->line_length,
                       object->line_space);
 
-  o_set_fill_options (toplevel,
-                      new_obj,
+  o_set_fill_options (new_obj,
                       object->fill_type,
                       object->fill_width,
                       object->fill_pitch1,
@@ -391,14 +389,13 @@ o_circle_read (TOPLEVEL *toplevel,
                       circle_width,
                       circle_length,
                       circle_space);
-  o_set_fill_options(toplevel,
-                     new_obj,
-                     (OBJECT_FILLING) circle_fill,
-                     fill_width,
-                     pitch1,
-                     angle1,
-                     pitch2,
-                     angle2);
+  o_set_fill_options (new_obj,
+                      (OBJECT_FILLING) circle_fill,
+                      fill_width,
+                      pitch1,
+                      angle1,
+                      pitch2,
+                      angle2);
 
   return new_obj;
 }

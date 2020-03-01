@@ -1021,8 +1021,7 @@ gschem_selection_adapter_set_fill_angle1 (GschemSelectionAdapter *adapter, int a
                                  &temp_angle2);
 
     if (success) {
-      o_set_fill_options (adapter->toplevel,
-                          object,
+      o_set_fill_options (object,
                           temp_fill_type,
                           temp_width,
                           temp_pitch1,
@@ -1081,8 +1080,7 @@ gschem_selection_adapter_set_fill_angle2 (GschemSelectionAdapter *adapter, int a
                                  &temp_angle2);
 
     if (success) {
-      o_set_fill_options (adapter->toplevel,
-                          object,
+      o_set_fill_options (object,
                           temp_fill_type,
                           temp_width,
                           temp_pitch1,
@@ -1143,8 +1141,7 @@ gschem_selection_adapter_set_fill_pitch1 (GschemSelectionAdapter *adapter, int p
                                  &temp_angle2);
 
     if (success) {
-      o_set_fill_options (adapter->toplevel,
-                          object,
+      o_set_fill_options (object,
                           temp_fill_type,
                           temp_width,
                           pitch,
@@ -1203,8 +1200,7 @@ gschem_selection_adapter_set_fill_pitch2 (GschemSelectionAdapter *adapter, int p
                                  &temp_angle2);
 
     if (success) {
-      o_set_fill_options (adapter->toplevel,
-                          object,
+      o_set_fill_options (object,
                           temp_fill_type,
                           temp_width,
                           temp_pitch1,
@@ -1265,8 +1261,7 @@ gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int fil
                                  &temp_angle2);
 
     if (success) {
-      o_set_fill_options (adapter->toplevel,
-                          object,
+      o_set_fill_options (object,
                           (OBJECT_FILLING) fill_type,
                           temp_width,
                           temp_pitch1,
@@ -1331,8 +1326,7 @@ gschem_selection_adapter_set_fill_width (GschemSelectionAdapter *adapter, int fi
                                  &temp_angle2);
 
     if (success) {
-      o_set_fill_options (adapter->toplevel,
-                          object,
+      o_set_fill_options (object,
                           temp_fill_type,
                           fill_width,
                           temp_pitch1,

@@ -108,7 +108,7 @@ geda_path_object_new_take_path (TOPLEVEL *toplevel,
                       -1,
                       -1);
 
-  o_set_fill_options (toplevel, new_node,
+  o_set_fill_options (new_node,
                       FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
   return new_node;
@@ -140,7 +140,7 @@ geda_path_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
   o_set_line_options (new_obj, o_current->line_end,
                       o_current->line_type, o_current->line_width,
                       o_current->line_length, o_current->line_space);
-  o_set_fill_options (toplevel, new_obj,
+  o_set_fill_options (new_obj,
                       o_current->fill_type, o_current->fill_width,
                       o_current->fill_pitch1, o_current->fill_angle1,
                       o_current->fill_pitch2, o_current->fill_angle2);
@@ -245,8 +245,7 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
                       line_length,
                       line_space);
   /* set its fill options */
-  o_set_fill_options (toplevel,
-                      new_obj,
+  o_set_fill_options (new_obj,
                       (OBJECT_FILLING) fill_type,
                       fill_width,
                       pitch1,

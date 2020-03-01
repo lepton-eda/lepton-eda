@@ -91,8 +91,8 @@ geda_arc_object_new (TOPLEVEL *toplevel,
                       -1,
                       -1);
 
-  o_set_fill_options(toplevel, new_node,
-                     FILLING_HOLLOW, -1, -1, -1, -1, -1);
+  o_set_fill_options (new_node,
+                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
   return new_node;
 }
@@ -127,8 +127,7 @@ geda_arc_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
                       object->line_length,
                       object->line_space);
 
-  o_set_fill_options (toplevel,
-                      new_object,
+  o_set_fill_options (new_object,
                       FILLING_HOLLOW,
                       -1,
                       -1,
@@ -452,9 +451,8 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
                       arc_width,
                       arc_length,
                       arc_space);
-  o_set_fill_options(toplevel, new_obj,
-                     FILLING_HOLLOW, -1, -1, -1,
-                     -1, -1);
+  o_set_fill_options (new_obj,
+                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
   return new_obj;
 }

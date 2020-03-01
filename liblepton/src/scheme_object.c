@@ -579,7 +579,6 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
                || edascm_is_object_type (obj_s, OBJ_PATH)),
               obj_s, SCM_ARG1, s_set_object_fill_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   int type, width = -1, angle1 = -1, space1 = -1, angle2 = -1, space2 = -1;
 
@@ -643,8 +642,7 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
     /* This case intentionally falls through */
   }
 
-  o_set_fill_options (toplevel,
-                      obj,
+  o_set_fill_options (obj,
                       (OBJECT_FILLING) type,
                       width,
                       space1,
