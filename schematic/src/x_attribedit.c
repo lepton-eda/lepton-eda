@@ -238,7 +238,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
 	o_invalidate (w_current, new_object);
 	new_object->text->x = wx;
 	new_object->text->y = wy;
-	o_text_recreate(toplevel, new_object);
+	o_text_recreate (new_object);
     gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
 	o_undo_savestate_old(w_current, UNDO_ALL);
       }

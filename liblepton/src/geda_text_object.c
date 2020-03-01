@@ -676,11 +676,10 @@ geda_text_object_to_buffer (const GedaObject *object)
  *  This function updates the underlying primary of the text object
  *  \a o_current.
  *
- *  \param toplevel  The TOPLEVEL object
  *  \param o_current The text object to update
  */
 void
-o_text_recreate (TOPLEVEL *toplevel, OBJECT *o_current)
+o_text_recreate (OBJECT *o_current)
 {
   o_emit_pre_change_notify (o_current);
   update_disp_string (o_current);
@@ -776,7 +775,7 @@ geda_text_object_rotate (TOPLEVEL *toplevel,
 
   geda_text_object_translate (object, x-object->text->x, y-object->text->y);
 
-  o_text_recreate(toplevel, object);
+  o_text_recreate (object);
 }
 
 
@@ -872,7 +871,7 @@ geda_text_object_mirror (TOPLEVEL *toplevel,
   object->text->x = -x + (world_centerx);
   object->text->y =  y + (world_centery);
 
-  o_text_recreate(toplevel, object);
+  o_text_recreate (object);
 }
 
 /*! \brief Calculates the distance between the given point and the closest
@@ -936,7 +935,7 @@ o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string)
   g_free (obj->text->string);
   obj->text->string = g_strdup (new_string);
 
-  o_text_recreate (toplevel, obj);
+  o_text_recreate (obj);
 }
 
 /*! \brief Set the font-renderer-specific bounds function.

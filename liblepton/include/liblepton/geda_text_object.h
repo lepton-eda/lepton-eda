@@ -119,7 +119,7 @@ geda_text_object_translate (GedaObject *object, int dx, int dy);
 /* older methods, need renaming */
 
 void
-o_text_recreate (TOPLEVEL *toplevel, OBJECT *o_current);
+o_text_recreate (OBJECT *o_current);
 
 void
 o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string);

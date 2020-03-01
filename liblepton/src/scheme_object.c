@@ -1615,7 +1615,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   o_text_set_string (toplevel, obj, tmp);
   free (tmp);
 
-  o_text_recreate (toplevel, obj);
+  o_text_recreate (obj);
 
   /* Color */
   o_set_color (toplevel, obj, scm_to_int (color_s));
