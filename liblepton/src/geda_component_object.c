@@ -244,7 +244,7 @@ o_component_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
   }
 
   /* object is invisible and we do not want to promote invisible text */
-  if ((!o_is_visible (toplevel, object)) &&
+  if ((!o_is_visible (object)) &&
       (promote_invisible == FALSE))
     return FALSE; /* attribute not eligible for promotion */
 

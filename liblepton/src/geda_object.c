@@ -1047,12 +1047,11 @@ o_emit_change_notify (OBJECT *object)
  *  \par Function Description
  *  Attribute getter for the visible field within the object.
  *
- *  \param toplevel The TOPLEVEL structure
  *  \param object   The OBJECT structure to be queried
  *  \return TRUE when VISIBLE, FALSE otherwise
  */
 gboolean
-o_is_visible (const TOPLEVEL *toplevel, const OBJECT *object)
+o_is_visible (const OBJECT *object)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   return object->visibility == VISIBLE;
@@ -1110,7 +1109,7 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
   /* only do bounding boxes for visible or doing show_hidden_text*/
   /* you might lose some attrs though */
   if (o_current->type == OBJ_TEXT &&
-      ! (o_is_visible (toplevel, o_current) || toplevel->show_hidden_text)) {
+      ! (o_is_visible (o_current) || toplevel->show_hidden_text)) {
     return 0;
   }
 
