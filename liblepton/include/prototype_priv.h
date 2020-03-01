@@ -34,7 +34,7 @@ void s_clib_init (void);
 /* s_conn.c */
 CONN *s_conn_return_new(OBJECT *other_object, int type, int x, int y, int whichone, int other_whichone);
 int s_conn_uniq(GList *conn_list, CONN *input_conn);
-int s_conn_remove_other(TOPLEVEL *toplevel, OBJECT *other_object, OBJECT *to_remove);
+int s_conn_remove_other (OBJECT *other_object, OBJECT *to_remove);
 OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y);
 void s_conn_print(GList *conn_list);
 void s_conn_add_object(PAGE *page, OBJECT *object);

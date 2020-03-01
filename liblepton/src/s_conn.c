@@ -106,13 +106,14 @@ int s_conn_uniq(GList * conn_list, CONN * input_conn)
  *  \par Function Description
  *  This function removes the OBJECT <b>to_remove</b> from the connection
  *  list of the OBJECT <b>other_object</b>.
- *  \param toplevel (currently not used)
+ *
  *  \param other_object OBJECT from that the to_remove OBJECT needs to be removed
  *  \param to_remove OBJECT to remove
  *  \return TRUE if a connection has been deleted, FALSE otherwise
  */
-int s_conn_remove_other (TOPLEVEL *toplevel, OBJECT *other_object,
-                         OBJECT *to_remove)
+int
+s_conn_remove_other (OBJECT *other_object,
+                     OBJECT *to_remove)
 {
     GList *c_current = NULL;
     CONN *conn = NULL;
@@ -184,7 +185,7 @@ s_conn_remove_object_connections (TOPLEVEL *toplevel, OBJECT *to_remove)
 
         /* keep calling this till it returns false (all refs removed) */
         /* there is NO body to this while loop */
-        while (s_conn_remove_other (toplevel, conn->other_object, to_remove));
+        while (s_conn_remove_other (conn->other_object, to_remove));
 
         c_iter->data = NULL;
         g_free (conn);
