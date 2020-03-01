@@ -116,7 +116,7 @@ void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string,
 
   o_set_visibility (object, visibility);
   object->show_name_value = show;
-  o_text_recreate(toplevel, object);
+  o_text_recreate (object);
 
   /* handle slot= attribute, it's a special case */
   if (object->attached_to != NULL &&

@@ -1757,7 +1757,7 @@ gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, in
 
     if (object->type == OBJ_TEXT) {
       geda_text_object_set_alignment (object, alignment);
-      o_text_recreate(adapter->toplevel, object);
+      o_text_recreate (object);
     }
 
     iter = g_list_next (iter);
@@ -1825,7 +1825,7 @@ gschem_selection_adapter_set_text_rotation (GschemSelectionAdapter *adapter, int
 
     if (object->type == OBJ_TEXT) {
       geda_text_object_set_angle (object, angle);
-      o_text_recreate(adapter->toplevel, object);
+      o_text_recreate (object);
     }
 
     iter = g_list_next (iter);
@@ -1859,7 +1859,7 @@ gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int siz
 
     if (object->type == OBJ_TEXT) {
       geda_text_object_set_size (object, size);
-      o_text_recreate(adapter->toplevel, object);
+      o_text_recreate (object);
     }
 
     iter = g_list_next (iter);
@@ -1901,7 +1901,7 @@ gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const
         o_slot_end (w_current, object->attached_to, string);
       }
 
-      o_text_recreate (adapter->toplevel, object);
+      o_text_recreate (object);
     }
 
     iter = g_list_next (iter);

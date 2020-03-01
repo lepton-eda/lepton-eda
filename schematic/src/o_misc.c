@@ -316,7 +316,6 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
 void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
                                   const GList *o_list)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *o_current;
   const GList *iter;
 
@@ -326,7 +325,7 @@ void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
     if (o_current->type == OBJ_TEXT && !o_is_visible (o_current)) {
 
       /* don't toggle the visibility flag */
-      o_text_recreate (toplevel, o_current);
+      o_text_recreate (o_current);
     }
 
     if (o_current->type == OBJ_COMPONENT || o_current->type == OBJ_PLACEHOLDER) {
@@ -385,7 +384,7 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
       if (!strncmp (stext, str, strlen (stext))) {
         if (o_is_visible (o_current)) {
           o_set_visibility (o_current, INVISIBLE);
-          o_text_recreate(toplevel, o_current);
+          o_text_recreate (o_current);
 
           gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
         }
@@ -419,7 +418,7 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
       if (!strncmp (stext, str, strlen (stext))) {
         if (!o_is_visible (o_current)) {
           o_set_visibility (o_current, VISIBLE);
-          o_text_recreate(toplevel, o_current);
+          o_text_recreate (o_current);
 
           gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
         }
