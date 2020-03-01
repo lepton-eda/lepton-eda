@@ -99,9 +99,7 @@ void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string,
   g_return_if_fail (page_view != NULL);
 
   PAGE *page = gschem_page_view_get_page (page_view);
-  TOPLEVEL *toplevel = page->toplevel;
 
-  g_return_if_fail (toplevel != NULL);
   g_return_if_fail (page != NULL);
 
   if (object == NULL) {
@@ -112,7 +110,7 @@ void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string,
     return;
   }
 
-  o_text_set_string (toplevel, object, string);
+  o_text_set_string (object, string);
 
   o_set_visibility (object, visibility);
   object->show_name_value = show;

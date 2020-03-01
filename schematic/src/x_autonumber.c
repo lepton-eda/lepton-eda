@@ -571,7 +571,7 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
 
   /* replace old text */
   str = g_strdup_printf("%s?", autotext->current_searchtext);
-  o_text_set_string (autotext->w_current->toplevel, o_current, str);
+  o_text_set_string (o_current, str);
   g_free (str);
 
   /* remove the slot attribute if slotting is active */
@@ -613,7 +613,7 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
 
   /* replace old text */
   str = g_strdup_printf("%s%d", autotext->current_searchtext, number);
-  o_text_set_string (autotext->w_current->toplevel, o_current, str);
+  o_text_set_string (o_current, str);
   g_free (str);
 
   gschem_toplevel_page_content_changed (autotext->w_current,

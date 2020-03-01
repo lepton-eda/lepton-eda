@@ -126,7 +126,7 @@ check_accessors ()
     geda_text_object_set_size (object0, size);
     o_set_color (toplevel, object0, color);
     o_set_visibility (object0, visible);
-    o_text_set_string (toplevel, object0, string);
+    o_text_set_string (object0, string);
 
     g_assert_cmpint (x, ==, geda_text_object_get_x (object0));
     g_assert_cmpint (y, ==, geda_text_object_get_y (object0));

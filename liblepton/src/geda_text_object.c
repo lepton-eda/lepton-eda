@@ -919,14 +919,13 @@ geda_text_object_shortest_distance (TOPLEVEL *toplevel,
  *  \par Function Description
  *  Updates the text object with a new text string.
  *
- *  \param [in]  toplevel              The TOPLEVEL object.
  *  \param [in]  obj                   The text object.
  *  \param [in]  new_string            The new value.
  */
 void
-o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string)
+o_text_set_string (OBJECT *obj,
+                   const gchar *new_string)
 {
-  g_return_if_fail (toplevel != NULL);
   g_return_if_fail (obj != NULL);
   g_return_if_fail (obj->type == OBJ_TEXT);
   g_return_if_fail (obj->text != NULL);

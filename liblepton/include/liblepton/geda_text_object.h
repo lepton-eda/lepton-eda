@@ -122,7 +122,8 @@ void
 o_text_recreate (OBJECT *o_current);
 
 void
-o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string);
+o_text_set_string (OBJECT *obj,
+                   const gchar *new_string);
 
 void
 o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
