@@ -2227,12 +2227,11 @@ SCM_DEFINE (set_picture_data_vector_x, "%set-picture-data/vector!",
 
   gboolean status;
   GError *error = NULL;
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   gchar *filename = scm_to_utf8_string (filename_s);
   scm_dynwind_unwind_handler (g_free, filename, SCM_F_WIND_EXPLICITLY);
 
-  status = o_picture_set_from_buffer (toplevel, obj, filename,
+  status = o_picture_set_from_buffer (obj, filename,
                                       buf, len, &error);
 
   if (!status) {
