@@ -1108,8 +1108,6 @@ static void o_grips_end_path(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_picture(GschemToplevel *w_current, OBJECT *o_current,
                                 int whichone)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-
   /* don't allow zero width/height picturees
    * this ends the picture drawing behavior
    * we want this? hack */
@@ -1119,8 +1117,8 @@ static void o_grips_end_picture(GschemToplevel *w_current, OBJECT *o_current,
     return;
   }
 
-  o_picture_modify(toplevel, o_current,
-		   w_current->second_wx, w_current->second_wy, whichone);
+  o_picture_modify (o_current,
+                    w_current->second_wx, w_current->second_wy, whichone);
 
   g_object_unref (w_current->current_pixbuf);
   w_current->current_pixbuf = NULL;

@@ -719,7 +719,6 @@ o_picture_get_ratio (OBJECT *object)
  *  The coordinates of the corner is modified in the world coordinate system.
  *  Screen coordinates and boundings are then updated.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     Picture OBJECT to modify.
  *  \param [in]     x          New x coordinate.
  *  \param [in]     y          New y coordinate.
@@ -733,8 +732,11 @@ o_picture_get_ratio (OBJECT *object)
  *    <DT>*</DT><DD>PICTURE_LOWER_RIGHT
  *  </DL>
  */
-void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
-                      int x, int y, int whichone)
+void
+o_picture_modify (OBJECT *object,
+                  int x,
+                  int y,
+                  int whichone)
 {
   int tmp;
   double ratio = o_picture_get_ratio (object);
