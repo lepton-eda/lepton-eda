@@ -66,7 +66,7 @@ void o_attrib_add_selected(GschemToplevel *w_current, SELECTION *selection,
 
     /* make sure object isn't selected already */
     if (!a_current->selected) {
-      o_selection_add (w_current->toplevel, selection, a_current);
+      o_selection_add (selection, a_current);
       selected_objects = g_list_prepend (selected_objects, a_current);
     }
   }
@@ -142,7 +142,7 @@ void o_attrib_select_invisible (GschemToplevel *w_current,
     a_current = (OBJECT*) a_iter->data;
 
     if (!a_current->selected && !o_is_visible (a_current)) {
-      o_selection_add (w_current->toplevel, selection, a_current);
+      o_selection_add (selection, a_current);
     }
   }
 }
@@ -370,7 +370,7 @@ OBJECT *o_attrib_add_attrib(GschemToplevel *w_current,
     o_attrib_attach (toplevel, new_obj, o_current, FALSE);
   }
 
-  o_selection_add (toplevel, toplevel->page_current->selection_list, new_obj);
+  o_selection_add (toplevel->page_current->selection_list, new_obj);
 
   /* handle slot= attribute, it's a special case */
   if (o_current != NULL &&
