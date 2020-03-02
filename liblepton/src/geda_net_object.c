@@ -604,12 +604,12 @@ static int o_net_consolidate_nomidpoint (OBJECT *object, int x, int y)
  *  This function tries to consolidate a net with any other object
  *  that is connected to the current \a object.
  *
- *  \param toplevel   The TOPLEVEL object
  *  \param object     The object to consolidate
  *  \return 0 if no consolidation was possible, -1 otherwise
  *
  */
-static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
+static int
+o_net_consolidate_segments (OBJECT *object)
 {
   int object_orient;
   int other_orient;
@@ -695,7 +695,6 @@ geda_net_object_consolidate (TOPLEVEL *toplevel, PAGE *page)
   int status = 0;
   gboolean net_consolidate;
 
-  g_return_if_fail (toplevel != NULL);
   g_return_if_fail (page != NULL);
 
   cfg_read_bool ("schematic", "net-consolidate",
@@ -710,7 +709,7 @@ geda_net_object_consolidate (TOPLEVEL *toplevel, PAGE *page)
     o_current = (OBJECT *)iter->data;
 
     if (o_current->type == OBJ_NET) {
-      status = o_net_consolidate_segments(toplevel, o_current);
+      status = o_net_consolidate_segments (o_current);
     }
 
     if (status == -1) {
