@@ -470,8 +470,7 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
     not_found_text =
       g_strdup_printf (_("Component not found:\n %1$s"),
            new_node->component_basename);
-    new_prim_obj = geda_text_object_new (toplevel,
-                                         DETACHED_ATTRIBUTE_COLOR,
+    new_prim_obj = geda_text_object_new (DETACHED_ATTRIBUTE_COLOR,
                                          x + NOT_FOUND_TEXT_X,
                                          y + NOT_FOUND_TEXT_Y,
                                          LOWER_LEFT,
@@ -514,8 +513,7 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
     o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
                         50, -1, -1);
     new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
-    new_prim_obj = geda_text_object_new (toplevel,
-                                         DETACHED_ATTRIBUTE_COLOR,
+    new_prim_obj = geda_text_object_new (DETACHED_ATTRIBUTE_COLOR,
                                          x + NOT_FOUND_TEXT_X + x_offset + 270,
                                          y + NOT_FOUND_TEXT_Y + y_offset + 90,
                                          LOWER_LEFT,

@@ -1468,8 +1468,7 @@ SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
 SCM_DEFINE (make_text, "%make-text", 0, 0, 0,
             (), "Create a new text object.")
 {
-  OBJECT *obj = geda_text_object_new (edascm_c_current_toplevel (),
-                                      DEFAULT_COLOR,
+  OBJECT *obj = geda_text_object_new (DEFAULT_COLOR,
                                       0,
                                       0,
                                       LOWER_LEFT,

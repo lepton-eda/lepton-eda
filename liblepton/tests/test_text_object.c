@@ -32,8 +32,7 @@ check_construction ()
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
     gboolean visible = g_test_rand_bit ();
 
-    GedaObject *object0 = geda_text_object_new (toplevel,
-                                                color,
+    GedaObject *object0 = geda_text_object_new (color,
                                                 x,
                                                 y,
                                                 alignment,
@@ -95,8 +94,7 @@ check_accessors ()
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
     gboolean visible = g_test_rand_bit ();
 
-    GedaObject *object0 = geda_text_object_new (toplevel,
-                                                color,
+    GedaObject *object0 = geda_text_object_new (color,
                                                 x,
                                                 y,
                                                 alignment,
@@ -171,8 +169,7 @@ check_serialization ()
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
     gboolean visible = g_test_rand_bit ();
 
-    GedaObject *object0 = geda_text_object_new (toplevel,
-                                                color,
+    GedaObject *object0 = geda_text_object_new (color,
                                                 x,
                                                 y,
                                                 alignment,
