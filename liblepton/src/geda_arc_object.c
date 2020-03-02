@@ -573,13 +573,13 @@ void geda_arc_object_rotate (TOPLEVEL *toplevel,
  *
  *  The arc is finally back translated to its previous location on the page.
  *
- *  \param [in] toplevel      The TOPLEVEL object.
  *  \param [in] world_centerx
  *  \param [in] world_centery
  *  \param [in] object
  */
-void geda_arc_object_mirror (TOPLEVEL *toplevel,
-			int world_centerx, int world_centery,
+void
+geda_arc_object_mirror (int world_centerx,
+                        int world_centery,
 			OBJECT *object)
 {
   g_return_if_fail (object != NULL);

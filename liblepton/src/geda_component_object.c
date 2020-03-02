@@ -581,7 +581,7 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
     }
     else {
       if (mirror) {
-        geda_object_list_mirror (new_node->component->prim_objs, 0, 0, toplevel);
+        geda_object_list_mirror (new_node->component->prim_objs, 0, 0);
       }
 
       geda_object_list_rotate (new_node->component->prim_objs, 0, 0, angle, toplevel);
@@ -902,8 +902,8 @@ geda_component_object_rotate (TOPLEVEL *toplevel,
  *
  */
 void
-geda_component_object_mirror (TOPLEVEL *toplevel,
-                              int world_centerx, int world_centery,
+geda_component_object_mirror (int world_centerx,
+                              int world_centery,
                               OBJECT *object)
 {
   int x, y;
@@ -918,7 +918,7 @@ geda_component_object_mirror (TOPLEVEL *toplevel,
 
   geda_component_object_translate (object, -object->component->x, -object->component->y);
 
-  geda_object_list_mirror (object->component->prim_objs, 0, 0, toplevel);
+  geda_object_list_mirror (object->component->prim_objs, 0, 0);
 
   switch(object->component->angle) {
     case(90):

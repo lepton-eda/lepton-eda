@@ -65,8 +65,7 @@ double
 geda_line_object_length (OBJECT *object);
 
 void
-geda_line_object_mirror (TOPLEVEL *toplevel,
-                         int world_centerx,
+geda_line_object_mirror (int world_centerx,
                          int world_centery,
                          OBJECT *object);
 

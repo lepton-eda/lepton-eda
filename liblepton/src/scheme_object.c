@@ -2340,12 +2340,11 @@ SCM_DEFINE (mirror_object_x, "%mirror-object!", 2, 0, 0,
   SCM_ASSERT (scm_is_integer (x_s), x_s,
               SCM_ARG2, s_mirror_object_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   int x = scm_to_int (x_s);
 
   o_emit_pre_change_notify (obj);
-  geda_object_mirror (toplevel, x, 0, obj);
+  geda_object_mirror (x, 0, obj);
   o_emit_change_notify (obj);
   o_page_changed (obj);
 

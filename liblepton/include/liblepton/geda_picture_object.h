@@ -65,7 +65,9 @@ void
 geda_picture_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle,OBJECT *object);
 
 void
-geda_picture_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_picture_object_mirror (int world_centerx,
+                            int world_centery,
+                            OBJECT *object);
 
 void
 geda_picture_object_translate (GedaObject *object, int dx, int dy);

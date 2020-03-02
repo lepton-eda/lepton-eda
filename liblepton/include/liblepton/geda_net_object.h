@@ -68,8 +68,7 @@ gint
 geda_net_object_get_y1 (const GedaObject *object);
 
 void
-geda_net_object_mirror (TOPLEVEL *toplevel,
-                        int world_centerx,
+geda_net_object_mirror (int world_centerx,
                         int world_centery,
                         OBJECT *object);
 

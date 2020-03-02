@@ -54,7 +54,9 @@ void
 geda_component_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 
 void
-geda_component_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_component_object_mirror (int world_centerx,
+                              int world_centery,
+                              OBJECT *object);
 
 OBJECT *
 o_component_find_pin_by_attribute (OBJECT *object, const char *name, char *wanted_value);

@@ -133,8 +133,7 @@ geda_object_rotate (TOPLEVEL *toplevel,
                     OBJECT *object);
 
 void
-geda_object_mirror (TOPLEVEL *toplevel,
-                    int world_centerx,
+geda_object_mirror (int world_centerx,
                     int world_centery,
                     OBJECT *object);
 

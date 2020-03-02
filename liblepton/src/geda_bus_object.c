@@ -509,14 +509,12 @@ geda_bus_object_rotate (TOPLEVEL *toplevel,
  *  This function mirrors a bus \a object horizontaly at the point
  *  (\a world_centerx, \a world_centery).
  *
- *  \param [in]     toplevel      The TOPLEVEL object
  *  \param [in]     world_centerx x-coord of the mirror position
  *  \param [in]     world_centery y-coord of the mirror position
  *  \param [in,out] object        The bus object
  */
 void
-geda_bus_object_mirror (TOPLEVEL *toplevel,
-                        gint world_centerx,
+geda_bus_object_mirror (gint world_centerx,
                         gint world_centery,
                         GedaObject *object)
 {

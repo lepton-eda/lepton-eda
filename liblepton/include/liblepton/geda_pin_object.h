@@ -64,8 +64,7 @@ gint
 geda_pin_object_get_y1 (const GedaObject *object);
 
 void
-geda_pin_object_mirror (TOPLEVEL *toplevel,
-                        int world_centerx,
+geda_pin_object_mirror (int world_centerx,
                         int world_centery,
                         OBJECT *object);
 

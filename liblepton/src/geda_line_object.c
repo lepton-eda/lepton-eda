@@ -564,13 +564,14 @@ void geda_line_object_rotate (TOPLEVEL *toplevel,
  *  The line if first translated to the origin, then mirrored
  *  and finally translated back at its previous position.
  *
- *  \param [in]     toplevel      The TOPLEVEL object.
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         Line OBJECT to mirror.
  */
-void geda_line_object_mirror (TOPLEVEL *toplevel, int world_centerx,
-			 int world_centery, OBJECT *object)
+void
+geda_line_object_mirror (int world_centerx,
+			 int world_centery,
+                         OBJECT *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);

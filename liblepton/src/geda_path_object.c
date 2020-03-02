@@ -467,13 +467,14 @@ void geda_path_object_rotate (TOPLEVEL *toplevel,
  *  This function mirrors the path from the point
  *  (<B>world_centerx</B>,<B>world_centery</B>) in world unit.
  *
- *  \param [in]     toplevel      The TOPLEVEL object.
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         Line OBJECT to mirror.
  */
-void geda_path_object_mirror (TOPLEVEL *toplevel, int world_centerx,
-                          int world_centery, OBJECT *object)
+void
+geda_path_object_mirror (int world_centerx,
+                         int world_centery,
+                         OBJECT *object)
 {
   PATH_SECTION *section;
   int i;

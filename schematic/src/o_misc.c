@@ -283,7 +283,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
     s_conn_remove_object_connections (o_current);
   }
 
-  geda_object_list_mirror ( list, centerx, centery, toplevel );
+  geda_object_list_mirror (list, centerx, centery);
 
   /* Find connected objects, adding each object in turn back to the
    * connection list. We only _really_ want those objects connected

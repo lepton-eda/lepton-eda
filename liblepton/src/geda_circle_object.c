@@ -521,14 +521,12 @@ geda_circle_object_rotate (TOPLEVEL *toplevel,
  *  The circle coordinates and its bounding are recalculated as well as the
  *  OBJECT specific (line width, filling ...).
  *
- *  \param [in]     toplevel       The TOPLEVEL object.
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         Circle OBJECT to mirror.
  */
 void
-geda_circle_object_mirror (TOPLEVEL *toplevel,
-                           gint world_centerx,
+geda_circle_object_mirror (gint world_centerx,
                            gint world_centery,
                            GedaObject *object)
 {

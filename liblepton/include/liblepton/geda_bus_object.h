@@ -63,8 +63,7 @@ gint
 geda_bus_object_get_y1 (const GedaObject *object);
 
 void
-geda_bus_object_mirror (TOPLEVEL *toplevel,
-                        gint world_centerx,
+geda_bus_object_mirror (gint world_centerx,
                         gint world_centery,
                         OBJECT *object);
 

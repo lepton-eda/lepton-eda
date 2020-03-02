@@ -506,13 +506,14 @@ void geda_pin_object_rotate (TOPLEVEL *toplevel, int world_centerx,
  *  This function mirrors a pin \a object horizontaly at the point
  *  (\a world_centerx, \a world_centery).
  *
- *  \param [in] toplevel      The TOPLEVEL object
  *  \param [in] world_centerx x-coord of the mirror position
  *  \param [in] world_centery y-coord of the mirror position
  *  \param [in] object        The pin object
  */
-void geda_pin_object_mirror (TOPLEVEL *toplevel,
-			int world_centerx, int world_centery, OBJECT *object)
+void
+geda_pin_object_mirror (int world_centerx,
+                        int world_centery,
+                        OBJECT *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);

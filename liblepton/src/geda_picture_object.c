@@ -911,13 +911,13 @@ void geda_picture_object_rotate (TOPLEVEL *toplevel,
  *  The picture is first translated to the origin, then mirrored and
  *  finally translated back at its previous position.
  *
- *  \param [in]     toplevel      The TOPLEVEL object.
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         Picture OBJECT to mirror.
  */
-void geda_picture_object_mirror(TOPLEVEL *toplevel,
-                            int world_centerx, int world_centery,
+void
+geda_picture_object_mirror (int world_centerx,
+                            int world_centery,
                             OBJECT *object)
 {
   int newx1, newy1;

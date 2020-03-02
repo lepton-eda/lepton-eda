@@ -53,8 +53,7 @@ gboolean
 geda_box_object_get_position (const GedaObject *object, gint *x, gint *y);
 
 void
-geda_box_object_mirror (TOPLEVEL *toplevel,
-                        int world_centerx,
+geda_box_object_mirror (int world_centerx,
                         int world_centery,
                         OBJECT *object);
 

@@ -437,13 +437,14 @@ void geda_net_object_rotate (TOPLEVEL *toplevel,
  *  This function mirrors a net \a object horizontaly at the point
  *  (\a world_centerx, \a world_centery).
  *
- *  \param [in] toplevel      The TOPLEVEL object
  *  \param [in] world_centerx x-coord of the mirror position
  *  \param [in] world_centery y-coord of the mirror position
  *  \param [in] object        The net object
  */
-void geda_net_object_mirror (TOPLEVEL *toplevel, int world_centerx,
-			int world_centery, OBJECT *object)
+void
+geda_net_object_mirror (int world_centerx,
+			int world_centery,
+                        OBJECT *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
