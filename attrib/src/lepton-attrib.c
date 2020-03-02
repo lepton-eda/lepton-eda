@@ -188,8 +188,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
   /* ----- Read in RC files.   ----- */
   g_rc_parse (pr_current, argv[0], NULL, NULL);
 
-  i_vars_set(pr_current);
-
   gtk_init(&argc, &argv);
 
   x_window_init();

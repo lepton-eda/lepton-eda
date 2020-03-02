@@ -145,9 +145,6 @@ void s_visibility_set_name_and_value();
 void s_visibility_set_cell(gint cur_page, gint row, gint col, 
 			   gint visibility, gint show_name_value);
 
-/* ------------- i_vars.c ------------- */
-void i_vars_set(TOPLEVEL *toplevel);
-
 /* ------------- x_dialog.c ------------- */
 void x_dialog_newattrib();
 void x_dialog_delattrib();
