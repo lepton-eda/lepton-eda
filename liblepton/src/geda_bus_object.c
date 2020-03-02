@@ -275,7 +275,6 @@ geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
  *  \par Function Description
  *  This function creates and returns a new bus object.
  *
- *  \param [in]     toplevel    The TOPLEVEL object.
  *  \param [in]     color       The color of the bus
  *  \param [in]     x1          x-coord of the first point
  *  \param [in]     y1          y-coord of the first point
@@ -285,8 +284,7 @@ geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
  *  \return A new bus OBJECT
  */
 GedaObject*
-geda_bus_object_new (TOPLEVEL *toplevel,
-                     gint color,
+geda_bus_object_new (gint color,
                      gint x1,
                      gint y1,
                      gint x2,
@@ -370,7 +368,7 @@ o_bus_read (TOPLEVEL *toplevel,
     ripper_dir = 0;
   }
 
-  new_obj = geda_bus_object_new (toplevel, color, x1, y1, x2, y2, ripper_dir);
+  new_obj = geda_bus_object_new (color, x1, y1, x2, y2, ripper_dir);
 
   return new_obj;
 }
@@ -443,8 +441,7 @@ geda_bus_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
   /* still doesn't work... you need to pass in the new values */
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
-  new_obj = geda_bus_object_new (toplevel,
-                                 object->color,
+  new_obj = geda_bus_object_new (object->color,
                                  object->line->x[0],
                                  object->line->y[0],
                                  object->line->x[1],

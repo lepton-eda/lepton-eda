@@ -82,8 +82,7 @@ void o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
   if ( (w_current->first_wx != w_current->second_wx) ||
        (w_current->first_wy != w_current->second_wy) ) {
 
-    new_obj = geda_bus_object_new (toplevel,
-                                   BUS_COLOR,
+    new_obj = geda_bus_object_new (BUS_COLOR,
                                    w_current->first_wx,
                                    w_current->first_wy,
                                    w_current->second_wx,

@@ -1062,8 +1062,7 @@ SCM_DEFINE (make_bus, "%make-bus", 0, 0, 0,
   OBJECT *obj;
   SCM result;
 
-  obj = geda_bus_object_new (edascm_c_current_toplevel (),
-                             BUS_COLOR,
+  obj = geda_bus_object_new (BUS_COLOR,
                              0,
                              0,
                              0,
