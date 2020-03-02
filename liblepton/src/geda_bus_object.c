@@ -246,13 +246,11 @@ geda_bus_object_get_position (const GedaObject *object, gint *x, gint *y)
  *
  *  On failure, this function sets the bounds to empty.
  *
- *  \param [in]  toplevel Unused
  *  \param [in]  object   The bus object
  *  \param [out] bounds   The bounds of the bus
  */
 void
-geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
-                                  const GedaObject *object,
+geda_bus_object_calculate_bounds (const GedaObject *object,
                                   GedaBounds *bounds)
 {
   gint expand;
