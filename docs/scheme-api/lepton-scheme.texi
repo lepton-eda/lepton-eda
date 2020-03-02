@@ -1775,7 +1775,8 @@ Since 1.10.
 
 @defun config-save! cfg
 Attempt to save configuration parameters for the context @var{cfg} to
-its associated file.
+its associated file. Returns @var{cfg}. If configuration cannot be
+saved, raises an error.
 
 Since 1.10.
 @end defun
@@ -1919,13 +1920,15 @@ Since 1.10.
 
 @defun config-remove-key! cfg group key
 Removes the configuration parameter identified by the given @var{group}
-and @var{key} in the configuration context @var{cfg}.
+and @var{key} in the configuration context @var{cfg}. Returns @samp{#t}
+on success, @samp{#f} otherwise.
 
 @end defun
 
 @defun config-remove-group! cfg group
 Removes the configuration group identified by @var{group}
 and all its parameters in the configuration context @var{cfg}.
+Returns @samp{#t} on success, @samp{#f} otherwise.
 
 @end defun
 
@@ -2024,7 +2027,7 @@ Since 1.10.
 @defun set-config! cfg group key value
 Set the configuration parameter identified by the given @var{group}
 and @var{key} in the configuration context @var{cfg}.  The type of
-value to set is inferred from @var{value}.
+value to set is inferred from @var{value}. Returns @var{cfg}.
 
 Since 1.10.
 @end defun
