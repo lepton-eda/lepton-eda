@@ -38,8 +38,7 @@ OBJECT*
 geda_path_object_copy (OBJECT *o_current);
 
 void
-geda_path_object_calculate_bounds (TOPLEVEL *toplevel,
-                                   const OBJECT *object,
+geda_path_object_calculate_bounds (const OBJECT *object,
                                    GedaBounds *bounds);
 
 void
