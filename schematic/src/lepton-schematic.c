@@ -143,8 +143,6 @@ void gschem_quit(void)
 #endif /* HAVE_LIBSTROKE */
   o_undo_cleanup();
 
-  i_vars_freenames();
-
   /* Check whether the main loop is running:
   */
   if (gtk_main_level() == 0)
@@ -248,9 +246,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* Initialize toplevel */
   toplevel = s_toplevel_new ();
-
-  /* Set up default configuration */
-  i_vars_init_defaults ();
 
   /* Set up atexit handlers */
   gschem_atexit (i_vars_atexit_save_cache_config, NULL);
