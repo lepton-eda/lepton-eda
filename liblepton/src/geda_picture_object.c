@@ -1032,7 +1032,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
   picture->embedded    = object->picture->embedded;
 
   /* Get the picture data */
-  picture->pixbuf = o_picture_get_pixbuf (toplevel, object);
+  picture->pixbuf = o_picture_get_pixbuf (object);
 
   return new_node;
 }
@@ -1162,12 +1162,11 @@ o_picture_is_embedded (const OBJECT *object)
  * The returned value should have its reference count decremented with
  * g_object_unref() when no longer needed.
  *
- * \param toplevel  The current #TOPLEVEL.
  * \param object    The picture #OBJECT to inspect.
  * \return A #GdkPixbuf for the picture.
  */
 GdkPixbuf *
-o_picture_get_pixbuf (TOPLEVEL *toplevel, OBJECT *object)
+o_picture_get_pixbuf (OBJECT *object)
 {
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->picture != NULL, NULL);
