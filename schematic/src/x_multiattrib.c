@@ -2453,7 +2453,7 @@ typedef struct {
  *  count which we need to merge the attribute lists of various objects
  *  together.
  *
- *  \param [in] multiattrib  The multi-attribute editor dialog (For libgeda API which needs a TOPLEVEL)
+ *  \param [in] multiattrib  The multi-attribute editor dialog
  *  \param [in] object       The OBJECT * whos attributes we are processing
  *  \returns  A GList of MODEL_ROW records detailing object's attributes.
  */
