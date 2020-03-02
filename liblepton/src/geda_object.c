@@ -189,7 +189,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
       break;
 
     case(OBJ_PICTURE):
-      new_obj = o_picture_copy (toplevel, selected);
+      new_obj = o_picture_copy (selected);
       break;
 
     case(OBJ_CIRCLE):

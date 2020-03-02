@@ -76,7 +76,7 @@ void
 geda_picture_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
-o_picture_copy(TOPLEVEL *toplevel, OBJECT *o_current) G_GNUC_WARN_UNUSED_RESULT;
+o_picture_copy (OBJECT *o_current) G_GNUC_WARN_UNUSED_RESULT;
 
 gboolean
 o_picture_is_embedded (const OBJECT *object);
