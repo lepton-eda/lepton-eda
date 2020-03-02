@@ -160,7 +160,7 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
     /* This is where the net consolidation call would have been
      * triggered before it was removed from o_save_buffer().
      */
-    geda_net_object_consolidate (toplevel, page);
+    geda_net_object_consolidate (page);
   }
 
   if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {

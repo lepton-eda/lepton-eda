@@ -51,7 +51,7 @@ geda_net_object_calculate_bounds (TOPLEVEL *toplevel,
                                   GedaBounds *bounds);
 
 void
-geda_net_object_consolidate (TOPLEVEL *toplevel, PAGE *page);
+geda_net_object_consolidate (PAGE *page);
 
 gboolean
 geda_net_object_get_position (const GedaObject *object, gint *x, gint *y);
