@@ -731,10 +731,9 @@ static void o_grips_start_path(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_start_picture(GschemToplevel *w_current, OBJECT *o_current,
                                   int x, int y, int whichone)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
-  w_current->current_pixbuf = o_picture_get_pixbuf (toplevel, o_current);
+  w_current->current_pixbuf = o_picture_get_pixbuf (o_current);
   w_current->pixbuf_filename =
     g_strdup (o_picture_get_filename (o_current));
   w_current->pixbuf_wh_ratio = o_picture_get_ratio (o_current);

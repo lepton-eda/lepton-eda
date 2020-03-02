@@ -81,7 +81,8 @@ o_picture_copy(TOPLEVEL *toplevel, OBJECT *o_current) G_GNUC_WARN_UNUSED_RESULT;
 gboolean
 o_picture_is_embedded (const OBJECT *object);
 
-GdkPixbuf *o_picture_get_pixbuf (TOPLEVEL *toplevel, OBJECT *object) G_GNUC_WARN_UNUSED_RESULT;
+GdkPixbuf*
+o_picture_get_pixbuf (OBJECT *object) G_GNUC_WARN_UNUSED_RESULT;
 
 const char*
 o_picture_get_data (TOPLEVEL *toplevel, OBJECT *object, size_t *len);
