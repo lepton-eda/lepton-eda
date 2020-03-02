@@ -32,13 +32,11 @@
  *
  *  On failure, this function sets the bounds to empty.
  *
- *  \param [in]  toplevel Unused
  *  \param [in]  object   The pin object
  *  \param [out] bounds   The bounds of the pin
  */
 void
-geda_pin_object_calculate_bounds (TOPLEVEL *toplevel,
-                                  const OBJECT *object,
+geda_pin_object_calculate_bounds (const OBJECT *object,
                                   GedaBounds *bounds)
 {
   gint expand;
