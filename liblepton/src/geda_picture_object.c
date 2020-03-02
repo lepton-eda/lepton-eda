@@ -1042,10 +1042,10 @@ o_picture_copy (OBJECT *object)
  * Verify that a picture has valid data associated with it, and if so,
  * mark it to be embedded.
  *
- *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     object       The picture OBJECT to embed
  */
-void o_picture_embed (TOPLEVEL *toplevel, OBJECT *object)
+void
+o_picture_embed (OBJECT *object)
 {
   const gchar *filename = o_picture_get_filename (object);
   gchar *basename;

@@ -42,13 +42,8 @@ o_embed (OBJECT *o_current)
 {
   int page_modified = 0;
   PAGE *page = NULL;
-  TOPLEVEL *toplevel = NULL;
 
   page = o_get_page (o_current);
-
-  if (page != NULL) {
-    toplevel = page->toplevel;
-  }
 
   /* check o_current is a component and is not already embedded */
   if (o_current->type == OBJ_COMPONENT &&
@@ -66,7 +61,7 @@ o_embed (OBJECT *o_current)
   /* If it's a picture and it's not embedded */
   if ( (o_current->type == OBJ_PICTURE) &&
        !o_picture_is_embedded (o_current) ) {
-    o_picture_embed (toplevel, o_current);
+    o_picture_embed (o_current);
 
     page_modified = 1;
   }
