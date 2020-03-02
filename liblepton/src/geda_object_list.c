@@ -240,17 +240,16 @@ geda_object_list_rotate (const GList *objects, int x, int y, int angle, TOPLEVEL
  *  \param [in,out] objects  A GList of objects to mirror.
  *  \param [in]     x        The x center of mirroring
  *  \param [in]     y        Unused, essentially
- *  \param [in]     toplevel The toplevel object. (used for change notification)
  */
 void
-geda_object_list_mirror (const GList *objects, int x, int y, TOPLEVEL *toplevel)
+geda_object_list_mirror (const GList *objects, int x, int y)
 {
   const GList *iter = objects;
 
   while (iter != NULL) {
     GedaObject *object = (GedaObject*)iter->data;
 
-    geda_object_mirror (toplevel, x, y, object);
+    geda_object_mirror (x, y, object);
     iter = g_list_next (iter);
   }
 }

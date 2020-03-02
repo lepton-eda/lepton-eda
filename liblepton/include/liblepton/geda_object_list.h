@@ -26,7 +26,9 @@ void
 geda_object_list_delete (GList *list);
 
 void
-geda_object_list_mirror (const GList *objects, int x, int y, TOPLEVEL *toplevel);
+geda_object_list_mirror (const GList *objects,
+                         int x,
+                         int y);
 
 void
 geda_object_list_print (GList *objects);

@@ -71,8 +71,7 @@ gint
 geda_arc_object_get_sweep_angle (const GedaObject *object);
 
 void
-geda_arc_object_mirror (TOPLEVEL *toplevel,
-                        int world_centerx,
+geda_arc_object_mirror (int world_centerx,
                         int world_centery,
                         OBJECT *object);
 

@@ -75,8 +75,7 @@ gint
 geda_text_object_get_y (const GedaObject *object);
 
 void
-geda_text_object_mirror (TOPLEVEL *toplevel,
-                         int world_centerx,
+geda_text_object_mirror (int world_centerx,
                          int world_centery,
                          OBJECT *object);
 

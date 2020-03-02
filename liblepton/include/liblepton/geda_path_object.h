@@ -55,7 +55,9 @@ void
 geda_path_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 
 void
-geda_path_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
+geda_path_object_mirror (int world_centerx,
+                         int world_centery,
+                         OBJECT *object);
 
 OBJECT*
 o_path_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);

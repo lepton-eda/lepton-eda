@@ -394,8 +394,7 @@ void o_place_mirror (GschemToplevel *w_current)
 
   geda_object_list_mirror (page->place_list,
                            w_current->first_wx,
-                           w_current->first_wy,
-                           page->toplevel);
+                           w_current->first_wy);
 
   /* Run mirror-objects-hook */
   g_run_hook_object_list (w_current, "%mirror-objects-hook", page->place_list);

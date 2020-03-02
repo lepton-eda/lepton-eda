@@ -58,8 +58,7 @@ gint
 geda_circle_object_get_radius (const GedaObject *object);
 
 void
-geda_circle_object_mirror (TOPLEVEL *toplevel,
-                           gint world_centerx,
+geda_circle_object_mirror (gint world_centerx,
                            gint world_centery,
                            OBJECT *object);
 

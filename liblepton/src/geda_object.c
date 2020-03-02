@@ -731,14 +731,16 @@ void geda_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_center
  *  This function mirrors an object about the point
  *  (<B>world_centerx</B>,<B>world_centery</B>) in world units.
  *
- *  \param [in]     toplevel       The TOPLEVEL object.
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
  *  \param [in,out] object         The OBJECT to mirror.
  */
-void geda_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object)
+void
+geda_object_mirror (int world_centerx,
+                    int world_centery,
+                    OBJECT *object)
 {
-  void (*func) (TOPLEVEL*, int, int, OBJECT*) = NULL;
+  void (*func) (int, int, OBJECT*) = NULL;
 
   switch (object->type) {
       case OBJ_LINE:    func = geda_line_object_mirror;    break;
@@ -760,7 +762,7 @@ void geda_object_mirror (TOPLEVEL *toplevel, int world_centerx, int world_center
   }
 
   if (func != NULL) {
-    (*func) (toplevel, world_centerx, world_centery, object);
+    (*func) (world_centerx, world_centery, object);
   }
 }
 
