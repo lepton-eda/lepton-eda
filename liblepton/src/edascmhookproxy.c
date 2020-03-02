@@ -102,9 +102,8 @@ edascm_hook_proxy_init (EdascmHookProxy *proxy)
 {
   SCM proc = SCM_BOOL_F;
 
-  proxy->priv = G_TYPE_INSTANCE_GET_PRIVATE (proxy,
-                                             EDASCM_TYPE_HOOK_PROXY,
-                                             EdascmHookProxyPrivate);
+  proxy->priv =
+    (EdascmHookProxyPrivate*) edascm_hook_proxy_get_instance_private (proxy);
 
   proxy->priv->hook = SCM_UNDEFINED;
   proxy->priv->closure = SCM_UNDEFINED;

@@ -273,9 +273,8 @@ eda_renderer_class_init (EdaRendererClass *klass)
 static void
 eda_renderer_init (EdaRenderer *renderer)
 {
-  renderer->priv = G_TYPE_INSTANCE_GET_PRIVATE (renderer,
-                                                EDA_TYPE_RENDERER,
-                                                EdaRendererPrivate);
+  renderer->priv =
+    (EdaRendererPrivate*) eda_renderer_get_instance_private (renderer);
 
   /* Set some sensible default options */
   renderer->priv->font_name = g_strdup (DEFAULT_FONT_NAME);
