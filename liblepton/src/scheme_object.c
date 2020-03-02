@@ -947,8 +947,8 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
     geda_net_object_modify (obj, x2, y2, 1);
     break;
   case OBJ_BUS:
-    geda_bus_object_modify (toplevel, obj, x1, y1, 0);
-    geda_bus_object_modify (toplevel, obj, x2, y2, 1);
+    geda_bus_object_modify (obj, x1, y1, 0);
+    geda_bus_object_modify (obj, x2, y2, 1);
     break;
   case OBJ_PIN:
     /* Swap ends according to pin's whichend flag. */

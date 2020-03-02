@@ -565,15 +565,13 @@ geda_bus_object_orientation (const GedaObject *object)
  *  is specified by the \a whichone variable and the new coordinate
  *  is (\a x, \a y).
  *
- *  \param [in]     toplevel   The TOPLEVEL object
  *  \param [in,out] object     The bus OBJECT to modify
  *  \param [in]     x          new x-coord of the bus point
  *  \param [in]     y          new y-coord of the bus point
  *  \param [in]     whichone   bus point to modify
  */
 void
-geda_bus_object_modify (TOPLEVEL *toplevel,
-                        GedaObject *object,
+geda_bus_object_modify (GedaObject *object,
                         gint x,
                         gint y,
                         gint whichone)
