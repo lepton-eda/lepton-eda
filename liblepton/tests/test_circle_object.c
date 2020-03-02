@@ -5,7 +5,6 @@ void
 check_construction ()
 {
   gint count;
-  LeptonToplevel *toplevel = lepton_toplevel_new ();
 
   for (count = 0; count < 1000; count++) {
     gint center_x = g_test_rand_int ();
@@ -41,15 +40,12 @@ check_construction ()
 
     lepton_object_delete (object1);
   }
-
-  lepton_toplevel_delete (toplevel);
 }
 
 void
 check_accessors ()
 {
   gint count;
-  LeptonToplevel *toplevel = lepton_toplevel_new ();
 
   for (count = 0; count < 1000; count++) {
     gint center_x = g_test_rand_int ();
@@ -82,8 +78,6 @@ check_accessors ()
 
     lepton_object_delete (object0);
   }
-
-  lepton_toplevel_delete (toplevel);
 }
 
 void
@@ -91,7 +85,6 @@ check_serialization ()
 {
   gint count;
   gint converted;
-  LeptonToplevel *toplevel = lepton_toplevel_new ();
   guint version;
 
   converted = sscanf (PACKAGE_DATE_VERSION, "%u", &version);
@@ -134,8 +127,6 @@ check_serialization ()
     g_free (buffer0);
     g_free (buffer1);
   }
-
-  lepton_toplevel_delete (toplevel);
 }
 
 int
