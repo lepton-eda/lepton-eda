@@ -45,8 +45,7 @@ geda_arc_object_copy (const GedaObject *object);
 /* methods */
 
 void
-geda_arc_object_calculate_bounds (TOPLEVEL *toplevel,
-                                  const OBJECT *object,
+geda_arc_object_calculate_bounds (const OBJECT *object,
                                   gint *left,
                                   gint *top,
                                   gint *right,

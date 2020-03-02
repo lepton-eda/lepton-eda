@@ -615,7 +615,6 @@ geda_arc_object_mirror (int world_centerx,
  *  They forms a first rectangle but (depending on the start angle and the
  *  sweep of the arc) not the right.
  *
- *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  object
  *  \param [out] left
  *  \param [out] top
@@ -623,8 +622,7 @@ geda_arc_object_mirror (int world_centerx,
  *  \param [out] bottom
  */
 void
-geda_arc_object_calculate_bounds (TOPLEVEL *toplevel,
-                                  const OBJECT *object,
+geda_arc_object_calculate_bounds (const OBJECT *object,
                                   gint *left,
                                   gint *top,
                                   gint *right,

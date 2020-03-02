@@ -1192,7 +1192,7 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
     if (o_current->arc == NULL) {
       return 0;
     }
-    geda_arc_object_calculate_bounds (toplevel, o_current,
+    geda_arc_object_calculate_bounds (o_current,
                                       &bounds.min_x,
                                       &bounds.min_y,
                                       &bounds.max_x,
