@@ -33,22 +33,6 @@ int   default_make_backup_files = TRUE;
 int   default_net_consolidate = TRUE;
 int   default_force_boundingbox = FALSE;
 
-
-/*! \brief Read configuration, initialize variables in TOPLEVEL object.
- *
- *  \param [in] toplevel  The TOPLEVEL object to be updated.
- */
-void i_vars_libgeda_set(TOPLEVEL *toplevel) {
-} /* i_vars_libgeda_set() */
-
-
-
-/*! \brief Free default variables.
- */
-void i_vars_libgeda_freenames()
-{
-}
-
 /* \brief Read a boolean configuration key.
  *
  * \par Function Description

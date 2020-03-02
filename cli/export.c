@@ -171,7 +171,6 @@ cmd_export_impl (void *data, int argc, char **argv)
   if (getenv ("LEPTON_INHIBIT_RC_FILES") == NULL) {
     g_rc_parse (toplevel, "lepton-cli export", NULL, NULL);
   }
-  i_vars_libgeda_set (toplevel); /* Ugh */
 
   /* Parse configuration files */
   export_config ();

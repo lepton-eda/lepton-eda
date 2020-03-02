@@ -144,7 +144,6 @@ void gschem_quit(void)
   o_undo_cleanup();
 
   i_vars_freenames();
-  i_vars_libgeda_freenames();
 
   /* Check whether the main loop is running:
   */
