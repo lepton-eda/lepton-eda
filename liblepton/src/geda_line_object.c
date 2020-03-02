@@ -594,13 +594,11 @@ geda_line_object_mirror (int world_centerx,
  *
  *  On failure, this function sets the bounds to empty.
  *
- *  \param [in]  toplevel Unused
  *  \param [in]  object   The line object
  *  \param [out] bounds   The bounds of the line
  */
 void
-geda_line_object_calculate_bounds (TOPLEVEL *toplevel,
-                                   const OBJECT *object,
+geda_line_object_calculate_bounds (const OBJECT *object,
                                    GedaBounds *bounds)
 {
   gint expand;
