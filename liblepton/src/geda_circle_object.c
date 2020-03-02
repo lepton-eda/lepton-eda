@@ -548,13 +548,11 @@ geda_circle_object_mirror (gint world_centerx,
  *  parameters to the boundings of the circle object described in <B>*circle</B>
  *  in world units.
  *
- *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  object    Circle OBJECT to read coordinates from.
  *  \param [out] bounds    The bounds of the circle object.
  */
 void
-geda_circle_object_calculate_bounds (TOPLEVEL *toplevel,
-                                     const GedaObject *object,
+geda_circle_object_calculate_bounds (const GedaObject *object,
                                      GedaBounds *bounds)
 {
   gint expand;
