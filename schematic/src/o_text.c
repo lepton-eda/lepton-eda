@@ -45,10 +45,6 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
     return;
   }
 
-  TOPLEVEL *toplevel = page->toplevel;
-  g_return_if_fail (toplevel != NULL);
-
-
   /* Insert the new object into the buffer at world coordinates (0,0).
    * It will be translated to the mouse coordinates during placement. */
 
@@ -64,8 +60,7 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
   /* here you need to add OBJ_TEXT when it's done */
   page->place_list =
     g_list_append(page->place_list,
-                  geda_text_object_new (toplevel,
-                                        color,
+                  geda_text_object_new (color,
                                         0,
                                         0,
                                         align,

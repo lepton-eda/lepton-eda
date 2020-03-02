@@ -343,8 +343,7 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
   printf ("     show_name_value = %d\n", show_name_value);
 #endif
 
-  new_obj = geda_text_object_new (toplevel,
-                                  color,
+  new_obj = geda_text_object_new (color,
                                   world_x,
                                   world_y,
                                   LOWER_LEFT,
