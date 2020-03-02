@@ -41,7 +41,7 @@ geda_text_object_new (gint color,
                       gint show_name_value);
 
 GedaObject*
-geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object);
+geda_text_object_copy (const GedaObject *object);
 
 /* methods */
 

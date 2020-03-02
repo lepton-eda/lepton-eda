@@ -706,12 +706,11 @@ geda_text_object_translate (GedaObject *object, int dx, int dy)
  *  \par Function Description
  *  This function creates a copy of the text object \a o_current.
  *
- *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] object    The object that is copied
  *  \return a new text object
  */
 GedaObject*
-geda_text_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
+geda_text_object_copy (const GedaObject *object)
 {
   GedaObject *new_obj;
 
