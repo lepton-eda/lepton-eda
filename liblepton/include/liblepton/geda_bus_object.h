@@ -27,8 +27,7 @@ G_BEGIN_DECLS
 /* construction, destruction */
 
 GedaObject*
-geda_bus_object_new (TOPLEVEL *toplevel,
-                     gint color,
+geda_bus_object_new (gint color,
                      gint x1,
                      gint y1,
                      gint x2,
