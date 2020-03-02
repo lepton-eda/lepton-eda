@@ -41,51 +41,7 @@ int   default_make_backup_files = TRUE;
  *
  *  \param [in] toplevel  The TOPLEVEL object to be updated.
  */
-void i_vars_libgeda_set(TOPLEVEL *toplevel)
-{
-  if (toplevel->always_promote_attributes)
-  {
-    g_ptr_array_unref (toplevel->always_promote_attributes);
-    toplevel->always_promote_attributes = NULL;
-  }
-
-  toplevel->always_promote_attributes = g_ptr_array_new (); /* => refcnt == 1 */
-
-  gchar*     cwd = g_get_current_dir();
-  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
-  g_free (cwd);
-
-  GError* err   = NULL;
-  gsize   size  = 0;
-  gchar** ppstr = eda_config_get_string_list (cfg,
-                                              "schematic.attrib",
-                                              "always-promote",
-                                              &size,
-                                              &err);
-  if (err == NULL && ppstr != NULL)
-  {
-    for (gsize i = 0; i < size; ++i)
-    {
-      gchar* attr = ppstr[i];
-
-      if (attr != NULL && strlen (attr) > 0)
-      {
-#ifdef DEBUG
-        printf( " >> always_promote_attributes += [%s]\n", attr );
-#endif
-        /* important: use g_intern_string() here, because attr strings are
-         * compared like pointers in o_component_is_eligible_attribute():
-         */
-        g_ptr_array_add (toplevel->always_promote_attributes,
-                         (gpointer) g_intern_string (attr));
-      }
-    }
-
-    g_strfreev (ppstr);
-  }
-
-  g_clear_error (&err);
-
+void i_vars_libgeda_set(TOPLEVEL *toplevel) {
 } /* i_vars_libgeda_set() */
 
 

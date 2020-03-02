@@ -74,6 +74,68 @@ cfg_read_bool (const gchar* group,
 }
 
 
+/* List of attributes to always promote */
+GPtrArray *always_promote_attributes = NULL;
+
+
+/*! \brief Initialize the variable 'always_promote_attributes'.
+ *
+ *  \param [in] toplevel  The TOPLEVEL object to be updated.
+ */
+void init_always_promote_attributes ()
+{
+  static gboolean initialised = FALSE;
+
+  if (initialised)
+    return;
+
+  if (always_promote_attributes)
+  {
+    g_ptr_array_unref (always_promote_attributes);
+    always_promote_attributes = NULL;
+  }
+
+  always_promote_attributes = g_ptr_array_new (); /* => refcnt == 1 */
+
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError* err   = NULL;
+  gsize   size  = 0;
+  gchar** ppstr = eda_config_get_string_list (cfg,
+                                              "schematic.attrib",
+                                              "always-promote",
+                                              &size,
+                                              &err);
+  if (err == NULL && ppstr != NULL)
+  {
+    for (gsize i = 0; i < size; ++i)
+    {
+      gchar* attr = ppstr[i];
+
+      if (attr != NULL && strlen (attr) > 0)
+      {
+#ifdef DEBUG
+        printf( " >> always_promote_attributes += [%s]\n", attr );
+#endif
+        /* important: use g_intern_string() here, because attr strings are
+         * compared like pointers in o_component_is_eligible_attribute():
+         */
+        g_ptr_array_add (always_promote_attributes,
+                         (gpointer) g_intern_string (attr));
+      }
+    }
+
+    g_strfreev (ppstr);
+  }
+
+  g_clear_error (&err);
+
+  initialised = TRUE;
+}
+
+
 /*! \brief Return the bounds of the given GList of objects.
  *  \par Given a list of objects, calcule the bounds coordinates.
  *  \param [in]  toplevel The TOPLEVEL structure.
@@ -205,10 +267,10 @@ o_component_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
     return TRUE;
 
   /* check list against attributes which can be promoted */
-  if (toplevel->always_promote_attributes != NULL) {
-    for (guint i = 0; i < toplevel->always_promote_attributes->len; ++i) {
+  if (always_promote_attributes != NULL) {
+    for (guint i = 0; i < always_promote_attributes->len; ++i) {
       gconstpointer promote =
-        g_ptr_array_index(toplevel->always_promote_attributes, i);
+        g_ptr_array_index (always_promote_attributes, i);
       if (name == promote)
         return TRUE;
     }
