@@ -183,10 +183,10 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
 
   /* Clear Anything above current */
   if (page->undo_current) {
-    s_undo_remove_rest(toplevel, page->undo_current->next);
+    s_undo_remove_rest (page->undo_current->next);
     page->undo_current->next = NULL;
   } else { /* undo current is NULL */
-    s_undo_remove_rest(toplevel, page->undo_bottom);
+    s_undo_remove_rest (page->undo_bottom);
     page->undo_bottom = NULL;
   }
 

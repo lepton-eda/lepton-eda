@@ -208,7 +208,8 @@ void s_undo_destroy_all(TOPLEVEL *toplevel, UNDO *head)
  *  \par Function Description
  *
  */
-void s_undo_remove_rest(TOPLEVEL *toplevel, UNDO *head)
+void
+s_undo_remove_rest (UNDO *head)
 {
   UNDO *u_current;
   UNDO *u_next;
