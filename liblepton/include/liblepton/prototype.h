@@ -41,10 +41,6 @@ void g_rc_parse_handler (TOPLEVEL *toplevel, const gchar *rcname, const gchar *r
 SCM g_rc_rc_filename();
 SCM g_rc_parse_rc (SCM pname_s, SCM rcname_s);
 
-/* i_vars.c */
-void i_vars_libgeda_set(TOPLEVEL *toplevel);
-void i_vars_libgeda_freenames();
-
 /* liblepton.c */
 void liblepton_init(void);
 void set_guile_compiled_path();

@@ -53,5 +53,4 @@
  */
 void i_vars_set (TOPLEVEL *toplevel)
 {
-  i_vars_libgeda_set (toplevel);
 }

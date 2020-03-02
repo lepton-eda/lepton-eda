@@ -39,15 +39,6 @@ SCM_DEFINE (edascm_make_toplevel, "%make-toplevel", 0, 0, 0,
             "Make new TOPLEVEL.")
 {
   TOPLEVEL* toplevel = s_toplevel_new();
-
-  /* Almost all calls to s_toplevel_new() are accompanied
-   * by subsequent call to i_vars_libgeda_set() in C code.
-   * It can't be done in Scheme.
-   * To get properly initialized TOPLEVEL object in Scheme
-   * code, call i_vars_libgeda_set() here:
-  */
-  i_vars_libgeda_set (toplevel);
-
   return edascm_from_toplevel (toplevel);
 }
 
