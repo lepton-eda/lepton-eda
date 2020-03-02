@@ -534,7 +534,6 @@ void geda_pin_object_mirror (TOPLEVEL *toplevel,
  *  is specified by the \a whichone variable and the new coordinate
  *  is (\a x, \a y).
  *
- *  \param toplevel   The TOPLEVEL object
  *  \param object     The pin OBJECT to modify
  *  \param x          new x-coord of the pin point
  *  \param y          new y-coord of the pin point
@@ -542,7 +541,10 @@ void geda_pin_object_mirror (TOPLEVEL *toplevel,
  *
  */
 void
-geda_pin_object_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone)
+geda_pin_object_modify (OBJECT *object,
+                        int x,
+                        int y,
+                        int whichone)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
