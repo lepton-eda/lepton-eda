@@ -42,8 +42,7 @@ geda_line_object_copy (OBJECT *o_current);
 /* methods */
 
 void
-geda_line_object_calculate_bounds (TOPLEVEL *toplevel,
-                                   const OBJECT *object,
+geda_line_object_calculate_bounds (const OBJECT *object,
                                    GedaBounds *bounds);
 
 gboolean
