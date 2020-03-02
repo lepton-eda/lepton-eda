@@ -574,7 +574,6 @@ geda_box_object_mirror (int world_centerx,
  *  parameters to the boundings of the box object described in <B>*box</B>
  *  in world units.
  *
- *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  object     BOX OBJECT to read coordinates from.
  *  \param [out] left       Left box coordinate in WORLD units.
  *  \param [out] top        Top box coordinate in WORLD units.
@@ -582,8 +581,7 @@ geda_box_object_mirror (int world_centerx,
  *  \param [out] bottom     Bottom box coordinate in WORLD units.
  */
 void
-geda_box_object_calculate_bounds (TOPLEVEL *toplevel,
-                                  const OBJECT *object,
+geda_box_object_calculate_bounds (const OBJECT *object,
                                   GedaBounds *bounds)
 {
   gint expand;
