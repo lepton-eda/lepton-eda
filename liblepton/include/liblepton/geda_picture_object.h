@@ -84,9 +84,6 @@ o_picture_is_embedded (const OBJECT *object);
 GdkPixbuf*
 o_picture_get_pixbuf (OBJECT *object) G_GNUC_WARN_UNUSED_RESULT;
 
-const char*
-o_picture_get_data (TOPLEVEL *toplevel, OBJECT *object, size_t *len);
-
 gboolean
 o_picture_set_from_buffer (OBJECT *object,
                            const gchar *filename,
