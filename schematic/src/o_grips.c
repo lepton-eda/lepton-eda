@@ -1253,8 +1253,6 @@ static void o_grips_end_net(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_pin(GschemToplevel *w_current, OBJECT *o_current,
                             int whichone)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-
   /* don't allow zero length pin
    * this ends the pin changing behavior
    * we want this? hack */
@@ -1265,8 +1263,10 @@ static void o_grips_end_pin(GschemToplevel *w_current, OBJECT *o_current,
   }
 
   s_conn_remove_object_connections (o_current);
-  geda_pin_object_modify (toplevel, o_current, w_current->second_wx,
-                          w_current->second_wy, w_current->which_grip);
+  geda_pin_object_modify (o_current,
+                          w_current->second_wx,
+                          w_current->second_wy,
+                          w_current->which_grip);
   s_conn_update_object (o_current->page, o_current);
 }
 

@@ -927,7 +927,6 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   SCM_ASSERT (scm_is_integer (y2_s),    y2_s,    SCM_ARG5, s_set_line_x);
   SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG6, s_set_line_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (line_s);
   int x1 = scm_to_int (x1_s);
   int y1 = scm_to_int (y1_s);
@@ -952,8 +951,8 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
     break;
   case OBJ_PIN:
     /* Swap ends according to pin's whichend flag. */
-    geda_pin_object_modify (toplevel, obj, x1, y1, obj->whichend ? 1 : 0);
-    geda_pin_object_modify (toplevel, obj, x2, y2, obj->whichend ? 0 : 1);
+    geda_pin_object_modify (obj, x1, y1, obj->whichend ? 1 : 0);
+    geda_pin_object_modify (obj, x2, y2, obj->whichend ? 0 : 1);
     break;
   default:
     return line_s;
