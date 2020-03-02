@@ -101,11 +101,11 @@ void
 geda_text_object_set_y (GedaObject *object, gint y);
 
 double
-geda_text_object_shortest_distance (TOPLEVEL *toplevel,
-                                    OBJECT *object,
+geda_text_object_shortest_distance (OBJECT *object,
                                     int x,
                                     int y,
-                                    int force_soild);
+                                    int force_soild,
+                                    gboolean include_hidden);
 
 gchar*
 geda_text_object_to_buffer (const GedaObject *object);

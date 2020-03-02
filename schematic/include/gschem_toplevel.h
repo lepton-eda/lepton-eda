@@ -239,6 +239,7 @@ struct st_gschem_toplevel {
   int select_slack_pixels; /* Number of pixels around an object we can still select it with */
   int zoom_gain;          /* Percentage increase in size for a zoom-in operation */
   int scrollpan_steps;    /* Number of scroll pan events required to traverse the viewed area */
+  int show_hidden_text;   /* Controls visibility of hidden text */
 
   gchar* bus_ripper_symname; /* default bus ripper symbol file name */
 

@@ -398,11 +398,11 @@ void o_select_box_search(GschemToplevel *w_current)
   while (iter != NULL) {
     o_current = (OBJECT*) iter->data;
     /* only select visible objects */
-    if (o_is_visible (o_current) || toplevel->show_hidden_text) {
+    if (o_is_visible (o_current) || w_current->show_hidden_text) {
       int cleft, ctop, cright, cbottom;
 
       if (geda_object_calculate_visible_bounds (o_current,
-                                                toplevel->show_hidden_text,
+                                                w_current->show_hidden_text,
                                                 &cleft,
                                                 &ctop,
                                                 &cright,
@@ -604,7 +604,7 @@ o_select_visible_unlocked (GschemToplevel *w_current)
     OBJECT *obj = (OBJECT *) iter->data;
 
     /* Skip invisible objects. */
-    if (!o_is_visible (obj) && !toplevel->show_hidden_text)
+    if (!o_is_visible (obj) && !w_current->show_hidden_text)
       continue;
 
     /* Skip locked objects. */

@@ -598,17 +598,20 @@ geda_path_object_get_position (const GedaObject *object, gint *x, gint *y)
 /*! \brief Calculates the distance between the given point and the closest
  *  point on the given path segment.
  *
- *  \param [in] toplevel     The TOPLEVEL object.
- *  \param [in] object       The path OBJECT.
- *  \param [in] x            The x coordinate of the given point.
- *  \param [in] y            The y coordinate of the given point.
- *  \param [in] force_solid  If true, force treating the object as solid.
+ *  \param [in] object         The path OBJECT.
+ *  \param [in] x              The x coordinate of the given point.
+ *  \param [in] y              The y coordinate of the given point.
+ *  \param [in] force_solid    If true, force treating the object as solid.
+ *  \param [in] include_hidden Take hidden text into account.
  *  \return The shortest distance from the object to the point.  With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-geda_path_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
-                                    int x, int y, int force_solid)
+geda_path_object_shortest_distance (OBJECT *object,
+                                    int x,
+                                    int y,
+                                    int force_solid,
+                                    gboolean include_hidden)
 {
   int solid;
 

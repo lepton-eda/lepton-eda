@@ -49,13 +49,19 @@ static void
 clear_store (GschemFindTextState *state);
 
 static GSList*
-find_objects_using_pattern (GSList *pages, const char *text);
+find_objects_using_pattern (GSList *pages,
+                            const char *text,
+                            gboolean include_hidden);
 
 static GSList*
-find_objects_using_regex (GSList *pages, const char *text, GError **error);
+find_objects_using_regex (GSList *pages,
+                          const char *text,
+                          gboolean include_hidden);
 
 static GSList*
-find_objects_using_substring (GSList *pages, const char *text);
+find_objects_using_substring (GSList *pages,
+                              const char *text,
+                              gboolean include_hidden);
 
 static GSList*
 find_objects_using_check (GSList *pages);
@@ -95,6 +101,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \param [in] type the type of find to perform
  *  \param [in] text the text to find
  *  \param [in] descend decend the page heirarchy
+ *  \param [in] include_hidden Include hidden objects.
  *  \return the number of objects found
  */
 int
@@ -103,7 +110,8 @@ gschem_find_text_state_find (GschemToplevel *w_current,
                              GList *pages,
                              int type,
                              const char *text,
-                             gboolean descend)
+                             gboolean descend,
+                             gboolean include_hidden)
 {
   int count;
   GSList *objects = NULL;
@@ -114,15 +122,15 @@ gschem_find_text_state_find (GschemToplevel *w_current,
 
   switch (type) {
     case FIND_TYPE_SUBSTRING:
-      objects = find_objects_using_substring (all_pages, text);
+      objects = find_objects_using_substring (all_pages, text, include_hidden);
       break;
 
     case FIND_TYPE_PATTERN:
-      objects = find_objects_using_pattern (all_pages, text);
+      objects = find_objects_using_pattern (all_pages, text, include_hidden);
       break;
 
     case FIND_TYPE_REGEX:
-      objects = find_objects_using_regex (all_pages, text, NULL);
+      objects = find_objects_using_regex (all_pages, text, include_hidden);
       break;
 
     case FIND_TYPE_CHECK:
@@ -321,10 +329,13 @@ clear_store (GschemFindTextState *state)
  *
  *  \param pages the list of pages to search
  *  \param text the pattern to match
+ *  \param include_hidden Include hidden objects.
  *  \return a list of objects that match the given pattern
  */
 static GSList*
-find_objects_using_pattern (GSList *pages, const char *text)
+find_objects_using_pattern (GSList *pages,
+                            const char *text,
+                            gboolean include_hidden)
 {
   GSList *object_list = NULL;
   GSList *page_iter = pages;
@@ -362,7 +373,7 @@ find_objects_using_pattern (GSList *pages, const char *text)
         continue;
       }
 
-      if (!(o_is_visible (object) || page->toplevel->show_hidden_text)) {
+      if (!(o_is_visible (object) || include_hidden)) {
         continue;
       }
 
@@ -389,10 +400,13 @@ find_objects_using_pattern (GSList *pages, const char *text)
  *
  *  \param pages the list of pages to search
  *  \param text the regex to match
+ *  \param include_hidden Include hidden objects.
  *  \return a list of objects that match the given regex
  */
 static GSList*
-find_objects_using_regex (GSList *pages, const char *text, GError **error)
+find_objects_using_regex (GSList *pages,
+                          const char *text,
+                          gboolean include_hidden)
 {
   GError *ierror = NULL;
   GSList *object_list = NULL;
@@ -407,7 +421,6 @@ find_objects_using_regex (GSList *pages, const char *text, GError **error)
                        &ierror);
 
   if (ierror != NULL) {
-    g_propagate_error (error, ierror);
     return NULL;
   }
 
@@ -439,7 +452,7 @@ find_objects_using_regex (GSList *pages, const char *text, GError **error)
         continue;
       }
 
-      if (!(o_is_visible (object) || page->toplevel->show_hidden_text)) {
+      if (!(o_is_visible (object) || include_hidden)) {
         continue;
       }
 
@@ -466,10 +479,13 @@ find_objects_using_regex (GSList *pages, const char *text, GError **error)
  *
  *  \param pages the list of pages to search
  *  \param text the substring to find
+ *  \param include_hidden Include hidden objects.
  *  \return a list of objects that contain the given substring
  */
 static GSList*
-find_objects_using_substring (GSList *pages, const char *text)
+find_objects_using_substring (GSList *pages,
+                              const char *text,
+                              gboolean include_hidden)
 {
   GSList *object_list = NULL;
   GSList *page_iter = pages;
@@ -504,7 +520,7 @@ find_objects_using_substring (GSList *pages, const char *text)
         continue;
       }
 
-      if (!(o_is_visible (object) || page->toplevel->show_hidden_text)) {
+      if (!(o_is_visible (object) || include_hidden)) {
         continue;
       }
 

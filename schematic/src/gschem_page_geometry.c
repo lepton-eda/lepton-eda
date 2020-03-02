@@ -704,26 +704,27 @@ gschem_page_geometry_set_viewport_top (GschemPageGeometry *geometry, int viewpor
 
 /*! \brief Zoom the viewport to the extents of the given objects
  *
- *  \param [in,out] geometry  This GschemPageGeometry
- *  \param [in]     toplevel  The TOPLEVEL for the given objects
- *  \param [in]     list      The list of object to zoom extents
+ *  \param [in,out] geometry    This GschemPageGeometry
+ *  \param [in] list            The list of object to zoom extents
+ *  \param [in] include_hidden  Calculate extents of hidden text
  */
 void
-gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry, TOPLEVEL *toplevel, const GList *list)
+gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry,
+                                   const GList *list,
+                                   gboolean include_hidden)
 {
   int lleft, lright, ltop, lbottom;
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x,world_pan_center_y;
 
   g_return_if_fail (geometry != NULL);
-  g_return_if_fail (toplevel != NULL);
 
   if (list == NULL) {
     return;
   }
 
   if (!world_get_object_glist_bounds (list,
-                                      toplevel->show_hidden_text,
+                                      include_hidden,
                                       &lleft,
                                       &ltop,
                                       &lright,

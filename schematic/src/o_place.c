@@ -247,7 +247,7 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
 
   /* Find the bounds of the drawing to be done */
   world_get_object_glist_bounds (page->place_list,
-                                 page->toplevel->show_hidden_text,
+                                 w_current->show_hidden_text,
                                  &left,
                                  &top,
                                  &right,
@@ -326,7 +326,7 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 
     /* Find the bounds of the drawing to be done */
     world_get_object_glist_bounds (page->place_list,
-                                   page->toplevel->show_hidden_text,
+                                   w_current->show_hidden_text,
                                    &left,
                                    &top,
                                    &right,

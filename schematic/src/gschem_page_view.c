@@ -52,7 +52,8 @@ enum
   PROP_HADJUSTMENT,
   PROP_PAGE,
   PROP_PAGE_GEOMETRY,
-  PROP_VADJUSTMENT
+  PROP_VADJUSTMENT,
+  PROP_SHOW_HIDDEN_TEXT
 };
 
 
@@ -206,6 +207,18 @@ event_unrealize(GtkWidget *widget, gpointer unused)
 }
 
 
+/*! \brief Event handler for window unrealized
+ */
+static void
+event_toggle_hidden_text (GtkWidget *widget, gpointer unused)
+{
+  GschemPageView *view = GSCHEM_PAGE_VIEW (widget);
+
+  g_return_if_fail (view != NULL);
+
+  view->show_hidden_text = !view->show_hidden_text;
+}
+
 
 /*! \brief Finalize object
  */
@@ -253,6 +266,10 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
     case PROP_VADJUSTMENT:
       g_value_set_object (value, gschem_page_view_get_vadjustment (view));
+      break;
+
+    case PROP_SHOW_HIDDEN_TEXT:
+      g_value_set_boolean (value, gschem_page_view_get_show_hidden_text (view));
       break;
 
     default:
@@ -312,6 +329,15 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
                                                         (GParamFlags) (G_PARAM_READWRITE
                                                                        | G_PARAM_CONSTRUCT)));
 
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_SHOW_HIDDEN_TEXT,
+                                   g_param_spec_boolean ("show-hidden-text",
+                                                        "Show hidden text",
+                                                        "Show hidden text in page-view",
+                                                        FALSE,
+                                                        (GParamFlags) (G_PARAM_READWRITE |
+                                                                       G_PARAM_CONSTRUCT)));
+
   GTK_WIDGET_CLASS (klass)->set_scroll_adjustments_signal = g_signal_new (
     "set-scroll-adjustments",
     G_OBJECT_CLASS_TYPE (klass),
@@ -335,6 +361,17 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
     g_cclosure_marshal_VOID__VOID,
     G_TYPE_NONE,
     0);
+
+  g_signal_new ("toggle-hidden-text",
+                G_OBJECT_CLASS_TYPE (klass),
+                (GSignalFlags) (G_SIGNAL_RUN_LAST), /*signal_flags */
+                0, /*class_offset */
+                NULL, /* accumulator */
+                NULL, /* accu_data */
+                NULL,
+                G_TYPE_NONE,
+                0 /* n_params */
+                );
 }
 
 
@@ -414,8 +451,8 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
     geometry_cache_insert (view, page, geometry);
 
     gschem_page_geometry_zoom_extents (geometry,
-                                       page->toplevel,
-                                       s_page_objects (page));
+                                       s_page_objects (page),
+                                       view->show_hidden_text);
   }
   else {
 
@@ -442,6 +479,14 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
   return geometry;
 }
 
+
+gboolean
+gschem_page_view_get_show_hidden_text (GschemPageView *view)
+{
+  g_return_val_if_fail (view != NULL, FALSE);
+
+  return view->show_hidden_text;
+}
 
 
 /*! \brief Get/register GschemPageView type.
@@ -618,6 +663,11 @@ gschem_page_view_init (GschemPageView *view)
   g_signal_connect(view,
                    "unrealize",
                    G_CALLBACK (event_unrealize),
+                   NULL);
+
+  g_signal_connect (view,
+                   "toggle-hidden-text",
+                   G_CALLBACK (event_toggle_hidden_text),
                    NULL);
 }
 
@@ -963,6 +1013,15 @@ gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustme
 
 
 
+void
+gschem_page_view_set_show_hidden_text (GschemPageView *view,
+                                       gboolean show_hidden_text)
+{
+  g_return_if_fail (view != NULL);
+  view->show_hidden_text = show_hidden_text;
+}
+
+
 /*! \brief Signal handler for a horizontal scroll adjustment change
  */
 static void
@@ -1011,6 +1070,11 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
     case PROP_VADJUSTMENT:
       gschem_page_view_set_vadjustment (view,
                                         GTK_ADJUSTMENT (g_value_get_object (value)));
+      break;
+
+    case PROP_SHOW_HIDDEN_TEXT:
+      gschem_page_view_set_show_hidden_text (view,
+                                             g_value_get_boolean (value));
       break;
 
     default:
@@ -1253,7 +1317,7 @@ gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
     temp = s_page_objects (gschem_page_view_get_page (view));
   }
 
-  gschem_page_geometry_zoom_extents (geometry, page->toplevel, temp);
+  gschem_page_geometry_zoom_extents (geometry, temp, view->show_hidden_text);
 
   /* Trigger a motion event to update the objects being drawn */
   x_event_faked_motion (view, NULL);
@@ -1286,7 +1350,7 @@ gschem_page_view_zoom_object (GschemPageView *view, OBJECT *object)
   g_return_if_fail (object->page->toplevel != NULL);
 
   success = geda_object_calculate_visible_bounds (object,
-                                                  object->page->toplevel->show_hidden_text,
+                                                  view->show_hidden_text,
                                                   &x[0],
                                                   &y[0],
                                                   &x[1],

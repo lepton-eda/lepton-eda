@@ -176,11 +176,9 @@ o_component_translate_all (GschemToplevel *w_current, int offset)
   gschem_page_view_invalidate_all (view);
 
   world_get_object_glist_bounds (s_page_objects (toplevel->page_current),
-                                 toplevel->show_hidden_text,
-                                 &w_rleft,
-                                 &w_rtop,
-                                 &w_rright,
-                                 &w_rbottom);
+                                 w_current->show_hidden_text,
+                                 &w_rleft,  &w_rtop,
+                                 &w_rright, &w_rbottom);
 
   /*! \todo do we want snap grid here? */
   x = snap_grid (w_current, w_rleft);

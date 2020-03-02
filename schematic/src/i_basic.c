@@ -107,7 +107,6 @@ static const char *i_status_string(GschemToplevel *w_current)
  */
 void i_show_state(GschemToplevel *w_current, const char *message)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gchar *what_to_say;
   const gchar *array[5] = { NULL };
   int i = 3; /* array[4] must be NULL */
@@ -118,7 +117,7 @@ void i_show_state(GschemToplevel *w_current, const char *message)
 
   snap_mode = gschem_options_get_snap_mode (w_current->options);
 
-  if(toplevel->show_hidden_text)
+  if (w_current->show_hidden_text)
     array[i--] = _("Show Hidden");
 
   if(snap_mode == SNAP_OFF)

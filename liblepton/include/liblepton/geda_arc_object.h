@@ -102,11 +102,11 @@ void
 geda_arc_object_set_sweep_angle (GedaObject *object, gint angle);
 
 double
-geda_arc_object_shortest_distance (TOPLEVEL *toplevel,
-                                   OBJECT *object,
+geda_arc_object_shortest_distance (OBJECT *object,
                                    int x,
                                    int y,
-                                   int force_soild);
+                                   int force_soild,
+                                   gboolean include_hidden);
 
 gchar*
 geda_arc_object_to_buffer (const GedaObject *object);

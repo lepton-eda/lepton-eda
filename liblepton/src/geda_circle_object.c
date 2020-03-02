@@ -599,20 +599,20 @@ geda_circle_object_get_position (const GedaObject *object, gint *x, gint *y)
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the circle.
  *
- *  \param [in] toplevel     The TOPLEVEL object.
- *  \param [in] object       The circle OBJECT.
- *  \param [in] x            The x coordinate of the given point.
- *  \param [in] y            The y coordinate of the given point.
- *  \param [in] force_solid  If true, force treating the object as solid.
+ *  \param [in] object         The circle OBJECT.
+ *  \param [in] x              The x coordinate of the given point.
+ *  \param [in] y              The y coordinate of the given point.
+ *  \param [in] force_solid    If true, force treating the object as solid.
+ *  \param [in] include_hidden Take hidden text into account.
  *  \return The shortest distance from the object to the point.  With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 gdouble
-geda_circle_object_shortest_distance (TOPLEVEL *toplevel,
-                                      GedaObject *object,
+geda_circle_object_shortest_distance (GedaObject *object,
                                       gint x,
                                       gint y,
-                                      gint force_solid)
+                                      gint force_solid,
+                                      gboolean include_hidden)
 {
   gboolean solid;
 
