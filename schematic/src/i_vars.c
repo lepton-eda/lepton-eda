@@ -446,29 +446,6 @@ i_vars_set (GschemToplevel* w_current)
 } /* i_vars_set() */
 
 
-/*! \brief Free default names
- *  \par Function Description
- *  This function will free all of the default variables.
- *
- */
-void i_vars_freenames()
-{
-}
-
-
-
-/*! \brief Setup default configuration.
- * \par Function Description
- * Populate the default configuration context with compiled-in
- * defaults.
- */
-void
-i_vars_init_defaults()
-{
-}
-
-
-
 /*! \brief Save cache config on exit.
  */
 void
