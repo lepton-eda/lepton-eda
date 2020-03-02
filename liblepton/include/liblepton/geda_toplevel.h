@@ -51,9 +51,6 @@ struct st_toplevel
   int auto_save_interval;
   gint auto_save_timeout;
 
-  /* controls if the net consolidation code is used */
-  int net_consolidate;
-
   /* controls if the whole bounding box is used in the auto whichend code */
   int force_boundingbox;
 

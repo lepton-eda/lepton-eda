@@ -66,8 +66,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->major_changed_refdes = NULL;
 
-  toplevel->net_consolidate = FALSE;
-
   /* The following is an attempt at getting (deterministic) defaults */
   /* for the following variables */
   toplevel->force_boundingbox = FALSE;

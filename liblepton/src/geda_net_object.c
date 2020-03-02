@@ -24,6 +24,42 @@
 
 #include "libgeda_priv.h"
 
+/* \brief Read a boolean configuration key.
+ *
+ * \par Function Description
+ * On success, set \a result to the value of the
+ * configuration key, otherwise set it to \a defval.
+ *
+ * \todo  Refactoring: this function was copied as is from schematic/src/i_vars.c.
+ *
+ * \param [in]       group   Configuration group name
+ * \param [in]       key     Configuration key name
+ * \param [in]       defval  Default value
+ * \param [in, out]  result  Result
+ *
+ * \return  TRUE if a specified config parameter was successfully read
+ */
+static gboolean
+cfg_read_bool (const gchar* group,
+               const gchar* key,
+               gboolean     defval,
+               gboolean*    result)
+{
+  gchar*     cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  GError*  err = NULL;
+  gboolean val = eda_config_get_boolean (cfg, group, key, &err);
+
+  gboolean success = err == NULL;
+  g_clear_error (&err);
+
+  *result = success ? val : defval;
+  return success;
+}
+
+
 /*! \file o_net_basic.c
  *  \brief functions for the net object
  */
@@ -693,9 +729,16 @@ geda_net_object_consolidate (TOPLEVEL *toplevel, PAGE *page)
   OBJECT *o_current;
   const GList *iter;
   int status = 0;
+  gboolean net_consolidate;
 
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (page != NULL);
+
+  cfg_read_bool ("schematic", "net-consolidate",
+                 default_net_consolidate, &net_consolidate);
+
+  if (!net_consolidate)
+    return;
 
   iter = s_page_objects (page);
 
