@@ -32,7 +32,7 @@ check_construction ()
     g_assert_cmpint (color, ==, geda_object_get_color (object0));
     g_assert_cmpint (ripper, ==, geda_bus_object_get_ripper_direction (object0));
 
-    GedaObject *object1 = geda_bus_object_copy (toplevel, object0);
+    GedaObject *object1 = geda_bus_object_copy (object0);
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
