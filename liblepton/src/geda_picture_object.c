@@ -1178,26 +1178,6 @@ o_picture_get_pixbuf (OBJECT *object)
   }
 }
 
-/*! \brief Get the raw image data from a picture object.
- * \par Function Description
- * Returns the raw image file data underlying the picture \a object,
- * or NULL if the picture could not be loaded.
- *
- * \param toplevel  The current #TOPLEVEL.
- * \param object    The picture #OBJECT to inspect.
- * \param len       Location to store buffer length.
- * \return A read-only buffer of raw image data.
- */
-const char *
-o_picture_get_data (TOPLEVEL *toplevel, OBJECT *object,
-                    size_t *len)
-{
-  g_return_val_if_fail (object != NULL, NULL);
-  g_return_val_if_fail (object->picture != NULL, NULL);
-
-  *len = object->picture->file_length;
-  return object->picture->file_content;
-}
 
 /*! \brief Set a picture object's contents from a buffer.
  * \par Function Description
