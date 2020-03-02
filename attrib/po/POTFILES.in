@@ -5,7 +5,6 @@ attrib/src/globals.c
 attrib/src/gtkextra-marshal.c
 attrib/src/gtksheet_2_2.c
 attrib/src/i_basic.c
-attrib/src/i_vars.c
 attrib/src/listsort.c
 attrib/src/parsecmd.c
 attrib/src/s_attrib.c
