@@ -684,11 +684,10 @@ o_net_consolidate_segments (OBJECT *object)
  *  This function consolidates all net objects in a page until no more
  *  consolidations are possible.
  *
- *  \param toplevel  The TOPLEVEL object.
  *  \param page      The PAGE to consolidate nets in.
  */
 void
-geda_net_object_consolidate (TOPLEVEL *toplevel, PAGE *page)
+geda_net_object_consolidate (PAGE *page)
 {
   OBJECT *o_current;
   const GList *iter;
