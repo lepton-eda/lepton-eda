@@ -993,11 +993,11 @@ geda_picture_object_translate (GedaObject *object, int dx, int dy)
  *  This function creates a verbatim copy of the object pointed by
  *  <B>o_current</B> describing a picture.
  *
- *  \param [in]  toplevel   The TOPLEVEL object.
  *  \param [in]  object     Picture OBJECT to copy.
  *  \return The new OBJECT
  */
-OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
+OBJECT*
+o_picture_copy (OBJECT *object)
 {
   OBJECT *new_node;
   PICTURE *picture;
