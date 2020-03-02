@@ -78,202 +78,10 @@ int default_select_slack_pixels = 10;
 int default_zoom_gain = 20;
 int default_scrollpan_steps = 8;
 
-
-
-/* \brief Read a boolean configuration key.
- *
- * \par Function Description
- * On success, set \a result to the value of the
- * configuration key, otherwise set it to \a defval.
- *
- * \param [in]       group   Configuration group name
- * \param [in]       key     Configuration key name
- * \param [in]       defval  Default value
- * \param [in, out]  result  Result
- *
- * \return  TRUE if a specified config parameter was successfully read
- */
-static gboolean
-cfg_read_bool (const gchar* group,
-               const gchar* key,
-               gboolean     defval,
-               gboolean*    result)
-{
-  gchar*     cwd = g_get_current_dir();
-  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
-  g_free (cwd);
-
-  GError*  err = NULL;
-  gboolean val = eda_config_get_boolean (cfg, group, key, &err);
-
-  gboolean success = err == NULL;
-  g_clear_error (&err);
-
-  *result = success ? val : defval;
-  return success;
-}
-
-
-
-/* \brief Read an int configuration key.
- *
- * \par Function Description
- * On success, set \a result to the value of the
- * configuration key, otherwise set it to \a defval.
- *
- * \param [in]       group   Configuration group name
- * \param [in]       key     Configuration key name
- * \param [in]       defval  Default value
- * \param [in, out]  result  Result
- *
- * \return  TRUE if a specified config parameter was successfully read
- */
-static gboolean
-cfg_read_int (const gchar* group,
-              const gchar* key,
-              gint         defval,
-              gint*        result)
-{
-  gchar*     cwd = g_get_current_dir();
-  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
-  g_free (cwd);
-
-  GError*  err = NULL;
-  gint val = eda_config_get_int (cfg, group, key, &err);
-
-  gboolean success = err == NULL;
-  g_clear_error (&err);
-
-  *result = success ? val : defval;
-  return success;
-}
-
-
-
-static gboolean
-check_int_not_0 (gint val) { return val != 0; }
-
-static gboolean
-check_int_greater_0 (gint val) { return val > 0; }
-
-static gboolean
-check_int_greater_eq_0 (gint val) { return val >= 0; }
-
-static gboolean
-check_int_text_size (gint val) { return val >= MINIMUM_TEXT_SIZE; }
-
-
-
-/* \brief Read an int configuration key, check read value.
- *
- * \par Function Description
- * On success, set \a result to the value of the
- * configuration key, otherwise set it to \a defval.
- * Also, check read value with pfn_check() function, and
- * if it returns FALSE, reset \a result to \a defval and
- * print an error message to STDERR.
- *
- * \param [in]       group      Configuration group name
- * \param [in]       key        Configuration key name
- * \param [in]       defval     Default value
- * \param [in, out]  result     Result
- * \param [in]       pfn_check  Function to check if value is valid
- *
- * \return  TRUE if a specified config parameter was successfully read
- */
-static gboolean
-cfg_read_int_with_check (const gchar* group,
-                         const gchar* key,
-                         gint         defval,
-                         gint*        result,
-                         gboolean     (*pfn_check)(int))
-{
-  gint val = 0;
-  gboolean success = cfg_read_int (group, key, defval, &val);
-
-  if (pfn_check (val))
-  {
-    *result = val;
-  }
-  else
-  {
-    *result = defval;
-    const gchar* errmsg = _("Invalid [%s]::%s (%d) is set in configuration\n");
-    fprintf (stderr, errmsg, group, key, val);
-  }
-
-  return success;
-}
-
-
-/* \struct OptionStringInt
- * \brief  A mapping of a string option's value to an int value.
- */
-struct OptionStringInt
-{
-  const gchar* str_; /* a string value of an option */
-  gint         int_; /* an int value of an option */
-};
-
-
-
-/* \brief Read a string configuration key, set a corresponding int option.
- *
- * \par Function Description
- * Read and compare a configuration value to the options passed
- * as an array of OptionStringInt structures - the mapping of
- * the string option values to the corresponding int values.
- * On success, set the \a result to the int value of
- * the option (if found), otherwise set it to \a defval.
- *
- * \param [in]       group      Configuration group name
- * \param [in]       key        Configuration key name
- * \param [in]       defval     Default value
- * \param [in]       vals       An array of OptionStringInt structures
- * \param [in]       nvals      A size of \a vals array
- * \param [in, out]  result     Result
- *
- * \return  TRUE if a specified config parameter was successfully read
- */
-static gboolean
-cfg_read_string2int (const gchar* group,
-                     const gchar* key,
-                     gint         defval,
-                     const struct OptionStringInt* vals,
-                     size_t       nvals,
-                     gint*        result)
-{
-  gchar*     cwd = g_get_current_dir();
-  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
-  g_free (cwd);
-
-  GError* err = NULL;
-  gchar*  str = eda_config_get_string (cfg, group, key, &err);
-
-  gboolean success = err == NULL;
-  g_clear_error (&err);
-
-  *result = defval;
-
-  if (success)
-  {
-    for (size_t i = 0; i < nvals; ++i)
-    {
-      if ( strcmp (vals[i].str_, str) == 0 )
-      {
-        *result = vals[i].int_;
-        break;
-      }
-    }
-
-    g_free (str);
-  }
-
-  return success;
-
-} /* cfg_read_string2int() */
-
-
+gboolean default_tabs_enabled = TRUE;
+gboolean default_tabs_show_close_button = TRUE;
+gboolean default_tabs_show_up_button = TRUE;
+gboolean default_tabs_show_tooltips = TRUE;
 
 static void
 i_vars_set_options (GschemOptions* opts)
@@ -281,7 +89,7 @@ i_vars_set_options (GschemOptions* opts)
   gint snap_size = 0;
   cfg_read_int_with_check ("schematic.gui", "snap-size",
                            default_snap_size, &snap_size,
-                           &check_int_greater_0);
+                           &cfg_check_int_greater_0);
   gschem_options_set_snap_size (opts, snap_size);
 
 
@@ -336,7 +144,7 @@ i_vars_set (GschemToplevel* w_current)
 
   cfg_read_int_with_check ("schematic.gui", "text-size",
                            default_text_size, &w_current->text_size,
-                           &check_int_text_size);
+                           &cfg_check_int_text_size);
 
 
   /* text-caps-style:
@@ -492,7 +300,7 @@ i_vars_set (GschemToplevel* w_current)
 
   cfg_read_int_with_check ("schematic.undo", "undo-levels",
                            default_undo_levels, &w_current->undo_levels,
-                           &check_int_greater_0);
+                           &cfg_check_int_greater_0);
 
   cfg_read_bool ("schematic.undo", "undo-control",
                  default_undo_control, &w_current->undo_control);
@@ -531,7 +339,7 @@ i_vars_set (GschemToplevel* w_current)
 
   cfg_read_int_with_check ("schematic", "bus-ripper-size",
                            default_bus_ripper_size, &w_current->bus_ripper_size,
-                           &check_int_greater_0);
+                           &cfg_check_int_greater_0);
 
 
   /* bus-ripper-type:
@@ -571,7 +379,7 @@ i_vars_set (GschemToplevel* w_current)
 
   cfg_read_int_with_check ("schematic.gui", "dots-grid-dot-size",
                            default_dots_grid_dot_size, &w_current->dots_grid_dot_size,
-                           &check_int_greater_0);
+                           &cfg_check_int_greater_0);
 
 
   /* dots-grid-mode:
@@ -592,35 +400,35 @@ i_vars_set (GschemToplevel* w_current)
 
   cfg_read_int_with_check ("schematic.gui", "dots-grid-fixed-threshold",
                            default_dots_grid_fixed_threshold, &w_current->dots_grid_fixed_threshold,
-                           &check_int_greater_0);
+                           &cfg_check_int_greater_0);
 
   cfg_read_int_with_check ("schematic.gui", "mesh-grid-display-threshold",
                            default_mesh_grid_display_threshold, &w_current->mesh_grid_display_threshold,
-                           &check_int_greater_0);
+                           &cfg_check_int_greater_0);
 
   cfg_read_int_with_check ("schematic.gui", "mousepan-gain",
                            default_mousepan_gain, &w_current->mousepan_gain,
-                           &check_int_greater_0);
+                           &cfg_check_int_greater_0);
 
   cfg_read_int_with_check ("schematic.gui", "keyboardpan-gain",
                            default_keyboardpan_gain, &w_current->keyboardpan_gain,
-                           &check_int_greater_0);
+                           &cfg_check_int_greater_0);
 
   cfg_read_int_with_check ("schematic.gui", "select-slack-pixels",
                            default_select_slack_pixels, &w_current->select_slack_pixels,
-                           &check_int_greater_0);
+                           &cfg_check_int_greater_0);
 
   cfg_read_int_with_check ("schematic.gui", "zoom-gain",
                            default_zoom_gain, &w_current->zoom_gain,
-                           &check_int_not_0);
+                           &cfg_check_int_not_0);
 
   cfg_read_int_with_check ("schematic.gui", "scrollpan-steps",
                            default_scrollpan_steps, &w_current->scrollpan_steps,
-                           &check_int_not_0);
+                           &cfg_check_int_not_0);
 
   cfg_read_int_with_check ("schematic", "auto-save-interval",
                            default_auto_save_interval, &toplevel->auto_save_interval,
-                           &check_int_greater_eq_0);
+                           &cfg_check_int_greater_eq_0);
 
 
   i_vars_set_options (w_current->options);

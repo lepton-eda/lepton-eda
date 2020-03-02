@@ -53,3 +53,7 @@ extern int default_keyboardpan_gain;
 extern int default_select_slack_pixels;
 extern int default_zoom_gain;
 extern int default_scrollpan_steps;
+extern gboolean default_tabs_enabled;
+extern gboolean default_tabs_show_close_button;
+extern gboolean default_tabs_show_up_button;
+extern gboolean default_tabs_show_tooltips;

@@ -160,4 +160,55 @@ const gchar *s_textbuffer_next (TextBuffer *tb, const gssize count);
 const gchar *s_textbuffer_next_line (TextBuffer *tb);
 gsize s_textbuffer_linenum (TextBuffer* tb);
 
+/* i_vars.c */
+
+
+/* \struct OptionStringInt
+ * \brief  A mapping of a string option's value to an int value.
+ */
+struct OptionStringInt
+{
+  const gchar* str_; /* a string value of an option */
+  gint         int_; /* an int value of an option */
+};
+
+gboolean
+cfg_read_bool (const gchar* group,
+               const gchar* key,
+               gboolean defval,
+               gboolean* result);
+
+gboolean
+cfg_read_int (const gchar* group,
+              const gchar* key,
+              gint defval,
+              gint* result);
+
+gboolean
+cfg_check_int_not_0 (gint val);
+
+gboolean
+cfg_check_int_greater_0 (gint val);
+
+gboolean
+cfg_check_int_greater_eq_0 (gint val);
+
+gboolean
+cfg_check_int_text_size (gint val);
+
+gboolean
+cfg_read_int_with_check (const gchar* group,
+                         const gchar* key,
+                         gint         defval,
+                         gint*        result,
+                         gboolean     (*pfn_check)(int));
+
+gboolean
+cfg_read_string2int (const gchar* group,
+                     const gchar* key,
+                     gint         defval,
+                     const struct OptionStringInt* vals,
+                     size_t       nvals,
+                     gint*        result);
+
 G_END_DECLS
