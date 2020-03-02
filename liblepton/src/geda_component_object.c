@@ -74,28 +74,25 @@ cfg_read_bool (const gchar* group,
 }
 
 
-/* List of attributes to always promote */
-GPtrArray *always_promote_attributes = NULL;
-
-
-/*! \brief Initialize the variable 'always_promote_attributes'.
- *
- *  \param [in] toplevel  The TOPLEVEL object to be updated.
- */
-void init_always_promote_attributes ()
+/*! \brief Return the array of attributes to always promote. */
+static GPtrArray*
+always_promote_attributes ()
 {
+  /* List of attributes to always promote */
+  static GPtrArray *attributes = NULL;
+
   static gboolean initialised = FALSE;
 
   if (initialised)
-    return;
+    return attributes;
 
-  if (always_promote_attributes)
+  if (attributes)
   {
-    g_ptr_array_unref (always_promote_attributes);
-    always_promote_attributes = NULL;
+    g_ptr_array_unref (attributes);
+    attributes = NULL;
   }
 
-  always_promote_attributes = g_ptr_array_new (); /* => refcnt == 1 */
+  attributes = g_ptr_array_new (); /* => refcnt == 1 */
 
   gchar*     cwd = g_get_current_dir();
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
@@ -122,7 +119,7 @@ void init_always_promote_attributes ()
         /* important: use g_intern_string() here, because attr strings are
          * compared like pointers in o_component_is_eligible_attribute():
          */
-        g_ptr_array_add (always_promote_attributes,
+        g_ptr_array_add (attributes,
                          (gpointer) g_intern_string (attr));
       }
     }
@@ -133,6 +130,8 @@ void init_always_promote_attributes ()
   g_clear_error (&err);
 
   initialised = TRUE;
+
+  return attributes;
 }
 
 
@@ -259,6 +258,8 @@ o_component_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
   cfg_read_bool ("schematic.attrib", "promote-invisible",
                  default_promote_invisible, &promote_invisible);
 
+  GPtrArray *attributes = always_promote_attributes ();
+
   const gchar *name = o_attrib_get_name (object);
   if (!name) return FALSE;
 
@@ -267,10 +268,10 @@ o_component_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
     return TRUE;
 
   /* check list against attributes which can be promoted */
-  if (always_promote_attributes != NULL) {
-    for (guint i = 0; i < always_promote_attributes->len; ++i) {
+  if (attributes != NULL) {
+    for (guint i = 0; i < attributes->len; ++i) {
       gconstpointer promote =
-        g_ptr_array_index (always_promote_attributes, i);
+        g_ptr_array_index (attributes, i);
       if (name == promote)
         return TRUE;
     }
