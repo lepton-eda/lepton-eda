@@ -77,8 +77,7 @@ gint
 geda_bus_object_orientation (const GedaObject *object);
 
 void
-geda_bus_object_rotate (TOPLEVEL *toplevel,
-                        gint world_centerx,
+geda_bus_object_rotate (gint world_centerx,
                         gint world_centery,
                         gint angle,
                         GedaObject *object);

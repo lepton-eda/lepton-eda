@@ -126,8 +126,7 @@ gint
 geda_object_get_visible (const GedaObject *object);
 
 void
-geda_object_rotate (TOPLEVEL *toplevel,
-                    int world_centerx,
+geda_object_rotate (int world_centerx,
                     int world_centery,
                     int angle,
                     OBJECT *object);

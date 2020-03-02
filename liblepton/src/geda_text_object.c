@@ -736,7 +736,6 @@ geda_text_object_copy (const GedaObject *object)
  *  This function rotates a text \a object around the point
  *  (\a world_centerx, \a world_centery).
  *
- *  \param [in] toplevel      The TOPLEVEL object
  *  \param [in] world_centerx x-coord of the rotation center
  *  \param [in] world_centery y-coord of the rotation center
  *  \param [in] angle         The angle to rotate the text object
@@ -744,8 +743,7 @@ geda_text_object_copy (const GedaObject *object)
  *  \note only steps of 90 degrees are allowed for the \a angle
  */
 void
-geda_text_object_rotate (TOPLEVEL *toplevel,
-                         int world_centerx,
+geda_text_object_rotate (int world_centerx,
                          int world_centery,
                          int angle,
                          OBJECT *object)

@@ -52,7 +52,10 @@ void
 geda_path_object_translate (GedaObject *object, int dx, int dy);
 
 void
-geda_path_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+geda_path_object_rotate (int world_centerx,
+                         int world_centery,
+                         int angle,
+                         OBJECT *object);
 
 void
 geda_path_object_mirror (int world_centerx,

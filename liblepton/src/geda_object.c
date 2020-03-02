@@ -691,15 +691,18 @@ geda_object_translate (GedaObject *object, gint dx, gint dy)
  *  This function rotates the object <B>object</B> about the coordinates
  *  <B>world_centerx</B> and <B>world_centery</B>, by <B>angle</B>degrees.
  *
- *  \param [in] toplevel The toplevel environment.
  *  \param [in] world_centerx  X coordinate of rotation center (world coords)
  *  \param [in] world_centery  Y coordinate of rotation center (world coords)
  *  \param [in] angle          Angle of rotation (degrees)
  *  \param [in] object         The object to rotate.
  */
-void geda_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object)
+void
+geda_object_rotate (int world_centerx,
+                    int world_centery,
+                    int angle,
+                    OBJECT *object)
 {
-  void (*func) (TOPLEVEL*, int, int, int, OBJECT*) = NULL;
+  void (*func) (int, int, int, OBJECT*) = NULL;
 
   switch (object->type) {
       case OBJ_LINE:    func = geda_line_object_rotate;    break;
@@ -721,7 +724,7 @@ void geda_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_center
   }
 
   if (func != NULL) {
-    (*func) (toplevel, world_centerx, world_centery, angle, object);
+    (*func) (world_centerx, world_centery, angle, object);
   }
 }
 

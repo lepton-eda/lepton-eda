@@ -455,7 +455,6 @@ geda_bus_object_copy (const GedaObject *object)
  *  This function rotates a bus \a object around the point
  *  (\a world_centerx, \a world_centery).
  *
- *  \param [in]     toplevel      The TOPLEVEL object
  *  \param [in]     world_centerx x-coord of the rotation center
  *  \param [in]     world_centery y-coord of the rotation center
  *  \param [in]     angle         The angle to rotate the bus object
@@ -463,8 +462,7 @@ geda_bus_object_copy (const GedaObject *object)
  *  \note only steps of 90 degrees are allowed for the \a angle
  */
 void
-geda_bus_object_rotate (TOPLEVEL *toplevel,
-                        gint world_centerx,
+geda_bus_object_rotate (gint world_centerx,
                         gint world_centery,
                         gint angle,
                         GedaObject *object)

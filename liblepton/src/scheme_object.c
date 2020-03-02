@@ -2297,7 +2297,6 @@ SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
   SCM_ASSERT (scm_is_integer (angle_s), angle_s,
               SCM_ARG4, s_rotate_object_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   int x = scm_to_int (x_s);
   int y = scm_to_int (y_s);
@@ -2312,7 +2311,7 @@ SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
               SCM_ARG4, s_rotate_object_x);
 
   o_emit_pre_change_notify (obj);
-  geda_object_rotate (toplevel, x, y, angle, obj);
+  geda_object_rotate (x, y, angle, obj);
   o_emit_change_notify (obj);
   o_page_changed (obj);
 
