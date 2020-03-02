@@ -67,9 +67,6 @@ void
 s_undo_destroy_all (TOPLEVEL *toplevel, UNDO *head);
 
 void
-s_undo_remove (TOPLEVEL *toplevel, UNDO *head, UNDO *u_tos);
-
-void
 s_undo_remove_rest (TOPLEVEL *toplevel, UNDO *head);
 
 int
