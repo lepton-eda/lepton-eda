@@ -40,8 +40,7 @@ geda_bus_object_copy (const GedaObject *o_current);
 /* methods */
 
 void
-geda_bus_object_calculate_bounds (TOPLEVEL *toplevel,
-                                  const GedaObject *object,
+geda_bus_object_calculate_bounds (const GedaObject *object,
                                   GedaBounds *bounds);
 
 gboolean
