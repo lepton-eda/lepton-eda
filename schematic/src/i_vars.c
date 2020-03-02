@@ -41,7 +41,6 @@ int   default_third_button = MOUSEBTN_DO_POPUP;
 int   default_third_button_cancel = TRUE;
 int   default_middle_button = MOUSEBTN_DO_PAN;
 int   default_scroll_wheel = SCROLL_WHEEL_CLASSIC;
-int   default_net_consolidate = TRUE;
 int   default_file_preview = TRUE;
 int   default_enforce_hierarchy = TRUE;
 int   default_fast_mousepan = FALSE;
@@ -478,10 +477,6 @@ i_vars_set (GschemToplevel* w_current)
                        vals_sw,
                        sizeof( vals_sw ) / sizeof( vals_sw[0] ),
                        &w_current->scroll_wheel);
-
-
-  cfg_read_bool ("schematic", "net-consolidate",
-                 default_net_consolidate, &toplevel->net_consolidate);
 
   cfg_read_bool ("schematic.gui", "file-preview",
                  default_file_preview, &w_current->file_preview);

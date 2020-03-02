@@ -34,6 +34,7 @@ int   default_promote_invisible = FALSE;
 int   default_keep_invisible = TRUE;
 
 int   default_make_backup_files = TRUE;
+int   default_net_consolidate = TRUE;
 
 
 
