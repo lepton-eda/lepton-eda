@@ -80,17 +80,13 @@
 
 
 
-static gboolean
-g_x_tabs_enabled = TRUE;
+static gboolean g_x_tabs_enabled;
 
-static gboolean
-g_x_tabs_show_close_button = TRUE;
+static gboolean g_x_tabs_show_close_button;
 
-static gboolean
-g_x_tabs_show_up_button = TRUE;
+static gboolean g_x_tabs_show_up_button;
 
-static gboolean
-g_x_tabs_show_tooltips = TRUE;
+static gboolean g_x_tabs_show_tooltips;
 
 
 
@@ -128,26 +124,6 @@ x_tabs_show_tooltips()
 }
 
 
-
-static void
-cfg_read_bool (EdaConfig*   cfg,
-               const gchar* group,
-               const gchar* key,
-               gboolean*    result)
-{
-  GError*  err = NULL;
-  gboolean val = eda_config_get_boolean (cfg, group, key, &err);
-
-  if (err == NULL)
-  {
-    *result = val;
-  }
-
-  g_clear_error (&err);
-}
-
-
-
 /*! \brief Initialize tabbed GUI; read configuration
  *  \public
  *
@@ -157,25 +133,17 @@ cfg_read_bool (EdaConfig*   cfg,
 void
 x_tabs_init()
 {
-  gchar*     cwd = g_get_current_dir();
-  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
-  g_free (cwd);
+  cfg_read_bool ("schematic.gui", "use-tabs",
+                 default_tabs_enabled, &g_x_tabs_enabled);
 
-  if (cfg != NULL)
-  {
-    cfg_read_bool (cfg, "schematic.gui", "use-tabs",
-                   &g_x_tabs_enabled);
+  cfg_read_bool ("schematic.tabs", "show-close-button",
+                 default_tabs_show_close_button, &g_x_tabs_show_close_button);
 
-    cfg_read_bool (cfg, "schematic.tabs", "show-close-button",
-                   &g_x_tabs_show_close_button);
+  cfg_read_bool ("schematic.tabs", "show-up-button",
+                 default_tabs_show_up_button, &g_x_tabs_show_up_button);
 
-    cfg_read_bool (cfg, "schematic.tabs", "show-up-button",
-                   &g_x_tabs_show_up_button);
-
-    cfg_read_bool (cfg, "schematic.tabs", "show-tooltips",
-                   &g_x_tabs_show_tooltips);
-  }
-
+  cfg_read_bool ("schematic.tabs", "show-tooltips",
+                 default_tabs_show_tooltips, &g_x_tabs_show_tooltips);
 } /* x_tabs_init() */
 
 
