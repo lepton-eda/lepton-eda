@@ -41,8 +41,7 @@ geda_circle_object_copy (const GedaObject *o_current);
 /* methods */
 
 void
-geda_circle_object_calculate_bounds (TOPLEVEL *toplevel,
-                                     const GedaObject *object,
+geda_circle_object_calculate_bounds (const GedaObject *object,
                                      GedaBounds *bounds);
 
 gint
