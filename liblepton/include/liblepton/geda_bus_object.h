@@ -35,7 +35,7 @@ geda_bus_object_new (gint color,
                      gint bus_ripper_direction);
 
 GedaObject*
-geda_bus_object_copy (TOPLEVEL *toplevel, const GedaObject *o_current);
+geda_bus_object_copy (const GedaObject *o_current);
 
 /* methods */
 

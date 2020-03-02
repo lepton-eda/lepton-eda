@@ -424,12 +424,11 @@ geda_bus_object_translate (GedaObject *object, gint dx, gint dy)
  *  \par Function Description
  *  This function creates a copy of the bus object \a o_current.
  *
- *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] o_current    The object that is copied
  *  \return a new bus object
  */
 GedaObject*
-geda_bus_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
+geda_bus_object_copy (const GedaObject *object)
 {
   GedaObject *new_obj;
 
