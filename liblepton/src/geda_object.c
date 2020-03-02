@@ -1152,7 +1152,7 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
     if (o_current->path->num_sections <= 0) {
       return 0;
     }
-    geda_path_object_calculate_bounds (toplevel, o_current, &bounds);
+    geda_path_object_calculate_bounds (o_current, &bounds);
     break;
 
   case(OBJ_PICTURE):
