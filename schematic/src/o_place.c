@@ -363,8 +363,7 @@ void o_place_rotate (GschemToplevel *w_current)
   geda_object_list_rotate (page->place_list,
                            w_current->first_wx,
                            w_current->first_wy,
-                           90,
-                           page->toplevel);
+                           90);
 
   /* Run rotate-objects-hook */
   g_run_hook_object_list (w_current, "%rotate-objects-hook", page->place_list);

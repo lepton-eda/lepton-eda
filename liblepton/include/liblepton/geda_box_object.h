@@ -71,8 +71,7 @@ geda_box_object_modify_all (OBJECT *object,
                             int y2);
 
 void
-geda_box_object_rotate (TOPLEVEL *toplevel,
-                        int world_centerx,
+geda_box_object_rotate (int world_centerx,
                         int world_centery,
                         int angle,
                         OBJECT *object);

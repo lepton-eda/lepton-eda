@@ -464,15 +464,13 @@ geda_circle_object_translate (GedaObject *object, gint dx, gint dy)
  *  angle <B>angle</B> degrees.
  *  The center of rotation is in world unit.
  *
- *  \param [in]      toplevel      The TOPLEVEL object.
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in WORLD units.
  *  \param [in]      angle          Rotation angle in degrees (See note below).
  *  \param [in,out]  object         Circle OBJECT to rotate.
  */
 void
-geda_circle_object_rotate (TOPLEVEL *toplevel,
-                           gint world_centerx,
+geda_circle_object_rotate (gint world_centerx,
                            gint world_centery,
                            gint angle,
                            GedaObject *object)

@@ -82,8 +82,7 @@ int
 geda_net_object_orientation (OBJECT *object);
 
 void
-geda_net_object_rotate (TOPLEVEL *toplevel,
-                        int world_centerx,
+geda_net_object_rotate (int world_centerx,
                         int world_centery,
                         int angle,
                         OBJECT *object);

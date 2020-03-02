@@ -69,8 +69,7 @@ geda_circle_object_modify (GedaObject *object,
                            gint whichone);
 
 void
-geda_circle_object_rotate (TOPLEVEL *toplevel,
-                           gint world_centerx,
+geda_circle_object_rotate (gint world_centerx,
                            gint world_centery,
                            gint angle,
                            GedaObject *object);

@@ -584,7 +584,7 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
         geda_object_list_mirror (new_node->component->prim_objs, 0, 0);
       }
 
-      geda_object_list_rotate (new_node->component->prim_objs, 0, 0, angle, toplevel);
+      geda_object_list_rotate (new_node->component->prim_objs, 0, 0, angle);
       geda_object_list_translate (new_node->component->prim_objs, x, y);
     }
 
@@ -857,16 +857,16 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  (\a centerx,\a centery) point by \a angle degrees.
  *  The center of rotation is in world units.
  *
- *  \param [in]      toplevel  The toplevel environment.
  *  \param [in]      centerx   X coordinate of rotation center (world coords).
  *  \param [in]      centery   Y coordinate of rotation center (world coords).
  *  \param [in]      angle     Rotation angle in degrees.
  *  \param [in,out]  object    Component object to rotate.
  */
 void
-geda_component_object_rotate (TOPLEVEL *toplevel,
-                              int centerx, int centery,
-                              int angle, OBJECT *object)
+geda_component_object_rotate (int centerx,
+                              int centery,
+                              int angle,
+                              OBJECT *object)
 {
   int x, y;
   int newx, newy;
@@ -885,7 +885,7 @@ geda_component_object_rotate (TOPLEVEL *toplevel,
 
   geda_component_object_translate (object, -object->component->x, -object->component->y);
 
-  geda_object_list_rotate (object->component->prim_objs, 0, 0, angle, toplevel);
+  geda_object_list_rotate (object->component->prim_objs, 0, 0, angle);
 
   object->component->x = 0;
   object->component->y = 0;

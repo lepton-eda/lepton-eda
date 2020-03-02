@@ -76,8 +76,7 @@ geda_line_object_modify (OBJECT *object,
                          int whichone);
 
 void
-geda_line_object_rotate (TOPLEVEL *toplevel,
-                         int world_centerx,
+geda_line_object_rotate (int world_centerx,
                          int world_centery,
                          int angle,
                          OBJECT *object);

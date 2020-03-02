@@ -844,7 +844,6 @@ o_picture_modify_all (OBJECT *object,
  *  degrees.
  *  The center of rotation is in world units.
  *
- *  \param [in]      toplevel      The TOPLEVEL object.
  *  \param [in]      world_centerx  Rotation center x coordinate in
  *                                  WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in
@@ -852,8 +851,10 @@ o_picture_modify_all (OBJECT *object,
  *  \param [in]      angle          Rotation angle in degrees (See note below).
  *  \param [in,out]  object         Picture OBJECT to rotate.
  */
-void geda_picture_object_rotate (TOPLEVEL *toplevel,
-                            int world_centerx, int world_centery, int angle,
+void
+geda_picture_object_rotate (int world_centerx,
+                            int world_centery,
+                            int angle,
                             OBJECT *object)
 {
   int newx1, newy1;

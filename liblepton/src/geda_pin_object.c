@@ -463,15 +463,16 @@ geda_pin_object_copy (OBJECT *o_current)
  *  This function rotates a pin \a object around the point
  *  (\a world_centerx, \a world_centery).
  *
- *  \param [in] toplevel      The TOPLEVEL object
  *  \param [in] world_centerx x-coord of the rotation center
  *  \param [in] world_centery y-coord of the rotation center
  *  \param [in] angle         The angle to rotat the pin object
  *  \param [in] object        The pin object
  *  \note only steps of 90 degrees are allowed for the \a angle
  */
-void geda_pin_object_rotate (TOPLEVEL *toplevel, int world_centerx,
-			int world_centery, int angle,
+void
+geda_pin_object_rotate (int world_centerx,
+			int world_centery,
+                        int angle,
 			OBJECT *object)
 {
   int newx, newy;

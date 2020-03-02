@@ -523,15 +523,16 @@ geda_arc_object_translate (GedaObject *object, int dx, int dy)
  *
  *  <B>world_centerx</B> and <B>world_centery</B> are in world units, <B>angle</B> is in degrees.
  *
- *  \param [in] toplevel      The TOPLEVEL object.
  *  \param [in] world_centerx
  *  \param [in] world_centery
  *  \param [in] angle
  *  \param [in] object
  */
-void geda_arc_object_rotate (TOPLEVEL *toplevel,
-			int world_centerx, int world_centery, int angle,
-			OBJECT *object)
+void
+geda_arc_object_rotate (int world_centerx,
+                        int world_centery,
+                        int angle,
+                        OBJECT *object)
 {
   int x, y, newx, newy;
 

@@ -225,7 +225,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
     s_conn_remove_object_connections (o_current);
   }
 
-  geda_object_list_rotate ( list, centerx, centery, angle, toplevel );
+  geda_object_list_rotate (list, centerx, centery, angle);
 
   /* Find connected objects, adding each object in turn back to the
    * connection list. We only _really_ want those objects connected

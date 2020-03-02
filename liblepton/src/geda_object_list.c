@@ -220,17 +220,16 @@ geda_object_list_translate (const GList *objects, int dx, int dy)
  *  \param [in]     x        The x center of rotation.
  *  \param [in]     y        The y center of rotation.
  *  \param [in]     angle    The angle rotation in multiples of 90 degrees.
- *  \param [in]     toplevel The toplevel object. (used for change notification)
  */
 void
-geda_object_list_rotate (const GList *objects, int x, int y, int angle, TOPLEVEL *toplevel)
+geda_object_list_rotate (const GList *objects, int x, int y, int angle)
 {
   const GList *iter = objects;
 
   while (iter != NULL) {
     GedaObject *object = (GedaObject*)iter->data;
 
-    geda_object_rotate (toplevel, x, y, angle, object);
+    geda_object_rotate (x, y, angle, object);
     iter = g_list_next (iter);
   }
 }

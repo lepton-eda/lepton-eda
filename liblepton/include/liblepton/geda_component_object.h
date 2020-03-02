@@ -51,7 +51,10 @@ OBJECT *
 o_component_copy (TOPLEVEL *toplevel, OBJECT *o_current);
 
 void
-geda_component_object_rotate (TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
+geda_component_object_rotate (int world_centerx,
+                              int world_centery,
+                              int angle,
+                              OBJECT *object);
 
 void
 geda_component_object_mirror (int world_centerx,

@@ -458,15 +458,16 @@ geda_box_object_translate (GedaObject *object, int dx, int dy)
  *  <B>angle</B> degrees.
  *  The center of rotation is in world unit.
  *
- *  \param [in]      toplevel      The TOPLEVEL object.
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in WORLD units.
  *  \param [in]      angle          Rotation angle in degrees (See note below).
  *  \param [in,out]  object         BOX OBJECT to rotate.
  *
  */
-void geda_box_object_rotate (TOPLEVEL *toplevel,
-			int world_centerx, int world_centery, int angle,
+void
+geda_box_object_rotate (int world_centerx,
+                        int world_centery,
+                        int angle,
 			OBJECT *object)
 {
   int newx1, newy1;
