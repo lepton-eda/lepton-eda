@@ -99,7 +99,7 @@ void o_attrib_deselect_invisible (GschemToplevel *w_current,
 
   g_assert( selection != NULL );
 
-  if (w_current->toplevel->show_hidden_text) {
+  if (w_current->show_hidden_text) {
     return;
   }
 
@@ -133,7 +133,7 @@ void o_attrib_select_invisible (GschemToplevel *w_current,
 
   g_assert( selection != NULL );
 
-  if (w_current->toplevel->show_hidden_text) {
+  if (w_current->show_hidden_text) {
     return;
   }
 
@@ -164,13 +164,13 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object)
 
   if (o_is_visible (object)) {
     /* only erase if we are not showing hidden text */
-    if (!toplevel->show_hidden_text) {
+    if (!w_current->show_hidden_text) {
       o_invalidate (w_current, object);
     }
 
     o_set_visibility (object, INVISIBLE);
 
-    if (toplevel->show_hidden_text) {
+    if (w_current->show_hidden_text) {
       /* draw text so that little I is drawn */
       o_invalidate (w_current, object);
     }
@@ -178,7 +178,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object)
   } else {
     /* if we are in the special show hidden mode, then erase text first */
     /* to get rid of the little I */
-    if (toplevel->show_hidden_text) {
+    if (w_current->show_hidden_text) {
       o_invalidate (w_current, object);
     }
 
@@ -338,7 +338,8 @@ OBJECT *o_attrib_add_attrib(GschemToplevel *w_current,
     }
   } else {
     world_get_object_glist_bounds (s_page_objects (toplevel->page_current),
-                                   toplevel->show_hidden_text,
+                                   /* Don't include hidden objects. */
+                                   FALSE,
                                    &left,
                                    &top,
                                    &right,

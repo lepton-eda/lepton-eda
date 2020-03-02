@@ -52,6 +52,8 @@ struct _GschemPageView
   int pan_y;
   int throttle;
 
+  gboolean show_hidden_text;
+
   /*< private >*/
   PAGE *_page;
 
@@ -74,6 +76,9 @@ gschem_page_view_get_type ();
 
 GtkAdjustment*
 gschem_page_view_get_vadjustment (GschemPageView *view);
+
+gboolean
+gschem_page_view_get_show_hidden_text (GschemPageView *view);
 
 void
 gschem_page_view_invalidate_all (GschemPageView *view);
@@ -122,6 +127,10 @@ gschem_page_view_set_page (GschemPageView *view, PAGE *page);
 
 void
 gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustment);
+
+void
+gschem_page_view_set_show_hidden_text (GschemPageView *view,
+                                       gboolean show_hidden_text);
 
 int
 gschem_page_view_WORLDabs(GschemPageView *view, int val);

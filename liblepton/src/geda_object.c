@@ -770,40 +770,43 @@ geda_object_mirror (int world_centerx,
 /*! \brief Calculates the distance between the given point and the closest
  * point on the given object.
  *
- *  \param [in] toplevel     The TOPLEVEL object.
- *  \param [in] object       The given object.
- *  \param [in] x            The x coordinate of the given point.
- *  \param [in] y            The y coordinate of the given point.
+ *  \param [in] object         The given object.
+ *  \param [in] x              The x coordinate of the given point.
+ *  \param [in] y              The y coordinate of the given point.
+ *  \param [in] include_hidden Take hidden text into account.
  *  \return The shortest distance from the object to the point. If the
  *  distance cannot be calculated, this function returns a really large
  *  number (G_MAXDOUBLE).  If an error occurs, this function returns
  *  G_MAXDOUBLE.
  */
 double
-geda_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y)
+geda_object_shortest_distance (OBJECT *object, int x, int y, gboolean include_hidden)
 {
-  return geda_object_shortest_distance_full (toplevel, object, x, y, FALSE);
+  return geda_object_shortest_distance_full (object, x, y, FALSE, include_hidden);
 }
 
 /*! \brief Calculates the distance between the given point and the closest
  * point on the given object. Allows forcing objects to solid.
  *
- *  \param [in] toplevel     The TOPLEVEL object.
- *  \param [in] object       The given object.
- *  \param [in] x            The x coordinate of the given point.
- *  \param [in] y            The y coordinate of the given point.
- *  \param [in] force_solid  If true, force treating the object as solid.
+ *  \param [in] object         The given object.
+ *  \param [in] x              The x coordinate of the given point.
+ *  \param [in] y              The y coordinate of the given point.
+ *  \param [in] force_solid    If true, force treating the object as solid.
+ *  \param [in] include_hidden Take hidden text into account.
  *  \return The shortest distance from the object to the point. If the
  *  distance cannot be calculated, this function returns a really large
  *  number (G_MAXDOUBLE).  If an error occurs, this function returns
  *  G_MAXDOUBLE.
  */
 double
-geda_object_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object,
-                                    int x, int y, int force_solid)
+geda_object_shortest_distance_full (OBJECT *object,
+                                    int x,
+                                    int y,
+                                    int force_solid,
+                                    gboolean include_hidden)
 {
   double shortest_distance = G_MAXDOUBLE;
-  double (*func) (TOPLEVEL *, OBJECT *, int, int, int) = NULL;
+  double (*func) (OBJECT *, int, int, int, gboolean) = NULL;
 
   g_return_val_if_fail (object != NULL, G_MAXDOUBLE);
 
@@ -826,7 +829,7 @@ geda_object_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object,
   }
 
   if (func != NULL) {
-    shortest_distance = (*func) (toplevel, object, x, y, force_solid);
+    shortest_distance = (*func) (object, x, y, force_solid, include_hidden);
   }
 
   return shortest_distance;

@@ -112,7 +112,11 @@ gchar*
 geda_picture_object_to_buffer (const GedaObject *object);
 
 double
-geda_picture_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
+geda_picture_object_shortest_distance (OBJECT *object,
+                                       int x,
+                                       int y,
+                                       int force_soild,
+                                       gboolean include_hidden);
 
 gboolean
 geda_picture_object_get_position (const GedaObject *object, gint *x, gint *y);

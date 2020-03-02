@@ -89,6 +89,9 @@ geda_text_object_calculate_bounds (const GedaObject *object,
                                    gboolean include_hidden,
                                    GedaBounds *bounds)
 {
+  if (! (o_is_visible (object) || include_hidden))
+    return FALSE;
+
   geda_bounds_init (bounds);
 
   g_return_val_if_fail (object != NULL, FALSE);
@@ -847,22 +850,22 @@ geda_text_object_mirror (int world_centerx,
  *  This function will calculate the distance to the text regardless
  *  if the text is visible or not.
  *
- *  \param [in] toplevel     The TOPLEVEL object.
- *  \param [in] object       The text OBJECT.
- *  \param [in] x            The x coordinate of the given point.
- *  \param [in] y            The y coordinate of the given point.
- *  \param [in] force_solid  If true, force treating the object as solid.
+ *  \param [in] object         The text OBJECT.
+ *  \param [in] x              The x coordinate of the given point.
+ *  \param [in] y              The y coordinate of the given point.
+ *  \param [in] force_solid    If true, force treating the object as solid.
+ *  \param [in] include_hidden Take hidden text into account.
  *  \return The shortest distance from the object to the point. If the
  *  distance cannot be calculated, this function returns a really large
  *  number (G_MAXDOUBLE).  With an invalid parameter, this funciton
  *  returns G_MAXDOUBLE.
  */
 double
-geda_text_object_shortest_distance (TOPLEVEL *toplevel,
-                                    OBJECT *object,
+geda_text_object_shortest_distance (OBJECT *object,
                                     int x,
                                     int y,
-                                    int force_solid)
+                                    int force_solid,
+                                    gboolean include_hidden)
 {
   int left, top, right, bottom;
   double dx, dy;
@@ -870,7 +873,7 @@ geda_text_object_shortest_distance (TOPLEVEL *toplevel,
   g_return_val_if_fail (object->text != NULL, G_MAXDOUBLE);
 
   if (!geda_object_calculate_visible_bounds (object,
-                                             toplevel->show_hidden_text,
+                                             include_hidden,
                                              &left,
                                              &top,
                                              &right,

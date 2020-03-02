@@ -93,11 +93,11 @@ void
 geda_line_object_set_y1 (GedaObject *object, gint y);
 
 double
-geda_line_object_shortest_distance (TOPLEVEL *toplevel,
-                                    OBJECT *object,
+geda_line_object_shortest_distance (OBJECT *object,
                                     int x,
                                     int y,
-                                    int force_soild);
+                                    int force_soild,
+                                    gboolean include_hidden);
 
 gchar*
 geda_line_object_to_buffer (const GedaObject *object);

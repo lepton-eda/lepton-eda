@@ -95,13 +95,14 @@ void o_redraw_rect (GschemToplevel *w_current,
   obj_list = s_page_objects_in_regions (toplevel,
                                         page,
                                         world_rect,
-                                        1);
+                                        1,
+                                        w_current->show_hidden_text);
 
   g_free (world_rect);
 
   /* Set up renderer based on configuration in w_current */
   render_flags = EDA_RENDERER_FLAG_HINTING;
-  if (toplevel->show_hidden_text)
+  if (w_current->show_hidden_text)
     render_flags |= EDA_RENDERER_FLAG_TEXT_HIDDEN;
   if (w_current->fast_mousepan &&
       gschem_toplevel_get_current_page_view(w_current)->doing_pan)
@@ -456,7 +457,7 @@ void o_invalidate (GschemToplevel *w_current, OBJECT *object)
   }
 
   if (geda_object_calculate_visible_bounds (object,
-                                            page->toplevel->show_hidden_text,
+                                            w_current->show_hidden_text,
                                             &left,
                                             &top,
                                             &right,
@@ -490,7 +491,7 @@ void o_invalidate_glist (GschemToplevel *w_current, GList *list)
   g_return_if_fail (page != NULL);
 
   if (world_get_object_glist_bounds (list,
-                                     page->toplevel->show_hidden_text,
+                                     w_current->show_hidden_text,
                                      &left,
                                      &top,
                                      &right,

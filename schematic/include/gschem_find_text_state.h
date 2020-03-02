@@ -64,7 +64,8 @@ gschem_find_text_state_find (GschemToplevel *w_current,
                              GList *pages,
                              int type,
                              const char *text,
-                             gboolean descend);
+                             gboolean descend,
+                             gboolean include_hidden);
 
 GType
 gschem_find_text_state_get_type ();

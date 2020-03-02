@@ -52,8 +52,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->pages = geda_list_new();
   toplevel->page_current = NULL;
 
-  toplevel->show_hidden_text = 0;
-
   toplevel->change_notify_funcs = NULL;
 
   /* Auto-save interval */

@@ -92,10 +92,8 @@ x_print_default_page_setup (TOPLEVEL *toplevel, PAGE *page)
              || g_strcmp0 (orientation, "auto") == 0) {
     /* Automatically choose the orientation that fits best */
     status = world_get_object_glist_bounds (s_page_objects (page),
-                                            /* Should we allow to
-                                               print hidden
-                                               text? */
-                                            toplevel->show_hidden_text,
+                                            /* Don't include hidden objects */
+                                            FALSE,
                                             &wx_min, &wy_min, &wx_max, &wy_max);
     if (!status || (wx_max - wx_min) > (wy_max - wy_min)) {
       /* Default to landscape */
@@ -145,9 +143,8 @@ x_print_draw_page (TOPLEVEL *toplevel, PAGE *page,
    * context. We want to center the extents of the page in the
    * available page area. */
   status = world_get_object_glist_bounds (s_page_objects (page),
-                                          /* Should we allow
-                                             hidden text here? */
-                                          toplevel->show_hidden_text,
+                                          /* Don't include hidden objects. */
+                                          FALSE,
                                           &wx_min,
                                           &wy_min,
                                           &wx_max,
@@ -360,8 +357,8 @@ x_print_export_pdf (GschemToplevel *w_current,
    * context. We want to center the extents of the page in the
    * available page area. */
   status = world_get_object_glist_bounds (s_page_objects (w_current->toplevel->page_current),
-                                          /* Should we allow hidden text here? */
-                                          w_current->toplevel->show_hidden_text,
+                                          /* Don't include hidden objects. */
+                                          FALSE,
                                           &wx_min, &wy_min, &wx_max, &wy_max);
   if (status) {
     width  = (wx_max - wx_min) * DEFAULT_ADOBE_PDF_PPI / DEFAULT_GSCHEM_PPI;

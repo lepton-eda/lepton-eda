@@ -352,6 +352,7 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->select_slack_pixels = 4;
   w_current->zoom_gain = 20;
   w_current->scrollpan_steps = 8;
+  w_current->show_hidden_text = FALSE;
 
   w_current->bus_ripper_symname = NULL;
 

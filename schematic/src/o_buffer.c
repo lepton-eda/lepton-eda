@@ -169,7 +169,7 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
                       toplevel->page_current->place_list);
 
   if (!world_get_object_glist_bounds (toplevel->page_current->place_list,
-                                      toplevel->show_hidden_text,
+                                      w_current->show_hidden_text,
                                       &rleft,
                                       &rtop,
                                       &rright,

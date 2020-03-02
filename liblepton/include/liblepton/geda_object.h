@@ -140,17 +140,17 @@ void
 geda_object_set_selectable (GedaObject *object, gboolean selectable);
 
 double
-geda_object_shortest_distance (TOPLEVEL *toplevel,
-                               OBJECT *object,
+geda_object_shortest_distance (OBJECT *object,
                                int x,
-                               int y);
+                               int y,
+                               gboolean include_hidden);
 
 double
-geda_object_shortest_distance_full (TOPLEVEL *toplevel,
-                                    OBJECT *object,
+geda_object_shortest_distance_full (OBJECT *object,
                                     int x,
                                     int y,
-                                    int force_solid);
+                                    int force_solid,
+                                    gboolean include_hidden);
 
 void
 geda_object_translate (GedaObject *object, gint dx, gint dy);

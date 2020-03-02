@@ -1368,19 +1368,22 @@ done:
  *        force treating them as solid filled.
  *        We ignore the force_solid argument to this function.
  *
- *  \param [in] toplevel     The TOPLEVEL object.
- *  \param [in] object       The component OBJECT.
- *  \param [in] x            The x coordinate of the given point.
- *  \param [in] y            The y coordinate of the given point.
- *  \param [in] force_solid  If true, force treating the object as solid.
+ *  \param [in] object         The component OBJECT.
+ *  \param [in] x              The x coordinate of the given point.
+ *  \param [in] y              The y coordinate of the given point.
+ *  \param [in] force_solid    If true, force treating the object as solid.
+ *  \param [in] include_hidden Take hidden text into account.
  *  \return The shortest distance from the object to the point. If the
  *  distance cannot be calculated, this function returns a really large
  *  number (G_MAXDOUBLE).  With an invalid parameter, this function returns
  *  G_MAXDOUBLE.
  */
 double
-geda_component_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
-                                         int x, int y, int force_solid)
+geda_component_object_shortest_distance (OBJECT *object,
+                                         int x,
+                                         int y,
+                                         int force_solid,
+                                         gboolean include_hidden)
 {
   double shortest_distance = G_MAXDOUBLE;
   double distance;
@@ -1398,7 +1401,7 @@ geda_component_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
     /* Collect the bounds of any lines and arcs in the symbol */
     if ((obj->type == OBJ_LINE || obj->type == OBJ_ARC) &&
         geda_object_calculate_visible_bounds (obj,
-                                              toplevel->show_hidden_text,
+                                              include_hidden,
                                               &left,
                                               &top,
                                               &right,
@@ -1416,7 +1419,7 @@ geda_component_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
         found_line_bounds = 1;
       }
     } else {
-      distance = geda_object_shortest_distance_full (toplevel, obj, x, y, TRUE);
+      distance = geda_object_shortest_distance_full (obj, x, y, TRUE, include_hidden);
       shortest_distance = MIN (shortest_distance, distance);
     }
 

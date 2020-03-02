@@ -142,10 +142,11 @@ const GList*
 s_page_objects (PAGE *page);
 
 GList*
-s_page_objects_in_region (TOPLEVEL *toplevel, PAGE *page, int min_x, int min_y, int max_x, int max_y);
-
-GList*
-s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page, BOX *rects, int n_rects);
+s_page_objects_in_regions (TOPLEVEL *toplevel,
+                           PAGE *page,
+                           BOX *rects,
+                           int n_rects,
+                           gboolean include_hidden);
 
 const gchar *s_page_get_filename (const PAGE *page);
 

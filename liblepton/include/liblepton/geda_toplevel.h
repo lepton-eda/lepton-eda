@@ -32,10 +32,6 @@ struct st_toplevel
   PAGE *page_current;
   GedaPageList *pages;
 
-  /* show_hidden_text is used to control which text is hidden in
-     lepton-schematic */
-  int show_hidden_text;
-
   /* backup variables */
   int auto_save_interval;
   gint auto_save_timeout;

@@ -52,14 +52,14 @@ is_object_hit (GschemToplevel *w_current, OBJECT *object,
   /* We can't hit invisible (text) objects unless show_hidden_text is active.
    */
   if (!o_is_visible (object) &&
-      !w_current->toplevel->show_hidden_text)
+      !w_current->show_hidden_text)
     return FALSE;
 
   /* Do a coarse test first to avoid computing distances for objects ouside
    * of the hit range.
    */
   if (!geda_object_calculate_visible_bounds (object,
-                                             w_current->toplevel->show_hidden_text,
+                                             w_current->show_hidden_text,
                                              &left,
                                              &top,
                                              &right,
@@ -69,7 +69,10 @@ is_object_hit (GschemToplevel *w_current, OBJECT *object,
                       w_x, w_y))
     return FALSE;
 
-  return (geda_object_shortest_distance (w_current->toplevel, object, w_x, w_y) < w_slack);
+  return (geda_object_shortest_distance (object,
+                                         w_x,
+                                         w_y,
+                                         w_current->show_hidden_text) < w_slack);
 }
 
 
