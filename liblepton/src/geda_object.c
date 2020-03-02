@@ -202,7 +202,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
       break;
 
     case(OBJ_TEXT):
-      new_obj = geda_text_object_copy (toplevel, selected);
+      new_obj = geda_text_object_copy (selected);
       break;
 
     case(OBJ_PATH):

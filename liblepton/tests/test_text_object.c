@@ -54,7 +54,7 @@ check_construction ()
     g_assert_cmpint (visible, ==, geda_object_get_visible (object0));
     g_assert_cmpstr (string, ==, geda_text_object_get_string (object0));
 
-    GedaObject *object1 = geda_text_object_copy (toplevel, object0);
+    GedaObject *object1 = geda_text_object_copy (object0);
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
