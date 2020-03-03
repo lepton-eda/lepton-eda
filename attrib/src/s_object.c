@@ -308,43 +308,29 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
 {
   int world_x = -1, world_y = -1;
   int color;
-  int left, right, top, bottom;
   OBJECT *new_obj;
 
   g_return_val_if_fail ((o_current != NULL), NULL);
 
   /* creating a toplevel or unattached attribute */
-  if (o_current) {
-    /* get coordinates of where to place the text object */
-    switch (o_current->type) {
-    case (OBJ_COMPONENT):
-      world_x = o_current->component->x;
-      world_y = o_current->component->y;
-      color = ATTRIBUTE_COLOR;
-      break;
+  /* get coordinates of where to place the text object */
+  switch (o_current->type) {
+  case (OBJ_COMPONENT):
+    world_x = o_current->component->x;
+    world_y = o_current->component->y;
+    color = ATTRIBUTE_COLOR;
+    break;
 
-    case (OBJ_NET):
-      world_x = o_current->component->x;
-      world_y = o_current->component->y;
-      color = ATTRIBUTE_COLOR;
-      break;
+  case (OBJ_NET):
+    world_x = o_current->component->x;
+    world_y = o_current->component->y;
+    color = ATTRIBUTE_COLOR;
+    break;
 
-    default:
-      fprintf (stderr, "s_object_attrib_add_attrib_in_object: ");
-      fprintf (stderr, _("Trying to add attrib to non-component or non-net!\n"));
-      exit(-1);
-    }
-  } else {    /* This must be a floating attrib, but what is that !?!?!?!?!  */
-    world_get_object_glist_bounds (toplevel,
-                                   s_page_objects (toplevel->page_current),
-                                   &left, &top, &right, &bottom);
-
-    /* this really is the lower left hand corner */
-    world_x = left;
-    world_y = top;
-
-    /* printf("%d %d\n", world_x, world_y); */
-    color = DETACHED_ATTRIBUTE_COLOR;
+  default:
+    fprintf (stderr, "s_object_attrib_add_attrib_in_object: ");
+    fprintf (stderr, _("Trying to add attrib to non-component or non-net!\n"));
+    exit(-1);
   }
 
   /* first create text item */
@@ -371,11 +357,9 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
 
   /* now toplevel->page_current->object_tail contains new text item */
 
-  /* now attach the attribute to the object (if o_current is not NULL) */
+  /* now attach the attribute to the object */
   /* remember that o_current contains the object to get the attribute */
-  if (o_current) {
-    o_attrib_attach (toplevel, new_obj, o_current, FALSE);
-  }
+  o_attrib_attach (toplevel, new_obj, o_current, FALSE);
 
   o_selection_add (toplevel,
                    toplevel->page_current->selection_list, new_obj);
