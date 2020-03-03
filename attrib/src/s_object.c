@@ -84,7 +84,7 @@ s_object_add_comp_attrib_to_object (TOPLEVEL *toplevel,
                                     gint show_name_value)
 {
   char *name_value_pair;
-
+  g_return_if_fail (o_current != NULL);
 
   /* One last sanity check, then add attrib */
   if (strlen(new_attrib_value) != 0) {
@@ -140,6 +140,7 @@ s_object_add_pin_attrib_to_object (TOPLEVEL *toplevel,
                                    char *new_attrib_value)
 {
   char *name_value_pair;
+  g_return_if_fail (o_current != NULL);
 
   /* One last sanity check */
   if (strlen(new_attrib_value) != 0) {
@@ -312,6 +313,7 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
   OBJECT *new_obj;
 
   o_current = object;
+  g_return_val_if_fail ((o_current != NULL), NULL);
 
   /* creating a toplevel or unattached attribute */
   if (o_current) {

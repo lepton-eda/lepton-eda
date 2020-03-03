@@ -655,6 +655,8 @@ s_toplevel_update_component_attribs_in_toplevel (
   gint visibility = 0;
   gint show_name_value = 0;
 
+  g_return_if_fail (o_current != NULL);
+
 #if DEBUG
   printf ("==== Enter s_toplevel_update_component_attribs_in_toplevel()\n");
 #endif
@@ -988,6 +990,8 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
   char *new_attrib_name;
   char *new_attrib_value;
   char *old_attrib_value;
+
+  g_return_if_fail (o_pin != NULL);
 
 #if DEBUG
   printf ("==== Enter s_toplevel_update_pin_attribs_in_toplevel()\n");
