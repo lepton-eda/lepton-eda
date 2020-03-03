@@ -295,7 +295,7 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
  * \param text_string
  * \param visibility
  * \param show_name_value
- * \param object
+ * \param o_current
  * \returns pointer to the object
  * \todo Does it need to return OBJECT?
  */
@@ -304,15 +304,13 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
                                       char *text_string,
                                       int visibility,
                                       int show_name_value,
-                                      OBJECT * object)
+                                      OBJECT * o_current)
 {
   int world_x = -1, world_y = -1;
   int color;
   int left, right, top, bottom;
-  OBJECT *o_current;
   OBJECT *new_obj;
 
-  o_current = object;
   g_return_val_if_fail ((o_current != NULL), NULL);
 
   /* creating a toplevel or unattached attribute */
