@@ -214,9 +214,10 @@ void s_object_replace_attrib_in_object(TOPLEVEL *toplevel,
 
   /* if we get here, it's because we have failed to find the attrib on the component.
    * This is an error condition. */
-  fprintf(stderr,
-	 _("In s_object_replace_attrib_in_object, we have failed to find the attrib %1$s on the component.  Exiting . . .\n"),
-	 new_attrib_name);
+  fprintf (stderr, "s_object_replace_attrib_in_object: ");
+  fprintf (stderr,
+          _("Failed to find the attrib %1$s on the component.\n"),
+          new_attrib_name);
   exit(-1);
 }
 
@@ -274,9 +275,10 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
 
   /* if we get here, it's because we have failed to find the attrib on the component.
    * This is an error condition. */
-  fprintf(stderr,
-	 _("In s_object_remove_attrib_in_object, we have failed to find the attrib %1$s on the component.  Exiting . . .\n"),
-	 new_attrib_name);
+  fprintf (stderr, "s_object_remove_attrib_in_object: ");
+  fprintf (stderr,
+           _("Failed to find the attrib %1$s on the component.\n"),
+           new_attrib_name);
   exit(-1);
 }
 
@@ -328,7 +330,8 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
       break;
 
     default:
-      fprintf (stderr, _("In s_object_attrib_add_attrib_in_object, trying to add attrib to non-component or non-net!\n"));
+      fprintf (stderr, "s_object_attrib_add_attrib_in_object: ");
+      fprintf (stderr, _("Trying to add attrib to non-component or non-net!\n"));
       exit(-1);
     }
   } else {    /* This must be a floating attrib, but what is that !?!?!?!?!  */

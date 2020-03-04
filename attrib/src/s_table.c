@@ -240,8 +240,8 @@ STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
   /* Sanity check */
   if (row == -1) {
     /* we didn't find the item in the list */
-    fprintf (stderr,
-             _("In s_table_create_attrib_pair, we didn't find the row name in the row list!\n"));
+    fprintf (stderr, "s_table_create_attrib_pair: ");
+    fprintf (stderr, _("We didn't find the row name in the row list!\n"));
     return attrib_pair_list;
   }
 
@@ -344,8 +344,8 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
               /* Sanity check */
               if (row == -1 || col == -1) {
                 /* we didn't find the item in the table */
-                fprintf (stderr,
-                         _("In s_table_add_toplevel_comp_items_to_comp_table, we didn't find either row or col in the lists!\n"));
+                fprintf (stderr, "s_table_add_toplevel_comp_items_to_comp_table: ");
+                fprintf (stderr, _("We didn't find either row or col in the lists!\n"));
               } else {
 
 #if DEBUG
@@ -561,8 +561,8 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
                   /* Sanity check */
                   if (row == -1 || col == -1) {
                     /* we didn't find the item in the table */
-                    fprintf (stderr,
-                             _("In s_table_add_toplevel_pin_items_to_pin_table, we didn't find either row or col in the lists!\n"));
+                    fprintf (stderr, "s_table_add_toplevel_pin_items_to_pin_table: ");
+                    fprintf (stderr, _("We didn't find either row or col in the lists!\n"));
                   } else {
 
 #if DEBUG
