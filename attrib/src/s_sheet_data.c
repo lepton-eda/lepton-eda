@@ -339,7 +339,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
 
             } else {      /* didn't find pinnumber.  Report error to log. */
               fprintf (stderr, "s_sheet_data_add_master_pin_list_items: ");
-              fprintf (stderr, _("Found component pin with no pinnumber: refdes = %s\n"),
+              fprintf (stderr, _("Found component pin with no pinnumber: refdes = %1$s\n"),
                        temp_uref);
             }
             g_free (temp_pinnumber);
