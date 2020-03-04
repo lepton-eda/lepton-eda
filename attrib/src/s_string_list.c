@@ -259,7 +259,7 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
    * Spew error and return.
    */
   fprintf (stderr, "s_string_list_delete_item:");
-  fprintf (stderr, _("Couldn't delete item %s\n"), item);
+  fprintf (stderr, _("Couldn't delete item %1$s\n"), item);
   return;
 
 }
