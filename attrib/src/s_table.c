@@ -284,7 +284,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
 
 
   if (verbose_mode) {
-    printf(_("- Starting internal component TABLE creation\n"));
+    printf (_("Start internal component TABLE creation\n"));
   }
 
 #ifdef DEBUG
@@ -500,7 +500,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
   OBJECT *pin_attrib;
 
   if (verbose_mode) {
-    printf(_("- Starting internal pin TABLE creation\n"));
+    printf (_("Start internal pin TABLE creation\n"));
   }
 
 #ifdef DEBUG
