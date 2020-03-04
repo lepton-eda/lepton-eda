@@ -38,11 +38,6 @@ exec @GUILE@ "$0" "$@"
     ( list 'single-char #\u )
     ( list 'value        #f )
   )
-  ( list ; --system (-s)
-    'system
-    ( list 'single-char #\s )
-    ( list 'value        #f )
-  )
   ( list ; --overwrite (-x)
     'overwrite
     ( list 'single-char #\x )
@@ -65,7 +60,7 @@ exec @GUILE@ "$0" "$@"
 
 ( define ( usage exit-code )
   ( format #t "~
-Usage: lepton-upcfg -l | -u | -s [-x] | -h | -V
+Usage: lepton-upcfg -l | -u | [-x] | -h | -V
 
 Lepton EDA configuration upgrade utility.
 Converts geda*.conf configuration files
@@ -76,8 +71,6 @@ Options:
                    (in current directory)
   -u, --user       geda-user.conf => lepton-user.conf
                    (in user configuration directory)
-  -s, --system     geda-system.conf => lepton-system.conf
-                   (in system configuration directory)
   -x, --overwrite  Overwrite existing files
   -h, --help       Show usage information
   -V, --version    Show version information
@@ -134,9 +127,6 @@ Lepton EDA homepage: <~a>
   )
   ( if (option-ref cmd-line-args 'user #f)
     ( set! what 'user )
-  )
-  ( if (option-ref cmd-line-args 'system #f)
-    ( set! what 'system )
   )
 
   ( unless what
