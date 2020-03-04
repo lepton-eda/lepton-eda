@@ -4874,10 +4874,6 @@ gtk_sheet_expose (GtkWidget * widget,
 
   (* GTK_WIDGET_CLASS (gtk_sheet_parent_class)->expose_event) (widget, event);
 
-#ifdef DEBUG
-  printf ("==== Leave gtk_sheet_expose()\n");
-#endif 
-
   return FALSE;
 }
 
