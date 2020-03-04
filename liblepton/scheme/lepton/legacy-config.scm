@@ -11,11 +11,20 @@
   #:use-module  ( lepton config )
   #:use-module  ( lepton legacy-config keylist )
 
+  #:export      ( upcfg-log )
   #:export      ( config-upgrade )
   #:export      ( warning-option-deprecated )
   #:export      ( warning-option-obsolete )
 )
 
+
+
+; public:
+;
+( define ( upcfg-log fmt . args )
+  ( apply format (current-error-port) fmt args )
+  ; ( apply log! 'message fmt args )
+)
 
 
 ; get configuration context
@@ -64,12 +73,12 @@
       ( catch #t
         ( lambda()
           ( set! val ( pfn cfg grp-old key-old ) ) ; pfn() throws
-          ( format #t "ii: read   [~a]::~a ~65,4t = [~a]~%" grp-old key-old val )
+          ( upcfg-log "ii: read   [~a]::~a ~65,4t = [~a]~%" grp-old key-old val )
           ( add-to-res grp-new key-new val )
         )
         ( lambda( ex . args )
           ( if report-absent-keys
-            ( format #t "ww: !read  [~a]::~a~%" grp-old key-old )
+            ( upcfg-log "ww: !read  [~a]::~a~%" grp-old key-old )
           )
         )
       ) ; catch()
@@ -163,8 +172,8 @@
     ( throw 'infile "Input config file does not exist:" fname )
   )
 
-  ( format #t "ii: INPUT: ~a~%" fname )
-  ( format #t "~%" )
+  ( upcfg-log "ii: INPUT: ~a~%" fname )
+  ( upcfg-log "~%" )
 
   ( catch #t
     ( lambda()
@@ -184,7 +193,7 @@
   ; write new config file (lepton*.conf):
   ;
 
-  ( format #t "~%" )
+  ( upcfg-log "~%" )
 
   ( config-set-legacy-mode! #f ) ; use lepton*.conf files
 
@@ -198,7 +207,7 @@
     ( throw 'outfile "Output config file already exists:" fname )
   )
 
-  ( format #t "ii: OUTPUT: ~a~%" fname )
+  ( upcfg-log "ii: OUTPUT: ~a~%" fname )
 
   ( catch #t
     ( lambda()
