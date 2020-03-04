@@ -99,7 +99,10 @@ char *s_attrib_get_refdes(OBJECT *object)
   if (!temp_uref) {
     temp_uref = o_attrib_search_object_attribs_by_name (object, "uref", 0); // deprecated
     if (temp_uref) {
-      printf(_("WARNING: Found uref=%1$s, uref= is deprecated, please use refdes=\n"), temp_uref);
+      fprintf (stderr, _("WARNING: "));
+      fprintf (stderr,
+               _("Found uref=%1$s, uref= is deprecated, please use refdes=\n"),
+               temp_uref);
     } else {        /* didn't find refdes.  Report error to log. */
 #ifdef DEBUG
       printf ("s_attrib_get_refdes: ");
