@@ -102,15 +102,17 @@ char *s_attrib_get_refdes(OBJECT *object)
       printf(_("WARNING: Found uref=%1$s, uref= is deprecated, please use refdes=\n"), temp_uref);
     } else {        /* didn't find refdes.  Report error to log. */
 #ifdef DEBUG
-      printf("In s_attrib_get_refdes, found non-graphical component with no refdes.\n");
-      printf(". . . . component_basename = %s.\n", object->component_basename);
+      printf ("s_attrib_get_refdes: ");
+      printf ("Found non-graphical component with no refdes: component_basename = %s\n",
+              object->component_basename);
 #endif
       return NULL;
     } 
   }
 
 #ifdef DEBUG
-  printf("In s_attrib_get_refdes, found component with refdes %s.\n", temp_uref);
+  printf ("s_attrib_get_refdes: ");
+  printf ("Found component with refdes %s.\n", temp_uref);
 #endif   
   
   /*------- Now append .slot to refdes if part is slotted -------- */
@@ -121,13 +123,13 @@ char *s_attrib_get_refdes(OBJECT *object)
 				    append slot number to refdes. */
     slot_value = s_slot_search_slot (object, &slot_text_object);
 #if DEBUG
-    printf(". . .  , found slotted component with slot = %s\n", slot_value);
+    printf ("  Found slotted component with slot = %s\n", slot_value);
 #endif
     temp_uref = g_strconcat(temp_uref, ".", slot_value, NULL);
   }
 
 #ifdef DEBUG
-  printf(". . . .   returning refdes %s.\n", temp_uref);
+  printf ("  Return refdes %s.\n", temp_uref);
 #endif   
   
   return temp_uref;

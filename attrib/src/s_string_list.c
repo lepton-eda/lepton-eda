@@ -128,7 +128,8 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
      into empty list separately.  (Is this necessary?) */
   if (list->data == NULL) {
 #ifdef DEBUG
-    printf("In s_string_list_add_item, about to place first item in list.\n");
+    printf ("s_string_list_add_item: ");
+    printf ("About to place first item in list.\n");
 #endif
     list->data = (gchar *) g_strdup(item);
     list->next = NULL;
@@ -190,7 +191,8 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
   }
 
 #ifdef DEBUG
-    printf("In s_string_list_delete_item, about to delete item %s from list.\n", item);
+    printf ("s_string_list_delete_item: ");
+    printf ("About to delete item %s from list.\n", item);
 #endif
 
   /* Now loop through list looking for item */
@@ -198,12 +200,14 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
   while (list_item != NULL) {
     trial_item = (gchar *) g_strdup(list_item->data);        
 #ifdef DEBUG
-    printf("In s_string_list_delete_item, matching item against trial item = %s from list.\n", trial_item);
+    printf ("s_string_list_delete_item: ");
+    printf ("Matching item against trial item = %s from list.\n", trial_item);
 #endif
     if (strcmp(trial_item, item) == 0) {
       /* found item, now delete it. */
 #ifdef DEBUG
-    printf("In s_string_list_delete_item, found match . . . . . \n");
+    printf ("s_string_list_delete_item: ");
+    printf ("Match found.\n");
 #endif
       prev_item = list_item->prev;
       next_item = list_item->next;
@@ -227,18 +231,21 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
       }
       
 #ifdef DEBUG
-    printf("In s_string_list_delete_item, now free list_item\n");
+    printf ("s_string_list_delete_item: ");
+    printf ("Free list_item.\n");
 #endif
       g_free(list_item);  /* free current list item */
       (*count)--;       /* decrement count */
       /* Do we need to re-number the list? */
 
 #ifdef DEBUG
-    printf("In s_string_list_delete_item, now free trial_item\n");
+    printf ("s_string_list_delete_item: ");
+    printf ("Free trial_item.\n");
 #endif
       g_free(trial_item); /* free trial item before returning */
 #ifdef DEBUG
-    printf("In s_string_list_delete_item, returning . . . .\n");
+    printf ("s_string_list_delete_item: ");
+    printf ("Return.\n");
 #endif
       return;
     }

@@ -124,7 +124,8 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
     OBJECT *o_current = (OBJECT*) iter->data;
 
 #ifdef DEBUG
-      printf("In s_sheet_data_add_master_comp_list_items, examining o_current->name = %s\n", o_current->name);
+    printf ("s_sheet_data_add_master_comp_list_items: ");
+    printf ("Examining o_current->name = %s\n", o_current->name);
 #endif
 
       /*-----  only process if this is a component with attributes ----*/
@@ -132,8 +133,9 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
           o_current->attribs != NULL) {
 
 #if DEBUG
-	printf("      In s_sheet_data_add_master_comp_list_items; found component on page\n");
-	printf(". . . . component_basename = %s.\n", o_current->component_basename);
+        printf ("s_sheet_data_add_master_comp_list_items: ");
+        printf ("Found component on page: component_basename = %s\n",
+                o_current->component_basename);
 #endif
 	verbose_print(" C");
       
@@ -142,7 +144,8 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
 	/* Now that we have refdes, store refdes and attach attrib list to component */
 	if (temp_uref) {
 #if DEBUG
-	  printf("       In s_sheet_add_master_comp_list, about to add to master list refdes = %s\n", temp_uref);
+          printf ("s_sheet_data_add_master_comp_list_items: ");
+          printf ("About to add to master list refdes = %s\n", temp_uref);
 #endif
 	  s_string_list_add_item(sheet_head->master_comp_list_head, 
 				  &(sheet_head->comp_count), temp_uref);
@@ -190,7 +193,8 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
     OBJECT *o_current = (OBJECT*) o_iter->data;
 
 #ifdef DEBUG
-      printf("In s_sheet_data_add_master_comp_attrib_list_items, examining o_current->name = %s\n", o_current->name);
+    printf ("s_sheet_data_add_master_comp_attrib_list_items: ");
+    printf ("Examining o_current->name = %s\n", o_current->name);
 #endif
 
       /*-----  only process if this is a component with attributes ----*/
@@ -214,7 +218,9 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
 		 (strcmp(attrib_name, "net") != 0) &&
 		 (strcmp(attrib_name, "slot") != 0) ) {  
 #if DEBUG
-	      printf(" . . . from this component, about to add to master comp attrib list attrib = %s\n", attrib_name);
+              printf ("... from this component, "
+                      "about to add to master comp attrib list attrib=%s\n",
+                      attrib_name);
 #endif
 	      s_string_list_add_item(sheet_head->master_comp_attrib_list_head, 
 				     &(sheet_head->comp_attrib_count), attrib_name);
@@ -303,7 +309,8 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
     OBJECT *o_current = (OBJECT*) o_iter->data;
 
 #ifdef DEBUG
-    printf ("In s_sheet_data_add_master_pin_list_items, examining o_current->name = %s\n", o_current->name);
+    printf ("s_sheet_data_add_master_pin_list_items: ");
+    printf ("Examining o_current->name = %s\n", o_current->name);
 #endif
 
     if (o_current->type == OBJ_COMPONENT) {
@@ -316,7 +323,8 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
              o_lower_iter = g_list_next (o_lower_iter)) {
           OBJECT *o_lower_current = (OBJECT*) o_lower_iter->data;
 #if DEBUG
-          printf ("In s_sheet_data_add_master_pin_list_items, examining object name %s\n", o_lower_current->name);
+          printf ("s_sheet_data_add_master_pin_list_items: ");
+          printf ("Examining object name %s\n", o_lower_current->name);
 #endif
           if (o_lower_current->type == OBJ_PIN) {
             temp_pinnumber = o_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0);
@@ -324,15 +332,14 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
             if (temp_pinnumber != NULL) {
               row_label = g_strconcat (temp_uref, ":", temp_pinnumber, NULL);
 #if DEBUG
-              printf ("In s_sheet_data_add_master_pin_list_items, about to add to master pin list row_label = %s\n", row_label);
+              printf ("s_sheet_data_add_master_pin_list_items: ");
+              printf ("About to add to master pin list row_label = %s\n", row_label);
 #endif
               s_string_list_add_item (sheet_head->master_pin_list_head, &(sheet_head->pin_count), row_label);
 
             } else {      /* didn't find pinnumber.  Report error to log. */
               fprintf (stderr, _("In s_sheet_data_add_master_pin_list_items, found component pin with no pinnumber.\n"));
-#ifdef DEBUG
               fprintf (stderr, ". . . . refdes = %s.\n", temp_uref);
-#endif
             }
             g_free (temp_pinnumber);
 
@@ -341,8 +348,9 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
 
       } else {          /* didn't find refdes.  Report error to log. */
 #ifdef DEBUG
-        fprintf (stderr, "In s_sheet_data_add_master_pin_list_items, found component with no refdes.\n");
-        fprintf (stderr, ". . . . component_basename = %s.\n", o_current->component_basename);
+        printf ("s_sheet_data_add_master_pin_list_items: ");
+        printf ("Found component with no refdes: component_basename = %s\n",
+                o_current->component_basename);
 #endif
       }
       g_free (temp_uref);
@@ -395,7 +403,8 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
     OBJECT *o_current = (OBJECT*) o_iter->data;
 
 #ifdef DEBUG
-      printf("In s_sheet_data_add_master_pin_attrib_list_items, examining o_current->name = %s\n", o_current->name);
+      printf ("s_sheet_data_add_master_pin_attrib_list_items: ");
+      printf ("Examining o_current->name = %s\n", o_current->name);
 #endif
 
       if (o_current->type == OBJ_COMPONENT) {
@@ -408,7 +417,8 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
                o_lower_iter = g_list_next (o_lower_iter)) {
             OBJECT *o_lower_current = (OBJECT*) o_lower_iter->data;
 #if DEBUG
-	    printf("In s_sheet_data_add_master_pin_attrib_list_items, examining component refdes =  %s\n", temp_uref);
+            printf ("s_sheet_data_add_master_pin_attrib_list_items: ");
+            printf ("Examining component refdes = %s\n", temp_uref);
 #endif
 	    if (o_lower_current->type == OBJ_PIN) {
 	      /* -----  Found a pin.  Now get attrib head and loop on attribs.  ----- */
@@ -426,8 +436,9 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
 		     * Also guard against pathalogical symbols which have non-attrib text inside pins. */
 
 #if DEBUG
-	    printf("In s_sheet_data_add_master_pin_attrib_list_items, found pin attrib =  %s\n", attrib_name);
-	    printf(". . . . . adding it to master_pin_attrib_list\n");
+                    printf ("s_sheet_data_add_master_pin_attrib_list_items: ");
+                    printf ("Found pin attrib = %s\n", attrib_name);
+                    printf ("Add it to master_pin_attrib_list.\n");
 #endif
 
 		    s_string_list_add_item(sheet_head->master_pin_attrib_list_head, 
