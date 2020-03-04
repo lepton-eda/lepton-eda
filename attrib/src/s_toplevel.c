@@ -597,7 +597,7 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
     if (count != i+1) {
       /* for some reason, we have lost a name_value_pair somewhere . . .  */
       fprintf (stderr, "s_toplevel_get_component_attribs_in_sheet: ");
-      fprintf (stderr, _("Count != i.\n"));
+      fprintf (stderr, "count != i.\n");
       exit(-1);
     }
 
@@ -945,7 +945,7 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
     if (count != i+1) {
       /* for some reason, we have lost a name_value_pair somewhere . . .  */
       fprintf (stderr, "s_toplevel_get_pin_attribs_in_sheet: ");
-      fprintf (stderr, _("Count != i.\n"));
+      fprintf (stderr, "count != i.\n");
       exit(-1);
     }
 
