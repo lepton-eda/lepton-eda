@@ -136,7 +136,7 @@ s_toplevel_gtksheet_to_toplevel(TOPLEVEL *toplevel)
   PAGE *p_current;
 
 #if DEBUG
-  printf("---------------------   Entering  s_toplevel_gtksheet_to_toplevel   -------------------\n");
+  printf ("==== Enter s_toplevel_gtksheet_to_toplevel()\n");
 #endif
 
   s_sheet_data_gtksheet_to_sheetdata();  /* read data from gtksheet into SHEET_DATA */
@@ -541,7 +541,7 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
   char *new_attrib_name;
 
 #if DEBUG
-  printf("-----  Entering s_toplevel_get_component_attribs_in_sheet.\n");
+  printf ("==== Enter s_toplevel_get_component_attribs_in_sheet()\n");
 #endif
 
 
@@ -639,7 +639,7 @@ s_toplevel_update_component_attribs_in_toplevel (
   gint show_name_value = 0;
 
 #if DEBUG
-  printf("-----  Entering s_toplevel_update_component_attribs_in_toplevel.\n");
+  printf ("==== Enter s_toplevel_update_component_attribs_in_toplevel()\n");
 #endif
 
   /* 
@@ -877,7 +877,7 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
   char *new_attrib_name;
 
 #if DEBUG
-  printf("-----  Entering s_toplevel_get_pin_attribs_in_sheet.\n");
+  printf ("==== Enter s_toplevel_get_pin_attribs_in_sheet()\n");
 #endif
 
   /* First find pos of this pin in the master pin list */
@@ -971,7 +971,7 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
   char *old_attrib_value;
 
 #if DEBUG
-  printf("-----  Entering s_toplevel_update_pin_attribs_in_toplevel.\n");
+  printf ("==== Enter s_toplevel_update_pin_attribs_in_toplevel()\n");
 #endif
 
   /* loop on name=value pairs held in new_pin_attrib_list */
