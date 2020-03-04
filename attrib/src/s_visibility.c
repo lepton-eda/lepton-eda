@@ -100,7 +100,8 @@ void s_visibility_set_invisible() {
   case GTK_SHEET_ROW_SELECTED: 
 
 #ifdef DEBUG
-    printf("In s_visibility_set_invisible, range/col/row selected.\n");
+    printf ("s_visibility_set_invisible: ");
+    printf ("Range/col/row selected.\n");
 #endif
 
     row_start = sheet->range.row0;
@@ -126,7 +127,8 @@ void s_visibility_set_invisible() {
 
   case GTK_SHEET_NORMAL:
 #ifdef DEBUG
-    printf("In s_visibility_set_invisible, normal selection.\n");
+    printf ("s_visibility_set_invisible: ");
+    printf ("Normal selection.\n");
 #endif
     s_visibility_set_cell(cur_page, 
 			  sheet->active_cell.row, 
@@ -172,7 +174,8 @@ void s_visibility_set_name_only() {
   case GTK_SHEET_COLUMN_SELECTED:  
   case GTK_SHEET_ROW_SELECTED: 
 #ifdef DEBUG
-    printf("In s_visibility_set_name_only, range/col/row selected.\n");
+    printf ("s_visibility_set_name_only: ");
+    printf ("Range/col/row selected.\n");
 #endif
     row_start = sheet->range.row0;
     row_end = sheet->range.rowi;
@@ -233,7 +236,8 @@ void s_visibility_set_value_only() {
   case GTK_SHEET_COLUMN_SELECTED:  
   case GTK_SHEET_ROW_SELECTED: 
 #ifdef DEBUG
-    printf("In s_visibility_set_value_only, range/col/row selected.\n");
+    printf ("s_visibility_set_value_only: ");
+    printf ("Range/col/row selected.\n");
 #endif
     row_start = sheet->range.row0;
     row_end = sheet->range.rowi;
@@ -255,7 +259,8 @@ void s_visibility_set_value_only() {
 
   case GTK_SHEET_NORMAL:
 #ifdef DEBUG
-    printf("In s_visibility_set_value_only, sheet normal selected.\n");
+    printf ("s_visibility_set_value_only: ");
+    printf ("Sheet normal selected.\n");
 #endif
     s_visibility_set_cell(cur_page, 
 			  sheet->active_cell.row, 
@@ -351,7 +356,8 @@ void s_visibility_set_cell(gint cur_page, gint row, gint col,
   TABLE **local_table = NULL;
 
 #ifdef DEBUG
-    printf("In s_visibility_set_cell, setting row = %d, col = %d.\n", 
+  printf ("s_visibility_set_cell: ");
+  printf ("Setting row = %d, col = %d.\n",
 	   row, col);
 #endif
 

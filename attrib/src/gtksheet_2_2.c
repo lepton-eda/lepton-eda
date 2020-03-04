@@ -5652,7 +5652,7 @@ gtk_sheet_key_press(GtkWidget *widget,
 || key->keyval==GDK_Shift_R;
 
 #ifdef DEBUG
-    printf(". . . .  extend_selection = %d\n", extend_selection);
+  printf ("extend_selection = %d\n", extend_selection);
 #endif
 
   state=sheet->state;
@@ -5660,7 +5660,7 @@ gtk_sheet_key_press(GtkWidget *widget,
   GTK_SHEET_UNSET_FLAGS(sheet, GTK_SHEET_IN_SELECTION);
 
 #ifdef DEBUG
-    printf("We are about to enter the switch statement. . .\n");
+  printf ("Enter the switch statement.\n");
 #endif
 
   switch(key->keyval){
@@ -5687,7 +5687,8 @@ gtk_sheet_key_press(GtkWidget *widget,
     case GDK_ISO_Left_Tab:
     case GDK_Left:   /* Left arrow  */
 #ifdef DEBUG
-      printf("In gtk_sheet_key_press, received GDK_Left.\n");
+      printf ("gtk_sheet_key_press: ");
+      printf ("Received GDK_Left.\n");
 #endif
       row = sheet->active_cell.row;
       col = sheet->active_cell.col;
@@ -5707,7 +5708,8 @@ gtk_sheet_key_press(GtkWidget *widget,
     case GDK_Tab:
     case GDK_Right: /* Right arrow  */
 #ifdef DEBUG
-      printf("In gtk_sheet_key_press, received GDK_Right.\n");
+      printf ("gtk_sheet_key_press: ");
+      printf ("Received GDK_Right.\n");
 #endif
       row = sheet->active_cell.row;
       col = sheet->active_cell.col;
@@ -5887,8 +5889,9 @@ gtk_sheet_key_press(GtkWidget *widget,
 
     default:
 #ifdef DEBUG
-      printf("In gtk_sheet_key_press, after switch, found default case.\n");
-      printf("  User probably typed letter key or DEL.\n");
+      printf ("gtk_sheet_key_press: ");
+      printf ("After switch, found default case.\n");
+      printf ("  User probably typed letter key or DEL.\n");
 #endif
       if(in_selection) {
 	GTK_SHEET_SET_FLAGS(sheet, GTK_SHEET_IN_SELECTION);

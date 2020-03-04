@@ -141,7 +141,8 @@ s_toplevel_gtksheet_to_toplevel(TOPLEVEL *toplevel)
 
   s_sheet_data_gtksheet_to_sheetdata();  /* read data from gtksheet into SHEET_DATA */
 #if DEBUG
-  printf("In s_toplevel_gtksheet_to_toplevel -- done writing stuff from gtksheet into SHEET_DATA.\n");
+  printf ("s_toplevel_gtksheet_to_toplevel: ");
+  printf ("Done writing stuff from gtksheet into SHEET_DATA.\n");
 #endif
 
   /* must iterate over all pages in design */
@@ -158,7 +159,8 @@ s_toplevel_gtksheet_to_toplevel(TOPLEVEL *toplevel)
   }
 
 #if DEBUG
-  printf("In s_toplevel_gtksheet_to_toplevel -- done writing SHEEET_DATA text back into pr_currnet.\n");
+  printf ("s_toplevel_gtksheet_to_toplevel: ");
+  printf ("Done writing SHEEET_DATA text back into pr_currnet.\n");
 #endif  
 
   return;
@@ -190,8 +192,8 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
   /* Next must figure out which sheet the attrib belongs to. */
   cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
 #ifdef DEBUG
-  printf("In s_toplevel_add_new_attrib, adding new attrib to page %d.\n", 
-	 cur_page);
+  printf ("s_toplevel_add_new_attrib: ");
+  printf ("Adding new attrib to page %d.\n", cur_page);
 #endif
 
   switch (cur_page) {
@@ -207,8 +209,9 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
     */
     old_comp_attrib_count = sheet_head->comp_attrib_count;
 #ifdef DEBUG 
-    printf("In s_toplevel_add_new_attrib, before adding new comp attrib.\n");
-    printf("                           comp_attrib_count = %d\n", old_comp_attrib_count);
+    printf ("s_toplevel_add_new_attrib: ");
+    printf ("Before adding new comp attrib: comp_attrib_count = %d\n",
+            old_comp_attrib_count);
 #endif
 
     s_string_list_add_item(sheet_head->master_comp_attrib_list_head, 
@@ -223,8 +226,9 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
                                            (char*)new_attrib_name);
 
 #ifdef DEBUG
-    printf("In s_toplevel_add_new_attrib, just updated comp_attrib string list.\n");
-    printf("                             new comp_attrib_count = %d\n", sheet_head->comp_attrib_count);
+    printf ("s_toplevel_add_new_attrib: ");
+    printf ("Updated comp_attrib string list: new comp_attrib_count = %d\n",
+            sheet_head->comp_attrib_count);
 #endif
 
     /* Now create new table */
@@ -239,7 +243,8 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
 		     old_comp_attrib_count, sheet_head->comp_attrib_count);
 
 #ifdef DEBUG
-    printf("In s_toplevel_add_new_attrib, just resized component table.\n");
+    printf ("s_toplevel_add_new_attrib: ");
+    printf ("Resized component table.\n");
 #endif
 
     /* Fill out new sheet with new stuff from gtksheet */
@@ -249,7 +254,8 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
 			      sheet_head->master_comp_attrib_list_head);
 
 #ifdef DEBUG
-    printf("In s_toplevel_add_new_attrib, just updated gtksheet.\n");
+    printf ("s_toplevel_add_new_attrib: ");
+    printf ("Updated gtksheet.\n");
 #endif
 
     break;
@@ -293,7 +299,8 @@ void s_toplevel_delete_attrib_col() {
   }
 
 #ifdef DEBUG
-  printf("In s_toplevel_delete_attrib_col, checks were OK, now do real work\n");
+  printf ("s_toplevel_delete_attrib_col: ");
+  printf ("Checks were OK, now do real work\n");
 #endif
 
   /*  Rebuild the gattrib-specific data structures  */
@@ -313,7 +320,8 @@ void s_toplevel_delete_attrib_col() {
     
     if (attrib_name != NULL) {
 #ifdef DEBUG
-      printf("In s_toplevel_delete_attrib_col, attrib to delete = %s\n", attrib_name);
+      printf ("s_toplevel_delete_attrib_col: ");
+      printf ("Attrib to delete = %s\n", attrib_name);
 #endif
     } else {
       fprintf(stderr, _("In s_toplevel_delete_attrib_col, can't get attrib name\n"));
@@ -321,8 +329,9 @@ void s_toplevel_delete_attrib_col() {
     }
     
 #ifdef DEBUG 
-    printf("In s_toplevel_delete_attrib_col, before deleting comp attrib.\n");
-    printf("                           comp_attrib_count = %d\n", sheet_head->comp_attrib_count);
+    printf ("s_toplevel_delete_attrib_col: ");
+    printf ("Before deleting comp attrib: comp_attrib_count = %d\n",
+            sheet_head->comp_attrib_count);
 #endif
     s_string_list_delete_item(&(sheet_head->master_comp_attrib_list_head), 
 			      &(sheet_head->comp_attrib_count), 
@@ -331,8 +340,9 @@ void s_toplevel_delete_attrib_col() {
     g_free(attrib_name);
     
 #ifdef DEBUG
-    printf("In s_toplevel_delete_attrib_col, just updated comp_attrib string list.\n");
-    printf("                             new comp_attrib_count = %d\n", sheet_head->comp_attrib_count);
+    printf ("s_toplevel_delete_attrib_col: ");
+    printf ("Just updated comp_attrib string list: new comp_attrib_count = %d\n",
+            sheet_head->comp_attrib_count);
 #endif
     
     /* Now create new table with new attrib count*/
@@ -341,7 +351,8 @@ void s_toplevel_delete_attrib_col() {
 
     
 #ifdef DEBUG
-    printf("In s_toplevel_delete_attrib_col, just updated SHEET_DATA info.\n");
+    printf ("s_toplevel_delete_attrib_col: ");
+    printf ("Updated SHEET_DATA info.\n");
 #endif
     break;
 
@@ -357,11 +368,13 @@ void s_toplevel_delete_attrib_col() {
 
   /* Delete col on gtksheet  */
 #ifdef DEBUG
-  printf("In s_toplevel_delete_attrib_col, about to delete col in gtksheet.\n");
+  printf ("s_toplevel_delete_attrib_col: ");
+  printf ("About to delete col in gtksheet.\n");
 #endif
   gtk_sheet_delete_columns (sheet, mincol, 1); 
 #ifdef DEBUG
-  printf("In s_toplevel_delete_attrib_col, done deleting col in gtksheet.\n");
+  printf ("s_toplevel_delete_attrib_col: ");
+  printf ("Done deleting col in gtksheet.\n");
 #endif
   
   sheet_head->CHANGED = TRUE;  /* Set changed flag so user is prompted when exiting */
@@ -399,7 +412,8 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
 
   /* -----  First deal with all components on the page.  ----- */
 #ifdef DEBUG
-  printf("-----  In s_toplevel_sheetdata_to_toplevel, handling components\n");
+  printf ("s_toplevel_sheetdata_to_toplevel: ");
+  printf ("Handling components\n");
 #endif
 
   /* Work from a copy list, as objects can be deleted
@@ -446,8 +460,9 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
 	g_free(temp_uref);
       } else {
 #ifdef DEBUG
-	printf ("In s_toplevel_sheetdata_to_toplevel, found component with no refdes. name = %s\n",
-	       o_current->name);
+        printf ("s_toplevel_sheetdata_to_toplevel: ");
+        printf ("Found component with no refdes. name = %s\n",
+                o_current->name);
 #endif
       }
     }  /* if (o_current->type == OBJ_COMPONENT) */
@@ -466,7 +481,8 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
   /* -----  Finally deal with all pins on the page.  ----- */
   /* -----  Next deal with all nets on the page.  ----- */
 #ifdef DEBUG
-	printf("-----  In s_toplevel_sheetdata_to_toplevel, handling pins\n");
+  printf ("s_toplevel_sheetdata_to_toplevel: ");
+  printf ("Handling pins\n");
 #endif
 
   /* Work from a copy list in case objects are
@@ -710,9 +726,8 @@ s_toplevel_update_component_attribs_in_toplevel (
   while (local_list != NULL) {
 
 #if DEBUG
-  printf("\n\n");
-  printf("        In s_toplevel_update_component_attribs_in_toplevel, handling entry in complete list %s .\n", 
-	 local_list->data);
+  printf ("s_toplevel_update_component_attribs_in_toplevel: ");
+  printf ("Handling entry in complete list %s.\n", local_list->data);
 #endif
 
   /*  Now get the old attrib name & value from complete_comp_attrib_list 
@@ -721,10 +736,10 @@ s_toplevel_update_component_attribs_in_toplevel (
   old_attrib_value = o_attrib_search_attached_attribs_by_name (o_current, old_attrib_name, 0);
 
 #if DEBUG
-  printf("        In s_toplevel_update_component_attribs_in_toplevel, old name = \"%s\" .\n", 
-	 old_attrib_name);
-  printf("        In s_toplevel_update_component_attribs_in_toplevel, old value = \"%s\" .\n", 
-	 old_attrib_value);
+  printf ("s_toplevel_update_component_attribs_in_toplevel: ");
+  printf ("Old name = \"%s\".\n", old_attrib_name);
+  printf ("s_toplevel_update_component_attribs_in_toplevel: ");
+  printf ("Old value = \"%s\".\n", old_attrib_value);
 #endif
 
   /*  Next try to get this attrib from new_comp_attrib_list  */
@@ -735,10 +750,10 @@ s_toplevel_update_component_attribs_in_toplevel (
     new_attrib_value = NULL;
   }
 #if DEBUG
-  printf("        In s_toplevel_update_component_attribs_in_toplevel, new name = \"%s\" .\n", 
-	 new_attrib_name);
-  printf("        In s_toplevel_update_component_attribs_in_toplevel, new value = \"%s\" .\n", 
-	 new_attrib_value);
+  printf ("s_toplevel_update_component_attribs_in_toplevel: ");
+  printf ("New name = \"%s\".\n", new_attrib_name);
+  printf ("s_toplevel_update_component_attribs_in_toplevel: ");
+  printf ("New value = \"%s\".\n", new_attrib_value);
 #endif
 
   /* Now get row and col where this new attrib lives.  Then get 
@@ -761,11 +776,11 @@ s_toplevel_update_component_attribs_in_toplevel (
     if ( (old_attrib_value != NULL) && (new_attrib_value != NULL) && (strlen(new_attrib_value) != 0) ) {
       /* simply write new attrib into place of old one. */
 #if DEBUG
-      printf("     -- In s_toplevel_update_component_attribs_in_toplevel,\n");
-      printf("               about to replace old attrib with name= %s, value= %s\n", 
-	                new_attrib_name, new_attrib_value);
-      printf("               visibility = %d, show_name_value = %d.\n",
-	     visibility, show_name_value);
+      printf ("s_toplevel_update_component_attribs_in_toplevel: ");
+      printf ("About to replace old attrib with name= %s, value= %s\n",
+              new_attrib_name, new_attrib_value);
+      printf ("    visibility = %d, show_name_value = %d.\n",
+              visibility, show_name_value);
 #endif
       s_object_replace_attrib_in_object(toplevel,
 					o_current,
@@ -779,8 +794,9 @@ s_toplevel_update_component_attribs_in_toplevel (
     else if ( (old_attrib_value != NULL) && (new_attrib_value == NULL) ) {
       /* remove attrib from component*/
 #if DEBUG
-      printf("     -- In s_toplevel_update_component_attribs_in_toplevel, about to remove old attrib with name= %s, value= %s\n",
-	     old_attrib_name, old_attrib_value);
+      printf ("s_toplevel_update_component_attribs_in_toplevel: ");
+      printf ("About to remove old attrib with name= %s, value= %s\n",
+              old_attrib_name, old_attrib_value);
 #endif
       s_object_remove_attrib_in_object (toplevel, o_current, old_attrib_name);
     }
@@ -790,8 +806,9 @@ s_toplevel_update_component_attribs_in_toplevel (
       /* add new attrib to component. */
 
 #if DEBUG
-      printf("     -- In s_toplevel_update_component_attribs_in_toplevel, about to add new attrib with name= %s, value= %s\n",
-	     new_attrib_name, new_attrib_value);
+      printf ("s_toplevel_update_component_attribs_in_toplevel: ");
+      printf ("About to add new attrib with name= %s, value= %s\n",
+              new_attrib_name, new_attrib_value);
 #endif 
 
       s_object_add_comp_attrib_to_object (toplevel,
@@ -805,7 +822,8 @@ s_toplevel_update_component_attribs_in_toplevel (
     } else {
       /* Do nothing. */
 #if DEBUG
-      printf("     -- In s_toplevel_update_component_attribs_in_toplevel, nothing needs to be done.\n");
+      printf ("s_toplevel_update_component_attribs_in_toplevel: ");
+      printf ("Nothing needs to be done.\n");
 #endif
     }
 
@@ -979,7 +997,8 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
   while (local_list != NULL) {
     new_name_value_pair = g_strdup(local_list->data);
 #if DEBUG
-  printf("        In s_toplevel_update_pin_attribs_in_toplevel, handling entry in master list %s .\n", new_name_value_pair);
+    printf ("s_toplevel_update_pin_attribs_in_toplevel: ");
+    printf ("Handling entry in master list %s.\n", new_name_value_pair);
 #endif
 
   new_attrib_name = u_basic_breakup_string(new_name_value_pair, '=', 0);
@@ -995,8 +1014,9 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
     if ( (old_attrib_value != NULL) && (new_attrib_value != NULL) && (strlen(new_attrib_value) != 0) ) {
       /* simply write new attrib into place of old one. */
 #if DEBUG
-      printf("In s_toplevel_update_pin_attribs_in_toplevel, about to replace old attrib with new one: name= %s, value= %s\n",
-             new_attrib_name, new_attrib_value);
+      printf ("s_toplevel_update_pin_attribs_in_toplevel: ");
+      printf ("About to replace old attrib with new one: name= %s, value= %s\n",
+              new_attrib_name, new_attrib_value);
 #endif
       s_object_replace_attrib_in_object(toplevel,
 					o_pin,
@@ -1010,8 +1030,9 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
     else if ( (old_attrib_value != NULL) && (new_attrib_value == NULL) ) {
       /* remove attrib from pin */
 #if DEBUG
-      printf("In s_toplevel_update_pin_attribs_in_toplevel, about to remove old attrib with name= %s, value= %s\n",
-             new_attrib_name, old_attrib_value);
+      printf ("s_toplevel_update_pin_attribs_in_toplevel: ");
+      printf ("About to remove old attrib with name= %s, value= %s\n",
+              new_attrib_name, old_attrib_value);
 #endif
       s_object_remove_attrib_in_object (toplevel, o_pin, new_attrib_name);
     }
@@ -1021,8 +1042,9 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
       /* add new attrib to pin. */
                                                                                                        
 #if DEBUG
-      printf("In s_toplevel_update_pin_attribs_in_toplevel, about to add new attrib with name= %s, value= %s\n",
-             new_attrib_name, new_attrib_value);
+      printf ("s_toplevel_update_pin_attribs_in_toplevel: ");
+      printf ("About to add new attrib with name= %s, value= %s\n",
+              new_attrib_name, new_attrib_value);
 #endif
 
       s_object_add_pin_attrib_to_object (toplevel,
@@ -1034,7 +1056,8 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
     } else {
       /* Do nothing. */
 #if DEBUG
-      printf("In s_toplevel_update_pin_attribs_in_toplevel, nothing needs to be done.\n");
+      printf ("s_toplevel_update_pin_attribs_in_toplevel: ");
+      printf ("Nothing needs to be done.\n");
 #endif
     }
                                                                                                        

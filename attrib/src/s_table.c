@@ -191,7 +191,8 @@ int s_table_get_index(STRING_LIST *local_list, char *local_string) {
   STRING_LIST *list_element;
 
 #ifdef DEBUG
-  printf("In s_table_get_index, examining %s to see if it is in the list.\n", local_string);
+  printf ("s_table_get_index: ");
+  printf ("Examining %s to see if it is in the list.\n", local_string);
 #endif
 
 
@@ -297,7 +298,8 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
     OBJECT *o_current = (OBJECT*) o_iter->data;
 
 #ifdef DEBUG
-      printf("   ---> In s_table_add_toplevel_comp_items_to_comp_table, examining o_current->name = %s\n", o_current->name);
+    printf ("s_table_add_toplevel_comp_items_to_comp_table: ");
+    printf ("Examining o_current->name = %s\n", o_current->name);
 #endif
 
     /* -----  Now process objects found on page  ----- */
@@ -309,7 +311,8 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
       if (temp_uref) {
 
 #if DEBUG
-        printf("      In s_table_add_toplevel_comp_items_to_comp_table, found component on page. Refdes = %s\n", temp_uref);
+        printf ("s_table_add_toplevel_comp_items_to_comp_table: ");
+        printf ("Found component on page. Refdes = %s\n", temp_uref);
 #endif
         verbose_print(" C");
 
@@ -346,9 +349,11 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
               } else {
 
 #if DEBUG
-                printf("       In s_table_add_toplevel_comp_items_to_comp_table, about to add row %d, col %d, attrib_value = %s\n",
+                printf ("s_table_add_toplevel_comp_items_to_comp_table: ");
+                printf ("About to add row %d, col %d, attrib_value = %s\n",
                        row, col, attrib_value);
-                printf(" . . . current address of attrib_value cell is [%p]\n", &((sheet_head->component_table)[row][col]).attrib_value);
+                printf ("    Current address of attrib_value cell is [%p]\n",
+                        &((sheet_head->component_table)[row][col]).attrib_value);
 #endif
                 /* Is there a compelling reason for me to put this into a separate fcn? */
                 ((sheet_head->component_table)[row][col]).row = row;
@@ -409,7 +414,8 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
 #if DEBUG
       fflush(stderr);
       fflush(stdout);
-      printf("In s_table_add_toplevel_net_items_to_net_table, Found net on page\n");
+      printf ("s_table_add_toplevel_net_items_to_net_table: ");
+      printf ("Found net on page.\n");
 #endif
       verbose_print(" N");
  
@@ -431,9 +437,11 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
 #if DEBUG
             fflush(stderr);
             fflush(stdout);
-            printf("In s_table_add_toplevel_net_items_to_net_table, about to add row %d, col %d, attrib_value = %s\n",
+            printf ("s_table_add_toplevel_net_items_to_net_table: ");
+            printf ("About to add row %d, col %d, attrib_value = %s\n",
                    row, col, attrib_value);
-            printf(" . . . current address of attrib_value cell is [%p]\n", &((sheet_head->net_table)[row][col]).attrib_value);
+            printf ("    Current address of attrib_value cell is [%p]\n",
+                    &((sheet_head->net_table)[row][col]).attrib_value);
 #endif
             /* Is there a compelling reason for me to put this into a separate fcn? */
             ((sheet_head->net_table)[row][col]).row = row;
@@ -462,7 +470,8 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
 #if DEBUG
   fflush(stderr);
   fflush(stdout);
-  printf("In s_table_add_toplevel_net_items_to_net_table -- we are about to return\n");
+  printf ("s_table_add_toplevel_net_items_to_net_table: ");
+  printf ("Return.\n");
 #endif
  
 }
@@ -503,7 +512,8 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
     OBJECT *o_current = (OBJECT*) o_iter->data;
 
 #ifdef DEBUG
-      printf("   ---> In s_table_add_toplevel_pin_items_to_pin_table, examining o_current->name = %s\n", o_current->name);
+    printf ("s_table_add_toplevel_pin_items_to_pin_table: ");
+    printf ("Examining o_current->name = %s\n", o_current->name);
 #endif
 
     /* -----  Now process objects found on page  ----- */
@@ -526,7 +536,8 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
 	    row_label = g_strconcat(temp_uref, ":", pinnumber, NULL);
 
 #if DEBUG
-        printf("      In s_table_add_toplevel_pin_items_to_pin_table, examining pin %s\n", row_label);
+            printf ("s_table_add_toplevel_pin_items_to_pin_table: ");
+            printf ("Examining pin %s\n", row_label);
 #endif
 
 	    a_iter = o_lower_current->attribs;
@@ -555,9 +566,11 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
                   } else {
 
 #if DEBUG
-                    printf("       In s_table_add_toplevel_pin_items_to_pin_table, about to add row %d, col %d, attrib_value = %s\n",
+                    printf ("s_table_add_toplevel_pin_items_to_pin_table: ");
+                    printf ("About to add row %d, col %d, attrib_value = %s\n",
                            row, col, attrib_value);
-                    printf(" . . . current address of attrib_value cell is [%p]\n", &((sheet_head->component_table)[row][col]).attrib_value);
+                    printf ("    Current address of attrib_value cell is [%p]\n",
+                            &((sheet_head->component_table)[row][col]).attrib_value);
 #endif
                     /* Is there a compelling reason for me to put this into a separate fcn? */
                     ((sheet_head->pin_table)[row][col]).row = row;
@@ -618,7 +631,8 @@ void s_table_gtksheet_to_all_tables() {
 
   /* now fill out new table */
 #ifdef DEBUG
-  printf("In s_table_gtksheet_to_all_tables, now about to fill out new component table.\n");
+  printf ("s_table_gtksheet_to_all_tables: ");
+  printf ("Now about to fill out new component table.\n");
 #endif
   s_table_gtksheet_to_table(local_gtk_sheet, master_row_list, 
 		       master_col_list, local_table,
@@ -712,13 +726,14 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 
 
 #ifdef DEBUG
-      printf("In s_table_gtksheet_to_table, found attrib_value = %s in cell row=%d, col=%d\n", 
-	     attrib_value, row, col);
+      printf ("s_table_gtksheet_to_table: ");
+      printf ("Found attrib_value = %s in cell row=%d, col=%d\n",
+              attrib_value, row, col);
 #endif
 
       /* first handle attrib value in cell */
 #ifdef DEBUG
-      printf("     Updating attrib_value %s\n", attrib_value);
+      printf ("    Updating attrib_value %s\n", attrib_value);
 #endif
       g_free( local_table[row][col].attrib_value );
       if (attrib_value != NULL) {
@@ -729,7 +744,7 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 
       /* next handle name of row (also held in TABLE cell) */
 #ifdef DEBUG
-      printf("     Updating row_name %s\n", row_title);
+      printf ("    Updating row_name %s\n", row_title);
 #endif
       g_free( local_table[row][col].row_name );
       if (row_title != NULL) {
@@ -740,7 +755,7 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 
       /* finally handle name of col */
 #ifdef DEBUG
-      printf("     Updating col_name %s\n", col_title);
+      printf ("    Updating col_name %s\n", col_title);
 #endif
       g_free( local_table[row][col].col_name );
       if (col_title != NULL) {

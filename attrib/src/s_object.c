@@ -255,7 +255,8 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
 	/* We've found the attrib.  Delete it and then return. */
 
 #ifdef DEBUG
-	printf("In s_object_remove_attrib_in_object, removing attrib with name = %1$s\n", old_attrib_name);
+	printf ("s_object_remove_attrib_in_object: ");
+	printf ("Removing attrib with name = %1$s\n", old_attrib_name);
 #endif
 
 	attribute_object = a_current;
@@ -345,11 +346,12 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
 
   /* first create text item */
 #if DEBUG
-  printf("===  In s_object_attrib_add_attrib_in_object, about to attach new text attrib with properties:\n");
-  printf("     color = %d\n", color);
-  printf("     text_string = %s \n", text_string);
-  printf("     visibility = %d \n", visibility);
-  printf("     show_name_value = %d \n", show_name_value);
+  printf ("s_object_attrib_add_attrib_in_object: ");
+  printf ("About to attach new text attrib with properties:\n");
+  printf ("     color = %d\n", color);
+  printf ("     text_string = %s\n", text_string);
+  printf ("     visibility = %d\n", visibility);
+  printf ("     show_name_value = %d\n", show_name_value);
 #endif
 
   new_obj = geda_text_object_new (toplevel,
@@ -417,12 +419,14 @@ int s_object_has_sym_file(OBJECT *object)
   filename = object->component_basename;
   if (filename != NULL) {
 #ifdef DEBUG
-    printf("In s_object_has_sym_file, object has sym file = %s.\n", filename);
+    printf ("s_object_has_sym_file: ");
+    printf ("Object has sym file = %s.\n", filename);
 #endif
     return 0;
   } else {
 #ifdef DEBUG
-    printf("In s_object_has_sym_file, found object with no attached symbol file.\n");
+    printf ("s_object_has_sym_file: ");
+    printf ("Found object with no attached symbol file.\n");
 #endif
     return 1;
   }
