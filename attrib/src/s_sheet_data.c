@@ -114,7 +114,7 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
 #endif
 
   if (verbose_mode) {
-    printf(_("- Starting master comp list creation.\n"));
+    printf (_("Start master component list creation.\n"));
   }
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
@@ -185,7 +185,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
 #endif
 
   if (verbose_mode) {
-    printf(_("- Starting master comp attrib list creation.\n"));
+    printf (_("Start master component attrib list creation.\n"));
   }
 
   /* -----  Iterate through all objects found on page looking for components (OBJ_COMPONENT) ----- */
@@ -301,7 +301,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
 #endif
 
   if (verbose_mode) {
-    printf(_("- Starting master pin list creation.\n"));
+    printf (_("Start master pin list creation.\n"));
   }
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
@@ -395,7 +395,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
 #endif
 
   if (verbose_mode) {
-    printf(_("- Starting master pin attrib list creation.\n"));
+    printf (_("Start master pin attrib list creation.\n"));
   }
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
