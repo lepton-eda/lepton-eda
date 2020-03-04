@@ -289,7 +289,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
 #ifdef DEBUG
   fflush(stderr);
   fflush(stdout);
-  printf("=========== Just entered  s_table_add_toplevel_comp_items_to_comp_table!  ==============\n");
+  printf ("==== Enter s_table_add_toplevel_comp_items_to_comp_table()\n");
 #endif
 
   /* -----  Iterate through all objects found on page  ----- */
@@ -495,7 +495,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
   }
 
 #ifdef DEBUG
-  printf("=========== Just entered  s_table_add_toplevel_pin_items_to_pin_table!  ==============\n");
+  printf ("==== Enter s_table_add_toplevel_pin_items_to_pin_table()\n");
 #endif
 
   /* -----  Iterate through all objects found on page  ----- */
@@ -688,7 +688,7 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
   gchar *attrib_value;
 
 #ifdef DEBUG
-      printf("**********    Entering s_table_gtksheet_to_table     ******************\n");
+  printf ("==== Enter s_table_gtksheet_to_table()\n");
 #endif
 
 

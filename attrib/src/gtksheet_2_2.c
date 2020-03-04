@@ -4814,7 +4814,8 @@ gtk_sheet_expose (GtkWidget * widget,
   GtkSheetRange range;
 
 #ifdef DEBUG
-  printf("---> Entered gtk_sheet_expose ... must have received expose_event\n");
+  printf ("==== Enter gtk_sheet_expose()\n");
+  printf ("Must have received expose_event\n");
 #endif 
 
   g_return_val_if_fail (widget != NULL, FALSE);
@@ -4874,7 +4875,7 @@ gtk_sheet_expose (GtkWidget * widget,
   (* GTK_WIDGET_CLASS (gtk_sheet_parent_class)->expose_event) (widget, event);
 
 #ifdef DEBUG
-  printf("<--- Leaving gtk_sheet_expose\n");
+  printf ("==== Leave gtk_sheet_expose()\n");
 #endif 
 
   return FALSE;
@@ -5633,7 +5634,7 @@ gtk_sheet_key_press(GtkWidget *widget,
   sheet = GTK_SHEET(widget);
 
 #ifdef DEBUG
-    printf("\n\nJust entered gtk_sheet_key_press. . . . \n");
+  printf ("==== Enter gtk_sheet_key_press()\n");
 #endif
 
 

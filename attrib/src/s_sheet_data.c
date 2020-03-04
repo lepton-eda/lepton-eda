@@ -110,7 +110,7 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
   const GList *iter;
   
 #ifdef DEBUG
-  printf("=========== Just entered  s_sheet_data_add_master_comp_list_items!  ==============\n");
+  printf ("==== Enter s_sheet_data_add_master_comp_list_items()\n");
 #endif
 
   if (verbose_mode) {
@@ -178,7 +178,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
 #ifdef DEBUG
   fflush(stderr);
   fflush(stdout);
-  printf("=========== Just entered  s_sheet_data_add_master_comp_attrib_list_items!  ==============\n");
+  printf ("==== Enter s_sheet_data_add_master_comp_attrib_list_items()\n");
 #endif
 
   if (verbose_mode) {
@@ -291,7 +291,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
 #ifdef DEBUG
   fflush(stderr);
   fflush(stdout);
-  printf("=========== Just entered  s_sheet_data_add_master_pin_list_items!  ==============\n");
+  printf ("==== Enter s_sheet_data_add_master_pin_list_items()\n");
 #endif
 
   if (verbose_mode) {
@@ -383,7 +383,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
 #ifdef DEBUG
   fflush(stderr);
   fflush(stdout);
-  printf("=========== Just entered  s_sheet_data_add_master_pin_attrib_list_items!  ==============\n");
+  printf ("==== Enter s_sheet_data_add_master_pin_attrib_list_items()\n");
 #endif
 
   if (verbose_mode) {
